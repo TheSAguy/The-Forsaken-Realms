@@ -2329,6 +2329,13 @@ from the plane's `config tables/settings.json`).
 
 ## Upstream merge log
 
+- **2026-10-02 - merged upstream `master` @ `da9e24cb3a0` (Forge 2.0.16-SNAPSHOT, 10.01 daily; 10 first-parent commits
+  since `fd5c996b843`; round 403).** Three conflicts (`AdventureQuestData.java`, `DialogData.java`, `UIScene.java`) -
+  see "Round 403" above. Base install `E:\GAMES\Forge_2`: `build.txt` `2026-10-01 18:28:31`, jars 2.0.16-SNAPSHOT;
+  probes: HAS `da9e24cb3a0` (`forge/gamemodes/net/ProtocolGuiGame.class`), LACKS `d381b8765b8`
+  (`forge/game/staticability/StaticAbilityDrawFromBottom.class`). The next merge starts at `d381b8765b8` (upstream head
+  at the fetch: `fb4d8091126`).
+
 - **2026-10-01 - merged upstream `master` @ `fd5c996b843` (Forge 2.0.16-SNAPSHOT, 09.30 daily; round 385).** Five
   conflicts (`Forge.java`, `TransitionScreen.java`, `RewardActor.java`, `RewardScene.java`, `ArenaScene.java`) - see
   "Round 385" above. Base install `E:\GAMES\Forge_2`: `build.txt` `2026-09-30 18:27:14`, jars 2.0.16-SNAPSHOT; probes:
@@ -3466,6 +3473,22 @@ its three returns in `CommanderCards.stripEnemyDeck(...)`; `util/AdventureEventC
   `forge-gui-mobile-dev-2.0.16-SNAPSHOT-jar-with-dependencies.jar`. The packager finds it by pattern;
   `dev-tools/agent/agent_launch.cmd` now does too (it named 2.0.15). Delete the old jar from
   `forge-gui-mobile-dev/target/` before a package (the packager wants exactly one).
+
+## Round 403 (2026-10-02) - the 10.01 engine merge (upstream `da9e24cb3a0`, Forge 2.0.16-SNAPSHOT)
+
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** + **`data/DialogData.java`** - upstream #11719
+  ("Fix adventure quest dialogs repeating after load") fixed the bug we fixed on 2026-08-15, its own way: a `displayed`
+  flag on the DialogData (saved with it), read by `getPrologue()`/`getEpilogue()`, and our two transient-turned-saved
+  fields deleted. Kept BOTH: our `prologueDisplayed`/`epilogueDisplayed` stay beside upstream's flag and either one counts
+  as shown. Every save since 2026-08-15 carries ours and none carries upstream's yet - upstream's check alone would replay
+  each active quest's opening once after loading one. DialogData's copy constructor copies both its round-185 field and
+  upstream's `displayed`; its serialVersionUID (1L) is unchanged on both sides.
+- **`forge-gui-mobile/src/forge/adventure/scene/UIScene.java`** - upstream #12088 (its data-backup screens) added a
+  `wrap` parameter to `createGenericDialog` (9 arguments) and made the 6-argument form call it. Ours kept: the body wraps
+  whenever it would overflow (2026-09-01); upstream's `wrap` now forces the wrap. Our 8-argument form delegates to the
+  9-argument one with `wrap` false.
+- Not a conflict, but needed: upstream added the edition `SUNF` (Unfinity Sticker Sheets, type Funny) - added to
+  config.json `restrictedEditions` beside UNF. No upstream file was deleted or renamed; no Android file changed.
 
 ## Round 396 (2026-10-02) - a corner button keeps its own line break
 

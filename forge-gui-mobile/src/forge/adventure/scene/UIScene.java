@@ -248,7 +248,7 @@ public class UIScene extends Scene {
     }
 
     public Dialog createGenericDialog(String title, String label, String stringYes, String stringNo, Runnable runnableYes, Runnable runnableNo) {
-        return createGenericDialog(title, label, stringYes, stringNo, runnableYes, runnableNo, false, "");
+        return createGenericDialog(title, label, stringYes, stringNo, runnableYes, runnableNo, false, "", false);
     }
 
     /** Widest a generic dialog's body label may get before it is wrapped, in stage units.
@@ -264,6 +264,12 @@ public class UIScene extends Scene {
     }
 
     public Dialog createGenericDialog(String title, String label, String stringYes, String stringNo, Runnable runnableYes, Runnable runnableNo, boolean cancelButton, String stringCancel) {
+        return createGenericDialog(title, label, stringYes, stringNo, runnableYes, runnableNo, cancelButton, stringCancel, false);
+    }
+
+    // Round 403 (the 10.01 engine merge): upstream's `wrap` (#12088, its data-backup screens) asks for a wrapped body
+    // outright; without it the body still wraps when it would overflow (ours, 2026-09-01).
+    public Dialog createGenericDialog(String title, String label, String stringYes, String stringNo, Runnable runnableYes, Runnable runnableNo, boolean cancelButton, String stringCancel, boolean wrap) {
         Dialog dialog = new Dialog(title == null ? "" : title, Controls.getSkin());
         textboxOpen = true;
 
@@ -285,7 +291,7 @@ public class UIScene extends Scene {
             // append further cells to this same content table and call row() themselves.
             TextraLabel body = Controls.newTextraLabel(label);
             float maxWidth = dialogBodyMaxWidth();
-            if (body.getPrefWidth() > maxWidth) {
+            if (wrap || body.getPrefWidth() > maxWidth) {
                 body.setWrap(true);
                 dialog.getContentTable().add(body).width(maxWidth);
             } else {

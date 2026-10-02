@@ -27,6 +27,7 @@
     "PUST",
     "DA1",
     "UNF",
+    "SUNF", // round 403: the Unfinity Sticker Sheets, a new upstream edition (the 10.01 merge) - blocked with Unfinity
     // Round 395 (a player on Discord: "is it meant to include online/arena cards and/or Alchemy cards? ... The Arena
     // cards that permanently change a card"): the MTG Arena sets with digital-only mechanics - perpetually, seek,
     // conjure, spellbooks, the "A-" rebalanced cards. Online sets that only reprint paper cards (the Remastered sets,
@@ -295,7 +296,7 @@
     "functioningNeutralTownsEnabled": true,
     "modVersion": "1.16",
     "modVersionDate": "10.01",
-    "engineBuildVersion": "2.0.16-SNAPSHOT-09.30",
+    "engineBuildVersion": "2.0.16-SNAPSHOT-10.01",
     "disableGeneticDeckOverrides": true,
     "caveChampionChance": 0.25,
     "welcomePopupText": "Thanks for playing The Forsaken Realms!\n\nFound a bug, or have thoughts on balance? Tell us on Discord - every report helps shape the next update.\n\nNew here? The Game Guide & FAQ explains everything this game adds to Forge's Adventure mode - how reputation, territory, dungeons and your Capitol work, and answers to the common questions. It is also in your game folder as GAME_GUIDE.html.\n\nMost of the game's numbers can be tuned in its settings files. The main one is settings.json, in The Forsaken Realms\\res\\adventure\\The Forsaken Realms\\config tables - make a copy before you edit it.\n\nRecommended settings (already on): Fog of War, Play for Ante and Match Ante Rarity - change them under Settings.\n\nHave fun out there, planeswalker!",

@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 403: the 10.01 engine merge - Forge 2.0.16-SNAPSHOT (2026-10-02)
+
+The user: "let's update to the latest Forge Official release: E:\\GAMES\\Forge_2" - the 10.01 daily (build.txt
+2026-10-01 18:28:31), pinned by content to upstream `da9e24cb3a0`: 10 first-parent commits past round 385's
+`fd5c996b843`, 179 files. Upstream brings: importing a deck from a URL (#11044), the Adventure data backup reworked
+(#12088), Unfinity stickers and sticker sheets (#12047), a lure-before-block-cost rules fix (#11949), quest dialogs no
+longer repeating after a load (#11719), a transparent commander-selection background (#12084), the remote GUI protocol
+without the network stack (#12091), edition data and a Reality Fracture puzzle.
+
+- **Three conflicts**, all resolved keeping both sides (CORE_ENGINE_CHANGES "Round 403"): the quest-dialog fix (#11719,
+  the same bug we fixed on 2026-08-15 - both flags kept so an older save's quests do not replay their opening once),
+  DialogData's fields (ours and upstream's), and `createGenericDialog` (upstream's new `wrap` beside our overflow wrap).
+- The new Unfinity Sticker Sheets edition (`SUNF`) blocked with Unfinity in config.json `restrictedEditions`.
+- `engineBuildVersion` 2.0.16-SNAPSHOT-10.01. Built offline, no new dependency.
+
 ## Round 402b: every building screen checked in portrait (2026-10-02)
 
 The user: "can you double-check all buildings with multiple buttons on Android, just confirming there are no other button

@@ -55,6 +55,10 @@ public class AdventureQuestData implements Serializable {
     // save/reload, letting the player collect its one-time grant more than once (user report:
     // "received twice the starting coins / teleporter item"). completed/failed stay transient -
     // untouched here, that's a separate question not confirmed to have the same bug.
+    // Round 403 (the 10.01 engine merge): upstream fixed the same bug its own way (#11719) - a `displayed` flag on
+    // the DialogData itself, which getPrologue()/getEpilogue() now read. Kept beside it: every save written since
+    // 2026-08-15 carries THESE, and a save's dialogs carry no upstream flag yet - alone, upstream's check would
+    // replay each active quest's opening once after loading one. Either flag counts as shown.
     private boolean prologueDisplayed = false;
     private boolean epilogueDisplayed = false;
 
@@ -511,7 +515,8 @@ public class AdventureQuestData implements Serializable {
     }
 
     public DialogData getPrologue() {
-        if (!prologueDisplayed) {
+        if (prologue != null && !prologue.isDisplayed() && !prologueDisplayed) {
+            prologue.markDisplayed();
             prologueDisplayed = true;
             return prologue;
         }
@@ -519,7 +524,8 @@ public class AdventureQuestData implements Serializable {
     }
 
     public DialogData getEpilogue() {
-        if (!epilogueDisplayed) {
+        if (epilogue != null && !epilogue.isDisplayed() && !epilogueDisplayed) {
+            epilogue.markDisplayed();
             epilogueDisplayed = true;
             return epilogue;
         }

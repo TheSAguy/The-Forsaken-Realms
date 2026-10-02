@@ -33,6 +33,8 @@ public class DialogData implements Serializable {
     // fold). Set on menus whose final entry is an escape hatch (Back / Not now); leave false for
     // quest dialogs, where the last option is a real choice and belongs in the list with the rest.
     public boolean pinLastOption = false;
+    // Persist quest dialog state here because this class already has a stable cross-platform serialization UID.
+    private boolean displayed = false;
 
     public transient Consumer callback;
 
@@ -55,6 +57,15 @@ public class DialogData implements Serializable {
         this.voiceFile = other.voiceFile;
         this.isDisabled = other.isDisabled;
         this.greyOutIfUnavailable = other.greyOutIfUnavailable;
+        this.displayed = other.displayed;
+    }
+
+    public boolean isDisplayed() {
+        return displayed;
+    }
+
+    public void markDisplayed() {
+        displayed = true;
     }
 
     @Override
