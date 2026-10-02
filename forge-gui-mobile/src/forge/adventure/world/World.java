@@ -3523,6 +3523,11 @@ public class World implements Disposable, SaveFileContent {
                 // live every frame) but wrong on the minimap forever after.
                 if (isFunctioningNeutralTownsEnabled())
                     TownRestoration.seedFunctioningNeutralTowns(this);
+                // Round 399: each color's castle joined by road to its capital's net (RoadNetwork rule 5) - here, not in
+                // the road pass: the sweep above moves most capitals (a town near the castle promoted, the old one
+                // turned Waste Town), so only now is the capital the castle should reach the one that stays. Before
+                // the re-bake below, which draws the new road onto the minimap.
+                forge.adventure.util.RoadNetwork.layCastleRoads(this);
                 // neutralizeTerritoryOutsideRadius() (called above) already repaints the minimap
                 // pixel for every tile it individually reassigns, which should already be complete
                 // - but a full re-bake from biomeMap/terrainMap's now-final state is a stronger

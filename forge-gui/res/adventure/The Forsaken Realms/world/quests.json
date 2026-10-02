@@ -7208,7 +7208,7 @@
 				"mapFlagValue": 1,
 				"objective": "CharacterFlag",
 				"prologue": {
-					"text": "The grey wastes are littered with the bones of your realm - ruined towns whose people are long dead or scattered. A navigation arrow should appear around your character; follow it, and step inside the first ruin you find.",
+					"text": "The gray wastes are littered with the bones of your realm - ruined towns whose people are long dead or scattered. A navigation arrow should appear around your character; follow it, and step inside the first ruin you find.",
 					"options": [
 						{
 							"name": "(Continue)",
@@ -9247,7 +9247,7 @@
 					1
 				],
 				"prologue": {
-					"text": "A Capitol needs more than walls - it needs a name people trust. Take on work across the realm: see any three quests through, from a Job Board, an inn, or a stranger on the road, and word of Orazca will spread. Standing is not mere flavor. A town's reputation is its shield: every point of it turns aside an attacking war mage that much more often. It is also its licence to grow - each point allows three more buildings there, so a town nobody respects can raise nothing at all. Reputation is earned by finishing work in a town and by beating back the mages who come for it.",
+					"text": "A Capitol needs more than walls - it needs a name people trust. Take on work across the realm: see any three quests through, from a Job Board, an inn, or a stranger on the road, and word of Orazca will spread. Standing is not mere flavor. A town's reputation is its shield: every point of it turns aside an attacking war mage that much more often. It is also its license to grow - each point allows three more buildings there, so a town nobody respects can raise nothing at all. Reputation is earned by finishing work in a town and by beating back the mages who come for it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -11329,7 +11329,7 @@
 				],
 				"prologue": {},
 				"epilogue": {
-					"text": "The portal's light fades behind you. Grey ash to every horizon - and around the broken stones at the heart of the star, five roads run out to five walled cities: the Ring. Their councils cracked your prison; now they owe you the means to fight. Far beyond them, five alien presences press against your awareness: the Five, already carving up the corpse of your realm. Not for long.",
+					"text": "The portal's light fades behind you. Gray ash to every horizon - and around the broken stones at the heart of the star, five roads run out to five walled cities: the Ring. Their councils cracked your prison; now they owe you the means to fight. Far beyond them, five alien presences press against your awareness: the Five, already carving up the corpse of your realm. Not for long.",
 					"options": [
 						{
 							"name": "(Continue)",

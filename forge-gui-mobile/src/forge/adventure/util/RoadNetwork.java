@@ -58,7 +58,7 @@ import forge.adventure.world.World;
  */
 public final class RoadNetwork {
     /** Bumped when the rules change and every save should be normalized again (World.roadsNormalized). */
-    public static final int VERSION = 4; // 2: roads past a town chained on both sides lifted (round 351b); 3: corner joints joined (round 365); 4: one road into the star per town (round 392)
+    public static final int VERSION = 5; // 2: roads past a town chained on both sides lifted (round 351b); 3: corner joints joined (round 365); 4: one road into the star per town (round 392); 5: a road to each color's castle (round 399)
     /** A hop along a road that is already there costs this share of a new one (cost = distance squared). */
     public static final double EXISTING_ROAD_DISCOUNT = 0.35;
     /** A pair of towns is joined by road when this share of either staircase between them is road. */
@@ -465,6 +465,92 @@ public final class RoadNetwork {
             return false;
         return coverage(world, walkBetween(world, a, b, true)) >= EDGE_COVERAGE
                 || coverage(world, walkBetween(world, a, b, false)) >= EDGE_COVERAGE;
+    }
+
+    // ------------------------------------------------------------------ the castles (rule 5)
+
+    /**
+     * Round 399 (the user: "Let's have a road to the AI Castles. They should be connected the the AI capitol. Directly
+     * or indirectly via another town(s) in between."). A color's castle stood off the road net - world-gen only cleared a
+     * footpath to its nearest town. Each "&lt;Color&gt; Castle" gets one road, to the nearest town the roads already join
+     * to that color's capital - the capital itself included. Never across the barrier.
+     */
+    public static String castleColor(PointOfInterest poi) {
+        PointOfInterestData data = poi == null ? null : poi.getData();
+        if (data == null || data.name == null || !"castle".equals(data.type))
+            return null;
+        for (String color : new String[]{"White", "Blue", "Black", "Red", "Green"})
+            if (data.name.equals(color + " Castle"))
+                return color.toLowerCase();
+        return null;
+    }
+
+    /** The town a castle's road runs to: the nearest the roads join to its color's capital, else the nearest of its color. */
+    static PointOfInterest castleRoadEnd(PointOfInterest castle, List<PointOfInterest> towns,
+            Map<PointOfInterest, List<PointOfInterest>> joined,
+            java.util.function.BiPredicate<PointOfInterest, PointOfInterest> blocked, int tileSize) {
+        String color = castleColor(castle);
+        if (color == null)
+            return null;
+        PointOfInterest capital = null;
+        List<PointOfInterest> ofColor = new ArrayList<>();
+        for (PointOfInterest t : towns) {
+            if (!color.equals(ColorReputation.colorOfTown(t.getData())))
+                continue;
+            ofColor.add(t);
+            if ("capital".equals(t.getData().type))
+                capital = t;
+        }
+        Set<PointOfInterest> reach = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
+        if (capital != null) {
+            java.util.ArrayDeque<PointOfInterest> queue = new java.util.ArrayDeque<>();
+            reach.add(capital);
+            queue.add(capital);
+            while (!queue.isEmpty())
+                for (PointOfInterest next : joined.getOrDefault(queue.poll(), java.util.Collections.emptyList()))
+                    if (reach.add(next))
+                        queue.add(next);
+        }
+        List<PointOfInterest> pool = new ArrayList<>(reach.isEmpty() ? ofColor : reach);
+        pool.sort(java.util.Comparator.comparingDouble(t -> t.getPosition().dst2(castle.getPosition())));
+        for (PointOfInterest t : pool) {
+            if (blocked != null && blocked.test(castle, t))
+                continue;
+            System.out.println("[TFR-Roads] " + castle.getDisplayName() + ": a road to " + t.getDisplayName() + ", "
+                    + Math.round(t.getPosition().dst(castle.getPosition()) / tileSize) + " tiles - "
+                    + (t == capital ? "the " + color + " capital itself"
+                    : reach.contains(t) ? "joined by road to the " + color + " capital (" + reach.size() + " town(s) on its net)"
+                    : "nearest " + color + " town (no capital net found)") + " (round 399)");
+            return t;
+        }
+        System.out.println("[TFR-Roads] " + castle.getDisplayName() + ": no " + color + " town to take a road to (round 399)");
+        return null;
+    }
+
+    /**
+     * Rule 5: each castle's road, laid against the roads on the ground - by world-gen once the territory sweep has
+     * settled the capitals, and once for a save laid before the rule. Returns the road tiles laid.
+     */
+    public static int layCastleRoads(World world) {
+        List<PointOfInterest> towns = towns(world);
+        Map<PointOfInterest, List<PointOfInterest>> joined = new IdentityHashMap<>();
+        for (Edge e : detectEdges(world, towns, null)) {
+            joined.computeIfAbsent(e.a, k -> new ArrayList<>()).add(e.b);
+            joined.computeIfAbsent(e.b, k -> new ArrayList<>()).add(e.a);
+        }
+        int laid = 0;
+        for (PointOfInterest poi : world.getAllPointOfInterest()) {
+            if (castleColor(poi) == null || !poi.getActive())
+                continue;
+            PointOfInterest to = castleRoadEnd(poi, towns, joined, world::roadLineCrossesBarrier, world.getTileSize());
+            if (to == null || roadJoins(world, poi, to))
+                continue;
+            int[] a = anchor(world, poi), b = anchor(world, to);
+            List<PointOfInterest> walk = canonicalFirst(a[0], a[1], b[0], b[1]) ? Arrays.asList(poi, to) : Arrays.asList(to, poi);
+            laid += world.buildRoad(walk, null);
+        }
+        System.out.println("[TFR-Roads] rule 5: " + laid + " castle road tile(s) laid (round 399)");
+        return laid;
     }
 
     /** The cost of one hop for the routers (distance squared), cheaper along a road already there. */
@@ -1230,9 +1316,11 @@ public final class RoadNetwork {
         int joined = world.getRoadsNormalized() < 3 ? joinCorners(world, new HashSet<>()) : 0;
         // Round 392: rule 4 alone for a rule-3 save - one road into the star per outside town.
         liftExtraStarLinks(world, new HashSet<>());
+        // Round 399: rule 5 - the castles' roads, once.
+        int castleTiles = layCastleRoads(world);
         world.setRoadsNormalized(VERSION);
-        System.out.println("[TFR-Roads] roads normalized to rule " + VERSION + " (" + joined + " corner joint(s) joined) in "
-                + (System.nanoTime() - t0) / 1_000_000 + " ms");
+        System.out.println("[TFR-Roads] roads normalized to rule " + VERSION + " (" + joined + " corner joint(s) joined, "
+                + castleTiles + " castle road tile(s) laid) in " + (System.nanoTime() - t0) / 1_000_000 + " ms");
     }
 
     /** Rules 1-2 (round 351/351b): the old roads normalized, a standing Capitol's network laid again. */

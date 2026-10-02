@@ -315,7 +315,9 @@ DOODADS = {
 
 # Round 305: the ocean (world/biomes/base.json, a plane copy of common's with spriteNames added). Whirlpools on its
 # open water only, about 20 on the whole map (~200k eligible tiles - 0.0003 gave 63). The picture is built by whirlpool.py.
-OCEAN_DOODADS = [("Whirlpool", 0.0001)]
+# Round 399 (the user: "Let's double the number of whirlpools on world-gen. They look so good and there are so few"):
+# 0.0001 -> 0.0002, about 40.
+OCEAN_DOODADS = [("Whirlpool", 0.0002)]
 # Round 391 (the user: "Let's animate the whirlpools"): the HMM3 whirlpool's eight frames (whirlpool.frames()), each
 # shown this long - MapSprite cycles every region of an animated doodad's name.
 WHIRLPOOL_FRAME_SECONDS = 0.12

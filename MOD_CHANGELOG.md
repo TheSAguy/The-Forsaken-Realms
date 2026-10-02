@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 399: twice the whirlpools, a road to every color's castle (2026-10-02)
+
+The user: "Let's double the number of whirlpools on world-gen. They look so good and there are so few. Let's have a road
+to the AI Castles. They should be connected the the AI capitol. Directly or indirectly via another town(s) in between."
+
+- Whirlpools: map_sprites.json density 0.0001 -> 0.0002 (and dev-tools/world-art/spec.py OCEAN_DOODADS, its source).
+  New worlds only - doodads are saved with the world. Counted offline (DoodadCount): the user's world 15, two new
+  worlds 38 and 46.
+- Castle roads, RoadNetwork rule 5 (`VERSION` 5, `layCastleRoads`): each "<Color> Castle" gets one road, to the
+  nearest town the roads on the ground already join to that color's capital (the capital itself included), never
+  across the barrier; `[TFR-Roads]` names each. World-gen lays them right after the territory sweep
+  (`TerritoryControl.neutralizeAfterGeneration`), before the minimap re-bake: the sweep moves most capitals - a town
+  near the castle promoted, the old capital turned Waste Town - so a hook in the road pass (the first cut) linked
+  Black Castle to its old capital 49 tiles off. A save from before the rule gets its roads once on load.
+- Agent-checked: the user's world (on load, rule 5) - all five castles to their capitals, 73 tiles; a new world - all
+  five to their final capitals (7-19 tiles), 71 tiles, on the minimap.
+- Text: "licence" -> "license", "grey" -> "gray" (twice) in quests.json.
+
 ## Round 398: the Inn and the Armory get their own ruins (2026-10-02)
 
 The user: "I've created a new layout for the Ruins towns. (wasteland_ruin.tmx) I removed the background image of the
