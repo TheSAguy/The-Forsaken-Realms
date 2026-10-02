@@ -163,9 +163,27 @@ public class TuningData {
     // Round 404 (the user: "If you have 3 consecutive wins over one specific enemy, they will start the 4th+ duel with a
     // 'Wastes' land in play ... a loss resets it ... Normal+ difficulty"): the wins in a row over one enemy (by name,
     // every deck it carries) after which it starts each duel with winStreakStartCards in play, on top of anything else
-    // it starts with. Not in Inn tournaments, never on Easy. 0 = off.
-    public int winStreakWins = 3;
+    // it starts with. Not in Inn tournaments. 0 = off.
+    // Round 405 (the user: "On normal, it's 5+ victories. On Hard 4+ to get the extra card and insane 3+"): one count
+    // per difficulty, keyed by its NAME like the defeat gold loss below - Easy stays off.
+    public int winStreakWinsEasy = 0;
+    public int winStreakWinsNormal = 5;
+    public int winStreakWinsHard = 4;
+    public int winStreakWinsInsane = 3;
     public String[] winStreakStartCards = {"Wastes|EOC"};
+
+    /** Round 405: the wins in a row a difficulty needs before an enemy starts with winStreakStartCards; 0 = off. */
+    public int winStreakWinsFor(String difficultyName) {
+        if (difficultyName == null)
+            return 0;
+        switch (difficultyName.trim().toLowerCase()) {
+            case "easy":   return Math.max(0, winStreakWinsEasy);
+            case "normal": return Math.max(0, winStreakWinsNormal);
+            case "hard":   return Math.max(0, winStreakWinsHard);
+            case "insane": return Math.max(0, winStreakWinsInsane);
+            default:       return 0;
+        }
+    }
 
     // Progressive Set Unlocks (MOD_SCOPE.md #4) research eligibility threshold (2026-08-22 user
     // request to make ResearchScene's hardcoded THRESHOLD_FRACTION tunable). Fraction of an

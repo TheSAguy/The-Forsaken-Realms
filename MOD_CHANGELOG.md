@@ -14264,6 +14264,15 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 405: the win streak's length by difficulty (2026-10-02)
+
+The user (after v1.17 had shipped with a flat 3): "On normal, it's 5+ victories. On Hard 4+ to get the extra card and
+insane 3+." Round 404's `winStreakWins` became one count per difficulty, keyed by its name like the defeat gold loss:
+settings.json `winStreakWinsEasy` 0 (off - replaces the name check), `winStreakWinsNormal` 5, `winStreakWinsHard` 4,
+`winStreakWinsInsane` 3 (`TuningData.winStreakWinsFor`, `AdventurePlayer.winStreakNeeded`). The counts themselves are
+unchanged and saved as before, so an existing Normal game's enemy at 3 or 4 wins loses its Wastes until the count
+reaches 5. `[TFR-WinStreak]` lines now read `streak 2 -> 3 of 5`. Game Guide wording updated.
+
 ## Round 404: an enemy you keep beating starts with Wastes in play (2026-10-02)
 
 The user: "If you have 3 consecutive wins over one specific enemy, they will start the 4th+ duel with a 'Wastes' land in

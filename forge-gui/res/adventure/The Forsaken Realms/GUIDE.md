@@ -45,9 +45,9 @@ version - playable, but it gets far less testing than the desktop builds.*
 
 The short version for returning players. Each item links to where the guide covers it in full.
 
-- **Enemies learn your tricks.** Beat the same enemy three times in a row and from then on it starts each
-  duel with a **Wastes** in play - until it beats you once, and its count starts over. Normal difficulty and
-  up. **Archmages** now start every duel with a Wastes too (not in town, Ring City, capital or Capitol fights,
+- **Enemies learn your tricks.** Beat the same enemy enough times in a row - five on Normal, four on Hard,
+  three on Insane - and from then on it starts each duel with a **Wastes** in play, until it beats you once and
+  its count starts over. Not on Easy. **Archmages** now start every duel with a Wastes too (not in town, Ring City, capital or Capitol fights,
   or Inn tournaments). See [Notes on Difficulty](#notes-on-difficulty).
 - **New Game+ asks what comes along:** cards only, cards and the resources you carry, or those plus a refund
   of what you invested in the towns and buildings you still hold - and whether to keep your items. Every
@@ -626,8 +626,9 @@ And your ante. Handing over a Bronze Coin on the "Card Lost" screen saves your g
 cards (the life loss still applies). If your life runs out you're carried home: to your Capitol, or to
 Orazca before it stands. Losing inside a rotating dungeon usually makes that dungeon vanish.
 
-**Enemies learn your tricks.** On Normal and above, beat the same enemy three times in a row and from the
-fourth duel on it starts with a **Wastes** in play - a notice tells you as the duel opens. It keeps that edge
+**Enemies learn your tricks.** Beat the same enemy five times in a row on Normal, four on Hard or three on
+Insane, and every duel after that it starts with a **Wastes** in play - a notice tells you as the duel opens. Easy
+is spared. It keeps that edge
 until it beats you once (a Bronze Coin still counts as a loss); then its count starts over. The count is per
 enemy, whichever of its decks it brings, and covers every duel but Inn tournaments and your guards' fights.
 **Archmages** start every duel with a Wastes as well, except in town, Ring City, capital and Capitol fights

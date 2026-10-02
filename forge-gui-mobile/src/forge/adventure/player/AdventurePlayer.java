@@ -361,23 +361,26 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             enemyWinStreaks.put(enemyName, before + 1);
         else
             enemyWinStreaks.remove(enemyName);
-        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
-        int need = tuning == null ? 0 : tuning.winStreakWins;
+        int need = winStreakNeeded();
         System.out.println("[TFR-WinStreak] " + enemyName + ": " + (won ? "won" : "lost") + " - streak " + before + " -> "
-                + winStreak(enemyName) + (need > 0 && winStreak(enemyName) >= need ? " (it starts the next duel with "
-                + String.join(", ", tuning.winStreakStartCards) + " in play"
-                + (winStreakDifficulty() ? "" : " - not on " + difficultyData.name) + ")" : ""));
+                + winStreak(enemyName) + " of " + (need > 0 ? need : "- (off on " + difficultyData.name + ")")
+                + (need > 0 && winStreak(enemyName) >= need ? " (it starts the next duel with "
+                + String.join(", ", forge.adventure.util.Config.instance().getTuningData().winStreakStartCards) + " in play)"
+                : ""));
     }
 
-    /** Round 404: does this enemy start its next duel with TuningData.winStreakStartCards? Normal and above only. */
+    /** Round 404: does this enemy start its next duel with TuningData.winStreakStartCards? Not on Easy. */
     public boolean winStreakReached(String enemyName) {
         forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
-        return tuning != null && tuning.winStreakWins > 0 && tuning.winStreakStartCards != null
-                && tuning.winStreakStartCards.length > 0 && winStreakDifficulty() && winStreak(enemyName) >= tuning.winStreakWins;
+        int need = winStreakNeeded();
+        return need > 0 && tuning.winStreakStartCards != null && tuning.winStreakStartCards.length > 0
+                && winStreak(enemyName) >= need;
     }
 
-    private boolean winStreakDifficulty() {
-        return difficultyData == null || difficultyData.name == null || !difficultyData.name.equalsIgnoreCase("easy");
+    /** Round 405: the wins in a row this game's difficulty needs (Normal 5, Hard 4, Insane 3); 0 = off (Easy). */
+    public int winStreakNeeded() {
+        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
+        return tuning == null || difficultyData == null ? 0 : tuning.winStreakWinsFor(difficultyData.name);
     }
 
     /** Round 216: the week this enemy was last Coin-Challenged, or -1 if never. */
