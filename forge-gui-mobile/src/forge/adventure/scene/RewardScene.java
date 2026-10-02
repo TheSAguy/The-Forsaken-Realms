@@ -353,8 +353,16 @@ public class RewardScene extends UIScene {
         int rows = (shown.size + 1) / 2;
         // Clear of whichever bottom furniture reaches highest: playerGold sits above playerShards on
         // the left, doneButton on the right, and they are not the same height off the floor.
+        // Round 402 (a player on Discord, Android: "can the blueprint button be moved? So you can reroll without
+        // buying it"): and the Refresh button, which sits right above Done on a card shop - the Armory never shows it,
+        // so this block was only ever checked there, and on an AI town's card shop Buy Blueprint lay over Refresh.
         float bottom = Math.max(playerGold.getY() + playerGold.getHeight(),
-                doneButton.getY() + doneButton.getHeight()) + 4f;
+                doneButton.getY() + doneButton.getHeight());
+        if (restockButton != null && restockButton.isVisible())
+            bottom = Math.max(bottom, restockButton.getY() + restockButton.getHeight());
+        bottom += 4f;
+        System.out.println("[TFR-ShopLayout] portrait: " + shown.size + " shop button(s) laid out from y=" + bottom
+                + (restockButton != null && restockButton.isVisible() ? " (clear of Refresh)" : ""));
         for (int i = 0; i < shown.size; i++) {
             TextraButton b = shown.get(i);
             int row = i / 2; // 0 is the UPPER row - the block is laid out from the bottom up

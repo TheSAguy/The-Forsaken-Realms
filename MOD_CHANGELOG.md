@@ -14264,6 +14264,20 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 402: on Android, Buy Blueprint no longer covers the shop's Refresh button (2026-10-02)
+
+A player on Discord (Galon88, with a phone screenshot of an AI town's card shop): "Android can the blueprint button be
+moved? So you can reroll without buying it." In portrait the shop's extra buttons are a block laid out above the bottom
+row (round 285) - clear of the gold readout and Done, but not of Refresh, which the layout file puts right above Done.
+The Armory, where the block was tested, never shows Refresh; a card shop selling a blueprint does, and the full-width
+Buy Blueprint lay over it (and over the gold count).
+
+- RewardScene.layoutPortraitModButtons(): the block also starts above Refresh when it is showing. `[TFR-ShopLayout]`
+  logs where the block starts.
+- Agent-seen in portrait (the desktop launcher's `portrait width=900 height=1950`): an AI Mountain town's Dragon shop -
+  Buy Blueprint above the Refresh button, Refresh and the gold count clear. Landscape is unchanged (its buttons are a
+  column beside Done).
+
 ## Round 401: every dungeon entrance reviewed against the user's new art (2026-10-02)
 
 The user: "I've actually found/created some great new ones. Saved here: Pictures/Screenshots/Update_2. Let's go through
