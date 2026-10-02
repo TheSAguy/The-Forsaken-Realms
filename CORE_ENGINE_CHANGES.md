@@ -3467,6 +3467,14 @@ its three returns in `CommanderCards.stripEnemyDeck(...)`; `util/AdventureEventC
   `dev-tools/agent/agent_launch.cmd` now does too (it named 2.0.15). Delete the old jar from
   `forge-gui-mobile-dev/target/` before a package (the packager wants exactly one).
 
+## Round 396 (2026-10-02) - a corner button keeps its own line break
+
+- **`toolbox/FButton.java`** (Forge's own, `draw()`): a BottomLeft/BottomRight corner label is split at its first space
+  only when it has no `
+` of its own (`if (!displayText.contains("
+"))` before the `replaceFirst`). The lost-ante
+  row's coin button reads "(Save: N gold)" over "Bronze Coin". On a merge: one guard on one line.
+
 ## Round 383 (2026-09-30) - corner buttons keep off the screen edge
 
 - **`toolbox/FButton.java`** (Forge's own, `draw()`): the BottomLeft corner case adds `x += PADDING; w -= PADDING;` and

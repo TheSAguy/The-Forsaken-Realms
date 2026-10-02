@@ -638,7 +638,9 @@ public class DuelScene extends ForgeScene {
                 message += "\n" + enemy.getName() + " already holds one of your Bronze Challenge "
                         + "Coins. Beat them to win it back.";
             } else {
-                message += "\nA Bronze Challenge Coin would buy back your whole ante - you have none.";
+                int wouldSave = Current.player().defeatGoldLossNow(); // round 396
+                message += "\nA Bronze Challenge Coin would buy back your whole ante"
+                        + (wouldSave > 0 ? " and save " + wouldSave + " gold" : "") + " - you have none.";
             }
         }
         if (!won)
@@ -654,7 +656,12 @@ public class DuelScene extends ForgeScene {
         // "Bronze Coin" ran into the screen edge. "Bronze Coin" splits into two short lines.
         // Round 383: still touching the edge at 3840x2130 (and OK at the left one) - the missing padding is now in
         // FButton.draw's corner cases, for every corner button.
-        final String COIN_BUTTON = "Bronze Coin";
+        // Round 396 (the user: "put in brackets, above the bronze coin, how much money you are about to lose ... Maybe
+        // Save: xxxx Gold"): the gold the coin keeps - the defeat penalty on the gold carried right now, so a Buy Back
+        // earlier in this loss is counted - on a line of its own over "Bronze Coin". FButton keeps a label's own line
+        // break (it only splits a corner label at its first space when the label has none).
+        int coinSaves = offerCoinRansom ? Current.player().defeatGoldLossNow() : 0;
+        final String COIN_BUTTON = coinSaves > 0 ? "(Save: " + coinSaves + " gold)\nBronze Coin" : "Bronze Coin";
         if (won && eventData == null) {
             int sellPrice = Current.player().cardSellPrice(card);
             buttons = sellPrice > 0

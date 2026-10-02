@@ -2181,6 +2181,19 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         onLifeTotalChangeList.emit();
     }
 
+    /**
+     * Round 396 (the user: "put in brackets, above the bronze coin, how much money you are about to lose ... Maybe
+     * Save: xxxx Gold"): the gold a defeat would take right now, from the gold carried - what defeated() takes when no
+     * Bronze Coin waives it. Changes nothing.
+     */
+    public int defeatGoldLossNow() {
+        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        int loss = tuning == null ? -1 : tuning.defeatGoldLoss(difficultyData.name, gold);
+        if (loss >= 0)
+            return loss;
+        return gold - (int) (gold - (gold * difficultyData.goldLoss));
+    }
+
     public boolean defeated() {
         // Bronze Coin ante ransom (2026-08-29): paying the coin buys off the GOLD penalty only -
         // the life loss still applies, so a loss is never consequence-free. One-shot: consumed
@@ -2192,13 +2205,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             int lostGold = gold;
             // Round 177 (user request): a FLAT loss per difficulty - all of it if you carry less. Round 359: a
             // percentage of the gold carried with that flat amount as the minimum (TuningData.defeatGoldLoss);
-            // the stock goldLoss when the plane's settings.json sets neither.
+            // the stock goldLoss when the plane's settings.json sets neither. Round 396: one formula with the preview.
             forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
             int loss = tuning == null ? -1 : tuning.defeatGoldLoss(difficultyData.name, gold);
-            if (loss >= 0)
-                gold = gold - loss;
-            else
-                gold = (int) (gold - (gold * difficultyData.goldLoss));
+            gold = gold - defeatGoldLossNow();
             System.out.println("[TFR-DefeatGold] " + difficultyData.name + ": lost " + (lostGold - gold) + " of " + lostGold
                     + " gold (" + (loss >= 0 ? tuning.defeatGoldLossPercentFor(difficultyData.name) + "%, minimum "
                     + tuning.defeatGoldLossFor(difficultyData.name) : "goldLoss " + difficultyData.goldLoss) + ")");

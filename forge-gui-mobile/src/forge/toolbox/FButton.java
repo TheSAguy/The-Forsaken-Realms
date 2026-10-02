@@ -355,7 +355,8 @@ public class FButton extends FDisplayObject implements IButton {
         String displayText = text;
         if (!StringUtils.isEmpty(displayText)) {
             if (corner == Corner.BottomLeft || corner == Corner.BottomRight) {
-                displayText = displayText.replaceFirst(" ", "\n"); //allow second word to wrap if corner button
+                if (!displayText.contains("\n")) // TFR round 396: a label with its own line break keeps it
+                    displayText = displayText.replaceFirst(" ", "\n"); //allow second word to wrap if corner button
             }
             g.drawText(displayText, font, foreColor, x, y, w, h, false, Align.center, true);
         }

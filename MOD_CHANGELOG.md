@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 397: the Inn's Simulate checkbox above the Prizes (2026-10-02)
+
+The user, from a joined Inn tournament: "It appears the "Simulate" check-box moved on the Inn Tournaments. I want it
+above the Prize Section, so you don't need to scroll to see it." EventScene splits the description and puts the
+checkbox between the halves - before "Pay 1 Entry Fee", which only an event not yet entered shows. Once entered there
+was no split point and the checkbox fell below the whole text. Now the split falls back to the start of the Prizes block
+(Draft, Sealed and Jumpstart prize texts all open with "Prizes
+"). Checked against all three description builders; not
+seen on screen (the agent world's nearby towns are Ring Cities and a ruin, none with an Inn).
+
+## Round 396: the Bronze Coin button shows the gold it saves (2026-10-02)
+
+The user: "Would it be possible to put in brackets, above the bronze coin, how much money you are about to lose. Or not
+lose if you use the bronze coin? Maybe Save: xxxx Gold."
+
+- `AdventurePlayer.defeatGoldLossNow()` - the gold a defeat would take right now (the tuning's `defeatGoldLoss`, else the
+  difficulty's share); `defeated()` takes exactly that, so the label and the loss can't drift apart.
+- The lost-duel dialog's coin button reads "(Save: N gold)" over "Bronze Coin" (DuelScene); with no coin in the bag, the
+  hint line says what one would have saved.
+- ENGINE (FButton, CORE_ENGINE_CHANGES round 396): a corner button only breaks its label at the first space when the
+  label has no line break of its own - "(Save: 308 gold)" stayed one line.
+- Agent-seen on an Archmage loss: the button read "(Save: 308 gold) / Bronze Coin"; using it kept all 2,057 gold, and the
+  next loss without it took exactly 308 (2,057 -> 1,749).
+
 ## Round 395: MTG Arena's digital-only sets blocked (2026-10-02)
 
 A player on Discord: "I was also wondering if it's meant to include online/arena cards and/or Alchemy cards? I think
@@ -14277,7 +14301,7 @@ sets":
   SIR, TPR, VMA, ME1-4, the anthologies, MTGO promos). A paper card reprinted in a blocked set keeps its paper
   printings. The D&D shop (Boo's Bargains) keeps AFR / CLB / AFC.
 - Enemy decks (`CommanderCards.isDigitalOnly`, inside round 387's `stripEnemyDeck`): a card whose every printing is in
-  a blocked set of type Online becomes a basic land of the deck's main colour, like a commander-only card. Offline
+  a blocked set of type Online becomes a basic land of the deck's main color, like a commander-only card. Offline
   count: 647 such cards, in 247 enemy decks (527 slots), mostly the legend decks. Cards a player already owns stay in
   their collection.
 - Agent-seen: Aegar's deck - Command Tower, Rimewall Protector, Path of Ancestry -> 3 Mountain; no exception.
