@@ -1,0 +1,2097 @@
+[
+ {
+  "n": 1,
+  "name": "Aerie",
+  "display": "Aerie",
+  "atlas": "buildings.atlas",
+  "region": "Aerie",
+  "category": "reuse",
+  "art": "S6-21",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    0,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a cliff-top eyrie instead of a mushroom tower"
+ },
+ {
+  "n": 3,
+  "name": "BarbarianCamp1",
+  "display": "Barbarian Camp",
+  "atlas": "buildings.atlas",
+  "region": "Building113",
+  "category": "reuse",
+  "art": "S7-42",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957417596.png",
+   "box": [
+    64,
+    192,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a ring of stakes around the fire (was a 32x16 scrap)"
+ },
+ {
+  "n": 4,
+  "name": "KorEncampment",
+  "display": "Kor Outpost",
+  "atlas": "buildings.atlas",
+  "region": "Building147",
+  "category": "reuse",
+  "art": "S7-12",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957417596.png",
+   "box": [
+    64,
+    0,
+    64,
+    64
+   ]
+  },
+  "fit": "tower",
+  "why": "a lookout tower with a banner"
+ },
+ {
+  "n": 7,
+  "name": "BarbarianCamp4",
+  "display": "Barbarian Camp",
+  "atlas": "buildings.atlas",
+  "region": "Building152",
+  "category": "reuse",
+  "art": "S6-34",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    96,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a banner camp"
+ },
+ {
+  "n": 8,
+  "name": "BarbarianCamp5",
+  "display": "Barbarian Camp",
+  "atlas": "buildings.atlas",
+  "region": "Building126",
+  "category": "reuse",
+  "art": "S6-43",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    64,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "timber huts"
+ },
+ {
+  "n": 11,
+  "name": "FortBlue1",
+  "display": "Pirate Fort",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "SandHall",
+  "category": "reuse",
+  "art": "S4-43",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790954425563.png",
+   "box": [
+    64,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a stone fort on a pier"
+ },
+ {
+  "n": 12,
+  "name": "FortBlue2",
+  "display": "River Crossing",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "RuinsSand",
+  "category": "reuse",
+  "art": "S6-76",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    160,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a mill on the river"
+ },
+ {
+  "n": 13,
+  "name": "FortBlue3",
+  "display": "Esper Manufactory",
+  "atlas": "buildingsbosses.atlas",
+  "region": "FortBlue",
+  "category": "reuse",
+  "art": "S6-81",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    0,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a workshop of blue machinery"
+ },
+ {
+  "n": 14,
+  "name": "DemonTower",
+  "display": "Hidden Treasure-room",
+  "atlas": "towers.atlas",
+  "region": "TowerRedTwin",
+  "category": "reuse",
+  "art": "S6-77",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    192,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a treasure vault (was a tiny tower)"
+ },
+ {
+  "n": 15,
+  "name": "FortBlue4",
+  "display": "Cloud Fort",
+  "atlas": "buildings.atlas",
+  "region": "CloudPalace",
+  "category": "reuse",
+  "art": "S6-88",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    224,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a floating island with a crystal"
+ },
+ {
+  "n": 16,
+  "name": "FortBlue5",
+  "display": "Sea Temple",
+  "atlas": "ruins.atlas",
+  "region": "TempleRuined",
+  "category": "reuse",
+  "art": "S9-18",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790891604993.png",
+   "box": [
+    224,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a temple overgrown with sea-green weed"
+ },
+ {
+  "n": 18,
+  "name": "Castle1",
+  "display": "Fort",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "RuinsWhite",
+  "category": "reuse",
+  "art": "S7-43",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957417596.png",
+   "box": [
+    128,
+    192,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a curtain wall and round keep"
+ },
+ {
+  "n": 19,
+  "name": "Castle2",
+  "display": "Pharaoh's Fort",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "SandTemple",
+  "category": "reuse",
+  "art": "S6-13",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    64,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a desert pyramid gate"
+ },
+ {
+  "n": 25,
+  "name": "CatLairW1",
+  "display": "Leonin Camp",
+  "atlas": "buildings.atlas",
+  "region": "Building114",
+  "category": "low",
+  "art": "S7-23",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957417596.png",
+   "box": [
+    128,
+    64,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a savanna hut village (was a 32x16 scrap)"
+ },
+ {
+  "n": 100,
+  "name": "Emrakul",
+  "display": "Emrakul's Castle",
+  "atlas": "buildings.atlas",
+  "region": "colorless_castle",
+  "category": "reuse",
+  "art": "S2-13",
+  "src": {
+   "sheet": "pixellab-An-ultimate-evil-rift-in-the-u-1790956703091.png",
+   "box": [
+    128,
+    0,
+    64,
+    64
+   ]
+  },
+  "fit": "native",
+  "why": "monoliths around a void swirl - the Eldrazi titan's seat"
+ },
+ {
+  "n": 101,
+  "name": "CopperhostForest",
+  "display": "Copper Host Forest",
+  "atlas": "Phyrexian_Buildings.atlas",
+  "region": "CopperhostForest",
+  "category": "low",
+  "art": "S8-34",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    192,
+    128,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a Phyrexian-grown horror tree"
+ },
+ {
+  "n": 102,
+  "name": "Crawlspace",
+  "display": "Blue Tower",
+  "atlas": "buildingsbosses.atlas",
+  "region": "MageTowerBlue",
+  "category": "reuse",
+  "art": "S5-18",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    224,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a glass-domed observatory"
+ },
+ {
+  "n": 106,
+  "name": "Dream Halls",
+  "display": "Blue Tower",
+  "atlas": "towers.atlas",
+  "region": "TowerBlue",
+  "category": "reuse",
+  "art": "S5-38",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    224,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a domed arcane tower (was tiny)"
+ },
+ {
+  "n": 107,
+  "name": "DrossOutpost",
+  "display": "Dross Outpost",
+  "atlas": "Phyrexian_Buildings.atlas",
+  "region": "DrossOutpost",
+  "category": "low",
+  "art": "S8-32",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    64,
+    128,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a Phyrexian flesh pit"
+ },
+ {
+  "n": 109,
+  "name": "EvilGrove",
+  "display": "Undead Grove",
+  "atlas": "buildings.atlas",
+  "region": "EvilGrove",
+  "category": "reuse",
+  "art": "S11-72",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790897419443.png",
+   "box": [
+    32,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a dead hollow tree"
+ },
+ {
+  "n": 116,
+  "name": "Factory",
+  "display": "Autonomous Factory",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "Factory_A",
+  "category": "reuse",
+  "art": "S8-42",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    64,
+    192,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a dark red-lit factory"
+ },
+ {
+  "n": 117,
+  "name": "Factory1",
+  "display": "Autonomous Factory",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "Factory_B",
+  "category": "reuse",
+  "art": "S6-26",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    160,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a walking construct"
+ },
+ {
+  "n": 118,
+  "name": "Factory2",
+  "display": "Autonomous Factory",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "Factory_C",
+  "category": "reuse",
+  "art": "S6-65",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    128,
+    160,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a workshop yard"
+ },
+ {
+  "n": 120,
+  "name": "Fort",
+  "display": "The Frozen Ruins",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "GreyTowerRuined",
+  "category": "reuse",
+  "art": "S6-87",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    192,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a ruined castle (was tiny)"
+ },
+ {
+  "n": 121,
+  "name": "Fort1",
+  "display": "Tundra Fort",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "GreyTower",
+  "category": "reuse",
+  "art": "S6-84",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    96,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a stone tower (was tiny)"
+ },
+ {
+  "n": 122,
+  "name": "Fort2",
+  "display": "Mages' Fort",
+  "atlas": "towers.atlas",
+  "region": "TowerGrey",
+  "category": "reuse",
+  "art": "S5-14",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    96,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a dark spired fort (was tiny)"
+ },
+ {
+  "n": 123,
+  "name": "FortMultilevel",
+  "display": "Cultists' Outpost",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "SandTowerRuined",
+  "category": "reuse",
+  "art": "S5-17",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    192,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a ziggurat with a violet capstone (was tiny)"
+ },
+ {
+  "n": 124,
+  "name": "Fort3",
+  "display": "Mercenary Barracks",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_Fort3",
+  "category": "reuse",
+  "art": "S6-56",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    160,
+    128,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a palisade fort"
+ },
+ {
+  "n": 125,
+  "name": "Fort4",
+  "display": "Putrid Fort",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "SandTower",
+  "category": "reuse",
+  "art": "S12-74",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    96,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a fort dripping with slime (was tiny)"
+ },
+ {
+  "n": 126,
+  "name": "Fort5",
+  "display": "Mind Slaver's Encampment",
+  "atlas": "buildings.atlas",
+  "region": "Building49",
+  "category": "reuse",
+  "art": "S8-22",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    64,
+    64,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a brain tree"
+ },
+ {
+  "n": 127,
+  "name": "Fort6",
+  "display": "Necromancer's Study",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "GreyTowerTallRuined",
+  "category": "reuse",
+  "art": "S7-33",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957417596.png",
+   "box": [
+    128,
+    128,
+    64,
+    64
+   ]
+  },
+  "fit": "tower",
+  "why": "a spiked bone spire"
+ },
+ {
+  "n": 128,
+  "name": "Fort7",
+  "display": "Logging Camp",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "RuinsYellow",
+  "category": "reuse",
+  "art": "S6-44",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    96,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "timber halls"
+ },
+ {
+  "n": 129,
+  "name": "Fort8",
+  "display": "Satyr Grove",
+  "atlas": "ruins.atlas",
+  "region": "TempleOvergrown",
+  "category": "reuse",
+  "art": "S9-28",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790891604993.png",
+   "box": [
+    224,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a vine-wrapped Theros temple"
+ },
+ {
+  "n": 130,
+  "name": "Fort9",
+  "display": "Beastmaster's Study",
+  "atlas": "buildingsbosses.atlas",
+  "region": "FortGreen",
+  "category": "low",
+  "art": "S12-22",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    32,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a tree shrine"
+ },
+ {
+  "n": 131,
+  "name": "FurnaceBase",
+  "display": "Furnace Host Base",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_FurnaceBase_Furnace_Host_Base",
+  "category": "reuse",
+  "art": "S8-24",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    192,
+    64,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a flesh dome with a smoking stack"
+ },
+ {
+  "n": 132,
+  "name": "Garruk Forest",
+  "display": "Garruk's Forest",
+  "atlas": "buildingsbosses.atlas",
+  "region": "Garruk",
+  "category": "low",
+  "art": "S6-47",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    192,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "special",
+  "why": "a great oak (was tiny)"
+ },
+ {
+  "n": 133,
+  "name": "GitaxianLab",
+  "display": "Gitaxian Laboratory",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_GitLabSmall_Gitaxian_Laboratory",
+  "category": "reuse",
+  "art": "S8-31",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    0,
+    128,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a Phyrexian bone citadel"
+ },
+ {
+  "n": 135,
+  "name": "Graveyard",
+  "display": "Graveyard",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "Graveyard_A",
+  "category": "reuse",
+  "art": "S6-78",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    224,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "an iron cemetery gate"
+ },
+ {
+  "n": 136,
+  "name": "Graveyard1",
+  "display": "Graveyard",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "Graveyard_B",
+  "category": "reuse",
+  "art": "S6-12",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    32,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a mossy mausoleum"
+ },
+ {
+  "n": 137,
+  "name": "Graveyard2",
+  "display": "Graveyard",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "Graveyard_C",
+  "category": "reuse",
+  "art": "S6-71",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    0,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a grey crypt"
+ },
+ {
+  "n": 138,
+  "name": "Graveyard3",
+  "display": "Graveyard",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "Graveyard_D",
+  "category": "reuse",
+  "art": "S7-14",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957417596.png",
+   "box": [
+    192,
+    0,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a domed tomb"
+ },
+ {
+  "n": 153,
+  "name": "Jacehold",
+  "display": "Jace's Holdout",
+  "atlas": "buildings.atlas",
+  "region": "Jace",
+  "category": "reuse",
+  "art": "S5-37",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    192,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "special",
+  "why": "a tower with a blue beam"
+ },
+ {
+  "n": 156,
+  "name": "Lavaforge Kobold",
+  "display": "Lava Forge",
+  "atlas": "buildingsbosses.atlas",
+  "region": "LavaForge",
+  "category": "reuse",
+  "art": "S6-33",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    64,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a forge glowing with fire"
+ },
+ {
+  "n": 157,
+  "name": "LavaForge1",
+  "display": "Lava Forge",
+  "atlas": "buildings.atlas",
+  "region": "Building24",
+  "category": "reuse",
+  "art": "S6-32",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    32,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a smithy and chimney"
+ },
+ {
+  "n": 158,
+  "name": "LavaForge2",
+  "display": "Lava Forge",
+  "atlas": "buildings.atlas",
+  "region": "LavaForge",
+  "category": "reuse",
+  "art": "S14-85",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790903021342.png",
+   "box": [
+    128,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a cave lit by lava"
+ },
+ {
+  "n": 159,
+  "name": "Lich's Mirror",
+  "display": "Black Tower",
+  "atlas": "towers.atlas",
+  "region": "TowerPurple",
+  "category": "reuse",
+  "art": "S5-61",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    0,
+    160,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a dark tower (was tiny)"
+ },
+ {
+  "n": 162,
+  "name": "MageTowerC3",
+  "display": "Red Tower",
+  "atlas": "towers.atlas",
+  "region": "TowerRed",
+  "category": "reuse",
+  "art": "S12-81",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    0,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a red rune tower (was tiny)"
+ },
+ {
+  "n": 165,
+  "name": "MageTowerC6",
+  "display": "Black Tower",
+  "atlas": "buildings.atlas",
+  "region": "Building109",
+  "category": "reuse",
+  "art": "S5-74",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    96,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a violet-lit tower"
+ },
+ {
+  "n": 166,
+  "name": "MageTower7Church",
+  "display": "White Tower",
+  "atlas": "buildings.atlas",
+  "region": "Building11",
+  "category": "low",
+  "art": "S12-41",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    0,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a white tower (was a house)"
+ },
+ {
+  "n": 167,
+  "name": "MageTowerC8",
+  "display": "Blue Tower",
+  "atlas": "buildings.atlas",
+  "region": "Building106",
+  "category": "reuse",
+  "art": "S12-51",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    0,
+    128,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a blue-stone ringed tower"
+ },
+ {
+  "n": 168,
+  "name": "MageTowerX",
+  "display": "Blue Tower",
+  "atlas": "buildings.atlas",
+  "region": "Building10",
+  "category": "reuse",
+  "art": "S5-71",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    0,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a glass dome"
+ },
+ {
+  "n": 169,
+  "name": "MageTowerCE",
+  "display": "Blue Tower",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "GreyTowerTall",
+  "category": "reuse",
+  "art": "S12-61",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    0,
+    160,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a blue-stone tower"
+ },
+ {
+  "n": 172,
+  "name": "MageTowerU2",
+  "display": "Red Tower",
+  "atlas": "buildings.atlas",
+  "region": "Building103",
+  "category": "low",
+  "art": "S12-83",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    64,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a red fortress-tower"
+ },
+ {
+  "n": 174,
+  "name": "MageTowerU4",
+  "display": "Green Tower",
+  "atlas": "buildings.atlas",
+  "region": "Building105",
+  "category": "reuse",
+  "art": "S12-11",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    0,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a green ringed tower"
+ },
+ {
+  "n": 175,
+  "name": "MageTowerU5",
+  "display": "Black Tower",
+  "atlas": "buildings.atlas",
+  "region": "Building127",
+  "category": "reuse",
+  "art": "S5-43",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    64,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a dark castle"
+ },
+ {
+  "n": 178,
+  "name": "MageTowerRats",
+  "display": "Black Tower",
+  "atlas": "buildings.atlas",
+  "region": "Building148",
+  "category": "reuse",
+  "art": "S5-11",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    0,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a dark many-legged tower (was a rock pile)"
+ },
+ {
+  "n": 179,
+  "name": "Maze",
+  "display": "Maze",
+  "atlas": "buildings.atlas",
+  "region": "Maze",
+  "category": "reuse",
+  "art": "S9-14",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790891604993.png",
+   "box": [
+    96,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a grey labyrinth temple"
+ },
+ {
+  "n": 183,
+  "name": "MerfolkPool",
+  "display": "Merfolk Pool",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_MerfolkPool",
+  "category": "reuse",
+  "art": "S14-57",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790903021342.png",
+   "box": [
+    192,
+    128,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a sea cave in the surf (was 32x16)"
+ },
+ {
+  "n": 185,
+  "name": "MerfolkPool1",
+  "display": "Merfolk Pool",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_MerfolkPool1",
+  "category": "reuse",
+  "art": "S14-55",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790903021342.png",
+   "box": [
+    128,
+    128,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a wave-washed grotto"
+ },
+ {
+  "n": 186,
+  "name": "MerfolkPool2",
+  "display": "Merfolk Pool",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_MerfolkPool2",
+  "category": "reuse",
+  "art": "S11-63",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790897419443.png",
+   "box": [
+    64,
+    160,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a blue crystal grotto"
+ },
+ {
+  "n": 189,
+  "name": "Monastery",
+  "display": "Monastery",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "BlueTemple",
+  "category": "reuse",
+  "art": "S9-13",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790891604993.png",
+   "box": [
+    64,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a white marble temple"
+ },
+ {
+  "n": 191,
+  "name": "Monastery2",
+  "display": "Monastery",
+  "atlas": "buildings.atlas",
+  "region": "Building12",
+  "category": "reuse",
+  "art": "S9-43",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790891604993.png",
+   "box": [
+    64,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a domed white temple"
+ },
+ {
+  "n": 192,
+  "name": "Monastery3",
+  "display": "Monastery",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "SandTemplePillared",
+  "category": "reuse",
+  "art": "S9-27",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790891604993.png",
+   "box": [
+    192,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a sandstone temple"
+ },
+ {
+  "n": 193,
+  "name": "Monastery4",
+  "display": "Monastery",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "GreyTemplePillared",
+  "category": "reuse",
+  "art": "S9-33",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790891604993.png",
+   "box": [
+    64,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a white temple"
+ },
+ {
+  "n": 200,
+  "name": "Quest_BanditCave",
+  "display": "Bandit Cave",
+  "atlas": "buildings.atlas",
+  "region": "banditcave",
+  "category": "reuse",
+  "art": "S6-64",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    96,
+    160,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a lantern-lit mine with a cart"
+ },
+ {
+  "n": 201,
+  "name": "Quest_DigSite",
+  "display": "Archaeological Dig",
+  "atlas": "buildings.atlas",
+  "region": "digsite",
+  "category": "reuse",
+  "art": "S6-11",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    0,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "fallen columns"
+ },
+ {
+  "n": 202,
+  "name": "Quest_FrostbittenCavern",
+  "display": "Frostbitten Cavern",
+  "atlas": "buildings.atlas",
+  "region": "frostbittencavern",
+  "category": "reuse",
+  "art": "S10-31",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790895682818.png",
+   "box": [
+    0,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "an icy cave"
+ },
+ {
+  "n": 203,
+  "name": "Quest_LibraryOfVarsil",
+  "display": "The Library Of Varsil",
+  "atlas": "buildings.atlas",
+  "region": "libraryofvarsil",
+  "category": "reuse",
+  "art": "S6-58",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    224,
+    128,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a gold-roofed hall of learning"
+ },
+ {
+  "n": 204,
+  "name": "Quest_PrimalJungle",
+  "display": "Primal Jungle",
+  "atlas": "buildings.atlas",
+  "region": "primaljungle",
+  "category": "reuse",
+  "art": "S14-25",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790903021342.png",
+   "box": [
+    128,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a jungle-swallowed cave"
+ },
+ {
+  "n": 205,
+  "name": "Quest_ShardMines",
+  "display": "Cidryl Shard Mines",
+  "atlas": "buildings.atlas",
+  "region": "Building28",
+  "category": "reuse",
+  "art": "S4-27",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790954425563.png",
+   "box": [
+    192,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a mine head with rails"
+ },
+ {
+  "n": 208,
+  "name": "SkullCaveR1",
+  "display": "Skull Cave",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_SkullCaveR1",
+  "category": "reuse",
+  "art": "S6-48",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    224,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a skull-mouthed cave"
+ },
+ {
+  "n": 209,
+  "name": "SkullCaveR2",
+  "display": "Skull Cave",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_SkullCaveR2",
+  "category": "reuse",
+  "art": "S6-28",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    224,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a horned skull lair"
+ },
+ {
+  "n": 210,
+  "name": "SnowAbbey",
+  "display": "Snow Abbey",
+  "atlas": "buildings.atlas",
+  "region": "SnowAbbey",
+  "category": "reuse",
+  "art": "S10-33",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790895682818.png",
+   "box": [
+    64,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a snowbound shrine"
+ },
+ {
+  "n": 211,
+  "name": "SnowAbbey1",
+  "display": "Snow Abbey",
+  "atlas": "buildings.atlas",
+  "region": "Building44",
+  "category": "reuse",
+  "art": "S10-42",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790895682818.png",
+   "box": [
+    32,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a snowbound temple gate"
+ },
+ {
+  "n": 215,
+  "name": "Camel Cave",
+  "display": "Strange Desert",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_Camel_Cave",
+  "category": "reuse",
+  "art": "S13-37",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790901313122.png",
+   "box": [
+    192,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "special",
+  "why": "a desert cave"
+ },
+ {
+  "n": 216,
+  "name": "Scarecrow Farm",
+  "display": "Scarecrow Farm",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_Scarecrow_Farm",
+  "category": "reuse",
+  "art": "S6-63",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    64,
+    160,
+    32,
+    32
+   ]
+  },
+  "fit": "special",
+  "why": "a farm with silo and hay"
+ },
+ {
+  "n": 220,
+  "name": "SkullCaveB1",
+  "display": "Skull Cave",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_SkullCaveR1",
+  "category": "reuse",
+  "art": "S12-82",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    32,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a dark demon gate"
+ },
+ {
+  "n": 221,
+  "name": "SkullCaveB2",
+  "display": "Skull Cave",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_SkullCaveR2",
+  "category": "reuse",
+  "art": "S11-75",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790897419443.png",
+   "box": [
+    128,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a tusked, bone-strewn mound"
+ },
+ {
+  "n": 223,
+  "name": "Temple of Chandra",
+  "display": "Temple of Chandra",
+  "atlas": "buildings.atlas",
+  "region": "hall_of_flame",
+  "category": "reuse",
+  "art": "S9-16",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790891604993.png",
+   "box": [
+    160,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a temple split by lava"
+ },
+ {
+  "n": 224,
+  "name": "Temple of Liliana",
+  "display": "Temple of Liliana",
+  "atlas": "buildings.atlas",
+  "region": "hall_of_fear",
+  "category": "reuse",
+  "art": "S9-15",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790891604993.png",
+   "box": [
+    128,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "an obsidian temple"
+ },
+ {
+  "n": 225,
+  "name": "Tibalts Fortress",
+  "display": "Tibalt's Fortress",
+  "atlas": "buildingsbosses.atlas",
+  "region": "Tibalt",
+  "category": "reuse",
+  "art": "S8-11",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    0,
+    0,
+    64,
+    64
+   ]
+  },
+  "fit": "special",
+  "why": "a winged devil spire (was a rock heap)"
+ },
+ {
+  "n": 226,
+  "name": "UnhallowedAbbey",
+  "display": "Unhallowed Abbey",
+  "atlas": "buildings.atlas",
+  "region": "Monastery",
+  "category": "reuse",
+  "art": "S7-31",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957417596.png",
+   "box": [
+    0,
+    128,
+    64,
+    64
+   ]
+  },
+  "fit": "special",
+  "why": "a stone chapel"
+ },
+ {
+  "n": 228,
+  "name": "VampireCastle1",
+  "display": "Vampire Castle",
+  "atlas": "buildings.atlas",
+  "region": "ChainerCastle",
+  "category": "reuse",
+  "art": "S8-21",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    0,
+    64,
+    64,
+    64
+   ]
+  },
+  "fit": "special",
+  "why": "a bone-and-blood castle"
+ },
+ {
+  "n": 230,
+  "name": "VampireCastle3",
+  "display": "Vampire Dungeon",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_VampireCastle3",
+  "category": "low",
+  "art": "S8-23",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    128,
+    64,
+    64,
+    64
+   ]
+  },
+  "fit": "special",
+  "why": "a heart on a bed of bones"
+ },
+ {
+  "n": 232,
+  "name": "WurmPond",
+  "display": "Wurm Pond",
+  "atlas": "buildings.atlas",
+  "region": "WurmPond",
+  "category": "reuse",
+  "art": "S8-14",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    192,
+    0,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a nest of wurms"
+ },
+ {
+  "n": 233,
+  "name": "Xiras Hive",
+  "display": "Xira's Hive",
+  "atlas": "buildingsbosses.atlas",
+  "region": "Xira",
+  "category": "reuse",
+  "art": "S8-43",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    128,
+    192,
+    64,
+    64
+   ]
+  },
+  "fit": "special",
+  "why": "a clutch of insect eggs"
+ },
+ {
+  "n": 235,
+  "name": "Zedruu City",
+  "display": "Zedruu City",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_Zedruu_City",
+  "category": "reuse",
+  "art": "S6-86",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    160,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "special",
+  "why": "a red-roofed plaza with a fountain"
+ },
+ {
+  "n": 240,
+  "name": "Wizard Palace",
+  "display": "Wizard Palace",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_Wizard_Palace",
+  "category": "reuse",
+  "art": "S6-27",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    192,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "special",
+  "why": "a blue-domed palace"
+ },
+ {
+  "n": 241,
+  "name": "Squirrel Farm",
+  "display": "Squirrel Farm",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_Squirrel_Farm",
+  "category": "reuse",
+  "art": "S7-41",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957417596.png",
+   "box": [
+    0,
+    192,
+    64,
+    64
+   ]
+  },
+  "fit": "special",
+  "why": "a cottage with a garden"
+ },
+ {
+  "n": 242,
+  "name": "Gitrog Bog",
+  "display": "Gitrog Bog",
+  "atlas": "buildingsbosses.atlas",
+  "region": "Mystical Bog",
+  "category": "low",
+  "art": "S8-44",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957728167.png",
+   "box": [
+    192,
+    192,
+    64,
+    64
+   ]
+  },
+  "fit": "special",
+  "why": "a toothed maw in the mire"
+ },
+ {
+  "n": 243,
+  "name": "Valor's Reach Arena",
+  "display": "Valor's Reach Arena",
+  "atlas": "buildings.atlas",
+  "region": "Building15",
+  "category": "low",
+  "art": "S6-42",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    32,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a colosseum"
+ },
+ {
+  "n": 244,
+  "name": "Church of Valgavoth",
+  "display": "Church of Valgavoth",
+  "atlas": "buildingsbosses.atlas",
+  "region": "Valvagoth's Lair",
+  "category": "low",
+  "art": "S12-84",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    96,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "special",
+  "why": "a horned demon temple"
+ },
+ {
+  "n": 245,
+  "name": "Court of Paliano",
+  "display": "Court of Paliano",
+  "atlas": "buildings.atlas",
+  "region": "Building91",
+  "category": "low",
+  "art": "S6-36",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    160,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a palace"
+ },
+ {
+  "n": 247,
+  "name": "Prismari Classroom",
+  "display": "Prismari Classroom",
+  "atlas": "buildings.atlas",
+  "region": "Building22",
+  "category": "low",
+  "art": "S6-46",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    160,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a crystal spire"
+ },
+ {
+  "n": 248,
+  "name": "Silverquill Classroom",
+  "display": "Silverquill Classroom",
+  "atlas": "buildings.atlas",
+  "region": "Building143",
+  "category": "reuse",
+  "art": "S5-62",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    32,
+    160,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a domed academy"
+ },
+ {
+  "n": 249,
+  "name": "Lorehold Classroom",
+  "display": "Lorehold Classroom",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_Lorehold_Classroom",
+  "category": "low",
+  "art": "S7-34",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790957417596.png",
+   "box": [
+    192,
+    128,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a ruined pavilion"
+ },
+ {
+  "n": 251,
+  "name": "Quandrix Classroom",
+  "display": "Quandrix Classroom",
+  "atlas": "buildings.atlas",
+  "region": "Portal",
+  "category": "reuse",
+  "art": "S12-55",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790898945731.png",
+   "box": [
+    128,
+    128,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a blue-stone observatory"
+ },
+ {
+  "n": 252,
+  "name": "Eldrazi Prison",
+  "display": "Eldrazi Prison",
+  "atlas": "buildingsbosses.atlas",
+  "region": "Edge of Eternities",
+  "category": "low",
+  "art": "X-EldraziPrison",
+  "src": {
+   "file": "Eldrazi_Prison.png",
+   "key": "white"
+  },
+  "fit": "native",
+  "why": "your new picture"
+ },
+ {
+  "n": 255,
+  "name": "inn_forgotten_lodge_1",
+  "display": "Forgotten Hunting Lodge",
+  "atlas": "buildings.atlas",
+  "region": "Building42",
+  "category": "reuse",
+  "art": "S6-25",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    128,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a timber lookout"
+ },
+ {
+  "n": 256,
+  "name": "inn_lodge_1",
+  "display": "Hunting Lodge",
+  "atlas": "inn_buildings.atlas",
+  "region": "lodge_1",
+  "category": "low",
+  "art": "S6-31",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790956891995.png",
+   "box": [
+    0,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a thatched lodge (was 16x16)"
+ },
+ {
+  "n": 265,
+  "name": "Isolated Hut",
+  "display": "Isolated Hut",
+  "atlas": "buildings.atlas",
+  "region": "Building198",
+  "category": "low",
+  "art": "S14-75",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1790903021342.png",
+   "box": [
+    128,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a rotting log hut (was 16x16)"
+ },
+ {
+  "n": 272,
+  "name": "Planeswalker Dueling Club",
+  "display": "Planeswalker Dueling Club",
+  "atlas": "buildings.atlas",
+  "region": "Building56",
+  "category": "reuse",
+  "art": "S5-26",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image--cre-1790955703771.png",
+   "box": [
+    160,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "a crackling arch portal"
+ },
+ {
+  "n": 339,
+  "name": "CaveCGen02",
+  "display": "Corrupted Shaft",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_CaveCGen02",
+  "category": "reuse",
+  "art": "S2-41",
+  "src": {
+   "sheet": "pixellab-An-ultimate-evil-rift-in-the-u-1790956703091.png",
+   "box": [
+    0,
+    192,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a void rift in the wastes"
+ },
+ {
+  "n": 346,
+  "name": "CaveCGen09",
+  "display": "Shattered Adit",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_CaveCGen09",
+  "category": "reuse",
+  "art": "S2-24",
+  "src": {
+   "sheet": "pixellab-An-ultimate-evil-rift-in-the-u-1790956703091.png",
+   "box": [
+    192,
+    64,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a void crack"
+ },
+ {
+  "n": 347,
+  "name": "CaveCGen10",
+  "display": "Barren Pocket",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_CaveCGen10",
+  "category": "reuse",
+  "art": "S1-44",
+  "src": {
+   "sheet": "pixellab-An-ultimate-evil-rift-in-the-u-1790956252309.png",
+   "box": [
+    192,
+    192,
+    64,
+    64
+   ]
+  },
+  "fit": "32",
+  "why": "a rift under floating rocks"
+ }
+]
