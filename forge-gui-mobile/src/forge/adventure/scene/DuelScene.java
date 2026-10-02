@@ -96,6 +96,8 @@ public class DuelScene extends ForgeScene {
     // anything throws between the swap and the restore. Cleared by initDuels() on every ordinary
     // duel, so a guard fight cannot leak into the next one.
     private Deck guardDeck;
+    // Round 404: the notice for an enemy on a win streak (see winStreakReached), shown as the duel opens; null when none.
+    private String winStreakNote;
     private int guardStartingLife;
     // Round 163 (MOD_SCOPE #118): the guard's OWN equipment, from the Armory storage. Handed in by
     // useGuardLoadout() rather than read off the player, so the round-156 rule (a spectator's boots
@@ -387,6 +389,13 @@ public class DuelScene extends ForgeScene {
         // once the transition screen finishes, and reputation has no rendering dependency.
         if (winner && !isArena && eventData == null && enemy != null)
             recordReputation(enemy); // round 166: body shared with the simulated guard fight
+        // Round 404: the player's own duels only - not an Inn tournament (its deck is the event's), not Deck Tester,
+        // not a roaming guard's fight (guardDeck - still set here, initDuels clears it for the next duel). The Arena
+        // counts: the enemy plays its own deck there.
+        // Keyed on the enemy's own name (EnemyData.getName()), as the start-of-duel check reads it - not enemyName, which
+        // carries a map-authored sprite override.
+        if (enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
+            Current.player().recordWinStreak(enemy.getData().getName(), winner);
         Forge.advFreezePlayerControls = winner;
         endRunnable = () -> Gdx.app.postRunnable(() -> {
             GameHUD.getInstance().updateBGM();
@@ -778,8 +787,21 @@ public class DuelScene extends ForgeScene {
         dungeonEffect = E;
     }
 
+    /** Round 404: what the player is told when an enemy on a win streak starts with extra cards. */
+    private static String streakNote(EnemyData e) {
+        String[] cards = Config.instance().getTuningData().winStreakStartCards;
+        java.util.List<String> names = new java.util.ArrayList<>();
+        for (String c : cards)
+            names.add(c.contains("|") ? c.substring(0, c.indexOf('|')) : c);
+        String who = e.getTieredDisplayName();
+        return who + " has learned your tricks - you have beaten it " + Current.player().winStreak(e.getName())
+                + " times in a row. It starts this duel with " + String.join(", ", names) + " in play. One win for it,"
+                + " and it forgets.";
+    }
+
     @Override
     public void enter() {
+        winStreakNote = null; // round 404: set again below for each enemy seat on a win streak
         Adventure.getInstance().renderTransitionScreen = false;
         Localizer localizer = Forge.getLocalizer();
         SoundSystem.instance.stopBackgroundMusic();
@@ -1044,6 +1066,18 @@ public class DuelScene extends ForgeScene {
                 if (archmage != null)
                     addEffects(aiPlayer, Array.with(archmage));
             }
+            // Round 404 (the user: "If you have 3 consecutive wins over one specific enemy, they will start the 4th+ duel
+            // with a 'Wastes' land in play"): on top of the Archmage's own (two for an Archmage on a streak), in town and
+            // Capitol fights too. Not in Inn tournaments, not in a roaming guard's fight, not on Easy (winStreakReached).
+            if (eventData == null && guardDeck == null && Current.player().winStreakReached(currentEnemy.getName())) {
+                EffectData streak = new EffectData();
+                streak.startBattleWithCard = Config.instance().getTuningData().winStreakStartCards;
+                addEffects(aiPlayer, Array.with(streak));
+                winStreakNote = (winStreakNote == null ? "" : winStreakNote + "\n\n") + streakNote(currentEnemy);
+                System.out.println("[TFR-WinStreak] " + currentEnemy.getName() + " starts with "
+                        + String.join(", ", streak.startBattleWithCard) + " in play - streak "
+                        + Current.player().winStreak(currentEnemy.getName()));
+            }
 
             //add extra cards for challenger mode
             if (chaosBattle) {
@@ -1100,9 +1134,17 @@ public class DuelScene extends ForgeScene {
         MatchController.instance.setGameView(hostedMatch.getGameView());
         boolean showMessages = enemy.getData().boss || (enemy.getData().copyPlayerDeck && Current.player().isUsingCustomDeck());
         LoadingOverlay matchOverlay;
-        if (chaosBattle || showMessages || isDeckMissing) {
+        if (winStreakNote != null && !(chaosBattle || showMessages || isDeckMissing)) {
+            // Round 404: an ordinary duel with an enemy on a win streak - its own notice, the boss dialog's shape.
+            final FBufferedImage fb = getFBEnemyAvatar();
+            bossDialogue = createFOption(winStreakNote, enemy.getTieredDisplayName(), fb, null);
+            matchOverlay = new LoadingOverlay(() -> FThreads.delayInEDT(300, () -> FThreads.invokeInEdtNowOrLater(() ->
+                    bossDialogue.show())), false, true);
+        } else if (chaosBattle || showMessages || isDeckMissing) {
             final FBufferedImage fb = getFBEnemyAvatar();
             String Intro = enemy.getBossIntro();
+            if (Intro != null && winStreakNote != null)
+                Intro = Intro + "\n\n" + winStreakNote; // round 404: a boss on a win streak says both
             // Round 289: upstream's 09.22 getFBEnemyAvatar() returns a STATIC shared FBufferedImage
             // instead of a fresh one per dialog, which is why its own version passes null where this
             // used to pass fb::dispose. Disposing it here would blank the enemy avatar for every later
@@ -1113,7 +1155,8 @@ public class DuelScene extends ForgeScene {
                 int randomKey = Aggregates.randomInt(1, 35);
                 String lookupKey = introKeysMap.get(randomKey);
 
-                bossDialogue = createFOption(isDeckMissing ? isDeckMissingMsg : localizer.getMessage(lookupKey),
+                bossDialogue = createFOption((isDeckMissing ? isDeckMissingMsg : localizer.getMessage(lookupKey))
+                                + (winStreakNote != null ? "\n\n" + winStreakNote : ""), // round 404
                         enemy.getTieredDisplayName(), fb, null);
             }
             matchOverlay = new LoadingOverlay(() -> FThreads.delayInEDT(300, () -> FThreads.invokeInEdtNowOrLater(() ->

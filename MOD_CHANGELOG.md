@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 404: an enemy you keep beating starts with Wastes in play (2026-10-02)
+
+The user: "If you have 3 consecutive wins over one specific enemy, they will start the 4th+ duel with a 'Wastes' land in
+play ... just if you have won them 3 times overall, without them beating you ... They win the 6th game, so whenever you
+duel the 7th time, it would be back to normal, counter starts over. This will be for Normal+ difficulty, so leave easy
+out."
+
+- **One streak per enemy name** (AdventurePlayer.enemyWinStreaks, saved as `winStreakNames`/`winStreakCounts`): a win
+  adds one, a loss (Bronze Coin or not) drops the enemy from the table. Enemies with several decks share one streak; the
+  ranked families (Apprentice ... Archmage) are separate enemies already. Recorded in DuelScene.afterGameEnd for the
+  player's own duels - bosses, legends, the Arena, town and Capitol fights; not Inn tournaments (eventData), not a fixed
+  deck, not a roaming guard's fight. A best-of-3 is one result. New Game+ clears the table.
+- **At `winStreakWins` (3) wins** the enemy's seat gets `winStreakStartCards` (`Wastes|EOC`) as a start-of-duel effect,
+  on top of an Archmage's own Wastes (so two for an Archmage on a streak) - in town and Capitol fights too. Not on Easy
+  (difficulty name). Both values in settings.json / TuningData.
+- **The notice**: "<enemy> has learned your tricks - you have beaten it N times in a row. It starts this duel with Wastes
+  in play. One win for it, and it forgets." - its own dialog in the boss-intro shape; a boss's intro carries it as a
+  second paragraph.
+- `[TFR-WinStreak]` lines: every recorded result (`won - streak 2 -> 3 (it starts the next duel with Wastes|EOC in
+  play)`, `lost - streak 3 -> 0`) and every duel that hands the cards.
+- **Agent-tested** (Insane world, cheats): Tiny Chick won 0->1->2->3 (Mutilated Stumbler's win kept its own count); the
+  4th duel showed the notice and the Chick had Wastes in play on Turn 1 before its first land; the Chick then won one,
+  the save's streak table lost its entry (`lost - streak 3 -> 0`), and the next Chick duel opened with no notice and no
+  Wastes.
+
 ## Round 403: the 10.01 engine merge - Forge 2.0.16-SNAPSHOT (2026-10-02)
 
 The user: "let's update to the latest Forge Official release: E:\\GAMES\\Forge_2" - the 10.01 daily (build.txt

@@ -102,6 +102,10 @@
     // Round 390 - every Archmage enemy starts its duels with these cards in play ("Name|SET" picks the printing).
     // Not in town / Ring City / capital assaults, the Capitol defense, or Inn and Arena events. [] = off.
     "archmageStartCards": ["Wastes|EOC"],
+    // Round 404 - after this many wins in a row over one enemy (any of its decks) it starts each later duel with
+    // winStreakStartCards in play too, until it beats you. Not in Inn tournaments, never on Easy. 0 = off.
+    "winStreakWins": 3,
+    "winStreakStartCards": ["Wastes|EOC"],
 
     // Fraction of an edition's own card count you must have found before the Research
     // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this

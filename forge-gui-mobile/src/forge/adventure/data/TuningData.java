@@ -160,6 +160,12 @@ public class TuningData {
     // every Archmage-tier (Mythic) enemy seat starts a duel with in play - except town, Ring City, capital and Capitol
     // fights, and Inn/Arena events (their own rules). "Name|SET" picks a printing. Empty = off.
     public String[] archmageStartCards = {"Wastes|EOC"};
+    // Round 404 (the user: "If you have 3 consecutive wins over one specific enemy, they will start the 4th+ duel with a
+    // 'Wastes' land in play ... a loss resets it ... Normal+ difficulty"): the wins in a row over one enemy (by name,
+    // every deck it carries) after which it starts each duel with winStreakStartCards in play, on top of anything else
+    // it starts with. Not in Inn tournaments, never on Easy. 0 = off.
+    public int winStreakWins = 3;
+    public String[] winStreakStartCards = {"Wastes|EOC"};
 
     // Progressive Set Unlocks (MOD_SCOPE.md #4) research eligibility threshold (2026-08-22 user
     // request to make ResearchScene's hardcoded THRESHOLD_FRACTION tunable). Fraction of an

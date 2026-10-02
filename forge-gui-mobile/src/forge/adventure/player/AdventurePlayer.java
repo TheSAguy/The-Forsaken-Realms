@@ -343,6 +343,43 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         suppressDefeatGoldLoss = true;
     }
 
+    /** Round 404: the player's wins over this enemy since it last beat them. */
+    public int winStreak(String enemyName) {
+        Integer n = enemyName == null ? null : enemyWinStreaks.get(enemyName);
+        return n == null ? 0 : n;
+    }
+
+    /**
+     * Round 404: a duel against this enemy ended - a win adds one to the streak, a loss (Bronze Coin or not) ends it.
+     * The caller excludes what does not count: Inn tournaments, Deck Tester, the roaming guards' own fights.
+     */
+    public void recordWinStreak(String enemyName, boolean won) {
+        if (enemyName == null || enemyName.isEmpty())
+            return;
+        int before = winStreak(enemyName);
+        if (won)
+            enemyWinStreaks.put(enemyName, before + 1);
+        else
+            enemyWinStreaks.remove(enemyName);
+        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
+        int need = tuning == null ? 0 : tuning.winStreakWins;
+        System.out.println("[TFR-WinStreak] " + enemyName + ": " + (won ? "won" : "lost") + " - streak " + before + " -> "
+                + winStreak(enemyName) + (need > 0 && winStreak(enemyName) >= need ? " (it starts the next duel with "
+                + String.join(", ", tuning.winStreakStartCards) + " in play"
+                + (winStreakDifficulty() ? "" : " - not on " + difficultyData.name) + ")" : ""));
+    }
+
+    /** Round 404: does this enemy start its next duel with TuningData.winStreakStartCards? Normal and above only. */
+    public boolean winStreakReached(String enemyName) {
+        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
+        return tuning != null && tuning.winStreakWins > 0 && tuning.winStreakStartCards != null
+                && tuning.winStreakStartCards.length > 0 && winStreakDifficulty() && winStreak(enemyName) >= tuning.winStreakWins;
+    }
+
+    private boolean winStreakDifficulty() {
+        return difficultyData == null || difficultyData.name == null || !difficultyData.name.equalsIgnoreCase("easy");
+    }
+
     /** Round 216: the week this enemy was last Coin-Challenged, or -1 if never. */
     public int coinChallengeWeek(String enemyName) {
         Integer week = enemyName == null ? null : coinChallengeWeeks.get(enemyName);
@@ -579,6 +616,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         unlockedEditions.clear();
         coinRansomedEnemies.clear();
         coinChallengeWeeks.clear();
+        enemyWinStreaks.clear(); // round 404
         unlockedShopTypes.clear();
         startingColorId = null;
         suppressDefeatGoldLoss = false;
@@ -625,6 +663,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // just doubled. Entries are never pruned: once the coin is back the enemy drops out of
     // coinRansomedEnemies and the stale week is simply never consulted again.
     private final java.util.Map<String, Integer> coinChallengeWeeks = new java.util.HashMap<>();
+    // Round 404 (the user: "if you have won them 3 times overall, without them beating you. Then the 4th+ they get
+    // this"): enemy name -> the player's wins over it since it last beat them. Name-keyed like the two above (one
+    // streak per enemy, whichever of its decks it brought), saved as two parallel lists, cleared by a New Game+.
+    private final java.util.Map<String, Integer> enemyWinStreaks = new java.util.HashMap<>();
     // Shop-type blueprints (user spec 2026-08-30): the card shop TYPES this player has learned.
     // Seeded at character creation from the chosen color (its common trio) plus the race's two
     // tribal shops - 5 total - then grown by buying blueprints in AI shops and by rare drops.
@@ -856,6 +898,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // allowance is keyed the same way and is dropped for the same reason.
         coinRansomedEnemies.clear();
         coinChallengeWeeks.clear();
+        enemyWinStreaks.clear(); // round 404: a new run's enemies have not learned your tricks yet
         // Round 160 (code review): the roster rides into the new run (the guards still hold their
         // decks), but every DAY-based field pointed at the old calendar - a guard benched on old
         // day 250 was "hurt for 279 more days" in a world back on day 1, and no wage was billed
@@ -1684,6 +1727,18 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 }
             }
         }
+        // Round 404: the win streaks, the same two-list shape. Absent before this round - nobody is on a streak yet.
+        enemyWinStreaks.clear();
+        if (data.containsKey("winStreakNames") && data.containsKey("winStreakCounts")) {
+            //noinspection unchecked
+            java.util.List<String> wsNames = (java.util.List<String>) data.readObject("winStreakNames");
+            //noinspection unchecked
+            java.util.List<Integer> wsCounts = (java.util.List<Integer>) data.readObject("winStreakCounts");
+            if (wsNames != null && wsCounts != null)
+                for (int i = 0; i < Math.min(wsNames.size(), wsCounts.size()); i++)
+                    if (wsNames.get(i) != null && wsCounts.get(i) != null)
+                        enemyWinStreaks.put(wsNames.get(i), wsCounts.get(i));
+        }
         // Shop-type blueprints (2026-08-30). Absent on every pre-round-71 save; the containsKey
         // guard leaves the set EMPTY there, which isShopTypeUnlocked() deliberately reads as
         // "legacy save, everything unlocked" rather than "nothing unlocked" - see the field.
@@ -1773,6 +1828,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
         data.storeObject("coinChallengeNames", coinChallengeNameList);
         data.storeObject("coinChallengeWeeks", coinChallengeWeekList);
+        ArrayList<String> winStreakNameList = new ArrayList<>(); // round 404
+        ArrayList<Integer> winStreakCountList = new ArrayList<>();
+        for (java.util.Map.Entry<String, Integer> entry : enemyWinStreaks.entrySet()) {
+            winStreakNameList.add(entry.getKey());
+            winStreakCountList.add(entry.getValue());
+        }
+        data.storeObject("winStreakNames", winStreakNameList);
+        data.storeObject("winStreakCounts", winStreakCountList);
         data.storeObject("unlockedShopTypes", new ArrayList<>(unlockedShopTypes));
         // store() with a null String throws (writeUTF) - persist "" and read it back as null.
         data.store("startingColorId", startingColorId == null ? "" : startingColorId);
