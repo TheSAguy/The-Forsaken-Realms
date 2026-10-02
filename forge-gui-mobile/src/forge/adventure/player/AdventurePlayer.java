@@ -935,6 +935,18 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             equippedItems.clear();
             armoryStorage.clear();
             onEquipmentChange.emit();
+        } else if (!armoryStorage.isEmpty()) {
+            // The storage opens at the Capitol's Level 2 Armory, which a new run has to raise again - its contents
+            // (and the released guards' gear, RoamingGuards.releaseAllForNewRun) come along in the bag.
+            System.out.println("[TFR-NewGamePlus] the Armory's storage: " + armoryStorage.size()
+                    + " item(s) moved into the bag - no Capitol Armory to open it from in the new run");
+            for (ItemData item : armoryStorage) {
+                if (item == null)
+                    continue;
+                item.isEquipped = false;
+                inventoryItems.add(item);
+            }
+            armoryStorage.clear();
         }
     }
 

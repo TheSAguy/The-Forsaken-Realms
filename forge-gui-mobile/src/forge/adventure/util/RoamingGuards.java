@@ -72,6 +72,28 @@ public class RoamingGuards {
         return AdventurePlayer.current().getRoamingGuards();
     }
 
+    /**
+     * Round 400 (the user, on New Game+: "Let's also confirm any roaming guards stuff is included. Items and Decks").
+     * Every guard is let go as a new run starts - the roster lives at the Capitol's Armory, which the new world does not
+     * have yet, so a guard carried over (round 160) held its deck and gear out of reach and drew a wage meanwhile. Its
+     * deck comes home into the first empty slot (loose cards when every slot is full) - a guard still recovering keeps
+     * it too: this is not the player dismissing it - and its gear goes back to the Armory's storage, which New Game+
+     * then hands over with the rest of the items, or leaves behind (AdventurePlayer.applyNewGamePlusCarry).
+     */
+    public static void releaseAllForNewRun() {
+        List<RoamingGuardData> roster = roster();
+        for (RoamingGuardData guard : new java.util.ArrayList<>(roster)) {
+            int cards = cardCount(guard);
+            String deck = guard.deckName;
+            int slot = returnDeckHome(guard);
+            int gear = ArmoryStorage.returnGear(guard);
+            System.out.println("[TFR-NewGamePlus] roaming guard " + displayName(guard.tier) + " released: "
+                    + (cards == 0 ? "no deck" : "\"" + deck + "\" (" + cards + " cards) " + (slot >= 0 ? "into deck slot " + (slot + 1)
+                    : "back as loose cards")) + ", " + gear + " piece(s) of gear to the storage");
+        }
+        roster.clear();
+    }
+
     // ------------------------------------------------------------------ tier stats
 
     public static int tierIndex(String tier) {

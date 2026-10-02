@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 400b: the roaming guards' decks and gear come home in New Game+ (2026-10-02)
+
+The user: "Good call on the Armory Storage. Let's also confirm any roaming guards stuff is included. Items and Decks."
+Round 160 carried the roster into the new run with each guard still holding its deck and gear - but the roster opens
+only from the Capitol's Armory, which a new world has to raise again: the cards and gear sat out of reach, and an
+armed guard drew its wage meanwhile.
+
+- `RoamingGuards.releaseAllForNewRun()` (SaveLoadScene, right after resetForNewGamePlus): every guard is let go - its
+  deck into the first empty deck slot (loose cards when all are full), a recovering guard's too (New Game+ is not the
+  player dismissing it, so no forfeit), its gear to the Armory's storage; the roster starts empty, like the town guards.
+- `applyNewGamePlusCarry`: with items kept, the Armory's storage (now holding the guards' gear too) moves into the bag -
+  it opens only at the Capitol's Level 2 Armory; with items off it is left behind with everything else.
+- Agent-run on a copy of the user's Quick Save (4 guards): "Moat Keep (W_B)", "Gravetithe (B)", "Skyfall (G_R)",
+  "Gravebound (B)" back in deck slots 1, 5, 6, 7, the collection 1,560 -> 1,720 cards. That save's guards wore no gear,
+  so the gear path ran with nothing to move (it is the dismissal's own ArmoryStorage.returnGear).
+
 ## Round 400: New Game+ asks what comes along (2026-10-02)
 
 The user: "Would it be possible, when doing a NG+ to ask the player if they want resources spent to restore towns and

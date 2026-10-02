@@ -408,6 +408,9 @@ public class SaveLoadScene extends UIScene {
                         // set, and before addQuest("28"), which needs the cleared quest
                         // list and the newGamePlus flag already in place.
                         Current.player().resetForNewGamePlus();
+                        // Round 400: the roaming guards' decks and gear come home first, so the items choice below
+                        // decides about the gear with everything else.
+                        forge.adventure.util.RoamingGuards.releaseAllForNewRun();
                         Current.player().applyNewGamePlusCarry(carry != CARRY_CARDS_ONLY, keepItems); // round 400
                         if (bankedGold > 0 && carry == CARRY_CARDS_ONLY) {
                             System.out.println("[TFR-NewGamePlus] cards only: the bank's " + bankedGold + " gold left behind");
