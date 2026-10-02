@@ -58,11 +58,17 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-02: **v1.17 "Old Foes, New Doors" RELEASED** - tag `tfr-v1.17` @ `e4e07f36dfb`, published 20:11 UTC,
+Latest; rounds 388-404 on Forge 2.0.16 (10.01 daily, upstream `da9e24cb3a0`); PC zip 278.5 MB, APK 13.5 MB (11700,
+signer ee603925), assets.zip 230.7 MB (build.txt pair 2026-10-02 19:40:29); artifacts in C:/TFR/release/v1.17/; live +
+agent = the release. Nothing is unreleased. Next merge starts at upstream `d381b8765b8`. The name was my pick (the user
+gave none). The notes leave out rounds 398/399 and the whirlpools at the user's word. Agent slot 11 = "r404 streak test".
+
 ## STATE 2026-10-01: **v1.16 "Lairs & Legends" RELEASED** - tag `tfr-v1.16` @ `6ab118775d9`, published 16:28 UTC, Latest;
 rounds 357-387 on Forge 2.0.16 (09.30 daily, upstream `fd5c996b843`); PC zip 265 MB, APK 13.5 MB (11600, signer ee603925),
 assets.zip 219 MB (build.txt pair 2026-10-01 16:23:58); artifacts in C:/TFR/release/v1.16/; live + agent = the release.
 Nothing is unreleased. Next merge starts at upstream `07adf4d5483`.
-**Since the release (local, unpushed):** round 388 = 44 doodad pictures re-cut whole or replaced (the `nd` sheet's
+**Since the release (all in v1.17 now):** round 388 = 44 doodad pictures re-cut whole or replaced (the `nd` sheet's
 one-tile cuts; `new_doodads.pre-r388.png` = the sheet before), every doodad on layer -1 (under the player), and
 `World.landUnderlay` - no sea line along land-to-land seams (`[TFR-SeaSeam]`); dev-tools/world-art paths.ART moved to
 `New Art\Terrain`. Round 389 = a quest that binds a vanished boss lair (Pest Control -> Xira's Hive) brings it back at
