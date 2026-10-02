@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 400: New Game+ asks what comes along (2026-10-02)
+
+The user: "Would it be possible, when doing a NG+ to ask the player if they want resources spent to restore towns and
+building to be refunded also ... Maybe 3 check-boxes. 1 - Cards Only, 2 - Cards and Current Resources on hand, 3 - Cards
+and Current Resources and Invested resources. (This will not include and research sets/blueprints.)" Then: "let's make
+a 4th check, items yes/no. Default Yes. 2 - Only active buildings. 3 - yes [option 2 the default]", and "The 'Keep Items
+and Equipment' - yes/no, should not affect the 5 starting coins. You should always start with those and only the 5 coins
+regardless of what the player currently has coin wise."
+
+- SaveLoadScene: Start on the New Game+ screen opens a "New Game+" dialog - Cards only / Cards + current resources
+  (the default, what New Game+ always did) / Cards + current + invested resources, one at a time, and "Keep items and
+  equipment" (on). `startNewGamePlus(carry, keepItems)` is the old start path with the choices wired in.
+- Cards only (`AdventurePlayer.applyNewGamePlusCarry`): gold, shards, wood and stone start at zero and the bank is left
+  behind - the Ring's starting kit (skip-intro or Llanowar) fills the purse to the new difficulty's amounts, as it does
+  in every New Game+ (a plane without ringGiftStart gets the difficulty's amounts directly). Cards, decks, boosters stay.
+- Invested (`util/NewGamePlusRefund`, `EconomyBuildings.standingCost`): read from the old world before it is wiped, at
+  the old run's prices - every town still held: its restore fee (not for one taken by assault or opened Ring City:
+  `TownRestoration.TAKEN_NOT_BOUGHT_FLAG`, set from now on - an older save's captured town counts as restored), the
+  Capitol's raise (+ Orazca's fee), and each building standing in it: a card shop at its tier, an economy building at
+  its price (an Exchange with its Trader), the Armory/Booster/land-shop repairs, the Arena (250) and other gated
+  buildings (100 + 10 wood), Armory and Arena level 2. A town lost to a color counts for nothing. Research, blueprints,
+  guards, rerolls and tolls are not buildings. A notice lists the refund; `[TFR-NewGamePlus]` logs each town.
+- Items off: the bag, every worn slot and the Armory's storage empty; the kit hands the new game's equipment over.
+- Challenge coins (`AdventurePlayer.resetChallengeCoins`): every New Game+ starts with exactly 1 Challenge, 1 Silver and
+  3 Bronze - carried coins (bag and Armory storage) go, items kept or not. The kits' own top-up then finds nothing missing.
+- Agent-run on a copy of the user's save (Insane): option 3 refunded 1,875 gold + 228 wood (four restored towns at
+  300 + 8, Orazca's fee + its Armory 375 + 188) onto 751 gold / 144 shards / 254 wood / 414 stone -> 2,626 / 144 / 482 /
+  414; 2 carried coins left behind, 5 handed over. Cards only + items off: purse 0 and only the five coins, 371 cards
+  kept; after "Skip the introduction" 250 gold, 10 shards, 100 wood, 100 stone (Normal), the boots and Homeward rune.
+
 ## Round 399: twice the whirlpools, a road to every color's castle (2026-10-02)
 
 The user: "Let's double the number of whirlpools on world-gen. They look so good and there are so few. Let's have a road

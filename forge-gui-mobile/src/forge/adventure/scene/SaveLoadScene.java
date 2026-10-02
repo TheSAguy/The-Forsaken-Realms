@@ -319,81 +319,151 @@ public class SaveLoadScene extends UIScene {
                 }
                 break;
             case NewGamePlus:
-                try {
-                    Forge.setTransitionScreen(new TransitionScreen(() -> {
-                        loaded = false;
-                        if (WorldSave.load(currentSlot)) {
-                            // Round 314 (user: "When doing a NG+, be sure to add the gold the player has in his bank to the
-                            // new game also"): the bank's balance lives on the Capitol's PointOfInterestChanges, which
-                            // clearChanges() wipes with the rest of the old world - counted first, paid into the purse
-                            // after the reset below.
-                            int banked = 0;
-                            for (forge.adventure.pointofintrest.PointOfInterestChanges c : WorldSave.getCurrentSave().getAllPointOfInterestChanges())
-                                banked += Math.max(0, c.getBankBalance());
-                            final int bankedGold = banked;
-                            WorldSave.getCurrentSave().clearChanges();
-                            // Round 241: world-gen thins the wasteland towns by difficulty, and the new
-                            // difficulty is only applied to the player below - so the World is told first.
-                            WorldSave.getCurrentSave().getWorld().setGenerationDifficulty(difficulty != null
-                                    ? Config.instance().getConfigData().difficulties[difficulty.getSelectedIndex()].name
-                                    : Current.player().getDifficulty().name);
-                            if (WorldSave.getCurrentSave().getWorld().generateNew(0)) {
-                                if (difficulty != null)
-                                    Current.player().updateDifficulty(Config.instance().getConfigData().difficulties[difficulty.getSelectedIndex()]);
-                                Current.player().setWorldPosY((int) (WorldSave.getCurrentSave().getWorld().getData().playerStartPosY * WorldSave.getCurrentSave().getWorld().getData().height * WorldSave.getCurrentSave().getWorld().getTileSize()));
-                                Current.player().setWorldPosX((int) (WorldSave.getCurrentSave().getWorld().getData().playerStartPosX * WorldSave.getCurrentSave().getWorld().getData().width * WorldSave.getCurrentSave().getWorld().getTileSize()));
-                                // "A New Game+ should basically be a new game, + your Cards,
-                                // Equipment and resources" (user spec 2026-08-31). Everything that
-                                // used to be reset piecemeal here - quests, quest flags,
-                                // statistics - now lives in one place alongside clear()/create(),
-                                // together with the per-run state this path was silently
-                                // inheriting: shop-type unlocks, starting editions, character
-                                // flags, color reputation, research timers and Bronze Coin marks.
-                                //
-                                // Ordering is load-bearing: updateDifficulty() must already have
-                                // run (the edition seed is difficulty-scaled), and this must run
-                                // before reservePlayerEditions() below, which reads the re-seeded
-                                // set, and before addQuest("28"), which needs the cleared quest
-                                // list and the newGamePlus flag already in place.
-                                Current.player().resetForNewGamePlus();
-                                if (bankedGold > 0) { // round 314: a transfer, not income - the ledger's IGNORED bucket
-                                    forge.adventure.util.ResourceLedger.run(forge.adventure.util.ResourceLedger.Bucket.IGNORED,
-                                            () -> Current.player().giveGold(bankedGold));
-                                    System.out.println("[TFR-NewGamePlus] the bank's " + bankedGold
-                                            + " gold carried into the new run - purse now " + Current.player().getGold());
-                                }
-                                // Mirrors WorldSave's own New Game ordering: the color shards only
-                                // exist after generateNew() has re-seeded them, and the player's
-                                // own editions must be carved out of the AI colors' pools again -
-                                // the New Game path does this right after create(), and New Game+
-                                // had no equivalent, so the exclusivity pass never ran.
-                                forge.adventure.util.EditionProgression.reservePlayerEditions(
-                                        WorldSave.getCurrentSave().getWorld(), Current.player());
-                                Current.player().removeAllQuestItems();
-                                // Every run starts with a full challenge-coin purse (user spec
-                                // 2026-08-31). Deliberately AFTER removeAllQuestItems() so the
-                                // grant can never be swept up by it - the three coins are not
-                                // flagged questItem today, but ordering it this way means a later
-                                // data edit that does flag them cannot silently empty the purse.
-                                // Tops up only what is missing, so a hoarded surplus survives.
-                                Current.player().topUpChallengeCoins();
-                                AdventurePlayer.current().addQuest("28", true);
-                                WorldSave.getCurrentSave().clearBookmarks();
-                                WorldStage.getInstance().enterSpawnPOI();
-                                SoundSystem.instance.changeBackgroundTrack();
-                                Forge.switchScene(GameScene.instance());
-                            } else {
-                                Forge.clearTransitionScreen();
-                            }
-                        } else {
-                            Forge.clearTransitionScreen();
-                        }
-                    }, null, false, true, Forge.getLocalizer().getMessage("lblGeneratingWorld")));
-                } catch (Exception e) {
+                askNewGamePlusCarry(); // round 400: what carries over, then startNewGamePlus()
+                break;
+        }
+    }
+
+    // Round 400 (the user: "when doing a NG+ to ask the player if they want resources spent to restore towns and building
+    // to be refunded also ... Maybe 3 check-boxes. 1 - Cards Only, 2 - Cards and Current Resources on hand, 3 - Cards and
+    // Current Resources and Invested resources", then "let's make a 4th check, items yes/no. Default Yes"; option 2, what
+    // New Game+ always did, is the default). Start opens this; the three are one choice, the items box its own.
+    static final int CARRY_CARDS_ONLY = 0, CARRY_CURRENT = 1, CARRY_INVESTED = 2;
+
+    private void askNewGamePlusCarry() {
+        com.badlogic.gdx.scenes.scene2d.ui.CheckBox cardsOnly = Controls.newCheckBox("Cards only");
+        com.badlogic.gdx.scenes.scene2d.ui.CheckBox current = Controls.newCheckBox("Cards + current resources");
+        com.badlogic.gdx.scenes.scene2d.ui.CheckBox invested = Controls.newCheckBox("Cards + current + invested resources");
+        com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup<com.badlogic.gdx.scenes.scene2d.ui.CheckBox> carry =
+                new com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup<>(cardsOnly, current, invested);
+        carry.setMaxCheckCount(1);
+        carry.setMinCheckCount(1);
+        current.setChecked(true);
+        com.badlogic.gdx.scenes.scene2d.ui.CheckBox keepItems = Controls.newCheckBox("Keep items and equipment");
+        keepItems.setChecked(true);
+        Dialog dialog = createGenericDialog("New Game+", "What comes with you into the new run?", Forge.getLocalizer().getMessage("lblStart"),
+                Forge.getLocalizer().getMessage("lblCancel"), () -> {
+                    int choice = cardsOnly.isChecked() ? CARRY_CARDS_ONLY : invested.isChecked() ? CARRY_INVESTED : CARRY_CURRENT;
+                    boolean items = keepItems.isChecked();
+                    removeDialog();
+                    startNewGamePlus(choice, items);
+                }, () -> {
                     loaded = false;
+                    removeDialog();
+                });
+        com.badlogic.gdx.scenes.scene2d.ui.Table content = dialog.getContentTable();
+        content.row();
+        content.add(cardsOnly).left().padLeft(10).row();
+        content.add(current).left().padLeft(10).row();
+        content.add(invested).left().padLeft(10).row();
+        TextraLabel note = Controls.newTextraLabel("[%80]Invested: what your towns, buildings and the Capitol cost to build.\n"
+                + "Research and blueprints start over.");
+        content.add(note).left().padLeft(10).padBottom(4).row();
+        content.add(keepItems).left().padLeft(10).row();
+        showDialog(dialog);
+    }
+
+    private void startNewGamePlus(int carry, boolean keepItems) {
+        try {
+            Forge.setTransitionScreen(new TransitionScreen(() -> {
+                loaded = false;
+                if (WorldSave.load(currentSlot)) {
+                    // Round 314 (user: "When doing a NG+, be sure to add the gold the player has in his bank to the
+                    // new game also"): the bank's balance lives on the Capitol's PointOfInterestChanges, which
+                    // clearChanges() wipes with the rest of the old world - counted first, paid into the purse
+                    // after the reset below.
+                    int banked = 0;
+                    for (forge.adventure.pointofintrest.PointOfInterestChanges c : WorldSave.getCurrentSave().getAllPointOfInterestChanges())
+                        banked += Math.max(0, c.getBankBalance());
+                    final int bankedGold = banked;
+                    // Round 400: what the held towns and buildings cost - read now, while the old world and the old
+                    // run's difficulty (its prices) are still in place.
+                    final int[] investedRefund = carry == CARRY_INVESTED
+                            ? forge.adventure.util.NewGamePlusRefund.invested(WorldSave.getCurrentSave().getWorld()) : null;
+                    System.out.println("[TFR-NewGamePlus] carrying: " + (carry == CARRY_CARDS_ONLY ? "cards only"
+                            : carry == CARRY_INVESTED ? "cards + current + invested resources" : "cards + current resources")
+                            + ", items " + (keepItems ? "kept" : "left behind"));
+                    WorldSave.getCurrentSave().clearChanges();
+                    // Round 241: world-gen thins the wasteland towns by difficulty, and the new
+                    // difficulty is only applied to the player below - so the World is told first.
+                    WorldSave.getCurrentSave().getWorld().setGenerationDifficulty(difficulty != null
+                            ? Config.instance().getConfigData().difficulties[difficulty.getSelectedIndex()].name
+                            : Current.player().getDifficulty().name);
+                    if (WorldSave.getCurrentSave().getWorld().generateNew(0)) {
+                        if (difficulty != null)
+                            Current.player().updateDifficulty(Config.instance().getConfigData().difficulties[difficulty.getSelectedIndex()]);
+                        Current.player().setWorldPosY((int) (WorldSave.getCurrentSave().getWorld().getData().playerStartPosY * WorldSave.getCurrentSave().getWorld().getData().height * WorldSave.getCurrentSave().getWorld().getTileSize()));
+                        Current.player().setWorldPosX((int) (WorldSave.getCurrentSave().getWorld().getData().playerStartPosX * WorldSave.getCurrentSave().getWorld().getData().width * WorldSave.getCurrentSave().getWorld().getTileSize()));
+                        // "A New Game+ should basically be a new game, + your Cards,
+                        // Equipment and resources" (user spec 2026-08-31). Everything that
+                        // used to be reset piecemeal here - quests, quest flags,
+                        // statistics - now lives in one place alongside clear()/create(),
+                        // together with the per-run state this path was silently
+                        // inheriting: shop-type unlocks, starting editions, character
+                        // flags, color reputation, research timers and Bronze Coin marks.
+                        //
+                        // Ordering is load-bearing: updateDifficulty() must already have
+                        // run (the edition seed is difficulty-scaled), and this must run
+                        // before reservePlayerEditions() below, which reads the re-seeded
+                        // set, and before addQuest("28"), which needs the cleared quest
+                        // list and the newGamePlus flag already in place.
+                        Current.player().resetForNewGamePlus();
+                        Current.player().applyNewGamePlusCarry(carry != CARRY_CARDS_ONLY, keepItems); // round 400
+                        if (bankedGold > 0 && carry == CARRY_CARDS_ONLY) {
+                            System.out.println("[TFR-NewGamePlus] cards only: the bank's " + bankedGold + " gold left behind");
+                        } else if (bankedGold > 0) { // round 314: a transfer, not income - the ledger's IGNORED bucket
+                            forge.adventure.util.ResourceLedger.run(forge.adventure.util.ResourceLedger.Bucket.IGNORED,
+                                    () -> Current.player().giveGold(bankedGold));
+                            System.out.println("[TFR-NewGamePlus] the bank's " + bankedGold
+                                    + " gold carried into the new run - purse now " + Current.player().getGold());
+                        }
+                        if (investedRefund != null) { // round 400: a refund, not income - IGNORED as well
+                            forge.adventure.util.ResourceLedger.run(forge.adventure.util.ResourceLedger.Bucket.IGNORED, () -> {
+                                Current.player().giveGold(investedRefund[0]);
+                                Current.player().addWood(investedRefund[1]);
+                                Current.player().addStone(investedRefund[2]);
+                                Current.player().addShards(investedRefund[3]);
+                            });
+                            System.out.println("[TFR-NewGamePlus] refunded what was built: "
+                                    + forge.adventure.util.NewGamePlusRefund.label(investedRefund) + " - purse now "
+                                    + Current.player().getGold() + " gold, " + Current.player().getWood() + " wood, "
+                                    + Current.player().getStone() + " stone, " + Current.player().getShards() + " shards");
+                        }
+                        // Mirrors WorldSave's own New Game ordering: the color shards only
+                        // exist after generateNew() has re-seeded them, and the player's
+                        // own editions must be carved out of the AI colors' pools again -
+                        // the New Game path does this right after create(), and New Game+
+                        // had no equivalent, so the exclusivity pass never ran.
+                        forge.adventure.util.EditionProgression.reservePlayerEditions(
+                                WorldSave.getCurrentSave().getWorld(), Current.player());
+                        Current.player().removeAllQuestItems();
+                        // Every run starts with a full challenge-coin purse (user spec
+                        // 2026-08-31). Deliberately AFTER removeAllQuestItems() so the
+                        // grant can never be swept up by it - the three coins are not
+                        // flagged questItem today, but ordering it this way means a later
+                        // data edit that does flag them cannot silently empty the purse.
+                        // Round 400: exactly the starting five, whatever was carried and whether or not
+                        // items were kept - a hoarded surplus no longer survives (the user's rule).
+                        Current.player().resetChallengeCoins();
+                        AdventurePlayer.current().addQuest("28", true);
+                        WorldSave.getCurrentSave().clearBookmarks();
+                        WorldStage.getInstance().enterSpawnPOI();
+                        SoundSystem.instance.changeBackgroundTrack();
+                        Forge.switchScene(GameScene.instance());
+                        if (investedRefund != null) // round 400: authored markup, as the Ring's gift notice
+                            forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]Refunded for what you built: [WHITE][+Gold][BLACK] "
+                                    + investedRefund[0] + "  [WHITE][+Wood][BLACK] " + investedRefund[1] + "  [WHITE][+Stone][BLACK] "
+                                    + investedRefund[2] + "  [WHITE][+Shards][BLACK] " + investedRefund[3], true);
+                    } else {
+                        Forge.clearTransitionScreen();
+                    }
+                } else {
                     Forge.clearTransitionScreen();
                 }
-                break;
+            }, null, false, true, Forge.getLocalizer().getMessage("lblGeneratingWorld")));
+        } catch (Exception e) {
+            loaded = false;
+            Forge.clearTransitionScreen();
         }
     }
 

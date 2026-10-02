@@ -447,6 +447,27 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         topUpChallengeCoins("[TFR-NewGamePlus]");
     }
 
+    /**
+     * Round 400 (the user: "The 'Keep Items and Equipment' - yes/no, should not affect the 5 starting coins. You should
+     * always start with those and only the 5 coins regardless of what the player currently has coin wise"). New Game+
+     * starts every run with exactly 1 Challenge, 1 Silver and 3 Bronze coins: whatever was carried - in the bag or the
+     * Armory's storage - goes, then the starting five are handed over. Replaces the 2026-08-31 top-up's "a hoarded surplus
+     * survives" for New Game+; the skip-intro and Llanowar kits still only top up, and find nothing missing.
+     */
+    public void resetChallengeCoins() {
+        int removed = 0;
+        for (String coin : new String[]{GOLD_COIN_ITEM, SILVER_COIN_ITEM, BRONZE_COIN_ITEM}) {
+            removed += (int) inventoryItems.stream().filter(i -> i != null && coin.equalsIgnoreCase(i.name)).count();
+            removed += (int) armoryStorage.stream().filter(i -> i != null && coin.equalsIgnoreCase(i.name)).count();
+            inventoryItems.removeIf(i -> i != null && coin.equalsIgnoreCase(i.name));
+            armoryStorage.removeIf(i -> i != null && coin.equalsIgnoreCase(i.name));
+        }
+        int granted = topUpChallengeCoins("[TFR-NewGamePlus]");
+        System.out.println("[TFR-NewGamePlus] challenge coins: " + removed + " carried coin(s) left behind, the starting "
+                + granted + " handed over (" + START_GOLD_COINS + " Challenge, " + START_SILVER_COINS + " Silver, "
+                + START_BRONZE_COINS + " Bronze)");
+    }
+
     /** Round 247: the same top-up under the caller's log tag; returns how many coins it handed over. */
     public int topUpChallengeCoins(String logTag) {
         return grantMissingCoins(logTag, GOLD_COIN_ITEM, START_GOLD_COINS)
@@ -880,6 +901,41 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 + " | difficulty=" + difficultyData.name
                 + " rewardMaxFactor=" + difficultyData.rewardMaxFactor
                 + " startingLife=" + difficultyData.startingLife);
+    }
+
+    /**
+     * Round 400 (the user's New Game+ choices: "1 - Cards Only, 2 - Cards and Current Resources on hand, 3 - Cards and
+     * Current Resources and Invested resources", and "a 4th check, items yes/no. Default Yes"). Runs after
+     * resetForNewGamePlus(). Without the resources, the purse is a new game's - empty when the Ring hands the starting kit
+     * over (ringGiftStart: the kit's gold, shards, wood and stone arrive with it, as in every New Game+), else the
+     * difficulty's starting amounts. Without the items, the bag and every worn slot empty, and the kit hands the new
+     * game's equipment over again (its New Game+ rule skips only what is still carried). Cards, decks and boosters stay.
+     */
+    public void applyNewGamePlusCarry(boolean keepResources, boolean keepItems) {
+        if (!keepResources) {
+            DifficultyData cfg = difficultyData;
+            DifficultyData[] all = forge.adventure.util.Config.instance().getConfigData().difficulties;
+            if (all != null)
+                for (DifficultyData d : all)
+                    if (d != null && d.name != null && d.name.equals(difficultyData.name)) { cfg = d; break; }
+            boolean kit = ringGiftStart();
+            System.out.println("[TFR-NewGamePlus] cards only: " + gold + " gold, " + shards + " shards, " + wood + " wood, "
+                    + stone + " stone left behind - " + (kit ? "the Ring's starting kit refills the purse" : "a new game's purse"));
+            gold = kit ? 0 : cfg.startingMoney;
+            shards = kit ? 0 : cfg.startingShards;
+            wood = kit ? 0 : cfg.startingWood;
+            stone = kit ? 0 : cfg.startingStone;
+            onGoldChangeList.emit();
+        }
+        if (!keepItems) {
+            System.out.println("[TFR-NewGamePlus] items left behind: " + inventoryItems.size() + " in the bag, "
+                    + equippedItems.size() + " worn, " + armoryStorage.size() + " in the Armory's storage"
+                    + " - the starting kit hands the new game's equipment over");
+            inventoryItems.clear();
+            equippedItems.clear();
+            armoryStorage.clear();
+            onEquipmentChange.emit();
+        }
     }
 
     public void updateDifficulty(DifficultyData diff) {

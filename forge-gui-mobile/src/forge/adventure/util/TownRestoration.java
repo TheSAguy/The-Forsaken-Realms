@@ -346,6 +346,29 @@ public class TownRestoration {
         return changes != null && changes.getMapFlags().get(TOWN_RESTORED_FLAG) != null;
     }
 
+    /**
+     * Round 400: a town the player holds by capture or by a Ring City opening its gates (settleAsPlayerTown) - TOWN_RESTORED
+     * without the restore fee. New Game+'s refund of what was built leaves its fee out. Saves from before this round
+     * carry no mark, so a town they captured counts as one they restored.
+     */
+    public static final String TAKEN_NOT_BOUGHT_FLAG = "takenNotBought";
+
+    /** Round 400: did the player pay this held town's restore fee - a wasteland town or Orazca, not a Ring City, not taken? */
+    public static boolean wasRestoredForAFee(PointOfInterest point, PointOfInterestChanges changes) {
+        return isTownRestored(changes) && changes.getMapFlags().get(TAKEN_NOT_BOUGHT_FLAG) == null
+                && !TerritoryControl.isRingTown(point) && isWastelandTown(point.getData());
+    }
+
+    /** Round 400: the restore fee's base {gold, wood, stone, shards} - difficulty-scaled where it is paid. */
+    static int[] restoreCostBase() {
+        return new int[]{RESTORE_COST_GOLD, RESTORE_COST_WOOD, 0, 0};
+    }
+
+    /** Round 400: the Capitol upgrade's base {gold, wood, stone, shards}. */
+    static int[] capitolCostBase() {
+        return new int[]{CAPITOL_COST_GOLD, CAPITOL_COST_WOOD, CAPITOL_COST_STONE, CAPITOL_COST_SHARDS};
+    }
+
     /** Is this town one of the Functioning Neutral Towns seeded by seedFunctioningNeutralTowns()
      *  (NEUTRAL_SEEDED_FLAG set on its own PointOfInterestChanges)? Public counterpart to the
      *  private isNeutralSeeded(String poiId) above, for callers that already hold the town's
@@ -493,6 +516,7 @@ public class TownRestoration {
         TerritoryControl.forgetTownState(world, preCaptureId, target.getID(), shownName, reason);
         PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(target.getID());
         changes.getMapFlags().put(TOWN_RESTORED_FLAG, (byte) 1);
+        changes.getMapFlags().put(TAKEN_NOT_BOUGHT_FLAG, (byte) 1); // round 400: no restore fee was paid for it
         world.setTownTerritoryRadius(target.getID(), repaintRadius);
         world.rebuildPlayerTownVision();
         long perfRepaint = System.nanoTime();
@@ -1387,7 +1411,7 @@ public class TownRestoration {
         return out;
     }
 
-    private static java.util.List<com.badlogic.gdx.utils.XmlReader.Element> readMapObjects(String mapPath) {
+    static java.util.List<com.badlogic.gdx.utils.XmlReader.Element> readMapObjects(String mapPath) {
         java.util.List<com.badlogic.gdx.utils.XmlReader.Element> cached = mapObjectsCache.get(mapPath);
         if (cached != null)
             return cached;
@@ -1406,7 +1430,7 @@ public class TownRestoration {
         return objects;
     }
 
-    private static boolean hasTrueProperty(com.badlogic.gdx.utils.XmlReader.Element object, String propertyName) {
+    static boolean hasTrueProperty(com.badlogic.gdx.utils.XmlReader.Element object, String propertyName) {
         com.badlogic.gdx.utils.XmlReader.Element properties = object.getChildByName("properties");
         if (properties == null)
             return false;

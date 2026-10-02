@@ -1371,6 +1371,90 @@ public class EconomyBuildings {
         return new int[]{100, 5, 0, 0};
     }
 
+    /**
+     * Round 400 (New Game+'s "invested resources" refund): what the building the player has standing on this slot cost to
+     * put up, at this run's prices - {gold, wood, stone, shards}, difficulty-scaled as each dialog charged it. Null when no
+     * player building stands there (never rebuilt, or destroyed again). The price of the building as it stands: a card shop
+     * at its tier, an economy building at its own price (an Exchange with the Trader it was raised from), the Armory or
+     * Arena with its level-2 upgrade. Research and blueprints are not buildings.
+     *
+     * @param template  the slot's Tiled template file name (shop.tx, arena.tx, spellsmith.tx ...)
+     * @param shopList  the slot's commonShopList - what an unpinned special slot always is
+     */
+    public static int[] standingCost(PointOfInterestChanges changes, int objectId, String template, String shopList,
+                                     boolean fixedShop, boolean capitol) {
+        if (changes == null || objectId < 0 || changes.getMapFlags().get("shopRebuilt_" + objectId) == null)
+            return null;
+        int[] out = new int[4];
+        int type = NONE;
+        for (Map.Entry<Integer, Integer> e : changes.getEconomyBuildingObjectIds().entrySet())
+            if (e.getValue() != null && e.getValue() == objectId)
+                type = e.getKey();
+        if (type == TELEPORTER) {
+            if (capitol)
+                addScaled(out, teleporterBase(true));
+            else
+                addExact(out, teleporterBase(false)); // round 138: a town's is an exact figure
+            return out;
+        }
+        if (type != NONE) {
+            addScaled(out, buildCostFor(type));
+            if (type == EXCHANGE)
+                addScaled(out, buildCostFor(TRADER)); // only ever raised from a Trader
+            return out;
+        }
+        String file = template == null ? "" : template;
+        if (file.endsWith("arena.tx")) {
+            addScaled(out, new int[]{250, 0, 0, 0}); // MapStage's withRebuildCost for the Arena
+            if (changes.getBuildingLevel(objectId) >= 2)
+                addScaled(out, new int[]{0, ARENA_UPGRADE_WOOD, ARENA_UPGRADE_STONE, 0});
+            return out;
+        }
+        if (!file.endsWith("shop.tx")) {
+            addScaled(out, new int[]{100, 10, 0, 0}); // Spellsmith, Shard Trader: TownRestoration.buildRebuildShopDialog's price
+            return out;
+        }
+        String pinned = changes.getPinnedShopName(objectId);
+        String name = pinned != null ? pinned : shopList == null ? null : shopList.split(",")[0].trim();
+        ShopData data = null;
+        for (ShopData candidate : new Array.ArrayIterator<>(WorldData.getShopList()))
+            if (candidate.name.equals(name))
+                data = candidate;
+        if (fixedShop || isSpecialShop(data)) {
+            // buildSimpleRepairDialog()'s table
+            if (isArmoryShop(data))
+                addScaled(out, new int[]{250, 125, 0, 0});
+            else if (isBoosterShop(data))
+                addScaled(out, new int[]{200, 0, 5, 0});
+            else if (landShopLabel(data) != null)
+                addScaled(out, new int[]{50, 0, 0, 0});
+            else
+                addScaled(out, new int[]{100, 5, 0, 0});
+            if (isArmoryShop(data) && changes.getBuildingLevel(objectId) >= 2)
+                addScaled(out, new int[]{0, 0, ARMORY_UPGRADE_STONE, 0});
+            return out;
+        }
+        // A card shop: the chooser pins what it built, priced by tier; the plain "Card Shop" rebuild pins nothing.
+        String tier = pinned == null ? null : playerTemplateTier(pinned);
+        addScaled(out, tier != null ? shopTierCost(tier) : buildCostFor(NONE));
+        return out;
+    }
+
+    private static int[] teleporterBase(boolean capitol) {
+        return capitol ? new int[]{0, 0, 0, 100} : new int[]{0, 0, 0, 10}; // teleporterCost(), without the loaded map
+    }
+
+    static void addScaled(int[] into, int[] base) {
+        for (int i = 0; i < 4; i++)
+            if (base[i] > 0)
+                into[i] += scaledCost(base[i]);
+    }
+
+    private static void addExact(int[] into, int[] cost) {
+        for (int i = 0; i < 4; i++)
+            into[i] += Math.max(0, cost[i]);
+    }
+
     /** Gold credited back when re-typing away from a shop of this tier (user spec: "you get 50%
      *  of the initial shop gold cost back"). Gold only - the user's own worked example
      *  (Uncommon -> Common = 25 gold + 5 wood) still pays the new shop's wood in full. */
