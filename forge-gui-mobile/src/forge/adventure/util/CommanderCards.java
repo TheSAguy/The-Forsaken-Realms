@@ -58,14 +58,52 @@ public final class CommanderCards {
         return restricted;
     }
 
-    /** An enemy's deck without its commander-only cards - each copy a basic land of the deck's main color. */
+    // Round 395 (a player on Discord: "is it meant to include online/arena cards and/or Alchemy cards?"): the blocked sets
+    // of Forge type Online in config.json restrictedEditions - Alchemy, Alchemy Horizons, Jumpstart: Historic Horizons,
+    // Jumpstart Arena Exclusives - and, per card name, whether every printing of it is in one of them.
+    private static Set<String> blockedOnline;
+    private static final Map<String, Boolean> DIGITAL_ONLY = new HashMap<>();
+
+    private static synchronized Set<String> blockedOnline() {
+        if (blockedOnline == null) {
+            blockedOnline = new HashSet<>();
+            String[] codes = Config.instance().getConfigData().restrictedEditions;
+            if (codes != null)
+                for (String code : codes) {
+                    forge.card.CardEdition ed = FModel.getMagicDb().getEditions().get(code);
+                    if (ed != null && ed.getType() == forge.card.CardEdition.Type.ONLINE)
+                        blockedOnline.add(code);
+                }
+        }
+        return blockedOnline;
+    }
+
+    /** Round 395: a card with no printing outside the blocked online sets - an Alchemy or Arena-only card. */
+    public static synchronized boolean isDigitalOnly(String name) {
+        return DIGITAL_ONLY.computeIfAbsent(name, n -> {
+            if (blockedOnline().isEmpty())
+                return false;
+            List<PaperCard> prints = FModel.getMagicDb().getCommonCards().getAllCards(n);
+            if (prints == null || prints.isEmpty())
+                return false;
+            for (PaperCard p : prints)
+                if (!blockedOnline().contains(p.getEdition()))
+                    return false;
+            return true;
+        });
+    }
+
+    /**
+     * An enemy's deck without its commander-only cards - each copy a basic land of the deck's main color. Round 395: and
+     * without digital-only cards (isDigitalOnly), the same way.
+     */
     public static Deck stripEnemyDeck(Deck deck, String enemyName) {
-        if (deck == null || commanderOnly().isEmpty())
+        if (deck == null)
             return deck;
         CardPool main = deck.getOrCreate(DeckSection.Main);
         Map<PaperCard, Integer> found = new HashMap<>();
         for (Map.Entry<PaperCard, Integer> e : main) {
-            if (commanderOnly().contains(e.getKey().getName()))
+            if (commanderOnly().contains(e.getKey().getName()) || isDigitalOnly(e.getKey().getName()))
                 found.put(e.getKey(), e.getValue());
         }
         if (found.isEmpty())

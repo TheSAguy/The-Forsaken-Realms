@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 395: MTG Arena's digital-only sets blocked (2026-10-02)
+
+A player on Discord: "I was also wondering if it's meant to include online/arena cards and/or Alchemy cards? I think
+I've seen some Alchemy cards. (The Arena cards that permanently change a card)" - the *perpetually* mechanic. Forge files
+59 sets as type Online and config.json restrictedEditions blocked none of them. The user: "go ahead and block those
+sets":
+
+- config.json restrictedEditions + 21 sets with digital-only mechanics (perpetually, seek, conjure, spellbooks, the
+  "A-" rebalanced cards): the 18 Alchemy sets (YMID ... YFRA), Alchemy Horizons: Baldur's Gate (HBG), Jumpstart:
+  Historic Horizons (J21), Jumpstart Arena Exclusives (AJMP). Online sets that only reprint paper cards stay (AKR, KLR,
+  SIR, TPR, VMA, ME1-4, the anthologies, MTGO promos). A paper card reprinted in a blocked set keeps its paper
+  printings. The D&D shop (Boo's Bargains) keeps AFR / CLB / AFC.
+- Enemy decks (`CommanderCards.isDigitalOnly`, inside round 387's `stripEnemyDeck`): a card whose every printing is in
+  a blocked set of type Online becomes a basic land of the deck's main colour, like a commander-only card. Offline
+  count: 647 such cards, in 247 enemy decks (527 slots), mostly the legend decks. Cards a player already owns stay in
+  their collection.
+- Agent-seen: Aegar's deck - Command Tower, Rimewall Protector, Path of Ancestry -> 3 Mountain; no exception.
+
 ## Round 394: each kind of dungeon at its share of the map (2026-10-01)
 
 The user: "There seems to be a lot of Mind Slaver dungeons on my map." Their save (read-only PoiCount tool): 10
