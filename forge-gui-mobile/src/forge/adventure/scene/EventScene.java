@@ -191,6 +191,11 @@ public class EventScene extends MenuScene implements IAfterMatch {
         // that text is short enough on its own to not need scrolling anyway.
         String fullDescription = currentEvent.getDescription(changes);
         int entryFeeIndex = fullDescription.indexOf("Pay 1 Entry Fee");
+        // Round 397 (the user, from a joined event: "I want it above the Prize Section, so you don't need to scroll to
+        // see it"): once entered there is no entry-fee line, and the checkbox fell to the bottom - split before the
+        // Prizes block instead (every prize text starts with "Prizes\n").
+        if (entryFeeIndex < 0)
+            entryFeeIndex = fullDescription.indexOf("Prizes\n");
         String topDescription = entryFeeIndex >= 0 ? fullDescription.substring(0, entryFeeIndex) : fullDescription;
         String bottomDescription = entryFeeIndex >= 0 ? fullDescription.substring(entryFeeIndex) : "";
 
