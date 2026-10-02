@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 406 - the card budget drops the list's fallback gold
+
+- **`forge-gui-mobile/src/forge/adventure/util/Reward.java`** - new `cardFallbackGold` field, `cardFallbackGold(int)`
+  factory and `isCardFallbackGold()`, placed after `getBlueprintShopName()`; nothing upstream wrote was changed.
+- **`forge-gui-mobile/src/forge/adventure/data/RewardData.java`** - the `deckCard` case's round-203 gold fallback is
+  built with `Reward.cardFallbackGold(...)` instead of `new Reward(int)`.
+- Mod: `CardBudget.apply` drops that gold; comment only in `TerritoryControl.dispatch`.
+
 ### Rounds 354-356
 
 - **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - onActing also returns while the stage's own

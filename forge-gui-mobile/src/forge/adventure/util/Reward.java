@@ -40,6 +40,9 @@ public class Reward {
     // display name - the unlock set is keyed by data name.
     String blueprintShopName;
     boolean isNoSell, isAutoSell;
+    // Round 406: gold paid for promised cards a reward list could not hand over (RewardData's deckCard fallback).
+    // CardBudget drops it - the budget trims the list's cards and pays its own gold for a real shortfall.
+    boolean cardFallbackGold;
     private final int count;
 
     public Reward(ItemData item) {
@@ -64,6 +67,17 @@ public class Reward {
 
     public String getBlueprintShopName() {
         return blueprintShopName;
+    }
+
+    /** Round 406: gold standing in for cards a reward list promised and could not pay. */
+    public static Reward cardFallbackGold(int count) {
+        Reward reward = new Reward(count);
+        reward.cardFallbackGold = true;
+        return reward;
+    }
+
+    public boolean isCardFallbackGold() {
+        return cardFallbackGold;
     }
 
     public Reward(PaperCard card) {

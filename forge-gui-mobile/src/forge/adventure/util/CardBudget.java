@@ -53,7 +53,8 @@ import java.util.Random;
  * <li><b>Easy</b> gets cardBudgetEasyBonus extra cards per win: the random extras that used to separate the
  *     difficulties (rewardMaxFactor) are trimmed away by the budget, so this is what keeps Easy generous.</li>
  * </ul>
- * NOT budgeted: gold, shards, items, life; the ante card; bosses, arena and event fighters and every other
+ * NOT budgeted: gold (except the list's own gold for deck cards it could not pay, which is dropped - round 406),
+ * shards, items, life; the ante card; bosses, arena and event fighters and every other
  * spawnRate-0 enemy (SpawnTierWeighting.isExempt - their rewards are dedicated); fixed-deck enemies, which never
  * record a win and so would count as a first win forever; and the extra rewards a map places on one specific
  * enemy, which EnemySprite adds after this runs.
@@ -99,9 +100,16 @@ public final class CardBudget {
 
         List<Reward> cards = new ArrayList<>();
         Array<Reward> result = new Array<>();
+        // Round 406: the list's own gold for deck cards it could not pay is dropped. Those cards were candidates like
+        // any other - the budget would have trimmed them on a list that already fills it - and a real shortfall is
+        // topped up below, with this method's own gold for whatever the deck still cannot pay. Kor Duelist (Insane,
+        // a first win) paid 128 gold for a 28-gold purse: 50 for the bonus card, 50 for a list card past the budget.
+        int droppedFallbackGold = 0;
         for (Reward reward : standard) {
             if (reward.getType() == Reward.Type.Card && reward.getCard() != null)
                 cards.add(reward);
+            else if (reward.getType() == Reward.Type.Gold && reward.isCardFallbackGold())
+                droppedFallbackGold += reward.getCount();
             else
                 result.add(reward);
         }
@@ -161,7 +169,8 @@ public final class CardBudget {
                 + Math.min(budget, candidates) + (bestFirst ? " best-first" : " at random")
                 + (toppedUp > 0 ? ", topped up " + toppedUp + " from its deck " + topUpRarities : "")
                 + (bonusWanted > 0 ? ", first-win bonus " + (bonusNames.isEmpty() ? "could not be paid" : bonusNames) : "")
-                + (unpayable > 0 ? ", " + unpayable + " unpayable -> " + (unpayable * goldPerCard) + " gold" : ""));
+                + (unpayable > 0 ? ", " + unpayable + " unpayable -> " + (unpayable * goldPerCard) + " gold" : "")
+                + (droppedFallbackGold > 0 ? ", dropped the list's " + droppedFallbackGold + " gold for unpaid deck card(s)" : ""));
         if (firstWin)
             GameHUD.getInstance().addNotification("First victory over " + enemyName + " - bonus loot!");
         return result;

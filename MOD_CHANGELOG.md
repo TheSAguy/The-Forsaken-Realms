@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 406: the card budget no longer pays gold for cards it would have cut (2026-10-02)
+
+Found in the user's live log (v1.17.1, Insane New Game+): Kor Duelist, an Apprentice beaten for the first time, paid
+**128 gold** on a 28-gold purse. Two 50-gold fallbacks were added (`deckCardFallbackGold`): one from `CardBudget` for the
+first-win bonus card the deck could not pay (intended), and one from `RewardData`'s `deckCard` entry. That entry
+promised a card from the enemy's deck that the color's locked editions ruled out, and it turned the card into gold before
+`CardBudget` ever saw it. The list had already rolled 4 cards against a budget of 2, so the budget would have cut that
+card, but the gold got through because the budget leaves gold alone. Across the user's logs since 2026-10-01, 6 of
+13 budgeted wins paid this extra gold.
+
+- `Reward.cardFallbackGold(int)` marks that gold (`isCardFallbackGold()`); `RewardData`'s `deckCard` case pays through it.
+- `CardBudget.apply` drops the marked gold (only past its own early returns, so bosses, arena/event fighters, fixed
+  decks and every other unbudgeted payout keep it as before). Nothing is lost on a real shortfall: a list short of its
+  budget is topped up from the deck, and what the deck still cannot pay is the budget's own 50 gold per card.
+- `[TFR-CardBudget]` adds `dropped the list's N gold for unpaid deck card(s)`.
+- Kor Duelist's win now pays 78 gold: the purse's 28 plus 50 for the bonus card.
+- The stale cap comment in `TerritoryControl.dispatch` (the pre-round-125 2-5 ladder) now reads 1-4 plus the bonuses.
+
 ## Round 405: the win streak's length by difficulty (2026-10-02)
 
 The user (after v1.17 had shipped with a flat 3): "On normal, it's 5+ victories. On Hard 4+ to get the extra card and

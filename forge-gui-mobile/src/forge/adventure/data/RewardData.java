@@ -621,7 +621,7 @@ public class RewardData implements Serializable {
                                 + " card(s) even after relaxing rarity - its editions are locked for this"
                                 + " color; paying " + (unpayable * goldPerCard) + " gold instead ("
                                 + unpayable + " x " + goldPerCard + ")");
-                        ret.add(new Reward(unpayable * goldPerCard));
+                        ret.add(Reward.cardFallbackGold(unpayable * goldPerCard));
                     }
                     break;
                 }

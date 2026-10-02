@@ -1527,7 +1527,8 @@ public class TerritoryControl {
             return;
         }
         // Difficulty-scaled cap on simultaneous in-flight mages per color (user request
-        // 2026-08-08): 2 on Easy, +1 per difficulty step, 5 on Insane. A color at its cap skips
+        // 2026-08-08): 1 on Easy, +1 per difficulty step, 4 on Insane since round 125, plus the
+        // town-count, Color Defeat and Capitol bonuses (maxActiveMagesPerColor). A color at its cap skips
         // this dispatch entirely - its attack timer still resets in processDaysPassed(), so it
         // simply tries again on its next scheduled attack day.
         int activeMages = 0;

@@ -58,6 +58,14 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-02 (night): **round 406 LOCAL + UNRELEASED** on top of v1.17.1. 406 = `CardBudget` drops the gold a reward
+list paid for deck cards it could not hand over (`Reward.cardFallbackGold`, marked in `RewardData`'s `deckCard` case).
+That gold slipped past the budget: Kor Duelist paid 128 gold where 78 was right, and 6 of 13 budgeted wins in the user's
+logs paid it. The budget's own shortfall gold still covers a real shortfall. LIVE + AGENT PACKAGED (jar 77c41d405606);
+not yet seen in play - look for `dropped the list's N gold` on a `[TFR-CardBudget]` line. The user asked about the attacking-mage cap
+(per color: Easy 1 / Normal 2 / Hard 3 / Insane 4, +1 per 11/10/9/8 player towns with the Capitol counted, +1 while the
+Capitol stands, +1 per defeated color, halved rounded down for a color whose capital the player took).
+
 ## STATE 2026-10-02 (late): **v1.17.1 "Old Foes, New Doors" RELEASED** - tag `tfr-v1.17.1` @ `c8046cdc889`, published
 20:41 UTC, Latest; = v1.17 + round 405 (win streak by difficulty: Normal 5 / Hard 4 / Insane 3, Easy off); PC zip 278.5 MB,
 APK 13.5 MB (11701, signer ee603925), assets.zip 230.7 MB (build.txt pair 2026-10-02 20:39:08); artifacts in
