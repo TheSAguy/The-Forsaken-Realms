@@ -1665,7 +1665,8 @@ public class MapStage extends GameStage {
                                 return;
                             }
                             Forge.switchScene(InnScene.instance(TileMapScene.instance(), TileMapScene.instance().rootPoint.getID(), changes, id));
-                        }).withRuinOverlay(() -> TownRestoration.isInnClosedByRuin(changes, id)));
+                        }).withRuinOverlay(() -> TownRestoration.isInnClosedByRuin(changes, id))
+                                .withRuinArt(() -> TownRestoration.getInnRuinSprite(id))); // round 398
                         break;
                     case "spellsmith":
                         addMapActor(obj, new OnCollide(() -> {

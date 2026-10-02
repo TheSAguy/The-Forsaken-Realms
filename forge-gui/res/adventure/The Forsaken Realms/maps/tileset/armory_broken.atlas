@@ -1,0 +1,225 @@
+armory_broken.png
+size: 256,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ArmoryBroken
+  xy: 96, 0
+  size: 32, 32
+  index: 0
+ArmoryBroken
+  xy: 128, 0
+  size: 32, 32
+  index: 1
+ArmoryBroken
+  xy: 160, 0
+  size: 32, 32
+  index: 2
+ArmoryBroken
+  xy: 192, 0
+  size: 32, 32
+  index: 3
+ArmoryBroken
+  xy: 224, 0
+  size: 32, 32
+  index: 4
+ArmoryBroken
+  xy: 96, 32
+  size: 32, 32
+  index: 5
+ArmoryBroken
+  xy: 128, 32
+  size: 32, 32
+  index: 6
+ArmoryBroken
+  xy: 160, 32
+  size: 32, 32
+  index: 7
+ArmoryBroken
+  xy: 192, 32
+  size: 32, 32
+  index: 8
+ArmoryBroken
+  xy: 224, 32
+  size: 32, 32
+  index: 9
+ArmoryBroken
+  xy: 96, 64
+  size: 32, 32
+  index: 10
+ArmoryBroken
+  xy: 128, 64
+  size: 32, 32
+  index: 11
+ArmoryBroken
+  xy: 160, 64
+  size: 32, 32
+  index: 12
+ArmoryBroken
+  xy: 192, 64
+  size: 32, 32
+  index: 13
+ArmoryBroken
+  xy: 224, 64
+  size: 32, 32
+  index: 14
+ArmoryBroken
+  xy: 0, 96
+  size: 32, 32
+  index: 15
+ArmoryBroken
+  xy: 32, 96
+  size: 32, 32
+  index: 16
+ArmoryBroken
+  xy: 64, 96
+  size: 32, 32
+  index: 17
+ArmoryBroken
+  xy: 96, 96
+  size: 32, 32
+  index: 18
+ArmoryBroken
+  xy: 128, 96
+  size: 32, 32
+  index: 19
+ArmoryBroken
+  xy: 160, 96
+  size: 32, 32
+  index: 20
+ArmoryBroken
+  xy: 192, 96
+  size: 32, 32
+  index: 21
+ArmoryBroken
+  xy: 224, 96
+  size: 32, 32
+  index: 22
+ArmoryBroken
+  xy: 0, 128
+  size: 32, 32
+  index: 23
+ArmoryBroken
+  xy: 32, 128
+  size: 32, 32
+  index: 24
+ArmoryBroken
+  xy: 64, 128
+  size: 32, 32
+  index: 25
+ArmoryBroken
+  xy: 96, 128
+  size: 32, 32
+  index: 26
+ArmoryBroken
+  xy: 128, 128
+  size: 32, 32
+  index: 27
+ArmoryBroken
+  xy: 160, 128
+  size: 32, 32
+  index: 28
+ArmoryBroken
+  xy: 192, 128
+  size: 32, 32
+  index: 29
+ArmoryBroken
+  xy: 224, 128
+  size: 32, 32
+  index: 30
+ArmoryBroken
+  xy: 0, 160
+  size: 32, 32
+  index: 31
+ArmoryBroken
+  xy: 32, 160
+  size: 32, 32
+  index: 32
+ArmoryBroken
+  xy: 64, 160
+  size: 32, 32
+  index: 33
+ArmoryBroken
+  xy: 96, 160
+  size: 32, 32
+  index: 34
+ArmoryBroken
+  xy: 128, 160
+  size: 32, 32
+  index: 35
+ArmoryBroken
+  xy: 160, 160
+  size: 32, 32
+  index: 36
+ArmoryBroken
+  xy: 192, 160
+  size: 32, 32
+  index: 37
+ArmoryBroken
+  xy: 224, 160
+  size: 32, 32
+  index: 38
+ArmoryBroken
+  xy: 0, 192
+  size: 32, 32
+  index: 39
+ArmoryBroken
+  xy: 32, 192
+  size: 32, 32
+  index: 40
+ArmoryBroken
+  xy: 64, 192
+  size: 32, 32
+  index: 41
+ArmoryBroken
+  xy: 96, 192
+  size: 32, 32
+  index: 42
+ArmoryBroken
+  xy: 128, 192
+  size: 32, 32
+  index: 43
+ArmoryBroken
+  xy: 160, 192
+  size: 32, 32
+  index: 44
+ArmoryBroken
+  xy: 192, 192
+  size: 32, 32
+  index: 45
+ArmoryBroken
+  xy: 224, 192
+  size: 32, 32
+  index: 46
+ArmoryBroken
+  xy: 0, 224
+  size: 32, 32
+  index: 47
+ArmoryBroken
+  xy: 32, 224
+  size: 32, 32
+  index: 48
+ArmoryBroken
+  xy: 64, 224
+  size: 32, 32
+  index: 49
+ArmoryBroken
+  xy: 96, 224
+  size: 32, 32
+  index: 50
+ArmoryBroken
+  xy: 128, 224
+  size: 32, 32
+  index: 51
+ArmoryBroken
+  xy: 160, 224
+  size: 32, 32
+  index: 52
+ArmoryBroken
+  xy: 192, 224
+  size: 32, 32
+  index: 53
+ArmoryBroken
+  xy: 224, 224
+  size: 32, 32
+  index: 54

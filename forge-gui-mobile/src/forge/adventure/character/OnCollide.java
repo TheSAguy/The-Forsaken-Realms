@@ -59,6 +59,16 @@ public class OnCollide extends MapActor {
         return this;
     }
 
+    // Round 398 (the user's ruin layouts, wasteland_ruin.tmx and orazca.tmx, have no Inn picture): the Inn's own ruin,
+    // drawn instead of the rubble while the supplier gives one - also while a tournament keeps the Inn open.
+    private java.util.function.Supplier<com.badlogic.gdx.graphics.g2d.TextureRegion> ruinArt;
+    private static boolean ruinArtLogged;
+
+    public OnCollide withRuinArt(java.util.function.Supplier<com.badlogic.gdx.graphics.g2d.TextureRegion> art) {
+        ruinArt = art;
+        return this;
+    }
+
     // Custom rebuild cost/verb (2026-08-12 cost table: the Arena's rebuild price differs from a
     // plain shop's). Null verb = the default plain-shop cost path.
     private int[] rebuildCost;
@@ -102,6 +112,11 @@ public class OnCollide extends MapActor {
     @Override
     public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
+        com.badlogic.gdx.graphics.g2d.TextureRegion ruin = ruinArt == null ? null : ruinArt.get();
+        if (ruin != null) {
+            drawOnPictureCell(batch, ruin);
+            return;
+        }
         if (ruinOverlay != null && ruinOverlay.getAsBoolean()) { // round 241: shut, not broken - see withRuinOverlay()
             RubbleOverlay.draw(batch, getX(), getY(), getWidth(), getHeight(), alpha);
             return;
@@ -133,6 +148,21 @@ public class OnCollide extends MapActor {
             }
         }
         RubbleOverlay.draw(batch, getX(), getY(), getWidth(), getHeight(), alpha);
+    }
+
+    // Round 398: the Inn's picture is a 2x2-tile building baked into the intact layouts, its door tile (this actor) at
+    // its bottom middle but a few pixels off the grid - snap to the tiles the picture covers, so the ruin stands exactly
+    // where the building does in a restored town.
+    private void drawOnPictureCell(Batch batch, com.badlogic.gdx.graphics.g2d.TextureRegion region) {
+        float w = region.getRegionWidth(), h = region.getRegionHeight();
+        float x = (Math.round((getX() + getWidth() / 2f) / 16f) - Math.round(w / 32f)) * 16f;
+        float y = Math.round(getY() / 16f) * 16f;
+        if (!ruinArtLogged) {
+            ruinArtLogged = true;
+            System.out.println("[TFR-RuinArt] Inn ruin " + (int) w + "x" + (int) h + " drawn at (" + (int) x + "," + (int) y
+                    + "), the Inn's door tile at (" + getX() + "," + getY() + ")");
+        }
+        batch.draw(region, x, y, w, h);
     }
 
     private void drawOverFootprint(Batch batch, com.badlogic.gdx.graphics.g2d.TextureRegion region) {

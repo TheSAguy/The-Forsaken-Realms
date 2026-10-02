@@ -185,16 +185,22 @@ public class TileMapScene extends HudScene {
         // hold loads the wasteland layout again; Orazca, once restored, loads the player town's layout with the Warden.
         // The POI data keeps its map - the POI id carries it. Same object ids in all of them.
         String map = point.getData().map;
-        boolean held = TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(point.getID()));
+        forge.adventure.pointofintrest.PointOfInterestChanges changes =
+                WorldSave.getCurrentSave().peekPointOfInterestChanges(point.getID());
+        boolean held = TownRestoration.isTownRestored(changes);
         if (TownRestoration.ORAZCA_POI_NAME.equals(point.getData().name))
             return held ? ORAZCA_RESTORED_MAP : map;
+        // Round 398 (the user's wasteland_ruin.tmx: the wasteland layout without the Inn's picture, whose ruin the game
+        // draws - OnCollide.withRuinArt): a ruin loads it, a functioning neutral town keeps the wasteland layout.
         if (map != null && map.endsWith("/towns/player_town.tmx") && !held)
-            return WASTELAND_TOWN_MAP;
+            return TownRestoration.isNeutralSeededTown(changes) ? WASTELAND_TOWN_MAP : WASTELAND_RUIN_MAP;
         return map;
     }
 
-    /** Round 351: a wasteland town the player does not hold - a ruin or a functioning neutral town. */
+    /** Round 351: a functioning neutral wasteland town (a ruin until round 398 too). */
     public static final String WASTELAND_TOWN_MAP = "../The Forsaken Realms/maps/map/towns/wasteland_town.tmx";
+    /** Round 398: a wasteland town still in ruins. */
+    public static final String WASTELAND_RUIN_MAP = "../The Forsaken Realms/maps/map/towns/wasteland_ruin.tmx";
     /** Round 351: Orazca restored, before the Capitol - the player town's layout with the Warden. */
     public static final String ORAZCA_RESTORED_MAP = "../The Forsaken Realms/maps/map/towns/orazca_restored.tmx";
     public void load(PointOfInterest point) {

@@ -1,0 +1,133 @@
+inn_broken.png
+size: 256,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+InnBroken
+  xy: 128, 32
+  size: 32, 32
+  index: 0
+InnBroken
+  xy: 160, 32
+  size: 32, 32
+  index: 1
+InnBroken
+  xy: 192, 32
+  size: 32, 32
+  index: 2
+InnBroken
+  xy: 224, 32
+  size: 32, 32
+  index: 3
+InnBroken
+  xy: 128, 64
+  size: 32, 32
+  index: 4
+InnBroken
+  xy: 160, 64
+  size: 32, 32
+  index: 5
+InnBroken
+  xy: 192, 64
+  size: 32, 32
+  index: 6
+InnBroken
+  xy: 224, 64
+  size: 32, 32
+  index: 7
+InnBroken
+  xy: 0, 96
+  size: 32, 32
+  index: 8
+InnBroken
+  xy: 32, 96
+  size: 32, 32
+  index: 9
+InnBroken
+  xy: 64, 96
+  size: 32, 32
+  index: 10
+InnBroken
+  xy: 96, 96
+  size: 32, 32
+  index: 11
+InnBroken
+  xy: 128, 96
+  size: 32, 32
+  index: 12
+InnBroken
+  xy: 160, 96
+  size: 32, 32
+  index: 13
+InnBroken
+  xy: 192, 96
+  size: 32, 32
+  index: 14
+InnBroken
+  xy: 224, 96
+  size: 32, 32
+  index: 15
+InnBroken
+  xy: 0, 128
+  size: 32, 32
+  index: 16
+InnBroken
+  xy: 32, 128
+  size: 32, 32
+  index: 17
+InnBroken
+  xy: 64, 128
+  size: 32, 32
+  index: 18
+InnBroken
+  xy: 96, 128
+  size: 32, 32
+  index: 19
+InnBroken
+  xy: 128, 128
+  size: 32, 32
+  index: 20
+InnBroken
+  xy: 160, 128
+  size: 32, 32
+  index: 21
+InnBroken
+  xy: 192, 128
+  size: 32, 32
+  index: 22
+InnBroken
+  xy: 224, 128
+  size: 32, 32
+  index: 23
+InnBroken
+  xy: 0, 160
+  size: 32, 32
+  index: 24
+InnBroken
+  xy: 32, 160
+  size: 32, 32
+  index: 25
+InnBroken
+  xy: 64, 160
+  size: 32, 32
+  index: 26
+InnBroken
+  xy: 96, 160
+  size: 32, 32
+  index: 27
+InnBroken
+  xy: 128, 160
+  size: 32, 32
+  index: 28
+InnBroken
+  xy: 160, 160
+  size: 32, 32
+  index: 29
+InnBroken
+  xy: 192, 160
+  size: 32, 32
+  index: 30
+InnBroken
+  xy: 224, 160
+  size: 32, 32
+  index: 31

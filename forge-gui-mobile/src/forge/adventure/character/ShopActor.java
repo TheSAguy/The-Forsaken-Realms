@@ -203,7 +203,11 @@ public class ShopActor extends MapActor {
             // tile, not fill it) - draw at native size, centered over the footprint, rather than
             // squishing it down to getWidth()/getHeight() (which was both shrinking it and
             // muddying the detail via a forced downscale).
-            TextureRegion brokenSprite = TownRestoration.getBrokenShopSprite(objectId);
+            // Round 398: an Armory has its own ruins - see TownRestoration.getArmoryRuinSprite().
+            TextureRegion brokenSprite = EconomyBuildings.isArmoryShop(shopData)
+                    ? TownRestoration.getArmoryRuinSprite(objectId) : null;
+            if (brokenSprite == null)
+                brokenSprite = TownRestoration.getBrokenShopSprite(objectId);
             if (brokenSprite != null)
                 drawOverFootprint(batch, brokenSprite);
         } else {

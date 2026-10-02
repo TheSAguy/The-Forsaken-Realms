@@ -699,6 +699,45 @@ public class TownRestoration {
         return brokenShopSprites;
     }
 
+    // Round 398 (the user, with their own Inn and Armory ruin sheets: "Currently, the inn did not have ruins, just an
+    // overlay. The Armory was using the card shop ruins"). A ruined Armory - in any layout, the Capitol's included -
+    // and a ruined town's Inn each pick from their own pool, the same way the card shops pick theirs: one per town and
+    // slot, kept across visits. The sheets go in through dev-tools/art-import/round398/install_ruin_art.py.
+    private static final String INN_RUIN_ATLAS = "maps/tileset/inn_broken.atlas";
+    private static final String ARMORY_RUIN_ATLAS = "maps/tileset/armory_broken.atlas";
+    private static Array<Sprite> innRuinSprites, armoryRuinSprites;
+    private static final java.util.Set<String> RUIN_ART_LOGGED = new java.util.HashSet<>();
+
+    /** Round 398: the Inn's ruin while the current town is a ruin (the ruin layouts have no Inn picture), else null. */
+    public static TextureRegion getInnRuinSprite(int objectId) {
+        if (!isCurrentTownRuined())
+            return null;
+        if (innRuinSprites == null)
+            innRuinSprites = Config.instance().getAtlas(INN_RUIN_ATLAS).createSprites("InnBroken");
+        return pickRuin(innRuinSprites, objectId, "Inn");
+    }
+
+    /** Round 398: a ruined Armory's picture - ShopActor asks only when the Armory is ruined. */
+    public static TextureRegion getArmoryRuinSprite(int objectId) {
+        if (armoryRuinSprites == null)
+            armoryRuinSprites = Config.instance().getAtlas(ARMORY_RUIN_ATLAS).createSprites("ArmoryBroken");
+        return pickRuin(armoryRuinSprites, objectId, "Armory");
+    }
+
+    // getBrokenShopSprite()'s pick: the slot's object id salted with the town's own id.
+    private static TextureRegion pickRuin(Array<Sprite> variants, int objectId, String what) {
+        if (variants == null || variants.size == 0)
+            return null;
+        PointOfInterest current = TileMapScene.instance().rootPoint;
+        int salt = current != null ? current.getID().hashCode() : 0;
+        int index = Math.floorMod(objectId * 31 + salt, variants.size);
+        String key = what + "|" + (current == null ? "" : current.getID()) + "|" + objectId;
+        if (RUIN_ART_LOGGED.add(key))
+            System.out.println("[TFR-RuinArt] " + (current == null ? "?" : current.getDisplayName()) + ": " + what
+                    + " (object " + objectId + ") shows ruin " + (index + 1) + " of " + variants.size);
+        return variants.get(index);
+    }
+
     public static boolean isShopRebuilt(MapStage stage, int objectId) {
         return stage.checkQuestFlag(shopRebuiltFlag(objectId));
     }

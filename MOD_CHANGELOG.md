@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 398: the Inn and the Armory get their own ruins (2026-10-02)
+
+The user: "I've created a new layout for the Ruins towns. (wasteland_ruin.tmx) I removed the background image of the
+Inn. I've created dedicated Inn and Armory ruins. Currently, the inn did not have ruins, just an overlay. The Armory was
+using the card shop ruins." Their sheets: Inn Ruins.png (32 ruins) and Armory Ruins.png (55), 32 px cells.
+
+- `dev-tools/art-import/round398/install_ruin_art.py <plane root>` copies both sheets as they are into
+  maps/tileset/inn_broken.png/.atlas (InnBroken) and armory_broken.png/.atlas (ArmoryBroken), one region per non-empty
+  cell - a cell redrawn in place only needs the script run again.
+- `TileMapScene.resolveMapPath`: a wasteland town still in ruins loads `wasteland_ruin.tmx` (WASTELAND_RUIN_MAP - the
+  wasteland layout without the Inn's 2x2 picture); a functioning neutral town keeps `wasteland_town.tmx`; a restored town
+  keeps `player_town.tmx`. The user's `orazca.tmx` edit takes the Inn's picture out of ruined Orazca too.
+- The Inn (`OnCollide.withRuinArt`, `TownRestoration.getInnRuinSprite`): while the town is a ruin, one of the 32 Inn ruins
+  stands on the tiles the Inn's picture covers in the intact layouts - in place of round 241's rubble overlay, also while
+  an entered tournament keeps the Inn open. The Inn stays shut until the town is restored, as before; the restored
+  layouts carry the intact picture.
+- The Armory (`ShopActor.draw`, `TownRestoration.getArmoryRuinSprite`): any ruined Armory - a ruin's, a neutral town's
+  slot broken at world-gen, a restored town's or Orazca's before the rebuild, the Capitol's before it is built - takes
+  one of the 55 Armory ruins instead of a card-shop ruin.
+- Both pick the way the card-shop ruins do: the slot's object id salted with the town's id, the same ruin every visit.
+  `[TFR-RuinArt]` logs each town's pick once and where the Inn ruin is drawn.
+- validate_plane_data.py follows wasteland_ruin.tmx as a reachable layout.
+- Agent-seen in the user's world: Kraaghaven (ruin - Armory and Inn ruins, the Inn ruin exactly on the picture's
+  tiles), Zephyr's Cave (neutral, Armory broken at world-gen - Armory ruin, intact Inn), Kraaghaven restored (player
+  layout, intact Inn, the same Armory ruin until rebuilt), ruined Orazca (both ruins). The Capitol's unbuilt Armory
+  (`ArmoryCommon (destroyed)`) takes the same path; not reached on screen.
+
 ## Round 397: the Inn's Simulate checkbox above the Prizes (2026-10-02)
 
 The user, from a joined Inn tournament: "It appears the "Simulate" check-box moved on the Inn Tournaments. I want it
