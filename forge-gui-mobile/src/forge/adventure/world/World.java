@@ -826,6 +826,18 @@ public class World implements Disposable, SaveFileContent {
         return roadsNormalized;
     }
 
+    // Round 394: DungeonRotation.BALANCE_VERSION this world's dungeon mix follows (saved as rotationBalanced); 0 = a save
+    // from before the per-kind balance - DungeonRotation.balanceOnLoad() balances it once.
+    private int rotationBalanced;
+
+    public int getRotationBalanced() {
+        return rotationBalanced;
+    }
+
+    public void setRotationBalanced(int version) {
+        rotationBalanced = version;
+    }
+
     public void setRoadsNormalized(int version) {
         roadsNormalized = version;
     }
@@ -1138,6 +1150,7 @@ public class World implements Disposable, SaveFileContent {
         obstacleSweep = saveFileData.containsKey("obstaclesSwept") ? saveFileData.readInt("obstaclesSwept") : 0;
         playerRoadsBuilt = saveFileData.containsKey("playerRoadsBuilt") ? saveFileData.readInt("playerRoadsBuilt") : 0; // round 346
         roadsNormalized = saveFileData.containsKey("roadsNormalized") ? saveFileData.readInt("roadsNormalized") : 0; // round 351
+        rotationBalanced = saveFileData.containsKey("rotationBalanced") ? saveFileData.readInt("rotationBalanced") : 0; // round 394
         plazaLayout = saveFileData.containsKey("plazaLayout") ? saveFileData.readInt("plazaLayout") : 0; // round 370
         ResourceSpawns.forceResync(); // actors on WorldStage must rebuild from this loaded state
 
@@ -1319,6 +1332,7 @@ public class World implements Disposable, SaveFileContent {
         data.store("obstaclesSwept", obstacleSweep);
         data.store("playerRoadsBuilt", playerRoadsBuilt); // round 346
         data.store("roadsNormalized", roadsNormalized); // round 351
+        data.store("rotationBalanced", rotationBalanced); // round 394
         data.store("plazaLayout", plazaLayout); // round 370
         saveBarrier(data); // round 294
         data.storeObject("poiDespawnDay", poiDespawnDay);

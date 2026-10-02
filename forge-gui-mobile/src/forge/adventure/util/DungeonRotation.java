@@ -340,15 +340,27 @@ public class DungeonRotation {
         }
         if (rotatable.isEmpty())
             return;
-        int activeTarget = Math.max(1, Math.round(rotatable.size() / (float) POOL_MULTIPLIER));
+        // Round 394: each kind of place starts with its own share on the map (typeQuota) - one shuffled draw over all of
+        // them put 5 of the 10 Mind Slaver's Encampments by the user's start, where the data asks for 2.
         java.util.Collections.shuffle(rotatable, world.getRandom());
-        for (int i = activeTarget; i < rotatable.size(); i++)
-            rotatable.get(i).setActive(false); // reserve pool - no cooldown, immediately swappable
-        for (int i = 0; i < Math.min(activeTarget, rotatable.size()); i++)
-            DungeonSources.onAppeared(world, rotatable.get(i), world.getCurrentDay()); // round 377: their age starts
+        java.util.Map<String, int[]> tally = typeTally(world);
+        java.util.Map<String, Integer> shown = new java.util.HashMap<>();
+        int activeTarget = 0;
+        for (PointOfInterest poi : rotatable) {
+            String type = typeKey(poi);
+            int n = shown.getOrDefault(type, 0);
+            if (n < typeQuota(tally.get(type)[0])) {
+                shown.put(type, n + 1);
+                activeTarget++;
+                DungeonSources.onAppeared(world, poi, world.getCurrentDay()); // round 377: their age starts
+            } else {
+                poi.setActive(false); // reserve pool - no cooldown, immediately swappable
+            }
+        }
         world.setPoiActiveTarget(activeTarget);
+        world.setRotationBalanced(BALANCE_VERSION);
         System.out.println("[DungeonRotation] new world: " + activeTarget + " of " + rotatable.size()
-                + " rotatable dungeons/caves active, the rest held in reserve");
+                + " rotatable dungeons/caves active, the rest held in reserve - each kind at its share (round 394)");
     }
 
     private static final int QUEST_NONE = 0, QUEST_SIDE = 1, QUEST_STORY = 2;
@@ -561,8 +573,22 @@ public class DungeonRotation {
         }
         int target = world.getPoiActiveTarget();
         boolean changed = false;
+        java.util.Map<String, int[]> tally = typeTally(world);
         while (activeCount < target && !eligibleReserve.isEmpty()) {
-            PointOfInterest pick = eligibleReserve.remove(world.getRandom().nextInt(eligibleReserve.size()));
+            // Round 394: a kind below its share first - a dungeon that leaves is mostly replaced by its own kind or
+            // another one short of its share, so the mix stays what the data asks for.
+            java.util.List<PointOfInterest> under = new java.util.ArrayList<>();
+            for (PointOfInterest p : eligibleReserve) {
+                int[] t = tally.get(typeKey(p));
+                if (t != null && t[1] < typeQuota(t[0]))
+                    under.add(p);
+            }
+            java.util.List<PointOfInterest> from = under.isEmpty() ? eligibleReserve : under;
+            PointOfInterest pick = from.get(world.getRandom().nextInt(from.size()));
+            eligibleReserve.remove(pick);
+            int[] pickTally = tally.get(typeKey(pick));
+            if (pickTally != null)
+                pickTally[1]++;
             pick.setActive(true);
             int restocked = restock(pick); // round 299: a spot the player emptied before comes back full
             if (restocked > 0)
@@ -815,5 +841,92 @@ public class DungeonRotation {
 
     private static int rollDays(World world, int min, int max) {
         return min + world.getRandom().nextInt(max - min + 1);
+    }
+
+    // ------------------------------------------------------------------ round 394: each kind's share
+
+    /** Bumped when the per-kind balance rules change and every save should be balanced again (World.rotationBalanced). */
+    public static final int BALANCE_VERSION = 1;
+
+    /** A place's kind - its data entry; every copy world-gen placed of one entry is one kind. */
+    static String typeKey(PointOfInterest poi) {
+        return poi.getData() == null ? "" : poi.getData().name;
+    }
+
+    /** How many of a kind the map shows at once: the copies placed / POOL_MULTIPLIER (its data count per land), at least 1. */
+    static int typeQuota(int placed) {
+        return Math.max(1, Math.round(placed / (float) POOL_MULTIPLIER));
+    }
+
+    /** Every rotatable kind in this world: {copies placed, copies on the map now}. */
+    static java.util.Map<String, int[]> typeTally(World world) {
+        java.util.Map<String, int[]> out = new java.util.HashMap<>();
+        for (PointOfInterest poi : world.getAllPointOfInterest()) {
+            if (!isRotatable(poi))
+                continue;
+            int[] t = out.computeIfAbsent(typeKey(poi), k -> new int[2]);
+            t[0]++;
+            if (poi.getActive())
+                t[1]++;
+        }
+        return out;
+    }
+
+    /**
+     * Round 394 (the user: "There seems to be a lot of Mind Slaver dungeons on my map" - their world showed 5 of its 10
+     * placed, where its share is 2; then "go ahead with the per-type rotation balance"): a save from before this round
+     * is balanced once on load. A kind over its share loses its surplus - only copies the player never went into, that
+     * no quest needs and that hold no loot, farthest from the player first - and the reserve refills the kinds short of
+     * theirs. Copies the player has been into stay; the kind settles as they rotate out.
+     */
+    public static void balanceOnLoad(World world) {
+        if (!isEnabled() || world == null || world.getRotationBalanced() >= BALANCE_VERSION)
+            return;
+        world.setRotationBalanced(BALANCE_VERSION);
+        int day = world.getCurrentDay();
+        java.util.Map<String, int[]> tally = typeTally(world);
+        com.badlogic.gdx.math.Vector2 here = forge.adventure.stage.WorldStage.getInstance().getPlayerSprite() == null ? null
+                : new com.badlogic.gdx.math.Vector2(forge.adventure.stage.WorldStage.getInstance().getPlayerSprite().getX(),
+                forge.adventure.stage.WorldStage.getInstance().getPlayerSprite().getY());
+        java.util.Map<String, java.util.List<PointOfInterest>> active = new java.util.HashMap<>();
+        for (PointOfInterest poi : world.getAllPointOfInterest())
+            if (isRotatable(poi) && poi.getActive())
+                active.computeIfAbsent(typeKey(poi), k -> new java.util.ArrayList<>()).add(poi);
+        int hidden = 0, kinds = 0;
+        StringBuilder detail = new StringBuilder();
+        for (java.util.Map.Entry<String, java.util.List<PointOfInterest>> e : active.entrySet()) {
+            int quota = typeQuota(tally.get(e.getKey())[0]);
+            int surplus = e.getValue().size() - quota;
+            if (surplus <= 0)
+                continue;
+            java.util.List<PointOfInterest> spare = new java.util.ArrayList<>();
+            for (PointOfInterest poi : e.getValue()) {
+                forge.adventure.pointofintrest.PointOfInterestChanges c =
+                        WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
+                boolean visited = c != null && c.hasDeletedObjects();
+                if (!visited && activeQuestStatus(poi) == QUEST_NONE && !world.getPoiLootHeldDay().containsKey(poi.getID()))
+                    spare.add(poi);
+            }
+            if (here != null)
+                spare.sort((a, b) -> Float.compare(b.getPosition().dst2(here), a.getPosition().dst2(here)));
+            int took = 0;
+            for (int i = 0; i < Math.min(surplus, spare.size()); i++) {
+                hidePoi(world, spare.get(i), day, null);
+                took++;
+            }
+            if (took > 0) {
+                hidden += took;
+                kinds++;
+                detail.append(detail.length() == 0 ? "" : ", ").append(e.getValue().get(0).getDisplayName())
+                        .append(" ").append(e.getValue().size()).append("->").append(e.getValue().size() - took)
+                        .append(" (share ").append(quota).append(")");
+            }
+        }
+        boolean refilled = activateFromReserve(world, day);
+        if (hidden > 0 || refilled)
+            world.refreshWorldMapMarkers();
+        System.out.println("[TFR-RotationBalance] save balanced once: " + hidden + " surplus place(s) of " + kinds
+                + " kind(s) taken off the map, the reserve refilled the kinds short of their share"
+                + (detail.length() == 0 ? "" : ": " + detail));
     }
 }

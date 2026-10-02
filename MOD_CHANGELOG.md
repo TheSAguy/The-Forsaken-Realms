@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 394: each kind of dungeon at its share of the map (2026-10-01)
+
+The user: "There seems to be a lot of Mind Slaver dungeons on my map." Their save (read-only PoiCount tool): 10
+Mind Slaver's Encampments placed (count 2 x POOL_MULTIPLIER 5), 5 on the map, all near the start - rotation drew its
+397 of 1985 active places in ONE shuffled draw, so each kind's number was a binomial roll (of the 54 kinds with 10
+copies, most showed 1-3, two showed 5). "go ahead with the per-type rotation balance":
+
+- A kind's share = the copies world-gen placed / POOL_MULTIPLIER (its data count per land listing it), at least 1
+  (`DungeonRotation.typeQuota`, per data name). A new world activates each kind's share (`initializeNewWorld`); the
+  daily refill takes a kind below its share first (`activateFromReserve`), any kind only when none is short.
+- Saves balance once on load (`balanceOnLoad`, World `rotationBalanced` / `BALANCE_VERSION` 1, after the stage load):
+  a kind over its share loses its surplus - copies the player never went into, no quest needs and that hold no loot,
+  farthest from the player first (hidden with the usual respawn cooldown) - and the reserve refills the short kinds.
+  `[TFR-RotationBalance]`.
+- Agent-checked on a copy of the user's world: 106 surplus places of 80 kinds off the map, Mind Slaver's
+  Encampment 5 -> 2, kinds at their share 134 -> 315 (the three still over are non-rotating kinds - two NoRotate Blue
+  Towers and the Aerie), 433 on the map before and after; a new world: 397 of 1985, each kind at its share.
+
 ## Round 393: the White Tower church's skeleton stays inside (2026-10-01)
 
 The user: "The White tower dungeon has a skeleton walking outside the boundaries." The church map

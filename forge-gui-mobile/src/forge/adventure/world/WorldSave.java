@@ -290,6 +290,9 @@ public class WorldSave {
                     // cache. No-op when fog of war is off.
                     currentSave.world.rebuildFogOfWarPixmap();
                     WorldStage.getInstance().load(mainData.readSubData("worldStage"));
+                    // Round 394: a save from before the per-kind balance gets its dungeon mix balanced once - after the
+                    // stage load, so "farthest from the player first" knows where the player stands.
+                    forge.adventure.util.DungeonRotation.balanceOnLoad(currentSave.world);
                     // generateNew() never runs for a loaded save, so nothing has pre-built Territory
                     // Control's per-color WFC structure patterns yet - kick that off now, in the
                     // background, so the first in-game day that triggers expansion doesn't have to
