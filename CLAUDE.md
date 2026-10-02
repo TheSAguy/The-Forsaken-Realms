@@ -58,6 +58,11 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-02 (late): **v1.17.1 "Old Foes, New Doors" RELEASED** - tag `tfr-v1.17.1` @ `c8046cdc889`, published
+20:41 UTC, Latest; = v1.17 + round 405 (win streak by difficulty: Normal 5 / Hard 4 / Insane 3, Easy off); PC zip 278.5 MB,
+APK 13.5 MB (11701, signer ee603925), assets.zip 230.7 MB (build.txt pair 2026-10-02 20:39:08); artifacts in
+C:/TFR/release/v1.17.1/; live + agent = the release. Nothing is unreleased. v1.17 stays up as the previous release.
+
 ## STATE 2026-10-02: **v1.17 "Old Foes, New Doors" RELEASED** - tag `tfr-v1.17` @ `e4e07f36dfb`, published 20:11 UTC,
 Latest; rounds 388-404 on Forge 2.0.16 (10.01 daily, upstream `da9e24cb3a0`); PC zip 278.5 MB, APK 13.5 MB (11700,
 signer ee603925), assets.zip 230.7 MB (build.txt pair 2026-10-02 19:40:29); artifacts in C:/TFR/release/v1.17/; live +
