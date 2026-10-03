@@ -1,5 +1,5 @@
 the_scarab_god.png
-size: 980,280
+size: 924,334
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,142 +8,139 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 70, 36
+  size: 66, 45
 Idle
-  xy: 70, 64
-  size: 70, 36
+  xy: 66, 64
+  size: 66, 45
 Idle
-  xy: 140, 64
-  size: 70, 36
+  xy: 132, 64
+  size: 66, 45
 Idle
-  xy: 210, 64
-  size: 70, 36
+  xy: 198, 64
+  size: 66, 45
 Idle
-  xy: 280, 64
-  size: 70, 36
+  xy: 264, 64
+  size: 66, 45
 Idle
-  xy: 350, 64
-  size: 70, 36
+  xy: 330, 64
+  size: 66, 45
 Idle
-  xy: 420, 64
-  size: 70, 36
+  xy: 396, 64
+  size: 66, 45
 Idle
-  xy: 490, 64
-  size: 70, 36
+  xy: 462, 64
+  size: 66, 45
 Idle
-  xy: 560, 64
-  size: 70, 36
+  xy: 528, 64
+  size: 66, 45
 Idle
-  xy: 630, 64
-  size: 70, 36
+  xy: 594, 64
+  size: 66, 45
 Walk
-  xy: 0, 100
-  size: 70, 36
+  xy: 0, 109
+  size: 66, 45
 Walk
-  xy: 70, 100
-  size: 70, 36
+  xy: 66, 109
+  size: 66, 45
 Walk
-  xy: 140, 100
-  size: 70, 36
+  xy: 132, 109
+  size: 66, 45
 Walk
-  xy: 210, 100
-  size: 70, 36
+  xy: 198, 109
+  size: 66, 45
 Attack
-  xy: 0, 136
-  size: 70, 36
+  xy: 0, 154
+  size: 66, 45
 Attack
-  xy: 70, 136
-  size: 70, 36
+  xy: 66, 154
+  size: 66, 45
 Attack
-  xy: 140, 136
-  size: 70, 36
+  xy: 132, 154
+  size: 66, 45
 Attack
-  xy: 210, 136
-  size: 70, 36
+  xy: 198, 154
+  size: 66, 45
 Attack
-  xy: 280, 136
-  size: 70, 36
+  xy: 264, 154
+  size: 66, 45
 Attack
-  xy: 350, 136
-  size: 70, 36
-Attack
-  xy: 420, 136
-  size: 70, 36
+  xy: 330, 154
+  size: 66, 45
 Hit
-  xy: 0, 172
-  size: 70, 36
+  xy: 0, 199
+  size: 66, 45
 Hit
-  xy: 70, 172
-  size: 70, 36
+  xy: 66, 199
+  size: 66, 45
 Hit
-  xy: 140, 172
-  size: 70, 36
+  xy: 132, 199
+  size: 66, 45
 Hit
-  xy: 210, 172
-  size: 70, 36
+  xy: 198, 199
+  size: 66, 45
 Hit
-  xy: 280, 172
-  size: 70, 36
+  xy: 264, 199
+  size: 66, 45
 Death
-  xy: 0, 208
-  size: 70, 36
-Death
-  xy: 70, 208
-  size: 70, 36
-Death
-  xy: 140, 208
-  size: 70, 36
-Death
-  xy: 210, 208
-  size: 70, 36
-Death
-  xy: 280, 208
-  size: 70, 36
-Death
-  xy: 350, 208
-  size: 70, 36
-Death
-  xy: 420, 208
-  size: 70, 36
-Death
-  xy: 490, 208
-  size: 70, 36
-Death
-  xy: 560, 208
-  size: 70, 36
-Death
-  xy: 630, 208
-  size: 70, 36
-Death
-  xy: 700, 208
-  size: 70, 36
-Death
-  xy: 770, 208
-  size: 70, 36
-Death
-  xy: 840, 208
-  size: 70, 36
-Death
-  xy: 910, 208
-  size: 70, 36
-Wake
   xy: 0, 244
-  size: 70, 36
+  size: 66, 45
+Death
+  xy: 66, 244
+  size: 66, 45
+Death
+  xy: 132, 244
+  size: 66, 45
+Death
+  xy: 198, 244
+  size: 66, 45
+Death
+  xy: 264, 244
+  size: 66, 45
+Death
+  xy: 330, 244
+  size: 66, 45
+Death
+  xy: 396, 244
+  size: 66, 45
+Death
+  xy: 462, 244
+  size: 66, 45
+Death
+  xy: 528, 244
+  size: 66, 45
+Death
+  xy: 594, 244
+  size: 66, 45
+Death
+  xy: 660, 244
+  size: 66, 45
+Death
+  xy: 726, 244
+  size: 66, 45
+Death
+  xy: 792, 244
+  size: 66, 45
+Death
+  xy: 858, 244
+  size: 66, 45
 Wake
-  xy: 70, 244
-  size: 70, 36
+  xy: 0, 289
+  size: 66, 45
 Wake
-  xy: 140, 244
-  size: 70, 36
+  xy: 66, 289
+  size: 66, 45
 Wake
-  xy: 210, 244
-  size: 70, 36
+  xy: 132, 289
+  size: 66, 45
 Wake
-  xy: 280, 244
-  size: 70, 36
+  xy: 198, 289
+  size: 66, 45
 Wake
-  xy: 350, 244
-  size: 70, 36
+  xy: 264, 289
+  size: 66, 45
 Wake
-  xy: 420, 244
-  size: 70, 36
+  xy: 330, 289
+  size: 66, 45
+Wake
+  xy: 396, 289
+  size: 66, 45

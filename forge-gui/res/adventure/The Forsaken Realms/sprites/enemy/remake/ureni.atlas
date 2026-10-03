@@ -1,5 +1,5 @@
 ureni.png
-size: 988,358
+size: 1040,382
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,142 +8,142 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 76, 49
+  size: 80, 53
 Idle
-  xy: 76, 64
-  size: 76, 49
+  xy: 80, 64
+  size: 80, 53
 Idle
-  xy: 152, 64
-  size: 76, 49
+  xy: 160, 64
+  size: 80, 53
 Idle
-  xy: 228, 64
-  size: 76, 49
+  xy: 240, 64
+  size: 80, 53
 Idle
-  xy: 304, 64
-  size: 76, 49
+  xy: 320, 64
+  size: 80, 53
 Idle
-  xy: 380, 64
-  size: 76, 49
+  xy: 400, 64
+  size: 80, 53
 Idle
-  xy: 456, 64
-  size: 76, 49
+  xy: 480, 64
+  size: 80, 53
 Idle
-  xy: 532, 64
-  size: 76, 49
+  xy: 560, 64
+  size: 80, 53
 Idle
-  xy: 608, 64
-  size: 76, 49
+  xy: 640, 64
+  size: 80, 53
 Idle
-  xy: 684, 64
-  size: 76, 49
+  xy: 720, 64
+  size: 80, 53
 Walk
-  xy: 0, 113
-  size: 76, 49
+  xy: 0, 117
+  size: 80, 53
 Walk
-  xy: 76, 113
-  size: 76, 49
+  xy: 80, 117
+  size: 80, 53
 Walk
-  xy: 152, 113
-  size: 76, 49
+  xy: 160, 117
+  size: 80, 53
 Walk
-  xy: 228, 113
-  size: 76, 49
+  xy: 240, 117
+  size: 80, 53
 Attack
-  xy: 0, 162
-  size: 76, 49
+  xy: 0, 170
+  size: 80, 53
 Attack
-  xy: 76, 162
-  size: 76, 49
+  xy: 80, 170
+  size: 80, 53
 Attack
-  xy: 152, 162
-  size: 76, 49
+  xy: 160, 170
+  size: 80, 53
 Attack
-  xy: 228, 162
-  size: 76, 49
+  xy: 240, 170
+  size: 80, 53
 Attack
-  xy: 304, 162
-  size: 76, 49
+  xy: 320, 170
+  size: 80, 53
 Attack
-  xy: 380, 162
-  size: 76, 49
+  xy: 400, 170
+  size: 80, 53
 Attack
-  xy: 456, 162
-  size: 76, 49
+  xy: 480, 170
+  size: 80, 53
 Attack
-  xy: 532, 162
-  size: 76, 49
+  xy: 560, 170
+  size: 80, 53
 Hit
-  xy: 0, 211
-  size: 76, 49
+  xy: 0, 223
+  size: 80, 53
 Hit
-  xy: 76, 211
-  size: 76, 49
+  xy: 80, 223
+  size: 80, 53
 Hit
-  xy: 152, 211
-  size: 76, 49
+  xy: 160, 223
+  size: 80, 53
 Hit
-  xy: 228, 211
-  size: 76, 49
+  xy: 240, 223
+  size: 80, 53
 Hit
-  xy: 304, 211
-  size: 76, 49
+  xy: 320, 223
+  size: 80, 53
 Death
-  xy: 0, 260
-  size: 76, 49
+  xy: 0, 276
+  size: 80, 53
 Death
-  xy: 76, 260
-  size: 76, 49
+  xy: 80, 276
+  size: 80, 53
 Death
-  xy: 152, 260
-  size: 76, 49
+  xy: 160, 276
+  size: 80, 53
 Death
-  xy: 228, 260
-  size: 76, 49
+  xy: 240, 276
+  size: 80, 53
 Death
-  xy: 304, 260
-  size: 76, 49
+  xy: 320, 276
+  size: 80, 53
 Death
-  xy: 380, 260
-  size: 76, 49
+  xy: 400, 276
+  size: 80, 53
 Death
-  xy: 456, 260
-  size: 76, 49
+  xy: 480, 276
+  size: 80, 53
 Death
-  xy: 532, 260
-  size: 76, 49
+  xy: 560, 276
+  size: 80, 53
 Death
-  xy: 608, 260
-  size: 76, 49
+  xy: 640, 276
+  size: 80, 53
 Death
-  xy: 684, 260
-  size: 76, 49
+  xy: 720, 276
+  size: 80, 53
 Death
-  xy: 760, 260
-  size: 76, 49
+  xy: 800, 276
+  size: 80, 53
 Death
-  xy: 836, 260
-  size: 76, 49
+  xy: 880, 276
+  size: 80, 53
 Death
-  xy: 912, 260
-  size: 76, 49
+  xy: 960, 276
+  size: 80, 53
 Wake
-  xy: 0, 309
-  size: 76, 49
+  xy: 0, 329
+  size: 80, 53
 Wake
-  xy: 76, 309
-  size: 76, 49
+  xy: 80, 329
+  size: 80, 53
 Wake
-  xy: 152, 309
-  size: 76, 49
+  xy: 160, 329
+  size: 80, 53
 Wake
-  xy: 228, 309
-  size: 76, 49
+  xy: 240, 329
+  size: 80, 53
 Wake
-  xy: 304, 309
-  size: 76, 49
+  xy: 320, 329
+  size: 80, 53
 Wake
-  xy: 380, 309
-  size: 76, 49
+  xy: 400, 329
+  size: 80, 53
 Wake
-  xy: 456, 309
-  size: 76, 49
+  xy: 480, 329
+  size: 80, 53

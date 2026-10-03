@@ -1,5 +1,5 @@
 eye.png
-size: 456,310
+size: 456,322
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,136 +8,136 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 38, 41
+  size: 38, 43
 Idle
   xy: 38, 64
-  size: 38, 41
+  size: 38, 43
 Idle
   xy: 76, 64
-  size: 38, 41
+  size: 38, 43
 Idle
   xy: 114, 64
-  size: 38, 41
+  size: 38, 43
 Idle
   xy: 152, 64
-  size: 38, 41
+  size: 38, 43
 Idle
   xy: 190, 64
-  size: 38, 41
+  size: 38, 43
 Idle
   xy: 228, 64
-  size: 38, 41
+  size: 38, 43
 Idle
   xy: 266, 64
-  size: 38, 41
+  size: 38, 43
 Idle
   xy: 304, 64
-  size: 38, 41
+  size: 38, 43
 Idle
   xy: 342, 64
-  size: 38, 41
+  size: 38, 43
 Walk
-  xy: 0, 105
-  size: 38, 41
+  xy: 0, 107
+  size: 38, 43
 Walk
-  xy: 38, 105
-  size: 38, 41
+  xy: 38, 107
+  size: 38, 43
 Walk
-  xy: 76, 105
-  size: 38, 41
+  xy: 76, 107
+  size: 38, 43
 Walk
-  xy: 114, 105
-  size: 38, 41
+  xy: 114, 107
+  size: 38, 43
 Attack
-  xy: 0, 146
-  size: 38, 41
+  xy: 0, 150
+  size: 38, 43
 Attack
-  xy: 38, 146
-  size: 38, 41
+  xy: 38, 150
+  size: 38, 43
 Attack
-  xy: 76, 146
-  size: 38, 41
+  xy: 76, 150
+  size: 38, 43
 Attack
-  xy: 114, 146
-  size: 38, 41
+  xy: 114, 150
+  size: 38, 43
 Attack
-  xy: 152, 146
-  size: 38, 41
+  xy: 152, 150
+  size: 38, 43
 Attack
-  xy: 190, 146
-  size: 38, 41
+  xy: 190, 150
+  size: 38, 43
 Attack
-  xy: 228, 146
-  size: 38, 41
+  xy: 228, 150
+  size: 38, 43
 Attack
-  xy: 266, 146
-  size: 38, 41
+  xy: 266, 150
+  size: 38, 43
 Attack
-  xy: 304, 146
-  size: 38, 41
+  xy: 304, 150
+  size: 38, 43
 Hit
-  xy: 0, 187
-  size: 38, 41
+  xy: 0, 193
+  size: 38, 43
 Hit
-  xy: 38, 187
-  size: 38, 41
+  xy: 38, 193
+  size: 38, 43
 Hit
-  xy: 76, 187
-  size: 38, 41
+  xy: 76, 193
+  size: 38, 43
 Hit
-  xy: 114, 187
-  size: 38, 41
+  xy: 114, 193
+  size: 38, 43
 Death
-  xy: 0, 228
-  size: 38, 41
+  xy: 0, 236
+  size: 38, 43
 Death
-  xy: 38, 228
-  size: 38, 41
+  xy: 38, 236
+  size: 38, 43
 Death
-  xy: 76, 228
-  size: 38, 41
+  xy: 76, 236
+  size: 38, 43
 Death
-  xy: 114, 228
-  size: 38, 41
+  xy: 114, 236
+  size: 38, 43
 Death
-  xy: 152, 228
-  size: 38, 41
+  xy: 152, 236
+  size: 38, 43
 Death
-  xy: 190, 228
-  size: 38, 41
+  xy: 190, 236
+  size: 38, 43
 Death
-  xy: 228, 228
-  size: 38, 41
+  xy: 228, 236
+  size: 38, 43
 Death
-  xy: 266, 228
-  size: 38, 41
+  xy: 266, 236
+  size: 38, 43
 Death
-  xy: 304, 228
-  size: 38, 41
+  xy: 304, 236
+  size: 38, 43
 Death
-  xy: 342, 228
-  size: 38, 41
+  xy: 342, 236
+  size: 38, 43
 Death
-  xy: 380, 228
-  size: 38, 41
+  xy: 380, 236
+  size: 38, 43
 Death
-  xy: 418, 228
-  size: 38, 41
+  xy: 418, 236
+  size: 38, 43
 Wake
-  xy: 0, 269
-  size: 38, 41
+  xy: 0, 279
+  size: 38, 43
 Wake
-  xy: 38, 269
-  size: 38, 41
+  xy: 38, 279
+  size: 38, 43
 Wake
-  xy: 76, 269
-  size: 38, 41
+  xy: 76, 279
+  size: 38, 43
 Wake
-  xy: 114, 269
-  size: 38, 41
+  xy: 114, 279
+  size: 38, 43
 Wake
-  xy: 152, 269
-  size: 38, 41
+  xy: 152, 279
+  size: 38, 43
 Wake
-  xy: 190, 269
-  size: 38, 41
+  xy: 190, 279
+  size: 38, 43

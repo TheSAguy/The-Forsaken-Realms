@@ -1,5 +1,5 @@
 arcades.png
-size: 780,292
+size: 832,316
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,136 +8,136 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 60, 38
+  size: 64, 42
 Idle
-  xy: 60, 64
-  size: 60, 38
+  xy: 64, 64
+  size: 64, 42
 Idle
-  xy: 120, 64
-  size: 60, 38
+  xy: 128, 64
+  size: 64, 42
 Idle
-  xy: 180, 64
-  size: 60, 38
+  xy: 192, 64
+  size: 64, 42
 Idle
-  xy: 240, 64
-  size: 60, 38
+  xy: 256, 64
+  size: 64, 42
 Idle
-  xy: 300, 64
-  size: 60, 38
+  xy: 320, 64
+  size: 64, 42
 Idle
-  xy: 360, 64
-  size: 60, 38
+  xy: 384, 64
+  size: 64, 42
 Idle
-  xy: 420, 64
-  size: 60, 38
+  xy: 448, 64
+  size: 64, 42
 Idle
-  xy: 480, 64
-  size: 60, 38
+  xy: 512, 64
+  size: 64, 42
 Idle
-  xy: 540, 64
-  size: 60, 38
+  xy: 576, 64
+  size: 64, 42
 Walk
-  xy: 0, 102
-  size: 60, 38
+  xy: 0, 106
+  size: 64, 42
 Walk
-  xy: 60, 102
-  size: 60, 38
+  xy: 64, 106
+  size: 64, 42
 Walk
-  xy: 120, 102
-  size: 60, 38
+  xy: 128, 106
+  size: 64, 42
 Walk
-  xy: 180, 102
-  size: 60, 38
+  xy: 192, 106
+  size: 64, 42
 Attack
-  xy: 0, 140
-  size: 60, 38
+  xy: 0, 148
+  size: 64, 42
 Attack
-  xy: 60, 140
-  size: 60, 38
+  xy: 64, 148
+  size: 64, 42
 Attack
-  xy: 120, 140
-  size: 60, 38
+  xy: 128, 148
+  size: 64, 42
 Attack
-  xy: 180, 140
-  size: 60, 38
+  xy: 192, 148
+  size: 64, 42
 Attack
-  xy: 240, 140
-  size: 60, 38
+  xy: 256, 148
+  size: 64, 42
 Attack
-  xy: 300, 140
-  size: 60, 38
+  xy: 320, 148
+  size: 64, 42
 Attack
-  xy: 360, 140
-  size: 60, 38
+  xy: 384, 148
+  size: 64, 42
 Attack
-  xy: 420, 140
-  size: 60, 38
+  xy: 448, 148
+  size: 64, 42
 Hit
-  xy: 0, 178
-  size: 60, 38
+  xy: 0, 190
+  size: 64, 42
 Hit
-  xy: 60, 178
-  size: 60, 38
+  xy: 64, 190
+  size: 64, 42
 Hit
-  xy: 120, 178
-  size: 60, 38
+  xy: 128, 190
+  size: 64, 42
 Hit
-  xy: 180, 178
-  size: 60, 38
+  xy: 192, 190
+  size: 64, 42
 Death
-  xy: 0, 216
-  size: 60, 38
+  xy: 0, 232
+  size: 64, 42
 Death
-  xy: 60, 216
-  size: 60, 38
+  xy: 64, 232
+  size: 64, 42
 Death
-  xy: 120, 216
-  size: 60, 38
+  xy: 128, 232
+  size: 64, 42
 Death
-  xy: 180, 216
-  size: 60, 38
+  xy: 192, 232
+  size: 64, 42
 Death
-  xy: 240, 216
-  size: 60, 38
+  xy: 256, 232
+  size: 64, 42
 Death
-  xy: 300, 216
-  size: 60, 38
+  xy: 320, 232
+  size: 64, 42
 Death
-  xy: 360, 216
-  size: 60, 38
+  xy: 384, 232
+  size: 64, 42
 Death
-  xy: 420, 216
-  size: 60, 38
+  xy: 448, 232
+  size: 64, 42
 Death
-  xy: 480, 216
-  size: 60, 38
+  xy: 512, 232
+  size: 64, 42
 Death
-  xy: 540, 216
-  size: 60, 38
+  xy: 576, 232
+  size: 64, 42
 Death
-  xy: 600, 216
-  size: 60, 38
+  xy: 640, 232
+  size: 64, 42
 Death
-  xy: 660, 216
-  size: 60, 38
+  xy: 704, 232
+  size: 64, 42
 Death
-  xy: 720, 216
-  size: 60, 38
+  xy: 768, 232
+  size: 64, 42
 Wake
-  xy: 0, 254
-  size: 60, 38
+  xy: 0, 274
+  size: 64, 42
 Wake
-  xy: 60, 254
-  size: 60, 38
+  xy: 64, 274
+  size: 64, 42
 Wake
-  xy: 120, 254
-  size: 60, 38
+  xy: 128, 274
+  size: 64, 42
 Wake
-  xy: 180, 254
-  size: 60, 38
+  xy: 192, 274
+  size: 64, 42
 Wake
-  xy: 240, 254
-  size: 60, 38
+  xy: 256, 274
+  size: 64, 42
 Wake
-  xy: 300, 254
-  size: 60, 38
+  xy: 320, 274
+  size: 64, 42

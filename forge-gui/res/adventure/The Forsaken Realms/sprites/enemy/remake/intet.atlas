@@ -1,5 +1,5 @@
 intet.png
-size: 1176,406
+size: 1204,418
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,148 +8,148 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 84, 57
+  size: 86, 59
 Idle
-  xy: 84, 64
-  size: 84, 57
+  xy: 86, 64
+  size: 86, 59
 Idle
-  xy: 168, 64
-  size: 84, 57
+  xy: 172, 64
+  size: 86, 59
 Idle
-  xy: 252, 64
-  size: 84, 57
+  xy: 258, 64
+  size: 86, 59
 Idle
-  xy: 336, 64
-  size: 84, 57
+  xy: 344, 64
+  size: 86, 59
 Idle
-  xy: 420, 64
-  size: 84, 57
+  xy: 430, 64
+  size: 86, 59
 Idle
-  xy: 504, 64
-  size: 84, 57
+  xy: 516, 64
+  size: 86, 59
 Idle
-  xy: 588, 64
-  size: 84, 57
+  xy: 602, 64
+  size: 86, 59
 Idle
-  xy: 672, 64
-  size: 84, 57
+  xy: 688, 64
+  size: 86, 59
 Idle
-  xy: 756, 64
-  size: 84, 57
+  xy: 774, 64
+  size: 86, 59
 Walk
-  xy: 0, 121
-  size: 84, 57
+  xy: 0, 123
+  size: 86, 59
 Walk
-  xy: 84, 121
-  size: 84, 57
+  xy: 86, 123
+  size: 86, 59
 Walk
-  xy: 168, 121
-  size: 84, 57
+  xy: 172, 123
+  size: 86, 59
 Walk
-  xy: 252, 121
-  size: 84, 57
+  xy: 258, 123
+  size: 86, 59
 Attack
-  xy: 0, 178
-  size: 84, 57
+  xy: 0, 182
+  size: 86, 59
 Attack
-  xy: 84, 178
-  size: 84, 57
+  xy: 86, 182
+  size: 86, 59
 Attack
-  xy: 168, 178
-  size: 84, 57
+  xy: 172, 182
+  size: 86, 59
 Attack
-  xy: 252, 178
-  size: 84, 57
+  xy: 258, 182
+  size: 86, 59
 Attack
-  xy: 336, 178
-  size: 84, 57
+  xy: 344, 182
+  size: 86, 59
 Attack
-  xy: 420, 178
-  size: 84, 57
+  xy: 430, 182
+  size: 86, 59
 Attack
-  xy: 504, 178
-  size: 84, 57
+  xy: 516, 182
+  size: 86, 59
 Attack
-  xy: 588, 178
-  size: 84, 57
+  xy: 602, 182
+  size: 86, 59
 Attack
-  xy: 672, 178
-  size: 84, 57
+  xy: 688, 182
+  size: 86, 59
 Hit
-  xy: 0, 235
-  size: 84, 57
+  xy: 0, 241
+  size: 86, 59
 Hit
-  xy: 84, 235
-  size: 84, 57
+  xy: 86, 241
+  size: 86, 59
 Hit
-  xy: 168, 235
-  size: 84, 57
+  xy: 172, 241
+  size: 86, 59
 Hit
-  xy: 252, 235
-  size: 84, 57
+  xy: 258, 241
+  size: 86, 59
 Hit
-  xy: 336, 235
-  size: 84, 57
+  xy: 344, 241
+  size: 86, 59
 Death
-  xy: 0, 292
-  size: 84, 57
+  xy: 0, 300
+  size: 86, 59
 Death
-  xy: 84, 292
-  size: 84, 57
+  xy: 86, 300
+  size: 86, 59
 Death
-  xy: 168, 292
-  size: 84, 57
+  xy: 172, 300
+  size: 86, 59
 Death
-  xy: 252, 292
-  size: 84, 57
+  xy: 258, 300
+  size: 86, 59
 Death
-  xy: 336, 292
-  size: 84, 57
+  xy: 344, 300
+  size: 86, 59
 Death
-  xy: 420, 292
-  size: 84, 57
+  xy: 430, 300
+  size: 86, 59
 Death
-  xy: 504, 292
-  size: 84, 57
+  xy: 516, 300
+  size: 86, 59
 Death
-  xy: 588, 292
-  size: 84, 57
+  xy: 602, 300
+  size: 86, 59
 Death
-  xy: 672, 292
-  size: 84, 57
+  xy: 688, 300
+  size: 86, 59
 Death
-  xy: 756, 292
-  size: 84, 57
+  xy: 774, 300
+  size: 86, 59
 Death
-  xy: 840, 292
-  size: 84, 57
+  xy: 860, 300
+  size: 86, 59
 Death
-  xy: 924, 292
-  size: 84, 57
+  xy: 946, 300
+  size: 86, 59
 Death
-  xy: 1008, 292
-  size: 84, 57
+  xy: 1032, 300
+  size: 86, 59
 Death
-  xy: 1092, 292
-  size: 84, 57
+  xy: 1118, 300
+  size: 86, 59
 Wake
-  xy: 0, 349
-  size: 84, 57
+  xy: 0, 359
+  size: 86, 59
 Wake
-  xy: 84, 349
-  size: 84, 57
+  xy: 86, 359
+  size: 86, 59
 Wake
-  xy: 168, 349
-  size: 84, 57
+  xy: 172, 359
+  size: 86, 59
 Wake
-  xy: 252, 349
-  size: 84, 57
+  xy: 258, 359
+  size: 86, 59
 Wake
-  xy: 336, 349
-  size: 84, 57
+  xy: 344, 359
+  size: 86, 59
 Wake
-  xy: 420, 349
-  size: 84, 57
+  xy: 430, 359
+  size: 86, 59
 Wake
-  xy: 504, 349
-  size: 84, 57
+  xy: 516, 359
+  size: 86, 59

@@ -1,5 +1,5 @@
 codie.png
-size: 728,442
+size: 728,466
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,148 +8,148 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 56, 63
+  size: 56, 67
 Idle
   xy: 56, 64
-  size: 56, 63
+  size: 56, 67
 Idle
   xy: 112, 64
-  size: 56, 63
+  size: 56, 67
 Idle
   xy: 168, 64
-  size: 56, 63
+  size: 56, 67
 Idle
   xy: 224, 64
-  size: 56, 63
+  size: 56, 67
 Idle
   xy: 280, 64
-  size: 56, 63
+  size: 56, 67
 Idle
   xy: 336, 64
-  size: 56, 63
+  size: 56, 67
 Idle
   xy: 392, 64
-  size: 56, 63
+  size: 56, 67
 Idle
   xy: 448, 64
-  size: 56, 63
+  size: 56, 67
 Idle
   xy: 504, 64
-  size: 56, 63
+  size: 56, 67
 Walk
-  xy: 0, 127
-  size: 56, 63
+  xy: 0, 131
+  size: 56, 67
 Walk
-  xy: 56, 127
-  size: 56, 63
+  xy: 56, 131
+  size: 56, 67
 Walk
-  xy: 112, 127
-  size: 56, 63
+  xy: 112, 131
+  size: 56, 67
 Walk
-  xy: 168, 127
-  size: 56, 63
+  xy: 168, 131
+  size: 56, 67
 Attack
-  xy: 0, 190
-  size: 56, 63
+  xy: 0, 198
+  size: 56, 67
 Attack
-  xy: 56, 190
-  size: 56, 63
+  xy: 56, 198
+  size: 56, 67
 Attack
-  xy: 112, 190
-  size: 56, 63
+  xy: 112, 198
+  size: 56, 67
 Attack
-  xy: 168, 190
-  size: 56, 63
+  xy: 168, 198
+  size: 56, 67
 Attack
-  xy: 224, 190
-  size: 56, 63
+  xy: 224, 198
+  size: 56, 67
 Attack
-  xy: 280, 190
-  size: 56, 63
+  xy: 280, 198
+  size: 56, 67
 Attack
-  xy: 336, 190
-  size: 56, 63
+  xy: 336, 198
+  size: 56, 67
 Attack
-  xy: 392, 190
-  size: 56, 63
+  xy: 392, 198
+  size: 56, 67
 Attack
-  xy: 448, 190
-  size: 56, 63
+  xy: 448, 198
+  size: 56, 67
 Attack
-  xy: 504, 190
-  size: 56, 63
+  xy: 504, 198
+  size: 56, 67
 Hit
-  xy: 0, 253
-  size: 56, 63
+  xy: 0, 265
+  size: 56, 67
 Hit
-  xy: 56, 253
-  size: 56, 63
+  xy: 56, 265
+  size: 56, 67
 Hit
-  xy: 112, 253
-  size: 56, 63
+  xy: 112, 265
+  size: 56, 67
 Hit
-  xy: 168, 253
-  size: 56, 63
+  xy: 168, 265
+  size: 56, 67
 Hit
-  xy: 224, 253
-  size: 56, 63
+  xy: 224, 265
+  size: 56, 67
 Death
-  xy: 0, 316
-  size: 56, 63
+  xy: 0, 332
+  size: 56, 67
 Death
-  xy: 56, 316
-  size: 56, 63
+  xy: 56, 332
+  size: 56, 67
 Death
-  xy: 112, 316
-  size: 56, 63
+  xy: 112, 332
+  size: 56, 67
 Death
-  xy: 168, 316
-  size: 56, 63
+  xy: 168, 332
+  size: 56, 67
 Death
-  xy: 224, 316
-  size: 56, 63
+  xy: 224, 332
+  size: 56, 67
 Death
-  xy: 280, 316
-  size: 56, 63
+  xy: 280, 332
+  size: 56, 67
 Death
-  xy: 336, 316
-  size: 56, 63
+  xy: 336, 332
+  size: 56, 67
 Death
-  xy: 392, 316
-  size: 56, 63
+  xy: 392, 332
+  size: 56, 67
 Death
-  xy: 448, 316
-  size: 56, 63
+  xy: 448, 332
+  size: 56, 67
 Death
-  xy: 504, 316
-  size: 56, 63
+  xy: 504, 332
+  size: 56, 67
 Death
-  xy: 560, 316
-  size: 56, 63
+  xy: 560, 332
+  size: 56, 67
 Death
-  xy: 616, 316
-  size: 56, 63
+  xy: 616, 332
+  size: 56, 67
 Death
-  xy: 672, 316
-  size: 56, 63
+  xy: 672, 332
+  size: 56, 67
 Wake
-  xy: 0, 379
-  size: 56, 63
+  xy: 0, 399
+  size: 56, 67
 Wake
-  xy: 56, 379
-  size: 56, 63
+  xy: 56, 399
+  size: 56, 67
 Wake
-  xy: 112, 379
-  size: 56, 63
+  xy: 112, 399
+  size: 56, 67
 Wake
-  xy: 168, 379
-  size: 56, 63
+  xy: 168, 399
+  size: 56, 67
 Wake
-  xy: 224, 379
-  size: 56, 63
+  xy: 224, 399
+  size: 56, 67
 Wake
-  xy: 280, 379
-  size: 56, 63
+  xy: 280, 399
+  size: 56, 67
 Wake
-  xy: 336, 379
-  size: 56, 63
+  xy: 336, 399
+  size: 56, 67

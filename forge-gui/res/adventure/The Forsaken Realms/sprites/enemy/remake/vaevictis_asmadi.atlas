@@ -1,5 +1,5 @@
 vaevictis_asmadi.png
-size: 1792,928
+size: 1792,946
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,160 +8,160 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 112, 144
+  size: 112, 147
 Idle
   xy: 112, 64
-  size: 112, 144
+  size: 112, 147
 Idle
   xy: 224, 64
-  size: 112, 144
+  size: 112, 147
 Idle
   xy: 336, 64
-  size: 112, 144
+  size: 112, 147
 Idle
   xy: 448, 64
-  size: 112, 144
+  size: 112, 147
 Idle
   xy: 560, 64
-  size: 112, 144
+  size: 112, 147
 Idle
   xy: 672, 64
-  size: 112, 144
+  size: 112, 147
 Idle
   xy: 784, 64
-  size: 112, 144
+  size: 112, 147
 Idle
   xy: 896, 64
-  size: 112, 144
+  size: 112, 147
 Idle
   xy: 1008, 64
-  size: 112, 144
+  size: 112, 147
 Walk
-  xy: 0, 208
-  size: 112, 144
+  xy: 0, 211
+  size: 112, 147
 Walk
-  xy: 112, 208
-  size: 112, 144
+  xy: 112, 211
+  size: 112, 147
 Walk
-  xy: 224, 208
-  size: 112, 144
+  xy: 224, 211
+  size: 112, 147
 Walk
-  xy: 336, 208
-  size: 112, 144
+  xy: 336, 211
+  size: 112, 147
 Attack
-  xy: 0, 352
-  size: 112, 144
+  xy: 0, 358
+  size: 112, 147
 Attack
-  xy: 112, 352
-  size: 112, 144
+  xy: 112, 358
+  size: 112, 147
 Attack
-  xy: 224, 352
-  size: 112, 144
+  xy: 224, 358
+  size: 112, 147
 Attack
-  xy: 336, 352
-  size: 112, 144
+  xy: 336, 358
+  size: 112, 147
 Attack
-  xy: 448, 352
-  size: 112, 144
+  xy: 448, 358
+  size: 112, 147
 Attack
-  xy: 560, 352
-  size: 112, 144
+  xy: 560, 358
+  size: 112, 147
 Attack
-  xy: 672, 352
-  size: 112, 144
+  xy: 672, 358
+  size: 112, 147
 Attack
-  xy: 784, 352
-  size: 112, 144
+  xy: 784, 358
+  size: 112, 147
 Attack
-  xy: 896, 352
-  size: 112, 144
+  xy: 896, 358
+  size: 112, 147
 Hit
-  xy: 0, 496
-  size: 112, 144
+  xy: 0, 505
+  size: 112, 147
 Hit
-  xy: 112, 496
-  size: 112, 144
+  xy: 112, 505
+  size: 112, 147
 Hit
-  xy: 224, 496
-  size: 112, 144
+  xy: 224, 505
+  size: 112, 147
 Hit
-  xy: 336, 496
-  size: 112, 144
+  xy: 336, 505
+  size: 112, 147
 Hit
-  xy: 448, 496
-  size: 112, 144
+  xy: 448, 505
+  size: 112, 147
 Hit
-  xy: 560, 496
-  size: 112, 144
+  xy: 560, 505
+  size: 112, 147
 Death
-  xy: 0, 640
-  size: 112, 144
+  xy: 0, 652
+  size: 112, 147
 Death
-  xy: 112, 640
-  size: 112, 144
+  xy: 112, 652
+  size: 112, 147
 Death
-  xy: 224, 640
-  size: 112, 144
+  xy: 224, 652
+  size: 112, 147
 Death
-  xy: 336, 640
-  size: 112, 144
+  xy: 336, 652
+  size: 112, 147
 Death
-  xy: 448, 640
-  size: 112, 144
+  xy: 448, 652
+  size: 112, 147
 Death
-  xy: 560, 640
-  size: 112, 144
+  xy: 560, 652
+  size: 112, 147
 Death
-  xy: 672, 640
-  size: 112, 144
+  xy: 672, 652
+  size: 112, 147
 Death
-  xy: 784, 640
-  size: 112, 144
+  xy: 784, 652
+  size: 112, 147
 Death
-  xy: 896, 640
-  size: 112, 144
+  xy: 896, 652
+  size: 112, 147
 Death
-  xy: 1008, 640
-  size: 112, 144
+  xy: 1008, 652
+  size: 112, 147
 Death
-  xy: 1120, 640
-  size: 112, 144
+  xy: 1120, 652
+  size: 112, 147
 Death
-  xy: 1232, 640
-  size: 112, 144
+  xy: 1232, 652
+  size: 112, 147
 Death
-  xy: 1344, 640
-  size: 112, 144
+  xy: 1344, 652
+  size: 112, 147
 Death
-  xy: 1456, 640
-  size: 112, 144
+  xy: 1456, 652
+  size: 112, 147
 Death
-  xy: 1568, 640
-  size: 112, 144
+  xy: 1568, 652
+  size: 112, 147
 Death
-  xy: 1680, 640
-  size: 112, 144
+  xy: 1680, 652
+  size: 112, 147
 Wake
-  xy: 0, 784
-  size: 112, 144
+  xy: 0, 799
+  size: 112, 147
 Wake
-  xy: 112, 784
-  size: 112, 144
+  xy: 112, 799
+  size: 112, 147
 Wake
-  xy: 224, 784
-  size: 112, 144
+  xy: 224, 799
+  size: 112, 147
 Wake
-  xy: 336, 784
-  size: 112, 144
+  xy: 336, 799
+  size: 112, 147
 Wake
-  xy: 448, 784
-  size: 112, 144
+  xy: 448, 799
+  size: 112, 147
 Wake
-  xy: 560, 784
-  size: 112, 144
+  xy: 560, 799
+  size: 112, 147
 Wake
-  xy: 672, 784
-  size: 112, 144
+  xy: 672, 799
+  size: 112, 147
 Wake
-  xy: 784, 784
-  size: 112, 144
+  xy: 784, 799
+  size: 112, 147

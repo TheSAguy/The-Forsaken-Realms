@@ -58,6 +58,11 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-02 (night, last): **round 409 LOCAL + UNRELEASED (data only)** - the 18 round-408 remakes re-exported
+with readable motion (the Royal Scarab lesson: every clip moves whole pixels, idles hold key poses); the four scarabs
+now have a beetle body plan with lifting wing cases and pinching mandibles (MOD_CHANGELOG round 409). Copied into
+the live + agent folders by hand like 408; the next package carries it. Not yet seen in the user's play.
+
 ## STATE 2026-10-02 (night, latest): **round 407 LOCAL + UNRELEASED** (committed after 408). Attacking-mage caps per
 difficulty by name: settings.json `attackingMagesEasy/Normal/Hard/Insane` 2/3/4/6 (replaces `baseAttackingMagesPerColor`
 + offsets; bonuses unchanged). Castle champions: each `<color>_castle.tmx` has two `castleChampion=<color>` enemies on the

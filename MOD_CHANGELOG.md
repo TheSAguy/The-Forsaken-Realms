@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 409: the remade enemies move so you can see it, and the scarabs became beetles (2026-10-02)
+
+The user's reference was the 16x16 Royal Scarab: three frames in a ping-pong loop (0.8 s). Its gold shell lifts 1-2 px
+off the body while the head dips and the mandibles shift - "pretty cool". Round 408's remakes moved realistically
+(idle breathing of half a pixel), which reads as frozen at game size. The user: "apply that to all other animations
+also". And on the scarab: "looks more like an ant or even a spider than a beetle" (with a photo of a green scarab).
+
+All 18 round-408 enemies re-exported from the generator (Procedural Pixel Creatures, the user's clone, branch
+`feature/forge-remake`), same seeds and colors:
+- Readable motion in every clip (the generator's new export setting `MotionBoost` 1.8). Idle, walk, attack, hit,
+  death and wake poses are amplified, and the idle gains held key poses: a bob, a head nod (a tilt for the eyes), tail
+  and wing stirs, two glances of the pupils. Each moving part travels whole pixels at game size.
+- The scarabs (Scarab, The Scarab God, Toxrill, Zask) got a beetle body plan. In profile it is one smooth oval: a
+  shield behind the head as wide as the wing cases and up to their crown, so nothing reads as a waist; a seam runs
+  down the back; a small head with clubbed antennae; no horn; legs long enough to show. They also got moving parts:
+  the wing cases breathe a few pixels off a darker abdomen while idle, stay shut while walking and flare wide in the
+  attack, and the ivory mandibles pinch.
+- Sizes as before, checked with `enemy_scale.sprite_body`: all 18 draw at full rank size (no frame-height cap). The
+  dragons keep the compact Rear attack.
+- Data only: 36 sprite files re-exported in place, `world/enemies.json` 3 scales (Korvold, Arcades, Toxrill: their
+  bodies moved by about a pixel). The boss / keepSize scales are unchanged (same body as round 408).
+- Checks: `validate_plane_data.py` unchanged; `sprite_artifact_audit.py --only remake` clean.
+- NOT seen in play yet. Console (F9): `spawn enemy Scarab`, `spawn enemy "The Scarab God"`,
+  `spawn enemy "Adult Green Dragon"`, `spawn enemy Eye`.
+
 ## Round 408: eighteen enemies redrawn with the creature generator (2026-10-02)
 
 Three tiny shared sprites drew 18 enemies: the green dragon (`dragon/adultgreendragon.atlas`, 16x16, Idle only - the

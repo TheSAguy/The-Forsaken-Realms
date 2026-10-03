@@ -1,5 +1,5 @@
 korvold.png
-size: 1248,412
+size: 1280,418
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,163 +8,163 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 78, 58
+  size: 80, 59
 Idle
-  xy: 78, 64
-  size: 78, 58
+  xy: 80, 64
+  size: 80, 59
 Idle
-  xy: 156, 64
-  size: 78, 58
+  xy: 160, 64
+  size: 80, 59
 Idle
-  xy: 234, 64
-  size: 78, 58
+  xy: 240, 64
+  size: 80, 59
 Idle
-  xy: 312, 64
-  size: 78, 58
+  xy: 320, 64
+  size: 80, 59
 Idle
-  xy: 390, 64
-  size: 78, 58
+  xy: 400, 64
+  size: 80, 59
 Idle
-  xy: 468, 64
-  size: 78, 58
+  xy: 480, 64
+  size: 80, 59
 Idle
-  xy: 546, 64
-  size: 78, 58
+  xy: 560, 64
+  size: 80, 59
 Idle
-  xy: 624, 64
-  size: 78, 58
+  xy: 640, 64
+  size: 80, 59
 Idle
-  xy: 702, 64
-  size: 78, 58
+  xy: 720, 64
+  size: 80, 59
 Walk
-  xy: 0, 122
-  size: 78, 58
+  xy: 0, 123
+  size: 80, 59
 Walk
-  xy: 78, 122
-  size: 78, 58
+  xy: 80, 123
+  size: 80, 59
 Walk
-  xy: 156, 122
-  size: 78, 58
+  xy: 160, 123
+  size: 80, 59
 Walk
-  xy: 234, 122
-  size: 78, 58
+  xy: 240, 123
+  size: 80, 59
 Attack
-  xy: 0, 180
-  size: 78, 58
+  xy: 0, 182
+  size: 80, 59
 Attack
-  xy: 78, 180
-  size: 78, 58
+  xy: 80, 182
+  size: 80, 59
 Attack
-  xy: 156, 180
-  size: 78, 58
+  xy: 160, 182
+  size: 80, 59
 Attack
-  xy: 234, 180
-  size: 78, 58
+  xy: 240, 182
+  size: 80, 59
 Attack
-  xy: 312, 180
-  size: 78, 58
+  xy: 320, 182
+  size: 80, 59
 Attack
-  xy: 390, 180
-  size: 78, 58
+  xy: 400, 182
+  size: 80, 59
 Attack
-  xy: 468, 180
-  size: 78, 58
+  xy: 480, 182
+  size: 80, 59
 Attack
-  xy: 546, 180
-  size: 78, 58
+  xy: 560, 182
+  size: 80, 59
 Attack
-  xy: 624, 180
-  size: 78, 58
+  xy: 640, 182
+  size: 80, 59
 Attack
-  xy: 702, 180
-  size: 78, 58
+  xy: 720, 182
+  size: 80, 59
 Hit
-  xy: 0, 238
-  size: 78, 58
+  xy: 0, 241
+  size: 80, 59
 Hit
-  xy: 78, 238
-  size: 78, 58
+  xy: 80, 241
+  size: 80, 59
 Hit
-  xy: 156, 238
-  size: 78, 58
+  xy: 160, 241
+  size: 80, 59
 Hit
-  xy: 234, 238
-  size: 78, 58
+  xy: 240, 241
+  size: 80, 59
 Hit
-  xy: 312, 238
-  size: 78, 58
+  xy: 320, 241
+  size: 80, 59
 Hit
-  xy: 390, 238
-  size: 78, 58
+  xy: 400, 241
+  size: 80, 59
 Death
-  xy: 0, 296
-  size: 78, 58
+  xy: 0, 300
+  size: 80, 59
 Death
-  xy: 78, 296
-  size: 78, 58
+  xy: 80, 300
+  size: 80, 59
 Death
-  xy: 156, 296
-  size: 78, 58
+  xy: 160, 300
+  size: 80, 59
 Death
-  xy: 234, 296
-  size: 78, 58
+  xy: 240, 300
+  size: 80, 59
 Death
-  xy: 312, 296
-  size: 78, 58
+  xy: 320, 300
+  size: 80, 59
 Death
-  xy: 390, 296
-  size: 78, 58
+  xy: 400, 300
+  size: 80, 59
 Death
-  xy: 468, 296
-  size: 78, 58
+  xy: 480, 300
+  size: 80, 59
 Death
-  xy: 546, 296
-  size: 78, 58
+  xy: 560, 300
+  size: 80, 59
 Death
-  xy: 624, 296
-  size: 78, 58
+  xy: 640, 300
+  size: 80, 59
 Death
-  xy: 702, 296
-  size: 78, 58
+  xy: 720, 300
+  size: 80, 59
 Death
-  xy: 780, 296
-  size: 78, 58
+  xy: 800, 300
+  size: 80, 59
 Death
-  xy: 858, 296
-  size: 78, 58
+  xy: 880, 300
+  size: 80, 59
 Death
-  xy: 936, 296
-  size: 78, 58
+  xy: 960, 300
+  size: 80, 59
 Death
-  xy: 1014, 296
-  size: 78, 58
+  xy: 1040, 300
+  size: 80, 59
 Death
-  xy: 1092, 296
-  size: 78, 58
+  xy: 1120, 300
+  size: 80, 59
 Death
-  xy: 1170, 296
-  size: 78, 58
+  xy: 1200, 300
+  size: 80, 59
 Wake
-  xy: 0, 354
-  size: 78, 58
+  xy: 0, 359
+  size: 80, 59
 Wake
-  xy: 78, 354
-  size: 78, 58
+  xy: 80, 359
+  size: 80, 59
 Wake
-  xy: 156, 354
-  size: 78, 58
+  xy: 160, 359
+  size: 80, 59
 Wake
-  xy: 234, 354
-  size: 78, 58
+  xy: 240, 359
+  size: 80, 59
 Wake
-  xy: 312, 354
-  size: 78, 58
+  xy: 320, 359
+  size: 80, 59
 Wake
-  xy: 390, 354
-  size: 78, 58
+  xy: 400, 359
+  size: 80, 59
 Wake
-  xy: 468, 354
-  size: 78, 58
+  xy: 480, 359
+  size: 80, 59
 Wake
-  xy: 546, 354
-  size: 78, 58
+  xy: 560, 359
+  size: 80, 59

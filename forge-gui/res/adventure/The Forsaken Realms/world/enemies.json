@@ -38121,7 +38121,7 @@
             "decks/legends/arcades_sabboth.dck"
         ],
         "ai": "",
-        "scale": 0.3939,
+        "scale": 0.4062,
         "speed": 30,
         "life": 40,
         "rewards": [
@@ -52348,7 +52348,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.3095,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -66232,7 +66232,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.4062,
+        "scale": 0.4194,
         "life": 30,
         "rewards": [
             {
