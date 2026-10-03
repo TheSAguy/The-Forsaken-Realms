@@ -67,7 +67,8 @@ which are getting anatomy work in the generator session.
 ## STATE 2026-10-03 (afternoon): **rounds 412 (peer, data) + 413 + 414 LOCAL + UNRELEASED.** 413 = cave champions and war
 champions (outside the arena) pay their arena list through the card budget x `championLootFactor` 2 (rank's first-win
 count x2, best-first, + signature card) and the resource purse x2 - `CardBudget.applyChampion`, `EnemySprite.championLoot`.
-Agent-tested on a cave champion; AGENT PACKAGED (jar 7f3199693d37), **LIVE NOT PACKAGED** (the user's game was running).
+Agent-tested on a cave champion. LIVE + AGENT PACKAGED with 412-414 (jar dd50c4887d89) - the user's saves get rule 6 on
+their next load. A war champion's payout and a champion with a signature card not yet seen in play.
 414 = road ends tidied under their towns (RoadNetwork rule 6, VERSION 6: skirt road joined to an outside road runs up under
 the art to the town's middle row, a dead end below a town is lifted; skirt-aware coverage keeps every joined pair). NOT the
 anchor move first proposed - that would have hidden every road from roadJoins/detectEdges (doubled roads). Agent-tested on
