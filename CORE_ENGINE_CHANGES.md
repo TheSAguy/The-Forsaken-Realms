@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 417 - no notoriety notice, quieter logs
+
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the notoriety Wall no longer adds a notice
+  (`notorietyNote()` removed). The equipped-items loop prints "Item N not found." only when the item is really missing.
+  Stock printed it, with no newline, for any equipped item without a duel effect. **Merge watch** on that loop.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java`** - `logInnEditions` reports the picked block's
+  name and sets (`blockLabel()`), not its land set.
+- Mod: `EditionProgression.restrictShopRewardsForCurrentTown` (no line for `shop-count`, "same as above" repeats),
+  `EconomyBuildings.buyableCardCount` (one recount line).
+
 ### Round 414 - road ends tidied under their towns
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `layRoad()` calls `RoadNetwork.tidyTownEnds(this,

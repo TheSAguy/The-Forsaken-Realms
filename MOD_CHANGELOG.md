@@ -14264,7 +14264,60 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
-## Round 416: a shop whose blueprint you own says so (2026-10-03)
+## Round 417: no notoriety notice, a bold Notoriety line, quieter logs (2026-10-03)
+
+Two asks. First, the user reviewing a log another player shared (v1.15 Hard, days 14-17, then v1.17.1): "yes, do round
+417". Second, with a screenshot of the notice: "Let's remove the Notoriety notification on each duel. It gets annoying.
+The card text informs the player what's going on. Maybe let's put the Notoriety text in bold."
+
+**Notoriety.**
+- `DuelScene` no longer adds the notice; `notorietyNote()` is removed. The round-404 per-enemy streak notice stays.
+- `make_wall_cards.py` `draw_why()` sets the why line's leading "Notoriety:" in Palatino bold italic, word-wrapped
+  across both fonts. The 12 cards are rebuilt, still on the placeholder art; the user's art is not in yet.
+- The guide says the card explains itself.
+
+**Logs** (from the shared log, where 1,234 `[TFR-ShopEditions]` lines were 237 KB of its 491 KB).
+- `[TFR-ShopEditions]`:
+  - The build menu's card counts (`EconomyBuildings.buyableCardCount`, ~200 shop types per town visit, trigger
+    `shop-count`) print nothing per shop. Instead there is one "build-menu card counts recounted" line per recount.
+  - A shop whose town, owner and restriction match the line above prints "restriction: same as above".
+- `DuelScene` "Item N not found." This is stock code. It printed the line for any equipped item without a duel effect
+  (the player's Rally rune) before every duel, with no newline. Now it prints only for a missing item.
+- `[TFR-InnEditions]` `picked=` now shows the block's name and sets (`blockLabel()`), not its land set. The log read
+  "picked=M19" for an Ultimate Masters draft.
+
+**Checked and left alone.**
+- An ante reroll offered with 0 shards is the user's 2026-08-17 decision.
+- Reality Fracture (FRA) lists "Overwrite the Multivers" (a typo) and two cards with no script (Lyla, Tolarian
+  Archangel; Winter, Tormented Lover). That's upstream data, so it is left for an engine merge.
+
+**The Djinn agent test** (the user: "do round 417 and the Djinn agent test").
+- The shared log showed a mage-tower Djinn whose deck came up short. Its loot paid duplicates of dual lands and gold
+  instead of cards.
+- Method: a scratch `decksurvey` console command, not in the repo. It was compiled against the agent jar and run ahead of
+  it. On agent slot 12 it generated all 67 template-deck enemies three times each.
+- For each deck it recorded the size and the distinct non-land names. It also counted the non-basic names the loot can
+  pay, meaning names with a printing in the enemy color's sets.
+- Deck size is NOT the problem.
+  - The median deck is 59 of 60.
+  - Only four come in under 50: Troll 43, Minotaur Warrior 48, Giant Red Basilisk 48 and Human Knight 49.
+  - The Djinn averages 58.
+- Loot variety is the problem.
+  - 29 of 67 decks have two or fewer common/uncommon spell names inside their color's sets.
+  - Furnace Goblin has none at all.
+  - This is the round-185/203 design working as written: duplicates capped at two, then the rarity relaxed, then gold.
+- Since round 406, CardBudget pays exactly the rank's card count. It pays 50 gold for each card slot it can't fill, so
+  the card count is right. What suffers is variety (lands, a card twice).
+- The same squeeze reaches hand-built `.dck` decks: the shared log's Owl, Werewolf Wanderer and Jadestone Golem are not
+  templates.
+- Options are with the user. One is to fill a thin deck's loot from the color's own sets in the deck's colors.
+
+**Agent-tested** on the 417 jar, Insane slot 12:
+- `notoriety 10`, then a Djinn (Adept). The duel opened straight onto the battlefield: `forgeUi` showed only Pause and
+  10x speed, with no notice.
+- The Djinn had a 0/2 plain Wall in play, and the card's bold "Notoriety:" line was readable on the battlefield.
+
+
 
 The user, with a screenshot of a card shop: "Can we add a notice, where the buy shop button would be, letting the player
 know they already own a blue-print."

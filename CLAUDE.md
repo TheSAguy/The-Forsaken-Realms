@@ -58,6 +58,12 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-03 (round 417): **round 417 LOCAL + UNRELEASED** - no notoriety notice (the Wall card's bold "Notoriety:"
+line explains it; cards rebuilt on placeholder art), quieter logs (`[TFR-ShopEditions]` silent for the build menu's
+shop-count, "same as above" repeats; stock "Item N not found." only for a missing item; Inn `picked=` shows the block).
+Djinn survey: template decks are full-size (median 59/60). Loot VARIETY is thin for 29 of 67 (by design: duplicates,
+then gold) - the user has the options. AGENT packaged + tested; LIVE NOT PACKAGED (the user's game was running).
+
 ## STATE 2026-10-03 (round 416): **round 416 LOCAL + UNRELEASED** - a card shop whose blueprint the player owns shows a
 greyed, disabled "Blueprint Owned" where Buy Blueprint sits (`RewardScene.showBlueprintOwned`), and the button turns into
 it after a purchase. Built; not yet seen in play. LIVE + AGENT PACKAGED with 415 + 416 (jar d47660a53377, plane

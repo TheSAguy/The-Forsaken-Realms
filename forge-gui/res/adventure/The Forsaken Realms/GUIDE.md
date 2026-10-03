@@ -655,8 +655,8 @@ Wall with flying. Which enemies do it depends on the difficulty:
 | Hard | Adepts, Masters and Archmages |
 | Insane | Everyone |
 
-A notice tells you as the duel opens. Lose once (a Bronze Coin still counts as a loss) and your streak starts
-over. It counts the same duels as an enemy's own streak above, and New Game+ starts it from zero.
+The Wall card itself says why it's there, under a bold **Notoriety** line. Lose once (a Bronze Coin still counts as a
+loss) and your streak starts over. It counts the same duels as an enemy's own streak above, and New Game+ starts it from zero.
 
 **The first two weeks are eased.** In week 1 (days 1-7) a monster starts its duel with half its life,
 but never fewer than 20; in week 2 (days 8-14) with three quarters, never fewer than 25. A monster that
