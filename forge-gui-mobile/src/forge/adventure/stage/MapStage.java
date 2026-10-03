@@ -1548,6 +1548,8 @@ public class MapStage extends GameStage {
                             if (changes != null && EN != null)
                                 changes.setFixedEnemy(id, EN.getName());
                             EnemySprite mob = new EnemySprite(id, EN);
+                            if (id == caveChampionObjectId && caveChampionData != null)
+                                mob.championLoot = true; // round 413: its arena list pays through the champion budget
                             Object dialogObject = prop.get("dialog"); //Check if the enemy has a dialogue attached to it.
                             if (dialogObject != null && !dialogObject.toString().isEmpty()) {
                                 mob.dialog = new MapDialog(dialogObject.toString(), this, mob.getId(), currentMap);

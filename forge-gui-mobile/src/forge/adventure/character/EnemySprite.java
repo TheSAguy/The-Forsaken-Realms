@@ -153,6 +153,9 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     // records which color dispatched this mage - tracked explicitly rather than parsed back out
     // of the enemy's display name, so it can't break if that name ever changes.
     public PointOfInterest territoryTarget;
+    // Round 413: this sprite is a cave's champion (set by MapStage on the promoted placement) - its arena loot list pays
+    // through CardBudget.applyChampion. War champions are told apart by name (WarChampions.isWarChampion).
+    public boolean championLoot;
     public String territoryColor;
     // Territory Control (MOD_SCOPE.md #7): the in-game day (World.getCurrentDay()) this mage was
     // last fought and LOST to. A losing fight no longer removes an attack mage (it survives and
@@ -842,21 +845,48 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                 // color (forge.adventure.util.ResourcePurse), so the list's own entries of those types are
                 // skipped before they roll. Skipped here rather than filtered out afterwards: a deck card that
                 // cannot be paid becomes GOLD too (deckCardFallbackGold), and that is compensation for a card.
-                boolean purse = forge.adventure.util.ResourcePurse.appliesTo(data);
+                // Round 413 (the user, of a cave spider: "The rewards seem a little extreme"): a cave champion or a war
+                // champion pays its arena list through the card budget x championLootFactor, its signature card on top,
+                // and the resource purse x the same factor instead of the list's own gold and shards.
+                forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+                int championFactor = tuning == null ? 0 : tuning.championLootFactor;
+                boolean champion = championFactor > 0 && (championLoot || forge.adventure.util.WarChampions.isWarChampion(data.getName()));
+                boolean purse = champion ? forge.adventure.util.ResourcePurse.appliesToChampion(data)
+                        : forge.adventure.util.ResourcePurse.appliesTo(data);
                 int replacedResourceEntries = 0;
                 Array<Reward> standard = new Array<>();
+                Array<Reward> signature = new Array<>();
                 for (RewardData rdata : standardRewardSource) {
                     if (purse && forge.adventure.util.ResourcePurse.isResourceEntry(rdata)) {
                         replacedResourceEntries++;
                         continue;
                     }
-                    standard.addAll(rdata.generate(false,  enemyDeck == null ? null : deckNoBasicLands.toFlatList(),true ));
+                    Array<Reward> got = rdata.generate(false,  enemyDeck == null ? null : deckNoBasicLands.toFlatList(),true );
+                    // the champion's first named card ("Skrelv, Defector Mite") is its signature - always paid
+                    if (champion && signature.isEmpty() && "card".equalsIgnoreCase(rdata.type)
+                            && rdata.cardName != null && !rdata.cardName.isEmpty() && got.notEmpty()) {
+                        signature.addAll(got);
+                        continue;
+                    }
+                    standard.addAll(got);
                 }
                 String payoutName = getName() != null ? getName() : data.getName();
-                rewards.addAll(forge.adventure.util.CardBudget.apply(standard, payoutName,
-                        data, enemyDeck == null ? null : deckNoBasicLands.toFlatList(), budgetEditions));
+                if (champion) {
+                    rewards.addAll(signature);
+                    rewards.addAll(forge.adventure.util.CardBudget.applyChampion(standard, payoutName,
+                            data, enemyDeck == null ? null : deckNoBasicLands.toFlatList(), budgetEditions));
+                    System.out.println("[TFR-ChampionLoot] " + payoutName + " (" + (championLoot ? "cave champion" : "war champion")
+                            + ", " + EnemyData.tierDisplayName(data.tier) + "): signature "
+                            + (signature.isEmpty() ? "none" : signature.get(0).getCard() != null ? signature.get(0).getCard().getName() : "?")
+                            + ", cards through the budget x" + championFactor + ", purse x" + championFactor
+                            + (purse ? "" : " (purse off - the list's own resources)"));
+                } else {
+                    rewards.addAll(forge.adventure.util.CardBudget.apply(standard, payoutName,
+                            data, enemyDeck == null ? null : deckNoBasicLands.toFlatList(), budgetEditions));
+                }
                 if (purse)
-                    rewards.addAll(forge.adventure.util.ResourcePurse.generate(payoutName, data, replacedResourceEntries));
+                    rewards.addAll(forge.adventure.util.ResourcePurse.generate(payoutName, data, replacedResourceEntries,
+                            champion ? championFactor : 1));
             }
             if(this.rewards != null) { //Collect additional rewards.
                 for(RewardData rdata : this.rewards) {

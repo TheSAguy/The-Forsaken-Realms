@@ -111,6 +111,10 @@
     "winStreakWinsHard": 4,
     "winStreakWinsInsane": 3,
     "winStreakStartCards": ["Wastes|EOC"],
+    // Round 413 - cave champions and war champions (met outside the arena) pay their arena list through the card
+    // budget: this many times their rank's first-win card count, best rarities first, plus their signature card, and
+    // this many times their rank's resource purse. 0 = the full arena list, as before.
+    "championLootFactor": 2,
     // Round 411 - NOTORIETY: your wins in a row against anyone (the duels above count; any loss resets it). Every
     // notorietyWinsPerLevel wins add a level, and an enemy of a reached rank starts with ONE Wall token - the level's
     // entry of its rank's list (level 1 = 5-9 wins = the first). notorietyMinRank* = the lowest rank it reaches on that

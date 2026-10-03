@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 413: cave and war champions pay through a doubled card budget (2026-10-03)
+
+The user beat a cave spider (Skrelv, the champion of CaveCE) and got 7 cards, 4 of them rares or mythics, plus 100 gold
+and 5 shards: "The rewards seem a little extreme." Skrelv is an Apprentice (13 life, 33 on Insane). Its arena list
+pays the named Skrelv card, 2-6 deck rares/mythics, 1-4 deck commons, 2-6 rares/mythics from any set and color, 1-4
+random commons, 100-1,100 gold and 5-20 shards. The user got the minimum of every entry. Cave champions (round 139,
+1 cave in 4) and war champions (round 139, 1 roll in 5 on a land at War) pay their arena-only lists outside the arena,
+and those lists bypass the card budget and the purse (`SpawnTierWeighting.isExempt`). Measured over the plane: an
+Apprentice-rank champion pays at least 4-5 cards (2.4 rares), against 2 + 1 bonus for an ordinary Apprentice's first
+win. Avacyn pays 4 named cards, 6-16 rares and 500-2,500 gold. The user chose "double their rank's budget" and the
+same for the war champions.
+
+- **`CardBudget.applyChampion`** runs the budget in champion mode: `championLootFactor` x the rank's FIRST-win count,
+  best rarities first, no separate first-win bonus card, gear and Easy bonuses as usual, and a top-up from the deck when
+  the list rolls fewer. Apprentice 4, Adept 6, Master 8, Archmage 10. `apply()` is unchanged and shares the same core.
+- **`EnemySprite.getRewards`**: a champion is `championLoot` (MapStage sets it on the promoted cave placement) or a
+  `WarChampions.isWarChampion` name. For a champion, the first named "card" entry that pays (its signature, e.g.
+  "Skrelv, Defector Mite") is kept apart and paid on top. The list's gold/shards/wood/stone entries are skipped for
+  `ResourcePurse.generate(..., factor)`, its rank's purse x the factor (`appliesToChampion`). Items in the list, such as
+  Avacyn's Scroll, are kept as before. The Arena never comes here; it pays its own bounty, unchanged.
+- settings.json `championLootFactor` 2 (0 = the full arena list as before).
+- Logs: `[TFR-ChampionLoot] <name> (cave|war champion, rank): signature ..., cards through the budget x2, purse x2`, a
+  `CHAMPION x2` tag on `[TFR-CardBudget]` and `x2 CHAMPION` on `[TFR-ResourcePurse]`.
+- **Agent-tested** (Normal slot 10; the agent copy's `caveChampionChance` set to 1.0 for the test, then restored by a
+  package). CaveCE drew Mark Le Pine '99 (Apprentice), which was beaten: `budget 4 (4 base) -> kept 2 best-first, topped
+  up 2 from its deck`. The purse was 60 x1.25 x1.50 x0.85 x2 -> 67 gold + 8 stone, and the payout was 4 cards, 67 gold
+  and 8 stone. It has no named card, so no signature. A war champion and a champion WITH a signature card were not seen.
+
 ## Round 412: six more enemy groups redrawn with the creature generator, 42 enemies (2026-10-03)
 
 The next ten low-resolution sprites of the remake survey were made by a cloud session of the creature generator

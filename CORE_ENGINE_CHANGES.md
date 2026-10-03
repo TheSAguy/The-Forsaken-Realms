@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 413 - champion loot through a doubled card budget
+
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - new `championLoot` field. In `getRewards()`, the
+  standard-rewards block routes champions (`championLoot` or a war-champion name) to `CardBudget.applyChampion`, keeps the
+  signature card apart, and pays the purse x the factor. **Merge watch** on `getRewards()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - sets `mob.championLoot` on the promoted cave placement.
+- Mod: `CardBudget` (`applyChampion`, a shared `run()` core), `ResourcePurse` (`generate(..., factor)`,
+  `appliesToChampion`), `WarChampions.isWarChampion`, `TuningData.championLootFactor`.
+
 ### Round 411 - notoriety Walls
 
 - **`forge-core/src/main/java/forge/ImageKeys.java`** - `getImageFile()`, the token branch: after the setless cache

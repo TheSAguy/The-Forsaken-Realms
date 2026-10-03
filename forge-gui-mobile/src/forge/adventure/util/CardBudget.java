@@ -78,10 +78,33 @@ public final class CardBudget {
      */
     public static Array<Reward> apply(Array<Reward> standard, String enemyName, EnemyData data,
                                       List<PaperCard> deckNoBasicLands, List<String> editionRestriction) {
+        return run(standard, enemyName, data, deckNoBasicLands, editionRestriction, 0);
+    }
+
+    /**
+     * Round 413 (the user, of a cave spider: "The rewards seem a little extreme"; they chose "double their rank's
+     * budget", for the war champions too). A cave champion or a war champion met outside the arena pays its arena list
+     * through the budget: TuningData.championLootFactor x its rank's FIRST-win count, best rarities first, no extra
+     * first-win bonus card (the factor covers it), and gear / Easy bonuses as usual. The caller keeps its signature card
+     * apart and adds it on top. Skrelv (Apprentice) paid 7 cards with 4 rares at the very least; it pays 4 + Skrelv now.
+     * A factor of 0 leaves the arena list whole.
+     */
+    public static Array<Reward> applyChampion(Array<Reward> standard, String enemyName, EnemyData data,
+                                              List<PaperCard> deckNoBasicLands, List<String> editionRestriction) {
         TuningData tuning = Config.instance().getTuningData();
+        int factor = tuning == null ? 0 : tuning.championLootFactor;
+        if (factor <= 0)
+            return standard;
+        return run(standard, enemyName, data, deckNoBasicLands, editionRestriction, factor);
+    }
+
+    private static Array<Reward> run(Array<Reward> standard, String enemyName, EnemyData data,
+                                     List<PaperCard> deckNoBasicLands, List<String> editionRestriction, int championFactor) {
+        TuningData tuning = Config.instance().getTuningData();
+        boolean champion = championFactor > 0;
         if (tuning == null || !tuning.cardBudgetEnabled || data == null || standard == null)
             return standard;
-        if (SpawnTierWeighting.isExempt(data) || data.fixedDeck != null || data.copyPlayerDeck)
+        if ((!champion && SpawnTierWeighting.isExempt(data)) || data.fixedDeck != null || data.copyPlayerDeck)
             return standard;
         int tier = tierIndex(data.tier);
         if (tier < 0) {
@@ -96,7 +119,8 @@ public final class CardBudget {
 
         int gearApplied = Math.max(0, Current.player().bonusDeckCards()); // in full, first win or repeat - "as is"
         int difficultyBonus = easy ? Math.max(0, tuning.cardBudgetEasyBonus) : 0;
-        int budget = Math.max(0, base(tuning, tier, firstWin)) + gearApplied + difficultyBonus;
+        int rankBase = champion ? championFactor * Math.max(0, base(tuning, tier, true)) : Math.max(0, base(tuning, tier, firstWin));
+        int budget = rankBase + gearApplied + difficultyBonus;
 
         List<Reward> cards = new ArrayList<>();
         Array<Reward> result = new Array<>();
@@ -115,7 +139,7 @@ public final class CardBudget {
         }
         int candidates = cards.size();
 
-        boolean bestFirst = firstWin || tier >= 2;
+        boolean bestFirst = champion || firstWin || tier >= 2;
         Random random = new Random(); // loot is deliberately unseeded, like RewardData.generate()'s drops
         Collections.shuffle(cards, random);
         if (bestFirst)
@@ -139,7 +163,7 @@ public final class CardBudget {
         }
 
         List<String> bonusNames = new ArrayList<>();
-        int bonusWanted = firstWin ? Math.max(0, tuning.cardBudgetFirstWinBonusCards) : 0;
+        int bonusWanted = firstWin && !champion ? Math.max(0, tuning.cardBudgetFirstWinBonusCards) : 0;
         if (bonusWanted > 0 && deckNoBasicLands != null) {
             List<PaperCard> nonLand = new ArrayList<>();
             for (PaperCard card : deckNoBasicLands) {
@@ -163,15 +187,16 @@ public final class CardBudget {
             result.add(new Reward(unpayable * goldPerCard));
 
         System.out.println("[TFR-CardBudget] " + enemyName + " (" + RANKS[tier] + ", " + (firstWin ? "FIRST win" : "win #" + wins)
+                + (champion ? ", CHAMPION x" + championFactor : "")
                 + "): the list rolled " + candidates + " card(s), budget " + budget
-                + " (" + base(tuning, tier, firstWin) + " base" + (gearApplied > 0 ? " +" + gearApplied + " gear" : "")
+                + " (" + rankBase + " base" + (gearApplied > 0 ? " +" + gearApplied + " gear" : "")
                 + (difficultyBonus > 0 ? " +" + difficultyBonus + " Easy" : "") + ") -> kept "
                 + Math.min(budget, candidates) + (bestFirst ? " best-first" : " at random")
                 + (toppedUp > 0 ? ", topped up " + toppedUp + " from its deck " + topUpRarities : "")
                 + (bonusWanted > 0 ? ", first-win bonus " + (bonusNames.isEmpty() ? "could not be paid" : bonusNames) : "")
                 + (unpayable > 0 ? ", " + unpayable + " unpayable -> " + (unpayable * goldPerCard) + " gold" : "")
                 + (droppedFallbackGold > 0 ? ", dropped the list's " + droppedFallbackGold + " gold for unpaid deck card(s)" : ""));
-        if (firstWin)
+        if (firstWin && !champion)
             GameHUD.getInstance().addNotification("First victory over " + enemyName + " - bonus loot!");
         return result;
     }

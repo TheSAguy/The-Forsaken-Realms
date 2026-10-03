@@ -325,6 +325,9 @@ enemy's name - and your **first victory** over each kind of enemy is the big one
 - Bosses, tournament opponents, chests and quest rewards pay what they always did. An Arena
   champion you beat pays one Rare card from its deck. A [legend](#legends) pays half its gold and two
   thirds of its cards.
+- A **champion met outside the Arena** - a cave's champion, or a color's war champion roaming its land
+  at War - pays twice what an ordinary enemy of its rank pays for a first win: twice the cards, best
+  rarities first, and twice the purse, plus its own signature card when it has one.
 - Every number here is a setting: `cardBudget...` (1 to 5 cards each) and `resourcePurse...` in
   the plane's `config tables/settings.json`.
 

@@ -74,6 +74,17 @@ public class WarChampions {
         return false;
     }
 
+    /** Round 413: is this enemy one of any colour's war champions? (Their loot goes through CardBudget.applyChampion.) */
+    public static boolean isWarChampion(String enemyName) {
+        if (enemyName == null)
+            return false;
+        for (String color : ColorReputation.COLORS) {
+            if (championNames(color).contains(enemyName))
+                return true;
+        }
+        return false;
+    }
+
     /** The champion names cast for this biome's colour; empty when the colour has none. */
     public static Set<String> championNames(String biomeName) {
         Set<String> out = new HashSet<>();

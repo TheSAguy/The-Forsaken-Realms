@@ -202,6 +202,12 @@ public class TuningData {
         }
     }
 
+    // Round 413 (the user, of a cave spider's 7 cards and 4 rares: "The rewards seem a little extreme"): a cave champion
+    // or a war champion met outside the arena pays its arena list through the card budget - this many times its rank's
+    // first-win count, best rarities first, its signature card on top - and this many times its rank's resource purse.
+    // 0 = the full arena list, as before.
+    public int championLootFactor = 2;
+
     // Round 411 - NOTORIETY (the user: "Each 5 win streak will add/upgrade one of these. Starting at duel 6"): the
     // player's wins in a row against anyone (the duels round 404 counts; any loss resets it, Bronze Coin or not).
     // Every notorietyWinsPerLevel of them lifts the level by one, up to the walls lists' length: the enemy seat starts
