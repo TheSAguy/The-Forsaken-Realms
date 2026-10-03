@@ -1007,7 +1007,10 @@ unless you've entered it or have prizes waiting. The entry fee scales with the t
 ### Territory, and Defending What's Yours
 
 The five colors expand their borders over time and dispatch attack mages at towns — yours
-included. Each color sends one every 2–5 days.
+included. Each color sends one every 2–5 days. A new game also opens with a first wave: the moment you
+step onto the world map, each color sends 1 mage on Easy, 2 on Normal, 4 on Hard or 6 on Insane at the
+towns nearest its land. Those are on top of its usual mages, and a mage's name now always matches its
+rank (an Apprentice Wizard is an Apprentice).
 
 - **Your Capitol can only be targeted once a week by each color.** Once a color aims a mage at it,
   that color can't pick it again for 7 days — win, lose, or kill the mage on the road. With five

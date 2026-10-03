@@ -14264,6 +14264,82 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 423: the user's Wall token art on all 12 cards (2026-10-03)
+
+The user: "I got the new Wall token art. It's here: F:\Art_to_Tweak\WALL Please format and implement."
+
+**The art.**
+- Twelve 256 x 256 RGBA pixel-art pictures: `Regular-1..4`, `Reach-1..4`, `Fly-1..4`. They stay outside the repo, like
+  the round-379 doodad sheet.
+- The skies are transparent. Some pictures are scenes that run edge to edge (Regular 1-4, Reach 1 and 4); the rest are
+  cut-outs (Reach 2-3, all four Fly).
+
+**`make_wall_cards.py`.**
+- It takes the user's file names (`USER_NAMES`).
+- `frame_art()` replaces `fit_art()`. Each picture gets a backdrop for its kind:
+  - plain Wall: a banded stone-grey sky;
+  - Reach: a green sky with a ground band;
+  - Flying: open sky with pixel clouds.
+- A scene covers the 408 x 300 box's width. It loses the height it must from its empty sky first, keeping a 14 px
+  margin over the tallest tower, then the rest from the bottom.
+- A cut-out is fitted whole with a margin. Reach stands on the ground line; Flying is centered in the sky.
+- `enlarge()`: hard-edged at 3x and more (the placeholder art). Below that it is 2x hard-edged, then smoothed down, which
+  keeps the pixel edges crisp at the uneven 1.2-1.6x these need.
+- The 12 cards were rebuilt and a 4 x 3 preview was sent to the user. The bold Notoriety line from round 417 is unchanged.
+
+## Round 422: the AI's opening wave of attack mages (2026-10-03)
+
+The user: "At the very start of the game, give each AI some free attacking mages. Easy - 1, Normal - 2, Hard - 4, Insane
+- 6. These are just attacking mages that will be available at the start of the game and has nothing to do with the
+weekly limit. Just something to get the AI going."
+
+**Before.** A color's attack timer was seeded on the first day rollover, without attacking. After that it sent one mage
+every 2-5 days, up to its in-flight cap (Easy 2 / Normal 3 / Hard 4 / Insane 6 since round 407, plus bonuses). Nothing
+moved on day 1.
+
+**Now.**
+- `TerritoryControl.sendOpeningWave` runs on the first world-map frame of a new world, from `WorldStage.onActing` after
+  the pause and dialog return.
+- Every color still in the game sends `TuningData.openingMagesFor(difficulty)` mages at once. The counts are in
+  settings.json `openingMages*`: 1 / 2 / 4 / 6.
+- They go through the ordinary `dispatch`: same targeting, each to a different town while untargeted ones remain, and
+  the same week-1 tier cap, so they are Apprentices and Adepts.
+- They are sent with `opening = true`, which means they ignore the in-flight cap, are not counted toward it
+  (`EnemySprite.openingMage`, saved in a parallel `openingMages` list), and are not announced one by one. Up to 30 at
+  once on Insane would flood the HUD; this follows round 267's hidden Capitol surge.
+- The wave seeds the colors' attack timers, so the regular schedule starts as before.
+- `World.openingWaveSent` is false only after `generateNew`. A save from before this round loads as true and gets no wave.
+- `[TFR-OpeningWave]` logs the wave in one line, and each dispatch line says "(opening wave)".
+
+**Agent-tested** (a new Insane game, New Game screen set to Insane):
+- `[TFR-OpeningWave] Insane: 6 mage(s) per color, outside the cap - white 6 (next attack day 4), blue 6 (6), black 6 (6),
+  red 6 (3), green 6 (4)`.
+- The state showed 30 mages, each color's 6 at 6 different towns. Ranks were 25 Adept and 5 Apprentice; red's
+  three Apprentices showed Common after round 421.
+- 29 neutral towns fell on day 1, with no Ring City among them.
+- Saved to agent slot 13 and reloaded: all 30 came back in flight.
+- Days 3-7: 8 regular dispatches on top, no "already in flight" skips, no exceptions.
+- Not explained: in the first run the game dropped to the start screen and closed cleanly during a `wait`. The log ends
+  in an ordinary shutdown with no exception, and the second run, with the same steps, did not repeat it.
+
+## Round 421: the wizards' ranks match their names (2026-10-03)
+
+The user, after the shared log's attacks were traced: "yes, line up the wizard names and tiers."
+
+**Why.** Rounds 116/118's tier slice rated the roster by deck strength and renamed nothing. Round 135 kept the names,
+which are identity (maps, quests, save keys), and fixed only the display. So the war-mage dispatcher, which builds a
+mage's name from the rolled rank (`"Apprentice " + Color + " Wizard"`), sent "Apprentice" Green/Red/White Wizards that
+were rated Adept in the data. They captured at 30% instead of 10% and showed as "Green Wizard (Adept)". The shared log's
+green attack rolled 29%. The Master Blue Wizard was rated Adept and captured at 30% instead of 70%.
+
+**What changed** (`world/enemies.json` `tier` only): Apprentice Green/Red/White Wizard Uncommon -> Common, Master Blue
+Wizard Uncommon -> Rare.
+- Names, decks, life, speed and the size scale are unchanged. Size comes from rank at runtime, so they now draw at
+  Apprentice and Master size.
+- Their decks were judged Adept-strength, so these three Apprentices are on the strong side for their rank.
+- If the tier slice is ever re-run, it would rate them back. The other mismatches round 135 noted (`Adept Necromancer`
+  at Master, the creature named `Archmage`) are not wizards and were left alone.
+
 ## Round 419: loot prefers new cards, then the color's sets, before gold (2026-10-03)
 
 The user, after the round-417 Djinn survey: "yes, do 418 and the loot-variety fix".

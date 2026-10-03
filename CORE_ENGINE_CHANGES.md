@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 422 - the AI's opening wave of attack mages
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `openingWaveSent` (saved; false in `generateNew`, true when
+  a save lacks the key), with its getter and setter.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `onActing()` calls `TerritoryControl.sendOpeningWave`
+  while the flag is false, after the pause and dialog early-return. The roaming list saves and loads a parallel
+  `openingMages` list. **Merge watch** on `save()`/`load()` - more parallel lists beside upstream's.
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - new field `openingMage`.
+- Mod: `TerritoryControl` (`dispatch(..., opening)`, `sendOpeningWave`, opening mages left out of the cap count),
+  `TuningData.openingMages*`.
+
 ### Round 417 - no notoriety notice, quieter logs
 
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the notoriety Wall no longer adds a notice
