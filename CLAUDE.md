@@ -64,13 +64,14 @@ each enemy its own creature (MOD_CHANGELOG round 412). Not hot-copied, because l
 (the one carrying 410-411b) brings it to live and agent. The user rejected the rabbit, bear, owl and squirrel remakes,
 which are getting anatomy work in the generator session.
 
-## STATE 2026-10-03 (afternoon): **rounds 412 (peer, data) + 413 LOCAL + UNRELEASED.** 413 = cave champions and war
+## STATE 2026-10-03 (afternoon): **rounds 412 (peer, data) + 413 + 414 LOCAL + UNRELEASED.** 413 = cave champions and war
 champions (outside the arena) pay their arena list through the card budget x `championLootFactor` 2 (rank's first-win
 count x2, best-first, + signature card) and the resource purse x2 - `CardBudget.applyChampion`, `EnemySprite.championLoot`.
 Agent-tested on a cave champion; AGENT PACKAGED (jar 7f3199693d37), **LIVE NOT PACKAGED** (the user's game was running).
-NEXT: round 414 = road ends at town centres (the user OK'd the full fix: `getTilePosition` y -> footprint centre, plus a
-one-time re-lay of every existing road). Measured on the user's auto_save: 39 towns stop short, 38 show a tail below the art,
-210 have roads on both sides. Read-only tools RoadEnds.java / RoadSides.java in the session scratchpad roads/.
+414 = road ends tidied under their towns (RoadNetwork rule 6, VERSION 6: skirt road joined to an outside road runs up under
+the art to the town's middle row, a dead end below a town is lifted; skirt-aware coverage keeps every joined pair). NOT the
+anchor move first proposed - that would have hidden every road from roadJoins/detectEdges (doubled roads). Agent-tested on
+a copy of the user's world (468 tiles at 210 places, 0 dead ends / 0 gaps / joined pairs 210 -> 210) and a new world.
 
 ## STATE 2026-10-03 (later): **round 411 LOCAL + UNRELEASED** - NOTORIETY: the player's wins in a row against anyone
 (`AdventurePlayer.notorietyStreak`, saved; any loss, New Game+ and a new game reset it). Every 5 wins = a level, up to 4.

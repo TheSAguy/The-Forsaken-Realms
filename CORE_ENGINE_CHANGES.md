@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 414 - road ends tidied under their towns
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `layRoad()` calls `RoadNetwork.tidyTownEnds(this,
+  waypoints, touched)` before its repaint. World-gen calls `RoadNetwork.tidyAllTownEnds(this, null)` right after
+  `layCastleRoads(this)`. **Merge watch** on the world-gen road block.
+- Mod: `RoadNetwork` - `VERSION` 6, `tidyTownEnds`/`tidyAllTownEnds`/`tidyTownEnd`/`touchesOutside`, a skirt-aware
+  `coverage()` (`inSkirtOf`), and rule 6 in `migrateOnLoad`.
+
 ### Round 413 - champion loot through a doubled card budget
 
 - **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - new `championLoot` field. In `getRewards()`, the

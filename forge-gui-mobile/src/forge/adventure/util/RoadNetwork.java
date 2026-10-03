@@ -58,7 +58,7 @@ import forge.adventure.world.World;
  */
 public final class RoadNetwork {
     /** Bumped when the rules change and every save should be normalized again (World.roadsNormalized). */
-    public static final int VERSION = 5; // 2: roads past a town chained on both sides lifted (round 351b); 3: corner joints joined (round 365); 4: one road into the star per town (round 392); 5: a road to each color's castle (round 399)
+    public static final int VERSION = 6; // 2: roads past a town chained on both sides lifted (round 351b); 3: corner joints joined (round 365); 4: one road into the star per town (round 392); 5: a road to each color's castle (round 399); 6: town ends tidied (round 414)
     /** A hop along a road that is already there costs this share of a new one (cost = distance squared). */
     public static final double EXISTING_ROAD_DISCOUNT = 0.35;
     /** A pair of towns is joined by road when this share of either staircase between them is road. */
@@ -380,11 +380,146 @@ public final class RoadNetwork {
     static float coverage(World world, long[] cells) {
         if (cells.length == 0)
             return 0f;
-        int hit = 0;
-        for (long c : cells)
-            if (world.roadKindRaw(keyX(c), keyY(c)) > 0)
+        // Round 414: the staircase's tiles in each end town's SKIRT are not counted - tidyTownEnds() trims the dead end
+        // a road from above leaves there, and a joined pair must not look broken for it. A staircase starts and ends on
+        // its towns' anchors (the row under the footprint), so the skirt is that row and the one above, a couple of
+        // columns either side; only the unbroken run of skirt tiles at each end is skipped.
+        int lo = 0, hi = cells.length - 1;
+        if (cells.length > 2) {
+            while (lo < hi && inSkirtOf(cells[lo], cells[0]))
+                lo++;
+            while (hi > lo && inSkirtOf(cells[hi], cells[cells.length - 1]))
+                hi--;
+        }
+        if (hi - lo < 2) { // two towns side by side: nothing between their skirts to measure
+            lo = 0;
+            hi = cells.length - 1;
+        }
+        int hit = 0, inner = 0;
+        for (int i = 0; i < cells.length; i++)
+            if (world.roadKindRaw(keyX(cells[i]), keyY(cells[i])) > 0) {
                 hit++;
-        return hit / (float) cells.length;
+                if (i >= lo && i <= hi)
+                    inner++;
+            }
+        // the better of the whole staircase (as before this round) and its middle: a pair joined before stays joined
+        return Math.max(hit / (float) cells.length, inner / (float) (hi - lo + 1));
+    }
+
+    /** Round 414: is this tile in the skirt of the town whose anchor is `anchor` (raw keys; raw rows grow south)? */
+    static boolean inSkirtOf(long tile, long anchor) {
+        return Math.abs(keyX(tile) - keyX(anchor)) <= 2
+                && (keyY(tile) == keyY(anchor) || keyY(tile) == keyY(anchor) - 1);
+    }
+
+    // ------------------------------------------------------------------ town ends (rule 6)
+
+    /**
+     * Round 414 (the user, three screenshots: "I think there might be an issue with road endings. Two of these seem short
+     * and one long"). A road ends at its town's anchor - the tile under the middle of the footprint's bottom edge, which
+     * the road pass's raw row draws one row SOUTH of the footprint. With a town's position off the tile grid (up to 15 px)
+     * and a ruin's transparent bottom (up to 10 px), a road from below stopped up to 1.5 tiles short of the art, and a road
+     * to a town further north, which starts at the same anchor, ran down under the art and out past it - up to 2.5 tiles of
+     * tail. On the user's day-2 autosave: 39 towns short, 38 with a tail, 210 with roads both sides. The routes stay as
+     * they are - every rule reads roads as staircases between anchors, so moving the anchors would make every road on the
+     * ground invisible to them - and each town's ends are tidied instead, in its SKIRT (the footprint's bottom row and the
+     * row under it, what shows below the art): skirt road joined, through the skirt, to a road outside the town stays and
+     * runs straight up to the town's middle row, under the art; skirt road that is not - the dead end of a road from above
+     * - is lifted. Old road only; a town with a plaza (held towns, the Capitol) is left to its plaza. Returns tiles changed.
+     */
+    public static int tidyTownEnds(World world, Collection<PointOfInterest> places, Set<Long> touched) {
+        if (world == null || places == null)
+            return 0;
+        return tidy(world, places, touched, true);
+    }
+
+    /** Rule 6: every town's and castle's ends - one summary line instead of one per town. */
+    public static int tidyAllTownEnds(World world, Set<Long> touched) {
+        return world == null ? 0 : tidy(world, world.getAllPointOfInterest(), touched, false);
+    }
+
+    private static int tidy(World world, Collection<PointOfInterest> places, Set<Long> touched, boolean perTown) {
+        int changed = 0, towns = 0;
+        for (PointOfInterest p : places)
+            if (isTownOrCapital(p) || castleColor(p) != null) {
+                int n = tidyTownEnd(world, p, touched, perTown);
+                changed += n;
+                if (n > 0)
+                    towns++;
+            }
+        if (!perTown)
+            System.out.println("[TFR-Roads] rule 6: " + changed + " town-end tile(s) changed at " + towns + " place(s)");
+        return changed;
+    }
+
+    static int tidyTownEnd(World world, PointOfInterest t, Set<Long> touched, boolean log) {
+        if (t == null || !t.getActive() || t.getSprite() == null || PlayerRoads.plazaCenter(t) != null)
+            return 0;
+        int ts = world.getTileSize(), h = world.getHeightInTiles();
+        Vector2 pos = t.getPosition();
+        float sw = t.getSprite().getWidth(), sh = t.getSprite().getHeight();
+        int fx0 = (int) Math.floor(pos.x / ts), fx1 = (int) Math.floor((pos.x + sw - 1) / ts);
+        int fy0 = (int) Math.floor(pos.y / ts), fy1 = (int) Math.floor((pos.y + sh - 1) / ts);
+        int fr0 = h - 1 - fy1, fr1 = h - 1 - fy0, below = fr1 + 1;   // raw rows grow southward
+        int middle = h - 1 - (int) Math.floor((pos.y + sh / 2f) / ts);
+        int ax = anchor(world, t)[0];
+        if (fr1 - fr0 < 1)
+            return 0;
+        Set<Long> skirt = new LinkedHashSet<>();
+        for (int c = fx0; c <= fx1; c++) {
+            skirt.add(key(c, fr1));
+            skirt.add(key(c, below));
+        }
+        java.util.ArrayDeque<Long> queue = new java.util.ArrayDeque<>();
+        Set<Long> kept = new HashSet<>();
+        for (long c : skirt)
+            if (road(world, keyX(c), keyY(c)) && touchesOutside(world, keyX(c), keyY(c), fx0, fx1, fr0, below)) {
+                kept.add(c);
+                queue.add(c);
+            }
+        int[][] steps = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        while (!queue.isEmpty()) {
+            long c = queue.poll();
+            for (int[] s : steps) {
+                long n = key(keyX(c) + s[0], keyY(c) + s[1]);
+                if (skirt.contains(n) && road(world, keyX(n), keyY(n)) && kept.add(n))
+                    queue.add(n);
+            }
+        }
+        int lifted = 0, laid = 0;
+        for (long c : skirt)
+            if (!kept.contains(c) && world.roadKindRaw(keyX(c), keyY(c)) == World.ROAD_OLD
+                    && world.setRoadKindRaw(keyX(c), keyY(c), World.ROAD_NONE, touched))
+                lifted++;
+        if (!kept.isEmpty()) {
+            // one column up under the art: the anchor's when the kept road reaches it, else the nearest kept column
+            int col = -1, kind = World.ROAD_OLD;
+            for (long c : kept) {
+                if (col < 0 || Math.abs(keyX(c) - ax) < Math.abs(col - ax)) {
+                    col = keyX(c);
+                    kind = world.roadKindRaw(keyX(c), keyY(c));
+                }
+            }
+            for (int r = fr1; r >= middle; r--)
+                if (world.roadKindRaw(col, r) == World.ROAD_NONE && world.setRoadKindRaw(col, r, kind, touched))
+                    laid++;
+        }
+        if (log && lifted + laid > 0)
+            System.out.println("[TFR-Roads] rule 6: " + t.getDisplayName() + " - " + (laid > 0 ? laid + " tile(s) run up under the town" : "")
+                    + (laid > 0 && lifted > 0 ? ", " : "") + (lifted > 0 ? lifted + " dead-end tile(s) below it lifted" : ""));
+        return lifted + laid;
+    }
+
+    /** Is a 4-neighbour of this skirt tile a road outside the town (neither under it nor in its skirt)? */
+    static boolean touchesOutside(World world, int x, int y, int fx0, int fx1, int fr0, int below) {
+        int[][] steps = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        for (int[] s : steps) {
+            int nx = x + s[0], ny = y + s[1];
+            boolean inTown = nx >= fx0 && nx <= fx1 && ny >= fr0 && ny <= below;
+            if (!inTown && road(world, nx, ny))
+                return true;
+        }
+        return false;
     }
 
     static double tileDistance(World world, PointOfInterest a, PointOfInterest b) {
@@ -1318,9 +1453,12 @@ public final class RoadNetwork {
         liftExtraStarLinks(world, new HashSet<>());
         // Round 399: rule 5 - the castles' roads, once.
         int castleTiles = layCastleRoads(world);
+        // Round 414: rule 6 - every town's road ends tidied (a save laid before it ends roads under the footprint).
+        int tidied = tidyAllTownEnds(world, new HashSet<>());
         world.setRoadsNormalized(VERSION);
         System.out.println("[TFR-Roads] roads normalized to rule " + VERSION + " (" + joined + " corner joint(s) joined, "
-                + castleTiles + " castle road tile(s) laid) in " + (System.nanoTime() - t0) / 1_000_000 + " ms");
+                + castleTiles + " castle road tile(s) laid, " + tidied + " town-end tile(s) tidied) in "
+                + (System.nanoTime() - t0) / 1_000_000 + " ms");
     }
 
     /** Rules 1-2 (round 351/351b): the old roads normalized, a standing Capitol's network laid again. */

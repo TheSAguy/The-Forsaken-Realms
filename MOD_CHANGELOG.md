@@ -14264,6 +14264,53 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 414: roads end under their towns - no gap below, no tail past them (2026-10-03)
+
+The user, with three screenshots: "I think there might be an issue with road endings. Two of these seem short and one
+long."
+
+**Why.** A road is a staircase between two towns' anchors (`PointOfInterest.getTilePosition`, the bottom-centre of the
+footprint). The road pass's raw row (`height - y`) draws that tile one row SOUTH of the footprint. A town's position is
+off the tile grid by up to 15 px, and the ruin art (`wastetown_broken.atlas`) has up to 10 px of transparent bottom; the
+other town art has none. So a road from below stopped up to 1.5 tiles short of the art. A road to a town further north
+starts at the same anchor, so it runs under the art and out past its bottom, up to 2.5 tiles of tail. The user's day-2
+autosave (read-only tools RoadEnds/RoadSides/RoadVerify) had 39 towns short, 38 with a tail, and 210 with roads on both
+sides.
+
+**The fix the user chose** was "end roads at the center". Before building it, it turned out that moving the anchor would
+make every road on the ground invisible to `RoadNetwork`: `roadJoins` and `detectEdges` read a road as the staircase
+between today's anchors, and round 383 kept `roadJoins` on today's anchors on purpose. The routers would then lay a
+second staircase beside the old one, the doubled roads of rounds 351/383. The same result on screen comes from **rule
+6, tidy each town's ends**, with every route left where it is:
+- `RoadNetwork.tidyTownEnd`: a town's SKIRT is its footprint's bottom row plus the row under it, which is what shows
+  below the art.
+  - Skirt road joined through the skirt to a road outside the town stays. One column of it, the anchor's or the nearest,
+    runs straight up to the footprint's middle row, under the art.
+  - Skirt road not joined that way is the dead end of a road from above, and is lifted.
+  - Only old road is lifted. Towns with a plaza (held towns, the Capitol) are skipped, and castles are included.
+- Run by `World.layRoad` for its waypoints (every `buildRoad`/`buildPlayerRoad`), by world-gen after the castle roads
+  (`tidyAllTownEnds`), and once on load: `RoadNetwork.VERSION` 6 in `migrateOnLoad`.
+- `coverage()` now also measures a staircase without the unbroken run of skirt tiles at each end (`inSkirtOf`), and takes
+  the better of that and the whole. A trimmed end does not break a joined pair, and no pair joined before this round is
+  lost.
+- `[TFR-Roads] rule 6: <town> - N tile(s) run up under the town, M dead-end tile(s) below it lifted` when one road is
+  laid, and one summary line for the bulk passes.
+
+**Agent-tested.**
+- The user's day-2 autosave as agent slot 12: `rule 6: 468 town-end tile(s) changed at 210 place(s)`, normalized to rule 6
+  in 81 ms, no castle road re-laid, no exceptions.
+  - Kraag Glade (road from the north) has no tail.
+  - Living Camp (road from the south) has its road up to the door, and the ruin below it takes its road from above with
+    nothing under it.
+- RoadVerify on that save, before -> after:
+  - skirt dead ends 56 -> 0
+  - outside roads not reaching under the art 132 -> 0
+  - joined pairs 210 -> 210 (the pre-round rule counted 210 on the untouched save)
+  - An END_SKIP=3 first cut lost 3 short pairs (4 tiles lifted at one end), which is why the skirt-aware measure exists.
+- A brand-new world: `rule 6: 399 town-end tile(s) changed at 196 place(s)` at world-gen; 0 dead ends, 0 gaps, 214 joined
+  pairs.
+- Agent slot 12 was restored afterwards.
+
 ## Round 413: cave and war champions pay through a doubled card budget (2026-10-03)
 
 The user beat a cave spider (Skrelv, the champion of CaveCE) and got 7 cards, 4 of them rares or mythics, plus 100 gold
