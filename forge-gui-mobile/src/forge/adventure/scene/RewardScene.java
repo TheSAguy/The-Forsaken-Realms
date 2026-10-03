@@ -228,8 +228,20 @@ public class RewardScene extends UIScene {
                             + " for " + cost + " shards (tier=" + tier + ")");
                     HapticEngine.vibrate(FPref.UI_VIBRATE_ON_SHOP_ACTION, 5);
                     SoundSystem.instance.play(SoundEffectType.Shuffle, false);
-                    buyBlueprintButton.setVisible(false); // known now - nothing left to buy here
+                    showBlueprintOwned(); // round 416: known now - the button says so instead of vanishing
                 }, this::removeDialog));
+    }
+
+    /**
+     * Round 416 (the user, at a shop whose type they knew: "Can we add a notice, where the buy shop button would be,
+     * letting the player know they already own a blue-print"). The Buy Blueprint spot reads "Blueprint Owned", greyed and
+     * disabled - promptBuyBlueprint() already returns at once for a known type, so a click (setDisabled() does not detach
+     * the handler) does nothing.
+     */
+    private void showBlueprintOwned() {
+        buyBlueprintButton.setText("[%80][GRAY]Blueprint Owned");
+        buyBlueprintButton.setDisabled(true);
+        buyBlueprintButton.setVisible(true);
     }
 
     /** Opens the tier/category chooser for an already-built card shop (2026-08-30 user spec,
@@ -1131,16 +1143,18 @@ public class RewardScene extends UIScene {
                 // point. Only shown for an ordinary card shop whose type is still unknown, and
                 // only when the slot is a real multi-type card-shop slot (isShopTypeRerollable
                 // excludes the Armory and the fixed Capitol land shops).
-                boolean blueprintOffered = Config.instance().getConfigData().shopBlueprintsEnabled
+                boolean blueprintShop = Config.instance().getConfigData().shopBlueprintsEnabled
                         && !isArmory
                         && shopActor.getShopData() != null
                         // The 5 Cartographer basic-land shops are outside the blueprint system
                         // (user spec 2026-08-31) - the player Capitol's copies unlock by visiting
                         // an AI capital, so a blueprint for one buys nothing.
                         && !EconomyBuildings.isBasicLandShop(shopActor.getShopData())
-                        && shopActor.getMapStage().isShopTypeRerollable(shopActor.getObjectId())
-                        && !EconomyBuildings.isShopTypeUnlocked(shopActor.getShopData().name);
-                buyBlueprintButton.setVisible(blueprintOffered);
+                        && shopActor.getMapStage().isShopTypeRerollable(shopActor.getObjectId());
+                boolean blueprintOffered = blueprintShop && !EconomyBuildings.isShopTypeUnlocked(shopActor.getShopData().name);
+                buyBlueprintButton.setVisible(blueprintShop);
+                if (blueprintShop && !blueprintOffered)
+                    showBlueprintOwned(); // round 416
                 if (blueprintOffered) {
                     String tier = EconomyBuildings.shopTierOf(shopActor.getMapStage(),
                             shopActor.getObjectId(), shopActor.getShopData().name);
