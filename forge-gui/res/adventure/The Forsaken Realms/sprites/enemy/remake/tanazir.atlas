@@ -1,0 +1,164 @@
+tanazir.png
+size: 1770,1042
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 118, 163
+Idle
+  xy: 118, 64
+  size: 118, 163
+Idle
+  xy: 236, 64
+  size: 118, 163
+Idle
+  xy: 354, 64
+  size: 118, 163
+Idle
+  xy: 472, 64
+  size: 118, 163
+Idle
+  xy: 590, 64
+  size: 118, 163
+Idle
+  xy: 708, 64
+  size: 118, 163
+Idle
+  xy: 826, 64
+  size: 118, 163
+Idle
+  xy: 944, 64
+  size: 118, 163
+Idle
+  xy: 1062, 64
+  size: 118, 163
+Walk
+  xy: 0, 227
+  size: 118, 163
+Walk
+  xy: 118, 227
+  size: 118, 163
+Walk
+  xy: 236, 227
+  size: 118, 163
+Walk
+  xy: 354, 227
+  size: 118, 163
+Attack
+  xy: 0, 390
+  size: 118, 163
+Attack
+  xy: 118, 390
+  size: 118, 163
+Attack
+  xy: 236, 390
+  size: 118, 163
+Attack
+  xy: 354, 390
+  size: 118, 163
+Attack
+  xy: 472, 390
+  size: 118, 163
+Attack
+  xy: 590, 390
+  size: 118, 163
+Attack
+  xy: 708, 390
+  size: 118, 163
+Attack
+  xy: 826, 390
+  size: 118, 163
+Attack
+  xy: 944, 390
+  size: 118, 163
+Hit
+  xy: 0, 553
+  size: 118, 163
+Hit
+  xy: 118, 553
+  size: 118, 163
+Hit
+  xy: 236, 553
+  size: 118, 163
+Hit
+  xy: 354, 553
+  size: 118, 163
+Hit
+  xy: 472, 553
+  size: 118, 163
+Hit
+  xy: 590, 553
+  size: 118, 163
+Death
+  xy: 0, 716
+  size: 118, 163
+Death
+  xy: 118, 716
+  size: 118, 163
+Death
+  xy: 236, 716
+  size: 118, 163
+Death
+  xy: 354, 716
+  size: 118, 163
+Death
+  xy: 472, 716
+  size: 118, 163
+Death
+  xy: 590, 716
+  size: 118, 163
+Death
+  xy: 708, 716
+  size: 118, 163
+Death
+  xy: 826, 716
+  size: 118, 163
+Death
+  xy: 944, 716
+  size: 118, 163
+Death
+  xy: 1062, 716
+  size: 118, 163
+Death
+  xy: 1180, 716
+  size: 118, 163
+Death
+  xy: 1298, 716
+  size: 118, 163
+Death
+  xy: 1416, 716
+  size: 118, 163
+Death
+  xy: 1534, 716
+  size: 118, 163
+Death
+  xy: 1652, 716
+  size: 118, 163
+Wake
+  xy: 0, 879
+  size: 118, 163
+Wake
+  xy: 118, 879
+  size: 118, 163
+Wake
+  xy: 236, 879
+  size: 118, 163
+Wake
+  xy: 354, 879
+  size: 118, 163
+Wake
+  xy: 472, 879
+  size: 118, 163
+Wake
+  xy: 590, 879
+  size: 118, 163
+Wake
+  xy: 708, 879
+  size: 118, 163
+Wake
+  xy: 826, 879
+  size: 118, 163

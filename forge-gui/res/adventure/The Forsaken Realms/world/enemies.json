@@ -413,7 +413,7 @@
     {
         "name": "Adult Green Dragon",
         "nameOverride": "",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/adult_green_dragon.atlas",
         "deck": [
             "decks/standard/greendragon.dck"
         ],
@@ -422,7 +422,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 37,
-        "scale": 1.0,
+        "scale": 0.3333,
         "life": 23,
         "rewards": [
             {
@@ -11152,7 +11152,7 @@
     },
     {
         "name": "Eye",
-        "sprite": "sprites/enemy/aberration/eye.atlas",
+        "sprite": "sprites/enemy/remake/eye.atlas",
         "deck": [
             "decks/standard/eye.dck"
         ],
@@ -11161,7 +11161,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 22,
-        "scale": 1.3,
+        "scale": 0.5,
         "life": 11,
         "rewards": [
             {
@@ -26810,7 +26810,7 @@
     },
     {
         "name": "Scarab",
-        "sprite": "sprites/enemy/beast/insect/scarab.atlas",
+        "sprite": "sprites/enemy/remake/scarab.atlas",
         "deck": [
             "decks/standard/scarab.dck"
         ],
@@ -26818,7 +26818,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.9286,
+        "scale": 0.5,
         "life": 21,
         "rewards": [
             {
@@ -38116,12 +38116,12 @@
     },
     {
         "name": "Arcades",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/arcades.atlas",
         "deck": [
             "decks/legends/arcades_sabboth.dck"
         ],
         "ai": "",
-        "scale": 1.0,
+        "scale": 0.3939,
         "speed": 30,
         "life": 40,
         "rewards": [
@@ -39905,13 +39905,13 @@
     },
     {
         "name": "The Scarab God",
-        "sprite": "sprites/enemy/beast/insect/scarab.atlas",
+        "sprite": "sprites/enemy/remake/the_scarab_god.atlas",
         "deck": [
             "decks/legends/the_scarab_god.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.9286,
+        "scale": 0.325,
         "life": 40,
         "rewards": [
             {
@@ -40351,13 +40351,13 @@
     },
     {
         "name": "Amareth",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/amareth.atlas",
         "deck": [
             "decks/legends/amareth.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.0,
+        "scale": 0.325,
         "life": 40,
         "rewards": [
             {
@@ -43052,14 +43052,14 @@
     },
     {
         "name": "Intet",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/intet.atlas",
         "deck": [
             "decks/legends/intet.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 1.0,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -50199,14 +50199,14 @@
     },
     {
         "name": "Tanazir",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/tanazir.atlas",
         "deck": [
             "decks/legends/tanazir.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.68,
+        "scale": 0.358,
         "life": 30,
         "rewards": [
             {
@@ -52341,14 +52341,14 @@
     },
     {
         "name": "Korvold",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/korvold.atlas",
         "deck": [
             "decks/legends/korvold.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -61303,14 +61303,14 @@
     },
     {
         "name": "Rith",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/rith.atlas",
         "deck": [
             "decks/legends/rith.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0,
+        "scale": 0.3333,
         "life": 30,
         "rewards": [
             {
@@ -66226,13 +66226,13 @@
     },
     {
         "name": "Toxrill",
-        "sprite": "sprites/enemy/beast/insect/scarab.atlas",
+        "sprite": "sprites/enemy/remake/toxrill.atlas",
         "deck": [
             "decks/legends/toxrill.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.9286,
+        "scale": 0.4062,
         "life": 30,
         "rewards": [
             {
@@ -72759,7 +72759,7 @@
     },
     {
         "name": "Vnwxt",
-        "sprite": "sprites/enemy/aberration/eye.atlas",
+        "sprite": "sprites/enemy/remake/vnwxt.atlas",
         "deck": [
             "decks/legends/vnwxt.dck"
         ],
@@ -72823,7 +72823,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.3
+        "scale": 0.4062
     },
     {
         "name": "Gornog",
@@ -76488,12 +76488,12 @@
     },
     {
         "name": "Zask",
-        "sprite": "sprites/enemy/beast/insect/scarab.atlas",
+        "sprite": "sprites/enemy/remake/zask.atlas",
         "deck": [
             "decks/legends/zask.dck"
         ],
         "ai": "",
-        "scale": 0.9286,
+        "scale": 0.4062,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -87957,7 +87957,7 @@
     },
     {
         "name": "Codie",
-        "sprite": "sprites/enemy/aberration/eye.atlas",
+        "sprite": "sprites/enemy/remake/codie.atlas",
         "deck": [
             "decks/legends/codie.dck"
         ],
@@ -88026,7 +88026,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.3
+        "scale": 0.3333
     },
     {
         "name": "Averna",
@@ -93736,12 +93736,12 @@
     },
     {
         "name": "Teval",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/teval.atlas",
         "deck": [
             "decks/legends/teval.dck"
         ],
         "ai": "",
-        "scale": 1.0,
+        "scale": 0.3333,
         "flying": true,
         "speed": 44,
         "life": 20,
@@ -93888,13 +93888,13 @@
     },
     {
         "name": "Ureni",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/ureni.atlas",
         "deck": [
             "decks/legends/ureni.dck"
         ],
         "ai": "",
         "flying": true,
-        "scale": 1.0,
+        "scale": 0.3333,
         "speed": 44,
         "life": 20,
         "rewards": [
@@ -122215,7 +122215,7 @@
     },
     {
         "name": "Palladia-Mors (Boss)",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/palladia_mors_boss.atlas",
         "deck": [
             "decks/miniboss/Palladia-Mors.dck"
         ],
@@ -122223,7 +122223,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 2.0,
+        "scale": 0.3939,
         "life": 40,
         "rewards": [
             {
@@ -122451,7 +122451,7 @@
     },
     {
         "name": "Vaevictis Asmadi",
-        "sprite": "sprites/enemy/dragon/adultgreendragon.atlas",
+        "sprite": "sprites/enemy/remake/vaevictis_asmadi.atlas",
         "deck": [
             "decks/miniboss/Vaevictis Asmadi.dck"
         ],
@@ -122459,7 +122459,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 2.0,
+        "scale": 0.4262,
         "life": 40,
         "rewards": [
             {

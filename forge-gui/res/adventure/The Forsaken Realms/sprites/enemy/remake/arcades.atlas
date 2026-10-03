@@ -1,0 +1,143 @@
+arcades.png
+size: 780,292
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 60, 38
+Idle
+  xy: 60, 64
+  size: 60, 38
+Idle
+  xy: 120, 64
+  size: 60, 38
+Idle
+  xy: 180, 64
+  size: 60, 38
+Idle
+  xy: 240, 64
+  size: 60, 38
+Idle
+  xy: 300, 64
+  size: 60, 38
+Idle
+  xy: 360, 64
+  size: 60, 38
+Idle
+  xy: 420, 64
+  size: 60, 38
+Idle
+  xy: 480, 64
+  size: 60, 38
+Idle
+  xy: 540, 64
+  size: 60, 38
+Walk
+  xy: 0, 102
+  size: 60, 38
+Walk
+  xy: 60, 102
+  size: 60, 38
+Walk
+  xy: 120, 102
+  size: 60, 38
+Walk
+  xy: 180, 102
+  size: 60, 38
+Attack
+  xy: 0, 140
+  size: 60, 38
+Attack
+  xy: 60, 140
+  size: 60, 38
+Attack
+  xy: 120, 140
+  size: 60, 38
+Attack
+  xy: 180, 140
+  size: 60, 38
+Attack
+  xy: 240, 140
+  size: 60, 38
+Attack
+  xy: 300, 140
+  size: 60, 38
+Attack
+  xy: 360, 140
+  size: 60, 38
+Attack
+  xy: 420, 140
+  size: 60, 38
+Hit
+  xy: 0, 178
+  size: 60, 38
+Hit
+  xy: 60, 178
+  size: 60, 38
+Hit
+  xy: 120, 178
+  size: 60, 38
+Hit
+  xy: 180, 178
+  size: 60, 38
+Death
+  xy: 0, 216
+  size: 60, 38
+Death
+  xy: 60, 216
+  size: 60, 38
+Death
+  xy: 120, 216
+  size: 60, 38
+Death
+  xy: 180, 216
+  size: 60, 38
+Death
+  xy: 240, 216
+  size: 60, 38
+Death
+  xy: 300, 216
+  size: 60, 38
+Death
+  xy: 360, 216
+  size: 60, 38
+Death
+  xy: 420, 216
+  size: 60, 38
+Death
+  xy: 480, 216
+  size: 60, 38
+Death
+  xy: 540, 216
+  size: 60, 38
+Death
+  xy: 600, 216
+  size: 60, 38
+Death
+  xy: 660, 216
+  size: 60, 38
+Death
+  xy: 720, 216
+  size: 60, 38
+Wake
+  xy: 0, 254
+  size: 60, 38
+Wake
+  xy: 60, 254
+  size: 60, 38
+Wake
+  xy: 120, 254
+  size: 60, 38
+Wake
+  xy: 180, 254
+  size: 60, 38
+Wake
+  xy: 240, 254
+  size: 60, 38
+Wake
+  xy: 300, 254
+  size: 60, 38

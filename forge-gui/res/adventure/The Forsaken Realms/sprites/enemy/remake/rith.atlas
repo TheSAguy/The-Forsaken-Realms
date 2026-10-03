@@ -1,0 +1,152 @@
+rith.png
+size: 1092,352
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 78, 48
+Idle
+  xy: 78, 64
+  size: 78, 48
+Idle
+  xy: 156, 64
+  size: 78, 48
+Idle
+  xy: 234, 64
+  size: 78, 48
+Idle
+  xy: 312, 64
+  size: 78, 48
+Idle
+  xy: 390, 64
+  size: 78, 48
+Idle
+  xy: 468, 64
+  size: 78, 48
+Idle
+  xy: 546, 64
+  size: 78, 48
+Idle
+  xy: 624, 64
+  size: 78, 48
+Idle
+  xy: 702, 64
+  size: 78, 48
+Walk
+  xy: 0, 112
+  size: 78, 48
+Walk
+  xy: 78, 112
+  size: 78, 48
+Walk
+  xy: 156, 112
+  size: 78, 48
+Walk
+  xy: 234, 112
+  size: 78, 48
+Attack
+  xy: 0, 160
+  size: 78, 48
+Attack
+  xy: 78, 160
+  size: 78, 48
+Attack
+  xy: 156, 160
+  size: 78, 48
+Attack
+  xy: 234, 160
+  size: 78, 48
+Attack
+  xy: 312, 160
+  size: 78, 48
+Attack
+  xy: 390, 160
+  size: 78, 48
+Attack
+  xy: 468, 160
+  size: 78, 48
+Attack
+  xy: 546, 160
+  size: 78, 48
+Hit
+  xy: 0, 208
+  size: 78, 48
+Hit
+  xy: 78, 208
+  size: 78, 48
+Hit
+  xy: 156, 208
+  size: 78, 48
+Hit
+  xy: 234, 208
+  size: 78, 48
+Hit
+  xy: 312, 208
+  size: 78, 48
+Death
+  xy: 0, 256
+  size: 78, 48
+Death
+  xy: 78, 256
+  size: 78, 48
+Death
+  xy: 156, 256
+  size: 78, 48
+Death
+  xy: 234, 256
+  size: 78, 48
+Death
+  xy: 312, 256
+  size: 78, 48
+Death
+  xy: 390, 256
+  size: 78, 48
+Death
+  xy: 468, 256
+  size: 78, 48
+Death
+  xy: 546, 256
+  size: 78, 48
+Death
+  xy: 624, 256
+  size: 78, 48
+Death
+  xy: 702, 256
+  size: 78, 48
+Death
+  xy: 780, 256
+  size: 78, 48
+Death
+  xy: 858, 256
+  size: 78, 48
+Death
+  xy: 936, 256
+  size: 78, 48
+Death
+  xy: 1014, 256
+  size: 78, 48
+Wake
+  xy: 0, 304
+  size: 78, 48
+Wake
+  xy: 78, 304
+  size: 78, 48
+Wake
+  xy: 156, 304
+  size: 78, 48
+Wake
+  xy: 234, 304
+  size: 78, 48
+Wake
+  xy: 312, 304
+  size: 78, 48
+Wake
+  xy: 390, 304
+  size: 78, 48
+Wake
+  xy: 468, 304
+  size: 78, 48

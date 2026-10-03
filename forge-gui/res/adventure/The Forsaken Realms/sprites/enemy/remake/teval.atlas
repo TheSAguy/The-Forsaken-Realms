@@ -1,0 +1,143 @@
+teval.png
+size: 960,382
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 53
+Idle
+  xy: 80, 64
+  size: 80, 53
+Idle
+  xy: 160, 64
+  size: 80, 53
+Idle
+  xy: 240, 64
+  size: 80, 53
+Idle
+  xy: 320, 64
+  size: 80, 53
+Idle
+  xy: 400, 64
+  size: 80, 53
+Idle
+  xy: 480, 64
+  size: 80, 53
+Idle
+  xy: 560, 64
+  size: 80, 53
+Idle
+  xy: 640, 64
+  size: 80, 53
+Idle
+  xy: 720, 64
+  size: 80, 53
+Walk
+  xy: 0, 117
+  size: 80, 53
+Walk
+  xy: 80, 117
+  size: 80, 53
+Walk
+  xy: 160, 117
+  size: 80, 53
+Walk
+  xy: 240, 117
+  size: 80, 53
+Attack
+  xy: 0, 170
+  size: 80, 53
+Attack
+  xy: 80, 170
+  size: 80, 53
+Attack
+  xy: 160, 170
+  size: 80, 53
+Attack
+  xy: 240, 170
+  size: 80, 53
+Attack
+  xy: 320, 170
+  size: 80, 53
+Attack
+  xy: 400, 170
+  size: 80, 53
+Attack
+  xy: 480, 170
+  size: 80, 53
+Attack
+  xy: 560, 170
+  size: 80, 53
+Hit
+  xy: 0, 223
+  size: 80, 53
+Hit
+  xy: 80, 223
+  size: 80, 53
+Hit
+  xy: 160, 223
+  size: 80, 53
+Hit
+  xy: 240, 223
+  size: 80, 53
+Hit
+  xy: 320, 223
+  size: 80, 53
+Death
+  xy: 0, 276
+  size: 80, 53
+Death
+  xy: 80, 276
+  size: 80, 53
+Death
+  xy: 160, 276
+  size: 80, 53
+Death
+  xy: 240, 276
+  size: 80, 53
+Death
+  xy: 320, 276
+  size: 80, 53
+Death
+  xy: 400, 276
+  size: 80, 53
+Death
+  xy: 480, 276
+  size: 80, 53
+Death
+  xy: 560, 276
+  size: 80, 53
+Death
+  xy: 640, 276
+  size: 80, 53
+Death
+  xy: 720, 276
+  size: 80, 53
+Death
+  xy: 800, 276
+  size: 80, 53
+Death
+  xy: 880, 276
+  size: 80, 53
+Wake
+  xy: 0, 329
+  size: 80, 53
+Wake
+  xy: 80, 329
+  size: 80, 53
+Wake
+  xy: 160, 329
+  size: 80, 53
+Wake
+  xy: 240, 329
+  size: 80, 53
+Wake
+  xy: 320, 329
+  size: 80, 53
+Wake
+  xy: 400, 329
+  size: 80, 53

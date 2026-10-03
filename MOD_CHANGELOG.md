@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 408: eighteen enemies redrawn with the creature generator (2026-10-02)
+
+Three tiny shared sprites drew 18 enemies: the green dragon (`dragon/adultgreendragon.atlas`, 16x16, Idle only - the
+Adult Green Dragon and ten dragon legends), the floating eye (`aberration/eye.atlas`, 17x17, Idle + Attack - Eye, Vnwxt,
+Codie) and the scarab (`beast/insect/scarab.atlas`, 22x16, no Hit or Wake - Scarab, The Scarab God, Toxrill, Zask). Each
+of the 18 now has its own sprite, `sprites/enemy/remake/<name>.atlas`, made with the open-source generator Procedural
+Pixel Creatures (idlerunner00, MIT; the work lives in the user's clone under `Claude_Code\Bannerloard`, branch
+`feature/forge-remake`, tooling `reports/forge/remake.py` + `install_remakes.py`). The user asked for them in the live
+game to try out.
+
+- Full set at 5 fps: Idle, Walk, Attack, Hit, Death, Wake, plus a 64x64 Avatar. Death = hit flash, collapse, then two
+  fading frames (55 % / 25 % opacity): the enemy is removed after its single Death play.
+- Round-382 density, about 2.5 art px per world px: body 26 / 32 / 40 by rank (Apprentice / Adept / Master), checked
+  with `enemy_scale.sprite_body` after export. Bosses and keepSize keep their hand-set drawn size and get bodies of
+  61-66 px for it: Tanazir (keepSize, 33.6 on the 16-px scale), Palladia-Mors (Boss) and Vaevictis Asmadi (32).
+- Each legend that shared a sprite gets its own body (a different generator seed: horns, crests, tails and its motion
+  personality differ) and colors taken from its card art in Forge's picture cache (the edition its reward names).
+  Hand-checked where the background won: Intet, Ureni, The Scarab God, Zask. Palladia-Mors (Boss) and Vaevictis
+  Asmadi have no card in their rewards: color identity.
+- Dragons are compact and heraldic (wings raised at rest, neck up, short curled tail), so a side view keeps its presence
+  under the one-size-per-rank rule. They attack with the generator's Rear (rear up, snap) instead of its wing buffet: the
+  buffet's raised wings made the frame tall enough for the frame-height cap (1.4 x rank x 16) to shrink the whole dragon
+  to 78 %. All 18 draw at full rank size.
+- The eyes float without a baked ground shadow: the size rule counts alpha >= 32, so a shadow under a hovering body
+  would have drawn the eyeball small.
+- Data only. `world/enemies.json`: 18 `sprite` + 18 `scale` lines (`enemy_scale.py --write` for the 15 ranked enemies;
+  the three boss / keepSize scales set so their bodies keep the drawn size; the tool then changes nothing). 36 new
+  files, a CREDITS.md line. The three original atlases stay in common. Saves keep enemies by name, so ones already on
+  the map show the new sprite after a load.
+- Checks: `validate_plane_data.py` as before (atlases-parsed 1110 -> 1125); `sprite_artifact_audit.py --only remake`
+  clean.
+- NOT seen in play yet. Try it with the console (F9): `spawn enemy "Adult Green Dragon"`, `spawn enemy Eye`,
+  `spawn enemy "The Scarab God"` - names with spaces in quotes; a spawn lands 3-10 tiles away.
+- Round 407 is the peer session's (attacking-mage caps + castle champions), still in progress when this was committed.
+
 ## Round 406: the card budget no longer pays gold for cards it would have cut (2026-10-02)
 
 Found in the user's live log (v1.17.1, Insane New Game+): Kor Duelist, an Apprentice beaten for the first time, paid

@@ -1,0 +1,149 @@
+ureni.png
+size: 988,358
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 49
+Idle
+  xy: 76, 64
+  size: 76, 49
+Idle
+  xy: 152, 64
+  size: 76, 49
+Idle
+  xy: 228, 64
+  size: 76, 49
+Idle
+  xy: 304, 64
+  size: 76, 49
+Idle
+  xy: 380, 64
+  size: 76, 49
+Idle
+  xy: 456, 64
+  size: 76, 49
+Idle
+  xy: 532, 64
+  size: 76, 49
+Idle
+  xy: 608, 64
+  size: 76, 49
+Idle
+  xy: 684, 64
+  size: 76, 49
+Walk
+  xy: 0, 113
+  size: 76, 49
+Walk
+  xy: 76, 113
+  size: 76, 49
+Walk
+  xy: 152, 113
+  size: 76, 49
+Walk
+  xy: 228, 113
+  size: 76, 49
+Attack
+  xy: 0, 162
+  size: 76, 49
+Attack
+  xy: 76, 162
+  size: 76, 49
+Attack
+  xy: 152, 162
+  size: 76, 49
+Attack
+  xy: 228, 162
+  size: 76, 49
+Attack
+  xy: 304, 162
+  size: 76, 49
+Attack
+  xy: 380, 162
+  size: 76, 49
+Attack
+  xy: 456, 162
+  size: 76, 49
+Attack
+  xy: 532, 162
+  size: 76, 49
+Hit
+  xy: 0, 211
+  size: 76, 49
+Hit
+  xy: 76, 211
+  size: 76, 49
+Hit
+  xy: 152, 211
+  size: 76, 49
+Hit
+  xy: 228, 211
+  size: 76, 49
+Hit
+  xy: 304, 211
+  size: 76, 49
+Death
+  xy: 0, 260
+  size: 76, 49
+Death
+  xy: 76, 260
+  size: 76, 49
+Death
+  xy: 152, 260
+  size: 76, 49
+Death
+  xy: 228, 260
+  size: 76, 49
+Death
+  xy: 304, 260
+  size: 76, 49
+Death
+  xy: 380, 260
+  size: 76, 49
+Death
+  xy: 456, 260
+  size: 76, 49
+Death
+  xy: 532, 260
+  size: 76, 49
+Death
+  xy: 608, 260
+  size: 76, 49
+Death
+  xy: 684, 260
+  size: 76, 49
+Death
+  xy: 760, 260
+  size: 76, 49
+Death
+  xy: 836, 260
+  size: 76, 49
+Death
+  xy: 912, 260
+  size: 76, 49
+Wake
+  xy: 0, 309
+  size: 76, 49
+Wake
+  xy: 76, 309
+  size: 76, 49
+Wake
+  xy: 152, 309
+  size: 76, 49
+Wake
+  xy: 228, 309
+  size: 76, 49
+Wake
+  xy: 304, 309
+  size: 76, 49
+Wake
+  xy: 380, 309
+  size: 76, 49
+Wake
+  xy: 456, 309
+  size: 76, 49

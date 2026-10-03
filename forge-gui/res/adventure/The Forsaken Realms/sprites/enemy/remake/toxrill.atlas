@@ -1,0 +1,137 @@
+toxrill.png
+size: 696,250
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 58, 31
+Idle
+  xy: 58, 64
+  size: 58, 31
+Idle
+  xy: 116, 64
+  size: 58, 31
+Idle
+  xy: 174, 64
+  size: 58, 31
+Idle
+  xy: 232, 64
+  size: 58, 31
+Idle
+  xy: 290, 64
+  size: 58, 31
+Idle
+  xy: 348, 64
+  size: 58, 31
+Idle
+  xy: 406, 64
+  size: 58, 31
+Idle
+  xy: 464, 64
+  size: 58, 31
+Idle
+  xy: 522, 64
+  size: 58, 31
+Walk
+  xy: 0, 95
+  size: 58, 31
+Walk
+  xy: 58, 95
+  size: 58, 31
+Walk
+  xy: 116, 95
+  size: 58, 31
+Walk
+  xy: 174, 95
+  size: 58, 31
+Attack
+  xy: 0, 126
+  size: 58, 31
+Attack
+  xy: 58, 126
+  size: 58, 31
+Attack
+  xy: 116, 126
+  size: 58, 31
+Attack
+  xy: 174, 126
+  size: 58, 31
+Attack
+  xy: 232, 126
+  size: 58, 31
+Attack
+  xy: 290, 126
+  size: 58, 31
+Attack
+  xy: 348, 126
+  size: 58, 31
+Hit
+  xy: 0, 157
+  size: 58, 31
+Hit
+  xy: 58, 157
+  size: 58, 31
+Hit
+  xy: 116, 157
+  size: 58, 31
+Hit
+  xy: 174, 157
+  size: 58, 31
+Death
+  xy: 0, 188
+  size: 58, 31
+Death
+  xy: 58, 188
+  size: 58, 31
+Death
+  xy: 116, 188
+  size: 58, 31
+Death
+  xy: 174, 188
+  size: 58, 31
+Death
+  xy: 232, 188
+  size: 58, 31
+Death
+  xy: 290, 188
+  size: 58, 31
+Death
+  xy: 348, 188
+  size: 58, 31
+Death
+  xy: 406, 188
+  size: 58, 31
+Death
+  xy: 464, 188
+  size: 58, 31
+Death
+  xy: 522, 188
+  size: 58, 31
+Death
+  xy: 580, 188
+  size: 58, 31
+Death
+  xy: 638, 188
+  size: 58, 31
+Wake
+  xy: 0, 219
+  size: 58, 31
+Wake
+  xy: 58, 219
+  size: 58, 31
+Wake
+  xy: 116, 219
+  size: 58, 31
+Wake
+  xy: 174, 219
+  size: 58, 31
+Wake
+  xy: 232, 219
+  size: 58, 31
+Wake
+  xy: 290, 219
+  size: 58, 31

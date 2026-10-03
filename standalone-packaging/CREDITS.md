@@ -78,6 +78,9 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   © New World Computing / The 3DO Company, 1999; sheets from The Spriters Resource, supplied by the user.
 - **Diablo / Diablo: Hellfire monster sprites** (9 enemies, renamed) - © Blizzard North / Synergistic Software,
   1996-97; sheets from The Spriters Resource, supplied by the user.
+- **Generated creatures** (18 enemies from round 408 - the green dragon and the ten dragon legends that shared its
+  sprite, the floating eyes, the scarabs) - made with the open-source generator **Procedural Pixel Creatures** by
+  **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
 

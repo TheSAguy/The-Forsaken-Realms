@@ -58,6 +58,12 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-02 (night, later): **round 408 LOCAL + UNRELEASED (data only)** - 18 enemies redrawn with the creature
+generator: the green dragon and the ten dragon legends that shared its sprite, Eye / Vnwxt / Codie, Scarab / The Scarab
+God / Toxrill / Zask, each its own atlas in `sprites/enemy/remake/` (MOD_CHANGELOG round 408, MOD_SCOPE #120). Copied
+into the live + agent folders by hand (no package: round 407, the peer session's attacking-mage caps + castle champions,
+had uncommitted Java at the time); the next package carries it. Not yet seen in the user's play.
+
 ## STATE 2026-10-02 (night): **round 406 LOCAL + UNRELEASED** on top of v1.17.1. 406 = `CardBudget` drops the gold a reward
 list paid for deck cards it could not hand over (`Reward.cardFallbackGold`, marked in `RewardData`'s `deckCard` case).
 That gold slipped past the budget: Kor Duelist paid 128 gold where 78 was right, and 6 of 13 budgeted wins in the user's

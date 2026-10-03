@@ -4949,3 +4949,12 @@ from Forge's card data (an insect plays insects), sits in the biome roster of ev
 constructs below Archmage in the Wasteland too), Masters and Archmages in the capital arenas, and the generated caves
 re-picked their roamers. Sizes follow round 178's one-size-per-rank rule. Toolchain: `dev-tools/art-import/`. The
 bestiary page: https://claude.ai/code/artifact/5f82734c-8bf7-497f-a369-27a1934c221e
+
+### 120. Generated enemy remakes — `In Progress (round 408, 2026-10-02: 18 enemies, the pilot)`
+User ask 2026-10-02: re-create enemies at the low end of the resolution scale - side view only, missing Death, Attack,
+Walk, Hit or Wake - with the original as the input model, and give every enemy that shares a sprite its own. The
+creature generator Procedural Pixel Creatures (idlerunner00, MIT; the user's clone under `Claude_Code\Bannerloard`,
+branch `feature/forge-remake`) searches its seeds for the original's silhouette and colors, exports the full animation
+set at the round-382 density and gives each sharing legend its own seed and card-art colors. Round 408 installed the
+dragon, eye and scarab groups (18 enemies). Sandworm, ooze and turtle remakes exist but are not installed. The survey of
+candidates: 360 low-resolution side-view enemies (the generator project's `reports/forge/survey/enemy_resolution.csv`).

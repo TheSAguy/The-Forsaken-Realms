@@ -1,0 +1,134 @@
+zask.png
+size: 616,244
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 30
+Idle
+  xy: 56, 64
+  size: 56, 30
+Idle
+  xy: 112, 64
+  size: 56, 30
+Idle
+  xy: 168, 64
+  size: 56, 30
+Idle
+  xy: 224, 64
+  size: 56, 30
+Idle
+  xy: 280, 64
+  size: 56, 30
+Idle
+  xy: 336, 64
+  size: 56, 30
+Idle
+  xy: 392, 64
+  size: 56, 30
+Idle
+  xy: 448, 64
+  size: 56, 30
+Idle
+  xy: 504, 64
+  size: 56, 30
+Walk
+  xy: 0, 94
+  size: 56, 30
+Walk
+  xy: 56, 94
+  size: 56, 30
+Walk
+  xy: 112, 94
+  size: 56, 30
+Walk
+  xy: 168, 94
+  size: 56, 30
+Attack
+  xy: 0, 124
+  size: 56, 30
+Attack
+  xy: 56, 124
+  size: 56, 30
+Attack
+  xy: 112, 124
+  size: 56, 30
+Attack
+  xy: 168, 124
+  size: 56, 30
+Attack
+  xy: 224, 124
+  size: 56, 30
+Attack
+  xy: 280, 124
+  size: 56, 30
+Attack
+  xy: 336, 124
+  size: 56, 30
+Hit
+  xy: 0, 154
+  size: 56, 30
+Hit
+  xy: 56, 154
+  size: 56, 30
+Hit
+  xy: 112, 154
+  size: 56, 30
+Hit
+  xy: 168, 154
+  size: 56, 30
+Death
+  xy: 0, 184
+  size: 56, 30
+Death
+  xy: 56, 184
+  size: 56, 30
+Death
+  xy: 112, 184
+  size: 56, 30
+Death
+  xy: 168, 184
+  size: 56, 30
+Death
+  xy: 224, 184
+  size: 56, 30
+Death
+  xy: 280, 184
+  size: 56, 30
+Death
+  xy: 336, 184
+  size: 56, 30
+Death
+  xy: 392, 184
+  size: 56, 30
+Death
+  xy: 448, 184
+  size: 56, 30
+Death
+  xy: 504, 184
+  size: 56, 30
+Death
+  xy: 560, 184
+  size: 56, 30
+Wake
+  xy: 0, 214
+  size: 56, 30
+Wake
+  xy: 56, 214
+  size: 56, 30
+Wake
+  xy: 112, 214
+  size: 56, 30
+Wake
+  xy: 168, 214
+  size: 56, 30
+Wake
+  xy: 224, 214
+  size: 56, 30
+Wake
+  xy: 280, 214
+  size: 56, 30

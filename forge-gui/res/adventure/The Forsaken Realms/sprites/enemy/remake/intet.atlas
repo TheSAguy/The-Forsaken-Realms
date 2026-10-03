@@ -1,0 +1,155 @@
+intet.png
+size: 1176,406
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 57
+Idle
+  xy: 84, 64
+  size: 84, 57
+Idle
+  xy: 168, 64
+  size: 84, 57
+Idle
+  xy: 252, 64
+  size: 84, 57
+Idle
+  xy: 336, 64
+  size: 84, 57
+Idle
+  xy: 420, 64
+  size: 84, 57
+Idle
+  xy: 504, 64
+  size: 84, 57
+Idle
+  xy: 588, 64
+  size: 84, 57
+Idle
+  xy: 672, 64
+  size: 84, 57
+Idle
+  xy: 756, 64
+  size: 84, 57
+Walk
+  xy: 0, 121
+  size: 84, 57
+Walk
+  xy: 84, 121
+  size: 84, 57
+Walk
+  xy: 168, 121
+  size: 84, 57
+Walk
+  xy: 252, 121
+  size: 84, 57
+Attack
+  xy: 0, 178
+  size: 84, 57
+Attack
+  xy: 84, 178
+  size: 84, 57
+Attack
+  xy: 168, 178
+  size: 84, 57
+Attack
+  xy: 252, 178
+  size: 84, 57
+Attack
+  xy: 336, 178
+  size: 84, 57
+Attack
+  xy: 420, 178
+  size: 84, 57
+Attack
+  xy: 504, 178
+  size: 84, 57
+Attack
+  xy: 588, 178
+  size: 84, 57
+Attack
+  xy: 672, 178
+  size: 84, 57
+Hit
+  xy: 0, 235
+  size: 84, 57
+Hit
+  xy: 84, 235
+  size: 84, 57
+Hit
+  xy: 168, 235
+  size: 84, 57
+Hit
+  xy: 252, 235
+  size: 84, 57
+Hit
+  xy: 336, 235
+  size: 84, 57
+Death
+  xy: 0, 292
+  size: 84, 57
+Death
+  xy: 84, 292
+  size: 84, 57
+Death
+  xy: 168, 292
+  size: 84, 57
+Death
+  xy: 252, 292
+  size: 84, 57
+Death
+  xy: 336, 292
+  size: 84, 57
+Death
+  xy: 420, 292
+  size: 84, 57
+Death
+  xy: 504, 292
+  size: 84, 57
+Death
+  xy: 588, 292
+  size: 84, 57
+Death
+  xy: 672, 292
+  size: 84, 57
+Death
+  xy: 756, 292
+  size: 84, 57
+Death
+  xy: 840, 292
+  size: 84, 57
+Death
+  xy: 924, 292
+  size: 84, 57
+Death
+  xy: 1008, 292
+  size: 84, 57
+Death
+  xy: 1092, 292
+  size: 84, 57
+Wake
+  xy: 0, 349
+  size: 84, 57
+Wake
+  xy: 84, 349
+  size: 84, 57
+Wake
+  xy: 168, 349
+  size: 84, 57
+Wake
+  xy: 252, 349
+  size: 84, 57
+Wake
+  xy: 336, 349
+  size: 84, 57
+Wake
+  xy: 420, 349
+  size: 84, 57
+Wake
+  xy: 504, 349
+  size: 84, 57

@@ -1,0 +1,167 @@
+vaevictis_asmadi.png
+size: 1792,928
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 112, 144
+Idle
+  xy: 112, 64
+  size: 112, 144
+Idle
+  xy: 224, 64
+  size: 112, 144
+Idle
+  xy: 336, 64
+  size: 112, 144
+Idle
+  xy: 448, 64
+  size: 112, 144
+Idle
+  xy: 560, 64
+  size: 112, 144
+Idle
+  xy: 672, 64
+  size: 112, 144
+Idle
+  xy: 784, 64
+  size: 112, 144
+Idle
+  xy: 896, 64
+  size: 112, 144
+Idle
+  xy: 1008, 64
+  size: 112, 144
+Walk
+  xy: 0, 208
+  size: 112, 144
+Walk
+  xy: 112, 208
+  size: 112, 144
+Walk
+  xy: 224, 208
+  size: 112, 144
+Walk
+  xy: 336, 208
+  size: 112, 144
+Attack
+  xy: 0, 352
+  size: 112, 144
+Attack
+  xy: 112, 352
+  size: 112, 144
+Attack
+  xy: 224, 352
+  size: 112, 144
+Attack
+  xy: 336, 352
+  size: 112, 144
+Attack
+  xy: 448, 352
+  size: 112, 144
+Attack
+  xy: 560, 352
+  size: 112, 144
+Attack
+  xy: 672, 352
+  size: 112, 144
+Attack
+  xy: 784, 352
+  size: 112, 144
+Attack
+  xy: 896, 352
+  size: 112, 144
+Hit
+  xy: 0, 496
+  size: 112, 144
+Hit
+  xy: 112, 496
+  size: 112, 144
+Hit
+  xy: 224, 496
+  size: 112, 144
+Hit
+  xy: 336, 496
+  size: 112, 144
+Hit
+  xy: 448, 496
+  size: 112, 144
+Hit
+  xy: 560, 496
+  size: 112, 144
+Death
+  xy: 0, 640
+  size: 112, 144
+Death
+  xy: 112, 640
+  size: 112, 144
+Death
+  xy: 224, 640
+  size: 112, 144
+Death
+  xy: 336, 640
+  size: 112, 144
+Death
+  xy: 448, 640
+  size: 112, 144
+Death
+  xy: 560, 640
+  size: 112, 144
+Death
+  xy: 672, 640
+  size: 112, 144
+Death
+  xy: 784, 640
+  size: 112, 144
+Death
+  xy: 896, 640
+  size: 112, 144
+Death
+  xy: 1008, 640
+  size: 112, 144
+Death
+  xy: 1120, 640
+  size: 112, 144
+Death
+  xy: 1232, 640
+  size: 112, 144
+Death
+  xy: 1344, 640
+  size: 112, 144
+Death
+  xy: 1456, 640
+  size: 112, 144
+Death
+  xy: 1568, 640
+  size: 112, 144
+Death
+  xy: 1680, 640
+  size: 112, 144
+Wake
+  xy: 0, 784
+  size: 112, 144
+Wake
+  xy: 112, 784
+  size: 112, 144
+Wake
+  xy: 224, 784
+  size: 112, 144
+Wake
+  xy: 336, 784
+  size: 112, 144
+Wake
+  xy: 448, 784
+  size: 112, 144
+Wake
+  xy: 560, 784
+  size: 112, 144
+Wake
+  xy: 672, 784
+  size: 112, 144
+Wake
+  xy: 784, 784
+  size: 112, 144
