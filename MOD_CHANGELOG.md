@@ -14264,6 +14264,75 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 419: loot prefers new cards, then the color's sets, before gold (2026-10-03)
+
+The user, after the round-417 Djinn survey: "yes, do 418 and the loot-variety fix".
+
+**Why.** For the 29 of 67 template enemies with a thin pool, the round-185/203 rules turned shortfalls into the same card
+twice or into gold. Thin means two or fewer common/uncommon spell names in the color's sets. Hand-built `.dck` decks hit
+the same squeeze.
+
+**What changed** (`CardBudget.run`, the one place every non-exempt enemy's cards pass through, champions included). Each
+budget slot is filled in this order:
+1. A name the payout has not paid yet, from what the list rolled (best-first or random, as before). A second copy waits.
+2. The existing top-up from the enemy's deck, skipping paid names.
+3. NEW: the color's own sets, in the deck's colors (`colorSetPool`).
+   - The colors are the non-land cards' colors, else the enemy's, else colorless.
+   - It draws non-land cards from `RewardData.getAllCards()` under the loot's set restriction.
+   - It uses the same Common 80 / Uncommon 17 / Rare 3 roll as the top-up.
+   - The pool is cached per colors + sets + pool instance and logged once (`color-set pool blue/red, 36 set(s): 2040
+     non-land card(s)`).
+4. A waiting second copy.
+5. Gold, as before.
+
+The first-win bonus also falls back to the color's sets, at its own rarities. The `[TFR-CardBudget]` line reports
+second copies set aside, cards from the color's sets and second copies paid.
+
+**Agent-tested.**
+- Method: a scratch `loottest <enemy> n` console command, not in the repo. It generates the enemy's deck, sets
+  `Current.latestDeck()` and calls the real `EnemySprite.getRewards()`, giving a full payout with no duel. Each test is a
+  first win.
+- Six thin-pool enemies, 6 payouts each, on the 417 jar and then the 419 jar (Insane slot 12):
+  - Furnace Goblin: 0 cards and ~240 gold in 4 of 6 (Defiler of Instinct twice in the other 2) -> 4 different red cards
+    every time.
+  - Minotaur Warrior: 0 cards in 5 of 6 -> 3 cards every time.
+  - Owl: 1-2 cards, mostly lands -> 4 cards, e.g. Rasputin Dreamweaver, Azure Drake.
+  - Djinn, Werewolf Wanderer and Jadestone Golem: no second copies in 18 payouts, against 9 doubled names before. Their
+    deck's own cards still come first: Huntmaster of the Fells, Platoon Dispenser.
+- A real duel won against a Cryptstalker Fiend (colorless) paid its first-win bonus from the colorless pool (344 cards):
+  Kraken's Eye.
+
+## Round 418: Hard and Insane meet higher ranks earlier (2026-10-03)
+
+The user, reading the shared log (a Hard player at week 3 met 78-87% Apprentices): "It sounds like we need to up the
+chances of Adept+ appearing early in Hard and Insane, thoughts?" Then: "yes, do 418".
+
+**Why.** The rank mix (`spawn_tier_weighting.json`: week brackets x territory row x fog zone) had no difficulty in it.
+Insane in week 3 met the same 78% Apprentices as Easy.
+
+**What changed.**
+- `difficultyFactors` in `spawn_tier_weighting.json`, multipliers only:
+  - Hard: Apprentice x0.8, the other ranks x1.25.
+  - Insane: Apprentice x0.6, the other ranks x1.5.
+  - Easy and Normal have no row.
+- `SpawnTierWeighting.targetTierWeight` multiplies the row after the territory row, then renormalizes it to the bracket's
+  total like a territory row. Bosses and other exempt spawns keep their share.
+- A multiplier cannot open a closed rank, so week 1 grows no Masters on any difficulty.
+- Every caller gets it: roaming spawns, dungeon-sent enemies (`DungeonSources`), and the quest/dispatch zero checks, which
+  are unchanged.
+- The `[TFR-SpawnTier]` line names the difficulty and its factors.
+- `validate_plane_data.py` knows the key and checks the difficulty names.
+
+**Shares on Wasteland (Apprentice / Adept / Master / Archmage):**
+- week 1: Normal 90/10, Hard 85/15, Insane 78/22.
+- weeks 2-3: 78/18/4, 69/25/6, 59/34/8.
+- weeks 4-6: 65/24/10/1, 54/31/13/1, 43/39/16/2.
+
+The guide's Notes on Difficulty say so in player terms.
+
+**Agent-tested** (Insane slot 12, day 1): `[TFR-SpawnTier] week 1 on WASTELAND, Insane x0.6/1.5/1.5/1.5: Apprentice 78.3%
+Adept 21.7% Master 0.0% Archmage 0.0%`. The same save on the 417 jar read 90.0 / 10.0.
+
 ## Round 417: no notoriety notice, a bold Notoriety line, quieter logs (2026-10-03)
 
 Two asks. First, the user reviewing a log another player shared (v1.15 Hard, days 14-17, then v1.17.1): "yes, do round

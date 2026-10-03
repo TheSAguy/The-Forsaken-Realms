@@ -58,6 +58,14 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-03 (rounds 418-419): **LOCAL + UNRELEASED.**
+- 418 = spawn ranks by difficulty: `spawn_tier_weighting.json` `difficultyFactors`, Hard x0.8/1.25 and Insane x0.6/1.5.
+  Renormalized like a territory row; week 1 still has no Masters.
+- 419 = loot variety (`CardBudget`). Order: a name not yet paid, then the deck top-up, then the color's sets in the deck's
+  colors (`colorSetPool`), then a second copy, then gold. The first-win bonus works the same way.
+- Both agent-tested. The scratch `loottest` / `decksurvey` console commands live in the session scratchpad, not the repo.
+- AGENT packaged. LIVE waits for the user's game to close.
+
 ## STATE 2026-10-03 (round 417): **round 417 LOCAL + UNRELEASED** - no notoriety notice (the Wall card's bold "Notoriety:"
 line explains it; cards rebuilt on placeholder art), quieter logs (`[TFR-ShopEditions]` silent for the build menu's
 shop-count, "same as above" repeats; stock "Item N not found." only for a missing item; Inn `picked=` shows the block).

@@ -314,7 +314,9 @@ enemy's name - and your **first victory** over each kind of enemy is the big one
   keeps the best rarities the enemy rolled, and adds one more non-land card from its deck (Common
   or Uncommon; Rare too on Easy). Masters and Archmages always keep their best cards first; an
   Apprentice or Adept pays at random on a repeat win. Gear that adds reward cards still adds them,
-  and Easy pays one more card per win.
+  and Easy pays one more card per win. A payout never hands you the same card twice while there is
+  something new to give: when the enemy's deck runs out of new cards, the rest come from the sets of
+  the enemy's color, in its deck's colors. A second copy, or gold, is the last resort.
 - **Gold and resources.** Every win pays gold plus, usually, one bonus resource that leans to the
   enemy's color: **White** to more Gold, **Blue** to Shards, **Red** to Stone, **Green** to Wood.
   **Black** is balanced, an enemy of two colors leans both ways, and a **colorless** one is
@@ -625,6 +627,11 @@ War states are more likely to actually happen, and the newest boss fights (sever
 best-of-three) are tuned to be a real test even with a well-built deck. If you're finding a
 specific new boss unfair, it's worth checking whether an easier difficulty changes that fight's
 deck tier before assuming it's just you.
+
+**Tougher ranks sooner on Hard and Insane.** As the weeks pass, more Adepts, Masters and Archmages roam,
+and Hard and Insane get there sooner. In weeks 2-3 on open land, about 2 in 10 roaming enemies are Adept or
+better on Normal, 3 in 10 on Hard and 4 in 10 on Insane. Week 1 never has Masters on any difficulty, and your
+own land stays the quietest.
 
 **What a lost duel costs.** Gold: a share of what you carry - 2% on Easy, 5% on Normal, 10% on Hard
 and 15% on Insane - but at least 50 / 100 / 150 / 200 gold, or all of it if you carry less. (The
