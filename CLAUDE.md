@@ -60,7 +60,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 
 ## STATE 2026-10-03 (round 416): **round 416 LOCAL + UNRELEASED** - a card shop whose blueprint the player owns shows a
 greyed, disabled "Blueprint Owned" where Buy Blueprint sits (`RewardScene.showBlueprintOwned`), and the button turns into
-it after a purchase. Built; not yet seen in play.
+it after a purchase. Built; not yet seen in play. LIVE + AGENT PACKAGED with 415 + 416 (jar d47660a53377, plane
+enemies.json 655f17de, 170 remake files).
 
 ## STATE 2026-10-03 (round 415): **round 415 LOCAL + UNRELEASED (data only + one dev tool)** - all 85 generator
 remakes in FOUR DIRECTIONS (IdleUp/WalkUp from behind, IdleDown/WalkDown from the front; the user wants four
