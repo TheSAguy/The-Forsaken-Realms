@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 416: a shop whose blueprint you own says so (2026-10-03)
+
+The user, with a screenshot of a card shop: "Can we add a notice, where the buy shop button would be, letting the player
+know they already own a blue-print."
+
+**Why.** The Buy Blueprint button (shop blueprints, `shopBlueprintsEnabled`) shows only while the shop's type is still
+unknown. On a shop whose type the player already owns, the spot stayed empty, and right after a purchase the button
+simply vanished, so the player could not tell "owned" from "this shop sells no blueprint".
+
+**What changed.** `RewardScene` now splits the check in two: `blueprintShop` (the shop could sell a blueprint: blueprints
+on, not the armory, not a basic-land shop, its type rerollable) and `blueprintOffered` (its type is still unknown).
+- A blueprint shop whose type the player owns shows the same button, greyed and disabled, reading "Blueprint Owned"
+  (`showBlueprintOwned()`).
+- Buying a blueprint turns the button into that notice instead of hiding it.
+- Shops that never sell a blueprint (the armory, basic-land shops, fixed-type shops) show nothing, as before.
+
+Built (MVN EXIT 0); not yet seen in play.
+
 ## Round 415: the remade enemies turn in four directions; the rabbit, bear, owl and squirrel redone (2026-10-03)
 
 The user, after a test sheet of four creatures seen from behind and from the front: "I like the 4 directional more
