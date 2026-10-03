@@ -108,6 +108,14 @@ def wrap(draw, text, fnt, width):
     return lines
 
 
+WINS_PER_LEVEL = 5   # settings.json notorietyWinsPerLevel - the 0/N wall stands from N x this many wins in a row
+
+
+def why_line(toughness):
+    """Round 411b (the user: "Add to the Card a text line. Saying why it's on the field"): the card's own threshold."""
+    return f"Notoriety: you have won {toughness * WINS_PER_LEVEL}+ duels in a row, and word has spread."
+
+
 def card(art, keywords, toughness):
     img = Image.new("RGB", (W, H), (16, 16, 18))
     d = ImageDraw.Draw(img)
@@ -139,6 +147,12 @@ def card(art, keywords, toughness):
             y += 22 if first else 20
             first = False
         y += 10
+    # why it is on the field - a rule, then italic like flavor text, kept clear of the P/T box
+    d.line([70, y, W - 71, y], fill=(150, 150, 150), width=1)
+    y += 8
+    for line in wrap(d, why_line(toughness), font("palai.ttf", 18), W - 41 - 14 - 54):
+        d.text((54, y), line, font=font("palai.ttf", 18), fill=(40, 40, 46))
+        y += 21
     # power / toughness
     d.rounded_rectangle([W - 128, 590, W - 34, 636], radius=10, fill=(214, 216, 220), outline=(70, 72, 78), width=2)
     pt = f"0/{toughness}"

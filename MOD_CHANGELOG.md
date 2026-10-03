@@ -14264,6 +14264,15 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 411b: each Wall card says why it is on the field (2026-10-03)
+
+The user, still drawing the real art: "For now, we can use your mock-up. Add to the Card a text line. Saying why it's
+on the field. Under Defender and Wall, Flight." `make_wall_cards.py` adds a thin rule under the keyword lines, then an
+italic line with the card's own threshold: "Notoriety: you have won 5+ / 10+ / 15+ / 20+ duels in a row, and word has
+spread." (`WINS_PER_LEVEL` 5 = settings.json `notorietyWinsPerLevel`). It is kept clear of the P/T box, which was
+checked on the flying 0/4, the fullest card. The token scripts' Oracle text stays rules only. The user approved the
+sheet. The 12 placeholder cards are rebuilt. AGENT PACKAGED; live waits for the user's game to close.
+
 ## Round 411: notoriety - a winning streak against anyone puts a Wall in front of the enemy (2026-10-03)
 
 The user picked the "Notoriety" idea from the round-410-era list ("make the game a little more challenging"; their

@@ -67,7 +67,8 @@ Difficulty decides the ranks: Easy Archmage, Normal Master+, Hard Adept+, Insane
 `dev-tools/wall_tokens/make_wall_cards.py`; **the user is drawing the real art** (normal/reach/flying.png, or per size,
 into Pictures/Screenshots/Art_to_Tweak/Wall_Tokens/) - re-run the script with `--art` and send a preview sheet. Cheat
 `notoriety [N]`. AGENT PACKAGED (jar c65aadf1116b) + agent-tested (Apprentice 0/4, Archmage 0/2 flying, loss reset).
-**LIVE NOT PACKAGED** (the user's game was running) - package when closed.
+411b = each card carries "Notoriety: you have won N+ duels in a row, and word has spread." under the keywords (the user
+OK'd the mock-up sheet; real art still to come). **LIVE NOT PACKAGED** (the user's game was running) - package when closed.
 
 ## STATE 2026-10-03 (morning): **round 410 LOCAL + UNRELEASED** - Settings option "Allow digital-only cards (MTG
 Arena's Alchemy and Arena-only sets) (Restart Required)", just below the Alchemy variants option
