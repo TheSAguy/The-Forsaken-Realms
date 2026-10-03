@@ -38,6 +38,20 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 411 - notoriety Walls
+
+- **`forge-core/src/main/java/forge/ImageKeys.java`** - `getImageFile()`, the token branch: after the setless cache
+  lookup it also tries `ADVENTURE_CARD_PICS_DIR` (`<name>.fullborder`, then `<name>`), so a custom token's picture can
+  ship with the game. **Merge watch** - a forge-core file.
+- **`forge-gui/res/tokenscripts/tfr_wall_*.txt`** - 12 NEW token scripts (no stock file changed).
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `afterGameEnd` also calls `recordNotoriety`. The enemy
+  seat loop adds the notoriety Wall after the round-404 streak block. New `notorietyNote()`.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `notorietyStreak` field, its save/load key, the
+  resets in the new-game and New Game+ paths, and `notorietyStreak()/notorietyLevel()/recordNotoriety()/
+  setNotorietyStreak()/notorietyWallFor()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - the `notoriety` cheat.
+- Mod: `TuningData` `notoriety*` fields and helpers.
+
 ### Round 410 - a Settings option for the digital-only cards
 
 - **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** - new `digitalOnlyEditions` field after

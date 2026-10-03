@@ -111,6 +111,19 @@
     "winStreakWinsHard": 4,
     "winStreakWinsInsane": 3,
     "winStreakStartCards": ["Wastes|EOC"],
+    // Round 411 - NOTORIETY: your wins in a row against anyone (the duels above count; any loss resets it). Every
+    // notorietyWinsPerLevel wins add a level, and an enemy of a reached rank starts with ONE Wall token - the level's
+    // entry of its rank's list (level 1 = 5-9 wins = the first). notorietyMinRank* = the lowest rank it reaches on that
+    // difficulty: 0 Apprentice, 1 Adept, 2 Master, 3 Archmage. Apprentice/Adept get the plain walls, Masters the reach
+    // walls, Archmages the flying walls (token scripts in forge-gui/res/tokenscripts). notorietyWinsPerLevel 0 = off.
+    "notorietyWinsPerLevel": 5,
+    "notorietyMinRankEasy": 3,
+    "notorietyMinRankNormal": 2,
+    "notorietyMinRankHard": 1,
+    "notorietyMinRankInsane": 0,
+    "notorietyWallsPlain": ["tfr_wall_0_1", "tfr_wall_0_2", "tfr_wall_0_3", "tfr_wall_0_4"],
+    "notorietyWallsReach": ["tfr_wall_reach_0_1", "tfr_wall_reach_0_2", "tfr_wall_reach_0_3", "tfr_wall_reach_0_4"],
+    "notorietyWallsFlying": ["tfr_wall_flying_0_1", "tfr_wall_flying_0_2", "tfr_wall_flying_0_3", "tfr_wall_flying_0_4"],
 
     // Fraction of an edition's own card count you must have found before the Research
     // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this

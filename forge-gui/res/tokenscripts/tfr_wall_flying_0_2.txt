@@ -1,0 +1,7 @@
+Name:Wall Token
+ManaCost:no cost
+Types:Artifact Creature Wall
+PT:0/2
+K:Defender
+K:Flying
+Oracle:Defender, flying

@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 411: notoriety - a winning streak against anyone puts a Wall in front of the enemy (2026-10-03)
+
+The user picked the "Notoriety" idea from the round-410-era list ("make the game a little more challenging"; their
+slot-7 record was 244-28 on Insane, 90% wins, with Masters losing 82%) and designed it: "Each 5 win streak will
+add/upgrade one of these. Starting at duel 6 ... They will get a 0/1 at 6 win streak, At 11, 0/2. 16: 0/3 and 21: 0/4.
+Apprentice: normal ... Adept: Normal ... Master: Reach ... ArchMages: Fly". By difficulty: Easy only Archmages, Normal
+Master+, Hard Adept+, Insane everyone. "All versions are walls." They took all five recommendations: Defender on all,
+Artifact Creature - Wall, any loss (Bronze Coin or not) ends it and New Game+ clears it, the per-enemy Wastes streak
+(rounds 404/405) stays as well, and a notice at duel start. Art option A: the user draws the art, a script builds the
+cards.
+
+- **12 token scripts** in `forge-gui/res/tokenscripts`: `tfr_wall_0_1..0_4`, `tfr_wall_reach_0_1..0_4` and
+  `tfr_wall_flying_0_1..0_4`. Each is "Wall Token", Artifact Creature Wall, Defender (+ Reach / + Flying), colorless.
+  They are written by `dev-tools/wall_tokens/make_token_scripts.py <tokenscripts folder>`.
+- **Counter**: `AdventurePlayer.notorietyStreak`, saved as `notorietyStreak` (0 on older saves). `recordNotoriety(won)` is
+  called from `DuelScene.afterGameEnd` beside `recordWinStreak`, under the same conditions (not Inn tournaments, guard
+  fights or fixed decks). It is cleared by a new game and by New Game+.
+- **The wall**: `notorietyWallFor(enemy)` gives level = wins / `notorietyWinsPerLevel`, capped at the list length. It
+  answers nothing below the difficulty's `notorietyMinRank*`, and otherwise the level's entry of the rank's list (plain
+  for 0-1, reach for 2, flying for 3). DuelScene gets the token with `TokenDb.getToken(script)` and adds it through
+  `addExtraCardsOnBattlefield`. `Player.initVariantsZones` builds tokens from a PaperToken like any card, so no new game
+  code was needed. The notice joins round 404's: "Word of your N wins in a row has spread. X starts this duel with a
+  0/T [flying|reach] Wall in play. Lose once, and the word dies down."
+- **settings.json**: `notorietyWinsPerLevel` 5, `notorietyMinRankEasy/Normal/Hard/Insane` 3/2/1/0, and
+  `notorietyWallsPlain/Reach/Flying` (the script names).
+- **Token pictures ship with the game.** `ImageKeys.getImageFile` (forge-core) only looked in the player's download
+  cache for a token. It now also tries `ADVENTURE_CARD_PICS_DIR` (`common/custom_card_pics`), as
+  `<name>.fullborder.png` and then `<name>`, which works on desktop and Android. A setless custom token's key is
+  `t:<script name>`.
+- **Card faces**: `dev-tools/wall_tokens/make_wall_cards.py --out <custom_card_pics> [--art DIR] [--sheet PNG]` builds
+  488x680 cards: a silver artifact frame, "Wall", the type line, Defender / Reach / Flying with reminder text, and P/T.
+  It reads the user's art as `normal|reach|flying.png`, or per size as `<kind>_<1-4>.png`. Without art it draws pixel
+  placeholder walls that grow with toughness, which are what ship now.
+- Console cheat `notoriety [N]`: show, or set, the wins in a row. `[TFR-Notoriety]` logs each result, each wall handed
+  out and each cheat.
+- Game Guide: a "Notoriety" paragraph and table in Notes on Difficulty. The New Game+ reset list names notoriety.
+- **Agent-tested** (Insane slot 11, cheats).
+  - `notoriety 20`, then a Forge Blacksmith (Apprentice): a 0/4 Wall Token on turn 1 with the placeholder art, and the
+    notice "Word of your 20 wins in a row has spread...". The duel was lost and a Bronze Coin paid: `lost - wins in a
+    row 20 -> 0`.
+  - `notoriety 12`, then the White Castle's Umbral Dragon (Archmage): "...a 0/2 flying Wall in play", the winged
+    placeholder card on its battlefield beside its Archmage Wastes. Lost: 12 -> 0.
+  - No exceptions.
+  - Not seen: a Master's reach wall, a win adding one, the difficulty gates other than Insane, and save/load of the
+    streak.
+
 ## Round 410: a Settings option to play with the digital-only cards (2026-10-03)
 
 The user, after explaining the config.json edit a player would need ("How can someone adjust the settings if they want

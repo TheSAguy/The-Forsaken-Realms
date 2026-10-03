@@ -181,6 +181,18 @@ public final class ImageKeys {
                     cachedCards.put(filename, file);
                     return file;
                 }
+                // TFR round 411: a token the game ships its own picture for (the notoriety Walls) - Forge only ever
+                // looked in the player's download cache, which a custom token can never be fetched into. The
+                // adventure custom-card picture folder ships with the game on desktop and Android alike.
+                if (ADVENTURE_CARD_PICS_DIR != null && !ADVENTURE_CARD_PICS_DIR.isEmpty()) {
+                    file = findFile(ADVENTURE_CARD_PICS_DIR, setlessFilename + ".fullborder");
+                    if (file == null)
+                        file = findFile(ADVENTURE_CARD_PICS_DIR, setlessFilename);
+                    if (file != null) {
+                        cachedCards.put(filename, file);
+                        return file;
+                    }
+                }
             }
 
             // AE -> Ae and Ae -> AE for older cards with different file names

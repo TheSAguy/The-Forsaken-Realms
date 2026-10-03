@@ -671,6 +671,17 @@ public class ConsoleCommandInterpreter {
         // the way to see player_capital.tmx in play after a layout change. Cheats only, like every command here.
         registerCommand(new String[]{"capitol", "raise"}, s ->
                 forge.adventure.util.TownRestoration.debugRaiseCapitol(MapStage.getInstance()));
+        // Round 411: test cheat - "notoriety 10" sets the wins in a row (level = wins / notorietyWinsPerLevel).
+        registerCommand(new String[]{"notoriety"}, s -> {
+            if (s.length < 1) return "Notoriety: " + Current.player().notorietyStreak() + " wins in a row, level "
+                    + Current.player().notorietyLevel() + ". Give a number to set it.";
+            try {
+                Current.player().setNotorietyStreak(Integer.parseInt(s[0]));
+            } catch (Exception e) {
+                return "Can not convert " + s[0] + " to number";
+            }
+            return "Notoriety set to " + Current.player().notorietyStreak() + " wins in a row, level " + Current.player().notorietyLevel();
+        });
         registerCommand(new String[]{"listPOI"}, s -> {
             ArrayList<String> poiNames = new ArrayList<>();
             List<BiomeData> biomeData = WorldSave.getCurrentSave().getWorld().getData().GetBiomes();

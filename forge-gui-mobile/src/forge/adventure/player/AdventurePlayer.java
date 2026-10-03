@@ -383,6 +383,58 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return tuning == null || difficultyData == null ? 0 : tuning.winStreakWinsFor(difficultyData.name);
     }
 
+    /** Round 411: NOTORIETY - the player's wins in a row against anyone (saved; New Game+ and a new game clear it). */
+    public int notorietyStreak() {
+        return notorietyStreak;
+    }
+
+    /** Round 411: the notoriety level the current streak buys - 0 none, 1 = 0/1 Wall, ... capped at the wall lists. */
+    public int notorietyLevel() {
+        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
+        if (tuning == null || tuning.notorietyWinsPerLevel <= 0)
+            return 0;
+        int cap = tuning.notorietyWallsPlain == null ? 0 : tuning.notorietyWallsPlain.length;
+        return Math.min(cap, notorietyStreak / tuning.notorietyWinsPerLevel);
+    }
+
+    /**
+     * Round 411: a duel the player fought ended (the duels round 404 counts) - a win adds one to notoriety, a loss
+     * (Bronze Coin or not) clears it.
+     */
+    public void recordNotoriety(boolean won) {
+        int before = notorietyStreak;
+        int levelBefore = notorietyLevel();
+        notorietyStreak = won ? before + 1 : 0;
+        System.out.println("[TFR-Notoriety] " + (won ? "won" : "lost") + " - wins in a row " + before + " -> "
+                + notorietyStreak + ", level " + levelBefore + " -> " + notorietyLevel()
+                + (difficultyData != null ? " (" + difficultyData.name + ")" : ""));
+    }
+
+    /** Round 411: test cheat - set the streak outright. */
+    public void setNotorietyStreak(int wins) {
+        notorietyStreak = Math.max(0, wins);
+        System.out.println("[TFR-Notoriety] cheat: wins in a row set to " + notorietyStreak + ", level " + notorietyLevel());
+    }
+
+    /**
+     * Round 411: the Wall token script an enemy of this tier starts the duel with, or null - notoriety below level 1,
+     * the rank below this difficulty's notorietyMinRank, or no such list entry. Plain for Apprentice/Adept, reach for a
+     * Master, flying for an Archmage; the level picks the size (level 1 = the 0/1).
+     */
+    public String notorietyWallFor(forge.adventure.data.EnemyData enemy) {
+        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
+        int level = notorietyLevel();
+        if (tuning == null || enemy == null || level <= 0)
+            return null;
+        int rank = forge.adventure.data.EnemyData.tierRank(enemy.tier);
+        if (rank < tuning.notorietyMinRankFor(difficultyData == null ? null : difficultyData.name))
+            return null;
+        String[] walls = tuning.notorietyWallsForRank(rank);
+        if (walls == null || walls.length == 0)
+            return null;
+        return walls[Math.min(level, walls.length) - 1];
+    }
+
     /** Round 216: the week this enemy was last Coin-Challenged, or -1 if never. */
     public int coinChallengeWeek(String enemyName) {
         Integer week = enemyName == null ? null : coinChallengeWeeks.get(enemyName);
@@ -620,6 +672,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         coinRansomedEnemies.clear();
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404
+        notorietyStreak = 0; // round 411
         unlockedShopTypes.clear();
         startingColorId = null;
         suppressDefeatGoldLoss = false;
@@ -670,6 +723,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // this"): enemy name -> the player's wins over it since it last beat them. Name-keyed like the two above (one
     // streak per enemy, whichever of its decks it brought), saved as two parallel lists, cleared by a New Game+.
     private final java.util.Map<String, Integer> enemyWinStreaks = new java.util.HashMap<>();
+    // Round 411: notoriety - the player's wins in a row against anyone, saved as "notorietyStreak".
+    private int notorietyStreak = 0;
     // Shop-type blueprints (user spec 2026-08-30): the card shop TYPES this player has learned.
     // Seeded at character creation from the chosen color (its common trio) plus the race's two
     // tribal shops - 5 total - then grown by buying blueprints in AI shops and by rare drops.
@@ -902,6 +957,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         coinRansomedEnemies.clear();
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404: a new run's enemies have not learned your tricks yet
+        notorietyStreak = 0; // round 411: nor heard of you
         // Round 160 (code review): the roster rides into the new run (the guards still hold their
         // decks), but every DAY-based field pointed at the old calendar - a guard benched on old
         // day 250 was "hurt for 279 more days" in a world back on day 1, and no wage was billed
@@ -1742,6 +1798,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                     if (wsNames.get(i) != null && wsCounts.get(i) != null)
                         enemyWinStreaks.put(wsNames.get(i), wsCounts.get(i));
         }
+        // Round 411: notoriety. Absent before this round - every older save starts at 0 wins in a row.
+        notorietyStreak = data.containsKey("notorietyStreak") ? Math.max(0, data.readInt("notorietyStreak")) : 0;
         // Shop-type blueprints (2026-08-30). Absent on every pre-round-71 save; the containsKey
         // guard leaves the set EMPTY there, which isShopTypeUnlocked() deliberately reads as
         // "legacy save, everything unlocked" rather than "nothing unlocked" - see the field.
@@ -1839,6 +1897,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
         data.storeObject("winStreakNames", winStreakNameList);
         data.storeObject("winStreakCounts", winStreakCountList);
+        data.store("notorietyStreak", notorietyStreak); // round 411
         data.storeObject("unlockedShopTypes", new ArrayList<>(unlockedShopTypes));
         // store() with a null String throws (writeUTF) - persist "" and read it back as null.
         data.store("startingColorId", startingColorId == null ? "" : startingColorId);

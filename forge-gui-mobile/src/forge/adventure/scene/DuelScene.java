@@ -394,8 +394,10 @@ public class DuelScene extends ForgeScene {
         // counts: the enemy plays its own deck there.
         // Keyed on the enemy's own name (EnemyData.getName()), as the start-of-duel check reads it - not enemyName, which
         // carries a map-authored sprite override.
-        if (enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
+        if (enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null) {
             Current.player().recordWinStreak(enemy.getData().getName(), winner);
+            Current.player().recordNotoriety(winner); // round 411: the same duels, against anyone
+        }
         Forge.advFreezePlayerControls = winner;
         endRunnable = () -> Gdx.app.postRunnable(() -> {
             GameHUD.getInstance().updateBGM();
@@ -799,6 +801,14 @@ public class DuelScene extends ForgeScene {
                 + " and it forgets.";
     }
 
+    /** Round 411: what the player is told when notoriety hands an enemy a Wall. */
+    private static String notorietyNote(EnemyData e, String wallScript, forge.item.PaperToken wall) {
+        String extra = wallScript.contains("flying") ? " flying" : wallScript.contains("reach") ? " reach" : "";
+        return "Word of your " + Current.player().notorietyStreak() + " wins in a row has spread. "
+                + e.getTieredDisplayName() + " starts this duel with a " + wall.getRules().getPower() + "/"
+                + wall.getRules().getToughness() + extra + " Wall in play. Lose once, and the word dies down.";
+    }
+
     @Override
     public void enter() {
         winStreakNote = null; // round 404: set again below for each enemy seat on a win streak
@@ -1077,6 +1087,25 @@ public class DuelScene extends ForgeScene {
                 System.out.println("[TFR-WinStreak] " + currentEnemy.getName() + " starts with "
                         + String.join(", ", streak.startBattleWithCard) + " in play - streak "
                         + Current.player().winStreak(currentEnemy.getName()));
+            }
+            // Round 411 (the user: "Each 5 win streak will add/upgrade one of these. Starting at duel 6"): notoriety - the
+            // player's wins in a row against anyone put ONE Wall token on this seat's battlefield, sized by the level and
+            // kind by the seat's rank, for the ranks the difficulty reaches. The same duels as the win streak above.
+            if (eventData == null && guardDeck == null) {
+                String wallScript = Current.player().notorietyWallFor(currentEnemy);
+                forge.item.PaperToken wall = wallScript == null ? null
+                        : forge.model.FModel.getMagicDb().getAllTokens().getToken(wallScript);
+                if (wall != null) {
+                    java.util.List<IPaperCard> walls = new java.util.ArrayList<>();
+                    walls.add(wall);
+                    aiPlayer.addExtraCardsOnBattlefield(walls);
+                    winStreakNote = (winStreakNote == null ? "" : winStreakNote + "\n\n") + notorietyNote(currentEnemy, wallScript, wall);
+                    System.out.println("[TFR-Notoriety] " + currentEnemy.getName() + " (" + EnemyData.tierDisplayName(currentEnemy.tier)
+                            + ") starts with " + wallScript + " (" + wall.getRules().getPower() + "/" + wall.getRules().getToughness()
+                            + ") - " + Current.player().notorietyStreak() + " wins in a row, level " + Current.player().notorietyLevel());
+                } else if (wallScript != null) {
+                    System.err.println("[TFR-Notoriety] token script " + wallScript + " not found - no wall");
+                }
             }
 
             //add extra cards for challenger mode

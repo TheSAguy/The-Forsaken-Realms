@@ -58,6 +58,17 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-03 (later): **round 411 LOCAL + UNRELEASED** - NOTORIETY: the player's wins in a row against anyone
+(`AdventurePlayer.notorietyStreak`, saved; any loss, New Game+ and a new game reset it). Every 5 wins = a level, up to 4.
+The enemy starts with ONE Wall token (0/level): plain for Apprentice/Adept, reach for Masters, flying for Archmages.
+Difficulty decides the ranks: Easy Archmage, Normal Master+, Hard Adept+, Insane all. 12 token scripts
+`forge-gui/res/tokenscripts/tfr_wall[_reach|_flying]_0_N`. Their pictures sit in `common/custom_card_pics` as
+`<name>.fullborder.png`, found via a new ImageKeys token fallback (forge-core). They are PLACEHOLDERS from
+`dev-tools/wall_tokens/make_wall_cards.py`; **the user is drawing the real art** (normal/reach/flying.png, or per size,
+into Pictures/Screenshots/Art_to_Tweak/Wall_Tokens/) - re-run the script with `--art` and send a preview sheet. Cheat
+`notoriety [N]`. AGENT PACKAGED (jar c65aadf1116b) + agent-tested (Apprentice 0/4, Archmage 0/2 flying, loss reset).
+**LIVE NOT PACKAGED** (the user's game was running) - package when closed.
+
 ## STATE 2026-10-03 (morning): **round 410 LOCAL + UNRELEASED** - Settings option "Allow digital-only cards (MTG
 Arena's Alchemy and Arena-only sets) (Restart Required)", just below the Alchemy variants option
 (`SettingData.allowDigitalOnlyCards`, off by default, saved in the player's profile so it survives updates). config.json's

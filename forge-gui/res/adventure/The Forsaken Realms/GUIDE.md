@@ -639,6 +639,22 @@ enemy, whichever of its decks it brings, and covers every duel but Inn tournamen
 **Archmages** start every duel with a Wastes as well, except in town, Ring City, capital and Capitol fights
 and Inn tournaments - so an Archmage on a streak starts with two.
 
+**Notoriety: word of your wins spreads.** Win five duels in a row - against anyone - and from your sixth duel
+on, enemies start with a **Wall** token in play: a 0/1 Wall from the 6th duel, 0/2 from the 11th, 0/3 from the
+16th and 0/4 from the 21st on. It's always one wall, growing with your streak, and every Wall has defender, so it
+blocks but never attacks. Apprentices and Adepts bring a plain Wall, Masters a Wall with reach and Archmages a
+Wall with flying. Which enemies do it depends on the difficulty:
+
+| Difficulty | Enemies that bring a Wall |
+|---|---|
+| Easy | Archmages |
+| Normal | Masters and Archmages |
+| Hard | Adepts, Masters and Archmages |
+| Insane | Everyone |
+
+A notice tells you as the duel opens. Lose once (a Bronze Coin still counts as a loss) and your streak starts
+over. It counts the same duels as an enemy's own streak above, and New Game+ starts it from zero.
+
 **The first two weeks are eased.** In week 1 (days 1-7) a monster starts its duel with half its life,
 but never fewer than 20; in week 2 (days 8-14) with three quarters, never fewer than 25. A monster that
 already has less keeps what it has. Bosses, legends, Arena and Inn fights, war mages and your guards'
@@ -1075,7 +1091,7 @@ A New Game+ is a **new game plus your collection**. Press Start and it asks what
   (the storage into your bag). Off, you start with the new game's kit.
 
 Everything else resets to a fresh run: shop blueprints, researched editions, research in progress, quests and
-story flags, color reputation, statistics, blessings, legend sightings, enemies' win streaks and any Bronze
+story flags, color reputation, statistics, blessings, legend sightings, enemies' win streaks, your notoriety and any Bronze
 Coins enemies were holding. **Every New Game+ starts with exactly five coins** - 1 Challenge, 1 Silver and 3
 Bronze - whatever you carried. Your **roaming guards are released**: each one's deck goes into an empty deck
 slot and its gear into your Armory's storage. The one thing that doesn't come back is the Jumpstart

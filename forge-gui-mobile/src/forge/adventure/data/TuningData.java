@@ -202,6 +202,43 @@ public class TuningData {
         }
     }
 
+    // Round 411 - NOTORIETY (the user: "Each 5 win streak will add/upgrade one of these. Starting at duel 6"): the
+    // player's wins in a row against anyone (the duels round 404 counts; any loss resets it, Bronze Coin or not).
+    // Every notorietyWinsPerLevel of them lifts the level by one, up to the walls lists' length: the enemy seat starts
+    // with ONE Wall token, the level's entry - level 1 (5-9 wins) the first. Which ranks get it, by difficulty name:
+    // notorietyMinRank* is the lowest rank that does (0 Apprentice, 1 Adept, 2 Master, 3 Archmage). Which wall, by
+    // rank: Apprentice and Adept the plain list, Master the reach list, Archmage the flying list. Token script names
+    // (forge-gui/res/tokenscripts). notorietyWinsPerLevel 0 = off.
+    public int notorietyWinsPerLevel = 5;
+    public int notorietyMinRankEasy = 3;
+    public int notorietyMinRankNormal = 2;
+    public int notorietyMinRankHard = 1;
+    public int notorietyMinRankInsane = 0;
+    public String[] notorietyWallsPlain = {"tfr_wall_0_1", "tfr_wall_0_2", "tfr_wall_0_3", "tfr_wall_0_4"};
+    public String[] notorietyWallsReach = {"tfr_wall_reach_0_1", "tfr_wall_reach_0_2", "tfr_wall_reach_0_3", "tfr_wall_reach_0_4"};
+    public String[] notorietyWallsFlying = {"tfr_wall_flying_0_1", "tfr_wall_flying_0_2", "tfr_wall_flying_0_3", "tfr_wall_flying_0_4"};
+
+    /** Round 411: the lowest enemy rank (0 Apprentice .. 3 Archmage) notoriety reaches on this difficulty; an unknown
+     *  difficulty takes Easy's (the fewest ranks), rather than guessing hard. */
+    public int notorietyMinRankFor(String difficultyName) {
+        String name = difficultyName == null ? "" : difficultyName.trim().toLowerCase();
+        switch (name) {
+            case "normal": return notorietyMinRankNormal;
+            case "hard":   return notorietyMinRankHard;
+            case "insane": return notorietyMinRankInsane;
+            default:       return notorietyMinRankEasy;
+        }
+    }
+
+    /** Round 411: the wall list for an enemy of this rank (0-3), or null when the list is missing. */
+    public String[] notorietyWallsForRank(int rank) {
+        if (rank >= 3)
+            return notorietyWallsFlying;
+        if (rank == 2)
+            return notorietyWallsReach;
+        return notorietyWallsPlain;
+    }
+
     // Progressive Set Unlocks (MOD_SCOPE.md #4) research eligibility threshold (2026-08-22 user
     // request to make ResearchScene's hardcoded THRESHOLD_FRACTION tunable). Fraction of an
     // edition's own real card count you must have found before the Research Lab offers to unlock
