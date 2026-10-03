@@ -61,7 +61,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 ## STATE 2026-10-03 (round 425): **LOCAL + UNRELEASED** - a New Game+ that takes its invested resources back owes the AI a
 one-off day-8 wave: towns held / 5|4|3|2 (Easy..Insane), rounded down, max 5 per color (`World.ngPlusWaveMages`,
 `TerritoryControl.sendNewGamePlusWave`, settings `ngPlusWave*`), outside the cap like round 422. Agent-tested through a
-real New Game+ on a copy of the user's slot 7 (20 towns, Insane -> 5 per color on day 8). AGENT packaged; live waits.
+real New Game+ on a copy of the user's slot 7 (20 towns, Insane -> 5 per color on day 8). LIVE + AGENT PACKAGED with 425
+(jar 5c4faad857c8).
 
 ## STATE 2026-10-03 (rounds 421-423): **LOCAL + UNRELEASED.**
 - 421 = the four mismatched wizards' tiers set to their names (enemies.json).
