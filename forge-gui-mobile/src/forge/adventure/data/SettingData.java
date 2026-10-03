@@ -50,4 +50,8 @@ public class SettingData {
     // a full round with the human eliminated can have several AI-vs-AI pairings, each running up
     // to gamesPerMatch independent games on its own background thread.
     public boolean simulateInnTournamentAIMatches;
+    // Round 410 (user: "add the digital-only cards setting"): when on, config.json's digitalOnlyEditions (MTG Arena's
+    // Alchemy and Arena-only sets) are NOT folded into restrictedEditions, so their cards reach rewards, shops, boosters
+    // and enemy decks. Off by default - round 395's block. Read once at startup (Config), so a change needs a restart.
+    public boolean allowDigitalOnlyCards;
 }

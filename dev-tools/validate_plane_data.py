@@ -104,7 +104,7 @@ def rel(p):
 # ---------------------------------------------------------------- loader field sets
 F = {}
 F["ConfigData"] = set("""terrainScale screenWidth screenHeight skin font fontColor minDeckSize maxNumberOfDecks playerBaseSpeed colorIds colorIdNames
- starterEditions starterEditionNames starterDecksByEdition difficulties legalCards restrictedCards restrictedEditions restrictedBlocks
+ starterEditions starterEditionNames starterDecksByEdition difficulties legalCards restrictedCards restrictedEditions digitalOnlyEditions restrictedBlocks
  restrictedTokens allowedEditions vintageOnlyEditions restrictedEvents allowedEvents allowedJumpstart defaultBasicLandSet enableGeneticAI
  chaosDeckFormat usePriceListPrices fogOfWarEnabled warTownAssaultEnabled ringGiftStart dayNightCycleEnabled townReconstructionEnabled
  territoryControlEnabled colorReputationEnabled resourceSpawnsEnabled dungeonRotationEnabled sideQuestTimerEnabled resourceLootVarietyEnabled
@@ -583,7 +583,7 @@ if cfg:
                 issue("ref-deck", "config.json.starterDecksByEdition[%s][%s]: '%s' not found" % (ed, color, path))
     if cfg.get("legalCards"):
         check_reward(cfg["legalCards"], "config.json.legalCards")
-    for k in ("restrictedCards", "restrictedEditions", "allowedEditions", "colorIds", "starterEditions"):
+    for k in ("restrictedCards", "restrictedEditions", "digitalOnlyEditions", "allowedEditions", "colorIds", "starterEditions"):
         v = cfg.get(k)
         if isinstance(v, list):
             dups = [x for x, c in Counter(v).items() if c > 1]

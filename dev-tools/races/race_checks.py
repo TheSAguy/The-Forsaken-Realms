@@ -106,7 +106,9 @@ for f in os.listdir(EDITIONS):
     if m:
         known.add(m.group(1))
         booster[m.group(1)] = bool(re.search(r"^(Booster|DraftBooster)=", meta, re.M))
-blocked = set(cfg.get("restrictedEditions") or []) | set(cfg.get("restrictedEvents") or [])
+# round 410: digitalOnlyEditions are blocked by default (the game folds them into restrictedEditions at startup)
+blocked = (set(cfg.get("restrictedEditions") or []) | set(cfg.get("digitalOnlyEditions") or [])
+           | set(cfg.get("restrictedEvents") or []))
 for r in cfg.get("raceEditions") or []:
     eds = r.get("editions") or []
     if len(eds) != 4:

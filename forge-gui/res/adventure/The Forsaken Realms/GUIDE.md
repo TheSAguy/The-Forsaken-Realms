@@ -59,7 +59,9 @@ The short version for returning players. Each item links to where the guide cove
   once on load.
 - **The Bronze Coin button shows the gold it saves** on the "Card Lost" screen.
 - **Arena-only sets are out:** MTG Arena's digital-only sets (Alchemy and the other cards with perpetual,
-  seek or conjure) no longer turn up in shops, boosters, rewards or enemy decks.
+  seek or conjure) no longer turn up in shops, boosters, rewards or enemy decks. To play with them, tick
+  **Allow digital-only cards** in Settings (just below the Alchemy variants option) and restart; the choice is kept
+  in your own profile, so updates don't undo it.
 - **A quest that sends you to a boss lair that has vanished brings the lair back.**
 - **The map:** decoration lies under you, a town outside the center has one road into the Ring Cities, and the
   water line along some land borders is gone.

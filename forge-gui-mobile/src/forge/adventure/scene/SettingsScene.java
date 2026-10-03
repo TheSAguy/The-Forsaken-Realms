@@ -298,6 +298,17 @@ public class SettingsScene extends UIScene {
                 RewardData.invalidateCardPool();
             }
         });
+        // Round 410: MTG Arena's digital-only sets (config.json digitalOnlyEditions) - the card pools read them once at
+        // startup, so this offers the restart, like the unknown/non-legal card options below.
+        addSettingField(localizer.getMessage("lblAllowDigitalOnlyCards") + " (" + localizer.getMessage("lblRestartRequired") + ")",
+                Config.instance().getSettingData().allowDigitalOnlyCards, new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Config.instance().getSettingData().allowDigitalOnlyCards = ((CheckBox) actor).isChecked();
+                Config.instance().saveSettings();
+                restartForge();
+            }
+        });
         // Restricted-edition art (2026-08-30 user request) - purely cosmetic, so it gets a plain
         // toggle rather than a restart prompt. No invalidateCardPool() needed: this changes which
         // PRINTING a reward resolves to at generation time, not which cards are in the pool.

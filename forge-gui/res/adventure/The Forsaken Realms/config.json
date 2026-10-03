@@ -27,12 +27,17 @@
     "PUST",
     "DA1",
     "UNF",
-    "SUNF", // round 403: the Unfinity Sticker Sheets, a new upstream edition (the 10.01 merge) - blocked with Unfinity
-    // Round 395 (a player on Discord: "is it meant to include online/arena cards and/or Alchemy cards? ... The Arena
-    // cards that permanently change a card"): the MTG Arena sets with digital-only mechanics - perpetually, seek,
-    // conjure, spellbooks, the "A-" rebalanced cards. Online sets that only reprint paper cards (the Remastered sets,
-    // Vintage Masters, Masters Edition, the anthologies, MTGO promos) stay. Enemy decks drop a card whose every
-    // printing is in one of these (CommanderCards.isDigitalOnly).
+    // round 403: SUNF = the Unfinity Sticker Sheets, a new upstream edition (the 10.01 merge) - blocked with Unfinity
+    "SUNF"
+  ],
+  // Round 395 (a player on Discord: "is it meant to include online/arena cards and/or Alchemy cards? ... The Arena
+  // cards that permanently change a card"): the MTG Arena sets with digital-only mechanics - perpetually, seek,
+  // conjure, spellbooks, the "A-" rebalanced cards. Online sets that only reprint paper cards (the Remastered sets,
+  // Vintage Masters, Masters Edition, the anthologies, MTGO promos) stay. Enemy decks drop a card whose every
+  // printing is in one of these (CommanderCards.isDigitalOnly).
+  // Round 410: their own list now. They join restrictedEditions at startup unless the player ticks "Allow digital-only
+  // cards" in Settings (SettingData.allowDigitalOnlyCards, kept in the player's profile, so it survives updates).
+  "digitalOnlyEditions": [
     "YMID", "YNEO", "YSNC", "YDMU", "YBRO", "YONE", "YWOE", "YLCI", "YMKM", "YOTJ", "YBLB", "YDSK", "YDFT", "YTDM",
     "YEOE", "YECL", "YSOS", "YFRA",
     "HBG", "J21", "AJMP"

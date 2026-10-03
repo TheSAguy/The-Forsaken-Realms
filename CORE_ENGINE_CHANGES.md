@@ -38,6 +38,18 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 410 - a Settings option for the digital-only cards
+
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** - new `digitalOnlyEditions` field after
+  `restrictedEditions`.
+- **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** - new `allowDigitalOnlyCards` (default false) at the
+  end of the class.
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** - the constructor calls the new
+  `applyDigitalOnlyEditions()` right after `configData` is parsed. The method sits above `applyTokenEditionFilter()`.
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** - one `addSettingField` after the
+  `lblExcludeAlchemyVariants` block. **Merge watch** if upstream reorders that list.
+- **`forge-gui/res/languages/en-US.properties`** - `lblAllowDigitalOnlyCards`, after `lblExcludeAlchemyVariants`.
+
 ### Round 407 - attacking-mage caps by difficulty, castle champions
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - the `enemy` case of `loadObjects()`: a placement with

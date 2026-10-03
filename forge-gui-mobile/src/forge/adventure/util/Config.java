@@ -160,6 +160,7 @@ public class Config {
             e.printStackTrace();
             configData = new ConfigData();
         }
+        applyDigitalOnlyEditions();
 
         // Tuning file (2026-08-14 user request): same plane-local/fallback-to-common load pattern
         // as config.json above, but for numeric game-balance tunables rather than boolean feature
@@ -416,6 +417,34 @@ public class Config {
     public forge.adventure.data.RoamingGuardConfig getRoamingGuardConfig() {
         return roamingGuardConfig;
     }
+
+    /**
+     * Round 410: config.json's digitalOnlyEditions join restrictedEditions unless the player's Settings allow them -
+     * here, right after the load, so every reader of restrictedEditions (reward and shop pools, boosters, the token
+     * filter, CommanderCards.isDigitalOnly for enemy decks) sees one list. Settings are read before config.json, and
+     * nothing re-reads either until the next start, which is why the setting says "restart required".
+     * The desktop launcher builds this Config (for the window size) before Forge sends System.out to forge.log, so the
+     * [TFR-DigitalOnly] line is kept here and printed by loadResources().
+     */
+    private void applyDigitalOnlyEditions() {
+        String[] digital = configData.digitalOnlyEditions;
+        if (digital == null || digital.length == 0)
+            return;
+        if (settingsData != null && settingsData.allowDigitalOnlyCards) {
+            digitalOnlyNote = "[TFR-DigitalOnly] allowed by the player's Settings - " + digital.length
+                    + " digital-only edition(s) stay open: " + String.join(", ", digital);
+            return;
+        }
+        java.util.LinkedHashSet<String> merged = new java.util.LinkedHashSet<>();
+        if (configData.restrictedEditions != null)
+            merged.addAll(Arrays.asList(configData.restrictedEditions));
+        merged.addAll(Arrays.asList(digital));
+        configData.restrictedEditions = merged.toArray(new String[0]);
+        digitalOnlyNote = "[TFR-DigitalOnly] blocked - " + digital.length + " digital-only edition(s) added to "
+                + "restrictedEditions (" + configData.restrictedEditions.length + " in all)";
+    }
+
+    private String digitalOnlyNote;
 
     // Push the plane's allowed/restricted editions and restricted token pairs into TokenDb.
     private void applyTokenEditionFilter() {
@@ -1039,6 +1068,8 @@ public class Config {
     }
 
     public void loadResources() {
+        if (digitalOnlyNote != null)
+            System.out.println(digitalOnlyNote); // round 410: decided at construction, before the log existed
         // Content filter tables (user spec 2026-08-12): fold the expansions table's Include=N
         // codes into restrictedEditions BEFORE the token filter and card-pool init below, so
         // every edition consumer sees one merged list. This is the earliest point where the

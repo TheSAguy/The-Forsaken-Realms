@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 410: a Settings option to play with the digital-only cards (2026-10-03)
+
+The user, after explaining the config.json edit a player would need ("How can someone adjust the settings if they want
+to play with the alchemy digital only cards?"): "yes, add the digital-only cards setting. (Like Fow, let's have it just
+below 'Exclude variants rebalanced for Arena's Alchemy and Historic formats')". Hand-editing config.json would be undone
+by every update and isn't possible on Android. A Settings option lives in the player's own profile, so it survives both.
+
+- **config.json**: round 395's 21 codes (the 18 Alchemy sets, HBG, J21, AJMP) moved out of `restrictedEditions` into a
+  new `digitalOnlyEditions` list. The SUNF comment moved to its own line, because `race_checks.py`'s stripper cannot
+  read a comment straight after a value with no comma.
+- **`Config.applyDigitalOnlyEditions()`**, right after config.json loads (settings.json is read before it): the list
+  joins `restrictedEditions` unless `SettingData.allowDigitalOnlyCards` is on. Every reader of `restrictedEditions` (the
+  reward/shop/booster pools, the token filter, `CommanderCards.isDigitalOnly` for enemy decks) works unchanged. With the
+  option off, the merged list is the same 39 codes in the same order as before (checked against HEAD).
+- **Settings**: "Allow digital-only cards (MTG Arena's Alchemy and Arena-only sets) (Restart Required)", just below the
+  Alchemy variants option. Off by default. Ticking it saves and offers the restart, as the unknown/non-legal card
+  options do; Abort keeps the choice for the next start. New `lblAllowDigitalOnlyCards`, in en-US only like
+  `lblFogOfWar` (other languages fall back to English).
+- `[TFR-DigitalOnly]` at startup: `blocked - 21 digital-only edition(s) added to restrictedEditions (39 in all)` or
+  `allowed by the player's Settings - 21 ... stay open: ...`. The desktop launcher builds Config, to read the window
+  size, before Forge sends System.out to forge.log. So the line is kept and printed by `loadResources()`; it appears
+  twice, since that runs twice at startup. The first build printed it straight away and it never reached the log.
+- Tools: `validate_plane_data.py` knows the key and checks it for duplicates. `races/race_checks.py` counts it as
+  blocked.
+- Game Guide: the "Arena-only sets are out" line points to the option.
+- **Agent-tested.**
+  - Off (default): `blocked - 21 ... (39 in all)`.
+  - On (the agent profile's settings.json set by hand, then restored): `allowed ... stay open: YMID, ... AJMP`, with no
+    exceptions.
+  - The Settings row itself was not seen on screen. The agent bridge cannot scroll that list, and its click reaches
+    only on-screen widgets (`clicked null`). Placement is by code: right after the Alchemy variants field.
+  - TRAP: the agent's forge.log is lost on a kill. Exit through the menu: `click text="Exit"`, then a fresh `state`,
+    then `click id=d1`.
+
 ## Round 409: the remade enemies move so you can see it, and the scarabs became beetles (2026-10-02)
 
 The user's reference was the 16x16 Royal Scarab: three frames in a ping-pong loop (0.8 s). Its gold shell lifts 1-2 px

@@ -58,6 +58,16 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-03 (morning): **round 410 LOCAL + UNRELEASED** - Settings option "Allow digital-only cards (MTG
+Arena's Alchemy and Arena-only sets) (Restart Required)", just below the Alchemy variants option
+(`SettingData.allowDigitalOnlyCards`, off by default, saved in the player's profile so it survives updates). config.json's
+round-395 codes moved to `digitalOnlyEditions`; `Config.applyDigitalOnlyEditions()` folds them into `restrictedEditions`
+at load unless allowed. `[TFR-DigitalOnly]` startup line (printed late from loadResources - the launcher builds Config
+before the log exists). LIVE + AGENT PACKAGED (jar 02bf4bd971c0), live + agent = rounds 406-410; agent-tested both
+ways via the agent profile's settings.json. The row itself not seen on screen (the bridge cannot scroll Settings).
+Open from 2026-10-02: the user has not picked from the challenge ideas yet (I recommended Master start land + a
+global "notoriety" win streak as one round).
+
 ## STATE 2026-10-02 (night, last): **round 409 LOCAL + UNRELEASED (data only)** - the 18 round-408 remakes re-exported
 with readable motion (the Royal Scarab lesson: every clip moves whole pixels, idles hold key poses); the four scarabs
 now have a beetle body plan with lifting wing cases and pinching mandibles (MOD_CHANGELOG round 409). Copied into

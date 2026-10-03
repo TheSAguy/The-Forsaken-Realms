@@ -27,6 +27,9 @@ public class ConfigData {
     // Round 387: restricted_cards.json commanderOnlyCards (merged into restrictedCards as well) - util/CommanderCards.
     public String[] commanderOnlyCards;
     public String[] restrictedEditions;
+    // Round 410: MTG Arena's digital-only sets (round 395's block), kept apart so the player's Settings can let them in -
+    // Config folds them into restrictedEditions at load unless SettingData.allowDigitalOnlyCards is on.
+    public String[] digitalOnlyEditions;
     public String[] restrictedBlocks;
     public String[] restrictedTokens;
     public String[] allowedEditions;
