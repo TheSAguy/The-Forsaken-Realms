@@ -260,7 +260,19 @@ public class AdventureEventData implements Serializable {
                 + " playerUnlocked(" + playerUnlocked.size() + ")=" + playerUnlocked
                 + " neutralShard(" + neutralShard.size() + ")=" + neutralShard
                 + " allowed(" + allowed.size() + ")=" + allowed
-                + " -> " + (picked != null && picked.getLandSet() != null ? "picked=" + picked.getLandSet().getCode() : "NONE (no legal blocks)"));
+                + " -> " + (picked != null ? "picked=" + blockLabel(picked) : "NONE (no legal blocks)"));
+    }
+
+    /** Round 417: the block's own sets, not its land set - "picked=M19" for an Ultimate Masters draft misled a log reader. */
+    private static String blockLabel(CardBlock block) {
+        List<String> codes = new ArrayList<>();
+        for (CardEdition ed : block.getSets())
+            codes.add(ed.getCode());
+        String label = block.getName() + " " + codes;
+        CardEdition land = block.getLandSet();
+        if (land != null && !codes.contains(land.getCode()))
+            label += " (basics from " + land.getCode() + ")";
+        return label;
     }
 
     private static final Predicate<CardEdition> filterPioneer = FModel.getFormats().getPioneer().editionLegalPredicate;

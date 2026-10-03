@@ -801,14 +801,6 @@ public class DuelScene extends ForgeScene {
                 + " and it forgets.";
     }
 
-    /** Round 411: what the player is told when notoriety hands an enemy a Wall. */
-    private static String notorietyNote(EnemyData e, String wallScript, forge.item.PaperToken wall) {
-        String extra = wallScript.contains("flying") ? " flying" : wallScript.contains("reach") ? " reach" : "";
-        return "Word of your " + Current.player().notorietyStreak() + " wins in a row has spread. "
-                + e.getTieredDisplayName() + " starts this duel with a " + wall.getRules().getPower() + "/"
-                + wall.getRules().getToughness() + extra + " Wall in play. Lose once, and the word dies down.";
-    }
-
     @Override
     public void enter() {
         winStreakNote = null; // round 404: set again below for each enemy seat on a win streak
@@ -899,8 +891,10 @@ public class DuelScene extends ForgeScene {
                 if (item != null && item.effect != null) {
                     playerEffects.add(item.effect);
                     if (item.effect.opponent != null) oppEffects.add(item.effect.opponent);
-                } else {
-                    System.err.printf("Item %s not found.", id);
+                } else if (item == null) {
+                    // Round 417: stock printed this for an item with no duel effect too (a Rally rune), and with no
+                    // newline, gluing it to the next log line. Only a really missing item is worth a line.
+                    System.err.println("Item " + id + " not found.");
                 }
             }
         }
@@ -1099,7 +1093,8 @@ public class DuelScene extends ForgeScene {
                     java.util.List<IPaperCard> walls = new java.util.ArrayList<>();
                     walls.add(wall);
                     aiPlayer.addExtraCardsOnBattlefield(walls);
-                    winStreakNote = (winStreakNote == null ? "" : winStreakNote + "\n\n") + notorietyNote(currentEnemy, wallScript, wall);
+                    // Round 417 (the user: "remove the Notoriety notification on each duel. It gets annoying. The card text
+                    // informs the player what's going on"): no notice - the Wall card's own Notoriety line explains it.
                     System.out.println("[TFR-Notoriety] " + currentEnemy.getName() + " (" + EnemyData.tierDisplayName(currentEnemy.tier)
                             + ") starts with " + wallScript + " (" + wall.getRules().getPower() + "/" + wall.getRules().getToughness()
                             + ") - " + Current.player().notorietyStreak() + " wins in a row, level " + Current.player().notorietyLevel());

@@ -46,6 +46,8 @@ public class EditionProgression {
     private static final String[] GROUPS = {"white", "blue", "black", "red", "green", NEUTRAL};
     private static final String[] COLOR_GROUPS = {"white", "blue", "black", "red", "green"};
     private static final int NEUTRAL_SHARD_SIZE = 12;
+    /** Round 417: the town/owner/restriction of the last [TFR-ShopEditions] line, so a repeat prints short. */
+    private static String lastShopEditionsKey;
 
     /** Every real, obtainable edition this plane could ever show - the same CAN_MAKE_BOOSTER +
      *  hasBoosterTemplate filter the existing "cardPackShop" booster-generation code already uses
@@ -488,9 +490,17 @@ public class EditionProgression {
             editionRestriction = getEditionsForColor(world, ownerLabel);
         }
         String townName = rootPoint != null ? rootPoint.getData().name : "(unknown)";
-        System.out.println("[TFR-ShopEditions] shop=" + shopNameForLogging + " town=\"" + townName + "\""
-                + " owner=" + ownerLabel + " reason=" + reason + " trigger=" + trigger
-                + " restriction(" + editionRestriction.size() + ")=" + editionRestriction);
+        // Round 417 (a shared player log: 1,234 of these lines were half its 491 KB). The build menu's card counts
+        // ("shop-count", ~200 shop types per town visit) log nothing - EconomyBuildings.buyableCardCount prints one line
+        // per recount instead - and a shop with the same town/owner/restriction as the last line says so briefly.
+        if (!"shop-count".equals(trigger)) {
+            String key = townName + "|" + ownerLabel + "|" + reason + "|" + editionRestriction;
+            boolean same = key.equals(lastShopEditionsKey);
+            lastShopEditionsKey = key;
+            System.out.println("[TFR-ShopEditions] shop=" + shopNameForLogging + " town=\"" + townName + "\""
+                    + " owner=" + ownerLabel + " reason=" + reason + " trigger=" + trigger
+                    + (same ? " restriction: same as above" : " restriction(" + editionRestriction.size() + ")=" + editionRestriction));
+        }
         List<RewardData> restricted = restrictToEditions(source, editionRestriction, true);
 
         // Armory item-rarity venue stamp (user spec 2026-08-31). This is the single stamping

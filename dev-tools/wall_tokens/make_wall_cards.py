@@ -116,6 +116,24 @@ def why_line(toughness):
     return f"Notoriety: you have won {toughness * WINS_PER_LEVEL}+ duels in a row, and word has spread."
 
 
+LEAD = "Notoriety:"   # round 417 (the user: "put the Notoriety text in bold") - the card is the only notice now
+
+
+def draw_why(d, text, x0, y, width):
+    """The why line in italic with its LEAD word bold italic, word-wrapped across both fonts. Returns the next y."""
+    italic, bold = font("palai.ttf", 18), font("palabi.ttf", 18)
+    space = d.textlength(" ", font=italic)
+    x = x0
+    for i, word in enumerate(text.split()):
+        f = bold if i == 0 and word == LEAD else italic
+        w = d.textlength(word, font=f)
+        if x > x0 and x + w > x0 + width:
+            x, y = x0, y + 21
+        d.text((x, y), word, font=f, fill=(40, 40, 46) if f is italic else (16, 16, 20))
+        x += w + space
+    return y + 21
+
+
 def card(art, keywords, toughness):
     img = Image.new("RGB", (W, H), (16, 16, 18))
     d = ImageDraw.Draw(img)
@@ -150,9 +168,7 @@ def card(art, keywords, toughness):
     # why it is on the field - a rule, then italic like flavor text, kept clear of the P/T box
     d.line([70, y, W - 71, y], fill=(150, 150, 150), width=1)
     y += 8
-    for line in wrap(d, why_line(toughness), font("palai.ttf", 18), W - 41 - 14 - 54):
-        d.text((54, y), line, font=font("palai.ttf", 18), fill=(40, 40, 46))
-        y += 21
+    y = draw_why(d, why_line(toughness), 54, y, W - 41 - 14 - 54)
     # power / toughness
     d.rounded_rectangle([W - 128, 590, W - 34, 636], radius=10, fill=(214, 216, 220), outline=(70, 72, 78), width=2)
     pt = f"0/{toughness}"

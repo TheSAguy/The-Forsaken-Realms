@@ -1863,6 +1863,11 @@ public class EconomyBuildings {
         if (!signature.equals(shopCardCountSignature)) {
             shopCardCountCache.clear();
             shopCardCountSignature = signature;
+            // Round 417: one line per recount - the per-shop [TFR-ShopEditions] lines of the count are silent now.
+            PointOfInterest poi = TileMapScene.instance().rootPoint;
+            System.out.println("[TFR-ShopEditions] build-menu card counts recounted for \""
+                    + (poi == null ? "-" : poi.getData().name) + "\" with " + AdventurePlayer.current().getUnlockedEditions().size()
+                    + " unlocked edition(s) (trigger=shop-count, per-shop lines silent)");
         }
         Integer cached = shopCardCountCache.get(shopName);
         if (cached != null)
