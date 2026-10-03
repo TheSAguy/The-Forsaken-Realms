@@ -139,7 +139,24 @@ public class TuningData {
     // offsets plus the town-count and Color Defeat bonuses on top. Default 3 reproduced the old
     // hardcoded 2+index ladder (2/3/4/5); lowered to 2 in round 125 (2026-09-06, user: "Reduce the
     // number of attacking mages by 1 per color. So Easy = 1 and Insane would be 4") -> 1/2/3/4.
-    public int baseAttackingMagesPerColor = 2;
+    // Round 407 (user: "+1 base ... (+2 for Insane.) So easy would be 2 and Insane would be 6"): one starting cap per
+    // difficulty, keyed by its NAME like the win streak - replaces baseAttackingMagesPerColor and its fixed offsets.
+    public int attackingMagesEasy = 2;
+    public int attackingMagesNormal = 3;
+    public int attackingMagesHard = 4;
+    public int attackingMagesInsane = 6;
+
+    /** Round 407: a color's starting attacking-mage cap on this difficulty, before the town, defeat and Capitol
+     *  bonuses. An unknown difficulty takes Easy's, rather than guessing high. */
+    public int attackingMagesFor(String difficultyName) {
+        String name = difficultyName == null ? "" : difficultyName.trim().toLowerCase();
+        switch (name) {
+            case "normal": return Math.max(0, attackingMagesNormal);
+            case "hard":   return Math.max(0, attackingMagesHard);
+            case "insane": return Math.max(0, attackingMagesInsane);
+            default:       return Math.max(0, attackingMagesEasy);
+        }
+    }
 
     // Round 239 (user: "When the Player builds his capitol, the AI gets +1 to max attacking mage spawns and
     // spawn one for each AI immediately after the capitol is built"). The bonus applies for as long as the
@@ -448,6 +465,10 @@ public class TuningData {
     // runs straight for the exit, which is the shape of a consequence rather than a cutscene. 0 or less leaves
     // the guard's own speed alone (a chase you can always outrun).
     public float robbedGuardSpeedFactor = 1.1f;
+
+    // Round 407 - a castle champion (util/CastleChampions) moves at least the player's base speed x this, the same
+    // floor a robbed booster guard hunts at. 0 or less leaves the Archmage's own speed.
+    public float castleChampionSpeedFactor = 1.1f;
 
     /** Render multiplier for an enemy tier; 1.0 for anything unrecognised, so a stock plane or a
      *  hand-edited tier string can never shrink a sprite to nothing. */

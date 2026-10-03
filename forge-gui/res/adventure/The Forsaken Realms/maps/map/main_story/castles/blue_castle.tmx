@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="93">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="95">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -535,6 +535,27 @@
     &quot;addMaxCount&quot;: 100
  }
 ]</property>
+   </properties>
+  </object>
+  <object id="93" template="../../../../../common/maps/obj/enemy.tx" x="228.667" y="346">
+   <properties>
+    <property name="castleChampion" value="blue"/>
+    <property name="enemy" value="Archmage of the Tides"/>
+    <property name="pursueRange" type="int" value="192"/>
+    <property name="threatRange" type="int" value="80"/>
+    <property name="waypoints" value="81,78,76,82"/>
+   </properties>
+  </object>
+  <object id="94" template="../../../../../common/maps/obj/enemy.tx" x="510" y="700">
+   <properties>
+    <property name="castleChampion" value="blue"/>
+    <property name="enemy" value="Sirena, Tide-Singer"/>
+    <property name="pursueRange" type="int" value="192"/>
+    <property name="spawn.Easy" type="bool" value="false"/>
+    <property name="spawn.Hard" type="bool" value="false"/>
+    <property name="spawn.Normal" type="bool" value="false"/>
+    <property name="threatRange" type="int" value="80"/>
+    <property name="waypoints" value="76,82,81,78"/>
    </properties>
   </object>
 </objectgroup>

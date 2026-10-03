@@ -66,6 +66,8 @@ public class MapStage extends GameStage {
     // object in the next map, MapStage being a process singleton.
     private int caveChampionObjectId = -1;
     private EnemyData caveChampionData = null;
+    // Round 407: the castle champions standing in THIS map, so a castle's two (Insane) are never the same Archmage.
+    private final java.util.Set<String> castleChampionsTaken = new java.util.HashSet<>();
     Queue<Vector2> positions = new LinkedList<>();
     private boolean isLoadingMatch = false;
     private boolean isPlayerLeavingDungeon = false;
@@ -811,6 +813,7 @@ public class MapStage extends GameStage {
         if (changes != null)
             changes.clearRosterSpecial(); // round 377: the placements below mark them afresh on every entry
         localInnID = -1;
+        castleChampionsTaken.clear();
         prepareCaveChampion(map);
         for (MapLayer layer : map.getLayers()) {
             if (layer.getProperties().containsKey("spriteLayer") && layer.getProperties().get("spriteLayer", boolean.class)) {
@@ -1459,13 +1462,22 @@ public class MapStage extends GameStage {
                                 System.out.println("[TFR-Placement] " + (AdventureQuestController.instance().mostRecentPOI == null ? "?"
                                         : AdventureQuestController.instance().mostRecentPOI.getDisplayName())
                                         + ": #" + id + " kept as authored (" + EN.getName() + ")");
+                            // Round 407: a castle champion is one of its color's Archmages, picked on the first visit and
+                            // kept by the roster record below - not the content filter's or the re-theme's business.
+                            String championColor = asAuthored ? null : CastleChampions.colorOf(prop);
+                            if (championColor != null) {
+                                EnemyData champion = CastleChampions.resolve(Current.world(), changes, id, championColor,
+                                        castleChampionsTaken);
+                                if (champion != null)
+                                    EN = champion;
+                            }
                             if (EN == null) {
                                 System.err.printf("Enemy \"%s\" not found, choosing a random one for current biome\n", enemy);
                                 forge.adventure.world.World world = Current.world();
                                 Vector2 poiPos = AdventureQuestController.instance().mostRecentPOI.getPosition();
                                 int currentBiome = forge.adventure.world.World.highestBiome(world.getBiome((int) poiPos.x / world.getTileSize(), (int) poiPos.y / world.getTileSize()));
                                 EN = world.getData().GetBiomes().get(currentBiome).getEnemy(Current.player().getStatistic().rank());
-                            } else if (!asAuthored) {
+                            } else if (!asAuthored && championColor == null) {
                                 // Content filter tables (user spec 2026-08-12): an Include=N
                                 // enemy is skipped from ordinary dungeon population. Same
                                 // ordinary-encounter test the re-theme below already uses -
@@ -1550,7 +1562,8 @@ public class MapStage extends GameStage {
                             // DungeonSources.livingInhabitants() skips it. Not `asAuthored`: that also holds every
                             // spawnRate-0 creature, which isSpecial() already weighs on its own.
                             if (changes != null && EN != null && (mob.dialog != null || mob.defeatDialog != null || keptByMap
-                                    || id == caveChampionObjectId || forge.adventure.util.DungeonSources.isSpecial(EN)
+                                    || id == caveChampionObjectId || championColor != null // round 407: a castle champion stays home
+                                    || forge.adventure.util.DungeonSources.isSpecial(EN)
                                     || AdventureQuestController.instance().isQuestTargetPlacement(EN,
                                             AdventureQuestController.instance().mostRecentPOI)))
                                 changes.markRosterSpecial(id);
@@ -1627,6 +1640,8 @@ public class MapStage extends GameStage {
                             {
                                 mob.speedModifier = Float.parseFloat(prop.get("speedModifier").toString());
                             }
+                            if (championColor != null)
+                                CastleChampions.applySpeedFloor(mob); // round 407: after the map's own speedModifier
 
                             enemies.add(mob);
                             addMapActor(obj, mob);

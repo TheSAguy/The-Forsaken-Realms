@@ -14299,6 +14299,43 @@ game to try out.
   `spawn enemy "The Scarab God"` - names with spaces in quotes; a spawn lands 3-10 tiles away.
 - Round 407 is the peer session's (attacking-mage caps + castle champions), still in progress when this was committed.
 
+## Round 407: more attacking mages, and an Archmage champion in every castle (2026-10-02)
+
+**Attacking mages.** The user: "I just want to add +1 base. Not per week. (+2 for Insane.) So easy would be 2 and Insane
+would be 6 attacking mages at the start of the game." (A first reading, +1 per week, was built and taken out again
+before anything shipped.) The Normal base and its fixed offsets (`baseAttackingMagesPerColor` 2, Easy -1 / Hard +1 /
+Insane +2) became one starting cap per difficulty, by name like the win streak: settings.json `attackingMagesEasy` 2,
+`attackingMagesNormal` 3, `attackingMagesHard` 4, `attackingMagesInsane` 6 (`TuningData.attackingMagesFor`). The
+town-count, Color Defeat and Capitol bonuses and the halving for a taken capital are unchanged. `[TFR-MageCap]` names the
+difficulty in place of the old offset. The user's one long save (Insane, day 246, old caps) held 3-5 mages per color in
+flight, so the cap was the limit there; each color still sends at most one mage every 2-5 days.
+
+**Castle champions.** The user: "add a aggressive patrolling war champion to each AI castle. two on Insane. Must be
+Arch-mage level." Castle guards come back on every visit (`respawnEnemies`), and the arena war champions
+(`war_champions.json`: Avacyn, Urza...) pay jackpot loot (500-2,500 gold, their named cards, best-of-3), so the user
+chose a **roster Archmage** instead: ordinary Archmage loot under the card budget, nothing to farm.
+
+- Each castle map (`maps/map/main_story/castles/<color>_castle.tmx`) has two new enemy objects with
+  `castleChampion=<color>`. One appears on every difficulty and starts at the top-left of the sand ring around the keep.
+  The other is Insane only (`spawn.Easy/Normal/Hard` false) and starts at the bottom-right. Both walk the ring the same
+  way, so they stay on opposite sides of it. `threatRange` 80 (5 tiles), `pursueRange` 192 (12 tiles), the ring's four
+  corner waypoints. Added by `dev-tools/castle_champions/add_champions.py` (text insertion, dry run by default).
+- `util/CastleChampions`: on the first visit the placement becomes a random Archmage from the color's own roster
+  (`TerritoryControl.grandmasterRoster`, split out of `pickGrandmasterMage`, the same pool the Archmage attackers use).
+  The pick skips speed-0 creatures (the four Behemoths cannot patrol), the content filter's exclusions, and a name
+  already standing in that castle. The POI's fixed roster keeps the pick for every later visit, including a castle first
+  entered before this round. The authored `enemy` is only a stand-in for a roster with nothing left. No content filter
+  and no re-theme on the placement; it is marked roster-special, so it never walks out as a dungeon source.
+- Chase speed is at least the player's base speed x `castleChampionSpeedFactor` (1.1, settings.json), the same floor a
+  robbed booster guard hunts at.
+- As Archmages they start their duels with Wastes in play (round 390; a castle is not a town or Capitol fight), and the
+  win streak counts them.
+- `[TFR-CastleChampion]` logs the pick (`<color> castle #<id>: <name> picked from N Archmage(s)`) and the patrol
+  (speed / floor / threat / pursue).
+- Route QA (`waypoint_routes_qa.py` on the five castles): 20 routes, 161 legs, no findings. Preview sheet of the ring
+  sent to the user before the build.
+- Game Guide: the cap numbers and a sentence on the castle champion.
+
 ## Round 406: the card budget no longer pays gold for cards it would have cut (2026-10-02)
 
 Found in the user's live log (v1.17.1, Insane New Game+): Kor Duelist, an Apprentice beaten for the first time, paid

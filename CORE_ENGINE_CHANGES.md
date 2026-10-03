@@ -38,6 +38,18 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 407 - attacking-mage caps by difficulty, castle champions
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - the `enemy` case of `loadObjects()`: a placement with
+  `castleChampion=<color>` resolves through `CastleChampions.resolve()` right after `asAuthored` is decided, skips the
+  content filter / re-theme branch (`&& championColor == null`), is marked roster-special, and gets
+  `CastleChampions.applySpeedFloor()` after the map's own `speedModifier`. New field `castleChampionsTaken`, cleared
+  beside `prepareCaveChampion(map)` in `loadMap()`. All inside blocks that are ours already. **Merge watch** on
+  `loadObjects()`.
+- Mod: new `util/CastleChampions`; `TerritoryControl.grandmasterRoster()` split out of `pickGrandmasterMage()`,
+  `maxActiveMagesPerColor()` reads `TuningData.attackingMagesFor()`; `TuningData` `attackingMages*` (replaces
+  `baseAttackingMagesPerColor`) and `castleChampionSpeedFactor`.
+
 ### Round 406 - the card budget drops the list's fallback gold
 
 - **`forge-gui-mobile/src/forge/adventure/util/Reward.java`** - new `cardFallbackGold` field, `cardFallbackGold(int)`

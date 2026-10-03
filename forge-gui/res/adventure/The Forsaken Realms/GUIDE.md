@@ -116,7 +116,10 @@ on a color's land anywhere from 10% faster (Partner) to 10% slower (War). Push a
 to **War** and you can take the fight to it: storm one of its towns (once a week per town) and a
 win makes the town yours, or storm its capital against two Archmages at once - taking a capital
 halves the war mages that color can field. Bring down a color's **castle** by beating the Lord
-inside and the color falls for good, and the consequences ripple outward: its towns and capital
+inside and the color falls for good. Mind the castle's champion on the way in: one of the color's
+own Archmages walks the ring of paths around the keep, notices you from five tiles off and gives
+chase - two of them on Insane, always on opposite sides of the ring. Once the color falls, the
+consequences ripple outward: its towns and capital
 revert to the neutral Wasteland, the two colors beside it on the wheel each send their next mage
 straight at you, and every surviving color can field one more mage from then on.
 
@@ -1001,7 +1004,7 @@ included. Each color sends one every 2–5 days.
 Every color runs the same routine, so most of it can be predicted.
 
 **When.** Each color attacks on its own clock, waiting 2–5 days between mages. It can only have so
-many mages on the road at once — 1 on Easy, 2 on Normal, 3 on Hard, 4 on Insane — plus one more
+many mages on the road at once — 2 on Easy, 3 on Normal, 4 on Hard, 6 on Insane — plus one more
 for every 11 / 10 / 9 / 8 towns you own (Easy through Insane; your Capitol counts as one), one
 more for every color that has already fallen, and one more while your Capitol stands. Take a
 color's capital and that cap is halved.

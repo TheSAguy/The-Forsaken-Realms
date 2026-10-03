@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="90">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="92">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -560,6 +560,27 @@
     &quot;addMaxCount&quot;: 100
  }
 ]</property>
+   </properties>
+  </object>
+  <object id="90" template="../../../../../common/maps/obj/enemy.tx" x="224.667" y="350.667">
+   <properties>
+    <property name="castleChampion" value="white"/>
+    <property name="enemy" value="Aegis Paladin"/>
+    <property name="pursueRange" type="int" value="192"/>
+    <property name="threatRange" type="int" value="80"/>
+    <property name="waypoints" value="80,77,78,79"/>
+   </properties>
+  </object>
+  <object id="91" template="../../../../../common/maps/obj/enemy.tx" x="514" y="704">
+   <properties>
+    <property name="castleChampion" value="white"/>
+    <property name="enemy" value="The Ivory Sovereign"/>
+    <property name="pursueRange" type="int" value="192"/>
+    <property name="spawn.Easy" type="bool" value="false"/>
+    <property name="spawn.Hard" type="bool" value="false"/>
+    <property name="spawn.Normal" type="bool" value="false"/>
+    <property name="threatRange" type="int" value="80"/>
+    <property name="waypoints" value="78,79,80,77"/>
    </properties>
   </object>
 </objectgroup>

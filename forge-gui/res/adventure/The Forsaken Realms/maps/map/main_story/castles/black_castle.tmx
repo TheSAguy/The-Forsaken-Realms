@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="92">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="94">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -538,6 +538,27 @@
     &quot;addMaxCount&quot;: 100
  }
 ]</property>
+   </properties>
+  </object>
+  <object id="92" template="../../../../../common/maps/obj/enemy.tx" x="216.878" y="344.024">
+   <properties>
+    <property name="castleChampion" value="black"/>
+    <property name="enemy" value="High Vampire"/>
+    <property name="pursueRange" type="int" value="192"/>
+    <property name="threatRange" type="int" value="80"/>
+    <property name="waypoints" value="73,74,76,80"/>
+   </properties>
+  </object>
+  <object id="93" template="../../../../../common/maps/obj/enemy.tx" x="512.919" y="704.587">
+   <properties>
+    <property name="castleChampion" value="black"/>
+    <property name="enemy" value="The Reaper"/>
+    <property name="pursueRange" type="int" value="192"/>
+    <property name="spawn.Easy" type="bool" value="false"/>
+    <property name="spawn.Hard" type="bool" value="false"/>
+    <property name="spawn.Normal" type="bool" value="false"/>
+    <property name="threatRange" type="int" value="80"/>
+    <property name="waypoints" value="76,80,73,74"/>
    </properties>
   </object>
 </objectgroup>

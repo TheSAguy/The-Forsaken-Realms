@@ -84,11 +84,13 @@
     // keeps the limit it started with - a change here reaches NEW quests only; quests from before round 367 keep 20.
     "sideQuestDays": 15,
 
-    // How many attacking mages each AI color can field at once on Normal difficulty.
-    // Easy uses one fewer, Hard one more, Insane two more (2 -> Easy 1 / Normal 2 /
-    // Hard 3 / Insane 4 since round 125; it was 3 -> 2/3/4/5 before). Town-count and
-    // Color Defeat bonuses stack on top of this base.
-    "baseAttackingMagesPerColor": 2,
+    // How many attacking mages each AI color can field at once at the start of a game, by difficulty (round 407; it
+    // was Easy 1 / Normal 2 / Hard 3 / Insane 4 since round 125). The town-count, Color Defeat and Capitol bonuses
+    // stack on top.
+    "attackingMagesEasy": 2,
+    "attackingMagesNormal": 3,
+    "attackingMagesHard": 4,
+    "attackingMagesInsane": 6,
 
     // Round 239 - the AI answers the player's Capitol: +this many to every color's attacking-mage cap for as
     // long as the Capitol stands, and (capitolBuiltSendsMages) one mage from every color the moment it is built.

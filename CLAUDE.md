@@ -58,6 +58,14 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-02 (night, latest): **round 407 LOCAL + UNRELEASED** (committed after 408). Attacking-mage caps per
+difficulty by name: settings.json `attackingMagesEasy/Normal/Hard/Insane` 2/3/4/6 (replaces `baseAttackingMagesPerColor`
++ offsets; bonuses unchanged). Castle champions: each `<color>_castle.tmx` has two `castleChampion=<color>` enemies on the
+sand ring around the keep (the second Insane-only), resolved by `util/CastleChampions` to a random roster Archmage
+(`TerritoryControl.grandmasterRoster`, speed > 0) on the first visit, kept by the POI's fixed roster. Threat 80 / pursue
+192, speed floor = player base x `castleChampionSpeedFactor` 1.1. `[TFR-CastleChampion]` log lines. The user chose roster
+Archmages over the arena war champions (castle guards respawn every visit; war champions pay jackpot loot).
+
 ## STATE 2026-10-02 (night, later): **round 408 LOCAL + UNRELEASED (data only)** - 18 enemies redrawn with the creature
 generator: the green dragon and the ten dragon legends that shared its sprite, Eye / Vnwxt / Codie, Scarab / The Scarab
 God / Toxrill / Zask, each its own atlas in `sprites/enemy/remake/` (MOD_CHANGELOG round 408, MOD_SCOPE #120). Copied

@@ -1467,6 +1467,15 @@ public class TerritoryControl {
     }
 
     public static EnemyData pickGrandmasterMage(World world, String color) {
+        List<EnemyData> candidates = grandmasterRoster(world, color);
+        if (candidates.isEmpty())
+            return null;
+        return candidates.get(world.getRandom().nextInt(candidates.size()));
+    }
+
+    /** The color's roaming Archmages (its own biome roster, Mythic, not a boss, spawnRate above 0), one entry per
+     *  name - the pool the Archmage attackers draw from, and since round 407 the castle champions. Empty when none. */
+    public static List<EnemyData> grandmasterRoster(World world, String color) {
         for (BiomeData biome : world.getData().GetBiomes()) {
             if (!color.equals(biome.name))
                 continue;
@@ -1491,11 +1500,9 @@ public class TerritoryControl {
                 if ("Mythic".equals(e.tier) && roster.contains(e.getName()) && seen.add(e.getName()))
                     candidates.add(e);
             }
-            if (candidates.isEmpty())
-                return null;
-            return candidates.get(world.getRandom().nextInt(candidates.size()));
+            return candidates;
         }
-        return null;
+        return new ArrayList<>();
     }
 
     // Every early-return below prints why, not just the success path - the only way to tell
@@ -1527,8 +1534,8 @@ public class TerritoryControl {
             return;
         }
         // Difficulty-scaled cap on simultaneous in-flight mages per color (user request
-        // 2026-08-08): 1 on Easy, +1 per difficulty step, 4 on Insane since round 125, plus the
-        // town-count, Color Defeat and Capitol bonuses (maxActiveMagesPerColor). A color at its cap skips
+        // 2026-08-08): Easy 2 / Normal 3 / Hard 4 / Insane 6 since round 407, plus the town-count,
+        // Color Defeat and Capitol bonuses (maxActiveMagesPerColor). A color at its cap skips
         // this dispatch entirely - its attack timer still resets in processDaysPassed(), so it
         // simply tries again on its next scheduled attack day.
         int activeMages = 0;
@@ -1918,9 +1925,9 @@ public class TerritoryControl {
             GameHUD.getInstance().addNotification(message);
     }
 
-    // 2 simultaneous mages per color on Easy, +1 per difficulty step up (Easy/Normal/Hard/Insane
-    // -> 2/3/4/5, matching the user's spec exactly for the shipped 4-difficulty list). Unknown or
-    // missing difficulty falls back to the Easy cap rather than guessing high.
+    // Simultaneous mages per color: Easy 2 / Normal 3 / Hard 4 / Insane 6 since round 407 (settings.json
+    // attackingMages*), plus the town-count, Color Defeat and Capitol bonuses. Unknown or missing
+    // difficulty falls back to the Easy cap rather than guessing high.
     private static int maxActiveMagesPerColor(World world) {
         DifficultyData playerDifficulty = Current.player().getDifficulty();
         DifficultyData[] allDifficulties = Config.instance().getConfigData().difficulties;
@@ -1952,25 +1959,24 @@ public class TerritoryControl {
         // already do. Defeated colors never call dispatch() at all (see processDaysPassed()'s own
         // skip), so this term is simply moot for them.
         int defeatBonus = world != null ? world.getDefeatedColorCount() : 0;
-        // Difficulty base made tunable 2026-08-20 (TuningData.baseAttackingMagesPerColor, Normal
-        // base; fixed offsets Easy -1 / Hard +1 / Insane +2 per user spec). The original default
-        // base of 3 reproduced the old hardcoded 2+index ladder (2/3/4/5); round 125 (2026-09-06)
-        // lowered the shipped base to 2 -> Easy 1 / Normal 2 / Hard 3 / Insane 4.
-        int difficultyOffset = index == 0 ? -1 : index - 1;
-        int base = Config.instance().getTuningData().baseAttackingMagesPerColor;
+        // Difficulty base made tunable 2026-08-20 (Normal base + fixed offsets Easy -1 / Hard +1 / Insane +2), lowered
+        // to 1/2/3/4 in round 125. Round 407 (user: "+1 base ... (+2 for Insane.) So easy would be 2 and Insane would
+        // be 6"): one value per difficulty by name, TuningData.attackingMagesFor - Easy 2 / Normal 3 / Hard 4 / Insane 6.
+        int base = Config.instance().getTuningData().attackingMagesFor(
+                playerDifficulty != null ? playerDifficulty.name : null);
         // Round 239 (user: "When the Player builds his capitol, the AI gets +1 to max attacking mage spawns").
         // A Capitol is the player declaring a realm, and every color takes notice for as long as it stands.
         // On top of townBonus, which already counts the Capitol as one town toward its per-N-towns step.
         int capitolBonus = TownRestoration.capitolExists()
                 ? Math.max(0, Config.instance().getTuningData().capitolBuiltMageCapBonus) : 0;
-        int cap = base + difficultyOffset + townBonus + defeatBonus + capitolBonus;
+        int cap = base + townBonus + defeatBonus + capitolBonus;
         // Diagnostic logging standard (user request 2026-08-13) - the town-count scaling term is
         // otherwise invisible: the caller only ever sees the final cap, with no way to tell how
         // much of it came from the flat difficulty base vs. this rubber-band bonus.
         // Printed only when the inputs or the result CHANGE (2026-09-02 log review: one idle
         // 139-day session wrote this identical line 194 times). The first call of a process
         // always prints, so a log still shows the cap in force for that session.
-        String line = "[TFR-MageCap] base=" + base + " difficultyOffset=" + difficultyOffset
+        String line = "[TFR-MageCap] base=" + base + " (" + (playerDifficulty != null ? playerDifficulty.name : "?") + ")"
                 + " playerTowns=" + playerTowns
                 + " divisor=" + (11 - index) + " townBonus=" + townBonus + " defeatBonus=" + defeatBonus
                 + " capitolBonus=" + capitolBonus + " -> cap=" + cap;
