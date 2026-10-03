@@ -1,0 +1,221 @@
+kastral.png
+size: 1080,814
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 75
+Idle
+  xy: 90, 64
+  size: 90, 75
+Idle
+  xy: 180, 64
+  size: 90, 75
+Idle
+  xy: 270, 64
+  size: 90, 75
+Idle
+  xy: 360, 64
+  size: 90, 75
+Idle
+  xy: 450, 64
+  size: 90, 75
+Idle
+  xy: 540, 64
+  size: 90, 75
+Idle
+  xy: 630, 64
+  size: 90, 75
+Idle
+  xy: 720, 64
+  size: 90, 75
+Idle
+  xy: 810, 64
+  size: 90, 75
+Walk
+  xy: 0, 139
+  size: 90, 75
+Walk
+  xy: 90, 139
+  size: 90, 75
+Walk
+  xy: 180, 139
+  size: 90, 75
+Walk
+  xy: 270, 139
+  size: 90, 75
+Attack
+  xy: 0, 214
+  size: 90, 75
+Attack
+  xy: 90, 214
+  size: 90, 75
+Attack
+  xy: 180, 214
+  size: 90, 75
+Attack
+  xy: 270, 214
+  size: 90, 75
+Attack
+  xy: 360, 214
+  size: 90, 75
+Attack
+  xy: 450, 214
+  size: 90, 75
+Attack
+  xy: 540, 214
+  size: 90, 75
+Hit
+  xy: 0, 289
+  size: 90, 75
+Hit
+  xy: 90, 289
+  size: 90, 75
+Hit
+  xy: 180, 289
+  size: 90, 75
+Hit
+  xy: 270, 289
+  size: 90, 75
+Death
+  xy: 0, 364
+  size: 90, 75
+Death
+  xy: 90, 364
+  size: 90, 75
+Death
+  xy: 180, 364
+  size: 90, 75
+Death
+  xy: 270, 364
+  size: 90, 75
+Death
+  xy: 360, 364
+  size: 90, 75
+Death
+  xy: 450, 364
+  size: 90, 75
+Death
+  xy: 540, 364
+  size: 90, 75
+Death
+  xy: 630, 364
+  size: 90, 75
+Death
+  xy: 720, 364
+  size: 90, 75
+Death
+  xy: 810, 364
+  size: 90, 75
+Death
+  xy: 900, 364
+  size: 90, 75
+Death
+  xy: 990, 364
+  size: 90, 75
+Wake
+  xy: 0, 439
+  size: 90, 75
+Wake
+  xy: 90, 439
+  size: 90, 75
+Wake
+  xy: 180, 439
+  size: 90, 75
+Wake
+  xy: 270, 439
+  size: 90, 75
+Wake
+  xy: 360, 439
+  size: 90, 75
+Wake
+  xy: 450, 439
+  size: 90, 75
+IdleUp
+  xy: 0, 514
+  size: 90, 75
+IdleUp
+  xy: 90, 514
+  size: 90, 75
+IdleUp
+  xy: 180, 514
+  size: 90, 75
+IdleUp
+  xy: 270, 514
+  size: 90, 75
+IdleUp
+  xy: 360, 514
+  size: 90, 75
+IdleUp
+  xy: 450, 514
+  size: 90, 75
+IdleUp
+  xy: 540, 514
+  size: 90, 75
+IdleUp
+  xy: 630, 514
+  size: 90, 75
+IdleUp
+  xy: 720, 514
+  size: 90, 75
+IdleUp
+  xy: 810, 514
+  size: 90, 75
+IdleDown
+  xy: 0, 589
+  size: 90, 75
+IdleDown
+  xy: 90, 589
+  size: 90, 75
+IdleDown
+  xy: 180, 589
+  size: 90, 75
+IdleDown
+  xy: 270, 589
+  size: 90, 75
+IdleDown
+  xy: 360, 589
+  size: 90, 75
+IdleDown
+  xy: 450, 589
+  size: 90, 75
+IdleDown
+  xy: 540, 589
+  size: 90, 75
+IdleDown
+  xy: 630, 589
+  size: 90, 75
+IdleDown
+  xy: 720, 589
+  size: 90, 75
+IdleDown
+  xy: 810, 589
+  size: 90, 75
+WalkUp
+  xy: 0, 664
+  size: 90, 75
+WalkUp
+  xy: 90, 664
+  size: 90, 75
+WalkUp
+  xy: 180, 664
+  size: 90, 75
+WalkUp
+  xy: 270, 664
+  size: 90, 75
+WalkDown
+  xy: 0, 739
+  size: 90, 75
+WalkDown
+  xy: 90, 739
+  size: 90, 75
+WalkDown
+  xy: 180, 739
+  size: 90, 75
+WalkDown
+  xy: 270, 739
+  size: 90, 75

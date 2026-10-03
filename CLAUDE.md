@@ -58,6 +58,11 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-03 (round 426): **LOCAL + UNRELEASED** - cloud batch 3 of the creature-generator remakes: 18 groups, 52
+enemies (elephant, leech, golems, myr, treant, elk, lizard, lion, cat, octopus, chicken, cave spider, polar bear,
+ladybug, dragonfly, raven). Scarecrow skipped; Griffin waits for the user's call. Data only (enemies.json,
+`sprites/enemy/remake/`, now 174 remade enemies). Not packaged yet; not seen in play.
+
 ## STATE 2026-10-03 (round 425): **LOCAL + UNRELEASED** - a New Game+ that takes its invested resources back owes the AI a
 one-off day-8 wave: towns held / 5|4|3|2 (Easy..Insane), rounded down, max 5 per color (`World.ngPlusWaveMages`,
 `TerritoryControl.sendNewGamePlusWave`, settings `ngPlusWave*`), outside the cap like round 422. Agent-tested through a

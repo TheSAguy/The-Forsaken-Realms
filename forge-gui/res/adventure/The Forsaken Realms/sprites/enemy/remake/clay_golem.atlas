@@ -1,0 +1,281 @@
+clay_golem.png
+size: 2304,1114
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 128, 105
+Idle
+  xy: 128, 64
+  size: 128, 105
+Idle
+  xy: 256, 64
+  size: 128, 105
+Idle
+  xy: 384, 64
+  size: 128, 105
+Idle
+  xy: 512, 64
+  size: 128, 105
+Idle
+  xy: 640, 64
+  size: 128, 105
+Idle
+  xy: 768, 64
+  size: 128, 105
+Idle
+  xy: 896, 64
+  size: 128, 105
+Idle
+  xy: 1024, 64
+  size: 128, 105
+Idle
+  xy: 1152, 64
+  size: 128, 105
+Walk
+  xy: 0, 169
+  size: 128, 105
+Walk
+  xy: 128, 169
+  size: 128, 105
+Walk
+  xy: 256, 169
+  size: 128, 105
+Walk
+  xy: 384, 169
+  size: 128, 105
+Walk
+  xy: 512, 169
+  size: 128, 105
+Walk
+  xy: 640, 169
+  size: 128, 105
+Attack
+  xy: 0, 274
+  size: 128, 105
+Attack
+  xy: 128, 274
+  size: 128, 105
+Attack
+  xy: 256, 274
+  size: 128, 105
+Attack
+  xy: 384, 274
+  size: 128, 105
+Attack
+  xy: 512, 274
+  size: 128, 105
+Attack
+  xy: 640, 274
+  size: 128, 105
+Attack
+  xy: 768, 274
+  size: 128, 105
+Attack
+  xy: 896, 274
+  size: 128, 105
+Attack
+  xy: 1024, 274
+  size: 128, 105
+Attack
+  xy: 1152, 274
+  size: 128, 105
+Hit
+  xy: 0, 379
+  size: 128, 105
+Hit
+  xy: 128, 379
+  size: 128, 105
+Hit
+  xy: 256, 379
+  size: 128, 105
+Hit
+  xy: 384, 379
+  size: 128, 105
+Hit
+  xy: 512, 379
+  size: 128, 105
+Hit
+  xy: 640, 379
+  size: 128, 105
+Hit
+  xy: 768, 379
+  size: 128, 105
+Death
+  xy: 0, 484
+  size: 128, 105
+Death
+  xy: 128, 484
+  size: 128, 105
+Death
+  xy: 256, 484
+  size: 128, 105
+Death
+  xy: 384, 484
+  size: 128, 105
+Death
+  xy: 512, 484
+  size: 128, 105
+Death
+  xy: 640, 484
+  size: 128, 105
+Death
+  xy: 768, 484
+  size: 128, 105
+Death
+  xy: 896, 484
+  size: 128, 105
+Death
+  xy: 1024, 484
+  size: 128, 105
+Death
+  xy: 1152, 484
+  size: 128, 105
+Death
+  xy: 1280, 484
+  size: 128, 105
+Death
+  xy: 1408, 484
+  size: 128, 105
+Death
+  xy: 1536, 484
+  size: 128, 105
+Death
+  xy: 1664, 484
+  size: 128, 105
+Death
+  xy: 1792, 484
+  size: 128, 105
+Death
+  xy: 1920, 484
+  size: 128, 105
+Death
+  xy: 2048, 484
+  size: 128, 105
+Death
+  xy: 2176, 484
+  size: 128, 105
+Wake
+  xy: 0, 589
+  size: 128, 105
+Wake
+  xy: 128, 589
+  size: 128, 105
+Wake
+  xy: 256, 589
+  size: 128, 105
+Wake
+  xy: 384, 589
+  size: 128, 105
+Wake
+  xy: 512, 589
+  size: 128, 105
+Wake
+  xy: 640, 589
+  size: 128, 105
+Wake
+  xy: 768, 589
+  size: 128, 105
+Wake
+  xy: 896, 589
+  size: 128, 105
+IdleUp
+  xy: 0, 694
+  size: 128, 105
+IdleUp
+  xy: 128, 694
+  size: 128, 105
+IdleUp
+  xy: 256, 694
+  size: 128, 105
+IdleUp
+  xy: 384, 694
+  size: 128, 105
+IdleUp
+  xy: 512, 694
+  size: 128, 105
+IdleUp
+  xy: 640, 694
+  size: 128, 105
+IdleUp
+  xy: 768, 694
+  size: 128, 105
+IdleUp
+  xy: 896, 694
+  size: 128, 105
+IdleUp
+  xy: 1024, 694
+  size: 128, 105
+IdleUp
+  xy: 1152, 694
+  size: 128, 105
+IdleDown
+  xy: 0, 799
+  size: 128, 105
+IdleDown
+  xy: 128, 799
+  size: 128, 105
+IdleDown
+  xy: 256, 799
+  size: 128, 105
+IdleDown
+  xy: 384, 799
+  size: 128, 105
+IdleDown
+  xy: 512, 799
+  size: 128, 105
+IdleDown
+  xy: 640, 799
+  size: 128, 105
+IdleDown
+  xy: 768, 799
+  size: 128, 105
+IdleDown
+  xy: 896, 799
+  size: 128, 105
+IdleDown
+  xy: 1024, 799
+  size: 128, 105
+IdleDown
+  xy: 1152, 799
+  size: 128, 105
+WalkUp
+  xy: 0, 904
+  size: 128, 105
+WalkUp
+  xy: 128, 904
+  size: 128, 105
+WalkUp
+  xy: 256, 904
+  size: 128, 105
+WalkUp
+  xy: 384, 904
+  size: 128, 105
+WalkUp
+  xy: 512, 904
+  size: 128, 105
+WalkUp
+  xy: 640, 904
+  size: 128, 105
+WalkDown
+  xy: 0, 1009
+  size: 128, 105
+WalkDown
+  xy: 128, 1009
+  size: 128, 105
+WalkDown
+  xy: 256, 1009
+  size: 128, 105
+WalkDown
+  xy: 384, 1009
+  size: 128, 105
+WalkDown
+  xy: 512, 1009
+  size: 128, 105
+WalkDown
+  xy: 640, 1009
+  size: 128, 105

@@ -1,0 +1,239 @@
+rudolph.png
+size: 1200,824
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 100, 76
+Idle
+  xy: 100, 64
+  size: 100, 76
+Idle
+  xy: 200, 64
+  size: 100, 76
+Idle
+  xy: 300, 64
+  size: 100, 76
+Idle
+  xy: 400, 64
+  size: 100, 76
+Idle
+  xy: 500, 64
+  size: 100, 76
+Idle
+  xy: 600, 64
+  size: 100, 76
+Idle
+  xy: 700, 64
+  size: 100, 76
+Idle
+  xy: 800, 64
+  size: 100, 76
+Idle
+  xy: 900, 64
+  size: 100, 76
+Walk
+  xy: 0, 140
+  size: 100, 76
+Walk
+  xy: 100, 140
+  size: 100, 76
+Walk
+  xy: 200, 140
+  size: 100, 76
+Walk
+  xy: 300, 140
+  size: 100, 76
+Walk
+  xy: 400, 140
+  size: 100, 76
+Walk
+  xy: 500, 140
+  size: 100, 76
+Attack
+  xy: 0, 216
+  size: 100, 76
+Attack
+  xy: 100, 216
+  size: 100, 76
+Attack
+  xy: 200, 216
+  size: 100, 76
+Attack
+  xy: 300, 216
+  size: 100, 76
+Attack
+  xy: 400, 216
+  size: 100, 76
+Attack
+  xy: 500, 216
+  size: 100, 76
+Attack
+  xy: 600, 216
+  size: 100, 76
+Hit
+  xy: 0, 292
+  size: 100, 76
+Hit
+  xy: 100, 292
+  size: 100, 76
+Hit
+  xy: 200, 292
+  size: 100, 76
+Hit
+  xy: 300, 292
+  size: 100, 76
+Death
+  xy: 0, 368
+  size: 100, 76
+Death
+  xy: 100, 368
+  size: 100, 76
+Death
+  xy: 200, 368
+  size: 100, 76
+Death
+  xy: 300, 368
+  size: 100, 76
+Death
+  xy: 400, 368
+  size: 100, 76
+Death
+  xy: 500, 368
+  size: 100, 76
+Death
+  xy: 600, 368
+  size: 100, 76
+Death
+  xy: 700, 368
+  size: 100, 76
+Death
+  xy: 800, 368
+  size: 100, 76
+Death
+  xy: 900, 368
+  size: 100, 76
+Death
+  xy: 1000, 368
+  size: 100, 76
+Death
+  xy: 1100, 368
+  size: 100, 76
+Wake
+  xy: 0, 444
+  size: 100, 76
+Wake
+  xy: 100, 444
+  size: 100, 76
+Wake
+  xy: 200, 444
+  size: 100, 76
+Wake
+  xy: 300, 444
+  size: 100, 76
+Wake
+  xy: 400, 444
+  size: 100, 76
+Wake
+  xy: 500, 444
+  size: 100, 76
+IdleUp
+  xy: 0, 520
+  size: 100, 76
+IdleUp
+  xy: 100, 520
+  size: 100, 76
+IdleUp
+  xy: 200, 520
+  size: 100, 76
+IdleUp
+  xy: 300, 520
+  size: 100, 76
+IdleUp
+  xy: 400, 520
+  size: 100, 76
+IdleUp
+  xy: 500, 520
+  size: 100, 76
+IdleUp
+  xy: 600, 520
+  size: 100, 76
+IdleUp
+  xy: 700, 520
+  size: 100, 76
+IdleUp
+  xy: 800, 520
+  size: 100, 76
+IdleUp
+  xy: 900, 520
+  size: 100, 76
+IdleDown
+  xy: 0, 596
+  size: 100, 76
+IdleDown
+  xy: 100, 596
+  size: 100, 76
+IdleDown
+  xy: 200, 596
+  size: 100, 76
+IdleDown
+  xy: 300, 596
+  size: 100, 76
+IdleDown
+  xy: 400, 596
+  size: 100, 76
+IdleDown
+  xy: 500, 596
+  size: 100, 76
+IdleDown
+  xy: 600, 596
+  size: 100, 76
+IdleDown
+  xy: 700, 596
+  size: 100, 76
+IdleDown
+  xy: 800, 596
+  size: 100, 76
+IdleDown
+  xy: 900, 596
+  size: 100, 76
+WalkUp
+  xy: 0, 672
+  size: 100, 76
+WalkUp
+  xy: 100, 672
+  size: 100, 76
+WalkUp
+  xy: 200, 672
+  size: 100, 76
+WalkUp
+  xy: 300, 672
+  size: 100, 76
+WalkUp
+  xy: 400, 672
+  size: 100, 76
+WalkUp
+  xy: 500, 672
+  size: 100, 76
+WalkDown
+  xy: 0, 748
+  size: 100, 76
+WalkDown
+  xy: 100, 748
+  size: 100, 76
+WalkDown
+  xy: 200, 748
+  size: 100, 76
+WalkDown
+  xy: 300, 748
+  size: 100, 76
+WalkDown
+  xy: 400, 748
+  size: 100, 76
+WalkDown
+  xy: 500, 748
+  size: 100, 76

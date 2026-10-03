@@ -1,0 +1,299 @@
+gorilla_chief.png
+size: 4560,1864
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 228, 180
+Idle
+  xy: 228, 64
+  size: 228, 180
+Idle
+  xy: 456, 64
+  size: 228, 180
+Idle
+  xy: 684, 64
+  size: 228, 180
+Idle
+  xy: 912, 64
+  size: 228, 180
+Idle
+  xy: 1140, 64
+  size: 228, 180
+Idle
+  xy: 1368, 64
+  size: 228, 180
+Idle
+  xy: 1596, 64
+  size: 228, 180
+Idle
+  xy: 1824, 64
+  size: 228, 180
+Idle
+  xy: 2052, 64
+  size: 228, 180
+Walk
+  xy: 0, 244
+  size: 228, 180
+Walk
+  xy: 228, 244
+  size: 228, 180
+Walk
+  xy: 456, 244
+  size: 228, 180
+Walk
+  xy: 684, 244
+  size: 228, 180
+Walk
+  xy: 912, 244
+  size: 228, 180
+Walk
+  xy: 1140, 244
+  size: 228, 180
+Attack
+  xy: 0, 424
+  size: 228, 180
+Attack
+  xy: 228, 424
+  size: 228, 180
+Attack
+  xy: 456, 424
+  size: 228, 180
+Attack
+  xy: 684, 424
+  size: 228, 180
+Attack
+  xy: 912, 424
+  size: 228, 180
+Attack
+  xy: 1140, 424
+  size: 228, 180
+Attack
+  xy: 1368, 424
+  size: 228, 180
+Attack
+  xy: 1596, 424
+  size: 228, 180
+Attack
+  xy: 1824, 424
+  size: 228, 180
+Attack
+  xy: 2052, 424
+  size: 228, 180
+Attack
+  xy: 2280, 424
+  size: 228, 180
+Hit
+  xy: 0, 604
+  size: 228, 180
+Hit
+  xy: 228, 604
+  size: 228, 180
+Hit
+  xy: 456, 604
+  size: 228, 180
+Hit
+  xy: 684, 604
+  size: 228, 180
+Hit
+  xy: 912, 604
+  size: 228, 180
+Hit
+  xy: 1140, 604
+  size: 228, 180
+Hit
+  xy: 1368, 604
+  size: 228, 180
+Hit
+  xy: 1596, 604
+  size: 228, 180
+Death
+  xy: 0, 784
+  size: 228, 180
+Death
+  xy: 228, 784
+  size: 228, 180
+Death
+  xy: 456, 784
+  size: 228, 180
+Death
+  xy: 684, 784
+  size: 228, 180
+Death
+  xy: 912, 784
+  size: 228, 180
+Death
+  xy: 1140, 784
+  size: 228, 180
+Death
+  xy: 1368, 784
+  size: 228, 180
+Death
+  xy: 1596, 784
+  size: 228, 180
+Death
+  xy: 1824, 784
+  size: 228, 180
+Death
+  xy: 2052, 784
+  size: 228, 180
+Death
+  xy: 2280, 784
+  size: 228, 180
+Death
+  xy: 2508, 784
+  size: 228, 180
+Death
+  xy: 2736, 784
+  size: 228, 180
+Death
+  xy: 2964, 784
+  size: 228, 180
+Death
+  xy: 3192, 784
+  size: 228, 180
+Death
+  xy: 3420, 784
+  size: 228, 180
+Death
+  xy: 3648, 784
+  size: 228, 180
+Death
+  xy: 3876, 784
+  size: 228, 180
+Death
+  xy: 4104, 784
+  size: 228, 180
+Death
+  xy: 4332, 784
+  size: 228, 180
+Wake
+  xy: 0, 964
+  size: 228, 180
+Wake
+  xy: 228, 964
+  size: 228, 180
+Wake
+  xy: 456, 964
+  size: 228, 180
+Wake
+  xy: 684, 964
+  size: 228, 180
+Wake
+  xy: 912, 964
+  size: 228, 180
+Wake
+  xy: 1140, 964
+  size: 228, 180
+Wake
+  xy: 1368, 964
+  size: 228, 180
+Wake
+  xy: 1596, 964
+  size: 228, 180
+Wake
+  xy: 1824, 964
+  size: 228, 180
+Wake
+  xy: 2052, 964
+  size: 228, 180
+IdleUp
+  xy: 0, 1144
+  size: 228, 180
+IdleUp
+  xy: 228, 1144
+  size: 228, 180
+IdleUp
+  xy: 456, 1144
+  size: 228, 180
+IdleUp
+  xy: 684, 1144
+  size: 228, 180
+IdleUp
+  xy: 912, 1144
+  size: 228, 180
+IdleUp
+  xy: 1140, 1144
+  size: 228, 180
+IdleUp
+  xy: 1368, 1144
+  size: 228, 180
+IdleUp
+  xy: 1596, 1144
+  size: 228, 180
+IdleUp
+  xy: 1824, 1144
+  size: 228, 180
+IdleUp
+  xy: 2052, 1144
+  size: 228, 180
+IdleDown
+  xy: 0, 1324
+  size: 228, 180
+IdleDown
+  xy: 228, 1324
+  size: 228, 180
+IdleDown
+  xy: 456, 1324
+  size: 228, 180
+IdleDown
+  xy: 684, 1324
+  size: 228, 180
+IdleDown
+  xy: 912, 1324
+  size: 228, 180
+IdleDown
+  xy: 1140, 1324
+  size: 228, 180
+IdleDown
+  xy: 1368, 1324
+  size: 228, 180
+IdleDown
+  xy: 1596, 1324
+  size: 228, 180
+IdleDown
+  xy: 1824, 1324
+  size: 228, 180
+IdleDown
+  xy: 2052, 1324
+  size: 228, 180
+WalkUp
+  xy: 0, 1504
+  size: 228, 180
+WalkUp
+  xy: 228, 1504
+  size: 228, 180
+WalkUp
+  xy: 456, 1504
+  size: 228, 180
+WalkUp
+  xy: 684, 1504
+  size: 228, 180
+WalkUp
+  xy: 912, 1504
+  size: 228, 180
+WalkUp
+  xy: 1140, 1504
+  size: 228, 180
+WalkDown
+  xy: 0, 1684
+  size: 228, 180
+WalkDown
+  xy: 228, 1684
+  size: 228, 180
+WalkDown
+  xy: 456, 1684
+  size: 228, 180
+WalkDown
+  xy: 684, 1684
+  size: 228, 180
+WalkDown
+  xy: 912, 1684
+  size: 228, 180
+WalkDown
+  xy: 1140, 1684
+  size: 228, 180

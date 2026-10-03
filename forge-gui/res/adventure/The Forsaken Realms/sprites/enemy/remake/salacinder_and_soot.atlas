@@ -1,0 +1,290 @@
+salacinder_and_soot.png
+size: 4674,1534
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 246, 147
+Idle
+  xy: 246, 64
+  size: 246, 147
+Idle
+  xy: 492, 64
+  size: 246, 147
+Idle
+  xy: 738, 64
+  size: 246, 147
+Idle
+  xy: 984, 64
+  size: 246, 147
+Idle
+  xy: 1230, 64
+  size: 246, 147
+Idle
+  xy: 1476, 64
+  size: 246, 147
+Idle
+  xy: 1722, 64
+  size: 246, 147
+Idle
+  xy: 1968, 64
+  size: 246, 147
+Idle
+  xy: 2214, 64
+  size: 246, 147
+Walk
+  xy: 0, 211
+  size: 246, 147
+Walk
+  xy: 246, 211
+  size: 246, 147
+Walk
+  xy: 492, 211
+  size: 246, 147
+Walk
+  xy: 738, 211
+  size: 246, 147
+Walk
+  xy: 984, 211
+  size: 246, 147
+Walk
+  xy: 1230, 211
+  size: 246, 147
+Attack
+  xy: 0, 358
+  size: 246, 147
+Attack
+  xy: 246, 358
+  size: 246, 147
+Attack
+  xy: 492, 358
+  size: 246, 147
+Attack
+  xy: 738, 358
+  size: 246, 147
+Attack
+  xy: 984, 358
+  size: 246, 147
+Attack
+  xy: 1230, 358
+  size: 246, 147
+Attack
+  xy: 1476, 358
+  size: 246, 147
+Attack
+  xy: 1722, 358
+  size: 246, 147
+Attack
+  xy: 1968, 358
+  size: 246, 147
+Hit
+  xy: 0, 505
+  size: 246, 147
+Hit
+  xy: 246, 505
+  size: 246, 147
+Hit
+  xy: 492, 505
+  size: 246, 147
+Hit
+  xy: 738, 505
+  size: 246, 147
+Hit
+  xy: 984, 505
+  size: 246, 147
+Hit
+  xy: 1230, 505
+  size: 246, 147
+Hit
+  xy: 1476, 505
+  size: 246, 147
+Hit
+  xy: 1722, 505
+  size: 246, 147
+Death
+  xy: 0, 652
+  size: 246, 147
+Death
+  xy: 246, 652
+  size: 246, 147
+Death
+  xy: 492, 652
+  size: 246, 147
+Death
+  xy: 738, 652
+  size: 246, 147
+Death
+  xy: 984, 652
+  size: 246, 147
+Death
+  xy: 1230, 652
+  size: 246, 147
+Death
+  xy: 1476, 652
+  size: 246, 147
+Death
+  xy: 1722, 652
+  size: 246, 147
+Death
+  xy: 1968, 652
+  size: 246, 147
+Death
+  xy: 2214, 652
+  size: 246, 147
+Death
+  xy: 2460, 652
+  size: 246, 147
+Death
+  xy: 2706, 652
+  size: 246, 147
+Death
+  xy: 2952, 652
+  size: 246, 147
+Death
+  xy: 3198, 652
+  size: 246, 147
+Death
+  xy: 3444, 652
+  size: 246, 147
+Death
+  xy: 3690, 652
+  size: 246, 147
+Death
+  xy: 3936, 652
+  size: 246, 147
+Death
+  xy: 4182, 652
+  size: 246, 147
+Death
+  xy: 4428, 652
+  size: 246, 147
+Wake
+  xy: 0, 799
+  size: 246, 147
+Wake
+  xy: 246, 799
+  size: 246, 147
+Wake
+  xy: 492, 799
+  size: 246, 147
+Wake
+  xy: 738, 799
+  size: 246, 147
+Wake
+  xy: 984, 799
+  size: 246, 147
+Wake
+  xy: 1230, 799
+  size: 246, 147
+Wake
+  xy: 1476, 799
+  size: 246, 147
+Wake
+  xy: 1722, 799
+  size: 246, 147
+Wake
+  xy: 1968, 799
+  size: 246, 147
+Wake
+  xy: 2214, 799
+  size: 246, 147
+IdleUp
+  xy: 0, 946
+  size: 246, 147
+IdleUp
+  xy: 246, 946
+  size: 246, 147
+IdleUp
+  xy: 492, 946
+  size: 246, 147
+IdleUp
+  xy: 738, 946
+  size: 246, 147
+IdleUp
+  xy: 984, 946
+  size: 246, 147
+IdleUp
+  xy: 1230, 946
+  size: 246, 147
+IdleUp
+  xy: 1476, 946
+  size: 246, 147
+IdleUp
+  xy: 1722, 946
+  size: 246, 147
+IdleUp
+  xy: 1968, 946
+  size: 246, 147
+IdleUp
+  xy: 2214, 946
+  size: 246, 147
+IdleDown
+  xy: 0, 1093
+  size: 246, 147
+IdleDown
+  xy: 246, 1093
+  size: 246, 147
+IdleDown
+  xy: 492, 1093
+  size: 246, 147
+IdleDown
+  xy: 738, 1093
+  size: 246, 147
+IdleDown
+  xy: 984, 1093
+  size: 246, 147
+IdleDown
+  xy: 1230, 1093
+  size: 246, 147
+IdleDown
+  xy: 1476, 1093
+  size: 246, 147
+IdleDown
+  xy: 1722, 1093
+  size: 246, 147
+IdleDown
+  xy: 1968, 1093
+  size: 246, 147
+IdleDown
+  xy: 2214, 1093
+  size: 246, 147
+WalkUp
+  xy: 0, 1240
+  size: 246, 147
+WalkUp
+  xy: 246, 1240
+  size: 246, 147
+WalkUp
+  xy: 492, 1240
+  size: 246, 147
+WalkUp
+  xy: 738, 1240
+  size: 246, 147
+WalkUp
+  xy: 984, 1240
+  size: 246, 147
+WalkUp
+  xy: 1230, 1240
+  size: 246, 147
+WalkDown
+  xy: 0, 1387
+  size: 246, 147
+WalkDown
+  xy: 246, 1387
+  size: 246, 147
+WalkDown
+  xy: 492, 1387
+  size: 246, 147
+WalkDown
+  xy: 738, 1387
+  size: 246, 147
+WalkDown
+  xy: 984, 1387
+  size: 246, 147
+WalkDown
+  xy: 1230, 1387
+  size: 246, 147

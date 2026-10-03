@@ -1,0 +1,302 @@
+thorna_and_twigtooth.png
+size: 4680,1934
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 234, 187
+Idle
+  xy: 234, 64
+  size: 234, 187
+Idle
+  xy: 468, 64
+  size: 234, 187
+Idle
+  xy: 702, 64
+  size: 234, 187
+Idle
+  xy: 936, 64
+  size: 234, 187
+Idle
+  xy: 1170, 64
+  size: 234, 187
+Idle
+  xy: 1404, 64
+  size: 234, 187
+Idle
+  xy: 1638, 64
+  size: 234, 187
+Idle
+  xy: 1872, 64
+  size: 234, 187
+Idle
+  xy: 2106, 64
+  size: 234, 187
+Walk
+  xy: 0, 251
+  size: 234, 187
+Walk
+  xy: 234, 251
+  size: 234, 187
+Walk
+  xy: 468, 251
+  size: 234, 187
+Walk
+  xy: 702, 251
+  size: 234, 187
+Walk
+  xy: 936, 251
+  size: 234, 187
+Walk
+  xy: 1170, 251
+  size: 234, 187
+Attack
+  xy: 0, 438
+  size: 234, 187
+Attack
+  xy: 234, 438
+  size: 234, 187
+Attack
+  xy: 468, 438
+  size: 234, 187
+Attack
+  xy: 702, 438
+  size: 234, 187
+Attack
+  xy: 936, 438
+  size: 234, 187
+Attack
+  xy: 1170, 438
+  size: 234, 187
+Attack
+  xy: 1404, 438
+  size: 234, 187
+Attack
+  xy: 1638, 438
+  size: 234, 187
+Attack
+  xy: 1872, 438
+  size: 234, 187
+Attack
+  xy: 2106, 438
+  size: 234, 187
+Attack
+  xy: 2340, 438
+  size: 234, 187
+Attack
+  xy: 2574, 438
+  size: 234, 187
+Hit
+  xy: 0, 625
+  size: 234, 187
+Hit
+  xy: 234, 625
+  size: 234, 187
+Hit
+  xy: 468, 625
+  size: 234, 187
+Hit
+  xy: 702, 625
+  size: 234, 187
+Hit
+  xy: 936, 625
+  size: 234, 187
+Hit
+  xy: 1170, 625
+  size: 234, 187
+Hit
+  xy: 1404, 625
+  size: 234, 187
+Hit
+  xy: 1638, 625
+  size: 234, 187
+Death
+  xy: 0, 812
+  size: 234, 187
+Death
+  xy: 234, 812
+  size: 234, 187
+Death
+  xy: 468, 812
+  size: 234, 187
+Death
+  xy: 702, 812
+  size: 234, 187
+Death
+  xy: 936, 812
+  size: 234, 187
+Death
+  xy: 1170, 812
+  size: 234, 187
+Death
+  xy: 1404, 812
+  size: 234, 187
+Death
+  xy: 1638, 812
+  size: 234, 187
+Death
+  xy: 1872, 812
+  size: 234, 187
+Death
+  xy: 2106, 812
+  size: 234, 187
+Death
+  xy: 2340, 812
+  size: 234, 187
+Death
+  xy: 2574, 812
+  size: 234, 187
+Death
+  xy: 2808, 812
+  size: 234, 187
+Death
+  xy: 3042, 812
+  size: 234, 187
+Death
+  xy: 3276, 812
+  size: 234, 187
+Death
+  xy: 3510, 812
+  size: 234, 187
+Death
+  xy: 3744, 812
+  size: 234, 187
+Death
+  xy: 3978, 812
+  size: 234, 187
+Death
+  xy: 4212, 812
+  size: 234, 187
+Death
+  xy: 4446, 812
+  size: 234, 187
+Wake
+  xy: 0, 999
+  size: 234, 187
+Wake
+  xy: 234, 999
+  size: 234, 187
+Wake
+  xy: 468, 999
+  size: 234, 187
+Wake
+  xy: 702, 999
+  size: 234, 187
+Wake
+  xy: 936, 999
+  size: 234, 187
+Wake
+  xy: 1170, 999
+  size: 234, 187
+Wake
+  xy: 1404, 999
+  size: 234, 187
+Wake
+  xy: 1638, 999
+  size: 234, 187
+Wake
+  xy: 1872, 999
+  size: 234, 187
+Wake
+  xy: 2106, 999
+  size: 234, 187
+IdleUp
+  xy: 0, 1186
+  size: 234, 187
+IdleUp
+  xy: 234, 1186
+  size: 234, 187
+IdleUp
+  xy: 468, 1186
+  size: 234, 187
+IdleUp
+  xy: 702, 1186
+  size: 234, 187
+IdleUp
+  xy: 936, 1186
+  size: 234, 187
+IdleUp
+  xy: 1170, 1186
+  size: 234, 187
+IdleUp
+  xy: 1404, 1186
+  size: 234, 187
+IdleUp
+  xy: 1638, 1186
+  size: 234, 187
+IdleUp
+  xy: 1872, 1186
+  size: 234, 187
+IdleUp
+  xy: 2106, 1186
+  size: 234, 187
+IdleDown
+  xy: 0, 1373
+  size: 234, 187
+IdleDown
+  xy: 234, 1373
+  size: 234, 187
+IdleDown
+  xy: 468, 1373
+  size: 234, 187
+IdleDown
+  xy: 702, 1373
+  size: 234, 187
+IdleDown
+  xy: 936, 1373
+  size: 234, 187
+IdleDown
+  xy: 1170, 1373
+  size: 234, 187
+IdleDown
+  xy: 1404, 1373
+  size: 234, 187
+IdleDown
+  xy: 1638, 1373
+  size: 234, 187
+IdleDown
+  xy: 1872, 1373
+  size: 234, 187
+IdleDown
+  xy: 2106, 1373
+  size: 234, 187
+WalkUp
+  xy: 0, 1560
+  size: 234, 187
+WalkUp
+  xy: 234, 1560
+  size: 234, 187
+WalkUp
+  xy: 468, 1560
+  size: 234, 187
+WalkUp
+  xy: 702, 1560
+  size: 234, 187
+WalkUp
+  xy: 936, 1560
+  size: 234, 187
+WalkUp
+  xy: 1170, 1560
+  size: 234, 187
+WalkDown
+  xy: 0, 1747
+  size: 234, 187
+WalkDown
+  xy: 234, 1747
+  size: 234, 187
+WalkDown
+  xy: 468, 1747
+  size: 234, 187
+WalkDown
+  xy: 702, 1747
+  size: 234, 187
+WalkDown
+  xy: 936, 1747
+  size: 234, 187
+WalkDown
+  xy: 1170, 1747
+  size: 234, 187

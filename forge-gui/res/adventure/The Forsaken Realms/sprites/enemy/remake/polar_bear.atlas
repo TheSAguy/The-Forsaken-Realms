@@ -1,0 +1,275 @@
+polar_bear.png
+size: 1440,914
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 85
+Idle
+  xy: 96, 64
+  size: 96, 85
+Idle
+  xy: 192, 64
+  size: 96, 85
+Idle
+  xy: 288, 64
+  size: 96, 85
+Idle
+  xy: 384, 64
+  size: 96, 85
+Idle
+  xy: 480, 64
+  size: 96, 85
+Idle
+  xy: 576, 64
+  size: 96, 85
+Idle
+  xy: 672, 64
+  size: 96, 85
+Idle
+  xy: 768, 64
+  size: 96, 85
+Idle
+  xy: 864, 64
+  size: 96, 85
+Walk
+  xy: 0, 149
+  size: 96, 85
+Walk
+  xy: 96, 149
+  size: 96, 85
+Walk
+  xy: 192, 149
+  size: 96, 85
+Walk
+  xy: 288, 149
+  size: 96, 85
+Walk
+  xy: 384, 149
+  size: 96, 85
+Walk
+  xy: 480, 149
+  size: 96, 85
+Attack
+  xy: 0, 234
+  size: 96, 85
+Attack
+  xy: 96, 234
+  size: 96, 85
+Attack
+  xy: 192, 234
+  size: 96, 85
+Attack
+  xy: 288, 234
+  size: 96, 85
+Attack
+  xy: 384, 234
+  size: 96, 85
+Attack
+  xy: 480, 234
+  size: 96, 85
+Attack
+  xy: 576, 234
+  size: 96, 85
+Attack
+  xy: 672, 234
+  size: 96, 85
+Attack
+  xy: 768, 234
+  size: 96, 85
+Attack
+  xy: 864, 234
+  size: 96, 85
+Attack
+  xy: 960, 234
+  size: 96, 85
+Attack
+  xy: 1056, 234
+  size: 96, 85
+Hit
+  xy: 0, 319
+  size: 96, 85
+Hit
+  xy: 96, 319
+  size: 96, 85
+Hit
+  xy: 192, 319
+  size: 96, 85
+Hit
+  xy: 288, 319
+  size: 96, 85
+Hit
+  xy: 384, 319
+  size: 96, 85
+Hit
+  xy: 480, 319
+  size: 96, 85
+Death
+  xy: 0, 404
+  size: 96, 85
+Death
+  xy: 96, 404
+  size: 96, 85
+Death
+  xy: 192, 404
+  size: 96, 85
+Death
+  xy: 288, 404
+  size: 96, 85
+Death
+  xy: 384, 404
+  size: 96, 85
+Death
+  xy: 480, 404
+  size: 96, 85
+Death
+  xy: 576, 404
+  size: 96, 85
+Death
+  xy: 672, 404
+  size: 96, 85
+Death
+  xy: 768, 404
+  size: 96, 85
+Death
+  xy: 864, 404
+  size: 96, 85
+Death
+  xy: 960, 404
+  size: 96, 85
+Death
+  xy: 1056, 404
+  size: 96, 85
+Death
+  xy: 1152, 404
+  size: 96, 85
+Death
+  xy: 1248, 404
+  size: 96, 85
+Death
+  xy: 1344, 404
+  size: 96, 85
+Wake
+  xy: 0, 489
+  size: 96, 85
+Wake
+  xy: 96, 489
+  size: 96, 85
+Wake
+  xy: 192, 489
+  size: 96, 85
+Wake
+  xy: 288, 489
+  size: 96, 85
+Wake
+  xy: 384, 489
+  size: 96, 85
+Wake
+  xy: 480, 489
+  size: 96, 85
+Wake
+  xy: 576, 489
+  size: 96, 85
+Wake
+  xy: 672, 489
+  size: 96, 85
+IdleUp
+  xy: 0, 574
+  size: 96, 85
+IdleUp
+  xy: 96, 574
+  size: 96, 85
+IdleUp
+  xy: 192, 574
+  size: 96, 85
+IdleUp
+  xy: 288, 574
+  size: 96, 85
+IdleUp
+  xy: 384, 574
+  size: 96, 85
+IdleUp
+  xy: 480, 574
+  size: 96, 85
+IdleUp
+  xy: 576, 574
+  size: 96, 85
+IdleUp
+  xy: 672, 574
+  size: 96, 85
+IdleUp
+  xy: 768, 574
+  size: 96, 85
+IdleUp
+  xy: 864, 574
+  size: 96, 85
+IdleDown
+  xy: 0, 659
+  size: 96, 85
+IdleDown
+  xy: 96, 659
+  size: 96, 85
+IdleDown
+  xy: 192, 659
+  size: 96, 85
+IdleDown
+  xy: 288, 659
+  size: 96, 85
+IdleDown
+  xy: 384, 659
+  size: 96, 85
+IdleDown
+  xy: 480, 659
+  size: 96, 85
+IdleDown
+  xy: 576, 659
+  size: 96, 85
+IdleDown
+  xy: 672, 659
+  size: 96, 85
+IdleDown
+  xy: 768, 659
+  size: 96, 85
+IdleDown
+  xy: 864, 659
+  size: 96, 85
+WalkUp
+  xy: 0, 744
+  size: 96, 85
+WalkUp
+  xy: 96, 744
+  size: 96, 85
+WalkUp
+  xy: 192, 744
+  size: 96, 85
+WalkUp
+  xy: 288, 744
+  size: 96, 85
+WalkUp
+  xy: 384, 744
+  size: 96, 85
+WalkUp
+  xy: 480, 744
+  size: 96, 85
+WalkDown
+  xy: 0, 829
+  size: 96, 85
+WalkDown
+  xy: 96, 829
+  size: 96, 85
+WalkDown
+  xy: 192, 829
+  size: 96, 85
+WalkDown
+  xy: 288, 829
+  size: 96, 85
+WalkDown
+  xy: 384, 829
+  size: 96, 85
+WalkDown
+  xy: 480, 829
+  size: 96, 85

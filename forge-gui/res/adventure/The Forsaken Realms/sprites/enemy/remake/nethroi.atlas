@@ -1,0 +1,248 @@
+nethroi.png
+size: 1430,1054
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 110, 99
+Idle
+  xy: 110, 64
+  size: 110, 99
+Idle
+  xy: 220, 64
+  size: 110, 99
+Idle
+  xy: 330, 64
+  size: 110, 99
+Idle
+  xy: 440, 64
+  size: 110, 99
+Idle
+  xy: 550, 64
+  size: 110, 99
+Idle
+  xy: 660, 64
+  size: 110, 99
+Idle
+  xy: 770, 64
+  size: 110, 99
+Idle
+  xy: 880, 64
+  size: 110, 99
+Idle
+  xy: 990, 64
+  size: 110, 99
+Walk
+  xy: 0, 163
+  size: 110, 99
+Walk
+  xy: 110, 163
+  size: 110, 99
+Walk
+  xy: 220, 163
+  size: 110, 99
+Walk
+  xy: 330, 163
+  size: 110, 99
+Walk
+  xy: 440, 163
+  size: 110, 99
+Walk
+  xy: 550, 163
+  size: 110, 99
+Attack
+  xy: 0, 262
+  size: 110, 99
+Attack
+  xy: 110, 262
+  size: 110, 99
+Attack
+  xy: 220, 262
+  size: 110, 99
+Attack
+  xy: 330, 262
+  size: 110, 99
+Attack
+  xy: 440, 262
+  size: 110, 99
+Attack
+  xy: 550, 262
+  size: 110, 99
+Attack
+  xy: 660, 262
+  size: 110, 99
+Hit
+  xy: 0, 361
+  size: 110, 99
+Hit
+  xy: 110, 361
+  size: 110, 99
+Hit
+  xy: 220, 361
+  size: 110, 99
+Hit
+  xy: 330, 361
+  size: 110, 99
+Hit
+  xy: 440, 361
+  size: 110, 99
+Death
+  xy: 0, 460
+  size: 110, 99
+Death
+  xy: 110, 460
+  size: 110, 99
+Death
+  xy: 220, 460
+  size: 110, 99
+Death
+  xy: 330, 460
+  size: 110, 99
+Death
+  xy: 440, 460
+  size: 110, 99
+Death
+  xy: 550, 460
+  size: 110, 99
+Death
+  xy: 660, 460
+  size: 110, 99
+Death
+  xy: 770, 460
+  size: 110, 99
+Death
+  xy: 880, 460
+  size: 110, 99
+Death
+  xy: 990, 460
+  size: 110, 99
+Death
+  xy: 1100, 460
+  size: 110, 99
+Death
+  xy: 1210, 460
+  size: 110, 99
+Death
+  xy: 1320, 460
+  size: 110, 99
+Wake
+  xy: 0, 559
+  size: 110, 99
+Wake
+  xy: 110, 559
+  size: 110, 99
+Wake
+  xy: 220, 559
+  size: 110, 99
+Wake
+  xy: 330, 559
+  size: 110, 99
+Wake
+  xy: 440, 559
+  size: 110, 99
+Wake
+  xy: 550, 559
+  size: 110, 99
+Wake
+  xy: 660, 559
+  size: 110, 99
+IdleUp
+  xy: 0, 658
+  size: 110, 99
+IdleUp
+  xy: 110, 658
+  size: 110, 99
+IdleUp
+  xy: 220, 658
+  size: 110, 99
+IdleUp
+  xy: 330, 658
+  size: 110, 99
+IdleUp
+  xy: 440, 658
+  size: 110, 99
+IdleUp
+  xy: 550, 658
+  size: 110, 99
+IdleUp
+  xy: 660, 658
+  size: 110, 99
+IdleUp
+  xy: 770, 658
+  size: 110, 99
+IdleUp
+  xy: 880, 658
+  size: 110, 99
+IdleUp
+  xy: 990, 658
+  size: 110, 99
+IdleDown
+  xy: 0, 757
+  size: 110, 99
+IdleDown
+  xy: 110, 757
+  size: 110, 99
+IdleDown
+  xy: 220, 757
+  size: 110, 99
+IdleDown
+  xy: 330, 757
+  size: 110, 99
+IdleDown
+  xy: 440, 757
+  size: 110, 99
+IdleDown
+  xy: 550, 757
+  size: 110, 99
+IdleDown
+  xy: 660, 757
+  size: 110, 99
+IdleDown
+  xy: 770, 757
+  size: 110, 99
+IdleDown
+  xy: 880, 757
+  size: 110, 99
+IdleDown
+  xy: 990, 757
+  size: 110, 99
+WalkUp
+  xy: 0, 856
+  size: 110, 99
+WalkUp
+  xy: 110, 856
+  size: 110, 99
+WalkUp
+  xy: 220, 856
+  size: 110, 99
+WalkUp
+  xy: 330, 856
+  size: 110, 99
+WalkUp
+  xy: 440, 856
+  size: 110, 99
+WalkUp
+  xy: 550, 856
+  size: 110, 99
+WalkDown
+  xy: 0, 955
+  size: 110, 99
+WalkDown
+  xy: 110, 955
+  size: 110, 99
+WalkDown
+  xy: 220, 955
+  size: 110, 99
+WalkDown
+  xy: 330, 955
+  size: 110, 99
+WalkDown
+  xy: 440, 955
+  size: 110, 99
+WalkDown
+  xy: 550, 955
+  size: 110, 99

@@ -1,0 +1,236 @@
+hope_of_ghirapur.png
+size: 1512,1004
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 108, 94
+Idle
+  xy: 108, 64
+  size: 108, 94
+Idle
+  xy: 216, 64
+  size: 108, 94
+Idle
+  xy: 324, 64
+  size: 108, 94
+Idle
+  xy: 432, 64
+  size: 108, 94
+Idle
+  xy: 540, 64
+  size: 108, 94
+Idle
+  xy: 648, 64
+  size: 108, 94
+Idle
+  xy: 756, 64
+  size: 108, 94
+Idle
+  xy: 864, 64
+  size: 108, 94
+Idle
+  xy: 972, 64
+  size: 108, 94
+Walk
+  xy: 0, 158
+  size: 108, 94
+Walk
+  xy: 108, 158
+  size: 108, 94
+Walk
+  xy: 216, 158
+  size: 108, 94
+Walk
+  xy: 324, 158
+  size: 108, 94
+Attack
+  xy: 0, 252
+  size: 108, 94
+Attack
+  xy: 108, 252
+  size: 108, 94
+Attack
+  xy: 216, 252
+  size: 108, 94
+Attack
+  xy: 324, 252
+  size: 108, 94
+Attack
+  xy: 432, 252
+  size: 108, 94
+Attack
+  xy: 540, 252
+  size: 108, 94
+Attack
+  xy: 648, 252
+  size: 108, 94
+Attack
+  xy: 756, 252
+  size: 108, 94
+Hit
+  xy: 0, 346
+  size: 108, 94
+Hit
+  xy: 108, 346
+  size: 108, 94
+Hit
+  xy: 216, 346
+  size: 108, 94
+Hit
+  xy: 324, 346
+  size: 108, 94
+Hit
+  xy: 432, 346
+  size: 108, 94
+Death
+  xy: 0, 440
+  size: 108, 94
+Death
+  xy: 108, 440
+  size: 108, 94
+Death
+  xy: 216, 440
+  size: 108, 94
+Death
+  xy: 324, 440
+  size: 108, 94
+Death
+  xy: 432, 440
+  size: 108, 94
+Death
+  xy: 540, 440
+  size: 108, 94
+Death
+  xy: 648, 440
+  size: 108, 94
+Death
+  xy: 756, 440
+  size: 108, 94
+Death
+  xy: 864, 440
+  size: 108, 94
+Death
+  xy: 972, 440
+  size: 108, 94
+Death
+  xy: 1080, 440
+  size: 108, 94
+Death
+  xy: 1188, 440
+  size: 108, 94
+Death
+  xy: 1296, 440
+  size: 108, 94
+Death
+  xy: 1404, 440
+  size: 108, 94
+Wake
+  xy: 0, 534
+  size: 108, 94
+Wake
+  xy: 108, 534
+  size: 108, 94
+Wake
+  xy: 216, 534
+  size: 108, 94
+Wake
+  xy: 324, 534
+  size: 108, 94
+Wake
+  xy: 432, 534
+  size: 108, 94
+Wake
+  xy: 540, 534
+  size: 108, 94
+Wake
+  xy: 648, 534
+  size: 108, 94
+IdleUp
+  xy: 0, 628
+  size: 108, 94
+IdleUp
+  xy: 108, 628
+  size: 108, 94
+IdleUp
+  xy: 216, 628
+  size: 108, 94
+IdleUp
+  xy: 324, 628
+  size: 108, 94
+IdleUp
+  xy: 432, 628
+  size: 108, 94
+IdleUp
+  xy: 540, 628
+  size: 108, 94
+IdleUp
+  xy: 648, 628
+  size: 108, 94
+IdleUp
+  xy: 756, 628
+  size: 108, 94
+IdleUp
+  xy: 864, 628
+  size: 108, 94
+IdleUp
+  xy: 972, 628
+  size: 108, 94
+IdleDown
+  xy: 0, 722
+  size: 108, 94
+IdleDown
+  xy: 108, 722
+  size: 108, 94
+IdleDown
+  xy: 216, 722
+  size: 108, 94
+IdleDown
+  xy: 324, 722
+  size: 108, 94
+IdleDown
+  xy: 432, 722
+  size: 108, 94
+IdleDown
+  xy: 540, 722
+  size: 108, 94
+IdleDown
+  xy: 648, 722
+  size: 108, 94
+IdleDown
+  xy: 756, 722
+  size: 108, 94
+IdleDown
+  xy: 864, 722
+  size: 108, 94
+IdleDown
+  xy: 972, 722
+  size: 108, 94
+WalkUp
+  xy: 0, 816
+  size: 108, 94
+WalkUp
+  xy: 108, 816
+  size: 108, 94
+WalkUp
+  xy: 216, 816
+  size: 108, 94
+WalkUp
+  xy: 324, 816
+  size: 108, 94
+WalkDown
+  xy: 0, 910
+  size: 108, 94
+WalkDown
+  xy: 108, 910
+  size: 108, 94
+WalkDown
+  xy: 216, 910
+  size: 108, 94
+WalkDown
+  xy: 324, 910
+  size: 108, 94

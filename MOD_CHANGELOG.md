@@ -14264,6 +14264,53 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 426: eighteen more enemy groups from the creature generator (cloud batch 3), 52 enemies (2026-10-03)
+
+The third cloud batch (20 targets; procedural-pixel-creatures PR #3), reviewed here. Every remake has the base
+generation of rounds 420-424: 3.41 art px per world px, four directions, the walk by body type, the duel portrait at
+the top of its front.
+
+- **The groups** (base first):
+  - Elephant (Elephant, Hamza, Quintorius, Roon, Gorilla Chief): a trunk that sways and swings (a new generator gene),
+    big floppy ears, tusks, pillar legs. It stomps rather than gallops.
+  - Leech (Horror, Sea Monster, Kokusho, Junji): a fat segmented worm with a round toothed sucker.
+  - Golems: Construct (Construct, Neyali, The Peregrine Dynamo, Alibou), Golem Sentinel (Golem Sentinel, Laelia,
+    Kilo), Clay Golem (Clay Golem, Syr Ginger).
+  - Myr (Myr Superion, Urtet, Brudiclad): slim metal humanoids with glowing eyes.
+  - Treefolk Guardian (Treefolk Guardian, Wandering Treefolk, Animar, Thorna and Twigtooth): the round-420 treant.
+  - Elk (Elk, Marath, Beza, Rudolph): antlers, long legs.
+  - Symbiote (Symbiote, Ojer Pakpatiq, Salacinder and Soot): a heavy, spiny lizard.
+  - Lion (Lion, Ygra, Nethroi), with a lion's mane (a new gene); Cat (Cat, Stray Cat, Arahbo).
+  - Octopus (Octopus, Plagon); Chicken (Chicken, Albiorix), with a comb (a new gene); Cave Spider (Cave Spider,
+    Skrelv); Polar Bear (Polar Bear, Duskana).
+  - Ladybug (Ladybug, Kathril), with spotted wing cases (a new gene); Dragonfly (Dragonfly, Hope of Ghirapur); Raven
+    (Raven, Kastral).
+- **Not installed**:
+  - the Scarecrow group: at game size it read as small hunched figures in caps, not scarecrows
+  - the Griffin: it reads only as a big eagle, waiting for the user's call
+  - the Giant Fly, which never read as a fly
+- **Colors**: 11 legends' card palettes had taken their art's background (brightness at the floor or ceiling) or the
+  wrong colors. Each was checked against the art and set by hand: Hamza, Roon, Junji, The Peregrine Dynamo, Urtet,
+  Laelia, Nethroi, Plagon, Kathril, Hope of Ghirapur, Albiorix.
+- **Boss sizes**: the generator's humanoids and four-legged beasts gained `size.giant` (bodies up to 2.2 times). Their
+  bosses are now drawn with their full pixels instead of enlarged (scale 3.0 -> 0.29 for Myr Superion, at the same
+  drawn size): Myr Superion, Thorna and Twigtooth, Gorilla Chief, Clay Golem.
+- **Data only:**
+  - `sprites/enemy/remake/`: 104 new files.
+  - `world/enemies.json`: 52 sprites and 52 scales; no other field changed.
+  - Generator: procedural-pixel-creatures `cloud/batch-03` (the cloud's batch and the local review commit).
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves.
+  - `sprite_artifact_audit.py --only remake` (174 atlases, 14398 frames) flags 181 frames, all shadows, checked by
+    eye:
+    - the hovering dragonflies' shadows in all 95 of their flagged frames, and the flying birds' (Raven, Kastral, the
+      round-420 owls and falcons)
+    - the giant treant boss Thorna and Twigtooth's canopy shadow just ahead of its feet
+    - small head and foot shadows in some front and back views
+- Not yet seen in play. Console (F9): `spawn enemy Elephant`, `spawn enemy Lion`, `spawn enemy Chicken`,
+  `spawn enemy Ladybug`, `spawn enemy "Treefolk Guardian"`.
+
 ## Round 425: a New Game+ with its invested resources back gets a day-8 AI wave (2026-10-03)
 
 The user: "On a NG+, if the player selects to get the invested resources back, I also want to add additional one off

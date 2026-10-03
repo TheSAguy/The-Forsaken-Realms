@@ -1,0 +1,254 @@
+brudiclad.png
+size: 1110,724
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 66
+Idle
+  xy: 74, 64
+  size: 74, 66
+Idle
+  xy: 148, 64
+  size: 74, 66
+Idle
+  xy: 222, 64
+  size: 74, 66
+Idle
+  xy: 296, 64
+  size: 74, 66
+Idle
+  xy: 370, 64
+  size: 74, 66
+Idle
+  xy: 444, 64
+  size: 74, 66
+Idle
+  xy: 518, 64
+  size: 74, 66
+Idle
+  xy: 592, 64
+  size: 74, 66
+Idle
+  xy: 666, 64
+  size: 74, 66
+Walk
+  xy: 0, 130
+  size: 74, 66
+Walk
+  xy: 74, 130
+  size: 74, 66
+Walk
+  xy: 148, 130
+  size: 74, 66
+Walk
+  xy: 222, 130
+  size: 74, 66
+Walk
+  xy: 296, 130
+  size: 74, 66
+Walk
+  xy: 370, 130
+  size: 74, 66
+Attack
+  xy: 0, 196
+  size: 74, 66
+Attack
+  xy: 74, 196
+  size: 74, 66
+Attack
+  xy: 148, 196
+  size: 74, 66
+Attack
+  xy: 222, 196
+  size: 74, 66
+Attack
+  xy: 296, 196
+  size: 74, 66
+Attack
+  xy: 370, 196
+  size: 74, 66
+Attack
+  xy: 444, 196
+  size: 74, 66
+Hit
+  xy: 0, 262
+  size: 74, 66
+Hit
+  xy: 74, 262
+  size: 74, 66
+Hit
+  xy: 148, 262
+  size: 74, 66
+Hit
+  xy: 222, 262
+  size: 74, 66
+Hit
+  xy: 296, 262
+  size: 74, 66
+Death
+  xy: 0, 328
+  size: 74, 66
+Death
+  xy: 74, 328
+  size: 74, 66
+Death
+  xy: 148, 328
+  size: 74, 66
+Death
+  xy: 222, 328
+  size: 74, 66
+Death
+  xy: 296, 328
+  size: 74, 66
+Death
+  xy: 370, 328
+  size: 74, 66
+Death
+  xy: 444, 328
+  size: 74, 66
+Death
+  xy: 518, 328
+  size: 74, 66
+Death
+  xy: 592, 328
+  size: 74, 66
+Death
+  xy: 666, 328
+  size: 74, 66
+Death
+  xy: 740, 328
+  size: 74, 66
+Death
+  xy: 814, 328
+  size: 74, 66
+Death
+  xy: 888, 328
+  size: 74, 66
+Death
+  xy: 962, 328
+  size: 74, 66
+Death
+  xy: 1036, 328
+  size: 74, 66
+Wake
+  xy: 0, 394
+  size: 74, 66
+Wake
+  xy: 74, 394
+  size: 74, 66
+Wake
+  xy: 148, 394
+  size: 74, 66
+Wake
+  xy: 222, 394
+  size: 74, 66
+Wake
+  xy: 296, 394
+  size: 74, 66
+Wake
+  xy: 370, 394
+  size: 74, 66
+Wake
+  xy: 444, 394
+  size: 74, 66
+IdleUp
+  xy: 0, 460
+  size: 74, 66
+IdleUp
+  xy: 74, 460
+  size: 74, 66
+IdleUp
+  xy: 148, 460
+  size: 74, 66
+IdleUp
+  xy: 222, 460
+  size: 74, 66
+IdleUp
+  xy: 296, 460
+  size: 74, 66
+IdleUp
+  xy: 370, 460
+  size: 74, 66
+IdleUp
+  xy: 444, 460
+  size: 74, 66
+IdleUp
+  xy: 518, 460
+  size: 74, 66
+IdleUp
+  xy: 592, 460
+  size: 74, 66
+IdleUp
+  xy: 666, 460
+  size: 74, 66
+IdleDown
+  xy: 0, 526
+  size: 74, 66
+IdleDown
+  xy: 74, 526
+  size: 74, 66
+IdleDown
+  xy: 148, 526
+  size: 74, 66
+IdleDown
+  xy: 222, 526
+  size: 74, 66
+IdleDown
+  xy: 296, 526
+  size: 74, 66
+IdleDown
+  xy: 370, 526
+  size: 74, 66
+IdleDown
+  xy: 444, 526
+  size: 74, 66
+IdleDown
+  xy: 518, 526
+  size: 74, 66
+IdleDown
+  xy: 592, 526
+  size: 74, 66
+IdleDown
+  xy: 666, 526
+  size: 74, 66
+WalkUp
+  xy: 0, 592
+  size: 74, 66
+WalkUp
+  xy: 74, 592
+  size: 74, 66
+WalkUp
+  xy: 148, 592
+  size: 74, 66
+WalkUp
+  xy: 222, 592
+  size: 74, 66
+WalkUp
+  xy: 296, 592
+  size: 74, 66
+WalkUp
+  xy: 370, 592
+  size: 74, 66
+WalkDown
+  xy: 0, 658
+  size: 74, 66
+WalkDown
+  xy: 74, 658
+  size: 74, 66
+WalkDown
+  xy: 148, 658
+  size: 74, 66
+WalkDown
+  xy: 222, 658
+  size: 74, 66
+WalkDown
+  xy: 296, 658
+  size: 74, 66
+WalkDown
+  xy: 370, 658
+  size: 74, 66
