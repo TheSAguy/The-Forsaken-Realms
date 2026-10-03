@@ -66,6 +66,22 @@ public final class NewGamePlusRefund {
         return total;
     }
 
+    /** Round 425: the towns the player holds - restored or taken, the Capitol counting as one, as invested() counts them. */
+    public static int heldTowns(World world) {
+        int towns = 0;
+        if (world == null)
+            return towns;
+        for (PointOfInterest poi : world.getAllPointOfInterest()) {
+            if (poi.getData() == null)
+                continue;
+            PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
+            boolean capitol = TownRestoration.CAPITOL_POI_NAME.equals(poi.getData().name);
+            if (changes != null && (capitol || TownRestoration.isTownRestored(changes)))
+                towns++;
+        }
+        return towns;
+    }
+
     public static String label(int[] c) {
         return c[0] + " gold, " + c[1] + " wood, " + c[2] + " stone, " + c[3] + " shards";
     }

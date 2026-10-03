@@ -167,6 +167,33 @@ public class TuningData {
     public int openingMagesHard = 4;
     public int openingMagesInsane = 6;
 
+    // Round 425 (the user: "On a NG+, if the player selects to get the invested resources back, I also want to add
+    // additional one off attacking mages ... This will spawn start of week 2. So day 8. Easy - For every 5 towns the player
+    // had, 1 additional mage ... Normal 4 ... Hard 3 ... Insane 2 ... round it down. And cap it at 5 max mages"; "These new
+    // mages have nothing to do with total allowed per week. They are just one off free spawns for the AI"). Per AI color,
+    // outside the in-flight cap like the opening wave. The towns are the ones held when the New Game+ began.
+    public int ngPlusWaveTownsPerMageEasy = 5;
+    public int ngPlusWaveTownsPerMageNormal = 4;
+    public int ngPlusWaveTownsPerMageHard = 3;
+    public int ngPlusWaveTownsPerMageInsane = 2;
+    public int ngPlusWaveMaxMages = 5;
+    public int ngPlusWaveDay = 8;
+
+    /** Round 425: one-off mages per AI color for a New Game+ begun holding this many towns - rounded down, capped. */
+    public int ngPlusWaveMagesFor(String difficultyName, int heldTowns) {
+        String name = difficultyName == null ? "" : difficultyName.trim().toLowerCase();
+        int per;
+        switch (name) {
+            case "normal": per = ngPlusWaveTownsPerMageNormal; break;
+            case "hard":   per = ngPlusWaveTownsPerMageHard; break;
+            case "insane": per = ngPlusWaveTownsPerMageInsane; break;
+            default:       per = ngPlusWaveTownsPerMageEasy; break;
+        }
+        if (per <= 0 || heldTowns <= 0)
+            return 0;
+        return Math.max(0, Math.min(ngPlusWaveMaxMages, heldTowns / per));
+    }
+
     /** Round 422: the opening wave per color on this difficulty; an unknown difficulty takes Easy's. */
     public int openingMagesFor(String difficultyName) {
         String name = difficultyName == null ? "" : difficultyName.trim().toLowerCase();

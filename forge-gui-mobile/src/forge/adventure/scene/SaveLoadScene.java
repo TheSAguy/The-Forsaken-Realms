@@ -380,6 +380,9 @@ public class SaveLoadScene extends UIScene {
                     // run's difficulty (its prices) are still in place.
                     final int[] investedRefund = carry == CARRY_INVESTED
                             ? forge.adventure.util.NewGamePlusRefund.invested(WorldSave.getCurrentSave().getWorld()) : null;
+                    // Round 425: the towns held now set the AI's one-off day-8 wave - counted before the old world goes.
+                    final int heldTowns = carry == CARRY_INVESTED
+                            ? forge.adventure.util.NewGamePlusRefund.heldTowns(WorldSave.getCurrentSave().getWorld()) : 0;
                     System.out.println("[TFR-NewGamePlus] carrying: " + (carry == CARRY_CARDS_ONLY ? "cards only"
                             : carry == CARRY_INVESTED ? "cards + current + invested resources" : "cards + current resources")
                             + ", items " + (keepItems ? "kept" : "left behind"));
@@ -431,6 +434,14 @@ public class SaveLoadScene extends UIScene {
                                     + forge.adventure.util.NewGamePlusRefund.label(investedRefund) + " - purse now "
                                     + Current.player().getGold() + " gold, " + Current.player().getWood() + " wood, "
                                     + Current.player().getStone() + " stone, " + Current.player().getShards() + " shards");
+                            // Round 425: the AI's answer to a rebuilt realm - one-off mages per color on day 8, by the
+                            // NEW run's difficulty (updateDifficulty above), outside the cap.
+                            forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+                            int wave = tuning.ngPlusWaveMagesFor(Current.player().getDifficulty().name, heldTowns);
+                            WorldSave.getCurrentSave().getWorld().setNgPlusWaveMages(wave);
+                            System.out.println("[TFR-NewGamePlus] " + heldTowns + " town(s) held -> " + wave
+                                    + " one-off mage(s) per AI color on day " + tuning.ngPlusWaveDay + " ("
+                                    + Current.player().getDifficulty().name + ", at most " + tuning.ngPlusWaveMaxMages + ")");
                         }
                         // Mirrors WorldSave's own New Game ordering: the color shards only
                         // exist after generateNew() has re-seeded them, and the player's

@@ -498,6 +498,8 @@ public class TerritoryControl {
         if (daysPassed <= 0 || !isEnabled())
             return;
         World world = WorldSave.getCurrentSave().getWorld();
+        if (world.getNgPlusWaveMages() > 0 && newDayCount >= Config.instance().getTuningData().ngPlusWaveDay)
+            sendNewGamePlusWave(world, newDayCount); // round 425
         for (String color : COLORS) {
             // Color Defeat (2026-08-14): a defeated color never attacks again - no timer upkeep,
             // no dispatch, nothing. buildPullSources() below has its own equivalent skip so a
@@ -1975,6 +1977,29 @@ public class TerritoryControl {
                     .append(" (next attack day ").append(seeded).append(')');
         }
         System.out.println("[TFR-OpeningWave] " + difficulty + ": " + perColor + " mage(s) per color, outside the cap - " + sent);
+    }
+
+    /**
+     * Round 425 (the user: "On a NG+, if the player selects to get the invested resources back, I also want to add
+     * additional one off attacking mages ... spawn start of week 2. So day 8"; "They are just one off free spawns for the
+     * AI"). World.ngPlusWaveMages is set by SaveLoadScene's New Game+ from the towns the player held (TuningData
+     * .ngPlusWaveMagesFor). On the first day tick from TuningData.ngPlusWaveDay, every color still in the game sends that
+     * many mages the way the opening wave does: ordinary targeting and tier roll (week 2 allows a Master), outside the
+     * in-flight cap and uncounted by it, unannounced. The colors' own timers are not touched. Then it is spent.
+     */
+    private static void sendNewGamePlusWave(World world, int day) {
+        int perColor = world.getNgPlusWaveMages();
+        world.setNgPlusWaveMages(0);
+        StringBuilder sent = new StringBuilder();
+        for (String color : COLORS) {
+            if (world.isColorDefeated(color))
+                continue;
+            int before = countOpeningMages(color);
+            for (int i = 0; i < perColor; i++)
+                dispatch(world, color, false, false, true);
+            sent.append(sent.length() == 0 ? "" : ", ").append(color).append(' ').append(countOpeningMages(color) - before);
+        }
+        System.out.println("[TFR-NgPlusWave] day " + day + ": " + perColor + " one-off mage(s) per color, outside the cap - " + sent);
     }
 
     private static int countOpeningMages(String color) {

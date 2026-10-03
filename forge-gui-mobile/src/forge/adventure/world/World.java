@@ -135,6 +135,18 @@ public class World implements Disposable, SaveFileContent {
         openingWaveSent = sent;
     }
 
+    // Round 425: a New Game+ that took its invested resources back - the one-off mages each AI color still owes on
+    // TuningData.ngPlusWaveDay (TerritoryControl.sendNewGamePlusWave). 0 = none owed, or already sent. Saved.
+    private int ngPlusWaveMages = 0;
+
+    public int getNgPlusWaveMages() {
+        return ngPlusWaveMages;
+    }
+
+    public void setNgPlusWaveMages(int mages) {
+        ngPlusWaveMages = Math.max(0, mages);
+    }
+
     // Territory Control (MOD_SCOPE.md #7) expansion: each color's current territory radius in
     // tiles, grown over time by TerritoryControl.processTerritoryExpansion() via
     // claimWastelandRing() above. Seeded once (to the same starting radius as the initial
@@ -1082,6 +1094,7 @@ public class World implements Disposable, SaveFileContent {
             colorNextAttackDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("colorNextAttackDay"));
         }
         openingWaveSent = !saveFileData.containsKey("openingWaveSent") || saveFileData.readBool("openingWaveSent"); // round 422
+        ngPlusWaveMages = saveFileData.containsKey("ngPlusWaveMages") ? saveFileData.readInt("ngPlusWaveMages") : 0; // round 425
 
         colorTerritoryRadius.clear();
         if (saveFileData.containsKey("colorTerritoryRadius")) {
@@ -1382,6 +1395,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("questDayLimit", questDayLimit); // round 367
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
         data.store("openingWaveSent", openingWaveSent); // round 422
+        data.store("ngPlusWaveMages", ngPlusWaveMages); // round 425
         return data;
     }
 
@@ -2571,6 +2585,7 @@ public class World implements Disposable, SaveFileContent {
             dayCount = 1;
             colorNextAttackDay.clear();
             openingWaveSent = false; // round 422: a new world - the AI's opening wave goes out on the first world-map frame
+            ngPlusWaveMages = 0; // round 425: New Game+ sets it after generateNew when the invested resources came back
             colorTerritoryRadius.clear();
             defeatedColors.clear();
             forcedPlayerTargetPending.clear();
