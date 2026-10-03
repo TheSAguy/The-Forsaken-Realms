@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 425: a New Game+ with its invested resources back gets a day-8 AI wave (2026-10-03)
+
+The user: "On a NG+, if the player selects to get the invested resources back, I also want to add additional one off
+attacking mages. Like we currently have for a new game. This will spawn start of week 2. So day 8."
+- Easy: one per 5 towns. Normal: per 4. Hard: per 3. Insane: per 2.
+- "Let's round it down. And cap it at 5 max mages ... for EACH of the 5 AI."
+- "These new mages have nothing to do with total allowed per week. They are just one off free spawns for the AI."
+
+**What changed.**
+- `SaveLoadScene.startNewGamePlus`, when "Cards + current + invested resources" is chosen, counts the towns the player
+  holds before the old world is cleared (`NewGamePlusRefund.heldTowns`). It counts restored or taken towns, with the
+  Capitol as one, the same rule `invested()` uses.
+- After the refund it sets `World.ngPlusWaveMages = TuningData.ngPlusWaveMagesFor(the new run's difficulty, towns)`:
+  towns / per-difficulty divisor, rounded down, capped by `ngPlusWaveMaxMages`.
+- The values are in settings.json `ngPlusWave*`: 5 / 4 / 3 / 2, max 5, day 8.
+- `TerritoryControl.processDaysPassed`, on the first day tick at or past `ngPlusWaveDay`, calls `sendNewGamePlusWave`.
+  Every color still in the game sends that many mages through `dispatch(..., opening = true)`, the round-422 path:
+  - ordinary targeting and tier roll (week 2 allows Masters);
+  - outside the in-flight cap and uncounted by it;
+  - unannounced, with the colors' timers untouched.
+- The wave is then spent (set back to 0). It is saved with the world and is 0 after `generateNew`.
+- On a New Game+ this comes on top of round 422's day-1 opening wave, which every new world gets.
+- Logs: `[TFR-NewGamePlus] N town(s) held -> M one-off mage(s) per AI color on day 8` and `[TFR-NgPlusWave]`.
+- The guide's New Game+ section explains it.
+
+**Agent-tested.**
+- The user's slot 7 ("Vampire Week 2 Day 4", Insane) was copied read-only into agent slot 1, after a backup. New Game+
+  ran from it through the real dialog with "Cards + current + invested resources", and slot 1 was restored afterwards.
+- `invested in 20 held town(s): 16800 gold, 1777 wood, 1751 stone, 330 shards`, then `20 town(s) held -> 5 one-off
+  mage(s) per AI color on day 8 (Insane, at most 5)`. 20 / 2 = 10, capped at 5.
+- Day 1: the opening wave sent 30.
+- Day 7 -> 8: `[TFR-NgPlusWave] day 8: 5 one-off mage(s) per color, outside the cap - white 5, blue 5, black 5, red 5,
+  green 5`. In-flight mages went from 16 to 37, the first 4 Masters among them.
+- 55 opening-flag dispatches in all (30 + 25). The only exception logged was the bridge's own `/state` timeout during
+  world-gen.
+
 ## Round 424: the remade animals run, the trolls and dragons stomp (2026-10-03)
 
 The user, pointing at the hand-drawn Outrider: "It's animations also looks pretty good."

@@ -1099,7 +1099,10 @@ A New Game+ is a **new game plus your collection**. Press Start and it asks what
 - **Cards + current + invested resources** - also a refund of what you put into the world you are leaving:
   the restore fee of every town you still hold (not one you took by force), your Capitol, and each building
   standing in them at its price. A town you lost counts for nothing; research, blueprints, guards and
-  re-rolls are not refunded. A notice shows the refund.
+  re-rolls are not refunded. A notice shows the refund. The colors take note of the realm you rebuild: on
+  day 8 each one sends extra attack mages, one for every 5 towns you held on Easy, every 4 on Normal, every
+  3 on Hard and every 2 on Insane (your Capitol counts as a town), at most 5 per color. They come once, on
+  top of the colors' usual attacks.
 - **Keep items and equipment** (on by default) - your bag, what you wear and your Armory's storage come along
   (the storage into your bag). Off, you start with the new game's kit.
 

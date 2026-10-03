@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 425 - a New Game+ day-8 AI wave
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `ngPlusWaveMages` (saved; 0 in `generateNew`), with its
+  getter and setter.
+- **`forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`** - `startNewGamePlus`, with the invested choice:
+  counts the held towns before `clearChanges()` (`NewGamePlusRefund.heldTowns`), and sets the new world's wave after
+  the refund. **Merge watch** on `startNewGamePlus`.
+- Mod: `TerritoryControl.sendNewGamePlusWave` (from `processDaysPassed`), `TuningData.ngPlusWave*`,
+  `NewGamePlusRefund.heldTowns`.
+
 ### Round 422 - the AI's opening wave of attack mages
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `openingWaveSent` (saved; false in `generateNew`, true when
