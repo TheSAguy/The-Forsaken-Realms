@@ -14334,6 +14334,17 @@ chose a **roster Archmage** instead: ordinary Archmage loot under the card budge
   (speed / floor / threat / pursue).
 - Route QA (`waypoint_routes_qa.py` on the five castles): 20 routes, 161 legs, no findings. Preview sheet of the ring
   sent to the user before the build.
+- **Agent-tested** (cheats).
+  - Insane slot 11, White Castle: `#90: Human Renegade picked from 20 Archmage(s)`, then `#91: Umbral Dragon picked
+    from 19`. On re-entry there were no new picks and the same two names returned.
+  - Both walked the ring once the castle's "Strange magical energies" dialog was closed (an open dialog freezes the
+    map). The Umbral Dragon noticed the player at the entrance and closed in at about 45 px/s; the floor was 44, against
+    the Renegade's own 43.
+  - Two duels, both lost by the day-1 deck. Each had `battlefield=[Wastes]` and `Umbral Dragon: lost - streak 0 -> 0 of 3`.
+  - Fast time to day 7: `[TFR-MageCap] base=6 (Insane) ... -> cap=6`, and all five colors sent mages.
+  - Normal slot 10, Black Castle: only #92 (`Onyx Minotaur Lord picked from 21`, own speed 46, kept). The Insane-only
+    #93 was absent.
+  - No exceptions in the agent log.
 - Game Guide: the cap numbers and a sentence on the castle champion.
 
 ## Round 406: the card budget no longer pays gold for cards it would have cut (2026-10-02)

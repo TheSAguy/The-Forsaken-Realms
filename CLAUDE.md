@@ -64,7 +64,10 @@ difficulty by name: settings.json `attackingMagesEasy/Normal/Hard/Insane` 2/3/4/
 sand ring around the keep (the second Insane-only), resolved by `util/CastleChampions` to a random roster Archmage
 (`TerritoryControl.grandmasterRoster`, speed > 0) on the first visit, kept by the POI's fixed roster. Threat 80 / pursue
 192, speed floor = player base x `castleChampionSpeedFactor` 1.1. `[TFR-CastleChampion]` log lines. The user chose roster
-Archmages over the arena war champions (castle guards respawn every visit; war champions pay jackpot loot).
+Archmages over the arena war champions (castle guards respawn every visit; war champions pay jackpot loot). LIVE + AGENT
+PACKAGED (jar 884b86adadbb, carries 408 too); AGENT-TESTED: 2 distinct champions on Insane, 1 on Normal, kept on
+re-entry, chase, Wastes start, cap=6 logged. Not yet seen in the user's own play. The agent's slots 10/11 were loaded
+(no manual saves made).
 
 ## STATE 2026-10-02 (night, later): **round 408 LOCAL + UNRELEASED (data only)** - 18 enemies redrawn with the creature
 generator: the green dragon and the ten dragon legends that shared its sprite, Eye / Vnwxt / Codie, Scarab / The Scarab
