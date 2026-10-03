@@ -5,9 +5,18 @@ usage: python make_wall_cards.py --out <custom_card_pics folder> [--art <folder>
 --out   REQUIRED - where the <token script>.fullborder.png files go (forge-gui/res/adventure/common/custom_card_pics;
         ImageKeys finds a token's picture there since round 411).
 --art   the user's art. Per kind: normal.png, reach.png, flying.png - or per size: normal_1.png .. flying_4.png, which
-        win over the kind's single picture. Any size; landscape ~4:3 fits the art box best (408 x 300). Small pictures
-        (pixel art) are enlarged with hard edges, big ones smoothly. Missing art falls back to a drawn placeholder.
---sheet a 6 x 2 preview of all twelve, for review before shipping.
+        win over the kind's single picture. Round 423: the user's own names work too - Regular-1.png .. Regular-4.png,
+        Reach-1..4, Fly-1..4 (their 256 x 256 set lives OUTSIDE the repo, F:\\Art_to_Tweak\\WALL). Missing art falls back
+        to a drawn placeholder.
+--sheet a 4 x 3 preview of all twelve, for review before shipping.
+
+Round 423 framing (frame_art). The art box is 408 x 300 and the user's art is square with a transparent sky, so every
+picture stands on a backdrop for its kind: a banded stone-grey sky for the plain Wall, a green one with a ground band
+for Reach, open sky with pixel clouds for Flying. A picture whose content runs edge to edge (a scene) covers the width
+and loses the height it must from its own empty sky first, keeping a small margin over the tallest tower, then from the
+bottom. A cut-out (content clear of the edges) is fitted whole with a margin - standing on the ground line for the
+grounded kinds, centered in the sky for Flying. Enlarging is hard-edged at 3x and more; below that it is 2x hard-edged,
+then smoothed down to size, which keeps pixel edges crisp at an uneven scale.
 """
 import argparse
 import sys
@@ -17,6 +26,7 @@ from PIL import Image, ImageDraw, ImageFont
 W, H = 488, 680
 ART_BOX = (40, 78, 448, 378)          # 408 x 300
 KINDS = [("normal", "", []), ("reach", "reach", ["Reach"]), ("flying", "flying", ["Flying"])]
+USER_NAMES = {"normal": "Regular", "reach": "Reach", "flying": "Fly"}   # round 423: the user's art file names
 REMINDER = {
     "Defender": "(This creature can't attack.)",
     "Reach": "(This creature can block creatures with flying.)",
@@ -83,14 +93,68 @@ def placeholder(kind, toughness):
     return img
 
 
-def fit_art(img):
+SKY = {  # round 423 backdrops: top of the sky, horizon
+    "normal": ((92, 112, 146), (190, 198, 210)),
+    "reach": ((74, 104, 92), (168, 186, 150)),
+    "flying": ((96, 150, 214), (206, 228, 248)),
+}
+GROUND = {"normal": (86, 78, 62), "reach": (58, 76, 44), "flying": None}
+TOP_MARGIN = 14   # px kept over the tallest tower when a scene is cropped
+
+
+def backdrop(kind, bw, bh):
+    """A banded sky drawn at quarter size and enlarged hard-edged, a ground band for the grounded kinds, clouds for flying."""
+    w, h = bw // 4, bh // 4
+    img = Image.new("RGB", (w, h))
+    d = ImageDraw.Draw(img)
+    top, horizon = SKY[kind]
+    bands = 9
+    for i in range(bands):
+        t = i / (bands - 1)
+        d.rectangle([0, round(h * i / bands), w, round(h * (i + 1) / bands)],
+                    fill=tuple(round(top[k] + (horizon[k] - top[k]) * t) for k in range(3)))
+    if GROUND[kind]:
+        g = GROUND[kind]
+        gy = round(h * 0.80)
+        d.rectangle([0, gy, w, h], fill=g)
+        d.rectangle([0, gy, w, gy], fill=tuple(min(255, v + 18) for v in g))
+    else:
+        for cx, cy, r in ((14, 56, 9), (50, 62, 12), (88, 54, 10), (30, 18, 6), (78, 14, 7)):
+            d.ellipse([cx - r, cy - r // 2, cx + r, cy + r // 2], fill=(240, 244, 250))
+            d.ellipse([cx - r // 2, cy - r // 2 - 3, cx + r // 2, cy + r // 2 - 3], fill=(248, 250, 253))
+    return img.resize((bw, bh), Image.NEAREST)
+
+
+def enlarge(img, size):
+    """Hard-edged at 3x and more; below that 2x hard-edged then smoothed down - crisp pixel edges at an uneven scale."""
+    if size[0] >= img.width * 3:
+        return img.resize(size, Image.NEAREST)
+    if size[0] <= img.width:
+        return img.resize(size, Image.LANCZOS)
+    return img.resize((img.width * 2, img.height * 2), Image.NEAREST).resize(size, Image.LANCZOS)
+
+
+def frame_art(img, kind):
+    """Round 423: the picture on its kind's backdrop, framed for the 408 x 300 box (see the module docstring)."""
     bw, bh = ART_BOX[2] - ART_BOX[0], ART_BOX[3] - ART_BOX[1]
-    scale = max(bw / img.width, bh / img.height)
-    method = Image.NEAREST if img.width <= bw // 2 else Image.LANCZOS
-    big = img.convert("RGB").resize((max(bw, round(img.width * scale)), max(bh, round(img.height * scale))), method)
-    left = (big.width - bw) // 2
-    top = (big.height - bh) // 2
-    return big.crop((left, top, left + bw, top + bh))
+    img = img.convert("RGBA")
+    box = img.getchannel("A").point(lambda v: 255 if v > 24 else 0).getbbox() or (0, 0, img.width, img.height)
+    x0, y0, x1, y1 = box
+    canvas = backdrop(kind, bw, bh).convert("RGBA")
+    if x0 <= 2 and x1 >= img.width - 2:   # a scene: cover the width
+        s = bw / img.width
+        h = max(bh, round(img.height * s))
+        need = h - bh
+        top = max(0, min(round(y0 * s) - TOP_MARGIN, need))
+        canvas.alpha_composite(enlarge(img, (bw, h)).crop((0, top, bw, top + bh)))
+    else:                                  # a cut-out: fit it whole
+        cw, ch = x1 - x0, y1 - y0
+        s = min(bw * 0.92 / cw, bh * 0.90 / ch)
+        art = enlarge(img.crop(box), (max(1, round(cw * s)), max(1, round(ch * s))))
+        px = (bw - art.width) // 2
+        py = (bh - art.height) // 2 if kind == "flying" else min(bh - art.height, round(bh * 0.93) - art.height)
+        canvas.alpha_composite(art, (px, max(0, py)))
+    return canvas.convert("RGB")
 
 
 # ---------------------------------------------------------------- the frame
@@ -134,7 +198,7 @@ def draw_why(d, text, x0, y, width):
     return y + 21
 
 
-def card(art, keywords, toughness):
+def card(art, kind, keywords, toughness):
     img = Image.new("RGB", (W, H), (16, 16, 18))
     d = ImageDraw.Draw(img)
     # silver artifact frame
@@ -146,7 +210,7 @@ def card(art, keywords, toughness):
     d.rounded_rectangle([30, 30, W - 31, 70], radius=10, fill=(214, 216, 220), outline=(90, 92, 98), width=2)
     d.text((44, 36), "Wall", font=font("palab.ttf", 27), fill=(20, 20, 22))
     # art
-    img.paste(fit_art(art), ART_BOX[:2])
+    img.paste(frame_art(art, kind), ART_BOX[:2])
     d.rectangle([ART_BOX[0] - 2, ART_BOX[1] - 2, ART_BOX[2] + 1, ART_BOX[3] + 1], outline=(60, 62, 66), width=2)
     # type line
     d.rounded_rectangle([30, 388, W - 31, 424], radius=9, fill=(214, 216, 220), outline=(90, 92, 98), width=2)
@@ -193,14 +257,15 @@ def main():
         for t in range(1, 5):
             art, source = None, "placeholder"
             if art_dir:
-                for candidate in (art_dir / f"{kind}_{t}.png", art_dir / f"{kind}.png"):
+                user = USER_NAMES[kind]   # round 423: the user's own file names, e.g. Fly-3.png
+                for candidate in (art_dir / f"{user}-{t}.png", art_dir / f"{kind}_{t}.png", art_dir / f"{kind}.png"):
                     if candidate.exists():
                         art, source = Image.open(candidate), candidate.name
                         break
             if art is None:
                 art = placeholder(kind, t)
             script = f"tfr_wall_{word + '_' if word else ''}0_{t}"
-            face = card(art, keywords, t)
+            face = card(art, kind, keywords, t)
             face.save(out / f"{script}.fullborder.png")
             made.append(face)
             print(f"{script}.fullborder.png  <- {source}")
