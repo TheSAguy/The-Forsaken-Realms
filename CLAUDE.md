@@ -67,7 +67,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   `frame_art`/`backdrop`/`enlarge`.
 - 420 = all 122 creature-generator remakes at 3.41 art px per world px (the Forge Blacksmith's), 37 of them new (cloud
   batch 2: bone dragon, hellion, red dragons, dog, rhino, falcon, bat, troll, treefolk). Data only (enemies.json,
-  `sprites/enemy/remake/`). Not seen in play yet. Package live + agent with 420-423.
+  `sprites/enemy/remake/`). Not seen in play yet.
+- LIVE + AGENT PACKAGED with 420-423 (jar 4ff922dc96bd, enemies.json bf32d7b2, 244 remake files).
 
 ## STATE 2026-10-03 (rounds 418-419): **LOCAL + UNRELEASED.**
 - 418 = spawn ranks by difficulty: `spawn_tier_weighting.json` `difficultyFactors`, Hard x0.8/1.25 and Insane x0.6/1.5.
