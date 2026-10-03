@@ -64,13 +64,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 - 419 = loot variety (`CardBudget`). Order: a name not yet paid, then the deck top-up, then the color's sets in the deck's
   colors (`colorSetPool`), then a second copy, then gold. The first-win bonus works the same way.
 - Both agent-tested. The scratch `loottest` / `decksurvey` console commands live in the session scratchpad, not the repo.
-- AGENT packaged. LIVE waits for the user's game to close.
+- LIVE + AGENT PACKAGED with 417-419 (jar 347a037f0fef).
 
 ## STATE 2026-10-03 (round 417): **round 417 LOCAL + UNRELEASED** - no notoriety notice (the Wall card's bold "Notoriety:"
 line explains it; cards rebuilt on placeholder art), quieter logs (`[TFR-ShopEditions]` silent for the build menu's
 shop-count, "same as above" repeats; stock "Item N not found." only for a missing item; Inn `picked=` shows the block).
 Djinn survey: template decks are full-size (median 59/60). Loot VARIETY is thin for 29 of 67 (by design: duplicates,
-then gold) - the user has the options. AGENT packaged + tested; LIVE NOT PACKAGED (the user's game was running).
+then gold) - fixed in round 419. Live + agent packaged with 417-419.
 
 ## STATE 2026-10-03 (round 416): **round 416 LOCAL + UNRELEASED** - a card shop whose blueprint the player owns shows a
 greyed, disabled "Blueprint Owned" where Buy Blueprint sits (`RewardScene.showBlueprintOwned`), and the button turns into
