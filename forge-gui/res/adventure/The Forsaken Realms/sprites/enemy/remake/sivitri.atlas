@@ -1,0 +1,152 @@
+sivitri.png
+size: 1036,376
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 52
+Idle
+  xy: 74, 64
+  size: 74, 52
+Idle
+  xy: 148, 64
+  size: 74, 52
+Idle
+  xy: 222, 64
+  size: 74, 52
+Idle
+  xy: 296, 64
+  size: 74, 52
+Idle
+  xy: 370, 64
+  size: 74, 52
+Idle
+  xy: 444, 64
+  size: 74, 52
+Idle
+  xy: 518, 64
+  size: 74, 52
+Idle
+  xy: 592, 64
+  size: 74, 52
+Idle
+  xy: 666, 64
+  size: 74, 52
+Walk
+  xy: 0, 116
+  size: 74, 52
+Walk
+  xy: 74, 116
+  size: 74, 52
+Walk
+  xy: 148, 116
+  size: 74, 52
+Walk
+  xy: 222, 116
+  size: 74, 52
+Attack
+  xy: 0, 168
+  size: 74, 52
+Attack
+  xy: 74, 168
+  size: 74, 52
+Attack
+  xy: 148, 168
+  size: 74, 52
+Attack
+  xy: 222, 168
+  size: 74, 52
+Attack
+  xy: 296, 168
+  size: 74, 52
+Attack
+  xy: 370, 168
+  size: 74, 52
+Attack
+  xy: 444, 168
+  size: 74, 52
+Attack
+  xy: 518, 168
+  size: 74, 52
+Hit
+  xy: 0, 220
+  size: 74, 52
+Hit
+  xy: 74, 220
+  size: 74, 52
+Hit
+  xy: 148, 220
+  size: 74, 52
+Hit
+  xy: 222, 220
+  size: 74, 52
+Hit
+  xy: 296, 220
+  size: 74, 52
+Death
+  xy: 0, 272
+  size: 74, 52
+Death
+  xy: 74, 272
+  size: 74, 52
+Death
+  xy: 148, 272
+  size: 74, 52
+Death
+  xy: 222, 272
+  size: 74, 52
+Death
+  xy: 296, 272
+  size: 74, 52
+Death
+  xy: 370, 272
+  size: 74, 52
+Death
+  xy: 444, 272
+  size: 74, 52
+Death
+  xy: 518, 272
+  size: 74, 52
+Death
+  xy: 592, 272
+  size: 74, 52
+Death
+  xy: 666, 272
+  size: 74, 52
+Death
+  xy: 740, 272
+  size: 74, 52
+Death
+  xy: 814, 272
+  size: 74, 52
+Death
+  xy: 888, 272
+  size: 74, 52
+Death
+  xy: 962, 272
+  size: 74, 52
+Wake
+  xy: 0, 324
+  size: 74, 52
+Wake
+  xy: 74, 324
+  size: 74, 52
+Wake
+  xy: 148, 324
+  size: 74, 52
+Wake
+  xy: 222, 324
+  size: 74, 52
+Wake
+  xy: 296, 324
+  size: 74, 52
+Wake
+  xy: 370, 324
+  size: 74, 52
+Wake
+  xy: 444, 324
+  size: 74, 52

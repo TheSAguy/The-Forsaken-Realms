@@ -58,6 +58,12 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-03 (round 412): **round 412 LOCAL + UNRELEASED (data only)** - six more enemy groups (42 enemies)
+redrawn with the creature generator: the Ancient Silver Dragon, Fire Dragon, Ooze Boss, Troll, Snake and Spider groups,
+each enemy its own creature (MOD_CHANGELOG round 412). Not hot-copied, because live was running; the next package
+(the one carrying 410-411b) brings it to live and agent. The user rejected the rabbit, bear, owl and squirrel remakes,
+which are getting anatomy work in the generator session.
+
 ## STATE 2026-10-03 (later): **round 411 LOCAL + UNRELEASED** - NOTORIETY: the player's wins in a row against anyone
 (`AdventurePlayer.notorietyStreak`, saved; any loss, New Game+ and a new game reset it). Every 5 wins = a level, up to 4.
 The enemy starts with ONE Wall token (0/level): plain for Apprentice/Adept, reach for Masters, flying for Archmages.

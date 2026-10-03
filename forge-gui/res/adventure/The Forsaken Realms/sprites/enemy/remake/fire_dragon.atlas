@@ -1,0 +1,146 @@
+fire_dragon.png
+size: 1066,400
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 56
+Idle
+  xy: 82, 64
+  size: 82, 56
+Idle
+  xy: 164, 64
+  size: 82, 56
+Idle
+  xy: 246, 64
+  size: 82, 56
+Idle
+  xy: 328, 64
+  size: 82, 56
+Idle
+  xy: 410, 64
+  size: 82, 56
+Idle
+  xy: 492, 64
+  size: 82, 56
+Idle
+  xy: 574, 64
+  size: 82, 56
+Idle
+  xy: 656, 64
+  size: 82, 56
+Idle
+  xy: 738, 64
+  size: 82, 56
+Walk
+  xy: 0, 120
+  size: 82, 56
+Walk
+  xy: 82, 120
+  size: 82, 56
+Walk
+  xy: 164, 120
+  size: 82, 56
+Walk
+  xy: 246, 120
+  size: 82, 56
+Attack
+  xy: 0, 176
+  size: 82, 56
+Attack
+  xy: 82, 176
+  size: 82, 56
+Attack
+  xy: 164, 176
+  size: 82, 56
+Attack
+  xy: 246, 176
+  size: 82, 56
+Attack
+  xy: 328, 176
+  size: 82, 56
+Attack
+  xy: 410, 176
+  size: 82, 56
+Attack
+  xy: 492, 176
+  size: 82, 56
+Attack
+  xy: 574, 176
+  size: 82, 56
+Hit
+  xy: 0, 232
+  size: 82, 56
+Hit
+  xy: 82, 232
+  size: 82, 56
+Hit
+  xy: 164, 232
+  size: 82, 56
+Hit
+  xy: 246, 232
+  size: 82, 56
+Hit
+  xy: 328, 232
+  size: 82, 56
+Death
+  xy: 0, 288
+  size: 82, 56
+Death
+  xy: 82, 288
+  size: 82, 56
+Death
+  xy: 164, 288
+  size: 82, 56
+Death
+  xy: 246, 288
+  size: 82, 56
+Death
+  xy: 328, 288
+  size: 82, 56
+Death
+  xy: 410, 288
+  size: 82, 56
+Death
+  xy: 492, 288
+  size: 82, 56
+Death
+  xy: 574, 288
+  size: 82, 56
+Death
+  xy: 656, 288
+  size: 82, 56
+Death
+  xy: 738, 288
+  size: 82, 56
+Death
+  xy: 820, 288
+  size: 82, 56
+Death
+  xy: 902, 288
+  size: 82, 56
+Death
+  xy: 984, 288
+  size: 82, 56
+Wake
+  xy: 0, 344
+  size: 82, 56
+Wake
+  xy: 82, 344
+  size: 82, 56
+Wake
+  xy: 164, 344
+  size: 82, 56
+Wake
+  xy: 246, 344
+  size: 82, 56
+Wake
+  xy: 328, 344
+  size: 82, 56
+Wake
+  xy: 410, 344
+  size: 82, 56

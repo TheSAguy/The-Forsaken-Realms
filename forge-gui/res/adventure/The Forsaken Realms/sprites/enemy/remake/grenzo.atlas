@@ -1,0 +1,137 @@
+grenzo.png
+size: 1248,400
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 56
+Idle
+  xy: 96, 64
+  size: 96, 56
+Idle
+  xy: 192, 64
+  size: 96, 56
+Idle
+  xy: 288, 64
+  size: 96, 56
+Idle
+  xy: 384, 64
+  size: 96, 56
+Idle
+  xy: 480, 64
+  size: 96, 56
+Idle
+  xy: 576, 64
+  size: 96, 56
+Idle
+  xy: 672, 64
+  size: 96, 56
+Idle
+  xy: 768, 64
+  size: 96, 56
+Idle
+  xy: 864, 64
+  size: 96, 56
+Walk
+  xy: 0, 120
+  size: 96, 56
+Walk
+  xy: 96, 120
+  size: 96, 56
+Walk
+  xy: 192, 120
+  size: 96, 56
+Walk
+  xy: 288, 120
+  size: 96, 56
+Attack
+  xy: 0, 176
+  size: 96, 56
+Attack
+  xy: 96, 176
+  size: 96, 56
+Attack
+  xy: 192, 176
+  size: 96, 56
+Attack
+  xy: 288, 176
+  size: 96, 56
+Attack
+  xy: 384, 176
+  size: 96, 56
+Attack
+  xy: 480, 176
+  size: 96, 56
+Hit
+  xy: 0, 232
+  size: 96, 56
+Hit
+  xy: 96, 232
+  size: 96, 56
+Hit
+  xy: 192, 232
+  size: 96, 56
+Hit
+  xy: 288, 232
+  size: 96, 56
+Death
+  xy: 0, 288
+  size: 96, 56
+Death
+  xy: 96, 288
+  size: 96, 56
+Death
+  xy: 192, 288
+  size: 96, 56
+Death
+  xy: 288, 288
+  size: 96, 56
+Death
+  xy: 384, 288
+  size: 96, 56
+Death
+  xy: 480, 288
+  size: 96, 56
+Death
+  xy: 576, 288
+  size: 96, 56
+Death
+  xy: 672, 288
+  size: 96, 56
+Death
+  xy: 768, 288
+  size: 96, 56
+Death
+  xy: 864, 288
+  size: 96, 56
+Death
+  xy: 960, 288
+  size: 96, 56
+Death
+  xy: 1056, 288
+  size: 96, 56
+Death
+  xy: 1152, 288
+  size: 96, 56
+Wake
+  xy: 0, 344
+  size: 96, 56
+Wake
+  xy: 96, 344
+  size: 96, 56
+Wake
+  xy: 192, 344
+  size: 96, 56
+Wake
+  xy: 288, 344
+  size: 96, 56
+Wake
+  xy: 384, 344
+  size: 96, 56
+Wake
+  xy: 480, 344
+  size: 96, 56

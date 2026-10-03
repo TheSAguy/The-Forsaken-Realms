@@ -1,0 +1,176 @@
+velomachus.png
+size: 2176,970
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 136, 151
+Idle
+  xy: 136, 64
+  size: 136, 151
+Idle
+  xy: 272, 64
+  size: 136, 151
+Idle
+  xy: 408, 64
+  size: 136, 151
+Idle
+  xy: 544, 64
+  size: 136, 151
+Idle
+  xy: 680, 64
+  size: 136, 151
+Idle
+  xy: 816, 64
+  size: 136, 151
+Idle
+  xy: 952, 64
+  size: 136, 151
+Idle
+  xy: 1088, 64
+  size: 136, 151
+Idle
+  xy: 1224, 64
+  size: 136, 151
+Walk
+  xy: 0, 215
+  size: 136, 151
+Walk
+  xy: 136, 215
+  size: 136, 151
+Walk
+  xy: 272, 215
+  size: 136, 151
+Walk
+  xy: 408, 215
+  size: 136, 151
+Attack
+  xy: 0, 366
+  size: 136, 151
+Attack
+  xy: 136, 366
+  size: 136, 151
+Attack
+  xy: 272, 366
+  size: 136, 151
+Attack
+  xy: 408, 366
+  size: 136, 151
+Attack
+  xy: 544, 366
+  size: 136, 151
+Attack
+  xy: 680, 366
+  size: 136, 151
+Attack
+  xy: 816, 366
+  size: 136, 151
+Attack
+  xy: 952, 366
+  size: 136, 151
+Attack
+  xy: 1088, 366
+  size: 136, 151
+Attack
+  xy: 1224, 366
+  size: 136, 151
+Hit
+  xy: 0, 517
+  size: 136, 151
+Hit
+  xy: 136, 517
+  size: 136, 151
+Hit
+  xy: 272, 517
+  size: 136, 151
+Hit
+  xy: 408, 517
+  size: 136, 151
+Hit
+  xy: 544, 517
+  size: 136, 151
+Hit
+  xy: 680, 517
+  size: 136, 151
+Hit
+  xy: 816, 517
+  size: 136, 151
+Death
+  xy: 0, 668
+  size: 136, 151
+Death
+  xy: 136, 668
+  size: 136, 151
+Death
+  xy: 272, 668
+  size: 136, 151
+Death
+  xy: 408, 668
+  size: 136, 151
+Death
+  xy: 544, 668
+  size: 136, 151
+Death
+  xy: 680, 668
+  size: 136, 151
+Death
+  xy: 816, 668
+  size: 136, 151
+Death
+  xy: 952, 668
+  size: 136, 151
+Death
+  xy: 1088, 668
+  size: 136, 151
+Death
+  xy: 1224, 668
+  size: 136, 151
+Death
+  xy: 1360, 668
+  size: 136, 151
+Death
+  xy: 1496, 668
+  size: 136, 151
+Death
+  xy: 1632, 668
+  size: 136, 151
+Death
+  xy: 1768, 668
+  size: 136, 151
+Death
+  xy: 1904, 668
+  size: 136, 151
+Death
+  xy: 2040, 668
+  size: 136, 151
+Wake
+  xy: 0, 819
+  size: 136, 151
+Wake
+  xy: 136, 819
+  size: 136, 151
+Wake
+  xy: 272, 819
+  size: 136, 151
+Wake
+  xy: 408, 819
+  size: 136, 151
+Wake
+  xy: 544, 819
+  size: 136, 151
+Wake
+  xy: 680, 819
+  size: 136, 151
+Wake
+  xy: 816, 819
+  size: 136, 151
+Wake
+  xy: 952, 819
+  size: 136, 151
+Wake
+  xy: 1088, 819
+  size: 136, 151

@@ -1,0 +1,152 @@
+chromium.png
+size: 1118,400
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 86, 56
+Idle
+  xy: 86, 64
+  size: 86, 56
+Idle
+  xy: 172, 64
+  size: 86, 56
+Idle
+  xy: 258, 64
+  size: 86, 56
+Idle
+  xy: 344, 64
+  size: 86, 56
+Idle
+  xy: 430, 64
+  size: 86, 56
+Idle
+  xy: 516, 64
+  size: 86, 56
+Idle
+  xy: 602, 64
+  size: 86, 56
+Idle
+  xy: 688, 64
+  size: 86, 56
+Idle
+  xy: 774, 64
+  size: 86, 56
+Walk
+  xy: 0, 120
+  size: 86, 56
+Walk
+  xy: 86, 120
+  size: 86, 56
+Walk
+  xy: 172, 120
+  size: 86, 56
+Walk
+  xy: 258, 120
+  size: 86, 56
+Attack
+  xy: 0, 176
+  size: 86, 56
+Attack
+  xy: 86, 176
+  size: 86, 56
+Attack
+  xy: 172, 176
+  size: 86, 56
+Attack
+  xy: 258, 176
+  size: 86, 56
+Attack
+  xy: 344, 176
+  size: 86, 56
+Attack
+  xy: 430, 176
+  size: 86, 56
+Attack
+  xy: 516, 176
+  size: 86, 56
+Attack
+  xy: 602, 176
+  size: 86, 56
+Attack
+  xy: 688, 176
+  size: 86, 56
+Hit
+  xy: 0, 232
+  size: 86, 56
+Hit
+  xy: 86, 232
+  size: 86, 56
+Hit
+  xy: 172, 232
+  size: 86, 56
+Hit
+  xy: 258, 232
+  size: 86, 56
+Hit
+  xy: 344, 232
+  size: 86, 56
+Death
+  xy: 0, 288
+  size: 86, 56
+Death
+  xy: 86, 288
+  size: 86, 56
+Death
+  xy: 172, 288
+  size: 86, 56
+Death
+  xy: 258, 288
+  size: 86, 56
+Death
+  xy: 344, 288
+  size: 86, 56
+Death
+  xy: 430, 288
+  size: 86, 56
+Death
+  xy: 516, 288
+  size: 86, 56
+Death
+  xy: 602, 288
+  size: 86, 56
+Death
+  xy: 688, 288
+  size: 86, 56
+Death
+  xy: 774, 288
+  size: 86, 56
+Death
+  xy: 860, 288
+  size: 86, 56
+Death
+  xy: 946, 288
+  size: 86, 56
+Death
+  xy: 1032, 288
+  size: 86, 56
+Wake
+  xy: 0, 344
+  size: 86, 56
+Wake
+  xy: 86, 344
+  size: 86, 56
+Wake
+  xy: 172, 344
+  size: 86, 56
+Wake
+  xy: 258, 344
+  size: 86, 56
+Wake
+  xy: 344, 344
+  size: 86, 56
+Wake
+  xy: 430, 344
+  size: 86, 56
+Wake
+  xy: 516, 344
+  size: 86, 56

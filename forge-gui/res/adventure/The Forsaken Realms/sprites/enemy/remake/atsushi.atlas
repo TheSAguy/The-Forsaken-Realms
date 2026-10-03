@@ -1,0 +1,170 @@
+atsushi.png
+size: 1600,478
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 100, 69
+Idle
+  xy: 100, 64
+  size: 100, 69
+Idle
+  xy: 200, 64
+  size: 100, 69
+Idle
+  xy: 300, 64
+  size: 100, 69
+Idle
+  xy: 400, 64
+  size: 100, 69
+Idle
+  xy: 500, 64
+  size: 100, 69
+Idle
+  xy: 600, 64
+  size: 100, 69
+Idle
+  xy: 700, 64
+  size: 100, 69
+Idle
+  xy: 800, 64
+  size: 100, 69
+Idle
+  xy: 900, 64
+  size: 100, 69
+Walk
+  xy: 0, 133
+  size: 100, 69
+Walk
+  xy: 100, 133
+  size: 100, 69
+Walk
+  xy: 200, 133
+  size: 100, 69
+Walk
+  xy: 300, 133
+  size: 100, 69
+Attack
+  xy: 0, 202
+  size: 100, 69
+Attack
+  xy: 100, 202
+  size: 100, 69
+Attack
+  xy: 200, 202
+  size: 100, 69
+Attack
+  xy: 300, 202
+  size: 100, 69
+Attack
+  xy: 400, 202
+  size: 100, 69
+Attack
+  xy: 500, 202
+  size: 100, 69
+Attack
+  xy: 600, 202
+  size: 100, 69
+Attack
+  xy: 700, 202
+  size: 100, 69
+Attack
+  xy: 800, 202
+  size: 100, 69
+Attack
+  xy: 900, 202
+  size: 100, 69
+Hit
+  xy: 0, 271
+  size: 100, 69
+Hit
+  xy: 100, 271
+  size: 100, 69
+Hit
+  xy: 200, 271
+  size: 100, 69
+Hit
+  xy: 300, 271
+  size: 100, 69
+Hit
+  xy: 400, 271
+  size: 100, 69
+Hit
+  xy: 500, 271
+  size: 100, 69
+Death
+  xy: 0, 340
+  size: 100, 69
+Death
+  xy: 100, 340
+  size: 100, 69
+Death
+  xy: 200, 340
+  size: 100, 69
+Death
+  xy: 300, 340
+  size: 100, 69
+Death
+  xy: 400, 340
+  size: 100, 69
+Death
+  xy: 500, 340
+  size: 100, 69
+Death
+  xy: 600, 340
+  size: 100, 69
+Death
+  xy: 700, 340
+  size: 100, 69
+Death
+  xy: 800, 340
+  size: 100, 69
+Death
+  xy: 900, 340
+  size: 100, 69
+Death
+  xy: 1000, 340
+  size: 100, 69
+Death
+  xy: 1100, 340
+  size: 100, 69
+Death
+  xy: 1200, 340
+  size: 100, 69
+Death
+  xy: 1300, 340
+  size: 100, 69
+Death
+  xy: 1400, 340
+  size: 100, 69
+Death
+  xy: 1500, 340
+  size: 100, 69
+Wake
+  xy: 0, 409
+  size: 100, 69
+Wake
+  xy: 100, 409
+  size: 100, 69
+Wake
+  xy: 200, 409
+  size: 100, 69
+Wake
+  xy: 300, 409
+  size: 100, 69
+Wake
+  xy: 400, 409
+  size: 100, 69
+Wake
+  xy: 500, 409
+  size: 100, 69
+Wake
+  xy: 600, 409
+  size: 100, 69
+Wake
+  xy: 700, 409
+  size: 100, 69

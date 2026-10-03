@@ -1,0 +1,179 @@
+chromium_boss.png
+size: 2108,1018
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 124, 159
+Idle
+  xy: 124, 64
+  size: 124, 159
+Idle
+  xy: 248, 64
+  size: 124, 159
+Idle
+  xy: 372, 64
+  size: 124, 159
+Idle
+  xy: 496, 64
+  size: 124, 159
+Idle
+  xy: 620, 64
+  size: 124, 159
+Idle
+  xy: 744, 64
+  size: 124, 159
+Idle
+  xy: 868, 64
+  size: 124, 159
+Idle
+  xy: 992, 64
+  size: 124, 159
+Idle
+  xy: 1116, 64
+  size: 124, 159
+Walk
+  xy: 0, 223
+  size: 124, 159
+Walk
+  xy: 124, 223
+  size: 124, 159
+Walk
+  xy: 248, 223
+  size: 124, 159
+Walk
+  xy: 372, 223
+  size: 124, 159
+Attack
+  xy: 0, 382
+  size: 124, 159
+Attack
+  xy: 124, 382
+  size: 124, 159
+Attack
+  xy: 248, 382
+  size: 124, 159
+Attack
+  xy: 372, 382
+  size: 124, 159
+Attack
+  xy: 496, 382
+  size: 124, 159
+Attack
+  xy: 620, 382
+  size: 124, 159
+Attack
+  xy: 744, 382
+  size: 124, 159
+Attack
+  xy: 868, 382
+  size: 124, 159
+Attack
+  xy: 992, 382
+  size: 124, 159
+Attack
+  xy: 1116, 382
+  size: 124, 159
+Hit
+  xy: 0, 541
+  size: 124, 159
+Hit
+  xy: 124, 541
+  size: 124, 159
+Hit
+  xy: 248, 541
+  size: 124, 159
+Hit
+  xy: 372, 541
+  size: 124, 159
+Hit
+  xy: 496, 541
+  size: 124, 159
+Hit
+  xy: 620, 541
+  size: 124, 159
+Hit
+  xy: 744, 541
+  size: 124, 159
+Death
+  xy: 0, 700
+  size: 124, 159
+Death
+  xy: 124, 700
+  size: 124, 159
+Death
+  xy: 248, 700
+  size: 124, 159
+Death
+  xy: 372, 700
+  size: 124, 159
+Death
+  xy: 496, 700
+  size: 124, 159
+Death
+  xy: 620, 700
+  size: 124, 159
+Death
+  xy: 744, 700
+  size: 124, 159
+Death
+  xy: 868, 700
+  size: 124, 159
+Death
+  xy: 992, 700
+  size: 124, 159
+Death
+  xy: 1116, 700
+  size: 124, 159
+Death
+  xy: 1240, 700
+  size: 124, 159
+Death
+  xy: 1364, 700
+  size: 124, 159
+Death
+  xy: 1488, 700
+  size: 124, 159
+Death
+  xy: 1612, 700
+  size: 124, 159
+Death
+  xy: 1736, 700
+  size: 124, 159
+Death
+  xy: 1860, 700
+  size: 124, 159
+Death
+  xy: 1984, 700
+  size: 124, 159
+Wake
+  xy: 0, 859
+  size: 124, 159
+Wake
+  xy: 124, 859
+  size: 124, 159
+Wake
+  xy: 248, 859
+  size: 124, 159
+Wake
+  xy: 372, 859
+  size: 124, 159
+Wake
+  xy: 496, 859
+  size: 124, 159
+Wake
+  xy: 620, 859
+  size: 124, 159
+Wake
+  xy: 744, 859
+  size: 124, 159
+Wake
+  xy: 868, 859
+  size: 124, 159
+Wake
+  xy: 992, 859
+  size: 124, 159

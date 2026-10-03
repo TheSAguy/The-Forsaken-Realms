@@ -1,0 +1,167 @@
+nicol_bolas_boss.png
+size: 1770,1054
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 118, 165
+Idle
+  xy: 118, 64
+  size: 118, 165
+Idle
+  xy: 236, 64
+  size: 118, 165
+Idle
+  xy: 354, 64
+  size: 118, 165
+Idle
+  xy: 472, 64
+  size: 118, 165
+Idle
+  xy: 590, 64
+  size: 118, 165
+Idle
+  xy: 708, 64
+  size: 118, 165
+Idle
+  xy: 826, 64
+  size: 118, 165
+Idle
+  xy: 944, 64
+  size: 118, 165
+Idle
+  xy: 1062, 64
+  size: 118, 165
+Walk
+  xy: 0, 229
+  size: 118, 165
+Walk
+  xy: 118, 229
+  size: 118, 165
+Walk
+  xy: 236, 229
+  size: 118, 165
+Walk
+  xy: 354, 229
+  size: 118, 165
+Attack
+  xy: 0, 394
+  size: 118, 165
+Attack
+  xy: 118, 394
+  size: 118, 165
+Attack
+  xy: 236, 394
+  size: 118, 165
+Attack
+  xy: 354, 394
+  size: 118, 165
+Attack
+  xy: 472, 394
+  size: 118, 165
+Attack
+  xy: 590, 394
+  size: 118, 165
+Attack
+  xy: 708, 394
+  size: 118, 165
+Attack
+  xy: 826, 394
+  size: 118, 165
+Attack
+  xy: 944, 394
+  size: 118, 165
+Hit
+  xy: 0, 559
+  size: 118, 165
+Hit
+  xy: 118, 559
+  size: 118, 165
+Hit
+  xy: 236, 559
+  size: 118, 165
+Hit
+  xy: 354, 559
+  size: 118, 165
+Hit
+  xy: 472, 559
+  size: 118, 165
+Hit
+  xy: 590, 559
+  size: 118, 165
+Hit
+  xy: 708, 559
+  size: 118, 165
+Death
+  xy: 0, 724
+  size: 118, 165
+Death
+  xy: 118, 724
+  size: 118, 165
+Death
+  xy: 236, 724
+  size: 118, 165
+Death
+  xy: 354, 724
+  size: 118, 165
+Death
+  xy: 472, 724
+  size: 118, 165
+Death
+  xy: 590, 724
+  size: 118, 165
+Death
+  xy: 708, 724
+  size: 118, 165
+Death
+  xy: 826, 724
+  size: 118, 165
+Death
+  xy: 944, 724
+  size: 118, 165
+Death
+  xy: 1062, 724
+  size: 118, 165
+Death
+  xy: 1180, 724
+  size: 118, 165
+Death
+  xy: 1298, 724
+  size: 118, 165
+Death
+  xy: 1416, 724
+  size: 118, 165
+Death
+  xy: 1534, 724
+  size: 118, 165
+Death
+  xy: 1652, 724
+  size: 118, 165
+Wake
+  xy: 0, 889
+  size: 118, 165
+Wake
+  xy: 118, 889
+  size: 118, 165
+Wake
+  xy: 236, 889
+  size: 118, 165
+Wake
+  xy: 354, 889
+  size: 118, 165
+Wake
+  xy: 472, 889
+  size: 118, 165
+Wake
+  xy: 590, 889
+  size: 118, 165
+Wake
+  xy: 708, 889
+  size: 118, 165
+Wake
+  xy: 826, 889
+  size: 118, 165

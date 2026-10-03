@@ -1,0 +1,179 @@
+khorvath_and_sylvia.png
+size: 2268,1060
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 126, 166
+Idle
+  xy: 126, 64
+  size: 126, 166
+Idle
+  xy: 252, 64
+  size: 126, 166
+Idle
+  xy: 378, 64
+  size: 126, 166
+Idle
+  xy: 504, 64
+  size: 126, 166
+Idle
+  xy: 630, 64
+  size: 126, 166
+Idle
+  xy: 756, 64
+  size: 126, 166
+Idle
+  xy: 882, 64
+  size: 126, 166
+Idle
+  xy: 1008, 64
+  size: 126, 166
+Idle
+  xy: 1134, 64
+  size: 126, 166
+Walk
+  xy: 0, 230
+  size: 126, 166
+Walk
+  xy: 126, 230
+  size: 126, 166
+Walk
+  xy: 252, 230
+  size: 126, 166
+Walk
+  xy: 378, 230
+  size: 126, 166
+Attack
+  xy: 0, 396
+  size: 126, 166
+Attack
+  xy: 126, 396
+  size: 126, 166
+Attack
+  xy: 252, 396
+  size: 126, 166
+Attack
+  xy: 378, 396
+  size: 126, 166
+Attack
+  xy: 504, 396
+  size: 126, 166
+Attack
+  xy: 630, 396
+  size: 126, 166
+Attack
+  xy: 756, 396
+  size: 126, 166
+Attack
+  xy: 882, 396
+  size: 126, 166
+Attack
+  xy: 1008, 396
+  size: 126, 166
+Hit
+  xy: 0, 562
+  size: 126, 166
+Hit
+  xy: 126, 562
+  size: 126, 166
+Hit
+  xy: 252, 562
+  size: 126, 166
+Hit
+  xy: 378, 562
+  size: 126, 166
+Hit
+  xy: 504, 562
+  size: 126, 166
+Hit
+  xy: 630, 562
+  size: 126, 166
+Hit
+  xy: 756, 562
+  size: 126, 166
+Death
+  xy: 0, 728
+  size: 126, 166
+Death
+  xy: 126, 728
+  size: 126, 166
+Death
+  xy: 252, 728
+  size: 126, 166
+Death
+  xy: 378, 728
+  size: 126, 166
+Death
+  xy: 504, 728
+  size: 126, 166
+Death
+  xy: 630, 728
+  size: 126, 166
+Death
+  xy: 756, 728
+  size: 126, 166
+Death
+  xy: 882, 728
+  size: 126, 166
+Death
+  xy: 1008, 728
+  size: 126, 166
+Death
+  xy: 1134, 728
+  size: 126, 166
+Death
+  xy: 1260, 728
+  size: 126, 166
+Death
+  xy: 1386, 728
+  size: 126, 166
+Death
+  xy: 1512, 728
+  size: 126, 166
+Death
+  xy: 1638, 728
+  size: 126, 166
+Death
+  xy: 1764, 728
+  size: 126, 166
+Death
+  xy: 1890, 728
+  size: 126, 166
+Death
+  xy: 2016, 728
+  size: 126, 166
+Death
+  xy: 2142, 728
+  size: 126, 166
+Wake
+  xy: 0, 894
+  size: 126, 166
+Wake
+  xy: 126, 894
+  size: 126, 166
+Wake
+  xy: 252, 894
+  size: 126, 166
+Wake
+  xy: 378, 894
+  size: 126, 166
+Wake
+  xy: 504, 894
+  size: 126, 166
+Wake
+  xy: 630, 894
+  size: 126, 166
+Wake
+  xy: 756, 894
+  size: 126, 166
+Wake
+  xy: 882, 894
+  size: 126, 166
+Wake
+  xy: 1008, 894
+  size: 126, 166

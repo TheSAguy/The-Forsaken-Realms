@@ -1,0 +1,134 @@
+arasta.png
+size: 770,376
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 52
+Idle
+  xy: 70, 64
+  size: 70, 52
+Idle
+  xy: 140, 64
+  size: 70, 52
+Idle
+  xy: 210, 64
+  size: 70, 52
+Idle
+  xy: 280, 64
+  size: 70, 52
+Idle
+  xy: 350, 64
+  size: 70, 52
+Idle
+  xy: 420, 64
+  size: 70, 52
+Idle
+  xy: 490, 64
+  size: 70, 52
+Idle
+  xy: 560, 64
+  size: 70, 52
+Idle
+  xy: 630, 64
+  size: 70, 52
+Walk
+  xy: 0, 116
+  size: 70, 52
+Walk
+  xy: 70, 116
+  size: 70, 52
+Walk
+  xy: 140, 116
+  size: 70, 52
+Walk
+  xy: 210, 116
+  size: 70, 52
+Attack
+  xy: 0, 168
+  size: 70, 52
+Attack
+  xy: 70, 168
+  size: 70, 52
+Attack
+  xy: 140, 168
+  size: 70, 52
+Attack
+  xy: 210, 168
+  size: 70, 52
+Attack
+  xy: 280, 168
+  size: 70, 52
+Attack
+  xy: 350, 168
+  size: 70, 52
+Attack
+  xy: 420, 168
+  size: 70, 52
+Hit
+  xy: 0, 220
+  size: 70, 52
+Hit
+  xy: 70, 220
+  size: 70, 52
+Hit
+  xy: 140, 220
+  size: 70, 52
+Hit
+  xy: 210, 220
+  size: 70, 52
+Death
+  xy: 0, 272
+  size: 70, 52
+Death
+  xy: 70, 272
+  size: 70, 52
+Death
+  xy: 140, 272
+  size: 70, 52
+Death
+  xy: 210, 272
+  size: 70, 52
+Death
+  xy: 280, 272
+  size: 70, 52
+Death
+  xy: 350, 272
+  size: 70, 52
+Death
+  xy: 420, 272
+  size: 70, 52
+Death
+  xy: 490, 272
+  size: 70, 52
+Death
+  xy: 560, 272
+  size: 70, 52
+Death
+  xy: 630, 272
+  size: 70, 52
+Death
+  xy: 700, 272
+  size: 70, 52
+Wake
+  xy: 0, 324
+  size: 70, 52
+Wake
+  xy: 70, 324
+  size: 70, 52
+Wake
+  xy: 140, 324
+  size: 70, 52
+Wake
+  xy: 210, 324
+  size: 70, 52
+Wake
+  xy: 280, 324
+  size: 70, 52
+Wake
+  xy: 350, 324
+  size: 70, 52

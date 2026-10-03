@@ -1,0 +1,155 @@
+ooze_boss.png
+size: 2100,592
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 150, 88
+Idle
+  xy: 150, 64
+  size: 150, 88
+Idle
+  xy: 300, 64
+  size: 150, 88
+Idle
+  xy: 450, 64
+  size: 150, 88
+Idle
+  xy: 600, 64
+  size: 150, 88
+Idle
+  xy: 750, 64
+  size: 150, 88
+Idle
+  xy: 900, 64
+  size: 150, 88
+Idle
+  xy: 1050, 64
+  size: 150, 88
+Idle
+  xy: 1200, 64
+  size: 150, 88
+Idle
+  xy: 1350, 64
+  size: 150, 88
+Walk
+  xy: 0, 152
+  size: 150, 88
+Walk
+  xy: 150, 152
+  size: 150, 88
+Walk
+  xy: 300, 152
+  size: 150, 88
+Walk
+  xy: 450, 152
+  size: 150, 88
+Attack
+  xy: 0, 240
+  size: 150, 88
+Attack
+  xy: 150, 240
+  size: 150, 88
+Attack
+  xy: 300, 240
+  size: 150, 88
+Attack
+  xy: 450, 240
+  size: 150, 88
+Attack
+  xy: 600, 240
+  size: 150, 88
+Attack
+  xy: 750, 240
+  size: 150, 88
+Attack
+  xy: 900, 240
+  size: 150, 88
+Hit
+  xy: 0, 328
+  size: 150, 88
+Hit
+  xy: 150, 328
+  size: 150, 88
+Hit
+  xy: 300, 328
+  size: 150, 88
+Hit
+  xy: 450, 328
+  size: 150, 88
+Hit
+  xy: 600, 328
+  size: 150, 88
+Hit
+  xy: 750, 328
+  size: 150, 88
+Death
+  xy: 0, 416
+  size: 150, 88
+Death
+  xy: 150, 416
+  size: 150, 88
+Death
+  xy: 300, 416
+  size: 150, 88
+Death
+  xy: 450, 416
+  size: 150, 88
+Death
+  xy: 600, 416
+  size: 150, 88
+Death
+  xy: 750, 416
+  size: 150, 88
+Death
+  xy: 900, 416
+  size: 150, 88
+Death
+  xy: 1050, 416
+  size: 150, 88
+Death
+  xy: 1200, 416
+  size: 150, 88
+Death
+  xy: 1350, 416
+  size: 150, 88
+Death
+  xy: 1500, 416
+  size: 150, 88
+Death
+  xy: 1650, 416
+  size: 150, 88
+Death
+  xy: 1800, 416
+  size: 150, 88
+Death
+  xy: 1950, 416
+  size: 150, 88
+Wake
+  xy: 0, 504
+  size: 150, 88
+Wake
+  xy: 150, 504
+  size: 150, 88
+Wake
+  xy: 300, 504
+  size: 150, 88
+Wake
+  xy: 450, 504
+  size: 150, 88
+Wake
+  xy: 600, 504
+  size: 150, 88
+Wake
+  xy: 750, 504
+  size: 150, 88
+Wake
+  xy: 900, 504
+  size: 150, 88
+Wake
+  xy: 1050, 504
+  size: 150, 88

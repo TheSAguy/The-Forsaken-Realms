@@ -1,0 +1,134 @@
+watcher_in_the_web.png
+size: 528,280
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 44, 36
+Idle
+  xy: 44, 64
+  size: 44, 36
+Idle
+  xy: 88, 64
+  size: 44, 36
+Idle
+  xy: 132, 64
+  size: 44, 36
+Idle
+  xy: 176, 64
+  size: 44, 36
+Idle
+  xy: 220, 64
+  size: 44, 36
+Idle
+  xy: 264, 64
+  size: 44, 36
+Idle
+  xy: 308, 64
+  size: 44, 36
+Idle
+  xy: 352, 64
+  size: 44, 36
+Idle
+  xy: 396, 64
+  size: 44, 36
+Walk
+  xy: 0, 100
+  size: 44, 36
+Walk
+  xy: 44, 100
+  size: 44, 36
+Walk
+  xy: 88, 100
+  size: 44, 36
+Walk
+  xy: 132, 100
+  size: 44, 36
+Attack
+  xy: 0, 136
+  size: 44, 36
+Attack
+  xy: 44, 136
+  size: 44, 36
+Attack
+  xy: 88, 136
+  size: 44, 36
+Attack
+  xy: 132, 136
+  size: 44, 36
+Attack
+  xy: 176, 136
+  size: 44, 36
+Attack
+  xy: 220, 136
+  size: 44, 36
+Hit
+  xy: 0, 172
+  size: 44, 36
+Hit
+  xy: 44, 172
+  size: 44, 36
+Hit
+  xy: 88, 172
+  size: 44, 36
+Hit
+  xy: 132, 172
+  size: 44, 36
+Death
+  xy: 0, 208
+  size: 44, 36
+Death
+  xy: 44, 208
+  size: 44, 36
+Death
+  xy: 88, 208
+  size: 44, 36
+Death
+  xy: 132, 208
+  size: 44, 36
+Death
+  xy: 176, 208
+  size: 44, 36
+Death
+  xy: 220, 208
+  size: 44, 36
+Death
+  xy: 264, 208
+  size: 44, 36
+Death
+  xy: 308, 208
+  size: 44, 36
+Death
+  xy: 352, 208
+  size: 44, 36
+Death
+  xy: 396, 208
+  size: 44, 36
+Death
+  xy: 440, 208
+  size: 44, 36
+Death
+  xy: 484, 208
+  size: 44, 36
+Wake
+  xy: 0, 244
+  size: 44, 36
+Wake
+  xy: 44, 244
+  size: 44, 36
+Wake
+  xy: 88, 244
+  size: 44, 36
+Wake
+  xy: 132, 244
+  size: 44, 36
+Wake
+  xy: 176, 244
+  size: 44, 36
+Wake
+  xy: 220, 244
+  size: 44, 36

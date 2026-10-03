@@ -1,0 +1,152 @@
+obeka.png
+size: 1710,454
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 114, 65
+Idle
+  xy: 114, 64
+  size: 114, 65
+Idle
+  xy: 228, 64
+  size: 114, 65
+Idle
+  xy: 342, 64
+  size: 114, 65
+Idle
+  xy: 456, 64
+  size: 114, 65
+Idle
+  xy: 570, 64
+  size: 114, 65
+Idle
+  xy: 684, 64
+  size: 114, 65
+Idle
+  xy: 798, 64
+  size: 114, 65
+Idle
+  xy: 912, 64
+  size: 114, 65
+Idle
+  xy: 1026, 64
+  size: 114, 65
+Walk
+  xy: 0, 129
+  size: 114, 65
+Walk
+  xy: 114, 129
+  size: 114, 65
+Walk
+  xy: 228, 129
+  size: 114, 65
+Walk
+  xy: 342, 129
+  size: 114, 65
+Attack
+  xy: 0, 194
+  size: 114, 65
+Attack
+  xy: 114, 194
+  size: 114, 65
+Attack
+  xy: 228, 194
+  size: 114, 65
+Attack
+  xy: 342, 194
+  size: 114, 65
+Attack
+  xy: 456, 194
+  size: 114, 65
+Attack
+  xy: 570, 194
+  size: 114, 65
+Attack
+  xy: 684, 194
+  size: 114, 65
+Hit
+  xy: 0, 259
+  size: 114, 65
+Hit
+  xy: 114, 259
+  size: 114, 65
+Hit
+  xy: 228, 259
+  size: 114, 65
+Hit
+  xy: 342, 259
+  size: 114, 65
+Hit
+  xy: 456, 259
+  size: 114, 65
+Death
+  xy: 0, 324
+  size: 114, 65
+Death
+  xy: 114, 324
+  size: 114, 65
+Death
+  xy: 228, 324
+  size: 114, 65
+Death
+  xy: 342, 324
+  size: 114, 65
+Death
+  xy: 456, 324
+  size: 114, 65
+Death
+  xy: 570, 324
+  size: 114, 65
+Death
+  xy: 684, 324
+  size: 114, 65
+Death
+  xy: 798, 324
+  size: 114, 65
+Death
+  xy: 912, 324
+  size: 114, 65
+Death
+  xy: 1026, 324
+  size: 114, 65
+Death
+  xy: 1140, 324
+  size: 114, 65
+Death
+  xy: 1254, 324
+  size: 114, 65
+Death
+  xy: 1368, 324
+  size: 114, 65
+Death
+  xy: 1482, 324
+  size: 114, 65
+Death
+  xy: 1596, 324
+  size: 114, 65
+Wake
+  xy: 0, 389
+  size: 114, 65
+Wake
+  xy: 114, 389
+  size: 114, 65
+Wake
+  xy: 228, 389
+  size: 114, 65
+Wake
+  xy: 342, 389
+  size: 114, 65
+Wake
+  xy: 456, 389
+  size: 114, 65
+Wake
+  xy: 570, 389
+  size: 114, 65
+Wake
+  xy: 684, 389
+  size: 114, 65

@@ -1,0 +1,155 @@
+numot.png
+size: 1148,388
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 54
+Idle
+  xy: 82, 64
+  size: 82, 54
+Idle
+  xy: 164, 64
+  size: 82, 54
+Idle
+  xy: 246, 64
+  size: 82, 54
+Idle
+  xy: 328, 64
+  size: 82, 54
+Idle
+  xy: 410, 64
+  size: 82, 54
+Idle
+  xy: 492, 64
+  size: 82, 54
+Idle
+  xy: 574, 64
+  size: 82, 54
+Idle
+  xy: 656, 64
+  size: 82, 54
+Idle
+  xy: 738, 64
+  size: 82, 54
+Walk
+  xy: 0, 118
+  size: 82, 54
+Walk
+  xy: 82, 118
+  size: 82, 54
+Walk
+  xy: 164, 118
+  size: 82, 54
+Walk
+  xy: 246, 118
+  size: 82, 54
+Attack
+  xy: 0, 172
+  size: 82, 54
+Attack
+  xy: 82, 172
+  size: 82, 54
+Attack
+  xy: 164, 172
+  size: 82, 54
+Attack
+  xy: 246, 172
+  size: 82, 54
+Attack
+  xy: 328, 172
+  size: 82, 54
+Attack
+  xy: 410, 172
+  size: 82, 54
+Attack
+  xy: 492, 172
+  size: 82, 54
+Attack
+  xy: 574, 172
+  size: 82, 54
+Attack
+  xy: 656, 172
+  size: 82, 54
+Hit
+  xy: 0, 226
+  size: 82, 54
+Hit
+  xy: 82, 226
+  size: 82, 54
+Hit
+  xy: 164, 226
+  size: 82, 54
+Hit
+  xy: 246, 226
+  size: 82, 54
+Hit
+  xy: 328, 226
+  size: 82, 54
+Death
+  xy: 0, 280
+  size: 82, 54
+Death
+  xy: 82, 280
+  size: 82, 54
+Death
+  xy: 164, 280
+  size: 82, 54
+Death
+  xy: 246, 280
+  size: 82, 54
+Death
+  xy: 328, 280
+  size: 82, 54
+Death
+  xy: 410, 280
+  size: 82, 54
+Death
+  xy: 492, 280
+  size: 82, 54
+Death
+  xy: 574, 280
+  size: 82, 54
+Death
+  xy: 656, 280
+  size: 82, 54
+Death
+  xy: 738, 280
+  size: 82, 54
+Death
+  xy: 820, 280
+  size: 82, 54
+Death
+  xy: 902, 280
+  size: 82, 54
+Death
+  xy: 984, 280
+  size: 82, 54
+Death
+  xy: 1066, 280
+  size: 82, 54
+Wake
+  xy: 0, 334
+  size: 82, 54
+Wake
+  xy: 82, 334
+  size: 82, 54
+Wake
+  xy: 164, 334
+  size: 82, 54
+Wake
+  xy: 246, 334
+  size: 82, 54
+Wake
+  xy: 328, 334
+  size: 82, 54
+Wake
+  xy: 410, 334
+  size: 82, 54
+Wake
+  xy: 492, 334
+  size: 82, 54

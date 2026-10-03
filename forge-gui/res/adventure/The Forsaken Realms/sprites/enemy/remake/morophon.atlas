@@ -1,0 +1,143 @@
+morophon.png
+size: 980,466
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 67
+Idle
+  xy: 70, 64
+  size: 70, 67
+Idle
+  xy: 140, 64
+  size: 70, 67
+Idle
+  xy: 210, 64
+  size: 70, 67
+Idle
+  xy: 280, 64
+  size: 70, 67
+Idle
+  xy: 350, 64
+  size: 70, 67
+Idle
+  xy: 420, 64
+  size: 70, 67
+Idle
+  xy: 490, 64
+  size: 70, 67
+Idle
+  xy: 560, 64
+  size: 70, 67
+Idle
+  xy: 630, 64
+  size: 70, 67
+Walk
+  xy: 0, 131
+  size: 70, 67
+Walk
+  xy: 70, 131
+  size: 70, 67
+Walk
+  xy: 140, 131
+  size: 70, 67
+Walk
+  xy: 210, 131
+  size: 70, 67
+Attack
+  xy: 0, 198
+  size: 70, 67
+Attack
+  xy: 70, 198
+  size: 70, 67
+Attack
+  xy: 140, 198
+  size: 70, 67
+Attack
+  xy: 210, 198
+  size: 70, 67
+Attack
+  xy: 280, 198
+  size: 70, 67
+Attack
+  xy: 350, 198
+  size: 70, 67
+Hit
+  xy: 0, 265
+  size: 70, 67
+Hit
+  xy: 70, 265
+  size: 70, 67
+Hit
+  xy: 140, 265
+  size: 70, 67
+Hit
+  xy: 210, 265
+  size: 70, 67
+Hit
+  xy: 280, 265
+  size: 70, 67
+Death
+  xy: 0, 332
+  size: 70, 67
+Death
+  xy: 70, 332
+  size: 70, 67
+Death
+  xy: 140, 332
+  size: 70, 67
+Death
+  xy: 210, 332
+  size: 70, 67
+Death
+  xy: 280, 332
+  size: 70, 67
+Death
+  xy: 350, 332
+  size: 70, 67
+Death
+  xy: 420, 332
+  size: 70, 67
+Death
+  xy: 490, 332
+  size: 70, 67
+Death
+  xy: 560, 332
+  size: 70, 67
+Death
+  xy: 630, 332
+  size: 70, 67
+Death
+  xy: 700, 332
+  size: 70, 67
+Death
+  xy: 770, 332
+  size: 70, 67
+Death
+  xy: 840, 332
+  size: 70, 67
+Death
+  xy: 910, 332
+  size: 70, 67
+Wake
+  xy: 0, 399
+  size: 70, 67
+Wake
+  xy: 70, 399
+  size: 70, 67
+Wake
+  xy: 140, 399
+  size: 70, 67
+Wake
+  xy: 210, 399
+  size: 70, 67
+Wake
+  xy: 280, 399
+  size: 70, 67
+Wake
+  xy: 350, 399
+  size: 70, 67

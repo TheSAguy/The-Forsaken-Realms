@@ -14264,6 +14264,51 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 412: six more enemy groups redrawn with the creature generator, 42 enemies (2026-10-03)
+
+The next ten low-resolution sprites of the remake survey were made by a cloud session of the creature generator
+(Procedural Pixel Creatures, the user's private copy, branch `cloud/next-10`) and checked here. The local
+regeneration matched the cloud's exactly: atlases byte-identical, every PNG pixel-identical, and all generator tests
+passed. The user approved six groups. The rabbit, bear and owl go back for anatomy work ("the bear and rabbit's butts
+are wrong", "the owl does not look like it can fly"), and so does the squirrel ("a slightly bushier tail, maybe a
+smaller body").
+
+Every enemy that shared one of the six sprites now has its own creature, with its own seed and colors from its card art:
+- **Ancient Silver Dragon** (13 enemies, with Ramos, Chromium, Illuna, Shadrix, Dromar, Treva, Kairi, Shiko, Kyodai,
+  Arcades Sabboth, Chromium (Boss), Sivitri): the green dragon's compact heraldic pose and a silver coat.
+- **Fire Dragon** (9, with Palladia-Mors, Numot, Vadrok, Velomachus, Dragonhawk, Atsushi, Khorvath and Sylvia,
+  Nicol Bolas (Boss)): glowing eyes. Its attack is the compact Rear, because its own wing buffet passed the height cap.
+- **Ooze Boss** (8, with Morophon, The Mimeoplasm, Aeve, Experiment Kraj, Mitotic Ultimus, Felix, Umori): giant
+  slimes. The boss hops (the user's pick over a pulsing glide).
+- **Troll** (5, with Grenzo, Obeka, Svella, Grismold): a hunched troll with a long nose and a club.
+- **Snake** (4, with Koma, Kura, Aesi): coiled and reared at rest, and it crawls with its front still raised.
+- **Spider** (3, with Watcher in the Web, Arasta): eight long splayed legs and a round abdomen.
+
+Card-art colors: 11 were corrected by hand after a side-by-side check against the card art. For these the palette
+had taken the art's background (a moon, a sky, a black void) instead of the creature:
+- Ramos bronze; Chromium and Chromium (Boss) chrome silver; Shadrix white; Treva teal
+- Nicol Bolas (Boss) black with gold horns; Experiment Kraj purple
+- Obeka blue skin; Grismold moss green (no white patches)
+- Koma blue; Aesi sea green
+
+Sizes, checked with `enemy_scale.sprite_body`:
+- `install_remakes.py` + `enemy_scale.py --write`: 33 rank scales. The 8 bosses keep their drawn size: Ancient
+  Silver Dragon, Shadrix, Arcades Sabboth, Chromium (Boss), Velomachus, Khorvath and Sylvia, Nicol Bolas (Boss),
+  Ooze Boss.
+- Two draw their idle smaller than their size, because their walk is longer than the idle; the user accepted both:
+  - the Snake's coiled idle draws at about 70% of its rank size
+  - the Ooze Boss's idle draws at about 83% of its drawn size (the hop's landing splat sets the measure)
+
+Data only: 84 new files in `sprites/enemy/remake/`, and `world/enemies.json` changes 42 sprites and 41 scales.
+
+Checks:
+- `validate_plane_data.py`: no sprite or enemy findings (only the existing deck and enum notes).
+- `sprite_artifact_audit.py --only remake`: two "needs eyes" notes on Arasta and Spider. Each is a leg tip's ground
+  shadow, 1 px apart from the rest; it is part of the sprite and left as is.
+
+Console (F9): `spawn enemy "Ancient Silver Dragon"`, `spawn enemy "Fire Dragon"`, `spawn enemy "Ooze Boss"`,
+`spawn enemy Troll`, `spawn enemy Snake`, `spawn enemy Spider`.
+
 ## Round 411b: each Wall card says why it is on the field (2026-10-03)
 
 The user, still drawing the real art: "For now, we can use your mock-up. Add to the Card a text line. Saying why it's

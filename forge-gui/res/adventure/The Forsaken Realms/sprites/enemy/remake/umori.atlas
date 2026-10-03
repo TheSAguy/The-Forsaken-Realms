@@ -1,0 +1,125 @@
+umori.png
+size: 300,376
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 30, 52
+Idle
+  xy: 30, 64
+  size: 30, 52
+Idle
+  xy: 60, 64
+  size: 30, 52
+Idle
+  xy: 90, 64
+  size: 30, 52
+Idle
+  xy: 120, 64
+  size: 30, 52
+Idle
+  xy: 150, 64
+  size: 30, 52
+Idle
+  xy: 180, 64
+  size: 30, 52
+Idle
+  xy: 210, 64
+  size: 30, 52
+Idle
+  xy: 240, 64
+  size: 30, 52
+Idle
+  xy: 270, 64
+  size: 30, 52
+Walk
+  xy: 0, 116
+  size: 30, 52
+Walk
+  xy: 30, 116
+  size: 30, 52
+Walk
+  xy: 60, 116
+  size: 30, 52
+Walk
+  xy: 90, 116
+  size: 30, 52
+Attack
+  xy: 0, 168
+  size: 30, 52
+Attack
+  xy: 30, 168
+  size: 30, 52
+Attack
+  xy: 60, 168
+  size: 30, 52
+Attack
+  xy: 90, 168
+  size: 30, 52
+Attack
+  xy: 120, 168
+  size: 30, 52
+Attack
+  xy: 150, 168
+  size: 30, 52
+Attack
+  xy: 180, 168
+  size: 30, 52
+Hit
+  xy: 0, 220
+  size: 30, 52
+Hit
+  xy: 30, 220
+  size: 30, 52
+Hit
+  xy: 60, 220
+  size: 30, 52
+Death
+  xy: 0, 272
+  size: 30, 52
+Death
+  xy: 30, 272
+  size: 30, 52
+Death
+  xy: 60, 272
+  size: 30, 52
+Death
+  xy: 90, 272
+  size: 30, 52
+Death
+  xy: 120, 272
+  size: 30, 52
+Death
+  xy: 150, 272
+  size: 30, 52
+Death
+  xy: 180, 272
+  size: 30, 52
+Death
+  xy: 210, 272
+  size: 30, 52
+Death
+  xy: 240, 272
+  size: 30, 52
+Death
+  xy: 270, 272
+  size: 30, 52
+Wake
+  xy: 0, 324
+  size: 30, 52
+Wake
+  xy: 30, 324
+  size: 30, 52
+Wake
+  xy: 60, 324
+  size: 30, 52
+Wake
+  xy: 90, 324
+  size: 30, 52
+Wake
+  xy: 120, 324
+  size: 30, 52

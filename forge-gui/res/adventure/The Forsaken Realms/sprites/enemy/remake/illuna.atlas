@@ -1,0 +1,170 @@
+illuna.png
+size: 1280,418
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 59
+Idle
+  xy: 80, 64
+  size: 80, 59
+Idle
+  xy: 160, 64
+  size: 80, 59
+Idle
+  xy: 240, 64
+  size: 80, 59
+Idle
+  xy: 320, 64
+  size: 80, 59
+Idle
+  xy: 400, 64
+  size: 80, 59
+Idle
+  xy: 480, 64
+  size: 80, 59
+Idle
+  xy: 560, 64
+  size: 80, 59
+Idle
+  xy: 640, 64
+  size: 80, 59
+Idle
+  xy: 720, 64
+  size: 80, 59
+Walk
+  xy: 0, 123
+  size: 80, 59
+Walk
+  xy: 80, 123
+  size: 80, 59
+Walk
+  xy: 160, 123
+  size: 80, 59
+Walk
+  xy: 240, 123
+  size: 80, 59
+Attack
+  xy: 0, 182
+  size: 80, 59
+Attack
+  xy: 80, 182
+  size: 80, 59
+Attack
+  xy: 160, 182
+  size: 80, 59
+Attack
+  xy: 240, 182
+  size: 80, 59
+Attack
+  xy: 320, 182
+  size: 80, 59
+Attack
+  xy: 400, 182
+  size: 80, 59
+Attack
+  xy: 480, 182
+  size: 80, 59
+Attack
+  xy: 560, 182
+  size: 80, 59
+Attack
+  xy: 640, 182
+  size: 80, 59
+Attack
+  xy: 720, 182
+  size: 80, 59
+Hit
+  xy: 0, 241
+  size: 80, 59
+Hit
+  xy: 80, 241
+  size: 80, 59
+Hit
+  xy: 160, 241
+  size: 80, 59
+Hit
+  xy: 240, 241
+  size: 80, 59
+Hit
+  xy: 320, 241
+  size: 80, 59
+Hit
+  xy: 400, 241
+  size: 80, 59
+Death
+  xy: 0, 300
+  size: 80, 59
+Death
+  xy: 80, 300
+  size: 80, 59
+Death
+  xy: 160, 300
+  size: 80, 59
+Death
+  xy: 240, 300
+  size: 80, 59
+Death
+  xy: 320, 300
+  size: 80, 59
+Death
+  xy: 400, 300
+  size: 80, 59
+Death
+  xy: 480, 300
+  size: 80, 59
+Death
+  xy: 560, 300
+  size: 80, 59
+Death
+  xy: 640, 300
+  size: 80, 59
+Death
+  xy: 720, 300
+  size: 80, 59
+Death
+  xy: 800, 300
+  size: 80, 59
+Death
+  xy: 880, 300
+  size: 80, 59
+Death
+  xy: 960, 300
+  size: 80, 59
+Death
+  xy: 1040, 300
+  size: 80, 59
+Death
+  xy: 1120, 300
+  size: 80, 59
+Death
+  xy: 1200, 300
+  size: 80, 59
+Wake
+  xy: 0, 359
+  size: 80, 59
+Wake
+  xy: 80, 359
+  size: 80, 59
+Wake
+  xy: 160, 359
+  size: 80, 59
+Wake
+  xy: 240, 359
+  size: 80, 59
+Wake
+  xy: 320, 359
+  size: 80, 59
+Wake
+  xy: 400, 359
+  size: 80, 59
+Wake
+  xy: 480, 359
+  size: 80, 59
+Wake
+  xy: 560, 359
+  size: 80, 59

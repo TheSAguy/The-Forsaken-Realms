@@ -1,0 +1,152 @@
+palladia_mors.png
+size: 1176,400
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 56
+Idle
+  xy: 84, 64
+  size: 84, 56
+Idle
+  xy: 168, 64
+  size: 84, 56
+Idle
+  xy: 252, 64
+  size: 84, 56
+Idle
+  xy: 336, 64
+  size: 84, 56
+Idle
+  xy: 420, 64
+  size: 84, 56
+Idle
+  xy: 504, 64
+  size: 84, 56
+Idle
+  xy: 588, 64
+  size: 84, 56
+Idle
+  xy: 672, 64
+  size: 84, 56
+Idle
+  xy: 756, 64
+  size: 84, 56
+Walk
+  xy: 0, 120
+  size: 84, 56
+Walk
+  xy: 84, 120
+  size: 84, 56
+Walk
+  xy: 168, 120
+  size: 84, 56
+Walk
+  xy: 252, 120
+  size: 84, 56
+Attack
+  xy: 0, 176
+  size: 84, 56
+Attack
+  xy: 84, 176
+  size: 84, 56
+Attack
+  xy: 168, 176
+  size: 84, 56
+Attack
+  xy: 252, 176
+  size: 84, 56
+Attack
+  xy: 336, 176
+  size: 84, 56
+Attack
+  xy: 420, 176
+  size: 84, 56
+Attack
+  xy: 504, 176
+  size: 84, 56
+Attack
+  xy: 588, 176
+  size: 84, 56
+Hit
+  xy: 0, 232
+  size: 84, 56
+Hit
+  xy: 84, 232
+  size: 84, 56
+Hit
+  xy: 168, 232
+  size: 84, 56
+Hit
+  xy: 252, 232
+  size: 84, 56
+Hit
+  xy: 336, 232
+  size: 84, 56
+Death
+  xy: 0, 288
+  size: 84, 56
+Death
+  xy: 84, 288
+  size: 84, 56
+Death
+  xy: 168, 288
+  size: 84, 56
+Death
+  xy: 252, 288
+  size: 84, 56
+Death
+  xy: 336, 288
+  size: 84, 56
+Death
+  xy: 420, 288
+  size: 84, 56
+Death
+  xy: 504, 288
+  size: 84, 56
+Death
+  xy: 588, 288
+  size: 84, 56
+Death
+  xy: 672, 288
+  size: 84, 56
+Death
+  xy: 756, 288
+  size: 84, 56
+Death
+  xy: 840, 288
+  size: 84, 56
+Death
+  xy: 924, 288
+  size: 84, 56
+Death
+  xy: 1008, 288
+  size: 84, 56
+Death
+  xy: 1092, 288
+  size: 84, 56
+Wake
+  xy: 0, 344
+  size: 84, 56
+Wake
+  xy: 84, 344
+  size: 84, 56
+Wake
+  xy: 168, 344
+  size: 84, 56
+Wake
+  xy: 252, 344
+  size: 84, 56
+Wake
+  xy: 336, 344
+  size: 84, 56
+Wake
+  xy: 420, 344
+  size: 84, 56
+Wake
+  xy: 504, 344
+  size: 84, 56

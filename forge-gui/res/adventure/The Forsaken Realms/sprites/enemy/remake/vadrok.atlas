@@ -1,0 +1,146 @@
+vadrok.png
+size: 1066,364
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 50
+Idle
+  xy: 82, 64
+  size: 82, 50
+Idle
+  xy: 164, 64
+  size: 82, 50
+Idle
+  xy: 246, 64
+  size: 82, 50
+Idle
+  xy: 328, 64
+  size: 82, 50
+Idle
+  xy: 410, 64
+  size: 82, 50
+Idle
+  xy: 492, 64
+  size: 82, 50
+Idle
+  xy: 574, 64
+  size: 82, 50
+Idle
+  xy: 656, 64
+  size: 82, 50
+Idle
+  xy: 738, 64
+  size: 82, 50
+Walk
+  xy: 0, 114
+  size: 82, 50
+Walk
+  xy: 82, 114
+  size: 82, 50
+Walk
+  xy: 164, 114
+  size: 82, 50
+Walk
+  xy: 246, 114
+  size: 82, 50
+Attack
+  xy: 0, 164
+  size: 82, 50
+Attack
+  xy: 82, 164
+  size: 82, 50
+Attack
+  xy: 164, 164
+  size: 82, 50
+Attack
+  xy: 246, 164
+  size: 82, 50
+Attack
+  xy: 328, 164
+  size: 82, 50
+Attack
+  xy: 410, 164
+  size: 82, 50
+Attack
+  xy: 492, 164
+  size: 82, 50
+Attack
+  xy: 574, 164
+  size: 82, 50
+Hit
+  xy: 0, 214
+  size: 82, 50
+Hit
+  xy: 82, 214
+  size: 82, 50
+Hit
+  xy: 164, 214
+  size: 82, 50
+Hit
+  xy: 246, 214
+  size: 82, 50
+Hit
+  xy: 328, 214
+  size: 82, 50
+Death
+  xy: 0, 264
+  size: 82, 50
+Death
+  xy: 82, 264
+  size: 82, 50
+Death
+  xy: 164, 264
+  size: 82, 50
+Death
+  xy: 246, 264
+  size: 82, 50
+Death
+  xy: 328, 264
+  size: 82, 50
+Death
+  xy: 410, 264
+  size: 82, 50
+Death
+  xy: 492, 264
+  size: 82, 50
+Death
+  xy: 574, 264
+  size: 82, 50
+Death
+  xy: 656, 264
+  size: 82, 50
+Death
+  xy: 738, 264
+  size: 82, 50
+Death
+  xy: 820, 264
+  size: 82, 50
+Death
+  xy: 902, 264
+  size: 82, 50
+Death
+  xy: 984, 264
+  size: 82, 50
+Wake
+  xy: 0, 314
+  size: 82, 50
+Wake
+  xy: 82, 314
+  size: 82, 50
+Wake
+  xy: 164, 314
+  size: 82, 50
+Wake
+  xy: 246, 314
+  size: 82, 50
+Wake
+  xy: 328, 314
+  size: 82, 50
+Wake
+  xy: 410, 314
+  size: 82, 50

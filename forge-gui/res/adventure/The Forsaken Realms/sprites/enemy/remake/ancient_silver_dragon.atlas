@@ -1,0 +1,167 @@
+ancient_silver_dragon.png
+size: 1760,904
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 110, 140
+Idle
+  xy: 110, 64
+  size: 110, 140
+Idle
+  xy: 220, 64
+  size: 110, 140
+Idle
+  xy: 330, 64
+  size: 110, 140
+Idle
+  xy: 440, 64
+  size: 110, 140
+Idle
+  xy: 550, 64
+  size: 110, 140
+Idle
+  xy: 660, 64
+  size: 110, 140
+Idle
+  xy: 770, 64
+  size: 110, 140
+Idle
+  xy: 880, 64
+  size: 110, 140
+Idle
+  xy: 990, 64
+  size: 110, 140
+Walk
+  xy: 0, 204
+  size: 110, 140
+Walk
+  xy: 110, 204
+  size: 110, 140
+Walk
+  xy: 220, 204
+  size: 110, 140
+Walk
+  xy: 330, 204
+  size: 110, 140
+Attack
+  xy: 0, 344
+  size: 110, 140
+Attack
+  xy: 110, 344
+  size: 110, 140
+Attack
+  xy: 220, 344
+  size: 110, 140
+Attack
+  xy: 330, 344
+  size: 110, 140
+Attack
+  xy: 440, 344
+  size: 110, 140
+Attack
+  xy: 550, 344
+  size: 110, 140
+Attack
+  xy: 660, 344
+  size: 110, 140
+Attack
+  xy: 770, 344
+  size: 110, 140
+Attack
+  xy: 880, 344
+  size: 110, 140
+Hit
+  xy: 0, 484
+  size: 110, 140
+Hit
+  xy: 110, 484
+  size: 110, 140
+Hit
+  xy: 220, 484
+  size: 110, 140
+Hit
+  xy: 330, 484
+  size: 110, 140
+Hit
+  xy: 440, 484
+  size: 110, 140
+Hit
+  xy: 550, 484
+  size: 110, 140
+Death
+  xy: 0, 624
+  size: 110, 140
+Death
+  xy: 110, 624
+  size: 110, 140
+Death
+  xy: 220, 624
+  size: 110, 140
+Death
+  xy: 330, 624
+  size: 110, 140
+Death
+  xy: 440, 624
+  size: 110, 140
+Death
+  xy: 550, 624
+  size: 110, 140
+Death
+  xy: 660, 624
+  size: 110, 140
+Death
+  xy: 770, 624
+  size: 110, 140
+Death
+  xy: 880, 624
+  size: 110, 140
+Death
+  xy: 990, 624
+  size: 110, 140
+Death
+  xy: 1100, 624
+  size: 110, 140
+Death
+  xy: 1210, 624
+  size: 110, 140
+Death
+  xy: 1320, 624
+  size: 110, 140
+Death
+  xy: 1430, 624
+  size: 110, 140
+Death
+  xy: 1540, 624
+  size: 110, 140
+Death
+  xy: 1650, 624
+  size: 110, 140
+Wake
+  xy: 0, 764
+  size: 110, 140
+Wake
+  xy: 110, 764
+  size: 110, 140
+Wake
+  xy: 220, 764
+  size: 110, 140
+Wake
+  xy: 330, 764
+  size: 110, 140
+Wake
+  xy: 440, 764
+  size: 110, 140
+Wake
+  xy: 550, 764
+  size: 110, 140
+Wake
+  xy: 660, 764
+  size: 110, 140
+Wake
+  xy: 770, 764
+  size: 110, 140

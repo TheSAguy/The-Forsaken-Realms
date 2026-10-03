@@ -1,0 +1,146 @@
+kairi.png
+size: 984,370
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 51
+Idle
+  xy: 82, 64
+  size: 82, 51
+Idle
+  xy: 164, 64
+  size: 82, 51
+Idle
+  xy: 246, 64
+  size: 82, 51
+Idle
+  xy: 328, 64
+  size: 82, 51
+Idle
+  xy: 410, 64
+  size: 82, 51
+Idle
+  xy: 492, 64
+  size: 82, 51
+Idle
+  xy: 574, 64
+  size: 82, 51
+Idle
+  xy: 656, 64
+  size: 82, 51
+Idle
+  xy: 738, 64
+  size: 82, 51
+Walk
+  xy: 0, 115
+  size: 82, 51
+Walk
+  xy: 82, 115
+  size: 82, 51
+Walk
+  xy: 164, 115
+  size: 82, 51
+Walk
+  xy: 246, 115
+  size: 82, 51
+Attack
+  xy: 0, 166
+  size: 82, 51
+Attack
+  xy: 82, 166
+  size: 82, 51
+Attack
+  xy: 164, 166
+  size: 82, 51
+Attack
+  xy: 246, 166
+  size: 82, 51
+Attack
+  xy: 328, 166
+  size: 82, 51
+Attack
+  xy: 410, 166
+  size: 82, 51
+Attack
+  xy: 492, 166
+  size: 82, 51
+Attack
+  xy: 574, 166
+  size: 82, 51
+Hit
+  xy: 0, 217
+  size: 82, 51
+Hit
+  xy: 82, 217
+  size: 82, 51
+Hit
+  xy: 164, 217
+  size: 82, 51
+Hit
+  xy: 246, 217
+  size: 82, 51
+Hit
+  xy: 328, 217
+  size: 82, 51
+Death
+  xy: 0, 268
+  size: 82, 51
+Death
+  xy: 82, 268
+  size: 82, 51
+Death
+  xy: 164, 268
+  size: 82, 51
+Death
+  xy: 246, 268
+  size: 82, 51
+Death
+  xy: 328, 268
+  size: 82, 51
+Death
+  xy: 410, 268
+  size: 82, 51
+Death
+  xy: 492, 268
+  size: 82, 51
+Death
+  xy: 574, 268
+  size: 82, 51
+Death
+  xy: 656, 268
+  size: 82, 51
+Death
+  xy: 738, 268
+  size: 82, 51
+Death
+  xy: 820, 268
+  size: 82, 51
+Death
+  xy: 902, 268
+  size: 82, 51
+Wake
+  xy: 0, 319
+  size: 82, 51
+Wake
+  xy: 82, 319
+  size: 82, 51
+Wake
+  xy: 164, 319
+  size: 82, 51
+Wake
+  xy: 246, 319
+  size: 82, 51
+Wake
+  xy: 328, 319
+  size: 82, 51
+Wake
+  xy: 410, 319
+  size: 82, 51
+Wake
+  xy: 492, 319
+  size: 82, 51

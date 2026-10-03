@@ -987,7 +987,7 @@
     {
         "name": "Ancient Silver Dragon",
         "nameOverride": "",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/ancient_silver_dragon.atlas",
         "deck": [
             "decks/miniboss/bluedragon.dck"
         ],
@@ -997,7 +997,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 1.3929,
+        "scale": 0.3305,
         "life": 18,
         "rewards": [
             {
@@ -11862,7 +11862,7 @@
     {
         "name": "Fire Dragon",
         "nameOverride": "",
-        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "sprite": "sprites/enemy/remake/fire_dragon.atlas",
         "deck": [
             "decks/standard/firedragon.dck"
         ],
@@ -11870,7 +11870,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 36,
-        "scale": 1.0,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -23820,7 +23820,7 @@
     },
     {
         "name": "Ooze Boss",
-        "sprite": "sprites/enemy/ooze/giant_slime.atlas",
+        "sprite": "sprites/enemy/remake/ooze_boss.atlas",
         "deck": [
             "decks/miniboss/ooze_boss.dck"
         ],
@@ -23918,7 +23918,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 0.8914
+        "scale": 0.4127
     },
     {
         "name": "Orc Brute",
@@ -28442,7 +28442,7 @@
     },
     {
         "name": "Snake",
-        "sprite": "sprites/enemy/beast/reptile/big_snake.atlas",
+        "sprite": "sprites/enemy/remake/snake.atlas",
         "deck": [
             "decks/standard/snake.json"
         ],
@@ -28524,7 +28524,7 @@
             "IdentitySimic"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.2968
     },
     {
         "name": "Snow Wizard",
@@ -28856,7 +28856,7 @@
     },
     {
         "name": "Spider",
-        "sprite": "sprites/enemy/beast/arachnid/spider_black.atlas",
+        "sprite": "sprites/enemy/remake/spider.atlas",
         "deck": [
             "decks/standard/spider.json"
         ],
@@ -28939,7 +28939,7 @@
             "BiomeGreen"
         ],
         "tier": "Rare",
-        "scale": 1.4444
+        "scale": 0.3611
     },
     {
         "name": "Spiked Ravager",
@@ -30852,7 +30852,7 @@
     },
     {
         "name": "Troll",
-        "sprite": "sprites/enemy/giant/troll.atlas",
+        "sprite": "sprites/enemy/remake/troll.atlas",
         "deck": [
             "decks/standard/troll.json"
         ],
@@ -30926,7 +30926,7 @@
             "BiomeRed"
         ],
         "tier": "Rare",
-        "scale": 1.1818
+        "scale": 0.3171
     },
     {
         "name": "Turtle",
@@ -35263,7 +35263,7 @@
     },
     {
         "name": "Watcher in the Web",
-        "sprite": "sprites/enemy/beast/arachnid/spider_black.atlas",
+        "sprite": "sprites/enemy/remake/watcher_in_the_web.atlas",
         "deck": [
             "decks/standard/INN/inn_spider_easy.dck"
         ],
@@ -35332,7 +35332,7 @@
             "abandoned"
         ],
         "tier": "Common",
-        "scale": 1.4444
+        "scale": 0.5
     },
     {
         "name": "Wolfkin Outcast",
@@ -36937,14 +36937,14 @@
     },
     {
         "name": "Ramos",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/ramos.atlas",
         "deck": [
             "decks/legends/ramos.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.9286,
+        "scale": 0.2653,
         "life": 50,
         "rewards": [
             {
@@ -38586,13 +38586,13 @@
     },
     {
         "name": "Palladia-Mors",
-        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "sprite": "sprites/enemy/remake/palladia_mors.atlas",
         "deck": [
             "decks/legends/palladia-mors.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.325,
         "life": 40,
         "rewards": [
             {
@@ -38721,13 +38721,13 @@
     },
     {
         "name": "Chromium",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/chromium.atlas",
         "deck": [
             "decks/legends/chromium.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.9286,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -42831,14 +42831,14 @@
     },
     {
         "name": "Numot",
-        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "sprite": "sprites/enemy/remake/numot.atlas",
         "deck": [
             "decks/legends/numot.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 1.0,
+        "scale": 0.325,
         "life": 40,
         "rewards": [
             {
@@ -43592,13 +43592,13 @@
     },
     {
         "name": "Morophon",
-        "sprite": "sprites/enemy/ooze/giant_slime.atlas",
+        "sprite": "sprites/enemy/remake/morophon.atlas",
         "deck": [
             "decks/legends/morophon.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.3714,
+        "scale": 0.3186,
         "life": 40,
         "rewards": [
             {
@@ -44369,14 +44369,14 @@
     },
     {
         "name": "Koma",
-        "sprite": "sprites/enemy/beast/reptile/big_snake.atlas",
+        "sprite": "sprites/enemy/remake/koma.atlas",
         "deck": [
             "decks/legends/koma.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -44934,7 +44934,7 @@
     },
     {
         "name": "The Mimeoplasm",
-        "sprite": "sprites/enemy/ooze/giant_slime.atlas",
+        "sprite": "sprites/enemy/remake/the_mimeoplasm.atlas",
         "deck": [
             "decks/legends/the_mimeoplasm.dck"
         ],
@@ -47020,13 +47020,13 @@
     },
     {
         "name": "Grenzo",
-        "sprite": "sprites/enemy/giant/troll.atlas",
+        "sprite": "sprites/enemy/remake/grenzo.atlas",
         "deck": [
             "decks/legends/grenzo.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.1818,
+        "scale": 0.4062,
         "life": 30,
         "rewards": [
             {
@@ -48633,14 +48633,14 @@
     },
     {
         "name": "Illuna",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/illuna.atlas",
         "deck": [
             "decks/legends/illuna.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.9286,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -48816,14 +48816,14 @@
     },
     {
         "name": "Vadrok",
-        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "sprite": "sprites/enemy/remake/vadrok.atlas",
         "deck": [
             "decks/legends/vadrok.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -49185,14 +49185,14 @@
     },
     {
         "name": "Velomachus",
-        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "sprite": "sprites/enemy/remake/velomachus.atlas",
         "deck": [
             "decks/legends/velomachus.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.68,
+        "scale": 0.326,
         "life": 30,
         "rewards": [
             {
@@ -50765,14 +50765,14 @@
     },
     {
         "name": "Shadrix",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/shadrix.atlas",
         "deck": [
             "decks/legends/shadrix.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.68,
+        "scale": 0.3409,
         "life": 30,
         "rewards": [
             {
@@ -56249,14 +56249,14 @@
     },
     {
         "name": "Dragonhawk",
-        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "sprite": "sprites/enemy/remake/dragonhawk.atlas",
         "deck": [
             "decks/legends/dragonhawk.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0,
+        "scale": 0.2766,
         "life": 48,
         "rewards": [
             {
@@ -61233,14 +61233,14 @@
     },
     {
         "name": "Dromar",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/dromar.atlas",
         "deck": [
             "decks/legends/dromar.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.9286,
+        "scale": 0.3333,
         "life": 30,
         "rewards": [
             {
@@ -61378,14 +61378,14 @@
     },
     {
         "name": "Treva",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/treva.atlas",
         "deck": [
             "decks/legends/treva.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.9286,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -63683,14 +63683,14 @@
     },
     {
         "name": "Atsushi",
-        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "sprite": "sprites/enemy/remake/atsushi.atlas",
         "deck": [
             "decks/legends/atsushi.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0,
+        "scale": 0.2826,
         "life": 47,
         "rewards": [
             {
@@ -63823,14 +63823,14 @@
     },
     {
         "name": "Kairi",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/kairi.atlas",
         "deck": [
             "decks/legends/kairi.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 38,
-        "scale": 0.9286,
+        "scale": 0.3171,
         "life": 33,
         "rewards": [
             {
@@ -63898,14 +63898,14 @@
     },
     {
         "name": "Kura",
-        "sprite": "sprites/enemy/beast/reptile/big_snake.atlas",
+        "sprite": "sprites/enemy/remake/kura.atlas",
         "deck": [
             "decks/legends/kura.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 39,
-        "scale": 1.0833,
+        "scale": 0.325,
         "life": 32,
         "rewards": [
             {
@@ -64913,14 +64913,14 @@
     },
     {
         "name": "Aesi",
-        "sprite": "sprites/enemy/beast/reptile/big_snake.atlas",
+        "sprite": "sprites/enemy/remake/aesi.atlas",
         "deck": [
             "decks/legends/aesi.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.3939,
         "life": 30,
         "rewards": [
             {
@@ -65884,13 +65884,13 @@
     },
     {
         "name": "Aeve",
-        "sprite": "sprites/enemy/ooze/giant_slime.atlas",
+        "sprite": "sprites/enemy/remake/aeve.atlas",
         "deck": [
             "decks/legends/aeve.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.3714,
+        "scale": 0.3023,
         "life": 27,
         "rewards": [
             {
@@ -65952,13 +65952,13 @@
     },
     {
         "name": "Experiment Kraj",
-        "sprite": "sprites/enemy/ooze/giant_slime.atlas",
+        "sprite": "sprites/enemy/remake/experiment_kraj.atlas",
         "deck": [
             "decks/legends/experiment_kraj.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.3714,
+        "scale": 0.3283,
         "life": 30,
         "rewards": [
             {
@@ -66020,13 +66020,13 @@
     },
     {
         "name": "Mitotic Ultimus",
-        "sprite": "sprites/enemy/ooze/giant_slime.atlas",
+        "sprite": "sprites/enemy/remake/mitotic_ultimus.atlas",
         "deck": [
             "decks/legends/mitotic_ultimus.dck"
         ],
         "ai": "",
         "speed": 37,
-        "scale": 0.3714,
+        "scale": 0.3611,
         "life": 26,
         "rewards": [
             {
@@ -66988,13 +66988,13 @@
     },
     {
         "name": "Felix",
-        "sprite": "sprites/enemy/ooze/giant_slime.atlas",
+        "sprite": "sprites/enemy/remake/felix.atlas",
         "deck": [
             "decks/legends/felix.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.3714,
+        "scale": 0.3283,
         "life": 30,
         "rewards": [
             {
@@ -67270,13 +67270,13 @@
     },
     {
         "name": "Obeka",
-        "sprite": "sprites/enemy/giant/troll.atlas",
+        "sprite": "sprites/enemy/remake/obeka.atlas",
         "deck": [
             "decks/legends/obeka.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -68059,13 +68059,13 @@
     },
     {
         "name": "Arasta",
-        "sprite": "sprites/enemy/beast/arachnid/spider_black.atlas",
+        "sprite": "sprites/enemy/remake/arasta.atlas",
         "deck": [
             "decks/legends/arasta.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.4444,
+        "scale": 0.3171,
         "life": 39,
         "rewards": [
             {
@@ -73165,7 +73165,7 @@
     },
     {
         "name": "Svella",
-        "sprite": "sprites/enemy/giant/troll.atlas",
+        "sprite": "sprites/enemy/remake/svella.atlas",
         "deck": [
             "decks/legends/svella.dck"
         ],
@@ -73229,7 +73229,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3939
     },
     {
         "name": "Baral",
@@ -76841,12 +76841,12 @@
     },
     {
         "name": "Shiko",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/shiko.atlas",
         "deck": [
             "decks/legends/shiko.dck"
         ],
         "ai": "",
-        "scale": 0.9286,
+        "scale": 0.4062,
         "flying": true,
         "speed": 34,
         "life": 20,
@@ -78832,12 +78832,12 @@
     },
     {
         "name": "Umori",
-        "sprite": "sprites/enemy/ooze/giant_slime.atlas",
+        "sprite": "sprites/enemy/remake/umori.atlas",
         "deck": [
             "decks/legends/umori.dck"
         ],
         "ai": "",
-        "scale": 0.3714,
+        "scale": 0.4062,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -86428,7 +86428,7 @@
     },
     {
         "name": "Grismold",
-        "sprite": "sprites/enemy/giant/troll.atlas",
+        "sprite": "sprites/enemy/remake/grismold.atlas",
         "deck": [
             "decks/legends/grismold.dck"
         ],
@@ -86492,7 +86492,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.4062
     },
     {
         "name": "The Raven Man",
@@ -88937,12 +88937,12 @@
     },
     {
         "name": "Kyodai",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/kyodai.atlas",
         "deck": [
             "decks/legends/kyodai.dck"
         ],
         "ai": "",
-        "scale": 0.9286,
+        "scale": 0.3333,
         "flying": true,
         "speed": 44,
         "life": 30,
@@ -94791,12 +94791,12 @@
     },
     {
         "name": "Khorvath and Sylvia",
-        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "sprite": "sprites/enemy/remake/khorvath_and_sylvia.atlas",
         "deck": [
             "decks/legends/khorvath_and_sylvia.dck"
         ],
         "ai": "",
-        "scale": 1.68,
+        "scale": 0.3309,
         "flying": true,
         "speed": 44,
         "life": 20,
@@ -121507,7 +121507,7 @@
     },
     {
         "name": "Arcades Sabboth",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/arcades_sabboth.atlas",
         "deck": [
             "decks/miniboss/Arcades Sabboth.dck"
         ],
@@ -121515,7 +121515,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 1.68,
+        "scale": 0.3675,
         "life": 40,
         "rewards": [
             {
@@ -121743,7 +121743,7 @@
     },
     {
         "name": "Chromium (Boss)",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/chromium_boss.atlas",
         "deck": [
             "decks/miniboss/chromium.dck"
         ],
@@ -121751,7 +121751,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 1.68,
+        "scale": 0.3675,
         "life": 40,
         "rewards": [
             {
@@ -121979,7 +121979,7 @@
     },
     {
         "name": "Nicol Bolas (Boss)",
-        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "sprite": "sprites/enemy/remake/nicol_bolas_boss.atlas",
         "deck": [
             "decks/miniboss/nicol bolas.dck"
         ],
@@ -121987,7 +121987,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 1.68,
+        "scale": 0.3467,
         "life": 40,
         "rewards": [
             {
@@ -124001,13 +124001,13 @@
     },
     {
         "name": "Sivitri",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/remake/sivitri.atlas",
         "deck": [
             "decks/legends/sivitri.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.9286,
+        "scale": 0.325,
         "life": 80,
         "rewards": [
             {

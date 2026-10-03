@@ -1,0 +1,170 @@
+ramos.png
+size: 1632,460
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 102, 66
+Idle
+  xy: 102, 64
+  size: 102, 66
+Idle
+  xy: 204, 64
+  size: 102, 66
+Idle
+  xy: 306, 64
+  size: 102, 66
+Idle
+  xy: 408, 64
+  size: 102, 66
+Idle
+  xy: 510, 64
+  size: 102, 66
+Idle
+  xy: 612, 64
+  size: 102, 66
+Idle
+  xy: 714, 64
+  size: 102, 66
+Idle
+  xy: 816, 64
+  size: 102, 66
+Idle
+  xy: 918, 64
+  size: 102, 66
+Walk
+  xy: 0, 130
+  size: 102, 66
+Walk
+  xy: 102, 130
+  size: 102, 66
+Walk
+  xy: 204, 130
+  size: 102, 66
+Walk
+  xy: 306, 130
+  size: 102, 66
+Attack
+  xy: 0, 196
+  size: 102, 66
+Attack
+  xy: 102, 196
+  size: 102, 66
+Attack
+  xy: 204, 196
+  size: 102, 66
+Attack
+  xy: 306, 196
+  size: 102, 66
+Attack
+  xy: 408, 196
+  size: 102, 66
+Attack
+  xy: 510, 196
+  size: 102, 66
+Attack
+  xy: 612, 196
+  size: 102, 66
+Attack
+  xy: 714, 196
+  size: 102, 66
+Attack
+  xy: 816, 196
+  size: 102, 66
+Attack
+  xy: 918, 196
+  size: 102, 66
+Hit
+  xy: 0, 262
+  size: 102, 66
+Hit
+  xy: 102, 262
+  size: 102, 66
+Hit
+  xy: 204, 262
+  size: 102, 66
+Hit
+  xy: 306, 262
+  size: 102, 66
+Hit
+  xy: 408, 262
+  size: 102, 66
+Hit
+  xy: 510, 262
+  size: 102, 66
+Death
+  xy: 0, 328
+  size: 102, 66
+Death
+  xy: 102, 328
+  size: 102, 66
+Death
+  xy: 204, 328
+  size: 102, 66
+Death
+  xy: 306, 328
+  size: 102, 66
+Death
+  xy: 408, 328
+  size: 102, 66
+Death
+  xy: 510, 328
+  size: 102, 66
+Death
+  xy: 612, 328
+  size: 102, 66
+Death
+  xy: 714, 328
+  size: 102, 66
+Death
+  xy: 816, 328
+  size: 102, 66
+Death
+  xy: 918, 328
+  size: 102, 66
+Death
+  xy: 1020, 328
+  size: 102, 66
+Death
+  xy: 1122, 328
+  size: 102, 66
+Death
+  xy: 1224, 328
+  size: 102, 66
+Death
+  xy: 1326, 328
+  size: 102, 66
+Death
+  xy: 1428, 328
+  size: 102, 66
+Death
+  xy: 1530, 328
+  size: 102, 66
+Wake
+  xy: 0, 394
+  size: 102, 66
+Wake
+  xy: 102, 394
+  size: 102, 66
+Wake
+  xy: 204, 394
+  size: 102, 66
+Wake
+  xy: 306, 394
+  size: 102, 66
+Wake
+  xy: 408, 394
+  size: 102, 66
+Wake
+  xy: 510, 394
+  size: 102, 66
+Wake
+  xy: 612, 394
+  size: 102, 66
+Wake
+  xy: 714, 394
+  size: 102, 66

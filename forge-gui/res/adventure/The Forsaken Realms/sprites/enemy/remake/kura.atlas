@@ -1,0 +1,146 @@
+kura.png
+size: 1792,388
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 128, 54
+Idle
+  xy: 128, 64
+  size: 128, 54
+Idle
+  xy: 256, 64
+  size: 128, 54
+Idle
+  xy: 384, 64
+  size: 128, 54
+Idle
+  xy: 512, 64
+  size: 128, 54
+Idle
+  xy: 640, 64
+  size: 128, 54
+Idle
+  xy: 768, 64
+  size: 128, 54
+Idle
+  xy: 896, 64
+  size: 128, 54
+Idle
+  xy: 1024, 64
+  size: 128, 54
+Idle
+  xy: 1152, 64
+  size: 128, 54
+Walk
+  xy: 0, 118
+  size: 128, 54
+Walk
+  xy: 128, 118
+  size: 128, 54
+Walk
+  xy: 256, 118
+  size: 128, 54
+Walk
+  xy: 384, 118
+  size: 128, 54
+Attack
+  xy: 0, 172
+  size: 128, 54
+Attack
+  xy: 128, 172
+  size: 128, 54
+Attack
+  xy: 256, 172
+  size: 128, 54
+Attack
+  xy: 384, 172
+  size: 128, 54
+Attack
+  xy: 512, 172
+  size: 128, 54
+Attack
+  xy: 640, 172
+  size: 128, 54
+Hit
+  xy: 0, 226
+  size: 128, 54
+Hit
+  xy: 128, 226
+  size: 128, 54
+Hit
+  xy: 256, 226
+  size: 128, 54
+Hit
+  xy: 384, 226
+  size: 128, 54
+Hit
+  xy: 512, 226
+  size: 128, 54
+Death
+  xy: 0, 280
+  size: 128, 54
+Death
+  xy: 128, 280
+  size: 128, 54
+Death
+  xy: 256, 280
+  size: 128, 54
+Death
+  xy: 384, 280
+  size: 128, 54
+Death
+  xy: 512, 280
+  size: 128, 54
+Death
+  xy: 640, 280
+  size: 128, 54
+Death
+  xy: 768, 280
+  size: 128, 54
+Death
+  xy: 896, 280
+  size: 128, 54
+Death
+  xy: 1024, 280
+  size: 128, 54
+Death
+  xy: 1152, 280
+  size: 128, 54
+Death
+  xy: 1280, 280
+  size: 128, 54
+Death
+  xy: 1408, 280
+  size: 128, 54
+Death
+  xy: 1536, 280
+  size: 128, 54
+Death
+  xy: 1664, 280
+  size: 128, 54
+Wake
+  xy: 0, 334
+  size: 128, 54
+Wake
+  xy: 128, 334
+  size: 128, 54
+Wake
+  xy: 256, 334
+  size: 128, 54
+Wake
+  xy: 384, 334
+  size: 128, 54
+Wake
+  xy: 512, 334
+  size: 128, 54
+Wake
+  xy: 640, 334
+  size: 128, 54
+Wake
+  xy: 768, 334
+  size: 128, 54

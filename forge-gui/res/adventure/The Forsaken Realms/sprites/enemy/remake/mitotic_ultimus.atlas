@@ -1,0 +1,137 @@
+mitotic_ultimus.png
+size: 744,382
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 53
+Idle
+  xy: 62, 64
+  size: 62, 53
+Idle
+  xy: 124, 64
+  size: 62, 53
+Idle
+  xy: 186, 64
+  size: 62, 53
+Idle
+  xy: 248, 64
+  size: 62, 53
+Idle
+  xy: 310, 64
+  size: 62, 53
+Idle
+  xy: 372, 64
+  size: 62, 53
+Idle
+  xy: 434, 64
+  size: 62, 53
+Idle
+  xy: 496, 64
+  size: 62, 53
+Idle
+  xy: 558, 64
+  size: 62, 53
+Walk
+  xy: 0, 117
+  size: 62, 53
+Walk
+  xy: 62, 117
+  size: 62, 53
+Walk
+  xy: 124, 117
+  size: 62, 53
+Walk
+  xy: 186, 117
+  size: 62, 53
+Attack
+  xy: 0, 170
+  size: 62, 53
+Attack
+  xy: 62, 170
+  size: 62, 53
+Attack
+  xy: 124, 170
+  size: 62, 53
+Attack
+  xy: 186, 170
+  size: 62, 53
+Attack
+  xy: 248, 170
+  size: 62, 53
+Attack
+  xy: 310, 170
+  size: 62, 53
+Attack
+  xy: 372, 170
+  size: 62, 53
+Hit
+  xy: 0, 223
+  size: 62, 53
+Hit
+  xy: 62, 223
+  size: 62, 53
+Hit
+  xy: 124, 223
+  size: 62, 53
+Hit
+  xy: 186, 223
+  size: 62, 53
+Death
+  xy: 0, 276
+  size: 62, 53
+Death
+  xy: 62, 276
+  size: 62, 53
+Death
+  xy: 124, 276
+  size: 62, 53
+Death
+  xy: 186, 276
+  size: 62, 53
+Death
+  xy: 248, 276
+  size: 62, 53
+Death
+  xy: 310, 276
+  size: 62, 53
+Death
+  xy: 372, 276
+  size: 62, 53
+Death
+  xy: 434, 276
+  size: 62, 53
+Death
+  xy: 496, 276
+  size: 62, 53
+Death
+  xy: 558, 276
+  size: 62, 53
+Death
+  xy: 620, 276
+  size: 62, 53
+Death
+  xy: 682, 276
+  size: 62, 53
+Wake
+  xy: 0, 329
+  size: 62, 53
+Wake
+  xy: 62, 329
+  size: 62, 53
+Wake
+  xy: 124, 329
+  size: 62, 53
+Wake
+  xy: 186, 329
+  size: 62, 53
+Wake
+  xy: 248, 329
+  size: 62, 53
+Wake
+  xy: 310, 329
+  size: 62, 53

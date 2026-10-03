@@ -1,0 +1,137 @@
+shiko.png
+size: 744,316
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 42
+Idle
+  xy: 62, 64
+  size: 62, 42
+Idle
+  xy: 124, 64
+  size: 62, 42
+Idle
+  xy: 186, 64
+  size: 62, 42
+Idle
+  xy: 248, 64
+  size: 62, 42
+Idle
+  xy: 310, 64
+  size: 62, 42
+Idle
+  xy: 372, 64
+  size: 62, 42
+Idle
+  xy: 434, 64
+  size: 62, 42
+Idle
+  xy: 496, 64
+  size: 62, 42
+Idle
+  xy: 558, 64
+  size: 62, 42
+Walk
+  xy: 0, 106
+  size: 62, 42
+Walk
+  xy: 62, 106
+  size: 62, 42
+Walk
+  xy: 124, 106
+  size: 62, 42
+Walk
+  xy: 186, 106
+  size: 62, 42
+Attack
+  xy: 0, 148
+  size: 62, 42
+Attack
+  xy: 62, 148
+  size: 62, 42
+Attack
+  xy: 124, 148
+  size: 62, 42
+Attack
+  xy: 186, 148
+  size: 62, 42
+Attack
+  xy: 248, 148
+  size: 62, 42
+Attack
+  xy: 310, 148
+  size: 62, 42
+Attack
+  xy: 372, 148
+  size: 62, 42
+Hit
+  xy: 0, 190
+  size: 62, 42
+Hit
+  xy: 62, 190
+  size: 62, 42
+Hit
+  xy: 124, 190
+  size: 62, 42
+Hit
+  xy: 186, 190
+  size: 62, 42
+Death
+  xy: 0, 232
+  size: 62, 42
+Death
+  xy: 62, 232
+  size: 62, 42
+Death
+  xy: 124, 232
+  size: 62, 42
+Death
+  xy: 186, 232
+  size: 62, 42
+Death
+  xy: 248, 232
+  size: 62, 42
+Death
+  xy: 310, 232
+  size: 62, 42
+Death
+  xy: 372, 232
+  size: 62, 42
+Death
+  xy: 434, 232
+  size: 62, 42
+Death
+  xy: 496, 232
+  size: 62, 42
+Death
+  xy: 558, 232
+  size: 62, 42
+Death
+  xy: 620, 232
+  size: 62, 42
+Death
+  xy: 682, 232
+  size: 62, 42
+Wake
+  xy: 0, 274
+  size: 62, 42
+Wake
+  xy: 62, 274
+  size: 62, 42
+Wake
+  xy: 124, 274
+  size: 62, 42
+Wake
+  xy: 186, 274
+  size: 62, 42
+Wake
+  xy: 248, 274
+  size: 62, 42
+Wake
+  xy: 310, 274
+  size: 62, 42

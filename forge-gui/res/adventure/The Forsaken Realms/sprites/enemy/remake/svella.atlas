@@ -1,0 +1,140 @@
+svella.png
+size: 1092,394
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 55
+Idle
+  xy: 84, 64
+  size: 84, 55
+Idle
+  xy: 168, 64
+  size: 84, 55
+Idle
+  xy: 252, 64
+  size: 84, 55
+Idle
+  xy: 336, 64
+  size: 84, 55
+Idle
+  xy: 420, 64
+  size: 84, 55
+Idle
+  xy: 504, 64
+  size: 84, 55
+Idle
+  xy: 588, 64
+  size: 84, 55
+Idle
+  xy: 672, 64
+  size: 84, 55
+Idle
+  xy: 756, 64
+  size: 84, 55
+Walk
+  xy: 0, 119
+  size: 84, 55
+Walk
+  xy: 84, 119
+  size: 84, 55
+Walk
+  xy: 168, 119
+  size: 84, 55
+Walk
+  xy: 252, 119
+  size: 84, 55
+Attack
+  xy: 0, 174
+  size: 84, 55
+Attack
+  xy: 84, 174
+  size: 84, 55
+Attack
+  xy: 168, 174
+  size: 84, 55
+Attack
+  xy: 252, 174
+  size: 84, 55
+Attack
+  xy: 336, 174
+  size: 84, 55
+Attack
+  xy: 420, 174
+  size: 84, 55
+Attack
+  xy: 504, 174
+  size: 84, 55
+Hit
+  xy: 0, 229
+  size: 84, 55
+Hit
+  xy: 84, 229
+  size: 84, 55
+Hit
+  xy: 168, 229
+  size: 84, 55
+Hit
+  xy: 252, 229
+  size: 84, 55
+Death
+  xy: 0, 284
+  size: 84, 55
+Death
+  xy: 84, 284
+  size: 84, 55
+Death
+  xy: 168, 284
+  size: 84, 55
+Death
+  xy: 252, 284
+  size: 84, 55
+Death
+  xy: 336, 284
+  size: 84, 55
+Death
+  xy: 420, 284
+  size: 84, 55
+Death
+  xy: 504, 284
+  size: 84, 55
+Death
+  xy: 588, 284
+  size: 84, 55
+Death
+  xy: 672, 284
+  size: 84, 55
+Death
+  xy: 756, 284
+  size: 84, 55
+Death
+  xy: 840, 284
+  size: 84, 55
+Death
+  xy: 924, 284
+  size: 84, 55
+Death
+  xy: 1008, 284
+  size: 84, 55
+Wake
+  xy: 0, 339
+  size: 84, 55
+Wake
+  xy: 84, 339
+  size: 84, 55
+Wake
+  xy: 168, 339
+  size: 84, 55
+Wake
+  xy: 252, 339
+  size: 84, 55
+Wake
+  xy: 336, 339
+  size: 84, 55
+Wake
+  xy: 420, 339
+  size: 84, 55

@@ -1,0 +1,137 @@
+koma.png
+size: 1632,352
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 136, 48
+Idle
+  xy: 136, 64
+  size: 136, 48
+Idle
+  xy: 272, 64
+  size: 136, 48
+Idle
+  xy: 408, 64
+  size: 136, 48
+Idle
+  xy: 544, 64
+  size: 136, 48
+Idle
+  xy: 680, 64
+  size: 136, 48
+Idle
+  xy: 816, 64
+  size: 136, 48
+Idle
+  xy: 952, 64
+  size: 136, 48
+Idle
+  xy: 1088, 64
+  size: 136, 48
+Idle
+  xy: 1224, 64
+  size: 136, 48
+Walk
+  xy: 0, 112
+  size: 136, 48
+Walk
+  xy: 136, 112
+  size: 136, 48
+Walk
+  xy: 272, 112
+  size: 136, 48
+Walk
+  xy: 408, 112
+  size: 136, 48
+Walk
+  xy: 544, 112
+  size: 136, 48
+Attack
+  xy: 0, 160
+  size: 136, 48
+Attack
+  xy: 136, 160
+  size: 136, 48
+Attack
+  xy: 272, 160
+  size: 136, 48
+Attack
+  xy: 408, 160
+  size: 136, 48
+Attack
+  xy: 544, 160
+  size: 136, 48
+Attack
+  xy: 680, 160
+  size: 136, 48
+Hit
+  xy: 0, 208
+  size: 136, 48
+Hit
+  xy: 136, 208
+  size: 136, 48
+Hit
+  xy: 272, 208
+  size: 136, 48
+Hit
+  xy: 408, 208
+  size: 136, 48
+Death
+  xy: 0, 256
+  size: 136, 48
+Death
+  xy: 136, 256
+  size: 136, 48
+Death
+  xy: 272, 256
+  size: 136, 48
+Death
+  xy: 408, 256
+  size: 136, 48
+Death
+  xy: 544, 256
+  size: 136, 48
+Death
+  xy: 680, 256
+  size: 136, 48
+Death
+  xy: 816, 256
+  size: 136, 48
+Death
+  xy: 952, 256
+  size: 136, 48
+Death
+  xy: 1088, 256
+  size: 136, 48
+Death
+  xy: 1224, 256
+  size: 136, 48
+Death
+  xy: 1360, 256
+  size: 136, 48
+Death
+  xy: 1496, 256
+  size: 136, 48
+Wake
+  xy: 0, 304
+  size: 136, 48
+Wake
+  xy: 136, 304
+  size: 136, 48
+Wake
+  xy: 272, 304
+  size: 136, 48
+Wake
+  xy: 408, 304
+  size: 136, 48
+Wake
+  xy: 544, 304
+  size: 136, 48
+Wake
+  xy: 680, 304
+  size: 136, 48

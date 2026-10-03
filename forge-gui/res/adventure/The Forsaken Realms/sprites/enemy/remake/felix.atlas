@@ -1,0 +1,137 @@
+felix.png
+size: 1012,370
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 92, 51
+Idle
+  xy: 92, 64
+  size: 92, 51
+Idle
+  xy: 184, 64
+  size: 92, 51
+Idle
+  xy: 276, 64
+  size: 92, 51
+Idle
+  xy: 368, 64
+  size: 92, 51
+Idle
+  xy: 460, 64
+  size: 92, 51
+Idle
+  xy: 552, 64
+  size: 92, 51
+Idle
+  xy: 644, 64
+  size: 92, 51
+Idle
+  xy: 736, 64
+  size: 92, 51
+Idle
+  xy: 828, 64
+  size: 92, 51
+Walk
+  xy: 0, 115
+  size: 92, 51
+Walk
+  xy: 92, 115
+  size: 92, 51
+Walk
+  xy: 184, 115
+  size: 92, 51
+Walk
+  xy: 276, 115
+  size: 92, 51
+Attack
+  xy: 0, 166
+  size: 92, 51
+Attack
+  xy: 92, 166
+  size: 92, 51
+Attack
+  xy: 184, 166
+  size: 92, 51
+Attack
+  xy: 276, 166
+  size: 92, 51
+Attack
+  xy: 368, 166
+  size: 92, 51
+Attack
+  xy: 460, 166
+  size: 92, 51
+Attack
+  xy: 552, 166
+  size: 92, 51
+Attack
+  xy: 644, 166
+  size: 92, 51
+Hit
+  xy: 0, 217
+  size: 92, 51
+Hit
+  xy: 92, 217
+  size: 92, 51
+Hit
+  xy: 184, 217
+  size: 92, 51
+Hit
+  xy: 276, 217
+  size: 92, 51
+Death
+  xy: 0, 268
+  size: 92, 51
+Death
+  xy: 92, 268
+  size: 92, 51
+Death
+  xy: 184, 268
+  size: 92, 51
+Death
+  xy: 276, 268
+  size: 92, 51
+Death
+  xy: 368, 268
+  size: 92, 51
+Death
+  xy: 460, 268
+  size: 92, 51
+Death
+  xy: 552, 268
+  size: 92, 51
+Death
+  xy: 644, 268
+  size: 92, 51
+Death
+  xy: 736, 268
+  size: 92, 51
+Death
+  xy: 828, 268
+  size: 92, 51
+Death
+  xy: 920, 268
+  size: 92, 51
+Wake
+  xy: 0, 319
+  size: 92, 51
+Wake
+  xy: 92, 319
+  size: 92, 51
+Wake
+  xy: 184, 319
+  size: 92, 51
+Wake
+  xy: 276, 319
+  size: 92, 51
+Wake
+  xy: 368, 319
+  size: 92, 51
+Wake
+  xy: 460, 319
+  size: 92, 51

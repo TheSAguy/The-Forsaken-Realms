@@ -1,0 +1,140 @@
+snake.png
+size: 1976,388
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 152, 54
+Idle
+  xy: 152, 64
+  size: 152, 54
+Idle
+  xy: 304, 64
+  size: 152, 54
+Idle
+  xy: 456, 64
+  size: 152, 54
+Idle
+  xy: 608, 64
+  size: 152, 54
+Idle
+  xy: 760, 64
+  size: 152, 54
+Idle
+  xy: 912, 64
+  size: 152, 54
+Idle
+  xy: 1064, 64
+  size: 152, 54
+Idle
+  xy: 1216, 64
+  size: 152, 54
+Idle
+  xy: 1368, 64
+  size: 152, 54
+Walk
+  xy: 0, 118
+  size: 152, 54
+Walk
+  xy: 152, 118
+  size: 152, 54
+Walk
+  xy: 304, 118
+  size: 152, 54
+Walk
+  xy: 456, 118
+  size: 152, 54
+Attack
+  xy: 0, 172
+  size: 152, 54
+Attack
+  xy: 152, 172
+  size: 152, 54
+Attack
+  xy: 304, 172
+  size: 152, 54
+Attack
+  xy: 456, 172
+  size: 152, 54
+Attack
+  xy: 608, 172
+  size: 152, 54
+Attack
+  xy: 760, 172
+  size: 152, 54
+Hit
+  xy: 0, 226
+  size: 152, 54
+Hit
+  xy: 152, 226
+  size: 152, 54
+Hit
+  xy: 304, 226
+  size: 152, 54
+Hit
+  xy: 456, 226
+  size: 152, 54
+Hit
+  xy: 608, 226
+  size: 152, 54
+Death
+  xy: 0, 280
+  size: 152, 54
+Death
+  xy: 152, 280
+  size: 152, 54
+Death
+  xy: 304, 280
+  size: 152, 54
+Death
+  xy: 456, 280
+  size: 152, 54
+Death
+  xy: 608, 280
+  size: 152, 54
+Death
+  xy: 760, 280
+  size: 152, 54
+Death
+  xy: 912, 280
+  size: 152, 54
+Death
+  xy: 1064, 280
+  size: 152, 54
+Death
+  xy: 1216, 280
+  size: 152, 54
+Death
+  xy: 1368, 280
+  size: 152, 54
+Death
+  xy: 1520, 280
+  size: 152, 54
+Death
+  xy: 1672, 280
+  size: 152, 54
+Death
+  xy: 1824, 280
+  size: 152, 54
+Wake
+  xy: 0, 334
+  size: 152, 54
+Wake
+  xy: 152, 334
+  size: 152, 54
+Wake
+  xy: 304, 334
+  size: 152, 54
+Wake
+  xy: 456, 334
+  size: 152, 54
+Wake
+  xy: 608, 334
+  size: 152, 54
+Wake
+  xy: 760, 334
+  size: 152, 54

@@ -1,0 +1,137 @@
+grismold.png
+size: 1170,370
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 51
+Idle
+  xy: 90, 64
+  size: 90, 51
+Idle
+  xy: 180, 64
+  size: 90, 51
+Idle
+  xy: 270, 64
+  size: 90, 51
+Idle
+  xy: 360, 64
+  size: 90, 51
+Idle
+  xy: 450, 64
+  size: 90, 51
+Idle
+  xy: 540, 64
+  size: 90, 51
+Idle
+  xy: 630, 64
+  size: 90, 51
+Idle
+  xy: 720, 64
+  size: 90, 51
+Idle
+  xy: 810, 64
+  size: 90, 51
+Walk
+  xy: 0, 115
+  size: 90, 51
+Walk
+  xy: 90, 115
+  size: 90, 51
+Walk
+  xy: 180, 115
+  size: 90, 51
+Walk
+  xy: 270, 115
+  size: 90, 51
+Attack
+  xy: 0, 166
+  size: 90, 51
+Attack
+  xy: 90, 166
+  size: 90, 51
+Attack
+  xy: 180, 166
+  size: 90, 51
+Attack
+  xy: 270, 166
+  size: 90, 51
+Attack
+  xy: 360, 166
+  size: 90, 51
+Attack
+  xy: 450, 166
+  size: 90, 51
+Hit
+  xy: 0, 217
+  size: 90, 51
+Hit
+  xy: 90, 217
+  size: 90, 51
+Hit
+  xy: 180, 217
+  size: 90, 51
+Hit
+  xy: 270, 217
+  size: 90, 51
+Death
+  xy: 0, 268
+  size: 90, 51
+Death
+  xy: 90, 268
+  size: 90, 51
+Death
+  xy: 180, 268
+  size: 90, 51
+Death
+  xy: 270, 268
+  size: 90, 51
+Death
+  xy: 360, 268
+  size: 90, 51
+Death
+  xy: 450, 268
+  size: 90, 51
+Death
+  xy: 540, 268
+  size: 90, 51
+Death
+  xy: 630, 268
+  size: 90, 51
+Death
+  xy: 720, 268
+  size: 90, 51
+Death
+  xy: 810, 268
+  size: 90, 51
+Death
+  xy: 900, 268
+  size: 90, 51
+Death
+  xy: 990, 268
+  size: 90, 51
+Death
+  xy: 1080, 268
+  size: 90, 51
+Wake
+  xy: 0, 319
+  size: 90, 51
+Wake
+  xy: 90, 319
+  size: 90, 51
+Wake
+  xy: 180, 319
+  size: 90, 51
+Wake
+  xy: 270, 319
+  size: 90, 51
+Wake
+  xy: 360, 319
+  size: 90, 51
+Wake
+  xy: 450, 319
+  size: 90, 51

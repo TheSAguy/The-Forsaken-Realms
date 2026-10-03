@@ -1,0 +1,125 @@
+aesi.png
+size: 1188,292
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 108, 38
+Idle
+  xy: 108, 64
+  size: 108, 38
+Idle
+  xy: 216, 64
+  size: 108, 38
+Idle
+  xy: 324, 64
+  size: 108, 38
+Idle
+  xy: 432, 64
+  size: 108, 38
+Idle
+  xy: 540, 64
+  size: 108, 38
+Idle
+  xy: 648, 64
+  size: 108, 38
+Idle
+  xy: 756, 64
+  size: 108, 38
+Idle
+  xy: 864, 64
+  size: 108, 38
+Idle
+  xy: 972, 64
+  size: 108, 38
+Walk
+  xy: 0, 102
+  size: 108, 38
+Walk
+  xy: 108, 102
+  size: 108, 38
+Walk
+  xy: 216, 102
+  size: 108, 38
+Walk
+  xy: 324, 102
+  size: 108, 38
+Attack
+  xy: 0, 140
+  size: 108, 38
+Attack
+  xy: 108, 140
+  size: 108, 38
+Attack
+  xy: 216, 140
+  size: 108, 38
+Attack
+  xy: 324, 140
+  size: 108, 38
+Attack
+  xy: 432, 140
+  size: 108, 38
+Hit
+  xy: 0, 178
+  size: 108, 38
+Hit
+  xy: 108, 178
+  size: 108, 38
+Hit
+  xy: 216, 178
+  size: 108, 38
+Hit
+  xy: 324, 178
+  size: 108, 38
+Death
+  xy: 0, 216
+  size: 108, 38
+Death
+  xy: 108, 216
+  size: 108, 38
+Death
+  xy: 216, 216
+  size: 108, 38
+Death
+  xy: 324, 216
+  size: 108, 38
+Death
+  xy: 432, 216
+  size: 108, 38
+Death
+  xy: 540, 216
+  size: 108, 38
+Death
+  xy: 648, 216
+  size: 108, 38
+Death
+  xy: 756, 216
+  size: 108, 38
+Death
+  xy: 864, 216
+  size: 108, 38
+Death
+  xy: 972, 216
+  size: 108, 38
+Death
+  xy: 1080, 216
+  size: 108, 38
+Wake
+  xy: 0, 254
+  size: 108, 38
+Wake
+  xy: 108, 254
+  size: 108, 38
+Wake
+  xy: 216, 254
+  size: 108, 38
+Wake
+  xy: 324, 254
+  size: 108, 38
+Wake
+  xy: 432, 254
+  size: 108, 38

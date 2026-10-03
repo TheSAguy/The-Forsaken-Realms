@@ -1,0 +1,155 @@
+dragonhawk.png
+size: 1320,442
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 63
+Idle
+  xy: 88, 64
+  size: 88, 63
+Idle
+  xy: 176, 64
+  size: 88, 63
+Idle
+  xy: 264, 64
+  size: 88, 63
+Idle
+  xy: 352, 64
+  size: 88, 63
+Idle
+  xy: 440, 64
+  size: 88, 63
+Idle
+  xy: 528, 64
+  size: 88, 63
+Idle
+  xy: 616, 64
+  size: 88, 63
+Idle
+  xy: 704, 64
+  size: 88, 63
+Idle
+  xy: 792, 64
+  size: 88, 63
+Walk
+  xy: 0, 127
+  size: 88, 63
+Walk
+  xy: 88, 127
+  size: 88, 63
+Walk
+  xy: 176, 127
+  size: 88, 63
+Walk
+  xy: 264, 127
+  size: 88, 63
+Attack
+  xy: 0, 190
+  size: 88, 63
+Attack
+  xy: 88, 190
+  size: 88, 63
+Attack
+  xy: 176, 190
+  size: 88, 63
+Attack
+  xy: 264, 190
+  size: 88, 63
+Attack
+  xy: 352, 190
+  size: 88, 63
+Attack
+  xy: 440, 190
+  size: 88, 63
+Attack
+  xy: 528, 190
+  size: 88, 63
+Attack
+  xy: 616, 190
+  size: 88, 63
+Hit
+  xy: 0, 253
+  size: 88, 63
+Hit
+  xy: 88, 253
+  size: 88, 63
+Hit
+  xy: 176, 253
+  size: 88, 63
+Hit
+  xy: 264, 253
+  size: 88, 63
+Hit
+  xy: 352, 253
+  size: 88, 63
+Death
+  xy: 0, 316
+  size: 88, 63
+Death
+  xy: 88, 316
+  size: 88, 63
+Death
+  xy: 176, 316
+  size: 88, 63
+Death
+  xy: 264, 316
+  size: 88, 63
+Death
+  xy: 352, 316
+  size: 88, 63
+Death
+  xy: 440, 316
+  size: 88, 63
+Death
+  xy: 528, 316
+  size: 88, 63
+Death
+  xy: 616, 316
+  size: 88, 63
+Death
+  xy: 704, 316
+  size: 88, 63
+Death
+  xy: 792, 316
+  size: 88, 63
+Death
+  xy: 880, 316
+  size: 88, 63
+Death
+  xy: 968, 316
+  size: 88, 63
+Death
+  xy: 1056, 316
+  size: 88, 63
+Death
+  xy: 1144, 316
+  size: 88, 63
+Death
+  xy: 1232, 316
+  size: 88, 63
+Wake
+  xy: 0, 379
+  size: 88, 63
+Wake
+  xy: 88, 379
+  size: 88, 63
+Wake
+  xy: 176, 379
+  size: 88, 63
+Wake
+  xy: 264, 379
+  size: 88, 63
+Wake
+  xy: 352, 379
+  size: 88, 63
+Wake
+  xy: 440, 379
+  size: 88, 63
+Wake
+  xy: 528, 379
+  size: 88, 63
