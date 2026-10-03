@@ -1,0 +1,209 @@
+falcon.png
+size: 814,624
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 56
+Idle
+  xy: 74, 64
+  size: 74, 56
+Idle
+  xy: 148, 64
+  size: 74, 56
+Idle
+  xy: 222, 64
+  size: 74, 56
+Idle
+  xy: 296, 64
+  size: 74, 56
+Idle
+  xy: 370, 64
+  size: 74, 56
+Idle
+  xy: 444, 64
+  size: 74, 56
+Idle
+  xy: 518, 64
+  size: 74, 56
+Idle
+  xy: 592, 64
+  size: 74, 56
+Idle
+  xy: 666, 64
+  size: 74, 56
+Walk
+  xy: 0, 120
+  size: 74, 56
+Walk
+  xy: 74, 120
+  size: 74, 56
+Walk
+  xy: 148, 120
+  size: 74, 56
+Walk
+  xy: 222, 120
+  size: 74, 56
+Attack
+  xy: 0, 176
+  size: 74, 56
+Attack
+  xy: 74, 176
+  size: 74, 56
+Attack
+  xy: 148, 176
+  size: 74, 56
+Attack
+  xy: 222, 176
+  size: 74, 56
+Attack
+  xy: 296, 176
+  size: 74, 56
+Attack
+  xy: 370, 176
+  size: 74, 56
+Hit
+  xy: 0, 232
+  size: 74, 56
+Hit
+  xy: 74, 232
+  size: 74, 56
+Hit
+  xy: 148, 232
+  size: 74, 56
+Death
+  xy: 0, 288
+  size: 74, 56
+Death
+  xy: 74, 288
+  size: 74, 56
+Death
+  xy: 148, 288
+  size: 74, 56
+Death
+  xy: 222, 288
+  size: 74, 56
+Death
+  xy: 296, 288
+  size: 74, 56
+Death
+  xy: 370, 288
+  size: 74, 56
+Death
+  xy: 444, 288
+  size: 74, 56
+Death
+  xy: 518, 288
+  size: 74, 56
+Death
+  xy: 592, 288
+  size: 74, 56
+Death
+  xy: 666, 288
+  size: 74, 56
+Death
+  xy: 740, 288
+  size: 74, 56
+Wake
+  xy: 0, 344
+  size: 74, 56
+Wake
+  xy: 74, 344
+  size: 74, 56
+Wake
+  xy: 148, 344
+  size: 74, 56
+Wake
+  xy: 222, 344
+  size: 74, 56
+Wake
+  xy: 296, 344
+  size: 74, 56
+IdleUp
+  xy: 0, 400
+  size: 74, 56
+IdleUp
+  xy: 74, 400
+  size: 74, 56
+IdleUp
+  xy: 148, 400
+  size: 74, 56
+IdleUp
+  xy: 222, 400
+  size: 74, 56
+IdleUp
+  xy: 296, 400
+  size: 74, 56
+IdleUp
+  xy: 370, 400
+  size: 74, 56
+IdleUp
+  xy: 444, 400
+  size: 74, 56
+IdleUp
+  xy: 518, 400
+  size: 74, 56
+IdleUp
+  xy: 592, 400
+  size: 74, 56
+IdleUp
+  xy: 666, 400
+  size: 74, 56
+IdleDown
+  xy: 0, 456
+  size: 74, 56
+IdleDown
+  xy: 74, 456
+  size: 74, 56
+IdleDown
+  xy: 148, 456
+  size: 74, 56
+IdleDown
+  xy: 222, 456
+  size: 74, 56
+IdleDown
+  xy: 296, 456
+  size: 74, 56
+IdleDown
+  xy: 370, 456
+  size: 74, 56
+IdleDown
+  xy: 444, 456
+  size: 74, 56
+IdleDown
+  xy: 518, 456
+  size: 74, 56
+IdleDown
+  xy: 592, 456
+  size: 74, 56
+IdleDown
+  xy: 666, 456
+  size: 74, 56
+WalkUp
+  xy: 0, 512
+  size: 74, 56
+WalkUp
+  xy: 74, 512
+  size: 74, 56
+WalkUp
+  xy: 148, 512
+  size: 74, 56
+WalkUp
+  xy: 222, 512
+  size: 74, 56
+WalkDown
+  xy: 0, 568
+  size: 74, 56
+WalkDown
+  xy: 74, 568
+  size: 74, 56
+WalkDown
+  xy: 148, 568
+  size: 74, 56
+WalkDown
+  xy: 222, 568
+  size: 74, 56

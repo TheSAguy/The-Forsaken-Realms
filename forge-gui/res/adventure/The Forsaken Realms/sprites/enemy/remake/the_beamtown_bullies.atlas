@@ -1,0 +1,233 @@
+the_beamtown_bullies.png
+size: 1764,844
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 126, 78
+Idle
+  xy: 126, 64
+  size: 126, 78
+Idle
+  xy: 252, 64
+  size: 126, 78
+Idle
+  xy: 378, 64
+  size: 126, 78
+Idle
+  xy: 504, 64
+  size: 126, 78
+Idle
+  xy: 630, 64
+  size: 126, 78
+Idle
+  xy: 756, 64
+  size: 126, 78
+Idle
+  xy: 882, 64
+  size: 126, 78
+Idle
+  xy: 1008, 64
+  size: 126, 78
+Idle
+  xy: 1134, 64
+  size: 126, 78
+Walk
+  xy: 0, 142
+  size: 126, 78
+Walk
+  xy: 126, 142
+  size: 126, 78
+Walk
+  xy: 252, 142
+  size: 126, 78
+Walk
+  xy: 378, 142
+  size: 126, 78
+Attack
+  xy: 0, 220
+  size: 126, 78
+Attack
+  xy: 126, 220
+  size: 126, 78
+Attack
+  xy: 252, 220
+  size: 126, 78
+Attack
+  xy: 378, 220
+  size: 126, 78
+Attack
+  xy: 504, 220
+  size: 126, 78
+Attack
+  xy: 630, 220
+  size: 126, 78
+Attack
+  xy: 756, 220
+  size: 126, 78
+Hit
+  xy: 0, 298
+  size: 126, 78
+Hit
+  xy: 126, 298
+  size: 126, 78
+Hit
+  xy: 252, 298
+  size: 126, 78
+Hit
+  xy: 378, 298
+  size: 126, 78
+Hit
+  xy: 504, 298
+  size: 126, 78
+Death
+  xy: 0, 376
+  size: 126, 78
+Death
+  xy: 126, 376
+  size: 126, 78
+Death
+  xy: 252, 376
+  size: 126, 78
+Death
+  xy: 378, 376
+  size: 126, 78
+Death
+  xy: 504, 376
+  size: 126, 78
+Death
+  xy: 630, 376
+  size: 126, 78
+Death
+  xy: 756, 376
+  size: 126, 78
+Death
+  xy: 882, 376
+  size: 126, 78
+Death
+  xy: 1008, 376
+  size: 126, 78
+Death
+  xy: 1134, 376
+  size: 126, 78
+Death
+  xy: 1260, 376
+  size: 126, 78
+Death
+  xy: 1386, 376
+  size: 126, 78
+Death
+  xy: 1512, 376
+  size: 126, 78
+Death
+  xy: 1638, 376
+  size: 126, 78
+Wake
+  xy: 0, 454
+  size: 126, 78
+Wake
+  xy: 126, 454
+  size: 126, 78
+Wake
+  xy: 252, 454
+  size: 126, 78
+Wake
+  xy: 378, 454
+  size: 126, 78
+Wake
+  xy: 504, 454
+  size: 126, 78
+Wake
+  xy: 630, 454
+  size: 126, 78
+Wake
+  xy: 756, 454
+  size: 126, 78
+IdleUp
+  xy: 0, 532
+  size: 126, 78
+IdleUp
+  xy: 126, 532
+  size: 126, 78
+IdleUp
+  xy: 252, 532
+  size: 126, 78
+IdleUp
+  xy: 378, 532
+  size: 126, 78
+IdleUp
+  xy: 504, 532
+  size: 126, 78
+IdleUp
+  xy: 630, 532
+  size: 126, 78
+IdleUp
+  xy: 756, 532
+  size: 126, 78
+IdleUp
+  xy: 882, 532
+  size: 126, 78
+IdleUp
+  xy: 1008, 532
+  size: 126, 78
+IdleUp
+  xy: 1134, 532
+  size: 126, 78
+IdleDown
+  xy: 0, 610
+  size: 126, 78
+IdleDown
+  xy: 126, 610
+  size: 126, 78
+IdleDown
+  xy: 252, 610
+  size: 126, 78
+IdleDown
+  xy: 378, 610
+  size: 126, 78
+IdleDown
+  xy: 504, 610
+  size: 126, 78
+IdleDown
+  xy: 630, 610
+  size: 126, 78
+IdleDown
+  xy: 756, 610
+  size: 126, 78
+IdleDown
+  xy: 882, 610
+  size: 126, 78
+IdleDown
+  xy: 1008, 610
+  size: 126, 78
+IdleDown
+  xy: 1134, 610
+  size: 126, 78
+WalkUp
+  xy: 0, 688
+  size: 126, 78
+WalkUp
+  xy: 126, 688
+  size: 126, 78
+WalkUp
+  xy: 252, 688
+  size: 126, 78
+WalkUp
+  xy: 378, 688
+  size: 126, 78
+WalkDown
+  xy: 0, 766
+  size: 126, 78
+WalkDown
+  xy: 126, 766
+  size: 126, 78
+WalkDown
+  xy: 252, 766
+  size: 126, 78
+WalkDown
+  xy: 378, 766
+  size: 126, 78

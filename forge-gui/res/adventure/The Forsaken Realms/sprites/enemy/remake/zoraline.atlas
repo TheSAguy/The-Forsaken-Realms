@@ -1,0 +1,224 @@
+zoraline.png
+size: 1638,1094
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 126, 103
+Idle
+  xy: 126, 64
+  size: 126, 103
+Idle
+  xy: 252, 64
+  size: 126, 103
+Idle
+  xy: 378, 64
+  size: 126, 103
+Idle
+  xy: 504, 64
+  size: 126, 103
+Idle
+  xy: 630, 64
+  size: 126, 103
+Idle
+  xy: 756, 64
+  size: 126, 103
+Idle
+  xy: 882, 64
+  size: 126, 103
+Idle
+  xy: 1008, 64
+  size: 126, 103
+Idle
+  xy: 1134, 64
+  size: 126, 103
+Walk
+  xy: 0, 167
+  size: 126, 103
+Walk
+  xy: 126, 167
+  size: 126, 103
+Walk
+  xy: 252, 167
+  size: 126, 103
+Walk
+  xy: 378, 167
+  size: 126, 103
+Attack
+  xy: 0, 270
+  size: 126, 103
+Attack
+  xy: 126, 270
+  size: 126, 103
+Attack
+  xy: 252, 270
+  size: 126, 103
+Attack
+  xy: 378, 270
+  size: 126, 103
+Attack
+  xy: 504, 270
+  size: 126, 103
+Attack
+  xy: 630, 270
+  size: 126, 103
+Attack
+  xy: 756, 270
+  size: 126, 103
+Hit
+  xy: 0, 373
+  size: 126, 103
+Hit
+  xy: 126, 373
+  size: 126, 103
+Hit
+  xy: 252, 373
+  size: 126, 103
+Hit
+  xy: 378, 373
+  size: 126, 103
+Death
+  xy: 0, 476
+  size: 126, 103
+Death
+  xy: 126, 476
+  size: 126, 103
+Death
+  xy: 252, 476
+  size: 126, 103
+Death
+  xy: 378, 476
+  size: 126, 103
+Death
+  xy: 504, 476
+  size: 126, 103
+Death
+  xy: 630, 476
+  size: 126, 103
+Death
+  xy: 756, 476
+  size: 126, 103
+Death
+  xy: 882, 476
+  size: 126, 103
+Death
+  xy: 1008, 476
+  size: 126, 103
+Death
+  xy: 1134, 476
+  size: 126, 103
+Death
+  xy: 1260, 476
+  size: 126, 103
+Death
+  xy: 1386, 476
+  size: 126, 103
+Death
+  xy: 1512, 476
+  size: 126, 103
+Wake
+  xy: 0, 579
+  size: 126, 103
+Wake
+  xy: 126, 579
+  size: 126, 103
+Wake
+  xy: 252, 579
+  size: 126, 103
+Wake
+  xy: 378, 579
+  size: 126, 103
+Wake
+  xy: 504, 579
+  size: 126, 103
+Wake
+  xy: 630, 579
+  size: 126, 103
+IdleUp
+  xy: 0, 682
+  size: 126, 103
+IdleUp
+  xy: 126, 682
+  size: 126, 103
+IdleUp
+  xy: 252, 682
+  size: 126, 103
+IdleUp
+  xy: 378, 682
+  size: 126, 103
+IdleUp
+  xy: 504, 682
+  size: 126, 103
+IdleUp
+  xy: 630, 682
+  size: 126, 103
+IdleUp
+  xy: 756, 682
+  size: 126, 103
+IdleUp
+  xy: 882, 682
+  size: 126, 103
+IdleUp
+  xy: 1008, 682
+  size: 126, 103
+IdleUp
+  xy: 1134, 682
+  size: 126, 103
+IdleDown
+  xy: 0, 785
+  size: 126, 103
+IdleDown
+  xy: 126, 785
+  size: 126, 103
+IdleDown
+  xy: 252, 785
+  size: 126, 103
+IdleDown
+  xy: 378, 785
+  size: 126, 103
+IdleDown
+  xy: 504, 785
+  size: 126, 103
+IdleDown
+  xy: 630, 785
+  size: 126, 103
+IdleDown
+  xy: 756, 785
+  size: 126, 103
+IdleDown
+  xy: 882, 785
+  size: 126, 103
+IdleDown
+  xy: 1008, 785
+  size: 126, 103
+IdleDown
+  xy: 1134, 785
+  size: 126, 103
+WalkUp
+  xy: 0, 888
+  size: 126, 103
+WalkUp
+  xy: 126, 888
+  size: 126, 103
+WalkUp
+  xy: 252, 888
+  size: 126, 103
+WalkUp
+  xy: 378, 888
+  size: 126, 103
+WalkDown
+  xy: 0, 991
+  size: 126, 103
+WalkDown
+  xy: 126, 991
+  size: 126, 103
+WalkDown
+  xy: 252, 991
+  size: 126, 103
+WalkDown
+  xy: 378, 991
+  size: 126, 103

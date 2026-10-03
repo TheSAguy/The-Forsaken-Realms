@@ -1,0 +1,254 @@
+rorix.png
+size: 1408,704
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 64
+Idle
+  xy: 88, 64
+  size: 88, 64
+Idle
+  xy: 176, 64
+  size: 88, 64
+Idle
+  xy: 264, 64
+  size: 88, 64
+Idle
+  xy: 352, 64
+  size: 88, 64
+Idle
+  xy: 440, 64
+  size: 88, 64
+Idle
+  xy: 528, 64
+  size: 88, 64
+Idle
+  xy: 616, 64
+  size: 88, 64
+Idle
+  xy: 704, 64
+  size: 88, 64
+Idle
+  xy: 792, 64
+  size: 88, 64
+Walk
+  xy: 0, 128
+  size: 88, 64
+Walk
+  xy: 88, 128
+  size: 88, 64
+Walk
+  xy: 176, 128
+  size: 88, 64
+Walk
+  xy: 264, 128
+  size: 88, 64
+Attack
+  xy: 0, 192
+  size: 88, 64
+Attack
+  xy: 88, 192
+  size: 88, 64
+Attack
+  xy: 176, 192
+  size: 88, 64
+Attack
+  xy: 264, 192
+  size: 88, 64
+Attack
+  xy: 352, 192
+  size: 88, 64
+Attack
+  xy: 440, 192
+  size: 88, 64
+Attack
+  xy: 528, 192
+  size: 88, 64
+Attack
+  xy: 616, 192
+  size: 88, 64
+Attack
+  xy: 704, 192
+  size: 88, 64
+Attack
+  xy: 792, 192
+  size: 88, 64
+Hit
+  xy: 0, 256
+  size: 88, 64
+Hit
+  xy: 88, 256
+  size: 88, 64
+Hit
+  xy: 176, 256
+  size: 88, 64
+Hit
+  xy: 264, 256
+  size: 88, 64
+Hit
+  xy: 352, 256
+  size: 88, 64
+Hit
+  xy: 440, 256
+  size: 88, 64
+Death
+  xy: 0, 320
+  size: 88, 64
+Death
+  xy: 88, 320
+  size: 88, 64
+Death
+  xy: 176, 320
+  size: 88, 64
+Death
+  xy: 264, 320
+  size: 88, 64
+Death
+  xy: 352, 320
+  size: 88, 64
+Death
+  xy: 440, 320
+  size: 88, 64
+Death
+  xy: 528, 320
+  size: 88, 64
+Death
+  xy: 616, 320
+  size: 88, 64
+Death
+  xy: 704, 320
+  size: 88, 64
+Death
+  xy: 792, 320
+  size: 88, 64
+Death
+  xy: 880, 320
+  size: 88, 64
+Death
+  xy: 968, 320
+  size: 88, 64
+Death
+  xy: 1056, 320
+  size: 88, 64
+Death
+  xy: 1144, 320
+  size: 88, 64
+Death
+  xy: 1232, 320
+  size: 88, 64
+Death
+  xy: 1320, 320
+  size: 88, 64
+Wake
+  xy: 0, 384
+  size: 88, 64
+Wake
+  xy: 88, 384
+  size: 88, 64
+Wake
+  xy: 176, 384
+  size: 88, 64
+Wake
+  xy: 264, 384
+  size: 88, 64
+Wake
+  xy: 352, 384
+  size: 88, 64
+Wake
+  xy: 440, 384
+  size: 88, 64
+Wake
+  xy: 528, 384
+  size: 88, 64
+Wake
+  xy: 616, 384
+  size: 88, 64
+IdleUp
+  xy: 0, 448
+  size: 88, 64
+IdleUp
+  xy: 88, 448
+  size: 88, 64
+IdleUp
+  xy: 176, 448
+  size: 88, 64
+IdleUp
+  xy: 264, 448
+  size: 88, 64
+IdleUp
+  xy: 352, 448
+  size: 88, 64
+IdleUp
+  xy: 440, 448
+  size: 88, 64
+IdleUp
+  xy: 528, 448
+  size: 88, 64
+IdleUp
+  xy: 616, 448
+  size: 88, 64
+IdleUp
+  xy: 704, 448
+  size: 88, 64
+IdleUp
+  xy: 792, 448
+  size: 88, 64
+IdleDown
+  xy: 0, 512
+  size: 88, 64
+IdleDown
+  xy: 88, 512
+  size: 88, 64
+IdleDown
+  xy: 176, 512
+  size: 88, 64
+IdleDown
+  xy: 264, 512
+  size: 88, 64
+IdleDown
+  xy: 352, 512
+  size: 88, 64
+IdleDown
+  xy: 440, 512
+  size: 88, 64
+IdleDown
+  xy: 528, 512
+  size: 88, 64
+IdleDown
+  xy: 616, 512
+  size: 88, 64
+IdleDown
+  xy: 704, 512
+  size: 88, 64
+IdleDown
+  xy: 792, 512
+  size: 88, 64
+WalkUp
+  xy: 0, 576
+  size: 88, 64
+WalkUp
+  xy: 88, 576
+  size: 88, 64
+WalkUp
+  xy: 176, 576
+  size: 88, 64
+WalkUp
+  xy: 264, 576
+  size: 88, 64
+WalkDown
+  xy: 0, 640
+  size: 88, 64
+WalkDown
+  xy: 88, 640
+  size: 88, 64
+WalkDown
+  xy: 176, 640
+  size: 88, 64
+WalkDown
+  xy: 264, 640
+  size: 88, 64

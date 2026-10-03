@@ -422,7 +422,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 37,
-        "scale": 0.3333,
+        "scale": 0.2407,
         "life": 23,
         "rewards": [
             {
@@ -997,7 +997,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 0.3305,
+        "scale": 0.2349,
         "life": 18,
         "rewards": [
             {
@@ -3311,7 +3311,7 @@
     },
     {
         "name": "Bat",
-        "sprite": "sprites/enemy/beast/smallmammals/bat.atlas",
+        "sprite": "sprites/enemy/remake/bat.atlas",
         "deck": [
             "decks/standard/bat.dck"
         ],
@@ -3320,7 +3320,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 24,
-        "scale": 1.3542,
+        "scale": 0.3714,
         "life": 15,
         "rewards": [
             {
@@ -3450,7 +3450,7 @@
             "BiomeGreen"
         ],
         "tier": "Uncommon",
-        "scale": 0.4194
+        "scale": 0.3023
     },
     {
         "name": "Beastmaster",
@@ -4298,7 +4298,7 @@
     {
         "name": "Bone Dragon",
         "nameOverride": "",
-        "sprite": "sprites/enemy/dragon/bonedragon.atlas",
+        "sprite": "sprites/enemy/remake/bone_dragon.atlas",
         "deck": [
             "decks/standard/bonedragon.dck"
         ],
@@ -4383,7 +4383,7 @@
         ],
         "tier": "Mythic",
         "flying": true,
-        "scale": 0.52
+        "scale": 0.197
     },
     {
         "name": "Bone Golem",
@@ -8875,7 +8875,7 @@
     },
     {
         "name": "Dog",
-        "sprite": "sprites/enemy/beast/smallmammals/dog.atlas",
+        "sprite": "sprites/enemy/remake/dog.atlas",
         "deck": [
             "decks/standard/dog.json",
             "decks/standard/dog.dck",
@@ -8886,7 +8886,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 1.1818,
+        "scale": 0.3714,
         "life": 11,
         "rewards": [
             {
@@ -8997,7 +8997,7 @@
     {
         "name": "Dragon",
         "nameOverride": "Red Dragon",
-        "sprite": "sprites/enemy/dragon/dragon.atlas",
+        "sprite": "sprites/enemy/remake/dragon.atlas",
         "deck": [
             "decks/standard/dragon.dck"
         ],
@@ -9080,7 +9080,7 @@
             "BiomeRed"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.2766
     },
     {
         "name": "Dragonfly",
@@ -11161,7 +11161,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 22,
-        "scale": 0.5,
+        "scale": 0.3714,
         "life": 11,
         "rewards": [
             {
@@ -11385,7 +11385,7 @@
     },
     {
         "name": "Falcon",
-        "sprite": "sprites/enemy/beast/bird/falcon.atlas",
+        "sprite": "sprites/enemy/remake/falcon.atlas",
         "deck": [
             "decks/standard/falcon_w.dck"
         ],
@@ -11433,7 +11433,7 @@
             "IdentityWhite"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3714
     },
     {
         "name": "Falcon-headed Aven Warrior",
@@ -11870,7 +11870,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 36,
-        "scale": 0.325,
+        "scale": 0.2281,
         "life": 30,
         "rewards": [
             {
@@ -16668,7 +16668,7 @@
     },
     {
         "name": "Hellion",
-        "sprite": "sprites/enemy/monstrosity/sandwurm.atlas",
+        "sprite": "sprites/enemy/remake/hellion.atlas",
         "deck": [
             "decks/standard/hellion.dck"
         ],
@@ -16676,7 +16676,7 @@
         "spawnRate": 0.2,
         "difficulty": 1,
         "speed": 28,
-        "scale": 0.8125,
+        "scale": 0.2889,
         "life": 21,
         "rewards": [
             {
@@ -20000,7 +20000,7 @@
     },
     {
         "name": "Lathliss",
-        "sprite": "sprites/enemy/dragon/lathiss.atlas",
+        "sprite": "sprites/enemy/remake/lathliss.atlas",
         "deck": [
             "decks/boss/lathliss.dck"
         ],
@@ -20008,7 +20008,7 @@
         "boss": true,
         "flying": true,
         "speed": 10,
-        "scale": 1.1304,
+        "scale": 0.243,
         "life": 40,
         "rewards": [
             {
@@ -23918,7 +23918,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 0.5149
+        "scale": 0.4127
     },
     {
         "name": "Orc Brute",
@@ -24359,7 +24359,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 24,
-        "scale": 0.3939,
+        "scale": 0.2889,
         "life": 13,
         "rewards": [
             {
@@ -26195,7 +26195,7 @@
     },
     {
         "name": "Rhino",
-        "sprite": "sprites/enemy/beast/largemammals/rhino.atlas",
+        "sprite": "sprites/enemy/remake/rhino.atlas",
         "deck": [
             "decks/standard/rhino.dck"
         ],
@@ -26204,7 +26204,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.8125,
+        "scale": 0.2889,
         "life": 16,
         "rewards": [
             {
@@ -26818,7 +26818,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.5,
+        "scale": 0.3714,
         "life": 21,
         "rewards": [
             {
@@ -28524,7 +28524,7 @@
             "IdentitySimic"
         ],
         "tier": "Rare",
-        "scale": 0.2968
+        "scale": 0.2355
     },
     {
         "name": "Snow Wizard",
@@ -28939,7 +28939,7 @@
             "BiomeGreen"
         ],
         "tier": "Rare",
-        "scale": 0.3611
+        "scale": 0.2364
     },
     {
         "name": "Spiked Ravager",
@@ -29079,7 +29079,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.3171,
+        "scale": 0.2321,
         "life": 15,
         "rewards": [
             {
@@ -30558,7 +30558,7 @@
     },
     {
         "name": "Treefolk",
-        "sprite": "sprites/enemy/plant/treant.atlas",
+        "sprite": "sprites/enemy/remake/treefolk.atlas",
         "deck": [
             "decks/standard/treefolk.json"
         ],
@@ -30612,7 +30612,8 @@
             "IdentityGreen",
             "BiomeGreen"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.2031
     },
     {
         "name": "Treefolk Elite",
@@ -30926,7 +30927,7 @@
             "BiomeRed"
         ],
         "tier": "Rare",
-        "scale": 0.3171
+        "scale": 0.2549
     },
     {
         "name": "Turtle",
@@ -35332,7 +35333,7 @@
             "abandoned"
         ],
         "tier": "Common",
-        "scale": 0.5
+        "scale": 0.3514
     },
     {
         "name": "Wolfkin Outcast",
@@ -35585,13 +35586,13 @@
     },
     {
         "name": "Cromat",
-        "sprite": "sprites/enemy/monstrosity/sandwurm.atlas",
+        "sprite": "sprites/enemy/remake/cromat.atlas",
         "deck": [
             "decks/legends/cromat.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.8125,
+        "scale": 0.2364,
         "life": 50,
         "rewards": [
             {
@@ -36612,13 +36613,13 @@
     },
     {
         "name": "Yidris",
-        "sprite": "sprites/enemy/giant/troll_2.atlas",
+        "sprite": "sprites/enemy/remake/yidris.atlas",
         "deck": [
             "decks/legends/yidris.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.2364,
         "life": 50,
         "rewards": [
             {
@@ -36944,7 +36945,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2653,
+        "scale": 0.194,
         "life": 50,
         "rewards": [
             {
@@ -37707,7 +37708,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.325,
+        "scale": 0.2321,
         "life": 50,
         "rewards": [
             {
@@ -38121,7 +38122,7 @@
             "decks/legends/arcades_sabboth.dck"
         ],
         "ai": "",
-        "scale": 0.4062,
+        "scale": 0.2889,
         "speed": 30,
         "life": 40,
         "rewards": [
@@ -38184,13 +38185,13 @@
     },
     {
         "name": "Rorix",
-        "sprite": "sprites/enemy/dragon/lathiss.atlas",
+        "sprite": "sprites/enemy/remake/rorix.atlas",
         "deck": [
             "decks/legends/rorix.dck"
         ],
         "ai": "",
         "speed": 29,
-        "scale": 0.5652,
+        "scale": 0.2955,
         "life": 18,
         "rewards": [
             {
@@ -38317,13 +38318,13 @@
     },
     {
         "name": "Vaevictis",
-        "sprite": "sprites/enemy/dragon/dragon.atlas",
+        "sprite": "sprites/enemy/remake/vaevictis.atlas",
         "deck": [
             "decks/legends/vaevictis_asmadi.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.1818,
+        "scale": 0.2955,
         "life": 40,
         "rewards": [
             {
@@ -38592,7 +38593,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.325,
+        "scale": 0.2241,
         "life": 40,
         "rewards": [
             {
@@ -38727,7 +38728,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.3171,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -39911,7 +39912,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.325,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -40357,7 +40358,7 @@
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.325,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -42838,7 +42839,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.325,
+        "scale": 0.25,
         "life": 40,
         "rewards": [
             {
@@ -42905,14 +42906,14 @@
     },
     {
         "name": "Teneb",
-        "sprite": "sprites/enemy/dragon/bonedragon.atlas",
+        "sprite": "sprites/enemy/remake/teneb.atlas",
         "deck": [
             "decks/legends/teneb.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.52,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -43059,7 +43060,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.3171,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -43598,7 +43599,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.3186,
+        "scale": 0.2579,
         "life": 40,
         "rewards": [
             {
@@ -44376,7 +44377,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.3171,
+        "scale": 0.25,
         "life": 40,
         "rewards": [
             {
@@ -44940,7 +44941,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.3714,
+        "scale": 0.2167,
         "life": 40,
         "rewards": [
             {
@@ -47026,7 +47027,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.4062,
+        "scale": 0.2955,
         "life": 30,
         "rewards": [
             {
@@ -48640,7 +48641,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.3171,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -48725,13 +48726,13 @@
     },
     {
         "name": "Brokkos",
-        "sprite": "sprites/enemy/beast/largemammals/rhino.atlas",
+        "sprite": "sprites/enemy/remake/brokkos.atlas",
         "deck": [
             "decks/legends/brokkos.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.8125,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -48823,7 +48824,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.325,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -49192,7 +49193,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.3766,
+        "scale": 0.273,
         "life": 30,
         "rewards": [
             {
@@ -50108,14 +50109,14 @@
     },
     {
         "name": "Galazeth",
-        "sprite": "sprites/enemy/dragon/lathiss.atlas",
+        "sprite": "sprites/enemy/remake/galazeth.atlas",
         "deck": [
             "decks/legends/galazeth.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.5652,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -50206,7 +50207,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.358,
+        "scale": 0.26,
         "life": 30,
         "rewards": [
             {
@@ -50772,7 +50773,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.3856,
+        "scale": 0.2868,
         "life": 30,
         "rewards": [
             {
@@ -51598,7 +51599,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.3333
+        "scale": 0.2321
     },
     {
         "name": "Arthur",
@@ -51771,7 +51772,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.3333
+        "scale": 0.2407
     },
     {
         "name": "The Infamous Cruelclaw",
@@ -52348,7 +52349,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.3171,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -52438,14 +52439,14 @@
     },
     {
         "name": "Beledros",
-        "sprite": "sprites/enemy/dragon/bonedragon.atlas",
+        "sprite": "sprites/enemy/remake/beledros.atlas",
         "deck": [
             "decks/legends/beledros.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.52,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -52893,14 +52894,14 @@
     },
     {
         "name": "Ziatora",
-        "sprite": "sprites/enemy/dragon/lathiss.atlas",
+        "sprite": "sprites/enemy/remake/ziatora.atlas",
         "deck": [
             "decks/legends/ziatora.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.5652,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -53061,7 +53062,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.3234,
+        "scale": 0.2257,
         "life": 30,
         "rewards": [
             {
@@ -53197,14 +53198,14 @@
     },
     {
         "name": "Commander Eesha",
-        "sprite": "sprites/enemy/beast/bird/falcon.atlas",
+        "sprite": "sprites/enemy/remake/commander_eesha.atlas",
         "deck": [
             "decks/legends/commander_eesha.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 27,
-        "scale": 1.1818,
+        "scale": 0.2928,
         "life": 20,
         "rewards": [
             {
@@ -53485,7 +53486,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.3283,
+        "scale": 0.2281,
         "life": 30,
         "rewards": [
             {
@@ -53685,14 +53686,14 @@
     },
     {
         "name": "Zoraline",
-        "sprite": "sprites/enemy/beast/smallmammals/bat.atlas",
+        "sprite": "sprites/enemy/remake/zoraline.atlas",
         "deck": [
             "decks/legends/zoraline.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.3542,
+        "scale": 0.2097,
         "life": 30,
         "rewards": [
             {
@@ -54353,14 +54354,14 @@
     },
     {
         "name": "Aclazotz",
-        "sprite": "sprites/enemy/beast/smallmammals/bat.atlas",
+        "sprite": "sprites/enemy/remake/aclazotz.atlas",
         "deck": [
             "decks/legends/aclazotz.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 30,
-        "scale": 1.3542,
+        "scale": 0.3023,
         "life": 21,
         "rewards": [
             {
@@ -56256,7 +56257,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2766,
+        "scale": 0.194,
         "life": 48,
         "rewards": [
             {
@@ -56395,7 +56396,7 @@
         ],
         "ai": "",
         "speed": 37,
-        "scale": 0.325,
+        "scale": 0.2281,
         "life": 28,
         "rewards": [
             {
@@ -56465,7 +56466,7 @@
         "ai": "",
         "flying": true,
         "speed": 52,
-        "scale": 0.3186,
+        "scale": 0.2462,
         "life": 28,
         "rewards": [
             {
@@ -57032,14 +57033,14 @@
     },
     {
         "name": "Skithiryx",
-        "sprite": "sprites/enemy/dragon/bonedragon.atlas",
+        "sprite": "sprites/enemy/remake/skithiryx.atlas",
         "deck": [
             "decks/legends/skithiryx.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 29,
-        "scale": 0.52,
+        "scale": 0.3023,
         "life": 19,
         "rewards": [
             {
@@ -61084,14 +61085,14 @@
     },
     {
         "name": "Crosis",
-        "sprite": "sprites/enemy/dragon/bonedragon.atlas",
+        "sprite": "sprites/enemy/remake/crosis.atlas",
         "deck": [
             "decks/legends/crosis.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.52,
+        "scale": 0.2453,
         "life": 30,
         "rewards": [
             {
@@ -61153,14 +61154,14 @@
     },
     {
         "name": "Darigaaz",
-        "sprite": "sprites/enemy/dragon/dragon.atlas",
+        "sprite": "sprites/enemy/remake/darigaaz.atlas",
         "deck": [
             "decks/legends/darigaaz.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -61240,7 +61241,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.3333,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -61310,7 +61311,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.3333,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -61385,7 +61386,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.325,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -61663,13 +61664,13 @@
     },
     {
         "name": "Ulasht",
-        "sprite": "sprites/enemy/monstrosity/sandwurm.atlas",
+        "sprite": "sprites/enemy/remake/ulasht.atlas",
         "deck": [
             "decks/legends/ulasht.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.8125,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -63690,7 +63691,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2826,
+        "scale": 0.2,
         "life": 47,
         "rewards": [
             {
@@ -63830,7 +63831,7 @@
         "ai": "",
         "flying": true,
         "speed": 38,
-        "scale": 0.3171,
+        "scale": 0.2453,
         "life": 33,
         "rewards": [
             {
@@ -63905,7 +63906,7 @@
         "ai": "",
         "flying": true,
         "speed": 39,
-        "scale": 0.325,
+        "scale": 0.2364,
         "life": 32,
         "rewards": [
             {
@@ -64920,7 +64921,7 @@
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 0.3939,
+        "scale": 0.2955,
         "life": 30,
         "rewards": [
             {
@@ -65200,14 +65201,14 @@
     },
     {
         "name": "Xolatoyac",
-        "sprite": "sprites/enemy/monstrosity/sandwurm.atlas",
+        "sprite": "sprites/enemy/remake/xolatoyac.atlas",
         "deck": [
             "decks/legends/xolatoyac.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.8125,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -65890,7 +65891,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.3023,
+        "scale": 0.2305,
         "life": 27,
         "rewards": [
             {
@@ -65958,7 +65959,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.3283,
+        "scale": 0.2381,
         "life": 30,
         "rewards": [
             {
@@ -66026,7 +66027,7 @@
         ],
         "ai": "",
         "speed": 37,
-        "scale": 0.3611,
+        "scale": 0.2305,
         "life": 26,
         "rewards": [
             {
@@ -66232,7 +66233,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.4194,
+        "scale": 0.2889,
         "life": 30,
         "rewards": [
             {
@@ -66654,7 +66655,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.325,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -66722,7 +66723,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.325,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -66790,7 +66791,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.325,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -66858,7 +66859,7 @@
         ],
         "ai": "",
         "speed": 37,
-        "scale": 0.4062,
+        "scale": 0.2955,
         "life": 31,
         "rewards": [
             {
@@ -66994,7 +66995,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.3283,
+        "scale": 0.2355,
         "life": 30,
         "rewards": [
             {
@@ -67276,7 +67277,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.325,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -68065,7 +68066,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.3171,
+        "scale": 0.2364,
         "life": 39,
         "rewards": [
             {
@@ -72823,7 +72824,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.4062
+        "scale": 0.2955
     },
     {
         "name": "Gornog",
@@ -73229,7 +73230,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.3939
+        "scale": 0.2889
     },
     {
         "name": "Baral",
@@ -74368,12 +74369,12 @@
     },
     {
         "name": "Ruric Thar",
-        "sprite": "sprites/enemy/giant/troll_2.atlas",
+        "sprite": "sprites/enemy/remake/ruric_thar.atlas",
         "deck": [
             "decks/legends/ruric_thar.dck"
         ],
         "ai": "",
-        "scale": 1.0,
+        "scale": 0.25,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -75792,7 +75793,7 @@
         "spawnRate": 0,
         "tier": "Common",
         "difficulty": 0.1,
-        "scale": 0.5
+        "scale": 0.3611
     },
     {
         "name": "Duskana",
@@ -75928,7 +75929,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.3939
+        "scale": 0.3171
     },
     {
         "name": "Kudo",
@@ -76001,7 +76002,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 0.4062
+        "scale": 0.3023
     },
     {
         "name": "Ruxa",
@@ -76493,7 +76494,7 @@
             "decks/legends/zask.dck"
         ],
         "ai": "",
-        "scale": 0.4062,
+        "scale": 0.2889,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -76846,7 +76847,7 @@
             "decks/legends/shiko.dck"
         ],
         "ai": "",
-        "scale": 0.4062,
+        "scale": 0.2955,
         "flying": true,
         "speed": 34,
         "life": 20,
@@ -78837,7 +78838,7 @@
             "decks/legends/umori.dck"
         ],
         "ai": "",
-        "scale": 0.4062,
+        "scale": 0.2889,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -79552,7 +79553,7 @@
     },
     {
         "name": "Rin and Seri",
-        "sprite": "sprites/enemy/beast/smallmammals/dog.atlas",
+        "sprite": "sprites/enemy/remake/rin_and_seri.atlas",
         "deck": [
             "decks/legends/rin_and_seri.dck"
         ],
@@ -79638,7 +79639,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.2407
     },
     {
         "name": "Alibou",
@@ -84904,12 +84905,12 @@
     },
     {
         "name": "Thromok",
-        "sprite": "sprites/enemy/monstrosity/sandwurm.atlas",
+        "sprite": "sprites/enemy/remake/thromok.atlas",
         "deck": [
             "decks/legends/thromok.dck"
         ],
         "ai": "",
-        "scale": 0.8125,
+        "scale": 0.2955,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -85977,7 +85978,7 @@
     },
     {
         "name": "Yoshimaru",
-        "sprite": "sprites/enemy/beast/smallmammals/dog.atlas",
+        "sprite": "sprites/enemy/remake/yoshimaru.atlas",
         "deck": [
             "decks/legends/yoshimaru.dck"
         ],
@@ -86041,7 +86042,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.2321
     },
     {
         "name": "Anowon",
@@ -86492,7 +86493,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 0.4062
+        "scale": 0.2889
     },
     {
         "name": "The Raven Man",
@@ -87120,7 +87121,7 @@
     },
     {
         "name": "Colfenor",
-        "sprite": "sprites/enemy/plant/treant.atlas",
+        "sprite": "sprites/enemy/remake/colfenor.atlas",
         "deck": [
             "decks/legends/colfenor.dck"
         ],
@@ -87183,7 +87184,8 @@
         "colors": "WBG",
         "spawnRate": 1,
         "tier": "Common",
-        "difficulty": 0.1
+        "difficulty": 0.1,
+        "scale": 0.3611
     },
     {
         "name": "Gimbal",
@@ -87888,13 +87890,13 @@
     },
     {
         "name": "Arna",
-        "sprite": "sprites/enemy/beast/bird/falcon.atlas",
+        "sprite": "sprites/enemy/remake/arna.atlas",
         "deck": [
             "decks/legends/arna.dck"
         ],
         "ai": "",
         "flying": true,
-        "scale": 1.1818,
+        "scale": 0.3052,
         "speed": 34,
         "life": 20,
         "rewards": [
@@ -88026,7 +88028,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.3333
+        "scale": 0.2653
     },
     {
         "name": "Averna",
@@ -88942,7 +88944,7 @@
             "decks/legends/kyodai.dck"
         ],
         "ai": "",
-        "scale": 0.3333,
+        "scale": 0.2241,
         "flying": true,
         "speed": 44,
         "life": 30,
@@ -91106,12 +91108,12 @@
     },
     {
         "name": "Doran",
-        "sprite": "sprites/enemy/plant/treant.atlas",
+        "sprite": "sprites/enemy/remake/doran.atlas",
         "deck": [
             "decks/legends/doran.dck"
         ],
         "ai": "",
-        "scale": 1.0,
+        "scale": 0.2889,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -91824,7 +91826,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.3283
+        "scale": 0.2381
     },
     {
         "name": "Felisa",
@@ -93386,7 +93388,7 @@
     },
     {
         "name": "Perrie",
-        "sprite": "sprites/enemy/beast/largemammals/rhino.atlas",
+        "sprite": "sprites/enemy/remake/perrie.atlas",
         "deck": [
             "decks/legends/perrie_the_pulverizer.dck"
         ],
@@ -93450,7 +93452,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.8125
+        "scale": 0.2321
     },
     {
         "name": "Rigo",
@@ -93741,7 +93743,7 @@
             "decks/legends/teval.dck"
         ],
         "ai": "",
-        "scale": 0.3333,
+        "scale": 0.2407,
         "flying": true,
         "speed": 44,
         "life": 20,
@@ -93894,7 +93896,7 @@
         ],
         "ai": "",
         "flying": true,
-        "scale": 0.3333,
+        "scale": 0.25,
         "speed": 44,
         "life": 20,
         "rewards": [
@@ -94095,7 +94097,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.3171
+        "scale": 0.2281
     },
     {
         "name": "Byrke",
@@ -94163,7 +94165,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.325
+        "scale": 0.2321
     },
     {
         "name": "Finneas",
@@ -94231,7 +94233,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.4194
+        "scale": 0.2955
     },
     {
         "name": "Hugs",
@@ -94796,7 +94798,7 @@
             "decks/legends/khorvath_and_sylvia.dck"
         ],
         "ai": "",
-        "scale": 0.3412,
+        "scale": 0.273,
         "flying": true,
         "speed": 44,
         "life": 20,
@@ -96708,7 +96710,7 @@
     },
     {
         "name": "The Beamtown Bullies",
-        "sprite": "sprites/enemy/giant/troll_2.atlas",
+        "sprite": "sprites/enemy/remake/the_beamtown_bullies.atlas",
         "deck": [
             "decks/legends/the_beamtown_bullies.dck"
         ],
@@ -96771,7 +96773,8 @@
         "colors": "BRG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3023
     },
     {
         "name": "Henzie",
@@ -96843,7 +96846,7 @@
     },
     {
         "name": "Mr. Orfeo",
-        "sprite": "sprites/enemy/beast/largemammals/rhino.atlas",
+        "sprite": "sprites/enemy/remake/mr_orfeo.atlas",
         "deck": [
             "decks/legends/mr_orfeo.dck"
         ],
@@ -96907,7 +96910,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.8125
+        "scale": 0.2955
     },
     {
         "name": "Ognis",
@@ -97384,7 +97387,7 @@
         "tier": "Rare",
         "difficulty": 2,
         "flying": true,
-        "scale": 0.314
+        "scale": 0.2381
     },
     {
         "name": "Arnyn",
@@ -97724,7 +97727,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.3495,
+        "scale": 0.2305,
         "life": 30,
         "rewards": [
             {
@@ -121515,7 +121518,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.3986,
+        "scale": 0.2868,
         "life": 40,
         "rewards": [
             {
@@ -121751,7 +121754,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.392,
+        "scale": 0.2904,
         "life": 40,
         "rewards": [
             {
@@ -121987,7 +121990,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.3581,
+        "scale": 0.254,
         "life": 40,
         "rewards": [
             {
@@ -122223,7 +122226,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 0.4262,
+        "scale": 0.321,
         "life": 40,
         "rewards": [
             {
@@ -122459,7 +122462,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 0.4262,
+        "scale": 0.3059,
         "life": 40,
         "rewards": [
             {
@@ -124007,7 +124010,7 @@
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.325,
+        "scale": 0.2321,
         "life": 80,
         "rewards": [
             {
@@ -124601,11 +124604,11 @@
         "spawnRate": 1,
         "difficulty": 2,
         "tier": "Rare",
-        "scale": 0.325
+        "scale": 0.2281
     },
     {
         "name": "Phelia",
-        "sprite": "sprites/enemy/beast/smallmammals/dog.atlas",
+        "sprite": "sprites/enemy/remake/phelia.atlas",
         "deck": [
             "decks/legends/phelia.dck"
         ],
@@ -124669,7 +124672,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.2955
     },
     {
         "name": "Preston",
@@ -124737,7 +124740,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "tier": "Uncommon",
-        "scale": 0.4062
+        "scale": 0.3023
     },
     {
         "name": "Thurid",

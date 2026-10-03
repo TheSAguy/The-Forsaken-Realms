@@ -1,0 +1,242 @@
+yoshimaru.png
+size: 1530,1004
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 102, 94
+Idle
+  xy: 102, 64
+  size: 102, 94
+Idle
+  xy: 204, 64
+  size: 102, 94
+Idle
+  xy: 306, 64
+  size: 102, 94
+Idle
+  xy: 408, 64
+  size: 102, 94
+Idle
+  xy: 510, 64
+  size: 102, 94
+Idle
+  xy: 612, 64
+  size: 102, 94
+Idle
+  xy: 714, 64
+  size: 102, 94
+Idle
+  xy: 816, 64
+  size: 102, 94
+Idle
+  xy: 918, 64
+  size: 102, 94
+Walk
+  xy: 0, 158
+  size: 102, 94
+Walk
+  xy: 102, 158
+  size: 102, 94
+Walk
+  xy: 204, 158
+  size: 102, 94
+Walk
+  xy: 306, 158
+  size: 102, 94
+Attack
+  xy: 0, 252
+  size: 102, 94
+Attack
+  xy: 102, 252
+  size: 102, 94
+Attack
+  xy: 204, 252
+  size: 102, 94
+Attack
+  xy: 306, 252
+  size: 102, 94
+Attack
+  xy: 408, 252
+  size: 102, 94
+Attack
+  xy: 510, 252
+  size: 102, 94
+Attack
+  xy: 612, 252
+  size: 102, 94
+Hit
+  xy: 0, 346
+  size: 102, 94
+Hit
+  xy: 102, 346
+  size: 102, 94
+Hit
+  xy: 204, 346
+  size: 102, 94
+Hit
+  xy: 306, 346
+  size: 102, 94
+Hit
+  xy: 408, 346
+  size: 102, 94
+Hit
+  xy: 510, 346
+  size: 102, 94
+Death
+  xy: 0, 440
+  size: 102, 94
+Death
+  xy: 102, 440
+  size: 102, 94
+Death
+  xy: 204, 440
+  size: 102, 94
+Death
+  xy: 306, 440
+  size: 102, 94
+Death
+  xy: 408, 440
+  size: 102, 94
+Death
+  xy: 510, 440
+  size: 102, 94
+Death
+  xy: 612, 440
+  size: 102, 94
+Death
+  xy: 714, 440
+  size: 102, 94
+Death
+  xy: 816, 440
+  size: 102, 94
+Death
+  xy: 918, 440
+  size: 102, 94
+Death
+  xy: 1020, 440
+  size: 102, 94
+Death
+  xy: 1122, 440
+  size: 102, 94
+Death
+  xy: 1224, 440
+  size: 102, 94
+Death
+  xy: 1326, 440
+  size: 102, 94
+Death
+  xy: 1428, 440
+  size: 102, 94
+Wake
+  xy: 0, 534
+  size: 102, 94
+Wake
+  xy: 102, 534
+  size: 102, 94
+Wake
+  xy: 204, 534
+  size: 102, 94
+Wake
+  xy: 306, 534
+  size: 102, 94
+Wake
+  xy: 408, 534
+  size: 102, 94
+Wake
+  xy: 510, 534
+  size: 102, 94
+Wake
+  xy: 612, 534
+  size: 102, 94
+Wake
+  xy: 714, 534
+  size: 102, 94
+IdleUp
+  xy: 0, 628
+  size: 102, 94
+IdleUp
+  xy: 102, 628
+  size: 102, 94
+IdleUp
+  xy: 204, 628
+  size: 102, 94
+IdleUp
+  xy: 306, 628
+  size: 102, 94
+IdleUp
+  xy: 408, 628
+  size: 102, 94
+IdleUp
+  xy: 510, 628
+  size: 102, 94
+IdleUp
+  xy: 612, 628
+  size: 102, 94
+IdleUp
+  xy: 714, 628
+  size: 102, 94
+IdleUp
+  xy: 816, 628
+  size: 102, 94
+IdleUp
+  xy: 918, 628
+  size: 102, 94
+IdleDown
+  xy: 0, 722
+  size: 102, 94
+IdleDown
+  xy: 102, 722
+  size: 102, 94
+IdleDown
+  xy: 204, 722
+  size: 102, 94
+IdleDown
+  xy: 306, 722
+  size: 102, 94
+IdleDown
+  xy: 408, 722
+  size: 102, 94
+IdleDown
+  xy: 510, 722
+  size: 102, 94
+IdleDown
+  xy: 612, 722
+  size: 102, 94
+IdleDown
+  xy: 714, 722
+  size: 102, 94
+IdleDown
+  xy: 816, 722
+  size: 102, 94
+IdleDown
+  xy: 918, 722
+  size: 102, 94
+WalkUp
+  xy: 0, 816
+  size: 102, 94
+WalkUp
+  xy: 102, 816
+  size: 102, 94
+WalkUp
+  xy: 204, 816
+  size: 102, 94
+WalkUp
+  xy: 306, 816
+  size: 102, 94
+WalkDown
+  xy: 0, 910
+  size: 102, 94
+WalkDown
+  xy: 102, 910
+  size: 102, 94
+WalkDown
+  xy: 204, 910
+  size: 102, 94
+WalkDown
+  xy: 306, 910
+  size: 102, 94

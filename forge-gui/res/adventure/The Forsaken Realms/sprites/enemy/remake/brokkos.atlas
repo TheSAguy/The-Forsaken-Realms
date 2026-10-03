@@ -1,0 +1,248 @@
+brokkos.png
+size: 1380,884
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 92, 82
+Idle
+  xy: 92, 64
+  size: 92, 82
+Idle
+  xy: 184, 64
+  size: 92, 82
+Idle
+  xy: 276, 64
+  size: 92, 82
+Idle
+  xy: 368, 64
+  size: 92, 82
+Idle
+  xy: 460, 64
+  size: 92, 82
+Idle
+  xy: 552, 64
+  size: 92, 82
+Idle
+  xy: 644, 64
+  size: 92, 82
+Idle
+  xy: 736, 64
+  size: 92, 82
+Idle
+  xy: 828, 64
+  size: 92, 82
+Walk
+  xy: 0, 146
+  size: 92, 82
+Walk
+  xy: 92, 146
+  size: 92, 82
+Walk
+  xy: 184, 146
+  size: 92, 82
+Walk
+  xy: 276, 146
+  size: 92, 82
+Attack
+  xy: 0, 228
+  size: 92, 82
+Attack
+  xy: 92, 228
+  size: 92, 82
+Attack
+  xy: 184, 228
+  size: 92, 82
+Attack
+  xy: 276, 228
+  size: 92, 82
+Attack
+  xy: 368, 228
+  size: 92, 82
+Attack
+  xy: 460, 228
+  size: 92, 82
+Attack
+  xy: 552, 228
+  size: 92, 82
+Attack
+  xy: 644, 228
+  size: 92, 82
+Attack
+  xy: 736, 228
+  size: 92, 82
+Hit
+  xy: 0, 310
+  size: 92, 82
+Hit
+  xy: 92, 310
+  size: 92, 82
+Hit
+  xy: 184, 310
+  size: 92, 82
+Hit
+  xy: 276, 310
+  size: 92, 82
+Hit
+  xy: 368, 310
+  size: 92, 82
+Hit
+  xy: 460, 310
+  size: 92, 82
+Death
+  xy: 0, 392
+  size: 92, 82
+Death
+  xy: 92, 392
+  size: 92, 82
+Death
+  xy: 184, 392
+  size: 92, 82
+Death
+  xy: 276, 392
+  size: 92, 82
+Death
+  xy: 368, 392
+  size: 92, 82
+Death
+  xy: 460, 392
+  size: 92, 82
+Death
+  xy: 552, 392
+  size: 92, 82
+Death
+  xy: 644, 392
+  size: 92, 82
+Death
+  xy: 736, 392
+  size: 92, 82
+Death
+  xy: 828, 392
+  size: 92, 82
+Death
+  xy: 920, 392
+  size: 92, 82
+Death
+  xy: 1012, 392
+  size: 92, 82
+Death
+  xy: 1104, 392
+  size: 92, 82
+Death
+  xy: 1196, 392
+  size: 92, 82
+Death
+  xy: 1288, 392
+  size: 92, 82
+Wake
+  xy: 0, 474
+  size: 92, 82
+Wake
+  xy: 92, 474
+  size: 92, 82
+Wake
+  xy: 184, 474
+  size: 92, 82
+Wake
+  xy: 276, 474
+  size: 92, 82
+Wake
+  xy: 368, 474
+  size: 92, 82
+Wake
+  xy: 460, 474
+  size: 92, 82
+Wake
+  xy: 552, 474
+  size: 92, 82
+Wake
+  xy: 644, 474
+  size: 92, 82
+IdleUp
+  xy: 0, 556
+  size: 92, 82
+IdleUp
+  xy: 92, 556
+  size: 92, 82
+IdleUp
+  xy: 184, 556
+  size: 92, 82
+IdleUp
+  xy: 276, 556
+  size: 92, 82
+IdleUp
+  xy: 368, 556
+  size: 92, 82
+IdleUp
+  xy: 460, 556
+  size: 92, 82
+IdleUp
+  xy: 552, 556
+  size: 92, 82
+IdleUp
+  xy: 644, 556
+  size: 92, 82
+IdleUp
+  xy: 736, 556
+  size: 92, 82
+IdleUp
+  xy: 828, 556
+  size: 92, 82
+IdleDown
+  xy: 0, 638
+  size: 92, 82
+IdleDown
+  xy: 92, 638
+  size: 92, 82
+IdleDown
+  xy: 184, 638
+  size: 92, 82
+IdleDown
+  xy: 276, 638
+  size: 92, 82
+IdleDown
+  xy: 368, 638
+  size: 92, 82
+IdleDown
+  xy: 460, 638
+  size: 92, 82
+IdleDown
+  xy: 552, 638
+  size: 92, 82
+IdleDown
+  xy: 644, 638
+  size: 92, 82
+IdleDown
+  xy: 736, 638
+  size: 92, 82
+IdleDown
+  xy: 828, 638
+  size: 92, 82
+WalkUp
+  xy: 0, 720
+  size: 92, 82
+WalkUp
+  xy: 92, 720
+  size: 92, 82
+WalkUp
+  xy: 184, 720
+  size: 92, 82
+WalkUp
+  xy: 276, 720
+  size: 92, 82
+WalkDown
+  xy: 0, 802
+  size: 92, 82
+WalkDown
+  xy: 92, 802
+  size: 92, 82
+WalkDown
+  xy: 184, 802
+  size: 92, 82
+WalkDown
+  xy: 276, 802
+  size: 92, 82

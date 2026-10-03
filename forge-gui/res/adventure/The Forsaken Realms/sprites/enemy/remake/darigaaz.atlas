@@ -1,0 +1,248 @@
+darigaaz.png
+size: 1650,914
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 110, 85
+Idle
+  xy: 110, 64
+  size: 110, 85
+Idle
+  xy: 220, 64
+  size: 110, 85
+Idle
+  xy: 330, 64
+  size: 110, 85
+Idle
+  xy: 440, 64
+  size: 110, 85
+Idle
+  xy: 550, 64
+  size: 110, 85
+Idle
+  xy: 660, 64
+  size: 110, 85
+Idle
+  xy: 770, 64
+  size: 110, 85
+Idle
+  xy: 880, 64
+  size: 110, 85
+Idle
+  xy: 990, 64
+  size: 110, 85
+Walk
+  xy: 0, 149
+  size: 110, 85
+Walk
+  xy: 110, 149
+  size: 110, 85
+Walk
+  xy: 220, 149
+  size: 110, 85
+Walk
+  xy: 330, 149
+  size: 110, 85
+Attack
+  xy: 0, 234
+  size: 110, 85
+Attack
+  xy: 110, 234
+  size: 110, 85
+Attack
+  xy: 220, 234
+  size: 110, 85
+Attack
+  xy: 330, 234
+  size: 110, 85
+Attack
+  xy: 440, 234
+  size: 110, 85
+Attack
+  xy: 550, 234
+  size: 110, 85
+Attack
+  xy: 660, 234
+  size: 110, 85
+Attack
+  xy: 770, 234
+  size: 110, 85
+Attack
+  xy: 880, 234
+  size: 110, 85
+Hit
+  xy: 0, 319
+  size: 110, 85
+Hit
+  xy: 110, 319
+  size: 110, 85
+Hit
+  xy: 220, 319
+  size: 110, 85
+Hit
+  xy: 330, 319
+  size: 110, 85
+Hit
+  xy: 440, 319
+  size: 110, 85
+Hit
+  xy: 550, 319
+  size: 110, 85
+Death
+  xy: 0, 404
+  size: 110, 85
+Death
+  xy: 110, 404
+  size: 110, 85
+Death
+  xy: 220, 404
+  size: 110, 85
+Death
+  xy: 330, 404
+  size: 110, 85
+Death
+  xy: 440, 404
+  size: 110, 85
+Death
+  xy: 550, 404
+  size: 110, 85
+Death
+  xy: 660, 404
+  size: 110, 85
+Death
+  xy: 770, 404
+  size: 110, 85
+Death
+  xy: 880, 404
+  size: 110, 85
+Death
+  xy: 990, 404
+  size: 110, 85
+Death
+  xy: 1100, 404
+  size: 110, 85
+Death
+  xy: 1210, 404
+  size: 110, 85
+Death
+  xy: 1320, 404
+  size: 110, 85
+Death
+  xy: 1430, 404
+  size: 110, 85
+Death
+  xy: 1540, 404
+  size: 110, 85
+Wake
+  xy: 0, 489
+  size: 110, 85
+Wake
+  xy: 110, 489
+  size: 110, 85
+Wake
+  xy: 220, 489
+  size: 110, 85
+Wake
+  xy: 330, 489
+  size: 110, 85
+Wake
+  xy: 440, 489
+  size: 110, 85
+Wake
+  xy: 550, 489
+  size: 110, 85
+Wake
+  xy: 660, 489
+  size: 110, 85
+Wake
+  xy: 770, 489
+  size: 110, 85
+IdleUp
+  xy: 0, 574
+  size: 110, 85
+IdleUp
+  xy: 110, 574
+  size: 110, 85
+IdleUp
+  xy: 220, 574
+  size: 110, 85
+IdleUp
+  xy: 330, 574
+  size: 110, 85
+IdleUp
+  xy: 440, 574
+  size: 110, 85
+IdleUp
+  xy: 550, 574
+  size: 110, 85
+IdleUp
+  xy: 660, 574
+  size: 110, 85
+IdleUp
+  xy: 770, 574
+  size: 110, 85
+IdleUp
+  xy: 880, 574
+  size: 110, 85
+IdleUp
+  xy: 990, 574
+  size: 110, 85
+IdleDown
+  xy: 0, 659
+  size: 110, 85
+IdleDown
+  xy: 110, 659
+  size: 110, 85
+IdleDown
+  xy: 220, 659
+  size: 110, 85
+IdleDown
+  xy: 330, 659
+  size: 110, 85
+IdleDown
+  xy: 440, 659
+  size: 110, 85
+IdleDown
+  xy: 550, 659
+  size: 110, 85
+IdleDown
+  xy: 660, 659
+  size: 110, 85
+IdleDown
+  xy: 770, 659
+  size: 110, 85
+IdleDown
+  xy: 880, 659
+  size: 110, 85
+IdleDown
+  xy: 990, 659
+  size: 110, 85
+WalkUp
+  xy: 0, 744
+  size: 110, 85
+WalkUp
+  xy: 110, 744
+  size: 110, 85
+WalkUp
+  xy: 220, 744
+  size: 110, 85
+WalkUp
+  xy: 330, 744
+  size: 110, 85
+WalkDown
+  xy: 0, 829
+  size: 110, 85
+WalkDown
+  xy: 110, 829
+  size: 110, 85
+WalkDown
+  xy: 220, 829
+  size: 110, 85
+WalkDown
+  xy: 330, 829
+  size: 110, 85

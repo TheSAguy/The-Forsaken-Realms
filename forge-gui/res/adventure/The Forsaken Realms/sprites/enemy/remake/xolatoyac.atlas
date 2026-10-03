@@ -1,0 +1,269 @@
+xolatoyac.png
+size: 2632,954
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 188, 89
+Idle
+  xy: 188, 64
+  size: 188, 89
+Idle
+  xy: 376, 64
+  size: 188, 89
+Idle
+  xy: 564, 64
+  size: 188, 89
+Idle
+  xy: 752, 64
+  size: 188, 89
+Idle
+  xy: 940, 64
+  size: 188, 89
+Idle
+  xy: 1128, 64
+  size: 188, 89
+Idle
+  xy: 1316, 64
+  size: 188, 89
+Idle
+  xy: 1504, 64
+  size: 188, 89
+Idle
+  xy: 1692, 64
+  size: 188, 89
+Walk
+  xy: 0, 153
+  size: 188, 89
+Walk
+  xy: 188, 153
+  size: 188, 89
+Walk
+  xy: 376, 153
+  size: 188, 89
+Walk
+  xy: 564, 153
+  size: 188, 89
+Walk
+  xy: 752, 153
+  size: 188, 89
+Walk
+  xy: 940, 153
+  size: 188, 89
+Walk
+  xy: 1128, 153
+  size: 188, 89
+Walk
+  xy: 1316, 153
+  size: 188, 89
+Attack
+  xy: 0, 242
+  size: 188, 89
+Attack
+  xy: 188, 242
+  size: 188, 89
+Attack
+  xy: 376, 242
+  size: 188, 89
+Attack
+  xy: 564, 242
+  size: 188, 89
+Attack
+  xy: 752, 242
+  size: 188, 89
+Attack
+  xy: 940, 242
+  size: 188, 89
+Attack
+  xy: 1128, 242
+  size: 188, 89
+Hit
+  xy: 0, 331
+  size: 188, 89
+Hit
+  xy: 188, 331
+  size: 188, 89
+Hit
+  xy: 376, 331
+  size: 188, 89
+Hit
+  xy: 564, 331
+  size: 188, 89
+Hit
+  xy: 752, 331
+  size: 188, 89
+Death
+  xy: 0, 420
+  size: 188, 89
+Death
+  xy: 188, 420
+  size: 188, 89
+Death
+  xy: 376, 420
+  size: 188, 89
+Death
+  xy: 564, 420
+  size: 188, 89
+Death
+  xy: 752, 420
+  size: 188, 89
+Death
+  xy: 940, 420
+  size: 188, 89
+Death
+  xy: 1128, 420
+  size: 188, 89
+Death
+  xy: 1316, 420
+  size: 188, 89
+Death
+  xy: 1504, 420
+  size: 188, 89
+Death
+  xy: 1692, 420
+  size: 188, 89
+Death
+  xy: 1880, 420
+  size: 188, 89
+Death
+  xy: 2068, 420
+  size: 188, 89
+Death
+  xy: 2256, 420
+  size: 188, 89
+Death
+  xy: 2444, 420
+  size: 188, 89
+Wake
+  xy: 0, 509
+  size: 188, 89
+Wake
+  xy: 188, 509
+  size: 188, 89
+Wake
+  xy: 376, 509
+  size: 188, 89
+Wake
+  xy: 564, 509
+  size: 188, 89
+Wake
+  xy: 752, 509
+  size: 188, 89
+Wake
+  xy: 940, 509
+  size: 188, 89
+Wake
+  xy: 1128, 509
+  size: 188, 89
+IdleUp
+  xy: 0, 598
+  size: 188, 89
+IdleUp
+  xy: 188, 598
+  size: 188, 89
+IdleUp
+  xy: 376, 598
+  size: 188, 89
+IdleUp
+  xy: 564, 598
+  size: 188, 89
+IdleUp
+  xy: 752, 598
+  size: 188, 89
+IdleUp
+  xy: 940, 598
+  size: 188, 89
+IdleUp
+  xy: 1128, 598
+  size: 188, 89
+IdleUp
+  xy: 1316, 598
+  size: 188, 89
+IdleUp
+  xy: 1504, 598
+  size: 188, 89
+IdleUp
+  xy: 1692, 598
+  size: 188, 89
+IdleDown
+  xy: 0, 687
+  size: 188, 89
+IdleDown
+  xy: 188, 687
+  size: 188, 89
+IdleDown
+  xy: 376, 687
+  size: 188, 89
+IdleDown
+  xy: 564, 687
+  size: 188, 89
+IdleDown
+  xy: 752, 687
+  size: 188, 89
+IdleDown
+  xy: 940, 687
+  size: 188, 89
+IdleDown
+  xy: 1128, 687
+  size: 188, 89
+IdleDown
+  xy: 1316, 687
+  size: 188, 89
+IdleDown
+  xy: 1504, 687
+  size: 188, 89
+IdleDown
+  xy: 1692, 687
+  size: 188, 89
+WalkUp
+  xy: 0, 776
+  size: 188, 89
+WalkUp
+  xy: 188, 776
+  size: 188, 89
+WalkUp
+  xy: 376, 776
+  size: 188, 89
+WalkUp
+  xy: 564, 776
+  size: 188, 89
+WalkUp
+  xy: 752, 776
+  size: 188, 89
+WalkUp
+  xy: 940, 776
+  size: 188, 89
+WalkUp
+  xy: 1128, 776
+  size: 188, 89
+WalkUp
+  xy: 1316, 776
+  size: 188, 89
+WalkDown
+  xy: 0, 865
+  size: 188, 89
+WalkDown
+  xy: 188, 865
+  size: 188, 89
+WalkDown
+  xy: 376, 865
+  size: 188, 89
+WalkDown
+  xy: 564, 865
+  size: 188, 89
+WalkDown
+  xy: 752, 865
+  size: 188, 89
+WalkDown
+  xy: 940, 865
+  size: 188, 89
+WalkDown
+  xy: 1128, 865
+  size: 188, 89
+WalkDown
+  xy: 1316, 865
+  size: 188, 89

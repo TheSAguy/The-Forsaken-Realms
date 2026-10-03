@@ -1,5 +1,5 @@
 tanazir.png
-size: 1770,1744
+size: 2788,2374
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,241 +8,256 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 118, 168
+  size: 164, 231
 Idle
-  xy: 118, 64
-  size: 118, 168
+  xy: 164, 64
+  size: 164, 231
 Idle
-  xy: 236, 64
-  size: 118, 168
+  xy: 328, 64
+  size: 164, 231
 Idle
-  xy: 354, 64
-  size: 118, 168
+  xy: 492, 64
+  size: 164, 231
 Idle
-  xy: 472, 64
-  size: 118, 168
+  xy: 656, 64
+  size: 164, 231
 Idle
-  xy: 590, 64
-  size: 118, 168
+  xy: 820, 64
+  size: 164, 231
 Idle
-  xy: 708, 64
-  size: 118, 168
+  xy: 984, 64
+  size: 164, 231
 Idle
-  xy: 826, 64
-  size: 118, 168
+  xy: 1148, 64
+  size: 164, 231
 Idle
-  xy: 944, 64
-  size: 118, 168
+  xy: 1312, 64
+  size: 164, 231
 Idle
-  xy: 1062, 64
-  size: 118, 168
+  xy: 1476, 64
+  size: 164, 231
 Walk
-  xy: 0, 232
-  size: 118, 168
+  xy: 0, 295
+  size: 164, 231
 Walk
-  xy: 118, 232
-  size: 118, 168
+  xy: 164, 295
+  size: 164, 231
 Walk
-  xy: 236, 232
-  size: 118, 168
+  xy: 328, 295
+  size: 164, 231
 Walk
-  xy: 354, 232
-  size: 118, 168
+  xy: 492, 295
+  size: 164, 231
 Attack
-  xy: 0, 400
-  size: 118, 168
+  xy: 0, 526
+  size: 164, 231
 Attack
-  xy: 118, 400
-  size: 118, 168
+  xy: 164, 526
+  size: 164, 231
 Attack
-  xy: 236, 400
-  size: 118, 168
+  xy: 328, 526
+  size: 164, 231
 Attack
-  xy: 354, 400
-  size: 118, 168
+  xy: 492, 526
+  size: 164, 231
 Attack
-  xy: 472, 400
-  size: 118, 168
+  xy: 656, 526
+  size: 164, 231
 Attack
-  xy: 590, 400
-  size: 118, 168
+  xy: 820, 526
+  size: 164, 231
 Attack
-  xy: 708, 400
-  size: 118, 168
+  xy: 984, 526
+  size: 164, 231
 Attack
-  xy: 826, 400
-  size: 118, 168
+  xy: 1148, 526
+  size: 164, 231
 Attack
-  xy: 944, 400
-  size: 118, 168
+  xy: 1312, 526
+  size: 164, 231
+Attack
+  xy: 1476, 526
+  size: 164, 231
 Hit
-  xy: 0, 568
-  size: 118, 168
+  xy: 0, 757
+  size: 164, 231
 Hit
-  xy: 118, 568
-  size: 118, 168
+  xy: 164, 757
+  size: 164, 231
 Hit
-  xy: 236, 568
-  size: 118, 168
+  xy: 328, 757
+  size: 164, 231
 Hit
-  xy: 354, 568
-  size: 118, 168
+  xy: 492, 757
+  size: 164, 231
 Hit
-  xy: 472, 568
-  size: 118, 168
+  xy: 656, 757
+  size: 164, 231
 Hit
-  xy: 590, 568
-  size: 118, 168
+  xy: 820, 757
+  size: 164, 231
+Hit
+  xy: 984, 757
+  size: 164, 231
 Death
-  xy: 0, 736
-  size: 118, 168
+  xy: 0, 988
+  size: 164, 231
 Death
-  xy: 118, 736
-  size: 118, 168
+  xy: 164, 988
+  size: 164, 231
 Death
-  xy: 236, 736
-  size: 118, 168
+  xy: 328, 988
+  size: 164, 231
 Death
-  xy: 354, 736
-  size: 118, 168
+  xy: 492, 988
+  size: 164, 231
 Death
-  xy: 472, 736
-  size: 118, 168
+  xy: 656, 988
+  size: 164, 231
 Death
-  xy: 590, 736
-  size: 118, 168
+  xy: 820, 988
+  size: 164, 231
 Death
-  xy: 708, 736
-  size: 118, 168
+  xy: 984, 988
+  size: 164, 231
 Death
-  xy: 826, 736
-  size: 118, 168
+  xy: 1148, 988
+  size: 164, 231
 Death
-  xy: 944, 736
-  size: 118, 168
+  xy: 1312, 988
+  size: 164, 231
 Death
-  xy: 1062, 736
-  size: 118, 168
+  xy: 1476, 988
+  size: 164, 231
 Death
-  xy: 1180, 736
-  size: 118, 168
+  xy: 1640, 988
+  size: 164, 231
 Death
-  xy: 1298, 736
-  size: 118, 168
+  xy: 1804, 988
+  size: 164, 231
 Death
-  xy: 1416, 736
-  size: 118, 168
+  xy: 1968, 988
+  size: 164, 231
 Death
-  xy: 1534, 736
-  size: 118, 168
+  xy: 2132, 988
+  size: 164, 231
 Death
-  xy: 1652, 736
-  size: 118, 168
+  xy: 2296, 988
+  size: 164, 231
+Death
+  xy: 2460, 988
+  size: 164, 231
+Death
+  xy: 2624, 988
+  size: 164, 231
 Wake
-  xy: 0, 904
-  size: 118, 168
+  xy: 0, 1219
+  size: 164, 231
 Wake
-  xy: 118, 904
-  size: 118, 168
+  xy: 164, 1219
+  size: 164, 231
 Wake
-  xy: 236, 904
-  size: 118, 168
+  xy: 328, 1219
+  size: 164, 231
 Wake
-  xy: 354, 904
-  size: 118, 168
+  xy: 492, 1219
+  size: 164, 231
 Wake
-  xy: 472, 904
-  size: 118, 168
+  xy: 656, 1219
+  size: 164, 231
 Wake
-  xy: 590, 904
-  size: 118, 168
+  xy: 820, 1219
+  size: 164, 231
 Wake
-  xy: 708, 904
-  size: 118, 168
+  xy: 984, 1219
+  size: 164, 231
 Wake
-  xy: 826, 904
-  size: 118, 168
+  xy: 1148, 1219
+  size: 164, 231
+Wake
+  xy: 1312, 1219
+  size: 164, 231
 IdleUp
-  xy: 0, 1072
-  size: 118, 168
+  xy: 0, 1450
+  size: 164, 231
 IdleUp
-  xy: 118, 1072
-  size: 118, 168
+  xy: 164, 1450
+  size: 164, 231
 IdleUp
-  xy: 236, 1072
-  size: 118, 168
+  xy: 328, 1450
+  size: 164, 231
 IdleUp
-  xy: 354, 1072
-  size: 118, 168
+  xy: 492, 1450
+  size: 164, 231
 IdleUp
-  xy: 472, 1072
-  size: 118, 168
+  xy: 656, 1450
+  size: 164, 231
 IdleUp
-  xy: 590, 1072
-  size: 118, 168
+  xy: 820, 1450
+  size: 164, 231
 IdleUp
-  xy: 708, 1072
-  size: 118, 168
+  xy: 984, 1450
+  size: 164, 231
 IdleUp
-  xy: 826, 1072
-  size: 118, 168
+  xy: 1148, 1450
+  size: 164, 231
 IdleUp
-  xy: 944, 1072
-  size: 118, 168
+  xy: 1312, 1450
+  size: 164, 231
 IdleUp
-  xy: 1062, 1072
-  size: 118, 168
+  xy: 1476, 1450
+  size: 164, 231
 IdleDown
-  xy: 0, 1240
-  size: 118, 168
+  xy: 0, 1681
+  size: 164, 231
 IdleDown
-  xy: 118, 1240
-  size: 118, 168
+  xy: 164, 1681
+  size: 164, 231
 IdleDown
-  xy: 236, 1240
-  size: 118, 168
+  xy: 328, 1681
+  size: 164, 231
 IdleDown
-  xy: 354, 1240
-  size: 118, 168
+  xy: 492, 1681
+  size: 164, 231
 IdleDown
-  xy: 472, 1240
-  size: 118, 168
+  xy: 656, 1681
+  size: 164, 231
 IdleDown
-  xy: 590, 1240
-  size: 118, 168
+  xy: 820, 1681
+  size: 164, 231
 IdleDown
-  xy: 708, 1240
-  size: 118, 168
+  xy: 984, 1681
+  size: 164, 231
 IdleDown
-  xy: 826, 1240
-  size: 118, 168
+  xy: 1148, 1681
+  size: 164, 231
 IdleDown
-  xy: 944, 1240
-  size: 118, 168
+  xy: 1312, 1681
+  size: 164, 231
 IdleDown
-  xy: 1062, 1240
-  size: 118, 168
+  xy: 1476, 1681
+  size: 164, 231
 WalkUp
-  xy: 0, 1408
-  size: 118, 168
+  xy: 0, 1912
+  size: 164, 231
 WalkUp
-  xy: 118, 1408
-  size: 118, 168
+  xy: 164, 1912
+  size: 164, 231
 WalkUp
-  xy: 236, 1408
-  size: 118, 168
+  xy: 328, 1912
+  size: 164, 231
 WalkUp
-  xy: 354, 1408
-  size: 118, 168
+  xy: 492, 1912
+  size: 164, 231
 WalkDown
-  xy: 0, 1576
-  size: 118, 168
+  xy: 0, 2143
+  size: 164, 231
 WalkDown
-  xy: 118, 1576
-  size: 118, 168
+  xy: 164, 2143
+  size: 164, 231
 WalkDown
-  xy: 236, 1576
-  size: 118, 168
+  xy: 328, 2143
+  size: 164, 231
 WalkDown
-  xy: 354, 1576
-  size: 118, 168
+  xy: 492, 2143
+  size: 164, 231

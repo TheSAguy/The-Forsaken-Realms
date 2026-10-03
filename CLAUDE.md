@@ -65,8 +65,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   `generateNew`. Agent-tested on Insane.
 - 423 = the user's Wall art (F:\Art_to_Tweak\WALL, outside the repo) on the 12 cards; `make_wall_cards.py`
   `frame_art`/`backdrop`/`enlarge`.
-- The peer's round 420 (23 remake groups) is in progress in the working tree. Package live + agent with 420-423 after
-  its "420 done".
+- 420 = all 122 creature-generator remakes at 3.41 art px per world px (the Forge Blacksmith's), 37 of them new (cloud
+  batch 2: bone dragon, hellion, red dragons, dog, rhino, falcon, bat, troll, treefolk). Data only (enemies.json,
+  `sprites/enemy/remake/`). Not seen in play yet. Package live + agent with 420-423.
 
 ## STATE 2026-10-03 (rounds 418-419): **LOCAL + UNRELEASED.**
 - 418 = spawn ranks by difficulty: `spawn_tier_weighting.json` `difficultyFactors`, Hard x0.8/1.25 and Insane x0.6/1.5.

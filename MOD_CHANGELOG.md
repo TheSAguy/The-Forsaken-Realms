@@ -14264,6 +14264,69 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 420: every remade enemy at the Forge Blacksmith's pixel density; ten more groups, 37 enemies (2026-10-03)
+
+The user, comparing the Kor Outfitter with the Forge Blacksmith on screen: "The blacksmith looks so much better on the
+screen." Then: "Let's make ALL our remakes closer to 3.4 to match the Blacksmith."
+
+- **Density.** All 122 enemies remade with the creature generator are now drawn with 3.41 art pixels per world pixel,
+  the Forge Blacksmith's. Round 415's were 2.46.
+  - Bodies are 36 / 44 / 55 / 66 art px by rank, instead of 26 / 32 / 40 / 48.
+  - The 85 re-installed enemies draw at exactly round 415's size (all 100%), with 1.38 times the pixels across.
+  - Snakes, spiders and scarabs reach the bigger bodies through the generator's `size.giant`. Bosses keep their
+    hand-set drawn size.
+  - Some stay under their rank's size, held by the frame-height cap: the owls (x0.88-0.95), Grenzo and Commander
+    Eesha (x0.92) and the Beamtown Bullies (x0.95). Codie stays at 89%, the eye family's largest size.
+- **Ten more groups, 37 enemies** (the second cloud batch, reviewed and partly redone with the user):
+  - Bone Dragon (Bone Dragon, Teneb, Beledros, Skithiryx, Crosis): a skeletal dragon, with dark gaps between the ribs
+    and dark wing membranes.
+  - Hellion (Hellion, Cromat, Ulasht, Xolatoyac, Thromok): a giant wurm rearing its toothed maw. Its back view keeps
+    its head; the converter used to crop it when it moved a view onto the side view's feet.
+  - Lathliss (Lathliss, Rorix, Galazeth, Ziatora) and Dragon (Dragon, Vaevictis, Darigaaz): red dragons.
+  - Dog (Dog, Rin and Seri, Yoshimaru, Phelia).
+  - Rhino (Rhino, Brokkos, Perrie, Mr. Orfeo), redone after the user's "Rino looks a little weird":
+    - a big horn on the nose and a short one behind it
+    - pillar legs on flat feet; hooves drew tan blobs
+    - a full rump and a thin hanging tail; a thick short tail blended into the body as a wedge
+    - hide instead of fur, and no mane; the seed's mane drew a dark patch on the hump
+  - Falcon (Falcon, Commander Eesha, Arna) and Bat (Bat, Zoraline, Aclazotz). The bat is seen three-quarters on.
+  - Troll (Yidris, Ruric Thar, The Beamtown Bullies).
+  - Treefolk (Treefolk, Colfenor, Doran), redone after the user's "The tree-folk looks pretty bad". It is a treant:
+    - a bark body, long branch arms and glowing eyes
+    - a leafy crown over its head and shoulders (the generator's new `head.foliage`) and a moss beard
+    - an overhead branch slam for its attack
+    - the plant family's walking stump and a robed, maned troll were both rejected
+- **Birds fly right side up.** The user: "The birds walk animation looks like it's flying upside down."
+  - The owls of round 415 levelled out in flight by a lean that the readability boost also amplified, so they rolled
+    past vertical onto their backs. The new falcons did the same.
+  - The generator now divides that lean by the boost.
+- **Duel portraits.** The Avatar was the front 32 px of the first idle frame, shown at 2x. At the new density that showed
+  a slab of body for big creatures (Yidris, Lathliss, the trolls).
+  - Now it is a 64 x 64 square at 1x; the game scales portraits into its box.
+  - A creature that fits in 64 px is shown whole and centered. A bigger one shows the square at the top of its front:
+    its head.
+- **Stray shadow pieces.** The converter drops a detached shadow piece that is under a quarter of the frame's shadow
+  and not its biggest piece, such as a troll club's shadow or a slime's in its front view.
+  - At the new density these passed the old 16 px limit.
+  - Flight shadows and the main shadow under a dragon's belly or a spider's body stay.
+  - 129 frames in 40 sheets lost such a piece; only shadow pixels changed.
+- **Data only:**
+  - `sprites/enemy/remake/`: 170 files re-exported and 74 new.
+  - `world/enemies.json`: 37 sprites and 122 scales; no other field changed.
+  - Generator: procedural-pixel-creatures `cloud/batch-02` at 673d295 (density, treant, rhino, flight) and 235ee85
+    (portraits, shadows).
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves, and a second run changes nothing.
+  - `sprite_artifact_audit.py --only remake` (122 atlases, 9700 frames) flags 39 frames, all checked by eye:
+    - the flying birds above their own shadows (the owls, the Falcon, Commander Eesha, Arna); in round 415 the owls
+      flew on their backs, which hid the gap
+    - Brokkos's and Perrie's horn shadow in front of the chin, in the front view only
+    - an edge of Obeka's portrait crop
+  - Do not run the audit's `--fix` on the remake sheets; it would erase the flight shadows.
+- Not yet seen in play. Console (F9): `spawn enemy Rhino`, `spawn enemy Treefolk`, `spawn enemy Falcon`,
+  `spawn enemy Owl`, `spawn enemy "Bone Dragon"`, `spawn enemy Hellion`; a duel shows the new portrait.
+
 ## Round 423: the user's Wall token art on all 12 cards (2026-10-03)
 
 The user: "I got the new Wall token art. It's here: F:\Art_to_Tweak\WALL Please format and implement."
