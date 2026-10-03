@@ -4959,3 +4959,4 @@ set at the round-382 density and gives each sharing legend its own seed and card
 dragon, eye and scarab groups (18 enemies); round 409 re-exported them with readable motion (every clip
 moves whole pixels at game size) and gave the scarabs a beetle body plan. Sandworm, ooze and turtle remakes exist but are not installed. The survey of
 candidates: 360 low-resolution side-view enemies (the generator project's `reports/forge/survey/enemy_resolution.csv`).
+Tooling: `tools/forge_remake/` in the generator project (commit f856953; its README has a remake round step by step).
