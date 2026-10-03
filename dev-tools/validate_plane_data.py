@@ -160,7 +160,7 @@ F["AdventureQuestData"] = set("""isTemplate name description synopsis offerDialo
 F["AdventureQuestStage"] = None   # filled from argv[3] if given (long list); otherwise skipped
 F["ArmoryRarityData"] = set("venueBrackets".split())
 F["WeekBracket"] = set("weekMin weekMax common uncommon rare mythic".split())
-F["SpawnTierWeightData"] = set("weekBrackets territoryDeltas fogZoneFactors".split())  # fogZoneFactors: round 338
+F["SpawnTierWeightData"] = set("weekBrackets territoryDeltas fogZoneFactors difficultyFactors".split())  # fogZoneFactors: round 338, difficultyFactors: round 418
 # The four *Scale multipliers landed in SpawnTierWeightData.TierDelta in round 183 but never here,
 # so every territory row of the shipped table reported as an unknown key.
 F["TierDelta"] = set("common uncommon rare mythic "
@@ -605,6 +605,10 @@ if stw:
         check_keys(br, "WeekBracket", "spawn_tier_weighting.json.weekBrackets[%d]" % j)
     for terr, td in (stw.get("territoryDeltas") or {}).items():
         check_keys(td, "TierDelta", "spawn_tier_weighting.json.territoryDeltas[%s]" % terr)
+    for diff, td in (stw.get("difficultyFactors") or {}).items():  # round 418
+        check_keys(td, "TierDelta", "spawn_tier_weighting.json.difficultyFactors[%s]" % diff)
+        if diff not in ("Easy", "Normal", "Hard", "Insane"):
+            issue("unknown-key", "spawn_tier_weighting.json.difficultyFactors: unknown difficulty '%s'" % diff)
 wc, _ = load_json(os.path.join(PLANE, "config tables", "war_champions.json"))
 if wc:
     check_keys(wc, "WarChampionData", "war_champions.json")

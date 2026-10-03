@@ -53,4 +53,6 @@ public class SpawnTierWeightData {
     public ObjectMap<String, TierDelta> territoryDeltas;
     // Round 338: "lit" / "dark" - the fog zone at the spawn tile; the *Scale fields multiply the week row's targets.
     public ObjectMap<String, TierDelta> fogZoneFactors;
+    // Round 418: keyed by difficulty name ("Hard", "Insane"); the *Scale fields multiply the row like a territory row's.
+    public ObjectMap<String, TierDelta> difficultyFactors;
 }

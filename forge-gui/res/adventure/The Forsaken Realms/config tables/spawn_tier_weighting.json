@@ -67,6 +67,18 @@
     "UNHAPPY":      { "commonScale": 0.60, "uncommonScale": 1.00, "rareScale": 1.40, "mythicScale": 1.70 },
     "WAR":          { "commonScale": 0.17, "uncommonScale": 1.00, "rareScale": 2.35, "mythicScale": 3.70 }
   },
+  // Round 418 (the user: "It sounds like we need to up the chances of Adept+ appearing early in Hard and Insane"):
+  // the difficulty tilts the row too, after the territory row and renormalized the same way (so bosses keep their
+  // share). Multipliers only, for the reason above: week 1 still grows no Masters on any difficulty. Easy and Normal
+  // have no row and play the table as written. Shares on Wasteland (Apprentice / Adept / Master / Archmage):
+  //             week 1        weeks 2-3         weeks 4-6
+  //   Normal    90 / 10       78 / 18 / 4       65 / 24 / 10 / 1
+  //   Hard      85 / 15       69 / 25 / 6       54 / 31 / 13 / 1
+  //   Insane    78 / 22       59 / 34 / 8       43 / 39 / 16 / 2
+  "difficultyFactors": {
+    "Hard":   { "commonScale": 0.80, "uncommonScale": 1.25, "rareScale": 1.25, "mythicScale": 1.25 },
+    "Insane": { "commonScale": 0.60, "uncommonScale": 1.50, "rareScale": 1.50, "mythicScale": 1.50 }
+  },
   // Round 338 (user spec 2026-09-25): the fog zone at the SPAWN TILE tilts the row too - "lit" = in view right now
   // (the player's own light, their land, a town's or a bonfire's lift), "dark" = explored-but-dim or unexplored.
   // Multipliers on the week row's targets (the pick is relative, so no renormalizing); deltas untouched.

@@ -115,10 +115,12 @@ public class SpawnTierWeighting {
             return 0f;
         String key = resolveKey(data, owningColor);
         SpawnTierWeightData.TierDelta delta = data.territoryDeltas == null ? null : data.territoryDeltas.get(key);
-        logRowOnce(bracket, delta, key, week);
-        if (delta == null)
+        String difficulty = difficultyName();
+        SpawnTierWeightData.TierDelta factor = difficultyFactor(data, difficulty);
+        logRowOnce(bracket, delta, factor, key, week, difficulty);
+        if (delta == null && factor == null)
             return Math.max(0f, baseFor(bracket, tier));
-        float adjusted = adjustedFor(bracket, delta, tier);
+        float adjusted = rowValue(bracket, delta, factor, tier);
         // Round 183: renormalize the row back to the week bracket's OWN total. The four adjusted numbers describe a
         // MIX, and every territory row before this round summed to zero change by hand (+10/+2/-4/-8 etc.) for a
         // reason: BiomeData.getEnemy() divides by the whole pool, and an EXEMPT entry (a boss, an arena-only fighter)
@@ -128,11 +130,43 @@ public class SpawnTierWeighting {
         // total keeps the tilt and leaves the ordinary-vs-exempt balance exactly where it was.
         float rowTotal = 0f;
         for (String t : TIERS)
-            rowTotal += adjustedFor(bracket, delta, t);
+            rowTotal += rowValue(bracket, delta, factor, t);
         if (rowTotal <= 0f)
             return adjusted;
         float bracketTotal = bracket.common + bracket.uncommon + bracket.rare + bracket.mythic;
         return adjusted * (bracketTotal / rowTotal);
+    }
+
+    /** One tier's target before the row is renormalized: the territory row (if any), then the difficulty's multiplier. */
+    private static float rowValue(SpawnTierWeightData.WeekBracket bracket, SpawnTierWeightData.TierDelta delta,
+                                  SpawnTierWeightData.TierDelta factor, String tier) {
+        float value = delta == null ? Math.max(0f, baseFor(bracket, tier)) : adjustedFor(bracket, delta, tier);
+        return factor == null ? value : value * Math.max(0f, scaleFor(factor, tier));
+    }
+
+    /**
+     * Round 418 (the user: "It sounds like we need to up the chances of Adept+ appearing early in Hard and Insane"). The
+     * rank mix used to ignore the difficulty: Insane in week 3 met 78% Apprentices, like Easy. spawn_tier_weighting.json
+     * difficultyFactors multiplies the row the same way a territory row does - multipliers only, so a week that closes a
+     * rank (week 1 has no Masters) keeps it closed on every difficulty - and the row is renormalized like a territory row,
+     * so bosses and other exempt spawns keep their share. Easy and Normal have no row and play the table as written.
+     */
+    private static SpawnTierWeightData.TierDelta difficultyFactor(SpawnTierWeightData data, String difficulty) {
+        if (data.difficultyFactors == null || difficulty == null)
+            return null;
+        for (com.badlogic.gdx.utils.ObjectMap.Entry<String, SpawnTierWeightData.TierDelta> e : data.difficultyFactors)
+            if (e.key != null && e.key.equalsIgnoreCase(difficulty))
+                return e.value;
+        return null;
+    }
+
+    private static String difficultyName() {
+        try {
+            forge.adventure.player.AdventurePlayer player = forge.adventure.player.AdventurePlayer.current();
+            return player == null || player.getDifficulty() == null ? null : player.getDifficulty().name;
+        } catch (RuntimeException e) {
+            return null; // no game loaded yet - the table as written
+        }
     }
 
     /** One tier's adjusted target before the row is renormalized: the delta moves it, the multiplier scales it.
@@ -217,13 +251,16 @@ public class SpawnTierWeighting {
     private static String lastLoggedRow = null;
 
     private static void logRowOnce(SpawnTierWeightData.WeekBracket bracket, SpawnTierWeightData.TierDelta delta,
-                                   String key, int week) {
+                                   SpawnTierWeightData.TierDelta factor, String key, int week, String difficulty) {
         StringBuilder line = new StringBuilder("[TFR-SpawnTier] week ").append(week).append(" on ").append(key)
-                .append(delta == null ? " (no row - week bracket as written)" : "").append(":");
+                .append(delta == null ? " (no row - week bracket as written)" : "")
+                .append(factor != null ? ", " + difficulty + " x" + factor.commonScale + "/" + factor.uncommonScale + "/"
+                        + factor.rareScale + "/" + factor.mythicScale : "") // round 418
+                .append(":");
         float rowTotal = 0f;
         float[] adjusted = new float[TIERS.length];
         for (int i = 0; i < TIERS.length; i++) {
-            adjusted[i] = delta == null ? Math.max(0f, baseFor(bracket, TIERS[i])) : adjustedFor(bracket, delta, TIERS[i]);
+            adjusted[i] = rowValue(bracket, delta, factor, TIERS[i]);
             rowTotal += adjusted[i];
         }
         for (int i = 0; i < TIERS.length; i++) {
