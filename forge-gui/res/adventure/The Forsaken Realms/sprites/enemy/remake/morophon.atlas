@@ -1,5 +1,5 @@
 morophon.png
-size: 980,466
+size: 980,734
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -140,4 +140,88 @@ Wake
   size: 70, 67
 Wake
   xy: 350, 399
+  size: 70, 67
+IdleUp
+  xy: 0, 466
+  size: 70, 67
+IdleUp
+  xy: 70, 466
+  size: 70, 67
+IdleUp
+  xy: 140, 466
+  size: 70, 67
+IdleUp
+  xy: 210, 466
+  size: 70, 67
+IdleUp
+  xy: 280, 466
+  size: 70, 67
+IdleUp
+  xy: 350, 466
+  size: 70, 67
+IdleUp
+  xy: 420, 466
+  size: 70, 67
+IdleUp
+  xy: 490, 466
+  size: 70, 67
+IdleUp
+  xy: 560, 466
+  size: 70, 67
+IdleUp
+  xy: 630, 466
+  size: 70, 67
+IdleDown
+  xy: 0, 533
+  size: 70, 67
+IdleDown
+  xy: 70, 533
+  size: 70, 67
+IdleDown
+  xy: 140, 533
+  size: 70, 67
+IdleDown
+  xy: 210, 533
+  size: 70, 67
+IdleDown
+  xy: 280, 533
+  size: 70, 67
+IdleDown
+  xy: 350, 533
+  size: 70, 67
+IdleDown
+  xy: 420, 533
+  size: 70, 67
+IdleDown
+  xy: 490, 533
+  size: 70, 67
+IdleDown
+  xy: 560, 533
+  size: 70, 67
+IdleDown
+  xy: 630, 533
+  size: 70, 67
+WalkUp
+  xy: 0, 600
+  size: 70, 67
+WalkUp
+  xy: 70, 600
+  size: 70, 67
+WalkUp
+  xy: 140, 600
+  size: 70, 67
+WalkUp
+  xy: 210, 600
+  size: 70, 67
+WalkDown
+  xy: 0, 667
+  size: 70, 67
+WalkDown
+  xy: 70, 667
+  size: 70, 67
+WalkDown
+  xy: 140, 667
+  size: 70, 67
+WalkDown
+  xy: 210, 667
   size: 70, 67

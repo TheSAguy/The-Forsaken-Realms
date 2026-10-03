@@ -58,6 +58,12 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-03 (round 415): **round 415 LOCAL + UNRELEASED (data only + one dev tool)** - all 85 generator
+remakes in FOUR DIRECTIONS (IdleUp/WalkUp from behind, IdleDown/WalkDown from the front; the user wants four
+directions as the default from now on). New creatures for the rabbit, bear, owl and squirrel groups (25 enemies).
+`dev-tools/enemy_scale.py` sizes a generated remake (plain Idle/Walk plus Up/Down) by its side view; every other
+atlas measures as before. The next batch (`batch_02`) runs in a cloud session of the generator.
+
 ## STATE 2026-10-03 (round 412): **round 412 LOCAL + UNRELEASED (data only)** - six more enemy groups (42 enemies)
 redrawn with the creature generator: the Ancient Silver Dragon, Fire Dragon, Ooze Boss, Troll, Snake and Spider groups,
 each enemy its own creature (MOD_CHANGELOG round 412). Not hot-copied, because live was running; the next package

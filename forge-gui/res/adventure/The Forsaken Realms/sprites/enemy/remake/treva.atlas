@@ -1,5 +1,5 @@
 treva.png
-size: 1120,382
+size: 1120,594
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -149,4 +149,88 @@ Wake
   size: 80, 53
 Wake
   xy: 480, 329
+  size: 80, 53
+IdleUp
+  xy: 0, 382
+  size: 80, 53
+IdleUp
+  xy: 80, 382
+  size: 80, 53
+IdleUp
+  xy: 160, 382
+  size: 80, 53
+IdleUp
+  xy: 240, 382
+  size: 80, 53
+IdleUp
+  xy: 320, 382
+  size: 80, 53
+IdleUp
+  xy: 400, 382
+  size: 80, 53
+IdleUp
+  xy: 480, 382
+  size: 80, 53
+IdleUp
+  xy: 560, 382
+  size: 80, 53
+IdleUp
+  xy: 640, 382
+  size: 80, 53
+IdleUp
+  xy: 720, 382
+  size: 80, 53
+IdleDown
+  xy: 0, 435
+  size: 80, 53
+IdleDown
+  xy: 80, 435
+  size: 80, 53
+IdleDown
+  xy: 160, 435
+  size: 80, 53
+IdleDown
+  xy: 240, 435
+  size: 80, 53
+IdleDown
+  xy: 320, 435
+  size: 80, 53
+IdleDown
+  xy: 400, 435
+  size: 80, 53
+IdleDown
+  xy: 480, 435
+  size: 80, 53
+IdleDown
+  xy: 560, 435
+  size: 80, 53
+IdleDown
+  xy: 640, 435
+  size: 80, 53
+IdleDown
+  xy: 720, 435
+  size: 80, 53
+WalkUp
+  xy: 0, 488
+  size: 80, 53
+WalkUp
+  xy: 80, 488
+  size: 80, 53
+WalkUp
+  xy: 160, 488
+  size: 80, 53
+WalkUp
+  xy: 240, 488
+  size: 80, 53
+WalkDown
+  xy: 0, 541
+  size: 80, 53
+WalkDown
+  xy: 80, 541
+  size: 80, 53
+WalkDown
+  xy: 160, 541
+  size: 80, 53
+WalkDown
+  xy: 240, 541
   size: 80, 53

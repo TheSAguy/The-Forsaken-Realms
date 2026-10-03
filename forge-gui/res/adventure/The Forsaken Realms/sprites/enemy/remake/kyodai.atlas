@@ -1,5 +1,5 @@
 kyodai.png
-size: 1092,406
+size: 1092,634
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -146,4 +146,88 @@ Wake
   size: 84, 57
 Wake
   xy: 504, 349
+  size: 84, 57
+IdleUp
+  xy: 0, 406
+  size: 84, 57
+IdleUp
+  xy: 84, 406
+  size: 84, 57
+IdleUp
+  xy: 168, 406
+  size: 84, 57
+IdleUp
+  xy: 252, 406
+  size: 84, 57
+IdleUp
+  xy: 336, 406
+  size: 84, 57
+IdleUp
+  xy: 420, 406
+  size: 84, 57
+IdleUp
+  xy: 504, 406
+  size: 84, 57
+IdleUp
+  xy: 588, 406
+  size: 84, 57
+IdleUp
+  xy: 672, 406
+  size: 84, 57
+IdleUp
+  xy: 756, 406
+  size: 84, 57
+IdleDown
+  xy: 0, 463
+  size: 84, 57
+IdleDown
+  xy: 84, 463
+  size: 84, 57
+IdleDown
+  xy: 168, 463
+  size: 84, 57
+IdleDown
+  xy: 252, 463
+  size: 84, 57
+IdleDown
+  xy: 336, 463
+  size: 84, 57
+IdleDown
+  xy: 420, 463
+  size: 84, 57
+IdleDown
+  xy: 504, 463
+  size: 84, 57
+IdleDown
+  xy: 588, 463
+  size: 84, 57
+IdleDown
+  xy: 672, 463
+  size: 84, 57
+IdleDown
+  xy: 756, 463
+  size: 84, 57
+WalkUp
+  xy: 0, 520
+  size: 84, 57
+WalkUp
+  xy: 84, 520
+  size: 84, 57
+WalkUp
+  xy: 168, 520
+  size: 84, 57
+WalkUp
+  xy: 252, 520
+  size: 84, 57
+WalkDown
+  xy: 0, 577
+  size: 84, 57
+WalkDown
+  xy: 84, 577
+  size: 84, 57
+WalkDown
+  xy: 168, 577
+  size: 84, 57
+WalkDown
+  xy: 252, 577
   size: 84, 57

@@ -1,0 +1,218 @@
+preston.png
+size: 682,584
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 52
+Idle
+  xy: 62, 64
+  size: 62, 52
+Idle
+  xy: 124, 64
+  size: 62, 52
+Idle
+  xy: 186, 64
+  size: 62, 52
+Idle
+  xy: 248, 64
+  size: 62, 52
+Idle
+  xy: 310, 64
+  size: 62, 52
+Idle
+  xy: 372, 64
+  size: 62, 52
+Idle
+  xy: 434, 64
+  size: 62, 52
+Idle
+  xy: 496, 64
+  size: 62, 52
+Idle
+  xy: 558, 64
+  size: 62, 52
+Walk
+  xy: 0, 116
+  size: 62, 52
+Walk
+  xy: 62, 116
+  size: 62, 52
+Walk
+  xy: 124, 116
+  size: 62, 52
+Walk
+  xy: 186, 116
+  size: 62, 52
+Attack
+  xy: 0, 168
+  size: 62, 52
+Attack
+  xy: 62, 168
+  size: 62, 52
+Attack
+  xy: 124, 168
+  size: 62, 52
+Attack
+  xy: 186, 168
+  size: 62, 52
+Attack
+  xy: 248, 168
+  size: 62, 52
+Attack
+  xy: 310, 168
+  size: 62, 52
+Attack
+  xy: 372, 168
+  size: 62, 52
+Attack
+  xy: 434, 168
+  size: 62, 52
+Hit
+  xy: 0, 220
+  size: 62, 52
+Hit
+  xy: 62, 220
+  size: 62, 52
+Hit
+  xy: 124, 220
+  size: 62, 52
+Hit
+  xy: 186, 220
+  size: 62, 52
+Death
+  xy: 0, 272
+  size: 62, 52
+Death
+  xy: 62, 272
+  size: 62, 52
+Death
+  xy: 124, 272
+  size: 62, 52
+Death
+  xy: 186, 272
+  size: 62, 52
+Death
+  xy: 248, 272
+  size: 62, 52
+Death
+  xy: 310, 272
+  size: 62, 52
+Death
+  xy: 372, 272
+  size: 62, 52
+Death
+  xy: 434, 272
+  size: 62, 52
+Death
+  xy: 496, 272
+  size: 62, 52
+Death
+  xy: 558, 272
+  size: 62, 52
+Death
+  xy: 620, 272
+  size: 62, 52
+Wake
+  xy: 0, 324
+  size: 62, 52
+Wake
+  xy: 62, 324
+  size: 62, 52
+Wake
+  xy: 124, 324
+  size: 62, 52
+Wake
+  xy: 186, 324
+  size: 62, 52
+Wake
+  xy: 248, 324
+  size: 62, 52
+IdleUp
+  xy: 0, 376
+  size: 62, 52
+IdleUp
+  xy: 62, 376
+  size: 62, 52
+IdleUp
+  xy: 124, 376
+  size: 62, 52
+IdleUp
+  xy: 186, 376
+  size: 62, 52
+IdleUp
+  xy: 248, 376
+  size: 62, 52
+IdleUp
+  xy: 310, 376
+  size: 62, 52
+IdleUp
+  xy: 372, 376
+  size: 62, 52
+IdleUp
+  xy: 434, 376
+  size: 62, 52
+IdleUp
+  xy: 496, 376
+  size: 62, 52
+IdleUp
+  xy: 558, 376
+  size: 62, 52
+IdleDown
+  xy: 0, 428
+  size: 62, 52
+IdleDown
+  xy: 62, 428
+  size: 62, 52
+IdleDown
+  xy: 124, 428
+  size: 62, 52
+IdleDown
+  xy: 186, 428
+  size: 62, 52
+IdleDown
+  xy: 248, 428
+  size: 62, 52
+IdleDown
+  xy: 310, 428
+  size: 62, 52
+IdleDown
+  xy: 372, 428
+  size: 62, 52
+IdleDown
+  xy: 434, 428
+  size: 62, 52
+IdleDown
+  xy: 496, 428
+  size: 62, 52
+IdleDown
+  xy: 558, 428
+  size: 62, 52
+WalkUp
+  xy: 0, 480
+  size: 62, 52
+WalkUp
+  xy: 62, 480
+  size: 62, 52
+WalkUp
+  xy: 124, 480
+  size: 62, 52
+WalkUp
+  xy: 186, 480
+  size: 62, 52
+WalkDown
+  xy: 0, 532
+  size: 62, 52
+WalkDown
+  xy: 62, 532
+  size: 62, 52
+WalkDown
+  xy: 124, 532
+  size: 62, 52
+WalkDown
+  xy: 186, 532
+  size: 62, 52

@@ -1,5 +1,5 @@
 aeve.png
-size: 936,514
+size: 936,814
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -137,4 +137,88 @@ Wake
   size: 78, 75
 Wake
   xy: 390, 439
+  size: 78, 75
+IdleUp
+  xy: 0, 514
+  size: 78, 75
+IdleUp
+  xy: 78, 514
+  size: 78, 75
+IdleUp
+  xy: 156, 514
+  size: 78, 75
+IdleUp
+  xy: 234, 514
+  size: 78, 75
+IdleUp
+  xy: 312, 514
+  size: 78, 75
+IdleUp
+  xy: 390, 514
+  size: 78, 75
+IdleUp
+  xy: 468, 514
+  size: 78, 75
+IdleUp
+  xy: 546, 514
+  size: 78, 75
+IdleUp
+  xy: 624, 514
+  size: 78, 75
+IdleUp
+  xy: 702, 514
+  size: 78, 75
+IdleDown
+  xy: 0, 589
+  size: 78, 75
+IdleDown
+  xy: 78, 589
+  size: 78, 75
+IdleDown
+  xy: 156, 589
+  size: 78, 75
+IdleDown
+  xy: 234, 589
+  size: 78, 75
+IdleDown
+  xy: 312, 589
+  size: 78, 75
+IdleDown
+  xy: 390, 589
+  size: 78, 75
+IdleDown
+  xy: 468, 589
+  size: 78, 75
+IdleDown
+  xy: 546, 589
+  size: 78, 75
+IdleDown
+  xy: 624, 589
+  size: 78, 75
+IdleDown
+  xy: 702, 589
+  size: 78, 75
+WalkUp
+  xy: 0, 664
+  size: 78, 75
+WalkUp
+  xy: 78, 664
+  size: 78, 75
+WalkUp
+  xy: 156, 664
+  size: 78, 75
+WalkUp
+  xy: 234, 664
+  size: 78, 75
+WalkDown
+  xy: 0, 739
+  size: 78, 75
+WalkDown
+  xy: 78, 739
+  size: 78, 75
+WalkDown
+  xy: 156, 739
+  size: 78, 75
+WalkDown
+  xy: 234, 739
   size: 78, 75

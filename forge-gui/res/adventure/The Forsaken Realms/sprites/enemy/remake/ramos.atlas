@@ -1,5 +1,5 @@
 ramos.png
-size: 1632,460
+size: 1632,724
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -167,4 +167,88 @@ Wake
   size: 102, 66
 Wake
   xy: 714, 394
+  size: 102, 66
+IdleUp
+  xy: 0, 460
+  size: 102, 66
+IdleUp
+  xy: 102, 460
+  size: 102, 66
+IdleUp
+  xy: 204, 460
+  size: 102, 66
+IdleUp
+  xy: 306, 460
+  size: 102, 66
+IdleUp
+  xy: 408, 460
+  size: 102, 66
+IdleUp
+  xy: 510, 460
+  size: 102, 66
+IdleUp
+  xy: 612, 460
+  size: 102, 66
+IdleUp
+  xy: 714, 460
+  size: 102, 66
+IdleUp
+  xy: 816, 460
+  size: 102, 66
+IdleUp
+  xy: 918, 460
+  size: 102, 66
+IdleDown
+  xy: 0, 526
+  size: 102, 66
+IdleDown
+  xy: 102, 526
+  size: 102, 66
+IdleDown
+  xy: 204, 526
+  size: 102, 66
+IdleDown
+  xy: 306, 526
+  size: 102, 66
+IdleDown
+  xy: 408, 526
+  size: 102, 66
+IdleDown
+  xy: 510, 526
+  size: 102, 66
+IdleDown
+  xy: 612, 526
+  size: 102, 66
+IdleDown
+  xy: 714, 526
+  size: 102, 66
+IdleDown
+  xy: 816, 526
+  size: 102, 66
+IdleDown
+  xy: 918, 526
+  size: 102, 66
+WalkUp
+  xy: 0, 592
+  size: 102, 66
+WalkUp
+  xy: 102, 592
+  size: 102, 66
+WalkUp
+  xy: 204, 592
+  size: 102, 66
+WalkUp
+  xy: 306, 592
+  size: 102, 66
+WalkDown
+  xy: 0, 658
+  size: 102, 66
+WalkDown
+  xy: 102, 658
+  size: 102, 66
+WalkDown
+  xy: 204, 658
+  size: 102, 66
+WalkDown
+  xy: 306, 658
   size: 102, 66

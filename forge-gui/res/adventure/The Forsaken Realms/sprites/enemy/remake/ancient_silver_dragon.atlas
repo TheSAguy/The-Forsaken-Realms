@@ -1,5 +1,5 @@
 ancient_silver_dragon.png
-size: 1760,904
+size: 1760,1464
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -164,4 +164,88 @@ Wake
   size: 110, 140
 Wake
   xy: 770, 764
+  size: 110, 140
+IdleUp
+  xy: 0, 904
+  size: 110, 140
+IdleUp
+  xy: 110, 904
+  size: 110, 140
+IdleUp
+  xy: 220, 904
+  size: 110, 140
+IdleUp
+  xy: 330, 904
+  size: 110, 140
+IdleUp
+  xy: 440, 904
+  size: 110, 140
+IdleUp
+  xy: 550, 904
+  size: 110, 140
+IdleUp
+  xy: 660, 904
+  size: 110, 140
+IdleUp
+  xy: 770, 904
+  size: 110, 140
+IdleUp
+  xy: 880, 904
+  size: 110, 140
+IdleUp
+  xy: 990, 904
+  size: 110, 140
+IdleDown
+  xy: 0, 1044
+  size: 110, 140
+IdleDown
+  xy: 110, 1044
+  size: 110, 140
+IdleDown
+  xy: 220, 1044
+  size: 110, 140
+IdleDown
+  xy: 330, 1044
+  size: 110, 140
+IdleDown
+  xy: 440, 1044
+  size: 110, 140
+IdleDown
+  xy: 550, 1044
+  size: 110, 140
+IdleDown
+  xy: 660, 1044
+  size: 110, 140
+IdleDown
+  xy: 770, 1044
+  size: 110, 140
+IdleDown
+  xy: 880, 1044
+  size: 110, 140
+IdleDown
+  xy: 990, 1044
+  size: 110, 140
+WalkUp
+  xy: 0, 1184
+  size: 110, 140
+WalkUp
+  xy: 110, 1184
+  size: 110, 140
+WalkUp
+  xy: 220, 1184
+  size: 110, 140
+WalkUp
+  xy: 330, 1184
+  size: 110, 140
+WalkDown
+  xy: 0, 1324
+  size: 110, 140
+WalkDown
+  xy: 110, 1324
+  size: 110, 140
+WalkDown
+  xy: 220, 1324
+  size: 110, 140
+WalkDown
+  xy: 330, 1324
   size: 110, 140

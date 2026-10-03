@@ -1,5 +1,5 @@
 palladia_mors.png
-size: 1176,400
+size: 1176,624
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -149,4 +149,88 @@ Wake
   size: 84, 56
 Wake
   xy: 504, 344
+  size: 84, 56
+IdleUp
+  xy: 0, 400
+  size: 84, 56
+IdleUp
+  xy: 84, 400
+  size: 84, 56
+IdleUp
+  xy: 168, 400
+  size: 84, 56
+IdleUp
+  xy: 252, 400
+  size: 84, 56
+IdleUp
+  xy: 336, 400
+  size: 84, 56
+IdleUp
+  xy: 420, 400
+  size: 84, 56
+IdleUp
+  xy: 504, 400
+  size: 84, 56
+IdleUp
+  xy: 588, 400
+  size: 84, 56
+IdleUp
+  xy: 672, 400
+  size: 84, 56
+IdleUp
+  xy: 756, 400
+  size: 84, 56
+IdleDown
+  xy: 0, 456
+  size: 84, 56
+IdleDown
+  xy: 84, 456
+  size: 84, 56
+IdleDown
+  xy: 168, 456
+  size: 84, 56
+IdleDown
+  xy: 252, 456
+  size: 84, 56
+IdleDown
+  xy: 336, 456
+  size: 84, 56
+IdleDown
+  xy: 420, 456
+  size: 84, 56
+IdleDown
+  xy: 504, 456
+  size: 84, 56
+IdleDown
+  xy: 588, 456
+  size: 84, 56
+IdleDown
+  xy: 672, 456
+  size: 84, 56
+IdleDown
+  xy: 756, 456
+  size: 84, 56
+WalkUp
+  xy: 0, 512
+  size: 84, 56
+WalkUp
+  xy: 84, 512
+  size: 84, 56
+WalkUp
+  xy: 168, 512
+  size: 84, 56
+WalkUp
+  xy: 252, 512
+  size: 84, 56
+WalkDown
+  xy: 0, 568
+  size: 84, 56
+WalkDown
+  xy: 84, 568
+  size: 84, 56
+WalkDown
+  xy: 168, 568
+  size: 84, 56
+WalkDown
+  xy: 252, 568
   size: 84, 56

@@ -1,5 +1,5 @@
 svella.png
-size: 1092,394
+size: 1092,644
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,133 +8,217 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 84, 55
+  size: 84, 58
 Idle
   xy: 84, 64
-  size: 84, 55
+  size: 84, 58
 Idle
   xy: 168, 64
-  size: 84, 55
+  size: 84, 58
 Idle
   xy: 252, 64
-  size: 84, 55
+  size: 84, 58
 Idle
   xy: 336, 64
-  size: 84, 55
+  size: 84, 58
 Idle
   xy: 420, 64
-  size: 84, 55
+  size: 84, 58
 Idle
   xy: 504, 64
-  size: 84, 55
+  size: 84, 58
 Idle
   xy: 588, 64
-  size: 84, 55
+  size: 84, 58
 Idle
   xy: 672, 64
-  size: 84, 55
+  size: 84, 58
 Idle
   xy: 756, 64
-  size: 84, 55
+  size: 84, 58
 Walk
-  xy: 0, 119
-  size: 84, 55
+  xy: 0, 122
+  size: 84, 58
 Walk
-  xy: 84, 119
-  size: 84, 55
+  xy: 84, 122
+  size: 84, 58
 Walk
-  xy: 168, 119
-  size: 84, 55
+  xy: 168, 122
+  size: 84, 58
 Walk
-  xy: 252, 119
-  size: 84, 55
+  xy: 252, 122
+  size: 84, 58
 Attack
-  xy: 0, 174
-  size: 84, 55
+  xy: 0, 180
+  size: 84, 58
 Attack
-  xy: 84, 174
-  size: 84, 55
+  xy: 84, 180
+  size: 84, 58
 Attack
-  xy: 168, 174
-  size: 84, 55
+  xy: 168, 180
+  size: 84, 58
 Attack
-  xy: 252, 174
-  size: 84, 55
+  xy: 252, 180
+  size: 84, 58
 Attack
-  xy: 336, 174
-  size: 84, 55
+  xy: 336, 180
+  size: 84, 58
 Attack
-  xy: 420, 174
-  size: 84, 55
+  xy: 420, 180
+  size: 84, 58
 Attack
-  xy: 504, 174
-  size: 84, 55
+  xy: 504, 180
+  size: 84, 58
 Hit
-  xy: 0, 229
-  size: 84, 55
+  xy: 0, 238
+  size: 84, 58
 Hit
-  xy: 84, 229
-  size: 84, 55
+  xy: 84, 238
+  size: 84, 58
 Hit
-  xy: 168, 229
-  size: 84, 55
+  xy: 168, 238
+  size: 84, 58
 Hit
-  xy: 252, 229
-  size: 84, 55
+  xy: 252, 238
+  size: 84, 58
 Death
-  xy: 0, 284
-  size: 84, 55
+  xy: 0, 296
+  size: 84, 58
 Death
-  xy: 84, 284
-  size: 84, 55
+  xy: 84, 296
+  size: 84, 58
 Death
-  xy: 168, 284
-  size: 84, 55
+  xy: 168, 296
+  size: 84, 58
 Death
-  xy: 252, 284
-  size: 84, 55
+  xy: 252, 296
+  size: 84, 58
 Death
-  xy: 336, 284
-  size: 84, 55
+  xy: 336, 296
+  size: 84, 58
 Death
-  xy: 420, 284
-  size: 84, 55
+  xy: 420, 296
+  size: 84, 58
 Death
-  xy: 504, 284
-  size: 84, 55
+  xy: 504, 296
+  size: 84, 58
 Death
-  xy: 588, 284
-  size: 84, 55
+  xy: 588, 296
+  size: 84, 58
 Death
-  xy: 672, 284
-  size: 84, 55
+  xy: 672, 296
+  size: 84, 58
 Death
-  xy: 756, 284
-  size: 84, 55
+  xy: 756, 296
+  size: 84, 58
 Death
-  xy: 840, 284
-  size: 84, 55
+  xy: 840, 296
+  size: 84, 58
 Death
-  xy: 924, 284
-  size: 84, 55
+  xy: 924, 296
+  size: 84, 58
 Death
-  xy: 1008, 284
-  size: 84, 55
+  xy: 1008, 296
+  size: 84, 58
 Wake
-  xy: 0, 339
-  size: 84, 55
+  xy: 0, 354
+  size: 84, 58
 Wake
-  xy: 84, 339
-  size: 84, 55
+  xy: 84, 354
+  size: 84, 58
 Wake
-  xy: 168, 339
-  size: 84, 55
+  xy: 168, 354
+  size: 84, 58
 Wake
-  xy: 252, 339
-  size: 84, 55
+  xy: 252, 354
+  size: 84, 58
 Wake
-  xy: 336, 339
-  size: 84, 55
+  xy: 336, 354
+  size: 84, 58
 Wake
-  xy: 420, 339
-  size: 84, 55
+  xy: 420, 354
+  size: 84, 58
+IdleUp
+  xy: 0, 412
+  size: 84, 58
+IdleUp
+  xy: 84, 412
+  size: 84, 58
+IdleUp
+  xy: 168, 412
+  size: 84, 58
+IdleUp
+  xy: 252, 412
+  size: 84, 58
+IdleUp
+  xy: 336, 412
+  size: 84, 58
+IdleUp
+  xy: 420, 412
+  size: 84, 58
+IdleUp
+  xy: 504, 412
+  size: 84, 58
+IdleUp
+  xy: 588, 412
+  size: 84, 58
+IdleUp
+  xy: 672, 412
+  size: 84, 58
+IdleUp
+  xy: 756, 412
+  size: 84, 58
+IdleDown
+  xy: 0, 470
+  size: 84, 58
+IdleDown
+  xy: 84, 470
+  size: 84, 58
+IdleDown
+  xy: 168, 470
+  size: 84, 58
+IdleDown
+  xy: 252, 470
+  size: 84, 58
+IdleDown
+  xy: 336, 470
+  size: 84, 58
+IdleDown
+  xy: 420, 470
+  size: 84, 58
+IdleDown
+  xy: 504, 470
+  size: 84, 58
+IdleDown
+  xy: 588, 470
+  size: 84, 58
+IdleDown
+  xy: 672, 470
+  size: 84, 58
+IdleDown
+  xy: 756, 470
+  size: 84, 58
+WalkUp
+  xy: 0, 528
+  size: 84, 58
+WalkUp
+  xy: 84, 528
+  size: 84, 58
+WalkUp
+  xy: 168, 528
+  size: 84, 58
+WalkUp
+  xy: 252, 528
+  size: 84, 58
+WalkDown
+  xy: 0, 586
+  size: 84, 58
+WalkDown
+  xy: 84, 586
+  size: 84, 58
+WalkDown
+  xy: 168, 586
+  size: 84, 58
+WalkDown
+  xy: 252, 586
+  size: 84, 58

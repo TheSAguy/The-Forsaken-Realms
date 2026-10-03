@@ -1,5 +1,5 @@
 tanazir.png
-size: 1770,1072
+size: 1770,1744
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -161,4 +161,88 @@ Wake
   size: 118, 168
 Wake
   xy: 826, 904
+  size: 118, 168
+IdleUp
+  xy: 0, 1072
+  size: 118, 168
+IdleUp
+  xy: 118, 1072
+  size: 118, 168
+IdleUp
+  xy: 236, 1072
+  size: 118, 168
+IdleUp
+  xy: 354, 1072
+  size: 118, 168
+IdleUp
+  xy: 472, 1072
+  size: 118, 168
+IdleUp
+  xy: 590, 1072
+  size: 118, 168
+IdleUp
+  xy: 708, 1072
+  size: 118, 168
+IdleUp
+  xy: 826, 1072
+  size: 118, 168
+IdleUp
+  xy: 944, 1072
+  size: 118, 168
+IdleUp
+  xy: 1062, 1072
+  size: 118, 168
+IdleDown
+  xy: 0, 1240
+  size: 118, 168
+IdleDown
+  xy: 118, 1240
+  size: 118, 168
+IdleDown
+  xy: 236, 1240
+  size: 118, 168
+IdleDown
+  xy: 354, 1240
+  size: 118, 168
+IdleDown
+  xy: 472, 1240
+  size: 118, 168
+IdleDown
+  xy: 590, 1240
+  size: 118, 168
+IdleDown
+  xy: 708, 1240
+  size: 118, 168
+IdleDown
+  xy: 826, 1240
+  size: 118, 168
+IdleDown
+  xy: 944, 1240
+  size: 118, 168
+IdleDown
+  xy: 1062, 1240
+  size: 118, 168
+WalkUp
+  xy: 0, 1408
+  size: 118, 168
+WalkUp
+  xy: 118, 1408
+  size: 118, 168
+WalkUp
+  xy: 236, 1408
+  size: 118, 168
+WalkUp
+  xy: 354, 1408
+  size: 118, 168
+WalkDown
+  xy: 0, 1576
+  size: 118, 168
+WalkDown
+  xy: 118, 1576
+  size: 118, 168
+WalkDown
+  xy: 236, 1576
+  size: 118, 168
+WalkDown
+  xy: 354, 1576
   size: 118, 168

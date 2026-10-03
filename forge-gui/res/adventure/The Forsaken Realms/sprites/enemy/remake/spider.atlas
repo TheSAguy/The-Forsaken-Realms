@@ -1,5 +1,5 @@
 spider.png
-size: 868,388
+size: 924,624
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,145 +8,229 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 62, 54
+  size: 66, 56
 Idle
-  xy: 62, 64
-  size: 62, 54
+  xy: 66, 64
+  size: 66, 56
 Idle
-  xy: 124, 64
-  size: 62, 54
+  xy: 132, 64
+  size: 66, 56
 Idle
-  xy: 186, 64
-  size: 62, 54
+  xy: 198, 64
+  size: 66, 56
 Idle
-  xy: 248, 64
-  size: 62, 54
+  xy: 264, 64
+  size: 66, 56
 Idle
-  xy: 310, 64
-  size: 62, 54
+  xy: 330, 64
+  size: 66, 56
 Idle
-  xy: 372, 64
-  size: 62, 54
+  xy: 396, 64
+  size: 66, 56
 Idle
-  xy: 434, 64
-  size: 62, 54
+  xy: 462, 64
+  size: 66, 56
 Idle
-  xy: 496, 64
-  size: 62, 54
+  xy: 528, 64
+  size: 66, 56
 Idle
-  xy: 558, 64
-  size: 62, 54
+  xy: 594, 64
+  size: 66, 56
 Walk
-  xy: 0, 118
-  size: 62, 54
+  xy: 0, 120
+  size: 66, 56
 Walk
-  xy: 62, 118
-  size: 62, 54
+  xy: 66, 120
+  size: 66, 56
 Walk
-  xy: 124, 118
-  size: 62, 54
+  xy: 132, 120
+  size: 66, 56
 Walk
-  xy: 186, 118
-  size: 62, 54
+  xy: 198, 120
+  size: 66, 56
 Attack
-  xy: 0, 172
-  size: 62, 54
+  xy: 0, 176
+  size: 66, 56
 Attack
-  xy: 62, 172
-  size: 62, 54
+  xy: 66, 176
+  size: 66, 56
 Attack
-  xy: 124, 172
-  size: 62, 54
+  xy: 132, 176
+  size: 66, 56
 Attack
-  xy: 186, 172
-  size: 62, 54
+  xy: 198, 176
+  size: 66, 56
 Attack
-  xy: 248, 172
-  size: 62, 54
+  xy: 264, 176
+  size: 66, 56
 Attack
-  xy: 310, 172
-  size: 62, 54
+  xy: 330, 176
+  size: 66, 56
 Attack
-  xy: 372, 172
-  size: 62, 54
+  xy: 396, 176
+  size: 66, 56
 Attack
-  xy: 434, 172
-  size: 62, 54
+  xy: 462, 176
+  size: 66, 56
 Hit
-  xy: 0, 226
-  size: 62, 54
+  xy: 0, 232
+  size: 66, 56
 Hit
-  xy: 62, 226
-  size: 62, 54
+  xy: 66, 232
+  size: 66, 56
 Hit
-  xy: 124, 226
-  size: 62, 54
+  xy: 132, 232
+  size: 66, 56
 Hit
-  xy: 186, 226
-  size: 62, 54
+  xy: 198, 232
+  size: 66, 56
 Hit
-  xy: 248, 226
-  size: 62, 54
+  xy: 264, 232
+  size: 66, 56
 Death
-  xy: 0, 280
-  size: 62, 54
+  xy: 0, 288
+  size: 66, 56
 Death
-  xy: 62, 280
-  size: 62, 54
+  xy: 66, 288
+  size: 66, 56
 Death
-  xy: 124, 280
-  size: 62, 54
+  xy: 132, 288
+  size: 66, 56
 Death
-  xy: 186, 280
-  size: 62, 54
+  xy: 198, 288
+  size: 66, 56
 Death
-  xy: 248, 280
-  size: 62, 54
+  xy: 264, 288
+  size: 66, 56
 Death
-  xy: 310, 280
-  size: 62, 54
+  xy: 330, 288
+  size: 66, 56
 Death
-  xy: 372, 280
-  size: 62, 54
+  xy: 396, 288
+  size: 66, 56
 Death
-  xy: 434, 280
-  size: 62, 54
+  xy: 462, 288
+  size: 66, 56
 Death
-  xy: 496, 280
-  size: 62, 54
+  xy: 528, 288
+  size: 66, 56
 Death
-  xy: 558, 280
-  size: 62, 54
+  xy: 594, 288
+  size: 66, 56
 Death
-  xy: 620, 280
-  size: 62, 54
+  xy: 660, 288
+  size: 66, 56
 Death
-  xy: 682, 280
-  size: 62, 54
+  xy: 726, 288
+  size: 66, 56
 Death
-  xy: 744, 280
-  size: 62, 54
+  xy: 792, 288
+  size: 66, 56
 Death
-  xy: 806, 280
-  size: 62, 54
+  xy: 858, 288
+  size: 66, 56
 Wake
-  xy: 0, 334
-  size: 62, 54
+  xy: 0, 344
+  size: 66, 56
 Wake
-  xy: 62, 334
-  size: 62, 54
+  xy: 66, 344
+  size: 66, 56
 Wake
-  xy: 124, 334
-  size: 62, 54
+  xy: 132, 344
+  size: 66, 56
 Wake
-  xy: 186, 334
-  size: 62, 54
+  xy: 198, 344
+  size: 66, 56
 Wake
-  xy: 248, 334
-  size: 62, 54
+  xy: 264, 344
+  size: 66, 56
 Wake
-  xy: 310, 334
-  size: 62, 54
+  xy: 330, 344
+  size: 66, 56
 Wake
-  xy: 372, 334
-  size: 62, 54
+  xy: 396, 344
+  size: 66, 56
+IdleUp
+  xy: 0, 400
+  size: 66, 56
+IdleUp
+  xy: 66, 400
+  size: 66, 56
+IdleUp
+  xy: 132, 400
+  size: 66, 56
+IdleUp
+  xy: 198, 400
+  size: 66, 56
+IdleUp
+  xy: 264, 400
+  size: 66, 56
+IdleUp
+  xy: 330, 400
+  size: 66, 56
+IdleUp
+  xy: 396, 400
+  size: 66, 56
+IdleUp
+  xy: 462, 400
+  size: 66, 56
+IdleUp
+  xy: 528, 400
+  size: 66, 56
+IdleUp
+  xy: 594, 400
+  size: 66, 56
+IdleDown
+  xy: 0, 456
+  size: 66, 56
+IdleDown
+  xy: 66, 456
+  size: 66, 56
+IdleDown
+  xy: 132, 456
+  size: 66, 56
+IdleDown
+  xy: 198, 456
+  size: 66, 56
+IdleDown
+  xy: 264, 456
+  size: 66, 56
+IdleDown
+  xy: 330, 456
+  size: 66, 56
+IdleDown
+  xy: 396, 456
+  size: 66, 56
+IdleDown
+  xy: 462, 456
+  size: 66, 56
+IdleDown
+  xy: 528, 456
+  size: 66, 56
+IdleDown
+  xy: 594, 456
+  size: 66, 56
+WalkUp
+  xy: 0, 512
+  size: 66, 56
+WalkUp
+  xy: 66, 512
+  size: 66, 56
+WalkUp
+  xy: 132, 512
+  size: 66, 56
+WalkUp
+  xy: 198, 512
+  size: 66, 56
+WalkDown
+  xy: 0, 568
+  size: 66, 56
+WalkDown
+  xy: 66, 568
+  size: 66, 56
+WalkDown
+  xy: 132, 568
+  size: 66, 56
+WalkDown
+  xy: 198, 568
+  size: 66, 56

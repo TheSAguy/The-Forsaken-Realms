@@ -1,5 +1,5 @@
 aesi.png
-size: 1188,292
+size: 1188,554
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,118 +8,202 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 108, 38
+  size: 108, 49
 Idle
   xy: 108, 64
-  size: 108, 38
+  size: 108, 49
 Idle
   xy: 216, 64
-  size: 108, 38
+  size: 108, 49
 Idle
   xy: 324, 64
-  size: 108, 38
+  size: 108, 49
 Idle
   xy: 432, 64
-  size: 108, 38
+  size: 108, 49
 Idle
   xy: 540, 64
-  size: 108, 38
+  size: 108, 49
 Idle
   xy: 648, 64
-  size: 108, 38
+  size: 108, 49
 Idle
   xy: 756, 64
-  size: 108, 38
+  size: 108, 49
 Idle
   xy: 864, 64
-  size: 108, 38
+  size: 108, 49
 Idle
   xy: 972, 64
-  size: 108, 38
+  size: 108, 49
 Walk
-  xy: 0, 102
-  size: 108, 38
+  xy: 0, 113
+  size: 108, 49
 Walk
-  xy: 108, 102
-  size: 108, 38
+  xy: 108, 113
+  size: 108, 49
 Walk
-  xy: 216, 102
-  size: 108, 38
+  xy: 216, 113
+  size: 108, 49
 Walk
-  xy: 324, 102
-  size: 108, 38
+  xy: 324, 113
+  size: 108, 49
 Attack
-  xy: 0, 140
-  size: 108, 38
+  xy: 0, 162
+  size: 108, 49
 Attack
-  xy: 108, 140
-  size: 108, 38
+  xy: 108, 162
+  size: 108, 49
 Attack
-  xy: 216, 140
-  size: 108, 38
+  xy: 216, 162
+  size: 108, 49
 Attack
-  xy: 324, 140
-  size: 108, 38
+  xy: 324, 162
+  size: 108, 49
 Attack
-  xy: 432, 140
-  size: 108, 38
+  xy: 432, 162
+  size: 108, 49
 Hit
-  xy: 0, 178
-  size: 108, 38
+  xy: 0, 211
+  size: 108, 49
 Hit
-  xy: 108, 178
-  size: 108, 38
+  xy: 108, 211
+  size: 108, 49
 Hit
-  xy: 216, 178
-  size: 108, 38
+  xy: 216, 211
+  size: 108, 49
 Hit
-  xy: 324, 178
-  size: 108, 38
+  xy: 324, 211
+  size: 108, 49
 Death
-  xy: 0, 216
-  size: 108, 38
+  xy: 0, 260
+  size: 108, 49
 Death
-  xy: 108, 216
-  size: 108, 38
+  xy: 108, 260
+  size: 108, 49
 Death
-  xy: 216, 216
-  size: 108, 38
+  xy: 216, 260
+  size: 108, 49
 Death
-  xy: 324, 216
-  size: 108, 38
+  xy: 324, 260
+  size: 108, 49
 Death
-  xy: 432, 216
-  size: 108, 38
+  xy: 432, 260
+  size: 108, 49
 Death
-  xy: 540, 216
-  size: 108, 38
+  xy: 540, 260
+  size: 108, 49
 Death
-  xy: 648, 216
-  size: 108, 38
+  xy: 648, 260
+  size: 108, 49
 Death
-  xy: 756, 216
-  size: 108, 38
+  xy: 756, 260
+  size: 108, 49
 Death
-  xy: 864, 216
-  size: 108, 38
+  xy: 864, 260
+  size: 108, 49
 Death
-  xy: 972, 216
-  size: 108, 38
+  xy: 972, 260
+  size: 108, 49
 Death
-  xy: 1080, 216
-  size: 108, 38
+  xy: 1080, 260
+  size: 108, 49
 Wake
-  xy: 0, 254
-  size: 108, 38
+  xy: 0, 309
+  size: 108, 49
 Wake
-  xy: 108, 254
-  size: 108, 38
+  xy: 108, 309
+  size: 108, 49
 Wake
-  xy: 216, 254
-  size: 108, 38
+  xy: 216, 309
+  size: 108, 49
 Wake
-  xy: 324, 254
-  size: 108, 38
+  xy: 324, 309
+  size: 108, 49
 Wake
-  xy: 432, 254
-  size: 108, 38
+  xy: 432, 309
+  size: 108, 49
+IdleUp
+  xy: 0, 358
+  size: 108, 49
+IdleUp
+  xy: 108, 358
+  size: 108, 49
+IdleUp
+  xy: 216, 358
+  size: 108, 49
+IdleUp
+  xy: 324, 358
+  size: 108, 49
+IdleUp
+  xy: 432, 358
+  size: 108, 49
+IdleUp
+  xy: 540, 358
+  size: 108, 49
+IdleUp
+  xy: 648, 358
+  size: 108, 49
+IdleUp
+  xy: 756, 358
+  size: 108, 49
+IdleUp
+  xy: 864, 358
+  size: 108, 49
+IdleUp
+  xy: 972, 358
+  size: 108, 49
+IdleDown
+  xy: 0, 407
+  size: 108, 49
+IdleDown
+  xy: 108, 407
+  size: 108, 49
+IdleDown
+  xy: 216, 407
+  size: 108, 49
+IdleDown
+  xy: 324, 407
+  size: 108, 49
+IdleDown
+  xy: 432, 407
+  size: 108, 49
+IdleDown
+  xy: 540, 407
+  size: 108, 49
+IdleDown
+  xy: 648, 407
+  size: 108, 49
+IdleDown
+  xy: 756, 407
+  size: 108, 49
+IdleDown
+  xy: 864, 407
+  size: 108, 49
+IdleDown
+  xy: 972, 407
+  size: 108, 49
+WalkUp
+  xy: 0, 456
+  size: 108, 49
+WalkUp
+  xy: 108, 456
+  size: 108, 49
+WalkUp
+  xy: 216, 456
+  size: 108, 49
+WalkUp
+  xy: 324, 456
+  size: 108, 49
+WalkDown
+  xy: 0, 505
+  size: 108, 49
+WalkDown
+  xy: 108, 505
+  size: 108, 49
+WalkDown
+  xy: 216, 505
+  size: 108, 49
+WalkDown
+  xy: 324, 505
+  size: 108, 49

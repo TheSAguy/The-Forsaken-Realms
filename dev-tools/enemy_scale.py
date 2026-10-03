@@ -71,8 +71,15 @@ def pose_images(atlas_path, per_anim=4):
     if png not in _pages:
         _pages[png] = Image.open(png).convert("RGBA")
     out = []
+    # round 415: a generated remake has a plain side view (Idle, Walk; the game mirrors it for Left) plus views from
+    # behind and from the front (IdleUp, WalkDown, ...). Its size is the side view's: an owl flying at the viewer with
+    # spread wings, or a spider's splayed legs seen from the front, would otherwise shrink the side view by up to half.
+    # Hand-drawn four-direction sets (IdleRight, IdleLeft, IdleUp, ...) keep the every-direction measure.
+    plain_side = any(n in ("Idle", "Walk") for n in regions)
     for name, frames in regions.items():
         if name.startswith("Idle") or name.startswith("Walk"):
+            if plain_side and name not in ("Idle", "Walk"):
+                continue
             for (x, y, w, h) in frames[:per_anim]:
                 out.append((name[:4], _pages[png].crop((x, y, x + w, y + h))))
     if not out:

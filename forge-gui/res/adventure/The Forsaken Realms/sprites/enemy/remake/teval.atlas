@@ -1,5 +1,5 @@
 teval.png
-size: 984,388
+size: 984,604
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -140,4 +140,88 @@ Wake
   size: 82, 54
 Wake
   xy: 410, 334
+  size: 82, 54
+IdleUp
+  xy: 0, 388
+  size: 82, 54
+IdleUp
+  xy: 82, 388
+  size: 82, 54
+IdleUp
+  xy: 164, 388
+  size: 82, 54
+IdleUp
+  xy: 246, 388
+  size: 82, 54
+IdleUp
+  xy: 328, 388
+  size: 82, 54
+IdleUp
+  xy: 410, 388
+  size: 82, 54
+IdleUp
+  xy: 492, 388
+  size: 82, 54
+IdleUp
+  xy: 574, 388
+  size: 82, 54
+IdleUp
+  xy: 656, 388
+  size: 82, 54
+IdleUp
+  xy: 738, 388
+  size: 82, 54
+IdleDown
+  xy: 0, 442
+  size: 82, 54
+IdleDown
+  xy: 82, 442
+  size: 82, 54
+IdleDown
+  xy: 164, 442
+  size: 82, 54
+IdleDown
+  xy: 246, 442
+  size: 82, 54
+IdleDown
+  xy: 328, 442
+  size: 82, 54
+IdleDown
+  xy: 410, 442
+  size: 82, 54
+IdleDown
+  xy: 492, 442
+  size: 82, 54
+IdleDown
+  xy: 574, 442
+  size: 82, 54
+IdleDown
+  xy: 656, 442
+  size: 82, 54
+IdleDown
+  xy: 738, 442
+  size: 82, 54
+WalkUp
+  xy: 0, 496
+  size: 82, 54
+WalkUp
+  xy: 82, 496
+  size: 82, 54
+WalkUp
+  xy: 164, 496
+  size: 82, 54
+WalkUp
+  xy: 246, 496
+  size: 82, 54
+WalkDown
+  xy: 0, 550
+  size: 82, 54
+WalkDown
+  xy: 82, 550
+  size: 82, 54
+WalkDown
+  xy: 164, 550
+  size: 82, 54
+WalkDown
+  xy: 246, 550
   size: 82, 54

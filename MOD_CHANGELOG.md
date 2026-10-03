@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 415: the remade enemies turn in four directions; the rabbit, bear, owl and squirrel redone (2026-10-03)
+
+The user, after a test sheet of four creatures seen from behind and from the front: "I like the 4 directional more
+than just side view. Let's try and have that as the default generation moving forward."
+
+- **Four directions.** All 85 enemies remade with the creature generator (rounds 408-412 and the four groups below)
+  now stand and walk the way the game's own directional enemies do (the tfr/ and tfr2/ sets):
+  - `IdleUp` / `WalkUp` show them from behind, and `IdleDown` / `WalkDown` from the front
+  - the side view (`Idle`, `Walk`) is mirrored for Left and used for diagonals
+  - Attack, Hit, Death and Wake stay side views
+  - the back and front views look down more steeply than the side (40 degrees; 25, 15 or 55 where the frame-height cap
+    would bite), as hand-drawn top-down sprites do, and their feet stand on the side view's bottom row
+  - the dragons show their raised wings spread from both sides, the Eye looks at you only from the front, and the
+    owls fly at you face first with spread wings
+- **The rabbit, bear, owl and squirrel groups** (25 enemies, from the cloud batch) now have their own creatures. The
+  user rejected the cloud's versions ("the bear and rabbit's butts are wrong", "the owl does not look like it can
+  fly", "the squirrel needs a bushier tail, maybe a smaller body") and sent references. The generator gained seven
+  opt-in options for them:
+  - Bear (Bear, Lumra, Ayula, Hurska, Kudo): a grizzly with a shoulder hump, round haunches, pillar legs and its
+    head low.
+  - Rabbit (Kwain, Ms. Bumbleflower, Baylen, Buxton, Byrke, Finneas, Preston): a compact body, a round rump, two long
+    leaf ears (one upright, one swept back) and a white tail puff. It hops.
+  - Owl (Owl, Balmor, Vega, Maha, Breena, Scriv, Abigale): its folded wings show on its flank, and it flies whenever
+    it moves (the original owl's walk was a flight too).
+  - Squirrel (Squirrel, Chatterfang, Camellia, Hazel, Euru, Toski): a compact body under a plume tail as wide as the
+    body.
+  - Their colors come from the card art, with 9 corrected by hand: Vega, Breena, Abigale, Finneas, Byrke,
+    Ms. Bumbleflower, Hazel, Camellia, Hurska.
+- **Sizes.** `dev-tools/enemy_scale.py` now sizes a generated remake (a plain `Idle` / `Walk` plus Up/Down views) by
+  its side view.
+  - Without this, an owl flying at the viewer with spread wings, or a spider's splayed legs seen from the front, set
+    the size, and the side view drew at 45-62%.
+  - Hand-drawn four-direction sets (`IdleRight`, `IdleLeft`, ...) keep the every-direction measure, and all 568
+    non-remake atlases measure exactly as before.
+  - The 60 re-installed enemies draw their side view at 95-107% of round 412's size (median 100%).
+  - The owls draw at x0.92-0.95 and Grenzo at x0.95, because the side-view wingbeat or attack passes the frame-height
+    cap.
+- **Data only:** 120 sprite files re-exported and 50 new in `sprites/enemy/remake/`; `world/enemies.json` changes 25
+  sprites and 34 scales; `dev-tools/enemy_scale.py`.
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `sprite_artifact_audit.py --only remake`: clean (85 atlases, 6416 frames). The converter now drops shadow-only
+    specks of 16 px or fewer, such as a raised head's shadow in front of the feet.
+- Not yet seen in play. Console (F9): `spawn enemy Owl`, `spawn enemy Kwain`, `spawn enemy Squirrel`,
+  `spawn enemy Bear`, `spawn enemy "Adult Green Dragon"`; walk up and down past them to see them turn.
+
 ## Round 414: roads end under their towns - no gap below, no tail past them (2026-10-03)
 
 The user, with three screenshots: "I think there might be an issue with road endings. Two of these seem short and one

@@ -1,5 +1,5 @@
 grenzo.png
-size: 1248,400
+size: 1248,644
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,130 +8,214 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 96, 56
+  size: 96, 58
 Idle
   xy: 96, 64
-  size: 96, 56
+  size: 96, 58
 Idle
   xy: 192, 64
-  size: 96, 56
+  size: 96, 58
 Idle
   xy: 288, 64
-  size: 96, 56
+  size: 96, 58
 Idle
   xy: 384, 64
-  size: 96, 56
+  size: 96, 58
 Idle
   xy: 480, 64
-  size: 96, 56
+  size: 96, 58
 Idle
   xy: 576, 64
-  size: 96, 56
+  size: 96, 58
 Idle
   xy: 672, 64
-  size: 96, 56
+  size: 96, 58
 Idle
   xy: 768, 64
-  size: 96, 56
+  size: 96, 58
 Idle
   xy: 864, 64
-  size: 96, 56
+  size: 96, 58
 Walk
-  xy: 0, 120
-  size: 96, 56
+  xy: 0, 122
+  size: 96, 58
 Walk
-  xy: 96, 120
-  size: 96, 56
+  xy: 96, 122
+  size: 96, 58
 Walk
-  xy: 192, 120
-  size: 96, 56
+  xy: 192, 122
+  size: 96, 58
 Walk
-  xy: 288, 120
-  size: 96, 56
+  xy: 288, 122
+  size: 96, 58
 Attack
-  xy: 0, 176
-  size: 96, 56
+  xy: 0, 180
+  size: 96, 58
 Attack
-  xy: 96, 176
-  size: 96, 56
+  xy: 96, 180
+  size: 96, 58
 Attack
-  xy: 192, 176
-  size: 96, 56
+  xy: 192, 180
+  size: 96, 58
 Attack
-  xy: 288, 176
-  size: 96, 56
+  xy: 288, 180
+  size: 96, 58
 Attack
-  xy: 384, 176
-  size: 96, 56
+  xy: 384, 180
+  size: 96, 58
 Attack
-  xy: 480, 176
-  size: 96, 56
+  xy: 480, 180
+  size: 96, 58
 Hit
-  xy: 0, 232
-  size: 96, 56
+  xy: 0, 238
+  size: 96, 58
 Hit
-  xy: 96, 232
-  size: 96, 56
+  xy: 96, 238
+  size: 96, 58
 Hit
-  xy: 192, 232
-  size: 96, 56
+  xy: 192, 238
+  size: 96, 58
 Hit
-  xy: 288, 232
-  size: 96, 56
+  xy: 288, 238
+  size: 96, 58
 Death
-  xy: 0, 288
-  size: 96, 56
+  xy: 0, 296
+  size: 96, 58
 Death
-  xy: 96, 288
-  size: 96, 56
+  xy: 96, 296
+  size: 96, 58
 Death
-  xy: 192, 288
-  size: 96, 56
+  xy: 192, 296
+  size: 96, 58
 Death
-  xy: 288, 288
-  size: 96, 56
+  xy: 288, 296
+  size: 96, 58
 Death
-  xy: 384, 288
-  size: 96, 56
+  xy: 384, 296
+  size: 96, 58
 Death
-  xy: 480, 288
-  size: 96, 56
+  xy: 480, 296
+  size: 96, 58
 Death
-  xy: 576, 288
-  size: 96, 56
+  xy: 576, 296
+  size: 96, 58
 Death
-  xy: 672, 288
-  size: 96, 56
+  xy: 672, 296
+  size: 96, 58
 Death
-  xy: 768, 288
-  size: 96, 56
+  xy: 768, 296
+  size: 96, 58
 Death
-  xy: 864, 288
-  size: 96, 56
+  xy: 864, 296
+  size: 96, 58
 Death
-  xy: 960, 288
-  size: 96, 56
+  xy: 960, 296
+  size: 96, 58
 Death
-  xy: 1056, 288
-  size: 96, 56
+  xy: 1056, 296
+  size: 96, 58
 Death
-  xy: 1152, 288
-  size: 96, 56
+  xy: 1152, 296
+  size: 96, 58
 Wake
-  xy: 0, 344
-  size: 96, 56
+  xy: 0, 354
+  size: 96, 58
 Wake
-  xy: 96, 344
-  size: 96, 56
+  xy: 96, 354
+  size: 96, 58
 Wake
-  xy: 192, 344
-  size: 96, 56
+  xy: 192, 354
+  size: 96, 58
 Wake
-  xy: 288, 344
-  size: 96, 56
+  xy: 288, 354
+  size: 96, 58
 Wake
-  xy: 384, 344
-  size: 96, 56
+  xy: 384, 354
+  size: 96, 58
 Wake
-  xy: 480, 344
-  size: 96, 56
+  xy: 480, 354
+  size: 96, 58
+IdleUp
+  xy: 0, 412
+  size: 96, 58
+IdleUp
+  xy: 96, 412
+  size: 96, 58
+IdleUp
+  xy: 192, 412
+  size: 96, 58
+IdleUp
+  xy: 288, 412
+  size: 96, 58
+IdleUp
+  xy: 384, 412
+  size: 96, 58
+IdleUp
+  xy: 480, 412
+  size: 96, 58
+IdleUp
+  xy: 576, 412
+  size: 96, 58
+IdleUp
+  xy: 672, 412
+  size: 96, 58
+IdleUp
+  xy: 768, 412
+  size: 96, 58
+IdleUp
+  xy: 864, 412
+  size: 96, 58
+IdleDown
+  xy: 0, 470
+  size: 96, 58
+IdleDown
+  xy: 96, 470
+  size: 96, 58
+IdleDown
+  xy: 192, 470
+  size: 96, 58
+IdleDown
+  xy: 288, 470
+  size: 96, 58
+IdleDown
+  xy: 384, 470
+  size: 96, 58
+IdleDown
+  xy: 480, 470
+  size: 96, 58
+IdleDown
+  xy: 576, 470
+  size: 96, 58
+IdleDown
+  xy: 672, 470
+  size: 96, 58
+IdleDown
+  xy: 768, 470
+  size: 96, 58
+IdleDown
+  xy: 864, 470
+  size: 96, 58
+WalkUp
+  xy: 0, 528
+  size: 96, 58
+WalkUp
+  xy: 96, 528
+  size: 96, 58
+WalkUp
+  xy: 192, 528
+  size: 96, 58
+WalkUp
+  xy: 288, 528
+  size: 96, 58
+WalkDown
+  xy: 0, 586
+  size: 96, 58
+WalkDown
+  xy: 96, 586
+  size: 96, 58
+WalkDown
+  xy: 192, 586
+  size: 96, 58
+WalkDown
+  xy: 288, 586
+  size: 96, 58

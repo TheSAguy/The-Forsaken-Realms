@@ -1,5 +1,5 @@
 vaevictis_asmadi.png
-size: 1792,946
+size: 1792,1534
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -164,4 +164,88 @@ Wake
   size: 112, 147
 Wake
   xy: 784, 799
+  size: 112, 147
+IdleUp
+  xy: 0, 946
+  size: 112, 147
+IdleUp
+  xy: 112, 946
+  size: 112, 147
+IdleUp
+  xy: 224, 946
+  size: 112, 147
+IdleUp
+  xy: 336, 946
+  size: 112, 147
+IdleUp
+  xy: 448, 946
+  size: 112, 147
+IdleUp
+  xy: 560, 946
+  size: 112, 147
+IdleUp
+  xy: 672, 946
+  size: 112, 147
+IdleUp
+  xy: 784, 946
+  size: 112, 147
+IdleUp
+  xy: 896, 946
+  size: 112, 147
+IdleUp
+  xy: 1008, 946
+  size: 112, 147
+IdleDown
+  xy: 0, 1093
+  size: 112, 147
+IdleDown
+  xy: 112, 1093
+  size: 112, 147
+IdleDown
+  xy: 224, 1093
+  size: 112, 147
+IdleDown
+  xy: 336, 1093
+  size: 112, 147
+IdleDown
+  xy: 448, 1093
+  size: 112, 147
+IdleDown
+  xy: 560, 1093
+  size: 112, 147
+IdleDown
+  xy: 672, 1093
+  size: 112, 147
+IdleDown
+  xy: 784, 1093
+  size: 112, 147
+IdleDown
+  xy: 896, 1093
+  size: 112, 147
+IdleDown
+  xy: 1008, 1093
+  size: 112, 147
+WalkUp
+  xy: 0, 1240
+  size: 112, 147
+WalkUp
+  xy: 112, 1240
+  size: 112, 147
+WalkUp
+  xy: 224, 1240
+  size: 112, 147
+WalkUp
+  xy: 336, 1240
+  size: 112, 147
+WalkDown
+  xy: 0, 1387
+  size: 112, 147
+WalkDown
+  xy: 112, 1387
+  size: 112, 147
+WalkDown
+  xy: 224, 1387
+  size: 112, 147
+WalkDown
+  xy: 336, 1387
   size: 112, 147

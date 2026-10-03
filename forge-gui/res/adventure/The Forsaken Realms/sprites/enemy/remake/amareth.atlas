@@ -1,5 +1,5 @@
 amareth.png
-size: 1092,370
+size: 1092,574
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -152,4 +152,88 @@ Wake
   size: 78, 51
 Wake
   xy: 468, 319
+  size: 78, 51
+IdleUp
+  xy: 0, 370
+  size: 78, 51
+IdleUp
+  xy: 78, 370
+  size: 78, 51
+IdleUp
+  xy: 156, 370
+  size: 78, 51
+IdleUp
+  xy: 234, 370
+  size: 78, 51
+IdleUp
+  xy: 312, 370
+  size: 78, 51
+IdleUp
+  xy: 390, 370
+  size: 78, 51
+IdleUp
+  xy: 468, 370
+  size: 78, 51
+IdleUp
+  xy: 546, 370
+  size: 78, 51
+IdleUp
+  xy: 624, 370
+  size: 78, 51
+IdleUp
+  xy: 702, 370
+  size: 78, 51
+IdleDown
+  xy: 0, 421
+  size: 78, 51
+IdleDown
+  xy: 78, 421
+  size: 78, 51
+IdleDown
+  xy: 156, 421
+  size: 78, 51
+IdleDown
+  xy: 234, 421
+  size: 78, 51
+IdleDown
+  xy: 312, 421
+  size: 78, 51
+IdleDown
+  xy: 390, 421
+  size: 78, 51
+IdleDown
+  xy: 468, 421
+  size: 78, 51
+IdleDown
+  xy: 546, 421
+  size: 78, 51
+IdleDown
+  xy: 624, 421
+  size: 78, 51
+IdleDown
+  xy: 702, 421
+  size: 78, 51
+WalkUp
+  xy: 0, 472
+  size: 78, 51
+WalkUp
+  xy: 78, 472
+  size: 78, 51
+WalkUp
+  xy: 156, 472
+  size: 78, 51
+WalkUp
+  xy: 234, 472
+  size: 78, 51
+WalkDown
+  xy: 0, 523
+  size: 78, 51
+WalkDown
+  xy: 78, 523
+  size: 78, 51
+WalkDown
+  xy: 156, 523
+  size: 78, 51
+WalkDown
+  xy: 234, 523
   size: 78, 51

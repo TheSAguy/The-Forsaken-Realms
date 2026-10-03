@@ -1,5 +1,5 @@
 fire_dragon.png
-size: 1066,400
+size: 1066,624
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -143,4 +143,88 @@ Wake
   size: 82, 56
 Wake
   xy: 410, 344
+  size: 82, 56
+IdleUp
+  xy: 0, 400
+  size: 82, 56
+IdleUp
+  xy: 82, 400
+  size: 82, 56
+IdleUp
+  xy: 164, 400
+  size: 82, 56
+IdleUp
+  xy: 246, 400
+  size: 82, 56
+IdleUp
+  xy: 328, 400
+  size: 82, 56
+IdleUp
+  xy: 410, 400
+  size: 82, 56
+IdleUp
+  xy: 492, 400
+  size: 82, 56
+IdleUp
+  xy: 574, 400
+  size: 82, 56
+IdleUp
+  xy: 656, 400
+  size: 82, 56
+IdleUp
+  xy: 738, 400
+  size: 82, 56
+IdleDown
+  xy: 0, 456
+  size: 82, 56
+IdleDown
+  xy: 82, 456
+  size: 82, 56
+IdleDown
+  xy: 164, 456
+  size: 82, 56
+IdleDown
+  xy: 246, 456
+  size: 82, 56
+IdleDown
+  xy: 328, 456
+  size: 82, 56
+IdleDown
+  xy: 410, 456
+  size: 82, 56
+IdleDown
+  xy: 492, 456
+  size: 82, 56
+IdleDown
+  xy: 574, 456
+  size: 82, 56
+IdleDown
+  xy: 656, 456
+  size: 82, 56
+IdleDown
+  xy: 738, 456
+  size: 82, 56
+WalkUp
+  xy: 0, 512
+  size: 82, 56
+WalkUp
+  xy: 82, 512
+  size: 82, 56
+WalkUp
+  xy: 164, 512
+  size: 82, 56
+WalkUp
+  xy: 246, 512
+  size: 82, 56
+WalkDown
+  xy: 0, 568
+  size: 82, 56
+WalkDown
+  xy: 82, 568
+  size: 82, 56
+WalkDown
+  xy: 164, 568
+  size: 82, 56
+WalkDown
+  xy: 246, 568
   size: 82, 56

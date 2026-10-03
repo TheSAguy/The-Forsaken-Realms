@@ -1,5 +1,5 @@
 atsushi.png
-size: 1600,478
+size: 1600,754
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -167,4 +167,88 @@ Wake
   size: 100, 69
 Wake
   xy: 700, 409
+  size: 100, 69
+IdleUp
+  xy: 0, 478
+  size: 100, 69
+IdleUp
+  xy: 100, 478
+  size: 100, 69
+IdleUp
+  xy: 200, 478
+  size: 100, 69
+IdleUp
+  xy: 300, 478
+  size: 100, 69
+IdleUp
+  xy: 400, 478
+  size: 100, 69
+IdleUp
+  xy: 500, 478
+  size: 100, 69
+IdleUp
+  xy: 600, 478
+  size: 100, 69
+IdleUp
+  xy: 700, 478
+  size: 100, 69
+IdleUp
+  xy: 800, 478
+  size: 100, 69
+IdleUp
+  xy: 900, 478
+  size: 100, 69
+IdleDown
+  xy: 0, 547
+  size: 100, 69
+IdleDown
+  xy: 100, 547
+  size: 100, 69
+IdleDown
+  xy: 200, 547
+  size: 100, 69
+IdleDown
+  xy: 300, 547
+  size: 100, 69
+IdleDown
+  xy: 400, 547
+  size: 100, 69
+IdleDown
+  xy: 500, 547
+  size: 100, 69
+IdleDown
+  xy: 600, 547
+  size: 100, 69
+IdleDown
+  xy: 700, 547
+  size: 100, 69
+IdleDown
+  xy: 800, 547
+  size: 100, 69
+IdleDown
+  xy: 900, 547
+  size: 100, 69
+WalkUp
+  xy: 0, 616
+  size: 100, 69
+WalkUp
+  xy: 100, 616
+  size: 100, 69
+WalkUp
+  xy: 200, 616
+  size: 100, 69
+WalkUp
+  xy: 300, 616
+  size: 100, 69
+WalkDown
+  xy: 0, 685
+  size: 100, 69
+WalkDown
+  xy: 100, 685
+  size: 100, 69
+WalkDown
+  xy: 200, 685
+  size: 100, 69
+WalkDown
+  xy: 300, 685
   size: 100, 69

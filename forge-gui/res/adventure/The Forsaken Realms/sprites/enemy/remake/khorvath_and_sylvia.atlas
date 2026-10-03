@@ -1,5 +1,5 @@
 khorvath_and_sylvia.png
-size: 2268,1060
+size: 1972,1604
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,172 +8,244 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 126, 166
+  size: 116, 154
 Idle
-  xy: 126, 64
-  size: 126, 166
+  xy: 116, 64
+  size: 116, 154
 Idle
-  xy: 252, 64
-  size: 126, 166
+  xy: 232, 64
+  size: 116, 154
 Idle
-  xy: 378, 64
-  size: 126, 166
+  xy: 348, 64
+  size: 116, 154
 Idle
-  xy: 504, 64
-  size: 126, 166
+  xy: 464, 64
+  size: 116, 154
 Idle
-  xy: 630, 64
-  size: 126, 166
+  xy: 580, 64
+  size: 116, 154
 Idle
-  xy: 756, 64
-  size: 126, 166
+  xy: 696, 64
+  size: 116, 154
 Idle
-  xy: 882, 64
-  size: 126, 166
+  xy: 812, 64
+  size: 116, 154
 Idle
-  xy: 1008, 64
-  size: 126, 166
+  xy: 928, 64
+  size: 116, 154
 Idle
-  xy: 1134, 64
-  size: 126, 166
+  xy: 1044, 64
+  size: 116, 154
 Walk
-  xy: 0, 230
-  size: 126, 166
+  xy: 0, 218
+  size: 116, 154
 Walk
-  xy: 126, 230
-  size: 126, 166
+  xy: 116, 218
+  size: 116, 154
 Walk
-  xy: 252, 230
-  size: 126, 166
+  xy: 232, 218
+  size: 116, 154
 Walk
-  xy: 378, 230
-  size: 126, 166
+  xy: 348, 218
+  size: 116, 154
 Attack
-  xy: 0, 396
-  size: 126, 166
+  xy: 0, 372
+  size: 116, 154
 Attack
-  xy: 126, 396
-  size: 126, 166
+  xy: 116, 372
+  size: 116, 154
 Attack
-  xy: 252, 396
-  size: 126, 166
+  xy: 232, 372
+  size: 116, 154
 Attack
-  xy: 378, 396
-  size: 126, 166
+  xy: 348, 372
+  size: 116, 154
 Attack
-  xy: 504, 396
-  size: 126, 166
+  xy: 464, 372
+  size: 116, 154
 Attack
-  xy: 630, 396
-  size: 126, 166
+  xy: 580, 372
+  size: 116, 154
 Attack
-  xy: 756, 396
-  size: 126, 166
+  xy: 696, 372
+  size: 116, 154
 Attack
-  xy: 882, 396
-  size: 126, 166
-Attack
-  xy: 1008, 396
-  size: 126, 166
+  xy: 812, 372
+  size: 116, 154
 Hit
-  xy: 0, 562
-  size: 126, 166
+  xy: 0, 526
+  size: 116, 154
 Hit
-  xy: 126, 562
-  size: 126, 166
+  xy: 116, 526
+  size: 116, 154
 Hit
-  xy: 252, 562
-  size: 126, 166
+  xy: 232, 526
+  size: 116, 154
 Hit
-  xy: 378, 562
-  size: 126, 166
+  xy: 348, 526
+  size: 116, 154
 Hit
-  xy: 504, 562
-  size: 126, 166
+  xy: 464, 526
+  size: 116, 154
 Hit
-  xy: 630, 562
-  size: 126, 166
-Hit
-  xy: 756, 562
-  size: 126, 166
+  xy: 580, 526
+  size: 116, 154
 Death
-  xy: 0, 728
-  size: 126, 166
+  xy: 0, 680
+  size: 116, 154
 Death
-  xy: 126, 728
-  size: 126, 166
+  xy: 116, 680
+  size: 116, 154
 Death
-  xy: 252, 728
-  size: 126, 166
+  xy: 232, 680
+  size: 116, 154
 Death
-  xy: 378, 728
-  size: 126, 166
+  xy: 348, 680
+  size: 116, 154
 Death
-  xy: 504, 728
-  size: 126, 166
+  xy: 464, 680
+  size: 116, 154
 Death
-  xy: 630, 728
-  size: 126, 166
+  xy: 580, 680
+  size: 116, 154
 Death
-  xy: 756, 728
-  size: 126, 166
+  xy: 696, 680
+  size: 116, 154
 Death
-  xy: 882, 728
-  size: 126, 166
+  xy: 812, 680
+  size: 116, 154
 Death
-  xy: 1008, 728
-  size: 126, 166
+  xy: 928, 680
+  size: 116, 154
 Death
-  xy: 1134, 728
-  size: 126, 166
+  xy: 1044, 680
+  size: 116, 154
 Death
-  xy: 1260, 728
-  size: 126, 166
+  xy: 1160, 680
+  size: 116, 154
 Death
-  xy: 1386, 728
-  size: 126, 166
+  xy: 1276, 680
+  size: 116, 154
 Death
-  xy: 1512, 728
-  size: 126, 166
+  xy: 1392, 680
+  size: 116, 154
 Death
-  xy: 1638, 728
-  size: 126, 166
+  xy: 1508, 680
+  size: 116, 154
 Death
-  xy: 1764, 728
-  size: 126, 166
+  xy: 1624, 680
+  size: 116, 154
 Death
-  xy: 1890, 728
-  size: 126, 166
+  xy: 1740, 680
+  size: 116, 154
 Death
-  xy: 2016, 728
-  size: 126, 166
-Death
-  xy: 2142, 728
-  size: 126, 166
+  xy: 1856, 680
+  size: 116, 154
 Wake
-  xy: 0, 894
-  size: 126, 166
+  xy: 0, 834
+  size: 116, 154
 Wake
-  xy: 126, 894
-  size: 126, 166
+  xy: 116, 834
+  size: 116, 154
 Wake
-  xy: 252, 894
-  size: 126, 166
+  xy: 232, 834
+  size: 116, 154
 Wake
-  xy: 378, 894
-  size: 126, 166
+  xy: 348, 834
+  size: 116, 154
 Wake
-  xy: 504, 894
-  size: 126, 166
+  xy: 464, 834
+  size: 116, 154
 Wake
-  xy: 630, 894
-  size: 126, 166
+  xy: 580, 834
+  size: 116, 154
 Wake
-  xy: 756, 894
-  size: 126, 166
+  xy: 696, 834
+  size: 116, 154
 Wake
-  xy: 882, 894
-  size: 126, 166
-Wake
-  xy: 1008, 894
-  size: 126, 166
+  xy: 812, 834
+  size: 116, 154
+IdleUp
+  xy: 0, 988
+  size: 116, 154
+IdleUp
+  xy: 116, 988
+  size: 116, 154
+IdleUp
+  xy: 232, 988
+  size: 116, 154
+IdleUp
+  xy: 348, 988
+  size: 116, 154
+IdleUp
+  xy: 464, 988
+  size: 116, 154
+IdleUp
+  xy: 580, 988
+  size: 116, 154
+IdleUp
+  xy: 696, 988
+  size: 116, 154
+IdleUp
+  xy: 812, 988
+  size: 116, 154
+IdleUp
+  xy: 928, 988
+  size: 116, 154
+IdleUp
+  xy: 1044, 988
+  size: 116, 154
+IdleDown
+  xy: 0, 1142
+  size: 116, 154
+IdleDown
+  xy: 116, 1142
+  size: 116, 154
+IdleDown
+  xy: 232, 1142
+  size: 116, 154
+IdleDown
+  xy: 348, 1142
+  size: 116, 154
+IdleDown
+  xy: 464, 1142
+  size: 116, 154
+IdleDown
+  xy: 580, 1142
+  size: 116, 154
+IdleDown
+  xy: 696, 1142
+  size: 116, 154
+IdleDown
+  xy: 812, 1142
+  size: 116, 154
+IdleDown
+  xy: 928, 1142
+  size: 116, 154
+IdleDown
+  xy: 1044, 1142
+  size: 116, 154
+WalkUp
+  xy: 0, 1296
+  size: 116, 154
+WalkUp
+  xy: 116, 1296
+  size: 116, 154
+WalkUp
+  xy: 232, 1296
+  size: 116, 154
+WalkUp
+  xy: 348, 1296
+  size: 116, 154
+WalkDown
+  xy: 0, 1450
+  size: 116, 154
+WalkDown
+  xy: 116, 1450
+  size: 116, 154
+WalkDown
+  xy: 232, 1450
+  size: 116, 154
+WalkDown
+  xy: 348, 1450
+  size: 116, 154

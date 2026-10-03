@@ -1,5 +1,5 @@
 eye.png
-size: 456,322
+size: 456,494
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -140,4 +140,88 @@ Wake
   size: 38, 43
 Wake
   xy: 190, 279
+  size: 38, 43
+IdleUp
+  xy: 0, 322
+  size: 38, 43
+IdleUp
+  xy: 38, 322
+  size: 38, 43
+IdleUp
+  xy: 76, 322
+  size: 38, 43
+IdleUp
+  xy: 114, 322
+  size: 38, 43
+IdleUp
+  xy: 152, 322
+  size: 38, 43
+IdleUp
+  xy: 190, 322
+  size: 38, 43
+IdleUp
+  xy: 228, 322
+  size: 38, 43
+IdleUp
+  xy: 266, 322
+  size: 38, 43
+IdleUp
+  xy: 304, 322
+  size: 38, 43
+IdleUp
+  xy: 342, 322
+  size: 38, 43
+IdleDown
+  xy: 0, 365
+  size: 38, 43
+IdleDown
+  xy: 38, 365
+  size: 38, 43
+IdleDown
+  xy: 76, 365
+  size: 38, 43
+IdleDown
+  xy: 114, 365
+  size: 38, 43
+IdleDown
+  xy: 152, 365
+  size: 38, 43
+IdleDown
+  xy: 190, 365
+  size: 38, 43
+IdleDown
+  xy: 228, 365
+  size: 38, 43
+IdleDown
+  xy: 266, 365
+  size: 38, 43
+IdleDown
+  xy: 304, 365
+  size: 38, 43
+IdleDown
+  xy: 342, 365
+  size: 38, 43
+WalkUp
+  xy: 0, 408
+  size: 38, 43
+WalkUp
+  xy: 38, 408
+  size: 38, 43
+WalkUp
+  xy: 76, 408
+  size: 38, 43
+WalkUp
+  xy: 114, 408
+  size: 38, 43
+WalkDown
+  xy: 0, 451
+  size: 38, 43
+WalkDown
+  xy: 38, 451
+  size: 38, 43
+WalkDown
+  xy: 76, 451
+  size: 38, 43
+WalkDown
+  xy: 114, 451
   size: 38, 43

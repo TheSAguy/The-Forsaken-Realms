@@ -1,5 +1,5 @@
 vnwxt.png
-size: 644,394
+size: 644,614
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -155,4 +155,88 @@ Wake
   size: 46, 55
 Wake
   xy: 276, 339
+  size: 46, 55
+IdleUp
+  xy: 0, 394
+  size: 46, 55
+IdleUp
+  xy: 46, 394
+  size: 46, 55
+IdleUp
+  xy: 92, 394
+  size: 46, 55
+IdleUp
+  xy: 138, 394
+  size: 46, 55
+IdleUp
+  xy: 184, 394
+  size: 46, 55
+IdleUp
+  xy: 230, 394
+  size: 46, 55
+IdleUp
+  xy: 276, 394
+  size: 46, 55
+IdleUp
+  xy: 322, 394
+  size: 46, 55
+IdleUp
+  xy: 368, 394
+  size: 46, 55
+IdleUp
+  xy: 414, 394
+  size: 46, 55
+IdleDown
+  xy: 0, 449
+  size: 46, 55
+IdleDown
+  xy: 46, 449
+  size: 46, 55
+IdleDown
+  xy: 92, 449
+  size: 46, 55
+IdleDown
+  xy: 138, 449
+  size: 46, 55
+IdleDown
+  xy: 184, 449
+  size: 46, 55
+IdleDown
+  xy: 230, 449
+  size: 46, 55
+IdleDown
+  xy: 276, 449
+  size: 46, 55
+IdleDown
+  xy: 322, 449
+  size: 46, 55
+IdleDown
+  xy: 368, 449
+  size: 46, 55
+IdleDown
+  xy: 414, 449
+  size: 46, 55
+WalkUp
+  xy: 0, 504
+  size: 46, 55
+WalkUp
+  xy: 46, 504
+  size: 46, 55
+WalkUp
+  xy: 92, 504
+  size: 46, 55
+WalkUp
+  xy: 138, 504
+  size: 46, 55
+WalkDown
+  xy: 0, 559
+  size: 46, 55
+WalkDown
+  xy: 46, 559
+  size: 46, 55
+WalkDown
+  xy: 92, 559
+  size: 46, 55
+WalkDown
+  xy: 138, 559
   size: 46, 55

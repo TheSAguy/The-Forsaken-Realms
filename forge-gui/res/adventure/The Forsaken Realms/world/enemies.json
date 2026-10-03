@@ -3380,7 +3380,7 @@
     {
         "name": "Bear",
         "nameOverride": "Brown Bear",
-        "sprite": "sprites/enemy/beast/bear/bear.atlas",
+        "sprite": "sprites/enemy/remake/bear.atlas",
         "deck": [
             "decks/standard/bear.json"
         ],
@@ -3450,7 +3450,7 @@
             "BiomeGreen"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.4194
     },
     {
         "name": "Beastmaster",
@@ -23918,7 +23918,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 0.4127
+        "scale": 0.5149
     },
     {
         "name": "Orc Brute",
@@ -24350,7 +24350,7 @@
     },
     {
         "name": "Owl",
-        "sprite": "sprites/enemy/beast/bird/owl.atlas",
+        "sprite": "sprites/enemy/remake/owl.atlas",
         "deck": [
             "decks/standard/owl.dck"
         ],
@@ -24359,7 +24359,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 24,
-        "scale": 1.0317,
+        "scale": 0.3939,
         "life": 13,
         "rewards": [
             {
@@ -29071,7 +29071,7 @@
     },
     {
         "name": "Squirrel",
-        "sprite": "sprites/enemy/beast/smallmammals/squirrel.atlas",
+        "sprite": "sprites/enemy/remake/squirrel.atlas",
         "deck": [
             "decks/standard/squirrel.dck"
         ],
@@ -29079,7 +29079,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.8667,
+        "scale": 0.3171,
         "life": 15,
         "rewards": [
             {
@@ -37701,13 +37701,13 @@
     },
     {
         "name": "Chatterfang",
-        "sprite": "sprites/enemy/beast/smallmammals/squirrel.atlas",
+        "sprite": "sprites/enemy/remake/chatterfang.atlas",
         "deck": [
             "decks/legends/chatterfang.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.8667,
+        "scale": 0.325,
         "life": 50,
         "rewards": [
             {
@@ -49192,7 +49192,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.326,
+        "scale": 0.3766,
         "life": 30,
         "rewards": [
             {
@@ -50772,7 +50772,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.3409,
+        "scale": 0.3856,
         "life": 30,
         "rewards": [
             {
@@ -51512,7 +51512,7 @@
     },
     {
         "name": "Ms. Bumbleflower",
-        "sprite": "sprites/enemy/beast/smallmammals/rabbit.atlas",
+        "sprite": "sprites/enemy/remake/ms_bumbleflower.atlas",
         "deck": [
             "decks/legends/ms_bumbleflower.dck"
         ],
@@ -51598,7 +51598,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.7222
+        "scale": 0.3333
     },
     {
         "name": "Arthur",
@@ -51690,7 +51690,7 @@
     },
     {
         "name": "Baylen",
-        "sprite": "sprites/enemy/beast/smallmammals/rabbit.atlas",
+        "sprite": "sprites/enemy/remake/baylen.atlas",
         "deck": [
             "decks/legends/baylen.dck"
         ],
@@ -51771,7 +51771,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.7222
+        "scale": 0.3333
     },
     {
         "name": "The Infamous Cruelclaw",
@@ -53054,14 +53054,14 @@
     },
     {
         "name": "Balmor",
-        "sprite": "sprites/enemy/beast/bird/owl.atlas",
+        "sprite": "sprites/enemy/remake/balmor.atlas",
         "deck": [
             "decks/legends/balmor.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0317,
+        "scale": 0.3234,
         "life": 30,
         "rewards": [
             {
@@ -53478,14 +53478,14 @@
     },
     {
         "name": "Vega",
-        "sprite": "sprites/enemy/beast/bird/owl.atlas",
+        "sprite": "sprites/enemy/remake/vega.atlas",
         "deck": [
             "decks/legends/vega.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0317,
+        "scale": 0.3283,
         "life": 30,
         "rewards": [
             {
@@ -56389,13 +56389,13 @@
     },
     {
         "name": "Lumra",
-        "sprite": "sprites/enemy/beast/bear/bear.atlas",
+        "sprite": "sprites/enemy/remake/lumra.atlas",
         "deck": [
             "decks/legends/lumra.dck"
         ],
         "ai": "",
         "speed": 37,
-        "scale": 1.0833,
+        "scale": 0.325,
         "life": 28,
         "rewards": [
             {
@@ -56458,14 +56458,14 @@
     },
     {
         "name": "Maha",
-        "sprite": "sprites/enemy/beast/bird/owl.atlas",
+        "sprite": "sprites/enemy/remake/maha.atlas",
         "deck": [
             "decks/legends/maha.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 52,
-        "scale": 1.0317,
+        "scale": 0.3186,
         "life": 28,
         "rewards": [
             {
@@ -66648,13 +66648,13 @@
     },
     {
         "name": "Camellia",
-        "sprite": "sprites/enemy/beast/smallmammals/squirrel.atlas",
+        "sprite": "sprites/enemy/remake/camellia.atlas",
         "deck": [
             "decks/legends/camellia.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.8667,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -66716,13 +66716,13 @@
     },
     {
         "name": "Hazel",
-        "sprite": "sprites/enemy/beast/smallmammals/squirrel.atlas",
+        "sprite": "sprites/enemy/remake/hazel.atlas",
         "deck": [
             "decks/legends/hazel.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.8667,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -66784,13 +66784,13 @@
     },
     {
         "name": "Euru",
-        "sprite": "sprites/enemy/beast/smallmammals/squirrel.atlas",
+        "sprite": "sprites/enemy/remake/euru.atlas",
         "deck": [
             "decks/legends/euru.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.8667,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -66852,13 +66852,13 @@
     },
     {
         "name": "Toski",
-        "sprite": "sprites/enemy/beast/smallmammals/squirrel.atlas",
+        "sprite": "sprites/enemy/remake/toski.atlas",
         "deck": [
             "decks/legends/toski.dck"
         ],
         "ai": "",
         "speed": 37,
-        "scale": 0.8667,
+        "scale": 0.4062,
         "life": 31,
         "rewards": [
             {
@@ -67276,7 +67276,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.3171,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -75728,7 +75728,7 @@
     },
     {
         "name": "Ayula",
-        "sprite": "sprites/enemy/beast/bear/bear.atlas",
+        "sprite": "sprites/enemy/remake/ayula.atlas",
         "deck": [
             "decks/legends/ayula.dck"
         ],
@@ -75792,7 +75792,7 @@
         "spawnRate": 0,
         "tier": "Common",
         "difficulty": 0.1,
-        "scale": 1.0833
+        "scale": 0.5
     },
     {
         "name": "Duskana",
@@ -75864,7 +75864,7 @@
     },
     {
         "name": "Hurska",
-        "sprite": "sprites/enemy/beast/bear/bear.atlas",
+        "sprite": "sprites/enemy/remake/hurska.atlas",
         "deck": [
             "decks/legends/hurska.dck"
         ],
@@ -75928,11 +75928,11 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.3939
     },
     {
         "name": "Kudo",
-        "sprite": "sprites/enemy/beast/bear/bear.atlas",
+        "sprite": "sprites/enemy/remake/kudo.atlas",
         "deck": [
             "decks/legends/kudo.dck"
         ],
@@ -76001,7 +76001,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.4062
     },
     {
         "name": "Ruxa",
@@ -91759,7 +91759,7 @@
     },
     {
         "name": "Breena",
-        "sprite": "sprites/enemy/beast/bird/owl.atlas",
+        "sprite": "sprites/enemy/remake/breena.atlas",
         "deck": [
             "decks/legends/breena.dck"
         ],
@@ -91824,7 +91824,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0317
+        "scale": 0.3283
     },
     {
         "name": "Felisa",
@@ -94031,7 +94031,7 @@
     },
     {
         "name": "Buxton",
-        "sprite": "sprites/enemy/beast/smallmammals/rabbit.atlas",
+        "sprite": "sprites/enemy/remake/buxton.atlas",
         "deck": [
             "decks/legends/buxton.dck"
         ],
@@ -94095,11 +94095,11 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.7222
+        "scale": 0.3171
     },
     {
         "name": "Byrke",
-        "sprite": "sprites/enemy/beast/smallmammals/rabbit.atlas",
+        "sprite": "sprites/enemy/remake/byrke.atlas",
         "deck": [
             "decks/legends/byrke.dck"
         ],
@@ -94163,11 +94163,11 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.7222
+        "scale": 0.325
     },
     {
         "name": "Finneas",
-        "sprite": "sprites/enemy/beast/smallmammals/rabbit.atlas",
+        "sprite": "sprites/enemy/remake/finneas.atlas",
         "deck": [
             "decks/legends/finneas.dck"
         ],
@@ -94231,7 +94231,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.7222
+        "scale": 0.4194
     },
     {
         "name": "Hugs",
@@ -94796,7 +94796,7 @@
             "decks/legends/khorvath_and_sylvia.dck"
         ],
         "ai": "",
-        "scale": 0.3309,
+        "scale": 0.3412,
         "flying": true,
         "speed": 44,
         "life": 20,
@@ -97319,7 +97319,7 @@
     },
     {
         "name": "Scriv",
-        "sprite": "sprites/enemy/beast/bird/owl.atlas",
+        "sprite": "sprites/enemy/remake/scriv.atlas",
         "deck": [
             "decks/legends/scriv.dck"
         ],
@@ -97384,7 +97384,7 @@
         "tier": "Rare",
         "difficulty": 2,
         "flying": true,
-        "scale": 1.0317
+        "scale": 0.314
     },
     {
         "name": "Arnyn",
@@ -97718,13 +97718,13 @@
     },
     {
         "name": "Abigale",
-        "sprite": "sprites/enemy/beast/bird/owl.atlas",
+        "sprite": "sprites/enemy/remake/abigale.atlas",
         "deck": [
             "decks/legends/abigale.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0317,
+        "scale": 0.3495,
         "life": 30,
         "rewards": [
             {
@@ -121515,7 +121515,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.3675,
+        "scale": 0.3986,
         "life": 40,
         "rewards": [
             {
@@ -121751,7 +121751,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.3675,
+        "scale": 0.392,
         "life": 40,
         "rewards": [
             {
@@ -121987,7 +121987,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.3467,
+        "scale": 0.3581,
         "life": 40,
         "rewards": [
             {
@@ -122223,7 +122223,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 0.3939,
+        "scale": 0.4262,
         "life": 40,
         "rewards": [
             {
@@ -124537,7 +124537,7 @@
     },
     {
         "name": "Kwain",
-        "sprite": "sprites/enemy/beast/smallmammals/rabbit.atlas",
+        "sprite": "sprites/enemy/remake/kwain.atlas",
         "deck": [
             "decks/legends/kwain.dck"
         ],
@@ -124601,7 +124601,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "tier": "Rare",
-        "scale": 0.7222
+        "scale": 0.325
     },
     {
         "name": "Phelia",
@@ -124673,7 +124673,7 @@
     },
     {
         "name": "Preston",
-        "sprite": "sprites/enemy/beast/smallmammals/rabbit.atlas",
+        "sprite": "sprites/enemy/remake/preston.atlas",
         "deck": [
             "decks/legends/preston.dck"
         ],
@@ -124737,7 +124737,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "tier": "Uncommon",
-        "scale": 0.7222
+        "scale": 0.4062
     },
     {
         "name": "Thurid",

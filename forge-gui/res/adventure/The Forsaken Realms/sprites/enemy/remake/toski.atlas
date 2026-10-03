@@ -1,0 +1,224 @@
+toski.png
+size: 616,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 54
+Idle
+  xy: 56, 64
+  size: 56, 54
+Idle
+  xy: 112, 64
+  size: 56, 54
+Idle
+  xy: 168, 64
+  size: 56, 54
+Idle
+  xy: 224, 64
+  size: 56, 54
+Idle
+  xy: 280, 64
+  size: 56, 54
+Idle
+  xy: 336, 64
+  size: 56, 54
+Idle
+  xy: 392, 64
+  size: 56, 54
+Idle
+  xy: 448, 64
+  size: 56, 54
+Idle
+  xy: 504, 64
+  size: 56, 54
+Walk
+  xy: 0, 118
+  size: 56, 54
+Walk
+  xy: 56, 118
+  size: 56, 54
+Walk
+  xy: 112, 118
+  size: 56, 54
+Walk
+  xy: 168, 118
+  size: 56, 54
+Attack
+  xy: 0, 172
+  size: 56, 54
+Attack
+  xy: 56, 172
+  size: 56, 54
+Attack
+  xy: 112, 172
+  size: 56, 54
+Attack
+  xy: 168, 172
+  size: 56, 54
+Attack
+  xy: 224, 172
+  size: 56, 54
+Attack
+  xy: 280, 172
+  size: 56, 54
+Attack
+  xy: 336, 172
+  size: 56, 54
+Attack
+  xy: 392, 172
+  size: 56, 54
+Attack
+  xy: 448, 172
+  size: 56, 54
+Hit
+  xy: 0, 226
+  size: 56, 54
+Hit
+  xy: 56, 226
+  size: 56, 54
+Hit
+  xy: 112, 226
+  size: 56, 54
+Hit
+  xy: 168, 226
+  size: 56, 54
+Death
+  xy: 0, 280
+  size: 56, 54
+Death
+  xy: 56, 280
+  size: 56, 54
+Death
+  xy: 112, 280
+  size: 56, 54
+Death
+  xy: 168, 280
+  size: 56, 54
+Death
+  xy: 224, 280
+  size: 56, 54
+Death
+  xy: 280, 280
+  size: 56, 54
+Death
+  xy: 336, 280
+  size: 56, 54
+Death
+  xy: 392, 280
+  size: 56, 54
+Death
+  xy: 448, 280
+  size: 56, 54
+Death
+  xy: 504, 280
+  size: 56, 54
+Death
+  xy: 560, 280
+  size: 56, 54
+Wake
+  xy: 0, 334
+  size: 56, 54
+Wake
+  xy: 56, 334
+  size: 56, 54
+Wake
+  xy: 112, 334
+  size: 56, 54
+Wake
+  xy: 168, 334
+  size: 56, 54
+Wake
+  xy: 224, 334
+  size: 56, 54
+Wake
+  xy: 280, 334
+  size: 56, 54
+IdleUp
+  xy: 0, 388
+  size: 56, 54
+IdleUp
+  xy: 56, 388
+  size: 56, 54
+IdleUp
+  xy: 112, 388
+  size: 56, 54
+IdleUp
+  xy: 168, 388
+  size: 56, 54
+IdleUp
+  xy: 224, 388
+  size: 56, 54
+IdleUp
+  xy: 280, 388
+  size: 56, 54
+IdleUp
+  xy: 336, 388
+  size: 56, 54
+IdleUp
+  xy: 392, 388
+  size: 56, 54
+IdleUp
+  xy: 448, 388
+  size: 56, 54
+IdleUp
+  xy: 504, 388
+  size: 56, 54
+IdleDown
+  xy: 0, 442
+  size: 56, 54
+IdleDown
+  xy: 56, 442
+  size: 56, 54
+IdleDown
+  xy: 112, 442
+  size: 56, 54
+IdleDown
+  xy: 168, 442
+  size: 56, 54
+IdleDown
+  xy: 224, 442
+  size: 56, 54
+IdleDown
+  xy: 280, 442
+  size: 56, 54
+IdleDown
+  xy: 336, 442
+  size: 56, 54
+IdleDown
+  xy: 392, 442
+  size: 56, 54
+IdleDown
+  xy: 448, 442
+  size: 56, 54
+IdleDown
+  xy: 504, 442
+  size: 56, 54
+WalkUp
+  xy: 0, 496
+  size: 56, 54
+WalkUp
+  xy: 56, 496
+  size: 56, 54
+WalkUp
+  xy: 112, 496
+  size: 56, 54
+WalkUp
+  xy: 168, 496
+  size: 56, 54
+WalkDown
+  xy: 0, 550
+  size: 56, 54
+WalkDown
+  xy: 56, 550
+  size: 56, 54
+WalkDown
+  xy: 112, 550
+  size: 56, 54
+WalkDown
+  xy: 168, 550
+  size: 56, 54

@@ -1,5 +1,5 @@
 the_scarab_god.png
-size: 924,334
+size: 924,514
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -143,4 +143,88 @@ Wake
   size: 66, 45
 Wake
   xy: 396, 289
+  size: 66, 45
+IdleUp
+  xy: 0, 334
+  size: 66, 45
+IdleUp
+  xy: 66, 334
+  size: 66, 45
+IdleUp
+  xy: 132, 334
+  size: 66, 45
+IdleUp
+  xy: 198, 334
+  size: 66, 45
+IdleUp
+  xy: 264, 334
+  size: 66, 45
+IdleUp
+  xy: 330, 334
+  size: 66, 45
+IdleUp
+  xy: 396, 334
+  size: 66, 45
+IdleUp
+  xy: 462, 334
+  size: 66, 45
+IdleUp
+  xy: 528, 334
+  size: 66, 45
+IdleUp
+  xy: 594, 334
+  size: 66, 45
+IdleDown
+  xy: 0, 379
+  size: 66, 45
+IdleDown
+  xy: 66, 379
+  size: 66, 45
+IdleDown
+  xy: 132, 379
+  size: 66, 45
+IdleDown
+  xy: 198, 379
+  size: 66, 45
+IdleDown
+  xy: 264, 379
+  size: 66, 45
+IdleDown
+  xy: 330, 379
+  size: 66, 45
+IdleDown
+  xy: 396, 379
+  size: 66, 45
+IdleDown
+  xy: 462, 379
+  size: 66, 45
+IdleDown
+  xy: 528, 379
+  size: 66, 45
+IdleDown
+  xy: 594, 379
+  size: 66, 45
+WalkUp
+  xy: 0, 424
+  size: 66, 45
+WalkUp
+  xy: 66, 424
+  size: 66, 45
+WalkUp
+  xy: 132, 424
+  size: 66, 45
+WalkUp
+  xy: 198, 424
+  size: 66, 45
+WalkDown
+  xy: 0, 469
+  size: 66, 45
+WalkDown
+  xy: 66, 469
+  size: 66, 45
+WalkDown
+  xy: 132, 469
+  size: 66, 45
+WalkDown
+  xy: 198, 469
   size: 66, 45

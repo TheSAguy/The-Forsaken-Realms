@@ -1,0 +1,233 @@
+chatterfang.png
+size: 840,754
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 69
+Idle
+  xy: 70, 64
+  size: 70, 69
+Idle
+  xy: 140, 64
+  size: 70, 69
+Idle
+  xy: 210, 64
+  size: 70, 69
+Idle
+  xy: 280, 64
+  size: 70, 69
+Idle
+  xy: 350, 64
+  size: 70, 69
+Idle
+  xy: 420, 64
+  size: 70, 69
+Idle
+  xy: 490, 64
+  size: 70, 69
+Idle
+  xy: 560, 64
+  size: 70, 69
+Idle
+  xy: 630, 64
+  size: 70, 69
+Walk
+  xy: 0, 133
+  size: 70, 69
+Walk
+  xy: 70, 133
+  size: 70, 69
+Walk
+  xy: 140, 133
+  size: 70, 69
+Walk
+  xy: 210, 133
+  size: 70, 69
+Attack
+  xy: 0, 202
+  size: 70, 69
+Attack
+  xy: 70, 202
+  size: 70, 69
+Attack
+  xy: 140, 202
+  size: 70, 69
+Attack
+  xy: 210, 202
+  size: 70, 69
+Attack
+  xy: 280, 202
+  size: 70, 69
+Attack
+  xy: 350, 202
+  size: 70, 69
+Attack
+  xy: 420, 202
+  size: 70, 69
+Attack
+  xy: 490, 202
+  size: 70, 69
+Attack
+  xy: 560, 202
+  size: 70, 69
+Attack
+  xy: 630, 202
+  size: 70, 69
+Hit
+  xy: 0, 271
+  size: 70, 69
+Hit
+  xy: 70, 271
+  size: 70, 69
+Hit
+  xy: 140, 271
+  size: 70, 69
+Hit
+  xy: 210, 271
+  size: 70, 69
+Hit
+  xy: 280, 271
+  size: 70, 69
+Death
+  xy: 0, 340
+  size: 70, 69
+Death
+  xy: 70, 340
+  size: 70, 69
+Death
+  xy: 140, 340
+  size: 70, 69
+Death
+  xy: 210, 340
+  size: 70, 69
+Death
+  xy: 280, 340
+  size: 70, 69
+Death
+  xy: 350, 340
+  size: 70, 69
+Death
+  xy: 420, 340
+  size: 70, 69
+Death
+  xy: 490, 340
+  size: 70, 69
+Death
+  xy: 560, 340
+  size: 70, 69
+Death
+  xy: 630, 340
+  size: 70, 69
+Death
+  xy: 700, 340
+  size: 70, 69
+Death
+  xy: 770, 340
+  size: 70, 69
+Wake
+  xy: 0, 409
+  size: 70, 69
+Wake
+  xy: 70, 409
+  size: 70, 69
+Wake
+  xy: 140, 409
+  size: 70, 69
+Wake
+  xy: 210, 409
+  size: 70, 69
+Wake
+  xy: 280, 409
+  size: 70, 69
+Wake
+  xy: 350, 409
+  size: 70, 69
+IdleUp
+  xy: 0, 478
+  size: 70, 69
+IdleUp
+  xy: 70, 478
+  size: 70, 69
+IdleUp
+  xy: 140, 478
+  size: 70, 69
+IdleUp
+  xy: 210, 478
+  size: 70, 69
+IdleUp
+  xy: 280, 478
+  size: 70, 69
+IdleUp
+  xy: 350, 478
+  size: 70, 69
+IdleUp
+  xy: 420, 478
+  size: 70, 69
+IdleUp
+  xy: 490, 478
+  size: 70, 69
+IdleUp
+  xy: 560, 478
+  size: 70, 69
+IdleUp
+  xy: 630, 478
+  size: 70, 69
+IdleDown
+  xy: 0, 547
+  size: 70, 69
+IdleDown
+  xy: 70, 547
+  size: 70, 69
+IdleDown
+  xy: 140, 547
+  size: 70, 69
+IdleDown
+  xy: 210, 547
+  size: 70, 69
+IdleDown
+  xy: 280, 547
+  size: 70, 69
+IdleDown
+  xy: 350, 547
+  size: 70, 69
+IdleDown
+  xy: 420, 547
+  size: 70, 69
+IdleDown
+  xy: 490, 547
+  size: 70, 69
+IdleDown
+  xy: 560, 547
+  size: 70, 69
+IdleDown
+  xy: 630, 547
+  size: 70, 69
+WalkUp
+  xy: 0, 616
+  size: 70, 69
+WalkUp
+  xy: 70, 616
+  size: 70, 69
+WalkUp
+  xy: 140, 616
+  size: 70, 69
+WalkUp
+  xy: 210, 616
+  size: 70, 69
+WalkDown
+  xy: 0, 685
+  size: 70, 69
+WalkDown
+  xy: 70, 685
+  size: 70, 69
+WalkDown
+  xy: 140, 685
+  size: 70, 69
+WalkDown
+  xy: 210, 685
+  size: 70, 69

@@ -1,0 +1,218 @@
+vega.png
+size: 1210,784
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 110, 72
+Idle
+  xy: 110, 64
+  size: 110, 72
+Idle
+  xy: 220, 64
+  size: 110, 72
+Idle
+  xy: 330, 64
+  size: 110, 72
+Idle
+  xy: 440, 64
+  size: 110, 72
+Idle
+  xy: 550, 64
+  size: 110, 72
+Idle
+  xy: 660, 64
+  size: 110, 72
+Idle
+  xy: 770, 64
+  size: 110, 72
+Idle
+  xy: 880, 64
+  size: 110, 72
+Idle
+  xy: 990, 64
+  size: 110, 72
+Walk
+  xy: 0, 136
+  size: 110, 72
+Walk
+  xy: 110, 136
+  size: 110, 72
+Walk
+  xy: 220, 136
+  size: 110, 72
+Walk
+  xy: 330, 136
+  size: 110, 72
+Attack
+  xy: 0, 208
+  size: 110, 72
+Attack
+  xy: 110, 208
+  size: 110, 72
+Attack
+  xy: 220, 208
+  size: 110, 72
+Attack
+  xy: 330, 208
+  size: 110, 72
+Attack
+  xy: 440, 208
+  size: 110, 72
+Attack
+  xy: 550, 208
+  size: 110, 72
+Attack
+  xy: 660, 208
+  size: 110, 72
+Hit
+  xy: 0, 280
+  size: 110, 72
+Hit
+  xy: 110, 280
+  size: 110, 72
+Hit
+  xy: 220, 280
+  size: 110, 72
+Hit
+  xy: 330, 280
+  size: 110, 72
+Death
+  xy: 0, 352
+  size: 110, 72
+Death
+  xy: 110, 352
+  size: 110, 72
+Death
+  xy: 220, 352
+  size: 110, 72
+Death
+  xy: 330, 352
+  size: 110, 72
+Death
+  xy: 440, 352
+  size: 110, 72
+Death
+  xy: 550, 352
+  size: 110, 72
+Death
+  xy: 660, 352
+  size: 110, 72
+Death
+  xy: 770, 352
+  size: 110, 72
+Death
+  xy: 880, 352
+  size: 110, 72
+Death
+  xy: 990, 352
+  size: 110, 72
+Death
+  xy: 1100, 352
+  size: 110, 72
+Wake
+  xy: 0, 424
+  size: 110, 72
+Wake
+  xy: 110, 424
+  size: 110, 72
+Wake
+  xy: 220, 424
+  size: 110, 72
+Wake
+  xy: 330, 424
+  size: 110, 72
+Wake
+  xy: 440, 424
+  size: 110, 72
+Wake
+  xy: 550, 424
+  size: 110, 72
+IdleUp
+  xy: 0, 496
+  size: 110, 72
+IdleUp
+  xy: 110, 496
+  size: 110, 72
+IdleUp
+  xy: 220, 496
+  size: 110, 72
+IdleUp
+  xy: 330, 496
+  size: 110, 72
+IdleUp
+  xy: 440, 496
+  size: 110, 72
+IdleUp
+  xy: 550, 496
+  size: 110, 72
+IdleUp
+  xy: 660, 496
+  size: 110, 72
+IdleUp
+  xy: 770, 496
+  size: 110, 72
+IdleUp
+  xy: 880, 496
+  size: 110, 72
+IdleUp
+  xy: 990, 496
+  size: 110, 72
+IdleDown
+  xy: 0, 568
+  size: 110, 72
+IdleDown
+  xy: 110, 568
+  size: 110, 72
+IdleDown
+  xy: 220, 568
+  size: 110, 72
+IdleDown
+  xy: 330, 568
+  size: 110, 72
+IdleDown
+  xy: 440, 568
+  size: 110, 72
+IdleDown
+  xy: 550, 568
+  size: 110, 72
+IdleDown
+  xy: 660, 568
+  size: 110, 72
+IdleDown
+  xy: 770, 568
+  size: 110, 72
+IdleDown
+  xy: 880, 568
+  size: 110, 72
+IdleDown
+  xy: 990, 568
+  size: 110, 72
+WalkUp
+  xy: 0, 640
+  size: 110, 72
+WalkUp
+  xy: 110, 640
+  size: 110, 72
+WalkUp
+  xy: 220, 640
+  size: 110, 72
+WalkUp
+  xy: 330, 640
+  size: 110, 72
+WalkDown
+  xy: 0, 712
+  size: 110, 72
+WalkDown
+  xy: 110, 712
+  size: 110, 72
+WalkDown
+  xy: 220, 712
+  size: 110, 72
+WalkDown
+  xy: 330, 712
+  size: 110, 72

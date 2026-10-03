@@ -1,5 +1,5 @@
 codie.png
-size: 728,466
+size: 728,734
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -152,4 +152,88 @@ Wake
   size: 56, 67
 Wake
   xy: 336, 399
+  size: 56, 67
+IdleUp
+  xy: 0, 466
+  size: 56, 67
+IdleUp
+  xy: 56, 466
+  size: 56, 67
+IdleUp
+  xy: 112, 466
+  size: 56, 67
+IdleUp
+  xy: 168, 466
+  size: 56, 67
+IdleUp
+  xy: 224, 466
+  size: 56, 67
+IdleUp
+  xy: 280, 466
+  size: 56, 67
+IdleUp
+  xy: 336, 466
+  size: 56, 67
+IdleUp
+  xy: 392, 466
+  size: 56, 67
+IdleUp
+  xy: 448, 466
+  size: 56, 67
+IdleUp
+  xy: 504, 466
+  size: 56, 67
+IdleDown
+  xy: 0, 533
+  size: 56, 67
+IdleDown
+  xy: 56, 533
+  size: 56, 67
+IdleDown
+  xy: 112, 533
+  size: 56, 67
+IdleDown
+  xy: 168, 533
+  size: 56, 67
+IdleDown
+  xy: 224, 533
+  size: 56, 67
+IdleDown
+  xy: 280, 533
+  size: 56, 67
+IdleDown
+  xy: 336, 533
+  size: 56, 67
+IdleDown
+  xy: 392, 533
+  size: 56, 67
+IdleDown
+  xy: 448, 533
+  size: 56, 67
+IdleDown
+  xy: 504, 533
+  size: 56, 67
+WalkUp
+  xy: 0, 600
+  size: 56, 67
+WalkUp
+  xy: 56, 600
+  size: 56, 67
+WalkUp
+  xy: 112, 600
+  size: 56, 67
+WalkUp
+  xy: 168, 600
+  size: 56, 67
+WalkDown
+  xy: 0, 667
+  size: 56, 67
+WalkDown
+  xy: 56, 667
+  size: 56, 67
+WalkDown
+  xy: 112, 667
+  size: 56, 67
+WalkDown
+  xy: 168, 667
   size: 56, 67

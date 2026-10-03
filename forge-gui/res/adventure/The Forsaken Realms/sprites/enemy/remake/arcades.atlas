@@ -1,5 +1,5 @@
 arcades.png
-size: 832,316
+size: 832,484
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -140,4 +140,88 @@ Wake
   size: 64, 42
 Wake
   xy: 320, 274
+  size: 64, 42
+IdleUp
+  xy: 0, 316
+  size: 64, 42
+IdleUp
+  xy: 64, 316
+  size: 64, 42
+IdleUp
+  xy: 128, 316
+  size: 64, 42
+IdleUp
+  xy: 192, 316
+  size: 64, 42
+IdleUp
+  xy: 256, 316
+  size: 64, 42
+IdleUp
+  xy: 320, 316
+  size: 64, 42
+IdleUp
+  xy: 384, 316
+  size: 64, 42
+IdleUp
+  xy: 448, 316
+  size: 64, 42
+IdleUp
+  xy: 512, 316
+  size: 64, 42
+IdleUp
+  xy: 576, 316
+  size: 64, 42
+IdleDown
+  xy: 0, 358
+  size: 64, 42
+IdleDown
+  xy: 64, 358
+  size: 64, 42
+IdleDown
+  xy: 128, 358
+  size: 64, 42
+IdleDown
+  xy: 192, 358
+  size: 64, 42
+IdleDown
+  xy: 256, 358
+  size: 64, 42
+IdleDown
+  xy: 320, 358
+  size: 64, 42
+IdleDown
+  xy: 384, 358
+  size: 64, 42
+IdleDown
+  xy: 448, 358
+  size: 64, 42
+IdleDown
+  xy: 512, 358
+  size: 64, 42
+IdleDown
+  xy: 576, 358
+  size: 64, 42
+WalkUp
+  xy: 0, 400
+  size: 64, 42
+WalkUp
+  xy: 64, 400
+  size: 64, 42
+WalkUp
+  xy: 128, 400
+  size: 64, 42
+WalkUp
+  xy: 192, 400
+  size: 64, 42
+WalkDown
+  xy: 0, 442
+  size: 64, 42
+WalkDown
+  xy: 64, 442
+  size: 64, 42
+WalkDown
+  xy: 128, 442
+  size: 64, 42
+WalkDown
+  xy: 192, 442
   size: 64, 42

@@ -1,5 +1,5 @@
 kairi.png
-size: 984,370
+size: 984,584
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,139 +8,223 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 82, 51
+  size: 82, 52
 Idle
   xy: 82, 64
-  size: 82, 51
+  size: 82, 52
 Idle
   xy: 164, 64
-  size: 82, 51
+  size: 82, 52
 Idle
   xy: 246, 64
-  size: 82, 51
+  size: 82, 52
 Idle
   xy: 328, 64
-  size: 82, 51
+  size: 82, 52
 Idle
   xy: 410, 64
-  size: 82, 51
+  size: 82, 52
 Idle
   xy: 492, 64
-  size: 82, 51
+  size: 82, 52
 Idle
   xy: 574, 64
-  size: 82, 51
+  size: 82, 52
 Idle
   xy: 656, 64
-  size: 82, 51
+  size: 82, 52
 Idle
   xy: 738, 64
-  size: 82, 51
+  size: 82, 52
 Walk
-  xy: 0, 115
-  size: 82, 51
+  xy: 0, 116
+  size: 82, 52
 Walk
-  xy: 82, 115
-  size: 82, 51
+  xy: 82, 116
+  size: 82, 52
 Walk
-  xy: 164, 115
-  size: 82, 51
+  xy: 164, 116
+  size: 82, 52
 Walk
-  xy: 246, 115
-  size: 82, 51
+  xy: 246, 116
+  size: 82, 52
 Attack
-  xy: 0, 166
-  size: 82, 51
+  xy: 0, 168
+  size: 82, 52
 Attack
-  xy: 82, 166
-  size: 82, 51
+  xy: 82, 168
+  size: 82, 52
 Attack
-  xy: 164, 166
-  size: 82, 51
+  xy: 164, 168
+  size: 82, 52
 Attack
-  xy: 246, 166
-  size: 82, 51
+  xy: 246, 168
+  size: 82, 52
 Attack
-  xy: 328, 166
-  size: 82, 51
+  xy: 328, 168
+  size: 82, 52
 Attack
-  xy: 410, 166
-  size: 82, 51
+  xy: 410, 168
+  size: 82, 52
 Attack
-  xy: 492, 166
-  size: 82, 51
+  xy: 492, 168
+  size: 82, 52
 Attack
-  xy: 574, 166
-  size: 82, 51
+  xy: 574, 168
+  size: 82, 52
 Hit
-  xy: 0, 217
-  size: 82, 51
+  xy: 0, 220
+  size: 82, 52
 Hit
-  xy: 82, 217
-  size: 82, 51
+  xy: 82, 220
+  size: 82, 52
 Hit
-  xy: 164, 217
-  size: 82, 51
+  xy: 164, 220
+  size: 82, 52
 Hit
-  xy: 246, 217
-  size: 82, 51
+  xy: 246, 220
+  size: 82, 52
 Hit
-  xy: 328, 217
-  size: 82, 51
+  xy: 328, 220
+  size: 82, 52
 Death
-  xy: 0, 268
-  size: 82, 51
+  xy: 0, 272
+  size: 82, 52
 Death
-  xy: 82, 268
-  size: 82, 51
+  xy: 82, 272
+  size: 82, 52
 Death
-  xy: 164, 268
-  size: 82, 51
+  xy: 164, 272
+  size: 82, 52
 Death
-  xy: 246, 268
-  size: 82, 51
+  xy: 246, 272
+  size: 82, 52
 Death
-  xy: 328, 268
-  size: 82, 51
+  xy: 328, 272
+  size: 82, 52
 Death
-  xy: 410, 268
-  size: 82, 51
+  xy: 410, 272
+  size: 82, 52
 Death
-  xy: 492, 268
-  size: 82, 51
+  xy: 492, 272
+  size: 82, 52
 Death
-  xy: 574, 268
-  size: 82, 51
+  xy: 574, 272
+  size: 82, 52
 Death
-  xy: 656, 268
-  size: 82, 51
+  xy: 656, 272
+  size: 82, 52
 Death
-  xy: 738, 268
-  size: 82, 51
+  xy: 738, 272
+  size: 82, 52
 Death
-  xy: 820, 268
-  size: 82, 51
+  xy: 820, 272
+  size: 82, 52
 Death
-  xy: 902, 268
-  size: 82, 51
+  xy: 902, 272
+  size: 82, 52
 Wake
-  xy: 0, 319
-  size: 82, 51
+  xy: 0, 324
+  size: 82, 52
 Wake
-  xy: 82, 319
-  size: 82, 51
+  xy: 82, 324
+  size: 82, 52
 Wake
-  xy: 164, 319
-  size: 82, 51
+  xy: 164, 324
+  size: 82, 52
 Wake
-  xy: 246, 319
-  size: 82, 51
+  xy: 246, 324
+  size: 82, 52
 Wake
-  xy: 328, 319
-  size: 82, 51
+  xy: 328, 324
+  size: 82, 52
 Wake
-  xy: 410, 319
-  size: 82, 51
+  xy: 410, 324
+  size: 82, 52
 Wake
-  xy: 492, 319
-  size: 82, 51
+  xy: 492, 324
+  size: 82, 52
+IdleUp
+  xy: 0, 376
+  size: 82, 52
+IdleUp
+  xy: 82, 376
+  size: 82, 52
+IdleUp
+  xy: 164, 376
+  size: 82, 52
+IdleUp
+  xy: 246, 376
+  size: 82, 52
+IdleUp
+  xy: 328, 376
+  size: 82, 52
+IdleUp
+  xy: 410, 376
+  size: 82, 52
+IdleUp
+  xy: 492, 376
+  size: 82, 52
+IdleUp
+  xy: 574, 376
+  size: 82, 52
+IdleUp
+  xy: 656, 376
+  size: 82, 52
+IdleUp
+  xy: 738, 376
+  size: 82, 52
+IdleDown
+  xy: 0, 428
+  size: 82, 52
+IdleDown
+  xy: 82, 428
+  size: 82, 52
+IdleDown
+  xy: 164, 428
+  size: 82, 52
+IdleDown
+  xy: 246, 428
+  size: 82, 52
+IdleDown
+  xy: 328, 428
+  size: 82, 52
+IdleDown
+  xy: 410, 428
+  size: 82, 52
+IdleDown
+  xy: 492, 428
+  size: 82, 52
+IdleDown
+  xy: 574, 428
+  size: 82, 52
+IdleDown
+  xy: 656, 428
+  size: 82, 52
+IdleDown
+  xy: 738, 428
+  size: 82, 52
+WalkUp
+  xy: 0, 480
+  size: 82, 52
+WalkUp
+  xy: 82, 480
+  size: 82, 52
+WalkUp
+  xy: 164, 480
+  size: 82, 52
+WalkUp
+  xy: 246, 480
+  size: 82, 52
+WalkDown
+  xy: 0, 532
+  size: 82, 52
+WalkDown
+  xy: 82, 532
+  size: 82, 52
+WalkDown
+  xy: 164, 532
+  size: 82, 52
+WalkDown
+  xy: 246, 532
+  size: 82, 52

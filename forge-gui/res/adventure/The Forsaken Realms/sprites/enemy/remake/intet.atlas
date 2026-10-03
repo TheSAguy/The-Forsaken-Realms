@@ -1,5 +1,5 @@
 intet.png
-size: 1204,418
+size: 1204,654
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -152,4 +152,88 @@ Wake
   size: 86, 59
 Wake
   xy: 516, 359
+  size: 86, 59
+IdleUp
+  xy: 0, 418
+  size: 86, 59
+IdleUp
+  xy: 86, 418
+  size: 86, 59
+IdleUp
+  xy: 172, 418
+  size: 86, 59
+IdleUp
+  xy: 258, 418
+  size: 86, 59
+IdleUp
+  xy: 344, 418
+  size: 86, 59
+IdleUp
+  xy: 430, 418
+  size: 86, 59
+IdleUp
+  xy: 516, 418
+  size: 86, 59
+IdleUp
+  xy: 602, 418
+  size: 86, 59
+IdleUp
+  xy: 688, 418
+  size: 86, 59
+IdleUp
+  xy: 774, 418
+  size: 86, 59
+IdleDown
+  xy: 0, 477
+  size: 86, 59
+IdleDown
+  xy: 86, 477
+  size: 86, 59
+IdleDown
+  xy: 172, 477
+  size: 86, 59
+IdleDown
+  xy: 258, 477
+  size: 86, 59
+IdleDown
+  xy: 344, 477
+  size: 86, 59
+IdleDown
+  xy: 430, 477
+  size: 86, 59
+IdleDown
+  xy: 516, 477
+  size: 86, 59
+IdleDown
+  xy: 602, 477
+  size: 86, 59
+IdleDown
+  xy: 688, 477
+  size: 86, 59
+IdleDown
+  xy: 774, 477
+  size: 86, 59
+WalkUp
+  xy: 0, 536
+  size: 86, 59
+WalkUp
+  xy: 86, 536
+  size: 86, 59
+WalkUp
+  xy: 172, 536
+  size: 86, 59
+WalkUp
+  xy: 258, 536
+  size: 86, 59
+WalkDown
+  xy: 0, 595
+  size: 86, 59
+WalkDown
+  xy: 86, 595
+  size: 86, 59
+WalkDown
+  xy: 172, 595
+  size: 86, 59
+WalkDown
+  xy: 258, 595
   size: 86, 59

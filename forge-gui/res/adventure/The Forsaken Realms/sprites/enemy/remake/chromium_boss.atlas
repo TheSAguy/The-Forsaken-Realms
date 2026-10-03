@@ -1,5 +1,5 @@
 chromium_boss.png
-size: 2108,1018
+size: 1792,1414
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,172 +8,253 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 124, 159
+  size: 112, 135
 Idle
-  xy: 124, 64
-  size: 124, 159
+  xy: 112, 64
+  size: 112, 135
 Idle
-  xy: 248, 64
-  size: 124, 159
+  xy: 224, 64
+  size: 112, 135
 Idle
-  xy: 372, 64
-  size: 124, 159
+  xy: 336, 64
+  size: 112, 135
 Idle
-  xy: 496, 64
-  size: 124, 159
+  xy: 448, 64
+  size: 112, 135
 Idle
-  xy: 620, 64
-  size: 124, 159
+  xy: 560, 64
+  size: 112, 135
 Idle
-  xy: 744, 64
-  size: 124, 159
+  xy: 672, 64
+  size: 112, 135
 Idle
-  xy: 868, 64
-  size: 124, 159
+  xy: 784, 64
+  size: 112, 135
 Idle
-  xy: 992, 64
-  size: 124, 159
+  xy: 896, 64
+  size: 112, 135
 Idle
-  xy: 1116, 64
-  size: 124, 159
+  xy: 1008, 64
+  size: 112, 135
 Walk
-  xy: 0, 223
-  size: 124, 159
+  xy: 0, 199
+  size: 112, 135
 Walk
-  xy: 124, 223
-  size: 124, 159
+  xy: 112, 199
+  size: 112, 135
 Walk
-  xy: 248, 223
-  size: 124, 159
+  xy: 224, 199
+  size: 112, 135
 Walk
-  xy: 372, 223
-  size: 124, 159
+  xy: 336, 199
+  size: 112, 135
 Attack
-  xy: 0, 382
-  size: 124, 159
+  xy: 0, 334
+  size: 112, 135
 Attack
-  xy: 124, 382
-  size: 124, 159
+  xy: 112, 334
+  size: 112, 135
 Attack
-  xy: 248, 382
-  size: 124, 159
+  xy: 224, 334
+  size: 112, 135
 Attack
-  xy: 372, 382
-  size: 124, 159
+  xy: 336, 334
+  size: 112, 135
 Attack
-  xy: 496, 382
-  size: 124, 159
+  xy: 448, 334
+  size: 112, 135
 Attack
-  xy: 620, 382
-  size: 124, 159
+  xy: 560, 334
+  size: 112, 135
 Attack
-  xy: 744, 382
-  size: 124, 159
+  xy: 672, 334
+  size: 112, 135
 Attack
-  xy: 868, 382
-  size: 124, 159
+  xy: 784, 334
+  size: 112, 135
 Attack
-  xy: 992, 382
-  size: 124, 159
+  xy: 896, 334
+  size: 112, 135
 Attack
-  xy: 1116, 382
-  size: 124, 159
+  xy: 1008, 334
+  size: 112, 135
 Hit
-  xy: 0, 541
-  size: 124, 159
+  xy: 0, 469
+  size: 112, 135
 Hit
-  xy: 124, 541
-  size: 124, 159
+  xy: 112, 469
+  size: 112, 135
 Hit
-  xy: 248, 541
-  size: 124, 159
+  xy: 224, 469
+  size: 112, 135
 Hit
-  xy: 372, 541
-  size: 124, 159
+  xy: 336, 469
+  size: 112, 135
 Hit
-  xy: 496, 541
-  size: 124, 159
+  xy: 448, 469
+  size: 112, 135
 Hit
-  xy: 620, 541
-  size: 124, 159
+  xy: 560, 469
+  size: 112, 135
 Hit
-  xy: 744, 541
-  size: 124, 159
+  xy: 672, 469
+  size: 112, 135
 Death
-  xy: 0, 700
-  size: 124, 159
+  xy: 0, 604
+  size: 112, 135
 Death
-  xy: 124, 700
-  size: 124, 159
+  xy: 112, 604
+  size: 112, 135
 Death
-  xy: 248, 700
-  size: 124, 159
+  xy: 224, 604
+  size: 112, 135
 Death
-  xy: 372, 700
-  size: 124, 159
+  xy: 336, 604
+  size: 112, 135
 Death
-  xy: 496, 700
-  size: 124, 159
+  xy: 448, 604
+  size: 112, 135
 Death
-  xy: 620, 700
-  size: 124, 159
+  xy: 560, 604
+  size: 112, 135
 Death
-  xy: 744, 700
-  size: 124, 159
+  xy: 672, 604
+  size: 112, 135
 Death
-  xy: 868, 700
-  size: 124, 159
+  xy: 784, 604
+  size: 112, 135
 Death
-  xy: 992, 700
-  size: 124, 159
+  xy: 896, 604
+  size: 112, 135
 Death
-  xy: 1116, 700
-  size: 124, 159
+  xy: 1008, 604
+  size: 112, 135
 Death
-  xy: 1240, 700
-  size: 124, 159
+  xy: 1120, 604
+  size: 112, 135
 Death
-  xy: 1364, 700
-  size: 124, 159
+  xy: 1232, 604
+  size: 112, 135
 Death
-  xy: 1488, 700
-  size: 124, 159
+  xy: 1344, 604
+  size: 112, 135
 Death
-  xy: 1612, 700
-  size: 124, 159
+  xy: 1456, 604
+  size: 112, 135
 Death
-  xy: 1736, 700
-  size: 124, 159
+  xy: 1568, 604
+  size: 112, 135
 Death
-  xy: 1860, 700
-  size: 124, 159
-Death
-  xy: 1984, 700
-  size: 124, 159
+  xy: 1680, 604
+  size: 112, 135
 Wake
-  xy: 0, 859
-  size: 124, 159
+  xy: 0, 739
+  size: 112, 135
 Wake
-  xy: 124, 859
-  size: 124, 159
+  xy: 112, 739
+  size: 112, 135
 Wake
-  xy: 248, 859
-  size: 124, 159
+  xy: 224, 739
+  size: 112, 135
 Wake
-  xy: 372, 859
-  size: 124, 159
+  xy: 336, 739
+  size: 112, 135
 Wake
-  xy: 496, 859
-  size: 124, 159
+  xy: 448, 739
+  size: 112, 135
 Wake
-  xy: 620, 859
-  size: 124, 159
+  xy: 560, 739
+  size: 112, 135
 Wake
-  xy: 744, 859
-  size: 124, 159
+  xy: 672, 739
+  size: 112, 135
 Wake
-  xy: 868, 859
-  size: 124, 159
+  xy: 784, 739
+  size: 112, 135
 Wake
-  xy: 992, 859
-  size: 124, 159
+  xy: 896, 739
+  size: 112, 135
+IdleUp
+  xy: 0, 874
+  size: 112, 135
+IdleUp
+  xy: 112, 874
+  size: 112, 135
+IdleUp
+  xy: 224, 874
+  size: 112, 135
+IdleUp
+  xy: 336, 874
+  size: 112, 135
+IdleUp
+  xy: 448, 874
+  size: 112, 135
+IdleUp
+  xy: 560, 874
+  size: 112, 135
+IdleUp
+  xy: 672, 874
+  size: 112, 135
+IdleUp
+  xy: 784, 874
+  size: 112, 135
+IdleUp
+  xy: 896, 874
+  size: 112, 135
+IdleUp
+  xy: 1008, 874
+  size: 112, 135
+IdleDown
+  xy: 0, 1009
+  size: 112, 135
+IdleDown
+  xy: 112, 1009
+  size: 112, 135
+IdleDown
+  xy: 224, 1009
+  size: 112, 135
+IdleDown
+  xy: 336, 1009
+  size: 112, 135
+IdleDown
+  xy: 448, 1009
+  size: 112, 135
+IdleDown
+  xy: 560, 1009
+  size: 112, 135
+IdleDown
+  xy: 672, 1009
+  size: 112, 135
+IdleDown
+  xy: 784, 1009
+  size: 112, 135
+IdleDown
+  xy: 896, 1009
+  size: 112, 135
+IdleDown
+  xy: 1008, 1009
+  size: 112, 135
+WalkUp
+  xy: 0, 1144
+  size: 112, 135
+WalkUp
+  xy: 112, 1144
+  size: 112, 135
+WalkUp
+  xy: 224, 1144
+  size: 112, 135
+WalkUp
+  xy: 336, 1144
+  size: 112, 135
+WalkDown
+  xy: 0, 1279
+  size: 112, 135
+WalkDown
+  xy: 112, 1279
+  size: 112, 135
+WalkDown
+  xy: 224, 1279
+  size: 112, 135
+WalkDown
+  xy: 336, 1279
+  size: 112, 135

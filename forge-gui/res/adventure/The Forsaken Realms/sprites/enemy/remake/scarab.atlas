@@ -1,5 +1,5 @@
 scarab.png
-size: 520,232
+size: 520,344
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -131,4 +131,88 @@ Wake
   size: 40, 28
 Wake
   xy: 200, 204
+  size: 40, 28
+IdleUp
+  xy: 0, 232
+  size: 40, 28
+IdleUp
+  xy: 40, 232
+  size: 40, 28
+IdleUp
+  xy: 80, 232
+  size: 40, 28
+IdleUp
+  xy: 120, 232
+  size: 40, 28
+IdleUp
+  xy: 160, 232
+  size: 40, 28
+IdleUp
+  xy: 200, 232
+  size: 40, 28
+IdleUp
+  xy: 240, 232
+  size: 40, 28
+IdleUp
+  xy: 280, 232
+  size: 40, 28
+IdleUp
+  xy: 320, 232
+  size: 40, 28
+IdleUp
+  xy: 360, 232
+  size: 40, 28
+IdleDown
+  xy: 0, 260
+  size: 40, 28
+IdleDown
+  xy: 40, 260
+  size: 40, 28
+IdleDown
+  xy: 80, 260
+  size: 40, 28
+IdleDown
+  xy: 120, 260
+  size: 40, 28
+IdleDown
+  xy: 160, 260
+  size: 40, 28
+IdleDown
+  xy: 200, 260
+  size: 40, 28
+IdleDown
+  xy: 240, 260
+  size: 40, 28
+IdleDown
+  xy: 280, 260
+  size: 40, 28
+IdleDown
+  xy: 320, 260
+  size: 40, 28
+IdleDown
+  xy: 360, 260
+  size: 40, 28
+WalkUp
+  xy: 0, 288
+  size: 40, 28
+WalkUp
+  xy: 40, 288
+  size: 40, 28
+WalkUp
+  xy: 80, 288
+  size: 40, 28
+WalkUp
+  xy: 120, 288
+  size: 40, 28
+WalkDown
+  xy: 0, 316
+  size: 40, 28
+WalkDown
+  xy: 40, 316
+  size: 40, 28
+WalkDown
+  xy: 80, 316
+  size: 40, 28
+WalkDown
+  xy: 120, 316
   size: 40, 28

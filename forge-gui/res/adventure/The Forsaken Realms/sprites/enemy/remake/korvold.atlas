@@ -1,5 +1,5 @@
 korvold.png
-size: 1280,418
+size: 1280,654
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -167,4 +167,88 @@ Wake
   size: 80, 59
 Wake
   xy: 560, 359
+  size: 80, 59
+IdleUp
+  xy: 0, 418
+  size: 80, 59
+IdleUp
+  xy: 80, 418
+  size: 80, 59
+IdleUp
+  xy: 160, 418
+  size: 80, 59
+IdleUp
+  xy: 240, 418
+  size: 80, 59
+IdleUp
+  xy: 320, 418
+  size: 80, 59
+IdleUp
+  xy: 400, 418
+  size: 80, 59
+IdleUp
+  xy: 480, 418
+  size: 80, 59
+IdleUp
+  xy: 560, 418
+  size: 80, 59
+IdleUp
+  xy: 640, 418
+  size: 80, 59
+IdleUp
+  xy: 720, 418
+  size: 80, 59
+IdleDown
+  xy: 0, 477
+  size: 80, 59
+IdleDown
+  xy: 80, 477
+  size: 80, 59
+IdleDown
+  xy: 160, 477
+  size: 80, 59
+IdleDown
+  xy: 240, 477
+  size: 80, 59
+IdleDown
+  xy: 320, 477
+  size: 80, 59
+IdleDown
+  xy: 400, 477
+  size: 80, 59
+IdleDown
+  xy: 480, 477
+  size: 80, 59
+IdleDown
+  xy: 560, 477
+  size: 80, 59
+IdleDown
+  xy: 640, 477
+  size: 80, 59
+IdleDown
+  xy: 720, 477
+  size: 80, 59
+WalkUp
+  xy: 0, 536
+  size: 80, 59
+WalkUp
+  xy: 80, 536
+  size: 80, 59
+WalkUp
+  xy: 160, 536
+  size: 80, 59
+WalkUp
+  xy: 240, 536
+  size: 80, 59
+WalkDown
+  xy: 0, 595
+  size: 80, 59
+WalkDown
+  xy: 80, 595
+  size: 80, 59
+WalkDown
+  xy: 160, 595
+  size: 80, 59
+WalkDown
+  xy: 240, 595
   size: 80, 59

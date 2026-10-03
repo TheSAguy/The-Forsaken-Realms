@@ -1,5 +1,5 @@
 umori.png
-size: 300,376
+size: 300,584
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -122,4 +122,88 @@ Wake
   size: 30, 52
 Wake
   xy: 120, 324
+  size: 30, 52
+IdleUp
+  xy: 0, 376
+  size: 30, 52
+IdleUp
+  xy: 30, 376
+  size: 30, 52
+IdleUp
+  xy: 60, 376
+  size: 30, 52
+IdleUp
+  xy: 90, 376
+  size: 30, 52
+IdleUp
+  xy: 120, 376
+  size: 30, 52
+IdleUp
+  xy: 150, 376
+  size: 30, 52
+IdleUp
+  xy: 180, 376
+  size: 30, 52
+IdleUp
+  xy: 210, 376
+  size: 30, 52
+IdleUp
+  xy: 240, 376
+  size: 30, 52
+IdleUp
+  xy: 270, 376
+  size: 30, 52
+IdleDown
+  xy: 0, 428
+  size: 30, 52
+IdleDown
+  xy: 30, 428
+  size: 30, 52
+IdleDown
+  xy: 60, 428
+  size: 30, 52
+IdleDown
+  xy: 90, 428
+  size: 30, 52
+IdleDown
+  xy: 120, 428
+  size: 30, 52
+IdleDown
+  xy: 150, 428
+  size: 30, 52
+IdleDown
+  xy: 180, 428
+  size: 30, 52
+IdleDown
+  xy: 210, 428
+  size: 30, 52
+IdleDown
+  xy: 240, 428
+  size: 30, 52
+IdleDown
+  xy: 270, 428
+  size: 30, 52
+WalkUp
+  xy: 0, 480
+  size: 30, 52
+WalkUp
+  xy: 30, 480
+  size: 30, 52
+WalkUp
+  xy: 60, 480
+  size: 30, 52
+WalkUp
+  xy: 90, 480
+  size: 30, 52
+WalkDown
+  xy: 0, 532
+  size: 30, 52
+WalkDown
+  xy: 30, 532
+  size: 30, 52
+WalkDown
+  xy: 60, 532
+  size: 30, 52
+WalkDown
+  xy: 90, 532
   size: 30, 52

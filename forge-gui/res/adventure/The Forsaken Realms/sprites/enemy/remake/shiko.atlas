@@ -1,5 +1,5 @@
 shiko.png
-size: 744,316
+size: 744,484
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -134,4 +134,88 @@ Wake
   size: 62, 42
 Wake
   xy: 310, 274
+  size: 62, 42
+IdleUp
+  xy: 0, 316
+  size: 62, 42
+IdleUp
+  xy: 62, 316
+  size: 62, 42
+IdleUp
+  xy: 124, 316
+  size: 62, 42
+IdleUp
+  xy: 186, 316
+  size: 62, 42
+IdleUp
+  xy: 248, 316
+  size: 62, 42
+IdleUp
+  xy: 310, 316
+  size: 62, 42
+IdleUp
+  xy: 372, 316
+  size: 62, 42
+IdleUp
+  xy: 434, 316
+  size: 62, 42
+IdleUp
+  xy: 496, 316
+  size: 62, 42
+IdleUp
+  xy: 558, 316
+  size: 62, 42
+IdleDown
+  xy: 0, 358
+  size: 62, 42
+IdleDown
+  xy: 62, 358
+  size: 62, 42
+IdleDown
+  xy: 124, 358
+  size: 62, 42
+IdleDown
+  xy: 186, 358
+  size: 62, 42
+IdleDown
+  xy: 248, 358
+  size: 62, 42
+IdleDown
+  xy: 310, 358
+  size: 62, 42
+IdleDown
+  xy: 372, 358
+  size: 62, 42
+IdleDown
+  xy: 434, 358
+  size: 62, 42
+IdleDown
+  xy: 496, 358
+  size: 62, 42
+IdleDown
+  xy: 558, 358
+  size: 62, 42
+WalkUp
+  xy: 0, 400
+  size: 62, 42
+WalkUp
+  xy: 62, 400
+  size: 62, 42
+WalkUp
+  xy: 124, 400
+  size: 62, 42
+WalkUp
+  xy: 186, 400
+  size: 62, 42
+WalkDown
+  xy: 0, 442
+  size: 62, 42
+WalkDown
+  xy: 62, 442
+  size: 62, 42
+WalkDown
+  xy: 124, 442
+  size: 62, 42
+WalkDown
+  xy: 186, 442
   size: 62, 42

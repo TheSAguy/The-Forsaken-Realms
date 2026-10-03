@@ -1,5 +1,5 @@
 koma.png
-size: 1632,352
+size: 1632,604
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,130 +8,220 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 136, 48
+  size: 136, 54
 Idle
   xy: 136, 64
-  size: 136, 48
+  size: 136, 54
 Idle
   xy: 272, 64
-  size: 136, 48
+  size: 136, 54
 Idle
   xy: 408, 64
-  size: 136, 48
+  size: 136, 54
 Idle
   xy: 544, 64
-  size: 136, 48
+  size: 136, 54
 Idle
   xy: 680, 64
-  size: 136, 48
+  size: 136, 54
 Idle
   xy: 816, 64
-  size: 136, 48
+  size: 136, 54
 Idle
   xy: 952, 64
-  size: 136, 48
+  size: 136, 54
 Idle
   xy: 1088, 64
-  size: 136, 48
+  size: 136, 54
 Idle
   xy: 1224, 64
-  size: 136, 48
+  size: 136, 54
 Walk
-  xy: 0, 112
-  size: 136, 48
+  xy: 0, 118
+  size: 136, 54
 Walk
-  xy: 136, 112
-  size: 136, 48
+  xy: 136, 118
+  size: 136, 54
 Walk
-  xy: 272, 112
-  size: 136, 48
+  xy: 272, 118
+  size: 136, 54
 Walk
-  xy: 408, 112
-  size: 136, 48
+  xy: 408, 118
+  size: 136, 54
 Walk
-  xy: 544, 112
-  size: 136, 48
+  xy: 544, 118
+  size: 136, 54
 Attack
-  xy: 0, 160
-  size: 136, 48
+  xy: 0, 172
+  size: 136, 54
 Attack
-  xy: 136, 160
-  size: 136, 48
+  xy: 136, 172
+  size: 136, 54
 Attack
-  xy: 272, 160
-  size: 136, 48
+  xy: 272, 172
+  size: 136, 54
 Attack
-  xy: 408, 160
-  size: 136, 48
+  xy: 408, 172
+  size: 136, 54
 Attack
-  xy: 544, 160
-  size: 136, 48
+  xy: 544, 172
+  size: 136, 54
 Attack
-  xy: 680, 160
-  size: 136, 48
+  xy: 680, 172
+  size: 136, 54
 Hit
-  xy: 0, 208
-  size: 136, 48
+  xy: 0, 226
+  size: 136, 54
 Hit
-  xy: 136, 208
-  size: 136, 48
+  xy: 136, 226
+  size: 136, 54
 Hit
-  xy: 272, 208
-  size: 136, 48
+  xy: 272, 226
+  size: 136, 54
 Hit
-  xy: 408, 208
-  size: 136, 48
+  xy: 408, 226
+  size: 136, 54
 Death
-  xy: 0, 256
-  size: 136, 48
+  xy: 0, 280
+  size: 136, 54
 Death
-  xy: 136, 256
-  size: 136, 48
+  xy: 136, 280
+  size: 136, 54
 Death
-  xy: 272, 256
-  size: 136, 48
+  xy: 272, 280
+  size: 136, 54
 Death
-  xy: 408, 256
-  size: 136, 48
+  xy: 408, 280
+  size: 136, 54
 Death
-  xy: 544, 256
-  size: 136, 48
+  xy: 544, 280
+  size: 136, 54
 Death
-  xy: 680, 256
-  size: 136, 48
+  xy: 680, 280
+  size: 136, 54
 Death
-  xy: 816, 256
-  size: 136, 48
+  xy: 816, 280
+  size: 136, 54
 Death
-  xy: 952, 256
-  size: 136, 48
+  xy: 952, 280
+  size: 136, 54
 Death
-  xy: 1088, 256
-  size: 136, 48
+  xy: 1088, 280
+  size: 136, 54
 Death
-  xy: 1224, 256
-  size: 136, 48
+  xy: 1224, 280
+  size: 136, 54
 Death
-  xy: 1360, 256
-  size: 136, 48
+  xy: 1360, 280
+  size: 136, 54
 Death
-  xy: 1496, 256
-  size: 136, 48
+  xy: 1496, 280
+  size: 136, 54
 Wake
-  xy: 0, 304
-  size: 136, 48
+  xy: 0, 334
+  size: 136, 54
 Wake
-  xy: 136, 304
-  size: 136, 48
+  xy: 136, 334
+  size: 136, 54
 Wake
-  xy: 272, 304
-  size: 136, 48
+  xy: 272, 334
+  size: 136, 54
 Wake
-  xy: 408, 304
-  size: 136, 48
+  xy: 408, 334
+  size: 136, 54
 Wake
-  xy: 544, 304
-  size: 136, 48
+  xy: 544, 334
+  size: 136, 54
 Wake
-  xy: 680, 304
-  size: 136, 48
+  xy: 680, 334
+  size: 136, 54
+IdleUp
+  xy: 0, 388
+  size: 136, 54
+IdleUp
+  xy: 136, 388
+  size: 136, 54
+IdleUp
+  xy: 272, 388
+  size: 136, 54
+IdleUp
+  xy: 408, 388
+  size: 136, 54
+IdleUp
+  xy: 544, 388
+  size: 136, 54
+IdleUp
+  xy: 680, 388
+  size: 136, 54
+IdleUp
+  xy: 816, 388
+  size: 136, 54
+IdleUp
+  xy: 952, 388
+  size: 136, 54
+IdleUp
+  xy: 1088, 388
+  size: 136, 54
+IdleUp
+  xy: 1224, 388
+  size: 136, 54
+IdleDown
+  xy: 0, 442
+  size: 136, 54
+IdleDown
+  xy: 136, 442
+  size: 136, 54
+IdleDown
+  xy: 272, 442
+  size: 136, 54
+IdleDown
+  xy: 408, 442
+  size: 136, 54
+IdleDown
+  xy: 544, 442
+  size: 136, 54
+IdleDown
+  xy: 680, 442
+  size: 136, 54
+IdleDown
+  xy: 816, 442
+  size: 136, 54
+IdleDown
+  xy: 952, 442
+  size: 136, 54
+IdleDown
+  xy: 1088, 442
+  size: 136, 54
+IdleDown
+  xy: 1224, 442
+  size: 136, 54
+WalkUp
+  xy: 0, 496
+  size: 136, 54
+WalkUp
+  xy: 136, 496
+  size: 136, 54
+WalkUp
+  xy: 272, 496
+  size: 136, 54
+WalkUp
+  xy: 408, 496
+  size: 136, 54
+WalkUp
+  xy: 544, 496
+  size: 136, 54
+WalkDown
+  xy: 0, 550
+  size: 136, 54
+WalkDown
+  xy: 136, 550
+  size: 136, 54
+WalkDown
+  xy: 272, 550
+  size: 136, 54
+WalkDown
+  xy: 408, 550
+  size: 136, 54
+WalkDown
+  xy: 544, 550
+  size: 136, 54

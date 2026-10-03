@@ -1,5 +1,5 @@
 sivitri.png
-size: 1036,376
+size: 1036,584
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -149,4 +149,88 @@ Wake
   size: 74, 52
 Wake
   xy: 444, 324
+  size: 74, 52
+IdleUp
+  xy: 0, 376
+  size: 74, 52
+IdleUp
+  xy: 74, 376
+  size: 74, 52
+IdleUp
+  xy: 148, 376
+  size: 74, 52
+IdleUp
+  xy: 222, 376
+  size: 74, 52
+IdleUp
+  xy: 296, 376
+  size: 74, 52
+IdleUp
+  xy: 370, 376
+  size: 74, 52
+IdleUp
+  xy: 444, 376
+  size: 74, 52
+IdleUp
+  xy: 518, 376
+  size: 74, 52
+IdleUp
+  xy: 592, 376
+  size: 74, 52
+IdleUp
+  xy: 666, 376
+  size: 74, 52
+IdleDown
+  xy: 0, 428
+  size: 74, 52
+IdleDown
+  xy: 74, 428
+  size: 74, 52
+IdleDown
+  xy: 148, 428
+  size: 74, 52
+IdleDown
+  xy: 222, 428
+  size: 74, 52
+IdleDown
+  xy: 296, 428
+  size: 74, 52
+IdleDown
+  xy: 370, 428
+  size: 74, 52
+IdleDown
+  xy: 444, 428
+  size: 74, 52
+IdleDown
+  xy: 518, 428
+  size: 74, 52
+IdleDown
+  xy: 592, 428
+  size: 74, 52
+IdleDown
+  xy: 666, 428
+  size: 74, 52
+WalkUp
+  xy: 0, 480
+  size: 74, 52
+WalkUp
+  xy: 74, 480
+  size: 74, 52
+WalkUp
+  xy: 148, 480
+  size: 74, 52
+WalkUp
+  xy: 222, 480
+  size: 74, 52
+WalkDown
+  xy: 0, 532
+  size: 74, 52
+WalkDown
+  xy: 74, 532
+  size: 74, 52
+WalkDown
+  xy: 148, 532
+  size: 74, 52
+WalkDown
+  xy: 222, 532
   size: 74, 52

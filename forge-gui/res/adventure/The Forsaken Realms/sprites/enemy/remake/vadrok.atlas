@@ -1,5 +1,5 @@
 vadrok.png
-size: 1066,364
+size: 1066,564
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -143,4 +143,88 @@ Wake
   size: 82, 50
 Wake
   xy: 410, 314
+  size: 82, 50
+IdleUp
+  xy: 0, 364
+  size: 82, 50
+IdleUp
+  xy: 82, 364
+  size: 82, 50
+IdleUp
+  xy: 164, 364
+  size: 82, 50
+IdleUp
+  xy: 246, 364
+  size: 82, 50
+IdleUp
+  xy: 328, 364
+  size: 82, 50
+IdleUp
+  xy: 410, 364
+  size: 82, 50
+IdleUp
+  xy: 492, 364
+  size: 82, 50
+IdleUp
+  xy: 574, 364
+  size: 82, 50
+IdleUp
+  xy: 656, 364
+  size: 82, 50
+IdleUp
+  xy: 738, 364
+  size: 82, 50
+IdleDown
+  xy: 0, 414
+  size: 82, 50
+IdleDown
+  xy: 82, 414
+  size: 82, 50
+IdleDown
+  xy: 164, 414
+  size: 82, 50
+IdleDown
+  xy: 246, 414
+  size: 82, 50
+IdleDown
+  xy: 328, 414
+  size: 82, 50
+IdleDown
+  xy: 410, 414
+  size: 82, 50
+IdleDown
+  xy: 492, 414
+  size: 82, 50
+IdleDown
+  xy: 574, 414
+  size: 82, 50
+IdleDown
+  xy: 656, 414
+  size: 82, 50
+IdleDown
+  xy: 738, 414
+  size: 82, 50
+WalkUp
+  xy: 0, 464
+  size: 82, 50
+WalkUp
+  xy: 82, 464
+  size: 82, 50
+WalkUp
+  xy: 164, 464
+  size: 82, 50
+WalkUp
+  xy: 246, 464
+  size: 82, 50
+WalkDown
+  xy: 0, 514
+  size: 82, 50
+WalkDown
+  xy: 82, 514
+  size: 82, 50
+WalkDown
+  xy: 164, 514
+  size: 82, 50
+WalkDown
+  xy: 246, 514
   size: 82, 50
