@@ -608,6 +608,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // waits for dialogs to close) never came, overwritten on day 304 by an Apprentice's.
         if (isPaused() || isDialogOnlyInput() || MapStage.getInstance().isDialogOnlyInput() || Forge.advFreezePlayerControls)
             return;
+        // Round 422: a new world's AI opening wave, the first time the world map runs (one saved flag read per frame).
+        World openingWorld = WorldSave.getCurrentSave().getWorld();
+        if (openingWorld != null && !openingWorld.isOpeningWaveSent())
+            TerritoryControl.sendOpeningWave(openingWorld);
         setDownOffBarrier(); // round 294
         drawNavigationArrow();
         if (player.isMoving())
@@ -2894,6 +2898,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
             List<Integer> lastDuelDays = data.containsKey("lastDuelDays") ? (List<Integer>) data.readObject("lastDuelDays") : null;
             // Round 350: a legend's expiry DAY - absent on older saves, where a legend in flight starts a fresh day lifetime.
             List<Integer> legendExpiryDays = data.containsKey("legendExpiryDays") ? (List<Integer>) data.readObject("legendExpiryDays") : null;
+            // Round 422: the opening-wave flag - absent on older saves, where every mage counts toward the cap.
+            List<Boolean> openingMages = data.containsKey("openingMages") ? (List<Boolean>) data.readObject("openingMages") : null;
             for (int i = 0; i < timeouts.size(); i++) {
                 // Null-guard (2026-08-13, Challenger-rename companion): an unresolvable saved name
                 // previously hit `new EnemySprite(null)` -> NPE swallowed by this method's empty
@@ -2941,6 +2947,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         if (targetId.equals(poi.getID())) {
                             sprite.territoryTarget = poi;
                             sprite.territoryColor = territoryColors != null && i < territoryColors.size() ? territoryColors.get(i) : null;
+                            sprite.openingMage = openingMages != null && i < openingMages.size() && Boolean.TRUE.equals(openingMages.get(i));
                             break;
                         }
                     }
@@ -3039,6 +3046,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // Round 350: a legend's day clock (EnemySprite.legendExpiryDay) - without it every legend in flight would
         // start its days over on each load.
         List<Integer> legendExpiryDays = new ArrayList<>();
+        List<Boolean> openingMages = new ArrayList<>(); // round 422
         for (Pair<Float, EnemySprite> enemy : enemies) {
             timeouts.add(enemy.getKey());
             // Raw name field, NOT getName() (2026-08-13 holistic review, pre-existing bug): the 3
@@ -3057,6 +3065,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             territoryTargetIds.add(enemy.getValue().territoryTarget == null ? null : enemy.getValue().territoryTarget.getID());
             lastDuelDays.add(enemy.getValue().lastDuelDay);
             legendExpiryDays.add(enemy.getValue().legendExpiryDay);
+            openingMages.add(enemy.getValue().openingMage);
         }
         // Round 173 (code review G6, user: "should lose the fight"): the mage a roaming guard is fighting
         // right now was pulled off `enemies` at the gate, so a save taken mid-fight - the watched fight's
@@ -3080,6 +3089,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 territoryTargetIds.add(duelling.territoryTarget == null ? null : duelling.territoryTarget.getID());
                 lastDuelDays.add(duelling.lastDuelDay);
                 legendExpiryDays.add(duelling.legendExpiryDay);
+                openingMages.add(duelling.openingMage);
             }
         }
         data.storeObject("timeouts", timeouts);
@@ -3090,6 +3100,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         data.storeObject("territoryColors", territoryColors);
         data.storeObject("lastDuelDays", lastDuelDays);
         data.storeObject("legendExpiryDays", legendExpiryDays);
+        data.storeObject("openingMages", openingMages);
         data.storeObject("territoryTargetIds", territoryTargetIds);
         data.store("globalTimer", globalTimer);
         return data;

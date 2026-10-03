@@ -123,6 +123,18 @@ public class World implements Disposable, SaveFileContent {
         colorNextAttackDay.put(color, day);
     }
 
+    // Round 422: the AI's opening wave of attack mages (TerritoryControl.sendOpeningWave) has gone out. False on a new
+    // world, true once sent, and true for a save from before the round - a game already under way gets no wave.
+    private boolean openingWaveSent = true;
+
+    public boolean isOpeningWaveSent() {
+        return openingWaveSent;
+    }
+
+    public void setOpeningWaveSent(boolean sent) {
+        openingWaveSent = sent;
+    }
+
     // Territory Control (MOD_SCOPE.md #7) expansion: each color's current territory radius in
     // tiles, grown over time by TerritoryControl.processTerritoryExpansion() via
     // claimWastelandRing() above. Seeded once (to the same starting radius as the initial
@@ -1069,6 +1081,7 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             colorNextAttackDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("colorNextAttackDay"));
         }
+        openingWaveSent = !saveFileData.containsKey("openingWaveSent") || saveFileData.readBool("openingWaveSent"); // round 422
 
         colorTerritoryRadius.clear();
         if (saveFileData.containsKey("colorTerritoryRadius")) {
@@ -1368,6 +1381,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("questAcceptedDay", questAcceptedDay);
         data.storeObject("questDayLimit", questDayLimit); // round 367
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
+        data.store("openingWaveSent", openingWaveSent); // round 422
         return data;
     }
 
@@ -2556,6 +2570,7 @@ public class World implements Disposable, SaveFileContent {
             dayProgress = 0.375f; // fresh world starts at 09:00, same default load() falls back to
             dayCount = 1;
             colorNextAttackDay.clear();
+            openingWaveSent = false; // round 422: a new world - the AI's opening wave goes out on the first world-map frame
             colorTerritoryRadius.clear();
             defeatedColors.clear();
             forcedPlayerTargetPending.clear();

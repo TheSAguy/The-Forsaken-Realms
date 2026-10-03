@@ -91,6 +91,12 @@
     "attackingMagesNormal": 3,
     "attackingMagesHard": 4,
     "attackingMagesInsane": 6,
+    // Round 422: the opening wave - how many mages each AI color sends out at once on a new world, by difficulty. They
+    // do not count toward the cap above and do not touch the color's attack schedule. 0 turns it off.
+    "openingMagesEasy": 1,
+    "openingMagesNormal": 2,
+    "openingMagesHard": 4,
+    "openingMagesInsane": 6,
 
     // Round 239 - the AI answers the player's Capitol: +this many to every color's attacking-mage cap for as
     // long as the Capitol stands, and (capitolBuiltSendsMages) one mage from every color the moment it is built.

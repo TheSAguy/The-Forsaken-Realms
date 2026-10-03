@@ -158,6 +158,26 @@ public class TuningData {
         }
     }
 
+    // Round 422 (the user: "At the very start of the game, give each AI some free attacking mages ... These are just
+    // attacking mages that will be available at the start of the game and has nothing to do with the weekly limit.
+    // Just something to get the AI going"). How many mages each AI color sends out at once on a new world, on top of its
+    // schedule and outside its in-flight cap. 0 turns the wave off.
+    public int openingMagesEasy = 1;
+    public int openingMagesNormal = 2;
+    public int openingMagesHard = 4;
+    public int openingMagesInsane = 6;
+
+    /** Round 422: the opening wave per color on this difficulty; an unknown difficulty takes Easy's. */
+    public int openingMagesFor(String difficultyName) {
+        String name = difficultyName == null ? "" : difficultyName.trim().toLowerCase();
+        switch (name) {
+            case "normal": return Math.max(0, openingMagesNormal);
+            case "hard":   return Math.max(0, openingMagesHard);
+            case "insane": return Math.max(0, openingMagesInsane);
+            default:       return Math.max(0, openingMagesEasy);
+        }
+    }
+
     // Round 239 (user: "When the Player builds his capitol, the AI gets +1 to max attacking mage spawns and
     // spawn one for each AI immediately after the capitol is built"). The bonus applies for as long as the
     // Capitol stands; the immediate mages go out once, from TownRestoration.upgradeToCapitol(), through the

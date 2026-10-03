@@ -1522,6 +1522,12 @@ public class TerritoryControl {
      *                      player capitol ... it will target a town pointing in the direction of the capitol").
      */
     private static void dispatch(World world, String color, boolean forceArchmage, boolean towardCapitol) {
+        dispatch(world, color, forceArchmage, towardCapitol, false);
+    }
+
+    /** @param opening round 422: an opening-wave mage - sent outside the in-flight cap, not counted toward it, and
+     *                 not announced one by one (sendOpeningWave logs the wave as a whole). */
+    private static void dispatch(World world, String color, boolean forceArchmage, boolean towardCapitol, boolean opening) {
         // TARGET selection is frontier-aware, but the LAUNCH is castle-only (user refinement
         // 2026-08-08, same day this briefly launched from the nearest owned property): candidates
         // are ranked by distance to the color's NEAREST owned property (castle + its towns/
@@ -1540,7 +1546,7 @@ public class TerritoryControl {
         // simply tries again on its next scheduled attack day.
         int activeMages = 0;
         for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages())
-            if (color.equals(mage.territoryColor))
+            if (color.equals(mage.territoryColor) && !mage.openingMage) // round 422: the opening wave is outside the cap
                 activeMages++;
         int cap = maxActiveMagesPerColor(world);
         if (world.isCapitolLost(color)) { // round 100 (user spec 2026-09-03): capital taken by the player - half the mages, rounded down
@@ -1548,7 +1554,7 @@ public class TerritoryControl {
             System.out.println("[TFR-MageCap] " + color + ": capital lost to the player - active-mage cap " + cap + " -> " + halved);
             cap = halved;
         }
-        if (activeMages >= cap) {
+        if (!opening && activeMages >= cap) {
             System.out.println("[TerritoryControl] " + color + ": " + activeMages + " mage(s) already in flight (cap " + cap + "), skipping dispatch");
             return;
         }
@@ -1877,6 +1883,7 @@ public class TerritoryControl {
         EnemySprite mage = new EnemySprite(enemyData);
         mage.territoryTarget = target;
         mage.territoryColor = color;
+        mage.openingMage = opening; // round 422
         WorldStage.getInstance().spawnAt(mage, new Vector2(castle.getPosition()));
 
         // Capitol weekly lockout (user spec 2026-08-31): stamp the moment the mage is provably
@@ -1918,11 +1925,64 @@ public class TerritoryControl {
         // double-struck glyphs at this pixel-font size, user report 2026-08-08).
         boolean targetPlayerOwned = TownRestoration.isTownRestored(
                 WorldSave.getCurrentSave().peekPointOfInterestChanges(target.getID()));
-        System.out.println("[TerritoryControl] " + message + (targetPlayerOwned ? " (Player Owned!)" : ""));
+        System.out.println("[TerritoryControl] " + message + (targetPlayerOwned ? " (Player Owned!)" : "")
+                + (opening ? " (opening wave)" : ""));
+        if (opening)
+            return; // round 422: up to 30 at once on Insane - the wave is not announced mage by mage
         if (targetPlayerOwned)
             GameHUD.getInstance().addNotification("[BLACK]" + message + " [RED]PLAYER OWNED TOWN!", true);
         else
             GameHUD.getInstance().addNotification(message);
+    }
+
+    /**
+     * Round 422 (the user: "At the very start of the game, give each AI some free attacking mages. Easy - 1, Normal - 2,
+     * Hard - 4, Insane - 6. These are just attacking mages that will be available at the start of the game and has nothing
+     * to do with the weekly limit. Just something to get the AI going").
+     * <p>
+     * Called by WorldStage the first time the world map runs on a new world (World.openingWaveSent, false only after
+     * generateNew). Every color still in the game sends TuningData.openingMagesFor(difficulty) mages at once through the
+     * ordinary dispatch - same targeting (each to a different town while the color has untargeted ones), same week-1 tier
+     * cap, so they are Apprentices and Adepts - but outside the in-flight cap and uncounted by it, so the color's own
+     * schedule and cap run exactly as before on top. Unannounced, like the Capitol surge (round 267). The colors' attack
+     * timers are seeded here as processDaysPassed would on the first day, so the wave never repeats.
+     */
+    public static void sendOpeningWave(World world) {
+        if (world == null || world.isOpeningWaveSent())
+            return;
+        world.setOpeningWaveSent(true);
+        if (!isEnabled())
+            return;
+        boolean fresh = true;
+        for (String color : COLORS)
+            fresh &= world.getColorNextAttackDay(color) == null;
+        if (!fresh) {
+            System.out.println("[TFR-OpeningWave] the colors' attack timers are already running - no opening wave");
+            return;
+        }
+        String difficulty = Current.player().getDifficulty() == null ? null : Current.player().getDifficulty().name;
+        int perColor = Config.instance().getTuningData().openingMagesFor(difficulty);
+        StringBuilder sent = new StringBuilder();
+        for (String color : COLORS) {
+            if (world.isColorDefeated(color))
+                continue;
+            int before = countOpeningMages(color);
+            for (int i = 0; i < perColor; i++)
+                dispatch(world, color, false, false, true);
+            int seeded = world.getCurrentDay() + randomAttackDelay(world);
+            world.setColorNextAttackDay(color, seeded);
+            sent.append(sent.length() == 0 ? "" : ", ").append(color).append(' ').append(countOpeningMages(color) - before)
+                    .append(" (next attack day ").append(seeded).append(')');
+        }
+        System.out.println("[TFR-OpeningWave] " + difficulty + ": " + perColor + " mage(s) per color, outside the cap - " + sent);
+    }
+
+    private static int countOpeningMages(String color) {
+        int n = 0;
+        for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages())
+            if (mage.openingMage && color.equals(mage.territoryColor))
+                n++;
+        return n;
     }
 
     // Simultaneous mages per color: Easy 2 / Normal 3 / Hard 4 / Insane 6 since round 407 (settings.json

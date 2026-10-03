@@ -157,6 +157,9 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     // through CardBudget.applyChampion. War champions are told apart by name (WarChampions.isWarChampion).
     public boolean championLoot;
     public String territoryColor;
+    // Round 422: one of the AI's opening-wave mages (TerritoryControl.sendOpeningWave) - it does not count toward its
+    // color's in-flight cap. Saved with the roaming list.
+    public boolean openingMage;
     // Territory Control (MOD_SCOPE.md #7): the in-game day (World.getCurrentDay()) this mage was
     // last fought and LOST to. A losing fight no longer removes an attack mage (it survives and
     // keeps traveling) - this just blocks re-engaging the same mage again the same day, checked in
