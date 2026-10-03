@@ -1773,7 +1773,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon",
+        "tier": "Common",
         "scale": 1.1818
     },
     {
@@ -1847,7 +1847,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Uncommon",
+        "tier": "Common",
         "scale": 1.3
     },
     {
@@ -1920,7 +1920,7 @@
             "BiomeColorless",
             "BiomeWhite"
         ],
-        "tier": "Uncommon",
+        "tier": "Common",
         "scale": 1.1818
     },
     {
@@ -21334,7 +21334,7 @@
             "BiomeColorless",
             "BiomeBlue"
         ],
-        "tier": "Uncommon",
+        "tier": "Rare",
         "scale": 1.0833
     },
     {
