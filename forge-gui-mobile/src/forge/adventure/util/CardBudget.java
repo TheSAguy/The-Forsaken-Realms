@@ -6,13 +6,19 @@ import forge.adventure.data.RewardData;
 import forge.adventure.data.TuningData;
 import forge.adventure.stage.GameHUD;
 import forge.card.CardRarity;
+import forge.card.ColorSet;
+import forge.card.MagicColor;
 import forge.item.PaperCard;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Round 237: the card budget - how MANY cards a defeated enemy pays, by rank and by whether this is the
@@ -43,6 +49,10 @@ import java.util.Random;
  *     rarity on cardBudgetTopUpWeight* (80 / 17 / 3, never Mythic) and, when the deck has nothing legal at
  *     that rarity, steps DOWN to the commoner ones before it ever steps up. What still cannot be paid becomes
  *     deckCardFallbackGold per card, the rule round 203 already set for an unpayable deck card.</li>
+ * <li><b>Variety</b> (round 419). A payout prefers a card name it has not paid yet. A second copy the list rolled waits.
+ *     When the deck has nothing new, the slot is filled from the color's own sets in the deck's colors (non-land, the same
+ *     rarity roll and set restriction). Only then does a second copy get paid, and only then gold. The first-win
+ *     bonus works the same way.</li>
  * <li><b>The first-win bonus card</b> (user, approving the table: "for first win, add +1 random Common or
  *     Uncommon from enemy deck on Normal, Hard and Insane and +1 random common or uncommon or rare for easy.
  *     All non-land"). It is on top of the budget, is never trimmed, and its rarity is NOT relaxed when the
@@ -144,7 +154,21 @@ public final class CardBudget {
         Collections.shuffle(cards, random);
         if (bestFirst)
             cards.sort((a, b) -> Integer.compare(rarityRank(b.getCard()), rarityRank(a.getCard()))); // stable: ties stay shuffled
-        List<Reward> kept = new ArrayList<>(cards.subList(0, Math.min(budget, cards.size())));
+        // Round 419 (the user, after the Djinn survey: "do ... the loot-variety fix"): a payout prefers a name it has not
+        // paid yet. A second copy the list rolled is set aside and paid only when the deck AND the color's sets have
+        // nothing new left - the Djinn paid Volatile Fjord twice from a deck with one other legal name.
+        Set<String> paidNames = new HashSet<>();
+        List<Reward> kept = new ArrayList<>();
+        List<Reward> secondCopies = new ArrayList<>();
+        for (Reward reward : cards) {
+            if (kept.size() >= budget)
+                break;
+            if (paidNames.add(reward.getCard().getName()))
+                kept.add(reward);
+            else
+                secondCopies.add(reward);
+        }
+        int fromList = kept.size();
 
         int unpayable = 0;
         int toppedUp = 0;
@@ -152,29 +176,67 @@ public final class CardBudget {
         List<String> topUpRarities = new ArrayList<>();
         if (shortfall > 0 && deckNoBasicLands != null) {
             for (int i = 0; i < shortfall; i++) {
-                PaperCard card = drawTopUpCard(tuning, deckNoBasicLands, editionRestriction, random);
+                PaperCard card = drawTopUpCard(tuning, unpaid(deckNoBasicLands, paidNames), editionRestriction, random);
                 if (card != null) {
                     kept.add(new Reward(card));
+                    paidNames.add(card.getName());
                     topUpRarities.add(String.valueOf(card.getRarity()));
                     toppedUp++;
                 }
             }
-            unpayable += shortfall - toppedUp;
         }
+        shortfall = budget - kept.size();
+        // Round 419: what the deck cannot pay comes from the color's own sets, in the deck's colors, before any gold.
+        List<String> fromColorSets = new ArrayList<>();
+        ColorSetPool colorPool = null;
+        for (int i = 0; i < shortfall; i++) {
+            if (colorPool == null)
+                colorPool = colorSetPool(data, deckNoBasicLands, editionRestriction);
+            PaperCard card = drawTopUpCard(tuning, unpaid(colorPool.cards, paidNames), editionRestriction, random);
+            if (card == null)
+                break;
+            kept.add(new Reward(card));
+            paidNames.add(card.getName());
+            fromColorSets.add(card.getName());
+        }
+        shortfall = budget - kept.size();
+        int secondCopiesPaid = 0;
+        while (shortfall > 0 && !secondCopies.isEmpty()) {
+            kept.add(secondCopies.remove(0));
+            secondCopiesPaid++;
+            shortfall--;
+        }
+        unpayable += shortfall;
 
         List<String> bonusNames = new ArrayList<>();
+        boolean bonusFromColorSets = false;
         int bonusWanted = firstWin && !champion ? Math.max(0, tuning.cardBudgetFirstWinBonusCards) : 0;
-        if (bonusWanted > 0 && deckNoBasicLands != null) {
-            List<PaperCard> nonLand = new ArrayList<>();
-            for (PaperCard card : deckNoBasicLands) {
-                if (card != null && !card.getRules().getType().isLand())
-                    nonLand.add(card);
-            }
+        if (bonusWanted > 0) {
             String[] rarities = easy ? new String[]{"Common", "Uncommon", "Rare"} : new String[]{"Common", "Uncommon"};
-            for (PaperCard card : CardUtil.generateCards(nonLand, deckEntry(rarities, editionRestriction), bonusWanted, random)) {
-                if (card != null) {
-                    kept.add(new Reward(card));
-                    bonusNames.add(card.getName());
+            if (deckNoBasicLands != null) {
+                List<PaperCard> nonLand = new ArrayList<>();
+                for (PaperCard card : unpaid(deckNoBasicLands, paidNames)) {
+                    if (!card.getRules().getType().isLand())
+                        nonLand.add(card);
+                }
+                for (PaperCard card : CardUtil.generateCards(nonLand, deckEntry(rarities, editionRestriction), bonusWanted, random)) {
+                    if (card != null && paidNames.add(card.getName())) {
+                        kept.add(new Reward(card));
+                        bonusNames.add(card.getName());
+                    }
+                }
+            }
+            // Round 419: the bonus too, from the color's sets at the same rarities, before it turns into gold.
+            int missing = bonusWanted - bonusNames.size();
+            if (missing > 0) {
+                if (colorPool == null)
+                    colorPool = colorSetPool(data, deckNoBasicLands, editionRestriction);
+                for (PaperCard card : CardUtil.generateCards(unpaid(colorPool.cards, paidNames), deckEntry(rarities, editionRestriction), missing, random)) {
+                    if (card != null && paidNames.add(card.getName())) {
+                        kept.add(new Reward(card));
+                        bonusNames.add(card.getName());
+                        bonusFromColorSets = true;
+                    }
                 }
             }
             unpayable += bonusWanted - bonusNames.size();
@@ -191,9 +253,16 @@ public final class CardBudget {
                 + "): the list rolled " + candidates + " card(s), budget " + budget
                 + " (" + rankBase + " base" + (gearApplied > 0 ? " +" + gearApplied + " gear" : "")
                 + (difficultyBonus > 0 ? " +" + difficultyBonus + " Easy" : "") + ") -> kept "
-                + Math.min(budget, candidates) + (bestFirst ? " best-first" : " at random")
+                + fromList + (bestFirst ? " best-first" : " at random")
+                + (secondCopies.size() + secondCopiesPaid > 0 ? " (" + (secondCopies.size() + secondCopiesPaid)
+                        + " second cop" + (secondCopies.size() + secondCopiesPaid == 1 ? "y" : "ies") + " set aside)" : "")
                 + (toppedUp > 0 ? ", topped up " + toppedUp + " from its deck " + topUpRarities : "")
-                + (bonusWanted > 0 ? ", first-win bonus " + (bonusNames.isEmpty() ? "could not be paid" : bonusNames) : "")
+                + (!fromColorSets.isEmpty() ? ", " + fromColorSets.size() + " from its color's sets " + fromColorSets
+                        + " (" + colorPool.label + ")" : "")
+                + (secondCopiesPaid > 0 ? ", " + secondCopiesPaid + " second cop" + (secondCopiesPaid == 1 ? "y" : "ies")
+                        + " paid - nothing new left" : "")
+                + (bonusWanted > 0 ? ", first-win bonus " + (bonusNames.isEmpty() ? "could not be paid" : bonusNames
+                        + (bonusFromColorSets ? " (color's sets)" : "")) : "")
                 + (unpayable > 0 ? ", " + unpayable + " unpayable -> " + (unpayable * goldPerCard) + " gold" : "")
                 + (droppedFallbackGold > 0 ? ", dropped the list's " + droppedFallbackGold + " gold for unpaid deck card(s)" : ""));
         if (firstWin && !champion)
@@ -263,6 +332,79 @@ public final class CardBudget {
             }
         }
         return null;
+    }
+
+    /** Round 419: the cards of a pool whose name this payout has not paid yet. */
+    private static List<PaperCard> unpaid(List<PaperCard> pool, Set<String> paidNames) {
+        List<PaperCard> out = new ArrayList<>(pool.size());
+        for (PaperCard card : pool) {
+            if (card != null && !paidNames.contains(card.getName()))
+                out.add(card);
+        }
+        return out;
+    }
+
+    /** Round 419: the color's sets in the deck's colors - non-land cards of the reward pool. */
+    private static final class ColorSetPool {
+        final List<PaperCard> cards;
+        final String label;
+
+        ColorSetPool(List<PaperCard> cards, String label) {
+            this.cards = cards;
+            this.label = label;
+        }
+    }
+
+    private static final String[] NON_LAND_TYPES = {"Creature", "Artifact", "Enchantment", "Instant", "Sorcery", "Planeswalker", "Battle"};
+    private static final String[] COLOR_NAMES = {"white", "blue", "black", "red", "green"};
+    private static final byte[] COLOR_BITS = {MagicColor.WHITE, MagicColor.BLUE, MagicColor.BLACK, MagicColor.RED, MagicColor.GREEN};
+    /** Built over the whole reward pool, so kept per colors + sets + pool instance (a rebuilt pool is a new list). */
+    private static final Map<String, List<PaperCard>> colorPoolCache = new HashMap<>();
+
+    /**
+     * The deck's colors are its non-land cards' colors (an Owl's deck is blue-black even when the enemy has no color),
+     * else the enemy's own colors; none at all means colorless cards. The set restriction is the same as the loot's,
+     * so a top-up from here still only hands out what the color's sets hold.
+     */
+    private static ColorSetPool colorSetPool(EnemyData data, List<PaperCard> deck, List<String> editionRestriction) {
+        int mask = 0;
+        if (deck != null) {
+            for (PaperCard card : deck) {
+                if (card != null && !card.getRules().getType().isLand())
+                    mask |= card.getRules().getColor().getColor();
+            }
+        }
+        if (mask == 0 && data.colors != null && !data.colors.isEmpty())
+            mask = ColorSet.fromNames(data.colors.toCharArray()).getColor();
+        RewardData entry = new RewardData();
+        entry.type = "card";
+        entry.probability = 1f;
+        entry.count = 1;
+        entry.cardTypes = NON_LAND_TYPES;
+        List<String> colors = new ArrayList<>();
+        for (int i = 0; i < COLOR_BITS.length; i++) {
+            if ((mask & COLOR_BITS[i]) != 0)
+                colors.add(COLOR_NAMES[i]);
+        }
+        if (colors.isEmpty())
+            entry.colorType = "Colorless";
+        else
+            entry.colors = colors.toArray(new String[0]);
+        if (editionRestriction != null && !editionRestriction.isEmpty())
+            entry.editions = editionRestriction.toArray(new String[0]);
+        Iterable<PaperCard> all = RewardData.getAllCards();
+        String label = (colors.isEmpty() ? "colorless" : String.join("/", colors))
+                + (entry.editions == null ? ", every set" : ", " + entry.editions.length + " set(s)");
+        String key = System.identityHashCode(all) + "|" + colors + "|" + (editionRestriction == null ? "-" : new java.util.TreeSet<>(editionRestriction));
+        List<PaperCard> cards = colorPoolCache.get(key);
+        if (cards == null) {
+            if (colorPoolCache.size() > 16)
+                colorPoolCache.clear();
+            cards = CardUtil.getPredicateResult(all, entry);
+            colorPoolCache.put(key, cards);
+            System.out.println("[TFR-CardBudget] color-set pool " + label + ": " + cards.size() + " non-land card(s)");
+        }
+        return new ColorSetPool(cards, label);
     }
 
     /** Best first: mythic, rare (and the odd Special), uncommon, common, then anything else. */
