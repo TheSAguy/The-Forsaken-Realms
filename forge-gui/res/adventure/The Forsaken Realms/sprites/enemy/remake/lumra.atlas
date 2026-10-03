@@ -1,5 +1,5 @@
 lumra.png
-size: 1500,924
+size: 1204,884
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,247 +8,256 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 100, 86
+  size: 86, 82
 Idle
-  xy: 100, 64
-  size: 100, 86
+  xy: 86, 64
+  size: 86, 82
 Idle
-  xy: 200, 64
-  size: 100, 86
+  xy: 172, 64
+  size: 86, 82
 Idle
-  xy: 300, 64
-  size: 100, 86
+  xy: 258, 64
+  size: 86, 82
 Idle
-  xy: 400, 64
-  size: 100, 86
+  xy: 344, 64
+  size: 86, 82
 Idle
-  xy: 500, 64
-  size: 100, 86
+  xy: 430, 64
+  size: 86, 82
 Idle
-  xy: 600, 64
-  size: 100, 86
+  xy: 516, 64
+  size: 86, 82
 Idle
-  xy: 700, 64
-  size: 100, 86
+  xy: 602, 64
+  size: 86, 82
 Idle
-  xy: 800, 64
-  size: 100, 86
+  xy: 688, 64
+  size: 86, 82
 Idle
-  xy: 900, 64
-  size: 100, 86
+  xy: 774, 64
+  size: 86, 82
 Walk
-  xy: 0, 150
-  size: 100, 86
+  xy: 0, 146
+  size: 86, 82
 Walk
-  xy: 100, 150
-  size: 100, 86
+  xy: 86, 146
+  size: 86, 82
 Walk
-  xy: 200, 150
-  size: 100, 86
+  xy: 172, 146
+  size: 86, 82
 Walk
-  xy: 300, 150
-  size: 100, 86
+  xy: 258, 146
+  size: 86, 82
+Walk
+  xy: 344, 146
+  size: 86, 82
+Walk
+  xy: 430, 146
+  size: 86, 82
 Attack
-  xy: 0, 236
-  size: 100, 86
+  xy: 0, 228
+  size: 86, 82
 Attack
-  xy: 100, 236
-  size: 100, 86
+  xy: 86, 228
+  size: 86, 82
 Attack
-  xy: 200, 236
-  size: 100, 86
+  xy: 172, 228
+  size: 86, 82
 Attack
-  xy: 300, 236
-  size: 100, 86
+  xy: 258, 228
+  size: 86, 82
 Attack
-  xy: 400, 236
-  size: 100, 86
+  xy: 344, 228
+  size: 86, 82
 Attack
-  xy: 500, 236
-  size: 100, 86
+  xy: 430, 228
+  size: 86, 82
 Attack
-  xy: 600, 236
-  size: 100, 86
+  xy: 516, 228
+  size: 86, 82
 Attack
-  xy: 700, 236
-  size: 100, 86
+  xy: 602, 228
+  size: 86, 82
 Attack
-  xy: 800, 236
-  size: 100, 86
+  xy: 688, 228
+  size: 86, 82
 Attack
-  xy: 900, 236
-  size: 100, 86
+  xy: 774, 228
+  size: 86, 82
 Attack
-  xy: 1000, 236
-  size: 100, 86
-Attack
-  xy: 1100, 236
-  size: 100, 86
+  xy: 860, 228
+  size: 86, 82
 Hit
-  xy: 0, 322
-  size: 100, 86
+  xy: 0, 310
+  size: 86, 82
 Hit
-  xy: 100, 322
-  size: 100, 86
+  xy: 86, 310
+  size: 86, 82
 Hit
-  xy: 200, 322
-  size: 100, 86
+  xy: 172, 310
+  size: 86, 82
 Hit
-  xy: 300, 322
-  size: 100, 86
+  xy: 258, 310
+  size: 86, 82
 Hit
-  xy: 400, 322
-  size: 100, 86
-Hit
-  xy: 500, 322
-  size: 100, 86
+  xy: 344, 310
+  size: 86, 82
 Death
-  xy: 0, 408
-  size: 100, 86
+  xy: 0, 392
+  size: 86, 82
 Death
-  xy: 100, 408
-  size: 100, 86
+  xy: 86, 392
+  size: 86, 82
 Death
-  xy: 200, 408
-  size: 100, 86
+  xy: 172, 392
+  size: 86, 82
 Death
-  xy: 300, 408
-  size: 100, 86
+  xy: 258, 392
+  size: 86, 82
 Death
-  xy: 400, 408
-  size: 100, 86
+  xy: 344, 392
+  size: 86, 82
 Death
-  xy: 500, 408
-  size: 100, 86
+  xy: 430, 392
+  size: 86, 82
 Death
-  xy: 600, 408
-  size: 100, 86
+  xy: 516, 392
+  size: 86, 82
 Death
-  xy: 700, 408
-  size: 100, 86
+  xy: 602, 392
+  size: 86, 82
 Death
-  xy: 800, 408
-  size: 100, 86
+  xy: 688, 392
+  size: 86, 82
 Death
-  xy: 900, 408
-  size: 100, 86
+  xy: 774, 392
+  size: 86, 82
 Death
-  xy: 1000, 408
-  size: 100, 86
+  xy: 860, 392
+  size: 86, 82
 Death
-  xy: 1100, 408
-  size: 100, 86
+  xy: 946, 392
+  size: 86, 82
 Death
-  xy: 1200, 408
-  size: 100, 86
+  xy: 1032, 392
+  size: 86, 82
 Death
-  xy: 1300, 408
-  size: 100, 86
-Death
-  xy: 1400, 408
-  size: 100, 86
+  xy: 1118, 392
+  size: 86, 82
 Wake
-  xy: 0, 494
-  size: 100, 86
+  xy: 0, 474
+  size: 86, 82
 Wake
-  xy: 100, 494
-  size: 100, 86
+  xy: 86, 474
+  size: 86, 82
 Wake
-  xy: 200, 494
-  size: 100, 86
+  xy: 172, 474
+  size: 86, 82
 Wake
-  xy: 300, 494
-  size: 100, 86
+  xy: 258, 474
+  size: 86, 82
 Wake
-  xy: 400, 494
-  size: 100, 86
+  xy: 344, 474
+  size: 86, 82
 Wake
-  xy: 500, 494
-  size: 100, 86
+  xy: 430, 474
+  size: 86, 82
 Wake
-  xy: 600, 494
-  size: 100, 86
+  xy: 516, 474
+  size: 86, 82
 IdleUp
-  xy: 0, 580
-  size: 100, 86
+  xy: 0, 556
+  size: 86, 82
 IdleUp
-  xy: 100, 580
-  size: 100, 86
+  xy: 86, 556
+  size: 86, 82
 IdleUp
-  xy: 200, 580
-  size: 100, 86
+  xy: 172, 556
+  size: 86, 82
 IdleUp
-  xy: 300, 580
-  size: 100, 86
+  xy: 258, 556
+  size: 86, 82
 IdleUp
-  xy: 400, 580
-  size: 100, 86
+  xy: 344, 556
+  size: 86, 82
 IdleUp
-  xy: 500, 580
-  size: 100, 86
+  xy: 430, 556
+  size: 86, 82
 IdleUp
-  xy: 600, 580
-  size: 100, 86
+  xy: 516, 556
+  size: 86, 82
 IdleUp
-  xy: 700, 580
-  size: 100, 86
+  xy: 602, 556
+  size: 86, 82
 IdleUp
-  xy: 800, 580
-  size: 100, 86
+  xy: 688, 556
+  size: 86, 82
 IdleUp
-  xy: 900, 580
-  size: 100, 86
+  xy: 774, 556
+  size: 86, 82
 IdleDown
-  xy: 0, 666
-  size: 100, 86
+  xy: 0, 638
+  size: 86, 82
 IdleDown
-  xy: 100, 666
-  size: 100, 86
+  xy: 86, 638
+  size: 86, 82
 IdleDown
-  xy: 200, 666
-  size: 100, 86
+  xy: 172, 638
+  size: 86, 82
 IdleDown
-  xy: 300, 666
-  size: 100, 86
+  xy: 258, 638
+  size: 86, 82
 IdleDown
-  xy: 400, 666
-  size: 100, 86
+  xy: 344, 638
+  size: 86, 82
 IdleDown
-  xy: 500, 666
-  size: 100, 86
+  xy: 430, 638
+  size: 86, 82
 IdleDown
-  xy: 600, 666
-  size: 100, 86
+  xy: 516, 638
+  size: 86, 82
 IdleDown
-  xy: 700, 666
-  size: 100, 86
+  xy: 602, 638
+  size: 86, 82
 IdleDown
-  xy: 800, 666
-  size: 100, 86
+  xy: 688, 638
+  size: 86, 82
 IdleDown
-  xy: 900, 666
-  size: 100, 86
+  xy: 774, 638
+  size: 86, 82
 WalkUp
-  xy: 0, 752
-  size: 100, 86
+  xy: 0, 720
+  size: 86, 82
 WalkUp
-  xy: 100, 752
-  size: 100, 86
+  xy: 86, 720
+  size: 86, 82
 WalkUp
-  xy: 200, 752
-  size: 100, 86
+  xy: 172, 720
+  size: 86, 82
 WalkUp
-  xy: 300, 752
-  size: 100, 86
+  xy: 258, 720
+  size: 86, 82
+WalkUp
+  xy: 344, 720
+  size: 86, 82
+WalkUp
+  xy: 430, 720
+  size: 86, 82
 WalkDown
-  xy: 0, 838
-  size: 100, 86
+  xy: 0, 802
+  size: 86, 82
 WalkDown
-  xy: 100, 838
-  size: 100, 86
+  xy: 86, 802
+  size: 86, 82
 WalkDown
-  xy: 200, 838
-  size: 100, 86
+  xy: 172, 802
+  size: 86, 82
 WalkDown
-  xy: 300, 838
-  size: 100, 86
+  xy: 258, 802
+  size: 86, 82
+WalkDown
+  xy: 344, 802
+  size: 86, 82
+WalkDown
+  xy: 430, 802
+  size: 86, 82

@@ -1,5 +1,5 @@
 palladia_mors.png
-size: 1888,1014
+size: 1650,954
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,247 +8,259 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 118, 95
+  size: 110, 89
 Idle
-  xy: 118, 64
-  size: 118, 95
+  xy: 110, 64
+  size: 110, 89
 Idle
-  xy: 236, 64
-  size: 118, 95
+  xy: 220, 64
+  size: 110, 89
 Idle
-  xy: 354, 64
-  size: 118, 95
+  xy: 330, 64
+  size: 110, 89
 Idle
-  xy: 472, 64
-  size: 118, 95
+  xy: 440, 64
+  size: 110, 89
 Idle
-  xy: 590, 64
-  size: 118, 95
+  xy: 550, 64
+  size: 110, 89
 Idle
-  xy: 708, 64
-  size: 118, 95
+  xy: 660, 64
+  size: 110, 89
 Idle
-  xy: 826, 64
-  size: 118, 95
+  xy: 770, 64
+  size: 110, 89
 Idle
-  xy: 944, 64
-  size: 118, 95
+  xy: 880, 64
+  size: 110, 89
 Idle
-  xy: 1062, 64
-  size: 118, 95
+  xy: 990, 64
+  size: 110, 89
 Walk
-  xy: 0, 159
-  size: 118, 95
+  xy: 0, 153
+  size: 110, 89
 Walk
-  xy: 118, 159
-  size: 118, 95
+  xy: 110, 153
+  size: 110, 89
 Walk
-  xy: 236, 159
-  size: 118, 95
+  xy: 220, 153
+  size: 110, 89
 Walk
-  xy: 354, 159
-  size: 118, 95
+  xy: 330, 153
+  size: 110, 89
+Walk
+  xy: 440, 153
+  size: 110, 89
+Walk
+  xy: 550, 153
+  size: 110, 89
 Attack
-  xy: 0, 254
-  size: 118, 95
+  xy: 0, 242
+  size: 110, 89
 Attack
-  xy: 118, 254
-  size: 118, 95
+  xy: 110, 242
+  size: 110, 89
 Attack
-  xy: 236, 254
-  size: 118, 95
+  xy: 220, 242
+  size: 110, 89
 Attack
-  xy: 354, 254
-  size: 118, 95
+  xy: 330, 242
+  size: 110, 89
 Attack
-  xy: 472, 254
-  size: 118, 95
+  xy: 440, 242
+  size: 110, 89
 Attack
-  xy: 590, 254
-  size: 118, 95
+  xy: 550, 242
+  size: 110, 89
 Attack
-  xy: 708, 254
-  size: 118, 95
+  xy: 660, 242
+  size: 110, 89
 Attack
-  xy: 826, 254
-  size: 118, 95
+  xy: 770, 242
+  size: 110, 89
 Attack
-  xy: 944, 254
-  size: 118, 95
+  xy: 880, 242
+  size: 110, 89
 Attack
-  xy: 1062, 254
-  size: 118, 95
+  xy: 990, 242
+  size: 110, 89
 Hit
-  xy: 0, 349
-  size: 118, 95
+  xy: 0, 331
+  size: 110, 89
 Hit
-  xy: 118, 349
-  size: 118, 95
+  xy: 110, 331
+  size: 110, 89
 Hit
-  xy: 236, 349
-  size: 118, 95
+  xy: 220, 331
+  size: 110, 89
 Hit
-  xy: 354, 349
-  size: 118, 95
+  xy: 330, 331
+  size: 110, 89
 Hit
-  xy: 472, 349
-  size: 118, 95
+  xy: 440, 331
+  size: 110, 89
 Hit
-  xy: 590, 349
-  size: 118, 95
+  xy: 550, 331
+  size: 110, 89
 Death
-  xy: 0, 444
-  size: 118, 95
+  xy: 0, 420
+  size: 110, 89
 Death
-  xy: 118, 444
-  size: 118, 95
+  xy: 110, 420
+  size: 110, 89
 Death
-  xy: 236, 444
-  size: 118, 95
+  xy: 220, 420
+  size: 110, 89
 Death
-  xy: 354, 444
-  size: 118, 95
+  xy: 330, 420
+  size: 110, 89
 Death
-  xy: 472, 444
-  size: 118, 95
+  xy: 440, 420
+  size: 110, 89
 Death
-  xy: 590, 444
-  size: 118, 95
+  xy: 550, 420
+  size: 110, 89
 Death
-  xy: 708, 444
-  size: 118, 95
+  xy: 660, 420
+  size: 110, 89
 Death
-  xy: 826, 444
-  size: 118, 95
+  xy: 770, 420
+  size: 110, 89
 Death
-  xy: 944, 444
-  size: 118, 95
+  xy: 880, 420
+  size: 110, 89
 Death
-  xy: 1062, 444
-  size: 118, 95
+  xy: 990, 420
+  size: 110, 89
 Death
-  xy: 1180, 444
-  size: 118, 95
+  xy: 1100, 420
+  size: 110, 89
 Death
-  xy: 1298, 444
-  size: 118, 95
+  xy: 1210, 420
+  size: 110, 89
 Death
-  xy: 1416, 444
-  size: 118, 95
+  xy: 1320, 420
+  size: 110, 89
 Death
-  xy: 1534, 444
-  size: 118, 95
+  xy: 1430, 420
+  size: 110, 89
 Death
-  xy: 1652, 444
-  size: 118, 95
-Death
-  xy: 1770, 444
-  size: 118, 95
+  xy: 1540, 420
+  size: 110, 89
 Wake
-  xy: 0, 539
-  size: 118, 95
+  xy: 0, 509
+  size: 110, 89
 Wake
-  xy: 118, 539
-  size: 118, 95
+  xy: 110, 509
+  size: 110, 89
 Wake
-  xy: 236, 539
-  size: 118, 95
+  xy: 220, 509
+  size: 110, 89
 Wake
-  xy: 354, 539
-  size: 118, 95
+  xy: 330, 509
+  size: 110, 89
 Wake
-  xy: 472, 539
-  size: 118, 95
+  xy: 440, 509
+  size: 110, 89
 Wake
-  xy: 590, 539
-  size: 118, 95
+  xy: 550, 509
+  size: 110, 89
 Wake
-  xy: 708, 539
-  size: 118, 95
-Wake
-  xy: 826, 539
-  size: 118, 95
+  xy: 660, 509
+  size: 110, 89
 IdleUp
-  xy: 0, 634
-  size: 118, 95
+  xy: 0, 598
+  size: 110, 89
 IdleUp
-  xy: 118, 634
-  size: 118, 95
+  xy: 110, 598
+  size: 110, 89
 IdleUp
-  xy: 236, 634
-  size: 118, 95
+  xy: 220, 598
+  size: 110, 89
 IdleUp
-  xy: 354, 634
-  size: 118, 95
+  xy: 330, 598
+  size: 110, 89
 IdleUp
-  xy: 472, 634
-  size: 118, 95
+  xy: 440, 598
+  size: 110, 89
 IdleUp
-  xy: 590, 634
-  size: 118, 95
+  xy: 550, 598
+  size: 110, 89
 IdleUp
-  xy: 708, 634
-  size: 118, 95
+  xy: 660, 598
+  size: 110, 89
 IdleUp
-  xy: 826, 634
-  size: 118, 95
+  xy: 770, 598
+  size: 110, 89
 IdleUp
-  xy: 944, 634
-  size: 118, 95
+  xy: 880, 598
+  size: 110, 89
 IdleUp
-  xy: 1062, 634
-  size: 118, 95
+  xy: 990, 598
+  size: 110, 89
 IdleDown
-  xy: 0, 729
-  size: 118, 95
+  xy: 0, 687
+  size: 110, 89
 IdleDown
-  xy: 118, 729
-  size: 118, 95
+  xy: 110, 687
+  size: 110, 89
 IdleDown
-  xy: 236, 729
-  size: 118, 95
+  xy: 220, 687
+  size: 110, 89
 IdleDown
-  xy: 354, 729
-  size: 118, 95
+  xy: 330, 687
+  size: 110, 89
 IdleDown
-  xy: 472, 729
-  size: 118, 95
+  xy: 440, 687
+  size: 110, 89
 IdleDown
-  xy: 590, 729
-  size: 118, 95
+  xy: 550, 687
+  size: 110, 89
 IdleDown
-  xy: 708, 729
-  size: 118, 95
+  xy: 660, 687
+  size: 110, 89
 IdleDown
-  xy: 826, 729
-  size: 118, 95
+  xy: 770, 687
+  size: 110, 89
 IdleDown
-  xy: 944, 729
-  size: 118, 95
+  xy: 880, 687
+  size: 110, 89
 IdleDown
-  xy: 1062, 729
-  size: 118, 95
+  xy: 990, 687
+  size: 110, 89
 WalkUp
-  xy: 0, 824
-  size: 118, 95
+  xy: 0, 776
+  size: 110, 89
 WalkUp
-  xy: 118, 824
-  size: 118, 95
+  xy: 110, 776
+  size: 110, 89
 WalkUp
-  xy: 236, 824
-  size: 118, 95
+  xy: 220, 776
+  size: 110, 89
 WalkUp
-  xy: 354, 824
-  size: 118, 95
+  xy: 330, 776
+  size: 110, 89
+WalkUp
+  xy: 440, 776
+  size: 110, 89
+WalkUp
+  xy: 550, 776
+  size: 110, 89
 WalkDown
-  xy: 0, 919
-  size: 118, 95
+  xy: 0, 865
+  size: 110, 89
 WalkDown
-  xy: 118, 919
-  size: 118, 95
+  xy: 110, 865
+  size: 110, 89
 WalkDown
-  xy: 236, 919
-  size: 118, 95
+  xy: 220, 865
+  size: 110, 89
 WalkDown
-  xy: 354, 919
-  size: 118, 95
+  xy: 330, 865
+  size: 110, 89
+WalkDown
+  xy: 440, 865
+  size: 110, 89
+WalkDown
+  xy: 550, 865
+  size: 110, 89

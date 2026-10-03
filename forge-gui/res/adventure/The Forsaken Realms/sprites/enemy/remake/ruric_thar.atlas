@@ -48,6 +48,12 @@ Walk
 Walk
   xy: 444, 155
   size: 148, 91
+Walk
+  xy: 592, 155
+  size: 148, 91
+Walk
+  xy: 740, 155
+  size: 148, 91
 Attack
   xy: 0, 246
   size: 148, 91
@@ -231,6 +237,12 @@ WalkUp
 WalkUp
   xy: 444, 792
   size: 148, 91
+WalkUp
+  xy: 592, 792
+  size: 148, 91
+WalkUp
+  xy: 740, 792
+  size: 148, 91
 WalkDown
   xy: 0, 883
   size: 148, 91
@@ -242,4 +254,10 @@ WalkDown
   size: 148, 91
 WalkDown
   xy: 444, 883
+  size: 148, 91
+WalkDown
+  xy: 592, 883
+  size: 148, 91
+WalkDown
+  xy: 740, 883
   size: 148, 91

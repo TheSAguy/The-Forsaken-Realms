@@ -422,7 +422,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 37,
-        "scale": 0.2407,
+        "scale": 0.2321,
         "life": 23,
         "rewards": [
             {
@@ -997,7 +997,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 0.2349,
+        "scale": 0.2321,
         "life": 18,
         "rewards": [
             {
@@ -3450,7 +3450,7 @@
             "BiomeGreen"
         ],
         "tier": "Uncommon",
-        "scale": 0.3023
+        "scale": 0.2955
     },
     {
         "name": "Beastmaster",
@@ -8886,7 +8886,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.3714,
+        "scale": 0.3495,
         "life": 11,
         "rewards": [
             {
@@ -9080,7 +9080,7 @@
             "BiomeRed"
         ],
         "tier": "Uncommon",
-        "scale": 0.2766
+        "scale": 0.2889
     },
     {
         "name": "Dragonfly",
@@ -11870,7 +11870,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 36,
-        "scale": 0.2281,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -20008,7 +20008,7 @@
         "boss": true,
         "flying": true,
         "speed": 10,
-        "scale": 0.243,
+        "scale": 0.3133,
         "life": 40,
         "rewards": [
             {
@@ -26818,7 +26818,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.3714,
+        "scale": 0.3611,
         "life": 21,
         "rewards": [
             {
@@ -28939,7 +28939,7 @@
             "BiomeGreen"
         ],
         "tier": "Rare",
-        "scale": 0.2364
+        "scale": 0.2407
     },
     {
         "name": "Spiked Ravager",
@@ -30613,7 +30613,7 @@
             "BiomeGreen"
         ],
         "tier": "Mythic",
-        "scale": 0.2031
+        "scale": 0.197
     },
     {
         "name": "Treefolk Elite",
@@ -30927,7 +30927,7 @@
             "BiomeRed"
         ],
         "tier": "Rare",
-        "scale": 0.2549
+        "scale": 0.25
     },
     {
         "name": "Turtle",
@@ -35333,7 +35333,7 @@
             "abandoned"
         ],
         "tier": "Common",
-        "scale": 0.3514
+        "scale": 0.3439
     },
     {
         "name": "Wolfkin Outcast",
@@ -36619,7 +36619,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2364,
+        "scale": 0.2453,
         "life": 50,
         "rewards": [
             {
@@ -36945,7 +36945,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.194,
+        "scale": 0.197,
         "life": 50,
         "rewards": [
             {
@@ -38122,7 +38122,7 @@
             "decks/legends/arcades_sabboth.dck"
         ],
         "ai": "",
-        "scale": 0.2889,
+        "scale": 0.2955,
         "speed": 30,
         "life": 40,
         "rewards": [
@@ -38191,7 +38191,7 @@
         ],
         "ai": "",
         "speed": 29,
-        "scale": 0.2955,
+        "scale": 0.3023,
         "life": 18,
         "rewards": [
             {
@@ -38324,7 +38324,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2955,
+        "scale": 0.2889,
         "life": 40,
         "rewards": [
             {
@@ -38593,7 +38593,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2241,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -38728,7 +38728,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2321,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -39912,7 +39912,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2321,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -40358,7 +40358,7 @@
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.2364,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -42839,7 +42839,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.25,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -42913,7 +42913,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.2407,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -48732,7 +48732,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2364,
+        "scale": 0.2653,
         "life": 30,
         "rewards": [
             {
@@ -48824,7 +48824,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2321,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -49193,7 +49193,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.273,
+        "scale": 0.2663,
         "life": 30,
         "rewards": [
             {
@@ -50116,7 +50116,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2407,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -50207,7 +50207,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.26,
+        "scale": 0.273,
         "life": 30,
         "rewards": [
             {
@@ -50773,7 +50773,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2868,
+        "scale": 0.2977,
         "life": 30,
         "rewards": [
             {
@@ -52446,7 +52446,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2321,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -52901,7 +52901,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2407,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -56257,7 +56257,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.194,
+        "scale": 0.2063,
         "life": 48,
         "rewards": [
             {
@@ -56396,7 +56396,7 @@
         ],
         "ai": "",
         "speed": 37,
-        "scale": 0.2281,
+        "scale": 0.2355,
         "life": 28,
         "rewards": [
             {
@@ -61092,7 +61092,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2453,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -61241,7 +61241,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2407,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -61386,7 +61386,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2407,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -63691,7 +63691,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2,
+        "scale": 0.2031,
         "life": 47,
         "rewards": [
             {
@@ -63831,7 +63831,7 @@
         "ai": "",
         "flying": true,
         "speed": 38,
-        "scale": 0.2453,
+        "scale": 0.2407,
         "life": 33,
         "rewards": [
             {
@@ -66233,7 +66233,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2889,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -67277,7 +67277,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2364,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -75929,7 +75929,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.3171
+        "scale": 0.3023
     },
     {
         "name": "Kudo",
@@ -76002,7 +76002,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 0.3023
+        "scale": 0.3009
     },
     {
         "name": "Ruxa",
@@ -79639,7 +79639,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2407
+        "scale": 0.2321
     },
     {
         "name": "Alibou",
@@ -86042,7 +86042,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2321
+        "scale": 0.233
     },
     {
         "name": "Anowon",
@@ -86493,7 +86493,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 0.2889
+        "scale": 0.2955
     },
     {
         "name": "The Raven Man",
@@ -88944,7 +88944,7 @@
             "decks/legends/kyodai.dck"
         ],
         "ai": "",
-        "scale": 0.2241,
+        "scale": 0.2407,
         "flying": true,
         "speed": 44,
         "life": 30,
@@ -93743,7 +93743,7 @@
             "decks/legends/teval.dck"
         ],
         "ai": "",
-        "scale": 0.2407,
+        "scale": 0.2364,
         "flying": true,
         "speed": 44,
         "life": 20,
@@ -93896,7 +93896,7 @@
         ],
         "ai": "",
         "flying": true,
-        "scale": 0.25,
+        "scale": 0.2453,
         "speed": 44,
         "life": 20,
         "rewards": [
@@ -94798,7 +94798,7 @@
             "decks/legends/khorvath_and_sylvia.dck"
         ],
         "ai": "",
-        "scale": 0.273,
+        "scale": 0.26,
         "flying": true,
         "speed": 44,
         "life": 20,
@@ -121754,7 +121754,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.2904,
+        "scale": 0.28,
         "life": 40,
         "rewards": [
             {
@@ -121990,7 +121990,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.254,
+        "scale": 0.2632,
         "life": 40,
         "rewards": [
             {
@@ -122226,7 +122226,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 0.321,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -122462,7 +122462,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 0.3059,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -124672,7 +124672,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "tier": "Uncommon",
-        "scale": 0.2955
+        "scale": 0.2826
     },
     {
         "name": "Preston",

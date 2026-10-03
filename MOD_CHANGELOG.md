@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 424: the remade animals run, the trolls and dragons stomp (2026-10-03)
+
+The user, pointing at the hand-drawn Outrider: "It's animations also looks pretty good."
+- Measured: its 6-frame gallop lifts its whole body by 14% of its height every stride; the remakes' walks moved theirs
+  by 2-3%.
+- After a test of three walks on the Dog, Bear, Troll and Green Dragon next to the Outrider: "B for animals, A for
+  trolls and dragons."
+
+- **Animals run as their walk** (B): the creature's run, a gallop on four legs, in 6 frames (1.2 s a stride).
+  - Bear (Bear, Lumra, Ayula, Hurska, Kudo), Dog (Dog, Rin and Seri, Yoshimaru, Phelia), Rhino (Rhino, Brokkos,
+    Perrie, Mr. Orfeo): one big bound a stride with the back rocking; the body rises and falls by 9-13% of its height.
+  - Spider (Spider, Watcher in the Web, Arasta) and Scarab (Scarab, The Scarab God, Toxrill, Zask) scurry the same way.
+- **Trolls, the Treefolk and every dragon stomp** (A): the walk in 6 frames with three times the body bob (6-9%).
+  A dragon's run is a takeoff, so it keeps walking.
+  - Troll (Troll, Grenzo, Obeka, Svella, Grismold), Troll (Yidris, Ruric Thar, The Beamtown Bullies), Treefolk
+    (Treefolk, Colfenor, Doran).
+  - The Adult Green Dragon, Ancient Silver Dragon, Fire Dragon, Bone Dragon, Lathliss and Dragon groups.
+- **Unchanged**: the rabbits and squirrels (they hop), the owls, the Falcon and the bats (they fly), the snakes, the
+  Hellion wurms, the slimes and the Eye.
+- Generator: the export options GaitFrames and GaitBob, and the run exported as the game's walk. The remake pipeline
+  now picks the walk by body type for every future remake (procedural-pixel-creatures `feature/forge-remake` e3b2ffe).
+- **Data only:**
+  - `sprites/enemy/remake/`: 152 files re-exported (76 enemies in 14 groups).
+  - `world/enemies.json`: 54 scales; no other field changed.
+  - The size rule measures the first walk frame, now a gallop or stomp pose, so 44 ranked enemies moved a few percent
+    (Brokkos x1.12, Dog x0.95). The 10 bosses keep their drawn size.
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves.
+  - `sprite_artifact_audit.py --only remake` (122 atlases, 10092 frames) flags 45 frames, all checked by eye:
+    - the flying birds above their shadows, as in round 420
+    - Obeka's portrait crop edge, as in round 420
+    - in the front views only, the head's shadow as a dot below the chin: Brokkos (as in 420) and now also the Rhino,
+      Dog, Rin and Seri and Phelia, whose size changed with the new walk
+    - a shadow beside the Treefolk's foot in one front-view frame
+- Not yet seen in play. Console (F9): `spawn enemy Bear`, `spawn enemy Dog`, `spawn enemy Rhino`, `spawn enemy Troll`,
+  `spawn enemy "Adult Green Dragon"`; follow them on the map.
+
 ## Round 420: every remade enemy at the Forge Blacksmith's pixel density; ten more groups, 37 enemies (2026-10-03)
 
 The user, comparing the Kor Outfitter with the Forge Blacksmith on screen: "The blacksmith looks so much better on the

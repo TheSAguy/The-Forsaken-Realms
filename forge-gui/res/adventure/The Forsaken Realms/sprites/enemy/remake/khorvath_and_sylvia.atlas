@@ -1,5 +1,5 @@
 khorvath_and_sylvia.png
-size: 2964,2064
+size: 2774,2054
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,265 +8,277 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 156, 200
+  size: 146, 199
 Idle
-  xy: 156, 64
-  size: 156, 200
+  xy: 146, 64
+  size: 146, 199
 Idle
-  xy: 312, 64
-  size: 156, 200
+  xy: 292, 64
+  size: 146, 199
 Idle
-  xy: 468, 64
-  size: 156, 200
+  xy: 438, 64
+  size: 146, 199
 Idle
-  xy: 624, 64
-  size: 156, 200
+  xy: 584, 64
+  size: 146, 199
 Idle
-  xy: 780, 64
-  size: 156, 200
+  xy: 730, 64
+  size: 146, 199
 Idle
-  xy: 936, 64
-  size: 156, 200
+  xy: 876, 64
+  size: 146, 199
 Idle
-  xy: 1092, 64
-  size: 156, 200
+  xy: 1022, 64
+  size: 146, 199
 Idle
-  xy: 1248, 64
-  size: 156, 200
+  xy: 1168, 64
+  size: 146, 199
 Idle
-  xy: 1404, 64
-  size: 156, 200
+  xy: 1314, 64
+  size: 146, 199
 Walk
-  xy: 0, 264
-  size: 156, 200
+  xy: 0, 263
+  size: 146, 199
 Walk
-  xy: 156, 264
-  size: 156, 200
+  xy: 146, 263
+  size: 146, 199
 Walk
-  xy: 312, 264
-  size: 156, 200
+  xy: 292, 263
+  size: 146, 199
 Walk
-  xy: 468, 264
-  size: 156, 200
+  xy: 438, 263
+  size: 146, 199
+Walk
+  xy: 584, 263
+  size: 146, 199
+Walk
+  xy: 730, 263
+  size: 146, 199
 Attack
-  xy: 0, 464
-  size: 156, 200
+  xy: 0, 462
+  size: 146, 199
 Attack
-  xy: 156, 464
-  size: 156, 200
+  xy: 146, 462
+  size: 146, 199
 Attack
-  xy: 312, 464
-  size: 156, 200
+  xy: 292, 462
+  size: 146, 199
 Attack
-  xy: 468, 464
-  size: 156, 200
+  xy: 438, 462
+  size: 146, 199
 Attack
-  xy: 624, 464
-  size: 156, 200
+  xy: 584, 462
+  size: 146, 199
 Attack
-  xy: 780, 464
-  size: 156, 200
+  xy: 730, 462
+  size: 146, 199
 Attack
-  xy: 936, 464
-  size: 156, 200
+  xy: 876, 462
+  size: 146, 199
 Attack
-  xy: 1092, 464
-  size: 156, 200
+  xy: 1022, 462
+  size: 146, 199
 Attack
-  xy: 1248, 464
-  size: 156, 200
-Attack
-  xy: 1404, 464
-  size: 156, 200
+  xy: 1168, 462
+  size: 146, 199
 Hit
-  xy: 0, 664
-  size: 156, 200
+  xy: 0, 661
+  size: 146, 199
 Hit
-  xy: 156, 664
-  size: 156, 200
+  xy: 146, 661
+  size: 146, 199
 Hit
-  xy: 312, 664
-  size: 156, 200
+  xy: 292, 661
+  size: 146, 199
 Hit
-  xy: 468, 664
-  size: 156, 200
+  xy: 438, 661
+  size: 146, 199
 Hit
-  xy: 624, 664
-  size: 156, 200
+  xy: 584, 661
+  size: 146, 199
 Hit
-  xy: 780, 664
-  size: 156, 200
+  xy: 730, 661
+  size: 146, 199
 Hit
-  xy: 936, 664
-  size: 156, 200
-Hit
-  xy: 1092, 664
-  size: 156, 200
+  xy: 876, 661
+  size: 146, 199
 Death
-  xy: 0, 864
-  size: 156, 200
+  xy: 0, 860
+  size: 146, 199
 Death
-  xy: 156, 864
-  size: 156, 200
+  xy: 146, 860
+  size: 146, 199
 Death
-  xy: 312, 864
-  size: 156, 200
+  xy: 292, 860
+  size: 146, 199
 Death
-  xy: 468, 864
-  size: 156, 200
+  xy: 438, 860
+  size: 146, 199
 Death
-  xy: 624, 864
-  size: 156, 200
+  xy: 584, 860
+  size: 146, 199
 Death
-  xy: 780, 864
-  size: 156, 200
+  xy: 730, 860
+  size: 146, 199
 Death
-  xy: 936, 864
-  size: 156, 200
+  xy: 876, 860
+  size: 146, 199
 Death
-  xy: 1092, 864
-  size: 156, 200
+  xy: 1022, 860
+  size: 146, 199
 Death
-  xy: 1248, 864
-  size: 156, 200
+  xy: 1168, 860
+  size: 146, 199
 Death
-  xy: 1404, 864
-  size: 156, 200
+  xy: 1314, 860
+  size: 146, 199
 Death
-  xy: 1560, 864
-  size: 156, 200
+  xy: 1460, 860
+  size: 146, 199
 Death
-  xy: 1716, 864
-  size: 156, 200
+  xy: 1606, 860
+  size: 146, 199
 Death
-  xy: 1872, 864
-  size: 156, 200
+  xy: 1752, 860
+  size: 146, 199
 Death
-  xy: 2028, 864
-  size: 156, 200
+  xy: 1898, 860
+  size: 146, 199
 Death
-  xy: 2184, 864
-  size: 156, 200
+  xy: 2044, 860
+  size: 146, 199
 Death
-  xy: 2340, 864
-  size: 156, 200
+  xy: 2190, 860
+  size: 146, 199
 Death
-  xy: 2496, 864
-  size: 156, 200
+  xy: 2336, 860
+  size: 146, 199
 Death
-  xy: 2652, 864
-  size: 156, 200
+  xy: 2482, 860
+  size: 146, 199
 Death
-  xy: 2808, 864
-  size: 156, 200
+  xy: 2628, 860
+  size: 146, 199
 Wake
-  xy: 0, 1064
-  size: 156, 200
+  xy: 0, 1059
+  size: 146, 199
 Wake
-  xy: 156, 1064
-  size: 156, 200
+  xy: 146, 1059
+  size: 146, 199
 Wake
-  xy: 312, 1064
-  size: 156, 200
+  xy: 292, 1059
+  size: 146, 199
 Wake
-  xy: 468, 1064
-  size: 156, 200
+  xy: 438, 1059
+  size: 146, 199
 Wake
-  xy: 624, 1064
-  size: 156, 200
+  xy: 584, 1059
+  size: 146, 199
 Wake
-  xy: 780, 1064
-  size: 156, 200
+  xy: 730, 1059
+  size: 146, 199
 Wake
-  xy: 936, 1064
-  size: 156, 200
+  xy: 876, 1059
+  size: 146, 199
 Wake
-  xy: 1092, 1064
-  size: 156, 200
+  xy: 1022, 1059
+  size: 146, 199
 Wake
-  xy: 1248, 1064
-  size: 156, 200
+  xy: 1168, 1059
+  size: 146, 199
 IdleUp
-  xy: 0, 1264
-  size: 156, 200
+  xy: 0, 1258
+  size: 146, 199
 IdleUp
-  xy: 156, 1264
-  size: 156, 200
+  xy: 146, 1258
+  size: 146, 199
 IdleUp
-  xy: 312, 1264
-  size: 156, 200
+  xy: 292, 1258
+  size: 146, 199
 IdleUp
-  xy: 468, 1264
-  size: 156, 200
+  xy: 438, 1258
+  size: 146, 199
 IdleUp
-  xy: 624, 1264
-  size: 156, 200
+  xy: 584, 1258
+  size: 146, 199
 IdleUp
-  xy: 780, 1264
-  size: 156, 200
+  xy: 730, 1258
+  size: 146, 199
 IdleUp
-  xy: 936, 1264
-  size: 156, 200
+  xy: 876, 1258
+  size: 146, 199
 IdleUp
-  xy: 1092, 1264
-  size: 156, 200
+  xy: 1022, 1258
+  size: 146, 199
 IdleUp
-  xy: 1248, 1264
-  size: 156, 200
+  xy: 1168, 1258
+  size: 146, 199
 IdleUp
-  xy: 1404, 1264
-  size: 156, 200
+  xy: 1314, 1258
+  size: 146, 199
 IdleDown
-  xy: 0, 1464
-  size: 156, 200
+  xy: 0, 1457
+  size: 146, 199
 IdleDown
-  xy: 156, 1464
-  size: 156, 200
+  xy: 146, 1457
+  size: 146, 199
 IdleDown
-  xy: 312, 1464
-  size: 156, 200
+  xy: 292, 1457
+  size: 146, 199
 IdleDown
-  xy: 468, 1464
-  size: 156, 200
+  xy: 438, 1457
+  size: 146, 199
 IdleDown
-  xy: 624, 1464
-  size: 156, 200
+  xy: 584, 1457
+  size: 146, 199
 IdleDown
-  xy: 780, 1464
-  size: 156, 200
+  xy: 730, 1457
+  size: 146, 199
 IdleDown
-  xy: 936, 1464
-  size: 156, 200
+  xy: 876, 1457
+  size: 146, 199
 IdleDown
-  xy: 1092, 1464
-  size: 156, 200
+  xy: 1022, 1457
+  size: 146, 199
 IdleDown
-  xy: 1248, 1464
-  size: 156, 200
+  xy: 1168, 1457
+  size: 146, 199
 IdleDown
-  xy: 1404, 1464
-  size: 156, 200
+  xy: 1314, 1457
+  size: 146, 199
 WalkUp
-  xy: 0, 1664
-  size: 156, 200
+  xy: 0, 1656
+  size: 146, 199
 WalkUp
-  xy: 156, 1664
-  size: 156, 200
+  xy: 146, 1656
+  size: 146, 199
 WalkUp
-  xy: 312, 1664
-  size: 156, 200
+  xy: 292, 1656
+  size: 146, 199
 WalkUp
-  xy: 468, 1664
-  size: 156, 200
+  xy: 438, 1656
+  size: 146, 199
+WalkUp
+  xy: 584, 1656
+  size: 146, 199
+WalkUp
+  xy: 730, 1656
+  size: 146, 199
 WalkDown
-  xy: 0, 1864
-  size: 156, 200
+  xy: 0, 1855
+  size: 146, 199
 WalkDown
-  xy: 156, 1864
-  size: 156, 200
+  xy: 146, 1855
+  size: 146, 199
 WalkDown
-  xy: 312, 1864
-  size: 156, 200
+  xy: 292, 1855
+  size: 146, 199
 WalkDown
-  xy: 468, 1864
-  size: 156, 200
+  xy: 438, 1855
+  size: 146, 199
+WalkDown
+  xy: 584, 1855
+  size: 146, 199
+WalkDown
+  xy: 730, 1855
+  size: 146, 199

@@ -48,6 +48,12 @@ Walk
 Walk
   xy: 264, 132
   size: 88, 68
+Walk
+  xy: 352, 132
+  size: 88, 68
+Walk
+  xy: 440, 132
+  size: 88, 68
 Attack
   xy: 0, 200
   size: 88, 68
@@ -219,6 +225,12 @@ WalkUp
 WalkUp
   xy: 264, 608
   size: 88, 68
+WalkUp
+  xy: 352, 608
+  size: 88, 68
+WalkUp
+  xy: 440, 608
+  size: 88, 68
 WalkDown
   xy: 0, 676
   size: 88, 68
@@ -230,4 +242,10 @@ WalkDown
   size: 88, 68
 WalkDown
   xy: 264, 676
+  size: 88, 68
+WalkDown
+  xy: 352, 676
+  size: 88, 68
+WalkDown
+  xy: 440, 676
   size: 88, 68

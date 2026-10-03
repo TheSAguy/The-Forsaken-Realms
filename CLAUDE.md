@@ -69,6 +69,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   batch 2: bone dragon, hellion, red dragons, dog, rhino, falcon, bat, troll, treefolk). Data only (enemies.json,
   `sprites/enemy/remake/`). Not seen in play yet.
 - LIVE + AGENT PACKAGED with 420-423 (jar 4ff922dc96bd, enemies.json bf32d7b2, 244 remake files).
+- 424 = new walks for 14 remake groups (76 enemies): the animals run as their walk (6 frames), trolls, the treefolk
+  and the dragons stomp (6 frames, 3x body bob). Data only (enemies.json scales, `sprites/enemy/remake/`). Not packaged
+  yet; not seen in play.
 
 ## STATE 2026-10-03 (rounds 418-419): **LOCAL + UNRELEASED.**
 - 418 = spawn ranks by difficulty: `spawn_tier_weighting.json` `difficultyFactors`, Hard x0.8/1.25 and Insane x0.6/1.5.

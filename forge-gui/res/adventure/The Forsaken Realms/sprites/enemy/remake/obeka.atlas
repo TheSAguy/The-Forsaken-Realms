@@ -1,5 +1,5 @@
 obeka.png
-size: 2560,1024
+size: 2560,1074
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,241 +8,259 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 160, 96
+  size: 160, 101
 Idle
   xy: 160, 64
-  size: 160, 96
+  size: 160, 101
 Idle
   xy: 320, 64
-  size: 160, 96
+  size: 160, 101
 Idle
   xy: 480, 64
-  size: 160, 96
+  size: 160, 101
 Idle
   xy: 640, 64
-  size: 160, 96
+  size: 160, 101
 Idle
   xy: 800, 64
-  size: 160, 96
+  size: 160, 101
 Idle
   xy: 960, 64
-  size: 160, 96
+  size: 160, 101
 Idle
   xy: 1120, 64
-  size: 160, 96
+  size: 160, 101
 Idle
   xy: 1280, 64
-  size: 160, 96
+  size: 160, 101
 Idle
   xy: 1440, 64
-  size: 160, 96
+  size: 160, 101
 Walk
-  xy: 0, 160
-  size: 160, 96
+  xy: 0, 165
+  size: 160, 101
 Walk
-  xy: 160, 160
-  size: 160, 96
+  xy: 160, 165
+  size: 160, 101
 Walk
-  xy: 320, 160
-  size: 160, 96
+  xy: 320, 165
+  size: 160, 101
 Walk
-  xy: 480, 160
-  size: 160, 96
+  xy: 480, 165
+  size: 160, 101
+Walk
+  xy: 640, 165
+  size: 160, 101
+Walk
+  xy: 800, 165
+  size: 160, 101
 Attack
-  xy: 0, 256
-  size: 160, 96
+  xy: 0, 266
+  size: 160, 101
 Attack
-  xy: 160, 256
-  size: 160, 96
+  xy: 160, 266
+  size: 160, 101
 Attack
-  xy: 320, 256
-  size: 160, 96
+  xy: 320, 266
+  size: 160, 101
 Attack
-  xy: 480, 256
-  size: 160, 96
+  xy: 480, 266
+  size: 160, 101
 Attack
-  xy: 640, 256
-  size: 160, 96
+  xy: 640, 266
+  size: 160, 101
 Attack
-  xy: 800, 256
-  size: 160, 96
+  xy: 800, 266
+  size: 160, 101
 Attack
-  xy: 960, 256
-  size: 160, 96
+  xy: 960, 266
+  size: 160, 101
 Attack
-  xy: 1120, 256
-  size: 160, 96
+  xy: 1120, 266
+  size: 160, 101
 Hit
-  xy: 0, 352
-  size: 160, 96
+  xy: 0, 367
+  size: 160, 101
 Hit
-  xy: 160, 352
-  size: 160, 96
+  xy: 160, 367
+  size: 160, 101
 Hit
-  xy: 320, 352
-  size: 160, 96
+  xy: 320, 367
+  size: 160, 101
 Hit
-  xy: 480, 352
-  size: 160, 96
+  xy: 480, 367
+  size: 160, 101
 Hit
-  xy: 640, 352
-  size: 160, 96
+  xy: 640, 367
+  size: 160, 101
 Hit
-  xy: 800, 352
-  size: 160, 96
+  xy: 800, 367
+  size: 160, 101
 Death
-  xy: 0, 448
-  size: 160, 96
+  xy: 0, 468
+  size: 160, 101
 Death
-  xy: 160, 448
-  size: 160, 96
+  xy: 160, 468
+  size: 160, 101
 Death
-  xy: 320, 448
-  size: 160, 96
+  xy: 320, 468
+  size: 160, 101
 Death
-  xy: 480, 448
-  size: 160, 96
+  xy: 480, 468
+  size: 160, 101
 Death
-  xy: 640, 448
-  size: 160, 96
+  xy: 640, 468
+  size: 160, 101
 Death
-  xy: 800, 448
-  size: 160, 96
+  xy: 800, 468
+  size: 160, 101
 Death
-  xy: 960, 448
-  size: 160, 96
+  xy: 960, 468
+  size: 160, 101
 Death
-  xy: 1120, 448
-  size: 160, 96
+  xy: 1120, 468
+  size: 160, 101
 Death
-  xy: 1280, 448
-  size: 160, 96
+  xy: 1280, 468
+  size: 160, 101
 Death
-  xy: 1440, 448
-  size: 160, 96
+  xy: 1440, 468
+  size: 160, 101
 Death
-  xy: 1600, 448
-  size: 160, 96
+  xy: 1600, 468
+  size: 160, 101
 Death
-  xy: 1760, 448
-  size: 160, 96
+  xy: 1760, 468
+  size: 160, 101
 Death
-  xy: 1920, 448
-  size: 160, 96
+  xy: 1920, 468
+  size: 160, 101
 Death
-  xy: 2080, 448
-  size: 160, 96
+  xy: 2080, 468
+  size: 160, 101
 Death
-  xy: 2240, 448
-  size: 160, 96
+  xy: 2240, 468
+  size: 160, 101
 Death
-  xy: 2400, 448
-  size: 160, 96
+  xy: 2400, 468
+  size: 160, 101
 Wake
-  xy: 0, 544
-  size: 160, 96
+  xy: 0, 569
+  size: 160, 101
 Wake
-  xy: 160, 544
-  size: 160, 96
+  xy: 160, 569
+  size: 160, 101
 Wake
-  xy: 320, 544
-  size: 160, 96
+  xy: 320, 569
+  size: 160, 101
 Wake
-  xy: 480, 544
-  size: 160, 96
+  xy: 480, 569
+  size: 160, 101
 Wake
-  xy: 640, 544
-  size: 160, 96
+  xy: 640, 569
+  size: 160, 101
 Wake
-  xy: 800, 544
-  size: 160, 96
+  xy: 800, 569
+  size: 160, 101
 Wake
-  xy: 960, 544
-  size: 160, 96
+  xy: 960, 569
+  size: 160, 101
 Wake
-  xy: 1120, 544
-  size: 160, 96
+  xy: 1120, 569
+  size: 160, 101
 IdleUp
-  xy: 0, 640
-  size: 160, 96
+  xy: 0, 670
+  size: 160, 101
 IdleUp
-  xy: 160, 640
-  size: 160, 96
+  xy: 160, 670
+  size: 160, 101
 IdleUp
-  xy: 320, 640
-  size: 160, 96
+  xy: 320, 670
+  size: 160, 101
 IdleUp
-  xy: 480, 640
-  size: 160, 96
+  xy: 480, 670
+  size: 160, 101
 IdleUp
-  xy: 640, 640
-  size: 160, 96
+  xy: 640, 670
+  size: 160, 101
 IdleUp
-  xy: 800, 640
-  size: 160, 96
+  xy: 800, 670
+  size: 160, 101
 IdleUp
-  xy: 960, 640
-  size: 160, 96
+  xy: 960, 670
+  size: 160, 101
 IdleUp
-  xy: 1120, 640
-  size: 160, 96
+  xy: 1120, 670
+  size: 160, 101
 IdleUp
-  xy: 1280, 640
-  size: 160, 96
+  xy: 1280, 670
+  size: 160, 101
 IdleUp
-  xy: 1440, 640
-  size: 160, 96
+  xy: 1440, 670
+  size: 160, 101
 IdleDown
-  xy: 0, 736
-  size: 160, 96
+  xy: 0, 771
+  size: 160, 101
 IdleDown
-  xy: 160, 736
-  size: 160, 96
+  xy: 160, 771
+  size: 160, 101
 IdleDown
-  xy: 320, 736
-  size: 160, 96
+  xy: 320, 771
+  size: 160, 101
 IdleDown
-  xy: 480, 736
-  size: 160, 96
+  xy: 480, 771
+  size: 160, 101
 IdleDown
-  xy: 640, 736
-  size: 160, 96
+  xy: 640, 771
+  size: 160, 101
 IdleDown
-  xy: 800, 736
-  size: 160, 96
+  xy: 800, 771
+  size: 160, 101
 IdleDown
-  xy: 960, 736
-  size: 160, 96
+  xy: 960, 771
+  size: 160, 101
 IdleDown
-  xy: 1120, 736
-  size: 160, 96
+  xy: 1120, 771
+  size: 160, 101
 IdleDown
-  xy: 1280, 736
-  size: 160, 96
+  xy: 1280, 771
+  size: 160, 101
 IdleDown
-  xy: 1440, 736
-  size: 160, 96
+  xy: 1440, 771
+  size: 160, 101
 WalkUp
-  xy: 0, 832
-  size: 160, 96
+  xy: 0, 872
+  size: 160, 101
 WalkUp
-  xy: 160, 832
-  size: 160, 96
+  xy: 160, 872
+  size: 160, 101
 WalkUp
-  xy: 320, 832
-  size: 160, 96
+  xy: 320, 872
+  size: 160, 101
 WalkUp
-  xy: 480, 832
-  size: 160, 96
+  xy: 480, 872
+  size: 160, 101
+WalkUp
+  xy: 640, 872
+  size: 160, 101
+WalkUp
+  xy: 800, 872
+  size: 160, 101
 WalkDown
-  xy: 0, 928
-  size: 160, 96
+  xy: 0, 973
+  size: 160, 101
 WalkDown
-  xy: 160, 928
-  size: 160, 96
+  xy: 160, 973
+  size: 160, 101
 WalkDown
-  xy: 320, 928
-  size: 160, 96
+  xy: 320, 973
+  size: 160, 101
 WalkDown
-  xy: 480, 928
-  size: 160, 96
+  xy: 480, 973
+  size: 160, 101
+WalkDown
+  xy: 640, 973
+  size: 160, 101
+WalkDown
+  xy: 800, 973
+  size: 160, 101
