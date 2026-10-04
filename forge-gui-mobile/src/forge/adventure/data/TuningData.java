@@ -255,6 +255,26 @@ public class TuningData {
     // 0 = the full arena list, as before.
     public int championLootFactor = 2;
 
+    // Round 434 - the town-restore fee (the user: "After 5 towns have been restored, let's add 50g and +50% wood cost
+    // for the next 5 towns, then at 10+ do it again, 15+", then "let's start with wood at 15 for easy"). The base below,
+    // plus one step for every restoreFeeStepTowns towns the player holds (TownRestoration.countPlayerTowns - restored or
+    // taken, Orazca/the Capitol counting as one): +restoreFeeStepGold gold and +restoreFeeStepWoodPercent of the BASE
+    // wood (additive, not compounding), no cap. Difficulty-scaled where it is paid (Easy x0.75 .. Insane x1.5), so the
+    // base 20 wood is 15 on Easy. Normal: 200g+20w, 250g+30w, 300g+40w, 350g+50w ...
+    public int restoreFeeGold = 200;
+    public int restoreFeeWood = 20;
+    public int restoreFeeStepTowns = 5;
+    public int restoreFeeStepGold = 50;
+    public int restoreFeeStepWoodPercent = 50;
+
+    /** Round 434: the restore fee's base {gold, wood, stone, shards} while the player holds this many towns. */
+    public int[] restoreFeeFor(int heldTowns) {
+        int step = restoreFeeStepTowns > 0 ? Math.max(0, heldTowns) / restoreFeeStepTowns : 0;
+        int gold = restoreFeeGold + step * restoreFeeStepGold;
+        int wood = restoreFeeWood + Math.round(restoreFeeWood * restoreFeeStepWoodPercent * step / 100f);
+        return new int[]{gold, wood, 0, 0};
+    }
+
     // Round 411 - NOTORIETY (the user: "Each 5 win streak will add/upgrade one of these. Starting at duel 6"): the
     // player's wins in a row against anyone (the duels round 404 counts; any loss resets it, Bronze Coin or not).
     // Every notorietyWinsPerLevel of them lifts the level by one, up to the walls lists' length: the enemy seat starts

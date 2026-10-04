@@ -346,7 +346,10 @@ Capitol), a **Teleporter** network for fast travel between any two Teleporter-eq
 and an **Archaeologist** who can be sent on week-long expeditions for a chance at boosters and
 rare items. Guards can be hired to defend a town, paid weekly out of your own coffers.
 
-**Restoring a town.** A ruin's Job Board offers the restoration. Once it's paid you are sent back
+**Restoring a town.** A ruin's Job Board offers the restoration. The fee grows with your realm: 200 gold and 20 wood
+while you hold fewer than five towns, then 50 gold and 10 wood more for every five you hold (250 + 30 from five
+towns, 300 + 40 from ten, and so on), scaled by difficulty like every other cost (Easy 25% cheaper, Hard 25% and
+Insane 50% dearer). Orazca, the Capitol and towns taken by force count; lose towns and the fee falls with them. Once it's paid you are sent back
 out to the map - step back in and the town stands in your own town layout, its Inn open and its
 other slots still rubble for you to build on. Ruins and neutral towns you don't hold keep the old
 Wasteland look, and Orazca, once restored, keeps the Warden inside. A town you capture from a color

@@ -25,6 +25,10 @@ public final class NewGamePlusRefund {
         if (world == null)
             return total;
         int towns = 0;
+        // Round 434: the restore fee rises one step per 5 towns held, so the n-th fee paid is refunded at the n-th step -
+        // the first five at the base, the next five one step up. An estimate: how many towns were held at each restore
+        // (towns taken by force raised it, towns lost lowered it) is not saved.
+        int feesPaid = 0;
         for (PointOfInterest poi : world.getAllPointOfInterest()) {
             if (poi.getData() == null)
                 continue;
@@ -35,12 +39,12 @@ public final class NewGamePlusRefund {
             int[] town = new int[4];
             StringBuilder what = new StringBuilder();
             if (capitol) { // Orazca restored, then raised
-                EconomyBuildings.addScaled(town, TownRestoration.restoreCostBase());
+                EconomyBuildings.addScaled(town, TownRestoration.restoreCostAt(feesPaid++));
                 EconomyBuildings.addScaled(town, TownRestoration.capitolCostBase());
                 what.append("restored + raised to the Capitol");
             } else if (TownRestoration.wasRestoredForAFee(poi, changes)) {
-                EconomyBuildings.addScaled(town, TownRestoration.restoreCostBase());
-                what.append("restored");
+                EconomyBuildings.addScaled(town, TownRestoration.restoreCostAt(feesPaid++));
+                what.append("restored (fee ").append(feesPaid).append(")");
             } else {
                 what.append("taken, no fee");
             }

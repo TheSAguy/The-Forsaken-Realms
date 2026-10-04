@@ -63,6 +63,12 @@ groups, one enemy each (boars, wolves, fox, cat, hen, chick, turtle, crab, snake
 a leech, a red lizard, a wurm); the cobra held for a rework. Data only (enemies.json, `sprites/enemy/remake/`;
 procedural-pixel-creatures `cloud/batch-05`). Now 225 remake atlases. Not packaged yet; not seen in play.
 
+## STATE 2026-10-04 (round 434): **LOCAL + UNRELEASED** - the town-restore fee rises with the towns held: settings.json
+`restoreFee*` = 200g + 20w (15w on Easy), +50g and +10w per 5 towns held, difficulty-scaled, no cap
+(`TuningData.restoreFeeFor`, `TownRestoration.restoreCostAt/currentRestoreCost`, `[TFR-RestoreFee]`; NG+ refunds the n-th
+fee at the n-th step). The attacking-mage cap no longer counts the Capitol twice (`TerritoryControl`). Agent-tested the
+fee (Insane, 6 held -> 375g + 45w); the cap fix compiled, not seen in play.
+
 ## STATE 2026-10-04 (round 433): **LOCAL + UNRELEASED** - `PointOfInterestData.rotationGroup`: Deep Caverns' four
 entries (CaveBA/CD/GB/RJ, cave_huge.tmx) share one rotation share - one on the map at a time, not one per land;
 `DungeonRotation.BALANCE_VERSION` 2 rebalances old saves on load and lowers their visible target to the shares' sum.

@@ -130,6 +130,14 @@
     // budget: this many times their rank's first-win card count, best rarities first, plus their signature card, and
     // this many times their rank's resource purse. 0 = the full arena list, as before.
     "championLootFactor": 2,
+    // Round 434 - the town-restore fee: this base, plus one step per restoreFeeStepTowns towns held (Orazca/the Capitol
+    // and towns taken by force count): +restoreFeeStepGold gold and +restoreFeeStepWoodPercent of the BASE wood, no cap.
+    // Difficulty-scaled where it is paid (Easy x0.75 .. Insane x1.5). Normal: 200g+20w, 250g+30w, 300g+40w, 350g+50w ...
+    "restoreFeeGold": 200,
+    "restoreFeeWood": 20,
+    "restoreFeeStepTowns": 5,
+    "restoreFeeStepGold": 50,
+    "restoreFeeStepWoodPercent": 50,
     // Round 411 - NOTORIETY: your wins in a row against anyone (the duels above count; any loss resets it). Every
     // notorietyWinsPerLevel wins add a level, and an enemy of a reached rank starts with a Wall token - the level's
     // entry of its rank's list (level 1 = 5-9 wins = the first). notorietyMinRank* = the lowest rank it reaches on that

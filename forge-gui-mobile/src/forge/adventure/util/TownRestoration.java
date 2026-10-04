@@ -34,10 +34,8 @@ public class TownRestoration {
     // through to the ordinary "no color match -> NEUTRAL" branch, and the town never counts as
     // player-owned. See TownRestoration.seedFunctioningNeutralTowns().
     public static final String NEUTRAL_SEEDED_FLAG = "neutralSeeded";
-    // 2026-08-12 user cost table (multi-resource; see EconomyBuildings' cost helpers).
-    // Wood component halved 2026-08-21 (v1.00 feedback round) - gold untouched.
-    private static final int RESTORE_COST_GOLD = 200;
-    private static final int RESTORE_COST_WOOD = 5;
+    // The restore fee: 2026-08-12 user cost table, wood halved 2026-08-21. Round 434: settings.json restoreFee*, rising
+    // with the towns the player holds - restoreCostAt() / currentRestoreCost() below.
 
     // Biome json ("colorless.json") whose name pool (town_names_waste.txt) names wasteland towns.
     private static final String WASTE_BIOME_NAME = "waste";
@@ -359,9 +357,15 @@ public class TownRestoration {
                 && !TerritoryControl.isRingTown(point) && isWastelandTown(point.getData());
     }
 
-    /** Round 400: the restore fee's base {gold, wood, stone, shards} - difficulty-scaled where it is paid. */
-    static int[] restoreCostBase() {
-        return new int[]{RESTORE_COST_GOLD, RESTORE_COST_WOOD, 0, 0};
+    /** Round 400: the restore fee's base {gold, wood, stone, shards} - difficulty-scaled where it is paid. Round 434: the
+     *  fee while the player holds this many towns (TuningData.restoreFeeFor - one step per 5 held). */
+    static int[] restoreCostAt(int heldTowns) {
+        return Config.instance().getTuningData().restoreFeeFor(heldTowns);
+    }
+
+    /** Round 434: the fee for the next restore - at the towns the player holds now (countPlayerTowns). */
+    static int[] currentRestoreCost() {
+        return restoreCostAt(countPlayerTowns());
     }
 
     /** Round 400: the Capitol upgrade's base {gold, wood, stone, shards}. */
@@ -782,15 +786,20 @@ public class TownRestoration {
     public static MapDialog buildRestoreTownDialog(MapStage stage, int objectId) {
         // Multi-resource cost (2026-08-12 user table: 200 gold + 10 wood), each component
         // difficulty-scaled inside EconomyBuildings' cost helpers - label, affordability, and
-        // deduction all derive from the same base tuple.
-        String label = EconomyBuildings.costLabel(RESTORE_COST_GOLD, RESTORE_COST_WOOD, 0, 0);
+        // deduction all derive from the same base tuple. Round 434: the tuple rises with the towns held.
+        int held = countPlayerTowns();
+        int[] fee = restoreCostAt(held);
+        System.out.println("[TFR-RestoreFee] holding " + held + " town(s): base " + fee[0] + " gold + " + fee[1]
+                + " wood, x" + EconomyBuildings.difficultyPriceMultiplier() + " for the difficulty -> "
+                + EconomyBuildings.scaledCost(fee[0]) + " gold + " + EconomyBuildings.scaledCost(fee[1]) + " wood");
+        String label = EconomyBuildings.costLabel(fee[0], fee[1], 0, 0);
         DialogData root = new DialogData();
         root.text = "The Job Board lies buried in rubble. Restoring the town here will cost "
                 + label + ".";
 
         DialogData yes = new DialogData();
         yes.name = "Restore town (" + label + ")";
-        yes.isDisabled = !EconomyBuildings.canAffordCost(RESTORE_COST_GOLD, RESTORE_COST_WOOD, 0, 0);
+        yes.isDisabled = !EconomyBuildings.canAffordCost(fee[0], fee[1], 0, 0);
         DialogData.ActionData refreshShops = new DialogData.ActionData();
         refreshShops.refreshShopRewardsTrigger = "town-restore";
         // Town Reputation (user spec 2026-08-17): restoring a town is worth +1 reputation there -
@@ -799,7 +808,7 @@ public class TownRestoration {
         DialogData.ActionData addRep = new DialogData.ActionData();
         addRep.addMapReputation = 1;
         yes.action = new DialogData.ActionData[]{
-                EconomyBuildings.spendCostAction(RESTORE_COST_GOLD, RESTORE_COST_WOOD, 0, 0),
+                EconomyBuildings.spendCostAction(fee[0], fee[1], 0, 0),
                 setFlagAction(TOWN_RESTORED_FLAG),
                 addRep,
                 refreshShops};

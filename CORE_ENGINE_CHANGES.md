@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 434 - the restore fee rises with the realm; the mage cap counts the Capitol once
+
+- No stock engine file. Mod: `TuningData.restoreFee*`/`restoreFeeFor`, `TownRestoration` (the RESTORE_COST constants
+  gave way to `restoreCostAt/currentRestoreCost`), `NewGamePlusRefund`, `TerritoryControl`'s mage-cap town term.
+
 ### Round 433 - rotation groups (Deep Caverns); the ground's draw-state check
 
 - **`forge-gui-mobile/src/forge/adventure/data/PointOfInterestData.java`** - new field `rotationGroup`; the copy

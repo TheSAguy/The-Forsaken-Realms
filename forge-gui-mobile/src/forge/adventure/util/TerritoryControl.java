@@ -2031,11 +2031,12 @@ public class TerritoryControl {
         // (11 - index) lands on exactly those 4 numbers - Easy 11, Normal 10, Hard 9, Insane 8 -
         // without needing a separate per-difficulty table. A rubber-band mechanic layered on top
         // of the flat difficulty base above, so a dominant player faces escalating pressure
-        // regardless of difficulty. countPlayerTowns() itself doesn't count the Capitol (it's a
-        // separate POI created via transformInto(), same reason the life-bonus calc elsewhere
-        // adds capitolExists() ? 1 : 0 on top of it) - added here explicitly per the user's own
-        // "count Capitol as a town" spec.
-        int playerTowns = TownRestoration.countPlayerTowns() + (TownRestoration.capitolExists() ? 1 : 0);
+        // regardless of difficulty. Round 434 (the user: "yes, fix the Capitol double count"): countPlayerTowns()
+        // ALREADY counts the Capitol - raising it sets TOWN_RESTORED_FLAG on the transformed POI - so the "+1 if a
+        // Capitol exists" that stood here counted it twice (a Discord log: playerTowns=18 while holding 17, the cap one
+        // higher). The user's "count Capitol as a town" is met by the count alone. (The life bonus's own
+        // capitolExists() +1 is a separate Capitol bonus, not a town.)
+        int playerTowns = TownRestoration.countPlayerTowns();
         int townBonus = playerTowns / (11 - index);
         // Color Defeat (2026-08-14 user spec, stacking): "+1 to the number of attacking mages
         // [every remaining AI] can field" per additional color defeated - a shared/global cap

@@ -14288,6 +14288,47 @@ install 19 as round 435, rework the cobra".
 - Not yet seen in play. Console (F9): `spawn enemy "Wild Boar"`, `spawn enemy "Snow Fox"`, `spawn enemy "Glowing Wisp"`,
   `spawn enemy "Orange Mushroomling"`, `spawn enemy "Slow Turtle"`.
 
+## Round 434: the restore fee grows with the realm; the mage cap counts the Capitol once (2026-10-04)
+
+The user: "yes, fix the Capitol double count. After 5 towns have been restored, let's add 50g and +50% wood cost for
+the next 5 towns, then at 10+ do it again, 15+", then "let's start with wood at 15 for easy" and "yes, do 434 with the
+new wood costs".
+
+**The restore fee** (the Job Board of a ruined town).
+- It was a flat 200 gold + 5 wood, difficulty-scaled; the Discord log of round 433 held 17 towns by day 16 on it.
+- Now settings.json `restoreFee*`: 200 gold + 20 wood (15 on Easy), plus one step for every 5 towns the player holds
+  (`TownRestoration.countPlayerTowns`: restored or taken, Orazca/the Capitol counting as one).
+- Each step adds +50 gold and +50% of the BASE wood (+10): additive, no cap.
+- Scaled by difficulty where paid (Easy x0.75, Hard x1.25, Insane x1.5).
+- Lose towns and the fee falls with them.
+
+  | Towns held | Easy | Normal | Hard | Insane |
+  |---|---|---|---|---|
+  | 0-4 | 150 + 15 | 200 + 20 | 250 + 25 | 300 + 30 |
+  | 5-9 | 188 + 23 | 250 + 30 | 313 + 38 | 375 + 45 |
+  | 10-14 | 225 + 30 | 300 + 40 | 375 + 50 | 450 + 60 |
+  | 15-19 | 263 + 38 | 350 + 50 | 438 + 63 | 525 + 75 |
+
+- `TuningData.restoreFeeFor(held)`, `TownRestoration.restoreCostAt/currentRestoreCost`. The dialog's label,
+  affordability and payment use the one tuple.
+- `[TFR-RestoreFee] holding N town(s): base G gold + W wood, xM for the difficulty -> g gold + w wood`.
+- New Game+'s refund of invested resources refunds the n-th fee paid at the n-th step. It is an estimate: the towns
+  held at each restore are not saved.
+
+**The mage cap counted the Capitol twice** (`TerritoryControl`, the attacking-mage cap's town term):
+- `countPlayerTowns()` already counts the Capitol, since raising it sets `TOWN_RESTORED_FLAG` on the transformed POI.
+- The `+ (capitolExists() ? 1 : 0)` beside it (written when the comment believed otherwise) added it again.
+- The Discord log read `playerTowns=18` while holding 17, and the cap was one higher.
+- The life bonus's own Capitol +1 is a separate bonus, not a town, and stays.
+
+**Checks.**
+- Agent game, Insane, the round-434 classes ahead of the jar: Baker's Forge restored while holding 6 towns.
+  `[TFR-RestoreFee] holding 6 town(s): base 250 gold + 30 wood, x1.5 for the difficulty -> 375 gold + 45 wood`; the
+  wood went 573 -> 528, and `townsRestored -> 7`.
+- The mage-cap line did not fire in that session, and the agent's save has no Capitol. The fix is one term, so it is
+  compiled but not seen in play.
+- GUIDE: "Restoring a town" now gives the fee and its steps.
+
 ## Round 433: Deep Caverns one at a time (rotation groups); a check on the ground's draw state (2026-10-04)
 
 The user, with a screenshot of Deep Caverns and one of the overworld after it: "There is a Cave, Called 'Deep Cave' It's
