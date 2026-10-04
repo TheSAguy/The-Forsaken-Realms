@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 436: the cobra, fully reared with a longer body (cloud batch 5 rework) (2026-10-04)
+
+The cobra held back in round 435, reworked here. The user picked the fully reared version ("Fully reared, install as
+round 436 and merge PR #5"), then: "I think the body of the cobra should be longer. It's very short."
+
+- **Poisonous Snake** (one enemy): a purple-grey cobra drawn three-quarters towards the viewer, so its spread hood
+  shows (seen from the side it read as a flap), reared up whether it stands or crawls, with a body half as long again
+  trailing behind it. A new generator option lengthens a snake without growing its head, hood or reared front. The
+  longer body also keeps the sprite under the game's frame-height limit: it draws at 97% of its rank size, against 76%
+  for the fully reared cobra at the old length.
+- **Data only:**
+  - `sprites/enemy/remake/`: 2 new files (`poisonous_snake.atlas` and `.png`).
+  - `world/enemies.json`: the Poisonous Snake's sprite and scale (1.08 -> 0.37); no other field changed.
+  - Generator: procedural-pixel-creatures PR #5, merged into `feature/forge-remake` (serpent `body.length`;
+    `cloud/batch_05.json` `snake_cobra`).
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves; 1 scale changed.
+  - `sprite_artifact_audit.py --only remake` (226 atlases, 18613 frames) flags 250 frames, all shadows, the same as in
+    round 435; none on the cobra.
+- Not yet seen in play. Console (F9): `spawn enemy "Poisonous Snake"`.
+
 ## Round 435: nineteen more creature groups from the generator (cloud batch 5) (2026-10-04)
 
 The fifth cloud batch, creatures only (procedural-pixel-creatures PR #5). The user went through the verdicts: "yes

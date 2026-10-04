@@ -25419,7 +25419,7 @@
     {
         "name": "Poisonous Snake",
         "nameOverride": "",
-        "sprite": "sprites/enemy/beast/reptile/snake_cobra.atlas",
+        "sprite": "sprites/enemy/remake/poisonous_snake.atlas",
         "deck": [
             "decks/standard/poisonoussnake.dck"
         ],
@@ -25427,7 +25427,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 1.0833,
+        "scale": 0.3736,
         "life": 14,
         "rewards": [
             {
