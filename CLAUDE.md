@@ -62,8 +62,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 46 enemies (the large dragon with Volcano Dragon and 15 legends, the drake with 4, 13 single dragons and wyverns, the
 greater sandwurm, the turtle, Kaheera, the worm); ten legend colors set by hand against the card art (Nicol Bolas
 green-gold); the Shrieker Mushroom held (keeps its original). Data only (enemies.json, `sprites/enemy/remake/`;
-procedural-pixel-creatures `cloud/batch-06`, new opt-in `legs.wyvern`). Now 272 remake atlases. NOT PACKAGED yet; not
-seen in play.
+procedural-pixel-creatures `cloud/batch-06`, new opt-in `legs.wyvern`). Now 272 remake atlases. LIVE + AGENT PACKAGED (enemies.json 95BC3380,
+544 remake files; jar 6C5A48B4EE77); not seen in play.
 
 ## STATE 2026-10-04 (round 436): **LOCAL + UNRELEASED** - the cobra (Poisonous Snake) from cloud batch 5, reworked: fully
 reared, drawn three-quarters so its hood spreads, with a body half as long again (new generator option serpent
