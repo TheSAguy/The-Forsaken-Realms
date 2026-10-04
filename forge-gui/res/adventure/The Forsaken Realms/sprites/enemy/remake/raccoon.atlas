@@ -1,0 +1,251 @@
+raccoon.png
+size: 1260,834
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 77
+Idle
+  xy: 90, 64
+  size: 90, 77
+Idle
+  xy: 180, 64
+  size: 90, 77
+Idle
+  xy: 270, 64
+  size: 90, 77
+Idle
+  xy: 360, 64
+  size: 90, 77
+Idle
+  xy: 450, 64
+  size: 90, 77
+Idle
+  xy: 540, 64
+  size: 90, 77
+Idle
+  xy: 630, 64
+  size: 90, 77
+Idle
+  xy: 720, 64
+  size: 90, 77
+Idle
+  xy: 810, 64
+  size: 90, 77
+Walk
+  xy: 0, 141
+  size: 90, 77
+Walk
+  xy: 90, 141
+  size: 90, 77
+Walk
+  xy: 180, 141
+  size: 90, 77
+Walk
+  xy: 270, 141
+  size: 90, 77
+Walk
+  xy: 360, 141
+  size: 90, 77
+Walk
+  xy: 450, 141
+  size: 90, 77
+Attack
+  xy: 0, 218
+  size: 90, 77
+Attack
+  xy: 90, 218
+  size: 90, 77
+Attack
+  xy: 180, 218
+  size: 90, 77
+Attack
+  xy: 270, 218
+  size: 90, 77
+Attack
+  xy: 360, 218
+  size: 90, 77
+Attack
+  xy: 450, 218
+  size: 90, 77
+Attack
+  xy: 540, 218
+  size: 90, 77
+Hit
+  xy: 0, 295
+  size: 90, 77
+Hit
+  xy: 90, 295
+  size: 90, 77
+Hit
+  xy: 180, 295
+  size: 90, 77
+Hit
+  xy: 270, 295
+  size: 90, 77
+Hit
+  xy: 360, 295
+  size: 90, 77
+Death
+  xy: 0, 372
+  size: 90, 77
+Death
+  xy: 90, 372
+  size: 90, 77
+Death
+  xy: 180, 372
+  size: 90, 77
+Death
+  xy: 270, 372
+  size: 90, 77
+Death
+  xy: 360, 372
+  size: 90, 77
+Death
+  xy: 450, 372
+  size: 90, 77
+Death
+  xy: 540, 372
+  size: 90, 77
+Death
+  xy: 630, 372
+  size: 90, 77
+Death
+  xy: 720, 372
+  size: 90, 77
+Death
+  xy: 810, 372
+  size: 90, 77
+Death
+  xy: 900, 372
+  size: 90, 77
+Death
+  xy: 990, 372
+  size: 90, 77
+Death
+  xy: 1080, 372
+  size: 90, 77
+Death
+  xy: 1170, 372
+  size: 90, 77
+Wake
+  xy: 0, 449
+  size: 90, 77
+Wake
+  xy: 90, 449
+  size: 90, 77
+Wake
+  xy: 180, 449
+  size: 90, 77
+Wake
+  xy: 270, 449
+  size: 90, 77
+Wake
+  xy: 360, 449
+  size: 90, 77
+Wake
+  xy: 450, 449
+  size: 90, 77
+Wake
+  xy: 540, 449
+  size: 90, 77
+IdleUp
+  xy: 0, 526
+  size: 90, 77
+IdleUp
+  xy: 90, 526
+  size: 90, 77
+IdleUp
+  xy: 180, 526
+  size: 90, 77
+IdleUp
+  xy: 270, 526
+  size: 90, 77
+IdleUp
+  xy: 360, 526
+  size: 90, 77
+IdleUp
+  xy: 450, 526
+  size: 90, 77
+IdleUp
+  xy: 540, 526
+  size: 90, 77
+IdleUp
+  xy: 630, 526
+  size: 90, 77
+IdleUp
+  xy: 720, 526
+  size: 90, 77
+IdleUp
+  xy: 810, 526
+  size: 90, 77
+IdleDown
+  xy: 0, 603
+  size: 90, 77
+IdleDown
+  xy: 90, 603
+  size: 90, 77
+IdleDown
+  xy: 180, 603
+  size: 90, 77
+IdleDown
+  xy: 270, 603
+  size: 90, 77
+IdleDown
+  xy: 360, 603
+  size: 90, 77
+IdleDown
+  xy: 450, 603
+  size: 90, 77
+IdleDown
+  xy: 540, 603
+  size: 90, 77
+IdleDown
+  xy: 630, 603
+  size: 90, 77
+IdleDown
+  xy: 720, 603
+  size: 90, 77
+IdleDown
+  xy: 810, 603
+  size: 90, 77
+WalkUp
+  xy: 0, 680
+  size: 90, 77
+WalkUp
+  xy: 90, 680
+  size: 90, 77
+WalkUp
+  xy: 180, 680
+  size: 90, 77
+WalkUp
+  xy: 270, 680
+  size: 90, 77
+WalkUp
+  xy: 360, 680
+  size: 90, 77
+WalkUp
+  xy: 450, 680
+  size: 90, 77
+WalkDown
+  xy: 0, 757
+  size: 90, 77
+WalkDown
+  xy: 90, 757
+  size: 90, 77
+WalkDown
+  xy: 180, 757
+  size: 90, 77
+WalkDown
+  xy: 270, 757
+  size: 90, 77
+WalkDown
+  xy: 360, 757
+  size: 90, 77
+WalkDown
+  xy: 450, 757
+  size: 90, 77

@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 438: eighteen more creature groups from the generator (cloud batch 7: golems and beasts) (2026-10-04)
+
+The seventh cloud batch (procedural-pixel-creatures PR #7): the golems still on their original sprites, built on the
+approved boulder-golem recipe, and beasts the earlier ranking had skipped. The user: "yes install 18 with fixes, fix
+the tiger now, merge PR #6".
+
+- **The groups:**
+  - Eight golems, each with its own build: Golem (light grey; Karn a smoother silver golem), Black Golem, Blue Golem,
+    Green Golem (Go-Shintai a small bark shrine-golem), Iron Golem (rust orange, iron pauldrons), Ice Golem, and the
+    Blue and Green Prototypes (metal constructs).
+  - Wolf (with Immerwolf, Voja, Wildsear, Tayam, Tolsimir, Sarulf and Primo), Fox (with Zirda, Loot and Mr. Foxglove),
+    Hippo (with Phelddagrif, winged like its card, and Keruga), Naked Mole Rat (with Anzrag and Mill Mole), Kavu (with
+    Eluge and Tannuk), Frog (with Helga and Tatsunari), Raptor (with Pantlaza), Penguin (with Ashiok), Raccoon (with
+    Bello) and Plague Rat Swarm (with Karumonix).
+- **Held back**: the tiger (its stripes could not go dark enough; a black-stripes option follows in the next round)
+  and the stegosaurus (it read as a long, low lizard with a sail; it keeps its original sprite).
+- **New generator options** (opt-in): a frog's seated build with bulging eyes, a penguin's white front, and giant back
+  plates (made for the stegosaurus).
+- **Colors**: five legends set by hand after checking the card art: Sarulf (blue-grey, like his card), Wildsear (dark,
+  with fiery eyes), Tayam (slate), Keruga (brown), Tannuk (dark blue-grey).
+- **Data only:**
+  - `sprites/enemy/remake/`: 84 new files (42 enemies).
+  - `world/enemies.json`: 42 sprites and 42 scales; no other field changed.
+  - Generator: procedural-pixel-creatures `cloud/batch-07` (the cloud's batch, batch 6 merged in, the local review).
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves; 41 scales changed (Tatsunari keeps its hand-set drawn size: the
+    installer set its scale).
+  - `sprite_artifact_audit.py --only remake` (314 atlases, 26018 frames) flags 310 frames, all shadows: the 31 new ones
+    are shadow pieces under gallops, the raptors' running strides and the golems' lifts.
+- Not yet seen in play. Console (F9): `spawn enemy Golem`, `spawn enemy "Iron Golem"`, `spawn enemy Wolf`,
+  `spawn enemy Frog`, `spawn enemy Penguin`, `spawn enemy Hippo`.
+
 ## Round 437: nineteen more creature groups from the generator (cloud batch 6: the dragons) (2026-10-04)
 
 The sixth cloud batch, creatures only (procedural-pixel-creatures PR #6). The user went through the verdicts: "yes

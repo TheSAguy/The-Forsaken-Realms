@@ -1,0 +1,269 @@
+go_shintai.png
+size: 1472,1034
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 92, 97
+Idle
+  xy: 92, 64
+  size: 92, 97
+Idle
+  xy: 184, 64
+  size: 92, 97
+Idle
+  xy: 276, 64
+  size: 92, 97
+Idle
+  xy: 368, 64
+  size: 92, 97
+Idle
+  xy: 460, 64
+  size: 92, 97
+Idle
+  xy: 552, 64
+  size: 92, 97
+Idle
+  xy: 644, 64
+  size: 92, 97
+Idle
+  xy: 736, 64
+  size: 92, 97
+Idle
+  xy: 828, 64
+  size: 92, 97
+Walk
+  xy: 0, 161
+  size: 92, 97
+Walk
+  xy: 92, 161
+  size: 92, 97
+Walk
+  xy: 184, 161
+  size: 92, 97
+Walk
+  xy: 276, 161
+  size: 92, 97
+Walk
+  xy: 368, 161
+  size: 92, 97
+Walk
+  xy: 460, 161
+  size: 92, 97
+Attack
+  xy: 0, 258
+  size: 92, 97
+Attack
+  xy: 92, 258
+  size: 92, 97
+Attack
+  xy: 184, 258
+  size: 92, 97
+Attack
+  xy: 276, 258
+  size: 92, 97
+Attack
+  xy: 368, 258
+  size: 92, 97
+Attack
+  xy: 460, 258
+  size: 92, 97
+Attack
+  xy: 552, 258
+  size: 92, 97
+Attack
+  xy: 644, 258
+  size: 92, 97
+Attack
+  xy: 736, 258
+  size: 92, 97
+Hit
+  xy: 0, 355
+  size: 92, 97
+Hit
+  xy: 92, 355
+  size: 92, 97
+Hit
+  xy: 184, 355
+  size: 92, 97
+Hit
+  xy: 276, 355
+  size: 92, 97
+Hit
+  xy: 368, 355
+  size: 92, 97
+Hit
+  xy: 460, 355
+  size: 92, 97
+Death
+  xy: 0, 452
+  size: 92, 97
+Death
+  xy: 92, 452
+  size: 92, 97
+Death
+  xy: 184, 452
+  size: 92, 97
+Death
+  xy: 276, 452
+  size: 92, 97
+Death
+  xy: 368, 452
+  size: 92, 97
+Death
+  xy: 460, 452
+  size: 92, 97
+Death
+  xy: 552, 452
+  size: 92, 97
+Death
+  xy: 644, 452
+  size: 92, 97
+Death
+  xy: 736, 452
+  size: 92, 97
+Death
+  xy: 828, 452
+  size: 92, 97
+Death
+  xy: 920, 452
+  size: 92, 97
+Death
+  xy: 1012, 452
+  size: 92, 97
+Death
+  xy: 1104, 452
+  size: 92, 97
+Death
+  xy: 1196, 452
+  size: 92, 97
+Death
+  xy: 1288, 452
+  size: 92, 97
+Death
+  xy: 1380, 452
+  size: 92, 97
+Wake
+  xy: 0, 549
+  size: 92, 97
+Wake
+  xy: 92, 549
+  size: 92, 97
+Wake
+  xy: 184, 549
+  size: 92, 97
+Wake
+  xy: 276, 549
+  size: 92, 97
+Wake
+  xy: 368, 549
+  size: 92, 97
+Wake
+  xy: 460, 549
+  size: 92, 97
+Wake
+  xy: 552, 549
+  size: 92, 97
+Wake
+  xy: 644, 549
+  size: 92, 97
+IdleUp
+  xy: 0, 646
+  size: 92, 97
+IdleUp
+  xy: 92, 646
+  size: 92, 97
+IdleUp
+  xy: 184, 646
+  size: 92, 97
+IdleUp
+  xy: 276, 646
+  size: 92, 97
+IdleUp
+  xy: 368, 646
+  size: 92, 97
+IdleUp
+  xy: 460, 646
+  size: 92, 97
+IdleUp
+  xy: 552, 646
+  size: 92, 97
+IdleUp
+  xy: 644, 646
+  size: 92, 97
+IdleUp
+  xy: 736, 646
+  size: 92, 97
+IdleUp
+  xy: 828, 646
+  size: 92, 97
+IdleDown
+  xy: 0, 743
+  size: 92, 97
+IdleDown
+  xy: 92, 743
+  size: 92, 97
+IdleDown
+  xy: 184, 743
+  size: 92, 97
+IdleDown
+  xy: 276, 743
+  size: 92, 97
+IdleDown
+  xy: 368, 743
+  size: 92, 97
+IdleDown
+  xy: 460, 743
+  size: 92, 97
+IdleDown
+  xy: 552, 743
+  size: 92, 97
+IdleDown
+  xy: 644, 743
+  size: 92, 97
+IdleDown
+  xy: 736, 743
+  size: 92, 97
+IdleDown
+  xy: 828, 743
+  size: 92, 97
+WalkUp
+  xy: 0, 840
+  size: 92, 97
+WalkUp
+  xy: 92, 840
+  size: 92, 97
+WalkUp
+  xy: 184, 840
+  size: 92, 97
+WalkUp
+  xy: 276, 840
+  size: 92, 97
+WalkUp
+  xy: 368, 840
+  size: 92, 97
+WalkUp
+  xy: 460, 840
+  size: 92, 97
+WalkDown
+  xy: 0, 937
+  size: 92, 97
+WalkDown
+  xy: 92, 937
+  size: 92, 97
+WalkDown
+  xy: 184, 937
+  size: 92, 97
+WalkDown
+  xy: 276, 937
+  size: 92, 97
+WalkDown
+  xy: 368, 937
+  size: 92, 97
+WalkDown
+  xy: 460, 937
+  size: 92, 97

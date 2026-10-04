@@ -1,0 +1,260 @@
+tatsunari.png
+size: 2190,1454
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 146, 139
+Idle
+  xy: 146, 64
+  size: 146, 139
+Idle
+  xy: 292, 64
+  size: 146, 139
+Idle
+  xy: 438, 64
+  size: 146, 139
+Idle
+  xy: 584, 64
+  size: 146, 139
+Idle
+  xy: 730, 64
+  size: 146, 139
+Idle
+  xy: 876, 64
+  size: 146, 139
+Idle
+  xy: 1022, 64
+  size: 146, 139
+Idle
+  xy: 1168, 64
+  size: 146, 139
+Idle
+  xy: 1314, 64
+  size: 146, 139
+Walk
+  xy: 0, 203
+  size: 146, 139
+Walk
+  xy: 146, 203
+  size: 146, 139
+Walk
+  xy: 292, 203
+  size: 146, 139
+Walk
+  xy: 438, 203
+  size: 146, 139
+Attack
+  xy: 0, 342
+  size: 146, 139
+Attack
+  xy: 146, 342
+  size: 146, 139
+Attack
+  xy: 292, 342
+  size: 146, 139
+Attack
+  xy: 438, 342
+  size: 146, 139
+Attack
+  xy: 584, 342
+  size: 146, 139
+Attack
+  xy: 730, 342
+  size: 146, 139
+Attack
+  xy: 876, 342
+  size: 146, 139
+Attack
+  xy: 1022, 342
+  size: 146, 139
+Attack
+  xy: 1168, 342
+  size: 146, 139
+Attack
+  xy: 1314, 342
+  size: 146, 139
+Attack
+  xy: 1460, 342
+  size: 146, 139
+Attack
+  xy: 1606, 342
+  size: 146, 139
+Hit
+  xy: 0, 481
+  size: 146, 139
+Hit
+  xy: 146, 481
+  size: 146, 139
+Hit
+  xy: 292, 481
+  size: 146, 139
+Hit
+  xy: 438, 481
+  size: 146, 139
+Hit
+  xy: 584, 481
+  size: 146, 139
+Hit
+  xy: 730, 481
+  size: 146, 139
+Hit
+  xy: 876, 481
+  size: 146, 139
+Death
+  xy: 0, 620
+  size: 146, 139
+Death
+  xy: 146, 620
+  size: 146, 139
+Death
+  xy: 292, 620
+  size: 146, 139
+Death
+  xy: 438, 620
+  size: 146, 139
+Death
+  xy: 584, 620
+  size: 146, 139
+Death
+  xy: 730, 620
+  size: 146, 139
+Death
+  xy: 876, 620
+  size: 146, 139
+Death
+  xy: 1022, 620
+  size: 146, 139
+Death
+  xy: 1168, 620
+  size: 146, 139
+Death
+  xy: 1314, 620
+  size: 146, 139
+Death
+  xy: 1460, 620
+  size: 146, 139
+Death
+  xy: 1606, 620
+  size: 146, 139
+Death
+  xy: 1752, 620
+  size: 146, 139
+Death
+  xy: 1898, 620
+  size: 146, 139
+Death
+  xy: 2044, 620
+  size: 146, 139
+Wake
+  xy: 0, 759
+  size: 146, 139
+Wake
+  xy: 146, 759
+  size: 146, 139
+Wake
+  xy: 292, 759
+  size: 146, 139
+Wake
+  xy: 438, 759
+  size: 146, 139
+Wake
+  xy: 584, 759
+  size: 146, 139
+Wake
+  xy: 730, 759
+  size: 146, 139
+Wake
+  xy: 876, 759
+  size: 146, 139
+Wake
+  xy: 1022, 759
+  size: 146, 139
+IdleUp
+  xy: 0, 898
+  size: 146, 139
+IdleUp
+  xy: 146, 898
+  size: 146, 139
+IdleUp
+  xy: 292, 898
+  size: 146, 139
+IdleUp
+  xy: 438, 898
+  size: 146, 139
+IdleUp
+  xy: 584, 898
+  size: 146, 139
+IdleUp
+  xy: 730, 898
+  size: 146, 139
+IdleUp
+  xy: 876, 898
+  size: 146, 139
+IdleUp
+  xy: 1022, 898
+  size: 146, 139
+IdleUp
+  xy: 1168, 898
+  size: 146, 139
+IdleUp
+  xy: 1314, 898
+  size: 146, 139
+IdleDown
+  xy: 0, 1037
+  size: 146, 139
+IdleDown
+  xy: 146, 1037
+  size: 146, 139
+IdleDown
+  xy: 292, 1037
+  size: 146, 139
+IdleDown
+  xy: 438, 1037
+  size: 146, 139
+IdleDown
+  xy: 584, 1037
+  size: 146, 139
+IdleDown
+  xy: 730, 1037
+  size: 146, 139
+IdleDown
+  xy: 876, 1037
+  size: 146, 139
+IdleDown
+  xy: 1022, 1037
+  size: 146, 139
+IdleDown
+  xy: 1168, 1037
+  size: 146, 139
+IdleDown
+  xy: 1314, 1037
+  size: 146, 139
+WalkUp
+  xy: 0, 1176
+  size: 146, 139
+WalkUp
+  xy: 146, 1176
+  size: 146, 139
+WalkUp
+  xy: 292, 1176
+  size: 146, 139
+WalkUp
+  xy: 438, 1176
+  size: 146, 139
+WalkDown
+  xy: 0, 1315
+  size: 146, 139
+WalkDown
+  xy: 146, 1315
+  size: 146, 139
+WalkDown
+  xy: 292, 1315
+  size: 146, 139
+WalkDown
+  xy: 438, 1315
+  size: 146, 139

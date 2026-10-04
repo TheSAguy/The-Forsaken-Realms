@@ -1,0 +1,251 @@
+naked_mole_rat.png
+size: 888,664
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 60
+Idle
+  xy: 74, 64
+  size: 74, 60
+Idle
+  xy: 148, 64
+  size: 74, 60
+Idle
+  xy: 222, 64
+  size: 74, 60
+Idle
+  xy: 296, 64
+  size: 74, 60
+Idle
+  xy: 370, 64
+  size: 74, 60
+Idle
+  xy: 444, 64
+  size: 74, 60
+Idle
+  xy: 518, 64
+  size: 74, 60
+Idle
+  xy: 592, 64
+  size: 74, 60
+Idle
+  xy: 666, 64
+  size: 74, 60
+Walk
+  xy: 0, 124
+  size: 74, 60
+Walk
+  xy: 74, 124
+  size: 74, 60
+Walk
+  xy: 148, 124
+  size: 74, 60
+Walk
+  xy: 222, 124
+  size: 74, 60
+Walk
+  xy: 296, 124
+  size: 74, 60
+Walk
+  xy: 370, 124
+  size: 74, 60
+Attack
+  xy: 0, 184
+  size: 74, 60
+Attack
+  xy: 74, 184
+  size: 74, 60
+Attack
+  xy: 148, 184
+  size: 74, 60
+Attack
+  xy: 222, 184
+  size: 74, 60
+Attack
+  xy: 296, 184
+  size: 74, 60
+Attack
+  xy: 370, 184
+  size: 74, 60
+Attack
+  xy: 444, 184
+  size: 74, 60
+Attack
+  xy: 518, 184
+  size: 74, 60
+Attack
+  xy: 592, 184
+  size: 74, 60
+Attack
+  xy: 666, 184
+  size: 74, 60
+Hit
+  xy: 0, 244
+  size: 74, 60
+Hit
+  xy: 74, 244
+  size: 74, 60
+Hit
+  xy: 148, 244
+  size: 74, 60
+Hit
+  xy: 222, 244
+  size: 74, 60
+Hit
+  xy: 296, 244
+  size: 74, 60
+Death
+  xy: 0, 304
+  size: 74, 60
+Death
+  xy: 74, 304
+  size: 74, 60
+Death
+  xy: 148, 304
+  size: 74, 60
+Death
+  xy: 222, 304
+  size: 74, 60
+Death
+  xy: 296, 304
+  size: 74, 60
+Death
+  xy: 370, 304
+  size: 74, 60
+Death
+  xy: 444, 304
+  size: 74, 60
+Death
+  xy: 518, 304
+  size: 74, 60
+Death
+  xy: 592, 304
+  size: 74, 60
+Death
+  xy: 666, 304
+  size: 74, 60
+Death
+  xy: 740, 304
+  size: 74, 60
+Death
+  xy: 814, 304
+  size: 74, 60
+Wake
+  xy: 0, 364
+  size: 74, 60
+Wake
+  xy: 74, 364
+  size: 74, 60
+Wake
+  xy: 148, 364
+  size: 74, 60
+Wake
+  xy: 222, 364
+  size: 74, 60
+Wake
+  xy: 296, 364
+  size: 74, 60
+Wake
+  xy: 370, 364
+  size: 74, 60
+IdleUp
+  xy: 0, 424
+  size: 74, 60
+IdleUp
+  xy: 74, 424
+  size: 74, 60
+IdleUp
+  xy: 148, 424
+  size: 74, 60
+IdleUp
+  xy: 222, 424
+  size: 74, 60
+IdleUp
+  xy: 296, 424
+  size: 74, 60
+IdleUp
+  xy: 370, 424
+  size: 74, 60
+IdleUp
+  xy: 444, 424
+  size: 74, 60
+IdleUp
+  xy: 518, 424
+  size: 74, 60
+IdleUp
+  xy: 592, 424
+  size: 74, 60
+IdleUp
+  xy: 666, 424
+  size: 74, 60
+IdleDown
+  xy: 0, 484
+  size: 74, 60
+IdleDown
+  xy: 74, 484
+  size: 74, 60
+IdleDown
+  xy: 148, 484
+  size: 74, 60
+IdleDown
+  xy: 222, 484
+  size: 74, 60
+IdleDown
+  xy: 296, 484
+  size: 74, 60
+IdleDown
+  xy: 370, 484
+  size: 74, 60
+IdleDown
+  xy: 444, 484
+  size: 74, 60
+IdleDown
+  xy: 518, 484
+  size: 74, 60
+IdleDown
+  xy: 592, 484
+  size: 74, 60
+IdleDown
+  xy: 666, 484
+  size: 74, 60
+WalkUp
+  xy: 0, 544
+  size: 74, 60
+WalkUp
+  xy: 74, 544
+  size: 74, 60
+WalkUp
+  xy: 148, 544
+  size: 74, 60
+WalkUp
+  xy: 222, 544
+  size: 74, 60
+WalkUp
+  xy: 296, 544
+  size: 74, 60
+WalkUp
+  xy: 370, 544
+  size: 74, 60
+WalkDown
+  xy: 0, 604
+  size: 74, 60
+WalkDown
+  xy: 74, 604
+  size: 74, 60
+WalkDown
+  xy: 148, 604
+  size: 74, 60
+WalkDown
+  xy: 222, 604
+  size: 74, 60
+WalkDown
+  xy: 296, 604
+  size: 74, 60
+WalkDown
+  xy: 370, 604
+  size: 74, 60

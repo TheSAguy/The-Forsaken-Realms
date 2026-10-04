@@ -58,6 +58,13 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-04 (round 438): **LOCAL + UNRELEASED** - cloud batch 7 of the creature-generator remakes: 18 groups,
+42 enemies (eight golems on the approved boulder recipe; wolf, fox, hippo, naked mole rat, kavu, frog, raptor, penguin,
+raccoon and plague rat with their legends); five legend colors set by hand against the card art; the tiger held for a
+black-stripes option (round 439) and the stegosaurus held (keeps its original). Data only (enemies.json,
+`sprites/enemy/remake/`; procedural-pixel-creatures `cloud/batch-07`). Now 314 remake atlases. NOT PACKAGED yet; not
+seen in play.
+
 ## STATE 2026-10-04 (round 437): **LOCAL + UNRELEASED** - cloud batch 6 of the creature-generator remakes: 19 groups,
 46 enemies (the large dragon with Volcano Dragon and 15 legends, the drake with 4, 13 single dragons and wyverns, the
 greater sandwurm, the turtle, Kaheera, the worm); ten legend colors set by hand against the card art (Nicol Bolas

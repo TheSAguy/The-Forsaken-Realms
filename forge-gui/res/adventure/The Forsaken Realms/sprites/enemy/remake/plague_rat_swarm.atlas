@@ -1,0 +1,251 @@
+plague_rat_swarm.png
+size: 840,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 54
+Idle
+  xy: 70, 64
+  size: 70, 54
+Idle
+  xy: 140, 64
+  size: 70, 54
+Idle
+  xy: 210, 64
+  size: 70, 54
+Idle
+  xy: 280, 64
+  size: 70, 54
+Idle
+  xy: 350, 64
+  size: 70, 54
+Idle
+  xy: 420, 64
+  size: 70, 54
+Idle
+  xy: 490, 64
+  size: 70, 54
+Idle
+  xy: 560, 64
+  size: 70, 54
+Idle
+  xy: 630, 64
+  size: 70, 54
+Walk
+  xy: 0, 118
+  size: 70, 54
+Walk
+  xy: 70, 118
+  size: 70, 54
+Walk
+  xy: 140, 118
+  size: 70, 54
+Walk
+  xy: 210, 118
+  size: 70, 54
+Walk
+  xy: 280, 118
+  size: 70, 54
+Walk
+  xy: 350, 118
+  size: 70, 54
+Attack
+  xy: 0, 172
+  size: 70, 54
+Attack
+  xy: 70, 172
+  size: 70, 54
+Attack
+  xy: 140, 172
+  size: 70, 54
+Attack
+  xy: 210, 172
+  size: 70, 54
+Attack
+  xy: 280, 172
+  size: 70, 54
+Attack
+  xy: 350, 172
+  size: 70, 54
+Attack
+  xy: 420, 172
+  size: 70, 54
+Attack
+  xy: 490, 172
+  size: 70, 54
+Attack
+  xy: 560, 172
+  size: 70, 54
+Attack
+  xy: 630, 172
+  size: 70, 54
+Hit
+  xy: 0, 226
+  size: 70, 54
+Hit
+  xy: 70, 226
+  size: 70, 54
+Hit
+  xy: 140, 226
+  size: 70, 54
+Hit
+  xy: 210, 226
+  size: 70, 54
+Hit
+  xy: 280, 226
+  size: 70, 54
+Death
+  xy: 0, 280
+  size: 70, 54
+Death
+  xy: 70, 280
+  size: 70, 54
+Death
+  xy: 140, 280
+  size: 70, 54
+Death
+  xy: 210, 280
+  size: 70, 54
+Death
+  xy: 280, 280
+  size: 70, 54
+Death
+  xy: 350, 280
+  size: 70, 54
+Death
+  xy: 420, 280
+  size: 70, 54
+Death
+  xy: 490, 280
+  size: 70, 54
+Death
+  xy: 560, 280
+  size: 70, 54
+Death
+  xy: 630, 280
+  size: 70, 54
+Death
+  xy: 700, 280
+  size: 70, 54
+Death
+  xy: 770, 280
+  size: 70, 54
+Wake
+  xy: 0, 334
+  size: 70, 54
+Wake
+  xy: 70, 334
+  size: 70, 54
+Wake
+  xy: 140, 334
+  size: 70, 54
+Wake
+  xy: 210, 334
+  size: 70, 54
+Wake
+  xy: 280, 334
+  size: 70, 54
+Wake
+  xy: 350, 334
+  size: 70, 54
+IdleUp
+  xy: 0, 388
+  size: 70, 54
+IdleUp
+  xy: 70, 388
+  size: 70, 54
+IdleUp
+  xy: 140, 388
+  size: 70, 54
+IdleUp
+  xy: 210, 388
+  size: 70, 54
+IdleUp
+  xy: 280, 388
+  size: 70, 54
+IdleUp
+  xy: 350, 388
+  size: 70, 54
+IdleUp
+  xy: 420, 388
+  size: 70, 54
+IdleUp
+  xy: 490, 388
+  size: 70, 54
+IdleUp
+  xy: 560, 388
+  size: 70, 54
+IdleUp
+  xy: 630, 388
+  size: 70, 54
+IdleDown
+  xy: 0, 442
+  size: 70, 54
+IdleDown
+  xy: 70, 442
+  size: 70, 54
+IdleDown
+  xy: 140, 442
+  size: 70, 54
+IdleDown
+  xy: 210, 442
+  size: 70, 54
+IdleDown
+  xy: 280, 442
+  size: 70, 54
+IdleDown
+  xy: 350, 442
+  size: 70, 54
+IdleDown
+  xy: 420, 442
+  size: 70, 54
+IdleDown
+  xy: 490, 442
+  size: 70, 54
+IdleDown
+  xy: 560, 442
+  size: 70, 54
+IdleDown
+  xy: 630, 442
+  size: 70, 54
+WalkUp
+  xy: 0, 496
+  size: 70, 54
+WalkUp
+  xy: 70, 496
+  size: 70, 54
+WalkUp
+  xy: 140, 496
+  size: 70, 54
+WalkUp
+  xy: 210, 496
+  size: 70, 54
+WalkUp
+  xy: 280, 496
+  size: 70, 54
+WalkUp
+  xy: 350, 496
+  size: 70, 54
+WalkDown
+  xy: 0, 550
+  size: 70, 54
+WalkDown
+  xy: 70, 550
+  size: 70, 54
+WalkDown
+  xy: 140, 550
+  size: 70, 54
+WalkDown
+  xy: 210, 550
+  size: 70, 54
+WalkDown
+  xy: 280, 550
+  size: 70, 54
+WalkDown
+  xy: 350, 550
+  size: 70, 54

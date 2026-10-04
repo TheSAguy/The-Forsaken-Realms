@@ -1,0 +1,248 @@
+tolsimir.png
+size: 1196,914
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 92, 85
+Idle
+  xy: 92, 64
+  size: 92, 85
+Idle
+  xy: 184, 64
+  size: 92, 85
+Idle
+  xy: 276, 64
+  size: 92, 85
+Idle
+  xy: 368, 64
+  size: 92, 85
+Idle
+  xy: 460, 64
+  size: 92, 85
+Idle
+  xy: 552, 64
+  size: 92, 85
+Idle
+  xy: 644, 64
+  size: 92, 85
+Idle
+  xy: 736, 64
+  size: 92, 85
+Idle
+  xy: 828, 64
+  size: 92, 85
+Walk
+  xy: 0, 149
+  size: 92, 85
+Walk
+  xy: 92, 149
+  size: 92, 85
+Walk
+  xy: 184, 149
+  size: 92, 85
+Walk
+  xy: 276, 149
+  size: 92, 85
+Walk
+  xy: 368, 149
+  size: 92, 85
+Walk
+  xy: 460, 149
+  size: 92, 85
+Attack
+  xy: 0, 234
+  size: 92, 85
+Attack
+  xy: 92, 234
+  size: 92, 85
+Attack
+  xy: 184, 234
+  size: 92, 85
+Attack
+  xy: 276, 234
+  size: 92, 85
+Attack
+  xy: 368, 234
+  size: 92, 85
+Attack
+  xy: 460, 234
+  size: 92, 85
+Attack
+  xy: 552, 234
+  size: 92, 85
+Hit
+  xy: 0, 319
+  size: 92, 85
+Hit
+  xy: 92, 319
+  size: 92, 85
+Hit
+  xy: 184, 319
+  size: 92, 85
+Hit
+  xy: 276, 319
+  size: 92, 85
+Hit
+  xy: 368, 319
+  size: 92, 85
+Death
+  xy: 0, 404
+  size: 92, 85
+Death
+  xy: 92, 404
+  size: 92, 85
+Death
+  xy: 184, 404
+  size: 92, 85
+Death
+  xy: 276, 404
+  size: 92, 85
+Death
+  xy: 368, 404
+  size: 92, 85
+Death
+  xy: 460, 404
+  size: 92, 85
+Death
+  xy: 552, 404
+  size: 92, 85
+Death
+  xy: 644, 404
+  size: 92, 85
+Death
+  xy: 736, 404
+  size: 92, 85
+Death
+  xy: 828, 404
+  size: 92, 85
+Death
+  xy: 920, 404
+  size: 92, 85
+Death
+  xy: 1012, 404
+  size: 92, 85
+Death
+  xy: 1104, 404
+  size: 92, 85
+Wake
+  xy: 0, 489
+  size: 92, 85
+Wake
+  xy: 92, 489
+  size: 92, 85
+Wake
+  xy: 184, 489
+  size: 92, 85
+Wake
+  xy: 276, 489
+  size: 92, 85
+Wake
+  xy: 368, 489
+  size: 92, 85
+Wake
+  xy: 460, 489
+  size: 92, 85
+Wake
+  xy: 552, 489
+  size: 92, 85
+IdleUp
+  xy: 0, 574
+  size: 92, 85
+IdleUp
+  xy: 92, 574
+  size: 92, 85
+IdleUp
+  xy: 184, 574
+  size: 92, 85
+IdleUp
+  xy: 276, 574
+  size: 92, 85
+IdleUp
+  xy: 368, 574
+  size: 92, 85
+IdleUp
+  xy: 460, 574
+  size: 92, 85
+IdleUp
+  xy: 552, 574
+  size: 92, 85
+IdleUp
+  xy: 644, 574
+  size: 92, 85
+IdleUp
+  xy: 736, 574
+  size: 92, 85
+IdleUp
+  xy: 828, 574
+  size: 92, 85
+IdleDown
+  xy: 0, 659
+  size: 92, 85
+IdleDown
+  xy: 92, 659
+  size: 92, 85
+IdleDown
+  xy: 184, 659
+  size: 92, 85
+IdleDown
+  xy: 276, 659
+  size: 92, 85
+IdleDown
+  xy: 368, 659
+  size: 92, 85
+IdleDown
+  xy: 460, 659
+  size: 92, 85
+IdleDown
+  xy: 552, 659
+  size: 92, 85
+IdleDown
+  xy: 644, 659
+  size: 92, 85
+IdleDown
+  xy: 736, 659
+  size: 92, 85
+IdleDown
+  xy: 828, 659
+  size: 92, 85
+WalkUp
+  xy: 0, 744
+  size: 92, 85
+WalkUp
+  xy: 92, 744
+  size: 92, 85
+WalkUp
+  xy: 184, 744
+  size: 92, 85
+WalkUp
+  xy: 276, 744
+  size: 92, 85
+WalkUp
+  xy: 368, 744
+  size: 92, 85
+WalkUp
+  xy: 460, 744
+  size: 92, 85
+WalkDown
+  xy: 0, 829
+  size: 92, 85
+WalkDown
+  xy: 92, 829
+  size: 92, 85
+WalkDown
+  xy: 184, 829
+  size: 92, 85
+WalkDown
+  xy: 276, 829
+  size: 92, 85
+WalkDown
+  xy: 368, 829
+  size: 92, 85
+WalkDown
+  xy: 460, 829
+  size: 92, 85

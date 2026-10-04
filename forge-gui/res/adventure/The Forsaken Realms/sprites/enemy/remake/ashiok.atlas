@@ -1,0 +1,233 @@
+ashiok.png
+size: 594,614
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 54, 55
+Idle
+  xy: 54, 64
+  size: 54, 55
+Idle
+  xy: 108, 64
+  size: 54, 55
+Idle
+  xy: 162, 64
+  size: 54, 55
+Idle
+  xy: 216, 64
+  size: 54, 55
+Idle
+  xy: 270, 64
+  size: 54, 55
+Idle
+  xy: 324, 64
+  size: 54, 55
+Idle
+  xy: 378, 64
+  size: 54, 55
+Idle
+  xy: 432, 64
+  size: 54, 55
+Idle
+  xy: 486, 64
+  size: 54, 55
+Walk
+  xy: 0, 119
+  size: 54, 55
+Walk
+  xy: 54, 119
+  size: 54, 55
+Walk
+  xy: 108, 119
+  size: 54, 55
+Walk
+  xy: 162, 119
+  size: 54, 55
+Walk
+  xy: 216, 119
+  size: 54, 55
+Walk
+  xy: 270, 119
+  size: 54, 55
+Attack
+  xy: 0, 174
+  size: 54, 55
+Attack
+  xy: 54, 174
+  size: 54, 55
+Attack
+  xy: 108, 174
+  size: 54, 55
+Attack
+  xy: 162, 174
+  size: 54, 55
+Attack
+  xy: 216, 174
+  size: 54, 55
+Attack
+  xy: 270, 174
+  size: 54, 55
+Attack
+  xy: 324, 174
+  size: 54, 55
+Hit
+  xy: 0, 229
+  size: 54, 55
+Hit
+  xy: 54, 229
+  size: 54, 55
+Hit
+  xy: 108, 229
+  size: 54, 55
+Hit
+  xy: 162, 229
+  size: 54, 55
+Death
+  xy: 0, 284
+  size: 54, 55
+Death
+  xy: 54, 284
+  size: 54, 55
+Death
+  xy: 108, 284
+  size: 54, 55
+Death
+  xy: 162, 284
+  size: 54, 55
+Death
+  xy: 216, 284
+  size: 54, 55
+Death
+  xy: 270, 284
+  size: 54, 55
+Death
+  xy: 324, 284
+  size: 54, 55
+Death
+  xy: 378, 284
+  size: 54, 55
+Death
+  xy: 432, 284
+  size: 54, 55
+Death
+  xy: 486, 284
+  size: 54, 55
+Death
+  xy: 540, 284
+  size: 54, 55
+Wake
+  xy: 0, 339
+  size: 54, 55
+Wake
+  xy: 54, 339
+  size: 54, 55
+Wake
+  xy: 108, 339
+  size: 54, 55
+Wake
+  xy: 162, 339
+  size: 54, 55
+Wake
+  xy: 216, 339
+  size: 54, 55
+IdleUp
+  xy: 0, 394
+  size: 54, 55
+IdleUp
+  xy: 54, 394
+  size: 54, 55
+IdleUp
+  xy: 108, 394
+  size: 54, 55
+IdleUp
+  xy: 162, 394
+  size: 54, 55
+IdleUp
+  xy: 216, 394
+  size: 54, 55
+IdleUp
+  xy: 270, 394
+  size: 54, 55
+IdleUp
+  xy: 324, 394
+  size: 54, 55
+IdleUp
+  xy: 378, 394
+  size: 54, 55
+IdleUp
+  xy: 432, 394
+  size: 54, 55
+IdleUp
+  xy: 486, 394
+  size: 54, 55
+IdleDown
+  xy: 0, 449
+  size: 54, 55
+IdleDown
+  xy: 54, 449
+  size: 54, 55
+IdleDown
+  xy: 108, 449
+  size: 54, 55
+IdleDown
+  xy: 162, 449
+  size: 54, 55
+IdleDown
+  xy: 216, 449
+  size: 54, 55
+IdleDown
+  xy: 270, 449
+  size: 54, 55
+IdleDown
+  xy: 324, 449
+  size: 54, 55
+IdleDown
+  xy: 378, 449
+  size: 54, 55
+IdleDown
+  xy: 432, 449
+  size: 54, 55
+IdleDown
+  xy: 486, 449
+  size: 54, 55
+WalkUp
+  xy: 0, 504
+  size: 54, 55
+WalkUp
+  xy: 54, 504
+  size: 54, 55
+WalkUp
+  xy: 108, 504
+  size: 54, 55
+WalkUp
+  xy: 162, 504
+  size: 54, 55
+WalkUp
+  xy: 216, 504
+  size: 54, 55
+WalkUp
+  xy: 270, 504
+  size: 54, 55
+WalkDown
+  xy: 0, 559
+  size: 54, 55
+WalkDown
+  xy: 54, 559
+  size: 54, 55
+WalkDown
+  xy: 108, 559
+  size: 54, 55
+WalkDown
+  xy: 162, 559
+  size: 54, 55
+WalkDown
+  xy: 216, 559
+  size: 54, 55
+WalkDown
+  xy: 270, 559
+  size: 54, 55

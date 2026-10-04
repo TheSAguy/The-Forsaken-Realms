@@ -3789,7 +3789,7 @@
     },
     {
         "name": "Black Golem",
-        "sprite": "sprites/enemy/construct/golem_black.atlas",
+        "sprite": "sprites/enemy/remake/black_golem.atlas",
         "deck": [
             "decks/standard/blackconstruct.dck"
         ],
@@ -3862,7 +3862,7 @@
             "Robot"
         ],
         "tier": "Rare",
-        "scale": 1.1818
+        "scale": 0.2281
     },
     {
         "name": "Bloodgift Demon",
@@ -3960,7 +3960,7 @@
     },
     {
         "name": "Blue Golem",
-        "sprite": "sprites/enemy/construct/golem_blue.atlas",
+        "sprite": "sprites/enemy/remake/blue_golem.atlas",
         "deck": [
             "decks/standard/blue_golem.dck"
         ],
@@ -4034,11 +4034,11 @@
             "Robot"
         ],
         "tier": "Mythic",
-        "scale": 1.3
+        "scale": 0.2
     },
     {
         "name": "Blue Prototype",
-        "sprite": "sprites/enemy/construct/prototype_blue.atlas",
+        "sprite": "sprites/enemy/remake/blue_prototype.atlas",
         "deck": [
             "decks/standard/prototype_blue.dck"
         ],
@@ -4111,7 +4111,7 @@
             "Robot"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.2364
     },
     {
         "name": "Boar",
@@ -12476,7 +12476,7 @@
     },
     {
         "name": "Fox",
-        "sprite": "sprites/enemy/beast/smallmammals/fox.atlas",
+        "sprite": "sprites/enemy/remake/fox.atlas",
         "deck": [
             "decks/standard/fox.json",
             "decks/standard/fox_greenwhite.dck"
@@ -12486,7 +12486,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 17,
-        "scale": 0.8125,
+        "scale": 0.3514,
         "life": 9,
         "rewards": [
             {
@@ -12541,7 +12541,7 @@
     },
     {
         "name": "Frog",
-        "sprite": "sprites/enemy/beast/amphibian/frog.atlas",
+        "sprite": "sprites/enemy/remake/frog.atlas",
         "deck": [
             "decks/standard/frog.json"
         ],
@@ -12606,7 +12606,7 @@
             "BiomeBlack"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.3023
     },
     {
         "name": "Froghemoth",
@@ -14761,7 +14761,7 @@
     {
         "name": "Golem",
         "nameOverride": "Rusted Golem",
-        "sprite": "sprites/enemy/construct/golem.atlas",
+        "sprite": "sprites/enemy/remake/golem.atlas",
         "deck": [
             "decks/standard/golem.json",
             "decks/standard/rustic_golem.dck"
@@ -14811,7 +14811,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.3714
     },
     {
         "name": "Golem Sentinel",
@@ -15691,7 +15691,7 @@
     },
     {
         "name": "Green Golem",
-        "sprite": "sprites/enemy/construct/golem_green.atlas",
+        "sprite": "sprites/enemy/remake/green_golem.atlas",
         "deck": [
             "decks/standard/greengolem.dck"
         ],
@@ -15765,11 +15765,11 @@
             "Robot"
         ],
         "tier": "Mythic",
-        "scale": 1.3
+        "scale": 0.194
     },
     {
         "name": "Green Prototype",
-        "sprite": "sprites/enemy/construct/prototype_green.atlas",
+        "sprite": "sprites/enemy/remake/green_prototype.atlas",
         "deck": [
             "decks/standard/prototype_green.dck"
         ],
@@ -15842,7 +15842,7 @@
             "Robot"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.2889
     },
     {
         "name": "Griffin",
@@ -17100,7 +17100,7 @@
     {
         "name": "Hippo",
         "nameOverride": "Giant Bull Hippo",
-        "sprite": "sprites/enemy/beast/largemammals/hippo.atlas",
+        "sprite": "sprites/enemy/remake/hippo.atlas",
         "deck": [
             "decks/standard/hippo.dck"
         ],
@@ -17108,7 +17108,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.52,
+        "scale": 0.2364,
         "life": 19,
         "rewards": [
             {
@@ -18725,7 +18725,7 @@
     },
     {
         "name": "Kavu",
-        "sprite": "sprites/enemy/monstrosity/kavu.atlas",
+        "sprite": "sprites/enemy/remake/kavu.atlas",
         "deck": [
             "decks/standard/kavu.dck",
             "decks/standard/kavu_domain.dck"
@@ -18815,7 +18815,7 @@
             "BiomeRed"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.2889
     },
     {
         "name": "Khan",
@@ -23134,7 +23134,7 @@
     },
     {
         "name": "Naked Mole Rat",
-        "sprite": "sprites/enemy/beast/smallmammals/nakedmolerat.atlas",
+        "sprite": "sprites/enemy/remake/naked_mole_rat.atlas",
         "deck": [
             "decks/standard/shrinemole.dck"
         ],
@@ -23142,7 +23142,7 @@
         "spawnRate": 0.5,
         "difficulty": 1,
         "speed": 26,
-        "scale": 0.9286,
+        "scale": 0.2955,
         "life": 18,
         "rewards": [
             {
@@ -24491,7 +24491,7 @@
     },
     {
         "name": "Penguin",
-        "sprite": "sprites/enemy/beast/polar/penguin.atlas",
+        "sprite": "sprites/enemy/remake/penguin.atlas",
         "deck": [
             "decks/standard/penguin.dck"
         ],
@@ -24561,7 +24561,7 @@
             "Snow"
         ],
         "tier": "Uncommon",
-        "scale": 1.625
+        "scale": 0.3023
     },
     {
         "name": "Penguin Elite",
@@ -25216,7 +25216,7 @@
     },
     {
         "name": "Plague Rat Swarm",
-        "sprite": "sprites/enemy/beast/smallmammals/wildratpoison.atlas",
+        "sprite": "sprites/enemy/remake/plague_rat_swarm.atlas",
         "deck": [
             "decks/standard/rat_poisonrat.dck"
         ],
@@ -25225,7 +25225,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.9286,
+        "scale": 0.3514,
         "life": 12,
         "rewards": [
             {
@@ -25738,7 +25738,7 @@
     },
     {
         "name": "Raccoon",
-        "sprite": "sprites/enemy/beast/smallmammals/raccoon.atlas",
+        "sprite": "sprites/enemy/remake/raccoon.atlas",
         "deck": [
             "decks/standard/enchantment_aggro.dck"
         ],
@@ -25746,7 +25746,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 17,
-        "scale": 0.8667,
+        "scale": 0.2407,
         "life": 20,
         "rewards": [
             {
@@ -25921,7 +25921,7 @@
     },
     {
         "name": "Raptor",
-        "sprite": "sprites/enemy/beast/dinosaur/dinosaur_raptor.atlas",
+        "sprite": "sprites/enemy/remake/raptor.atlas",
         "deck": [
             "decks/standard/dinosaur_rw_enrage.dck"
         ],
@@ -25929,7 +25929,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.9286,
+        "scale": 0.2889,
         "life": 20,
         "rewards": [
             {
@@ -33061,7 +33061,7 @@
     },
     {
         "name": "Wolf",
-        "sprite": "sprites/enemy/beast/largemammals/wolf.atlas",
+        "sprite": "sprites/enemy/remake/wolf.atlas",
         "deck": [
             "decks/standard/wolfboss.dck"
         ],
@@ -33069,7 +33069,7 @@
         "spawnRate": 1,
         "difficulty": 3,
         "speed": 45,
-        "scale": 0.4643,
+        "scale": 0.197,
         "life": 42,
         "rewards": [
             {
@@ -34698,7 +34698,7 @@
     },
     {
         "name": "Immerwolf",
-        "sprite": "sprites/enemy/beast/largemammals/wolf.atlas",
+        "sprite": "sprites/enemy/remake/immerwolf.atlas",
         "deck": [
             "decks/standard/INN/inn_immerwolf_easy.dck"
         ],
@@ -34707,7 +34707,7 @@
         "difficulty": 0.1,
         "speed": 24,
         "life": 15,
-        "scale": 0.4643,
+        "scale": 0.3611,
         "rewards": [
             {
                 "type": "deckCard",
@@ -43667,13 +43667,13 @@
     },
     {
         "name": "Go-Shintai",
-        "sprite": "sprites/enemy/construct/golem_green.atlas",
+        "sprite": "sprites/enemy/remake/go_shintai.atlas",
         "deck": [
             "decks/legends/go-shintai.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.3,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -48450,13 +48450,13 @@
     },
     {
         "name": "Karn",
-        "sprite": "sprites/enemy/construct/golem.atlas",
+        "sprite": "sprites/enemy/remake/karn.atlas",
         "deck": [
             "decks/legends/karn.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.3,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -49387,14 +49387,14 @@
     },
     {
         "name": "Phelddagrif",
-        "sprite": "sprites/enemy/beast/largemammals/hippo.atlas",
+        "sprite": "sprites/enemy/remake/phelddagrif.atlas",
         "deck": [
             "decks/legends/phelddagrif.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.52,
+        "scale": 0.2407,
         "life": 42,
         "rewards": [
             {
@@ -51425,13 +51425,13 @@
     },
     {
         "name": "Bello",
-        "sprite": "sprites/enemy/beast/smallmammals/raccoon.atlas",
+        "sprite": "sprites/enemy/remake/bello.atlas",
         "deck": [
             "decks/legends/bello.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.8667,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -52532,13 +52532,13 @@
     },
     {
         "name": "Voja",
-        "sprite": "sprites/enemy/beast/largemammals/wolf.atlas",
+        "sprite": "sprites/enemy/remake/voja.atlas",
         "deck": [
             "decks/legends/voja.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.4643,
+        "scale": 0.2955,
         "life": 30,
         "rewards": [
             {
@@ -56322,14 +56322,14 @@
     },
     {
         "name": "Eluge",
-        "sprite": "sprites/enemy/monstrosity/kavu.atlas",
+        "sprite": "sprites/enemy/remake/eluge.atlas",
         "deck": [
             "decks/legends/eluge.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 46,
-        "scale": 1.0833,
+        "scale": 0.194,
         "life": 43,
         "rewards": [
             {
@@ -56531,13 +56531,13 @@
     },
     {
         "name": "Wildsear",
-        "sprite": "sprites/enemy/beast/largemammals/wolf.atlas",
+        "sprite": "sprites/enemy/remake/wildsear.atlas",
         "deck": [
             "decks/legends/wildsear.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.4643,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -58086,13 +58086,13 @@
     },
     {
         "name": "Pantlaza",
-        "sprite": "sprites/enemy/beast/dinosaur/dinosaur_raptor.atlas",
+        "sprite": "sprites/enemy/remake/pantlaza.atlas",
         "deck": [
             "decks/legends/pantlaza.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.9286,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -59350,13 +59350,13 @@
     },
     {
         "name": "Helga",
-        "sprite": "sprites/enemy/beast/amphibian/frog.atlas",
+        "sprite": "sprites/enemy/remake/helga.atlas",
         "deck": [
             "decks/legends/helga.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.3,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -59699,13 +59699,13 @@
     },
     {
         "name": "Tatsunari",
-        "sprite": "sprites/enemy/beast/amphibian/frog.atlas",
+        "sprite": "sprites/enemy/remake/tatsunari.atlas",
         "deck": [
             "decks/legends/tatsunari.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 2.4375,
+        "scale": 0.2973,
         "life": 30,
         "rewards": [
             {
@@ -74234,12 +74234,12 @@
     },
     {
         "name": "Anzrag",
-        "sprite": "sprites/enemy/beast/smallmammals/nakedmolerat.atlas",
+        "sprite": "sprites/enemy/remake/anzrag.atlas",
         "deck": [
             "decks/legends/anzrag.dck"
         ],
         "ai": "",
-        "scale": 0.9286,
+        "scale": 0.2407,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -78631,7 +78631,7 @@
     },
     {
         "name": "Keruga",
-        "sprite": "sprites/enemy/beast/largemammals/hippo.atlas",
+        "sprite": "sprites/enemy/remake/keruga.atlas",
         "deck": [
             "decks/legends/keruga.dck"
         ],
@@ -78695,7 +78695,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.52
+        "scale": 0.2321
     },
     {
         "name": "Lurrus",
@@ -78971,7 +78971,7 @@
     },
     {
         "name": "Tayam",
-        "sprite": "sprites/enemy/beast/largemammals/wolf.atlas",
+        "sprite": "sprites/enemy/remake/tayam.atlas",
         "deck": [
             "decks/legends/tayam.dck"
         ],
@@ -79035,7 +79035,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.4643
+        "scale": 0.2407
     },
     {
         "name": "Xyris",
@@ -79178,7 +79178,7 @@
     },
     {
         "name": "Zirda",
-        "sprite": "sprites/enemy/beast/smallmammals/fox.atlas",
+        "sprite": "sprites/enemy/remake/zirda.atlas",
         "deck": [
             "decks/legends/zirda.dck"
         ],
@@ -79242,7 +79242,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.8125
+        "scale": 0.2321
     },
     {
         "name": "Arahbo",
@@ -87678,7 +87678,7 @@
     },
     {
         "name": "Loot",
-        "sprite": "sprites/enemy/beast/smallmammals/fox.atlas",
+        "sprite": "sprites/enemy/remake/loot.atlas",
         "deck": [
             "decks/legends/loot.dck"
         ],
@@ -87752,7 +87752,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.8125
+        "scale": 0.2321
     },
     {
         "name": "Sevinne",
@@ -90763,7 +90763,7 @@
     },
     {
         "name": "Karumonix",
-        "sprite": "sprites/enemy/beast/smallmammals/wildratpoison.atlas",
+        "sprite": "sprites/enemy/remake/karumonix.atlas",
         "deck": [
             "decks/legends/karumonix.dck"
         ],
@@ -90827,7 +90827,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.9286
+        "scale": 0.2321
     },
     {
         "name": "Nashi",
@@ -91685,12 +91685,12 @@
     },
     {
         "name": "Tolsimir",
-        "sprite": "sprites/enemy/beast/largemammals/wolf.atlas",
+        "sprite": "sprites/enemy/remake/tolsimir.atlas",
         "deck": [
             "decks/legends/tolsimir.dck"
         ],
         "ai": "",
-        "scale": 0.4643,
+        "scale": 0.2364,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -93181,7 +93181,7 @@
     },
     {
         "name": "Tannuk",
-        "sprite": "sprites/enemy/monstrosity/kavu.atlas",
+        "sprite": "sprites/enemy/remake/tannuk.atlas",
         "deck": [
             "decks/legends/tannuk.dck"
         ],
@@ -93250,7 +93250,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.2364
     },
     {
         "name": "Bennie Bracks",
@@ -94448,7 +94448,7 @@
     },
     {
         "name": "Mr. Foxglove",
-        "sprite": "sprites/enemy/beast/smallmammals/fox.atlas",
+        "sprite": "sprites/enemy/remake/mr_foxglove.atlas",
         "deck": [
             "decks/legends/mr_foxglove.dck"
         ],
@@ -94512,7 +94512,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.8125
+        "scale": 0.2407
     },
     {
         "name": "Bosh",
@@ -95793,12 +95793,12 @@
     },
     {
         "name": "Sarulf",
-        "sprite": "sprites/enemy/beast/largemammals/wolf.atlas",
+        "sprite": "sprites/enemy/remake/sarulf.atlas",
         "deck": [
             "decks/legends/sarulf.dck"
         ],
         "ai": "",
-        "scale": 0.4643,
+        "scale": 0.2955,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -97257,7 +97257,7 @@
     },
     {
         "name": "Primo",
-        "sprite": "sprites/enemy/beast/largemammals/wolf.atlas",
+        "sprite": "sprites/enemy/remake/primo.atlas",
         "deck": [
             "decks/legends/primo.dck"
         ],
@@ -97321,7 +97321,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.4643
+        "scale": 0.2364
     },
     {
         "name": "Scriv",
@@ -100635,7 +100635,7 @@
     },
     {
         "name": "Mill Mole",
-        "sprite": "sprites/enemy/beast/smallmammals/nakedmolerat.atlas",
+        "sprite": "sprites/enemy/remake/mill_mole.atlas",
         "deck": [
             "decks/elite/mill_mole.dck"
         ],
@@ -100885,7 +100885,7 @@
             "BiomeBlue"
         ],
         "tier": "Mythic",
-        "scale": 0.9286
+        "scale": 0.194
     },
     {
         "name": "Merfolk King",
@@ -125675,14 +125675,14 @@
     },
     {
         "name": "Ashiok",
-        "sprite": "sprites/enemy/beast/polar/penguin.atlas",
+        "sprite": "sprites/enemy/remake/ashiok.atlas",
         "deck": [
             "decks/legends/mystery_list.dck"
         ],
         "ai": "",
         "spawnRate": 0,
         "difficulty": 0.1,
-        "scale": 1.625,
+        "scale": 0.3714,
         "speed": 0,
         "life": 1,
         "rewards": [],
@@ -135239,7 +135239,7 @@
     },
     {
         "name": "Ice Golem",
-        "sprite": "sprites/enemy/basic/magical/ice_golem.atlas",
+        "sprite": "sprites/enemy/remake/ice_golem.atlas",
         "deck": [
             "decks/standard/ice_golem.dck"
         ],
@@ -135300,11 +135300,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3611
     },
     {
         "name": "Iron Golem",
-        "sprite": "sprites/enemy/basic/magical/iron_golem.atlas",
+        "sprite": "sprites/enemy/remake/iron_golem.atlas",
         "deck": [
             "decks/standard/iron_golem.dck"
         ],
@@ -135365,7 +135365,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.1818
+        "scale": 0.2281
     },
     {
         "name": "Magical Fairy",
