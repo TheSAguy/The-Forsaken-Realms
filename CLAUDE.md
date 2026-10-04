@@ -58,6 +58,12 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-04 (round 432): **LOCAL + UNRELEASED** - the five AI capital arenas' win item = 1 of 8 from two themed
+sets (no item in two capitals; table in MOD_CHANGELOG); Arena duels neither add to nor reset notoriety (their enemies
+still get the Walls); the Player Capitol has ONE quest board (object 66 = `waste_town_generic,player_capital`, object
+104 removed; `AdventureQuestController` splits questtype on commas); `plains_town_tribal.tmx` questtype typo fixed.
+Agent-tested (board 22 quests; arena loss left the streak at 12). AGENT packaged; LIVE NOT (the user's game running).
+
 ## STATE 2026-10-04 (round 431): **LOCAL + UNRELEASED (data only)** - the Green Capital arena's win item lists
 Dungeon Map 3 of 24 (12.5%, was 1 of 4) beside Mad Staff/Gold Boots/Disrupting Scepter 7 each (forest_capital.tmx);
 Victor (the vampire Archmage) joins the Player Capitol's Level-2 Challenging pool (player_capital.tmx `arenaChallenge`).

@@ -274,10 +274,14 @@
    &quot;probability&quot;: 1,
    &quot;count&quot;: 1,
    &quot;itemNames&quot;: [
-    &quot;Gold Armor&quot;,
-    &quot;Gold Shield&quot;,
-    &quot;Gold Boots&quot;,
-    &quot;Bronze Sword&quot;
+    &quot;Peddler's Shoes&quot;,
+    &quot;Amulet of Mirth&quot;,
+    &quot;Ring of Thune&quot;,
+    &quot;Urza's Armor&quot;,
+    &quot;Caravaneer's Greaves&quot;,
+    &quot;Mask of Hypochondria&quot;,
+    &quot;Skyclave Maul&quot;,
+    &quot;Steel Sword&quot;
    ]
   }
  ]

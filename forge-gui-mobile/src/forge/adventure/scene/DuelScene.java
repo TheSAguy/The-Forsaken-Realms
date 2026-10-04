@@ -396,7 +396,14 @@ public class DuelScene extends ForgeScene {
         // carries a map-authored sprite override.
         if (enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null) {
             Current.player().recordWinStreak(enemy.getData().getName(), winner);
-            Current.player().recordNotoriety(winner); // round 411: the same duels, against anyone
+            // Round 411: the same duels, against anyone. Round 432 (the user: "exclude any Tournament or Arena battles
+            // for the Streak. So it should not add or reset"): an Arena duel leaves it as it is - its enemy still
+            // starts with the Walls the streak has earned (the seat setup below never checked isArena).
+            if (isArena)
+                System.out.println("[TFR-Notoriety] Arena duel " + (winner ? "won" : "lost") + " - not counted, still "
+                        + Current.player().notorietyStreak() + " wins in a row");
+            else
+                Current.player().recordNotoriety(winner);
         }
         Forge.advFreezePlayerControls = winner;
         endRunnable = () -> Gdx.app.postRunnable(() -> {

@@ -107,7 +107,7 @@
   <object id="58" template="../../../../common/maps/obj/shardtrader.tx" x="128" y="130"/>
   <object id="59" template="../../../../common/maps/obj/quest.tx" x="319" y="130" width="34" height="16">
    <properties>
-    <property name="questtype" value="plains_town_trobal"/>
+    <property name="questtype" value="plains_town_tribal"/>
    </properties>
   </object>
  </objectgroup>

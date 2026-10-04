@@ -19384,12 +19384,7 @@
   </object>
   <object id="66" template="../../../../common/maps/obj/quest.tx" x="200" y="257">
    <properties>
-    <property name="questtype" value="waste_town_generic"/>
-   </properties>
-  </object>
-  <object id="104" template="../../../../common/maps/obj/quest.tx" x="240" y="257">
-   <properties>
-    <property name="questtype" value="player_capital"/>
+    <property name="questtype" value="waste_town_generic,player_capital"/>
    </properties>
   </object>
   <object id="77" template="../../../../common/maps/obj/shop.tx" x="416" y="480">

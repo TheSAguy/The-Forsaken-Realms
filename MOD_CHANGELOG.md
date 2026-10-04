@@ -14264,6 +14264,59 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 432: AI arena win items in themed sets of eight; Arena duels leave notoriety alone; one Capitol quest board (2026-10-04)
+
+The user, after the five AI arenas' win items side by side ("Seems like White is totally unbalanced vs. black") and my
+draft of two themed sets per arena: "Go with Both. Also, for the winning streak. I want to exclude any Tournament or
+Arena battles for the Streak. So it should not add or reset. The current bonus enemies get should remain. So if it's
+at 10+ they should still get the wall." And, with a Tiled screenshot of the Capitol: "There are two Quest giving spots.
+ID 66 Main Job board and ID 104 ... All quests should go through the Job board. ID 66."
+
+**AI arena win items** (`maps/map/main_story/<land>_capital.tmx`, the round-3 table's guaranteed item; 1 in 8 each).
+Every capital gets two sets of four, one item per slot, built from the item families printed in all five colors
+(Set A: helper shoes, Planeswalker amulet, color ring, body; Set B: leveling or defender boots, mask, right hand,
+left hand). All Uncommon or Rare; no item is in two capitals.
+
+| Capital | Set A | Set B |
+|---|---|---|
+| Plains (White) | Peddler's Shoes, Amulet of Mirth, Ring of Thune, Urza's Armor | Caravaneer's Greaves, Mask of Hypochondria, Skyclave Maul, Steel Sword |
+| Island (Blue) | Trickster's Shoes, Amulet of Mischief, Ring of Evos Isle, Mantle of Denial | Barrier Breeches, Cunning Mask, Entrancing Lyre, The Blackstaff of Waterdeep |
+| Swamp (Black) | Witch's Shoes, Amulet of Scorn, Ring of Xathrid, Steel Armor | Soul Shoes, Mask of Mortiphobia, Unhallowed Sigil, The Underworld Cookbook |
+| Mountain (Red) | Firefrightener Shoes, Amulet of Fury, Ring of Valkas, Flaming Armor | Brimstone Boots, Mask of Pyromania, Flame Sword, Brawler's Cestus |
+| Forest (Green) | Greenseeker's Shoes, Amulet of Favor, Ring of Kalonia, Sage's Robes | Beastbreaker Boots, Mask of Narcissism, Chitinous Club, Presence of the Hydra |
+
+- Replaced: White's and Blue's Gold Armor/Shield/Boots (+4/+3/+2 life with no downside), Black's Dark set (three of
+  four cost 2-3 life), Red's rings and Axt, Green's Dungeon Map (round 431's 12.5% is moot), Mad Staff, Gold Boots and
+  Disrupting Scepter. They stay in the Player Capitol's arena tables and the shops.
+- Colored items: the creatures enter play for anyone; their abilities need the color, and a ring's +1/+1 only grows
+  a creature of its color.
+
+**Notoriety skips the Arena** (`DuelScene.afterGameEnd`): an Arena duel neither adds to the streak nor resets it -
+`[TFR-Notoriety] Arena duel won/lost - not counted, still N wins in a row`. Its enemy still starts with the Walls the
+streak has earned (the seat setup never checked `isArena`). Inn tournaments were already outside both (eventData).
+The per-enemy win streak (round 404, the Wastes) still counts Arena duels, as round 404 chose.
+
+**One quest board in the Capitol.**
+- Object 104 (`questtype` player_capital, the "!" beside the board, round 132) is removed.
+- Object 66 now reads `waste_town_generic,player_capital`: `AdventureQuestController.getQuestNPCResponse` splits a
+  questtype on commas and offers a quest tagged with any of them.
+- Both givers already shared one POI id, so one quest at a time and the "come back tomorrow" day were common to both.
+- The five "Find the <Color> Capital" quests now draw from the board's whole pool: 22 quests where object 104 had 6.
+- `[TFR-QuestBoard] waste_town_generic + player_capital: N quest(s) to offer` when a board has several pools.
+
+**Found on the way:** `plains_town_tribal.tmx`'s board asked for `plains_town_trobal` (a stock typo), so its 10 tagged
+quests (High Plains Justice, A Freshly Plowed Field, Proving Yourself Worthy, the four invasions, Blot Out the Dark,
+Cool the Flames, Sweep the Wilds) were never offered there; the board handed out any side quest instead. Fixed in
+the plane's copy.
+
+**Agent-tested** (Insane, agent slot 1, the Capitol raised by cheat):
+- Capitol: one quest giver listed (66); the board offered a quest; `[TFR-QuestBoard] waste_town_generic +
+  player_capital: 22 quest(s) to offer`.
+- Plains Capital arena at `notoriety 12`: `Silverlance Cavalier (Master) starts with tfr_wall_reach_1_2 (1/2)`, the
+  duel lost, `Arena duel lost - not counted, still 12 wins in a row`; the console read 12 afterwards.
+- The win pools were checked from the parsed maps (all 40 names resolve in items.json, no duplicates); a won bracket
+  was not played.
+
 ## Round 431: the Green Capital's Dungeon Map at half odds; Victor in the Level-2 Challenging arena (2026-10-04)
 
 The user, with a screenshot of a Green Capital arena win (500 gold, a Dungeon Map, three cards): "I want the Dungeon

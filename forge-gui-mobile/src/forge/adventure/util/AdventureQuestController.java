@@ -895,12 +895,18 @@ public class AdventureQuestController implements Serializable {
         // get an extra Bernoulli gate before they're even added to that pool - so they show up
         // rarely without permanently disappearing, and every ordinary quest (offerProbability
         // still 0) keeps its exact prior behavior.
+        // Round 432 (the user: "All quests should go through the Job board"): a questtype may name several pools,
+        // comma-separated - the Player Capitol's board offers the wasteland towns' pool and its own Capitol pool.
+        java.util.Set<String> origins = new java.util.HashSet<>();
+        for (String origin : questOrigin == null ? new String[0] : questOrigin.split(","))
+            if (!origin.trim().isEmpty())
+                origins.add(origin.trim());
         Array<AdventureQuestData> validSideQuests = new Array<>();
         for (AdventureQuestData option : allSideQuests){
             boolean tagMatch = option.questSourceTags.length == 0;
             if (!tagMatch) {
                 for (int i = 0; i < option.questSourceTags.length; i++){
-                    if (option.questSourceTags[i] != null && option.questSourceTags[i].equals(questOrigin)){
+                    if (option.questSourceTags[i] != null && origins.contains(option.questSourceTags[i])){
                         tagMatch = true;
                         break;
                     }
@@ -920,6 +926,9 @@ public class AdventureQuestController implements Serializable {
                 continue;
             validSideQuests.add(option);
         }
+        if (origins.size() > 1) // round 432: a board with several pools says what it drew from
+            System.out.println("[TFR-QuestBoard] " + String.join(" + ", origins) + ": " + validSideQuests.size
+                    + " quest(s) to offer");
         if (validSideQuests.size > 0)
             ret = new AdventureQuestData(Aggregates.random(validSideQuests));
         else {

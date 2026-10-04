@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 432 - Arena duels leave notoriety alone; a quest board with several pools
+
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `afterGameEnd`: `recordNotoriety` is skipped for
+  `isArena` (a `[TFR-Notoriety] Arena duel ... not counted` line instead). The per-enemy win streak beside it is unchanged.
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** - `getQuestNPCResponse` splits the
+  questtype on commas and matches a quest tagged with any of them; logs `[TFR-QuestBoard]` when there are several.
+  **Merge watch** on the tag-match loop.
+- Mod data: the Player Capitol's object 104 removed, object 66 = `waste_town_generic,player_capital`; the five AI
+  capitals' arena win pools; `plains_town_tribal.tmx`'s questtype typo (stock `plains_town_trobal`, plane copy only).
+
 ### Round 429 - a second notoriety Wall
 
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the enemy seat loop adds every script

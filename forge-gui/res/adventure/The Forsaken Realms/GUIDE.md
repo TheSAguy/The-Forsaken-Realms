@@ -284,7 +284,8 @@ Shops, a Utility Land Shop, a Booster Shop and an Armory, against an ordinary to
 slots and an Armory). It also offers buildings no ordinary town does: the Bank, the Exchange, the
 Archaeologist, the Research Lab, Rare and Mythic card shops, and an Arena you can upgrade.
 Upgrading carries Orazca's reputation, buildings and guards forward, and adds +2 town reputation
-on top for good measure.
+on top for good measure. The Capitol's Job Board offers the usual town quests and the Capitol's own, such as
+finding the five AI capitals.
 
 Raising it draws fire. The moment your Capitol stands, every color still in the game sends an
 Archmage at your realm, and for as long as it stands each color may keep one more attack mage in
@@ -432,7 +433,9 @@ an **advanced Arena** with a challenge tier (and champion fights) no ordinary to
 Arena fighters play their own decks, the same ones they'd bring to a fight in the wild. The
 brackets at the five AI capitals, and at your own Arena until you upgrade it to level 2, never
 seat Apprentice-tier fighters: about half the field are Adepts, a third Masters and the rest
-Archmages.
+Archmages. Win all three rounds at an AI capital and you take one item from that capital's own set of eight, in its
+color's style - helper shoes, a Planeswalker amulet, a color ring, a mask, armor and weapons - and no two capitals
+share an item.
 
 ### Item Economy & Shops
 
@@ -665,7 +668,9 @@ Walls with flying. Which enemies do it depends on the difficulty:
 | Insane | Everyone |
 
 Each Wall card says why it's there, under a bold **Notoriety** line with the wins it stands for. Lose once (a Bronze Coin still counts as a
-loss) and your streak starts over. It counts the same duels as an enemy's own streak above, and New Game+ starts it from zero.
+loss) and your streak starts over. It counts the same duels as an enemy's own streak above, except the Arena: an Arena
+duel neither adds to your streak nor resets it, though Arena fighters still bring the Walls it has earned. New Game+
+starts it from zero.
 
 **The first two weeks are eased.** In week 1 (days 1-7) a monster starts its duel with half its life,
 but never fewer than 20; in week 2 (days 8-14) with three quarters, never fewer than 25. A monster that
