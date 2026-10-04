@@ -1453,8 +1453,9 @@ public final class RoadNetwork {
      * Rule 7 PAVES each pocket of at most HOLE_FILL_MAX tiles, so the band reads as one wider road. It never lifts road:
      * every rule here reads a road as the staircase between two anchors and keeps a pair joined only above EDGE_COVERAGE,
      * so taking even one tile of a short staircase can make a joined pair look broken and get a second road laid beside it
-     * - the doubled roads of rounds 351/383. Paving only adds road. A pocket is left alone when it touches a place's
-     * footprint (a town, a cave - even one rotated away), the map edge, water or the barrier (World.canJoinRoadRaw). It is
+     * - the doubled roads of rounds 351/383. Paving only adds road. A pocket is left alone when it touches the footprint
+     * of a place on the map (a town, a cave; one rotated away does not count), the map edge, water or the barrier
+     * (World.canJoinRoadRaw). It is
      * paved player road when every road around it is player road, else old road.
      *
      * @param near     the tiles a road change just touched - the pass looks HOLE_REGION_MARGIN around them; null = the
@@ -1482,6 +1483,10 @@ public final class RoadNetwork {
         boolean[][] foot = new boolean[rw][rh];
         int ts = world.getTileSize();
         for (PointOfInterest p : world.getAllPointOfInterest()) {
+            // A place rotated away (DungeonRotation) is not on the map: Gobspike's second pocket sat on a cave that was gone,
+            // and the loop stayed in view. If it rotates back it stands on road, as a town does.
+            if (!p.getActive())
+                continue;
             com.badlogic.gdx.math.Rectangle rect = p.getBoundingRectangle();
             Vector2 pos = p.getPosition();
             int fx0 = (int) Math.floor(pos.x / ts), fx1 = (int) Math.floor((pos.x + Math.max(1f, rect.width) - 1) / ts);
