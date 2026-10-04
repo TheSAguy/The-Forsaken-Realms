@@ -30230,7 +30230,7 @@
     },
     {
         "name": "Tiger",
-        "sprite": "sprites/enemy/beast/cat/tiger.atlas",
+        "sprite": "sprites/enemy/remake/tiger.atlas",
         "deck": [
             "decks/standard/tiger.dck"
         ],
@@ -30289,7 +30289,7 @@
             "Beast"
         ],
         "tier": "Common",
-        "scale": 0.7647
+        "scale": 0.3611
     },
     {
         "name": "Tomb Guardian",
@@ -48911,13 +48911,13 @@
     },
     {
         "name": "Snapdax",
-        "sprite": "sprites/enemy/beast/cat/tiger.atlas",
+        "sprite": "sprites/enemy/remake/snapdax.atlas",
         "deck": [
             "decks/legends/snapdax.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.7647,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -79409,7 +79409,7 @@
     },
     {
         "name": "Jedit",
-        "sprite": "sprites/enemy/beast/cat/tiger.atlas",
+        "sprite": "sprites/enemy/remake/jedit.atlas",
         "deck": [
             "decks/legends/jedit_ojanen.dck"
         ],
@@ -79483,7 +79483,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.7647
+        "scale": 0.2364
     },
     {
         "name": "Qala",

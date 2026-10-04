@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 439: the tiger, with black stripes (cloud batch 7 rework) (2026-10-04)
+
+The tiger held back in round 438, reworked here. The user: "fix the tiger now", then, after seeing it: "Install the
+tiger."
+
+- **Tiger** (with Snapdax and Jedit): the cloud's tiger had orange-brown stripes, since the generator's marking color
+  can only go a few shades darker than an orange coat. A new generator option (black markings) draws the stripes
+  near-black on any coat, keeping the coat's own pattern. Snapdax is red-orange and Jedit a cream-white tiger, like
+  their cards.
+- **Data only:**
+  - `sprites/enemy/remake/`: 6 new files (`tiger`, `snapdax`, `jedit`).
+  - `world/enemies.json`: 3 sprites and 3 scales; no other field changed.
+  - Generator: procedural-pixel-creatures `cloud/batch-07` (quadruped `pattern.blackMarks`).
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves; 3 scales changed.
+  - `sprite_artifact_audit.py --only remake` (317 atlases, 26263 frames) flags 316 frames, all shadows: the 6 new ones
+    are a small shadow piece under Snapdax.
+- Not yet seen in play. Console (F9): `spawn enemy Tiger`, `spawn enemy Jedit`.
+
 ## Round 438: eighteen more creature groups from the generator (cloud batch 7: golems and beasts) (2026-10-04)
 
 The seventh cloud batch (procedural-pixel-creatures PR #7): the golems still on their original sprites, built on the

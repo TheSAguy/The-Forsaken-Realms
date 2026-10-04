@@ -58,6 +58,12 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-04 (round 439): **LOCAL + UNRELEASED** - the tiger group (Tiger, Snapdax, Jedit) from cloud batch 7,
+reworked with black stripes (new generator option quadruped `pattern.blackMarks`); Snapdax red-orange and Jedit a
+cream-white tiger, like their cards. Data only (enemies.json, `sprites/enemy/remake/tiger|snapdax|jedit.*`;
+procedural-pixel-creatures `cloud/batch-07`). Now 317 remake atlases. NOT PACKAGED yet (the user's game was running);
+not seen in play.
+
 ## STATE 2026-10-04 (round 438): **LOCAL + UNRELEASED** - cloud batch 7 of the creature-generator remakes: 18 groups,
 42 enemies (eight golems on the approved boulder recipe; wolf, fox, hippo, naked mole rat, kavu, frog, raptor, penguin,
 raccoon and plague rat with their legends); five legend colors set by hand against the card art; the tiger held for a
