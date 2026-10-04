@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 433 - rotation groups (Deep Caverns); the ground's draw-state check
+
+- **`forge-gui-mobile/src/forge/adventure/data/PointOfInterestData.java`** - new field `rotationGroup`; the copy
+  constructor now also carries `retireOnQuestFlag` and `rotationGroup` (it is unused in the code base today).
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldBackground.java`** - `draw()` calls `checkGroundDrawState()` before
+  the chunk loop: a tinted shared batch is set back to white (`[TFR-WorldDraw]`, 5 a session), and the first overworld
+  frame after 30+ frames away logs `[TFR-WorldReturn]`. **Merge watch** on `draw()`'s chunk loop.
+- Mod: `DungeonRotation` (`typeKey` by group, `typeTally` a group at one member's placed count, `quotaSum`, the reserve
+  never overfills a group, `BALANCE_VERSION` 2 lowers an old save's visible target to the shares' sum).
+
 ### Round 432 - Arena duels leave notoriety alone; a quest board with several pools
 
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `afterGameEnd`: `recordNotoriety` is skipped for

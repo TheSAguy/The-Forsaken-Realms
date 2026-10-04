@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 433: Deep Caverns one at a time (rotation groups); a check on the ground's draw state (2026-10-04)
+
+The user, with a screenshot of Deep Caverns and one of the overworld after it: "There is a Cave, Called 'Deep Cave' It's
+massive. I'd like to lower the probability of this cave showing up. By at least 75%. Also, when I exited that cave, my
+screen had no background terrain. I had to quit the game to get it back."
+
+**Deep Caverns** (`maps/map/cave/cave_huge.tmx`, a 200 x 200 tile cave) is four entries in points_of_interest.json -
+CaveBA (black), CaveCD (colorless), CaveGB (green), CaveRJ (red) - and since round 394 every rotating kind keeps its
+own share on the map (at least one). So a world always showed four Deep Caverns, one per land.
+- New `PointOfInterestData.rotationGroup`: entries with the same group are ONE kind for `DungeonRotation`, at a single
+  entry's share (`typeTally` counts a group's placed copies as its largest member's). The four entries carry
+  `"rotationGroup": "Deep Caverns"`: one on the map at a time, in a random one of its four lands - 75% fewer.
+- The reserve never fills a group past its share: when every kind is at its share and the target is still unmet (a
+  kind's copies all retired or resting), any other kind may go one over, a group may not.
+- `BALANCE_VERSION` 2: an older save is balanced again on load (round 394's rule: surplus copies the player never fought
+  or looted in, no quest target, no loot held, farthest first), and its visible target drops to the shares' sum, the
+  number a new world starts with - only ever lowered.
+
+**The black ground.** Not reproduced:
+- Neither the user's log nor the agent's has an error.
+- In the agent game, Deep Caverns (the same world, the same tile) entered and left drew the ground every time,
+  including with two colors defeated by the console while inside. The user's visit saw two AI captures and their
+  terrain repaints.
+- The user's screenshot shows the places, doodads, banner and minimap, but no ground even under the player. A reload
+  did not bring it back.
+- New: every return to the overworld rebuilds the 3x3 chunk textures around the player (`[TFR-WorldReturn]` read 0/9
+  built on the agent's first frame back). So the black came from the rebuild, from the draw state or the tile source,
+  not from stale textures.
+
+Added in `WorldBackground.checkGroundDrawState()`, before the ground draws:
+- A tinted shared batch is put back to white: `[TFR-WorldDraw] the ground found the batch tinted (r,g,b,a) - drawn white`,
+  5 times a session. That was round 329's black world (a leftover alpha-0 tint). Nothing in today's code is known to
+  leave one.
+- A different shader than on the ground's first frame is said once.
+- `[TFR-WorldReturn] back after N frames: batch color ..., shader default|changed, blending src/dst; chunk textures k/9
+  around chunk (x,y); player tile (x,y) explored=.. visible=..` on the first overworld frame after 30+ frames away.
+
+**Agent-tested** (the agent's slot 1 save, `rotationBalanced` 1):
+- On load: `[TFR-RotationBalance] save balanced once (v2): 3 surplus place(s) of 1 kind(s) taken off the map ...
+  visible target 397 -> 394: Deep Caverns 4->1 (share 1)` - three `Deep Caverns despawned` lines, the one beside the
+  player kept.
+- In and out of it: `[TFR-WorldReturn] back after 36 frames: batch color white, ... chunk textures 0/9 ... explored=true
+  visible=true`; no `[TFR-WorldDraw]` line in normal play; the ground drew.
+
 ## Round 432: AI arena win items in themed sets of eight; Arena duels leave notoriety alone; one Capitol quest board (2026-10-04)
 
 The user, after the five AI arenas' win items side by side ("Seems like White is totally unbalanced vs. black") and my

@@ -578,12 +578,20 @@ public class DungeonRotation {
             // Round 394: a kind below its share first - a dungeon that leaves is mostly replaced by its own kind or
             // another one short of its share, so the mix stays what the data asks for.
             java.util.List<PointOfInterest> under = new java.util.ArrayList<>();
+            java.util.List<PointOfInterest> overflow = new java.util.ArrayList<>(); // round 433
             for (PointOfInterest p : eligibleReserve) {
-                int[] t = tally.get(typeKey(p));
+                String key = typeKey(p);
+                int[] t = tally.get(key);
                 if (t != null && t[1] < typeQuota(t[0]))
                     under.add(p);
+                else if (!isGroupKey(key))
+                    overflow.add(p);
             }
-            java.util.List<PointOfInterest> from = under.isEmpty() ? eligibleReserve : under;
+            // Round 433: every kind at its share and the target still unmet (a kind's copies all retired or resting) -
+            // any kind may go one over, but a rotation group never does (Deep Caverns stays one at a time).
+            java.util.List<PointOfInterest> from = !under.isEmpty() ? under : overflow;
+            if (from.isEmpty())
+                break;
             PointOfInterest pick = from.get(world.getRandom().nextInt(from.size()));
             eligibleReserve.remove(pick);
             int[] pickTally = tally.get(typeKey(pick));
@@ -845,12 +853,24 @@ public class DungeonRotation {
 
     // ------------------------------------------------------------------ round 394: each kind's share
 
-    /** Bumped when the per-kind balance rules change and every save should be balanced again (World.rotationBalanced). */
-    public static final int BALANCE_VERSION = 1;
+    /** Bumped when the per-kind balance rules change and every save should be balanced again (World.rotationBalanced).
+     *  2 = round 433's rotation groups (Deep Caverns' four kinds share one place). */
+    public static final int BALANCE_VERSION = 2;
 
-    /** A place's kind - its data entry; every copy world-gen placed of one entry is one kind. */
+    private static final String GROUP_PREFIX = "group:";
+
+    /** A place's kind - its data entry; every copy world-gen placed of one entry is one kind. Round 433 (the user: "There
+     *  is a Cave, Called 'Deep Cave' It's massive. I'd like to lower the probability of this cave showing up. By at least
+     *  75%"): entries with the same PointOfInterestData.rotationGroup are ONE kind, at one entry's share. */
     static String typeKey(PointOfInterest poi) {
-        return poi.getData() == null ? "" : poi.getData().name;
+        if (poi.getData() == null)
+            return "";
+        String group = poi.getData().rotationGroup;
+        return group != null && !group.isEmpty() ? GROUP_PREFIX + group : poi.getData().name;
+    }
+
+    private static boolean isGroupKey(String key) {
+        return key.startsWith(GROUP_PREFIX);
     }
 
     /** How many of a kind the map shows at once: the copies placed / POOL_MULTIPLIER (its data count per land), at least 1. */
@@ -858,18 +878,36 @@ public class DungeonRotation {
         return Math.max(1, Math.round(placed / (float) POOL_MULTIPLIER));
     }
 
-    /** Every rotatable kind in this world: {copies placed, copies on the map now}. */
+    /** Every rotatable kind in this world: {copies placed, copies on the map now}. Round 433: a group's "placed" is its
+     *  largest member entry's, so typeQuota() gives the group one entry's share, not the sum of its members'. */
     static java.util.Map<String, int[]> typeTally(World world) {
         java.util.Map<String, int[]> out = new java.util.HashMap<>();
+        java.util.Map<String, Integer> memberPlaced = new java.util.HashMap<>();
         for (PointOfInterest poi : world.getAllPointOfInterest()) {
             if (!isRotatable(poi))
                 continue;
-            int[] t = out.computeIfAbsent(typeKey(poi), k -> new int[2]);
+            String key = typeKey(poi);
+            int[] t = out.computeIfAbsent(key, k -> new int[2]);
             t[0]++;
             if (poi.getActive())
                 t[1]++;
+            if (isGroupKey(key))
+                memberPlaced.merge(key + "\n" + poi.getData().name, 1, Integer::sum);
         }
+        java.util.Map<String, Integer> groupPlaced = new java.util.HashMap<>();
+        for (java.util.Map.Entry<String, Integer> e : memberPlaced.entrySet())
+            groupPlaced.merge(e.getKey().substring(0, e.getKey().indexOf('\n')), e.getValue(), Math::max);
+        for (java.util.Map.Entry<String, Integer> e : groupPlaced.entrySet())
+            out.get(e.getKey())[0] = e.getValue();
         return out;
+    }
+
+    /** Round 433: the visible count every kind's share adds up to - what a new world starts with. */
+    static int quotaSum(java.util.Map<String, int[]> tally) {
+        int sum = 0;
+        for (int[] t : tally.values())
+            sum += typeQuota(t[0]);
+        return sum;
     }
 
     /**
@@ -922,11 +960,19 @@ public class DungeonRotation {
                         .append(" (share ").append(quota).append(")");
             }
         }
+        // Round 433: the visible target is the shares' sum, as a new world sets it - a group's members no longer each add
+        // their own, so a save made before carries a target the reserve would otherwise refill past the shares. Only
+        // ever lowered here.
+        int oldTarget = world.getPoiActiveTarget();
+        int sharesTarget = quotaSum(tally);
+        if (sharesTarget < oldTarget)
+            world.setPoiActiveTarget(sharesTarget);
         boolean refilled = activateFromReserve(world, day);
         if (hidden > 0 || refilled)
             world.refreshWorldMapMarkers();
-        System.out.println("[TFR-RotationBalance] save balanced once: " + hidden + " surplus place(s) of " + kinds
-                + " kind(s) taken off the map, the reserve refilled the kinds short of their share"
+        System.out.println("[TFR-RotationBalance] save balanced once (v" + BALANCE_VERSION + "): " + hidden
+                + " surplus place(s) of " + kinds + " kind(s) taken off the map, the reserve refilled the kinds short of"
+                + " their share; visible target " + oldTarget + " -> " + world.getPoiActiveTarget()
                 + (detail.length() == 0 ? "" : ": " + detail));
     }
 }

@@ -643,6 +643,7 @@
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
 		"sprite": "E_CaveBA",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_huge.tmx",
+		"rotationGroup": "Deep Caverns",
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Cave",
@@ -850,6 +851,7 @@
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
 		"sprite": "E_CaveCD",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_huge.tmx",
+		"rotationGroup": "Deep Caverns",
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Hostile",
@@ -1072,6 +1074,7 @@
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
 		"sprite": "E_CaveGB",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_huge.tmx",
+		"rotationGroup": "Deep Caverns",
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Cave",
@@ -1473,6 +1476,7 @@
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
 		"sprite": "E_CaveRJ",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_huge.tmx",
+		"rotationGroup": "Deep Caverns",
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Hostile",

@@ -58,6 +58,13 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-04 (round 433): **LOCAL + UNRELEASED** - `PointOfInterestData.rotationGroup`: Deep Caverns' four
+entries (CaveBA/CD/GB/RJ, cave_huge.tmx) share one rotation share - one on the map at a time, not one per land;
+`DungeonRotation.BALANCE_VERSION` 2 rebalances old saves on load and lowers their visible target to the shares' sum.
+`WorldBackground.checkGroundDrawState()`: a tinted batch is reset to white before the ground draws (`[TFR-WorldDraw]`)
+and `[TFR-WorldReturn]` logs the draw state on each return to the overworld - the user's black ground after Deep
+Caverns was NOT reproduced. Agent-tested. LIVE NOT PACKAGED with 430-433 (the user's game was running).
+
 ## STATE 2026-10-04 (round 432): **LOCAL + UNRELEASED** - the five AI capital arenas' win item = 1 of 8 from two themed
 sets (no item in two capitals; table in MOD_CHANGELOG); Arena duels neither add to nor reset notoriety (their enemies
 still get the Walls); the Player Capitol has ONE quest board (object 66 = `waste_town_generic,player_capital`, object

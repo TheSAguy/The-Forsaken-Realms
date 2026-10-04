@@ -33,6 +33,12 @@ public class WorldBackground extends Actor {
     private static final int MAX_CHUNK_TEXTURES = 32;
     private final java.util.LinkedHashSet<Long> chunkRecency = new java.util.LinkedHashSet<>();
     private int chunkBuildsLogged;
+    // Round 433: the ground's draw-state checks (drawGround()) - the last frame the overworld drew, and how many tinted
+    // batches it has put right this session.
+    private long lastGroundFrame = -1;
+    private int tintFixesLogged;
+    private Object firstGroundShader; // the batch's shader on the first ground draw - its default
+    private boolean shaderChangeLogged;
     int playerX;
     int playerY;
 
@@ -330,6 +336,7 @@ public class WorldBackground extends Actor {
             currentChunkY = py;
         }
 
+        checkGroundDrawState(batch, world, px, py);
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
                 int targetX = px + x;
@@ -345,6 +352,63 @@ public class WorldBackground extends Actor {
         world.endTileBatch(); // round 331
         // Round 296: the barrier's mountains at full resolution, over the terrain and under every actor.
         forge.adventure.world.BarrierMountains.draw(batch, world, px, py, getStage().getCamera());
+    }
+
+    /**
+     * Round 433 (the user, after leaving Deep Caverns: "my screen had no background terrain. I had to quit the game to get
+     * it back" - the places, doodads, HUD and minimap drew, the ground did not, a reload did not help, and the log had no
+     * error; not reproduced in the agent game). Two things before the ground draws:
+     * <ul>
+     * <li>The ground is drawn untinted. The batch is shared with the HUD and every actor (round 316), and round 329's
+     * black world was a tint left behind by the last actor drawn - so a tinted batch here is put back to white and said
+     * (the first 5 times a session).</li>
+     * <li>[TFR-WorldReturn]: on the first overworld frame after a map, a duel or any other scene (30+ frames away), one line
+     * with the draw state and the ground under the player - if the ground goes black again, the log tells which.</li>
+     * </ul>
+     */
+    private void checkGroundDrawState(Batch batch, World world, int chunkX, int chunkY) {
+        long frame = Gdx.graphics.getFrameId();
+        com.badlogic.gdx.graphics.Color c = batch.getColor();
+        boolean tinted = c.r != 1f || c.g != 1f || c.b != 1f || c.a != 1f;
+        String tint = tinted ? String.format("(%.2f,%.2f,%.2f,%.2f)", c.r, c.g, c.b, c.a) : "white";
+        // SpriteBatch.getShader() is never null (its own default when no custom one is set), so "changed" means not the
+        // shader the ground saw on its first frame.
+        Object shader = batch.getShader();
+        if (firstGroundShader == null)
+            firstGroundShader = shader;
+        String shaderState = shader == firstGroundShader ? "default" : "changed";
+        if (shader != firstGroundShader && !shaderChangeLogged) {
+            shaderChangeLogged = true;
+            System.out.println("[TFR-WorldDraw] the ground found a different shader on the batch than on its first frame");
+        }
+        if (lastGroundFrame >= 0 && frame - lastGroundFrame >= 30) {
+            int built = 0, inMap = 0;
+            for (int x = -1; x < 2; x++)
+                for (int y = -1; y < 2; y++) {
+                    int cx = chunkX + x, cy = chunkY + y;
+                    if (cx < 0 || cy < 0 || cx >= chunks.length || cy >= chunks[0].length)
+                        continue;
+                    inMap++;
+                    if (chunks[cx][cy] != null)
+                        built++;
+                }
+            int tx = playerX / tileSize, ty = playerY / tileSize;
+            boolean blending = batch.isBlendingEnabled();
+            System.out.println("[TFR-WorldReturn] back after " + (frame - lastGroundFrame) + " frames: batch color " + tint
+                    + ", shader " + shaderState + ", blending "
+                    + (blending ? batch.getBlendSrcFunc() + "/" + batch.getBlendDstFunc() : "off") + "; chunk textures "
+                    + built + "/" + inMap + " around chunk (" + chunkX + "," + chunkY + "); player tile (" + tx + "," + ty
+                    + ") explored=" + world.isExploredWorld(tx, ty) + " visible=" + world.isCurrentlyVisible(tx, ty));
+        }
+        lastGroundFrame = frame;
+        if (tinted) {
+            if (tintFixesLogged < 5) {
+                tintFixesLogged++;
+                System.out.println("[TFR-WorldDraw] the ground found the batch tinted " + tint + " - drawn white ("
+                        + tintFixesLogged + " of 5 this session)");
+            }
+            batch.setColor(com.badlogic.gdx.graphics.Color.WHITE);
+        }
     }
 
     public void loadChunk(int x, int y) {
