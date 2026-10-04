@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 431: the Green Capital's Dungeon Map at half odds; Victor in the Level-2 Challenging arena (2026-10-04)
+
+The user, with a screenshot of a Green Capital arena win (500 gold, a Dungeon Map, three cards): "I want the Dungeon
+Map reward probability reduced. You can currently win it at the Green Capitol Area. Let's cut the probability of
+winning it there by 50%. Victor, the Vampire we added a few rounds back. I want to add him to the Arena Lvl2 list of
+competitors in Player Cap." Data only.
+
+- **Dungeon Map** (`maps/map/main_story/forest_capital.tmx`, the arena's round-3 win item): the table picks one name
+  uniformly from its list (`RewardData` shuffles and takes the first), so it was 1 in 4 = 25%. The list now holds
+  Dungeon Map 3 times and Mad Staff, Gold Boots and Disrupting Scepter 7 times each: 3/24 = 12.5% exactly, and the
+  other three share the rest evenly (29.2% each). It is a Rare, so the bonus Common item roll can't give it, which
+  makes the win item its only source in the Green Capital. The Player Capitol's own arenas still list it (1 in 16
+  for the Normal win item) and are unchanged.
+- **Victor** (the vampire Archmage of round 382) joins `arenaChallenge`'s `enemyPool` in
+  `maps/map/towns/player_capital.tmx`: the Level-2 arena's Challenging mode, the bosses' pool (91 names now). The
+  Normal pool (the wizards, used at both levels) is unchanged. Challenging plays best-of-1, so his best-of-3 does not
+  apply there; Include=Y in enemies.csv.
+- **Checks**: both maps' arena JSON parses and the odds were counted from the parsed lists; Victor resolves in
+  enemies.json (Mythic, decks/legends/victor_vampire.dck); `validate_plane_data.py` adds no finding. Not agent-tested
+  (no code changed; the pool pick is `WorldData.getEnemy(name)`, the same lookup his overworld spawns use).
+
 ## Round 429: notoriety Walls hit back (0/1, 1/2, 2/4, 3/6), and a second Wall from 25 wins in a row (2026-10-04)
 
 The user: "Let's have level 2, be 1/2, lvl 3: 2/4 and level 4: 3/6. Also, let's have it open ended, so at 25

@@ -58,6 +58,11 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-04 (round 431): **LOCAL + UNRELEASED (data only)** - the Green Capital arena's win item lists
+Dungeon Map 3 of 24 (12.5%, was 1 of 4) beside Mad Staff/Gold Boots/Disrupting Scepter 7 each (forest_capital.tmx);
+Victor (the vampire Archmage) joins the Player Capitol's Level-2 Challenging pool (player_capital.tmx `arenaChallenge`).
+Round 430 is the peer's (cloud batch 4, pending the user's review). Not yet packaged live.
+
 ## STATE 2026-10-04 (round 429): **LOCAL + UNRELEASED** - notoriety Walls 0/1, 1/2, 2/4, 3/6, and a second Wall from
 25 wins in a row (3/6 + 0/1 up to 3/6 + 3/6 at 40+, the cap). `TuningData.notorietyLevelsPerWall` (4) +
 `notorietyWallIndexes`; 8-entry `notorietyWalls*` lists; `AdventurePlayer.notorietyWallsFor` returns a list. 24 token

@@ -219,10 +219,10 @@
    &quot;probability&quot;: 1,
    &quot;count&quot;: 1,
    &quot;itemNames&quot;: [
-    &quot;Dungeon Map&quot;,
-    &quot;Mad Staff&quot;,
-    &quot;Gold Boots&quot;,
-    &quot;Disrupting Scepter&quot;
+    &quot;Dungeon Map&quot;, &quot;Dungeon Map&quot;, &quot;Dungeon Map&quot;,
+    &quot;Mad Staff&quot;, &quot;Mad Staff&quot;, &quot;Mad Staff&quot;, &quot;Mad Staff&quot;, &quot;Mad Staff&quot;, &quot;Mad Staff&quot;, &quot;Mad Staff&quot;,
+    &quot;Gold Boots&quot;, &quot;Gold Boots&quot;, &quot;Gold Boots&quot;, &quot;Gold Boots&quot;, &quot;Gold Boots&quot;, &quot;Gold Boots&quot;, &quot;Gold Boots&quot;,
+    &quot;Disrupting Scepter&quot;, &quot;Disrupting Scepter&quot;, &quot;Disrupting Scepter&quot;, &quot;Disrupting Scepter&quot;, &quot;Disrupting Scepter&quot;, &quot;Disrupting Scepter&quot;, &quot;Disrupting Scepter&quot;
    ]
   }
  ]
