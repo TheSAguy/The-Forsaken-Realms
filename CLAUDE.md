@@ -62,8 +62,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 42 enemies (eight golems on the approved boulder recipe; wolf, fox, hippo, naked mole rat, kavu, frog, raptor, penguin,
 raccoon and plague rat with their legends); five legend colors set by hand against the card art; the tiger held for a
 black-stripes option (round 439) and the stegosaurus held (keeps its original). Data only (enemies.json,
-`sprites/enemy/remake/`; procedural-pixel-creatures `cloud/batch-07`). Now 314 remake atlases. NOT PACKAGED yet; not
-seen in play.
+`sprites/enemy/remake/`; procedural-pixel-creatures `cloud/batch-07`). Now 314 remake atlases. LIVE + AGENT PACKAGED (enemies.json 90ED0AF3, 628 remake files; jar 6C5A48B4EE77); not seen in play.
 
 ## STATE 2026-10-04 (round 437): **LOCAL + UNRELEASED** - cloud batch 6 of the creature-generator remakes: 19 groups,
 46 enemies (the large dragon with Volcano Dragon and 15 legends, the drake with 4, 13 single dragons and wyverns, the
