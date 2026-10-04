@@ -58,7 +58,7 @@ import forge.adventure.world.World;
  */
 public final class RoadNetwork {
     /** Bumped when the rules change and every save should be normalized again (World.roadsNormalized). */
-    public static final int VERSION = 6; // 2: roads past a town chained on both sides lifted (round 351b); 3: corner joints joined (round 365); 4: one road into the star per town (round 392); 5: a road to each color's castle (round 399); 6: town ends tidied (round 414)
+    public static final int VERSION = 7; // 2: roads past a town chained on both sides lifted (round 351b); 3: corner joints joined (round 365); 4: one road into the star per town (round 392); 5: a road to each color's castle (round 399); 6: town ends tidied (round 414); 7: pockets enclosed by road paved (round 427)
     /** A hop along a road that is already there costs this share of a new one (cost = distance squared). */
     public static final double EXISTING_ROAD_DISCOUNT = 0.35;
     /** A pair of towns is joined by road when this share of either staircase between them is road. */
@@ -1348,6 +1348,7 @@ public final class RoadNetwork {
         int abandoned = former == null ? 0 : liftAbandoned(world, edges, hops, network, former, prot, touched);
         int thinned = thinBesidePlayerRoad(world, anchorTiles(world, towns), touched);
         joinCorners(world, touched); // round 365
+        fillRoadHoles(world, null, touched); // round 427: rule 7
         world.repaintRoadTiles(touched, onTileRepainted);
         world.setPlayerRoadsBuilt(PlayerRoads.NETWORK_VERSION);
         System.out.println("[TFR-Roads] player road network (" + why + "): " + held.size() + " held town(s) from "
@@ -1384,6 +1385,7 @@ public final class RoadNetwork {
         int plaza = world.stampPlayerRoadPatch(town, Config.instance().getTuningData().playerRoadPlazaTown, repaint);
         int thinned = thinBesidePlayerRoad(world, anchorTiles(world, towns), touched);
         joinCorners(world, touched); // round 365
+        fillRoadHoles(world, new HashSet<>(touched), touched); // round 427: rule 7 around what changed
         world.repaintRoadTiles(touched, repaint);
         System.out.println("[TFR-Roads] player road (" + why + "): " + town.getDisplayName() + " joined - " + hops.size()
                 + " hop(s) (" + heldPairs + " old road(s) to held places upgraded as well), " + laid[0] + " tile(s) laid, "
@@ -1434,6 +1436,124 @@ public final class RoadNetwork {
         return 1;
     }
 
+    // ------------------------------------------------------------------ enclosed gaps (rule 7)
+
+    /** Round 427: the largest pocket of ground enclosed by road that rule 7 paves - the gaps measured were 1-5 tiles. */
+    static final int HOLE_FILL_MAX = 6;
+    /** Round 427: how far around a new road's tiles a local rule-7 pass looks. */
+    static final int HOLE_REGION_MARGIN = 8;
+
+    /**
+     * Round 427 (the user, with a screenshot of a loop of road under Gobspike: "There is a double road in my current game";
+     * then "yes, do 427 the road clean-up"). Two roads whose staircases leave a town in almost the same direction overlap
+     * into a band 3-4 tiles wide and, where they part by a tile, close a pocket of ground in on every side - on screen, two
+     * roads side by side. The user's new world had four such pockets (Gobspike's two, 1 tile each, under its road end),
+     * their saves from before round 414 one to three, the agent's worlds five: world-gen, not a regression.
+     * <p>
+     * Rule 7 PAVES each pocket of at most HOLE_FILL_MAX tiles, so the band reads as one wider road. It never lifts road:
+     * every rule here reads a road as the staircase between two anchors and keeps a pair joined only above EDGE_COVERAGE,
+     * so taking even one tile of a short staircase can make a joined pair look broken and get a second road laid beside it
+     * - the doubled roads of rounds 351/383. Paving only adds road. A pocket is left alone when it touches a place's
+     * footprint (a town, a cave - even one rotated away), the map edge, water or the barrier (World.canJoinRoadRaw). It is
+     * paved player road when every road around it is player road, else old road.
+     *
+     * @param near     the tiles a road change just touched - the pass looks HOLE_REGION_MARGIN around them; null = the
+     *                 whole map (world-gen, the load migration, a network rebuild)
+     * @param touched  changed tiles, for repaintRoadTiles(); may be null
+     * @return tiles paved
+     */
+    public static int fillRoadHoles(World world, Set<Long> near, Set<Long> touched) {
+        if (world == null)
+            return 0;
+        int w = world.getWidthInTiles(), h = world.getHeightInTiles();
+        int x0 = 0, y0 = 0, x1 = w - 1, y1 = h - 1;
+        if (near != null) {
+            if (near.isEmpty())
+                return 0;
+            x0 = w; y0 = h; x1 = -1; y1 = -1;
+            for (long c : near) {
+                x0 = Math.min(x0, keyX(c)); x1 = Math.max(x1, keyX(c));
+                y0 = Math.min(y0, keyY(c)); y1 = Math.max(y1, keyY(c));
+            }
+            x0 = Math.max(0, x0 - HOLE_REGION_MARGIN); y0 = Math.max(0, y0 - HOLE_REGION_MARGIN);
+            x1 = Math.min(w - 1, x1 + HOLE_REGION_MARGIN); y1 = Math.min(h - 1, y1 + HOLE_REGION_MARGIN);
+        }
+        int rw = x1 - x0 + 1, rh = y1 - y0 + 1;
+        boolean[][] foot = new boolean[rw][rh];
+        int ts = world.getTileSize();
+        for (PointOfInterest p : world.getAllPointOfInterest()) {
+            com.badlogic.gdx.math.Rectangle rect = p.getBoundingRectangle();
+            Vector2 pos = p.getPosition();
+            int fx0 = (int) Math.floor(pos.x / ts), fx1 = (int) Math.floor((pos.x + Math.max(1f, rect.width) - 1) / ts);
+            int fr0 = h - 1 - (int) Math.floor((pos.y + Math.max(1f, rect.height) - 1) / ts), fr1 = h - 1 - (int) Math.floor(pos.y / ts);
+            for (int fx = Math.max(x0, fx0); fx <= Math.min(x1, fx1); fx++)
+                for (int fr = Math.max(y0, fr0); fr <= Math.min(y1, fr1); fr++)
+                    foot[fx - x0][fr - y0] = true;
+        }
+        boolean[][] seen = new boolean[rw][rh];
+        int[][] steps = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        java.util.ArrayDeque<int[]> queue = new java.util.ArrayDeque<>();
+        List<int[]> pocket = new ArrayList<>();
+        int paved = 0, pockets = 0;
+        StringBuilder where = new StringBuilder();
+        for (int sx = x0; sx <= x1; sx++) {
+            for (int sy = y0; sy <= y1; sy++) {
+                if (seen[sx - x0][sy - y0] || world.roadKindRaw(sx, sy) != World.ROAD_NONE)
+                    continue;
+                // the whole ground component, marked seen once - a pass over the map stays linear
+                pocket.clear();
+                boolean open = false, onPlace = false, allLand = true, allPlayer = true;
+                seen[sx - x0][sy - y0] = true;
+                queue.add(new int[]{sx, sy});
+                int size = 0;
+                while (!queue.isEmpty()) {
+                    int[] c = queue.poll();
+                    size++;
+                    if (size <= HOLE_FILL_MAX)
+                        pocket.add(c);
+                    if (foot[c[0] - x0][c[1] - y0])
+                        onPlace = true;
+                    if (!world.canJoinRoadRaw(c[0], c[1]))
+                        allLand = false;
+                    for (int[] s : steps) {
+                        int nx = c[0] + s[0], ny = c[1] + s[1];
+                        if (nx < x0 || ny < y0 || nx > x1 || ny > y1) {
+                            open = true; // the map's edge, or the edge of a local pass's window
+                            continue;
+                        }
+                        int kind = world.roadKindRaw(nx, ny);
+                        if (kind != World.ROAD_NONE) {
+                            if (kind != World.ROAD_PLAYER)
+                                allPlayer = false;
+                            continue;
+                        }
+                        if (!seen[nx - x0][ny - y0]) {
+                            seen[nx - x0][ny - y0] = true;
+                            queue.add(new int[]{nx, ny});
+                        }
+                    }
+                }
+                if (open || onPlace || !allLand || size > HOLE_FILL_MAX)
+                    continue;
+                int kind = allPlayer ? World.ROAD_PLAYER : World.ROAD_OLD;
+                int n = 0;
+                for (int[] c : pocket)
+                    if (world.setRoadKindRaw(c[0], c[1], kind, touched))
+                        n++;
+                if (n > 0) {
+                    paved += n;
+                    pockets++;
+                    if (pockets <= 8)
+                        where.append(pockets == 1 ? "" : ", ").append("(").append(sx).append(",").append(sy).append(")x").append(n);
+                }
+            }
+        }
+        if (pockets > 0)
+            System.out.println("[TFR-Roads] rule 7: " + pockets + " pocket(s) of ground enclosed by road paved, " + paved
+                    + " tile(s) - raw " + where + (pockets > 8 ? " ..." : "") + (near == null ? " (whole map)" : ""));
+        return paved;
+    }
+
     static BiConsumer<Integer, Integer> liveRepaint() {
         WorldStage stage = WorldStage.getInstance();
         return stage == null ? null : stage::refreshBackgroundTile;
@@ -1455,10 +1575,12 @@ public final class RoadNetwork {
         int castleTiles = layCastleRoads(world);
         // Round 414: rule 6 - every town's road ends tidied (a save laid before it ends roads under the footprint).
         int tidied = tidyAllTownEnds(world, new HashSet<>());
+        // Round 427: rule 7 - every pocket of ground enclosed by road paved, once.
+        int pavedPockets = fillRoadHoles(world, null, new HashSet<>());
         world.setRoadsNormalized(VERSION);
         System.out.println("[TFR-Roads] roads normalized to rule " + VERSION + " (" + joined + " corner joint(s) joined, "
-                + castleTiles + " castle road tile(s) laid, " + tidied + " town-end tile(s) tidied) in "
-                + (System.nanoTime() - t0) / 1_000_000 + " ms");
+                + castleTiles + " castle road tile(s) laid, " + tidied + " town-end tile(s) tidied, " + pavedPockets
+                + " enclosed tile(s) paved) in " + (System.nanoTime() - t0) / 1_000_000 + " ms");
     }
 
     /** Rules 1-2 (round 351/351b): the old roads normalized, a standing Capitol's network laid again. */

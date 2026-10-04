@@ -3560,6 +3560,8 @@ public class World implements Disposable, SaveFileContent {
                 forge.adventure.util.RoadNetwork.layCastleRoads(this);
                 // Round 414: rule 6 for a new world - every town's road ends under its art, no dead end below it.
                 forge.adventure.util.RoadNetwork.tidyAllTownEnds(this, null);
+                // Round 427: rule 7 - a pocket of ground two roads close in on every side is paved, not left as a loop.
+                forge.adventure.util.RoadNetwork.fillRoadHoles(this, null, null);
                 // neutralizeTerritoryOutsideRadius() (called above) already repaints the minimap
                 // pixel for every tile it individually reassigns, which should already be complete
                 // - but a full re-bake from biomeMap/terrainMap's now-final state is a stronger
@@ -5117,6 +5119,8 @@ public class World implements Disposable, SaveFileContent {
             System.out.println("[TFR-Roads] an old road crossed " + keptPlayerRoad + " player road tile(s) and left them as they were");
         // Round 414: the new road's ends run up under its towns and a dead end below one goes (RoadNetwork rule 6).
         forge.adventure.util.RoadNetwork.tidyTownEnds(this, waypoints, touched);
+        // Round 427: rule 7 around the new road - a pocket of ground it closed in with another road is paved.
+        forge.adventure.util.RoadNetwork.fillRoadHoles(this, new java.util.HashSet<>(touched), touched);
         // Chunk-texture patches for every changed tile plus a 2-tile ring around it - a road
         // tile's neighbors blend against it, same neighbor-staleness reasoning as
         // repaintBiomeAroundTown()'s post-loop repaint.
