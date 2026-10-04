@@ -1,0 +1,230 @@
+coral_crab.png
+size: 924,694
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 63
+Idle
+  xy: 84, 64
+  size: 84, 63
+Idle
+  xy: 168, 64
+  size: 84, 63
+Idle
+  xy: 252, 64
+  size: 84, 63
+Idle
+  xy: 336, 64
+  size: 84, 63
+Idle
+  xy: 420, 64
+  size: 84, 63
+Idle
+  xy: 504, 64
+  size: 84, 63
+Idle
+  xy: 588, 64
+  size: 84, 63
+Idle
+  xy: 672, 64
+  size: 84, 63
+Idle
+  xy: 756, 64
+  size: 84, 63
+Walk
+  xy: 0, 127
+  size: 84, 63
+Walk
+  xy: 84, 127
+  size: 84, 63
+Walk
+  xy: 168, 127
+  size: 84, 63
+Walk
+  xy: 252, 127
+  size: 84, 63
+Walk
+  xy: 336, 127
+  size: 84, 63
+Walk
+  xy: 420, 127
+  size: 84, 63
+Attack
+  xy: 0, 190
+  size: 84, 63
+Attack
+  xy: 84, 190
+  size: 84, 63
+Attack
+  xy: 168, 190
+  size: 84, 63
+Attack
+  xy: 252, 190
+  size: 84, 63
+Attack
+  xy: 336, 190
+  size: 84, 63
+Hit
+  xy: 0, 253
+  size: 84, 63
+Hit
+  xy: 84, 253
+  size: 84, 63
+Hit
+  xy: 168, 253
+  size: 84, 63
+Hit
+  xy: 252, 253
+  size: 84, 63
+Death
+  xy: 0, 316
+  size: 84, 63
+Death
+  xy: 84, 316
+  size: 84, 63
+Death
+  xy: 168, 316
+  size: 84, 63
+Death
+  xy: 252, 316
+  size: 84, 63
+Death
+  xy: 336, 316
+  size: 84, 63
+Death
+  xy: 420, 316
+  size: 84, 63
+Death
+  xy: 504, 316
+  size: 84, 63
+Death
+  xy: 588, 316
+  size: 84, 63
+Death
+  xy: 672, 316
+  size: 84, 63
+Death
+  xy: 756, 316
+  size: 84, 63
+Death
+  xy: 840, 316
+  size: 84, 63
+Wake
+  xy: 0, 379
+  size: 84, 63
+Wake
+  xy: 84, 379
+  size: 84, 63
+Wake
+  xy: 168, 379
+  size: 84, 63
+Wake
+  xy: 252, 379
+  size: 84, 63
+Wake
+  xy: 336, 379
+  size: 84, 63
+Wake
+  xy: 420, 379
+  size: 84, 63
+IdleUp
+  xy: 0, 442
+  size: 84, 63
+IdleUp
+  xy: 84, 442
+  size: 84, 63
+IdleUp
+  xy: 168, 442
+  size: 84, 63
+IdleUp
+  xy: 252, 442
+  size: 84, 63
+IdleUp
+  xy: 336, 442
+  size: 84, 63
+IdleUp
+  xy: 420, 442
+  size: 84, 63
+IdleUp
+  xy: 504, 442
+  size: 84, 63
+IdleUp
+  xy: 588, 442
+  size: 84, 63
+IdleUp
+  xy: 672, 442
+  size: 84, 63
+IdleUp
+  xy: 756, 442
+  size: 84, 63
+IdleDown
+  xy: 0, 505
+  size: 84, 63
+IdleDown
+  xy: 84, 505
+  size: 84, 63
+IdleDown
+  xy: 168, 505
+  size: 84, 63
+IdleDown
+  xy: 252, 505
+  size: 84, 63
+IdleDown
+  xy: 336, 505
+  size: 84, 63
+IdleDown
+  xy: 420, 505
+  size: 84, 63
+IdleDown
+  xy: 504, 505
+  size: 84, 63
+IdleDown
+  xy: 588, 505
+  size: 84, 63
+IdleDown
+  xy: 672, 505
+  size: 84, 63
+IdleDown
+  xy: 756, 505
+  size: 84, 63
+WalkUp
+  xy: 0, 568
+  size: 84, 63
+WalkUp
+  xy: 84, 568
+  size: 84, 63
+WalkUp
+  xy: 168, 568
+  size: 84, 63
+WalkUp
+  xy: 252, 568
+  size: 84, 63
+WalkUp
+  xy: 336, 568
+  size: 84, 63
+WalkUp
+  xy: 420, 568
+  size: 84, 63
+WalkDown
+  xy: 0, 631
+  size: 84, 63
+WalkDown
+  xy: 84, 631
+  size: 84, 63
+WalkDown
+  xy: 168, 631
+  size: 84, 63
+WalkDown
+  xy: 252, 631
+  size: 84, 63
+WalkDown
+  xy: 336, 631
+  size: 84, 63
+WalkDown
+  xy: 420, 631
+  size: 84, 63

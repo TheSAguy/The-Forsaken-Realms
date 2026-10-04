@@ -1,0 +1,224 @@
+clucking_chicken.png
+size: 500,694
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 50, 63
+Idle
+  xy: 50, 64
+  size: 50, 63
+Idle
+  xy: 100, 64
+  size: 50, 63
+Idle
+  xy: 150, 64
+  size: 50, 63
+Idle
+  xy: 200, 64
+  size: 50, 63
+Idle
+  xy: 250, 64
+  size: 50, 63
+Idle
+  xy: 300, 64
+  size: 50, 63
+Idle
+  xy: 350, 64
+  size: 50, 63
+Idle
+  xy: 400, 64
+  size: 50, 63
+Idle
+  xy: 450, 64
+  size: 50, 63
+Walk
+  xy: 0, 127
+  size: 50, 63
+Walk
+  xy: 50, 127
+  size: 50, 63
+Walk
+  xy: 100, 127
+  size: 50, 63
+Walk
+  xy: 150, 127
+  size: 50, 63
+Walk
+  xy: 200, 127
+  size: 50, 63
+Walk
+  xy: 250, 127
+  size: 50, 63
+Attack
+  xy: 0, 190
+  size: 50, 63
+Attack
+  xy: 50, 190
+  size: 50, 63
+Attack
+  xy: 100, 190
+  size: 50, 63
+Attack
+  xy: 150, 190
+  size: 50, 63
+Attack
+  xy: 200, 190
+  size: 50, 63
+Hit
+  xy: 0, 253
+  size: 50, 63
+Hit
+  xy: 50, 253
+  size: 50, 63
+Hit
+  xy: 100, 253
+  size: 50, 63
+Hit
+  xy: 150, 253
+  size: 50, 63
+Death
+  xy: 0, 316
+  size: 50, 63
+Death
+  xy: 50, 316
+  size: 50, 63
+Death
+  xy: 100, 316
+  size: 50, 63
+Death
+  xy: 150, 316
+  size: 50, 63
+Death
+  xy: 200, 316
+  size: 50, 63
+Death
+  xy: 250, 316
+  size: 50, 63
+Death
+  xy: 300, 316
+  size: 50, 63
+Death
+  xy: 350, 316
+  size: 50, 63
+Death
+  xy: 400, 316
+  size: 50, 63
+Death
+  xy: 450, 316
+  size: 50, 63
+Wake
+  xy: 0, 379
+  size: 50, 63
+Wake
+  xy: 50, 379
+  size: 50, 63
+Wake
+  xy: 100, 379
+  size: 50, 63
+Wake
+  xy: 150, 379
+  size: 50, 63
+Wake
+  xy: 200, 379
+  size: 50, 63
+IdleUp
+  xy: 0, 442
+  size: 50, 63
+IdleUp
+  xy: 50, 442
+  size: 50, 63
+IdleUp
+  xy: 100, 442
+  size: 50, 63
+IdleUp
+  xy: 150, 442
+  size: 50, 63
+IdleUp
+  xy: 200, 442
+  size: 50, 63
+IdleUp
+  xy: 250, 442
+  size: 50, 63
+IdleUp
+  xy: 300, 442
+  size: 50, 63
+IdleUp
+  xy: 350, 442
+  size: 50, 63
+IdleUp
+  xy: 400, 442
+  size: 50, 63
+IdleUp
+  xy: 450, 442
+  size: 50, 63
+IdleDown
+  xy: 0, 505
+  size: 50, 63
+IdleDown
+  xy: 50, 505
+  size: 50, 63
+IdleDown
+  xy: 100, 505
+  size: 50, 63
+IdleDown
+  xy: 150, 505
+  size: 50, 63
+IdleDown
+  xy: 200, 505
+  size: 50, 63
+IdleDown
+  xy: 250, 505
+  size: 50, 63
+IdleDown
+  xy: 300, 505
+  size: 50, 63
+IdleDown
+  xy: 350, 505
+  size: 50, 63
+IdleDown
+  xy: 400, 505
+  size: 50, 63
+IdleDown
+  xy: 450, 505
+  size: 50, 63
+WalkUp
+  xy: 0, 568
+  size: 50, 63
+WalkUp
+  xy: 50, 568
+  size: 50, 63
+WalkUp
+  xy: 100, 568
+  size: 50, 63
+WalkUp
+  xy: 150, 568
+  size: 50, 63
+WalkUp
+  xy: 200, 568
+  size: 50, 63
+WalkUp
+  xy: 250, 568
+  size: 50, 63
+WalkDown
+  xy: 0, 631
+  size: 50, 63
+WalkDown
+  xy: 50, 631
+  size: 50, 63
+WalkDown
+  xy: 100, 631
+  size: 50, 63
+WalkDown
+  xy: 150, 631
+  size: 50, 63
+WalkDown
+  xy: 200, 631
+  size: 50, 63
+WalkDown
+  xy: 250, 631
+  size: 50, 63

@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 435: nineteen more creature groups from the generator (cloud batch 5) (2026-10-04)
+
+The fifth cloud batch, creatures only (procedural-pixel-creatures PR #5). The user went through the verdicts: "yes
+install 19 as round 435, rework the cobra".
+
+- **The groups** (one enemy each): Wild Boar and Bristleback Boar (the round-430 boar: a pig's build, bristles, tusks),
+  Wolf Pup, Timber Wolf (red eyes), Snow Fox (a bushy tail), Meowing Cat (an orange tabby), Clucking Chicken (the
+  approved chicken in white), Tiny Chick, Slow Turtle (a domed green shell), Coral Crab, Viper, Xyris (a green snake),
+  Ooze and Ochre Jelly (slimes), Glowing Wisp (a blue flame with a white-hot core, a new generator option), Orange
+  Mushroomling (a walking mushroom with a face), Grist (a banded leech), Red Beast (a red lizard; the original was a
+  hunched beast) and Wurm.
+- **Held back**: the cobra (Poisonous Snake) keeps its sprite for a rework; from the side its hood read as a flap.
+- **Data only:**
+  - `sprites/enemy/remake/`: 38 new files (19 enemies).
+  - `world/enemies.json`: 19 sprites and 19 scales; no other field changed.
+  - Generator: procedural-pixel-creatures `cloud/batch-05`.
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves; 19 scales changed.
+  - `sprite_artifact_audit.py --only remake` (225 atlases, 18543 frames) flags 250 frames, all shadows; the one new frame
+    is the Wolf Pup's shadow under a gallop stride with every foot off the ground (as the cats' in round 428).
+- Not yet seen in play. Console (F9): `spawn enemy "Wild Boar"`, `spawn enemy "Snow Fox"`, `spawn enemy "Glowing Wisp"`,
+  `spawn enemy "Orange Mushroomling"`, `spawn enemy "Slow Turtle"`.
+
 ## Round 433: Deep Caverns one at a time (rotation groups); a check on the ground's draw state (2026-10-04)
 
 The user, with a screenshot of Deep Caverns and one of the overworld after it: "There is a Cave, Called 'Deep Cave' It's

@@ -1,0 +1,218 @@
+xyris.png
+size: 1800,794
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 150, 73
+Idle
+  xy: 150, 64
+  size: 150, 73
+Idle
+  xy: 300, 64
+  size: 150, 73
+Idle
+  xy: 450, 64
+  size: 150, 73
+Idle
+  xy: 600, 64
+  size: 150, 73
+Idle
+  xy: 750, 64
+  size: 150, 73
+Idle
+  xy: 900, 64
+  size: 150, 73
+Idle
+  xy: 1050, 64
+  size: 150, 73
+Idle
+  xy: 1200, 64
+  size: 150, 73
+Idle
+  xy: 1350, 64
+  size: 150, 73
+Walk
+  xy: 0, 137
+  size: 150, 73
+Walk
+  xy: 150, 137
+  size: 150, 73
+Walk
+  xy: 300, 137
+  size: 150, 73
+Walk
+  xy: 450, 137
+  size: 150, 73
+Attack
+  xy: 0, 210
+  size: 150, 73
+Attack
+  xy: 150, 210
+  size: 150, 73
+Attack
+  xy: 300, 210
+  size: 150, 73
+Attack
+  xy: 450, 210
+  size: 150, 73
+Attack
+  xy: 600, 210
+  size: 150, 73
+Attack
+  xy: 750, 210
+  size: 150, 73
+Hit
+  xy: 0, 283
+  size: 150, 73
+Hit
+  xy: 150, 283
+  size: 150, 73
+Hit
+  xy: 300, 283
+  size: 150, 73
+Hit
+  xy: 450, 283
+  size: 150, 73
+Death
+  xy: 0, 356
+  size: 150, 73
+Death
+  xy: 150, 356
+  size: 150, 73
+Death
+  xy: 300, 356
+  size: 150, 73
+Death
+  xy: 450, 356
+  size: 150, 73
+Death
+  xy: 600, 356
+  size: 150, 73
+Death
+  xy: 750, 356
+  size: 150, 73
+Death
+  xy: 900, 356
+  size: 150, 73
+Death
+  xy: 1050, 356
+  size: 150, 73
+Death
+  xy: 1200, 356
+  size: 150, 73
+Death
+  xy: 1350, 356
+  size: 150, 73
+Death
+  xy: 1500, 356
+  size: 150, 73
+Death
+  xy: 1650, 356
+  size: 150, 73
+Wake
+  xy: 0, 429
+  size: 150, 73
+Wake
+  xy: 150, 429
+  size: 150, 73
+Wake
+  xy: 300, 429
+  size: 150, 73
+Wake
+  xy: 450, 429
+  size: 150, 73
+Wake
+  xy: 600, 429
+  size: 150, 73
+Wake
+  xy: 750, 429
+  size: 150, 73
+IdleUp
+  xy: 0, 502
+  size: 150, 73
+IdleUp
+  xy: 150, 502
+  size: 150, 73
+IdleUp
+  xy: 300, 502
+  size: 150, 73
+IdleUp
+  xy: 450, 502
+  size: 150, 73
+IdleUp
+  xy: 600, 502
+  size: 150, 73
+IdleUp
+  xy: 750, 502
+  size: 150, 73
+IdleUp
+  xy: 900, 502
+  size: 150, 73
+IdleUp
+  xy: 1050, 502
+  size: 150, 73
+IdleUp
+  xy: 1200, 502
+  size: 150, 73
+IdleUp
+  xy: 1350, 502
+  size: 150, 73
+IdleDown
+  xy: 0, 575
+  size: 150, 73
+IdleDown
+  xy: 150, 575
+  size: 150, 73
+IdleDown
+  xy: 300, 575
+  size: 150, 73
+IdleDown
+  xy: 450, 575
+  size: 150, 73
+IdleDown
+  xy: 600, 575
+  size: 150, 73
+IdleDown
+  xy: 750, 575
+  size: 150, 73
+IdleDown
+  xy: 900, 575
+  size: 150, 73
+IdleDown
+  xy: 1050, 575
+  size: 150, 73
+IdleDown
+  xy: 1200, 575
+  size: 150, 73
+IdleDown
+  xy: 1350, 575
+  size: 150, 73
+WalkUp
+  xy: 0, 648
+  size: 150, 73
+WalkUp
+  xy: 150, 648
+  size: 150, 73
+WalkUp
+  xy: 300, 648
+  size: 150, 73
+WalkUp
+  xy: 450, 648
+  size: 150, 73
+WalkDown
+  xy: 0, 721
+  size: 150, 73
+WalkDown
+  xy: 150, 721
+  size: 150, 73
+WalkDown
+  xy: 300, 721
+  size: 150, 73
+WalkDown
+  xy: 450, 721
+  size: 150, 73

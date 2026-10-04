@@ -23751,7 +23751,7 @@
     },
     {
         "name": "Ooze",
-        "sprite": "sprites/enemy/ooze/ooze.atlas",
+        "sprite": "sprites/enemy/remake/ooze.atlas",
         "deck": [
             "decks/standard/ooze.json",
             "decks/standard/ooze_greenblackred.dck",
@@ -23763,7 +23763,7 @@
         "spawnRate": 0.3,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 1.3,
+        "scale": 0.2928,
         "life": 12,
         "rewards": [
             {
@@ -26154,7 +26154,7 @@
     {
         "name": "Red Beast",
         "nameOverride": "Giant Red Basilisk",
-        "sprite": "sprites/enemy/monstrosity/basilisk_2.atlas",
+        "sprite": "sprites/enemy/remake/red_beast.atlas",
         "deck": [
             "decks/standard/beast_red.json"
         ],
@@ -26193,7 +26193,7 @@
             "BiomeRed"
         ],
         "tier": "Mythic",
-        "scale": 1.0833
+        "scale": 0.197
     },
     {
         "name": "Rhino",
@@ -31831,7 +31831,7 @@
     },
     {
         "name": "Viper",
-        "sprite": "sprites/enemy/beast/reptile/big_snake_2.atlas",
+        "sprite": "sprites/enemy/remake/viper.atlas",
         "deck": [
             "decks/standard/snake.dck"
         ],
@@ -31893,7 +31893,7 @@
             "BiomeGreen"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3552
     },
     {
         "name": "Volcano Dragon",
@@ -33132,7 +33132,7 @@
     },
     {
         "name": "Wolf Pup",
-        "sprite": "sprites/enemy/beast/smallmammals/wolfcub.atlas",
+        "sprite": "sprites/enemy/remake/wolf_pup.atlas",
         "deck": [
             "decks/standard/wolf.json"
         ],
@@ -33140,7 +33140,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 22,
-        "scale": 0.8667,
+        "scale": 0.2955,
         "life": 13,
         "rewards": [
             {
@@ -33456,7 +33456,7 @@
     },
     {
         "name": "Wurm",
-        "sprite": "sprites/enemy/monstrosity/wurm.atlas",
+        "sprite": "sprites/enemy/remake/wurm.atlas",
         "deck": [
             "decks/standard/wurm.json"
         ],
@@ -33499,7 +33499,7 @@
             "BiomeGreen"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.2955
     },
     {
         "name": "Xira",
@@ -76282,7 +76282,7 @@
     },
     {
         "name": "Grist",
-        "sprite": "sprites/enemy/aberration/leech.atlas",
+        "sprite": "sprites/enemy/remake/grist.atlas",
         "deck": [
             "decks/legends/grist.dck"
         ],
@@ -76351,7 +76351,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.2955
     },
     {
         "name": "Vishgraz",
@@ -79039,13 +79039,13 @@
     },
     {
         "name": "Xyris",
-        "sprite": "sprites/enemy/beast/reptile/snake_green.atlas",
+        "sprite": "sprites/enemy/remake/xyris.atlas",
         "deck": [
             "decks/legends/xyris.dck"
         ],
         "ai": "",
         "flying": true,
-        "scale": 1.3,
+        "scale": 0.2889,
         "speed": 34,
         "life": 20,
         "rewards": [
@@ -128910,7 +128910,7 @@
     },
     {
         "name": "Clucking Chicken",
-        "sprite": "sprites/enemy/basic/animal/clucking_chicken.atlas",
+        "sprite": "sprites/enemy/remake/clucking_chicken.atlas",
         "deck": [
             "decks/standard/clucking_chicken.dck"
         ],
@@ -128971,11 +128971,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3611
     },
     {
         "name": "Coral Crab",
-        "sprite": "sprites/enemy/basic/animal/coral_crab.atlas",
+        "sprite": "sprites/enemy/remake/coral_crab.atlas",
         "deck": [
             "decks/standard/coral_crab.dck"
         ],
@@ -129035,7 +129035,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2955
     },
     {
         "name": "Croaking Toad",
@@ -129360,7 +129361,7 @@
     },
     {
         "name": "Meowing Cat",
-        "sprite": "sprites/enemy/basic/animal/meowing_cat.atlas",
+        "sprite": "sprites/enemy/remake/meowing_cat.atlas",
         "deck": [
             "decks/standard/meowing_cat.dck"
         ],
@@ -129420,7 +129421,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3714
     },
     {
         "name": "Pasturing Sheep",
@@ -129487,7 +129489,7 @@
     },
     {
         "name": "Slow Turtle",
-        "sprite": "sprites/enemy/basic/animal/slow_turtle.atlas",
+        "sprite": "sprites/enemy/remake/slow_turtle.atlas",
         "deck": [
             "decks/standard/slow_turtle.dck"
         ],
@@ -129547,11 +129549,12 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2955
     },
     {
         "name": "Snow Fox",
-        "sprite": "sprites/enemy/basic/animal/snow_fox.atlas",
+        "sprite": "sprites/enemy/remake/snow_fox.atlas",
         "deck": [
             "decks/standard/snow_fox.dck"
         ],
@@ -129610,7 +129613,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3514
     },
     {
         "name": "Spikey Porcupine",
@@ -129740,7 +129743,7 @@
     },
     {
         "name": "Timber Wolf",
-        "sprite": "sprites/enemy/basic/animal/timber_wolf.atlas",
+        "sprite": "sprites/enemy/remake/timber_wolf.atlas",
         "deck": [
             "decks/standard/timber_wolf.dck"
         ],
@@ -129798,11 +129801,12 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3611
     },
     {
         "name": "Tiny Chick",
-        "sprite": "sprites/enemy/basic/animal/tiny_chick.atlas",
+        "sprite": "sprites/enemy/remake/tiny_chick.atlas",
         "deck": [
             "decks/standard/tiny_chick.dck"
         ],
@@ -129861,7 +129865,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.4444
+        "scale": 0.3611
     },
     {
         "name": "Depraved Blackguard",
@@ -133324,7 +133328,7 @@
     },
     {
         "name": "Ochre Jelly",
-        "sprite": "sprites/enemy/basic/monster/ochre_jelly.atlas",
+        "sprite": "sprites/enemy/remake/ochre_jelly.atlas",
         "deck": [
             "decks/standard/ochre_jelly.dck"
         ],
@@ -133385,7 +133389,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.3514
     },
     {
         "name": "Ocular Watcher",
@@ -135106,7 +135110,7 @@
     },
     {
         "name": "Glowing Wisp",
-        "sprite": "sprites/enemy/basic/magical/glowing_wisp.atlas",
+        "sprite": "sprites/enemy/remake/glowing_wisp.atlas",
         "deck": [
             "decks/standard/glowing_wisp.dck"
         ],
@@ -135167,7 +135171,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3611
     },
     {
         "name": "Grizzled Treant",
@@ -140342,7 +140346,7 @@
     },
     {
         "name": "Wild Boar",
-        "sprite": "sprites/enemy/basic/animal/wild_boar.atlas",
+        "sprite": "sprites/enemy/remake/wild_boar.atlas",
         "deck": [
             "decks/standard/wild_boar.dck"
         ],
@@ -140401,11 +140405,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0
+        "scale": 0.3611
     },
     {
         "name": "Bristleback Boar",
-        "sprite": "sprites/enemy/basic/animal/bristleback_boar.atlas",
+        "sprite": "sprites/enemy/remake/bristleback_boar.atlas",
         "deck": [
             "decks/standard/bristleback_boar.dck"
         ],
@@ -140464,7 +140468,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0
+        "scale": 0.3514
     },
     {
         "name": "Bungisngis",
@@ -142295,7 +142299,7 @@
     },
     {
         "name": "Orange Mushroomling",
-        "sprite": "sprites/enemy/basic/monster/orange_mushroomling.atlas",
+        "sprite": "sprites/enemy/remake/orange_mushroomling.atlas",
         "deck": [
             "decks/standard/orange_mushroomling.dck"
         ],
@@ -142354,7 +142358,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.8667
+        "scale": 0.2889
     },
     {
         "name": "Pitchfork Farmer",
