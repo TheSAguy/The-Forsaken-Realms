@@ -61,7 +61,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 ## STATE 2026-10-04 (round 441): **LOCAL + UNRELEASED (data only)** - the Player Capitol's Normal arena (level 1, and level
 2 in Normal mode) win item: its 16 old names + all 40 of the AI capitals' sets = 56, 1 in 56 each, Dungeon Map kept
 (player_capital.tmx `arena`). The per-enemy win streak keeps counting Arena duels (the user: "Keep as is"). NEXT
-RELEASE NAME (the user): **"Blame Vr01!"** - rounds 406-441 on top of v1.17.1. LIVE NOT PACKAGED with 439-441 yet.
+RELEASE NAME (the user): **"Blame Vr01!"** - rounds 406-441 on top of v1.17.1. LIVE + AGENT PACKAGED with 439-441
+(jar CFB504FC8FB9, enemies.json 6AF535CF, 634 remake files, stock res = Forge_2 10.04).
 
 ## STATE 2026-10-04 (round 440): **LOCAL + UNRELEASED** - ENGINE = the 10.04 daily (upstream `f9aafc5315e`, 17 commits
 since round 403). Two conflicts from upstream #12098, ours kept: `WorldBackground` (their camera-streaming rewrite not
@@ -69,14 +70,12 @@ taken; their placeholder dispose taken) and `World.getBiomeSprite` (their shared
 contract). The clean part of #12098 caches `Assets.getWhiteTexture()` & co. - the per-frame texture leak behind
 Manasight's dots, the likely cause of the user's black ground after Deep Caverns. `engineBuildVersion` 10.04. AGENT
 PACKAGED (full stock copy from Forge_2's 10.04; cardsfolder.zip identical) and smoke-tested: load, a town in and out,
-a duel, no exception, `[TFR-WorldReturn]` white/default both times. LIVE NOT PACKAGED with 439 + 440 (the user's game
-was running).
+a duel, no exception, `[TFR-WorldReturn]` white/default both times. LIVE PACKAGED with 439-441 (see 441).
 
 ## STATE 2026-10-04 (round 439): **LOCAL + UNRELEASED** - the tiger group (Tiger, Snapdax, Jedit) from cloud batch 7,
 reworked with black stripes (new generator option quadruped `pattern.blackMarks`); Snapdax red-orange and Jedit a
 cream-white tiger, like their cards. Data only (enemies.json, `sprites/enemy/remake/tiger|snapdax|jedit.*`;
-procedural-pixel-creatures `cloud/batch-07`). Now 317 remake atlases. NOT PACKAGED yet (the user's game was running);
-not seen in play.
+procedural-pixel-creatures `cloud/batch-07`). Now 317 remake atlases. LIVE + AGENT PACKAGED (with 440-441); not seen in play.
 
 ## STATE 2026-10-04 (round 438): **LOCAL + UNRELEASED** - cloud batch 7 of the creature-generator remakes: 18 groups,
 42 enemies (eight golems on the approved boulder recipe; wolf, fox, hippo, naked mole rat, kavu, frog, raptor, penguin,
