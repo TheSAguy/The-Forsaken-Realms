@@ -61,7 +61,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 ## STATE 2026-10-04 (round 436): **LOCAL + UNRELEASED** - the cobra (Poisonous Snake) from cloud batch 5, reworked: fully
 reared, drawn three-quarters so its hood spreads, with a body half as long again (new generator option serpent
 `body.length`). Data only (enemies.json, `sprites/enemy/remake/poisonous_snake.*`; procedural-pixel-creatures PR #5,
-merged). Now 226 remake atlases. NOT PACKAGED yet; not seen in play.
+merged). Now 226 remake atlases. LIVE + AGENT PACKAGED (jar 6C5A48B4EE77, enemies.json A216A6E2, 452 remake
+files); not seen in play.
 
 ## STATE 2026-10-04 (round 435): **LOCAL + UNRELEASED** - cloud batch 5 of the creature-generator remakes: 19 creature
 groups, one enemy each (boars, wolves, fox, cat, hen, chick, turtle, crab, snakes, slimes, a flame wisp, a mushroomling,
