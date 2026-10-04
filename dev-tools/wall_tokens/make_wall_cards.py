@@ -1,4 +1,7 @@
-"""Round 411: build the 12 notoriety Wall token card faces (488 x 680, like the plane's other custom card pictures).
+"""Round 411: build the notoriety Wall token card faces (488 x 680, like the plane's other custom card pictures).
+
+Round 429: 24 faces - two walls (the second from 25 wins in a row) x three kinds x four levels, P/T 0/1, 1/2, 2/4, 3/6
+(make_token_scripts.py names them). The second wall uses the same art; only its printed win count differs (25+..40+).
 
 usage: python make_wall_cards.py --out <custom_card_pics folder> [--art <folder>] [--sheet <preview.png>]
 
@@ -8,7 +11,7 @@ usage: python make_wall_cards.py --out <custom_card_pics folder> [--art <folder>
         win over the kind's single picture. Round 423: the user's own names work too - Regular-1.png .. Regular-4.png,
         Reach-1..4, Fly-1..4 (their 256 x 256 set lives OUTSIDE the repo, F:\\Art_to_Tweak\\WALL). Missing art falls back
         to a drawn placeholder.
---sheet a 4 x 3 preview of all twelve, for review before shipping.
+--sheet a 4-wide preview of every face, for review before shipping.
 
 Round 423 framing (frame_art). The art box is 408 x 300 and the user's art is square with a transparent sky, so every
 picture stands on a backdrop for its kind: a banded stone-grey sky for the plain Wall, a green one with a ground band
@@ -22,6 +25,9 @@ import argparse
 import sys
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from make_token_scripts import LEVEL_PT, WALLS, script_name   # noqa: E402 - round 429: one naming for scripts and faces
 
 W, H = 488, 680
 ART_BOX = (40, 78, 448, 378)          # 408 x 300
@@ -172,12 +178,15 @@ def wrap(draw, text, fnt, width):
     return lines
 
 
-WINS_PER_LEVEL = 5   # settings.json notorietyWinsPerLevel - the 0/N wall stands from N x this many wins in a row
+WINS_PER_LEVEL = 5   # settings.json notorietyWinsPerLevel
+LEVELS_PER_WALL = 4  # settings.json notorietyLevelsPerWall
 
 
-def why_line(toughness):
-    """Round 411b (the user: "Add to the Card a text line. Saying why it's on the field"): the card's own threshold."""
-    return f"Notoriety: you have won {toughness * WINS_PER_LEVEL}+ duels in a row, and word has spread."
+def why_line(wall, level):
+    """Round 411b (the user: "Add to the Card a text line. Saying why it's on the field"): the card's own threshold.
+    Round 429: by level, not toughness (2/4 and 3/6 broke "toughness x 5"), and the second wall counts on from 25."""
+    wins = (wall * LEVELS_PER_WALL + level) * WINS_PER_LEVEL
+    return f"Notoriety: you have won {wins}+ duels in a row, and word has spread."
 
 
 LEAD = "Notoriety:"   # round 417 (the user: "put the Notoriety text in bold") - the card is the only notice now
@@ -198,7 +207,7 @@ def draw_why(d, text, x0, y, width):
     return y + 21
 
 
-def card(art, kind, keywords, toughness):
+def card(art, kind, keywords, wall, level):
     img = Image.new("RGB", (W, H), (16, 16, 18))
     d = ImageDraw.Draw(img)
     # silver artifact frame
@@ -232,10 +241,10 @@ def card(art, kind, keywords, toughness):
     # why it is on the field - a rule, then italic like flavor text, kept clear of the P/T box
     d.line([70, y, W - 71, y], fill=(150, 150, 150), width=1)
     y += 8
-    y = draw_why(d, why_line(toughness), 54, y, W - 41 - 14 - 54)
+    y = draw_why(d, why_line(wall, level), 54, y, W - 41 - 14 - 54)
     # power / toughness
     d.rounded_rectangle([W - 128, 590, W - 34, 636], radius=10, fill=(214, 216, 220), outline=(70, 72, 78), width=2)
-    pt = f"0/{toughness}"
+    pt = "%d/%d" % LEVEL_PT[level]
     f = font("palab.ttf", 30)
     d.text((W - 81 - d.textlength(pt, font=f) / 2, 595), pt, font=f, fill=(16, 16, 18))
     d.text((36, H - 40), "The Forsaken Realms \u2022 Notoriety", font=font("pala.ttf", 13), fill=(40, 40, 44))
@@ -253,24 +262,26 @@ def main():
         sys.exit(f"--out is not a folder: {out}")
     art_dir = Path(args.art) if args.art else None
     made = []
-    for kind, word, keywords in KINDS:
-        for t in range(1, 5):
-            art, source = None, "placeholder"
-            if art_dir:
-                user = USER_NAMES[kind]   # round 423: the user's own file names, e.g. Fly-3.png
-                for candidate in (art_dir / f"{user}-{t}.png", art_dir / f"{kind}_{t}.png", art_dir / f"{kind}.png"):
-                    if candidate.exists():
-                        art, source = Image.open(candidate), candidate.name
-                        break
-            if art is None:
-                art = placeholder(kind, t)
-            script = f"tfr_wall_{word + '_' if word else ''}0_{t}"
-            face = card(art, kind, keywords, t)
-            face.save(out / f"{script}.fullborder.png")
-            made.append(face)
-            print(f"{script}.fullborder.png  <- {source}")
+    for wall in range(len(WALLS)):        # round 429: the second wall - same art, its own win counts
+        for kind, word, keywords in KINDS:
+            for level in range(1, 5):
+                art, source = None, "placeholder"
+                if art_dir:
+                    user = USER_NAMES[kind]   # round 423: the user's own file names, e.g. Fly-3.png
+                    for candidate in (art_dir / f"{user}-{level}.png", art_dir / f"{kind}_{level}.png", art_dir / f"{kind}.png"):
+                        if candidate.exists():
+                            art, source = Image.open(candidate), candidate.name
+                            break
+                if art is None:
+                    art = placeholder(kind, level)
+                script = script_name(wall, word, level)
+                face = card(art, kind, keywords, wall, level)
+                face.save(out / f"{script}.fullborder.png")
+                made.append(face)
+                print(f"{script}.fullborder.png  <- {source}")
     if args.sheet:
-        sheet = Image.new("RGB", (W * 4 // 2 + 30, H * 3 // 2 + 40), (36, 36, 40))
+        rows = (len(made) + 3) // 4
+        sheet = Image.new("RGB", (W * 4 // 2 + 30, rows * (H // 2 + 10) + 10), (36, 36, 40))
         for i, face in enumerate(made):
             small = face.resize((W // 2, H // 2), Image.LANCZOS)
             sheet.paste(small, (10 + (i % 4) * (W // 2 + 4), 10 + (i // 4) * (H // 2 + 10)))

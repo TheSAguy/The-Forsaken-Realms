@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 429 - a second notoriety Wall
+
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the enemy seat loop adds every script
+  `notorietyWallsFor` returns (one or two Walls) and logs them on one line.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `notorietyWallFor` became `notorietyWallsFor`,
+  returning a list.
+- Mod: `TuningData.notorietyLevelsPerWall`, `notorietyWallIndexes`, the 8-entry `notorietyWalls*` lists; token scripts
+  `forge-gui/res/tokenscripts/tfr_wall*` (24, new files).
+
 ### Round 427 - road rule 7: a pocket enclosed by road is paved
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - world-gen calls `RoadNetwork.fillRoadHoles(this, null, null)`

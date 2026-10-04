@@ -417,22 +417,26 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     /**
-     * Round 411: the Wall token script an enemy of this tier starts the duel with, or null - notoriety below level 1,
-     * the rank below this difficulty's notorietyMinRank, or no such list entry. Plain for Apprentice/Adept, reach for a
-     * Master, flying for an Archmage; the level picks the size (level 1 = the 0/1).
+     * Round 411: the Wall token scripts an enemy of this tier starts the duel with - none below notoriety level 1, for
+     * a rank below this difficulty's notorietyMinRank, or with no list. Plain for Apprentice/Adept, reach for a Master,
+     * flying for an Archmage; the level picks the size (level 1 = the 0/1). Round 429: past the first wall's last
+     * level a second wall joins it (TuningData.notorietyWallIndexes).
      */
-    public String notorietyWallFor(forge.adventure.data.EnemyData enemy) {
+    public java.util.List<String> notorietyWallsFor(forge.adventure.data.EnemyData enemy) {
+        java.util.List<String> scripts = new java.util.ArrayList<>();
         forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
         int level = notorietyLevel();
         if (tuning == null || enemy == null || level <= 0)
-            return null;
+            return scripts;
         int rank = forge.adventure.data.EnemyData.tierRank(enemy.tier);
         if (rank < tuning.notorietyMinRankFor(difficultyData == null ? null : difficultyData.name))
-            return null;
+            return scripts;
         String[] walls = tuning.notorietyWallsForRank(rank);
         if (walls == null || walls.length == 0)
-            return null;
-        return walls[Math.min(level, walls.length) - 1];
+            return scripts;
+        for (int index : tuning.notorietyWallIndexes(Math.min(level, walls.length)))
+            scripts.add(walls[index]);
+        return scripts;
     }
 
     /** Round 216: the week this enemy was last Coin-Challenged, or -1 if never. */

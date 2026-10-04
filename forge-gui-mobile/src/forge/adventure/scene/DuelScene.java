@@ -1085,21 +1085,26 @@ public class DuelScene extends ForgeScene {
             // Round 411 (the user: "Each 5 win streak will add/upgrade one of these. Starting at duel 6"): notoriety - the
             // player's wins in a row against anyone put ONE Wall token on this seat's battlefield, sized by the level and
             // kind by the seat's rank, for the ranks the difficulty reaches. The same duels as the win streak above.
+            // Round 429: from 25 wins in a row a second Wall joins the first (AdventurePlayer.notorietyWallsFor).
             if (eventData == null && guardDeck == null) {
-                String wallScript = Current.player().notorietyWallFor(currentEnemy);
-                forge.item.PaperToken wall = wallScript == null ? null
-                        : forge.model.FModel.getMagicDb().getAllTokens().getToken(wallScript);
-                if (wall != null) {
-                    java.util.List<IPaperCard> walls = new java.util.ArrayList<>();
+                java.util.List<IPaperCard> walls = new java.util.ArrayList<>();
+                java.util.List<String> shown = new java.util.ArrayList<>();
+                for (String wallScript : Current.player().notorietyWallsFor(currentEnemy)) {
+                    forge.item.PaperToken wall = forge.model.FModel.getMagicDb().getAllTokens().getToken(wallScript);
+                    if (wall == null) {
+                        System.err.println("[TFR-Notoriety] token script " + wallScript + " not found - no wall");
+                        continue;
+                    }
                     walls.add(wall);
+                    shown.add(wallScript + " (" + wall.getRules().getPower() + "/" + wall.getRules().getToughness() + ")");
+                }
+                if (!walls.isEmpty()) {
                     aiPlayer.addExtraCardsOnBattlefield(walls);
                     // Round 417 (the user: "remove the Notoriety notification on each duel. It gets annoying. The card text
                     // informs the player what's going on"): no notice - the Wall card's own Notoriety line explains it.
                     System.out.println("[TFR-Notoriety] " + currentEnemy.getName() + " (" + EnemyData.tierDisplayName(currentEnemy.tier)
-                            + ") starts with " + wallScript + " (" + wall.getRules().getPower() + "/" + wall.getRules().getToughness()
-                            + ") - " + Current.player().notorietyStreak() + " wins in a row, level " + Current.player().notorietyLevel());
-                } else if (wallScript != null) {
-                    System.err.println("[TFR-Notoriety] token script " + wallScript + " not found - no wall");
+                            + ") starts with " + String.join(" + ", shown) + " - " + Current.player().notorietyStreak()
+                            + " wins in a row, level " + Current.player().notorietyLevel());
                 }
             }
 

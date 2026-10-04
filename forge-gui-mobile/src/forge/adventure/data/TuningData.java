@@ -258,7 +258,8 @@ public class TuningData {
     // Round 411 - NOTORIETY (the user: "Each 5 win streak will add/upgrade one of these. Starting at duel 6"): the
     // player's wins in a row against anyone (the duels round 404 counts; any loss resets it, Bronze Coin or not).
     // Every notorietyWinsPerLevel of them lifts the level by one, up to the walls lists' length: the enemy seat starts
-    // with ONE Wall token, the level's entry - level 1 (5-9 wins) the first. Which ranks get it, by difficulty name:
+    // with a Wall token, the level's entry - level 1 (5-9 wins) the first (a second wall from 25: round 429, below).
+    // Which ranks get it, by difficulty name:
     // notorietyMinRank* is the lowest rank that does (0 Apprentice, 1 Adept, 2 Master, 3 Archmage). Which wall, by
     // rank: Apprentice and Adept the plain list, Master the reach list, Archmage the flying list. Token script names
     // (forge-gui/res/tokenscripts). notorietyWinsPerLevel 0 = off.
@@ -267,9 +268,18 @@ public class TuningData {
     public int notorietyMinRankNormal = 2;
     public int notorietyMinRankHard = 1;
     public int notorietyMinRankInsane = 0;
-    public String[] notorietyWallsPlain = {"tfr_wall_0_1", "tfr_wall_0_2", "tfr_wall_0_3", "tfr_wall_0_4"};
-    public String[] notorietyWallsReach = {"tfr_wall_reach_0_1", "tfr_wall_reach_0_2", "tfr_wall_reach_0_3", "tfr_wall_reach_0_4"};
-    public String[] notorietyWallsFlying = {"tfr_wall_flying_0_1", "tfr_wall_flying_0_2", "tfr_wall_flying_0_3", "tfr_wall_flying_0_4"};
+    // Round 429 (the user: "level 2, be 1/2, lvl 3: 2/4 and level 4: 3/6 ... at 25 consecutive wins, start over with a
+    // second wall"): the lists run on past one wall. Every notorietyLevelsPerWall entries are one wall's levels; a level
+    // past the first wall keeps each finished wall at its last entry and adds the level's own entry - level 5 (25-29
+    // wins) = the 3/6 + the second 0/1, level 8 (40+) = both 3/6. The lists' length caps it (8 = two walls). Each
+    // wall's card prints its own win count, so a third wall needs its own cards. 0 = always one wall, as before.
+    public int notorietyLevelsPerWall = 4;
+    public String[] notorietyWallsPlain = {"tfr_wall_0_1", "tfr_wall_1_2", "tfr_wall_2_4", "tfr_wall_3_6",
+            "tfr_wall2_0_1", "tfr_wall2_1_2", "tfr_wall2_2_4", "tfr_wall2_3_6"};
+    public String[] notorietyWallsReach = {"tfr_wall_reach_0_1", "tfr_wall_reach_1_2", "tfr_wall_reach_2_4", "tfr_wall_reach_3_6",
+            "tfr_wall2_reach_0_1", "tfr_wall2_reach_1_2", "tfr_wall2_reach_2_4", "tfr_wall2_reach_3_6"};
+    public String[] notorietyWallsFlying = {"tfr_wall_flying_0_1", "tfr_wall_flying_1_2", "tfr_wall_flying_2_4", "tfr_wall_flying_3_6",
+            "tfr_wall2_flying_0_1", "tfr_wall2_flying_1_2", "tfr_wall2_flying_2_4", "tfr_wall2_flying_3_6"};
 
     /** Round 411: the lowest enemy rank (0 Apprentice .. 3 Archmage) notoriety reaches on this difficulty; an unknown
      *  difficulty takes Easy's (the fewest ranks), rather than guessing hard. */
@@ -281,6 +291,22 @@ public class TuningData {
             case "insane": return notorietyMinRankInsane;
             default:       return notorietyMinRankEasy;
         }
+    }
+
+    /**
+     * Round 429: the list indexes (0-based) of the walls a notoriety level puts in play - every finished wall at its
+     * last level, then the level's own entry. Level 0 or less: none.
+     */
+    public java.util.List<Integer> notorietyWallIndexes(int level) {
+        java.util.List<Integer> indexes = new java.util.ArrayList<>();
+        if (level <= 0)
+            return indexes;
+        int per = notorietyLevelsPerWall;
+        if (per > 0)
+            for (int done = 1; done <= (level - 1) / per; done++)
+                indexes.add(done * per - 1);
+        indexes.add(level - 1);
+        return indexes;
     }
 
     /** Round 411: the wall list for an enemy of this rank (0-3), or null when the list is missing. */

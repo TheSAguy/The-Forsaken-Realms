@@ -58,6 +58,12 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-04 (round 429): **LOCAL + UNRELEASED** - notoriety Walls 0/1, 1/2, 2/4, 3/6, and a second Wall from
+25 wins in a row (3/6 + 0/1 up to 3/6 + 3/6 at 40+, the cap). `TuningData.notorietyLevelsPerWall` (4) +
+`notorietyWallIndexes`; 8-entry `notorietyWalls*` lists; `AdventurePlayer.notorietyWallsFor` returns a list. 24 token
+scripts/faces (`tfr_wall[2][_reach|_flying]_P_T`, `dev-tools/wall_tokens`; the second set prints 25+..40+). Agent-tested
+at 40, 25 and 12 wins. Not yet packaged live.
+
 ## STATE 2026-10-03 (round 428): **LOCAL + UNRELEASED** - the batch-3 rework (data only: enemies.json,
 `sprites/enemy/remake/`). Elephant, Chicken, Elk, Cat, Lion, the golems and the Treefolk Guardian reworked; Griffin and
 the new Scorpion group installed; the Myr group back on its original sprite. Every running or stomping remake

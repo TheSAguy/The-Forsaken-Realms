@@ -1,0 +1,7 @@
+Name:Wall Token
+ManaCost:no cost
+Types:Artifact Creature Wall
+PT:2/4
+K:Defender
+K:Reach
+Oracle:Defender, reach

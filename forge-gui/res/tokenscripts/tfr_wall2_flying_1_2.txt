@@ -1,7 +1,7 @@
 Name:Wall Token
 ManaCost:no cost
 Types:Artifact Creature Wall
-PT:0/4
+PT:1/2
 K:Defender
-K:Reach
-Oracle:Defender, reach
+K:Flying
+Oracle:Defender, flying

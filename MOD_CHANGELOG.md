@@ -14264,6 +14264,54 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 429: notoriety Walls hit back (0/1, 1/2, 2/4, 3/6), and a second Wall from 25 wins in a row (2026-10-04)
+
+The user: "Let's have level 2, be 1/2, lvl 3: 2/4 and level 4: 3/6. Also, let's have it open ended, so at 25
+consecutive wins, start over with a second wall ... If the text on the walls can't be dynamic, telling you the win
+streak number, we can just create a second set of walls and cap this at 2 walls of level 4 each." Then: "yes, do 429
+the wall update".
+
+- **The ladder** (5 wins a level, as before):
+
+  | Wins in a row | Duel | Walls |
+  |---|---|---|
+  | 5 | 6th | 0/1 |
+  | 10 | 11th | 1/2 |
+  | 15 | 16th | 2/4 |
+  | 20 | 21st | 3/6 |
+  | 25 | 26th | 3/6 + 0/1 |
+  | 30 | 31st | 3/6 + 1/2 |
+  | 35 | 36th | 3/6 + 2/4 |
+  | 40+ | 41st on | 3/6 + 3/6 (the cap) |
+
+  Which ranks bring Walls (by difficulty) and which kind (plain, reach for Masters, flying for Archmages) are
+  unchanged; the second Wall is the same kind as the first. The Walls still have defender; from the 1/2 on they deal
+  damage when they block, and an enemy's fight or "damage equal to its power" cards can use them.
+- **The second wall has its own cards.** The win count is printed in the card picture, so it cannot change per duel.
+  The second wall's 12 cards use the same art and print 25+, 30+, 35+ and 40+. A third wall would need 12 more cards
+  and list entries; the code needs nothing.
+- **Code.**
+  - `TuningData.notorietyLevelsPerWall` (4) and `notorietyWallIndexes(level)`: every finished wall stays at its last
+    entry, plus the level's own entry. Level 5 = entries 4 and 5 (1-based), level 8 = 4 and 8.
+  - The `notorietyWalls*` lists hold 8 entries each; their length caps the level (`notorietyLevel()` already used it).
+  - `AdventurePlayer.notorietyWallsFor` (was `notorietyWallFor`) returns the list. `DuelScene` adds them all and logs
+    `[TFR-Notoriety] <enemy> (<rank>) starts with <script> (P/T) + <script> (P/T) - N wins in a row, level L`.
+- **Cards and scripts** (`dev-tools/wall_tokens`):
+  - `make_token_scripts.py` writes 24 scripts named `tfr_wall[2][_reach|_flying]_<power>_<toughness>`.
+  - `make_wall_cards.py --art F:\Art_to_Tweak\WALL` writes 24 faces. The Notoriety line now comes from the level, not
+    the toughness ("toughness x 5" broke at 2/4 and 3/6).
+  - The 9 old 0/2, 0/3 and 0/4 scripts and pictures are removed. The packager's overlay only adds files, so the
+    leftovers were also deleted from the live and agent folders by hand.
+- **Agent-tested** (Insane, a copy of the user's world in agent slot 1, the `notoriety N` cheat), screenshots of the
+  walls in play:
+  - 40 wins, Human Knight (Archmage): `tfr_wall_flying_3_6 (3/6) + tfr_wall2_flying_3_6 (3/6)`; the cards read 20+
+    and 40+.
+  - 25 wins, Hydra (Archmage): `tfr_wall_flying_3_6 (3/6) + tfr_wall2_flying_0_1 (0/1)`.
+  - 12 wins, Centaur (Master): `tfr_wall_reach_1_2 (1/2)`.
+  - Forge's "Token image key is malformed: t:tfr_wall_..." line (since round 411) is harmless; the pictures show.
+  - The first launch froze in the transition into the Knight duel (no exception, the log stopped before the deck
+    lines, so before the Wall code). Relaunched, the same Knight duel started normally. Not reproduced.
+
 ## Round 428: the batch-3 rework, a natural gallop stride, bosses at full density; the Myr keep their original (2026-10-03)
 
 The user compared batch 3 with the originals ("I feel like the original looks better on most of these") and asked

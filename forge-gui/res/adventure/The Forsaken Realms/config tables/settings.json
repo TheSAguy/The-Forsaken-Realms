@@ -131,18 +131,25 @@
     // this many times their rank's resource purse. 0 = the full arena list, as before.
     "championLootFactor": 2,
     // Round 411 - NOTORIETY: your wins in a row against anyone (the duels above count; any loss resets it). Every
-    // notorietyWinsPerLevel wins add a level, and an enemy of a reached rank starts with ONE Wall token - the level's
+    // notorietyWinsPerLevel wins add a level, and an enemy of a reached rank starts with a Wall token - the level's
     // entry of its rank's list (level 1 = 5-9 wins = the first). notorietyMinRank* = the lowest rank it reaches on that
     // difficulty: 0 Apprentice, 1 Adept, 2 Master, 3 Archmage. Apprentice/Adept get the plain walls, Masters the reach
     // walls, Archmages the flying walls (token scripts in forge-gui/res/tokenscripts). notorietyWinsPerLevel 0 = off.
+    // Round 429: 0/1, 1/2, 2/4, 3/6, then a SECOND wall - every notorietyLevelsPerWall entries are one wall, and a
+    // level past the first wall keeps it at its last entry and adds the level's own: 25 wins = 3/6 + 0/1, 40+ = 3/6 +
+    // 3/6. The lists' length caps it. The second wall's cards print 25+..40+ (dev-tools/wall_tokens).
     "notorietyWinsPerLevel": 5,
     "notorietyMinRankEasy": 3,
     "notorietyMinRankNormal": 2,
     "notorietyMinRankHard": 1,
     "notorietyMinRankInsane": 0,
-    "notorietyWallsPlain": ["tfr_wall_0_1", "tfr_wall_0_2", "tfr_wall_0_3", "tfr_wall_0_4"],
-    "notorietyWallsReach": ["tfr_wall_reach_0_1", "tfr_wall_reach_0_2", "tfr_wall_reach_0_3", "tfr_wall_reach_0_4"],
-    "notorietyWallsFlying": ["tfr_wall_flying_0_1", "tfr_wall_flying_0_2", "tfr_wall_flying_0_3", "tfr_wall_flying_0_4"],
+    "notorietyLevelsPerWall": 4,
+    "notorietyWallsPlain": ["tfr_wall_0_1", "tfr_wall_1_2", "tfr_wall_2_4", "tfr_wall_3_6",
+        "tfr_wall2_0_1", "tfr_wall2_1_2", "tfr_wall2_2_4", "tfr_wall2_3_6"],
+    "notorietyWallsReach": ["tfr_wall_reach_0_1", "tfr_wall_reach_1_2", "tfr_wall_reach_2_4", "tfr_wall_reach_3_6",
+        "tfr_wall2_reach_0_1", "tfr_wall2_reach_1_2", "tfr_wall2_reach_2_4", "tfr_wall2_reach_3_6"],
+    "notorietyWallsFlying": ["tfr_wall_flying_0_1", "tfr_wall_flying_1_2", "tfr_wall_flying_2_4", "tfr_wall_flying_3_6",
+        "tfr_wall2_flying_0_1", "tfr_wall2_flying_1_2", "tfr_wall2_flying_2_4", "tfr_wall2_flying_3_6"],
 
     // Fraction of an edition's own card count you must have found before the Research
     // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this
