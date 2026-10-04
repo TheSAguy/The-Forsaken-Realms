@@ -1,0 +1,260 @@
+baby_green_dragon.png
+size: 1350,714
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 65
+Idle
+  xy: 90, 64
+  size: 90, 65
+Idle
+  xy: 180, 64
+  size: 90, 65
+Idle
+  xy: 270, 64
+  size: 90, 65
+Idle
+  xy: 360, 64
+  size: 90, 65
+Idle
+  xy: 450, 64
+  size: 90, 65
+Idle
+  xy: 540, 64
+  size: 90, 65
+Idle
+  xy: 630, 64
+  size: 90, 65
+Idle
+  xy: 720, 64
+  size: 90, 65
+Idle
+  xy: 810, 64
+  size: 90, 65
+Walk
+  xy: 0, 129
+  size: 90, 65
+Walk
+  xy: 90, 129
+  size: 90, 65
+Walk
+  xy: 180, 129
+  size: 90, 65
+Walk
+  xy: 270, 129
+  size: 90, 65
+Walk
+  xy: 360, 129
+  size: 90, 65
+Walk
+  xy: 450, 129
+  size: 90, 65
+Attack
+  xy: 0, 194
+  size: 90, 65
+Attack
+  xy: 90, 194
+  size: 90, 65
+Attack
+  xy: 180, 194
+  size: 90, 65
+Attack
+  xy: 270, 194
+  size: 90, 65
+Attack
+  xy: 360, 194
+  size: 90, 65
+Attack
+  xy: 450, 194
+  size: 90, 65
+Attack
+  xy: 540, 194
+  size: 90, 65
+Attack
+  xy: 630, 194
+  size: 90, 65
+Attack
+  xy: 720, 194
+  size: 90, 65
+Hit
+  xy: 0, 259
+  size: 90, 65
+Hit
+  xy: 90, 259
+  size: 90, 65
+Hit
+  xy: 180, 259
+  size: 90, 65
+Hit
+  xy: 270, 259
+  size: 90, 65
+Hit
+  xy: 360, 259
+  size: 90, 65
+Death
+  xy: 0, 324
+  size: 90, 65
+Death
+  xy: 90, 324
+  size: 90, 65
+Death
+  xy: 180, 324
+  size: 90, 65
+Death
+  xy: 270, 324
+  size: 90, 65
+Death
+  xy: 360, 324
+  size: 90, 65
+Death
+  xy: 450, 324
+  size: 90, 65
+Death
+  xy: 540, 324
+  size: 90, 65
+Death
+  xy: 630, 324
+  size: 90, 65
+Death
+  xy: 720, 324
+  size: 90, 65
+Death
+  xy: 810, 324
+  size: 90, 65
+Death
+  xy: 900, 324
+  size: 90, 65
+Death
+  xy: 990, 324
+  size: 90, 65
+Death
+  xy: 1080, 324
+  size: 90, 65
+Death
+  xy: 1170, 324
+  size: 90, 65
+Death
+  xy: 1260, 324
+  size: 90, 65
+Wake
+  xy: 0, 389
+  size: 90, 65
+Wake
+  xy: 90, 389
+  size: 90, 65
+Wake
+  xy: 180, 389
+  size: 90, 65
+Wake
+  xy: 270, 389
+  size: 90, 65
+Wake
+  xy: 360, 389
+  size: 90, 65
+Wake
+  xy: 450, 389
+  size: 90, 65
+Wake
+  xy: 540, 389
+  size: 90, 65
+IdleUp
+  xy: 0, 454
+  size: 90, 65
+IdleUp
+  xy: 90, 454
+  size: 90, 65
+IdleUp
+  xy: 180, 454
+  size: 90, 65
+IdleUp
+  xy: 270, 454
+  size: 90, 65
+IdleUp
+  xy: 360, 454
+  size: 90, 65
+IdleUp
+  xy: 450, 454
+  size: 90, 65
+IdleUp
+  xy: 540, 454
+  size: 90, 65
+IdleUp
+  xy: 630, 454
+  size: 90, 65
+IdleUp
+  xy: 720, 454
+  size: 90, 65
+IdleUp
+  xy: 810, 454
+  size: 90, 65
+IdleDown
+  xy: 0, 519
+  size: 90, 65
+IdleDown
+  xy: 90, 519
+  size: 90, 65
+IdleDown
+  xy: 180, 519
+  size: 90, 65
+IdleDown
+  xy: 270, 519
+  size: 90, 65
+IdleDown
+  xy: 360, 519
+  size: 90, 65
+IdleDown
+  xy: 450, 519
+  size: 90, 65
+IdleDown
+  xy: 540, 519
+  size: 90, 65
+IdleDown
+  xy: 630, 519
+  size: 90, 65
+IdleDown
+  xy: 720, 519
+  size: 90, 65
+IdleDown
+  xy: 810, 519
+  size: 90, 65
+WalkUp
+  xy: 0, 584
+  size: 90, 65
+WalkUp
+  xy: 90, 584
+  size: 90, 65
+WalkUp
+  xy: 180, 584
+  size: 90, 65
+WalkUp
+  xy: 270, 584
+  size: 90, 65
+WalkUp
+  xy: 360, 584
+  size: 90, 65
+WalkUp
+  xy: 450, 584
+  size: 90, 65
+WalkDown
+  xy: 0, 649
+  size: 90, 65
+WalkDown
+  xy: 90, 649
+  size: 90, 65
+WalkDown
+  xy: 180, 649
+  size: 90, 65
+WalkDown
+  xy: 270, 649
+  size: 90, 65
+WalkDown
+  xy: 360, 649
+  size: 90, 65
+WalkDown
+  xy: 450, 649
+  size: 90, 65

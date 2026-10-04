@@ -1,0 +1,203 @@
+worm.png
+size: 820,524
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 46
+Idle
+  xy: 82, 64
+  size: 82, 46
+Idle
+  xy: 164, 64
+  size: 82, 46
+Idle
+  xy: 246, 64
+  size: 82, 46
+Idle
+  xy: 328, 64
+  size: 82, 46
+Idle
+  xy: 410, 64
+  size: 82, 46
+Idle
+  xy: 492, 64
+  size: 82, 46
+Idle
+  xy: 574, 64
+  size: 82, 46
+Idle
+  xy: 656, 64
+  size: 82, 46
+Idle
+  xy: 738, 64
+  size: 82, 46
+Walk
+  xy: 0, 110
+  size: 82, 46
+Walk
+  xy: 82, 110
+  size: 82, 46
+Walk
+  xy: 164, 110
+  size: 82, 46
+Walk
+  xy: 246, 110
+  size: 82, 46
+Walk
+  xy: 328, 110
+  size: 82, 46
+Attack
+  xy: 0, 156
+  size: 82, 46
+Attack
+  xy: 82, 156
+  size: 82, 46
+Attack
+  xy: 164, 156
+  size: 82, 46
+Attack
+  xy: 246, 156
+  size: 82, 46
+Hit
+  xy: 0, 202
+  size: 82, 46
+Hit
+  xy: 82, 202
+  size: 82, 46
+Hit
+  xy: 164, 202
+  size: 82, 46
+Death
+  xy: 0, 248
+  size: 82, 46
+Death
+  xy: 82, 248
+  size: 82, 46
+Death
+  xy: 164, 248
+  size: 82, 46
+Death
+  xy: 246, 248
+  size: 82, 46
+Death
+  xy: 328, 248
+  size: 82, 46
+Death
+  xy: 410, 248
+  size: 82, 46
+Death
+  xy: 492, 248
+  size: 82, 46
+Death
+  xy: 574, 248
+  size: 82, 46
+Death
+  xy: 656, 248
+  size: 82, 46
+Wake
+  xy: 0, 294
+  size: 82, 46
+Wake
+  xy: 82, 294
+  size: 82, 46
+Wake
+  xy: 164, 294
+  size: 82, 46
+Wake
+  xy: 246, 294
+  size: 82, 46
+IdleUp
+  xy: 0, 340
+  size: 82, 46
+IdleUp
+  xy: 82, 340
+  size: 82, 46
+IdleUp
+  xy: 164, 340
+  size: 82, 46
+IdleUp
+  xy: 246, 340
+  size: 82, 46
+IdleUp
+  xy: 328, 340
+  size: 82, 46
+IdleUp
+  xy: 410, 340
+  size: 82, 46
+IdleUp
+  xy: 492, 340
+  size: 82, 46
+IdleUp
+  xy: 574, 340
+  size: 82, 46
+IdleUp
+  xy: 656, 340
+  size: 82, 46
+IdleUp
+  xy: 738, 340
+  size: 82, 46
+IdleDown
+  xy: 0, 386
+  size: 82, 46
+IdleDown
+  xy: 82, 386
+  size: 82, 46
+IdleDown
+  xy: 164, 386
+  size: 82, 46
+IdleDown
+  xy: 246, 386
+  size: 82, 46
+IdleDown
+  xy: 328, 386
+  size: 82, 46
+IdleDown
+  xy: 410, 386
+  size: 82, 46
+IdleDown
+  xy: 492, 386
+  size: 82, 46
+IdleDown
+  xy: 574, 386
+  size: 82, 46
+IdleDown
+  xy: 656, 386
+  size: 82, 46
+IdleDown
+  xy: 738, 386
+  size: 82, 46
+WalkUp
+  xy: 0, 432
+  size: 82, 46
+WalkUp
+  xy: 82, 432
+  size: 82, 46
+WalkUp
+  xy: 164, 432
+  size: 82, 46
+WalkUp
+  xy: 246, 432
+  size: 82, 46
+WalkUp
+  xy: 328, 432
+  size: 82, 46
+WalkDown
+  xy: 0, 478
+  size: 82, 46
+WalkDown
+  xy: 82, 478
+  size: 82, 46
+WalkDown
+  xy: 164, 478
+  size: 82, 46
+WalkDown
+  xy: 246, 478
+  size: 82, 46
+WalkDown
+  xy: 328, 478
+  size: 82, 46

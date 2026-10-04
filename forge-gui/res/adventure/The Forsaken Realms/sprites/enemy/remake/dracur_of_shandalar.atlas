@@ -1,0 +1,251 @@
+dracur_of_shandalar.png
+size: 1040,674
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 61
+Idle
+  xy: 80, 64
+  size: 80, 61
+Idle
+  xy: 160, 64
+  size: 80, 61
+Idle
+  xy: 240, 64
+  size: 80, 61
+Idle
+  xy: 320, 64
+  size: 80, 61
+Idle
+  xy: 400, 64
+  size: 80, 61
+Idle
+  xy: 480, 64
+  size: 80, 61
+Idle
+  xy: 560, 64
+  size: 80, 61
+Idle
+  xy: 640, 64
+  size: 80, 61
+Idle
+  xy: 720, 64
+  size: 80, 61
+Walk
+  xy: 0, 125
+  size: 80, 61
+Walk
+  xy: 80, 125
+  size: 80, 61
+Walk
+  xy: 160, 125
+  size: 80, 61
+Walk
+  xy: 240, 125
+  size: 80, 61
+Walk
+  xy: 320, 125
+  size: 80, 61
+Walk
+  xy: 400, 125
+  size: 80, 61
+Attack
+  xy: 0, 186
+  size: 80, 61
+Attack
+  xy: 80, 186
+  size: 80, 61
+Attack
+  xy: 160, 186
+  size: 80, 61
+Attack
+  xy: 240, 186
+  size: 80, 61
+Attack
+  xy: 320, 186
+  size: 80, 61
+Attack
+  xy: 400, 186
+  size: 80, 61
+Attack
+  xy: 480, 186
+  size: 80, 61
+Attack
+  xy: 560, 186
+  size: 80, 61
+Hit
+  xy: 0, 247
+  size: 80, 61
+Hit
+  xy: 80, 247
+  size: 80, 61
+Hit
+  xy: 160, 247
+  size: 80, 61
+Hit
+  xy: 240, 247
+  size: 80, 61
+Hit
+  xy: 320, 247
+  size: 80, 61
+Death
+  xy: 0, 308
+  size: 80, 61
+Death
+  xy: 80, 308
+  size: 80, 61
+Death
+  xy: 160, 308
+  size: 80, 61
+Death
+  xy: 240, 308
+  size: 80, 61
+Death
+  xy: 320, 308
+  size: 80, 61
+Death
+  xy: 400, 308
+  size: 80, 61
+Death
+  xy: 480, 308
+  size: 80, 61
+Death
+  xy: 560, 308
+  size: 80, 61
+Death
+  xy: 640, 308
+  size: 80, 61
+Death
+  xy: 720, 308
+  size: 80, 61
+Death
+  xy: 800, 308
+  size: 80, 61
+Death
+  xy: 880, 308
+  size: 80, 61
+Death
+  xy: 960, 308
+  size: 80, 61
+Wake
+  xy: 0, 369
+  size: 80, 61
+Wake
+  xy: 80, 369
+  size: 80, 61
+Wake
+  xy: 160, 369
+  size: 80, 61
+Wake
+  xy: 240, 369
+  size: 80, 61
+Wake
+  xy: 320, 369
+  size: 80, 61
+Wake
+  xy: 400, 369
+  size: 80, 61
+Wake
+  xy: 480, 369
+  size: 80, 61
+IdleUp
+  xy: 0, 430
+  size: 80, 61
+IdleUp
+  xy: 80, 430
+  size: 80, 61
+IdleUp
+  xy: 160, 430
+  size: 80, 61
+IdleUp
+  xy: 240, 430
+  size: 80, 61
+IdleUp
+  xy: 320, 430
+  size: 80, 61
+IdleUp
+  xy: 400, 430
+  size: 80, 61
+IdleUp
+  xy: 480, 430
+  size: 80, 61
+IdleUp
+  xy: 560, 430
+  size: 80, 61
+IdleUp
+  xy: 640, 430
+  size: 80, 61
+IdleUp
+  xy: 720, 430
+  size: 80, 61
+IdleDown
+  xy: 0, 491
+  size: 80, 61
+IdleDown
+  xy: 80, 491
+  size: 80, 61
+IdleDown
+  xy: 160, 491
+  size: 80, 61
+IdleDown
+  xy: 240, 491
+  size: 80, 61
+IdleDown
+  xy: 320, 491
+  size: 80, 61
+IdleDown
+  xy: 400, 491
+  size: 80, 61
+IdleDown
+  xy: 480, 491
+  size: 80, 61
+IdleDown
+  xy: 560, 491
+  size: 80, 61
+IdleDown
+  xy: 640, 491
+  size: 80, 61
+IdleDown
+  xy: 720, 491
+  size: 80, 61
+WalkUp
+  xy: 0, 552
+  size: 80, 61
+WalkUp
+  xy: 80, 552
+  size: 80, 61
+WalkUp
+  xy: 160, 552
+  size: 80, 61
+WalkUp
+  xy: 240, 552
+  size: 80, 61
+WalkUp
+  xy: 320, 552
+  size: 80, 61
+WalkUp
+  xy: 400, 552
+  size: 80, 61
+WalkDown
+  xy: 0, 613
+  size: 80, 61
+WalkDown
+  xy: 80, 613
+  size: 80, 61
+WalkDown
+  xy: 160, 613
+  size: 80, 61
+WalkDown
+  xy: 240, 613
+  size: 80, 61
+WalkDown
+  xy: 320, 613
+  size: 80, 61
+WalkDown
+  xy: 400, 613
+  size: 80, 61

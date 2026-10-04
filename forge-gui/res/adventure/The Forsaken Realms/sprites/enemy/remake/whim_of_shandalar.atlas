@@ -1,0 +1,257 @@
+whim_of_shandalar.png
+size: 1344,814
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 75
+Idle
+  xy: 96, 64
+  size: 96, 75
+Idle
+  xy: 192, 64
+  size: 96, 75
+Idle
+  xy: 288, 64
+  size: 96, 75
+Idle
+  xy: 384, 64
+  size: 96, 75
+Idle
+  xy: 480, 64
+  size: 96, 75
+Idle
+  xy: 576, 64
+  size: 96, 75
+Idle
+  xy: 672, 64
+  size: 96, 75
+Idle
+  xy: 768, 64
+  size: 96, 75
+Idle
+  xy: 864, 64
+  size: 96, 75
+Walk
+  xy: 0, 139
+  size: 96, 75
+Walk
+  xy: 96, 139
+  size: 96, 75
+Walk
+  xy: 192, 139
+  size: 96, 75
+Walk
+  xy: 288, 139
+  size: 96, 75
+Walk
+  xy: 384, 139
+  size: 96, 75
+Walk
+  xy: 480, 139
+  size: 96, 75
+Attack
+  xy: 0, 214
+  size: 96, 75
+Attack
+  xy: 96, 214
+  size: 96, 75
+Attack
+  xy: 192, 214
+  size: 96, 75
+Attack
+  xy: 288, 214
+  size: 96, 75
+Attack
+  xy: 384, 214
+  size: 96, 75
+Attack
+  xy: 480, 214
+  size: 96, 75
+Attack
+  xy: 576, 214
+  size: 96, 75
+Attack
+  xy: 672, 214
+  size: 96, 75
+Attack
+  xy: 768, 214
+  size: 96, 75
+Hit
+  xy: 0, 289
+  size: 96, 75
+Hit
+  xy: 96, 289
+  size: 96, 75
+Hit
+  xy: 192, 289
+  size: 96, 75
+Hit
+  xy: 288, 289
+  size: 96, 75
+Hit
+  xy: 384, 289
+  size: 96, 75
+Death
+  xy: 0, 364
+  size: 96, 75
+Death
+  xy: 96, 364
+  size: 96, 75
+Death
+  xy: 192, 364
+  size: 96, 75
+Death
+  xy: 288, 364
+  size: 96, 75
+Death
+  xy: 384, 364
+  size: 96, 75
+Death
+  xy: 480, 364
+  size: 96, 75
+Death
+  xy: 576, 364
+  size: 96, 75
+Death
+  xy: 672, 364
+  size: 96, 75
+Death
+  xy: 768, 364
+  size: 96, 75
+Death
+  xy: 864, 364
+  size: 96, 75
+Death
+  xy: 960, 364
+  size: 96, 75
+Death
+  xy: 1056, 364
+  size: 96, 75
+Death
+  xy: 1152, 364
+  size: 96, 75
+Death
+  xy: 1248, 364
+  size: 96, 75
+Wake
+  xy: 0, 439
+  size: 96, 75
+Wake
+  xy: 96, 439
+  size: 96, 75
+Wake
+  xy: 192, 439
+  size: 96, 75
+Wake
+  xy: 288, 439
+  size: 96, 75
+Wake
+  xy: 384, 439
+  size: 96, 75
+Wake
+  xy: 480, 439
+  size: 96, 75
+Wake
+  xy: 576, 439
+  size: 96, 75
+IdleUp
+  xy: 0, 514
+  size: 96, 75
+IdleUp
+  xy: 96, 514
+  size: 96, 75
+IdleUp
+  xy: 192, 514
+  size: 96, 75
+IdleUp
+  xy: 288, 514
+  size: 96, 75
+IdleUp
+  xy: 384, 514
+  size: 96, 75
+IdleUp
+  xy: 480, 514
+  size: 96, 75
+IdleUp
+  xy: 576, 514
+  size: 96, 75
+IdleUp
+  xy: 672, 514
+  size: 96, 75
+IdleUp
+  xy: 768, 514
+  size: 96, 75
+IdleUp
+  xy: 864, 514
+  size: 96, 75
+IdleDown
+  xy: 0, 589
+  size: 96, 75
+IdleDown
+  xy: 96, 589
+  size: 96, 75
+IdleDown
+  xy: 192, 589
+  size: 96, 75
+IdleDown
+  xy: 288, 589
+  size: 96, 75
+IdleDown
+  xy: 384, 589
+  size: 96, 75
+IdleDown
+  xy: 480, 589
+  size: 96, 75
+IdleDown
+  xy: 576, 589
+  size: 96, 75
+IdleDown
+  xy: 672, 589
+  size: 96, 75
+IdleDown
+  xy: 768, 589
+  size: 96, 75
+IdleDown
+  xy: 864, 589
+  size: 96, 75
+WalkUp
+  xy: 0, 664
+  size: 96, 75
+WalkUp
+  xy: 96, 664
+  size: 96, 75
+WalkUp
+  xy: 192, 664
+  size: 96, 75
+WalkUp
+  xy: 288, 664
+  size: 96, 75
+WalkUp
+  xy: 384, 664
+  size: 96, 75
+WalkUp
+  xy: 480, 664
+  size: 96, 75
+WalkDown
+  xy: 0, 739
+  size: 96, 75
+WalkDown
+  xy: 96, 739
+  size: 96, 75
+WalkDown
+  xy: 192, 739
+  size: 96, 75
+WalkDown
+  xy: 288, 739
+  size: 96, 75
+WalkDown
+  xy: 384, 739
+  size: 96, 75
+WalkDown
+  xy: 480, 739
+  size: 96, 75

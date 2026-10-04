@@ -1,0 +1,245 @@
+aqua_drake.png
+size: 888,634
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 57
+Idle
+  xy: 74, 64
+  size: 74, 57
+Idle
+  xy: 148, 64
+  size: 74, 57
+Idle
+  xy: 222, 64
+  size: 74, 57
+Idle
+  xy: 296, 64
+  size: 74, 57
+Idle
+  xy: 370, 64
+  size: 74, 57
+Idle
+  xy: 444, 64
+  size: 74, 57
+Idle
+  xy: 518, 64
+  size: 74, 57
+Idle
+  xy: 592, 64
+  size: 74, 57
+Idle
+  xy: 666, 64
+  size: 74, 57
+Walk
+  xy: 0, 121
+  size: 74, 57
+Walk
+  xy: 74, 121
+  size: 74, 57
+Walk
+  xy: 148, 121
+  size: 74, 57
+Walk
+  xy: 222, 121
+  size: 74, 57
+Walk
+  xy: 296, 121
+  size: 74, 57
+Walk
+  xy: 370, 121
+  size: 74, 57
+Attack
+  xy: 0, 178
+  size: 74, 57
+Attack
+  xy: 74, 178
+  size: 74, 57
+Attack
+  xy: 148, 178
+  size: 74, 57
+Attack
+  xy: 222, 178
+  size: 74, 57
+Attack
+  xy: 296, 178
+  size: 74, 57
+Attack
+  xy: 370, 178
+  size: 74, 57
+Attack
+  xy: 444, 178
+  size: 74, 57
+Attack
+  xy: 518, 178
+  size: 74, 57
+Hit
+  xy: 0, 235
+  size: 74, 57
+Hit
+  xy: 74, 235
+  size: 74, 57
+Hit
+  xy: 148, 235
+  size: 74, 57
+Hit
+  xy: 222, 235
+  size: 74, 57
+Hit
+  xy: 296, 235
+  size: 74, 57
+Death
+  xy: 0, 292
+  size: 74, 57
+Death
+  xy: 74, 292
+  size: 74, 57
+Death
+  xy: 148, 292
+  size: 74, 57
+Death
+  xy: 222, 292
+  size: 74, 57
+Death
+  xy: 296, 292
+  size: 74, 57
+Death
+  xy: 370, 292
+  size: 74, 57
+Death
+  xy: 444, 292
+  size: 74, 57
+Death
+  xy: 518, 292
+  size: 74, 57
+Death
+  xy: 592, 292
+  size: 74, 57
+Death
+  xy: 666, 292
+  size: 74, 57
+Death
+  xy: 740, 292
+  size: 74, 57
+Death
+  xy: 814, 292
+  size: 74, 57
+Wake
+  xy: 0, 349
+  size: 74, 57
+Wake
+  xy: 74, 349
+  size: 74, 57
+Wake
+  xy: 148, 349
+  size: 74, 57
+Wake
+  xy: 222, 349
+  size: 74, 57
+Wake
+  xy: 296, 349
+  size: 74, 57
+Wake
+  xy: 370, 349
+  size: 74, 57
+IdleUp
+  xy: 0, 406
+  size: 74, 57
+IdleUp
+  xy: 74, 406
+  size: 74, 57
+IdleUp
+  xy: 148, 406
+  size: 74, 57
+IdleUp
+  xy: 222, 406
+  size: 74, 57
+IdleUp
+  xy: 296, 406
+  size: 74, 57
+IdleUp
+  xy: 370, 406
+  size: 74, 57
+IdleUp
+  xy: 444, 406
+  size: 74, 57
+IdleUp
+  xy: 518, 406
+  size: 74, 57
+IdleUp
+  xy: 592, 406
+  size: 74, 57
+IdleUp
+  xy: 666, 406
+  size: 74, 57
+IdleDown
+  xy: 0, 463
+  size: 74, 57
+IdleDown
+  xy: 74, 463
+  size: 74, 57
+IdleDown
+  xy: 148, 463
+  size: 74, 57
+IdleDown
+  xy: 222, 463
+  size: 74, 57
+IdleDown
+  xy: 296, 463
+  size: 74, 57
+IdleDown
+  xy: 370, 463
+  size: 74, 57
+IdleDown
+  xy: 444, 463
+  size: 74, 57
+IdleDown
+  xy: 518, 463
+  size: 74, 57
+IdleDown
+  xy: 592, 463
+  size: 74, 57
+IdleDown
+  xy: 666, 463
+  size: 74, 57
+WalkUp
+  xy: 0, 520
+  size: 74, 57
+WalkUp
+  xy: 74, 520
+  size: 74, 57
+WalkUp
+  xy: 148, 520
+  size: 74, 57
+WalkUp
+  xy: 222, 520
+  size: 74, 57
+WalkUp
+  xy: 296, 520
+  size: 74, 57
+WalkUp
+  xy: 370, 520
+  size: 74, 57
+WalkDown
+  xy: 0, 577
+  size: 74, 57
+WalkDown
+  xy: 74, 577
+  size: 74, 57
+WalkDown
+  xy: 148, 577
+  size: 74, 57
+WalkDown
+  xy: 222, 577
+  size: 74, 57
+WalkDown
+  xy: 296, 577
+  size: 74, 57
+WalkDown
+  xy: 370, 577
+  size: 74, 57

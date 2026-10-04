@@ -1,0 +1,266 @@
+scion_of_the_ur_dragon.png
+size: 1596,974
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 114, 91
+Idle
+  xy: 114, 64
+  size: 114, 91
+Idle
+  xy: 228, 64
+  size: 114, 91
+Idle
+  xy: 342, 64
+  size: 114, 91
+Idle
+  xy: 456, 64
+  size: 114, 91
+Idle
+  xy: 570, 64
+  size: 114, 91
+Idle
+  xy: 684, 64
+  size: 114, 91
+Idle
+  xy: 798, 64
+  size: 114, 91
+Idle
+  xy: 912, 64
+  size: 114, 91
+Idle
+  xy: 1026, 64
+  size: 114, 91
+Walk
+  xy: 0, 155
+  size: 114, 91
+Walk
+  xy: 114, 155
+  size: 114, 91
+Walk
+  xy: 228, 155
+  size: 114, 91
+Walk
+  xy: 342, 155
+  size: 114, 91
+Walk
+  xy: 456, 155
+  size: 114, 91
+Walk
+  xy: 570, 155
+  size: 114, 91
+Attack
+  xy: 0, 246
+  size: 114, 91
+Attack
+  xy: 114, 246
+  size: 114, 91
+Attack
+  xy: 228, 246
+  size: 114, 91
+Attack
+  xy: 342, 246
+  size: 114, 91
+Attack
+  xy: 456, 246
+  size: 114, 91
+Attack
+  xy: 570, 246
+  size: 114, 91
+Attack
+  xy: 684, 246
+  size: 114, 91
+Attack
+  xy: 798, 246
+  size: 114, 91
+Attack
+  xy: 912, 246
+  size: 114, 91
+Attack
+  xy: 1026, 246
+  size: 114, 91
+Hit
+  xy: 0, 337
+  size: 114, 91
+Hit
+  xy: 114, 337
+  size: 114, 91
+Hit
+  xy: 228, 337
+  size: 114, 91
+Hit
+  xy: 342, 337
+  size: 114, 91
+Hit
+  xy: 456, 337
+  size: 114, 91
+Hit
+  xy: 570, 337
+  size: 114, 91
+Death
+  xy: 0, 428
+  size: 114, 91
+Death
+  xy: 114, 428
+  size: 114, 91
+Death
+  xy: 228, 428
+  size: 114, 91
+Death
+  xy: 342, 428
+  size: 114, 91
+Death
+  xy: 456, 428
+  size: 114, 91
+Death
+  xy: 570, 428
+  size: 114, 91
+Death
+  xy: 684, 428
+  size: 114, 91
+Death
+  xy: 798, 428
+  size: 114, 91
+Death
+  xy: 912, 428
+  size: 114, 91
+Death
+  xy: 1026, 428
+  size: 114, 91
+Death
+  xy: 1140, 428
+  size: 114, 91
+Death
+  xy: 1254, 428
+  size: 114, 91
+Death
+  xy: 1368, 428
+  size: 114, 91
+Death
+  xy: 1482, 428
+  size: 114, 91
+Wake
+  xy: 0, 519
+  size: 114, 91
+Wake
+  xy: 114, 519
+  size: 114, 91
+Wake
+  xy: 228, 519
+  size: 114, 91
+Wake
+  xy: 342, 519
+  size: 114, 91
+Wake
+  xy: 456, 519
+  size: 114, 91
+Wake
+  xy: 570, 519
+  size: 114, 91
+Wake
+  xy: 684, 519
+  size: 114, 91
+Wake
+  xy: 798, 519
+  size: 114, 91
+IdleUp
+  xy: 0, 610
+  size: 114, 91
+IdleUp
+  xy: 114, 610
+  size: 114, 91
+IdleUp
+  xy: 228, 610
+  size: 114, 91
+IdleUp
+  xy: 342, 610
+  size: 114, 91
+IdleUp
+  xy: 456, 610
+  size: 114, 91
+IdleUp
+  xy: 570, 610
+  size: 114, 91
+IdleUp
+  xy: 684, 610
+  size: 114, 91
+IdleUp
+  xy: 798, 610
+  size: 114, 91
+IdleUp
+  xy: 912, 610
+  size: 114, 91
+IdleUp
+  xy: 1026, 610
+  size: 114, 91
+IdleDown
+  xy: 0, 701
+  size: 114, 91
+IdleDown
+  xy: 114, 701
+  size: 114, 91
+IdleDown
+  xy: 228, 701
+  size: 114, 91
+IdleDown
+  xy: 342, 701
+  size: 114, 91
+IdleDown
+  xy: 456, 701
+  size: 114, 91
+IdleDown
+  xy: 570, 701
+  size: 114, 91
+IdleDown
+  xy: 684, 701
+  size: 114, 91
+IdleDown
+  xy: 798, 701
+  size: 114, 91
+IdleDown
+  xy: 912, 701
+  size: 114, 91
+IdleDown
+  xy: 1026, 701
+  size: 114, 91
+WalkUp
+  xy: 0, 792
+  size: 114, 91
+WalkUp
+  xy: 114, 792
+  size: 114, 91
+WalkUp
+  xy: 228, 792
+  size: 114, 91
+WalkUp
+  xy: 342, 792
+  size: 114, 91
+WalkUp
+  xy: 456, 792
+  size: 114, 91
+WalkUp
+  xy: 570, 792
+  size: 114, 91
+WalkDown
+  xy: 0, 883
+  size: 114, 91
+WalkDown
+  xy: 114, 883
+  size: 114, 91
+WalkDown
+  xy: 228, 883
+  size: 114, 91
+WalkDown
+  xy: 342, 883
+  size: 114, 91
+WalkDown
+  xy: 456, 883
+  size: 114, 91
+WalkDown
+  xy: 570, 883
+  size: 114, 91

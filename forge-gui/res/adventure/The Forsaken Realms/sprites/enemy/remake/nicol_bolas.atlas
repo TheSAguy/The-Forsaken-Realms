@@ -1,0 +1,260 @@
+nicol_bolas.png
+size: 1440,724
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 66
+Idle
+  xy: 96, 64
+  size: 96, 66
+Idle
+  xy: 192, 64
+  size: 96, 66
+Idle
+  xy: 288, 64
+  size: 96, 66
+Idle
+  xy: 384, 64
+  size: 96, 66
+Idle
+  xy: 480, 64
+  size: 96, 66
+Idle
+  xy: 576, 64
+  size: 96, 66
+Idle
+  xy: 672, 64
+  size: 96, 66
+Idle
+  xy: 768, 64
+  size: 96, 66
+Idle
+  xy: 864, 64
+  size: 96, 66
+Walk
+  xy: 0, 130
+  size: 96, 66
+Walk
+  xy: 96, 130
+  size: 96, 66
+Walk
+  xy: 192, 130
+  size: 96, 66
+Walk
+  xy: 288, 130
+  size: 96, 66
+Walk
+  xy: 384, 130
+  size: 96, 66
+Walk
+  xy: 480, 130
+  size: 96, 66
+Attack
+  xy: 0, 196
+  size: 96, 66
+Attack
+  xy: 96, 196
+  size: 96, 66
+Attack
+  xy: 192, 196
+  size: 96, 66
+Attack
+  xy: 288, 196
+  size: 96, 66
+Attack
+  xy: 384, 196
+  size: 96, 66
+Attack
+  xy: 480, 196
+  size: 96, 66
+Attack
+  xy: 576, 196
+  size: 96, 66
+Attack
+  xy: 672, 196
+  size: 96, 66
+Attack
+  xy: 768, 196
+  size: 96, 66
+Hit
+  xy: 0, 262
+  size: 96, 66
+Hit
+  xy: 96, 262
+  size: 96, 66
+Hit
+  xy: 192, 262
+  size: 96, 66
+Hit
+  xy: 288, 262
+  size: 96, 66
+Hit
+  xy: 384, 262
+  size: 96, 66
+Death
+  xy: 0, 328
+  size: 96, 66
+Death
+  xy: 96, 328
+  size: 96, 66
+Death
+  xy: 192, 328
+  size: 96, 66
+Death
+  xy: 288, 328
+  size: 96, 66
+Death
+  xy: 384, 328
+  size: 96, 66
+Death
+  xy: 480, 328
+  size: 96, 66
+Death
+  xy: 576, 328
+  size: 96, 66
+Death
+  xy: 672, 328
+  size: 96, 66
+Death
+  xy: 768, 328
+  size: 96, 66
+Death
+  xy: 864, 328
+  size: 96, 66
+Death
+  xy: 960, 328
+  size: 96, 66
+Death
+  xy: 1056, 328
+  size: 96, 66
+Death
+  xy: 1152, 328
+  size: 96, 66
+Death
+  xy: 1248, 328
+  size: 96, 66
+Death
+  xy: 1344, 328
+  size: 96, 66
+Wake
+  xy: 0, 394
+  size: 96, 66
+Wake
+  xy: 96, 394
+  size: 96, 66
+Wake
+  xy: 192, 394
+  size: 96, 66
+Wake
+  xy: 288, 394
+  size: 96, 66
+Wake
+  xy: 384, 394
+  size: 96, 66
+Wake
+  xy: 480, 394
+  size: 96, 66
+Wake
+  xy: 576, 394
+  size: 96, 66
+IdleUp
+  xy: 0, 460
+  size: 96, 66
+IdleUp
+  xy: 96, 460
+  size: 96, 66
+IdleUp
+  xy: 192, 460
+  size: 96, 66
+IdleUp
+  xy: 288, 460
+  size: 96, 66
+IdleUp
+  xy: 384, 460
+  size: 96, 66
+IdleUp
+  xy: 480, 460
+  size: 96, 66
+IdleUp
+  xy: 576, 460
+  size: 96, 66
+IdleUp
+  xy: 672, 460
+  size: 96, 66
+IdleUp
+  xy: 768, 460
+  size: 96, 66
+IdleUp
+  xy: 864, 460
+  size: 96, 66
+IdleDown
+  xy: 0, 526
+  size: 96, 66
+IdleDown
+  xy: 96, 526
+  size: 96, 66
+IdleDown
+  xy: 192, 526
+  size: 96, 66
+IdleDown
+  xy: 288, 526
+  size: 96, 66
+IdleDown
+  xy: 384, 526
+  size: 96, 66
+IdleDown
+  xy: 480, 526
+  size: 96, 66
+IdleDown
+  xy: 576, 526
+  size: 96, 66
+IdleDown
+  xy: 672, 526
+  size: 96, 66
+IdleDown
+  xy: 768, 526
+  size: 96, 66
+IdleDown
+  xy: 864, 526
+  size: 96, 66
+WalkUp
+  xy: 0, 592
+  size: 96, 66
+WalkUp
+  xy: 96, 592
+  size: 96, 66
+WalkUp
+  xy: 192, 592
+  size: 96, 66
+WalkUp
+  xy: 288, 592
+  size: 96, 66
+WalkUp
+  xy: 384, 592
+  size: 96, 66
+WalkUp
+  xy: 480, 592
+  size: 96, 66
+WalkDown
+  xy: 0, 658
+  size: 96, 66
+WalkDown
+  xy: 96, 658
+  size: 96, 66
+WalkDown
+  xy: 192, 658
+  size: 96, 66
+WalkDown
+  xy: 288, 658
+  size: 96, 66
+WalkDown
+  xy: 384, 658
+  size: 96, 66
+WalkDown
+  xy: 480, 658
+  size: 96, 66

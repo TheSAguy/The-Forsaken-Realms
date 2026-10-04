@@ -1,0 +1,257 @@
+viridian_drake.png
+size: 1344,804
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 74
+Idle
+  xy: 96, 64
+  size: 96, 74
+Idle
+  xy: 192, 64
+  size: 96, 74
+Idle
+  xy: 288, 64
+  size: 96, 74
+Idle
+  xy: 384, 64
+  size: 96, 74
+Idle
+  xy: 480, 64
+  size: 96, 74
+Idle
+  xy: 576, 64
+  size: 96, 74
+Idle
+  xy: 672, 64
+  size: 96, 74
+Idle
+  xy: 768, 64
+  size: 96, 74
+Idle
+  xy: 864, 64
+  size: 96, 74
+Walk
+  xy: 0, 138
+  size: 96, 74
+Walk
+  xy: 96, 138
+  size: 96, 74
+Walk
+  xy: 192, 138
+  size: 96, 74
+Walk
+  xy: 288, 138
+  size: 96, 74
+Walk
+  xy: 384, 138
+  size: 96, 74
+Walk
+  xy: 480, 138
+  size: 96, 74
+Attack
+  xy: 0, 212
+  size: 96, 74
+Attack
+  xy: 96, 212
+  size: 96, 74
+Attack
+  xy: 192, 212
+  size: 96, 74
+Attack
+  xy: 288, 212
+  size: 96, 74
+Attack
+  xy: 384, 212
+  size: 96, 74
+Attack
+  xy: 480, 212
+  size: 96, 74
+Attack
+  xy: 576, 212
+  size: 96, 74
+Attack
+  xy: 672, 212
+  size: 96, 74
+Attack
+  xy: 768, 212
+  size: 96, 74
+Hit
+  xy: 0, 286
+  size: 96, 74
+Hit
+  xy: 96, 286
+  size: 96, 74
+Hit
+  xy: 192, 286
+  size: 96, 74
+Hit
+  xy: 288, 286
+  size: 96, 74
+Hit
+  xy: 384, 286
+  size: 96, 74
+Death
+  xy: 0, 360
+  size: 96, 74
+Death
+  xy: 96, 360
+  size: 96, 74
+Death
+  xy: 192, 360
+  size: 96, 74
+Death
+  xy: 288, 360
+  size: 96, 74
+Death
+  xy: 384, 360
+  size: 96, 74
+Death
+  xy: 480, 360
+  size: 96, 74
+Death
+  xy: 576, 360
+  size: 96, 74
+Death
+  xy: 672, 360
+  size: 96, 74
+Death
+  xy: 768, 360
+  size: 96, 74
+Death
+  xy: 864, 360
+  size: 96, 74
+Death
+  xy: 960, 360
+  size: 96, 74
+Death
+  xy: 1056, 360
+  size: 96, 74
+Death
+  xy: 1152, 360
+  size: 96, 74
+Death
+  xy: 1248, 360
+  size: 96, 74
+Wake
+  xy: 0, 434
+  size: 96, 74
+Wake
+  xy: 96, 434
+  size: 96, 74
+Wake
+  xy: 192, 434
+  size: 96, 74
+Wake
+  xy: 288, 434
+  size: 96, 74
+Wake
+  xy: 384, 434
+  size: 96, 74
+Wake
+  xy: 480, 434
+  size: 96, 74
+Wake
+  xy: 576, 434
+  size: 96, 74
+IdleUp
+  xy: 0, 508
+  size: 96, 74
+IdleUp
+  xy: 96, 508
+  size: 96, 74
+IdleUp
+  xy: 192, 508
+  size: 96, 74
+IdleUp
+  xy: 288, 508
+  size: 96, 74
+IdleUp
+  xy: 384, 508
+  size: 96, 74
+IdleUp
+  xy: 480, 508
+  size: 96, 74
+IdleUp
+  xy: 576, 508
+  size: 96, 74
+IdleUp
+  xy: 672, 508
+  size: 96, 74
+IdleUp
+  xy: 768, 508
+  size: 96, 74
+IdleUp
+  xy: 864, 508
+  size: 96, 74
+IdleDown
+  xy: 0, 582
+  size: 96, 74
+IdleDown
+  xy: 96, 582
+  size: 96, 74
+IdleDown
+  xy: 192, 582
+  size: 96, 74
+IdleDown
+  xy: 288, 582
+  size: 96, 74
+IdleDown
+  xy: 384, 582
+  size: 96, 74
+IdleDown
+  xy: 480, 582
+  size: 96, 74
+IdleDown
+  xy: 576, 582
+  size: 96, 74
+IdleDown
+  xy: 672, 582
+  size: 96, 74
+IdleDown
+  xy: 768, 582
+  size: 96, 74
+IdleDown
+  xy: 864, 582
+  size: 96, 74
+WalkUp
+  xy: 0, 656
+  size: 96, 74
+WalkUp
+  xy: 96, 656
+  size: 96, 74
+WalkUp
+  xy: 192, 656
+  size: 96, 74
+WalkUp
+  xy: 288, 656
+  size: 96, 74
+WalkUp
+  xy: 384, 656
+  size: 96, 74
+WalkUp
+  xy: 480, 656
+  size: 96, 74
+WalkDown
+  xy: 0, 730
+  size: 96, 74
+WalkDown
+  xy: 96, 730
+  size: 96, 74
+WalkDown
+  xy: 192, 730
+  size: 96, 74
+WalkDown
+  xy: 288, 730
+  size: 96, 74
+WalkDown
+  xy: 384, 730
+  size: 96, 74
+WalkDown
+  xy: 480, 730
+  size: 96, 74

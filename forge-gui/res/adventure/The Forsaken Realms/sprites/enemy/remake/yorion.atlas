@@ -1,0 +1,260 @@
+yorion.png
+size: 1350,844
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 78
+Idle
+  xy: 90, 64
+  size: 90, 78
+Idle
+  xy: 180, 64
+  size: 90, 78
+Idle
+  xy: 270, 64
+  size: 90, 78
+Idle
+  xy: 360, 64
+  size: 90, 78
+Idle
+  xy: 450, 64
+  size: 90, 78
+Idle
+  xy: 540, 64
+  size: 90, 78
+Idle
+  xy: 630, 64
+  size: 90, 78
+Idle
+  xy: 720, 64
+  size: 90, 78
+Idle
+  xy: 810, 64
+  size: 90, 78
+Walk
+  xy: 0, 142
+  size: 90, 78
+Walk
+  xy: 90, 142
+  size: 90, 78
+Walk
+  xy: 180, 142
+  size: 90, 78
+Walk
+  xy: 270, 142
+  size: 90, 78
+Walk
+  xy: 360, 142
+  size: 90, 78
+Walk
+  xy: 450, 142
+  size: 90, 78
+Attack
+  xy: 0, 220
+  size: 90, 78
+Attack
+  xy: 90, 220
+  size: 90, 78
+Attack
+  xy: 180, 220
+  size: 90, 78
+Attack
+  xy: 270, 220
+  size: 90, 78
+Attack
+  xy: 360, 220
+  size: 90, 78
+Attack
+  xy: 450, 220
+  size: 90, 78
+Attack
+  xy: 540, 220
+  size: 90, 78
+Attack
+  xy: 630, 220
+  size: 90, 78
+Hit
+  xy: 0, 298
+  size: 90, 78
+Hit
+  xy: 90, 298
+  size: 90, 78
+Hit
+  xy: 180, 298
+  size: 90, 78
+Hit
+  xy: 270, 298
+  size: 90, 78
+Hit
+  xy: 360, 298
+  size: 90, 78
+Hit
+  xy: 450, 298
+  size: 90, 78
+Death
+  xy: 0, 376
+  size: 90, 78
+Death
+  xy: 90, 376
+  size: 90, 78
+Death
+  xy: 180, 376
+  size: 90, 78
+Death
+  xy: 270, 376
+  size: 90, 78
+Death
+  xy: 360, 376
+  size: 90, 78
+Death
+  xy: 450, 376
+  size: 90, 78
+Death
+  xy: 540, 376
+  size: 90, 78
+Death
+  xy: 630, 376
+  size: 90, 78
+Death
+  xy: 720, 376
+  size: 90, 78
+Death
+  xy: 810, 376
+  size: 90, 78
+Death
+  xy: 900, 376
+  size: 90, 78
+Death
+  xy: 990, 376
+  size: 90, 78
+Death
+  xy: 1080, 376
+  size: 90, 78
+Death
+  xy: 1170, 376
+  size: 90, 78
+Death
+  xy: 1260, 376
+  size: 90, 78
+Wake
+  xy: 0, 454
+  size: 90, 78
+Wake
+  xy: 90, 454
+  size: 90, 78
+Wake
+  xy: 180, 454
+  size: 90, 78
+Wake
+  xy: 270, 454
+  size: 90, 78
+Wake
+  xy: 360, 454
+  size: 90, 78
+Wake
+  xy: 450, 454
+  size: 90, 78
+Wake
+  xy: 540, 454
+  size: 90, 78
+IdleUp
+  xy: 0, 532
+  size: 90, 78
+IdleUp
+  xy: 90, 532
+  size: 90, 78
+IdleUp
+  xy: 180, 532
+  size: 90, 78
+IdleUp
+  xy: 270, 532
+  size: 90, 78
+IdleUp
+  xy: 360, 532
+  size: 90, 78
+IdleUp
+  xy: 450, 532
+  size: 90, 78
+IdleUp
+  xy: 540, 532
+  size: 90, 78
+IdleUp
+  xy: 630, 532
+  size: 90, 78
+IdleUp
+  xy: 720, 532
+  size: 90, 78
+IdleUp
+  xy: 810, 532
+  size: 90, 78
+IdleDown
+  xy: 0, 610
+  size: 90, 78
+IdleDown
+  xy: 90, 610
+  size: 90, 78
+IdleDown
+  xy: 180, 610
+  size: 90, 78
+IdleDown
+  xy: 270, 610
+  size: 90, 78
+IdleDown
+  xy: 360, 610
+  size: 90, 78
+IdleDown
+  xy: 450, 610
+  size: 90, 78
+IdleDown
+  xy: 540, 610
+  size: 90, 78
+IdleDown
+  xy: 630, 610
+  size: 90, 78
+IdleDown
+  xy: 720, 610
+  size: 90, 78
+IdleDown
+  xy: 810, 610
+  size: 90, 78
+WalkUp
+  xy: 0, 688
+  size: 90, 78
+WalkUp
+  xy: 90, 688
+  size: 90, 78
+WalkUp
+  xy: 180, 688
+  size: 90, 78
+WalkUp
+  xy: 270, 688
+  size: 90, 78
+WalkUp
+  xy: 360, 688
+  size: 90, 78
+WalkUp
+  xy: 450, 688
+  size: 90, 78
+WalkDown
+  xy: 0, 766
+  size: 90, 78
+WalkDown
+  xy: 90, 766
+  size: 90, 78
+WalkDown
+  xy: 180, 766
+  size: 90, 78
+WalkDown
+  xy: 270, 766
+  size: 90, 78
+WalkDown
+  xy: 360, 766
+  size: 90, 78
+WalkDown
+  xy: 450, 766
+  size: 90, 78

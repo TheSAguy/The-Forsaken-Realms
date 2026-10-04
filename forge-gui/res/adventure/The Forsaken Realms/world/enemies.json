@@ -9144,7 +9144,7 @@
     },
     {
         "name": "Drake",
-        "sprite": "sprites/enemy/dragon/drake.atlas",
+        "sprite": "sprites/enemy/remake/drake.atlas",
         "deck": [
             "decks/standard/drake_ur_beginner.dck",
             "decks/standard/drake_ur_mid.dck",
@@ -9156,7 +9156,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.7647,
+        "scale": 0.2955,
         "life": 20,
         "rewards": [
             {
@@ -15488,7 +15488,7 @@
     },
     {
         "name": "Greater Sandwurm",
-        "sprite": "sprites/enemy/monstrosity/sandwurm2.atlas",
+        "sprite": "sprites/enemy/remake/greater_sandwurm.atlas",
         "deck": [
             "decks/standard/sandwurm.dck"
         ],
@@ -15530,7 +15530,7 @@
         ],
         "tier": "Uncommon",
         "speed": 27,
-        "scale": 1.0833
+        "scale": 0.2889
     },
     {
         "name": "Greater Zombie",
@@ -30933,7 +30933,7 @@
     },
     {
         "name": "Turtle",
-        "sprite": "sprites/enemy/beast/reptile/turtle.atlas",
+        "sprite": "sprites/enemy/remake/turtle.atlas",
         "deck": [
             "decks/standard/turtle.json"
         ],
@@ -30941,7 +30941,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 5,
-        "scale": 0.8125,
+        "scale": 0.2955,
         "life": 21,
         "rewards": [
             {
@@ -31898,7 +31898,7 @@
     {
         "name": "Volcano Dragon",
         "nameOverride": "",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/volcano_dragon.atlas",
         "deck": [
             "decks/standard/junddragon.dck"
         ],
@@ -31906,7 +31906,7 @@
         "spawnRate": 1,
         "difficulty": 3,
         "speed": 46,
-        "scale": 0.4194,
+        "scale": 0.197,
         "life": 47,
         "rewards": [
             {
@@ -33197,7 +33197,7 @@
     },
     {
         "name": "Worm",
-        "sprite": "sprites/enemy/beast/insect/smallworm.atlas",
+        "sprite": "sprites/enemy/remake/worm.atlas",
         "deck": [
             "decks/standard/worm.dck"
         ],
@@ -33229,7 +33229,7 @@
             "Beginner"
         ],
         "tier": "Common",
-        "scale": 1.625
+        "scale": 0.3611
     },
     {
         "name": "Wounded Sliver",
@@ -37239,14 +37239,14 @@
     },
     {
         "name": "The Ur-Dragon",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/the_ur_dragon.atlas",
         "deck": [
             "decks/legends/the_ur-dragon.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.4194,
+        "scale": 0.2,
         "life": 70,
         "rewards": [
             {
@@ -37385,14 +37385,14 @@
     },
     {
         "name": "Scion of the Ur-Dragon",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/scion_of_the_ur_dragon.atlas",
         "deck": [
             "decks/legends/scion_of_the_ur-dragon.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.4194,
+        "scale": 0.2364,
         "life": 50,
         "rewards": [
             {
@@ -38522,13 +38522,13 @@
     },
     {
         "name": "Nicol Bolas",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/nicol_bolas.atlas",
         "deck": [
             "decks/legends/nicol_bolas.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.4194,
+        "scale": 0.2889,
         "life": 40,
         "rewards": [
             {
@@ -39682,13 +39682,13 @@
     },
     {
         "name": "Drakuseth",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/drakuseth.atlas",
         "deck": [
             "decks/legends/drakuseth.dck"
         ],
         "ai": "",
         "speed": 41,
-        "scale": 0.4194,
+        "scale": 0.197,
         "life": 54,
         "rewards": [
             {
@@ -42981,14 +42981,14 @@
     },
     {
         "name": "Vorosh",
-        "sprite": "sprites/enemy/dragon/drake.atlas",
+        "sprite": "sprites/enemy/remake/vorosh.atlas",
         "deck": [
             "decks/legends/vorosh.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.7647,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -43129,14 +43129,14 @@
     },
     {
         "name": "Oros",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/oros.atlas",
         "deck": [
             "decks/legends/oros.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.4194,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -44612,14 +44612,14 @@
     },
     {
         "name": "Karrthus",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/karrthus.atlas",
         "deck": [
             "decks/legends/karrthus.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.4194,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -48070,14 +48070,14 @@
     },
     {
         "name": "Niv-Mizzet",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/niv_mizzet.atlas",
         "deck": [
             "decks/legends/niv-mizzet.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.4194,
+        "scale": 0.2955,
         "life": 30,
         "rewards": [
             {
@@ -48545,14 +48545,14 @@
     },
     {
         "name": "Prossh",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/prossh.atlas",
         "deck": [
             "decks/legends/prossh.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.4194,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -57945,13 +57945,13 @@
     },
     {
         "name": "Nezahal",
-        "sprite": "sprites/enemy/monstrosity/sandwurm2.atlas",
+        "sprite": "sprites/enemy/remake/nezahal.atlas",
         "deck": [
             "decks/legends/nezahal.dck"
         ],
         "ai": "",
         "speed": 37,
-        "scale": 1.0833,
+        "scale": 0.2889,
         "life": 30,
         "rewards": [
             {
@@ -58222,14 +58222,14 @@
     },
     {
         "name": "Zetalpa",
-        "sprite": "sprites/enemy/dragon/drake.atlas",
+        "sprite": "sprites/enemy/remake/zetalpa.atlas",
         "deck": [
             "decks/legends/zetalpa.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 35,
-        "scale": 0.7647,
+        "scale": 0.2364,
         "life": 28,
         "rewards": [
             {
@@ -63617,14 +63617,14 @@
     },
     {
         "name": "Ao",
-        "sprite": "sprites/enemy/monstrosity/sandwurm2.atlas",
+        "sprite": "sprites/enemy/remake/ao.atlas",
         "deck": [
             "decks/legends/ao.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 37,
-        "scale": 1.0833,
+        "scale": 0.2321,
         "life": 26,
         "rewards": [
             {
@@ -64986,14 +64986,14 @@
     },
     {
         "name": "Arixmethes",
-        "sprite": "sprites/enemy/beast/reptile/turtle.atlas",
+        "sprite": "sprites/enemy/remake/arixmethes.atlas",
         "deck": [
             "decks/legends/arixmethes.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.8125,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -70853,7 +70853,7 @@
     },
     {
         "name": "Betor",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/betor.atlas",
         "deck": [
             "decks/legends/betor.dck"
         ],
@@ -70923,7 +70923,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.4194
+        "scale": 0.2364
     },
     {
         "name": "Daghatar",
@@ -78288,12 +78288,12 @@
     },
     {
         "name": "Akim",
-        "sprite": "sprites/enemy/dragon/drake.atlas",
+        "sprite": "sprites/enemy/remake/akim.atlas",
         "deck": [
             "decks/legends/akim.dck"
         ],
         "ai": "",
-        "scale": 0.7647,
+        "scale": 0.2321,
         "flying": true,
         "speed": 44,
         "life": 20,
@@ -78425,7 +78425,7 @@
     },
     {
         "name": "Kaheera",
-        "sprite": "sprites/enemy/beast/largemammals/deer.atlas",
+        "sprite": "sprites/enemy/remake/kaheera.atlas",
         "deck": [
             "decks/legends/kaheera.dck"
         ],
@@ -78489,7 +78489,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Kalamax",
@@ -78767,7 +78767,7 @@
     },
     {
         "name": "Obosh",
-        "sprite": "sprites/enemy/monstrosity/sandwurm2.atlas",
+        "sprite": "sprites/enemy/remake/obosh.atlas",
         "deck": [
             "decks/legends/obosh.dck"
         ],
@@ -78831,7 +78831,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.2889
     },
     {
         "name": "Umori",
@@ -79109,7 +79109,7 @@
     },
     {
         "name": "Yorion",
-        "sprite": "sprites/enemy/dragon/drake.atlas",
+        "sprite": "sprites/enemy/remake/yorion.atlas",
         "deck": [
             "decks/legends/yorion.dck"
         ],
@@ -79174,7 +79174,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.7647
+        "scale": 0.2955
     },
     {
         "name": "Zirda",
@@ -80075,7 +80075,7 @@
     },
     {
         "name": "Neriv",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/neriv.atlas",
         "deck": [
             "decks/legends/neriv.dck"
         ],
@@ -80145,7 +80145,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.4194
+        "scale": 0.2364
     },
     {
         "name": "Akawalli",
@@ -86567,12 +86567,12 @@
     },
     {
         "name": "Gorex",
-        "sprite": "sprites/enemy/beast/reptile/turtle.atlas",
+        "sprite": "sprites/enemy/remake/gorex.atlas",
         "deck": [
             "decks/legends/gorex.dck"
         ],
         "ai": "",
-        "scale": 0.8125,
+        "scale": 0.2955,
         "speed": 30,
         "life": 18,
         "rewards": [
@@ -87055,7 +87055,7 @@
     },
     {
         "name": "Archelos",
-        "sprite": "sprites/enemy/beast/reptile/turtle.atlas",
+        "sprite": "sprites/enemy/remake/archelos.atlas",
         "deck": [
             "decks/legends/archelos.dck"
         ],
@@ -87119,7 +87119,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.8125
+        "scale": 0.2955
     },
     {
         "name": "Colfenor",
@@ -92461,12 +92461,12 @@
     },
     {
         "name": "The Pride of Hull Clade",
-        "sprite": "sprites/enemy/beast/reptile/turtle.atlas",
+        "sprite": "sprites/enemy/remake/the_pride_of_hull_clade.atlas",
         "deck": [
             "decks/legends/the_pride_of_hull_clade.dck"
         ],
         "ai": "",
-        "scale": 0.8125,
+        "scale": 0.2955,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -94725,12 +94725,12 @@
     },
     {
         "name": "Grothama",
-        "sprite": "sprites/enemy/monstrosity/sandwurm2.atlas",
+        "sprite": "sprites/enemy/remake/grothama.atlas",
         "deck": [
             "decks/legends/grothama.dck"
         ],
         "ai": "",
-        "scale": 2.0312,
+        "scale": 0.2902,
         "speed": 29,
         "life": 22,
         "rewards": [
@@ -115255,7 +115255,7 @@
     },
     {
         "name": "Kiska-Ra of Shandalar",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/kiska_ra_of_shandalar.atlas",
         "deck": [
             "decks/elite/shandalar97_colorless_kiskara.dck"
         ],
@@ -115264,7 +115264,7 @@
         "spawnRate": 0.4,
         "difficulty": 1,
         "speed": 28,
-        "scale": 0.4194,
+        "scale": 0.2955,
         "life": 24,
         "rewards": [
             {
@@ -115486,7 +115486,7 @@
     },
     {
         "name": "Whim of Shandalar",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/whim_of_shandalar.atlas",
         "deck": [
             "decks/elite/shandalar97_colorless_whim.dck"
         ],
@@ -115495,7 +115495,7 @@
         "spawnRate": 0.4,
         "difficulty": 2,
         "speed": 38,
-        "scale": 0.4194,
+        "scale": 0.2889,
         "life": 24,
         "rewards": [
             {
@@ -115723,7 +115723,7 @@
     },
     {
         "name": "Mandurang of Shandalar",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/mandurang_of_shandalar.atlas",
         "deck": [
             "decks/elite/shandalar97_colorless_mandurang.dck"
         ],
@@ -115732,7 +115732,7 @@
         "spawnRate": 0.4,
         "difficulty": 1,
         "speed": 28,
-        "scale": 0.4194,
+        "scale": 0.3023,
         "life": 24,
         "rewards": [
             {
@@ -115960,7 +115960,7 @@
     },
     {
         "name": "Dracur of Shandalar",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/dracur_of_shandalar.atlas",
         "deck": [
             "decks/elite/shandalar97_colorless_dracur.dck"
         ],
@@ -115969,7 +115969,7 @@
         "spawnRate": 0.4,
         "difficulty": 1,
         "speed": 28,
-        "scale": 0.4194,
+        "scale": 0.2889,
         "life": 24,
         "rewards": [
             {
@@ -116197,7 +116197,7 @@
     },
     {
         "name": "Prismat of Shandalar",
-        "sprite": "sprites/enemy/dragon/dragonlarge.atlas",
+        "sprite": "sprites/enemy/remake/prismat_of_shandalar.atlas",
         "deck": [
             "decks/elite/shandalar97_colorless_prismat.dck"
         ],
@@ -116206,7 +116206,7 @@
         "spawnRate": 0.4,
         "difficulty": 2,
         "speed": 38,
-        "scale": 0.4194,
+        "scale": 0.2364,
         "life": 24,
         "rewards": [
             {
@@ -130827,7 +130827,7 @@
     },
     {
         "name": "Elder Green Dragon",
-        "sprite": "sprites/enemy/basic/dragon/elder_green_dragon.atlas",
+        "sprite": "sprites/enemy/remake/elder_green_dragon.atlas",
         "deck": [
             "decks/standard/elder_green_dragon.dck"
         ],
@@ -130886,7 +130886,8 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "flying": true
+        "flying": true,
+        "scale": 0.2364
     },
     {
         "name": "Elder White Dragon",
@@ -130954,7 +130955,7 @@
     },
     {
         "name": "Aqua Drake",
-        "sprite": "sprites/enemy/basic/dragon/aqua_drake.atlas",
+        "sprite": "sprites/enemy/remake/aqua_drake.atlas",
         "deck": [
             "decks/standard/aqua_drake.dck"
         ],
@@ -131014,11 +131015,11 @@
         ],
         "tier": "Common",
         "flying": true,
-        "scale": 1.0833
+        "scale": 0.3611
     },
     {
         "name": "Baby Brass Dragon",
-        "sprite": "sprites/enemy/basic/dragon/baby_brass_dragon.atlas",
+        "sprite": "sprites/enemy/remake/baby_brass_dragon.atlas",
         "deck": [
             "decks/standard/baby_brass_dragon.dck"
         ],
@@ -131078,11 +131079,11 @@
         ],
         "tier": "Common",
         "flying": true,
-        "scale": 1.3
+        "scale": 0.3514
     },
     {
         "name": "Baby Copper Dragon",
-        "sprite": "sprites/enemy/basic/dragon/baby_copper_dragon.atlas",
+        "sprite": "sprites/enemy/remake/baby_copper_dragon.atlas",
         "deck": [
             "decks/standard/baby_copper_dragon.dck"
         ],
@@ -131142,11 +131143,11 @@
         ],
         "tier": "Common",
         "flying": true,
-        "scale": 1.1818
+        "scale": 0.3514
     },
     {
         "name": "Baby Green Dragon",
-        "sprite": "sprites/enemy/basic/dragon/baby_green_dragon.atlas",
+        "sprite": "sprites/enemy/remake/baby_green_dragon.atlas",
         "deck": [
             "decks/standard/baby_green_dragon.dck"
         ],
@@ -131206,11 +131207,11 @@
         ],
         "tier": "Uncommon",
         "flying": true,
-        "scale": 1.3
+        "scale": 0.2889
     },
     {
         "name": "Baby White Dragon",
-        "sprite": "sprites/enemy/basic/dragon/baby_white_dragon.atlas",
+        "sprite": "sprites/enemy/remake/baby_white_dragon.atlas",
         "deck": [
             "decks/standard/baby_white_dragon.dck"
         ],
@@ -131270,11 +131271,11 @@
         ],
         "tier": "Uncommon",
         "flying": true,
-        "scale": 1.3
+        "scale": 0.2889
     },
     {
         "name": "Juvenile Bronze Dragon",
-        "sprite": "sprites/enemy/basic/dragon/juvenile_bronze_dragon.atlas",
+        "sprite": "sprites/enemy/remake/juvenile_bronze_dragon.atlas",
         "deck": [
             "decks/standard/juvenile_bronze_dragon.dck"
         ],
@@ -131336,11 +131337,11 @@
         ],
         "tier": "Common",
         "flying": true,
-        "scale": 1.1818
+        "scale": 0.3714
     },
     {
         "name": "Mature Bronze Dragon",
-        "sprite": "sprites/enemy/basic/dragon/mature_bronze_dragon.atlas",
+        "sprite": "sprites/enemy/remake/mature_bronze_dragon.atlas",
         "deck": [
             "decks/standard/mature_bronze_dragon.dck"
         ],
@@ -131402,11 +131403,11 @@
         ],
         "tier": "Rare",
         "flying": true,
-        "scale": 1.0833
+        "scale": 0.2364
     },
     {
         "name": "Mud Wyvern",
-        "sprite": "sprites/enemy/basic/dragon/mud_wyvern.atlas",
+        "sprite": "sprites/enemy/remake/mud_wyvern.atlas",
         "deck": [
             "decks/standard/mud_wyvern.dck"
         ],
@@ -131466,11 +131467,11 @@
         ],
         "tier": "Uncommon",
         "flying": true,
-        "scale": 1.1818
+        "scale": 0.2889
     },
     {
         "name": "Poison Drake",
-        "sprite": "sprites/enemy/basic/dragon/poison_drake.atlas",
+        "sprite": "sprites/enemy/remake/poison_drake.atlas",
         "deck": [
             "decks/standard/poison_drake.dck"
         ],
@@ -131532,11 +131533,11 @@
         ],
         "tier": "Common",
         "flying": true,
-        "scale": 1.1818
+        "scale": 0.3714
     },
     {
         "name": "Pygmy Wyvern",
-        "sprite": "sprites/enemy/basic/dragon/pygmy_wyvern.atlas",
+        "sprite": "sprites/enemy/remake/pygmy_wyvern.atlas",
         "deck": [
             "decks/standard/pygmy_wyvern.dck"
         ],
@@ -131598,11 +131599,11 @@
         ],
         "tier": "Common",
         "flying": true,
-        "scale": 1.4444
+        "scale": 0.3611
     },
     {
         "name": "Viridian Drake",
-        "sprite": "sprites/enemy/basic/dragon/viridian_drake.atlas",
+        "sprite": "sprites/enemy/remake/viridian_drake.atlas",
         "deck": [
             "decks/standard/viridian_drake.dck"
         ],
@@ -131662,11 +131663,11 @@
         ],
         "tier": "Uncommon",
         "flying": true,
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Young Brass Dragon",
-        "sprite": "sprites/enemy/basic/dragon/young_brass_dragon.atlas",
+        "sprite": "sprites/enemy/remake/young_brass_dragon.atlas",
         "deck": [
             "decks/standard/young_brass_dragon.dck"
         ],
@@ -131728,7 +131729,7 @@
         ],
         "tier": "Common",
         "flying": true,
-        "scale": 1.0833
+        "scale": 0.3714
     },
     {
         "name": "Young Red Dragon",

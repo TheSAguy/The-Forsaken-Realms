@@ -1,0 +1,257 @@
+prismat_of_shandalar.png
+size: 1482,984
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 114, 92
+Idle
+  xy: 114, 64
+  size: 114, 92
+Idle
+  xy: 228, 64
+  size: 114, 92
+Idle
+  xy: 342, 64
+  size: 114, 92
+Idle
+  xy: 456, 64
+  size: 114, 92
+Idle
+  xy: 570, 64
+  size: 114, 92
+Idle
+  xy: 684, 64
+  size: 114, 92
+Idle
+  xy: 798, 64
+  size: 114, 92
+Idle
+  xy: 912, 64
+  size: 114, 92
+Idle
+  xy: 1026, 64
+  size: 114, 92
+Walk
+  xy: 0, 156
+  size: 114, 92
+Walk
+  xy: 114, 156
+  size: 114, 92
+Walk
+  xy: 228, 156
+  size: 114, 92
+Walk
+  xy: 342, 156
+  size: 114, 92
+Walk
+  xy: 456, 156
+  size: 114, 92
+Walk
+  xy: 570, 156
+  size: 114, 92
+Attack
+  xy: 0, 248
+  size: 114, 92
+Attack
+  xy: 114, 248
+  size: 114, 92
+Attack
+  xy: 228, 248
+  size: 114, 92
+Attack
+  xy: 342, 248
+  size: 114, 92
+Attack
+  xy: 456, 248
+  size: 114, 92
+Attack
+  xy: 570, 248
+  size: 114, 92
+Attack
+  xy: 684, 248
+  size: 114, 92
+Attack
+  xy: 798, 248
+  size: 114, 92
+Attack
+  xy: 912, 248
+  size: 114, 92
+Hit
+  xy: 0, 340
+  size: 114, 92
+Hit
+  xy: 114, 340
+  size: 114, 92
+Hit
+  xy: 228, 340
+  size: 114, 92
+Hit
+  xy: 342, 340
+  size: 114, 92
+Hit
+  xy: 456, 340
+  size: 114, 92
+Hit
+  xy: 570, 340
+  size: 114, 92
+Death
+  xy: 0, 432
+  size: 114, 92
+Death
+  xy: 114, 432
+  size: 114, 92
+Death
+  xy: 228, 432
+  size: 114, 92
+Death
+  xy: 342, 432
+  size: 114, 92
+Death
+  xy: 456, 432
+  size: 114, 92
+Death
+  xy: 570, 432
+  size: 114, 92
+Death
+  xy: 684, 432
+  size: 114, 92
+Death
+  xy: 798, 432
+  size: 114, 92
+Death
+  xy: 912, 432
+  size: 114, 92
+Death
+  xy: 1026, 432
+  size: 114, 92
+Death
+  xy: 1140, 432
+  size: 114, 92
+Death
+  xy: 1254, 432
+  size: 114, 92
+Death
+  xy: 1368, 432
+  size: 114, 92
+Wake
+  xy: 0, 524
+  size: 114, 92
+Wake
+  xy: 114, 524
+  size: 114, 92
+Wake
+  xy: 228, 524
+  size: 114, 92
+Wake
+  xy: 342, 524
+  size: 114, 92
+Wake
+  xy: 456, 524
+  size: 114, 92
+Wake
+  xy: 570, 524
+  size: 114, 92
+Wake
+  xy: 684, 524
+  size: 114, 92
+IdleUp
+  xy: 0, 616
+  size: 114, 92
+IdleUp
+  xy: 114, 616
+  size: 114, 92
+IdleUp
+  xy: 228, 616
+  size: 114, 92
+IdleUp
+  xy: 342, 616
+  size: 114, 92
+IdleUp
+  xy: 456, 616
+  size: 114, 92
+IdleUp
+  xy: 570, 616
+  size: 114, 92
+IdleUp
+  xy: 684, 616
+  size: 114, 92
+IdleUp
+  xy: 798, 616
+  size: 114, 92
+IdleUp
+  xy: 912, 616
+  size: 114, 92
+IdleUp
+  xy: 1026, 616
+  size: 114, 92
+IdleDown
+  xy: 0, 708
+  size: 114, 92
+IdleDown
+  xy: 114, 708
+  size: 114, 92
+IdleDown
+  xy: 228, 708
+  size: 114, 92
+IdleDown
+  xy: 342, 708
+  size: 114, 92
+IdleDown
+  xy: 456, 708
+  size: 114, 92
+IdleDown
+  xy: 570, 708
+  size: 114, 92
+IdleDown
+  xy: 684, 708
+  size: 114, 92
+IdleDown
+  xy: 798, 708
+  size: 114, 92
+IdleDown
+  xy: 912, 708
+  size: 114, 92
+IdleDown
+  xy: 1026, 708
+  size: 114, 92
+WalkUp
+  xy: 0, 800
+  size: 114, 92
+WalkUp
+  xy: 114, 800
+  size: 114, 92
+WalkUp
+  xy: 228, 800
+  size: 114, 92
+WalkUp
+  xy: 342, 800
+  size: 114, 92
+WalkUp
+  xy: 456, 800
+  size: 114, 92
+WalkUp
+  xy: 570, 800
+  size: 114, 92
+WalkDown
+  xy: 0, 892
+  size: 114, 92
+WalkDown
+  xy: 114, 892
+  size: 114, 92
+WalkDown
+  xy: 228, 892
+  size: 114, 92
+WalkDown
+  xy: 342, 892
+  size: 114, 92
+WalkDown
+  xy: 456, 892
+  size: 114, 92
+WalkDown
+  xy: 570, 892
+  size: 114, 92

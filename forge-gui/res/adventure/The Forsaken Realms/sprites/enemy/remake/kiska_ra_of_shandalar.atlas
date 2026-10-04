@@ -1,0 +1,251 @@
+kiska_ra_of_shandalar.png
+size: 1196,734
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 92, 67
+Idle
+  xy: 92, 64
+  size: 92, 67
+Idle
+  xy: 184, 64
+  size: 92, 67
+Idle
+  xy: 276, 64
+  size: 92, 67
+Idle
+  xy: 368, 64
+  size: 92, 67
+Idle
+  xy: 460, 64
+  size: 92, 67
+Idle
+  xy: 552, 64
+  size: 92, 67
+Idle
+  xy: 644, 64
+  size: 92, 67
+Idle
+  xy: 736, 64
+  size: 92, 67
+Idle
+  xy: 828, 64
+  size: 92, 67
+Walk
+  xy: 0, 131
+  size: 92, 67
+Walk
+  xy: 92, 131
+  size: 92, 67
+Walk
+  xy: 184, 131
+  size: 92, 67
+Walk
+  xy: 276, 131
+  size: 92, 67
+Walk
+  xy: 368, 131
+  size: 92, 67
+Walk
+  xy: 460, 131
+  size: 92, 67
+Attack
+  xy: 0, 198
+  size: 92, 67
+Attack
+  xy: 92, 198
+  size: 92, 67
+Attack
+  xy: 184, 198
+  size: 92, 67
+Attack
+  xy: 276, 198
+  size: 92, 67
+Attack
+  xy: 368, 198
+  size: 92, 67
+Attack
+  xy: 460, 198
+  size: 92, 67
+Attack
+  xy: 552, 198
+  size: 92, 67
+Attack
+  xy: 644, 198
+  size: 92, 67
+Hit
+  xy: 0, 265
+  size: 92, 67
+Hit
+  xy: 92, 265
+  size: 92, 67
+Hit
+  xy: 184, 265
+  size: 92, 67
+Hit
+  xy: 276, 265
+  size: 92, 67
+Hit
+  xy: 368, 265
+  size: 92, 67
+Death
+  xy: 0, 332
+  size: 92, 67
+Death
+  xy: 92, 332
+  size: 92, 67
+Death
+  xy: 184, 332
+  size: 92, 67
+Death
+  xy: 276, 332
+  size: 92, 67
+Death
+  xy: 368, 332
+  size: 92, 67
+Death
+  xy: 460, 332
+  size: 92, 67
+Death
+  xy: 552, 332
+  size: 92, 67
+Death
+  xy: 644, 332
+  size: 92, 67
+Death
+  xy: 736, 332
+  size: 92, 67
+Death
+  xy: 828, 332
+  size: 92, 67
+Death
+  xy: 920, 332
+  size: 92, 67
+Death
+  xy: 1012, 332
+  size: 92, 67
+Death
+  xy: 1104, 332
+  size: 92, 67
+Wake
+  xy: 0, 399
+  size: 92, 67
+Wake
+  xy: 92, 399
+  size: 92, 67
+Wake
+  xy: 184, 399
+  size: 92, 67
+Wake
+  xy: 276, 399
+  size: 92, 67
+Wake
+  xy: 368, 399
+  size: 92, 67
+Wake
+  xy: 460, 399
+  size: 92, 67
+Wake
+  xy: 552, 399
+  size: 92, 67
+IdleUp
+  xy: 0, 466
+  size: 92, 67
+IdleUp
+  xy: 92, 466
+  size: 92, 67
+IdleUp
+  xy: 184, 466
+  size: 92, 67
+IdleUp
+  xy: 276, 466
+  size: 92, 67
+IdleUp
+  xy: 368, 466
+  size: 92, 67
+IdleUp
+  xy: 460, 466
+  size: 92, 67
+IdleUp
+  xy: 552, 466
+  size: 92, 67
+IdleUp
+  xy: 644, 466
+  size: 92, 67
+IdleUp
+  xy: 736, 466
+  size: 92, 67
+IdleUp
+  xy: 828, 466
+  size: 92, 67
+IdleDown
+  xy: 0, 533
+  size: 92, 67
+IdleDown
+  xy: 92, 533
+  size: 92, 67
+IdleDown
+  xy: 184, 533
+  size: 92, 67
+IdleDown
+  xy: 276, 533
+  size: 92, 67
+IdleDown
+  xy: 368, 533
+  size: 92, 67
+IdleDown
+  xy: 460, 533
+  size: 92, 67
+IdleDown
+  xy: 552, 533
+  size: 92, 67
+IdleDown
+  xy: 644, 533
+  size: 92, 67
+IdleDown
+  xy: 736, 533
+  size: 92, 67
+IdleDown
+  xy: 828, 533
+  size: 92, 67
+WalkUp
+  xy: 0, 600
+  size: 92, 67
+WalkUp
+  xy: 92, 600
+  size: 92, 67
+WalkUp
+  xy: 184, 600
+  size: 92, 67
+WalkUp
+  xy: 276, 600
+  size: 92, 67
+WalkUp
+  xy: 368, 600
+  size: 92, 67
+WalkUp
+  xy: 460, 600
+  size: 92, 67
+WalkDown
+  xy: 0, 667
+  size: 92, 67
+WalkDown
+  xy: 92, 667
+  size: 92, 67
+WalkDown
+  xy: 184, 667
+  size: 92, 67
+WalkDown
+  xy: 276, 667
+  size: 92, 67
+WalkDown
+  xy: 368, 667
+  size: 92, 67
+WalkDown
+  xy: 460, 667
+  size: 92, 67

@@ -1,0 +1,239 @@
+juvenile_bronze_dragon.png
+size: 768,594
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 64, 53
+Idle
+  xy: 64, 64
+  size: 64, 53
+Idle
+  xy: 128, 64
+  size: 64, 53
+Idle
+  xy: 192, 64
+  size: 64, 53
+Idle
+  xy: 256, 64
+  size: 64, 53
+Idle
+  xy: 320, 64
+  size: 64, 53
+Idle
+  xy: 384, 64
+  size: 64, 53
+Idle
+  xy: 448, 64
+  size: 64, 53
+Idle
+  xy: 512, 64
+  size: 64, 53
+Idle
+  xy: 576, 64
+  size: 64, 53
+Walk
+  xy: 0, 117
+  size: 64, 53
+Walk
+  xy: 64, 117
+  size: 64, 53
+Walk
+  xy: 128, 117
+  size: 64, 53
+Walk
+  xy: 192, 117
+  size: 64, 53
+Walk
+  xy: 256, 117
+  size: 64, 53
+Walk
+  xy: 320, 117
+  size: 64, 53
+Attack
+  xy: 0, 170
+  size: 64, 53
+Attack
+  xy: 64, 170
+  size: 64, 53
+Attack
+  xy: 128, 170
+  size: 64, 53
+Attack
+  xy: 192, 170
+  size: 64, 53
+Attack
+  xy: 256, 170
+  size: 64, 53
+Attack
+  xy: 320, 170
+  size: 64, 53
+Attack
+  xy: 384, 170
+  size: 64, 53
+Hit
+  xy: 0, 223
+  size: 64, 53
+Hit
+  xy: 64, 223
+  size: 64, 53
+Hit
+  xy: 128, 223
+  size: 64, 53
+Hit
+  xy: 192, 223
+  size: 64, 53
+Death
+  xy: 0, 276
+  size: 64, 53
+Death
+  xy: 64, 276
+  size: 64, 53
+Death
+  xy: 128, 276
+  size: 64, 53
+Death
+  xy: 192, 276
+  size: 64, 53
+Death
+  xy: 256, 276
+  size: 64, 53
+Death
+  xy: 320, 276
+  size: 64, 53
+Death
+  xy: 384, 276
+  size: 64, 53
+Death
+  xy: 448, 276
+  size: 64, 53
+Death
+  xy: 512, 276
+  size: 64, 53
+Death
+  xy: 576, 276
+  size: 64, 53
+Death
+  xy: 640, 276
+  size: 64, 53
+Death
+  xy: 704, 276
+  size: 64, 53
+Wake
+  xy: 0, 329
+  size: 64, 53
+Wake
+  xy: 64, 329
+  size: 64, 53
+Wake
+  xy: 128, 329
+  size: 64, 53
+Wake
+  xy: 192, 329
+  size: 64, 53
+Wake
+  xy: 256, 329
+  size: 64, 53
+Wake
+  xy: 320, 329
+  size: 64, 53
+IdleUp
+  xy: 0, 382
+  size: 64, 53
+IdleUp
+  xy: 64, 382
+  size: 64, 53
+IdleUp
+  xy: 128, 382
+  size: 64, 53
+IdleUp
+  xy: 192, 382
+  size: 64, 53
+IdleUp
+  xy: 256, 382
+  size: 64, 53
+IdleUp
+  xy: 320, 382
+  size: 64, 53
+IdleUp
+  xy: 384, 382
+  size: 64, 53
+IdleUp
+  xy: 448, 382
+  size: 64, 53
+IdleUp
+  xy: 512, 382
+  size: 64, 53
+IdleUp
+  xy: 576, 382
+  size: 64, 53
+IdleDown
+  xy: 0, 435
+  size: 64, 53
+IdleDown
+  xy: 64, 435
+  size: 64, 53
+IdleDown
+  xy: 128, 435
+  size: 64, 53
+IdleDown
+  xy: 192, 435
+  size: 64, 53
+IdleDown
+  xy: 256, 435
+  size: 64, 53
+IdleDown
+  xy: 320, 435
+  size: 64, 53
+IdleDown
+  xy: 384, 435
+  size: 64, 53
+IdleDown
+  xy: 448, 435
+  size: 64, 53
+IdleDown
+  xy: 512, 435
+  size: 64, 53
+IdleDown
+  xy: 576, 435
+  size: 64, 53
+WalkUp
+  xy: 0, 488
+  size: 64, 53
+WalkUp
+  xy: 64, 488
+  size: 64, 53
+WalkUp
+  xy: 128, 488
+  size: 64, 53
+WalkUp
+  xy: 192, 488
+  size: 64, 53
+WalkUp
+  xy: 256, 488
+  size: 64, 53
+WalkUp
+  xy: 320, 488
+  size: 64, 53
+WalkDown
+  xy: 0, 541
+  size: 64, 53
+WalkDown
+  xy: 64, 541
+  size: 64, 53
+WalkDown
+  xy: 128, 541
+  size: 64, 53
+WalkDown
+  xy: 192, 541
+  size: 64, 53
+WalkDown
+  xy: 256, 541
+  size: 64, 53
+WalkDown
+  xy: 320, 541
+  size: 64, 53

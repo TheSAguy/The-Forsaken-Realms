@@ -1,0 +1,254 @@
+elder_green_dragon.png
+size: 1456,954
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 112, 89
+Idle
+  xy: 112, 64
+  size: 112, 89
+Idle
+  xy: 224, 64
+  size: 112, 89
+Idle
+  xy: 336, 64
+  size: 112, 89
+Idle
+  xy: 448, 64
+  size: 112, 89
+Idle
+  xy: 560, 64
+  size: 112, 89
+Idle
+  xy: 672, 64
+  size: 112, 89
+Idle
+  xy: 784, 64
+  size: 112, 89
+Idle
+  xy: 896, 64
+  size: 112, 89
+Idle
+  xy: 1008, 64
+  size: 112, 89
+Walk
+  xy: 0, 153
+  size: 112, 89
+Walk
+  xy: 112, 153
+  size: 112, 89
+Walk
+  xy: 224, 153
+  size: 112, 89
+Walk
+  xy: 336, 153
+  size: 112, 89
+Walk
+  xy: 448, 153
+  size: 112, 89
+Walk
+  xy: 560, 153
+  size: 112, 89
+Attack
+  xy: 0, 242
+  size: 112, 89
+Attack
+  xy: 112, 242
+  size: 112, 89
+Attack
+  xy: 224, 242
+  size: 112, 89
+Attack
+  xy: 336, 242
+  size: 112, 89
+Attack
+  xy: 448, 242
+  size: 112, 89
+Attack
+  xy: 560, 242
+  size: 112, 89
+Attack
+  xy: 672, 242
+  size: 112, 89
+Attack
+  xy: 784, 242
+  size: 112, 89
+Attack
+  xy: 896, 242
+  size: 112, 89
+Hit
+  xy: 0, 331
+  size: 112, 89
+Hit
+  xy: 112, 331
+  size: 112, 89
+Hit
+  xy: 224, 331
+  size: 112, 89
+Hit
+  xy: 336, 331
+  size: 112, 89
+Hit
+  xy: 448, 331
+  size: 112, 89
+Death
+  xy: 0, 420
+  size: 112, 89
+Death
+  xy: 112, 420
+  size: 112, 89
+Death
+  xy: 224, 420
+  size: 112, 89
+Death
+  xy: 336, 420
+  size: 112, 89
+Death
+  xy: 448, 420
+  size: 112, 89
+Death
+  xy: 560, 420
+  size: 112, 89
+Death
+  xy: 672, 420
+  size: 112, 89
+Death
+  xy: 784, 420
+  size: 112, 89
+Death
+  xy: 896, 420
+  size: 112, 89
+Death
+  xy: 1008, 420
+  size: 112, 89
+Death
+  xy: 1120, 420
+  size: 112, 89
+Death
+  xy: 1232, 420
+  size: 112, 89
+Death
+  xy: 1344, 420
+  size: 112, 89
+Wake
+  xy: 0, 509
+  size: 112, 89
+Wake
+  xy: 112, 509
+  size: 112, 89
+Wake
+  xy: 224, 509
+  size: 112, 89
+Wake
+  xy: 336, 509
+  size: 112, 89
+Wake
+  xy: 448, 509
+  size: 112, 89
+Wake
+  xy: 560, 509
+  size: 112, 89
+Wake
+  xy: 672, 509
+  size: 112, 89
+IdleUp
+  xy: 0, 598
+  size: 112, 89
+IdleUp
+  xy: 112, 598
+  size: 112, 89
+IdleUp
+  xy: 224, 598
+  size: 112, 89
+IdleUp
+  xy: 336, 598
+  size: 112, 89
+IdleUp
+  xy: 448, 598
+  size: 112, 89
+IdleUp
+  xy: 560, 598
+  size: 112, 89
+IdleUp
+  xy: 672, 598
+  size: 112, 89
+IdleUp
+  xy: 784, 598
+  size: 112, 89
+IdleUp
+  xy: 896, 598
+  size: 112, 89
+IdleUp
+  xy: 1008, 598
+  size: 112, 89
+IdleDown
+  xy: 0, 687
+  size: 112, 89
+IdleDown
+  xy: 112, 687
+  size: 112, 89
+IdleDown
+  xy: 224, 687
+  size: 112, 89
+IdleDown
+  xy: 336, 687
+  size: 112, 89
+IdleDown
+  xy: 448, 687
+  size: 112, 89
+IdleDown
+  xy: 560, 687
+  size: 112, 89
+IdleDown
+  xy: 672, 687
+  size: 112, 89
+IdleDown
+  xy: 784, 687
+  size: 112, 89
+IdleDown
+  xy: 896, 687
+  size: 112, 89
+IdleDown
+  xy: 1008, 687
+  size: 112, 89
+WalkUp
+  xy: 0, 776
+  size: 112, 89
+WalkUp
+  xy: 112, 776
+  size: 112, 89
+WalkUp
+  xy: 224, 776
+  size: 112, 89
+WalkUp
+  xy: 336, 776
+  size: 112, 89
+WalkUp
+  xy: 448, 776
+  size: 112, 89
+WalkUp
+  xy: 560, 776
+  size: 112, 89
+WalkDown
+  xy: 0, 865
+  size: 112, 89
+WalkDown
+  xy: 112, 865
+  size: 112, 89
+WalkDown
+  xy: 224, 865
+  size: 112, 89
+WalkDown
+  xy: 336, 865
+  size: 112, 89
+WalkDown
+  xy: 448, 865
+  size: 112, 89
+WalkDown
+  xy: 560, 865
+  size: 112, 89

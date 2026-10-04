@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 437: nineteen more creature groups from the generator (cloud batch 6: the dragons) (2026-10-04)
+
+The sixth cloud batch, creatures only (procedural-pixel-creatures PR #6). The user went through the verdicts: "yes
+install 19 with the fixes, Bolas green".
+
+- **The groups:**
+  - The large dragon: Volcano Dragon and fifteen legends (The Ur-Dragon, Scion of the Ur-Dragon, Nicol Bolas,
+    Drakuseth, Oros, Karrthus, Niv-Mizzet, Prossh, Betor, Neriv and the five Shandalar dragons), each its own dragon
+    in build (horns, crest, back, tail tip, neck) as well as color.
+  - The drake (Drake, Vorosh, Zetalpa, Akim, Yorion), on two legs with its wings as forelimbs.
+  - Thirteen single dragons from baby to elder: Baby Green, Baby White, Baby Brass and Baby Copper Dragon, Young Brass
+    and Juvenile Bronze Dragon, Mature Bronze and Elder Green Dragon, Mud and Pygmy Wyvern (on two legs), Viridian,
+    Poison and Aqua Drake.
+  - Greater Sandwurm (with Nezahal, Ao, Obosh and Grothama), Turtle (with Arixmethes, Gorex, Archelos and The Pride of
+    Hull Clade), Kaheera (a deer) and Worm.
+- **Held back**: the Shrieker Mushroom keeps its original sprite; its remake was an egg-shaped cap on a stump with no
+  eyes showing.
+- **New generator option** (opt-in): wyverns, a winged dragon standing on two hind legs with its wings as forelimbs.
+- **Colors**: ten legends set by hand after checking the card art: Scion of the Ur-Dragon (olive gold), Drakuseth
+  (near-black red), Karrthus (bronze), Nicol Bolas (green-gold, like his card), Betor (pale grey), Neriv (pink-violet),
+  Oros (tan), Zetalpa (slate blue), Akim (tan-brown), Grothama (ochre).
+- **Data only:**
+  - `sprites/enemy/remake/`: 92 new files (46 enemies).
+  - `world/enemies.json`: 46 sprites and 46 scales (Elder Green Dragon gains a scale field); no other field changed.
+  - Generator: procedural-pixel-creatures `cloud/batch-06` (the cloud's batch and the local review commit).
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves; 45 scales changed (Grothama keeps its hand-set drawn size: the
+    installer set its scale).
+  - `sprite_artifact_audit.py --only remake` (272 atlases, 22478 frames) flags 279 frames, all shadows: the 29 new
+    ones are the head's shadow below the chin in Drakuseth's 16 front-view frames (as the tyrannosaurs' and Brokkos's in
+    earlier rounds), the shadows of the two-legged Drake, Yorion and Akim, and one gallop frame of Kaheera's.
+- Not yet seen in play. Console (F9): `spawn enemy "Volcano Dragon"`, `spawn enemy "Nicol Bolas"`,
+  `spawn enemy "Mud Wyvern"`, `spawn enemy "Baby White Dragon"`, `spawn enemy "Greater Sandwurm"`, `spawn enemy Turtle`.
+
 ## Round 436: the cobra, fully reared with a longer body (cloud batch 5 rework) (2026-10-04)
 
 The cobra held back in round 435, reworked here. The user picked the fully reared version ("Fully reared, install as

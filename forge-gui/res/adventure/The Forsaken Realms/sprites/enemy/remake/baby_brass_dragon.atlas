@@ -1,0 +1,257 @@
+baby_brass_dragon.png
+size: 1036,594
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 53
+Idle
+  xy: 74, 64
+  size: 74, 53
+Idle
+  xy: 148, 64
+  size: 74, 53
+Idle
+  xy: 222, 64
+  size: 74, 53
+Idle
+  xy: 296, 64
+  size: 74, 53
+Idle
+  xy: 370, 64
+  size: 74, 53
+Idle
+  xy: 444, 64
+  size: 74, 53
+Idle
+  xy: 518, 64
+  size: 74, 53
+Idle
+  xy: 592, 64
+  size: 74, 53
+Idle
+  xy: 666, 64
+  size: 74, 53
+Walk
+  xy: 0, 117
+  size: 74, 53
+Walk
+  xy: 74, 117
+  size: 74, 53
+Walk
+  xy: 148, 117
+  size: 74, 53
+Walk
+  xy: 222, 117
+  size: 74, 53
+Walk
+  xy: 296, 117
+  size: 74, 53
+Walk
+  xy: 370, 117
+  size: 74, 53
+Attack
+  xy: 0, 170
+  size: 74, 53
+Attack
+  xy: 74, 170
+  size: 74, 53
+Attack
+  xy: 148, 170
+  size: 74, 53
+Attack
+  xy: 222, 170
+  size: 74, 53
+Attack
+  xy: 296, 170
+  size: 74, 53
+Attack
+  xy: 370, 170
+  size: 74, 53
+Attack
+  xy: 444, 170
+  size: 74, 53
+Attack
+  xy: 518, 170
+  size: 74, 53
+Attack
+  xy: 592, 170
+  size: 74, 53
+Hit
+  xy: 0, 223
+  size: 74, 53
+Hit
+  xy: 74, 223
+  size: 74, 53
+Hit
+  xy: 148, 223
+  size: 74, 53
+Hit
+  xy: 222, 223
+  size: 74, 53
+Hit
+  xy: 296, 223
+  size: 74, 53
+Death
+  xy: 0, 276
+  size: 74, 53
+Death
+  xy: 74, 276
+  size: 74, 53
+Death
+  xy: 148, 276
+  size: 74, 53
+Death
+  xy: 222, 276
+  size: 74, 53
+Death
+  xy: 296, 276
+  size: 74, 53
+Death
+  xy: 370, 276
+  size: 74, 53
+Death
+  xy: 444, 276
+  size: 74, 53
+Death
+  xy: 518, 276
+  size: 74, 53
+Death
+  xy: 592, 276
+  size: 74, 53
+Death
+  xy: 666, 276
+  size: 74, 53
+Death
+  xy: 740, 276
+  size: 74, 53
+Death
+  xy: 814, 276
+  size: 74, 53
+Death
+  xy: 888, 276
+  size: 74, 53
+Death
+  xy: 962, 276
+  size: 74, 53
+Wake
+  xy: 0, 329
+  size: 74, 53
+Wake
+  xy: 74, 329
+  size: 74, 53
+Wake
+  xy: 148, 329
+  size: 74, 53
+Wake
+  xy: 222, 329
+  size: 74, 53
+Wake
+  xy: 296, 329
+  size: 74, 53
+Wake
+  xy: 370, 329
+  size: 74, 53
+Wake
+  xy: 444, 329
+  size: 74, 53
+IdleUp
+  xy: 0, 382
+  size: 74, 53
+IdleUp
+  xy: 74, 382
+  size: 74, 53
+IdleUp
+  xy: 148, 382
+  size: 74, 53
+IdleUp
+  xy: 222, 382
+  size: 74, 53
+IdleUp
+  xy: 296, 382
+  size: 74, 53
+IdleUp
+  xy: 370, 382
+  size: 74, 53
+IdleUp
+  xy: 444, 382
+  size: 74, 53
+IdleUp
+  xy: 518, 382
+  size: 74, 53
+IdleUp
+  xy: 592, 382
+  size: 74, 53
+IdleUp
+  xy: 666, 382
+  size: 74, 53
+IdleDown
+  xy: 0, 435
+  size: 74, 53
+IdleDown
+  xy: 74, 435
+  size: 74, 53
+IdleDown
+  xy: 148, 435
+  size: 74, 53
+IdleDown
+  xy: 222, 435
+  size: 74, 53
+IdleDown
+  xy: 296, 435
+  size: 74, 53
+IdleDown
+  xy: 370, 435
+  size: 74, 53
+IdleDown
+  xy: 444, 435
+  size: 74, 53
+IdleDown
+  xy: 518, 435
+  size: 74, 53
+IdleDown
+  xy: 592, 435
+  size: 74, 53
+IdleDown
+  xy: 666, 435
+  size: 74, 53
+WalkUp
+  xy: 0, 488
+  size: 74, 53
+WalkUp
+  xy: 74, 488
+  size: 74, 53
+WalkUp
+  xy: 148, 488
+  size: 74, 53
+WalkUp
+  xy: 222, 488
+  size: 74, 53
+WalkUp
+  xy: 296, 488
+  size: 74, 53
+WalkUp
+  xy: 370, 488
+  size: 74, 53
+WalkDown
+  xy: 0, 541
+  size: 74, 53
+WalkDown
+  xy: 74, 541
+  size: 74, 53
+WalkDown
+  xy: 148, 541
+  size: 74, 53
+WalkDown
+  xy: 222, 541
+  size: 74, 53
+WalkDown
+  xy: 296, 541
+  size: 74, 53
+WalkDown
+  xy: 370, 541
+  size: 74, 53
