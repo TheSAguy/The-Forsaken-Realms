@@ -64,7 +64,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 - It never lifts road: lifting can drop a joined pair under EDGE_COVERAGE and get a second road laid beside it.
 - Runs at world-gen, in `layRoad`, after player-network builds, and once on load (`VERSION` 7).
 - The user's "double road" was Gobspike: two world-gen staircases from Robbers' Camp. Agent-tested on a copy of the user's
-  slot 1: 11 tiles at 5 places, joined pairs 236 -> 236.
+  slot 1: 11 tiles at 5 places, joined pairs 236 -> 236. LIVE + AGENT PACKAGED with 427 (jar 573fac96b584).
 
 ## STATE 2026-10-03 (round 426): **LOCAL + UNRELEASED** - cloud batch 3 of the creature-generator remakes: 18 groups, 52
 enemies (elephant, leech, golems, myr, treant, elk, lizard, lion, cat, octopus, chicken, cave spider, polar bear,
