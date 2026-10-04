@@ -1,5 +1,5 @@
 hurska.png
-size: 1092,744
+size: 1008,704
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,256 +8,256 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 78, 68
+  size: 72, 64
 Idle
-  xy: 78, 64
-  size: 78, 68
+  xy: 72, 64
+  size: 72, 64
 Idle
-  xy: 156, 64
-  size: 78, 68
+  xy: 144, 64
+  size: 72, 64
 Idle
-  xy: 234, 64
-  size: 78, 68
+  xy: 216, 64
+  size: 72, 64
 Idle
-  xy: 312, 64
-  size: 78, 68
+  xy: 288, 64
+  size: 72, 64
 Idle
-  xy: 390, 64
-  size: 78, 68
+  xy: 360, 64
+  size: 72, 64
 Idle
-  xy: 468, 64
-  size: 78, 68
+  xy: 432, 64
+  size: 72, 64
 Idle
-  xy: 546, 64
-  size: 78, 68
+  xy: 504, 64
+  size: 72, 64
 Idle
-  xy: 624, 64
-  size: 78, 68
+  xy: 576, 64
+  size: 72, 64
 Idle
-  xy: 702, 64
-  size: 78, 68
+  xy: 648, 64
+  size: 72, 64
 Walk
-  xy: 0, 132
-  size: 78, 68
+  xy: 0, 128
+  size: 72, 64
 Walk
-  xy: 78, 132
-  size: 78, 68
+  xy: 72, 128
+  size: 72, 64
 Walk
-  xy: 156, 132
-  size: 78, 68
+  xy: 144, 128
+  size: 72, 64
 Walk
-  xy: 234, 132
-  size: 78, 68
+  xy: 216, 128
+  size: 72, 64
 Walk
-  xy: 312, 132
-  size: 78, 68
+  xy: 288, 128
+  size: 72, 64
 Walk
-  xy: 390, 132
-  size: 78, 68
+  xy: 360, 128
+  size: 72, 64
 Attack
-  xy: 0, 200
-  size: 78, 68
+  xy: 0, 192
+  size: 72, 64
 Attack
-  xy: 78, 200
-  size: 78, 68
+  xy: 72, 192
+  size: 72, 64
 Attack
-  xy: 156, 200
-  size: 78, 68
+  xy: 144, 192
+  size: 72, 64
 Attack
-  xy: 234, 200
-  size: 78, 68
+  xy: 216, 192
+  size: 72, 64
 Attack
-  xy: 312, 200
-  size: 78, 68
+  xy: 288, 192
+  size: 72, 64
 Attack
-  xy: 390, 200
-  size: 78, 68
+  xy: 360, 192
+  size: 72, 64
 Attack
-  xy: 468, 200
-  size: 78, 68
+  xy: 432, 192
+  size: 72, 64
 Attack
-  xy: 546, 200
-  size: 78, 68
+  xy: 504, 192
+  size: 72, 64
 Attack
-  xy: 624, 200
-  size: 78, 68
+  xy: 576, 192
+  size: 72, 64
 Attack
-  xy: 702, 200
-  size: 78, 68
+  xy: 648, 192
+  size: 72, 64
 Attack
-  xy: 780, 200
-  size: 78, 68
+  xy: 720, 192
+  size: 72, 64
 Hit
-  xy: 0, 268
-  size: 78, 68
+  xy: 0, 256
+  size: 72, 64
 Hit
-  xy: 78, 268
-  size: 78, 68
+  xy: 72, 256
+  size: 72, 64
 Hit
-  xy: 156, 268
-  size: 78, 68
+  xy: 144, 256
+  size: 72, 64
 Hit
-  xy: 234, 268
-  size: 78, 68
+  xy: 216, 256
+  size: 72, 64
 Hit
-  xy: 312, 268
-  size: 78, 68
+  xy: 288, 256
+  size: 72, 64
 Death
-  xy: 0, 336
-  size: 78, 68
+  xy: 0, 320
+  size: 72, 64
 Death
-  xy: 78, 336
-  size: 78, 68
+  xy: 72, 320
+  size: 72, 64
 Death
-  xy: 156, 336
-  size: 78, 68
+  xy: 144, 320
+  size: 72, 64
 Death
-  xy: 234, 336
-  size: 78, 68
+  xy: 216, 320
+  size: 72, 64
 Death
-  xy: 312, 336
-  size: 78, 68
+  xy: 288, 320
+  size: 72, 64
 Death
-  xy: 390, 336
-  size: 78, 68
+  xy: 360, 320
+  size: 72, 64
 Death
-  xy: 468, 336
-  size: 78, 68
+  xy: 432, 320
+  size: 72, 64
 Death
-  xy: 546, 336
-  size: 78, 68
+  xy: 504, 320
+  size: 72, 64
 Death
-  xy: 624, 336
-  size: 78, 68
+  xy: 576, 320
+  size: 72, 64
 Death
-  xy: 702, 336
-  size: 78, 68
+  xy: 648, 320
+  size: 72, 64
 Death
-  xy: 780, 336
-  size: 78, 68
+  xy: 720, 320
+  size: 72, 64
 Death
-  xy: 858, 336
-  size: 78, 68
+  xy: 792, 320
+  size: 72, 64
 Death
-  xy: 936, 336
-  size: 78, 68
+  xy: 864, 320
+  size: 72, 64
 Death
-  xy: 1014, 336
-  size: 78, 68
+  xy: 936, 320
+  size: 72, 64
 Wake
-  xy: 0, 404
-  size: 78, 68
+  xy: 0, 384
+  size: 72, 64
 Wake
-  xy: 78, 404
-  size: 78, 68
+  xy: 72, 384
+  size: 72, 64
 Wake
-  xy: 156, 404
-  size: 78, 68
+  xy: 144, 384
+  size: 72, 64
 Wake
-  xy: 234, 404
-  size: 78, 68
+  xy: 216, 384
+  size: 72, 64
 Wake
-  xy: 312, 404
-  size: 78, 68
+  xy: 288, 384
+  size: 72, 64
 Wake
-  xy: 390, 404
-  size: 78, 68
+  xy: 360, 384
+  size: 72, 64
 Wake
-  xy: 468, 404
-  size: 78, 68
+  xy: 432, 384
+  size: 72, 64
 IdleUp
-  xy: 0, 472
-  size: 78, 68
+  xy: 0, 448
+  size: 72, 64
 IdleUp
-  xy: 78, 472
-  size: 78, 68
+  xy: 72, 448
+  size: 72, 64
 IdleUp
-  xy: 156, 472
-  size: 78, 68
+  xy: 144, 448
+  size: 72, 64
 IdleUp
-  xy: 234, 472
-  size: 78, 68
+  xy: 216, 448
+  size: 72, 64
 IdleUp
-  xy: 312, 472
-  size: 78, 68
+  xy: 288, 448
+  size: 72, 64
 IdleUp
-  xy: 390, 472
-  size: 78, 68
+  xy: 360, 448
+  size: 72, 64
 IdleUp
-  xy: 468, 472
-  size: 78, 68
+  xy: 432, 448
+  size: 72, 64
 IdleUp
-  xy: 546, 472
-  size: 78, 68
+  xy: 504, 448
+  size: 72, 64
 IdleUp
-  xy: 624, 472
-  size: 78, 68
+  xy: 576, 448
+  size: 72, 64
 IdleUp
-  xy: 702, 472
-  size: 78, 68
+  xy: 648, 448
+  size: 72, 64
 IdleDown
-  xy: 0, 540
-  size: 78, 68
+  xy: 0, 512
+  size: 72, 64
 IdleDown
-  xy: 78, 540
-  size: 78, 68
+  xy: 72, 512
+  size: 72, 64
 IdleDown
-  xy: 156, 540
-  size: 78, 68
+  xy: 144, 512
+  size: 72, 64
 IdleDown
-  xy: 234, 540
-  size: 78, 68
+  xy: 216, 512
+  size: 72, 64
 IdleDown
-  xy: 312, 540
-  size: 78, 68
+  xy: 288, 512
+  size: 72, 64
 IdleDown
-  xy: 390, 540
-  size: 78, 68
+  xy: 360, 512
+  size: 72, 64
 IdleDown
-  xy: 468, 540
-  size: 78, 68
+  xy: 432, 512
+  size: 72, 64
 IdleDown
-  xy: 546, 540
-  size: 78, 68
+  xy: 504, 512
+  size: 72, 64
 IdleDown
-  xy: 624, 540
-  size: 78, 68
+  xy: 576, 512
+  size: 72, 64
 IdleDown
-  xy: 702, 540
-  size: 78, 68
+  xy: 648, 512
+  size: 72, 64
 WalkUp
-  xy: 0, 608
-  size: 78, 68
+  xy: 0, 576
+  size: 72, 64
 WalkUp
-  xy: 78, 608
-  size: 78, 68
+  xy: 72, 576
+  size: 72, 64
 WalkUp
-  xy: 156, 608
-  size: 78, 68
+  xy: 144, 576
+  size: 72, 64
 WalkUp
-  xy: 234, 608
-  size: 78, 68
+  xy: 216, 576
+  size: 72, 64
 WalkUp
-  xy: 312, 608
-  size: 78, 68
+  xy: 288, 576
+  size: 72, 64
 WalkUp
-  xy: 390, 608
-  size: 78, 68
+  xy: 360, 576
+  size: 72, 64
 WalkDown
-  xy: 0, 676
-  size: 78, 68
+  xy: 0, 640
+  size: 72, 64
 WalkDown
-  xy: 78, 676
-  size: 78, 68
+  xy: 72, 640
+  size: 72, 64
 WalkDown
-  xy: 156, 676
-  size: 78, 68
+  xy: 144, 640
+  size: 72, 64
 WalkDown
-  xy: 234, 676
-  size: 78, 68
+  xy: 216, 640
+  size: 72, 64
 WalkDown
-  xy: 312, 676
-  size: 78, 68
+  xy: 288, 640
+  size: 72, 64
 WalkDown
-  xy: 390, 676
-  size: 78, 68
+  xy: 360, 640
+  size: 72, 64

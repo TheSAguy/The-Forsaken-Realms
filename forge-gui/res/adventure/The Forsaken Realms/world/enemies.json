@@ -422,7 +422,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 37,
-        "scale": 0.2321,
+        "scale": 0.2407,
         "life": 23,
         "rewards": [
             {
@@ -3450,7 +3450,7 @@
             "BiomeGreen"
         ],
         "tier": "Uncommon",
-        "scale": 0.2955
+        "scale": 0.3421
     },
     {
         "name": "Beastmaster",
@@ -4383,7 +4383,7 @@
         ],
         "tier": "Mythic",
         "flying": true,
-        "scale": 0.197
+        "scale": 0.194
     },
     {
         "name": "Bone Golem",
@@ -4819,7 +4819,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.2407,
+        "scale": 0.2321,
         "life": 18,
         "rewards": [
             {
@@ -6286,7 +6286,7 @@
         "spawnRate": 1,
         "difficulty": 0.8,
         "speed": 23,
-        "scale": 0.2321,
+        "scale": 0.2364,
         "life": 12,
         "rewards": [
             {
@@ -6423,7 +6423,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.197
+        "scale": 0.194
     },
     {
         "name": "Cleric",
@@ -8886,7 +8886,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.3495,
+        "scale": 0.3714,
         "life": 11,
         "rewards": [
             {
@@ -10435,7 +10435,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.2364,
+        "scale": 0.2407,
         "life": 20,
         "rewards": [
             {
@@ -10762,7 +10762,7 @@
             "BiomeGreen"
         ],
         "tier": "Common",
-        "scale": 0.3714
+        "scale": 0.3514
     },
     {
         "name": "Emrakul",
@@ -11871,7 +11871,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 36,
-        "scale": 0.2407,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -15845,7 +15845,7 @@
     },
     {
         "name": "Griffin",
-        "sprite": "sprites/enemy/monstrosity/griffin.atlas",
+        "sprite": "sprites/enemy/remake/griffin.atlas",
         "deck": [
             "decks/standard/griffin.json"
         ],
@@ -15929,7 +15929,7 @@
             "BiomeWhite"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Griselbrand",
@@ -20009,7 +20009,7 @@
         "boss": true,
         "flying": true,
         "speed": 10,
-        "scale": 0.3133,
+        "scale": 0.2525,
         "life": 40,
         "rewards": [
             {
@@ -20656,7 +20656,7 @@
         "spawnRate": 0.8,
         "difficulty": 1,
         "speed": 27,
-        "scale": 0.2928,
+        "scale": 0.3023,
         "life": 17,
         "rewards": [
             {
@@ -22784,7 +22784,7 @@
     },
     {
         "name": "Myr Superion",
-        "sprite": "sprites/enemy/remake/myr_superion.atlas",
+        "sprite": "sprites/enemy/construct/myr.atlas",
         "deck": [
             "decks/miniboss/myr_superion.dck"
         ],
@@ -22793,7 +22793,7 @@
         "spawnRate": 1,
         "difficulty": 0.5,
         "speed": 18,
-        "scale": 0.291,
+        "scale": 3.0,
         "life": 25,
         "rewards": [
             {
@@ -25561,7 +25561,7 @@
             "Snow"
         ],
         "tier": "Rare",
-        "scale": 0.233
+        "scale": 0.2364
     },
     {
         "name": "Porcupine",
@@ -26205,7 +26205,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.2889,
+        "scale": 0.2955,
         "life": 16,
         "rewards": [
             {
@@ -27002,7 +27002,7 @@
     },
     {
         "name": "Scorpion",
-        "sprite": "sprites/enemy/beast/arachnid/scorpion.atlas",
+        "sprite": "sprites/enemy/remake/scorpion.atlas",
         "deck": [
             "decks/standard/scorpion.dck"
         ],
@@ -27010,7 +27010,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.9286,
+        "scale": 0.3611,
         "life": 11,
         "rewards": [
             {
@@ -28940,7 +28940,7 @@
             "BiomeGreen"
         ],
         "tier": "Rare",
-        "scale": 0.2407
+        "scale": 0.2321
     },
     {
         "name": "Spiked Ravager",
@@ -29272,7 +29272,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.3514,
+        "scale": 0.3714,
         "life": 13,
         "rewards": [
             {
@@ -30776,7 +30776,7 @@
             "BiomeGreen"
         ],
         "tier": "Common",
-        "scale": 0.3611
+        "scale": 0.3421
     },
     {
         "name": "Triceratops",
@@ -30928,7 +30928,7 @@
             "BiomeRed"
         ],
         "tier": "Rare",
-        "scale": 0.25
+        "scale": 0.2407
     },
     {
         "name": "Turtle",
@@ -35334,7 +35334,7 @@
             "abandoned"
         ],
         "tier": "Common",
-        "scale": 0.3439
+        "scale": 0.3514
     },
     {
         "name": "Wolfkin Outcast",
@@ -36620,7 +36620,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2453,
+        "scale": 0.2407,
         "life": 50,
         "rewards": [
             {
@@ -38123,7 +38123,7 @@
             "decks/legends/arcades_sabboth.dck"
         ],
         "ai": "",
-        "scale": 0.2955,
+        "scale": 0.2889,
         "speed": 30,
         "life": 40,
         "rewards": [
@@ -38192,7 +38192,7 @@
         ],
         "ai": "",
         "speed": 29,
-        "scale": 0.3023,
+        "scale": 0.2889,
         "life": 18,
         "rewards": [
             {
@@ -38325,7 +38325,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2889,
+        "scale": 0.3023,
         "life": 40,
         "rewards": [
             {
@@ -38594,7 +38594,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2407,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -39361,7 +39361,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2407,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -39913,7 +39913,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2364,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -40057,13 +40057,13 @@
     },
     {
         "name": "The Scorpion God",
-        "sprite": "sprites/enemy/beast/arachnid/scorpion.atlas",
+        "sprite": "sprites/enemy/remake/the_scorpion_god.atlas",
         "deck": [
             "decks/legends/the_scorpion_god.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.9286,
+        "scale": 0.2889,
         "life": 40,
         "rewards": [
             {
@@ -40359,7 +40359,7 @@
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.2407,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -40496,7 +40496,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2321,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -42840,7 +42840,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.2407,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -42914,7 +42914,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.2364,
+        "scale": 0.2453,
         "life": 40,
         "rewards": [
             {
@@ -43061,7 +43061,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.2407,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -47028,7 +47028,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2955,
+        "scale": 0.2889,
         "life": 30,
         "rewards": [
             {
@@ -48733,7 +48733,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2653,
+        "scale": 0.2281,
         "life": 30,
         "rewards": [
             {
@@ -48825,7 +48825,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2407,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -49007,7 +49007,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2305,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -49194,7 +49194,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2663,
+        "scale": 0.2374,
         "life": 30,
         "rewards": [
             {
@@ -50208,7 +50208,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.273,
+        "scale": 0.2348,
         "life": 30,
         "rewards": [
             {
@@ -50774,7 +50774,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2977,
+        "scale": 0.2376,
         "life": 30,
         "rewards": [
             {
@@ -51867,13 +51867,13 @@
     },
     {
         "name": "Urtet",
-        "sprite": "sprites/enemy/remake/urtet.atlas",
+        "sprite": "sprites/enemy/construct/myr.atlas",
         "deck": [
             "decks/legends/urtet.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.3095,
+        "scale": 1,
         "life": 30,
         "rewards": [
             {
@@ -52447,7 +52447,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2407,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -52993,7 +52993,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2407,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -53549,14 +53549,14 @@
     },
     {
         "name": "Zeriam",
-        "sprite": "sprites/enemy/monstrosity/griffin.atlas",
+        "sprite": "sprites/enemy/remake/zeriam.atlas",
         "deck": [
             "decks/legends/zeriam.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 19,
-        "scale": 1.1818,
+        "scale": 0.3824,
         "life": 12,
         "rewards": [
             {
@@ -56188,7 +56188,7 @@
         ],
         "ai": "",
         "speed": 60,
-        "scale": 0.2281,
+        "scale": 0.197,
         "life": 49,
         "rewards": [
             {
@@ -56258,7 +56258,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2063,
+        "scale": 0.197,
         "life": 48,
         "rewards": [
             {
@@ -56397,7 +56397,7 @@
         ],
         "ai": "",
         "speed": 37,
-        "scale": 0.2355,
+        "scale": 0.2321,
         "life": 28,
         "rewards": [
             {
@@ -59148,7 +59148,7 @@
         ],
         "ai": "",
         "speed": 21,
-        "scale": 0.3611,
+        "scale": 0.3514,
         "life": 13,
         "rewards": [
             {
@@ -61093,7 +61093,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2407,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -61242,7 +61242,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2364,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -61387,7 +61387,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2321,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -63124,13 +63124,13 @@
     },
     {
         "name": "Brudiclad",
-        "sprite": "sprites/enemy/remake/brudiclad.atlas",
+        "sprite": "sprites/enemy/construct/myr.atlas",
         "deck": [
             "decks/legends/brudiclad.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2889,
+        "scale": 1,
         "life": 30,
         "rewards": [
             {
@@ -63692,7 +63692,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.2031,
+        "scale": 0.197,
         "life": 47,
         "rewards": [
             {
@@ -63832,7 +63832,7 @@
         "ai": "",
         "flying": true,
         "speed": 38,
-        "scale": 0.2407,
+        "scale": 0.2364,
         "life": 33,
         "rewards": [
             {
@@ -66234,7 +66234,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.3023,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -74375,7 +74375,7 @@
             "decks/legends/ruric_thar.dck"
         ],
         "ai": "",
-        "scale": 0.25,
+        "scale": 0.2321,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -75794,7 +75794,7 @@
         "spawnRate": 0,
         "tier": "Common",
         "difficulty": 0.1,
-        "scale": 0.3611
+        "scale": 0.3095
     },
     {
         "name": "Duskana",
@@ -75862,7 +75862,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.25
+        "scale": 0.2407
     },
     {
         "name": "Hurska",
@@ -75930,7 +75930,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.3023
+        "scale": 0.3333
     },
     {
         "name": "Kudo",
@@ -76003,7 +76003,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 0.3009
+        "scale": 0.2889
     },
     {
         "name": "Ruxa",
@@ -76495,7 +76495,7 @@
             "decks/legends/zask.dck"
         ],
         "ai": "",
-        "scale": 0.2889,
+        "scale": 0.2955,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -76848,7 +76848,7 @@
             "decks/legends/shiko.dck"
         ],
         "ai": "",
-        "scale": 0.2955,
+        "scale": 0.2889,
         "flying": true,
         "speed": 34,
         "life": 20,
@@ -78566,7 +78566,7 @@
         ],
         "ai": "",
         "flying": true,
-        "scale": 0.2321,
+        "scale": 0.2364,
         "speed": 44,
         "life": 20,
         "rewards": [
@@ -79250,7 +79250,7 @@
             "decks/legends/arahbo.dck"
         ],
         "ai": "",
-        "scale": 0.2364,
+        "scale": 0.2407,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -79640,7 +79640,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2321
+        "scale": 0.2364
     },
     {
         "name": "Alibou",
@@ -79708,7 +79708,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2364
+        "scale": 0.2407
     },
     {
         "name": "Osgir",
@@ -79924,7 +79924,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2407
+        "scale": 0.2321
     },
     {
         "name": "Tersa",
@@ -86043,7 +86043,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.233
+        "scale": 0.2321
     },
     {
         "name": "Anowon",
@@ -92884,7 +92884,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2364
+        "scale": 0.2407
     },
     {
         "name": "Mm'menon",
@@ -93453,7 +93453,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2321
+        "scale": 0.2364
     },
     {
         "name": "Rigo",
@@ -93744,7 +93744,7 @@
             "decks/legends/teval.dck"
         ],
         "ai": "",
-        "scale": 0.2364,
+        "scale": 0.2321,
         "flying": true,
         "speed": 44,
         "life": 20,
@@ -93897,7 +93897,7 @@
         ],
         "ai": "",
         "flying": true,
-        "scale": 0.2453,
+        "scale": 0.2321,
         "speed": 44,
         "life": 20,
         "rewards": [
@@ -94799,7 +94799,7 @@
             "decks/legends/khorvath_and_sylvia.dck"
         ],
         "ai": "",
-        "scale": 0.26,
+        "scale": 0.2323,
         "flying": true,
         "speed": 44,
         "life": 20,
@@ -96412,7 +96412,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.3009
+        "scale": 0.2955
     },
     {
         "name": "Mrs. Klaus",
@@ -96649,7 +96649,7 @@
             "decks/legends/syr_ginger.dck"
         ],
         "ai": "",
-        "scale": 0.2889,
+        "scale": 0.3023,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -96912,7 +96912,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.2955
+        "scale": 0.3171
     },
     {
         "name": "Ognis",
@@ -98323,7 +98323,7 @@
         "spawnRate": 0.8,
         "difficulty": 1,
         "speed": 16,
-        "scale": 0.3023,
+        "scale": 0.2889,
         "life": 10,
         "rewards": [
             {
@@ -117303,7 +117303,7 @@
         "nameOverride": "Hidden Wumpus",
         "boss": true,
         "tier": "Rare",
-        "scale": 0.2361
+        "scale": 0.232
     },
     {
         "name": "Slivdrazi Monstrosity",
@@ -121520,7 +121520,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.2868,
+        "scale": 0.2375,
         "life": 40,
         "rewards": [
             {
@@ -121756,7 +121756,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.28,
+        "scale": 0.2352,
         "life": 40,
         "rewards": [
             {
@@ -121992,7 +121992,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 0.2632,
+        "scale": 0.2324,
         "life": 40,
         "rewards": [
             {
@@ -122228,7 +122228,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 0.3171,
+        "scale": 0.2889,
         "life": 40,
         "rewards": [
             {
@@ -122464,7 +122464,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 0.3171,
+        "scale": 0.2921,
         "life": 40,
         "rewards": [
             {
@@ -124012,7 +124012,7 @@
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.2321,
+        "scale": 0.2364,
         "life": 80,
         "rewards": [
             {
@@ -124674,7 +124674,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "tier": "Uncommon",
-        "scale": 0.2826
+        "scale": 0.2955
     },
     {
         "name": "Preston",

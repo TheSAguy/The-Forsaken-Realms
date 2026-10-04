@@ -1,0 +1,245 @@
+griffin.png
+size: 1118,774
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 86, 71
+Idle
+  xy: 86, 64
+  size: 86, 71
+Idle
+  xy: 172, 64
+  size: 86, 71
+Idle
+  xy: 258, 64
+  size: 86, 71
+Idle
+  xy: 344, 64
+  size: 86, 71
+Idle
+  xy: 430, 64
+  size: 86, 71
+Idle
+  xy: 516, 64
+  size: 86, 71
+Idle
+  xy: 602, 64
+  size: 86, 71
+Idle
+  xy: 688, 64
+  size: 86, 71
+Idle
+  xy: 774, 64
+  size: 86, 71
+Walk
+  xy: 0, 135
+  size: 86, 71
+Walk
+  xy: 86, 135
+  size: 86, 71
+Walk
+  xy: 172, 135
+  size: 86, 71
+Walk
+  xy: 258, 135
+  size: 86, 71
+Walk
+  xy: 344, 135
+  size: 86, 71
+Walk
+  xy: 430, 135
+  size: 86, 71
+Attack
+  xy: 0, 206
+  size: 86, 71
+Attack
+  xy: 86, 206
+  size: 86, 71
+Attack
+  xy: 172, 206
+  size: 86, 71
+Attack
+  xy: 258, 206
+  size: 86, 71
+Attack
+  xy: 344, 206
+  size: 86, 71
+Attack
+  xy: 430, 206
+  size: 86, 71
+Hit
+  xy: 0, 277
+  size: 86, 71
+Hit
+  xy: 86, 277
+  size: 86, 71
+Hit
+  xy: 172, 277
+  size: 86, 71
+Hit
+  xy: 258, 277
+  size: 86, 71
+Hit
+  xy: 344, 277
+  size: 86, 71
+Death
+  xy: 0, 348
+  size: 86, 71
+Death
+  xy: 86, 348
+  size: 86, 71
+Death
+  xy: 172, 348
+  size: 86, 71
+Death
+  xy: 258, 348
+  size: 86, 71
+Death
+  xy: 344, 348
+  size: 86, 71
+Death
+  xy: 430, 348
+  size: 86, 71
+Death
+  xy: 516, 348
+  size: 86, 71
+Death
+  xy: 602, 348
+  size: 86, 71
+Death
+  xy: 688, 348
+  size: 86, 71
+Death
+  xy: 774, 348
+  size: 86, 71
+Death
+  xy: 860, 348
+  size: 86, 71
+Death
+  xy: 946, 348
+  size: 86, 71
+Death
+  xy: 1032, 348
+  size: 86, 71
+Wake
+  xy: 0, 419
+  size: 86, 71
+Wake
+  xy: 86, 419
+  size: 86, 71
+Wake
+  xy: 172, 419
+  size: 86, 71
+Wake
+  xy: 258, 419
+  size: 86, 71
+Wake
+  xy: 344, 419
+  size: 86, 71
+Wake
+  xy: 430, 419
+  size: 86, 71
+Wake
+  xy: 516, 419
+  size: 86, 71
+IdleUp
+  xy: 0, 490
+  size: 86, 71
+IdleUp
+  xy: 86, 490
+  size: 86, 71
+IdleUp
+  xy: 172, 490
+  size: 86, 71
+IdleUp
+  xy: 258, 490
+  size: 86, 71
+IdleUp
+  xy: 344, 490
+  size: 86, 71
+IdleUp
+  xy: 430, 490
+  size: 86, 71
+IdleUp
+  xy: 516, 490
+  size: 86, 71
+IdleUp
+  xy: 602, 490
+  size: 86, 71
+IdleUp
+  xy: 688, 490
+  size: 86, 71
+IdleUp
+  xy: 774, 490
+  size: 86, 71
+IdleDown
+  xy: 0, 561
+  size: 86, 71
+IdleDown
+  xy: 86, 561
+  size: 86, 71
+IdleDown
+  xy: 172, 561
+  size: 86, 71
+IdleDown
+  xy: 258, 561
+  size: 86, 71
+IdleDown
+  xy: 344, 561
+  size: 86, 71
+IdleDown
+  xy: 430, 561
+  size: 86, 71
+IdleDown
+  xy: 516, 561
+  size: 86, 71
+IdleDown
+  xy: 602, 561
+  size: 86, 71
+IdleDown
+  xy: 688, 561
+  size: 86, 71
+IdleDown
+  xy: 774, 561
+  size: 86, 71
+WalkUp
+  xy: 0, 632
+  size: 86, 71
+WalkUp
+  xy: 86, 632
+  size: 86, 71
+WalkUp
+  xy: 172, 632
+  size: 86, 71
+WalkUp
+  xy: 258, 632
+  size: 86, 71
+WalkUp
+  xy: 344, 632
+  size: 86, 71
+WalkUp
+  xy: 430, 632
+  size: 86, 71
+WalkDown
+  xy: 0, 703
+  size: 86, 71
+WalkDown
+  xy: 86, 703
+  size: 86, 71
+WalkDown
+  xy: 172, 703
+  size: 86, 71
+WalkDown
+  xy: 258, 703
+  size: 86, 71
+WalkDown
+  xy: 344, 703
+  size: 86, 71
+WalkDown
+  xy: 430, 703
+  size: 86, 71

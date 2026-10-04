@@ -1,5 +1,5 @@
 arahbo.png
-size: 1376,884
+size: 1504,974
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,256 +8,256 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 86, 82
+  size: 94, 91
 Idle
-  xy: 86, 64
-  size: 86, 82
+  xy: 94, 64
+  size: 94, 91
 Idle
-  xy: 172, 64
-  size: 86, 82
+  xy: 188, 64
+  size: 94, 91
 Idle
-  xy: 258, 64
-  size: 86, 82
+  xy: 282, 64
+  size: 94, 91
 Idle
-  xy: 344, 64
-  size: 86, 82
+  xy: 376, 64
+  size: 94, 91
 Idle
-  xy: 430, 64
-  size: 86, 82
+  xy: 470, 64
+  size: 94, 91
 Idle
-  xy: 516, 64
-  size: 86, 82
+  xy: 564, 64
+  size: 94, 91
 Idle
-  xy: 602, 64
-  size: 86, 82
+  xy: 658, 64
+  size: 94, 91
 Idle
-  xy: 688, 64
-  size: 86, 82
+  xy: 752, 64
+  size: 94, 91
 Idle
-  xy: 774, 64
-  size: 86, 82
+  xy: 846, 64
+  size: 94, 91
 Walk
-  xy: 0, 146
-  size: 86, 82
+  xy: 0, 155
+  size: 94, 91
 Walk
-  xy: 86, 146
-  size: 86, 82
+  xy: 94, 155
+  size: 94, 91
 Walk
-  xy: 172, 146
-  size: 86, 82
+  xy: 188, 155
+  size: 94, 91
 Walk
-  xy: 258, 146
-  size: 86, 82
+  xy: 282, 155
+  size: 94, 91
 Walk
-  xy: 344, 146
-  size: 86, 82
+  xy: 376, 155
+  size: 94, 91
 Walk
-  xy: 430, 146
-  size: 86, 82
+  xy: 470, 155
+  size: 94, 91
 Attack
-  xy: 0, 228
-  size: 86, 82
+  xy: 0, 246
+  size: 94, 91
 Attack
-  xy: 86, 228
-  size: 86, 82
+  xy: 94, 246
+  size: 94, 91
 Attack
-  xy: 172, 228
-  size: 86, 82
+  xy: 188, 246
+  size: 94, 91
 Attack
-  xy: 258, 228
-  size: 86, 82
+  xy: 282, 246
+  size: 94, 91
 Attack
-  xy: 344, 228
-  size: 86, 82
+  xy: 376, 246
+  size: 94, 91
 Attack
-  xy: 430, 228
-  size: 86, 82
+  xy: 470, 246
+  size: 94, 91
 Attack
-  xy: 516, 228
-  size: 86, 82
+  xy: 564, 246
+  size: 94, 91
 Hit
-  xy: 0, 310
-  size: 86, 82
+  xy: 0, 337
+  size: 94, 91
 Hit
-  xy: 86, 310
-  size: 86, 82
+  xy: 94, 337
+  size: 94, 91
 Hit
-  xy: 172, 310
-  size: 86, 82
+  xy: 188, 337
+  size: 94, 91
 Hit
-  xy: 258, 310
-  size: 86, 82
+  xy: 282, 337
+  size: 94, 91
 Hit
-  xy: 344, 310
-  size: 86, 82
+  xy: 376, 337
+  size: 94, 91
 Hit
-  xy: 430, 310
-  size: 86, 82
+  xy: 470, 337
+  size: 94, 91
 Death
-  xy: 0, 392
-  size: 86, 82
+  xy: 0, 428
+  size: 94, 91
 Death
-  xy: 86, 392
-  size: 86, 82
+  xy: 94, 428
+  size: 94, 91
 Death
-  xy: 172, 392
-  size: 86, 82
+  xy: 188, 428
+  size: 94, 91
 Death
-  xy: 258, 392
-  size: 86, 82
+  xy: 282, 428
+  size: 94, 91
 Death
-  xy: 344, 392
-  size: 86, 82
+  xy: 376, 428
+  size: 94, 91
 Death
-  xy: 430, 392
-  size: 86, 82
+  xy: 470, 428
+  size: 94, 91
 Death
-  xy: 516, 392
-  size: 86, 82
+  xy: 564, 428
+  size: 94, 91
 Death
-  xy: 602, 392
-  size: 86, 82
+  xy: 658, 428
+  size: 94, 91
 Death
-  xy: 688, 392
-  size: 86, 82
+  xy: 752, 428
+  size: 94, 91
 Death
-  xy: 774, 392
-  size: 86, 82
+  xy: 846, 428
+  size: 94, 91
 Death
-  xy: 860, 392
-  size: 86, 82
+  xy: 940, 428
+  size: 94, 91
 Death
-  xy: 946, 392
-  size: 86, 82
+  xy: 1034, 428
+  size: 94, 91
 Death
-  xy: 1032, 392
-  size: 86, 82
+  xy: 1128, 428
+  size: 94, 91
 Death
-  xy: 1118, 392
-  size: 86, 82
+  xy: 1222, 428
+  size: 94, 91
 Death
-  xy: 1204, 392
-  size: 86, 82
+  xy: 1316, 428
+  size: 94, 91
 Death
-  xy: 1290, 392
-  size: 86, 82
+  xy: 1410, 428
+  size: 94, 91
 Wake
-  xy: 0, 474
-  size: 86, 82
+  xy: 0, 519
+  size: 94, 91
 Wake
-  xy: 86, 474
-  size: 86, 82
+  xy: 94, 519
+  size: 94, 91
 Wake
-  xy: 172, 474
-  size: 86, 82
+  xy: 188, 519
+  size: 94, 91
 Wake
-  xy: 258, 474
-  size: 86, 82
+  xy: 282, 519
+  size: 94, 91
 Wake
-  xy: 344, 474
-  size: 86, 82
+  xy: 376, 519
+  size: 94, 91
 Wake
-  xy: 430, 474
-  size: 86, 82
+  xy: 470, 519
+  size: 94, 91
 Wake
-  xy: 516, 474
-  size: 86, 82
+  xy: 564, 519
+  size: 94, 91
 Wake
-  xy: 602, 474
-  size: 86, 82
+  xy: 658, 519
+  size: 94, 91
 IdleUp
-  xy: 0, 556
-  size: 86, 82
+  xy: 0, 610
+  size: 94, 91
 IdleUp
-  xy: 86, 556
-  size: 86, 82
+  xy: 94, 610
+  size: 94, 91
 IdleUp
-  xy: 172, 556
-  size: 86, 82
+  xy: 188, 610
+  size: 94, 91
 IdleUp
-  xy: 258, 556
-  size: 86, 82
+  xy: 282, 610
+  size: 94, 91
 IdleUp
-  xy: 344, 556
-  size: 86, 82
+  xy: 376, 610
+  size: 94, 91
 IdleUp
-  xy: 430, 556
-  size: 86, 82
+  xy: 470, 610
+  size: 94, 91
 IdleUp
-  xy: 516, 556
-  size: 86, 82
+  xy: 564, 610
+  size: 94, 91
 IdleUp
-  xy: 602, 556
-  size: 86, 82
+  xy: 658, 610
+  size: 94, 91
 IdleUp
-  xy: 688, 556
-  size: 86, 82
+  xy: 752, 610
+  size: 94, 91
 IdleUp
-  xy: 774, 556
-  size: 86, 82
+  xy: 846, 610
+  size: 94, 91
 IdleDown
-  xy: 0, 638
-  size: 86, 82
+  xy: 0, 701
+  size: 94, 91
 IdleDown
-  xy: 86, 638
-  size: 86, 82
+  xy: 94, 701
+  size: 94, 91
 IdleDown
-  xy: 172, 638
-  size: 86, 82
+  xy: 188, 701
+  size: 94, 91
 IdleDown
-  xy: 258, 638
-  size: 86, 82
+  xy: 282, 701
+  size: 94, 91
 IdleDown
-  xy: 344, 638
-  size: 86, 82
+  xy: 376, 701
+  size: 94, 91
 IdleDown
-  xy: 430, 638
-  size: 86, 82
+  xy: 470, 701
+  size: 94, 91
 IdleDown
-  xy: 516, 638
-  size: 86, 82
+  xy: 564, 701
+  size: 94, 91
 IdleDown
-  xy: 602, 638
-  size: 86, 82
+  xy: 658, 701
+  size: 94, 91
 IdleDown
-  xy: 688, 638
-  size: 86, 82
+  xy: 752, 701
+  size: 94, 91
 IdleDown
-  xy: 774, 638
-  size: 86, 82
+  xy: 846, 701
+  size: 94, 91
 WalkUp
-  xy: 0, 720
-  size: 86, 82
+  xy: 0, 792
+  size: 94, 91
 WalkUp
-  xy: 86, 720
-  size: 86, 82
+  xy: 94, 792
+  size: 94, 91
 WalkUp
-  xy: 172, 720
-  size: 86, 82
+  xy: 188, 792
+  size: 94, 91
 WalkUp
-  xy: 258, 720
-  size: 86, 82
+  xy: 282, 792
+  size: 94, 91
 WalkUp
-  xy: 344, 720
-  size: 86, 82
+  xy: 376, 792
+  size: 94, 91
 WalkUp
-  xy: 430, 720
-  size: 86, 82
+  xy: 470, 792
+  size: 94, 91
 WalkDown
-  xy: 0, 802
-  size: 86, 82
+  xy: 0, 883
+  size: 94, 91
 WalkDown
-  xy: 86, 802
-  size: 86, 82
+  xy: 94, 883
+  size: 94, 91
 WalkDown
-  xy: 172, 802
-  size: 86, 82
+  xy: 188, 883
+  size: 94, 91
 WalkDown
-  xy: 258, 802
-  size: 86, 82
+  xy: 282, 883
+  size: 94, 91
 WalkDown
-  xy: 344, 802
-  size: 86, 82
+  xy: 376, 883
+  size: 94, 91
 WalkDown
-  xy: 430, 802
-  size: 86, 82
+  xy: 470, 883
+  size: 94, 91

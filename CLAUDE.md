@@ -58,6 +58,14 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-03 (round 428): **LOCAL + UNRELEASED** - the batch-3 rework (data only: enemies.json,
+`sprites/enemy/remake/`). Elephant, Chicken, Elk, Cat, Lion, the golems and the Treefolk Guardian reworked; Griffin and
+the new Scorpion group installed; the Myr group back on its original sprite. Every running or stomping remake
+re-exported with the natural stride (the 6-frame walk keeps the full-speed gait and moves slower). 14 bosses
+re-exported at full density: `remake.py` had sized a regenerated boss against its original sprite with its remake's
+scale (procedural-pixel-creatures `cloud/batch-03`). Lathliss and the Ooze Boss stop at the `size.giant` ceiling. Now
+175 remade enemies. Not packaged yet; not seen in play.
+
 ## STATE 2026-10-03 (round 427): **LOCAL + UNRELEASED** - road rule 7.
 - `RoadNetwork.fillRoadHoles` paves pockets of ground (at most 6 tiles) that roads close in on every side. A pocket on
   the footprint of a place on the map, the map edge, water or the barrier is left.

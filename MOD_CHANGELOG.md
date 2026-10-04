@@ -14264,6 +14264,63 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 428: the batch-3 rework, a natural gallop stride, bosses at full density; the Myr keep their original (2026-10-03)
+
+The user compared batch 3 with the originals ("I feel like the original looks better on most of these") and asked
+for a rework: "Elephant needs work. Body seems too slim. Chicken body seems too fat. Elk tail/hind quarter needs
+work. Same for cat ... Griffin definitely needs total rework. The 4 legged animals run seems a little off. I think
+their front legs go too far back ... All the golems need more definition". After the comparison: "Much better! The
+only thing i would keep was the Symbiote/ Salamander. Use the new model as a scorpion. install all reworks as round
+428."
+
+- **Reworked groups** (the generator's new genes are opt-in; procedural-pixel-creatures `cloud/batch-03`):
+  - Elephant (Elephant, Hamza, Quintorius, Roon, Gorilla Chief): big flat ear flaps hanging past the jaw and a heavy,
+    deep body.
+  - Chicken (Chicken, Albiorix): slimmer and upright, with longer legs and a shorter tail.
+  - Elk (Elk, Marath, Beza, Rudolph): a reindeer's rack (bigger antlers with tines), round hindquarters and a thin
+    hanging tail.
+  - Cat (Cat, Stray Cat, Arahbo): fuller hindquarters. Lion (Lion, Ygra, Nethroi): a full mane and a raised, tufted
+    tail.
+  - Griffin (Griffin, Zeriam): recast on a lion's body with an eagle's white head, a gold beak and feathered wings
+    half raised. It waited in round 426 (it read as a big eagle); installed now.
+  - Golems: Construct (Construct, Neyali, The Peregrine Dynamo, Alibou), Golem Sentinel (Golem Sentinel, Laelia,
+    Kilo), Clay Golem (Clay Golem, Syr Ginger): outlined, faceted boulders on the shoulders, forearms, thighs and
+    back, drawn three-quarters towards the viewer so the broad shoulders show.
+  - Treefolk Guardian (Treefolk Guardian, Wandering Treefolk, Animar, Thorna and Twigtooth): chunkier, darker bark,
+    the full crown.
+- **Scorpion (Scorpion, The Scorpion God)**: new. The scorpion made for the Symbiote during the rework (pincers, a
+  raised stinger), crimson like the original; The Scorpion God near-black from its card. The Symbiote group keeps the
+  lizard (the user's call).
+- **A natural gallop stride**: round 424's 6-frame walk played the gait at full speed, so every planted foot trailed
+  far behind the body. The exporter now keeps the full-speed gait (a gallop stays a gallop) and moves slower, so the
+  strides keep their natural length. Every running or stomping remake was re-exported: the reworked groups and
+  Ancient Silver Dragon, Fire Dragon, Troll, Spider, Bear, Bone Dragon, Lathliss, Dragon, Yidris, Treefolk, Dog, Rhino,
+  Adult Green Dragon, Scarab, Cave Spider, Polar Bear, Ladybug and Symbiote, with their variants.
+- **Bosses at full density**: a regenerated boss was measured against its original sprite with its remake's scale,
+  so its body fell to the 30-unit boss minimum (since round 424): 14 bosses drew with chunkier pixels than every
+  other remake (about 82 art px where 89-133 belong). Fixed in the generator's `remake.py`; re-exported at the same
+  drawn size: Lathliss, Shadrix, Arcades Sabboth, Chromium (Boss), Velomachus, Khorvath and Sylvia, Nicol Bolas
+  (Boss), Tanazir, Palladia-Mors (Boss), Vaevictis Asmadi, Gorilla Chief, Thorna and Twigtooth, Salacinder and Soot,
+  Ooze Boss.
+- **Myr (Myr Superion, Urtet, Brudiclad)**: back to the original sprite and scale (the user preferred the original);
+  their remake files are removed.
+- **Data only:**
+  - `sprites/enemy/remake/`: 226 files re-exported, 8 new (Griffin, Zeriam, Scorpion, The Scorpion God), 6
+    removed (the Myr group).
+  - `world/enemies.json`: 7 sprites (4 new remakes, 3 back to the original) and 87 scales (the installer's boss
+    rescales at the same drawn size, then `enemy_scale.py --write`); no other field changed.
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves; 73 scales changed (the four new remakes, and the natural
+    stride's smaller walk frames).
+  - `sprite_artifact_audit.py --only remake` (175 atlases, 14554 frames) flags 182 frames, all shadows, checked
+    by eye: under the golems' swinging fists, raised feet, the Troll's club and Yidris's mace, the flying birds,
+    and the hovering dragonfly Hope of Ghirapur (47 frames).
+  - Lathliss and the Ooze Boss stay below the density of the rest (103 and 76 game px against 133): the
+    generator's `size.giant` tops out at 1.8 times for reptiles and 2.4 for slimes.
+- Not yet seen in play. Console (F9): `spawn enemy Griffin`, `spawn enemy Scorpion`, `spawn enemy Elephant`,
+  `spawn enemy Construct`, `spawn enemy Lathliss`.
+
 ## Round 427: road rule 7 - a pocket of ground closed in by roads is paved (2026-10-03)
 
 The user, with a screenshot of a loop of road under a town: "There is a double road in my current game. See log/save."
