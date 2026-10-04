@@ -61,13 +61,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 ## STATE 2026-10-04 (round 435): **LOCAL + UNRELEASED** - cloud batch 5 of the creature-generator remakes: 19 creature
 groups, one enemy each (boars, wolves, fox, cat, hen, chick, turtle, crab, snakes, slimes, a flame wisp, a mushroomling,
 a leech, a red lizard, a wurm); the cobra held for a rework. Data only (enemies.json, `sprites/enemy/remake/`;
-procedural-pixel-creatures `cloud/batch-05`). Now 225 remake atlases. Not packaged yet; not seen in play.
+procedural-pixel-creatures `cloud/batch-05`). Now 225 remake atlases. LIVE + AGENT PACKAGED (with 434); not seen in play.
 
 ## STATE 2026-10-04 (round 434): **LOCAL + UNRELEASED** - the town-restore fee rises with the towns held: settings.json
 `restoreFee*` = 200g + 20w (15w on Easy), +50g and +10w per 5 towns held, difficulty-scaled, no cap
 (`TuningData.restoreFeeFor`, `TownRestoration.restoreCostAt/currentRestoreCost`, `[TFR-RestoreFee]`; NG+ refunds the n-th
 fee at the n-th step). The attacking-mage cap no longer counts the Capitol twice (`TerritoryControl`). Agent-tested the
-fee (Insane, 6 held -> 375g + 45w); the cap fix compiled, not seen in play.
+fee (Insane, 6 held -> 375g + 45w); the cap fix compiled, not seen in play. LIVE + AGENT PACKAGED with 434 + 435
+(jar 6C5A48B4EE77, enemies.json FDCCB933, settings.json FA6B6EA0, 450 remake files); not seen in play.
 
 ## STATE 2026-10-04 (round 433): **LOCAL + UNRELEASED** - `PointOfInterestData.rotationGroup`: Deep Caverns' four
 entries (CaveBA/CD/GB/RJ, cave_huge.tmx) share one rotation share - one on the map at a time, not one per land;
