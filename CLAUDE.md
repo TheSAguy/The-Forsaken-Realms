@@ -63,25 +63,26 @@ entries (CaveBA/CD/GB/RJ, cave_huge.tmx) share one rotation share - one on the m
 `DungeonRotation.BALANCE_VERSION` 2 rebalances old saves on load and lowers their visible target to the shares' sum.
 `WorldBackground.checkGroundDrawState()`: a tinted batch is reset to white before the ground draws (`[TFR-WorldDraw]`)
 and `[TFR-WorldReturn]` logs the draw state on each return to the overworld - the user's black ground after Deep
-Caverns was NOT reproduced. Agent-tested. LIVE NOT PACKAGED with 430-433 (the user's game was running).
+Caverns was NOT reproduced. Agent-tested. LIVE + AGENT PACKAGED with 430-433 (jar 214117427821, enemies.json EE63437A,
+points_of_interest.json 72EC2420, 412 remake files); none of 430-433 seen in play.
 
 ## STATE 2026-10-04 (round 432): **LOCAL + UNRELEASED** - the five AI capital arenas' win item = 1 of 8 from two themed
 sets (no item in two capitals; table in MOD_CHANGELOG); Arena duels neither add to nor reset notoriety (their enemies
 still get the Walls); the Player Capitol has ONE quest board (object 66 = `waste_town_generic,player_capital`, object
 104 removed; `AdventureQuestController` splits questtype on commas); `plains_town_tribal.tmx` questtype typo fixed.
-Agent-tested (board 22 quests; arena loss left the streak at 12). AGENT packaged; LIVE NOT (the user's game running).
+Agent-tested (board 22 quests; arena loss left the streak at 12). LIVE + AGENT PACKAGED (with 433).
 
 ## STATE 2026-10-04 (round 431): **LOCAL + UNRELEASED (data only)** - the Green Capital arena's win item lists
 Dungeon Map 3 of 24 (12.5%, was 1 of 4) beside Mad Staff/Gold Boots/Disrupting Scepter 7 each (forest_capital.tmx);
 Victor (the vampire Archmage) joins the Player Capitol's Level-2 Challenging pool (player_capital.tmx `arenaChallenge`).
-Round 430 is the peer's (cloud batch 4, pending the user's review). Not yet packaged live.
+LIVE + AGENT PACKAGED (with 433).
 
 ## STATE 2026-10-04 (round 430): **LOCAL + UNRELEASED** - cloud batch 4 of the creature-generator remakes, creatures
 only: 20 groups, 31 enemies (giant flies, tyrannosaurs, raptors, jellyfish, crabs, purple spiders, a grey griffin, rats,
 parrots, boar, pig, crocodile, hermit crab, panda, hedgehog, ibis, death slime, two dragons, a lizard), reworked locally
 from the user's references (pig, boar, rats, panda, tyrannosaurs, flies); the Ooze Boss re-exported at full density.
 Data only (enemies.json, `sprites/enemy/remake/`; procedural-pixel-creatures `cloud/batch-04`). Now 206 remake atlases.
-Not packaged yet; not seen in play.
+LIVE + AGENT PACKAGED (with 433); not seen in play.
 
 ## STATE 2026-10-04 (round 429): **LOCAL + UNRELEASED** - notoriety Walls 0/1, 1/2, 2/4, 3/6, and a second Wall from
 25 wins in a row (3/6 + 0/1 up to 3/6 + 3/6 at 40+, the cap). `TuningData.notorietyLevelsPerWall` (4) +
