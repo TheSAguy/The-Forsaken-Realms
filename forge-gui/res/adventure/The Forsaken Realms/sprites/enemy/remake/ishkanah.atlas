@@ -1,0 +1,302 @@
+ishkanah.png
+size: 4360,1894
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 218, 183
+Idle
+  xy: 218, 64
+  size: 218, 183
+Idle
+  xy: 436, 64
+  size: 218, 183
+Idle
+  xy: 654, 64
+  size: 218, 183
+Idle
+  xy: 872, 64
+  size: 218, 183
+Idle
+  xy: 1090, 64
+  size: 218, 183
+Idle
+  xy: 1308, 64
+  size: 218, 183
+Idle
+  xy: 1526, 64
+  size: 218, 183
+Idle
+  xy: 1744, 64
+  size: 218, 183
+Idle
+  xy: 1962, 64
+  size: 218, 183
+Walk
+  xy: 0, 247
+  size: 218, 183
+Walk
+  xy: 218, 247
+  size: 218, 183
+Walk
+  xy: 436, 247
+  size: 218, 183
+Walk
+  xy: 654, 247
+  size: 218, 183
+Walk
+  xy: 872, 247
+  size: 218, 183
+Walk
+  xy: 1090, 247
+  size: 218, 183
+Attack
+  xy: 0, 430
+  size: 218, 183
+Attack
+  xy: 218, 430
+  size: 218, 183
+Attack
+  xy: 436, 430
+  size: 218, 183
+Attack
+  xy: 654, 430
+  size: 218, 183
+Attack
+  xy: 872, 430
+  size: 218, 183
+Attack
+  xy: 1090, 430
+  size: 218, 183
+Attack
+  xy: 1308, 430
+  size: 218, 183
+Attack
+  xy: 1526, 430
+  size: 218, 183
+Attack
+  xy: 1744, 430
+  size: 218, 183
+Attack
+  xy: 1962, 430
+  size: 218, 183
+Attack
+  xy: 2180, 430
+  size: 218, 183
+Attack
+  xy: 2398, 430
+  size: 218, 183
+Hit
+  xy: 0, 613
+  size: 218, 183
+Hit
+  xy: 218, 613
+  size: 218, 183
+Hit
+  xy: 436, 613
+  size: 218, 183
+Hit
+  xy: 654, 613
+  size: 218, 183
+Hit
+  xy: 872, 613
+  size: 218, 183
+Hit
+  xy: 1090, 613
+  size: 218, 183
+Hit
+  xy: 1308, 613
+  size: 218, 183
+Hit
+  xy: 1526, 613
+  size: 218, 183
+Death
+  xy: 0, 796
+  size: 218, 183
+Death
+  xy: 218, 796
+  size: 218, 183
+Death
+  xy: 436, 796
+  size: 218, 183
+Death
+  xy: 654, 796
+  size: 218, 183
+Death
+  xy: 872, 796
+  size: 218, 183
+Death
+  xy: 1090, 796
+  size: 218, 183
+Death
+  xy: 1308, 796
+  size: 218, 183
+Death
+  xy: 1526, 796
+  size: 218, 183
+Death
+  xy: 1744, 796
+  size: 218, 183
+Death
+  xy: 1962, 796
+  size: 218, 183
+Death
+  xy: 2180, 796
+  size: 218, 183
+Death
+  xy: 2398, 796
+  size: 218, 183
+Death
+  xy: 2616, 796
+  size: 218, 183
+Death
+  xy: 2834, 796
+  size: 218, 183
+Death
+  xy: 3052, 796
+  size: 218, 183
+Death
+  xy: 3270, 796
+  size: 218, 183
+Death
+  xy: 3488, 796
+  size: 218, 183
+Death
+  xy: 3706, 796
+  size: 218, 183
+Death
+  xy: 3924, 796
+  size: 218, 183
+Death
+  xy: 4142, 796
+  size: 218, 183
+Wake
+  xy: 0, 979
+  size: 218, 183
+Wake
+  xy: 218, 979
+  size: 218, 183
+Wake
+  xy: 436, 979
+  size: 218, 183
+Wake
+  xy: 654, 979
+  size: 218, 183
+Wake
+  xy: 872, 979
+  size: 218, 183
+Wake
+  xy: 1090, 979
+  size: 218, 183
+Wake
+  xy: 1308, 979
+  size: 218, 183
+Wake
+  xy: 1526, 979
+  size: 218, 183
+Wake
+  xy: 1744, 979
+  size: 218, 183
+Wake
+  xy: 1962, 979
+  size: 218, 183
+IdleUp
+  xy: 0, 1162
+  size: 218, 183
+IdleUp
+  xy: 218, 1162
+  size: 218, 183
+IdleUp
+  xy: 436, 1162
+  size: 218, 183
+IdleUp
+  xy: 654, 1162
+  size: 218, 183
+IdleUp
+  xy: 872, 1162
+  size: 218, 183
+IdleUp
+  xy: 1090, 1162
+  size: 218, 183
+IdleUp
+  xy: 1308, 1162
+  size: 218, 183
+IdleUp
+  xy: 1526, 1162
+  size: 218, 183
+IdleUp
+  xy: 1744, 1162
+  size: 218, 183
+IdleUp
+  xy: 1962, 1162
+  size: 218, 183
+IdleDown
+  xy: 0, 1345
+  size: 218, 183
+IdleDown
+  xy: 218, 1345
+  size: 218, 183
+IdleDown
+  xy: 436, 1345
+  size: 218, 183
+IdleDown
+  xy: 654, 1345
+  size: 218, 183
+IdleDown
+  xy: 872, 1345
+  size: 218, 183
+IdleDown
+  xy: 1090, 1345
+  size: 218, 183
+IdleDown
+  xy: 1308, 1345
+  size: 218, 183
+IdleDown
+  xy: 1526, 1345
+  size: 218, 183
+IdleDown
+  xy: 1744, 1345
+  size: 218, 183
+IdleDown
+  xy: 1962, 1345
+  size: 218, 183
+WalkUp
+  xy: 0, 1528
+  size: 218, 183
+WalkUp
+  xy: 218, 1528
+  size: 218, 183
+WalkUp
+  xy: 436, 1528
+  size: 218, 183
+WalkUp
+  xy: 654, 1528
+  size: 218, 183
+WalkUp
+  xy: 872, 1528
+  size: 218, 183
+WalkUp
+  xy: 1090, 1528
+  size: 218, 183
+WalkDown
+  xy: 0, 1711
+  size: 218, 183
+WalkDown
+  xy: 218, 1711
+  size: 218, 183
+WalkDown
+  xy: 436, 1711
+  size: 218, 183
+WalkDown
+  xy: 654, 1711
+  size: 218, 183
+WalkDown
+  xy: 872, 1711
+  size: 218, 183
+WalkDown
+  xy: 1090, 1711
+  size: 218, 183

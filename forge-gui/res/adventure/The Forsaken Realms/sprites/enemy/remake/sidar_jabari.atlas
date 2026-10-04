@@ -1,0 +1,257 @@
+sidar_jabari.png
+size: 1624,954
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 116, 89
+Idle
+  xy: 116, 64
+  size: 116, 89
+Idle
+  xy: 232, 64
+  size: 116, 89
+Idle
+  xy: 348, 64
+  size: 116, 89
+Idle
+  xy: 464, 64
+  size: 116, 89
+Idle
+  xy: 580, 64
+  size: 116, 89
+Idle
+  xy: 696, 64
+  size: 116, 89
+Idle
+  xy: 812, 64
+  size: 116, 89
+Idle
+  xy: 928, 64
+  size: 116, 89
+Idle
+  xy: 1044, 64
+  size: 116, 89
+Walk
+  xy: 0, 153
+  size: 116, 89
+Walk
+  xy: 116, 153
+  size: 116, 89
+Walk
+  xy: 232, 153
+  size: 116, 89
+Walk
+  xy: 348, 153
+  size: 116, 89
+Walk
+  xy: 464, 153
+  size: 116, 89
+Walk
+  xy: 580, 153
+  size: 116, 89
+Attack
+  xy: 0, 242
+  size: 116, 89
+Attack
+  xy: 116, 242
+  size: 116, 89
+Attack
+  xy: 232, 242
+  size: 116, 89
+Attack
+  xy: 348, 242
+  size: 116, 89
+Attack
+  xy: 464, 242
+  size: 116, 89
+Attack
+  xy: 580, 242
+  size: 116, 89
+Attack
+  xy: 696, 242
+  size: 116, 89
+Hit
+  xy: 0, 331
+  size: 116, 89
+Hit
+  xy: 116, 331
+  size: 116, 89
+Hit
+  xy: 232, 331
+  size: 116, 89
+Hit
+  xy: 348, 331
+  size: 116, 89
+Hit
+  xy: 464, 331
+  size: 116, 89
+Hit
+  xy: 580, 331
+  size: 116, 89
+Death
+  xy: 0, 420
+  size: 116, 89
+Death
+  xy: 116, 420
+  size: 116, 89
+Death
+  xy: 232, 420
+  size: 116, 89
+Death
+  xy: 348, 420
+  size: 116, 89
+Death
+  xy: 464, 420
+  size: 116, 89
+Death
+  xy: 580, 420
+  size: 116, 89
+Death
+  xy: 696, 420
+  size: 116, 89
+Death
+  xy: 812, 420
+  size: 116, 89
+Death
+  xy: 928, 420
+  size: 116, 89
+Death
+  xy: 1044, 420
+  size: 116, 89
+Death
+  xy: 1160, 420
+  size: 116, 89
+Death
+  xy: 1276, 420
+  size: 116, 89
+Death
+  xy: 1392, 420
+  size: 116, 89
+Death
+  xy: 1508, 420
+  size: 116, 89
+Wake
+  xy: 0, 509
+  size: 116, 89
+Wake
+  xy: 116, 509
+  size: 116, 89
+Wake
+  xy: 232, 509
+  size: 116, 89
+Wake
+  xy: 348, 509
+  size: 116, 89
+Wake
+  xy: 464, 509
+  size: 116, 89
+Wake
+  xy: 580, 509
+  size: 116, 89
+Wake
+  xy: 696, 509
+  size: 116, 89
+Wake
+  xy: 812, 509
+  size: 116, 89
+IdleUp
+  xy: 0, 598
+  size: 116, 89
+IdleUp
+  xy: 116, 598
+  size: 116, 89
+IdleUp
+  xy: 232, 598
+  size: 116, 89
+IdleUp
+  xy: 348, 598
+  size: 116, 89
+IdleUp
+  xy: 464, 598
+  size: 116, 89
+IdleUp
+  xy: 580, 598
+  size: 116, 89
+IdleUp
+  xy: 696, 598
+  size: 116, 89
+IdleUp
+  xy: 812, 598
+  size: 116, 89
+IdleUp
+  xy: 928, 598
+  size: 116, 89
+IdleUp
+  xy: 1044, 598
+  size: 116, 89
+IdleDown
+  xy: 0, 687
+  size: 116, 89
+IdleDown
+  xy: 116, 687
+  size: 116, 89
+IdleDown
+  xy: 232, 687
+  size: 116, 89
+IdleDown
+  xy: 348, 687
+  size: 116, 89
+IdleDown
+  xy: 464, 687
+  size: 116, 89
+IdleDown
+  xy: 580, 687
+  size: 116, 89
+IdleDown
+  xy: 696, 687
+  size: 116, 89
+IdleDown
+  xy: 812, 687
+  size: 116, 89
+IdleDown
+  xy: 928, 687
+  size: 116, 89
+IdleDown
+  xy: 1044, 687
+  size: 116, 89
+WalkUp
+  xy: 0, 776
+  size: 116, 89
+WalkUp
+  xy: 116, 776
+  size: 116, 89
+WalkUp
+  xy: 232, 776
+  size: 116, 89
+WalkUp
+  xy: 348, 776
+  size: 116, 89
+WalkUp
+  xy: 464, 776
+  size: 116, 89
+WalkUp
+  xy: 580, 776
+  size: 116, 89
+WalkDown
+  xy: 0, 865
+  size: 116, 89
+WalkDown
+  xy: 116, 865
+  size: 116, 89
+WalkDown
+  xy: 232, 865
+  size: 116, 89
+WalkDown
+  xy: 348, 865
+  size: 116, 89
+WalkDown
+  xy: 464, 865
+  size: 116, 89
+WalkDown
+  xy: 580, 865
+  size: 116, 89

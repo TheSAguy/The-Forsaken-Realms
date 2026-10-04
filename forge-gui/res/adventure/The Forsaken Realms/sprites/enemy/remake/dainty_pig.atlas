@@ -1,0 +1,254 @@
+dainty_pig.png
+size: 980,784
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 72
+Idle
+  xy: 70, 64
+  size: 70, 72
+Idle
+  xy: 140, 64
+  size: 70, 72
+Idle
+  xy: 210, 64
+  size: 70, 72
+Idle
+  xy: 280, 64
+  size: 70, 72
+Idle
+  xy: 350, 64
+  size: 70, 72
+Idle
+  xy: 420, 64
+  size: 70, 72
+Idle
+  xy: 490, 64
+  size: 70, 72
+Idle
+  xy: 560, 64
+  size: 70, 72
+Idle
+  xy: 630, 64
+  size: 70, 72
+Walk
+  xy: 0, 136
+  size: 70, 72
+Walk
+  xy: 70, 136
+  size: 70, 72
+Walk
+  xy: 140, 136
+  size: 70, 72
+Walk
+  xy: 210, 136
+  size: 70, 72
+Walk
+  xy: 280, 136
+  size: 70, 72
+Walk
+  xy: 350, 136
+  size: 70, 72
+Attack
+  xy: 0, 208
+  size: 70, 72
+Attack
+  xy: 70, 208
+  size: 70, 72
+Attack
+  xy: 140, 208
+  size: 70, 72
+Attack
+  xy: 210, 208
+  size: 70, 72
+Attack
+  xy: 280, 208
+  size: 70, 72
+Attack
+  xy: 350, 208
+  size: 70, 72
+Attack
+  xy: 420, 208
+  size: 70, 72
+Attack
+  xy: 490, 208
+  size: 70, 72
+Hit
+  xy: 0, 280
+  size: 70, 72
+Hit
+  xy: 70, 280
+  size: 70, 72
+Hit
+  xy: 140, 280
+  size: 70, 72
+Hit
+  xy: 210, 280
+  size: 70, 72
+Hit
+  xy: 280, 280
+  size: 70, 72
+Death
+  xy: 0, 352
+  size: 70, 72
+Death
+  xy: 70, 352
+  size: 70, 72
+Death
+  xy: 140, 352
+  size: 70, 72
+Death
+  xy: 210, 352
+  size: 70, 72
+Death
+  xy: 280, 352
+  size: 70, 72
+Death
+  xy: 350, 352
+  size: 70, 72
+Death
+  xy: 420, 352
+  size: 70, 72
+Death
+  xy: 490, 352
+  size: 70, 72
+Death
+  xy: 560, 352
+  size: 70, 72
+Death
+  xy: 630, 352
+  size: 70, 72
+Death
+  xy: 700, 352
+  size: 70, 72
+Death
+  xy: 770, 352
+  size: 70, 72
+Death
+  xy: 840, 352
+  size: 70, 72
+Death
+  xy: 910, 352
+  size: 70, 72
+Wake
+  xy: 0, 424
+  size: 70, 72
+Wake
+  xy: 70, 424
+  size: 70, 72
+Wake
+  xy: 140, 424
+  size: 70, 72
+Wake
+  xy: 210, 424
+  size: 70, 72
+Wake
+  xy: 280, 424
+  size: 70, 72
+Wake
+  xy: 350, 424
+  size: 70, 72
+Wake
+  xy: 420, 424
+  size: 70, 72
+IdleUp
+  xy: 0, 496
+  size: 70, 72
+IdleUp
+  xy: 70, 496
+  size: 70, 72
+IdleUp
+  xy: 140, 496
+  size: 70, 72
+IdleUp
+  xy: 210, 496
+  size: 70, 72
+IdleUp
+  xy: 280, 496
+  size: 70, 72
+IdleUp
+  xy: 350, 496
+  size: 70, 72
+IdleUp
+  xy: 420, 496
+  size: 70, 72
+IdleUp
+  xy: 490, 496
+  size: 70, 72
+IdleUp
+  xy: 560, 496
+  size: 70, 72
+IdleUp
+  xy: 630, 496
+  size: 70, 72
+IdleDown
+  xy: 0, 568
+  size: 70, 72
+IdleDown
+  xy: 70, 568
+  size: 70, 72
+IdleDown
+  xy: 140, 568
+  size: 70, 72
+IdleDown
+  xy: 210, 568
+  size: 70, 72
+IdleDown
+  xy: 280, 568
+  size: 70, 72
+IdleDown
+  xy: 350, 568
+  size: 70, 72
+IdleDown
+  xy: 420, 568
+  size: 70, 72
+IdleDown
+  xy: 490, 568
+  size: 70, 72
+IdleDown
+  xy: 560, 568
+  size: 70, 72
+IdleDown
+  xy: 630, 568
+  size: 70, 72
+WalkUp
+  xy: 0, 640
+  size: 70, 72
+WalkUp
+  xy: 70, 640
+  size: 70, 72
+WalkUp
+  xy: 140, 640
+  size: 70, 72
+WalkUp
+  xy: 210, 640
+  size: 70, 72
+WalkUp
+  xy: 280, 640
+  size: 70, 72
+WalkUp
+  xy: 350, 640
+  size: 70, 72
+WalkDown
+  xy: 0, 712
+  size: 70, 72
+WalkDown
+  xy: 70, 712
+  size: 70, 72
+WalkDown
+  xy: 140, 712
+  size: 70, 72
+WalkDown
+  xy: 210, 712
+  size: 70, 72
+WalkDown
+  xy: 280, 712
+  size: 70, 72
+WalkDown
+  xy: 350, 712
+  size: 70, 72

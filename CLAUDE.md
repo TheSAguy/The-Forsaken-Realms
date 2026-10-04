@@ -63,6 +63,13 @@ Dungeon Map 3 of 24 (12.5%, was 1 of 4) beside Mad Staff/Gold Boots/Disrupting S
 Victor (the vampire Archmage) joins the Player Capitol's Level-2 Challenging pool (player_capital.tmx `arenaChallenge`).
 Round 430 is the peer's (cloud batch 4, pending the user's review). Not yet packaged live.
 
+## STATE 2026-10-04 (round 430): **LOCAL + UNRELEASED** - cloud batch 4 of the creature-generator remakes, creatures
+only: 20 groups, 31 enemies (giant flies, tyrannosaurs, raptors, jellyfish, crabs, purple spiders, a grey griffin, rats,
+parrots, boar, pig, crocodile, hermit crab, panda, hedgehog, ibis, death slime, two dragons, a lizard), reworked locally
+from the user's references (pig, boar, rats, panda, tyrannosaurs, flies); the Ooze Boss re-exported at full density.
+Data only (enemies.json, `sprites/enemy/remake/`; procedural-pixel-creatures `cloud/batch-04`). Now 206 remake atlases.
+Not packaged yet; not seen in play.
+
 ## STATE 2026-10-04 (round 429): **LOCAL + UNRELEASED** - notoriety Walls 0/1, 1/2, 2/4, 3/6, and a second Wall from
 25 wins in a row (3/6 + 0/1 up to 3/6 + 3/6 at 40+, the cap). `TuningData.notorietyLevelsPerWall` (4) +
 `notorietyWallIndexes`; 8-entry `notorietyWalls*` lists; `AdventurePlayer.notorietyWallsFor` returns a list. 24 token

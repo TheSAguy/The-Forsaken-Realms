@@ -1,0 +1,245 @@
+crocodile.png
+size: 1092,584
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 52
+Idle
+  xy: 84, 64
+  size: 84, 52
+Idle
+  xy: 168, 64
+  size: 84, 52
+Idle
+  xy: 252, 64
+  size: 84, 52
+Idle
+  xy: 336, 64
+  size: 84, 52
+Idle
+  xy: 420, 64
+  size: 84, 52
+Idle
+  xy: 504, 64
+  size: 84, 52
+Idle
+  xy: 588, 64
+  size: 84, 52
+Idle
+  xy: 672, 64
+  size: 84, 52
+Idle
+  xy: 756, 64
+  size: 84, 52
+Walk
+  xy: 0, 116
+  size: 84, 52
+Walk
+  xy: 84, 116
+  size: 84, 52
+Walk
+  xy: 168, 116
+  size: 84, 52
+Walk
+  xy: 252, 116
+  size: 84, 52
+Walk
+  xy: 336, 116
+  size: 84, 52
+Walk
+  xy: 420, 116
+  size: 84, 52
+Attack
+  xy: 0, 168
+  size: 84, 52
+Attack
+  xy: 84, 168
+  size: 84, 52
+Attack
+  xy: 168, 168
+  size: 84, 52
+Attack
+  xy: 252, 168
+  size: 84, 52
+Attack
+  xy: 336, 168
+  size: 84, 52
+Attack
+  xy: 420, 168
+  size: 84, 52
+Hit
+  xy: 0, 220
+  size: 84, 52
+Hit
+  xy: 84, 220
+  size: 84, 52
+Hit
+  xy: 168, 220
+  size: 84, 52
+Hit
+  xy: 252, 220
+  size: 84, 52
+Hit
+  xy: 336, 220
+  size: 84, 52
+Death
+  xy: 0, 272
+  size: 84, 52
+Death
+  xy: 84, 272
+  size: 84, 52
+Death
+  xy: 168, 272
+  size: 84, 52
+Death
+  xy: 252, 272
+  size: 84, 52
+Death
+  xy: 336, 272
+  size: 84, 52
+Death
+  xy: 420, 272
+  size: 84, 52
+Death
+  xy: 504, 272
+  size: 84, 52
+Death
+  xy: 588, 272
+  size: 84, 52
+Death
+  xy: 672, 272
+  size: 84, 52
+Death
+  xy: 756, 272
+  size: 84, 52
+Death
+  xy: 840, 272
+  size: 84, 52
+Death
+  xy: 924, 272
+  size: 84, 52
+Death
+  xy: 1008, 272
+  size: 84, 52
+Wake
+  xy: 0, 324
+  size: 84, 52
+Wake
+  xy: 84, 324
+  size: 84, 52
+Wake
+  xy: 168, 324
+  size: 84, 52
+Wake
+  xy: 252, 324
+  size: 84, 52
+Wake
+  xy: 336, 324
+  size: 84, 52
+Wake
+  xy: 420, 324
+  size: 84, 52
+Wake
+  xy: 504, 324
+  size: 84, 52
+IdleUp
+  xy: 0, 376
+  size: 84, 52
+IdleUp
+  xy: 84, 376
+  size: 84, 52
+IdleUp
+  xy: 168, 376
+  size: 84, 52
+IdleUp
+  xy: 252, 376
+  size: 84, 52
+IdleUp
+  xy: 336, 376
+  size: 84, 52
+IdleUp
+  xy: 420, 376
+  size: 84, 52
+IdleUp
+  xy: 504, 376
+  size: 84, 52
+IdleUp
+  xy: 588, 376
+  size: 84, 52
+IdleUp
+  xy: 672, 376
+  size: 84, 52
+IdleUp
+  xy: 756, 376
+  size: 84, 52
+IdleDown
+  xy: 0, 428
+  size: 84, 52
+IdleDown
+  xy: 84, 428
+  size: 84, 52
+IdleDown
+  xy: 168, 428
+  size: 84, 52
+IdleDown
+  xy: 252, 428
+  size: 84, 52
+IdleDown
+  xy: 336, 428
+  size: 84, 52
+IdleDown
+  xy: 420, 428
+  size: 84, 52
+IdleDown
+  xy: 504, 428
+  size: 84, 52
+IdleDown
+  xy: 588, 428
+  size: 84, 52
+IdleDown
+  xy: 672, 428
+  size: 84, 52
+IdleDown
+  xy: 756, 428
+  size: 84, 52
+WalkUp
+  xy: 0, 480
+  size: 84, 52
+WalkUp
+  xy: 84, 480
+  size: 84, 52
+WalkUp
+  xy: 168, 480
+  size: 84, 52
+WalkUp
+  xy: 252, 480
+  size: 84, 52
+WalkUp
+  xy: 336, 480
+  size: 84, 52
+WalkUp
+  xy: 420, 480
+  size: 84, 52
+WalkDown
+  xy: 0, 532
+  size: 84, 52
+WalkDown
+  xy: 84, 532
+  size: 84, 52
+WalkDown
+  xy: 168, 532
+  size: 84, 52
+WalkDown
+  xy: 252, 532
+  size: 84, 52
+WalkDown
+  xy: 336, 532
+  size: 84, 52
+WalkDown
+  xy: 420, 532
+  size: 84, 52

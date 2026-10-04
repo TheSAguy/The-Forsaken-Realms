@@ -1,5 +1,5 @@
 experiment_kraj.png
-size: 1400,994
+size: 1400,1004
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,232 +8,232 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 100, 93
+  size: 100, 94
 Idle
   xy: 100, 64
-  size: 100, 93
+  size: 100, 94
 Idle
   xy: 200, 64
-  size: 100, 93
+  size: 100, 94
 Idle
   xy: 300, 64
-  size: 100, 93
+  size: 100, 94
 Idle
   xy: 400, 64
-  size: 100, 93
+  size: 100, 94
 Idle
   xy: 500, 64
-  size: 100, 93
+  size: 100, 94
 Idle
   xy: 600, 64
-  size: 100, 93
+  size: 100, 94
 Idle
   xy: 700, 64
-  size: 100, 93
+  size: 100, 94
 Idle
   xy: 800, 64
-  size: 100, 93
+  size: 100, 94
 Idle
   xy: 900, 64
-  size: 100, 93
+  size: 100, 94
 Walk
-  xy: 0, 157
-  size: 100, 93
+  xy: 0, 158
+  size: 100, 94
 Walk
-  xy: 100, 157
-  size: 100, 93
+  xy: 100, 158
+  size: 100, 94
 Walk
-  xy: 200, 157
-  size: 100, 93
+  xy: 200, 158
+  size: 100, 94
 Walk
-  xy: 300, 157
-  size: 100, 93
+  xy: 300, 158
+  size: 100, 94
 Attack
-  xy: 0, 250
-  size: 100, 93
+  xy: 0, 252
+  size: 100, 94
 Attack
-  xy: 100, 250
-  size: 100, 93
+  xy: 100, 252
+  size: 100, 94
 Attack
-  xy: 200, 250
-  size: 100, 93
+  xy: 200, 252
+  size: 100, 94
 Attack
-  xy: 300, 250
-  size: 100, 93
+  xy: 300, 252
+  size: 100, 94
 Attack
-  xy: 400, 250
-  size: 100, 93
+  xy: 400, 252
+  size: 100, 94
 Attack
-  xy: 500, 250
-  size: 100, 93
+  xy: 500, 252
+  size: 100, 94
 Attack
-  xy: 600, 250
-  size: 100, 93
+  xy: 600, 252
+  size: 100, 94
 Attack
-  xy: 700, 250
-  size: 100, 93
+  xy: 700, 252
+  size: 100, 94
 Attack
-  xy: 800, 250
-  size: 100, 93
+  xy: 800, 252
+  size: 100, 94
 Hit
-  xy: 0, 343
-  size: 100, 93
+  xy: 0, 346
+  size: 100, 94
 Hit
-  xy: 100, 343
-  size: 100, 93
+  xy: 100, 346
+  size: 100, 94
 Hit
-  xy: 200, 343
-  size: 100, 93
+  xy: 200, 346
+  size: 100, 94
 Hit
-  xy: 300, 343
-  size: 100, 93
+  xy: 300, 346
+  size: 100, 94
 Hit
-  xy: 400, 343
-  size: 100, 93
+  xy: 400, 346
+  size: 100, 94
 Death
-  xy: 0, 436
-  size: 100, 93
+  xy: 0, 440
+  size: 100, 94
 Death
-  xy: 100, 436
-  size: 100, 93
+  xy: 100, 440
+  size: 100, 94
 Death
-  xy: 200, 436
-  size: 100, 93
+  xy: 200, 440
+  size: 100, 94
 Death
-  xy: 300, 436
-  size: 100, 93
+  xy: 300, 440
+  size: 100, 94
 Death
-  xy: 400, 436
-  size: 100, 93
+  xy: 400, 440
+  size: 100, 94
 Death
-  xy: 500, 436
-  size: 100, 93
+  xy: 500, 440
+  size: 100, 94
 Death
-  xy: 600, 436
-  size: 100, 93
+  xy: 600, 440
+  size: 100, 94
 Death
-  xy: 700, 436
-  size: 100, 93
+  xy: 700, 440
+  size: 100, 94
 Death
-  xy: 800, 436
-  size: 100, 93
+  xy: 800, 440
+  size: 100, 94
 Death
-  xy: 900, 436
-  size: 100, 93
+  xy: 900, 440
+  size: 100, 94
 Death
-  xy: 1000, 436
-  size: 100, 93
+  xy: 1000, 440
+  size: 100, 94
 Death
-  xy: 1100, 436
-  size: 100, 93
+  xy: 1100, 440
+  size: 100, 94
 Death
-  xy: 1200, 436
-  size: 100, 93
+  xy: 1200, 440
+  size: 100, 94
 Death
-  xy: 1300, 436
-  size: 100, 93
+  xy: 1300, 440
+  size: 100, 94
 Wake
-  xy: 0, 529
-  size: 100, 93
+  xy: 0, 534
+  size: 100, 94
 Wake
-  xy: 100, 529
-  size: 100, 93
+  xy: 100, 534
+  size: 100, 94
 Wake
-  xy: 200, 529
-  size: 100, 93
+  xy: 200, 534
+  size: 100, 94
 Wake
-  xy: 300, 529
-  size: 100, 93
+  xy: 300, 534
+  size: 100, 94
 Wake
-  xy: 400, 529
-  size: 100, 93
+  xy: 400, 534
+  size: 100, 94
 Wake
-  xy: 500, 529
-  size: 100, 93
+  xy: 500, 534
+  size: 100, 94
 Wake
-  xy: 600, 529
-  size: 100, 93
+  xy: 600, 534
+  size: 100, 94
 IdleUp
-  xy: 0, 622
-  size: 100, 93
+  xy: 0, 628
+  size: 100, 94
 IdleUp
-  xy: 100, 622
-  size: 100, 93
+  xy: 100, 628
+  size: 100, 94
 IdleUp
-  xy: 200, 622
-  size: 100, 93
+  xy: 200, 628
+  size: 100, 94
 IdleUp
-  xy: 300, 622
-  size: 100, 93
+  xy: 300, 628
+  size: 100, 94
 IdleUp
-  xy: 400, 622
-  size: 100, 93
+  xy: 400, 628
+  size: 100, 94
 IdleUp
-  xy: 500, 622
-  size: 100, 93
+  xy: 500, 628
+  size: 100, 94
 IdleUp
-  xy: 600, 622
-  size: 100, 93
+  xy: 600, 628
+  size: 100, 94
 IdleUp
-  xy: 700, 622
-  size: 100, 93
+  xy: 700, 628
+  size: 100, 94
 IdleUp
-  xy: 800, 622
-  size: 100, 93
+  xy: 800, 628
+  size: 100, 94
 IdleUp
-  xy: 900, 622
-  size: 100, 93
+  xy: 900, 628
+  size: 100, 94
 IdleDown
-  xy: 0, 715
-  size: 100, 93
+  xy: 0, 722
+  size: 100, 94
 IdleDown
-  xy: 100, 715
-  size: 100, 93
+  xy: 100, 722
+  size: 100, 94
 IdleDown
-  xy: 200, 715
-  size: 100, 93
+  xy: 200, 722
+  size: 100, 94
 IdleDown
-  xy: 300, 715
-  size: 100, 93
+  xy: 300, 722
+  size: 100, 94
 IdleDown
-  xy: 400, 715
-  size: 100, 93
+  xy: 400, 722
+  size: 100, 94
 IdleDown
-  xy: 500, 715
-  size: 100, 93
+  xy: 500, 722
+  size: 100, 94
 IdleDown
-  xy: 600, 715
-  size: 100, 93
+  xy: 600, 722
+  size: 100, 94
 IdleDown
-  xy: 700, 715
-  size: 100, 93
+  xy: 700, 722
+  size: 100, 94
 IdleDown
-  xy: 800, 715
-  size: 100, 93
+  xy: 800, 722
+  size: 100, 94
 IdleDown
-  xy: 900, 715
-  size: 100, 93
+  xy: 900, 722
+  size: 100, 94
 WalkUp
-  xy: 0, 808
-  size: 100, 93
+  xy: 0, 816
+  size: 100, 94
 WalkUp
-  xy: 100, 808
-  size: 100, 93
+  xy: 100, 816
+  size: 100, 94
 WalkUp
-  xy: 200, 808
-  size: 100, 93
+  xy: 200, 816
+  size: 100, 94
 WalkUp
-  xy: 300, 808
-  size: 100, 93
+  xy: 300, 816
+  size: 100, 94
 WalkDown
-  xy: 0, 901
-  size: 100, 93
+  xy: 0, 910
+  size: 100, 94
 WalkDown
-  xy: 100, 901
-  size: 100, 93
+  xy: 100, 910
+  size: 100, 94
 WalkDown
-  xy: 200, 901
-  size: 100, 93
+  xy: 200, 910
+  size: 100, 94
 WalkDown
-  xy: 300, 901
-  size: 100, 93
+  xy: 300, 910
+  size: 100, 94

@@ -1,0 +1,263 @@
+the_locust_god.png
+size: 1440,874
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 81
+Idle
+  xy: 90, 64
+  size: 90, 81
+Idle
+  xy: 180, 64
+  size: 90, 81
+Idle
+  xy: 270, 64
+  size: 90, 81
+Idle
+  xy: 360, 64
+  size: 90, 81
+Idle
+  xy: 450, 64
+  size: 90, 81
+Idle
+  xy: 540, 64
+  size: 90, 81
+Idle
+  xy: 630, 64
+  size: 90, 81
+Idle
+  xy: 720, 64
+  size: 90, 81
+Idle
+  xy: 810, 64
+  size: 90, 81
+Walk
+  xy: 0, 145
+  size: 90, 81
+Walk
+  xy: 90, 145
+  size: 90, 81
+Walk
+  xy: 180, 145
+  size: 90, 81
+Walk
+  xy: 270, 145
+  size: 90, 81
+Walk
+  xy: 360, 145
+  size: 90, 81
+Walk
+  xy: 450, 145
+  size: 90, 81
+Attack
+  xy: 0, 226
+  size: 90, 81
+Attack
+  xy: 90, 226
+  size: 90, 81
+Attack
+  xy: 180, 226
+  size: 90, 81
+Attack
+  xy: 270, 226
+  size: 90, 81
+Attack
+  xy: 360, 226
+  size: 90, 81
+Attack
+  xy: 450, 226
+  size: 90, 81
+Attack
+  xy: 540, 226
+  size: 90, 81
+Hit
+  xy: 0, 307
+  size: 90, 81
+Hit
+  xy: 90, 307
+  size: 90, 81
+Hit
+  xy: 180, 307
+  size: 90, 81
+Hit
+  xy: 270, 307
+  size: 90, 81
+Hit
+  xy: 360, 307
+  size: 90, 81
+Hit
+  xy: 450, 307
+  size: 90, 81
+Death
+  xy: 0, 388
+  size: 90, 81
+Death
+  xy: 90, 388
+  size: 90, 81
+Death
+  xy: 180, 388
+  size: 90, 81
+Death
+  xy: 270, 388
+  size: 90, 81
+Death
+  xy: 360, 388
+  size: 90, 81
+Death
+  xy: 450, 388
+  size: 90, 81
+Death
+  xy: 540, 388
+  size: 90, 81
+Death
+  xy: 630, 388
+  size: 90, 81
+Death
+  xy: 720, 388
+  size: 90, 81
+Death
+  xy: 810, 388
+  size: 90, 81
+Death
+  xy: 900, 388
+  size: 90, 81
+Death
+  xy: 990, 388
+  size: 90, 81
+Death
+  xy: 1080, 388
+  size: 90, 81
+Death
+  xy: 1170, 388
+  size: 90, 81
+Death
+  xy: 1260, 388
+  size: 90, 81
+Death
+  xy: 1350, 388
+  size: 90, 81
+Wake
+  xy: 0, 469
+  size: 90, 81
+Wake
+  xy: 90, 469
+  size: 90, 81
+Wake
+  xy: 180, 469
+  size: 90, 81
+Wake
+  xy: 270, 469
+  size: 90, 81
+Wake
+  xy: 360, 469
+  size: 90, 81
+Wake
+  xy: 450, 469
+  size: 90, 81
+Wake
+  xy: 540, 469
+  size: 90, 81
+Wake
+  xy: 630, 469
+  size: 90, 81
+IdleUp
+  xy: 0, 550
+  size: 90, 81
+IdleUp
+  xy: 90, 550
+  size: 90, 81
+IdleUp
+  xy: 180, 550
+  size: 90, 81
+IdleUp
+  xy: 270, 550
+  size: 90, 81
+IdleUp
+  xy: 360, 550
+  size: 90, 81
+IdleUp
+  xy: 450, 550
+  size: 90, 81
+IdleUp
+  xy: 540, 550
+  size: 90, 81
+IdleUp
+  xy: 630, 550
+  size: 90, 81
+IdleUp
+  xy: 720, 550
+  size: 90, 81
+IdleUp
+  xy: 810, 550
+  size: 90, 81
+IdleDown
+  xy: 0, 631
+  size: 90, 81
+IdleDown
+  xy: 90, 631
+  size: 90, 81
+IdleDown
+  xy: 180, 631
+  size: 90, 81
+IdleDown
+  xy: 270, 631
+  size: 90, 81
+IdleDown
+  xy: 360, 631
+  size: 90, 81
+IdleDown
+  xy: 450, 631
+  size: 90, 81
+IdleDown
+  xy: 540, 631
+  size: 90, 81
+IdleDown
+  xy: 630, 631
+  size: 90, 81
+IdleDown
+  xy: 720, 631
+  size: 90, 81
+IdleDown
+  xy: 810, 631
+  size: 90, 81
+WalkUp
+  xy: 0, 712
+  size: 90, 81
+WalkUp
+  xy: 90, 712
+  size: 90, 81
+WalkUp
+  xy: 180, 712
+  size: 90, 81
+WalkUp
+  xy: 270, 712
+  size: 90, 81
+WalkUp
+  xy: 360, 712
+  size: 90, 81
+WalkUp
+  xy: 450, 712
+  size: 90, 81
+WalkDown
+  xy: 0, 793
+  size: 90, 81
+WalkDown
+  xy: 90, 793
+  size: 90, 81
+WalkDown
+  xy: 180, 793
+  size: 90, 81
+WalkDown
+  xy: 270, 793
+  size: 90, 81
+WalkDown
+  xy: 360, 793
+  size: 90, 81
+WalkDown
+  xy: 450, 793
+  size: 90, 81

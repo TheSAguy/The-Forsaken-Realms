@@ -1,0 +1,260 @@
+gahiji.png
+size: 1350,974
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 91
+Idle
+  xy: 90, 64
+  size: 90, 91
+Idle
+  xy: 180, 64
+  size: 90, 91
+Idle
+  xy: 270, 64
+  size: 90, 91
+Idle
+  xy: 360, 64
+  size: 90, 91
+Idle
+  xy: 450, 64
+  size: 90, 91
+Idle
+  xy: 540, 64
+  size: 90, 91
+Idle
+  xy: 630, 64
+  size: 90, 91
+Idle
+  xy: 720, 64
+  size: 90, 91
+Idle
+  xy: 810, 64
+  size: 90, 91
+Walk
+  xy: 0, 155
+  size: 90, 91
+Walk
+  xy: 90, 155
+  size: 90, 91
+Walk
+  xy: 180, 155
+  size: 90, 91
+Walk
+  xy: 270, 155
+  size: 90, 91
+Walk
+  xy: 360, 155
+  size: 90, 91
+Walk
+  xy: 450, 155
+  size: 90, 91
+Attack
+  xy: 0, 246
+  size: 90, 91
+Attack
+  xy: 90, 246
+  size: 90, 91
+Attack
+  xy: 180, 246
+  size: 90, 91
+Attack
+  xy: 270, 246
+  size: 90, 91
+Attack
+  xy: 360, 246
+  size: 90, 91
+Attack
+  xy: 450, 246
+  size: 90, 91
+Attack
+  xy: 540, 246
+  size: 90, 91
+Hit
+  xy: 0, 337
+  size: 90, 91
+Hit
+  xy: 90, 337
+  size: 90, 91
+Hit
+  xy: 180, 337
+  size: 90, 91
+Hit
+  xy: 270, 337
+  size: 90, 91
+Hit
+  xy: 360, 337
+  size: 90, 91
+Hit
+  xy: 450, 337
+  size: 90, 91
+Death
+  xy: 0, 428
+  size: 90, 91
+Death
+  xy: 90, 428
+  size: 90, 91
+Death
+  xy: 180, 428
+  size: 90, 91
+Death
+  xy: 270, 428
+  size: 90, 91
+Death
+  xy: 360, 428
+  size: 90, 91
+Death
+  xy: 450, 428
+  size: 90, 91
+Death
+  xy: 540, 428
+  size: 90, 91
+Death
+  xy: 630, 428
+  size: 90, 91
+Death
+  xy: 720, 428
+  size: 90, 91
+Death
+  xy: 810, 428
+  size: 90, 91
+Death
+  xy: 900, 428
+  size: 90, 91
+Death
+  xy: 990, 428
+  size: 90, 91
+Death
+  xy: 1080, 428
+  size: 90, 91
+Death
+  xy: 1170, 428
+  size: 90, 91
+Death
+  xy: 1260, 428
+  size: 90, 91
+Wake
+  xy: 0, 519
+  size: 90, 91
+Wake
+  xy: 90, 519
+  size: 90, 91
+Wake
+  xy: 180, 519
+  size: 90, 91
+Wake
+  xy: 270, 519
+  size: 90, 91
+Wake
+  xy: 360, 519
+  size: 90, 91
+Wake
+  xy: 450, 519
+  size: 90, 91
+Wake
+  xy: 540, 519
+  size: 90, 91
+Wake
+  xy: 630, 519
+  size: 90, 91
+IdleUp
+  xy: 0, 610
+  size: 90, 91
+IdleUp
+  xy: 90, 610
+  size: 90, 91
+IdleUp
+  xy: 180, 610
+  size: 90, 91
+IdleUp
+  xy: 270, 610
+  size: 90, 91
+IdleUp
+  xy: 360, 610
+  size: 90, 91
+IdleUp
+  xy: 450, 610
+  size: 90, 91
+IdleUp
+  xy: 540, 610
+  size: 90, 91
+IdleUp
+  xy: 630, 610
+  size: 90, 91
+IdleUp
+  xy: 720, 610
+  size: 90, 91
+IdleUp
+  xy: 810, 610
+  size: 90, 91
+IdleDown
+  xy: 0, 701
+  size: 90, 91
+IdleDown
+  xy: 90, 701
+  size: 90, 91
+IdleDown
+  xy: 180, 701
+  size: 90, 91
+IdleDown
+  xy: 270, 701
+  size: 90, 91
+IdleDown
+  xy: 360, 701
+  size: 90, 91
+IdleDown
+  xy: 450, 701
+  size: 90, 91
+IdleDown
+  xy: 540, 701
+  size: 90, 91
+IdleDown
+  xy: 630, 701
+  size: 90, 91
+IdleDown
+  xy: 720, 701
+  size: 90, 91
+IdleDown
+  xy: 810, 701
+  size: 90, 91
+WalkUp
+  xy: 0, 792
+  size: 90, 91
+WalkUp
+  xy: 90, 792
+  size: 90, 91
+WalkUp
+  xy: 180, 792
+  size: 90, 91
+WalkUp
+  xy: 270, 792
+  size: 90, 91
+WalkUp
+  xy: 360, 792
+  size: 90, 91
+WalkUp
+  xy: 450, 792
+  size: 90, 91
+WalkDown
+  xy: 0, 883
+  size: 90, 91
+WalkDown
+  xy: 90, 883
+  size: 90, 91
+WalkDown
+  xy: 180, 883
+  size: 90, 91
+WalkDown
+  xy: 270, 883
+  size: 90, 91
+WalkDown
+  xy: 360, 883
+  size: 90, 91
+WalkDown
+  xy: 450, 883
+  size: 90, 91

@@ -1,0 +1,248 @@
+zilortha.png
+size: 1008,834
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 77
+Idle
+  xy: 72, 64
+  size: 72, 77
+Idle
+  xy: 144, 64
+  size: 72, 77
+Idle
+  xy: 216, 64
+  size: 72, 77
+Idle
+  xy: 288, 64
+  size: 72, 77
+Idle
+  xy: 360, 64
+  size: 72, 77
+Idle
+  xy: 432, 64
+  size: 72, 77
+Idle
+  xy: 504, 64
+  size: 72, 77
+Idle
+  xy: 576, 64
+  size: 72, 77
+Idle
+  xy: 648, 64
+  size: 72, 77
+Walk
+  xy: 0, 141
+  size: 72, 77
+Walk
+  xy: 72, 141
+  size: 72, 77
+Walk
+  xy: 144, 141
+  size: 72, 77
+Walk
+  xy: 216, 141
+  size: 72, 77
+Walk
+  xy: 288, 141
+  size: 72, 77
+Walk
+  xy: 360, 141
+  size: 72, 77
+Attack
+  xy: 0, 218
+  size: 72, 77
+Attack
+  xy: 72, 218
+  size: 72, 77
+Attack
+  xy: 144, 218
+  size: 72, 77
+Attack
+  xy: 216, 218
+  size: 72, 77
+Attack
+  xy: 288, 218
+  size: 72, 77
+Attack
+  xy: 360, 218
+  size: 72, 77
+Hit
+  xy: 0, 295
+  size: 72, 77
+Hit
+  xy: 72, 295
+  size: 72, 77
+Hit
+  xy: 144, 295
+  size: 72, 77
+Hit
+  xy: 216, 295
+  size: 72, 77
+Hit
+  xy: 288, 295
+  size: 72, 77
+Death
+  xy: 0, 372
+  size: 72, 77
+Death
+  xy: 72, 372
+  size: 72, 77
+Death
+  xy: 144, 372
+  size: 72, 77
+Death
+  xy: 216, 372
+  size: 72, 77
+Death
+  xy: 288, 372
+  size: 72, 77
+Death
+  xy: 360, 372
+  size: 72, 77
+Death
+  xy: 432, 372
+  size: 72, 77
+Death
+  xy: 504, 372
+  size: 72, 77
+Death
+  xy: 576, 372
+  size: 72, 77
+Death
+  xy: 648, 372
+  size: 72, 77
+Death
+  xy: 720, 372
+  size: 72, 77
+Death
+  xy: 792, 372
+  size: 72, 77
+Death
+  xy: 864, 372
+  size: 72, 77
+Death
+  xy: 936, 372
+  size: 72, 77
+Wake
+  xy: 0, 449
+  size: 72, 77
+Wake
+  xy: 72, 449
+  size: 72, 77
+Wake
+  xy: 144, 449
+  size: 72, 77
+Wake
+  xy: 216, 449
+  size: 72, 77
+Wake
+  xy: 288, 449
+  size: 72, 77
+Wake
+  xy: 360, 449
+  size: 72, 77
+Wake
+  xy: 432, 449
+  size: 72, 77
+IdleUp
+  xy: 0, 526
+  size: 72, 77
+IdleUp
+  xy: 72, 526
+  size: 72, 77
+IdleUp
+  xy: 144, 526
+  size: 72, 77
+IdleUp
+  xy: 216, 526
+  size: 72, 77
+IdleUp
+  xy: 288, 526
+  size: 72, 77
+IdleUp
+  xy: 360, 526
+  size: 72, 77
+IdleUp
+  xy: 432, 526
+  size: 72, 77
+IdleUp
+  xy: 504, 526
+  size: 72, 77
+IdleUp
+  xy: 576, 526
+  size: 72, 77
+IdleUp
+  xy: 648, 526
+  size: 72, 77
+IdleDown
+  xy: 0, 603
+  size: 72, 77
+IdleDown
+  xy: 72, 603
+  size: 72, 77
+IdleDown
+  xy: 144, 603
+  size: 72, 77
+IdleDown
+  xy: 216, 603
+  size: 72, 77
+IdleDown
+  xy: 288, 603
+  size: 72, 77
+IdleDown
+  xy: 360, 603
+  size: 72, 77
+IdleDown
+  xy: 432, 603
+  size: 72, 77
+IdleDown
+  xy: 504, 603
+  size: 72, 77
+IdleDown
+  xy: 576, 603
+  size: 72, 77
+IdleDown
+  xy: 648, 603
+  size: 72, 77
+WalkUp
+  xy: 0, 680
+  size: 72, 77
+WalkUp
+  xy: 72, 680
+  size: 72, 77
+WalkUp
+  xy: 144, 680
+  size: 72, 77
+WalkUp
+  xy: 216, 680
+  size: 72, 77
+WalkUp
+  xy: 288, 680
+  size: 72, 77
+WalkUp
+  xy: 360, 680
+  size: 72, 77
+WalkDown
+  xy: 0, 757
+  size: 72, 77
+WalkDown
+  xy: 72, 757
+  size: 72, 77
+WalkDown
+  xy: 144, 757
+  size: 72, 77
+WalkDown
+  xy: 216, 757
+  size: 72, 77
+WalkDown
+  xy: 288, 757
+  size: 72, 77
+WalkDown
+  xy: 360, 757
+  size: 72, 77

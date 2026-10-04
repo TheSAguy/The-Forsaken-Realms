@@ -14285,6 +14285,46 @@ competitors in Player Cap." Data only.
   enemies.json (Mythic, decks/legends/victor_vampire.dck); `validate_plane_data.py` adds no finding. Not agent-tested
   (no code changed; the pool pick is `WorldData.getEnemy(name)`, the same lookup his overworld spawns use).
 
+## Round 430: twenty more creature groups from the generator (cloud batch 4), 31 enemies (2026-10-04)
+
+The fourth cloud batch (creatures only; procedural-pixel-creatures PR #4), reviewed and partly reworked here. The user
+on the rework: "The Pig and Mouse/Rat needs some work. The Boar is basically a pig with tusks, so same", "The Fumulus
+and Gishath needs a little work. I think it needs a bigger head. Think T-Rex", then "All good, except for the fly",
+and after the second fly: "yes install all as round 430".
+
+- **The groups** (base first):
+  - Giant Fly (Giant Fly, The Locust God, Fumulus): a near-black fly with bright red faceted eyes and clear wings that
+    rest in a low V and buzz open on the walk; Fumulus grey with pale horns like its card.
+  - Dinosaur (Dinosaur, Gishath, Gahiji): tyrannosaurs with a big boxy head, the chest raised and a heavy tail; Gishath
+    grey-green with gold spikes. Dinosaur Elite (Dinosaur Elite, Zilortha): a raptor, and Zilortha upright with the
+    tyrannosaur's head.
+  - Jellyfish (Jellyfish, Mm'menon); Crab (Crab, Charix); Giant Spider (Giant Spider, Ishkanah); Grey griffin (Bird,
+    Sidar Jabari).
+  - Arthur (Arthur, Mabel): rats with a long low body and pink ears, nose, paws and tail. Parrot (Parrot, Zinnia).
+  - Mad Boar (a pig's build with bristles and big tusks), Dainty Pig (a pink barrel body, upright ears, a curly tail),
+    Crocodile, Hermit Crab (a cream spiral shell), Giant Panda, Hedgehog, Ibis, Death Slime (three red eyes), Young Red
+    Dragon, Elder White Dragon, Green Beast (a striped lizard).
+- **New generator options** (opt-in): bigger tusks, bare pink skin, a giant head and a raised chest for theropods,
+  faceted fly eyes, resting fly wings.
+- **Colors**: seven legends set by hand after checking the art (The Locust God, Fumulus, Gishath, Gahiji, Zinnia,
+  Mabel, Sidar Jabari). The card lookup skipped The Locust God's dark Masterpiece printing only after a fix.
+- **Bosses at full density**: spiders and beetles can now grow to 3 times and slimes to 4.4 times, so Ishkanah (116 px)
+  and the re-exported Ooze Boss (137 px) draw with the same fine pixels as the other remakes, at the same drawn size.
+  Lathliss stays as in round 428 (103 px of 133): at a larger growth one of its animations passes the exporter's frame
+  limit.
+- **Data only:**
+  - `sprites/enemy/remake/`: 62 new files (31 enemies), 14 re-exported (the Ooze Boss's slime group).
+  - `world/enemies.json`: 31 sprites and 38 scales; no other field changed.
+  - Generator: procedural-pixel-creatures `cloud/batch-04` (the cloud's batch and the local review commits).
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves; 36 scales changed.
+  - `sprite_artifact_audit.py --only remake` (206 atlases, 17092 frames) flags 249 frames, all shadows, checked by eye:
+    the 67 new ones are the parrots' flight shadows and the head shadows in the front views of the tyrannosaurs and
+    the young red dragon (as Brokkos's and the dog's in earlier rounds).
+- Not yet seen in play. Console (F9): `spawn enemy "Giant Fly"`, `spawn enemy Dinosaur`, `spawn enemy "Dainty Pig"`,
+  `spawn enemy Arthur`, `spawn enemy "Giant Panda"`.
+
 ## Round 429: notoriety Walls hit back (0/1, 1/2, 2/4, 3/6), and a second Wall from 25 wins in a row (2026-10-04)
 
 The user: "Let's have level 2, be 1/2, lvl 3: 2/4 and level 4: 3/6. Also, let's have it open ended, so at 25

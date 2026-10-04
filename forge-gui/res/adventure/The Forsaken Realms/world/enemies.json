@@ -3701,7 +3701,7 @@
     {
         "name": "Bird",
         "nameOverride": "Griffin Birdcaller",
-        "sprite": "sprites/enemy/monstrosity/griffin_2.atlas",
+        "sprite": "sprites/enemy/remake/bird.atlas",
         "deck": [
             "decks/standard/bird_blue.json"
         ],
@@ -3785,7 +3785,7 @@
             "BiomeBlue"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3514
     },
     {
         "name": "Black Golem",
@@ -7349,7 +7349,7 @@
     },
     {
         "name": "Crab",
-        "sprite": "sprites/enemy/beast/ocean/crab.atlas",
+        "sprite": "sprites/enemy/remake/crab.atlas",
         "deck": [
             "decks/standard/crab.json",
             "decks/standard/giant_crab.dck"
@@ -7359,7 +7359,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 17,
-        "scale": 0.7738,
+        "scale": 0.2955,
         "life": 11,
         "rewards": [
             {
@@ -7482,7 +7482,7 @@
     },
     {
         "name": "Crocodile",
-        "sprite": "sprites/enemy/beast/reptile/crocodile_water.atlas",
+        "sprite": "sprites/enemy/remake/crocodile.atlas",
         "deck": [
             "decks/standard/crocodile.dck"
         ],
@@ -7530,7 +7530,7 @@
             "Crocodile"
         ],
         "tier": "Uncommon",
-        "scale": 1.6667
+        "scale": 0.2889
     },
     {
         "name": "Curselord",
@@ -8605,7 +8605,7 @@
     {
         "name": "Dinosaur",
         "nameOverride": "Giant Carnosaur",
-        "sprite": "sprites/enemy/beast/dinosaur/ancient_2.atlas",
+        "sprite": "sprites/enemy/remake/dinosaur.atlas",
         "deck": [
             "decks/standard/dinosaur_w_r.dck"
         ],
@@ -8613,7 +8613,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 1.0,
+        "scale": 0.3714,
         "life": 19,
         "rewards": [
             {
@@ -8660,7 +8660,7 @@
     },
     {
         "name": "Dinosaur Elite",
-        "sprite": "sprites/enemy/beast/dinosaur/ancient.atlas",
+        "sprite": "sprites/enemy/remake/dinosaur_elite.atlas",
         "deck": [
             "decks/standard/dinosaurelite.dck"
         ],
@@ -8668,7 +8668,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 1.0833,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -13854,7 +13854,7 @@
     },
     {
         "name": "Giant Fly",
-        "sprite": "sprites/enemy/beast/insect/giantfly.atlas",
+        "sprite": "sprites/enemy/remake/giant_fly.atlas",
         "deck": [
             "decks/standard/giant_fly_r111.dck"
         ],
@@ -13863,7 +13863,7 @@
         "spawnRate": 0.5,
         "difficulty": 2,
         "speed": 34,
-        "scale": 0.8667,
+        "scale": 0.2321,
         "life": 28,
         "rewards": [
             {
@@ -13915,7 +13915,7 @@
     },
     {
         "name": "Giant Panda",
-        "sprite": "sprites/enemy/beast/bear/giantpanda.atlas",
+        "sprite": "sprites/enemy/remake/giant_panda.atlas",
         "deck": [
             "decks/standard/giantpanda.dck"
         ],
@@ -13986,11 +13986,12 @@
             "Panda",
             "Bear"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2889
     },
     {
         "name": "Giant Spider",
-        "sprite": "sprites/enemy/beast/arachnid/spider_purple.atlas",
+        "sprite": "sprites/enemy/remake/giant_spider.atlas",
         "deck": [
             "decks/standard/spider_token.dck"
         ],
@@ -14025,7 +14026,7 @@
             "BiomeGreen"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3611
     },
     {
         "name": "Gitaxian Scientist",
@@ -15605,7 +15606,7 @@
     {
         "name": "Green Beast",
         "nameOverride": "Giant Green Basilisk",
-        "sprite": "sprites/enemy/monstrosity/basilisk.atlas",
+        "sprite": "sprites/enemy/remake/green_beast.atlas",
         "deck": [
             "decks/standard/beast_green.json"
         ],
@@ -15686,7 +15687,7 @@
             "BiomeGreen"
         ],
         "tier": "Mythic",
-        "scale": 1.0833
+        "scale": 0.197
     },
     {
         "name": "Green Golem",
@@ -16523,7 +16524,7 @@
     },
     {
         "name": "Hedgehog",
-        "sprite": "sprites/enemy/beast/smallmammals/hedgehog.atlas",
+        "sprite": "sprites/enemy/remake/hedgehog.atlas",
         "deck": [
             "decks/standard/hedgehog.dck"
         ],
@@ -16531,7 +16532,7 @@
         "spawnRate": 0.5,
         "difficulty": 2,
         "speed": 37,
-        "scale": 1.0,
+        "scale": 0.2364,
         "life": 28,
         "rewards": [
             {
@@ -16718,7 +16719,7 @@
     },
     {
         "name": "Hermit Crab",
-        "sprite": "sprites/enemy/beast/ocean/hermitcrab.atlas",
+        "sprite": "sprites/enemy/remake/hermit_crab.atlas",
         "deck": [
             "decks/standard/hermitcrab.dck"
         ],
@@ -16726,7 +16727,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.8667,
+        "scale": 0.2364,
         "life": 20,
         "rewards": [
             {
@@ -18097,7 +18098,7 @@
     },
     {
         "name": "Ibis",
-        "sprite": "sprites/enemy/beast/bird/ibis.atlas",
+        "sprite": "sprites/enemy/remake/ibis.atlas",
         "deck": [
             "decks/standard/bird_gu.dck"
         ],
@@ -18106,7 +18107,7 @@
         "spawnRate": 0.3,
         "difficulty": 0.1,
         "speed": 24,
-        "scale": 1.0833,
+        "scale": 0.3514,
         "life": 11,
         "rewards": [
             {
@@ -18506,7 +18507,7 @@
     },
     {
         "name": "Jellyfish",
-        "sprite": "sprites/enemy/beast/ocean/jellyfish.atlas",
+        "sprite": "sprites/enemy/remake/jellyfish.atlas",
         "deck": [
             "decks/standard/jellyfish.dck"
         ],
@@ -18515,7 +18516,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 1.0833,
+        "scale": 0.2889,
         "life": 12,
         "rewards": [
             {
@@ -23919,7 +23920,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 0.4127
+        "scale": 0.2271
     },
     {
         "name": "Orc Brute",
@@ -24421,7 +24422,7 @@
     },
     {
         "name": "Parrot",
-        "sprite": "sprites/enemy/beast/bird/parrot.atlas",
+        "sprite": "sprites/enemy/remake/parrot.atlas",
         "deck": [
             "decks/standard/parrot.dck"
         ],
@@ -24430,7 +24431,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 1.0833,
+        "scale": 0.2968,
         "life": 12,
         "rewards": [
             {
@@ -39983,13 +39984,13 @@
     },
     {
         "name": "The Locust God",
-        "sprite": "sprites/enemy/beast/insect/giantfly.atlas",
+        "sprite": "sprites/enemy/remake/the_locust_god.atlas",
         "deck": [
             "decks/legends/the_locust_god.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.8667,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -40130,13 +40131,13 @@
     },
     {
         "name": "Gishath",
-        "sprite": "sprites/enemy/beast/dinosaur/ancient_2.atlas",
+        "sprite": "sprites/enemy/remake/gishath.atlas",
         "deck": [
             "decks/legends/gishath.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -40786,13 +40787,13 @@
     },
     {
         "name": "Gahiji",
-        "sprite": "sprites/enemy/beast/dinosaur/ancient_2.atlas",
+        "sprite": "sprites/enemy/remake/gahiji.atlas",
         "deck": [
             "decks/legends/gahiji.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -43600,7 +43601,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2579,
+        "scale": 0.2355,
         "life": 40,
         "rewards": [
             {
@@ -44942,7 +44943,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2167,
+        "scale": 0.26,
         "life": 40,
         "rewards": [
             {
@@ -51604,7 +51605,7 @@
     },
     {
         "name": "Arthur",
-        "sprite": "sprites/enemy/beast/smallmammals/mouse.atlas",
+        "sprite": "sprites/enemy/remake/arthur.atlas",
         "deck": [
             "decks/legends/arthur.dck"
         ],
@@ -51688,7 +51689,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.7471
+        "scale": 0.2321
     },
     {
         "name": "Baylen",
@@ -53618,14 +53619,14 @@
     },
     {
         "name": "Zinnia",
-        "sprite": "sprites/enemy/beast/bird/parrot.atlas",
+        "sprite": "sprites/enemy/remake/zinnia.atlas",
         "deck": [
             "decks/legends/zinnia.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.3009,
         "life": 30,
         "rewards": [
             {
@@ -58291,13 +58292,13 @@
     },
     {
         "name": "Zilortha",
-        "sprite": "sprites/enemy/beast/dinosaur/ancient.atlas",
+        "sprite": "sprites/enemy/remake/zilortha.atlas",
         "deck": [
             "decks/legends/zilortha.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.2955,
         "life": 30,
         "rewards": [
             {
@@ -59417,13 +59418,13 @@
     },
     {
         "name": "Ishkanah",
-        "sprite": "sprites/enemy/beast/arachnid/spider_purple.atlas",
+        "sprite": "sprites/enemy/remake/ishkanah.atlas",
         "deck": [
             "decks/legends/ishkanah.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 2.48,
+        "scale": 0.2352,
         "life": 30,
         "rewards": [
             {
@@ -65055,14 +65056,14 @@
     },
     {
         "name": "Charix",
-        "sprite": "sprites/enemy/beast/ocean/crab.atlas",
+        "sprite": "sprites/enemy/remake/charix.atlas",
         "deck": [
             "decks/legends/charix.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 54,
-        "scale": 0.7738,
+        "scale": 0.2955,
         "life": 31,
         "rewards": [
             {
@@ -65892,7 +65893,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2305,
+        "scale": 0.2355,
         "life": 27,
         "rewards": [
             {
@@ -65960,7 +65961,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2381,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -66028,7 +66029,7 @@
         ],
         "ai": "",
         "speed": 37,
-        "scale": 0.2305,
+        "scale": 0.2407,
         "life": 26,
         "rewards": [
             {
@@ -66996,7 +66997,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2355,
+        "scale": 0.233,
         "life": 30,
         "rewards": [
             {
@@ -67856,14 +67857,14 @@
     },
     {
         "name": "Sidar Jabari",
-        "sprite": "sprites/enemy/monstrosity/griffin_2.atlas",
+        "sprite": "sprites/enemy/remake/sidar_jabari.atlas",
         "deck": [
             "decks/legends/sidar_jabari.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.2321,
         "life": 30,
         "rewards": [
             {
@@ -76211,13 +76212,13 @@
     },
     {
         "name": "Fumulus",
-        "sprite": "sprites/enemy/beast/insect/giantfly.atlas",
+        "sprite": "sprites/enemy/remake/fumulus.atlas",
         "deck": [
             "decks/legends/fumulus.dck"
         ],
         "ai": "",
         "flying": true,
-        "scale": 0.8667,
+        "scale": 0.3611,
         "speed": 27,
         "life": 18,
         "rewards": [
@@ -92888,7 +92889,7 @@
     },
     {
         "name": "Mm'menon",
-        "sprite": "sprites/enemy/beast/ocean/jellyfish.atlas",
+        "sprite": "sprites/enemy/remake/mm_menon.atlas",
         "deck": [
             "decks/legends/mm'menon.dck"
         ],
@@ -92958,7 +92959,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Ragost",
@@ -94374,7 +94375,7 @@
     },
     {
         "name": "Mabel",
-        "sprite": "sprites/enemy/beast/smallmammals/mouse.atlas",
+        "sprite": "sprites/enemy/remake/mabel.atlas",
         "deck": [
             "decks/legends/mabel.dck"
         ],
@@ -94443,7 +94444,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.7471
+        "scale": 0.2955
     },
     {
         "name": "Mr. Foxglove",
@@ -129103,7 +129104,7 @@
     },
     {
         "name": "Dainty Pig",
-        "sprite": "sprites/enemy/basic/animal/dainty_pig.atlas",
+        "sprite": "sprites/enemy/remake/dainty_pig.atlas",
         "deck": [
             "decks/standard/dainty_pig.dck"
         ],
@@ -129162,7 +129163,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.2955
     },
     {
         "name": "Honking Goose",
@@ -129296,7 +129297,7 @@
     },
     {
         "name": "Mad Boar",
-        "sprite": "sprites/enemy/basic/animal/mad_boar.atlas",
+        "sprite": "sprites/enemy/remake/mad_boar.atlas",
         "deck": [
             "decks/standard/mad_boar.dck"
         ],
@@ -129355,7 +129356,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.1818
+        "scale": 0.2321
     },
     {
         "name": "Meowing Cat",
@@ -130885,7 +130886,7 @@
     },
     {
         "name": "Elder White Dragon",
-        "sprite": "sprites/enemy/basic/dragon/elder_white_dragon.atlas",
+        "sprite": "sprites/enemy/remake/elder_white_dragon.atlas",
         "deck": [
             "decks/standard/elder_white_dragon.dck"
         ],
@@ -130945,7 +130946,7 @@
         ],
         "tier": "Mythic",
         "flying": true,
-        "scale": 1.0833
+        "scale": 0.197
     },
     {
         "name": "Aqua Drake",
@@ -131727,7 +131728,7 @@
     },
     {
         "name": "Young Red Dragon",
-        "sprite": "sprites/enemy/basic/dragon/young_red_dragon.atlas",
+        "sprite": "sprites/enemy/remake/young_red_dragon.atlas",
         "deck": [
             "decks/standard/young_red_dragon.dck"
         ],
@@ -131787,7 +131788,7 @@
         ],
         "tier": "Mythic",
         "flying": true,
-        "scale": 1.0833
+        "scale": 0.2
     },
     {
         "name": "Bestial Lizardfolk",
@@ -133066,7 +133067,7 @@
     },
     {
         "name": "Death Slime",
-        "sprite": "sprites/enemy/basic/monster/death_slime.atlas",
+        "sprite": "sprites/enemy/remake/death_slime.atlas",
         "deck": [
             "decks/standard/death_slime.dck"
         ],
@@ -133127,7 +133128,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.2407
     },
     {
         "name": "Fungal Myconid",

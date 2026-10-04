@@ -1,0 +1,239 @@
+hermit_crab.png
+size: 1222,904
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 84
+Idle
+  xy: 94, 64
+  size: 94, 84
+Idle
+  xy: 188, 64
+  size: 94, 84
+Idle
+  xy: 282, 64
+  size: 94, 84
+Idle
+  xy: 376, 64
+  size: 94, 84
+Idle
+  xy: 470, 64
+  size: 94, 84
+Idle
+  xy: 564, 64
+  size: 94, 84
+Idle
+  xy: 658, 64
+  size: 94, 84
+Idle
+  xy: 752, 64
+  size: 94, 84
+Idle
+  xy: 846, 64
+  size: 94, 84
+Walk
+  xy: 0, 148
+  size: 94, 84
+Walk
+  xy: 94, 148
+  size: 94, 84
+Walk
+  xy: 188, 148
+  size: 94, 84
+Walk
+  xy: 282, 148
+  size: 94, 84
+Walk
+  xy: 376, 148
+  size: 94, 84
+Walk
+  xy: 470, 148
+  size: 94, 84
+Attack
+  xy: 0, 232
+  size: 94, 84
+Attack
+  xy: 94, 232
+  size: 94, 84
+Attack
+  xy: 188, 232
+  size: 94, 84
+Attack
+  xy: 282, 232
+  size: 94, 84
+Attack
+  xy: 376, 232
+  size: 94, 84
+Attack
+  xy: 470, 232
+  size: 94, 84
+Hit
+  xy: 0, 316
+  size: 94, 84
+Hit
+  xy: 94, 316
+  size: 94, 84
+Hit
+  xy: 188, 316
+  size: 94, 84
+Hit
+  xy: 282, 316
+  size: 94, 84
+Death
+  xy: 0, 400
+  size: 94, 84
+Death
+  xy: 94, 400
+  size: 94, 84
+Death
+  xy: 188, 400
+  size: 94, 84
+Death
+  xy: 282, 400
+  size: 94, 84
+Death
+  xy: 376, 400
+  size: 94, 84
+Death
+  xy: 470, 400
+  size: 94, 84
+Death
+  xy: 564, 400
+  size: 94, 84
+Death
+  xy: 658, 400
+  size: 94, 84
+Death
+  xy: 752, 400
+  size: 94, 84
+Death
+  xy: 846, 400
+  size: 94, 84
+Death
+  xy: 940, 400
+  size: 94, 84
+Death
+  xy: 1034, 400
+  size: 94, 84
+Death
+  xy: 1128, 400
+  size: 94, 84
+Wake
+  xy: 0, 484
+  size: 94, 84
+Wake
+  xy: 94, 484
+  size: 94, 84
+Wake
+  xy: 188, 484
+  size: 94, 84
+Wake
+  xy: 282, 484
+  size: 94, 84
+Wake
+  xy: 376, 484
+  size: 94, 84
+Wake
+  xy: 470, 484
+  size: 94, 84
+IdleUp
+  xy: 0, 568
+  size: 94, 84
+IdleUp
+  xy: 94, 568
+  size: 94, 84
+IdleUp
+  xy: 188, 568
+  size: 94, 84
+IdleUp
+  xy: 282, 568
+  size: 94, 84
+IdleUp
+  xy: 376, 568
+  size: 94, 84
+IdleUp
+  xy: 470, 568
+  size: 94, 84
+IdleUp
+  xy: 564, 568
+  size: 94, 84
+IdleUp
+  xy: 658, 568
+  size: 94, 84
+IdleUp
+  xy: 752, 568
+  size: 94, 84
+IdleUp
+  xy: 846, 568
+  size: 94, 84
+IdleDown
+  xy: 0, 652
+  size: 94, 84
+IdleDown
+  xy: 94, 652
+  size: 94, 84
+IdleDown
+  xy: 188, 652
+  size: 94, 84
+IdleDown
+  xy: 282, 652
+  size: 94, 84
+IdleDown
+  xy: 376, 652
+  size: 94, 84
+IdleDown
+  xy: 470, 652
+  size: 94, 84
+IdleDown
+  xy: 564, 652
+  size: 94, 84
+IdleDown
+  xy: 658, 652
+  size: 94, 84
+IdleDown
+  xy: 752, 652
+  size: 94, 84
+IdleDown
+  xy: 846, 652
+  size: 94, 84
+WalkUp
+  xy: 0, 736
+  size: 94, 84
+WalkUp
+  xy: 94, 736
+  size: 94, 84
+WalkUp
+  xy: 188, 736
+  size: 94, 84
+WalkUp
+  xy: 282, 736
+  size: 94, 84
+WalkUp
+  xy: 376, 736
+  size: 94, 84
+WalkUp
+  xy: 470, 736
+  size: 94, 84
+WalkDown
+  xy: 0, 820
+  size: 94, 84
+WalkDown
+  xy: 94, 820
+  size: 94, 84
+WalkDown
+  xy: 188, 820
+  size: 94, 84
+WalkDown
+  xy: 282, 820
+  size: 94, 84
+WalkDown
+  xy: 376, 820
+  size: 94, 84
+WalkDown
+  xy: 470, 820
+  size: 94, 84

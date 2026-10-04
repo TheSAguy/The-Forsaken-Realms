@@ -1,0 +1,215 @@
+mm_menon.png
+size: 968,824
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 76
+Idle
+  xy: 88, 64
+  size: 88, 76
+Idle
+  xy: 176, 64
+  size: 88, 76
+Idle
+  xy: 264, 64
+  size: 88, 76
+Idle
+  xy: 352, 64
+  size: 88, 76
+Idle
+  xy: 440, 64
+  size: 88, 76
+Idle
+  xy: 528, 64
+  size: 88, 76
+Idle
+  xy: 616, 64
+  size: 88, 76
+Idle
+  xy: 704, 64
+  size: 88, 76
+Idle
+  xy: 792, 64
+  size: 88, 76
+Walk
+  xy: 0, 140
+  size: 88, 76
+Walk
+  xy: 88, 140
+  size: 88, 76
+Walk
+  xy: 176, 140
+  size: 88, 76
+Walk
+  xy: 264, 140
+  size: 88, 76
+Attack
+  xy: 0, 216
+  size: 88, 76
+Attack
+  xy: 88, 216
+  size: 88, 76
+Attack
+  xy: 176, 216
+  size: 88, 76
+Attack
+  xy: 264, 216
+  size: 88, 76
+Attack
+  xy: 352, 216
+  size: 88, 76
+Attack
+  xy: 440, 216
+  size: 88, 76
+Attack
+  xy: 528, 216
+  size: 88, 76
+Hit
+  xy: 0, 292
+  size: 88, 76
+Hit
+  xy: 88, 292
+  size: 88, 76
+Hit
+  xy: 176, 292
+  size: 88, 76
+Hit
+  xy: 264, 292
+  size: 88, 76
+Death
+  xy: 0, 368
+  size: 88, 76
+Death
+  xy: 88, 368
+  size: 88, 76
+Death
+  xy: 176, 368
+  size: 88, 76
+Death
+  xy: 264, 368
+  size: 88, 76
+Death
+  xy: 352, 368
+  size: 88, 76
+Death
+  xy: 440, 368
+  size: 88, 76
+Death
+  xy: 528, 368
+  size: 88, 76
+Death
+  xy: 616, 368
+  size: 88, 76
+Death
+  xy: 704, 368
+  size: 88, 76
+Death
+  xy: 792, 368
+  size: 88, 76
+Death
+  xy: 880, 368
+  size: 88, 76
+Wake
+  xy: 0, 444
+  size: 88, 76
+Wake
+  xy: 88, 444
+  size: 88, 76
+Wake
+  xy: 176, 444
+  size: 88, 76
+Wake
+  xy: 264, 444
+  size: 88, 76
+Wake
+  xy: 352, 444
+  size: 88, 76
+IdleUp
+  xy: 0, 520
+  size: 88, 76
+IdleUp
+  xy: 88, 520
+  size: 88, 76
+IdleUp
+  xy: 176, 520
+  size: 88, 76
+IdleUp
+  xy: 264, 520
+  size: 88, 76
+IdleUp
+  xy: 352, 520
+  size: 88, 76
+IdleUp
+  xy: 440, 520
+  size: 88, 76
+IdleUp
+  xy: 528, 520
+  size: 88, 76
+IdleUp
+  xy: 616, 520
+  size: 88, 76
+IdleUp
+  xy: 704, 520
+  size: 88, 76
+IdleUp
+  xy: 792, 520
+  size: 88, 76
+IdleDown
+  xy: 0, 596
+  size: 88, 76
+IdleDown
+  xy: 88, 596
+  size: 88, 76
+IdleDown
+  xy: 176, 596
+  size: 88, 76
+IdleDown
+  xy: 264, 596
+  size: 88, 76
+IdleDown
+  xy: 352, 596
+  size: 88, 76
+IdleDown
+  xy: 440, 596
+  size: 88, 76
+IdleDown
+  xy: 528, 596
+  size: 88, 76
+IdleDown
+  xy: 616, 596
+  size: 88, 76
+IdleDown
+  xy: 704, 596
+  size: 88, 76
+IdleDown
+  xy: 792, 596
+  size: 88, 76
+WalkUp
+  xy: 0, 672
+  size: 88, 76
+WalkUp
+  xy: 88, 672
+  size: 88, 76
+WalkUp
+  xy: 176, 672
+  size: 88, 76
+WalkUp
+  xy: 264, 672
+  size: 88, 76
+WalkDown
+  xy: 0, 748
+  size: 88, 76
+WalkDown
+  xy: 88, 748
+  size: 88, 76
+WalkDown
+  xy: 176, 748
+  size: 88, 76
+WalkDown
+  xy: 264, 748
+  size: 88, 76
