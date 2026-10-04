@@ -58,6 +58,15 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-04 (late): **v1.18 "Blame Vr01!" RELEASED** - tag `tfr-v1.18` @ `aba742ad603`, published 23:29:08 UTC,
+Latest. Rounds 406-441 on top of v1.17.1, engine = the 10.04 daily. Assets in `C:\TFR\release\v1.18`:
+`The-Forsaken-Realms-v1.18.zip` 312.8 MB (jar CFB504FC8FB9, 634 remake files), `forsaken-realms-1.18-signed-aligned.apk`
+13.5 MB (com.thesaguy.forsakenrealms, versionCode 11800, signer EE:60:39:25), `assets.zip` 264.9 MB (build.txt pair
+2026-10-04 23:25:21; Android built from `C:\TFR-build` via R: in 2.7 min). Notes = `RELEASE_NOTES_v1.18.md` (the user:
+"only the important stuff"). The AGENT folder is the release; the LIVE folder is 441 with the old 1.17.1 stamp (the
+user's game was running) - repackage when closed. NOTHING is unreleased. Next merge from upstream after `f9aafc5315e`.
+Next version: 1.19 / 11900.
+
 ## STATE 2026-10-04 (round 441): **LOCAL + UNRELEASED (data only)** - the Player Capitol's Normal arena (level 1, and level
 2 in Normal mode) win item: its 16 old names + all 40 of the AI capitals' sets = 56, 1 in 56 each, Dungeon Map kept
 (player_capital.tmx `arena`). The per-enemy win streak keeps counting Arena duels (the user: "Keep as is"). NEXT
