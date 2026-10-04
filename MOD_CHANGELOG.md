@@ -14264,6 +14264,60 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 427: road rule 7 - a pocket of ground closed in by roads is paved (2026-10-03)
+
+The user, with a screenshot of a loop of road under a town: "There is a double road in my current game. See log/save."
+Then: "yes, do 427 the road clean-up".
+
+**What it was.**
+- The place: Gobspike, in the user's new world, with Robbers' Camp south-west of it.
+- World-gen had laid two roads from Robbers' Camp north-east in almost the same direction: one to Gobspike, one past it.
+  Each road is a straight staircase, so they overlap into a band 3-4 tiles wide.
+- Under Gobspike they part by a tile and enclose two single tiles of ground, 1 tile each. On screen it reads as two roads
+  side by side.
+- Not a regression. Read-only scans (scratchpad `roads/`: RoadHoles, SkirtHoles, RoadPatch, RoadImage, PlayerSpot)
+  found the same pockets in every world:
+  - the user's new world: 6 (4 clear of any place);
+  - their 2026-10-02 save, from before round 414: 3;
+  - their 2026-10-01 save: 1;
+  - the agent's round-422 world: 5.
+- The user's screenshot did not match slot 1's position near Llanowar. The log's restore order and RoadPatch on each
+  restored town placed it at Gobspike.
+
+**Paved, not lifted.**
+- The proposal was to break each loop on its extra side. Before building it, I found that lifting road is unsafe.
+- Every rule reads a road as the staircase between two anchors, and keeps a pair joined only at EDGE_COVERAGE (95%).
+  One tile off a short staircase can drop a joined pair under that line, and the routers then lay a second road beside
+  it: the doubled roads of rounds 351/383.
+- Rule 7 only adds road. `RoadNetwork.fillRoadHoles` paves every 4-connected pocket of ground of at most `HOLE_FILL_MAX`
+  (6) tiles that roads close in on every side. The band then reads as one wider road.
+- A pocket is left alone when it touches:
+  - the footprint of a place on the map (a town, a cave; one rotated away does not count);
+  - the map edge;
+  - water or the barrier (`canJoinRoadRaw`).
+- A pocket is paved player road when every road around it is player road, else old road.
+- One linear pass over the map, or a window HOLE_REGION_MARGIN (8) around the tiles a road change touched.
+- It runs:
+  - at world-gen, after rule 6;
+  - in `layRoad` after `tidyTownEnds`, around what it touched;
+  - after the player network's rebuild and `connectPlayerTown`;
+  - once on load: `RoadNetwork.VERSION` 7.
+- `[TFR-Roads] rule 7: N pocket(s) ... paved, M tile(s) - raw (x,y)xn ...`.
+
+**Rotated-away places.** The first build skipped Gobspike's second pocket: it sat on the footprint of a cave
+DungeonRotation had taken off the map, and the loop stayed in view. Only places on the map (`getActive`) protect a pocket
+now. A cave that rotates back stands on road, as a town does.
+
+**Agent-tested** on a copy of the user's slot 1, put in agent slot 1 and restored afterwards:
+- On load: `rule 7: 5 pocket(s) ... paved, 11 tile(s) - raw (269,183)x5, (273,185)x1, (332,293)x1, (334,291)x1,
+  (617,220)x3`, in 147 ms, no exceptions.
+- At Gobspike the band from Robbers' Camp is one wide road with no grass enclosed; screenshot, compared with the user's.
+- Saved to agent slot 14 and compared with the user's save:
+  - joined pairs 236 -> 236 (RoadVerify);
+  - skirt dead ends 0 -> 0;
+  - pockets clear of a place 4 -> 0.
+- The one pocket left (near Tangled Thicket) holds a cave that is on the map, so it is kept on purpose.
+
 ## Round 426: eighteen more enemy groups from the creature generator (cloud batch 3), 52 enemies (2026-10-03)
 
 The third cloud batch (20 targets; procedural-pixel-creatures PR #3), reviewed here. Every remake has the base

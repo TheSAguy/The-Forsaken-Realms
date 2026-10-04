@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 427 - road rule 7: a pocket enclosed by road is paved
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - world-gen calls `RoadNetwork.fillRoadHoles(this, null, null)`
+  after rule 6. `layRoad` calls it around the tiles it touched, after `tidyTownEnds`, before the repaint. **Merge
+  watch** on `layRoad`'s tail.
+- Mod: `RoadNetwork.fillRoadHoles` (rule 7, `VERSION` 7 in `migrateOnLoad`, after the player network's rebuild and
+  `connectPlayerTown`).
+
 ### Round 425 - a New Game+ day-8 AI wave
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `ngPlusWaveMages` (saved; 0 in `generateNew`), with its
