@@ -58,6 +58,11 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-04 (round 441): **LOCAL + UNRELEASED (data only)** - the Player Capitol's Normal arena (level 1, and level
+2 in Normal mode) win item: its 16 old names + all 40 of the AI capitals' sets = 56, 1 in 56 each, Dungeon Map kept
+(player_capital.tmx `arena`). The per-enemy win streak keeps counting Arena duels (the user: "Keep as is"). NEXT
+RELEASE NAME (the user): **"Blame Vr01!"** - rounds 406-441 on top of v1.17.1. LIVE NOT PACKAGED with 439-441 yet.
+
 ## STATE 2026-10-04 (round 440): **LOCAL + UNRELEASED** - ENGINE = the 10.04 daily (upstream `f9aafc5315e`, 17 commits
 since round 403). Two conflicts from upstream #12098, ours kept: `WorldBackground` (their camera-streaming rewrite not
 taken; their placeholder dispose taken) and `World.getBiomeSprite` (their shared off-map tile vs our caller-owned

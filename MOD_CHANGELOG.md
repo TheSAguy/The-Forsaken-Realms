@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 441: the Player Capitol's Normal arena pays from every AI arena's sets too (2026-10-04)
+
+The user, asked whether to rebalance the Capitol arena like the AI ones: "For player Arena level 1. Add ALL the sets the
+AI arenas currently have if not already part of the price pool. Include 'Dungeon Map' as one of the prizes." (And of
+the per-enemy win streak counting Arena duels: "Keep as is." The next release is to be called "Blame Vr01!".) Data
+only.
+
+- `maps/map/towns/player_capital.tmx`, the `arena` property's round-3 win item:
+  - It held 16 names (Gold Armor/Shield/Boots, Bronze Sword, Dagger, the Dark set, Death Ring, Aladdin's Ring, Axt,
+    Ring of Immortals, Jandor's Ring, Dungeon Map, Mad Staff, Disrupting Scepter).
+  - It gains the 40 of round 432's AI sets, none of which it had: 56 names, 1 in 56 each.
+  - Dungeon Map stays in.
+- The same table serves a Level-2 arena switched to Normal (round 134). The Challenging pool and its item tiers are
+  unchanged.
+- Checked from the parsed map: 56 names, all in items.json, no duplicates. Not agent-tested; a won bracket was not
+  played.
+
 ## Round 440: the engine to the 10.04 daily (upstream `f9aafc5315e`); the Manasight texture leak goes with it (2026-10-04)
 
 The user: "I've updated folder E:\GAMES\Forge_2 with the latest official forge release. Please update to that."
