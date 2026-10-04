@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 440: the engine to the 10.04 daily (upstream `f9aafc5315e`); the Manasight texture leak goes with it (2026-10-04)
+
+The user: "I've updated folder E:\GAMES\Forge_2 with the latest official forge release. Please update to that."
+
+- **The target.** Forge_2 holds the 2.0.16-SNAPSHOT 10.04 daily (`build.txt` 2026-10-04 21:14:32; the installer's
+  APP_VER 10.04). Upstream's head at the fetch, `f9aafc5315e` (committed 21:11 UTC), is in it: its `Graphics.endClip()`
+  early return shows in the installed jar's bytecode. That makes 17 commits since round 403's `da9e24cb3a0`; 51 files.
+  `engineBuildVersion` -> `2.0.16-SNAPSHOT-10.04`.
+- **Two conflicts, both from upstream's "Update WorldBackground (#12098)", ours kept in both** (details in
+  CORE_ENGINE_CHANGES "Round 440"):
+  - **WorldBackground.java:** upstream's camera-streaming ground renderer is not taken. The plane's renderer already
+    caps its textures (round 300) and carries every fog/discovery/repaint hook. Upstream's placeholder-pixmap dispose
+    is taken.
+  - **World.java:** upstream's shared off-map tile would be disposed by every caller here, so the caller-owned tile
+    stays.
+- **The black ground after Deep Caverns (round 433), explained.** The clean part of the same upstream change caches the
+  1x1 helper textures in `Assets`. Until now every `getWhiteTexture()` call made a new GPU texture that was never
+  freed, and Manasight's color dots (`EnemySprite.drawColorHints`) call it for every dot of every enemy, every frame.
+  - The user carries the Manasight Stone.
+  - Deep Caverns (a 200 x 200 cave, ~40 enemies) leaks thousands of textures a minute there.
+  - Out on the overworld no new chunk texture could be made, so the ground was black; the places and doodads,
+    already-made textures, drew. A reload frees nothing leaked; a restart did.
+  - Round 433's draw-state check stays as a guard.
+- Also in the merge: AI fixes (no activations into lethal triggers, Itazura bids), several card fixes, lazily loaded
+  counter fonts, fewer rectangle draw calls, and menu shortcuts no longer firing while typing in a text field.
+- No new editions; no Android, README or pom changes.
+
 ## Round 439: the tiger, with black stripes (cloud batch 7 rework) (2026-10-04)
 
 The tiger held back in round 438, reworked here. The user: "fix the tiger now", then, after seeing it: "Install the

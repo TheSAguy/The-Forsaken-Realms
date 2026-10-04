@@ -38,6 +38,35 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 440 - the 10.04 engine merge (upstream `f9aafc5315e`)
+
+Two conflicts, both from upstream `583d7f1496b` "Update WorldBackground (#12098)" ("Hopefully it fixes white world
+background caused by exhausted texture memory"):
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldBackground.java`** - upstream rewrote the ground renderer to stream
+  chunks by the camera's view (prefetch ring, a 4 ms per-frame build budget, gray placeholders, free on leaving a keep
+  area). OURS kept whole: the plane's renderer already caps chunk textures (round 300's LRU of 32, 2x texels, one
+  upload per chunk) and carries the fog reveal/haze patching, the discovery flash, town lifts, the barrier mountains,
+  the tile batch and round 433's draw-state check, none of which the rewrite has. Taken from it: the placeholder
+  pixmap is disposed after its texture is made. **Merge watch:** upstream will keep editing this file; ours is the
+  plane's own from here.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - upstream's `getBiomeSprite()` hands a SHARED `emptyTile`
+  for an off-map tile. Every caller here disposes what it gets (round 123 S2-2, round 289), so the shared pixmap would
+  be disposed and reused. OURS kept (a fresh caller-owned pixmap); `emptyTile` and `globalTileDrawing` not adopted.
+
+Merged cleanly and reviewed against the plane:
+- `forge-gui-mobile/src/forge/assets/Assets.java` - `getWhiteTexture()`/`getGrayTexture()`/`getBackropTexture()`/
+  `getBlackTexture()` now cache their 1x1 texture. Before, every call made a new GPU texture that nothing freed - and
+  `EnemySprite.drawColorHints()` (Manasight's color dots) calls `getWhiteTexture()` per dot per enemy per frame. That
+  leak is the likely cause of the user's black ground after Deep Caverns (round 433): dozens of enemies with dots
+  exhausted the texture memory, and a new chunk texture could not be made until a restart.
+- `TileMapScene` - the map renderer is disposed on leave and made lazily. It shares the stage's batch (ownsBatch false),
+  so its dispose frees nothing and the instance stays usable - harmless.
+- `MapSprite` - `spriteStar`/`spriteMagnifier` are static; every draw sets their scale, position and color first and
+  resets the color after, so sharing is safe.
+- `RewardActor`/`Graphics` - `endClip()` before `end()`, and `endClip()` returns when nothing is open.
+- The rest: AI fixes (lethal activation triggers #12125, Itazura bids #12115), card fixes, a font/graphics pass (counter
+  fonts lazily loaded through the AssetManager, fewer rectangle draw calls), menu shortcuts not firing in text fields.
+
 ### Round 434 - the restore fee rises with the realm; the mage cap counts the Capitol once
 
 - No stock engine file. Mod: `TuningData.restoreFee*`/`restoreFeeFor`, `TownRestoration` (the RESTORE_COST constants
@@ -2464,6 +2493,12 @@ from the plane's `config tables/settings.json`).
   0.25 -> 0.12.
 
 ## Upstream merge log
+
+- **2026-10-04 - merged upstream `master` @ `f9aafc5315e` (Forge 2.0.16-SNAPSHOT, 10.04 daily; 17 first-parent commits
+  since `da9e24cb3a0`; round 440).** Two conflicts (`WorldBackground.java`, `World.java`), ours kept - see "Round 440"
+  above. Base install `E:\GAMES\Forge_2`: `build.txt` `2026-10-04 21:14:32`, jars 2.0.16-SNAPSHOT, installer APP_VER
+  10.04; probe: HAS `f9aafc5315e` (`forge/Graphics.endClip()` returns when `clipDepth == 0`, javap). `f9aafc5315e` was
+  upstream's head at the fetch, so the next merge starts after it.
 
 - **2026-10-02 - merged upstream `master` @ `da9e24cb3a0` (Forge 2.0.16-SNAPSHOT, 10.01 daily; 10 first-parent commits
   since `fd5c996b843`; round 403).** Three conflicts (`AdventureQuestData.java`, `DialogData.java`, `UIScene.java`) -

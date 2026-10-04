@@ -878,8 +878,8 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
         Forge.getGraphics().setProjectionMatrix(m);
         Forge.getGraphics().startClip();
         CardImageRenderer.drawCardImage(Forge.getGraphics(), CardView.getCardForUi(card), alternate, 0, 0, preview_w, preview_h, CardRenderer.CardStackPosition.Top, Forge.allowCardBG, false, false, true, displayArt, true);
-        Forge.getGraphics().end();
         Forge.getGraphics().endClip();
+        Forge.getGraphics().end();
         frameBuffer.end();
         // Rendering ends here. Grab the rendered framebuffer and bind to texture (faster method than initializing new texture)
         Texture result = frameBuffer.getColorBufferTexture();
@@ -928,8 +928,8 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             itemText.setY(itemText.getY() + (modY * 8));
             itemText.draw(Forge.getGraphics().getBatch(), 1);
         }
-        Forge.getGraphics().end();
         Forge.getGraphics().endClip();
+        Forge.getGraphics().end();
         frameBuffer.end();
         image = frameBuffer.getColorBufferTexture();
         image.bind();
@@ -1026,8 +1026,8 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                 }
                 if (itemExists && description.isEmpty() && item.questItem)
                     description = "Quest Item";
-                Forge.getGraphics().end();
                 Forge.getGraphics().endClip();
+                Forge.getGraphics().end();
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {

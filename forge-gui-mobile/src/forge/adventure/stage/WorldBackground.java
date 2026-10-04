@@ -535,6 +535,7 @@ public class WorldBackground extends Actor {
             loadPix.setColor(0.5f, 0.5f, 0.5f, 1);
             loadPix.fill();
             loadingTexture = new Texture(loadPix);
+            loadPix.dispose(); // round 440: taken from upstream #12098 - the texture holds its own copy
         }
 
 
