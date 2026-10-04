@@ -62,8 +62,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 since round 403). Two conflicts from upstream #12098, ours kept: `WorldBackground` (their camera-streaming rewrite not
 taken; their placeholder dispose taken) and `World.getBiomeSprite` (their shared off-map tile vs our caller-owned
 contract). The clean part of #12098 caches `Assets.getWhiteTexture()` & co. - the per-frame texture leak behind
-Manasight's dots, the likely cause of the user's black ground after Deep Caverns. `engineBuildVersion` 10.04. NOT
-PACKAGED yet (the first package after an engine change does the full stock-asset copy).
+Manasight's dots, the likely cause of the user's black ground after Deep Caverns. `engineBuildVersion` 10.04. AGENT
+PACKAGED (full stock copy from Forge_2's 10.04; cardsfolder.zip identical) and smoke-tested: load, a town in and out,
+a duel, no exception, `[TFR-WorldReturn]` white/default both times. LIVE NOT PACKAGED with 439 + 440 (the user's game
+was running).
 
 ## STATE 2026-10-04 (round 439): **LOCAL + UNRELEASED** - the tiger group (Tiger, Snapdax, Jedit) from cloud batch 7,
 reworked with black stripes (new generator option quadruped `pattern.blackMarks`); Snapdax red-orange and Jedit a
