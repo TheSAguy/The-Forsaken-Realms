@@ -14300,8 +14300,9 @@ the wall update".
   - `make_token_scripts.py` writes 24 scripts named `tfr_wall[2][_reach|_flying]_<power>_<toughness>`.
   - `make_wall_cards.py --art F:\Art_to_Tweak\WALL` writes 24 faces. The Notoriety line now comes from the level, not
     the toughness ("toughness x 5" broke at 2/4 and 3/6).
-  - The 9 old 0/2, 0/3 and 0/4 scripts and pictures are removed. The packager's overlay only adds files, so the
-    leftovers were also deleted from the live and agent folders by hand.
+  - The 9 old 0/2, 0/3 and 0/4 scripts and pictures are removed. The packager copies the plane folder whole, but its
+    overlay of res files outside it (custom_card_pics, tokenscripts) only adds, so the leftovers were also deleted from
+    the live and agent folders by hand.
 - **Agent-tested** (Insane, a copy of the user's world in agent slot 1, the `notoriety N` cheat), screenshots of the
   walls in play:
   - 40 wins, Human Knight (Archmage): `tfr_wall_flying_3_6 (3/6) + tfr_wall2_flying_3_6 (3/6)`; the cards read 20+
