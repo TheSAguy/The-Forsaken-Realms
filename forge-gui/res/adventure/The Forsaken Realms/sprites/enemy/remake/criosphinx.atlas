@@ -1,0 +1,242 @@
+criosphinx.png
+size: 960,824
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 76
+Idle
+  xy: 80, 64
+  size: 80, 76
+Idle
+  xy: 160, 64
+  size: 80, 76
+Idle
+  xy: 240, 64
+  size: 80, 76
+Idle
+  xy: 320, 64
+  size: 80, 76
+Idle
+  xy: 400, 64
+  size: 80, 76
+Idle
+  xy: 480, 64
+  size: 80, 76
+Idle
+  xy: 560, 64
+  size: 80, 76
+Idle
+  xy: 640, 64
+  size: 80, 76
+Idle
+  xy: 720, 64
+  size: 80, 76
+Walk
+  xy: 0, 140
+  size: 80, 76
+Walk
+  xy: 80, 140
+  size: 80, 76
+Walk
+  xy: 160, 140
+  size: 80, 76
+Walk
+  xy: 240, 140
+  size: 80, 76
+Walk
+  xy: 320, 140
+  size: 80, 76
+Walk
+  xy: 400, 140
+  size: 80, 76
+Attack
+  xy: 0, 216
+  size: 80, 76
+Attack
+  xy: 80, 216
+  size: 80, 76
+Attack
+  xy: 160, 216
+  size: 80, 76
+Attack
+  xy: 240, 216
+  size: 80, 76
+Attack
+  xy: 320, 216
+  size: 80, 76
+Attack
+  xy: 400, 216
+  size: 80, 76
+Hit
+  xy: 0, 292
+  size: 80, 76
+Hit
+  xy: 80, 292
+  size: 80, 76
+Hit
+  xy: 160, 292
+  size: 80, 76
+Hit
+  xy: 240, 292
+  size: 80, 76
+Hit
+  xy: 320, 292
+  size: 80, 76
+Death
+  xy: 0, 368
+  size: 80, 76
+Death
+  xy: 80, 368
+  size: 80, 76
+Death
+  xy: 160, 368
+  size: 80, 76
+Death
+  xy: 240, 368
+  size: 80, 76
+Death
+  xy: 320, 368
+  size: 80, 76
+Death
+  xy: 400, 368
+  size: 80, 76
+Death
+  xy: 480, 368
+  size: 80, 76
+Death
+  xy: 560, 368
+  size: 80, 76
+Death
+  xy: 640, 368
+  size: 80, 76
+Death
+  xy: 720, 368
+  size: 80, 76
+Death
+  xy: 800, 368
+  size: 80, 76
+Death
+  xy: 880, 368
+  size: 80, 76
+Wake
+  xy: 0, 444
+  size: 80, 76
+Wake
+  xy: 80, 444
+  size: 80, 76
+Wake
+  xy: 160, 444
+  size: 80, 76
+Wake
+  xy: 240, 444
+  size: 80, 76
+Wake
+  xy: 320, 444
+  size: 80, 76
+Wake
+  xy: 400, 444
+  size: 80, 76
+Wake
+  xy: 480, 444
+  size: 80, 76
+IdleUp
+  xy: 0, 520
+  size: 80, 76
+IdleUp
+  xy: 80, 520
+  size: 80, 76
+IdleUp
+  xy: 160, 520
+  size: 80, 76
+IdleUp
+  xy: 240, 520
+  size: 80, 76
+IdleUp
+  xy: 320, 520
+  size: 80, 76
+IdleUp
+  xy: 400, 520
+  size: 80, 76
+IdleUp
+  xy: 480, 520
+  size: 80, 76
+IdleUp
+  xy: 560, 520
+  size: 80, 76
+IdleUp
+  xy: 640, 520
+  size: 80, 76
+IdleUp
+  xy: 720, 520
+  size: 80, 76
+IdleDown
+  xy: 0, 596
+  size: 80, 76
+IdleDown
+  xy: 80, 596
+  size: 80, 76
+IdleDown
+  xy: 160, 596
+  size: 80, 76
+IdleDown
+  xy: 240, 596
+  size: 80, 76
+IdleDown
+  xy: 320, 596
+  size: 80, 76
+IdleDown
+  xy: 400, 596
+  size: 80, 76
+IdleDown
+  xy: 480, 596
+  size: 80, 76
+IdleDown
+  xy: 560, 596
+  size: 80, 76
+IdleDown
+  xy: 640, 596
+  size: 80, 76
+IdleDown
+  xy: 720, 596
+  size: 80, 76
+WalkUp
+  xy: 0, 672
+  size: 80, 76
+WalkUp
+  xy: 80, 672
+  size: 80, 76
+WalkUp
+  xy: 160, 672
+  size: 80, 76
+WalkUp
+  xy: 240, 672
+  size: 80, 76
+WalkUp
+  xy: 320, 672
+  size: 80, 76
+WalkUp
+  xy: 400, 672
+  size: 80, 76
+WalkDown
+  xy: 0, 748
+  size: 80, 76
+WalkDown
+  xy: 80, 748
+  size: 80, 76
+WalkDown
+  xy: 160, 748
+  size: 80, 76
+WalkDown
+  xy: 240, 748
+  size: 80, 76
+WalkDown
+  xy: 320, 748
+  size: 80, 76
+WalkDown
+  xy: 400, 748
+  size: 80, 76

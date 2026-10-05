@@ -1,0 +1,248 @@
+isperia.png
+size: 1144,834
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 77
+Idle
+  xy: 88, 64
+  size: 88, 77
+Idle
+  xy: 176, 64
+  size: 88, 77
+Idle
+  xy: 264, 64
+  size: 88, 77
+Idle
+  xy: 352, 64
+  size: 88, 77
+Idle
+  xy: 440, 64
+  size: 88, 77
+Idle
+  xy: 528, 64
+  size: 88, 77
+Idle
+  xy: 616, 64
+  size: 88, 77
+Idle
+  xy: 704, 64
+  size: 88, 77
+Idle
+  xy: 792, 64
+  size: 88, 77
+Walk
+  xy: 0, 141
+  size: 88, 77
+Walk
+  xy: 88, 141
+  size: 88, 77
+Walk
+  xy: 176, 141
+  size: 88, 77
+Walk
+  xy: 264, 141
+  size: 88, 77
+Walk
+  xy: 352, 141
+  size: 88, 77
+Walk
+  xy: 440, 141
+  size: 88, 77
+Attack
+  xy: 0, 218
+  size: 88, 77
+Attack
+  xy: 88, 218
+  size: 88, 77
+Attack
+  xy: 176, 218
+  size: 88, 77
+Attack
+  xy: 264, 218
+  size: 88, 77
+Attack
+  xy: 352, 218
+  size: 88, 77
+Attack
+  xy: 440, 218
+  size: 88, 77
+Attack
+  xy: 528, 218
+  size: 88, 77
+Hit
+  xy: 0, 295
+  size: 88, 77
+Hit
+  xy: 88, 295
+  size: 88, 77
+Hit
+  xy: 176, 295
+  size: 88, 77
+Hit
+  xy: 264, 295
+  size: 88, 77
+Hit
+  xy: 352, 295
+  size: 88, 77
+Death
+  xy: 0, 372
+  size: 88, 77
+Death
+  xy: 88, 372
+  size: 88, 77
+Death
+  xy: 176, 372
+  size: 88, 77
+Death
+  xy: 264, 372
+  size: 88, 77
+Death
+  xy: 352, 372
+  size: 88, 77
+Death
+  xy: 440, 372
+  size: 88, 77
+Death
+  xy: 528, 372
+  size: 88, 77
+Death
+  xy: 616, 372
+  size: 88, 77
+Death
+  xy: 704, 372
+  size: 88, 77
+Death
+  xy: 792, 372
+  size: 88, 77
+Death
+  xy: 880, 372
+  size: 88, 77
+Death
+  xy: 968, 372
+  size: 88, 77
+Death
+  xy: 1056, 372
+  size: 88, 77
+Wake
+  xy: 0, 449
+  size: 88, 77
+Wake
+  xy: 88, 449
+  size: 88, 77
+Wake
+  xy: 176, 449
+  size: 88, 77
+Wake
+  xy: 264, 449
+  size: 88, 77
+Wake
+  xy: 352, 449
+  size: 88, 77
+Wake
+  xy: 440, 449
+  size: 88, 77
+Wake
+  xy: 528, 449
+  size: 88, 77
+IdleUp
+  xy: 0, 526
+  size: 88, 77
+IdleUp
+  xy: 88, 526
+  size: 88, 77
+IdleUp
+  xy: 176, 526
+  size: 88, 77
+IdleUp
+  xy: 264, 526
+  size: 88, 77
+IdleUp
+  xy: 352, 526
+  size: 88, 77
+IdleUp
+  xy: 440, 526
+  size: 88, 77
+IdleUp
+  xy: 528, 526
+  size: 88, 77
+IdleUp
+  xy: 616, 526
+  size: 88, 77
+IdleUp
+  xy: 704, 526
+  size: 88, 77
+IdleUp
+  xy: 792, 526
+  size: 88, 77
+IdleDown
+  xy: 0, 603
+  size: 88, 77
+IdleDown
+  xy: 88, 603
+  size: 88, 77
+IdleDown
+  xy: 176, 603
+  size: 88, 77
+IdleDown
+  xy: 264, 603
+  size: 88, 77
+IdleDown
+  xy: 352, 603
+  size: 88, 77
+IdleDown
+  xy: 440, 603
+  size: 88, 77
+IdleDown
+  xy: 528, 603
+  size: 88, 77
+IdleDown
+  xy: 616, 603
+  size: 88, 77
+IdleDown
+  xy: 704, 603
+  size: 88, 77
+IdleDown
+  xy: 792, 603
+  size: 88, 77
+WalkUp
+  xy: 0, 680
+  size: 88, 77
+WalkUp
+  xy: 88, 680
+  size: 88, 77
+WalkUp
+  xy: 176, 680
+  size: 88, 77
+WalkUp
+  xy: 264, 680
+  size: 88, 77
+WalkUp
+  xy: 352, 680
+  size: 88, 77
+WalkUp
+  xy: 440, 680
+  size: 88, 77
+WalkDown
+  xy: 0, 757
+  size: 88, 77
+WalkDown
+  xy: 88, 757
+  size: 88, 77
+WalkDown
+  xy: 176, 757
+  size: 88, 77
+WalkDown
+  xy: 264, 757
+  size: 88, 77
+WalkDown
+  xy: 352, 757
+  size: 88, 77
+WalkDown
+  xy: 440, 757
+  size: 88, 77

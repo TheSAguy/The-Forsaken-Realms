@@ -14264,6 +14264,60 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 442: thirty more creature groups from the generator (cloud batch 8: the remaining creatures) (2026-10-04)
+
+The eighth cloud batch (procedural-pixel-creatures PR #8): the remaining creature sprites that more than one enemy
+shares, the two reworks the user sent back in rounds 437 and 438, and the trolls, ogres and yetis on the approved troll
+recipe. The user on the review: "The Cosmic Horror, needs more Horror and the Manticore can get a little more tune-up.
+And whatever other tweaks you want to do"; on the first reworked horror: "does not look like extra mouths. Just read
+blobs. Unless the animation opens the red"; then "Horror looks okay."
+
+- **The groups:**
+  - Criosphinx (with Sharuum, Unesh, Yennett, Atemsis, Isperia and Tivit): winged lions with ram's horns. Sphinx (with
+    Raffine, Eligeth and Anara, Arjun, Medomai, Azor and Eirdu): winged lions with a mane.
+  - Hydra (five heads; Zacama, The Goose Mother, Grakmaw, Polukranos, Crag Hydra of Shandalar with three to six) and
+    the great hydra (The Hydra of Shandalaar, Progenitus, O-Kagachi, Gargos, Gyrus, Zaxara, up to eight heads).
+  - Monkey (with Kari Zev, Otrimi, Kibo, Ragavan); Plant (with Loam Dryad, Six, Kaust, Chorus of the Conclave), walking
+    twig creatures.
+  - Stegosaurus (with Etali, Kalamax), reworked: a high arched back, two alternating rows of plates, a spiked tail.
+    Shrieker Mushroom, reworked: a tall pointed cap, red eyes and a gaping mouth.
+  - Cosmic Horror (with Yarok, Pir and Toothy), reworked: staring eyes all over a purple octopus and fanged maws, red
+    lips round a dark throat, that snap open and shut on their own beats and all gape in the attack; the first maw is
+    the face's mouth. Heart-Piercer Manticore (with Leori), reworked: a lion with a mane, bat wings and a scorpion's
+    tail.
+  - Golgari Fungus (with Akawalli, Nemata), Fungus (with Shroofus), Slimefoot (with The Mycotyrant), Hidden Bush (with
+    Bristly Bill and Gaea, the Worldsoul), Golgari Treefolk (with Ghave).
+  - Camel (with Walter, the Stray Camel), Wasp (with Zabaz), Brain Mole (with Kira), Lorthos (with Gyruda), two slimes
+    (Slogurk, Terrian), Boar (with Ilharg), Caracal (with Lurrus), Badger (with Hugs), Kitsa (with The Infamous
+    Cruelclaw).
+  - Yeti (with Isu), Uril, Mountain Ogre (with Kazuul), Brawny Ogre, Stone Troll, Mire Troll.
+- **New generator options** (opt-in): several heads, an arched back with plate rows and tail spikes, a hump, a
+  scorpion's tail, pale wings and bat wings, white markings, black markings for insects, a cone cap, a hidden bush, a
+  gaping mouth, giant plants, and a horror's staring eyes and gnashing maws.
+- **Duel portraits of the giants**: a creature over twice the portrait's 64 px square now shows a square twice as big,
+  halved. At 1x the square caught a patch of skin (Eirdu's head, Slimefoot's cap) or, for Lorthos, two tentacles; its
+  portrait, and Gyruda's in its group, is now centered on the dome (a new batch option, `"avatar": "top"`). The Hydra
+  of Shandalaar's shows more of its heads. Every other portrait is unchanged.
+- **Colors**: eight legends set by hand after checking the card art: Sharuum (near-black with pale wings), Unesh (dark
+  brown), Isperia (dark blue), Medomai (near-black), Progenitus (pale blue-white), Otrimi (pink), Zabaz (blue), Lurrus
+  (dark purple).
+- **Data only:**
+  - `sprites/enemy/remake/`: 166 new files (83 enemies).
+  - `world/enemies.json`: 83 sprites and 83 scales; no other field changed.
+  - Generator: procedural-pixel-creatures `cloud/batch-08` (the cloud's batch and the local review).
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves; 77 scales changed (the six bosses keep their hand-set drawn size:
+    the installer set their scale).
+  - `sprite_artifact_audit.py --only remake` (400 atlases, 33047 frames) flags 334 frames: the 18 new ones are small
+    shadow pieces (Walter and the camel, Isperia, Raffine and Eirdu, Leori and the manticore, Etali, the Golgari
+    Treefolk and Ghave, Isu).
+  - Before the portrait change Lorthos's portrait was flagged (two tentacle pieces); after it, every frame of the four
+    re-exported groups is identical and only the five portraits changed (Gyruda, in Lorthos's group, takes the
+    dome-centered square too).
+- Not yet seen in play. Console (F9): `spawn enemy Criosphinx`, `spawn enemy Hydra`, `spawn enemy "Cosmic Horror"`,
+  `spawn enemy "Heart-Piercer Manticore"`, `spawn enemy Stegosaurus`, `spawn enemy Monkey`, `spawn enemy Lorthos`.
+
 ## Round 441: the Player Capitol's Normal arena pays from every AI arena's sets too (2026-10-04)
 
 The user, asked whether to rebalance the Capitol arena like the AI ones: "For player Arena level 1. Add ALL the sets the

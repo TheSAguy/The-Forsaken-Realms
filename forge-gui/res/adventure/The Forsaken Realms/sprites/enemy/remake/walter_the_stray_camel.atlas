@@ -1,0 +1,284 @@
+walter_the_stray_camel.png
+size: 2100,1394
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 140, 133
+Idle
+  xy: 140, 64
+  size: 140, 133
+Idle
+  xy: 280, 64
+  size: 140, 133
+Idle
+  xy: 420, 64
+  size: 140, 133
+Idle
+  xy: 560, 64
+  size: 140, 133
+Idle
+  xy: 700, 64
+  size: 140, 133
+Idle
+  xy: 840, 64
+  size: 140, 133
+Idle
+  xy: 980, 64
+  size: 140, 133
+Idle
+  xy: 1120, 64
+  size: 140, 133
+Idle
+  xy: 1260, 64
+  size: 140, 133
+Walk
+  xy: 0, 197
+  size: 140, 133
+Walk
+  xy: 140, 197
+  size: 140, 133
+Walk
+  xy: 280, 197
+  size: 140, 133
+Walk
+  xy: 420, 197
+  size: 140, 133
+Walk
+  xy: 560, 197
+  size: 140, 133
+Walk
+  xy: 700, 197
+  size: 140, 133
+Attack
+  xy: 0, 330
+  size: 140, 133
+Attack
+  xy: 140, 330
+  size: 140, 133
+Attack
+  xy: 280, 330
+  size: 140, 133
+Attack
+  xy: 420, 330
+  size: 140, 133
+Attack
+  xy: 560, 330
+  size: 140, 133
+Attack
+  xy: 700, 330
+  size: 140, 133
+Attack
+  xy: 840, 330
+  size: 140, 133
+Attack
+  xy: 980, 330
+  size: 140, 133
+Attack
+  xy: 1120, 330
+  size: 140, 133
+Attack
+  xy: 1260, 330
+  size: 140, 133
+Attack
+  xy: 1400, 330
+  size: 140, 133
+Attack
+  xy: 1540, 330
+  size: 140, 133
+Attack
+  xy: 1680, 330
+  size: 140, 133
+Hit
+  xy: 0, 463
+  size: 140, 133
+Hit
+  xy: 140, 463
+  size: 140, 133
+Hit
+  xy: 280, 463
+  size: 140, 133
+Hit
+  xy: 420, 463
+  size: 140, 133
+Hit
+  xy: 560, 463
+  size: 140, 133
+Hit
+  xy: 700, 463
+  size: 140, 133
+Hit
+  xy: 840, 463
+  size: 140, 133
+Death
+  xy: 0, 596
+  size: 140, 133
+Death
+  xy: 140, 596
+  size: 140, 133
+Death
+  xy: 280, 596
+  size: 140, 133
+Death
+  xy: 420, 596
+  size: 140, 133
+Death
+  xy: 560, 596
+  size: 140, 133
+Death
+  xy: 700, 596
+  size: 140, 133
+Death
+  xy: 840, 596
+  size: 140, 133
+Death
+  xy: 980, 596
+  size: 140, 133
+Death
+  xy: 1120, 596
+  size: 140, 133
+Death
+  xy: 1260, 596
+  size: 140, 133
+Death
+  xy: 1400, 596
+  size: 140, 133
+Death
+  xy: 1540, 596
+  size: 140, 133
+Death
+  xy: 1680, 596
+  size: 140, 133
+Death
+  xy: 1820, 596
+  size: 140, 133
+Death
+  xy: 1960, 596
+  size: 140, 133
+Wake
+  xy: 0, 729
+  size: 140, 133
+Wake
+  xy: 140, 729
+  size: 140, 133
+Wake
+  xy: 280, 729
+  size: 140, 133
+Wake
+  xy: 420, 729
+  size: 140, 133
+Wake
+  xy: 560, 729
+  size: 140, 133
+Wake
+  xy: 700, 729
+  size: 140, 133
+Wake
+  xy: 840, 729
+  size: 140, 133
+Wake
+  xy: 980, 729
+  size: 140, 133
+Wake
+  xy: 1120, 729
+  size: 140, 133
+IdleUp
+  xy: 0, 862
+  size: 140, 133
+IdleUp
+  xy: 140, 862
+  size: 140, 133
+IdleUp
+  xy: 280, 862
+  size: 140, 133
+IdleUp
+  xy: 420, 862
+  size: 140, 133
+IdleUp
+  xy: 560, 862
+  size: 140, 133
+IdleUp
+  xy: 700, 862
+  size: 140, 133
+IdleUp
+  xy: 840, 862
+  size: 140, 133
+IdleUp
+  xy: 980, 862
+  size: 140, 133
+IdleUp
+  xy: 1120, 862
+  size: 140, 133
+IdleUp
+  xy: 1260, 862
+  size: 140, 133
+IdleDown
+  xy: 0, 995
+  size: 140, 133
+IdleDown
+  xy: 140, 995
+  size: 140, 133
+IdleDown
+  xy: 280, 995
+  size: 140, 133
+IdleDown
+  xy: 420, 995
+  size: 140, 133
+IdleDown
+  xy: 560, 995
+  size: 140, 133
+IdleDown
+  xy: 700, 995
+  size: 140, 133
+IdleDown
+  xy: 840, 995
+  size: 140, 133
+IdleDown
+  xy: 980, 995
+  size: 140, 133
+IdleDown
+  xy: 1120, 995
+  size: 140, 133
+IdleDown
+  xy: 1260, 995
+  size: 140, 133
+WalkUp
+  xy: 0, 1128
+  size: 140, 133
+WalkUp
+  xy: 140, 1128
+  size: 140, 133
+WalkUp
+  xy: 280, 1128
+  size: 140, 133
+WalkUp
+  xy: 420, 1128
+  size: 140, 133
+WalkUp
+  xy: 560, 1128
+  size: 140, 133
+WalkUp
+  xy: 700, 1128
+  size: 140, 133
+WalkDown
+  xy: 0, 1261
+  size: 140, 133
+WalkDown
+  xy: 140, 1261
+  size: 140, 133
+WalkDown
+  xy: 280, 1261
+  size: 140, 133
+WalkDown
+  xy: 420, 1261
+  size: 140, 133
+WalkDown
+  xy: 560, 1261
+  size: 140, 133
+WalkDown
+  xy: 700, 1261
+  size: 140, 133

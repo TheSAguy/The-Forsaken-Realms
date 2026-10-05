@@ -1,0 +1,278 @@
+gargos.png
+size: 2040,984
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 120, 92
+Idle
+  xy: 120, 64
+  size: 120, 92
+Idle
+  xy: 240, 64
+  size: 120, 92
+Idle
+  xy: 360, 64
+  size: 120, 92
+Idle
+  xy: 480, 64
+  size: 120, 92
+Idle
+  xy: 600, 64
+  size: 120, 92
+Idle
+  xy: 720, 64
+  size: 120, 92
+Idle
+  xy: 840, 64
+  size: 120, 92
+Idle
+  xy: 960, 64
+  size: 120, 92
+Idle
+  xy: 1080, 64
+  size: 120, 92
+Walk
+  xy: 0, 156
+  size: 120, 92
+Walk
+  xy: 120, 156
+  size: 120, 92
+Walk
+  xy: 240, 156
+  size: 120, 92
+Walk
+  xy: 360, 156
+  size: 120, 92
+Walk
+  xy: 480, 156
+  size: 120, 92
+Walk
+  xy: 600, 156
+  size: 120, 92
+Attack
+  xy: 0, 248
+  size: 120, 92
+Attack
+  xy: 120, 248
+  size: 120, 92
+Attack
+  xy: 240, 248
+  size: 120, 92
+Attack
+  xy: 360, 248
+  size: 120, 92
+Attack
+  xy: 480, 248
+  size: 120, 92
+Attack
+  xy: 600, 248
+  size: 120, 92
+Attack
+  xy: 720, 248
+  size: 120, 92
+Attack
+  xy: 840, 248
+  size: 120, 92
+Attack
+  xy: 960, 248
+  size: 120, 92
+Hit
+  xy: 0, 340
+  size: 120, 92
+Hit
+  xy: 120, 340
+  size: 120, 92
+Hit
+  xy: 240, 340
+  size: 120, 92
+Hit
+  xy: 360, 340
+  size: 120, 92
+Hit
+  xy: 480, 340
+  size: 120, 92
+Hit
+  xy: 600, 340
+  size: 120, 92
+Hit
+  xy: 720, 340
+  size: 120, 92
+Death
+  xy: 0, 432
+  size: 120, 92
+Death
+  xy: 120, 432
+  size: 120, 92
+Death
+  xy: 240, 432
+  size: 120, 92
+Death
+  xy: 360, 432
+  size: 120, 92
+Death
+  xy: 480, 432
+  size: 120, 92
+Death
+  xy: 600, 432
+  size: 120, 92
+Death
+  xy: 720, 432
+  size: 120, 92
+Death
+  xy: 840, 432
+  size: 120, 92
+Death
+  xy: 960, 432
+  size: 120, 92
+Death
+  xy: 1080, 432
+  size: 120, 92
+Death
+  xy: 1200, 432
+  size: 120, 92
+Death
+  xy: 1320, 432
+  size: 120, 92
+Death
+  xy: 1440, 432
+  size: 120, 92
+Death
+  xy: 1560, 432
+  size: 120, 92
+Death
+  xy: 1680, 432
+  size: 120, 92
+Death
+  xy: 1800, 432
+  size: 120, 92
+Death
+  xy: 1920, 432
+  size: 120, 92
+Wake
+  xy: 0, 524
+  size: 120, 92
+Wake
+  xy: 120, 524
+  size: 120, 92
+Wake
+  xy: 240, 524
+  size: 120, 92
+Wake
+  xy: 360, 524
+  size: 120, 92
+Wake
+  xy: 480, 524
+  size: 120, 92
+Wake
+  xy: 600, 524
+  size: 120, 92
+Wake
+  xy: 720, 524
+  size: 120, 92
+Wake
+  xy: 840, 524
+  size: 120, 92
+Wake
+  xy: 960, 524
+  size: 120, 92
+IdleUp
+  xy: 0, 616
+  size: 120, 92
+IdleUp
+  xy: 120, 616
+  size: 120, 92
+IdleUp
+  xy: 240, 616
+  size: 120, 92
+IdleUp
+  xy: 360, 616
+  size: 120, 92
+IdleUp
+  xy: 480, 616
+  size: 120, 92
+IdleUp
+  xy: 600, 616
+  size: 120, 92
+IdleUp
+  xy: 720, 616
+  size: 120, 92
+IdleUp
+  xy: 840, 616
+  size: 120, 92
+IdleUp
+  xy: 960, 616
+  size: 120, 92
+IdleUp
+  xy: 1080, 616
+  size: 120, 92
+IdleDown
+  xy: 0, 708
+  size: 120, 92
+IdleDown
+  xy: 120, 708
+  size: 120, 92
+IdleDown
+  xy: 240, 708
+  size: 120, 92
+IdleDown
+  xy: 360, 708
+  size: 120, 92
+IdleDown
+  xy: 480, 708
+  size: 120, 92
+IdleDown
+  xy: 600, 708
+  size: 120, 92
+IdleDown
+  xy: 720, 708
+  size: 120, 92
+IdleDown
+  xy: 840, 708
+  size: 120, 92
+IdleDown
+  xy: 960, 708
+  size: 120, 92
+IdleDown
+  xy: 1080, 708
+  size: 120, 92
+WalkUp
+  xy: 0, 800
+  size: 120, 92
+WalkUp
+  xy: 120, 800
+  size: 120, 92
+WalkUp
+  xy: 240, 800
+  size: 120, 92
+WalkUp
+  xy: 360, 800
+  size: 120, 92
+WalkUp
+  xy: 480, 800
+  size: 120, 92
+WalkUp
+  xy: 600, 800
+  size: 120, 92
+WalkDown
+  xy: 0, 892
+  size: 120, 92
+WalkDown
+  xy: 120, 892
+  size: 120, 92
+WalkDown
+  xy: 240, 892
+  size: 120, 92
+WalkDown
+  xy: 360, 892
+  size: 120, 92
+WalkDown
+  xy: 480, 892
+  size: 120, 92
+WalkDown
+  xy: 600, 892
+  size: 120, 92

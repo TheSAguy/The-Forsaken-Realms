@@ -1,0 +1,257 @@
+gaea_the_worldsoul.png
+size: 1980,1554
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 132, 149
+Idle
+  xy: 132, 64
+  size: 132, 149
+Idle
+  xy: 264, 64
+  size: 132, 149
+Idle
+  xy: 396, 64
+  size: 132, 149
+Idle
+  xy: 528, 64
+  size: 132, 149
+Idle
+  xy: 660, 64
+  size: 132, 149
+Idle
+  xy: 792, 64
+  size: 132, 149
+Idle
+  xy: 924, 64
+  size: 132, 149
+Idle
+  xy: 1056, 64
+  size: 132, 149
+Idle
+  xy: 1188, 64
+  size: 132, 149
+Walk
+  xy: 0, 213
+  size: 132, 149
+Walk
+  xy: 132, 213
+  size: 132, 149
+Walk
+  xy: 264, 213
+  size: 132, 149
+Walk
+  xy: 396, 213
+  size: 132, 149
+Attack
+  xy: 0, 362
+  size: 132, 149
+Attack
+  xy: 132, 362
+  size: 132, 149
+Attack
+  xy: 264, 362
+  size: 132, 149
+Attack
+  xy: 396, 362
+  size: 132, 149
+Attack
+  xy: 528, 362
+  size: 132, 149
+Attack
+  xy: 660, 362
+  size: 132, 149
+Attack
+  xy: 792, 362
+  size: 132, 149
+Attack
+  xy: 924, 362
+  size: 132, 149
+Attack
+  xy: 1056, 362
+  size: 132, 149
+Attack
+  xy: 1188, 362
+  size: 132, 149
+Attack
+  xy: 1320, 362
+  size: 132, 149
+Attack
+  xy: 1452, 362
+  size: 132, 149
+Hit
+  xy: 0, 511
+  size: 132, 149
+Hit
+  xy: 132, 511
+  size: 132, 149
+Hit
+  xy: 264, 511
+  size: 132, 149
+Hit
+  xy: 396, 511
+  size: 132, 149
+Hit
+  xy: 528, 511
+  size: 132, 149
+Hit
+  xy: 660, 511
+  size: 132, 149
+Death
+  xy: 0, 660
+  size: 132, 149
+Death
+  xy: 132, 660
+  size: 132, 149
+Death
+  xy: 264, 660
+  size: 132, 149
+Death
+  xy: 396, 660
+  size: 132, 149
+Death
+  xy: 528, 660
+  size: 132, 149
+Death
+  xy: 660, 660
+  size: 132, 149
+Death
+  xy: 792, 660
+  size: 132, 149
+Death
+  xy: 924, 660
+  size: 132, 149
+Death
+  xy: 1056, 660
+  size: 132, 149
+Death
+  xy: 1188, 660
+  size: 132, 149
+Death
+  xy: 1320, 660
+  size: 132, 149
+Death
+  xy: 1452, 660
+  size: 132, 149
+Death
+  xy: 1584, 660
+  size: 132, 149
+Death
+  xy: 1716, 660
+  size: 132, 149
+Death
+  xy: 1848, 660
+  size: 132, 149
+Wake
+  xy: 0, 809
+  size: 132, 149
+Wake
+  xy: 132, 809
+  size: 132, 149
+Wake
+  xy: 264, 809
+  size: 132, 149
+Wake
+  xy: 396, 809
+  size: 132, 149
+Wake
+  xy: 528, 809
+  size: 132, 149
+Wake
+  xy: 660, 809
+  size: 132, 149
+Wake
+  xy: 792, 809
+  size: 132, 149
+Wake
+  xy: 924, 809
+  size: 132, 149
+IdleUp
+  xy: 0, 958
+  size: 132, 149
+IdleUp
+  xy: 132, 958
+  size: 132, 149
+IdleUp
+  xy: 264, 958
+  size: 132, 149
+IdleUp
+  xy: 396, 958
+  size: 132, 149
+IdleUp
+  xy: 528, 958
+  size: 132, 149
+IdleUp
+  xy: 660, 958
+  size: 132, 149
+IdleUp
+  xy: 792, 958
+  size: 132, 149
+IdleUp
+  xy: 924, 958
+  size: 132, 149
+IdleUp
+  xy: 1056, 958
+  size: 132, 149
+IdleUp
+  xy: 1188, 958
+  size: 132, 149
+IdleDown
+  xy: 0, 1107
+  size: 132, 149
+IdleDown
+  xy: 132, 1107
+  size: 132, 149
+IdleDown
+  xy: 264, 1107
+  size: 132, 149
+IdleDown
+  xy: 396, 1107
+  size: 132, 149
+IdleDown
+  xy: 528, 1107
+  size: 132, 149
+IdleDown
+  xy: 660, 1107
+  size: 132, 149
+IdleDown
+  xy: 792, 1107
+  size: 132, 149
+IdleDown
+  xy: 924, 1107
+  size: 132, 149
+IdleDown
+  xy: 1056, 1107
+  size: 132, 149
+IdleDown
+  xy: 1188, 1107
+  size: 132, 149
+WalkUp
+  xy: 0, 1256
+  size: 132, 149
+WalkUp
+  xy: 132, 1256
+  size: 132, 149
+WalkUp
+  xy: 264, 1256
+  size: 132, 149
+WalkUp
+  xy: 396, 1256
+  size: 132, 149
+WalkDown
+  xy: 0, 1405
+  size: 132, 149
+WalkDown
+  xy: 132, 1405
+  size: 132, 149
+WalkDown
+  xy: 264, 1405
+  size: 132, 149
+WalkDown
+  xy: 396, 1405
+  size: 132, 149

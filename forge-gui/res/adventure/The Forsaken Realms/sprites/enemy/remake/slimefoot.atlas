@@ -1,0 +1,263 @@
+slimefoot.png
+size: 2992,2114
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 176, 205
+Idle
+  xy: 176, 64
+  size: 176, 205
+Idle
+  xy: 352, 64
+  size: 176, 205
+Idle
+  xy: 528, 64
+  size: 176, 205
+Idle
+  xy: 704, 64
+  size: 176, 205
+Idle
+  xy: 880, 64
+  size: 176, 205
+Idle
+  xy: 1056, 64
+  size: 176, 205
+Idle
+  xy: 1232, 64
+  size: 176, 205
+Idle
+  xy: 1408, 64
+  size: 176, 205
+Idle
+  xy: 1584, 64
+  size: 176, 205
+Walk
+  xy: 0, 269
+  size: 176, 205
+Walk
+  xy: 176, 269
+  size: 176, 205
+Walk
+  xy: 352, 269
+  size: 176, 205
+Walk
+  xy: 528, 269
+  size: 176, 205
+Attack
+  xy: 0, 474
+  size: 176, 205
+Attack
+  xy: 176, 474
+  size: 176, 205
+Attack
+  xy: 352, 474
+  size: 176, 205
+Attack
+  xy: 528, 474
+  size: 176, 205
+Attack
+  xy: 704, 474
+  size: 176, 205
+Attack
+  xy: 880, 474
+  size: 176, 205
+Attack
+  xy: 1056, 474
+  size: 176, 205
+Attack
+  xy: 1232, 474
+  size: 176, 205
+Attack
+  xy: 1408, 474
+  size: 176, 205
+Attack
+  xy: 1584, 474
+  size: 176, 205
+Hit
+  xy: 0, 679
+  size: 176, 205
+Hit
+  xy: 176, 679
+  size: 176, 205
+Hit
+  xy: 352, 679
+  size: 176, 205
+Hit
+  xy: 528, 679
+  size: 176, 205
+Hit
+  xy: 704, 679
+  size: 176, 205
+Hit
+  xy: 880, 679
+  size: 176, 205
+Hit
+  xy: 1056, 679
+  size: 176, 205
+Death
+  xy: 0, 884
+  size: 176, 205
+Death
+  xy: 176, 884
+  size: 176, 205
+Death
+  xy: 352, 884
+  size: 176, 205
+Death
+  xy: 528, 884
+  size: 176, 205
+Death
+  xy: 704, 884
+  size: 176, 205
+Death
+  xy: 880, 884
+  size: 176, 205
+Death
+  xy: 1056, 884
+  size: 176, 205
+Death
+  xy: 1232, 884
+  size: 176, 205
+Death
+  xy: 1408, 884
+  size: 176, 205
+Death
+  xy: 1584, 884
+  size: 176, 205
+Death
+  xy: 1760, 884
+  size: 176, 205
+Death
+  xy: 1936, 884
+  size: 176, 205
+Death
+  xy: 2112, 884
+  size: 176, 205
+Death
+  xy: 2288, 884
+  size: 176, 205
+Death
+  xy: 2464, 884
+  size: 176, 205
+Death
+  xy: 2640, 884
+  size: 176, 205
+Death
+  xy: 2816, 884
+  size: 176, 205
+Wake
+  xy: 0, 1089
+  size: 176, 205
+Wake
+  xy: 176, 1089
+  size: 176, 205
+Wake
+  xy: 352, 1089
+  size: 176, 205
+Wake
+  xy: 528, 1089
+  size: 176, 205
+Wake
+  xy: 704, 1089
+  size: 176, 205
+Wake
+  xy: 880, 1089
+  size: 176, 205
+Wake
+  xy: 1056, 1089
+  size: 176, 205
+Wake
+  xy: 1232, 1089
+  size: 176, 205
+Wake
+  xy: 1408, 1089
+  size: 176, 205
+IdleUp
+  xy: 0, 1294
+  size: 176, 205
+IdleUp
+  xy: 176, 1294
+  size: 176, 205
+IdleUp
+  xy: 352, 1294
+  size: 176, 205
+IdleUp
+  xy: 528, 1294
+  size: 176, 205
+IdleUp
+  xy: 704, 1294
+  size: 176, 205
+IdleUp
+  xy: 880, 1294
+  size: 176, 205
+IdleUp
+  xy: 1056, 1294
+  size: 176, 205
+IdleUp
+  xy: 1232, 1294
+  size: 176, 205
+IdleUp
+  xy: 1408, 1294
+  size: 176, 205
+IdleUp
+  xy: 1584, 1294
+  size: 176, 205
+IdleDown
+  xy: 0, 1499
+  size: 176, 205
+IdleDown
+  xy: 176, 1499
+  size: 176, 205
+IdleDown
+  xy: 352, 1499
+  size: 176, 205
+IdleDown
+  xy: 528, 1499
+  size: 176, 205
+IdleDown
+  xy: 704, 1499
+  size: 176, 205
+IdleDown
+  xy: 880, 1499
+  size: 176, 205
+IdleDown
+  xy: 1056, 1499
+  size: 176, 205
+IdleDown
+  xy: 1232, 1499
+  size: 176, 205
+IdleDown
+  xy: 1408, 1499
+  size: 176, 205
+IdleDown
+  xy: 1584, 1499
+  size: 176, 205
+WalkUp
+  xy: 0, 1704
+  size: 176, 205
+WalkUp
+  xy: 176, 1704
+  size: 176, 205
+WalkUp
+  xy: 352, 1704
+  size: 176, 205
+WalkUp
+  xy: 528, 1704
+  size: 176, 205
+WalkDown
+  xy: 0, 1909
+  size: 176, 205
+WalkDown
+  xy: 176, 1909
+  size: 176, 205
+WalkDown
+  xy: 352, 1909
+  size: 176, 205
+WalkDown
+  xy: 528, 1909
+  size: 176, 205

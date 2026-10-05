@@ -1,0 +1,254 @@
+yeti.png
+size: 924,704
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 66, 64
+Idle
+  xy: 66, 64
+  size: 66, 64
+Idle
+  xy: 132, 64
+  size: 66, 64
+Idle
+  xy: 198, 64
+  size: 66, 64
+Idle
+  xy: 264, 64
+  size: 66, 64
+Idle
+  xy: 330, 64
+  size: 66, 64
+Idle
+  xy: 396, 64
+  size: 66, 64
+Idle
+  xy: 462, 64
+  size: 66, 64
+Idle
+  xy: 528, 64
+  size: 66, 64
+Idle
+  xy: 594, 64
+  size: 66, 64
+Walk
+  xy: 0, 128
+  size: 66, 64
+Walk
+  xy: 66, 128
+  size: 66, 64
+Walk
+  xy: 132, 128
+  size: 66, 64
+Walk
+  xy: 198, 128
+  size: 66, 64
+Walk
+  xy: 264, 128
+  size: 66, 64
+Walk
+  xy: 330, 128
+  size: 66, 64
+Attack
+  xy: 0, 192
+  size: 66, 64
+Attack
+  xy: 66, 192
+  size: 66, 64
+Attack
+  xy: 132, 192
+  size: 66, 64
+Attack
+  xy: 198, 192
+  size: 66, 64
+Attack
+  xy: 264, 192
+  size: 66, 64
+Attack
+  xy: 330, 192
+  size: 66, 64
+Attack
+  xy: 396, 192
+  size: 66, 64
+Attack
+  xy: 462, 192
+  size: 66, 64
+Hit
+  xy: 0, 256
+  size: 66, 64
+Hit
+  xy: 66, 256
+  size: 66, 64
+Hit
+  xy: 132, 256
+  size: 66, 64
+Hit
+  xy: 198, 256
+  size: 66, 64
+Hit
+  xy: 264, 256
+  size: 66, 64
+Death
+  xy: 0, 320
+  size: 66, 64
+Death
+  xy: 66, 320
+  size: 66, 64
+Death
+  xy: 132, 320
+  size: 66, 64
+Death
+  xy: 198, 320
+  size: 66, 64
+Death
+  xy: 264, 320
+  size: 66, 64
+Death
+  xy: 330, 320
+  size: 66, 64
+Death
+  xy: 396, 320
+  size: 66, 64
+Death
+  xy: 462, 320
+  size: 66, 64
+Death
+  xy: 528, 320
+  size: 66, 64
+Death
+  xy: 594, 320
+  size: 66, 64
+Death
+  xy: 660, 320
+  size: 66, 64
+Death
+  xy: 726, 320
+  size: 66, 64
+Death
+  xy: 792, 320
+  size: 66, 64
+Death
+  xy: 858, 320
+  size: 66, 64
+Wake
+  xy: 0, 384
+  size: 66, 64
+Wake
+  xy: 66, 384
+  size: 66, 64
+Wake
+  xy: 132, 384
+  size: 66, 64
+Wake
+  xy: 198, 384
+  size: 66, 64
+Wake
+  xy: 264, 384
+  size: 66, 64
+Wake
+  xy: 330, 384
+  size: 66, 64
+Wake
+  xy: 396, 384
+  size: 66, 64
+IdleUp
+  xy: 0, 448
+  size: 66, 64
+IdleUp
+  xy: 66, 448
+  size: 66, 64
+IdleUp
+  xy: 132, 448
+  size: 66, 64
+IdleUp
+  xy: 198, 448
+  size: 66, 64
+IdleUp
+  xy: 264, 448
+  size: 66, 64
+IdleUp
+  xy: 330, 448
+  size: 66, 64
+IdleUp
+  xy: 396, 448
+  size: 66, 64
+IdleUp
+  xy: 462, 448
+  size: 66, 64
+IdleUp
+  xy: 528, 448
+  size: 66, 64
+IdleUp
+  xy: 594, 448
+  size: 66, 64
+IdleDown
+  xy: 0, 512
+  size: 66, 64
+IdleDown
+  xy: 66, 512
+  size: 66, 64
+IdleDown
+  xy: 132, 512
+  size: 66, 64
+IdleDown
+  xy: 198, 512
+  size: 66, 64
+IdleDown
+  xy: 264, 512
+  size: 66, 64
+IdleDown
+  xy: 330, 512
+  size: 66, 64
+IdleDown
+  xy: 396, 512
+  size: 66, 64
+IdleDown
+  xy: 462, 512
+  size: 66, 64
+IdleDown
+  xy: 528, 512
+  size: 66, 64
+IdleDown
+  xy: 594, 512
+  size: 66, 64
+WalkUp
+  xy: 0, 576
+  size: 66, 64
+WalkUp
+  xy: 66, 576
+  size: 66, 64
+WalkUp
+  xy: 132, 576
+  size: 66, 64
+WalkUp
+  xy: 198, 576
+  size: 66, 64
+WalkUp
+  xy: 264, 576
+  size: 66, 64
+WalkUp
+  xy: 330, 576
+  size: 66, 64
+WalkDown
+  xy: 0, 640
+  size: 66, 64
+WalkDown
+  xy: 66, 640
+  size: 66, 64
+WalkDown
+  xy: 132, 640
+  size: 66, 64
+WalkDown
+  xy: 198, 640
+  size: 66, 64
+WalkDown
+  xy: 264, 640
+  size: 66, 64
+WalkDown
+  xy: 330, 640
+  size: 66, 64

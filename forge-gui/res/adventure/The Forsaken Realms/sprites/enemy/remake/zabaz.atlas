@@ -1,0 +1,248 @@
+zabaz.png
+size: 1540,884
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 110, 82
+Idle
+  xy: 110, 64
+  size: 110, 82
+Idle
+  xy: 220, 64
+  size: 110, 82
+Idle
+  xy: 330, 64
+  size: 110, 82
+Idle
+  xy: 440, 64
+  size: 110, 82
+Idle
+  xy: 550, 64
+  size: 110, 82
+Idle
+  xy: 660, 64
+  size: 110, 82
+Idle
+  xy: 770, 64
+  size: 110, 82
+Idle
+  xy: 880, 64
+  size: 110, 82
+Idle
+  xy: 990, 64
+  size: 110, 82
+Walk
+  xy: 0, 146
+  size: 110, 82
+Walk
+  xy: 110, 146
+  size: 110, 82
+Walk
+  xy: 220, 146
+  size: 110, 82
+Walk
+  xy: 330, 146
+  size: 110, 82
+Walk
+  xy: 440, 146
+  size: 110, 82
+Walk
+  xy: 550, 146
+  size: 110, 82
+Attack
+  xy: 0, 228
+  size: 110, 82
+Attack
+  xy: 110, 228
+  size: 110, 82
+Attack
+  xy: 220, 228
+  size: 110, 82
+Attack
+  xy: 330, 228
+  size: 110, 82
+Attack
+  xy: 440, 228
+  size: 110, 82
+Attack
+  xy: 550, 228
+  size: 110, 82
+Hit
+  xy: 0, 310
+  size: 110, 82
+Hit
+  xy: 110, 310
+  size: 110, 82
+Hit
+  xy: 220, 310
+  size: 110, 82
+Hit
+  xy: 330, 310
+  size: 110, 82
+Hit
+  xy: 440, 310
+  size: 110, 82
+Death
+  xy: 0, 392
+  size: 110, 82
+Death
+  xy: 110, 392
+  size: 110, 82
+Death
+  xy: 220, 392
+  size: 110, 82
+Death
+  xy: 330, 392
+  size: 110, 82
+Death
+  xy: 440, 392
+  size: 110, 82
+Death
+  xy: 550, 392
+  size: 110, 82
+Death
+  xy: 660, 392
+  size: 110, 82
+Death
+  xy: 770, 392
+  size: 110, 82
+Death
+  xy: 880, 392
+  size: 110, 82
+Death
+  xy: 990, 392
+  size: 110, 82
+Death
+  xy: 1100, 392
+  size: 110, 82
+Death
+  xy: 1210, 392
+  size: 110, 82
+Death
+  xy: 1320, 392
+  size: 110, 82
+Death
+  xy: 1430, 392
+  size: 110, 82
+Wake
+  xy: 0, 474
+  size: 110, 82
+Wake
+  xy: 110, 474
+  size: 110, 82
+Wake
+  xy: 220, 474
+  size: 110, 82
+Wake
+  xy: 330, 474
+  size: 110, 82
+Wake
+  xy: 440, 474
+  size: 110, 82
+Wake
+  xy: 550, 474
+  size: 110, 82
+Wake
+  xy: 660, 474
+  size: 110, 82
+IdleUp
+  xy: 0, 556
+  size: 110, 82
+IdleUp
+  xy: 110, 556
+  size: 110, 82
+IdleUp
+  xy: 220, 556
+  size: 110, 82
+IdleUp
+  xy: 330, 556
+  size: 110, 82
+IdleUp
+  xy: 440, 556
+  size: 110, 82
+IdleUp
+  xy: 550, 556
+  size: 110, 82
+IdleUp
+  xy: 660, 556
+  size: 110, 82
+IdleUp
+  xy: 770, 556
+  size: 110, 82
+IdleUp
+  xy: 880, 556
+  size: 110, 82
+IdleUp
+  xy: 990, 556
+  size: 110, 82
+IdleDown
+  xy: 0, 638
+  size: 110, 82
+IdleDown
+  xy: 110, 638
+  size: 110, 82
+IdleDown
+  xy: 220, 638
+  size: 110, 82
+IdleDown
+  xy: 330, 638
+  size: 110, 82
+IdleDown
+  xy: 440, 638
+  size: 110, 82
+IdleDown
+  xy: 550, 638
+  size: 110, 82
+IdleDown
+  xy: 660, 638
+  size: 110, 82
+IdleDown
+  xy: 770, 638
+  size: 110, 82
+IdleDown
+  xy: 880, 638
+  size: 110, 82
+IdleDown
+  xy: 990, 638
+  size: 110, 82
+WalkUp
+  xy: 0, 720
+  size: 110, 82
+WalkUp
+  xy: 110, 720
+  size: 110, 82
+WalkUp
+  xy: 220, 720
+  size: 110, 82
+WalkUp
+  xy: 330, 720
+  size: 110, 82
+WalkUp
+  xy: 440, 720
+  size: 110, 82
+WalkUp
+  xy: 550, 720
+  size: 110, 82
+WalkDown
+  xy: 0, 802
+  size: 110, 82
+WalkDown
+  xy: 110, 802
+  size: 110, 82
+WalkDown
+  xy: 220, 802
+  size: 110, 82
+WalkDown
+  xy: 330, 802
+  size: 110, 82
+WalkDown
+  xy: 440, 802
+  size: 110, 82
+WalkDown
+  xy: 550, 802
+  size: 110, 82

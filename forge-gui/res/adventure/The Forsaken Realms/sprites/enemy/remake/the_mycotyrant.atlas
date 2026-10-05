@@ -1,0 +1,224 @@
+the_mycotyrant.png
+size: 884,824
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 68, 76
+Idle
+  xy: 68, 64
+  size: 68, 76
+Idle
+  xy: 136, 64
+  size: 68, 76
+Idle
+  xy: 204, 64
+  size: 68, 76
+Idle
+  xy: 272, 64
+  size: 68, 76
+Idle
+  xy: 340, 64
+  size: 68, 76
+Idle
+  xy: 408, 64
+  size: 68, 76
+Idle
+  xy: 476, 64
+  size: 68, 76
+Idle
+  xy: 544, 64
+  size: 68, 76
+Idle
+  xy: 612, 64
+  size: 68, 76
+Walk
+  xy: 0, 140
+  size: 68, 76
+Walk
+  xy: 68, 140
+  size: 68, 76
+Walk
+  xy: 136, 140
+  size: 68, 76
+Walk
+  xy: 204, 140
+  size: 68, 76
+Attack
+  xy: 0, 216
+  size: 68, 76
+Attack
+  xy: 68, 216
+  size: 68, 76
+Attack
+  xy: 136, 216
+  size: 68, 76
+Attack
+  xy: 204, 216
+  size: 68, 76
+Attack
+  xy: 272, 216
+  size: 68, 76
+Attack
+  xy: 340, 216
+  size: 68, 76
+Attack
+  xy: 408, 216
+  size: 68, 76
+Hit
+  xy: 0, 292
+  size: 68, 76
+Hit
+  xy: 68, 292
+  size: 68, 76
+Hit
+  xy: 136, 292
+  size: 68, 76
+Hit
+  xy: 204, 292
+  size: 68, 76
+Death
+  xy: 0, 368
+  size: 68, 76
+Death
+  xy: 68, 368
+  size: 68, 76
+Death
+  xy: 136, 368
+  size: 68, 76
+Death
+  xy: 204, 368
+  size: 68, 76
+Death
+  xy: 272, 368
+  size: 68, 76
+Death
+  xy: 340, 368
+  size: 68, 76
+Death
+  xy: 408, 368
+  size: 68, 76
+Death
+  xy: 476, 368
+  size: 68, 76
+Death
+  xy: 544, 368
+  size: 68, 76
+Death
+  xy: 612, 368
+  size: 68, 76
+Death
+  xy: 680, 368
+  size: 68, 76
+Death
+  xy: 748, 368
+  size: 68, 76
+Death
+  xy: 816, 368
+  size: 68, 76
+Wake
+  xy: 0, 444
+  size: 68, 76
+Wake
+  xy: 68, 444
+  size: 68, 76
+Wake
+  xy: 136, 444
+  size: 68, 76
+Wake
+  xy: 204, 444
+  size: 68, 76
+Wake
+  xy: 272, 444
+  size: 68, 76
+Wake
+  xy: 340, 444
+  size: 68, 76
+IdleUp
+  xy: 0, 520
+  size: 68, 76
+IdleUp
+  xy: 68, 520
+  size: 68, 76
+IdleUp
+  xy: 136, 520
+  size: 68, 76
+IdleUp
+  xy: 204, 520
+  size: 68, 76
+IdleUp
+  xy: 272, 520
+  size: 68, 76
+IdleUp
+  xy: 340, 520
+  size: 68, 76
+IdleUp
+  xy: 408, 520
+  size: 68, 76
+IdleUp
+  xy: 476, 520
+  size: 68, 76
+IdleUp
+  xy: 544, 520
+  size: 68, 76
+IdleUp
+  xy: 612, 520
+  size: 68, 76
+IdleDown
+  xy: 0, 596
+  size: 68, 76
+IdleDown
+  xy: 68, 596
+  size: 68, 76
+IdleDown
+  xy: 136, 596
+  size: 68, 76
+IdleDown
+  xy: 204, 596
+  size: 68, 76
+IdleDown
+  xy: 272, 596
+  size: 68, 76
+IdleDown
+  xy: 340, 596
+  size: 68, 76
+IdleDown
+  xy: 408, 596
+  size: 68, 76
+IdleDown
+  xy: 476, 596
+  size: 68, 76
+IdleDown
+  xy: 544, 596
+  size: 68, 76
+IdleDown
+  xy: 612, 596
+  size: 68, 76
+WalkUp
+  xy: 0, 672
+  size: 68, 76
+WalkUp
+  xy: 68, 672
+  size: 68, 76
+WalkUp
+  xy: 136, 672
+  size: 68, 76
+WalkUp
+  xy: 204, 672
+  size: 68, 76
+WalkDown
+  xy: 0, 748
+  size: 68, 76
+WalkDown
+  xy: 68, 748
+  size: 68, 76
+WalkDown
+  xy: 136, 748
+  size: 68, 76
+WalkDown
+  xy: 204, 748
+  size: 68, 76

@@ -1,0 +1,254 @@
+golgari_treefolk.png
+size: 1372,944
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 98, 88
+Idle
+  xy: 98, 64
+  size: 98, 88
+Idle
+  xy: 196, 64
+  size: 98, 88
+Idle
+  xy: 294, 64
+  size: 98, 88
+Idle
+  xy: 392, 64
+  size: 98, 88
+Idle
+  xy: 490, 64
+  size: 98, 88
+Idle
+  xy: 588, 64
+  size: 98, 88
+Idle
+  xy: 686, 64
+  size: 98, 88
+Idle
+  xy: 784, 64
+  size: 98, 88
+Idle
+  xy: 882, 64
+  size: 98, 88
+Walk
+  xy: 0, 152
+  size: 98, 88
+Walk
+  xy: 98, 152
+  size: 98, 88
+Walk
+  xy: 196, 152
+  size: 98, 88
+Walk
+  xy: 294, 152
+  size: 98, 88
+Walk
+  xy: 392, 152
+  size: 98, 88
+Walk
+  xy: 490, 152
+  size: 98, 88
+Attack
+  xy: 0, 240
+  size: 98, 88
+Attack
+  xy: 98, 240
+  size: 98, 88
+Attack
+  xy: 196, 240
+  size: 98, 88
+Attack
+  xy: 294, 240
+  size: 98, 88
+Attack
+  xy: 392, 240
+  size: 98, 88
+Attack
+  xy: 490, 240
+  size: 98, 88
+Attack
+  xy: 588, 240
+  size: 98, 88
+Attack
+  xy: 686, 240
+  size: 98, 88
+Hit
+  xy: 0, 328
+  size: 98, 88
+Hit
+  xy: 98, 328
+  size: 98, 88
+Hit
+  xy: 196, 328
+  size: 98, 88
+Hit
+  xy: 294, 328
+  size: 98, 88
+Hit
+  xy: 392, 328
+  size: 98, 88
+Death
+  xy: 0, 416
+  size: 98, 88
+Death
+  xy: 98, 416
+  size: 98, 88
+Death
+  xy: 196, 416
+  size: 98, 88
+Death
+  xy: 294, 416
+  size: 98, 88
+Death
+  xy: 392, 416
+  size: 98, 88
+Death
+  xy: 490, 416
+  size: 98, 88
+Death
+  xy: 588, 416
+  size: 98, 88
+Death
+  xy: 686, 416
+  size: 98, 88
+Death
+  xy: 784, 416
+  size: 98, 88
+Death
+  xy: 882, 416
+  size: 98, 88
+Death
+  xy: 980, 416
+  size: 98, 88
+Death
+  xy: 1078, 416
+  size: 98, 88
+Death
+  xy: 1176, 416
+  size: 98, 88
+Death
+  xy: 1274, 416
+  size: 98, 88
+Wake
+  xy: 0, 504
+  size: 98, 88
+Wake
+  xy: 98, 504
+  size: 98, 88
+Wake
+  xy: 196, 504
+  size: 98, 88
+Wake
+  xy: 294, 504
+  size: 98, 88
+Wake
+  xy: 392, 504
+  size: 98, 88
+Wake
+  xy: 490, 504
+  size: 98, 88
+Wake
+  xy: 588, 504
+  size: 98, 88
+IdleUp
+  xy: 0, 592
+  size: 98, 88
+IdleUp
+  xy: 98, 592
+  size: 98, 88
+IdleUp
+  xy: 196, 592
+  size: 98, 88
+IdleUp
+  xy: 294, 592
+  size: 98, 88
+IdleUp
+  xy: 392, 592
+  size: 98, 88
+IdleUp
+  xy: 490, 592
+  size: 98, 88
+IdleUp
+  xy: 588, 592
+  size: 98, 88
+IdleUp
+  xy: 686, 592
+  size: 98, 88
+IdleUp
+  xy: 784, 592
+  size: 98, 88
+IdleUp
+  xy: 882, 592
+  size: 98, 88
+IdleDown
+  xy: 0, 680
+  size: 98, 88
+IdleDown
+  xy: 98, 680
+  size: 98, 88
+IdleDown
+  xy: 196, 680
+  size: 98, 88
+IdleDown
+  xy: 294, 680
+  size: 98, 88
+IdleDown
+  xy: 392, 680
+  size: 98, 88
+IdleDown
+  xy: 490, 680
+  size: 98, 88
+IdleDown
+  xy: 588, 680
+  size: 98, 88
+IdleDown
+  xy: 686, 680
+  size: 98, 88
+IdleDown
+  xy: 784, 680
+  size: 98, 88
+IdleDown
+  xy: 882, 680
+  size: 98, 88
+WalkUp
+  xy: 0, 768
+  size: 98, 88
+WalkUp
+  xy: 98, 768
+  size: 98, 88
+WalkUp
+  xy: 196, 768
+  size: 98, 88
+WalkUp
+  xy: 294, 768
+  size: 98, 88
+WalkUp
+  xy: 392, 768
+  size: 98, 88
+WalkUp
+  xy: 490, 768
+  size: 98, 88
+WalkDown
+  xy: 0, 856
+  size: 98, 88
+WalkDown
+  xy: 98, 856
+  size: 98, 88
+WalkDown
+  xy: 196, 856
+  size: 98, 88
+WalkDown
+  xy: 294, 856
+  size: 98, 88
+WalkDown
+  xy: 392, 856
+  size: 98, 88
+WalkDown
+  xy: 490, 856
+  size: 98, 88

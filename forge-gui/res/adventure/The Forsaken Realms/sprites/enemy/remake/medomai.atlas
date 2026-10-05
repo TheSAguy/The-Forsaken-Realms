@@ -1,0 +1,242 @@
+medomai.png
+size: 888,774
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 71
+Idle
+  xy: 74, 64
+  size: 74, 71
+Idle
+  xy: 148, 64
+  size: 74, 71
+Idle
+  xy: 222, 64
+  size: 74, 71
+Idle
+  xy: 296, 64
+  size: 74, 71
+Idle
+  xy: 370, 64
+  size: 74, 71
+Idle
+  xy: 444, 64
+  size: 74, 71
+Idle
+  xy: 518, 64
+  size: 74, 71
+Idle
+  xy: 592, 64
+  size: 74, 71
+Idle
+  xy: 666, 64
+  size: 74, 71
+Walk
+  xy: 0, 135
+  size: 74, 71
+Walk
+  xy: 74, 135
+  size: 74, 71
+Walk
+  xy: 148, 135
+  size: 74, 71
+Walk
+  xy: 222, 135
+  size: 74, 71
+Walk
+  xy: 296, 135
+  size: 74, 71
+Walk
+  xy: 370, 135
+  size: 74, 71
+Attack
+  xy: 0, 206
+  size: 74, 71
+Attack
+  xy: 74, 206
+  size: 74, 71
+Attack
+  xy: 148, 206
+  size: 74, 71
+Attack
+  xy: 222, 206
+  size: 74, 71
+Attack
+  xy: 296, 206
+  size: 74, 71
+Attack
+  xy: 370, 206
+  size: 74, 71
+Hit
+  xy: 0, 277
+  size: 74, 71
+Hit
+  xy: 74, 277
+  size: 74, 71
+Hit
+  xy: 148, 277
+  size: 74, 71
+Hit
+  xy: 222, 277
+  size: 74, 71
+Hit
+  xy: 296, 277
+  size: 74, 71
+Death
+  xy: 0, 348
+  size: 74, 71
+Death
+  xy: 74, 348
+  size: 74, 71
+Death
+  xy: 148, 348
+  size: 74, 71
+Death
+  xy: 222, 348
+  size: 74, 71
+Death
+  xy: 296, 348
+  size: 74, 71
+Death
+  xy: 370, 348
+  size: 74, 71
+Death
+  xy: 444, 348
+  size: 74, 71
+Death
+  xy: 518, 348
+  size: 74, 71
+Death
+  xy: 592, 348
+  size: 74, 71
+Death
+  xy: 666, 348
+  size: 74, 71
+Death
+  xy: 740, 348
+  size: 74, 71
+Death
+  xy: 814, 348
+  size: 74, 71
+Wake
+  xy: 0, 419
+  size: 74, 71
+Wake
+  xy: 74, 419
+  size: 74, 71
+Wake
+  xy: 148, 419
+  size: 74, 71
+Wake
+  xy: 222, 419
+  size: 74, 71
+Wake
+  xy: 296, 419
+  size: 74, 71
+Wake
+  xy: 370, 419
+  size: 74, 71
+Wake
+  xy: 444, 419
+  size: 74, 71
+IdleUp
+  xy: 0, 490
+  size: 74, 71
+IdleUp
+  xy: 74, 490
+  size: 74, 71
+IdleUp
+  xy: 148, 490
+  size: 74, 71
+IdleUp
+  xy: 222, 490
+  size: 74, 71
+IdleUp
+  xy: 296, 490
+  size: 74, 71
+IdleUp
+  xy: 370, 490
+  size: 74, 71
+IdleUp
+  xy: 444, 490
+  size: 74, 71
+IdleUp
+  xy: 518, 490
+  size: 74, 71
+IdleUp
+  xy: 592, 490
+  size: 74, 71
+IdleUp
+  xy: 666, 490
+  size: 74, 71
+IdleDown
+  xy: 0, 561
+  size: 74, 71
+IdleDown
+  xy: 74, 561
+  size: 74, 71
+IdleDown
+  xy: 148, 561
+  size: 74, 71
+IdleDown
+  xy: 222, 561
+  size: 74, 71
+IdleDown
+  xy: 296, 561
+  size: 74, 71
+IdleDown
+  xy: 370, 561
+  size: 74, 71
+IdleDown
+  xy: 444, 561
+  size: 74, 71
+IdleDown
+  xy: 518, 561
+  size: 74, 71
+IdleDown
+  xy: 592, 561
+  size: 74, 71
+IdleDown
+  xy: 666, 561
+  size: 74, 71
+WalkUp
+  xy: 0, 632
+  size: 74, 71
+WalkUp
+  xy: 74, 632
+  size: 74, 71
+WalkUp
+  xy: 148, 632
+  size: 74, 71
+WalkUp
+  xy: 222, 632
+  size: 74, 71
+WalkUp
+  xy: 296, 632
+  size: 74, 71
+WalkUp
+  xy: 370, 632
+  size: 74, 71
+WalkDown
+  xy: 0, 703
+  size: 74, 71
+WalkDown
+  xy: 74, 703
+  size: 74, 71
+WalkDown
+  xy: 148, 703
+  size: 74, 71
+WalkDown
+  xy: 222, 703
+  size: 74, 71
+WalkDown
+  xy: 296, 703
+  size: 74, 71
+WalkDown
+  xy: 370, 703
+  size: 74, 71

@@ -1,0 +1,221 @@
+fungus.png
+size: 552,614
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 46, 55
+Idle
+  xy: 46, 64
+  size: 46, 55
+Idle
+  xy: 92, 64
+  size: 46, 55
+Idle
+  xy: 138, 64
+  size: 46, 55
+Idle
+  xy: 184, 64
+  size: 46, 55
+Idle
+  xy: 230, 64
+  size: 46, 55
+Idle
+  xy: 276, 64
+  size: 46, 55
+Idle
+  xy: 322, 64
+  size: 46, 55
+Idle
+  xy: 368, 64
+  size: 46, 55
+Idle
+  xy: 414, 64
+  size: 46, 55
+Walk
+  xy: 0, 119
+  size: 46, 55
+Walk
+  xy: 46, 119
+  size: 46, 55
+Walk
+  xy: 92, 119
+  size: 46, 55
+Walk
+  xy: 138, 119
+  size: 46, 55
+Attack
+  xy: 0, 174
+  size: 46, 55
+Attack
+  xy: 46, 174
+  size: 46, 55
+Attack
+  xy: 92, 174
+  size: 46, 55
+Attack
+  xy: 138, 174
+  size: 46, 55
+Attack
+  xy: 184, 174
+  size: 46, 55
+Attack
+  xy: 230, 174
+  size: 46, 55
+Attack
+  xy: 276, 174
+  size: 46, 55
+Hit
+  xy: 0, 229
+  size: 46, 55
+Hit
+  xy: 46, 229
+  size: 46, 55
+Hit
+  xy: 92, 229
+  size: 46, 55
+Hit
+  xy: 138, 229
+  size: 46, 55
+Death
+  xy: 0, 284
+  size: 46, 55
+Death
+  xy: 46, 284
+  size: 46, 55
+Death
+  xy: 92, 284
+  size: 46, 55
+Death
+  xy: 138, 284
+  size: 46, 55
+Death
+  xy: 184, 284
+  size: 46, 55
+Death
+  xy: 230, 284
+  size: 46, 55
+Death
+  xy: 276, 284
+  size: 46, 55
+Death
+  xy: 322, 284
+  size: 46, 55
+Death
+  xy: 368, 284
+  size: 46, 55
+Death
+  xy: 414, 284
+  size: 46, 55
+Death
+  xy: 460, 284
+  size: 46, 55
+Death
+  xy: 506, 284
+  size: 46, 55
+Wake
+  xy: 0, 339
+  size: 46, 55
+Wake
+  xy: 46, 339
+  size: 46, 55
+Wake
+  xy: 92, 339
+  size: 46, 55
+Wake
+  xy: 138, 339
+  size: 46, 55
+Wake
+  xy: 184, 339
+  size: 46, 55
+Wake
+  xy: 230, 339
+  size: 46, 55
+IdleUp
+  xy: 0, 394
+  size: 46, 55
+IdleUp
+  xy: 46, 394
+  size: 46, 55
+IdleUp
+  xy: 92, 394
+  size: 46, 55
+IdleUp
+  xy: 138, 394
+  size: 46, 55
+IdleUp
+  xy: 184, 394
+  size: 46, 55
+IdleUp
+  xy: 230, 394
+  size: 46, 55
+IdleUp
+  xy: 276, 394
+  size: 46, 55
+IdleUp
+  xy: 322, 394
+  size: 46, 55
+IdleUp
+  xy: 368, 394
+  size: 46, 55
+IdleUp
+  xy: 414, 394
+  size: 46, 55
+IdleDown
+  xy: 0, 449
+  size: 46, 55
+IdleDown
+  xy: 46, 449
+  size: 46, 55
+IdleDown
+  xy: 92, 449
+  size: 46, 55
+IdleDown
+  xy: 138, 449
+  size: 46, 55
+IdleDown
+  xy: 184, 449
+  size: 46, 55
+IdleDown
+  xy: 230, 449
+  size: 46, 55
+IdleDown
+  xy: 276, 449
+  size: 46, 55
+IdleDown
+  xy: 322, 449
+  size: 46, 55
+IdleDown
+  xy: 368, 449
+  size: 46, 55
+IdleDown
+  xy: 414, 449
+  size: 46, 55
+WalkUp
+  xy: 0, 504
+  size: 46, 55
+WalkUp
+  xy: 46, 504
+  size: 46, 55
+WalkUp
+  xy: 92, 504
+  size: 46, 55
+WalkUp
+  xy: 138, 504
+  size: 46, 55
+WalkDown
+  xy: 0, 559
+  size: 46, 55
+WalkDown
+  xy: 46, 559
+  size: 46, 55
+WalkDown
+  xy: 92, 559
+  size: 46, 55
+WalkDown
+  xy: 138, 559
+  size: 46, 55

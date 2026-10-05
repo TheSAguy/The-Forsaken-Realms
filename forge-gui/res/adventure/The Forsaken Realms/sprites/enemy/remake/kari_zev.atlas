@@ -1,0 +1,254 @@
+kari_zev.png
+size: 1764,884
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 126, 82
+Idle
+  xy: 126, 64
+  size: 126, 82
+Idle
+  xy: 252, 64
+  size: 126, 82
+Idle
+  xy: 378, 64
+  size: 126, 82
+Idle
+  xy: 504, 64
+  size: 126, 82
+Idle
+  xy: 630, 64
+  size: 126, 82
+Idle
+  xy: 756, 64
+  size: 126, 82
+Idle
+  xy: 882, 64
+  size: 126, 82
+Idle
+  xy: 1008, 64
+  size: 126, 82
+Idle
+  xy: 1134, 64
+  size: 126, 82
+Walk
+  xy: 0, 146
+  size: 126, 82
+Walk
+  xy: 126, 146
+  size: 126, 82
+Walk
+  xy: 252, 146
+  size: 126, 82
+Walk
+  xy: 378, 146
+  size: 126, 82
+Walk
+  xy: 504, 146
+  size: 126, 82
+Walk
+  xy: 630, 146
+  size: 126, 82
+Attack
+  xy: 0, 228
+  size: 126, 82
+Attack
+  xy: 126, 228
+  size: 126, 82
+Attack
+  xy: 252, 228
+  size: 126, 82
+Attack
+  xy: 378, 228
+  size: 126, 82
+Attack
+  xy: 504, 228
+  size: 126, 82
+Attack
+  xy: 630, 228
+  size: 126, 82
+Attack
+  xy: 756, 228
+  size: 126, 82
+Attack
+  xy: 882, 228
+  size: 126, 82
+Hit
+  xy: 0, 310
+  size: 126, 82
+Hit
+  xy: 126, 310
+  size: 126, 82
+Hit
+  xy: 252, 310
+  size: 126, 82
+Hit
+  xy: 378, 310
+  size: 126, 82
+Hit
+  xy: 504, 310
+  size: 126, 82
+Death
+  xy: 0, 392
+  size: 126, 82
+Death
+  xy: 126, 392
+  size: 126, 82
+Death
+  xy: 252, 392
+  size: 126, 82
+Death
+  xy: 378, 392
+  size: 126, 82
+Death
+  xy: 504, 392
+  size: 126, 82
+Death
+  xy: 630, 392
+  size: 126, 82
+Death
+  xy: 756, 392
+  size: 126, 82
+Death
+  xy: 882, 392
+  size: 126, 82
+Death
+  xy: 1008, 392
+  size: 126, 82
+Death
+  xy: 1134, 392
+  size: 126, 82
+Death
+  xy: 1260, 392
+  size: 126, 82
+Death
+  xy: 1386, 392
+  size: 126, 82
+Death
+  xy: 1512, 392
+  size: 126, 82
+Death
+  xy: 1638, 392
+  size: 126, 82
+Wake
+  xy: 0, 474
+  size: 126, 82
+Wake
+  xy: 126, 474
+  size: 126, 82
+Wake
+  xy: 252, 474
+  size: 126, 82
+Wake
+  xy: 378, 474
+  size: 126, 82
+Wake
+  xy: 504, 474
+  size: 126, 82
+Wake
+  xy: 630, 474
+  size: 126, 82
+Wake
+  xy: 756, 474
+  size: 126, 82
+IdleUp
+  xy: 0, 556
+  size: 126, 82
+IdleUp
+  xy: 126, 556
+  size: 126, 82
+IdleUp
+  xy: 252, 556
+  size: 126, 82
+IdleUp
+  xy: 378, 556
+  size: 126, 82
+IdleUp
+  xy: 504, 556
+  size: 126, 82
+IdleUp
+  xy: 630, 556
+  size: 126, 82
+IdleUp
+  xy: 756, 556
+  size: 126, 82
+IdleUp
+  xy: 882, 556
+  size: 126, 82
+IdleUp
+  xy: 1008, 556
+  size: 126, 82
+IdleUp
+  xy: 1134, 556
+  size: 126, 82
+IdleDown
+  xy: 0, 638
+  size: 126, 82
+IdleDown
+  xy: 126, 638
+  size: 126, 82
+IdleDown
+  xy: 252, 638
+  size: 126, 82
+IdleDown
+  xy: 378, 638
+  size: 126, 82
+IdleDown
+  xy: 504, 638
+  size: 126, 82
+IdleDown
+  xy: 630, 638
+  size: 126, 82
+IdleDown
+  xy: 756, 638
+  size: 126, 82
+IdleDown
+  xy: 882, 638
+  size: 126, 82
+IdleDown
+  xy: 1008, 638
+  size: 126, 82
+IdleDown
+  xy: 1134, 638
+  size: 126, 82
+WalkUp
+  xy: 0, 720
+  size: 126, 82
+WalkUp
+  xy: 126, 720
+  size: 126, 82
+WalkUp
+  xy: 252, 720
+  size: 126, 82
+WalkUp
+  xy: 378, 720
+  size: 126, 82
+WalkUp
+  xy: 504, 720
+  size: 126, 82
+WalkUp
+  xy: 630, 720
+  size: 126, 82
+WalkDown
+  xy: 0, 802
+  size: 126, 82
+WalkDown
+  xy: 126, 802
+  size: 126, 82
+WalkDown
+  xy: 252, 802
+  size: 126, 82
+WalkDown
+  xy: 378, 802
+  size: 126, 82
+WalkDown
+  xy: 504, 802
+  size: 126, 82
+WalkDown
+  xy: 630, 802
+  size: 126, 82

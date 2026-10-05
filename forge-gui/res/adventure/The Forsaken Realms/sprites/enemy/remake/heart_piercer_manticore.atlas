@@ -1,0 +1,242 @@
+heart_piercer_manticore.png
+size: 840,704
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 64
+Idle
+  xy: 70, 64
+  size: 70, 64
+Idle
+  xy: 140, 64
+  size: 70, 64
+Idle
+  xy: 210, 64
+  size: 70, 64
+Idle
+  xy: 280, 64
+  size: 70, 64
+Idle
+  xy: 350, 64
+  size: 70, 64
+Idle
+  xy: 420, 64
+  size: 70, 64
+Idle
+  xy: 490, 64
+  size: 70, 64
+Idle
+  xy: 560, 64
+  size: 70, 64
+Idle
+  xy: 630, 64
+  size: 70, 64
+Walk
+  xy: 0, 128
+  size: 70, 64
+Walk
+  xy: 70, 128
+  size: 70, 64
+Walk
+  xy: 140, 128
+  size: 70, 64
+Walk
+  xy: 210, 128
+  size: 70, 64
+Walk
+  xy: 280, 128
+  size: 70, 64
+Walk
+  xy: 350, 128
+  size: 70, 64
+Attack
+  xy: 0, 192
+  size: 70, 64
+Attack
+  xy: 70, 192
+  size: 70, 64
+Attack
+  xy: 140, 192
+  size: 70, 64
+Attack
+  xy: 210, 192
+  size: 70, 64
+Attack
+  xy: 280, 192
+  size: 70, 64
+Attack
+  xy: 350, 192
+  size: 70, 64
+Hit
+  xy: 0, 256
+  size: 70, 64
+Hit
+  xy: 70, 256
+  size: 70, 64
+Hit
+  xy: 140, 256
+  size: 70, 64
+Hit
+  xy: 210, 256
+  size: 70, 64
+Hit
+  xy: 280, 256
+  size: 70, 64
+Death
+  xy: 0, 320
+  size: 70, 64
+Death
+  xy: 70, 320
+  size: 70, 64
+Death
+  xy: 140, 320
+  size: 70, 64
+Death
+  xy: 210, 320
+  size: 70, 64
+Death
+  xy: 280, 320
+  size: 70, 64
+Death
+  xy: 350, 320
+  size: 70, 64
+Death
+  xy: 420, 320
+  size: 70, 64
+Death
+  xy: 490, 320
+  size: 70, 64
+Death
+  xy: 560, 320
+  size: 70, 64
+Death
+  xy: 630, 320
+  size: 70, 64
+Death
+  xy: 700, 320
+  size: 70, 64
+Death
+  xy: 770, 320
+  size: 70, 64
+Wake
+  xy: 0, 384
+  size: 70, 64
+Wake
+  xy: 70, 384
+  size: 70, 64
+Wake
+  xy: 140, 384
+  size: 70, 64
+Wake
+  xy: 210, 384
+  size: 70, 64
+Wake
+  xy: 280, 384
+  size: 70, 64
+Wake
+  xy: 350, 384
+  size: 70, 64
+Wake
+  xy: 420, 384
+  size: 70, 64
+IdleUp
+  xy: 0, 448
+  size: 70, 64
+IdleUp
+  xy: 70, 448
+  size: 70, 64
+IdleUp
+  xy: 140, 448
+  size: 70, 64
+IdleUp
+  xy: 210, 448
+  size: 70, 64
+IdleUp
+  xy: 280, 448
+  size: 70, 64
+IdleUp
+  xy: 350, 448
+  size: 70, 64
+IdleUp
+  xy: 420, 448
+  size: 70, 64
+IdleUp
+  xy: 490, 448
+  size: 70, 64
+IdleUp
+  xy: 560, 448
+  size: 70, 64
+IdleUp
+  xy: 630, 448
+  size: 70, 64
+IdleDown
+  xy: 0, 512
+  size: 70, 64
+IdleDown
+  xy: 70, 512
+  size: 70, 64
+IdleDown
+  xy: 140, 512
+  size: 70, 64
+IdleDown
+  xy: 210, 512
+  size: 70, 64
+IdleDown
+  xy: 280, 512
+  size: 70, 64
+IdleDown
+  xy: 350, 512
+  size: 70, 64
+IdleDown
+  xy: 420, 512
+  size: 70, 64
+IdleDown
+  xy: 490, 512
+  size: 70, 64
+IdleDown
+  xy: 560, 512
+  size: 70, 64
+IdleDown
+  xy: 630, 512
+  size: 70, 64
+WalkUp
+  xy: 0, 576
+  size: 70, 64
+WalkUp
+  xy: 70, 576
+  size: 70, 64
+WalkUp
+  xy: 140, 576
+  size: 70, 64
+WalkUp
+  xy: 210, 576
+  size: 70, 64
+WalkUp
+  xy: 280, 576
+  size: 70, 64
+WalkUp
+  xy: 350, 576
+  size: 70, 64
+WalkDown
+  xy: 0, 640
+  size: 70, 64
+WalkDown
+  xy: 70, 640
+  size: 70, 64
+WalkDown
+  xy: 140, 640
+  size: 70, 64
+WalkDown
+  xy: 210, 640
+  size: 70, 64
+WalkDown
+  xy: 280, 640
+  size: 70, 64
+WalkDown
+  xy: 350, 640
+  size: 70, 64

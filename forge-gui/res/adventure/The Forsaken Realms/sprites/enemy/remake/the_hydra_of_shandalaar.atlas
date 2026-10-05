@@ -1,0 +1,293 @@
+the_hydra_of_shandalaar.png
+size: 3192,1384
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 168, 132
+Idle
+  xy: 168, 64
+  size: 168, 132
+Idle
+  xy: 336, 64
+  size: 168, 132
+Idle
+  xy: 504, 64
+  size: 168, 132
+Idle
+  xy: 672, 64
+  size: 168, 132
+Idle
+  xy: 840, 64
+  size: 168, 132
+Idle
+  xy: 1008, 64
+  size: 168, 132
+Idle
+  xy: 1176, 64
+  size: 168, 132
+Idle
+  xy: 1344, 64
+  size: 168, 132
+Idle
+  xy: 1512, 64
+  size: 168, 132
+Walk
+  xy: 0, 196
+  size: 168, 132
+Walk
+  xy: 168, 196
+  size: 168, 132
+Walk
+  xy: 336, 196
+  size: 168, 132
+Walk
+  xy: 504, 196
+  size: 168, 132
+Walk
+  xy: 672, 196
+  size: 168, 132
+Walk
+  xy: 840, 196
+  size: 168, 132
+Attack
+  xy: 0, 328
+  size: 168, 132
+Attack
+  xy: 168, 328
+  size: 168, 132
+Attack
+  xy: 336, 328
+  size: 168, 132
+Attack
+  xy: 504, 328
+  size: 168, 132
+Attack
+  xy: 672, 328
+  size: 168, 132
+Attack
+  xy: 840, 328
+  size: 168, 132
+Attack
+  xy: 1008, 328
+  size: 168, 132
+Attack
+  xy: 1176, 328
+  size: 168, 132
+Attack
+  xy: 1344, 328
+  size: 168, 132
+Attack
+  xy: 1512, 328
+  size: 168, 132
+Hit
+  xy: 0, 460
+  size: 168, 132
+Hit
+  xy: 168, 460
+  size: 168, 132
+Hit
+  xy: 336, 460
+  size: 168, 132
+Hit
+  xy: 504, 460
+  size: 168, 132
+Hit
+  xy: 672, 460
+  size: 168, 132
+Hit
+  xy: 840, 460
+  size: 168, 132
+Hit
+  xy: 1008, 460
+  size: 168, 132
+Hit
+  xy: 1176, 460
+  size: 168, 132
+Death
+  xy: 0, 592
+  size: 168, 132
+Death
+  xy: 168, 592
+  size: 168, 132
+Death
+  xy: 336, 592
+  size: 168, 132
+Death
+  xy: 504, 592
+  size: 168, 132
+Death
+  xy: 672, 592
+  size: 168, 132
+Death
+  xy: 840, 592
+  size: 168, 132
+Death
+  xy: 1008, 592
+  size: 168, 132
+Death
+  xy: 1176, 592
+  size: 168, 132
+Death
+  xy: 1344, 592
+  size: 168, 132
+Death
+  xy: 1512, 592
+  size: 168, 132
+Death
+  xy: 1680, 592
+  size: 168, 132
+Death
+  xy: 1848, 592
+  size: 168, 132
+Death
+  xy: 2016, 592
+  size: 168, 132
+Death
+  xy: 2184, 592
+  size: 168, 132
+Death
+  xy: 2352, 592
+  size: 168, 132
+Death
+  xy: 2520, 592
+  size: 168, 132
+Death
+  xy: 2688, 592
+  size: 168, 132
+Death
+  xy: 2856, 592
+  size: 168, 132
+Death
+  xy: 3024, 592
+  size: 168, 132
+Wake
+  xy: 0, 724
+  size: 168, 132
+Wake
+  xy: 168, 724
+  size: 168, 132
+Wake
+  xy: 336, 724
+  size: 168, 132
+Wake
+  xy: 504, 724
+  size: 168, 132
+Wake
+  xy: 672, 724
+  size: 168, 132
+Wake
+  xy: 840, 724
+  size: 168, 132
+Wake
+  xy: 1008, 724
+  size: 168, 132
+Wake
+  xy: 1176, 724
+  size: 168, 132
+Wake
+  xy: 1344, 724
+  size: 168, 132
+Wake
+  xy: 1512, 724
+  size: 168, 132
+IdleUp
+  xy: 0, 856
+  size: 168, 132
+IdleUp
+  xy: 168, 856
+  size: 168, 132
+IdleUp
+  xy: 336, 856
+  size: 168, 132
+IdleUp
+  xy: 504, 856
+  size: 168, 132
+IdleUp
+  xy: 672, 856
+  size: 168, 132
+IdleUp
+  xy: 840, 856
+  size: 168, 132
+IdleUp
+  xy: 1008, 856
+  size: 168, 132
+IdleUp
+  xy: 1176, 856
+  size: 168, 132
+IdleUp
+  xy: 1344, 856
+  size: 168, 132
+IdleUp
+  xy: 1512, 856
+  size: 168, 132
+IdleDown
+  xy: 0, 988
+  size: 168, 132
+IdleDown
+  xy: 168, 988
+  size: 168, 132
+IdleDown
+  xy: 336, 988
+  size: 168, 132
+IdleDown
+  xy: 504, 988
+  size: 168, 132
+IdleDown
+  xy: 672, 988
+  size: 168, 132
+IdleDown
+  xy: 840, 988
+  size: 168, 132
+IdleDown
+  xy: 1008, 988
+  size: 168, 132
+IdleDown
+  xy: 1176, 988
+  size: 168, 132
+IdleDown
+  xy: 1344, 988
+  size: 168, 132
+IdleDown
+  xy: 1512, 988
+  size: 168, 132
+WalkUp
+  xy: 0, 1120
+  size: 168, 132
+WalkUp
+  xy: 168, 1120
+  size: 168, 132
+WalkUp
+  xy: 336, 1120
+  size: 168, 132
+WalkUp
+  xy: 504, 1120
+  size: 168, 132
+WalkUp
+  xy: 672, 1120
+  size: 168, 132
+WalkUp
+  xy: 840, 1120
+  size: 168, 132
+WalkDown
+  xy: 0, 1252
+  size: 168, 132
+WalkDown
+  xy: 168, 1252
+  size: 168, 132
+WalkDown
+  xy: 336, 1252
+  size: 168, 132
+WalkDown
+  xy: 504, 1252
+  size: 168, 132
+WalkDown
+  xy: 672, 1252
+  size: 168, 132
+WalkDown
+  xy: 840, 1252
+  size: 168, 132

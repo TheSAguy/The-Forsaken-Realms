@@ -1,0 +1,278 @@
+the_goose_mother.png
+size: 1908,874
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 106, 81
+Idle
+  xy: 106, 64
+  size: 106, 81
+Idle
+  xy: 212, 64
+  size: 106, 81
+Idle
+  xy: 318, 64
+  size: 106, 81
+Idle
+  xy: 424, 64
+  size: 106, 81
+Idle
+  xy: 530, 64
+  size: 106, 81
+Idle
+  xy: 636, 64
+  size: 106, 81
+Idle
+  xy: 742, 64
+  size: 106, 81
+Idle
+  xy: 848, 64
+  size: 106, 81
+Idle
+  xy: 954, 64
+  size: 106, 81
+Walk
+  xy: 0, 145
+  size: 106, 81
+Walk
+  xy: 106, 145
+  size: 106, 81
+Walk
+  xy: 212, 145
+  size: 106, 81
+Walk
+  xy: 318, 145
+  size: 106, 81
+Walk
+  xy: 424, 145
+  size: 106, 81
+Walk
+  xy: 530, 145
+  size: 106, 81
+Attack
+  xy: 0, 226
+  size: 106, 81
+Attack
+  xy: 106, 226
+  size: 106, 81
+Attack
+  xy: 212, 226
+  size: 106, 81
+Attack
+  xy: 318, 226
+  size: 106, 81
+Attack
+  xy: 424, 226
+  size: 106, 81
+Attack
+  xy: 530, 226
+  size: 106, 81
+Attack
+  xy: 636, 226
+  size: 106, 81
+Attack
+  xy: 742, 226
+  size: 106, 81
+Hit
+  xy: 0, 307
+  size: 106, 81
+Hit
+  xy: 106, 307
+  size: 106, 81
+Hit
+  xy: 212, 307
+  size: 106, 81
+Hit
+  xy: 318, 307
+  size: 106, 81
+Hit
+  xy: 424, 307
+  size: 106, 81
+Hit
+  xy: 530, 307
+  size: 106, 81
+Hit
+  xy: 636, 307
+  size: 106, 81
+Death
+  xy: 0, 388
+  size: 106, 81
+Death
+  xy: 106, 388
+  size: 106, 81
+Death
+  xy: 212, 388
+  size: 106, 81
+Death
+  xy: 318, 388
+  size: 106, 81
+Death
+  xy: 424, 388
+  size: 106, 81
+Death
+  xy: 530, 388
+  size: 106, 81
+Death
+  xy: 636, 388
+  size: 106, 81
+Death
+  xy: 742, 388
+  size: 106, 81
+Death
+  xy: 848, 388
+  size: 106, 81
+Death
+  xy: 954, 388
+  size: 106, 81
+Death
+  xy: 1060, 388
+  size: 106, 81
+Death
+  xy: 1166, 388
+  size: 106, 81
+Death
+  xy: 1272, 388
+  size: 106, 81
+Death
+  xy: 1378, 388
+  size: 106, 81
+Death
+  xy: 1484, 388
+  size: 106, 81
+Death
+  xy: 1590, 388
+  size: 106, 81
+Death
+  xy: 1696, 388
+  size: 106, 81
+Death
+  xy: 1802, 388
+  size: 106, 81
+Wake
+  xy: 0, 469
+  size: 106, 81
+Wake
+  xy: 106, 469
+  size: 106, 81
+Wake
+  xy: 212, 469
+  size: 106, 81
+Wake
+  xy: 318, 469
+  size: 106, 81
+Wake
+  xy: 424, 469
+  size: 106, 81
+Wake
+  xy: 530, 469
+  size: 106, 81
+Wake
+  xy: 636, 469
+  size: 106, 81
+Wake
+  xy: 742, 469
+  size: 106, 81
+Wake
+  xy: 848, 469
+  size: 106, 81
+IdleUp
+  xy: 0, 550
+  size: 106, 81
+IdleUp
+  xy: 106, 550
+  size: 106, 81
+IdleUp
+  xy: 212, 550
+  size: 106, 81
+IdleUp
+  xy: 318, 550
+  size: 106, 81
+IdleUp
+  xy: 424, 550
+  size: 106, 81
+IdleUp
+  xy: 530, 550
+  size: 106, 81
+IdleUp
+  xy: 636, 550
+  size: 106, 81
+IdleUp
+  xy: 742, 550
+  size: 106, 81
+IdleUp
+  xy: 848, 550
+  size: 106, 81
+IdleUp
+  xy: 954, 550
+  size: 106, 81
+IdleDown
+  xy: 0, 631
+  size: 106, 81
+IdleDown
+  xy: 106, 631
+  size: 106, 81
+IdleDown
+  xy: 212, 631
+  size: 106, 81
+IdleDown
+  xy: 318, 631
+  size: 106, 81
+IdleDown
+  xy: 424, 631
+  size: 106, 81
+IdleDown
+  xy: 530, 631
+  size: 106, 81
+IdleDown
+  xy: 636, 631
+  size: 106, 81
+IdleDown
+  xy: 742, 631
+  size: 106, 81
+IdleDown
+  xy: 848, 631
+  size: 106, 81
+IdleDown
+  xy: 954, 631
+  size: 106, 81
+WalkUp
+  xy: 0, 712
+  size: 106, 81
+WalkUp
+  xy: 106, 712
+  size: 106, 81
+WalkUp
+  xy: 212, 712
+  size: 106, 81
+WalkUp
+  xy: 318, 712
+  size: 106, 81
+WalkUp
+  xy: 424, 712
+  size: 106, 81
+WalkUp
+  xy: 530, 712
+  size: 106, 81
+WalkDown
+  xy: 0, 793
+  size: 106, 81
+WalkDown
+  xy: 106, 793
+  size: 106, 81
+WalkDown
+  xy: 212, 793
+  size: 106, 81
+WalkDown
+  xy: 318, 793
+  size: 106, 81
+WalkDown
+  xy: 424, 793
+  size: 106, 81
+WalkDown
+  xy: 530, 793
+  size: 106, 81

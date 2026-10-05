@@ -1,0 +1,236 @@
+cosmic_horror.png
+size: 1680,974
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 120, 91
+Idle
+  xy: 120, 64
+  size: 120, 91
+Idle
+  xy: 240, 64
+  size: 120, 91
+Idle
+  xy: 360, 64
+  size: 120, 91
+Idle
+  xy: 480, 64
+  size: 120, 91
+Idle
+  xy: 600, 64
+  size: 120, 91
+Idle
+  xy: 720, 64
+  size: 120, 91
+Idle
+  xy: 840, 64
+  size: 120, 91
+Idle
+  xy: 960, 64
+  size: 120, 91
+Idle
+  xy: 1080, 64
+  size: 120, 91
+Walk
+  xy: 0, 155
+  size: 120, 91
+Walk
+  xy: 120, 155
+  size: 120, 91
+Walk
+  xy: 240, 155
+  size: 120, 91
+Walk
+  xy: 360, 155
+  size: 120, 91
+Attack
+  xy: 0, 246
+  size: 120, 91
+Attack
+  xy: 120, 246
+  size: 120, 91
+Attack
+  xy: 240, 246
+  size: 120, 91
+Attack
+  xy: 360, 246
+  size: 120, 91
+Attack
+  xy: 480, 246
+  size: 120, 91
+Attack
+  xy: 600, 246
+  size: 120, 91
+Attack
+  xy: 720, 246
+  size: 120, 91
+Attack
+  xy: 840, 246
+  size: 120, 91
+Hit
+  xy: 0, 337
+  size: 120, 91
+Hit
+  xy: 120, 337
+  size: 120, 91
+Hit
+  xy: 240, 337
+  size: 120, 91
+Hit
+  xy: 360, 337
+  size: 120, 91
+Hit
+  xy: 480, 337
+  size: 120, 91
+Death
+  xy: 0, 428
+  size: 120, 91
+Death
+  xy: 120, 428
+  size: 120, 91
+Death
+  xy: 240, 428
+  size: 120, 91
+Death
+  xy: 360, 428
+  size: 120, 91
+Death
+  xy: 480, 428
+  size: 120, 91
+Death
+  xy: 600, 428
+  size: 120, 91
+Death
+  xy: 720, 428
+  size: 120, 91
+Death
+  xy: 840, 428
+  size: 120, 91
+Death
+  xy: 960, 428
+  size: 120, 91
+Death
+  xy: 1080, 428
+  size: 120, 91
+Death
+  xy: 1200, 428
+  size: 120, 91
+Death
+  xy: 1320, 428
+  size: 120, 91
+Death
+  xy: 1440, 428
+  size: 120, 91
+Death
+  xy: 1560, 428
+  size: 120, 91
+Wake
+  xy: 0, 519
+  size: 120, 91
+Wake
+  xy: 120, 519
+  size: 120, 91
+Wake
+  xy: 240, 519
+  size: 120, 91
+Wake
+  xy: 360, 519
+  size: 120, 91
+Wake
+  xy: 480, 519
+  size: 120, 91
+Wake
+  xy: 600, 519
+  size: 120, 91
+Wake
+  xy: 720, 519
+  size: 120, 91
+IdleUp
+  xy: 0, 610
+  size: 120, 91
+IdleUp
+  xy: 120, 610
+  size: 120, 91
+IdleUp
+  xy: 240, 610
+  size: 120, 91
+IdleUp
+  xy: 360, 610
+  size: 120, 91
+IdleUp
+  xy: 480, 610
+  size: 120, 91
+IdleUp
+  xy: 600, 610
+  size: 120, 91
+IdleUp
+  xy: 720, 610
+  size: 120, 91
+IdleUp
+  xy: 840, 610
+  size: 120, 91
+IdleUp
+  xy: 960, 610
+  size: 120, 91
+IdleUp
+  xy: 1080, 610
+  size: 120, 91
+IdleDown
+  xy: 0, 701
+  size: 120, 91
+IdleDown
+  xy: 120, 701
+  size: 120, 91
+IdleDown
+  xy: 240, 701
+  size: 120, 91
+IdleDown
+  xy: 360, 701
+  size: 120, 91
+IdleDown
+  xy: 480, 701
+  size: 120, 91
+IdleDown
+  xy: 600, 701
+  size: 120, 91
+IdleDown
+  xy: 720, 701
+  size: 120, 91
+IdleDown
+  xy: 840, 701
+  size: 120, 91
+IdleDown
+  xy: 960, 701
+  size: 120, 91
+IdleDown
+  xy: 1080, 701
+  size: 120, 91
+WalkUp
+  xy: 0, 792
+  size: 120, 91
+WalkUp
+  xy: 120, 792
+  size: 120, 91
+WalkUp
+  xy: 240, 792
+  size: 120, 91
+WalkUp
+  xy: 360, 792
+  size: 120, 91
+WalkDown
+  xy: 0, 883
+  size: 120, 91
+WalkDown
+  xy: 120, 883
+  size: 120, 91
+WalkDown
+  xy: 240, 883
+  size: 120, 91
+WalkDown
+  xy: 360, 883
+  size: 120, 91

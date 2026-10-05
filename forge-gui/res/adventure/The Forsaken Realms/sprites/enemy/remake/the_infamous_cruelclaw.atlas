@@ -1,0 +1,260 @@
+the_infamous_cruelclaw.png
+size: 1222,844
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 78
+Idle
+  xy: 94, 64
+  size: 94, 78
+Idle
+  xy: 188, 64
+  size: 94, 78
+Idle
+  xy: 282, 64
+  size: 94, 78
+Idle
+  xy: 376, 64
+  size: 94, 78
+Idle
+  xy: 470, 64
+  size: 94, 78
+Idle
+  xy: 564, 64
+  size: 94, 78
+Idle
+  xy: 658, 64
+  size: 94, 78
+Idle
+  xy: 752, 64
+  size: 94, 78
+Idle
+  xy: 846, 64
+  size: 94, 78
+Walk
+  xy: 0, 142
+  size: 94, 78
+Walk
+  xy: 94, 142
+  size: 94, 78
+Walk
+  xy: 188, 142
+  size: 94, 78
+Walk
+  xy: 282, 142
+  size: 94, 78
+Walk
+  xy: 376, 142
+  size: 94, 78
+Walk
+  xy: 470, 142
+  size: 94, 78
+Attack
+  xy: 0, 220
+  size: 94, 78
+Attack
+  xy: 94, 220
+  size: 94, 78
+Attack
+  xy: 188, 220
+  size: 94, 78
+Attack
+  xy: 282, 220
+  size: 94, 78
+Attack
+  xy: 376, 220
+  size: 94, 78
+Attack
+  xy: 470, 220
+  size: 94, 78
+Attack
+  xy: 564, 220
+  size: 94, 78
+Attack
+  xy: 658, 220
+  size: 94, 78
+Attack
+  xy: 752, 220
+  size: 94, 78
+Attack
+  xy: 846, 220
+  size: 94, 78
+Attack
+  xy: 940, 220
+  size: 94, 78
+Hit
+  xy: 0, 298
+  size: 94, 78
+Hit
+  xy: 94, 298
+  size: 94, 78
+Hit
+  xy: 188, 298
+  size: 94, 78
+Hit
+  xy: 282, 298
+  size: 94, 78
+Hit
+  xy: 376, 298
+  size: 94, 78
+Death
+  xy: 0, 376
+  size: 94, 78
+Death
+  xy: 94, 376
+  size: 94, 78
+Death
+  xy: 188, 376
+  size: 94, 78
+Death
+  xy: 282, 376
+  size: 94, 78
+Death
+  xy: 376, 376
+  size: 94, 78
+Death
+  xy: 470, 376
+  size: 94, 78
+Death
+  xy: 564, 376
+  size: 94, 78
+Death
+  xy: 658, 376
+  size: 94, 78
+Death
+  xy: 752, 376
+  size: 94, 78
+Death
+  xy: 846, 376
+  size: 94, 78
+Death
+  xy: 940, 376
+  size: 94, 78
+Death
+  xy: 1034, 376
+  size: 94, 78
+Death
+  xy: 1128, 376
+  size: 94, 78
+Wake
+  xy: 0, 454
+  size: 94, 78
+Wake
+  xy: 94, 454
+  size: 94, 78
+Wake
+  xy: 188, 454
+  size: 94, 78
+Wake
+  xy: 282, 454
+  size: 94, 78
+Wake
+  xy: 376, 454
+  size: 94, 78
+Wake
+  xy: 470, 454
+  size: 94, 78
+Wake
+  xy: 564, 454
+  size: 94, 78
+IdleUp
+  xy: 0, 532
+  size: 94, 78
+IdleUp
+  xy: 94, 532
+  size: 94, 78
+IdleUp
+  xy: 188, 532
+  size: 94, 78
+IdleUp
+  xy: 282, 532
+  size: 94, 78
+IdleUp
+  xy: 376, 532
+  size: 94, 78
+IdleUp
+  xy: 470, 532
+  size: 94, 78
+IdleUp
+  xy: 564, 532
+  size: 94, 78
+IdleUp
+  xy: 658, 532
+  size: 94, 78
+IdleUp
+  xy: 752, 532
+  size: 94, 78
+IdleUp
+  xy: 846, 532
+  size: 94, 78
+IdleDown
+  xy: 0, 610
+  size: 94, 78
+IdleDown
+  xy: 94, 610
+  size: 94, 78
+IdleDown
+  xy: 188, 610
+  size: 94, 78
+IdleDown
+  xy: 282, 610
+  size: 94, 78
+IdleDown
+  xy: 376, 610
+  size: 94, 78
+IdleDown
+  xy: 470, 610
+  size: 94, 78
+IdleDown
+  xy: 564, 610
+  size: 94, 78
+IdleDown
+  xy: 658, 610
+  size: 94, 78
+IdleDown
+  xy: 752, 610
+  size: 94, 78
+IdleDown
+  xy: 846, 610
+  size: 94, 78
+WalkUp
+  xy: 0, 688
+  size: 94, 78
+WalkUp
+  xy: 94, 688
+  size: 94, 78
+WalkUp
+  xy: 188, 688
+  size: 94, 78
+WalkUp
+  xy: 282, 688
+  size: 94, 78
+WalkUp
+  xy: 376, 688
+  size: 94, 78
+WalkUp
+  xy: 470, 688
+  size: 94, 78
+WalkDown
+  xy: 0, 766
+  size: 94, 78
+WalkDown
+  xy: 94, 766
+  size: 94, 78
+WalkDown
+  xy: 188, 766
+  size: 94, 78
+WalkDown
+  xy: 282, 766
+  size: 94, 78
+WalkDown
+  xy: 376, 766
+  size: 94, 78
+WalkDown
+  xy: 470, 766
+  size: 94, 78

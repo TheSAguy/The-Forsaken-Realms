@@ -58,6 +58,15 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-04 (round 442): **LOCAL + UNRELEASED (data only)** - cloud batch 8 of the creature-generator remakes:
+30 groups, 83 enemies (criosphinxes and sphinxes, hydras and great hydras, monkeys, plants, the stegosaurus and shrieker
+reworks, the cosmic horror with staring eyes and gnashing maws, the bat-winged manticore, fungi, bushes and treefolk,
+camel, wasp, brain mole, Lorthos, slimes, boar, caracal, badger, weasel, yetis, ogres, trolls); eight legend colors
+set by hand against the card art; the four giants' duel portraits from a double square, halved (Lorthos's on its
+dome). Data only (enemies.json 83 sprites + 83 scales, `sprites/enemy/remake/` 166 files; procedural-pixel-creatures
+`cloud/batch-08`). Now 400 remake atlases. NOT PACKAGED yet (the peer session packages live + agent when the user's
+game is closed); not seen in play.
+
 ## STATE 2026-10-04 (late): **v1.18 "Blame Vr01!" RELEASED** - tag `tfr-v1.18` @ `aba742ad603`, published 23:29:08 UTC,
 Latest. Rounds 406-441 on top of v1.17.1, engine = the 10.04 daily. Assets in `C:\TFR\release\v1.18`:
 `The-Forsaken-Realms-v1.18.zip` 312.8 MB (jar CFB504FC8FB9, 634 remake files), `forsaken-realms-1.18-signed-aligned.apk`

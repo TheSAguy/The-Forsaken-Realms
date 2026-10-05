@@ -1,0 +1,221 @@
+golgari_fungus.png
+size: 672,834
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 77
+Idle
+  xy: 56, 64
+  size: 56, 77
+Idle
+  xy: 112, 64
+  size: 56, 77
+Idle
+  xy: 168, 64
+  size: 56, 77
+Idle
+  xy: 224, 64
+  size: 56, 77
+Idle
+  xy: 280, 64
+  size: 56, 77
+Idle
+  xy: 336, 64
+  size: 56, 77
+Idle
+  xy: 392, 64
+  size: 56, 77
+Idle
+  xy: 448, 64
+  size: 56, 77
+Idle
+  xy: 504, 64
+  size: 56, 77
+Walk
+  xy: 0, 141
+  size: 56, 77
+Walk
+  xy: 56, 141
+  size: 56, 77
+Walk
+  xy: 112, 141
+  size: 56, 77
+Walk
+  xy: 168, 141
+  size: 56, 77
+Attack
+  xy: 0, 218
+  size: 56, 77
+Attack
+  xy: 56, 218
+  size: 56, 77
+Attack
+  xy: 112, 218
+  size: 56, 77
+Attack
+  xy: 168, 218
+  size: 56, 77
+Attack
+  xy: 224, 218
+  size: 56, 77
+Attack
+  xy: 280, 218
+  size: 56, 77
+Attack
+  xy: 336, 218
+  size: 56, 77
+Hit
+  xy: 0, 295
+  size: 56, 77
+Hit
+  xy: 56, 295
+  size: 56, 77
+Hit
+  xy: 112, 295
+  size: 56, 77
+Hit
+  xy: 168, 295
+  size: 56, 77
+Death
+  xy: 0, 372
+  size: 56, 77
+Death
+  xy: 56, 372
+  size: 56, 77
+Death
+  xy: 112, 372
+  size: 56, 77
+Death
+  xy: 168, 372
+  size: 56, 77
+Death
+  xy: 224, 372
+  size: 56, 77
+Death
+  xy: 280, 372
+  size: 56, 77
+Death
+  xy: 336, 372
+  size: 56, 77
+Death
+  xy: 392, 372
+  size: 56, 77
+Death
+  xy: 448, 372
+  size: 56, 77
+Death
+  xy: 504, 372
+  size: 56, 77
+Death
+  xy: 560, 372
+  size: 56, 77
+Death
+  xy: 616, 372
+  size: 56, 77
+Wake
+  xy: 0, 449
+  size: 56, 77
+Wake
+  xy: 56, 449
+  size: 56, 77
+Wake
+  xy: 112, 449
+  size: 56, 77
+Wake
+  xy: 168, 449
+  size: 56, 77
+Wake
+  xy: 224, 449
+  size: 56, 77
+Wake
+  xy: 280, 449
+  size: 56, 77
+IdleUp
+  xy: 0, 526
+  size: 56, 77
+IdleUp
+  xy: 56, 526
+  size: 56, 77
+IdleUp
+  xy: 112, 526
+  size: 56, 77
+IdleUp
+  xy: 168, 526
+  size: 56, 77
+IdleUp
+  xy: 224, 526
+  size: 56, 77
+IdleUp
+  xy: 280, 526
+  size: 56, 77
+IdleUp
+  xy: 336, 526
+  size: 56, 77
+IdleUp
+  xy: 392, 526
+  size: 56, 77
+IdleUp
+  xy: 448, 526
+  size: 56, 77
+IdleUp
+  xy: 504, 526
+  size: 56, 77
+IdleDown
+  xy: 0, 603
+  size: 56, 77
+IdleDown
+  xy: 56, 603
+  size: 56, 77
+IdleDown
+  xy: 112, 603
+  size: 56, 77
+IdleDown
+  xy: 168, 603
+  size: 56, 77
+IdleDown
+  xy: 224, 603
+  size: 56, 77
+IdleDown
+  xy: 280, 603
+  size: 56, 77
+IdleDown
+  xy: 336, 603
+  size: 56, 77
+IdleDown
+  xy: 392, 603
+  size: 56, 77
+IdleDown
+  xy: 448, 603
+  size: 56, 77
+IdleDown
+  xy: 504, 603
+  size: 56, 77
+WalkUp
+  xy: 0, 680
+  size: 56, 77
+WalkUp
+  xy: 56, 680
+  size: 56, 77
+WalkUp
+  xy: 112, 680
+  size: 56, 77
+WalkUp
+  xy: 168, 680
+  size: 56, 77
+WalkDown
+  xy: 0, 757
+  size: 56, 77
+WalkDown
+  xy: 56, 757
+  size: 56, 77
+WalkDown
+  xy: 112, 757
+  size: 56, 77
+WalkDown
+  xy: 168, 757
+  size: 56, 77

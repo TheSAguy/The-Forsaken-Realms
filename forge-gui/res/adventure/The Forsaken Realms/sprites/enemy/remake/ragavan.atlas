@@ -1,0 +1,254 @@
+ragavan.png
+size: 1680,844
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 120, 78
+Idle
+  xy: 120, 64
+  size: 120, 78
+Idle
+  xy: 240, 64
+  size: 120, 78
+Idle
+  xy: 360, 64
+  size: 120, 78
+Idle
+  xy: 480, 64
+  size: 120, 78
+Idle
+  xy: 600, 64
+  size: 120, 78
+Idle
+  xy: 720, 64
+  size: 120, 78
+Idle
+  xy: 840, 64
+  size: 120, 78
+Idle
+  xy: 960, 64
+  size: 120, 78
+Idle
+  xy: 1080, 64
+  size: 120, 78
+Walk
+  xy: 0, 142
+  size: 120, 78
+Walk
+  xy: 120, 142
+  size: 120, 78
+Walk
+  xy: 240, 142
+  size: 120, 78
+Walk
+  xy: 360, 142
+  size: 120, 78
+Walk
+  xy: 480, 142
+  size: 120, 78
+Walk
+  xy: 600, 142
+  size: 120, 78
+Attack
+  xy: 0, 220
+  size: 120, 78
+Attack
+  xy: 120, 220
+  size: 120, 78
+Attack
+  xy: 240, 220
+  size: 120, 78
+Attack
+  xy: 360, 220
+  size: 120, 78
+Attack
+  xy: 480, 220
+  size: 120, 78
+Attack
+  xy: 600, 220
+  size: 120, 78
+Attack
+  xy: 720, 220
+  size: 120, 78
+Attack
+  xy: 840, 220
+  size: 120, 78
+Hit
+  xy: 0, 298
+  size: 120, 78
+Hit
+  xy: 120, 298
+  size: 120, 78
+Hit
+  xy: 240, 298
+  size: 120, 78
+Hit
+  xy: 360, 298
+  size: 120, 78
+Hit
+  xy: 480, 298
+  size: 120, 78
+Death
+  xy: 0, 376
+  size: 120, 78
+Death
+  xy: 120, 376
+  size: 120, 78
+Death
+  xy: 240, 376
+  size: 120, 78
+Death
+  xy: 360, 376
+  size: 120, 78
+Death
+  xy: 480, 376
+  size: 120, 78
+Death
+  xy: 600, 376
+  size: 120, 78
+Death
+  xy: 720, 376
+  size: 120, 78
+Death
+  xy: 840, 376
+  size: 120, 78
+Death
+  xy: 960, 376
+  size: 120, 78
+Death
+  xy: 1080, 376
+  size: 120, 78
+Death
+  xy: 1200, 376
+  size: 120, 78
+Death
+  xy: 1320, 376
+  size: 120, 78
+Death
+  xy: 1440, 376
+  size: 120, 78
+Death
+  xy: 1560, 376
+  size: 120, 78
+Wake
+  xy: 0, 454
+  size: 120, 78
+Wake
+  xy: 120, 454
+  size: 120, 78
+Wake
+  xy: 240, 454
+  size: 120, 78
+Wake
+  xy: 360, 454
+  size: 120, 78
+Wake
+  xy: 480, 454
+  size: 120, 78
+Wake
+  xy: 600, 454
+  size: 120, 78
+Wake
+  xy: 720, 454
+  size: 120, 78
+IdleUp
+  xy: 0, 532
+  size: 120, 78
+IdleUp
+  xy: 120, 532
+  size: 120, 78
+IdleUp
+  xy: 240, 532
+  size: 120, 78
+IdleUp
+  xy: 360, 532
+  size: 120, 78
+IdleUp
+  xy: 480, 532
+  size: 120, 78
+IdleUp
+  xy: 600, 532
+  size: 120, 78
+IdleUp
+  xy: 720, 532
+  size: 120, 78
+IdleUp
+  xy: 840, 532
+  size: 120, 78
+IdleUp
+  xy: 960, 532
+  size: 120, 78
+IdleUp
+  xy: 1080, 532
+  size: 120, 78
+IdleDown
+  xy: 0, 610
+  size: 120, 78
+IdleDown
+  xy: 120, 610
+  size: 120, 78
+IdleDown
+  xy: 240, 610
+  size: 120, 78
+IdleDown
+  xy: 360, 610
+  size: 120, 78
+IdleDown
+  xy: 480, 610
+  size: 120, 78
+IdleDown
+  xy: 600, 610
+  size: 120, 78
+IdleDown
+  xy: 720, 610
+  size: 120, 78
+IdleDown
+  xy: 840, 610
+  size: 120, 78
+IdleDown
+  xy: 960, 610
+  size: 120, 78
+IdleDown
+  xy: 1080, 610
+  size: 120, 78
+WalkUp
+  xy: 0, 688
+  size: 120, 78
+WalkUp
+  xy: 120, 688
+  size: 120, 78
+WalkUp
+  xy: 240, 688
+  size: 120, 78
+WalkUp
+  xy: 360, 688
+  size: 120, 78
+WalkUp
+  xy: 480, 688
+  size: 120, 78
+WalkUp
+  xy: 600, 688
+  size: 120, 78
+WalkDown
+  xy: 0, 766
+  size: 120, 78
+WalkDown
+  xy: 120, 766
+  size: 120, 78
+WalkDown
+  xy: 240, 766
+  size: 120, 78
+WalkDown
+  xy: 360, 766
+  size: 120, 78
+WalkDown
+  xy: 480, 766
+  size: 120, 78
+WalkDown
+  xy: 600, 766
+  size: 120, 78

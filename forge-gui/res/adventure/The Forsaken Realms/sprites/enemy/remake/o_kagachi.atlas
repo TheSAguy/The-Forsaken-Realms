@@ -1,0 +1,260 @@
+o_kagachi.png
+size: 1560,894
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 104, 83
+Idle
+  xy: 104, 64
+  size: 104, 83
+Idle
+  xy: 208, 64
+  size: 104, 83
+Idle
+  xy: 312, 64
+  size: 104, 83
+Idle
+  xy: 416, 64
+  size: 104, 83
+Idle
+  xy: 520, 64
+  size: 104, 83
+Idle
+  xy: 624, 64
+  size: 104, 83
+Idle
+  xy: 728, 64
+  size: 104, 83
+Idle
+  xy: 832, 64
+  size: 104, 83
+Idle
+  xy: 936, 64
+  size: 104, 83
+Walk
+  xy: 0, 147
+  size: 104, 83
+Walk
+  xy: 104, 147
+  size: 104, 83
+Walk
+  xy: 208, 147
+  size: 104, 83
+Walk
+  xy: 312, 147
+  size: 104, 83
+Walk
+  xy: 416, 147
+  size: 104, 83
+Walk
+  xy: 520, 147
+  size: 104, 83
+Attack
+  xy: 0, 230
+  size: 104, 83
+Attack
+  xy: 104, 230
+  size: 104, 83
+Attack
+  xy: 208, 230
+  size: 104, 83
+Attack
+  xy: 312, 230
+  size: 104, 83
+Attack
+  xy: 416, 230
+  size: 104, 83
+Attack
+  xy: 520, 230
+  size: 104, 83
+Attack
+  xy: 624, 230
+  size: 104, 83
+Hit
+  xy: 0, 313
+  size: 104, 83
+Hit
+  xy: 104, 313
+  size: 104, 83
+Hit
+  xy: 208, 313
+  size: 104, 83
+Hit
+  xy: 312, 313
+  size: 104, 83
+Hit
+  xy: 416, 313
+  size: 104, 83
+Hit
+  xy: 520, 313
+  size: 104, 83
+Death
+  xy: 0, 396
+  size: 104, 83
+Death
+  xy: 104, 396
+  size: 104, 83
+Death
+  xy: 208, 396
+  size: 104, 83
+Death
+  xy: 312, 396
+  size: 104, 83
+Death
+  xy: 416, 396
+  size: 104, 83
+Death
+  xy: 520, 396
+  size: 104, 83
+Death
+  xy: 624, 396
+  size: 104, 83
+Death
+  xy: 728, 396
+  size: 104, 83
+Death
+  xy: 832, 396
+  size: 104, 83
+Death
+  xy: 936, 396
+  size: 104, 83
+Death
+  xy: 1040, 396
+  size: 104, 83
+Death
+  xy: 1144, 396
+  size: 104, 83
+Death
+  xy: 1248, 396
+  size: 104, 83
+Death
+  xy: 1352, 396
+  size: 104, 83
+Death
+  xy: 1456, 396
+  size: 104, 83
+Wake
+  xy: 0, 479
+  size: 104, 83
+Wake
+  xy: 104, 479
+  size: 104, 83
+Wake
+  xy: 208, 479
+  size: 104, 83
+Wake
+  xy: 312, 479
+  size: 104, 83
+Wake
+  xy: 416, 479
+  size: 104, 83
+Wake
+  xy: 520, 479
+  size: 104, 83
+Wake
+  xy: 624, 479
+  size: 104, 83
+Wake
+  xy: 728, 479
+  size: 104, 83
+IdleUp
+  xy: 0, 562
+  size: 104, 83
+IdleUp
+  xy: 104, 562
+  size: 104, 83
+IdleUp
+  xy: 208, 562
+  size: 104, 83
+IdleUp
+  xy: 312, 562
+  size: 104, 83
+IdleUp
+  xy: 416, 562
+  size: 104, 83
+IdleUp
+  xy: 520, 562
+  size: 104, 83
+IdleUp
+  xy: 624, 562
+  size: 104, 83
+IdleUp
+  xy: 728, 562
+  size: 104, 83
+IdleUp
+  xy: 832, 562
+  size: 104, 83
+IdleUp
+  xy: 936, 562
+  size: 104, 83
+IdleDown
+  xy: 0, 645
+  size: 104, 83
+IdleDown
+  xy: 104, 645
+  size: 104, 83
+IdleDown
+  xy: 208, 645
+  size: 104, 83
+IdleDown
+  xy: 312, 645
+  size: 104, 83
+IdleDown
+  xy: 416, 645
+  size: 104, 83
+IdleDown
+  xy: 520, 645
+  size: 104, 83
+IdleDown
+  xy: 624, 645
+  size: 104, 83
+IdleDown
+  xy: 728, 645
+  size: 104, 83
+IdleDown
+  xy: 832, 645
+  size: 104, 83
+IdleDown
+  xy: 936, 645
+  size: 104, 83
+WalkUp
+  xy: 0, 728
+  size: 104, 83
+WalkUp
+  xy: 104, 728
+  size: 104, 83
+WalkUp
+  xy: 208, 728
+  size: 104, 83
+WalkUp
+  xy: 312, 728
+  size: 104, 83
+WalkUp
+  xy: 416, 728
+  size: 104, 83
+WalkUp
+  xy: 520, 728
+  size: 104, 83
+WalkDown
+  xy: 0, 811
+  size: 104, 83
+WalkDown
+  xy: 104, 811
+  size: 104, 83
+WalkDown
+  xy: 208, 811
+  size: 104, 83
+WalkDown
+  xy: 312, 811
+  size: 104, 83
+WalkDown
+  xy: 416, 811
+  size: 104, 83
+WalkDown
+  xy: 520, 811
+  size: 104, 83

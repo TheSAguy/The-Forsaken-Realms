@@ -1,0 +1,248 @@
+mire_troll.png
+size: 1484,884
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 106, 82
+Idle
+  xy: 106, 64
+  size: 106, 82
+Idle
+  xy: 212, 64
+  size: 106, 82
+Idle
+  xy: 318, 64
+  size: 106, 82
+Idle
+  xy: 424, 64
+  size: 106, 82
+Idle
+  xy: 530, 64
+  size: 106, 82
+Idle
+  xy: 636, 64
+  size: 106, 82
+Idle
+  xy: 742, 64
+  size: 106, 82
+Idle
+  xy: 848, 64
+  size: 106, 82
+Idle
+  xy: 954, 64
+  size: 106, 82
+Walk
+  xy: 0, 146
+  size: 106, 82
+Walk
+  xy: 106, 146
+  size: 106, 82
+Walk
+  xy: 212, 146
+  size: 106, 82
+Walk
+  xy: 318, 146
+  size: 106, 82
+Walk
+  xy: 424, 146
+  size: 106, 82
+Walk
+  xy: 530, 146
+  size: 106, 82
+Attack
+  xy: 0, 228
+  size: 106, 82
+Attack
+  xy: 106, 228
+  size: 106, 82
+Attack
+  xy: 212, 228
+  size: 106, 82
+Attack
+  xy: 318, 228
+  size: 106, 82
+Attack
+  xy: 424, 228
+  size: 106, 82
+Attack
+  xy: 530, 228
+  size: 106, 82
+Hit
+  xy: 0, 310
+  size: 106, 82
+Hit
+  xy: 106, 310
+  size: 106, 82
+Hit
+  xy: 212, 310
+  size: 106, 82
+Hit
+  xy: 318, 310
+  size: 106, 82
+Hit
+  xy: 424, 310
+  size: 106, 82
+Death
+  xy: 0, 392
+  size: 106, 82
+Death
+  xy: 106, 392
+  size: 106, 82
+Death
+  xy: 212, 392
+  size: 106, 82
+Death
+  xy: 318, 392
+  size: 106, 82
+Death
+  xy: 424, 392
+  size: 106, 82
+Death
+  xy: 530, 392
+  size: 106, 82
+Death
+  xy: 636, 392
+  size: 106, 82
+Death
+  xy: 742, 392
+  size: 106, 82
+Death
+  xy: 848, 392
+  size: 106, 82
+Death
+  xy: 954, 392
+  size: 106, 82
+Death
+  xy: 1060, 392
+  size: 106, 82
+Death
+  xy: 1166, 392
+  size: 106, 82
+Death
+  xy: 1272, 392
+  size: 106, 82
+Death
+  xy: 1378, 392
+  size: 106, 82
+Wake
+  xy: 0, 474
+  size: 106, 82
+Wake
+  xy: 106, 474
+  size: 106, 82
+Wake
+  xy: 212, 474
+  size: 106, 82
+Wake
+  xy: 318, 474
+  size: 106, 82
+Wake
+  xy: 424, 474
+  size: 106, 82
+Wake
+  xy: 530, 474
+  size: 106, 82
+Wake
+  xy: 636, 474
+  size: 106, 82
+IdleUp
+  xy: 0, 556
+  size: 106, 82
+IdleUp
+  xy: 106, 556
+  size: 106, 82
+IdleUp
+  xy: 212, 556
+  size: 106, 82
+IdleUp
+  xy: 318, 556
+  size: 106, 82
+IdleUp
+  xy: 424, 556
+  size: 106, 82
+IdleUp
+  xy: 530, 556
+  size: 106, 82
+IdleUp
+  xy: 636, 556
+  size: 106, 82
+IdleUp
+  xy: 742, 556
+  size: 106, 82
+IdleUp
+  xy: 848, 556
+  size: 106, 82
+IdleUp
+  xy: 954, 556
+  size: 106, 82
+IdleDown
+  xy: 0, 638
+  size: 106, 82
+IdleDown
+  xy: 106, 638
+  size: 106, 82
+IdleDown
+  xy: 212, 638
+  size: 106, 82
+IdleDown
+  xy: 318, 638
+  size: 106, 82
+IdleDown
+  xy: 424, 638
+  size: 106, 82
+IdleDown
+  xy: 530, 638
+  size: 106, 82
+IdleDown
+  xy: 636, 638
+  size: 106, 82
+IdleDown
+  xy: 742, 638
+  size: 106, 82
+IdleDown
+  xy: 848, 638
+  size: 106, 82
+IdleDown
+  xy: 954, 638
+  size: 106, 82
+WalkUp
+  xy: 0, 720
+  size: 106, 82
+WalkUp
+  xy: 106, 720
+  size: 106, 82
+WalkUp
+  xy: 212, 720
+  size: 106, 82
+WalkUp
+  xy: 318, 720
+  size: 106, 82
+WalkUp
+  xy: 424, 720
+  size: 106, 82
+WalkUp
+  xy: 530, 720
+  size: 106, 82
+WalkDown
+  xy: 0, 802
+  size: 106, 82
+WalkDown
+  xy: 106, 802
+  size: 106, 82
+WalkDown
+  xy: 212, 802
+  size: 106, 82
+WalkDown
+  xy: 318, 802
+  size: 106, 82
+WalkDown
+  xy: 424, 802
+  size: 106, 82
+WalkDown
+  xy: 530, 802
+  size: 106, 82

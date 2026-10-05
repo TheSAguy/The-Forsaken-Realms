@@ -1,0 +1,248 @@
+eligeth_and_anara.png
+size: 1352,1014
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 104, 95
+Idle
+  xy: 104, 64
+  size: 104, 95
+Idle
+  xy: 208, 64
+  size: 104, 95
+Idle
+  xy: 312, 64
+  size: 104, 95
+Idle
+  xy: 416, 64
+  size: 104, 95
+Idle
+  xy: 520, 64
+  size: 104, 95
+Idle
+  xy: 624, 64
+  size: 104, 95
+Idle
+  xy: 728, 64
+  size: 104, 95
+Idle
+  xy: 832, 64
+  size: 104, 95
+Idle
+  xy: 936, 64
+  size: 104, 95
+Walk
+  xy: 0, 159
+  size: 104, 95
+Walk
+  xy: 104, 159
+  size: 104, 95
+Walk
+  xy: 208, 159
+  size: 104, 95
+Walk
+  xy: 312, 159
+  size: 104, 95
+Walk
+  xy: 416, 159
+  size: 104, 95
+Walk
+  xy: 520, 159
+  size: 104, 95
+Attack
+  xy: 0, 254
+  size: 104, 95
+Attack
+  xy: 104, 254
+  size: 104, 95
+Attack
+  xy: 208, 254
+  size: 104, 95
+Attack
+  xy: 312, 254
+  size: 104, 95
+Attack
+  xy: 416, 254
+  size: 104, 95
+Attack
+  xy: 520, 254
+  size: 104, 95
+Attack
+  xy: 624, 254
+  size: 104, 95
+Hit
+  xy: 0, 349
+  size: 104, 95
+Hit
+  xy: 104, 349
+  size: 104, 95
+Hit
+  xy: 208, 349
+  size: 104, 95
+Hit
+  xy: 312, 349
+  size: 104, 95
+Hit
+  xy: 416, 349
+  size: 104, 95
+Death
+  xy: 0, 444
+  size: 104, 95
+Death
+  xy: 104, 444
+  size: 104, 95
+Death
+  xy: 208, 444
+  size: 104, 95
+Death
+  xy: 312, 444
+  size: 104, 95
+Death
+  xy: 416, 444
+  size: 104, 95
+Death
+  xy: 520, 444
+  size: 104, 95
+Death
+  xy: 624, 444
+  size: 104, 95
+Death
+  xy: 728, 444
+  size: 104, 95
+Death
+  xy: 832, 444
+  size: 104, 95
+Death
+  xy: 936, 444
+  size: 104, 95
+Death
+  xy: 1040, 444
+  size: 104, 95
+Death
+  xy: 1144, 444
+  size: 104, 95
+Death
+  xy: 1248, 444
+  size: 104, 95
+Wake
+  xy: 0, 539
+  size: 104, 95
+Wake
+  xy: 104, 539
+  size: 104, 95
+Wake
+  xy: 208, 539
+  size: 104, 95
+Wake
+  xy: 312, 539
+  size: 104, 95
+Wake
+  xy: 416, 539
+  size: 104, 95
+Wake
+  xy: 520, 539
+  size: 104, 95
+Wake
+  xy: 624, 539
+  size: 104, 95
+IdleUp
+  xy: 0, 634
+  size: 104, 95
+IdleUp
+  xy: 104, 634
+  size: 104, 95
+IdleUp
+  xy: 208, 634
+  size: 104, 95
+IdleUp
+  xy: 312, 634
+  size: 104, 95
+IdleUp
+  xy: 416, 634
+  size: 104, 95
+IdleUp
+  xy: 520, 634
+  size: 104, 95
+IdleUp
+  xy: 624, 634
+  size: 104, 95
+IdleUp
+  xy: 728, 634
+  size: 104, 95
+IdleUp
+  xy: 832, 634
+  size: 104, 95
+IdleUp
+  xy: 936, 634
+  size: 104, 95
+IdleDown
+  xy: 0, 729
+  size: 104, 95
+IdleDown
+  xy: 104, 729
+  size: 104, 95
+IdleDown
+  xy: 208, 729
+  size: 104, 95
+IdleDown
+  xy: 312, 729
+  size: 104, 95
+IdleDown
+  xy: 416, 729
+  size: 104, 95
+IdleDown
+  xy: 520, 729
+  size: 104, 95
+IdleDown
+  xy: 624, 729
+  size: 104, 95
+IdleDown
+  xy: 728, 729
+  size: 104, 95
+IdleDown
+  xy: 832, 729
+  size: 104, 95
+IdleDown
+  xy: 936, 729
+  size: 104, 95
+WalkUp
+  xy: 0, 824
+  size: 104, 95
+WalkUp
+  xy: 104, 824
+  size: 104, 95
+WalkUp
+  xy: 208, 824
+  size: 104, 95
+WalkUp
+  xy: 312, 824
+  size: 104, 95
+WalkUp
+  xy: 416, 824
+  size: 104, 95
+WalkUp
+  xy: 520, 824
+  size: 104, 95
+WalkDown
+  xy: 0, 919
+  size: 104, 95
+WalkDown
+  xy: 104, 919
+  size: 104, 95
+WalkDown
+  xy: 208, 919
+  size: 104, 95
+WalkDown
+  xy: 312, 919
+  size: 104, 95
+WalkDown
+  xy: 416, 919
+  size: 104, 95
+WalkDown
+  xy: 520, 919
+  size: 104, 95

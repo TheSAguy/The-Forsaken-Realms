@@ -1,0 +1,215 @@
+gyruda.png
+size: 1078,834
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 98, 77
+Idle
+  xy: 98, 64
+  size: 98, 77
+Idle
+  xy: 196, 64
+  size: 98, 77
+Idle
+  xy: 294, 64
+  size: 98, 77
+Idle
+  xy: 392, 64
+  size: 98, 77
+Idle
+  xy: 490, 64
+  size: 98, 77
+Idle
+  xy: 588, 64
+  size: 98, 77
+Idle
+  xy: 686, 64
+  size: 98, 77
+Idle
+  xy: 784, 64
+  size: 98, 77
+Idle
+  xy: 882, 64
+  size: 98, 77
+Walk
+  xy: 0, 141
+  size: 98, 77
+Walk
+  xy: 98, 141
+  size: 98, 77
+Walk
+  xy: 196, 141
+  size: 98, 77
+Walk
+  xy: 294, 141
+  size: 98, 77
+Attack
+  xy: 0, 218
+  size: 98, 77
+Attack
+  xy: 98, 218
+  size: 98, 77
+Attack
+  xy: 196, 218
+  size: 98, 77
+Attack
+  xy: 294, 218
+  size: 98, 77
+Attack
+  xy: 392, 218
+  size: 98, 77
+Attack
+  xy: 490, 218
+  size: 98, 77
+Hit
+  xy: 0, 295
+  size: 98, 77
+Hit
+  xy: 98, 295
+  size: 98, 77
+Hit
+  xy: 196, 295
+  size: 98, 77
+Hit
+  xy: 294, 295
+  size: 98, 77
+Death
+  xy: 0, 372
+  size: 98, 77
+Death
+  xy: 98, 372
+  size: 98, 77
+Death
+  xy: 196, 372
+  size: 98, 77
+Death
+  xy: 294, 372
+  size: 98, 77
+Death
+  xy: 392, 372
+  size: 98, 77
+Death
+  xy: 490, 372
+  size: 98, 77
+Death
+  xy: 588, 372
+  size: 98, 77
+Death
+  xy: 686, 372
+  size: 98, 77
+Death
+  xy: 784, 372
+  size: 98, 77
+Death
+  xy: 882, 372
+  size: 98, 77
+Death
+  xy: 980, 372
+  size: 98, 77
+Wake
+  xy: 0, 449
+  size: 98, 77
+Wake
+  xy: 98, 449
+  size: 98, 77
+Wake
+  xy: 196, 449
+  size: 98, 77
+Wake
+  xy: 294, 449
+  size: 98, 77
+Wake
+  xy: 392, 449
+  size: 98, 77
+Wake
+  xy: 490, 449
+  size: 98, 77
+IdleUp
+  xy: 0, 526
+  size: 98, 77
+IdleUp
+  xy: 98, 526
+  size: 98, 77
+IdleUp
+  xy: 196, 526
+  size: 98, 77
+IdleUp
+  xy: 294, 526
+  size: 98, 77
+IdleUp
+  xy: 392, 526
+  size: 98, 77
+IdleUp
+  xy: 490, 526
+  size: 98, 77
+IdleUp
+  xy: 588, 526
+  size: 98, 77
+IdleUp
+  xy: 686, 526
+  size: 98, 77
+IdleUp
+  xy: 784, 526
+  size: 98, 77
+IdleUp
+  xy: 882, 526
+  size: 98, 77
+IdleDown
+  xy: 0, 603
+  size: 98, 77
+IdleDown
+  xy: 98, 603
+  size: 98, 77
+IdleDown
+  xy: 196, 603
+  size: 98, 77
+IdleDown
+  xy: 294, 603
+  size: 98, 77
+IdleDown
+  xy: 392, 603
+  size: 98, 77
+IdleDown
+  xy: 490, 603
+  size: 98, 77
+IdleDown
+  xy: 588, 603
+  size: 98, 77
+IdleDown
+  xy: 686, 603
+  size: 98, 77
+IdleDown
+  xy: 784, 603
+  size: 98, 77
+IdleDown
+  xy: 882, 603
+  size: 98, 77
+WalkUp
+  xy: 0, 680
+  size: 98, 77
+WalkUp
+  xy: 98, 680
+  size: 98, 77
+WalkUp
+  xy: 196, 680
+  size: 98, 77
+WalkUp
+  xy: 294, 680
+  size: 98, 77
+WalkDown
+  xy: 0, 757
+  size: 98, 77
+WalkDown
+  xy: 98, 757
+  size: 98, 77
+WalkDown
+  xy: 196, 757
+  size: 98, 77
+WalkDown
+  xy: 294, 757
+  size: 98, 77

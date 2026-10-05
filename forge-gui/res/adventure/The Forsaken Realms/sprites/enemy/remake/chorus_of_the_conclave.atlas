@@ -1,0 +1,236 @@
+chorus_of_the_conclave.png
+size: 1428,954
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 102, 89
+Idle
+  xy: 102, 64
+  size: 102, 89
+Idle
+  xy: 204, 64
+  size: 102, 89
+Idle
+  xy: 306, 64
+  size: 102, 89
+Idle
+  xy: 408, 64
+  size: 102, 89
+Idle
+  xy: 510, 64
+  size: 102, 89
+Idle
+  xy: 612, 64
+  size: 102, 89
+Idle
+  xy: 714, 64
+  size: 102, 89
+Idle
+  xy: 816, 64
+  size: 102, 89
+Idle
+  xy: 918, 64
+  size: 102, 89
+Walk
+  xy: 0, 153
+  size: 102, 89
+Walk
+  xy: 102, 153
+  size: 102, 89
+Walk
+  xy: 204, 153
+  size: 102, 89
+Walk
+  xy: 306, 153
+  size: 102, 89
+Attack
+  xy: 0, 242
+  size: 102, 89
+Attack
+  xy: 102, 242
+  size: 102, 89
+Attack
+  xy: 204, 242
+  size: 102, 89
+Attack
+  xy: 306, 242
+  size: 102, 89
+Attack
+  xy: 408, 242
+  size: 102, 89
+Attack
+  xy: 510, 242
+  size: 102, 89
+Attack
+  xy: 612, 242
+  size: 102, 89
+Attack
+  xy: 714, 242
+  size: 102, 89
+Hit
+  xy: 0, 331
+  size: 102, 89
+Hit
+  xy: 102, 331
+  size: 102, 89
+Hit
+  xy: 204, 331
+  size: 102, 89
+Hit
+  xy: 306, 331
+  size: 102, 89
+Hit
+  xy: 408, 331
+  size: 102, 89
+Death
+  xy: 0, 420
+  size: 102, 89
+Death
+  xy: 102, 420
+  size: 102, 89
+Death
+  xy: 204, 420
+  size: 102, 89
+Death
+  xy: 306, 420
+  size: 102, 89
+Death
+  xy: 408, 420
+  size: 102, 89
+Death
+  xy: 510, 420
+  size: 102, 89
+Death
+  xy: 612, 420
+  size: 102, 89
+Death
+  xy: 714, 420
+  size: 102, 89
+Death
+  xy: 816, 420
+  size: 102, 89
+Death
+  xy: 918, 420
+  size: 102, 89
+Death
+  xy: 1020, 420
+  size: 102, 89
+Death
+  xy: 1122, 420
+  size: 102, 89
+Death
+  xy: 1224, 420
+  size: 102, 89
+Death
+  xy: 1326, 420
+  size: 102, 89
+Wake
+  xy: 0, 509
+  size: 102, 89
+Wake
+  xy: 102, 509
+  size: 102, 89
+Wake
+  xy: 204, 509
+  size: 102, 89
+Wake
+  xy: 306, 509
+  size: 102, 89
+Wake
+  xy: 408, 509
+  size: 102, 89
+Wake
+  xy: 510, 509
+  size: 102, 89
+Wake
+  xy: 612, 509
+  size: 102, 89
+IdleUp
+  xy: 0, 598
+  size: 102, 89
+IdleUp
+  xy: 102, 598
+  size: 102, 89
+IdleUp
+  xy: 204, 598
+  size: 102, 89
+IdleUp
+  xy: 306, 598
+  size: 102, 89
+IdleUp
+  xy: 408, 598
+  size: 102, 89
+IdleUp
+  xy: 510, 598
+  size: 102, 89
+IdleUp
+  xy: 612, 598
+  size: 102, 89
+IdleUp
+  xy: 714, 598
+  size: 102, 89
+IdleUp
+  xy: 816, 598
+  size: 102, 89
+IdleUp
+  xy: 918, 598
+  size: 102, 89
+IdleDown
+  xy: 0, 687
+  size: 102, 89
+IdleDown
+  xy: 102, 687
+  size: 102, 89
+IdleDown
+  xy: 204, 687
+  size: 102, 89
+IdleDown
+  xy: 306, 687
+  size: 102, 89
+IdleDown
+  xy: 408, 687
+  size: 102, 89
+IdleDown
+  xy: 510, 687
+  size: 102, 89
+IdleDown
+  xy: 612, 687
+  size: 102, 89
+IdleDown
+  xy: 714, 687
+  size: 102, 89
+IdleDown
+  xy: 816, 687
+  size: 102, 89
+IdleDown
+  xy: 918, 687
+  size: 102, 89
+WalkUp
+  xy: 0, 776
+  size: 102, 89
+WalkUp
+  xy: 102, 776
+  size: 102, 89
+WalkUp
+  xy: 204, 776
+  size: 102, 89
+WalkUp
+  xy: 306, 776
+  size: 102, 89
+WalkDown
+  xy: 0, 865
+  size: 102, 89
+WalkDown
+  xy: 102, 865
+  size: 102, 89
+WalkDown
+  xy: 204, 865
+  size: 102, 89
+WalkDown
+  xy: 306, 865
+  size: 102, 89
