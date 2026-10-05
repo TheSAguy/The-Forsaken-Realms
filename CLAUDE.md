@@ -64,8 +64,7 @@ reworks, the cosmic horror with staring eyes and gnashing maws, the bat-winged m
 camel, wasp, brain mole, Lorthos, slimes, boar, caracal, badger, weasel, yetis, ogres, trolls); eight legend colors
 set by hand against the card art; the four giants' duel portraits from a double square, halved (Lorthos's on its
 dome). Data only (enemies.json 83 sprites + 83 scales, `sprites/enemy/remake/` 166 files; procedural-pixel-creatures
-`cloud/batch-08`). Now 400 remake atlases. NOT PACKAGED yet (the peer session packages live + agent when the user's
-game is closed); not seen in play.
+`cloud/batch-08`). Now 400 remake atlases. LIVE + AGENT PACKAGED (enemies.json 08B39508, 800 remake files; jar CFB504FC8FB9); not seen in play.
 
 ## STATE 2026-10-04 (late): **v1.18 "Blame Vr01!" RELEASED** - tag `tfr-v1.18` @ `aba742ad603`, published 23:29:08 UTC,
 Latest. Rounds 406-441 on top of v1.17.1, engine = the 10.04 daily. Assets in `C:\TFR\release\v1.18`:
@@ -75,9 +74,8 @@ Latest. Rounds 406-441 on top of v1.17.1, engine = the 10.04 daily. Assets in `C
 "only the important stuff"). The AGENT folder is the release; the LIVE folder is 441 with the old 1.17.1 stamp (the
 user's game was running) - repackage when closed. NOTHING is unreleased. Next merge from upstream after `f9aafc5315e`.
 Next version: 1.19 / 11900.
-**NEXT SESSION (thread closed 2026-10-04 late):** (1) when `javaw` is not running, repackage LIVE (+ agent) so it carries
-the 1.18 stamp; (2) the peer session "Procedural Pixel Creatures" holds round **442** (cloud batch 8: 30 groups, 83
-enemies) and pings before writing - package it when it says "442 done" and the game is closed; my next round is **443**;
+**NEXT SESSION (thread closed 2026-10-04 late):** (1)+(2) DONE - the peer's round 442 (cloud batch 8, 2abb355d9e9) is
+packaged live + agent, and live now carries the 1.18 stamp; my next round is **443**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,
