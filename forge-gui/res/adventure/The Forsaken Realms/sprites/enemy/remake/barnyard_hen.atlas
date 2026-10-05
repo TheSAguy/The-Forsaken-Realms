@@ -1,0 +1,218 @@
+barnyard_hen.png
+size: 616,714
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 65
+Idle
+  xy: 56, 64
+  size: 56, 65
+Idle
+  xy: 112, 64
+  size: 56, 65
+Idle
+  xy: 168, 64
+  size: 56, 65
+Idle
+  xy: 224, 64
+  size: 56, 65
+Idle
+  xy: 280, 64
+  size: 56, 65
+Idle
+  xy: 336, 64
+  size: 56, 65
+Idle
+  xy: 392, 64
+  size: 56, 65
+Idle
+  xy: 448, 64
+  size: 56, 65
+Idle
+  xy: 504, 64
+  size: 56, 65
+Walk
+  xy: 0, 129
+  size: 56, 65
+Walk
+  xy: 56, 129
+  size: 56, 65
+Walk
+  xy: 112, 129
+  size: 56, 65
+Walk
+  xy: 168, 129
+  size: 56, 65
+Attack
+  xy: 0, 194
+  size: 56, 65
+Attack
+  xy: 56, 194
+  size: 56, 65
+Attack
+  xy: 112, 194
+  size: 56, 65
+Attack
+  xy: 168, 194
+  size: 56, 65
+Attack
+  xy: 224, 194
+  size: 56, 65
+Attack
+  xy: 280, 194
+  size: 56, 65
+Attack
+  xy: 336, 194
+  size: 56, 65
+Hit
+  xy: 0, 259
+  size: 56, 65
+Hit
+  xy: 56, 259
+  size: 56, 65
+Hit
+  xy: 112, 259
+  size: 56, 65
+Hit
+  xy: 168, 259
+  size: 56, 65
+Death
+  xy: 0, 324
+  size: 56, 65
+Death
+  xy: 56, 324
+  size: 56, 65
+Death
+  xy: 112, 324
+  size: 56, 65
+Death
+  xy: 168, 324
+  size: 56, 65
+Death
+  xy: 224, 324
+  size: 56, 65
+Death
+  xy: 280, 324
+  size: 56, 65
+Death
+  xy: 336, 324
+  size: 56, 65
+Death
+  xy: 392, 324
+  size: 56, 65
+Death
+  xy: 448, 324
+  size: 56, 65
+Death
+  xy: 504, 324
+  size: 56, 65
+Death
+  xy: 560, 324
+  size: 56, 65
+Wake
+  xy: 0, 389
+  size: 56, 65
+Wake
+  xy: 56, 389
+  size: 56, 65
+Wake
+  xy: 112, 389
+  size: 56, 65
+Wake
+  xy: 168, 389
+  size: 56, 65
+Wake
+  xy: 224, 389
+  size: 56, 65
+Wake
+  xy: 280, 389
+  size: 56, 65
+IdleUp
+  xy: 0, 454
+  size: 56, 65
+IdleUp
+  xy: 56, 454
+  size: 56, 65
+IdleUp
+  xy: 112, 454
+  size: 56, 65
+IdleUp
+  xy: 168, 454
+  size: 56, 65
+IdleUp
+  xy: 224, 454
+  size: 56, 65
+IdleUp
+  xy: 280, 454
+  size: 56, 65
+IdleUp
+  xy: 336, 454
+  size: 56, 65
+IdleUp
+  xy: 392, 454
+  size: 56, 65
+IdleUp
+  xy: 448, 454
+  size: 56, 65
+IdleUp
+  xy: 504, 454
+  size: 56, 65
+IdleDown
+  xy: 0, 519
+  size: 56, 65
+IdleDown
+  xy: 56, 519
+  size: 56, 65
+IdleDown
+  xy: 112, 519
+  size: 56, 65
+IdleDown
+  xy: 168, 519
+  size: 56, 65
+IdleDown
+  xy: 224, 519
+  size: 56, 65
+IdleDown
+  xy: 280, 519
+  size: 56, 65
+IdleDown
+  xy: 336, 519
+  size: 56, 65
+IdleDown
+  xy: 392, 519
+  size: 56, 65
+IdleDown
+  xy: 448, 519
+  size: 56, 65
+IdleDown
+  xy: 504, 519
+  size: 56, 65
+WalkUp
+  xy: 0, 584
+  size: 56, 65
+WalkUp
+  xy: 56, 584
+  size: 56, 65
+WalkUp
+  xy: 112, 584
+  size: 56, 65
+WalkUp
+  xy: 168, 584
+  size: 56, 65
+WalkDown
+  xy: 0, 649
+  size: 56, 65
+WalkDown
+  xy: 56, 649
+  size: 56, 65
+WalkDown
+  xy: 112, 649
+  size: 56, 65
+WalkDown
+  xy: 168, 649
+  size: 56, 65

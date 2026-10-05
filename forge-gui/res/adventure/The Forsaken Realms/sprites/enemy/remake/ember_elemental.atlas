@@ -1,0 +1,206 @@
+ember_elemental.png
+size: 560,674
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 61
+Idle
+  xy: 56, 64
+  size: 56, 61
+Idle
+  xy: 112, 64
+  size: 56, 61
+Idle
+  xy: 168, 64
+  size: 56, 61
+Idle
+  xy: 224, 64
+  size: 56, 61
+Idle
+  xy: 280, 64
+  size: 56, 61
+Idle
+  xy: 336, 64
+  size: 56, 61
+Idle
+  xy: 392, 64
+  size: 56, 61
+Idle
+  xy: 448, 64
+  size: 56, 61
+Idle
+  xy: 504, 64
+  size: 56, 61
+Walk
+  xy: 0, 125
+  size: 56, 61
+Walk
+  xy: 56, 125
+  size: 56, 61
+Walk
+  xy: 112, 125
+  size: 56, 61
+Walk
+  xy: 168, 125
+  size: 56, 61
+Attack
+  xy: 0, 186
+  size: 56, 61
+Attack
+  xy: 56, 186
+  size: 56, 61
+Attack
+  xy: 112, 186
+  size: 56, 61
+Attack
+  xy: 168, 186
+  size: 56, 61
+Attack
+  xy: 224, 186
+  size: 56, 61
+Attack
+  xy: 280, 186
+  size: 56, 61
+Hit
+  xy: 0, 247
+  size: 56, 61
+Hit
+  xy: 56, 247
+  size: 56, 61
+Hit
+  xy: 112, 247
+  size: 56, 61
+Death
+  xy: 0, 308
+  size: 56, 61
+Death
+  xy: 56, 308
+  size: 56, 61
+Death
+  xy: 112, 308
+  size: 56, 61
+Death
+  xy: 168, 308
+  size: 56, 61
+Death
+  xy: 224, 308
+  size: 56, 61
+Death
+  xy: 280, 308
+  size: 56, 61
+Death
+  xy: 336, 308
+  size: 56, 61
+Death
+  xy: 392, 308
+  size: 56, 61
+Death
+  xy: 448, 308
+  size: 56, 61
+Death
+  xy: 504, 308
+  size: 56, 61
+Wake
+  xy: 0, 369
+  size: 56, 61
+Wake
+  xy: 56, 369
+  size: 56, 61
+Wake
+  xy: 112, 369
+  size: 56, 61
+Wake
+  xy: 168, 369
+  size: 56, 61
+Wake
+  xy: 224, 369
+  size: 56, 61
+IdleUp
+  xy: 0, 430
+  size: 56, 61
+IdleUp
+  xy: 56, 430
+  size: 56, 61
+IdleUp
+  xy: 112, 430
+  size: 56, 61
+IdleUp
+  xy: 168, 430
+  size: 56, 61
+IdleUp
+  xy: 224, 430
+  size: 56, 61
+IdleUp
+  xy: 280, 430
+  size: 56, 61
+IdleUp
+  xy: 336, 430
+  size: 56, 61
+IdleUp
+  xy: 392, 430
+  size: 56, 61
+IdleUp
+  xy: 448, 430
+  size: 56, 61
+IdleUp
+  xy: 504, 430
+  size: 56, 61
+IdleDown
+  xy: 0, 491
+  size: 56, 61
+IdleDown
+  xy: 56, 491
+  size: 56, 61
+IdleDown
+  xy: 112, 491
+  size: 56, 61
+IdleDown
+  xy: 168, 491
+  size: 56, 61
+IdleDown
+  xy: 224, 491
+  size: 56, 61
+IdleDown
+  xy: 280, 491
+  size: 56, 61
+IdleDown
+  xy: 336, 491
+  size: 56, 61
+IdleDown
+  xy: 392, 491
+  size: 56, 61
+IdleDown
+  xy: 448, 491
+  size: 56, 61
+IdleDown
+  xy: 504, 491
+  size: 56, 61
+WalkUp
+  xy: 0, 552
+  size: 56, 61
+WalkUp
+  xy: 56, 552
+  size: 56, 61
+WalkUp
+  xy: 112, 552
+  size: 56, 61
+WalkUp
+  xy: 168, 552
+  size: 56, 61
+WalkDown
+  xy: 0, 613
+  size: 56, 61
+WalkDown
+  xy: 56, 613
+  size: 56, 61
+WalkDown
+  xy: 112, 613
+  size: 56, 61
+WalkDown
+  xy: 168, 613
+  size: 56, 61

@@ -1,0 +1,212 @@
+flesh_abomination.png
+size: 704,584
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 64, 52
+Idle
+  xy: 64, 64
+  size: 64, 52
+Idle
+  xy: 128, 64
+  size: 64, 52
+Idle
+  xy: 192, 64
+  size: 64, 52
+Idle
+  xy: 256, 64
+  size: 64, 52
+Idle
+  xy: 320, 64
+  size: 64, 52
+Idle
+  xy: 384, 64
+  size: 64, 52
+Idle
+  xy: 448, 64
+  size: 64, 52
+Idle
+  xy: 512, 64
+  size: 64, 52
+Idle
+  xy: 576, 64
+  size: 64, 52
+Walk
+  xy: 0, 116
+  size: 64, 52
+Walk
+  xy: 64, 116
+  size: 64, 52
+Walk
+  xy: 128, 116
+  size: 64, 52
+Walk
+  xy: 192, 116
+  size: 64, 52
+Attack
+  xy: 0, 168
+  size: 64, 52
+Attack
+  xy: 64, 168
+  size: 64, 52
+Attack
+  xy: 128, 168
+  size: 64, 52
+Attack
+  xy: 192, 168
+  size: 64, 52
+Attack
+  xy: 256, 168
+  size: 64, 52
+Hit
+  xy: 0, 220
+  size: 64, 52
+Hit
+  xy: 64, 220
+  size: 64, 52
+Hit
+  xy: 128, 220
+  size: 64, 52
+Hit
+  xy: 192, 220
+  size: 64, 52
+Death
+  xy: 0, 272
+  size: 64, 52
+Death
+  xy: 64, 272
+  size: 64, 52
+Death
+  xy: 128, 272
+  size: 64, 52
+Death
+  xy: 192, 272
+  size: 64, 52
+Death
+  xy: 256, 272
+  size: 64, 52
+Death
+  xy: 320, 272
+  size: 64, 52
+Death
+  xy: 384, 272
+  size: 64, 52
+Death
+  xy: 448, 272
+  size: 64, 52
+Death
+  xy: 512, 272
+  size: 64, 52
+Death
+  xy: 576, 272
+  size: 64, 52
+Death
+  xy: 640, 272
+  size: 64, 52
+Wake
+  xy: 0, 324
+  size: 64, 52
+Wake
+  xy: 64, 324
+  size: 64, 52
+Wake
+  xy: 128, 324
+  size: 64, 52
+Wake
+  xy: 192, 324
+  size: 64, 52
+Wake
+  xy: 256, 324
+  size: 64, 52
+Wake
+  xy: 320, 324
+  size: 64, 52
+IdleUp
+  xy: 0, 376
+  size: 64, 52
+IdleUp
+  xy: 64, 376
+  size: 64, 52
+IdleUp
+  xy: 128, 376
+  size: 64, 52
+IdleUp
+  xy: 192, 376
+  size: 64, 52
+IdleUp
+  xy: 256, 376
+  size: 64, 52
+IdleUp
+  xy: 320, 376
+  size: 64, 52
+IdleUp
+  xy: 384, 376
+  size: 64, 52
+IdleUp
+  xy: 448, 376
+  size: 64, 52
+IdleUp
+  xy: 512, 376
+  size: 64, 52
+IdleUp
+  xy: 576, 376
+  size: 64, 52
+IdleDown
+  xy: 0, 428
+  size: 64, 52
+IdleDown
+  xy: 64, 428
+  size: 64, 52
+IdleDown
+  xy: 128, 428
+  size: 64, 52
+IdleDown
+  xy: 192, 428
+  size: 64, 52
+IdleDown
+  xy: 256, 428
+  size: 64, 52
+IdleDown
+  xy: 320, 428
+  size: 64, 52
+IdleDown
+  xy: 384, 428
+  size: 64, 52
+IdleDown
+  xy: 448, 428
+  size: 64, 52
+IdleDown
+  xy: 512, 428
+  size: 64, 52
+IdleDown
+  xy: 576, 428
+  size: 64, 52
+WalkUp
+  xy: 0, 480
+  size: 64, 52
+WalkUp
+  xy: 64, 480
+  size: 64, 52
+WalkUp
+  xy: 128, 480
+  size: 64, 52
+WalkUp
+  xy: 192, 480
+  size: 64, 52
+WalkDown
+  xy: 0, 532
+  size: 64, 52
+WalkDown
+  xy: 64, 532
+  size: 64, 52
+WalkDown
+  xy: 128, 532
+  size: 64, 52
+WalkDown
+  xy: 192, 532
+  size: 64, 52

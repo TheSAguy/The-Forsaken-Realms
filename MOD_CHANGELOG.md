@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 444: thirty-two more creatures from the generator (batch 9: the single small creatures) (2026-10-05)
+
+The ninth batch (procedural-pixel-creatures PR #9): the 32 creature sprites that one enemy each uses. The cloud session
+made 31 of them before its credit ran out; the local session made the snail, finished the ones the cloud skipped or
+left for a look, and reworked four after the user's first review: "I think we can try and improve these 4: Fire and
+Tide elementals, Mageripper and the goose. (The goose looks more like a chicken. The mageripper needs tentacles. The
+elementals more human form." On the reworked four: "Looks good. Let's use."
+
+- **The creatures:**
+  - Ghalta (the T-rex boss, its chest raised so it stands taller) and the Triceratops (a solid frill, two long brow
+    horns and a nose horn).
+  - Penguin Elite; Ape (a gorilla); Necrogoyf (a lanky purple troll, green glow); Amomongo (a heavy grey ape); Buwaya
+    (an upright crocodile-man).
+  - Mageripper, reworked after the user's reference: a furry spider with a gaping fanged maw and two whip tentacles
+    with blue hooked tips (the original's big blue eye is gone).
+  - Ocular Watcher and Bloodshot Eye (eyes with tentacles); Flesh Abomination (salmon flesh, spikes and tentacles);
+    Hedge Slime (leafy).
+  - Corrupted Treant (a crown of bare branches); Grizzled Treant (a beard and foliage); Loam Elemental (an earth golem).
+  - Ember Elemental, reworked: a hulking burning figure, a head low between broad shoulders, clawed arms bent forwards,
+    a crown of flames, flames on the shoulders and the back, a glowing core in the chest. Tide Elemental, reworked:
+    the same figure in water, rising from a foaming wave. Both drawn in the three-quarter view.
+  - Hidden Snake (the approved cobra, dark bands); Snail (a spiral shell, the eyes on stalks).
+  - Porcupine, Spikey Porcupine, Stinky Skunk, Wild Rat; Armadillo (a banded shell); Pasturing Sheep (a white fleece).
+  - Barnyard Hen, Fighting Rooster, Vulture; Honking Goose, reworked: a long, slender, upright neck, a longer beak,
+    orange legs.
+  - Leaping Frog, Croaking Toad; Sigbin (sitting upright on its haunches).
+- **New generator options** (opt-in): a snail's shell with eye stalks, an armadillo's bands, a sheep's fleece, a
+  triceratops's horns and frill, an elemental's arms, wave and human figure, bare branches, a goose's long neck, whip
+  tentacles and a round fanged maw.
+- **Data only:**
+  - `sprites/enemy/remake/`: 64 new files (32 enemies); now 432 remake atlases.
+  - `world/enemies.json`: 32 sprites and 32 scales (four of them had no scale before); no other field changed.
+  - Generator: procedural-pixel-creatures `cloud/batch-09` (5820689).
+- **Checks:**
+  - `validate_plane_data.py`: no sprite or enemy findings.
+  - `enemy_scale.py --write`: every sprite resolves; 31 scales changed (Ghalta, the boss, keeps its hand-set drawn size:
+    the installer set its scale).
+  - `sprite_artifact_audit.py --only remake` (432 atlases, 35563 frames) flags 349 frames: the 15 new ones are 14 small
+    shadow pieces (Ape, Armadillo, Barnyard Hen, Corrupted Treant, Loam Elemental, Ghalta) and, in Ghalta's duel
+    portrait, the edge of its leg where the square cuts it, not a stray piece.
+  - The 32 duel portraits checked on a contact sheet.
+- Not yet seen in play. Console (F9): `spawn enemy Ghalta`, `spawn enemy "Ember Elemental"`, `spawn enemy "Tide
+  Elemental"`, `spawn enemy Mageripper`, `spawn enemy "Honking Goose"`, `spawn enemy Snail`.
+
 ## Round 443: a place is cleared only when every level is; one clear bonus; loot keeps a cleared place (2026-10-04)
 
 The user: "In my most recent game, Scoured Valley gave me multiple Cleared bonuses and worse, it was not even cleared.

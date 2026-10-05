@@ -1,0 +1,257 @@
+pasturing_sheep.png
+size: 1200,794
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 73
+Idle
+  xy: 80, 64
+  size: 80, 73
+Idle
+  xy: 160, 64
+  size: 80, 73
+Idle
+  xy: 240, 64
+  size: 80, 73
+Idle
+  xy: 320, 64
+  size: 80, 73
+Idle
+  xy: 400, 64
+  size: 80, 73
+Idle
+  xy: 480, 64
+  size: 80, 73
+Idle
+  xy: 560, 64
+  size: 80, 73
+Idle
+  xy: 640, 64
+  size: 80, 73
+Idle
+  xy: 720, 64
+  size: 80, 73
+Walk
+  xy: 0, 137
+  size: 80, 73
+Walk
+  xy: 80, 137
+  size: 80, 73
+Walk
+  xy: 160, 137
+  size: 80, 73
+Walk
+  xy: 240, 137
+  size: 80, 73
+Walk
+  xy: 320, 137
+  size: 80, 73
+Walk
+  xy: 400, 137
+  size: 80, 73
+Attack
+  xy: 0, 210
+  size: 80, 73
+Attack
+  xy: 80, 210
+  size: 80, 73
+Attack
+  xy: 160, 210
+  size: 80, 73
+Attack
+  xy: 240, 210
+  size: 80, 73
+Attack
+  xy: 320, 210
+  size: 80, 73
+Attack
+  xy: 400, 210
+  size: 80, 73
+Attack
+  xy: 480, 210
+  size: 80, 73
+Attack
+  xy: 560, 210
+  size: 80, 73
+Hit
+  xy: 0, 283
+  size: 80, 73
+Hit
+  xy: 80, 283
+  size: 80, 73
+Hit
+  xy: 160, 283
+  size: 80, 73
+Hit
+  xy: 240, 283
+  size: 80, 73
+Hit
+  xy: 320, 283
+  size: 80, 73
+Death
+  xy: 0, 356
+  size: 80, 73
+Death
+  xy: 80, 356
+  size: 80, 73
+Death
+  xy: 160, 356
+  size: 80, 73
+Death
+  xy: 240, 356
+  size: 80, 73
+Death
+  xy: 320, 356
+  size: 80, 73
+Death
+  xy: 400, 356
+  size: 80, 73
+Death
+  xy: 480, 356
+  size: 80, 73
+Death
+  xy: 560, 356
+  size: 80, 73
+Death
+  xy: 640, 356
+  size: 80, 73
+Death
+  xy: 720, 356
+  size: 80, 73
+Death
+  xy: 800, 356
+  size: 80, 73
+Death
+  xy: 880, 356
+  size: 80, 73
+Death
+  xy: 960, 356
+  size: 80, 73
+Death
+  xy: 1040, 356
+  size: 80, 73
+Death
+  xy: 1120, 356
+  size: 80, 73
+Wake
+  xy: 0, 429
+  size: 80, 73
+Wake
+  xy: 80, 429
+  size: 80, 73
+Wake
+  xy: 160, 429
+  size: 80, 73
+Wake
+  xy: 240, 429
+  size: 80, 73
+Wake
+  xy: 320, 429
+  size: 80, 73
+Wake
+  xy: 400, 429
+  size: 80, 73
+Wake
+  xy: 480, 429
+  size: 80, 73
+IdleUp
+  xy: 0, 502
+  size: 80, 73
+IdleUp
+  xy: 80, 502
+  size: 80, 73
+IdleUp
+  xy: 160, 502
+  size: 80, 73
+IdleUp
+  xy: 240, 502
+  size: 80, 73
+IdleUp
+  xy: 320, 502
+  size: 80, 73
+IdleUp
+  xy: 400, 502
+  size: 80, 73
+IdleUp
+  xy: 480, 502
+  size: 80, 73
+IdleUp
+  xy: 560, 502
+  size: 80, 73
+IdleUp
+  xy: 640, 502
+  size: 80, 73
+IdleUp
+  xy: 720, 502
+  size: 80, 73
+IdleDown
+  xy: 0, 575
+  size: 80, 73
+IdleDown
+  xy: 80, 575
+  size: 80, 73
+IdleDown
+  xy: 160, 575
+  size: 80, 73
+IdleDown
+  xy: 240, 575
+  size: 80, 73
+IdleDown
+  xy: 320, 575
+  size: 80, 73
+IdleDown
+  xy: 400, 575
+  size: 80, 73
+IdleDown
+  xy: 480, 575
+  size: 80, 73
+IdleDown
+  xy: 560, 575
+  size: 80, 73
+IdleDown
+  xy: 640, 575
+  size: 80, 73
+IdleDown
+  xy: 720, 575
+  size: 80, 73
+WalkUp
+  xy: 0, 648
+  size: 80, 73
+WalkUp
+  xy: 80, 648
+  size: 80, 73
+WalkUp
+  xy: 160, 648
+  size: 80, 73
+WalkUp
+  xy: 240, 648
+  size: 80, 73
+WalkUp
+  xy: 320, 648
+  size: 80, 73
+WalkUp
+  xy: 400, 648
+  size: 80, 73
+WalkDown
+  xy: 0, 721
+  size: 80, 73
+WalkDown
+  xy: 80, 721
+  size: 80, 73
+WalkDown
+  xy: 160, 721
+  size: 80, 73
+WalkDown
+  xy: 240, 721
+  size: 80, 73
+WalkDown
+  xy: 320, 721
+  size: 80, 73
+WalkDown
+  xy: 400, 721
+  size: 80, 73

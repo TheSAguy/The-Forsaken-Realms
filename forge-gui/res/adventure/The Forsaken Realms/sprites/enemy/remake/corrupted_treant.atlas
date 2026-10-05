@@ -1,0 +1,254 @@
+corrupted_treant.png
+size: 1484,1074
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 106, 101
+Idle
+  xy: 106, 64
+  size: 106, 101
+Idle
+  xy: 212, 64
+  size: 106, 101
+Idle
+  xy: 318, 64
+  size: 106, 101
+Idle
+  xy: 424, 64
+  size: 106, 101
+Idle
+  xy: 530, 64
+  size: 106, 101
+Idle
+  xy: 636, 64
+  size: 106, 101
+Idle
+  xy: 742, 64
+  size: 106, 101
+Idle
+  xy: 848, 64
+  size: 106, 101
+Idle
+  xy: 954, 64
+  size: 106, 101
+Walk
+  xy: 0, 165
+  size: 106, 101
+Walk
+  xy: 106, 165
+  size: 106, 101
+Walk
+  xy: 212, 165
+  size: 106, 101
+Walk
+  xy: 318, 165
+  size: 106, 101
+Walk
+  xy: 424, 165
+  size: 106, 101
+Walk
+  xy: 530, 165
+  size: 106, 101
+Attack
+  xy: 0, 266
+  size: 106, 101
+Attack
+  xy: 106, 266
+  size: 106, 101
+Attack
+  xy: 212, 266
+  size: 106, 101
+Attack
+  xy: 318, 266
+  size: 106, 101
+Attack
+  xy: 424, 266
+  size: 106, 101
+Attack
+  xy: 530, 266
+  size: 106, 101
+Attack
+  xy: 636, 266
+  size: 106, 101
+Attack
+  xy: 742, 266
+  size: 106, 101
+Hit
+  xy: 0, 367
+  size: 106, 101
+Hit
+  xy: 106, 367
+  size: 106, 101
+Hit
+  xy: 212, 367
+  size: 106, 101
+Hit
+  xy: 318, 367
+  size: 106, 101
+Hit
+  xy: 424, 367
+  size: 106, 101
+Death
+  xy: 0, 468
+  size: 106, 101
+Death
+  xy: 106, 468
+  size: 106, 101
+Death
+  xy: 212, 468
+  size: 106, 101
+Death
+  xy: 318, 468
+  size: 106, 101
+Death
+  xy: 424, 468
+  size: 106, 101
+Death
+  xy: 530, 468
+  size: 106, 101
+Death
+  xy: 636, 468
+  size: 106, 101
+Death
+  xy: 742, 468
+  size: 106, 101
+Death
+  xy: 848, 468
+  size: 106, 101
+Death
+  xy: 954, 468
+  size: 106, 101
+Death
+  xy: 1060, 468
+  size: 106, 101
+Death
+  xy: 1166, 468
+  size: 106, 101
+Death
+  xy: 1272, 468
+  size: 106, 101
+Death
+  xy: 1378, 468
+  size: 106, 101
+Wake
+  xy: 0, 569
+  size: 106, 101
+Wake
+  xy: 106, 569
+  size: 106, 101
+Wake
+  xy: 212, 569
+  size: 106, 101
+Wake
+  xy: 318, 569
+  size: 106, 101
+Wake
+  xy: 424, 569
+  size: 106, 101
+Wake
+  xy: 530, 569
+  size: 106, 101
+Wake
+  xy: 636, 569
+  size: 106, 101
+IdleUp
+  xy: 0, 670
+  size: 106, 101
+IdleUp
+  xy: 106, 670
+  size: 106, 101
+IdleUp
+  xy: 212, 670
+  size: 106, 101
+IdleUp
+  xy: 318, 670
+  size: 106, 101
+IdleUp
+  xy: 424, 670
+  size: 106, 101
+IdleUp
+  xy: 530, 670
+  size: 106, 101
+IdleUp
+  xy: 636, 670
+  size: 106, 101
+IdleUp
+  xy: 742, 670
+  size: 106, 101
+IdleUp
+  xy: 848, 670
+  size: 106, 101
+IdleUp
+  xy: 954, 670
+  size: 106, 101
+IdleDown
+  xy: 0, 771
+  size: 106, 101
+IdleDown
+  xy: 106, 771
+  size: 106, 101
+IdleDown
+  xy: 212, 771
+  size: 106, 101
+IdleDown
+  xy: 318, 771
+  size: 106, 101
+IdleDown
+  xy: 424, 771
+  size: 106, 101
+IdleDown
+  xy: 530, 771
+  size: 106, 101
+IdleDown
+  xy: 636, 771
+  size: 106, 101
+IdleDown
+  xy: 742, 771
+  size: 106, 101
+IdleDown
+  xy: 848, 771
+  size: 106, 101
+IdleDown
+  xy: 954, 771
+  size: 106, 101
+WalkUp
+  xy: 0, 872
+  size: 106, 101
+WalkUp
+  xy: 106, 872
+  size: 106, 101
+WalkUp
+  xy: 212, 872
+  size: 106, 101
+WalkUp
+  xy: 318, 872
+  size: 106, 101
+WalkUp
+  xy: 424, 872
+  size: 106, 101
+WalkUp
+  xy: 530, 872
+  size: 106, 101
+WalkDown
+  xy: 0, 973
+  size: 106, 101
+WalkDown
+  xy: 106, 973
+  size: 106, 101
+WalkDown
+  xy: 212, 973
+  size: 106, 101
+WalkDown
+  xy: 318, 973
+  size: 106, 101
+WalkDown
+  xy: 424, 973
+  size: 106, 101
+WalkDown
+  xy: 530, 973
+  size: 106, 101

@@ -1,0 +1,245 @@
+bloodshot_eye.png
+size: 728,674
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 52, 61
+Idle
+  xy: 52, 64
+  size: 52, 61
+Idle
+  xy: 104, 64
+  size: 52, 61
+Idle
+  xy: 156, 64
+  size: 52, 61
+Idle
+  xy: 208, 64
+  size: 52, 61
+Idle
+  xy: 260, 64
+  size: 52, 61
+Idle
+  xy: 312, 64
+  size: 52, 61
+Idle
+  xy: 364, 64
+  size: 52, 61
+Idle
+  xy: 416, 64
+  size: 52, 61
+Idle
+  xy: 468, 64
+  size: 52, 61
+Walk
+  xy: 0, 125
+  size: 52, 61
+Walk
+  xy: 52, 125
+  size: 52, 61
+Walk
+  xy: 104, 125
+  size: 52, 61
+Walk
+  xy: 156, 125
+  size: 52, 61
+Attack
+  xy: 0, 186
+  size: 52, 61
+Attack
+  xy: 52, 186
+  size: 52, 61
+Attack
+  xy: 104, 186
+  size: 52, 61
+Attack
+  xy: 156, 186
+  size: 52, 61
+Attack
+  xy: 208, 186
+  size: 52, 61
+Attack
+  xy: 260, 186
+  size: 52, 61
+Attack
+  xy: 312, 186
+  size: 52, 61
+Attack
+  xy: 364, 186
+  size: 52, 61
+Attack
+  xy: 416, 186
+  size: 52, 61
+Attack
+  xy: 468, 186
+  size: 52, 61
+Attack
+  xy: 520, 186
+  size: 52, 61
+Hit
+  xy: 0, 247
+  size: 52, 61
+Hit
+  xy: 52, 247
+  size: 52, 61
+Hit
+  xy: 104, 247
+  size: 52, 61
+Hit
+  xy: 156, 247
+  size: 52, 61
+Hit
+  xy: 208, 247
+  size: 52, 61
+Death
+  xy: 0, 308
+  size: 52, 61
+Death
+  xy: 52, 308
+  size: 52, 61
+Death
+  xy: 104, 308
+  size: 52, 61
+Death
+  xy: 156, 308
+  size: 52, 61
+Death
+  xy: 208, 308
+  size: 52, 61
+Death
+  xy: 260, 308
+  size: 52, 61
+Death
+  xy: 312, 308
+  size: 52, 61
+Death
+  xy: 364, 308
+  size: 52, 61
+Death
+  xy: 416, 308
+  size: 52, 61
+Death
+  xy: 468, 308
+  size: 52, 61
+Death
+  xy: 520, 308
+  size: 52, 61
+Death
+  xy: 572, 308
+  size: 52, 61
+Death
+  xy: 624, 308
+  size: 52, 61
+Death
+  xy: 676, 308
+  size: 52, 61
+Wake
+  xy: 0, 369
+  size: 52, 61
+Wake
+  xy: 52, 369
+  size: 52, 61
+Wake
+  xy: 104, 369
+  size: 52, 61
+Wake
+  xy: 156, 369
+  size: 52, 61
+Wake
+  xy: 208, 369
+  size: 52, 61
+Wake
+  xy: 260, 369
+  size: 52, 61
+Wake
+  xy: 312, 369
+  size: 52, 61
+IdleUp
+  xy: 0, 430
+  size: 52, 61
+IdleUp
+  xy: 52, 430
+  size: 52, 61
+IdleUp
+  xy: 104, 430
+  size: 52, 61
+IdleUp
+  xy: 156, 430
+  size: 52, 61
+IdleUp
+  xy: 208, 430
+  size: 52, 61
+IdleUp
+  xy: 260, 430
+  size: 52, 61
+IdleUp
+  xy: 312, 430
+  size: 52, 61
+IdleUp
+  xy: 364, 430
+  size: 52, 61
+IdleUp
+  xy: 416, 430
+  size: 52, 61
+IdleUp
+  xy: 468, 430
+  size: 52, 61
+IdleDown
+  xy: 0, 491
+  size: 52, 61
+IdleDown
+  xy: 52, 491
+  size: 52, 61
+IdleDown
+  xy: 104, 491
+  size: 52, 61
+IdleDown
+  xy: 156, 491
+  size: 52, 61
+IdleDown
+  xy: 208, 491
+  size: 52, 61
+IdleDown
+  xy: 260, 491
+  size: 52, 61
+IdleDown
+  xy: 312, 491
+  size: 52, 61
+IdleDown
+  xy: 364, 491
+  size: 52, 61
+IdleDown
+  xy: 416, 491
+  size: 52, 61
+IdleDown
+  xy: 468, 491
+  size: 52, 61
+WalkUp
+  xy: 0, 552
+  size: 52, 61
+WalkUp
+  xy: 52, 552
+  size: 52, 61
+WalkUp
+  xy: 104, 552
+  size: 52, 61
+WalkUp
+  xy: 156, 552
+  size: 52, 61
+WalkDown
+  xy: 0, 613
+  size: 52, 61
+WalkDown
+  xy: 52, 613
+  size: 52, 61
+WalkDown
+  xy: 104, 613
+  size: 52, 61
+WalkDown
+  xy: 156, 613
+  size: 52, 61

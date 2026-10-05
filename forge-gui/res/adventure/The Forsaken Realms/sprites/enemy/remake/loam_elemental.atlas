@@ -1,0 +1,269 @@
+loam_elemental.png
+size: 2210,1064
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 130, 100
+Idle
+  xy: 130, 64
+  size: 130, 100
+Idle
+  xy: 260, 64
+  size: 130, 100
+Idle
+  xy: 390, 64
+  size: 130, 100
+Idle
+  xy: 520, 64
+  size: 130, 100
+Idle
+  xy: 650, 64
+  size: 130, 100
+Idle
+  xy: 780, 64
+  size: 130, 100
+Idle
+  xy: 910, 64
+  size: 130, 100
+Idle
+  xy: 1040, 64
+  size: 130, 100
+Idle
+  xy: 1170, 64
+  size: 130, 100
+Walk
+  xy: 0, 164
+  size: 130, 100
+Walk
+  xy: 130, 164
+  size: 130, 100
+Walk
+  xy: 260, 164
+  size: 130, 100
+Walk
+  xy: 390, 164
+  size: 130, 100
+Walk
+  xy: 520, 164
+  size: 130, 100
+Walk
+  xy: 650, 164
+  size: 130, 100
+Attack
+  xy: 0, 264
+  size: 130, 100
+Attack
+  xy: 130, 264
+  size: 130, 100
+Attack
+  xy: 260, 264
+  size: 130, 100
+Attack
+  xy: 390, 264
+  size: 130, 100
+Attack
+  xy: 520, 264
+  size: 130, 100
+Attack
+  xy: 650, 264
+  size: 130, 100
+Attack
+  xy: 780, 264
+  size: 130, 100
+Attack
+  xy: 910, 264
+  size: 130, 100
+Hit
+  xy: 0, 364
+  size: 130, 100
+Hit
+  xy: 130, 364
+  size: 130, 100
+Hit
+  xy: 260, 364
+  size: 130, 100
+Hit
+  xy: 390, 364
+  size: 130, 100
+Hit
+  xy: 520, 364
+  size: 130, 100
+Hit
+  xy: 650, 364
+  size: 130, 100
+Death
+  xy: 0, 464
+  size: 130, 100
+Death
+  xy: 130, 464
+  size: 130, 100
+Death
+  xy: 260, 464
+  size: 130, 100
+Death
+  xy: 390, 464
+  size: 130, 100
+Death
+  xy: 520, 464
+  size: 130, 100
+Death
+  xy: 650, 464
+  size: 130, 100
+Death
+  xy: 780, 464
+  size: 130, 100
+Death
+  xy: 910, 464
+  size: 130, 100
+Death
+  xy: 1040, 464
+  size: 130, 100
+Death
+  xy: 1170, 464
+  size: 130, 100
+Death
+  xy: 1300, 464
+  size: 130, 100
+Death
+  xy: 1430, 464
+  size: 130, 100
+Death
+  xy: 1560, 464
+  size: 130, 100
+Death
+  xy: 1690, 464
+  size: 130, 100
+Death
+  xy: 1820, 464
+  size: 130, 100
+Death
+  xy: 1950, 464
+  size: 130, 100
+Death
+  xy: 2080, 464
+  size: 130, 100
+Wake
+  xy: 0, 564
+  size: 130, 100
+Wake
+  xy: 130, 564
+  size: 130, 100
+Wake
+  xy: 260, 564
+  size: 130, 100
+Wake
+  xy: 390, 564
+  size: 130, 100
+Wake
+  xy: 520, 564
+  size: 130, 100
+Wake
+  xy: 650, 564
+  size: 130, 100
+Wake
+  xy: 780, 564
+  size: 130, 100
+Wake
+  xy: 910, 564
+  size: 130, 100
+IdleUp
+  xy: 0, 664
+  size: 130, 100
+IdleUp
+  xy: 130, 664
+  size: 130, 100
+IdleUp
+  xy: 260, 664
+  size: 130, 100
+IdleUp
+  xy: 390, 664
+  size: 130, 100
+IdleUp
+  xy: 520, 664
+  size: 130, 100
+IdleUp
+  xy: 650, 664
+  size: 130, 100
+IdleUp
+  xy: 780, 664
+  size: 130, 100
+IdleUp
+  xy: 910, 664
+  size: 130, 100
+IdleUp
+  xy: 1040, 664
+  size: 130, 100
+IdleUp
+  xy: 1170, 664
+  size: 130, 100
+IdleDown
+  xy: 0, 764
+  size: 130, 100
+IdleDown
+  xy: 130, 764
+  size: 130, 100
+IdleDown
+  xy: 260, 764
+  size: 130, 100
+IdleDown
+  xy: 390, 764
+  size: 130, 100
+IdleDown
+  xy: 520, 764
+  size: 130, 100
+IdleDown
+  xy: 650, 764
+  size: 130, 100
+IdleDown
+  xy: 780, 764
+  size: 130, 100
+IdleDown
+  xy: 910, 764
+  size: 130, 100
+IdleDown
+  xy: 1040, 764
+  size: 130, 100
+IdleDown
+  xy: 1170, 764
+  size: 130, 100
+WalkUp
+  xy: 0, 864
+  size: 130, 100
+WalkUp
+  xy: 130, 864
+  size: 130, 100
+WalkUp
+  xy: 260, 864
+  size: 130, 100
+WalkUp
+  xy: 390, 864
+  size: 130, 100
+WalkUp
+  xy: 520, 864
+  size: 130, 100
+WalkUp
+  xy: 650, 864
+  size: 130, 100
+WalkDown
+  xy: 0, 964
+  size: 130, 100
+WalkDown
+  xy: 130, 964
+  size: 130, 100
+WalkDown
+  xy: 260, 964
+  size: 130, 100
+WalkDown
+  xy: 390, 964
+  size: 130, 100
+WalkDown
+  xy: 520, 964
+  size: 130, 100
+WalkDown
+  xy: 650, 964
+  size: 130, 100

@@ -1,0 +1,230 @@
+honking_goose.png
+size: 638,654
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 58, 59
+Idle
+  xy: 58, 64
+  size: 58, 59
+Idle
+  xy: 116, 64
+  size: 58, 59
+Idle
+  xy: 174, 64
+  size: 58, 59
+Idle
+  xy: 232, 64
+  size: 58, 59
+Idle
+  xy: 290, 64
+  size: 58, 59
+Idle
+  xy: 348, 64
+  size: 58, 59
+Idle
+  xy: 406, 64
+  size: 58, 59
+Idle
+  xy: 464, 64
+  size: 58, 59
+Idle
+  xy: 522, 64
+  size: 58, 59
+Walk
+  xy: 0, 123
+  size: 58, 59
+Walk
+  xy: 58, 123
+  size: 58, 59
+Walk
+  xy: 116, 123
+  size: 58, 59
+Walk
+  xy: 174, 123
+  size: 58, 59
+Walk
+  xy: 232, 123
+  size: 58, 59
+Walk
+  xy: 290, 123
+  size: 58, 59
+Attack
+  xy: 0, 182
+  size: 58, 59
+Attack
+  xy: 58, 182
+  size: 58, 59
+Attack
+  xy: 116, 182
+  size: 58, 59
+Attack
+  xy: 174, 182
+  size: 58, 59
+Attack
+  xy: 232, 182
+  size: 58, 59
+Attack
+  xy: 290, 182
+  size: 58, 59
+Hit
+  xy: 0, 241
+  size: 58, 59
+Hit
+  xy: 58, 241
+  size: 58, 59
+Hit
+  xy: 116, 241
+  size: 58, 59
+Hit
+  xy: 174, 241
+  size: 58, 59
+Death
+  xy: 0, 300
+  size: 58, 59
+Death
+  xy: 58, 300
+  size: 58, 59
+Death
+  xy: 116, 300
+  size: 58, 59
+Death
+  xy: 174, 300
+  size: 58, 59
+Death
+  xy: 232, 300
+  size: 58, 59
+Death
+  xy: 290, 300
+  size: 58, 59
+Death
+  xy: 348, 300
+  size: 58, 59
+Death
+  xy: 406, 300
+  size: 58, 59
+Death
+  xy: 464, 300
+  size: 58, 59
+Death
+  xy: 522, 300
+  size: 58, 59
+Death
+  xy: 580, 300
+  size: 58, 59
+Wake
+  xy: 0, 359
+  size: 58, 59
+Wake
+  xy: 58, 359
+  size: 58, 59
+Wake
+  xy: 116, 359
+  size: 58, 59
+Wake
+  xy: 174, 359
+  size: 58, 59
+Wake
+  xy: 232, 359
+  size: 58, 59
+IdleUp
+  xy: 0, 418
+  size: 58, 59
+IdleUp
+  xy: 58, 418
+  size: 58, 59
+IdleUp
+  xy: 116, 418
+  size: 58, 59
+IdleUp
+  xy: 174, 418
+  size: 58, 59
+IdleUp
+  xy: 232, 418
+  size: 58, 59
+IdleUp
+  xy: 290, 418
+  size: 58, 59
+IdleUp
+  xy: 348, 418
+  size: 58, 59
+IdleUp
+  xy: 406, 418
+  size: 58, 59
+IdleUp
+  xy: 464, 418
+  size: 58, 59
+IdleUp
+  xy: 522, 418
+  size: 58, 59
+IdleDown
+  xy: 0, 477
+  size: 58, 59
+IdleDown
+  xy: 58, 477
+  size: 58, 59
+IdleDown
+  xy: 116, 477
+  size: 58, 59
+IdleDown
+  xy: 174, 477
+  size: 58, 59
+IdleDown
+  xy: 232, 477
+  size: 58, 59
+IdleDown
+  xy: 290, 477
+  size: 58, 59
+IdleDown
+  xy: 348, 477
+  size: 58, 59
+IdleDown
+  xy: 406, 477
+  size: 58, 59
+IdleDown
+  xy: 464, 477
+  size: 58, 59
+IdleDown
+  xy: 522, 477
+  size: 58, 59
+WalkUp
+  xy: 0, 536
+  size: 58, 59
+WalkUp
+  xy: 58, 536
+  size: 58, 59
+WalkUp
+  xy: 116, 536
+  size: 58, 59
+WalkUp
+  xy: 174, 536
+  size: 58, 59
+WalkUp
+  xy: 232, 536
+  size: 58, 59
+WalkUp
+  xy: 290, 536
+  size: 58, 59
+WalkDown
+  xy: 0, 595
+  size: 58, 59
+WalkDown
+  xy: 58, 595
+  size: 58, 59
+WalkDown
+  xy: 116, 595
+  size: 58, 59
+WalkDown
+  xy: 174, 595
+  size: 58, 59
+WalkDown
+  xy: 232, 595
+  size: 58, 59
+WalkDown
+  xy: 290, 595
+  size: 58, 59

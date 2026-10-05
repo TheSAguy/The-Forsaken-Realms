@@ -1472,7 +1472,7 @@
     {
         "name": "Ape",
         "nameOverride": "Ape Behemoth",
-        "sprite": "sprites/enemy/beast/ape/behemoth.atlas",
+        "sprite": "sprites/enemy/remake/ape.atlas",
         "deck": [
             "decks/standard/ape.json"
         ],
@@ -1553,7 +1553,8 @@
             "IdentityGruul",
             "BiomeGreen"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.2321
     },
     {
         "name": "Apprentice Black Wizard",
@@ -2329,7 +2330,7 @@
     },
     {
         "name": "Armadillo",
-        "sprite": "sprites/enemy/beast/smallmammals/armadillo.atlas",
+        "sprite": "sprites/enemy/remake/armadillo.atlas",
         "deck": [
             "decks/standard/armadillo.dck"
         ],
@@ -2337,7 +2338,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.6842,
+        "scale": 0.2407,
         "life": 20,
         "rewards": [
             {
@@ -12184,7 +12185,7 @@
     },
     {
         "name": "Flesh Abomination",
-        "sprite": "sprites/enemy/monstrosity/flesh_horror.atlas",
+        "sprite": "sprites/enemy/remake/flesh_abomination.atlas",
         "deck": [
             "decks/standard/flesh_horror.dck"
         ],
@@ -12192,7 +12193,7 @@
         "spawnRate": 0.3,
         "difficulty": 0.8,
         "speed": 17,
-        "scale": 0.5417,
+        "scale": 0.3672,
         "life": 32,
         "rewards": [
             {
@@ -13533,14 +13534,14 @@
     },
     {
         "name": "Ghalta",
-        "sprite": "sprites/enemy/beast/dinosaur/ghalta.atlas",
+        "sprite": "sprites/enemy/remake/ghalta.atlas",
         "deck": [
             "decks/boss/ghalta.dck"
         ],
         "ai": "",
         "boss": true,
         "speed": 10,
-        "scale": 1.4856,
+        "scale": 0.2346,
         "life": 40,
         "rewards": [
             {
@@ -16830,7 +16831,7 @@
     },
     {
         "name": "Hidden Snake",
-        "sprite": "sprites/enemy/beast/reptile/cobradungeon.atlas",
+        "sprite": "sprites/enemy/remake/hidden_snake.atlas",
         "deck": [
             "decks/standard/snake.json"
         ],
@@ -16838,7 +16839,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.65,
+        "scale": 0.2381,
         "life": 20,
         "rewards": [
             {
@@ -21003,7 +21004,7 @@
     },
     {
         "name": "Mageripper",
-        "sprite": "sprites/enemy/monstrosity/mageripper.atlas",
+        "sprite": "sprites/enemy/remake/mageripper.atlas",
         "deck": [
             "decks/standard/mageripper.dck"
         ],
@@ -21011,7 +21012,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8667,
+        "scale": 0.2321,
         "life": 15,
         "rewards": [
             {
@@ -23285,7 +23286,7 @@
     },
     {
         "name": "Necrogoyf",
-        "sprite": "sprites/enemy/monstrosity/shardsoul_slayer.atlas",
+        "sprite": "sprites/enemy/remake/necrogoyf.atlas",
         "deck": [
             "decks/standard/necrogoyf.dck"
         ],
@@ -23294,7 +23295,7 @@
         "spawnRate": 1,
         "difficulty": 3,
         "speed": 45,
-        "scale": 0.5,
+        "scale": 0.194,
         "life": 53,
         "rewards": [
             {
@@ -24565,7 +24566,7 @@
     },
     {
         "name": "Penguin Elite",
-        "sprite": "sprites/enemy/beast/polar/penguinlarge.atlas",
+        "sprite": "sprites/enemy/remake/penguin_elite.atlas",
         "deck": [
             "decks/standard/penguinelite.dck"
         ],
@@ -24573,7 +24574,7 @@
         "spawnRate": 0.3,
         "difficulty": 2,
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.2321,
         "life": 26,
         "rewards": [
             {
@@ -25566,7 +25567,7 @@
     },
     {
         "name": "Porcupine",
-        "sprite": "sprites/enemy/beast/smallmammals/porcupine.atlas",
+        "sprite": "sprites/enemy/remake/porcupine.atlas",
         "deck": [
             "decks/standard/porcupine.dck"
         ],
@@ -25574,7 +25575,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 17,
-        "scale": 0.9286,
+        "scale": 0.2321,
         "life": 20,
         "rewards": [
             {
@@ -28408,14 +28409,14 @@
     },
     {
         "name": "Snail",
-        "sprite": "sprites/enemy/beast/insect/snail.atlas",
+        "sprite": "sprites/enemy/remake/snail.atlas",
         "deck": [
             "decks/standard/slug.dck"
         ],
         "ai": "",
         "spawnRate": 0.5,
         "difficulty": 0.2,
-        "scale": 0.7647,
+        "scale": 0.3514,
         "speed": 19,
         "life": 13,
         "rewards": [
@@ -30781,7 +30782,7 @@
     },
     {
         "name": "Triceratops",
-        "sprite": "sprites/enemy/beast/dinosaur/dinosaur_triceratops.atlas",
+        "sprite": "sprites/enemy/remake/triceratops.atlas",
         "deck": [
             "decks/standard/dinosaur_gw_ramp.dck"
         ],
@@ -30851,7 +30852,7 @@
             "IdentitySelesnya"
         ],
         "tier": "Uncommon",
-        "scale": 0.7222
+        "scale": 0.3023
     },
     {
         "name": "Troll",
@@ -32168,7 +32169,7 @@
     },
     {
         "name": "Vulture",
-        "sprite": "sprites/enemy/beast/bird/vulture.atlas",
+        "sprite": "sprites/enemy/remake/vulture.atlas",
         "deck": [
             "decks/standard/vulture.dck"
         ],
@@ -32177,7 +32178,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 23,
-        "scale": 0.6373,
+        "scale": 0.3714,
         "life": 11,
         "rewards": [
             {
@@ -32845,7 +32846,7 @@
     },
     {
         "name": "Wild Rat",
-        "sprite": "sprites/enemy/beast/smallmammals/wildrat.atlas",
+        "sprite": "sprites/enemy/remake/wild_rat.atlas",
         "deck": [
             "decks/standard/infectrat.dck",
             "decks/standard/rat.json",
@@ -32856,7 +32857,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.9286,
+        "scale": 0.3611,
         "life": 13,
         "rewards": [
             {
@@ -129040,7 +129041,7 @@
     },
     {
         "name": "Croaking Toad",
-        "sprite": "sprites/enemy/basic/animal/croaking_toad.atlas",
+        "sprite": "sprites/enemy/remake/croaking_toad.atlas",
         "deck": [
             "decks/standard/croaking_toad.dck"
         ],
@@ -129101,7 +129102,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3514
     },
     {
         "name": "Dainty Pig",
@@ -129168,7 +129169,7 @@
     },
     {
         "name": "Honking Goose",
-        "sprite": "sprites/enemy/basic/animal/honking_goose.atlas",
+        "sprite": "sprites/enemy/remake/honking_goose.atlas",
         "deck": [
             "decks/standard/honking_goose.dck"
         ],
@@ -129229,11 +129230,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3611
     },
     {
         "name": "Leaping Frog",
-        "sprite": "sprites/enemy/basic/animal/leaping_frog.atlas",
+        "sprite": "sprites/enemy/remake/leaping_frog.atlas",
         "deck": [
             "decks/standard/leaping_frog.dck"
         ],
@@ -129294,7 +129295,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3611
     },
     {
         "name": "Mad Boar",
@@ -129426,7 +129427,7 @@
     },
     {
         "name": "Pasturing Sheep",
-        "sprite": "sprites/enemy/basic/animal/pasturing_sheep.atlas",
+        "sprite": "sprites/enemy/remake/pasturing_sheep.atlas",
         "deck": [
             "decks/standard/pasturing_sheep.dck"
         ],
@@ -129485,7 +129486,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.2889
     },
     {
         "name": "Slow Turtle",
@@ -129617,7 +129618,7 @@
     },
     {
         "name": "Spikey Porcupine",
-        "sprite": "sprites/enemy/basic/animal/spikey_porcupine.atlas",
+        "sprite": "sprites/enemy/remake/spikey_porcupine.atlas",
         "deck": [
             "decks/standard/spikey_porcupine.dck"
         ],
@@ -129675,11 +129676,12 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2955
     },
     {
         "name": "Stinky Skunk",
-        "sprite": "sprites/enemy/basic/animal/stinky_skunk.atlas",
+        "sprite": "sprites/enemy/remake/stinky_skunk.atlas",
         "deck": [
             "decks/standard/stinky_skunk.dck"
         ],
@@ -129739,7 +129741,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3714
     },
     {
         "name": "Timber Wolf",
@@ -132817,7 +132820,7 @@
     },
     {
         "name": "Bloodshot Eye",
-        "sprite": "sprites/enemy/basic/monster/bloodshot_eye.atlas",
+        "sprite": "sprites/enemy/remake/bloodshot_eye.atlas",
         "deck": [
             "decks/standard/bloodshot_eye.dck"
         ],
@@ -132878,7 +132881,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.8571
+        "scale": 0.3611
     },
     {
         "name": "Brawny Ogre",
@@ -133394,7 +133397,7 @@
     },
     {
         "name": "Ocular Watcher",
-        "sprite": "sprites/enemy/basic/monster/ocular_watcher.atlas",
+        "sprite": "sprites/enemy/remake/ocular_watcher.atlas",
         "deck": [
             "decks/standard/ocular_watcher.dck"
         ],
@@ -133455,7 +133458,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.4444
+        "scale": 0.2321
     },
     {
         "name": "Red Cap",
@@ -134730,7 +134733,7 @@
     },
     {
         "name": "Corrupted Treant",
-        "sprite": "sprites/enemy/basic/magical/corrupted_treant.atlas",
+        "sprite": "sprites/enemy/remake/corrupted_treant.atlas",
         "deck": [
             "decks/standard/corrupted_treant.dck"
         ],
@@ -134788,7 +134791,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.2321
     },
     {
         "name": "Deft Sorceress",
@@ -134855,7 +134859,7 @@
     },
     {
         "name": "Loam Elemental",
-        "sprite": "sprites/enemy/basic/magical/loam_elemental.atlas",
+        "sprite": "sprites/enemy/remake/loam_elemental.atlas",
         "deck": [
             "decks/standard/loam_elemental.dck"
         ],
@@ -134916,7 +134920,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.1818
+        "scale": 0.2364
     },
     {
         "name": "Expert Druid",
@@ -134982,7 +134986,7 @@
     },
     {
         "name": "Ember Elemental",
-        "sprite": "sprites/enemy/basic/magical/ember_elemental.atlas",
+        "sprite": "sprites/enemy/remake/ember_elemental.atlas",
         "deck": [
             "decks/standard/ember_elemental.dck"
         ],
@@ -135041,7 +135045,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3714
     },
     {
         "name": "Fluttering Pixie",
@@ -135176,7 +135180,7 @@
     },
     {
         "name": "Grizzled Treant",
-        "sprite": "sprites/enemy/basic/magical/grizzled_treant.atlas",
+        "sprite": "sprites/enemy/remake/grizzled_treant.atlas",
         "deck": [
             "decks/standard/grizzled_treant.dck"
         ],
@@ -135235,7 +135239,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.9286
+        "scale": 0.2955
     },
     {
         "name": "Ice Golem",
@@ -135560,7 +135564,7 @@
     },
     {
         "name": "Tide Elemental",
-        "sprite": "sprites/enemy/basic/magical/tide_elemental.atlas",
+        "sprite": "sprites/enemy/remake/tide_elemental.atlas",
         "deck": [
             "decks/standard/tide_elemental.dck"
         ],
@@ -135619,7 +135623,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Aegis Paladin",
@@ -136631,7 +136635,7 @@
     },
     {
         "name": "Hedge Slime",
-        "sprite": "sprites/enemy/basic/monster/hedge_slime.atlas",
+        "sprite": "sprites/enemy/remake/hedge_slime.atlas",
         "deck": [
             "decks/standard/hedge_slime.dck"
         ],
@@ -136690,7 +136694,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3611
     },
     {
         "name": "Goblin Cutthroat",
@@ -140284,7 +140288,7 @@
     },
     {
         "name": "Amomongo",
-        "sprite": "sprites/enemy/basic/animal/amomongo.atlas",
+        "sprite": "sprites/enemy/remake/amomongo.atlas",
         "deck": [
             "decks/standard/amomongo.dck"
         ],
@@ -140343,7 +140347,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.8667
+        "scale": 0.2955
     },
     {
         "name": "Wild Boar",
@@ -140599,7 +140603,7 @@
     },
     {
         "name": "Buwaya",
-        "sprite": "sprites/enemy/basic/animal/buwaya.atlas",
+        "sprite": "sprites/enemy/remake/buwaya.atlas",
         "deck": [
             "decks/standard/buwaya.dck"
         ],
@@ -140658,11 +140662,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.8667
+        "scale": 0.3514
     },
     {
         "name": "Barnyard Hen",
-        "sprite": "sprites/enemy/basic/animal/barnyard_hen.atlas",
+        "sprite": "sprites/enemy/remake/barnyard_hen.atlas",
         "deck": [
             "decks/standard/barnyard_hen.dck"
         ],
@@ -140721,7 +140725,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3514
     },
     {
         "name": "Blue Dwende",
@@ -141355,7 +141359,7 @@
     },
     {
         "name": "Fighting Rooster",
-        "sprite": "sprites/enemy/basic/animal/fighting_rooster.atlas",
+        "sprite": "sprites/enemy/remake/fighting_rooster.atlas",
         "deck": [
             "decks/standard/fighting_rooster.dck"
         ],
@@ -141414,7 +141418,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3611
     },
     {
         "name": "Santelmo",
@@ -141481,7 +141485,7 @@
     },
     {
         "name": "Sigbin",
-        "sprite": "sprites/enemy/basic/animal/sigbin.atlas",
+        "sprite": "sprites/enemy/remake/sigbin.atlas",
         "deck": [
             "decks/standard/sigbin.dck"
         ],
@@ -141540,7 +141544,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.9286
+        "scale": 0.3023
     },
     {
         "name": "Sirena",

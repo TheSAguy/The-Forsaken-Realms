@@ -1,0 +1,251 @@
+grizzled_treant.png
+size: 1120,774
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 71
+Idle
+  xy: 80, 64
+  size: 80, 71
+Idle
+  xy: 160, 64
+  size: 80, 71
+Idle
+  xy: 240, 64
+  size: 80, 71
+Idle
+  xy: 320, 64
+  size: 80, 71
+Idle
+  xy: 400, 64
+  size: 80, 71
+Idle
+  xy: 480, 64
+  size: 80, 71
+Idle
+  xy: 560, 64
+  size: 80, 71
+Idle
+  xy: 640, 64
+  size: 80, 71
+Idle
+  xy: 720, 64
+  size: 80, 71
+Walk
+  xy: 0, 135
+  size: 80, 71
+Walk
+  xy: 80, 135
+  size: 80, 71
+Walk
+  xy: 160, 135
+  size: 80, 71
+Walk
+  xy: 240, 135
+  size: 80, 71
+Walk
+  xy: 320, 135
+  size: 80, 71
+Walk
+  xy: 400, 135
+  size: 80, 71
+Attack
+  xy: 0, 206
+  size: 80, 71
+Attack
+  xy: 80, 206
+  size: 80, 71
+Attack
+  xy: 160, 206
+  size: 80, 71
+Attack
+  xy: 240, 206
+  size: 80, 71
+Attack
+  xy: 320, 206
+  size: 80, 71
+Attack
+  xy: 400, 206
+  size: 80, 71
+Attack
+  xy: 480, 206
+  size: 80, 71
+Attack
+  xy: 560, 206
+  size: 80, 71
+Hit
+  xy: 0, 277
+  size: 80, 71
+Hit
+  xy: 80, 277
+  size: 80, 71
+Hit
+  xy: 160, 277
+  size: 80, 71
+Hit
+  xy: 240, 277
+  size: 80, 71
+Hit
+  xy: 320, 277
+  size: 80, 71
+Death
+  xy: 0, 348
+  size: 80, 71
+Death
+  xy: 80, 348
+  size: 80, 71
+Death
+  xy: 160, 348
+  size: 80, 71
+Death
+  xy: 240, 348
+  size: 80, 71
+Death
+  xy: 320, 348
+  size: 80, 71
+Death
+  xy: 400, 348
+  size: 80, 71
+Death
+  xy: 480, 348
+  size: 80, 71
+Death
+  xy: 560, 348
+  size: 80, 71
+Death
+  xy: 640, 348
+  size: 80, 71
+Death
+  xy: 720, 348
+  size: 80, 71
+Death
+  xy: 800, 348
+  size: 80, 71
+Death
+  xy: 880, 348
+  size: 80, 71
+Death
+  xy: 960, 348
+  size: 80, 71
+Death
+  xy: 1040, 348
+  size: 80, 71
+Wake
+  xy: 0, 419
+  size: 80, 71
+Wake
+  xy: 80, 419
+  size: 80, 71
+Wake
+  xy: 160, 419
+  size: 80, 71
+Wake
+  xy: 240, 419
+  size: 80, 71
+Wake
+  xy: 320, 419
+  size: 80, 71
+Wake
+  xy: 400, 419
+  size: 80, 71
+IdleUp
+  xy: 0, 490
+  size: 80, 71
+IdleUp
+  xy: 80, 490
+  size: 80, 71
+IdleUp
+  xy: 160, 490
+  size: 80, 71
+IdleUp
+  xy: 240, 490
+  size: 80, 71
+IdleUp
+  xy: 320, 490
+  size: 80, 71
+IdleUp
+  xy: 400, 490
+  size: 80, 71
+IdleUp
+  xy: 480, 490
+  size: 80, 71
+IdleUp
+  xy: 560, 490
+  size: 80, 71
+IdleUp
+  xy: 640, 490
+  size: 80, 71
+IdleUp
+  xy: 720, 490
+  size: 80, 71
+IdleDown
+  xy: 0, 561
+  size: 80, 71
+IdleDown
+  xy: 80, 561
+  size: 80, 71
+IdleDown
+  xy: 160, 561
+  size: 80, 71
+IdleDown
+  xy: 240, 561
+  size: 80, 71
+IdleDown
+  xy: 320, 561
+  size: 80, 71
+IdleDown
+  xy: 400, 561
+  size: 80, 71
+IdleDown
+  xy: 480, 561
+  size: 80, 71
+IdleDown
+  xy: 560, 561
+  size: 80, 71
+IdleDown
+  xy: 640, 561
+  size: 80, 71
+IdleDown
+  xy: 720, 561
+  size: 80, 71
+WalkUp
+  xy: 0, 632
+  size: 80, 71
+WalkUp
+  xy: 80, 632
+  size: 80, 71
+WalkUp
+  xy: 160, 632
+  size: 80, 71
+WalkUp
+  xy: 240, 632
+  size: 80, 71
+WalkUp
+  xy: 320, 632
+  size: 80, 71
+WalkUp
+  xy: 400, 632
+  size: 80, 71
+WalkDown
+  xy: 0, 703
+  size: 80, 71
+WalkDown
+  xy: 80, 703
+  size: 80, 71
+WalkDown
+  xy: 160, 703
+  size: 80, 71
+WalkDown
+  xy: 240, 703
+  size: 80, 71
+WalkDown
+  xy: 320, 703
+  size: 80, 71
+WalkDown
+  xy: 400, 703
+  size: 80, 71

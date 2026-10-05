@@ -1,0 +1,212 @@
+hedge_slime.png
+size: 816,524
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 68, 46
+Idle
+  xy: 68, 64
+  size: 68, 46
+Idle
+  xy: 136, 64
+  size: 68, 46
+Idle
+  xy: 204, 64
+  size: 68, 46
+Idle
+  xy: 272, 64
+  size: 68, 46
+Idle
+  xy: 340, 64
+  size: 68, 46
+Idle
+  xy: 408, 64
+  size: 68, 46
+Idle
+  xy: 476, 64
+  size: 68, 46
+Idle
+  xy: 544, 64
+  size: 68, 46
+Idle
+  xy: 612, 64
+  size: 68, 46
+Walk
+  xy: 0, 110
+  size: 68, 46
+Walk
+  xy: 68, 110
+  size: 68, 46
+Walk
+  xy: 136, 110
+  size: 68, 46
+Walk
+  xy: 204, 110
+  size: 68, 46
+Attack
+  xy: 0, 156
+  size: 68, 46
+Attack
+  xy: 68, 156
+  size: 68, 46
+Attack
+  xy: 136, 156
+  size: 68, 46
+Attack
+  xy: 204, 156
+  size: 68, 46
+Attack
+  xy: 272, 156
+  size: 68, 46
+Hit
+  xy: 0, 202
+  size: 68, 46
+Hit
+  xy: 68, 202
+  size: 68, 46
+Hit
+  xy: 136, 202
+  size: 68, 46
+Hit
+  xy: 204, 202
+  size: 68, 46
+Death
+  xy: 0, 248
+  size: 68, 46
+Death
+  xy: 68, 248
+  size: 68, 46
+Death
+  xy: 136, 248
+  size: 68, 46
+Death
+  xy: 204, 248
+  size: 68, 46
+Death
+  xy: 272, 248
+  size: 68, 46
+Death
+  xy: 340, 248
+  size: 68, 46
+Death
+  xy: 408, 248
+  size: 68, 46
+Death
+  xy: 476, 248
+  size: 68, 46
+Death
+  xy: 544, 248
+  size: 68, 46
+Death
+  xy: 612, 248
+  size: 68, 46
+Death
+  xy: 680, 248
+  size: 68, 46
+Death
+  xy: 748, 248
+  size: 68, 46
+Wake
+  xy: 0, 294
+  size: 68, 46
+Wake
+  xy: 68, 294
+  size: 68, 46
+Wake
+  xy: 136, 294
+  size: 68, 46
+Wake
+  xy: 204, 294
+  size: 68, 46
+Wake
+  xy: 272, 294
+  size: 68, 46
+IdleUp
+  xy: 0, 340
+  size: 68, 46
+IdleUp
+  xy: 68, 340
+  size: 68, 46
+IdleUp
+  xy: 136, 340
+  size: 68, 46
+IdleUp
+  xy: 204, 340
+  size: 68, 46
+IdleUp
+  xy: 272, 340
+  size: 68, 46
+IdleUp
+  xy: 340, 340
+  size: 68, 46
+IdleUp
+  xy: 408, 340
+  size: 68, 46
+IdleUp
+  xy: 476, 340
+  size: 68, 46
+IdleUp
+  xy: 544, 340
+  size: 68, 46
+IdleUp
+  xy: 612, 340
+  size: 68, 46
+IdleDown
+  xy: 0, 386
+  size: 68, 46
+IdleDown
+  xy: 68, 386
+  size: 68, 46
+IdleDown
+  xy: 136, 386
+  size: 68, 46
+IdleDown
+  xy: 204, 386
+  size: 68, 46
+IdleDown
+  xy: 272, 386
+  size: 68, 46
+IdleDown
+  xy: 340, 386
+  size: 68, 46
+IdleDown
+  xy: 408, 386
+  size: 68, 46
+IdleDown
+  xy: 476, 386
+  size: 68, 46
+IdleDown
+  xy: 544, 386
+  size: 68, 46
+IdleDown
+  xy: 612, 386
+  size: 68, 46
+WalkUp
+  xy: 0, 432
+  size: 68, 46
+WalkUp
+  xy: 68, 432
+  size: 68, 46
+WalkUp
+  xy: 136, 432
+  size: 68, 46
+WalkUp
+  xy: 204, 432
+  size: 68, 46
+WalkDown
+  xy: 0, 478
+  size: 68, 46
+WalkDown
+  xy: 68, 478
+  size: 68, 46
+WalkDown
+  xy: 136, 478
+  size: 68, 46
+WalkDown
+  xy: 204, 478
+  size: 68, 46

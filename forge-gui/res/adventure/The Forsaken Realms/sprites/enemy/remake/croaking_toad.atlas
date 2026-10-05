@@ -1,0 +1,227 @@
+croaking_toad.png
+size: 744,684
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 62
+Idle
+  xy: 62, 64
+  size: 62, 62
+Idle
+  xy: 124, 64
+  size: 62, 62
+Idle
+  xy: 186, 64
+  size: 62, 62
+Idle
+  xy: 248, 64
+  size: 62, 62
+Idle
+  xy: 310, 64
+  size: 62, 62
+Idle
+  xy: 372, 64
+  size: 62, 62
+Idle
+  xy: 434, 64
+  size: 62, 62
+Idle
+  xy: 496, 64
+  size: 62, 62
+Idle
+  xy: 558, 64
+  size: 62, 62
+Walk
+  xy: 0, 126
+  size: 62, 62
+Walk
+  xy: 62, 126
+  size: 62, 62
+Walk
+  xy: 124, 126
+  size: 62, 62
+Walk
+  xy: 186, 126
+  size: 62, 62
+Attack
+  xy: 0, 188
+  size: 62, 62
+Attack
+  xy: 62, 188
+  size: 62, 62
+Attack
+  xy: 124, 188
+  size: 62, 62
+Attack
+  xy: 186, 188
+  size: 62, 62
+Attack
+  xy: 248, 188
+  size: 62, 62
+Attack
+  xy: 310, 188
+  size: 62, 62
+Attack
+  xy: 372, 188
+  size: 62, 62
+Attack
+  xy: 434, 188
+  size: 62, 62
+Attack
+  xy: 496, 188
+  size: 62, 62
+Hit
+  xy: 0, 250
+  size: 62, 62
+Hit
+  xy: 62, 250
+  size: 62, 62
+Hit
+  xy: 124, 250
+  size: 62, 62
+Hit
+  xy: 186, 250
+  size: 62, 62
+Death
+  xy: 0, 312
+  size: 62, 62
+Death
+  xy: 62, 312
+  size: 62, 62
+Death
+  xy: 124, 312
+  size: 62, 62
+Death
+  xy: 186, 312
+  size: 62, 62
+Death
+  xy: 248, 312
+  size: 62, 62
+Death
+  xy: 310, 312
+  size: 62, 62
+Death
+  xy: 372, 312
+  size: 62, 62
+Death
+  xy: 434, 312
+  size: 62, 62
+Death
+  xy: 496, 312
+  size: 62, 62
+Death
+  xy: 558, 312
+  size: 62, 62
+Death
+  xy: 620, 312
+  size: 62, 62
+Death
+  xy: 682, 312
+  size: 62, 62
+Wake
+  xy: 0, 374
+  size: 62, 62
+Wake
+  xy: 62, 374
+  size: 62, 62
+Wake
+  xy: 124, 374
+  size: 62, 62
+Wake
+  xy: 186, 374
+  size: 62, 62
+Wake
+  xy: 248, 374
+  size: 62, 62
+Wake
+  xy: 310, 374
+  size: 62, 62
+IdleUp
+  xy: 0, 436
+  size: 62, 62
+IdleUp
+  xy: 62, 436
+  size: 62, 62
+IdleUp
+  xy: 124, 436
+  size: 62, 62
+IdleUp
+  xy: 186, 436
+  size: 62, 62
+IdleUp
+  xy: 248, 436
+  size: 62, 62
+IdleUp
+  xy: 310, 436
+  size: 62, 62
+IdleUp
+  xy: 372, 436
+  size: 62, 62
+IdleUp
+  xy: 434, 436
+  size: 62, 62
+IdleUp
+  xy: 496, 436
+  size: 62, 62
+IdleUp
+  xy: 558, 436
+  size: 62, 62
+IdleDown
+  xy: 0, 498
+  size: 62, 62
+IdleDown
+  xy: 62, 498
+  size: 62, 62
+IdleDown
+  xy: 124, 498
+  size: 62, 62
+IdleDown
+  xy: 186, 498
+  size: 62, 62
+IdleDown
+  xy: 248, 498
+  size: 62, 62
+IdleDown
+  xy: 310, 498
+  size: 62, 62
+IdleDown
+  xy: 372, 498
+  size: 62, 62
+IdleDown
+  xy: 434, 498
+  size: 62, 62
+IdleDown
+  xy: 496, 498
+  size: 62, 62
+IdleDown
+  xy: 558, 498
+  size: 62, 62
+WalkUp
+  xy: 0, 560
+  size: 62, 62
+WalkUp
+  xy: 62, 560
+  size: 62, 62
+WalkUp
+  xy: 124, 560
+  size: 62, 62
+WalkUp
+  xy: 186, 560
+  size: 62, 62
+WalkDown
+  xy: 0, 622
+  size: 62, 62
+WalkDown
+  xy: 62, 622
+  size: 62, 62
+WalkDown
+  xy: 124, 622
+  size: 62, 62
+WalkDown
+  xy: 186, 622
+  size: 62, 62

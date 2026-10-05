@@ -1,0 +1,263 @@
+porcupine.png
+size: 1428,974
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 102, 91
+Idle
+  xy: 102, 64
+  size: 102, 91
+Idle
+  xy: 204, 64
+  size: 102, 91
+Idle
+  xy: 306, 64
+  size: 102, 91
+Idle
+  xy: 408, 64
+  size: 102, 91
+Idle
+  xy: 510, 64
+  size: 102, 91
+Idle
+  xy: 612, 64
+  size: 102, 91
+Idle
+  xy: 714, 64
+  size: 102, 91
+Idle
+  xy: 816, 64
+  size: 102, 91
+Idle
+  xy: 918, 64
+  size: 102, 91
+Walk
+  xy: 0, 155
+  size: 102, 91
+Walk
+  xy: 102, 155
+  size: 102, 91
+Walk
+  xy: 204, 155
+  size: 102, 91
+Walk
+  xy: 306, 155
+  size: 102, 91
+Walk
+  xy: 408, 155
+  size: 102, 91
+Walk
+  xy: 510, 155
+  size: 102, 91
+Attack
+  xy: 0, 246
+  size: 102, 91
+Attack
+  xy: 102, 246
+  size: 102, 91
+Attack
+  xy: 204, 246
+  size: 102, 91
+Attack
+  xy: 306, 246
+  size: 102, 91
+Attack
+  xy: 408, 246
+  size: 102, 91
+Attack
+  xy: 510, 246
+  size: 102, 91
+Attack
+  xy: 612, 246
+  size: 102, 91
+Attack
+  xy: 714, 246
+  size: 102, 91
+Attack
+  xy: 816, 246
+  size: 102, 91
+Attack
+  xy: 918, 246
+  size: 102, 91
+Attack
+  xy: 1020, 246
+  size: 102, 91
+Hit
+  xy: 0, 337
+  size: 102, 91
+Hit
+  xy: 102, 337
+  size: 102, 91
+Hit
+  xy: 204, 337
+  size: 102, 91
+Hit
+  xy: 306, 337
+  size: 102, 91
+Hit
+  xy: 408, 337
+  size: 102, 91
+Death
+  xy: 0, 428
+  size: 102, 91
+Death
+  xy: 102, 428
+  size: 102, 91
+Death
+  xy: 204, 428
+  size: 102, 91
+Death
+  xy: 306, 428
+  size: 102, 91
+Death
+  xy: 408, 428
+  size: 102, 91
+Death
+  xy: 510, 428
+  size: 102, 91
+Death
+  xy: 612, 428
+  size: 102, 91
+Death
+  xy: 714, 428
+  size: 102, 91
+Death
+  xy: 816, 428
+  size: 102, 91
+Death
+  xy: 918, 428
+  size: 102, 91
+Death
+  xy: 1020, 428
+  size: 102, 91
+Death
+  xy: 1122, 428
+  size: 102, 91
+Death
+  xy: 1224, 428
+  size: 102, 91
+Death
+  xy: 1326, 428
+  size: 102, 91
+Wake
+  xy: 0, 519
+  size: 102, 91
+Wake
+  xy: 102, 519
+  size: 102, 91
+Wake
+  xy: 204, 519
+  size: 102, 91
+Wake
+  xy: 306, 519
+  size: 102, 91
+Wake
+  xy: 408, 519
+  size: 102, 91
+Wake
+  xy: 510, 519
+  size: 102, 91
+Wake
+  xy: 612, 519
+  size: 102, 91
+IdleUp
+  xy: 0, 610
+  size: 102, 91
+IdleUp
+  xy: 102, 610
+  size: 102, 91
+IdleUp
+  xy: 204, 610
+  size: 102, 91
+IdleUp
+  xy: 306, 610
+  size: 102, 91
+IdleUp
+  xy: 408, 610
+  size: 102, 91
+IdleUp
+  xy: 510, 610
+  size: 102, 91
+IdleUp
+  xy: 612, 610
+  size: 102, 91
+IdleUp
+  xy: 714, 610
+  size: 102, 91
+IdleUp
+  xy: 816, 610
+  size: 102, 91
+IdleUp
+  xy: 918, 610
+  size: 102, 91
+IdleDown
+  xy: 0, 701
+  size: 102, 91
+IdleDown
+  xy: 102, 701
+  size: 102, 91
+IdleDown
+  xy: 204, 701
+  size: 102, 91
+IdleDown
+  xy: 306, 701
+  size: 102, 91
+IdleDown
+  xy: 408, 701
+  size: 102, 91
+IdleDown
+  xy: 510, 701
+  size: 102, 91
+IdleDown
+  xy: 612, 701
+  size: 102, 91
+IdleDown
+  xy: 714, 701
+  size: 102, 91
+IdleDown
+  xy: 816, 701
+  size: 102, 91
+IdleDown
+  xy: 918, 701
+  size: 102, 91
+WalkUp
+  xy: 0, 792
+  size: 102, 91
+WalkUp
+  xy: 102, 792
+  size: 102, 91
+WalkUp
+  xy: 204, 792
+  size: 102, 91
+WalkUp
+  xy: 306, 792
+  size: 102, 91
+WalkUp
+  xy: 408, 792
+  size: 102, 91
+WalkUp
+  xy: 510, 792
+  size: 102, 91
+WalkDown
+  xy: 0, 883
+  size: 102, 91
+WalkDown
+  xy: 102, 883
+  size: 102, 91
+WalkDown
+  xy: 204, 883
+  size: 102, 91
+WalkDown
+  xy: 306, 883
+  size: 102, 91
+WalkDown
+  xy: 408, 883
+  size: 102, 91
+WalkDown
+  xy: 510, 883
+  size: 102, 91
