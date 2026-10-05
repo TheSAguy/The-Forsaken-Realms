@@ -673,7 +673,8 @@ depends on the difficulty:
 | Insane | Everyone |
 
 Past that, two more Walls come for **every** enemy on every difficulty: a flying 3/6 Wall from your 46th duel, and a
-second flying 3/6 from the 51st. So on Insane an enemy facing a 50-win streak starts with four Walls.
+second flying 3/6 from the 51st. Each also gives the enemy 25% more life - +25% from the 46th duel, +50% from the
+51st. So on Insane an enemy facing a 50-win streak starts with four Walls and half again its life.
 
 Each Wall card says why it's there, under a bold **Notoriety** line with the wins it stands for. Lose once (a Bronze Coin still counts as a
 loss) and your streak starts over. It counts the same duels as an enemy's own streak above, except the Arena: an Arena

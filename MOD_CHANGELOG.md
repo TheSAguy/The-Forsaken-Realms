@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 446: the notoriety bonus Walls add enemy life - +25% at 45 wins, +50% at 50 (2026-10-05)
+
+The user: "For the below two conditions, let's also give the enemy +25% health, per for each" - 45 wins: "+25%
+health", 50 wins: "+25% another health".
+
+- **Additive** (my reading of "another"): +25% from 45 wins in a row (duel 46), +50% from 50 (duel 51) - not
+  compounded (that would be +56%). Same duels as the bonus walls (no event, no roaming guard; Arena and town/Capitol
+  fights included), every rank, every difficulty.
+- Applied to the enemy's starting life after the difficulty factor, the day/night terrain change and the early-week
+  ramp; rounded. `[TFR-EnemyLife]` ends with `-> notoriety +N%=<life>`.
+- **Data:** settings.json + `TuningData.notorietyBonusWallLifePercent` [25, 25], parallel to the bonus-wall lists.
+  **Code:** `AdventurePlayer.notorietyBonusLifePercent()` (the sum for the counts reached), `DuelScene`'s life block.
+- `GUIDE.md`: +25% / +50% life with the bonus walls.
+- **Agent-tested** (Insane, a Goblin Rager Apprentice, normally 33 life): 44 wins -> 33 and two walls; 45 -> 41
+  (+25%) and three; 50 -> 50 (+50%) and four.
+- Not done (offered): the 45+/50+ cards do not mention the extra life.
+- LIVE + AGENT PACKAGED 2026-10-05 (jar 142839232D09).
+
 ## Round 445: notoriety bonus Walls - a third at 45 wins, a fourth at 50, for every enemy (2026-10-05)
 
 The user, showing the flying 3/6 Wall: "The flying wall level 4. Let's create 2 more copies of that, one that ready

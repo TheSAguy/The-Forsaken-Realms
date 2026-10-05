@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 446 - the notoriety bonus Walls add enemy life
+
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the enemy's starting life gets
+  `AdventurePlayer.notorietyBonusLifePercent()` after the early-week ramp (no event, no roaming guard - the walls'
+  duels); `[TFR-EnemyLife]` prints `notoriety +N%=<life>`.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - new `notorietyBonusLifePercent()`.
+- Mod: `TuningData.notorietyBonusWallLifePercent` + settings.json.
+
 ### Round 445 - notoriety bonus Walls at 45 and 50 wins
 
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `notorietyWallsFor()` adds the bonus walls

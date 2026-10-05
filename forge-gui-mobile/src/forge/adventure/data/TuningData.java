@@ -306,6 +306,9 @@ public class TuningData {
     // (notorietyMinRank* does not gate them). Both are a flying 3/6 whose card prints its count. Parallel lists.
     public int[] notorietyBonusWallWins = {45, 50};
     public String[] notorietyBonusWalls = {"tfr_wall3_flying_3_6", "tfr_wall4_flying_3_6"};
+    // Round 446 (the user: "+25% health" at 45 wins, "+25% another health" at 50): each bonus wall reached also raises
+    // the enemy's starting life by its entry here, summed (45+ = +25%, 50+ = +50%). Parallel to the lists above.
+    public int[] notorietyBonusWallLifePercent = {25, 25};
 
     /** Round 411: the lowest enemy rank (0 Apprentice .. 3 Archmage) notoriety reaches on this difficulty; an unknown
      *  difficulty takes Easy's (the fewest ranks), rather than guessing hard. */

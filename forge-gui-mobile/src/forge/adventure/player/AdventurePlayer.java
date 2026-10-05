@@ -442,6 +442,22 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return scripts;
     }
 
+    /**
+     * Round 446: the extra starting life, in percent, the bonus walls reached so far give an enemy - every rank, the
+     * same duels the walls go to (TuningData.notorietyBonusWallLifePercent, summed: 45+ = 25, 50+ = 50).
+     */
+    public int notorietyBonusLifePercent() {
+        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
+        if (tuning == null || notorietyLevel() <= 0 || tuning.notorietyBonusWallWins == null
+                || tuning.notorietyBonusWallLifePercent == null)
+            return 0;
+        int percent = 0;
+        for (int i = 0; i < Math.min(tuning.notorietyBonusWallWins.length, tuning.notorietyBonusWallLifePercent.length); i++)
+            if (notorietyStreak >= tuning.notorietyBonusWallWins[i])
+                percent += Math.max(0, tuning.notorietyBonusWallLifePercent[i]);
+        return percent;
+    }
+
     /** Round 216: the week this enemy was last Coin-Challenged, or -1 if never. */
     public int coinChallengeWeek(String enemyName) {
         Integer week = enemyName == null ? null : coinChallengeWeeks.get(enemyName);

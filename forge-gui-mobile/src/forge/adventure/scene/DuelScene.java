@@ -1043,6 +1043,13 @@ public class DuelScene extends ForgeScene {
                         (int) enemy.getX() / tileSize, (int) enemy.getY() / tileSize);
             }
             enemyStartingLife = earlyWeekLife(enemyStartingLife, currentEnemy); // round 383
+            // Round 446 (the user: "+25% health" at 45 wins in a row, "+25% another" at 50): the notoriety bonus walls'
+            // extra life - the same duels the walls go to (below: no event, no roaming guard), every rank.
+            int notorietyLifePercent = eventData == null && guardDeck == null
+                    ? Current.player().notorietyBonusLifePercent() : 0;
+            int lifeBeforeNotoriety = enemyStartingLife;
+            if (notorietyLifePercent > 0)
+                enemyStartingLife = Math.round(enemyStartingLife * (100 + notorietyLifePercent) / 100f);
             // Diagnostic logging standard (user request 2026-08-13) - unconditional (unlike
             // [TFR-DayNight] above, which only fires for the colored-terrain/day-night-enabled
             // subset of overworld fights), so difficulty-scaled starting life is verifiable for
@@ -1050,7 +1057,8 @@ public class DuelScene extends ForgeScene {
             System.out.println("[TFR-EnemyLife] " + currentEnemy.getName() + " rawLife=" + currentEnemy.life
                     + " enemyLifeFactor=" + advPlayer.getDifficulty().enemyLifeFactor
                     + " -> difficultyScaled=" + lifeBeforeTerrainModifier
-                    + (enemyStartingLife != lifeBeforeTerrainModifier ? " -> terrainAdjusted=" + enemyStartingLife : "")
+                    + (lifeBeforeNotoriety != lifeBeforeTerrainModifier ? " -> terrainAdjusted=" + lifeBeforeNotoriety : "")
+                    + (notorietyLifePercent > 0 ? " -> notoriety +" + notorietyLifePercent + "%=" + enemyStartingLife : "")
                     + " (eventOverride=" + (eventData != null) + ")");
             aiPlayer.setStartingLife(eventData != null ? eventData.eventRules.startingLife : enemyStartingLife);
 

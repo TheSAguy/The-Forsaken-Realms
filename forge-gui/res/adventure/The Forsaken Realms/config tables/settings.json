@@ -162,6 +162,8 @@
     // for EVERY rank on every difficulty (notorietyMinRank* does not gate them). Parallel lists; a flying 3/6 each.
     "notorietyBonusWallWins": [45, 50],
     "notorietyBonusWalls": ["tfr_wall3_flying_3_6", "tfr_wall4_flying_3_6"],
+    // Round 446: each bonus wall reached also adds this much to the enemy's starting life, summed (45+ = +25%, 50+ = +50%).
+    "notorietyBonusWallLifePercent": [25, 25],
 
     // Fraction of an edition's own card count you must have found before the Research
     // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this
