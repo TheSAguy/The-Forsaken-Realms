@@ -1093,6 +1093,7 @@ public class DuelScene extends ForgeScene {
             // player's wins in a row against anyone put ONE Wall token on this seat's battlefield, sized by the level and
             // kind by the seat's rank, for the ranks the difficulty reaches. The same duels as the win streak above.
             // Round 429: from 25 wins in a row a second Wall joins the first (AdventurePlayer.notorietyWallsFor).
+            // Round 445: from 45 and 50 a third and a fourth, a flying 3/6 each, for every rank.
             if (eventData == null && guardDeck == null) {
                 java.util.List<IPaperCard> walls = new java.util.ArrayList<>();
                 java.util.List<String> shown = new java.util.ArrayList<>();

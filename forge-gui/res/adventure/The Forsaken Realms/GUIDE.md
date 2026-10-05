@@ -660,10 +660,10 @@ and Inn tournaments - so an Archmage on a streak starts with two.
 **Notoriety: word of your wins spreads.** Win five duels in a row - against anyone - and from your sixth duel
 on, enemies start with a **Wall** token in play: a 0/1 Wall from the 6th duel, 1/2 from the 11th, 2/4 from the
 16th and 3/6 from the 21st. Keep winning and a **second Wall** joins it: from the 26th duel the enemy has the 3/6
-plus a 0/1, and the second one grows the same way - 1/2 from the 31st, 2/4 from the 36th and 3/6 from the 41st on,
-which is the most it gets (two 3/6 Walls). Every Wall has defender, so it blocks but never attacks; from the 1/2
-on it also deals damage when it blocks. Apprentices and Adepts bring plain Walls, Masters Walls with reach and Archmages
-Walls with flying. Which enemies do it depends on the difficulty:
+plus a 0/1, and the second one grows the same way - 1/2 from the 31st, 2/4 from the 36th and 3/6 from the 41st on.
+Every Wall has defender, so it blocks but never attacks; from the 1/2 on it also deals damage when it blocks.
+Apprentices and Adepts bring plain Walls, Masters Walls with reach and Archmages Walls with flying. Which enemies do it
+depends on the difficulty:
 
 | Difficulty | Enemies that bring a Wall |
 |---|---|
@@ -671,6 +671,9 @@ Walls with flying. Which enemies do it depends on the difficulty:
 | Normal | Masters and Archmages |
 | Hard | Adepts, Masters and Archmages |
 | Insane | Everyone |
+
+Past that, two more Walls come for **every** enemy on every difficulty: a flying 3/6 Wall from your 46th duel, and a
+second flying 3/6 from the 51st. So on Insane an enemy facing a 50-win streak starts with four Walls.
 
 Each Wall card says why it's there, under a bold **Notoriety** line with the wins it stands for. Lose once (a Bronze Coin still counts as a
 loss) and your streak starts over. It counts the same duels as an enemy's own streak above, except the Arena: an Arena

@@ -27,7 +27,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from make_token_scripts import LEVEL_PT, WALLS, script_name   # noqa: E402 - round 429: one naming for scripts and faces
+from make_token_scripts import BONUS_WALLS, LEVEL_PT, WALLS, script_name   # noqa: E402 - round 429: one naming for scripts and faces
 
 W, H = 488, 680
 ART_BOX = (40, 78, 448, 378)          # 408 x 300
@@ -182,10 +182,12 @@ WINS_PER_LEVEL = 5   # settings.json notorietyWinsPerLevel
 LEVELS_PER_WALL = 4  # settings.json notorietyLevelsPerWall
 
 
-def why_line(wall, level):
+def why_line(wall, level, wins=None):
     """Round 411b (the user: "Add to the Card a text line. Saying why it's on the field"): the card's own threshold.
-    Round 429: by level, not toughness (2/4 and 3/6 broke "toughness x 5"), and the second wall counts on from 25."""
-    wins = (wall * LEVELS_PER_WALL + level) * WINS_PER_LEVEL
+    Round 429: by level, not toughness (2/4 and 3/6 broke "toughness x 5"), and the second wall counts on from 25.
+    Round 445: a bonus wall passes its own count (45, 50)."""
+    if wins is None:
+        wins = (wall * LEVELS_PER_WALL + level) * WINS_PER_LEVEL
     return f"Notoriety: you have won {wins}+ duels in a row, and word has spread."
 
 
@@ -207,7 +209,7 @@ def draw_why(d, text, x0, y, width):
     return y + 21
 
 
-def card(art, kind, keywords, wall, level):
+def card(art, kind, keywords, wall, level, wins=None):
     img = Image.new("RGB", (W, H), (16, 16, 18))
     d = ImageDraw.Draw(img)
     # silver artifact frame
@@ -241,7 +243,7 @@ def card(art, kind, keywords, wall, level):
     # why it is on the field - a rule, then italic like flavor text, kept clear of the P/T box
     d.line([70, y, W - 71, y], fill=(150, 150, 150), width=1)
     y += 8
-    y = draw_why(d, why_line(wall, level), 54, y, W - 41 - 14 - 54)
+    y = draw_why(d, why_line(wall, level, wins), 54, y, W - 41 - 14 - 54)
     # power / toughness
     d.rounded_rectangle([W - 128, 590, W - 34, 636], radius=10, fill=(214, 216, 220), outline=(70, 72, 78), width=2)
     pt = "%d/%d" % LEVEL_PT[level]
@@ -256,13 +258,27 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--art")
     ap.add_argument("--sheet")
+    ap.add_argument("--bonus-only", action="store_true", help="round 445: only the bonus walls' faces")
     args = ap.parse_args()
     out = Path(args.out)
     if not out.is_dir():
         sys.exit(f"--out is not a folder: {out}")
     art_dir = Path(args.art) if args.art else None
     made = []
-    for wall in range(len(WALLS)):        # round 429: the second wall - same art, its own win counts
+    for script, wins in BONUS_WALLS:      # round 445: the flying 3/6 (Fly-4 art) with its own win count
+        art, source = None, "placeholder"
+        if art_dir:
+            for candidate in (art_dir / "Fly-4.png", art_dir / "flying_4.png", art_dir / "flying.png"):
+                if candidate.exists():
+                    art, source = Image.open(candidate), candidate.name
+                    break
+        if art is None:
+            art = placeholder("flying", 4)
+        face = card(art, "flying", ["Flying"], 0, 4, wins)
+        face.save(out / f"{script}.fullborder.png")
+        made.append(face)
+        print(f"{script}.fullborder.png  <- {source}")
+    for wall in range(0 if args.bonus_only else len(WALLS)):   # round 429: the second wall - same art, its own win counts
         for kind, word, keywords in KINDS:
             for level in range(1, 5):
                 art, source = None, "placeholder"

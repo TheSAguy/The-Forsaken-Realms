@@ -300,6 +300,12 @@ public class TuningData {
             "tfr_wall2_reach_0_1", "tfr_wall2_reach_1_2", "tfr_wall2_reach_2_4", "tfr_wall2_reach_3_6"};
     public String[] notorietyWallsFlying = {"tfr_wall_flying_0_1", "tfr_wall_flying_1_2", "tfr_wall_flying_2_4", "tfr_wall_flying_3_6",
             "tfr_wall2_flying_0_1", "tfr_wall2_flying_1_2", "tfr_wall2_flying_2_4", "tfr_wall2_flying_3_6"};
+    // Round 445 (the user: "The flying wall level 4. Let's create 2 more copies of that, one ... 45+ and one 50+ win
+    // streak. ... give those to all enemy levels at duel 46, 51", then "ALL levels get the new wall"): bonus walls on top
+    // of the two above, each once the wins in a row reach its count - for EVERY rank on every difficulty
+    // (notorietyMinRank* does not gate them). Both are a flying 3/6 whose card prints its count. Parallel lists.
+    public int[] notorietyBonusWallWins = {45, 50};
+    public String[] notorietyBonusWalls = {"tfr_wall3_flying_3_6", "tfr_wall4_flying_3_6"};
 
     /** Round 411: the lowest enemy rank (0 Apprentice .. 3 Archmage) notoriety reaches on this difficulty; an unknown
      *  difficulty takes Easy's (the fewest ranks), rather than guessing hard. */

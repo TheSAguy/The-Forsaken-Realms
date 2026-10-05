@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 445 - notoriety bonus Walls at 45 and 50 wins
+
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `notorietyWallsFor()` adds the bonus walls
+  (`TuningData.notorietyBonusWalls/notorietyBonusWallWins`) for every rank once the streak reaches each count; the
+  difficulty's `notorietyMinRank` now gates only the regular walls.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - comment only.
+- Mod: `TuningData` (the two lists), settings.json, token scripts `tfr_wall3_flying_3_6`/`tfr_wall4_flying_3_6`, their
+  card faces in `adventure/common/custom_card_pics`, `dev-tools/wall_tokens` (BONUS_WALLS, `--bonus-only`).
+
 ### Round 443 - a place is cleared only when every level is; one clear bonus
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - field `levelStairs` (walkable `entry` teleports of the

@@ -158,6 +158,10 @@
         "tfr_wall2_reach_0_1", "tfr_wall2_reach_1_2", "tfr_wall2_reach_2_4", "tfr_wall2_reach_3_6"],
     "notorietyWallsFlying": ["tfr_wall_flying_0_1", "tfr_wall_flying_1_2", "tfr_wall_flying_2_4", "tfr_wall_flying_3_6",
         "tfr_wall2_flying_0_1", "tfr_wall2_flying_1_2", "tfr_wall2_flying_2_4", "tfr_wall2_flying_3_6"],
+    // Round 445: bonus walls on top of the two above - each once the wins in a row reach its count (45 = duel 46),
+    // for EVERY rank on every difficulty (notorietyMinRank* does not gate them). Parallel lists; a flying 3/6 each.
+    "notorietyBonusWallWins": [45, 50],
+    "notorietyBonusWalls": ["tfr_wall3_flying_3_6", "tfr_wall4_flying_3_6"],
 
     // Fraction of an edition's own card count you must have found before the Research
     // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this

@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 445: notoriety bonus Walls - a third at 45 wins, a fourth at 50, for every enemy (2026-10-05)
+
+The user, showing the flying 3/6 Wall: "The flying wall level 4. Let's create 2 more copies of that, one that ready
+45+ and one 50+ win streak. Let's give those to all enemy levels at duel 46, 51. So if you have 45+ run streak, they
+will receive 3 walls." Asked about the difficulty limit: "ALL levels get's the new wall"; Arena fighters bring them too
+(agreed).
+
+- **The rule.** From 45 wins in a row (duel 46) the enemy seat starts with a third Wall, a flying 3/6 whose card prints
+  "45+"; from 50 (duel 51) a fourth, printing "50+". For EVERY rank on every difficulty - `notorietyMinRank*` gates only
+  the two regular walls now. So on Easy an Apprentice (no regular walls) brings one at 45+ and two at 50+; on Insane
+  everyone brings three, then four. Same duels as before (not events or guard duels; Arena fighters bring them).
+- **Data:** settings.json + `TuningData.notorietyBonusWallWins` [45, 50] / `notorietyBonusWalls`
+  [`tfr_wall3_flying_3_6`, `tfr_wall4_flying_3_6`] (parallel lists - add an entry for a fifth). Two token scripts
+  (`forge-gui/res/tokenscripts`, the same Defender + Flying 3/6 as `tfr_wall2_flying_3_6`) and their card faces
+  (`adventure/common/custom_card_pics`, the user's Fly-4 art; only the printed count differs).
+- **Code:** `AdventurePlayer.notorietyWallsFor()` appends the bonus walls once the streak reaches each count; the
+  per-4-entry wall lists could not hold a wall that starts at 3/6. `notorietyLevel()` is unchanged (still 8 at 40+;
+  the log line lists every wall).
+- **Tools:** `dev-tools/wall_tokens` - `BONUS_WALLS` in make_token_scripts.py, make_wall_cards.py builds them
+  (`--bonus-only` for just the two). A full rebuild into a scratch folder reproduced all 24 existing faces
+  pixel-identical.
+- `GUIDE.md`: the two bonus walls, for every enemy on every difficulty.
+- **Agent-tested** (the agent package, Insane): `notoriety 45` -> a Goblin Rager (Apprentice) started with plain 3/6 +
+  plain 3/6 + the flying 3/6 "45+"; `notoriety 50` -> four (two flying, the top one "50+"). Both cards drew with their
+  own picture. The "Token image key is malformed" lines are the image downloader skipping tokens without an edition -
+  the same as every Wall since round 411. Easy/Normal/Hard not run (code path: the bonus loop is outside the rank gate).
+- LIVE + AGENT PACKAGED 2026-10-05 07:14 with round 444 (jar 7A8027E4C9BC).
+
 ## Round 444: thirty-two more creatures from the generator (batch 9: the single small creatures) (2026-10-05)
 
 The ninth batch (procedural-pixel-creatures PR #9): the 32 creature sprites that one enemy each uses. The cloud session

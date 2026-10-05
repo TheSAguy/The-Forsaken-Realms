@@ -420,7 +420,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      * Round 411: the Wall token scripts an enemy of this tier starts the duel with - none below notoriety level 1, for
      * a rank below this difficulty's notorietyMinRank, or with no list. Plain for Apprentice/Adept, reach for a Master,
      * flying for an Archmage; the level picks the size (level 1 = the 0/1). Round 429: past the first wall's last
-     * level a second wall joins it (TuningData.notorietyWallIndexes).
+     * level a second wall joins it (TuningData.notorietyWallIndexes). Round 445: the bonus walls (45 and 50 wins) join
+     * for every rank, whatever the difficulty's notorietyMinRank.
      */
     public java.util.List<String> notorietyWallsFor(forge.adventure.data.EnemyData enemy) {
         java.util.List<String> scripts = new java.util.ArrayList<>();
@@ -429,13 +430,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (tuning == null || enemy == null || level <= 0)
             return scripts;
         int rank = forge.adventure.data.EnemyData.tierRank(enemy.tier);
-        if (rank < tuning.notorietyMinRankFor(difficultyData == null ? null : difficultyData.name))
-            return scripts;
         String[] walls = tuning.notorietyWallsForRank(rank);
-        if (walls == null || walls.length == 0)
-            return scripts;
-        for (int index : tuning.notorietyWallIndexes(Math.min(level, walls.length)))
-            scripts.add(walls[index]);
+        if (rank >= tuning.notorietyMinRankFor(difficultyData == null ? null : difficultyData.name)
+                && walls != null && walls.length > 0)
+            for (int index : tuning.notorietyWallIndexes(Math.min(level, walls.length)))
+                scripts.add(walls[index]);
+        if (tuning.notorietyBonusWalls != null && tuning.notorietyBonusWallWins != null)
+            for (int i = 0; i < Math.min(tuning.notorietyBonusWalls.length, tuning.notorietyBonusWallWins.length); i++)
+                if (notorietyStreak >= tuning.notorietyBonusWallWins[i])
+                    scripts.add(tuning.notorietyBonusWalls[i]);
         return scripts;
     }
 

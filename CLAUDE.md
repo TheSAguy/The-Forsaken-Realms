@@ -58,14 +58,21 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-05 (round 445): **LOCAL + UNRELEASED** - notoriety bonus Walls: from 45 wins in a row (duel 46) the
+enemy starts with a third Wall, a flying 3/6 printing "45+", and from 50 (duel 51) a fourth printing "50+" - for EVERY
+rank on every difficulty (the user: "ALL levels get's the new wall"; the difficulty's min rank still gates the two
+regular walls); Arena fighters bring them too. settings.json/TuningData `notorietyBonusWallWins` [45, 50] +
+`notorietyBonusWalls`; token scripts + faces `tfr_wall3/4_flying_3_6`; `AdventurePlayer.notorietyWallsFor`. Agent-tested
+(3 walls at 45, 4 at 50, both faces drawn). LIVE + AGENT PACKAGED 2026-10-05 07:14 with 444 (jar 7A8027E4C9BC).
+
 ## STATE 2026-10-05 (round 444): **LOCAL + UNRELEASED (data only)** - batch 9 of the creature-generator remakes: 32
 single-enemy creatures (Ghalta, Penguin Elite, Ape, Necrogoyf, Mageripper, Ocular Watcher, Bloodshot Eye, the Corrupted
 and Grizzled Treants, the Loam, Ember and Tide Elementals, Flesh Abomination, Hidden Snake, porcupines, skunk, rat, hen,
 rooster, goose, frog, toad, vulture, Sigbin, Amomongo, Buwaya, Hedge Slime, Triceratops, Armadillo, Sheep, Snail), four
 of them reworked at the user's word (the goose's long neck, the Mageripper's whips and maw, both elementals as figures).
 Data only (enemies.json 32 sprites + 32 scales, `sprites/enemy/remake/` 64 files; procedural-pixel-creatures
-`cloud/batch-09` 5820689). Now 432 remake atlases. NOT PACKAGED - the user's game was running; the peer (#30) packages
-live + agent when it is closed. Not seen in play.
+`cloud/batch-09` 5820689). Now 432 remake atlases. LIVE + AGENT PACKAGED 2026-10-05 07:14 with round 445
+(enemies.json 49F94BB9, 864 remake files). Not seen in play.
 
 ## STATE 2026-10-04 (round 443): **LOCAL + UNRELEASED** - dungeon clears (the user's "Scoured Valley" report: two
 places mixed up - Scoured Gallery paid twice, Cultists' Outpost paid and despawned after level 1 of 4). (A) one clear
@@ -96,7 +103,8 @@ user's game was running) - repackage when closed. NOTHING is unreleased. Next me
 Next version: 1.19 / 11900.
 **NEXT SESSION (thread closed 2026-10-04 late):** (1)+(2) DONE - the peer's round 442 (cloud batch 8, 2abb355d9e9) is
 packaged live + agent, and live now carries the 1.18 stamp; round 443 (dungeon clears) is done; round 444 = batch 9
-of the remakes (the Procedural Pixel Creatures session) - the next free round is **445**;
+of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety bonus Walls (done) - the next free round
+is **446**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,

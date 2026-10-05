@@ -15,6 +15,10 @@ from pathlib import Path
 KINDS = {"": [], "reach": ["Reach"], "flying": ["Flying"]}
 LEVEL_PT = {1: (0, 1), 2: (1, 2), 3: (2, 4), 4: (3, 6)}   # round 429
 WALLS = ("tfr_wall", "tfr_wall2")                          # round 429: the first wall, the second (from 25 wins)
+# Round 445 (the user: "The flying wall level 4. Let's create 2 more copies of that, one ... 45+ and one 50+ win streak.
+# ... give those to all enemy levels"): two bonus walls, a flying 3/6 each, for every rank - settings.json
+# notorietyBonusWalls / notorietyBonusWallWins. (script name, the win count its card prints)
+BONUS_WALLS = (("tfr_wall3_flying_3_6", 45), ("tfr_wall4_flying_3_6", 50))
 
 
 def script_name(wall, kind, level):
@@ -40,6 +44,11 @@ def main():
                 lines.append("Oracle:" + ", ".join([keywords[0]] + [k.lower() for k in keywords[1:]]))
                 (out / f"{name}.txt").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
                 print(name, "|", ", ".join(keywords), f"{p}/{t}")
+    for name, _wins in BONUS_WALLS:   # round 445: the same token as the second wall's flying 3/6
+        lines = ["Name:Wall Token", "ManaCost:no cost", "Types:Artifact Creature Wall", "PT:3/6",
+                 "K:Defender", "K:Flying", "Oracle:Defender, flying"]
+        (out / f"{name}.txt").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+        print(name, "| Defender, Flying 3/6")
 
 
 if __name__ == "__main__":
