@@ -99,6 +99,8 @@ public class MapStage extends GameStage {
     private boolean respawnEnemies;
     private boolean canFailDungeon = false;
     protected ArrayList<EnemySprite> enemies = new ArrayList<>();
+    // Round 443: where this level's walkable stairs lead (entry teleports) - the level ledger's links, see PlaceLevels.
+    private final LinkedHashSet<String> levelStairs = new LinkedHashSet<>();
     public Map<Integer, Vector2> waypoints = new HashMap<>();
 
     // A shop's own "shop" object is just its 16x16 doorstep footprint - the real building art is
@@ -807,6 +809,7 @@ public class MapStage extends GameStage {
         spawnClassified.clear();
         sourceMapMatch.clear();
         enemies.clear();
+        levelStairs.clear(); // round 443
         lootPositions.clear(); // round 279 - per map, like everything else here
         lootBehindGates = 0; // round 378
         beatenPlacements.clear(); // round 322
@@ -1366,8 +1369,11 @@ public class MapStage extends GameStage {
                         } else {
                             otherEntries.add(entry);
                         }
-                        if (!prop.containsKey("noExit") || prop.get("noExit").toString().equals("false"))
+                        if (!prop.containsKey("noExit") || prop.get("noExit").toString().equals("false")) {
                             addMapActor(obj, entry);
+                            if (targetMap != null && !targetMap.isEmpty())
+                                levelStairs.add(targetMap); // round 443: a level this one leads to (PlaceLevels)
+                        }
                         break;
                     case "portal":
                         float px = Float.parseFloat(prop.get("x").toString());
@@ -2079,6 +2085,9 @@ public class MapStage extends GameStage {
      * Loot still on the floor means neither rule applies: the place is still worth a return visit.
      * Both callees self-gate on rotation-enabled/rotatable/story, so towns, castles, Ring Cities
      * and story dungeons fall through them untouched.
+     * <p>
+     * Round 443: "left" means anywhere in the place - every level, through PlaceLevels - and a place
+     * already off the map is left alone.
      */
     private void applyDungeonExitRules() {
         PointOfInterest root = TileMapScene.instance().rootPoint;
@@ -2087,24 +2096,14 @@ public class MapStage extends GameStage {
         // is correct and keeps the rules in exactly one place.
         if (root == null)
             return;
-        boolean enemiesLeft = false;
-        for (EnemySprite enemy : enemies) {
-            // Same "still actually on the map" test updateQuestsWin() uses, and the same
-            // defeatDialog exemption: an enemy that can't be removed by defeating it must not
-            // hold the dungeon open forever. Round 301: nor an ambusher that never sprang -
-            // countsAsEnemyLeft() is the shared rule.
-            if (countsAsEnemyLeft(enemy)) {
-                enemiesLeft = true;
-                break;
-            }
-        }
-        boolean lootLeft = false;
-        for (MapActor actor : new Array.ArrayIterator<>(actors)) {
-            if (actor instanceof RewardSprite && actor.getStage() != null) {
-                lootLeft = true;
-                break;
-            }
-        }
+        // Round 443: the WHOLE place, not just the level the player walks out of. This level is read live (the same
+        // "still actually on the map" test updateQuestsWin() uses, with its defeatDialog and round-301 ambusher
+        // exemptions - countsAsEnemyLeft() - and every reward pickup still on the stage); every other level comes
+        // from its ledger (PlaceLevels). A level below still holding enemies or loot, or never visited, keeps the
+        // place - and a boss lair - on the map.
+        PlaceLevels.Status place = placeStatus(null);
+        boolean enemiesLeft = place.enemiesLeft();
+        boolean lootLeft = place.lootLeft();
         // Round 299: a boss lair leaves the map on this walk-out when its boss is down and nothing is left. The
         // rotatable-dungeon rules below self-gate on isRotatable and do nothing for a lair. The names go to the log's
         // "stays" line - "enemies are still inside" alone did not say which. An ambusher that is still HIDDEN is not
@@ -2130,7 +2129,19 @@ public class MapStage extends GameStage {
             System.out.println("[TFR-Ambush] " + root.getDisplayName() + ": " + stillHidden + " ambusher(s) never sprang"
                     + " - not counted as enemies left"
                     + (listed > 0 ? " (" + listed + " other enemy(ies) still inside)" : " (nothing else is left)"));
-        DungeonRotation.onLairExit(root, listed > 0 ? remaining.toString() : null, lootLeft);
+        String elsewhere = place.levels > 1 ? place.others() : "none"; // round 443: the other levels not done
+        String inside = !enemiesLeft ? null : listed == 0 ? "other levels - " + elsewhere
+                : "none".equals(elsewhere) ? remaining.toString() : remaining + "; other levels - " + elsewhere;
+        DungeonRotation.onLairExit(root, inside, lootLeft);
+        if (!root.getActive()) {
+            // Round 443: already off the map - the last kill cleared it (every level, nothing left), or a lair just
+            // left above. The rules below used to run anyway: the walk-out paid the clear bonus a second time
+            // (DungeonSources.onCleared) and wrote a despawn timer onto a place that had already despawned.
+            if (DungeonRotation.isRotatableData(root.getData()))
+                System.out.println("[TFR-DungeonClear] " + root.getDisplayName()
+                        + " is already off the map - nothing to hold, cut or pay on the way out");
+            return;
+        }
         if (lootLeft) {
             // Round 257 (user: "Don't de-spawn till all loot is cleared. but let's apply the same rule as when all
             // enemies are dead, cut time de-spawn by 75%"): the place keeps what is on its floor until the player
@@ -2142,6 +2153,14 @@ public class MapStage extends GameStage {
             return;
         }
         DungeonRotation.releaseLootHold(root); // round 257: nothing left on the floor
+        if (place.unvisited > 0) {
+            // Round 443: nothing the player has seen is left on a floor, but a level was never visited - what it holds is
+            // unknown, so the place is neither held nor cut (round 128's cut is for a place stripped of its loot).
+            if (DungeonRotation.isRotatableData(root.getData()))
+                System.out.println("[TFR-PlaceClear] " + root.getDisplayName() + ": walked out with " + place.unvisited
+                        + " level(s) not visited (" + elsewhere + ") - its timer runs as it was");
+            return;
+        }
         if (enemiesLeft) {
             // Round 128: looted but still guarded - bring the despawn forward instead of firing it.
             DungeonRotation.onDungeonLooted(root);
@@ -2164,6 +2183,9 @@ public class MapStage extends GameStage {
         // routes through dungeonFailedDialog() -> exitDungeon(false, ...), and conceding likewise,
         // so `defeated` is only true when life actually hit zero). The hook lives at the match-loss
         // handler itself - see the loss branch below (the one that calls updateQuestsLose()).
+        // Round 443: the level the player walks out of gets its ledger (PlaceLevels) - BEFORE the reset below, so a reset
+        // level's deleted-object count no longer matches the ledger and the ledger is ignored.
+        recordLevelLedger();
         if (mustClearOnExit) {
             mustClearOnExit = false;
 
@@ -2448,6 +2470,43 @@ public class MapStage extends GameStage {
      */
     public static boolean countsAsEnemyLeft(EnemySprite enemy) {
         return enemy != null && enemy.getStage() != null && enemy.defeatDialog == null && !enemy.hidden;
+    }
+
+    /** Round 443: enemies left on this level by countsAsEnemyLeft(), not counting {@code exclude} (the one just beaten). */
+    public int liveEnemiesLeft(EnemySprite exclude) {
+        int count = 0;
+        for (EnemySprite enemy : enemies)
+            if (enemy != exclude && countsAsEnemyLeft(enemy))
+                count++;
+        return count;
+    }
+
+    /** Round 443: reward pickups still on this level - the exit rules' loot test since round 128. */
+    public int liveLootLeft() {
+        int count = 0;
+        for (MapActor actor : new Array.ArrayIterator<>(actors))
+            if (actor instanceof RewardSprite && actor.getStage() != null)
+                count++;
+        return count;
+    }
+
+    /**
+     * Round 443: writes the ledger (PlaceLevels) of the level the player is leaving - by its stairs
+     * (TileMapScene.loadNext) or by walking out (exitDungeon). A place with no stairs, read only live, gets none.
+     */
+    public void recordLevelLedger() {
+        PointOfInterest root = TileMapScene.instance().rootPoint;
+        if (changes == null || root == null || !isInMap)
+            return;
+        if (levelStairs.isEmpty() && root.getID().equals(TileMapScene.instance().currentLevelKey()))
+            return;
+        PlaceLevels.record(changes, liveEnemiesLeft(null), liveLootLeft(), levelStairs);
+    }
+
+    /** Round 443: what is left in the whole place - this level live, every other level from its ledger. */
+    public PlaceLevels.Status placeStatus(EnemySprite exclude) {
+        return PlaceLevels.status(TileMapScene.instance().rootPoint, TileMapScene.instance().currentLevelKey(),
+                liveEnemiesLeft(exclude), liveLootLeft(), levelStairs);
     }
 
     public Actor getByID(int id) { //Search actor by ID.

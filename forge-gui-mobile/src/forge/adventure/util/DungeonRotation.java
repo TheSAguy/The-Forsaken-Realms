@@ -222,10 +222,10 @@ public class DungeonRotation {
         world.getLairClearCount().put(id, clears);
         world.getLairBossDownDay().remove(id);
         poi.setActive(false);
-        forge.adventure.pointofintrest.PointOfInterestChanges poiChanges =
-                WorldSave.getCurrentSave().peekPointOfInterestChanges(id);
-        if (poiChanges != null)
-            poiChanges.clearFixedRoster(); // a fresh roster when it returns, like a rotated dungeon (round 201)
+        // A fresh roster when it returns, like a rotated dungeon (round 201) - round 443: on every level.
+        for (forge.adventure.pointofintrest.PointOfInterestChanges levelChanges
+                : WorldSave.getCurrentSave().getPointOfInterestChangesTree(id))
+            levelChanges.clearFixedRoster();
         int backDay = currentDay + rollDays(world, respawnMinDays(), respawnMaxDays());
         world.getPoiRespawnDay().put(id, backDay);
         System.out.println("[TFR-Lair] " + poi.getDisplayName() + " cleared (clear #" + clears + ") - gone until day "
@@ -784,6 +784,9 @@ public class DungeonRotation {
      * event (see AdventureQuestStage's Clear case) - there's nothing left to come back for.
      * Non-rotatable POIs (story dungeons, bosses, towns...) are untouched, same as
      * onDungeonDefeat().
+     * <p>
+     * Round 443: "every enemy inside" is every level (PlaceLevels), and the win-time call comes only with no loot
+     * left either - with loot left that path calls onDungeonCleared() and the walk-out decides.
      */
     public static void onDungeonClear(PointOfInterest poi) {
         DungeonSources.onCleared(poi); // round 377: once per incarnation, whatever the rotation then does with it
@@ -826,12 +829,11 @@ public class DungeonRotation {
         // Round 201 (user: "if the dungeon fades/disappears and re-appears on the map later, it will
         // be random till you enter it again for the first time at its new location"). This is the
         // half of the fixed-roster feature that keeps rotation meaningful - without it a dungeon
-        // would keep the same creatures for the rest of the run. peek, not get: a POI that has never
-        // been entered has no changes entry and does not need one created just to clear it.
-        forge.adventure.pointofintrest.PointOfInterestChanges poiChanges =
-                WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
-        if (poiChanges != null)
-            poiChanges.clearFixedRoster();
+        // would keep the same creatures for the rest of the run. Round 443: every level's roster - this read only
+        // the first level's, so a lower floor came back with the same creatures. The tree never creates an entry.
+        for (forge.adventure.pointofintrest.PointOfInterestChanges levelChanges
+                : WorldSave.getCurrentSave().getPointOfInterestChangesTree(poi.getID()))
+            levelChanges.clearFixedRoster();
         world.getPoiDespawnDay().remove(poi.getID());
         world.getPoiFailedAttempts().remove(poi.getID());
         world.getPoiLootedDay().remove(poi.getID()); // round 128: next incarnation may be halved again

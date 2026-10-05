@@ -410,6 +410,13 @@ public final class DungeonSources {
         String id = poi.getID();
         if (world.getDungeonClearedDay().containsKey(id))
             return;
+        // Round 443 (the user's log: Scoured Gallery, Grey Warren and the Forgotten Hunting Lodge each paid twice): only a
+        // place still on the map pays. A clear on the last kill despawned the place, the despawn (onHidden) wiped the
+        // mark read above, and the walk-out paid again. MapStage's exit rules now skip a place already off the map.
+        if (!poi.getActive()) {
+            System.out.println("[TFR-DungeonSource] " + poi.getDisplayName() + " is already off the map - no second payment");
+            return;
+        }
         int today = world.getCurrentDay();
         world.getDungeonClearedDay().put(id, today);
         Integer since = world.getDungeonAppearedDay().get(id);

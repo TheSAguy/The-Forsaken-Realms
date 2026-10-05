@@ -352,6 +352,7 @@ public class TileMapScene extends HudScene {
     }
 
     public void loadNext(String targetMap, int entryTargetObject) {
+        MapStage.getInstance().recordLevelLedger(); // round 443: the level being left, for PlaceLevels' whole-place clear
         nextMap = targetMap;
         nextSpawnPoint = entryTargetObject;
     }

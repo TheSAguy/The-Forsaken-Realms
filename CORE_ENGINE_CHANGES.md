@@ -38,6 +38,24 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 443 - a place is cleared only when every level is; one clear bonus
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - field `levelStairs` (walkable `entry` teleports of the
+  loaded level, filled in `loadObjects()`'s `entry` case, cleared in `loadMap()`); new `liveEnemiesLeft()`,
+  `liveLootLeft()`, `recordLevelLedger()`, `placeStatus()`; `applyDungeonExitRules()` reads the whole place
+  (`PlaceLevels`) instead of the loaded level, passes the other levels' leftovers to `onLairExit`, returns early for a
+  place already off the map, and leaves the timer alone when a level was never visited; `exitDungeon()` records the
+  ledger first (before the `mustClearOnExit` reset). **Merge watch** on `exitDungeon()`/`applyDungeonExitRules()`.
+- **`forge-gui-mobile/src/forge/adventure/scene/TileMapScene.java`** - `loadNext()` records the ledger of the level
+  being left (one line).
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** - `updateQuestsWin()`: a clear of the
+  loaded level asks `MapStage.placeStatus()`; another level not done keeps `event.clear` false (side-quest Clear needs
+  every level) and skips the rotation call; with loot left anywhere it calls `DungeonRotation.onDungeonCleared()`
+  instead of `onDungeonClear()`.
+- Mod: new `util/PlaceLevels` (the level ledger in each level's `mapFlags`: `tfrLedgerEnemies/Loot/Deleted`,
+  `tfrLedgerStair:<map>`), `DungeonSources.onCleared` (pays only for a place on the map), `DungeonRotation.hidePoi` and
+  `onLairExit` (every level's fixed roster, via `WorldSave.getPointOfInterestChangesTree`).
+
 ### Round 440 - the 10.04 engine merge (upstream `f9aafc5315e`)
 
 Two conflicts, both from upstream `583d7f1496b` "Update WorldBackground (#12098)" ("Hopefully it fixes white world

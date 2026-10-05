@@ -14264,6 +14264,70 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 443: a place is cleared only when every level is; one clear bonus; loot keeps a cleared place (2026-10-04)
+
+The user: "In my most recent game, Scoured Valley gave me multiple Cleared bonuses and worse, it was not even cleared.
+It was a multi level dungeon that was not done. Review log." A cloud session had found two of the faults by reading the
+code; the log showed a third. The user: "Do all 3" (A, B, C below, plus the roster fix), and a side quest's "Clear
+<place>" needs every level too.
+
+- **What the log showed** - two places, mixed up in the report:
+  - Scoured Gallery (`CaveCGen12`, one level): all five enemies down, every pickup taken, then paid twice (Baker's
+    Forge 2 -> 3). Grey Warren and the Forgotten Hunting Lodge paid twice the same way.
+  - Cultists' Outpost (`FortMultilevel`, four levels): paid and despawned after level 1 (3 enemies) with the player
+    inside. Level 2 still held 4 enemies and loot; levels 3-4 were never visited. The user's screenshot is this fort,
+    showing the second Scoured Gallery notice late (HUD notices queue, about 15 s each).
+- **A - one payment.** `DungeonRotation.onDungeonClear` paid (`DungeonSources.onCleared`) and hid the place.
+  `hidePoi` -> `DungeonSources.onHidden` deleted the "cleared" mark, so the walk-out (`MapStage.applyDungeonExitRules`)
+  paid again. It also wrote a despawn timer onto a place already off the map. Broken since round 377. Now:
+  - `onCleared` pays only for a place still on the map (`[TFR-DungeonSource] ... is already off the map - no second
+    payment`).
+  - The exit rules skip a place already off the map (`[TFR-DungeonClear] ... is already off the map - nothing to hold,
+    cut or pay on the way out`).
+- **B - every level.** Every clear test read only the loaded level. New `util/PlaceLevels`, the level ledger:
+  - When the player leaves a level (its stairs: `TileMapScene.loadNext`; the walk-out: `MapStage.exitDungeon`, before
+    a reset), what is left there goes into that level's saved `mapFlags`: enemies (`countsAsEnemyLeft`), reward
+    pickups, and its walkable stairs' targets (`tfrLedgerEnemies/Loot/Deleted`, `tfrLedgerStair:<map>`).
+  - The whole place = the live level + every level its stairs reach, through the ledgers. No ledger = not visited =
+    not clear. Nothing is read from the map files, so no spawn rule is copied.
+  - The ledger keeps the level's deleted-object count. Objects are deleted only while the player is on that level, so
+    a different count later means it was restocked or reset, and the ledger is ignored.
+  - Used by the last kill (`AdventureQuestController.updateQuestsWin`: the bonus, the despawn, "Clear N dungeons",
+    side-quest Clear), the walk-out rules and the boss-lair exit. `[TFR-PlaceClear] <place>: this level is clear, the
+    place is not (N levels) - <level>: not visited`.
+  - A walk-out with a level never visited is neither held nor cut (`[TFR-PlaceClear] ... walked out with N level(s)
+    not visited`).
+  - Scope (scratch `scan_multilevel.py`): 20 rotating places have stairs - the caves CaveReptile/CaveTroll/CaveDragon/
+    CaveZombie/CaveKobold, Cultists' Outpost, 5 Graveyards, 3 Vampire Castles, 2 Djinn's Palaces, Barbarian Camp, Kor
+    Outpost, Homarid Island, the 8-level Hidden Treasure-room - plus 6 multi-level boss lairs. Random "Clear" side
+    quests can land on 9 multi-level places. No rotating place links levels by portal.
+- **C - loot keeps a cleared place.** The last kill despawned the place even with loot on the floor (the Forgotten
+  Hunting Lodge lost its loot), against round 257's "Don't de-spawn till all loot is cleared". Now every enemy down with
+  loot left anywhere calls `onDungeonCleared` (one payment, the 75% timer cut), and the place stays until the player
+  walks out with nothing left. No rotating map has a hidden reward object (265 maps scanned), so loot nobody can see
+  can never hold a place.
+- **Rosters.** `hidePoi` and `onLairExit` cleared the fixed roster (round 201) of the first level only. They now clear
+  every level's (`WorldSave.getPointOfInterestChangesTree`), so a lower floor no longer comes back with the same
+  creatures.
+- `GUIDE.md`: "completely" means every enemy and every pickup on every floor; enemies down with loot left waits for the
+  player.
+- **No save change** (`mapFlags` already exists). In an old save, levels visited before this round have no ledger and
+  count as not visited until the player walks through them once.
+- **Agent-tested** (dev loop, then the agent package; the agent world is a copy of the user's):
+  - Cultists' Outpost: a level-1 win with level 2 unvisited - not cleared, no payment, no despawn. A level-2 win reads
+    level 1's ledger as done and lists only level 3. Walking out with a level unvisited leaves the timer. After a lost
+    duel (a despawn) the walk-out says "already off the map".
+  - Scoured Gallery: the last kill with 5 loot left - one payment, timer 32 -> 10, it stays. The walk-out with the
+    loot - held, no second payment. Re-entered, loot taken, walked out - despawned, no payment.
+  - NOT seen: a full four-level clear (the agent's AI lost the level-3/4 fights at Insane, and a loss despawns the
+    place) and the last-kill despawn with nothing left.
+- Noticed, not fixed: the console `leave` cheat during a duel closes the game (NPE in `FDropDown`); it lacks the "Not
+  during a duel." guard round 383b gave `teleport to poi`. Test-only. The agent's walker gets stuck in the fort's
+  level 2, and on level 3 its arrival point sits on the up-stairs.
+- Files: `util/PlaceLevels.java` (new), `stage/MapStage.java`, `scene/TileMapScene.java`,
+  `util/AdventureQuestController.java`, `util/DungeonRotation.java`, `util/DungeonSources.java`, `GUIDE.md`. Jar
+  3248B990640D. AGENT PACKAGED; LIVE not yet (the user's game was running).
+
 ## Round 442: thirty more creature groups from the generator (cloud batch 8: the remaining creatures) (2026-10-04)
 
 The eighth cloud batch (procedural-pixel-creatures PR #8): the remaining creature sprites that more than one enemy

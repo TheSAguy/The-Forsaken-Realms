@@ -383,8 +383,10 @@ Dungeons and caves aren't fixed forever. Every visible one has a lifespan - 20 t
 which it despawns on its own (at once if you lose a fight there and it isn't a story target), and a
 fresh one appears elsewhere to take its place, drawn from a much larger reserve pool than what's
 ever visible at once. Clearing a dungeon out completely also retires it, making room for something
-new - and stripping one of its loot while its guards still stand leaves it only a quarter of the
-days it had left. Side-quest-linked dungeons get extra grace: three failed attempts before they're
+new - completely means every enemy and every pickup, on every floor of a dungeon with stairs. Beat
+every enemy but leave loot behind and it waits for you to come back for the loot, with only a
+quarter of the days it had left. Stripping its loot while its guards still stand also cuts it to a
+quarter. Side-quest-linked dungeons get extra grace: three failed attempts before they're
 gone for good, and 30 extra days while a quest still points at them. Story-critical locations never
 disappear.
 
@@ -1239,8 +1241,8 @@ creatures come as usual wherever you are. See [Where the Monsters Come From](#wh
 
 ### Why did a dungeon disappear from my map?
 
-Dungeons and caves rotate: each lasts 20-40 days, and one leaves early when you clear it, lose a duel
-inside it, or strip its loot while its enemies still stand. Boss lairs leave only once cleared and come
+Dungeons and caves rotate: each lasts 20-40 days, and one leaves early when you clear it (every
+floor, enemies and loot), lose a duel inside it, or strip its loot while its enemies still stand. Boss lairs leave only once cleared and come
 back restocked 10-30 days later. See [Dungeons That Actually Rotate](#dungeons-that-actually-rotate).
 
 ### Why do monsters have less life early on?

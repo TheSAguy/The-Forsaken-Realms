@@ -657,8 +657,30 @@ public class AdventureQuestController implements Serializable {
             // that's this method's own "this really was a dungeon-context battle" signal -
             // the single-enemy overworld-duel overload below passes enemies=null and would
             // otherwise trip allEnemiesCleared's true-by-default value for every ordinary win.
-            if (allEnemiesCleared)
-                DungeonRotation.onDungeonClear(TileMapScene.instance().rootPoint);
+            // Round 443 (the user: "it was not even cleared. It was a multi level dungeon that was not done"): this level
+            // being clear is not the place being clear. Every other level counts, through its ledger (PlaceLevels): one
+            // still holding enemies, or never visited, means no bonus, no despawn and no Clear objective - the user: a
+            // side quest's "Clear" needs every level too. With every enemy down but loot left anywhere, the place pays
+            // and its timer is cut (onDungeonCleared), and it stays until the player walks out with nothing left -
+            // round 257's "Don't de-spawn till all loot is cleared"; this path used to despawn it with the loot inside.
+            if (allEnemiesCleared) {
+                PointOfInterest root = TileMapScene.instance().rootPoint;
+                PlaceLevels.Status place = MapStage.getInstance().placeStatus(defeated);
+                boolean worthALine = root != null && (place.levels > 1 || DungeonRotation.isRotatableData(root.getData()));
+                if (place.enemiesLeft()) {
+                    allEnemiesCleared = false;
+                    if (worthALine)
+                        System.out.println("[TFR-PlaceClear] " + root.getDisplayName() + ": this level is clear, the place"
+                                + " is not (" + place.levels + " levels) - " + place.others());
+                } else if (place.lootLeft()) {
+                    if (worthALine)
+                        System.out.println("[TFR-PlaceClear] " + root.getDisplayName() + ": every enemy is down ("
+                                + place.levels + " level(s)), " + place.loot + " loot left - it stays until the player"
+                                + " walks out with nothing left");
+                    DungeonRotation.onDungeonCleared(root);
+                } else
+                    DungeonRotation.onDungeonClear(root);
+            }
         }
         AdventureQuestEvent event = new AdventureQuestEvent();
         event.type = AdventureQuestEventType.MATCHCOMPLETE;

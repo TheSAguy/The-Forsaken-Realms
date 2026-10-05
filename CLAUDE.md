@@ -58,6 +58,17 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-04 (round 443): **LOCAL + UNRELEASED** - dungeon clears (the user's "Scoured Valley" report: two
+places mixed up - Scoured Gallery paid twice, Cultists' Outpost paid and despawned after level 1 of 4). (A) one clear
+bonus per place: the walk-out paid it again since round 377 - `DungeonSources.onCleared` pays only on the map, the exit
+rules skip a place already gone. (B) a place is cleared only when EVERY level is: `util/PlaceLevels`, a level ledger in
+each level's `mapFlags`, written when the player leaves a level; the last kill, the walk-out, "Clear N dungeons", side-
+quest Clear (the user: every level) and the lair exit all read the whole place; a never-visited level = not clear.
+(C) the last kill with loot left anywhere pays and cuts the timer but keeps the place until the walk-out with nothing
+left. Every level's roster resets on a despawn. No save change. Agent-tested (MOD_CHANGELOG 443; a full four-level clear
+NOT seen - the agent's fights at Insane were lost). AGENT PACKAGED (jar 3248B990640D, GUIDE edit after it); LIVE NOT
+PACKAGED - the user's game was running: package live (+ agent) when closed.
+
 ## STATE 2026-10-04 (round 442): **LOCAL + UNRELEASED (data only)** - cloud batch 8 of the creature-generator remakes:
 30 groups, 83 enemies (criosphinxes and sphinxes, hydras and great hydras, monkeys, plants, the stegosaurus and shrieker
 reworks, the cosmic horror with staring eyes and gnashing maws, the bat-winged manticore, fungi, bushes and treefolk,
@@ -75,7 +86,7 @@ Latest. Rounds 406-441 on top of v1.17.1, engine = the 10.04 daily. Assets in `C
 user's game was running) - repackage when closed. NOTHING is unreleased. Next merge from upstream after `f9aafc5315e`.
 Next version: 1.19 / 11900.
 **NEXT SESSION (thread closed 2026-10-04 late):** (1)+(2) DONE - the peer's round 442 (cloud batch 8, 2abb355d9e9) is
-packaged live + agent, and live now carries the 1.18 stamp; my next round is **443**;
+packaged live + agent, and live now carries the 1.18 stamp; round 443 (dungeon clears) is done - next round **444**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,
