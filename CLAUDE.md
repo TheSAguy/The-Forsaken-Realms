@@ -66,8 +66,8 @@ each level's `mapFlags`, written when the player leaves a level; the last kill, 
 quest Clear (the user: every level) and the lair exit all read the whole place; a never-visited level = not clear.
 (C) the last kill with loot left anywhere pays and cuts the timer but keeps the place until the walk-out with nothing
 left. Every level's roster resets on a despawn. No save change. Agent-tested (MOD_CHANGELOG 443; a full four-level clear
-NOT seen - the agent's fights at Insane were lost). AGENT PACKAGED (jar 3248B990640D, GUIDE edit after it); LIVE NOT
-PACKAGED - the user's game was running: package live (+ agent) when closed.
+NOT seen - the agent's fights at Insane were lost). LIVE + AGENT PACKAGED 2026-10-04 20:35
+(jar 3248B990640D, GUIDE included). Not seen in the user's play yet.
 
 ## STATE 2026-10-04 (round 442): **LOCAL + UNRELEASED (data only)** - cloud batch 8 of the creature-generator remakes:
 30 groups, 83 enemies (criosphinxes and sphinxes, hydras and great hydras, monkeys, plants, the stegosaurus and shrieker
