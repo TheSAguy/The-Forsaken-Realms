@@ -537,6 +537,11 @@ public class ConsoleCommandInterpreter {
         });
         registerCommand(new String[]{"leave"}, s -> {
             if (!MapStage.getInstance().isInMap()) return "not on a map";
+            // Round 448: not during a duel - leaving the map mid-duel closed the game (an NPE in FDropDown when the
+            // duel's screen updated after the scene had switched; round 443's agent test). teleport to poi has had
+            // this guard since round 383b.
+            if (Forge.getCurrentScene() instanceof forge.adventure.scene.DuelScene)
+                return "Not during a duel.";
             MapStage.getInstance().exitDungeon(false, false);
             return "Got out";
         });

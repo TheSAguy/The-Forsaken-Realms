@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 448 - the console `leave` waits out a duel
+
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `leave` returns "Not during a duel."
+  while a `DuelScene` is current (the guard `teleport to poi` has).
+- Mod (agent bridge): `AgentActions.leave()` takes the same guard; `WalkController`'s own map planner.
+
 ### Round 447 - a win streak draws stronger enemies
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - `loadObjects()`'s enemy case: after the re-theme, a

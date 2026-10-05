@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 448: the console `leave` waits out a duel; the agent's map walker finds its way (2026-10-05)
+
+The user: "Let's see if there is a fix for" the two leftovers from round 443's agent test. Test tooling only - nothing a
+player meets changes.
+
+- **`leave` mid-duel closed the game** (an NPE in `FDropDown` - the duel's screen updated after `exitDungeon()` had
+  switched the scene). The console `leave` and the bridge's own `leave` now answer "Not during a duel." / "not during a
+  duel", the guard `teleport to poi` has had since round 383b. Checked: a duel inside Scoured Gallery, both refused,
+  the game played on.
+- **The agent's walker inside maps** (`agent/WalkController`). Cultists' Outpost's lower floors needed hand-placed
+  waypoints, and level 3's arrival walked straight back up its stairs. Three causes, three fixes:
+  - It borrowed the enemies' navigation graph (a 6.4 px enemy, a fixed -8 px offset), not the player's 10 x 6.4 px feet,
+    so it routed through gaps the player snags in; and a replan returned the same path. NEW: A* over an 8 px grid of
+    `MapStage.collisionRect` stamped with the player's own collision box (read from `boundingRect()` at plan time),
+    8-way without corner cutting, line-of-sight smoothing; a snag closes the cell just ahead (never one touching the
+    target) and replans (8 tries in a map). The enemy graph stays as the fallback.
+  - It knew nothing of stairs: a path crossed the up-stairs the player had just arrived beside. NEW: every stairs,
+    portal and exit trigger (`EntryActor`, `OnCollide`) is kept off, except the destination's and the one the player
+    stands in (moving inside it triggers nothing).
+  - Stairs swap the map inside the same `MapStage`, so the walk went on following the old floor's path on the new one
+    ("stuck near"). NEW: a level change ends the walk - "the level changed - took the stairs or a portal".
+  - And one sub-pixel case: level 3's down-stairs sit on a 15 x 16 wall under the stair art, leaving a 2 px strip of
+    trigger beside it; the player held 0.4 px off the corner. NEW: after 0.4 s without progress the walker leans
+    sideways, alternating, so the game's wall sliding frees it.
+  - A snag logs the player's box and every wall within 12 px (`[TFR-Agent] snagged at ...`) - that is how the strip
+    was found.
+- **Agent-tested:** all seven of Cultists' Outpost's stairs (down 1-2-3-4, back up 4-3-2-1) and its exit with plain
+  `goto actor=`, each on the first try; Scoured Gallery loot pickups and its exit; Baker's Forge shop doors (shop opens,
+  a ruined shop's dialog stops the walk as before).
+- `.claude/skills/tfr-play/SKILL.md` (outside the repo): the walker and `leave` notes.
+- LIVE + AGENT PACKAGED 2026-10-05 (jar 37110C10AB43).
+
 ## Round 447: a win streak draws stronger enemies - roaming rank odds, the spawn gate, dungeon upgrades (2026-10-05)
 
 The user asked how an enemy's rank is set (overworld and dungeon) and for recommendations "to slow down a run away

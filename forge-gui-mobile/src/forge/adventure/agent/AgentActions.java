@@ -194,6 +194,8 @@ final class AgentActions {
     private CompletableFuture<Map<String, Object>> leave() {
         if (!needGame()) return now(false, "no game loaded");
         if (!MapStage.getInstance().isInMap()) return now(false, "not inside a map");
+        // Round 448: the console's leave closed the game mid-duel; the bridge's own leave takes the same guard.
+        if (Forge.getCurrentScene() instanceof DuelScene) return now(false, "not during a duel");
         walker.cancel("leaving");
         MapStage.getInstance().exitDungeon(false, false);
         return now(true, "leaving the map");

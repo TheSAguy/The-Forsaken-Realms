@@ -29,8 +29,9 @@ import java.util.concurrent.CompletableFuture;
  * Round 161: walks the player somewhere, one frame at a time, through the same virtual joystick the
  * touch UI feeds ({@link GameStage#setTouchKnobInput}). An invisible actor on the active stage ticks
  * this before the stage reads its inputs, so no stock movement code changes. Paths come from A*
- * over the world's collision tiles on the overworld and from the map's own navigation graph inside
- * a town or dungeon. Also runs the "wait N days" clock.
+ * over the world's collision tiles on the overworld and, inside a town or dungeon, from A* over an 8 px grid of
+ * the map's collision with the player's own box (round 448; the enemies' navigation graph is the fallback). Also
+ * runs the "wait N days" clock.
  */
 final class WalkController {
     /** Round 214: how long a finished walk will stand on its destination waiting for world
@@ -144,6 +145,8 @@ final class WalkController {
         finalTarget = destPx.cpy();
         target = description;
         blocked.clear();
+        mapGrid = null; // round 448: a new walk builds its own grid
+        walkMap = worldWalk ? null : MapStage.getInstance().tiledMap;
         replans = 0;
         List<Vector2> p = plan(stage, playerCenter(stage), destPx);
         if (p == null)
@@ -233,6 +236,10 @@ final class WalkController {
         }
         if (!walking)
             return;
+        if (!worldWalk && walkMap != null && MapStage.getInstance().tiledMap != walkMap) {
+            finish(true, "the level changed - took the stairs or a portal to " + target); // round 448
+            return;
+        }
         walkTime += delta;
         if (Forge.advFreezePlayerControls || stage.isPaused()) {
             // A map that has just loaded sits paused for a moment; a walk issued then must wait it
@@ -298,13 +305,22 @@ final class WalkController {
         Vector2 dir = wp.cpy().sub(me);
         if (dir.len2() > 0.0001f)
             dir.nor();
+        if (!worldWalk && noProgress > 0.4f) {
+            // Round 448: inside a map a gap can be exactly as wide as the player's box (Cultists' Outpost's level-3
+            // stairs: a 2 px strip of trigger beside a wall under the stair art), and a fraction of a pixel off holds the
+            // player against the corner. After 0.4 s without progress, lean sideways - alternating sides every 0.25 s -
+            // so the game's own wall sliding (GameStage.adjustMovement) frees it before a replan.
+            float side = ((int) (noProgress / 0.25f)) % 2 == 0 ? 1f : -1f;
+            dir.add(-dir.y * 0.7f * side, dir.x * 0.7f * side).nor();
+        }
         stage.setTouchKnobInput(dir.x, dir.y);
         if (walkTime > 240f)
             finish(false, "gave up after 240s of walking");
     }
 
     private boolean replan(GameStage stage, Vector2 me) {
-        if (++replans > 4) {
+        // Round 448: a map walk closes one snagged cell per replan, so it gets a few more tries than a world walk.
+        if (++replans > (worldWalk ? 4 : 8)) {
             finish(false, "stuck near " + tileOf(me) + " on the way to " + target);
             return false;
         }
@@ -313,6 +329,35 @@ final class WalkController {
             World world = Current.world();
             int ts = world.getTileSize();
             blocked.add(key((int) (wp.x / ts), (int) (wp.y / ts)));
+        }
+        if (!worldWalk && stage.getPlayerSprite() != null) {
+            // Round 448: what the player is actually up against - its box and every wall rectangle within 12 px of it.
+            com.badlogic.gdx.math.Rectangle box = stage.getPlayerSprite().boundingRect();
+            StringBuilder near = new StringBuilder();
+            for (com.badlogic.gdx.math.Rectangle r : MapStage.getInstance().collisionRect)
+                if (r.x < box.x + box.width + 12 && r.x + r.width > box.x - 12 && r.y < box.y + box.height + 12
+                        && r.y + r.height > box.y - 12)
+                    near.append(String.format(" [%.1f,%.1f %.1fx%.1f]", r.x, r.y, r.width, r.height));
+            bridge.log(String.format("[TFR-Agent] snagged at (%.1f,%.1f): box [%.1f,%.1f %.1fx%.1f], walls near:%s", me.x, me.y,
+                    box.x, box.y, box.width, box.height, near.length() == 0 ? " none" : near.toString()));
+        }
+        if (!worldWalk && mapGrid != null && index < path.size()) {
+            // Round 448: inside a map, the cell just ahead of the player toward the waypoint is where it snagged - close
+            // it for the rest of this walk (the grid's own cell, so the line-of-sight shortcuts respect it too), unless
+            // that is where the walk has to arrive.
+            Vector2 dir = path.get(index).cpy().sub(me);
+            if (dir.len2() > 0.0001f) {
+                Vector2 ahead = me.cpy().add(dir.nor().scl(MAP_CELL));
+                int i = mapGrid.ci(ahead.x), j = mapGrid.cj(ahead.y);
+                // Never a cell where the walk has to arrive: one touching the target's trigger (it can be the only way
+                // in - the level-3 stairs above), or an exact target's own cell.
+                boolean goalCell = mapGrid.goalTrigger != null ? mapGrid.touches(i, j, mapGrid.goalTrigger)
+                        : i == mapGrid.ci(finalTarget.x) && j == mapGrid.cj(finalTarget.y);
+                if (!goalCell && !(i == mapGrid.ci(me.x) && j == mapGrid.cj(me.y))) {
+                    mapGrid.solid[j * mapGrid.cols + i] = true;
+                    mapGrid.stuckBlocks++;
+                }
+            }
         }
         List<Vector2> p = plan(stage, me, finalTarget);
         if (p == null) {
@@ -357,7 +402,250 @@ final class WalkController {
     private List<Vector2> plan(GameStage stage, Vector2 from, Vector2 to) {
         if (worldWalk)
             return planWorld(from, to);
-        return planMap(from, to);
+        // Round 448: the map's own grid first (the player's collision box, stairs kept off), the enemy graph if it finds
+        // nothing, a straight line last.
+        List<Vector2> grid = planMapGrid(stage, from, to);
+        return grid != null ? grid : planMap(from, to);
+    }
+
+    // ------------------------------------------------------------------ round 448: maps
+
+    /**
+     * Round 448 (the agent test of round 443: Cultists' Outpost's lower floors - "stuck near" at every gap, and level 3's
+     * arrival walked straight back up its stairs). The enemy graph planMap() borrows is built for a 6.4 px enemy with a
+     * fixed -8 px offset, not the player's 10 x 6.4 px feet, so it routed through gaps the player snags in; a replan
+     * returned the same path four times; and it knew nothing of the stairs, so a path could cross the up-stairs the
+     * player had just arrived beside and send them back. This plans on an 8 px grid stamped with the player's own
+     * collision box against MapStage.collisionRect - the rectangles the player's movement really tests - keeps off every
+     * stairs, portal and exit trigger but the destination's (and the one the player stands in, which moving inside does
+     * not trigger), and a replan blocks the cell it got stuck at.
+     */
+    private static final float MAP_CELL = 8f;
+    /** The current map walk's grid, built once per walk and reused by its replans. */
+    private MapGrid mapGrid;
+    /** The level a map walk started on. Stairs and portals swap the map inside the same MapStage, so the stage check in
+     *  frame() never sees it - the walk went on following the old floor's path on the new one ("stuck near"). */
+    private com.badlogic.gdx.maps.tiled.TiledMap walkMap;
+
+    private static final class MapGrid {
+        int cols, rows;
+        boolean[] solid;
+        // the player's collision box around playerCenter() (CharacterSprite.updateBoundingRect: x+4, y, w-6, h*0.4)
+        float left, right, bottom, top;
+        int walls, triggers, stuckBlocks;
+        com.badlogic.gdx.math.Rectangle goalTrigger;
+
+        boolean open(int i, int j) {
+            return i >= 0 && j >= 0 && i < cols && j < rows && !solid[j * cols + i];
+        }
+
+        float cx(int i) {
+            return (i + 0.5f) * MAP_CELL;
+        }
+
+        float cy(int j) {
+            return (j + 0.5f) * MAP_CELL;
+        }
+
+        int ci(float x) {
+            return clamp((int) (x / MAP_CELL), cols);
+        }
+
+        int cj(float y) {
+            return clamp((int) (y / MAP_CELL), rows);
+        }
+
+        /** Solid: every cell where the player's box would overlap r (strict overlap, like Rectangle.overlaps). */
+        void stamp(com.badlogic.gdx.math.Rectangle r) {
+            int i0 = Math.max(0, (int) Math.floor((r.x - right) / MAP_CELL - 0.5f) + 1);
+            int i1 = Math.min(cols - 1, (int) Math.ceil((r.x + r.width - left) / MAP_CELL - 0.5f) - 1);
+            int j0 = Math.max(0, (int) Math.floor((r.y - top) / MAP_CELL - 0.5f) + 1);
+            int j1 = Math.min(rows - 1, (int) Math.ceil((r.y + r.height - bottom) / MAP_CELL - 0.5f) - 1);
+            for (int j = j0; j <= j1; j++)
+                for (int i = i0; i <= i1; i++)
+                    solid[j * cols + i] = true;
+        }
+
+        /** Would the player's box at this cell's centre touch r? */
+        boolean touches(int i, int j, com.badlogic.gdx.math.Rectangle r) {
+            float x = cx(i), y = cy(j);
+            return x + left < r.x + r.width && x + right > r.x && y + bottom < r.y + r.height && y + top > r.y;
+        }
+    }
+
+    private MapGrid buildMapGrid(GameStage stage, Vector2 to) {
+        MapStage ms = MapStage.getInstance();
+        if (ms.tiledMap == null || stage.getPlayerSprite() == null)
+            return null;
+        com.badlogic.gdx.maps.MapProperties props = ms.tiledMap.getProperties();
+        float w = Float.parseFloat(props.get("width").toString()) * Float.parseFloat(props.get("tilewidth").toString());
+        float h = Float.parseFloat(props.get("height").toString()) * Float.parseFloat(props.get("tileheight").toString());
+        MapGrid g = new MapGrid();
+        g.cols = (int) Math.ceil(w / MAP_CELL);
+        g.rows = (int) Math.ceil(h / MAP_CELL);
+        if (g.cols <= 0 || g.rows <= 0 || (long) g.cols * g.rows > 4_000_000L)
+            return null;
+        g.solid = new boolean[g.cols * g.rows];
+        PlayerSprite player = stage.getPlayerSprite();
+        Vector2 center = playerCenter(stage);
+        com.badlogic.gdx.math.Rectangle box = player.boundingRect(); // what PlayerSprite.act() moves with
+        if (box != null && box.width > 0f && box.height > 0f) {
+            g.left = box.x - center.x;
+            g.right = box.x + box.width - center.x;
+            g.bottom = box.y - center.y;
+            g.top = box.y + box.height - center.y;
+        } else { // collision switched off for a moment - CharacterSprite.updateBoundingRect's usual shape
+            float pw = player.getWidth(), ph = player.getHeight();
+            g.left = 4f - pw / 2f;
+            g.right = pw / 2f - 2f;
+            g.bottom = -0.2f * ph;
+            g.top = 0.2f * ph;
+        }
+        for (com.badlogic.gdx.math.Rectangle r : ms.collisionRect) {
+            g.stamp(r);
+            g.walls++;
+        }
+        Vector2 me = playerCenter(stage);
+        com.badlogic.gdx.math.Rectangle myBox = new com.badlogic.gdx.math.Rectangle(me.x + g.left, me.y + g.bottom,
+                g.right - g.left, g.top - g.bottom);
+        for (forge.adventure.character.MapActor a : AgentStageAccess.mapActors()) {
+            if (!(a instanceof forge.adventure.character.EntryActor) && !(a instanceof forge.adventure.character.OnCollide))
+                continue;
+            com.badlogic.gdx.math.Rectangle r = a.boundingRect();
+            if (r == null || r.width <= 0f || r.height <= 0f)
+                continue;
+            if (r.contains(to)) {
+                g.goalTrigger = new com.badlogic.gdx.math.Rectangle(r);
+                continue;
+            }
+            if (r.overlaps(myBox))
+                continue; // standing in it: moving inside triggers nothing (MapActor.collideWithPlayer fires on entry)
+            g.stamp(r);
+            g.triggers++;
+        }
+        return g;
+    }
+
+    private List<Vector2> planMapGrid(GameStage stage, Vector2 from, Vector2 to) {
+        if (mapGrid == null)
+            mapGrid = buildMapGrid(stage, to);
+        MapGrid g = mapGrid;
+        if (g == null)
+            return null;
+        int si = g.ci(from.x), sj = g.cj(from.y);
+        // The goal: the cells touching the destination's trigger (stairs, an exit), else the destination's own cell,
+        // else the nearest open cell to it (a destination drawn into a wall).
+        int gi = g.ci(to.x), gj = g.cj(to.y);
+        boolean exactGoal = g.goalTrigger == null && g.open(gi, gj);
+        if (g.goalTrigger == null && !exactGoal) {
+            float best = Float.MAX_VALUE;
+            int bi = -1, bj = -1;
+            for (int r = 1; r <= 6 && bi < 0; r++)
+                for (int dj = -r; dj <= r; dj++)
+                    for (int di = -r; di <= r; di++) {
+                        if (Math.max(Math.abs(di), Math.abs(dj)) != r || !g.open(gi + di, gj + dj))
+                            continue;
+                        float d = new Vector2(g.cx(gi + di), g.cy(gj + dj)).dst2(to);
+                        if (d < best) {
+                            best = d;
+                            bi = gi + di;
+                            bj = gj + dj;
+                        }
+                    }
+            if (bi < 0)
+                return null;
+            gi = bi;
+            gj = bj;
+        }
+        int n = g.cols * g.rows;
+        float[] cost = new float[n];
+        java.util.Arrays.fill(cost, Float.MAX_VALUE);
+        int[] came = new int[n];
+        boolean[] closed = new boolean[n];
+        int start = sj * g.cols + si;
+        cost[start] = 0f;
+        PriorityQueue<float[]> open = new PriorityQueue<>((a, b) -> Float.compare(a[1], b[1]));
+        open.add(new float[]{start, heuristic(si, sj, gi, gj)});
+        int found = -1;
+        while (!open.isEmpty()) {
+            int cur = (int) open.poll()[0];
+            if (closed[cur])
+                continue;
+            closed[cur] = true;
+            int ci = cur % g.cols, cj = cur / g.cols;
+            if (g.goalTrigger != null ? g.touches(ci, cj, g.goalTrigger) : ci == gi && cj == gj) {
+                found = cur;
+                break;
+            }
+            for (int dj = -1; dj <= 1; dj++)
+                for (int di = -1; di <= 1; di++) {
+                    if (di == 0 && dj == 0)
+                        continue;
+                    int ni = ci + di, nj = cj + dj;
+                    if (!g.open(ni, nj))
+                        continue;
+                    if (di != 0 && dj != 0 && (!g.open(ci + di, cj) || !g.open(ci, cj + dj)))
+                        continue; // no corner cutting
+                    int nk = nj * g.cols + ni;
+                    if (closed[nk])
+                        continue;
+                    float ng = cost[cur] + (di != 0 && dj != 0 ? 1.4142f : 1f);
+                    if (ng >= cost[nk])
+                        continue;
+                    cost[nk] = ng;
+                    came[nk] = cur;
+                    open.add(new float[]{nk, ng + heuristic(ni, nj, gi, gj)});
+                }
+        }
+        if (found < 0)
+            return null;
+        List<Vector2> cells = new ArrayList<>();
+        for (int cur = found; cur != start; cur = came[cur])
+            cells.add(0, new Vector2(g.cx(cur % g.cols), g.cy(cur / g.cols)));
+        cells.add(0, from.cpy());
+        if (exactGoal || g.goalTrigger != null)
+            cells.add(to.cpy());
+        List<Vector2> out = smoothMap(g, cells);
+        out.remove(0); // the player's own position
+        if (out.isEmpty())
+            out.add(to.cpy());
+        bridge.log("[TFR-Agent] map plan: " + g.cols + "x" + g.rows + " cells of " + (int) MAP_CELL + " px, " + g.walls
+                + " wall rect(s), " + g.triggers + " stairs/exit trigger(s) kept off"
+                + (g.goalTrigger != null ? ", walking onto the target's trigger" : exactGoal ? "" : ", target in a wall - nearest open cell")
+                + (g.stuckBlocks == 0 ? "" : ", " + g.stuckBlocks + " cell(s) blocked after getting stuck")
+                + " -> " + out.size() + " waypoint(s)");
+        return out;
+    }
+
+    /** Line-of-sight shortcuts over the grid: from each kept point, the farthest later point reachable in a straight
+     *  line through open cells (sampled every half cell). The first point is the player's own cell, open or not. */
+    private static List<Vector2> smoothMap(MapGrid g, List<Vector2> pts) {
+        List<Vector2> out = new ArrayList<>();
+        out.add(pts.get(0));
+        int i = 0;
+        while (i < pts.size() - 1) {
+            int j = pts.size() - 1;
+            while (j > i + 1 && !lineOpen(g, pts.get(i), pts.get(j), i == 0))
+                j--;
+            out.add(pts.get(j));
+            i = j;
+        }
+        return out;
+    }
+
+    private static boolean lineOpen(MapGrid g, Vector2 a, Vector2 b, boolean fromPlayer) {
+        float len = a.dst(b);
+        int steps = Math.max(1, (int) Math.ceil(len / (MAP_CELL / 2f)));
+        int startI = g.ci(a.x), startJ = g.cj(a.y), endI = g.ci(b.x), endJ = g.cj(b.y);
+        for (int s = 1; s < steps; s++) {
+            float t = s / (float) steps;
+            int i = g.ci(a.x + (b.x - a.x) * t), j = g.cj(a.y + (b.y - a.y) * t);
+            if ((fromPlayer && i == startI && j == startJ) || (i == endI && j == endJ))
+                continue;
+            if (!g.open(i, j))
+                return false;
+        }
+        return true;
     }
 
     /** Inside a map: the enemy AI's navigation graph, falling back to a straight line. */
