@@ -66,6 +66,13 @@ Latest. Rounds 406-441 on top of v1.17.1, engine = the 10.04 daily. Assets in `C
 "only the important stuff"). The AGENT folder is the release; the LIVE folder is 441 with the old 1.17.1 stamp (the
 user's game was running) - repackage when closed. NOTHING is unreleased. Next merge from upstream after `f9aafc5315e`.
 Next version: 1.19 / 11900.
+**NEXT SESSION (thread closed 2026-10-04 late):** (1) when `javaw` is not running, repackage LIVE (+ agent) so it carries
+the 1.18 stamp; (2) the peer session "Procedural Pixel Creatures" holds round **442** (cloud batch 8: 30 groups, 83
+enemies) and pings before writing - package it when it says "442 done" and the game is closed; my next round is **443**;
+(3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
+item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
+Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,
+not reproduced).
 
 ## STATE 2026-10-04 (round 441): **LOCAL + UNRELEASED (data only)** - the Player Capitol's Normal arena (level 1, and level
 2 in Normal mode) win item: its 16 old names + all 40 of the AI capitals' sets = 56, 1 in 56 each, Dungeon Map kept
