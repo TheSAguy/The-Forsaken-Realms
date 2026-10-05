@@ -85,5 +85,14 @@
   "fogZoneFactors": {
     "lit":  { "commonScale": 1.25, "uncommonScale": 1.00, "rareScale": 0.75, "mythicScale": 0.75 },
     "dark": { "commonScale": 0.75, "uncommonScale": 1.00, "rareScale": 1.25, "mythicScale": 1.25 }
-  }
+  },
+  // Round 447 (the user: "gradually increase the spawn chances of higher level enemies as the player's win streak ...
+  // goes up"): the win-streak tilt. Level = wins in a row / notorietyWinsPerLevel, capped at notorietyMaxLevel (45 and
+  // 50 wins = levels 9 and 10). Each *Scale is added to 1 once per level - multipliers after the difficulty's,
+  // renormalized the same way; a week that closes a rank keeps it closed. Weeks 7-10, Insane, Wasteland:
+  //   0 wins 30/39/25/6, 25 wins 19/35/35/10, 40 wins 13/33/41/13, 50 wins 10/32/44/14 (Archmages only where the
+  //   spawn gate lets them in - settings.json notorietyRankStepWins).
+  "notorietyWinsPerLevel": 5,
+  "notorietyMaxLevel": 10,
+  "notorietyPerLevel": { "commonScale": -0.06, "uncommonScale": 0.0, "rareScale": 0.12, "mythicScale": 0.20 }
 }

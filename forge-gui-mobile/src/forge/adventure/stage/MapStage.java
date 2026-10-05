@@ -1503,6 +1503,20 @@ public class MapStage extends GameStage {
                                         EN = reThemed;
                                 }
                             }
+                            // Round 447 (the user: dungeon enemies "depending on your win streak ... could go up by one or
+                            // two levels", "only for the active dungeon, once it cycles, it will reset"): on the first visit
+                            // of this level - no recorded pick for the placement yet - an ordinary placement of a rotating
+                            // place may step up a rank or two (DungeonUpgrades). The roster record below keeps it for this
+                            // incarnation; a rotation clears every level's roster.
+                            if (!asAuthored && championColor == null && EN != null && id != caveChampionObjectId
+                                    && (changes == null || changes.getFixedEnemy(id) == null)
+                                    && (prop.get("dialog") == null || prop.get("dialog").toString().isEmpty())
+                                    && (prop.get("defeatDialog") == null || prop.get("defeatDialog").toString().isEmpty())) {
+                                EnemyData upgraded = DungeonUpgrades.upgrade(Current.world(),
+                                        AdventureQuestController.instance().mostRecentPOI, EN, id);
+                                if (upgraded != null)
+                                    EN = upgraded;
+                            }
                             // Round 201 (user: "each time I enter a dungeon, the creatures inside are
                             // randomized. Can we have it fixed after your first entry"). Once this
                             // POI's roster has been recorded, the stored pick WINS over every source

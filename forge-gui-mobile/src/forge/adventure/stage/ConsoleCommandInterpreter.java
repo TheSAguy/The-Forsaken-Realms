@@ -366,20 +366,26 @@ public class ConsoleCommandInterpreter {
                     biome = b;
             if (biome == null)
                 return "No biome " + s[0];
-            float rank = Current.player().getStatistic().rank();
+            // Round 447: the rank a spawn really rolls against (a 30+ streak steps it up), and the rank mix it gives.
+            float rank = forge.adventure.util.SpawnTierWeighting.effectiveRank(Current.player().getStatistic().rank());
             Map<String, Integer> champions = new TreeMap<>();
+            int[] ranks = new int[4];
             int roaming = 0, frontier = 0;
             for (int i = 0; i < n; i++) {
                 EnemyData e = biome.getEnemy(rank);
+                if (e != null)
+                    ranks[EnemyData.tierRank(e.tier)]++;
                 if (forge.adventure.util.RoamingChampions.isChampion(e)) {
                     roaming++;
                     champions.merge(e.getName(), 1, Integer::sum);
                 } else if (forge.adventure.util.FrontierSpawns.isCandidate(e))
                     frontier++;
             }
-            String line = "[TFR-LegendTable] spawnroll " + biome.name + " x" + n + " at rank " + rank + ": champions "
-                    + roaming + " (" + String.format("%.1f%%", 100f * roaming / n) + ") " + champions
-                    + ", frontier legends " + frontier + " - both 0 since round 375 (the legend table)";
+            String mix = String.format("Apprentice %.1f%% Adept %.1f%% Master %.1f%% Archmage %.1f%%", 100f * ranks[0] / n,
+                    100f * ranks[1] / n, 100f * ranks[2] / n, 100f * ranks[3] / n);
+            String line = "[TFR-SpawnRoll] spawnroll " + biome.name + " x" + n + " at rank " + rank + ", "
+                    + Current.player().notorietyStreak() + " wins in a row: " + mix + " | champions " + roaming + " "
+                    + champions + ", frontier legends " + frontier + " (both 0 since round 375)";
             System.out.println(line);
             return line;
         });

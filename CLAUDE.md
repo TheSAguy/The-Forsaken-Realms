@@ -58,6 +58,16 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-05 (round 447): **LOCAL + UNRELEASED** - a win streak draws stronger enemies (the user's picks 1, 2,
+4, 5 of my recommendations; 3 = the player's land softening a streak - "leave that as is"). (1) spawn_tier_weighting.json
+`notorietyPerLevel` tilts the rank odds per 5 wins in a row (to level 10); (2) settings `notorietyRankStepWins` 30 - a
+30+ streak rolls against the next lifetime-win rank (`SpawnTierWeighting.effectiveRank`), opening roaming Archmages
+under 150 lifetime wins; (4) new `util/DungeonUpgrades` - on a rotating place's first visit per level, placements step
+up +1/+2 by `dungeonUpgradeWins/PlusOne/PlusTwo` (30 wins: 25%/20%), same-kind creatures of the land, kept until the
+place rotates; (5) attack mages untouched. `spawnroll` prints the rank mix. Agent-tested on a copy of the user's slot 4
+(day 210): Archmage share 0% -> ~38% at 30 wins; Scoured Gallery at 50 wins = 3 Archmages + 2 Masters. Early weeks not
+seen. LIVE + AGENT PACKAGED 2026-10-05 (jar 8261C08CC641).
+
 ## STATE 2026-10-05 (round 446): **LOCAL + UNRELEASED** - the notoriety bonus Walls also raise the enemy's starting
 life: +25% from 45 wins in a row, +50% from 50 (additive; settings `notorietyBonusWallLifePercent` [25, 25];
 `AdventurePlayer.notorietyBonusLifePercent`, DuelScene's life block, `[TFR-EnemyLife] ... notoriety +N%`). Same duels
@@ -109,8 +119,8 @@ user's game was running) - repackage when closed. NOTHING is unreleased. Next me
 Next version: 1.19 / 11900.
 **NEXT SESSION (thread closed 2026-10-04 late):** (1)+(2) DONE - the peer's round 442 (cloud batch 8, 2abb355d9e9) is
 packaged live + agent, and live now carries the 1.18 stamp; round 443 (dungeon clears) is done; round 444 = batch 9
-of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety bonus Walls, 446 = their +25%/+50% life
-(done) - the next free round is **447**;
+of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety bonus Walls, 446 = their +25%/+50% life,
+447 = the streak draws stronger enemies (done) - the next free round is **448**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,

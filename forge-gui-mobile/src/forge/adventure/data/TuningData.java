@@ -309,6 +309,18 @@ public class TuningData {
     // Round 446 (the user: "+25% health" at 45 wins, "+25% another health" at 50): each bonus wall reached also raises
     // the enemy's starting life by its entry here, summed (45+ = +25%, 50+ = +50%). Parallel to the lists above.
     public int[] notorietyBonusWallLifePercent = {25, 25};
+    // Round 447 (the user agreed: "let the streak open the lifetime-win gate one step"): from this many wins in a row
+    // a spawn rolls against the NEXT lifetime-win rank (SpawnTierWeighting.effectiveRank: 0.5 -> 1 -> 2 -> 10), so a
+    // player under 150 lifetime wins can meet roaming Archmages. 0 = off.
+    public int notorietyRankStepWins = 30;
+    // Round 447 (the user: "a lot, if not most dungeons I visit only have apprentice and adepts ... depending on your
+    // win streak, it could go up by one or two levels ... It should only be for the active dungeon, once it cycles, it
+    // will reset"): on the first visit of a level of a rotating dungeon or cave, each ordinary placement may step up a
+    // rank or two. The highest dungeonUpgradeWins reached picks the chances (percent) from the parallel lists; the
+    // result is kept by the place's roster until it rotates away. See DungeonUpgrades.
+    public int[] dungeonUpgradeWins = {10, 20, 30, 40, 50};
+    public int[] dungeonUpgradePlusOne = {20, 25, 25, 25, 25};
+    public int[] dungeonUpgradePlusTwo = {0, 5, 20, 30, 40};
 
     /** Round 411: the lowest enemy rank (0 Apprentice .. 3 Archmage) notoriety reaches on this difficulty; an unknown
      *  difficulty takes Easy's (the fewest ranks), rather than guessing hard. */

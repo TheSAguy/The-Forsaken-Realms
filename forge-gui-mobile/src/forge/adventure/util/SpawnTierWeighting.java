@@ -3,6 +3,7 @@ package forge.adventure.util;
 import forge.adventure.data.ConfigData;
 import forge.adventure.data.EnemyData;
 import forge.adventure.data.SpawnTierWeightData;
+import forge.adventure.data.TuningData;
 import forge.adventure.world.World;
 import forge.adventure.world.WorldSave;
 
@@ -117,10 +118,11 @@ public class SpawnTierWeighting {
         SpawnTierWeightData.TierDelta delta = data.territoryDeltas == null ? null : data.territoryDeltas.get(key);
         String difficulty = difficultyName();
         SpawnTierWeightData.TierDelta factor = difficultyFactor(data, difficulty);
-        logRowOnce(bracket, delta, factor, key, week, difficulty);
-        if (delta == null && factor == null)
+        SpawnTierWeightData.TierDelta tilt = notorietyTilt(data); // round 447
+        logRowOnce(bracket, delta, factor, tilt, key, week, difficulty);
+        if (delta == null && factor == null && tilt == null)
             return Math.max(0f, baseFor(bracket, tier));
-        float adjusted = rowValue(bracket, delta, factor, tier);
+        float adjusted = rowValue(bracket, delta, factor, tilt, tier);
         // Round 183: renormalize the row back to the week bracket's OWN total. The four adjusted numbers describe a
         // MIX, and every territory row before this round summed to zero change by hand (+10/+2/-4/-8 etc.) for a
         // reason: BiomeData.getEnemy() divides by the whole pool, and an EXEMPT entry (a boss, an arena-only fighter)
@@ -130,18 +132,81 @@ public class SpawnTierWeighting {
         // total keeps the tilt and leaves the ordinary-vs-exempt balance exactly where it was.
         float rowTotal = 0f;
         for (String t : TIERS)
-            rowTotal += rowValue(bracket, delta, factor, t);
+            rowTotal += rowValue(bracket, delta, factor, tilt, t);
         if (rowTotal <= 0f)
             return adjusted;
         float bracketTotal = bracket.common + bracket.uncommon + bracket.rare + bracket.mythic;
         return adjusted * (bracketTotal / rowTotal);
     }
 
-    /** One tier's target before the row is renormalized: the territory row (if any), then the difficulty's multiplier. */
+    /** One tier's target before the row is renormalized: the territory row (if any), then the difficulty's multiplier,
+     *  then the round-447 win-streak tilt. */
     private static float rowValue(SpawnTierWeightData.WeekBracket bracket, SpawnTierWeightData.TierDelta delta,
-                                  SpawnTierWeightData.TierDelta factor, String tier) {
+                                  SpawnTierWeightData.TierDelta factor, SpawnTierWeightData.TierDelta tilt, String tier) {
         float value = delta == null ? Math.max(0f, baseFor(bracket, tier)) : adjustedFor(bracket, delta, tier);
-        return factor == null ? value : value * Math.max(0f, scaleFor(factor, tier));
+        if (factor != null)
+            value *= Math.max(0f, scaleFor(factor, tier));
+        return tilt == null ? value : value * Math.max(0f, scaleFor(tilt, tier));
+    }
+
+    /**
+     * Round 447 (the user: "gradually increase the spawn chances of higher level enemies as the player's win streak ...
+     * goes up"): the win-streak level - wins in a row / notorietyWinsPerLevel, capped at notorietyMaxLevel (45 and 50
+     * wins are levels 9 and 10, the bonus Walls'). 0 with no table, no game or no streak.
+     */
+    public static int notorietyTiltLevel() {
+        SpawnTierWeightData data = Config.instance().getSpawnTierWeightData();
+        if (data == null || data.notorietyPerLevel == null || data.notorietyWinsPerLevel <= 0)
+            return 0;
+        try {
+            forge.adventure.player.AdventurePlayer player = forge.adventure.player.AdventurePlayer.current();
+            if (player == null)
+                return 0;
+            return Math.max(0, Math.min(data.notorietyMaxLevel, player.notorietyStreak() / data.notorietyWinsPerLevel));
+        } catch (RuntimeException e) {
+            return 0; // no game loaded yet
+        }
+    }
+
+    /** Round 447: the tilt's multipliers at the current level (1 + perLevel x level per tier), or null at level 0. A
+     *  multiplier, like a difficulty factor: it cannot open a rank the week bracket closed. */
+    private static SpawnTierWeightData.TierDelta notorietyTilt(SpawnTierWeightData data) {
+        int level = notorietyTiltLevel();
+        if (level <= 0)
+            return null;
+        SpawnTierWeightData.TierDelta per = data.notorietyPerLevel;
+        SpawnTierWeightData.TierDelta tilt = new SpawnTierWeightData.TierDelta();
+        tilt.commonScale = Math.max(0f, 1f + per.commonScale * level);
+        tilt.uncommonScale = Math.max(0f, 1f + per.uncommonScale * level);
+        tilt.rareScale = Math.max(0f, 1f + per.rareScale * level);
+        tilt.mythicScale = Math.max(0f, 1f + per.mythicScale * level);
+        return tilt;
+    }
+
+    /** PlayerStatistic.rank()'s steps (lifetime wins: under 20, 20-59, 60-150, over 150). */
+    private static final float[] RANK_STEPS = {0.5f, 1f, 2f, 10f};
+
+    /**
+     * Round 447 (the user agreed: let the streak open the lifetime-win gate one step): the difficulty ceiling a spawn
+     * rolls against - the lifetime-win rank, one step higher while the wins in a row reach
+     * TuningData.notorietyRankStepWins (0.5 -> 1 -> 2 -> 10; 10 stays). Without it a player under 150 lifetime wins
+     * never meets a roaming Archmage, whatever the tilt asks for.
+     */
+    public static float effectiveRank(float lifetimeRank) {
+        TuningData tuning = Config.instance().getTuningData();
+        if (tuning == null || tuning.notorietyRankStepWins <= 0)
+            return lifetimeRank;
+        try {
+            forge.adventure.player.AdventurePlayer player = forge.adventure.player.AdventurePlayer.current();
+            if (player == null || player.notorietyStreak() < tuning.notorietyRankStepWins)
+                return lifetimeRank;
+        } catch (RuntimeException e) {
+            return lifetimeRank;
+        }
+        for (float step : RANK_STEPS)
+            if (step > lifetimeRank)
+                return step;
+        return lifetimeRank;
     }
 
     /**
@@ -233,6 +298,10 @@ public class SpawnTierWeighting {
         return "NEUTRAL";
     }
 
+    private static float round2(float v) {
+        return Math.round(v * 100f) / 100f;
+    }
+
     /** MTG letter for one of ColorReputation.COLORS ("black" -> "B"), for the skew read-out below. */
     private static String colorLetter(String color) {
         switch (color) {
@@ -251,16 +320,19 @@ public class SpawnTierWeighting {
     private static String lastLoggedRow = null;
 
     private static void logRowOnce(SpawnTierWeightData.WeekBracket bracket, SpawnTierWeightData.TierDelta delta,
-                                   SpawnTierWeightData.TierDelta factor, String key, int week, String difficulty) {
+                                   SpawnTierWeightData.TierDelta factor, SpawnTierWeightData.TierDelta tilt, String key,
+                                   int week, String difficulty) {
         StringBuilder line = new StringBuilder("[TFR-SpawnTier] week ").append(week).append(" on ").append(key)
                 .append(delta == null ? " (no row - week bracket as written)" : "")
                 .append(factor != null ? ", " + difficulty + " x" + factor.commonScale + "/" + factor.uncommonScale + "/"
                         + factor.rareScale + "/" + factor.mythicScale : "") // round 418
+                .append(tilt != null ? ", notoriety level " + notorietyTiltLevel() + " x" + round2(tilt.commonScale) + "/"
+                        + round2(tilt.uncommonScale) + "/" + round2(tilt.rareScale) + "/" + round2(tilt.mythicScale) : "") // round 447
                 .append(":");
         float rowTotal = 0f;
         float[] adjusted = new float[TIERS.length];
         for (int i = 0; i < TIERS.length; i++) {
-            adjusted[i] = rowValue(bracket, delta, factor, TIERS[i]);
+            adjusted[i] = rowValue(bracket, delta, factor, tilt, TIERS[i]);
             rowTotal += adjusted[i];
         }
         for (int i = 0; i < TIERS.length; i++) {

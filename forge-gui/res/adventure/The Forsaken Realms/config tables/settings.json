@@ -164,6 +164,16 @@
     "notorietyBonusWalls": ["tfr_wall3_flying_3_6", "tfr_wall4_flying_3_6"],
     // Round 446: each bonus wall reached also adds this much to the enemy's starting life, summed (45+ = +25%, 50+ = +50%).
     "notorietyBonusWallLifePercent": [25, 25],
+    // Round 447: from this many wins in a row a spawn rolls against the NEXT lifetime-win rank (0.5 -> 1 -> 2 -> 10), so a
+    // player under 150 lifetime wins can meet roaming Archmages. 0 = off. (The rank odds' own streak tilt is in
+    // spawn_tier_weighting.json.)
+    "notorietyRankStepWins": 30,
+    // Round 447: dungeon placements by win streak - on the first visit of a level of a rotating dungeon or cave, each
+    // ordinary placement may step up two ranks (PlusTwo %) or one (PlusOne %), by the highest Wins reached; kept until
+    // the place rotates away. 30 wins: 25% one rank up, 20% two.
+    "dungeonUpgradeWins": [10, 20, 30, 40, 50],
+    "dungeonUpgradePlusOne": [20, 25, 25, 25, 25],
+    "dungeonUpgradePlusTwo": [0, 5, 20, 30, 40],
 
     // Fraction of an edition's own card count you must have found before the Research
     // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this

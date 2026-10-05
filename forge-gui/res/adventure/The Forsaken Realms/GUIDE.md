@@ -676,6 +676,13 @@ Past that, two more Walls come for **every** enemy on every difficulty: a flying
 second flying 3/6 from the 51st. Each also gives the enemy 25% more life - +25% from the 46th duel, +50% from the
 51st. So on Insane an enemy facing a 50-win streak starts with four Walls and half again its life.
 
+Word of a streak also draws stronger opponents. Every 5 wins in a row tilts the roaming spawns toward higher ranks
+(fewer Apprentices, more Masters and Archmages), and from 30 wins in a row the toughest creatures of the land can come
+out sooner than your total wins would allow. Dungeons and caves you enter for the first time feel it too: from 10 wins
+in a row some of their creatures step up a rank, and from 20 some step up two - at 30 wins about one in four goes up a
+rank and one in five goes up two. A place keeps what you found in it until it rotates away. Lose once and it all
+starts over with your streak.
+
 Each Wall card says why it's there, under a bold **Notoriety** line with the wins it stands for. Lose once (a Bronze Coin still counts as a
 loss) and your streak starts over. It counts the same duels as an enemy's own streak above, except the Arena: an Arena
 duel neither adds to your streak nor resets it, though Arena fighters still bring the Walls it has earned. New Game+

@@ -38,6 +38,18 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 447 - a win streak draws stronger enemies
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - `loadObjects()`'s enemy case: after the re-theme, a
+  placement with no roster pick yet (not kept as authored, no champion, no dialog) asks `DungeonUpgrades.upgrade()`.
+  **Merge watch** on the enemy case.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - the land roll and the dungeon sources' pick roll
+  against `SpawnTierWeighting.effectiveRank(rank())`; `[TFR-Spawn]` notes the streak's step.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `spawnroll` prints the rank mix.
+- Mod: `SpawnTierWeightData` (`notorietyPerLevel`, `notorietyWinsPerLevel`, `notorietyMaxLevel`), `SpawnTierWeighting`
+  (the tilt in `rowValue`, `notorietyTiltLevel`, `effectiveRank`), `TuningData` (`notorietyRankStepWins`,
+  `dungeonUpgrade*`), new `util/DungeonUpgrades`, the two config tables, `dev-tools/validate_plane_data.py`.
+
 ### Round 446 - the notoriety bonus Walls add enemy life
 
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the enemy's starting life gets

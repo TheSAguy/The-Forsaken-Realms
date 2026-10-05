@@ -55,4 +55,11 @@ public class SpawnTierWeightData {
     public ObjectMap<String, TierDelta> fogZoneFactors;
     // Round 418: keyed by difficulty name ("Hard", "Insane"); the *Scale fields multiply the row like a territory row's.
     public ObjectMap<String, TierDelta> difficultyFactors;
+    /** Round 447 (the user: "gradually increase the spawn chances of higher level enemies as the player's win streak
+     *  ... goes up"): the win-streak tilt. The level is the wins in a row / notorietyWinsPerLevel, capped at
+     *  notorietyMaxLevel; each *Scale field here is added to 1 once per level (commonScale -0.06 at level 5 = x0.7).
+     *  Multiplies the row like a difficulty factor and is renormalized with it. Missing = no tilt. */
+    public TierDelta notorietyPerLevel;
+    public int notorietyWinsPerLevel = 5;
+    public int notorietyMaxLevel = 10;
 }

@@ -2037,7 +2037,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // player rank itself (a real bug, fixed 2026-08-10) - now the caller's job. Player rank
         // is still the base signal (unchanged progression feel), the intrusion substitution above
         // is a separate, independent axis (which biome's list to draw from, not how hard within it).
-        float difficultyFactor = Current.player().getStatistic().rank();
+        float lifetimeRank = Current.player().getStatistic().rank();
+        float difficultyFactor = SpawnTierWeighting.effectiveRank(lifetimeRank); // round 447: a 30+ streak opens the next step
 
         // Very-rare War-tier boss encounter (user request 2026-08-10): only once the effective
         // color for THIS roll (post-intrusion above) is one the player is genuinely At War with -
@@ -2075,6 +2076,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         + ", colors=" + enemyData.colors + ", speed=" + enemyData.speed
                         + ", life=" + enemyData.life + ", fog=" + (lit ? "lit" : "dark") + ") in " + data.name
                         + " territory (rank=" + difficultyFactor
+                        + (difficultyFactor != lifetimeRank ? " - the streak's step from " + lifetimeRank : "") // round 447
                         + spawnTierInfo + ")");
                 // Round 173 (review S1): the groups BiomeData appends to the roll say so when they land. Round 375:
                 // legends come through the legend table only (rollLegendSighting) - one here slipped past it.
@@ -2368,7 +2370,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             if (source == null)
                 break;
             forge.adventure.util.DungeonSources.Pick pick = forge.adventure.util.DungeonSources.pick(world, source.poi,
-                    Current.player().getStatistic().rank(), rand);
+                    SpawnTierWeighting.effectiveRank(Current.player().getStatistic().rank()), rand); // round 447
             if (pick == null)
                 continue;
             EnemySprite sprite = placeFromSource(pick.enemy, source.poi, world, biomes);

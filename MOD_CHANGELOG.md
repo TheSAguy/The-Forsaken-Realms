@@ -14264,6 +14264,54 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 447: a win streak draws stronger enemies - roaming rank odds, the spawn gate, dungeon upgrades (2026-10-05)
+
+The user asked how an enemy's rank is set (overworld and dungeon) and for recommendations "to slow down a run away
+player". Of mine: 1 (tilt the rank odds by the streak), 2 (let the streak open the lifetime-win gate a step) and 5
+(leave the attack mages) - agreed; 3 (stop the player's own land softening a streak) - "leave that as is"; 4 (dungeons)
+- "depending on your win streak ... it could go up by one or two levels ... It should only be for the active dungeon,
+once it cycles, it will reset ... At 30+ win streak, going from a apprentice to adept won't have much of an impact".
+
+- **How it worked before (the analysis):** a roaming roll first keeps only enemies whose `difficulty` is at or under
+  the player's LIFETIME-win rank (PlayerStatistic.rank: under 20 wins 0.5, 20-59 1, 60-150 2, over 150 10) - below 150
+  lifetime wins no land but black has a roaming Archmage, so the week table's Archmage share went to the other ranks.
+  Then the rank odds (week bracket x land row x difficulty x fog, renormalized), then the enemy (uniform, halved per kill,
+  color skew). Dungeon enemies are the map's authored placements, re-rolled only when the land changed owner (the
+  placement's own difficulty as the gate, no fog), then fixed per incarnation by the roster.
+- **1 - the rank odds tilt by the streak.** spawn_tier_weighting.json `notorietyPerLevel` (Apprentice -0.06, Adept 0,
+  Master +0.12, Archmage +0.20 per level), level = wins in a row / `notorietyWinsPerLevel` 5, capped at
+  `notorietyMaxLevel` 10 (45 and 50 wins are levels 9 and 10). Multipliers after the difficulty's, renormalized; a rank
+  the week closes stays closed. Every roll through `SpawnTierWeighting.targetTierWeight`: roaming spawns, dungeon
+  inhabitants sent out, re-themed placements. `[TFR-SpawnTier]` prints the level and multipliers.
+- **2 - the streak opens the gate a step.** settings.json `notorietyRankStepWins` 30: from 30 wins in a row a spawn
+  rolls against the next lifetime rank (`SpawnTierWeighting.effectiveRank`: 0.5 -> 1 -> 2 -> 10) - the land roll and the
+  dungeon sources' ordinary roll. `[TFR-Spawn]` shows "the streak's step from <lifetime rank>". Not quests, legends or
+  cave champions.
+- **4 - dungeon upgrades (new `util/DungeonUpgrades`).** On the first visit of a level of a rotating dungeon or cave
+  (no roster pick for the placement yet), each ordinary placement rolls by the highest `dungeonUpgradeWins` reached:
+  10 wins +1 20%; 20 +1 25% / +2 5%; 30 +1 25% / +2 20%; 40 +1 25% / +2 30%; 50 +1 25% / +2 40% (settings.json,
+  parallel lists). The creature comes from the land the place stands on now, at the target rank, within the stepped
+  gate, open in this week's row (round 418's rule: week 1 has no Masters, so none by upgrade either), preferring the
+  most shared descriptive tags (Undead stays Undead); two ranks up with no candidate falls back to one; Archmage caps.
+  The roster keeps it for the incarnation; a rotation clears every level's roster (round 443) so it rolls afresh. Not
+  for placements kept as authored, castle/cave champions, dialog carriers or special creatures.
+  `[TFR-DungeonUpgrade] <place> #id: <old> (<rank>) -> <new> (<rank>), +N - <wins> wins in a row (...)`.
+- **5 - attack mages untouched:** their only use of the rank odds is a zero-check (the week clamp), which a multiplier
+  cannot change. Quest spawns likewise.
+- **Tools:** console `spawnroll <land> [n]` now prints the rank mix at the effective rank (`[TFR-SpawnRoll]`).
+  validate_plane_data.py knows `notorietyPerLevel` (its source scan skips object-typed fields).
+- `GUIDE.md`: the streak draws stronger opponents - the roaming tilt, the 30-win step, the dungeon upgrades.
+- **Agent-tested** on a copy of the user's slot 4 (day 210, Insane, lifetime rank 2):
+  - `spawnroll waste 3000`: 0 wins 15/37/48/0; 25 wins 8/32/60/0; 30 wins (gate stepped to 10) 5/18/40/38; 50 wins
+    2/15/41/42 (Apprentice/Adept/Master/Archmage %). Black and red alike.
+  - At 50 wins, teleported into two unvisited places: Scoured Gallery's five placements (re-themed to white) came out
+    3 Archmages + 2 Masters (upgrades +1, +1 capped from +2, +1, +2); a bear cave (black) got a Master -> Archmage and an
+    Adept -> Master. Dark Forest, which the user had visited, kept its roster untouched.
+  - NOT seen: an early-week game (the week gate on upgrades is code-checked only) and streaks of 10-29 in a dungeon.
+- **Watch:** the 30-win step is a cliff late in the game - at day 210 the Archmage share jumps from 0 to ~38%, because
+  the late week brackets already want 24% Archmages and the lifetime gate had been holding them back.
+- LIVE + AGENT PACKAGED 2026-10-05 (jar 8261C08CC641).
+
 ## Round 446: the notoriety bonus Walls add enemy life - +25% at 45 wins, +50% at 50 (2026-10-05)
 
 The user: "For the below two conditions, let's also give the enemy +25% health, per for each" - 45 wins: "+25%
