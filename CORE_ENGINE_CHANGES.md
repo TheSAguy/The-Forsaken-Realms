@@ -38,6 +38,23 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 452 - a Mimic is a chest's size; no Manasight dot on the Warden; the Research Lab's set view
+
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - the constructor sizes an enemy that
+  `disguisedAsLoot()` at `LOOT_DISGUISE_PIXELS` (16, a chest); `disguisedAsLoot()` is package-private now; new
+  `WARDEN_NAME` ("The Warden") - `draw()` skips the color hints for it.
+- **`forge-gui-mobile/src/forge/adventure/character/CharacterSprite.java`** - `draw()`, after its per-frame
+  art x scale x rank size, holds a disguised enemy at `EnemySprite.LOOT_DISGUISE_PIXELS`.
+- **`forge-gui-mobile/src/forge/adventure/scene/AdventureDeckEditor.java`** - `resolveClose()` leaves
+  `newCards` alone for a `DeckPreviewConfig` (the Inn's pack preview cleared the collection's NEW marks too); new
+  `AdventureDeckEditor(Deck, String pageCaption)` -> `DeckPreviewConfig(deck, caption)` ->
+  `ContentPreviewPage(deck, caption)` (null = the stock "Inventory"). Upstream conflict risk: low-medium - the
+  preview constructors gained a parameter; re-thread it if upstream reworks the preview page.
+- **`forge-gui-mobile/src/forge/adventure/scene/DeckPreviewScene.java`** - `getInstance(Deck, String pageCaption)`
+  beside the stock one-argument form, passed to the editor.
+- Mod: `ResearchScene` - the magnifier on a researchable/researched set's line, `openSetView()` ->
+  `DeckPreviewScene`, and the way back keeps the view and the scroll position.
+
 ### Round 451 - no crown on a Mimic
 
 - **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - the crown in `draw()` and

@@ -163,6 +163,7 @@
    <properties>
     <property name="dialog">[
 {
+   &quot;condition&quot;: [{ &quot;checkCharacterFlag&quot;: &quot;newGamePlus&quot;, &quot;not&quot;: true }],
    &quot;text&quot;: &quot;A flagstone rocks under your boot. Beneath it, wrapped in oilskin and sealed with your people's old crest, lies a single card someone hid here long ago - for whoever came home next.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Take the card)&quot;,

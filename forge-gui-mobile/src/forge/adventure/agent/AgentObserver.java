@@ -484,7 +484,51 @@ final class AgentObserver {
             if (out.size() >= 80)
                 break;
         }
+        // Round 452: a text line that answers a tap (a ClickListener on a label - the Research Lab's set lines) is as
+        // clickable as a button; listed after the buttons, by its text.
+        List<Actor> lines = new ArrayList<>();
+        if (st != null)
+            collectTappableLabels(st.getRoot(), lines);
+        for (Actor l : lines) {
+            if (out.size() >= 80)
+                break;
+            String id = "u" + (++i);
+            actorsById.put(id, l);
+            Map<String, Object> lm = new LinkedHashMap<>();
+            lm.put("id", id);
+            lm.put("text", labelText(l));
+            lm.put("class", "label");
+            out.add(lm);
+        }
         return out;
+    }
+
+    /** Round 452: visible labels carrying a ClickListener (buttons are collectButtons'). */
+    static void collectTappableLabels(Group root, List<Actor> out) {
+        for (Actor a : root.getChildren()) {
+            if (!a.isVisible() || a instanceof Button)
+                continue;
+            if ((a instanceof TextraLabel || a instanceof Label) && a.getTouchable() != Touchable.disabled) {
+                for (com.badlogic.gdx.scenes.scene2d.EventListener l : a.getListeners())
+                    if (l instanceof com.badlogic.gdx.scenes.scene2d.utils.ClickListener) {
+                        out.add(a);
+                        break;
+                    }
+                continue;
+            }
+            if (a instanceof Group)
+                collectTappableLabels((Group) a, out);
+        }
+    }
+
+    static String labelText(Actor a) {
+        if (a instanceof TypingLabel)
+            return Jsons.plain(((TypingLabel) a).getOriginalText().toString());
+        if (a instanceof TextraLabel)
+            return Jsons.plain(((TextraLabel) a).storedText);
+        if (a instanceof Label)
+            return ((Label) a).getText().toString();
+        return String.valueOf(a.getName());
     }
 
     private Map<String, Object> shop(RewardScene scene) {

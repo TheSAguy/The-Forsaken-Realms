@@ -58,6 +58,14 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-06 (round 452): **LOCAL + UNRELEASED** - (1) a Mimic/Fog Trap draws at a chest's 16 px whatever its rank
+(`EnemySprite.LOOT_DISGUISE_PIXELS`, held in `CharacterSprite.draw()`); (2) no Manasight dot on "The Warden"
+(`EnemySprite.WARDEN_NAME`); (3) the Research Lab: a researchable/researched set's line ends in a `[+Magnifier]` and a tap
+opens its cards (`PrintingIndex.namesIn`, the set's printing) in `DeckPreviewScene` captioned "Cards"; back keeps the
+view + scroll; a preview no longer clears NEW marks; (4) the spawn cave's hidden flagstone card is a new game's only
+(`checkCharacterFlag newGamePlus, not`). All four agent-tested. Bridge lists tappable labels. LIVE + AGENT PACKAGED
+2026-10-06 (jar 6E9253C12F1A).
+
 ## STATE 2026-10-06 (round 451): **LOCAL + UNRELEASED** - no crown on a Mimic (the user: "Hide the crown on the
 mimic"): `EnemySprite.draw()`'s crown and `applyCrownSizeFloor()` skip `disguisedAsLoot()`; the battle effect stays.
 Offered, not done: rank sizing (Master 1.25x, Archmage 1.5x) still makes a high-rank Mimic bigger than a chest. LIVE + AGENT
@@ -146,7 +154,8 @@ Next version: 1.19 / 11900.
 packaged live + agent, and live now carries the 1.18 stamp; round 443 (dungeon clears) is done; round 444 = batch 9
 of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety bonus Walls, 446 = their +25%/+50% life,
 447 = the streak draws stronger enemies, 448 = `leave` + map walker fixes, 449 = pickups within walking reach +
-research 40 + a 243 s day, 450 = no Manasight on a Mimic, 451 = no crown on a Mimic (done) - the next free round is **452**;
+research 40 + a 243 s day, 450 = no Manasight on a Mimic, 451 = no crown on a Mimic, 452 = chest-size Mimics + the Warden's dot + the Lab's
+set view + the hidden card a new game's only (done) - the next free round is **453**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,

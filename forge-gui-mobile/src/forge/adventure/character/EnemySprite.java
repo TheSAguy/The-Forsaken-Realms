@@ -200,6 +200,10 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                     data.boss || data.keepSize); // round 261: the box has to shrink with the art, or it lies
         setWidth(getWidth() * scale);
         setHeight(getHeight() * scale);
+        if (disguisedAsLoot()) { // round 452: a chest's size, whatever its rank (CharacterSprite.draw() holds it there)
+            setWidth(LOOT_DISGUISE_PIXELS);
+            setHeight(LOOT_DISGUISE_PIXELS);
+        }
         updateBoundingRect();
         initializeBaseMovementBehavior();
     }
@@ -947,10 +951,12 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
      * Round 450 (the user: "The Manasight Store should not work on the Mimic (The guy that looks like a chest)"): an
      * enemy drawn as a treasure chest - the Mimic and the Fog Trap share {@code aberration/mimic.atlas} - wears no marks
      * that only an enemy wears: no Manasight color hints, no dungeon-effect pip, and (round 451, the user: "Hide the crown
-     * on the mimic") no crown and no crown size floor - its battle effect still applies. Read from the sprite the enemy is drawn
-     * with (a re-theme or a dungeon upgrade swaps {@code data}), plus the Mimic quest tag for a future art swap.
+     * on the mimic") no crown and no crown size floor - its battle effect still applies. Round 452 ("Mimic should always
+     * appear as regular size chest"): drawn at {@link #LOOT_DISGUISE_PIXELS} whatever its rank or scale. Read from the
+     * sprite the enemy is drawn with (a re-theme or a dungeon upgrade swaps {@code data}), plus the Mimic quest tag for a
+     * future art swap.
      */
-    private boolean disguisedAsLoot() {
+    boolean disguisedAsLoot() {
         if (data == null)
             return false;
         if (data.sprite != null && data.sprite.contains("mimic"))
@@ -961,6 +967,13 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                     return true;
         return false;
     }
+
+    /** Round 452: the size a treasure chest is drawn at - treasure.atlas's 16 px frame, scale 1, no rank cue. */
+    static final float LOOT_DISGUISE_PIXELS = 16f;
+
+    /** Round 452 (the user: "Remove the Manasight dot from the Warden"): the guide the player first meets, who waits in
+     *  Orazca and the Capitol - an Adept Black Wizard renamed by the maps' displayNameOverride. Not an adversary. */
+    static final String WARDEN_NAME = "The Warden";
 
     private void drawColorHints(Batch batch){
         int size = Math.min(data.colors.length(), 6);
@@ -1028,7 +1041,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                 return;
         }
         super.draw(batch, parentAlpha);
-        if(Current.player().hasColorView() && !data.colors.isEmpty() && !disguisedAsLoot()) {
+        if(Current.player().hasColorView() && !data.colors.isEmpty() && !disguisedAsLoot() && !WARDEN_NAME.equals(nameOverride)) {
             drawColorHints(batch);
         }
         if(dialog != null && dialog.canShow()){ //Draw a talk icon on top.

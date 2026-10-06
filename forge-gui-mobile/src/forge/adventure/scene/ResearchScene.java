@@ -2,11 +2,13 @@ package forge.adventure.scene;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.github.tommyettinger.textra.TextraButton;
 import com.github.tommyettinger.textra.TypingLabel;
@@ -17,11 +19,15 @@ import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
 import forge.adventure.util.EconomyBuildings;
 import forge.adventure.util.EditionProgression;
+import forge.adventure.util.PrintingIndex;
+import forge.card.CardDb;
 import forge.card.CardEdition;
+import forge.deck.Deck;
 import forge.item.PaperCard;
 import forge.model.FModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +83,11 @@ public class ResearchScene extends UIScene {
     // Not persisted - deliberately resets to "hidden" each time the screen opens, same as the
     // hide-unfound checkbox always starting checked (see its own setChecked(true) below).
     private boolean showResearched = false;
+    private final ScrollPane scroller;
+    // Round 452: set while a set's card view is open, so the way back keeps the view, the filters and the place in the
+    // list (enter() otherwise starts a fresh visit).
+    private boolean returningFromSetView = false;
+    private float scrollYBeforeSetView = 0f;
 
     private ResearchScene() {
         super(Forge.isLandscapeMode() ? "ui/research.json" : "ui/research_portrait.json");
@@ -120,7 +131,7 @@ public class ResearchScene extends UIScene {
         scrollContainer = new Table(Controls.getSkin());
         scrollContainer.top().left(); // round 100: never center a too-wide row (Android portrait cut the left edge)
         scrollContainer.row();
-        ScrollPane scroller = new ScrollPane(scrollContainer);
+        scroller = new ScrollPane(scrollContainer);
         // Vertical only - matches QuestLogScene's detailScroller.setScrollingDisabled(true, false).
         scroller.setScrollingDisabled(true, false);
         root.add(scroller).colspan(2).expand().fill();
@@ -142,6 +153,14 @@ public class ResearchScene extends UIScene {
         // processDaysPassed() - but re-checking here too means a research that finished while the
         // player was elsewhere in-game still shows as complete the instant they open this screen).
         AdventurePlayer.current().checkResearchCompletion(Current.world().getCurrentDay());
+        if (returningFromSetView) { // round 452: back from a set's cards - the same view, at the same place in the list
+            returningFromSetView = false;
+            buildList();
+            scroller.layout();
+            scroller.setScrollY(scrollYBeforeSetView);
+            scroller.updateVisualScroll();
+            return;
+        }
         // The scene is a singleton, so the toggle survives between visits unless reset here -
         // every open starts on the normal (unresearched) view with the button label matching.
         showResearched = false;
@@ -329,11 +348,25 @@ public class ResearchScene extends UIScene {
             // added 2026-08-15 to match SpellSmith's own edition-name format, which gets it for
             // free from CardEdition's own toString() - this list builds its own label text
             // instead, so the code has to be added explicitly here).
-            TypingLabel nameLabel = Controls.newTypingLabel(ed.getName() + " (" + ed.getCode() + ") ("
-                    + owned + "/" + threshold + ") - " + String.format("%,d", total) + " cards");
+            // Round 452: a set you can research or have researched carries a magnifier - tap its line to see its cards.
+            boolean viewable = researched || eligible;
+            String line = ed.getName() + " (" + ed.getCode() + ") (" + owned + "/" + threshold + ") - "
+                    + String.format("%,d", total) + " cards";
+            Color lineColor = researched ? Color.DARK_GRAY : (eligible ? Color.BLACK : Color.GRAY);
+            // The label's tint would darken the glyph too (a black silhouette), so a viewable line is colored by markup
+            // and the magnifier drawn untinted.
+            TypingLabel nameLabel = Controls.newTypingLabel(viewable
+                    ? "[#" + lineColor + "]" + line + "[#ffffffff] [+Magnifier]" : line);
             nameLabel.skipToTheEnd();
             nameLabel.setWrap(true);
-            nameLabel.setColor(researched ? Color.DARK_GRAY : (eligible ? Color.BLACK : Color.GRAY));
+            nameLabel.setColor(viewable ? Color.WHITE : lineColor);
+            if (viewable)
+                nameLabel.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        openSetView(code);
+                    }
+                });
             boolean portrait = !Forge.isLandscapeMode(); // round 100: 258px pane in portrait - set line on its own row, button below
             scrollContainer.add(nameLabel).align(Align.left).width(portrait ? 236f : 250f).colspan(portrait ? 2 : 1);
             if (portrait)
@@ -372,6 +405,38 @@ public class ResearchScene extends UIScene {
             empty.setColor(Color.DARK_GRAY);
             scrollContainer.add(empty).colspan(2).align(Align.left).expandX().width(Forge.isLandscapeMode() ? 340 : 236);
         }
+    }
+
+    /**
+     * Round 452 (the user: "add a view button/icon (maybe the magnifying glass) in the research lab, for sets you can
+     * research or have researched. When you click on it, you can view all the cards in that set ... kinda like the deck
+     * builder"). The cards are the ones the Lab counts - {@link PrintingIndex#namesIn}, the "N cards" on the set's line -
+     * one of each in the set's own printing, shown read-only by the deck editor's preview (DeckPreviewScene, the Inn's
+     * Jumpstart preview: tap a card to zoom it, nothing to buy or move).
+     */
+    private void openSetView(String code) {
+        CardDb db = FModel.getMagicDb().getCommonCards();
+        List<String> names = new ArrayList<>(PrintingIndex.namesIn(code));
+        Collections.sort(names);
+        Deck deck = new Deck(editionDisplayName(code));
+        int shown = 0, otherPrinting = 0;
+        for (String name : names) {
+            PaperCard pc = db.getCard(name, code);
+            if (pc == null) {
+                pc = db.getCard(name);
+                if (pc != null)
+                    otherPrinting++;
+            }
+            if (pc == null)
+                continue;
+            deck.getMain().add(pc);
+            shown++;
+        }
+        System.out.println("[TFR-SetView] " + code + ": " + shown + " of " + names.size() + " card(s) shown"
+                + (otherPrinting > 0 ? ", " + otherPrinting + " in another set's printing" : ""));
+        scrollYBeforeSetView = scroller.getScrollY();
+        returningFromSetView = true;
+        Forge.switchScene(DeckPreviewScene.getInstance(deck, "Cards"));
     }
 
     /** Round 313: an unresearched edition's group - 0 researching now, 1 ready to research, 2 some cards found but

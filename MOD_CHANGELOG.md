@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 452: a Mimic is a chest's size; no dot on the Warden; the Research Lab shows a set's cards; the hidden card is a new game's (2026-10-06)
+
+Four asks from the user, two with screenshots (the Warden with a purple Manasight dot; the Lab with a magnifier
+pasted after each set line):
+
+- **"Mimic should always appear as regular size chest."** (my question from round 451). A Mimic or Fog Trap
+  (`disguisedAsLoot()`) is drawn at `EnemySprite.LOOT_DISGUISE_PIXELS` - 16 px, a treasure chest's frame - whatever its
+  rank or scale: in the constructor (the spawn's collision box) and in `CharacterSprite.draw()`, which recomputes art x
+  scale x rank every frame. Agent-tested: two Master Fog Traps on the world map now draw at the player's 16 px (a
+  Master was 1.25x - 20 px).
+- **"Remove the Manasight dot from the Warden."** ("The Warden is the guy you first meet, and is in your capitol") -
+  the `displayNameOverride` "The Warden" placement (an Adept Black Wizard) in `spawn`, `orazca`, `orazca_restored` and
+  `player_capital`. `EnemySprite.WARDEN_NAME`; `draw()` skips the color hints for it. Agent-tested in the Capitol with a
+  Manasight Stone on: no dot.
+- **"a view button/icon (maybe the magnifying glass) in the research lab, for sets you can research or have
+  researched. When you click on it, you can view all the cards in that set ... kinda like the deck builder".**
+  - A set you can research (found >= threshold, researching included) or have researched ends its line with the items
+    atlas's `Magnifier` glyph, and the whole line answers a tap (the mockup put the icon right after the text).
+  - The first build drew the glyph as a black silhouette (the user saw it too: "The icons are black") - a label's tint
+    multiplies its inline images. The line is colored by markup now (`[#000000ff]...[#ffffffff] [+Magnifier]`) on a
+    white label, so the magnifier keeps its blue lens and brown handle.
+  - The tap opens the deck editor's read-only preview (`DeckPreviewScene` - the Inn's Jumpstart preview: tap a card to
+    zoom, nothing to buy or move) on a deck named after the set holding one of each card the Lab counts
+    (`PrintingIndex.namesIn` - the "N cards" on the line), in the set's own printing (`[TFR-SetView]` logs shown/total
+    and any card that had to fall back to another printing). The page is captioned "Cards" ("Search Cards"), not the
+    stock "Inventory" - new `DeckPreviewScene.getInstance(deck, caption)`.
+  - Back returns to the Lab as it was - the researched view stays on, the list keeps its scroll position
+    (`returningFromSetView`); a fresh visit still starts on the normal view.
+  - Closing any preview no longer clears the collection's NEW marks (`AdventureDeckEditor.resolveClose`) - the Inn's
+    pack preview did that too.
+  - Agent-tested on the day-210 copy (Insane): four set lines with magnifiers, partial sets without; M21 opened 259/259
+    cards in the M21 printing; Foundations from the researched view; back kept "Hide Researched" on screen.
+- **"In the Starting/ Spawn dungeon, there is a hidden card one can find. This should only be there for new games,
+  not NG+."** The flagstone (`main_story/spawn.tmx` dialog 89 - a Rare of the starting color) takes the condition
+  `checkCharacterFlag newGamePlus, not` - `resetForNewGamePlus()` sets that flag for the whole run, a New Game never has
+  it, and a dialog whose every node fails shows nothing and does not stop the player. Agent-tested in a fresh New Game:
+  with `set charflag newGamePlus 1` the stone is silent; with it cleared it offers the card.
+- Agent bridge: labels carrying a `ClickListener` are listed as clickable (`AgentObserver.collectTappableLabels`, after
+  the buttons) - how the set lines were tested.
+- Stock engine files - CORE_ENGINE_CHANGES round 452. LIVE + AGENT PACKAGED 2026-10-06 (jar 6E9253C12F1A).
+
 ## Round 451: no crown on a Mimic (2026-10-06)
 
 The user, on round 450's open question: "Hide the crown on the mimic". An enemy with a battle effect wears a crown

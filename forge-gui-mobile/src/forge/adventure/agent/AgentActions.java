@@ -248,7 +248,7 @@ final class AgentActions {
             return now(false, "that button is no longer visible - take a fresh /state");
         if (target instanceof Button && ((Button) target).isDisabled())
             return now(false, "that button is disabled");
-        String label = target instanceof Button ? AgentObserver.buttonText((Button) target) : String.valueOf(target.getName());
+        String label = target instanceof Button ? AgentObserver.buttonText((Button) target) : AgentObserver.labelText(target);
         press(target);
         return now(true, "clicked " + (label.isEmpty() ? String.valueOf(target.getName()) : "'" + label + "'"));
     }

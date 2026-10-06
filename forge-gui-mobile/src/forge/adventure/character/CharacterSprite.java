@@ -321,6 +321,10 @@ public class CharacterSprite extends MapActor {
 
         setHeight(currentFrame.getRegionHeight() * scale);
         setWidth(currentFrame.getRegionWidth() * scale);
+        if (this instanceof EnemySprite && ((EnemySprite) this).disguisedAsLoot()) { // round 452: a Mimic is a chest's size
+            setHeight(EnemySprite.LOOT_DISGUISE_PIXELS);
+            setWidth(EnemySprite.LOOT_DISGUISE_PIXELS);
+        }
 
         Color originalBatchColor = batch.getColor();
         batchColor.set(originalBatchColor.r, originalBatchColor.g, originalBatchColor.b, originalBatchColor.a);

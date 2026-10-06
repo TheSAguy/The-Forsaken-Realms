@@ -935,7 +935,8 @@ sets, items or enemies off yourself; everything is on by default.)
    count again, and a card you own as an Amonkhet printing counts for Amonkhet only. You'll get a popup
    the moment you cross that line. The Lab lists every edition with your progress as `(owned/needed)` -
    research under way first, then the sets ready to research - and two checkboxes hide the sets you have
-   found no cards for, or not yet enough.
+   found no cards for, or not yet enough. A set you can research, or have researched, ends its line with a
+   magnifier: tap the line to browse every card in it.
 2. **Pay 40 Shards** (on Normal - 30 on Easy, 50 on Hard, 60 on Insane) and start the research.
 3. **Wait a week.** Each edition runs on its own 7-day timer, and you can research several at once.
 

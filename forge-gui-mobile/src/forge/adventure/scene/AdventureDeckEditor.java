@@ -170,9 +170,15 @@ public class AdventureDeckEditor extends FDeckEditor {
 
     protected static class DeckPreviewConfig extends AdventureEditorConfig {
         private final Deck deckToPreview;
+        private final String pageCaption; // round 452: null = the stock "Inventory"
 
         public DeckPreviewConfig(Deck deckToPreview) {
+            this(deckToPreview, null);
+        }
+
+        public DeckPreviewConfig(Deck deckToPreview, String pageCaption) {
             this.deckToPreview = deckToPreview;
+            this.pageCaption = pageCaption;
         }
 
         @Override
@@ -197,7 +203,7 @@ public class AdventureDeckEditor extends FDeckEditor {
 
         @Override
         protected DeckEditorPage[] getInitialPages() {
-            return new DeckEditorPage[]{new ContentPreviewPage(deckToPreview)};
+            return new DeckEditorPage[]{new ContentPreviewPage(deckToPreview, pageCaption)};
         }
     }
 
@@ -288,8 +294,9 @@ public class AdventureDeckEditor extends FDeckEditor {
     private static class ContentPreviewPage extends CatalogPage {
         Deck contents;
 
-        protected ContentPreviewPage(Deck cardsToShow) {
-            super(new AdventureCardManager(), ItemManagerConfig.ADVENTURE_STORE_POOL, Forge.getLocalizer().getMessage("lblInventory"), CATALOG_ICON);
+        protected ContentPreviewPage(Deck cardsToShow, String caption) {
+            super(new AdventureCardManager(), ItemManagerConfig.ADVENTURE_STORE_POOL,
+                    caption != null ? caption : Forge.getLocalizer().getMessage("lblInventory"), CATALOG_ICON);
             contents = cardsToShow;
             cardManager.setBtnAdvancedSearchOptions(false);
         }
@@ -838,7 +845,12 @@ public class AdventureDeckEditor extends FDeckEditor {
     }
 
     public AdventureDeckEditor(Deck deckToPreview) {
-        super(new DeckPreviewConfig(deckToPreview), deckToPreview);
+        this(deckToPreview, null);
+    }
+
+    /** Round 452: a preview whose page is not "Inventory" - the Research Lab's set view calls it "Cards". */
+    public AdventureDeckEditor(Deck deckToPreview, String pageCaption) {
+        super(new DeckPreviewConfig(deckToPreview, pageCaption), deckToPreview);
     }
 
     @Override
@@ -981,7 +993,10 @@ public class AdventureDeckEditor extends FDeckEditor {
 
     private void resolveClose(final Consumer<Boolean> canCloseCallback, boolean result) {
         if (result) {
-            Current.player().newCards.clear();
+            // Round 452: a preview (the Research Lab's set view, the Inn's pack preview) never showed the collection, so
+            // closing it leaves the collection's NEW marks alone.
+            if (!(getEditorConfig() instanceof DeckPreviewConfig))
+                Current.player().newCards.clear();
             if (isDrafting())
                 getCurrentEvent().eventStatus = AdventureEventController.EventStatus.Abandoned;
         }

@@ -24,13 +24,21 @@ public class DeckPreviewScene extends ForgeScene {
     private static DeckPreviewScene object;
 
     public static DeckPreviewScene getInstance(Deck deckToPreview) {
+        return getInstance(deckToPreview, null);
+    }
+
+    /** Round 452: with the page's own caption (the Research Lab's set view: "Cards"); null = the stock "Inventory". */
+    public static DeckPreviewScene getInstance(Deck deckToPreview, String pageCaption) {
         if(object == null)
             object = new DeckPreviewScene();
 
         object.deckToPreview = deckToPreview;
+        object.pageCaption = pageCaption;
 
         return object;
     }
+
+    private String pageCaption;
 
     @Override
     public void dispose() {
@@ -54,7 +62,7 @@ public class DeckPreviewScene extends ForgeScene {
     @Override
     public FScreen getScreen() {
         if (screen == null) {
-            screen = new AdventureDeckEditor(deckToPreview);
+            screen = new AdventureDeckEditor(deckToPreview, pageCaption);
         }
         screen.setEvent(null);
         return screen;
