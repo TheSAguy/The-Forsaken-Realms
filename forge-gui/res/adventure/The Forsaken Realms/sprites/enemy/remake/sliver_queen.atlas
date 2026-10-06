@@ -1,5 +1,5 @@
 sliver_queen.png
-size: 1898,704
+size: 3484,704
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,148 +8,148 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 146, 128
+  size: 268, 128
 Idle
-  xy: 146, 64
-  size: 146, 128
+  xy: 268, 64
+  size: 268, 128
 Idle
-  xy: 292, 64
-  size: 146, 128
+  xy: 536, 64
+  size: 268, 128
 Idle
-  xy: 438, 64
-  size: 146, 128
+  xy: 804, 64
+  size: 268, 128
 Idle
-  xy: 584, 64
-  size: 146, 128
+  xy: 1072, 64
+  size: 268, 128
 Idle
-  xy: 730, 64
-  size: 146, 128
+  xy: 1340, 64
+  size: 268, 128
 Idle
-  xy: 876, 64
-  size: 146, 128
+  xy: 1608, 64
+  size: 268, 128
 Idle
-  xy: 1022, 64
-  size: 146, 128
+  xy: 1876, 64
+  size: 268, 128
 Idle
-  xy: 1168, 64
-  size: 146, 128
+  xy: 2144, 64
+  size: 268, 128
 Idle
-  xy: 1314, 64
-  size: 146, 128
+  xy: 2412, 64
+  size: 268, 128
 Idle
-  xy: 1460, 64
-  size: 146, 128
+  xy: 2680, 64
+  size: 268, 128
 Idle
-  xy: 1606, 64
-  size: 146, 128
+  xy: 2948, 64
+  size: 268, 128
 Walk
   xy: 0, 192
-  size: 146, 128
+  size: 268, 128
 Walk
-  xy: 146, 192
-  size: 146, 128
+  xy: 268, 192
+  size: 268, 128
 Walk
-  xy: 292, 192
-  size: 146, 128
+  xy: 536, 192
+  size: 268, 128
 Walk
-  xy: 438, 192
-  size: 146, 128
+  xy: 804, 192
+  size: 268, 128
 Walk
-  xy: 584, 192
-  size: 146, 128
+  xy: 1072, 192
+  size: 268, 128
 Walk
-  xy: 730, 192
-  size: 146, 128
+  xy: 1340, 192
+  size: 268, 128
 Walk
-  xy: 876, 192
-  size: 146, 128
+  xy: 1608, 192
+  size: 268, 128
 Walk
-  xy: 1022, 192
-  size: 146, 128
+  xy: 1876, 192
+  size: 268, 128
 Attack
   xy: 0, 320
-  size: 146, 128
+  size: 268, 128
 Attack
-  xy: 146, 320
-  size: 146, 128
+  xy: 268, 320
+  size: 268, 128
 Attack
-  xy: 292, 320
-  size: 146, 128
+  xy: 536, 320
+  size: 268, 128
 Attack
-  xy: 438, 320
-  size: 146, 128
+  xy: 804, 320
+  size: 268, 128
 Attack
-  xy: 584, 320
-  size: 146, 128
+  xy: 1072, 320
+  size: 268, 128
 Attack
-  xy: 730, 320
-  size: 146, 128
+  xy: 1340, 320
+  size: 268, 128
 Attack
-  xy: 876, 320
-  size: 146, 128
+  xy: 1608, 320
+  size: 268, 128
 Attack
-  xy: 1022, 320
-  size: 146, 128
+  xy: 1876, 320
+  size: 268, 128
 Attack
-  xy: 1168, 320
-  size: 146, 128
+  xy: 2144, 320
+  size: 268, 128
 Attack
-  xy: 1314, 320
-  size: 146, 128
+  xy: 2412, 320
+  size: 268, 128
 Attack
-  xy: 1460, 320
-  size: 146, 128
+  xy: 2680, 320
+  size: 268, 128
 Attack
-  xy: 1606, 320
-  size: 146, 128
+  xy: 2948, 320
+  size: 268, 128
 Hit
   xy: 0, 448
-  size: 146, 128
+  size: 268, 128
 Hit
-  xy: 146, 448
-  size: 146, 128
+  xy: 268, 448
+  size: 268, 128
 Hit
-  xy: 292, 448
-  size: 146, 128
+  xy: 536, 448
+  size: 268, 128
 Hit
-  xy: 438, 448
-  size: 146, 128
+  xy: 804, 448
+  size: 268, 128
 Death
   xy: 0, 576
-  size: 146, 128
+  size: 268, 128
 Death
-  xy: 146, 576
-  size: 146, 128
+  xy: 268, 576
+  size: 268, 128
 Death
-  xy: 292, 576
-  size: 146, 128
+  xy: 536, 576
+  size: 268, 128
 Death
-  xy: 438, 576
-  size: 146, 128
+  xy: 804, 576
+  size: 268, 128
 Death
-  xy: 584, 576
-  size: 146, 128
+  xy: 1072, 576
+  size: 268, 128
 Death
-  xy: 730, 576
-  size: 146, 128
+  xy: 1340, 576
+  size: 268, 128
 Death
-  xy: 876, 576
-  size: 146, 128
+  xy: 1608, 576
+  size: 268, 128
 Death
-  xy: 1022, 576
-  size: 146, 128
+  xy: 1876, 576
+  size: 268, 128
 Death
-  xy: 1168, 576
-  size: 146, 128
+  xy: 2144, 576
+  size: 268, 128
 Death
-  xy: 1314, 576
-  size: 146, 128
+  xy: 2412, 576
+  size: 268, 128
 Death
-  xy: 1460, 576
-  size: 146, 128
+  xy: 2680, 576
+  size: 268, 128
 Death
-  xy: 1606, 576
-  size: 146, 128
+  xy: 2948, 576
+  size: 268, 128
 Death
-  xy: 1752, 576
-  size: 146, 128
+  xy: 3216, 576
+  size: 268, 128

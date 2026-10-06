@@ -19731,14 +19731,14 @@
     },
     {
         "name": "Kozilek",
-        "sprite": "sprites/enemy/aberration/eldrazi/kozilek.atlas",
+        "sprite": "sprites/enemy/remake/kozilek.atlas",
         "deck": [
             "decks/miniboss/copperhostbrutalizer.dck"
         ],
         "ai": "",
         "spawnRate": 0.1,
         "boss": true,
-        "scale": 0.7092,
+        "scale": 0.47,
         "bossIntro": "Your 'truth' is a thin veil over a void that is hungry. I am the hand that pulls the thread.",
         "bossInsult": "Your reality is a structure of glass. I am the rock.",
         "difficulty": 0.5,
@@ -125803,13 +125803,13 @@
     },
     {
         "name": "Kozilek, Butcher of Truth",
-        "sprite": "sprites/enemy/aberration/eldrazi/kozilek.atlas",
+        "sprite": "sprites/enemy/remake/kozilek_butcher_of_truth.atlas",
         "deck": [
             "decks/legends/kozilek.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.5674,
+        "scale": 0.376,
         "life": 70,
         "rewards": [
             {

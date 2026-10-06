@@ -1,0 +1,155 @@
+kozilek.png
+size: 1872,709
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 144, 129
+Idle
+  xy: 144, 64
+  size: 144, 129
+Idle
+  xy: 288, 64
+  size: 144, 129
+Idle
+  xy: 432, 64
+  size: 144, 129
+Idle
+  xy: 576, 64
+  size: 144, 129
+Idle
+  xy: 720, 64
+  size: 144, 129
+Idle
+  xy: 864, 64
+  size: 144, 129
+Idle
+  xy: 1008, 64
+  size: 144, 129
+Idle
+  xy: 1152, 64
+  size: 144, 129
+Idle
+  xy: 1296, 64
+  size: 144, 129
+Idle
+  xy: 1440, 64
+  size: 144, 129
+Idle
+  xy: 1584, 64
+  size: 144, 129
+Walk
+  xy: 0, 193
+  size: 144, 129
+Walk
+  xy: 144, 193
+  size: 144, 129
+Walk
+  xy: 288, 193
+  size: 144, 129
+Walk
+  xy: 432, 193
+  size: 144, 129
+Walk
+  xy: 576, 193
+  size: 144, 129
+Walk
+  xy: 720, 193
+  size: 144, 129
+Walk
+  xy: 864, 193
+  size: 144, 129
+Walk
+  xy: 1008, 193
+  size: 144, 129
+Attack
+  xy: 0, 322
+  size: 144, 129
+Attack
+  xy: 144, 322
+  size: 144, 129
+Attack
+  xy: 288, 322
+  size: 144, 129
+Attack
+  xy: 432, 322
+  size: 144, 129
+Attack
+  xy: 576, 322
+  size: 144, 129
+Attack
+  xy: 720, 322
+  size: 144, 129
+Attack
+  xy: 864, 322
+  size: 144, 129
+Attack
+  xy: 1008, 322
+  size: 144, 129
+Attack
+  xy: 1152, 322
+  size: 144, 129
+Attack
+  xy: 1296, 322
+  size: 144, 129
+Attack
+  xy: 1440, 322
+  size: 144, 129
+Attack
+  xy: 1584, 322
+  size: 144, 129
+Hit
+  xy: 0, 451
+  size: 144, 129
+Hit
+  xy: 144, 451
+  size: 144, 129
+Hit
+  xy: 288, 451
+  size: 144, 129
+Hit
+  xy: 432, 451
+  size: 144, 129
+Death
+  xy: 0, 580
+  size: 144, 129
+Death
+  xy: 144, 580
+  size: 144, 129
+Death
+  xy: 288, 580
+  size: 144, 129
+Death
+  xy: 432, 580
+  size: 144, 129
+Death
+  xy: 576, 580
+  size: 144, 129
+Death
+  xy: 720, 580
+  size: 144, 129
+Death
+  xy: 864, 580
+  size: 144, 129
+Death
+  xy: 1008, 580
+  size: 144, 129
+Death
+  xy: 1152, 580
+  size: 144, 129
+Death
+  xy: 1296, 580
+  size: 144, 129
+Death
+  xy: 1440, 580
+  size: 144, 129
+Death
+  xy: 1584, 580
+  size: 144, 129
+Death
+  xy: 1728, 580
+  size: 144, 129

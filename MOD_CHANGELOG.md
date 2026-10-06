@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 456: Kozilek from AI clips; the Sliver Queen's strike in frame; every duel portrait shows the whole creature (2026-10-06)
+
+Three things from the user's play-testing of rounds 453-455: Kozilek's clips arrived (the third hand-made enemy); on the
+Sliver Queen, "The portrait looks a little weird, I think is should be more of the creature. The attack is also going
+out of frame."; on the duel screen, "The Golem's [eyes] look a little weird" (the Clay Golem) and of Pir and Toothy,
+"This portrait looks weird. Should be the whole body."
+
+- **Kozilek** (the user's ChatGPT still and Kling clips, cleaned in Pixelate): a headless titan, a golden plated torso
+  on a mass of mauve tentacles, red clawed arms with white-violet energy, black obsidian blades and a floating crown of
+  black shards; Idle 12, Walk 8, Attack 12, Hit 4, Death 13 (he crumbles into debris that fades). Both enemies on the
+  old shared sprite get it: "Kozilek" (a boss, scale 0.7092 -> 0.47) and "Kozilek, Butcher of Truth" (keepSize, 0.5674
+  -> 0.376), each the same drawn size. His clips came back on black (his still had a transparent background); the
+  converter floods the border color in from the frame edges, so his own black crown and blades (darker palette colors,
+  never the background's) stay, and it removes the video tool's watermark block.
+- **The Sliver Queen's attack:** her lunge ran past the edge of the 128 px clip (cut in the source). The user made it
+  again from her still padded with green on every side, exported at 256 px (the same pixel size, room round her); the
+  converter lines every clip up on the idle's first frame. The whole strike now shows.
+- **Whole-body portraits:** every remake's duel portrait (the 64 px Avatar region of 436 sprites) now shows the whole
+  creature from its first Idle frame, shrunk by the smallest whole factor that fits (each block of 2x2 or 3x3 pixels
+  its most common color), instead of a 64 px crop round the head of anything bigger. procedural-pixel-creatures
+  `tools/forge_remake/portraits.py` rewrote them; `ppc_to_forge.py` and `pixelate_to_forge.py` now make them the same
+  way, so a regeneration keeps them.
+- **Data only:**
+  - `sprites/enemy/remake/`: 432 PNGs modified (431 portraits + the Sliver Queen's new sheet); one atlas changed
+    (`sliver_queen.atlas`, her new frame size); 4 new files (`kozilek.*`, `kozilek_butcher_of_truth.*`).
+  - `world/enemies.json`: the two Kozilek entries' sprite and scale; nothing else.
+- **Checks:** `validate_plane_data.py` - no sprite or enemy findings; `enemy_scale.py --write` - nothing changed;
+  `sprite_artifact_audit.py --only remake` (436 atlases, 35763 frames) flags 384 frames: new ones are 28 Kozilek frames
+  where his tentacles lift a row off the ground shadow and one portrait piece (the Heart-Piercer Manticore).
+- Not yet seen in play. Console (F9): `spawn enemy Kozilek`, `spawn enemy "Sliver Queen"`.
+
 ## Round 455: the Sliver Queen, hand-made from AI clips (the Pixelate pilot, 2nd) (2026-10-06)
 
 The second enemy from the user's AI clips (ChatGPT still, Kling animations, cleaned in Pixelate), after Ulamog
