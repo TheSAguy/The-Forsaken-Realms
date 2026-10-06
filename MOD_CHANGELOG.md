@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 449: every pickup within walking reach; research 40 shards; a 243-second day (2026-10-06)
+
+Three asks, all data:
+
+- **Pickups nobody can walk to.** The user, with a screenshot of a Wood pile outside Mercenary Barracks' west wall: "Can
+  you audit all dungeons and make sure there are no resources we added that can't be reached by walking (vs. flying)".
+  NEW `dev-tools/gated_loot/pickup_reach.py` runs round 378's global reach model (`audit.World`: from every POI map's
+  world arrival, across stairs and portals, 10 x 6 player boxes over tile + object collision and blocking actors) over
+  every `reward` object in the plane's maps - 2,975 pickups - and sorts each into open / GATED (behind a gate, a locked
+  portal, a boss: by design) / UNREACHABLE. Before: **14 of our 849 Wood and Stone piles UNREACHABLE** (7 + 7), 65 GATED;
+  plus 4 gold/shard pickups with the same fault. Each one was rendered on the map art and checked by eye before moving
+  it to the nearest open floor a walking player can touch (clear of collision and other objects, 16 px clear of
+  stairs and exits):
+  - `fort/fort_colorless_3_human` (Mercenary Barracks) wood 72 - the user's: outside the west wall, in the snow ->
+    inside, the library room against that wall.
+  - `barbariancamp/barbariancamp_goblin_2` wood 94 - across the river with no crossing -> the near bank.
+  - `demontower/portal_2` stone 84 - the woods outside the compound wall -> inside the compound's corner.
+  - `evilgrove/Isolated_Hut` wood 103 - the east field behind the boulder line -> by the pond near the hut (229 px, the
+    farthest move; nothing nearer is walkable).
+  - `evilgrove/evilgrove_2_blackgolem` wood 92 - behind the boulders -> the clearing below them.
+  - `magetower/magetower_4_monastery` stone 86 - on top of the fountain -> beside it.
+  - `main_story_explore/frostbitten_cavern_1` stone 27 - in the snow outside the cave wall -> inside the cave mouth.
+  - `merfolkpool/merfolkpool_1` stone 62, `merfolkpool_2` stone 67 + wood 68 - on the beach: the pool maps are walked
+    IN the water and the sand is scenery -> the shallows by the shore, where those maps' other pickups lie.
+  - `nest/nest_blue_1` wood 92 - the plateau behind the rocks -> the sand below.
+  - `zedruu/zedruu` stone 267 - a raised cliff top -> its foot; wood 272 - wedged between the village's huts -> the path.
+  - `zedruu/zedruu_f1` stone 226 + gold 115 - a sealed middle cell (its Farmer is a reaction enemy that comes to you) ->
+    the open cell beside it / the hall above.
+  - `fort/Peaceful_Clearing` gold 52 - the forest corner -> between the trees below; `graveyard_crypt/graveyard_4` shard
+    69 - above the crypt, outside the grounds -> the graveyard path; `main_story/templeofchandra` gold 55 - a walled-off
+    pocket beside the maze -> the maze next door (still behind the maze's gate, as authored).
+  After: UNREACHABLE 0 (`pickup_reach.py` exits 1 on any - rerun it after a map edit). One line per pickup, ids kept, so
+  saves keep what was already picked up. The 65 GATED Wood/Stone piles stay where they are (vaults, boss rooms, a
+  switch-opened wing - the same rule as round 378's gated boosters).
+- **Research cost.** "Let's lower research cost a little. On Insane it should be 60. Does it scale with difficulty?"
+  Yes - `EconomyBuildings.scaledCost`: Easy x0.75, Normal x1, Hard x1.25, Insane x1.5 of `researchShardCost`. Base 50 ->
+  **40**: 30 / 40 / 50 / 60 shards (was 38 / 50 / 63 / 75). GUIDE's two mentions updated.
+- **The day.** "Let's have a day go by a little faster... speed it up by 10%." `dayLengthSeconds` 270 -> **243**, the
+  same 10% step as round 268: a day is 4m03s of wall clock. Everything counted in days is unchanged.
+- `GUIDE.html` regenerated - it had fallen behind `GUIDE.md` since round 443 (the dungeon-clear wording and rounds
+  445-447's notoriety paragraphs were missing from it).
+- Not agent-tested: the moves are positions only, and the reach model is the test. Packaged when the user's game closes.
+
 ## Round 448: the console `leave` waits out a duel; the agent's map walker finds its way (2026-10-05)
 
 The user: "Let's see if there is a fix for" the two leftovers from round 443's agent test. Test tooling only - nothing a

@@ -38,8 +38,8 @@
   </data>
  </layer>
  <objectgroup id="12" name="Objects" opacity="0.9" offsetx="3.15789" offsety="7.89474">
-  <object id="115" template="../../../../common/maps/obj/gold.tx" x="347.713" y="266.037"/>
-  <object id="226" template="../../obj/stone.tx" x="322.046" y="293.037"/>
+  <object id="115" template="../../../../common/maps/obj/gold.tx" x="348" y="240"/>
+  <object id="226" template="../../obj/stone.tx" x="283" y="293"/>
   <object id="117" template="../../../../common/maps/obj/enemy.tx" x="428.76" y="199.309">
    <properties>
     <property name="enemy" value="Illusionist"/>

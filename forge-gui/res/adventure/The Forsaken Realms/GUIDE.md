@@ -936,7 +936,7 @@ sets, items or enemies off yourself; everything is on by default.)
    the moment you cross that line. The Lab lists every edition with your progress as `(owned/needed)` -
    research under way first, then the sets ready to research - and two checkboxes hide the sets you have
    found no cards for, or not yet enough.
-2. **Pay 50 Shards** (on Normal - 38 on Easy, 63 on Hard, 75 on Insane) and start the research.
+2. **Pay 40 Shards** (on Normal - 30 on Easy, 50 on Hard, 60 on Insane) and start the research.
 3. **Wait a week.** Each edition runs on its own 7-day timer, and you can research several at once.
 
 Once researched, that edition joins your unlocked pool permanently: your own shops start stocking
@@ -1173,7 +1173,7 @@ https://discord.gg/TTRPKc9HYJ
 
 You start with only a few sets open (4 on Easy down to 1 on Insane, from your race's four). Once you
 own 10% of a set's distinct cards in that set's printing (at least 5), the **Research Lab** in your
-Capitol unlocks it for 50 Shards on Normal and a week's wait. An unlocked set stocks your own shops and
+Capitol unlocks it for 40 Shards on Normal and a week's wait. An unlocked set stocks your own shops and
 joins your own Inns' tournaments; it never limits your deck. Full detail:
 [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).
 

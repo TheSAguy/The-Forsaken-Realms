@@ -52,7 +52,7 @@
    </properties>
   </object>
   <object id="55" template="../../../../common/maps/obj/gold.tx" x="43.6185" y="157.915"/>
-  <object id="67" template="../../obj/stone.tx" x="185.094" y="39.5815"/>
+  <object id="67" template="../../obj/stone.tx" x="185" y="74"/>
   <object id="56" template="../../../../common/maps/obj/enemy.tx" x="309.47" y="103.028">
    <properties>
     <property name="enemy" value="Water Elemental"/>
@@ -101,7 +101,7 @@
   <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="79.1742" y="210.152"/>
   <object id="65" template="../../../../common/maps/obj/waypoint.tx" x="329.854" y="84.8123"/>
   <object id="66" template="../../../../common/maps/obj/waypoint.tx" x="219.26" y="131.218"/>
-  <object id="68" template="../../obj/wood.tx" x="376.154" y="112.705">
+  <object id="68" template="../../obj/wood.tx" x="345" y="113">
    <properties>
     <property name="reward">[
   {

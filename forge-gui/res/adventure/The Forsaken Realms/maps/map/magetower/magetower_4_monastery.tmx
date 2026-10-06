@@ -59,7 +59,7 @@
 &quot;cardName&quot;: &quot;Staff of the Sun Magus&quot;}]</property>
    </properties>
   </object>
-  <object id="86" template="../../obj/stone.tx" x="244.156" y="44.423"/>
+  <object id="86" template="../../obj/stone.tx" x="220" y="44"/>
   <object id="67" template="../../../../common/maps/obj/booster.tx" x="208.5" y="78">
    <properties>
     <property name="reward">[

@@ -972,7 +972,7 @@
    </properties>
   </object>
   <object id="54" template="../../../../common/maps/obj/manashards.tx" x="568.5" y="927.5"/>
-  <object id="55" template="../../../../common/maps/obj/gold.tx" x="572" y="357.5"/>
+  <object id="55" template="../../../../common/maps/obj/gold.tx" x="539" y="340"/>
   <object id="56" template="../../../../common/maps/obj/gold.tx" x="343" y="145">
    <properties>
     <property name="noGuard" type="bool" value="true"/>

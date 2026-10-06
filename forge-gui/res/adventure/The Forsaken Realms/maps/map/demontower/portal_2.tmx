@@ -37,7 +37,7 @@
     <property name="teleport" value=""/>
    </properties>
   </object>
-  <object id="84" template="../../obj/stone.tx" x="100.758" y="354.033"/>
+  <object id="84" template="../../obj/stone.tx" x="150" y="332"/>
   <object id="78" template="../../../../common/maps/obj/door_down.tx" x="232.5" y="235.5">
    <properties>
     <property name="teleport" value="../The Forsaken Realms/maps/map/demontower/portal_2B.tmx"/>

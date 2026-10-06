@@ -145,7 +145,7 @@
   <object id="85" template="../../../../common/maps/obj/waypoint.tx" x="284.468" y="248.45"/>
   <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="324.808" y="188.659"/>
   <object id="90" template="../../../../common/maps/obj/collision.tx" x="160" y="432" width="480" height="16"/>
-  <object id="92" template="../../obj/wood.tx" x="508.667" y="152"/>
+  <object id="92" template="../../obj/wood.tx" x="467" y="224"/>
   <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="480" y="208"/>
   <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="464" y="224"/>
  </objectgroup>

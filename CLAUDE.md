@@ -58,6 +58,14 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-06 (round 449): **LOCAL + UNRELEASED (data only)** - (1) every pickup within walking reach: the user's
+Mercenary Barracks Wood (outside the west wall) led to NEW `dev-tools/gated_loot/pickup_reach.py` (round 378's reach
+model over all 2,975 map pickups; exit 1 on any UNREACHABLE) - 14 Wood/Stone + 4 gold/shard moved to the nearest
+walkable floor, each checked on the map art (MOD_CHANGELOG 449 lists them); 65 GATED Wood/Stone kept (vaults, boss
+rooms). (2) `researchShardCost` 50 -> 40 (30/40/50/60 Easy-Insane; "On Insane it should be 60"). (3) `dayLengthSeconds`
+270 -> 243 (10% faster, like round 268). GUIDE.md + GUIDE.html (it had lagged since 443). PACKAGING waits for the
+user's game to close (it was running).
+
 ## STATE 2026-10-05 (round 448): **LOCAL + UNRELEASED (test tooling)** - the console `leave` and the bridge's `leave`
 refuse during a duel (leaving mid-duel closed the game); the agent's map walker plans its own A* over an 8 px grid of
 the map's collision with the player's box, keeps off stairs/portals/exits but the target, ends a walk when the level
@@ -127,7 +135,8 @@ Next version: 1.19 / 11900.
 **NEXT SESSION (thread closed 2026-10-04 late):** (1)+(2) DONE - the peer's round 442 (cloud batch 8, 2abb355d9e9) is
 packaged live + agent, and live now carries the 1.18 stamp; round 443 (dungeon clears) is done; round 444 = batch 9
 of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety bonus Walls, 446 = their +25%/+50% life,
-447 = the streak draws stronger enemies, 448 = `leave` + map walker fixes (done) - the next free round is **449**;
+447 = the streak draws stronger enemies, 448 = `leave` + map walker fixes, 449 = pickups within walking reach +
+research 40 + a 243 s day (done) - the next free round is **450**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,

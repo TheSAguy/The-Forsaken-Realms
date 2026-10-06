@@ -13,7 +13,9 @@
     // back at 40). A day now passes in 4m30s of wall clock instead of 5m, so every day- and
     // week-keyed milestone arrives 10% sooner, while everything measured IN days - quest timers,
     // dungeon rotation, mage travel - is untouched.
-    "dayLengthSeconds": 270.0,
+    // Round 449: 270 -> 243, the user's "Let's have a day go by a little faster... speed it up by 10%"
+    // - the same 10% step as round 268. A day now passes in 4m03s of wall clock.
+    "dayLengthSeconds": 243.0,
 
     // Territory growth: how fast the player's Capitol claims land (tiles per day).
     "capitolExpansionTilesPerDay": 1,
@@ -182,8 +184,10 @@
     // Research Lab: in-game days from clicking Research until an edition unlocks. Each edition
     // runs on its own timer, so several can be in progress at once.
     "researchDays": 7,
-    // Research Lab: base shard price per edition (difficulty scaling applies on top).
-    "researchShardCost": 50,
+    // Research Lab: base shard price per edition (difficulty scaling applies on top: Easy x0.75,
+    // Normal x1, Hard x1.25, Insane x1.5). Round 449: 50 -> 40, the user's "On Insane it should be
+    // 60" - 30 / 40 / 50 / 60 shards from Easy to Insane.
+    "researchShardCost": 40,
     // AI towns: in-game days of unbroken AI ownership per guard-dot level (4 levels; the clock
     // starts when the town is first seen held, not retroactively). Level sets the assault defender:
     // none = Apprentice, 1 = Adept, 2 = Master, 3 = Archmage, 4 = Archmage with two starting lands.
