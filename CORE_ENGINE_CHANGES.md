@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 450 - a Mimic keeps its disguise under Manasight
+
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - new `disguisedAsLoot()` (sprite path contains
+  `mimic`, or the `Mimic` quest tag); `draw()` skips `drawColorHints()` and `drawDungeonEffectPip()` returns early for it.
+  Upstream conflict risk: low - one extra condition on the stock `hasColorView()` line in `draw()`.
+
 ### Round 448 - the console `leave` waits out a duel
 
 - **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `leave` returns "Not during a duel."

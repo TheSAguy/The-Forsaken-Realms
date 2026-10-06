@@ -58,6 +58,11 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-06 (round 450): **LOCAL + UNRELEASED** - a Mimic keeps its disguise: `EnemySprite.disguisedAsLoot()`
+(the chest sprite `aberration/mimic.atlas` - Mimic and Fog Trap - or the `Mimic` tag) skips Manasight's color dots and
+the dungeon-effect pip (the user: "The Manasight Store should not work on the Minic"). Open: Temple of Chandra's one
+crowned Mimic (id 180) still wears its crown - asked. Packaged with 449 when the user's game closes.
+
 ## STATE 2026-10-06 (round 449): **LOCAL + UNRELEASED (data only)** - (1) every pickup within walking reach: the user's
 Mercenary Barracks Wood (outside the west wall) led to NEW `dev-tools/gated_loot/pickup_reach.py` (round 378's reach
 model over all 2,975 map pickups; exit 1 on any UNREACHABLE) - 14 Wood/Stone + 4 gold/shard moved to the nearest
@@ -136,7 +141,7 @@ Next version: 1.19 / 11900.
 packaged live + agent, and live now carries the 1.18 stamp; round 443 (dungeon clears) is done; round 444 = batch 9
 of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety bonus Walls, 446 = their +25%/+50% life,
 447 = the streak draws stronger enemies, 448 = `leave` + map walker fixes, 449 = pickups within walking reach +
-research 40 + a 243 s day (done) - the next free round is **450**;
+research 40 + a 243 s day, 450 = no Manasight on a Mimic (done) - the next free round is **451**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,

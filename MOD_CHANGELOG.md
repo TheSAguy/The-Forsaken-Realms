@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 450: a Mimic keeps its disguise under Manasight (2026-10-06)
+
+The user: "The Manasight Store should not work on the Minic (The guy that looks like a chest)". Manasight (the
+Manasight Stone, the Manasight Amulet, a `colorView` blessing) draws an enemy's colors as 2 px dots down its left
+edge - on a treasure chest that is a sign saying "enemy here".
+
+- `EnemySprite.disguisedAsLoot()`: an enemy drawn with the chest sprite - `aberration/mimic.atlas`, which the **Mimic**
+  (UB) and the **Fog Trap** (GW) share - or carrying the `Mimic` quest tag. It is read from the enemy's current data, so
+  a re-themed or upgraded placement is judged by what it actually looks like.
+- No Manasight color dots on it, anywhere (the world map's roaming ones too).
+- No dungeon-effect pip either (round 200's cyan dot on every enemy in a buffed place) - the same giveaway on a chest.
+- Left as is, and raised with the user: the crown on an enemy with a battle effect. One Mimic placement carries one
+  (`main_story/templeofchandra` id 180, of 11 Mimic/Fog Trap placements), so that chest wears a crown.
+- Stock engine file - CORE_ENGINE_CHANGES round 450.
+
 ## Round 449: every pickup within walking reach; research 40 shards; a 243-second day (2026-10-06)
 
 Three asks, all data:

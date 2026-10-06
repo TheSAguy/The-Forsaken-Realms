@@ -943,6 +943,24 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         }
     }
 
+    /**
+     * Round 450 (the user: "The Manasight Store should not work on the Mimic (The guy that looks like a chest)"): an
+     * enemy drawn as a treasure chest - the Mimic and the Fog Trap share {@code aberration/mimic.atlas} - wears no marks
+     * that only an enemy wears: no Manasight color hints, no dungeon-effect pip. Read from the sprite the enemy is drawn
+     * with (a re-theme or a dungeon upgrade swaps {@code data}), plus the Mimic quest tag for a future art swap.
+     */
+    private boolean disguisedAsLoot() {
+        if (data == null)
+            return false;
+        if (data.sprite != null && data.sprite.contains("mimic"))
+            return true;
+        if (data.questTags != null)
+            for (String tag : data.questTags)
+                if ("Mimic".equals(tag))
+                    return true;
+        return false;
+    }
+
     private void drawColorHints(Batch batch){
         int size = Math.min(data.colors.length(), 6);
         float DX = getX() - 2f;
@@ -1009,7 +1027,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                 return;
         }
         super.draw(batch, parentAlpha);
-        if(Current.player().hasColorView() && !data.colors.isEmpty()) {
+        if(Current.player().hasColorView() && !data.colors.isEmpty() && !disguisedAsLoot()) {
             drawColorHints(batch);
         }
         if(dialog != null && dialog.canShow()){ //Draw a talk icon on top.
@@ -1044,7 +1062,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
      * of the crown/talk icon above and the colour hints on the left.
      */
     private void drawDungeonEffectPip(Batch batch) {
-        if (!MapStage.getInstance().isInMap() || !MapStage.getInstance().hasDungeonEffect())
+        if (!MapStage.getInstance().isInMap() || !MapStage.getInstance().hasDungeonEffect() || disguisedAsLoot())
             return;
         batch.setColor(Color.CYAN);
         batch.draw(Forge.getAssets().getWhiteTexture(), getX() + getWidth(), getY() + getHeight() - 3f, 3, 3);
