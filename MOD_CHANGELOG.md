@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 454: Ulamog's own death - crumbling into dust (2026-10-06)
+
+The user made Ulamog's death clip in Kling as well ("Here is the death for Ulamog"), exported from Pixelate with its
+green background kept. Round 453's death was made by the converter from the idle frame (a flash, a darkening, a fade).
+
+- **The death:** the white hit flash, then the clip thinned to 10 frames - Ulamog shudders, his tentacles flatten, he
+  crumbles into dust with debris flying, the dust settles - and the two-frame fade; 13 frames, 2.6 s. His shadow fades
+  as his body goes.
+- **The converter** (procedural-pixel-creatures `tools/forge_remake/pixelate_to_forge.py`): keys a sheet whose
+  background was kept (the green goes transparent, dust blended into it turns semi-transparent), keeps a death's flying
+  debris (only the watermark's corner is cleaned there), and puts the shadow on the ground he stands on.
+- **Data only:** `sprites/enemy/remake/ulamog.atlas` + `.png` replaced (cell 140x123, was 124x117: the death sprawls
+  wider). His scale is unchanged (his idle body measures the same), so `world/enemies.json` is untouched.
+- **Checks:** `validate_plane_data.py` - no sprite or enemy findings; `enemy_scale.py --write` - nothing changed;
+  `sprite_artifact_audit.py --only remake/ulamog` (50 frames) - 6 shadow pieces.
+- Not yet seen in play. Console (F9): `spawn enemy Ulamog`, then win the duel to see the death.
+
 ## Round 453: Ulamog, hand-made from AI art cleaned into pixel art (the Pixelate pilot) (2026-10-06)
 
 The first enemy not built by the creature generator. The user, on the remake study ("what can we learn from these"),
