@@ -36151,13 +36151,13 @@
     },
     {
         "name": "Ulamog",
-        "sprite": "sprites/enemy/aberration/eldrazi/ulamog.atlas",
+        "sprite": "sprites/enemy/remake/ulamog.atlas",
         "deck": [
             "decks/legends/ulamog.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.5201,
+        "scale": 0.4161,
         "life": 70,
         "rewards": [
             {

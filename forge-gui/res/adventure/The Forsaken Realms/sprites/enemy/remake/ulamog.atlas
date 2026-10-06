@@ -1,0 +1,134 @@
+ulamog.png
+size: 1488,649
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 124, 117
+Idle
+  xy: 124, 64
+  size: 124, 117
+Idle
+  xy: 248, 64
+  size: 124, 117
+Idle
+  xy: 372, 64
+  size: 124, 117
+Idle
+  xy: 496, 64
+  size: 124, 117
+Idle
+  xy: 620, 64
+  size: 124, 117
+Idle
+  xy: 744, 64
+  size: 124, 117
+Idle
+  xy: 868, 64
+  size: 124, 117
+Idle
+  xy: 992, 64
+  size: 124, 117
+Idle
+  xy: 1116, 64
+  size: 124, 117
+Idle
+  xy: 1240, 64
+  size: 124, 117
+Idle
+  xy: 1364, 64
+  size: 124, 117
+Walk
+  xy: 0, 181
+  size: 124, 117
+Walk
+  xy: 124, 181
+  size: 124, 117
+Walk
+  xy: 248, 181
+  size: 124, 117
+Walk
+  xy: 372, 181
+  size: 124, 117
+Walk
+  xy: 496, 181
+  size: 124, 117
+Walk
+  xy: 620, 181
+  size: 124, 117
+Walk
+  xy: 744, 181
+  size: 124, 117
+Walk
+  xy: 868, 181
+  size: 124, 117
+Attack
+  xy: 0, 298
+  size: 124, 117
+Attack
+  xy: 124, 298
+  size: 124, 117
+Attack
+  xy: 248, 298
+  size: 124, 117
+Attack
+  xy: 372, 298
+  size: 124, 117
+Attack
+  xy: 496, 298
+  size: 124, 117
+Attack
+  xy: 620, 298
+  size: 124, 117
+Attack
+  xy: 744, 298
+  size: 124, 117
+Attack
+  xy: 868, 298
+  size: 124, 117
+Attack
+  xy: 992, 298
+  size: 124, 117
+Attack
+  xy: 1116, 298
+  size: 124, 117
+Attack
+  xy: 1240, 298
+  size: 124, 117
+Attack
+  xy: 1364, 298
+  size: 124, 117
+Hit
+  xy: 0, 415
+  size: 124, 117
+Hit
+  xy: 124, 415
+  size: 124, 117
+Hit
+  xy: 248, 415
+  size: 124, 117
+Hit
+  xy: 372, 415
+  size: 124, 117
+Death
+  xy: 0, 532
+  size: 124, 117
+Death
+  xy: 124, 532
+  size: 124, 117
+Death
+  xy: 248, 532
+  size: 124, 117
+Death
+  xy: 372, 532
+  size: 124, 117
+Death
+  xy: 496, 532
+  size: 124, 117
+Death
+  xy: 620, 532
+  size: 124, 117

@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 453: Ulamog, hand-made from AI art cleaned into pixel art (the Pixelate pilot) (2026-10-06)
+
+The first enemy not built by the creature generator. The user, on the remake study ("what can we learn from these"),
+pointed at github.com/nickpeanutai/pixelate - a browser workbench that turns AI-generated images and videos into clean
+pixel sprites - for the creatures the generator cannot build. They made Ulamog themselves: a still in ChatGPT, then idle,
+walk and attack clips in Kling (image-to-video, the still as first and last frame, on a green key), cleaned into 128 px
+pixel art in Pixelate. On the original sprite, seen in game first: "Original is pretty bad. Please install update so i
+can check him out."
+
+- **The sprite:** a gaunt titan with a bone skull plate and shoulder spikes, a ribbed dark-red body, long clawed arms
+  spread wide and a mass of indigo tentacles; Idle 12 frames, Walk 8, Attack 12 (an arm raised, a tentacle lashing
+  forward, a raking claw strike), Hit (the white flash and a recoil) and Death (the flash, a darkening and a two-frame
+  fade) made by the converter, a ground shadow like the remakes, the duel portrait on the skull. Side view only, like
+  the original.
+- **The converter** (procedural-pixel-creatures `tools/forge_remake/pixelate_to_forge.py`): removes the video tool's
+  watermark (it survives the keying as specks), recolors the pixels the green background bled into (a fast arm, and an
+  outline Pixelate had mixed with the green, which now draws near-black) from the creature's own palette, drops a loop's
+  repeated last frame, thins every clip to game length, writes the house atlas and the record install_remakes.py reads.
+- **Data only:**
+  - `sprites/enemy/remake/`: 2 new files (`ulamog.atlas`, `ulamog.png`).
+  - `world/enemies.json`: Ulamog's sprite, and its scale 0.5201 -> 0.4161 (a `keepSize` legend: the same drawn size).
+- **Checks:** `validate_plane_data.py` - no sprite or enemy findings; `enemy_scale.py --write` - every sprite resolves, no
+  scale changed; `sprite_artifact_audit.py --only remake/ulamog` (43 frames) - one shadow piece; the portrait checked.
+- Not yet seen in play. Console (F9): `spawn enemy Ulamog` (then `torch pulse` if the fog hides it).
+
 ## Round 452: a Mimic is a chest's size; no dot on the Warden; the Research Lab shows a set's cards; the hidden card is a new game's (2026-10-06)
 
 Four asks from the user, two with screenshots (the Warden with a purple Manasight dot; the Lab with a magnifier
