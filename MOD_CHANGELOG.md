@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 451: no crown on a Mimic (2026-10-06)
+
+The user, on round 450's open question: "Hide the crown on the mimic". An enemy with a battle effect wears a crown
+(`EnemySprite.draw()`) and is grown to at least Master size (round 186's crown size floor) - on a chest, both say
+"enemy". For an enemy that `disguisedAsLoot()` (the chest sprite, or the `Mimic` tag): no crown and no size floor. The
+effect itself still applies in the duel - only the sign is gone. The one placement it touches today is Temple of
+Chandra's crowned Mimic (`main_story/templeofchandra` id 180); a Mimic crowned at runtime (a town defender, a cave
+champion) is covered the same way.
+
+Still a tell, raised with the user, not changed: rank sizing - an Apprentice is drawn at 0.8125x, an Adept at 1x
+(a chest's own size), a Master at 1.25x and an Archmage at 1.5x, so a Master Fog Trap is visibly bigger than a chest.
+
 ## Round 450: a Mimic keeps its disguise under Manasight (2026-10-06)
 
 The user: "The Manasight Store should not work on the Minic (The guy that looks like a chest)". Manasight (the

@@ -233,7 +233,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
      * replacement would multiply the sprite up again.
      */
     private void applyCrownSizeFloor() {
-        if (effect == null || crownSizeFloorApplied)
+        if (effect == null || crownSizeFloorApplied || disguisedAsLoot()) // round 451: a Mimic wears no crown to grow for
             return;
         TuningData tuning = Config.instance().getTuningData();
         float current = tuning.tierScale(data.tier);
@@ -946,7 +946,8 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     /**
      * Round 450 (the user: "The Manasight Store should not work on the Mimic (The guy that looks like a chest)"): an
      * enemy drawn as a treasure chest - the Mimic and the Fog Trap share {@code aberration/mimic.atlas} - wears no marks
-     * that only an enemy wears: no Manasight color hints, no dungeon-effect pip. Read from the sprite the enemy is drawn
+     * that only an enemy wears: no Manasight color hints, no dungeon-effect pip, and (round 451, the user: "Hide the crown
+     * on the mimic") no crown and no crown size floor - its battle effect still applies. Read from the sprite the enemy is drawn
      * with (a re-theme or a dungeon upgrade swaps {@code data}), plus the Mimic quest tag for a future art swap.
      */
     private boolean disguisedAsLoot() {
@@ -1035,7 +1036,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
             TextureRegion TR = new TextureRegion(T, 0, 0, 16, 16);
             batch.draw(TR, getX(), getY() + 16, 16, 16);
         }
-        if(effect != null){ //Draw a crown icon on top.
+        if(effect != null && !disguisedAsLoot()){ //Draw a crown icon on top. (Round 451: not on a Mimic - the effect stays.)
             Texture T = Current.world().getGlobalTexture();
             TextureRegion TR = new TextureRegion(T, 16, 0, 16, 16);
             batch.draw(TR, getX(), getY() + 16, 16*getScaleX(), 16*getScaleY());

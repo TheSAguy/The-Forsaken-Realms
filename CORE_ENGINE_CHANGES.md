@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 451 - no crown on a Mimic
+
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - the crown in `draw()` and
+  `applyCrownSizeFloor()` skip an enemy that `disguisedAsLoot()`; its effect is untouched.
+
 ### Round 450 - a Mimic keeps its disguise under Manasight
 
 - **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - new `disguisedAsLoot()` (sprite path contains
