@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 455: the Sliver Queen, hand-made from AI clips (the Pixelate pilot, 2nd) (2026-10-06)
+
+The second enemy from the user's AI clips (ChatGPT still, Kling animations, cleaned in Pixelate), after Ulamog
+(453, 454). The user gave two walk takes: "In one, the legs don't move and in the second, the legs move, but the tail
+disappears. Can you combine the two, I want the tail and the legs to move."
+
+- **The sprite:** a huge serpent coiled on the ground, the upper body reared like a cobra with violet egg sacs, a
+  crest of horn spikes and two scythe claws, thin spiked legs at the coils, a cone-tipped tail. Idle 12 frames (the
+  egg sacs pulse), Walk 8, Attack 12 (she rears back and strikes down with both claws), Hit (flash and recoil), Death
+  13 (the flash, the egg sac swelling into a bulb, the collapse into dust, the fade). The portrait shows her head,
+  crest and claws. Side view only.
+- **The walk, merged:** the take with moving legs lost its tail from frame 6 (the join dissolving into the green key,
+  then the cone tip floating free); procedural-pixel-creatures `tools/forge_remake/pixelate/sliver_queen/merge_walk.py`
+  keeps that take and, in frames 6-17, fills in the other take's tail where it is empty, only pieces that join the
+  body, so the coil and the legs stay.
+- **Data only:**
+  - `sprites/enemy/remake/`: `sliver_queen.atlas` + `.png` (2 new files).
+  - `world/enemies.json`: the Sliver Queen's sprite, and its scale 0.6934 -> 0.3759 (a boss: the same drawn size).
+    Karona (Boss) shares the old sprite and keeps it.
+- **Checks:** `validate_plane_data.py` - no sprite or enemy findings; `enemy_scale.py --write` - every sprite resolves,
+  no scale changed; `sprite_artifact_audit.py --only remake/sliver_queen` (50 frames) - 4 frames where the death's dust
+  cloud lies apart from the body (meant); the portrait checked.
+- Not yet seen in play. Console (F9): `spawn enemy "Sliver Queen"`.
+
 ## Round 454: Ulamog's own death - crumbling into dust (2026-10-06)
 
 The user made Ulamog's death clip in Kling as well ("Here is the death for Ulamog"), exported from Pixelate with its

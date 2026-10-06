@@ -27851,7 +27851,7 @@
     },
     {
         "name": "Sliver Queen",
-        "sprite": "sprites/enemy/aberration/sliver_queen.atlas",
+        "sprite": "sprites/enemy/remake/sliver_queen.atlas",
         "deck": [
             "decks/miniboss/sliver_queen.dck"
         ],
@@ -28027,7 +28027,7 @@
         "gamesPerMatch": 3,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.6934
+        "scale": 0.3759
     },
     {
         "name": "Sliver_Black",
