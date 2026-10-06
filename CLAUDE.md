@@ -61,15 +61,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 ## STATE 2026-10-06 (round 450): **LOCAL + UNRELEASED** - a Mimic keeps its disguise: `EnemySprite.disguisedAsLoot()`
 (the chest sprite `aberration/mimic.atlas` - Mimic and Fog Trap - or the `Mimic` tag) skips Manasight's color dots and
 the dungeon-effect pip (the user: "The Manasight Store should not work on the Minic"). Open: Temple of Chandra's one
-crowned Mimic (id 180) still wears its crown - asked. Packaged with 449 when the user's game closes.
+crowned Mimic (id 180) still wears its crown - asked. LIVE + AGENT PACKAGED 2026-10-06 07:08 with 449 (jar C935032AA8A0).
 
 ## STATE 2026-10-06 (round 449): **LOCAL + UNRELEASED (data only)** - (1) every pickup within walking reach: the user's
 Mercenary Barracks Wood (outside the west wall) led to NEW `dev-tools/gated_loot/pickup_reach.py` (round 378's reach
 model over all 2,975 map pickups; exit 1 on any UNREACHABLE) - 14 Wood/Stone + 4 gold/shard moved to the nearest
 walkable floor, each checked on the map art (MOD_CHANGELOG 449 lists them); 65 GATED Wood/Stone kept (vaults, boss
 rooms). (2) `researchShardCost` 50 -> 40 (30/40/50/60 Easy-Insane; "On Insane it should be 60"). (3) `dayLengthSeconds`
-270 -> 243 (10% faster, like round 268). GUIDE.md + GUIDE.html (it had lagged since 443). PACKAGING waits for the
-user's game to close (it was running).
+270 -> 243 (10% faster, like round 268). GUIDE.md + GUIDE.html (it had lagged since 443). LIVE + AGENT PACKAGED
+2026-10-06 07:08 with 450 (jar C935032AA8A0).
 
 ## STATE 2026-10-05 (round 448): **LOCAL + UNRELEASED (test tooling)** - the console `leave` and the bridge's `leave`
 refuse during a duel (leaving mid-duel closed the game); the agent's map walker plans its own A* over an 8 px grid of

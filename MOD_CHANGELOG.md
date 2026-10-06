@@ -14277,7 +14277,10 @@ edge - on a treasure chest that is a sign saying "enemy here".
 - No dungeon-effect pip either (round 200's cyan dot on every enemy in a buffed place) - the same giveaway on a chest.
 - Left as is, and raised with the user: the crown on an enemy with a battle effect. One Mimic placement carries one
   (`main_story/templeofchandra` id 180, of 11 Mimic/Fog Trap placements), so that chest wears a crown.
+- Agent-tested on the world map with a Manasight Stone equipped: a Goblin Worker shows its red dot, two Mimics and a
+  Fog Trap beside it show none.
 - Stock engine file - CORE_ENGINE_CHANGES round 450.
+- LIVE + AGENT PACKAGED 2026-10-06 07:08 with round 449 (jar C935032AA8A0).
 
 ## Round 449: every pickup within walking reach; research 40 shards; a 243-second day (2026-10-06)
 
@@ -14320,7 +14323,8 @@ Three asks, all data:
   same 10% step as round 268: a day is 4m03s of wall clock. Everything counted in days is unchanged.
 - `GUIDE.html` regenerated - it had fallen behind `GUIDE.md` since round 443 (the dungeon-clear wording and rounds
   445-447's notoriety paragraphs were missing from it).
-- Not agent-tested: the moves are positions only, and the reach model is the test. Packaged when the user's game closes.
+- Not agent-tested: the moves are positions only, and the reach model is the test. LIVE + AGENT PACKAGED 2026-10-06
+  07:08 with round 450 (jar C935032AA8A0).
 
 ## Round 448: the console `leave` waits out a duel; the agent's map walker finds its way (2026-10-05)
 
