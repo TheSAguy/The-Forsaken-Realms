@@ -60,7 +60,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 
 ## STATE 2026-10-06 (round 451): **LOCAL + UNRELEASED** - no crown on a Mimic (the user: "Hide the crown on the
 mimic"): `EnemySprite.draw()`'s crown and `applyCrownSizeFloor()` skip `disguisedAsLoot()`; the battle effect stays.
-Offered, not done: rank sizing (Master 1.25x, Archmage 1.5x) still makes a high-rank Mimic bigger than a chest.
+Offered, not done: rank sizing (Master 1.25x, Archmage 1.5x) still makes a high-rank Mimic bigger than a chest. LIVE + AGENT
+PACKAGED 2026-10-06 (jar D86EDA489062). Not seen in game (the logic is round 450's tested helper).
 
 ## STATE 2026-10-06 (round 450): **LOCAL + UNRELEASED** - a Mimic keeps its disguise: `EnemySprite.disguisedAsLoot()`
 (the chest sprite `aberration/mimic.atlas` - Mimic and Fog Trap - or the `Mimic` tag) skips Manasight's color dots and

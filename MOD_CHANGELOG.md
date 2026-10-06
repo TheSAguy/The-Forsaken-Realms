@@ -14276,6 +14276,9 @@ champion) is covered the same way.
 Still a tell, raised with the user, not changed: rank sizing - an Apprentice is drawn at 0.8125x, an Adept at 1x
 (a chest's own size), a Master at 1.25x and an Archmage at 1.5x, so a Master Fog Trap is visibly bigger than a chest.
 
+LIVE + AGENT PACKAGED 2026-10-06 (jar D86EDA489062). Not agent-tested: round 450's tested `disguisedAsLoot()` gates two
+more draws.
+
 ## Round 450: a Mimic keeps its disguise under Manasight (2026-10-06)
 
 The user: "The Manasight Store should not work on the Minic (The guy that looks like a chest)". Manasight (the
