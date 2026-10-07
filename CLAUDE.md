@@ -63,7 +63,8 @@ Pixel Creatures session: the 18 sheets in `sprites/enemy/fallen_empires/svyeluni
 portraits, six-frame deaths on the 14 sheets that had one frame or none (the four 8-frame deaths kept), and a War
 Machine whose carriage bounces as it walks and rears and slams as it attacks (`tools/forge_remake/upgrade_sheet.py`,
 `svyelunite/war_machine.py` in that repo). Frame cells unchanged: enemy_scale 0 changes, no data edits. Approved from
-the preview sheets; not seen in play.
+the preview sheets; not seen in play. LIVE + AGENT PACKAGED 2026-10-07 (jar
+447D4EDA8E23; the 36 files identical to the repo; atlases checked: regions inside their sheets, an Avatar each).
 
 ## STATE 2026-10-07 (round 468): **LOCAL + UNRELEASED** - NoRotate places (the Blue Towers, the Forgotten Cave) leave on a
 full clear (every level, nothing left) and come back after the spot rest like a boss lair (`DungeonRotation.
