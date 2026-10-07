@@ -287,10 +287,14 @@ public class MatchController extends NetworkGuiGame {
         if (FThreads.isGuiThread()) {
             return;
         }
+        // Round 464 (The Forsaken Realms; the user: "have it start without a tap"): in the Adventure the opening toss
+        // closes on its own after the flip and its result, like a card's coin flip - a run has hundreds of duels, and
+        // each one stood waiting for a tap. A tap still skips it.
+        final boolean tapToClose = waitForTap && !Forge.isMobileAdventureMode;
         final CountDownLatch latch = new CountDownLatch(1);
         FThreads.invokeInEdtLater(() -> {
             try {
-                new CoinFlipOverlay(heads, caption, waitForTap, latch::countDown).show();
+                new CoinFlipOverlay(heads, caption, tapToClose, latch::countDown).show();
             } catch (RuntimeException e) {
                 latch.countDown();
             }

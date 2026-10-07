@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 464 - the opening coin toss closes on its own; a Settings switch
+
+- **`forge-gui-mobile/src/forge/screens/match/MatchController.java`** - `showCoinFlip()`: `waitForTap` is dropped
+  in Adventure mode (`Forge.isMobileAdventureMode`). Upstream conflict risk: low - one local before the overlay.
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** - an `addCheckBox` for
+  `FPref.UI_COIN_FLIP_ANIMATION` after upstream's card-play animation row.
+
 ### Round 462 - Svyelunite Temple
 
 - **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** - `getQuestNPCResponse()`: a quest

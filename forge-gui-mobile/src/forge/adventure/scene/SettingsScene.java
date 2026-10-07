@@ -427,6 +427,10 @@ public class SettingsScene extends UIScene {
         });
         addLabel(localizer.getMessageorUseDefault("lblCardPlayOption", "Card Play Animation Style"));
         settingGroup.add(cardPlayAnim).align(Align.right).pad(2);
+        // Round 464 (the user: "Add both an on/off setting and have it start without a tap"): Forge's own Coin Flip
+        // Animation switch - the opening toss and every card's coin flip - here too, not only in Classic's settings.
+        addCheckBox(localizer.getMessageorUseDefault("lblCoinFlipAnimation", "Coin Flip Animation"),
+                ForgePreferences.FPref.UI_COIN_FLIP_ANIMATION);
         if (!GuiBase.isAndroid()) {
             final String[] item = {FModel.getPreferences().getPref(ForgePreferences.FPref.UI_ENABLE_BORDER_MASKING)};
             SelectBox<String> borderMask = Controls.newComboBox(new String[]{"Off", "Crop", "Full", "Art"}, item[0], o -> {

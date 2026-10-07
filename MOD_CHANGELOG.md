@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 464: the opening coin toss closes on its own; a Settings switch for it (2026-10-06)
+
+Round 460's merge brought upstream's coin flip animation (#12155): the first game of every match opens with a flip and
+"<name>, you have won/lost the coin toss" that waited for a tap (`CoinFlipOverlay` waitForTap, the game thread held on
+a latch); a card's coin flip plays ~2.4 s and closes itself. The switch, `UI_COIN_FLIP_ANIMATION` ("Coin Flip
+Animation", on by default), was only in Classic Forge's settings. The user, after the details: "Add both an on/off
+setting and have it start without a tap."
+
+- **No tap** (`MatchController.showCoinFlip`): in the Adventure (`Forge.isMobileAdventureMode`) the opening toss closes
+  on its own like a card's flip - 1.5 s flip, 0.9 s on the result. A tap still skips it; Classic Forge keeps
+  upstream's tap.
+- **Settings** (`SettingsScene`): "Coin Flip Animation" checkbox under "Card Play Animation Style" - the same Forge
+  preference Classic's page sets, so either place turns it off (the toss and card flips both).
+- **Agent-tested** with auto-battle off (a human seat): after the ante screens the coin flipped, showed "tails / Victor,
+  you have lost the coin toss." with no "Tap to continue", and was gone ~1.8 s later, the mulligan prompt up ("Nymris
+  (Master) is going first"). The new checkbox sits below the Settings fold (the bridge cannot scroll) - not seen.
+
 ## Round 462: Svyelunite Temple - Old Border Shandalar's Fallen Empires battle comes to the realm (2026-10-06)
 
 The user: "For the New enemies in Shandalar Old Border. Go with your recommendation and take the temple set. See if we
