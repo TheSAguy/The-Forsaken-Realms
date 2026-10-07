@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 457: the Bank moves 500 at a time; the Capitol's land shops, answered (2026-10-06)
+
+A player on Discord (Android): "Can the bank deposit and withdraw be 1k instead of 100. 2. Do the colored land shops in
+the capital not have reroll buttons either for the books. Or the neutral land store. I bought some land but not sure if
+the renew each week or not". The user: "Let's change the bank Deposit and Withdrawal amounts to 500" and "The 5 land
+shops in the Player Capitol. Do their inventories refresh weekly?"
+
+- **Bank step 100 -> 500.** The constant `BANK_DENOMINATION` became settings.json `bankStepGold` (TuningData, read by
+  `EconomyBuildings.bankStep()`, floor 1): the Deposit and Withdraw buttons move 500 [+Gold]; Deposit All / Withdraw All
+  are unchanged. Desktop only until the next release - the Android APK carries the old build.
+- **The land shops, answered (no change).** All six in `player_capital.tmx` (Plains 55, Forest 77, Mountain 78, Swamp
+  79, Island 80, neutral Land 81) are `noRestock` + `fixedShop`: `PointOfInterestChanges.getWeeklyShopSeed()` rerolls
+  each one 7 in-game days after ITS OWN last roll (stamped on first sight, applied on the next entry - not on the HUD's
+  week boundary), and MapStage forces their restockPrice to 0, so there is no paid restock button - by the user's
+  2026-08-15 decision, the weekly reroll is their only refresh. The shop header says "Inventory will refresh weekly".
+  The five colored shops are `unlimited` (4 Land Sketchbooks + 4 Snow-Covered basics that never sell out, the books
+  re-picked weekly); the neutral Land shop's 8 nonbasic lands sell out until its next reroll.
+- Offered, not done: line the land shops' (and the Armory's) reroll up with the calendar week (`World.weekOf`, as round
+  288 did for the restock surcharge), so all of them turn over on the day the week tracker does.
+- Not agent-tested (a settings read). LIVE + AGENT PACKAGED 2026-10-06 (jar 9B2B649584B6).
+
 ## Round 456: Kozilek from AI clips; the Sliver Queen's strike in frame; every duel portrait shows the whole creature (2026-10-06)
 
 Three things from the user's play-testing of rounds 453-455: Kozilek's clips arrived (the third hand-made enemy); on the

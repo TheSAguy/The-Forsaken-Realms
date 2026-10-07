@@ -2590,7 +2590,11 @@ public class EconomyBuildings {
     // need repeatable custom Java logic - bank balance and Wood/Stone aren't expressible through
     // the declarative ActionData system used by ordinary map dialogs). ----
 
-    private static final int BANK_DENOMINATION = 100;
+    /** The Bank's Deposit / Withdraw step - settings.json bankStepGold (round 457: 100 -> 500), never below 1. */
+    private static int bankStep() {
+        TuningData tuning = Config.instance().getTuningData();
+        return tuning == null ? 500 : Math.max(1, tuning.bankStepGold);
+    }
 
     public static void openBankDialog(MapStage stage, PointOfInterestChanges changes, int objectId) {
         refreshBankDialog(stage, changes, objectId);
@@ -2647,9 +2651,10 @@ public class EconomyBuildings {
         // [+Gold]"/"Deposit All" etc. are all shorter than "Dismiss Uncommon"/"Dismiss Mythic",
         // which already fit this same 140f width unscaled.
         int[] column = {0};
-        addHalfButton(dialog, column, "Deposit " + BANK_DENOMINATION + " [+Gold]", player.getGold() >= BANK_DENOMINATION, () -> {
-            ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.takeGold(BANK_DENOMINATION));
-            changes.addBankBalance(BANK_DENOMINATION);
+        int step = bankStep();
+        addHalfButton(dialog, column, "Deposit " + step + " [+Gold]", player.getGold() >= step, () -> {
+            ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.takeGold(step));
+            changes.addBankBalance(step);
             refreshBankDialog(stage, changes, objectId);
         });
         addHalfButton(dialog, column, "Deposit All", player.getGold() > 0, () -> {
@@ -2658,9 +2663,9 @@ public class EconomyBuildings {
             changes.addBankBalance(all);
             refreshBankDialog(stage, changes, objectId);
         });
-        addHalfButton(dialog, column, "Withdraw " + BANK_DENOMINATION + " [+Gold]", changes.getBankBalance() >= BANK_DENOMINATION, () -> {
-            changes.addBankBalance(-BANK_DENOMINATION);
-            ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.giveGold(BANK_DENOMINATION));
+        addHalfButton(dialog, column, "Withdraw " + step + " [+Gold]", changes.getBankBalance() >= step, () -> {
+            changes.addBankBalance(-step);
+            ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.giveGold(step));
             refreshBankDialog(stage, changes, objectId);
         });
         addHalfButton(dialog, column, "Withdraw All", changes.getBankBalance() > 0, () -> {

@@ -374,6 +374,9 @@ public class TuningData {
     // difficulty scaling every other building cost gets (EconomyBuildings.scaledCost()).
     public int researchDays = 7;
     public int researchShardCost = 100;
+    // Round 457 (the user: "Let's change the bank Deposit and Withdrawal amounts to 500", after a player asked for 1k
+    // instead of 100): the gold one Bank Deposit / Withdraw press moves (EconomyBuildings.bankStep()).
+    public int bankStepGold = 500;
     // AI town guard dots (MOD_SCOPE #87, user spec 2026-09-03): an AI-held color town gains one
     // guard level every this many in-game days of unbroken AI ownership (default 4 weeks), up to
     // level 4. The clock starts when the town is first seen held (save load / capture), never

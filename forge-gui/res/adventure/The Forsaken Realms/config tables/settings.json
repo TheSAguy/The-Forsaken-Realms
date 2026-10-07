@@ -188,6 +188,9 @@
     // Normal x1, Hard x1.25, Insane x1.5). Round 449: 50 -> 40, the user's "On Insane it should be
     // 60" - 30 / 40 / 50 / 60 shards from Easy to Insane.
     "researchShardCost": 40,
+    // Bank: the gold one Deposit or Withdraw press moves (Deposit All / Withdraw All move everything).
+    // Round 457: 100 -> 500 (a player asked for 1,000).
+    "bankStepGold": 500,
     // AI towns: in-game days of unbroken AI ownership per guard-dot level (4 levels; the clock
     // starts when the town is first seen held, not retroactively). Level sets the assault defender:
     // none = Apprentice, 1 = Adept, 2 = Master, 3 = Archmage, 4 = Archmage with two starting lands.
