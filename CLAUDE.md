@@ -63,11 +63,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 (+ Eldrazi Scion, Ulalek) and the Phoenix (+ Syrix) - 8 enemies, 16 new files in `sprites/enemy/remake/`, enemies.json
 8 sprites + 8 scales (the boss and the keepSize set pieces keep their drawn size). Known flaw: the Eldrazi's and the
 Phoenix's attacks are cut at the clip's top edge in a few frames (unpadded 256 exports); padded stills for a redo are
-ready in the user's Custom folder. The peer (#30) packages live + agent. Not seen in play.
+ready in the user's Custom folder. LIVE + AGENT PACKAGED 2026-10-07 by #30 (atlases checked; enemies.json and the
+16 files identical to the repo). Not seen in play.
 
 ## STATE 2026-10-07 (round 470): **LOCAL + UNRELEASED (pictures + tool)** - the 45+ and 50+ bonus Wall cards print the
 life they add ("Your foe also starts with +25% life." / "+25% more life (+50% in all)."), redrawn by
-`make_wall_cards.py --bonus-only --reuse-art` (the art folder on F: was not attached; art boxes kept byte-identical).
+`make_wall_cards.py --bonus-only --reuse-art` (the art folder on F: was not attached; art boxes kept byte-identical). LIVE + AGENT
+PACKAGED 2026-10-07 (with 469).
 
 ## STATE 2026-10-07 (round 463): **LOCAL + UNRELEASED (sprites only)** - the Svyelunite Temple art, by the Procedural
 Pixel Creatures session: the 18 sheets in `sprites/enemy/fallen_empires/svyelunite/` get 64 px whole-body duel
