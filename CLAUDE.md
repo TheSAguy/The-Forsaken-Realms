@@ -61,7 +61,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 ## STATE 2026-10-07 (round 465): **LOCAL + UNRELEASED** - the win-streak notice shows once per streak (the first duel
 the streak applies; `AdventurePlayer.winStreakJustReached`), later duels start the enemy with its Wastes silently; the
 streak does not scale (always one Wastes). Test cheat `winstreak "Name" N`. Agent-tested on Insane (streak 3 notice,
-streak 4 none).
+streak 4 none). LIVE + AGENT PACKAGED 2026-10-07 (jar 92D07DD50469; carries 464 too).
 
 ## STATE 2026-10-06 (round 464): **LOCAL + UNRELEASED** - the opening coin toss (upstream #12155, round 460) closes on its
 own in the Adventure (`MatchController.showCoinFlip` drops waitForTap when `Forge.isMobileAdventureMode`), and TFR's
