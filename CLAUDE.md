@@ -58,11 +58,18 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-06 (round 461): **LOCAL + UNRELEASED** - invasions with variety, sized to the player (a player: "always
+the same opponents"): 4 pools widened, 6 new invasions (quests 93-98: Orc Warband, Giants at the Gate, Demon Incursion,
+Knightly Siege, Bandit Raid, Blood Hunt), 9 leaders tagged; all 11 `tfrInvasion` + offerProbability 0.45; NEW
+`util/InvasionQuests` - minion wins by difficulty (2/3/3/4), leader within rank (+1 rank at town reputation 10), reward
+by the leader's rank (300/500/800/1200 gold, rep 2/2/3/3), no back-to-back repeats. Eviction Notice: uniform pick in
+the window (was 50% the nearest), skips last target, +91 caves. Agent-tested (Insane rank 10 and a new Normal game).
+
 ## STATE 2026-10-06 (round 460): **LOCAL + UNRELEASED** - ENGINE = the 10.06 daily (upstream `2f90918a902`, base install
 `E:\GAMES\Forge_2` build 2026-10-06 18:28:55; `engineBuildVersion` 2.0.16-SNAPSHOT-10.06). Conflicts: README (ours),
 InventoryScene (ours + upstream's localized item names). New: item/shop text via the localizer (no keys ship yet), duel
 animations incl. an opening coin toss that waits for a tap (asked the user). Next merge starts at `2f90918a902`.
-Agent-tested a duel end to end. Rounds 458-460 package together.
+Agent-tested a duel end to end. LIVE + AGENT PACKAGED 2026-10-06 with 458-459 (jar C6FD561F0282).
 
 ## STATE 2026-10-06 (round 459): **LOCAL + UNRELEASED** - weekly shops turn over with the calendar week (the user: "The
 land shops should refresh on days 8, 15, 22, ect."): `PointOfInterestChanges.getWeeklyShopSeed()` rerolls when
@@ -203,7 +210,7 @@ of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety b
 research 40 + a 243 s day, 450 = no Manasight on a Mimic, 451 = no crown on a Mimic, 452 = chest-size Mimics + the Warden's dot + the Lab's
 set view + the hidden card a new game's only (done), 453 = Ulamog from the Pixelate pilot (the Procedural Pixel
 Creatures session), 454 = Ulamog's own death (same), 455 = the Sliver Queen (same), 456 = Kozilek + whole-body portraits (same), 457 = the Bank's step 500, 458 = the Juggernaut, the Evil Wall and the Chimera (the Procedural Pixel Creatures session), 459 = weekly shops turn over
-with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`) - the next free round is **461**;
+with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread - the next free round is **462**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,

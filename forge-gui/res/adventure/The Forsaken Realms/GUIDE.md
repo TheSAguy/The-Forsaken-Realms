@@ -415,6 +415,12 @@ coin flip - though a key you need to get deeper in always drops.
 - **The creatures a quest asks for come to you.** While a "defeat" quest is active, its creatures get their
   own roll every time new creatures appear - on roads and on your own land as much as anywhere. With
   several such quests, each gets an equal turn.
+- **Invasions** (goblins, merfolk, the undead, elves, soldiers, orcs, giants, demons, knights, bandits and
+  vampires) ask for a few wins against the invaders - 2 on Easy, 3 on Normal and Hard, 4 on Insane - then
+  for their leader. The leader matches your rank, and comes one rank tougher once the town that asks has
+  10 or more reputation with you. The reward grows with the leader's rank: 300 / 500 / 800 / 1,200 gold
+  and 2 or 3 local reputation. A town won't offer the same invasion twice in a row.
+- **Eviction Notice** sends you to clear one of the nearer dungeons or caves - a different one each time.
 - The **blue dot** in the quest list marks the quest you're tracking, and counting quests - "defeat five
   Blue enemies", "clear three dungeons" - show their progress there, "(2/5)".
 

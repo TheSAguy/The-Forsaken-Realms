@@ -377,6 +377,14 @@ public class TuningData {
     // Round 457 (the user: "Let's change the bank Deposit and Withdrawal amounts to 500", after a player asked for 1k
     // instead of 100): the gold one Bank Deposit / Withdraw press moves (EconomyBuildings.bankStep()).
     public int bankStepGold = 500;
+    // Round 461 (the user: invasion quests with "some variety. Take into consideration the difficulty level, and the players
+    // current reputation level") - read by util/InvasionQuests for every quests.json "tfrInvasion" template:
+    // minion wins asked, Easy..Insane; the issuing town's reputation at which its leader comes one rank tougher (0 =
+    // never); the reward by the leader's rank, Apprentice..Archmage.
+    public int[] invasionMinionsByDifficulty = {2, 3, 3, 4};
+    public int invasionTrustReputation = 10;
+    public int[] invasionGoldByTier = {300, 500, 800, 1200};
+    public int[] invasionReputationByTier = {2, 2, 3, 3};
     // AI town guard dots (MOD_SCOPE #87, user spec 2026-09-03): an AI-held color town gains one
     // guard level every this many in-game days of unbroken AI ownership (default 4 weeks), up to
     // level 4. The clock starts when the town is first seen held (save load / capture), never

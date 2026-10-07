@@ -60,7 +60,8 @@
             "Humanoid",
             "Unholy",
             "IdentityBlack",
-            "BiomeBlack"
+            "BiomeBlack",
+            "Leader"
         ],
         "tier": "Rare",
         "scale": 0.9286
@@ -10637,7 +10638,7 @@
         ],
         "colors": "R",
         "questTags": [
-            "Goblin",
+            "Elf",
             "IdentityGreen",
             "Beginner"
         ],
@@ -113576,7 +113577,8 @@
         "questTags": [
             "Shandalar1997",
             "Demon",
-            "BiomeBlack"
+            "BiomeBlack",
+            "Leader"
         ],
         "tier": "Uncommon"
     },
@@ -130570,7 +130572,8 @@
             "BiomeBlack",
             "IdentityRed",
             "BiomeRed",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Leader"
         ],
         "tier": "Rare",
         "scale": 1.4444
@@ -136250,7 +136253,8 @@
             "Goblin",
             "IdentityRed",
             "BiomeRed",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Leader"
         ],
         "tier": "Mythic",
         "scale": 0.7647
@@ -137321,7 +137325,8 @@
             "Knight",
             "IdentityWhite",
             "BiomeWhite",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Leader"
         ],
         "tier": "Uncommon",
         "scale": 0.7647
@@ -137510,7 +137515,8 @@
             "Merfolk",
             "IdentityBlue",
             "BiomeBlue",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Leader"
         ],
         "tier": "Mythic",
         "scale": 0.5417
@@ -138896,7 +138902,8 @@
             "Orc",
             "IdentityRed",
             "BiomeRed",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Leader"
         ],
         "tier": "Uncommon",
         "scale": 0.3611
@@ -138959,7 +138966,8 @@
             "Orc",
             "IdentityBlack",
             "BiomeBlack",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Leader"
         ],
         "tier": "Rare",
         "scale": 0.3611
@@ -140093,7 +140101,8 @@
             "Knight",
             "IdentityWhite",
             "BiomeWhite",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Leader"
         ],
         "tier": "Uncommon",
         "scale": 0.3714

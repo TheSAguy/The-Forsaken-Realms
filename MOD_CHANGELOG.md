@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 461: invasions with variety, sized to the player; Eviction Notice spreads out (2026-10-06)
+
+A player on Discord: "are the invasion quests repetitive (always the same opponents)? The only fun quests ... are the
+ones that require clearing a dungeon (eviction notice, pest control, etc.)". The user: "add more with some variety.
+Take into consideration the difficulty level, and the players current reputation level ... Same for 'Eviction
+Notice' If that has a set pool of POI, let's see if we can expand that a little", then "Go with your recommendations".
+
+**What it was.** Invasions were 33-40% of every town's board, from tiny pools: Elf 3 minions + always the Golgari Elf,
+Goblin 6 + 2 leaders, Merfolk 6 + 3, Soldier 16 + 3 (Undead alone had depth); a flat 500 gold + 2 reputation whatever
+the difficulty, rank or standing. Eviction Notice had a big pool (171 POI types, 249 placed) but `count1` 0 with
+`count2` 25 clamped half of all rolls to the single NEAREST one.
+
+- **Wider pools.** Goblin, Merfolk, Elf and Soldier minions no longer need the `Minion` tag - every spawnable family
+  member that is not a Leader or Boss counts (spawnable minions / leaders: Goblin 6/2 -> 13/3, Merfolk 6/3 -> 10/4, Elf
+  3/1 -> 7/1, Soldier 16/3 -> 19/3; Undead 38/20 unchanged). `Leader` added in enemies.json to Goblin Warlord, Sirena
+  Tide-Singer, Orc Warchief, Orc Deathcaller, Abyssal Baron, Pit Balor, Nether Fiend of Shandalar, Cavalier Captain and
+  Shieldmaiden Captain - leaders at the higher ranks. **Elf Vagabond** (an elf druid sprite) was tagged `Goblin`: now
+  `Elf` (it came up as a Goblin Invasion leader in the test). New pools: Orc 15/3, Giants 20/3, Demons 33/5, Knights
+  23/5, Bandits 15/4, Vampires 5/3.
+- **Six new invasions** (quests 93-98), from families with depth at every rank: **Orc Warband**, **Giants at the
+  Gate** (Sphinx/Wurm/Nature/Zombie/Undead/Golem "giants" excluded), **Demon Incursion**, **Knightly Siege**, **Bandit
+  Raid** (bandits and pirates), **Blood Hunt** (vampires). Each is offered in every town color but its home's.
+- **The board keeps its balance.** All 11 invasions carry `offerProbability` 0.45, so about four are eligible at any
+  town - the old share, now drawn from 11. A town never offers the invasion it offered last (this session).
+- **Sized to the player** (`util/InvasionQuests`, quests.json `"tfrInvasion": true`, read out-of-band; settings.json):
+  - minion wins `invasionMinionsByDifficulty` 2 / 3 / 3 / 4 (Easy-Insane), shown through `$(invasion_count)`;
+  - the leader is picked within the player's rank (`SpawnTierWeighting.effectiveRank` - lifetime wins, a step up on a
+    30+ streak), one rank tougher once the issuing town has `invasionTrustReputation` (10) reputation; tagged leaders
+    first, else the family's strongest member in reach (Orc, Demon and Knight leaders start at Adept or above); one of
+    the top two ranks in reach; not the leader this invasion sent last time when another will do;
+  - the reward follows the leader's shown rank: `invasionGoldByTier` 300 / 500 / 800 / 1,200 and
+    `invasionReputationByTier` 2 / 2 / 3 / 3, written into the epilogue's action and its text (`$(invasion_gold)`,
+    `$(invasion_rep)`). `[TFR-Invasion]` logs each one.
+- **Eviction Notice.** `AdventureQuestStage.setTargetPOI` picks uniformly in the count1 +/- count2 window that fits
+  the list (also no longer falling back to a random place anywhere when the window ran past the end), and skips the
+  place the same quest named last (this session). 91 ordinary Hostile caves join its pool (`Sidequest` added; the
+  NoRotate Forgotten Cave stays out): about 340 places. `[TFR-QuestTarget]` logs each pick.
+- GUIDE: Quests - invasions and Eviction Notice.
+- **Agent-tested.** Day-210 save (Insane, rank 10): all 11 invasions issue with 4 minion wins and leaders from each
+  family's top ranks (Goblin King, Storm Titan, Pit Balor, Revenant Knight-Captain, Bloodveil Countess...), rewards
+  300-1,200 by rank; repeated issues never repeat a leader back to back; 8 Eviction Notices named 8 different places
+  between #2 and #84 of the nearest quarter. A fresh New Game (Normal, rank 0.5): 3 minion wins and Apprentice-level
+  leaders (Axe Orc, Weak Demon, Chainmail Knight, Pirate Captain, Yeti), 300-500 gold. Found and fixed: the Goblin
+  leader stand-in was the Goblin-tagged Elf Vagabond (retagged; both Goblin stages exclude `Elf` too). The quest log reads
+  "Win at least 4 duels against them. (0/4)". Not seen: a town at 10+ reputation stepping its leader up.
+
 ## Round 460: the engine to the 10.06 daily (upstream `2f90918a902`) (2026-10-06)
 
 The user installed the official 10.06 snapshot into `E:\GAMES\Forge_2` (the packager then refused: base 10.06, plane

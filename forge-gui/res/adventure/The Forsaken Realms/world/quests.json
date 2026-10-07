@@ -8232,6 +8232,8 @@
 	{
 		"id": 38,
 		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
 		"name": "Goblin Invasion",
 		"description": "Stop the Goblin invasion.",
 		"offerDialog": {
@@ -8275,7 +8277,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "With the Goblin attacks halted, the people of $(poi_3) shower you with thanks and quite a few coins as well. (+2 Local Reputation, +500 [+Gold])",
+			"text": "With the Goblin attacks halted, the people of $(poi_3) shower you with thanks and quite a few coins as well. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
 			"options": [
 				{
 					"action": [
@@ -8327,7 +8329,7 @@
 			{
 				"id": 1,
 				"name": "Battle the Goblin horde",
-				"description": "Goblins are appearing all over. Win at least three duels against them.",
+				"description": "Goblins are appearing all over. Win at least $(invasion_count) duels against them.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 3,
@@ -8335,12 +8337,12 @@
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"enemyTags": [
-					"Goblin",
-					"Minion"
+					"Goblin"
 				],
 				"enemyExcludeTags": [
 					"Leader",
-					"Boss"
+					"Boss",
+					"Elf"
 				],
 				"prologue": {},
 				"epilogue": {
@@ -8370,7 +8372,8 @@
 					"Leader"
 				],
 				"enemyExcludeTags": [
-					"Boss"
+					"Boss",
+					"Elf"
 				],
 				"prologue": {},
 				"epilogue": {
@@ -8420,6 +8423,8 @@
 	{
 		"id": 39,
 		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
 		"name": "Merfolk Invasion",
 		"description": "Stop the Merfolk invasion.",
 		"offerDialog": {
@@ -8463,7 +8468,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "Whether the merfolk got sufficient revenge, or your efforts drove them away, $(poi_3) is no longer under attack. (+2 Local Reputation, +500 [+Gold])",
+			"text": "Whether the merfolk got sufficient revenge, or your efforts drove them away, $(poi_3) is no longer under attack. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
 			"options": [
 				{
 					"action": [
@@ -8515,7 +8520,7 @@
 			{
 				"id": 1,
 				"name": "Battle the Merfolk raiders",
-				"description": "Defeat at least three Merfolk in defense of $(poi_3).",
+				"description": "Defeat at least $(invasion_count) Merfolk in defense of $(poi_3).",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 3,
@@ -8523,8 +8528,7 @@
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"enemyTags": [
-					"Merfolk",
-					"Minion"
+					"Merfolk"
 				],
 				"enemyExcludeTags": [
 					"Leader",
@@ -8608,6 +8612,8 @@
 	{
 		"id": 40,
 		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
 		"name": "Undead Invasion",
 		"description": "Stop the Undead invasion.",
 		"offerDialog": {
@@ -8651,7 +8657,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "Tonight, $(poi_3) can rest more easily, as the dead do not rise before they can be burned. (+2 Local Reputation, +500 [+Gold])",
+			"text": "Tonight, $(poi_3) can rest more easily, as the dead do not rise before they can be burned. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
 			"options": [
 				{
 					"action": [
@@ -8703,7 +8709,7 @@
 			{
 				"id": 1,
 				"name": "Battle the Undead",
-				"description": "Defeat at least three Undead in defense of $(poi_3).",
+				"description": "Defeat at least $(invasion_count) Undead in defense of $(poi_3).",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 3,
@@ -8795,6 +8801,8 @@
 	{
 		"id": 41,
 		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
 		"name": "Elven Invasion",
 		"description": "Stop the Elven invasion.",
 		"offerDialog": {
@@ -8838,7 +8846,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "The elves are still angry about the defilement of their sacred tree, but your efforts in defending $(poi_3) have convinced them to forgo revenge for now. (+2 Local Reputation, +500 [+Gold])",
+			"text": "The elves are still angry about the defilement of their sacred tree, but your efforts in defending $(poi_3) have convinced them to forgo revenge for now. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
 			"options": [
 				{
 					"action": [
@@ -8890,7 +8898,7 @@
 			{
 				"id": 1,
 				"name": "Battle the Elves",
-				"description": "Defeat at least three Elves in defense of $(poi_3).",
+				"description": "Defeat at least $(invasion_count) Elves in defense of $(poi_3).",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 3,
@@ -8898,8 +8906,7 @@
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"enemyTags": [
-					"Elf",
-					"Minion"
+					"Elf"
 				],
 				"enemyExcludeTags": [
 					"Leader",
@@ -8983,6 +8990,8 @@
 	{
 		"id": 42,
 		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
 		"name": "Soldier Invasion",
 		"description": "Stop the Soldier invasion.",
 		"offerDialog": {
@@ -9026,7 +9035,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "The leaders of $(poi_3) have you to thank for their freedom, and likely their heads. (+2 Local Reputation, +500 [+Gold])",
+			"text": "The leaders of $(poi_3) have you to thank for their freedom, and likely their heads. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
 			"options": [
 				{
 					"action": [
@@ -9078,7 +9087,7 @@
 			{
 				"id": 1,
 				"name": "Battle the Soldiers",
-				"description": "Defeat at least three Soldiers in defense of $(poi_3).",
+				"description": "Defeat at least $(invasion_count) Soldiers in defense of $(poi_3).",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 3,
@@ -9087,8 +9096,7 @@
 				"objective": "Defeat",
 				"enemyTags": [
 					"Soldier",
-					"IdentityWhite",
-					"Minion"
+					"IdentityWhite"
 				],
 				"enemyExcludeTags": [
 					"Boss",
@@ -15186,5 +15194,1151 @@
 			"player_capital"
 		],
 		"offerProbability": 0.08
+	},
+	{
+		"id": 93,
+		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
+		"name": "Orc Warband",
+		"description": "Break the orc warband.",
+		"offerDialog": {
+			"text": "A horn sounds from the watchtower over $(poi_3), long and low.",
+			"options": [
+				{
+					"name": "Go and see what the horn is for.",
+					"text": "\"Orcs!\" the watch captain shouts down. \"A warband, painted for war, coming over the hills. Every blade to the wall!\"",
+					"options": [
+						{
+							"action": [
+								{
+									"addMapReputation": -1,
+									"POIReference": "$(poi_3)"
+								}
+							],
+							"name": "Let the watch handle a few orcs. (Decline Quest, -1 Local Reputation)"
+						},
+						{
+							"action": [
+								{
+									"removeItem": "",
+									"setColorIdentity": "",
+									"advanceQuestFlag": "",
+									"advanceMapFlag": "",
+									"setQuestFlag": {
+										"key": ""
+									},
+									"setMapFlag": {
+										"key": ""
+									},
+									"issueQuest": "93",
+									"POIReference": ""
+								}
+							],
+							"name": "Take up a blade beside the watch (Accept Quest)"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The orcs are gone from the walls of $(poi_3), and the town pays its defenders well. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
+			"options": [
+				{
+					"action": [
+						{
+							"addGold": 500,
+							"addMapReputation": 2,
+							"POIReference": "$(poi_3)"
+						}
+					],
+					"name": "(Quest Complete)"
+				}
+			]
+		},
+		"failureDialog": {
+			"action": [
+				{
+					"removeItem": "",
+					"setColorIdentity": "",
+					"advanceQuestFlag": "",
+					"advanceMapFlag": "",
+					"setQuestFlag": {
+						"key": ""
+					},
+					"setMapFlag": {
+						"key": ""
+					},
+					"issueQuest": "",
+					"addMapReputation": -2,
+					"POIReference": "$(poi_3)"
+				}
+			],
+			"text": "The warband burns the fields outside $(poi_3) and moves on, richer. (-2 Local Reputation)",
+			"options": [
+				{
+					"name": "(Quest Failed)"
+				}
+			]
+		},
+		"declinedDialog": {
+			"text": "Come back tomorrow and perhaps I'll have something that you'll actually be willing to do.",
+			"options": [
+				{
+					"name": "(Catching the not so subtle hint, you leave.)"
+				}
+			]
+		},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Break the orc warband",
+				"description": "Orc raiders roam the land around $(poi_3). Win $(invasion_count) duels against them.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 3,
+				"mixedEnemies": true,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"enemyTags": [
+					"Orc"
+				],
+				"enemyExcludeTags": [
+					"Leader",
+					"Boss"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The warband is bleeding, but its chieftain still drives it on. Find the $(enemy_2) and end this.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Defeat the $(enemy_2)",
+				"description": "Without its chieftain the warband will scatter back into the hills.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"prerequisiteIDs": [
+					1
+				],
+				"enemyTags": [
+					"Orc",
+					"Leader"
+				],
+				"enemyExcludeTags": [
+					"Boss"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The warband breaks and runs. $(poi_3) will want to hear it from you.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 3,
+				"name": "Travel",
+				"description": "Return to $(poi_3) and collect your rewards.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					2
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"forest_town_generic",
+			"forest_town_identity",
+			"forest_town_tribal",
+			"island_town_generic",
+			"island_town_identity",
+			"island_town_tribal",
+			"plains_town_generic",
+			"plains_town_identity",
+			"plains_town_tribal",
+			"swamp_town_generic",
+			"swamp_town_identity",
+			"swamp_town_tribal",
+			"waste_town_generic",
+			"waste_town_identity",
+			"waste_town_tribal"
+		]
+	},
+	{
+		"id": 94,
+		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
+		"name": "Giants at the Gate",
+		"description": "Drive the giants away from the town.",
+		"offerDialog": {
+			"text": "The ground shakes under $(poi_3) - once, then again, closer.",
+			"options": [
+				{
+					"name": "Climb the wall and look.",
+					"text": "\"Giants,\" breathes the guard beside you. \"Down from the high country, and hungry. The gate won't hold them long.\"",
+					"options": [
+						{
+							"action": [
+								{
+									"addMapReputation": -1,
+									"POIReference": "$(poi_3)"
+								}
+							],
+							"name": "Giants are beyond you. (Decline Quest, -1 Local Reputation)"
+						},
+						{
+							"action": [
+								{
+									"removeItem": "",
+									"setColorIdentity": "",
+									"advanceQuestFlag": "",
+									"advanceMapFlag": "",
+									"setQuestFlag": {
+										"key": ""
+									},
+									"setMapFlag": {
+										"key": ""
+									},
+									"issueQuest": "94",
+									"POIReference": ""
+								}
+							],
+							"name": "Help hold the gate (Accept Quest)"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The giants are gone, leaving only footprints the size of carts. $(poi_3) is grateful, and generous. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
+			"options": [
+				{
+					"action": [
+						{
+							"addGold": 500,
+							"addMapReputation": 2,
+							"POIReference": "$(poi_3)"
+						}
+					],
+					"name": "(Quest Complete)"
+				}
+			]
+		},
+		"failureDialog": {
+			"action": [
+				{
+					"removeItem": "",
+					"setColorIdentity": "",
+					"advanceQuestFlag": "",
+					"advanceMapFlag": "",
+					"setQuestFlag": {
+						"key": ""
+					},
+					"setMapFlag": {
+						"key": ""
+					},
+					"issueQuest": "",
+					"addMapReputation": -2,
+					"POIReference": "$(poi_3)"
+				}
+			],
+			"text": "The giants take what they came for from $(poi_3) and leave the walls in pieces. (-2 Local Reputation)",
+			"options": [
+				{
+					"name": "(Quest Failed)"
+				}
+			]
+		},
+		"declinedDialog": {
+			"text": "Come back tomorrow and perhaps I'll have something that you'll actually be willing to do.",
+			"options": [
+				{
+					"name": "(Catching the not so subtle hint, you leave.)"
+				}
+			]
+		},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Drive back the giants",
+				"description": "Giants and ogres raid the farms around $(poi_3). Win $(invasion_count) duels against them.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 3,
+				"mixedEnemies": true,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"enemyTags": [
+					"Giant"
+				],
+				"enemyExcludeTags": [
+					"Leader",
+					"Boss",
+					"Sphinx",
+					"Wurm",
+					"Nature",
+					"Zombie",
+					"Undead",
+					"Golem"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The smaller brutes have gone home bruised. The $(enemy_2) leading them has not.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Topple the $(enemy_2)",
+				"description": "Bring down the raid's leader and the rest will lumber back to the mountains.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"prerequisiteIDs": [
+					1
+				],
+				"enemyTags": [
+					"Giant",
+					"Leader"
+				],
+				"enemyExcludeTags": [
+					"Boss",
+					"Sphinx",
+					"Wurm",
+					"Nature",
+					"Zombie",
+					"Undead",
+					"Golem"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The raid's leader is down, and the ground stops shaking. Return to $(poi_3).",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 3,
+				"name": "Travel",
+				"description": "Return to $(poi_3) and collect your rewards.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					2
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"forest_town_generic",
+			"forest_town_identity",
+			"forest_town_tribal",
+			"island_town_generic",
+			"island_town_identity",
+			"island_town_tribal",
+			"plains_town_generic",
+			"plains_town_identity",
+			"plains_town_tribal",
+			"swamp_town_generic",
+			"swamp_town_identity",
+			"swamp_town_tribal",
+			"waste_town_generic",
+			"waste_town_identity",
+			"waste_town_tribal"
+		]
+	},
+	{
+		"id": 95,
+		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
+		"name": "Demon Incursion",
+		"description": "Close the door the demons came through.",
+		"offerDialog": {
+			"text": "The sky over $(poi_3) has gone the color of a bruise, and the air smells of sulfur.",
+			"options": [
+				{
+					"name": "Find out what has happened.",
+					"text": "A priest grips your arm. \"Something opened a door that should have stayed shut. Demons walk the roads now - and something worse is calling them.\"",
+					"options": [
+						{
+							"action": [
+								{
+									"addMapReputation": -1,
+									"POIReference": "$(poi_3)"
+								}
+							],
+							"name": "Demons are a priest's business. (Decline Quest, -1 Local Reputation)"
+						},
+						{
+							"action": [
+								{
+									"removeItem": "",
+									"setColorIdentity": "",
+									"advanceQuestFlag": "",
+									"advanceMapFlag": "",
+									"setQuestFlag": {
+										"key": ""
+									},
+									"setMapFlag": {
+										"key": ""
+									},
+									"issueQuest": "95",
+									"POIReference": ""
+								}
+							],
+							"name": "Stand against the incursion (Accept Quest)"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The sky over $(poi_3) clears, and the town rings every bell it has. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
+			"options": [
+				{
+					"action": [
+						{
+							"addGold": 500,
+							"addMapReputation": 2,
+							"POIReference": "$(poi_3)"
+						}
+					],
+					"name": "(Quest Complete)"
+				}
+			]
+		},
+		"failureDialog": {
+			"action": [
+				{
+					"removeItem": "",
+					"setColorIdentity": "",
+					"advanceQuestFlag": "",
+					"advanceMapFlag": "",
+					"setQuestFlag": {
+						"key": ""
+					},
+					"setMapFlag": {
+						"key": ""
+					},
+					"issueQuest": "",
+					"addMapReputation": -2,
+					"POIReference": "$(poi_3)"
+				}
+			],
+			"text": "Whatever came through the door now walks the streets of $(poi_3). (-2 Local Reputation)",
+			"options": [
+				{
+					"name": "(Quest Failed)"
+				}
+			]
+		},
+		"declinedDialog": {
+			"text": "Come back tomorrow and perhaps I'll have something that you'll actually be willing to do.",
+			"options": [
+				{
+					"name": "(Catching the not so subtle hint, you leave.)"
+				}
+			]
+		},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Banish the demons",
+				"description": "Demons stalk the land around $(poi_3). Win $(invasion_count) duels against them.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 3,
+				"mixedEnemies": true,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"enemyTags": [
+					"Demon"
+				],
+				"enemyExcludeTags": [
+					"Leader",
+					"Boss"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The lesser fiends are fewer now. The $(enemy_2) that called them is not.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Defeat the $(enemy_2)",
+				"description": "Strike down the demon holding the door open and it will close behind it.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"prerequisiteIDs": [
+					1
+				],
+				"enemyTags": [
+					"Demon",
+					"Leader"
+				],
+				"enemyExcludeTags": [
+					"Boss"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The door slams shut with a sound you feel in your teeth. Return to $(poi_3).",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 3,
+				"name": "Travel",
+				"description": "Return to $(poi_3) and collect your rewards.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					2
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"forest_town_generic",
+			"forest_town_identity",
+			"forest_town_tribal",
+			"island_town_generic",
+			"island_town_identity",
+			"island_town_tribal",
+			"mountain_town_generic",
+			"mountain_town_identity",
+			"mountain_town_tribal",
+			"plains_town_generic",
+			"plains_town_identity",
+			"plains_town_tribal",
+			"waste_town_generic",
+			"waste_town_identity",
+			"waste_town_tribal"
+		]
+	},
+	{
+		"id": 96,
+		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
+		"name": "Knightly Siege",
+		"description": "Lift the knights' siege.",
+		"offerDialog": {
+			"text": "Banners are rising on the hill above $(poi_3) - many banners, and none of them friendly.",
+			"options": [
+				{
+					"name": "Ask the town what they want.",
+					"text": "\"A lord's knights, claiming $(poi_3) by some old writ,\" the mayor says. \"They mean to take it by the sword if we will not hand it over.\"",
+					"options": [
+						{
+							"action": [
+								{
+									"addMapReputation": -1,
+									"POIReference": "$(poi_3)"
+								}
+							],
+							"name": "This is a quarrel between lords. (Decline Quest, -1 Local Reputation)"
+						},
+						{
+							"action": [
+								{
+									"removeItem": "",
+									"setColorIdentity": "",
+									"advanceQuestFlag": "",
+									"advanceMapFlag": "",
+									"setQuestFlag": {
+										"key": ""
+									},
+									"setMapFlag": {
+										"key": ""
+									},
+									"issueQuest": "96",
+									"POIReference": ""
+								}
+							],
+							"name": "Ride out against the knights (Accept Quest)"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The banners come down from the hill, and $(poi_3) keeps its freedom. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
+			"options": [
+				{
+					"action": [
+						{
+							"addGold": 500,
+							"addMapReputation": 2,
+							"POIReference": "$(poi_3)"
+						}
+					],
+					"name": "(Quest Complete)"
+				}
+			]
+		},
+		"failureDialog": {
+			"action": [
+				{
+					"removeItem": "",
+					"setColorIdentity": "",
+					"advanceQuestFlag": "",
+					"advanceMapFlag": "",
+					"setQuestFlag": {
+						"key": ""
+					},
+					"setMapFlag": {
+						"key": ""
+					},
+					"issueQuest": "",
+					"addMapReputation": -2,
+					"POIReference": "$(poi_3)"
+				}
+			],
+			"text": "The knights ride through the gates of $(poi_3) under their lord's banner. (-2 Local Reputation)",
+			"options": [
+				{
+					"name": "(Quest Failed)"
+				}
+			]
+		},
+		"declinedDialog": {
+			"text": "Come back tomorrow and perhaps I'll have something that you'll actually be willing to do.",
+			"options": [
+				{
+					"name": "(Catching the not so subtle hint, you leave.)"
+				}
+			]
+		},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Unhorse the knights",
+				"description": "Knights ride the roads around $(poi_3). Win $(invasion_count) duels against them.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 3,
+				"mixedEnemies": true,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"enemyTags": [
+					"Knight"
+				],
+				"enemyExcludeTags": [
+					"Leader",
+					"Boss"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The siege lines are thinning. Their commander, the $(enemy_2), still holds the hill.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Defeat the $(enemy_2)",
+				"description": "Without their commander the knights will strike their banners and ride home.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"prerequisiteIDs": [
+					1
+				],
+				"enemyTags": [
+					"Knight",
+					"Leader"
+				],
+				"enemyExcludeTags": [
+					"Boss"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The commander yields, and the knights begin to break camp. Return to $(poi_3).",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 3,
+				"name": "Travel",
+				"description": "Return to $(poi_3) and collect your rewards.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					2
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"forest_town_generic",
+			"forest_town_identity",
+			"forest_town_tribal",
+			"island_town_generic",
+			"island_town_identity",
+			"island_town_tribal",
+			"mountain_town_generic",
+			"mountain_town_identity",
+			"mountain_town_tribal",
+			"swamp_town_generic",
+			"swamp_town_identity",
+			"swamp_town_tribal",
+			"waste_town_generic",
+			"waste_town_identity",
+			"waste_town_tribal"
+		]
+	},
+	{
+		"id": 97,
+		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
+		"name": "Bandit Raid",
+		"description": "Clear the roads of bandits.",
+		"offerDialog": {
+			"text": "Every merchant in $(poi_3) seems to be complaining at once.",
+			"options": [
+				{
+					"name": "Ask what has happened.",
+					"text": "\"Bandits!\" a trader spits. \"Three caravans this week, robbed on the road, and pirates up the river too. Someone has to stop them.\"",
+					"options": [
+						{
+							"action": [
+								{
+									"addMapReputation": -1,
+									"POIReference": "$(poi_3)"
+								}
+							],
+							"name": "The roads were never safe. (Decline Quest, -1 Local Reputation)"
+						},
+						{
+							"action": [
+								{
+									"removeItem": "",
+									"setColorIdentity": "",
+									"advanceQuestFlag": "",
+									"advanceMapFlag": "",
+									"setQuestFlag": {
+										"key": ""
+									},
+									"setMapFlag": {
+										"key": ""
+									},
+									"issueQuest": "97",
+									"POIReference": ""
+								}
+							],
+							"name": "Clear the roads (Accept Quest)"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The caravans roll again, and the merchants of $(poi_3) pay up gladly. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
+			"options": [
+				{
+					"action": [
+						{
+							"addGold": 500,
+							"addMapReputation": 2,
+							"POIReference": "$(poi_3)"
+						}
+					],
+					"name": "(Quest Complete)"
+				}
+			]
+		},
+		"failureDialog": {
+			"action": [
+				{
+					"removeItem": "",
+					"setColorIdentity": "",
+					"advanceQuestFlag": "",
+					"advanceMapFlag": "",
+					"setQuestFlag": {
+						"key": ""
+					},
+					"setMapFlag": {
+						"key": ""
+					},
+					"issueQuest": "",
+					"addMapReputation": -2,
+					"POIReference": "$(poi_3)"
+				}
+			],
+			"text": "The bandits own the roads around $(poi_3), and the merchants blame you. (-2 Local Reputation)",
+			"options": [
+				{
+					"name": "(Quest Failed)"
+				}
+			]
+		},
+		"declinedDialog": {
+			"text": "Come back tomorrow and perhaps I'll have something that you'll actually be willing to do.",
+			"options": [
+				{
+					"name": "(Catching the not so subtle hint, you leave.)"
+				}
+			]
+		},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Clear the roads of bandits",
+				"description": "Bandits and pirates prey on travelers around $(poi_3). Win $(invasion_count) duels against them.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 3,
+				"mixedEnemies": true,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"enemyTags": [
+					"Bandit"
+				],
+				"enemyExcludeTags": [
+					"Leader",
+					"Boss"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The roads are quieter. The $(enemy_2) who leads them is still out there, counting the spoils.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Defeat the $(enemy_2)",
+				"description": "Take down their leader and the gang will scatter.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"prerequisiteIDs": [
+					1
+				],
+				"enemyTags": [
+					"Bandit",
+					"Leader"
+				],
+				"enemyExcludeTags": [
+					"Boss"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "With their leader beaten, the gang scatters to the wind. Return to $(poi_3).",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 3,
+				"name": "Travel",
+				"description": "Return to $(poi_3) and collect your rewards.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					2
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"forest_town_generic",
+			"forest_town_identity",
+			"forest_town_tribal",
+			"island_town_generic",
+			"island_town_identity",
+			"island_town_tribal",
+			"mountain_town_generic",
+			"mountain_town_identity",
+			"mountain_town_tribal",
+			"plains_town_generic",
+			"plains_town_identity",
+			"plains_town_tribal",
+			"waste_town_generic",
+			"waste_town_identity",
+			"waste_town_tribal"
+		]
+	},
+	{
+		"id": 98,
+		"isTemplate": true,
+		"tfrInvasion": true,
+		"offerProbability": 0.45,
+		"name": "Blood Hunt",
+		"description": "Hunt down the vampires preying on the town.",
+		"offerDialog": {
+			"text": "Doors are barred early in $(poi_3), and garlic hangs from every window.",
+			"options": [
+				{
+					"name": "Ask why.",
+					"text": "\"People vanish at night,\" an old woman whispers. \"Found pale and empty in the morning. The vampires are hunting us.\"",
+					"options": [
+						{
+							"action": [
+								{
+									"addMapReputation": -1,
+									"POIReference": "$(poi_3)"
+								}
+							],
+							"name": "Bar your own door and wait for morning. (Decline Quest, -1 Local Reputation)"
+						},
+						{
+							"action": [
+								{
+									"removeItem": "",
+									"setColorIdentity": "",
+									"advanceQuestFlag": "",
+									"advanceMapFlag": "",
+									"setQuestFlag": {
+										"key": ""
+									},
+									"setMapFlag": {
+										"key": ""
+									},
+									"issueQuest": "98",
+									"POIReference": ""
+								}
+							],
+							"name": "Hunt the hunters (Accept Quest)"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "For the first night in weeks, $(poi_3) sleeps with its doors open. (+$(invasion_rep) Local Reputation, +$(invasion_gold) [+Gold])",
+			"options": [
+				{
+					"action": [
+						{
+							"addGold": 500,
+							"addMapReputation": 2,
+							"POIReference": "$(poi_3)"
+						}
+					],
+					"name": "(Quest Complete)"
+				}
+			]
+		},
+		"failureDialog": {
+			"action": [
+				{
+					"removeItem": "",
+					"setColorIdentity": "",
+					"advanceQuestFlag": "",
+					"advanceMapFlag": "",
+					"setQuestFlag": {
+						"key": ""
+					},
+					"setMapFlag": {
+						"key": ""
+					},
+					"issueQuest": "",
+					"addMapReputation": -2,
+					"POIReference": "$(poi_3)"
+				}
+			],
+			"text": "The night belongs to the vampires, and $(poi_3) is a little emptier each morning. (-2 Local Reputation)",
+			"options": [
+				{
+					"name": "(Quest Failed)"
+				}
+			]
+		},
+		"declinedDialog": {
+			"text": "Come back tomorrow and perhaps I'll have something that you'll actually be willing to do.",
+			"options": [
+				{
+					"name": "(Catching the not so subtle hint, you leave.)"
+				}
+			]
+		},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Hunt the vampires",
+				"description": "Vampires stalk the night around $(poi_3). Win $(invasion_count) duels against them.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 3,
+				"mixedEnemies": true,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"enemyTags": [
+					"Vampire"
+				],
+				"enemyExcludeTags": [
+					"Leader",
+					"Boss"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "Their brood is thinner now. The $(enemy_2) they serve will not stay hidden much longer.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Destroy the $(enemy_2)",
+				"description": "End the master, and its spawn lose their hunger.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"prerequisiteIDs": [
+					1
+				],
+				"enemyTags": [
+					"Vampire",
+					"Leader"
+				],
+				"enemyExcludeTags": [
+					"Boss"
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The master falls to dust. Return to $(poi_3) with the news.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 3,
+				"name": "Travel",
+				"description": "Return to $(poi_3) and collect your rewards.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					2
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"forest_town_generic",
+			"forest_town_identity",
+			"forest_town_tribal",
+			"island_town_generic",
+			"island_town_identity",
+			"island_town_tribal",
+			"mountain_town_generic",
+			"mountain_town_identity",
+			"mountain_town_tribal",
+			"plains_town_generic",
+			"plains_town_identity",
+			"plains_town_tribal",
+			"waste_town_generic",
+			"waste_town_identity",
+			"waste_town_tribal"
+		]
 	}
 ]

@@ -153,11 +153,23 @@ public class AdventureQuestStage implements Serializable {
             }
             int targetIndex = (count1 * validPOIs.size() / 100);
             int variance = (count2 * validPOIs.size()) / 100;
-            targetIndex = Math.max(0, (int) (targetIndex - variance + (new Random().nextFloat() * variance * 2)));
+            // Round 461 (Eviction Notice "always the same dungeon"): the pick is uniform over the window around count1
+            // that fits the list. It used to clamp a window running below index 0 to 0 - count1 0 with count2 25
+            // sent half of all rolls to the single nearest place. And the place this quest named last time is skipped
+            // when the window holds another.
+            int lo = Math.max(0, targetIndex - variance);
+            int hi = Math.min(validPOIs.size() - 1, targetIndex + variance);
+            targetIndex = lo > hi ? targetIndex : lo + new Random().nextInt(hi - lo + 1);
 
             if (targetIndex < validPOIs.size() && targetIndex >= 0) {
                 validPOIs.sort(new AdventureQuestController.DistanceSort());
+                String last = AdventureQuestController.instance().lastQuestTarget(questName);
+                if (last != null && hi > lo && last.equals(validPOIs.get(targetIndex).getID()))
+                    targetIndex = targetIndex == hi ? lo + new Random().nextInt(hi - lo) : targetIndex + 1;
                 setTargetPOI(validPOIs.get(targetIndex));
+                AdventureQuestController.instance().setLastQuestTarget(questName, validPOIs.get(targetIndex).getID());
+                System.out.println("[TFR-QuestTarget] " + questName + " -> " + validPOIs.get(targetIndex).getDisplayName()
+                        + " (#" + targetIndex + " by distance of " + validPOIs.size() + ", window " + lo + "-" + hi + ")");
             } else {
                 if (count1 != 0 || count2 != 0) {
                     System.out.println("Quest '" + questName + "' -  Stage '" + this.name + "' has invalid count1 ('" + count1 + "') and/or count2 ('" + count2 + "') value");

@@ -233,8 +233,24 @@ public class AdventureQuestData implements Serializable {
         for (AdventureQuestStage stage : stages){
             initializeStage(stage);
         }
+        // Round 461: an invasion (quests.json "tfrInvasion") sizes its minions, leader and reward to the player before
+        // the text tokens are filled.
+        if (forge.adventure.util.AdventureQuestController.instance().isInvasionTemplate(id))
+            forge.adventure.util.InvasionQuests.apply(this);
 
         replaceTokens();
+    }
+
+    /** Round 461 (InvasionQuests): replace a stage's $(enemy_N) target before the tokens are filled. */
+    public void putEnemyToken(String key, EnemyData target) {
+        if (key != null && target != null)
+            enemyTokens.put(key, target);
+    }
+
+    /** Round 461 (InvasionQuests): a text token of its own, such as $(invasion_gold). */
+    public void putOtherToken(String key, String value) {
+        if (key != null && value != null)
+            otherTokens.put(key, value);
     }
 
     public void initializeStage(AdventureQuestStage stage){

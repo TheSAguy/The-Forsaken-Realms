@@ -38,6 +38,19 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 461 - invasions sized to the player; Eviction Notice spreads out
+
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** - `initialize()` calls
+  `util/InvasionQuests.apply()` for a "tfrInvasion" template before `replaceTokens()`; new `putEnemyToken()`,
+  `putOtherToken()`.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java`** - `setTargetPOI()`: uniform pick in the
+  count1 +/- count2 window clamped to the list (was a clamp to index 0 and an out-of-range random fallback); skips the
+  quest's last target; `[TFR-QuestTarget]`.
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** (mod-heavy) - "tfrInvasion" read
+  out-of-band in `loadData()`; `getQuestNPCResponse()` drops the invasion offered last; last-leader / last-target maps.
+- Mod: new `util/InvasionQuests.java`; TuningData `invasionMinionsByDifficulty`, `invasionTrustReputation`,
+  `invasionGoldByTier`, `invasionReputationByTier`.
+
 ### Round 460 - the 10.06 engine merge (upstream `2f90918a902`)
 
 Two conflicts:

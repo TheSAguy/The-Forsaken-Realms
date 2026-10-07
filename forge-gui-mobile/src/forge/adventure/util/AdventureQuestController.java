@@ -514,6 +514,37 @@ public class AdventureQuestController implements Serializable {
     // Json loader (transient) or corrupt every existing save's quest list (non-transient).
     private final Map<Integer, String> questRequiresFlagUnset = new HashMap<>();
 
+    // Round 461: quests.json "tfrInvasion" - the templates InvasionQuests sizes to the player - read out-of-band for the
+    // same reasons as offerProbability. Plus the variety memory (this session only): the invasion offered last, which
+    // the next offer skips when it has another, and the leader each invasion sent last.
+    private final Set<Integer> invasionTemplates = new HashSet<>();
+    private int lastInvasionOffered = -1;
+    private final Map<Integer, String> lastInvasionLeaders = new HashMap<>();
+    // Round 461: the place each POI-picking quest last sent the player to (by template name), which the next pick of
+    // the same quest skips when it has another - Eviction Notice kept naming the same nearest dungeon.
+    private final Map<String, String> lastQuestTargets = new HashMap<>();
+
+    public boolean isInvasionTemplate(int id) {
+        return invasionTemplates.contains(id);
+    }
+
+    public String lastInvasionLeader(int questId) {
+        return lastInvasionLeaders.get(questId);
+    }
+
+    public void setLastInvasionLeader(int questId, String leaderName) {
+        lastInvasionLeaders.put(questId, leaderName);
+    }
+
+    public String lastQuestTarget(String questName) {
+        return lastQuestTargets.get(questName);
+    }
+
+    public void setLastQuestTarget(String questName, String poiId) {
+        if (questName != null && poiId != null)
+            lastQuestTargets.put(questName, poiId);
+    }
+
     /** True when this quest is currently blocked by its requiresCharacterFlagUnset gate. */
     private boolean flagGateBlocks(AdventureQuestData quest) {
         String flag = questRequiresFlagUnset.get(quest.getID());
@@ -535,6 +566,8 @@ public class AdventureQuestController implements Serializable {
                 String requiresUnset = q.getString("requiresCharacterFlagUnset", null); // round 132
                 if (requiresUnset != null && !requiresUnset.isEmpty())
                     questRequiresFlagUnset.put(q.getInt("id"), requiresUnset);
+                if (q.getBoolean("tfrInvasion", false)) // round 461
+                    invasionTemplates.add(q.getInt("id"));
             }
         }
 
@@ -951,6 +984,12 @@ public class AdventureQuestController implements Serializable {
         if (origins.size() > 1) // round 432: a board with several pools says what it drew from
             System.out.println("[TFR-QuestBoard] " + String.join(" + ", origins) + ": " + validSideQuests.size
                     + " quest(s) to offer");
+        // Round 461: not the same invasion twice in a row, when the board has anything else to offer.
+        if (validSideQuests.size > 1) {
+            for (int i = validSideQuests.size - 1; i >= 0; i--)
+                if (validSideQuests.get(i).getID() == lastInvasionOffered && validSideQuests.size > 1)
+                    validSideQuests.removeIndex(i);
+        }
         if (validSideQuests.size > 0)
             ret = new AdventureQuestData(Aggregates.random(validSideQuests));
         else {
@@ -967,6 +1006,8 @@ public class AdventureQuestController implements Serializable {
             ret = new AdventureQuestData(Aggregates.random(ungated.size > 0 ? ungated : allSideQuests));
         }
         ret.sourceID = pointID;
+        if (isInvasionTemplate(ret.getID()))
+            lastInvasionOffered = ret.getID(); // round 461
         ret.initialize();
         return ret;
     }
