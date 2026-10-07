@@ -796,16 +796,24 @@ public class DuelScene extends ForgeScene {
         dungeonEffect = E;
     }
 
-    /** Round 404: what the player is told when an enemy on a win streak starts with extra cards. */
+    /** Round 404: what the player is told when an enemy on a win streak starts with extra cards. Round 467: a new
+     *  notice for each step of the streak (the user: "Give a new message"), the count of cards growing with it. */
     private static String streakNote(EnemyData e) {
         String[] cards = Config.instance().getTuningData().winStreakStartCards;
+        int steps = Current.player().winStreakSteps(e.getName());
         java.util.List<String> names = new java.util.ArrayList<>();
         for (String c : cards)
-            names.add(c.contains("|") ? c.substring(0, c.indexOf('|')) : c);
+            names.add((steps > 1 ? steps + " " : "") + (c.contains("|") ? c.substring(0, c.indexOf('|')) : c));
         String who = e.getTieredDisplayName();
-        return who + " has learned your tricks - you have beaten it " + Current.player().winStreak(e.getName())
-                + " times in a row. It starts this duel with " + String.join(", ", names) + " in play. One win for it,"
-                + " and it forgets.";
+        String wins = " - you have beaten it " + Current.player().winStreak(e.getName()) + " times in a row. ";
+        String inPlay = String.join(", ", names) + " in play";
+        String forgets = " One win for it, and it forgets.";
+        if (steps <= 1)
+            return who + " has learned your tricks" + wins + "It starts this duel with " + inPlay + "." + forgets;
+        if (steps < Math.max(1, Config.instance().getTuningData().winStreakMaxSteps))
+            return who + " has studied your every move" + wins + "It now starts with " + inPlay + "." + forgets;
+        return who + " knows you better than you know yourself" + wins + "It now starts with " + inPlay
+                + " - and it will not grow any stronger." + forgets;
     }
 
     @Override
@@ -1090,9 +1098,16 @@ public class DuelScene extends ForgeScene {
             // Capitol fights too. Not in Inn tournaments, not in a roaming guard's fight, not on Easy (winStreakReached).
             if (eventData == null && guardDeck == null && Current.player().winStreakReached(currentEnemy.getName())) {
                 EffectData streak = new EffectData();
-                streak.startBattleWithCard = Config.instance().getTuningData().winStreakStartCards;
+                // Round 467: the cards once per step of the streak (Insane: one at 3 wins, two at 6, three from 9).
+                String[] once = Config.instance().getTuningData().winStreakStartCards;
+                int steps = Current.player().winStreakSteps(currentEnemy.getName());
+                String[] cards = new String[once.length * steps];
+                for (int step = 0; step < steps; step++)
+                    System.arraycopy(once, 0, cards, step * once.length, once.length);
+                streak.startBattleWithCard = cards;
                 addEffects(aiPlayer, Array.with(streak));
                 // Round 465 (the user): told once - on the first duel the streak applies; later ones just start with it.
+                // Round 467: once more on the first duel of each further step.
                 boolean tell = Current.player().winStreakJustReached(currentEnemy.getName());
                 if (tell)
                     winStreakNote = (winStreakNote == null ? "" : winStreakNote + "\n\n") + streakNote(currentEnemy);

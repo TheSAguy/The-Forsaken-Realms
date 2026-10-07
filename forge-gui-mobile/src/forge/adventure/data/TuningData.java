@@ -235,6 +235,10 @@ public class TuningData {
     public int winStreakWinsHard = 4;
     public int winStreakWinsInsane = 3;
     public String[] winStreakStartCards = {"Wastes|EOC"};
+    // Round 467 (the user: "Win Streak - Should also scale. If it's at 3 for Insane, then at 6, (So the 7th duel), add
+    // another land. (Give a new message.) Then again at 9. (Duel 10). I don't think we need to go beyond that."): every
+    // further count of wins adds winStreakStartCards once more, up to this many times. 1 = no growth.
+    public int winStreakMaxSteps = 3;
 
     /** Round 405: the wins in a row a difficulty needs before an enemy starts with winStreakStartCards; 0 = off. */
     public int winStreakWinsFor(String difficultyName) {

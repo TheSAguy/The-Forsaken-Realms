@@ -58,6 +58,10 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-07 (round 467): **LOCAL + UNRELEASED** - the win streak grows: one Wastes per full count of wins in a
+row (Insane 3/6/9 = duels 4/7/10; Hard 4/8/12; Normal 5/10/15), three at most (`TuningData.winStreakMaxSteps`), a new
+notice at each step (`AdventurePlayer.winStreakSteps`). Agent-tested at 6/7/9/12.
+
 ## STATE 2026-10-07 (round 466): **LOCAL + UNRELEASED** - Valor's Reach Arena runs in seasons: it leaves when its 7
 contenders are beaten (6 duos + Najeela; Gwafa Hazid the shopkeeper does not count) and nothing is left on the floor,
 returns after the spot rest restocked with its map flags reset, and every opponent there then starts with an extra
@@ -234,7 +238,7 @@ of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety b
 research 40 + a 243 s day, 450 = no Manasight on a Mimic, 451 = no crown on a Mimic, 452 = chest-size Mimics + the Warden's dot + the Lab's
 set view + the hidden card a new game's only (done), 453 = Ulamog from the Pixelate pilot (the Procedural Pixel
 Creatures session), 454 = Ulamog's own death (same), 455 = the Sliver Queen (same), 456 = Kozilek + whole-body portraits (same), 457 = the Bank's step 500, 458 = the Juggernaut, the Evil Wall and the Chimera (the Procedural Pixel Creatures session), 459 = weekly shops turn over
-with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread, 462 = Svyelunite Temple, 464 = the coin toss without a tap + its Settings switch, 465 = the win-streak notice once per streak, 466 = Valor's Reach Arena in seasons - round 463 is reserved for the Procedural Pixel Creatures session's temple art; the next free round is **467**;
+with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread, 462 = Svyelunite Temple, 464 = the coin toss without a tap + its Settings switch, 465 = the win-streak notice once per streak, 466 = Valor's Reach Arena in seasons, 467 = the win streak grows to three Wastes - round 463 is reserved for the Procedural Pixel Creatures session's temple art; the next free round is **468**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,

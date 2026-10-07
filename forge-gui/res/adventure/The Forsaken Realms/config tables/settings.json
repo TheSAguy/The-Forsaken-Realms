@@ -128,6 +128,9 @@
     "winStreakWinsHard": 4,
     "winStreakWinsInsane": 3,
     "winStreakStartCards": ["Wastes|EOC"],
+    // Round 467 - the streak grows: every further count of wins adds winStreakStartCards once more (Insane: 1 at 3 wins,
+    // 2 at 6, 3 at 9), up to this many times. 1 = no growth.
+    "winStreakMaxSteps": 3,
     // Round 413 - cave champions and war champions (met outside the arena) pay their arena list through the card
     // budget: this many times their rank's first-win card count, best rarities first, plus their signature card, and
     // this many times their rank's resource purse. 0 = the full arena list, as before.

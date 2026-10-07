@@ -362,11 +362,26 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         else
             enemyWinStreaks.remove(enemyName);
         int need = winStreakNeeded();
+        int steps = winStreakSteps(enemyName);
         System.out.println("[TFR-WinStreak] " + enemyName + ": " + (won ? "won" : "lost") + " - streak " + before + " -> "
                 + winStreak(enemyName) + " of " + (need > 0 ? need : "- (off on " + difficultyData.name + ")")
-                + (need > 0 && winStreak(enemyName) >= need ? " (it starts the next duel with "
-                + String.join(", ", forge.adventure.util.Config.instance().getTuningData().winStreakStartCards) + " in play)"
-                : ""));
+                + (steps > 0 ? " (it starts the next duel with "
+                + String.join(", ", forge.adventure.util.Config.instance().getTuningData().winStreakStartCards)
+                + (steps > 1 ? " x" + steps : "") + " in play)" : ""));
+    }
+
+    /**
+     * Round 467 (the user: "If it's at 3 for Insane, then at 6, (So the 7th duel), add another land. (Give a new
+     * message.) Then again at 9. (Duel 10). I don't think we need to go beyond that."): how many times this enemy starts
+     * with TuningData.winStreakStartCards - one per full count of wins in a row (Insane 3, Normal 5, Hard 4), up to
+     * winStreakMaxSteps. 0 = none (no streak yet, or Easy).
+     */
+    public int winStreakSteps(String enemyName) {
+        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
+        int need = winStreakNeeded();
+        if (need <= 0 || tuning.winStreakStartCards == null || tuning.winStreakStartCards.length == 0)
+            return 0;
+        return Math.min(Math.max(1, tuning.winStreakMaxSteps), winStreak(enemyName) / need);
     }
 
     /** Round 465 (test cheat "winstreak"): set the wins in a row over one enemy; 0 or less clears it. */
@@ -381,17 +396,17 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     /** Round 465 (the user: the message "should only appear once per creature ... it should show, but not again on duel
      *  5"): true only for the first duel the streak starts this enemy with its extra cards - the streak exactly at the
-     *  difficulty's count. A loss resets the streak, so a new streak tells the player again. */
+     *  difficulty's count. A loss resets the streak, so a new streak tells the player again. Round 467: and on the first
+     *  duel of each further step (Insane: 3, 6 and 9 wins), never past the last. */
     public boolean winStreakJustReached(String enemyName) {
-        return winStreakReached(enemyName) && winStreak(enemyName) == winStreakNeeded();
+        int need = winStreakNeeded();
+        int steps = winStreakSteps(enemyName);
+        return steps > 0 && winStreak(enemyName) == steps * need;
     }
 
     /** Round 404: does this enemy start its next duel with TuningData.winStreakStartCards? Not on Easy. */
     public boolean winStreakReached(String enemyName) {
-        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
-        int need = winStreakNeeded();
-        return need > 0 && tuning.winStreakStartCards != null && tuning.winStreakStartCards.length > 0
-                && winStreak(enemyName) >= need;
+        return winStreakSteps(enemyName) > 0; // round 467: the steps decide
     }
 
     /** Round 405: the wins in a row this game's difficulty needs (Normal 5, Hard 4, Insane 3); 0 = off (Easy). */

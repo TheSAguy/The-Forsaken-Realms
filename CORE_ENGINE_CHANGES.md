@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 467 - the win streak grows
+
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** - new `winStreakMaxSteps` (3) after
+  `winStreakStartCards`.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - new `winStreakSteps()`; `winStreakReached()`
+  and `winStreakJustReached()` read it; the `recordWinStreak()` log names the copies.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the streak block repeats the cards per step;
+  `streakNote()` words each step.
+
 ### Round 466 - Valor's Reach Arena runs in seasons
 
 - **`forge-gui-mobile/src/forge/adventure/data/PointOfInterestData.java`** - new fields `leavesWhenBeaten`,

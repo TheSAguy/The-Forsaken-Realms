@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 467: the win streak grows - a second and third Wastes (2026-10-07)
+
+Round 465 answered "it does not scale". The user, next message: "Win Streak - Should also scale. If it's at 3 for Insane,
+then at 6, (So the 7th duel), add another land. (Give a new message.) Then again at 9. (Duel 10). I don't think we need
+to go beyond that."
+
+- **Steps** (`AdventurePlayer.winStreakSteps`): one per full count of wins in a row - streak / the difficulty's count
+  (Insane 3, Hard 4, Normal 5), capped at `TuningData.winStreakMaxSteps` (settings.json, 3). Insane: one Wastes from
+  duel 4, two from duel 7, three from duel 10. `winStreakReached()` is "steps > 0"; `winStreakJustReached()` is true
+  when the streak sits exactly on a step (3, 6, 9) - never past the last.
+- **Cards** (`DuelScene` streak block): `winStreakStartCards` once per step.
+- **A new notice per step** (`streakNote`): step 1 unchanged ("has learned your tricks ... It starts this duel with
+  Wastes in play"); step 2 "has studied your every move ... It now starts with 2 Wastes in play"; the last step "knows
+  you better than you know yourself ... It now starts with 3 Wastes in play - and it will not grow any stronger." Each
+  ends "One win for it, and it forgets." The `[TFR-WinStreak]` lines name the copies ("Wastes|EOC x2").
+- **GUIDE**: the win-streak paragraph's "It is always one Wastes" replaced.
+- **Agent-tested** on Insane with the Wild Rat (`winstreak` cheat): streak 6 -> notice "has studied your every move ...
+  2 Wastes", `battlefield=[Wastes, Wastes]`; 7 -> no notice, two Wastes; 9 -> the last notice, three Wastes; 12 -> no
+  notice, still three (`battlefield=[Wastes, Wastes, Wastes]`).
+
 ## Round 466: Valor's Reach Arena runs in seasons (2026-10-07)
 
 The user, with a screenshot of the arena's entry notice: "The Valors Arena should disappear once you have killed all the
