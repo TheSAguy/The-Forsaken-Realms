@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 460: the engine to the 10.06 daily (upstream `2f90918a902`) (2026-10-06)
+
+The user installed the official 10.06 snapshot into `E:\GAMES\Forge_2` (the packager then refused: base 10.06, plane
+10.04), and said "Merge the 10.06 engine into the repo".
+
+- **The target.** `build.txt` 2026-10-06 18:28:55 (UTC). Upstream's last commit before it is `2f90918a902` "correct three
+  scripts that disagree with the printed card (#12153)" (18:00 UTC); the next, `0d425a66548` Demonic Pact (#12160), is
+  18:45. Checked against the installed `cardsfolder.zip`: Bard's Company carries #12153, Demonic Pact predates #12160.
+  32 commits since round 440's `f9aafc5315e`, 159 files. `engineBuildVersion` -> `2.0.16-SNAPSHOT-10.06`.
+- **Two textual conflicts, ours kept in both** (CORE_ENGINE_CHANGES "Round 460"):
+  - `README.md`: upstream's iOS build note is Forge's README, not the game's.
+  - `adventure/scene/InventoryScene.java`: upstream localizes item names (`ItemData.getDisplayName()`) and "Use" and
+    keeps its build-once Use dialog. Ours rebuilds the dialog per use (round 152: it showed the first item's name for
+    every later one) and wraps the text; upstream's localized name and "Use" are taken into ours, and into the item
+    description line.
+- **Merged on their own, reviewed against the plane:**
+  - Item and shop text through the localizer (`ItemData.getDisplayName()/getDescription()`, `ShopData.getDescription()`,
+    `adv.item.<Name>.*` / `adv.shop.<name>.description` keys). No language file ships any such key yet, so every name and
+    description still comes from our `items.json` / `shops.json`. **Merge watch:** once upstream ships translations, a
+    TFR item that keeps a stock name shows Forge's translated text in that language, not ours.
+  - New duel animations: a card-play flight (Settings: "Card Play Animation Style" - Rotate, Slide, Popup, Off; Rotate by
+    default), a leave animation, and a coin flip. The opening coin toss (`GameAction` fires it on every match's first
+    game) **waits for a tap** when the human seat is the player's (`UI_COIN_FLIP_ANIMATION`, on by default; no Adventure
+    setting turns it off) - raised with the user. The agent's auto-battles do not show it (no human controller): a full
+    duel ran through to the ante prompt on the merged build.
+  - Old Border Shandalar: the Svyelunite Temple quest and its 35 enemies, 18 sprite sheets, 26 decks and map (round 462
+    brings them into the plane). Two broken map dialogs repaired (#12128).
+  - AI and rules: no reanimating creatures that would die at once, no paying to keep an empty "exile until leaves"
+    permanent, Saddle/Teamwork cost checks, Charm modes with different X, required multi-mana sources first, additional
+    triggers counted, simultaneous-entry snapshots, endless mandatory trigger loops end in a draw, tokens from an
+    uninstalled edition, several card scripts.
+  - Editions: NAU ("Nauctis: The Sunken Realm", 2027) added with no cards yet - nothing to research or stock. Updates to
+    FIN, PRM, SLD, UNK, YFRA, PF26.
+- Built (offline Maven), agent package, and a duel run end to end on the agent (`Nymris (Master)` - lost, the ante prompt
+  came up, back to the map). Next merge starts at upstream `2f90918a902`.
+
 ## Round 459: weekly shops turn over with the calendar week (2026-10-06)
 
 The user, on round 457's offer: "The land shops should refresh on days 8, 15, 22, ect. The start of the new week."

@@ -38,6 +38,26 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 460 - the 10.06 engine merge (upstream `2f90918a902`)
+
+Two conflicts:
+- **`README.md`** - OURS (the game's README); upstream's iOS build note belongs to Forge's.
+- **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`** - upstream's build-once Use dialog NOT taken
+  (round 152: a cached dialog kept the first item's name); its localized `lblUse` + `ItemData.getDisplayName()` taken
+  into ours, and `getDisplayName()` into the description line (`setDescription`, ours).
+
+Merged cleanly and reviewed against the plane:
+- `ItemData` (`getDisplayName()`, `getDescription()` via `adv.item.<Name>.description`), `ShopData.getDescription()`,
+  `ShopActor`, `RewardActor`, `Current` - names/descriptions through the localizer, falling back to the JSON. No language
+  file has `adv.item.*`/`adv.shop.*` keys yet. **Merge watch:** translated stock names will override a TFR item that
+  shares a stock name, in that language.
+- `SettingsScene` - "Card Play Animation Style" (`UI_CARD_PLAY_ANIMATION_STYLE`). `MatchController`/`MatchScreen`/
+  `CardFlightOverlay`/`CoinFlipOverlay`/`FControlGameEventHandler`/`IGuiGame` - card flight, leave and coin flip
+  animations; the opening toss blocks for a tap when a human controller is present (`UI_COIN_FLIP_ANIMATION`, default
+  true). `Forge.lifecycleClosing`.
+- `Player`, `Zone`, `GameAction`, `TriggerHandler`, `MagicStack` and the AI classes - rules/AI fixes; none touch a
+  method this mod edits.
+
 ### Round 459 - weekly shops turn over with the calendar week
 
 - **`forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterestChanges.java`** - `getWeeklyShopSeed()`

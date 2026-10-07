@@ -284,7 +284,7 @@ public class InventoryScene extends UIScene {
             return;
         }
         final int cost = initialCost;
-        showDialog(createGenericDialog("", "[+" + data.iconName + "] " + data.name + "\n" +
+        showDialog(createGenericDialog("", "[+" + data.iconName + "] " + data.getDisplayName() + "\n" +
             Forge.getLocalizer().getMessage("lblRepairCost", "[+GoldCoin] " + cost),
             Forge.getLocalizer().getMessage("lblYes"),
             Forge.getLocalizer().getMessage("lblNo"), () -> {
@@ -440,13 +440,15 @@ public class InventoryScene extends UIScene {
             // the dialog was built ONCE and cached in a field, so it kept the name and description
             // of whichever item was used FIRST for the rest of the session. Rebuilt every time now,
             // and the label wraps to the dialog width instead of running off the screen edge.
+            // Round 460 (the 10.06 merge): upstream's localized "Use" and item display name taken; its build-once
+            // cache (the round 152 bug) is not.
             useDialog = createGenericDialog("", null, Forge.getLocalizer().getMessage("lblYes"),
                     Forge.getLocalizer().getMessage("lblNo"), () -> {
                         this.triggerUse();
                         removeDialog();
                     }, this::removeDialog);
-            com.github.tommyettinger.textra.TextraLabel useLabel =
-                    Controls.newTextraLabel("Use " + data.name + "?\n" + data.getDescription());
+            com.github.tommyettinger.textra.TextraLabel useLabel = Controls.newTextraLabel(
+                    Forge.getLocalizer().getMessage("lblUse") + " " + data.getDisplayName() + "?\n" + data.getDescription());
             useLabel.setWrap(true);
             useDialog.getContentTable().add(useLabel).width(Forge.isLandscapeMode() ? 250f : 230f).row();
             showDialog(useDialog);
@@ -496,9 +498,9 @@ public class InventoryScene extends UIScene {
             boolean isInPoi = MapStage.getInstance().isInMap();
             useButton.setDisabled(!(isInPoi && data.usableInPoi || !isInPoi && data.usableOnWorldMap));
             if (data.shardsNeeded == 0)
-                useButton.setText("Use");
+                useButton.setText(Forge.getLocalizer().getMessage("lblUse"));
             else
-                useButton.setText("Use " + data.shardsNeeded + "[+Shards]");
+                useButton.setText(Forge.getLocalizer().getMessage("lblUse") + " " + data.shardsNeeded + "[+Shards]");
             useButton.layout();
             if (Current.player().getShards() < data.shardsNeeded)
                 useButton.setDisabled(true);
@@ -513,7 +515,7 @@ public class InventoryScene extends UIScene {
                     if (id != null && id.equals(data.longID) && data.isEquipped) {
                         button.setText("Unequip");
                     } else {
-                        button.setText("Equip");
+                        button.setText(Forge.getLocalizer().getMessage("lblEquip"));
                     }
                     button.layout();
                 }
@@ -525,7 +527,7 @@ public class InventoryScene extends UIScene {
             // it in the button's own visual state. Same 0.4x-of-item-cost formula repair() uses.
             repairButton.setDisabled(Current.player().getGold() < (int) (data.cost * 0.4f));
             String status = data.isCracked ? " (" + Forge.getLocalizer().getMessage("lblCracked") + ")" : "";
-            setDescription(data.name + status + "\n[%98]" + data.getDescription());
+            setDescription(data.getDisplayName() + status + "\n[%98]" + data.getDescription()); // round 460: upstream's display name
         }
         else if (deckLocation.containsKey(actor)){
             Deck data = (deckLocation.get(actor));
@@ -533,7 +535,7 @@ public class InventoryScene extends UIScene {
 
             deleteButton.setDisabled(true);
             useButton.setDisabled(false);
-            useButton.setText("Open");
+            useButton.setText(Forge.getLocalizer().getMessage("lblOpen"));
             useButton.layout();
             equipButton.setDisabled(true);
             // 2026-08-29 crash fix: this exact line was the reported crash - clicking a booster/
