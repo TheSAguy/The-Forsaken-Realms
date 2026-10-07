@@ -63,6 +63,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 enemies (nameOverride, rank from role tag, enemy_scale), POI in the blue biome (no Sidequest), quest 99 "The Tides
 Give, the Tides Take", item Coral Helm. Fix: tagless quests only on town/capital boards (the heralds offered a
 delivery job). New worlds only. Agent-tested: quest offered and accepted, a Homarid duel won on its FEM deck.
+LIVE + AGENT PACKAGED 2026-10-06 (jar 08EFECB4B7A7).
 
 ## STATE 2026-10-06 (round 461): **LOCAL + UNRELEASED** - invasions with variety, sized to the player (a player: "always
 the same opponents"): 4 pools widened, 6 new invasions (quests 93-98: Orc Warband, Giants at the Gate, Demon Incursion,
