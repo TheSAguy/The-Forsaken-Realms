@@ -1,11 +1,11 @@
 deep_spawn.png
-size: 896,480
+size: 896,576
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Avatar
-  xy: 64, 32
-  size: 16, 16
+  xy: 0, 480
+  size: 64, 64
 Idle
   xy: 0, 0
   size: 112, 96
@@ -67,5 +67,20 @@ Hit
   xy: 336, 288
   size: 112, 96
 Death
-  xy: 784, 384
+  xy: 64, 480
+  size: 112, 96
+Death
+  xy: 176, 480
+  size: 112, 96
+Death
+  xy: 288, 480
+  size: 112, 96
+Death
+  xy: 400, 480
+  size: 112, 96
+Death
+  xy: 512, 480
+  size: 112, 96
+Death
+  xy: 624, 480
   size: 112, 96

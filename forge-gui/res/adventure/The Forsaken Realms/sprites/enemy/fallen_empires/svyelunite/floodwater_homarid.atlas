@@ -1,11 +1,11 @@
 floodwater_homarid.png
-size: 512,240
+size: 512,304
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Avatar
-  xy: 256, 0
-  size: 16, 16
+  xy: 0, 240
+  size: 64, 64
 IdleLeft
   xy: 0, 0
   size: 64, 48

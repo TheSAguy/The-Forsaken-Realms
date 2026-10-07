@@ -1,20 +1,38 @@
 seasinger.png
-size: 272,48
+size: 448,112
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Avatar
-  xy: 256, 0
-  size: 16, 16
+  xy: 0, 48
+  size: 64, 64
 Idle
-  xy: 0, 00
+  xy: 0, 0
   size: 64, 48
 Idle
-  xy: 64, 00
+  xy: 64, 0
   size: 64, 48
 Idle
-  xy: 128, 00
+  xy: 128, 0
   size: 64, 48
 Idle
-  xy: 192, 00
+  xy: 192, 0
+  size: 64, 48
+Death
+  xy: 64, 48
+  size: 64, 48
+Death
+  xy: 128, 48
+  size: 64, 48
+Death
+  xy: 192, 48
+  size: 64, 48
+Death
+  xy: 256, 48
+  size: 64, 48
+Death
+  xy: 320, 48
+  size: 64, 48
+Death
+  xy: 384, 48
   size: 64, 48

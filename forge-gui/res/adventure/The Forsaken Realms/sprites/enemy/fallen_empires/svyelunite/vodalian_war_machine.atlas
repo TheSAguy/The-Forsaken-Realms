@@ -1,11 +1,11 @@
 vodalian_war_machine.png
-size: 1040,288
+size: 1040,384
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Avatar
-  xy: 1024, 0
-  size: 16, 16
+  xy: 0, 288
+  size: 64, 64
 Idle
   xy: 0, 0
   size: 128, 96
@@ -77,4 +77,22 @@ Attack
   size: 128, 96
 Attack
   xy: 896, 192
+  size: 128, 96
+Death
+  xy: 64, 288
+  size: 128, 96
+Death
+  xy: 192, 288
+  size: 128, 96
+Death
+  xy: 320, 288
+  size: 128, 96
+Death
+  xy: 448, 288
+  size: 128, 96
+Death
+  xy: 576, 288
+  size: 128, 96
+Death
+  xy: 704, 288
   size: 128, 96

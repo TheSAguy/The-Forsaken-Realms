@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 463: Svyelunite Temple art - whole-body portraits, six-frame deaths, a War Machine that moves (2026-10-07)
+
+The user, of upstream's set as round 462 brought it in: their portraits are "16x16 head portraits vs our whole-body
+ones", the deaths "1-frame or missing", and the War Machine reads as static. The split agreed with the Procedural Pixel
+Creatures session: round 462 did the data, that session's pipeline did the art (`tools/forge_remake/upgrade_sheet.py`
+and `svyelunite/war_machine.py` in the generator repo, commit 0fea7dd). Only the 18 sheets in
+`sprites/enemy/fallen_empires/svyelunite/` change (18 .atlas + 18 .png); no data edits.
+
+- **Portraits, all 18:** the Avatar is the whole creature in 64 px (the remakes' rule from round 456's `portraits.py`;
+  a creature of 32 px or less is grown by a whole factor first, so the small homarids fill the box). floodwater_homarid
+  is drawn facing left (`IdleLeft`..., the engine mirrors it), so its portrait is mirrored to face right like the rest.
+- **Deaths, 14 sheets, six frames each:** the hit flash, a 2 px recoil, the artist's fallen pose where there was one
+  (deep_spawn, homarid green/purple/red/yellow, homarid_shaman, homarid_warrior, svyelunite_priest, vodalian_mage,
+  vodalian_soldier) or the standing frame where there was none (homarid_spawning_bed, seasinger, vodalian_knights,
+  vodalian_war_machine), then darkening and the remakes' two-step fade. The four 8-frame deaths (floodwater_homarid,
+  river_merfolk, viscerid_drone, vodalian_merchant) are kept.
+- **War Machine:** its wheels spin and its crew moves in the art, but at scale 0.14 (about the hero's width) that is a
+  pixel or less. The whole carriage now moves inside the same cells: Walk bounces (0, -3, -6, -3 art px, twice a
+  loop), Attack rears up and slams down (0, -2, -6, -9, -9, -4, 0, 0).
+- Each page grows by one strip at the bottom (the portrait, then the death frames); every other region keeps its
+  pixels and coordinates, so Idle/Walk cells are unchanged: `enemy_scale.py --write` 0 changes. `validate_plane_data.py`
+  has no sprite or enemy finding. The artifact audit erases nothing; its NEEDS EYES lines (floodwater_homarid 3
+  frames, vodalian_mage 4) are the authored art's own detached pieces - upstream's untouched copy shows the same
+  homarid frames and the mage's single death frame, whose pose the new death repeats in four frames.
+- Approved by the user from the preview sheets (all 18 portraits old beside new, the 14 deaths, the War Machine GIF).
+  Not seen in play yet.
+
 ## Round 468: NoRotate places leave on a full clear; the arena's Wastes grow each season (2026-10-07)
 
 **A Blue Tower that never left.** Vr01 on Discord (v1.18): an Eviction Notice "needed to clear a dungeon, but it was only

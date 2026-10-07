@@ -1,11 +1,11 @@
 viscerid_drone.png
-size: 640,256
+size: 640,320
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Avatar
-  xy: 320, 0
-  size: 16, 16
+  xy: 0, 256
+  size: 64, 64
 Idle
   xy: 0, 0
   size: 80, 64

@@ -1,56 +1,74 @@
 vodalian_knights.png
-size: 640,240
+size: 640,320
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Avatar
-  xy: 320, 0
-  size: 16, 16
+  xy: 0, 240
+  size: 64, 64
 Idle
-  xy: 00, 00
-  size: 80,80
+  xy: 0, 0
+  size: 80, 80
 Idle
-  xy: 80, 00
-  size: 80,80
+  xy: 80, 0
+  size: 80, 80
 Idle
-  xy: 160, 00
-  size: 80,80
+  xy: 160, 0
+  size: 80, 80
 Idle
-  xy: 240, 00
-  size: 80,80
+  xy: 240, 0
+  size: 80, 80
 Walk
-  xy: 00, 80
-  size: 80,80
+  xy: 0, 80
+  size: 80, 80
 Walk
   xy: 80, 80
-  size: 80,80
+  size: 80, 80
 Walk
   xy: 160, 80
-  size: 80,80
+  size: 80, 80
 Walk
   xy: 240, 80
-  size: 80,80
+  size: 80, 80
 Walk
   xy: 320, 80
-  size: 80,80
+  size: 80, 80
 Walk
   xy: 400, 80
-  size: 80,80
+  size: 80, 80
 Walk
   xy: 480, 80
-  size: 80,80
+  size: 80, 80
 Walk
   xy: 560, 80
-  size: 80,80
+  size: 80, 80
 Attack
-  xy: 00, 160
-  size: 80,80
+  xy: 0, 160
+  size: 80, 80
 Attack
   xy: 160, 160
-  size: 80,80
+  size: 80, 80
 Attack
   xy: 400, 160
-  size: 80,80
+  size: 80, 80
 Attack
   xy: 560, 160
-  size: 80,80
+  size: 80, 80
+Death
+  xy: 64, 240
+  size: 80, 80
+Death
+  xy: 144, 240
+  size: 80, 80
+Death
+  xy: 224, 240
+  size: 80, 80
+Death
+  xy: 304, 240
+  size: 80, 80
+Death
+  xy: 384, 240
+  size: 80, 80
+Death
+  xy: 464, 240
+  size: 80, 80

@@ -1,11 +1,11 @@
 vodalian_mage.png
-size: 768,512
+size: 768,640
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Avatar
-  xy: 384, 0
-  size: 16, 16
+  xy: 0, 512
+  size: 64, 64
 Idle
   xy: 0, 0
   size: 96, 128
@@ -55,5 +55,20 @@ Attack
   xy: 672, 256
   size: 96, 128
 Death
-  xy: 672, 384
+  xy: 64, 512
+  size: 96, 128
+Death
+  xy: 160, 512
+  size: 96, 128
+Death
+  xy: 256, 512
+  size: 96, 128
+Death
+  xy: 352, 512
+  size: 96, 128
+Death
+  xy: 448, 512
+  size: 96, 128
+Death
+  xy: 544, 512
   size: 96, 128
