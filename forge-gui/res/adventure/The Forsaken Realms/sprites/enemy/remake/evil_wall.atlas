@@ -1,0 +1,167 @@
+evil_wall.png
+size: 2470,659
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 190, 119
+Idle
+  xy: 190, 64
+  size: 190, 119
+Idle
+  xy: 380, 64
+  size: 190, 119
+Idle
+  xy: 570, 64
+  size: 190, 119
+Idle
+  xy: 760, 64
+  size: 190, 119
+Idle
+  xy: 950, 64
+  size: 190, 119
+Idle
+  xy: 1140, 64
+  size: 190, 119
+Idle
+  xy: 1330, 64
+  size: 190, 119
+Idle
+  xy: 1520, 64
+  size: 190, 119
+Idle
+  xy: 1710, 64
+  size: 190, 119
+Idle
+  xy: 1900, 64
+  size: 190, 119
+Idle
+  xy: 2090, 64
+  size: 190, 119
+Walk
+  xy: 0, 183
+  size: 190, 119
+Walk
+  xy: 190, 183
+  size: 190, 119
+Walk
+  xy: 380, 183
+  size: 190, 119
+Walk
+  xy: 570, 183
+  size: 190, 119
+Walk
+  xy: 760, 183
+  size: 190, 119
+Walk
+  xy: 950, 183
+  size: 190, 119
+Walk
+  xy: 1140, 183
+  size: 190, 119
+Walk
+  xy: 1330, 183
+  size: 190, 119
+Walk
+  xy: 1520, 183
+  size: 190, 119
+Walk
+  xy: 1710, 183
+  size: 190, 119
+Walk
+  xy: 1900, 183
+  size: 190, 119
+Walk
+  xy: 2090, 183
+  size: 190, 119
+Attack
+  xy: 0, 302
+  size: 190, 119
+Attack
+  xy: 190, 302
+  size: 190, 119
+Attack
+  xy: 380, 302
+  size: 190, 119
+Attack
+  xy: 570, 302
+  size: 190, 119
+Attack
+  xy: 760, 302
+  size: 190, 119
+Attack
+  xy: 950, 302
+  size: 190, 119
+Attack
+  xy: 1140, 302
+  size: 190, 119
+Attack
+  xy: 1330, 302
+  size: 190, 119
+Attack
+  xy: 1520, 302
+  size: 190, 119
+Attack
+  xy: 1710, 302
+  size: 190, 119
+Attack
+  xy: 1900, 302
+  size: 190, 119
+Attack
+  xy: 2090, 302
+  size: 190, 119
+Hit
+  xy: 0, 421
+  size: 190, 119
+Hit
+  xy: 190, 421
+  size: 190, 119
+Hit
+  xy: 380, 421
+  size: 190, 119
+Hit
+  xy: 570, 421
+  size: 190, 119
+Death
+  xy: 0, 540
+  size: 190, 119
+Death
+  xy: 190, 540
+  size: 190, 119
+Death
+  xy: 380, 540
+  size: 190, 119
+Death
+  xy: 570, 540
+  size: 190, 119
+Death
+  xy: 760, 540
+  size: 190, 119
+Death
+  xy: 950, 540
+  size: 190, 119
+Death
+  xy: 1140, 540
+  size: 190, 119
+Death
+  xy: 1330, 540
+  size: 190, 119
+Death
+  xy: 1520, 540
+  size: 190, 119
+Death
+  xy: 1710, 540
+  size: 190, 119
+Death
+  xy: 1900, 540
+  size: 190, 119
+Death
+  xy: 2090, 540
+  size: 190, 119
+Death
+  xy: 2280, 540
+  size: 190, 119

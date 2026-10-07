@@ -6328,7 +6328,7 @@
     },
     {
         "name": "Chimera",
-        "sprite": "sprites/enemy/aberration/chimera.atlas",
+        "sprite": "sprites/enemy/remake/chimera.atlas",
         "deck": [
             "decks/standard/chimera.dck"
         ],
@@ -6376,7 +6376,7 @@
             "IdentityTimur"
         ],
         "tier": "Rare",
-        "scale": 0.7647
+        "scale": 0.1625
     },
     {
         "name": "Clay Golem",
@@ -11088,7 +11088,7 @@
     },
     {
         "name": "Evil Wall",
-        "sprite": "sprites/enemy/construct/wall.atlas",
+        "sprite": "sprites/enemy/remake/evil_wall.atlas",
         "deck": [
             "decks/standard/hiddenwall.dck"
         ],
@@ -11150,7 +11150,7 @@
             "Hidden"
         ],
         "tier": "Uncommon",
-        "scale": 0.9286
+        "scale": 0.1806
     },
     {
         "name": "Eye",
@@ -18653,14 +18653,14 @@
     },
     {
         "name": "Juggernaut",
-        "sprite": "sprites/enemy/construct/juggernaut.atlas",
+        "sprite": "sprites/enemy/remake/juggernaut.atlas",
         "deck": [
             "decks/standard/juggernaut.dck"
         ],
         "ai": "",
         "spawnRate": 1,
         "difficulty": 0.1,
-        "scale": 0.65,
+        "scale": 0.1529,
         "speed": 18,
         "life": 20,
         "rewards": [
@@ -94585,7 +94585,7 @@
     },
     {
         "name": "Graaz",
-        "sprite": "sprites/enemy/construct/juggernaut.atlas",
+        "sprite": "sprites/enemy/remake/graaz.atlas",
         "deck": [
             "decks/legends/graaz.dck"
         ],
@@ -94649,7 +94649,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.65
+        "scale": 0.1529
     },
     {
         "name": "Gorm and Virtus",

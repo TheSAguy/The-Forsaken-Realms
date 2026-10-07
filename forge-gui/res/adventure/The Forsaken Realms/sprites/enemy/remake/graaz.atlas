@@ -1,0 +1,155 @@
+graaz.png
+size: 2106,614
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 162, 110
+Idle
+  xy: 162, 64
+  size: 162, 110
+Idle
+  xy: 324, 64
+  size: 162, 110
+Idle
+  xy: 486, 64
+  size: 162, 110
+Idle
+  xy: 648, 64
+  size: 162, 110
+Idle
+  xy: 810, 64
+  size: 162, 110
+Idle
+  xy: 972, 64
+  size: 162, 110
+Idle
+  xy: 1134, 64
+  size: 162, 110
+Idle
+  xy: 1296, 64
+  size: 162, 110
+Idle
+  xy: 1458, 64
+  size: 162, 110
+Idle
+  xy: 1620, 64
+  size: 162, 110
+Idle
+  xy: 1782, 64
+  size: 162, 110
+Walk
+  xy: 0, 174
+  size: 162, 110
+Walk
+  xy: 162, 174
+  size: 162, 110
+Walk
+  xy: 324, 174
+  size: 162, 110
+Walk
+  xy: 486, 174
+  size: 162, 110
+Walk
+  xy: 648, 174
+  size: 162, 110
+Walk
+  xy: 810, 174
+  size: 162, 110
+Walk
+  xy: 972, 174
+  size: 162, 110
+Walk
+  xy: 1134, 174
+  size: 162, 110
+Attack
+  xy: 0, 284
+  size: 162, 110
+Attack
+  xy: 162, 284
+  size: 162, 110
+Attack
+  xy: 324, 284
+  size: 162, 110
+Attack
+  xy: 486, 284
+  size: 162, 110
+Attack
+  xy: 648, 284
+  size: 162, 110
+Attack
+  xy: 810, 284
+  size: 162, 110
+Attack
+  xy: 972, 284
+  size: 162, 110
+Attack
+  xy: 1134, 284
+  size: 162, 110
+Attack
+  xy: 1296, 284
+  size: 162, 110
+Attack
+  xy: 1458, 284
+  size: 162, 110
+Attack
+  xy: 1620, 284
+  size: 162, 110
+Attack
+  xy: 1782, 284
+  size: 162, 110
+Hit
+  xy: 0, 394
+  size: 162, 110
+Hit
+  xy: 162, 394
+  size: 162, 110
+Hit
+  xy: 324, 394
+  size: 162, 110
+Hit
+  xy: 486, 394
+  size: 162, 110
+Death
+  xy: 0, 504
+  size: 162, 110
+Death
+  xy: 162, 504
+  size: 162, 110
+Death
+  xy: 324, 504
+  size: 162, 110
+Death
+  xy: 486, 504
+  size: 162, 110
+Death
+  xy: 648, 504
+  size: 162, 110
+Death
+  xy: 810, 504
+  size: 162, 110
+Death
+  xy: 972, 504
+  size: 162, 110
+Death
+  xy: 1134, 504
+  size: 162, 110
+Death
+  xy: 1296, 504
+  size: 162, 110
+Death
+  xy: 1458, 504
+  size: 162, 110
+Death
+  xy: 1620, 504
+  size: 162, 110
+Death
+  xy: 1782, 504
+  size: 162, 110
+Death
+  xy: 1944, 504
+  size: 162, 110

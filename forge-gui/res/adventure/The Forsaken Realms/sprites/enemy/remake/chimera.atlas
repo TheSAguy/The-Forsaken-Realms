@@ -1,0 +1,155 @@
+chimera.png
+size: 1846,659
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 142, 119
+Idle
+  xy: 142, 64
+  size: 142, 119
+Idle
+  xy: 284, 64
+  size: 142, 119
+Idle
+  xy: 426, 64
+  size: 142, 119
+Idle
+  xy: 568, 64
+  size: 142, 119
+Idle
+  xy: 710, 64
+  size: 142, 119
+Idle
+  xy: 852, 64
+  size: 142, 119
+Idle
+  xy: 994, 64
+  size: 142, 119
+Idle
+  xy: 1136, 64
+  size: 142, 119
+Idle
+  xy: 1278, 64
+  size: 142, 119
+Idle
+  xy: 1420, 64
+  size: 142, 119
+Idle
+  xy: 1562, 64
+  size: 142, 119
+Walk
+  xy: 0, 183
+  size: 142, 119
+Walk
+  xy: 142, 183
+  size: 142, 119
+Walk
+  xy: 284, 183
+  size: 142, 119
+Walk
+  xy: 426, 183
+  size: 142, 119
+Walk
+  xy: 568, 183
+  size: 142, 119
+Walk
+  xy: 710, 183
+  size: 142, 119
+Walk
+  xy: 852, 183
+  size: 142, 119
+Walk
+  xy: 994, 183
+  size: 142, 119
+Attack
+  xy: 0, 302
+  size: 142, 119
+Attack
+  xy: 142, 302
+  size: 142, 119
+Attack
+  xy: 284, 302
+  size: 142, 119
+Attack
+  xy: 426, 302
+  size: 142, 119
+Attack
+  xy: 568, 302
+  size: 142, 119
+Attack
+  xy: 710, 302
+  size: 142, 119
+Attack
+  xy: 852, 302
+  size: 142, 119
+Attack
+  xy: 994, 302
+  size: 142, 119
+Attack
+  xy: 1136, 302
+  size: 142, 119
+Attack
+  xy: 1278, 302
+  size: 142, 119
+Attack
+  xy: 1420, 302
+  size: 142, 119
+Attack
+  xy: 1562, 302
+  size: 142, 119
+Hit
+  xy: 0, 421
+  size: 142, 119
+Hit
+  xy: 142, 421
+  size: 142, 119
+Hit
+  xy: 284, 421
+  size: 142, 119
+Hit
+  xy: 426, 421
+  size: 142, 119
+Death
+  xy: 0, 540
+  size: 142, 119
+Death
+  xy: 142, 540
+  size: 142, 119
+Death
+  xy: 284, 540
+  size: 142, 119
+Death
+  xy: 426, 540
+  size: 142, 119
+Death
+  xy: 568, 540
+  size: 142, 119
+Death
+  xy: 710, 540
+  size: 142, 119
+Death
+  xy: 852, 540
+  size: 142, 119
+Death
+  xy: 994, 540
+  size: 142, 119
+Death
+  xy: 1136, 540
+  size: 142, 119
+Death
+  xy: 1278, 540
+  size: 142, 119
+Death
+  xy: 1420, 540
+  size: 142, 119
+Death
+  xy: 1562, 540
+  size: 142, 119
+Death
+  xy: 1704, 540
+  size: 142, 119

@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 458: the Juggernaut, the Evil Wall and the Chimera, hand-made from AI clips (2026-10-06)
+
+The user picked the next hand-made enemies ("Juggernaut, the Mimic, the Wall and the Chimera"), then dropped one: "We
+will leave Mimic as is, since it's a hidden treasure chest." Their ChatGPT stills and Kling clips, cleaned in Pixelate
+(the fourth to sixth after Ulamog, the Sliver Queen and Kozilek):
+
+- **Juggernaut + Graaz:** a ram-skull siege tank after the card's Dominaria art: a dark iron ram skull with spiral
+  horns and glowing orange eyes, a long hull of rust-red armor plates under a row of spikes, spiked iron wheels. Idle
+  12 (the eyes flare), Walk 8 (the wheels roll, one bump), Attack 12 (it rocks back and rams), Hit 4, Death 13 (it
+  bursts into scrap that scatters and fades). Graaz, Unstoppable Juggernaut gets the same art. The other four enemies
+  on the old shared `construct/juggernaut.atlas` (Kethek, Traxos, Liberator, Infinite Guideline Station) keep it: a
+  tank fits none of them.
+- **Evil Wall:** a living stone wall after Animate Wall: weathered gray blocks overgrown with ivy, a scowling face with
+  amber eyes, a stone hand pushing out of its side. Idle 12 (it scowls and blinks, the hand flexes), Attack 12 (the
+  hand clenches and punches), Hit 4, Death 13 (it cracks and crumbles into rubble). It never moves, so it has no walk
+  clip (Walk = the idle). Made on a magenta key: green would have taken the ivy.
+- **Chimera:** a winged lion with a goat's head and a red dragon's head on its shoulders and a serpent tail, after the
+  user's D&D references. Idle 12, Walk 8, Attack 12 (the dragon head breathes fire as the lion roars), Hit 4, Death 13
+  (it staggers, collapses and fades; the clip's last five frames, dust tinted by the green key, are left out).
+- The attacks were exported at 256 px from the still itself, not a padded copy, so each creature came out twice the
+  size of its other clips. `pixelate_to_forge.py` now measures a clip's first frame against the idle's and shrinks
+  such a clip back by the whole factor (each 2x2 block its most common color). The Chimera's flame reaches the edge of
+  its clip and is cut there in three frames; a redo of that one clip from a padded still would fix it (offered).
+- **Data only:**
+  - `sprites/enemy/remake/`: 8 new files (`juggernaut.*`, `graaz.*`, `evil_wall.*`, `chimera.*`).
+  - `world/enemies.json`: the four entries' sprite and scale (one size per tier: Juggernaut and Graaz 0.65 -> 0.1529,
+    Evil Wall 0.9286 -> 0.1806, Chimera 0.7647 -> 0.1625); nothing else.
+- **Checks:** `validate_plane_data.py` - no sprite or enemy findings; `enemy_scale.py --write` - the four new scales
+  only; `sprite_artifact_audit.py --only remake` (440 atlases, 35967 frames): the new flags are the ground shadow one
+  to three rows under a lifted body (the Chimera's stride and stagger, the Juggernaut's bump) and death debris
+  separated from the rest (the Juggernaut's scrap, the Wall's flying stones), all part of the clips. The four duel
+  portraits show the whole creature.
+- Not yet seen in play. Console (F9): `spawn enemy Juggernaut`, `spawn enemy "Evil Wall"`, `spawn enemy Chimera`.
+
 ## Round 457: the Bank moves 500 at a time; the Capitol's land shops, answered (2026-10-06)
 
 A player on Discord (Android): "Can the bank deposit and withdraw be 1k instead of 100. 2. Do the colored land shops in

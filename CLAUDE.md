@@ -58,6 +58,12 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-06 (round 458): **LOCAL + UNRELEASED (data only)** - three more hand-made enemies from the user's AI
+clips (Pixelate): the Juggernaut (Graaz shares it; Kethek, Traxos, Liberator and Infinite Guideline Station keep the old
+construct sprite), the Evil Wall and the Chimera. enemies.json the four entries' sprite + scale, 8 new files in
+`sprites/enemy/remake/`. The Mimic stays the chest (the user's call). NOT PACKAGED at commit time - the peer (#30)
+packages live + agent when the user's game is closed. Not seen in play.
+
 ## STATE 2026-10-06 (round 457): **LOCAL + UNRELEASED** - the Bank's Deposit/Withdraw step 100 -> 500 (the user, after a
 player asked for 1k): new settings.json `bankStepGold` (TuningData, `EconomyBuildings.bankStep()`). Answered, no change:
 the Capitol's six land shops (`noRestock` + `fixedShop`) reroll every 7 days from their own last roll, no paid restock
@@ -66,8 +72,8 @@ button; the five colored ones are `unlimited`. Not agent-tested. LIVE + AGENT PA
 ## STATE 2026-10-06 (round 456): **LOCAL + UNRELEASED (data only)** - Kozilek from the user's AI clips (both Kozilek
 entries), the Sliver Queen's attack remade in frame, and EVERY remake's duel portrait (436) now the whole creature
 (procedural-pixel-creatures `tools/forge_remake/portraits.py`; the converters make them so too). 432 remake PNGs + 1
-atlas changed, 4 new files, enemies.json the two Kozilek entries. NOT PACKAGED at commit time - the peer (#30) packages
-live + agent when the user's game is closed. Not seen in play.
+atlas changed, 4 new files, enemies.json the two Kozilek entries. LIVE + AGENT PACKAGED by the peer (#30) the same day
+(jar 6E9253C12F1A). Not seen in play.
 
 ## STATE 2026-10-06 (round 455): **LOCAL + UNRELEASED (data only)** - the Sliver Queen, the second hand-made enemy
 from the user's AI clips (Pixelate pilot): enemies.json her sprite + scale (boss, same drawn size; Karona (Boss) keeps
@@ -184,7 +190,7 @@ of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety b
 447 = the streak draws stronger enemies, 448 = `leave` + map walker fixes, 449 = pickups within walking reach +
 research 40 + a 243 s day, 450 = no Manasight on a Mimic, 451 = no crown on a Mimic, 452 = chest-size Mimics + the Warden's dot + the Lab's
 set view + the hidden card a new game's only (done), 453 = Ulamog from the Pixelate pilot (the Procedural Pixel
-Creatures session), 454 = Ulamog's own death (same), 455 = the Sliver Queen (same), 456 = Kozilek + whole-body portraits (same), 457 = the Bank's step 500 - the next free round is **458**;
+Creatures session), 454 = Ulamog's own death (same), 455 = the Sliver Queen (same), 456 = Kozilek + whole-body portraits (same), 457 = the Bank's step 500, 458 = the Juggernaut, the Evil Wall and the Chimera (the Procedural Pixel Creatures session) - the next free round is **459**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,
