@@ -58,6 +58,10 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-07 (round 470): **LOCAL + UNRELEASED (pictures + tool)** - the 45+ and 50+ bonus Wall cards print the
+life they add ("Your foe also starts with +25% life." / "+25% more life (+50% in all)."), redrawn by
+`make_wall_cards.py --bonus-only --reuse-art` (the art folder on F: was not attached; art boxes kept byte-identical).
+
 ## STATE 2026-10-07 (round 463): **LOCAL + UNRELEASED (sprites only)** - the Svyelunite Temple art, by the Procedural
 Pixel Creatures session: the 18 sheets in `sprites/enemy/fallen_empires/svyelunite/` get 64 px whole-body duel
 portraits, six-frame deaths on the 14 sheets that had one frame or none (the four 8-frame deaths kept), and a War
@@ -254,7 +258,7 @@ of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety b
 research 40 + a 243 s day, 450 = no Manasight on a Mimic, 451 = no crown on a Mimic, 452 = chest-size Mimics + the Warden's dot + the Lab's
 set view + the hidden card a new game's only (done), 453 = Ulamog from the Pixelate pilot (the Procedural Pixel
 Creatures session), 454 = Ulamog's own death (same), 455 = the Sliver Queen (same), 456 = Kozilek + whole-body portraits (same), 457 = the Bank's step 500, 458 = the Juggernaut, the Evil Wall and the Chimera (the Procedural Pixel Creatures session), 459 = weekly shops turn over
-with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread, 462 = Svyelunite Temple, 464 = the coin toss without a tap + its Settings switch, 465 = the win-streak notice once per streak, 466 = Valor's Reach Arena in seasons, 467 = the win streak grows to three Wastes, 468 = NoRotate places leave on a full clear + the arena's Wastes grow, 463 = the Svyelunite Temple art (the Procedural Pixel Creatures session), 469 = reserved for that session's Pixelate four (Emrakul, the Beholder, the Eldrazi, the Phoenix); the next free round is **470**;
+with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread, 462 = Svyelunite Temple, 464 = the coin toss without a tap + its Settings switch, 465 = the win-streak notice once per streak, 466 = Valor's Reach Arena in seasons, 467 = the win streak grows to three Wastes, 468 = NoRotate places leave on a full clear + the arena's Wastes grow, 463 = the Svyelunite Temple art (the Procedural Pixel Creatures session), 469 = reserved for that session's Pixelate four (Emrakul, the Beholder, the Eldrazi, the Phoenix); 470 = the 45+/50+ Wall cards print their +life; the next free round is **471**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,

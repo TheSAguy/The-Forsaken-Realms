@@ -14291,6 +14291,23 @@ and `svyelunite/war_machine.py` in the generator repo, commit 0fea7dd). Only the
 - Approved by the user from the preview sheets (all 18 portraits old beside new, the 14 deaths, the War Machine GIF).
   Not seen in play yet.
 
+## Round 470: the 45+ and 50+ Wall cards print their +life (2026-10-07)
+
+The user: "Print the +life on the 45+ and 50+ Wall cards." Round 446 gave the two bonus Walls (round 445) +25% enemy life
+each, but their cards said only why they were there.
+
+- **The faces** (`common/custom_card_pics/tfr_wall3_flying_3_6` / `tfr_wall4_flying_3_6.fullborder.png`): after the
+  Notoriety line, "Your foe also starts with **+25%** life." on the 45+ card and "Your foe also starts with **+25%** more
+  life **(+50%** in all)." on the 50+ card; the percentages bold.
+- **`dev-tools/wall_tokens/make_wall_cards.py`**: `BONUS_LIFE_PERCENT` (settings.json's notorietyBonusWallLifePercent,
+  25/25) and `life_line()`; `draw_why()` bolds a "+" word and wraps a line that reaches the P/T box's height short of it.
+  The art folder (F:\Art_to_Tweak\WALL) was not attached, so new `--reuse-art` takes each bonus face's art box from the
+  face already in `--out` and draws only the frame and text again (art box byte-identical, checked); `--preview-dir`
+  writes elsewhere to look first. Run: `make_wall_cards.py --out forge-gui/res/adventure/common/custom_card_pics
+  --bonus-only --reuse-art`.
+- Token scripts unchanged (the line is on the picture, like the Notoriety line since round 411b). GUIDE: the notoriety
+  paragraph says the 45+ and 50+ cards print the life they add.
+
 ## Round 468: NoRotate places leave on a full clear; the arena's Wastes grow each season (2026-10-07)
 
 **A Blue Tower that never left.** Vr01 on Discord (v1.18): an Eviction Notice "needed to clear a dungeon, but it was only

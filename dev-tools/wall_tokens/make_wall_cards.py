@@ -12,6 +12,11 @@ usage: python make_wall_cards.py --out <custom_card_pics folder> [--art <folder>
         Reach-1..4, Fly-1..4 (their 256 x 256 set lives OUTSIDE the repo, F:\\Art_to_Tweak\\WALL). Missing art falls back
         to a drawn placeholder.
 --sheet a 4-wide preview of every face, for review before shipping.
+--reuse-art  round 470: the bonus walls' art boxes come from their faces already in --out (the art folder was not at
+        hand) - only the frame and the text are drawn again. With --bonus-only it touches only those two faces.
+--preview-dir  round 470: write the faces to this folder instead of --out, to look before replacing.
+
+Round 470: the two bonus walls (45+, 50+) print their extra enemy life after the why line (BONUS_LIFE_PERCENT).
 
 Round 423 framing (frame_art). The art box is 408 x 300 and the user's art is square with a transparent sky, so every
 picture stands on a backdrop for its kind: a banded stone-grey sky for the plain Wall, a green one with a ground band
@@ -180,6 +185,17 @@ def wrap(draw, text, fnt, width):
 
 WINS_PER_LEVEL = 5   # settings.json notorietyWinsPerLevel
 LEVELS_PER_WALL = 4  # settings.json notorietyLevelsPerWall
+BONUS_LIFE_PERCENT = (25, 25)   # settings.json notorietyBonusWallLifePercent - each bonus wall's +life, in BONUS_WALLS order
+
+
+def life_line(index):
+    """Round 470 (the user: "Print the +life on the 45+ and 50+ Wall cards"): the bonus wall's extra enemy life - its own
+    share, and from the second on the total so far."""
+    pct = BONUS_LIFE_PERCENT[index]
+    total = sum(BONUS_LIFE_PERCENT[:index + 1])
+    if index == 0:
+        return f"Your foe also starts with +{pct}% life."
+    return f"Your foe also starts with +{pct}% more life (+{total}% in all)."
 
 
 def why_line(wall, level, wins=None):
@@ -194,22 +210,30 @@ def why_line(wall, level, wins=None):
 LEAD = "Notoriety:"   # round 417 (the user: "put the Notoriety text in bold") - the card is the only notice now
 
 
+PT_BOX = (W - 128, 590)   # the P/T box's left edge and top - text on a line reaching below its top stays left of it
+
+
 def draw_why(d, text, x0, y, width):
-    """The why line in italic with its LEAD word bold italic, word-wrapped across both fonts. Returns the next y."""
+    """The why line in italic with its LEAD word bold italic, word-wrapped across both fonts. Returns the next y.
+    Round 470: a word starting with "+" is bold too (the bonus walls' +life), and a line that reaches the P/T box's
+    height wraps short of it."""
     italic, bold = font("palai.ttf", 18), font("palabi.ttf", 18)
     space = d.textlength(" ", font=italic)
     x = x0
     for i, word in enumerate(text.split()):
-        f = bold if i == 0 and word == LEAD else italic
+        f = bold if (i == 0 and word == LEAD) or word.startswith("+") or word.startswith("(+") else italic
         w = d.textlength(word, font=f)
-        if x > x0 and x + w > x0 + width:
+        limit = x0 + width if y + 21 <= PT_BOX[1] else PT_BOX[0] - 8
+        if x > x0 and x + w > limit:
             x, y = x0, y + 21
         d.text((x, y), word, font=f, fill=(40, 40, 46) if f is italic else (16, 16, 20))
         x += w + space
     return y + 21
 
 
-def card(art, kind, keywords, wall, level, wins=None):
+def card(art, kind, keywords, wall, level, wins=None, extra=None, framed=None):
+    """extra: round 470 - a sentence after the why line (a bonus wall's +life). framed: round 470 - an art box already
+    framed (408 x 300, cut from an existing face by --reuse-art), pasted as it is."""
     img = Image.new("RGB", (W, H), (16, 16, 18))
     d = ImageDraw.Draw(img)
     # silver artifact frame
@@ -221,7 +245,7 @@ def card(art, kind, keywords, wall, level, wins=None):
     d.rounded_rectangle([30, 30, W - 31, 70], radius=10, fill=(214, 216, 220), outline=(90, 92, 98), width=2)
     d.text((44, 36), "Wall", font=font("palab.ttf", 27), fill=(20, 20, 22))
     # art
-    img.paste(frame_art(art, kind), ART_BOX[:2])
+    img.paste(framed if framed is not None else frame_art(art, kind), ART_BOX[:2])
     d.rectangle([ART_BOX[0] - 2, ART_BOX[1] - 2, ART_BOX[2] + 1, ART_BOX[3] + 1], outline=(60, 62, 66), width=2)
     # type line
     d.rounded_rectangle([30, 388, W - 31, 424], radius=9, fill=(214, 216, 220), outline=(90, 92, 98), width=2)
@@ -243,7 +267,7 @@ def card(art, kind, keywords, wall, level, wins=None):
     # why it is on the field - a rule, then italic like flavor text, kept clear of the P/T box
     d.line([70, y, W - 71, y], fill=(150, 150, 150), width=1)
     y += 8
-    y = draw_why(d, why_line(wall, level, wins), 54, y, W - 41 - 14 - 54)
+    y = draw_why(d, why_line(wall, level, wins) + (" " + extra if extra else ""), 54, y, W - 41 - 14 - 54)
     # power / toughness
     d.rounded_rectangle([W - 128, 590, W - 34, 636], radius=10, fill=(214, 216, 220), outline=(70, 72, 78), width=2)
     pt = "%d/%d" % LEVEL_PT[level]
@@ -259,23 +283,33 @@ def main():
     ap.add_argument("--art")
     ap.add_argument("--sheet")
     ap.add_argument("--bonus-only", action="store_true", help="round 445: only the bonus walls' faces")
+    ap.add_argument("--reuse-art", action="store_true",
+                    help="round 470: take each bonus wall's art box from its face already in --out (when --art is not at "
+                         "hand) - only the frame and the text are drawn again")
+    ap.add_argument("--preview-dir", help="round 470: write the faces here instead of --out (--out is still read by "
+                                          "--reuse-art)")
     args = ap.parse_args()
     out = Path(args.out)
     if not out.is_dir():
         sys.exit(f"--out is not a folder: {out}")
+    dest = Path(args.preview_dir) if args.preview_dir else out
+    dest.mkdir(parents=True, exist_ok=True)
     art_dir = Path(args.art) if args.art else None
     made = []
-    for script, wins in BONUS_WALLS:      # round 445: the flying 3/6 (Fly-4 art) with its own win count
-        art, source = None, "placeholder"
+    for index, (script, wins) in enumerate(BONUS_WALLS):   # round 445: the flying 3/6 (Fly-4 art) with its own win count
+        art, source, framed = None, "placeholder", None
         if art_dir:
             for candidate in (art_dir / "Fly-4.png", art_dir / "flying_4.png", art_dir / "flying.png"):
                 if candidate.exists():
                     art, source = Image.open(candidate), candidate.name
                     break
-        if art is None:
+        if art is None and args.reuse_art and (out / f"{script}.fullborder.png").exists():
+            framed = Image.open(out / f"{script}.fullborder.png").convert("RGB").crop(ART_BOX)
+            source = f"the art box of the existing {script}.fullborder.png"
+        if art is None and framed is None:
             art = placeholder("flying", 4)
-        face = card(art, "flying", ["Flying"], 0, 4, wins)
-        face.save(out / f"{script}.fullborder.png")
+        face = card(art, "flying", ["Flying"], 0, 4, wins, extra=life_line(index), framed=framed)
+        face.save(dest / f"{script}.fullborder.png")
         made.append(face)
         print(f"{script}.fullborder.png  <- {source}")
     for wall in range(0 if args.bonus_only else len(WALLS)):   # round 429: the second wall - same art, its own win counts
@@ -292,7 +326,7 @@ def main():
                     art = placeholder(kind, level)
                 script = script_name(wall, word, level)
                 face = card(art, kind, keywords, wall, level)
-                face.save(out / f"{script}.fullborder.png")
+                face.save(dest / f"{script}.fullborder.png")
                 made.append(face)
                 print(f"{script}.fullborder.png  <- {source}")
     if args.sheet:

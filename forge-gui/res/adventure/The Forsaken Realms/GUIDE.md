@@ -706,7 +706,8 @@ in a row some of their creatures step up a rank, and from 20 some step up two - 
 rank and one in five goes up two. A place keeps what you found in it until it rotates away. Lose once and it all
 starts over with your streak.
 
-Each Wall card says why it's there, under a bold **Notoriety** line with the wins it stands for. Lose once (a Bronze Coin still counts as a
+Each Wall card says why it's there, under a bold **Notoriety** line with the wins it stands for; the 45+ and 50+
+cards also print the life they add. Lose once (a Bronze Coin still counts as a
 loss) and your streak starts over. It counts the same duels as an enemy's own streak above, except the Arena: an Arena
 duel neither adds to your streak nor resets it, though Arena fighters still bring the Walls it has earned. New Game+
 starts it from zero.
