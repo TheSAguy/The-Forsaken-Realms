@@ -62,7 +62,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 full clear (every level, nothing left) and come back after the spot rest like a boss lair (`DungeonRotation.
 isClearReturner`); losses and timers still never remove them. Valor's Reach Arena's Wastes grow by one per return, up
 to three (`PointOfInterestData.returnStartCardsMax`). From Vr01's Discord report (v1.18), whose one-floor Eviction
-Notice clear round 443 already fixed. Agent-tested.
+Notice clear round 443 already fixed. Agent-tested. LIVE + AGENT PACKAGED 2026-10-07 (jar 447D4EDA8E23). The user's
+11:38-12:49 session on the 466-467 jar: clean, the streak's second Wastes seen (a Skeleton at 6 wins).
 
 ## STATE 2026-10-07 (round 467): **LOCAL + UNRELEASED** - the win streak grows: one Wastes per full count of wins in a
 row (Insane 3/6/9 = duels 4/7/10; Hard 4/8/12; Normal 5/10/15), three at most (`TuningData.winStreakMaxSteps`), a new
