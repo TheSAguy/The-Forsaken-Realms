@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 471: the remakes' style pass - ink lines, readable texture, eye sockets, rim light and contrast on 415 generated remakes (2026-10-07)
+
+The user's go for the approved style upgrade (the 2026-10-05 study of what the hand-drawn enemies do better), with a
+brief: a fresh audit of every sprite and animation first, detail that reads at in-game size and sits still across
+frames, the established palette and style, frame sizes, layouts and counts untouched. The Procedural Pixel Creatures
+session did the work; its audit (`tools/forge_remake/cloud/remaining/AUDIT.md` and `AUDIT_TABLE.md` in the generator
+repo) found the set technically clean - no stray pixels, no stray alpha, seamless loops, steady feet, every ranked body
+at exactly 13 px before the tier cue - and the gap where the study put it: tinted outlines, micro texture under a drawn
+pixel that reads as mottling, a narrow value range, small faces; plus attacks without a clear impact (motor work, not
+this round) and thin antler tines breaking into dashes (a raster bug, noted).
+
+- **The look** (export-time only, `remake.EXPORT_STYLE`): every material's outline one near-black line, the contours
+  between parts in that line, no sel-out; the surface texture's cells (fur tufts, scales, plates, scallops) at twice
+  their size, so each mark is 6-9 art px and survives the 3.4 art px per world px; a dark socket round eyes of three
+  and four pixels; a one-step rim light on silhouette pixels facing away from the key light; the deep shade darker and
+  light and highlight lighter by 0.05 Oklch lightness. The generator's own look, goldens and presets are unchanged.
+- **Data only, pixels only:** 415 PNGs under `sprites/enemy/remake/`. Every creature was re-exported from the exact spec
+  it was installed with (`style_pass.py`, 2 s each), and each result was proven identical to the installed atlas in
+  cell, animation names, frame counts and every frame's opaque footprint (Avatar included) before it was copied in;
+  the .atlas files and enemies.json are byte-identical (`enemy_scale.py --write` 0 changes).
+- **17 kept as they were:** arasta, cave_spider, spider, giant_fly, the_locust_god, kathril, hermit_crab,
+  the_scarab_god, zask (arthropods), codie, death_slime, eye, jellyfish, mm_menon, octopus, plagon, vnwxt (amorphous).
+  Today's generator reproduces their cells but not their attack or walk frame counts (the motor's action timing and
+  gait cadence moved since rounds 408-430), so by the brief's rule they wait for the round that changes frames anyway.
+  The 16 hand-made Pixelate sprites are untouched.
+- **Measured before -> after** (idle frames, the 415): silhouette lines near-black 92 % -> 100 %, hard edges 19 % -> 25 %,
+  value range 154 -> 170 of 255, main colors 10.1 -> 10.6; line toggling between frames up by 0.02 (more dark pixels
+  moving with the body), shade shimmer on still pixels 0.148 -> 0.157 - no creature flickers more than +0.07.
+- Checks: `validate_plane_data.py` no sprite or enemy finding; the artifact audit unchanged (451 frames, all the known
+  shadow pieces and portrait edges). Previews for the user in the generator repo's `reports/forge/style_pass/`: the
+  Mountain Ogre and the Wolf at in-game size and speed (GIF), zoomed and onion-skinned per clip, `qa_strip.png` (24
+  creatures before/after), `before_after_<family>.png`, `avatars_471.png`.
+- **Built but held** (they move the silhouette, so the size fit re-runs and the cell changes by a pixel or two): biped
+  `gear.trim` (wraps, a buckle, a bound grip, a banded and studded club) and `body.gem` (a glowing chest gem for the
+  golems); the recipe pass (bigger eyes, one focal accent each). Not seen in play yet.
+
 ## Round 469: Emrakul, the Beholder, the Eldrazi and the Phoenix, hand-made from AI clips (2026-10-07)
 
 The fourth Pixelate batch (the Procedural Pixel Creatures session; the process is in its
