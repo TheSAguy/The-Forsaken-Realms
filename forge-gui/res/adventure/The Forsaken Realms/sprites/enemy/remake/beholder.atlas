@@ -1,0 +1,155 @@
+beholder.png
+size: 1768,679
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 136, 123
+Idle
+  xy: 136, 64
+  size: 136, 123
+Idle
+  xy: 272, 64
+  size: 136, 123
+Idle
+  xy: 408, 64
+  size: 136, 123
+Idle
+  xy: 544, 64
+  size: 136, 123
+Idle
+  xy: 680, 64
+  size: 136, 123
+Idle
+  xy: 816, 64
+  size: 136, 123
+Idle
+  xy: 952, 64
+  size: 136, 123
+Idle
+  xy: 1088, 64
+  size: 136, 123
+Idle
+  xy: 1224, 64
+  size: 136, 123
+Idle
+  xy: 1360, 64
+  size: 136, 123
+Idle
+  xy: 1496, 64
+  size: 136, 123
+Walk
+  xy: 0, 187
+  size: 136, 123
+Walk
+  xy: 136, 187
+  size: 136, 123
+Walk
+  xy: 272, 187
+  size: 136, 123
+Walk
+  xy: 408, 187
+  size: 136, 123
+Walk
+  xy: 544, 187
+  size: 136, 123
+Walk
+  xy: 680, 187
+  size: 136, 123
+Walk
+  xy: 816, 187
+  size: 136, 123
+Walk
+  xy: 952, 187
+  size: 136, 123
+Attack
+  xy: 0, 310
+  size: 136, 123
+Attack
+  xy: 136, 310
+  size: 136, 123
+Attack
+  xy: 272, 310
+  size: 136, 123
+Attack
+  xy: 408, 310
+  size: 136, 123
+Attack
+  xy: 544, 310
+  size: 136, 123
+Attack
+  xy: 680, 310
+  size: 136, 123
+Attack
+  xy: 816, 310
+  size: 136, 123
+Attack
+  xy: 952, 310
+  size: 136, 123
+Attack
+  xy: 1088, 310
+  size: 136, 123
+Attack
+  xy: 1224, 310
+  size: 136, 123
+Attack
+  xy: 1360, 310
+  size: 136, 123
+Attack
+  xy: 1496, 310
+  size: 136, 123
+Hit
+  xy: 0, 433
+  size: 136, 123
+Hit
+  xy: 136, 433
+  size: 136, 123
+Hit
+  xy: 272, 433
+  size: 136, 123
+Hit
+  xy: 408, 433
+  size: 136, 123
+Death
+  xy: 0, 556
+  size: 136, 123
+Death
+  xy: 136, 556
+  size: 136, 123
+Death
+  xy: 272, 556
+  size: 136, 123
+Death
+  xy: 408, 556
+  size: 136, 123
+Death
+  xy: 544, 556
+  size: 136, 123
+Death
+  xy: 680, 556
+  size: 136, 123
+Death
+  xy: 816, 556
+  size: 136, 123
+Death
+  xy: 952, 556
+  size: 136, 123
+Death
+  xy: 1088, 556
+  size: 136, 123
+Death
+  xy: 1224, 556
+  size: 136, 123
+Death
+  xy: 1360, 556
+  size: 136, 123
+Death
+  xy: 1496, 556
+  size: 136, 123
+Death
+  xy: 1632, 556
+  size: 136, 123

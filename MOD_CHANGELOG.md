@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 469: Emrakul, the Beholder, the Eldrazi and the Phoenix, hand-made from AI clips (2026-10-07)
+
+The fourth Pixelate batch (the Procedural Pixel Creatures session; the process is in its
+`tools/forge_remake/pixelate/README.md`): the user's ChatGPT stills and Kling clips, cleaned into pixel art in Pixelate,
+converted by `pixelate_to_forge.py`, installed by `install_remakes.py`. Eight enemies on four sprites: 16 new files in
+`sprites/enemy/remake/`; enemies.json changes the eight entries' sprite and scale (Phoenix and Syrix had no scale).
+
+- **Emrakul** (boss) and **Emrakul, the Aeons Torn** (keepSize), the Aeons Torn look: the cowl of blue chitin plates
+  round a glowing spiral core, torn mantle membranes, the trunk splitting into tentacles. Scale 0.6499 -> 0.4394 for
+  both: the drawn size kept against the 134x120 cell. Her idle came exported at 256 px (the other clips at 128): the
+  converter now measures every clip against the smallest one and shrinks whatever is a whole factor bigger, the idle
+  included. Death: convulsion, the core goes dark, the body crumbles in a cloud of gray ash (the clip's green-tinted
+  dust, despilled to gray).
+- **Beholder** (Uncommon), purple because green skin would key out: the central eye, the fanged maw, ten eyestalks. It
+  bobs, glides, lunges and snaps; the death closes the eye, droops the stalks, sinks and deflates to a puddle. Scale
+  1.0833 -> 0.197.
+- **Eldrazi** (Uncommon), **Eldrazi Scion** (Common) and **Ulalek** (keepSize, 2.5999 -> 0.39), Matter Reshaper's look:
+  jagged black bone plates, the molten core, hooked claws on backward-jointed legs. The attack raises both claws and
+  slashes down with the core flaring; the death collapses into ash. Scale 1.0833 -> 0.1625 for the two ranked ones.
+- **Phoenix** (Mythic) and **Syrix** (Rare), Chandra's Phoenix: crimson, orange and gold with wing and tail flames. It
+  hovers with slow beats, flies forward, rears and dives with its talons out; the death flares once and burns out to
+  embers and ash. Scale (none) -> 0.1605. New converter option `--despill-all` for a creature with no color near the
+  key: every green-leaning pixel (by more than 4, not 20) is recolored to the creature's palette; the flare's lime
+  fringe ((181,187,35), under the old threshold - the Chimera's flame had the same) is gone.
+- **Known flaw, two attacks:** all four attacks were 256 exports of the unpadded stills (the converter shrinks them
+  back), so the Eldrazi's raised claws (2 of 12 frames) and the Phoenix's spread wings (3 of 12) are cut flat at the
+  clip's top edge. Padded stills for a redo (`pad_still.py`) are in the user's Custom folder; a redo lands like the
+  Sliver Queen's in round 456.
+- Checks: `enemy_scale.py --write` set the 5 ranked scales; `validate_plane_data.py` has no sprite or enemy finding;
+  the artifact audit's new lines are all expected - the hovering Beholder's and Phoenix's ground shadows detached from
+  the body when it lifts (flight shadows, as the owls'), the Eldrazi's ash piles and Emrakul's smoke clouds in the
+  deaths. Never `--fix` a remake sheet. Portraits: the whole creature, all eight (contact sheet checked).
+- Not seen in play yet.
+
 ## Round 463: Svyelunite Temple art - whole-body portraits, six-frame deaths, a War Machine that moves (2026-10-07)
 
 The user, of upstream's set as round 462 brought it in: their portraits are "16x16 head portraits vs our whole-body

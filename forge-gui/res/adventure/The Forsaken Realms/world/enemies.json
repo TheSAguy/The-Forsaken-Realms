@@ -3535,7 +3535,7 @@
     },
     {
         "name": "Beholder",
-        "sprite": "sprites/enemy/aberration/beholder.atlas",
+        "sprite": "sprites/enemy/remake/beholder.atlas",
         "deck": [
             "decks/standard/beholder.dck"
         ],
@@ -3608,7 +3608,7 @@
             "BiomeBlack"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.197
     },
     {
         "name": "Berserker",
@@ -10037,7 +10037,7 @@
     },
     {
         "name": "Eldrazi",
-        "sprite": "sprites/enemy/aberration/eldrazi/eldrazi.atlas",
+        "sprite": "sprites/enemy/remake/eldrazi.atlas",
         "deck": [
             "decks/standard/eldrazi.dck"
         ],
@@ -10127,11 +10127,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.1625
     },
     {
         "name": "Eldrazi Scion",
-        "sprite": "sprites/enemy/aberration/eldrazi/eldrazi.atlas",
+        "sprite": "sprites/enemy/remake/eldrazi_scion.atlas",
         "deck": [
             "decks/standard/tfr/eldrazi_scion.dck"
         ],
@@ -10186,7 +10186,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.1625
     },
     {
         "name": "Eldrazi Devastator",
@@ -10768,7 +10768,7 @@
     },
     {
         "name": "Emrakul",
-        "sprite": "sprites/enemy/aberration/emrakul.atlas",
+        "sprite": "sprites/enemy/remake/emrakul.atlas",
         "deck": [
             "decks/boss/emrakul.dck"
         ],
@@ -10776,7 +10776,7 @@
         "boss": true,
         "flying": true,
         "speed": 44,
-        "scale": 0.6499,
+        "scale": 0.4394,
         "life": 100,
         "rewards": [
             {
@@ -24701,7 +24701,7 @@
     },
     {
         "name": "Phoenix",
-        "sprite": "sprites/enemy/elemental/phoenix.atlas",
+        "sprite": "sprites/enemy/remake/phoenix.atlas",
         "deck": [
             "decks/standard/phoenix.dck"
         ],
@@ -24805,7 +24805,8 @@
             "Loner",
             "IdentityRed"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.1605
     },
     {
         "name": "Pirate",
@@ -36075,13 +36076,13 @@
     },
     {
         "name": "Ulalek",
-        "sprite": "sprites/enemy/aberration/eldrazi/eldrazi.atlas",
+        "sprite": "sprites/enemy/remake/ulalek.atlas",
         "deck": [
             "decks/legends/ulalek.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 2.5999,
+        "scale": 0.39,
         "life": 50,
         "rewards": [
             {
@@ -86774,7 +86775,7 @@
     },
     {
         "name": "Syrix",
-        "sprite": "sprites/enemy/elemental/phoenix.atlas",
+        "sprite": "sprites/enemy/remake/syrix.atlas",
         "deck": [
             "decks/legends/syrix.dck"
         ],
@@ -86838,7 +86839,8 @@
         "colors": "BR",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.1605
     },
     {
         "name": "Tevesh Szat",
@@ -125723,13 +125725,13 @@
     },
     {
         "name": "Emrakul, the Aeons Torn",
-        "sprite": "sprites/enemy/aberration/emrakul.atlas",
+        "sprite": "sprites/enemy/remake/emrakul_the_aeons_torn.atlas",
         "deck": [
             "decks/legends/emrakul.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.6499,
+        "scale": 0.4394,
         "life": 70,
         "rewards": [
             {

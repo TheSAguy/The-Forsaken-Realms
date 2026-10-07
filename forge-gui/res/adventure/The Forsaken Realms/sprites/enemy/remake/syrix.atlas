@@ -1,0 +1,155 @@
+syrix.png
+size: 2574,724
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 198, 132
+Idle
+  xy: 198, 64
+  size: 198, 132
+Idle
+  xy: 396, 64
+  size: 198, 132
+Idle
+  xy: 594, 64
+  size: 198, 132
+Idle
+  xy: 792, 64
+  size: 198, 132
+Idle
+  xy: 990, 64
+  size: 198, 132
+Idle
+  xy: 1188, 64
+  size: 198, 132
+Idle
+  xy: 1386, 64
+  size: 198, 132
+Idle
+  xy: 1584, 64
+  size: 198, 132
+Idle
+  xy: 1782, 64
+  size: 198, 132
+Idle
+  xy: 1980, 64
+  size: 198, 132
+Idle
+  xy: 2178, 64
+  size: 198, 132
+Walk
+  xy: 0, 196
+  size: 198, 132
+Walk
+  xy: 198, 196
+  size: 198, 132
+Walk
+  xy: 396, 196
+  size: 198, 132
+Walk
+  xy: 594, 196
+  size: 198, 132
+Walk
+  xy: 792, 196
+  size: 198, 132
+Walk
+  xy: 990, 196
+  size: 198, 132
+Walk
+  xy: 1188, 196
+  size: 198, 132
+Walk
+  xy: 1386, 196
+  size: 198, 132
+Attack
+  xy: 0, 328
+  size: 198, 132
+Attack
+  xy: 198, 328
+  size: 198, 132
+Attack
+  xy: 396, 328
+  size: 198, 132
+Attack
+  xy: 594, 328
+  size: 198, 132
+Attack
+  xy: 792, 328
+  size: 198, 132
+Attack
+  xy: 990, 328
+  size: 198, 132
+Attack
+  xy: 1188, 328
+  size: 198, 132
+Attack
+  xy: 1386, 328
+  size: 198, 132
+Attack
+  xy: 1584, 328
+  size: 198, 132
+Attack
+  xy: 1782, 328
+  size: 198, 132
+Attack
+  xy: 1980, 328
+  size: 198, 132
+Attack
+  xy: 2178, 328
+  size: 198, 132
+Hit
+  xy: 0, 460
+  size: 198, 132
+Hit
+  xy: 198, 460
+  size: 198, 132
+Hit
+  xy: 396, 460
+  size: 198, 132
+Hit
+  xy: 594, 460
+  size: 198, 132
+Death
+  xy: 0, 592
+  size: 198, 132
+Death
+  xy: 198, 592
+  size: 198, 132
+Death
+  xy: 396, 592
+  size: 198, 132
+Death
+  xy: 594, 592
+  size: 198, 132
+Death
+  xy: 792, 592
+  size: 198, 132
+Death
+  xy: 990, 592
+  size: 198, 132
+Death
+  xy: 1188, 592
+  size: 198, 132
+Death
+  xy: 1386, 592
+  size: 198, 132
+Death
+  xy: 1584, 592
+  size: 198, 132
+Death
+  xy: 1782, 592
+  size: 198, 132
+Death
+  xy: 1980, 592
+  size: 198, 132
+Death
+  xy: 2178, 592
+  size: 198, 132
+Death
+  xy: 2376, 592
+  size: 198, 132

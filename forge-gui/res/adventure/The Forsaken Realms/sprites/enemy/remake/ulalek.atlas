@@ -1,0 +1,155 @@
+ulalek.png
+size: 1742,724
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 134, 132
+Idle
+  xy: 134, 64
+  size: 134, 132
+Idle
+  xy: 268, 64
+  size: 134, 132
+Idle
+  xy: 402, 64
+  size: 134, 132
+Idle
+  xy: 536, 64
+  size: 134, 132
+Idle
+  xy: 670, 64
+  size: 134, 132
+Idle
+  xy: 804, 64
+  size: 134, 132
+Idle
+  xy: 938, 64
+  size: 134, 132
+Idle
+  xy: 1072, 64
+  size: 134, 132
+Idle
+  xy: 1206, 64
+  size: 134, 132
+Idle
+  xy: 1340, 64
+  size: 134, 132
+Idle
+  xy: 1474, 64
+  size: 134, 132
+Walk
+  xy: 0, 196
+  size: 134, 132
+Walk
+  xy: 134, 196
+  size: 134, 132
+Walk
+  xy: 268, 196
+  size: 134, 132
+Walk
+  xy: 402, 196
+  size: 134, 132
+Walk
+  xy: 536, 196
+  size: 134, 132
+Walk
+  xy: 670, 196
+  size: 134, 132
+Walk
+  xy: 804, 196
+  size: 134, 132
+Walk
+  xy: 938, 196
+  size: 134, 132
+Attack
+  xy: 0, 328
+  size: 134, 132
+Attack
+  xy: 134, 328
+  size: 134, 132
+Attack
+  xy: 268, 328
+  size: 134, 132
+Attack
+  xy: 402, 328
+  size: 134, 132
+Attack
+  xy: 536, 328
+  size: 134, 132
+Attack
+  xy: 670, 328
+  size: 134, 132
+Attack
+  xy: 804, 328
+  size: 134, 132
+Attack
+  xy: 938, 328
+  size: 134, 132
+Attack
+  xy: 1072, 328
+  size: 134, 132
+Attack
+  xy: 1206, 328
+  size: 134, 132
+Attack
+  xy: 1340, 328
+  size: 134, 132
+Attack
+  xy: 1474, 328
+  size: 134, 132
+Hit
+  xy: 0, 460
+  size: 134, 132
+Hit
+  xy: 134, 460
+  size: 134, 132
+Hit
+  xy: 268, 460
+  size: 134, 132
+Hit
+  xy: 402, 460
+  size: 134, 132
+Death
+  xy: 0, 592
+  size: 134, 132
+Death
+  xy: 134, 592
+  size: 134, 132
+Death
+  xy: 268, 592
+  size: 134, 132
+Death
+  xy: 402, 592
+  size: 134, 132
+Death
+  xy: 536, 592
+  size: 134, 132
+Death
+  xy: 670, 592
+  size: 134, 132
+Death
+  xy: 804, 592
+  size: 134, 132
+Death
+  xy: 938, 592
+  size: 134, 132
+Death
+  xy: 1072, 592
+  size: 134, 132
+Death
+  xy: 1206, 592
+  size: 134, 132
+Death
+  xy: 1340, 592
+  size: 134, 132
+Death
+  xy: 1474, 592
+  size: 134, 132
+Death
+  xy: 1608, 592
+  size: 134, 132
