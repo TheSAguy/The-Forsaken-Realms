@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 462: Svyelunite Temple - Old Border Shandalar's Fallen Empires battle comes to the realm (2026-10-06)
+
+The user: "For the New enemies in Shandalar Old Border. Go with your recommendation and take the temple set. See if we
+can fix any of the gaps." Upstream `075a037399e` (Vanja, #12145), merged in round 460, built it for Old Border
+Shandalar: a blue-shore temple where the Vodalian merfolk and the Homarids are at war, and a choice quest.
+
+- **Brought in as authored:** 18 sprite sheets -> `sprites/enemy/fallen_empires/svyelunite/` (copied unchanged - the
+  Procedural Pixel Creatures session takes the art next round: 64 px whole-body portraits for the 16 px heads,
+  multi-frame deaths where there is one frame or none, the War Machine's motion); 26 decks -> `decks/standard/`; the map
+  -> `maps/map/fallen_empires/svyelunite_temple.tmx` (65 x 45, 70 placements, every one counting toward the quest
+  through its defeatDialog), with its 183 template/tileset paths rewritten from upstream's six `../` to the plane's four
+  (both resolve in game through the POI's `../<plane>/` prefix; only four open in Tiled and in dev-tools).
+- **35 enemies** (`FEM ...`, spawnRate 0): kept their names (the map places them by name) with a `nameOverride` that
+  drops "FEM ", "Ally" and the A/B/C/D/5ED variants ("Homarid Warrior (Adept)"); upstream's role tag sets the rank -
+  Standard and Ally Adept, Elite and Miniboss Master, the two bosses (Homarid Deep Spawn, Seasinger) Archmage, the
+  Ally Seasinger Master - with a matching `difficulty`; upstream's life (20-40) and rewards kept; `enemy_scale.py
+  --write` sized the 35 (no other scale moved; both bosses at the 48 px ceiling). spawnRate 0 makes them scripted
+  placements: no re-theme or roster swap can break the battle.
+- **The place:** POI `SvyeluniteTemple` (the entrance art is upstream's, in `common/maps/tileset/buildingsbosses`),
+  listed in the blue biome. Tagged SvyeluniteTemple, FallenEmpires, BiomeBlue, Hostile - upstream's `Sidequest` left
+  off: Eviction Notice's "clear every enemy" cannot be done in a two-faction battle, and the quest itself keeps the
+  temple on the map while it is open. New worlds only (an existing world was made without it).
+- **The quest:** upstream 55 -> TFR **99** "The Tides Give, the Tides Take" (`issueQuest` x4 renumbered): offered by
+  any town board and by the temple's heralds (`SvyeluniteTempleEntry`); pick the merfolk or the Homarids, defeat the
+  other side's 18 fighters, return - 1,000 gold, 25 shards, three Fallen Empires cards, an FEM pack, and a Coral Helm
+  (now in items.json: Neck, Rare, starts the battle with Coral Helm).
+- **A board fix it needed** (`AdventureQuestController.getQuestNPCResponse`): a quest with no source tags (Eviction
+  Notice, Find the Caravan, Wanderlust) is offered only on a board with a town or capital pool. The temple's heralds
+  offered one of those three times in four - the first agent visit got a letter-delivery job.
+- CREDITS: the Old Border team's entry names the temple and its author. GUIDE: Quests.
+- **Agent-tested** in a new world: the temple is placed and enterable; the heralds offer quest 99 (faction choice);
+  "Aid the Merfolk" accepts it and the Homarid side stands ready, named and ranked ("Floodwater Homarid (Master)",
+  "Homarid Deep Spawn (Archmage)"); a duel with a Homarid ran on its FEM deck and was won; every sheet loads; no
+  exceptions. `pickup_reach.py`: UNREACHABLE 0. Not played: the full 18-fight battle and the reward. Seen: the allies
+  talk when touched and stand in corridors, so a walk can bump into their lines; the duel portraits are the 16 px
+  heads until the art round.
+
 ## Round 461: invasions with variety, sized to the player; Eviction Notice spreads out (2026-10-06)
 
 A player on Discord: "are the invasion quests repetitive (always the same opponents)? The only fun quests ... are the

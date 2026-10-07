@@ -956,9 +956,16 @@ public class AdventureQuestController implements Serializable {
         for (String origin : questOrigin == null ? new String[0] : questOrigin.split(","))
             if (!origin.trim().isEmpty())
                 origins.add(origin.trim());
+        // Round 462: a quest with no source tags (Eviction Notice, Find the Caravan, Wanderlust) belongs to the town job
+        // boards only. A special quest-giver - Svyelunite Temple's heralds ("SvyeluniteTempleEntry") - offered one of
+        // them three times in four instead of its own quest.
+        boolean townBoard = origins.isEmpty();
+        for (String origin : origins)
+            if (origin.contains("_town_") || origin.endsWith("_capital"))
+                townBoard = true;
         Array<AdventureQuestData> validSideQuests = new Array<>();
         for (AdventureQuestData option : allSideQuests){
-            boolean tagMatch = option.questSourceTags.length == 0;
+            boolean tagMatch = option.questSourceTags.length == 0 && townBoard;
             if (!tagMatch) {
                 for (int i = 0; i < option.questSourceTags.length; i++){
                     if (option.questSourceTags[i] != null && origins.contains(option.questSourceTags[i])){

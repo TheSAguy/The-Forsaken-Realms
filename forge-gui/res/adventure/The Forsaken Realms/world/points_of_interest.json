@@ -6361,5 +6361,21 @@
 			"BiomeColorless",
 			"Sidequest"
 		]
+	},
+	{
+		"name": "SvyeluniteTemple",
+		"displayName": "Svyelunite Temple",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../common/maps/tileset/buildingsbosses.atlas",
+		"sprite": "SvyeluniteTemple",
+		"map": "../The Forsaken Realms/maps/map/fallen_empires/svyelunite_temple.tmx",
+		"radiusFactor": 0.6,
+		"questTags": [
+			"SvyeluniteTemple",
+			"FallenEmpires",
+			"BiomeBlue",
+			"Hostile"
+		]
 	}
 ]

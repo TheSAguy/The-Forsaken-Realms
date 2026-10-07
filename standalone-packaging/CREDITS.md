@@ -25,7 +25,9 @@ building/boss artwork, and starter deck concepts.
 Creators of the Shandalar Old Border adventure plane. The Forsaken Realms
 ports their dungeon designs (Demon's Bargain, the Ancient Diamond Mine,
 Riddle's Lair, the five color Dragon's Lairs) and their 38 classic bosses,
-who roam this world as rare War-tier encounters.
+who roam this world as rare War-tier encounters. Svyelunite Temple - its map,
+the Homarid and Vodalian creatures with their artwork and decks, and the quest
+"The Tides Give, the Tides Take" - is by Vanja (GitHub vanja-ivancevic, Forge #12145).
 
 ## The Shandalar, Innistrad, and Amonkhet plane teams
 

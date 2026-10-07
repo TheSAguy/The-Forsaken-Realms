@@ -7939,5 +7939,17 @@
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
+    },
+    {
+        "name":  "Coral Helm",
+        "description":  "Pay 3 and discard randomly to give target creature +2/+2.",
+        "equipmentSlot":  "Neck",
+        "iconName":  "KiteShield",
+        "effect":  {
+                       "startBattleWithCard":  [
+                                                   "Coral Helm|ATQ"
+                                               ]
+                   },
+        "rarity":  "Rare"
     }
 ]

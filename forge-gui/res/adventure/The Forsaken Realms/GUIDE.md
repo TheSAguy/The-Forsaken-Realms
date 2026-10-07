@@ -421,6 +421,9 @@ coin flip - though a key you need to get deeper in always drops.
   10 or more reputation with you. The reward grows with the leader's rank: 300 / 500 / 800 / 1,200 gold
   and 2 or 3 local reputation. A town won't offer the same invasion twice in a row.
 - **Eviction Notice** sends you to clear one of the nearer dungeons or caves - a different one each time.
+- **Svyelunite Temple**, on a blue shore, is a battle already under way between the Vodalian merfolk and the
+  Homarids. Its heralds ask you to pick a side ("The Tides Give, the Tides Take"); beat the other side's
+  fighters there for a reward that depends on whom you helped. It is found in worlds made from this version on.
 - The **blue dot** in the quest list marks the quest you're tracking, and counting quests - "defeat five
   Blue enemies", "clear three dungeons" - show their progress there, "(2/5)".
 

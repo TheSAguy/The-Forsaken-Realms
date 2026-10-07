@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 462 - Svyelunite Temple
+
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** - `getQuestNPCResponse()`: a quest
+  with no questSourceTags matches only a board whose origins include a town or capital pool (`_town_` / `_capital`) or
+  no pool; a special quest-giver (the temple's `SvyeluniteTempleEntry`) offers only its own quests.
+
 ### Round 461 - invasions sized to the player; Eviction Notice spreads out
 
 - **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** - `initialize()` calls

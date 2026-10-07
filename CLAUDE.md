@@ -58,12 +58,19 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-06 (round 462): **LOCAL + UNRELEASED** - Svyelunite Temple from Old Border Shandalar (upstream #12145):
+18 sheets (as authored; art gaps = the peer's round 463), 26 decks, the map (paths rewritten to four `../`), 35 `FEM`
+enemies (nameOverride, rank from role tag, enemy_scale), POI in the blue biome (no Sidequest), quest 99 "The Tides
+Give, the Tides Take", item Coral Helm. Fix: tagless quests only on town/capital boards (the heralds offered a
+delivery job). New worlds only. Agent-tested: quest offered and accepted, a Homarid duel won on its FEM deck.
+
 ## STATE 2026-10-06 (round 461): **LOCAL + UNRELEASED** - invasions with variety, sized to the player (a player: "always
 the same opponents"): 4 pools widened, 6 new invasions (quests 93-98: Orc Warband, Giants at the Gate, Demon Incursion,
 Knightly Siege, Bandit Raid, Blood Hunt), 9 leaders tagged; all 11 `tfrInvasion` + offerProbability 0.45; NEW
 `util/InvasionQuests` - minion wins by difficulty (2/3/3/4), leader within rank (+1 rank at town reputation 10), reward
 by the leader's rank (300/500/800/1200 gold, rep 2/2/3/3), no back-to-back repeats. Eviction Notice: uniform pick in
 the window (was 50% the nearest), skips last target, +91 caves. Agent-tested (Insane rank 10 and a new Normal game).
+LIVE + AGENT PACKAGED 2026-10-06 (jar 2F2617ECDD15).
 
 ## STATE 2026-10-06 (round 460): **LOCAL + UNRELEASED** - ENGINE = the 10.06 daily (upstream `2f90918a902`, base install
 `E:\GAMES\Forge_2` build 2026-10-06 18:28:55; `engineBuildVersion` 2.0.16-SNAPSHOT-10.06). Conflicts: README (ours),
@@ -210,7 +217,7 @@ of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety b
 research 40 + a 243 s day, 450 = no Manasight on a Mimic, 451 = no crown on a Mimic, 452 = chest-size Mimics + the Warden's dot + the Lab's
 set view + the hidden card a new game's only (done), 453 = Ulamog from the Pixelate pilot (the Procedural Pixel
 Creatures session), 454 = Ulamog's own death (same), 455 = the Sliver Queen (same), 456 = Kozilek + whole-body portraits (same), 457 = the Bank's step 500, 458 = the Juggernaut, the Evil Wall and the Chimera (the Procedural Pixel Creatures session), 459 = weekly shops turn over
-with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread - the next free round is **462**;
+with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread, 462 = Svyelunite Temple - the next free round is **463** (reserved for the Procedural Pixel Creatures session's temple art);
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,
