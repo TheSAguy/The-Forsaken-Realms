@@ -2509,16 +2509,20 @@ public class MapStage extends GameStage {
      * Round 466 (the user, of Valor's Reach Arena's return: "let's have all enemy contestants start with an extra 'Waste
      * Lands' besides any other bonuses already"): once a set piece has come back, its returnStartCards join the map's
      * own dungeon effect - every opponent in it starts with them in play, and the "Strange magical energies" notice
-     * lists them beside the map's own cards. One extra each, however many times it has returned.
+     * lists them beside the map's own cards. Round 468 (the user: "Let's make this repeat for the 3 and 4th visit also,
+     * each time add another land"): once more per clear, up to the place's returnStartCardsMax
+     * (DungeonRotation.returnStartCopies) - the arena's second visit +1 Wastes, its third +2, its fourth on +3.
      */
     private void applyReturnStartCards() {
         PointOfInterest root = TileMapScene.instance().rootPoint;
-        if (root == null || !DungeonRotation.isSetPiece(root.getData()))
+        int copies = DungeonRotation.returnStartCopies(root);
+        if (copies <= 0)
             return;
-        String[] extra = root.getData().returnStartCards;
+        String[] once = root.getData().returnStartCards;
+        String[] extra = new String[once.length * copies];
+        for (int copy = 0; copy < copies; copy++)
+            System.arraycopy(once, 0, extra, copy * once.length, once.length);
         int clears = WorldSave.getCurrentSave().getWorld().getLairClearCount().getOrDefault(root.getID(), 0);
-        if (extra == null || extra.length == 0 || clears <= 0)
-            return;
         // A copy: the map's effect comes from JSONStringLoader's cache, shared by every load of this map - adding to it
         // in place added the cards once more on every visit (agent test: two Wastes on the second entry).
         com.badlogic.gdx.utils.Json json = new com.badlogic.gdx.utils.Json();

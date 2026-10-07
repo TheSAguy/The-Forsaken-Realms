@@ -4410,6 +4410,7 @@
 		"radiusFactor": 0.8,
 		"leavesWhenBeaten": true,
 		"returnStartCards": ["Wastes|EOC"],
+		"returnStartCardsMax": 3,
 		"questTags": [
 			"Story"]
 	},

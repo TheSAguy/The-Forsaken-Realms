@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 468 - NoRotate places leave on a full clear; the arena's Wastes grow
+
+- **`forge-gui-mobile/src/forge/adventure/data/PointOfInterestData.java`** - new field `returnStartCardsMax` (default 1),
+  copied in the copy constructor.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - `applyReturnStartCards()` repeats the cards
+  `DungeonRotation.returnStartCopies()` times.
+
 ### Round 467 - the win streak grows
 
 - **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** - new `winStreakMaxSteps` (3) after

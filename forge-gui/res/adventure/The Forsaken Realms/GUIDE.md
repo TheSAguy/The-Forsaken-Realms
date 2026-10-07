@@ -404,11 +404,17 @@ it comes back to the same spot, fully restocked. Return visits pay half the gold
 cards; a +Life reward and the boss's own signature item pay only once, and every other item is a
 coin flip - though a key you need to get deeper in always drops.
 
+**The Blue Towers and the Forgotten Cave** never rotate away: each locks a door behind a key found
+inside it, so neither a lost duel nor the passing days remove one. Clear one completely - every enemy
+and every pickup, on every floor - and walk out, and it leaves like a boss lair, coming back 10 to 30
+days later restocked, on a lair's return-visit rewards.
+
 **Valor's Reach Arena** runs in seasons. Beat all seven of its contenders - the six duos in the ring
 and the champion behind the WINNERS ONLY gate - and walk out with nothing left on the floor, and the
 arena closes, taking its shops with it. 10 to 30 days later it opens again in the same spot with every
-contender back, on a boss lair's return-visit rewards, and this time every opponent there starts with
-an extra **Wastes** in play.
+contender back, on a boss lair's return-visit rewards, and every opponent there starts with an extra
+**Wastes** in play - one more each time it returns, up to three (two on its third season, three from
+its fourth).
 
 ### Quests
 

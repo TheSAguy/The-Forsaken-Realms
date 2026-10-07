@@ -39,6 +39,8 @@ public class PointOfInterestData implements Serializable {
     public boolean leavesWhenBeaten;
     /** Round 466: cards every opponent in the place starts with in play once it has come back (the arena's Wastes). */
     public String[] returnStartCards;
+    /** Round 468: returnStartCards go to each opponent once more per clear, up to this many times (the arena: 3). */
+    public int returnStartCardsMax = 1;
     public DialogData.ActionData.QuestFlag[] questFlagsToActivate = new DialogData.ActionData.QuestFlag[0];
     public String displayName;
 
@@ -86,6 +88,7 @@ public class PointOfInterestData implements Serializable {
         rotationGroup = other.rotationGroup;
         leavesWhenBeaten = other.leavesWhenBeaten; // round 466
         returnStartCards = other.returnStartCards;
+        returnStartCardsMax = other.returnStartCardsMax; // round 468
     }
 
     public String getDisplayName() {

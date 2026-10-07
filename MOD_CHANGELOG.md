@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 468: NoRotate places leave on a full clear; the arena's Wastes grow each season (2026-10-07)
+
+**A Blue Tower that never left.** Vr01 on Discord (v1.18): an Eviction Notice "needed to clear a dungeon, but it was only
+one floor despite having many", then "it does not disappear after beating every foe". Their log (Blue Tower =
+MageTowerC8, two levels): `[DungeonRotation] cleared at Blue Tower - it stays on the map: it is tagged NoRotate` the
+moment the top floor's last Illusionist fell, the basement untouched - v1.18 judged a clear one level at a time; round 443
+(PlaceLevels) already fixes that for the next release. The second half was not fixed: NoRotate (round 184/228 - a map
+that locks a door behind an item found inside itself must not vanish mid-collection) kept the place out of every rule
+that removes one, a full clear included. The user took the recommendation: "a NoRotate place leaves only on a full clear
+(every floor, nothing left) and comes back restocked after a rest, like a boss lair. Losses and timers still never
+remove it."
+
+- `DungeonRotation.isClearReturner()`: a Hostile dungeon or cave tagged NoRotate, not story or quest - today the two Blue
+  Tower entries (MageTowerC8, MageTowerU7) and the Forgotten Cave (CaveLarge1). `lairStaysReason()` lets it through, so
+  `onLairExit()`, the return after the spot rest, the quest return (round 389) and PlaceRewards' return-visit half pay
+  all apply; no boss check - MapStage's usual walk-out test decides (every level via PlaceLevels, an unvisited level
+  counting as not clear, nothing on any floor). Still not rotatable: a loss or a timer never removes it, and it sends no
+  creatures (DungeonSources skips NoRotate, as before). The win-time "cleared" log line now says it leaves on the walk-out.
+
+**The arena grows.** The user, of round 466's return: "Let's make this repeat for the 3 and 4th visit also, each time add
+another land. We can leave the payout at 50%, like the second visit." New `PointOfInterestData.returnStartCardsMax`
+(default 1; the arena 3): `DungeonRotation.returnStartCopies()` = clears, capped - second season +1 Wastes, third +2,
+fourth on +3. MapStage repeats the cards that many times; the notice reads "2x Wastes". Return pay stays half.
+
+- **GUIDE**: a Blue Towers / Forgotten Cave paragraph after the boss lairs'; the arena's paragraph says one more Wastes
+  each return, up to three.
+- **Agent-tested**: the arena at two clears -> "1x Trouble in Pairs / 2x Wastes", its third clear logged "every opponent
+  starting with Wastes|EOC x3"; a Blue Tower with its top floor emptied and the basement unvisited -> "stays on the
+  map: enemies are still inside (other levels - magetower_8_illusion_basement.tmx: not visited)"; both floors emptied ->
+  "Blue Tower cleared (clear #1) - gone until day 252 ... (a NoRotate place: it left on a full clear - round 468)"; day 252
+  -> "Blue Tower is back on the map ... 39 enemies/rewards restocked", a fresh roster inside.
+
 ## Round 467: the win streak grows - a second and third Wastes (2026-10-07)
 
 Round 465 answered "it does not scale". The user, next message: "Win Streak - Should also scale. If it's at 3 for Insane,
