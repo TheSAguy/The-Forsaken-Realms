@@ -404,6 +404,12 @@ it comes back to the same spot, fully restocked. Return visits pay half the gold
 cards; a +Life reward and the boss's own signature item pay only once, and every other item is a
 coin flip - though a key you need to get deeper in always drops.
 
+**Valor's Reach Arena** runs in seasons. Beat all seven of its contenders - the six duos in the ring
+and the champion behind the WINNERS ONLY gate - and walk out with nothing left on the floor, and the
+arena closes, taking its shops with it. 10 to 30 days later it opens again in the same spot with every
+contender back, on a boss lair's return-visit rewards, and this time every opponent there starts with
+an extra **Wastes** in play.
+
 ### Quests
 
 - **Up to 10 side quests** can be active at once.

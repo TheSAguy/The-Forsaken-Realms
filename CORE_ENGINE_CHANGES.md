@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 466 - Valor's Reach Arena runs in seasons
+
+- **`forge-gui-mobile/src/forge/adventure/data/PointOfInterestData.java`** - new fields `leavesWhenBeaten`,
+  `returnStartCards` (copied in the copy constructor). Upstream conflict risk: low - additions beside round 433's.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - `applyDungeonExitRules()` passes `contendersLeft()`
+  for a set piece; map load calls `applyReturnStartCards()` after the dungeonEffect parse (on a copy of the cached
+  effect). Both new methods sit beside round 443's `liveEnemiesLeft()`.
+
 ### Round 465 - the win-streak notice once per streak
 
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the TFR streak block shows the notice only when

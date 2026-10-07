@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 466: Valor's Reach Arena runs in seasons (2026-10-07)
+
+The user, with a screenshot of the arena's entry notice: "The Valors Arena should disappear once you have killed all the
+Contenders and you leave." Asked whether it should come back (its beach strip holds 11 shops, the inn, the shard trader,
+the Medal shop and Gwafa Hazid): "Can we do #1 [back after a rest, like a cleared boss lair], but the next time it
+appears, let's have all enemy contestants start with an extra 'Waste Lands' besides any other bonuses already. So round
+2 would be harder."
+
+Why the old rules never touched it: tagged Story (never rotates); its six duos carry a defeatDialog (each win advances the
+gate's `enemiesDefeated` flag), and `MapStage.countsAsEnemyLeft()` skips a defeatDialog enemy - while it counts Gwafa
+Hazid, a talking shopkeeper who never duels. Najeela, the champion behind the WINNERS ONLY gate, is no boss.
+
+- **Data**: `PointOfInterestData.leavesWhenBeaten` + `returnStartCards`; the arena's entry sets `true` and
+  `["Wastes|EOC"]`. A saved place re-reads its data by name, so running games get it.
+- **The rule** (`DungeonRotation.isSetPiece`): a set piece is a vanishing lair by `lairStaysReason()` (its Story tag
+  no longer stops it), so `onLairExit()`, `returnClearedLairs()` and PlaceRewards' return-visit pay all apply - with no
+  boss check. MapStage passes its CONTENDERS instead of the usual enemies-left test (`contendersLeft()`: every enemy
+  on the map but one with a contact dialog), and the loot test is the lair's (nothing left on the floor).
+- **Leaving**: a notification, "Valor's Reach Arena closes for the season - it will be back, and its contenders will be
+  ready for you." Back after the spot rest (10-30 days), restocked, and its map flags reset (`returnLair()`) - the
+  gate counts wins in one and would otherwise let the player straight to Najeela.
+- **The return's Wastes** (`MapStage.applyReturnStartCards()`): once cleared, `returnStartCards` join the map's dungeon
+  effect, so every opponent starts with Trouble in Pairs + Wastes and the "Strange magical energies" notice lists both.
+  One extra however many seasons. Built on a COPY of the map's effect: `JSONStringLoader` caches parsed JSON by its text
+  and every load of the map shares the object - the first build appended in place, and the agent's second entry showed
+  two Wastes.
+- **Guard**: `onLairExit()` does nothing for a place already off the map. A test teleport into the closed arena and out
+  again counted clear #2 (a lair is covered by its boss-down mark, which the clear removes).
+- **Agent-tested** (Insane save, day 210): walked out with every contender up -> "it stays on the map: contenders are
+  still standing (Regna and Krav #54 ... Grothama #106)", Gwafa not listed; seven removed by cheat, loot taken, out ->
+  the notification, "cleared (clear #1) - gone until day 238", the entrance gone from the map; day 238 -> "back on the
+  map ... 27 enemies/rewards restocked ... 1 map flag(s) reset"; inside: all seven and the gate back, the notice
+  "1x Trouble in Pairs / 1x Wastes", the gate offered only "You attempt to open the gate" (the 6-win option hidden);
+  Regna and Krav's duel: `[TFR-DuelEffects] ... battlefield=[Trouble in Pairs, Wastes]`. After the copy fix: two
+  entries in a row, one Wastes each time.
+- **GUIDE**: a paragraph after the boss lairs'.
+
 ## Round 465: the win-streak notice once per streak (2026-10-07)
 
 Rounds 404/405 made an enemy you beat over and over start the next duel with a Wastes in play (Normal 5 wins in a row,

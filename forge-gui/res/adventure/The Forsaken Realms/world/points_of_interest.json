@@ -4408,6 +4408,8 @@
 		"sprite": "E_Valor_s_Reach_Arena",
 		"map": "../The Forsaken Realms/maps/map/cave/Valors_Reach_Arena.tmx",
 		"radiusFactor": 0.8,
+		"leavesWhenBeaten": true,
+		"returnStartCards": ["Wastes|EOC"],
 		"questTags": [
 			"Story"]
 	},

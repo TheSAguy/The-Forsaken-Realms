@@ -145,6 +145,8 @@ public class DungeonRotation {
     public static String lairStaysReason(PointOfInterestData data) {
         if (data == null)
             return "it has no POI data";
+        if (isSetPiece(data))
+            return null; // round 466: opted in by its data - its Story tag keeps it out of rotation, not out of this
         if (!isLairType(data))
             return "type '" + data.type + "' is not a boss lair";
         if (data.name == null || data.name.startsWith("Quest_"))
@@ -174,6 +176,20 @@ public class DungeonRotation {
     }
 
     /**
+     * Round 466 (the user: "The Valors Arena should disappear once you have killed all the Contenders and you leave" -
+     * then, of its return: "the next time it appears, let's have all enemy contestants start with an extra 'Waste
+     * Lands' besides any other bonuses already. So round 2 would be harder"). A place whose data sets leavesWhenBeaten
+     * runs on a cleared boss lair's rules - it leaves on the walk-out, comes back to its own spot after the spot rest,
+     * restocked, and its return visits pay what a lair's do (PlaceRewards) - with two differences: no boss to beat
+     * (every duelist on it is a contender: MapStage.contendersLeft()), and a fresh start when it returns (its map
+     * flags too - the arena's gate counts wins in one). Its returnStartCards go to every opponent once it is back
+     * (MapStage.applyReturnStartCards()).
+     */
+    public static boolean isSetPiece(PointOfInterestData data) {
+        return data != null && data.leavesWhenBeaten;
+    }
+
+    /**
      * Round 299: a boss fell inside this place - MapStage.getReward() on the win, and PlaceRewards.noteEarlierDefeat()
      * at map load for a boss killed before this round (the user's Slime Hive). Recorded for vanishing lairs only: it
      * is what lets onLairExit() count the walk-out as a clear. An empty entrance level alone is not one - Tibalt's
@@ -200,17 +216,24 @@ public class DungeonRotation {
      * enemiesLeft: null when none are left, otherwise the names MapStage found (for the log).
      */
     public static void onLairExit(PointOfInterest poi, String enemiesLeft, boolean lootLeft) {
-        if (!isEnabled() || poi == null || !isLairType(poi.getData()))
+        if (!isEnabled() || poi == null || !(isLairType(poi.getData()) || isSetPiece(poi.getData())))
             return;
+        if (!poi.getActive()) {
+            // Round 466: already off the map. Only a test teleport walks into a hidden place, and walking out of the
+            // hidden arena counted its clear a second time - a lair has its boss-down mark, which its clear removes.
+            System.out.println("[TFR-Lair] walked out of " + poi.getDisplayName() + " - it is already off the map");
+            return;
+        }
         World world = WorldSave.getCurrentSave().getWorld();
         String id = poi.getID();
+        boolean setPiece = isSetPiece(poi.getData()); // round 466: enemiesLeft is its contenders, and there is no boss
         String reason = lairStaysReason(poi.getData());
         if (reason == null && activeQuestStatus(poi) == QUEST_STORY)
             reason = "an active story quest targets it";
-        if (reason == null && !world.getLairBossDownDay().containsKey(id))
+        if (reason == null && !setPiece && !world.getLairBossDownDay().containsKey(id))
             reason = "its boss has not been beaten";
         if (reason == null && enemiesLeft != null)
-            reason = "enemies are still inside (" + enemiesLeft + ")";
+            reason = (setPiece ? "contenders are still standing (" : "enemies are still inside (") + enemiesLeft + ")";
         if (reason == null && lootLeft)
             reason = "loot is still on the floor";
         if (reason != null) {
@@ -229,7 +252,12 @@ public class DungeonRotation {
         int backDay = currentDay + rollDays(world, respawnMinDays(), respawnMaxDays());
         world.getPoiRespawnDay().put(id, backDay);
         System.out.println("[TFR-Lair] " + poi.getDisplayName() + " cleared (clear #" + clears + ") - gone until day "
-                + backDay + ", then back restocked on return-visit rewards");
+                + backDay + ", then back restocked on return-visit rewards"
+                + (setPiece && hasReturnStartCards(poi) ? ", every opponent starting with "
+                        + String.join(", ", poi.getData().returnStartCards) + " in play" : ""));
+        if (setPiece) // round 466: a lone place vanishing behind the player is a surprise - say it comes back
+            GameHUD.getInstance().addNotification(poi.getDisplayName() + " closes for the season - it will be back, and"
+                    + " its contenders will be ready for you.");
         AdventureQuestController.instance().updateDungeonCleared(poi); // "clear N dungeons" counts an emptied lair too
         world.refreshWorldMapMarkers();
     }
@@ -264,8 +292,25 @@ public class DungeonRotation {
         world.getPoiRespawnDay().remove(id);
         world.getLairBossDownDay().remove(id);
         int restocked = restock(poi);
+        // Round 466: a set piece starts its new season from scratch - the arena's gate opens on a win count kept in a
+        // map flag, which would otherwise let the player straight through to the champion.
+        int flags = 0;
+        if (isSetPiece(poi.getData()))
+            for (forge.adventure.pointofintrest.PointOfInterestChanges levelChanges
+                    : WorldSave.getCurrentSave().getPointOfInterestChangesTree(id)) {
+                flags += levelChanges.getMapFlags().size();
+                levelChanges.getMapFlags().clear();
+            }
         System.out.println("[TFR-Lair] " + poi.getDisplayName() + " is back on the map (" + why + "): " + restocked
-                + " enemies/rewards restocked - return visits pay half, no +Life, no signature item");
+                + " enemies/rewards restocked - return visits pay half, no +Life, no signature item"
+                + (isSetPiece(poi.getData()) ? "; a new season: " + flags + " map flag(s) reset"
+                        + (hasReturnStartCards(poi) ? ", every opponent starts with "
+                        + String.join(", ", poi.getData().returnStartCards) + " in play" : "") : ""));
+    }
+
+    /** Round 466: whether this place gives its opponents extra cards once it has come back. */
+    private static boolean hasReturnStartCards(PointOfInterest poi) {
+        return poi.getData().returnStartCards != null && poi.getData().returnStartCards.length > 0;
     }
 
     /**
@@ -628,6 +673,7 @@ public class DungeonRotation {
             // NoRotate cave all get their line, and "why is it still here" is answered by the log.
             logStays("defeat", poi, poi == null ? "the map has no root POI"
                     : isLairType(poi.getData()) ? "a boss lair leaves the map only when it is cleared (round 299)"
+                    : isSetPiece(poi.getData()) ? "it leaves the map only when its contenders are beaten (round 466)"
                     : notRotatableReason(poi.getData()));
             return;
         }

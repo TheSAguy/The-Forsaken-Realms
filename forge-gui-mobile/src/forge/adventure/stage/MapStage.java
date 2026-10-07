@@ -787,6 +787,7 @@ public class MapStage extends GameStage {
         if (MP.get("dungeonEffect") != null && !MP.get("dungeonEffect").toString().isEmpty()) {
             effect = JSONStringLoader.parse(EffectData.class, map.getProperties().get("dungeonEffect").toString(), "");
         }
+        applyReturnStartCards(); // round 466
         if (MP.get("respawnEnemies") != null && MP.get("respawnEnemies") instanceof Boolean && (Boolean) MP.get("respawnEnemies")) {
             respawnEnemies = true;
         } else {
@@ -2146,6 +2147,8 @@ public class MapStage extends GameStage {
         String elsewhere = place.levels > 1 ? place.others() : "none"; // round 443: the other levels not done
         String inside = !enemiesLeft ? null : listed == 0 ? "other levels - " + elsewhere
                 : "none".equals(elsewhere) ? remaining.toString() : remaining + "; other levels - " + elsewhere;
+        if (DungeonRotation.isSetPiece(root.getData()))
+            inside = contendersLeft(); // round 466: the arena's duos carry a defeatDialog, its shopkeeper does not
         DungeonRotation.onLairExit(root, inside, lootLeft);
         if (!root.getActive()) {
             // Round 443: already off the map - the last kill cleared it (every level, nothing left), or a lair just
@@ -2484,6 +2487,48 @@ public class MapStage extends GameStage {
      */
     public static boolean countsAsEnemyLeft(EnemySprite enemy) {
         return enemy != null && enemy.getStage() != null && enemy.defeatDialog == null && !enemy.hidden;
+    }
+
+    /**
+     * Round 466: the duelists still standing in a set piece (DungeonRotation.isSetPiece) - null when none. Not
+     * countsAsEnemyLeft(): that skips an enemy with a defeatDialog, and every one of Valor's Reach Arena's six duos has
+     * one (it counts the win toward the gate), while it counts Gwafa Hazid, a shopkeeper who never duels. Here every
+     * enemy on the map is a contender except one that talks instead of fighting (a contact dialog).
+     */
+    private String contendersLeft() {
+        StringBuilder names = new StringBuilder();
+        for (EnemySprite enemy : enemies) {
+            if (enemy == null || enemy.getStage() == null || enemy.hidden || enemy.dialog != null)
+                continue;
+            names.append(names.length() == 0 ? "" : ", ").append(enemy.getName()).append(" #").append(enemy.getId());
+        }
+        return names.length() == 0 ? null : names.toString();
+    }
+
+    /**
+     * Round 466 (the user, of Valor's Reach Arena's return: "let's have all enemy contestants start with an extra 'Waste
+     * Lands' besides any other bonuses already"): once a set piece has come back, its returnStartCards join the map's
+     * own dungeon effect - every opponent in it starts with them in play, and the "Strange magical energies" notice
+     * lists them beside the map's own cards. One extra each, however many times it has returned.
+     */
+    private void applyReturnStartCards() {
+        PointOfInterest root = TileMapScene.instance().rootPoint;
+        if (root == null || !DungeonRotation.isSetPiece(root.getData()))
+            return;
+        String[] extra = root.getData().returnStartCards;
+        int clears = WorldSave.getCurrentSave().getWorld().getLairClearCount().getOrDefault(root.getID(), 0);
+        if (extra == null || extra.length == 0 || clears <= 0)
+            return;
+        // A copy: the map's effect comes from JSONStringLoader's cache, shared by every load of this map - adding to it
+        // in place added the cards once more on every visit (agent test: two Wastes on the second entry).
+        com.badlogic.gdx.utils.Json json = new com.badlogic.gdx.utils.Json();
+        effect = effect == null ? new EffectData() : json.fromJson(EffectData.class, json.toJson(effect));
+        String[] own = effect.startBattleWithCard == null ? new String[0] : effect.startBattleWithCard;
+        String[] all = java.util.Arrays.copyOf(own, own.length + extra.length);
+        System.arraycopy(extra, 0, all, own.length, extra.length);
+        effect.startBattleWithCard = all;
+        System.out.println("[TFR-Lair] " + root.getDisplayName() + " is back after " + clears + " clear(s) - every opponent"
+                + " starts with " + String.join(", ", all) + " in play (" + String.join(", ", extra) + " for its return)");
     }
 
     /** Round 443: enemies left on this level by countsAsEnemyLeft(), not counting {@code exclude} (the one just beaten). */

@@ -34,6 +34,11 @@ public class PointOfInterestData implements Serializable {
     /** Round 433: rotating kinds that share one name here share ONE place on the map - their group shows as many as a
      *  single kind of them would (DungeonRotation.typeKey). Deep Caverns' four kinds: one at a time, not one per land. */
     public String rotationGroup;
+    /** Round 466: a set piece that leaves the map once every duelist on it is beaten and nothing is left on its floor,
+     *  and comes back after a rest - a cleared boss lair's rules (DungeonRotation.isSetPiece). Valor's Reach Arena. */
+    public boolean leavesWhenBeaten;
+    /** Round 466: cards every opponent in the place starts with in play once it has come back (the arena's Wastes). */
+    public String[] returnStartCards;
     public DialogData.ActionData.QuestFlag[] questFlagsToActivate = new DialogData.ActionData.QuestFlag[0];
     public String displayName;
 
@@ -79,6 +84,8 @@ public class PointOfInterestData implements Serializable {
         questFlagsToActivate = other.questFlagsToActivate;
         retireOnQuestFlag = other.retireOnQuestFlag; // round 433: both mod fields carried
         rotationGroup = other.rotationGroup;
+        leavesWhenBeaten = other.leavesWhenBeaten; // round 466
+        returnStartCards = other.returnStartCards;
     }
 
     public String getDisplayName() {
