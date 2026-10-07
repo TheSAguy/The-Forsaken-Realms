@@ -423,12 +423,17 @@ public class PointOfInterestChanges implements SaveFileContent  {
      * case, restockPrice forced to 0 whenever noRestock is set), so without this they'd roll their
      * stock exactly once, ever, per shop instance. Auto-reseeds once every 7 in-game days instead
      * of on player-paid demand - same generateNewShopSeed() under the hood, just triggered by the
-     * calendar rather than a button. First call for a given shop both seeds and stamps the day, so
-     * a freshly-discovered shop doesn't immediately "expire" on its very next 7-day boundary.
+     * calendar rather than a button. First call for a given shop both seeds and stamps the day.
+     * <p>
+     * Round 459 (the user: "The land shops should refresh on days 8, 15, 22, ect. The start of the new week"): the
+     * reroll comes with the calendar week ({@link forge.adventure.world.World#weekOf}, the HUD's week, the payday's)
+     * instead of 7 days after this shop's own last roll - every weekly shop (the Capitol's land shops, the Armory, the
+     * widened card shops) turns over on day 8, 15, 22... A stamp from before still reads as a day, so saves carry over.
      */
     public long getWeeklyShopSeed(int objectID, int currentDay) {
         Integer lastRefresh = shopLastRefreshDay.get(objectID);
-        if (lastRefresh == null || currentDay - lastRefresh >= 7) {
+        if (lastRefresh == null || forge.adventure.world.World.weekOf(currentDay)
+                != forge.adventure.world.World.weekOf(lastRefresh)) {
             generateNewShopSeed(objectID);
             shopLastRefreshDay.put(objectID, currentDay);
         }

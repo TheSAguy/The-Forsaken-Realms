@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 459 - weekly shops turn over with the calendar week
+
+- **`forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterestChanges.java`** - `getWeeklyShopSeed()`
+  rerolls when `World.weekOf(currentDay) != World.weekOf(lastRefresh)` (was `currentDay - lastRefresh >= 7`).
+  (`getWeeklyShopSeed` and `shopLastRefreshDay` are this mod's own additions to the stock file.)
+
+### Round 457 - the Bank's step
+
+- **`forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java`** (mod file) - `BANK_DENOMINATION` -> `bankStep()`
+  reading TuningData `bankStepGold`.
+
 ### Round 452 - a Mimic is a chest's size; no Manasight dot on the Warden; the Research Lab's set view
 
 - **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - the constructor sizes an enemy that

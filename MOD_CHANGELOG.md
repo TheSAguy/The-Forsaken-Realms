@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 459: weekly shops turn over with the calendar week (2026-10-06)
+
+The user, on round 457's offer: "The land shops should refresh on days 8, 15, 22, ect. The start of the new week."
+
+- `PointOfInterestChanges.getWeeklyShopSeed()` rerolled a `noRestock` shop 7 in-game days after ITS OWN last roll
+  (stamped on first sight), so no two shops - and none of them with the HUD's week tracker - turned over together. It
+  now rerolls when `World.weekOf(currentDay)` differs from the week of the last roll: days 1-7 are week 0, so every
+  weekly shop turns over on day 8, 15, 22... - the day the week tracker, the payday and round 288's restock surcharge
+  already use.
+- One clock for all of them: the Capitol's six land shops, the Armory family and the widened ordinary card shops (all
+  `noRestock`). Their paid restock buttons, where they have one, are unchanged.
+- Saves carry over: the stored value is still the day of the last roll, read as a week now. A shop last rolled on day
+  12 rerolls on entry from day 15 (it used to wait to day 19).
+- Not agent-tested (one condition). Stock engine file - CORE_ENGINE_CHANGES round 459.
+
 ## Round 458: the Juggernaut, the Evil Wall and the Chimera, hand-made from AI clips (2026-10-06)
 
 The user picked the next hand-made enemies ("Juggernaut, the Mimic, the Wall and the Chimera"), then dropped one: "We
