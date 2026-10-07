@@ -659,8 +659,8 @@ cards (the life loss still applies). If your life runs out you're carried home: 
 Orazca before it stands. Losing inside a rotating dungeon usually makes that dungeon vanish.
 
 **Enemies learn your tricks.** Beat the same enemy five times in a row on Normal, four on Hard or three on
-Insane, and every duel after that it starts with a **Wastes** in play - a notice tells you as the duel opens. Easy
-is spared. It keeps that edge
+Insane, and every duel after that it starts with a **Wastes** in play - a notice tells you the first time, as that
+duel opens. It is always one Wastes, however long the streak runs. Easy is spared. It keeps that edge
 until it beats you once (a Bronze Coin still counts as a loss); then its count starts over. The count is per
 enemy, whichever of its decks it brings, and covers every duel but Inn tournaments and your guards' fights.
 **Archmages** start every duel with a Wastes as well, except in town, Ring City, capital and Capitol fights

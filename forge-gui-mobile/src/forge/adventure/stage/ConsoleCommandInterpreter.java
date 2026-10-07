@@ -693,6 +693,18 @@ public class ConsoleCommandInterpreter {
             }
             return "Notoriety set to " + Current.player().notorietyStreak() + " wins in a row, level " + Current.player().notorietyLevel();
         });
+        // Round 465: test cheat - 'winstreak "Wild Rat" 3' sets your wins in a row over one enemy (by name).
+        registerCommand(new String[]{"winstreak"}, s -> {
+            if (s.length < 1) return "Give an enemy name, and a number to set its streak.";
+            if (s.length < 2) return s[0] + ": " + Current.player().winStreak(s[0]) + " win(s) in a row of "
+                    + Current.player().winStreakNeeded();
+            try {
+                Current.player().setWinStreak(s[0], Integer.parseInt(s[1]));
+            } catch (Exception e) {
+                return "Can not convert " + s[1] + " to number";
+            }
+            return s[0] + " win streak set to " + Current.player().winStreak(s[0]) + " of " + Current.player().winStreakNeeded();
+        });
         registerCommand(new String[]{"listPOI"}, s -> {
             ArrayList<String> poiNames = new ArrayList<>();
             List<BiomeData> biomeData = WorldSave.getCurrentSave().getWorld().getData().GetBiomes();

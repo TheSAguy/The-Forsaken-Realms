@@ -369,6 +369,23 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 : ""));
     }
 
+    /** Round 465 (test cheat "winstreak"): set the wins in a row over one enemy; 0 or less clears it. */
+    public void setWinStreak(String enemyName, int wins) {
+        if (enemyName == null || enemyName.isEmpty())
+            return;
+        if (wins > 0)
+            enemyWinStreaks.put(enemyName, wins);
+        else
+            enemyWinStreaks.remove(enemyName);
+    }
+
+    /** Round 465 (the user: the message "should only appear once per creature ... it should show, but not again on duel
+     *  5"): true only for the first duel the streak starts this enemy with its extra cards - the streak exactly at the
+     *  difficulty's count. A loss resets the streak, so a new streak tells the player again. */
+    public boolean winStreakJustReached(String enemyName) {
+        return winStreakReached(enemyName) && winStreak(enemyName) == winStreakNeeded();
+    }
+
     /** Round 404: does this enemy start its next duel with TuningData.winStreakStartCards? Not on Easy. */
     public boolean winStreakReached(String enemyName) {
         forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();

@@ -1092,10 +1092,14 @@ public class DuelScene extends ForgeScene {
                 EffectData streak = new EffectData();
                 streak.startBattleWithCard = Config.instance().getTuningData().winStreakStartCards;
                 addEffects(aiPlayer, Array.with(streak));
-                winStreakNote = (winStreakNote == null ? "" : winStreakNote + "\n\n") + streakNote(currentEnemy);
+                // Round 465 (the user): told once - on the first duel the streak applies; later ones just start with it.
+                boolean tell = Current.player().winStreakJustReached(currentEnemy.getName());
+                if (tell)
+                    winStreakNote = (winStreakNote == null ? "" : winStreakNote + "\n\n") + streakNote(currentEnemy);
                 System.out.println("[TFR-WinStreak] " + currentEnemy.getName() + " starts with "
                         + String.join(", ", streak.startBattleWithCard) + " in play - streak "
-                        + Current.player().winStreak(currentEnemy.getName()));
+                        + Current.player().winStreak(currentEnemy.getName())
+                        + (tell ? " (notice shown)" : " (notice given before - not repeated)"));
             }
             // Round 411 (the user: "Each 5 win streak will add/upgrade one of these. Starting at duel 6"): notoriety - the
             // player's wins in a row against anyone put ONE Wall token on this seat's battlefield, sized by the level and

@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 465 - the win-streak notice once per streak
+
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the TFR streak block shows the notice only when
+  `winStreakJustReached()`; the `[TFR-WinStreak]` line says whether it was shown.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - new `setWinStreak()` (test cheat) and
+  `winStreakJustReached()` beside the round-404 streak methods.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - new `winstreak` console command.
+
 ### Round 464 - the opening coin toss closes on its own; a Settings switch
 
 - **`forge-gui-mobile/src/forge/screens/match/MatchController.java`** - `showCoinFlip()`: `waitForTap` is dropped

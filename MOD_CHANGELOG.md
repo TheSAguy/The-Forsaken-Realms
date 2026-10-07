@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 465: the win-streak notice once per streak (2026-10-07)
+
+Rounds 404/405 made an enemy you beat over and over start the next duel with a Wastes in play (Normal 5 wins in a row,
+Hard 4, Insane 3; Easy never), and the duel opened with a notice ("Wild Rat has learned your tricks ...") EVERY time
+the streak applied. The user, with a screenshot of the Wild Rat notice: "This message ... should only appear once per
+creature. So when I fight the rat, And it's duel 4, so I have a win streak of 3, it should show, but not again on duel
+5. Does this scale with the streak, meaning is there a streak total where he gets two lands?"
+
+- **Once per streak** (`DuelScene` streak block, `AdventurePlayer.winStreakJustReached`): the notice shows only when
+  the streak sits exactly at the difficulty's count - the first duel it applies. Later duels still start the enemy with
+  the Wastes, silently. A loss resets the streak (round 404), so a new streak tells the player again. The
+  `[TFR-WinStreak]` start line now ends "(notice shown)" or "(notice given before - not repeated)".
+- **It does not scale** (answer, no change): always one Wastes, however long the streak. An Archmage starts with a
+  second land from its own separate rule, not from the streak.
+- **Test cheat** (`ConsoleCommandInterpreter`): `winstreak "Wild Rat" 3` sets your wins in a row over one enemy (0
+  clears it); `winstreak "Wild Rat"` reports it.
+- **GUIDE**: the win-streak paragraph says the notice comes the first time and that it is always one Wastes.
+- **Agent-tested** on Insane: at streak 3 the rat duel opened with the notice (OK, Pause, 10x speed), log "streak 3
+  (notice shown)"; the next rat at streak 4 opened with no notice (Pause, 10x speed), log "streak 4 (notice given before
+  - not repeated)", and it still started with Wastes|EOC in play.
+
 ## Round 464: the opening coin toss closes on its own; a Settings switch for it (2026-10-06)
 
 Round 460's merge brought upstream's coin flip animation (#12155): the first game of every match opens with a flip and
