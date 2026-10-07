@@ -60,7 +60,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 
 ## STATE 2026-10-07 (round 467): **LOCAL + UNRELEASED** - the win streak grows: one Wastes per full count of wins in a
 row (Insane 3/6/9 = duels 4/7/10; Hard 4/8/12; Normal 5/10/15), three at most (`TuningData.winStreakMaxSteps`), a new
-notice at each step (`AdventurePlayer.winStreakSteps`). Agent-tested at 6/7/9/12.
+notice at each step (`AdventurePlayer.winStreakSteps`). Agent-tested at 6/7/9/12. LIVE + AGENT PACKAGED 2026-10-07
+with 466 (jar 50CB19E07C6D).
 
 ## STATE 2026-10-07 (round 466): **LOCAL + UNRELEASED** - Valor's Reach Arena runs in seasons: it leaves when its 7
 contenders are beaten (6 duos + Najeela; Gwafa Hazid the shopkeeper does not count) and nothing is left on the floor,
