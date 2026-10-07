@@ -66,7 +66,8 @@ footprint proven identical to before; .atlas files and enemies.json untouched (e
 before (the motor no longer reproduces their frame counts: arasta, cave_spider, spider, giant_fly, the_locust_god,
 kathril, hermit_crab, the_scarab_god, zask, codie, death_slime, eye, jellyfish, mm_menon, octopus, plagon, vnwxt); the
 16 Pixelate sprites untouched. Audit + sheets: the generator repo's `tools/forge_remake/cloud/remaining/AUDIT.md` and
-`reports/forge/style_pass/`. The peer (#30) packages. Not seen in play.
+`reports/forge/style_pass/`. LIVE + AGENT PACKAGED 2026-10-07 by #30 (all 415 PNGs checked against
+the previous commit: same size, same opaque footprint; the remake folder byte-identical in both). Not seen in play.
 
 ## STATE 2026-10-07 (round 469): **LOCAL + UNRELEASED (data only)** - four more hand-made enemies from the user's AI clips
 (Pixelate, the Procedural Pixel Creatures session): Emrakul (+ Emrakul, the Aeons Torn), the Beholder, the Eldrazi
