@@ -77,7 +77,8 @@ Not seen in play.
 
 ## STATE 2026-10-08 (round 477): **LOCAL + UNRELEASED (data only)** - the praetors (Kozilek, Elesh Norn, Jin-Gitaxias,
 Urabrask, Vorinclex) and Arzakon, Shandalar's Doom re-ranked Archmage (enemies.json tier Mythic) - back in the Level-2
-Challenging bracket; they now start with the Archmage Wastes and bring flying Walls. Legend "Arzakon" and Nissa stay Adept.
+Challenging bracket; they now start with the Archmage Wastes and bring flying Walls. Legend "Arzakon" and Nissa stay Adept. Packaged live + agent
+2026-10-08 with the peer's round 476 (verified: 28 scale-only json changes, atlases with Avatars, CREDITS line).
 (Round 476 is the Procedural Pixel Creatures session's pack import.)
 
 ## STATE 2026-10-08 (rounds 474-475): **LOCAL + UNRELEASED** - 474: a dungeon chest card entry whose edition-restricted
