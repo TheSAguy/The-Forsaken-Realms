@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 483: pack sprites for the ten golem leftovers and the five undead animals (2026-10-08)
+
+The Procedural Pixel Creatures session's third pack import (the user: "Do the golem leftovers and the zombie animals").
+Data and sprites only; no Java. Manifest `packs/rpgmaker/imports3.json` in the generator repo.
+
+- **Ten golems** on the two golem sheets of round 476 (stone and armored, 48 px), each on its own colorway: Arcane
+  Golem (the ice-blue armored golem turned violet), Golos (grey armored), Shorikai (white-blue armored), Time Walker
+  (ice-blue armored; keepSize, its drawn size kept: scale 1.5 -> 0.5), Bone Golem (the orange-brown stone turned
+  ivory), Jadestone Golem (the green stone turned jade), Kilnfired Golem (red-brown), Marblehewn Golem (white),
+  Rimeglass Golem (ice, like the Ice Golem), Sand Golem (the orange-brown stone turned sand). Three of them shared the
+  stock arcane_golem, two the stock bonegolem, four were TFR-made, the Sand Golem wore the sand elemental.
+- **Five undead animals** on the zombie-animals sheet (48 px): Carrion Steed (the zombie horse), Gravehound (the dark
+  zombie dog), Rotfang Hound (the teal zombie dog), Toxic Hound (the teal dog turned sickly green; it wore a stock
+  undead hound), Gravemoss Bear (the zombie bear). The sheet's zombie cow, pig, chicken and sheep have no undead
+  livestock in the game to wear them; the walking dead on the coverage list (Zombie, Skaab, Balthor...) are humanoid and
+  keep their sprites.
+- **enemies.json**: 15 sprite paths, 14 scales from `enemy_scale.py --write` (the golems land at 0.34, the hounds at
+  0.42; Time Walker keepSize). CREDITS.md: the second-set line extended. `validate_plane_data.py` unchanged; the sprite
+  audit flags only the house shadow's 1-row gap under the lunging frames.
+
 ## Round 482: ten more Story places leave when cleared; an Archmage for the Elves and the Bandits (2026-10-08)
 
 The user, on round 481's two open questions: "Should they work the same way? - Yes." and "Re-rank one for each."

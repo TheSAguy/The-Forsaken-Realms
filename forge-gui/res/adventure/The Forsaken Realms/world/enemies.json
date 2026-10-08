@@ -1927,7 +1927,7 @@
     },
     {
         "name": "Arcane Golem",
-        "sprite": "sprites/enemy/construct/arcane_golem.atlas",
+        "sprite": "sprites/enemy/remake/arcane_golem.atlas",
         "deck": [
             "decks/standard/jodah.dck"
         ],
@@ -1935,7 +1935,7 @@
         "spawnRate": 1,
         "difficulty": 0.8,
         "speed": 16,
-        "scale": 0.325,
+        "scale": 0.3333,
         "life": 25,
         "rewards": [
             {
@@ -4390,7 +4390,7 @@
     },
     {
         "name": "Bone Golem",
-        "sprite": "sprites/enemy/undead/bonegolem.atlas",
+        "sprite": "sprites/enemy/remake/bone_golem.atlas",
         "deck": [
             "decks/standard/bonegolem.dck"
         ],
@@ -4461,7 +4461,8 @@
             "Monster",
             "Evil"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.3421
     },
     {
         "name": "Brain Mole",
@@ -26601,7 +26602,7 @@
     },
     {
         "name": "Sand Golem",
-        "sprite": "sprites/enemy/elemental/sandelemental.atlas",
+        "sprite": "sprites/enemy/remake/sand_golem.atlas",
         "deck": [
             "decks/standard/sandgolem.dck"
         ],
@@ -26646,7 +26647,7 @@
             "BiomeRed"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3421
     },
     {
         "name": "Satyr",
@@ -37176,13 +37177,13 @@
     },
     {
         "name": "Golos",
-        "sprite": "sprites/enemy/construct/arcane_golem.atlas",
+        "sprite": "sprites/enemy/remake/golos.atlas",
         "deck": [
             "decks/legends/golos.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.325,
+        "scale": 0.3421,
         "life": 50,
         "rewards": [
             {
@@ -83907,7 +83908,7 @@
     },
     {
         "name": "Shorikai",
-        "sprite": "sprites/enemy/construct/arcane_golem.atlas",
+        "sprite": "sprites/enemy/remake/shorikai.atlas",
         "deck": [
             "decks/legends/shorikai.dck"
         ],
@@ -83983,7 +83984,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.325
+        "scale": 0.3421
     },
     {
         "name": "Tamiyo",
@@ -120517,7 +120518,7 @@
     },
     {
         "name": "Time Walker",
-        "sprite": "sprites/enemy/undead/bonegolem.atlas",
+        "sprite": "sprites/enemy/remake/time_walker.atlas",
         "deck": [
             "decks/miniboss/time_walker.dck"
         ],
@@ -120725,7 +120726,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.5
+        "scale": 0.5
     },
     {
         "name": "Krampus (Elite)",
@@ -134496,7 +134497,7 @@
     },
     {
         "name": "Toxic Hound",
-        "sprite": "sprites/enemy/basic/undead/toxic_hound.atlas",
+        "sprite": "sprites/enemy/remake/toxic_hound.atlas",
         "deck": [
             "decks/standard/toxic_hound.dck"
         ],
@@ -134555,7 +134556,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.1818
+        "scale": 0.4194
     },
     {
         "name": "Unwinding Crawler",
@@ -150803,7 +150804,7 @@
     },
     {
         "name": "Gravehound",
-        "sprite": "sprites/enemy/tfr/gravehound.atlas",
+        "sprite": "sprites/enemy/remake/gravehound.atlas",
         "deck": [
             "decks/standard/tfr/gravehound.dck"
         ],
@@ -150873,7 +150874,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.2826
+        "scale": 0.4194
     },
     {
         "name": "Carapace Stalker",
@@ -160818,7 +160819,7 @@
     },
     {
         "name": "Marblehewn Golem",
-        "sprite": "sprites/enemy/tfr/marblehewn_golem.atlas",
+        "sprite": "sprites/enemy/remake/marblehewn_golem.atlas",
         "deck": [
             "decks/standard/tfr/marblehewn_golem.dck"
         ],
@@ -160897,11 +160898,11 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.3714
+        "scale": 0.3421
     },
     {
         "name": "Rimeglass Golem",
-        "sprite": "sprites/enemy/tfr/rimeglass_golem.atlas",
+        "sprite": "sprites/enemy/remake/rimeglass_golem.atlas",
         "deck": [
             "decks/standard/tfr/rimeglass_golem.dck"
         ],
@@ -160980,7 +160981,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.3714
+        "scale": 0.3421
     },
     {
         "name": "Obsidian Warden",
@@ -161067,7 +161068,7 @@
     },
     {
         "name": "Kilnfired Golem",
-        "sprite": "sprites/enemy/tfr/kilnfired_golem.atlas",
+        "sprite": "sprites/enemy/remake/kilnfired_golem.atlas",
         "deck": [
             "decks/standard/tfr/kilnfired_golem.dck"
         ],
@@ -161146,11 +161147,11 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.3714
+        "scale": 0.3421
     },
     {
         "name": "Jadestone Golem",
-        "sprite": "sprites/enemy/tfr/jadestone_golem.atlas",
+        "sprite": "sprites/enemy/remake/jadestone_golem.atlas",
         "deck": [
             "decks/standard/tfr/jadestone_golem.dck"
         ],
@@ -161229,7 +161230,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.3714
+        "scale": 0.3421
     },
     {
         "name": "Dreadgaze Horror",
@@ -161660,7 +161661,7 @@
     },
     {
         "name": "Rotfang Hound",
-        "sprite": "sprites/enemy/tfr/rotfang_hound.atlas",
+        "sprite": "sprites/enemy/remake/rotfang_hound.atlas",
         "deck": [
             "decks/standard/tfr/rotfang_hound.dck"
         ],
@@ -161730,11 +161731,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.3824
+        "scale": 0.4194
     },
     {
         "name": "Gravemoss Bear",
-        "sprite": "sprites/enemy/tfr/gravemoss_bear.atlas",
+        "sprite": "sprites/enemy/remake/gravemoss_bear.atlas",
         "deck": [
             "decks/standard/tfr/gravemoss_bear.dck"
         ],
@@ -161814,11 +161815,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.3714
+        "scale": 0.3824
     },
     {
         "name": "Carrion Steed",
-        "sprite": "sprites/enemy/tfr/carrion_steed.atlas",
+        "sprite": "sprites/enemy/remake/carrion_steed.atlas",
         "deck": [
             "decks/standard/tfr/carrion_steed.dck"
         ],
@@ -161895,7 +161896,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.3611
+        "scale": 0.3421
     },
     {
         "name": "Bronzecrest Automaton",

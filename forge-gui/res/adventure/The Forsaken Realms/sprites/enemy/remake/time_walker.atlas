@@ -1,0 +1,134 @@
+time_walker.png
+size: 352,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 44, 54
+Idle
+  xy: 44, 64
+  size: 44, 54
+Idle
+  xy: 88, 64
+  size: 44, 54
+Idle
+  xy: 132, 64
+  size: 44, 54
+Walk
+  xy: 0, 118
+  size: 44, 54
+Walk
+  xy: 44, 118
+  size: 44, 54
+Walk
+  xy: 88, 118
+  size: 44, 54
+Walk
+  xy: 132, 118
+  size: 44, 54
+Attack
+  xy: 0, 172
+  size: 44, 54
+Attack
+  xy: 44, 172
+  size: 44, 54
+Attack
+  xy: 88, 172
+  size: 44, 54
+Attack
+  xy: 132, 172
+  size: 44, 54
+Attack
+  xy: 176, 172
+  size: 44, 54
+Attack
+  xy: 220, 172
+  size: 44, 54
+Attack
+  xy: 264, 172
+  size: 44, 54
+Attack
+  xy: 308, 172
+  size: 44, 54
+Hit
+  xy: 0, 226
+  size: 44, 54
+Hit
+  xy: 44, 226
+  size: 44, 54
+Hit
+  xy: 88, 226
+  size: 44, 54
+Hit
+  xy: 132, 226
+  size: 44, 54
+Death
+  xy: 0, 280
+  size: 44, 54
+Death
+  xy: 44, 280
+  size: 44, 54
+Death
+  xy: 88, 280
+  size: 44, 54
+Death
+  xy: 132, 280
+  size: 44, 54
+Death
+  xy: 176, 280
+  size: 44, 54
+Death
+  xy: 220, 280
+  size: 44, 54
+IdleUp
+  xy: 0, 334
+  size: 44, 54
+IdleUp
+  xy: 44, 334
+  size: 44, 54
+IdleUp
+  xy: 88, 334
+  size: 44, 54
+IdleUp
+  xy: 132, 334
+  size: 44, 54
+IdleDown
+  xy: 0, 388
+  size: 44, 54
+IdleDown
+  xy: 44, 388
+  size: 44, 54
+IdleDown
+  xy: 88, 388
+  size: 44, 54
+IdleDown
+  xy: 132, 388
+  size: 44, 54
+WalkUp
+  xy: 0, 442
+  size: 44, 54
+WalkUp
+  xy: 44, 442
+  size: 44, 54
+WalkUp
+  xy: 88, 442
+  size: 44, 54
+WalkUp
+  xy: 132, 442
+  size: 44, 54
+WalkDown
+  xy: 0, 496
+  size: 44, 54
+WalkDown
+  xy: 44, 496
+  size: 44, 54
+WalkDown
+  xy: 88, 496
+  size: 44, 54
+WalkDown
+  xy: 132, 496
+  size: 44, 54

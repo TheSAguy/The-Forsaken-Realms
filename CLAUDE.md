@@ -67,6 +67,14 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 483): **LOCAL + UNRELEASED (data only)** - the Procedural Pixel Creatures session's third
+pack import (the user: "Do the golem leftovers and the zombie animals"): the ten golems still on stock/TFR sprites
+(Arcane, Bone, Jadestone, Kilnfired, Marblehewn, Rimeglass, Sand Golem, Golos, Shorikai, Time Walker) on the round-476
+golem sheets, each its own colorway, and five undead animals (Carrion Steed, Gravehound, Rotfang Hound, Toxic Hound,
+Gravemoss Bear) on the zombie-animals sheet. 30 new files under `sprites/enemy/remake/`, enemies.json 15 sprite paths
++ 14 scales (Time Walker keepSize keeps its drawn size), CREDITS.md one line. Manifest `packs/rpgmaker/imports3.json`
+in the generator repo. The peer (#30) verifies and packages. Not seen in play.
+
 ## STATE 2026-10-08 (round 482): **LOCAL + UNRELEASED (data only)** - ten more hostile `Story` places (Court of
 Paliano, the four Legendary Lorwyn/Realm dungeons, Planeswalker Dueling Club, both temples, Aerie, Idyllic Beachfront,
 Peaceful Clearing) -> `NoRotate` (+ `Hostile`): they leave on a full clear like the classrooms. Bandit Leader and

@@ -1,0 +1,134 @@
+golos.png
+size: 352,505
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 44, 49
+Idle
+  xy: 44, 64
+  size: 44, 49
+Idle
+  xy: 88, 64
+  size: 44, 49
+Idle
+  xy: 132, 64
+  size: 44, 49
+Walk
+  xy: 0, 113
+  size: 44, 49
+Walk
+  xy: 44, 113
+  size: 44, 49
+Walk
+  xy: 88, 113
+  size: 44, 49
+Walk
+  xy: 132, 113
+  size: 44, 49
+Attack
+  xy: 0, 162
+  size: 44, 49
+Attack
+  xy: 44, 162
+  size: 44, 49
+Attack
+  xy: 88, 162
+  size: 44, 49
+Attack
+  xy: 132, 162
+  size: 44, 49
+Attack
+  xy: 176, 162
+  size: 44, 49
+Attack
+  xy: 220, 162
+  size: 44, 49
+Attack
+  xy: 264, 162
+  size: 44, 49
+Attack
+  xy: 308, 162
+  size: 44, 49
+Hit
+  xy: 0, 211
+  size: 44, 49
+Hit
+  xy: 44, 211
+  size: 44, 49
+Hit
+  xy: 88, 211
+  size: 44, 49
+Hit
+  xy: 132, 211
+  size: 44, 49
+Death
+  xy: 0, 260
+  size: 44, 49
+Death
+  xy: 44, 260
+  size: 44, 49
+Death
+  xy: 88, 260
+  size: 44, 49
+Death
+  xy: 132, 260
+  size: 44, 49
+Death
+  xy: 176, 260
+  size: 44, 49
+Death
+  xy: 220, 260
+  size: 44, 49
+IdleUp
+  xy: 0, 309
+  size: 44, 49
+IdleUp
+  xy: 44, 309
+  size: 44, 49
+IdleUp
+  xy: 88, 309
+  size: 44, 49
+IdleUp
+  xy: 132, 309
+  size: 44, 49
+IdleDown
+  xy: 0, 358
+  size: 44, 49
+IdleDown
+  xy: 44, 358
+  size: 44, 49
+IdleDown
+  xy: 88, 358
+  size: 44, 49
+IdleDown
+  xy: 132, 358
+  size: 44, 49
+WalkUp
+  xy: 0, 407
+  size: 44, 49
+WalkUp
+  xy: 44, 407
+  size: 44, 49
+WalkUp
+  xy: 88, 407
+  size: 44, 49
+WalkUp
+  xy: 132, 407
+  size: 44, 49
+WalkDown
+  xy: 0, 456
+  size: 44, 49
+WalkDown
+  xy: 44, 456
+  size: 44, 49
+WalkDown
+  xy: 88, 456
+  size: 44, 49
+WalkDown
+  xy: 132, 456
+  size: 44, 49

@@ -1,0 +1,134 @@
+kilnfired_golem.png
+size: 384,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 48, 54
+Idle
+  xy: 48, 64
+  size: 48, 54
+Idle
+  xy: 96, 64
+  size: 48, 54
+Idle
+  xy: 144, 64
+  size: 48, 54
+Walk
+  xy: 0, 118
+  size: 48, 54
+Walk
+  xy: 48, 118
+  size: 48, 54
+Walk
+  xy: 96, 118
+  size: 48, 54
+Walk
+  xy: 144, 118
+  size: 48, 54
+Attack
+  xy: 0, 172
+  size: 48, 54
+Attack
+  xy: 48, 172
+  size: 48, 54
+Attack
+  xy: 96, 172
+  size: 48, 54
+Attack
+  xy: 144, 172
+  size: 48, 54
+Attack
+  xy: 192, 172
+  size: 48, 54
+Attack
+  xy: 240, 172
+  size: 48, 54
+Attack
+  xy: 288, 172
+  size: 48, 54
+Attack
+  xy: 336, 172
+  size: 48, 54
+Hit
+  xy: 0, 226
+  size: 48, 54
+Hit
+  xy: 48, 226
+  size: 48, 54
+Hit
+  xy: 96, 226
+  size: 48, 54
+Hit
+  xy: 144, 226
+  size: 48, 54
+Death
+  xy: 0, 280
+  size: 48, 54
+Death
+  xy: 48, 280
+  size: 48, 54
+Death
+  xy: 96, 280
+  size: 48, 54
+Death
+  xy: 144, 280
+  size: 48, 54
+Death
+  xy: 192, 280
+  size: 48, 54
+Death
+  xy: 240, 280
+  size: 48, 54
+IdleUp
+  xy: 0, 334
+  size: 48, 54
+IdleUp
+  xy: 48, 334
+  size: 48, 54
+IdleUp
+  xy: 96, 334
+  size: 48, 54
+IdleUp
+  xy: 144, 334
+  size: 48, 54
+IdleDown
+  xy: 0, 388
+  size: 48, 54
+IdleDown
+  xy: 48, 388
+  size: 48, 54
+IdleDown
+  xy: 96, 388
+  size: 48, 54
+IdleDown
+  xy: 144, 388
+  size: 48, 54
+WalkUp
+  xy: 0, 442
+  size: 48, 54
+WalkUp
+  xy: 48, 442
+  size: 48, 54
+WalkUp
+  xy: 96, 442
+  size: 48, 54
+WalkUp
+  xy: 144, 442
+  size: 48, 54
+WalkDown
+  xy: 0, 496
+  size: 48, 54
+WalkDown
+  xy: 48, 496
+  size: 48, 54
+WalkDown
+  xy: 96, 496
+  size: 48, 54
+WalkDown
+  xy: 144, 496
+  size: 48, 54

@@ -1,0 +1,134 @@
+rotfang_hound.png
+size: 528,505
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 66, 49
+Idle
+  xy: 66, 64
+  size: 66, 49
+Idle
+  xy: 132, 64
+  size: 66, 49
+Idle
+  xy: 198, 64
+  size: 66, 49
+Walk
+  xy: 0, 113
+  size: 66, 49
+Walk
+  xy: 66, 113
+  size: 66, 49
+Walk
+  xy: 132, 113
+  size: 66, 49
+Walk
+  xy: 198, 113
+  size: 66, 49
+Attack
+  xy: 0, 162
+  size: 66, 49
+Attack
+  xy: 66, 162
+  size: 66, 49
+Attack
+  xy: 132, 162
+  size: 66, 49
+Attack
+  xy: 198, 162
+  size: 66, 49
+Attack
+  xy: 264, 162
+  size: 66, 49
+Attack
+  xy: 330, 162
+  size: 66, 49
+Attack
+  xy: 396, 162
+  size: 66, 49
+Attack
+  xy: 462, 162
+  size: 66, 49
+Hit
+  xy: 0, 211
+  size: 66, 49
+Hit
+  xy: 66, 211
+  size: 66, 49
+Hit
+  xy: 132, 211
+  size: 66, 49
+Hit
+  xy: 198, 211
+  size: 66, 49
+Death
+  xy: 0, 260
+  size: 66, 49
+Death
+  xy: 66, 260
+  size: 66, 49
+Death
+  xy: 132, 260
+  size: 66, 49
+Death
+  xy: 198, 260
+  size: 66, 49
+Death
+  xy: 264, 260
+  size: 66, 49
+Death
+  xy: 330, 260
+  size: 66, 49
+IdleUp
+  xy: 0, 309
+  size: 66, 49
+IdleUp
+  xy: 66, 309
+  size: 66, 49
+IdleUp
+  xy: 132, 309
+  size: 66, 49
+IdleUp
+  xy: 198, 309
+  size: 66, 49
+IdleDown
+  xy: 0, 358
+  size: 66, 49
+IdleDown
+  xy: 66, 358
+  size: 66, 49
+IdleDown
+  xy: 132, 358
+  size: 66, 49
+IdleDown
+  xy: 198, 358
+  size: 66, 49
+WalkUp
+  xy: 0, 407
+  size: 66, 49
+WalkUp
+  xy: 66, 407
+  size: 66, 49
+WalkUp
+  xy: 132, 407
+  size: 66, 49
+WalkUp
+  xy: 198, 407
+  size: 66, 49
+WalkDown
+  xy: 0, 456
+  size: 66, 49
+WalkDown
+  xy: 66, 456
+  size: 66, 49
+WalkDown
+  xy: 132, 456
+  size: 66, 49
+WalkDown
+  xy: 198, 456
+  size: 66, 49

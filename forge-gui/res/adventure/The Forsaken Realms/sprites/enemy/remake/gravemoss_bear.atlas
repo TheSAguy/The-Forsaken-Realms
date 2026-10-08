@@ -1,0 +1,134 @@
+gravemoss_bear.png
+size: 544,523
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 68, 51
+Idle
+  xy: 68, 64
+  size: 68, 51
+Idle
+  xy: 136, 64
+  size: 68, 51
+Idle
+  xy: 204, 64
+  size: 68, 51
+Walk
+  xy: 0, 115
+  size: 68, 51
+Walk
+  xy: 68, 115
+  size: 68, 51
+Walk
+  xy: 136, 115
+  size: 68, 51
+Walk
+  xy: 204, 115
+  size: 68, 51
+Attack
+  xy: 0, 166
+  size: 68, 51
+Attack
+  xy: 68, 166
+  size: 68, 51
+Attack
+  xy: 136, 166
+  size: 68, 51
+Attack
+  xy: 204, 166
+  size: 68, 51
+Attack
+  xy: 272, 166
+  size: 68, 51
+Attack
+  xy: 340, 166
+  size: 68, 51
+Attack
+  xy: 408, 166
+  size: 68, 51
+Attack
+  xy: 476, 166
+  size: 68, 51
+Hit
+  xy: 0, 217
+  size: 68, 51
+Hit
+  xy: 68, 217
+  size: 68, 51
+Hit
+  xy: 136, 217
+  size: 68, 51
+Hit
+  xy: 204, 217
+  size: 68, 51
+Death
+  xy: 0, 268
+  size: 68, 51
+Death
+  xy: 68, 268
+  size: 68, 51
+Death
+  xy: 136, 268
+  size: 68, 51
+Death
+  xy: 204, 268
+  size: 68, 51
+Death
+  xy: 272, 268
+  size: 68, 51
+Death
+  xy: 340, 268
+  size: 68, 51
+IdleUp
+  xy: 0, 319
+  size: 68, 51
+IdleUp
+  xy: 68, 319
+  size: 68, 51
+IdleUp
+  xy: 136, 319
+  size: 68, 51
+IdleUp
+  xy: 204, 319
+  size: 68, 51
+IdleDown
+  xy: 0, 370
+  size: 68, 51
+IdleDown
+  xy: 68, 370
+  size: 68, 51
+IdleDown
+  xy: 136, 370
+  size: 68, 51
+IdleDown
+  xy: 204, 370
+  size: 68, 51
+WalkUp
+  xy: 0, 421
+  size: 68, 51
+WalkUp
+  xy: 68, 421
+  size: 68, 51
+WalkUp
+  xy: 136, 421
+  size: 68, 51
+WalkUp
+  xy: 204, 421
+  size: 68, 51
+WalkDown
+  xy: 0, 472
+  size: 68, 51
+WalkDown
+  xy: 68, 472
+  size: 68, 51
+WalkDown
+  xy: 136, 472
+  size: 68, 51
+WalkDown
+  xy: 204, 472
+  size: 68, 51
