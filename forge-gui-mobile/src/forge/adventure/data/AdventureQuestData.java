@@ -253,6 +253,11 @@ public class AdventureQuestData implements Serializable {
             otherTokens.put(key, value);
     }
 
+    /** Round 481 (InvasionQuests): a token put earlier - saved with the quest, so it also carries invasion state. */
+    public String getOtherToken(String key) {
+        return key == null ? null : otherTokens.get(key);
+    }
+
     public void initializeStage(AdventureQuestStage stage){
         if (stage == null || stage.objective == null) return;
 
@@ -517,7 +522,10 @@ public class AdventureQuestData implements Serializable {
         for (AdventureQuestStage stage: stages) {
             switch (stage.getStatus()) {
                 case ACTIVE:
+                    int before = stage.getProgress3();
                     done = stage.handleEvent(event) == COMPLETE && done;
+                    if (stage.getProgress3() > before) // round 481: an invasion notes the troops it lost
+                        forge.adventure.util.InvasionQuests.noteTroopBeaten(this, stage, event);
                     break;
                 case COMPLETE:
                     continue;
@@ -616,6 +624,8 @@ public class AdventureQuestData implements Serializable {
                     s.checkPrerequisites(getCompletedStageIDs());
                     if (s.getStatus() == ACTIVE) {
                         changedThisPass = true;
+                        // Round 481: an invasion's leader, one rank above the toughest troop beaten - before its sprite.
+                        forge.adventure.util.InvasionQuests.onStageActivated(this, s);
                         if (s.hasRequiredFetchItems()) {
                             s.handleEvent(new AdventureQuestEvent());
                         }

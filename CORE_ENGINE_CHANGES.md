@@ -38,6 +38,18 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 481 - an invasion's leader one rank above its troops; his Gemstone Mine
+
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** - `getOtherToken()`; `updateStages()` tells
+  `InvasionQuests.noteTroopBeaten` when an ACTIVE stage's count rose; `activateNextStages()` calls
+  `InvasionQuests.onStageActivated` for a stage that just turned ACTIVE, before its sprites. No new saved field.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java`** - `getProgress3()` (method only).
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** - `invasionLeaderStartCards`,
+  `invasionLeaderStartMinDifficulty`.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - after the win-streak block: an open invasion
+  leader's start cards (`InvasionQuests.leaderStartCards`).
+- Mod-added `util/InvasionQuests.java` (troop rank, leader re-pick, reward line, start cards).
+
 ### Round 480 - treasure holes until the treasure is found; the center piece first
 
 - **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `treasure dig` refuses (refund) a dig

@@ -97,6 +97,11 @@ public class AdventureQuestStage implements Serializable {
         return status;
     }
 
+    /** Round 481 (InvasionQuests): the count toward count3, so a caller can tell an event counted. */
+    public int getProgress3() {
+        return progress3;
+    }
+
     public PointOfInterest getTargetPOI() {
         return targetPOI;
     }

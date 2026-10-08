@@ -67,6 +67,13 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 481): **LOCAL + UNRELEASED** - the five Strixhaven classrooms `Story` -> `Hostile` +
+`NoRotate` (they leave on a full clear and come back, round 468's rule; the user's Witherbloom report); an invasion's
+leader is re-picked when its stage opens at one rank above the toughest troop beaten (`InvasionQuests`, the rank kept
+in the quest's text tokens), the reward line following him, and on Hard/Insane he starts with a Gemstone Mine
+(`invasionLeaderStartCards`). Agent-tested (Goblin Warrior Adept -> Goblin Chief Master with the Mine). OPEN for the
+user: the other hostile Story places; Elves and Bandits have no Archmage; the pillage-event design (not built).
+
 ## STATE 2026-10-08 (round 480): **LOCAL + UNRELEASED** - treasure-hunt tweaks (the user): dig holes stay until their
 hunt's treasure is found, then fill in (`TreasureHunt.digOwner`/`clearHoles`; a dig in claimed lands is refused and
 refunded - my call); the first map piece is the center with the X, the other eight random; walking onto the X digs at

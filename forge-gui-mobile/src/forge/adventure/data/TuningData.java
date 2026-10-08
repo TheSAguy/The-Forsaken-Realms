@@ -389,6 +389,10 @@ public class TuningData {
     public int invasionTrustReputation = 10;
     public int[] invasionGoldByTier = {300, 500, 800, 1200};
     public int[] invasionReputationByTier = {2, 2, 3, 3};
+    // Round 481 (the user: "On Hard and Insane, he should start with a Gemstone Mine in play"): the cards an invasion's
+    // leader starts with in play, from this difficulty index on (0 Easy .. 3 Insane).
+    public String[] invasionLeaderStartCards = {"Gemstone Mine"};
+    public int invasionLeaderStartMinDifficulty = 2;
     // AI town guard dots (MOD_SCOPE #87, user spec 2026-09-03): an AI-held color town gains one
     // guard level every this many in-game days of unbroken AI ownership (default 4 weeks), up to
     // level 4. The clock starts when the town is first seen held (save load / capture), never

@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 481: the Strixhaven classrooms leave when cleared; an invasion's leader one rank above its troops, with a Gemstone Mine on Hard and Insane (2026-10-08)
+
+- **The classrooms** (the user, with a screenshot of a cleared Witherbloom Classroom: "I just cleared out this dungeon
+  and it did not disappear"; their log: `[DungeonRotation] cleared at Witherbloom Classroom - it stays on the map: it
+  is tagged Story - story and quest maps never vanish`). All five Strixhaven classrooms (Prismari, Silverquill,
+  Lorehold, Witherbloom, Quandrix) carried the upstream `Story` tag, though each is a self-contained 5-enemy dungeon
+  (its key drops from its own boss and opens a gate in the same map; no quest, dialog or other map names them).
+  `points_of_interest.json`: `Story` -> `Hostile` + `NoRotate`, round 468's rule (`DungeonRotation.isClearReturner`):
+  a full clear plus the walk out takes it off the map, and it comes back restocked after the spot rest with
+  return-visit (half) pay. One instance each, so no rotation pool is needed and existing worlds work as they are. A
+  classroom the player has already emptied leaves on the next walk out. Left as they were, for the user to decide:
+  the other hostile `Story` places (Court of Paliano, Ancient Opal Cavern, Eclipsed Elven Court, Ashling's Domain,
+  Planeswalker Dueling Club, Temple of Chandra, Temple of Liliana, Aerie and the peaceful-sounding Idyllic Beachfront
+  and Peaceful Clearing, which hold 7-8 enemies each); Omenport, Three Tree City, An-Havva Inn, Isolated Hut and
+  Valor's Reach keep theirs.
+- **The invasion leader** (the user: "For invasion quests, let's have the leader you have to kill at the end always be
+  1 level higher than the troops you killed before him. On Hard and Insane, he should start with a Gemstone Mine in
+  play"). `InvasionQuests`: each troop win the first stage counts records the toughest rank beaten
+  (`$(invasion_troop_rank)` in the quest's saved text tokens - no new saved field, per AdventureQuestData's
+  serialVersionUID note); when the leader stage opens (`AdventureQuestData.activateNextStages`, before the leader's
+  sprite) the leader is re-picked at exactly one rank above it, Archmage at most: Leader-tagged first, then the
+  family's members (no bosses), then the nearest rank with the tougher side first. Not limited by the player's own
+  rank. The reward follows him: the epilogue's issued line "(+2 Local Reputation, +500 [+Gold])" and the paid amounts
+  are rewritten together (when the line is not found, the issued reward stands). The issue-time pick (and with it the
+  town-trust step-up, `invasionTrustReputation`) only stands in until then - and for a quest issued before this round
+  with no troop on record. DuelScene: the open leader stage's enemy starts with `invasionLeaderStartCards`
+  (["Gemstone Mine"]) in play from `invasionLeaderStartMinDifficulty` (2 = Hard) on; the ETB-counters switch gives
+  the Mine its three mining counters.
+- **Gaps in the data**: the Elves and the Bandits have no Archmage of any kind, so a Master troop leaves their leader a
+  Master (the nearest rank); the Elves also have no Master leader (a Master elf of the family stands in). Undead,
+  Giant, Demon, Knight and Vampire troops can already be Archmages - their leader is then an Archmage too (the cap).
+- **Tested in the agent game** (Normal; the agent copy's settings briefly at 1 troop win and the Mine from Normal):
+  Goblin Invasion issued with Goblin Rager (Apprentice) as the stand-in; a Goblin Warrior (Adept) beaten -> "leader
+  Goblin Chief (Rare) (was Goblin Rager (Common)), reward 800 gold +3 reputation"; the Chief's duel opened with
+  Gemstone Mine in play (MINING counters on the card). The classroom change is data only (validate_plane_data clean
+  of new findings); the leave-on-clear path is round 468's, tested then on the Blue Tower.
+
 ## Round 480: treasure holes stay until their treasure is found; the first map piece is the center with the X; no "Dig here?"; the Spade's icon (2026-10-08)
 
 Four of the user's calls on round 478's test version:

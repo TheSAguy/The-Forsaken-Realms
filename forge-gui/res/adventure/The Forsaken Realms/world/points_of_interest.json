@@ -4460,7 +4460,8 @@
 		"map": "../The Forsaken Realms/maps/map/barbariancamp/Prismari_Classroom.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story"]
+			"Hostile",
+			"NoRotate"]
 	},
 	{
 		"name": "Silverquill Classroom",
@@ -4472,7 +4473,8 @@
 		"map": "../The Forsaken Realms/maps/map/evilgrove/Silverquill_Classroom.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story"]
+			"Hostile",
+			"NoRotate"]
 	},
 	{
 		"name": "Lorehold Classroom",
@@ -4484,7 +4486,8 @@
 		"map": "../The Forsaken Realms/maps/map/fort/Lorehold_Classroom.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story"]
+			"Hostile",
+			"NoRotate"]
 	},
 	{
 		"name": "Witherbloom Classroom",
@@ -4496,7 +4499,8 @@
 		"map": "../The Forsaken Realms/maps/map/grove/Witherbloom_Classroom.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story"]
+			"Hostile",
+			"NoRotate"]
 	},
 	{
 		"name": "Quandrix Classroom",
@@ -4508,7 +4512,8 @@
 		"map": "../The Forsaken Realms/maps/map/merfolkpool/Quandrix_Classroom.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story"]
+			"Hostile",
+			"NoRotate"]
 	},
 	{
 		"name": "Eldrazi Prison",

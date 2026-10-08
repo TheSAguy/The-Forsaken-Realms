@@ -1116,6 +1116,18 @@ public class DuelScene extends ForgeScene {
                         + Current.player().winStreak(currentEnemy.getName())
                         + (tell ? " (notice shown)" : " (notice given before - not repeated)"));
             }
+            // Round 481 (the user: "On Hard and Insane, he should start with a Gemstone Mine in play"): an open invasion's
+            // leader (InvasionQuests.leaderStartCards).
+            if (eventData == null) {
+                String[] leaderCards = forge.adventure.util.InvasionQuests.leaderStartCards(currentEnemy);
+                if (leaderCards != null) {
+                    EffectData leaderStart = new EffectData();
+                    leaderStart.startBattleWithCard = leaderCards;
+                    addEffects(aiPlayer, Array.with(leaderStart));
+                    System.out.println("[TFR-Invasion] leader " + currentEnemy.getName() + " starts with "
+                            + String.join(", ", leaderCards) + " in play");
+                }
+            }
             // Round 411 (the user: "Each 5 win streak will add/upgrade one of these. Starting at duel 6"): notoriety - the
             // player's wins in a row against anyone put ONE Wall token on this seat's battlefield, sized by the level and
             // kind by the seat's rank, for the ranks the difficulty reaches. The same duels as the win streak above.
