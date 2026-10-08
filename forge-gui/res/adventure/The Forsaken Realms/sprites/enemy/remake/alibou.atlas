@@ -1,5 +1,5 @@
 alibou.png
-size: 1920,1064
+size: 352,550
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,256 +8,127 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 120, 100
+  size: 44, 54
 Idle
-  xy: 120, 64
-  size: 120, 100
+  xy: 44, 64
+  size: 44, 54
 Idle
-  xy: 240, 64
-  size: 120, 100
+  xy: 88, 64
+  size: 44, 54
 Idle
-  xy: 360, 64
-  size: 120, 100
-Idle
-  xy: 480, 64
-  size: 120, 100
-Idle
-  xy: 600, 64
-  size: 120, 100
-Idle
-  xy: 720, 64
-  size: 120, 100
-Idle
-  xy: 840, 64
-  size: 120, 100
-Idle
-  xy: 960, 64
-  size: 120, 100
-Idle
-  xy: 1080, 64
-  size: 120, 100
+  xy: 132, 64
+  size: 44, 54
 Walk
-  xy: 0, 164
-  size: 120, 100
+  xy: 0, 118
+  size: 44, 54
 Walk
-  xy: 120, 164
-  size: 120, 100
+  xy: 44, 118
+  size: 44, 54
 Walk
-  xy: 240, 164
-  size: 120, 100
+  xy: 88, 118
+  size: 44, 54
 Walk
-  xy: 360, 164
-  size: 120, 100
-Walk
-  xy: 480, 164
-  size: 120, 100
-Walk
-  xy: 600, 164
-  size: 120, 100
+  xy: 132, 118
+  size: 44, 54
 Attack
-  xy: 0, 264
-  size: 120, 100
+  xy: 0, 172
+  size: 44, 54
 Attack
-  xy: 120, 264
-  size: 120, 100
+  xy: 44, 172
+  size: 44, 54
 Attack
-  xy: 240, 264
-  size: 120, 100
+  xy: 88, 172
+  size: 44, 54
 Attack
-  xy: 360, 264
-  size: 120, 100
+  xy: 132, 172
+  size: 44, 54
 Attack
-  xy: 480, 264
-  size: 120, 100
+  xy: 176, 172
+  size: 44, 54
 Attack
-  xy: 600, 264
-  size: 120, 100
+  xy: 220, 172
+  size: 44, 54
 Attack
-  xy: 720, 264
-  size: 120, 100
+  xy: 264, 172
+  size: 44, 54
+Attack
+  xy: 308, 172
+  size: 44, 54
 Hit
-  xy: 0, 364
-  size: 120, 100
+  xy: 0, 226
+  size: 44, 54
 Hit
-  xy: 120, 364
-  size: 120, 100
+  xy: 44, 226
+  size: 44, 54
 Hit
-  xy: 240, 364
-  size: 120, 100
+  xy: 88, 226
+  size: 44, 54
 Hit
-  xy: 360, 364
-  size: 120, 100
-Hit
-  xy: 480, 364
-  size: 120, 100
-Hit
-  xy: 600, 364
-  size: 120, 100
+  xy: 132, 226
+  size: 44, 54
 Death
-  xy: 0, 464
-  size: 120, 100
+  xy: 0, 280
+  size: 44, 54
 Death
-  xy: 120, 464
-  size: 120, 100
+  xy: 44, 280
+  size: 44, 54
 Death
-  xy: 240, 464
-  size: 120, 100
+  xy: 88, 280
+  size: 44, 54
 Death
-  xy: 360, 464
-  size: 120, 100
+  xy: 132, 280
+  size: 44, 54
 Death
-  xy: 480, 464
-  size: 120, 100
+  xy: 176, 280
+  size: 44, 54
 Death
-  xy: 600, 464
-  size: 120, 100
-Death
-  xy: 720, 464
-  size: 120, 100
-Death
-  xy: 840, 464
-  size: 120, 100
-Death
-  xy: 960, 464
-  size: 120, 100
-Death
-  xy: 1080, 464
-  size: 120, 100
-Death
-  xy: 1200, 464
-  size: 120, 100
-Death
-  xy: 1320, 464
-  size: 120, 100
-Death
-  xy: 1440, 464
-  size: 120, 100
-Death
-  xy: 1560, 464
-  size: 120, 100
-Death
-  xy: 1680, 464
-  size: 120, 100
-Death
-  xy: 1800, 464
-  size: 120, 100
-Wake
-  xy: 0, 564
-  size: 120, 100
-Wake
-  xy: 120, 564
-  size: 120, 100
-Wake
-  xy: 240, 564
-  size: 120, 100
-Wake
-  xy: 360, 564
-  size: 120, 100
-Wake
-  xy: 480, 564
-  size: 120, 100
-Wake
-  xy: 600, 564
-  size: 120, 100
-Wake
-  xy: 720, 564
-  size: 120, 100
-Wake
-  xy: 840, 564
-  size: 120, 100
+  xy: 220, 280
+  size: 44, 54
 IdleUp
-  xy: 0, 664
-  size: 120, 100
+  xy: 0, 334
+  size: 44, 54
 IdleUp
-  xy: 120, 664
-  size: 120, 100
+  xy: 44, 334
+  size: 44, 54
 IdleUp
-  xy: 240, 664
-  size: 120, 100
+  xy: 88, 334
+  size: 44, 54
 IdleUp
-  xy: 360, 664
-  size: 120, 100
-IdleUp
-  xy: 480, 664
-  size: 120, 100
-IdleUp
-  xy: 600, 664
-  size: 120, 100
-IdleUp
-  xy: 720, 664
-  size: 120, 100
-IdleUp
-  xy: 840, 664
-  size: 120, 100
-IdleUp
-  xy: 960, 664
-  size: 120, 100
-IdleUp
-  xy: 1080, 664
-  size: 120, 100
+  xy: 132, 334
+  size: 44, 54
 IdleDown
-  xy: 0, 764
-  size: 120, 100
+  xy: 0, 388
+  size: 44, 54
 IdleDown
-  xy: 120, 764
-  size: 120, 100
+  xy: 44, 388
+  size: 44, 54
 IdleDown
-  xy: 240, 764
-  size: 120, 100
+  xy: 88, 388
+  size: 44, 54
 IdleDown
-  xy: 360, 764
-  size: 120, 100
-IdleDown
-  xy: 480, 764
-  size: 120, 100
-IdleDown
-  xy: 600, 764
-  size: 120, 100
-IdleDown
-  xy: 720, 764
-  size: 120, 100
-IdleDown
-  xy: 840, 764
-  size: 120, 100
-IdleDown
-  xy: 960, 764
-  size: 120, 100
-IdleDown
-  xy: 1080, 764
-  size: 120, 100
+  xy: 132, 388
+  size: 44, 54
 WalkUp
-  xy: 0, 864
-  size: 120, 100
+  xy: 0, 442
+  size: 44, 54
 WalkUp
-  xy: 120, 864
-  size: 120, 100
+  xy: 44, 442
+  size: 44, 54
 WalkUp
-  xy: 240, 864
-  size: 120, 100
+  xy: 88, 442
+  size: 44, 54
 WalkUp
-  xy: 360, 864
-  size: 120, 100
-WalkUp
-  xy: 480, 864
-  size: 120, 100
-WalkUp
-  xy: 600, 864
-  size: 120, 100
+  xy: 132, 442
+  size: 44, 54
 WalkDown
-  xy: 0, 964
-  size: 120, 100
+  xy: 0, 496
+  size: 44, 54
 WalkDown
-  xy: 120, 964
-  size: 120, 100
+  xy: 44, 496
+  size: 44, 54
 WalkDown
-  xy: 240, 964
-  size: 120, 100
+  xy: 88, 496
+  size: 44, 54
 WalkDown
-  xy: 360, 964
-  size: 120, 100
-WalkDown
-  xy: 480, 964
-  size: 120, 100
-WalkDown
-  xy: 600, 964
-  size: 120, 100
+  xy: 132, 496
+  size: 44, 54

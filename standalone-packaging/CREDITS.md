@@ -76,6 +76,11 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   behemoths, werewolves, kirin, fanged bats, stone golems and automatons, winged-eye horrors, reapers and
   zombie beasts - and the coiled eastern dragons Jugan, Yosei, Ryusei and Keiga wear) - supplied by the
   user; pack author not recorded.
+- **RPG Maker MV/MZ creature sheets, second set** (22 enemies, round 476 - the 19 golems and constructs from two
+  golem sheets, stone and armored, each tinted to its legend's colors where the sheet had no matching colorway; the
+  Squirrel and Chatterfang from a squirrel sheet; the Werewolf from a wolf-beast sheet; their idle breath, lunge, hit
+  and death made from the walk frames) - supplied by the user from the same downloads (`animals`, `Mythological
+  animals`); pack author not named in the files.
 - **Heroes of Might and Magic III creature sprites** (37 enemies, the five legend dragons among them, renamed) -
   © New World Computing / The 3DO Company, 1999; sheets from The Spriters Resource, supplied by the user.
 - **Diablo / Diablo: Hellfire monster sprites** (9 enemies, renamed) - © Blizzard North / Synergistic Software,

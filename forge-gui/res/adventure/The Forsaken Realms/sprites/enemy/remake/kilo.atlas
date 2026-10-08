@@ -1,5 +1,5 @@
 kilo.png
-size: 1472,1014
+size: 352,550
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,259 +8,127 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 92, 95
+  size: 44, 54
 Idle
-  xy: 92, 64
-  size: 92, 95
+  xy: 44, 64
+  size: 44, 54
 Idle
-  xy: 184, 64
-  size: 92, 95
+  xy: 88, 64
+  size: 44, 54
 Idle
-  xy: 276, 64
-  size: 92, 95
-Idle
-  xy: 368, 64
-  size: 92, 95
-Idle
-  xy: 460, 64
-  size: 92, 95
-Idle
-  xy: 552, 64
-  size: 92, 95
-Idle
-  xy: 644, 64
-  size: 92, 95
-Idle
-  xy: 736, 64
-  size: 92, 95
-Idle
-  xy: 828, 64
-  size: 92, 95
+  xy: 132, 64
+  size: 44, 54
 Walk
-  xy: 0, 159
-  size: 92, 95
+  xy: 0, 118
+  size: 44, 54
 Walk
-  xy: 92, 159
-  size: 92, 95
+  xy: 44, 118
+  size: 44, 54
 Walk
-  xy: 184, 159
-  size: 92, 95
+  xy: 88, 118
+  size: 44, 54
 Walk
-  xy: 276, 159
-  size: 92, 95
-Walk
-  xy: 368, 159
-  size: 92, 95
-Walk
-  xy: 460, 159
-  size: 92, 95
+  xy: 132, 118
+  size: 44, 54
 Attack
-  xy: 0, 254
-  size: 92, 95
+  xy: 0, 172
+  size: 44, 54
 Attack
-  xy: 92, 254
-  size: 92, 95
+  xy: 44, 172
+  size: 44, 54
 Attack
-  xy: 184, 254
-  size: 92, 95
+  xy: 88, 172
+  size: 44, 54
 Attack
-  xy: 276, 254
-  size: 92, 95
+  xy: 132, 172
+  size: 44, 54
 Attack
-  xy: 368, 254
-  size: 92, 95
+  xy: 176, 172
+  size: 44, 54
 Attack
-  xy: 460, 254
-  size: 92, 95
+  xy: 220, 172
+  size: 44, 54
 Attack
-  xy: 552, 254
-  size: 92, 95
+  xy: 264, 172
+  size: 44, 54
 Attack
-  xy: 644, 254
-  size: 92, 95
-Attack
-  xy: 736, 254
-  size: 92, 95
+  xy: 308, 172
+  size: 44, 54
 Hit
-  xy: 0, 349
-  size: 92, 95
+  xy: 0, 226
+  size: 44, 54
 Hit
-  xy: 92, 349
-  size: 92, 95
+  xy: 44, 226
+  size: 44, 54
 Hit
-  xy: 184, 349
-  size: 92, 95
+  xy: 88, 226
+  size: 44, 54
 Hit
-  xy: 276, 349
-  size: 92, 95
-Hit
-  xy: 368, 349
-  size: 92, 95
-Hit
-  xy: 460, 349
-  size: 92, 95
+  xy: 132, 226
+  size: 44, 54
 Death
-  xy: 0, 444
-  size: 92, 95
+  xy: 0, 280
+  size: 44, 54
 Death
-  xy: 92, 444
-  size: 92, 95
+  xy: 44, 280
+  size: 44, 54
 Death
-  xy: 184, 444
-  size: 92, 95
+  xy: 88, 280
+  size: 44, 54
 Death
-  xy: 276, 444
-  size: 92, 95
+  xy: 132, 280
+  size: 44, 54
 Death
-  xy: 368, 444
-  size: 92, 95
+  xy: 176, 280
+  size: 44, 54
 Death
-  xy: 460, 444
-  size: 92, 95
-Death
-  xy: 552, 444
-  size: 92, 95
-Death
-  xy: 644, 444
-  size: 92, 95
-Death
-  xy: 736, 444
-  size: 92, 95
-Death
-  xy: 828, 444
-  size: 92, 95
-Death
-  xy: 920, 444
-  size: 92, 95
-Death
-  xy: 1012, 444
-  size: 92, 95
-Death
-  xy: 1104, 444
-  size: 92, 95
-Death
-  xy: 1196, 444
-  size: 92, 95
-Death
-  xy: 1288, 444
-  size: 92, 95
-Death
-  xy: 1380, 444
-  size: 92, 95
-Wake
-  xy: 0, 539
-  size: 92, 95
-Wake
-  xy: 92, 539
-  size: 92, 95
-Wake
-  xy: 184, 539
-  size: 92, 95
-Wake
-  xy: 276, 539
-  size: 92, 95
-Wake
-  xy: 368, 539
-  size: 92, 95
-Wake
-  xy: 460, 539
-  size: 92, 95
-Wake
-  xy: 552, 539
-  size: 92, 95
+  xy: 220, 280
+  size: 44, 54
 IdleUp
-  xy: 0, 634
-  size: 92, 95
+  xy: 0, 334
+  size: 44, 54
 IdleUp
-  xy: 92, 634
-  size: 92, 95
+  xy: 44, 334
+  size: 44, 54
 IdleUp
-  xy: 184, 634
-  size: 92, 95
+  xy: 88, 334
+  size: 44, 54
 IdleUp
-  xy: 276, 634
-  size: 92, 95
-IdleUp
-  xy: 368, 634
-  size: 92, 95
-IdleUp
-  xy: 460, 634
-  size: 92, 95
-IdleUp
-  xy: 552, 634
-  size: 92, 95
-IdleUp
-  xy: 644, 634
-  size: 92, 95
-IdleUp
-  xy: 736, 634
-  size: 92, 95
-IdleUp
-  xy: 828, 634
-  size: 92, 95
+  xy: 132, 334
+  size: 44, 54
 IdleDown
-  xy: 0, 729
-  size: 92, 95
+  xy: 0, 388
+  size: 44, 54
 IdleDown
-  xy: 92, 729
-  size: 92, 95
+  xy: 44, 388
+  size: 44, 54
 IdleDown
-  xy: 184, 729
-  size: 92, 95
+  xy: 88, 388
+  size: 44, 54
 IdleDown
-  xy: 276, 729
-  size: 92, 95
-IdleDown
-  xy: 368, 729
-  size: 92, 95
-IdleDown
-  xy: 460, 729
-  size: 92, 95
-IdleDown
-  xy: 552, 729
-  size: 92, 95
-IdleDown
-  xy: 644, 729
-  size: 92, 95
-IdleDown
-  xy: 736, 729
-  size: 92, 95
-IdleDown
-  xy: 828, 729
-  size: 92, 95
+  xy: 132, 388
+  size: 44, 54
 WalkUp
-  xy: 0, 824
-  size: 92, 95
+  xy: 0, 442
+  size: 44, 54
 WalkUp
-  xy: 92, 824
-  size: 92, 95
+  xy: 44, 442
+  size: 44, 54
 WalkUp
-  xy: 184, 824
-  size: 92, 95
+  xy: 88, 442
+  size: 44, 54
 WalkUp
-  xy: 276, 824
-  size: 92, 95
-WalkUp
-  xy: 368, 824
-  size: 92, 95
-WalkUp
-  xy: 460, 824
-  size: 92, 95
+  xy: 132, 442
+  size: 44, 54
 WalkDown
-  xy: 0, 919
-  size: 92, 95
+  xy: 0, 496
+  size: 44, 54
 WalkDown
-  xy: 92, 919
-  size: 92, 95
+  xy: 44, 496
+  size: 44, 54
 WalkDown
-  xy: 184, 919
-  size: 92, 95
+  xy: 88, 496
+  size: 44, 54
 WalkDown
-  xy: 276, 919
-  size: 92, 95
-WalkDown
-  xy: 368, 919
-  size: 92, 95
-WalkDown
-  xy: 460, 919
-  size: 92, 95
+  xy: 132, 496
+  size: 44, 54

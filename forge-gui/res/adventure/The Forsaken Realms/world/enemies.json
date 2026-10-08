@@ -3864,7 +3864,7 @@
             "Robot"
         ],
         "tier": "Rare",
-        "scale": 0.2281
+        "scale": 0.3421
     },
     {
         "name": "Bloodgift Demon",
@@ -4036,7 +4036,7 @@
             "Robot"
         ],
         "tier": "Mythic",
-        "scale": 0.2
+        "scale": 0.3333
     },
     {
         "name": "Blue Prototype",
@@ -4113,7 +4113,7 @@
             "Robot"
         ],
         "tier": "Rare",
-        "scale": 0.2364
+        "scale": 0.3421
     },
     {
         "name": "Boar",
@@ -6425,7 +6425,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.194
+        "scale": 0.3421
     },
     {
         "name": "Cleric",
@@ -6897,7 +6897,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.3611
+        "scale": 0.3333
     },
     {
         "name": "Copper Host Brutalizer",
@@ -10491,7 +10491,7 @@
         "spawnRate": 0.1,
         "difficulty": 0.5,
         "speed": 20,
-        "scale": 0.6,
+        "scale": 0.4906,
         "life": 80,
         "rewards": [
             {
@@ -14813,7 +14813,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.3714
+        "scale": 0.3421
     },
     {
         "name": "Golem Sentinel",
@@ -14866,7 +14866,7 @@
             "Dungeon"
         ],
         "tier": "Uncommon",
-        "scale": 0.2955
+        "scale": 0.3421
     },
     {
         "name": "Golgari Elf",
@@ -15767,7 +15767,7 @@
             "Robot"
         ],
         "tier": "Mythic",
-        "scale": 0.194
+        "scale": 0.3421
     },
     {
         "name": "Green Prototype",
@@ -15844,7 +15844,7 @@
             "Robot"
         ],
         "tier": "Uncommon",
-        "scale": 0.2889
+        "scale": 0.3333
     },
     {
         "name": "Griffin",
@@ -18577,7 +18577,7 @@
         "ai": "",
         "spawnRate": 0.1,
         "boss": true,
-        "scale": 0.75,
+        "scale": 0.5778,
         "bossIntro": "The work goes on. The progress is inevitable.",
         "bossInsult": "Flesh is a flaw. We are the cure.",
         "difficulty": 0.5,
@@ -19739,7 +19739,7 @@
         "ai": "",
         "spawnRate": 0.1,
         "boss": true,
-        "scale": 0.47,
+        "scale": 0.3132,
         "bossIntro": "Your 'truth' is a thin veil over a void that is hungry. I am the hand that pulls the thread.",
         "bossInsult": "Your reality is a structure of glass. I am the rock.",
         "difficulty": 0.5,
@@ -29084,7 +29084,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.2321,
+        "scale": 0.52,
         "life": 15,
         "rewards": [
             {
@@ -31414,7 +31414,7 @@
         "spawnRate": 0.1,
         "difficulty": 0.5,
         "speed": 20,
-        "scale": 0.75,
+        "scale": 0.591,
         "life": 80,
         "rewards": [
             {
@@ -32094,7 +32094,7 @@
         "ai": "",
         "spawnRate": 0.1,
         "boss": true,
-        "scale": 0.75,
+        "scale": 0.52,
         "bossIntro": "The hunt is the only truth. The predator is the only king.",
         "bossInsult": "Submit to the hunger. Become part of the machine.",
         "difficulty": 0.5,
@@ -32807,7 +32807,7 @@
             "BiomeGreen"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.2889
     },
     {
         "name": "White Dwarf",
@@ -37713,7 +37713,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2321,
+        "scale": 0.52,
         "life": 50,
         "rewards": [
             {
@@ -43676,7 +43676,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2364,
+        "scale": 0.3421,
         "life": 40,
         "rewards": [
             {
@@ -48459,7 +48459,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2364,
+        "scale": 0.3421,
         "life": 30,
         "rewards": [
             {
@@ -51972,7 +51972,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2364,
+        "scale": 0.3421,
         "life": 30,
         "rewards": [
             {
@@ -77941,7 +77941,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 1,
-        "scale": 0.2364
+        "scale": 0.3421
     },
     {
         "name": "Traxos",
@@ -79712,7 +79712,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2407
+        "scale": 0.3333
     },
     {
         "name": "Osgir",
@@ -84533,7 +84533,7 @@
         "spawnRate": 1,
         "tier": "Common",
         "difficulty": 0.1,
-        "scale": 0.3611
+        "scale": 0.3421
     },
     {
         "name": "Jeska",
@@ -92889,7 +92889,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2407
+        "scale": 0.3333
     },
     {
         "name": "Mm'menon",
@@ -96654,7 +96654,7 @@
             "decks/legends/syr_ginger.dck"
         ],
         "ai": "",
-        "scale": 0.3023,
+        "scale": 0.3421,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -116437,7 +116437,7 @@
         "spawnRate": 0.1,
         "difficulty": 1,
         "speed": 24,
-        "scale": 1.857,
+        "scale": 1.238,
         "life": 200,
         "rewards": [
             {
@@ -135309,7 +135309,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.3611
+        "scale": 0.3421
     },
     {
         "name": "Iron Golem",
@@ -135374,7 +135374,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.2281
+        "scale": 0.3421
     },
     {
         "name": "Magical Fairy",

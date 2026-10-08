@@ -1,5 +1,5 @@
 squirrel.png
-size: 1200,1034
+size: 416,343
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,232 +8,127 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 100, 97
+  size: 52, 31
 Idle
-  xy: 100, 64
-  size: 100, 97
+  xy: 52, 64
+  size: 52, 31
 Idle
-  xy: 200, 64
-  size: 100, 97
+  xy: 104, 64
+  size: 52, 31
 Idle
-  xy: 300, 64
-  size: 100, 97
-Idle
-  xy: 400, 64
-  size: 100, 97
-Idle
-  xy: 500, 64
-  size: 100, 97
-Idle
-  xy: 600, 64
-  size: 100, 97
-Idle
-  xy: 700, 64
-  size: 100, 97
-Idle
-  xy: 800, 64
-  size: 100, 97
-Idle
-  xy: 900, 64
-  size: 100, 97
+  xy: 156, 64
+  size: 52, 31
 Walk
-  xy: 0, 161
-  size: 100, 97
+  xy: 0, 95
+  size: 52, 31
 Walk
-  xy: 100, 161
-  size: 100, 97
+  xy: 52, 95
+  size: 52, 31
 Walk
-  xy: 200, 161
-  size: 100, 97
+  xy: 104, 95
+  size: 52, 31
 Walk
-  xy: 300, 161
-  size: 100, 97
+  xy: 156, 95
+  size: 52, 31
 Attack
-  xy: 0, 258
-  size: 100, 97
+  xy: 0, 126
+  size: 52, 31
 Attack
-  xy: 100, 258
-  size: 100, 97
+  xy: 52, 126
+  size: 52, 31
 Attack
-  xy: 200, 258
-  size: 100, 97
+  xy: 104, 126
+  size: 52, 31
 Attack
-  xy: 300, 258
-  size: 100, 97
+  xy: 156, 126
+  size: 52, 31
 Attack
-  xy: 400, 258
-  size: 100, 97
+  xy: 208, 126
+  size: 52, 31
 Attack
-  xy: 500, 258
-  size: 100, 97
+  xy: 260, 126
+  size: 52, 31
 Attack
-  xy: 600, 258
-  size: 100, 97
+  xy: 312, 126
+  size: 52, 31
 Attack
-  xy: 700, 258
-  size: 100, 97
-Attack
-  xy: 800, 258
-  size: 100, 97
-Attack
-  xy: 900, 258
-  size: 100, 97
-Attack
-  xy: 1000, 258
-  size: 100, 97
+  xy: 364, 126
+  size: 52, 31
 Hit
-  xy: 0, 355
-  size: 100, 97
+  xy: 0, 157
+  size: 52, 31
 Hit
-  xy: 100, 355
-  size: 100, 97
+  xy: 52, 157
+  size: 52, 31
 Hit
-  xy: 200, 355
-  size: 100, 97
+  xy: 104, 157
+  size: 52, 31
 Hit
-  xy: 300, 355
-  size: 100, 97
-Hit
-  xy: 400, 355
-  size: 100, 97
+  xy: 156, 157
+  size: 52, 31
 Death
-  xy: 0, 452
-  size: 100, 97
+  xy: 0, 188
+  size: 52, 31
 Death
-  xy: 100, 452
-  size: 100, 97
+  xy: 52, 188
+  size: 52, 31
 Death
-  xy: 200, 452
-  size: 100, 97
+  xy: 104, 188
+  size: 52, 31
 Death
-  xy: 300, 452
-  size: 100, 97
+  xy: 156, 188
+  size: 52, 31
 Death
-  xy: 400, 452
-  size: 100, 97
+  xy: 208, 188
+  size: 52, 31
 Death
-  xy: 500, 452
-  size: 100, 97
-Death
-  xy: 600, 452
-  size: 100, 97
-Death
-  xy: 700, 452
-  size: 100, 97
-Death
-  xy: 800, 452
-  size: 100, 97
-Death
-  xy: 900, 452
-  size: 100, 97
-Death
-  xy: 1000, 452
-  size: 100, 97
-Death
-  xy: 1100, 452
-  size: 100, 97
-Wake
-  xy: 0, 549
-  size: 100, 97
-Wake
-  xy: 100, 549
-  size: 100, 97
-Wake
-  xy: 200, 549
-  size: 100, 97
-Wake
-  xy: 300, 549
-  size: 100, 97
-Wake
-  xy: 400, 549
-  size: 100, 97
-Wake
-  xy: 500, 549
-  size: 100, 97
-Wake
-  xy: 600, 549
-  size: 100, 97
+  xy: 260, 188
+  size: 52, 31
 IdleUp
-  xy: 0, 646
-  size: 100, 97
+  xy: 0, 219
+  size: 52, 31
 IdleUp
-  xy: 100, 646
-  size: 100, 97
+  xy: 52, 219
+  size: 52, 31
 IdleUp
-  xy: 200, 646
-  size: 100, 97
+  xy: 104, 219
+  size: 52, 31
 IdleUp
-  xy: 300, 646
-  size: 100, 97
-IdleUp
-  xy: 400, 646
-  size: 100, 97
-IdleUp
-  xy: 500, 646
-  size: 100, 97
-IdleUp
-  xy: 600, 646
-  size: 100, 97
-IdleUp
-  xy: 700, 646
-  size: 100, 97
-IdleUp
-  xy: 800, 646
-  size: 100, 97
-IdleUp
-  xy: 900, 646
-  size: 100, 97
+  xy: 156, 219
+  size: 52, 31
 IdleDown
-  xy: 0, 743
-  size: 100, 97
+  xy: 0, 250
+  size: 52, 31
 IdleDown
-  xy: 100, 743
-  size: 100, 97
+  xy: 52, 250
+  size: 52, 31
 IdleDown
-  xy: 200, 743
-  size: 100, 97
+  xy: 104, 250
+  size: 52, 31
 IdleDown
-  xy: 300, 743
-  size: 100, 97
-IdleDown
-  xy: 400, 743
-  size: 100, 97
-IdleDown
-  xy: 500, 743
-  size: 100, 97
-IdleDown
-  xy: 600, 743
-  size: 100, 97
-IdleDown
-  xy: 700, 743
-  size: 100, 97
-IdleDown
-  xy: 800, 743
-  size: 100, 97
-IdleDown
-  xy: 900, 743
-  size: 100, 97
+  xy: 156, 250
+  size: 52, 31
 WalkUp
-  xy: 0, 840
-  size: 100, 97
+  xy: 0, 281
+  size: 52, 31
 WalkUp
-  xy: 100, 840
-  size: 100, 97
+  xy: 52, 281
+  size: 52, 31
 WalkUp
-  xy: 200, 840
-  size: 100, 97
+  xy: 104, 281
+  size: 52, 31
 WalkUp
-  xy: 300, 840
-  size: 100, 97
+  xy: 156, 281
+  size: 52, 31
 WalkDown
-  xy: 0, 937
-  size: 100, 97
+  xy: 0, 312
+  size: 52, 31
 WalkDown
-  xy: 100, 937
-  size: 100, 97
+  xy: 52, 312
+  size: 52, 31
 WalkDown
-  xy: 200, 937
-  size: 100, 97
+  xy: 104, 312
+  size: 52, 31
 WalkDown
-  xy: 300, 937
-  size: 100, 97
+  xy: 156, 312
+  size: 52, 31

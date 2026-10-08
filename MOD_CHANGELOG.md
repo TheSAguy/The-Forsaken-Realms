@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 476: hand-drawn pack sprites for the golems, the squirrels and the Werewolf (2026-10-08)
+
+The user, on the RPG Maker MV/MZ creature sheets in their downloads (`animals`, `Mythological animals`; the Procedural
+Pixel Creatures session compared them with our remakes at the same in-game size): "I was thinking the golems might be
+better than our current generated ones", then "Import the pack golems and the squirrel and the wolfbeast." Their
+golems are armored, faced and footed where ours were stacked blobs; the squirrel is the classic bushy-tailed one; the
+wolf-beast replaces a hellhound sprite. The sheets hold a standing frame and a 3-frame walk in four directions and
+nothing else, so the rest is synthesized (`rpgmaker_to_forge.py`, manifest `packs/rpgmaker/imports.json` in the
+generator repo): an idle breath (the chest a pixel up on two of four frames), the walk as a four-frame cycle, a lunge
+attack in eight frames, the flash-and-recoil hit, the darkening death with the two-step fade, the up and down views
+from the sheet's rows, our ground shadow and the whole-body portrait.
+
+- **22 enemies, 44 files under `sprites/enemy/remake/`** (the slugs they already had; `werewolf.atlas/.png` new): the
+  19 golems and constructs (Golem, Karn, Clay Golem, Syr Ginger, Black Golem, Green Golem, Go-Shintai, Ice Golem from
+  the stone sheet; Blue Golem, Construct, Alibou, Neyali, The Peregrine Dynamo, Golem Sentinel, Kilo, Laelia, Iron
+  Golem, Blue Prototype, Green Prototype from the armored sheet), the Squirrel and Chatterfang, the Werewolf.
+- **Colors:** where the sheet had no colorway for a legend, the character is tinted to the hue of the enemy's installed
+  remake with its shading kept (Oklch hue replacement, lightness untouched): the Clay Golem clay, Syr Ginger
+  gingerbread, the Peregrine Dynamo its card's orange, Kilo and the Blue Golem two blues on one armored body. Karn
+  stays silver, Alibou bronze, the Black Golem black, the Ice Golem ice.
+- **enemies.json:** 28 scales (`enemy_scale.py --write`; the pack bodies are 25-45 px, ours were 36-91, every drawn
+  size kept: the golems to about 0.34, the Werewolf 1.08 -> 0.29 off the tiny hellhound, the squirrels 0.23 -> 0.52)
+  and the Werewolf's sprite path (`fiend/hellhound.atlas` -> `remake/werewolf.atlas`; that one line went in with
+  round 477's commit of the working tree). The three TFR werewolves (Cinderpelt, Thicketmaw, Moonsilver) keep their own
+  upright sprites from an earlier pack import; the red, gold-brown and white wolf-beasts are theirs if wanted.
+  `hellhound.atlas` and the three `tfr/*_werewolf.atlas` stay in the repo (the Werewolf was hellhound.atlas's only user).
+- **Density:** the pack draws 2.3-2.9 art px per world px against our remakes' 3.4; the squirrels, small on their
+  sheet and ranked Rare, come out at 1.5 (chunkier than their neighbors at 4K). The user chose the designs over the
+  resolution; the generated squirrels are one `install_remakes.py squirrel` away.
+- Checks: `validate_plane_data.py` no sprite or enemy finding; the artifact audit's new lines are the pack sprites'
+  shadows under the lunge and their death frames (the known class). `CREDITS.md` gains the line for the second set.
+  Review sheet: the generator repo's `reports/forge/remake/pack_imports_review.png`. Not seen in play yet.
+
 ## Round 477: the praetors and Arzakon re-ranked Archmage (2026-10-08)
 
 Round 475 left the Level-2 Challenging bracket Master+ only, and the bosses ranked Adept in enemies.json sat it out. The

@@ -67,6 +67,14 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 476): **LOCAL + UNRELEASED (data only)** - hand-drawn pack sprites (the Procedural Pixel
+Creatures session, the user's call) for 22 enemies: the 19 golems and constructs, the Squirrel, Chatterfang and the
+Werewolf (which wore a hellhound sprite), from the user's downloaded RPG Maker MV/MZ sheets with the missing clips
+synthesized (`rpgmaker_to_forge.py`; manifest `packs/rpgmaker/imports.json`); legends tinted to their installed hue
+where the sheet had no colorway. 44 files under `sprites/enemy/remake/` (werewolf.atlas/.png new), enemies.json 28
+scales + the Werewolf's path, CREDITS.md one line. The three TFR werewolves keep their sprites. The peer (#30) packages.
+Not seen in play.
+
 ## STATE 2026-10-08 (round 477): **LOCAL + UNRELEASED (data only)** - the praetors (Kozilek, Elesh Norn, Jin-Gitaxias,
 Urabrask, Vorinclex) and Arzakon, Shandalar's Doom re-ranked Archmage (enemies.json tier Mythic) - back in the Level-2
 Challenging bracket; they now start with the Archmage Wastes and bring flying Walls. Legend "Arzakon" and Nissa stay Adept.
@@ -315,7 +323,7 @@ of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety b
 research 40 + a 243 s day, 450 = no Manasight on a Mimic, 451 = no crown on a Mimic, 452 = chest-size Mimics + the Warden's dot + the Lab's
 set view + the hidden card a new game's only (done), 453 = Ulamog from the Pixelate pilot (the Procedural Pixel
 Creatures session), 454 = Ulamog's own death (same), 455 = the Sliver Queen (same), 456 = Kozilek + whole-body portraits (same), 457 = the Bank's step 500, 458 = the Juggernaut, the Evil Wall and the Chimera (the Procedural Pixel Creatures session), 459 = weekly shops turn over
-with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread, 462 = Svyelunite Temple, 464 = the coin toss without a tap + its Settings switch, 465 = the win-streak notice once per streak, 466 = Valor's Reach Arena in seasons, 467 = the win streak grows to three Wastes, 468 = NoRotate places leave on a full clear + the arena's Wastes grow, 463 = the Svyelunite Temple art (the Procedural Pixel Creatures session), 469 = Emrakul, the Beholder, the Eldrazi and the Phoenix from Pixelate clips (that session); 470 = the 45+/50+ Wall cards print their +life, 471 = the remakes' style pass (the Procedural Pixel Creatures session); 472 = the 10.07 engine merge, 473 = the remakes' recipe pass (the Procedural Pixel Creatures session); 474 = empty-pool chest entries draw from every set, 475 = the Level-2 arena Master+ only; 476 = reserved for the Procedural Pixel Creatures session's pack import, 477 = the praetors and Arzakon re-ranked Archmage; the next free round is **478**;
+with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread, 462 = Svyelunite Temple, 464 = the coin toss without a tap + its Settings switch, 465 = the win-streak notice once per streak, 466 = Valor's Reach Arena in seasons, 467 = the win streak grows to three Wastes, 468 = NoRotate places leave on a full clear + the arena's Wastes grow, 463 = the Svyelunite Temple art (the Procedural Pixel Creatures session), 469 = Emrakul, the Beholder, the Eldrazi and the Phoenix from Pixelate clips (that session); 470 = the 45+/50+ Wall cards print their +life, 471 = the remakes' style pass (the Procedural Pixel Creatures session); 472 = the 10.07 engine merge, 473 = the remakes' recipe pass (the Procedural Pixel Creatures session); 474 = empty-pool chest entries draw from every set, 475 = the Level-2 arena Master+ only; 476 = hand-drawn pack sprites for the golems, the squirrels and the Werewolf (the Procedural Pixel Creatures session), 477 = the praetors and Arzakon re-ranked Archmage; the next free round is **478**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,

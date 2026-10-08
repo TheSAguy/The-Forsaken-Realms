@@ -1,5 +1,5 @@
 chatterfang.png
-size: 1274,1054
+size: 416,343
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,238 +8,127 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 98, 99
+  size: 52, 31
 Idle
-  xy: 98, 64
-  size: 98, 99
+  xy: 52, 64
+  size: 52, 31
 Idle
-  xy: 196, 64
-  size: 98, 99
+  xy: 104, 64
+  size: 52, 31
 Idle
-  xy: 294, 64
-  size: 98, 99
-Idle
-  xy: 392, 64
-  size: 98, 99
-Idle
-  xy: 490, 64
-  size: 98, 99
-Idle
-  xy: 588, 64
-  size: 98, 99
-Idle
-  xy: 686, 64
-  size: 98, 99
-Idle
-  xy: 784, 64
-  size: 98, 99
-Idle
-  xy: 882, 64
-  size: 98, 99
+  xy: 156, 64
+  size: 52, 31
 Walk
-  xy: 0, 163
-  size: 98, 99
+  xy: 0, 95
+  size: 52, 31
 Walk
-  xy: 98, 163
-  size: 98, 99
+  xy: 52, 95
+  size: 52, 31
 Walk
-  xy: 196, 163
-  size: 98, 99
+  xy: 104, 95
+  size: 52, 31
 Walk
-  xy: 294, 163
-  size: 98, 99
+  xy: 156, 95
+  size: 52, 31
 Attack
-  xy: 0, 262
-  size: 98, 99
+  xy: 0, 126
+  size: 52, 31
 Attack
-  xy: 98, 262
-  size: 98, 99
+  xy: 52, 126
+  size: 52, 31
 Attack
-  xy: 196, 262
-  size: 98, 99
+  xy: 104, 126
+  size: 52, 31
 Attack
-  xy: 294, 262
-  size: 98, 99
+  xy: 156, 126
+  size: 52, 31
 Attack
-  xy: 392, 262
-  size: 98, 99
+  xy: 208, 126
+  size: 52, 31
 Attack
-  xy: 490, 262
-  size: 98, 99
+  xy: 260, 126
+  size: 52, 31
 Attack
-  xy: 588, 262
-  size: 98, 99
+  xy: 312, 126
+  size: 52, 31
 Attack
-  xy: 686, 262
-  size: 98, 99
-Attack
-  xy: 784, 262
-  size: 98, 99
-Attack
-  xy: 882, 262
-  size: 98, 99
-Attack
-  xy: 980, 262
-  size: 98, 99
-Attack
-  xy: 1078, 262
-  size: 98, 99
+  xy: 364, 126
+  size: 52, 31
 Hit
-  xy: 0, 361
-  size: 98, 99
+  xy: 0, 157
+  size: 52, 31
 Hit
-  xy: 98, 361
-  size: 98, 99
+  xy: 52, 157
+  size: 52, 31
 Hit
-  xy: 196, 361
-  size: 98, 99
+  xy: 104, 157
+  size: 52, 31
 Hit
-  xy: 294, 361
-  size: 98, 99
-Hit
-  xy: 392, 361
-  size: 98, 99
+  xy: 156, 157
+  size: 52, 31
 Death
-  xy: 0, 460
-  size: 98, 99
+  xy: 0, 188
+  size: 52, 31
 Death
-  xy: 98, 460
-  size: 98, 99
+  xy: 52, 188
+  size: 52, 31
 Death
-  xy: 196, 460
-  size: 98, 99
+  xy: 104, 188
+  size: 52, 31
 Death
-  xy: 294, 460
-  size: 98, 99
+  xy: 156, 188
+  size: 52, 31
 Death
-  xy: 392, 460
-  size: 98, 99
+  xy: 208, 188
+  size: 52, 31
 Death
-  xy: 490, 460
-  size: 98, 99
-Death
-  xy: 588, 460
-  size: 98, 99
-Death
-  xy: 686, 460
-  size: 98, 99
-Death
-  xy: 784, 460
-  size: 98, 99
-Death
-  xy: 882, 460
-  size: 98, 99
-Death
-  xy: 980, 460
-  size: 98, 99
-Death
-  xy: 1078, 460
-  size: 98, 99
-Death
-  xy: 1176, 460
-  size: 98, 99
-Wake
-  xy: 0, 559
-  size: 98, 99
-Wake
-  xy: 98, 559
-  size: 98, 99
-Wake
-  xy: 196, 559
-  size: 98, 99
-Wake
-  xy: 294, 559
-  size: 98, 99
-Wake
-  xy: 392, 559
-  size: 98, 99
-Wake
-  xy: 490, 559
-  size: 98, 99
-Wake
-  xy: 588, 559
-  size: 98, 99
+  xy: 260, 188
+  size: 52, 31
 IdleUp
-  xy: 0, 658
-  size: 98, 99
+  xy: 0, 219
+  size: 52, 31
 IdleUp
-  xy: 98, 658
-  size: 98, 99
+  xy: 52, 219
+  size: 52, 31
 IdleUp
-  xy: 196, 658
-  size: 98, 99
+  xy: 104, 219
+  size: 52, 31
 IdleUp
-  xy: 294, 658
-  size: 98, 99
-IdleUp
-  xy: 392, 658
-  size: 98, 99
-IdleUp
-  xy: 490, 658
-  size: 98, 99
-IdleUp
-  xy: 588, 658
-  size: 98, 99
-IdleUp
-  xy: 686, 658
-  size: 98, 99
-IdleUp
-  xy: 784, 658
-  size: 98, 99
-IdleUp
-  xy: 882, 658
-  size: 98, 99
+  xy: 156, 219
+  size: 52, 31
 IdleDown
-  xy: 0, 757
-  size: 98, 99
+  xy: 0, 250
+  size: 52, 31
 IdleDown
-  xy: 98, 757
-  size: 98, 99
+  xy: 52, 250
+  size: 52, 31
 IdleDown
-  xy: 196, 757
-  size: 98, 99
+  xy: 104, 250
+  size: 52, 31
 IdleDown
-  xy: 294, 757
-  size: 98, 99
-IdleDown
-  xy: 392, 757
-  size: 98, 99
-IdleDown
-  xy: 490, 757
-  size: 98, 99
-IdleDown
-  xy: 588, 757
-  size: 98, 99
-IdleDown
-  xy: 686, 757
-  size: 98, 99
-IdleDown
-  xy: 784, 757
-  size: 98, 99
-IdleDown
-  xy: 882, 757
-  size: 98, 99
+  xy: 156, 250
+  size: 52, 31
 WalkUp
-  xy: 0, 856
-  size: 98, 99
+  xy: 0, 281
+  size: 52, 31
 WalkUp
-  xy: 98, 856
-  size: 98, 99
+  xy: 52, 281
+  size: 52, 31
 WalkUp
-  xy: 196, 856
-  size: 98, 99
+  xy: 104, 281
+  size: 52, 31
 WalkUp
-  xy: 294, 856
-  size: 98, 99
+  xy: 156, 281
+  size: 52, 31
 WalkDown
-  xy: 0, 955
-  size: 98, 99
+  xy: 0, 312
+  size: 52, 31
 WalkDown
-  xy: 98, 955
-  size: 98, 99
+  xy: 52, 312
+  size: 52, 31
 WalkDown
-  xy: 196, 955
-  size: 98, 99
+  xy: 104, 312
+  size: 52, 31
 WalkDown
-  xy: 294, 955
-  size: 98, 99
+  xy: 156, 312
+  size: 52, 31

@@ -1,5 +1,5 @@
 syr_ginger.png
-size: 1312,764
+size: 384,550
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,250 +8,127 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 82, 70
+  size: 48, 54
 Idle
-  xy: 82, 64
-  size: 82, 70
+  xy: 48, 64
+  size: 48, 54
 Idle
-  xy: 164, 64
-  size: 82, 70
+  xy: 96, 64
+  size: 48, 54
 Idle
-  xy: 246, 64
-  size: 82, 70
-Idle
-  xy: 328, 64
-  size: 82, 70
-Idle
-  xy: 410, 64
-  size: 82, 70
-Idle
-  xy: 492, 64
-  size: 82, 70
-Idle
-  xy: 574, 64
-  size: 82, 70
-Idle
-  xy: 656, 64
-  size: 82, 70
-Idle
-  xy: 738, 64
-  size: 82, 70
+  xy: 144, 64
+  size: 48, 54
 Walk
-  xy: 0, 134
-  size: 82, 70
+  xy: 0, 118
+  size: 48, 54
 Walk
-  xy: 82, 134
-  size: 82, 70
+  xy: 48, 118
+  size: 48, 54
 Walk
-  xy: 164, 134
-  size: 82, 70
+  xy: 96, 118
+  size: 48, 54
 Walk
-  xy: 246, 134
-  size: 82, 70
-Walk
-  xy: 328, 134
-  size: 82, 70
-Walk
-  xy: 410, 134
-  size: 82, 70
+  xy: 144, 118
+  size: 48, 54
 Attack
-  xy: 0, 204
-  size: 82, 70
+  xy: 0, 172
+  size: 48, 54
 Attack
-  xy: 82, 204
-  size: 82, 70
+  xy: 48, 172
+  size: 48, 54
 Attack
-  xy: 164, 204
-  size: 82, 70
+  xy: 96, 172
+  size: 48, 54
 Attack
-  xy: 246, 204
-  size: 82, 70
+  xy: 144, 172
+  size: 48, 54
 Attack
-  xy: 328, 204
-  size: 82, 70
+  xy: 192, 172
+  size: 48, 54
 Attack
-  xy: 410, 204
-  size: 82, 70
+  xy: 240, 172
+  size: 48, 54
 Attack
-  xy: 492, 204
-  size: 82, 70
+  xy: 288, 172
+  size: 48, 54
+Attack
+  xy: 336, 172
+  size: 48, 54
 Hit
-  xy: 0, 274
-  size: 82, 70
+  xy: 0, 226
+  size: 48, 54
 Hit
-  xy: 82, 274
-  size: 82, 70
+  xy: 48, 226
+  size: 48, 54
 Hit
-  xy: 164, 274
-  size: 82, 70
+  xy: 96, 226
+  size: 48, 54
 Hit
-  xy: 246, 274
-  size: 82, 70
-Hit
-  xy: 328, 274
-  size: 82, 70
+  xy: 144, 226
+  size: 48, 54
 Death
-  xy: 0, 344
-  size: 82, 70
+  xy: 0, 280
+  size: 48, 54
 Death
-  xy: 82, 344
-  size: 82, 70
+  xy: 48, 280
+  size: 48, 54
 Death
-  xy: 164, 344
-  size: 82, 70
+  xy: 96, 280
+  size: 48, 54
 Death
-  xy: 246, 344
-  size: 82, 70
+  xy: 144, 280
+  size: 48, 54
 Death
-  xy: 328, 344
-  size: 82, 70
+  xy: 192, 280
+  size: 48, 54
 Death
-  xy: 410, 344
-  size: 82, 70
-Death
-  xy: 492, 344
-  size: 82, 70
-Death
-  xy: 574, 344
-  size: 82, 70
-Death
-  xy: 656, 344
-  size: 82, 70
-Death
-  xy: 738, 344
-  size: 82, 70
-Death
-  xy: 820, 344
-  size: 82, 70
-Death
-  xy: 902, 344
-  size: 82, 70
-Death
-  xy: 984, 344
-  size: 82, 70
-Death
-  xy: 1066, 344
-  size: 82, 70
-Death
-  xy: 1148, 344
-  size: 82, 70
-Death
-  xy: 1230, 344
-  size: 82, 70
-Wake
-  xy: 0, 414
-  size: 82, 70
-Wake
-  xy: 82, 414
-  size: 82, 70
-Wake
-  xy: 164, 414
-  size: 82, 70
-Wake
-  xy: 246, 414
-  size: 82, 70
-Wake
-  xy: 328, 414
-  size: 82, 70
-Wake
-  xy: 410, 414
-  size: 82, 70
-Wake
-  xy: 492, 414
-  size: 82, 70
+  xy: 240, 280
+  size: 48, 54
 IdleUp
-  xy: 0, 484
-  size: 82, 70
+  xy: 0, 334
+  size: 48, 54
 IdleUp
-  xy: 82, 484
-  size: 82, 70
+  xy: 48, 334
+  size: 48, 54
 IdleUp
-  xy: 164, 484
-  size: 82, 70
+  xy: 96, 334
+  size: 48, 54
 IdleUp
-  xy: 246, 484
-  size: 82, 70
-IdleUp
-  xy: 328, 484
-  size: 82, 70
-IdleUp
-  xy: 410, 484
-  size: 82, 70
-IdleUp
-  xy: 492, 484
-  size: 82, 70
-IdleUp
-  xy: 574, 484
-  size: 82, 70
-IdleUp
-  xy: 656, 484
-  size: 82, 70
-IdleUp
-  xy: 738, 484
-  size: 82, 70
+  xy: 144, 334
+  size: 48, 54
 IdleDown
-  xy: 0, 554
-  size: 82, 70
+  xy: 0, 388
+  size: 48, 54
 IdleDown
-  xy: 82, 554
-  size: 82, 70
+  xy: 48, 388
+  size: 48, 54
 IdleDown
-  xy: 164, 554
-  size: 82, 70
+  xy: 96, 388
+  size: 48, 54
 IdleDown
-  xy: 246, 554
-  size: 82, 70
-IdleDown
-  xy: 328, 554
-  size: 82, 70
-IdleDown
-  xy: 410, 554
-  size: 82, 70
-IdleDown
-  xy: 492, 554
-  size: 82, 70
-IdleDown
-  xy: 574, 554
-  size: 82, 70
-IdleDown
-  xy: 656, 554
-  size: 82, 70
-IdleDown
-  xy: 738, 554
-  size: 82, 70
+  xy: 144, 388
+  size: 48, 54
 WalkUp
-  xy: 0, 624
-  size: 82, 70
+  xy: 0, 442
+  size: 48, 54
 WalkUp
-  xy: 82, 624
-  size: 82, 70
+  xy: 48, 442
+  size: 48, 54
 WalkUp
-  xy: 164, 624
-  size: 82, 70
+  xy: 96, 442
+  size: 48, 54
 WalkUp
-  xy: 246, 624
-  size: 82, 70
-WalkUp
-  xy: 328, 624
-  size: 82, 70
-WalkUp
-  xy: 410, 624
-  size: 82, 70
+  xy: 144, 442
+  size: 48, 54
 WalkDown
-  xy: 0, 694
-  size: 82, 70
+  xy: 0, 496
+  size: 48, 54
 WalkDown
-  xy: 82, 694
-  size: 82, 70
+  xy: 48, 496
+  size: 48, 54
 WalkDown
-  xy: 164, 694
-  size: 82, 70
+  xy: 96, 496
+  size: 48, 54
 WalkDown
-  xy: 246, 694
-  size: 82, 70
-WalkDown
-  xy: 328, 694
-  size: 82, 70
-WalkDown
-  xy: 410, 694
-  size: 82, 70
+  xy: 144, 496
+  size: 48, 54
