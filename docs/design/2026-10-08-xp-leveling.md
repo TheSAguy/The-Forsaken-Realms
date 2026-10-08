@@ -1,7 +1,7 @@
 # XP / Leveling for The Forsaken Realms - findings, options, recommendation
 
-*Design doc, 2026-10-08. No code written. Status: waiting for the user to pick a direction (section 6 has the open
-questions).*
+*Design doc, 2026-10-08. **The user picked Option B with changes - section 7 is the live plan and overrides sections
+4.4-4.6 where they differ.** No code written yet.*
 
 Paths below: **J** = `forge-gui-mobile/src/forge/adventure/`, **P** = `forge-gui/res/adventure/The Forsaken Realms/`.
 "Stock" = a file that exists in upstream Forge (each edit needs a `CORE_ENGINE_CHANGES.md` entry); "mod" = mod-added.
@@ -460,3 +460,133 @@ Open question 6 asks whether Vigor should be a percentage instead.
     quests), so a long save starts around its true level with its Boon picks waiting one at a time (recommended), or
     start everyone at 1?
 12. **Names:** Power / Ascendance / Boons / Spoils, and the six titles - keep, or would you rather Renown or Spark?
+
+---
+
+## 7. Decisions (2026-10-08) and the revised plan
+
+The user: "Let's try out option B. I do want to add one thing though. Equipment slots should also be gated behind
+leveling. You start with 1 slot. (Not utility, just the 5 main slots: Neck, Chest, Left Hand, Right Hand and Boots.)
+At level 5, you get the second and at level 10 you get the 3rd, level 15, the 4th and level 20 the 5th. They are all
+available, but you can only equip so at level 5, you can have any 2 of the 5 equipped. +1 Health is also very strong,
+so maybe we give that at level 6, 11, 16, 21, 26 and 30? ... I'm thinking with each level you get something like a
+choice of 3 from the following list: +3 life for the first duel each day (the second time you take this it would be
+the first 2 duels, etc.), + xxx Gold, + xxx Shards, + xxx Wood, + xxx Stone, + random rare card(s), + random common
+item, + ????" and: "Let's say it won't work on existing saves, have to do a NG+ or new game. Let's not have a
+Seal-bound cap for now."
+
+### 7.1 What stays from Option B
+
+- Power (XP) and Ascendance 1-30.
+- The XP sources, multipliers and outgrown rule (4.2).
+- The curve (4.3), with no Seal-bound cap.
+- The HUD badge, bar and toasts, the Power page, cheats and logs (4.8).
+- **Dropped:** the Seal-bound cap, the Boon and Spoil alternation (4.4-4.5), the Rite of Unbinding, and estimating a
+  level for existing saves.
+
+### 7.2 Which saves get it
+
+- **New Game and New Game+ only.** A save started either way carries an `ascendance` flag.
+- **Older saves never get the system:** no XP and no slot limit, so nothing they have equipped changes.
+- **New Game+ starts over at Ascendance 1.**
+
+### 7.3 Fixed level rewards
+
+| Level | Reward | Reached at about |
+|---|---|---|
+| 1 | Wear **1** item in the main slots | start |
+| 5 | **2** main items | 15 wins (2 h) |
+| 6 | **+1 max life** | 21 wins |
+| 10 | **3** main items | 58 wins (8 h) |
+| 11 | +1 max life | 70 wins |
+| 15 | **4** main items | 122 wins (16 h) |
+| 16 | +1 max life | 135 wins |
+| 20 | **5** main items (all) | 187 wins (25 h) |
+| 21, 26, 30 | +1 max life each | 200 / 265 / 317 wins |
+
+**The main slots** are Neck, Body, Left, Right and Boots. Every slot stays open: the limit counts how many items you
+wear across them. Utility slots are never limited: Ability 1-3, Medal, Blessing, Heart, Token and Pocket.
+
+### 7.4 The choice levels
+
+There are 19 of them: 2, 3, 4, 7, 8, 9, 12, 13, 14, 17, 18, 19, 22, 23, 24, 25, 27, 28 and 29. At each one you pick
+**1 of 3** offers.
+
+**Offer rules:**
+- The 3 offers are always different.
+- Each offer holds at least one **lasting** option and at least one **one-time** reward, while any are left.
+- A lasting option stops appearing once it reaches its maximum picks.
+- A one-time reward with nothing to give (every blueprint owned, every map piece found) is never offered.
+- A pending choice waits for you. You pick on the map or in a town, never mid-duel.
+
+### 7.5 The choice pool (proposed; amounts scale with the level L, all in `ascendance.json`)
+
+**One-time rewards:**
+
+| Option | Gives | Example L4 / L14 / L28 |
+|---|---|---|
+| Gold | 40 x L | 160 / 560 / 1,120 |
+| Shards | 4 x L | 16 / 56 / 112 |
+| Wood | 12 x L | 48 / 168 / 336 |
+| Stone | 12 x L | 48 / 168 / 336 |
+| Rare cards | Random, in your deck's colors: 1 rare (L2-12), 2 rares (L13-22), 1 rare + 1 mythic (L23+) | |
+| Item | A random item, Common (L2-12), Uncommon (L13-22), Rare (L23+) | |
+| Booster pack | One pack of an edition you have unlocked | |
+| Map fragment | One piece of a treasure map you are still missing | |
+| Blueprint | A random shop blueprint you don't own, from the tiers your reputation allows | |
+| Bronze Coins | +2 coins | |
+| Goodwill | +2 reputation in the town you hold with the least | |
+| Mend | Every cracked item repaired, and every downed roaming guard back on its feet | |
+
+**Lasting options (stack up to the maximum):**
+
+| Option | Each pick | Max |
+|---|---|---|
+| **Morning Vigor** (the user's) | +3 life in the first duel of each day; each pick covers one more duel | 3 |
+| Haggler | -5% shop prices | 3 |
+| Swift Feet | +5% overworld speed | 3 |
+| Prospector | +15% from resource pickups and mines | 3 |
+| Far Sight | +15% vision radius | 2 |
+| Marshal | Roaming guards +2 life | 3 |
+| Stubborn | Defeats cost 25% less life and gold | 2 |
+| Mender | 25% chance an equipped item doesn't crack on a defeat | 2 |
+| Spoilsman | +1 card on your first win against each enemy | 2 |
+| Shardwell | +1 mana shard at the start of each duel | 2 |
+| Envoy | -15% color reputation lost from wins | 2 |
+
+**Kept out, as before:** anything that softens notoriety or "enemies learn your tricks", hand size, mulligans, ante.
+
+### 7.6 How the slot limit works
+
+- **Equipping:** equipping a main-slot item while at the limit is refused, with a clear message: "Your power allows 2
+  main items - Ascendance 10 brings a third." Swapping the item in a slot you already use is always allowed.
+- **The Inventory and Armory** show "Main items 2 / 3" by the doll.
+- **Starting kits:** Easy starts with two main-slot items (Manasight Amulet and Leather Boots). At level 1 the boots
+  are worn and the amulet waits in the bag.
+- **Deck loadouts** (each deck remembers its gear): switching to a loadout with more main items than allowed keeps the
+  first ones and leaves the rest in the bag, with a notification.
+- **New Game+ with items kept:** you go back to 1 worn main item.
+- **Roaming guards** wear what they like; the limit is the player's.
+- **Gauntlets** grant extra hand slots (Left2 and Right2). Whether those count toward the limit is question 1 below.
+
+### 7.7 Timing to watch
+
+With the curve in 4.3, the full kit of 5 arrives at about 187 wins (about 25 hours). Today players wear 5 main items as
+soon as they find them, so the first half of a run gets noticeably harder, Insane most of all. If that feels too slow
+in play, I would speed up the curve's early levels rather than move the slot levels.
+
+### 7.8 Revised rounds
+
+1. **Core:** the save flag; Power, the curve and every XP hook; level-ups with the +1 life levels; the HUD badge and
+   bar; toasts; cheats; `[TFR-Ascend]` logs.
+2. **The slot limit:** equip paths (Inventory, Armory, deck loadouts, starting kit, New Game+), the "Main items" UI.
+3. **The choice framework:** offers, the pending button, the pick dialog, the one-time rewards.
+4. **The lasting options:** 11 effects at about 10 code sites.
+5. **The Power page, then an agent soak** (150+ duels) and tuning.
+
+### 7.9 Open questions now
+
+1. Do the gauntlets' extra hand slots (Left2 / Right2) count toward the main-item limit? (Recommended: yes - otherwise
+   a gauntlet sidesteps it.)
+2. The pool in 7.5: drop or add anything? Are the amounts right?
+3. Titles every 5 levels: keep them as free flavor, or drop them?
