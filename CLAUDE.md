@@ -67,6 +67,19 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 487): **LOCAL + UNRELEASED (data only)** - the Procedural Pixel Creatures session's generator
+batch 10, the last of the non-humanoid list (the user, overnight: "Batch 10 of the generator (80 sprites: elementals
+and the remaining low-res creatures)"; 34 of the 80 had been done by the Pixelate and pack rounds, the 18 detailed ones
+are no targets): 46 sprites / 85 enemies - the 20 elemental sprites as glowing figures of their element (fire, smoke
+and water figures, rock golems, flame wisps, a stone head, a leaf), and 26 low-res creatures (the 8 sliver sprites as
+reared serpents with a new claw-arm option, Eldrazi jellyfish and horrors, brain, geonid, the hellhounds, the Nightmare
+as a horse, crawler, scarabs, bat, three eyes, hand, carcass feeder, gargoyles, faerie dragon). 170 new files under
+`sprites/enemy/remake/` (nothing overwritten), enemies.json 85 paths + 80 scales (keepSize kept drawn size: Muldrotha,
+Slivdrazi Monstrosity, Wounded Sliver, Azlask, Zhulodok). Batch `cloud/batch_10.json` + `make_batch10.py` in the
+generator repo; its checks pass (core 23/23, Godot 37/37). Data commit 89918e49ab1, docs in a second commit. The peer
+(#30) verifies and packages. Not seen in play; the user reviews the contact sheet (slivers draw small: a serpent's
+crawl extent sets its size).
+
 ## STATE 2026-10-08 (rounds 484-485): **LOCAL + UNRELEASED** - 484: a town being pillaged (`util/TownPillage`, the
 user's design + my defaults): weekly 10% per qualifying town (yours, or an entered working neutral town; not ruined, not
 under AI attack; 4+ hostile dungeons within 15 tiles), at most 2 a week; raiders from those dungeons 3-4 at a time near

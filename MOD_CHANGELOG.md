@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 487: generator batch 10 - the elementals and the remaining low-res creatures (2026-10-08)
+
+The Procedural Pixel Creatures session's tenth and last batch of the non-humanoid list (the user, overnight: "Batch 10
+of the generator (80 sprites: elementals and the remaining low-res creatures), now that the ink style and the recipe
+pass are in the pipeline"). Of the plan's 80 sprites, 34 had been done since by the Pixelate and pack rounds and the 18
+"already detailed" ones are no targets; the 46 left, 85 enemies, are here. Data and sprites only; no Java. Generated
+art, so no credits change. Batch file `cloud/batch_10.json` in the generator repo (built by `cloud/make_batch10.py`
+from the approved recipes of the earlier batches).
+
+- **The 20 elemental sprites** (40 enemies) become glowing figures of their element, the ember and tide figures of
+  batch 9 in every element's colors, the three-quarter view: fire, magma, magma-fire and volcano elementals as flame
+  figures (Fire Elemental, Aziza, Magma Elemental, Flame Elemental, Omnath green, Ashling, Magma Fire Elemental, Volcano
+  Elemental); the efreet the same in red (Efreet, Najal, Yusri, Uvilda); air, magic and the djinn as smoke figures
+  (Merfolk warrior, Inniaz, Supreme Elemental, Kruphix, Averna, Djinn, Siani and Esior, Tarkir Djinn, Zahid, Elsha,
+  Veyran, Mighty Djinn); the water elementals as blue figures rising from a wave (Merfolk, Muddle, Water Elemental,
+  Muldrotha huge at its keepSize); the earth, ice and crystal elementals as rock golems (Earth Elemental, Silvos,
+  Phylath, Ice Elemental, Melek, Elemental, Jyoti, Esix); the lightning and Santelmo as flame wisps; Kolyog a stone
+  head with glowing eyes; Kirri a leaf blade on legs with a sprout.
+- **The 26 low-res creatures** (45 enemies): the eight sliver sprites as reared serpents with fanged maws, brow horns,
+  spined backs, fin tails and two hooked claw arms (17 slivers: Sliver, Sliver Overlord, the Slivdrazi Monstrosity,
+  the black, blue, green, red and white slivers with Metallic, Recruiter, Weftwinder, Hivelord, Legion and Gravemother,
+  the Slivdrazi Experiment, The First Sliver, the Wounded Sliver); the Eldrazi Floater, Azlask and Nephilim Epochal as
+  jellyfish; the Eldrazi Devastator, Zhulodok and The Dawning Archaic as cosmic horrors with gnashing maws; the Walking
+  Brain and Gimbal as lumpy pink slimes; the Geonid Death-Cap and The Necrobloom as fanged boulders; Hellhound,
+  Chandra's Hellhound, Kunoros (white) and Tesak as wolves with fiery manes; the Nightmare and the Cateran Slaver as
+  black horses (the first equine remake); the Unraveling Crawler a pale spider; the Royal Scarab and its giant in
+  gold; the Vampire Bat; the Ghastly Eye (spiked), the Floating Eye (tentacled) and The Unblinking Eye (a great white
+  eyeball); the Skittering Hand a clawless six-legged crawler; the Carcass Feeder a hunched hound; the two Gargoyles as
+  stone lions with bat wings and horns; the Faerie Dragon a blue-violet baby dragon with wide wings.
+- **Generator**: a new serpent option `body.claws` (opt-in, the slivers' arms); the quadruped `equine` form's first
+  remake. Pipeline: enemies on hand-drawn art (packs, Pixelate) are no longer counted as users of their old shared
+  sprite (the Forest Titan, on the pack deity since round 479, would have come back as a walking-leaf variant); a
+  recipe's anatomy genes reach every variant (Muldrotha first came out a plain dome); 13 legends whose card palette
+  took the art's background are colored by hand (Muddle, Aziza, Omnath, Ashling, Melek, Siani and Esior, Zahid, Najal,
+  The Necrobloom, Kunoros, Sliver Overlord, Weftwinder, Hivelord).
+- **Known limits** (for the user's look): the game sizes a sprite by its longest frame extent and a serpent's crawl
+  lays the body out, so the slivers' reared idle draws at about two thirds of the rank body (still three times the
+  old 16 px sprite); the Skittering Hand reads as a crawler more than a hand; the Nightmare's mane is dark, not fire.
+- **enemies.json**: 85 sprite paths and 80 scales from `enemy_scale.py --write`; the five keepSize legends keep their
+  drawn size (Muldrotha 2.2286 -> 0.2364, the Slivdrazi Monstrosity 1.875 -> 0.2973, the Wounded Sliver 1.875 ->
+  0.3659, Azlask 0.6934 -> 0.2364, Zhulodok 1.1556 -> 0.2364); ten enemies gained a scale key. 170 new files under
+  `sprites/enemy/remake/`, nothing overwritten; the old stock atlases stay in place.
+- **Checks**: `validate_plane_data.py` unchanged; `sprite_artifact_audit.py --only remake` flags the house shadow's
+  gap under the hovering and lunging bodies and one faded frame; the generator's own checks pass (core 23/23, Godot
+  37/37).
+
 ## Round 485: one Back leaves the treasure maps (2026-10-08)
 
 The user, with a screenshot of the six-map page gone black: "When I hit back from the treasure map, they just go black,
