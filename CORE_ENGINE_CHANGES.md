@@ -38,6 +38,28 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 485 - one Back leaves the treasure maps
+
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`**, **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`**
+  - the Treasure Maps buttons open the maps from a ClickListener (a ChangeListener that un-checked the button fired
+  twice). Mod-added `scene/TreasureMapScene.java`: no self-switch, textures freed at the next rebuild.
+
+### Round 484 - a town being pillaged
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - saved `pillages` (HashMap<String,int[]>) and
+  `pillageWeek`; load (containsKey-guarded), save, reset in `generateNew()`; getters/setter.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `TownPillage.tick()` after `TreasureHunt.tick()`;
+  raiders (`pillageTown != null`) skip the travel-clock despawn; `TownPillage.onRaiderBeaten` in `setWinner`'s win
+  branch; `TownPillage.resetSessionState()` in `clearCache()`; `pillageTowns` in the roaming save/load (both save
+  blocks); new `getPillageRaiders`, `removePillageRaiders`, `directionFromPlayer(float, float)`.
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - `public String pillageTown`.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** - `pillageEnabled`.
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** - the twelve `pillage*` settings.
+- **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** - a row per pillaged town after the legends.
+- **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** - a "Pillaged! n/5" Details label per town.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `pillage start|info`.
+- New (mod-added): `util/TownPillage.java`.
+
 ### Round 481 - an invasion's leader one rank above its troops; his Gemstone Mine
 
 - **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** - `getOtherToken()`; `updateStages()` tells

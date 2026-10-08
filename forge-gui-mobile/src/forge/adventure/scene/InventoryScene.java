@@ -230,9 +230,11 @@ public class InventoryScene extends UIScene {
                 icon.setPosition((treasureMapsButton.getWidth() - icon.getWidth()) / 2, (treasureMapsButton.getHeight() - icon.getHeight()) / 2);
                 treasureMapsButton.addActor(icon);
             }
-            treasureMapsButton.addListener(new ChangeListener() {
+            // A click, not a ChangeListener: setChecked(false) inside the change handler fired it a second time, and the
+            // maps opened twice (Back had to be pressed twice - the user's report).
+            treasureMapsButton.addListener(new com.badlogic.gdx.scenes.scene2d.utils.ClickListener() {
                 @Override
-                public void changed(ChangeEvent event, Actor actor) {
+                public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                     treasureMapsButton.setChecked(false);
                     TreasureMapScene.show();
                 }

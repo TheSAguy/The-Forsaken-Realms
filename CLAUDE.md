@@ -67,6 +67,13 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (rounds 484-485): **LOCAL + UNRELEASED** - 484: a town being pillaged (`util/TownPillage`, the
+user's design + my defaults): weekly 10% per qualifying town (yours, or an entered working neutral town; not ruined, not
+under AI attack; 4+ hostile dungeons within 15 tiles), at most 2 a week; raiders from those dungeons 3-4 at a time near
+the town, 5 to beat in 7 days -> +1 rep, +50 wood, +50 stone; else -2 rep. Raiders marked `EnemySprite.pillageTown`
+(saved); quest-log rows + a "Pillaged!" map label; cheats `pillage start|beaten|info`; `pillageEnabled` in config.json.
+485: one Back leaves the treasure maps (the buttons opened the scene twice). Both agent-tested.
+
 ## STATE 2026-10-08 (round 483): **LOCAL + UNRELEASED (data only)** - the Procedural Pixel Creatures session's third
 pack import (the user: "Do the golem leftovers and the zombie animals"): the ten golems still on stock/TFR sprites
 (Arcane, Bone, Jadestone, Kilnfired, Marblehewn, Rimeglass, Sand Golem, Golos, Shorikai, Time Walker) on the round-476

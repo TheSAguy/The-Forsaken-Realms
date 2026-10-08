@@ -171,6 +171,9 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     // Round 375: a sighted legend holds its ground until the player comes within legends.json chaseTiles; true while it
     // chases (WorldStage.legendGivesChase). Not saved - a loaded legend stands until the player comes near again.
     public boolean legendChasing = false;
+    // Round 484: a raider of a pillaged town - that town's POI id (util/TownPillage). It never times out on the travel
+    // clock and leaves when the town's pillage ends. Saved with the roaming list. null for every other enemy.
+    public String pillageTown;
 
     private final Vector2 spriteToPlayerVec = new Vector2();
     private final Vector2 candidateToPlayerVec = new Vector2();

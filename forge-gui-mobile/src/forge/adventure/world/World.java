@@ -863,6 +863,23 @@ public class World implements Disposable, SaveFileContent {
         treasureStamp++;
     }
 
+    // Round 484 - towns being pillaged (util/TownPillage): town POI id -> {start day, raiders beaten, raiders at once,
+    // reminder given 0/1}, and the week of the last weekly roll (-1 = none yet). Saved; old saves read without them.
+    private final java.util.HashMap<String, int[]> pillages = new java.util.HashMap<>();
+    private int pillageWeek = -1;
+
+    public java.util.HashMap<String, int[]> getPillages() {
+        return pillages;
+    }
+
+    public int getPillageWeek() {
+        return pillageWeek;
+    }
+
+    public void setPillageWeek(int week) {
+        pillageWeek = week;
+    }
+
     /** Round 478: the minimap image WITHOUT the fog of war (getBiomeImage() returns the fogged copy when fog is on) - the
      *  treasure map shows land the player has never seen. Read-only for callers. */
     public Pixmap getCleanBiomeImage() {
@@ -1216,6 +1233,12 @@ public class World implements Disposable, SaveFileContent {
             treasureHoles.addAll((List<int[]>) saveFileData.readObject("treasureHoles"));
         }
         treasureStamp++;
+        pillages.clear(); // round 484
+        if (saveFileData.containsKey("pillages")) {
+            //noinspection unchecked
+            pillages.putAll((java.util.Map<String, int[]>) saveFileData.readObject("pillages"));
+        }
+        pillageWeek = saveFileData.containsKey("pillageWeek") ? saveFileData.readInt("pillageWeek") : -1;
         bonfires.clear(); // round 336
         if (saveFileData.containsKey("bonfires")) {
             //noinspection unchecked
@@ -1407,6 +1430,8 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("treasureHunts", new ArrayList<>(treasureHunts)); // round 478
         data.storeObject("treasureHoles", new ArrayList<>(treasureHoles));
         data.store("treasureVersion", treasureVersion);
+        data.storeObject("pillages", new java.util.HashMap<>(pillages)); // round 484
+        data.store("pillageWeek", pillageWeek);
         data.store("obstaclesSwept", obstacleSweep);
         data.store("playerRoadsBuilt", playerRoadsBuilt); // round 346
         data.store("roadsNormalized", roadsNormalized); // round 351
@@ -2657,6 +2682,8 @@ public class World implements Disposable, SaveFileContent {
             treasureHoles.clear();
             treasureVersion = 0;
             treasureStamp++;
+            pillages.clear(); // round 484: a new world starts with no town under raid
+            pillageWeek = -1;
             // 2026-09-02 review finding: the one-shot full-map reveal flag survived into a New Game
             // or New Game+ started from a finished run, so the reveal could never fire again.
             fogOfWarStage2Revealed = false;

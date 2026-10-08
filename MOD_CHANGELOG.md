@@ -14264,6 +14264,61 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 485: one Back leaves the treasure maps (2026-10-08)
+
+The user, with a screenshot of the six-map page gone black: "When I hit back from the treasure map, they just go black,
+but don't exit. I have to hit it twice." Two causes:
+
+- **Opened twice.** The HUD's and the inventory's Treasure Maps buttons used a ChangeListener that called
+  `setChecked(false)` inside itself - which fires a second change event, so one tap ran `TreasureMapScene.show()` twice
+  and the scene pushed itself onto Forge's scene history; the first Back came back to itself. Both buttons now use a
+  ClickListener (GameHUD, InventoryScene), and `show()` no longer switches scene when the maps are already showing.
+- **Black squares.** Back freed the map textures and then left - and leaving takes a screenshot of the page for the
+  transition, which caught them freed. They are now freed at the next `rebuild()` instead.
+- Agent-tested: HUD button -> one Back -> world map; inventory button -> one Back -> inventory -> one Back -> world map.
+
+## Round 484: a town being pillaged (2026-10-08)
+
+The user: "I want to add a new 'Random Event' to the game. If one of your towns/capitol or a neutral town, not a ruined
+town, that you have visited before. If there are 4+ dungeons in a radius of 15 around the location, then there should be
+a 10% chance for a 'Town being pillaged.' event. have enemies spawn around the location, 3 to 4 at a time. The play has
+1 week to kill 5 to have the event stop. If he does he gets +1 reputation and 50 stone 50 wood from the location, if he
+does not, he loses 2 reputation with that town. Let's so no more than 2 of these events per week can spawn." Then, on
+my answer (roll weekly, raiders from the nearby dungeons, shown only near the town, a quest-log entry and a reminder):
+"Go ahead and build the pillage event with those defaults."
+
+- **`util/TownPillage.java`** (new; `config.json` `pillageEnabled: true`, `ConfigData.pillageEnabled` default false):
+  - **The roll**: once a calendar week (`World.weekOf`), every qualifying town rolls `pillageChancePercent` (10); at
+    most `pillageMaxPerWeek` (2) start. Qualifies: the player's own (the Capitol, Orazca, a restored or captured town)
+    or a working neutral town the player has entered (`PointOfInterestChanges.isVisited`); not ruined, not already
+    pillaged, not the target of an AI attack mage; with `pillageDungeonsNeeded` (4) hostile dungeons or caves on the map
+    within `pillageRadiusTiles` (15) - rotating dungeons, boss lairs and leave-on-clear places (`DungeonRotation`).
+  - **The raiders** come out of those dungeons (`DungeonSources.pick`: the dungeon's living inhabitants, or its land's
+    creatures) at the player's rank. Within `pillageSpawnRangeTiles` (20) of the town, 3 or 4 of them
+    (`pillageRaidersAtOnce`, fixed per pillage) stand 3-7 tiles outside it (2-6 put them at the walls, and chasing one walked into the town), topped up one at a time as they fall and
+    never more than are still to beat. They chase like any roamer.
+  - **The end**: `pillageKills` (5) beaten within `pillageDays` (7) -> +`pillageRewardReputation` (1) with the town,
+    +`pillageRewardWood` (50), +`pillageRewardStone` (50); time out -> -`pillageFailReputation` (2). A reminder with 2
+    days left. A town that falls to an AI or turns to ruin ends its pillage with neither.
+- **The raider marker** `EnemySprite.pillageTown` (the town's id), saved with WorldStage's roaming list (`pillageTowns`,
+  both save blocks; restored for every sprite). Raiders skip the travel-clock despawn and leave the map when their
+  pillage ends (`WorldStage.removePillageRaiders`). A raider beaten in a world duel counts (`setWinner` win branch); one
+  that beats the player is removed like any roamer and replaced.
+- **Saved state** on World: `pillages` (town id -> {start day, beaten, at once, reminded}) and `pillageWeek`; old saves
+  read without them and roll on their first tick.
+- **What the player sees**: a notice at the start, per raider beaten, at 2 days left, and at the end; a quest-log row per
+  pillaged town ("Pillaged: Orazca - beat the raiders (1 of 5) - north-west (7 days left)", built like the legends' rows
+  - no quest behind it); an orange "Pillaged! 1/5" on the world map's Details.
+- **Settings** (`config tables/settings.json`): the twelve `pillage*` keys above. Console: `pillage start [town]` (the
+  nearest town that could be pillaged, dungeon count waived), `pillage beaten <n>` and `pillage info`. `[TFR-Pillage]` logs every roll,
+  start, raider (and which dungeon it came from), win and end.
+- **Agent-tested** (`pillage start` at Orazca, 2 dungeons near): raiders out of Barren Pocket and Autonomous Factory
+  ("waste (not visited)" - their land's creatures), 3 at a time and replaced as they fell; the quest-log row and the
+  count; five wins (two real ones, `pillage beaten 4` and a real fifth) -> "pillage stopped on day 1 - +1 reputation,
+  +50 wood, +50 stone"; a second pillage left at 3 of 5 -> on day 8 "time ran out at 3 beaten - -2 reputation"; the
+  week-1 roll ran at the week change (none of this world's towns qualified: few visited towns near 4 dungeons). The
+  first raiders stood 2-6 tiles out and the agent chasing one walked into Orazca - now 3-7. Log clean.
+
 ## Round 483: pack sprites for the ten golem leftovers and the five undead animals (2026-10-08)
 
 The Procedural Pixel Creatures session's third pack import (the user: "Do the golem leftovers and the zombie animals").

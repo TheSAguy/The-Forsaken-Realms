@@ -58,7 +58,10 @@ public class TreasureMapScene extends UIScene {
     public static void show(int region) {
         instance().shownRegion = region;
         instance().rebuild();
-        Forge.switchScene(instance(), true);
+        // Already showing: just the new view. Switching to itself pushed this scene onto the history a second time, and
+        // the first Back then came back here (the user: "When I hit back ... they just go black, but don't exit").
+        if (Forge.getCurrentScene() != instance())
+            Forge.switchScene(instance(), true);
     }
 
     private void onReturn() {
@@ -67,7 +70,8 @@ public class TreasureMapScene extends UIScene {
             rebuild();
             return;
         }
-        disposeTextures();
+        // The pictures stay until the next rebuild(): Back takes a screenshot of this page for the transition, and
+        // freeing them first painted the six maps black on the way out.
         back();
     }
 

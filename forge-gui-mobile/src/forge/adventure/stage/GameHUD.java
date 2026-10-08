@@ -380,9 +380,11 @@ public class GameHUD extends Stage {
             button.setSize(20f, 20f);
             button.setPosition(gamehud.getX() - 22f, gamehud.getY() + gamehud.getHeight() - 22f);
             button.setVisible(false);
-            button.addListener(new ChangeListener() {
+            // A click, not a ChangeListener: un-checking the button inside its own change handler fired the handler
+            // again, so one tap opened the maps twice and Back had to be pressed twice (the user's report).
+            button.addListener(new com.badlogic.gdx.scenes.scene2d.utils.ClickListener() {
                 @Override
-                public void changed(ChangeEvent event, Actor actor) {
+                public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                     button.setChecked(false);
                     forge.adventure.scene.TreasureMapScene.show();
                 }

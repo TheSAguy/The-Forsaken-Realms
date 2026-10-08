@@ -1046,6 +1046,21 @@ public class ConsoleCommandInterpreter {
                 return "The treasure is here but its guardian is missing" + refundItemInUse("Something is buried here, but nothing stirs.");
             return "The " + forge.adventure.util.TreasureHunt.REGION_NAMES[region] + " treasure's guardian rises";
         });
+        // Round 484: test cheats for the town pillage (util/TownPillage) - start one now at the nearest town that could be
+        // pillaged (the dungeon count waived), or list what is running and why the nearest towns qualify or not.
+        registerCommand(new String[]{"pillage", "start"}, s -> {
+            if (MapStage.getInstance().isInMap())
+                return "Only on the world map";
+            return forge.adventure.util.TownPillage.cheatStart(s.length > 0 ? String.join(" ", s) : null);
+        });
+        registerCommand(new String[]{"pillage", "info"}, s -> forge.adventure.util.TownPillage.cheatInfo());
+        registerCommand(new String[]{"pillage", "beaten"}, s -> {
+            try {
+                return forge.adventure.util.TownPillage.cheatSetBeaten(s.length > 0 ? Integer.parseInt(s[0]) : 0);
+            } catch (NumberFormatException e) {
+                return "Can not convert " + s[0] + " to number";
+            }
+        });
         registerCommand(new String[]{"treasure", "info"}, s -> {
             forge.adventure.world.World world = Current.world();
             return world == null ? "No world" : forge.adventure.util.TreasureHunt.describe(world);

@@ -286,6 +286,7 @@
     "colorReputationEnabled": true,
     "resourceSpawnsEnabled": true,
     "treasureHuntEnabled": true,
+    "pillageEnabled": true,
     "dungeonRotationEnabled": true,
     "sideQuestTimerEnabled": true,
     "resourceLootVarietyEnabled": false,

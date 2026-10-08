@@ -81,6 +81,8 @@ public class ConfigData {
     public boolean resourceSpawnsEnabled = false;
     /** Round 478: the lost-treasure hunts (util/TreasureHunt) - obelisks, map fragments, the dig, the guardians. */
     public boolean treasureHuntEnabled = false;
+    /** Round 484: towns being pillaged by raiders from nearby dungeons (util/TownPillage). */
+    public boolean pillageEnabled = false;
     public boolean dungeonRotationEnabled = false;
     public boolean sideQuestTimerEnabled = false;
     public boolean resourceLootVarietyEnabled = false;

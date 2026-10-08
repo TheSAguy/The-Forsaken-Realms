@@ -335,6 +335,13 @@ public class MapViewScene extends UIScene {
             label.setColor(GameHUD.getMageMarkerColor(mage.territoryColor));
             placeDetailLabel(label, targetPoi.getCenter().x, targetPoi.getCenter().y, placedLabelRects);
         }
+        // Round 484: towns being pillaged (TownPillage) - the player has entered or owns each, so no fog gate is needed.
+        for (Object[] pillaged : forge.adventure.util.TownPillage.mapLabels()) {
+            PointOfInterest town = (PointOfInterest) pillaged[0];
+            TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] " + pillaged[1]);
+            label.setColor(Color.ORANGE);
+            placeDetailLabel(label, town.getCenter().x, town.getCenter().y, placedLabelRects);
+        }
 
         // Garrison strength (round 147, user request). Added to THIS overlay rather than a new one
         // because Details is already where "Under Attack!" lives, and the two answer the same

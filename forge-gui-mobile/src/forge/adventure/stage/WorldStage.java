@@ -773,6 +773,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             // collection check has to track the player's live position (cheap; see its comment).
             ResourceSpawns.tick(world, dayAfter);
             forge.adventure.util.TreasureHunt.tick(world, dayAfter); // round 478: obelisks, the X, the weekly moves
+            forge.adventure.util.TownPillage.tick(world, dayAfter); // round 484: the weekly roll, the raiders, the deadline
             handleMonsterSpawn(delta);
             collided = collided || handlePointsOfInterestCollision();
             globalTimer += delta;
@@ -797,7 +798,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 boolean expired = roamer.legendExpiryDay >= 0
                         ? Current.world().getCurrentDay() >= roamer.legendExpiryDay
                         : globalTimer >= pair.getKey() + roamer.getLifetime();
-                if (roamer.territoryTarget == null && expired) {
+                // Round 484: a pillaged town's raiders have no clock - TownPillage removes them when the pillage ends.
+                if (roamer.territoryTarget == null && roamer.pillageTown == null && expired) {
                     if (roamer.legendExpiryDay >= 0)
                         System.out.println("[TFR-Legend] " + roamer.getData().getTieredDisplayName()
                                 + " moves on - its days are over (day " + Current.world().getCurrentDay() + ")");
@@ -982,6 +984,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         forge.adventure.util.PlaceRewards.filterWorldPayout(loot, currentMob);
                         if (treasureRegion >= 0) // round 478: the treasure rides in the guardian's own rewards
                             forge.adventure.util.TreasureHunt.onGuardianBeaten(treasureRegion);
+                        forge.adventure.util.TownPillage.onRaiderBeaten(currentMob); // round 484: a pillaged town's raider
                         if (assaultPoi != null) // town assault won: the town changes hands (user spec 2026-09-03)
                             TownRestoration.captureTownForPlayer(Current.world(), assaultPoi, assaultColor);
                         // Bronze Coin ransom reclaim as a visible loot tile (user request
@@ -2854,6 +2857,32 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
     /** Round 239: the frontier legends alive on the overworld right now, for the map view's gold dots - the
      *  same reason getTerritoryMages() exists (the enemy list is not visible from the scene package). */
+    /** Round 484: a pillaged town's raiders on the map (EnemySprite.pillageTown) - all of them for a null id. */
+    public List<EnemySprite> getPillageRaiders(String townId) {
+        List<EnemySprite> raiders = new ArrayList<>();
+        for (Pair<Float, EnemySprite> pair : enemies) {
+            EnemySprite mob = pair.getValue();
+            if (mob != null && mob.pillageTown != null && (townId == null || townId.equals(mob.pillageTown)))
+                raiders.add(mob);
+        }
+        return raiders;
+    }
+
+    /** Round 484: the pillage is over - its raiders leave the map. */
+    public void removePillageRaiders(String townId) {
+        for (EnemySprite raider : getPillageRaiders(townId)) {
+            foregroundSprites.removeActor(raider);
+            removeEnemy(raider);
+        }
+    }
+
+    /** Round 484: the compass direction from the player to a world position (the quest log's pillage rows). */
+    public String directionFromPlayer(float x, float y) {
+        if (player == null)
+            return "";
+        return compassDirection(x - player.getX(), y - player.getY());
+    }
+
     public List<EnemySprite> getLegendSightings() {
         List<EnemySprite> legends = new ArrayList<>();
         for (Pair<Float, EnemySprite> pair : enemies) {
@@ -3012,6 +3041,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
             List<Integer> legendExpiryDays = data.containsKey("legendExpiryDays") ? (List<Integer>) data.readObject("legendExpiryDays") : null;
             // Round 422: the opening-wave flag - absent on older saves, where every mage counts toward the cap.
             List<Boolean> openingMages = data.containsKey("openingMages") ? (List<Boolean>) data.readObject("openingMages") : null;
+            // Round 484: a pillaged town's raiders (EnemySprite.pillageTown) - absent on older saves.
+            List<String> pillageTowns = data.containsKey("pillageTowns") ? (List<String>) data.readObject("pillageTowns") : null;
             for (int i = 0; i < timeouts.size(); i++) {
                 // Null-guard (2026-08-13, Challenger-rename companion): an unresolvable saved name
                 // previously hit `new EnemySprite(null)` -> NPE swallowed by this method's empty
@@ -3048,6 +3079,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     sprite.legendExpiryDay = legendExpiryDays.get(i);
                 else if (forge.adventure.util.RoamingChampions.isLegend(resolved))
                     sprite.legendExpiryDay = legendExpiryDayFromNow(); // round 350: a legend saved before the day clock
+                if (pillageTowns != null && i < pillageTowns.size())
+                    sprite.pillageTown = pillageTowns.get(i); // round 484
                 if (territoryTargetIds != null && i < territoryTargetIds.size() && territoryTargetIds.get(i) != null) {
                     // WorldSave.load() loads World (and its POIs) before this method runs, so the
                     // id resolves against the same world state the save captured. If it somehow
@@ -3117,6 +3150,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         MapMarkerRefresh.resetSessionState(); // round 190: the shared marker-refresh batch baseline
         forge.adventure.util.TreasureHunt.resetSessionState(); // round 478
         treasureActorsStamp = -1;
+        forge.adventure.util.TownPillage.resetSessionState(); // round 484
         // Round 188, user: "The Speed up and Wait seems to persist on load. I save, then check
         // them, when I load they are checked still, even though they were not checked before save."
         // Both are HUD toggles over session state on this singleton - neither is written to the
@@ -3162,6 +3196,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // start its days over on each load.
         List<Integer> legendExpiryDays = new ArrayList<>();
         List<Boolean> openingMages = new ArrayList<>(); // round 422
+        List<String> pillageTowns = new ArrayList<>(); // round 484
         for (Pair<Float, EnemySprite> enemy : enemies) {
             timeouts.add(enemy.getKey());
             // Raw name field, NOT getName() (2026-08-13 holistic review, pre-existing bug): the 3
@@ -3181,6 +3216,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             lastDuelDays.add(enemy.getValue().lastDuelDay);
             legendExpiryDays.add(enemy.getValue().legendExpiryDay);
             openingMages.add(enemy.getValue().openingMage);
+            pillageTowns.add(enemy.getValue().pillageTown);
         }
         // Round 173 (code review G6, user: "should lose the fight"): the mage a roaming guard is fighting
         // right now was pulled off `enemies` at the gate, so a save taken mid-fight - the watched fight's
@@ -3205,6 +3241,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 lastDuelDays.add(duelling.lastDuelDay);
                 legendExpiryDays.add(duelling.legendExpiryDay);
                 openingMages.add(duelling.openingMage);
+                pillageTowns.add(duelling.pillageTown);
             }
         }
         data.storeObject("timeouts", timeouts);
@@ -3216,6 +3253,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         data.storeObject("lastDuelDays", lastDuelDays);
         data.storeObject("legendExpiryDays", legendExpiryDays);
         data.storeObject("openingMages", openingMages);
+        data.storeObject("pillageTowns", pillageTowns);
         data.storeObject("territoryTargetIds", territoryTargetIds);
         data.store("globalTimer", globalTimer);
         return data;

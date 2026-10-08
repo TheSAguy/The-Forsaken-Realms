@@ -393,6 +393,23 @@ public class TuningData {
     // leader starts with in play, from this difficulty index on (0 Easy .. 3 Insane).
     public String[] invasionLeaderStartCards = {"Gemstone Mine"};
     public int invasionLeaderStartMinDifficulty = 2;
+    // Round 484 - a town being pillaged (util/TownPillage; the user: "If one of your towns/capitol or a neutral town,
+    // not a ruined town, that you have visited before. If there are 4+ dungeons in a radius of 15 around the location,
+    // then there should be a 10% chance for a 'Town being pillaged.' event"). Rolled once a week per town that
+    // qualifies; at most pillageMaxPerWeek start a week. The raiders show up 3-4 at a time once the player is within
+    // pillageSpawnRangeTiles, until pillageKills are beaten; pillageDays to do it.
+    public int pillageChancePercent = 10;
+    public int pillageMaxPerWeek = 2;
+    public int pillageDungeonsNeeded = 4;
+    public int pillageRadiusTiles = 15;
+    public int pillageKills = 5;
+    public int pillageDays = 7;
+    public int[] pillageRaidersAtOnce = {3, 4};
+    public int pillageSpawnRangeTiles = 20;
+    public int pillageRewardReputation = 1;
+    public int pillageRewardWood = 50;
+    public int pillageRewardStone = 50;
+    public int pillageFailReputation = 2;
     // AI town guard dots (MOD_SCOPE #87, user spec 2026-09-03): an AI-held color town gains one
     // guard level every this many in-game days of unbroken AI ownership (default 4 weeks), up to
     // level 4. The clock starts when the town is first seen held (save load / capture), never

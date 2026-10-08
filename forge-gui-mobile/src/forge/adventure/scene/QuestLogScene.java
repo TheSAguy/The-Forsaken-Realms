@@ -140,6 +140,15 @@ public class QuestLogScene extends UIScene {
             scrollContainer.add(); // no Details - a sighting has no quest behind it
             scrollContainer.row().padTop(5);
         }
+        // Round 484: every town being pillaged (TownPillage), a row like the legends' - no quest behind it either.
+        for (String row : forge.adventure.util.TownPillage.questLogRows()) {
+            TypingLabel pillageLabel = Controls.newTypingLabel("[BLACK]" + row);
+            pillageLabel.skipToTheEnd();
+            pillageLabel.setWrap(true);
+            scrollContainer.add(pillageLabel).align(Align.left).expandX();
+            scrollContainer.add();
+            scrollContainer.row().padTop(5);
+        }
         performTouch(scrollPaneOfActor(scrollContainer)); //can use mouse wheel if available to scroll
     }
 
