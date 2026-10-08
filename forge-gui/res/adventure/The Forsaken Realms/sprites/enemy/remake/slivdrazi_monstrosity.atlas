@@ -1,5 +1,5 @@
 slivdrazi_monstrosity.png
-size: 3360,1284
+size: 2496,804
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,238 +8,127 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 240, 122
+  size: 208, 148
 Idle
-  xy: 240, 64
-  size: 240, 122
+  xy: 208, 64
+  size: 208, 148
 Idle
-  xy: 480, 64
-  size: 240, 122
+  xy: 416, 64
+  size: 208, 148
 Idle
-  xy: 720, 64
-  size: 240, 122
+  xy: 624, 64
+  size: 208, 148
 Idle
-  xy: 960, 64
-  size: 240, 122
+  xy: 832, 64
+  size: 208, 148
 Idle
-  xy: 1200, 64
-  size: 240, 122
+  xy: 1040, 64
+  size: 208, 148
 Idle
-  xy: 1440, 64
-  size: 240, 122
+  xy: 1248, 64
+  size: 208, 148
 Idle
-  xy: 1680, 64
-  size: 240, 122
+  xy: 1456, 64
+  size: 208, 148
 Idle
-  xy: 1920, 64
-  size: 240, 122
+  xy: 1664, 64
+  size: 208, 148
 Idle
-  xy: 2160, 64
-  size: 240, 122
+  xy: 1872, 64
+  size: 208, 148
+Idle
+  xy: 2080, 64
+  size: 208, 148
+Idle
+  xy: 2288, 64
+  size: 208, 148
 Walk
-  xy: 0, 186
-  size: 240, 122
+  xy: 0, 212
+  size: 208, 148
 Walk
-  xy: 240, 186
-  size: 240, 122
+  xy: 208, 212
+  size: 208, 148
 Walk
-  xy: 480, 186
-  size: 240, 122
+  xy: 416, 212
+  size: 208, 148
 Walk
-  xy: 720, 186
-  size: 240, 122
+  xy: 624, 212
+  size: 208, 148
 Walk
-  xy: 960, 186
-  size: 240, 122
+  xy: 832, 212
+  size: 208, 148
+Walk
+  xy: 1040, 212
+  size: 208, 148
+Walk
+  xy: 1248, 212
+  size: 208, 148
+Walk
+  xy: 1456, 212
+  size: 208, 148
 Attack
-  xy: 0, 308
-  size: 240, 122
+  xy: 0, 360
+  size: 208, 148
 Attack
-  xy: 240, 308
-  size: 240, 122
+  xy: 208, 360
+  size: 208, 148
 Attack
-  xy: 480, 308
-  size: 240, 122
+  xy: 416, 360
+  size: 208, 148
 Attack
-  xy: 720, 308
-  size: 240, 122
+  xy: 624, 360
+  size: 208, 148
 Attack
-  xy: 960, 308
-  size: 240, 122
+  xy: 832, 360
+  size: 208, 148
 Attack
-  xy: 1200, 308
-  size: 240, 122
+  xy: 1040, 360
+  size: 208, 148
 Attack
-  xy: 1440, 308
-  size: 240, 122
+  xy: 1248, 360
+  size: 208, 148
 Attack
-  xy: 1680, 308
-  size: 240, 122
+  xy: 1456, 360
+  size: 208, 148
+Attack
+  xy: 1664, 360
+  size: 208, 148
+Attack
+  xy: 1872, 360
+  size: 208, 148
+Attack
+  xy: 2080, 360
+  size: 208, 148
+Attack
+  xy: 2288, 360
+  size: 208, 148
 Hit
-  xy: 0, 430
-  size: 240, 122
+  xy: 0, 508
+  size: 208, 148
 Hit
-  xy: 240, 430
-  size: 240, 122
+  xy: 208, 508
+  size: 208, 148
 Hit
-  xy: 480, 430
-  size: 240, 122
+  xy: 416, 508
+  size: 208, 148
 Hit
-  xy: 720, 430
-  size: 240, 122
-Hit
-  xy: 960, 430
-  size: 240, 122
+  xy: 624, 508
+  size: 208, 148
 Death
-  xy: 0, 552
-  size: 240, 122
+  xy: 0, 656
+  size: 208, 148
 Death
-  xy: 240, 552
-  size: 240, 122
+  xy: 208, 656
+  size: 208, 148
 Death
-  xy: 480, 552
-  size: 240, 122
+  xy: 416, 656
+  size: 208, 148
 Death
-  xy: 720, 552
-  size: 240, 122
+  xy: 624, 656
+  size: 208, 148
 Death
-  xy: 960, 552
-  size: 240, 122
+  xy: 832, 656
+  size: 208, 148
 Death
-  xy: 1200, 552
-  size: 240, 122
-Death
-  xy: 1440, 552
-  size: 240, 122
-Death
-  xy: 1680, 552
-  size: 240, 122
-Death
-  xy: 1920, 552
-  size: 240, 122
-Death
-  xy: 2160, 552
-  size: 240, 122
-Death
-  xy: 2400, 552
-  size: 240, 122
-Death
-  xy: 2640, 552
-  size: 240, 122
-Death
-  xy: 2880, 552
-  size: 240, 122
-Death
-  xy: 3120, 552
-  size: 240, 122
-Wake
-  xy: 0, 674
-  size: 240, 122
-Wake
-  xy: 240, 674
-  size: 240, 122
-Wake
-  xy: 480, 674
-  size: 240, 122
-Wake
-  xy: 720, 674
-  size: 240, 122
-Wake
-  xy: 960, 674
-  size: 240, 122
-Wake
-  xy: 1200, 674
-  size: 240, 122
-Wake
-  xy: 1440, 674
-  size: 240, 122
-IdleUp
-  xy: 0, 796
-  size: 240, 122
-IdleUp
-  xy: 240, 796
-  size: 240, 122
-IdleUp
-  xy: 480, 796
-  size: 240, 122
-IdleUp
-  xy: 720, 796
-  size: 240, 122
-IdleUp
-  xy: 960, 796
-  size: 240, 122
-IdleUp
-  xy: 1200, 796
-  size: 240, 122
-IdleUp
-  xy: 1440, 796
-  size: 240, 122
-IdleUp
-  xy: 1680, 796
-  size: 240, 122
-IdleUp
-  xy: 1920, 796
-  size: 240, 122
-IdleUp
-  xy: 2160, 796
-  size: 240, 122
-IdleDown
-  xy: 0, 918
-  size: 240, 122
-IdleDown
-  xy: 240, 918
-  size: 240, 122
-IdleDown
-  xy: 480, 918
-  size: 240, 122
-IdleDown
-  xy: 720, 918
-  size: 240, 122
-IdleDown
-  xy: 960, 918
-  size: 240, 122
-IdleDown
-  xy: 1200, 918
-  size: 240, 122
-IdleDown
-  xy: 1440, 918
-  size: 240, 122
-IdleDown
-  xy: 1680, 918
-  size: 240, 122
-IdleDown
-  xy: 1920, 918
-  size: 240, 122
-IdleDown
-  xy: 2160, 918
-  size: 240, 122
-WalkUp
-  xy: 0, 1040
-  size: 240, 122
-WalkUp
-  xy: 240, 1040
-  size: 240, 122
-WalkUp
-  xy: 480, 1040
-  size: 240, 122
-WalkUp
-  xy: 720, 1040
-  size: 240, 122
-WalkUp
-  xy: 960, 1040
-  size: 240, 122
-WalkDown
-  xy: 0, 1162
-  size: 240, 122
-WalkDown
-  xy: 240, 1162
-  size: 240, 122
-WalkDown
-  xy: 480, 1162
-  size: 240, 122
-WalkDown
-  xy: 720, 1162
-  size: 240, 122
-WalkDown
-  xy: 960, 1162
-  size: 240, 122
+  xy: 1040, 656
+  size: 208, 148

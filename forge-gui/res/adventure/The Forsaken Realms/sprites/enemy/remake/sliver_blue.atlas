@@ -1,5 +1,5 @@
 sliver_blue.png
-size: 1782,1014
+size: 2496,804
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,205 +8,127 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 162, 95
+  size: 208, 148
 Idle
-  xy: 162, 64
-  size: 162, 95
+  xy: 208, 64
+  size: 208, 148
 Idle
-  xy: 324, 64
-  size: 162, 95
+  xy: 416, 64
+  size: 208, 148
 Idle
-  xy: 486, 64
-  size: 162, 95
+  xy: 624, 64
+  size: 208, 148
 Idle
-  xy: 648, 64
-  size: 162, 95
+  xy: 832, 64
+  size: 208, 148
 Idle
-  xy: 810, 64
-  size: 162, 95
+  xy: 1040, 64
+  size: 208, 148
 Idle
-  xy: 972, 64
-  size: 162, 95
+  xy: 1248, 64
+  size: 208, 148
 Idle
-  xy: 1134, 64
-  size: 162, 95
+  xy: 1456, 64
+  size: 208, 148
 Idle
-  xy: 1296, 64
-  size: 162, 95
+  xy: 1664, 64
+  size: 208, 148
 Idle
-  xy: 1458, 64
-  size: 162, 95
+  xy: 1872, 64
+  size: 208, 148
+Idle
+  xy: 2080, 64
+  size: 208, 148
+Idle
+  xy: 2288, 64
+  size: 208, 148
 Walk
-  xy: 0, 159
-  size: 162, 95
+  xy: 0, 212
+  size: 208, 148
 Walk
-  xy: 162, 159
-  size: 162, 95
+  xy: 208, 212
+  size: 208, 148
 Walk
-  xy: 324, 159
-  size: 162, 95
+  xy: 416, 212
+  size: 208, 148
 Walk
-  xy: 486, 159
-  size: 162, 95
+  xy: 624, 212
+  size: 208, 148
+Walk
+  xy: 832, 212
+  size: 208, 148
+Walk
+  xy: 1040, 212
+  size: 208, 148
+Walk
+  xy: 1248, 212
+  size: 208, 148
+Walk
+  xy: 1456, 212
+  size: 208, 148
 Attack
-  xy: 0, 254
-  size: 162, 95
+  xy: 0, 360
+  size: 208, 148
 Attack
-  xy: 162, 254
-  size: 162, 95
+  xy: 208, 360
+  size: 208, 148
 Attack
-  xy: 324, 254
-  size: 162, 95
+  xy: 416, 360
+  size: 208, 148
 Attack
-  xy: 486, 254
-  size: 162, 95
+  xy: 624, 360
+  size: 208, 148
 Attack
-  xy: 648, 254
-  size: 162, 95
+  xy: 832, 360
+  size: 208, 148
 Attack
-  xy: 810, 254
-  size: 162, 95
+  xy: 1040, 360
+  size: 208, 148
+Attack
+  xy: 1248, 360
+  size: 208, 148
+Attack
+  xy: 1456, 360
+  size: 208, 148
+Attack
+  xy: 1664, 360
+  size: 208, 148
+Attack
+  xy: 1872, 360
+  size: 208, 148
+Attack
+  xy: 2080, 360
+  size: 208, 148
+Attack
+  xy: 2288, 360
+  size: 208, 148
 Hit
-  xy: 0, 349
-  size: 162, 95
+  xy: 0, 508
+  size: 208, 148
 Hit
-  xy: 162, 349
-  size: 162, 95
+  xy: 208, 508
+  size: 208, 148
 Hit
-  xy: 324, 349
-  size: 162, 95
+  xy: 416, 508
+  size: 208, 148
 Hit
-  xy: 486, 349
-  size: 162, 95
+  xy: 624, 508
+  size: 208, 148
 Death
-  xy: 0, 444
-  size: 162, 95
+  xy: 0, 656
+  size: 208, 148
 Death
-  xy: 162, 444
-  size: 162, 95
+  xy: 208, 656
+  size: 208, 148
 Death
-  xy: 324, 444
-  size: 162, 95
+  xy: 416, 656
+  size: 208, 148
 Death
-  xy: 486, 444
-  size: 162, 95
+  xy: 624, 656
+  size: 208, 148
 Death
-  xy: 648, 444
-  size: 162, 95
+  xy: 832, 656
+  size: 208, 148
 Death
-  xy: 810, 444
-  size: 162, 95
-Death
-  xy: 972, 444
-  size: 162, 95
-Death
-  xy: 1134, 444
-  size: 162, 95
-Death
-  xy: 1296, 444
-  size: 162, 95
-Death
-  xy: 1458, 444
-  size: 162, 95
-Death
-  xy: 1620, 444
-  size: 162, 95
-Wake
-  xy: 0, 539
-  size: 162, 95
-Wake
-  xy: 162, 539
-  size: 162, 95
-Wake
-  xy: 324, 539
-  size: 162, 95
-Wake
-  xy: 486, 539
-  size: 162, 95
-Wake
-  xy: 648, 539
-  size: 162, 95
-IdleUp
-  xy: 0, 634
-  size: 162, 95
-IdleUp
-  xy: 162, 634
-  size: 162, 95
-IdleUp
-  xy: 324, 634
-  size: 162, 95
-IdleUp
-  xy: 486, 634
-  size: 162, 95
-IdleUp
-  xy: 648, 634
-  size: 162, 95
-IdleUp
-  xy: 810, 634
-  size: 162, 95
-IdleUp
-  xy: 972, 634
-  size: 162, 95
-IdleUp
-  xy: 1134, 634
-  size: 162, 95
-IdleUp
-  xy: 1296, 634
-  size: 162, 95
-IdleUp
-  xy: 1458, 634
-  size: 162, 95
-IdleDown
-  xy: 0, 729
-  size: 162, 95
-IdleDown
-  xy: 162, 729
-  size: 162, 95
-IdleDown
-  xy: 324, 729
-  size: 162, 95
-IdleDown
-  xy: 486, 729
-  size: 162, 95
-IdleDown
-  xy: 648, 729
-  size: 162, 95
-IdleDown
-  xy: 810, 729
-  size: 162, 95
-IdleDown
-  xy: 972, 729
-  size: 162, 95
-IdleDown
-  xy: 1134, 729
-  size: 162, 95
-IdleDown
-  xy: 1296, 729
-  size: 162, 95
-IdleDown
-  xy: 1458, 729
-  size: 162, 95
-WalkUp
-  xy: 0, 824
-  size: 162, 95
-WalkUp
-  xy: 162, 824
-  size: 162, 95
-WalkUp
-  xy: 324, 824
-  size: 162, 95
-WalkUp
-  xy: 486, 824
-  size: 162, 95
-WalkDown
-  xy: 0, 919
-  size: 162, 95
-WalkDown
-  xy: 162, 919
-  size: 162, 95
-WalkDown
-  xy: 324, 919
-  size: 162, 95
-WalkDown
-  xy: 486, 919
-  size: 162, 95
+  xy: 1040, 656
+  size: 208, 148

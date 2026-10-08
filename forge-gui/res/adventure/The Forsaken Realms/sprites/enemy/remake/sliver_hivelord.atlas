@@ -1,5 +1,5 @@
 sliver_hivelord.png
-size: 1694,994
+size: 2496,804
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,205 +8,127 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 154, 93
+  size: 208, 148
 Idle
-  xy: 154, 64
-  size: 154, 93
+  xy: 208, 64
+  size: 208, 148
 Idle
-  xy: 308, 64
-  size: 154, 93
+  xy: 416, 64
+  size: 208, 148
 Idle
-  xy: 462, 64
-  size: 154, 93
+  xy: 624, 64
+  size: 208, 148
 Idle
-  xy: 616, 64
-  size: 154, 93
+  xy: 832, 64
+  size: 208, 148
 Idle
-  xy: 770, 64
-  size: 154, 93
+  xy: 1040, 64
+  size: 208, 148
 Idle
-  xy: 924, 64
-  size: 154, 93
+  xy: 1248, 64
+  size: 208, 148
 Idle
-  xy: 1078, 64
-  size: 154, 93
+  xy: 1456, 64
+  size: 208, 148
 Idle
-  xy: 1232, 64
-  size: 154, 93
+  xy: 1664, 64
+  size: 208, 148
 Idle
-  xy: 1386, 64
-  size: 154, 93
+  xy: 1872, 64
+  size: 208, 148
+Idle
+  xy: 2080, 64
+  size: 208, 148
+Idle
+  xy: 2288, 64
+  size: 208, 148
 Walk
-  xy: 0, 157
-  size: 154, 93
+  xy: 0, 212
+  size: 208, 148
 Walk
-  xy: 154, 157
-  size: 154, 93
+  xy: 208, 212
+  size: 208, 148
 Walk
-  xy: 308, 157
-  size: 154, 93
+  xy: 416, 212
+  size: 208, 148
 Walk
-  xy: 462, 157
-  size: 154, 93
+  xy: 624, 212
+  size: 208, 148
+Walk
+  xy: 832, 212
+  size: 208, 148
+Walk
+  xy: 1040, 212
+  size: 208, 148
+Walk
+  xy: 1248, 212
+  size: 208, 148
+Walk
+  xy: 1456, 212
+  size: 208, 148
 Attack
-  xy: 0, 250
-  size: 154, 93
+  xy: 0, 360
+  size: 208, 148
 Attack
-  xy: 154, 250
-  size: 154, 93
+  xy: 208, 360
+  size: 208, 148
 Attack
-  xy: 308, 250
-  size: 154, 93
+  xy: 416, 360
+  size: 208, 148
 Attack
-  xy: 462, 250
-  size: 154, 93
+  xy: 624, 360
+  size: 208, 148
 Attack
-  xy: 616, 250
-  size: 154, 93
+  xy: 832, 360
+  size: 208, 148
 Attack
-  xy: 770, 250
-  size: 154, 93
+  xy: 1040, 360
+  size: 208, 148
+Attack
+  xy: 1248, 360
+  size: 208, 148
+Attack
+  xy: 1456, 360
+  size: 208, 148
+Attack
+  xy: 1664, 360
+  size: 208, 148
+Attack
+  xy: 1872, 360
+  size: 208, 148
+Attack
+  xy: 2080, 360
+  size: 208, 148
+Attack
+  xy: 2288, 360
+  size: 208, 148
 Hit
-  xy: 0, 343
-  size: 154, 93
+  xy: 0, 508
+  size: 208, 148
 Hit
-  xy: 154, 343
-  size: 154, 93
+  xy: 208, 508
+  size: 208, 148
 Hit
-  xy: 308, 343
-  size: 154, 93
+  xy: 416, 508
+  size: 208, 148
 Hit
-  xy: 462, 343
-  size: 154, 93
+  xy: 624, 508
+  size: 208, 148
 Death
-  xy: 0, 436
-  size: 154, 93
+  xy: 0, 656
+  size: 208, 148
 Death
-  xy: 154, 436
-  size: 154, 93
+  xy: 208, 656
+  size: 208, 148
 Death
-  xy: 308, 436
-  size: 154, 93
+  xy: 416, 656
+  size: 208, 148
 Death
-  xy: 462, 436
-  size: 154, 93
+  xy: 624, 656
+  size: 208, 148
 Death
-  xy: 616, 436
-  size: 154, 93
+  xy: 832, 656
+  size: 208, 148
 Death
-  xy: 770, 436
-  size: 154, 93
-Death
-  xy: 924, 436
-  size: 154, 93
-Death
-  xy: 1078, 436
-  size: 154, 93
-Death
-  xy: 1232, 436
-  size: 154, 93
-Death
-  xy: 1386, 436
-  size: 154, 93
-Death
-  xy: 1540, 436
-  size: 154, 93
-Wake
-  xy: 0, 529
-  size: 154, 93
-Wake
-  xy: 154, 529
-  size: 154, 93
-Wake
-  xy: 308, 529
-  size: 154, 93
-Wake
-  xy: 462, 529
-  size: 154, 93
-Wake
-  xy: 616, 529
-  size: 154, 93
-IdleUp
-  xy: 0, 622
-  size: 154, 93
-IdleUp
-  xy: 154, 622
-  size: 154, 93
-IdleUp
-  xy: 308, 622
-  size: 154, 93
-IdleUp
-  xy: 462, 622
-  size: 154, 93
-IdleUp
-  xy: 616, 622
-  size: 154, 93
-IdleUp
-  xy: 770, 622
-  size: 154, 93
-IdleUp
-  xy: 924, 622
-  size: 154, 93
-IdleUp
-  xy: 1078, 622
-  size: 154, 93
-IdleUp
-  xy: 1232, 622
-  size: 154, 93
-IdleUp
-  xy: 1386, 622
-  size: 154, 93
-IdleDown
-  xy: 0, 715
-  size: 154, 93
-IdleDown
-  xy: 154, 715
-  size: 154, 93
-IdleDown
-  xy: 308, 715
-  size: 154, 93
-IdleDown
-  xy: 462, 715
-  size: 154, 93
-IdleDown
-  xy: 616, 715
-  size: 154, 93
-IdleDown
-  xy: 770, 715
-  size: 154, 93
-IdleDown
-  xy: 924, 715
-  size: 154, 93
-IdleDown
-  xy: 1078, 715
-  size: 154, 93
-IdleDown
-  xy: 1232, 715
-  size: 154, 93
-IdleDown
-  xy: 1386, 715
-  size: 154, 93
-WalkUp
-  xy: 0, 808
-  size: 154, 93
-WalkUp
-  xy: 154, 808
-  size: 154, 93
-WalkUp
-  xy: 308, 808
-  size: 154, 93
-WalkUp
-  xy: 462, 808
-  size: 154, 93
-WalkDown
-  xy: 0, 901
-  size: 154, 93
-WalkDown
-  xy: 154, 901
-  size: 154, 93
-WalkDown
-  xy: 308, 901
-  size: 154, 93
-WalkDown
-  xy: 462, 901
-  size: 154, 93
+  xy: 1040, 656
+  size: 208, 148

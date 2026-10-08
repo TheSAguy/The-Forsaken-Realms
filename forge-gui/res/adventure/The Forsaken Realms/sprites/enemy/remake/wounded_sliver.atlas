@@ -1,5 +1,5 @@
 wounded_sliver.png
-size: 3094,1514
+size: 2496,804
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,235 +8,127 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 238, 145
+  size: 208, 148
 Idle
-  xy: 238, 64
-  size: 238, 145
+  xy: 208, 64
+  size: 208, 148
 Idle
-  xy: 476, 64
-  size: 238, 145
+  xy: 416, 64
+  size: 208, 148
 Idle
-  xy: 714, 64
-  size: 238, 145
+  xy: 624, 64
+  size: 208, 148
 Idle
-  xy: 952, 64
-  size: 238, 145
+  xy: 832, 64
+  size: 208, 148
 Idle
-  xy: 1190, 64
-  size: 238, 145
+  xy: 1040, 64
+  size: 208, 148
 Idle
-  xy: 1428, 64
-  size: 238, 145
+  xy: 1248, 64
+  size: 208, 148
 Idle
-  xy: 1666, 64
-  size: 238, 145
+  xy: 1456, 64
+  size: 208, 148
 Idle
-  xy: 1904, 64
-  size: 238, 145
+  xy: 1664, 64
+  size: 208, 148
 Idle
-  xy: 2142, 64
-  size: 238, 145
+  xy: 1872, 64
+  size: 208, 148
+Idle
+  xy: 2080, 64
+  size: 208, 148
+Idle
+  xy: 2288, 64
+  size: 208, 148
 Walk
-  xy: 0, 209
-  size: 238, 145
+  xy: 0, 212
+  size: 208, 148
 Walk
-  xy: 238, 209
-  size: 238, 145
+  xy: 208, 212
+  size: 208, 148
 Walk
-  xy: 476, 209
-  size: 238, 145
+  xy: 416, 212
+  size: 208, 148
 Walk
-  xy: 714, 209
-  size: 238, 145
+  xy: 624, 212
+  size: 208, 148
 Walk
-  xy: 952, 209
-  size: 238, 145
+  xy: 832, 212
+  size: 208, 148
+Walk
+  xy: 1040, 212
+  size: 208, 148
+Walk
+  xy: 1248, 212
+  size: 208, 148
+Walk
+  xy: 1456, 212
+  size: 208, 148
 Attack
-  xy: 0, 354
-  size: 238, 145
+  xy: 0, 360
+  size: 208, 148
 Attack
-  xy: 238, 354
-  size: 238, 145
+  xy: 208, 360
+  size: 208, 148
 Attack
-  xy: 476, 354
-  size: 238, 145
+  xy: 416, 360
+  size: 208, 148
 Attack
-  xy: 714, 354
-  size: 238, 145
+  xy: 624, 360
+  size: 208, 148
 Attack
-  xy: 952, 354
-  size: 238, 145
+  xy: 832, 360
+  size: 208, 148
 Attack
-  xy: 1190, 354
-  size: 238, 145
+  xy: 1040, 360
+  size: 208, 148
 Attack
-  xy: 1428, 354
-  size: 238, 145
+  xy: 1248, 360
+  size: 208, 148
 Attack
-  xy: 1666, 354
-  size: 238, 145
+  xy: 1456, 360
+  size: 208, 148
+Attack
+  xy: 1664, 360
+  size: 208, 148
+Attack
+  xy: 1872, 360
+  size: 208, 148
+Attack
+  xy: 2080, 360
+  size: 208, 148
+Attack
+  xy: 2288, 360
+  size: 208, 148
 Hit
-  xy: 0, 499
-  size: 238, 145
+  xy: 0, 508
+  size: 208, 148
 Hit
-  xy: 238, 499
-  size: 238, 145
+  xy: 208, 508
+  size: 208, 148
 Hit
-  xy: 476, 499
-  size: 238, 145
+  xy: 416, 508
+  size: 208, 148
 Hit
-  xy: 714, 499
-  size: 238, 145
-Hit
-  xy: 952, 499
-  size: 238, 145
+  xy: 624, 508
+  size: 208, 148
 Death
-  xy: 0, 644
-  size: 238, 145
+  xy: 0, 656
+  size: 208, 148
 Death
-  xy: 238, 644
-  size: 238, 145
+  xy: 208, 656
+  size: 208, 148
 Death
-  xy: 476, 644
-  size: 238, 145
+  xy: 416, 656
+  size: 208, 148
 Death
-  xy: 714, 644
-  size: 238, 145
+  xy: 624, 656
+  size: 208, 148
 Death
-  xy: 952, 644
-  size: 238, 145
+  xy: 832, 656
+  size: 208, 148
 Death
-  xy: 1190, 644
-  size: 238, 145
-Death
-  xy: 1428, 644
-  size: 238, 145
-Death
-  xy: 1666, 644
-  size: 238, 145
-Death
-  xy: 1904, 644
-  size: 238, 145
-Death
-  xy: 2142, 644
-  size: 238, 145
-Death
-  xy: 2380, 644
-  size: 238, 145
-Death
-  xy: 2618, 644
-  size: 238, 145
-Death
-  xy: 2856, 644
-  size: 238, 145
-Wake
-  xy: 0, 789
-  size: 238, 145
-Wake
-  xy: 238, 789
-  size: 238, 145
-Wake
-  xy: 476, 789
-  size: 238, 145
-Wake
-  xy: 714, 789
-  size: 238, 145
-Wake
-  xy: 952, 789
-  size: 238, 145
-Wake
-  xy: 1190, 789
-  size: 238, 145
-Wake
-  xy: 1428, 789
-  size: 238, 145
-IdleUp
-  xy: 0, 934
-  size: 238, 145
-IdleUp
-  xy: 238, 934
-  size: 238, 145
-IdleUp
-  xy: 476, 934
-  size: 238, 145
-IdleUp
-  xy: 714, 934
-  size: 238, 145
-IdleUp
-  xy: 952, 934
-  size: 238, 145
-IdleUp
-  xy: 1190, 934
-  size: 238, 145
-IdleUp
-  xy: 1428, 934
-  size: 238, 145
-IdleUp
-  xy: 1666, 934
-  size: 238, 145
-IdleUp
-  xy: 1904, 934
-  size: 238, 145
-IdleUp
-  xy: 2142, 934
-  size: 238, 145
-IdleDown
-  xy: 0, 1079
-  size: 238, 145
-IdleDown
-  xy: 238, 1079
-  size: 238, 145
-IdleDown
-  xy: 476, 1079
-  size: 238, 145
-IdleDown
-  xy: 714, 1079
-  size: 238, 145
-IdleDown
-  xy: 952, 1079
-  size: 238, 145
-IdleDown
-  xy: 1190, 1079
-  size: 238, 145
-IdleDown
-  xy: 1428, 1079
-  size: 238, 145
-IdleDown
-  xy: 1666, 1079
-  size: 238, 145
-IdleDown
-  xy: 1904, 1079
-  size: 238, 145
-IdleDown
-  xy: 2142, 1079
-  size: 238, 145
-WalkUp
-  xy: 0, 1224
-  size: 238, 145
-WalkUp
-  xy: 238, 1224
-  size: 238, 145
-WalkUp
-  xy: 476, 1224
-  size: 238, 145
-WalkUp
-  xy: 714, 1224
-  size: 238, 145
-WalkUp
-  xy: 952, 1224
-  size: 238, 145
-WalkDown
-  xy: 0, 1369
-  size: 238, 145
-WalkDown
-  xy: 238, 1369
-  size: 238, 145
-WalkDown
-  xy: 476, 1369
-  size: 238, 145
-WalkDown
-  xy: 714, 1369
-  size: 238, 145
-WalkDown
-  xy: 952, 1369
-  size: 238, 145
+  xy: 1040, 656
+  size: 208, 148

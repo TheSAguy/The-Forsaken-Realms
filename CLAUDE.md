@@ -67,6 +67,11 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 495): **LOCAL + UNRELEASED (data only)** - the Sliver from the user's own Pixelate clips (still +
+idle/walk/attack; death synthesized), one still tinted into eight colors for the 17 slivers of batch 10, replacing their
+generated serpents in place (same 17 atlases under `sprites/enemy/remake/`, enemies.json 15 scales, two keepSize kept).
+The Procedural Pixel Creatures session; the peer (#30) verifies and packages when the game closes. Not seen in play.
+
 ## STATE 2026-10-08 (round 494): **LOCAL + UNRELEASED** - Ascendance's pick-1-of-3 rewards (`AscendanceUI`,
 `AscendanceRewards`):
 - Tap the HUD "Asc" panel to take the oldest waiting level's offer (or see the status).

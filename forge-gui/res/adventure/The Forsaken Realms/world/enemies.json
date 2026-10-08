@@ -21993,7 +21993,7 @@
         ],
         "tier": "Rare",
         "difficulty": 1,
-        "scale": 0.2407
+        "scale": 0.1494
     },
     {
         "name": "Mighty Djinn",
@@ -26164,7 +26164,7 @@
         ],
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.2955
+        "scale": 0.1494
     },
     {
         "name": "Red Beast",
@@ -27826,7 +27826,7 @@
         ],
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2381
+        "scale": 0.1494
     },
     {
         "name": "Sliver",
@@ -27863,7 +27863,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.2955
+        "scale": 0.1494
     },
     {
         "name": "Sliver Queen",
@@ -28100,7 +28100,7 @@
             "BiomeBlack"
         ],
         "tier": "Rare",
-        "scale": 0.2381
+        "scale": 0.1494
     },
     {
         "name": "Sliver_Blue",
@@ -28157,7 +28157,7 @@
             "BiomeBlue"
         ],
         "tier": "Rare",
-        "scale": 0.2381
+        "scale": 0.1494
     },
     {
         "name": "Sliver_Green",
@@ -28214,7 +28214,7 @@
             "BiomeGreen"
         ],
         "tier": "Rare",
-        "scale": 0.2381
+        "scale": 0.1494
     },
     {
         "name": "Sliver_Red",
@@ -28271,7 +28271,7 @@
             "BiomeRed"
         ],
         "tier": "Uncommon",
-        "scale": 0.2928
+        "scale": 0.1494
     },
     {
         "name": "Sliver_White",
@@ -28328,7 +28328,7 @@
             "BiomeWhite"
         ],
         "tier": "Uncommon",
-        "scale": 0.2955
+        "scale": 0.1494
     },
     {
         "name": "Slobad",
@@ -33413,7 +33413,7 @@
         ],
         "tier": "Common",
         "difficulty": 0.1,
-        "scale": 0.3659
+        "scale": 0.3449
     },
     {
         "name": "Wraith",
@@ -37651,7 +37651,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2321,
+        "scale": 0.1494,
         "life": 50,
         "rewards": [
             {
@@ -45041,7 +45041,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2321,
+        "scale": 0.1494,
         "life": 40,
         "rewards": [
             {
@@ -45116,7 +45116,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2407,
+        "scale": 0.1494,
         "life": 40,
         "rewards": [
             {
@@ -45191,7 +45191,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2321,
+        "scale": 0.1494,
         "life": 40,
         "rewards": [
             {
@@ -45337,7 +45337,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2407,
+        "scale": 0.1494,
         "life": 40,
         "rewards": [
             {
@@ -45409,7 +45409,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2321,
+        "scale": 0.1494,
         "life": 40,
         "rewards": [
             {
@@ -117573,7 +117573,7 @@
         "nameOverride": "Spined Sliver",
         "boss": true,
         "tier": "Uncommon",
-        "scale": 0.2973
+        "scale": 0.2802
     },
     {
         "name": "Tibalt's Torturer",

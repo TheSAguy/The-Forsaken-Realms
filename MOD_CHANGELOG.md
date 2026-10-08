@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 495: the Sliver from the user's own clips, in eight colors (2026-10-08)
+
+The Procedural Pixel Creatures session: the user's AI still of a sliver (a golden-brown serpent reared on its coils, a
+bladed crest, a red chest gem, one sickle-claw arm, a blade-tipped tail) and their Kling idle, walk and attack clips
+through Pixelate (`pixelate_to_forge.py`; no death clip: the flash, recoil, darkening and fades are synthesized). One
+still serves all 17 slivers of batch 10 (round 487), whose generated serpents were the weakest of that batch:
+- as made: Sliver, Sliver Overlord, the Slivdrazi Monstrosity;
+- a hue or lightness tint of the same frames for the color sprites (new converter options `--clips`, `--tint-hue`,
+  `--tint-chroma`, `--tint-light`): black (Sliver_Black, Metallic Sliver, Recruiter Sliver), blue (Sliver_Blue, Sliver
+  Weftwinder), green (Sliver_Green, Sliver Hivelord), red (Sliver_Red, Sliver Legion), white (Sliver_White, Sliver
+  Gravemother), pink (the Slivdrazi Experiment, The First Sliver), tan (the Wounded Sliver).
+- The attack: Kling turned "the red gem flares" into a glowing burst round the head during the slash; kept as made
+  (a redo without that line is the user's call).
+- Same 17 atlases under `sprites/enemy/remake/` (replaced in place); enemies.json 15 scales (the ranked slivers at 0.15,
+  a 128 px creature at the rank body), the Slivdrazi Monstrosity and the Wounded Sliver at their keepSize drawn size.
+  `validate_plane_data.py` unchanged; the audit flags the shadow gap under the attack's leap frames. The user's own
+  art: no credits change.
+
 ## Round 494: Ascendance's rewards - pick 1 of 3 on every level that is not a milestone (2026-10-08)
 
 The user's list: "+3 life for the first duel each day. (The second time you take this it would be the first 2 duels,

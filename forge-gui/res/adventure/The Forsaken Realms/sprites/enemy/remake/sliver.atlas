@@ -1,5 +1,5 @@
 sliver.png
-size: 1638,804
+size: 2496,804
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,217 +8,127 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 126, 74
+  size: 208, 148
 Idle
-  xy: 126, 64
-  size: 126, 74
+  xy: 208, 64
+  size: 208, 148
 Idle
-  xy: 252, 64
-  size: 126, 74
+  xy: 416, 64
+  size: 208, 148
 Idle
-  xy: 378, 64
-  size: 126, 74
+  xy: 624, 64
+  size: 208, 148
 Idle
-  xy: 504, 64
-  size: 126, 74
+  xy: 832, 64
+  size: 208, 148
 Idle
-  xy: 630, 64
-  size: 126, 74
+  xy: 1040, 64
+  size: 208, 148
 Idle
-  xy: 756, 64
-  size: 126, 74
+  xy: 1248, 64
+  size: 208, 148
 Idle
-  xy: 882, 64
-  size: 126, 74
+  xy: 1456, 64
+  size: 208, 148
 Idle
-  xy: 1008, 64
-  size: 126, 74
+  xy: 1664, 64
+  size: 208, 148
 Idle
-  xy: 1134, 64
-  size: 126, 74
+  xy: 1872, 64
+  size: 208, 148
+Idle
+  xy: 2080, 64
+  size: 208, 148
+Idle
+  xy: 2288, 64
+  size: 208, 148
 Walk
-  xy: 0, 138
-  size: 126, 74
-Walk
-  xy: 126, 138
-  size: 126, 74
-Walk
-  xy: 252, 138
-  size: 126, 74
-Walk
-  xy: 378, 138
-  size: 126, 74
-Attack
   xy: 0, 212
-  size: 126, 74
+  size: 208, 148
+Walk
+  xy: 208, 212
+  size: 208, 148
+Walk
+  xy: 416, 212
+  size: 208, 148
+Walk
+  xy: 624, 212
+  size: 208, 148
+Walk
+  xy: 832, 212
+  size: 208, 148
+Walk
+  xy: 1040, 212
+  size: 208, 148
+Walk
+  xy: 1248, 212
+  size: 208, 148
+Walk
+  xy: 1456, 212
+  size: 208, 148
 Attack
-  xy: 126, 212
-  size: 126, 74
-Attack
-  xy: 252, 212
-  size: 126, 74
-Attack
-  xy: 378, 212
-  size: 126, 74
-Attack
-  xy: 504, 212
-  size: 126, 74
-Attack
-  xy: 630, 212
-  size: 126, 74
-Attack
-  xy: 756, 212
-  size: 126, 74
-Hit
-  xy: 0, 286
-  size: 126, 74
-Hit
-  xy: 126, 286
-  size: 126, 74
-Hit
-  xy: 252, 286
-  size: 126, 74
-Hit
-  xy: 378, 286
-  size: 126, 74
-Death
   xy: 0, 360
-  size: 126, 74
-Death
-  xy: 126, 360
-  size: 126, 74
-Death
-  xy: 252, 360
-  size: 126, 74
-Death
-  xy: 378, 360
-  size: 126, 74
-Death
-  xy: 504, 360
-  size: 126, 74
-Death
-  xy: 630, 360
-  size: 126, 74
-Death
-  xy: 756, 360
-  size: 126, 74
-Death
-  xy: 882, 360
-  size: 126, 74
-Death
-  xy: 1008, 360
-  size: 126, 74
-Death
-  xy: 1134, 360
-  size: 126, 74
-Death
-  xy: 1260, 360
-  size: 126, 74
-Death
-  xy: 1386, 360
-  size: 126, 74
-Death
-  xy: 1512, 360
-  size: 126, 74
-Wake
-  xy: 0, 434
-  size: 126, 74
-Wake
-  xy: 126, 434
-  size: 126, 74
-Wake
-  xy: 252, 434
-  size: 126, 74
-Wake
-  xy: 378, 434
-  size: 126, 74
-Wake
-  xy: 504, 434
-  size: 126, 74
-Wake
-  xy: 630, 434
-  size: 126, 74
-IdleUp
+  size: 208, 148
+Attack
+  xy: 208, 360
+  size: 208, 148
+Attack
+  xy: 416, 360
+  size: 208, 148
+Attack
+  xy: 624, 360
+  size: 208, 148
+Attack
+  xy: 832, 360
+  size: 208, 148
+Attack
+  xy: 1040, 360
+  size: 208, 148
+Attack
+  xy: 1248, 360
+  size: 208, 148
+Attack
+  xy: 1456, 360
+  size: 208, 148
+Attack
+  xy: 1664, 360
+  size: 208, 148
+Attack
+  xy: 1872, 360
+  size: 208, 148
+Attack
+  xy: 2080, 360
+  size: 208, 148
+Attack
+  xy: 2288, 360
+  size: 208, 148
+Hit
   xy: 0, 508
-  size: 126, 74
-IdleUp
-  xy: 126, 508
-  size: 126, 74
-IdleUp
-  xy: 252, 508
-  size: 126, 74
-IdleUp
-  xy: 378, 508
-  size: 126, 74
-IdleUp
-  xy: 504, 508
-  size: 126, 74
-IdleUp
-  xy: 630, 508
-  size: 126, 74
-IdleUp
-  xy: 756, 508
-  size: 126, 74
-IdleUp
-  xy: 882, 508
-  size: 126, 74
-IdleUp
-  xy: 1008, 508
-  size: 126, 74
-IdleUp
-  xy: 1134, 508
-  size: 126, 74
-IdleDown
-  xy: 0, 582
-  size: 126, 74
-IdleDown
-  xy: 126, 582
-  size: 126, 74
-IdleDown
-  xy: 252, 582
-  size: 126, 74
-IdleDown
-  xy: 378, 582
-  size: 126, 74
-IdleDown
-  xy: 504, 582
-  size: 126, 74
-IdleDown
-  xy: 630, 582
-  size: 126, 74
-IdleDown
-  xy: 756, 582
-  size: 126, 74
-IdleDown
-  xy: 882, 582
-  size: 126, 74
-IdleDown
-  xy: 1008, 582
-  size: 126, 74
-IdleDown
-  xy: 1134, 582
-  size: 126, 74
-WalkUp
+  size: 208, 148
+Hit
+  xy: 208, 508
+  size: 208, 148
+Hit
+  xy: 416, 508
+  size: 208, 148
+Hit
+  xy: 624, 508
+  size: 208, 148
+Death
   xy: 0, 656
-  size: 126, 74
-WalkUp
-  xy: 126, 656
-  size: 126, 74
-WalkUp
-  xy: 252, 656
-  size: 126, 74
-WalkUp
-  xy: 378, 656
-  size: 126, 74
-WalkDown
-  xy: 0, 730
-  size: 126, 74
-WalkDown
-  xy: 126, 730
-  size: 126, 74
-WalkDown
-  xy: 252, 730
-  size: 126, 74
-WalkDown
-  xy: 378, 730
-  size: 126, 74
+  size: 208, 148
+Death
+  xy: 208, 656
+  size: 208, 148
+Death
+  xy: 416, 656
+  size: 208, 148
+Death
+  xy: 624, 656
+  size: 208, 148
+Death
+  xy: 832, 656
+  size: 208, 148
+Death
+  xy: 1040, 656
+  size: 208, 148
