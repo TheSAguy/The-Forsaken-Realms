@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 486: the five castles open only to their treasure key or War; the user's new hole art (2026-10-08)
+
+The user: "Here is a new Hole Art. Guards should be strong for the hidden treasure. In each or the 5 AI biomes, one of
+the treasure rewards needs to be a key to get into that AI biomes castle. So the player can't enter unless they have the
+key or is at war with that AI." Asked about story quest 52 (its "Find the X Castle" / "Take the X Seal" stages need
+those castles): the gate with exceptions - but "for existing saves, you can't re-enter unless you have the key at war".
+
+- **The keys** (`items.json`): White / Blue / Black / Red / Green Castle Key - quest items, the plane's WhiteKey ...
+  GreenKey icons. Each color region's treasure now pays its key with the purse (`TreasureHunt.castleKeyName`,
+  `treasureRewards`); the Wastes treasure has none. The map page says what lies buried with it.
+- **The gate** (`WorldStage`, after the War-barred gate): a castle tagged `Chapter1Boss` (the five color castles, the
+  color by its Biome tag) stays shut without its key unless the player is at War with the color
+  (`TreasureHunt.lockedCastleRegion`; `ColorReputation.Status.WAR`). A dialog says why and how to get in; walk off and
+  back on to try again. No exception for a castle entered before. Emrakul's Castle, the AI capitals and the other
+  castles are not touched.
+- **"Find the X Castle" still counts at the gate**: on the world map `AdventureQuestStage.checkIfTargetLocation()`
+  answers `worldMapOK` (false for Travel stages), so firing the ordinary ENTERPOI event there counted for nothing (seen
+  in the agent test). New `AdventureQuestController.updateArrivedAtGate` -> `AdventureQuestData.arriveAtGate` ->
+  `AdventureQuestStage.arriveAtGate`, which match the place directly (target POI, else its POI tags). Methods only - no
+  saved quest field. Taking the seal still needs the castle.
+- **The guardians stay as strong as they were** (the user: "Guards should be strong") - 1.5x life Archmages.
+- **The holes** (`sprites/treasure_obelisks.png/.atlas`, rebuilt: the obelisks pixel-identical, the holes 48 px wide
+  now): cut from the user's 15-hole sheet (`ChatGPT Image Oct 7, 2026, 10_37_18 PM.png`) by outline, shrunk with a
+  20-color palette: Wastes = #7 greyed to ash, White = #2, Blue = #3 (sand ring), Black = #15 (dark), Red = #8 (orange
+  rim, red pit), Green = #14 (mossy). The previous iStock-preview holes are gone.
+- Agent-tested: the Blue Castle's gate shut with quest 52 open (the Find stage did not tick - hence the fix above);
+  after the fix the Black Castle's gate, never entered, ticked "Find the Black Castle" ("[TFR-Quest] arrived at the
+  shut gate of Black Castle"); the Blue Castle Key opened it; the Red Castle shut, then open once at War with Red (`give rep red -300`);
+  two new Red holes on the desert ground. Logs clean.
+
 ## Round 487: generator batch 10 - the elementals and the remaining low-res creatures (2026-10-08)
 
 The Procedural Pixel Creatures session's tenth and last batch of the non-humanoid list (the user, overnight: "Batch 10

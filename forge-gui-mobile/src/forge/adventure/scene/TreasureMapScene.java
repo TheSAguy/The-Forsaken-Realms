@@ -162,6 +162,10 @@ public class TreasureMapScene extends UIScene {
         else
             text = "No pieces yet. Look for the " + name + " obelisk somewhere in the " + name + " lands - it moves on after"
                     + " a week.";
+        // Round 486: a color's treasure holds the key to its castle.
+        String key = TreasureHunt.castleKeyName(h[TreasureHunt.H_REGION]);
+        if (key != null && h[TreasureHunt.H_FOUND] == 0)
+            text += " Buried with it: the " + key + " - the " + name + " Castle opens only to its key, or at war.";
         boolean landscape = Forge.isLandscapeMode();
         Image image = new Image(mapTexture(world, h));
         TypingLabel label = Controls.newTypingLabel("[BLACK]" + text);

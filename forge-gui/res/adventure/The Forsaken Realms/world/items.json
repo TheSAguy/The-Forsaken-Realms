@@ -7962,5 +7962,41 @@
         "shardsNeeded":  5,
         "commandOnUse":  "treasure dig",
         "rarity":  "Rare"
+    },
+    {
+        "name":  "White Castle Key",
+        "description":  "A heavy key, dug up with the White treasure. It opens the gates of the White Castle - without it, only war with White gets you in.",
+        "iconName":  "WhiteKey",
+        "questItem":  true,
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Blue Castle Key",
+        "description":  "A heavy key, dug up with the Blue treasure. It opens the gates of the Blue Castle - without it, only war with Blue gets you in.",
+        "iconName":  "BlueKey",
+        "questItem":  true,
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Black Castle Key",
+        "description":  "A heavy key, dug up with the Black treasure. It opens the gates of the Black Castle - without it, only war with Black gets you in.",
+        "iconName":  "BlackKey",
+        "questItem":  true,
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Red Castle Key",
+        "description":  "A heavy key, dug up with the Red treasure. It opens the gates of the Red Castle - without it, only war with Red gets you in.",
+        "iconName":  "RedKey",
+        "questItem":  true,
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Green Castle Key",
+        "description":  "A heavy key, dug up with the Green treasure. It opens the gates of the Green Castle - without it, only war with Green gets you in.",
+        "iconName":  "GreenKey",
+        "questItem":  true,
+        "rarity":  "Rare"
     }
+
 ]

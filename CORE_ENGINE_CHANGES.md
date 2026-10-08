@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 486 - the Chapter-1 castles' key gate
+
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - POI collision: after the War-barred gate, a castle
+  locked by `TreasureHunt.lockedCastleRegion` fires `AdventureQuestController.updateArrivedAtGate`, shows quest dialogs
+  and `showCastleLockedDialog` (new) instead of entering.
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** - `updateArrivedAtGate(PointOfInterest)`.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** - `arriveAtGate(PointOfInterest)` (method only).
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java`** - `arriveAtGate(PointOfInterest)`: a Travel
+  stage matched to the place without the world-map `worldMapOK` short-cut (method only).
+- Mod-added `util/TreasureHunt.java` (castleKeyName, lockedCastleRegion, the key reward) and `scene/TreasureMapScene.java`.
+
 ### Round 485 - one Back leaves the treasure maps
 
 - **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`**, **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`**

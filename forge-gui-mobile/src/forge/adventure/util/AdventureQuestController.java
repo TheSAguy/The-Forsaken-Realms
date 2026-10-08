@@ -594,6 +594,18 @@ public class AdventureQuestController implements Serializable {
         }
     }
 
+    /** Round 486: the player stands at a place's shut gate (WorldStage, the Chapter-1 castles) - its "find it" stages
+     *  count, though the player never gets in. */
+    public void updateArrivedAtGate(PointOfInterest place) {
+        boolean advanced = false;
+        for (AdventureQuestData quest : Current.player().getQuests())
+            advanced |= quest.arriveAtGate(place);
+        if (advanced) {
+            System.out.println("[TFR-Quest] arrived at the shut gate of " + place.getDisplayName() + " - its \"find\" stage counts");
+            activateNextStages();
+        }
+    }
+
     public void updateEnteredPOI(PointOfInterest arrivedAt)
     {
         AdventureQuestEvent event = new AdventureQuestEvent();

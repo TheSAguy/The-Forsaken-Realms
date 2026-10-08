@@ -1082,6 +1082,18 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         }
                         continue;
                     }
+                    // Round 486 (the user: "one of the treasure rewards needs to be a key to get into that AI biomes castle.
+                    // So the player can't enter unless they have the key or is at war with that AI"): the five Chapter-1
+                    // castles. Reaching the gate still counts as finding the castle (story quest 52's "Find the X Castle" -
+                    // the user's choice); only going in needs the key or War.
+                    int lockedRegion = forge.adventure.util.TreasureHunt.lockedCastleRegion(point.getPointOfInterest());
+                    if (lockedRegion >= 0) {
+                        collidingPoint = point;
+                        AdventureQuestController.instance().updateArrivedAtGate(point.getPointOfInterest());
+                        AdventureQuestController.instance().showQuestDialogs(MapStage.getInstance());
+                        showCastleLockedDialog(point.getPointOfInterest(), lockedRegion);
+                        continue;
+                    }
                     // Legendary endgame content (2026-08-21, v1.00 feedback "Tier 1"): the
                     // Realm of Legends-ported dungeons (questTag "Legendary") are balanced far
                     // above the surrounding world - warn at the door instead of ambushing.
@@ -1599,6 +1611,27 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.getButtonTable().add(Controls.newTextButton("Leave", this::hideDialog)).width(240f).row();
         dialog.setKeepWithinStage(true);
         showDialog();
+    }
+
+    /** Round 486: a Chapter-1 castle's shut gate - the color's treasure key, or War with the color, opens it. */
+    private void showCastleLockedDialog(PointOfInterest poi, int region) {
+        Dialog dialog = getDialog();
+        dialog.getContentTable().clear();
+        dialog.getButtonTable().clear();
+        dialog.clearListeners();
+        String color = forge.adventure.util.TreasureHunt.REGION_NAMES[region];
+        TypingLabel label = Controls.newTypingLabel("The gates of " + poi.getDisplayName() + " are sealed. Its key lies"
+                + " buried with the " + color + " treasure - follow the " + color + " obelisks' map and dig it up. Only the "
+                + forge.adventure.util.TreasureHunt.castleKeyName(region) + ", or [RED]War[] with " + color
+                + ", will open them.");
+        label.setWrap(true);
+        label.skipToTheEnd();
+        dialog.getContentTable().add(label).width(250f).row();
+        dialog.getButtonTable().add(Controls.newTextButton("Leave", this::hideDialog)).width(240f).row();
+        dialog.setKeepWithinStage(true);
+        showDialog();
+        System.out.println("[TFR-Treasure] " + poi.getDisplayName() + "'s gate stays shut - no "
+                + forge.adventure.util.TreasureHunt.castleKeyName(region) + ", not at War with " + color);
     }
 
     // Standalone welcome popup (MOD_SCOPE.md #89, relocated here 2026-08-20): plain OK-dialog

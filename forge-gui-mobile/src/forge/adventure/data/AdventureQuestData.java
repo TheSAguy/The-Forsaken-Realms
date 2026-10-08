@@ -538,6 +538,20 @@ public class AdventureQuestData implements Serializable {
         completed = done;
     }
 
+    /** Round 486: a place reached at its shut gate - see AdventureQuestStage.arriveAtGate(). True when a stage advanced. */
+    public boolean arriveAtGate(PointOfInterest place) {
+        boolean advanced = false;
+        for (AdventureQuestStage stage : stages)
+            advanced |= stage.arriveAtGate(place);
+        if (advanced) {
+            boolean done = true;
+            for (AdventureQuestStage stage : stages)
+                done &= stage.getStatus() == COMPLETE;
+            completed = done;
+        }
+        return advanced;
+    }
+
     public DialogData getPrologue() {
         if (prologue != null && !prologue.isDisplayed() && !prologueDisplayed) {
             prologue.markDisplayed();

@@ -213,6 +213,30 @@ public class AdventureQuestStage implements Serializable {
         return checkIfTargetLocation(TileMapScene.instance().rootPoint);
     }
 
+    /**
+     * Round 486: a Travel stage reached at a place's shut gate (WorldStage, the five Chapter-1 castles) counts as found -
+     * the user chose that the story quest's "Find the X Castle" still completes there. On the world map
+     * checkIfTargetLocation() answers worldMapOK, so the place is matched here directly. True when this stage advanced.
+     */
+    public boolean arriveAtGate(PointOfInterest place) {
+        if (status != ACTIVE || objective != Travel || place == null || place.getData() == null)
+            return false;
+        boolean matches;
+        if (targetPOI != null) {
+            matches = targetPOI.getPosition().equals(place.getPosition());
+        } else if (anyPOI) {
+            matches = true;
+        } else {
+            List<String> placeTags = place.getData().questTags == null ? java.util.Collections.emptyList()
+                    : Arrays.asList(place.getData().questTags);
+            matches = !POITags.isEmpty() && placeTags.containsAll(POITags);
+        }
+        if (!matches)
+            return false;
+        status = ++progress3 >= count3 ? COMPLETE : status;
+        return true;
+    }
+
     public boolean checkIfTargetLocation(PointOfInterest locationToCheck) {
         if (!MapStage.getInstance().isInMap())
         {

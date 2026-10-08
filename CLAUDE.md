@@ -67,6 +67,12 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 486): **LOCAL + UNRELEASED** - the five Chapter-1 castles (tag `Chapter1Boss`) open only to
+their color's Castle Key (a new reward of that color's treasure; items.json) or at War with the color - no exception for
+castles entered before (the user). Reaching the shut gate still ticks story quest 52's "Find the X Castle"
+(`updateArrivedAtGate` / `arriveAtGate`, methods only). Guardians unchanged (strong, the user). New 48 px holes from the
+user's sheet in `treasure_obelisks.png`. Agent-tested.
+
 ## STATE 2026-10-08 (round 487): **LOCAL + UNRELEASED (data only)** - the Procedural Pixel Creatures session's generator
 batch 10, the last of the non-humanoid list (the user, overnight: "Batch 10 of the generator (80 sprites: elementals
 and the remaining low-res creatures)"; 34 of the 80 had been done by the Pixelate and pack rounds, the 18 detailed ones

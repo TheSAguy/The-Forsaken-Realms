@@ -538,7 +538,43 @@ public final class TreasureHunt {
         return true;
     }
 
-    /** Test placeholder treasure: 1000 gold, 40 shards and four rare-or-mythic cards of the region's color. */
+    /**
+     * Round 486 (the user: "In each of the 5 AI biomes, one of the treasure rewards needs to be a key to get into that AI
+     * biomes castle. So the player can't enter unless they have the key or is at war with that AI"): the key a color
+     * region's treasure holds (items.json "White Castle Key" ...), null for the Wastes.
+     */
+    public static String castleKeyName(int r) {
+        return r >= 1 && r < REGIONS.length ? REGION_NAMES[r] + " Castle Key" : null;
+    }
+
+    /**
+     * Round 486: the region (1-5) whose Chapter-1 castle this is (type castle, tagged Chapter1Boss, its color by its
+     * Biome tag) when the gate stays shut - no key and not at War with that color; -1 when the player may enter or it is
+     * no such castle. No exception for a castle entered before (the user: "for existing saves, you can't re-enter unless
+     * you have the key at war").
+     */
+    public static int lockedCastleRegion(PointOfInterest poi) {
+        if (!isEnabled() || poi == null || poi.getData() == null || poi.getData().questTags == null
+                || !"castle".equals(poi.getData().type))
+            return -1;
+        List<String> tags = java.util.Arrays.asList(poi.getData().questTags);
+        if (!tags.contains("Chapter1Boss"))
+            return -1;
+        int r = -1;
+        for (int i = 1; i < REGIONS.length; i++)
+            if (tags.contains("Biome" + REGION_NAMES[i]))
+                r = i;
+        if (r < 0)
+            return -1;
+        if (Current.player().hasItem(castleKeyName(r)))
+            return -1;
+        if (ColorReputation.getStatus(REGIONS[r]) == ColorReputation.Status.WAR)
+            return -1;
+        return r;
+    }
+
+    /** Test placeholder treasure: 1000 gold, 40 shards and four rare-or-mythic cards of the region's color - and, from
+     *  round 486, the color's castle key. */
     private static RewardData[] treasureRewards(int r) {
         RewardData gold = new RewardData();
         gold.type = "gold";
@@ -554,7 +590,15 @@ public final class TreasureHunt {
         cards.probability = 1;
         cards.rarity = new String[]{"Rare", "Mythic Rare"};
         cards.colors = new String[]{TREASURE_COLORS[r]};
-        return new RewardData[]{gold, shards, cards};
+        String keyName = castleKeyName(r);
+        if (keyName == null)
+            return new RewardData[]{gold, shards, cards};
+        RewardData key = new RewardData();
+        key.type = "item";
+        key.itemName = keyName;
+        key.count = 1;
+        key.probability = 1;
+        return new RewardData[]{gold, shards, cards, key};
     }
 
     public static void onGuardianBeaten(int r) {

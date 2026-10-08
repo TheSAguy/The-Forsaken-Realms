@@ -1,5 +1,5 @@
 treasure_obelisks.png
-size: 192,51
+size: 288,52
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -23,19 +23,19 @@ ObeliskGreen
   size: 16, 32
 HoleWaste
   xy: 0, 32
-  size: 32, 9
+  size: 48, 16
 HoleWhite
-  xy: 32, 32
-  size: 32, 13
+  xy: 48, 32
+  size: 48, 20
 HoleBlue
-  xy: 64, 32
-  size: 32, 13
-HoleBlack
   xy: 96, 32
-  size: 32, 15
+  size: 48, 18
+HoleBlack
+  xy: 144, 32
+  size: 48, 13
 HoleRed
-  xy: 128, 32
-  size: 32, 19
+  xy: 192, 32
+  size: 48, 19
 HoleGreen
-  xy: 160, 32
-  size: 32, 16
+  xy: 240, 32
+  size: 48, 17
