@@ -1,0 +1,173 @@
+red_dragonkin_renegade.png
+size: 810,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 57
+Idle
+  xy: 90, 64
+  size: 90, 57
+Idle
+  xy: 180, 64
+  size: 90, 57
+Idle
+  xy: 270, 64
+  size: 90, 57
+Walk
+  xy: 0, 121
+  size: 90, 57
+Walk
+  xy: 90, 121
+  size: 90, 57
+Walk
+  xy: 180, 121
+  size: 90, 57
+Walk
+  xy: 270, 121
+  size: 90, 57
+Walk
+  xy: 360, 121
+  size: 90, 57
+Walk
+  xy: 450, 121
+  size: 90, 57
+Walk
+  xy: 540, 121
+  size: 90, 57
+Walk
+  xy: 630, 121
+  size: 90, 57
+Attack
+  xy: 0, 178
+  size: 90, 57
+Attack
+  xy: 90, 178
+  size: 90, 57
+Attack
+  xy: 180, 178
+  size: 90, 57
+Attack
+  xy: 270, 178
+  size: 90, 57
+Attack
+  xy: 360, 178
+  size: 90, 57
+Attack
+  xy: 450, 178
+  size: 90, 57
+Hit
+  xy: 0, 235
+  size: 90, 57
+Hit
+  xy: 90, 235
+  size: 90, 57
+Hit
+  xy: 180, 235
+  size: 90, 57
+Hit
+  xy: 270, 235
+  size: 90, 57
+Death
+  xy: 0, 292
+  size: 90, 57
+Death
+  xy: 90, 292
+  size: 90, 57
+Death
+  xy: 180, 292
+  size: 90, 57
+Death
+  xy: 270, 292
+  size: 90, 57
+Death
+  xy: 360, 292
+  size: 90, 57
+Death
+  xy: 450, 292
+  size: 90, 57
+Death
+  xy: 540, 292
+  size: 90, 57
+Death
+  xy: 630, 292
+  size: 90, 57
+Death
+  xy: 720, 292
+  size: 90, 57
+IdleUp
+  xy: 0, 349
+  size: 90, 57
+IdleUp
+  xy: 90, 349
+  size: 90, 57
+IdleUp
+  xy: 180, 349
+  size: 90, 57
+IdleUp
+  xy: 270, 349
+  size: 90, 57
+IdleDown
+  xy: 0, 406
+  size: 90, 57
+IdleDown
+  xy: 90, 406
+  size: 90, 57
+IdleDown
+  xy: 180, 406
+  size: 90, 57
+IdleDown
+  xy: 270, 406
+  size: 90, 57
+WalkUp
+  xy: 0, 463
+  size: 90, 57
+WalkUp
+  xy: 90, 463
+  size: 90, 57
+WalkUp
+  xy: 180, 463
+  size: 90, 57
+WalkUp
+  xy: 270, 463
+  size: 90, 57
+WalkUp
+  xy: 360, 463
+  size: 90, 57
+WalkUp
+  xy: 450, 463
+  size: 90, 57
+WalkUp
+  xy: 540, 463
+  size: 90, 57
+WalkUp
+  xy: 630, 463
+  size: 90, 57
+WalkDown
+  xy: 0, 520
+  size: 90, 57
+WalkDown
+  xy: 90, 520
+  size: 90, 57
+WalkDown
+  xy: 180, 520
+  size: 90, 57
+WalkDown
+  xy: 270, 520
+  size: 90, 57
+WalkDown
+  xy: 360, 520
+  size: 90, 57
+WalkDown
+  xy: 450, 520
+  size: 90, 57
+WalkDown
+  xy: 540, 520
+  size: 90, 57
+WalkDown
+  xy: 630, 520
+  size: 90, 57

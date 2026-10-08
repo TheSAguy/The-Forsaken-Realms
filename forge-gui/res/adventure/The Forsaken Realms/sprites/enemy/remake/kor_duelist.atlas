@@ -1,0 +1,173 @@
+kor_duelist.png
+size: 1386,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 154, 60
+Idle
+  xy: 154, 64
+  size: 154, 60
+Idle
+  xy: 308, 64
+  size: 154, 60
+Idle
+  xy: 462, 64
+  size: 154, 60
+Walk
+  xy: 0, 124
+  size: 154, 60
+Walk
+  xy: 154, 124
+  size: 154, 60
+Walk
+  xy: 308, 124
+  size: 154, 60
+Walk
+  xy: 462, 124
+  size: 154, 60
+Walk
+  xy: 616, 124
+  size: 154, 60
+Walk
+  xy: 770, 124
+  size: 154, 60
+Walk
+  xy: 924, 124
+  size: 154, 60
+Walk
+  xy: 1078, 124
+  size: 154, 60
+Attack
+  xy: 0, 184
+  size: 154, 60
+Attack
+  xy: 154, 184
+  size: 154, 60
+Attack
+  xy: 308, 184
+  size: 154, 60
+Attack
+  xy: 462, 184
+  size: 154, 60
+Attack
+  xy: 616, 184
+  size: 154, 60
+Attack
+  xy: 770, 184
+  size: 154, 60
+Hit
+  xy: 0, 244
+  size: 154, 60
+Hit
+  xy: 154, 244
+  size: 154, 60
+Hit
+  xy: 308, 244
+  size: 154, 60
+Hit
+  xy: 462, 244
+  size: 154, 60
+Death
+  xy: 0, 304
+  size: 154, 60
+Death
+  xy: 154, 304
+  size: 154, 60
+Death
+  xy: 308, 304
+  size: 154, 60
+Death
+  xy: 462, 304
+  size: 154, 60
+Death
+  xy: 616, 304
+  size: 154, 60
+Death
+  xy: 770, 304
+  size: 154, 60
+Death
+  xy: 924, 304
+  size: 154, 60
+Death
+  xy: 1078, 304
+  size: 154, 60
+Death
+  xy: 1232, 304
+  size: 154, 60
+IdleUp
+  xy: 0, 364
+  size: 154, 60
+IdleUp
+  xy: 154, 364
+  size: 154, 60
+IdleUp
+  xy: 308, 364
+  size: 154, 60
+IdleUp
+  xy: 462, 364
+  size: 154, 60
+IdleDown
+  xy: 0, 424
+  size: 154, 60
+IdleDown
+  xy: 154, 424
+  size: 154, 60
+IdleDown
+  xy: 308, 424
+  size: 154, 60
+IdleDown
+  xy: 462, 424
+  size: 154, 60
+WalkUp
+  xy: 0, 484
+  size: 154, 60
+WalkUp
+  xy: 154, 484
+  size: 154, 60
+WalkUp
+  xy: 308, 484
+  size: 154, 60
+WalkUp
+  xy: 462, 484
+  size: 154, 60
+WalkUp
+  xy: 616, 484
+  size: 154, 60
+WalkUp
+  xy: 770, 484
+  size: 154, 60
+WalkUp
+  xy: 924, 484
+  size: 154, 60
+WalkUp
+  xy: 1078, 484
+  size: 154, 60
+WalkDown
+  xy: 0, 544
+  size: 154, 60
+WalkDown
+  xy: 154, 544
+  size: 154, 60
+WalkDown
+  xy: 308, 544
+  size: 154, 60
+WalkDown
+  xy: 462, 544
+  size: 154, 60
+WalkDown
+  xy: 616, 544
+  size: 154, 60
+WalkDown
+  xy: 770, 544
+  size: 154, 60
+WalkDown
+  xy: 924, 544
+  size: 154, 60
+WalkDown
+  xy: 1078, 544
+  size: 154, 60

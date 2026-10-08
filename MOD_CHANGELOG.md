@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 500: the devils, dragonkin, kor, leonin and metathran from the Universal LPC Spritesheet parts (2026-10-08)
+
+The Procedural Pixel Creatures session's second LPC batch (the user: "Do the devils, dragonkin, kor, leonin and
+metathran next"): 33 enemies on the 16 px hero sprites, composed from LPC parts the way round 498's were (selections in
+the generator repo's `lpc_selections/make_500.py`).
+
+- **Devil Wanderer and Renegade**: red skin (the generator's any-material palette, since the body's own has no red),
+  curled horns, a cat tail and bat wings; a dagger, and chainmail with a trident.
+- **The five Dragonkin Renegades**: the lizard head, tail and lizard wings in black, green, red, blue and pearl white,
+  sabers.
+- **All the Kor** (22): the Kor Wanderer and Renegade and the twenty older Kor - Hookmaster, Skyfisher, Sanctifier,
+  Aeronaut, Cartographer, Duelist, Outfitter, Bladewhirl, Firewalker, Castigator, Scout, Line-Slinger, Chant-Leader,
+  Spiritdancer, Skyknight, Entangler, Celebrant, Blademaster, Sky Climber, Dirgewarden - which all wore one 16 px
+  sprite (the men one, the women another); porcelain skin, platinum or white hair, each dressed and armed for its name
+  (spear, bow, white robe and staff, cape, feathered cap, rapier, vest, leather and saber, red robes and staff,
+  chainmail and mace, forest hood and bow, slingshot, white robes, lavender, pointed helmet and plate, spear, rose,
+  leather and longsword, quiver and dagger, black hood and scythe).
+- **Leonin Wanderer and Renegade**: cat ears, a cat tail and a mane on tan and gold fur; a dagger, a saber and a shield.
+- **Metathran Wanderer and Renegade**: blue skin with a fin crest; a staff, and chainmail with a spear.
+- **Files**: 33 new atlases under `sprites/enemy/remake/`; enemies.json 33 sprite paths + 33 scales (0.29-0.32).
+  `CREDITS.md`'s LPC line now covers 58 enemies over rounds 498 and 500; `standalone-packaging/CREDITS_LPC.md`
+  regenerated for both rounds by the new `lpc_credits_md.py` (parts, authors, license used, sources per enemy).
+- **Checks**: `validate_plane_data.py` unchanged; the sprite audit's one flag on the new atlases is the plate armour's
+  anti-aliased edge pixels on the Kor Skyknight (LPC art as drawn). Not seen in play.
+
 ## Round 499: the Common mana and land items become Uncommon (2026-10-08)
 
 The user, after the item audit (docs/audits/2026-10-08-items-mana-and-units.md): "For the land/mana items, let's start by

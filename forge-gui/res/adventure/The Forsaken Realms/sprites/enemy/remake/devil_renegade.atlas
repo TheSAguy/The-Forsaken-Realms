@@ -1,0 +1,179 @@
+devil_renegade.png
+size: 1620,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 180, 56
+Idle
+  xy: 180, 64
+  size: 180, 56
+Idle
+  xy: 360, 64
+  size: 180, 56
+Idle
+  xy: 540, 64
+  size: 180, 56
+Walk
+  xy: 0, 120
+  size: 180, 56
+Walk
+  xy: 180, 120
+  size: 180, 56
+Walk
+  xy: 360, 120
+  size: 180, 56
+Walk
+  xy: 540, 120
+  size: 180, 56
+Walk
+  xy: 720, 120
+  size: 180, 56
+Walk
+  xy: 900, 120
+  size: 180, 56
+Walk
+  xy: 1080, 120
+  size: 180, 56
+Walk
+  xy: 1260, 120
+  size: 180, 56
+Attack
+  xy: 0, 176
+  size: 180, 56
+Attack
+  xy: 180, 176
+  size: 180, 56
+Attack
+  xy: 360, 176
+  size: 180, 56
+Attack
+  xy: 540, 176
+  size: 180, 56
+Attack
+  xy: 720, 176
+  size: 180, 56
+Attack
+  xy: 900, 176
+  size: 180, 56
+Attack
+  xy: 1080, 176
+  size: 180, 56
+Attack
+  xy: 1260, 176
+  size: 180, 56
+Hit
+  xy: 0, 232
+  size: 180, 56
+Hit
+  xy: 180, 232
+  size: 180, 56
+Hit
+  xy: 360, 232
+  size: 180, 56
+Hit
+  xy: 540, 232
+  size: 180, 56
+Death
+  xy: 0, 288
+  size: 180, 56
+Death
+  xy: 180, 288
+  size: 180, 56
+Death
+  xy: 360, 288
+  size: 180, 56
+Death
+  xy: 540, 288
+  size: 180, 56
+Death
+  xy: 720, 288
+  size: 180, 56
+Death
+  xy: 900, 288
+  size: 180, 56
+Death
+  xy: 1080, 288
+  size: 180, 56
+Death
+  xy: 1260, 288
+  size: 180, 56
+Death
+  xy: 1440, 288
+  size: 180, 56
+IdleUp
+  xy: 0, 344
+  size: 180, 56
+IdleUp
+  xy: 180, 344
+  size: 180, 56
+IdleUp
+  xy: 360, 344
+  size: 180, 56
+IdleUp
+  xy: 540, 344
+  size: 180, 56
+IdleDown
+  xy: 0, 400
+  size: 180, 56
+IdleDown
+  xy: 180, 400
+  size: 180, 56
+IdleDown
+  xy: 360, 400
+  size: 180, 56
+IdleDown
+  xy: 540, 400
+  size: 180, 56
+WalkUp
+  xy: 0, 456
+  size: 180, 56
+WalkUp
+  xy: 180, 456
+  size: 180, 56
+WalkUp
+  xy: 360, 456
+  size: 180, 56
+WalkUp
+  xy: 540, 456
+  size: 180, 56
+WalkUp
+  xy: 720, 456
+  size: 180, 56
+WalkUp
+  xy: 900, 456
+  size: 180, 56
+WalkUp
+  xy: 1080, 456
+  size: 180, 56
+WalkUp
+  xy: 1260, 456
+  size: 180, 56
+WalkDown
+  xy: 0, 512
+  size: 180, 56
+WalkDown
+  xy: 180, 512
+  size: 180, 56
+WalkDown
+  xy: 360, 512
+  size: 180, 56
+WalkDown
+  xy: 540, 512
+  size: 180, 56
+WalkDown
+  xy: 720, 512
+  size: 180, 56
+WalkDown
+  xy: 900, 512
+  size: 180, 56
+WalkDown
+  xy: 1080, 512
+  size: 180, 56
+WalkDown
+  xy: 1260, 512
+  size: 180, 56

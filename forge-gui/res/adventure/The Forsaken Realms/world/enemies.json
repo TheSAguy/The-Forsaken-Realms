@@ -125918,7 +125918,7 @@
     },
     {
         "name": "Devil Renegade",
-        "sprite": "sprites/enemy/heroes/devil_m.atlas",
+        "sprite": "sprites/enemy/remake/devil_renegade.atlas",
         "deck": [
             "decks/standard/devil_m.dck"
         ],
@@ -125980,11 +125980,11 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.9286
+        "scale": 0.3171
     },
     {
         "name": "Devil Wanderer",
-        "sprite": "sprites/enemy/heroes/devil_f.atlas",
+        "sprite": "sprites/enemy/remake/devil_wanderer.atlas",
         "deck": [
             "decks/standard/devil_f.dck"
         ],
@@ -126045,11 +126045,12 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3095
     },
     {
         "name": "Kor Renegade",
-        "sprite": "sprites/enemy/heroes/kor_m.atlas",
+        "sprite": "sprites/enemy/remake/kor_renegade.atlas",
         "deck": [
             "decks/standard/kor_m.dck"
         ],
@@ -126109,11 +126110,11 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.9286
+        "scale": 0.3095
     },
     {
         "name": "Kor Wanderer",
-        "sprite": "sprites/enemy/heroes/kor_f.atlas",
+        "sprite": "sprites/enemy/remake/kor_wanderer.atlas",
         "deck": [
             "decks/standard/kor_f.dck"
         ],
@@ -126172,7 +126173,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3023
     },
     {
         "name": "Human Renegade",
@@ -126434,7 +126436,7 @@
     },
     {
         "name": "Metathran Renegade",
-        "sprite": "sprites/enemy/heroes/metathran_m.atlas",
+        "sprite": "sprites/enemy/remake/metathran_renegade.atlas",
         "deck": [
             "decks/standard/metathran_m.dck"
         ],
@@ -126494,11 +126496,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Metathran Wanderer",
-        "sprite": "sprites/enemy/heroes/metathran_f.atlas",
+        "sprite": "sprites/enemy/remake/metathran_wanderer.atlas",
         "deck": [
             "decks/standard/metathran_f.dck"
         ],
@@ -126560,7 +126562,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Undead Renegade",
@@ -127214,7 +127216,7 @@
     },
     {
         "name": "Leonin Renegade",
-        "sprite": "sprites/enemy/heroes/leonin_m.atlas",
+        "sprite": "sprites/enemy/remake/leonin_renegade.atlas",
         "deck": [
             "decks/standard/leonin_m.dck"
         ],
@@ -127275,11 +127277,12 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2955
     },
     {
         "name": "Leonin Wanderer",
-        "sprite": "sprites/enemy/heroes/leonin_f.atlas",
+        "sprite": "sprites/enemy/remake/leonin_wanderer.atlas",
         "deck": [
             "decks/standard/leonin_f.dck"
         ],
@@ -127338,11 +127341,12 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.2889
     },
     {
         "name": "Red Dragonkin Renegade",
-        "sprite": "sprites/enemy/heroes/dragonkin_r.atlas",
+        "sprite": "sprites/enemy/remake/red_dragonkin_renegade.atlas",
         "deck": [
             "decks/standard/dragonkin_r.dck"
         ],
@@ -127403,11 +127407,11 @@
         ],
         "tier": "Mythic",
         "flying": true,
-        "scale": 1.0833
+        "scale": 0.3421
     },
     {
         "name": "White Dragonkin Renegade",
-        "sprite": "sprites/enemy/heroes/dragonkin_w.atlas",
+        "sprite": "sprites/enemy/remake/white_dragonkin_renegade.atlas",
         "deck": [
             "decks/standard/dragonkin_w.dck"
         ],
@@ -127468,11 +127472,11 @@
         ],
         "tier": "Uncommon",
         "flying": true,
-        "scale": 1.0833
+        "scale": 0.3421
     },
     {
         "name": "Blue Dragonkin Renegade",
-        "sprite": "sprites/enemy/heroes/dragonkin_u.atlas",
+        "sprite": "sprites/enemy/remake/blue_dragonkin_renegade.atlas",
         "deck": [
             "decks/standard/dragonkin_u.dck"
         ],
@@ -127533,11 +127537,11 @@
         ],
         "tier": "Rare",
         "flying": true,
-        "scale": 1.0833
+        "scale": 0.3421
     },
     {
         "name": "Green Dragonkin Renegade",
-        "sprite": "sprites/enemy/heroes/dragonkin_g.atlas",
+        "sprite": "sprites/enemy/remake/green_dragonkin_renegade.atlas",
         "deck": [
             "decks/standard/dragonkin_g.dck"
         ],
@@ -127598,11 +127602,11 @@
         ],
         "tier": "Rare",
         "flying": true,
-        "scale": 1.0833
+        "scale": 0.3421
     },
     {
         "name": "Black Dragonkin Renegade",
-        "sprite": "sprites/enemy/heroes/dragonkin_b.atlas",
+        "sprite": "sprites/enemy/remake/black_dragonkin_renegade.atlas",
         "deck": [
             "decks/standard/dragonkin_b.dck"
         ],
@@ -127663,11 +127667,11 @@
         ],
         "tier": "Rare",
         "flying": true,
-        "scale": 1.0833
+        "scale": 0.3421
     },
     {
         "name": "Kor Hookmaster",
-        "sprite": "sprites/enemy/heroes/old_kor_01.atlas",
+        "sprite": "sprites/enemy/remake/kor_hookmaster.atlas",
         "deck": [
             "decks/standard/old_kor_01.dck"
         ],
@@ -127729,11 +127733,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3095
     },
     {
         "name": "Kor Skyfisher",
-        "sprite": "sprites/enemy/heroes/old_kor_02.atlas",
+        "sprite": "sprites/enemy/remake/kor_skyfisher.atlas",
         "deck": [
             "decks/standard/old_kor_02.dck"
         ],
@@ -127793,11 +127797,11 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.9286
+        "scale": 0.3171
     },
     {
         "name": "Kor Sanctifier",
-        "sprite": "sprites/enemy/heroes/old_kor_03.atlas",
+        "sprite": "sprites/enemy/remake/kor_sanctifier.atlas",
         "deck": [
             "decks/standard/old_kor_03.dck"
         ],
@@ -127857,11 +127861,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3171
     },
     {
         "name": "Kor Aeronaut",
-        "sprite": "sprites/enemy/heroes/old_kor_04.atlas",
+        "sprite": "sprites/enemy/remake/kor_aeronaut.atlas",
         "deck": [
             "decks/standard/old_kor_04.dck"
         ],
@@ -127921,11 +127925,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3023
     },
     {
         "name": "Kor Cartographer",
-        "sprite": "sprites/enemy/heroes/old_kor_05.atlas",
+        "sprite": "sprites/enemy/remake/kor_cartographer.atlas",
         "deck": [
             "decks/standard/old_kor_05.dck"
         ],
@@ -127985,11 +127989,11 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.9286
+        "scale": 0.2889
     },
     {
         "name": "Kor Duelist",
-        "sprite": "sprites/enemy/heroes/old_kor_06.atlas",
+        "sprite": "sprites/enemy/remake/kor_duelist.atlas",
         "deck": [
             "decks/standard/old_kor_06.dck"
         ],
@@ -128049,11 +128053,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3023
     },
     {
         "name": "Kor Outfitter",
-        "sprite": "sprites/enemy/heroes/old_kor_07.atlas",
+        "sprite": "sprites/enemy/remake/kor_outfitter.atlas",
         "deck": [
             "decks/standard/old_kor_07.dck"
         ],
@@ -128115,11 +128119,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3095
     },
     {
         "name": "Kor Bladewhirl",
-        "sprite": "sprites/enemy/heroes/old_kor_08.atlas",
+        "sprite": "sprites/enemy/remake/kor_bladewhirl.atlas",
         "deck": [
             "decks/standard/old_kor_08.dck"
         ],
@@ -128179,11 +128183,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3095
     },
     {
         "name": "Kor Firewalker",
-        "sprite": "sprites/enemy/heroes/old_kor_09.atlas",
+        "sprite": "sprites/enemy/remake/kor_firewalker.atlas",
         "deck": [
             "decks/standard/old_kor_09.dck"
         ],
@@ -128243,11 +128247,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3095
     },
     {
         "name": "Kor Castigator",
-        "sprite": "sprites/enemy/heroes/old_kor_10.atlas",
+        "sprite": "sprites/enemy/remake/kor_castigator.atlas",
         "deck": [
             "decks/standard/old_kor_10.dck"
         ],
@@ -128307,11 +128311,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3023
     },
     {
         "name": "Kor Scout",
-        "sprite": "sprites/enemy/heroes/old_kor_11.atlas",
+        "sprite": "sprites/enemy/remake/kor_scout.atlas",
         "deck": [
             "decks/standard/old_kor_11.dck"
         ],
@@ -128372,11 +128376,12 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3095
     },
     {
         "name": "Kor Line-Slinger",
-        "sprite": "sprites/enemy/heroes/old_kor_12.atlas",
+        "sprite": "sprites/enemy/remake/kor_line_slinger.atlas",
         "deck": [
             "decks/standard/old_kor_12.dck"
         ],
@@ -128435,11 +128440,12 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3095
     },
     {
         "name": "Kor Chant-Leader",
-        "sprite": "sprites/enemy/heroes/old_kor_13.atlas",
+        "sprite": "sprites/enemy/remake/kor_chant_leader.atlas",
         "deck": [
             "decks/standard/old_kor_13.dck"
         ],
@@ -128498,11 +128504,12 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3095
     },
     {
         "name": "Kor Spiritdancer",
-        "sprite": "sprites/enemy/heroes/old_kor_14.atlas",
+        "sprite": "sprites/enemy/remake/kor_spiritdancer.atlas",
         "deck": [
             "decks/standard/old_kor_14.dck"
         ],
@@ -128561,11 +128568,12 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3023
     },
     {
         "name": "Kor Skyknight",
-        "sprite": "sprites/enemy/heroes/old_kor_15.atlas",
+        "sprite": "sprites/enemy/remake/kor_skyknight.atlas",
         "deck": [
             "decks/standard/old_kor_15.dck"
         ],
@@ -128626,11 +128634,12 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3023
     },
     {
         "name": "Kor Entangler",
-        "sprite": "sprites/enemy/heroes/old_kor_16.atlas",
+        "sprite": "sprites/enemy/remake/kor_entangler.atlas",
         "deck": [
             "decks/standard/old_kor_16.dck"
         ],
@@ -128689,11 +128698,12 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3023
     },
     {
         "name": "Kor Celebrant",
-        "sprite": "sprites/enemy/heroes/old_kor_17.atlas",
+        "sprite": "sprites/enemy/remake/kor_celebrant.atlas",
         "deck": [
             "decks/standard/old_kor_17.dck"
         ],
@@ -128754,11 +128764,12 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3095
     },
     {
         "name": "Kor Blademaster",
-        "sprite": "sprites/enemy/heroes/old_kor_18.atlas",
+        "sprite": "sprites/enemy/remake/kor_blademaster.atlas",
         "deck": [
             "decks/standard/old_kor_18.dck"
         ],
@@ -128819,11 +128830,12 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.2955
     },
     {
         "name": "Kor Sky Climber",
-        "sprite": "sprites/enemy/heroes/old_kor_19.atlas",
+        "sprite": "sprites/enemy/remake/kor_sky_climber.atlas",
         "deck": [
             "decks/standard/old_kor_19.dck"
         ],
@@ -128882,11 +128894,12 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3095
     },
     {
         "name": "Kor Dirgewarden",
-        "sprite": "sprites/enemy/heroes/old_kor_20.atlas",
+        "sprite": "sprites/enemy/remake/kor_dirgewarden.atlas",
         "deck": [
             "decks/standard/old_kor_20.dck"
         ],
@@ -128947,7 +128960,8 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.3095
     },
     {
         "name": "Clucking Chicken",

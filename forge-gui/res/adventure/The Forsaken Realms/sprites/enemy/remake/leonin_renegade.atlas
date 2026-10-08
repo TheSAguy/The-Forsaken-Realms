@@ -1,0 +1,173 @@
+leonin_renegade.png
+size: 828,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 92, 57
+Idle
+  xy: 92, 64
+  size: 92, 57
+Idle
+  xy: 184, 64
+  size: 92, 57
+Idle
+  xy: 276, 64
+  size: 92, 57
+Walk
+  xy: 0, 121
+  size: 92, 57
+Walk
+  xy: 92, 121
+  size: 92, 57
+Walk
+  xy: 184, 121
+  size: 92, 57
+Walk
+  xy: 276, 121
+  size: 92, 57
+Walk
+  xy: 368, 121
+  size: 92, 57
+Walk
+  xy: 460, 121
+  size: 92, 57
+Walk
+  xy: 552, 121
+  size: 92, 57
+Walk
+  xy: 644, 121
+  size: 92, 57
+Attack
+  xy: 0, 178
+  size: 92, 57
+Attack
+  xy: 92, 178
+  size: 92, 57
+Attack
+  xy: 184, 178
+  size: 92, 57
+Attack
+  xy: 276, 178
+  size: 92, 57
+Attack
+  xy: 368, 178
+  size: 92, 57
+Attack
+  xy: 460, 178
+  size: 92, 57
+Hit
+  xy: 0, 235
+  size: 92, 57
+Hit
+  xy: 92, 235
+  size: 92, 57
+Hit
+  xy: 184, 235
+  size: 92, 57
+Hit
+  xy: 276, 235
+  size: 92, 57
+Death
+  xy: 0, 292
+  size: 92, 57
+Death
+  xy: 92, 292
+  size: 92, 57
+Death
+  xy: 184, 292
+  size: 92, 57
+Death
+  xy: 276, 292
+  size: 92, 57
+Death
+  xy: 368, 292
+  size: 92, 57
+Death
+  xy: 460, 292
+  size: 92, 57
+Death
+  xy: 552, 292
+  size: 92, 57
+Death
+  xy: 644, 292
+  size: 92, 57
+Death
+  xy: 736, 292
+  size: 92, 57
+IdleUp
+  xy: 0, 349
+  size: 92, 57
+IdleUp
+  xy: 92, 349
+  size: 92, 57
+IdleUp
+  xy: 184, 349
+  size: 92, 57
+IdleUp
+  xy: 276, 349
+  size: 92, 57
+IdleDown
+  xy: 0, 406
+  size: 92, 57
+IdleDown
+  xy: 92, 406
+  size: 92, 57
+IdleDown
+  xy: 184, 406
+  size: 92, 57
+IdleDown
+  xy: 276, 406
+  size: 92, 57
+WalkUp
+  xy: 0, 463
+  size: 92, 57
+WalkUp
+  xy: 92, 463
+  size: 92, 57
+WalkUp
+  xy: 184, 463
+  size: 92, 57
+WalkUp
+  xy: 276, 463
+  size: 92, 57
+WalkUp
+  xy: 368, 463
+  size: 92, 57
+WalkUp
+  xy: 460, 463
+  size: 92, 57
+WalkUp
+  xy: 552, 463
+  size: 92, 57
+WalkUp
+  xy: 644, 463
+  size: 92, 57
+WalkDown
+  xy: 0, 520
+  size: 92, 57
+WalkDown
+  xy: 92, 520
+  size: 92, 57
+WalkDown
+  xy: 184, 520
+  size: 92, 57
+WalkDown
+  xy: 276, 520
+  size: 92, 57
+WalkDown
+  xy: 368, 520
+  size: 92, 57
+WalkDown
+  xy: 460, 520
+  size: 92, 57
+WalkDown
+  xy: 552, 520
+  size: 92, 57
+WalkDown
+  xy: 644, 520
+  size: 92, 57

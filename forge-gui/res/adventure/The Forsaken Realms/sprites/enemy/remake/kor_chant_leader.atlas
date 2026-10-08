@@ -1,0 +1,176 @@
+kor_chant_leader.png
+size: 486,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 54, 56
+Idle
+  xy: 54, 64
+  size: 54, 56
+Idle
+  xy: 108, 64
+  size: 54, 56
+Idle
+  xy: 162, 64
+  size: 54, 56
+Walk
+  xy: 0, 120
+  size: 54, 56
+Walk
+  xy: 54, 120
+  size: 54, 56
+Walk
+  xy: 108, 120
+  size: 54, 56
+Walk
+  xy: 162, 120
+  size: 54, 56
+Walk
+  xy: 216, 120
+  size: 54, 56
+Walk
+  xy: 270, 120
+  size: 54, 56
+Walk
+  xy: 324, 120
+  size: 54, 56
+Walk
+  xy: 378, 120
+  size: 54, 56
+Attack
+  xy: 0, 176
+  size: 54, 56
+Attack
+  xy: 54, 176
+  size: 54, 56
+Attack
+  xy: 108, 176
+  size: 54, 56
+Attack
+  xy: 162, 176
+  size: 54, 56
+Attack
+  xy: 216, 176
+  size: 54, 56
+Attack
+  xy: 270, 176
+  size: 54, 56
+Attack
+  xy: 324, 176
+  size: 54, 56
+Hit
+  xy: 0, 232
+  size: 54, 56
+Hit
+  xy: 54, 232
+  size: 54, 56
+Hit
+  xy: 108, 232
+  size: 54, 56
+Hit
+  xy: 162, 232
+  size: 54, 56
+Death
+  xy: 0, 288
+  size: 54, 56
+Death
+  xy: 54, 288
+  size: 54, 56
+Death
+  xy: 108, 288
+  size: 54, 56
+Death
+  xy: 162, 288
+  size: 54, 56
+Death
+  xy: 216, 288
+  size: 54, 56
+Death
+  xy: 270, 288
+  size: 54, 56
+Death
+  xy: 324, 288
+  size: 54, 56
+Death
+  xy: 378, 288
+  size: 54, 56
+Death
+  xy: 432, 288
+  size: 54, 56
+IdleUp
+  xy: 0, 344
+  size: 54, 56
+IdleUp
+  xy: 54, 344
+  size: 54, 56
+IdleUp
+  xy: 108, 344
+  size: 54, 56
+IdleUp
+  xy: 162, 344
+  size: 54, 56
+IdleDown
+  xy: 0, 400
+  size: 54, 56
+IdleDown
+  xy: 54, 400
+  size: 54, 56
+IdleDown
+  xy: 108, 400
+  size: 54, 56
+IdleDown
+  xy: 162, 400
+  size: 54, 56
+WalkUp
+  xy: 0, 456
+  size: 54, 56
+WalkUp
+  xy: 54, 456
+  size: 54, 56
+WalkUp
+  xy: 108, 456
+  size: 54, 56
+WalkUp
+  xy: 162, 456
+  size: 54, 56
+WalkUp
+  xy: 216, 456
+  size: 54, 56
+WalkUp
+  xy: 270, 456
+  size: 54, 56
+WalkUp
+  xy: 324, 456
+  size: 54, 56
+WalkUp
+  xy: 378, 456
+  size: 54, 56
+WalkDown
+  xy: 0, 512
+  size: 54, 56
+WalkDown
+  xy: 54, 512
+  size: 54, 56
+WalkDown
+  xy: 108, 512
+  size: 54, 56
+WalkDown
+  xy: 162, 512
+  size: 54, 56
+WalkDown
+  xy: 216, 512
+  size: 54, 56
+WalkDown
+  xy: 270, 512
+  size: 54, 56
+WalkDown
+  xy: 324, 512
+  size: 54, 56
+WalkDown
+  xy: 378, 512
+  size: 54, 56

@@ -1,0 +1,173 @@
+kor_sky_climber.png
+size: 540,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 60, 55
+Idle
+  xy: 60, 64
+  size: 60, 55
+Idle
+  xy: 120, 64
+  size: 60, 55
+Idle
+  xy: 180, 64
+  size: 60, 55
+Walk
+  xy: 0, 119
+  size: 60, 55
+Walk
+  xy: 60, 119
+  size: 60, 55
+Walk
+  xy: 120, 119
+  size: 60, 55
+Walk
+  xy: 180, 119
+  size: 60, 55
+Walk
+  xy: 240, 119
+  size: 60, 55
+Walk
+  xy: 300, 119
+  size: 60, 55
+Walk
+  xy: 360, 119
+  size: 60, 55
+Walk
+  xy: 420, 119
+  size: 60, 55
+Attack
+  xy: 0, 174
+  size: 60, 55
+Attack
+  xy: 60, 174
+  size: 60, 55
+Attack
+  xy: 120, 174
+  size: 60, 55
+Attack
+  xy: 180, 174
+  size: 60, 55
+Attack
+  xy: 240, 174
+  size: 60, 55
+Attack
+  xy: 300, 174
+  size: 60, 55
+Hit
+  xy: 0, 229
+  size: 60, 55
+Hit
+  xy: 60, 229
+  size: 60, 55
+Hit
+  xy: 120, 229
+  size: 60, 55
+Hit
+  xy: 180, 229
+  size: 60, 55
+Death
+  xy: 0, 284
+  size: 60, 55
+Death
+  xy: 60, 284
+  size: 60, 55
+Death
+  xy: 120, 284
+  size: 60, 55
+Death
+  xy: 180, 284
+  size: 60, 55
+Death
+  xy: 240, 284
+  size: 60, 55
+Death
+  xy: 300, 284
+  size: 60, 55
+Death
+  xy: 360, 284
+  size: 60, 55
+Death
+  xy: 420, 284
+  size: 60, 55
+Death
+  xy: 480, 284
+  size: 60, 55
+IdleUp
+  xy: 0, 339
+  size: 60, 55
+IdleUp
+  xy: 60, 339
+  size: 60, 55
+IdleUp
+  xy: 120, 339
+  size: 60, 55
+IdleUp
+  xy: 180, 339
+  size: 60, 55
+IdleDown
+  xy: 0, 394
+  size: 60, 55
+IdleDown
+  xy: 60, 394
+  size: 60, 55
+IdleDown
+  xy: 120, 394
+  size: 60, 55
+IdleDown
+  xy: 180, 394
+  size: 60, 55
+WalkUp
+  xy: 0, 449
+  size: 60, 55
+WalkUp
+  xy: 60, 449
+  size: 60, 55
+WalkUp
+  xy: 120, 449
+  size: 60, 55
+WalkUp
+  xy: 180, 449
+  size: 60, 55
+WalkUp
+  xy: 240, 449
+  size: 60, 55
+WalkUp
+  xy: 300, 449
+  size: 60, 55
+WalkUp
+  xy: 360, 449
+  size: 60, 55
+WalkUp
+  xy: 420, 449
+  size: 60, 55
+WalkDown
+  xy: 0, 504
+  size: 60, 55
+WalkDown
+  xy: 60, 504
+  size: 60, 55
+WalkDown
+  xy: 120, 504
+  size: 60, 55
+WalkDown
+  xy: 180, 504
+  size: 60, 55
+WalkDown
+  xy: 240, 504
+  size: 60, 55
+WalkDown
+  xy: 300, 504
+  size: 60, 55
+WalkDown
+  xy: 360, 504
+  size: 60, 55
+WalkDown
+  xy: 420, 504
+  size: 60, 55

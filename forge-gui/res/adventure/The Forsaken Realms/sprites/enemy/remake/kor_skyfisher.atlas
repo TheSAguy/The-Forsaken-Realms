@@ -1,0 +1,179 @@
+kor_skyfisher.png
+size: 540,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 60, 59
+Idle
+  xy: 60, 64
+  size: 60, 59
+Idle
+  xy: 120, 64
+  size: 60, 59
+Idle
+  xy: 180, 64
+  size: 60, 59
+Walk
+  xy: 0, 123
+  size: 60, 59
+Walk
+  xy: 60, 123
+  size: 60, 59
+Walk
+  xy: 120, 123
+  size: 60, 59
+Walk
+  xy: 180, 123
+  size: 60, 59
+Walk
+  xy: 240, 123
+  size: 60, 59
+Walk
+  xy: 300, 123
+  size: 60, 59
+Walk
+  xy: 360, 123
+  size: 60, 59
+Walk
+  xy: 420, 123
+  size: 60, 59
+Attack
+  xy: 0, 182
+  size: 60, 59
+Attack
+  xy: 60, 182
+  size: 60, 59
+Attack
+  xy: 120, 182
+  size: 60, 59
+Attack
+  xy: 180, 182
+  size: 60, 59
+Attack
+  xy: 240, 182
+  size: 60, 59
+Attack
+  xy: 300, 182
+  size: 60, 59
+Attack
+  xy: 360, 182
+  size: 60, 59
+Attack
+  xy: 420, 182
+  size: 60, 59
+Hit
+  xy: 0, 241
+  size: 60, 59
+Hit
+  xy: 60, 241
+  size: 60, 59
+Hit
+  xy: 120, 241
+  size: 60, 59
+Hit
+  xy: 180, 241
+  size: 60, 59
+Death
+  xy: 0, 300
+  size: 60, 59
+Death
+  xy: 60, 300
+  size: 60, 59
+Death
+  xy: 120, 300
+  size: 60, 59
+Death
+  xy: 180, 300
+  size: 60, 59
+Death
+  xy: 240, 300
+  size: 60, 59
+Death
+  xy: 300, 300
+  size: 60, 59
+Death
+  xy: 360, 300
+  size: 60, 59
+Death
+  xy: 420, 300
+  size: 60, 59
+Death
+  xy: 480, 300
+  size: 60, 59
+IdleUp
+  xy: 0, 359
+  size: 60, 59
+IdleUp
+  xy: 60, 359
+  size: 60, 59
+IdleUp
+  xy: 120, 359
+  size: 60, 59
+IdleUp
+  xy: 180, 359
+  size: 60, 59
+IdleDown
+  xy: 0, 418
+  size: 60, 59
+IdleDown
+  xy: 60, 418
+  size: 60, 59
+IdleDown
+  xy: 120, 418
+  size: 60, 59
+IdleDown
+  xy: 180, 418
+  size: 60, 59
+WalkUp
+  xy: 0, 477
+  size: 60, 59
+WalkUp
+  xy: 60, 477
+  size: 60, 59
+WalkUp
+  xy: 120, 477
+  size: 60, 59
+WalkUp
+  xy: 180, 477
+  size: 60, 59
+WalkUp
+  xy: 240, 477
+  size: 60, 59
+WalkUp
+  xy: 300, 477
+  size: 60, 59
+WalkUp
+  xy: 360, 477
+  size: 60, 59
+WalkUp
+  xy: 420, 477
+  size: 60, 59
+WalkDown
+  xy: 0, 536
+  size: 60, 59
+WalkDown
+  xy: 60, 536
+  size: 60, 59
+WalkDown
+  xy: 120, 536
+  size: 60, 59
+WalkDown
+  xy: 180, 536
+  size: 60, 59
+WalkDown
+  xy: 240, 536
+  size: 60, 59
+WalkDown
+  xy: 300, 536
+  size: 60, 59
+WalkDown
+  xy: 360, 536
+  size: 60, 59
+WalkDown
+  xy: 420, 536
+  size: 60, 59

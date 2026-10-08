@@ -1,0 +1,179 @@
+kor_line_slinger.png
+size: 450,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 50, 55
+Idle
+  xy: 50, 64
+  size: 50, 55
+Idle
+  xy: 100, 64
+  size: 50, 55
+Idle
+  xy: 150, 64
+  size: 50, 55
+Walk
+  xy: 0, 119
+  size: 50, 55
+Walk
+  xy: 50, 119
+  size: 50, 55
+Walk
+  xy: 100, 119
+  size: 50, 55
+Walk
+  xy: 150, 119
+  size: 50, 55
+Walk
+  xy: 200, 119
+  size: 50, 55
+Walk
+  xy: 250, 119
+  size: 50, 55
+Walk
+  xy: 300, 119
+  size: 50, 55
+Walk
+  xy: 350, 119
+  size: 50, 55
+Attack
+  xy: 0, 174
+  size: 50, 55
+Attack
+  xy: 50, 174
+  size: 50, 55
+Attack
+  xy: 100, 174
+  size: 50, 55
+Attack
+  xy: 150, 174
+  size: 50, 55
+Attack
+  xy: 200, 174
+  size: 50, 55
+Attack
+  xy: 250, 174
+  size: 50, 55
+Attack
+  xy: 300, 174
+  size: 50, 55
+Attack
+  xy: 350, 174
+  size: 50, 55
+Hit
+  xy: 0, 229
+  size: 50, 55
+Hit
+  xy: 50, 229
+  size: 50, 55
+Hit
+  xy: 100, 229
+  size: 50, 55
+Hit
+  xy: 150, 229
+  size: 50, 55
+Death
+  xy: 0, 284
+  size: 50, 55
+Death
+  xy: 50, 284
+  size: 50, 55
+Death
+  xy: 100, 284
+  size: 50, 55
+Death
+  xy: 150, 284
+  size: 50, 55
+Death
+  xy: 200, 284
+  size: 50, 55
+Death
+  xy: 250, 284
+  size: 50, 55
+Death
+  xy: 300, 284
+  size: 50, 55
+Death
+  xy: 350, 284
+  size: 50, 55
+Death
+  xy: 400, 284
+  size: 50, 55
+IdleUp
+  xy: 0, 339
+  size: 50, 55
+IdleUp
+  xy: 50, 339
+  size: 50, 55
+IdleUp
+  xy: 100, 339
+  size: 50, 55
+IdleUp
+  xy: 150, 339
+  size: 50, 55
+IdleDown
+  xy: 0, 394
+  size: 50, 55
+IdleDown
+  xy: 50, 394
+  size: 50, 55
+IdleDown
+  xy: 100, 394
+  size: 50, 55
+IdleDown
+  xy: 150, 394
+  size: 50, 55
+WalkUp
+  xy: 0, 449
+  size: 50, 55
+WalkUp
+  xy: 50, 449
+  size: 50, 55
+WalkUp
+  xy: 100, 449
+  size: 50, 55
+WalkUp
+  xy: 150, 449
+  size: 50, 55
+WalkUp
+  xy: 200, 449
+  size: 50, 55
+WalkUp
+  xy: 250, 449
+  size: 50, 55
+WalkUp
+  xy: 300, 449
+  size: 50, 55
+WalkUp
+  xy: 350, 449
+  size: 50, 55
+WalkDown
+  xy: 0, 504
+  size: 50, 55
+WalkDown
+  xy: 50, 504
+  size: 50, 55
+WalkDown
+  xy: 100, 504
+  size: 50, 55
+WalkDown
+  xy: 150, 504
+  size: 50, 55
+WalkDown
+  xy: 200, 504
+  size: 50, 55
+WalkDown
+  xy: 250, 504
+  size: 50, 55
+WalkDown
+  xy: 300, 504
+  size: 50, 55
+WalkDown
+  xy: 350, 504
+  size: 50, 55

@@ -1,0 +1,173 @@
+kor_spiritdancer.png
+size: 540,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 60, 56
+Idle
+  xy: 60, 64
+  size: 60, 56
+Idle
+  xy: 120, 64
+  size: 60, 56
+Idle
+  xy: 180, 64
+  size: 60, 56
+Walk
+  xy: 0, 120
+  size: 60, 56
+Walk
+  xy: 60, 120
+  size: 60, 56
+Walk
+  xy: 120, 120
+  size: 60, 56
+Walk
+  xy: 180, 120
+  size: 60, 56
+Walk
+  xy: 240, 120
+  size: 60, 56
+Walk
+  xy: 300, 120
+  size: 60, 56
+Walk
+  xy: 360, 120
+  size: 60, 56
+Walk
+  xy: 420, 120
+  size: 60, 56
+Attack
+  xy: 0, 176
+  size: 60, 56
+Attack
+  xy: 60, 176
+  size: 60, 56
+Attack
+  xy: 120, 176
+  size: 60, 56
+Attack
+  xy: 180, 176
+  size: 60, 56
+Attack
+  xy: 240, 176
+  size: 60, 56
+Attack
+  xy: 300, 176
+  size: 60, 56
+Hit
+  xy: 0, 232
+  size: 60, 56
+Hit
+  xy: 60, 232
+  size: 60, 56
+Hit
+  xy: 120, 232
+  size: 60, 56
+Hit
+  xy: 180, 232
+  size: 60, 56
+Death
+  xy: 0, 288
+  size: 60, 56
+Death
+  xy: 60, 288
+  size: 60, 56
+Death
+  xy: 120, 288
+  size: 60, 56
+Death
+  xy: 180, 288
+  size: 60, 56
+Death
+  xy: 240, 288
+  size: 60, 56
+Death
+  xy: 300, 288
+  size: 60, 56
+Death
+  xy: 360, 288
+  size: 60, 56
+Death
+  xy: 420, 288
+  size: 60, 56
+Death
+  xy: 480, 288
+  size: 60, 56
+IdleUp
+  xy: 0, 344
+  size: 60, 56
+IdleUp
+  xy: 60, 344
+  size: 60, 56
+IdleUp
+  xy: 120, 344
+  size: 60, 56
+IdleUp
+  xy: 180, 344
+  size: 60, 56
+IdleDown
+  xy: 0, 400
+  size: 60, 56
+IdleDown
+  xy: 60, 400
+  size: 60, 56
+IdleDown
+  xy: 120, 400
+  size: 60, 56
+IdleDown
+  xy: 180, 400
+  size: 60, 56
+WalkUp
+  xy: 0, 456
+  size: 60, 56
+WalkUp
+  xy: 60, 456
+  size: 60, 56
+WalkUp
+  xy: 120, 456
+  size: 60, 56
+WalkUp
+  xy: 180, 456
+  size: 60, 56
+WalkUp
+  xy: 240, 456
+  size: 60, 56
+WalkUp
+  xy: 300, 456
+  size: 60, 56
+WalkUp
+  xy: 360, 456
+  size: 60, 56
+WalkUp
+  xy: 420, 456
+  size: 60, 56
+WalkDown
+  xy: 0, 512
+  size: 60, 56
+WalkDown
+  xy: 60, 512
+  size: 60, 56
+WalkDown
+  xy: 120, 512
+  size: 60, 56
+WalkDown
+  xy: 180, 512
+  size: 60, 56
+WalkDown
+  xy: 240, 512
+  size: 60, 56
+WalkDown
+  xy: 300, 512
+  size: 60, 56
+WalkDown
+  xy: 360, 512
+  size: 60, 56
+WalkDown
+  xy: 420, 512
+  size: 60, 56

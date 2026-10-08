@@ -1,0 +1,173 @@
+devil_wanderer.png
+size: 720,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 56
+Idle
+  xy: 80, 64
+  size: 80, 56
+Idle
+  xy: 160, 64
+  size: 80, 56
+Idle
+  xy: 240, 64
+  size: 80, 56
+Walk
+  xy: 0, 120
+  size: 80, 56
+Walk
+  xy: 80, 120
+  size: 80, 56
+Walk
+  xy: 160, 120
+  size: 80, 56
+Walk
+  xy: 240, 120
+  size: 80, 56
+Walk
+  xy: 320, 120
+  size: 80, 56
+Walk
+  xy: 400, 120
+  size: 80, 56
+Walk
+  xy: 480, 120
+  size: 80, 56
+Walk
+  xy: 560, 120
+  size: 80, 56
+Attack
+  xy: 0, 176
+  size: 80, 56
+Attack
+  xy: 80, 176
+  size: 80, 56
+Attack
+  xy: 160, 176
+  size: 80, 56
+Attack
+  xy: 240, 176
+  size: 80, 56
+Attack
+  xy: 320, 176
+  size: 80, 56
+Attack
+  xy: 400, 176
+  size: 80, 56
+Hit
+  xy: 0, 232
+  size: 80, 56
+Hit
+  xy: 80, 232
+  size: 80, 56
+Hit
+  xy: 160, 232
+  size: 80, 56
+Hit
+  xy: 240, 232
+  size: 80, 56
+Death
+  xy: 0, 288
+  size: 80, 56
+Death
+  xy: 80, 288
+  size: 80, 56
+Death
+  xy: 160, 288
+  size: 80, 56
+Death
+  xy: 240, 288
+  size: 80, 56
+Death
+  xy: 320, 288
+  size: 80, 56
+Death
+  xy: 400, 288
+  size: 80, 56
+Death
+  xy: 480, 288
+  size: 80, 56
+Death
+  xy: 560, 288
+  size: 80, 56
+Death
+  xy: 640, 288
+  size: 80, 56
+IdleUp
+  xy: 0, 344
+  size: 80, 56
+IdleUp
+  xy: 80, 344
+  size: 80, 56
+IdleUp
+  xy: 160, 344
+  size: 80, 56
+IdleUp
+  xy: 240, 344
+  size: 80, 56
+IdleDown
+  xy: 0, 400
+  size: 80, 56
+IdleDown
+  xy: 80, 400
+  size: 80, 56
+IdleDown
+  xy: 160, 400
+  size: 80, 56
+IdleDown
+  xy: 240, 400
+  size: 80, 56
+WalkUp
+  xy: 0, 456
+  size: 80, 56
+WalkUp
+  xy: 80, 456
+  size: 80, 56
+WalkUp
+  xy: 160, 456
+  size: 80, 56
+WalkUp
+  xy: 240, 456
+  size: 80, 56
+WalkUp
+  xy: 320, 456
+  size: 80, 56
+WalkUp
+  xy: 400, 456
+  size: 80, 56
+WalkUp
+  xy: 480, 456
+  size: 80, 56
+WalkUp
+  xy: 560, 456
+  size: 80, 56
+WalkDown
+  xy: 0, 512
+  size: 80, 56
+WalkDown
+  xy: 80, 512
+  size: 80, 56
+WalkDown
+  xy: 160, 512
+  size: 80, 56
+WalkDown
+  xy: 240, 512
+  size: 80, 56
+WalkDown
+  xy: 320, 512
+  size: 80, 56
+WalkDown
+  xy: 400, 512
+  size: 80, 56
+WalkDown
+  xy: 480, 512
+  size: 80, 56
+WalkDown
+  xy: 560, 512
+  size: 80, 56

@@ -1,0 +1,173 @@
+kor_dirgewarden.png
+size: 864,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 56
+Idle
+  xy: 96, 64
+  size: 96, 56
+Idle
+  xy: 192, 64
+  size: 96, 56
+Idle
+  xy: 288, 64
+  size: 96, 56
+Walk
+  xy: 0, 120
+  size: 96, 56
+Walk
+  xy: 96, 120
+  size: 96, 56
+Walk
+  xy: 192, 120
+  size: 96, 56
+Walk
+  xy: 288, 120
+  size: 96, 56
+Walk
+  xy: 384, 120
+  size: 96, 56
+Walk
+  xy: 480, 120
+  size: 96, 56
+Walk
+  xy: 576, 120
+  size: 96, 56
+Walk
+  xy: 672, 120
+  size: 96, 56
+Attack
+  xy: 0, 176
+  size: 96, 56
+Attack
+  xy: 96, 176
+  size: 96, 56
+Attack
+  xy: 192, 176
+  size: 96, 56
+Attack
+  xy: 288, 176
+  size: 96, 56
+Attack
+  xy: 384, 176
+  size: 96, 56
+Attack
+  xy: 480, 176
+  size: 96, 56
+Hit
+  xy: 0, 232
+  size: 96, 56
+Hit
+  xy: 96, 232
+  size: 96, 56
+Hit
+  xy: 192, 232
+  size: 96, 56
+Hit
+  xy: 288, 232
+  size: 96, 56
+Death
+  xy: 0, 288
+  size: 96, 56
+Death
+  xy: 96, 288
+  size: 96, 56
+Death
+  xy: 192, 288
+  size: 96, 56
+Death
+  xy: 288, 288
+  size: 96, 56
+Death
+  xy: 384, 288
+  size: 96, 56
+Death
+  xy: 480, 288
+  size: 96, 56
+Death
+  xy: 576, 288
+  size: 96, 56
+Death
+  xy: 672, 288
+  size: 96, 56
+Death
+  xy: 768, 288
+  size: 96, 56
+IdleUp
+  xy: 0, 344
+  size: 96, 56
+IdleUp
+  xy: 96, 344
+  size: 96, 56
+IdleUp
+  xy: 192, 344
+  size: 96, 56
+IdleUp
+  xy: 288, 344
+  size: 96, 56
+IdleDown
+  xy: 0, 400
+  size: 96, 56
+IdleDown
+  xy: 96, 400
+  size: 96, 56
+IdleDown
+  xy: 192, 400
+  size: 96, 56
+IdleDown
+  xy: 288, 400
+  size: 96, 56
+WalkUp
+  xy: 0, 456
+  size: 96, 56
+WalkUp
+  xy: 96, 456
+  size: 96, 56
+WalkUp
+  xy: 192, 456
+  size: 96, 56
+WalkUp
+  xy: 288, 456
+  size: 96, 56
+WalkUp
+  xy: 384, 456
+  size: 96, 56
+WalkUp
+  xy: 480, 456
+  size: 96, 56
+WalkUp
+  xy: 576, 456
+  size: 96, 56
+WalkUp
+  xy: 672, 456
+  size: 96, 56
+WalkDown
+  xy: 0, 512
+  size: 96, 56
+WalkDown
+  xy: 96, 512
+  size: 96, 56
+WalkDown
+  xy: 192, 512
+  size: 96, 56
+WalkDown
+  xy: 288, 512
+  size: 96, 56
+WalkDown
+  xy: 384, 512
+  size: 96, 56
+WalkDown
+  xy: 480, 512
+  size: 96, 56
+WalkDown
+  xy: 576, 512
+  size: 96, 56
+WalkDown
+  xy: 672, 512
+  size: 96, 56

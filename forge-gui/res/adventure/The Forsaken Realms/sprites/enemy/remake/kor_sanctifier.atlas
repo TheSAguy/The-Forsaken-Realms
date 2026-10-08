@@ -1,0 +1,176 @@
+kor_sanctifier.png
+size: 486,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 54, 54
+Idle
+  xy: 54, 64
+  size: 54, 54
+Idle
+  xy: 108, 64
+  size: 54, 54
+Idle
+  xy: 162, 64
+  size: 54, 54
+Walk
+  xy: 0, 118
+  size: 54, 54
+Walk
+  xy: 54, 118
+  size: 54, 54
+Walk
+  xy: 108, 118
+  size: 54, 54
+Walk
+  xy: 162, 118
+  size: 54, 54
+Walk
+  xy: 216, 118
+  size: 54, 54
+Walk
+  xy: 270, 118
+  size: 54, 54
+Walk
+  xy: 324, 118
+  size: 54, 54
+Walk
+  xy: 378, 118
+  size: 54, 54
+Attack
+  xy: 0, 172
+  size: 54, 54
+Attack
+  xy: 54, 172
+  size: 54, 54
+Attack
+  xy: 108, 172
+  size: 54, 54
+Attack
+  xy: 162, 172
+  size: 54, 54
+Attack
+  xy: 216, 172
+  size: 54, 54
+Attack
+  xy: 270, 172
+  size: 54, 54
+Attack
+  xy: 324, 172
+  size: 54, 54
+Hit
+  xy: 0, 226
+  size: 54, 54
+Hit
+  xy: 54, 226
+  size: 54, 54
+Hit
+  xy: 108, 226
+  size: 54, 54
+Hit
+  xy: 162, 226
+  size: 54, 54
+Death
+  xy: 0, 280
+  size: 54, 54
+Death
+  xy: 54, 280
+  size: 54, 54
+Death
+  xy: 108, 280
+  size: 54, 54
+Death
+  xy: 162, 280
+  size: 54, 54
+Death
+  xy: 216, 280
+  size: 54, 54
+Death
+  xy: 270, 280
+  size: 54, 54
+Death
+  xy: 324, 280
+  size: 54, 54
+Death
+  xy: 378, 280
+  size: 54, 54
+Death
+  xy: 432, 280
+  size: 54, 54
+IdleUp
+  xy: 0, 334
+  size: 54, 54
+IdleUp
+  xy: 54, 334
+  size: 54, 54
+IdleUp
+  xy: 108, 334
+  size: 54, 54
+IdleUp
+  xy: 162, 334
+  size: 54, 54
+IdleDown
+  xy: 0, 388
+  size: 54, 54
+IdleDown
+  xy: 54, 388
+  size: 54, 54
+IdleDown
+  xy: 108, 388
+  size: 54, 54
+IdleDown
+  xy: 162, 388
+  size: 54, 54
+WalkUp
+  xy: 0, 442
+  size: 54, 54
+WalkUp
+  xy: 54, 442
+  size: 54, 54
+WalkUp
+  xy: 108, 442
+  size: 54, 54
+WalkUp
+  xy: 162, 442
+  size: 54, 54
+WalkUp
+  xy: 216, 442
+  size: 54, 54
+WalkUp
+  xy: 270, 442
+  size: 54, 54
+WalkUp
+  xy: 324, 442
+  size: 54, 54
+WalkUp
+  xy: 378, 442
+  size: 54, 54
+WalkDown
+  xy: 0, 496
+  size: 54, 54
+WalkDown
+  xy: 54, 496
+  size: 54, 54
+WalkDown
+  xy: 108, 496
+  size: 54, 54
+WalkDown
+  xy: 162, 496
+  size: 54, 54
+WalkDown
+  xy: 216, 496
+  size: 54, 54
+WalkDown
+  xy: 270, 496
+  size: 54, 54
+WalkDown
+  xy: 324, 496
+  size: 54, 54
+WalkDown
+  xy: 378, 496
+  size: 54, 54

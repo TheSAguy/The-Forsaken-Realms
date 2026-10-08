@@ -67,6 +67,15 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 500): **LOCAL + UNRELEASED (data only)** - LPC batch 2 (the Procedural Pixel Creatures
+session; the user: "Do the devils, dragonkin, kor, leonin and metathran next"): 33 enemies on the hero sprites - the two
+devils (red skin, horns, cat tail, bat wings), the five dragonkin (lizard head, tail, wings in five colors), all 22 Kor
+(the two heroes and the twenty older ones that shared one sprite, each its own kit), the two leonin (cat ears, tail,
+mane on fur), the two metathran (blue skin, fin crest). 33 new atlases under `sprites/enemy/remake/`, enemies.json 33
+paths + 33 scales, CREDITS.md's LPC line (58 enemies, rounds 498 + 500), CREDITS_LPC.md regenerated for both rounds.
+The peer (#30) verifies and packages with its 499 when the game closes. Not seen in play. Next LPC batches: the
+remaining ~733 humanoids (the 20+ px stock sprites next).
+
 ## STATE 2026-10-08 (round 499): **LOCAL + UNRELEASED (data only)** - the 13 Common mana/land items are Uncommon
 (items.json rarity only; the audit is docs/audits/2026-10-08-items-mana-and-units.md).
 
