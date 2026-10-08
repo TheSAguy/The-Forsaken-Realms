@@ -1419,6 +1419,7 @@ public class RewardScene extends UIScene {
             price = CardUtil.getRewardPrice(actor.getReward());
             price *= Current.player().goldModifier();
             price *= shopModifier;
+            price *= forge.adventure.util.Ascendance.shopPriceFactor(); // round 494: Haggler
             setText("[+GoldCoin] " + price);
             updateOwned();
             addListener(new ClickListener() {
@@ -1502,7 +1503,7 @@ public class RewardScene extends UIScene {
             // Priced RewardChoice (Chest's Thief Merchant) vs. the original free pick (quest
             // grantRewardsChoice) - see selectionPriceMultiplier's own comment.
             price = selectionPriceMultiplier > 0f
-                    ? Math.round(CardUtil.getRewardPrice(reward) * selectionPriceMultiplier)
+                    ? Math.round(CardUtil.getRewardPrice(reward) * selectionPriceMultiplier * forge.adventure.util.Ascendance.shopPriceFactor()) // round 494: Haggler
                     : 0;
             setText(price > 0 ? "[%75][+GoldCoin] " + price : "Pick Reward");
             updateOwned();

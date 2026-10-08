@@ -1351,7 +1351,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
             Forge.setTransitionScreen(new TransitionScreen(() -> {
                 Forge.advFreezePlayerControls = false;
                 duelScene.initDuels(player, guardFoe, false, null, true);
-                duelScene.useGuardLoadout(deck, guard.maxLife, ArmoryStorage.effectsOf(guard)); // round 163: its gear
+                duelScene.useGuardLoadout(deck, guard.maxLife + forge.adventure.util.Ascendance.guardLifeBonus(), // round 494: Marshal
+                        ArmoryStorage.effectsOf(guard)); // round 163: its gear
                 Forge.switchScene(duelScene);
             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                     guardFoe.getAtlasPath(), RoamingGuards.displayName(guard.tier) + " Guard",
@@ -1382,7 +1383,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             mageLife = Current.world().applyDayNightTerrainLife(mageLife, (int) mage.getX() / tileSize, (int) mage.getY() / tileSize);
         }
         System.out.println("[TFR-RoamGuard] simulating: " + RoamingGuards.displayName(guard.tier)
-                + " (" + guard.maxLife + " life) vs " + mage.getName() + " (" + mageLife + " life, raw "
+                + " (" + (guard.maxLife + forge.adventure.util.Ascendance.guardLifeBonus()) + " life) vs " + mage.getName() + " (" + mageLife + " life, raw "
                 + mage.getData().life + " x " + Current.player().getDifficulty().enemyLifeFactor + ")"
                 + " gear: " + ArmoryStorage.gearNames(guard));
         // Round 163 (MOD_SCOPE #118): the guard's equipment rides into the headless fight through the
@@ -1394,7 +1395,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         if (archmageStart != null)
             gearOnMage.add(archmageStart);
         DeckTesterSimulator.runBatch(
-                RoamingGuards.displayName(guard.tier) + " Guard", deck, guard.maxLife,
+                RoamingGuards.displayName(guard.tier) + " Guard", deck, guard.maxLife + forge.adventure.util.Ascendance.guardLifeBonus(), // round 494: Marshal
                 gear.size == 0 ? null : rp -> DuelScene.applyEffects(rp, gear),
                 mage.getName(), mageDeck, mageLife,
                 gearOnMage.size == 0 ? null : rp -> DuelScene.applyEffects(rp, gearOnMage),

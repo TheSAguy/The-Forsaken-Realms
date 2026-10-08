@@ -14264,6 +14264,64 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 494: Ascendance's rewards - pick 1 of 3 on every level that is not a milestone (2026-10-08)
+
+The user's list: "+3 life for the first duel each day. (The second time you take this it would be the first 2 duels,
+etc.), + xxx Gold, + xxx Shards, + xxx Wood, + xxx Stone, + random rare card(s), + random common item, + ????". Also:
+"Let's say you choose Haggler. -5% shop prices, then the next time it would be -10% and the 3rd -15%", "Let's add -x%
+cheaper building cost/town repair" and "Goodwill should be for your own towns only."
+
+- **Taking a reward**: tap the HUD's "Asc" panel (a gold "!" means rewards wait). The dialog (`AscendanceUI`, the
+  stage's own dialog, so Esc and the bridge see it) shows the oldest waiting level's offer. Each reward is a button
+  with its name, rank and effect ("Haggler II - Shop prices -10% (now -5%)"), plus "Not now". The next level's offer
+  follows once the reward screen of a loot reward is done. With nothing waiting, the panel shows the status: level,
+  title, Power to the next, main items, lasting rewards.
+- **The offer** (`Ascendance.currentOffer`): 3 (`offerSize`), weighted.
+  - It holds at least one lasting and one one-time reward while any are left, never the same id twice.
+  - It is rolled once per level and kept, saved, so closing the dialog does not re-roll it.
+  - A lasting reward stops at its `maxPicks`; a one-time reward with nothing to give is not offered.
+- **One-time** (`AscendanceRewards`), scaled by the level the choice was earned at:
+  - Gold 40 x level, Shards 4 x level, Wood and Stone 12 x level.
+  - Rare cards in the deck's colors: 1 rare at L2-12, 2 rares at L13-22, a rare and a mythic at L23+.
+  - An item: Common, Uncommon from L13, Rare from L23.
+  - A booster of an unlocked edition, a missing treasure-map piece, a blueprint (`ResourceSpawns.grantRandomBlueprint`),
+    2 Bronze Coins.
+  - Goodwill: +2 reputation in the player's own town with the least.
+  - Mend: every cracked item repaired, every downed roaming guard healed.
+  - Cards, items, packs and map pieces go through the reward screen.
+- **Lasting** (stacking per pick; each effect is read where the game computes the value):
+
+| Reward | Effect | Where it hooks |
+|---|---|---|
+| Morning Vigor | +3 life in the first N duels each day | DuelScene's player effects, the player's own duels only |
+| Haggler | -5% shop prices per pick | RewardScene's buy price and the Thief Merchant's |
+| Swift Feet | +5% speed per pick | `AdventurePlayer.equipmentSpeed()`, refreshed through the equipment signal |
+| Prospector | +15% resource pickups and mines per pick | `ResourceSpawns.award`, `EconomyBuildings.mineWeeklyAmount` |
+| Far Sight | +15% vision per pick | `visionRadiusMultiplier()` |
+| Marshal | +2 roaming-guard duel life per pick | both guard-duel sites, never saved into the guard |
+| Stubborn | defeats cost 25% less life and gold per pick | `defeatGoldLossNow`, the life loss |
+| Mender | 25% per pick that an item escapes cracking | `Current.generateDefeatMessage` |
+| Spoilsman | +1 card on a first win | `CardBudget` |
+| Shardwell | +1 mana shard at duel start | DuelScene's player effects |
+| Envoy | -15% color reputation lost per pick | `ColorReputation.onPlayerWonDuel` |
+| Architect | -10% building and restore costs per pick | `EconomyBuildings`' four cost helpers, so label, check and payment agree |
+
+- **Save**: the waiting levels, the offer, the picks and Morning Vigor's day count, under their own keys. A round-493
+  save's count of waiting choices is rebuilt into levels.
+- **Cheats**: `asc choose` (the panel's tap) and `asc pick <id>`.
+- **Agent-tested**:
+  - The round-493 save's 23 waiting choices became levels 2-29.
+  - Offers mixed lasting and one-time rewards.
+  - Swift Feet was taken from the dialog, then the next offer opened.
+  - A booster (a SOM pack) and a rare card went through the reward screen, the next offer waiting after.
+  - Gold paid 320 at level 8; coins and a Green Map Fragment were given.
+  - Goodwill and blueprint were refused: no town owned yet, and no shop list loaded this session.
+  - A duel ran with Morning Vigor (+3 life, "1 of 1 today") and Shardwell (+1 shard).
+  - A Wisp win paid 4 Power: 20 at 20%, outgrown.
+  - The status view opened, and everything survived a save and load.
+- **Not exercised in play** (compiled, each a one-line read at its site): Haggler, Prospector, Far Sight, Marshal,
+  Stubborn, Mender, Spoilsman, Envoy, Architect, Mend.
+
 ## Round 493: Ascendance, the player's level - Power, levels, the main-item limit, the Settings switch (2026-10-08)
 
 The XP design (docs/design/2026-10-08-xp-leveling.md) - the user picked Option B: "Let's try out option B. I do want to

@@ -38,6 +38,21 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 494 - Ascendance's rewards
+
+Lasting-reward multipliers, each a one-line read of `Ascendance`:
+- **`scene/RewardScene.java`** - Haggler on the buy price and the Thief Merchant price.
+- **`player/AdventurePlayer.java`** - Swift Feet in `equipmentSpeed()` plus `refreshEquipmentEffects()`; Far Sight in
+  `visionRadiusMultiplier()`; Stubborn in `defeatGoldLossNow()` and the life loss.
+- **`stage/WorldStage.java`** - Marshal at both guard-duel life sites.
+- **`scene/DuelScene.java`** - Morning Vigor and Shardwell as a player `EffectData`, the player's own duels only.
+- **`util/Current.java`** - Mender in `generateDefeatMessage`.
+- **`stage/ConsoleCommandInterpreter.java`** - `asc choose`, `asc pick`.
+- **New (mod-added)**: `util/AscendanceUI.java`, `util/AscendanceRewards.java`.
+- **Mod-added, touched**: `ResourceSpawns` and `EconomyBuildings` (Prospector), `EconomyBuildings` (Architect,
+  `buildCost` in the four cost helpers), `CardBudget` (Spoilsman), `ColorReputation` (Envoy), `AscendanceState`,
+  `AscendanceData`, `AgentObserver`.
+
 ### Round 493 - Ascendance, the player's level
 
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`**:

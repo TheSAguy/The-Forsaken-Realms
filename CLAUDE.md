@@ -67,6 +67,15 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 494): **LOCAL + UNRELEASED** - Ascendance's pick-1-of-3 rewards (`AscendanceUI`,
+`AscendanceRewards`):
+- Tap the HUD "Asc" panel to take the oldest waiting level's offer (or see the status).
+- 12 one-time rewards scale with the level: gold, shards, wood, stone, rare cards, an item, a booster, a map piece, a
+  blueprint, coins, Goodwill (own towns), Mend.
+- 12 lasting rewards stack per pick: Morning Vigor, Haggler, Swift Feet, Prospector, Far Sight, Marshal, Stubborn,
+  Mender, Spoilsman, Shardwell, Envoy, Architect.
+- Pool and numbers in `config tables/ascendance.json` "choices". Cheats `asc choose`, `asc pick <id>`.
+
 ## STATE 2026-10-08 (round 493): **LOCAL + UNRELEASED** - Ascendance, the player's level (`util/Ascendance`, design doc
 `docs/design/2026-10-08-xp-leveling.md` section 7):
 - New Game / New Game+ only (older saves untouched).

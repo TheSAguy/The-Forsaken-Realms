@@ -50,6 +50,13 @@ public class AscendanceDisplayActor extends com.badlogic.gdx.scenes.scene2d.Grou
 
         setSize(PANEL_WIDTH, PANEL_HEIGHT);
         setVisible(false);
+        // Round 494: a tap opens the waiting reward, or the status (AscendanceUI).
+        addListener(new com.badlogic.gdx.scenes.scene2d.utils.ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                AscendanceUI.openFromHud();
+            }
+        });
     }
 
     @Override

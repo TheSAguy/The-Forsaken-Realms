@@ -11,12 +11,24 @@ public class AscendanceState {
     public boolean on;
     /** Every point of Power this run - the level is read from it (Ascendance.levelFor). */
     public int power;
-    /** Level-ups whose pick-1-of-3 reward is still to be taken. */
-    public int pendingChoices;
+    /** Round 494: the levels whose pick-1-of-3 reward is still to be taken, oldest first - a one-time reward scales with
+     *  the level it was earned at, not the level it is taken at. */
+    public final java.util.ArrayList<Integer> pendingLevels = new java.util.ArrayList<>();
+    /** Round 494: the offer on the table for the oldest pending level, so closing the dialog does not re-roll it. */
+    public final java.util.ArrayList<String> offer = new java.util.ArrayList<>();
+    /** Round 494: lasting rewards taken, id -> picks. */
+    public final java.util.LinkedHashMap<String, Integer> picks = new java.util.LinkedHashMap<>();
+    /** Round 494: Morning Vigor - the day it last counted duels, and how many it has covered that day. */
+    public int vigorDay = -1;
+    public int vigorUsed;
 
     public void reset() {
         on = false;
         power = 0;
-        pendingChoices = 0;
+        pendingLevels.clear();
+        offer.clear();
+        picks.clear();
+        vigorDay = -1;
+        vigorUsed = 0;
     }
 }

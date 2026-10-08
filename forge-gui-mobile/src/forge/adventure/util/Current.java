@@ -37,7 +37,8 @@ public class Current {
         final String baseMessage = Forge.getLocalizer().getMessage(key, player().getName());
 
         final ItemData itemData = player().getRandomEquippedItem();
-        if (itemData != null && !(Config.instance().getSettingData().disableCrackedItems)) {
+        if (itemData != null && !(Config.instance().getSettingData().disableCrackedItems)
+                && !Ascendance.itemEscapesCracking(itemData)) { // round 494: Mender
             itemData.isCracked = true;
             player().equip(itemData); // un-equip
             InventoryScene.instance().clearItemDescription();

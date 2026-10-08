@@ -101,7 +101,7 @@ public final class Ascendance {
 
     public static int pendingChoices() {
         AscendanceState s = state();
-        return s == null ? 0 : s.pendingChoices;
+        return s == null ? 0 : s.pendingLevels.size();
     }
 
     /** The last level on the curve (30); past it the levels go on, much slower (postCapXpToNext). */
@@ -351,11 +351,11 @@ public final class Ascendance {
             gifts.add(mainSlotAllowance(level) + " main items");
         String title = contains(d.titleLevels, level) ? titleAt(level) : "";
         if (gifts.isEmpty() && title.isEmpty() && !pastCurve) {
-            s.pendingChoices++;
-            gifts.add("a reward to choose");
+            s.pendingLevels.add(level);
+            gifts.add("a reward to choose - tap the Asc panel");
         }
         System.out.println("[TFR-Ascend] LEVEL " + level + (title.isEmpty() ? "" : " - " + title) + ": "
-                + String.join(", ", gifts) + " (choices waiting: " + s.pendingChoices + ")");
+                + String.join(", ", gifts) + " (choices waiting: " + s.pendingLevels.size() + ")");
         GameHUD.getInstance().addNotification("[GOLD]Ascendance " + level + (title.isEmpty() ? "" : " - " + title) + "![] "
                 + capitalize(String.join(", ", gifts)) + ".", true);
     }
@@ -466,13 +466,250 @@ public final class Ascendance {
         award(amount, "Inn tournament (" + event.matchesWon + " match" + (event.matchesWon == 1 ? "" : "es") + " won)");
     }
 
+    // ------------------------------------------------------------------------------------------------ the choices (round 494)
+    // The user: "I'm thinking with each level you get something like a choice of 3 from the following list: +3 life for
+    // the first duel each day (the second time you take this it would be the first 2 duels, etc.), + xxx Gold, + xxx
+    // Shards, + xxx Wood, + xxx Stone, + random rare card(s), + random common item, + ????" - and on the stacking: "Let's
+    // say you choose Haggler. -5% shop prices, then the next time it would be -10% and the 3rd -15%. So it's like a mini
+    // decision, if you want to invest heavily into one direction." Pool and numbers: ascendance.json "choices".
+
+    private static final java.util.Random RAND = new java.util.Random();
+
+    private static AscendanceData.Choice choice(String id) {
+        for (AscendanceData.Choice c : data().choices)
+            if (c != null && c.id.equals(id))
+                return c;
+        return null;
+    }
+
+    /** Picks of a lasting reward taken so far - 0 when Ascendance is off (every effect below reads neutral then). */
+    public static int picks(String id) {
+        AscendanceState s = state();
+        if (s == null || !isActive())
+            return 0;
+        Integer n = s.picks.get(id);
+        return n == null ? 0 : n;
+    }
+
+    /** A lasting reward's total: its per-pick value times the picks taken. */
+    private static float total(String id) {
+        AscendanceData.Choice c = choice(id);
+        return c == null ? 0f : c.value * picks(id);
+    }
+
+    // The effects, read where the game computes each value. Neutral (1, or 0) without the pick.
+    /** Haggler: the price the player pays in a shop, times this. */
+    public static float shopPriceFactor() { return Math.max(0.1f, 1f - total("haggler")); }
+    /** Swift Feet: overworld speed, times this. */
+    public static float speedFactor() { return 1f + total("swiftFeet"); }
+    /** Prospector: resource pickups and mine yields, times this. */
+    public static float prospectorFactor() { return 1f + total("prospector"); }
+    /** Far Sight: vision radius, times this. */
+    public static float visionFactor() { return 1f + total("farSight"); }
+    /** Marshal: added to a roaming guard's duel life. */
+    public static int guardLifeBonus() { return Math.round(total("marshal")); }
+    /** Stubborn: the life and gold a defeat costs, times this. */
+    public static float defeatLossFactor() { return Math.max(0f, 1f - total("stubborn")); }
+    /** Mender: the chance an equipped item escapes cracking on a defeat. */
+    public static float crackSaveChance() { return Math.min(1f, total("mender")); }
+    /** Mender: does this item escape the crack a defeat would give it? Rolled once per defeat. */
+    public static boolean itemEscapesCracking(ItemData item) {
+        float chance = crackSaveChance();
+        if (chance <= 0f || RAND.nextFloat() >= chance)
+            return false;
+        System.out.println("[TFR-Ascend] Mender: " + item.name + " escapes cracking (" + pct(chance) + " chance)");
+        GameHUD.getInstance().addNotification("Mender: your " + item.name + " held together.");
+        return true;
+    }
+
+    /** Spoilsman: cards added to a first win's reward. */
+    public static int firstWinCardBonus() { return Math.round(total("spoilsman")); }
+    /** Shardwell: mana shards added at the start of the player's duels. */
+    public static int duelStartShards() { return Math.round(total("shardwell")); }
+    /** Envoy: color reputation LOST from a won duel, times this. */
+    public static float reputationLossFactor() { return Math.max(0f, 1f - total("envoy")); }
+    /** Architect: building and town-restore costs, times this. */
+    public static float buildCostFactor() { return Math.max(0.1f, 1f - total("architect")); }
+
+    /** Morning Vigor: the life added to this duel - "+3 life for the first duel each day", one more duel each pick.
+     *  Counts the duel (call once, at a duel's start). */
+    public static int morningVigorLife() {
+        AscendanceState s = state();
+        int picks = picks("vigor");
+        if (s == null || picks <= 0)
+            return 0;
+        int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        if (s.vigorDay != day) {
+            s.vigorDay = day;
+            s.vigorUsed = 0;
+        }
+        if (s.vigorUsed >= picks)
+            return 0;
+        s.vigorUsed++;
+        int life = Math.round(choice("vigor").value);
+        System.out.println("[TFR-Ascend] Morning Vigor: +" + life + " life this duel (" + s.vigorUsed + " of " + picks
+                + " today, day " + day + ")");
+        return life;
+    }
+
+    /** The offer for the oldest waiting level - rolled once and kept (closing the dialog does not re-roll it). Empty
+     *  when nothing waits. */
+    public static List<String> currentOffer() {
+        AscendanceState s = state();
+        if (s == null || !isActive() || s.pendingLevels.isEmpty())
+            return new ArrayList<>();
+        boolean stale = s.offer.isEmpty();
+        for (String id : s.offer)
+            stale |= !offerable(choice(id), s.pendingLevels.get(0));
+        if (stale)
+            rollOffer(s);
+        return new ArrayList<>(s.offer);
+    }
+
+    public static int offerLevel() {
+        AscendanceState s = state();
+        return s == null || s.pendingLevels.isEmpty() ? 0 : s.pendingLevels.get(0);
+    }
+
+    private static boolean offerable(AscendanceData.Choice c, int level) {
+        if (c == null)
+            return false;
+        if (c.lasting)
+            return picks(c.id) < c.maxPicks;
+        return AscendanceRewards.canGive(c.id, level);
+    }
+
+    /** At least one lasting and one one-time reward while any are left (the user: "a choice of 3"), weighted. */
+    private static void rollOffer(AscendanceState s) {
+        int level = s.pendingLevels.get(0);
+        List<AscendanceData.Choice> lasting = new ArrayList<>(), once = new ArrayList<>();
+        for (AscendanceData.Choice c : data().choices)
+            if (offerable(c, level))
+                (c.lasting ? lasting : once).add(c);
+        s.offer.clear();
+        if (!lasting.isEmpty())
+            s.offer.add(draw(lasting).id);
+        if (!once.isEmpty())
+            s.offer.add(draw(once).id);
+        List<AscendanceData.Choice> rest = new ArrayList<>(lasting);
+        rest.addAll(once);
+        while (s.offer.size() < Math.max(1, data().offerSize) && !rest.isEmpty())
+            s.offer.add(draw(rest).id);
+        java.util.Collections.shuffle(s.offer, RAND);
+        System.out.println("[TFR-Ascend] offer for level " + level + ": " + s.offer);
+    }
+
+    /** One weighted draw, removed from the list - and the same id never twice in an offer. */
+    private static AscendanceData.Choice draw(List<AscendanceData.Choice> from) {
+        AscendanceState s = state();
+        from.removeIf(c -> s != null && s.offer.contains(c.id));
+        if (from.isEmpty())
+            return null;
+        float sum = 0f;
+        for (AscendanceData.Choice c : from)
+            sum += Math.max(0f, c.weight);
+        float roll = RAND.nextFloat() * sum;
+        AscendanceData.Choice picked = from.get(from.size() - 1);
+        for (AscendanceData.Choice c : from) {
+            roll -= Math.max(0f, c.weight);
+            if (roll <= 0f) {
+                picked = c;
+                break;
+            }
+        }
+        from.remove(picked);
+        return picked;
+    }
+
+    private static final String[] RANKS = {"", " I", " II", " III", " IV", " V"};
+
+    /** "[%95]Haggler II[]\n[%75]Shop prices -10% (now -5%)" - the dialog's button text for one offered reward. */
+    public static String describe(String id, int level) {
+        AscendanceData.Choice c = choice(id);
+        if (c == null)
+            return id;
+        if (!c.lasting)
+            return "[%95]" + AscendanceRewards.name(id) + "[]\n[%75]" + AscendanceRewards.describe(id, c.value, level);
+        int next = picks(id) + 1;
+        String rank = next < RANKS.length ? RANKS[next] : " " + next;
+        float now = c.value * picks(id), then = c.value * next;
+        String effect;
+        switch (id) {
+            case "vigor": effect = "+" + Math.round(c.value) + " life in the first " + next + " duel" + (next == 1 ? "" : "s") + " each day"; break;
+            case "haggler": effect = "Shop prices -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
+            case "swiftFeet": effect = "Overworld speed +" + pct(then) + (now > 0 ? " (now +" + pct(now) + ")" : ""); break;
+            case "prospector": effect = "Resource pickups and mines +" + pct(then) + (now > 0 ? " (now +" + pct(now) + ")" : ""); break;
+            case "farSight": effect = "Vision +" + pct(then) + (now > 0 ? " (now +" + pct(now) + ")" : ""); break;
+            case "marshal": effect = "Roaming guards +" + Math.round(then) + " life" + (now > 0 ? " (now +" + Math.round(now) + ")" : ""); break;
+            case "stubborn": effect = "Defeats cost " + pct(then) + " less life and gold" + (now > 0 ? " (now " + pct(now) + ")" : ""); break;
+            case "mender": effect = pct(Math.min(1f, then)) + " chance a worn item escapes cracking" + (now > 0 ? " (now " + pct(now) + ")" : ""); break;
+            case "spoilsman": effect = "+" + Math.round(then) + " card" + (then >= 2 ? "s" : "") + " on a first win against an enemy"; break;
+            case "shardwell": effect = "+" + Math.round(then) + " mana shard" + (then >= 2 ? "s" : "") + " at the start of each duel"; break;
+            case "envoy": effect = "Color reputation lost from wins -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
+            case "architect": effect = "Building and town restore costs -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
+            default: effect = id;
+        }
+        return "[%95]" + lastingName(id) + rank + "[]\n[%75]" + effect;
+    }
+
+    private static String pct(float share) {
+        return Math.round(share * 100f) + "%";
+    }
+
+    public static String lastingName(String id) {
+        switch (id) {
+            case "vigor": return "Morning Vigor";
+            case "haggler": return "Haggler";
+            case "swiftFeet": return "Swift Feet";
+            case "prospector": return "Prospector";
+            case "farSight": return "Far Sight";
+            case "marshal": return "Marshal";
+            case "stubborn": return "Stubborn";
+            case "mender": return "Mender";
+            case "spoilsman": return "Spoilsman";
+            case "shardwell": return "Shardwell";
+            case "envoy": return "Envoy";
+            case "architect": return "Architect";
+            default: return id;
+        }
+    }
+
+    /** Take {@code id} from the current offer: a lasting pick counts, a one-time reward is paid at the level it was
+     *  earned. Returns what happened, for the dialog's toast; null when {@code id} is not on offer. */
+    public static String choose(String id) {
+        AscendanceState s = state();
+        if (s == null || !isActive() || s.pendingLevels.isEmpty() || !currentOffer().contains(id))
+            return null;
+        AscendanceData.Choice c = choice(id);
+        int level = s.pendingLevels.remove(0);
+        s.offer.clear();
+        String result;
+        if (c.lasting) {
+            s.picks.merge(id, 1, Integer::sum);
+            result = lastingName(id) + RANKS[Math.min(RANKS.length - 1, s.picks.get(id))];
+            if ("swiftFeet".equals(id)) // the player sprite caches its speed until the equipment signal
+                WorldSave.getCurrentSave().getPlayer().refreshEquipmentEffects();
+        } else {
+            result = AscendanceRewards.give(id, c.value, level);
+        }
+        System.out.println("[TFR-Ascend] level " + level + " reward chosen: " + id + " -> " + result + " (still waiting: "
+                + s.pendingLevels.size() + ")");
+        GameHUD.getInstance().addNotification("[GOLD]" + result + "[]", true);
+        return result;
+    }
+
     // ------------------------------------------------------------------------------------------------ save
 
     /** AdventurePlayer.save: the state under its own keys (no serialized object - see AscendanceState). */
     public static void save(forge.adventure.util.SaveFileData data, AscendanceState s) {
         data.store("ascendanceOn", s.on);
         data.store("ascendancePower", s.power);
-        data.store("ascendancePending", s.pendingChoices);
+        data.storeObject("ascendancePendingLevels", new ArrayList<>(s.pendingLevels)); // round 494
+        data.storeObject("ascendanceOffer", new ArrayList<>(s.offer));
+        data.storeObject("ascendancePickIds", new ArrayList<>(s.picks.keySet()));
+        data.storeObject("ascendancePickCounts", new ArrayList<>(s.picks.values()));
+        data.store("ascendanceVigorDay", s.vigorDay);
+        data.store("ascendanceVigorUsed", s.vigorUsed);
     }
 
     /** AdventurePlayer.load: absent keys (every save before round 493) read as "off". */
@@ -480,10 +717,62 @@ public final class Ascendance {
         s.reset();
         s.on = data.containsKey("ascendanceOn") && data.readBool("ascendanceOn");
         s.power = data.containsKey("ascendancePower") ? Math.max(0, data.readInt("ascendancePower")) : 0;
-        s.pendingChoices = data.containsKey("ascendancePending") ? Math.max(0, data.readInt("ascendancePending")) : 0;
+        loadChoices(data, s); // round 494
+    }
+
+    /** Round 494: the choice state. A round-493 save kept only a count of waiting choices: rebuild their levels from the
+     *  level reached (the last non-milestone levels), so each still pays at a sensible level. */
+    @SuppressWarnings("unchecked")
+    private static void loadChoices(forge.adventure.util.SaveFileData data, AscendanceState s) {
+        if (data.containsKey("ascendancePendingLevels")) {
+            List<Integer> levels = (List<Integer>) data.readObject("ascendancePendingLevels");
+            if (levels != null)
+                for (Integer l : levels)
+                    if (l != null)
+                        s.pendingLevels.add(l);
+        } else if (data.containsKey("ascendancePending")) {
+            int count = Math.max(0, data.readInt("ascendancePending"));
+            List<Integer> rebuilt = new ArrayList<>();
+            for (int l = levelFor(s.power); l >= 2 && rebuilt.size() < count; l--)
+                if (!contains(data().lifeLevels, l) && !contains(data().titleLevels, l) && l <= curveTop())
+                    rebuilt.add(0, l);
+            s.pendingLevels.addAll(rebuilt);
+        }
+        if (data.containsKey("ascendanceOffer")) {
+            List<String> offer = (List<String>) data.readObject("ascendanceOffer");
+            if (offer != null)
+                for (String id : offer)
+                    if (id != null)
+                        s.offer.add(id);
+        }
+        if (data.containsKey("ascendancePickIds") && data.containsKey("ascendancePickCounts")) {
+            List<String> ids = (List<String>) data.readObject("ascendancePickIds");
+            List<Integer> counts = (List<Integer>) data.readObject("ascendancePickCounts");
+            if (ids != null && counts != null)
+                for (int i = 0; i < Math.min(ids.size(), counts.size()); i++)
+                    if (ids.get(i) != null && counts.get(i) != null)
+                        s.picks.put(ids.get(i), counts.get(i));
+        }
+        s.vigorDay = data.containsKey("ascendanceVigorDay") ? data.readInt("ascendanceVigorDay") : -1;
+        s.vigorUsed = data.containsKey("ascendanceVigorUsed") ? data.readInt("ascendanceVigorUsed") : 0;
     }
 
     // ------------------------------------------------------------------------------------------------ cheats
+
+    /** Console "asc pick <id>": take that reward now, as if it had been offered (for testing each effect). */
+    public static String cheatPick(String id) {
+        AscendanceState s = state();
+        if (s == null || !isActive())
+            return "This character has no Ascendance (New Game or New Game+ only)";
+        AscendanceData.Choice c = choice(id);
+        if (c == null)
+            return "No reward called " + id;
+        if (s.pendingLevels.isEmpty())
+            s.pendingLevels.add(level());
+        s.offer.clear();
+        s.offer.add(id);
+        return choose(id);
+    }
 
     public static String cheatGive(int amount) {
         if (!isActive())
@@ -516,6 +805,7 @@ public final class Ascendance {
         AdventurePlayer player = WorldSave.getCurrentSave().getPlayer();
         return "Ascendance " + level() + (title().isEmpty() ? "" : " (" + title() + ")") + ", " + s.power + " Power, "
                 + p[0] + "/" + p[1] + " to next; main items " + mainItemsWorn(player) + "/" + mainSlotAllowance()
-                + "; choices waiting " + s.pendingChoices + "; max life " + player.getMaxLife();
+                + "; choices waiting " + s.pendingLevels.size() + " " + s.pendingLevels + "; lasting " + s.picks
+                + "; max life " + player.getMaxLife();
     }
 }

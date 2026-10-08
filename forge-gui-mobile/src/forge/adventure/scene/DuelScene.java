@@ -918,6 +918,18 @@ public class DuelScene extends ForgeScene {
                 }
             }
         }
+        // Round 494: Ascendance's Morning Vigor (+life in the first duels each day) and Shardwell (+mana shards) - the
+        // player's own duels only: not a spectated guard fight (aiControlsPlayerSide), not an Inn tournament.
+        if (!aiControlsPlayerSide && eventData == null) {
+            int vigor = forge.adventure.util.Ascendance.morningVigorLife();
+            int shardBonus = forge.adventure.util.Ascendance.duelStartShards();
+            if (vigor > 0 || shardBonus > 0) {
+                EffectData ascendance = new EffectData();
+                ascendance.lifeModifier = vigor;
+                ascendance.extraManaShards = shardBonus;
+                playerEffects.add(ascendance);
+            }
+        }
         // Round 163 (MOD_SCOPE #118): a roaming guard's own equipment. Its effects go on the guard's
         // seat and its items' opponent effects on the mage's, exactly as the player's do above.
         if (guardEffects != null) {

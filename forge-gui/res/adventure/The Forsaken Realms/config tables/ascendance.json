@@ -54,5 +54,39 @@
   "mainSlotLevels": [5, 10, 15, 20],
   "titleLevels": [5, 10, 15, 20, 25, 30],
   "titles": ["Unbound", "Reclaimer", "Warden of Ash", "Seal-breaker", "Sovereign", "Ascendant"],
-  "guardMainSlots": [2, 3, 4, 5]
+  "guardMainSlots": [2, 3, 4, 5],
+
+  // Round 494: every level that is not a milestone offers offerSize of these; the player takes one. Each offer holds at
+  // least one lasting and one one-time reward while any are left; a lasting one stops at maxPicks, a one-time one with
+  // nothing to give (every blueprint owned, every map piece found) is never offered.
+  // One-time "value" scales with the level the choice was earned at; lasting "value" is per pick and stacks.
+  "offerSize": 3,
+  "choices": [
+    // one-time
+    { "id": "gold",        "value": 40 },   // 40 x level gold
+    { "id": "shards",      "value": 4 },    // 4 x level shards
+    { "id": "wood",        "value": 12 },   // 12 x level wood
+    { "id": "stone",       "value": 12 },   // 12 x level stone
+    { "id": "rareCards" },                  // in the deck's colors: 1 rare (L2-12), 2 rares (L13-22), a rare + a mythic (L23+)
+    { "id": "item" },                       // Common (L2-12), Uncommon (L13-22), Rare (L23+)
+    { "id": "booster" },                    // a pack of an edition the player has unlocked
+    { "id": "mapFragment" },                // a piece of a treasure map still missing
+    { "id": "blueprint" },                  // a shop blueprint not owned, from the tiers reputation allows
+    { "id": "coins",       "value": 2 },    // Bronze Challenge Coins
+    { "id": "goodwill",    "value": 2 },    // reputation in the player's own town with the least
+    { "id": "mend" },                       // every cracked item repaired, every downed roaming guard healed
+    // lasting
+    { "id": "vigor",       "lasting": true, "maxPicks": 3, "value": 3 },    // +3 life in the first N duels each day
+    { "id": "haggler",     "lasting": true, "maxPicks": 3, "value": 0.05 }, // -5% shop prices a pick
+    { "id": "swiftFeet",   "lasting": true, "maxPicks": 3, "value": 0.05 }, // +5% overworld speed
+    { "id": "prospector",  "lasting": true, "maxPicks": 3, "value": 0.15 }, // +15% resource pickups and mines
+    { "id": "farSight",    "lasting": true, "maxPicks": 2, "value": 0.15 }, // +15% vision radius
+    { "id": "marshal",     "lasting": true, "maxPicks": 3, "value": 2 },    // roaming guards +2 life
+    { "id": "stubborn",    "lasting": true, "maxPicks": 2, "value": 0.25 }, // defeats cost 25% less life and gold
+    { "id": "mender",      "lasting": true, "maxPicks": 2, "value": 0.25 }, // 25% chance an item doesn't crack
+    { "id": "spoilsman",   "lasting": true, "maxPicks": 2, "value": 1 },    // +1 card on a first win
+    { "id": "shardwell",   "lasting": true, "maxPicks": 2, "value": 1 },    // +1 mana shard at duel start
+    { "id": "envoy",       "lasting": true, "maxPicks": 2, "value": 0.15 }, // -15% color reputation lost from wins
+    { "id": "architect",   "lasting": true, "maxPicks": 3, "value": 0.10 }  // -10% building and restore costs
+  ]
 }

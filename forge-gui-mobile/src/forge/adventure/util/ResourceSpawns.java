@@ -376,6 +376,7 @@ public class ResourceSpawns {
                     ? GOLD_MIN + world.getRandom().nextInt(GOLD_MAX - GOLD_MIN + 1)
                     : OTHER_MIN + world.getRandom().nextInt(OTHER_MAX - OTHER_MIN + 1);
         }
+        value = Math.max(1, Math.round(value * Ascendance.prospectorFactor())); // round 494: Prospector
         String what;
         switch (type) {
             case TYPE_GOLD:

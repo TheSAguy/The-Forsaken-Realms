@@ -1078,6 +1078,18 @@ public class ConsoleCommandInterpreter {
             }
         });
         registerCommand(new String[]{"asc", "info"}, s -> forge.adventure.util.Ascendance.cheatInfo());
+        // Round 494: "asc choose" opens the waiting reward (or the status) as the HUD panel's tap does; "asc pick <id>"
+        // takes that reward now (ids in ascendance.json "choices") - for testing each one.
+        registerCommand(new String[]{"asc", "choose"}, s -> {
+            forge.adventure.util.AscendanceUI.openFromHud();
+            return "Ascendance dialog opened (" + forge.adventure.util.Ascendance.pendingChoices() + " waiting)";
+        });
+        registerCommand(new String[]{"asc", "pick"}, s -> {
+            if (s.length < 1)
+                return "Command needs 1 parameter: a reward id from ascendance.json";
+            String result = forge.adventure.util.Ascendance.cheatPick(s[0]);
+            return result == null ? "Could not take " + s[0] : result;
+        });
         // Round 490: test cheats for roaming guards on pillage duty. "guard add [tier] [help]" hires a guard carrying a COPY
         // of the selected deck (cheat cards: they come home on a dismissal), "help" ticking its "Help with pillaged towns"
         // order; "guard orders" opens the Capitol's Guards dialog over the current menu scene (after "armory open").

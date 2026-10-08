@@ -631,3 +631,8 @@ levels. Maybe we don't cap it at 30, but make the leveling MUCH slower after 30 
 - **Config**: `levelingSpeed` multiplies every award; `milestoneLife` is the life given at each milestone level.
 - **No cap**: past 30, a level costs 2,000 Power, 250 more for each level after (about 40 wins per level at that stage,
   against 13 before). Each gives +1 max life (`postCapLife`) and nothing else.
+
+### 7.12 Built in round 494
+
+The choice framework and the whole pool of 7.5 + 7.10 (Architect; Goodwill for the player's own towns only). Rewards
+are taken by tapping the HUD's "Asc" panel; each offer is rolled once per waiting level and kept.

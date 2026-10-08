@@ -66,4 +66,22 @@ public class AscendanceData {
     public String[] titles = {"Unbound", "Reclaimer", "Warden of Ash", "Seal-breaker", "Sovereign", "Ascendant"};
     /** A roaming guard's main-slot items, by its rank. */
     public int[] guardMainSlots = {2, 3, 4, 5};
+
+    // ---- round 494: the pick-1-of-3 rewards
+    /** How many rewards a choice offers. */
+    public int offerSize = 3;
+    /** The pool. A one-time reward's {@code value} scales with the level it was earned at (gold: value x level); a
+     *  lasting one's is per pick (Haggler 0.05 = -5% a pick, the user: "the next time it would be -10% and the 3rd
+     *  -15%"). What each id does is util/Ascendance's; the numbers are here. */
+    public Choice[] choices = new Choice[0];
+
+    public static class Choice {
+        public String id = "";
+        public boolean lasting;
+        /** Lasting only: picks it can take before it stops being offered. */
+        public int maxPicks = 1;
+        public float value;
+        /** Relative chance of being offered. */
+        public float weight = 1f;
+    }
 }

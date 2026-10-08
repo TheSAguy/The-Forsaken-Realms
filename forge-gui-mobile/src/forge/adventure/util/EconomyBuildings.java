@@ -823,7 +823,12 @@ public class EconomyBuildings {
     /** Weekly payout amount for a mine type, sourced from TuningData (2026-08-16, user spec:
      *  "Gold: 50g/week. Wood: 25/w Stone 25/w Shards 20/w") - not difficulty-scaled, same as the
      *  flat RESOURCE_PRODUCTION_PER_DAY it replaces never was either. */
+    /** Round 494: a mine's weekly payout, Ascendance's Prospector included - the payout and the balance sheet read it. */
     private static int mineWeeklyAmount(int type) {
+        return Math.round(mineWeeklyBase(type) * Ascendance.prospectorFactor());
+    }
+
+    private static int mineWeeklyBase(int type) {
         TuningData tuning = Config.instance().getTuningData();
         switch (type) {
             case SHARD_MINE: return tuning.mineWeeklyShardPayout;
@@ -1153,6 +1158,12 @@ public class EconomyBuildings {
 
     /** "250 [+Gold] + 150 [+Stone]" from BASE values (each component difficulty-scaled here);
      *  zero components are skipped. */
+    /** Round 494: a building-flow cost component - difficulty-scaled, then Ascendance's Architect discount. The four
+     *  helpers below (label, affordability, payment, dialog action) all read it, so shown and charged never differ. */
+    private static int buildCost(int baseAmount) {
+        return Math.round(scaledCost(baseAmount) * Ascendance.buildCostFactor());
+    }
+
     public static String costLabel(int gold, int wood, int stone, int shards) {
         StringBuilder sb = new StringBuilder();
         appendCostPart(sb, gold, "[+Gold]");
@@ -1167,7 +1178,7 @@ public class EconomyBuildings {
             return;
         if (sb.length() > 0)
             sb.append(" + ");
-        sb.append(scaledCost(baseAmount)).append(' ').append(icon);
+        sb.append(buildCost(baseAmount)).append(' ').append(icon);
     }
 
     // 2026-08-25 bug fix (user report: couldn't repair the Arena - 250 gold, no stone cost -
@@ -1178,30 +1189,30 @@ public class EconomyBuildings {
     // balance - this check only ever gates the resources a purchase actually spends.
     public static boolean canAffordCost(int gold, int wood, int stone, int shards) {
         AdventurePlayer player = AdventurePlayer.current();
-        return (gold <= 0 || player.getGold() >= scaledCost(gold))
-                && (wood <= 0 || player.getWood() >= scaledCost(wood))
-                && (stone <= 0 || player.getStone() >= scaledCost(stone))
-                && (shards <= 0 || player.getShards() >= scaledCost(shards));
+        return (gold <= 0 || player.getGold() >= buildCost(gold))
+                && (wood <= 0 || player.getWood() >= buildCost(wood))
+                && (stone <= 0 || player.getStone() >= buildCost(stone))
+                && (shards <= 0 || player.getShards() >= buildCost(shards));
     }
 
     /** Immediate payment for TextraButton flows (upgrades, research). Callers gate on
      *  canAffordCost() first - this does not re-check. */
     public static void payCost(int gold, int wood, int stone, int shards) {
         AdventurePlayer player = AdventurePlayer.current();
-        if (gold > 0) player.takeGold(scaledCost(gold));
-        if (wood > 0) player.takeWood(scaledCost(wood));
-        if (stone > 0) player.takeStone(scaledCost(stone));
-        if (shards > 0) player.takeShards(scaledCost(shards));
+        if (gold > 0) player.takeGold(buildCost(gold));
+        if (wood > 0) player.takeWood(buildCost(wood));
+        if (stone > 0) player.takeStone(buildCost(stone));
+        if (shards > 0) player.takeShards(buildCost(shards));
     }
 
     /** One ActionData deducting every non-zero (scaled) component - MapDialog handles all four
      *  fields (addWood/addStone are mod additions to DialogData.ActionData). */
     public static DialogData.ActionData spendCostAction(int gold, int wood, int stone, int shards) {
         DialogData.ActionData action = new DialogData.ActionData();
-        action.addGold = -scaledCost(gold);
-        action.addShards = -scaledCost(shards);
-        action.addWood = -scaledCost(wood);
-        action.addStone = -scaledCost(stone);
+        action.addGold = -buildCost(gold);
+        action.addShards = -buildCost(shards);
+        action.addWood = -buildCost(wood);
+        action.addStone = -buildCost(stone);
         return action;
     }
 

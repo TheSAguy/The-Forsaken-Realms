@@ -2457,9 +2457,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public int defeatGoldLossNow() {
         forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
         int loss = tuning == null ? -1 : tuning.defeatGoldLoss(difficultyData.name, gold);
-        if (loss >= 0)
-            return loss;
-        return gold - (int) (gold - (gold * difficultyData.goldLoss));
+        if (loss < 0)
+            loss = gold - (int) (gold - (gold * difficultyData.goldLoss));
+        return Math.round(loss * forge.adventure.util.Ascendance.defeatLossFactor()); // round 494: Stubborn
     }
 
     public boolean defeated() {
@@ -2483,7 +2483,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.GOLD, gold - lostGold);
         }
         int lb = life, mb = maxLife;
-        life = (int) (life - (maxLife * difficultyData.lifeLoss));
+        life = (int) (life - (maxLife * difficultyData.lifeLoss * forge.adventure.util.Ascendance.defeatLossFactor())); // round 494: Stubborn
         logLife("defeated(lifeLoss=" + difficultyData.lifeLoss + ")", lb, mb);
         onLifeTotalChangeList.emit();
         onGoldChangeList.emit();
@@ -3223,7 +3223,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             if (blessing.moveSpeed > 0.0)
                 factor *= blessing.moveSpeed;
         }
-        return factor;
+        return factor * forge.adventure.util.Ascendance.speedFactor(); // round 494: Swift Feet
+    }
+
+    /** Round 494: speed is cached by the player sprite on this signal - Ascendance's Swift Feet pick refreshes it. */
+    public void refreshEquipmentEffects() {
+        onEquipmentChange.emit();
     }
 
     // Torch (MOD_SCOPE.md, 2026-08-13): same equipped-item-effect-product pattern as
@@ -3239,7 +3244,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             if (data != null && data.effect != null && data.effect.visionRadiusMultiplier > 0.0)
                 factor = Math.max(factor, data.effect.visionRadiusMultiplier);
         }
-        return factor;
+        return factor * forge.adventure.util.Ascendance.visionFactor(); // round 494: Far Sight
     }
 
     public float goldModifier(boolean sale) {

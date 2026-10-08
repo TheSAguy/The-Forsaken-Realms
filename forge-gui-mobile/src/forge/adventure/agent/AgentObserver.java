@@ -266,7 +266,9 @@ final class AgentObserver {
             asc.put("toNext", progress[0] + "/" + progress[1]);
             asc.put("title", forge.adventure.util.Ascendance.title());
             asc.put("mainItems", forge.adventure.util.Ascendance.mainItemsWorn(p) + "/" + forge.adventure.util.Ascendance.mainSlotAllowance());
-            asc.put("pendingChoices", p.ascendance().pendingChoices);
+            asc.put("pendingChoices", p.ascendance().pendingLevels.size()); // round 494: the levels, oldest first
+            asc.put("offer", new java.util.ArrayList<>(p.ascendance().offer));
+            asc.put("picks", new java.util.LinkedHashMap<>(p.ascendance().picks));
             m.put("ascendance", asc);
         }
         return m;

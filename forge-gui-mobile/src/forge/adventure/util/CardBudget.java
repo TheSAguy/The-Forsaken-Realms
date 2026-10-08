@@ -130,7 +130,8 @@ public final class CardBudget {
         int gearApplied = Math.max(0, Current.player().bonusDeckCards()); // in full, first win or repeat - "as is"
         int difficultyBonus = easy ? Math.max(0, tuning.cardBudgetEasyBonus) : 0;
         int rankBase = champion ? championFactor * Math.max(0, base(tuning, tier, true)) : Math.max(0, base(tuning, tier, firstWin));
-        int budget = rankBase + gearApplied + difficultyBonus;
+        int budget = rankBase + gearApplied + difficultyBonus
+                + (firstWin && !champion ? Ascendance.firstWinCardBonus() : 0); // round 494: Spoilsman
 
         List<Reward> cards = new ArrayList<>();
         Array<Reward> result = new Array<>();
