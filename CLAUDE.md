@@ -58,6 +58,15 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## STATE 2026-10-08 (00:15 UTC): **v1.19 "Titans & Tides" RELEASED** - tag `tfr-v1.19` @ `9eba8fa822a`, published
+00:15:04 UTC, Latest. Rounds 442-472 on top of v1.18, engine = the 10.07 daily (upstream `e7fca289313`). Assets in
+`C:\TFRelease1.19`: `The-Forsaken-Realms-v1.19.zip` 329.9 MB, `forsaken-realms-1.19-signed-aligned.apk` 13.6 MB
+(com.thesaguy.forsakenrealms, versionCode 11900, signer EE:60:39:25), `assets.zip` 281.9 MB (build.txt pair 2026-10-08
+00:11:15; Android from `C:\TFR-build` via R: in 2:42). Notes = `RELEASE_NOTES_v1.19.md` (the name was my pick). Quick
+agent test before release: a new world, a duel (loss path), Settings, an old save loaded - log clean. Live + agent = the
+release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
+user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
+
 ## STATE 2026-10-07 (round 472): **LOCAL + UNRELEASED** - ENGINE = the 10.07 daily (upstream `e7fca289313`, base install
 `E:\GAMES\Forge_2` build.txt 2026-10-07 22:47:23). No textual conflicts; one semantic: `UI_COIN_FLIP_ANIMATION` renamed
 `UI_COIN_DICE_ANIMATION` upstream (#12167, the new dice animation) - round 464's Settings switch rebound to it ("Coin/Dice
