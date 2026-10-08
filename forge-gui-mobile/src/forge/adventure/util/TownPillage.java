@@ -404,6 +404,7 @@ public final class TownPillage {
         System.out.println("[TFR-Pillage] " + town + ": pillage stopped on day " + world.getCurrentDay() + " - +"
                 + t.pillageRewardReputation + " reputation, +" + t.pillageRewardWood + " wood, +" + t.pillageRewardStone
                 + " stone");
+        Ascendance.onPillageStopped(town); // round 493
         end(world, mob.pillageTown);
     }
 

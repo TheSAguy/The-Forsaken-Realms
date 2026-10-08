@@ -388,7 +388,11 @@ public class InventoryScene extends UIScene {
             return;
         ItemData data = itemLocation.get(selected).getRight();
         if (data == null) return;
-        Current.player().equip(data);
+        if (!Current.player().equip(data)) { // round 493: Ascendance's main-item limit
+            showDialog(createGenericDialog("", forge.adventure.util.Ascendance.refusalFor(Current.player(), data), "OK",
+                    null, this::removeDialog, null, false, "", true));
+            return;
+        }
         updateInventory();
         // Round 160 (code review): updateInventory() rebuilds every button and (since round 141)
         // clears itemLocation, so `selected` pointed at a detached actor and the SECOND press of
@@ -549,7 +553,8 @@ public class InventoryScene extends UIScene {
             // it in the button's own visual state. Same 0.4x-of-item-cost formula repair() uses.
             repairButton.setDisabled(Current.player().getGold() < (int) (data.cost * 0.4f));
             String status = data.isCracked ? " (" + Forge.getLocalizer().getMessage("lblCracked") + ")" : "";
-            setDescription(data.getDisplayName() + status + "\n[%98]" + data.getDescription()); // round 460: upstream's display name
+            setDescription(data.getDisplayName() + status + "\n[%98]" + data.getDescription() // round 460: upstream's display name
+                    + forge.adventure.util.Ascendance.mainItemsLine(Current.player(), data)); // round 493
         }
         else if (deckLocation.containsKey(actor)){
             Deck data = (deckLocation.get(actor));

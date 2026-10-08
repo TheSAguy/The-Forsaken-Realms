@@ -299,11 +299,14 @@ public class ArmoryScene extends UIScene {
 
         storageTitle.setText("[%70]Armory Storage (" + ArmoryStorage.items().size() + ")");
         if (playerMode()) {
-            dollTitle.setText("[%70]" + Current.player().getName());
+            String mainItems = forge.adventure.util.Ascendance.mainItemsLabel(Current.player()); // round 493
+            dollTitle.setText("[%70]" + Current.player().getName() + (mainItems.isEmpty() ? "" : " - " + mainItems));
             inventoryTitle.setText("[%70]Inventory (" + Current.player().getItems().size() + ")");
         } else {
             String rank = RoamingGuards.displayName(guard.tier);
-            dollTitle.setText("[%70]" + rank + " Guard");
+            dollTitle.setText("[%70]" + rank + " Guard" + (forge.adventure.util.Ascendance.isActive()
+                    ? " - main items " + forge.adventure.util.Ascendance.guardMainWorn(guard) + " / "
+                    + forge.adventure.util.Ascendance.guardMainAllowance(guard.tier) : "")); // round 493
             inventoryTitle.setText("[%70]" + rank + " Guard - worn (" + guard.equipment.size() + ")");
         }
         dollTitle.layout();
@@ -479,6 +482,12 @@ public class ArmoryScene extends UIScene {
             return;
         boolean stored = inStorage.contains(selected);
         boolean moved;
+        if (!playerMode() && stored && forge.adventure.util.Ascendance.guardRefusal(guard, data) != null) {
+            // Round 493: a roaming guard's main items by rank (the user: Apprentice 2, Adept 3, Master 4, Archmage 5).
+            showDialog(createGenericDialog("", forge.adventure.util.Ascendance.guardRefusal(guard, data), "OK",
+                    null, this::removeDialog, null, false, "", true));
+            return;
+        }
         if (playerMode())
             moved = stored ? ArmoryStorage.withdraw(data) : ArmoryStorage.deposit(data);
         else
@@ -493,7 +502,11 @@ public class ArmoryScene extends UIScene {
         ItemData data = selectedItem();
         if (data == null || !playerMode() || inStorage.contains(selected))
             return;
-        Current.player().equip(data);
+        if (!Current.player().equip(data)) { // round 493: Ascendance's main-item limit
+            showDialog(createGenericDialog("", forge.adventure.util.Ascendance.refusalFor(Current.player(), data), "OK",
+                    null, this::removeDialog, null, false, "", true));
+            return;
+        }
         refresh();
         reselect(data);
     }

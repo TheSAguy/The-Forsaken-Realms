@@ -436,6 +436,7 @@ public final class DungeonSources {
         }
         System.out.println("[TFR-DungeonSource] " + poi.getDisplayName() + " cleared on day " + today + " after " + age
                 + " day(s) (x" + escalation(age) + ") - it falls quiet" + paid);
+        Ascendance.onPlaceCleared(poi); // round 493: once per incarnation, like the reputation above
     }
 
     /** The nearest town or capital with people in it - not a ruin still waiting for its restoration, not the start camp. */

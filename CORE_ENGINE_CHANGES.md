@@ -38,6 +38,39 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 493 - Ascendance, the player's level
+
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`**:
+  - the `ascendance` state field + getter; `clear()` resets it;
+  - `create()` and `resetForNewGamePlus()` call `Ascendance.startRun()`;
+  - `applyNewGamePlusCarry()` and the deck-loadout switch call `Ascendance.enforceMainLimit()`;
+  - `save`/`load` call `Ascendance.save/load`;
+  - **`equip()` now returns boolean** (false = refused by the main-item limit; a free Left2/Right2 twin is still taken);
+  - new `takeOffSlot()`; `wearStartItem` skips a refused kit item.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `afterGameEnd`: `Ascendance.onDuelWon()` for the
+  player's own won duels.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `visitPoi()` replaces the three `visit()` calls (a
+  first visit pays Power); `isTreasureGuardianFight()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - the `AscendanceDisplayActor` under the wood/stone panel.
+- **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`** - equip refusal dialog; a main item's description
+  ends with "Main items x / y".
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** + **`data/SettingData.java`** - the "Leveling
+  (Ascendance)" switch (`ascendanceDisabled`); `res/languages/en-US.properties` `lblAscendanceLeveling`.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** - `ascendanceEnabled` (on in the plane's config.json).
+- **Award hooks**:
+  - `forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java` (quest completed)
+  - `scene/ArenaScene.java` (bracket won)
+  - `util/AdventureEventController.java` (Inn tournament ended)
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `asc give / set / info`.
+- **New (mod-added)**: `util/Ascendance.java`, `util/AscendanceDisplayActor.java`, `data/AscendanceData.java`,
+  `data/AscendanceState.java`, `config tables/ascendance.json`.
+- **Mod-added, touched**:
+  - `ArmoryScene` (refusals, counts)
+  - `ArmoryStorage.giveToGuard` (the guard limit), `RoamingGuards.retier` (trim)
+  - `DungeonSources.onCleared`, `TownRestoration` (restore, capture, Capitol), `TownPillage`, `TreasureHunt` (awards)
+  - `InvasionQuests.toughestTroopRank`
+  - `AgentActions.equip` (refusal), `AgentObserver` (state)
+
 ### Round 491 - Esc closes nested windows; the Armory panes follow the pointer
 
 - **`forge-gui-mobile/src/forge/adventure/util/Controls.java`** - `pressDialogClose(Dialog)`: presses a dialog's own

@@ -1,0 +1,58 @@
+// Ascendance - the player's level (round 493; design: docs/design/2026-10-08-xp-leveling.md, section 7).
+// New games and New Game+ only. Rank-indexed arrays: Apprentice, Adept, Master, Archmage.
+{
+  // Power needed for each next level: entry 1 is level 1 -> 2, the last is 29 -> 30 (10,880 in all).
+  // Built as (at-level wins for the level, 2 rising by 1.1 and capped at 13) x (one at-level win, 10 + 0.85 x level)
+  // x 1.4 (the share that is not duels), rounded to 5: level 10 at about 58 wins, 20 at about 187, 30 at about 317.
+  "xpToNext": [30, 50, 75, 100, 130, 160, 190, 230, 265, 310, 350, 370, 385, 400, 415, 430, 445, 460, 475, 490,
+               505, 520, 540, 555, 570, 585, 600, 615, 630],
+  // Leveling speed: every award is multiplied by this (2 = twice as fast, 0.5 = half as fast).
+  "levelingSpeed": 1.0,
+  // Max life given at each milestone level (lifeLevels below).
+  "milestoneLife": 1,
+  // Past level 30 there is no cap, but each level is much slower - 2,000 Power for 30 -> 31 (about 40 wins at that
+  // stage, against 13 before), 250 more for each level after - and gives only postCapLife max life.
+  "postCapXpToNext": 2000,
+  "postCapXpStep": 250,
+  "postCapLife": 1,
+
+  // A won duel: the enemy's rank, then the highest multiplier that applies (never stacked).
+  "duelBase": [10, 18, 28, 40],
+  "bossFactor": 3,
+  "legendFactor": 2.5,
+  "firstWinFactor": 2,
+  "townFightFactor": 2,
+  "treasureGuardianFactor": 2,
+  "championFactor": 1.5,
+  "mageFactor": 1.5,
+  // Outgrown: above the band top a rank's wins pay 10% less per level, never under 20%.
+  "outgrownBandTop": [8, 15, 22, 999],
+  "outgrownStep": 0.10,
+  "outgrownFloor": 0.20,
+
+  // Not duels.
+  "firstVisitTown": 5,
+  "firstVisitPlace": 3,
+  "clearCave": 8,
+  "clearDungeon": 15,
+  "restoreTown": 30,
+  "captureTown": 40,
+  "raiseCapitol": 100,
+  "sideQuest": 20,
+  "storyQuest": 50,
+  "invasion": [50, 75, 100, 150],
+  "pillageStopped": 25,
+  "arenaBracket": 40,
+  "innMatchWin": 15,
+  "innChampion": 30,
+  "treasureFound": 75,
+
+  // Level rewards: +1 max life at these levels; main-slot items (Neck, Body, Left, Right, Boots) 1, +1 at each of
+  // mainSlotLevels; the titles; a roaming guard's main-slot items by its rank.
+  "lifeLevels": [5, 10, 15, 20, 25, 30],
+  "mainSlotsBase": 1,
+  "mainSlotLevels": [5, 10, 15, 20],
+  "titleLevels": [5, 10, 15, 20, 25, 30],
+  "titles": ["Unbound", "Reclaimer", "Warden of Ash", "Seal-breaker", "Sovereign", "Ascendant"],
+  "guardMainSlots": [2, 3, 4, 5]
+}

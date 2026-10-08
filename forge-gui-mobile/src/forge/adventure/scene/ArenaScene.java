@@ -982,6 +982,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             doneButton.layout();
             AdventureQuestController.instance().updateArenaComplete(true);
             AdventureQuestController.instance().showQuestDialogs(MapStage.getInstance());
+            forge.adventure.util.Ascendance.onArenaBracketWon(); // round 493
         }
         if (!Forge.isLandscapeMode())
             drawArena();//update

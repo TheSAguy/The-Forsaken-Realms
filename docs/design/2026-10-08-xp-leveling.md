@@ -590,3 +590,44 @@ in play, I would speed up the curve's early levels rather than move the slot lev
    a gauntlet sidesteps it.)
 2. The pool in 7.5: drop or add anything? Are the amounts right?
 3. Titles every 5 levels: keep them as free flavor, or drop them?
+
+### 7.10 Decisions, second pass (2026-10-08)
+
+The user: "For the Gauntlets, no. it's a special item. so it does give a bonus item slot. ... Let's say you choose
+Haggler. -5% shop prices, then the next time it would be -10% and the 3rd -15%. So it's like a mini decision, if you want
+to invest heavily into one direction. Let's add -x% cheaper building cost/town repair. Goodwill should be for your own
+towns only. Go with the titles. Let's limit the roaming guards equipment slots also. Apprentice - 2, Adept - 3, Master -
+4 and Archmage 5. Let's actually combine +1 life and Equipment slot unlock at 5, 10, etc. This will give us more
+opportunity for the other 3 random picks."
+
+- **Gauntlets:** their extra hand slots (Left2, Right2) are a bonus and never count toward the limit.
+- **Lasting options stack as an investment:** Haggler is -5%, then -10%, then -15%. Every lasting option works this way.
+- **Architect** is added to the lasting options: -10% building and town-restore costs per pick, max 3.
+- **Goodwill** is for the player's own towns only.
+- **Titles stay:** Unbound (5), Reclaimer (10), Warden of Ash (15), Seal-breaker (20), Sovereign (25), Ascendant (30).
+- **Roaming guards' main items, by rank:** Apprentice 2, Adept 3, Master 4, Archmage 5. Lowering a guard's rank sends
+  the extra items back to the Armory storage. This applies to saves with Ascendance, like the player's limit.
+- **Milestone levels combine** +1 max life, the slot unlock and the title:
+
+| Level | Reward |
+|---|---|
+| 5 | +1 max life, 2 main items, *Unbound* |
+| 10 | +1 max life, 3 main items, *Reclaimer* |
+| 15 | +1 max life, 4 main items, *Warden of Ash* |
+| 20 | +1 max life, 5 main items, *Seal-breaker* |
+| 25 | +1 max life, *Sovereign* |
+| 30 | +1 max life, *Ascendant* |
+| every other level (23 of them) | pick 1 of 3 |
+
+### 7.11 Decisions, third pass (2026-10-08) - built in round 493
+
+The user: "I do think the XP/Leveling system is going to be controversial, so maybe add an option is settings to turn it
+all off. Also, in the config, add options to control the speed of leveling and how much life is given at the milestone
+levels. Maybe we don't cap it at 30, but make the leveling MUCH slower after 30 and give +1 life for each level?"
+
+- **Settings switch**: "Leveling (Ascendance)", on by default. Off turns off all of it: no Power, no main-item or guard
+  limits, no HUD panel. What was already gained stays, and switching it back on carries on (items over the limit are
+  taken off).
+- **Config**: `levelingSpeed` multiplies every award; `milestoneLife` is the life given at each milestone level.
+- **No cap**: past 30, a level costs 2,000 Power, 250 more for each level after (about 40 wins per level at that stage,
+  against 13 before). Each gives +1 max life (`postCapLife`) and nothing else.

@@ -104,6 +104,11 @@ public final class InvasionQuests {
         return quest != null && quest.getOtherToken(COUNT) != null;
     }
 
+    /** Round 493: the toughest troop rank an invasion lost, for Ascendance's Power (0 when none was counted). */
+    public static int toughestTroopRank(AdventureQuestData quest) {
+        return Math.max(0, troopRank(quest));
+    }
+
     /** The toughest troop rank this invasion has lost (0 Apprentice .. 3 Archmage), -1 before the first. */
     private static int troopRank(AdventureQuestData quest) {
         try {

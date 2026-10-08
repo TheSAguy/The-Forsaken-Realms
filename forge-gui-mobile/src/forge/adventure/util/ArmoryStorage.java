@@ -126,7 +126,7 @@ public final class ArmoryStorage {
 
     /** Storage -> guard. One item per slot: whatever was in that slot goes back to the storage. */
     public static boolean giveToGuard(RoamingGuardData guard, ItemData item) {
-        if (!guardCanWear(item) || !items().remove(item))
+        if (!guardCanWear(item) || Ascendance.guardRefusal(guard, item) != null || !items().remove(item)) // round 493
             return false;
         ItemData displaced = worn(guard, item.equipmentSlot);
         if (displaced != null) {

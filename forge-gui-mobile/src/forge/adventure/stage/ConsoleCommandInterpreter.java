@@ -1061,6 +1061,23 @@ public class ConsoleCommandInterpreter {
             forge.adventure.scene.ArmoryScene.instance().open(null);
             return "Armory storage opened";
         });
+        // Round 493: Ascendance test cheats - "asc give <power>" (as an award, times the levelingSpeed), "asc set <level>"
+        // (straight there, each level's rewards paid), "asc info".
+        registerCommand(new String[]{"asc", "give"}, s -> {
+            try {
+                return forge.adventure.util.Ascendance.cheatGive(s.length > 0 ? Integer.parseInt(s[0]) : 100);
+            } catch (NumberFormatException e) {
+                return "Can not convert " + s[0] + " to number";
+            }
+        });
+        registerCommand(new String[]{"asc", "set"}, s -> {
+            try {
+                return forge.adventure.util.Ascendance.cheatSetLevel(s.length > 0 ? Integer.parseInt(s[0]) : 1);
+            } catch (NumberFormatException e) {
+                return "Can not convert " + s[0] + " to number";
+            }
+        });
+        registerCommand(new String[]{"asc", "info"}, s -> forge.adventure.util.Ascendance.cheatInfo());
         // Round 490: test cheats for roaming guards on pillage duty. "guard add [tier] [help]" hires a guard carrying a COPY
         // of the selected deck (cheat cards: they come home on a dismissal), "help" ticking its "Help with pillaged towns"
         // order; "guard orders" opens the Capitol's Guards dialog over the current menu scene (after "armory open").

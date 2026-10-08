@@ -83,6 +83,8 @@ public class ConfigData {
     public boolean treasureHuntEnabled = false;
     /** Round 484: towns being pillaged by raiders from nearby dungeons (util/TownPillage). */
     public boolean pillageEnabled = false;
+    /** Round 493: Ascendance, the player's level (util/Ascendance) - read when a run starts (New Game, New Game+). */
+    public boolean ascendanceEnabled = false;
     public boolean dungeonRotationEnabled = false;
     public boolean sideQuestTimerEnabled = false;
     public boolean resourceLootVarietyEnabled = false;

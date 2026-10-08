@@ -14264,6 +14264,70 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 493: Ascendance, the player's level - Power, levels, the main-item limit, the Settings switch (2026-10-08)
+
+The XP design (docs/design/2026-10-08-xp-leveling.md) - the user picked Option B: "Let's try out option B. I do want to
+add one thing though. Equipment slots should also be gated behind leveling. You start with 1 slot. (Not utility, just the
+5 main slots ...) At level 5, you get the second and at level 10 you get the 3rd, level 15, the 4th and level 20 the 5th."
+Then: "Let's actually combine +1 life and Equipment slot unlock at 5, 10, etc.", "Let's limit the roaming guards equipment
+slots also. Apprentice - 2, Adept - 3, Master - 4 and Archmage 5", "Let's say it won't work on existing saves, have to do a
+NG+ or new game", "Let's not have a Seal-bound cap for now", and mid-round: "I do think the XP/Leveling system is going to
+be controversial, so maybe add an option is settings to turn it all off. Also, in the config, add options to control the
+speed of leveling and how much life is given at the milestone levels. Maybe we don't cap it at 30, but make the leveling
+MUCH slower after 30 and give +1 life for each level?"
+
+- **Who has it**: a character started by New Game or New Game+ (`AscendanceState.on`, saved as `ascendanceOn`). Every
+  older save loads with it off and plays exactly as before - no Power, no limit. New Game+ starts over at Ascendance 1.
+- **Power** (`util/Ascendance`):
+  - **Won duels**: by the enemy's rank (10 / 18 / 28 / 40), times the highest multiplier that applies (boss x3, legend
+    x2.5, first win against that enemy x2, town fight x2, treasure guardian x2, champion or attacking mage x1.5).
+  - **Outgrown rule**: above Ascendance 8 / 15 / 22 an Apprentice / Adept / Master win pays 10% less per level, floor
+    20%.
+  - **Not duels**: a quest (20; story 50; an invasion 50-150 by its toughest troop), a first visit (town 5, other places
+    3), a cleared dungeon or cave (15 / 8, once per incarnation), a restored town 30, a captured town 40, the Capitol
+    100, a stopped pillage 25, an Arena bracket 40, an Inn tournament (15 per match won, +30 for winning it), a treasure
+    75.
+  - **Never**: a loss, a guard's fight, Deck Tester, anything inside a duel. The hook is `DuelScene.afterGameEnd`,
+    before the deferred `recordStatistics`, so "first win" reads the record without this win.
+- **Levels**: the curve in `config tables/ascendance.json` (29 steps, 10,880 to reach 30: level 10 at about 58 wins, 20 at
+  about 187, 30 at about 317).
+  - Every 5th level: +1 max life (`milestoneLife`) and a title (Unbound, Reclaimer, Warden of Ash, Seal-breaker,
+    Sovereign, Ascendant).
+  - Levels 5, 10, 15 and 20 also allow one more main item.
+  - Every other level banks a pick-1-of-3 reward (`pendingChoices`; the choices are the next round).
+  - **Past 30, no cap**: 2,000 Power for 30 -> 31, +250 per level after, each giving +1 max life (`postCapXpToNext`,
+    `postCapXpStep`, `postCapLife`).
+  - `levelingSpeed` multiplies every award.
+- **The main-item limit**: Neck, Body, Left, Right and Boots.
+  - 1 item at level 1, then 2 / 3 / 4 / 5 at levels 5 / 10 / 15 / 20.
+  - Every slot stays open; the limit counts worn items.
+  - The gauntlets' Left2 / Right2 are a bonus and never count - a free twin is still taken at the limit.
+  - Swapping a worn slot's item never changes the count.
+  - `AdventurePlayer.equip()` returns false when refused. The Inventory and Armory screens say why ("Your power allows 1
+    main item ... Ascendance 5 brings one more."), a main item's description shows "Main items 1 / 2 - one more at
+    Ascendance 5", and the Armory doll title shows the count.
+  - The starting kit wears what fits.
+  - New Game+ with items kept, a deck's loadout and switching Ascendance back on take items off (last slot first) to fit.
+- **Roaming guards' main items by rank**: Apprentice 2, Adept 3, Master 4, Archmage 5 (`ArmoryStorage.giveToGuard`,
+  the Armory's "Give" says why). Lowering a guard's rank sends the extra items back to the storage.
+- **Settings**: "Leveling (Ascendance): Power, levels, and the main-item limit" (`SettingData.ascendanceDisabled`). Off
+  means all of it - no Power, no limits, no HUD panel. What was gained stays.
+- **HUD**: "Asc 7" with a gold bar to the next level under the wood/stone panel (`AscendanceDisplayActor`, code-built
+  like `ResourceDisplayActor`). A gold "!" means rewards wait to be chosen. Toasts show every "+N Power - why" and each
+  level-up.
+- **Switches and tuning**: `ConfigData.ascendanceEnabled` (on in this plane's config.json) gates new runs. Cheats
+  `asc give <n>`, `asc set <level>`, `asc info`. The agent's state lists `ascendance`. `[TFR-Ascend]` logs every award,
+  level, refusal and trim.
+- **Agent-tested**:
+  - A new game starts on with the boots worn (1/1), and the skipped intro's story quest paid 50 (level 2).
+  - A second main item was refused at level 2 with the message, and worn at level 5 (+1 max life, *Unbound*, 3 choices
+    banked).
+  - A Goblin Worker win paid 20 (Apprentice 10, first win x2).
+  - The Settings switch: off hid the panel and let a third item on; on again took the Boots off with a notice.
+  - Level 31 cost 2,000 and gave +1 life (max life 27 = 21 + 5 milestones + 1); everything survived a save and load.
+  - An Apprentice guard refused its third item; promoted to Master it took it; demoted, the extra went back to storage.
+  - An older save stays off.
+
 ## Round 492: the Axe Orc's atlas regions follow its figures (2026-10-08)
 
 The user: "I think the Axe Orc art might be cycling wrong". It was: `sprites/enemy/basic/humanoid/axe_orc.atlas` (a

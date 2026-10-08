@@ -68,6 +68,19 @@ public class WorldStage extends GameStage implements SaveFileContent {
     public boolean isTownOrCapitolFight() {
         return currentMobIsTownAssault || currentMobIsCapitolDefense;
     }
+    /** Round 493: a treasure guardian's duel in progress - Ascendance pays it as one (read before setWinner clears it). */
+    public boolean isTreasureGuardianFight() {
+        return currentMobTreasureRegion >= 0;
+    }
+
+    /** Round 493: mark a place entered; the first time ever pays Ascendance's first-visit Power. */
+    private void visitPoi(PointOfInterest poi) {
+        forge.adventure.pointofintrest.PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID());
+        boolean first = !changes.isVisited();
+        changes.visit();
+        if (first)
+            forge.adventure.util.Ascendance.onFirstVisit(poi);
+    }
     private String townAssaultTownName = null;
     private PointOfInterest townAssaultPoi = null;
     // Round 105 (user request 2026-09-04): full-screen back-splash behind the win/lose dialog - the user's
@@ -1116,7 +1129,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         autoSaveHere();
                         loadPOI(point.getPointOfInterest());
                         point.getMapSprite().checkOut();
-                        WorldSave.getCurrentSave().getPointOfInterestChanges(point.getPointOfInterest().getID()).visit();
+                        visitPoi(point.getPointOfInterest()); // round 493: the first visit pays Power
                     });
                     return true;
                 } else {
@@ -1768,7 +1781,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     autoSaveHere();
                     loadPOI(poi);
                     point.getMapSprite().checkOut();
-                    WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).visit();
+                    visitPoi(poi); // round 493
                 })
                 : Controls.newTextButton("Pay " + ColorReputation.CAPITAL_ENTRY_TOLL + " [+Gold] (you have "
                     + Current.player().getGold() + ")");
@@ -1825,7 +1838,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             autoSaveHere();
             loadPOI(poi);
             point.getMapSprite().checkOut();
-            WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).visit();
+            visitPoi(poi); // round 493
         })).width(240f).row();
         dialog.getButtonTable().add(Controls.newTextButton("Turn Back", this::hideDialog)).width(240f).row();
         dialog.setKeepWithinStage(true);

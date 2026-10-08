@@ -405,6 +405,11 @@ public class DuelScene extends ForgeScene {
             else
                 Current.player().recordNotoriety(winner);
         }
+        // Round 493: Ascendance - Power for the same duels (the player's own: not a guard's fight, an Inn match - its
+        // tournament pays at the end - or Deck Tester). Here, before the deferred recordStatistics(), so "first win
+        // against this enemy" reads the record without this win in it.
+        if (winner && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
+            forge.adventure.util.Ascendance.onDuelWon(enemy, enemyName, isArena);
         Forge.advFreezePlayerControls = winner;
         endRunnable = () -> Gdx.app.postRunnable(() -> {
             GameHUD.getInstance().updateBGM();

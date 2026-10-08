@@ -54,4 +54,8 @@ public class SettingData {
     // Alchemy and Arena-only sets) are NOT folded into restrictedEditions, so their cards reach rewards, shops, boosters
     // and enemy decks. Off by default - round 395's block. Read once at startup (Config), so a change needs a restart.
     public boolean allowDigitalOnlyCards;
+    // Round 493 (the user: "I do think the XP/Leveling system is going to be controversial, so maybe add an option is
+    // settings to turn it all off"): true switches Ascendance off entirely - no Power, no main-slot limit, no HUD panel.
+    // Stored as "disabled" so a settings file from before it reads as on (the default).
+    public boolean ascendanceDisabled;
 }

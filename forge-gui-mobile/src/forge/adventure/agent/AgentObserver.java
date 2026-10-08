@@ -257,6 +257,18 @@ final class AgentObserver {
             guards.add(gm);
         }
         if (!guards.isEmpty()) m.put("roamingGuards", guards);
+        if (p.ascendance().on) { // round 493
+            Map<String, Object> asc = new LinkedHashMap<>();
+            asc.put("active", forge.adventure.util.Ascendance.isActive());
+            asc.put("level", forge.adventure.util.Ascendance.level());
+            asc.put("power", p.ascendance().power);
+            int[] progress = forge.adventure.util.Ascendance.progress();
+            asc.put("toNext", progress[0] + "/" + progress[1]);
+            asc.put("title", forge.adventure.util.Ascendance.title());
+            asc.put("mainItems", forge.adventure.util.Ascendance.mainItemsWorn(p) + "/" + forge.adventure.util.Ascendance.mainSlotAllowance());
+            asc.put("pendingChoices", p.ascendance().pendingChoices);
+            m.put("ascendance", asc);
+        }
         return m;
     }
 

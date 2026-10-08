@@ -371,6 +371,7 @@ public class AdventureQuestController implements Serializable {
             }
             finishedQuests.add(quest);
             updateQuestComplete(quest);
+            Ascendance.onQuestCompleted(quest); // round 493
         }
 
         if (activeDialog == null && !dialogQueue.isEmpty()){

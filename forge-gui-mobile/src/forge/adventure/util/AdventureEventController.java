@@ -28,6 +28,7 @@ public class AdventureEventController implements Serializable {
 
     public void finalizeEvent(AdventureEventData completedEvent) {
         Current.player().getStatistic().setResult(completedEvent);
+        Ascendance.onInnEventEnded(completedEvent); // round 493
         Current.player().removeEvent(completedEvent);
     }
 

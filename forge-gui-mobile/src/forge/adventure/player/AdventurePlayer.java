@@ -728,6 +728,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404
         notorietyStreak = 0; // round 411
+        ascendance.reset(); // round 493
         unlockedShopTypes.clear();
         startingColorId = null;
         suppressDefeatGoldLoss = false;
@@ -780,6 +781,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private final java.util.Map<String, Integer> enemyWinStreaks = new java.util.HashMap<>();
     // Round 411: notoriety - the player's wins in a row against anyone, saved as "notorietyStreak".
     private int notorietyStreak = 0;
+    // Round 493: Ascendance, the player's level (util/Ascendance) - saved under its own keys, off for older saves.
+    private final forge.adventure.data.AscendanceState ascendance = new forge.adventure.data.AscendanceState();
+
+    public forge.adventure.data.AscendanceState ascendance() {
+        return ascendance;
+    }
     // Shop-type blueprints (user spec 2026-08-30): the card shop TYPES this player has learned.
     // Seeded at character creation from the chosen color (its common trio) plus the race's two
     // tribal shops - 5 total - then grown by buying blueprints in AI shops and by rare drops.
@@ -871,6 +878,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // after heroRace is set above, since the race grant is keyed off it.
         seedStartingShopTypes(race);
 
+        // Round 493: a new character starts at Ascendance 1 - before the kit is worn, so the main-slot limit applies.
+        forge.adventure.util.Ascendance.startRun(this, "New Game");
+
         for (String s : (ringGiftStart() ? new String[0] : difficultyData.startItems)) { // round 101: Llanowar hands the kit over
             ItemData i = ItemListData.getItem(s);
             if (i == null)
@@ -923,6 +933,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                         }
                     }
                 }
+                // Round 493: a loadout saved before a lower limit (Ascendance off then on) wears only what fits.
+                forge.adventure.util.Ascendance.enforceMainLimit(this, "deck loadout");
 
                 onEquipmentChange.emit();
             }
@@ -1013,6 +1025,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404: a new run's enemies have not learned your tricks yet
         notorietyStreak = 0; // round 411: nor heard of you
+        // Round 493 (the user: "Not 100% sure how NG+ will work, I think you start over"): back to Ascendance 1 - and a
+        // New Game+ is how an older save gets Ascendance at all.
+        forge.adventure.util.Ascendance.startRun(this, "New Game+");
         // Round 160 (code review): the roster rides into the new run (the guards still hold their
         // decks), but every DAY-based field pointed at the old calendar - a guard benched on old
         // day 250 was "hurt for 279 more days" in a world back on day 1, and no wage was billed
@@ -1106,6 +1121,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             }
             armoryStorage.clear();
         }
+        // Round 493: a run back at Ascendance 1 wears one main item - the rest of the kept gear goes in the bag.
+        forge.adventure.util.Ascendance.enforceMainLimit(this, "New Game+");
     }
 
     public void updateDifficulty(DifficultyData diff) {
@@ -1856,6 +1873,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
         // Round 411: notoriety. Absent before this round - every older save starts at 0 wins in a row.
         notorietyStreak = data.containsKey("notorietyStreak") ? Math.max(0, data.readInt("notorietyStreak")) : 0;
+        forge.adventure.util.Ascendance.load(data, ascendance); // round 493: absent before it - off
         // Shop-type blueprints (2026-08-30). Absent on every pre-round-71 save; the containsKey
         // guard leaves the set EMPTY there, which isShopTypeUnlocked() deliberately reads as
         // "legacy save, everything unlocked" rather than "nothing unlocked" - see the field.
@@ -1954,6 +1972,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         data.storeObject("winStreakNames", winStreakNameList);
         data.storeObject("winStreakCounts", winStreakCountList);
         data.store("notorietyStreak", notorietyStreak); // round 411
+        forge.adventure.util.Ascendance.save(data, ascendance); // round 493
         data.storeObject("unlockedShopTypes", new ArrayList<>(unlockedShopTypes));
         // store() with a null String throws (writeUTF) - persist "" and read it back as null.
         data.store("startingColorId", startingColorId == null ? "" : startingColorId);
@@ -3126,7 +3145,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
     }
 
-    public void equip(ItemData item) {
+    /** @return false when Ascendance's main-slot limit refused the item (round 493 - the caller says why, through
+     *  Ascendance.equipRefusal); true for every equip and unequip that happened. */
+    public boolean equip(ItemData item) {
         java.util.List<String> candidates = slotCandidates(item);
         // Already worn in one of its candidate slots? Then this is an unequip.
         for (String slot : candidates) {
@@ -3136,16 +3157,32 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 equippedItems.remove(slot);
                 dropUngrantedSlots();
                 onEquipmentChange.emit();
-                return;
+                return true;
             }
         }
         // Otherwise fill the first FREE candidate, falling back to displacing the base slot.
-        String target = candidates.get(0);
+        // Round 493: a free MAIN slot only while the level allows one more main item - a gauntlet's Left2/Right2 never
+        // counts (the user: "it's a special item. so it does give a bonus item slot"), so a free twin is still taken,
+        // and swapping what is already worn never changes the count.
+        String target = null;
+        String refusal = null;
         for (String slot : candidates) {
-            if (!equippedItems.containsKey(slot)) {
+            if (equippedItems.containsKey(slot))
+                continue;
+            String why = forge.adventure.util.Ascendance.equipRefusal(this, item, slot);
+            if (why == null) {
                 target = slot;
                 break;
             }
+            if (refusal == null)
+                refusal = why;
+        }
+        if (target == null) {
+            if (refusal != null && !equippedItems.containsKey(candidates.get(0))) {
+                System.out.println("[TFR-Ascend] " + item.name + " not worn - " + refusal);
+                return false;
+            }
+            target = candidates.get(0);
         }
         ItemData displaced = getEquippedItem(equippedItems.get(target));
         if (displaced != null && !displaced.longID.equals(item.longID))
@@ -3154,6 +3191,21 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         equippedItems.put(target, item.longID);
         dropUngrantedSlots();
         onEquipmentChange.emit();
+        return true;
+    }
+
+    /** Round 493: take off whatever is worn in {@code slot}; its name, or null for an empty slot. */
+    public String takeOffSlot(String slot) {
+        Long id = equippedItems.get(slot);
+        if (id == null)
+            return null;
+        ItemData item = getEquippedItem(id);
+        equippedItems.remove(slot);
+        if (item != null)
+            item.isEquipped = false;
+        dropUngrantedSlots();
+        onEquipmentChange.emit();
+        return item == null ? slot : item.name;
     }
 
     public Long itemInSlot(String key) {
@@ -3253,7 +3305,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (item == null || item.equipmentSlot == null || item.equipmentSlot.isEmpty()
                 || itemInSlot(item.equipmentSlot) != null)
             return;
-        equip(item);
+        if (!equip(item)) { // round 493: Ascendance 1 wears one main item - the rest of the kit waits in the bag
+            System.out.println("[TFR-StartKit] " + item.name + " stays in the bag - the main-item limit");
+            return;
+        }
         System.out.println("[TFR-StartKit] " + item.name + " worn in the " + item.equipmentSlot + " slot");
     }
 

@@ -120,6 +120,7 @@ public class GameHUD extends Stage {
     // manual speed-up during testing.
     private final CheckBox speedCheckBox;
     private final ResourceDisplayActor resourceDisplayActor;
+    private final forge.adventure.util.AscendanceDisplayActor ascendanceDisplayActor; // round 493
     private final TextraButton worldStandingsActor;
     private final InputEvent eventTouchDown, eventTouchUp;
     private final TextraButton deckActor, openMapActor, menuActor, logbookActor, inventoryActor, exitToWorldMapActor, bookmarkActor;
@@ -202,6 +203,7 @@ public class GameHUD extends Stage {
             }
         });
         resourceDisplayActor = new ResourceDisplayActor();
+        ascendanceDisplayActor = new forge.adventure.util.AscendanceDisplayActor(); // round 493: "Asc 7" and its bar
         // Territory Control (MOD_SCOPE.md #7): opens WorldStandingsScene instead of a permanent
         // HUD panel (the earlier TownCountActor version of this was taking up too much on-screen
         // space for data that only changes every few in-game days, per feedback). Built in code,
@@ -250,6 +252,7 @@ public class GameHUD extends Stage {
         // against it so its own bordered panel reads as a continuation of the same column
         // instead of a separate floating box.
         resourceDisplayActor.setPosition(money.getX(), money.getY() - resourceDisplayActor.getHeight());
+        ascendanceDisplayActor.setPosition(resourceDisplayActor.getX(), resourceDisplayActor.getY() - ascendanceDisplayActor.getHeight()); // round 493
         // In line with the top menu bar (2026-08-08 tighten-up - was floating below the bar
         // chained off bookmarkActor). Matches the bar buttons' own height/row so it reads as part
         // of the bar. Renamed "World" -> "Info" and moved/narrowed 2026-08-15 (user screenshot:
@@ -364,6 +367,7 @@ public class GameHUD extends Stage {
         // with the minimap. hudGroup only has its alpha adjusted, never hidden outright, matching
         // Gold/Shards/HP staying visible everywhere - Lumber/Stone should behave the same way.
         hudGroup.addActor(resourceDisplayActor);
+        hudGroup.addActor(ascendanceDisplayActor); // round 493
         // Round 478 (the user: "possible a map icon on the player to click on"): the treasure maps' button, just left of
         // the portrait panel - shown once any map piece is found (updateTreasureMapsButton), opens TreasureMapScene.
         // "item_frame_static" is an ImageButtonStyle in the skin - a plain Button cannot look it up (the first build threw

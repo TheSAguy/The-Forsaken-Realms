@@ -351,7 +351,8 @@ final class AgentActions {
         ItemData it = findItem(name, !on);
         if (it == null) return now(false, (on ? "no unequipped " : "no equipped ") + "item named '" + name + "'");
         if (it.equipmentSlot == null || it.equipmentSlot.isEmpty()) return now(false, it.name + " is not equipment");
-        Current.player().equip(it);
+        if (!Current.player().equip(it)) // round 493: the main-item limit
+            return now(false, it.name + " refused - " + forge.adventure.util.Ascendance.refusalFor(Current.player(), it));
         return now(true, (on ? "equipped " : "unequipped ") + it.name + " (" + it.equipmentSlot + ")");
     }
 

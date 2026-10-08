@@ -507,6 +507,7 @@ public class TownRestoration {
         System.out.println("[TFR-TownAssault] " + shownName + " captured from " + fromColor
                 + " -> player-owned restored town (radius " + repaintRadius + "), buildings start broken except the inn");
         forge.adventure.stage.GameHUD.getInstance().addNotification(shownName + " is yours! Its people welcome you - the buildings will need rebuilding."); // round 331: black tint (was white text)
+        Ascendance.onTownCaptured(shownName); // round 493
     }
 
     /**
@@ -626,6 +627,7 @@ public class TownRestoration {
         int restoredCount = Math.min(127, countPlayerTowns());
         Current.player().setQuestFlag("townsRestored", restoredCount);
         System.out.println("[TFR-MainQuest] townsRestored -> " + restoredCount);
+        Ascendance.onTownRestored(point.getDisplayName()); // round 493
     }
 
     /**
@@ -1135,6 +1137,7 @@ public class TownRestoration {
             return;
         }
         forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        Ascendance.onCapitolRaised(); // round 493
 
         // Snapshot the old town's built state before the id changes.
         PointOfInterestChanges oldChanges = WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID());

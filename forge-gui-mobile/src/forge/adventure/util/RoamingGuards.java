@@ -200,6 +200,7 @@ public class RoamingGuards {
         int shardDifference = Math.max(0, weeklyShardCost(newTier) - weeklyShardCost(oldTier)); // round 183 (G13): the caller charges it
         guard.tier = newTier;
         guard.maxLife = lifeFor(newTier);
+        Ascendance.enforceGuardLimit(guard); // round 493: a lower rank wears fewer main items - the rest to the storage
         System.out.println("[TFR-RoamGuard] " + displayName(oldTier) + " -> " + displayName(newTier)
                 + " (life " + guard.maxLife + ", speed " + speedFor(newTier)
                 + "), one-off charge " + goldDifference + " gold + " + shardDifference + " shards");

@@ -67,6 +67,19 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 493): **LOCAL + UNRELEASED** - Ascendance, the player's level (`util/Ascendance`, design doc
+`docs/design/2026-10-08-xp-leveling.md` section 7):
+- New Game / New Game+ only (older saves untouched).
+- Power from wins by rank with multipliers and an outgrown rule, plus quests, first visits, clears, towns, the Capitol,
+  pillages, arenas, Inns and treasures.
+- 30-level curve in `config tables/ascendance.json` (`levelingSpeed`, `milestoneLife`); past 30 it continues much
+  slower, +1 max life per level.
+- Every 5th level: +1 max life and a title. Levels 5/10/15/20 each allow one more main item (Neck/Body/Left/Right/Boots,
+  starting at 1; the gauntlets' slots don't count).
+- Roaming guards' main items by rank: 2/3/4/5.
+- Other levels bank a pick-1-of-3 reward - **the choice framework is the NEXT round**.
+- Settings switch "Leveling (Ascendance)"; HUD "Asc N" panel; cheats `asc give/set/info`. Agent-tested.
+
 ## STATE 2026-10-08 (round 492): **LOCAL + UNRELEASED (data only)** - the Axe Orc's atlas regions re-fitted to its
 figures (the user: "the Axe Orc art might be cycling wrong"): the pack sheet's figures are unevenly spaced and the
 fixed-grid regions showed a blank Hit frame, a blank and two garbled Death frames and clipped Attack/Idle frames. One

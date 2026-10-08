@@ -245,6 +245,14 @@ public class SettingsScene extends UIScene {
                 }
             }
         });
+        // Round 493: Ascendance (the player's level) on or off - see util/Ascendance.switchedOffInSettings().
+        addSettingField(localizer.getMessage("lblAscendanceLeveling"), !Config.instance().getSettingData().ascendanceDisabled, new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Config.instance().getSettingData().ascendanceDisabled = !((CheckBox) actor).isChecked();
+                Config.instance().saveSettings();
+            }
+        });
         addSettingField(localizer.getMessage("lblFogOfWar"), Config.instance().getSettingData().fogOfWarEnabled, new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
