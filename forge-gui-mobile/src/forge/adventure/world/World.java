@@ -831,6 +831,43 @@ public class World implements Disposable, SaveFileContent {
     // Round 340: the Yin-Yang rune's other half - the tile it lies on, or null. Set by one use, the next use brings
     // the player here and picks it up (ConsoleCommandInterpreter "yinyang"). Saved as yinYangAnchor.
     private int[] yinYangAnchor;
+    // Round 478: the lost-treasure hunts - one int[] per region, laid out by util/TreasureHunt's H_* indexes (target,
+    // map crop, fragments, found, the region's obelisk). Saved as treasureHunts; treasureVersion 0 = never seeded, so
+    // the first world-map tick seeds them - old saves included. The stamp tells WorldStage to rebuild its actors.
+    private final List<int[]> treasureHunts = new ArrayList<>();
+    private final List<int[]> treasureHoles = new ArrayList<>(); // {tileX, tileY, day, region} - the Spade's holes
+    private int treasureVersion = 0;
+    private int treasureStamp = 0;
+
+    public List<int[]> getTreasureHunts() {
+        return treasureHunts;
+    }
+
+    public List<int[]> getTreasureHoles() {
+        return treasureHoles;
+    }
+
+    public int getTreasureVersion() {
+        return treasureVersion;
+    }
+
+    public void setTreasureVersion(int version) {
+        treasureVersion = version;
+    }
+
+    public int getTreasureStamp() {
+        return treasureStamp;
+    }
+
+    public void bumpTreasureStamp() {
+        treasureStamp++;
+    }
+
+    /** Round 478: the minimap image WITHOUT the fog of war (getBiomeImage() returns the fogged copy when fog is on) - the
+     *  treasure map shows land the player has never seen. Read-only for callers. */
+    public Pixmap getCleanBiomeImage() {
+        return biomeImage;
+    }
     // Round 346: PlayerRoads.NETWORK_VERSION once the Capitol's road network was laid in this world (saved as
     // playerRoadsBuilt); 0 = never, and a save with a Capitol lays it on load.
     private int playerRoadsBuilt;
@@ -1167,6 +1204,18 @@ public class World implements Disposable, SaveFileContent {
         resourceSpawnsSeeded = saveFileData.containsKey("resourceSpawnsSeeded") && saveFileData.readInt("resourceSpawnsSeeded") != 0;
         yinYangAnchor = saveFileData.containsKey("yinYangAnchor") ? (int[]) saveFileData.readObject("yinYangAnchor") : null; // round 340
         yinYangStamp++;
+        treasureHunts.clear(); // round 478
+        if (saveFileData.containsKey("treasureHunts")) {
+            //noinspection unchecked
+            treasureHunts.addAll((List<int[]>) saveFileData.readObject("treasureHunts"));
+        }
+        treasureVersion = saveFileData.containsKey("treasureVersion") ? saveFileData.readInt("treasureVersion") : 0;
+        treasureHoles.clear();
+        if (saveFileData.containsKey("treasureHoles")) {
+            //noinspection unchecked
+            treasureHoles.addAll((List<int[]>) saveFileData.readObject("treasureHoles"));
+        }
+        treasureStamp++;
         bonfires.clear(); // round 336
         if (saveFileData.containsKey("bonfires")) {
             //noinspection unchecked
@@ -1355,6 +1404,9 @@ public class World implements Disposable, SaveFileContent {
         if (yinYangAnchor != null) // round 340
             data.storeObject("yinYangAnchor", yinYangAnchor);
         data.store("resourceSpawnsSeeded", resourceSpawnsSeeded ? 1 : 0);
+        data.storeObject("treasureHunts", new ArrayList<>(treasureHunts)); // round 478
+        data.storeObject("treasureHoles", new ArrayList<>(treasureHoles));
+        data.store("treasureVersion", treasureVersion);
         data.store("obstaclesSwept", obstacleSweep);
         data.store("playerRoadsBuilt", playerRoadsBuilt); // round 346
         data.store("roadsNormalized", roadsNormalized); // round 351
@@ -2601,6 +2653,10 @@ public class World implements Disposable, SaveFileContent {
             playerTownVisionAreas.clear(); // fresh world, no owned towns yet
             resourceSpawns.clear();
             resourceSpawnsSeeded = false; // fresh world reseeds its 20 on the first tick
+            treasureHunts.clear(); // round 478: a new world (New Game+ too) seeds six new hunts on its first tick
+            treasureHoles.clear();
+            treasureVersion = 0;
+            treasureStamp++;
             // 2026-09-02 review finding: the one-shot full-map reveal flag survived into a New Game
             // or New Game+ started from a finished run, so the reveal could never fire again.
             fogOfWarStage2Revealed = false;

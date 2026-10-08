@@ -1928,3 +1928,6 @@ SinistralGauntlet
 DextralGauntlet
   xy: 16, 0
   size: 16, 16
+Spade
+  xy: 112, 720
+  size: 16, 16

@@ -517,6 +517,134 @@ public class WorldStage extends GameStage implements SaveFileContent {
         return landing;
     }
 
+    // Round 478: the treasure hunts (util/TreasureHunt) - each region's obelisk, and an X on every whole map's treasure.
+    // Rebuilt whenever World.getTreasureStamp moves; a guardian duel remembers its region for setWinner().
+    private int currentMobTreasureRegion = -1;
+    private final List<Actor> treasureActors = new ArrayList<>();
+    private int treasureActorsStamp = -1;
+
+    private void syncTreasureActors(World world) {
+        if (world.getTreasureStamp() == treasureActorsStamp)
+            return;
+        treasureActorsStamp = world.getTreasureStamp();
+        for (Actor actor : treasureActors)
+            foregroundSprites.removeActor(actor);
+        treasureActors.clear();
+        if (!forge.adventure.util.TreasureHunt.isEnabled())
+            return;
+        int tileSize = world.getTileSize();
+        for (int[] h : world.getTreasureHunts()) {
+            if (h[forge.adventure.util.TreasureHunt.H_OBACTIVE] == 0 || h[forge.adventure.util.TreasureHunt.H_FOUND] != 0
+                    || h[forge.adventure.util.TreasureHunt.H_FRAGS] >= forge.adventure.util.TreasureHunt.FRAGMENTS)
+                continue;
+            String region = forge.adventure.util.TreasureHunt.OBELISK_REGIONS[h[forge.adventure.util.TreasureHunt.H_REGION]];
+            Sprite sprite = Config.instance().getAtlasSprite(forge.adventure.util.TreasureHunt.OBELISK_ATLAS, region);
+            if (sprite == null) {
+                System.out.println("[TFR-Treasure] no " + region + " region in " + forge.adventure.util.TreasureHunt.OBELISK_ATLAS);
+                continue;
+            }
+            // Like the resource pickups (round 376): seen only where the player sees right now - an obelisk moves on weekly.
+            Actor obelisk = new Actor() {
+                @Override
+                public void draw(Batch batch, float parentAlpha) {
+                    World w = Current.world();
+                    int tx = (int) (getX() / w.getTileSize()), ty = (int) (getY() / w.getTileSize());
+                    if (!w.isExploredWorld(tx, ty) || !w.isCurrentlyVisible(tx, ty))
+                        return;
+                    batch.draw(sprite, getX(), getY(), getWidth(), getHeight());
+                }
+            };
+            obelisk.setSize(tileSize, tileSize * 2f);
+            obelisk.setPosition(h[forge.adventure.util.TreasureHunt.H_OBX] * tileSize, h[forge.adventure.util.TreasureHunt.H_OBY] * tileSize);
+            foregroundSprites.addActor(obelisk);
+            treasureActors.add(obelisk);
+        }
+        for (int[] hole : world.getTreasureHoles()) {
+            String region = forge.adventure.util.TreasureHunt.HOLE_REGIONS[Math.min(5, Math.max(0, hole[3]))];
+            Sprite holeSprite = Config.instance().getAtlasSprite(forge.adventure.util.TreasureHunt.OBELISK_ATLAS, region);
+            if (holeSprite == null)
+                continue;
+            // A hole in the ground: seen wherever the player has explored, like a place's icon.
+            Actor actor = new Actor() {
+                @Override
+                public void draw(Batch batch, float parentAlpha) {
+                    World w = Current.world();
+                    if (!w.isExploredWorld((int) (getX() / w.getTileSize()), (int) ((getY() + 1) / w.getTileSize())))
+                        return;
+                    batch.draw(holeSprite, getX(), getY(), getWidth(), getHeight());
+                }
+            };
+            float width = tileSize * 1.5f;
+            float height = width * holeSprite.getRegionHeight() / holeSprite.getRegionWidth();
+            actor.setSize(width, height);
+            actor.setPosition(hole[0] * tileSize + tileSize / 2f - width / 2f, hole[1] * tileSize);
+            foregroundSprites.addActor(actor);
+            treasureActors.add(actor);
+            actor.toBack(); // under the player and everything else standing there
+        }
+        Sprite mark = Config.instance().getItemSprite("Exit"); // the red X of the items sheet
+        if (mark == null)
+            return;
+        for (int[] x : forge.adventure.util.TreasureHunt.xMarks(world)) {
+            // A map mark, not a thing on the ground - drawn whatever the fog, with a slow pulse to catch the eye.
+            Actor actor = new Actor() {
+                private float time;
+
+                @Override
+                public void act(float delta) {
+                    super.act(delta);
+                    time += delta;
+                }
+
+                @Override
+                public void draw(Batch batch, float parentAlpha) {
+                    float alpha = parentAlpha * (0.75f + 0.25f * MathUtils.sin(time * 3f));
+                    Color prev = batch.getColor();
+                    float pr = prev.r, pg = prev.g, pb = prev.b, pa = prev.a;
+                    batch.setColor(pr, pg, pb, alpha);
+                    batch.draw(mark, getX(), getY(), getWidth(), getHeight());
+                    batch.setColor(pr, pg, pb, pa);
+                }
+            };
+            actor.setSize(tileSize, tileSize);
+            actor.setPosition(x[0] * tileSize, x[1] * tileSize);
+            foregroundSprites.addActor(actor);
+            treasureActors.add(actor);
+        }
+    }
+
+    /** Round 478: stepping onto a whole map's X offers the dig - free, no Spade needed. */
+    public void showTreasureDigDialog(int region, String regionName) {
+        Dialog dialog = getDialog();
+        dialog.getContentTable().clear();
+        dialog.getButtonTable().clear();
+        dialog.clearListeners();
+        int cost = forge.adventure.util.TreasureHunt.DIG_SHARDS;
+        TypingLabel label = Controls.newTypingLabel("The " + regionName + " map's X marks this very spot. Dig here for "
+                + cost + " [+Shards]? You have " + Current.player().getShards() + ".");
+        label.setWrap(true);
+        label.skipToTheEnd();
+        dialog.getContentTable().add(label).width(250f).row();
+        dialog.getButtonTable().add(Controls.newTextButton("Dig", () -> {
+            hideDialog();
+            // A dig is a dig: 5 shards and a hole, like the Spade's (ConsoleCommandInterpreter "treasure dig").
+            if (Current.player().getShards() < cost) {
+                GameHUD.getInstance().addNotification("[BLACK]Not enough shards to dig (" + cost + " [WHITE][+Shards][BLACK]).", true);
+                return;
+            }
+            Current.player().takeShards(cost);
+            forge.adventure.util.TreasureHunt.addHole(Current.world(), playerTileX(), playerTileY());
+            if (!forge.adventure.util.TreasureHunt.startGuardian(Current.world(), region)) {
+                Current.player().addShards(cost);
+                GameHUD.getInstance().addNotification("Nothing stirs here.");
+            }
+        })).width(120f);
+        dialog.getButtonTable().add(Controls.newTextButton("Not now", this::hideDialog)).width(120f).row();
+        dialog.setKeepWithinStage(true);
+        showDialog();
+        dialog.toFront();
+    }
+
     private final List<Actor> resourceSpawnActors = new ArrayList<>();
 
     // Clear-and-rebuild sync from World's persisted spawn list (<= ResourceSpawns.MAX_SPAWNS
@@ -598,6 +726,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             if (synced != null) {
                 syncBonfireActors(synced);
                 syncYinYangActor(synced);
+                syncTreasureActors(synced); // round 478
             }
         }
         // Round 356: this stage's OWN dialogs stop the world too. Upstream checked only MapStage's flag (which the HUD's
@@ -675,6 +804,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             // Per frame while moving, not just on day change - pickups are walk-over, so the
             // collection check has to track the player's live position (cheap; see its comment).
             ResourceSpawns.tick(world, dayAfter);
+            forge.adventure.util.TreasureHunt.tick(world, dayAfter); // round 478: obelisks, the X, the weekly moves
             handleMonsterSpawn(delta);
             collided = collided || handlePointsOfInterestCollision();
             globalTimer += delta;
@@ -853,6 +983,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         boolean isCapitolDefense = currentMobIsCapitolDefense;
         currentMobIsCapitolDefense = false;
+        final int treasureRegion = currentMobTreasureRegion; // round 478: a treasure guardian's duel
+        currentMobTreasureRegion = -1;
         final PointOfInterest assaultPoi = currentMobIsTownAssault ? townAssaultPoi : null;
         final String assaultColor = townAssaultColor;
         if (currentMobIsTownAssault) {
@@ -880,6 +1012,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         Array<Reward> loot = currentMob.getRewards();
                         // Round 302: an enemy's +Life is paid once per game, out here as well (PlaceRewards).
                         forge.adventure.util.PlaceRewards.filterWorldPayout(loot, currentMob);
+                        if (treasureRegion >= 0) // round 478: the treasure rides in the guardian's own rewards
+                            forge.adventure.util.TreasureHunt.onGuardianBeaten(treasureRegion);
                         if (assaultPoi != null) // town assault won: the town changes hands (user spec 2026-09-03)
                             TownRestoration.captureTownForPlayer(Current.world(), assaultPoi, assaultColor);
                         // Bronze Coin ransom reclaim as a visible loot tile (user request
@@ -921,6 +1055,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     return;
                 }
                 boolean defeated = Current.player().defeated();
+                if (treasureRegion >= 0) // round 478
+                    forge.adventure.util.TreasureHunt.onGuardianLost(treasureRegion);
                 AdventureQuestController.instance().updateQuestsLose(currentMob);
                 AdventureQuestController.instance().showQuestDialogs(MapStage.getInstance());
                 boolean defeatedFromBoss = currentMob.getData().boss && !isArena;
@@ -1288,6 +1424,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     if (passthrough != null)
                         TerritoryControl.onMageArrived(passthrough);
                 });
+    }
+
+    /** Round 478: a treasure guardian's duel - the chest duel's launch, with the region remembered for setWinner(). */
+    public void startTreasureDuel(EnemySprite enemy, int region) {
+        currentMobTreasureRegion = region;
+        startChestDuel(enemy);
     }
 
     public void startChestDuel(EnemySprite enemy) {
@@ -2978,6 +3120,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         currentMob = null;
         currentMobIsCapitolDefense = false;
         currentMobIsTownAssault = false;
+        currentMobTreasureRegion = -1; // round 478
     }
 
     public void clearCache() {
@@ -3004,6 +3147,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // persisted, both must forget the previous run/save here.
         DungeonRotation.resetSessionState();
         MapMarkerRefresh.resetSessionState(); // round 190: the shared marker-refresh batch baseline
+        forge.adventure.util.TreasureHunt.resetSessionState(); // round 478
+        treasureActorsStamp = -1;
         // Round 188, user: "The Speed up and Wait seems to persist on load. I save, then check
         // them, when I load they are checked still, even though they were not checked before save."
         // Both are HUD toggles over session state on this singleton - neither is written to the

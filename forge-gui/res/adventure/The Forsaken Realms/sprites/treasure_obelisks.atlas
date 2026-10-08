@@ -1,0 +1,41 @@
+treasure_obelisks.png
+size: 192,51
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ObeliskWaste
+  xy: 0, 0
+  size: 16, 32
+ObeliskWhite
+  xy: 16, 0
+  size: 16, 32
+ObeliskBlue
+  xy: 32, 0
+  size: 16, 32
+ObeliskBlack
+  xy: 48, 0
+  size: 16, 32
+ObeliskRed
+  xy: 64, 0
+  size: 16, 32
+ObeliskGreen
+  xy: 80, 0
+  size: 16, 32
+HoleWaste
+  xy: 0, 32
+  size: 32, 9
+HoleWhite
+  xy: 32, 32
+  size: 32, 13
+HoleBlue
+  xy: 64, 32
+  size: 32, 13
+HoleBlack
+  xy: 96, 32
+  size: 32, 15
+HoleRed
+  xy: 128, 32
+  size: 32, 19
+HoleGreen
+  xy: 160, 32
+  size: 32, 16

@@ -38,6 +38,28 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 478 - the lost-treasure hunts (test version)
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - new saved fields `treasureHunts` (List<int[]>),
+  `treasureHoles` (List<int[]>), `treasureVersion`, plus a session `treasureStamp`; load (containsKey-guarded, old saves
+  read clean), save, and `generateNew()` reset them; getters, `setTreasureVersion`, `bumpTreasureStamp`,
+  `getCleanBiomeImage()` (the minimap pixmap the treasure maps crop).
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `TreasureHunt.tick()` after `ResourceSpawns.tick()`;
+  `syncTreasureActors()` in `onActing()` (obelisk, hole and X actors, rebuilt when the stamp changes);
+  `startTreasureDuel()` + `currentMobTreasureRegion`, read in `setWinner()` (win -> `onGuardianBeaten`, loss ->
+  `onGuardianLost`), reset in `cancelPendingActions()`; `clearCache()` resets the hunt's session state;
+  `showTreasureDigDialog()` (5 shards, a hole, the guardian).
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - a Treasure Maps ImageButton (`item_frame_static`,
+  DungeonMap icon) left of the portrait panel, in a try/catch, shown once any map has a piece.
+- **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`** - the `treasureMaps` button from the layout opens
+  `TreasureMapScene`; shown once any map has a piece.
+- **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** - a whole map's X (items atlas "Exit") added to
+  the markers before `layoutMarkers()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `treasure dig` (the Spade's
+  command; refunds via `refundItemInUse`) and the cheats `treasure info|fragments|obelisk|map|here`.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** - `treasureHuntEnabled` (default false).
+- New (mod-added): `util/TreasureHunt.java`, `scene/TreasureMapScene.java`.
+
 ### Round 475 - the Player Capitol's Level-2 arena fields Masters and Archmages only
 
 - **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - bracket build: the player-owned Challenging bracket

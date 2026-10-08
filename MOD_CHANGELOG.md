@@ -14264,6 +14264,67 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 478: the lost-treasure hunts, a TEST version - obelisks, map pieces, the Spade and the X (2026-10-08)
+
+The design is `docs/design/2026-10-07-lost-treasure.md`. The user: "On this sheet ... there is an 'X' we can use and a
+shovel ... Here ... are obelisks we can use ... We can place one in each biome and each time you find one you will get
+one piece of the map. They will spawn randomly in that biome. Last 1 week and then re-spawn somewhere else in the biome.
+So you can only find one a week. Can we build a test version", then "Each time the player 'digs' it will cost 5 shards.
+The player will get the shovel when they encounter their first obelisk", "one map button that when clicked, will open a
+new interface showing the 6 biome maps. Then you click on each of those to see the progress/map itself", "The player
+will need to dig within a certain radius of the hidden treasure to trigger a find", and dig-hole art for the overworld.
+
+- **Six hunts a world** (`util/TreasureHunt.java`, new), one per region: the Wastes and the five colors. A region is a
+  biome's world-gen circle (`World.computeBarrier` geometry, raw coordinates), not today's owner - Territory Control
+  repaints ownership daily. Seeded on the first tick of a world without them (old saves included, `treasureVersion`):
+  a BFS over walkable tiles from the player, then per region a treasure tile that is reachable, not colliding, off the
+  roads and 8+ tiles from every place. Its map is a 30x30-tile crop of the minimap in 3x3 pieces of 10x10; the treasure
+  sits in the CENTER piece, 2-7 tiles in from its edges, so eight pieces narrow it to that square and only the ninth
+  shows the X. The outer pieces come in a shuffled order per world, the center last.
+- **Obelisks**: one per region on a reachable tile 4+ from places and 8+ from the treasure, drawn from buildings.png
+  (one color each, `sprites/treasure_obelisks.png/.atlas`, one tile wide, two high, under the fog like the rest of the
+  land). Walking onto one gives the next piece and it is gone; a week after it rose it rises again elsewhere in its
+  region, found or not - one piece a region a week. The FIRST piece brings the **Spade** (`items.json`, the items.png
+  shovel at 112,720: quest item, Ability2 slot, `commandOnUse "treasure dig"`, `shardsNeeded 5`).
+- **Digging**: the Spade digs where the player stands for 5 shards (charged by the item-use path, handed back when the
+  dig cannot happen - inside a place, hunts off). Within `DIG_RADIUS` 2 tiles (Chebyshev, a 5x5 patch) of an unclaimed
+  treasure the region's guardian rises; elsewhere "nothing but dirt and stones". A whole map puts a pulsing red X (the
+  items.png X) on the overworld and on the world map (`MapViewScene`); walking onto it asks "Dig here for 5 [+Shards]?"
+  (`WorldStage.showTreasureDigDialog`) - the same 5 shards and a hole, refunded if the guardian cannot start.
+- **Holes**: every dig leaves a hole for a week (`World.treasureHoles`, region-colored, drawn behind the player, only on
+  explored land) - the player sees where they already searched. Six hole sprites pixelated from the user's iStock
+  sheets, one per region (see the art note below).
+- **The guardian**: a copy of an existing non-boss Archmage per region (Artifact Warrior, Angel Warrior, Storm Titan,
+  Bone Dragon, Volcano Dragon, Hydra - a boss win cracks an equipped item, too harsh here) at 1.5x life, its own loot
+  plus the treasure through `EnemySprite.rewards`: 1000 gold, 40 shards and four Rare/Mythic Rare cards of the region's
+  color. Win = claimed (the X goes, the map says so); loss = the treasure stays and the X stays.
+- **The maps** (`scene/TreasureMapScene.java`, new; `ui/treasure_map.json` + `_portrait`): the six maps on a parchment
+  page with "<Region> - n of 9" / "claimed"; a tap opens one large with what it means (pieces, where to dig, the cost).
+  Back from a map returns to the six. Each map is the minimap crop scaled 3x, sepia, unfound pieces as parchment, the
+  piece grid, the X when whole. Opened from a Treasure Maps button in the inventory (beside the paperdoll's bottom
+  right, `ui/inventory.json` + `_portrait`) and one on the world HUD (left of the portrait panel), both hidden until the
+  first piece.
+- **Saved with the world** (`World.java`): `treasureHunts` (int[19] per hunt), `treasureHoles` ({x, y, day, region}),
+  `treasureVersion`. Old saves read without them and seed on the next tick. `config.json` `treasureHuntEnabled: true`
+  (`ConfigData`, default false - other planes untouched).
+- **Cheats** (console): `treasure info`, `treasure fragments <region> <0-9>`, `treasure obelisk <region>` (moves it next
+  to the player), `treasure here <region>` (moves the treasure next to the player), `treasure map [region]`.
+  `[TFR-Treasure]` logs the seeding, every obelisk move and piece, every dig and both guardian results.
+- **Art**: obelisks from `maps/tileset/buildings.png` (x 352-432, y 176-208); the X and the shovel from `items.png`
+  (the Spade appended to the plane's `items.atlas`); the HUD/inventory button uses the existing DungeonMap icon (the
+  user's scroll clipart was not on disk). **The six holes come from iStock COMP images - watermarked previews, not
+  licensed** (2195897922, 2285354998 and two more in the user's Downloads); they are test art until bought or redrawn.
+- **Tested in the agent game**: 6 hunts seeded in 59-87 ms (205,930 tiles reachable); an obelisk drawn and touched
+  (piece 1 + the Spade); a Spade dig (5 shards, a hole); the HUD button (after a fix: `new Button(skin,
+  "item_frame_static")` threw - it is an ImageButtonStyle - and took the HUD panel with it); the X on the overworld;
+  the dig dialog; the Black guardian (Bone Dragon, life 62) won by the AI's starter deck - "the treasure stays buried";
+  the Wastes guardian (Artifact Warrior, life 63) beaten - gold 150 -> 1254, shards 61 -> 101, the hunt FOUND, its
+  obelisk retired; the six-map page and two detail pages. Then the 5-shard charge at the X (added after that run): with
+  3 shards "Not enough shards to dig (5 [+Shards])" and nothing spent; with 24 the dig took 5 (24 -> 19), the guardian
+  rose and the hole showed under the X. Log clean both runs.
+- **Open for the user (test stand-ins)**: the guardians (Mythic, 41-49 life, so 62-73 at 1.5x) and the purse; whether
+  the minimap crop reads well enough to find the spot; DIG_RADIUS 2; the hole art per region.
+
 ## Round 476: hand-drawn pack sprites for the golems, the squirrels and the Werewolf (2026-10-08)
 
 The user, on the RPG Maker MV/MZ creature sheets in their downloads (`animals`, `Mythological animals`; the Procedural

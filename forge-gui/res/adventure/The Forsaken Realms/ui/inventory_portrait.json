@@ -145,6 +145,15 @@
     },
     {
       "type": "ImageButton",
+      "name": "treasureMaps",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 107,
+      "y": 324
+    },
+    {
+      "type": "ImageButton",
       "name": "Equipment_Right2",
       "style": "item_frame_static",
       "width": 20,

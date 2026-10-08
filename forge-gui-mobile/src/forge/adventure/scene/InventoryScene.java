@@ -46,6 +46,7 @@ public class InventoryScene extends UIScene {
     // to ItemData), so a flat 25% matches the one precedent that does exist rather than inventing
     // a new difficulty-scaling rule.
     TextraButton sellButton;
+    Button treasureMapsButton; // round 478
     Texture equipOverlay, unusableOverlay;
     Dialog useDialog, deleteDialog, sellDialog;
     int columns = 0;
@@ -217,6 +218,25 @@ public class InventoryScene extends UIScene {
                     }
                 });
             }
+        }
+        // Round 478 (the user's mock-up: a map at the paperdoll's bottom right - "one map button that when clicked, will open
+        // a new interface showing the 6 biome maps"): not an equipment slot, a button. Shown once a piece is found.
+        treasureMapsButton = ui.findActor("treasureMaps");
+        if (treasureMapsButton != null) {
+            Sprite mapIcon = Config.instance().getItemSprite("DungeonMap");
+            if (mapIcon != null) {
+                Image icon = new Image(mapIcon);
+                icon.setTouchable(com.badlogic.gdx.scenes.scene2d.Touchable.disabled);
+                icon.setPosition((treasureMapsButton.getWidth() - icon.getWidth()) / 2, (treasureMapsButton.getHeight() - icon.getHeight()) / 2);
+                treasureMapsButton.addActor(icon);
+            }
+            treasureMapsButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    treasureMapsButton.setChecked(false);
+                    TreasureMapScene.show();
+                }
+            });
         }
         inventory = new Table(Controls.getSkin());
         ScrollPane scrollPane = ui.findActor("inventory");
@@ -728,6 +748,8 @@ public class InventoryScene extends UIScene {
         }
         clearItemDescription();
         updateInventory();
+        if (treasureMapsButton != null) // round 478
+            treasureMapsButton.setVisible(TreasureHunt.anyPieces(Current.world()));
         //inventory.add().expand();
         super.enter();
     }

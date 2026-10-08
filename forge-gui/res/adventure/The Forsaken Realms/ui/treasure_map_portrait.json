@@ -1,0 +1,50 @@
+{
+  "width": 270,
+  "height": 480,
+  "yDown": true,
+  "elements": [
+    {
+      "type": "Image",
+      "name": "lastScreen",
+      "width": 270,
+      "height": 480
+    },
+    {
+      "type": "Window",
+      "name": "scrollWindow",
+      "style": "paper",
+      "x": 4,
+      "y": 4,
+      "width": 262,
+      "height": 419
+    },
+    {
+      "type": "Label",
+      "name": "title",
+      "x": 10,
+      "y": 10,
+      "width": 246,
+      "height": 20,
+      "fontColor": "black"
+    },
+    {
+      "type": "Table",
+      "name": "mapArea",
+      "x": 8,
+      "y": 34,
+      "width": 254,
+      "height": 380,
+      "fontColor": "black"
+    },
+    {
+      "type": "TextButton",
+      "name": "return",
+      "text": "tr(lblBack)",
+      "binding": "Back",
+      "width": 130,
+      "height": 30,
+      "x": 70,
+      "y": 440
+    }
+  ]
+}

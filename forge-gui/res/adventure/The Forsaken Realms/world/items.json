@@ -7951,5 +7951,16 @@
                                                ]
                    },
         "rarity":  "Rare"
+    },
+    {
+        "name":  "Spade",
+        "description":  "An old spade, found at the foot of an obelisk. Use it on the world map to dig where you stand - 5 shards a dig. Dig within 2 tiles of a buried treasure and its guardian rises. Your treasure maps show where to look.",
+        "equipmentSlot":  "Ability2",
+        "iconName":  "Spade",
+        "questItem":  true,
+        "usableOnWorldMap":  true,
+        "shardsNeeded":  5,
+        "commandOnUse":  "treasure dig",
+        "rarity":  "Rare"
     }
 ]

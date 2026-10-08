@@ -112,6 +112,7 @@ public class GameHUD extends Stage {
     private final Image enemyCounterBackground;
     private final TextraLabel notificationText = Controls.newTextraLabel("");
     private final Image miniMap, gamehud, mapborder, avatarborder, blank;
+    private Button treasureMapsButton; // round 478
     private final TimeOfDayActor timeOfDayActor;
     private final CheckBox waitCheckBox;
     // TEMPORARY debug toggle to fast-forward the day/night clock (and, later, territory-control's
@@ -361,6 +362,36 @@ public class GameHUD extends Stage {
         // with the minimap. hudGroup only has its alpha adjusted, never hidden outright, matching
         // Gold/Shards/HP staying visible everywhere - Lumber/Stone should behave the same way.
         hudGroup.addActor(resourceDisplayActor);
+        // Round 478 (the user: "possible a map icon on the player to click on"): the treasure maps' button, just left of
+        // the portrait panel - shown once any map piece is found (updateTreasureMapsButton), opens TreasureMapScene.
+        // "item_frame_static" is an ImageButtonStyle in the skin - a plain Button cannot look it up (the first build threw
+        // here and the rest of the HUD - the portrait panel, life, shards, gold - was never added). Guarded: an optional
+        // button must never take the HUD down with it.
+        try {
+            com.badlogic.gdx.scenes.scene2d.ui.ImageButton button =
+                    new com.badlogic.gdx.scenes.scene2d.ui.ImageButton(Controls.getSkin(), "item_frame_static");
+            com.badlogic.gdx.graphics.g2d.Sprite mapIcon = Config.instance().getItemSprite("DungeonMap");
+            if (mapIcon != null) {
+                Image icon = new Image(mapIcon);
+                icon.setTouchable(Touchable.disabled);
+                button.addActor(icon);
+                icon.setPosition(2f, 2f);
+            }
+            button.setSize(20f, 20f);
+            button.setPosition(gamehud.getX() - 22f, gamehud.getY() + gamehud.getHeight() - 22f);
+            button.setVisible(false);
+            button.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    button.setChecked(false);
+                    forge.adventure.scene.TreasureMapScene.show();
+                }
+            });
+            hudGroup.addActor(button);
+            treasureMapsButton = button;
+        } catch (RuntimeException e) {
+            System.out.println("[TFR-Treasure] the HUD's Treasure Maps button could not be built: " + e);
+        }
         ui.addActor(hudGroup);
         //MENU
         menuGroup.addActor(deckActor);
@@ -502,6 +533,8 @@ public class GameHUD extends Stage {
         int xPos = (int) gameStage.player.getX();
         act(Gdx.graphics.getDeltaTime()); //act the Hud
         updateHiddenEnemyChevrons();
+        if (treasureMapsButton != null) // round 478: the treasure maps' button once a piece is found
+            treasureMapsButton.setVisible(forge.adventure.util.TreasureHunt.anyPieces(WorldSave.getCurrentSave().getWorld()));
         super.draw(); //draw the Hud
         // Round 329 (the user, right after this round's banner change: "I just loaded my game and the screen was black,
         // no terrain"). The HUD shares one SpriteBatch with the world (round 316, upstream #12011), and scene2d leaves

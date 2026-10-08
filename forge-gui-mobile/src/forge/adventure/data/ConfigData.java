@@ -79,6 +79,8 @@ public class ConfigData {
     public boolean territoryControlEnabled = false;
     public boolean colorReputationEnabled = false;
     public boolean resourceSpawnsEnabled = false;
+    /** Round 478: the lost-treasure hunts (util/TreasureHunt) - obelisks, map fragments, the dig, the guardians. */
+    public boolean treasureHuntEnabled = false;
     public boolean dungeonRotationEnabled = false;
     public boolean sideQuestTimerEnabled = false;
     public boolean resourceLootVarietyEnabled = false;

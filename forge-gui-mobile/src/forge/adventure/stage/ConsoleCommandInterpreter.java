@@ -1018,6 +1018,63 @@ public class ConsoleCommandInterpreter {
         // Round 336: the Bonfire kit - "bonfire place" builds a fire on the player's tile (World.addBonfire) that keeps the
         // fog lifted 15 tiles around, one tile less each day. Ten fires to a kit, one shard each (shardsNeeded); a spent
         // kit offers its rebuild (WorldStage.showBonfireRepairDialog). Every refusal hands the shard back.
+        // Round 478: the lost-treasure hunts (util/TreasureHunt). "treasure dig" is the Spade's command (5 shards a dig, charged
+        // by the item-use paths before this runs); a dig that cannot happen hands them back. The rest are test cheats.
+        registerCommand(new String[]{"treasure", "dig"}, s -> {
+            forge.adventure.world.World world = Current.world();
+            if (!forge.adventure.util.TreasureHunt.isEnabled() || world == null)
+                return "No treasure hunts here" + refundItemInUse("There is nothing to dig for in this world.");
+            if (MapStage.getInstance().isInMap())
+                return "Not inside a place" + refundItemInUse("Dig under the open sky, on the world map.");
+            WorldStage stage = WorldStage.getInstance();
+            int tx = stage.playerTileX(), ty = stage.playerTileY();
+            int region = forge.adventure.util.TreasureHunt.treasureAt(world, tx, ty);
+            stage.player.playEffect(Paths.EFFECT_SPARKS, 0.5f);
+            forge.adventure.util.TreasureHunt.addHole(world, tx, ty); // the user's dig art: a hole left for a week
+            if (region < 0) {
+                GameHUD.getInstance().addNotification("You dig, and find nothing but dirt and stones.");
+                System.out.println("[TFR-Treasure] dig at (" + tx + "," + ty + ") - nothing");
+                return "Nothing here at " + tx + "," + ty;
+            }
+            System.out.println("[TFR-Treasure] dig at (" + tx + "," + ty + ") - the " + forge.adventure.util.TreasureHunt.REGION_NAMES[region]
+                    + " treasure");
+            if (!forge.adventure.util.TreasureHunt.startGuardian(world, region))
+                return "The treasure is here but its guardian is missing" + refundItemInUse("Something is buried here, but nothing stirs.");
+            return "The " + forge.adventure.util.TreasureHunt.REGION_NAMES[region] + " treasure's guardian rises";
+        });
+        registerCommand(new String[]{"treasure", "info"}, s -> {
+            forge.adventure.world.World world = Current.world();
+            return world == null ? "No world" : forge.adventure.util.TreasureHunt.describe(world);
+        });
+        registerCommand(new String[]{"treasure", "fragments"}, s -> {
+            if (s.length < 2)
+                return "Command needs 2 parameters: Region (Wastes, White, Blue, Black, Red, Green) and a count 0-9";
+            forge.adventure.world.World world = Current.world();
+            try {
+                return forge.adventure.util.TreasureHunt.setFragments(world, s[0], Integer.parseInt(s[1]));
+            } catch (NumberFormatException e) {
+                return "Can not convert " + s[1] + " to number";
+            }
+        });
+        registerCommand(new String[]{"treasure", "obelisk"}, s -> {
+            if (s.length < 1)
+                return "Command needs 1 parameter: Region (Wastes, White, Blue, Black, Red, Green)";
+            if (MapStage.getInstance().isInMap())
+                return "Only on the world map";
+            return forge.adventure.util.TreasureHunt.obeliskHere(Current.world(), s[0]);
+        });
+        registerCommand(new String[]{"treasure", "map"}, s -> {
+            int region = s.length > 0 ? forge.adventure.util.TreasureHunt.regionIndex(s[0]) : -1;
+            forge.adventure.scene.TreasureMapScene.show(region);
+            return "Treasure maps opened" + (region >= 0 ? " at the " + forge.adventure.util.TreasureHunt.REGION_NAMES[region] + " map" : "");
+        });
+        registerCommand(new String[]{"treasure", "here"}, s -> {
+            if (s.length < 1)
+                return "Command needs 1 parameter: Region (Wastes, White, Blue, Black, Red, Green)";
+            if (MapStage.getInstance().isInMap())
+                return "Only on the world map";
+            return forge.adventure.util.TreasureHunt.treasureHere(Current.world(), s[0]);
+        });
         registerCommand(new String[]{"bonfire", "place"}, s -> {
             boolean inMap = MapStage.getInstance().isInMap();
             forge.adventure.world.World world = Current.world();

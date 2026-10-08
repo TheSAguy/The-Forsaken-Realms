@@ -67,6 +67,16 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 478): **LOCAL + UNRELEASED** - the lost-treasure hunts, a TEST version
+(`util/TreasureHunt.java`, `scene/TreasureMapScene.java`; design `docs/design/2026-10-07-lost-treasure.md`): six
+hunts a world (the Wastes + five colors), one obelisk per region (buildings.png) giving one map piece and moving on
+weekly, the Spade on the first piece (5 shards a dig, finds within 2 tiles), the X on a whole map (dig there for 5
+shards), a 1.5x-life guardian whose win pays 1000 gold, 40 shards and four rare cards of the color, holes for a week,
+a Treasure Maps button (inventory + HUD) with the six-map page. Saved in World (`treasureHunts`, `treasureHoles`,
+`treasureVersion`); `config.json treasureHuntEnabled`. Tested in the agent game end to end (both guardian results).
+OPEN for the user: guardians + purse are stand-ins; the hole art is six iStock COMPS (watermarked, not licensed) -
+pick per region or redraw; the minimap crop's readability; DIG_RADIUS. Cheats: `treasure info|fragments|obelisk|here|map`.
+
 ## STATE 2026-10-08 (round 476): **LOCAL + UNRELEASED (data only)** - hand-drawn pack sprites (the Procedural Pixel
 Creatures session, the user's call) for 22 enemies: the 19 golems and constructs, the Squirrel, Chatterfang and the
 Werewolf (which wore a hellhound sprite), from the user's downloaded RPG Maker MV/MZ sheets with the missing clips

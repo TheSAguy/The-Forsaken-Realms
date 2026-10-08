@@ -1,4 +1,4 @@
-# Lost treasure hunts (design, not built)
+# Lost treasure hunts (design; a TEST version built in round 478)
 
 User ask (2026-10-07): *"look into how we could implement a lost treasure quest. The idea is that you'd collect fragments
 of a map until you have collected enough to know where to 'dig' to find a treasure. ... 6 of these in total. 1 for each
@@ -10,7 +10,11 @@ maps, and an adaptation outline (waystone fragments, a scroll puzzle map, genera
 guardian duel).
 
 This file records the research (where each piece would hook in, with code references as of round 471) and the
-recommended design. **Nothing is built.** Open decisions for the user are at the end.
+recommended design. Open decisions for the user are at the end.
+
+**Round 478 built a test version** with the user's answers (2026-10-07): obelisks from buildings.png, one per biome,
+moving on weekly (one piece a region a week); the Spade on the first obelisk, 5 shards a dig, a find within 2 tiles; a
+Treasure Maps button opening the six maps. What it does and what is still a stand-in: MOD_CHANGELOG "Round 478".
 
 ## Bottom line
 

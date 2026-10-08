@@ -1070,6 +1070,19 @@ public class MapViewScene extends UIScene {
             markerAnchors.add(new float[]{legend.getX(), legend.getY()}); // round 292
             legendDots++;
         }
+        // Round 478: a whole treasure map's X (util/TreasureHunt) - a map mark, no fog gate. In mageMarkers so zooming moves it.
+        com.badlogic.gdx.graphics.g2d.Sprite xMark = Config.instance().getItemSprite("Exit");
+        if (xMark != null) {
+            int ts = WorldSave.getCurrentSave().getWorld().getTileSize();
+            for (int[] x : forge.adventure.util.TreasureHunt.xMarks(WorldSave.getCurrentSave().getWorld())) {
+                Image marker = new Image(xMark);
+                float wx = x[0] * ts + ts / 2f, wy = x[1] * ts + ts / 2f;
+                table.addActor(marker);
+                marker.setPosition(getMapX(wx) - marker.getWidth() / 2, getMapY(wy) - marker.getHeight() / 2);
+                mageMarkers.add(marker);
+                markerAnchors.add(new float[]{wx, wy});
+            }
+        }
         layoutMarkers(); // round 292: the same placement every zoom step uses
         if (legendDots > 0)
             System.out.println("[TFR-MapView] " + legendDots + " sighted legend(s) marked in gold");
