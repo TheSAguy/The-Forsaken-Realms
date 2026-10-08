@@ -1,11 +1,16 @@
 // Ascendance - the player's level (round 493; design: docs/design/2026-10-08-xp-leveling.md, section 7).
 // New games and New Game+ only. Rank-indexed arrays: Apprentice, Adept, Master, Archmage.
 {
-  // Power needed for each next level: entry 1 is level 1 -> 2, the last is 29 -> 30 (10,880 in all).
+  // Power needed for each next level: entry 1 is level 0 -> 1 (round 497: a character starts at level 0; 50 is the intro
+  // quest's Power, so finishing it - the tutorial or the skip - is level 1), entry 2 is 1 -> 2, the last is 29 -> 30.
   // Built as (at-level wins for the level, 2 rising by 1.1 and capped at 13) x (one at-level win, 10 + 0.85 x level)
   // x 1.4 (the share that is not duels), rounded to 5: level 10 at about 58 wins, 20 at about 187, 30 at about 317.
-  "xpToNext": [30, 50, 75, 100, 130, 160, 190, 230, 265, 310, 350, 370, 385, 400, 415, 430, 445, 460, 475, 490,
+  "xpToNext": [50, 30, 50, 75, 100, 130, 160, 190, 230, 265, 310, 350, 370, 385, 400, 415, 430, 445, 460, 475, 490,
                505, 520, 540, 555, 570, 585, 600, 615, 630],
+  // Leveling cost by difficulty (round 497): the Power every level from 1 on costs, times this - Easy 20% cheaper,
+  // Hard 20% and Insane 40% dearer. The step 0 -> 1 is not scaled, so the intro is level 1 on every difficulty.
+  "difficultyNames": ["Easy", "Normal", "Hard", "Insane"],
+  "difficultyLevelCost": [0.8, 1.0, 1.2, 1.4],
   // Leveling speed: every award is multiplied by this (2 = twice as fast, 0.5 = half as fast).
   "levelingSpeed": 1.0,
   // Max life given at each milestone level (lifeLevels below).
@@ -46,8 +51,8 @@
   "innMatchWin": 15,
   "innChampion": 30,
   "treasureFound": 75,
-  // Quests that pay no Power: the intro that completes the moment a new game starts (round 496).
-  "noPowerQuestIds": [28],
+  // Quests that pay no Power (round 496 listed the intro, 28; round 497 pays it again - it is the step to level 1).
+  "noPowerQuestIds": [],
 
   // Level rewards: +1 max life at these levels; main-slot items (Neck, Body, Left, Right, Boots) 1, +1 at each of
   // mainSlotLevels; the titles; a roaming guard's main-slot items by its rank.

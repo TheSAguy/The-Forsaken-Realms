@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 497: Ascendance starts at level 0, the intro pays again, and leveling costs more on harder difficulties (2026-10-08)
+
+The user: "I just skipped the quest and did not get any power, should I not have received 50? Also, let's start at level
+0." Then: "Does leveling take longer on Insane vs. Easy? It should."
+
+- **Level 0**: a character starts at Ascendance 0.
+  - `xpToNext` gains a first step, 0 -> 1 = 50.
+  - The intro quest's 50 Power is paid again (round 496's `noPowerQuestIds` [28] emptied), so finishing it - the
+    tutorial or the skip - is exactly level 1, and level 1 is the first pick-1-of-3.
+  - The Level sheet starts at level 1; `asc set 0` works.
+- **By difficulty** (`difficultyNames` / `difficultyLevelCost` in ascendance.json): every level from 1 on costs Easy
+  x0.8, Normal x1, Hard x1.2, Insane x1.4 Power, rounded to 5. The 0 -> 1 step is never scaled (the intro is level 1
+  everywhere). Insane: 1 -> 2 costs 40 against 30; level 10 at 1,765 Power against 1,280 on Normal.
+- **Older saves keep their level** (saved `ascendanceCurve`, now 3):
+  - Before level 0: +50 Power.
+  - Before the difficulty cost: re-priced to the same level and the same share of the way to the next.
+  - So no waiting choice or milestone is earned twice.
+  - Checked numerically for Insane: 255 -> 405 (level 5, 0/180), 1,300 -> 1,863 (level 10, 98/435).
+- **Agent-tested**:
+  - A Normal level-31 save kept level 31 (+50).
+  - A new Normal game: the skip paid 50, level 1, a choice waiting.
+  - A new Insane game: level 1 at 50, then 0/40 to level 2; `asc set 10` = 1,765 Power, 435 to the next.
+
 ## Round 496: Ascendance - black banners, icons on every reward, level 1 at the start, the character sheet and the Level sheet (2026-10-08)
 
 The user, with screenshots: "The text is white, should be black. I started two games, one I chose the tutorial and the

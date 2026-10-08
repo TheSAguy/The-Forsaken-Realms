@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 497 - Ascendance from level 0, costs by difficulty
+
+- **`player/AdventurePlayer.java`** - `Ascendance.load(data, ascendance, difficultyData.name)` (the difficulty re-prices an
+  older save's Power).
+
 ### Round 496 - Ascendance on the character sheet
 
 - **`scene/PlayerStatisticScene.java`** - `enter()`: Ascendance's level, title, Power to the next level and a "Level

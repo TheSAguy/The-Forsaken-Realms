@@ -7,11 +7,17 @@ package forge.adventure.data;
  * (Adept), Rare (Master), Mythic (Archmage).
  */
 public class AscendanceData {
-    /** Power needed to go from level i+1 to i+2: entry 0 is 1 -> 2, up to the last milestone level (30). */
+    /** Power needed to go from level i to i+1: entry 0 is 0 -> 1 (round 497: a character starts at level 0), up to the
+     *  last milestone level (30). */
     public int[] xpToNext = new int[0];
     /** The user: "in the config, add options to control the speed of leveling and how much life is given at the
      *  milestone levels". Every award is multiplied by this - 2 levels twice as fast, 0.5 half as fast. */
     public float levelingSpeed = 1f;
+    /** Round 497 (the user: "Does leveling take longer on Insane vs. Easy? It should."): the Power every level from 1 on
+     *  costs, times this, by difficulty name - Easy cheaper, Insane dearer. The step 0 -> 1 is not scaled (the intro's
+     *  50 is level 1 on every difficulty). */
+    public String[] difficultyNames = {"Easy", "Normal", "Hard", "Insane"};
+    public float[] difficultyLevelCost = {0.8f, 1f, 1.2f, 1.4f};
     /** Max life added at each of lifeLevels. */
     public int milestoneLife = 1;
     /** The user: "Maybe we don't cap it at 30, but make the leveling MUCH slower after 30 and give +1 life for each
@@ -54,8 +60,8 @@ public class AscendanceData {
     public int innMatchWin = 15;
     public int innChampion = 30;
     public int treasureFound = 75;
-    /** Round 496: quests that pay no Power - the intro that completes the moment a new game starts (28). */
-    public int[] noPowerQuestIds = {28};
+    /** Round 496: quests that pay no Power (empty since round 497 - the intro's 50 is the step to level 1). */
+    public int[] noPowerQuestIds = {};
 
     // ---- level rewards
     /** Levels that give +1 max life (with their title, and a main slot through mainSlotLevels). */

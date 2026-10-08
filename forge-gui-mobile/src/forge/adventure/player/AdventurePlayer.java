@@ -878,7 +878,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // after heroRace is set above, since the race grant is keyed off it.
         seedStartingShopTypes(race);
 
-        // Round 493: a new character starts at Ascendance 1 - before the kit is worn, so the main-slot limit applies.
+        // Round 493: a new character starts at Ascendance 0 (round 497) - before the kit is worn, so the main-slot limit applies.
         forge.adventure.util.Ascendance.startRun(this, "New Game");
 
         for (String s : (ringGiftStart() ? new String[0] : difficultyData.startItems)) { // round 101: Llanowar hands the kit over
@@ -1025,7 +1025,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404: a new run's enemies have not learned your tricks yet
         notorietyStreak = 0; // round 411: nor heard of you
-        // Round 493 (the user: "Not 100% sure how NG+ will work, I think you start over"): back to Ascendance 1 - and a
+        // Round 493 (the user: "Not 100% sure how NG+ will work, I think you start over"): back to Ascendance 0 - and a
         // New Game+ is how an older save gets Ascendance at all.
         forge.adventure.util.Ascendance.startRun(this, "New Game+");
         // Round 160 (code review): the roster rides into the new run (the guards still hold their
@@ -1121,7 +1121,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             }
             armoryStorage.clear();
         }
-        // Round 493: a run back at Ascendance 1 wears one main item - the rest of the kept gear goes in the bag.
+        // Round 493: a run back at Ascendance 0 wears one main item - the rest of the kept gear goes in the bag.
         forge.adventure.util.Ascendance.enforceMainLimit(this, "New Game+");
     }
 
@@ -1873,7 +1873,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
         // Round 411: notoriety. Absent before this round - every older save starts at 0 wins in a row.
         notorietyStreak = data.containsKey("notorietyStreak") ? Math.max(0, data.readInt("notorietyStreak")) : 0;
-        forge.adventure.util.Ascendance.load(data, ascendance); // round 493: absent before it - off
+        forge.adventure.util.Ascendance.load(data, ascendance, difficultyData.name); // round 493: absent before it - off
         // Shop-type blueprints (2026-08-30). Absent on every pre-round-71 save; the containsKey
         // guard leaves the set EMPTY there, which isShopTypeUnlocked() deliberately reads as
         // "legacy save, everything unlocked" rather than "nothing unlocked" - see the field.
@@ -3310,7 +3310,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (item == null || item.equipmentSlot == null || item.equipmentSlot.isEmpty()
                 || itemInSlot(item.equipmentSlot) != null)
             return;
-        if (!equip(item)) { // round 493: Ascendance 1 wears one main item - the rest of the kit waits in the bag
+        if (!equip(item)) { // round 493: Ascendance 0 wears one main item - the rest of the kit waits in the bag
             System.out.println("[TFR-StartKit] " + item.name + " stays in the bag - the main-item limit");
             return;
         }

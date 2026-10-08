@@ -67,6 +67,11 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 497): **LOCAL + UNRELEASED** - Ascendance tuning:
+- Characters start at level 0; the intro quest's 50 Power is level 1 (the first pick).
+- Every level from 1 on costs Easy x0.8 / Normal x1 / Hard x1.2 / Insane x1.4 Power (`difficultyLevelCost`).
+- Older saves are migrated to keep their level (`ascendanceCurve` 3).
+
 ## STATE 2026-10-08 (round 496): **LOCAL + UNRELEASED** - Ascendance polish:
 - Black level-up banners (dark-gold level, icons in color).
 - `[+Icon]` glyphs on every reward.

@@ -104,24 +104,49 @@ public final class Ascendance {
         return s == null ? 0 : s.pendingLevels.size();
     }
 
-    /** The last level on the curve (30); past it the levels go on, much slower (postCapXpToNext). */
+    /** The last level on the curve (30); past it the levels go on, much slower (postCapXpToNext). Round 497 (the user:
+     *  "let's start at level 0"): a character starts at level 0 and xpToNext[0] is the step 0 -> 1. */
     public static int curveTop() {
-        return data().xpToNext.length + 1;
+        return data().xpToNext.length;
     }
 
-    /** Power to go from {@code level} to the next - the curve, then the slow post-30 levels. */
+    /** Power to go from {@code level} to the next on this character's difficulty - the curve, then the slow post-30
+     *  levels. */
     public static int powerToNext(int level) {
+        return powerToNext(level, costFactor());
+    }
+
+    /** {@code factor} (difficultyLevelCost) scales every level from 1 on, rounded to 5; the step 0 -> 1 never. */
+    static int powerToNext(int level, float factor) {
         AscendanceData d = data();
-        if (level - 1 < d.xpToNext.length)
-            return d.xpToNext[level - 1];
-        return Math.max(1, d.postCapXpToNext + d.postCapXpStep * (level - curveTop()));
+        int raw = level >= 0 && level < d.xpToNext.length ? d.xpToNext[level]
+                : Math.max(1, d.postCapXpToNext + d.postCapXpStep * (level - curveTop()));
+        return level < 1 || factor == 1f ? raw : Math.max(5, Math.round(raw * factor / 5f) * 5);
+    }
+
+    /** Round 497: the difficulty's level cost (difficultyLevelCost) - 1 for a name the table does not list. */
+    static float costFactor(String difficulty) {
+        AscendanceData d = data();
+        for (int i = 0; i < Math.min(d.difficultyNames.length, d.difficultyLevelCost.length); i++)
+            if (d.difficultyNames[i] != null && d.difficultyNames[i].equalsIgnoreCase(difficulty))
+                return Math.max(0.1f, d.difficultyLevelCost[i]);
+        return 1f;
+    }
+
+    private static float costFactor() {
+        AdventurePlayer player = WorldSave.getCurrentSave() == null ? null : WorldSave.getCurrentSave().getPlayer();
+        return player == null || player.getDifficulty() == null ? 1f : costFactor(player.getDifficulty().name);
     }
 
     public static int levelFor(int power) {
-        int level = 1;
+        return levelFor(power, costFactor());
+    }
+
+    static int levelFor(int power, float factor) {
+        int level = 0;
         int spent = 0;
         while (level < 999) {
-            int need = powerToNext(level);
+            int need = powerToNext(level, factor);
             if (power < spent + need)
                 return level;
             spent += need;
@@ -136,9 +161,13 @@ public final class Ascendance {
 
     /** Power the given level starts at. */
     private static int powerAtLevel(int level) {
+        return powerAtLevel(level, costFactor());
+    }
+
+    private static int powerAtLevel(int level, float factor) {
         int total = 0;
-        for (int l = 1; l < level; l++)
-            total += powerToNext(l);
+        for (int l = 0; l < level; l++)
+            total += powerToNext(l, factor);
         return total;
     }
 
@@ -312,12 +341,12 @@ public final class Ascendance {
 
     // ------------------------------------------------------------------------------------------------ Power
 
-    /** A new character (New Game) or a New Game+: back to Ascendance 1, on when the plane has it on. */
+    /** A new character (New Game) or a New Game+: back to Ascendance 0 (round 497), on when the plane has it on. */
     public static void startRun(AdventurePlayer player, String why) {
         AscendanceState s = player.ascendance();
         s.reset();
         s.on = enabledForNewRuns();
-        System.out.println("[TFR-Ascend] " + why + ": Ascendance " + (s.on ? "on - level 1, " + mainSlotAllowance(1)
+        System.out.println("[TFR-Ascend] " + why + ": Ascendance " + (s.on ? "on - level 0, " + mainSlotAllowance(0)
                 + " main item(s)" : "off (config.json ascendanceEnabled)"));
     }
 
@@ -752,6 +781,7 @@ public final class Ascendance {
     public static void save(forge.adventure.util.SaveFileData data, AscendanceState s) {
         data.store("ascendanceOn", s.on);
         data.store("ascendancePower", s.power);
+        data.store("ascendanceCurve", 3); // round 497: the curve starts at level 0 (2) and costs by difficulty (3)
         data.storeObject("ascendancePendingLevels", new ArrayList<>(s.pendingLevels)); // round 494
         data.storeObject("ascendanceOffer", new ArrayList<>(s.offer));
         data.storeObject("ascendancePickIds", new ArrayList<>(s.picks.keySet()));
@@ -762,10 +792,30 @@ public final class Ascendance {
     }
 
     /** AdventurePlayer.load: absent keys (every save before round 493) read as "off". */
-    public static void load(forge.adventure.util.SaveFileData data, AscendanceState s) {
+    public static void load(forge.adventure.util.SaveFileData data, AscendanceState s, String difficulty) {
         s.reset();
         s.on = data.containsKey("ascendanceOn") && data.readBool("ascendanceOn");
         s.power = data.containsKey("ascendancePower") ? Math.max(0, data.readInt("ascendancePower")) : 0;
+        int curve = data.containsKey("ascendanceCurve") ? data.readInt("ascendanceCurve") : 1;
+        if (s.on && curve < 2 && data().xpToNext.length > 0) {
+            // Round 497: a character saved before level 0 existed keeps the level it had - its Power gains the new
+            // first step, so its waiting choices and level sheet still match.
+            s.power += data().xpToNext[0];
+            System.out.println("[TFR-Ascend] a save from before level 0: +" + data().xpToNext[0] + " Power so it keeps level "
+                    + levelFor(s.power, 1f));
+        }
+        float factor = costFactor(difficulty);
+        if (s.on && curve < 3 && factor != 1f) {
+            // Round 497: and before the difficulty's level cost - the same level and the same share of the way to the
+            // next, re-priced, so nothing it was given is earned twice.
+            int level = levelFor(s.power, 1f);
+            int into = s.power - powerAtLevel(level, 1f);
+            int before = s.power;
+            s.power = powerAtLevel(level, factor)
+                    + Math.round(into * (powerToNext(level, factor) / (float) powerToNext(level, 1f)));
+            System.out.println("[TFR-Ascend] a save from before the difficulty's level cost (" + difficulty + " x" + factor
+                    + "): Power " + before + " -> " + s.power + ", still level " + levelFor(s.power, factor));
+        }
         loadChoices(data, s); // round 494
     }
 
@@ -782,7 +832,7 @@ public final class Ascendance {
         } else if (data.containsKey("ascendancePending")) {
             int count = Math.max(0, data.readInt("ascendancePending"));
             List<Integer> rebuilt = new ArrayList<>();
-            for (int l = levelFor(s.power); l >= 2 && rebuilt.size() < count; l--)
+            for (int l = levelFor(s.power); l >= 1 && rebuilt.size() < count; l--)
                 if (!contains(data().lifeLevels, l) && !contains(data().titleLevels, l) && l <= curveTop())
                     rebuilt.add(0, l);
             s.pendingLevels.addAll(rebuilt);
@@ -841,7 +891,7 @@ public final class Ascendance {
         AscendanceState s = state();
         if (s == null || !s.on)
             return "This character has no Ascendance (New Game or New Game+ only)";
-        int want = Math.max(1, Math.min(200, target));
+        int want = Math.max(0, Math.min(200, target));
         int need = powerAtLevel(want) - s.power;
         if (need > 0) { // straight to the target Power - levelingSpeed must not scale a console jump
             int before = levelFor(s.power);

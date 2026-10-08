@@ -119,7 +119,7 @@ public final class AscendanceUI {
         java.util.TreeMap<Integer, String> history = Ascendance.levelHistory();
         List<Integer> waiting = Ascendance.pendingLevelList();
         com.badlogic.gdx.scenes.scene2d.ui.Table rows = new com.badlogic.gdx.scenes.scene2d.ui.Table();
-        for (int level = 2; level <= Ascendance.level(); level++) {
+        for (int level = 1; level <= Ascendance.level(); level++) { // round 497: level 1 is a level-up now
             String what = history.get(level);
             if (what == null)
                 what = waiting.contains(level) ? "[GOLD]a reward waits - tap the Asc panel[]" : "[%80](before the level sheet)";
@@ -131,7 +131,7 @@ public final class AscendanceUI {
             rows.add(number).width(22f).top().left();
             rows.add(text).width(width() - 30f).left().padBottom(2f).row();
         }
-        if (Ascendance.level() < 2)
+        if (Ascendance.level() < 1)
             rows.add(Controls.newTypingLabel("[%85]Nothing yet - the first level comes with the first wins.")).width(width()).row();
         com.badlogic.gdx.scenes.scene2d.ui.ScrollPane pane = new com.badlogic.gdx.scenes.scene2d.ui.ScrollPane(rows);
         pane.setScrollingDisabled(true, false);
