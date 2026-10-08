@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 477: the praetors and Arzakon re-ranked Archmage (2026-10-08)
+
+Round 475 left the Level-2 Challenging bracket Master+ only, and the bosses ranked Adept in enemies.json sat it out. The
+user: "Yes, re-rank the praetors and Arzakon to Archmage."
+
+- **enemies.json** `tier` "Uncommon" -> "Mythic" (Archmage) on six entries: Kozilek, Elesh Norn, Jin-Gitaxias, Urabrask,
+  Vorinclex (the Phyrexian Copper Host bosses, 80 life) and Arzakon, Shandalar's Doom (200 life). They return to the
+  Level-2 bracket (now 57 of its 91 names).
+- **What else the rank changes** (all six are `boss: true`): they show "(Archmage)"; outside town fights, the Capitol
+  defense and Inn/Arena events they start with the Archmage Wastes (`archmageStartCards`); their notoriety Walls are the
+  flying kind; the arena's AI-vs-AI sim favours them as Archmages. Unchanged: how often they spawn (bosses are exempt
+  from the tier weighting, `SpawnTierWeighting.isExempt`), their `difficulty` gate, their life, and their rewards
+  (bosses skip the card budget).
+- Left as they were: the legend "Arzakon" (spawnRate 0, in the five color biomes' lists) and Nissa (the sixth Copper
+  Host entry, also Adept) - the user named the praetors and Arzakon, Shandalar's Doom.
+
 ## Round 475: the Player Capitol's Level-2 arena fields Masters and Archmages only (2026-10-08)
 
 The user: "In the Player arena lvl 2, there should be no Apprentices or Adepts, only Master+". Their last session's

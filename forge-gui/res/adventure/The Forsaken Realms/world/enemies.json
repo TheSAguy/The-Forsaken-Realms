@@ -10562,7 +10562,7 @@
         ],
         "bossInsult": "Our glorious infection has taken hold.",
         "bossIntro": "All worlds will know perfection.",
-        "tier": "Uncommon"
+        "tier": "Mythic"
     },
     {
         "name": "Elf",
@@ -18650,7 +18650,7 @@
             "Copper Host",
             "Humanoid"
         ],
-        "tier": "Uncommon"
+        "tier": "Mythic"
     },
     {
         "name": "Juggernaut",
@@ -19933,7 +19933,7 @@
             "Copper Host",
             "Humanoid"
         ],
-        "tier": "Uncommon"
+        "tier": "Mythic"
     },
     {
         "name": "Ladybug",
@@ -31485,7 +31485,7 @@
         ],
         "bossInsult": "That Great Work of yours is looking pretty fragile",
         "bossIntro": "Large or small, all will toil for the Great Work.",
-        "tier": "Uncommon"
+        "tier": "Mythic"
     },
     {
         "name": "Valyx Feaster of Torment",
@@ -32167,7 +32167,7 @@
             "Copper Host",
             "Humanoid"
         ],
-        "tier": "Uncommon"
+        "tier": "Mythic"
     },
     {
         "name": "Vulture",
@@ -32768,7 +32768,7 @@
     },
     {
         "name": "Werewolf",
-        "sprite": "sprites/enemy/fiend/hellhound.atlas",
+        "sprite": "sprites/enemy/remake/werewolf.atlas",
         "deck": [
             "decks/standard/werewolf.dck"
         ],
@@ -116703,7 +116703,7 @@
             "FinalBoss"
         ],
         "gamesPerMatch": 3,
-        "tier": "Uncommon"
+        "tier": "Mythic"
     },
     {
         "name": "Baron Von Gant",
