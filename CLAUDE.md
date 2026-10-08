@@ -67,6 +67,11 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 482): **LOCAL + UNRELEASED (data only)** - ten more hostile `Story` places (Court of
+Paliano, the four Legendary Lorwyn/Realm dungeons, Planeswalker Dueling Club, both temples, Aerie, Idyllic Beachfront,
+Peaceful Clearing) -> `NoRotate` (+ `Hostile`): they leave on a full clear like the classrooms. Bandit Leader and
+Golgari Elf re-ranked Archmage (the user), so every invasion family can field a leader above Master troops.
+
 ## STATE 2026-10-08 (round 481): **LOCAL + UNRELEASED** - the five Strixhaven classrooms `Story` -> `Hostile` +
 `NoRotate` (they leave on a full clear and come back, round 468's rule; the user's Witherbloom report); an invasion's
 leader is re-picked when its stage opens at one rank above the toughest troop beaten (`InvasionQuests`, the rank kept

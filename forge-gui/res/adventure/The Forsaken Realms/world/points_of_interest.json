@@ -13,8 +13,7 @@
 			"Nest",
 			"Dungeon",
 			"Sidequest",
-			"Story"
-		]
+			"NoRotate"]
 	},
 	{
 		"name": "BarbarianCamp",
@@ -4023,13 +4022,12 @@
 		"map": "../The Forsaken Realms/maps/map/main_story/templeofchandra.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story",
+			"NoRotate",
 			"BiomeRed",
 			"Temple",
 			"DungeonEffect",
 			"Hostile",
-			"Boss"
-		],
+			"Boss"],
 		"questFlagsToActivate": [
 			{
 				"key": "mainQuest",
@@ -4047,13 +4045,12 @@
 		"map": "../The Forsaken Realms/maps/map/main_story/temple_of_liliana/keep.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story",
+			"NoRotate",
 			"BiomeBlack",
 			"Temple",
 			"DungeonEffect",
 			"Hostile",
-			"Boss"
-		],
+			"Boss"],
 		"questFlagsToActivate": [
 			{
 				"key": "mainQuest",
@@ -4436,7 +4433,8 @@
 		"map": "../The Forsaken Realms/maps/map/evilgrove/Court_of_Paliano.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story"]
+			"Hostile",
+			"NoRotate"]
 	},
 	{
 		"name": "Kenrith's Court",
@@ -4739,7 +4737,8 @@
 		"map": "../The Forsaken Realms/maps/map/cave/Ancient_Opal_Cavern.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story",
+			"Hostile",
+			"NoRotate",
 			"Legendary"]
 	},
 	{
@@ -4752,7 +4751,8 @@
 		"map": "../The Forsaken Realms/maps/map/evilgrove/Eclipsed_Elven_Court.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story",
+			"Hostile",
+			"NoRotate",
 			"Legendary"]
 	},
 	{
@@ -4765,7 +4765,8 @@
 		"map": "../The Forsaken Realms/maps/map/barbariancamp/Ashlings_Domain.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story",
+			"Hostile",
+			"NoRotate",
 			"Legendary"]
 	},
 	{
@@ -4778,7 +4779,8 @@
 		"map": "../The Forsaken Realms/maps/map/merfolkpool/Idyllic_Beachfront.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story",
+			"Hostile",
+			"NoRotate",
 			"Legendary"]
 	},
 	{
@@ -4791,7 +4793,8 @@
 		"map": "../The Forsaken Realms/maps/map/fort/Peaceful_Clearing.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story",
+			"Hostile",
+			"NoRotate",
 			"Legendary"]
 	},
 	{
@@ -4804,7 +4807,8 @@
 		"map": "../The Forsaken Realms/maps/map/cave/Planeswalker_Dueling_Club.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
-			"Story",
+			"Hostile",
+			"NoRotate",
 			"Legendary"]
 	},
 	{

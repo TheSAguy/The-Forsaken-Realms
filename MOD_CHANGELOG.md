@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 482: ten more Story places leave when cleared; an Archmage for the Elves and the Bandits (2026-10-08)
+
+The user, on round 481's two open questions: "Should they work the same way? - Yes." and "Re-rank one for each."
+
+- **`points_of_interest.json`**: `Story` -> `NoRotate` (+ `Hostile` where it was missing) on Court of Paliano, Ancient
+  Opal Cavern, Eclipsed Elven Court, Ashling's Domain, Planeswalker Dueling Club, Temple of Chandra, Temple of Liliana,
+  Aerie, Idyllic Beachfront and Peaceful Clearing - round 468's rule (`DungeonRotation.isClearReturner`): a full clear
+  and the walk out take them off the map, and they return restocked after the spot rest, half pay. Their other tags
+  stay (Legendary only picks the minimap's triple-skull glyph; the temples keep Boss/Temple/DungeonEffect, the Aerie
+  Sidequest). None is named by a quest, dialog or another map. A place whose enemies never all fall (non-hostile
+  figures among them) simply stays, as before. Left with `Story`: the settlements and set pieces (Omenport, Three Tree
+  City, An-Havva Inn, Isolated Hut, Valor's Reach Arena), the castles, Spawn, Orazca, the Eldrazi Prison and the
+  Story-tagged castles.
+- **`enemies.json`** `tier` "Uncommon" -> "Mythic" (Archmage): **Bandit Leader** (life 25, the Bolas deck; also placed in
+  barbariancamp_bandit.tmx, cave_bandit.tmx and the Temple of Liliana's forest level, where it is now an Archmage too)
+  and **Golgari Elf** (life 20, the Elves' only Leader-tagged enemy). The Bandit ladder is now Barbarian (Adept),
+  Pirate Captain (Master), Bandit Leader (Archmage); the Elves' Master leader falls back to the High Elf (a family
+  member), Adept to the Elf warrior. As in round 477, only the rank changes: life, decks and the `difficulty` gate
+  stay; the rank brings the Archmage Wastes, the flying notoriety Walls and the Archmage spawn weighting. Data only.
+
 ## Round 481: the Strixhaven classrooms leave when cleared; an invasion's leader one rank above its troops, with a Gemstone Mine on Hard and Insane (2026-10-08)
 
 - **The classrooms** (the user, with a screenshot of a cleared Witherbloom Classroom: "I just cleared out this dungeon
