@@ -9,7 +9,7 @@ some of them to prevent someone from starting a duel with 3 or 4 creatures."
 **Source:**
 - `world/items.json`: `effect.startBattleWithCard`, `...Tapped` and `...InCommandZone`.
 - Each card's type read from its script (cardsfolder, custom_cards, tokenscripts).
-- All 708 items checked; every card name resolved. The full rows are in the two CSVs next to this file.
+- All 673 items checked; every card name resolved. The full rows are in the two CSVs next to this file.
 
 **How start cards enter** (`Player.java` ~2941): they are added straight to the battlefield, summoning-sick, with no zone
 change. **An "enters the battlefield" trigger never fires.** So "when it enters, create tokens" items make nothing at the
