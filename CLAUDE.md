@@ -60,7 +60,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 
 ## STATE 2026-10-08 (00:15 UTC): **v1.19 "Titans & Tides" RELEASED** - tag `tfr-v1.19` @ `9eba8fa822a`, published
 00:15:04 UTC, Latest. Rounds 442-472 on top of v1.18, engine = the 10.07 daily (upstream `e7fca289313`). Assets in
-`C:\TFRelease1.19`: `The-Forsaken-Realms-v1.19.zip` 329.9 MB, `forsaken-realms-1.19-signed-aligned.apk` 13.6 MB
+`C:\TFR\release\v1.19`: `The-Forsaken-Realms-v1.19.zip` 329.9 MB, `forsaken-realms-1.19-signed-aligned.apk` 13.6 MB
 (com.thesaguy.forsakenrealms, versionCode 11900, signer EE:60:39:25), `assets.zip` 281.9 MB (build.txt pair 2026-10-08
 00:11:15; Android from `C:\TFR-build` via R: in 2:42). Notes = `RELEASE_NOTES_v1.19.md` (the name was my pick). Quick
 agent test before release: a new world, a duel (loss path), Settings, an old save loaded - log clean. Live + agent = the
