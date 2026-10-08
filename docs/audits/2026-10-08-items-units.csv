@@ -1,0 +1,165 @@
+item,slot,rarity,card,zone,what,type,pt,sale,cost
+Dark Armor,Body,Common,Skeletal Snake,battlefield,Creature 2/1,Creature Snake Skeleton,2/1,yes,3000
+Vitu-Ghazi Cloak,Body,Uncommon,"Vitu-Ghazi, the City-Tree",battlefield,creature tokens (g_1_1_saproling) - activated,Land,,yes,
+Armor of the First,Body,Rare,Sliver Hive,battlefield,creature tokens (c_1_1_sliver) - activated,Land,,yes,
+Bearhide Breeches,Boots,Common,Mother Bear,battlefield,Creature 2/2 + creature tokens (g_2_2_bear) - activated,Creature Bear,2/2,yes,
+Blistering Breeches,Boots,Common,Blistering Barrier,battlefield,Creature 5/2,Creature Wall,5/2,yes,5000
+Bloodfire Boots,Boots,Common,Bloodfire Dwarf,battlefield,Creature 1/1,Creature Dwarf,1/1,yes,
+Brokers Boots,Boots,Common,Brokers Initiate,battlefield,Creature 0/4,Creature Cat Citizen,0/4,yes,
+Cabaretti Kicks,Boots,Common,Cabaretti Initiate,battlefield,Creature 1/2,Creature Raccoon Citizen,1/2,yes,
+Coiled Anklet,Boots,Common,komas_coil,battlefield,Creature 3/3,Creature Serpent,3/3,yes,
+Courier's Boots,Boots,Common,Torch Courier,battlefield,Creature 1/1,Creature Goblin,1/1,yes,
+Deathspitter Skirt,Boots,Common,Frilled Deathspitter,battlefield,Creature 3/2,Creature Dinosaur,3/2,yes,
+Enduring Sliverband,Boots,Common,Enduring Sliver,battlefield,Creature 2/2,Creature Sliver,2/2,yes,
+Fblthp's Lost Socks,Boots,Common,Humongulus,battlefield,Creature 2/5,Creature Homunculus,2/5,yes,
+Glimmerbell Bondband,Boots,Common,Glimmerbell,battlefield,Creature 1/3,Creature Elemental Jellyfish,1/3,yes,
+Greaves of Glare,Boots,Common,Wall of Glare,battlefield,Creature 0/5,Creature Wall,0/5,yes,5000
+Imposter's Sliverband,Boots,Common,Venser's Sliver,battlefield,Creature 3/3,Artifact Creature Sliver,3/3,yes,
+Kobold Boots,Boots,Common,Kobolds of Kher Keep,battlefield,Creature 0/1,Creature Kobold,0/1,yes,
+Kobold Boots,Boots,Common,Crookshank Kobolds,battlefield,Creature 0/1,Creature Kobold,0/1,yes,
+Maestro Loafers,Boots,Common,Maestros Initiate,battlefield,Creature 3/1,Creature Human Citizen,3/1,yes,
+Obscura Shoes,Boots,Common,Obscura Initiate,battlefield,Creature 2/2,Creature Bird Citizen,2/2,yes,
+Petalmane Pants,Boots,Common,Petalmane Baku,battlefield,Creature 1/2,Creature Spirit,1/2,yes,
+Plated Sliverband,Boots,Common,Plated Sliver,battlefield,Creature 1/1,Creature Sliver,1/1,yes,
+Raptor Bondband,Boots,Common,Frenzied Raptor,battlefield,Creature 4/2,Creature Dinosaur,4/2,yes,
+Referee's Shoes,Boots,Common,Mage Tower Referee,battlefield,Creature 2/1,Artifact Creature Construct,2/1,yes,
+Riveteer Greaves,Boots,Common,Riveteers Initiate,battlefield,Creature 2/2,Creature Lizard Citizen,2/2,yes,
+Sabertooth Bondband,Boots,Common,Savai Sabertooth,battlefield,Creature 3/1,Creature Cat,3/1,yes,
+Scarecrow Socks,Boots,Common,Scarecrow Guide,battlefield,Creature 2/1,Artifact Creature Scarecrow,2/1,yes,
+Scrapling Shoes,Boots,Common,Myr Scrapling,battlefield,Creature 1/1,Artifact Creature Myr,1/1,yes,
+Silvergill Tailband,Boots,Common,Silvergill Douser,battlefield,Creature 1/1,Creature Merfolk Wizard,1/1,yes,
+Starfish On Your Foot,Boots,Common,Spiny Starfish,battlefield,Creature 0/1 + creature tokens (u_0_1_starfish),Creature Starfish,0/1,yes,
+Steel Boots,Boots,Common,Steel Wall,battlefield,Creature 0/4,Artifact Creature Wall,0/4,yes,1000
+Symbiote Bondband,Boots,Common,Essence Symbiote,battlefield,Creature 2/2,Creature Beast,2/2,yes,
+Timebug Boots,Boots,Common,Jhoira's Timebug,battlefield,Creature 1/2,Artifact Creature Insect,1/2,yes,
+Winter Boots,Boots,Common,Priest of the Haunted Edge,battlefield,Creature 0/4,Snow Creature Zombie Cleric,0/4,yes,
+Acidic Sliverband,Boots,Uncommon,Acidic Sliver,battlefield,Creature 2/2,Creature Sliver,2/2,yes,
+Angelic Greaves,Boots,Uncommon,Angelic Wall,battlefield,Creature 0/4,Creature Wall,0/4,yes,
+Anklet of the End,Boots,Uncommon,It That Heralds the End,battlefield,Creature 2/2,Creature Eldrazi Drone,2/2,yes,
+Artificial Sliverband,Boots,Uncommon,Sliversmith,battlefield,Creature 1/1 + tokens - activated,Artifact Creature Spellshaper,1/1,yes,
+Bandar Boots,Boots,Uncommon,Wily Bandar,battlefield,Creature 1/1,Creature Cat Monkey,1/1,yes,
+Barrier Breeches,Boots,Uncommon,Hover Barrier,battlefield,Creature 0/6,Creature Illusion Wall,0/6,yes,6000
+Battle Cry Boots,Boots,Uncommon,Battle Cry Goblin,battlefield,Creature 2/2 + creature tokens (r_1_1_goblin),Creature Goblin,2/2,yes,
+Beastbreaker Boots,Boots,Uncommon,Beastbreaker of Bala Ged,battlefield,Creature 2/2,Creature Human Warrior,2/2,yes,5000
+Bloodsworn Bite,Boots,Uncommon,Olivia's Bloodsworn,battlefield,Creature 2/1,Creature Vampire Soldier,2/1,yes,
+Brimstone Boots,Boots,Uncommon,Brimstone Mage,battlefield,Creature 2/2,Creature Human Shaman,2/2,yes,5000
+Caravaneer's Greaves,Boots,Uncommon,Caravan Escort,battlefield,Creature 1/1,Creature Human Knight,1/1,yes,3000
+Cloudseeder Shoes,Boots,Uncommon,Cloudseeder,battlefield,Creature 1/1 + tokens - activated,Creature Faerie Spellshaper,1/1,yes,
+Cryptologist's Fins,Boots,Uncommon,Enclave Cryptologist,battlefield,Creature 0/1,Creature Merfolk Wizard,0/1,yes,5000
+Dark Boots,Boots,Uncommon,Clattering Augur,battlefield,Creature 1/1,Creature Skeleton Shaman,1/1,yes,2000
+Deathspore Shoes,Boots,Uncommon,Deathspore Thallid,battlefield,Creature 1/1 + creature tokens (g_1_1_saproling) - each upkeep/activated,Creature Zombie Fungus,1/1,yes,
+Despoiler's Boots,Boots,Uncommon,Ulamog's Despoiler,battlefield,Creature 5/5,Creature Eldrazi Processor,5/5,yes,
+Draped Dragonhide,Boots,Uncommon,Dragon Whelp,battlefield,Creature 2/3,Creature Dragon,2/3,yes,
+Empyrial Greaves,Boots,Uncommon,Angel's Herald,battlefield,Creature 1/1,Creature Human Cleric,1/1,yes,
+Faerie Anklet,Boots,Uncommon,Faerie Dragon,battlefield,Creature 1/3,Creature Dragon,1/3,yes,
+Firefrightener Shoes,Boots,Uncommon,Firefright Mage,battlefield,Creature 1/1,Creature Goblin Spellshaper,1/1,yes,2250
+Flamecaster Pants,Boots,Uncommon,Enraged Flamecaster,battlefield,Creature 3/2,Creature Elemental Sorcerer,3/2,yes,
+Fleshwright Chaps,Boots,Uncommon,Stitchwing Skaab,battlefield,Creature 3/1,Creature Zombie Horror,3/1,yes,
+Gingerboots,Boots,Uncommon,Gingerbrute,battlefield,Creature 1/1,Artifact Creature Food Golem,1/1,yes,
+Godsire Greaves,Boots,Uncommon,Behemoth's Herald,battlefield,Creature 1/1,Creature Elf Shaman,1/1,yes,
+Greenseeker's Shoes,Boots,Uncommon,Greenseeker,battlefield,Creature 1/1,Creature Elf Spellshaper,1/1,yes,3000
+Hellkite Greaves,Boots,Uncommon,Dragon's Herald,battlefield,Creature 1/1,Creature Goblin Shaman,1/1,yes,
+Hengestrider Boots,Boots,Uncommon,Henge Guardian,battlefield,Creature 3/4,Artifact Creature Dragon Wurm,3/4,yes,
+Jolly Boots,Boots,Uncommon,Jolly Gerbils,battlefield,Creature 2/3,Creature Hamster Citizen,2/3,yes,
+Joraga Boots,Boots,Uncommon,Joraga Treespeaker,battlefield,Creature 1/1,Creature Elf Druid,1/1,yes,
+Leech Breeches,Boots,Uncommon,Leech Collector,battlefield,Creature 2/2,Creature Human Warlock,2/2,yes,
+Mamba Bondband,Boots,Uncommon,Zagoth Mamba,battlefield,Creature 1/1,Creature Nightmare Snake,1/1,yes,
+Packsong Pants,Boots,Uncommon,Packsong Pup,battlefield,Creature 1/1,Creature Wolf,1/1,yes,
+Princely Greaves,Boots,Uncommon,Demon's Herald,battlefield,Creature 1/1,Creature Human Wizard,1/1,yes,
+Shoes of the Swarm,Boots,Uncommon,Swarm of Rats,battlefield,Creature */1,Creature Rat,*/1,yes,
+Soul Shoes,Boots,Uncommon,Wall of Souls,battlefield,Creature 0/4,Creature Wall,0/4,yes,3000
+Sovereign Greaves,Boots,Uncommon,Sphinx's Herald,battlefield,Creature 1/1,Artifact Creature Vedalken Wizard,1/1,yes,
+Spectral Sliverband,Boots,Uncommon,Spectral Sliver,battlefield,Creature 2/2,Creature Sliver Spirit,2/2,yes,
+Trickster's Shoes,Boots,Uncommon,Trickster Mage,battlefield,Creature 1/1,Creature Human Spellshaper,1/1,yes,3000
+Valorous Greaves,Boots,Uncommon,Inspiring Veteran,battlefield,Creature 2/2,Creature Human Knight,2/2,yes,
+Victual Sliverband,Boots,Uncommon,Victual Sliver,battlefield,Creature 2/2,Creature Sliver,2/2,yes,
+Vindicator Greaves,Boots,Uncommon,Kabira Vindicator,battlefield,Creature 2/4,Creature Human Knight,2/4,yes,5000
+Acolyte's Anklet,Boots,Rare,"Klement, Novice Acolyte",battlefield,"Creature 2/2 + creature tokens (b_2_2_zombie, g_4_4_ox) - on entering",Legendary Creature Tiefling Cleric,2/2,yes,
+Alesha's War Skirt,Boots,Rare,"Alesha, Who Smiles at Death",battlefield,Creature 3/2,Legendary Creature Human Warrior,3/2,yes,
+Chandler's Shoes,Boots,Rare,Chandler,battlefield,Creature 3/3,Legendary Creature Human Rogue,3/3,yes,
+Cutthroat Skirt,Boots,Rare,Nirkana Cutthroat,battlefield,Creature 3/2,Creature Vampire Warrior,3/2,yes,5000
+Dune-Brood Anklet,Boots,Rare,Dune-Brood Nephilim,battlefield,Creature 3/3 + creature tokens (c_1_1_sand),Creature Nephilim,3/3,yes,
+Evershrike Anklet,Boots,Rare,Evershrike,battlefield,Creature 2/2,Creature Elemental Spirit,2/2,yes,
+Ghoulcaller Greaves,Boots,Rare,Graf Reaver,battlefield,Creature 3/3,Creature Zombie Warrior,3/3,yes,
+Girlfriend's Skirt,Boots,Rare,Joined Researchers,battlefield,Creature 2/2,Creature Human Cleric Wizard,2/2,yes,
+Gixian Graft,Boots,Rare,Gixian Recycler,battlefield,Creature 3/1,Artifact Creature Phyrexian Horror,3/1,yes,
+Glint-Eye Anklet,Boots,Rare,Glint-Eye Nephilim,battlefield,Creature 2/2,Creature Nephilim,2/2,yes,
+Ink-Treader Anklet,Boots,Rare,Ink-Treader Nephilim,battlefield,Creature 3/3,Creature Nephilim,3/3,yes,
+Joven's Shoes,Boots,Rare,Joven,battlefield,Creature 3/3,Legendary Creature Human Rogue,3/3,yes,
+Lookout's Harness,Boots,Rare,Cliffside Lookout,battlefield,Creature 1/1,Creature Kor Scout Ally,1/1,yes,
+Pack Leader Pants,Boots,Rare,Pack Leader,battlefield,Creature 2/2,Creature Dog,2/2,yes,
+Peddler's Shoes,Boots,Rare,Tonic Peddler,battlefield,Creature 1/1,Creature Human Spellshaper,1/1,yes,4500
+Sheldon's Shoes,Boots,Rare,Keen Duelist,battlefield,Creature 2/2,Creature Human Wizard,2/2,yes,
+Slime-Covered Boots,Boots,Rare,Ooze Flux,battlefield,creature tokens (g_x_x_ooze) - activated,Enchantment,,yes,6000
+Slobad's Iron Boots,Boots,Rare,Slobad's Iron Boots,command zone,creature tokens (c_0_0_a_construct_total_artifacts) - activated,Artifact,,yes,10000
+Spore Skirt,Boots,Rare,Mindbender Spores,battlefield,Creature 0/1,Creature Fungus Wall,0/1,yes,3000
+Utopia Anklet,Boots,Rare,Utopia Tree,battlefield,Creature 0/2,Creature Plant,0/2,yes,
+Witch's Shoes,Boots,Rare,Plague Witch,battlefield,Creature 1/1,Creature Elf Spellshaper,1/1,yes,3750
+Witch-Maw Anklet,Boots,Rare,Witch-Maw Nephilim,battlefield,Creature 1/1,Creature Nephilim,1/1,yes,
+Yore-Tiller Anklet,Boots,Rare,Yore-Tiller Nephilim,battlefield,Creature 2/2,Creature Nephilim,2/2,yes,
+Battle Standard,Left,Common,r_1_1_goblin,battlefield,Creature 1/1,Creature Goblin,1/1,yes,1500
+Ephemeral Prayerbook,Left,Common,Vessel of Ephemera,battlefield,creature tokens (w_1_1_spirit_flying) - activated,Enchantment,,yes,
+Kiora's Bident,Left,Common,Kraken Hatchling,battlefield,Creature 0/4,Creature Kraken,0/4,yes,10000
+Abzan Gauntlet,Left,Uncommon,Abzan Monument,battlefield,creature tokens (w_x_x_spirit) - on entering/activated,Artifact,,yes,
+Jeskai Gauntlet,Left,Uncommon,Jeskai Monument,battlefield,creature tokens (w_1_1_bird_flying) - on entering/activated,Artifact,,yes,
+Map to the World Tree,Left,Uncommon,Path to the World Tree,battlefield,creature tokens (g_2_2_bear) - on entering,Enchantment,,yes,
+Mardu Gauntlet,Left,Uncommon,Mardu Monument,battlefield,creature tokens (r_1_1_warrior) - on entering/activated,Artifact,,yes,
+Sultai Gauntlet,Left,Uncommon,Sultai Monument,battlefield,creature tokens (b_2_2_zombie_druid) - on entering/activated,Artifact,,yes,
+Temur Gauntlet,Left,Uncommon,Temur Monument,battlefield,creature tokens (g_5_5_elephant) - on entering/activated,Artifact,,yes,
+Tome of the Builder,Left,Uncommon,The Birth of Meletis,battlefield,creature tokens (c_0_4_a_wall_defender),Enchantment Saga,,yes,
+Attendant's Prayerbook,Left,Rare,Silent Attendant,battlefield,Creature 0/2,Creature Human Cleric,0/2,yes,
+Ferret Food,Left,Rare,Joven's Ferrets,battlefield,Creature 1/1,Creature Ferret,1/1,yes,
+Garruk's Mighty Axe,Left,Rare,Garruk's Mighty Axe,command zone,creature tokens (bg_2_2_wolf_garruk),Artifact Equipment,,yes,12000
+Goblin Trumpet,Left,Rare,Goblin Polka Band,battlefield,Creature 1/1,Creature Goblin,1/1,yes,
+Guard's Shield,Left,Rare,Security Detail,battlefield,creature tokens (w_1_1_soldier) - activated,Enchantment,,yes,
+Shield of Air,Left,Rare,Wall of Air,battlefield,Creature 1/5,Creature Wall,1/5,yes,
+Shield of the Hivelord,Left,Rare,Plated Sliver,battlefield,Creature 1/1,Creature Sliver,1/1,yes,
+Tasty Tome,Left,Rare,Orcish Librarian,battlefield,Creature 1/1,Creature Orc,1/1,yes,
+Warren Tender's Baton,Left,Rare,Goblin Warrens,battlefield,creature tokens (r_1_1_goblin) - activated,Enchantment,,yes,3000
+Acorn Amulet,Neck,Uncommon,Nut Collector,battlefield,Creature 1/1 + creature tokens (g_1_1_squirrel) - each upkeep,Creature Human Druid,1/1,yes,
+Amulet of Annihilation,Neck,Uncommon,Path of Annihilation,battlefield,creature tokens (c_0_1_eldrazi_spawn_sac) - on entering,Enchantment,,yes,
+Liliana's Veil,Neck,Uncommon,Oath of Liliana,battlefield,creature tokens (b_2_2_zombie) - on entering,Legendary Enchantment,,yes,
+Ominous Amulet,Neck,Uncommon,Ominous Seas,battlefield,creature tokens (u_8_8_kraken) - activated,Enchantment,,yes,
+Outlaw's Hat,Neck,Uncommon,Rakish Crew,battlefield,creature tokens (r_1_1_mercenary_tappump) - on entering,Enchantment,,yes,
+Outlaw's Hat,Neck,Uncommon,r_1_1_mercenary_tappump,battlefield,Creature 1/1,Creature Mercenary,1/1,yes,
+Pegasus Helm,Neck,Uncommon,Pegasus Refuge,battlefield,creature tokens (w_1_1_pegasus_flying) - activated,Enchantment,,yes,
+Skywise Talisman,Neck,Uncommon,Skywise Teachings,battlefield,creature tokens (u_2_2_djinn_monk_flying),Enchantment,,yes,
+Amulet of Awakening,Neck,Rare,Awakening Zone,battlefield,creature tokens (c_0_1_eldrazi_spawn_sac) - each upkeep,Enchantment,,yes,
+Bear Helm,Neck,Rare,Bearscape,battlefield,creature tokens (g_2_2_bear) - activated,Enchantment,,yes,
+Ghoulish Jewel,Neck,Rare,Ghoulish Procession,battlefield,creature tokens (b_2_2_zombie_decayed),Enchantment,,yes,30000
+Morcant's Crown,Neck,Rare,Morcant's Eyes,battlefield,creature tokens (bg_2_2_elf) - each upkeep/activated,Kindred Enchantment Elf,,yes,
+Ooze Amulet,Neck,Rare,Ooze Flux,battlefield,creature tokens (g_x_x_ooze) - activated,Enchantment,,yes,
+Teeming Stormcrown,Neck,Rare,Teeming Dragonstorm,battlefield,creature tokens (w_2_2_soldier) - on entering,Enchantment,,yes,
+Xira's Fancy Hat,Neck,Rare,Xira's Hive,battlefield,Creature 0/2 + creature tokens (b_1_1_insect_flying),Creature Insect,0/2,yes,10000
+Cheat,Neck,Mythic,Blightsteel Colossus,battlefield,Creature 11/11,Artifact Creature Phyrexian Golem,11/11,yes,50000
+Cheat,Neck,Mythic,Urabrask the Hidden,battlefield,Creature 4/4,Legendary Creature Phyrexian Praetor,4/4,yes,50000
+Cheat,Neck,Mythic,Avatar of Slaughter,battlefield,Creature 8/8,Creature Avatar,8/8,yes,50000
+Chicken Egg,Right,Common,Chicken Egg,battlefield,Creature 0/1 + creature tokens (r_4_4_giant_bird) - each upkeep,Creature Egg,0/1,yes,3000
+Dark Shield,Right,Common,Barrier of Bones,battlefield,Creature 0/3,Creature Skeleton Wall,0/3,yes,2500
+Cursed Ring,Right,Uncommon,c_0_1_a_goblin_construct_noblock_ping,battlefield,Creature 0/1,Artifact Creature Goblin Construct,0/1,yes,4000
+Cursed Ring,Right,Uncommon,c_0_1_a_goblin_construct_noblock_ping,battlefield,Creature 0/1,Artifact Creature Goblin Construct,0/1,yes,4000
+Cursed Ring,Right,Uncommon,c_0_1_a_goblin_construct_noblock_ping,battlefield,Creature 0/1,Artifact Creature Goblin Construct,0/1,yes,4000
+Fblthp's Lost Fishing Pole,Right,Uncommon,Fishing Pole,battlefield,creature tokens (u_1_1_fish),Artifact Equipment,,yes,
+Giant's Bracer,Right,Uncommon,Giant's Amulet,battlefield,creature tokens (u_4_4_giant_wizard) - on entering,Artifact Equipment,,yes,5000
+Jungle Shield,Right,Uncommon,g_0_1_plant,battlefield,Creature 0/1,Creature Plant,0/1,yes,4500
+Starforged Sword,Right,Uncommon,Starforged Sword,battlefield,creature tokens (u_1_1_fish) - on entering,Artifact Equipment,,yes,
+Bog Glider Glove,Right,Rare,Bog Glider,battlefield,Creature 1/1,Creature Human Mercenary,1/1,yes,
+Breathstealer's Blade,Right,Rare,Breathstealer,battlefield,Creature 2/2,Creature Nightstalker,2/2,yes,
+Faerie Dragon Egg,Right,Rare,Faerie Dragon,battlefield,Creature 1/3,Creature Dragon,1/3,yes,
+Holy Symbol,Right,Rare,Miracle Worker,battlefield,Creature 1/1,Creature Human Cleric,1/1,yes,5000
+Ichor Knife,Right,Rare,Ichorid,battlefield,Creature 3/1,Creature Horror,3/1,yes,
+Istvan's Axe,Right,Rare,Uncle Istvan,battlefield,Creature 1/3,Creature Human,1/3,yes,
+Kobold King's Blade,Right,Rare,Crimson Kobolds,battlefield,Creature 0/1,Creature Kobold,0/1,yes,
+Kobold King's Blade,Right,Rare,Crookshank Kobolds,battlefield,Creature 0/1,Creature Kobold,0/1,yes,
+Kobold King's Blade,Right,Rare,Kobolds of Kher Keep,battlefield,Creature 0/1,Creature Kobold,0/1,yes,
+Marble Mace,Right,Rare,Marble Priest,battlefield,Creature 3/3,Artifact Creature Cleric,3/3,yes,
+Mithril Shield,Right,Rare,c_0_4_a_wall_defender,battlefield,Creature 0/4,Artifact Creature Wall,0/4,yes,6500
+Prismatic Egg,Right,Rare,Prismatic Dragon,battlefield,Creature 2/3,Creature Dragon,2/3,yes,
+Rainbow Spear,Right,Rare,Rainbow Knights,battlefield,Creature 2/1,Creature Human Knight,2/1,yes,
+Shaman's Staff,Right,Rare,Gorilla Shaman,battlefield,Creature 1/1,Creature Ape Shaman,1/1,yes,
+Spyglass,Right,Rare,Orcish Spy,battlefield,Creature 1/1,Creature Orc Rogue,1/1,yes,
+Steel Shield,Right,Rare,w_0_3_wall_defender,battlefield,Creature 0/3,Creature Wall,0/3,yes,6500
+Token of Decay,Token,Mythic,b_2_2_zombie_decayed,battlefield,Creature 2/2,Creature Zombie,2/2,yes,40000
+Token of Shielding,Token,Mythic,w_0_3_wall_defender,battlefield,Creature 0/3,Creature Wall,0/3,yes,60000
+Token of Soaring Spirit,Token,Mythic,wb_1_1_spirit_flying,battlefield,Creature 1/1,Creature Spirit,1/1,yes,80000
+Token of Spirit,Token,Mythic,c_1_1_spirit,battlefield,Creature 1/1,Creature Spirit,1/1,yes,50000

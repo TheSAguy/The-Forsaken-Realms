@@ -1,0 +1,75 @@
+item,slot,rarity,card,zone,what,type,pt,sale,cost
+Cloak of the Wastes,Body,Common,Wastes,battlefield,Land: Add {C},Basic Land,,yes,3000
+Isle Shirt,Body,Common,Remote Isle,battlefield,Land: Add {U},Land,,yes,7500
+Karst Shawl,Body,Common,Slippery Karst,battlefield,Land: Add {G},Land,,yes,7500
+Meadow Outfit,Body,Common,Drifting Meadow,battlefield,Land: Add {W},Land,,yes,7500
+Mire Leather,Body,Common,Polluted Mire,battlefield,Land: Add {B},Land,,yes,7500
+Pilgrim's Cloak,Body,Common,Evolving Wilds,battlefield,Land: land,Land,,yes,
+Seraphim Wings,Body,Common,Seraph Sanctuary,battlefield,Land: Add {C},Land,,yes,
+Smoldering Cloak,Body,Common,Smoldering Crater,battlefield,Land: Add {R},Land,,yes,7500
+Armor of Ifnir,Body,Uncommon,Ifnir Deadlands,battlefield,Land: Add {C},Land Desert,,yes,
+Armor of Ipnu,Body,Uncommon,Ipnu Rivulet,battlefield,Land: Add {C},Land Desert,,yes,
+Armor of Ramunap,Body,Uncommon,Ramunap Ruins,battlefield,Land: Add {C},Land Desert,,yes,
+Barbarian Armor,Body,Uncommon,Barbarian Ring,battlefield,Land: Add {R},Land,,yes,
+Cabal Armor,Body,Uncommon,Cabal Pit,battlefield,Land: Add {B},Land,,yes,
+Centaur Armor,Body,Uncommon,Centaur Garden,battlefield,Land: Add {G},Land,,yes,
+Cephalid Armor,Body,Uncommon,Cephalid Coliseum,battlefield,Land: Add {U},Land,,yes,
+Cloak of Orzhova,Body,Uncommon,"Orzhova, the Church of Deals",battlefield,Land: Add {C},Land,,yes,
+Cloak of Prahv,Body,Uncommon,"Prahv, Spires of Order",battlefield,Land: Add {C},Land,,yes,
+Cloak of Svogthos,Body,Uncommon,"Svogthos, the Restless Tomb",battlefield,Land: Add {C},Land,,yes,
+Cloudcrest Cloak,Body,Uncommon,Cloudcrest Lake,battlefield,Land: Add {C},Land,,yes,
+Explorer's Cloak,Body,Uncommon,Access Tunnel,battlefield,Land: Add {C},Land,,yes,
+Glacial Armor,Body,Uncommon,Mouth of Ronom,battlefield,Land: Add {C},Snow Land,,yes,
+Lantern-Lit Cloak,Body,Uncommon,Lantern-Lit Graveyard,battlefield,Land: Add {C},Land,,yes,
+Mantle of Dusk,Body,Uncommon,"Duskmantle, House of Shadow",battlefield,Land: Add {C},Land,,yes,
+Nivix Vest,Body,Uncommon,"Nivix, Aerie of the Firemind",battlefield,Land: Add {C},Land,,yes,
+Nomad Armor,Body,Uncommon,Nomad Stadium,battlefield,Land: Add {W},Land,,yes,
+Novijen Cloak,Body,Uncommon,"Novijen, Heart of Progress",battlefield,Land: Add {C},Land,,yes,
+Pinecrest Cloak,Body,Uncommon,Pinecrest Ridge,battlefield,Land: Add {C},Land,,yes,
+Rancher's Garb,Body,Uncommon,Bucolic Ranch,battlefield,Land: Add {C},Land Desert,,yes,
+Rix Maadi Cloak,Body,Uncommon,"Rix Maadi, Dungeon Palace",battlefield,Land: Add {C},Land,,yes,
+Skargg Cloak,Body,Uncommon,"Skarrg, the Rage Pits",battlefield,Land: Add {C},Land,,yes,
+Sunhome Cloak,Body,Uncommon,"Sunhome, Fortress of the Legion",battlefield,Land: Add {C},Land,,yes,
+Tranquil Cloak,Body,Uncommon,Tranquil Garden,battlefield,Land: Add {C},Land,,yes,
+Vitu-Ghazi Cloak,Body,Uncommon,"Vitu-Ghazi, the City-Tree",battlefield,Land: Add {C},Land,,yes,
+Waterveil Cloak,Body,Uncommon,Waterveil Cavern,battlefield,Land: Add {C},Land,,yes,
+Armor of Urami,Body,Rare,Tomb of Urami,battlefield,Land: Add {B},Legendary Land,,yes,
+Armor of the First,Body,Rare,Sliver Hive,battlefield,Land: Add {C},Land,,yes,
+Cloud Keeper Armor,Body,Rare,"Untaidake, the Cloud Keeper",battlefield,Land: Add {C}{C},Legendary Land,,yes,
+Crucible Armor,Body,Rare,Crucible of the Spirit Dragon,battlefield,Land: Add {C},Land,,yes,
+Crystalline Armor,Body,Rare,Crystal Quarry,battlefield,Land: Add {C},Land,,yes,
+Diamond Belt,Body,Rare,Diamond Valley,battlefield,Land: land,Land,,yes,
+Fblthp's Lost Shirt,Body,Rare,Mystifying Maze,battlefield,Land: Add {C},Land,,yes,
+Interplanar Armor,Body,Rare,Interplanar Beacon,battlefield,Land: Add {C},Land,,yes,
+Librarian's Robes,Body,Rare,The Biblioplex,battlefield,Land: Add {C},Land,,yes,
+Oracle's Robes,Body,Rare,Hall of Oracles,battlefield,Land: Add {C},Land,,yes,
+Parun's Armor,Body,Rare,Pillar of the Paruns,battlefield,Land: land,Land,,yes,
+Sanctuary Armor,Body,Rare,Animal Sanctuary,battlefield,Land: Add {C},Land,,yes,
+Urza's Robe,Body,Rare,Urza's Workshop,battlefield,Land: Add {C},Land Urza's,,yes,
+Petalmane Pants,Boots,Common,Petalmane Baku,battlefield,Mana: mana ability,Creature Spirit,1/2,yes,
+Scarecrow Socks,Boots,Common,Scarecrow Guide,battlefield,Mana: mana ability,Artifact Creature Scarecrow,2/1,yes,
+Joraga Boots,Boots,Uncommon,Joraga Treespeaker,battlefield,Mana: Add {G}{G},Creature Elf Druid,1/1,yes,
+Utopia Anklet,Boots,Rare,Utopia Tree,battlefield,Mana: mana ability,Creature Plant,0/2,yes,
+Chromatic Sphere,Left,Common,Chromatic Sphere,battlefield,Mana: mana ability,Artifact,,yes,5000
+Lotus Petal,Left,Common,Lotus Petal,battlefield,Mana: mana ability,Artifact,,yes,5000
+Volatile Prayerbook,Left,Common,Vessel of Volatility,battlefield,Mana: Add {R}{R}{R}{R},Enchantment,,yes,
+Golden Egg,Left,Uncommon,Golden Egg,battlefield,Mana: mana ability,Artifact Food,,yes,
+Presence of the Hydra,Left,Uncommon,Presence of the Hydra,command zone,Mana: mana ability,Artifact Equipment,,yes,4000
+Sol Ring,Left,Uncommon,Sol Ring,battlefield,Mana: Add {C}{C},Artifact,,yes,25000
+Black Lotus,Left,Rare,Black Lotus,battlefield,Mana: mana ability,Artifact,,yes,
+Kaleidostone,Left,Rare,Kaleidostone,battlefield,Mana: Add {W}{U}{B}{R}{G},Artifact,,yes,
+Amulet of Annihilation,Neck,Uncommon,Path of Annihilation,battlefield,Mana: Add {C},Enchantment,,yes,
+Jeweled Amulet,Neck,Uncommon,Jeweled Amulet,battlefield,Mana: mana ability,Artifact,,yes,5000
+Celestial Prism,Neck,Rare,Celestial Prism,battlefield,Mana: mana ability,Artifact,,yes,
+Crown of the False God,Neck,Rare,Temple of the False God,battlefield,Land: Add {C}{C},Land,,yes,
+Crown of the Vale,Neck,Rare,Rainbow Vale,battlefield,Land: land,Land,,yes,
+Krampus's Horns,Neck,Rare,Charcoal Diamond,battlefield,Mana: Add {B},Artifact,,yes,
+Mox Emerald,Neck,Rare,Mox Emerald,battlefield,Mana: Add {G},Artifact,,yes,25000
+Mox Jet,Neck,Rare,Mox Jet,battlefield,Mana: Add {B},Artifact,,yes,25000
+Mox Pearl,Neck,Rare,Mox Pearl,battlefield,Mana: Add {W},Artifact,,yes,25000
+Mox Ruby,Neck,Rare,Mox Ruby,battlefield,Mana: Add {R},Artifact,,yes,25000
+Mox Sapphire,Neck,Rare,Mox Sapphire,battlefield,Mana: Add {U},Artifact,,yes,25000
+Santa's Hat,Neck,Rare,Jack-in-the-Mox,battlefield,Mana: Add {W},Artifact,,yes,
+Change,Right,Rare,c_a_gold_sac,battlefield,Mana: mana ability,Artifact Gold,,yes,5000
+Dungeon Map,Right,Rare,Dungeon Map,battlefield,Mana: Add {C},Artifact,,yes,12000
+Treasure,Right,Rare,c_a_treasure_sac,battlefield,Mana: mana ability,Artifact Treasure,,yes,5000
