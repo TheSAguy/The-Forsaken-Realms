@@ -506,6 +506,10 @@ def main():
     here = os.path.dirname(os.path.abspath(__file__))
     shutil.copy2(os.path.join(here, "README.md"), game_dir)
     shutil.copy2(os.path.join(here, "CREDITS.md"), game_dir)
+    # round 498: the LPC licenses want every part's author and license listed - the per-enemy list CREDITS.md points to
+    lpc_credits = os.path.join(here, "CREDITS_LPC.md")
+    if os.path.exists(lpc_credits):
+        shutil.copy2(lpc_credits, game_dir)
     guide = os.path.join(adv, PLANE, "GUIDE.md")
     if os.path.exists(guide):
         shutil.copy2(guide, os.path.join(game_dir, "GAME_GUIDE.md"))
@@ -524,6 +528,8 @@ def main():
         os.remove(old_faq)
     shutil.copy2(os.path.join(BASE_INSTALL, "LICENSE.txt"), os.path.join(adv, PLANE))
     shutil.copy2(os.path.join(here, "CREDITS.md"), os.path.join(adv, PLANE))
+    if os.path.exists(lpc_credits):  # round 498: mirrored with CREDITS.md
+        shutil.copy2(lpc_credits, os.path.join(adv, PLANE))
 
     # 8. verify
     errors = []
