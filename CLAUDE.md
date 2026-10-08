@@ -75,8 +75,9 @@ arthropods; the ink look stays. 403 files under `sprites/enemy/remake/` (46 atla
 incl. the 17 that round 471 could not reproduce, regenerated with their seeds kept), enemies.json 21 scales by a few
 percent. The 16 Pixelate sprites untouched. Verified by #30: all 448 remake atlases inside their sheets with an Avatar each,
 the 46 re-laid-out ones with their animation names unchanged, the 21 json changes scale-only on remake enemies. Seen in
-the agent game (an Iron Golem with its chest stone, a wolf, outlines clean). AGENT PACKAGED 2026-10-08; LIVE waits for
-the user's game to close (a clean-tree watcher packages it).
+the agent game (an Iron Golem with its chest stone, a wolf, outlines clean). LIVE + AGENT PACKAGED 2026-10-08 (jar
+37F57C23B7AC, live from the clean tree at f8ae9692c49). The user's v1.19 session before it (17:38-18:48): log clean,
+notoriety 46 wins in a row on Insane (the 45+ bonus Wall and its +life card from the next duel).
 
 ## STATE 2026-10-07 (round 472): **LOCAL + UNRELEASED** - ENGINE = the 10.07 daily (upstream `e7fca289313`, base install
 `E:\GAMES\Forge_2` build.txt 2026-10-07 22:47:23). No textual conflicts; one semantic: `UI_COIN_FLIP_ANIMATION` renamed
