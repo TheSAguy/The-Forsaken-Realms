@@ -67,6 +67,9 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 499): **LOCAL + UNRELEASED (data only)** - the 13 Common mana/land items are Uncommon
+(items.json rarity only; the audit is docs/audits/2026-10-08-items-mana-and-units.md).
+
 ## STATE 2026-10-08 (round 498): **LOCAL + UNRELEASED (data only)** - the first humanoids from the Universal LPC
 Spritesheet parts (the Procedural Pixel Creatures session; the user approved a five-sprite pilot and asked for twenty
 more): 25 enemies - the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer, Woodland

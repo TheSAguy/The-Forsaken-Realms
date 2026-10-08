@@ -1,5 +1,7 @@
 # Item audit - mana/land and units at duel start (2026-10-08)
 
+*Round 499 (same day): the 13 Common mana/land items listed below were made Uncommon.*
+
 Asked by the user: "List me all items that add mana/land. I.E. Dungeon Map - Tap for 1 colorless. I need to know the slot
 and rarity. Same for all items that add units on the battlefield. Slot and rarity. I think we need to possibly re-allocate
 some of them to prevent someone from starting a duel with 3 or 4 creatures."

@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 499: the Common mana and land items become Uncommon (2026-10-08)
+
+The user, after the item audit (docs/audits/2026-10-08-items-mana-and-units.md): "For the land/mana items, let's start by
+changing all the Common items to be Uncommon."
+
+- **items.json `rarity` Common -> Uncommon on all 13** (nothing else changed):
+  - **Body lands (8):** Cloak of the Wastes, Isle Shirt, Karst Shawl, Meadow Outfit, Mire Leather, Pilgrim's Cloak,
+    Seraphim Wings, Smoldering Cloak.
+  - **Left (3):** Chromatic Sphere, Lotus Petal, Volatile Prayerbook.
+  - **Boots mana creatures (2):** Petalmane Pants, Scarecrow Socks.
+- **What rarity moves:** which shops stock an item and how often (`armory_rarity.json` by venue and week), loot and chest
+  item rolls, and Ascendance's item reward (Common at L2-12, Uncommon from L13). No Common item adds mana or land any
+  more.
+- **Prices are unchanged.** The Body lands already cost 7,500 (Cloak of the Wastes 3,000), above the Uncommon body
+  median of 3,000. Five items have no price set and use the default 1,000: Pilgrim's Cloak, Seraphim Wings, Petalmane
+  Pants, Scarecrow Socks, Volatile Prayerbook.
+- `validate_plane_data` is unchanged.
+
 ## Round 498: twenty-five humanoids from the Universal LPC Spritesheet parts (2026-10-08)
 
 The Procedural Pixel Creatures session: the first people-shaped enemies rebuilt from the LPC part library (the user,
