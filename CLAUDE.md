@@ -67,6 +67,12 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 492): **LOCAL + UNRELEASED (data only)** - the Axe Orc's atlas regions re-fitted to its
+figures (the user: "the Axe Orc art might be cycling wrong"): the pack sheet's figures are unevenly spaced and the
+fixed-grid regions showed a blank Hit frame, a blank and two garbled Death frames and clipped Attack/Idle frames. One
+file, `sprites/enemy/basic/humanoid/axe_orc.atlas`, same cells and frame counts. The Procedural Pixel Creatures
+session; the peer (#30) verifies and packages when the game closes. Not seen in play.
+
 ## STATE 2026-10-08 (rounds 490-491): **LOCAL + UNRELEASED** - 490: roaming guards help with pillaged towns (the
 "Help with pillaged towns" order beside the color checkboxes, off by default; one guard per pillaged town hunts its
 raiders by rank, watched or simulated; wins count toward the pillage; raiders also spawn while a helping guard is near -

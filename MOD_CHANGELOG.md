@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 492: the Axe Orc's atlas regions follow its figures (2026-10-08)
+
+The user: "I think the Axe Orc art might be cycling wrong". It was: `sprites/enemy/basic/humanoid/axe_orc.atlas` (a
+Pixel Character Pack sheet, round 117) cut its 18x21 regions on a fixed grid while the sheet's figures are not evenly
+spaced, so the second Hit frame was blank (a flash to nothing), the three Death frames were a blank, two half-figures
+side by side and a figure cut in half, and two Attack frames and one Idle frame lost a side. Every region is now
+centered on the figure it shows (the figures found from the sheet's opaque columns, stray dots dropped, a raised axe
+merged with its figure); the second Hit frame, which the sheet never drew, shows the first; the two attack figures
+wider than the cell lose one pixel at each side. Same cells, clip names and frame counts, the page untouched, one file.
+`validate_plane_data.py` unchanged. The fitter is `tools/forge_remake/atlas_fit_regions.py` in the generator repo, for
+the next pack sheet that cycles wrong.
+
 ## Round 491: Esc closes any window that can be closed, one step at a time; the Armory panes take the mouse wheel where the pointer is (2026-10-08)
 
 The user: "Next on nested windows, Like the guard orders. There are multiple 'Back' buttons, but 'Esc' - Escape, only
