@@ -33,16 +33,17 @@ import java.util.Random;
  * (World.computeBarrier's geometry), not the land's current owner: Territory Control repaints ownership every day.</li>
  * <li><b>The treasure</b> lies on a walkable tile, reachable on foot from where the player stood at seeding, well clear of
  * every place. Its map is a 30x30-tile crop of the minimap (3x3 pieces of 10x10); the treasure sits inside the CENTER
- * piece but off its middle, so eight pieces narrow it to that square and only the ninth shows the X.</li>
- * <li><b>One obelisk per region</b>, on a reachable tile in that region. Walking onto it gives a fragment (the next outer
- * piece in this world's order, the center last) and it is gone; a week after it appeared it rises again somewhere else
+ * piece, off its middle. The first piece is that center with the X (round 480, the user); the other eight show the land
+ * around it, so the spot gets easier to recognize with every piece.</li>
+ * <li><b>One obelisk per region</b>, on a reachable tile in that region. Walking onto it gives a fragment (the center
+ * first, then the outer pieces in this world's order) and it is gone; a week after it appeared it rises again elsewhere
  * in the region, found or not - one fragment a region a week. The first fragment also brings the Spade. The maps open
  * from the inventory's Treasure Maps button (the user: "one map button that when clicked, will open a new interface
  * showing the 6 biome maps. Then you click on each of those to see the progress/map itself" - TreasureMapScene).</li>
  * <li><b>Digging</b>: the Spade (5 shards a dig, ItemData.shardsNeeded) digs where the player stands; within DIG_RADIUS
  * (2 tiles) of an unclaimed treasure the region's guardian rises and a duel starts (the user: "dig within a certain
  * radius of the hidden treasure to trigger a find"). With all nine pieces the X shows on the world map and walking onto
- * it offers the dig (the same 5 shards, and it leaves a hole too).</li>
+ * it digs there at once (the same 5 shards and a hole; round 480 dropped the "Dig here?" question).</li>
  * <li><b>Winning</b> pays the guardian's own loot plus the treasure (gold, shards and four rare cards of the region's
  * color) and the hunt is done; a loss leaves the treasure where it is.</li>
  * </ul>
@@ -72,10 +73,10 @@ public final class TreasureHunt {
     public static final int CROP_TILES = PIECE_TILES * 3;
     private static final int OBELISK_DAYS = 7;
     // The user: "The player will need to dig within a certain radius of the hidden treasure to trigger a find" - 2 tiles
-    // (a 5x5 patch): eight pieces narrow the treasure to a 10x10 square, about four guesses at 5 shards a dig.
+    // (a 5x5 patch): the map shows the X from the first piece, so the radius is the slack for placing it on the land.
     public static final int DIG_RADIUS = 2;
     // The user: "Each time the player 'digs' it will cost 5 shards" - the Spade's shardsNeeded in items.json, and the
-    // whole map's Dig at the X (WorldStage.showTreasureDigDialog) charges the same.
+    // whole map's dig on the X (digAtX) charges the same.
     public static final int DIG_SHARDS = 5;
     private static final float TOUCH_RADIUS_TILES = 0.75f;
     private static final int TARGET_POI_CLEARANCE = 8, OBELISK_POI_CLEARANCE = 4, OBELISK_TARGET_CLEARANCE = 8;
@@ -86,7 +87,8 @@ public final class TreasureHunt {
             H_OBX = 7, H_OBY = 8, H_OBDAY = 9, H_OBACTIVE = 10, H_ORDER = 11, H_LENGTH = H_ORDER + 8;
 
     private static int lastProcessedDay = Integer.MIN_VALUE;
-    private static int promptedRegion = -1; // the X the player was last offered a dig on, until they step away
+    private static int promptedRegion = -1; // the X the player last dug on, until they step away
+    private static boolean xArmed = false; // false after a load: an X the player already stands on waits until they step off
 
     public static boolean isEnabled() {
         ConfigData configData = Config.instance().getConfigData();
@@ -97,6 +99,7 @@ public final class TreasureHunt {
     public static void resetSessionState() {
         lastProcessedDay = Integer.MIN_VALUE;
         promptedRegion = -1;
+        xArmed = false;
     }
 
     // ------------------------------------------------------------------------------------------------ the tick
@@ -112,7 +115,9 @@ public final class TreasureHunt {
         if (currentDay != lastProcessedDay) {
             lastProcessedDay = currentDay;
             moveObelisks(world, currentDay);
-            expireHoles(world, currentDay);
+            for (int[] h : world.getTreasureHunts())
+                if (h[H_FOUND] != 0)
+                    clearHoles(world, h[H_REGION]); // a claim's holes are filled at the win; this catches older saves
         }
         checkObelisks(world);
         checkX(world);
@@ -374,8 +379,9 @@ public final class TreasureHunt {
             String message = h[H_FRAGS] >= FRAGMENTS
                     ? "The " + name + " obelisk gives up the last piece of its map - the " + name
                     + " map is whole, and an X marks the spot on your world map."
-                    : "You touch the " + name + " obelisk and a piece of an old map comes away in your hand (" + h[H_FRAGS]
-                    + " of " + FRAGMENTS + ")." + (first ? " An old spade lies at its foot - you take it." : "");
+                    : "You touch the " + name + " obelisk and a piece of an old map comes away in your hand"
+                    + (h[H_FRAGS] == 1 ? ", marked with an X" : "") + " (" + h[H_FRAGS] + " of " + FRAGMENTS + ")."
+                    + (first ? " An old spade lies at its foot - you take it." : "");
             GameHUD.getInstance().addNotification(message);
             System.out.println("[TFR-Treasure] " + name + " obelisk at (" + h[H_OBX] + "," + h[H_OBY] + ") touched - fragment "
                     + h[H_FRAGS] + "/" + FRAGMENTS + (first ? " (the first: the Spade given)" : "")
@@ -383,7 +389,9 @@ public final class TreasureHunt {
         }
     }
 
-    /** With all nine pieces, stepping onto the X offers the dig - free - once until the player steps away. */
+    /** With all nine pieces, stepping onto the X digs there at once - once until the player steps away. Round 480, the
+     * user: "Don't need to ask each time if they want to dig, just have it done and show the dig/hole icon or if you found
+     * it, the battle" (round 478 asked "Dig here?" first). */
     private static void checkX(World world) {
         float[] center = playerCenter();
         if (center == null)
@@ -392,6 +400,13 @@ public final class TreasureHunt {
         for (int[] h : world.getTreasureHunts())
             if (h[H_FOUND] == 0 && h[H_FRAGS] >= FRAGMENTS && touching(world, center, h[H_TX], h[H_TY], TOUCH_RADIUS_TILES))
                 onX = h[H_REGION];
+        if (!xArmed) {
+            // The first check after a load or a new world: a save made standing on an X (after a lost guardian, say)
+            // must not dig and start the fight again on the first step - it waits until the player steps off.
+            xArmed = true;
+            promptedRegion = onX;
+            return;
+        }
         if (onX < 0) {
             promptedRegion = -1;
             return;
@@ -399,7 +414,24 @@ public final class TreasureHunt {
         if (onX == promptedRegion)
             return;
         promptedRegion = onX;
-        WorldStage.getInstance().showTreasureDigDialog(onX, REGION_NAMES[onX]);
+        digAtX(world, hunt(world, onX));
+    }
+
+    /** A dig is a dig: 5 shards and a hole, like the Spade's (ConsoleCommandInterpreter "treasure dig"), then the guardian. */
+    private static void digAtX(World world, int[] h) {
+        int r = h[H_REGION];
+        if (Current.player().getShards() < DIG_SHARDS) {
+            GameHUD.getInstance().addNotification("[BLACK]The " + REGION_NAMES[r] + " map's X is here, but a dig costs "
+                    + DIG_SHARDS + " [WHITE][+Shards][BLACK].", true);
+            System.out.println("[TFR-Treasure] on the " + REGION_NAMES[r] + " X without " + DIG_SHARDS + " shards - no dig");
+            return;
+        }
+        Current.player().takeShards(DIG_SHARDS);
+        WorldStage.getInstance().getPlayerSprite().playEffect(Paths.EFFECT_SPARKS, 0.5f);
+        addHole(world, h[H_TX], h[H_TY]);
+        System.out.println("[TFR-Treasure] dig at (" + h[H_TX] + "," + h[H_TY] + ") - on the " + REGION_NAMES[r] + " X");
+        if (!startGuardian(world, r))
+            Current.player().addShards(DIG_SHARDS);
     }
 
     /** Whether any map has a piece yet (or was claimed) - the HUD and inventory Treasure Maps buttons show from then on. */
@@ -412,21 +444,58 @@ public final class TreasureHunt {
         return false;
     }
 
-    // The user: "Here are some 'Dig' graphics you can use on the overworld" - every dig leaves a hole for HOLE_DAYS, so
-    // the player sees where they have already searched. {tileX, tileY, day, region}, saved with the world.
-    public static final int HOLE_DAYS = 7;
+    // The user: "Here are some 'Dig' graphics you can use on the overworld" - every dig leaves a hole, so the player sees
+    // where they have already searched. Round 480, the user: "The dig spots should remain until that biomes treasure is
+    // found, then they should disappear." {tileX, tileY, day, look, hunt}, saved with the world: look = the region whose
+    // ground the hole wears (where it was dug), hunt = the region whose claimed treasure clears it (digOwner). Round 478's
+    // holes have no hunt field - their look stands in.
     public static final String[] HOLE_REGIONS = {"HoleWaste", "HoleWhite", "HoleBlue", "HoleBlack", "HoleRed", "HoleGreen"};
 
+    /** The hunt a dig at (tx, ty) is for: an unclaimed map whose 30x30 area holds the spot (the nearest treasure when two
+     * overlap), else the region of the land - so a dig across a biome border near a treasure still goes with that map. */
+    public static int digOwner(World world, int tx, int ty) {
+        int best = -1, bestDist = Integer.MAX_VALUE;
+        for (int[] h : world.getTreasureHunts()) {
+            if (h[H_FOUND] != 0 || tx < h[H_CROPX] || tx >= h[H_CROPX] + CROP_TILES || ty < h[H_CROPY]
+                    || ty >= h[H_CROPY] + CROP_TILES)
+                continue;
+            int dist = Math.max(Math.abs(h[H_TX] - tx), Math.abs(h[H_TY] - ty));
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = h[H_REGION];
+            }
+        }
+        return best >= 0 ? best : Math.max(0, regionOf(world, regionCircles(world), tx, ty));
+    }
+
+    public static boolean isClaimed(World world, int r) {
+        int[] h = hunt(world, r);
+        return h != null && h[H_FOUND] != 0;
+    }
+
+    private static int holeHunt(int[] hole) {
+        return hole.length > 4 ? hole[4] : hole[3];
+    }
+
+    /** A dig's hole; none when its hunt is already claimed (it would be gone at once). */
     public static void addHole(World world, int tx, int ty) {
+        int owner = digOwner(world, tx, ty);
+        if (isClaimed(world, owner))
+            return;
         world.getTreasureHoles().removeIf(h -> h[0] == tx && h[1] == ty);
-        int region = regionOf(world, regionCircles(world), tx, ty);
-        world.getTreasureHoles().add(new int[]{tx, ty, world.getCurrentDay(), Math.max(0, region)});
+        int look = Math.max(0, regionOf(world, regionCircles(world), tx, ty));
+        world.getTreasureHoles().add(new int[]{tx, ty, world.getCurrentDay(), look, owner});
         world.bumpTreasureStamp();
     }
 
-    private static void expireHoles(World world, int currentDay) {
-        if (world.getTreasureHoles().removeIf(h -> currentDay >= h[2] + HOLE_DAYS))
+    /** The hunt is claimed: its holes fill in. */
+    private static void clearHoles(World world, int r) {
+        int before = world.getTreasureHoles().size();
+        if (world.getTreasureHoles().removeIf(h -> holeHunt(h) == r)) {
             world.bumpTreasureStamp();
+            System.out.println("[TFR-Treasure] the " + REGION_NAMES[r] + " treasure found - " + (before
+                    - world.getTreasureHoles().size()) + " dig hole(s) filled in");
+        }
     }
 
     /** The X's tile for a whole, unclaimed map - what WorldStage and the map screen mark. */
@@ -450,7 +519,7 @@ public final class TreasureHunt {
 
     /** Raises region r's guardian and starts the duel. False when its enemy is missing (logged). */
     public static boolean startGuardian(World world, int r) {
-        if (MapStage.getInstance().isInMap())
+        if (MapStage.getInstance().isInMap() || isClaimed(world, r))
             return false;
         EnemyData base = WorldData.getEnemy(GUARDIANS[r]);
         if (base == null) {
@@ -498,6 +567,7 @@ public final class TreasureHunt {
         world.bumpTreasureStamp();
         GameHUD.getInstance().addNotification("The " + REGION_NAMES[r] + " treasure is yours!");
         System.out.println("[TFR-Treasure] the " + REGION_NAMES[r] + " guardian beaten - treasure claimed");
+        clearHoles(world, r);
     }
 
     public static void onGuardianLost(int r) {
@@ -508,14 +578,16 @@ public final class TreasureHunt {
 
     // ------------------------------------------------------------------------------------------------ the map picture
 
-    /** How many of the 3x3 pieces show, and which: piece index (row*3+col, row 0 at the top) -> revealed. */
+    /** How many of the 3x3 pieces show, and which: piece index (row*3+col, row 0 at the top) -> revealed. Round 480, the
+     * user: "the first 'clue'/map fragment, should always be the center one with the 'X' on it, then the rest can be
+     * random" - piece 1 is the center with the X, pieces 2-9 the outer ones in this world's order. */
     public static boolean[] revealedPieces(int[] h) {
         boolean[] shown = new boolean[9];
-        int outer = Math.min(8, h[H_FRAGS]);
+        if (h[H_FRAGS] >= 1)
+            shown[4] = true;
+        int outer = Math.min(8, h[H_FRAGS] - 1);
         for (int i = 0; i < outer; i++)
             shown[h[H_ORDER + i]] = true;
-        if (h[H_FRAGS] >= FRAGMENTS)
-            shown[4] = true;
         return shown;
     }
 
@@ -607,11 +679,16 @@ public final class TreasureHunt {
         if (world.getTreasureHunts().isEmpty())
             return "No treasure hunts in this world yet (they seed on the first world-map tick)";
         StringBuilder sb = new StringBuilder();
-        for (int[] h : world.getTreasureHunts())
+        for (int[] h : world.getTreasureHunts()) {
+            int holes = 0;
+            for (int[] hole : world.getTreasureHoles())
+                if (holeHunt(hole) == h[H_REGION])
+                    holes++;
             sb.append(sb.length() == 0 ? "" : " | ").append(REGION_NAMES[h[H_REGION]]).append(": ").append(h[H_FRAGS]).append("/9")
                     .append(h[H_FOUND] != 0 ? " FOUND" : "").append(" treasure (").append(h[H_TX]).append(",").append(h[H_TY])
                     .append(") obelisk ").append(h[H_OBACTIVE] != 0 ? "(" + h[H_OBX] + "," + h[H_OBY] + ")" : "gone")
-                    .append(" until day ").append(h[H_OBDAY] + OBELISK_DAYS);
+                    .append(" until day ").append(h[H_OBDAY] + OBELISK_DAYS).append(", ").append(holes).append(" hole(s)");
+        }
         return sb.toString();
     }
 

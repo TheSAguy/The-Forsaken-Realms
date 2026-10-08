@@ -1029,8 +1029,12 @@ public class ConsoleCommandInterpreter {
             WorldStage stage = WorldStage.getInstance();
             int tx = stage.playerTileX(), ty = stage.playerTileY();
             int region = forge.adventure.util.TreasureHunt.treasureAt(world, tx, ty);
+            int owner = forge.adventure.util.TreasureHunt.digOwner(world, tx, ty);
+            if (region < 0 && forge.adventure.util.TreasureHunt.isClaimed(world, owner)) // round 480: nothing left to find
+                return "Already claimed here" + refundItemInUse("The " + forge.adventure.util.TreasureHunt.REGION_NAMES[owner]
+                        + " treasure is already yours - nothing else lies buried in these lands.");
             stage.player.playEffect(Paths.EFFECT_SPARKS, 0.5f);
-            forge.adventure.util.TreasureHunt.addHole(world, tx, ty); // the user's dig art: a hole left for a week
+            forge.adventure.util.TreasureHunt.addHole(world, tx, ty); // the user's dig art: a hole until its treasure is found
             if (region < 0) {
                 GameHUD.getInstance().addNotification("You dig, and find nothing but dirt and stones.");
                 System.out.println("[TFR-Treasure] dig at (" + tx + "," + ty + ") - nothing");

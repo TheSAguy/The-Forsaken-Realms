@@ -835,7 +835,7 @@ public class World implements Disposable, SaveFileContent {
     // map crop, fragments, found, the region's obelisk). Saved as treasureHunts; treasureVersion 0 = never seeded, so
     // the first world-map tick seeds them - old saves included. The stamp tells WorldStage to rebuild its actors.
     private final List<int[]> treasureHunts = new ArrayList<>();
-    private final List<int[]> treasureHoles = new ArrayList<>(); // {tileX, tileY, day, region} - the Spade's holes
+    private final List<int[]> treasureHoles = new ArrayList<>(); // {tileX, tileY, day, look, hunt} - dig holes (round 480: kept until the hunt's treasure is found)
     private int treasureVersion = 0;
     private int treasureStamp = 0;
 

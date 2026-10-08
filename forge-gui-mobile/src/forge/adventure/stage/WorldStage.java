@@ -613,38 +613,6 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
     }
 
-    /** Round 478: stepping onto a whole map's X offers the dig - free, no Spade needed. */
-    public void showTreasureDigDialog(int region, String regionName) {
-        Dialog dialog = getDialog();
-        dialog.getContentTable().clear();
-        dialog.getButtonTable().clear();
-        dialog.clearListeners();
-        int cost = forge.adventure.util.TreasureHunt.DIG_SHARDS;
-        TypingLabel label = Controls.newTypingLabel("The " + regionName + " map's X marks this very spot. Dig here for "
-                + cost + " [+Shards]? You have " + Current.player().getShards() + ".");
-        label.setWrap(true);
-        label.skipToTheEnd();
-        dialog.getContentTable().add(label).width(250f).row();
-        dialog.getButtonTable().add(Controls.newTextButton("Dig", () -> {
-            hideDialog();
-            // A dig is a dig: 5 shards and a hole, like the Spade's (ConsoleCommandInterpreter "treasure dig").
-            if (Current.player().getShards() < cost) {
-                GameHUD.getInstance().addNotification("[BLACK]Not enough shards to dig (" + cost + " [WHITE][+Shards][BLACK]).", true);
-                return;
-            }
-            Current.player().takeShards(cost);
-            forge.adventure.util.TreasureHunt.addHole(Current.world(), playerTileX(), playerTileY());
-            if (!forge.adventure.util.TreasureHunt.startGuardian(Current.world(), region)) {
-                Current.player().addShards(cost);
-                GameHUD.getInstance().addNotification("Nothing stirs here.");
-            }
-        })).width(120f);
-        dialog.getButtonTable().add(Controls.newTextButton("Not now", this::hideDialog)).width(120f).row();
-        dialog.setKeepWithinStage(true);
-        showDialog();
-        dialog.toFront();
-    }
-
     private final List<Actor> resourceSpawnActors = new ArrayList<>();
 
     // Clear-and-rebuild sync from World's persisted spawn list (<= ResourceSpawns.MAX_SPAWNS

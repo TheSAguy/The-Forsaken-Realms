@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 480 - treasure holes until the treasure is found; the center piece first
+
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `treasure dig` refuses (refund) a dig
+  in claimed lands outside every unclaimed map.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - comment only: a hole is {tileX, tileY, day, look, hunt}.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - round 478's `showTreasureDigDialog()` removed (the X
+  digs at once, `TreasureHunt.digAtX`).
+- Mod-added `util/TreasureHunt.java` (digOwner, clearHoles, no week expiry, center-first `revealedPieces`) and
+  `scene/TreasureMapScene.java` (texts).
+
 ### Round 478 - the lost-treasure hunts (test version)
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - new saved fields `treasureHunts` (List<int[]>),

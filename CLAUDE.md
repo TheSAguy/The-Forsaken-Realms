@@ -67,6 +67,12 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 480): **LOCAL + UNRELEASED** - treasure-hunt tweaks (the user): dig holes stay until their
+hunt's treasure is found, then fill in (`TreasureHunt.digOwner`/`clearHoles`; a dig in claimed lands is refused and
+refunded - my call); the first map piece is the center with the X, the other eight random; walking onto the X digs at
+once (no "Dig here?"); the Spade's atlas region moved into the items.png page (it sat in items_gloves.png and drew
+nothing). (479 = the peer's second pack import.)
+
 ## STATE 2026-10-08 (round 478): **LOCAL + UNRELEASED** - the lost-treasure hunts, a TEST version
 (`util/TreasureHunt.java`, `scene/TreasureMapScene.java`; design `docs/design/2026-10-07-lost-treasure.md`): six
 hunts a world (the Wastes + five colors), one obelisk per region (buildings.png) giving one map piece and moving on

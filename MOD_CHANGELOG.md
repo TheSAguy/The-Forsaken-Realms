@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 480: treasure holes stay until their treasure is found; the first map piece is the center with the X; no "Dig here?"; the Spade's icon (2026-10-08)
+
+Four of the user's calls on round 478's test version:
+
+- **"Don't need to ask each time if they want to dig, just have it done and show the dig/hole icon or if you found it,
+  the battle."** Walking onto a whole map's X digs at once (`TreasureHunt.digAtX`: 5 shards, the hole, the guardian),
+  once until the player steps off; short of shards, a notice says the X is here and what a dig costs.
+  `WorldStage.showTreasureDigDialog` is gone. It also closes a hole the agent test found: the Spade used while that
+  question was open raised the guardian, and the stale question could raise a claimed treasure's guardian again -
+  `startGuardian` now refuses a claimed hunt. A game loaded (or a world begun) with the player standing on an X does
+  not dig on the first step: the first check only notes the X underfoot (`xArmed`), so it waits until the player steps
+  off and back on (the agent test loaded a save made on the Wastes X after a lost guardian and walked straight into the
+  fight again).
+- **The Spade's icon** (the user's screenshot of the ability button: the shard cost and no shovel): round 478 appended
+  the `Spade` region after `DextralGauntlet`, inside the atlas's `items_gloves.png` page (32x16), so 112,720 pointed
+  off that picture - the HUD button, the inventory and every `[+Spade]` glyph drew nothing. It now sits at the end of
+  the `items.png` section (after `CloudKeeperArmor`).
+
+- **"The dig spots should remain until that biomes treasure is found, then they should disappear."** A hole no longer
+  fills in after a week. Each hole records the hunt it belongs to (`TreasureHunt.digOwner`, a fifth field): the
+  unclaimed map whose 30x30 area holds the spot (the nearest treasure when two overlap), else the region of the land -
+  so a dig across a biome border while hunting the Black treasure still clears with the Black map. Beating a guardian
+  fills in its hunt's holes (`[TFR-Treasure] the <Region> treasure found - N dig hole(s) filled in`); a daily sweep
+  catches round-478 saves (their four-field holes count as the land's region). The hole's look still follows the
+  ground where it was dug. `treasure info` lists each hunt's holes.
+- **My call, same rule:** a Spade dig outside every unclaimed map, in lands whose treasure is already found, is refused
+  and its 5 shards handed back ("The <Region> treasure is already yours - nothing else lies buried in these lands") -
+  it could find nothing, and its hole would vanish at once.
+- **"the first 'clue'/map fragment, should always be the center one with the 'X' on it, then the rest can be
+  random."** `revealedPieces`: piece 1 = the center with the X, pieces 2-9 = the eight outer ones in the world's
+  shuffled order (round 478 gave the center last). The X on the overworld and the world map still needs all nine
+  pieces. The first piece's notice says "marked with an X"; the map page for 1-8 pieces: the X marks the treasure,
+  recognize the spot and dig with the Spade, each obelisk adds the land around it. Round-478 saves keep their counts
+  and show the center from piece 1.
+- **Tested in the agent game**: the Red map at 1 piece (the center and its X alone) and at 4; two Spade misses inside
+  the Black map (5 shards each, "2 hole(s)" on the Black hunt); the Wastes guardian beaten - "1 dig hole(s) filled
+  in", 0 left; a Spade dig in claimed Wastes land outside the open maps refused and refunded; the shovel on the HUD
+  ability button; walking onto the Black X dug at once (49 -> 44 shards, the battle, no question); a save made on the
+  Black X loaded, stepped off (no dig), stepped back on (dug, 44 -> 39). Logs clean. A guardian loss seen three times
+  (the X and its hole stay).
+
 ## Round 478: the lost-treasure hunts, a TEST version - obelisks, map pieces, the Spade and the X (2026-10-08)
 
 The design is `docs/design/2026-10-07-lost-treasure.md`. The user: "On this sheet ... there is an 'X' we can use and a

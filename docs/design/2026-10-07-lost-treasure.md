@@ -15,6 +15,8 @@ recommended design. Open decisions for the user are at the end.
 **Round 478 built a test version** with the user's answers (2026-10-07): obelisks from buildings.png, one per biome,
 moving on weekly (one piece a region a week); the Spade on the first obelisk, 5 shards a dig, a find within 2 tiles; a
 Treasure Maps button opening the six maps. What it does and what is still a stand-in: MOD_CHANGELOG "Round 478".
+Round 480 (the user): the first piece is the center with the X, the other eight random; dig holes stay until
+that region's treasure is found.
 
 ## Bottom line
 

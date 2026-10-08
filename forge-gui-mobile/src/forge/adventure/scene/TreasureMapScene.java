@@ -150,14 +150,11 @@ public class TreasureMapScene extends UIScene {
         else if (frags >= TreasureHunt.FRAGMENTS)
             text = "The map is whole. The X marks the spot, and it shows on your world map too: walk onto it and dig ("
                     + cost + ").";
-        else if (frags >= TreasureHunt.FRAGMENTS - 1)
-            text = "Only the middle is missing - the treasure lies somewhere under it. Find that spot on the land and dig"
-                    + " with the Spade (" + cost + " a dig, it finds anything within " + TreasureHunt.DIG_RADIUS
-                    + " tiles), or wait for the last piece.";
-        else if (frags > 0)
-            text = "Each " + name + " obelisk gives one piece of this map, and an obelisk moves on after a week - one piece"
-                    + " a week. The treasure lies under the middle piece. Recognize the land, then dig there with the Spade"
-                    + " (" + cost + " a dig).";
+        else if (frags > 0) // round 480: the first piece is the center, with the X
+            text = "The X marks the treasure. Recognize that spot on the land and dig there with the Spade (" + cost
+                    + " a dig, it finds anything within " + TreasureHunt.DIG_RADIUS + " tiles). Each " + name
+                    + " obelisk adds a piece of the land around it - one a week, as an obelisk moves on after a week - and"
+                    + " with all nine the X shows on your world map too.";
         else
             text = "No pieces yet. Look for the " + name + " obelisk somewhere in the " + name + " lands - it moves on after"
                     + " a week.";

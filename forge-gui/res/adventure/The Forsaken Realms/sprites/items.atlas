@@ -1907,6 +1907,9 @@ InterplanarArmor
 CloudKeeperArmor
   xy: 192, 1056
   size: 16, 16
+Spade
+  xy: 112, 720
+  size: 16, 16
 
 items_rally.png
 size: 16,16
@@ -1927,7 +1930,4 @@ SinistralGauntlet
   size: 16, 16
 DextralGauntlet
   xy: 16, 0
-  size: 16, 16
-Spade
-  xy: 112, 720
   size: 16, 16
