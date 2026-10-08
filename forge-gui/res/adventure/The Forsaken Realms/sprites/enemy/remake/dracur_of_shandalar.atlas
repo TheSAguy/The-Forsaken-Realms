@@ -1,5 +1,5 @@
 dracur_of_shandalar.png
-size: 1040,674
+size: 1040,684
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,244 +8,244 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 80, 61
+  size: 80, 62
 Idle
   xy: 80, 64
-  size: 80, 61
+  size: 80, 62
 Idle
   xy: 160, 64
-  size: 80, 61
+  size: 80, 62
 Idle
   xy: 240, 64
-  size: 80, 61
+  size: 80, 62
 Idle
   xy: 320, 64
-  size: 80, 61
+  size: 80, 62
 Idle
   xy: 400, 64
-  size: 80, 61
+  size: 80, 62
 Idle
   xy: 480, 64
-  size: 80, 61
+  size: 80, 62
 Idle
   xy: 560, 64
-  size: 80, 61
+  size: 80, 62
 Idle
   xy: 640, 64
-  size: 80, 61
+  size: 80, 62
 Idle
   xy: 720, 64
-  size: 80, 61
+  size: 80, 62
 Walk
-  xy: 0, 125
-  size: 80, 61
+  xy: 0, 126
+  size: 80, 62
 Walk
-  xy: 80, 125
-  size: 80, 61
+  xy: 80, 126
+  size: 80, 62
 Walk
-  xy: 160, 125
-  size: 80, 61
+  xy: 160, 126
+  size: 80, 62
 Walk
-  xy: 240, 125
-  size: 80, 61
+  xy: 240, 126
+  size: 80, 62
 Walk
-  xy: 320, 125
-  size: 80, 61
+  xy: 320, 126
+  size: 80, 62
 Walk
-  xy: 400, 125
-  size: 80, 61
+  xy: 400, 126
+  size: 80, 62
 Attack
-  xy: 0, 186
-  size: 80, 61
+  xy: 0, 188
+  size: 80, 62
 Attack
-  xy: 80, 186
-  size: 80, 61
+  xy: 80, 188
+  size: 80, 62
 Attack
-  xy: 160, 186
-  size: 80, 61
+  xy: 160, 188
+  size: 80, 62
 Attack
-  xy: 240, 186
-  size: 80, 61
+  xy: 240, 188
+  size: 80, 62
 Attack
-  xy: 320, 186
-  size: 80, 61
+  xy: 320, 188
+  size: 80, 62
 Attack
-  xy: 400, 186
-  size: 80, 61
+  xy: 400, 188
+  size: 80, 62
 Attack
-  xy: 480, 186
-  size: 80, 61
+  xy: 480, 188
+  size: 80, 62
 Attack
-  xy: 560, 186
-  size: 80, 61
+  xy: 560, 188
+  size: 80, 62
 Hit
-  xy: 0, 247
-  size: 80, 61
+  xy: 0, 250
+  size: 80, 62
 Hit
-  xy: 80, 247
-  size: 80, 61
+  xy: 80, 250
+  size: 80, 62
 Hit
-  xy: 160, 247
-  size: 80, 61
+  xy: 160, 250
+  size: 80, 62
 Hit
-  xy: 240, 247
-  size: 80, 61
+  xy: 240, 250
+  size: 80, 62
 Hit
-  xy: 320, 247
-  size: 80, 61
+  xy: 320, 250
+  size: 80, 62
 Death
-  xy: 0, 308
-  size: 80, 61
+  xy: 0, 312
+  size: 80, 62
 Death
-  xy: 80, 308
-  size: 80, 61
+  xy: 80, 312
+  size: 80, 62
 Death
-  xy: 160, 308
-  size: 80, 61
+  xy: 160, 312
+  size: 80, 62
 Death
-  xy: 240, 308
-  size: 80, 61
+  xy: 240, 312
+  size: 80, 62
 Death
-  xy: 320, 308
-  size: 80, 61
+  xy: 320, 312
+  size: 80, 62
 Death
-  xy: 400, 308
-  size: 80, 61
+  xy: 400, 312
+  size: 80, 62
 Death
-  xy: 480, 308
-  size: 80, 61
+  xy: 480, 312
+  size: 80, 62
 Death
-  xy: 560, 308
-  size: 80, 61
+  xy: 560, 312
+  size: 80, 62
 Death
-  xy: 640, 308
-  size: 80, 61
+  xy: 640, 312
+  size: 80, 62
 Death
-  xy: 720, 308
-  size: 80, 61
+  xy: 720, 312
+  size: 80, 62
 Death
-  xy: 800, 308
-  size: 80, 61
+  xy: 800, 312
+  size: 80, 62
 Death
-  xy: 880, 308
-  size: 80, 61
+  xy: 880, 312
+  size: 80, 62
 Death
-  xy: 960, 308
-  size: 80, 61
+  xy: 960, 312
+  size: 80, 62
 Wake
-  xy: 0, 369
-  size: 80, 61
+  xy: 0, 374
+  size: 80, 62
 Wake
-  xy: 80, 369
-  size: 80, 61
+  xy: 80, 374
+  size: 80, 62
 Wake
-  xy: 160, 369
-  size: 80, 61
+  xy: 160, 374
+  size: 80, 62
 Wake
-  xy: 240, 369
-  size: 80, 61
+  xy: 240, 374
+  size: 80, 62
 Wake
-  xy: 320, 369
-  size: 80, 61
+  xy: 320, 374
+  size: 80, 62
 Wake
-  xy: 400, 369
-  size: 80, 61
+  xy: 400, 374
+  size: 80, 62
 Wake
-  xy: 480, 369
-  size: 80, 61
+  xy: 480, 374
+  size: 80, 62
 IdleUp
-  xy: 0, 430
-  size: 80, 61
+  xy: 0, 436
+  size: 80, 62
 IdleUp
-  xy: 80, 430
-  size: 80, 61
+  xy: 80, 436
+  size: 80, 62
 IdleUp
-  xy: 160, 430
-  size: 80, 61
+  xy: 160, 436
+  size: 80, 62
 IdleUp
-  xy: 240, 430
-  size: 80, 61
+  xy: 240, 436
+  size: 80, 62
 IdleUp
-  xy: 320, 430
-  size: 80, 61
+  xy: 320, 436
+  size: 80, 62
 IdleUp
-  xy: 400, 430
-  size: 80, 61
+  xy: 400, 436
+  size: 80, 62
 IdleUp
-  xy: 480, 430
-  size: 80, 61
+  xy: 480, 436
+  size: 80, 62
 IdleUp
-  xy: 560, 430
-  size: 80, 61
+  xy: 560, 436
+  size: 80, 62
 IdleUp
-  xy: 640, 430
-  size: 80, 61
+  xy: 640, 436
+  size: 80, 62
 IdleUp
-  xy: 720, 430
-  size: 80, 61
+  xy: 720, 436
+  size: 80, 62
 IdleDown
-  xy: 0, 491
-  size: 80, 61
+  xy: 0, 498
+  size: 80, 62
 IdleDown
-  xy: 80, 491
-  size: 80, 61
+  xy: 80, 498
+  size: 80, 62
 IdleDown
-  xy: 160, 491
-  size: 80, 61
+  xy: 160, 498
+  size: 80, 62
 IdleDown
-  xy: 240, 491
-  size: 80, 61
+  xy: 240, 498
+  size: 80, 62
 IdleDown
-  xy: 320, 491
-  size: 80, 61
+  xy: 320, 498
+  size: 80, 62
 IdleDown
-  xy: 400, 491
-  size: 80, 61
+  xy: 400, 498
+  size: 80, 62
 IdleDown
-  xy: 480, 491
-  size: 80, 61
+  xy: 480, 498
+  size: 80, 62
 IdleDown
-  xy: 560, 491
-  size: 80, 61
+  xy: 560, 498
+  size: 80, 62
 IdleDown
-  xy: 640, 491
-  size: 80, 61
+  xy: 640, 498
+  size: 80, 62
 IdleDown
-  xy: 720, 491
-  size: 80, 61
+  xy: 720, 498
+  size: 80, 62
 WalkUp
-  xy: 0, 552
-  size: 80, 61
+  xy: 0, 560
+  size: 80, 62
 WalkUp
-  xy: 80, 552
-  size: 80, 61
+  xy: 80, 560
+  size: 80, 62
 WalkUp
-  xy: 160, 552
-  size: 80, 61
+  xy: 160, 560
+  size: 80, 62
 WalkUp
-  xy: 240, 552
-  size: 80, 61
+  xy: 240, 560
+  size: 80, 62
 WalkUp
-  xy: 320, 552
-  size: 80, 61
+  xy: 320, 560
+  size: 80, 62
 WalkUp
-  xy: 400, 552
-  size: 80, 61
+  xy: 400, 560
+  size: 80, 62
 WalkDown
-  xy: 0, 613
-  size: 80, 61
+  xy: 0, 622
+  size: 80, 62
 WalkDown
-  xy: 80, 613
-  size: 80, 61
+  xy: 80, 622
+  size: 80, 62
 WalkDown
-  xy: 160, 613
-  size: 80, 61
+  xy: 160, 622
+  size: 80, 62
 WalkDown
-  xy: 240, 613
-  size: 80, 61
+  xy: 240, 622
+  size: 80, 62
 WalkDown
-  xy: 320, 613
-  size: 80, 61
+  xy: 320, 622
+  size: 80, 62
 WalkDown
-  xy: 400, 613
-  size: 80, 61
+  xy: 400, 622
+  size: 80, 62

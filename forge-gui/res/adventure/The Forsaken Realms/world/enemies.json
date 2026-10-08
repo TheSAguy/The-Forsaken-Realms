@@ -4821,7 +4821,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.2321,
+        "scale": 0.2364,
         "life": 18,
         "rewards": [
             {
@@ -12608,7 +12608,7 @@
             "BiomeBlack"
         ],
         "tier": "Uncommon",
-        "scale": 0.3023
+        "scale": 0.2955
     },
     {
         "name": "Froghemoth",
@@ -16729,7 +16729,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.2364,
+        "scale": 0.2321,
         "life": 20,
         "rewards": [
             {
@@ -19946,7 +19946,7 @@
         "spawnRate": 0.8,
         "difficulty": 1,
         "speed": 29,
-        "scale": 0.3023,
+        "scale": 0.2889,
         "life": 21,
         "rewards": [
             {
@@ -22677,7 +22677,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 14,
-        "scale": 0.2364,
+        "scale": 0.2407,
         "life": 19,
         "rewards": [
             {
@@ -28944,7 +28944,7 @@
             "BiomeGreen"
         ],
         "tier": "Rare",
-        "scale": 0.2321
+        "scale": 0.2364
     },
     {
         "name": "Spiked Ravager",
@@ -36624,7 +36624,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2407,
+        "scale": 0.2364,
         "life": 50,
         "rewards": [
             {
@@ -39993,7 +39993,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2407,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -42991,7 +42991,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.2321,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -58022,7 +58022,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.194,
+        "scale": 0.1912,
         "life": 50,
         "rewards": [
             {
@@ -65139,7 +65139,7 @@
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 0.2889,
+        "scale": 0.2955,
         "life": 60,
         "rewards": [
             {
@@ -68071,7 +68071,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.2364,
+        "scale": 0.2321,
         "life": 39,
         "rewards": [
             {
@@ -70510,7 +70510,7 @@
         ],
         "ai": "",
         "speed": 30,
-        "scale": 0.2955,
+        "scale": 0.2889,
         "life": 17,
         "rewards": [
             {
@@ -72829,7 +72829,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.2955
+        "scale": 0.3023
     },
     {
         "name": "Gornog",
@@ -76499,7 +76499,7 @@
             "decks/legends/zask.dck"
         ],
         "ai": "",
-        "scale": 0.2955,
+        "scale": 0.2889,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -76852,7 +76852,7 @@
             "decks/legends/shiko.dck"
         ],
         "ai": "",
-        "scale": 0.2889,
+        "scale": 0.2826,
         "flying": true,
         "speed": 34,
         "life": 20,
@@ -78501,7 +78501,7 @@
             "decks/legends/kalamax.dck"
         ],
         "ai": "",
-        "scale": 0.2321,
+        "scale": 0.2281,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -78570,7 +78570,7 @@
         ],
         "ai": "",
         "flying": true,
-        "scale": 0.2364,
+        "scale": 0.2321,
         "speed": 44,
         "life": 20,
         "rewards": [
@@ -88034,7 +88034,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.2653
+        "scale": 0.2364
     },
     {
         "name": "Averna",
@@ -92963,7 +92963,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.3023
+        "scale": 0.2826
     },
     {
         "name": "Ragost",
@@ -129106,7 +129106,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.3514
+        "scale": 0.3421
     },
     {
         "name": "Dainty Pig",

@@ -1,5 +1,5 @@
 ladybug.png
-size: 980,574
+size: 1008,604
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,241 +8,241 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 70, 51
+  size: 72, 54
 Idle
-  xy: 70, 64
-  size: 70, 51
+  xy: 72, 64
+  size: 72, 54
 Idle
-  xy: 140, 64
-  size: 70, 51
+  xy: 144, 64
+  size: 72, 54
 Idle
-  xy: 210, 64
-  size: 70, 51
+  xy: 216, 64
+  size: 72, 54
 Idle
-  xy: 280, 64
-  size: 70, 51
+  xy: 288, 64
+  size: 72, 54
 Idle
-  xy: 350, 64
-  size: 70, 51
+  xy: 360, 64
+  size: 72, 54
 Idle
-  xy: 420, 64
-  size: 70, 51
+  xy: 432, 64
+  size: 72, 54
 Idle
-  xy: 490, 64
-  size: 70, 51
+  xy: 504, 64
+  size: 72, 54
 Idle
-  xy: 560, 64
-  size: 70, 51
+  xy: 576, 64
+  size: 72, 54
 Idle
-  xy: 630, 64
-  size: 70, 51
+  xy: 648, 64
+  size: 72, 54
 Walk
-  xy: 0, 115
-  size: 70, 51
+  xy: 0, 118
+  size: 72, 54
 Walk
-  xy: 70, 115
-  size: 70, 51
+  xy: 72, 118
+  size: 72, 54
 Walk
-  xy: 140, 115
-  size: 70, 51
+  xy: 144, 118
+  size: 72, 54
 Walk
-  xy: 210, 115
-  size: 70, 51
+  xy: 216, 118
+  size: 72, 54
 Walk
-  xy: 280, 115
-  size: 70, 51
+  xy: 288, 118
+  size: 72, 54
 Walk
-  xy: 350, 115
-  size: 70, 51
+  xy: 360, 118
+  size: 72, 54
 Attack
-  xy: 0, 166
-  size: 70, 51
+  xy: 0, 172
+  size: 72, 54
 Attack
-  xy: 70, 166
-  size: 70, 51
+  xy: 72, 172
+  size: 72, 54
 Attack
-  xy: 140, 166
-  size: 70, 51
+  xy: 144, 172
+  size: 72, 54
 Attack
-  xy: 210, 166
-  size: 70, 51
+  xy: 216, 172
+  size: 72, 54
 Attack
-  xy: 280, 166
-  size: 70, 51
+  xy: 288, 172
+  size: 72, 54
 Attack
-  xy: 350, 166
-  size: 70, 51
+  xy: 360, 172
+  size: 72, 54
 Hit
-  xy: 0, 217
-  size: 70, 51
+  xy: 0, 226
+  size: 72, 54
 Hit
-  xy: 70, 217
-  size: 70, 51
+  xy: 72, 226
+  size: 72, 54
 Hit
-  xy: 140, 217
-  size: 70, 51
+  xy: 144, 226
+  size: 72, 54
 Hit
-  xy: 210, 217
-  size: 70, 51
+  xy: 216, 226
+  size: 72, 54
 Hit
-  xy: 280, 217
-  size: 70, 51
+  xy: 288, 226
+  size: 72, 54
 Death
-  xy: 0, 268
-  size: 70, 51
+  xy: 0, 280
+  size: 72, 54
 Death
-  xy: 70, 268
-  size: 70, 51
+  xy: 72, 280
+  size: 72, 54
 Death
-  xy: 140, 268
-  size: 70, 51
+  xy: 144, 280
+  size: 72, 54
 Death
-  xy: 210, 268
-  size: 70, 51
+  xy: 216, 280
+  size: 72, 54
 Death
-  xy: 280, 268
-  size: 70, 51
+  xy: 288, 280
+  size: 72, 54
 Death
-  xy: 350, 268
-  size: 70, 51
+  xy: 360, 280
+  size: 72, 54
 Death
-  xy: 420, 268
-  size: 70, 51
+  xy: 432, 280
+  size: 72, 54
 Death
-  xy: 490, 268
-  size: 70, 51
+  xy: 504, 280
+  size: 72, 54
 Death
-  xy: 560, 268
-  size: 70, 51
+  xy: 576, 280
+  size: 72, 54
 Death
-  xy: 630, 268
-  size: 70, 51
+  xy: 648, 280
+  size: 72, 54
 Death
-  xy: 700, 268
-  size: 70, 51
+  xy: 720, 280
+  size: 72, 54
 Death
-  xy: 770, 268
-  size: 70, 51
+  xy: 792, 280
+  size: 72, 54
 Death
-  xy: 840, 268
-  size: 70, 51
+  xy: 864, 280
+  size: 72, 54
 Death
-  xy: 910, 268
-  size: 70, 51
+  xy: 936, 280
+  size: 72, 54
 Wake
-  xy: 0, 319
-  size: 70, 51
+  xy: 0, 334
+  size: 72, 54
 Wake
-  xy: 70, 319
-  size: 70, 51
+  xy: 72, 334
+  size: 72, 54
 Wake
-  xy: 140, 319
-  size: 70, 51
+  xy: 144, 334
+  size: 72, 54
 Wake
-  xy: 210, 319
-  size: 70, 51
+  xy: 216, 334
+  size: 72, 54
 Wake
-  xy: 280, 319
-  size: 70, 51
+  xy: 288, 334
+  size: 72, 54
 Wake
-  xy: 350, 319
-  size: 70, 51
+  xy: 360, 334
+  size: 72, 54
 Wake
-  xy: 420, 319
-  size: 70, 51
+  xy: 432, 334
+  size: 72, 54
 IdleUp
-  xy: 0, 370
-  size: 70, 51
+  xy: 0, 388
+  size: 72, 54
 IdleUp
-  xy: 70, 370
-  size: 70, 51
+  xy: 72, 388
+  size: 72, 54
 IdleUp
-  xy: 140, 370
-  size: 70, 51
+  xy: 144, 388
+  size: 72, 54
 IdleUp
-  xy: 210, 370
-  size: 70, 51
+  xy: 216, 388
+  size: 72, 54
 IdleUp
-  xy: 280, 370
-  size: 70, 51
+  xy: 288, 388
+  size: 72, 54
 IdleUp
-  xy: 350, 370
-  size: 70, 51
+  xy: 360, 388
+  size: 72, 54
 IdleUp
-  xy: 420, 370
-  size: 70, 51
+  xy: 432, 388
+  size: 72, 54
 IdleUp
-  xy: 490, 370
-  size: 70, 51
+  xy: 504, 388
+  size: 72, 54
 IdleUp
-  xy: 560, 370
-  size: 70, 51
+  xy: 576, 388
+  size: 72, 54
 IdleUp
-  xy: 630, 370
-  size: 70, 51
+  xy: 648, 388
+  size: 72, 54
 IdleDown
-  xy: 0, 421
-  size: 70, 51
+  xy: 0, 442
+  size: 72, 54
 IdleDown
-  xy: 70, 421
-  size: 70, 51
+  xy: 72, 442
+  size: 72, 54
 IdleDown
-  xy: 140, 421
-  size: 70, 51
+  xy: 144, 442
+  size: 72, 54
 IdleDown
-  xy: 210, 421
-  size: 70, 51
+  xy: 216, 442
+  size: 72, 54
 IdleDown
-  xy: 280, 421
-  size: 70, 51
+  xy: 288, 442
+  size: 72, 54
 IdleDown
-  xy: 350, 421
-  size: 70, 51
+  xy: 360, 442
+  size: 72, 54
 IdleDown
-  xy: 420, 421
-  size: 70, 51
+  xy: 432, 442
+  size: 72, 54
 IdleDown
-  xy: 490, 421
-  size: 70, 51
+  xy: 504, 442
+  size: 72, 54
 IdleDown
-  xy: 560, 421
-  size: 70, 51
+  xy: 576, 442
+  size: 72, 54
 IdleDown
-  xy: 630, 421
-  size: 70, 51
+  xy: 648, 442
+  size: 72, 54
 WalkUp
-  xy: 0, 472
-  size: 70, 51
+  xy: 0, 496
+  size: 72, 54
 WalkUp
-  xy: 70, 472
-  size: 70, 51
+  xy: 72, 496
+  size: 72, 54
 WalkUp
-  xy: 140, 472
-  size: 70, 51
+  xy: 144, 496
+  size: 72, 54
 WalkUp
-  xy: 210, 472
-  size: 70, 51
+  xy: 216, 496
+  size: 72, 54
 WalkUp
-  xy: 280, 472
-  size: 70, 51
+  xy: 288, 496
+  size: 72, 54
 WalkUp
-  xy: 350, 472
-  size: 70, 51
+  xy: 360, 496
+  size: 72, 54
 WalkDown
-  xy: 0, 523
-  size: 70, 51
+  xy: 0, 550
+  size: 72, 54
 WalkDown
-  xy: 70, 523
-  size: 70, 51
+  xy: 72, 550
+  size: 72, 54
 WalkDown
-  xy: 140, 523
-  size: 70, 51
+  xy: 144, 550
+  size: 72, 54
 WalkDown
-  xy: 210, 523
-  size: 70, 51
+  xy: 216, 550
+  size: 72, 54
 WalkDown
-  xy: 280, 523
-  size: 70, 51
+  xy: 288, 550
+  size: 72, 54
 WalkDown
-  xy: 350, 523
-  size: 70, 51
+  xy: 360, 550
+  size: 72, 54

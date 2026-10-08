@@ -1,5 +1,5 @@
 intet.png
-size: 1952,1024
+size: 1952,1034
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,268 +8,268 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 122, 96
+  size: 122, 97
 Idle
   xy: 122, 64
-  size: 122, 96
+  size: 122, 97
 Idle
   xy: 244, 64
-  size: 122, 96
+  size: 122, 97
 Idle
   xy: 366, 64
-  size: 122, 96
+  size: 122, 97
 Idle
   xy: 488, 64
-  size: 122, 96
+  size: 122, 97
 Idle
   xy: 610, 64
-  size: 122, 96
+  size: 122, 97
 Idle
   xy: 732, 64
-  size: 122, 96
+  size: 122, 97
 Idle
   xy: 854, 64
-  size: 122, 96
+  size: 122, 97
 Idle
   xy: 976, 64
-  size: 122, 96
+  size: 122, 97
 Idle
   xy: 1098, 64
-  size: 122, 96
+  size: 122, 97
 Walk
-  xy: 0, 160
-  size: 122, 96
+  xy: 0, 161
+  size: 122, 97
 Walk
-  xy: 122, 160
-  size: 122, 96
+  xy: 122, 161
+  size: 122, 97
 Walk
-  xy: 244, 160
-  size: 122, 96
+  xy: 244, 161
+  size: 122, 97
 Walk
-  xy: 366, 160
-  size: 122, 96
+  xy: 366, 161
+  size: 122, 97
 Walk
-  xy: 488, 160
-  size: 122, 96
+  xy: 488, 161
+  size: 122, 97
 Walk
-  xy: 610, 160
-  size: 122, 96
+  xy: 610, 161
+  size: 122, 97
 Attack
-  xy: 0, 256
-  size: 122, 96
+  xy: 0, 258
+  size: 122, 97
 Attack
-  xy: 122, 256
-  size: 122, 96
+  xy: 122, 258
+  size: 122, 97
 Attack
-  xy: 244, 256
-  size: 122, 96
+  xy: 244, 258
+  size: 122, 97
 Attack
-  xy: 366, 256
-  size: 122, 96
+  xy: 366, 258
+  size: 122, 97
 Attack
-  xy: 488, 256
-  size: 122, 96
+  xy: 488, 258
+  size: 122, 97
 Attack
-  xy: 610, 256
-  size: 122, 96
+  xy: 610, 258
+  size: 122, 97
 Attack
-  xy: 732, 256
-  size: 122, 96
+  xy: 732, 258
+  size: 122, 97
 Attack
-  xy: 854, 256
-  size: 122, 96
+  xy: 854, 258
+  size: 122, 97
 Attack
-  xy: 976, 256
-  size: 122, 96
+  xy: 976, 258
+  size: 122, 97
 Attack
-  xy: 1098, 256
-  size: 122, 96
+  xy: 1098, 258
+  size: 122, 97
 Attack
-  xy: 1220, 256
-  size: 122, 96
+  xy: 1220, 258
+  size: 122, 97
 Hit
-  xy: 0, 352
-  size: 122, 96
+  xy: 0, 355
+  size: 122, 97
 Hit
-  xy: 122, 352
-  size: 122, 96
+  xy: 122, 355
+  size: 122, 97
 Hit
-  xy: 244, 352
-  size: 122, 96
+  xy: 244, 355
+  size: 122, 97
 Hit
-  xy: 366, 352
-  size: 122, 96
+  xy: 366, 355
+  size: 122, 97
 Hit
-  xy: 488, 352
-  size: 122, 96
+  xy: 488, 355
+  size: 122, 97
 Hit
-  xy: 610, 352
-  size: 122, 96
+  xy: 610, 355
+  size: 122, 97
 Death
-  xy: 0, 448
-  size: 122, 96
+  xy: 0, 452
+  size: 122, 97
 Death
-  xy: 122, 448
-  size: 122, 96
+  xy: 122, 452
+  size: 122, 97
 Death
-  xy: 244, 448
-  size: 122, 96
+  xy: 244, 452
+  size: 122, 97
 Death
-  xy: 366, 448
-  size: 122, 96
+  xy: 366, 452
+  size: 122, 97
 Death
-  xy: 488, 448
-  size: 122, 96
+  xy: 488, 452
+  size: 122, 97
 Death
-  xy: 610, 448
-  size: 122, 96
+  xy: 610, 452
+  size: 122, 97
 Death
-  xy: 732, 448
-  size: 122, 96
+  xy: 732, 452
+  size: 122, 97
 Death
-  xy: 854, 448
-  size: 122, 96
+  xy: 854, 452
+  size: 122, 97
 Death
-  xy: 976, 448
-  size: 122, 96
+  xy: 976, 452
+  size: 122, 97
 Death
-  xy: 1098, 448
-  size: 122, 96
+  xy: 1098, 452
+  size: 122, 97
 Death
-  xy: 1220, 448
-  size: 122, 96
+  xy: 1220, 452
+  size: 122, 97
 Death
-  xy: 1342, 448
-  size: 122, 96
+  xy: 1342, 452
+  size: 122, 97
 Death
-  xy: 1464, 448
-  size: 122, 96
+  xy: 1464, 452
+  size: 122, 97
 Death
-  xy: 1586, 448
-  size: 122, 96
+  xy: 1586, 452
+  size: 122, 97
 Death
-  xy: 1708, 448
-  size: 122, 96
+  xy: 1708, 452
+  size: 122, 97
 Death
-  xy: 1830, 448
-  size: 122, 96
+  xy: 1830, 452
+  size: 122, 97
 Wake
-  xy: 0, 544
-  size: 122, 96
+  xy: 0, 549
+  size: 122, 97
 Wake
-  xy: 122, 544
-  size: 122, 96
+  xy: 122, 549
+  size: 122, 97
 Wake
-  xy: 244, 544
-  size: 122, 96
+  xy: 244, 549
+  size: 122, 97
 Wake
-  xy: 366, 544
-  size: 122, 96
+  xy: 366, 549
+  size: 122, 97
 Wake
-  xy: 488, 544
-  size: 122, 96
+  xy: 488, 549
+  size: 122, 97
 Wake
-  xy: 610, 544
-  size: 122, 96
+  xy: 610, 549
+  size: 122, 97
 Wake
-  xy: 732, 544
-  size: 122, 96
+  xy: 732, 549
+  size: 122, 97
 Wake
-  xy: 854, 544
-  size: 122, 96
+  xy: 854, 549
+  size: 122, 97
 IdleUp
-  xy: 0, 640
-  size: 122, 96
+  xy: 0, 646
+  size: 122, 97
 IdleUp
-  xy: 122, 640
-  size: 122, 96
+  xy: 122, 646
+  size: 122, 97
 IdleUp
-  xy: 244, 640
-  size: 122, 96
+  xy: 244, 646
+  size: 122, 97
 IdleUp
-  xy: 366, 640
-  size: 122, 96
+  xy: 366, 646
+  size: 122, 97
 IdleUp
-  xy: 488, 640
-  size: 122, 96
+  xy: 488, 646
+  size: 122, 97
 IdleUp
-  xy: 610, 640
-  size: 122, 96
+  xy: 610, 646
+  size: 122, 97
 IdleUp
-  xy: 732, 640
-  size: 122, 96
+  xy: 732, 646
+  size: 122, 97
 IdleUp
-  xy: 854, 640
-  size: 122, 96
+  xy: 854, 646
+  size: 122, 97
 IdleUp
-  xy: 976, 640
-  size: 122, 96
+  xy: 976, 646
+  size: 122, 97
 IdleUp
-  xy: 1098, 640
-  size: 122, 96
+  xy: 1098, 646
+  size: 122, 97
 IdleDown
-  xy: 0, 736
-  size: 122, 96
+  xy: 0, 743
+  size: 122, 97
 IdleDown
-  xy: 122, 736
-  size: 122, 96
+  xy: 122, 743
+  size: 122, 97
 IdleDown
-  xy: 244, 736
-  size: 122, 96
+  xy: 244, 743
+  size: 122, 97
 IdleDown
-  xy: 366, 736
-  size: 122, 96
+  xy: 366, 743
+  size: 122, 97
 IdleDown
-  xy: 488, 736
-  size: 122, 96
+  xy: 488, 743
+  size: 122, 97
 IdleDown
-  xy: 610, 736
-  size: 122, 96
+  xy: 610, 743
+  size: 122, 97
 IdleDown
-  xy: 732, 736
-  size: 122, 96
+  xy: 732, 743
+  size: 122, 97
 IdleDown
-  xy: 854, 736
-  size: 122, 96
+  xy: 854, 743
+  size: 122, 97
 IdleDown
-  xy: 976, 736
-  size: 122, 96
+  xy: 976, 743
+  size: 122, 97
 IdleDown
-  xy: 1098, 736
-  size: 122, 96
+  xy: 1098, 743
+  size: 122, 97
 WalkUp
-  xy: 0, 832
-  size: 122, 96
+  xy: 0, 840
+  size: 122, 97
 WalkUp
-  xy: 122, 832
-  size: 122, 96
+  xy: 122, 840
+  size: 122, 97
 WalkUp
-  xy: 244, 832
-  size: 122, 96
+  xy: 244, 840
+  size: 122, 97
 WalkUp
-  xy: 366, 832
-  size: 122, 96
+  xy: 366, 840
+  size: 122, 97
 WalkUp
-  xy: 488, 832
-  size: 122, 96
+  xy: 488, 840
+  size: 122, 97
 WalkUp
-  xy: 610, 832
-  size: 122, 96
+  xy: 610, 840
+  size: 122, 97
 WalkDown
-  xy: 0, 928
-  size: 122, 96
+  xy: 0, 937
+  size: 122, 97
 WalkDown
-  xy: 122, 928
-  size: 122, 96
+  xy: 122, 937
+  size: 122, 97
 WalkDown
-  xy: 244, 928
-  size: 122, 96
+  xy: 244, 937
+  size: 122, 97
 WalkDown
-  xy: 366, 928
-  size: 122, 96
+  xy: 366, 937
+  size: 122, 97
 WalkDown
-  xy: 488, 928
-  size: 122, 96
+  xy: 488, 937
+  size: 122, 97
 WalkDown
-  xy: 610, 928
-  size: 122, 96
+  xy: 610, 937
+  size: 122, 97

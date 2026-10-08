@@ -1,5 +1,5 @@
 grismold.png
-size: 1792,814
+size: 1792,824
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,244 +8,244 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 128, 75
+  size: 128, 76
 Idle
   xy: 128, 64
-  size: 128, 75
+  size: 128, 76
 Idle
   xy: 256, 64
-  size: 128, 75
+  size: 128, 76
 Idle
   xy: 384, 64
-  size: 128, 75
+  size: 128, 76
 Idle
   xy: 512, 64
-  size: 128, 75
+  size: 128, 76
 Idle
   xy: 640, 64
-  size: 128, 75
+  size: 128, 76
 Idle
   xy: 768, 64
-  size: 128, 75
+  size: 128, 76
 Idle
   xy: 896, 64
-  size: 128, 75
+  size: 128, 76
 Idle
   xy: 1024, 64
-  size: 128, 75
+  size: 128, 76
 Idle
   xy: 1152, 64
-  size: 128, 75
+  size: 128, 76
 Walk
-  xy: 0, 139
-  size: 128, 75
+  xy: 0, 140
+  size: 128, 76
 Walk
-  xy: 128, 139
-  size: 128, 75
+  xy: 128, 140
+  size: 128, 76
 Walk
-  xy: 256, 139
-  size: 128, 75
+  xy: 256, 140
+  size: 128, 76
 Walk
-  xy: 384, 139
-  size: 128, 75
+  xy: 384, 140
+  size: 128, 76
 Walk
-  xy: 512, 139
-  size: 128, 75
+  xy: 512, 140
+  size: 128, 76
 Walk
-  xy: 640, 139
-  size: 128, 75
+  xy: 640, 140
+  size: 128, 76
 Attack
-  xy: 0, 214
-  size: 128, 75
+  xy: 0, 216
+  size: 128, 76
 Attack
-  xy: 128, 214
-  size: 128, 75
+  xy: 128, 216
+  size: 128, 76
 Attack
-  xy: 256, 214
-  size: 128, 75
+  xy: 256, 216
+  size: 128, 76
 Attack
-  xy: 384, 214
-  size: 128, 75
+  xy: 384, 216
+  size: 128, 76
 Attack
-  xy: 512, 214
-  size: 128, 75
+  xy: 512, 216
+  size: 128, 76
 Attack
-  xy: 640, 214
-  size: 128, 75
+  xy: 640, 216
+  size: 128, 76
 Attack
-  xy: 768, 214
-  size: 128, 75
+  xy: 768, 216
+  size: 128, 76
 Hit
-  xy: 0, 289
-  size: 128, 75
+  xy: 0, 292
+  size: 128, 76
 Hit
-  xy: 128, 289
-  size: 128, 75
+  xy: 128, 292
+  size: 128, 76
 Hit
-  xy: 256, 289
-  size: 128, 75
+  xy: 256, 292
+  size: 128, 76
 Hit
-  xy: 384, 289
-  size: 128, 75
+  xy: 384, 292
+  size: 128, 76
 Hit
-  xy: 512, 289
-  size: 128, 75
+  xy: 512, 292
+  size: 128, 76
 Death
-  xy: 0, 364
-  size: 128, 75
+  xy: 0, 368
+  size: 128, 76
 Death
-  xy: 128, 364
-  size: 128, 75
+  xy: 128, 368
+  size: 128, 76
 Death
-  xy: 256, 364
-  size: 128, 75
+  xy: 256, 368
+  size: 128, 76
 Death
-  xy: 384, 364
-  size: 128, 75
+  xy: 384, 368
+  size: 128, 76
 Death
-  xy: 512, 364
-  size: 128, 75
+  xy: 512, 368
+  size: 128, 76
 Death
-  xy: 640, 364
-  size: 128, 75
+  xy: 640, 368
+  size: 128, 76
 Death
-  xy: 768, 364
-  size: 128, 75
+  xy: 768, 368
+  size: 128, 76
 Death
-  xy: 896, 364
-  size: 128, 75
+  xy: 896, 368
+  size: 128, 76
 Death
-  xy: 1024, 364
-  size: 128, 75
+  xy: 1024, 368
+  size: 128, 76
 Death
-  xy: 1152, 364
-  size: 128, 75
+  xy: 1152, 368
+  size: 128, 76
 Death
-  xy: 1280, 364
-  size: 128, 75
+  xy: 1280, 368
+  size: 128, 76
 Death
-  xy: 1408, 364
-  size: 128, 75
+  xy: 1408, 368
+  size: 128, 76
 Death
-  xy: 1536, 364
-  size: 128, 75
+  xy: 1536, 368
+  size: 128, 76
 Death
-  xy: 1664, 364
-  size: 128, 75
+  xy: 1664, 368
+  size: 128, 76
 Wake
-  xy: 0, 439
-  size: 128, 75
+  xy: 0, 444
+  size: 128, 76
 Wake
-  xy: 128, 439
-  size: 128, 75
+  xy: 128, 444
+  size: 128, 76
 Wake
-  xy: 256, 439
-  size: 128, 75
+  xy: 256, 444
+  size: 128, 76
 Wake
-  xy: 384, 439
-  size: 128, 75
+  xy: 384, 444
+  size: 128, 76
 Wake
-  xy: 512, 439
-  size: 128, 75
+  xy: 512, 444
+  size: 128, 76
 Wake
-  xy: 640, 439
-  size: 128, 75
+  xy: 640, 444
+  size: 128, 76
 Wake
-  xy: 768, 439
-  size: 128, 75
+  xy: 768, 444
+  size: 128, 76
 IdleUp
-  xy: 0, 514
-  size: 128, 75
+  xy: 0, 520
+  size: 128, 76
 IdleUp
-  xy: 128, 514
-  size: 128, 75
+  xy: 128, 520
+  size: 128, 76
 IdleUp
-  xy: 256, 514
-  size: 128, 75
+  xy: 256, 520
+  size: 128, 76
 IdleUp
-  xy: 384, 514
-  size: 128, 75
+  xy: 384, 520
+  size: 128, 76
 IdleUp
-  xy: 512, 514
-  size: 128, 75
+  xy: 512, 520
+  size: 128, 76
 IdleUp
-  xy: 640, 514
-  size: 128, 75
+  xy: 640, 520
+  size: 128, 76
 IdleUp
-  xy: 768, 514
-  size: 128, 75
+  xy: 768, 520
+  size: 128, 76
 IdleUp
-  xy: 896, 514
-  size: 128, 75
+  xy: 896, 520
+  size: 128, 76
 IdleUp
-  xy: 1024, 514
-  size: 128, 75
+  xy: 1024, 520
+  size: 128, 76
 IdleUp
-  xy: 1152, 514
-  size: 128, 75
+  xy: 1152, 520
+  size: 128, 76
 IdleDown
-  xy: 0, 589
-  size: 128, 75
+  xy: 0, 596
+  size: 128, 76
 IdleDown
-  xy: 128, 589
-  size: 128, 75
+  xy: 128, 596
+  size: 128, 76
 IdleDown
-  xy: 256, 589
-  size: 128, 75
+  xy: 256, 596
+  size: 128, 76
 IdleDown
-  xy: 384, 589
-  size: 128, 75
+  xy: 384, 596
+  size: 128, 76
 IdleDown
-  xy: 512, 589
-  size: 128, 75
+  xy: 512, 596
+  size: 128, 76
 IdleDown
-  xy: 640, 589
-  size: 128, 75
+  xy: 640, 596
+  size: 128, 76
 IdleDown
-  xy: 768, 589
-  size: 128, 75
+  xy: 768, 596
+  size: 128, 76
 IdleDown
-  xy: 896, 589
-  size: 128, 75
+  xy: 896, 596
+  size: 128, 76
 IdleDown
-  xy: 1024, 589
-  size: 128, 75
+  xy: 1024, 596
+  size: 128, 76
 IdleDown
-  xy: 1152, 589
-  size: 128, 75
+  xy: 1152, 596
+  size: 128, 76
 WalkUp
-  xy: 0, 664
-  size: 128, 75
+  xy: 0, 672
+  size: 128, 76
 WalkUp
-  xy: 128, 664
-  size: 128, 75
+  xy: 128, 672
+  size: 128, 76
 WalkUp
-  xy: 256, 664
-  size: 128, 75
+  xy: 256, 672
+  size: 128, 76
 WalkUp
-  xy: 384, 664
-  size: 128, 75
+  xy: 384, 672
+  size: 128, 76
 WalkUp
-  xy: 512, 664
-  size: 128, 75
+  xy: 512, 672
+  size: 128, 76
 WalkUp
-  xy: 640, 664
-  size: 128, 75
+  xy: 640, 672
+  size: 128, 76
 WalkDown
-  xy: 0, 739
-  size: 128, 75
+  xy: 0, 748
+  size: 128, 76
 WalkDown
-  xy: 128, 739
-  size: 128, 75
+  xy: 128, 748
+  size: 128, 76
 WalkDown
-  xy: 256, 739
-  size: 128, 75
+  xy: 256, 748
+  size: 128, 76
 WalkDown
-  xy: 384, 739
-  size: 128, 75
+  xy: 384, 748
+  size: 128, 76
 WalkDown
-  xy: 512, 739
-  size: 128, 75
+  xy: 512, 748
+  size: 128, 76
 WalkDown
-  xy: 640, 739
-  size: 128, 75
+  xy: 640, 748
+  size: 128, 76

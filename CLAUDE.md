@@ -67,6 +67,14 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-07 (round 473): **LOCAL + UNRELEASED (data only)** - the remakes' recipe pass (the Procedural Pixel
+Creatures session, on the user's go): all 432 generated remakes re-exported from their exact genomes with eyes one
+notch bigger, leather wraps + a buckle + a bound, banded, studded club on the five bipeds with gear, a glowing chest
+gem on the 19 golems and constructs, bigger claws/talons on predators, dragons and raptors, bigger mandibles on
+arthropods; the ink look stays. 403 files under `sprites/enemy/remake/` (46 atlases with another cell or frame count,
+incl. the 17 that round 471 could not reproduce, regenerated with their seeds kept), enemies.json 21 scales by a few
+percent. The 16 Pixelate sprites untouched. The peer (#30) checks a few in the agent game and packages. Not seen in play.
+
 ## STATE 2026-10-07 (round 472): **LOCAL + UNRELEASED** - ENGINE = the 10.07 daily (upstream `e7fca289313`, base install
 `E:\GAMES\Forge_2` build.txt 2026-10-07 22:47:23). No textual conflicts; one semantic: `UI_COIN_FLIP_ANIMATION` renamed
 `UI_COIN_DICE_ANIMATION` upstream (#12167, the new dice animation) - round 464's Settings switch rebound to it ("Coin/Dice
@@ -292,7 +300,7 @@ of the remakes (the Procedural Pixel Creatures session); round 445 = notoriety b
 research 40 + a 243 s day, 450 = no Manasight on a Mimic, 451 = no crown on a Mimic, 452 = chest-size Mimics + the Warden's dot + the Lab's
 set view + the hidden card a new game's only (done), 453 = Ulamog from the Pixelate pilot (the Procedural Pixel
 Creatures session), 454 = Ulamog's own death (same), 455 = the Sliver Queen (same), 456 = Kozilek + whole-body portraits (same), 457 = the Bank's step 500, 458 = the Juggernaut, the Evil Wall and the Chimera (the Procedural Pixel Creatures session), 459 = weekly shops turn over
-with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread, 462 = Svyelunite Temple, 464 = the coin toss without a tap + its Settings switch, 465 = the win-streak notice once per streak, 466 = Valor's Reach Arena in seasons, 467 = the win streak grows to three Wastes, 468 = NoRotate places leave on a full clear + the arena's Wastes grow, 463 = the Svyelunite Temple art (the Procedural Pixel Creatures session), 469 = Emrakul, the Beholder, the Eldrazi and the Phoenix from Pixelate clips (that session); 470 = the 45+/50+ Wall cards print their +life, 471 = the remakes' style pass (the Procedural Pixel Creatures session); 472 = the 10.07 engine merge; the next free round is **473**;
+with the calendar week, 460 = the 10.06 engine merge (`2f90918a902`), 461 = invasions with variety + Eviction Notice spread, 462 = Svyelunite Temple, 464 = the coin toss without a tap + its Settings switch, 465 = the win-streak notice once per streak, 466 = Valor's Reach Arena in seasons, 467 = the win streak grows to three Wastes, 468 = NoRotate places leave on a full clear + the arena's Wastes grow, 463 = the Svyelunite Temple art (the Procedural Pixel Creatures session), 469 = Emrakul, the Beholder, the Eldrazi and the Phoenix from Pixelate clips (that session); 470 = the 45+/50+ Wall cards print their +life, 471 = the remakes' style pass (the Procedural Pixel Creatures session); 472 = the 10.07 engine merge, 473 = the remakes' recipe pass (the Procedural Pixel Creatures session); the next free round is **474**;
 (3) not seen in the user's play yet: the 10.04 engine, the black-ground leak fix (a long big-cave visit with a Manasight
 item), notoriety's second Wall, the restore-fee steps, the AI/Capitol arena prizes, the merged Capitol job board, Deep
 Caverns one at a time, and the 441 remakes; (4) open but parked: one agent freeze entering a Knight duel (round 429,

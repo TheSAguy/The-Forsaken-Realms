@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 473: the remakes' recipe pass - bigger eyes, claws, leather trim, chest gems (2026-10-07)
+
+The user's go after round 471 ("Go ahead with the trim and gem parts and the recipe pass"): the detail the style pass
+could not add without moving a silhouette. The Procedural Pixel Creatures session re-exported all 432 generated remakes
+from the exact genomes they were installed with, nudged by rules that apply to every creature of a kind so the set stays
+even (`recipe_pass.py`; the rules are also written into the batch files as `post_genes` / `gene_deltas`, so a future
+regeneration keeps them; the export tool's new `geneDeltas` adds a delta to a gene whatever the seed gave and clamps it).
+
+- **Every creature:** eyes one notch bigger (`head.eyeSize`, `eyes.size` or `face.eyeSize` +0.15), on top of round
+  471's dark sockets - faces carry at in-game size.
+- **The five bipeds with gear** (Mountain Ogre, Kazuul, Stone Troll, Mire Troll, Brawny Ogre): leather wraps round the
+  wrists and the ankles in the cloth color, a buckle on the loincloth's belt, a bound grip on the club, a metal band
+  and five studs round its head (`gear.trim`, new biped gene; `Gear.Wrap` bands sit on the joint bones and turn with
+  the joints).
+- **The 19 golems and constructs:** a glowing faceted gem in a dark rim on the chest (`body.gem`, new biped gene; the
+  stone sits on the chest surface - the first build sank into it), the one bright accent of a stone figure.
+- **Claws where they are the signature:** quadruped felines, canines and ursines `legs.claws` +0.3; dragons, drakes,
+  wyverns, lizards and crocodiles +0.2; raptors and owls `legs.talons` +0.3; trolls, ogres and yetis `arms.claws` +0.2;
+  arthropods `head.mouthSize` +0.15. Colors untouched (the approved legend palettes in `pinned_colors.json` stay).
+- **Frames may move this time** (the user's rule for 471 lifted for this pass): 46 atlases have another cell or frame
+  count, by a pixel or three for the parts and the eyes, more for the 17 that round 471 could not reproduce (arasta,
+  cave_spider, spider, giant_fly, the_locust_god, kathril, hermit_crab, the_scarab_god, zask, codie, death_slime, eye,
+  jellyfish, mm_menon, octopus, plagon, vnwxt): their saved size genes predate the raised giant-size ceilings, so they
+  went through remake.py's own search and fit again - every one of them kept its seed, so the creatures are the same
+  at today's proportions, and they get the ink look now too. `enemy_scale.py --write` moved 21 scales, all by a few
+  percent (Codie 0.27 -> 0.24 the largest), keeping every drawn size; 403 files under `sprites/enemy/remake/` (357
+  pages, 46 atlases); the 16 Pixelate sprites untouched.
+- Checks: `validate_plane_data.py` no sprite or enemy finding; the artifact audit 455 frames (was 451), the new ones
+  the ground shadow under a lunging golem - the known class. Review sheets in the generator repo's
+  `reports/forge/recipe_pass/` (`qa_strip.png`, `qa_strip2.png`, `before_after_<family>.png`, `gem_check2.png`).
+  Not seen in play yet; the peer looks at a few on the map and in a duel before packaging.
+
 ## Round 472: the engine to the 10.07 daily (upstream `e7fca289313`) (2026-10-07)
 
 The user installed the official 10.07 snapshot into `E:\GAMES\Forge_2` and asked for a full release ("Update the
