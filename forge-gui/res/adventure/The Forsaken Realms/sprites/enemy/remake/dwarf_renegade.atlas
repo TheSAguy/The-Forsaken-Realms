@@ -1,0 +1,173 @@
+dwarf_renegade.png
+size: 846,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 54
+Idle
+  xy: 94, 64
+  size: 94, 54
+Idle
+  xy: 188, 64
+  size: 94, 54
+Idle
+  xy: 282, 64
+  size: 94, 54
+Walk
+  xy: 0, 118
+  size: 94, 54
+Walk
+  xy: 94, 118
+  size: 94, 54
+Walk
+  xy: 188, 118
+  size: 94, 54
+Walk
+  xy: 282, 118
+  size: 94, 54
+Walk
+  xy: 376, 118
+  size: 94, 54
+Walk
+  xy: 470, 118
+  size: 94, 54
+Walk
+  xy: 564, 118
+  size: 94, 54
+Walk
+  xy: 658, 118
+  size: 94, 54
+Attack
+  xy: 0, 172
+  size: 94, 54
+Attack
+  xy: 94, 172
+  size: 94, 54
+Attack
+  xy: 188, 172
+  size: 94, 54
+Attack
+  xy: 282, 172
+  size: 94, 54
+Attack
+  xy: 376, 172
+  size: 94, 54
+Attack
+  xy: 470, 172
+  size: 94, 54
+Hit
+  xy: 0, 226
+  size: 94, 54
+Hit
+  xy: 94, 226
+  size: 94, 54
+Hit
+  xy: 188, 226
+  size: 94, 54
+Hit
+  xy: 282, 226
+  size: 94, 54
+Death
+  xy: 0, 280
+  size: 94, 54
+Death
+  xy: 94, 280
+  size: 94, 54
+Death
+  xy: 188, 280
+  size: 94, 54
+Death
+  xy: 282, 280
+  size: 94, 54
+Death
+  xy: 376, 280
+  size: 94, 54
+Death
+  xy: 470, 280
+  size: 94, 54
+Death
+  xy: 564, 280
+  size: 94, 54
+Death
+  xy: 658, 280
+  size: 94, 54
+Death
+  xy: 752, 280
+  size: 94, 54
+IdleUp
+  xy: 0, 334
+  size: 94, 54
+IdleUp
+  xy: 94, 334
+  size: 94, 54
+IdleUp
+  xy: 188, 334
+  size: 94, 54
+IdleUp
+  xy: 282, 334
+  size: 94, 54
+IdleDown
+  xy: 0, 388
+  size: 94, 54
+IdleDown
+  xy: 94, 388
+  size: 94, 54
+IdleDown
+  xy: 188, 388
+  size: 94, 54
+IdleDown
+  xy: 282, 388
+  size: 94, 54
+WalkUp
+  xy: 0, 442
+  size: 94, 54
+WalkUp
+  xy: 94, 442
+  size: 94, 54
+WalkUp
+  xy: 188, 442
+  size: 94, 54
+WalkUp
+  xy: 282, 442
+  size: 94, 54
+WalkUp
+  xy: 376, 442
+  size: 94, 54
+WalkUp
+  xy: 470, 442
+  size: 94, 54
+WalkUp
+  xy: 564, 442
+  size: 94, 54
+WalkUp
+  xy: 658, 442
+  size: 94, 54
+WalkDown
+  xy: 0, 496
+  size: 94, 54
+WalkDown
+  xy: 94, 496
+  size: 94, 54
+WalkDown
+  xy: 188, 496
+  size: 94, 54
+WalkDown
+  xy: 282, 496
+  size: 94, 54
+WalkDown
+  xy: 376, 496
+  size: 94, 54
+WalkDown
+  xy: 470, 496
+  size: 94, 54
+WalkDown
+  xy: 564, 496
+  size: 94, 54
+WalkDown
+  xy: 658, 496
+  size: 94, 54

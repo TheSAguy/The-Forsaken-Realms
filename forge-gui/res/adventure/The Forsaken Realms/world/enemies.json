@@ -126176,7 +126176,7 @@
     },
     {
         "name": "Human Renegade",
-        "sprite": "sprites/enemy/heroes/human_m.atlas",
+        "sprite": "sprites/enemy/remake/human_renegade.atlas",
         "deck": [
             "decks/standard/human_m.dck"
         ],
@@ -126235,11 +126235,12 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.2955
     },
     {
         "name": "Human Wanderer",
-        "sprite": "sprites/enemy/heroes/human_f.atlas",
+        "sprite": "sprites/enemy/remake/human_wanderer.atlas",
         "deck": [
             "decks/standard/human_f.dck"
         ],
@@ -126298,11 +126299,12 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3023
     },
     {
         "name": "Elf Renegade",
-        "sprite": "sprites/enemy/heroes/elf_m.atlas",
+        "sprite": "sprites/enemy/remake/elf_renegade.atlas",
         "deck": [
             "decks/standard/elf_m.dck"
         ],
@@ -126361,11 +126363,12 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3023
     },
     {
         "name": "Elf Wanderer",
-        "sprite": "sprites/enemy/heroes/elf_f.atlas",
+        "sprite": "sprites/enemy/remake/elf_wanderer.atlas",
         "deck": [
             "decks/standard/elf_f.dck"
         ],
@@ -126426,7 +126429,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3095
     },
     {
         "name": "Metathran Renegade",
@@ -126949,7 +126953,7 @@
     },
     {
         "name": "Dwarf Renegade",
-        "sprite": "sprites/enemy/heroes/dwarf_m.atlas",
+        "sprite": "sprites/enemy/remake/dwarf_renegade.atlas",
         "deck": [
             "decks/standard/dwarf_m.dck"
         ],
@@ -127011,7 +127015,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.1818
+        "scale": 0.3171
     },
     {
         "name": "Dwarf Wanderer",
@@ -131837,7 +131841,7 @@
     },
     {
         "name": "Bestial Lizardfolk",
-        "sprite": "sprites/enemy/basic/humanoid/bestial_lizardfolk.atlas",
+        "sprite": "sprites/enemy/remake/bestial_lizardfolk.atlas",
         "deck": [
             "decks/standard/bestial_lizardfolk.dck"
         ],
@@ -131898,11 +131902,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3333
     },
     {
         "name": "Goblin Archer",
-        "sprite": "sprites/enemy/basic/humanoid/goblin_archer.atlas",
+        "sprite": "sprites/enemy/remake/goblin_archer.atlas",
         "deck": [
             "decks/standard/goblin_archer.dck"
         ],
@@ -131961,11 +131965,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.325
     },
     {
         "name": "Goblin Zealot",
-        "sprite": "sprites/enemy/basic/humanoid/goblin_zealot.atlas",
+        "sprite": "sprites/enemy/remake/goblin_zealot.atlas",
         "deck": [
             "decks/standard/goblin_zealot.dck"
         ],
@@ -132024,11 +132028,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Goblin Fighter",
-        "sprite": "sprites/enemy/basic/humanoid/goblin_fighter.atlas",
+        "sprite": "sprites/enemy/remake/goblin_fighter.atlas",
         "deck": [
             "decks/standard/goblin_fighter.dck"
         ],
@@ -132087,11 +132091,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Goblin Occultist",
-        "sprite": "sprites/enemy/basic/humanoid/goblin_occultist.atlas",
+        "sprite": "sprites/enemy/remake/goblin_occultist.atlas",
         "deck": [
             "decks/standard/goblin_occultist.dck"
         ],
@@ -132152,7 +132156,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.325
     },
     {
         "name": "Goblin Wolf Rider",
@@ -132220,7 +132224,7 @@
     },
     {
         "name": "Halfling Assassin",
-        "sprite": "sprites/enemy/basic/humanoid/halfling_assassin.atlas",
+        "sprite": "sprites/enemy/remake/halfling_assassin.atlas",
         "deck": [
             "decks/standard/halfling_assassin.dck"
         ],
@@ -132281,11 +132285,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.3095
     },
     {
         "name": "Halfling Bard",
-        "sprite": "sprites/enemy/basic/humanoid/halfling_bard.atlas",
+        "sprite": "sprites/enemy/remake/halfling_bard.atlas",
         "deck": [
             "decks/standard/halfling_bard.dck"
         ],
@@ -132344,11 +132348,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.2889
     },
     {
         "name": "Halfling Ranger",
-        "sprite": "sprites/enemy/basic/humanoid/halfling_ranger.atlas",
+        "sprite": "sprites/enemy/remake/halfling_ranger.atlas",
         "deck": [
             "decks/standard/halfling_ranger.dck"
         ],
@@ -132407,11 +132411,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.3171
     },
     {
         "name": "Halfling Rogue",
-        "sprite": "sprites/enemy/basic/humanoid/halfling_rogue.atlas",
+        "sprite": "sprites/enemy/remake/halfling_rogue.atlas",
         "deck": [
             "decks/standard/halfling_rogue.dck"
         ],
@@ -132470,11 +132474,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.2955
     },
     {
         "name": "Halfling Slinger",
-        "sprite": "sprites/enemy/basic/humanoid/halfling_slinger.atlas",
+        "sprite": "sprites/enemy/remake/halfling_slinger.atlas",
         "deck": [
             "decks/standard/halfling_slinger.dck"
         ],
@@ -132533,11 +132537,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Lizardfolk Archer",
-        "sprite": "sprites/enemy/basic/humanoid/lizardfolk_archer.atlas",
+        "sprite": "sprites/enemy/remake/lizardfolk_archer.atlas",
         "deck": [
             "decks/standard/lizardfolk_archer.dck"
         ],
@@ -132596,11 +132600,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3421
     },
     {
         "name": "Lizardfolk Gladiator",
-        "sprite": "sprites/enemy/basic/humanoid/lizardfolk_gladiator.atlas",
+        "sprite": "sprites/enemy/remake/lizardfolk_gladiator.atlas",
         "deck": [
             "decks/standard/lizardfolk_gladiator.dck"
         ],
@@ -132661,11 +132665,11 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.3514
     },
     {
         "name": "Lizardfolk Scout",
-        "sprite": "sprites/enemy/basic/humanoid/lizardfolk_scout.atlas",
+        "sprite": "sprites/enemy/remake/lizardfolk_scout.atlas",
         "deck": [
             "decks/standard/lizardfolk_scout.dck"
         ],
@@ -132724,11 +132728,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3333
     },
     {
         "name": "Lizardfolk Spearman",
-        "sprite": "sprites/enemy/basic/humanoid/lizardfolk_spearman.atlas",
+        "sprite": "sprites/enemy/remake/lizardfolk_spearman.atlas",
         "deck": [
             "decks/standard/lizardfolk_spearman.dck"
         ],
@@ -132788,7 +132792,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3514
     },
     {
         "name": "Blinded Grimlock",
@@ -137240,7 +137245,7 @@
     },
     {
         "name": "Crossbow Marksman",
-        "sprite": "sprites/enemy/basic/humanoid/crossbow_marksman.atlas",
+        "sprite": "sprites/enemy/remake/crossbow_marksman.atlas",
         "deck": [
             "decks/standard/crossbow_marksman.dck"
         ],
@@ -137299,7 +137304,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.3023
     },
     {
         "name": "Cavalier Captain",
@@ -142599,7 +142604,7 @@
     },
     {
         "name": "Woodland Rover",
-        "sprite": "sprites/enemy/basic/humanoid/woodland_rover.atlas",
+        "sprite": "sprites/enemy/remake/woodland_rover.atlas",
         "deck": [
             "decks/standard/woodland_rover.dck"
         ],
@@ -142658,11 +142663,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.4444
+        "scale": 0.3171
     },
     {
         "name": "Traveling Conjurer",
-        "sprite": "sprites/enemy/basic/humanoid/traveling_conjurer.atlas",
+        "sprite": "sprites/enemy/remake/traveling_conjurer.atlas",
         "deck": [
             "decks/standard/traveling_conjurer.dck"
         ],
@@ -142721,11 +142726,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.4444
+        "scale": 0.3023
     },
     {
         "name": "Red-Cloak Duelist",
-        "sprite": "sprites/enemy/basic/humanoid/red_cloak_duelist.atlas",
+        "sprite": "sprites/enemy/remake/red_cloak_duelist.atlas",
         "deck": [
             "decks/standard/red_cloak_duelist.dck"
         ],
@@ -142784,11 +142789,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.2955
     },
     {
         "name": "Grey Pilgrim",
-        "sprite": "sprites/enemy/basic/humanoid/grey_pilgrim.atlas",
+        "sprite": "sprites/enemy/remake/grey_pilgrim.atlas",
         "deck": [
             "decks/standard/grey_pilgrim.dck"
         ],
@@ -142847,11 +142852,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.4444
+        "scale": 0.3095
     },
     {
         "name": "Alley Knife",
-        "sprite": "sprites/enemy/basic/humanoid/alley_knife.atlas",
+        "sprite": "sprites/enemy/remake/alley_knife.atlas",
         "deck": [
             "decks/standard/alley_knife.dck"
         ],
@@ -142910,7 +142915,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.2955
     },
     {
         "name": "Earthcore Colossus",

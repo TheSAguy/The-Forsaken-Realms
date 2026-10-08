@@ -1,0 +1,173 @@
+elf_renegade.png
+size: 1404,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 156, 60
+Idle
+  xy: 156, 64
+  size: 156, 60
+Idle
+  xy: 312, 64
+  size: 156, 60
+Idle
+  xy: 468, 64
+  size: 156, 60
+Walk
+  xy: 0, 124
+  size: 156, 60
+Walk
+  xy: 156, 124
+  size: 156, 60
+Walk
+  xy: 312, 124
+  size: 156, 60
+Walk
+  xy: 468, 124
+  size: 156, 60
+Walk
+  xy: 624, 124
+  size: 156, 60
+Walk
+  xy: 780, 124
+  size: 156, 60
+Walk
+  xy: 936, 124
+  size: 156, 60
+Walk
+  xy: 1092, 124
+  size: 156, 60
+Attack
+  xy: 0, 184
+  size: 156, 60
+Attack
+  xy: 156, 184
+  size: 156, 60
+Attack
+  xy: 312, 184
+  size: 156, 60
+Attack
+  xy: 468, 184
+  size: 156, 60
+Attack
+  xy: 624, 184
+  size: 156, 60
+Attack
+  xy: 780, 184
+  size: 156, 60
+Hit
+  xy: 0, 244
+  size: 156, 60
+Hit
+  xy: 156, 244
+  size: 156, 60
+Hit
+  xy: 312, 244
+  size: 156, 60
+Hit
+  xy: 468, 244
+  size: 156, 60
+Death
+  xy: 0, 304
+  size: 156, 60
+Death
+  xy: 156, 304
+  size: 156, 60
+Death
+  xy: 312, 304
+  size: 156, 60
+Death
+  xy: 468, 304
+  size: 156, 60
+Death
+  xy: 624, 304
+  size: 156, 60
+Death
+  xy: 780, 304
+  size: 156, 60
+Death
+  xy: 936, 304
+  size: 156, 60
+Death
+  xy: 1092, 304
+  size: 156, 60
+Death
+  xy: 1248, 304
+  size: 156, 60
+IdleUp
+  xy: 0, 364
+  size: 156, 60
+IdleUp
+  xy: 156, 364
+  size: 156, 60
+IdleUp
+  xy: 312, 364
+  size: 156, 60
+IdleUp
+  xy: 468, 364
+  size: 156, 60
+IdleDown
+  xy: 0, 424
+  size: 156, 60
+IdleDown
+  xy: 156, 424
+  size: 156, 60
+IdleDown
+  xy: 312, 424
+  size: 156, 60
+IdleDown
+  xy: 468, 424
+  size: 156, 60
+WalkUp
+  xy: 0, 484
+  size: 156, 60
+WalkUp
+  xy: 156, 484
+  size: 156, 60
+WalkUp
+  xy: 312, 484
+  size: 156, 60
+WalkUp
+  xy: 468, 484
+  size: 156, 60
+WalkUp
+  xy: 624, 484
+  size: 156, 60
+WalkUp
+  xy: 780, 484
+  size: 156, 60
+WalkUp
+  xy: 936, 484
+  size: 156, 60
+WalkUp
+  xy: 1092, 484
+  size: 156, 60
+WalkDown
+  xy: 0, 544
+  size: 156, 60
+WalkDown
+  xy: 156, 544
+  size: 156, 60
+WalkDown
+  xy: 312, 544
+  size: 156, 60
+WalkDown
+  xy: 468, 544
+  size: 156, 60
+WalkDown
+  xy: 624, 544
+  size: 156, 60
+WalkDown
+  xy: 780, 544
+  size: 156, 60
+WalkDown
+  xy: 936, 544
+  size: 156, 60
+WalkDown
+  xy: 1092, 544
+  size: 156, 60

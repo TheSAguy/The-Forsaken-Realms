@@ -67,6 +67,16 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 498): **LOCAL + UNRELEASED (data only)** - the first humanoids from the Universal LPC
+Spritesheet parts (the Procedural Pixel Creatures session; the user approved a five-sprite pilot and asked for twenty
+more): 25 enemies - the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer, Woodland
+Rover, four goblins, five halflings, five lizardfolk, the human and elf wanderers and renegades, the Dwarf Renegade -
+composed from LPC parts (`lpc_to_forge.py`, selections in the generator repo), 25 new atlases under
+`sprites/enemy/remake/`, enemies.json 25 paths + 25 scales, CREDITS.md's LPC line + the new
+`standalone-packaging/CREDITS_LPC.md` (per-enemy parts, authors, licenses; the packager must copy it beside
+CREDITS.md - the peer (#30) adds that). The peer verifies and packages when the game closes. Not seen in play. Next: the
+remaining ~760 humanoids in batches of this kind (selections per enemy from its name and original).
+
 ## STATE 2026-10-08 (round 497): **LOCAL + UNRELEASED** - Ascendance tuning:
 - Characters start at level 0; the intro quest's 50 Power is level 1 (the first pick).
 - Every level from 1 on costs Easy x0.8 / Normal x1 / Hard x1.2 / Insane x1.4 Power (`difficultyLevelCost`).

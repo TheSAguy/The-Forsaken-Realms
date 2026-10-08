@@ -1,0 +1,179 @@
+goblin_archer.png
+size: 558,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 59
+Idle
+  xy: 62, 64
+  size: 62, 59
+Idle
+  xy: 124, 64
+  size: 62, 59
+Idle
+  xy: 186, 64
+  size: 62, 59
+Walk
+  xy: 0, 123
+  size: 62, 59
+Walk
+  xy: 62, 123
+  size: 62, 59
+Walk
+  xy: 124, 123
+  size: 62, 59
+Walk
+  xy: 186, 123
+  size: 62, 59
+Walk
+  xy: 248, 123
+  size: 62, 59
+Walk
+  xy: 310, 123
+  size: 62, 59
+Walk
+  xy: 372, 123
+  size: 62, 59
+Walk
+  xy: 434, 123
+  size: 62, 59
+Attack
+  xy: 0, 182
+  size: 62, 59
+Attack
+  xy: 62, 182
+  size: 62, 59
+Attack
+  xy: 124, 182
+  size: 62, 59
+Attack
+  xy: 186, 182
+  size: 62, 59
+Attack
+  xy: 248, 182
+  size: 62, 59
+Attack
+  xy: 310, 182
+  size: 62, 59
+Attack
+  xy: 372, 182
+  size: 62, 59
+Attack
+  xy: 434, 182
+  size: 62, 59
+Hit
+  xy: 0, 241
+  size: 62, 59
+Hit
+  xy: 62, 241
+  size: 62, 59
+Hit
+  xy: 124, 241
+  size: 62, 59
+Hit
+  xy: 186, 241
+  size: 62, 59
+Death
+  xy: 0, 300
+  size: 62, 59
+Death
+  xy: 62, 300
+  size: 62, 59
+Death
+  xy: 124, 300
+  size: 62, 59
+Death
+  xy: 186, 300
+  size: 62, 59
+Death
+  xy: 248, 300
+  size: 62, 59
+Death
+  xy: 310, 300
+  size: 62, 59
+Death
+  xy: 372, 300
+  size: 62, 59
+Death
+  xy: 434, 300
+  size: 62, 59
+Death
+  xy: 496, 300
+  size: 62, 59
+IdleUp
+  xy: 0, 359
+  size: 62, 59
+IdleUp
+  xy: 62, 359
+  size: 62, 59
+IdleUp
+  xy: 124, 359
+  size: 62, 59
+IdleUp
+  xy: 186, 359
+  size: 62, 59
+IdleDown
+  xy: 0, 418
+  size: 62, 59
+IdleDown
+  xy: 62, 418
+  size: 62, 59
+IdleDown
+  xy: 124, 418
+  size: 62, 59
+IdleDown
+  xy: 186, 418
+  size: 62, 59
+WalkUp
+  xy: 0, 477
+  size: 62, 59
+WalkUp
+  xy: 62, 477
+  size: 62, 59
+WalkUp
+  xy: 124, 477
+  size: 62, 59
+WalkUp
+  xy: 186, 477
+  size: 62, 59
+WalkUp
+  xy: 248, 477
+  size: 62, 59
+WalkUp
+  xy: 310, 477
+  size: 62, 59
+WalkUp
+  xy: 372, 477
+  size: 62, 59
+WalkUp
+  xy: 434, 477
+  size: 62, 59
+WalkDown
+  xy: 0, 536
+  size: 62, 59
+WalkDown
+  xy: 62, 536
+  size: 62, 59
+WalkDown
+  xy: 124, 536
+  size: 62, 59
+WalkDown
+  xy: 186, 536
+  size: 62, 59
+WalkDown
+  xy: 248, 536
+  size: 62, 59
+WalkDown
+  xy: 310, 536
+  size: 62, 59
+WalkDown
+  xy: 372, 536
+  size: 62, 59
+WalkDown
+  xy: 434, 536
+  size: 62, 59

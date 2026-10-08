@@ -1,0 +1,173 @@
+halfling_rogue.png
+size: 558,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 56
+Idle
+  xy: 62, 64
+  size: 62, 56
+Idle
+  xy: 124, 64
+  size: 62, 56
+Idle
+  xy: 186, 64
+  size: 62, 56
+Walk
+  xy: 0, 120
+  size: 62, 56
+Walk
+  xy: 62, 120
+  size: 62, 56
+Walk
+  xy: 124, 120
+  size: 62, 56
+Walk
+  xy: 186, 120
+  size: 62, 56
+Walk
+  xy: 248, 120
+  size: 62, 56
+Walk
+  xy: 310, 120
+  size: 62, 56
+Walk
+  xy: 372, 120
+  size: 62, 56
+Walk
+  xy: 434, 120
+  size: 62, 56
+Attack
+  xy: 0, 176
+  size: 62, 56
+Attack
+  xy: 62, 176
+  size: 62, 56
+Attack
+  xy: 124, 176
+  size: 62, 56
+Attack
+  xy: 186, 176
+  size: 62, 56
+Attack
+  xy: 248, 176
+  size: 62, 56
+Attack
+  xy: 310, 176
+  size: 62, 56
+Hit
+  xy: 0, 232
+  size: 62, 56
+Hit
+  xy: 62, 232
+  size: 62, 56
+Hit
+  xy: 124, 232
+  size: 62, 56
+Hit
+  xy: 186, 232
+  size: 62, 56
+Death
+  xy: 0, 288
+  size: 62, 56
+Death
+  xy: 62, 288
+  size: 62, 56
+Death
+  xy: 124, 288
+  size: 62, 56
+Death
+  xy: 186, 288
+  size: 62, 56
+Death
+  xy: 248, 288
+  size: 62, 56
+Death
+  xy: 310, 288
+  size: 62, 56
+Death
+  xy: 372, 288
+  size: 62, 56
+Death
+  xy: 434, 288
+  size: 62, 56
+Death
+  xy: 496, 288
+  size: 62, 56
+IdleUp
+  xy: 0, 344
+  size: 62, 56
+IdleUp
+  xy: 62, 344
+  size: 62, 56
+IdleUp
+  xy: 124, 344
+  size: 62, 56
+IdleUp
+  xy: 186, 344
+  size: 62, 56
+IdleDown
+  xy: 0, 400
+  size: 62, 56
+IdleDown
+  xy: 62, 400
+  size: 62, 56
+IdleDown
+  xy: 124, 400
+  size: 62, 56
+IdleDown
+  xy: 186, 400
+  size: 62, 56
+WalkUp
+  xy: 0, 456
+  size: 62, 56
+WalkUp
+  xy: 62, 456
+  size: 62, 56
+WalkUp
+  xy: 124, 456
+  size: 62, 56
+WalkUp
+  xy: 186, 456
+  size: 62, 56
+WalkUp
+  xy: 248, 456
+  size: 62, 56
+WalkUp
+  xy: 310, 456
+  size: 62, 56
+WalkUp
+  xy: 372, 456
+  size: 62, 56
+WalkUp
+  xy: 434, 456
+  size: 62, 56
+WalkDown
+  xy: 0, 512
+  size: 62, 56
+WalkDown
+  xy: 62, 512
+  size: 62, 56
+WalkDown
+  xy: 124, 512
+  size: 62, 56
+WalkDown
+  xy: 186, 512
+  size: 62, 56
+WalkDown
+  xy: 248, 512
+  size: 62, 56
+WalkDown
+  xy: 310, 512
+  size: 62, 56
+WalkDown
+  xy: 372, 512
+  size: 62, 56
+WalkDown
+  xy: 434, 512
+  size: 62, 56

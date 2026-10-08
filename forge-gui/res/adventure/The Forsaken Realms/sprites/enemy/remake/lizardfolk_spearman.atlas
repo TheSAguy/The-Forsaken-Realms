@@ -1,0 +1,179 @@
+lizardfolk_spearman.png
+size: 648,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 50
+Idle
+  xy: 72, 64
+  size: 72, 50
+Idle
+  xy: 144, 64
+  size: 72, 50
+Idle
+  xy: 216, 64
+  size: 72, 50
+Walk
+  xy: 0, 114
+  size: 72, 50
+Walk
+  xy: 72, 114
+  size: 72, 50
+Walk
+  xy: 144, 114
+  size: 72, 50
+Walk
+  xy: 216, 114
+  size: 72, 50
+Walk
+  xy: 288, 114
+  size: 72, 50
+Walk
+  xy: 360, 114
+  size: 72, 50
+Walk
+  xy: 432, 114
+  size: 72, 50
+Walk
+  xy: 504, 114
+  size: 72, 50
+Attack
+  xy: 0, 164
+  size: 72, 50
+Attack
+  xy: 72, 164
+  size: 72, 50
+Attack
+  xy: 144, 164
+  size: 72, 50
+Attack
+  xy: 216, 164
+  size: 72, 50
+Attack
+  xy: 288, 164
+  size: 72, 50
+Attack
+  xy: 360, 164
+  size: 72, 50
+Attack
+  xy: 432, 164
+  size: 72, 50
+Attack
+  xy: 504, 164
+  size: 72, 50
+Hit
+  xy: 0, 214
+  size: 72, 50
+Hit
+  xy: 72, 214
+  size: 72, 50
+Hit
+  xy: 144, 214
+  size: 72, 50
+Hit
+  xy: 216, 214
+  size: 72, 50
+Death
+  xy: 0, 264
+  size: 72, 50
+Death
+  xy: 72, 264
+  size: 72, 50
+Death
+  xy: 144, 264
+  size: 72, 50
+Death
+  xy: 216, 264
+  size: 72, 50
+Death
+  xy: 288, 264
+  size: 72, 50
+Death
+  xy: 360, 264
+  size: 72, 50
+Death
+  xy: 432, 264
+  size: 72, 50
+Death
+  xy: 504, 264
+  size: 72, 50
+Death
+  xy: 576, 264
+  size: 72, 50
+IdleUp
+  xy: 0, 314
+  size: 72, 50
+IdleUp
+  xy: 72, 314
+  size: 72, 50
+IdleUp
+  xy: 144, 314
+  size: 72, 50
+IdleUp
+  xy: 216, 314
+  size: 72, 50
+IdleDown
+  xy: 0, 364
+  size: 72, 50
+IdleDown
+  xy: 72, 364
+  size: 72, 50
+IdleDown
+  xy: 144, 364
+  size: 72, 50
+IdleDown
+  xy: 216, 364
+  size: 72, 50
+WalkUp
+  xy: 0, 414
+  size: 72, 50
+WalkUp
+  xy: 72, 414
+  size: 72, 50
+WalkUp
+  xy: 144, 414
+  size: 72, 50
+WalkUp
+  xy: 216, 414
+  size: 72, 50
+WalkUp
+  xy: 288, 414
+  size: 72, 50
+WalkUp
+  xy: 360, 414
+  size: 72, 50
+WalkUp
+  xy: 432, 414
+  size: 72, 50
+WalkUp
+  xy: 504, 414
+  size: 72, 50
+WalkDown
+  xy: 0, 464
+  size: 72, 50
+WalkDown
+  xy: 72, 464
+  size: 72, 50
+WalkDown
+  xy: 144, 464
+  size: 72, 50
+WalkDown
+  xy: 216, 464
+  size: 72, 50
+WalkDown
+  xy: 288, 464
+  size: 72, 50
+WalkDown
+  xy: 360, 464
+  size: 72, 50
+WalkDown
+  xy: 432, 464
+  size: 72, 50
+WalkDown
+  xy: 504, 464
+  size: 72, 50

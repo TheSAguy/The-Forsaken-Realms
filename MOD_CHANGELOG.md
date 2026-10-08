@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 498: twenty-five humanoids from the Universal LPC Spritesheet parts (2026-10-08)
+
+The Procedural Pixel Creatures session: the first people-shaped enemies rebuilt from the LPC part library (the user,
+after a five-sprite pilot: "The LPC looks very good. Let's install these 5 and proceed with the next 20"). The mod's
+Python port of the LPC generator's renderer composes a character from a selection of parts, and
+`lpc_to_forge.py` cuts the house atlas from it: walk (9 frames, the first standing), the weapon's attack (a bow
+shoots, a spear thrusts, a blade slashes, a staff casts; a rapier, mace, axe, saber or scimitar swings in LPC's 128 or
+192 px oversize area), the south-facing hurt fall as the death (the one way LPC draws it), a synthesized hit, four
+facings, the house shadow, the whole-figure portrait. LPC figures are about 47 px tall in 64 px frames: 4.4 art px
+per world px at Common, drawn 1:1 at 4K, no resampling. Selections in the generator repo (`lpc_selections/`).
+
+- **The 25**: Alley Knife (dagger), Grey Pilgrim (grey robe, staff), Red-Cloak Duelist (leather, red cape, rapier),
+  Crossbow Marksman (nasal helmet, crossbow), Traveling Conjurer (wizard hat, orange robe, staff), Woodland Rover
+  (hood, bow); Goblin Archer, Fighter, Occultist and Zealot (the goblin head on green skin; bow, dagger, hooded robe
+  and staff, mace); Halfling Assassin, Bard, Ranger, Rogue and Slinger (hood and dagger, feathered cap and rapier,
+  bow, dagger, slingshot); Lizardfolk Archer, Gladiator, Scout and Spearman and the Bestial Lizardfolk (the lizard
+  head and tail on green, bright green, blue, pale green and amber skin; bow, scimitar and shield, spear, spear and
+  shield, club); Human Wanderer and Renegade (sabers), Elf Wanderer and Renegade (elven ears; bow, rapier), Dwarf
+  Renegade (plump head, beard, war axe).
+- **LPC quirks met**: the robe item is female-only, so a male robe is a long-sleeved top over a long plain skirt with
+  a robe belt; the crossbow has no shoot animation (it fires with the thrust); items with pre-colored variants take a
+  variant name, the others a palette recolor; every ranked enemy draws at the rank body, so halflings and goblins
+  stand on the adult bodies (the small bodies carry few weapons).
+- **Files**: 25 new atlases under `sprites/enemy/remake/`; enemies.json 25 sprite paths + 25 scales (0.30-0.35).
+  `CREDITS.md`: the LPC line (the generator, the authors); `standalone-packaging/CREDITS_LPC.md`: the parts, authors,
+  license used and sources per enemy (every part under its own license - OGA-BY 3.0, CC-BY 4.0, CC-BY-SA 3.0, CC0 -
+  the composed sprites CC-BY or CC-BY-SA, as the mod's GPL-3 allows); the packager copies CREDITS.md by name, so the
+  peer adds CREDITS_LPC.md to its two copies in a packaging commit.
+- **Checks**: `validate_plane_data.py` unchanged; `sprite_artifact_audit.py --only remake` has nothing on the new
+  atlases. Not seen in play.
+
 ## Round 497: Ascendance starts at level 0, the intro pays again, and leveling costs more on harder difficulties (2026-10-08)
 
 The user: "I just skipped the quest and did not get any power, should I not have received 50? Also, let's start at level
