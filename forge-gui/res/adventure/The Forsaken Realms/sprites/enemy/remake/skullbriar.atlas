@@ -1,0 +1,134 @@
+skullbriar.png
+size: 368,397
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 46, 37
+Idle
+  xy: 46, 64
+  size: 46, 37
+Idle
+  xy: 92, 64
+  size: 46, 37
+Idle
+  xy: 138, 64
+  size: 46, 37
+Walk
+  xy: 0, 101
+  size: 46, 37
+Walk
+  xy: 46, 101
+  size: 46, 37
+Walk
+  xy: 92, 101
+  size: 46, 37
+Walk
+  xy: 138, 101
+  size: 46, 37
+Attack
+  xy: 0, 138
+  size: 46, 37
+Attack
+  xy: 46, 138
+  size: 46, 37
+Attack
+  xy: 92, 138
+  size: 46, 37
+Attack
+  xy: 138, 138
+  size: 46, 37
+Attack
+  xy: 184, 138
+  size: 46, 37
+Attack
+  xy: 230, 138
+  size: 46, 37
+Attack
+  xy: 276, 138
+  size: 46, 37
+Attack
+  xy: 322, 138
+  size: 46, 37
+Hit
+  xy: 0, 175
+  size: 46, 37
+Hit
+  xy: 46, 175
+  size: 46, 37
+Hit
+  xy: 92, 175
+  size: 46, 37
+Hit
+  xy: 138, 175
+  size: 46, 37
+Death
+  xy: 0, 212
+  size: 46, 37
+Death
+  xy: 46, 212
+  size: 46, 37
+Death
+  xy: 92, 212
+  size: 46, 37
+Death
+  xy: 138, 212
+  size: 46, 37
+Death
+  xy: 184, 212
+  size: 46, 37
+Death
+  xy: 230, 212
+  size: 46, 37
+IdleUp
+  xy: 0, 249
+  size: 46, 37
+IdleUp
+  xy: 46, 249
+  size: 46, 37
+IdleUp
+  xy: 92, 249
+  size: 46, 37
+IdleUp
+  xy: 138, 249
+  size: 46, 37
+IdleDown
+  xy: 0, 286
+  size: 46, 37
+IdleDown
+  xy: 46, 286
+  size: 46, 37
+IdleDown
+  xy: 92, 286
+  size: 46, 37
+IdleDown
+  xy: 138, 286
+  size: 46, 37
+WalkUp
+  xy: 0, 323
+  size: 46, 37
+WalkUp
+  xy: 46, 323
+  size: 46, 37
+WalkUp
+  xy: 92, 323
+  size: 46, 37
+WalkUp
+  xy: 138, 323
+  size: 46, 37
+WalkDown
+  xy: 0, 360
+  size: 46, 37
+WalkDown
+  xy: 46, 360
+  size: 46, 37
+WalkDown
+  xy: 92, 360
+  size: 46, 37
+WalkDown
+  xy: 138, 360
+  size: 46, 37

@@ -1,0 +1,134 @@
+geist.png
+size: 400,532
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 50, 52
+Idle
+  xy: 50, 64
+  size: 50, 52
+Idle
+  xy: 100, 64
+  size: 50, 52
+Idle
+  xy: 150, 64
+  size: 50, 52
+Walk
+  xy: 0, 116
+  size: 50, 52
+Walk
+  xy: 50, 116
+  size: 50, 52
+Walk
+  xy: 100, 116
+  size: 50, 52
+Walk
+  xy: 150, 116
+  size: 50, 52
+Attack
+  xy: 0, 168
+  size: 50, 52
+Attack
+  xy: 50, 168
+  size: 50, 52
+Attack
+  xy: 100, 168
+  size: 50, 52
+Attack
+  xy: 150, 168
+  size: 50, 52
+Attack
+  xy: 200, 168
+  size: 50, 52
+Attack
+  xy: 250, 168
+  size: 50, 52
+Attack
+  xy: 300, 168
+  size: 50, 52
+Attack
+  xy: 350, 168
+  size: 50, 52
+Hit
+  xy: 0, 220
+  size: 50, 52
+Hit
+  xy: 50, 220
+  size: 50, 52
+Hit
+  xy: 100, 220
+  size: 50, 52
+Hit
+  xy: 150, 220
+  size: 50, 52
+Death
+  xy: 0, 272
+  size: 50, 52
+Death
+  xy: 50, 272
+  size: 50, 52
+Death
+  xy: 100, 272
+  size: 50, 52
+Death
+  xy: 150, 272
+  size: 50, 52
+Death
+  xy: 200, 272
+  size: 50, 52
+Death
+  xy: 250, 272
+  size: 50, 52
+IdleUp
+  xy: 0, 324
+  size: 50, 52
+IdleUp
+  xy: 50, 324
+  size: 50, 52
+IdleUp
+  xy: 100, 324
+  size: 50, 52
+IdleUp
+  xy: 150, 324
+  size: 50, 52
+IdleDown
+  xy: 0, 376
+  size: 50, 52
+IdleDown
+  xy: 50, 376
+  size: 50, 52
+IdleDown
+  xy: 100, 376
+  size: 50, 52
+IdleDown
+  xy: 150, 376
+  size: 50, 52
+WalkUp
+  xy: 0, 428
+  size: 50, 52
+WalkUp
+  xy: 50, 428
+  size: 50, 52
+WalkUp
+  xy: 100, 428
+  size: 50, 52
+WalkUp
+  xy: 150, 428
+  size: 50, 52
+WalkDown
+  xy: 0, 480
+  size: 50, 52
+WalkDown
+  xy: 50, 480
+  size: 50, 52
+WalkDown
+  xy: 100, 480
+  size: 50, 52
+WalkDown
+  xy: 150, 480
+  size: 50, 52

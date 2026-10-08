@@ -1,0 +1,86 @@
+crimson_imp.png
+size: 1248,704
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 156, 128
+Idle
+  xy: 156, 64
+  size: 156, 128
+Idle
+  xy: 312, 64
+  size: 156, 128
+Idle
+  xy: 468, 64
+  size: 156, 128
+Walk
+  xy: 0, 192
+  size: 156, 128
+Walk
+  xy: 156, 192
+  size: 156, 128
+Walk
+  xy: 312, 192
+  size: 156, 128
+Walk
+  xy: 468, 192
+  size: 156, 128
+Attack
+  xy: 0, 320
+  size: 156, 128
+Attack
+  xy: 156, 320
+  size: 156, 128
+Attack
+  xy: 312, 320
+  size: 156, 128
+Attack
+  xy: 468, 320
+  size: 156, 128
+Attack
+  xy: 624, 320
+  size: 156, 128
+Attack
+  xy: 780, 320
+  size: 156, 128
+Attack
+  xy: 936, 320
+  size: 156, 128
+Attack
+  xy: 1092, 320
+  size: 156, 128
+Hit
+  xy: 0, 448
+  size: 156, 128
+Hit
+  xy: 156, 448
+  size: 156, 128
+Hit
+  xy: 312, 448
+  size: 156, 128
+Hit
+  xy: 468, 448
+  size: 156, 128
+Death
+  xy: 0, 576
+  size: 156, 128
+Death
+  xy: 156, 576
+  size: 156, 128
+Death
+  xy: 312, 576
+  size: 156, 128
+Death
+  xy: 468, 576
+  size: 156, 128
+Death
+  xy: 624, 576
+  size: 156, 128
+Death
+  xy: 780, 576
+  size: 156, 128

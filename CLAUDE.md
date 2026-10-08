@@ -73,6 +73,17 @@ refunded - my call); the first map piece is the center with the X, the other eig
 once (no "Dig here?"); the Spade's atlas region moved into the items.png page (it sat in items_gloves.png and drew
 nothing). (479 = the peer's second pack import.)
 
+## STATE 2026-10-08 (round 479): **LOCAL + UNRELEASED (data only)** - the Procedural Pixel Creatures session's second
+pack import (the user: "Import the mythological sheets: BigDeaths, BigDemons, BigGods, ghosts, skeleghouls"): 87
+enemies wear a hand-drawn character from the user's RPG Maker sheets - 26 liches, necromancers, wraiths and reapers (a
+hooded reaper in four colorways, seven with flames tinted to the legend's color), 28 demons, devils, imps and fiends (a
+crowned archdemon), 12 titans, gods and avatars (a many-armed deity; the 18 angels left out - no wings), 18 ghosts,
+geists, spirits and shades (sheet ghosts), the 3 skulls (the "skeleghouls" sheet is floating skulls, so no skeletons).
+The 22 round-476 atlases rebuilt (PNGs only: the idle breath's one-pixel seam closed). 174 new files + 22 PNGs under
+`sprites/enemy/remake/`, enemies.json 109 sprite paths + 84 scales (three keepSize legends keep their drawn size),
+CREDITS.md one line. Manifest `packs/rpgmaker/imports2.json` in the generator repo; `rpgmaker_to_forge.py` learned
+recolor sheets, white keying, baked-shadow stripping and hue tints. The peer (#30) verifies and packages. Not seen in play.
+
 ## STATE 2026-10-08 (round 478): **LOCAL + UNRELEASED** - the lost-treasure hunts, a TEST version
 (`util/TreasureHunt.java`, `scene/TreasureMapScene.java`; design `docs/design/2026-10-07-lost-treasure.md`): six
 hunts a world (the Wastes + five colors), one obelisk per region (buildings.png) giving one map piece and moving on

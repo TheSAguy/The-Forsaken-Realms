@@ -1,0 +1,134 @@
+millicent.png
+size: 448,532
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 52
+Idle
+  xy: 56, 64
+  size: 56, 52
+Idle
+  xy: 112, 64
+  size: 56, 52
+Idle
+  xy: 168, 64
+  size: 56, 52
+Walk
+  xy: 0, 116
+  size: 56, 52
+Walk
+  xy: 56, 116
+  size: 56, 52
+Walk
+  xy: 112, 116
+  size: 56, 52
+Walk
+  xy: 168, 116
+  size: 56, 52
+Attack
+  xy: 0, 168
+  size: 56, 52
+Attack
+  xy: 56, 168
+  size: 56, 52
+Attack
+  xy: 112, 168
+  size: 56, 52
+Attack
+  xy: 168, 168
+  size: 56, 52
+Attack
+  xy: 224, 168
+  size: 56, 52
+Attack
+  xy: 280, 168
+  size: 56, 52
+Attack
+  xy: 336, 168
+  size: 56, 52
+Attack
+  xy: 392, 168
+  size: 56, 52
+Hit
+  xy: 0, 220
+  size: 56, 52
+Hit
+  xy: 56, 220
+  size: 56, 52
+Hit
+  xy: 112, 220
+  size: 56, 52
+Hit
+  xy: 168, 220
+  size: 56, 52
+Death
+  xy: 0, 272
+  size: 56, 52
+Death
+  xy: 56, 272
+  size: 56, 52
+Death
+  xy: 112, 272
+  size: 56, 52
+Death
+  xy: 168, 272
+  size: 56, 52
+Death
+  xy: 224, 272
+  size: 56, 52
+Death
+  xy: 280, 272
+  size: 56, 52
+IdleUp
+  xy: 0, 324
+  size: 56, 52
+IdleUp
+  xy: 56, 324
+  size: 56, 52
+IdleUp
+  xy: 112, 324
+  size: 56, 52
+IdleUp
+  xy: 168, 324
+  size: 56, 52
+IdleDown
+  xy: 0, 376
+  size: 56, 52
+IdleDown
+  xy: 56, 376
+  size: 56, 52
+IdleDown
+  xy: 112, 376
+  size: 56, 52
+IdleDown
+  xy: 168, 376
+  size: 56, 52
+WalkUp
+  xy: 0, 428
+  size: 56, 52
+WalkUp
+  xy: 56, 428
+  size: 56, 52
+WalkUp
+  xy: 112, 428
+  size: 56, 52
+WalkUp
+  xy: 168, 428
+  size: 56, 52
+WalkDown
+  xy: 0, 480
+  size: 56, 52
+WalkDown
+  xy: 56, 480
+  size: 56, 52
+WalkDown
+  xy: 112, 480
+  size: 56, 52
+WalkDown
+  xy: 168, 480
+  size: 56, 52

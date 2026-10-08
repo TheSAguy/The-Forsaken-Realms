@@ -1,0 +1,134 @@
+hollowlight_shade.png
+size: 448,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 53
+Idle
+  xy: 56, 64
+  size: 56, 53
+Idle
+  xy: 112, 64
+  size: 56, 53
+Idle
+  xy: 168, 64
+  size: 56, 53
+Walk
+  xy: 0, 117
+  size: 56, 53
+Walk
+  xy: 56, 117
+  size: 56, 53
+Walk
+  xy: 112, 117
+  size: 56, 53
+Walk
+  xy: 168, 117
+  size: 56, 53
+Attack
+  xy: 0, 170
+  size: 56, 53
+Attack
+  xy: 56, 170
+  size: 56, 53
+Attack
+  xy: 112, 170
+  size: 56, 53
+Attack
+  xy: 168, 170
+  size: 56, 53
+Attack
+  xy: 224, 170
+  size: 56, 53
+Attack
+  xy: 280, 170
+  size: 56, 53
+Attack
+  xy: 336, 170
+  size: 56, 53
+Attack
+  xy: 392, 170
+  size: 56, 53
+Hit
+  xy: 0, 223
+  size: 56, 53
+Hit
+  xy: 56, 223
+  size: 56, 53
+Hit
+  xy: 112, 223
+  size: 56, 53
+Hit
+  xy: 168, 223
+  size: 56, 53
+Death
+  xy: 0, 276
+  size: 56, 53
+Death
+  xy: 56, 276
+  size: 56, 53
+Death
+  xy: 112, 276
+  size: 56, 53
+Death
+  xy: 168, 276
+  size: 56, 53
+Death
+  xy: 224, 276
+  size: 56, 53
+Death
+  xy: 280, 276
+  size: 56, 53
+IdleUp
+  xy: 0, 329
+  size: 56, 53
+IdleUp
+  xy: 56, 329
+  size: 56, 53
+IdleUp
+  xy: 112, 329
+  size: 56, 53
+IdleUp
+  xy: 168, 329
+  size: 56, 53
+IdleDown
+  xy: 0, 382
+  size: 56, 53
+IdleDown
+  xy: 56, 382
+  size: 56, 53
+IdleDown
+  xy: 112, 382
+  size: 56, 53
+IdleDown
+  xy: 168, 382
+  size: 56, 53
+WalkUp
+  xy: 0, 435
+  size: 56, 53
+WalkUp
+  xy: 56, 435
+  size: 56, 53
+WalkUp
+  xy: 112, 435
+  size: 56, 53
+WalkUp
+  xy: 168, 435
+  size: 56, 53
+WalkDown
+  xy: 0, 488
+  size: 56, 53
+WalkDown
+  xy: 56, 488
+  size: 56, 53
+WalkDown
+  xy: 112, 488
+  size: 56, 53
+WalkDown
+  xy: 168, 488
+  size: 56, 53

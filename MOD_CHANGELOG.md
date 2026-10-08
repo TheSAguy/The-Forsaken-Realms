@@ -14305,6 +14305,55 @@ Four of the user's calls on round 478's test version:
   Black X loaded, stepped off (no dig), stepped back on (dug, 44 -> 39). Logs clean. A guardian loss seen three times
   (the X and its hole stay).
 
+## Round 479: hand-drawn pack sprites for the liches, demons, titans, ghosts and skulls (2026-10-08)
+
+The Procedural Pixel Creatures session's second pack import, from the user's coverage ticks: "Import the mythological
+sheets: BigDeaths, BigDemons, BigGods, ghosts, skeleghouls" (the `Mythological animals` download; RPG Maker MV/MZ
+character sheets, the same pack family as round 476). Data and sprites only; no Java.
+
+- **87 enemies wear a pack character** (`sprites/enemy/remake/<slug>.atlas/.png`, one atlas per enemy, the house format:
+  Idle, Walk, Attack, Hit, Death, a 64 px whole-body Avatar; the 48 px sheets also IdleUp/IdleDown/WalkUp/WalkDown):
+  - the **hooded reaper** sheet (96 px, four colorways: blue flames, red flames, plain dark, grey) for 26 - The Reaper,
+    the Reaper King, Lich, the Lichlord of Azar, Zombie Master, Zombie Lord, Egon, Thomil, Nekusar, Jeleva, Phenax,
+    Athreos, Sedris, Atris, Jadar, Tergrid, Jarad, Narfi, Mikaeus, Ratadrabik, Wraith, the Necromancer of Shandalar,
+    Lim-Dul the Necromancer, and the TFR-made Frostrobe Lich, Gilded Lich and Hollowplate Phantom (2.5-2.7 art px per
+    world px before, about 6 now). Seven of them have their flames turned to the legend's color (Egon and Jarad green,
+    Jeleva blood-red, Sedris orange, Atris cyan, the Necromancer violet, the Gilded Lich gold).
+  - the **crowned archdemon** sheet (120 px: red with blue wings, black with orange wings, purple, green) for 28 - Pit
+    Balor, Rascally Demonling, Devil of Tibalt, Rakdos Devil, Fledgling Demon, Demon, Kothophed, Ancient Demon,
+    Ashmouth Devil, Bloodgift Demon, Minor Demon, Weak Demon, the Nether Fiend of Shandalar, Devil, Imp, Crimson Imp,
+    Vilis, Immersturm Demon, Archfiend, Akul, Belzenlok, Demon of Tibalt, Rakdos, Ob Nixilis, and the TFR-made
+    Hellspark, Cryptstalker, Tuskmaw and Stormhorn Fiends.
+  - the **many-armed deity** sheet (120 px: blue, green, gold, red) for 12 titans, gods and avatars - Bonny Pall, Grave
+    Titan, Oloro, Ephara, Kroxa, Ojer Taq, Beluna, Sun Titan, Forest Titan, Merfolk Avatar, Frost Titan, Storm Titan.
+    The 18 angels the coverage sheet listed under it are NOT on it: the deity has no wings; they keep their sprites.
+  - the **sheet-ghost** sheet (48 px: white, mint, white with sparkles, dark with red eyes, two faces each) for 18 -
+    Agrus Kos, Ghost, Veko, Abuelo, Olivia, Millicent, Spirit, Braids, Dark Spirit, Geist, Orvar, Wandering Geist,
+    Shauku, Umbris, Shade, Obzedat, Obuun, and the TFR-made Hollowlight Shade. Ihsan's Shade keeps its knight.
+  - the **floating-skull** sheet (48 px; the "skeleghouls" file is skulls, not skeletons - the skeletons and ghouls of
+    the coverage list keep their sprites) for the three skull enemies: Unholy Skull (blue flaming), Skullbriar (green),
+    Warp Skull (purple flaming).
+- **How they were made** (`tools/forge_remake/rpgmaker_to_forge.py` in the generator repo, `pack_import.py
+  packs/rpgmaker/imports2.json`): the three big sheets are "recolor" sheets - one front view in four colorway rows,
+  three bobbing frames each - so the one view serves every direction and the bob is the idle and the walk; their white
+  background is keyed (enclosed pockets too, bar specks); the baked ground shadow every sheet carries (a translucent
+  black ellipse on the reapers, flat grey 127 on the demons, deities and plain skulls, a glowing disc under the flaming
+  skulls) is stripped so the house shadow is not doubled; the lunge, recoil and shadow thickness scale with the body
+  (a 120 px character moves twice a 48 px one); a flame-color tint is an OKLCH hue rotation of the chromatic pixels only.
+- **The 22 round-476 pack atlases rebuilt** (the golems, squirrels, Werewolf; PNGs only): the synthesized idle breath
+  left a one-pixel transparent seam across the body on its two raised frames - a flicker at game scale; the row at the
+  split is now doubled (a stretch, not a gap).
+- **enemies.json**: 109 sprite paths (87 new + the 22 re-pointed to the same files) and 84 scales from
+  `enemy_scale.py --write` (the 120 px demons and deities land at 0.14-0.15, the reapers at 0.16-0.17, the ghosts at
+  0.35; three keepSize legends keep their drawn size: the Reaper King 2.48 -> 0.3767, the Lichlord of Azar 2.0312 ->
+  0.3125, Bonny Pall 1.68 -> 0.2265). The old stock atlases stay in place (other entries may still use them).
+- **CREDITS.md**: the second-set line extended with the five sheets.
+- **Checks**: `validate_plane_data.py` unchanged (its pre-existing deck-bucket and restricted-cards notes only);
+  `sprite_artifact_audit.py --only remake` flags the shadow under the floating reapers and ghosts (a 1-row gap, the
+  flyers' pattern, expected and never --fix) and the two sparkle ghosts' bodies as detached from their sparkles (the
+  art). The flaming skulls' portraits are taken from the frame with its alpha flattened (the whole-body portrait keeps
+  solid pixels only, and the pack's flames are translucent).
+
 ## Round 478: the lost-treasure hunts, a TEST version - obelisks, map pieces, the Spade and the X (2026-10-08)
 
 The design is `docs/design/2026-10-07-lost-treasure.md`. The user: "On this sheet ... there is an 'X' we can use and a

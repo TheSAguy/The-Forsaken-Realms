@@ -1,0 +1,86 @@
+zombie_master.png
+size: 1024,579
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 128, 103
+Idle
+  xy: 128, 64
+  size: 128, 103
+Idle
+  xy: 256, 64
+  size: 128, 103
+Idle
+  xy: 384, 64
+  size: 128, 103
+Walk
+  xy: 0, 167
+  size: 128, 103
+Walk
+  xy: 128, 167
+  size: 128, 103
+Walk
+  xy: 256, 167
+  size: 128, 103
+Walk
+  xy: 384, 167
+  size: 128, 103
+Attack
+  xy: 0, 270
+  size: 128, 103
+Attack
+  xy: 128, 270
+  size: 128, 103
+Attack
+  xy: 256, 270
+  size: 128, 103
+Attack
+  xy: 384, 270
+  size: 128, 103
+Attack
+  xy: 512, 270
+  size: 128, 103
+Attack
+  xy: 640, 270
+  size: 128, 103
+Attack
+  xy: 768, 270
+  size: 128, 103
+Attack
+  xy: 896, 270
+  size: 128, 103
+Hit
+  xy: 0, 373
+  size: 128, 103
+Hit
+  xy: 128, 373
+  size: 128, 103
+Hit
+  xy: 256, 373
+  size: 128, 103
+Hit
+  xy: 384, 373
+  size: 128, 103
+Death
+  xy: 0, 476
+  size: 128, 103
+Death
+  xy: 128, 476
+  size: 128, 103
+Death
+  xy: 256, 476
+  size: 128, 103
+Death
+  xy: 384, 476
+  size: 128, 103
+Death
+  xy: 512, 476
+  size: 128, 103
+Death
+  xy: 640, 476
+  size: 128, 103

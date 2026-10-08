@@ -1,0 +1,134 @@
+unholy_skull.png
+size: 448,478
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 46
+Idle
+  xy: 56, 64
+  size: 56, 46
+Idle
+  xy: 112, 64
+  size: 56, 46
+Idle
+  xy: 168, 64
+  size: 56, 46
+Walk
+  xy: 0, 110
+  size: 56, 46
+Walk
+  xy: 56, 110
+  size: 56, 46
+Walk
+  xy: 112, 110
+  size: 56, 46
+Walk
+  xy: 168, 110
+  size: 56, 46
+Attack
+  xy: 0, 156
+  size: 56, 46
+Attack
+  xy: 56, 156
+  size: 56, 46
+Attack
+  xy: 112, 156
+  size: 56, 46
+Attack
+  xy: 168, 156
+  size: 56, 46
+Attack
+  xy: 224, 156
+  size: 56, 46
+Attack
+  xy: 280, 156
+  size: 56, 46
+Attack
+  xy: 336, 156
+  size: 56, 46
+Attack
+  xy: 392, 156
+  size: 56, 46
+Hit
+  xy: 0, 202
+  size: 56, 46
+Hit
+  xy: 56, 202
+  size: 56, 46
+Hit
+  xy: 112, 202
+  size: 56, 46
+Hit
+  xy: 168, 202
+  size: 56, 46
+Death
+  xy: 0, 248
+  size: 56, 46
+Death
+  xy: 56, 248
+  size: 56, 46
+Death
+  xy: 112, 248
+  size: 56, 46
+Death
+  xy: 168, 248
+  size: 56, 46
+Death
+  xy: 224, 248
+  size: 56, 46
+Death
+  xy: 280, 248
+  size: 56, 46
+IdleUp
+  xy: 0, 294
+  size: 56, 46
+IdleUp
+  xy: 56, 294
+  size: 56, 46
+IdleUp
+  xy: 112, 294
+  size: 56, 46
+IdleUp
+  xy: 168, 294
+  size: 56, 46
+IdleDown
+  xy: 0, 340
+  size: 56, 46
+IdleDown
+  xy: 56, 340
+  size: 56, 46
+IdleDown
+  xy: 112, 340
+  size: 56, 46
+IdleDown
+  xy: 168, 340
+  size: 56, 46
+WalkUp
+  xy: 0, 386
+  size: 56, 46
+WalkUp
+  xy: 56, 386
+  size: 56, 46
+WalkUp
+  xy: 112, 386
+  size: 56, 46
+WalkUp
+  xy: 168, 386
+  size: 56, 46
+WalkDown
+  xy: 0, 432
+  size: 56, 46
+WalkDown
+  xy: 56, 432
+  size: 56, 46
+WalkDown
+  xy: 112, 432
+  size: 56, 46
+WalkDown
+  xy: 168, 432
+  size: 56, 46

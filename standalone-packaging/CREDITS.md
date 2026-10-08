@@ -79,8 +79,11 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 - **RPG Maker MV/MZ creature sheets, second set** (22 enemies, round 476 - the 19 golems and constructs from two
   golem sheets, stone and armored, each tinted to its legend's colors where the sheet had no matching colorway; the
   Squirrel and Chatterfang from a squirrel sheet; the Werewolf from a wolf-beast sheet; their idle breath, lunge, hit
-  and death made from the walk frames) - supplied by the user from the same downloads (`animals`, `Mythological
-  animals`); pack author not named in the files.
+  and death made from the walk frames; and 87 more in round 479 - the liches, necromancers, wraiths and reapers from a
+  hooded-reaper sheet in four colorways, some with their flames turned to a legend's color; the demons, devils, imps and
+  fiends from a crowned-archdemon sheet; the titans, gods and avatars from a many-armed deity sheet; the ghosts, geists,
+  spirits and shades from a sheet-ghost sheet; the three skulls from a floating-skull sheet) - supplied by the user from
+  the same downloads (`animals`, `Mythological animals`); pack author not named in the files.
 - **Heroes of Might and Magic III creature sprites** (37 enemies, the five legend dragons among them, renamed) -
   © New World Computing / The 3DO Company, 1999; sheets from The Spriters Resource, supplied by the user.
 - **Diablo / Diablo: Hellfire monster sprites** (9 enemies, renamed) - © Blizzard North / Synergistic Software,
