@@ -1,0 +1,215 @@
+elsha.png
+size: 1128,1034
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 97
+Idle
+  xy: 94, 64
+  size: 94, 97
+Idle
+  xy: 188, 64
+  size: 94, 97
+Idle
+  xy: 282, 64
+  size: 94, 97
+Idle
+  xy: 376, 64
+  size: 94, 97
+Idle
+  xy: 470, 64
+  size: 94, 97
+Idle
+  xy: 564, 64
+  size: 94, 97
+Idle
+  xy: 658, 64
+  size: 94, 97
+Idle
+  xy: 752, 64
+  size: 94, 97
+Idle
+  xy: 846, 64
+  size: 94, 97
+Walk
+  xy: 0, 161
+  size: 94, 97
+Walk
+  xy: 94, 161
+  size: 94, 97
+Walk
+  xy: 188, 161
+  size: 94, 97
+Walk
+  xy: 282, 161
+  size: 94, 97
+Attack
+  xy: 0, 258
+  size: 94, 97
+Attack
+  xy: 94, 258
+  size: 94, 97
+Attack
+  xy: 188, 258
+  size: 94, 97
+Attack
+  xy: 282, 258
+  size: 94, 97
+Attack
+  xy: 376, 258
+  size: 94, 97
+Hit
+  xy: 0, 355
+  size: 94, 97
+Hit
+  xy: 94, 355
+  size: 94, 97
+Hit
+  xy: 188, 355
+  size: 94, 97
+Hit
+  xy: 282, 355
+  size: 94, 97
+Death
+  xy: 0, 452
+  size: 94, 97
+Death
+  xy: 94, 452
+  size: 94, 97
+Death
+  xy: 188, 452
+  size: 94, 97
+Death
+  xy: 282, 452
+  size: 94, 97
+Death
+  xy: 376, 452
+  size: 94, 97
+Death
+  xy: 470, 452
+  size: 94, 97
+Death
+  xy: 564, 452
+  size: 94, 97
+Death
+  xy: 658, 452
+  size: 94, 97
+Death
+  xy: 752, 452
+  size: 94, 97
+Death
+  xy: 846, 452
+  size: 94, 97
+Death
+  xy: 940, 452
+  size: 94, 97
+Death
+  xy: 1034, 452
+  size: 94, 97
+Wake
+  xy: 0, 549
+  size: 94, 97
+Wake
+  xy: 94, 549
+  size: 94, 97
+Wake
+  xy: 188, 549
+  size: 94, 97
+Wake
+  xy: 282, 549
+  size: 94, 97
+Wake
+  xy: 376, 549
+  size: 94, 97
+Wake
+  xy: 470, 549
+  size: 94, 97
+IdleUp
+  xy: 0, 646
+  size: 94, 97
+IdleUp
+  xy: 94, 646
+  size: 94, 97
+IdleUp
+  xy: 188, 646
+  size: 94, 97
+IdleUp
+  xy: 282, 646
+  size: 94, 97
+IdleUp
+  xy: 376, 646
+  size: 94, 97
+IdleUp
+  xy: 470, 646
+  size: 94, 97
+IdleUp
+  xy: 564, 646
+  size: 94, 97
+IdleUp
+  xy: 658, 646
+  size: 94, 97
+IdleUp
+  xy: 752, 646
+  size: 94, 97
+IdleUp
+  xy: 846, 646
+  size: 94, 97
+IdleDown
+  xy: 0, 743
+  size: 94, 97
+IdleDown
+  xy: 94, 743
+  size: 94, 97
+IdleDown
+  xy: 188, 743
+  size: 94, 97
+IdleDown
+  xy: 282, 743
+  size: 94, 97
+IdleDown
+  xy: 376, 743
+  size: 94, 97
+IdleDown
+  xy: 470, 743
+  size: 94, 97
+IdleDown
+  xy: 564, 743
+  size: 94, 97
+IdleDown
+  xy: 658, 743
+  size: 94, 97
+IdleDown
+  xy: 752, 743
+  size: 94, 97
+IdleDown
+  xy: 846, 743
+  size: 94, 97
+WalkUp
+  xy: 0, 840
+  size: 94, 97
+WalkUp
+  xy: 94, 840
+  size: 94, 97
+WalkUp
+  xy: 188, 840
+  size: 94, 97
+WalkUp
+  xy: 282, 840
+  size: 94, 97
+WalkDown
+  xy: 0, 937
+  size: 94, 97
+WalkDown
+  xy: 94, 937
+  size: 94, 97
+WalkDown
+  xy: 188, 937
+  size: 94, 97
+WalkDown
+  xy: 282, 937
+  size: 94, 97

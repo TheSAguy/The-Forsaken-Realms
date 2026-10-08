@@ -1,0 +1,212 @@
+zahid.png
+size: 864,794
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 73
+Idle
+  xy: 72, 64
+  size: 72, 73
+Idle
+  xy: 144, 64
+  size: 72, 73
+Idle
+  xy: 216, 64
+  size: 72, 73
+Idle
+  xy: 288, 64
+  size: 72, 73
+Idle
+  xy: 360, 64
+  size: 72, 73
+Idle
+  xy: 432, 64
+  size: 72, 73
+Idle
+  xy: 504, 64
+  size: 72, 73
+Idle
+  xy: 576, 64
+  size: 72, 73
+Idle
+  xy: 648, 64
+  size: 72, 73
+Walk
+  xy: 0, 137
+  size: 72, 73
+Walk
+  xy: 72, 137
+  size: 72, 73
+Walk
+  xy: 144, 137
+  size: 72, 73
+Walk
+  xy: 216, 137
+  size: 72, 73
+Attack
+  xy: 0, 210
+  size: 72, 73
+Attack
+  xy: 72, 210
+  size: 72, 73
+Attack
+  xy: 144, 210
+  size: 72, 73
+Attack
+  xy: 216, 210
+  size: 72, 73
+Attack
+  xy: 288, 210
+  size: 72, 73
+Hit
+  xy: 0, 283
+  size: 72, 73
+Hit
+  xy: 72, 283
+  size: 72, 73
+Hit
+  xy: 144, 283
+  size: 72, 73
+Hit
+  xy: 216, 283
+  size: 72, 73
+Death
+  xy: 0, 356
+  size: 72, 73
+Death
+  xy: 72, 356
+  size: 72, 73
+Death
+  xy: 144, 356
+  size: 72, 73
+Death
+  xy: 216, 356
+  size: 72, 73
+Death
+  xy: 288, 356
+  size: 72, 73
+Death
+  xy: 360, 356
+  size: 72, 73
+Death
+  xy: 432, 356
+  size: 72, 73
+Death
+  xy: 504, 356
+  size: 72, 73
+Death
+  xy: 576, 356
+  size: 72, 73
+Death
+  xy: 648, 356
+  size: 72, 73
+Death
+  xy: 720, 356
+  size: 72, 73
+Death
+  xy: 792, 356
+  size: 72, 73
+Wake
+  xy: 0, 429
+  size: 72, 73
+Wake
+  xy: 72, 429
+  size: 72, 73
+Wake
+  xy: 144, 429
+  size: 72, 73
+Wake
+  xy: 216, 429
+  size: 72, 73
+Wake
+  xy: 288, 429
+  size: 72, 73
+IdleUp
+  xy: 0, 502
+  size: 72, 73
+IdleUp
+  xy: 72, 502
+  size: 72, 73
+IdleUp
+  xy: 144, 502
+  size: 72, 73
+IdleUp
+  xy: 216, 502
+  size: 72, 73
+IdleUp
+  xy: 288, 502
+  size: 72, 73
+IdleUp
+  xy: 360, 502
+  size: 72, 73
+IdleUp
+  xy: 432, 502
+  size: 72, 73
+IdleUp
+  xy: 504, 502
+  size: 72, 73
+IdleUp
+  xy: 576, 502
+  size: 72, 73
+IdleUp
+  xy: 648, 502
+  size: 72, 73
+IdleDown
+  xy: 0, 575
+  size: 72, 73
+IdleDown
+  xy: 72, 575
+  size: 72, 73
+IdleDown
+  xy: 144, 575
+  size: 72, 73
+IdleDown
+  xy: 216, 575
+  size: 72, 73
+IdleDown
+  xy: 288, 575
+  size: 72, 73
+IdleDown
+  xy: 360, 575
+  size: 72, 73
+IdleDown
+  xy: 432, 575
+  size: 72, 73
+IdleDown
+  xy: 504, 575
+  size: 72, 73
+IdleDown
+  xy: 576, 575
+  size: 72, 73
+IdleDown
+  xy: 648, 575
+  size: 72, 73
+WalkUp
+  xy: 0, 648
+  size: 72, 73
+WalkUp
+  xy: 72, 648
+  size: 72, 73
+WalkUp
+  xy: 144, 648
+  size: 72, 73
+WalkUp
+  xy: 216, 648
+  size: 72, 73
+WalkDown
+  xy: 0, 721
+  size: 72, 73
+WalkDown
+  xy: 72, 721
+  size: 72, 73
+WalkDown
+  xy: 144, 721
+  size: 72, 73
+WalkDown
+  xy: 216, 721
+  size: 72, 73

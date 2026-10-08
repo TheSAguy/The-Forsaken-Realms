@@ -1,0 +1,230 @@
+eldrazi_devastator.png
+size: 1612,1054
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 124, 99
+Idle
+  xy: 124, 64
+  size: 124, 99
+Idle
+  xy: 248, 64
+  size: 124, 99
+Idle
+  xy: 372, 64
+  size: 124, 99
+Idle
+  xy: 496, 64
+  size: 124, 99
+Idle
+  xy: 620, 64
+  size: 124, 99
+Idle
+  xy: 744, 64
+  size: 124, 99
+Idle
+  xy: 868, 64
+  size: 124, 99
+Idle
+  xy: 992, 64
+  size: 124, 99
+Idle
+  xy: 1116, 64
+  size: 124, 99
+Walk
+  xy: 0, 163
+  size: 124, 99
+Walk
+  xy: 124, 163
+  size: 124, 99
+Walk
+  xy: 248, 163
+  size: 124, 99
+Walk
+  xy: 372, 163
+  size: 124, 99
+Attack
+  xy: 0, 262
+  size: 124, 99
+Attack
+  xy: 124, 262
+  size: 124, 99
+Attack
+  xy: 248, 262
+  size: 124, 99
+Attack
+  xy: 372, 262
+  size: 124, 99
+Attack
+  xy: 496, 262
+  size: 124, 99
+Attack
+  xy: 620, 262
+  size: 124, 99
+Attack
+  xy: 744, 262
+  size: 124, 99
+Attack
+  xy: 868, 262
+  size: 124, 99
+Hit
+  xy: 0, 361
+  size: 124, 99
+Hit
+  xy: 124, 361
+  size: 124, 99
+Hit
+  xy: 248, 361
+  size: 124, 99
+Hit
+  xy: 372, 361
+  size: 124, 99
+Hit
+  xy: 496, 361
+  size: 124, 99
+Death
+  xy: 0, 460
+  size: 124, 99
+Death
+  xy: 124, 460
+  size: 124, 99
+Death
+  xy: 248, 460
+  size: 124, 99
+Death
+  xy: 372, 460
+  size: 124, 99
+Death
+  xy: 496, 460
+  size: 124, 99
+Death
+  xy: 620, 460
+  size: 124, 99
+Death
+  xy: 744, 460
+  size: 124, 99
+Death
+  xy: 868, 460
+  size: 124, 99
+Death
+  xy: 992, 460
+  size: 124, 99
+Death
+  xy: 1116, 460
+  size: 124, 99
+Death
+  xy: 1240, 460
+  size: 124, 99
+Death
+  xy: 1364, 460
+  size: 124, 99
+Death
+  xy: 1488, 460
+  size: 124, 99
+Wake
+  xy: 0, 559
+  size: 124, 99
+Wake
+  xy: 124, 559
+  size: 124, 99
+Wake
+  xy: 248, 559
+  size: 124, 99
+Wake
+  xy: 372, 559
+  size: 124, 99
+Wake
+  xy: 496, 559
+  size: 124, 99
+Wake
+  xy: 620, 559
+  size: 124, 99
+IdleUp
+  xy: 0, 658
+  size: 124, 99
+IdleUp
+  xy: 124, 658
+  size: 124, 99
+IdleUp
+  xy: 248, 658
+  size: 124, 99
+IdleUp
+  xy: 372, 658
+  size: 124, 99
+IdleUp
+  xy: 496, 658
+  size: 124, 99
+IdleUp
+  xy: 620, 658
+  size: 124, 99
+IdleUp
+  xy: 744, 658
+  size: 124, 99
+IdleUp
+  xy: 868, 658
+  size: 124, 99
+IdleUp
+  xy: 992, 658
+  size: 124, 99
+IdleUp
+  xy: 1116, 658
+  size: 124, 99
+IdleDown
+  xy: 0, 757
+  size: 124, 99
+IdleDown
+  xy: 124, 757
+  size: 124, 99
+IdleDown
+  xy: 248, 757
+  size: 124, 99
+IdleDown
+  xy: 372, 757
+  size: 124, 99
+IdleDown
+  xy: 496, 757
+  size: 124, 99
+IdleDown
+  xy: 620, 757
+  size: 124, 99
+IdleDown
+  xy: 744, 757
+  size: 124, 99
+IdleDown
+  xy: 868, 757
+  size: 124, 99
+IdleDown
+  xy: 992, 757
+  size: 124, 99
+IdleDown
+  xy: 1116, 757
+  size: 124, 99
+WalkUp
+  xy: 0, 856
+  size: 124, 99
+WalkUp
+  xy: 124, 856
+  size: 124, 99
+WalkUp
+  xy: 248, 856
+  size: 124, 99
+WalkUp
+  xy: 372, 856
+  size: 124, 99
+WalkDown
+  xy: 0, 955
+  size: 124, 99
+WalkDown
+  xy: 124, 955
+  size: 124, 99
+WalkDown
+  xy: 248, 955
+  size: 124, 99
+WalkDown
+  xy: 372, 955
+  size: 124, 99

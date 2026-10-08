@@ -1,0 +1,257 @@
+gargoyle.png
+size: 1652,994
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 118, 93
+Idle
+  xy: 118, 64
+  size: 118, 93
+Idle
+  xy: 236, 64
+  size: 118, 93
+Idle
+  xy: 354, 64
+  size: 118, 93
+Idle
+  xy: 472, 64
+  size: 118, 93
+Idle
+  xy: 590, 64
+  size: 118, 93
+Idle
+  xy: 708, 64
+  size: 118, 93
+Idle
+  xy: 826, 64
+  size: 118, 93
+Idle
+  xy: 944, 64
+  size: 118, 93
+Idle
+  xy: 1062, 64
+  size: 118, 93
+Walk
+  xy: 0, 157
+  size: 118, 93
+Walk
+  xy: 118, 157
+  size: 118, 93
+Walk
+  xy: 236, 157
+  size: 118, 93
+Walk
+  xy: 354, 157
+  size: 118, 93
+Walk
+  xy: 472, 157
+  size: 118, 93
+Walk
+  xy: 590, 157
+  size: 118, 93
+Attack
+  xy: 0, 250
+  size: 118, 93
+Attack
+  xy: 118, 250
+  size: 118, 93
+Attack
+  xy: 236, 250
+  size: 118, 93
+Attack
+  xy: 354, 250
+  size: 118, 93
+Attack
+  xy: 472, 250
+  size: 118, 93
+Attack
+  xy: 590, 250
+  size: 118, 93
+Attack
+  xy: 708, 250
+  size: 118, 93
+Hit
+  xy: 0, 343
+  size: 118, 93
+Hit
+  xy: 118, 343
+  size: 118, 93
+Hit
+  xy: 236, 343
+  size: 118, 93
+Hit
+  xy: 354, 343
+  size: 118, 93
+Hit
+  xy: 472, 343
+  size: 118, 93
+Hit
+  xy: 590, 343
+  size: 118, 93
+Death
+  xy: 0, 436
+  size: 118, 93
+Death
+  xy: 118, 436
+  size: 118, 93
+Death
+  xy: 236, 436
+  size: 118, 93
+Death
+  xy: 354, 436
+  size: 118, 93
+Death
+  xy: 472, 436
+  size: 118, 93
+Death
+  xy: 590, 436
+  size: 118, 93
+Death
+  xy: 708, 436
+  size: 118, 93
+Death
+  xy: 826, 436
+  size: 118, 93
+Death
+  xy: 944, 436
+  size: 118, 93
+Death
+  xy: 1062, 436
+  size: 118, 93
+Death
+  xy: 1180, 436
+  size: 118, 93
+Death
+  xy: 1298, 436
+  size: 118, 93
+Death
+  xy: 1416, 436
+  size: 118, 93
+Death
+  xy: 1534, 436
+  size: 118, 93
+Wake
+  xy: 0, 529
+  size: 118, 93
+Wake
+  xy: 118, 529
+  size: 118, 93
+Wake
+  xy: 236, 529
+  size: 118, 93
+Wake
+  xy: 354, 529
+  size: 118, 93
+Wake
+  xy: 472, 529
+  size: 118, 93
+Wake
+  xy: 590, 529
+  size: 118, 93
+Wake
+  xy: 708, 529
+  size: 118, 93
+Wake
+  xy: 826, 529
+  size: 118, 93
+IdleUp
+  xy: 0, 622
+  size: 118, 93
+IdleUp
+  xy: 118, 622
+  size: 118, 93
+IdleUp
+  xy: 236, 622
+  size: 118, 93
+IdleUp
+  xy: 354, 622
+  size: 118, 93
+IdleUp
+  xy: 472, 622
+  size: 118, 93
+IdleUp
+  xy: 590, 622
+  size: 118, 93
+IdleUp
+  xy: 708, 622
+  size: 118, 93
+IdleUp
+  xy: 826, 622
+  size: 118, 93
+IdleUp
+  xy: 944, 622
+  size: 118, 93
+IdleUp
+  xy: 1062, 622
+  size: 118, 93
+IdleDown
+  xy: 0, 715
+  size: 118, 93
+IdleDown
+  xy: 118, 715
+  size: 118, 93
+IdleDown
+  xy: 236, 715
+  size: 118, 93
+IdleDown
+  xy: 354, 715
+  size: 118, 93
+IdleDown
+  xy: 472, 715
+  size: 118, 93
+IdleDown
+  xy: 590, 715
+  size: 118, 93
+IdleDown
+  xy: 708, 715
+  size: 118, 93
+IdleDown
+  xy: 826, 715
+  size: 118, 93
+IdleDown
+  xy: 944, 715
+  size: 118, 93
+IdleDown
+  xy: 1062, 715
+  size: 118, 93
+WalkUp
+  xy: 0, 808
+  size: 118, 93
+WalkUp
+  xy: 118, 808
+  size: 118, 93
+WalkUp
+  xy: 236, 808
+  size: 118, 93
+WalkUp
+  xy: 354, 808
+  size: 118, 93
+WalkUp
+  xy: 472, 808
+  size: 118, 93
+WalkUp
+  xy: 590, 808
+  size: 118, 93
+WalkDown
+  xy: 0, 901
+  size: 118, 93
+WalkDown
+  xy: 118, 901
+  size: 118, 93
+WalkDown
+  xy: 236, 901
+  size: 118, 93
+WalkDown
+  xy: 354, 901
+  size: 118, 93
+WalkDown
+  xy: 472, 901
+  size: 118, 93
+WalkDown
+  xy: 590, 901
+  size: 118, 93

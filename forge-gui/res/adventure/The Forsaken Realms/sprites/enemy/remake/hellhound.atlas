@@ -1,0 +1,245 @@
+hellhound.png
+size: 896,644
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 64, 58
+Idle
+  xy: 64, 64
+  size: 64, 58
+Idle
+  xy: 128, 64
+  size: 64, 58
+Idle
+  xy: 192, 64
+  size: 64, 58
+Idle
+  xy: 256, 64
+  size: 64, 58
+Idle
+  xy: 320, 64
+  size: 64, 58
+Idle
+  xy: 384, 64
+  size: 64, 58
+Idle
+  xy: 448, 64
+  size: 64, 58
+Idle
+  xy: 512, 64
+  size: 64, 58
+Idle
+  xy: 576, 64
+  size: 64, 58
+Walk
+  xy: 0, 122
+  size: 64, 58
+Walk
+  xy: 64, 122
+  size: 64, 58
+Walk
+  xy: 128, 122
+  size: 64, 58
+Walk
+  xy: 192, 122
+  size: 64, 58
+Walk
+  xy: 256, 122
+  size: 64, 58
+Walk
+  xy: 320, 122
+  size: 64, 58
+Attack
+  xy: 0, 180
+  size: 64, 58
+Attack
+  xy: 64, 180
+  size: 64, 58
+Attack
+  xy: 128, 180
+  size: 64, 58
+Attack
+  xy: 192, 180
+  size: 64, 58
+Attack
+  xy: 256, 180
+  size: 64, 58
+Attack
+  xy: 320, 180
+  size: 64, 58
+Hit
+  xy: 0, 238
+  size: 64, 58
+Hit
+  xy: 64, 238
+  size: 64, 58
+Hit
+  xy: 128, 238
+  size: 64, 58
+Hit
+  xy: 192, 238
+  size: 64, 58
+Hit
+  xy: 256, 238
+  size: 64, 58
+Death
+  xy: 0, 296
+  size: 64, 58
+Death
+  xy: 64, 296
+  size: 64, 58
+Death
+  xy: 128, 296
+  size: 64, 58
+Death
+  xy: 192, 296
+  size: 64, 58
+Death
+  xy: 256, 296
+  size: 64, 58
+Death
+  xy: 320, 296
+  size: 64, 58
+Death
+  xy: 384, 296
+  size: 64, 58
+Death
+  xy: 448, 296
+  size: 64, 58
+Death
+  xy: 512, 296
+  size: 64, 58
+Death
+  xy: 576, 296
+  size: 64, 58
+Death
+  xy: 640, 296
+  size: 64, 58
+Death
+  xy: 704, 296
+  size: 64, 58
+Death
+  xy: 768, 296
+  size: 64, 58
+Death
+  xy: 832, 296
+  size: 64, 58
+Wake
+  xy: 0, 354
+  size: 64, 58
+Wake
+  xy: 64, 354
+  size: 64, 58
+Wake
+  xy: 128, 354
+  size: 64, 58
+Wake
+  xy: 192, 354
+  size: 64, 58
+Wake
+  xy: 256, 354
+  size: 64, 58
+Wake
+  xy: 320, 354
+  size: 64, 58
+IdleUp
+  xy: 0, 412
+  size: 64, 58
+IdleUp
+  xy: 64, 412
+  size: 64, 58
+IdleUp
+  xy: 128, 412
+  size: 64, 58
+IdleUp
+  xy: 192, 412
+  size: 64, 58
+IdleUp
+  xy: 256, 412
+  size: 64, 58
+IdleUp
+  xy: 320, 412
+  size: 64, 58
+IdleUp
+  xy: 384, 412
+  size: 64, 58
+IdleUp
+  xy: 448, 412
+  size: 64, 58
+IdleUp
+  xy: 512, 412
+  size: 64, 58
+IdleUp
+  xy: 576, 412
+  size: 64, 58
+IdleDown
+  xy: 0, 470
+  size: 64, 58
+IdleDown
+  xy: 64, 470
+  size: 64, 58
+IdleDown
+  xy: 128, 470
+  size: 64, 58
+IdleDown
+  xy: 192, 470
+  size: 64, 58
+IdleDown
+  xy: 256, 470
+  size: 64, 58
+IdleDown
+  xy: 320, 470
+  size: 64, 58
+IdleDown
+  xy: 384, 470
+  size: 64, 58
+IdleDown
+  xy: 448, 470
+  size: 64, 58
+IdleDown
+  xy: 512, 470
+  size: 64, 58
+IdleDown
+  xy: 576, 470
+  size: 64, 58
+WalkUp
+  xy: 0, 528
+  size: 64, 58
+WalkUp
+  xy: 64, 528
+  size: 64, 58
+WalkUp
+  xy: 128, 528
+  size: 64, 58
+WalkUp
+  xy: 192, 528
+  size: 64, 58
+WalkUp
+  xy: 256, 528
+  size: 64, 58
+WalkUp
+  xy: 320, 528
+  size: 64, 58
+WalkDown
+  xy: 0, 586
+  size: 64, 58
+WalkDown
+  xy: 64, 586
+  size: 64, 58
+WalkDown
+  xy: 128, 586
+  size: 64, 58
+WalkDown
+  xy: 192, 586
+  size: 64, 58
+WalkDown
+  xy: 256, 586
+  size: 64, 58
+WalkDown
+  xy: 320, 586
+  size: 64, 58

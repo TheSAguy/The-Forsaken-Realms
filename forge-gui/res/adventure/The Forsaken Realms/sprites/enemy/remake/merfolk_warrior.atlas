@@ -1,0 +1,212 @@
+merfolk_warrior.png
+size: 888,824
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 76
+Idle
+  xy: 74, 64
+  size: 74, 76
+Idle
+  xy: 148, 64
+  size: 74, 76
+Idle
+  xy: 222, 64
+  size: 74, 76
+Idle
+  xy: 296, 64
+  size: 74, 76
+Idle
+  xy: 370, 64
+  size: 74, 76
+Idle
+  xy: 444, 64
+  size: 74, 76
+Idle
+  xy: 518, 64
+  size: 74, 76
+Idle
+  xy: 592, 64
+  size: 74, 76
+Idle
+  xy: 666, 64
+  size: 74, 76
+Walk
+  xy: 0, 140
+  size: 74, 76
+Walk
+  xy: 74, 140
+  size: 74, 76
+Walk
+  xy: 148, 140
+  size: 74, 76
+Walk
+  xy: 222, 140
+  size: 74, 76
+Attack
+  xy: 0, 216
+  size: 74, 76
+Attack
+  xy: 74, 216
+  size: 74, 76
+Attack
+  xy: 148, 216
+  size: 74, 76
+Attack
+  xy: 222, 216
+  size: 74, 76
+Attack
+  xy: 296, 216
+  size: 74, 76
+Hit
+  xy: 0, 292
+  size: 74, 76
+Hit
+  xy: 74, 292
+  size: 74, 76
+Hit
+  xy: 148, 292
+  size: 74, 76
+Hit
+  xy: 222, 292
+  size: 74, 76
+Death
+  xy: 0, 368
+  size: 74, 76
+Death
+  xy: 74, 368
+  size: 74, 76
+Death
+  xy: 148, 368
+  size: 74, 76
+Death
+  xy: 222, 368
+  size: 74, 76
+Death
+  xy: 296, 368
+  size: 74, 76
+Death
+  xy: 370, 368
+  size: 74, 76
+Death
+  xy: 444, 368
+  size: 74, 76
+Death
+  xy: 518, 368
+  size: 74, 76
+Death
+  xy: 592, 368
+  size: 74, 76
+Death
+  xy: 666, 368
+  size: 74, 76
+Death
+  xy: 740, 368
+  size: 74, 76
+Death
+  xy: 814, 368
+  size: 74, 76
+Wake
+  xy: 0, 444
+  size: 74, 76
+Wake
+  xy: 74, 444
+  size: 74, 76
+Wake
+  xy: 148, 444
+  size: 74, 76
+Wake
+  xy: 222, 444
+  size: 74, 76
+Wake
+  xy: 296, 444
+  size: 74, 76
+IdleUp
+  xy: 0, 520
+  size: 74, 76
+IdleUp
+  xy: 74, 520
+  size: 74, 76
+IdleUp
+  xy: 148, 520
+  size: 74, 76
+IdleUp
+  xy: 222, 520
+  size: 74, 76
+IdleUp
+  xy: 296, 520
+  size: 74, 76
+IdleUp
+  xy: 370, 520
+  size: 74, 76
+IdleUp
+  xy: 444, 520
+  size: 74, 76
+IdleUp
+  xy: 518, 520
+  size: 74, 76
+IdleUp
+  xy: 592, 520
+  size: 74, 76
+IdleUp
+  xy: 666, 520
+  size: 74, 76
+IdleDown
+  xy: 0, 596
+  size: 74, 76
+IdleDown
+  xy: 74, 596
+  size: 74, 76
+IdleDown
+  xy: 148, 596
+  size: 74, 76
+IdleDown
+  xy: 222, 596
+  size: 74, 76
+IdleDown
+  xy: 296, 596
+  size: 74, 76
+IdleDown
+  xy: 370, 596
+  size: 74, 76
+IdleDown
+  xy: 444, 596
+  size: 74, 76
+IdleDown
+  xy: 518, 596
+  size: 74, 76
+IdleDown
+  xy: 592, 596
+  size: 74, 76
+IdleDown
+  xy: 666, 596
+  size: 74, 76
+WalkUp
+  xy: 0, 672
+  size: 74, 76
+WalkUp
+  xy: 74, 672
+  size: 74, 76
+WalkUp
+  xy: 148, 672
+  size: 74, 76
+WalkUp
+  xy: 222, 672
+  size: 74, 76
+WalkDown
+  xy: 0, 748
+  size: 74, 76
+WalkDown
+  xy: 74, 748
+  size: 74, 76
+WalkDown
+  xy: 148, 748
+  size: 74, 76
+WalkDown
+  xy: 222, 748
+  size: 74, 76

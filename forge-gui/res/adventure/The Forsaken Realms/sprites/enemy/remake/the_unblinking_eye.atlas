@@ -1,0 +1,281 @@
+the_unblinking_eye.png
+size: 1764,1204
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 98, 114
+Idle
+  xy: 98, 64
+  size: 98, 114
+Idle
+  xy: 196, 64
+  size: 98, 114
+Idle
+  xy: 294, 64
+  size: 98, 114
+Idle
+  xy: 392, 64
+  size: 98, 114
+Idle
+  xy: 490, 64
+  size: 98, 114
+Idle
+  xy: 588, 64
+  size: 98, 114
+Idle
+  xy: 686, 64
+  size: 98, 114
+Idle
+  xy: 784, 64
+  size: 98, 114
+Idle
+  xy: 882, 64
+  size: 98, 114
+Walk
+  xy: 0, 178
+  size: 98, 114
+Walk
+  xy: 98, 178
+  size: 98, 114
+Walk
+  xy: 196, 178
+  size: 98, 114
+Walk
+  xy: 294, 178
+  size: 98, 114
+Attack
+  xy: 0, 292
+  size: 98, 114
+Attack
+  xy: 98, 292
+  size: 98, 114
+Attack
+  xy: 196, 292
+  size: 98, 114
+Attack
+  xy: 294, 292
+  size: 98, 114
+Attack
+  xy: 392, 292
+  size: 98, 114
+Attack
+  xy: 490, 292
+  size: 98, 114
+Attack
+  xy: 588, 292
+  size: 98, 114
+Attack
+  xy: 686, 292
+  size: 98, 114
+Attack
+  xy: 784, 292
+  size: 98, 114
+Attack
+  xy: 882, 292
+  size: 98, 114
+Attack
+  xy: 980, 292
+  size: 98, 114
+Attack
+  xy: 1078, 292
+  size: 98, 114
+Attack
+  xy: 1176, 292
+  size: 98, 114
+Attack
+  xy: 1274, 292
+  size: 98, 114
+Attack
+  xy: 1372, 292
+  size: 98, 114
+Hit
+  xy: 0, 406
+  size: 98, 114
+Hit
+  xy: 98, 406
+  size: 98, 114
+Hit
+  xy: 196, 406
+  size: 98, 114
+Hit
+  xy: 294, 406
+  size: 98, 114
+Hit
+  xy: 392, 406
+  size: 98, 114
+Hit
+  xy: 490, 406
+  size: 98, 114
+Hit
+  xy: 588, 406
+  size: 98, 114
+Death
+  xy: 0, 520
+  size: 98, 114
+Death
+  xy: 98, 520
+  size: 98, 114
+Death
+  xy: 196, 520
+  size: 98, 114
+Death
+  xy: 294, 520
+  size: 98, 114
+Death
+  xy: 392, 520
+  size: 98, 114
+Death
+  xy: 490, 520
+  size: 98, 114
+Death
+  xy: 588, 520
+  size: 98, 114
+Death
+  xy: 686, 520
+  size: 98, 114
+Death
+  xy: 784, 520
+  size: 98, 114
+Death
+  xy: 882, 520
+  size: 98, 114
+Death
+  xy: 980, 520
+  size: 98, 114
+Death
+  xy: 1078, 520
+  size: 98, 114
+Death
+  xy: 1176, 520
+  size: 98, 114
+Death
+  xy: 1274, 520
+  size: 98, 114
+Death
+  xy: 1372, 520
+  size: 98, 114
+Death
+  xy: 1470, 520
+  size: 98, 114
+Death
+  xy: 1568, 520
+  size: 98, 114
+Death
+  xy: 1666, 520
+  size: 98, 114
+Wake
+  xy: 0, 634
+  size: 98, 114
+Wake
+  xy: 98, 634
+  size: 98, 114
+Wake
+  xy: 196, 634
+  size: 98, 114
+Wake
+  xy: 294, 634
+  size: 98, 114
+Wake
+  xy: 392, 634
+  size: 98, 114
+Wake
+  xy: 490, 634
+  size: 98, 114
+Wake
+  xy: 588, 634
+  size: 98, 114
+Wake
+  xy: 686, 634
+  size: 98, 114
+Wake
+  xy: 784, 634
+  size: 98, 114
+IdleUp
+  xy: 0, 748
+  size: 98, 114
+IdleUp
+  xy: 98, 748
+  size: 98, 114
+IdleUp
+  xy: 196, 748
+  size: 98, 114
+IdleUp
+  xy: 294, 748
+  size: 98, 114
+IdleUp
+  xy: 392, 748
+  size: 98, 114
+IdleUp
+  xy: 490, 748
+  size: 98, 114
+IdleUp
+  xy: 588, 748
+  size: 98, 114
+IdleUp
+  xy: 686, 748
+  size: 98, 114
+IdleUp
+  xy: 784, 748
+  size: 98, 114
+IdleUp
+  xy: 882, 748
+  size: 98, 114
+IdleDown
+  xy: 0, 862
+  size: 98, 114
+IdleDown
+  xy: 98, 862
+  size: 98, 114
+IdleDown
+  xy: 196, 862
+  size: 98, 114
+IdleDown
+  xy: 294, 862
+  size: 98, 114
+IdleDown
+  xy: 392, 862
+  size: 98, 114
+IdleDown
+  xy: 490, 862
+  size: 98, 114
+IdleDown
+  xy: 588, 862
+  size: 98, 114
+IdleDown
+  xy: 686, 862
+  size: 98, 114
+IdleDown
+  xy: 784, 862
+  size: 98, 114
+IdleDown
+  xy: 882, 862
+  size: 98, 114
+WalkUp
+  xy: 0, 976
+  size: 98, 114
+WalkUp
+  xy: 98, 976
+  size: 98, 114
+WalkUp
+  xy: 196, 976
+  size: 98, 114
+WalkUp
+  xy: 294, 976
+  size: 98, 114
+WalkDown
+  xy: 0, 1090
+  size: 98, 114
+WalkDown
+  xy: 98, 1090
+  size: 98, 114
+WalkDown
+  xy: 196, 1090
+  size: 98, 114
+WalkDown
+  xy: 294, 1090
+  size: 98, 114

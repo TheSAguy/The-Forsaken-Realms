@@ -5748,7 +5748,7 @@
     },
     {
         "name": "Chandra's Hellhound",
-        "sprite": "sprites/enemy/fiend/hellhound_2.atlas",
+        "sprite": "sprites/enemy/remake/chandra_s_hellhound.atlas",
         "deck": [
             "decks/standard/hellhound2.dck"
         ],
@@ -5850,7 +5850,7 @@
             "IdentityRed"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Chandra's Immolator",
@@ -8795,7 +8795,7 @@
     },
     {
         "name": "Djinn",
-        "sprite": "sprites/enemy/elemental/djinn.atlas",
+        "sprite": "sprites/enemy/remake/djinn.atlas",
         "deck": [
             "decks/standard/djinn.json"
         ],
@@ -8876,7 +8876,8 @@
             "IdentityIzzet",
             "BiomeBlue"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3023
     },
     {
         "name": "Dog",
@@ -9777,7 +9778,7 @@
     },
     {
         "name": "Earth Elemental",
-        "sprite": "sprites/enemy/elemental/earthelemental.atlas",
+        "sprite": "sprites/enemy/remake/earth_elemental.atlas",
         "deck": [
             "decks/standard/earth_elemental.dck"
         ],
@@ -9785,7 +9786,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 1.0,
+        "scale": 0.3714,
         "life": 14,
         "rewards": [
             {
@@ -9825,7 +9826,7 @@
     },
     {
         "name": "Efreet",
-        "sprite": "sprites/enemy/elemental/efreet_2.atlas",
+        "sprite": "sprites/enemy/remake/efreet.atlas",
         "deck": [
             "decks/standard/efreet.dck"
         ],
@@ -9860,7 +9861,7 @@
             "BiomeRed"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Eldraine Faerie",
@@ -10193,7 +10194,7 @@
     },
     {
         "name": "Eldrazi Devastator",
-        "sprite": "sprites/enemy/aberration/eldrazi/eldrazi_large.atlas",
+        "sprite": "sprites/enemy/remake/eldrazi_devastator.atlas",
         "deck": [
             "decks/standard/eldrazilarge.dck"
         ],
@@ -10285,11 +10286,11 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.4815
+        "scale": 0.2321
     },
     {
         "name": "Eldrazi Floater",
-        "sprite": "sprites/enemy/aberration/eldrazi/eldrazi_2.atlas",
+        "sprite": "sprites/enemy/remake/eldrazi_floater.atlas",
         "deck": [
             "decks/standard/eldrazi_floater_r111.dck"
         ],
@@ -10298,7 +10299,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 24,
-        "scale": 0.2889,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -10386,7 +10387,7 @@
     {
         "name": "Elemental",
         "nameOverride": "Air Elemental",
-        "sprite": "sprites/enemy/elemental/crystalelemental.atlas",
+        "sprite": "sprites/enemy/remake/elemental.atlas",
         "deck": [
             "decks/standard/elemental_air.dck"
         ],
@@ -10428,7 +10429,8 @@
             "IdentityBlue",
             "BiomeBlue"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.2407
     },
     {
         "name": "Elephant",
@@ -11305,7 +11307,7 @@
     },
     {
         "name": "Faerie Dragon",
-        "sprite": "sprites/enemy/fey/faerie_dragon.atlas",
+        "sprite": "sprites/enemy/remake/faerie_dragon.atlas",
         "deck": [
             "decks/standard/faeriedragon.dck"
         ],
@@ -11387,7 +11389,7 @@
             "IdentityDimir"
         ],
         "tier": "Rare",
-        "scale": 0.5909
+        "scale": 0.2321
     },
     {
         "name": "Falcon",
@@ -11947,7 +11949,7 @@
     },
     {
         "name": "Fire Elemental",
-        "sprite": "sprites/enemy/elemental/fireelemental.atlas",
+        "sprite": "sprites/enemy/remake/fire_elemental.atlas",
         "deck": [
             "decks/standard/fire_elemental.dck"
         ],
@@ -12028,7 +12030,7 @@
             "BiomeRed"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3611
     },
     {
         "name": "Fire Giant",
@@ -12106,7 +12108,7 @@
     },
     {
         "name": "Flame Elemental",
-        "sprite": "sprites/enemy/elemental/magmaelemental.atlas",
+        "sprite": "sprites/enemy/remake/flame_elemental.atlas",
         "deck": [
             "decks/standard/flame_elemental.dck"
         ],
@@ -12185,7 +12187,7 @@
             "BiomeRed"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Flesh Abomination",
@@ -13016,7 +13018,7 @@
     {
         "name": "Gargoyle",
         "nameOverride": "Obsidian Gargoyle",
-        "sprite": "sprites/enemy/construct/gargoyle.atlas",
+        "sprite": "sprites/enemy/remake/gargoyle.atlas",
         "deck": [
             "decks/standard/gargoyle.json"
         ],
@@ -13104,12 +13106,12 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.3
+        "scale": 0.2407
     },
     {
         "name": "Gargoyle 2",
         "nameOverride": "Granite Gargoyle",
-        "sprite": "sprites/enemy/construct/gargoyle_2.atlas",
+        "sprite": "sprites/enemy/remake/gargoyle_2.atlas",
         "deck": [
             "decks/standard/gargoyle.dck"
         ],
@@ -13194,7 +13196,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3824
     },
     {
         "name": "Garruk",
@@ -13452,7 +13454,7 @@
     },
     {
         "name": "Geonid Death-Cap",
-        "sprite": "sprites/enemy/aberration/geonid.atlas",
+        "sprite": "sprites/enemy/remake/geonid_death_cap.atlas",
         "deck": [
             "decks/standard/geonid.dck"
         ],
@@ -13460,7 +13462,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 1.1818,
+        "scale": 0.3736,
         "life": 11,
         "rewards": [
             {
@@ -16588,7 +16590,7 @@
     },
     {
         "name": "Hellhound",
-        "sprite": "sprites/enemy/fiend/hellhound_2.atlas",
+        "sprite": "sprites/enemy/remake/hellhound.atlas",
         "deck": [
             "decks/standard/hellhound.dck"
         ],
@@ -16672,7 +16674,7 @@
             "BiomeRed"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3611
     },
     {
         "name": "Hellion",
@@ -18247,7 +18249,7 @@
     },
     {
         "name": "Ice Elemental",
-        "sprite": "sprites/enemy/elemental/iceelemental2.atlas",
+        "sprite": "sprites/enemy/remake/ice_elemental.atlas",
         "deck": [
             "decks/standard/ice_elemental.dck"
         ],
@@ -18284,7 +18286,8 @@
             "Mythical",
             "IdentitySelesnya"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3514
     },
     {
         "name": "Illusionist",
@@ -20276,7 +20279,7 @@
     },
     {
         "name": "Lightning Elemental",
-        "sprite": "sprites/enemy/elemental/lightningelemental.atlas",
+        "sprite": "sprites/enemy/remake/lightning_elemental.atlas",
         "deck": [
             "decks/standard/lightning_elemental.dck"
         ],
@@ -20378,7 +20381,7 @@
             "IdentityRed"
         ],
         "tier": "Uncommon",
-        "scale": 1.2037
+        "scale": 0.2889
     },
     {
         "name": "Liliana",
@@ -21064,7 +21067,7 @@
     },
     {
         "name": "Magma Elemental",
-        "sprite": "sprites/enemy/elemental/magmaelemental.atlas",
+        "sprite": "sprites/enemy/remake/magma_elemental.atlas",
         "deck": [
             "decks/standard/magma_elemental.dck"
         ],
@@ -21167,11 +21170,11 @@
             "IdentityRed"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Magma Fire Elemental",
-        "sprite": "sprites/enemy/elemental/magmafireelemental.atlas",
+        "sprite": "sprites/enemy/remake/magma_fire_elemental.atlas",
         "deck": [
             "decks/standard/magma_fire_elemental_r111.dck"
         ],
@@ -21232,7 +21235,7 @@
             "Inhuman"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3714
     },
     {
         "name": "Master Black Wizard",
@@ -21518,7 +21521,7 @@
     {
         "name": "Merfolk",
         "nameOverride": "Merfolk Raider",
-        "sprite": "sprites/enemy/elemental/waterelemental.atlas",
+        "sprite": "sprites/enemy/remake/merfolk.atlas",
         "deck": [
             "decks/standard/merfolk_bad.json"
         ],
@@ -21565,7 +21568,7 @@
             "Minion"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3714
     },
     {
         "name": "Merfolk Avatar",
@@ -21889,7 +21892,7 @@
     {
         "name": "Merfolk warrior",
         "nameOverride": "Merfolk Warrior",
-        "sprite": "sprites/enemy/elemental/airelemental.atlas",
+        "sprite": "sprites/enemy/remake/merfolk_warrior.atlas",
         "deck": [
             "decks/standard/merfolk_mid.json"
         ],
@@ -21937,11 +21940,11 @@
             "BiomeBlue"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Metallic Sliver",
-        "sprite": "sprites/enemy/aberration/sliver_black.atlas",
+        "sprite": "sprites/enemy/remake/metallic_sliver.atlas",
         "deck": [
             "decks/standard/sliver_metallicsliver.dck"
         ],
@@ -21989,11 +21992,12 @@
             "IdentityColorless"
         ],
         "tier": "Rare",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.2407
     },
     {
         "name": "Mighty Djinn",
-        "sprite": "sprites/enemy/elemental/genie.atlas",
+        "sprite": "sprites/enemy/remake/mighty_djinn.atlas",
         "deck": [
             "decks/standard/mighty_djinn.dck"
         ],
@@ -22002,7 +22006,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.52,
+        "scale": 0.2407,
         "life": 24,
         "rewards": [
             {
@@ -23544,7 +23548,7 @@
     },
     {
         "name": "Nightmare",
-        "sprite": "sprites/enemy/fiend/nightmare.atlas",
+        "sprite": "sprites/enemy/remake/nightmare.atlas",
         "deck": [
             "decks/standard/nightmare.dck"
         ],
@@ -23552,7 +23556,7 @@
         "spawnRate": 0.3,
         "difficulty": 0.8,
         "speed": 16,
-        "scale": 0.6842,
+        "scale": 0.197,
         "life": 30,
         "rewards": [
             {
@@ -26108,7 +26112,7 @@
     },
     {
         "name": "Recruiter Sliver",
-        "sprite": "sprites/enemy/aberration/sliver_black.atlas",
+        "sprite": "sprites/enemy/remake/recruiter_sliver.atlas",
         "deck": [
             "decks/standard/sliver_recruitersliver.dck"
         ],
@@ -26159,7 +26163,8 @@
             "BiomeBlack"
         ],
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.2955
     },
     {
         "name": "Red Beast",
@@ -27773,7 +27778,7 @@
     },
     {
         "name": "Slivdrazi Experiment",
-        "sprite": "sprites/enemy/aberration/sliverexperiment.atlas",
+        "sprite": "sprites/enemy/remake/slivdrazi_experiment.atlas",
         "deck": [
             "decks/standard/sliver_slivdrazi.dck"
         ],
@@ -27820,11 +27825,12 @@
             "Eldrazi"
         ],
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.2381
     },
     {
         "name": "Sliver",
-        "sprite": "sprites/enemy/aberration/sliver.atlas",
+        "sprite": "sprites/enemy/remake/sliver.atlas",
         "deck": [
             "decks/standard/sliver.json"
         ],
@@ -27856,7 +27862,8 @@
             "IdentityWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2955
     },
     {
         "name": "Sliver Queen",
@@ -28041,7 +28048,7 @@
     {
         "name": "Sliver_Black",
         "nameOverride": "Black Sliver",
-        "sprite": "sprites/enemy/aberration/sliver_black.atlas",
+        "sprite": "sprites/enemy/remake/sliver_black.atlas",
         "deck": [
             "decks/standard/sliver_black.dck"
         ],
@@ -28092,12 +28099,13 @@
             "IdentityGrixis",
             "BiomeBlack"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.2381
     },
     {
         "name": "Sliver_Blue",
         "nameOverride": "Blue Sliver",
-        "sprite": "sprites/enemy/aberration/sliver_blue.atlas",
+        "sprite": "sprites/enemy/remake/sliver_blue.atlas",
         "deck": [
             "decks/standard/sliver_blue.dck"
         ],
@@ -28148,12 +28156,13 @@
             "IdentityEsper",
             "BiomeBlue"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.2381
     },
     {
         "name": "Sliver_Green",
         "nameOverride": "Green Sliver",
-        "sprite": "sprites/enemy/aberration/sliver_green.atlas",
+        "sprite": "sprites/enemy/remake/sliver_green.atlas",
         "deck": [
             "decks/standard/sliver_green.dck"
         ],
@@ -28204,12 +28213,13 @@
             "IdentityNaya",
             "BiomeGreen"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.2381
     },
     {
         "name": "Sliver_Red",
         "nameOverride": "Red Sliver",
-        "sprite": "sprites/enemy/aberration/sliver_red.atlas",
+        "sprite": "sprites/enemy/remake/sliver_red.atlas",
         "deck": [
             "decks/standard/sliver_red.dck"
         ],
@@ -28260,12 +28270,13 @@
             "IdentityJund",
             "BiomeRed"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2928
     },
     {
         "name": "Sliver_White",
         "nameOverride": "White Sliver",
-        "sprite": "sprites/enemy/aberration/sliver_white.atlas",
+        "sprite": "sprites/enemy/remake/sliver_white.atlas",
         "deck": [
             "decks/standard/sliver_white.dck"
         ],
@@ -28316,7 +28327,8 @@
             "IdentityBant",
             "BiomeWhite"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2955
     },
     {
         "name": "Slobad",
@@ -29463,7 +29475,7 @@
     },
     {
         "name": "Supreme Elemental",
-        "sprite": "sprites/enemy/elemental/magicelemental.atlas",
+        "sprite": "sprites/enemy/remake/supreme_elemental.atlas",
         "deck": [
             "decks/standard/supremeelemental.dck"
         ],
@@ -29472,7 +29484,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 22,
-        "scale": 1.0833,
+        "scale": 0.2407,
         "life": 18,
         "rewards": [
             {
@@ -29711,7 +29723,7 @@
     },
     {
         "name": "Tarkir Djinn",
-        "sprite": "sprites/enemy/elemental/djinn_2.atlas",
+        "sprite": "sprites/enemy/remake/tarkir_djinn.atlas",
         "deck": [
             "decks/standard/djinn_tarkir.dck"
         ],
@@ -29746,7 +29758,8 @@
             "IdentityIzzet",
             "BiomeBlue"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3611
     },
     {
         "name": "Teferi",
@@ -31344,7 +31357,7 @@
     },
     {
         "name": "Unraveling Crawler",
-        "sprite": "sprites/enemy/undead/unravelingcrawler.atlas",
+        "sprite": "sprites/enemy/remake/unraveling_crawler.atlas",
         "deck": [
             "decks/standard/unravelingcrawler.dck"
         ],
@@ -31408,7 +31421,7 @@
             "Skeleton"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3611
     },
     {
         "name": "Urabrask",
@@ -31987,7 +32000,7 @@
     },
     {
         "name": "Volcano Elemental",
-        "sprite": "sprites/enemy/elemental/volcanoelemental.atlas",
+        "sprite": "sprites/enemy/remake/volcano_elemental.atlas",
         "deck": [
             "decks/standard/br_elemental.dck"
         ],
@@ -32090,7 +32103,8 @@
             "IdentityBlack",
             "IdentityRakdos"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3023
     },
     {
         "name": "Vorinclex",
@@ -32232,7 +32246,7 @@
     },
     {
         "name": "Walking Brain",
-        "sprite": "sprites/enemy/aberration/walkingbrain.atlas",
+        "sprite": "sprites/enemy/remake/walking_brain.atlas",
         "deck": [
             "decks/standard/walkingbrain.dck"
         ],
@@ -32240,7 +32254,7 @@
         "spawnRate": 0.3,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.8667,
+        "scale": 0.233,
         "life": 16,
         "rewards": [
             {
@@ -32621,7 +32635,7 @@
     },
     {
         "name": "Water Elemental",
-        "sprite": "sprites/enemy/elemental/waterelemental_3.atlas",
+        "sprite": "sprites/enemy/remake/water_elemental.atlas",
         "deck": [
             "decks/standard/water_elemental.dck"
         ],
@@ -32664,7 +32678,7 @@
             "BiomeBlue"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3714
     },
     {
         "name": "Weak Demon",
@@ -33244,7 +33258,7 @@
     },
     {
         "name": "Wounded Sliver",
-        "sprite": "sprites/enemy/aberration/wsliver.atlas",
+        "sprite": "sprites/enemy/remake/wounded_sliver.atlas",
         "deck": [
             "decks/boss/sliver_shandalar.dck"
         ],
@@ -33399,7 +33413,7 @@
         ],
         "tier": "Common",
         "difficulty": 0.1,
-        "scale": 1.875
+        "scale": 0.3659
     },
     {
         "name": "Wraith",
@@ -36007,13 +36021,13 @@
     },
     {
         "name": "Azlask",
-        "sprite": "sprites/enemy/aberration/eldrazi/eldrazi_2.atlas",
+        "sprite": "sprites/enemy/remake/azlask.atlas",
         "deck": [
             "decks/legends/azlask.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.6934,
+        "scale": 0.2364,
         "life": 50,
         "rewards": [
             {
@@ -36240,13 +36254,13 @@
     },
     {
         "name": "Zhulodok",
-        "sprite": "sprites/enemy/aberration/eldrazi/eldrazi_large.atlas",
+        "sprite": "sprites/enemy/remake/zhulodok.atlas",
         "deck": [
             "decks/legends/zhulodok.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.1556,
+        "scale": 0.2364,
         "life": 50,
         "rewards": [
             {
@@ -37631,13 +37645,13 @@
     },
     {
         "name": "The First Sliver",
-        "sprite": "sprites/enemy/aberration/sliverexperiment.atlas",
+        "sprite": "sprites/enemy/remake/the_first_sliver.atlas",
         "deck": [
             "decks/legends/the_first_sliver.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.2321,
         "life": 50,
         "rewards": [
             {
@@ -38399,13 +38413,13 @@
     },
     {
         "name": "Silvos",
-        "sprite": "sprites/enemy/elemental/earthelemental.atlas",
+        "sprite": "sprites/enemy/remake/silvos.atlas",
         "deck": [
             "decks/legends/silvos.dck"
         ],
         "ai": "",
         "speed": 27,
-        "scale": 1.0,
+        "scale": 0.3023,
         "life": 22,
         "rewards": [
             {
@@ -40571,13 +40585,13 @@
     },
     {
         "name": "Omnath",
-        "sprite": "sprites/enemy/elemental/magmaelemental.atlas",
+        "sprite": "sprites/enemy/remake/omnath.atlas",
         "deck": [
             "decks/legends/omnath.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.1818,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -44238,13 +44252,13 @@
     },
     {
         "name": "Kruphix",
-        "sprite": "sprites/enemy/elemental/magicelemental.atlas",
+        "sprite": "sprites/enemy/remake/kruphix.atlas",
         "deck": [
             "decks/legends/kruphix.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -45021,13 +45035,13 @@
     },
     {
         "name": "Sliver Overlord",
-        "sprite": "sprites/enemy/aberration/sliver.atlas",
+        "sprite": "sprites/enemy/remake/sliver_overlord.atlas",
         "deck": [
             "decks/legends/sliver_overlord.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -45096,13 +45110,13 @@
     },
     {
         "name": "Sliver Weftwinder",
-        "sprite": "sprites/enemy/aberration/sliver_blue.atlas",
+        "sprite": "sprites/enemy/remake/sliver_weftwinder.atlas",
         "deck": [
             "decks/legends/sliver_weftwinder.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -45171,13 +45185,13 @@
     },
     {
         "name": "Sliver Legion",
-        "sprite": "sprites/enemy/aberration/sliver_red.atlas",
+        "sprite": "sprites/enemy/remake/sliver_legion.atlas",
         "deck": [
             "decks/legends/sliver_legion.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -45317,13 +45331,13 @@
     },
     {
         "name": "Sliver Hivelord",
-        "sprite": "sprites/enemy/aberration/sliver_green.atlas",
+        "sprite": "sprites/enemy/remake/sliver_hivelord.atlas",
         "deck": [
             "decks/legends/sliver_hivelord.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.2407,
         "life": 40,
         "rewards": [
             {
@@ -45389,13 +45403,13 @@
     },
     {
         "name": "Sliver Gravemother",
-        "sprite": "sprites/enemy/aberration/sliver_white.atlas",
+        "sprite": "sprites/enemy/remake/sliver_gravemother.atlas",
         "deck": [
             "decks/legends/sliver_gravemother.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.2321,
         "life": 40,
         "rewards": [
             {
@@ -46752,14 +46766,14 @@
     },
     {
         "name": "Yusri",
-        "sprite": "sprites/enemy/elemental/efreet.atlas",
+        "sprite": "sprites/enemy/remake/yusri.atlas",
         "deck": [
             "decks/legends/yusri.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -46843,14 +46857,14 @@
     },
     {
         "name": "Inniaz",
-        "sprite": "sprites/enemy/elemental/airelemental.atlas",
+        "sprite": "sprites/enemy/remake/inniaz.atlas",
         "deck": [
             "decks/legends/inniaz.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.2407,
         "life": 30,
         "rewards": [
             {
@@ -59504,13 +59518,13 @@
     },
     {
         "name": "Muldrotha",
-        "sprite": "sprites/enemy/elemental/waterelemental_3.atlas",
+        "sprite": "sprites/enemy/remake/muldrotha.atlas",
         "deck": [
             "decks/legends/muldrotha.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 2.2286,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -68282,13 +68296,13 @@
     },
     {
         "name": "Kunoros",
-        "sprite": "sprites/enemy/fiend/hellhound_2.atlas",
+        "sprite": "sprites/enemy/remake/kunoros.atlas",
         "deck": [
             "decks/legends/kunoros.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.2364,
         "life": 30,
         "rewards": [
             {
@@ -70649,13 +70663,13 @@
     },
     {
         "name": "Phylath",
-        "sprite": "sprites/enemy/elemental/earthelemental.atlas",
+        "sprite": "sprites/enemy/remake/phylath.atlas",
         "deck": [
             "decks/legends/phylath.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.2955,
         "life": 30,
         "rewards": [
             {
@@ -71671,7 +71685,7 @@
     },
     {
         "name": "Siani and Esior",
-        "sprite": "sprites/enemy/elemental/djinn.atlas",
+        "sprite": "sprites/enemy/remake/siani_and_esior.atlas",
         "deck": [
             "decks/legends/siani_and_esior.dck"
         ],
@@ -71740,11 +71754,12 @@
         "colors": "U",
         "spawnRate": 0,
         "tier": "Common",
-        "difficulty": 0.1
+        "difficulty": 0.1,
+        "scale": 0.3611
     },
     {
         "name": "Najal",
-        "sprite": "sprites/enemy/elemental/efreet_2.atlas",
+        "sprite": "sprites/enemy/remake/najal.atlas",
         "deck": [
             "decks/legends/najal.dck"
         ],
@@ -71808,11 +71823,11 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Zahid",
-        "sprite": "sprites/enemy/elemental/djinn_2.atlas",
+        "sprite": "sprites/enemy/remake/zahid.atlas",
         "deck": [
             "decks/legends/zahid.dck"
         ],
@@ -71876,7 +71891,8 @@
         "colors": "U",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3023
     },
     {
         "name": "Brago",
@@ -76571,7 +76587,7 @@
     },
     {
         "name": "Melek",
-        "sprite": "sprites/enemy/elemental/iceelemental2.atlas",
+        "sprite": "sprites/enemy/remake/melek.atlas",
         "deck": [
             "decks/legends/melek.dck"
         ],
@@ -76639,7 +76655,8 @@
         "colors": "UR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.2321
     },
     {
         "name": "Ral",
@@ -76783,7 +76800,7 @@
     },
     {
         "name": "Elsha",
-        "sprite": "sprites/enemy/elemental/djinn_2.atlas",
+        "sprite": "sprites/enemy/remake/elsha.atlas",
         "deck": [
             "decks/legends/elsha.dck"
         ],
@@ -76851,7 +76868,8 @@
         "colors": "WUR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.2321
     },
     {
         "name": "Shiko",
@@ -80298,7 +80316,7 @@
     },
     {
         "name": "The Necrobloom",
-        "sprite": "sprites/enemy/aberration/geonid.atlas",
+        "sprite": "sprites/enemy/remake/the_necrobloom.atlas",
         "deck": [
             "decks/legends/the_necrobloom.dck"
         ],
@@ -80362,7 +80380,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.2968
     },
     {
         "name": "Shroofus",
@@ -81650,7 +81668,7 @@
     },
     {
         "name": "Kirri",
-        "sprite": "sprites/enemy/elemental/walkingleef.atlas",
+        "sprite": "sprites/enemy/remake/kirri.atlas",
         "deck": [
             "decks/legends/kirri.dck"
         ],
@@ -81714,7 +81732,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.3
+        "scale": 0.2453
     },
     {
         "name": "Lilah",
@@ -82715,12 +82733,12 @@
     },
     {
         "name": "Jyoti",
-        "sprite": "sprites/enemy/elemental/crystalelemental.atlas",
+        "sprite": "sprites/enemy/remake/jyoti.atlas",
         "deck": [
             "decks/legends/jyoti.dck"
         ],
         "ai": "",
-        "scale": 1.0,
+        "scale": 0.2364,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -87205,7 +87223,7 @@
     },
     {
         "name": "Gimbal",
-        "sprite": "sprites/enemy/aberration/walkingbrain.atlas",
+        "sprite": "sprites/enemy/remake/gimbal.atlas",
         "deck": [
             "decks/legends/gimbal.dck"
         ],
@@ -87269,7 +87287,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.8667
+        "scale": 0.2453
     },
     {
         "name": "Kaust",
@@ -88048,7 +88066,7 @@
     },
     {
         "name": "Averna",
-        "sprite": "sprites/enemy/elemental/magicelemental.atlas",
+        "sprite": "sprites/enemy/remake/averna.atlas",
         "deck": [
             "decks/legends/averna.dck"
         ],
@@ -88112,7 +88130,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Ghired",
@@ -89534,7 +89552,7 @@
     },
     {
         "name": "Uvilda",
-        "sprite": "sprites/enemy/elemental/efreet.atlas",
+        "sprite": "sprites/enemy/remake/uvilda.atlas",
         "deck": [
             "decks/legends/uvilda.dck"
         ],
@@ -89597,11 +89615,12 @@
         "colors": "UR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.2321
     },
     {
         "name": "Veyran",
-        "sprite": "sprites/enemy/elemental/djinn_2.atlas",
+        "sprite": "sprites/enemy/remake/veyran.atlas",
         "deck": [
             "decks/legends/veyran.dck"
         ],
@@ -89664,7 +89683,8 @@
         "colors": "UR",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3023
     },
     {
         "name": "Zaffai",
@@ -89803,7 +89823,7 @@
     },
     {
         "name": "Esix",
-        "sprite": "sprites/enemy/elemental/crystalelemental.atlas",
+        "sprite": "sprites/enemy/remake/esix.atlas",
         "deck": [
             "decks/legends/esix.dck"
         ],
@@ -89867,7 +89887,8 @@
         "colors": "UG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.2889
     },
     {
         "name": "Kianne",
@@ -90432,7 +90453,7 @@
     },
     {
         "name": "Tesak",
-        "sprite": "sprites/enemy/fiend/hellhound_2.atlas",
+        "sprite": "sprites/enemy/remake/tesak.atlas",
         "deck": [
             "decks/legends/tesak.dck"
         ],
@@ -90496,7 +90517,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Juri",
@@ -97203,7 +97224,7 @@
     },
     {
         "name": "Muddle",
-        "sprite": "sprites/enemy/elemental/waterelemental.atlas",
+        "sprite": "sprites/enemy/remake/muddle.atlas",
         "deck": [
             "decks/legends/muddle.dck"
         ],
@@ -97267,7 +97288,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.2321
     },
     {
         "name": "Primo",
@@ -97498,13 +97519,13 @@
     },
     {
         "name": "Aziza",
-        "sprite": "sprites/enemy/elemental/fireelemental.atlas",
+        "sprite": "sprites/enemy/remake/aziza.atlas",
         "deck": [
             "decks/legends/aziza.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.2955,
         "life": 30,
         "rewards": [
             {
@@ -98086,13 +98107,13 @@
     },
     {
         "name": "The Dawning Archaic",
-        "sprite": "sprites/enemy/aberration/eldrazi/eldrazi_large.atlas",
+        "sprite": "sprites/enemy/remake/the_dawning_archaic.atlas",
         "deck": [
             "decks/legends/the_dawning_archaic.dck"
         ],
         "ai": "",
         "speed": 30,
-        "scale": 0.4815,
+        "scale": 0.2364,
         "life": 40,
         "rewards": [
             {
@@ -117324,7 +117345,7 @@
     },
     {
         "name": "Slivdrazi Monstrosity",
-        "sprite": "sprites/enemy/aberration/sliver.atlas",
+        "sprite": "sprites/enemy/remake/slivdrazi_monstrosity.atlas",
         "deck": [
             "decks/miniboss/shandalar97_slivdrazi_monstrosity.dck"
         ],
@@ -117552,7 +117573,7 @@
         "nameOverride": "Spined Sliver",
         "boss": true,
         "tier": "Uncommon",
-        "scale": 1.875
+        "scale": 0.2973
     },
     {
         "name": "Tibalt's Torturer",
@@ -119341,7 +119362,7 @@
     },
     {
         "name": "Cateran Slaver",
-        "sprite": "sprites/enemy/fiend/nightmare.atlas",
+        "sprite": "sprites/enemy/remake/cateran_slaver.atlas",
         "deck": [
             "decks/standard/shandalar97_cateran_slaver.dck"
         ],
@@ -119448,7 +119469,7 @@
             "BiomeBlack"
         ],
         "tier": "Common",
-        "scale": 0.6842
+        "scale": 0.3824
     },
     {
         "name": "Urza Planeswalker",
@@ -122915,13 +122936,13 @@
     },
     {
         "name": "Ashling",
-        "sprite": "sprites/enemy/elemental/magmaelemental.atlas",
+        "sprite": "sprites/enemy/remake/ashling.atlas",
         "deck": [
             "decks/legends/ashling.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.1818,
+        "scale": 0.194,
         "life": 80,
         "rewards": [
             {
@@ -124323,13 +124344,13 @@
     },
     {
         "name": "Nephilim Epochal",
-        "sprite": "sprites/enemy/aberration/eldrazi/eldrazi_2.atlas",
+        "sprite": "sprites/enemy/remake/nephilim_epochal.atlas",
         "deck": [
             "decks/legends/nephilim_epochal.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.2889,
+        "scale": 0.2321,
         "life": 100,
         "rewards": [
             {
@@ -130271,7 +130292,7 @@
     },
     {
         "name": "Floating Eye",
-        "sprite": "sprites/enemy/basic/demon/floating_eye.atlas",
+        "sprite": "sprites/enemy/remake/floating_eye.atlas",
         "deck": [
             "decks/standard/floating_eye.dck"
         ],
@@ -130332,7 +130353,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.2889
     },
     {
         "name": "Foul Gouger",
@@ -133859,7 +133880,7 @@
     },
     {
         "name": "Carcass Feeder",
-        "sprite": "sprites/enemy/basic/undead/carcass_feeder.atlas",
+        "sprite": "sprites/enemy/remake/carcass_feeder.atlas",
         "deck": [
             "decks/standard/carcass_feeder.dck"
         ],
@@ -133920,7 +133941,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.3023
     },
     {
         "name": "Decrepit Bones",
@@ -134049,7 +134070,7 @@
     },
     {
         "name": "Ghastly Eye",
-        "sprite": "sprites/enemy/basic/undead/ghastly_eye.atlas",
+        "sprite": "sprites/enemy/remake/ghastly_eye.atlas",
         "deck": [
             "decks/standard/ghastly_eye.dck"
         ],
@@ -134110,11 +134131,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.2889
     },
     {
         "name": "Giant Royal Scarab",
-        "sprite": "sprites/enemy/basic/undead/giant_royal_scarab.atlas",
+        "sprite": "sprites/enemy/remake/giant_royal_scarab.atlas",
         "deck": [
             "decks/standard/giant_royal_scarab.dck"
         ],
@@ -134175,7 +134196,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.2407
     },
     {
         "name": "Grave Revenant",
@@ -134306,7 +134327,7 @@
     },
     {
         "name": "Royal Scarab",
-        "sprite": "sprites/enemy/basic/undead/royal_scarab.atlas",
+        "sprite": "sprites/enemy/remake/royal_scarab.atlas",
         "deck": [
             "decks/standard/royal_scarab.dck"
         ],
@@ -134365,7 +134386,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3714
     },
     {
         "name": "Dune Ghoul",
@@ -134434,7 +134455,7 @@
     },
     {
         "name": "Skittering Hand",
-        "sprite": "sprites/enemy/basic/undead/skittering_hand.atlas",
+        "sprite": "sprites/enemy/remake/skittering_hand.atlas",
         "deck": [
             "decks/standard/skittering_hand.dck"
         ],
@@ -134493,7 +134514,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.2889
     },
     {
         "name": "Toxic Hound",
@@ -134623,7 +134644,7 @@
     },
     {
         "name": "Vampire Bat",
-        "sprite": "sprites/enemy/basic/undead/vampire_bat.atlas",
+        "sprite": "sprites/enemy/remake/vampire_bat.atlas",
         "deck": [
             "decks/standard/vampire_bat.dck"
         ],
@@ -134683,7 +134704,7 @@
         ],
         "tier": "Common",
         "flying": true,
-        "scale": 1.3
+        "scale": 0.3714
     },
     {
         "name": "Adept Necromancer",
@@ -135895,7 +135916,7 @@
     },
     {
         "name": "The Unblinking Eye",
-        "sprite": "sprites/enemy/mythic/unblinking_eye.atlas",
+        "sprite": "sprites/enemy/remake/the_unblinking_eye.atlas",
         "deck": [
             "decks/standard/unblinking_eye.dck"
         ],
@@ -135954,7 +135975,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 1.0833
+        "scale": 0.197
     },
     {
         "name": "Archmage of the Tides",
@@ -141129,7 +141150,7 @@
     },
     {
         "name": "Kolyog",
-        "sprite": "sprites/enemy/basic/elemental/kolyog.atlas",
+        "sprite": "sprites/enemy/remake/kolyog.atlas",
         "deck": [
             "decks/standard/kolyog.dck"
         ],
@@ -141188,7 +141209,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.8667
+        "scale": 0.2928
     },
     {
         "name": "Malakat",
@@ -141444,7 +141465,7 @@
     },
     {
         "name": "Santelmo",
-        "sprite": "sprites/enemy/basic/elemental/santelmo.atlas",
+        "sprite": "sprites/enemy/remake/santelmo.atlas",
         "deck": [
             "decks/standard/santelmo.dck"
         ],
@@ -141503,7 +141524,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.0
+        "scale": 0.2407
     },
     {
         "name": "Sigbin",

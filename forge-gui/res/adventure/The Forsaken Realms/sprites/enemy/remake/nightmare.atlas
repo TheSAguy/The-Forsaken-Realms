@@ -1,0 +1,266 @@
+nightmare.png
+size: 2074,1094
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 122, 103
+Idle
+  xy: 122, 64
+  size: 122, 103
+Idle
+  xy: 244, 64
+  size: 122, 103
+Idle
+  xy: 366, 64
+  size: 122, 103
+Idle
+  xy: 488, 64
+  size: 122, 103
+Idle
+  xy: 610, 64
+  size: 122, 103
+Idle
+  xy: 732, 64
+  size: 122, 103
+Idle
+  xy: 854, 64
+  size: 122, 103
+Idle
+  xy: 976, 64
+  size: 122, 103
+Idle
+  xy: 1098, 64
+  size: 122, 103
+Walk
+  xy: 0, 167
+  size: 122, 103
+Walk
+  xy: 122, 167
+  size: 122, 103
+Walk
+  xy: 244, 167
+  size: 122, 103
+Walk
+  xy: 366, 167
+  size: 122, 103
+Walk
+  xy: 488, 167
+  size: 122, 103
+Walk
+  xy: 610, 167
+  size: 122, 103
+Attack
+  xy: 0, 270
+  size: 122, 103
+Attack
+  xy: 122, 270
+  size: 122, 103
+Attack
+  xy: 244, 270
+  size: 122, 103
+Attack
+  xy: 366, 270
+  size: 122, 103
+Attack
+  xy: 488, 270
+  size: 122, 103
+Attack
+  xy: 610, 270
+  size: 122, 103
+Attack
+  xy: 732, 270
+  size: 122, 103
+Hit
+  xy: 0, 373
+  size: 122, 103
+Hit
+  xy: 122, 373
+  size: 122, 103
+Hit
+  xy: 244, 373
+  size: 122, 103
+Hit
+  xy: 366, 373
+  size: 122, 103
+Hit
+  xy: 488, 373
+  size: 122, 103
+Hit
+  xy: 610, 373
+  size: 122, 103
+Death
+  xy: 0, 476
+  size: 122, 103
+Death
+  xy: 122, 476
+  size: 122, 103
+Death
+  xy: 244, 476
+  size: 122, 103
+Death
+  xy: 366, 476
+  size: 122, 103
+Death
+  xy: 488, 476
+  size: 122, 103
+Death
+  xy: 610, 476
+  size: 122, 103
+Death
+  xy: 732, 476
+  size: 122, 103
+Death
+  xy: 854, 476
+  size: 122, 103
+Death
+  xy: 976, 476
+  size: 122, 103
+Death
+  xy: 1098, 476
+  size: 122, 103
+Death
+  xy: 1220, 476
+  size: 122, 103
+Death
+  xy: 1342, 476
+  size: 122, 103
+Death
+  xy: 1464, 476
+  size: 122, 103
+Death
+  xy: 1586, 476
+  size: 122, 103
+Death
+  xy: 1708, 476
+  size: 122, 103
+Death
+  xy: 1830, 476
+  size: 122, 103
+Death
+  xy: 1952, 476
+  size: 122, 103
+Wake
+  xy: 0, 579
+  size: 122, 103
+Wake
+  xy: 122, 579
+  size: 122, 103
+Wake
+  xy: 244, 579
+  size: 122, 103
+Wake
+  xy: 366, 579
+  size: 122, 103
+Wake
+  xy: 488, 579
+  size: 122, 103
+Wake
+  xy: 610, 579
+  size: 122, 103
+Wake
+  xy: 732, 579
+  size: 122, 103
+Wake
+  xy: 854, 579
+  size: 122, 103
+IdleUp
+  xy: 0, 682
+  size: 122, 103
+IdleUp
+  xy: 122, 682
+  size: 122, 103
+IdleUp
+  xy: 244, 682
+  size: 122, 103
+IdleUp
+  xy: 366, 682
+  size: 122, 103
+IdleUp
+  xy: 488, 682
+  size: 122, 103
+IdleUp
+  xy: 610, 682
+  size: 122, 103
+IdleUp
+  xy: 732, 682
+  size: 122, 103
+IdleUp
+  xy: 854, 682
+  size: 122, 103
+IdleUp
+  xy: 976, 682
+  size: 122, 103
+IdleUp
+  xy: 1098, 682
+  size: 122, 103
+IdleDown
+  xy: 0, 785
+  size: 122, 103
+IdleDown
+  xy: 122, 785
+  size: 122, 103
+IdleDown
+  xy: 244, 785
+  size: 122, 103
+IdleDown
+  xy: 366, 785
+  size: 122, 103
+IdleDown
+  xy: 488, 785
+  size: 122, 103
+IdleDown
+  xy: 610, 785
+  size: 122, 103
+IdleDown
+  xy: 732, 785
+  size: 122, 103
+IdleDown
+  xy: 854, 785
+  size: 122, 103
+IdleDown
+  xy: 976, 785
+  size: 122, 103
+IdleDown
+  xy: 1098, 785
+  size: 122, 103
+WalkUp
+  xy: 0, 888
+  size: 122, 103
+WalkUp
+  xy: 122, 888
+  size: 122, 103
+WalkUp
+  xy: 244, 888
+  size: 122, 103
+WalkUp
+  xy: 366, 888
+  size: 122, 103
+WalkUp
+  xy: 488, 888
+  size: 122, 103
+WalkUp
+  xy: 610, 888
+  size: 122, 103
+WalkDown
+  xy: 0, 991
+  size: 122, 103
+WalkDown
+  xy: 122, 991
+  size: 122, 103
+WalkDown
+  xy: 244, 991
+  size: 122, 103
+WalkDown
+  xy: 366, 991
+  size: 122, 103
+WalkDown
+  xy: 488, 991
+  size: 122, 103
+WalkDown
+  xy: 610, 991
+  size: 122, 103

@@ -1,0 +1,284 @@
+muldrotha.png
+size: 4826,2464
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 254, 240
+Idle
+  xy: 254, 64
+  size: 254, 240
+Idle
+  xy: 508, 64
+  size: 254, 240
+Idle
+  xy: 762, 64
+  size: 254, 240
+Idle
+  xy: 1016, 64
+  size: 254, 240
+Idle
+  xy: 1270, 64
+  size: 254, 240
+Idle
+  xy: 1524, 64
+  size: 254, 240
+Idle
+  xy: 1778, 64
+  size: 254, 240
+Idle
+  xy: 2032, 64
+  size: 254, 240
+Idle
+  xy: 2286, 64
+  size: 254, 240
+Walk
+  xy: 0, 304
+  size: 254, 240
+Walk
+  xy: 254, 304
+  size: 254, 240
+Walk
+  xy: 508, 304
+  size: 254, 240
+Walk
+  xy: 762, 304
+  size: 254, 240
+Attack
+  xy: 0, 544
+  size: 254, 240
+Attack
+  xy: 254, 544
+  size: 254, 240
+Attack
+  xy: 508, 544
+  size: 254, 240
+Attack
+  xy: 762, 544
+  size: 254, 240
+Attack
+  xy: 1016, 544
+  size: 254, 240
+Attack
+  xy: 1270, 544
+  size: 254, 240
+Attack
+  xy: 1524, 544
+  size: 254, 240
+Attack
+  xy: 1778, 544
+  size: 254, 240
+Attack
+  xy: 2032, 544
+  size: 254, 240
+Attack
+  xy: 2286, 544
+  size: 254, 240
+Attack
+  xy: 2540, 544
+  size: 254, 240
+Attack
+  xy: 2794, 544
+  size: 254, 240
+Attack
+  xy: 3048, 544
+  size: 254, 240
+Attack
+  xy: 3302, 544
+  size: 254, 240
+Attack
+  xy: 3556, 544
+  size: 254, 240
+Hit
+  xy: 0, 784
+  size: 254, 240
+Hit
+  xy: 254, 784
+  size: 254, 240
+Hit
+  xy: 508, 784
+  size: 254, 240
+Hit
+  xy: 762, 784
+  size: 254, 240
+Hit
+  xy: 1016, 784
+  size: 254, 240
+Hit
+  xy: 1270, 784
+  size: 254, 240
+Hit
+  xy: 1524, 784
+  size: 254, 240
+Death
+  xy: 0, 1024
+  size: 254, 240
+Death
+  xy: 254, 1024
+  size: 254, 240
+Death
+  xy: 508, 1024
+  size: 254, 240
+Death
+  xy: 762, 1024
+  size: 254, 240
+Death
+  xy: 1016, 1024
+  size: 254, 240
+Death
+  xy: 1270, 1024
+  size: 254, 240
+Death
+  xy: 1524, 1024
+  size: 254, 240
+Death
+  xy: 1778, 1024
+  size: 254, 240
+Death
+  xy: 2032, 1024
+  size: 254, 240
+Death
+  xy: 2286, 1024
+  size: 254, 240
+Death
+  xy: 2540, 1024
+  size: 254, 240
+Death
+  xy: 2794, 1024
+  size: 254, 240
+Death
+  xy: 3048, 1024
+  size: 254, 240
+Death
+  xy: 3302, 1024
+  size: 254, 240
+Death
+  xy: 3556, 1024
+  size: 254, 240
+Death
+  xy: 3810, 1024
+  size: 254, 240
+Death
+  xy: 4064, 1024
+  size: 254, 240
+Death
+  xy: 4318, 1024
+  size: 254, 240
+Death
+  xy: 4572, 1024
+  size: 254, 240
+Wake
+  xy: 0, 1264
+  size: 254, 240
+Wake
+  xy: 254, 1264
+  size: 254, 240
+Wake
+  xy: 508, 1264
+  size: 254, 240
+Wake
+  xy: 762, 1264
+  size: 254, 240
+Wake
+  xy: 1016, 1264
+  size: 254, 240
+Wake
+  xy: 1270, 1264
+  size: 254, 240
+Wake
+  xy: 1524, 1264
+  size: 254, 240
+Wake
+  xy: 1778, 1264
+  size: 254, 240
+Wake
+  xy: 2032, 1264
+  size: 254, 240
+IdleUp
+  xy: 0, 1504
+  size: 254, 240
+IdleUp
+  xy: 254, 1504
+  size: 254, 240
+IdleUp
+  xy: 508, 1504
+  size: 254, 240
+IdleUp
+  xy: 762, 1504
+  size: 254, 240
+IdleUp
+  xy: 1016, 1504
+  size: 254, 240
+IdleUp
+  xy: 1270, 1504
+  size: 254, 240
+IdleUp
+  xy: 1524, 1504
+  size: 254, 240
+IdleUp
+  xy: 1778, 1504
+  size: 254, 240
+IdleUp
+  xy: 2032, 1504
+  size: 254, 240
+IdleUp
+  xy: 2286, 1504
+  size: 254, 240
+IdleDown
+  xy: 0, 1744
+  size: 254, 240
+IdleDown
+  xy: 254, 1744
+  size: 254, 240
+IdleDown
+  xy: 508, 1744
+  size: 254, 240
+IdleDown
+  xy: 762, 1744
+  size: 254, 240
+IdleDown
+  xy: 1016, 1744
+  size: 254, 240
+IdleDown
+  xy: 1270, 1744
+  size: 254, 240
+IdleDown
+  xy: 1524, 1744
+  size: 254, 240
+IdleDown
+  xy: 1778, 1744
+  size: 254, 240
+IdleDown
+  xy: 2032, 1744
+  size: 254, 240
+IdleDown
+  xy: 2286, 1744
+  size: 254, 240
+WalkUp
+  xy: 0, 1984
+  size: 254, 240
+WalkUp
+  xy: 254, 1984
+  size: 254, 240
+WalkUp
+  xy: 508, 1984
+  size: 254, 240
+WalkUp
+  xy: 762, 1984
+  size: 254, 240
+WalkDown
+  xy: 0, 2224
+  size: 254, 240
+WalkDown
+  xy: 254, 2224
+  size: 254, 240
+WalkDown
+  xy: 508, 2224
+  size: 254, 240
+WalkDown
+  xy: 762, 2224
+  size: 254, 240

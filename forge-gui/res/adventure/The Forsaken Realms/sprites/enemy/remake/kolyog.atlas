@@ -1,0 +1,224 @@
+kolyog.png
+size: 1196,874
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 92, 81
+Idle
+  xy: 92, 64
+  size: 92, 81
+Idle
+  xy: 184, 64
+  size: 92, 81
+Idle
+  xy: 276, 64
+  size: 92, 81
+Idle
+  xy: 368, 64
+  size: 92, 81
+Idle
+  xy: 460, 64
+  size: 92, 81
+Idle
+  xy: 552, 64
+  size: 92, 81
+Idle
+  xy: 644, 64
+  size: 92, 81
+Idle
+  xy: 736, 64
+  size: 92, 81
+Idle
+  xy: 828, 64
+  size: 92, 81
+Walk
+  xy: 0, 145
+  size: 92, 81
+Walk
+  xy: 92, 145
+  size: 92, 81
+Walk
+  xy: 184, 145
+  size: 92, 81
+Walk
+  xy: 276, 145
+  size: 92, 81
+Attack
+  xy: 0, 226
+  size: 92, 81
+Attack
+  xy: 92, 226
+  size: 92, 81
+Attack
+  xy: 184, 226
+  size: 92, 81
+Attack
+  xy: 276, 226
+  size: 92, 81
+Attack
+  xy: 368, 226
+  size: 92, 81
+Attack
+  xy: 460, 226
+  size: 92, 81
+Hit
+  xy: 0, 307
+  size: 92, 81
+Hit
+  xy: 92, 307
+  size: 92, 81
+Hit
+  xy: 184, 307
+  size: 92, 81
+Hit
+  xy: 276, 307
+  size: 92, 81
+Hit
+  xy: 368, 307
+  size: 92, 81
+Death
+  xy: 0, 388
+  size: 92, 81
+Death
+  xy: 92, 388
+  size: 92, 81
+Death
+  xy: 184, 388
+  size: 92, 81
+Death
+  xy: 276, 388
+  size: 92, 81
+Death
+  xy: 368, 388
+  size: 92, 81
+Death
+  xy: 460, 388
+  size: 92, 81
+Death
+  xy: 552, 388
+  size: 92, 81
+Death
+  xy: 644, 388
+  size: 92, 81
+Death
+  xy: 736, 388
+  size: 92, 81
+Death
+  xy: 828, 388
+  size: 92, 81
+Death
+  xy: 920, 388
+  size: 92, 81
+Death
+  xy: 1012, 388
+  size: 92, 81
+Death
+  xy: 1104, 388
+  size: 92, 81
+Wake
+  xy: 0, 469
+  size: 92, 81
+Wake
+  xy: 92, 469
+  size: 92, 81
+Wake
+  xy: 184, 469
+  size: 92, 81
+Wake
+  xy: 276, 469
+  size: 92, 81
+Wake
+  xy: 368, 469
+  size: 92, 81
+Wake
+  xy: 460, 469
+  size: 92, 81
+IdleUp
+  xy: 0, 550
+  size: 92, 81
+IdleUp
+  xy: 92, 550
+  size: 92, 81
+IdleUp
+  xy: 184, 550
+  size: 92, 81
+IdleUp
+  xy: 276, 550
+  size: 92, 81
+IdleUp
+  xy: 368, 550
+  size: 92, 81
+IdleUp
+  xy: 460, 550
+  size: 92, 81
+IdleUp
+  xy: 552, 550
+  size: 92, 81
+IdleUp
+  xy: 644, 550
+  size: 92, 81
+IdleUp
+  xy: 736, 550
+  size: 92, 81
+IdleUp
+  xy: 828, 550
+  size: 92, 81
+IdleDown
+  xy: 0, 631
+  size: 92, 81
+IdleDown
+  xy: 92, 631
+  size: 92, 81
+IdleDown
+  xy: 184, 631
+  size: 92, 81
+IdleDown
+  xy: 276, 631
+  size: 92, 81
+IdleDown
+  xy: 368, 631
+  size: 92, 81
+IdleDown
+  xy: 460, 631
+  size: 92, 81
+IdleDown
+  xy: 552, 631
+  size: 92, 81
+IdleDown
+  xy: 644, 631
+  size: 92, 81
+IdleDown
+  xy: 736, 631
+  size: 92, 81
+IdleDown
+  xy: 828, 631
+  size: 92, 81
+WalkUp
+  xy: 0, 712
+  size: 92, 81
+WalkUp
+  xy: 92, 712
+  size: 92, 81
+WalkUp
+  xy: 184, 712
+  size: 92, 81
+WalkUp
+  xy: 276, 712
+  size: 92, 81
+WalkDown
+  xy: 0, 793
+  size: 92, 81
+WalkDown
+  xy: 92, 793
+  size: 92, 81
+WalkDown
+  xy: 184, 793
+  size: 92, 81
+WalkDown
+  xy: 276, 793
+  size: 92, 81

@@ -1,0 +1,233 @@
+the_necrobloom.png
+size: 1036,834
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 77
+Idle
+  xy: 74, 64
+  size: 74, 77
+Idle
+  xy: 148, 64
+  size: 74, 77
+Idle
+  xy: 222, 64
+  size: 74, 77
+Idle
+  xy: 296, 64
+  size: 74, 77
+Idle
+  xy: 370, 64
+  size: 74, 77
+Idle
+  xy: 444, 64
+  size: 74, 77
+Idle
+  xy: 518, 64
+  size: 74, 77
+Idle
+  xy: 592, 64
+  size: 74, 77
+Idle
+  xy: 666, 64
+  size: 74, 77
+Walk
+  xy: 0, 141
+  size: 74, 77
+Walk
+  xy: 74, 141
+  size: 74, 77
+Walk
+  xy: 148, 141
+  size: 74, 77
+Walk
+  xy: 222, 141
+  size: 74, 77
+Attack
+  xy: 0, 218
+  size: 74, 77
+Attack
+  xy: 74, 218
+  size: 74, 77
+Attack
+  xy: 148, 218
+  size: 74, 77
+Attack
+  xy: 222, 218
+  size: 74, 77
+Attack
+  xy: 296, 218
+  size: 74, 77
+Attack
+  xy: 370, 218
+  size: 74, 77
+Attack
+  xy: 444, 218
+  size: 74, 77
+Hit
+  xy: 0, 295
+  size: 74, 77
+Hit
+  xy: 74, 295
+  size: 74, 77
+Hit
+  xy: 148, 295
+  size: 74, 77
+Hit
+  xy: 222, 295
+  size: 74, 77
+Hit
+  xy: 296, 295
+  size: 74, 77
+Death
+  xy: 0, 372
+  size: 74, 77
+Death
+  xy: 74, 372
+  size: 74, 77
+Death
+  xy: 148, 372
+  size: 74, 77
+Death
+  xy: 222, 372
+  size: 74, 77
+Death
+  xy: 296, 372
+  size: 74, 77
+Death
+  xy: 370, 372
+  size: 74, 77
+Death
+  xy: 444, 372
+  size: 74, 77
+Death
+  xy: 518, 372
+  size: 74, 77
+Death
+  xy: 592, 372
+  size: 74, 77
+Death
+  xy: 666, 372
+  size: 74, 77
+Death
+  xy: 740, 372
+  size: 74, 77
+Death
+  xy: 814, 372
+  size: 74, 77
+Death
+  xy: 888, 372
+  size: 74, 77
+Death
+  xy: 962, 372
+  size: 74, 77
+Wake
+  xy: 0, 449
+  size: 74, 77
+Wake
+  xy: 74, 449
+  size: 74, 77
+Wake
+  xy: 148, 449
+  size: 74, 77
+Wake
+  xy: 222, 449
+  size: 74, 77
+Wake
+  xy: 296, 449
+  size: 74, 77
+Wake
+  xy: 370, 449
+  size: 74, 77
+Wake
+  xy: 444, 449
+  size: 74, 77
+IdleUp
+  xy: 0, 526
+  size: 74, 77
+IdleUp
+  xy: 74, 526
+  size: 74, 77
+IdleUp
+  xy: 148, 526
+  size: 74, 77
+IdleUp
+  xy: 222, 526
+  size: 74, 77
+IdleUp
+  xy: 296, 526
+  size: 74, 77
+IdleUp
+  xy: 370, 526
+  size: 74, 77
+IdleUp
+  xy: 444, 526
+  size: 74, 77
+IdleUp
+  xy: 518, 526
+  size: 74, 77
+IdleUp
+  xy: 592, 526
+  size: 74, 77
+IdleUp
+  xy: 666, 526
+  size: 74, 77
+IdleDown
+  xy: 0, 603
+  size: 74, 77
+IdleDown
+  xy: 74, 603
+  size: 74, 77
+IdleDown
+  xy: 148, 603
+  size: 74, 77
+IdleDown
+  xy: 222, 603
+  size: 74, 77
+IdleDown
+  xy: 296, 603
+  size: 74, 77
+IdleDown
+  xy: 370, 603
+  size: 74, 77
+IdleDown
+  xy: 444, 603
+  size: 74, 77
+IdleDown
+  xy: 518, 603
+  size: 74, 77
+IdleDown
+  xy: 592, 603
+  size: 74, 77
+IdleDown
+  xy: 666, 603
+  size: 74, 77
+WalkUp
+  xy: 0, 680
+  size: 74, 77
+WalkUp
+  xy: 74, 680
+  size: 74, 77
+WalkUp
+  xy: 148, 680
+  size: 74, 77
+WalkUp
+  xy: 222, 680
+  size: 74, 77
+WalkDown
+  xy: 0, 757
+  size: 74, 77
+WalkDown
+  xy: 74, 757
+  size: 74, 77
+WalkDown
+  xy: 148, 757
+  size: 74, 77
+WalkDown
+  xy: 222, 757
+  size: 74, 77

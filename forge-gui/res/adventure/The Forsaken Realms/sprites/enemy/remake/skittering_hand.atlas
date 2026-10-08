@@ -1,0 +1,254 @@
+skittering_hand.png
+size: 1320,714
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 65
+Idle
+  xy: 88, 64
+  size: 88, 65
+Idle
+  xy: 176, 64
+  size: 88, 65
+Idle
+  xy: 264, 64
+  size: 88, 65
+Idle
+  xy: 352, 64
+  size: 88, 65
+Idle
+  xy: 440, 64
+  size: 88, 65
+Idle
+  xy: 528, 64
+  size: 88, 65
+Idle
+  xy: 616, 64
+  size: 88, 65
+Idle
+  xy: 704, 64
+  size: 88, 65
+Idle
+  xy: 792, 64
+  size: 88, 65
+Walk
+  xy: 0, 129
+  size: 88, 65
+Walk
+  xy: 88, 129
+  size: 88, 65
+Walk
+  xy: 176, 129
+  size: 88, 65
+Walk
+  xy: 264, 129
+  size: 88, 65
+Walk
+  xy: 352, 129
+  size: 88, 65
+Walk
+  xy: 440, 129
+  size: 88, 65
+Attack
+  xy: 0, 194
+  size: 88, 65
+Attack
+  xy: 88, 194
+  size: 88, 65
+Attack
+  xy: 176, 194
+  size: 88, 65
+Attack
+  xy: 264, 194
+  size: 88, 65
+Attack
+  xy: 352, 194
+  size: 88, 65
+Attack
+  xy: 440, 194
+  size: 88, 65
+Attack
+  xy: 528, 194
+  size: 88, 65
+Hit
+  xy: 0, 259
+  size: 88, 65
+Hit
+  xy: 88, 259
+  size: 88, 65
+Hit
+  xy: 176, 259
+  size: 88, 65
+Hit
+  xy: 264, 259
+  size: 88, 65
+Hit
+  xy: 352, 259
+  size: 88, 65
+Death
+  xy: 0, 324
+  size: 88, 65
+Death
+  xy: 88, 324
+  size: 88, 65
+Death
+  xy: 176, 324
+  size: 88, 65
+Death
+  xy: 264, 324
+  size: 88, 65
+Death
+  xy: 352, 324
+  size: 88, 65
+Death
+  xy: 440, 324
+  size: 88, 65
+Death
+  xy: 528, 324
+  size: 88, 65
+Death
+  xy: 616, 324
+  size: 88, 65
+Death
+  xy: 704, 324
+  size: 88, 65
+Death
+  xy: 792, 324
+  size: 88, 65
+Death
+  xy: 880, 324
+  size: 88, 65
+Death
+  xy: 968, 324
+  size: 88, 65
+Death
+  xy: 1056, 324
+  size: 88, 65
+Death
+  xy: 1144, 324
+  size: 88, 65
+Death
+  xy: 1232, 324
+  size: 88, 65
+Wake
+  xy: 0, 389
+  size: 88, 65
+Wake
+  xy: 88, 389
+  size: 88, 65
+Wake
+  xy: 176, 389
+  size: 88, 65
+Wake
+  xy: 264, 389
+  size: 88, 65
+Wake
+  xy: 352, 389
+  size: 88, 65
+Wake
+  xy: 440, 389
+  size: 88, 65
+Wake
+  xy: 528, 389
+  size: 88, 65
+IdleUp
+  xy: 0, 454
+  size: 88, 65
+IdleUp
+  xy: 88, 454
+  size: 88, 65
+IdleUp
+  xy: 176, 454
+  size: 88, 65
+IdleUp
+  xy: 264, 454
+  size: 88, 65
+IdleUp
+  xy: 352, 454
+  size: 88, 65
+IdleUp
+  xy: 440, 454
+  size: 88, 65
+IdleUp
+  xy: 528, 454
+  size: 88, 65
+IdleUp
+  xy: 616, 454
+  size: 88, 65
+IdleUp
+  xy: 704, 454
+  size: 88, 65
+IdleUp
+  xy: 792, 454
+  size: 88, 65
+IdleDown
+  xy: 0, 519
+  size: 88, 65
+IdleDown
+  xy: 88, 519
+  size: 88, 65
+IdleDown
+  xy: 176, 519
+  size: 88, 65
+IdleDown
+  xy: 264, 519
+  size: 88, 65
+IdleDown
+  xy: 352, 519
+  size: 88, 65
+IdleDown
+  xy: 440, 519
+  size: 88, 65
+IdleDown
+  xy: 528, 519
+  size: 88, 65
+IdleDown
+  xy: 616, 519
+  size: 88, 65
+IdleDown
+  xy: 704, 519
+  size: 88, 65
+IdleDown
+  xy: 792, 519
+  size: 88, 65
+WalkUp
+  xy: 0, 584
+  size: 88, 65
+WalkUp
+  xy: 88, 584
+  size: 88, 65
+WalkUp
+  xy: 176, 584
+  size: 88, 65
+WalkUp
+  xy: 264, 584
+  size: 88, 65
+WalkUp
+  xy: 352, 584
+  size: 88, 65
+WalkUp
+  xy: 440, 584
+  size: 88, 65
+WalkDown
+  xy: 0, 649
+  size: 88, 65
+WalkDown
+  xy: 88, 649
+  size: 88, 65
+WalkDown
+  xy: 176, 649
+  size: 88, 65
+WalkDown
+  xy: 264, 649
+  size: 88, 65
+WalkDown
+  xy: 352, 649
+  size: 88, 65
+WalkDown
+  xy: 440, 649
+  size: 88, 65

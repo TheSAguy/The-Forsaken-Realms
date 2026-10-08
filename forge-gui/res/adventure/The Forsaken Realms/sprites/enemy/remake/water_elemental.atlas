@@ -1,0 +1,206 @@
+water_elemental.png
+size: 760,684
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 62
+Idle
+  xy: 76, 64
+  size: 76, 62
+Idle
+  xy: 152, 64
+  size: 76, 62
+Idle
+  xy: 228, 64
+  size: 76, 62
+Idle
+  xy: 304, 64
+  size: 76, 62
+Idle
+  xy: 380, 64
+  size: 76, 62
+Idle
+  xy: 456, 64
+  size: 76, 62
+Idle
+  xy: 532, 64
+  size: 76, 62
+Idle
+  xy: 608, 64
+  size: 76, 62
+Idle
+  xy: 684, 64
+  size: 76, 62
+Walk
+  xy: 0, 126
+  size: 76, 62
+Walk
+  xy: 76, 126
+  size: 76, 62
+Walk
+  xy: 152, 126
+  size: 76, 62
+Walk
+  xy: 228, 126
+  size: 76, 62
+Attack
+  xy: 0, 188
+  size: 76, 62
+Attack
+  xy: 76, 188
+  size: 76, 62
+Attack
+  xy: 152, 188
+  size: 76, 62
+Attack
+  xy: 228, 188
+  size: 76, 62
+Attack
+  xy: 304, 188
+  size: 76, 62
+Attack
+  xy: 380, 188
+  size: 76, 62
+Hit
+  xy: 0, 250
+  size: 76, 62
+Hit
+  xy: 76, 250
+  size: 76, 62
+Hit
+  xy: 152, 250
+  size: 76, 62
+Death
+  xy: 0, 312
+  size: 76, 62
+Death
+  xy: 76, 312
+  size: 76, 62
+Death
+  xy: 152, 312
+  size: 76, 62
+Death
+  xy: 228, 312
+  size: 76, 62
+Death
+  xy: 304, 312
+  size: 76, 62
+Death
+  xy: 380, 312
+  size: 76, 62
+Death
+  xy: 456, 312
+  size: 76, 62
+Death
+  xy: 532, 312
+  size: 76, 62
+Death
+  xy: 608, 312
+  size: 76, 62
+Death
+  xy: 684, 312
+  size: 76, 62
+Wake
+  xy: 0, 374
+  size: 76, 62
+Wake
+  xy: 76, 374
+  size: 76, 62
+Wake
+  xy: 152, 374
+  size: 76, 62
+Wake
+  xy: 228, 374
+  size: 76, 62
+Wake
+  xy: 304, 374
+  size: 76, 62
+IdleUp
+  xy: 0, 436
+  size: 76, 62
+IdleUp
+  xy: 76, 436
+  size: 76, 62
+IdleUp
+  xy: 152, 436
+  size: 76, 62
+IdleUp
+  xy: 228, 436
+  size: 76, 62
+IdleUp
+  xy: 304, 436
+  size: 76, 62
+IdleUp
+  xy: 380, 436
+  size: 76, 62
+IdleUp
+  xy: 456, 436
+  size: 76, 62
+IdleUp
+  xy: 532, 436
+  size: 76, 62
+IdleUp
+  xy: 608, 436
+  size: 76, 62
+IdleUp
+  xy: 684, 436
+  size: 76, 62
+IdleDown
+  xy: 0, 498
+  size: 76, 62
+IdleDown
+  xy: 76, 498
+  size: 76, 62
+IdleDown
+  xy: 152, 498
+  size: 76, 62
+IdleDown
+  xy: 228, 498
+  size: 76, 62
+IdleDown
+  xy: 304, 498
+  size: 76, 62
+IdleDown
+  xy: 380, 498
+  size: 76, 62
+IdleDown
+  xy: 456, 498
+  size: 76, 62
+IdleDown
+  xy: 532, 498
+  size: 76, 62
+IdleDown
+  xy: 608, 498
+  size: 76, 62
+IdleDown
+  xy: 684, 498
+  size: 76, 62
+WalkUp
+  xy: 0, 560
+  size: 76, 62
+WalkUp
+  xy: 76, 560
+  size: 76, 62
+WalkUp
+  xy: 152, 560
+  size: 76, 62
+WalkUp
+  xy: 228, 560
+  size: 76, 62
+WalkDown
+  xy: 0, 622
+  size: 76, 62
+WalkDown
+  xy: 76, 622
+  size: 76, 62
+WalkDown
+  xy: 152, 622
+  size: 76, 62
+WalkDown
+  xy: 228, 622
+  size: 76, 62

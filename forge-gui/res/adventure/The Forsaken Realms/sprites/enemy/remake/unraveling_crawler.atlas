@@ -1,0 +1,248 @@
+unraveling_crawler.png
+size: 832,574
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 64, 51
+Idle
+  xy: 64, 64
+  size: 64, 51
+Idle
+  xy: 128, 64
+  size: 64, 51
+Idle
+  xy: 192, 64
+  size: 64, 51
+Idle
+  xy: 256, 64
+  size: 64, 51
+Idle
+  xy: 320, 64
+  size: 64, 51
+Idle
+  xy: 384, 64
+  size: 64, 51
+Idle
+  xy: 448, 64
+  size: 64, 51
+Idle
+  xy: 512, 64
+  size: 64, 51
+Idle
+  xy: 576, 64
+  size: 64, 51
+Walk
+  xy: 0, 115
+  size: 64, 51
+Walk
+  xy: 64, 115
+  size: 64, 51
+Walk
+  xy: 128, 115
+  size: 64, 51
+Walk
+  xy: 192, 115
+  size: 64, 51
+Walk
+  xy: 256, 115
+  size: 64, 51
+Walk
+  xy: 320, 115
+  size: 64, 51
+Attack
+  xy: 0, 166
+  size: 64, 51
+Attack
+  xy: 64, 166
+  size: 64, 51
+Attack
+  xy: 128, 166
+  size: 64, 51
+Attack
+  xy: 192, 166
+  size: 64, 51
+Attack
+  xy: 256, 166
+  size: 64, 51
+Attack
+  xy: 320, 166
+  size: 64, 51
+Attack
+  xy: 384, 166
+  size: 64, 51
+Attack
+  xy: 448, 166
+  size: 64, 51
+Hit
+  xy: 0, 217
+  size: 64, 51
+Hit
+  xy: 64, 217
+  size: 64, 51
+Hit
+  xy: 128, 217
+  size: 64, 51
+Hit
+  xy: 192, 217
+  size: 64, 51
+Hit
+  xy: 256, 217
+  size: 64, 51
+Death
+  xy: 0, 268
+  size: 64, 51
+Death
+  xy: 64, 268
+  size: 64, 51
+Death
+  xy: 128, 268
+  size: 64, 51
+Death
+  xy: 192, 268
+  size: 64, 51
+Death
+  xy: 256, 268
+  size: 64, 51
+Death
+  xy: 320, 268
+  size: 64, 51
+Death
+  xy: 384, 268
+  size: 64, 51
+Death
+  xy: 448, 268
+  size: 64, 51
+Death
+  xy: 512, 268
+  size: 64, 51
+Death
+  xy: 576, 268
+  size: 64, 51
+Death
+  xy: 640, 268
+  size: 64, 51
+Death
+  xy: 704, 268
+  size: 64, 51
+Death
+  xy: 768, 268
+  size: 64, 51
+Wake
+  xy: 0, 319
+  size: 64, 51
+Wake
+  xy: 64, 319
+  size: 64, 51
+Wake
+  xy: 128, 319
+  size: 64, 51
+Wake
+  xy: 192, 319
+  size: 64, 51
+Wake
+  xy: 256, 319
+  size: 64, 51
+Wake
+  xy: 320, 319
+  size: 64, 51
+IdleUp
+  xy: 0, 370
+  size: 64, 51
+IdleUp
+  xy: 64, 370
+  size: 64, 51
+IdleUp
+  xy: 128, 370
+  size: 64, 51
+IdleUp
+  xy: 192, 370
+  size: 64, 51
+IdleUp
+  xy: 256, 370
+  size: 64, 51
+IdleUp
+  xy: 320, 370
+  size: 64, 51
+IdleUp
+  xy: 384, 370
+  size: 64, 51
+IdleUp
+  xy: 448, 370
+  size: 64, 51
+IdleUp
+  xy: 512, 370
+  size: 64, 51
+IdleUp
+  xy: 576, 370
+  size: 64, 51
+IdleDown
+  xy: 0, 421
+  size: 64, 51
+IdleDown
+  xy: 64, 421
+  size: 64, 51
+IdleDown
+  xy: 128, 421
+  size: 64, 51
+IdleDown
+  xy: 192, 421
+  size: 64, 51
+IdleDown
+  xy: 256, 421
+  size: 64, 51
+IdleDown
+  xy: 320, 421
+  size: 64, 51
+IdleDown
+  xy: 384, 421
+  size: 64, 51
+IdleDown
+  xy: 448, 421
+  size: 64, 51
+IdleDown
+  xy: 512, 421
+  size: 64, 51
+IdleDown
+  xy: 576, 421
+  size: 64, 51
+WalkUp
+  xy: 0, 472
+  size: 64, 51
+WalkUp
+  xy: 64, 472
+  size: 64, 51
+WalkUp
+  xy: 128, 472
+  size: 64, 51
+WalkUp
+  xy: 192, 472
+  size: 64, 51
+WalkUp
+  xy: 256, 472
+  size: 64, 51
+WalkUp
+  xy: 320, 472
+  size: 64, 51
+WalkDown
+  xy: 0, 523
+  size: 64, 51
+WalkDown
+  xy: 64, 523
+  size: 64, 51
+WalkDown
+  xy: 128, 523
+  size: 64, 51
+WalkDown
+  xy: 192, 523
+  size: 64, 51
+WalkDown
+  xy: 256, 523
+  size: 64, 51
+WalkDown
+  xy: 320, 523
+  size: 64, 51

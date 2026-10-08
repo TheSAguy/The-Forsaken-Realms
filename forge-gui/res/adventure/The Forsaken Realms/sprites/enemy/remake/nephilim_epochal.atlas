@@ -1,0 +1,224 @@
+nephilim_epochal.png
+size: 1430,1044
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 110, 98
+Idle
+  xy: 110, 64
+  size: 110, 98
+Idle
+  xy: 220, 64
+  size: 110, 98
+Idle
+  xy: 330, 64
+  size: 110, 98
+Idle
+  xy: 440, 64
+  size: 110, 98
+Idle
+  xy: 550, 64
+  size: 110, 98
+Idle
+  xy: 660, 64
+  size: 110, 98
+Idle
+  xy: 770, 64
+  size: 110, 98
+Idle
+  xy: 880, 64
+  size: 110, 98
+Idle
+  xy: 990, 64
+  size: 110, 98
+Walk
+  xy: 0, 162
+  size: 110, 98
+Walk
+  xy: 110, 162
+  size: 110, 98
+Walk
+  xy: 220, 162
+  size: 110, 98
+Walk
+  xy: 330, 162
+  size: 110, 98
+Attack
+  xy: 0, 260
+  size: 110, 98
+Attack
+  xy: 110, 260
+  size: 110, 98
+Attack
+  xy: 220, 260
+  size: 110, 98
+Attack
+  xy: 330, 260
+  size: 110, 98
+Attack
+  xy: 440, 260
+  size: 110, 98
+Attack
+  xy: 550, 260
+  size: 110, 98
+Hit
+  xy: 0, 358
+  size: 110, 98
+Hit
+  xy: 110, 358
+  size: 110, 98
+Hit
+  xy: 220, 358
+  size: 110, 98
+Hit
+  xy: 330, 358
+  size: 110, 98
+Hit
+  xy: 440, 358
+  size: 110, 98
+Death
+  xy: 0, 456
+  size: 110, 98
+Death
+  xy: 110, 456
+  size: 110, 98
+Death
+  xy: 220, 456
+  size: 110, 98
+Death
+  xy: 330, 456
+  size: 110, 98
+Death
+  xy: 440, 456
+  size: 110, 98
+Death
+  xy: 550, 456
+  size: 110, 98
+Death
+  xy: 660, 456
+  size: 110, 98
+Death
+  xy: 770, 456
+  size: 110, 98
+Death
+  xy: 880, 456
+  size: 110, 98
+Death
+  xy: 990, 456
+  size: 110, 98
+Death
+  xy: 1100, 456
+  size: 110, 98
+Death
+  xy: 1210, 456
+  size: 110, 98
+Death
+  xy: 1320, 456
+  size: 110, 98
+Wake
+  xy: 0, 554
+  size: 110, 98
+Wake
+  xy: 110, 554
+  size: 110, 98
+Wake
+  xy: 220, 554
+  size: 110, 98
+Wake
+  xy: 330, 554
+  size: 110, 98
+Wake
+  xy: 440, 554
+  size: 110, 98
+Wake
+  xy: 550, 554
+  size: 110, 98
+IdleUp
+  xy: 0, 652
+  size: 110, 98
+IdleUp
+  xy: 110, 652
+  size: 110, 98
+IdleUp
+  xy: 220, 652
+  size: 110, 98
+IdleUp
+  xy: 330, 652
+  size: 110, 98
+IdleUp
+  xy: 440, 652
+  size: 110, 98
+IdleUp
+  xy: 550, 652
+  size: 110, 98
+IdleUp
+  xy: 660, 652
+  size: 110, 98
+IdleUp
+  xy: 770, 652
+  size: 110, 98
+IdleUp
+  xy: 880, 652
+  size: 110, 98
+IdleUp
+  xy: 990, 652
+  size: 110, 98
+IdleDown
+  xy: 0, 750
+  size: 110, 98
+IdleDown
+  xy: 110, 750
+  size: 110, 98
+IdleDown
+  xy: 220, 750
+  size: 110, 98
+IdleDown
+  xy: 330, 750
+  size: 110, 98
+IdleDown
+  xy: 440, 750
+  size: 110, 98
+IdleDown
+  xy: 550, 750
+  size: 110, 98
+IdleDown
+  xy: 660, 750
+  size: 110, 98
+IdleDown
+  xy: 770, 750
+  size: 110, 98
+IdleDown
+  xy: 880, 750
+  size: 110, 98
+IdleDown
+  xy: 990, 750
+  size: 110, 98
+WalkUp
+  xy: 0, 848
+  size: 110, 98
+WalkUp
+  xy: 110, 848
+  size: 110, 98
+WalkUp
+  xy: 220, 848
+  size: 110, 98
+WalkUp
+  xy: 330, 848
+  size: 110, 98
+WalkDown
+  xy: 0, 946
+  size: 110, 98
+WalkDown
+  xy: 110, 946
+  size: 110, 98
+WalkDown
+  xy: 220, 946
+  size: 110, 98
+WalkDown
+  xy: 330, 946
+  size: 110, 98

@@ -1,0 +1,206 @@
+tarkir_djinn.png
+size: 620,694
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 63
+Idle
+  xy: 62, 64
+  size: 62, 63
+Idle
+  xy: 124, 64
+  size: 62, 63
+Idle
+  xy: 186, 64
+  size: 62, 63
+Idle
+  xy: 248, 64
+  size: 62, 63
+Idle
+  xy: 310, 64
+  size: 62, 63
+Idle
+  xy: 372, 64
+  size: 62, 63
+Idle
+  xy: 434, 64
+  size: 62, 63
+Idle
+  xy: 496, 64
+  size: 62, 63
+Idle
+  xy: 558, 64
+  size: 62, 63
+Walk
+  xy: 0, 127
+  size: 62, 63
+Walk
+  xy: 62, 127
+  size: 62, 63
+Walk
+  xy: 124, 127
+  size: 62, 63
+Walk
+  xy: 186, 127
+  size: 62, 63
+Attack
+  xy: 0, 190
+  size: 62, 63
+Attack
+  xy: 62, 190
+  size: 62, 63
+Attack
+  xy: 124, 190
+  size: 62, 63
+Attack
+  xy: 186, 190
+  size: 62, 63
+Attack
+  xy: 248, 190
+  size: 62, 63
+Attack
+  xy: 310, 190
+  size: 62, 63
+Hit
+  xy: 0, 253
+  size: 62, 63
+Hit
+  xy: 62, 253
+  size: 62, 63
+Hit
+  xy: 124, 253
+  size: 62, 63
+Death
+  xy: 0, 316
+  size: 62, 63
+Death
+  xy: 62, 316
+  size: 62, 63
+Death
+  xy: 124, 316
+  size: 62, 63
+Death
+  xy: 186, 316
+  size: 62, 63
+Death
+  xy: 248, 316
+  size: 62, 63
+Death
+  xy: 310, 316
+  size: 62, 63
+Death
+  xy: 372, 316
+  size: 62, 63
+Death
+  xy: 434, 316
+  size: 62, 63
+Death
+  xy: 496, 316
+  size: 62, 63
+Death
+  xy: 558, 316
+  size: 62, 63
+Wake
+  xy: 0, 379
+  size: 62, 63
+Wake
+  xy: 62, 379
+  size: 62, 63
+Wake
+  xy: 124, 379
+  size: 62, 63
+Wake
+  xy: 186, 379
+  size: 62, 63
+Wake
+  xy: 248, 379
+  size: 62, 63
+IdleUp
+  xy: 0, 442
+  size: 62, 63
+IdleUp
+  xy: 62, 442
+  size: 62, 63
+IdleUp
+  xy: 124, 442
+  size: 62, 63
+IdleUp
+  xy: 186, 442
+  size: 62, 63
+IdleUp
+  xy: 248, 442
+  size: 62, 63
+IdleUp
+  xy: 310, 442
+  size: 62, 63
+IdleUp
+  xy: 372, 442
+  size: 62, 63
+IdleUp
+  xy: 434, 442
+  size: 62, 63
+IdleUp
+  xy: 496, 442
+  size: 62, 63
+IdleUp
+  xy: 558, 442
+  size: 62, 63
+IdleDown
+  xy: 0, 505
+  size: 62, 63
+IdleDown
+  xy: 62, 505
+  size: 62, 63
+IdleDown
+  xy: 124, 505
+  size: 62, 63
+IdleDown
+  xy: 186, 505
+  size: 62, 63
+IdleDown
+  xy: 248, 505
+  size: 62, 63
+IdleDown
+  xy: 310, 505
+  size: 62, 63
+IdleDown
+  xy: 372, 505
+  size: 62, 63
+IdleDown
+  xy: 434, 505
+  size: 62, 63
+IdleDown
+  xy: 496, 505
+  size: 62, 63
+IdleDown
+  xy: 558, 505
+  size: 62, 63
+WalkUp
+  xy: 0, 568
+  size: 62, 63
+WalkUp
+  xy: 62, 568
+  size: 62, 63
+WalkUp
+  xy: 124, 568
+  size: 62, 63
+WalkUp
+  xy: 186, 568
+  size: 62, 63
+WalkDown
+  xy: 0, 631
+  size: 62, 63
+WalkDown
+  xy: 62, 631
+  size: 62, 63
+WalkDown
+  xy: 124, 631
+  size: 62, 63
+WalkDown
+  xy: 186, 631
+  size: 62, 63

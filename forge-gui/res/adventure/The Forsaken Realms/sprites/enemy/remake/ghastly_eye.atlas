@@ -1,0 +1,239 @@
+ghastly_eye.png
+size: 1148,864
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 80
+Idle
+  xy: 82, 64
+  size: 82, 80
+Idle
+  xy: 164, 64
+  size: 82, 80
+Idle
+  xy: 246, 64
+  size: 82, 80
+Idle
+  xy: 328, 64
+  size: 82, 80
+Idle
+  xy: 410, 64
+  size: 82, 80
+Idle
+  xy: 492, 64
+  size: 82, 80
+Idle
+  xy: 574, 64
+  size: 82, 80
+Idle
+  xy: 656, 64
+  size: 82, 80
+Idle
+  xy: 738, 64
+  size: 82, 80
+Walk
+  xy: 0, 144
+  size: 82, 80
+Walk
+  xy: 82, 144
+  size: 82, 80
+Walk
+  xy: 164, 144
+  size: 82, 80
+Walk
+  xy: 246, 144
+  size: 82, 80
+Attack
+  xy: 0, 224
+  size: 82, 80
+Attack
+  xy: 82, 224
+  size: 82, 80
+Attack
+  xy: 164, 224
+  size: 82, 80
+Attack
+  xy: 246, 224
+  size: 82, 80
+Attack
+  xy: 328, 224
+  size: 82, 80
+Attack
+  xy: 410, 224
+  size: 82, 80
+Attack
+  xy: 492, 224
+  size: 82, 80
+Attack
+  xy: 574, 224
+  size: 82, 80
+Attack
+  xy: 656, 224
+  size: 82, 80
+Hit
+  xy: 0, 304
+  size: 82, 80
+Hit
+  xy: 82, 304
+  size: 82, 80
+Hit
+  xy: 164, 304
+  size: 82, 80
+Hit
+  xy: 246, 304
+  size: 82, 80
+Hit
+  xy: 328, 304
+  size: 82, 80
+Death
+  xy: 0, 384
+  size: 82, 80
+Death
+  xy: 82, 384
+  size: 82, 80
+Death
+  xy: 164, 384
+  size: 82, 80
+Death
+  xy: 246, 384
+  size: 82, 80
+Death
+  xy: 328, 384
+  size: 82, 80
+Death
+  xy: 410, 384
+  size: 82, 80
+Death
+  xy: 492, 384
+  size: 82, 80
+Death
+  xy: 574, 384
+  size: 82, 80
+Death
+  xy: 656, 384
+  size: 82, 80
+Death
+  xy: 738, 384
+  size: 82, 80
+Death
+  xy: 820, 384
+  size: 82, 80
+Death
+  xy: 902, 384
+  size: 82, 80
+Death
+  xy: 984, 384
+  size: 82, 80
+Death
+  xy: 1066, 384
+  size: 82, 80
+Wake
+  xy: 0, 464
+  size: 82, 80
+Wake
+  xy: 82, 464
+  size: 82, 80
+Wake
+  xy: 164, 464
+  size: 82, 80
+Wake
+  xy: 246, 464
+  size: 82, 80
+Wake
+  xy: 328, 464
+  size: 82, 80
+Wake
+  xy: 410, 464
+  size: 82, 80
+Wake
+  xy: 492, 464
+  size: 82, 80
+IdleUp
+  xy: 0, 544
+  size: 82, 80
+IdleUp
+  xy: 82, 544
+  size: 82, 80
+IdleUp
+  xy: 164, 544
+  size: 82, 80
+IdleUp
+  xy: 246, 544
+  size: 82, 80
+IdleUp
+  xy: 328, 544
+  size: 82, 80
+IdleUp
+  xy: 410, 544
+  size: 82, 80
+IdleUp
+  xy: 492, 544
+  size: 82, 80
+IdleUp
+  xy: 574, 544
+  size: 82, 80
+IdleUp
+  xy: 656, 544
+  size: 82, 80
+IdleUp
+  xy: 738, 544
+  size: 82, 80
+IdleDown
+  xy: 0, 624
+  size: 82, 80
+IdleDown
+  xy: 82, 624
+  size: 82, 80
+IdleDown
+  xy: 164, 624
+  size: 82, 80
+IdleDown
+  xy: 246, 624
+  size: 82, 80
+IdleDown
+  xy: 328, 624
+  size: 82, 80
+IdleDown
+  xy: 410, 624
+  size: 82, 80
+IdleDown
+  xy: 492, 624
+  size: 82, 80
+IdleDown
+  xy: 574, 624
+  size: 82, 80
+IdleDown
+  xy: 656, 624
+  size: 82, 80
+IdleDown
+  xy: 738, 624
+  size: 82, 80
+WalkUp
+  xy: 0, 704
+  size: 82, 80
+WalkUp
+  xy: 82, 704
+  size: 82, 80
+WalkUp
+  xy: 164, 704
+  size: 82, 80
+WalkUp
+  xy: 246, 704
+  size: 82, 80
+WalkDown
+  xy: 0, 784
+  size: 82, 80
+WalkDown
+  xy: 82, 784
+  size: 82, 80
+WalkDown
+  xy: 164, 784
+  size: 82, 80
+WalkDown
+  xy: 246, 784
+  size: 82, 80

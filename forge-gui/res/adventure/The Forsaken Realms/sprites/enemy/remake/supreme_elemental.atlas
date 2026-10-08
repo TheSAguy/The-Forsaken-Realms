@@ -1,0 +1,206 @@
+supreme_elemental.png
+size: 900,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 96
+Idle
+  xy: 90, 64
+  size: 90, 96
+Idle
+  xy: 180, 64
+  size: 90, 96
+Idle
+  xy: 270, 64
+  size: 90, 96
+Idle
+  xy: 360, 64
+  size: 90, 96
+Idle
+  xy: 450, 64
+  size: 90, 96
+Idle
+  xy: 540, 64
+  size: 90, 96
+Idle
+  xy: 630, 64
+  size: 90, 96
+Idle
+  xy: 720, 64
+  size: 90, 96
+Idle
+  xy: 810, 64
+  size: 90, 96
+Walk
+  xy: 0, 160
+  size: 90, 96
+Walk
+  xy: 90, 160
+  size: 90, 96
+Walk
+  xy: 180, 160
+  size: 90, 96
+Walk
+  xy: 270, 160
+  size: 90, 96
+Attack
+  xy: 0, 256
+  size: 90, 96
+Attack
+  xy: 90, 256
+  size: 90, 96
+Attack
+  xy: 180, 256
+  size: 90, 96
+Attack
+  xy: 270, 256
+  size: 90, 96
+Attack
+  xy: 360, 256
+  size: 90, 96
+Hit
+  xy: 0, 352
+  size: 90, 96
+Hit
+  xy: 90, 352
+  size: 90, 96
+Hit
+  xy: 180, 352
+  size: 90, 96
+Hit
+  xy: 270, 352
+  size: 90, 96
+Death
+  xy: 0, 448
+  size: 90, 96
+Death
+  xy: 90, 448
+  size: 90, 96
+Death
+  xy: 180, 448
+  size: 90, 96
+Death
+  xy: 270, 448
+  size: 90, 96
+Death
+  xy: 360, 448
+  size: 90, 96
+Death
+  xy: 450, 448
+  size: 90, 96
+Death
+  xy: 540, 448
+  size: 90, 96
+Death
+  xy: 630, 448
+  size: 90, 96
+Death
+  xy: 720, 448
+  size: 90, 96
+Death
+  xy: 810, 448
+  size: 90, 96
+Wake
+  xy: 0, 544
+  size: 90, 96
+Wake
+  xy: 90, 544
+  size: 90, 96
+Wake
+  xy: 180, 544
+  size: 90, 96
+Wake
+  xy: 270, 544
+  size: 90, 96
+Wake
+  xy: 360, 544
+  size: 90, 96
+IdleUp
+  xy: 0, 640
+  size: 90, 96
+IdleUp
+  xy: 90, 640
+  size: 90, 96
+IdleUp
+  xy: 180, 640
+  size: 90, 96
+IdleUp
+  xy: 270, 640
+  size: 90, 96
+IdleUp
+  xy: 360, 640
+  size: 90, 96
+IdleUp
+  xy: 450, 640
+  size: 90, 96
+IdleUp
+  xy: 540, 640
+  size: 90, 96
+IdleUp
+  xy: 630, 640
+  size: 90, 96
+IdleUp
+  xy: 720, 640
+  size: 90, 96
+IdleUp
+  xy: 810, 640
+  size: 90, 96
+IdleDown
+  xy: 0, 736
+  size: 90, 96
+IdleDown
+  xy: 90, 736
+  size: 90, 96
+IdleDown
+  xy: 180, 736
+  size: 90, 96
+IdleDown
+  xy: 270, 736
+  size: 90, 96
+IdleDown
+  xy: 360, 736
+  size: 90, 96
+IdleDown
+  xy: 450, 736
+  size: 90, 96
+IdleDown
+  xy: 540, 736
+  size: 90, 96
+IdleDown
+  xy: 630, 736
+  size: 90, 96
+IdleDown
+  xy: 720, 736
+  size: 90, 96
+IdleDown
+  xy: 810, 736
+  size: 90, 96
+WalkUp
+  xy: 0, 832
+  size: 90, 96
+WalkUp
+  xy: 90, 832
+  size: 90, 96
+WalkUp
+  xy: 180, 832
+  size: 90, 96
+WalkUp
+  xy: 270, 832
+  size: 90, 96
+WalkDown
+  xy: 0, 928
+  size: 90, 96
+WalkDown
+  xy: 90, 928
+  size: 90, 96
+WalkDown
+  xy: 180, 928
+  size: 90, 96
+WalkDown
+  xy: 270, 928
+  size: 90, 96

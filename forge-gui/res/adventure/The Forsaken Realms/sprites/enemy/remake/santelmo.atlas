@@ -1,0 +1,242 @@
+santelmo.png
+size: 1620,1034
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 108, 97
+Idle
+  xy: 108, 64
+  size: 108, 97
+Idle
+  xy: 216, 64
+  size: 108, 97
+Idle
+  xy: 324, 64
+  size: 108, 97
+Idle
+  xy: 432, 64
+  size: 108, 97
+Idle
+  xy: 540, 64
+  size: 108, 97
+Idle
+  xy: 648, 64
+  size: 108, 97
+Idle
+  xy: 756, 64
+  size: 108, 97
+Idle
+  xy: 864, 64
+  size: 108, 97
+Idle
+  xy: 972, 64
+  size: 108, 97
+Walk
+  xy: 0, 161
+  size: 108, 97
+Walk
+  xy: 108, 161
+  size: 108, 97
+Walk
+  xy: 216, 161
+  size: 108, 97
+Walk
+  xy: 324, 161
+  size: 108, 97
+Attack
+  xy: 0, 258
+  size: 108, 97
+Attack
+  xy: 108, 258
+  size: 108, 97
+Attack
+  xy: 216, 258
+  size: 108, 97
+Attack
+  xy: 324, 258
+  size: 108, 97
+Attack
+  xy: 432, 258
+  size: 108, 97
+Attack
+  xy: 540, 258
+  size: 108, 97
+Attack
+  xy: 648, 258
+  size: 108, 97
+Attack
+  xy: 756, 258
+  size: 108, 97
+Attack
+  xy: 864, 258
+  size: 108, 97
+Hit
+  xy: 0, 355
+  size: 108, 97
+Hit
+  xy: 108, 355
+  size: 108, 97
+Hit
+  xy: 216, 355
+  size: 108, 97
+Hit
+  xy: 324, 355
+  size: 108, 97
+Hit
+  xy: 432, 355
+  size: 108, 97
+Death
+  xy: 0, 452
+  size: 108, 97
+Death
+  xy: 108, 452
+  size: 108, 97
+Death
+  xy: 216, 452
+  size: 108, 97
+Death
+  xy: 324, 452
+  size: 108, 97
+Death
+  xy: 432, 452
+  size: 108, 97
+Death
+  xy: 540, 452
+  size: 108, 97
+Death
+  xy: 648, 452
+  size: 108, 97
+Death
+  xy: 756, 452
+  size: 108, 97
+Death
+  xy: 864, 452
+  size: 108, 97
+Death
+  xy: 972, 452
+  size: 108, 97
+Death
+  xy: 1080, 452
+  size: 108, 97
+Death
+  xy: 1188, 452
+  size: 108, 97
+Death
+  xy: 1296, 452
+  size: 108, 97
+Death
+  xy: 1404, 452
+  size: 108, 97
+Death
+  xy: 1512, 452
+  size: 108, 97
+Wake
+  xy: 0, 549
+  size: 108, 97
+Wake
+  xy: 108, 549
+  size: 108, 97
+Wake
+  xy: 216, 549
+  size: 108, 97
+Wake
+  xy: 324, 549
+  size: 108, 97
+Wake
+  xy: 432, 549
+  size: 108, 97
+Wake
+  xy: 540, 549
+  size: 108, 97
+Wake
+  xy: 648, 549
+  size: 108, 97
+IdleUp
+  xy: 0, 646
+  size: 108, 97
+IdleUp
+  xy: 108, 646
+  size: 108, 97
+IdleUp
+  xy: 216, 646
+  size: 108, 97
+IdleUp
+  xy: 324, 646
+  size: 108, 97
+IdleUp
+  xy: 432, 646
+  size: 108, 97
+IdleUp
+  xy: 540, 646
+  size: 108, 97
+IdleUp
+  xy: 648, 646
+  size: 108, 97
+IdleUp
+  xy: 756, 646
+  size: 108, 97
+IdleUp
+  xy: 864, 646
+  size: 108, 97
+IdleUp
+  xy: 972, 646
+  size: 108, 97
+IdleDown
+  xy: 0, 743
+  size: 108, 97
+IdleDown
+  xy: 108, 743
+  size: 108, 97
+IdleDown
+  xy: 216, 743
+  size: 108, 97
+IdleDown
+  xy: 324, 743
+  size: 108, 97
+IdleDown
+  xy: 432, 743
+  size: 108, 97
+IdleDown
+  xy: 540, 743
+  size: 108, 97
+IdleDown
+  xy: 648, 743
+  size: 108, 97
+IdleDown
+  xy: 756, 743
+  size: 108, 97
+IdleDown
+  xy: 864, 743
+  size: 108, 97
+IdleDown
+  xy: 972, 743
+  size: 108, 97
+WalkUp
+  xy: 0, 840
+  size: 108, 97
+WalkUp
+  xy: 108, 840
+  size: 108, 97
+WalkUp
+  xy: 216, 840
+  size: 108, 97
+WalkUp
+  xy: 324, 840
+  size: 108, 97
+WalkDown
+  xy: 0, 937
+  size: 108, 97
+WalkDown
+  xy: 108, 937
+  size: 108, 97
+WalkDown
+  xy: 216, 937
+  size: 108, 97
+WalkDown
+  xy: 324, 937
+  size: 108, 97

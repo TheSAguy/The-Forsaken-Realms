@@ -1,0 +1,236 @@
+the_dawning_archaic.png
+size: 1708,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 122, 96
+Idle
+  xy: 122, 64
+  size: 122, 96
+Idle
+  xy: 244, 64
+  size: 122, 96
+Idle
+  xy: 366, 64
+  size: 122, 96
+Idle
+  xy: 488, 64
+  size: 122, 96
+Idle
+  xy: 610, 64
+  size: 122, 96
+Idle
+  xy: 732, 64
+  size: 122, 96
+Idle
+  xy: 854, 64
+  size: 122, 96
+Idle
+  xy: 976, 64
+  size: 122, 96
+Idle
+  xy: 1098, 64
+  size: 122, 96
+Walk
+  xy: 0, 160
+  size: 122, 96
+Walk
+  xy: 122, 160
+  size: 122, 96
+Walk
+  xy: 244, 160
+  size: 122, 96
+Walk
+  xy: 366, 160
+  size: 122, 96
+Attack
+  xy: 0, 256
+  size: 122, 96
+Attack
+  xy: 122, 256
+  size: 122, 96
+Attack
+  xy: 244, 256
+  size: 122, 96
+Attack
+  xy: 366, 256
+  size: 122, 96
+Attack
+  xy: 488, 256
+  size: 122, 96
+Attack
+  xy: 610, 256
+  size: 122, 96
+Attack
+  xy: 732, 256
+  size: 122, 96
+Attack
+  xy: 854, 256
+  size: 122, 96
+Hit
+  xy: 0, 352
+  size: 122, 96
+Hit
+  xy: 122, 352
+  size: 122, 96
+Hit
+  xy: 244, 352
+  size: 122, 96
+Hit
+  xy: 366, 352
+  size: 122, 96
+Hit
+  xy: 488, 352
+  size: 122, 96
+Death
+  xy: 0, 448
+  size: 122, 96
+Death
+  xy: 122, 448
+  size: 122, 96
+Death
+  xy: 244, 448
+  size: 122, 96
+Death
+  xy: 366, 448
+  size: 122, 96
+Death
+  xy: 488, 448
+  size: 122, 96
+Death
+  xy: 610, 448
+  size: 122, 96
+Death
+  xy: 732, 448
+  size: 122, 96
+Death
+  xy: 854, 448
+  size: 122, 96
+Death
+  xy: 976, 448
+  size: 122, 96
+Death
+  xy: 1098, 448
+  size: 122, 96
+Death
+  xy: 1220, 448
+  size: 122, 96
+Death
+  xy: 1342, 448
+  size: 122, 96
+Death
+  xy: 1464, 448
+  size: 122, 96
+Death
+  xy: 1586, 448
+  size: 122, 96
+Wake
+  xy: 0, 544
+  size: 122, 96
+Wake
+  xy: 122, 544
+  size: 122, 96
+Wake
+  xy: 244, 544
+  size: 122, 96
+Wake
+  xy: 366, 544
+  size: 122, 96
+Wake
+  xy: 488, 544
+  size: 122, 96
+Wake
+  xy: 610, 544
+  size: 122, 96
+Wake
+  xy: 732, 544
+  size: 122, 96
+IdleUp
+  xy: 0, 640
+  size: 122, 96
+IdleUp
+  xy: 122, 640
+  size: 122, 96
+IdleUp
+  xy: 244, 640
+  size: 122, 96
+IdleUp
+  xy: 366, 640
+  size: 122, 96
+IdleUp
+  xy: 488, 640
+  size: 122, 96
+IdleUp
+  xy: 610, 640
+  size: 122, 96
+IdleUp
+  xy: 732, 640
+  size: 122, 96
+IdleUp
+  xy: 854, 640
+  size: 122, 96
+IdleUp
+  xy: 976, 640
+  size: 122, 96
+IdleUp
+  xy: 1098, 640
+  size: 122, 96
+IdleDown
+  xy: 0, 736
+  size: 122, 96
+IdleDown
+  xy: 122, 736
+  size: 122, 96
+IdleDown
+  xy: 244, 736
+  size: 122, 96
+IdleDown
+  xy: 366, 736
+  size: 122, 96
+IdleDown
+  xy: 488, 736
+  size: 122, 96
+IdleDown
+  xy: 610, 736
+  size: 122, 96
+IdleDown
+  xy: 732, 736
+  size: 122, 96
+IdleDown
+  xy: 854, 736
+  size: 122, 96
+IdleDown
+  xy: 976, 736
+  size: 122, 96
+IdleDown
+  xy: 1098, 736
+  size: 122, 96
+WalkUp
+  xy: 0, 832
+  size: 122, 96
+WalkUp
+  xy: 122, 832
+  size: 122, 96
+WalkUp
+  xy: 244, 832
+  size: 122, 96
+WalkUp
+  xy: 366, 832
+  size: 122, 96
+WalkDown
+  xy: 0, 928
+  size: 122, 96
+WalkDown
+  xy: 122, 928
+  size: 122, 96
+WalkDown
+  xy: 244, 928
+  size: 122, 96
+WalkDown
+  xy: 366, 928
+  size: 122, 96

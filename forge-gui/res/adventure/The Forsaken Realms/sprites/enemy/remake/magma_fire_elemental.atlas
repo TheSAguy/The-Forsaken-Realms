@@ -1,0 +1,212 @@
+magma_fire_elemental.png
+size: 616,684
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 62
+Idle
+  xy: 56, 64
+  size: 56, 62
+Idle
+  xy: 112, 64
+  size: 56, 62
+Idle
+  xy: 168, 64
+  size: 56, 62
+Idle
+  xy: 224, 64
+  size: 56, 62
+Idle
+  xy: 280, 64
+  size: 56, 62
+Idle
+  xy: 336, 64
+  size: 56, 62
+Idle
+  xy: 392, 64
+  size: 56, 62
+Idle
+  xy: 448, 64
+  size: 56, 62
+Idle
+  xy: 504, 64
+  size: 56, 62
+Walk
+  xy: 0, 126
+  size: 56, 62
+Walk
+  xy: 56, 126
+  size: 56, 62
+Walk
+  xy: 112, 126
+  size: 56, 62
+Walk
+  xy: 168, 126
+  size: 56, 62
+Attack
+  xy: 0, 188
+  size: 56, 62
+Attack
+  xy: 56, 188
+  size: 56, 62
+Attack
+  xy: 112, 188
+  size: 56, 62
+Attack
+  xy: 168, 188
+  size: 56, 62
+Attack
+  xy: 224, 188
+  size: 56, 62
+Attack
+  xy: 280, 188
+  size: 56, 62
+Attack
+  xy: 336, 188
+  size: 56, 62
+Hit
+  xy: 0, 250
+  size: 56, 62
+Hit
+  xy: 56, 250
+  size: 56, 62
+Hit
+  xy: 112, 250
+  size: 56, 62
+Death
+  xy: 0, 312
+  size: 56, 62
+Death
+  xy: 56, 312
+  size: 56, 62
+Death
+  xy: 112, 312
+  size: 56, 62
+Death
+  xy: 168, 312
+  size: 56, 62
+Death
+  xy: 224, 312
+  size: 56, 62
+Death
+  xy: 280, 312
+  size: 56, 62
+Death
+  xy: 336, 312
+  size: 56, 62
+Death
+  xy: 392, 312
+  size: 56, 62
+Death
+  xy: 448, 312
+  size: 56, 62
+Death
+  xy: 504, 312
+  size: 56, 62
+Death
+  xy: 560, 312
+  size: 56, 62
+Wake
+  xy: 0, 374
+  size: 56, 62
+Wake
+  xy: 56, 374
+  size: 56, 62
+Wake
+  xy: 112, 374
+  size: 56, 62
+Wake
+  xy: 168, 374
+  size: 56, 62
+Wake
+  xy: 224, 374
+  size: 56, 62
+IdleUp
+  xy: 0, 436
+  size: 56, 62
+IdleUp
+  xy: 56, 436
+  size: 56, 62
+IdleUp
+  xy: 112, 436
+  size: 56, 62
+IdleUp
+  xy: 168, 436
+  size: 56, 62
+IdleUp
+  xy: 224, 436
+  size: 56, 62
+IdleUp
+  xy: 280, 436
+  size: 56, 62
+IdleUp
+  xy: 336, 436
+  size: 56, 62
+IdleUp
+  xy: 392, 436
+  size: 56, 62
+IdleUp
+  xy: 448, 436
+  size: 56, 62
+IdleUp
+  xy: 504, 436
+  size: 56, 62
+IdleDown
+  xy: 0, 498
+  size: 56, 62
+IdleDown
+  xy: 56, 498
+  size: 56, 62
+IdleDown
+  xy: 112, 498
+  size: 56, 62
+IdleDown
+  xy: 168, 498
+  size: 56, 62
+IdleDown
+  xy: 224, 498
+  size: 56, 62
+IdleDown
+  xy: 280, 498
+  size: 56, 62
+IdleDown
+  xy: 336, 498
+  size: 56, 62
+IdleDown
+  xy: 392, 498
+  size: 56, 62
+IdleDown
+  xy: 448, 498
+  size: 56, 62
+IdleDown
+  xy: 504, 498
+  size: 56, 62
+WalkUp
+  xy: 0, 560
+  size: 56, 62
+WalkUp
+  xy: 56, 560
+  size: 56, 62
+WalkUp
+  xy: 112, 560
+  size: 56, 62
+WalkUp
+  xy: 168, 560
+  size: 56, 62
+WalkDown
+  xy: 0, 622
+  size: 56, 62
+WalkDown
+  xy: 56, 622
+  size: 56, 62
+WalkDown
+  xy: 112, 622
+  size: 56, 62
+WalkDown
+  xy: 168, 622
+  size: 56, 62

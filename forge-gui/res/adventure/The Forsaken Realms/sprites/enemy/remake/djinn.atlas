@@ -1,0 +1,212 @@
+djinn.png
+size: 792,814
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 75
+Idle
+  xy: 72, 64
+  size: 72, 75
+Idle
+  xy: 144, 64
+  size: 72, 75
+Idle
+  xy: 216, 64
+  size: 72, 75
+Idle
+  xy: 288, 64
+  size: 72, 75
+Idle
+  xy: 360, 64
+  size: 72, 75
+Idle
+  xy: 432, 64
+  size: 72, 75
+Idle
+  xy: 504, 64
+  size: 72, 75
+Idle
+  xy: 576, 64
+  size: 72, 75
+Idle
+  xy: 648, 64
+  size: 72, 75
+Walk
+  xy: 0, 139
+  size: 72, 75
+Walk
+  xy: 72, 139
+  size: 72, 75
+Walk
+  xy: 144, 139
+  size: 72, 75
+Walk
+  xy: 216, 139
+  size: 72, 75
+Attack
+  xy: 0, 214
+  size: 72, 75
+Attack
+  xy: 72, 214
+  size: 72, 75
+Attack
+  xy: 144, 214
+  size: 72, 75
+Attack
+  xy: 216, 214
+  size: 72, 75
+Attack
+  xy: 288, 214
+  size: 72, 75
+Attack
+  xy: 360, 214
+  size: 72, 75
+Hit
+  xy: 0, 289
+  size: 72, 75
+Hit
+  xy: 72, 289
+  size: 72, 75
+Hit
+  xy: 144, 289
+  size: 72, 75
+Hit
+  xy: 216, 289
+  size: 72, 75
+Death
+  xy: 0, 364
+  size: 72, 75
+Death
+  xy: 72, 364
+  size: 72, 75
+Death
+  xy: 144, 364
+  size: 72, 75
+Death
+  xy: 216, 364
+  size: 72, 75
+Death
+  xy: 288, 364
+  size: 72, 75
+Death
+  xy: 360, 364
+  size: 72, 75
+Death
+  xy: 432, 364
+  size: 72, 75
+Death
+  xy: 504, 364
+  size: 72, 75
+Death
+  xy: 576, 364
+  size: 72, 75
+Death
+  xy: 648, 364
+  size: 72, 75
+Death
+  xy: 720, 364
+  size: 72, 75
+Wake
+  xy: 0, 439
+  size: 72, 75
+Wake
+  xy: 72, 439
+  size: 72, 75
+Wake
+  xy: 144, 439
+  size: 72, 75
+Wake
+  xy: 216, 439
+  size: 72, 75
+Wake
+  xy: 288, 439
+  size: 72, 75
+IdleUp
+  xy: 0, 514
+  size: 72, 75
+IdleUp
+  xy: 72, 514
+  size: 72, 75
+IdleUp
+  xy: 144, 514
+  size: 72, 75
+IdleUp
+  xy: 216, 514
+  size: 72, 75
+IdleUp
+  xy: 288, 514
+  size: 72, 75
+IdleUp
+  xy: 360, 514
+  size: 72, 75
+IdleUp
+  xy: 432, 514
+  size: 72, 75
+IdleUp
+  xy: 504, 514
+  size: 72, 75
+IdleUp
+  xy: 576, 514
+  size: 72, 75
+IdleUp
+  xy: 648, 514
+  size: 72, 75
+IdleDown
+  xy: 0, 589
+  size: 72, 75
+IdleDown
+  xy: 72, 589
+  size: 72, 75
+IdleDown
+  xy: 144, 589
+  size: 72, 75
+IdleDown
+  xy: 216, 589
+  size: 72, 75
+IdleDown
+  xy: 288, 589
+  size: 72, 75
+IdleDown
+  xy: 360, 589
+  size: 72, 75
+IdleDown
+  xy: 432, 589
+  size: 72, 75
+IdleDown
+  xy: 504, 589
+  size: 72, 75
+IdleDown
+  xy: 576, 589
+  size: 72, 75
+IdleDown
+  xy: 648, 589
+  size: 72, 75
+WalkUp
+  xy: 0, 664
+  size: 72, 75
+WalkUp
+  xy: 72, 664
+  size: 72, 75
+WalkUp
+  xy: 144, 664
+  size: 72, 75
+WalkUp
+  xy: 216, 664
+  size: 72, 75
+WalkDown
+  xy: 0, 739
+  size: 72, 75
+WalkDown
+  xy: 72, 739
+  size: 72, 75
+WalkDown
+  xy: 144, 739
+  size: 72, 75
+WalkDown
+  xy: 216, 739
+  size: 72, 75
