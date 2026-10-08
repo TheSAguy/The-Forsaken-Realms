@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 472 - the engine to the 10.07 daily (upstream `e7fca289313`)
+
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** - round 464's checkbox now binds
+  `FPref.UI_COIN_DICE_ANIMATION` (upstream #12167 renamed `UI_COIN_FLIP_ANIMATION` and extended it to dice) with the
+  `lblCoinDiceAnimation` label. No textual conflicts in the merge; `MatchController.showCoinFlip` (round 464) merged clean
+  beside upstream's `DiceOverlay.attach` line.
+
 ### Round 468 - NoRotate places leave on a full clear; the arena's Wastes grow
 
 - **`forge-gui-mobile/src/forge/adventure/data/PointOfInterestData.java`** - new field `returnStartCardsMax` (default 1),

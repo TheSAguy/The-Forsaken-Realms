@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 472: the engine to the 10.07 daily (upstream `e7fca289313`) (2026-10-07)
+
+The user installed the official 10.07 snapshot into `E:\GAMES\Forge_2` and asked for a full release ("Update the
+everything and let's do a full release").
+
+- **The target.** `build.txt` 2026-10-07 22:47:23 (UTC). Upstream's head `e7fca289313` ("commented out failing test",
+  22:38:39 UTC) is the last commit before it; the installed jar carries `forge/screens/match/Dice3D` and `DiceOverlay`
+  from `e39e4dd7ba7` (#12167, 22:05 UTC). 16 commits since round 460's `2f90918a902`, 68 files.
+  `engineBuildVersion` -> `2.0.16-SNAPSHOT-10.07`.
+- **No textual conflicts. One real (semantic) one** (CORE_ENGINE_CHANGES "Round 472"): upstream renamed the
+  `UI_COIN_FLIP_ANIMATION` preference to `UI_COIN_DICE_ANIMATION` (#12167) - it now also switches the new dice-roll
+  animation. Round 464's Settings checkbox referenced the old name and would not compile; it now uses the new one with
+  Forge's label "Coin/Dice Animation". Impact: the same switch, now covering dice too; a value saved under the old name
+  is ignored once (the switch reads On until set again). Round 464's no-tap opening toss is untouched
+  (`MatchController.showCoinFlip` merged clean; upstream's hold on the result is now 1.2 s).
+- **Merged on their own, reviewed against the plane:**
+  - Dice animation (#12167): a 3D die rolls whenever a card rolls dice (d20 and planar dice too); it plays and continues
+    on its own, a tap skips it; off with the same switch. The coin flip got a 3D coin (`Coin3D`), its textures moved to
+    `Assets`.
+  - `RewardActor`: tooltips hide properly when a reward card is removed or not hovered (`hideTooltip`); no overlap
+    with our round-321 `renderPlaceholder()` wrapper.
+  - AI pays for mana abilities that cost mana (Signets, filter lands) (#12149); mana refunds no longer reverse a
+    payment that could not be reversed (#12162); hotseat draw offer dialog (#12173); Demonic Pact's discard mode targets
+    an opponent (#12160); Wiccan Rising Magician script (#12161); FRA token image; Quest mode's all-colors starting pool
+    (not used by the Adventure).
+  - Editions: SLD, SLP updates.
+- No Android files changed upstream; the identity checks (`ANDROID_RELEASE.md` revert-watch) all hold.
+- Next merge starts at upstream `e7fca289313`.
+
 ## Round 471: the remakes' style pass - ink lines, readable texture, eye sockets, rim light and contrast on 415 generated remakes (2026-10-07)
 
 The user's go for the approved style upgrade (the 2026-10-05 study of what the hand-drawn enemies do better), with a

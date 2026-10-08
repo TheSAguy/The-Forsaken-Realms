@@ -429,8 +429,10 @@ public class SettingsScene extends UIScene {
         settingGroup.add(cardPlayAnim).align(Align.right).pad(2);
         // Round 464 (the user: "Add both an on/off setting and have it start without a tap"): Forge's own Coin Flip
         // Animation switch - the opening toss and every card's coin flip - here too, not only in Classic's settings.
-        addCheckBox(localizer.getMessageorUseDefault("lblCoinFlipAnimation", "Coin Flip Animation"),
-                ForgePreferences.FPref.UI_COIN_FLIP_ANIMATION);
+        // Round 472 (the 10.07 merge): upstream renamed it UI_COIN_DICE_ANIMATION and it now also covers the new dice
+        // rolls (#12167) - same switch, Forge's new name and label.
+        addCheckBox(localizer.getMessageorUseDefault("lblCoinDiceAnimation", "Coin/Dice Animation"),
+                ForgePreferences.FPref.UI_COIN_DICE_ANIMATION);
         if (!GuiBase.isAndroid()) {
             final String[] item = {FModel.getPreferences().getPref(ForgePreferences.FPref.UI_ENABLE_BORDER_MASKING)};
             SelectBox<String> borderMask = Controls.newComboBox(new String[]{"Off", "Crop", "Full", "Art"}, item[0], o -> {

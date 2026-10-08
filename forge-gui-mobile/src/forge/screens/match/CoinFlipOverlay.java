@@ -1,27 +1,26 @@
 package forge.screens.match;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Align;
 
 import forge.Forge;
 import forge.Graphics;
-import forge.assets.FImage;
 import forge.assets.FSkinColor;
 import forge.assets.FSkinColor.Colors;
 import forge.assets.FSkinFont;
-import forge.assets.FTextureRegionImage;
 import forge.gui.FThreads;
-import forge.localinstance.properties.ForgeConstants;
 import forge.toolbox.FOverlay;
+
 
 public class CoinFlipOverlay extends FOverlay {
     private static final float FLIP_TIME = 1.5f;
-    private static final float HOLD_TIME = 0.9f;
-    private static final int   SPINS = 4;
+    private static final float HOLD_TIME = 1.2f;
+    private static final int   SPINS = 3;
 
     private static final Color HEADS_FALLBACK = new Color(0.95f, 0.80f, 0.25f, 1f);
     private static final Color TAILS_FALLBACK = new Color(0.75f, 0.75f, 0.80f, 1f);
@@ -30,8 +29,8 @@ public class CoinFlipOverlay extends FOverlay {
     private final String caption;
     private final Runnable onDone;
 
-    private Texture headsTex, tailsTex;
-    private FImage headsImg, tailsImg;
+    private Coin3D coin;
+    private boolean coinFailed;
 
     private float elapsed;
     private boolean done;
@@ -40,31 +39,34 @@ public class CoinFlipOverlay extends FOverlay {
     private final boolean waitForTap;
     private boolean released;
 
+    private final Matrix4 savedProjection = new Matrix4();
+    private final Matrix4 projection = new Matrix4();
+
     public CoinFlipOverlay(final boolean heads, final String caption, final boolean waitForTap, final Runnable onDone) {
         super(FSkinColor.get(Colors.CLR_OVERLAY));
         this.heads = heads;
         this.caption = caption;
         this.waitForTap = waitForTap;
         this.onDone = onDone;
-        loadTextures();
     }
 
-    private void loadTextures() {
+    /** Built on the first frame, when the overlay size (and so the render size) is known. */
+    private void createCoin(final float diameter) {
         try {
-            // adjust the folder to wherever you put the PNGs
-            final String dir = ForgeConstants.RES_DIR + "skins/default/";
-            final FileHandle hf = Gdx.files.absolute(dir + "coin_heads.png");
-            final FileHandle tf = Gdx.files.absolute(dir + "coin_tails.png");
-            if (hf.exists() && tf.exists()) {
-                headsTex = new Texture(hf);
-                tailsTex = new Texture(tf);
-                headsTex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-                tailsTex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-                headsImg = new FTextureRegionImage(new TextureRegion(headsTex));
-                tailsImg = new FTextureRegionImage(new TextureRegion(tailsTex));
+            Texture headsTex = null, tailsTex = null;
+            try {
+                headsTex = Forge.getAssets().getCoinHead();
+                tailsTex = Forge.getAssets().getCoinTail();
+            } catch (Exception e) {
+                headsTex = tailsTex = null; // plain metal faces
             }
-        } catch (Exception e) {
-            headsImg = tailsImg = null; // fall back to plain squares
+            final float pxScale = w > 0 ? Gdx.graphics.getBackBufferWidth() / w : 1f;
+            final float box = diameter / (2f * Coin3D.R / Coin3D.FRAME);
+            final int fb = MathUtils.clamp(Math.round(box * pxScale), 256, 1024);
+            coin = new Coin3D(headsTex, tailsTex, fb);
+        } catch (RuntimeException e) {
+            Gdx.app.error("CoinFlipOverlay", "failed to create 3D coin", e);
+            coinFailed = true;
         }
     }
 
@@ -91,36 +93,30 @@ public class CoinFlipOverlay extends FOverlay {
         }
         elapsed += Math.min(Gdx.graphics.getDeltaTime(), 0.05f);
         final float t = Math.min(1f, elapsed / FLIP_TIME);
-        final float eased = 1f - (1f - t) * (1f - t) * (1f - t);
+        final float settle = Math.max(0f, elapsed - FLIP_TIME);
 
-        // integer turns => heads up, +0.5 turn => tails up
-        final float turns = SPINS + (heads ? 0f : 0.5f);
-        final float angle = eased * turns * 2f * (float) Math.PI;
-        final float cos = (float) Math.cos(angle);
-        final boolean showingHeads = cos >= 0f;
-        final float scaleY = Math.max(0.04f, Math.abs(cos));
-
-        final float size = Math.min(w, h) * 0.36f;
+        final float size = Math.min(w, h) * 0.36f;          // on-screen coin diameter
         final float lift = 4f * t * (1f - t) * h * 0.25f;
         final float cx = w / 2f;
         final float cy = h / 2f - lift;
-        final float drawH = size * scaleY;
-        final float x = cx - size / 2f;
-        final float y = cy - drawH / 2f;
 
-        final FImage img = showingHeads ? headsImg : tailsImg;
-        if (img != null) {
-            g.drawImage(img, x, y, size, drawH);
+        if (coin == null && !coinFailed) {
+            createCoin(size);
+        }
+        if (coin != null) {
+            // integer turns => heads up, +0.5 turn => tails up
+            coin.pose(t, settle, SPINS + (heads ? 0f : 0.5f));
+            drawCoin(cx, cy, size);
         } else {
-            g.fillRect(showingHeads ? HEADS_FALLBACK : TAILS_FALLBACK, x, y, size, drawH);
+            // 3D failed: flat fallback so the game still gets its result
+            final float scaleY = Math.max(0.04f, Math.abs((float) Math.cos(t * (SPINS + (heads ? 0f : 0.5f)) * 2f * Math.PI)));
+            g.fillRect(heads ? HEADS_FALLBACK : TAILS_FALLBACK, cx - size / 2f, cy - size * scaleY / 2f, size, size * scaleY);
         }
 
         if (t >= 1f) {
-            final String face = Forge.getLocalizer().getMessage(heads ? "lblHeads" : "lblTails");
             final FSkinFont font = FSkinFont.get(18);
             final FSkinColor text = FSkinColor.get(Colors.CLR_TEXT);
             final float textY = cy + size / 2f + 10f;
-            g.drawText(face, font, text, 0, textY, w, font.getLineHeight() * 1.5f, false, Align.center, true);
             g.drawText(caption, font, text, 0, textY + font.getLineHeight() * 1.6f,
                     w, font.getLineHeight() * 3f, true, Align.center, false);
             if (waitForTap) {
@@ -132,6 +128,45 @@ public class CoinFlipOverlay extends FOverlay {
             }
         }
         Gdx.graphics.requestRendering();
+    }
+
+    /**
+     * Renders the coin into its FrameBuffer (which needs Forge's batch closed for a moment) and then draws
+     * the finished picture through the same batch with its own pixel projection.
+     */
+    private void drawCoin(final float cx, final float cy, final float diameter) {
+        final Batch b = Forge.getGraphics().getBatch();
+        final boolean wasDrawing = b.isDrawing();
+        if (wasDrawing) {
+            b.end();
+        }
+        coin.render();
+        if (wasDrawing) {
+            b.begin();
+        }
+
+        final float bw = Gdx.graphics.getBackBufferWidth();
+        final float bh = Gdx.graphics.getBackBufferHeight();
+        final float sx = bw / w, sy = bh / h;
+        final float box = diameter / (2f * Coin3D.R / Coin3D.FRAME); // the 3D scene is a square around the coin
+        final float px = (cx - box / 2f) * sx;
+        final float pw = box * sx, ph = box * sy;
+        final float py = bh - (cy + box / 2f) * sy;                  // Forge's y points down, the batch's up
+
+        savedProjection.set(b.getProjectionMatrix());
+        final float oldColor = b.getPackedColor();
+        projection.setToOrtho2D(0, 0, bw, bh);
+        b.setProjectionMatrix(projection);
+        if (!b.isDrawing()) {
+            b.begin();
+        }
+        b.setColor(1f, 1f, 1f, 1f);
+        b.draw(coin.getRegion(), px, py, pw, ph);
+        if (!wasDrawing) {
+            b.end();
+        }
+        b.setPackedColor(oldColor);
+        b.setProjectionMatrix(savedProjection);
     }
 
     private void finish() {
@@ -147,9 +182,11 @@ public class CoinFlipOverlay extends FOverlay {
             return;
         }
         released = true;
-        done = true; // stop drawing before textures are disposed
-        if (headsTex != null) headsTex.dispose();
-        if (tailsTex != null) tailsTex.dispose();
+        done = true; // stop drawing before the coin is disposed
+        if (coin != null) {
+            coin.dispose();
+            coin = null;
+        }
         onDone.run();   // releases the latch so the game thread continues
     }
 
