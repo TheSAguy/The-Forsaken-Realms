@@ -67,6 +67,13 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (rounds 490-491): **LOCAL + UNRELEASED** - 490: roaming guards help with pillaged towns (the
+"Help with pillaged towns" order beside the color checkboxes, off by default; one guard per pillaged town hunts its
+raiders by rank, watched or simulated; wins count toward the pillage; raiders also spawn while a helping guard is near -
+only raiders; a raider far from the player holds at its town or goes for the guard). 491: Esc closes any closable
+window one step at a time (`Controls.pressDialogClose` from UIScene and GameHUD; the press's release is swallowed); the
+Armory panes take the wheel under the pointer. Cheats `guard add [tier] [help]`, `guard orders`. Agent-tested.
+
 ## STATE 2026-10-08 (round 489): **LOCAL + UNRELEASED** - the Armory storage screen shows the selected item's
 description: landscape = three columns (storage | description | inventory, `ui/armory.json`), portrait = storage and
 description side by side on top (`ui/armory_portrait.json`); four variants compared in the agent game (portrait via a

@@ -38,6 +38,32 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 491 - Esc closes nested windows; the Armory panes follow the pointer
+
+- **`forge-gui-mobile/src/forge/adventure/util/Controls.java`** - `pressDialogClose(Dialog)`: presses a dialog's own
+  Back / Close / Cancel / Abort / Not now / No / Leave button (or a lone OK) with a touchDown + touchUp.
+- **`forge-gui-mobile/src/forge/adventure/scene/UIScene.java`** - `keyPressed`: Back on a showing dialog goes to
+  `pressDialogClose` first; `keyReleased`: that key's release is swallowed (`backClosedDialog`) so the scene's Esc-bound
+  button does not fire behind the closed dialog.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `keyDown`: Back on a MapStage/WorldStage dialog presses
+  its closing button instead of reaching the HUD's buttons; `dialogInput`: the same for the HUD's own dialog; `keyUp`:
+  the swallowed release (`backClosedDialog`).
+- Mod-added `scene/ArmoryScene.java`: `wheelFollowsPointer` on the storage, inventory and description panes; a picked
+  item's pane takes the scroll focus. Mod-added `agent/AgentActions.java`: `key` name lookup, refuses a running duel.
+
+### Round 490 - roaming guards help with pillaged towns
+
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - the enemy loop: a pillage raider's goal
+  (`TownPillage.raiderGoal`) before the player-homing block (idle when there, else moves to it); `startGuardRaiderDuel()`
+  (a guard's raider fight); `releaseGuardFoe()` replaces the four `TerritoryControl.onMageArrived(passthrough)` calls
+  after a guard fight (a raider goes back on the map); `startGuardDuel` copies `pillageTown` onto the foe's clone.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `guard add [tier] [help]`,
+  `guard orders` (test cheats).
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - the New Game+ guard reset clears `missionPillage`.
+- Mod-added: `data/RoamingGuardData` (`helpPillage`, `missionPillage`), `util/RoamingGuards` (saved; `onDefeated` clears
+  it), `util/RoamingGuardRuntime` (dispatch, hunt, results), `util/RoamingGuardUI` (the checkbox), `util/TownPillage`
+  (`spawnRange`, guard-aware `keepRaiders`, `raiderGoal`), `agent/AgentObserver` (guard fields).
+
 ### Round 489 - the Armory storage screen's description box
 
 - **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `armory open` (test cheat).

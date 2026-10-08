@@ -113,6 +113,8 @@ public class RoamingGuardUI {
             sb.append(" [RED](engages nothing - tick a rank AND a color)");
         else if (guard.returningHome)
             sb.append(" (returning to the Capitol)");
+        else if (!guard.isIdle() && guard.missionPillage)
+            sb.append(" (fighting raiders)"); // round 490
         else if (!guard.isIdle())
             sb.append(" (defending)");
         else
@@ -347,7 +349,7 @@ public class RoamingGuardUI {
             rankLabels[i] = RoamingGuards.displayName(RoamingGuards.TIERS_ASCENDING[i]);
         addCheckGrid(dialog, guard, "rank", rankLabels, guard.engageTier);
 
-        EconomyBuildings.addContentRow(dialog, "[%85]Okay to attack (color):");
+        addColorHeadingWithPillageBox(dialog, guard); // round 490
         String[] colorLabels = new String[TerritoryControl.COLORS.length];
         for (int i = 0; i < colorLabels.length; i++)
             colorLabels[i] = Character.toUpperCase(TerritoryControl.COLORS[i].charAt(0))
@@ -507,6 +509,33 @@ public class RoamingGuardUI {
             grid.add(box).width(width / labels.length).left();
         }
         dialog.getContentTable().add(grid).width(width).left().row();
+    }
+
+    /**
+     * Round 490 (the user, with a mock-up: "I'd like the Roaming guards to be able to help with that. It should be a
+     * checkbox option on their orders page"). The color heading and the new order share one row, the order on the
+     * right as drawn - the dialog is already at the bottom of a 270px-tall screen (round 155), so it adds no row.
+     */
+    private static void addColorHeadingWithPillageBox(Dialog dialog, RoamingGuardData guard) {
+        float width = forge.Forge.isLandscapeMode() ? 250f : 230f;
+        Table row = new Table();
+        com.github.tommyettinger.textra.TypingLabel heading = Controls.newTypingLabel("[%85]Okay to attack (color):");
+        heading.skipToTheEnd();
+        row.add(heading).left().expandX();
+        CheckBox box = Controls.newCheckBox("Help with pillaged towns");
+        box.getLabel().setFontScale(0.55f);
+        box.getImageCell().padRight(1f);
+        box.setChecked(guard.helpPillage);
+        box.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                guard.helpPillage = ((CheckBox) actor).isChecked();
+                System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " helps with pillaged towns -> "
+                        + guard.helpPillage);
+            }
+        });
+        row.add(box).right();
+        dialog.getContentTable().add(row).width(width).left().row();
     }
 
     private static void openRetier(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,

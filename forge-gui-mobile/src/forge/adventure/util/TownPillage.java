@@ -65,6 +65,7 @@ public final class TownPillage {
     public static void resetSessionState() {
         lastProcessedDay = Integer.MIN_VALUE;
         frames = 0;
+        poiCache.clear(); // round 490: a load or a new world brings new POI objects
     }
 
     private static TuningData tuning() {
@@ -247,24 +248,82 @@ public final class TownPillage {
 
     // ------------------------------------------------------------------------------------------------ the raiders
 
+    /** pillageSpawnRangeTiles in world pixels: how near the player - or, since round 490, a roaming guard helping there -
+     *  must be for a pillaged town to have raiders out. */
+    public static float spawnRange(World world) {
+        return tuning().pillageSpawnRangeTiles * (float) world.getTileSize();
+    }
+
     private static void keepRaiders(World world) {
         if (world.getPillages().isEmpty())
             return;
         TuningData t = tuning();
         Vector2 playerPos = WorldStage.getInstance().getPlayerSprite().pos();
-        float range = t.pillageSpawnRangeTiles * (float) world.getTileSize();
+        float range = spawnRange(world);
         for (Map.Entry<String, int[]> entry : world.getPillages().entrySet()) {
             int[] p = entry.getValue();
             int wanted = Math.min(p[P_AT_ONCE], t.pillageKills - p[P_BEATEN]);
             if (wanted <= 0)
                 continue;
             PointOfInterest poi = findPoi(world, entry.getKey());
-            if (poi == null || poi.getCenter().dst2(playerPos) > range * range)
+            if (poi == null)
                 continue;
-            int live = WorldStage.getInstance().getPillageRaiders(entry.getKey()).size();
+            // Round 490 (the user: "the raiders only spawn around the player. So this will need to be tweaked, so they
+            // also spawn around the guards. If possible, only the raiders and not other enemies"): a guard on this
+            // pillage counts as someone there. Only this method asks - WorldStage's ordinary spawns stay the player's.
+            if (poi.getCenter().dst2(playerPos) > range * range
+                    && !RoamingGuardRuntime.helpingAt(entry.getKey(), poi.getCenter(), range))
+                continue;
+            // The raider a guard is fighting right now is off the map until the result - not a gap to fill.
+            int live = WorldStage.getInstance().getPillageRaiders(entry.getKey()).size()
+                    + RoamingGuardRuntime.raidersInFight(entry.getKey());
             if (live < wanted)
                 spawnRaider(world, poi); // one per check - they trickle out of the dungeons, not all in one frame
         }
+    }
+
+    /**
+     * Round 490: where a raider heads this frame, read by WorldStage's enemy loop. Null when the player is within
+     * spawnRange of the raider or of its town: it goes for the player as every roamer does (round 484's behavior).
+     * Otherwise it does not cross the map after a distant player - the guard hunting at its town is nearer, so it goes
+     * for the guard (RoamingGuardRuntime.hunterFor); with no guard it drifts back to the town's surroundings, and there
+     * it holds its ground (its own position comes back: WorldStage idles it). With both about, the nearer of the two.
+     */
+    public static Vector2 raiderGoal(EnemySprite raider, Vector2 playerPos) {
+        World world = Current.world();
+        PointOfInterest town = world == null ? null : cachedPoi(world, raider.pillageTown);
+        if (town == null)
+            return null;
+        float range = spawnRange(world);
+        Vector2 here = raider.pos();
+        Vector2 center = town.getCenter();
+        float toPlayer2 = here.dst2(playerPos);
+        boolean playerNear = toPlayer2 <= range * range || center.dst2(playerPos) <= range * range;
+        Vector2 guard = RoamingGuardRuntime.hunterFor(raider, center, range);
+        if (guard != null && (!playerNear || here.dst2(guard) < toPlayer2))
+            return guard;
+        if (playerNear)
+            return null;
+        float half = Math.max(town.getBoundingRectangle().width, town.getBoundingRectangle().height) / 2f;
+        float hold = half + RAIDER_HOLD_TILES * world.getTileSize();
+        if (here.dst2(center) > hold * hold)
+            return new Vector2(center.x - raider.getWidth() / 2f, center.y - raider.getHeight() / 2f);
+        return here;
+    }
+
+    /** Round 490: a raider left alone holds within this many tiles beyond the town's footprint (they spawn 3-7 out). */
+    private static final int RAIDER_HOLD_TILES = 8;
+    private static final java.util.Map<String, PointOfInterest> poiCache = new java.util.HashMap<>();
+
+    /** findPoi for every raider every frame would walk the whole POI list each time; the ids never change in a world. */
+    private static PointOfInterest cachedPoi(World world, String id) {
+        PointOfInterest poi = poiCache.get(id);
+        if (poi == null) {
+            poi = findPoi(world, id);
+            if (poi != null)
+                poiCache.put(id, poi);
+        }
+        return poi;
     }
 
     private static void spawnRaider(World world, PointOfInterest town) {

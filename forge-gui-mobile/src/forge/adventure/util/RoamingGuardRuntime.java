@@ -156,6 +156,7 @@ public class RoamingGuardRuntime {
             if (pair.getValue().territoryTarget != null)
                 liveThreats.add(pair.getValue().territoryTarget.getID());
         }
+        java.util.Map<String, int[]> pillages = WorldSave.getCurrentSave().getWorld().getPillages();
         for (RoamingGuardData guard : RoamingGuards.roster()) {
             if (guard.isIdle() || guard.returningHome)
                 continue;
@@ -163,6 +164,15 @@ public class RoamingGuardRuntime {
                 continue; // round 152: its mage is off the enemies list PRECISELY because it is
                           // being fought right now - releasing the guard here logged "target is no
                           // longer under attack" in the middle of its own interception.
+            if (guard.missionPillage) {
+                // Round 490: the pillage ended (won, lost, or the town changed hands), or the player unticked the order.
+                if (!pillages.containsKey(guard.missionPoiId) || !guard.helpPillage || !TownPillage.isEnabled()) {
+                    System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + "'s pillage duty ends ("
+                            + (!guard.helpPillage ? "order withdrawn" : "the pillage is over") + ") - returning to the Capitol");
+                    sendHome(guard);
+                }
+                continue;
+            }
             if (!liveThreats.contains(guard.missionPoiId)) {
                 System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier)
                         + "'s target is no longer under attack - returning to the Capitol");
@@ -177,33 +187,12 @@ public class RoamingGuardRuntime {
             if (!isPlayerOwned(target))
                 continue;
             String targetId = target.getID();
-            if (guardAssignedTo(targetId) != null)
+            if (guardAssignedTo(targetId, false) != null)
                 continue; // one guard per threat
             RoamingGuardData guard = pickGuardFor(mage, day);
             if (guard == null)
                 continue;
-            guard.missionPoiId = targetId;
-            guard.returningHome = false;
-            guard.deployed = true;
-            // Round 233: a guard that was strolling sets out from where it stands, so its sprite walks
-            // off instead of jumping to the Capitol's origin first - see the off-duty notes above.
-            Stroll stroll = strolls.remove(guard);
-            if (stroll != null) {
-                guard.x = stroll.x;
-                guard.y = stroll.y;
-            }
-            // A guard at rest sits at the Capitol, so that is where it sets out from. Teleporting
-            // is decided on arrival at the destination, not here, so the log reads in order.
-            PointOfInterest home = RoamingGuards.capitol();
-            if (guard.x == 0 && guard.y == 0 && home != null) {
-                guard.x = home.getPosition().x;
-                guard.y = home.getPosition().y;
-            }
-            boolean teleports = canTeleportTo(target);
-            if (teleports) {
-                guard.x = target.getPosition().x;
-                guard.y = target.getPosition().y;
-            }
+            boolean teleports = setOut(guard, target, false);
             System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " dispatched to "
                     + target.getDisplayName() + " against a " + mage.getData().tier + " mage (speed "
                     + mage.getData().speed + " vs " + (int) (RoamingGuards.speedFor(guard.tier) * ArmoryStorage.speedOf(guard))
@@ -213,6 +202,70 @@ public class RoamingGuardRuntime {
                     + " guard sets out for " + target.getDisplayName() + "."
                     + (teleports ? " (teleported)" : ""));
         }
+        // Round 490: then the pillaged towns, one guard each, from the guards still at home with the order. A mage
+        // attack is dispatched first, above, so a guard sent out on a pillage is never the one a threatened town needed
+        // this frame.
+        if (!TownPillage.isEnabled())
+            return;
+        for (String townId : pillages.keySet()) {
+            if (guardAssignedTo(townId, true) != null)
+                continue;
+            PointOfInterest town = poiById(townId);
+            RoamingGuardData guard = town == null ? null : pickPillageGuard(day);
+            if (guard == null)
+                continue;
+            boolean teleports = setOut(guard, town, true);
+            System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " dispatched to the pillage at "
+                    + town.getDisplayName() + " (gear " + ArmoryStorage.gearNames(guard) + ")"
+                    + (teleports ? " - TELEPORTED" : " - travelling"));
+            GameHUD.getInstance().addNotification("Your " + RoamingGuards.displayName(guard.tier)
+                    + " guard sets out to drive the raiders from " + town.getDisplayName() + "."
+                    + (teleports ? " (teleported)" : ""));
+        }
+    }
+
+    /** Puts a guard on the road to {@code target}; true when it teleported there. Shared by both kinds of mission. */
+    private static boolean setOut(RoamingGuardData guard, PointOfInterest target, boolean pillage) {
+        guard.missionPoiId = target.getID();
+        guard.missionPillage = pillage;
+        guard.returningHome = false;
+        guard.deployed = true;
+        // Round 233: a guard that was strolling sets out from where it stands, so its sprite walks
+        // off instead of jumping to the Capitol's origin first - see the off-duty notes above.
+        Stroll stroll = strolls.remove(guard);
+        if (stroll != null) {
+            guard.x = stroll.x;
+            guard.y = stroll.y;
+        }
+        // A guard at rest sits at the Capitol, so that is where it sets out from. Teleporting
+        // is decided on arrival at the destination, not here, so the log reads in order.
+        PointOfInterest home = RoamingGuards.capitol();
+        if (guard.x == 0 && guard.y == 0 && home != null) {
+            guard.x = home.getPosition().x;
+            guard.y = home.getPosition().y;
+        }
+        boolean teleports = canTeleportTo(target);
+        if (teleports) {
+            guard.x = target.getPosition().x;
+            guard.y = target.getPosition().y;
+        }
+        return teleports;
+    }
+
+    /** Round 490: an idle, healthy, armed guard with the "Help with pillaged towns" order, or null. */
+    private static RoamingGuardData pickPillageGuard(int day) {
+        for (RoamingGuardData guard : RoamingGuards.roster()) {
+            if (!guard.helpPillage || !guard.isIdle() || guard.returningHome || guard.isOutOfCommission(day))
+                continue;
+            if (guard.deckCards.length == 0)
+                continue;
+            boolean anyRank = false;
+            for (String tier : RoamingGuards.TIERS_ASCENDING)
+                anyRank |= RoamingGuards.willEngage(guard, tier);
+            if (anyRank)
+                return guard;
+        }
+        return null;
     }
 
     /**
@@ -270,12 +323,29 @@ public class RoamingGuardRuntime {
                 continue;
             }
             Vector2 goal = destination.getPosition();
+            // Round 490: on a pillage the guard goes for the nearest raider it may fight rather than the gate, and stands
+            // over a fight it is in. With no raider about (none spawned yet, or only ranks it refuses) it waits at the gate.
+            EnemySprite quarry = null;
+            if (guard.missionPillage && !guard.isIdle() && !guard.returningHome) {
+                if (guard == duellingGuard) {
+                    goal = new Vector2(guard.x, guard.y);
+                } else {
+                    quarry = nearestRaider(guard, destination);
+                    if (quarry != null)
+                        goal = quarry.pos();
+                }
+            }
             float stepX = 0f, stepY = 0f;
             float speed = RoamingGuards.speedFor(guard.tier) * ArmoryStorage.speedOf(guard); // round 163: boots count
             float dx = goal.x - guard.x;
             float dy = goal.y - guard.y;
             float distance = (float) Math.sqrt(dx * dx + dy * dy);
-            if (distance <= ARRIVAL_EPSILON) {
+            if (quarry != null && distance <= RAIDER_CONTACT) {
+                // Round 490: caught it. One guard fight at a time (round 166) - with another running it waits beside
+                // the raider, which stands its ground facing it (TownPillage.raiderGoal).
+                if (duellingGuard == null)
+                    startRaiderFight(guard, quarry);
+            } else if (distance <= ARRIVAL_EPSILON) {
                 if (guard.returningHome) {
                     // Home again, and available for the next threat (user spec: "After winning, it
                     // will first go back to the capitol, then dispatch to the next town").
@@ -313,6 +383,96 @@ public class RoamingGuardRuntime {
                 sprite.setAnimation(CharacterSprite.AnimationTypes.Idle);
             sprite.setPosition(guard.x, guard.y); // authoritative: guard.x/y is what persists
         }
+    }
+
+    // ------------------------------------------------------------------ pillages (round 490)
+    // The user: "For the new Town being Pillaged events. I'd like the Roaming guards to be able to help with that. It
+    // should be a checkbox option on their orders page. You mentioned that the raiders only spawn around the player. So
+    // this will need to be tweaked, so they also spawn around the guards. If possible, only the raiders and not other
+    // enemies."
+    //  - a guard with the order (RoamingGuardData.helpPillage) and nothing else to do is sent to a pillaged town, one per
+    //    town (assignMissions), after any mage attack has had its pick;
+    //  - near the town it walks to the nearest raider whose rank it may fight and, on contact, fights it exactly as it
+    //    fights a mage at a gate: watched or simulated, its own deck, life and gear, one guard fight at a time;
+    //  - TownPillage.keepRaiders spawns the town's raiders while this guard is near, as it does for the player - only
+    //    raiders: the ordinary roamers still spawn around the player alone (WorldStage.handleMonsterSpawn);
+    //  - a win counts toward the pillage like the player's own (TownPillage.onRaiderBeaten, the reward included); a loss
+    //    puts the guard out of commission and the raider back where it stood (WorldStage.releaseGuardFoe);
+    //  - the duty ends when the pillage does, or the order is unticked - the guard walks home.
+
+    /** Round 490: how close a guard must get to a raider to start the fight - about the touch of two sprites. */
+    private static final float RAIDER_CONTACT = 10f;
+
+    /** Round 490: the nearest of this town's raiders, around the town, that the guard's rank orders allow. */
+    private static EnemySprite nearestRaider(RoamingGuardData guard, PointOfInterest town) {
+        float range = TownPillage.spawnRange(WorldSave.getCurrentSave().getWorld());
+        Vector2 center = town.getCenter();
+        EnemySprite best = null;
+        float bestD2 = Float.MAX_VALUE;
+        for (EnemySprite raider : forge.adventure.stage.WorldStage.getInstance().getPillageRaiders(town.getID())) {
+            if (raider.getData() == null || !RoamingGuards.willEngage(guard, raider.getData().tier))
+                continue;
+            if (Vector2.dst2(raider.getX(), raider.getY(), center.x, center.y) > range * range)
+                continue; // one that followed the player off across the map is the player's business
+            float d2 = Vector2.dst2(raider.getX(), raider.getY(), guard.x, guard.y);
+            if (d2 < bestD2) {
+                bestD2 = d2;
+                best = raider;
+            }
+        }
+        return best;
+    }
+
+    private static void startRaiderFight(RoamingGuardData guard, EnemySprite raider) {
+        PointOfInterest town = poiById(guard.missionPoiId);
+        duellingGuard = guard;
+        duellingMage = raider;
+        guard.inDuel = true; // round 173's rule holds: a save mid-fight scores it as the guard's loss
+        System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " catches the raider "
+                + raider.getName() + " (" + raider.getData().tier + ") at " + (town == null ? "?" : town.getDisplayName())
+                + " (guard life " + guard.maxLife + ", deck \"" + guard.deckName + "\", "
+                + (guard.watchMatches ? "watched" : "simulated") + ")");
+        if (!forge.adventure.stage.WorldStage.getInstance().startGuardRaiderDuel(raider)) {
+            guard.inDuel = false; // the player's own fight starts this frame - try again after it
+            clearDuel();
+        }
+    }
+
+    /** Round 490: is a guard on this town's pillage within {@code range} of it? Then TownPillage keeps raiders there
+     *  as it does for the player. */
+    public static boolean helpingAt(String townId, Vector2 townCenter, float range) {
+        if (!RoamingGuards.isEnabled())
+            return false;
+        int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        for (RoamingGuardData guard : RoamingGuards.roster())
+            if (onPillageDuty(guard, townId, day)
+                    && Vector2.dst2(guard.x, guard.y, townCenter.x, townCenter.y) <= range * range)
+                return true;
+        return false;
+    }
+
+    /** Round 490: where the guard hunting at this raider's town stands, when the raider is one it may fight and the
+     *  guard is within {@code range} of the town - null otherwise. TownPillage.raiderGoal sends the raider at it. */
+    public static Vector2 hunterFor(EnemySprite raider, Vector2 townCenter, float range) {
+        if (!RoamingGuards.isEnabled() || raider.getData() == null)
+            return null;
+        int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        for (RoamingGuardData guard : RoamingGuards.roster())
+            if (onPillageDuty(guard, raider.pillageTown, day) && RoamingGuards.willEngage(guard, raider.getData().tier)
+                    && Vector2.dst2(guard.x, guard.y, townCenter.x, townCenter.y) <= range * range)
+                return new Vector2(guard.x, guard.y);
+        return null;
+    }
+
+    /** Round 490: 1 when the raider a guard is fighting right now belongs to this town (it is off the map until the
+     *  result is in, and TownPillage must not spawn a replacement for it meanwhile). */
+    public static int raidersInFight(String townId) {
+        return duellingMage != null && townId.equals(duellingMage.pillageTown) ? 1 : 0;
+    }
+
+    private static boolean onPillageDuty(RoamingGuardData guard, String townId, int day) {
+        return guard.deployed && guard.missionPillage && !guard.returningHome && !guard.isOutOfCommission(day)
+                && townId != null && townId.equals(guard.missionPoiId);
     }
 
     /** The live sprite for this guard, created where it stands the first time it is needed. */
@@ -455,7 +615,7 @@ public class RoamingGuardRuntime {
     public static Arrival onArrival(EnemySprite mage) {
         if (!RoamingGuards.isEnabled() || mage.territoryTarget == null)
             return Arrival.PASS;
-        RoamingGuardData guard = guardAssignedTo(mage.territoryTarget.getID());
+        RoamingGuardData guard = guardAssignedTo(mage.territoryTarget.getID(), false); // round 490: not one on raider duty
         if (guard == null || guard.returningHome || guard.deckCards.length == 0)
             return Arrival.PASS;
         Vector2 town = mage.territoryTarget.getPosition();
@@ -510,6 +670,27 @@ public class RoamingGuardRuntime {
             return null;
         guard.inDuel = false;
         int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        if (mage != null && mage.pillageTown != null) {
+            // Round 490: a pillaged town's raider. Never a mage for TerritoryControl - a loss hands it back to
+            // WorldStage.releaseGuardFoe, which puts it back where it stood.
+            PointOfInterest poi = poiById(mage.pillageTown);
+            String where = poi == null ? "the pillaged town" : poi.getDisplayName();
+            if (guardWon) {
+                System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " WON against the raider "
+                        + mage.getName() + " at " + where);
+                GameHUD.getInstance().addNotification("[GREEN]Your " + RoamingGuards.displayName(guard.tier)
+                        + " guard beat a raider at " + where + "!");
+                TownPillage.onRaiderBeaten(mage); // counts (and pays, on the last one) like the player's own win
+                return null; // it hunts on - assignMissions sends it home once the pillage is over
+            }
+            System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " LOST to the raider "
+                    + mage.getName() + " at " + where);
+            RoamingGuards.onDefeated(guard, day);
+            GameHUD.getInstance().addNotification("[RED]Your " + RoamingGuards.displayName(guard.tier)
+                    + " guard fell to a raider at " + where + " and is out of commission for "
+                    + RoamingGuards.recoveryDays() + " days.", true);
+            return mage;
+        }
         String town = mage != null && mage.territoryTarget != null
                 ? mage.territoryTarget.getDisplayName() : "your town";
         if (guardWon) {
@@ -551,7 +732,9 @@ public class RoamingGuardRuntime {
         if (guard == null)
             return mage;
         guard.inDuel = false;
-        String town = mage != null && mage.territoryTarget != null ? mage.territoryTarget.getDisplayName() : "your town";
+        String town = mage != null && mage.territoryTarget != null ? mage.territoryTarget.getDisplayName()
+                : mage != null && mage.pillageTown != null && poiById(mage.pillageTown) != null
+                ? poiById(mage.pillageTown).getDisplayName() + " (a raider)" : "your town"; // round 490
         System.out.println("[TFR-RoamGuard] no contest at " + town + " (" + why + ") - "
                 + RoamingGuards.displayName(guard.tier) + " walks home unhurt, the town defends itself");
         sendHome(guard);
@@ -579,8 +762,9 @@ public class RoamingGuardRuntime {
             PointOfInterest town = poiById(guard.missionPoiId);
             // save() appends the fought mage after every live one, so the LAST mage aimed at this town
             // is the one this guard was fighting (an earlier one would be a mage queued at the gate).
+            // Round 490: a raider fight's foe came back with the other raiders (pillageTown is saved) - no mage to find.
             EnemySprite mage = null;
-            if (town != null && enemies != null) {
+            if (town != null && enemies != null && !guard.missionPillage) {
                 for (Pair<Float, EnemySprite> pair : enemies) {
                     EnemySprite e = pair.getValue();
                     if (e != null && e.territoryTarget != null && town.getID().equals(e.territoryTarget.getID()))
@@ -602,15 +786,18 @@ public class RoamingGuardRuntime {
 
     private static void sendHome(RoamingGuardData guard) {
         guard.missionPoiId = "";
+        guard.missionPillage = false; // round 490
         guard.returningHome = true;
         guard.deployed = true;
     }
 
     // ------------------------------------------------------------------ helpers
 
-    private static RoamingGuardData guardAssignedTo(String poiId) {
+    /** The guard on its way to (or at) this town for a mage attack - or, with {@code pillage}, for its pillage (round
+     *  490). A town can have one of each: a raider hunter is not the gate's defender. */
+    private static RoamingGuardData guardAssignedTo(String poiId, boolean pillage) {
         for (RoamingGuardData guard : RoamingGuards.roster()) {
-            if (!guard.returningHome && poiId.equals(guard.missionPoiId))
+            if (!guard.returningHome && guard.missionPillage == pillage && poiId.equals(guard.missionPoiId))
                 return guard;
         }
         return null;

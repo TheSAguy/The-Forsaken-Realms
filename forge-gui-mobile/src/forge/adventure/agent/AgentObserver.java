@@ -250,6 +250,9 @@ final class AgentObserver {
             gm.put("deck", g.deckName);
             gm.put("deployed", g.deployed);
             gm.put("mission", g.missionPoiId);
+            gm.put("helpPillage", g.helpPillage); // round 490
+            gm.put("pillageDuty", g.missionPillage);
+            gm.put("pos", (int) g.x + "," + (int) g.y);
             gm.put("downUntilDay", g.downUntilDay);
             guards.add(gm);
         }

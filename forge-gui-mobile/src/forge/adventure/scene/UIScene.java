@@ -380,8 +380,16 @@ public class UIScene extends Scene {
         return null;
     }
 
+    /** Round 491: the Back key whose press just closed a dialog - its release must not ALSO fire the scene's own
+     *  Esc-bound button (the dialog is gone by then), or one Esc took two steps: the dialog AND the screen behind it. */
+    private int backClosedDialog = -1;
+
     public boolean keyReleased(int keycode) {
         ui.pressUp(keycode);
+        if (keycode == backClosedDialog) {
+            backClosedDialog = -1;
+            return true;
+        }
         if (!dialogShowing()) {
             Button pressedButton = ui.buttonPressed(keycode);
             if (pressedButton != null) {
@@ -400,6 +408,13 @@ public class UIScene extends Scene {
 
     public boolean keyPressed(int keycode) {
         ui.pressDown(keycode);
+        // Round 491: Esc / Back closes the top dialog through its own Back / Close / Cancel button - the scene's own
+        // Esc-bound buttons are (rightly) ignored while a dialog is up, so nested windows had no way out by key.
+        if (dialogShowing() && KeyBinding.Back.isPressed(keycode)
+                && forge.adventure.util.Controls.pressDialogClose(dialogs.get(dialogs.size - 1))) {
+            backClosedDialog = keycode;
+            return true;
+        }
 
         Selectable selection = getSelected();
         if (KeyBinding.Use.isPressed(keycode)) {

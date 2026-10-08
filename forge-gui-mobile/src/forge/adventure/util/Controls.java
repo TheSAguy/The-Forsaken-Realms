@@ -460,6 +460,74 @@ public class Controls {
         return newTextButton(text, func, "");
     }
 
+    /** Round 491: the labels a dialog's closing button carries, in the order they are looked for. "OK" only counts on a
+     *  dialog with no other button (a notice); "(Continue)" and the like never do, so Esc cannot skip story text. */
+    private static final String[] CLOSE_LABELS = {"Back", "Close", "Cancel", "Abort", "Not now", "No", "Leave"};
+
+    /**
+     * Round 491 (the user: "There are multiple 'Back' buttons, but 'Esc' - Escape, only works on the entry screen and not
+     * the nested screens ... I'd like for it to work on any window that you can close. Hitting escape to close, go back to
+     * previous window"). Esc / Back on an open dialog presses the dialog's own closing button - so its handler runs
+     * exactly as a click would (a nested window's Back reopens the window before it). True when one was pressed.
+     */
+    public static boolean pressDialogClose(com.badlogic.gdx.scenes.scene2d.ui.Dialog dialog) {
+        if (dialog == null || !dialog.isVisible() || dialog.getStage() == null)
+            return false;
+        java.util.List<Button> buttons = new java.util.ArrayList<>();
+        collectButtons(dialog.getButtonTable(), buttons);
+        collectButtons(dialog.getContentTable(), buttons);
+        for (String label : CLOSE_LABELS)
+            for (Button b : buttons)
+                if (matchesLabel(b, label))
+                    return press(b);
+        if (buttons.size() == 1 && matchesLabel(buttons.get(0), "OK"))
+            return press(buttons.get(0));
+        return false;
+    }
+
+    private static void collectButtons(com.badlogic.gdx.scenes.scene2d.Group group, java.util.List<Button> out) {
+        if (group == null)
+            return;
+        for (Actor a : group.getChildren()) {
+            if (!a.isVisible())
+                continue;
+            if (a instanceof Button) {
+                if (!((Button) a).isDisabled())
+                    out.add((Button) a);
+            } else if (a instanceof com.badlogic.gdx.scenes.scene2d.Group) {
+                collectButtons((com.badlogic.gdx.scenes.scene2d.Group) a, out);
+            }
+        }
+    }
+
+    private static boolean matchesLabel(Button b, String label) {
+        String text;
+        if (b instanceof TextraButton)
+            text = ((TextraButton) b).getText();
+        else if (b instanceof com.badlogic.gdx.scenes.scene2d.ui.TextButton)
+            text = ((com.badlogic.gdx.scenes.scene2d.ui.TextButton) b).getText().toString();
+        else
+            return false;
+        if (text == null)
+            return false;
+        String plain = text.replaceAll("\\[[^\\]]*\\]", "").replaceAll("\\{[^}]*\\}", "").trim();
+        return plain.equalsIgnoreCase(label) || plain.regionMatches(true, 0, label + " ", 0, label.length() + 1);
+    }
+
+    /** A click as the touch screen gives one: down and up on the same spot (ClickListener counts it as a tap). */
+    private static boolean press(Button b) {
+        InputEvent down = new InputEvent();
+        down.setType(InputEvent.Type.touchDown);
+        down.setPointer(-1);
+        b.fire(down);
+        InputEvent up = new InputEvent();
+        up.setType(InputEvent.Type.touchUp);
+        up.setPointer(-1);
+        b.fire(up);
+        System.out.println("[TFR-Esc] pressed the dialog's \"" + (b instanceof TextraButton ? ((TextraButton) b).getText() : "button") + "\"");
+        return true;
+    }
+
     static public TextraButton newTextButton(String text, Runnable func, String styleName) {
         TextraButton ret = newTextButton(text);
         ret.addListener(new ClickListener() {

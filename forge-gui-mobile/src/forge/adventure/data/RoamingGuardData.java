@@ -38,6 +38,13 @@ public class RoamingGuardData {
      *  really played by the AI either way - this is presentation, not resolution. */
     public boolean watchMatches = true;
 
+    /** Round 490 (the user: "I'd like the Roaming guards to be able to help with that. It should be a checkbox option on
+     *  their orders page"): an idle guard with this order goes to a town being pillaged (util/TownPillage) and fights its
+     *  raiders. Off by default - a guard on a pillage is not at home for the next mage attack. */
+    public boolean helpPillage = false;
+    /** Round 490: true while missionPoiId is a pillaged town's (the guard hunts its raiders), not a threatened town's. */
+    public boolean missionPillage;
+
     public int hiredDay;
     public int lastPaidDay;
 

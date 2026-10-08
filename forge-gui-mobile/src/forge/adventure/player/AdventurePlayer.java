@@ -1022,6 +1022,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             guard.lastPaidDay = 0;
             guard.downUntilDay = 0;
             guard.missionPoiId = "";
+            guard.missionPillage = false; // round 490
             guard.returningHome = false;
             guard.deployed = false;
             guard.x = 0f;

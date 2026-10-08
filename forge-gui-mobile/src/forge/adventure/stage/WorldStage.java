@@ -811,6 +811,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     continue;
                 }
                 EnemySprite mob = pair.getValue();
+                // Round 490: a pillaged town's raider with the player far off goes for the roaming guard hunting there,
+                // or holds at its town, instead of crossing the map after the player (TownPillage.raiderGoal).
+                Vector2 raiderGoal = mob.pillageTown == null ? null
+                        : forge.adventure.util.TownPillage.raiderGoal(mob, player.pos());
 
                 // Territory Control (MOD_SCOPE.md #7): a mage seeks its target town instead of
                 // homing toward the player - checked first since it's an unconditional replacement
@@ -849,8 +853,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     // Round 375 (the user chose "hold ground"): a sighted legend stands where it was seen until the
                     // player comes within legends.json chaseTiles - the sighting is a fight to choose, not an ambush.
                     mob.setAnimation(CharacterSprite.AnimationTypes.Idle);
-                } else if (!currentModifications.containsKey(PlayerModification.Hide)) {
-                    enemyMoveVector.set(player.getX(), player.getY()).sub(mob.pos());
+                } else if (raiderGoal != null && raiderGoal.dst2(mob.pos()) < 36f) {
+                    mob.setAnimation(CharacterSprite.AnimationTypes.Idle); // round 490: there (or holding its ground)
+                } else if (raiderGoal != null || !currentModifications.containsKey(PlayerModification.Hide)) {
+                    enemyMoveVector.set(raiderGoal != null ? raiderGoal.x : player.getX(),
+                            raiderGoal != null ? raiderGoal.y : player.getY()).sub(mob.pos()); // round 490: or its goal
                     enemyMoveVector.setLength(mob.speed() * delta);
                     tempBoundingRect.set(mob.getX() + enemyMoveVector.x, mob.getY() + enemyMoveVector.y, mob.getWidth(), mob.getHeight() * mob.getCollisionHeight());
 
@@ -936,9 +943,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // ordinary win/lose machinery below runs for a fight the player was not in.
         if (currentMobIsGuardDuel) {
             currentMobIsGuardDuel = false;
-            EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(playerIsWinner);
-            if (passthrough != null)
-                TerritoryControl.onMageArrived(passthrough);
+            releaseGuardFoe(RoamingGuardRuntime.onDuelFinished(playerIsWinner));
             currentMob = null;
             return;
         }
@@ -1300,9 +1305,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             return;
         forge.deck.Deck deck = RoamingGuards.battleDeck(guard);
         if (deck == null) { // no deck: nothing to fight with, let the town defend itself
-            EnemySprite passthrough = RoamingGuardRuntime.onDuelVoid("the guard has no playable deck"); // round 183 (G16)
-            if (passthrough != null)
-                TerritoryControl.onMageArrived(passthrough);
+            releaseGuardFoe(RoamingGuardRuntime.onDuelVoid("the guard has no playable deck")); // round 183 (G16)
             return;
         }
         // "Simulate" is not a different resolution - it is the same real match, played headless
@@ -1326,6 +1329,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         guardFoe.setPosition(mage.getX(), mage.getY());
         guardFoe.territoryTarget = mage.territoryTarget;
         guardFoe.territoryColor = mage.territoryColor;
+        guardFoe.pillageTown = mage.pillageTown; // round 490: a pillaged town's raider
         currentMob = guardFoe;
         currentMobIsGuardDuel = true;
         Forge.advFreezePlayerControls = true;
@@ -1352,9 +1356,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
     private void simulateGuardDuel(forge.adventure.data.RoamingGuardData guard, EnemySprite mage, forge.deck.Deck deck) {
         forge.deck.Deck mageDeck = mage.getData().generateDeck(Current.player().isFantasyMode(), false);
         if (mageDeck == null) { // nothing to simulate against - let the town defend itself
-            EnemySprite passthrough = RoamingGuardRuntime.onDuelVoid("the mage has no deck"); // round 183 (G16)
-            if (passthrough != null)
-                TerritoryControl.onMageArrived(passthrough);
+            releaseGuardFoe(RoamingGuardRuntime.onDuelVoid("the mage has no deck")); // round 183 (G16)
             return;
         }
         // Round 160 (code review): the watched path scales the mage's life by the difficulty's
@@ -1403,10 +1405,37 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         DuelScene.recordReputation(mage);
                     if (mage.getData().fixedDeck == null)
                         DuelScene.recordStatistics(mage, mage.getName(), guardWon);
-                    EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(guardWon);
-                    if (passthrough != null)
-                        TerritoryControl.onMageArrived(passthrough);
+                    releaseGuardFoe(RoamingGuardRuntime.onDuelFinished(guardWon));
                 });
+    }
+
+    /**
+     * Round 490: a roaming guard on a pillage caught one of the town's raiders (RoamingGuardRuntime, which has already
+     * made it the guard fight in progress). Off the map, as a mage is at its gate, and into the same fight. False - and
+     * nothing done - when the player's own fight begins this frame.
+     */
+    public boolean startGuardRaiderDuel(EnemySprite raider) {
+        if (collided)
+            return false;
+        foregroundSprites.removeActor(raider);
+        removeEnemy(raider);
+        startGuardDuel(raider);
+        return true;
+    }
+
+    /**
+     * Where a guard fight's foe goes when the guard did not stop it (null: it did). A mage walks on into its town, which
+     * defends itself; round 490: a pillaged town's raider goes back where it stood, unless its pillage ended meanwhile.
+     */
+    private void releaseGuardFoe(EnemySprite foe) {
+        if (foe == null)
+            return;
+        if (foe.pillageTown == null) {
+            TerritoryControl.onMageArrived(foe);
+            return;
+        }
+        if (Current.world() != null && Current.world().getPillages().containsKey(foe.pillageTown))
+            spawnAt(foe, new Vector2(foe.getX(), foe.getY()));
     }
 
     /** Round 478: a treasure guardian's duel - the chest duel's launch, with the region remembered for setWinner(). */

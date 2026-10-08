@@ -14264,6 +14264,80 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 491: Esc closes any window that can be closed, one step at a time; the Armory panes take the mouse wheel where the pointer is (2026-10-08)
+
+The user: "Next on nested windows, Like the guard orders. There are multiple 'Back' buttons, but 'Esc' - Escape, only
+works on the entry screen and not the nested screens, so hitting Esc does not close the window, only if you are on the
+original/first window does it work. I'd like for it to work on any window that you can close. Hitting escape to close, go
+back to previous window." And: "On the Storage, just confirming that the two areas with the items do scroll once you have
+more that fit in there."
+
+- **Why Esc did nothing**: a scene's Esc-bound button (the Armory's or a building page's Back) is rightly ignored while a
+  dialog is up, and the dialogs themselves had no key handling - so only the screen under them answered Esc.
+- **`Controls.pressDialogClose(dialog)`**: presses the dialog's own closing button - the first visible, enabled button
+  labeled Back, Close, Cancel, Abort, Not now, No or Leave (markup stripped, "Back (Esc)"-style suffixes allowed), or a
+  lone OK. A real touchDown + touchUp, so the button does exactly what a click does (the guard pages' Back re-opens the
+  previous page). `[TFR-Esc] pressed the dialog's "<label>"`.
+- **Where**: `UIScene.keyPressed` (every menu scene's dialog stack, top dialog first), `GameHUD.keyDown` (a town's or the
+  world's own dialog - a building window, a barred gate, a notice - instead of the HUD's menu button), and
+  `GameHUD.dialogInput` (the HUD's own dialogs). A dialog with no closing button (a story page's "(Continue)") is left
+  alone.
+- **One press = one step**: the press that closed a dialog swallows its own release (`backClosedDialog` in UIScene and
+  GameHUD) - the scene's Esc-bound button fires on RELEASE, gated only on "no dialog showing", so closing the last dialog
+  also left the screen behind it (seen in the agent: the third Esc landed on the main menu).
+- **The Armory's scrolling** (`ArmoryScene`): both grids scroll (drag, wheel, Page Up/Down) - confirmed in the agent with
+  50 items in storage and 41 in the inventory. But the wheel follows the stage's scroll focus, which libGDX moves only
+  when a pane is touched, and UIScene starts it on the last pane in the layout: wheeling over a full storage right after
+  opening the screen scrolled the inventory. The pane under the mouse takes the wheel now (`wheelFollowsPointer`, also the
+  description box), and picking an item gives its pane the Page Up / Down keys.
+- **The bridge** (`AgentActions.key`): key names resolve the way libGDX spells them ("Escape", "Page Down"; any case,
+  `_` for the space) - `key key=ESCAPE` used to answer "unknown key"; and `key` refuses a running duel like `back` does
+  since round 276 (Forge.back() walked off a live match and the game died on its next stack update - it happened once in
+  this round's test).
+- Agent-tested: the guard pages (orders -> roster -> closed -> off the Armory, one Esc each; the Dismiss confirmation's
+  Esc goes back without dismissing), Blazing Peak's barred-gate dialog (Esc = Leave, no menu; the next Esc opens the
+  menu as before), the storage with 50 items scrolled to its end.
+
+## Round 490: roaming guards help with pillaged towns (2026-10-08)
+
+The user, with a mock-up of the guard's orders page: "For the new Town being Pillaged events. I'd like the Roaming guards
+to be able to help with that. It should be a checkbox option on their orders page. You mentioned that the raiders only
+spawn around the player. So this will need to be tweaked, so they also spawn around the guards. If possible, only the
+raiders and not other enemies."
+
+- **The order** (`RoamingGuardData.helpPillage`, off by default; saved per guard like every other field, absent = off):
+  a "Help with pillaged towns" checkbox to the right of "Okay to attack (color):", as drawn - no extra row on a page that
+  is already at the bottom of a 270px screen. A guard on raider duty reads "(fighting raiders)".
+- **Dispatch** (`RoamingGuardRuntime.assignMissions`): after the mage attacks have had their pick, each pillaged town
+  without a helper gets one idle, healthy, armed guard with the order (`missionPillage` marks the mission). Same road and
+  teleporter as a defence. The duty ends - the guard walks home - when the pillage does (won, lost, the town changed
+  hands) or the order is unticked. A town can have a gate defender and a raider hunter at once (`guardAssignedTo` keys on
+  the mission kind).
+- **The hunt** (`moveGuards`): within the spawn range of the town the guard walks to the nearest raider whose RANK its
+  orders allow (colors do not apply - raiders have none); on contact (10 px) it fights it exactly as it fights a mage at
+  a gate: watched or simulated, its deck, life and gear, one guard fight at a time (`startGuardRaiderDuel` takes the
+  raider off the map; `inDuel` makes a save mid-fight a loss, as round 173 rules). No raider about: it waits at the gate.
+- **The result**: a win counts toward the pillage like the player's own (`TownPillage.onRaiderBeaten` - the last one pays
+  the reputation, wood and stone) and the guard hunts on; a loss benches the guard (30 days) and puts the raider back
+  where it stood (`WorldStage.releaseGuardFoe`, which also routes a mage on to its town as before). A raider is never
+  handed to TerritoryControl.
+- **Raiders around the guard, only raiders** (`TownPillage.keepRaiders`): a guard on the pillage within
+  `pillageSpawnRangeTiles` counts as someone there, as the player does; the raider being fought counts as present.
+  WorldStage's ordinary spawns still follow the player alone.
+- **Raiders stay at their town** (`TownPillage.raiderGoal`, WorldStage's enemy loop): with the player within the spawn
+  range of the raider or its town they chase the player as before; otherwise they go for the guard hunting there (the
+  nearer of the two when both are about), or drift back within 8 tiles of the town and hold. Before this round a raider
+  followed a distant player across the map - and a guard could not catch one walking away from it.
+- Test cheats: `guard add [tier] [help]` (a guard carrying a COPY of the selected deck), `guard orders` (the Capitol's
+  Guards dialog over the current menu scene, after `armory open`). The agent's state lists each guard's `helpPillage`,
+  `pillageDuty` and position.
+- Agent-tested on the round-484 save (Orazca pillaged, the player 45 tiles off): watched win (1 of 5), watched loss
+  (guard benched, the Pygmy Wyvern back 5 tiles from the town), two simulated losses to a Baby Copper Dragon (real
+  headless games), and a watched win at 4 of 5 that ended the pillage (+1 reputation, +50 wood, +50 stone) and sent the
+  guard home. The order survives a save and load.
+- Seen while testing, not changed: raising the Capitol gives Orazca a new POI id, so a pillage running on Orazca at that
+  moment ends quietly at the next day tick ("gone from the map", no reward, no penalty).
+
 ## Round 489: the Armory storage screen shows the item's description; the Treasure Maps button checked on the portrait layout (2026-10-08)
 
 The user, with a screenshot of the Armory storage screen: "We need to test the new map icon on Android layout,

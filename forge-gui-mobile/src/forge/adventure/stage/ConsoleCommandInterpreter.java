@@ -1061,6 +1061,35 @@ public class ConsoleCommandInterpreter {
             forge.adventure.scene.ArmoryScene.instance().open(null);
             return "Armory storage opened";
         });
+        // Round 490: test cheats for roaming guards on pillage duty. "guard add [tier] [help]" hires a guard carrying a COPY
+        // of the selected deck (cheat cards: they come home on a dismissal), "help" ticking its "Help with pillaged towns"
+        // order; "guard orders" opens the Capitol's Guards dialog over the current menu scene (after "armory open").
+        registerCommand(new String[]{"guard", "add"}, s -> {
+            if (!forge.adventure.util.RoamingGuards.isEnabled())
+                return "Roaming guards are off in this plane";
+            String tier = "Rare";
+            for (String t : forge.adventure.util.RoamingGuards.TIERS_ASCENDING)
+                if (s.length > 0 && (t.equalsIgnoreCase(s[0]) || forge.adventure.util.RoamingGuards.displayName(t).equalsIgnoreCase(s[0])))
+                    tier = t;
+            forge.deck.Deck deck = Current.player().getSelectedDeck();
+            if (deck == null || deck.getMain().countAll() == 0)
+                return "Select a deck first";
+            forge.adventure.data.RoamingGuardData guard = forge.adventure.util.RoamingGuards.hire(tier, Current.world().getCurrentDay());
+            guard.deckName = deck.getName();
+            guard.deckCards = deck.getMain().toCardList("\n").split("\n");
+            guard.helpPillage = s.length > 1 && "help".equalsIgnoreCase(s[1]);
+            return forge.adventure.util.RoamingGuards.displayName(tier) + " guard hired with \"" + deck.getName() + "\""
+                    + (guard.helpPillage ? ", helping with pillaged towns" : "");
+        });
+        registerCommand(new String[]{"guard", "orders"}, s -> {
+            if (!(Forge.getCurrentScene() instanceof forge.adventure.scene.UIScene))
+                return "Open a menu scene first (armory open)";
+            PointOfInterest capitol = forge.adventure.util.RoamingGuards.capitol();
+            forge.adventure.util.RoamingGuardUI.openGuardChooser((forge.adventure.scene.UIScene) Forge.getCurrentScene(),
+                    capitol == null ? null : WorldSave.getCurrentSave().getPointOfInterestChanges(capitol.getID()),
+                    forge.adventure.util.TownRestoration.CAPITOL_POI_NAME, 0);
+            return "Guards dialog opened";
+        });
         registerCommand(new String[]{"pillage", "beaten"}, s -> {
             try {
                 return forge.adventure.util.TownPillage.cheatSetBeaten(s.length > 0 ? Integer.parseInt(s[0]) : 0);

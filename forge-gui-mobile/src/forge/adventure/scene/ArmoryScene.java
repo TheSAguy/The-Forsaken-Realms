@@ -177,6 +177,26 @@ public class ArmoryScene extends UIScene {
         inventoryPane.setScrollingDisabled(true, false);
         inventoryPane.setActor(inventoryGrid);
         inventoryColumns = columnsFor(inventoryPane);
+
+        // Round 491 (the user: "just confirming that the two areas with the items do scroll once you have more that fit
+        // in there"). They do, by drag - but the mouse wheel goes to the stage's scroll focus, which libGDX moves only
+        // when a pane is TOUCHED, and UIScene starts it on the last pane in the layout: wheeling over a full storage right
+        // after opening the screen scrolled the inventory instead. The pane under the pointer takes the wheel now, and
+        // picking an item hands its pane the Page Up / Page Down keys (fill()).
+        wheelFollowsPointer(storagePane);
+        wheelFollowsPointer(inventoryPane);
+        if (descriptionPane != null)
+            wheelFollowsPointer(descriptionPane);
+    }
+
+    private static void wheelFollowsPointer(ScrollPane pane) {
+        pane.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
+            @Override
+            public void enter(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                if (pointer == -1 && pane.getStage() != null) // -1: the mouse moving in, not a finger
+                    pane.getStage().setScrollFocus(pane);
+            }
+        });
     }
 
     private int columnsFor(ScrollPane pane) {
@@ -336,8 +356,11 @@ public class ArmoryScene extends UIScene {
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    if (((Button) actor).isChecked())
+                    if (((Button) actor).isChecked()) {
                         setSelected((Button) actor);
+                        if (grid.getParent() instanceof ScrollPane && actor.getStage() != null)
+                            actor.getStage().setScrollFocus(grid.getParent()); // round 491: its pane scrolls by key
+                    }
                 }
             });
         }

@@ -132,6 +132,8 @@ public class GameHUD extends Stage {
 
     private final Dialog dialog;
     private boolean dialogOnlyInput;
+    /** Round 491: the Back key whose press closed a dialog - see keyUp(). */
+    private int backClosedDialog = -1;
     private final Array<TextraButton> dialogButtonMap = new Array<>();
     private final Array<TextraButton> abilityButtonMap = new Array<>();
     private final Array<NavArrowActor> hiddenEnemyChevrons = new Array<>();
@@ -1182,7 +1184,11 @@ public class GameHUD extends Stage {
     @Override
     public boolean keyUp(int keycode) {
         ui.pressUp(keycode);
-    
+        if (keycode == backClosedDialog) { // round 491: that press closed a dialog - its release opens no menu
+            backClosedDialog = -1;
+            return super.keyUp(keycode);
+        }
+
         Button pressedButton = ui.buttonPressed(keycode);
         if (pressedButton != null) {
             pressedButton.fire(eventTouchUp);
@@ -1195,6 +1201,16 @@ public class GameHUD extends Stage {
     public boolean keyDown(int keycode) {
         if (dialogOnlyInput) {
             return dialogInput(keycode);
+        }
+        // Round 491: a town's or the world's own dialog (a building's window, a gate, a notice) closes on Esc / Back
+        // through its closing button, instead of the HUD's Esc-bound menu button opening over it.
+        if (KeyBinding.Back.isPressed(keycode) && !console.isVisible()) {
+            GameStage shown = MapStage.getInstance().isInMap() ? MapStage.getInstance() : WorldStage.getInstance();
+            if (shown.isDialogOnlyInput()) {
+                forge.adventure.util.Controls.pressDialogClose(shown.getDialog());
+                backClosedDialog = keycode;
+                return true;
+            }
         }
         ui.pressDown(keycode);
         if (keycode == Input.Keys.F9 || keycode == Input.Keys.F10) {
@@ -1227,6 +1243,9 @@ public class GameHUD extends Stage {
             if (KeyBinding.Use.isPressed(keycode)) {
                 performTouch(this.getKeyboardFocus());
             }
+            if (KeyBinding.Back.isPressed(keycode) // round 491: the HUD's own dialogs close on Esc too
+                    && forge.adventure.util.Controls.pressDialogClose(dialog))
+                backClosedDialog = keycode;
         }
         return true;
     }

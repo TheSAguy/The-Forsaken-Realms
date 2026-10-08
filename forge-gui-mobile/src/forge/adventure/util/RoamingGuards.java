@@ -550,6 +550,7 @@ public class RoamingGuards {
         guard.downUntilDay = currentDay + recoveryDays();
         guard.deployed = false;
         guard.missionPoiId = "";
+        guard.missionPillage = false; // round 490
         guard.returningHome = false;
         System.out.println("[TFR-RoamGuard] " + displayName(guard.tier) + " defeated on day " + currentDay
                 + " - out of commission until day " + guard.downUntilDay);
@@ -585,6 +586,8 @@ public class RoamingGuards {
             sub.store("returningHome", g.returningHome);
             sub.store("deployed", g.deployed);
             sub.store("inDuel", g.inDuel); // round 173 (review G6)
+            sub.store("helpPillage", g.helpPillage); // round 490
+            sub.store("missionPillage", g.missionPillage);
             sub.store("pos", new Vector2(g.x, g.y));
             // Round 163: the guard's equipment, the inventory's own idiom (an ItemData[]).
             sub.storeObject("equipment", g.equipment.toArray(new forge.adventure.data.ItemData[0]));
@@ -622,6 +625,8 @@ public class RoamingGuards {
             g.returningHome = sub.containsKey("returningHome") && sub.readBool("returningHome");
             g.deployed = sub.containsKey("deployed") && sub.readBool("deployed");
             g.inDuel = sub.containsKey("inDuel") && sub.readBool("inDuel"); // round 173: absent before it
+            g.helpPillage = sub.containsKey("helpPillage") && sub.readBool("helpPillage"); // round 490: absent before it
+            g.missionPillage = sub.containsKey("missionPillage") && sub.readBool("missionPillage");
             if (sub.containsKey("pos")) {
                 Vector2 pos = sub.readVector2("pos");
                 g.x = pos.x;

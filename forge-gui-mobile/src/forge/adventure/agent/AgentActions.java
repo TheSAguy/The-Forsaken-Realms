@@ -300,7 +300,15 @@ final class AgentActions {
     }
 
     private CompletableFuture<Map<String, Object>> key(String name) {
-        int code = Input.Keys.valueOf(name.toUpperCase());
+        // Round 491: libGDX names keys "Escape", "Page Down" - valueOf(name.toUpperCase()) found only one-letter keys, so
+        // `key key=ESCAPE` answered "unknown key". Any case, '_' for the space.
+        int code = -1;
+        String wanted = name.replace('_', ' ').trim();
+        for (int i = 0; i <= Input.Keys.MAX_KEYCODE && code < 0; i++) {
+            String known = Input.Keys.toString(i);
+            if (known != null && known.equalsIgnoreCase(wanted))
+                code = i;
+        }
         if (code < 0) return now(false, "unknown key " + name);
         Scene scene = Forge.getCurrentScene();
         if (scene instanceof UIScene) {
@@ -309,6 +317,10 @@ final class AgentActions {
         } else if (scene instanceof HudScene) {
             ((HudScene) scene).keyDown(code);
             ((HudScene) scene).keyUp(code);
+        } else if (scene instanceof forge.adventure.scene.DuelScene) {
+            // Round 491: Forge.back() below on a duel in progress walked off the board with the match still running -
+            // its next stack update found no screen and the game died (NPE in FDropDown.updateSizeAndPosition).
+            return now(false, "a duel is running - `settle` sits it out");
         } else if (scene instanceof ForgeScene && (code == Input.Keys.ESCAPE || code == Input.Keys.BACK)) {
             // Round 214: same escape hatch as back() - a ForgeScene has no key handling of its own
             // here, but ESCAPE/BACK on one means "close this screen", which is Forge.back().
