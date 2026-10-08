@@ -4,12 +4,8 @@ Your v1.18 save loads as it is.
 
 ## New
 
-- **Svyelunite Temple:** a temple on the blue shores where the Vodalian merfolk and the Homarids are at war - 35 new
-  enemies, a quest with a choice to make, and the Coral Helm. (Built by Vanja for Old Border Shandalar.)
 - **The Eldrazi titans and other legends, hand-drawn:** Ulamog, Kozilek, Emrakul, the Sliver Queen, the Beholder, the
   Eldrazi, the Phoenix, the Juggernaut, the Evil Wall and the Chimera, with whole-body duel portraits.
-- **Every generated creature redrawn again** in a sharper style (ink outlines, eye sockets, rim light), and over a
-  hundred more creatures remade - 432 in all.
 - **Valor's Reach Arena runs in seasons:** beat all seven contenders and it closes. It reopens 10 to 30 days later,
   and its opponents start with an extra Wastes - one more each season, up to three.
 - **Invasions with variety:** six new invasion quests, sized to your difficulty and your standing with the town;
