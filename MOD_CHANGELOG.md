@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 475: the Player Capitol's Level-2 arena fields Masters and Archmages only (2026-10-08)
+
+The user: "In the Player arena lvl 2, there should be no Apprentices or Adepts, only Master+". Their last session's
+Level-2 (Challenging) bracket drew Domri Rade (Adept) and Dark Enchanter (Adept): a player arena upgraded to Level 2 picks
+uniformly from its pool in both modes (round 125 weighted only AI capitals and Level-1 player arenas), and the
+`arenaChallenge` pool in `player_capital.tmx` holds 91 names - 5 Archmage, 46 Master, 32 Adept, 8 Apprentice.
+
+- `ArenaScene` (bracket build): for the player-owned Challenging bracket (`challengePayoutBracket`) the pool keeps only
+  names whose `EnemyData.tierRank` is Master or Archmage - 51 of the 91. A pool with none keeps itself whole (the pick
+  loop would spin forever on an empty list). `[TFR-ArenaTier] Level-2 Challenging: Master+ only - N of M pool name(s)`.
+- **Who leaves the bracket:** ranks are enemies.json's own, so the bosses ranked Adept there sit it out - the five
+  praetors (Kozilek, Elesh Norn, Jin-Gitaxias, Urabrask, Vorinclex, all `Uncommon` with 80 life), Arzakon, Shandalar's
+  Doom (`Uncommon`, 200 life), Grolnok, Gaea, Chandra, Nissa, and others. Raised with the user: re-ranking those bosses
+  would bring them back (and change their rank everywhere else).
+- The Level-2 arena's NORMAL mode is unchanged (plain pick from the 64-name `arena` pool, Apprentices included).
+- Not agent-tested: the test world's `capitol raise` did not switch Orazca to the Capitol layout on re-entry. Checked on
+  the data: the filter leaves 51 names.
+
+## Round 474: a dungeon chest whose card cannot exist in the local sets draws from every set (2026-10-08)
+
+The user: "I just cleared a dungeon, and the last chest I took just disappeared. There was nothing inside. Please check
+log." Their log: the Spider Cave (`CaveC6`, `cave_spider.tmx`) on neutral land, `[TFR-LootEditions] dungeon-chest
+poi="CaveC6" color=neutral restriction(16)=[2XM, LRW, RIX, ELD, RNA, GPT, MBS, XLN, ME2, 5ED, TMP, SHM, FDN, KHM, SNC,
+AVR]`, then `[TFR-PlaceRewards] pickup 48 is empty after the place's reward rules`. Pickup 48 is a chest with one card
+entry: a Black Spider creature (common/uncommon/rare, no editions of its own). All of Magic has 18 black Spider
+creatures and none is printed in those 16 sets, so the edition-restricted clone had an empty pool and the chest paid
+nothing (the "reward rules" log line is generic - no once-per-place rule took anything).
+
+- `EditionProgression.restrictDungeonRewardsForCurrentPoi()`: an open card entry (`type` "card", no `cardName`,
+  `sourceDeck` or `cardUnion`) whose restricted clone has NO possible card (`CardUtil.getPredicateResult` over
+  `RewardData.getAllCards()` - the exact test `CardUtil.generateCards` empties on) keeps the map's own entry,
+  unrestricted. The authored theme wins over the shard, as for entries that name their editions (2026-08-13). The
+  `[TFR-LootEditions]` line adds "(no card in these sets for Black Spider Creature - drawn from every set instead, round
+  474)".
+- Not a probability fallback: an entry whose pool has cards but whose roll fails still pays nothing.
+- Agent: the Spider Cave looted on a world whose neutral sets do hold a black spider - every chest paid as before
+  (8 pickups); the empty-pool branch is the same call `generateCards` makes, so it fires exactly when a chest would have
+  come up empty.
+
 ## Round 473: the remakes' recipe pass - bigger eyes, claws, leather trim, chest gems (2026-10-07)
 
 The user's go after round 471 ("Go ahead with the trim and gem parts and the recipe pass"): the detail the style pass

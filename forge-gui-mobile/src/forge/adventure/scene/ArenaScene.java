@@ -1584,6 +1584,22 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         capitolPayoutBracket = !isChallenge && fromBuilding && (playerOwnedArena || isAiCapitalArena());
         challengePayoutBracket = isChallenge && fromBuilding && playerOwnedArena;
         chestArenaBracket = false;
+        // Round 475 (the user: "In the Player arena lvl 2, there should be no Apprentices or Adepts, only Master+"): the
+        // player's Level-2 (Challenging) bracket draws only Masters and Archmages from its pool. Ranks as enemies.json
+        // has them - a boss ranked Adept there (the praetors, Arzakon) sits this bracket out. A pool with no Master+
+        // name keeps the whole pool rather than spin the pick loop below forever.
+        if (challengePayoutBracket) {
+            java.util.List<String> masterPlus = new java.util.ArrayList<>();
+            for (String name : poolNames) {
+                EnemyData pooled = WorldData.getEnemy(name);
+                if (pooled != null && EnemyData.tierRank(pooled.tier) >= 2)
+                    masterPlus.add(name);
+            }
+            System.out.println("[TFR-ArenaTier] Level-2 Challenging: Master+ only - " + masterPlus.size() + " of "
+                    + poolNames.size() + " pool name(s)" + (masterPlus.isEmpty() ? " - none, the whole pool stays" : ""));
+            if (!masterPlus.isEmpty())
+                poolNames = masterPlus;
+        }
         java.util.List<EnemyData> adeptPool = new java.util.ArrayList<>();
         java.util.List<EnemyData> masterPool = new java.util.ArrayList<>();
         java.util.List<EnemyData> archmagePool = new java.util.ArrayList<>();

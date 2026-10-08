@@ -570,13 +570,25 @@ public class EditionProgression {
         }
         List<RewardData> restricted = new ArrayList<>();
         int authored = 0;
+        List<String> unrestricted = new ArrayList<>();
         for (RewardData rd : source) {
             if (rd != null && rd.editions != null && rd.editions.length > 0) {
                 restricted.add(rd);
                 authored++;
             } else {
-                for (RewardData clone : restrictToEditions(Collections.singletonList(rd), editionRestriction))
-                    restricted.add(clone);
+                for (RewardData clone : restrictToEditions(Collections.singletonList(rd), editionRestriction)) {
+                    // Round 474 (the user: "the last chest I took just disappeared. There was nothing inside"): the
+                    // Spider Cave's chest asks for a Black Spider creature, and no such card is printed in any of the
+                    // neutral shard's 16 sets - the clone had nothing to draw, the chest paid nothing and was taken.
+                    // An open card entry the restriction leaves with NO possible card keeps the map's own filter
+                    // unrestricted: the authored theme over the shard, as for entries that name their editions.
+                    if (isOpenCardEntry(rd) && CardUtil.getPredicateResult(RewardData.getAllCards(), clone).isEmpty()) {
+                        restricted.add(rd);
+                        unrestricted.add(describeCardEntry(rd));
+                    } else {
+                        restricted.add(clone);
+                    }
+                }
             }
         }
         // Diagnostic-only logging - greppable in forge.log as "[TFR-LootEditions]", same tag
@@ -584,7 +596,27 @@ public class EditionProgression {
         // "dungeon-chest" source label instead of an enemy name.
         System.out.println("[TFR-LootEditions] dungeon-chest poi=\"" + (rootPoint != null ? rootPoint.getData().name : "(unknown)")
                 + "\" color=" + colorLabel + " restriction(" + editionRestriction.size() + ")=" + editionRestriction
-                + (authored > 0 ? " (authored-theme entries passed through: " + authored + ")" : ""));
+                + (authored > 0 ? " (authored-theme entries passed through: " + authored + ")" : "")
+                + (unrestricted.isEmpty() ? "" : " (no card in these sets for " + String.join("; ", unrestricted)
+                        + " - drawn from every set instead, round 474)"));
         return restricted;
+    }
+
+    /** Round 474: a "card" entry that draws from the open pool - not a named card, a deck or a union. */
+    private static boolean isOpenCardEntry(RewardData rd) {
+        return rd != null && "card".equals(rd.type) && (rd.cardName == null || rd.cardName.isEmpty())
+                && (rd.sourceDeck == null || rd.sourceDeck.isEmpty()) && rd.cardUnion == null;
+    }
+
+    /** Round 474: the log's short name for a card entry's filter, e.g. "Black Spider Creature". */
+    private static String describeCardEntry(RewardData rd) {
+        List<String> parts = new ArrayList<>();
+        if (rd.colors != null)
+            parts.add(String.join("/", rd.colors));
+        if (rd.subTypes != null)
+            parts.add(String.join("/", rd.subTypes));
+        if (rd.cardTypes != null)
+            parts.add(String.join("/", rd.cardTypes));
+        return parts.isEmpty() ? "an open card entry" : String.join(" ", parts);
     }
 }

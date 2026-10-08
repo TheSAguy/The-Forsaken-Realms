@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 475 - the Player Capitol's Level-2 arena fields Masters and Archmages only
+
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - bracket build: the player-owned Challenging bracket
+  keeps only Master+ pool names (`EnemyData.tierRank >= 2`), after `challengePayoutBracket` is set.
+
+### Round 474 - an empty-pool chest card entry draws from every set
+
+- `util/EditionProgression.java` (mod-added) - `restrictDungeonRewardsForCurrentPoi()` keeps an open card entry
+  unrestricted when the restriction leaves it no possible card; new `isOpenCardEntry()`, `describeCardEntry()`.
+
 ### Round 472 - the engine to the 10.07 daily (upstream `e7fca289313`)
 
 - **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** - round 464's checkbox now binds
