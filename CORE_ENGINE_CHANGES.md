@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 489 - the Armory storage screen's description box
+
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `armory open` (test cheat).
+- Mod-added `scene/ArmoryScene.java`: optional `item_description` label + `setDescription`, filled in `setSelected`.
+
 ### Round 488 - map fragments, the Cartographer's Compass, secret-entrance keys
 
 - **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `treasure piece <Region>` (a Map

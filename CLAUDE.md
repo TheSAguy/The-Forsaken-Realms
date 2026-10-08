@@ -67,6 +67,11 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 489): **LOCAL + UNRELEASED** - the Armory storage screen shows the selected item's
+description: landscape = three columns (storage | description | inventory, `ui/armory.json`), portrait = storage and
+description side by side on top (`ui/armory_portrait.json`); four variants compared in the agent game (portrait via a
+1080x1920 window). The Treasure Maps button on the portrait inventory covers nothing. Cheat `armory open`.
+
 ## STATE 2026-10-08 (round 488): **LOCAL + UNRELEASED** - six Map Fragment items (use = one more piece of that map;
 arena 1-in-9 in each AI capital's third round for its color; Archaeologist ~1.5% = a Rare item's odds, setting
 `archaeologistMapFragmentChance`); the Cartographer's Compass (Wastes treasure; shows every obelisk on the world map;

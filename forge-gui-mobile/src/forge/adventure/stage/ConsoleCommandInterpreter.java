@@ -1054,6 +1054,13 @@ public class ConsoleCommandInterpreter {
             return forge.adventure.util.TownPillage.cheatStart(s.length > 0 ? String.join(" ", s) : null);
         });
         registerCommand(new String[]{"pillage", "info"}, s -> forge.adventure.util.TownPillage.cheatInfo());
+        // Round 489: the Armory storage screen without a Capitol Armory - for testing its layouts.
+        registerCommand(new String[]{"armory", "open"}, s -> {
+            if (Forge.getCurrentScene() instanceof forge.adventure.scene.DuelScene)
+                return "Not during a duel.";
+            forge.adventure.scene.ArmoryScene.instance().open(null);
+            return "Armory storage opened";
+        });
         registerCommand(new String[]{"pillage", "beaten"}, s -> {
             try {
                 return forge.adventure.util.TownPillage.cheatSetBeaten(s.length > 0 ? Integer.parseInt(s[0]) : 0);

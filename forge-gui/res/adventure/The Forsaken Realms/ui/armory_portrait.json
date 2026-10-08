@@ -15,7 +15,7 @@
       "text": "[%70]Armory Storage",
       "x": 12,
       "y": 4,
-      "width": 250,
+      "width": 122,
       "height": 12
     },
     {
@@ -23,7 +23,7 @@
       "name": "storage",
       "x": 8,
       "y": 17,
-      "width": 254,
+      "width": 125,
       "height": 88
     },
     {
@@ -194,6 +194,21 @@
       "y": 126,
       "width": 117,
       "height": 229
+    },
+    {
+      "type": "Window",
+      "x": 137,
+      "y": 8,
+      "width": 125,
+      "height": 97
+    },
+    {
+      "type": "Label",
+      "name": "item_description",
+      "x": 143,
+      "y": 12,
+      "width": 115,
+      "height": 91
     },
     {
       "type": "TextButton",

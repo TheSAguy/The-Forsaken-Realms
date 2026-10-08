@@ -92,6 +92,10 @@ public class ArmoryScene extends UIScene {
     private NinePatchDrawable slotBorderDrawable;
     private Button selected;
     private String selectedSlot;
+    // Round 489 (the user: "When in the storage management, we need to add a section to give the item description"):
+    // the selected item's name and text, as the inventory screen shows them - when the layout has an item_description.
+    private TextraLabel itemDescription;
+    private ScrollPane descriptionPane;
 
     private ArmoryScene() {
         super(Forge.isLandscapeMode() ? "ui/armory.json" : "ui/armory_portrait.json");
@@ -111,6 +115,16 @@ public class ArmoryScene extends UIScene {
         dollTitle = ui.findActor("dollTitle");
         storageTitle = ui.findActor("storageTitle");
         inventoryTitle = ui.findActor("inventoryTitle");
+        itemDescription = ui.findActor("item_description");
+        if (itemDescription != null) { // round 489: wrapped and scrolled like InventoryScene's
+            itemDescription.setAlignment(com.badlogic.gdx.utils.Align.topLeft);
+            itemDescription.setWrap(true);
+            descriptionPane = new ScrollPane(itemDescription);
+            descriptionPane.setBounds(itemDescription.getX(), itemDescription.getY(), itemDescription.getWidth() - 5,
+                    itemDescription.getHeight() - 4);
+            descriptionPane.setScrollingDisabled(true, false);
+            ui.addActor(descriptionPane);
+        }
 
         Array<Actor> children = ui.getChildren();
         for (int i = 0, n = children.size; i < n; i++) {
@@ -369,6 +383,7 @@ public class ArmoryScene extends UIScene {
         }
         if (button == null || itemAt.get(button) == null) {
             selected = null;
+            setDescription("[%85]Select an item to see what it does.");
             deleteButton.setDisabled(true);
             sellButton.setDisabled(true);
             useButton.setDisabled(true);
@@ -380,6 +395,8 @@ public class ArmoryScene extends UIScene {
         }
         ItemData data = itemAt.get(button);
         boolean stored = inStorage.contains(button);
+        setDescription(data.getDisplayName() + (data.isCracked ? " (" + Forge.getLocalizer().getMessage("lblCracked") + ")" : "")
+                + "\n[%98]" + data.getDescription()); // round 489: as InventoryScene shows it
         if (playerMode()) {
             deleteButton.setDisabled(stored || data.questItem);
             sellButton.setDisabled(stored || data.questItem);
@@ -401,6 +418,17 @@ public class ArmoryScene extends UIScene {
             transferButton.setText(stored ? "[%75]Give" : "[%75]Take Back");
         }
         transferButton.layout();
+    }
+
+    /** Round 489: the description box's text, laid out to the box's width (InventoryScene.setDescription's rule). */
+    private void setDescription(String text) {
+        if (itemDescription == null)
+            return;
+        itemDescription.setText(text);
+        itemDescription.layout.setTargetWidth(descriptionPane.getWidth());
+        itemDescription.getFont().regenerateLayout(itemDescription.layout);
+        itemDescription.invalidateHierarchy();
+        descriptionPane.setScrollY(0);
     }
 
     /** Point the selection at the freshly built button for {@code data} after a rebuild - the same

@@ -283,7 +283,7 @@ def check_dialog(d, where, depth=0):
         check_dialog(o, "%s.options[%d]" % (where, i), depth + 1)
 
 REWARD_TYPES = set("card randomCard item cardPackShop landSketchbookShop cardPack deckCard gold life mana shards stone wood Union".split())
-CONSOLE_ROOTS = set("""bonfire yinyang treasure pillage capitol glyph teleport spawn give set leave debug clearnosell sanitize fullHeal listPOI count setColorID resetQuests resetMapQuests
+CONSOLE_ROOTS = set("""bonfire yinyang treasure pillage armory capitol glyph teleport spawn give set leave debug clearnosell sanitize fullHeal listPOI count setColorID resetQuests resetMapQuests
  dumpEnemyDeckColors dumpEnemyDeckList dumpEnemyColorIdentity heal getShards remove hide fly sprint crack edition fog defeat reset torch""".split())
 
 # ---------------------------------------------------------------- atlases

@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 489: the Armory storage screen shows the item's description; the Treasure Maps button checked on the portrait layout (2026-10-08)
+
+The user, with a screenshot of the Armory storage screen: "We need to test the new map icon on Android layout,
+confirming it's not covering anything. When in the storage management, we need to add a section to give the item
+description. I'm not sure if it's better to make each of the two storage panels smaller and adding it in between or
+creating 3 columns. Player storage, Description and Armory storage. Not sure what approach will work best of Android.
+Can you test it out."
+
+- **The description** (`ArmoryScene`): an optional `item_description` label in the layout, wrapped and scrolled like the
+  inventory's (`setDescription`, InventoryScene's rule); the selected item's name (cracked noted) and description, or
+  "Select an item to see what it does." In both modes (player and roaming guard).
+- **Four layouts tried in the agent game** (portrait = a 1080x1920 window, the layout Android phones use upright):
+  landscape stacked (both grids shorter, the description between - it clipped the third line at 46 px), landscape three
+  columns (storage | description | inventory, 4 items a row and ~8 rows each - the whole description shows), portrait
+  stacked (a strip under the storage grid, the doll and buttons 20 lower - clipped like the landscape one), portrait side
+  by side (storage | description across the top, the doll | inventory unchanged below). **Installed: the three columns
+  in landscape (`ui/armory.json`) and side by side in portrait (`ui/armory_portrait.json`)** - the same idea in each
+  orientation, the description beside the storage grid, nothing below moved.
+- **The Treasure Maps button on the portrait inventory** (`ui/inventory_portrait.json`, x 107 y 324): on the boots row at
+  the doll's bottom-right, clear of every slot and button - seen in the portrait run.
+- Test cheat `armory open` (the storage screen without a Capitol Armory).
+
 ## Round 488: map fragments from the arenas and the Archaeologist; the Cartographer's Compass; secret-entrance keys; the Warden's warning (2026-10-08)
 
 The user: "Let's add map fragments per color as a possible reward in each of the 5 AI arenas. So green will have a
