@@ -346,6 +346,11 @@ final class AgentActions {
     private CompletableFuture<Map<String, Object>> use(String name) {
         if (!needGame()) return now(false, "no game loaded");
         ItemData it = findItem(name, true);
+        if (it == null) { // round 488: an item with no slot (a Map Fragment) is used straight from the bag, as the inventory does
+            ItemData bagged = findItem(name, null);
+            if (bagged != null && (bagged.equipmentSlot == null || bagged.equipmentSlot.isEmpty()))
+                it = bagged;
+        }
         if (it == null) return now(false, "no equipped item named '" + name + "' (abilities must be equipped to use, as in the HUD)");
         if (it.commandOnUse == null || it.commandOnUse.isEmpty()) return now(false, it.name + " has no use action");
         boolean inMap = MapStage.getInstance().isInMap();

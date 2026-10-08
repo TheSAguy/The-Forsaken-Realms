@@ -225,6 +225,9 @@
     "pillageRewardWood": 50,
     "pillageRewardStone": 50,
     "pillageFailReputation": 2,
+    // Round 488: the Archaeologist's chance of a treasure-map fragment per expedition (0-1). -1 = as often as a
+    // Rare item from the dig (5% item chance x the pool's Rare share, about 1.5%).
+    "archaeologistMapFragmentChance": -1,
     // AI towns: in-game days of unbroken AI ownership per guard-dot level (4 levels; the clock
     // starts when the town is first seen held, not retroactively). Level sets the assault defender:
     // none = Apprentice, 1 = Adept, 2 = Master, 3 = Archmage, 4 = Archmage with two starting lands.

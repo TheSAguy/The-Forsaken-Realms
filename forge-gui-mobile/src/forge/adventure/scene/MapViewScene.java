@@ -1090,6 +1090,21 @@ public class MapViewScene extends UIScene {
                 markerAnchors.add(new float[]{wx, wy});
             }
         }
+        // Round 488: with the Cartographer's Compass, every obelisk standing right now - its own sprite, no fog gate.
+        for (int[] ob : forge.adventure.util.TreasureHunt.obeliskMarks(WorldSave.getCurrentSave().getWorld())) {
+            com.badlogic.gdx.graphics.g2d.Sprite obelisk = Config.instance().getAtlasSprite(
+                    forge.adventure.util.TreasureHunt.OBELISK_ATLAS, forge.adventure.util.TreasureHunt.OBELISK_REGIONS[ob[2]]);
+            if (obelisk == null)
+                continue;
+            int ts = WorldSave.getCurrentSave().getWorld().getTileSize();
+            Image marker = new Image(obelisk);
+            marker.setSize(8f, 16f);
+            float wx = ob[0] * ts + ts / 2f, wy = ob[1] * ts + ts;
+            table.addActor(marker);
+            marker.setPosition(getMapX(wx) - marker.getWidth() / 2, getMapY(wy) - marker.getHeight() / 2);
+            mageMarkers.add(marker);
+            markerAnchors.add(new float[]{wx, wy});
+        }
         layoutMarkers(); // round 292: the same placement every zoom step uses
         if (legendDots > 0)
             System.out.println("[TFR-MapView] " + legendDots + " sighted legend(s) marked in gold");

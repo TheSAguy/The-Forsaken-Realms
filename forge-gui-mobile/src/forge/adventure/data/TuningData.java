@@ -410,6 +410,9 @@ public class TuningData {
     public int pillageRewardWood = 50;
     public int pillageRewardStone = 50;
     public int pillageFailReputation = 2;
+    // Round 488: the Archaeologist's chance of a treasure-map fragment per expedition (0-1). Below 0 (the default) means
+    // "as often as a Rare item": the 5% item chance x the item pool's Rare share (about 1.5%).
+    public float archaeologistMapFragmentChance = -1f;
     // AI town guard dots (MOD_SCOPE #87, user spec 2026-09-03): an AI-held color town gains one
     // guard level every this many in-game days of unbroken AI ownership (default 4 weeks), up to
     // level 4. The clock starts when the town is first seen held (save load / capture), never

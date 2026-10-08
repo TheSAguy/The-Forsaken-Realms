@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 488: map fragments from the arenas and the Archaeologist; the Cartographer's Compass; secret-entrance keys; the Warden's warning (2026-10-08)
+
+The user: "Let's add map fragments per color as a possible reward in each of the 5 AI arenas. So green will have a
+probability to get a green fragment. This will have the same odds as a item and will replace an item as a reward. Give
+it a little map icon in the rewards screen and when 'use' it will reveal a section. Also, have a map fragment be a
+possible reward from the archeologist. Some as rare item. We need to update the main quest dialog, letting them know at
+some point that they need to find the key to a hidden entrance to get into the castle or fight their way in. AKA, being
+at war with the color. I like the Cartographer's Compass, lets add that. Let's update the new hidden keys to secret
+entrance keys."
+
+- **Map fragments** (`items.json`): Wastes / White / Blue / Black / Red / Green Map Fragment - Rare, usable on the world
+  map and in places (`commandOnUse "treasure piece <Region>"`), `excludeFromGeneralSale`, 400 gold (sellable). Using one
+  adds one piece to that region's map - the same next piece an obelisk would give, and the Spade with a first piece as
+  an obelisk does (`TreasureHunt.usePiece`). It is used up only when the piece takes; a whole or already dug-up map
+  refuses it and it stays in the bag.
+- **The five AI arenas** (`maps/map/main_story/<land>_capital.tmx`, the third round's item): each color's fragment is a
+  ninth name in its item list, so it comes up as often as each of the eight items (1 in 9) and takes the item's place.
+- **The Archaeologist** (`EconomyBuildings.generateExpeditionRewards`): a fragment for a map that can still use one,
+  as often as an expedition turns up a Rare item - the 5% item chance x the item pool's Rare share (164 of 536, so about
+  1.5%), computed from the live pool; settings `archaeologistMapFragmentChance` (0-1) overrides it.
+- **Icons**: a new `items_treasure.png` page in the plane's `items.atlas` - six torn corners of the DungeonMap parchment
+  with the region's color seal, and a drawn brass compass.
+- **The Cartographer's Compass** (the Wastes treasure's prize, `TreasureHunt.treasureItemName`; quest item, Mythic):
+  while carried, the world map shows every obelisk standing now (`TreasureHunt.obeliskMarks` -> MapViewScene, each in its
+  own obelisk sprite, no fog gate). A save whose Wastes treasure was dug up before this round gets it on its next day
+  tick (`grantMissingCompass`) - the user's own game had.
+- **Secret Entrance Keys**: the five keys renamed "<Color> Secret Entrance Key"; their descriptions, the sealed-gate
+  dialog and the map page now speak of the castle's secret entrance, and War through the front gate.
+- **The main quest** (`quests.json` quest 52): the Warden's prologue gets a second page - the Five sealed their gates;
+  each castle keeps a secret entrance whose key lies buried in its lands (the treasure maps, the obelisks); or make war
+  on a color and fight through its front gate. The quest's description says the same. A quest already open keeps its
+  saved texts; its players meet the sealed-gate dialog.
+- **Agent bridge**: `use` also takes a slotless item from the bag (a fragment), as the inventory does.
+- Agent-tested: a Red fragment 4 -> 5 of 9 and gone from the bag; a Green fragment on a whole map refused and kept; the
+  Compass's Red obelisk on the world map; the new gate text at the Black Castle; the icons in the inventory. Not seen in
+  play: an arena or Archaeologist fragment drop (a 1-in-9 third-round roll and a ~1.5% expedition roll) and the new
+  prologue page (quest 52 was already open in the agent's save). Logs clean.
+
 ## Round 486: the five castles open only to their treasure key or War; the user's new hole art (2026-10-08)
 
 The user: "Here is a new Hole Art. Guards should be strong for the hidden treasure. In each or the 5 AI biomes, one of

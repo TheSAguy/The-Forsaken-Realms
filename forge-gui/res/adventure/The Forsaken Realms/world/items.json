@@ -7964,39 +7964,113 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "White Castle Key",
-        "description":  "A heavy key, dug up with the White treasure. It opens the gates of the White Castle - without it, only war with White gets you in.",
+        "name":  "White Secret Entrance Key",
+        "description":  "A heavy key, dug up with the White treasure. It opens the White Castle's secret entrance - without it, only war with White gets you in through the front gate.",
         "iconName":  "WhiteKey",
         "questItem":  true,
         "rarity":  "Rare"
     },
     {
-        "name":  "Blue Castle Key",
-        "description":  "A heavy key, dug up with the Blue treasure. It opens the gates of the Blue Castle - without it, only war with Blue gets you in.",
+        "name":  "Blue Secret Entrance Key",
+        "description":  "A heavy key, dug up with the Blue treasure. It opens the Blue Castle's secret entrance - without it, only war with Blue gets you in through the front gate.",
         "iconName":  "BlueKey",
         "questItem":  true,
         "rarity":  "Rare"
     },
     {
-        "name":  "Black Castle Key",
-        "description":  "A heavy key, dug up with the Black treasure. It opens the gates of the Black Castle - without it, only war with Black gets you in.",
+        "name":  "Black Secret Entrance Key",
+        "description":  "A heavy key, dug up with the Black treasure. It opens the Black Castle's secret entrance - without it, only war with Black gets you in through the front gate.",
         "iconName":  "BlackKey",
         "questItem":  true,
         "rarity":  "Rare"
     },
     {
-        "name":  "Red Castle Key",
-        "description":  "A heavy key, dug up with the Red treasure. It opens the gates of the Red Castle - without it, only war with Red gets you in.",
+        "name":  "Red Secret Entrance Key",
+        "description":  "A heavy key, dug up with the Red treasure. It opens the Red Castle's secret entrance - without it, only war with Red gets you in through the front gate.",
         "iconName":  "RedKey",
         "questItem":  true,
         "rarity":  "Rare"
     },
     {
-        "name":  "Green Castle Key",
-        "description":  "A heavy key, dug up with the Green treasure. It opens the gates of the Green Castle - without it, only war with Green gets you in.",
+        "name":  "Green Secret Entrance Key",
+        "description":  "A heavy key, dug up with the Green treasure. It opens the Green Castle's secret entrance - without it, only war with Green gets you in through the front gate.",
         "iconName":  "GreenKey",
         "questItem":  true,
         "rarity":  "Rare"
+    },
+    {
+        "name":  "Wastes Map Fragment",
+        "description":  "A torn piece of the Wastes treasure map. Use it to fit it into your map - one more section revealed.",
+        "iconName":  "MapFragmentWaste",
+        "usableOnWorldMap":  true,
+        "usableInPoi":  true,
+        "commandOnUse":  "treasure piece Wastes",
+        "excludeFromGeneralSale":  true,
+        "cost":  400,
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "White Map Fragment",
+        "description":  "A torn piece of the White treasure map. Use it to fit it into your map - one more section revealed.",
+        "iconName":  "MapFragmentWhite",
+        "usableOnWorldMap":  true,
+        "usableInPoi":  true,
+        "commandOnUse":  "treasure piece White",
+        "excludeFromGeneralSale":  true,
+        "cost":  400,
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Blue Map Fragment",
+        "description":  "A torn piece of the Blue treasure map. Use it to fit it into your map - one more section revealed.",
+        "iconName":  "MapFragmentBlue",
+        "usableOnWorldMap":  true,
+        "usableInPoi":  true,
+        "commandOnUse":  "treasure piece Blue",
+        "excludeFromGeneralSale":  true,
+        "cost":  400,
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Black Map Fragment",
+        "description":  "A torn piece of the Black treasure map. Use it to fit it into your map - one more section revealed.",
+        "iconName":  "MapFragmentBlack",
+        "usableOnWorldMap":  true,
+        "usableInPoi":  true,
+        "commandOnUse":  "treasure piece Black",
+        "excludeFromGeneralSale":  true,
+        "cost":  400,
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Red Map Fragment",
+        "description":  "A torn piece of the Red treasure map. Use it to fit it into your map - one more section revealed.",
+        "iconName":  "MapFragmentRed",
+        "usableOnWorldMap":  true,
+        "usableInPoi":  true,
+        "commandOnUse":  "treasure piece Red",
+        "excludeFromGeneralSale":  true,
+        "cost":  400,
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Green Map Fragment",
+        "description":  "A torn piece of the Green treasure map. Use it to fit it into your map - one more section revealed.",
+        "iconName":  "MapFragmentGreen",
+        "usableOnWorldMap":  true,
+        "usableInPoi":  true,
+        "commandOnUse":  "treasure piece Green",
+        "excludeFromGeneralSale":  true,
+        "cost":  400,
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Cartographer's Compass",
+        "description":  "The compass that drew the six treasure maps, buried at home in the Wastes. While you carry it, your world map shows where every obelisk stands right now.",
+        "iconName":  "CartographersCompass",
+        "questItem":  true,
+        "rarity":  "Mythic"
     }
+
 
 ]

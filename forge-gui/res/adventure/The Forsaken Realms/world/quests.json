@@ -11086,7 +11086,7 @@
 		"id": 52,
 		"isTemplate": true,
 		"name": "The Enemy of My Enemy...",
-		"description": "The five Seals that bound you - pearl, jet, sapphire, emerald, ruby - sit in the five invaders' castles. Storm each castle and take back what was forged from your stolen power. Each of the Five hoards card sets no other holds, so what you win in one biome you will not find in another.",
+		"description": "The five Seals that bound you - pearl, jet, sapphire, emerald, ruby - sit in the five invaders' castles. Storm each castle and take back what was forged from your stolen power. Each of the Five hoards card sets no other holds, so what you win in one biome you will not find in another. Their gates are sealed: each castle keeps a secret entrance whose key lies buried in its lands (the treasure maps), or make war on its color and fight through the front gate.",
 		"offerDialog": {},
 		"prologue": {
 			"action": [
@@ -11100,7 +11100,13 @@
 			"text": "The Warden lays out five worn map-marks, one for each castle. \"Each of the Five keeps their Seal at the heart of their castle - the instruments of your imprisonment, cut from your own stolen power. Take them back, one throne at a time. Break their trials, defeat their champions, and reclaim what is yours. And watch what falls along the way - the Five divided the realm's card sets between them, and no two hold the same. Swamp spoils are not mountain spoils. Hunt a biome and you learn what only that biome can teach. Then come home to Orazca.\"",
 			"options": [
 				{
-					"name": "(Continue)"
+					"name": "(Continue)",
+					"text": "The Warden taps each mark in turn. \"One more thing. The Five have sealed their gates against you. Every castle keeps a secret entrance, and the key to each lies buried in its own lands - old treasure maps show where, and the obelisks of each color give them up piece by piece. Find a key and walk in unseen. Or make war on a color and fight your way through its front gate. There is no third way in.\"",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
 				}
 			]
 		},

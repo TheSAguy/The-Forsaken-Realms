@@ -1620,10 +1620,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.getButtonTable().clear();
         dialog.clearListeners();
         String color = forge.adventure.util.TreasureHunt.REGION_NAMES[region];
-        TypingLabel label = Controls.newTypingLabel("The gates of " + poi.getDisplayName() + " are sealed. Its key lies"
-                + " buried with the " + color + " treasure - follow the " + color + " obelisks' map and dig it up. Only the "
-                + forge.adventure.util.TreasureHunt.castleKeyName(region) + ", or [RED]War[] with " + color
-                + ", will open them.");
+        // Round 488 (the user: "secret entrance keys"): the castle's secret entrance, or War through the front gate.
+        TypingLabel label = Controls.newTypingLabel("The gates of " + poi.getDisplayName() + " are sealed. A secret"
+                + " entrance lies hidden in its walls, and its key is buried with the " + color + " treasure - follow the "
+                + color + " map and dig it up. Only the " + forge.adventure.util.TreasureHunt.castleKeyName(region)
+                + " opens the secret way in; at [RED]War[] with " + color + " you can fight through the front gate.");
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();

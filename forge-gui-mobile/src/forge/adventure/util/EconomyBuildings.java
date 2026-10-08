@@ -335,6 +335,21 @@ public class EconomyBuildings {
         dialog.setKeepWithinStage(true);
     }
 
+    /** Round 488: the expedition's map-fragment chance - settings archaeologistMapFragmentChance when set (0-1), else
+     *  the odds of a Rare item: ARCHAEOLOGIST_ITEM_CHANCE x the Rare share of NON_MYTHIC_ITEM_POOL. */
+    private static float archaeologistFragmentChance() {
+        float set = Config.instance().getTuningData().archaeologistMapFragmentChance;
+        if (set >= 0f)
+            return set;
+        int rare = 0;
+        for (String name : NON_MYTHIC_ITEM_POOL) {
+            ItemData item = ItemListData.getItem(name);
+            if (item != null && "Rare".equals(item.rarity))
+                rare++;
+        }
+        return ARCHAEOLOGIST_ITEM_CHANCE * rare / NON_MYTHIC_ITEM_POOL.length;
+    }
+
     private static Set<String> ownedCardNames() {
         Set<String> owned = new HashSet<>();
         for (Map.Entry<PaperCard, Integer> entry : AdventurePlayer.current().getCards())
@@ -377,6 +392,20 @@ public class EconomyBuildings {
             ItemData itemData = ItemListData.getItem(itemName);
             if (itemData != null)
                 rewards.add(new Reward(itemData));
+        }
+
+        // Round 488 (the user: "have a map fragment be a possible reward from the archeologist. Some as rare item"): a
+        // treasure-map fragment for a map that can still use one, as often as the dig turns up a Rare item - the item
+        // chance times the pool's Rare share, unless settings archaeologistMapFragmentChance names its own (0-1).
+        float fragmentChance = archaeologistFragmentChance();
+        if (random.nextFloat() < fragmentChance) {
+            String fragment = TreasureHunt.fragmentForExpedition(WorldSave.getCurrentSave().getWorld(), random);
+            ItemData fragmentData = fragment == null ? null : ItemListData.getItem(fragment);
+            if (fragmentData != null) {
+                rewards.add(new Reward(fragmentData));
+                System.out.println("[TFR-Treasure] the Archaeologist's expedition dug up a " + fragment + " (chance "
+                        + Math.round(fragmentChance * 1000f) / 10f + "%)");
+            }
         }
 
         // Shop-type blueprint (user spec 2026-08-31). A dig is thematically the right place to

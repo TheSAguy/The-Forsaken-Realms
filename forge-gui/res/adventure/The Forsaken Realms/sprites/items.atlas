@@ -1931,3 +1931,30 @@ SinistralGauntlet
 DextralGauntlet
   xy: 16, 0
   size: 16, 16
+
+items_treasure.png
+size: 112,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+MapFragmentWaste
+  xy: 0, 0
+  size: 16, 16
+MapFragmentWhite
+  xy: 16, 0
+  size: 16, 16
+MapFragmentBlue
+  xy: 32, 0
+  size: 16, 16
+MapFragmentBlack
+  xy: 48, 0
+  size: 16, 16
+MapFragmentRed
+  xy: 64, 0
+  size: 16, 16
+MapFragmentGreen
+  xy: 80, 0
+  size: 16, 16
+CartographersCompass
+  xy: 96, 0
+  size: 16, 16

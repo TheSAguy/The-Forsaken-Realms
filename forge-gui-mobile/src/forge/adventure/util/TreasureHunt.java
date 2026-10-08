@@ -114,6 +114,7 @@ public final class TreasureHunt {
         }
         if (currentDay != lastProcessedDay) {
             lastProcessedDay = currentDay;
+            grantMissingCompass(world); // round 488 - also the first tick after a load
             moveObelisks(world, currentDay);
             for (int[] h : world.getTreasureHunts())
                 if (h[H_FOUND] != 0)
@@ -544,7 +545,88 @@ public final class TreasureHunt {
      * region's treasure holds (items.json "White Castle Key" ...), null for the Wastes.
      */
     public static String castleKeyName(int r) {
-        return r >= 1 && r < REGIONS.length ? REGION_NAMES[r] + " Castle Key" : null;
+        // Round 488 (the user: "Let's update the new hidden keys to secret entrance keys"): the castle's secret entrance.
+        return r >= 1 && r < REGIONS.length ? REGION_NAMES[r] + " Secret Entrance Key" : null;
+    }
+
+    /** Round 488 (the user: "I like the Cartographer's Compass, lets add that"): the Wastes treasure's prize. While
+     *  carried, the world map shows every obelisk standing right now (MapViewScene, obeliskMarks()). */
+    public static final String COMPASS_ITEM = "Cartographer's Compass";
+
+    /** What a region's treasure holds besides the purse: a color's secret-entrance key, the Wastes' Compass. */
+    public static String treasureItemName(int r) {
+        return r == 0 ? COMPASS_ITEM : castleKeyName(r);
+    }
+
+    /** Round 488: the region's map fragment item (items.json "Green Map Fragment" ...) - arena and Archaeologist loot. */
+    public static String fragmentItemName(int r) {
+        return r >= 0 && r < REGIONS.length ? REGION_NAMES[r] + " Map Fragment" : null;
+    }
+
+    /**
+     * Round 488 (the user: "when 'use' it will reveal a section"): a Map Fragment item used - one more piece of that
+     * region's map, the same piece an obelisk would give (and the Spade with the first, as an obelisk would). Null when
+     * it took (the caller removes the item); otherwise why not, and the item stays.
+     */
+    public static String usePiece(World world, String regionName) {
+        if (!isEnabled() || world == null)
+            return "There are no treasure maps in this world.";
+        int r = regionIndex(regionName);
+        int[] h = r < 0 ? null : hunt(world, r);
+        if (h == null)
+            return "The treasure maps are not drawn yet - step out onto the world map first.";
+        String name = REGION_NAMES[r];
+        if (h[H_FOUND] != 0)
+            return "You already dug up the " + name + " treasure - this piece leads nowhere now.";
+        if (h[H_FRAGS] >= FRAGMENTS)
+            return "Your " + name + " map is already whole.";
+        h[H_FRAGS]++;
+        world.bumpTreasureStamp();
+        boolean first = !Current.player().hasItem(SPADE_ITEM);
+        if (first)
+            Current.player().addItem(SPADE_ITEM);
+        GameHUD.getInstance().addNotification("The fragment fits your " + name + " map (" + h[H_FRAGS] + " of " + FRAGMENTS
+                + ")" + (h[H_FRAGS] >= FRAGMENTS ? " - the map is whole, and an X marks the spot on your world map." : ".")
+                + (first ? " Tucked into it: an old spade - you take it." : ""));
+        System.out.println("[TFR-Treasure] a " + name + " Map Fragment used - " + h[H_FRAGS] + "/" + FRAGMENTS
+                + (first ? " (the first: the Spade given)" : ""));
+        return null;
+    }
+
+    /** Round 488 (the user: "have a map fragment be a possible reward from the archeologist"): a fragment for a map that
+     *  can still use one (not whole, not claimed), picked at random; null when every map is done or hunts are off. */
+    public static String fragmentForExpedition(World world, Random rand) {
+        if (!isEnabled() || world == null)
+            return null;
+        List<Integer> open = new ArrayList<>();
+        for (int[] h : world.getTreasureHunts())
+            if (h[H_FOUND] == 0 && h[H_FRAGS] < FRAGMENTS)
+                open.add(h[H_REGION]);
+        return open.isEmpty() ? null : fragmentItemName(open.get(rand.nextInt(open.size())));
+    }
+
+    /** Round 488: the obelisks standing right now, {tileX, tileY, region}, for the world map - only while the player
+     *  carries the Cartographer's Compass. */
+    public static List<int[]> obeliskMarks(World world) {
+        List<int[]> out = new ArrayList<>();
+        if (!isEnabled() || world == null || !Current.player().hasItem(COMPASS_ITEM))
+            return out;
+        for (int[] h : world.getTreasureHunts())
+            if (h[H_OBACTIVE] != 0 && h[H_FOUND] == 0 && h[H_FRAGS] < FRAGMENTS)
+                out.add(new int[]{h[H_OBX], h[H_OBY], h[H_REGION]});
+        return out;
+    }
+
+    /** Round 488: a save whose Wastes treasure was dug up before the Compass existed gets it now (once - it is a quest
+     *  item, so it cannot be sold or thrown away). */
+    private static void grantMissingCompass(World world) {
+        int[] wastes = hunt(world, 0);
+        if (wastes == null || wastes[H_FOUND] == 0 || Current.player().hasItem(COMPASS_ITEM))
+            return;
+        Current.player().addItem(COMPASS_ITEM);
+        GameHUD.getInstance().addNotification("Among the Wastes treasure you dug up, you find something you missed: the "
+                + COMPASS_ITEM + ". Your world map now shows every obelisk.");
+        System.out.println("[TFR-Treasure] the Wastes treasure was claimed before round 488 - the " + COMPASS_ITEM + " given");
     }
 
     /**
@@ -590,7 +672,7 @@ public final class TreasureHunt {
         cards.probability = 1;
         cards.rarity = new String[]{"Rare", "Mythic Rare"};
         cards.colors = new String[]{TREASURE_COLORS[r]};
-        String keyName = castleKeyName(r);
+        String keyName = treasureItemName(r); // a color's secret-entrance key, the Wastes' Compass (round 488)
         if (keyName == null)
             return new RewardData[]{gold, shards, cards};
         RewardData key = new RewardData();

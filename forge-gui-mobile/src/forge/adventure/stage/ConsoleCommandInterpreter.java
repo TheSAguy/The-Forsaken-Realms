@@ -1061,6 +1061,20 @@ public class ConsoleCommandInterpreter {
                 return "Can not convert " + s[0] + " to number";
             }
         });
+        // Round 488: a Map Fragment item's use (items.json "treasure piece <Region>") - one more piece of that map. Used
+        // up only when the piece took; otherwise it stays in the bag and the player is told why.
+        registerCommand(new String[]{"treasure", "piece"}, s -> {
+            if (s.length < 1)
+                return "Command needs 1 parameter: Region (Wastes, White, Blue, Black, Red, Green)";
+            String refusal = forge.adventure.util.TreasureHunt.usePiece(Current.world(), s[0]);
+            if (refusal != null) {
+                GameHUD.getInstance().addNotification(refusal);
+                return refusal;
+            }
+            if (itemInUse != null)
+                Current.player().removeItem(itemInUse);
+            return "The " + s[0] + " map has one more piece";
+        });
         registerCommand(new String[]{"treasure", "info"}, s -> {
             forge.adventure.world.World world = Current.world();
             return world == null ? "No world" : forge.adventure.util.TreasureHunt.describe(world);

@@ -67,6 +67,12 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 488): **LOCAL + UNRELEASED** - six Map Fragment items (use = one more piece of that map;
+arena 1-in-9 in each AI capital's third round for its color; Archaeologist ~1.5% = a Rare item's odds, setting
+`archaeologistMapFragmentChance`); the Cartographer's Compass (Wastes treasure; shows every obelisk on the world map;
+granted to saves that dug the Wastes up earlier); keys renamed "<Color> Secret Entrance Key"; quest 52's Warden warns of
+the sealed gates (new prologue page + description). Icons on a new items.atlas page `items_treasure.png`. Agent-tested.
+
 ## STATE 2026-10-08 (round 486): **LOCAL + UNRELEASED** - the five Chapter-1 castles (tag `Chapter1Boss`) open only to
 their color's Castle Key (a new reward of that color's treasure; items.json) or at War with the color - no exception for
 castles entered before (the user). Reaching the shut gate still ticks story quest 52's "Find the X Castle"

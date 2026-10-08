@@ -162,10 +162,16 @@ public class TreasureMapScene extends UIScene {
         else
             text = "No pieces yet. Look for the " + name + " obelisk somewhere in the " + name + " lands - it moves on after"
                     + " a week.";
-        // Round 486: a color's treasure holds the key to its castle.
+        // Round 486: a color's treasure holds the key to its castle's secret entrance (round 488's name); the Wastes', the
+        // Cartographer's Compass.
         String key = TreasureHunt.castleKeyName(h[TreasureHunt.H_REGION]);
-        if (key != null && h[TreasureHunt.H_FOUND] == 0)
-            text += " Buried with it: the " + key + " - the " + name + " Castle opens only to its key, or at war.";
+        if (h[TreasureHunt.H_FOUND] == 0) {
+            if (key != null)
+                text += " Buried with it: the " + key + " - the " + name + " Castle opens only to its secret entrance, or"
+                        + " to war through its front gate.";
+            else
+                text += " Buried with it: the " + TreasureHunt.COMPASS_ITEM + ", which shows every obelisk on your world map.";
+        }
         boolean landscape = Forge.isLandscapeMode();
         Image image = new Image(mapTexture(world, h));
         TypingLabel label = Controls.newTypingLabel("[BLACK]" + text);

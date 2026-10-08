@@ -38,6 +38,18 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 488 - map fragments, the Cartographer's Compass, secret-entrance keys
+
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `treasure piece <Region>` (a Map
+  Fragment's use; removes the item in use only when the piece took).
+- **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** - the Compass's obelisk markers after the treasure X's.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - the sealed-gate dialog's text (secret entrance).
+- **`forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java`** - the Archaeologist's map-fragment roll and
+  `archaeologistFragmentChance()`.
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** - `archaeologistMapFragmentChance`.
+- **`forge-gui-mobile/src/forge/adventure/agent/AgentActions.java`** (mod-added bridge) - `use` takes a slotless item.
+- Mod-added `util/TreasureHunt.java`, `scene/TreasureMapScene.java`.
+
 ### Round 486 - the Chapter-1 castles' key gate
 
 - **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - POI collision: after the War-barred gate, a castle
