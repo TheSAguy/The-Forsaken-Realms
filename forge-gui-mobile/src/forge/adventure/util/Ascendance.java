@@ -345,19 +345,62 @@ public final class Ascendance {
         int life = pastCurve ? d.postCapLife : contains(d.lifeLevels, level) ? d.milestoneLife : 0;
         if (life > 0) {
             player.addMaxLife(life);
-            gifts.add("+" + life + " max life");
+            gifts.add("+" + life + " [+Life] max life");
         }
         if (contains(d.mainSlotLevels, level))
             gifts.add(mainSlotAllowance(level) + " main items");
         String title = contains(d.titleLevels, level) ? titleAt(level) : "";
-        if (gifts.isEmpty() && title.isEmpty() && !pastCurve) {
+        boolean choice = gifts.isEmpty() && title.isEmpty() && !pastCurve;
+        if (choice) {
             s.pendingLevels.add(level);
             gifts.add("a reward to choose - tap the Asc panel");
+        } else { // round 496: the level sheet's line for a fixed level
+            record(level, String.join(", ", gifts) + (title.isEmpty() ? "" : " - " + title));
         }
         System.out.println("[TFR-Ascend] LEVEL " + level + (title.isEmpty() ? "" : " - " + title) + ": "
                 + String.join(", ", gifts) + " (choices waiting: " + s.pendingLevels.size() + ")");
-        GameHUD.getInstance().addNotification("[GOLD]Ascendance " + level + (title.isEmpty() ? "" : " - " + title) + "![] "
-                + capitalize(String.join(", ", gifts)) + ".", true);
+        // Round 496 (the user: "The text is white, should be black"): an authored banner on the paper notification opens
+        // black; the level in a dark gold that reads on paper; each icon drawn [WHITE] so the black tint does not darken it.
+        GameHUD.getInstance().addNotification(onPaper("[#8A5A00]Ascendance " + level + (title.isEmpty() ? "" : " - " + title)
+                + "![BLACK] " + capitalize(String.join(", ", gifts)) + "."), true);
+    }
+
+    /** Round 496: black text for the paper banner, every [+Icon] in its own colors. */
+    private static String onPaper(String text) {
+        String body = text.replaceAll("(\\[\\+[A-Za-z0-9_]+\\])", "[WHITE]$1[BLACK]");
+        return body.startsWith("[") ? body : "[BLACK]" + body;
+    }
+
+    /** Round 496: what a level gave, for the level sheet (the user: "We should add a Level sheet that shows what you picked
+     *  on each level"). */
+    private static void record(int level, String what) {
+        AscendanceState s = state();
+        if (s == null)
+            return;
+        s.history.removeIf(entry -> entry.startsWith(level + "|"));
+        s.history.add(level + "|" + what);
+    }
+
+    /** Round 496: level -> what it gave, oldest first; waiting levels and levels from before the sheet existed have none. */
+    public static java.util.TreeMap<Integer, String> levelHistory() {
+        java.util.TreeMap<Integer, String> out = new java.util.TreeMap<>();
+        AscendanceState s = state();
+        if (s == null)
+            return out;
+        for (String entry : s.history) {
+            int bar = entry.indexOf('|');
+            if (bar > 0)
+                try {
+                    out.put(Integer.parseInt(entry.substring(0, bar)), entry.substring(bar + 1));
+                } catch (NumberFormatException ignored) {
+                }
+        }
+        return out;
+    }
+
+    public static List<Integer> pendingLevelList() {
+        AscendanceState s = state();
+        return s == null ? new ArrayList<>() : new ArrayList<>(s.pendingLevels);
     }
 
     private static String capitalize(String text) {
@@ -404,6 +447,10 @@ public final class Ascendance {
         if (InvasionQuests.isInvasion(quest)) {
             int rank = Math.max(0, Math.min(d.invasion.length - 1, InvasionQuests.toughestTroopRank(quest)));
             award(d.invasion[rank], "invasion repelled");
+        } else if (contains(d.noPowerQuestIds, quest.getID())) {
+            // Round 496 (the user: "I started two games, one I chose the tutorial and the other I skipped. Both started me
+            // off at level 2"): the intro quest completes the moment either start ends - it pays nothing.
+            System.out.println("[TFR-Ascend] no Power for " + quest.name + " (noPowerQuestIds)");
         } else if (quest.storyQuest) {
             award(d.storyQuest, "story: " + quest.name);
         } else {
@@ -635,16 +682,16 @@ public final class Ascendance {
         float now = c.value * picks(id), then = c.value * next;
         String effect;
         switch (id) {
-            case "vigor": effect = "+" + Math.round(c.value) + " life in the first " + next + " duel" + (next == 1 ? "" : "s") + " each day"; break;
-            case "haggler": effect = "Shop prices -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
+            case "vigor": effect = "+" + Math.round(c.value) + " [+Life] in the first " + next + " duel" + (next == 1 ? "" : "s") + " each day"; break;
+            case "haggler": effect = "Shop prices -" + pct(then) + " [+Gold]" + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
             case "swiftFeet": effect = "Overworld speed +" + pct(then) + (now > 0 ? " (now +" + pct(now) + ")" : ""); break;
             case "prospector": effect = "Resource pickups and mines +" + pct(then) + (now > 0 ? " (now +" + pct(now) + ")" : ""); break;
             case "farSight": effect = "Vision +" + pct(then) + (now > 0 ? " (now +" + pct(now) + ")" : ""); break;
-            case "marshal": effect = "Roaming guards +" + Math.round(then) + " life" + (now > 0 ? " (now +" + Math.round(now) + ")" : ""); break;
-            case "stubborn": effect = "Defeats cost " + pct(then) + " less life and gold" + (now > 0 ? " (now " + pct(now) + ")" : ""); break;
+            case "marshal": effect = "Roaming guards +" + Math.round(then) + " [+Life]" + (now > 0 ? " (now +" + Math.round(now) + ")" : ""); break;
+            case "stubborn": effect = "Defeats cost " + pct(then) + " less [+Life] and [+Gold]" + (now > 0 ? " (now " + pct(now) + ")" : ""); break;
             case "mender": effect = pct(Math.min(1f, then)) + " chance a worn item escapes cracking" + (now > 0 ? " (now " + pct(now) + ")" : ""); break;
             case "spoilsman": effect = "+" + Math.round(then) + " card" + (then >= 2 ? "s" : "") + " on a first win against an enemy"; break;
-            case "shardwell": effect = "+" + Math.round(then) + " mana shard" + (then >= 2 ? "s" : "") + " at the start of each duel"; break;
+            case "shardwell": effect = "+" + Math.round(then) + " [+Shards] at the start of each duel"; break;
             case "envoy": effect = "Color reputation lost from wins -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
             case "architect": effect = "Building and town restore costs -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
             default: effect = id;
@@ -694,7 +741,8 @@ public final class Ascendance {
         }
         System.out.println("[TFR-Ascend] level " + level + " reward chosen: " + id + " -> " + result + " (still waiting: "
                 + s.pendingLevels.size() + ")");
-        GameHUD.getInstance().addNotification("[GOLD]" + result + "[]", true);
+        record(level, result); // round 496: the level sheet
+        GameHUD.getInstance().addNotification(result); // round 496: black on the paper; icons keep their colors
         return result;
     }
 
@@ -708,6 +756,7 @@ public final class Ascendance {
         data.storeObject("ascendanceOffer", new ArrayList<>(s.offer));
         data.storeObject("ascendancePickIds", new ArrayList<>(s.picks.keySet()));
         data.storeObject("ascendancePickCounts", new ArrayList<>(s.picks.values()));
+        data.storeObject("ascendanceHistory", new ArrayList<>(s.history)); // round 496: the level sheet
         data.store("ascendanceVigorDay", s.vigorDay);
         data.store("ascendanceVigorUsed", s.vigorUsed);
     }
@@ -752,6 +801,13 @@ public final class Ascendance {
                 for (int i = 0; i < Math.min(ids.size(), counts.size()); i++)
                     if (ids.get(i) != null && counts.get(i) != null)
                         s.picks.put(ids.get(i), counts.get(i));
+        }
+        if (data.containsKey("ascendanceHistory")) { // round 496: absent before it - the sheet starts empty
+            List<String> history = (List<String>) data.readObject("ascendanceHistory");
+            if (history != null)
+                for (String entry : history)
+                    if (entry != null)
+                        s.history.add(entry);
         }
         s.vigorDay = data.containsKey("ascendanceVigorDay") ? data.readInt("ascendanceVigorDay") : -1;
         s.vigorUsed = data.containsKey("ascendanceVigorUsed") ? data.readInt("ascendanceVigorUsed") : 0;

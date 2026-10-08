@@ -258,6 +258,30 @@ public class PlayerStatisticScene extends UIScene {
                 blessingScroll.setText("[BLACK]No blessing.");
             }
         }
+        // Round 496 (the user: "On the character sheet is should show current level and progress, how much is needed for
+        // next" and "We should add a Level sheet that shows what you picked on each level"): Ascendance heads the
+        // blessing box - level, title, Power toward the next level, and the Level sheet's button - built in code, so the
+        // shared statistic layouts are not forked.
+        ScrollPane blessingBox = ui.findActor("blessingInfo");
+        if (blessingBox != null && blessingScroll != null) {
+            if (forge.adventure.util.Ascendance.isActive()) {
+                float width = Math.max(60f, blessingBox.getWidth() - 6f);
+                int[] progress = forge.adventure.util.Ascendance.progress();
+                String title = forge.adventure.util.Ascendance.title();
+                TextraLabel ascendance = Controls.newTextraLabel("[BLACK]Ascendance " + forge.adventure.util.Ascendance.level()
+                        + (title.isEmpty() ? "" : " - " + title) + "\n[BLACK][%85]Power " + progress[0] + " / " + progress[1]
+                        + " to level " + (forge.adventure.util.Ascendance.level() + 1));
+                ascendance.setWrap(true);
+                Table box = new Table();
+                box.add(ascendance).width(width).left().row();
+                box.add(Controls.newTextButton("[%80]Level sheet",
+                        () -> forge.adventure.util.AscendanceUI.openLevelSheet(this))).left().padTop(2f).padBottom(6f).row();
+                box.add(blessingScroll).width(width).left().row();
+                blessingBox.setActor(box);
+            } else {
+                blessingBox.setActor(blessingScroll);
+            }
+        }
 
         for (Map.Entry<String, Pair<Integer, Integer>> entry : Current.player().getStatistic().getWinLossRecord().entrySet()) {
             EnemyData data = WorldData.getEnemy(entry.getKey());

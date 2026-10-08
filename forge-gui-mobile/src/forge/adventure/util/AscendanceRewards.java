@@ -59,15 +59,15 @@ final class AscendanceRewards {
         switch (id) {
             case "gold": return "+" + amount(value, level) + " [+Gold]";
             case "shards": return "+" + amount(value, level) + " [+Shards]";
-            case "wood": return "+" + amount(value, level) + " wood";
-            case "stone": return "+" + amount(value, level) + " stone";
+            case "wood": return "+" + amount(value, level) + " [+Wood]";
+            case "stone": return "+" + amount(value, level) + " [+Stone]";
             case "rareCards": return level >= 23 ? "A rare and a mythic in your deck's colors"
                     : level >= 13 ? "Two rares in your deck's colors" : "A rare in your deck's colors";
             case "item": return "A random " + itemRarity(level).toLowerCase() + " item";
             case "booster": return "A pack of an edition you have unlocked";
-            case "mapFragment": return "A piece of a treasure map you are still missing";
+            case "mapFragment": return "[+MapFragmentWaste] A piece of a treasure map you are still missing";
             case "blueprint": return "A shop blueprint you don't have yet";
-            case "coins": return "+" + Math.round(value) + " Bronze Challenge Coins";
+            case "coins": return "+" + Math.round(value) + " [+BronzeChallengeCoin] Bronze Challenge Coins";
             case "goodwill": PointOfInterest town = leastRespectedTown();
                 return "+" + Math.round(value) + " reputation in " + (town == null ? "your town" : town.getDisplayName());
             case "mend": return "Repair every cracked item; downed roaming guards back on their feet";
@@ -96,10 +96,11 @@ final class AscendanceRewards {
         Array<Reward> loot = new Array<>();
         String result;
         switch (id) {
-            case "gold": player.giveGold(amount(value, level)); result = "+" + amount(value, level) + " gold"; break;
-            case "shards": player.addShards(amount(value, level)); result = "+" + amount(value, level) + " shards"; break;
-            case "wood": player.addWood(amount(value, level)); result = "+" + amount(value, level) + " wood"; break;
-            case "stone": player.addStone(amount(value, level)); result = "+" + amount(value, level) + " stone"; break;
+            // Round 496 (the user: "All rewards should use the Icon symbols").
+            case "gold": player.giveGold(amount(value, level)); result = "+" + amount(value, level) + " [+Gold]"; break;
+            case "shards": player.addShards(amount(value, level)); result = "+" + amount(value, level) + " [+Shards]"; break;
+            case "wood": player.addWood(amount(value, level)); result = "+" + amount(value, level) + " [+Wood]"; break;
+            case "stone": player.addStone(amount(value, level)); result = "+" + amount(value, level) + " [+Stone]"; break;
             case "rareCards":
                 if (level >= 23) {
                     loot.addAll(cards(1, "Rare"));
@@ -132,7 +133,7 @@ final class AscendanceRewards {
                 ItemData fragment = r < 0 ? null : ItemListData.getItem(TreasureHunt.fragmentItemName(r));
                 if (fragment != null)
                     loot.add(new Reward(fragment));
-                result = fragment == null ? "no fragment" : fragment.name;
+                result = fragment == null ? "no fragment" : "[+" + fragment.iconName + "] " + fragment.name;
                 break;
             }
             case "blueprint":
@@ -145,7 +146,7 @@ final class AscendanceRewards {
                     if (coin != null)
                         loot.add(new Reward(coin));
                 }
-                result = "+" + loot.size + " Bronze Coins";
+                result = "+" + loot.size + " [+BronzeChallengeCoin] Bronze Coins";
                 break;
             case "goodwill": {
                 PointOfInterest town = leastRespectedTown();

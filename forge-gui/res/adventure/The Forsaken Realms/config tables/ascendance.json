@@ -46,6 +46,8 @@
   "innMatchWin": 15,
   "innChampion": 30,
   "treasureFound": 75,
+  // Quests that pay no Power: the intro that completes the moment a new game starts (round 496).
+  "noPowerQuestIds": [28],
 
   // Level rewards: +1 max life at these levels; main-slot items (Neck, Body, Left, Right, Boots) 1, +1 at each of
   // mainSlotLevels; the titles; a roaming guard's main-slot items by its rank.

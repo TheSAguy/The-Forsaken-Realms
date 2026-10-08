@@ -18,6 +18,8 @@ public class AscendanceState {
     public final java.util.ArrayList<String> offer = new java.util.ArrayList<>();
     /** Round 494: lasting rewards taken, id -> picks. */
     public final java.util.LinkedHashMap<String, Integer> picks = new java.util.LinkedHashMap<>();
+    /** Round 496: the level sheet - "level|what it gave", one per level reached since round 496. */
+    public final java.util.ArrayList<String> history = new java.util.ArrayList<>();
     /** Round 494: Morning Vigor - the day it last counted duels, and how many it has covered that day. */
     public int vigorDay = -1;
     public int vigorUsed;
@@ -28,6 +30,7 @@ public class AscendanceState {
         pendingLevels.clear();
         offer.clear();
         picks.clear();
+        history.clear();
         vigorDay = -1;
         vigorUsed = 0;
     }

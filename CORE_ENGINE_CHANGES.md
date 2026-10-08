@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 496 - Ascendance on the character sheet
+
+- **`scene/PlayerStatisticScene.java`** - `enter()`: Ascendance's level, title, Power to the next level and a "Level
+  sheet" button head the `blessingInfo` box (a code-built Table around the blessing label; no layout fork).
+- **Mod-added, touched**: `Ascendance` (paper-safe banners, the history, `noPowerQuestIds`), `AscendanceUI` (the Level
+  sheet), `AscendanceRewards` (icons), `AscendanceState` (`history`), `AscendanceData` (`noPowerQuestIds`).
+
 ### Round 494 - Ascendance's rewards
 
 Lasting-reward multipliers, each a one-line read of `Ascendance`:

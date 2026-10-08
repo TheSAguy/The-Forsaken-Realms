@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 496: Ascendance - black banners, icons on every reward, level 1 at the start, the character sheet and the Level sheet (2026-10-08)
+
+The user, with screenshots: "The text is white, should be black. I started two games, one I chose the tutorial and the
+other I skipped. Both started me off at level 2. All rewards should use the Icon symbols. On the character sheet is should
+show current level and progress, how much is needed for next. We should add a Level sheet that shows what you picked on
+each level."
+
+- **Banners**: the level-up banner was authored markup ending a gold run with `[]`, which snaps to the white tint. It now
+  opens black, shows the level in a dark gold that reads on paper (`#8A5A00`), and draws each `[+Icon]` `[WHITE]`
+  (`Ascendance.onPaper`). The chosen-reward toast is plain text with icons, so GameHUD's own rule draws it black.
+- **Level 1 at the start**: both starts (the tutorial and the skip) completed "Entering The Forsaken Realms" (quest 28)
+  the moment they ended - 50 Power, level 2. ascendance.json `noPowerQuestIds: [28]`; logged "no Power for ...".
+- **Icons**: gold `[+Gold]`, shards `[+Shards]`, wood `[+Wood]`, stone `[+Stone]`, life `[+Life]` (Morning Vigor,
+  Marshal, Stubborn, the milestone's "+1 max life"), mana shards `[+Shards]` (Shardwell), coins `[+BronzeChallengeCoin]`,
+  a map piece its own `[+MapFragment<Color>]`, Haggler's prices `[+Gold]` - in the offer, the toast and the sheet.
+- **Character sheet** (PlayerStatisticScene): "Ascendance 5 - Unbound / Power 0 / 130 to level 6" and a "Level sheet"
+  button head the blessing box. It is built in code, so the shared statistic layouts are not forked.
+- **Level sheet**: every level from 2 to the level reached and what it gave - the pick ("Swift Feet I", "+80 [+Gold]") or
+  the milestone ("+1 [+Life] max life, 2 main items - Unbound"); a waiting level says so.
+  - Recorded from round 496 on (`AscendanceState.history`, saved as `ascendanceHistory`); levels from earlier say
+    "(before the level sheet)".
+  - It scrolls once longer than the screen.
+  - Opened from the "Asc" panel's status ("Level sheet" button) and from the character sheet.
+- **Agent-tested**:
+  - A new game skipping the intro starts at level 1 with 0 Power.
+  - Banners are black with the heart icon in color.
+  - The offer showed `[+Shards]`, `[+Gold]` and `[+Life]`.
+  - Gold and shards were taken.
+  - The Level sheet listed 2-5, from the map and from the character sheet; Esc closes it a step at a time.
+
 ## Round 495: the Sliver from the user's own clips, in eight colors (2026-10-08)
 
 The Procedural Pixel Creatures session: the user's AI still of a sliver (a golden-brown serpent reared on its coils, a

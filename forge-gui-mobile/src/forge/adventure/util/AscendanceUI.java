@@ -81,9 +81,73 @@ public final class AscendanceUI {
             lasting.append(Ascendance.lastingName(pick.getKey())).append(" x").append(pick.getValue());
         }
         addRow(dialog, "[%85]" + (lasting.length() == 0 ? "No lasting rewards yet." : lasting.toString()));
+        dialog.getButtonTable().add(Controls.newTextButton("Level sheet", () -> { // round 496
+            stage.hideDialog();
+            Gdx.app.postRunnable(AscendanceUI::openLevelSheet);
+        })).width(width() / 2f).padRight(4f);
         dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).width(width() / 2f).row();
         dialog.setKeepWithinStage(true);
         stage.showDialog();
+    }
+
+    /** Round 496 (the user: "We should add a Level sheet that shows what you picked on each level"), on the map. */
+    public static void openLevelSheet() {
+        GameStage stage = stage();
+        if (stage.isDialogOnlyInput())
+            return;
+        Dialog dialog = prepare(stage);
+        fillLevelSheet(dialog);
+        dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).width(width() / 2f).row();
+        dialog.setKeepWithinStage(true);
+        stage.showDialog();
+    }
+
+    /** Round 496: the same sheet over a menu scene (the character sheet's "Level sheet" button). */
+    public static void openLevelSheet(forge.adventure.scene.UIScene scene) {
+        Dialog dialog = new Dialog("", Controls.getSkin());
+        fillLevelSheet(dialog);
+        dialog.getButtonTable().add(Controls.newTextButton("Close", scene::removeDialog)).width(width() / 2f).row();
+        dialog.setKeepWithinStage(true);
+        scene.showDialog(dialog);
+    }
+
+    /** Level 2 to the level reached: what each gave - a pick, or a milestone's life, slot and title; a waiting level says
+     *  so. Scrolls once it is longer than the screen. */
+    private static void fillLevelSheet(Dialog dialog) {
+        String title = Ascendance.title();
+        addRow(dialog, "[GOLD]Level sheet[] - Ascendance " + Ascendance.level() + (title.isEmpty() ? "" : ", " + title));
+        java.util.TreeMap<Integer, String> history = Ascendance.levelHistory();
+        List<Integer> waiting = Ascendance.pendingLevelList();
+        com.badlogic.gdx.scenes.scene2d.ui.Table rows = new com.badlogic.gdx.scenes.scene2d.ui.Table();
+        for (int level = 2; level <= Ascendance.level(); level++) {
+            String what = history.get(level);
+            if (what == null)
+                what = waiting.contains(level) ? "[GOLD]a reward waits - tap the Asc panel[]" : "[%80](before the level sheet)";
+            TypingLabel number = Controls.newTypingLabel("[%85]" + level);
+            number.skipToTheEnd();
+            TypingLabel text = Controls.newTypingLabel("[%85]" + what);
+            text.setWrap(true);
+            text.skipToTheEnd();
+            rows.add(number).width(22f).top().left();
+            rows.add(text).width(width() - 30f).left().padBottom(2f).row();
+        }
+        if (Ascendance.level() < 2)
+            rows.add(Controls.newTypingLabel("[%85]Nothing yet - the first level comes with the first wins.")).width(width()).row();
+        com.badlogic.gdx.scenes.scene2d.ui.ScrollPane pane = new com.badlogic.gdx.scenes.scene2d.ui.ScrollPane(rows);
+        pane.setScrollingDisabled(true, false);
+        pane.setFadeScrollBars(false);
+        rows.pack();
+        float cap = forge.Forge.isLandscapeMode() ? 150f : 320f;
+        dialog.getContentTable().add(pane).width(width() + 6f).height(Math.min(cap, rows.getPrefHeight() + 4f)).row();
+        // The wheel scrolls the list, not the stage under it, once the dialog is up (UIScene.showDialog takes the focus).
+        pane.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
+            @Override
+            public void enter(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y, int pointer,
+                              com.badlogic.gdx.scenes.scene2d.Actor fromActor) {
+                if (pointer == -1 && pane.getStage() != null)
+                    pane.getStage().setScrollFocus(pane);
+            }
+        });
     }
 
     private static Dialog prepare(GameStage stage) {

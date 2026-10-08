@@ -67,6 +67,13 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 496): **LOCAL + UNRELEASED** - Ascendance polish:
+- Black level-up banners (dark-gold level, icons in color).
+- `[+Icon]` glyphs on every reward.
+- The intro quest (28) pays no Power, so new games start at level 1.
+- The character sheet shows the level, title and Power to the next level, with a "Level sheet" button.
+- The Level sheet lists what each level gave (also from the "Asc" status view).
+
 ## STATE 2026-10-08 (round 495): **LOCAL + UNRELEASED (data only)** - the Sliver from the user's own Pixelate clips (still +
 idle/walk/attack; death synthesized), one still tinted into eight colors for the 17 slivers of batch 10, replacing their
 generated serpents in place (same 17 atlases under `sprites/enemy/remake/`, enemies.json 15 scales, two keepSize kept).

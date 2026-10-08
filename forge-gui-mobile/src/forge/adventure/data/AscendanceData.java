@@ -54,6 +54,8 @@ public class AscendanceData {
     public int innMatchWin = 15;
     public int innChampion = 30;
     public int treasureFound = 75;
+    /** Round 496: quests that pay no Power - the intro that completes the moment a new game starts (28). */
+    public int[] noPowerQuestIds = {28};
 
     // ---- level rewards
     /** Levels that give +1 max life (with their title, and a main slot through mainSlotLevels). */
