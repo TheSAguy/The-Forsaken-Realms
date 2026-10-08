@@ -71,7 +71,7 @@ user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-tr
 pool is empty (the user's Spider Cave: Black Spider creature vs the neutral shard's 16 sets) draws from every set
 instead of paying nothing (`EditionProgression.restrictDungeonRewardsForCurrentPoi`). 475: the Player Capitol's Level-2
 (Challenging) arena bracket draws Master+ only (51 of its 91 names; the praetors and Arzakon, ranked Adept, sit out -
-re-ranking offered). Neither seen in play.
+re-ranking offered). Neither seen in play. LIVE + AGENT PACKAGED 2026-10-08 (jar DFD357CF5782).
 
 ## STATE 2026-10-07 (round 473): **LOCAL + UNRELEASED (data only)** - the remakes' recipe pass (the Procedural Pixel
 Creatures session, on the user's go): all 432 generated remakes re-exported from their exact genomes with eyes one
