@@ -67,6 +67,11 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 503): **LOCAL + UNRELEASED (credits only)** - the LPC credits thank unnamed contributors in
+general and point to the generator's repository and OpenGameArt (the user: "if we don't know the authors, just say thanks
+in general and point to the website"); CREDITS.md's LPC bullet + CREDITS_LPC.md regenerated (the Procedural Pixel
+Creatures session). No game data changed; packaged by the peer (#30) with its 504.
+
 ## STATE 2026-10-08 (round 502): **LOCAL + UNRELEASED** - the companion limit (the user, after the item audit: "Go with
 the companion limit, 2 at Ascendance 15 and 3 at 25"): a worn item that starts a creature on the battlefield, in any slot,
 is a companion; 1 allowed, +1 at Ascendance 15 and 25; 3 without Ascendance (`companionsWithoutAscendance`, my pick).

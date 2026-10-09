@@ -207,7 +207,7 @@ sources.
 - Pants [legs_pants] - legs/pants/male: bluecarrot16, JaidynReiman, ElizaWy, Matthew Krohn (makrohn), Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-expanded-pants
 - Basic Boots [feet_boots_basic] - feet/boots/basic: JaidynReiman, bluecarrot16, Nila122; OGA-BY 3.0; https://opengameart.org/content/lpc-clothes-and-hair, https://opengameart.org/content/lpc-expanded-socks-shoes
 - Leather [torso_armour_leather] - torso/armour/leather: Johannes Sjölund (wulax), bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-clothing-updates, https://opengameart.org/content/lpc-expanded-armor
-- Human Male Plump [heads_human_male_plump] - head/heads/human/male_plump: Stephen Challener (Redshrike), ??; CC-BY-SA 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-folk
+- Human Male Plump [heads_human_male_plump] - head/heads/human/male_plump: Stephen Challener (Redshrike) (and our thanks to the contributor the generator's credits leave unnamed - see the source page); CC-BY-SA 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-folk
 - Basic Beard [beards_beard] - beards/beard/basic: JaidynReiman, Carlo Enrico Victoria (Nemisys); CC-BY-SA 3.0; https://opengameart.org/content/lpc-white-beard
 - Buzzcut [hair_buzzcut] - hair/buzzcut: ElizaWy; OGA-BY 3.0; https://opengameart.org/content/lpc-hair
 

@@ -109,8 +109,9 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Dr. Jamgo, Ahmad3366, Manuel Riecke (MrBeast), Sander Frenken (castelonia), the DCSS artists, Inboxninja, dalonedrau,
   Daniel Eddeland (daneeklu), gr3yh47, Joe White, Thane Brimhall (pennomi), laetissima, Carlo Enrico Victoria
   (Nemisys), Michael Whitlock (bigbeargames), Tuomo Untinen (reemax), Napsio (Vitruvian Studio), Mandi Paugh, Marcel
-  van de Steeg (MadMarcel), Fabzy, Luke Mehl, DarkwallLKE, Charles Sanchez (CharlesGabriel), Zi Ye, AntumDeluge, and the
-  unnamed author of the plump head's rework (LPC's own credits list "??" for the LPC Folk pack).
+  van de Steeg (MadMarcel), Fabzy, Luke Mehl, DarkwallLKE, Charles Sanchez (CharlesGabriel), Zi Ye, AntumDeluge - and
+  our thanks to every contributor the generator's credits leave unnamed; the parts and their source pages are listed at
+  https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator and on https://opengameart.org.
 
 ## World art
 
