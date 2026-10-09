@@ -67,6 +67,17 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 501): **LOCAL + UNRELEASED (data only)** - LPC batch 3 (the Procedural Pixel Creatures
+session; the user: "Do the next 30 humanoids via LPC"): 30 enemies - the last nine 16 px hero sprites (the dwarf, the
+two Phyrexians, the undead as a zombie and a skeleton, the two viashino, the two werewolves as wolf heads on fur) and the
+21 enemies on the eight stock viashino sprites (the viashino legends in reds and ambers with lizard heads and tails,
+Bontu and Rhonas as god-lizards in gold, the merfolk Tishana, Hakbal and Vorel with fins, the frogs Glarb and Clement as
+pale lizards, the Wild-Magic Sorcerer an orc, Atogatog a troll head, Roalesk winged), each its own kit. 30 new atlases
+under `sprites/enemy/remake/`, enemies.json 30 paths + 30 scales, CREDITS.md's LPC line (88 enemies, rounds 498 + 500 +
+501), CREDITS_LPC.md regenerated for the three rounds. The peer (#30) verifies and packages when the game closes. Not
+seen in play. Next LPC batches: the stock `humanoid/` folders (kobolds, orcs, minotaurs, merfolk, elves, dwarves,
+goblins, the human classes) and the larger `basic/humanoid/` sprites.
+
 ## STATE 2026-10-08 (round 500): **LOCAL + UNRELEASED (data only)** - LPC batch 2 (the Procedural Pixel Creatures
 session; the user: "Do the devils, dragonkin, kor, leonin and metathran next"): 33 enemies on the hero sprites - the two
 devils (red skin, horns, cat tail, bat wings), the five dragonkin (lizard head, tail, wings in five colors), all 22 Kor

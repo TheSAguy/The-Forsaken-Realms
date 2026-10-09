@@ -95,17 +95,22 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (58 enemies from rounds 498 and 500 - the goblins, halflings, lizardfolk,
-  the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland Rover, and the
-  hero sprites' humans, elves, the dwarf, devils, dragonkin, all the Kor, the leonin and the metathran) - composed from
-  the parts of the Universal LPC Spritesheet Character Generator (Liberated Pixel Cup contributors), each part under
-  its own license (OGA-BY 3.0, CC-BY 3.0/4.0, CC-BY-SA 3.0, CC0), the composed sprites CC-BY or CC-BY-SA; the parts,
-  authors, licenses and sources per enemy are in `CREDITS_LPC.md`. Authors: Johannes Sjölund (wulax), Stephen
+- **Universal LPC Spritesheet characters** (88 enemies from rounds 498, 500 and 501 - the goblins, halflings,
+  lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
+  Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
+  Phyrexians, the undead, the viashino and the werewolves; and the viashino sprites' cast - the Viashino, Glarb, Ognis,
+  the Dark Enchanter, Mindclaw Shaman, Bontu, Yurlok, the Wild-Magic Sorcerer, Rhonas, Tishana, Rivaz, Atogatog, Vorel,
+  Simic Wizard, Clement, Hakbal, Roalesk, Shaman of Zedruu, Chishiro, Tsagan and Laughing Jasper Flint) - composed
+  from the parts of the Universal LPC Spritesheet Character Generator (Liberated Pixel Cup contributors), each part
+  under its own license (OGA-BY 3.0, CC-BY 3.0/4.0, CC-BY-SA 3.0, CC0), the composed sprites CC-BY or CC-BY-SA; the
+  parts, authors, licenses and sources per enemy are in `CREDITS_LPC.md`. Authors: Johannes Sjölund (wulax), Stephen
   Challener (Redshrike), bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy),
   TheraHedwig, MuffinElZangano, Durrani, Matthew Krohn (makrohn), Pierre Vigier (pvigier), Nila122, William.Thomsponj,
   Dr. Jamgo, Ahmad3366, Manuel Riecke (MrBeast), Sander Frenken (castelonia), the DCSS artists, Inboxninja, dalonedrau,
   Daniel Eddeland (daneeklu), gr3yh47, Joe White, Thane Brimhall (pennomi), laetissima, Carlo Enrico Victoria
-  (Nemisys), Michael Whitlock (bigbeargames), Tuomo Untinen (reemax), Napsio (Vitruvian Studio), Mandi Paugh.
+  (Nemisys), Michael Whitlock (bigbeargames), Tuomo Untinen (reemax), Napsio (Vitruvian Studio), Mandi Paugh, Marcel
+  van de Steeg (MadMarcel), Fabzy, Luke Mehl, DarkwallLKE, Charles Sanchez (CharlesGabriel), Zi Ye, AntumDeluge, and the
+  unnamed author of the plump head's rework (LPC's own credits list "??" for the LPC Folk pack).
 
 ## World art
 

@@ -1,0 +1,173 @@
+undead_renegade.png
+size: 720,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 57
+Idle
+  xy: 80, 64
+  size: 80, 57
+Idle
+  xy: 160, 64
+  size: 80, 57
+Idle
+  xy: 240, 64
+  size: 80, 57
+Walk
+  xy: 0, 121
+  size: 80, 57
+Walk
+  xy: 80, 121
+  size: 80, 57
+Walk
+  xy: 160, 121
+  size: 80, 57
+Walk
+  xy: 240, 121
+  size: 80, 57
+Walk
+  xy: 320, 121
+  size: 80, 57
+Walk
+  xy: 400, 121
+  size: 80, 57
+Walk
+  xy: 480, 121
+  size: 80, 57
+Walk
+  xy: 560, 121
+  size: 80, 57
+Attack
+  xy: 0, 178
+  size: 80, 57
+Attack
+  xy: 80, 178
+  size: 80, 57
+Attack
+  xy: 160, 178
+  size: 80, 57
+Attack
+  xy: 240, 178
+  size: 80, 57
+Attack
+  xy: 320, 178
+  size: 80, 57
+Attack
+  xy: 400, 178
+  size: 80, 57
+Hit
+  xy: 0, 235
+  size: 80, 57
+Hit
+  xy: 80, 235
+  size: 80, 57
+Hit
+  xy: 160, 235
+  size: 80, 57
+Hit
+  xy: 240, 235
+  size: 80, 57
+Death
+  xy: 0, 292
+  size: 80, 57
+Death
+  xy: 80, 292
+  size: 80, 57
+Death
+  xy: 160, 292
+  size: 80, 57
+Death
+  xy: 240, 292
+  size: 80, 57
+Death
+  xy: 320, 292
+  size: 80, 57
+Death
+  xy: 400, 292
+  size: 80, 57
+Death
+  xy: 480, 292
+  size: 80, 57
+Death
+  xy: 560, 292
+  size: 80, 57
+Death
+  xy: 640, 292
+  size: 80, 57
+IdleUp
+  xy: 0, 349
+  size: 80, 57
+IdleUp
+  xy: 80, 349
+  size: 80, 57
+IdleUp
+  xy: 160, 349
+  size: 80, 57
+IdleUp
+  xy: 240, 349
+  size: 80, 57
+IdleDown
+  xy: 0, 406
+  size: 80, 57
+IdleDown
+  xy: 80, 406
+  size: 80, 57
+IdleDown
+  xy: 160, 406
+  size: 80, 57
+IdleDown
+  xy: 240, 406
+  size: 80, 57
+WalkUp
+  xy: 0, 463
+  size: 80, 57
+WalkUp
+  xy: 80, 463
+  size: 80, 57
+WalkUp
+  xy: 160, 463
+  size: 80, 57
+WalkUp
+  xy: 240, 463
+  size: 80, 57
+WalkUp
+  xy: 320, 463
+  size: 80, 57
+WalkUp
+  xy: 400, 463
+  size: 80, 57
+WalkUp
+  xy: 480, 463
+  size: 80, 57
+WalkUp
+  xy: 560, 463
+  size: 80, 57
+WalkDown
+  xy: 0, 520
+  size: 80, 57
+WalkDown
+  xy: 80, 520
+  size: 80, 57
+WalkDown
+  xy: 160, 520
+  size: 80, 57
+WalkDown
+  xy: 240, 520
+  size: 80, 57
+WalkDown
+  xy: 320, 520
+  size: 80, 57
+WalkDown
+  xy: 400, 520
+  size: 80, 57
+WalkDown
+  xy: 480, 520
+  size: 80, 57
+WalkDown
+  xy: 560, 520
+  size: 80, 57

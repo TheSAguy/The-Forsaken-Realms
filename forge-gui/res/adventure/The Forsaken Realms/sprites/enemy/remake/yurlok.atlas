@@ -1,0 +1,173 @@
+yurlok.png
+size: 846,523
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 51
+Idle
+  xy: 94, 64
+  size: 94, 51
+Idle
+  xy: 188, 64
+  size: 94, 51
+Idle
+  xy: 282, 64
+  size: 94, 51
+Walk
+  xy: 0, 115
+  size: 94, 51
+Walk
+  xy: 94, 115
+  size: 94, 51
+Walk
+  xy: 188, 115
+  size: 94, 51
+Walk
+  xy: 282, 115
+  size: 94, 51
+Walk
+  xy: 376, 115
+  size: 94, 51
+Walk
+  xy: 470, 115
+  size: 94, 51
+Walk
+  xy: 564, 115
+  size: 94, 51
+Walk
+  xy: 658, 115
+  size: 94, 51
+Attack
+  xy: 0, 166
+  size: 94, 51
+Attack
+  xy: 94, 166
+  size: 94, 51
+Attack
+  xy: 188, 166
+  size: 94, 51
+Attack
+  xy: 282, 166
+  size: 94, 51
+Attack
+  xy: 376, 166
+  size: 94, 51
+Attack
+  xy: 470, 166
+  size: 94, 51
+Hit
+  xy: 0, 217
+  size: 94, 51
+Hit
+  xy: 94, 217
+  size: 94, 51
+Hit
+  xy: 188, 217
+  size: 94, 51
+Hit
+  xy: 282, 217
+  size: 94, 51
+Death
+  xy: 0, 268
+  size: 94, 51
+Death
+  xy: 94, 268
+  size: 94, 51
+Death
+  xy: 188, 268
+  size: 94, 51
+Death
+  xy: 282, 268
+  size: 94, 51
+Death
+  xy: 376, 268
+  size: 94, 51
+Death
+  xy: 470, 268
+  size: 94, 51
+Death
+  xy: 564, 268
+  size: 94, 51
+Death
+  xy: 658, 268
+  size: 94, 51
+Death
+  xy: 752, 268
+  size: 94, 51
+IdleUp
+  xy: 0, 319
+  size: 94, 51
+IdleUp
+  xy: 94, 319
+  size: 94, 51
+IdleUp
+  xy: 188, 319
+  size: 94, 51
+IdleUp
+  xy: 282, 319
+  size: 94, 51
+IdleDown
+  xy: 0, 370
+  size: 94, 51
+IdleDown
+  xy: 94, 370
+  size: 94, 51
+IdleDown
+  xy: 188, 370
+  size: 94, 51
+IdleDown
+  xy: 282, 370
+  size: 94, 51
+WalkUp
+  xy: 0, 421
+  size: 94, 51
+WalkUp
+  xy: 94, 421
+  size: 94, 51
+WalkUp
+  xy: 188, 421
+  size: 94, 51
+WalkUp
+  xy: 282, 421
+  size: 94, 51
+WalkUp
+  xy: 376, 421
+  size: 94, 51
+WalkUp
+  xy: 470, 421
+  size: 94, 51
+WalkUp
+  xy: 564, 421
+  size: 94, 51
+WalkUp
+  xy: 658, 421
+  size: 94, 51
+WalkDown
+  xy: 0, 472
+  size: 94, 51
+WalkDown
+  xy: 94, 472
+  size: 94, 51
+WalkDown
+  xy: 188, 472
+  size: 94, 51
+WalkDown
+  xy: 282, 472
+  size: 94, 51
+WalkDown
+  xy: 376, 472
+  size: 94, 51
+WalkDown
+  xy: 470, 472
+  size: 94, 51
+WalkDown
+  xy: 564, 472
+  size: 94, 51
+WalkDown
+  xy: 658, 472
+  size: 94, 51

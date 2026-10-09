@@ -1,0 +1,179 @@
+shaman_of_zedruu.png
+size: 1386,505
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 154, 49
+Idle
+  xy: 154, 64
+  size: 154, 49
+Idle
+  xy: 308, 64
+  size: 154, 49
+Idle
+  xy: 462, 64
+  size: 154, 49
+Walk
+  xy: 0, 113
+  size: 154, 49
+Walk
+  xy: 154, 113
+  size: 154, 49
+Walk
+  xy: 308, 113
+  size: 154, 49
+Walk
+  xy: 462, 113
+  size: 154, 49
+Walk
+  xy: 616, 113
+  size: 154, 49
+Walk
+  xy: 770, 113
+  size: 154, 49
+Walk
+  xy: 924, 113
+  size: 154, 49
+Walk
+  xy: 1078, 113
+  size: 154, 49
+Attack
+  xy: 0, 162
+  size: 154, 49
+Attack
+  xy: 154, 162
+  size: 154, 49
+Attack
+  xy: 308, 162
+  size: 154, 49
+Attack
+  xy: 462, 162
+  size: 154, 49
+Attack
+  xy: 616, 162
+  size: 154, 49
+Attack
+  xy: 770, 162
+  size: 154, 49
+Attack
+  xy: 924, 162
+  size: 154, 49
+Attack
+  xy: 1078, 162
+  size: 154, 49
+Hit
+  xy: 0, 211
+  size: 154, 49
+Hit
+  xy: 154, 211
+  size: 154, 49
+Hit
+  xy: 308, 211
+  size: 154, 49
+Hit
+  xy: 462, 211
+  size: 154, 49
+Death
+  xy: 0, 260
+  size: 154, 49
+Death
+  xy: 154, 260
+  size: 154, 49
+Death
+  xy: 308, 260
+  size: 154, 49
+Death
+  xy: 462, 260
+  size: 154, 49
+Death
+  xy: 616, 260
+  size: 154, 49
+Death
+  xy: 770, 260
+  size: 154, 49
+Death
+  xy: 924, 260
+  size: 154, 49
+Death
+  xy: 1078, 260
+  size: 154, 49
+Death
+  xy: 1232, 260
+  size: 154, 49
+IdleUp
+  xy: 0, 309
+  size: 154, 49
+IdleUp
+  xy: 154, 309
+  size: 154, 49
+IdleUp
+  xy: 308, 309
+  size: 154, 49
+IdleUp
+  xy: 462, 309
+  size: 154, 49
+IdleDown
+  xy: 0, 358
+  size: 154, 49
+IdleDown
+  xy: 154, 358
+  size: 154, 49
+IdleDown
+  xy: 308, 358
+  size: 154, 49
+IdleDown
+  xy: 462, 358
+  size: 154, 49
+WalkUp
+  xy: 0, 407
+  size: 154, 49
+WalkUp
+  xy: 154, 407
+  size: 154, 49
+WalkUp
+  xy: 308, 407
+  size: 154, 49
+WalkUp
+  xy: 462, 407
+  size: 154, 49
+WalkUp
+  xy: 616, 407
+  size: 154, 49
+WalkUp
+  xy: 770, 407
+  size: 154, 49
+WalkUp
+  xy: 924, 407
+  size: 154, 49
+WalkUp
+  xy: 1078, 407
+  size: 154, 49
+WalkDown
+  xy: 0, 456
+  size: 154, 49
+WalkDown
+  xy: 154, 456
+  size: 154, 49
+WalkDown
+  xy: 308, 456
+  size: 154, 49
+WalkDown
+  xy: 462, 456
+  size: 154, 49
+WalkDown
+  xy: 616, 456
+  size: 154, 49
+WalkDown
+  xy: 770, 456
+  size: 154, 49
+WalkDown
+  xy: 924, 456
+  size: 154, 49
+WalkDown
+  xy: 1078, 456
+  size: 154, 49

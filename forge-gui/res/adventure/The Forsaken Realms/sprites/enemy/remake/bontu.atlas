@@ -1,0 +1,173 @@
+bontu.png
+size: 972,685
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 108, 69
+Idle
+  xy: 108, 64
+  size: 108, 69
+Idle
+  xy: 216, 64
+  size: 108, 69
+Idle
+  xy: 324, 64
+  size: 108, 69
+Walk
+  xy: 0, 133
+  size: 108, 69
+Walk
+  xy: 108, 133
+  size: 108, 69
+Walk
+  xy: 216, 133
+  size: 108, 69
+Walk
+  xy: 324, 133
+  size: 108, 69
+Walk
+  xy: 432, 133
+  size: 108, 69
+Walk
+  xy: 540, 133
+  size: 108, 69
+Walk
+  xy: 648, 133
+  size: 108, 69
+Walk
+  xy: 756, 133
+  size: 108, 69
+Attack
+  xy: 0, 202
+  size: 108, 69
+Attack
+  xy: 108, 202
+  size: 108, 69
+Attack
+  xy: 216, 202
+  size: 108, 69
+Attack
+  xy: 324, 202
+  size: 108, 69
+Attack
+  xy: 432, 202
+  size: 108, 69
+Attack
+  xy: 540, 202
+  size: 108, 69
+Hit
+  xy: 0, 271
+  size: 108, 69
+Hit
+  xy: 108, 271
+  size: 108, 69
+Hit
+  xy: 216, 271
+  size: 108, 69
+Hit
+  xy: 324, 271
+  size: 108, 69
+Death
+  xy: 0, 340
+  size: 108, 69
+Death
+  xy: 108, 340
+  size: 108, 69
+Death
+  xy: 216, 340
+  size: 108, 69
+Death
+  xy: 324, 340
+  size: 108, 69
+Death
+  xy: 432, 340
+  size: 108, 69
+Death
+  xy: 540, 340
+  size: 108, 69
+Death
+  xy: 648, 340
+  size: 108, 69
+Death
+  xy: 756, 340
+  size: 108, 69
+Death
+  xy: 864, 340
+  size: 108, 69
+IdleUp
+  xy: 0, 409
+  size: 108, 69
+IdleUp
+  xy: 108, 409
+  size: 108, 69
+IdleUp
+  xy: 216, 409
+  size: 108, 69
+IdleUp
+  xy: 324, 409
+  size: 108, 69
+IdleDown
+  xy: 0, 478
+  size: 108, 69
+IdleDown
+  xy: 108, 478
+  size: 108, 69
+IdleDown
+  xy: 216, 478
+  size: 108, 69
+IdleDown
+  xy: 324, 478
+  size: 108, 69
+WalkUp
+  xy: 0, 547
+  size: 108, 69
+WalkUp
+  xy: 108, 547
+  size: 108, 69
+WalkUp
+  xy: 216, 547
+  size: 108, 69
+WalkUp
+  xy: 324, 547
+  size: 108, 69
+WalkUp
+  xy: 432, 547
+  size: 108, 69
+WalkUp
+  xy: 540, 547
+  size: 108, 69
+WalkUp
+  xy: 648, 547
+  size: 108, 69
+WalkUp
+  xy: 756, 547
+  size: 108, 69
+WalkDown
+  xy: 0, 616
+  size: 108, 69
+WalkDown
+  xy: 108, 616
+  size: 108, 69
+WalkDown
+  xy: 216, 616
+  size: 108, 69
+WalkDown
+  xy: 324, 616
+  size: 108, 69
+WalkDown
+  xy: 432, 616
+  size: 108, 69
+WalkDown
+  xy: 540, 616
+  size: 108, 69
+WalkDown
+  xy: 648, 616
+  size: 108, 69
+WalkDown
+  xy: 756, 616
+  size: 108, 69

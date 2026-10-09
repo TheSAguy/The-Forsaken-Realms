@@ -1,0 +1,179 @@
+laughing_jasper_flint.png
+size: 666,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 58
+Idle
+  xy: 74, 64
+  size: 74, 58
+Idle
+  xy: 148, 64
+  size: 74, 58
+Idle
+  xy: 222, 64
+  size: 74, 58
+Walk
+  xy: 0, 122
+  size: 74, 58
+Walk
+  xy: 74, 122
+  size: 74, 58
+Walk
+  xy: 148, 122
+  size: 74, 58
+Walk
+  xy: 222, 122
+  size: 74, 58
+Walk
+  xy: 296, 122
+  size: 74, 58
+Walk
+  xy: 370, 122
+  size: 74, 58
+Walk
+  xy: 444, 122
+  size: 74, 58
+Walk
+  xy: 518, 122
+  size: 74, 58
+Attack
+  xy: 0, 180
+  size: 74, 58
+Attack
+  xy: 74, 180
+  size: 74, 58
+Attack
+  xy: 148, 180
+  size: 74, 58
+Attack
+  xy: 222, 180
+  size: 74, 58
+Attack
+  xy: 296, 180
+  size: 74, 58
+Attack
+  xy: 370, 180
+  size: 74, 58
+Attack
+  xy: 444, 180
+  size: 74, 58
+Attack
+  xy: 518, 180
+  size: 74, 58
+Hit
+  xy: 0, 238
+  size: 74, 58
+Hit
+  xy: 74, 238
+  size: 74, 58
+Hit
+  xy: 148, 238
+  size: 74, 58
+Hit
+  xy: 222, 238
+  size: 74, 58
+Death
+  xy: 0, 296
+  size: 74, 58
+Death
+  xy: 74, 296
+  size: 74, 58
+Death
+  xy: 148, 296
+  size: 74, 58
+Death
+  xy: 222, 296
+  size: 74, 58
+Death
+  xy: 296, 296
+  size: 74, 58
+Death
+  xy: 370, 296
+  size: 74, 58
+Death
+  xy: 444, 296
+  size: 74, 58
+Death
+  xy: 518, 296
+  size: 74, 58
+Death
+  xy: 592, 296
+  size: 74, 58
+IdleUp
+  xy: 0, 354
+  size: 74, 58
+IdleUp
+  xy: 74, 354
+  size: 74, 58
+IdleUp
+  xy: 148, 354
+  size: 74, 58
+IdleUp
+  xy: 222, 354
+  size: 74, 58
+IdleDown
+  xy: 0, 412
+  size: 74, 58
+IdleDown
+  xy: 74, 412
+  size: 74, 58
+IdleDown
+  xy: 148, 412
+  size: 74, 58
+IdleDown
+  xy: 222, 412
+  size: 74, 58
+WalkUp
+  xy: 0, 470
+  size: 74, 58
+WalkUp
+  xy: 74, 470
+  size: 74, 58
+WalkUp
+  xy: 148, 470
+  size: 74, 58
+WalkUp
+  xy: 222, 470
+  size: 74, 58
+WalkUp
+  xy: 296, 470
+  size: 74, 58
+WalkUp
+  xy: 370, 470
+  size: 74, 58
+WalkUp
+  xy: 444, 470
+  size: 74, 58
+WalkUp
+  xy: 518, 470
+  size: 74, 58
+WalkDown
+  xy: 0, 528
+  size: 74, 58
+WalkDown
+  xy: 74, 528
+  size: 74, 58
+WalkDown
+  xy: 148, 528
+  size: 74, 58
+WalkDown
+  xy: 222, 528
+  size: 74, 58
+WalkDown
+  xy: 296, 528
+  size: 74, 58
+WalkDown
+  xy: 370, 528
+  size: 74, 58
+WalkDown
+  xy: 444, 528
+  size: 74, 58
+WalkDown
+  xy: 518, 528
+  size: 74, 58

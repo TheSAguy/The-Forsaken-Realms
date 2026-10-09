@@ -1,0 +1,179 @@
+phyrexian_wanderer.png
+size: 720,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 55
+Idle
+  xy: 80, 64
+  size: 80, 55
+Idle
+  xy: 160, 64
+  size: 80, 55
+Idle
+  xy: 240, 64
+  size: 80, 55
+Walk
+  xy: 0, 119
+  size: 80, 55
+Walk
+  xy: 80, 119
+  size: 80, 55
+Walk
+  xy: 160, 119
+  size: 80, 55
+Walk
+  xy: 240, 119
+  size: 80, 55
+Walk
+  xy: 320, 119
+  size: 80, 55
+Walk
+  xy: 400, 119
+  size: 80, 55
+Walk
+  xy: 480, 119
+  size: 80, 55
+Walk
+  xy: 560, 119
+  size: 80, 55
+Attack
+  xy: 0, 174
+  size: 80, 55
+Attack
+  xy: 80, 174
+  size: 80, 55
+Attack
+  xy: 160, 174
+  size: 80, 55
+Attack
+  xy: 240, 174
+  size: 80, 55
+Attack
+  xy: 320, 174
+  size: 80, 55
+Attack
+  xy: 400, 174
+  size: 80, 55
+Attack
+  xy: 480, 174
+  size: 80, 55
+Attack
+  xy: 560, 174
+  size: 80, 55
+Hit
+  xy: 0, 229
+  size: 80, 55
+Hit
+  xy: 80, 229
+  size: 80, 55
+Hit
+  xy: 160, 229
+  size: 80, 55
+Hit
+  xy: 240, 229
+  size: 80, 55
+Death
+  xy: 0, 284
+  size: 80, 55
+Death
+  xy: 80, 284
+  size: 80, 55
+Death
+  xy: 160, 284
+  size: 80, 55
+Death
+  xy: 240, 284
+  size: 80, 55
+Death
+  xy: 320, 284
+  size: 80, 55
+Death
+  xy: 400, 284
+  size: 80, 55
+Death
+  xy: 480, 284
+  size: 80, 55
+Death
+  xy: 560, 284
+  size: 80, 55
+Death
+  xy: 640, 284
+  size: 80, 55
+IdleUp
+  xy: 0, 339
+  size: 80, 55
+IdleUp
+  xy: 80, 339
+  size: 80, 55
+IdleUp
+  xy: 160, 339
+  size: 80, 55
+IdleUp
+  xy: 240, 339
+  size: 80, 55
+IdleDown
+  xy: 0, 394
+  size: 80, 55
+IdleDown
+  xy: 80, 394
+  size: 80, 55
+IdleDown
+  xy: 160, 394
+  size: 80, 55
+IdleDown
+  xy: 240, 394
+  size: 80, 55
+WalkUp
+  xy: 0, 449
+  size: 80, 55
+WalkUp
+  xy: 80, 449
+  size: 80, 55
+WalkUp
+  xy: 160, 449
+  size: 80, 55
+WalkUp
+  xy: 240, 449
+  size: 80, 55
+WalkUp
+  xy: 320, 449
+  size: 80, 55
+WalkUp
+  xy: 400, 449
+  size: 80, 55
+WalkUp
+  xy: 480, 449
+  size: 80, 55
+WalkUp
+  xy: 560, 449
+  size: 80, 55
+WalkDown
+  xy: 0, 504
+  size: 80, 55
+WalkDown
+  xy: 80, 504
+  size: 80, 55
+WalkDown
+  xy: 160, 504
+  size: 80, 55
+WalkDown
+  xy: 240, 504
+  size: 80, 55
+WalkDown
+  xy: 320, 504
+  size: 80, 55
+WalkDown
+  xy: 400, 504
+  size: 80, 55
+WalkDown
+  xy: 480, 504
+  size: 80, 55
+WalkDown
+  xy: 560, 504
+  size: 80, 55

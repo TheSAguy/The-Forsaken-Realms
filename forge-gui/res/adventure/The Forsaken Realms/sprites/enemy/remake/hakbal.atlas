@@ -1,0 +1,179 @@
+hakbal.png
+size: 1476,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 164, 55
+Idle
+  xy: 164, 64
+  size: 164, 55
+Idle
+  xy: 328, 64
+  size: 164, 55
+Idle
+  xy: 492, 64
+  size: 164, 55
+Walk
+  xy: 0, 119
+  size: 164, 55
+Walk
+  xy: 164, 119
+  size: 164, 55
+Walk
+  xy: 328, 119
+  size: 164, 55
+Walk
+  xy: 492, 119
+  size: 164, 55
+Walk
+  xy: 656, 119
+  size: 164, 55
+Walk
+  xy: 820, 119
+  size: 164, 55
+Walk
+  xy: 984, 119
+  size: 164, 55
+Walk
+  xy: 1148, 119
+  size: 164, 55
+Attack
+  xy: 0, 174
+  size: 164, 55
+Attack
+  xy: 164, 174
+  size: 164, 55
+Attack
+  xy: 328, 174
+  size: 164, 55
+Attack
+  xy: 492, 174
+  size: 164, 55
+Attack
+  xy: 656, 174
+  size: 164, 55
+Attack
+  xy: 820, 174
+  size: 164, 55
+Attack
+  xy: 984, 174
+  size: 164, 55
+Attack
+  xy: 1148, 174
+  size: 164, 55
+Hit
+  xy: 0, 229
+  size: 164, 55
+Hit
+  xy: 164, 229
+  size: 164, 55
+Hit
+  xy: 328, 229
+  size: 164, 55
+Hit
+  xy: 492, 229
+  size: 164, 55
+Death
+  xy: 0, 284
+  size: 164, 55
+Death
+  xy: 164, 284
+  size: 164, 55
+Death
+  xy: 328, 284
+  size: 164, 55
+Death
+  xy: 492, 284
+  size: 164, 55
+Death
+  xy: 656, 284
+  size: 164, 55
+Death
+  xy: 820, 284
+  size: 164, 55
+Death
+  xy: 984, 284
+  size: 164, 55
+Death
+  xy: 1148, 284
+  size: 164, 55
+Death
+  xy: 1312, 284
+  size: 164, 55
+IdleUp
+  xy: 0, 339
+  size: 164, 55
+IdleUp
+  xy: 164, 339
+  size: 164, 55
+IdleUp
+  xy: 328, 339
+  size: 164, 55
+IdleUp
+  xy: 492, 339
+  size: 164, 55
+IdleDown
+  xy: 0, 394
+  size: 164, 55
+IdleDown
+  xy: 164, 394
+  size: 164, 55
+IdleDown
+  xy: 328, 394
+  size: 164, 55
+IdleDown
+  xy: 492, 394
+  size: 164, 55
+WalkUp
+  xy: 0, 449
+  size: 164, 55
+WalkUp
+  xy: 164, 449
+  size: 164, 55
+WalkUp
+  xy: 328, 449
+  size: 164, 55
+WalkUp
+  xy: 492, 449
+  size: 164, 55
+WalkUp
+  xy: 656, 449
+  size: 164, 55
+WalkUp
+  xy: 820, 449
+  size: 164, 55
+WalkUp
+  xy: 984, 449
+  size: 164, 55
+WalkUp
+  xy: 1148, 449
+  size: 164, 55
+WalkDown
+  xy: 0, 504
+  size: 164, 55
+WalkDown
+  xy: 164, 504
+  size: 164, 55
+WalkDown
+  xy: 328, 504
+  size: 164, 55
+WalkDown
+  xy: 492, 504
+  size: 164, 55
+WalkDown
+  xy: 656, 504
+  size: 164, 55
+WalkDown
+  xy: 820, 504
+  size: 164, 55
+WalkDown
+  xy: 984, 504
+  size: 164, 55
+WalkDown
+  xy: 1148, 504
+  size: 164, 55

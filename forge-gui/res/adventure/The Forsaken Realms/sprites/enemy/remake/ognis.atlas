@@ -1,0 +1,173 @@
+ognis.png
+size: 954,613
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 106, 61
+Idle
+  xy: 106, 64
+  size: 106, 61
+Idle
+  xy: 212, 64
+  size: 106, 61
+Idle
+  xy: 318, 64
+  size: 106, 61
+Walk
+  xy: 0, 125
+  size: 106, 61
+Walk
+  xy: 106, 125
+  size: 106, 61
+Walk
+  xy: 212, 125
+  size: 106, 61
+Walk
+  xy: 318, 125
+  size: 106, 61
+Walk
+  xy: 424, 125
+  size: 106, 61
+Walk
+  xy: 530, 125
+  size: 106, 61
+Walk
+  xy: 636, 125
+  size: 106, 61
+Walk
+  xy: 742, 125
+  size: 106, 61
+Attack
+  xy: 0, 186
+  size: 106, 61
+Attack
+  xy: 106, 186
+  size: 106, 61
+Attack
+  xy: 212, 186
+  size: 106, 61
+Attack
+  xy: 318, 186
+  size: 106, 61
+Attack
+  xy: 424, 186
+  size: 106, 61
+Attack
+  xy: 530, 186
+  size: 106, 61
+Hit
+  xy: 0, 247
+  size: 106, 61
+Hit
+  xy: 106, 247
+  size: 106, 61
+Hit
+  xy: 212, 247
+  size: 106, 61
+Hit
+  xy: 318, 247
+  size: 106, 61
+Death
+  xy: 0, 308
+  size: 106, 61
+Death
+  xy: 106, 308
+  size: 106, 61
+Death
+  xy: 212, 308
+  size: 106, 61
+Death
+  xy: 318, 308
+  size: 106, 61
+Death
+  xy: 424, 308
+  size: 106, 61
+Death
+  xy: 530, 308
+  size: 106, 61
+Death
+  xy: 636, 308
+  size: 106, 61
+Death
+  xy: 742, 308
+  size: 106, 61
+Death
+  xy: 848, 308
+  size: 106, 61
+IdleUp
+  xy: 0, 369
+  size: 106, 61
+IdleUp
+  xy: 106, 369
+  size: 106, 61
+IdleUp
+  xy: 212, 369
+  size: 106, 61
+IdleUp
+  xy: 318, 369
+  size: 106, 61
+IdleDown
+  xy: 0, 430
+  size: 106, 61
+IdleDown
+  xy: 106, 430
+  size: 106, 61
+IdleDown
+  xy: 212, 430
+  size: 106, 61
+IdleDown
+  xy: 318, 430
+  size: 106, 61
+WalkUp
+  xy: 0, 491
+  size: 106, 61
+WalkUp
+  xy: 106, 491
+  size: 106, 61
+WalkUp
+  xy: 212, 491
+  size: 106, 61
+WalkUp
+  xy: 318, 491
+  size: 106, 61
+WalkUp
+  xy: 424, 491
+  size: 106, 61
+WalkUp
+  xy: 530, 491
+  size: 106, 61
+WalkUp
+  xy: 636, 491
+  size: 106, 61
+WalkUp
+  xy: 742, 491
+  size: 106, 61
+WalkDown
+  xy: 0, 552
+  size: 106, 61
+WalkDown
+  xy: 106, 552
+  size: 106, 61
+WalkDown
+  xy: 212, 552
+  size: 106, 61
+WalkDown
+  xy: 318, 552
+  size: 106, 61
+WalkDown
+  xy: 424, 552
+  size: 106, 61
+WalkDown
+  xy: 530, 552
+  size: 106, 61
+WalkDown
+  xy: 636, 552
+  size: 106, 61
+WalkDown
+  xy: 742, 552
+  size: 106, 61

@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 501: the last hero sprites and the viashino sprites' enemies from the Universal LPC Spritesheet parts (2026-10-08)
+
+The Procedural Pixel Creatures session's third LPC batch (the user: "Do the next 30 humanoids via LPC"): 30 enemies -
+the nine hero sprites still at 16 px and the 21 enemies that shared the eight stock viashino sprites, each its own kit
+(selections in the generator repo's `lpc_selections/make_501.py`).
+
+- **The heroes**: the Dwarf Wanderer (brown skin, a red bun, leather, a floating blue crystal - LPC's crystal "staff"
+  draws only its gem, which is what the 16 px sprite's sparkle was); the Phyrexian Wanderer (orange skin, black horns,
+  a red crystal) and Renegade (an alien head on teal skin, blue spiked hair, iron arms, a tattered cape, a blue
+  crystal); the Undead Wanderer (the zombie body, black hair, a red scarf, a dagger) and Renegade (the skeleton body
+  in bone white, a red scarf, a saber); the Viashino Wanderer (the lizard head and tail in sea green, a yellow
+  crystal) and Renegade (leather and a scimitar); the Werewolf Wanderer (the wolf head and tail on brown fur, her red
+  hair kept) and Renegade (black fur, a red shirt), both clawing bare-handed.
+- **The viashino sprites' enemies**, dressed by their cards: Viashino (green, a maroon top, a dagger); Glarb the frog
+  augur (dark green, navy hood and robe, casting); Ognis (red-orange, dark leather, a flail for the lash); the Dark
+  Enchanter (purple hood and robe, a loop staff; a boss, so it keeps its drawn size); Mindclaw Shaman (amber, a maroon
+  hood, casting); Bontu (charcoal, a gold crown and legion shoulders, a halberd); Yurlok (garnet, muscular, pauldrons
+  and a war axe); the Wild-Magic Sorcerer as an orc (green, black hair, an orange crystal); Rhonas (emerald, muscular,
+  gold shoulders and bracers, a gold long spear); Tishana the merfolk (sea-blue skin with fins, casting); Rivaz (red,
+  dark leather, a dagger); Atogatog (a troll head on purple skin, a club); Vorel (pale green with fins, a teal robe,
+  casting); Simic Wizard (bright green, blue hood and robe, casting); Clement the frog (pale green, a forest cap and
+  cape, casting); Hakbal the merfolk (sea-blue with fins, a gold necklace and shoulders, a gold trident); Roalesk
+  (bright green with lizard wings, clawing); Shaman of Zedruu (green, a red top, a long spear); Chishiro (green, bronze
+  legion armour, a katana); Tsagan (bronze, a white shirt, a cross shield and a mace); Laughing Jasper Flint (orange, a
+  brown cavalier hat and vest, a crossbow).
+- **Files**: 30 new atlases under `sprites/enemy/remake/`; enemies.json 30 sprite paths + 30 scales (0.26-0.35 for the
+  ranked ones, the Dark Enchanter 0.59 for its boss size; five entries gain a scale, so their tier lines take a trailing
+  comma). `CREDITS.md`'s LPC line now covers 88 enemies over rounds 498, 500 and 501; `standalone-packaging/CREDITS_LPC.md`
+  regenerated for the three rounds.
+- **Checks**: `validate_plane_data.py` unchanged; the sprite audit's one flag on the new atlases is Ognis's flail head
+  swinging clear of the body in the attack frames (the weapon as drawn). Known: LPC draws the long spear and the trident
+  only in the attack frames, so Rhonas, Hakbal and the Shaman of Zedruu walk empty-handed (as the Devil Renegade does).
+  Not seen in play.
+
 ## Round 500: the devils, dragonkin, kor, leonin and metathran from the Universal LPC Spritesheet parts (2026-10-08)
 
 The Procedural Pixel Creatures session's second LPC batch (the user: "Do the devils, dragonkin, kor, leonin and

@@ -1,0 +1,173 @@
+rivaz.png
+size: 612,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 68, 50
+Idle
+  xy: 68, 64
+  size: 68, 50
+Idle
+  xy: 136, 64
+  size: 68, 50
+Idle
+  xy: 204, 64
+  size: 68, 50
+Walk
+  xy: 0, 114
+  size: 68, 50
+Walk
+  xy: 68, 114
+  size: 68, 50
+Walk
+  xy: 136, 114
+  size: 68, 50
+Walk
+  xy: 204, 114
+  size: 68, 50
+Walk
+  xy: 272, 114
+  size: 68, 50
+Walk
+  xy: 340, 114
+  size: 68, 50
+Walk
+  xy: 408, 114
+  size: 68, 50
+Walk
+  xy: 476, 114
+  size: 68, 50
+Attack
+  xy: 0, 164
+  size: 68, 50
+Attack
+  xy: 68, 164
+  size: 68, 50
+Attack
+  xy: 136, 164
+  size: 68, 50
+Attack
+  xy: 204, 164
+  size: 68, 50
+Attack
+  xy: 272, 164
+  size: 68, 50
+Attack
+  xy: 340, 164
+  size: 68, 50
+Hit
+  xy: 0, 214
+  size: 68, 50
+Hit
+  xy: 68, 214
+  size: 68, 50
+Hit
+  xy: 136, 214
+  size: 68, 50
+Hit
+  xy: 204, 214
+  size: 68, 50
+Death
+  xy: 0, 264
+  size: 68, 50
+Death
+  xy: 68, 264
+  size: 68, 50
+Death
+  xy: 136, 264
+  size: 68, 50
+Death
+  xy: 204, 264
+  size: 68, 50
+Death
+  xy: 272, 264
+  size: 68, 50
+Death
+  xy: 340, 264
+  size: 68, 50
+Death
+  xy: 408, 264
+  size: 68, 50
+Death
+  xy: 476, 264
+  size: 68, 50
+Death
+  xy: 544, 264
+  size: 68, 50
+IdleUp
+  xy: 0, 314
+  size: 68, 50
+IdleUp
+  xy: 68, 314
+  size: 68, 50
+IdleUp
+  xy: 136, 314
+  size: 68, 50
+IdleUp
+  xy: 204, 314
+  size: 68, 50
+IdleDown
+  xy: 0, 364
+  size: 68, 50
+IdleDown
+  xy: 68, 364
+  size: 68, 50
+IdleDown
+  xy: 136, 364
+  size: 68, 50
+IdleDown
+  xy: 204, 364
+  size: 68, 50
+WalkUp
+  xy: 0, 414
+  size: 68, 50
+WalkUp
+  xy: 68, 414
+  size: 68, 50
+WalkUp
+  xy: 136, 414
+  size: 68, 50
+WalkUp
+  xy: 204, 414
+  size: 68, 50
+WalkUp
+  xy: 272, 414
+  size: 68, 50
+WalkUp
+  xy: 340, 414
+  size: 68, 50
+WalkUp
+  xy: 408, 414
+  size: 68, 50
+WalkUp
+  xy: 476, 414
+  size: 68, 50
+WalkDown
+  xy: 0, 464
+  size: 68, 50
+WalkDown
+  xy: 68, 464
+  size: 68, 50
+WalkDown
+  xy: 136, 464
+  size: 68, 50
+WalkDown
+  xy: 204, 464
+  size: 68, 50
+WalkDown
+  xy: 272, 464
+  size: 68, 50
+WalkDown
+  xy: 340, 464
+  size: 68, 50
+WalkDown
+  xy: 408, 464
+  size: 68, 50
+WalkDown
+  xy: 476, 464
+  size: 68, 50

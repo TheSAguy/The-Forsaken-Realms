@@ -1,0 +1,176 @@
+mindclaw_shaman.png
+size: 558,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 53
+Idle
+  xy: 62, 64
+  size: 62, 53
+Idle
+  xy: 124, 64
+  size: 62, 53
+Idle
+  xy: 186, 64
+  size: 62, 53
+Walk
+  xy: 0, 117
+  size: 62, 53
+Walk
+  xy: 62, 117
+  size: 62, 53
+Walk
+  xy: 124, 117
+  size: 62, 53
+Walk
+  xy: 186, 117
+  size: 62, 53
+Walk
+  xy: 248, 117
+  size: 62, 53
+Walk
+  xy: 310, 117
+  size: 62, 53
+Walk
+  xy: 372, 117
+  size: 62, 53
+Walk
+  xy: 434, 117
+  size: 62, 53
+Attack
+  xy: 0, 170
+  size: 62, 53
+Attack
+  xy: 62, 170
+  size: 62, 53
+Attack
+  xy: 124, 170
+  size: 62, 53
+Attack
+  xy: 186, 170
+  size: 62, 53
+Attack
+  xy: 248, 170
+  size: 62, 53
+Attack
+  xy: 310, 170
+  size: 62, 53
+Attack
+  xy: 372, 170
+  size: 62, 53
+Hit
+  xy: 0, 223
+  size: 62, 53
+Hit
+  xy: 62, 223
+  size: 62, 53
+Hit
+  xy: 124, 223
+  size: 62, 53
+Hit
+  xy: 186, 223
+  size: 62, 53
+Death
+  xy: 0, 276
+  size: 62, 53
+Death
+  xy: 62, 276
+  size: 62, 53
+Death
+  xy: 124, 276
+  size: 62, 53
+Death
+  xy: 186, 276
+  size: 62, 53
+Death
+  xy: 248, 276
+  size: 62, 53
+Death
+  xy: 310, 276
+  size: 62, 53
+Death
+  xy: 372, 276
+  size: 62, 53
+Death
+  xy: 434, 276
+  size: 62, 53
+Death
+  xy: 496, 276
+  size: 62, 53
+IdleUp
+  xy: 0, 329
+  size: 62, 53
+IdleUp
+  xy: 62, 329
+  size: 62, 53
+IdleUp
+  xy: 124, 329
+  size: 62, 53
+IdleUp
+  xy: 186, 329
+  size: 62, 53
+IdleDown
+  xy: 0, 382
+  size: 62, 53
+IdleDown
+  xy: 62, 382
+  size: 62, 53
+IdleDown
+  xy: 124, 382
+  size: 62, 53
+IdleDown
+  xy: 186, 382
+  size: 62, 53
+WalkUp
+  xy: 0, 435
+  size: 62, 53
+WalkUp
+  xy: 62, 435
+  size: 62, 53
+WalkUp
+  xy: 124, 435
+  size: 62, 53
+WalkUp
+  xy: 186, 435
+  size: 62, 53
+WalkUp
+  xy: 248, 435
+  size: 62, 53
+WalkUp
+  xy: 310, 435
+  size: 62, 53
+WalkUp
+  xy: 372, 435
+  size: 62, 53
+WalkUp
+  xy: 434, 435
+  size: 62, 53
+WalkDown
+  xy: 0, 488
+  size: 62, 53
+WalkDown
+  xy: 62, 488
+  size: 62, 53
+WalkDown
+  xy: 124, 488
+  size: 62, 53
+WalkDown
+  xy: 186, 488
+  size: 62, 53
+WalkDown
+  xy: 248, 488
+  size: 62, 53
+WalkDown
+  xy: 310, 488
+  size: 62, 53
+WalkDown
+  xy: 372, 488
+  size: 62, 53
+WalkDown
+  xy: 434, 488
+  size: 62, 53

@@ -1,0 +1,173 @@
+tsagan.png
+size: 792,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 50
+Idle
+  xy: 88, 64
+  size: 88, 50
+Idle
+  xy: 176, 64
+  size: 88, 50
+Idle
+  xy: 264, 64
+  size: 88, 50
+Walk
+  xy: 0, 114
+  size: 88, 50
+Walk
+  xy: 88, 114
+  size: 88, 50
+Walk
+  xy: 176, 114
+  size: 88, 50
+Walk
+  xy: 264, 114
+  size: 88, 50
+Walk
+  xy: 352, 114
+  size: 88, 50
+Walk
+  xy: 440, 114
+  size: 88, 50
+Walk
+  xy: 528, 114
+  size: 88, 50
+Walk
+  xy: 616, 114
+  size: 88, 50
+Attack
+  xy: 0, 164
+  size: 88, 50
+Attack
+  xy: 88, 164
+  size: 88, 50
+Attack
+  xy: 176, 164
+  size: 88, 50
+Attack
+  xy: 264, 164
+  size: 88, 50
+Attack
+  xy: 352, 164
+  size: 88, 50
+Attack
+  xy: 440, 164
+  size: 88, 50
+Hit
+  xy: 0, 214
+  size: 88, 50
+Hit
+  xy: 88, 214
+  size: 88, 50
+Hit
+  xy: 176, 214
+  size: 88, 50
+Hit
+  xy: 264, 214
+  size: 88, 50
+Death
+  xy: 0, 264
+  size: 88, 50
+Death
+  xy: 88, 264
+  size: 88, 50
+Death
+  xy: 176, 264
+  size: 88, 50
+Death
+  xy: 264, 264
+  size: 88, 50
+Death
+  xy: 352, 264
+  size: 88, 50
+Death
+  xy: 440, 264
+  size: 88, 50
+Death
+  xy: 528, 264
+  size: 88, 50
+Death
+  xy: 616, 264
+  size: 88, 50
+Death
+  xy: 704, 264
+  size: 88, 50
+IdleUp
+  xy: 0, 314
+  size: 88, 50
+IdleUp
+  xy: 88, 314
+  size: 88, 50
+IdleUp
+  xy: 176, 314
+  size: 88, 50
+IdleUp
+  xy: 264, 314
+  size: 88, 50
+IdleDown
+  xy: 0, 364
+  size: 88, 50
+IdleDown
+  xy: 88, 364
+  size: 88, 50
+IdleDown
+  xy: 176, 364
+  size: 88, 50
+IdleDown
+  xy: 264, 364
+  size: 88, 50
+WalkUp
+  xy: 0, 414
+  size: 88, 50
+WalkUp
+  xy: 88, 414
+  size: 88, 50
+WalkUp
+  xy: 176, 414
+  size: 88, 50
+WalkUp
+  xy: 264, 414
+  size: 88, 50
+WalkUp
+  xy: 352, 414
+  size: 88, 50
+WalkUp
+  xy: 440, 414
+  size: 88, 50
+WalkUp
+  xy: 528, 414
+  size: 88, 50
+WalkUp
+  xy: 616, 414
+  size: 88, 50
+WalkDown
+  xy: 0, 464
+  size: 88, 50
+WalkDown
+  xy: 88, 464
+  size: 88, 50
+WalkDown
+  xy: 176, 464
+  size: 88, 50
+WalkDown
+  xy: 264, 464
+  size: 88, 50
+WalkDown
+  xy: 352, 464
+  size: 88, 50
+WalkDown
+  xy: 440, 464
+  size: 88, 50
+WalkDown
+  xy: 528, 464
+  size: 88, 50
+WalkDown
+  xy: 616, 464
+  size: 88, 50

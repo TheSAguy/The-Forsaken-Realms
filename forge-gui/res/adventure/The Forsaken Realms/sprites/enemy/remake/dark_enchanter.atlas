@@ -1,0 +1,179 @@
+dark_enchanter.png
+size: 756,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 53
+Idle
+  xy: 84, 64
+  size: 84, 53
+Idle
+  xy: 168, 64
+  size: 84, 53
+Idle
+  xy: 252, 64
+  size: 84, 53
+Walk
+  xy: 0, 117
+  size: 84, 53
+Walk
+  xy: 84, 117
+  size: 84, 53
+Walk
+  xy: 168, 117
+  size: 84, 53
+Walk
+  xy: 252, 117
+  size: 84, 53
+Walk
+  xy: 336, 117
+  size: 84, 53
+Walk
+  xy: 420, 117
+  size: 84, 53
+Walk
+  xy: 504, 117
+  size: 84, 53
+Walk
+  xy: 588, 117
+  size: 84, 53
+Attack
+  xy: 0, 170
+  size: 84, 53
+Attack
+  xy: 84, 170
+  size: 84, 53
+Attack
+  xy: 168, 170
+  size: 84, 53
+Attack
+  xy: 252, 170
+  size: 84, 53
+Attack
+  xy: 336, 170
+  size: 84, 53
+Attack
+  xy: 420, 170
+  size: 84, 53
+Attack
+  xy: 504, 170
+  size: 84, 53
+Attack
+  xy: 588, 170
+  size: 84, 53
+Hit
+  xy: 0, 223
+  size: 84, 53
+Hit
+  xy: 84, 223
+  size: 84, 53
+Hit
+  xy: 168, 223
+  size: 84, 53
+Hit
+  xy: 252, 223
+  size: 84, 53
+Death
+  xy: 0, 276
+  size: 84, 53
+Death
+  xy: 84, 276
+  size: 84, 53
+Death
+  xy: 168, 276
+  size: 84, 53
+Death
+  xy: 252, 276
+  size: 84, 53
+Death
+  xy: 336, 276
+  size: 84, 53
+Death
+  xy: 420, 276
+  size: 84, 53
+Death
+  xy: 504, 276
+  size: 84, 53
+Death
+  xy: 588, 276
+  size: 84, 53
+Death
+  xy: 672, 276
+  size: 84, 53
+IdleUp
+  xy: 0, 329
+  size: 84, 53
+IdleUp
+  xy: 84, 329
+  size: 84, 53
+IdleUp
+  xy: 168, 329
+  size: 84, 53
+IdleUp
+  xy: 252, 329
+  size: 84, 53
+IdleDown
+  xy: 0, 382
+  size: 84, 53
+IdleDown
+  xy: 84, 382
+  size: 84, 53
+IdleDown
+  xy: 168, 382
+  size: 84, 53
+IdleDown
+  xy: 252, 382
+  size: 84, 53
+WalkUp
+  xy: 0, 435
+  size: 84, 53
+WalkUp
+  xy: 84, 435
+  size: 84, 53
+WalkUp
+  xy: 168, 435
+  size: 84, 53
+WalkUp
+  xy: 252, 435
+  size: 84, 53
+WalkUp
+  xy: 336, 435
+  size: 84, 53
+WalkUp
+  xy: 420, 435
+  size: 84, 53
+WalkUp
+  xy: 504, 435
+  size: 84, 53
+WalkUp
+  xy: 588, 435
+  size: 84, 53
+WalkDown
+  xy: 0, 488
+  size: 84, 53
+WalkDown
+  xy: 84, 488
+  size: 84, 53
+WalkDown
+  xy: 168, 488
+  size: 84, 53
+WalkDown
+  xy: 252, 488
+  size: 84, 53
+WalkDown
+  xy: 336, 488
+  size: 84, 53
+WalkDown
+  xy: 420, 488
+  size: 84, 53
+WalkDown
+  xy: 504, 488
+  size: 84, 53
+WalkDown
+  xy: 588, 488
+  size: 84, 53

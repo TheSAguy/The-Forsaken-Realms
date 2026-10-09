@@ -1,0 +1,173 @@
+roalesk.png
+size: 540,505
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 60, 49
+Idle
+  xy: 60, 64
+  size: 60, 49
+Idle
+  xy: 120, 64
+  size: 60, 49
+Idle
+  xy: 180, 64
+  size: 60, 49
+Walk
+  xy: 0, 113
+  size: 60, 49
+Walk
+  xy: 60, 113
+  size: 60, 49
+Walk
+  xy: 120, 113
+  size: 60, 49
+Walk
+  xy: 180, 113
+  size: 60, 49
+Walk
+  xy: 240, 113
+  size: 60, 49
+Walk
+  xy: 300, 113
+  size: 60, 49
+Walk
+  xy: 360, 113
+  size: 60, 49
+Walk
+  xy: 420, 113
+  size: 60, 49
+Attack
+  xy: 0, 162
+  size: 60, 49
+Attack
+  xy: 60, 162
+  size: 60, 49
+Attack
+  xy: 120, 162
+  size: 60, 49
+Attack
+  xy: 180, 162
+  size: 60, 49
+Attack
+  xy: 240, 162
+  size: 60, 49
+Attack
+  xy: 300, 162
+  size: 60, 49
+Hit
+  xy: 0, 211
+  size: 60, 49
+Hit
+  xy: 60, 211
+  size: 60, 49
+Hit
+  xy: 120, 211
+  size: 60, 49
+Hit
+  xy: 180, 211
+  size: 60, 49
+Death
+  xy: 0, 260
+  size: 60, 49
+Death
+  xy: 60, 260
+  size: 60, 49
+Death
+  xy: 120, 260
+  size: 60, 49
+Death
+  xy: 180, 260
+  size: 60, 49
+Death
+  xy: 240, 260
+  size: 60, 49
+Death
+  xy: 300, 260
+  size: 60, 49
+Death
+  xy: 360, 260
+  size: 60, 49
+Death
+  xy: 420, 260
+  size: 60, 49
+Death
+  xy: 480, 260
+  size: 60, 49
+IdleUp
+  xy: 0, 309
+  size: 60, 49
+IdleUp
+  xy: 60, 309
+  size: 60, 49
+IdleUp
+  xy: 120, 309
+  size: 60, 49
+IdleUp
+  xy: 180, 309
+  size: 60, 49
+IdleDown
+  xy: 0, 358
+  size: 60, 49
+IdleDown
+  xy: 60, 358
+  size: 60, 49
+IdleDown
+  xy: 120, 358
+  size: 60, 49
+IdleDown
+  xy: 180, 358
+  size: 60, 49
+WalkUp
+  xy: 0, 407
+  size: 60, 49
+WalkUp
+  xy: 60, 407
+  size: 60, 49
+WalkUp
+  xy: 120, 407
+  size: 60, 49
+WalkUp
+  xy: 180, 407
+  size: 60, 49
+WalkUp
+  xy: 240, 407
+  size: 60, 49
+WalkUp
+  xy: 300, 407
+  size: 60, 49
+WalkUp
+  xy: 360, 407
+  size: 60, 49
+WalkUp
+  xy: 420, 407
+  size: 60, 49
+WalkDown
+  xy: 0, 456
+  size: 60, 49
+WalkDown
+  xy: 60, 456
+  size: 60, 49
+WalkDown
+  xy: 120, 456
+  size: 60, 49
+WalkDown
+  xy: 180, 456
+  size: 60, 49
+WalkDown
+  xy: 240, 456
+  size: 60, 49
+WalkDown
+  xy: 300, 456
+  size: 60, 49
+WalkDown
+  xy: 360, 456
+  size: 60, 49
+WalkDown
+  xy: 420, 456
+  size: 60, 49

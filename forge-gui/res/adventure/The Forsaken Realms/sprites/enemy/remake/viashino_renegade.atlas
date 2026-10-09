@@ -1,0 +1,173 @@
+viashino_renegade.png
+size: 1062,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 118, 60
+Idle
+  xy: 118, 64
+  size: 118, 60
+Idle
+  xy: 236, 64
+  size: 118, 60
+Idle
+  xy: 354, 64
+  size: 118, 60
+Walk
+  xy: 0, 124
+  size: 118, 60
+Walk
+  xy: 118, 124
+  size: 118, 60
+Walk
+  xy: 236, 124
+  size: 118, 60
+Walk
+  xy: 354, 124
+  size: 118, 60
+Walk
+  xy: 472, 124
+  size: 118, 60
+Walk
+  xy: 590, 124
+  size: 118, 60
+Walk
+  xy: 708, 124
+  size: 118, 60
+Walk
+  xy: 826, 124
+  size: 118, 60
+Attack
+  xy: 0, 184
+  size: 118, 60
+Attack
+  xy: 118, 184
+  size: 118, 60
+Attack
+  xy: 236, 184
+  size: 118, 60
+Attack
+  xy: 354, 184
+  size: 118, 60
+Attack
+  xy: 472, 184
+  size: 118, 60
+Attack
+  xy: 590, 184
+  size: 118, 60
+Hit
+  xy: 0, 244
+  size: 118, 60
+Hit
+  xy: 118, 244
+  size: 118, 60
+Hit
+  xy: 236, 244
+  size: 118, 60
+Hit
+  xy: 354, 244
+  size: 118, 60
+Death
+  xy: 0, 304
+  size: 118, 60
+Death
+  xy: 118, 304
+  size: 118, 60
+Death
+  xy: 236, 304
+  size: 118, 60
+Death
+  xy: 354, 304
+  size: 118, 60
+Death
+  xy: 472, 304
+  size: 118, 60
+Death
+  xy: 590, 304
+  size: 118, 60
+Death
+  xy: 708, 304
+  size: 118, 60
+Death
+  xy: 826, 304
+  size: 118, 60
+Death
+  xy: 944, 304
+  size: 118, 60
+IdleUp
+  xy: 0, 364
+  size: 118, 60
+IdleUp
+  xy: 118, 364
+  size: 118, 60
+IdleUp
+  xy: 236, 364
+  size: 118, 60
+IdleUp
+  xy: 354, 364
+  size: 118, 60
+IdleDown
+  xy: 0, 424
+  size: 118, 60
+IdleDown
+  xy: 118, 424
+  size: 118, 60
+IdleDown
+  xy: 236, 424
+  size: 118, 60
+IdleDown
+  xy: 354, 424
+  size: 118, 60
+WalkUp
+  xy: 0, 484
+  size: 118, 60
+WalkUp
+  xy: 118, 484
+  size: 118, 60
+WalkUp
+  xy: 236, 484
+  size: 118, 60
+WalkUp
+  xy: 354, 484
+  size: 118, 60
+WalkUp
+  xy: 472, 484
+  size: 118, 60
+WalkUp
+  xy: 590, 484
+  size: 118, 60
+WalkUp
+  xy: 708, 484
+  size: 118, 60
+WalkUp
+  xy: 826, 484
+  size: 118, 60
+WalkDown
+  xy: 0, 544
+  size: 118, 60
+WalkDown
+  xy: 118, 544
+  size: 118, 60
+WalkDown
+  xy: 236, 544
+  size: 118, 60
+WalkDown
+  xy: 354, 544
+  size: 118, 60
+WalkDown
+  xy: 472, 544
+  size: 118, 60
+WalkDown
+  xy: 590, 544
+  size: 118, 60
+WalkDown
+  xy: 708, 544
+  size: 118, 60
+WalkDown
+  xy: 826, 544
+  size: 118, 60
