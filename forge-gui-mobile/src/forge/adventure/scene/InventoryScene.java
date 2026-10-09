@@ -645,7 +645,7 @@ public class InventoryScene extends UIScene {
             inventoryButtons.add(newActor);
 
             ItemData item = items.get(i);
-            Image img = new Image(item.sprite());
+            Image img = Controls.itemIcon(item.sprite()); // round 506: the sprite's size (32-px icons)
             img.setX((newActor.getWidth() - img.getWidth()) / 2);
             img.setY((newActor.getHeight() - img.getHeight()) / 2);
             newActor.addActor(img);
@@ -730,7 +730,7 @@ public class InventoryScene extends UIScene {
             if (id != null) {
                 ItemData item = Current.player().getEquippedItem(id);
                 if (item != null) {
-                    Image img = new Image(item.sprite());
+                    Image img = Controls.itemIcon(item.sprite()); // round 506: the sprite's size (32-px icons)
                     img.setName(SLOT_ITEM_NAME);
                     img.setX((slotButton.getWidth() - img.getWidth()) / 2);
                     img.setY((slotButton.getHeight() - img.getHeight()) / 2);

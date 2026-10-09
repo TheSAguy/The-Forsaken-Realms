@@ -928,8 +928,8 @@
     {
         "name":  "Utopia Anklet",
         "description":  "0/2 taps for any color",
-        "equipmentSlot":  "Boots",
-        "iconName":  "UtopiaAnklet",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckUtopia",
         "effect":  {
                        "lifeModifier":  -4,
                        "startBattleWithCard":  [
@@ -1116,8 +1116,8 @@
     {
         "name":  "Petalmane Pants",
         "description":  "1/2 spirit, gets ki when spirit/arcane, 1 and remove X ki for X mana",
-        "equipmentSlot":  "Boots",
-        "iconName":  "PetalmanePants",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckPetalmane",
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -1334,8 +1334,8 @@
     {
         "name":  "Joraga Boots",
         "description":  "1/1, level up to tap for GG, then let all elves tap for GG",
-        "equipmentSlot":  "Boots",
-        "iconName":  "JoragaBoots",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckJoraga",
         "effect":  {
                        "lifeModifier":  -6,
                        "startBattleWithCard":  [
@@ -1676,8 +1676,8 @@
     {
         "name":  "Scarecrow Socks",
         "description":  "2/1 reach, filters mana once a turn",
-        "equipmentSlot":  "Boots",
-        "iconName":  "ScarecrowSocks",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckScarecrow",
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -2003,8 +2003,8 @@
     {
         "name":  "Golden Egg",
         "description":  "Filter mana or pay 2 for 3 life",
-        "equipmentSlot":  "Left",
-        "iconName":  "GoldenEgg",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckGoldenEgg",
         "effect":  {
                        "lifeModifier":  3,
                        "startBattleWithCard":  [
@@ -2209,8 +2209,8 @@
     {
         "name":  "Lotus Petal",
         "description":  "One mana of any color once",
-        "equipmentSlot":  "Left",
-        "iconName":  "LotusPetal",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckLotusPetal",
         "cost":  5000,
         "effect":  {
                        "lifeModifier":  -3,
@@ -2223,8 +2223,8 @@
     {
         "name":  "Black Lotus",
         "description":  "Three mana of any color once",
-        "equipmentSlot":  "Left",
-        "iconName":  "BlackLotus",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckBlackLotus",
         "effect":  {
                        "lifeModifier":  -7,
                        "changeStartCards":  -1,
@@ -2263,8 +2263,8 @@
     {
         "name":  "Chromatic Sphere",
         "description":  "Filter mana and draw",
-        "equipmentSlot":  "Left",
-        "iconName":  "ChromaticSphere",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckChromaticSphere",
         "cost":  5000,
         "effect":  {
                        "startBattleWithCard":  [
@@ -2301,8 +2301,8 @@
     {
         "name":  "Kaleidostone",
         "description":  "Filter 5 into WUBRG",
-        "equipmentSlot":  "Left",
-        "iconName":  "Kaleidostone",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckKaleidostone",
         "effect":  {
                        "lifeModifier":  5,
                        "startBattleWithCard":  [
@@ -2577,8 +2577,8 @@
     {
         "name":  "Volatile Prayerbook",
         "description":  "Pay 1R for RRRR",
-        "equipmentSlot":  "Left",
-        "iconName":  "VolatilePrayerbook",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckVolatilePrayerbook",
         "effect":  {
                        "lifeModifier":  -4,
                        "startBattleWithCard":  [
@@ -5694,8 +5694,8 @@
     },
     {
         "name":  "Sol Ring",
-        "equipmentSlot":  "Left",
-        "iconName":  "SolRing",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckSolRing",
         "cost":  25000,
         "effect":  {
                        "startBattleWithCard":  [
@@ -6073,8 +6073,8 @@
     },
     {
         "name":  "Presence of the Hydra",
-        "equipmentSlot":  "Left",
-        "iconName":  "PresenceoftheHydra",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckPresenceoftheHydra",
         "cost":  4000,
         "effect":  {
                        "lifeModifier":  2,
@@ -6166,8 +6166,8 @@
     },
     {
         "name":  "Dungeon Map",
-        "equipmentSlot":  "Right",
-        "iconName":  "DungeonMap",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckDungeonMap",
         "cost":  12000,
         "effect":  {
                        "startBattleWithCard":  [
@@ -6400,8 +6400,8 @@
     },
     {
         "name":  "Change",
-        "equipmentSlot":  "Right",
-        "iconName":  "GoldStack",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckChange",
         "cost":  5000,
         "effect":  {
                        "startBattleWithCard":  [
@@ -6412,8 +6412,8 @@
     },
     {
         "name":  "Treasure",
-        "equipmentSlot":  "Right",
-        "iconName":  "Treasure",
+        "equipmentSlot":  "Neck",
+        "iconName":  "NeckTreasure",
         "cost":  5000,
         "effect":  {
                        "startBattleWithCard":  [

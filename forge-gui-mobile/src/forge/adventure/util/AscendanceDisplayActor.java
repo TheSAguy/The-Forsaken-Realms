@@ -73,6 +73,9 @@ public class AscendanceDisplayActor extends com.badlogic.gdx.scenes.scene2d.Grou
             Ascendance.enforceCompanionLimit(player, active ? "Ascendance" : "no Ascendance");
         if (active && player.ascendance().deferredLoaded) // round 505: saved while a quest's dialog held its Power
             Ascendance.payDeferred();
+        if (player != null) // round 506: what a load changed (an item that moved slots came off)
+            for (String notice : player.takeLoadNotices())
+                forge.adventure.stage.GameHUD.getInstance().addNotification(notice);
         wasActive = active;
         setVisible(active);
         if (!active)

@@ -67,6 +67,12 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 506): **LOCAL + UNRELEASED** - the 15 Left/Right/Boots mana items are Neck items (the user:
+"re-distribute them to neck"), with pendant icons on Shikashi's Fantasy Icons Pack's necklace (`sprites/items_neck.png`,
+32 px drawn in the 16 box - `Config.getItemSprite` + `Controls.itemIcon`). Old saves: the catalog's new slot is taken,
+copies worn in the old slot come off with a notice, loadouts skip them, a guard's duplicate goes to storage. Easy/Normal
+defeats can now crack them (Neck cracks there, Left/Right did not).
+
 ## STATE 2026-10-08 (round 505b): **LOCAL + UNRELEASED** - the tutorial path's step to level 1 is the tutorial quest's
 own 50 (quest 53 at the Warden): `tutorialQuestIds` drops the intro's held 50 on that path (the user: "Started at level
 1. I chose to do the tutorial"); the skip path still pays it at the choice.

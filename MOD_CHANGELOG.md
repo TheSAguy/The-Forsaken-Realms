@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 506: the fifteen Left, Right and Boots mana items hang at the neck (2026-10-08)
+
+The user, after the item audit: "For the mana/land items, can we take the Right, Boots and Left, should be 15 in total
+and re-distribute them to neck? You could find a replacement icon here probably: C:\Users\User\Downloads\Shikashi's
+Fantasy Icons Pack".
+
+- **items.json `equipmentSlot` -> Neck** (rarity, cost and effects unchanged):
+  - **Left (8):** Sol Ring, Black Lotus, Lotus Petal, Chromatic Sphere, Golden Egg, Kaleidostone, Volatile Prayerbook,
+    Presence of the Hydra.
+  - **Right (3):** Dungeon Map, Treasure, Change.
+  - **Boots (4, the mana creatures - still companions, round 502):** Joraga Boots, Utopia Anklet, Petalmane Pants,
+    Scarecrow Socks.
+  - Neck now holds 27 of the 74 mana/land items; with Body's lands that is one fast-mana item worn at a time, and the
+    gauntlets' second hand can no longer double one.
+- **The icons** (`sprites/items_neck.png`, 15 regions `Neck<Item>` appended to `sprites/items.atlas`): the gold necklace
+  from Shikashi's Fantasy Icons Pack (32 px; its own pendant cut) with each item's own 16-px icon hung as the pendant -
+  or a pack icon, shrunk with its own palette, where the old icon was shared or does not hang: Lotus Petal a pink lotus
+  bud (it shared Black Lotus's), Treasure a crowned coin (it shared Kaleidostone's gem), Joraga green leaves, Petalmane
+  an orange leaf, Scarecrow a feather. The old regions stay (DungeonMap is also the inventory's treasure-maps button).
+  Generator: the session scratchpad's `neck_icons.py`. CREDITS.md: a new "Item art" section.
+- **32-px item icons**: `Config.getItemSprite` sizes a 32x32 region's sprite to 16, and `Controls.itemIcon` builds the
+  inventory's and the Armory's icons from the sprite's size (Image(TextureRegion) took the region's 32 and drew them
+  twice as big); the reward cards already sized from the sprite.
+- **Saves**: the inventory keeps each copy's slot, so `refreshItemDefinitionsFromCatalog` now takes the catalog's slot
+  when it changed (`[TFR-ItemRefresh] ... moved from Left to Neck`). A copy worn in its old slot comes off as the
+  equipment loads (`slotTakes`), a deck's loadout skips it when switched to, and a roaming guard already wearing a Neck
+  item sends the moved one back to the Armory storage. The HUD tells the player ("Dungeon Map, Sol Ring have a new
+  equipment slot and came off - put them on again.").
+- **Impact to know**: on Easy and Normal a defeat cracks only Boots, Body and Neck items - the eleven Left/Right ones
+  could not crack there before and now can. The four Boots names (Joraga Boots, Utopia Anklet, Petalmane Pants,
+  Scarecrow Socks) are kept: a rename needs every save's copies renamed too (dev-tools/save-editing/RenameItem.java).
+- **Tested** (agent): a save wearing Sol Ring in Left and Dungeon Map in Right, made on the old data, loaded on the new:
+  both moved to Neck and came off with the notice; both deck loadouts left them off; Sol Ring then went on at the neck;
+  the 15 icons draw at the normal size in the inventory and on the paperdoll. The guard path was not tried in play.
+
 ## Round 505b: on the tutorial path the tutorial pays the step to level 1 (2026-10-08)
 
 The user, on 505: "Just started a new game same issue. Started at level 1. I chose to do the tutorial." Round 505 paid

@@ -340,7 +340,7 @@ public class ArmoryScene extends UIScene {
             gridButtons.add(button);
 
             ItemData item = items.get(i);
-            Image img = new Image(item.sprite());
+            Image img = Controls.itemIcon(item.sprite()); // round 506: the sprite's size (32-px icons)
             img.setX((button.getWidth() - img.getWidth()) / 2);
             img.setY((button.getHeight() - img.getHeight()) / 2);
             button.addActor(img);
@@ -386,7 +386,7 @@ public class ArmoryScene extends UIScene {
             removeSlotBorder(slotButton);
             ItemData worn = wornIn(name);
             if (worn != null && worn.sprite() != null) {
-                Image img = new Image(worn.sprite());
+                Image img = Controls.itemIcon(worn.sprite()); // round 506
                 img.setName(SLOT_ITEM_NAME);
                 img.setX((slotButton.getWidth() - img.getWidth()) / 2);
                 img.setY((slotButton.getHeight() - img.getHeight()) / 2);

@@ -1958,3 +1958,54 @@ MapFragmentGreen
 CartographersCompass
   xy: 96, 0
   size: 16, 16
+
+items_neck.png
+size: 480,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+NeckSolRing
+  xy: 0, 0
+  size: 32, 32
+NeckBlackLotus
+  xy: 32, 0
+  size: 32, 32
+NeckLotusPetal
+  xy: 64, 0
+  size: 32, 32
+NeckChromaticSphere
+  xy: 96, 0
+  size: 32, 32
+NeckGoldenEgg
+  xy: 128, 0
+  size: 32, 32
+NeckKaleidostone
+  xy: 160, 0
+  size: 32, 32
+NeckVolatilePrayerbook
+  xy: 192, 0
+  size: 32, 32
+NeckPresenceoftheHydra
+  xy: 224, 0
+  size: 32, 32
+NeckDungeonMap
+  xy: 256, 0
+  size: 32, 32
+NeckTreasure
+  xy: 288, 0
+  size: 32, 32
+NeckChange
+  xy: 320, 0
+  size: 32, 32
+NeckJoraga
+  xy: 352, 0
+  size: 32, 32
+NeckUtopia
+  xy: 384, 0
+  size: 32, 32
+NeckPetalmane
+  xy: 416, 0
+  size: 32, 32
+NeckScarecrow
+  xy: 448, 0
+  size: 32, 32

@@ -819,7 +819,12 @@ public class Config {
     }
 
     public Sprite getItemSprite(String itemName) {
-        return getAtlasSprite(forge.adventure.util.Paths.ITEMS_ATLAS, itemName);
+        Sprite sprite = getAtlasSprite(forge.adventure.util.Paths.ITEMS_ATLAS, itemName);
+        // Round 506: a 32-px item icon (the neck pendants on Shikashi's Fantasy Icons Pack's chain) is drawn in the same
+        // 16-unit box as every other icon - twice the detail, the same size. Every user sizes it from the sprite.
+        if (sprite != null && sprite.getRegionWidth() == 32 && sprite.getRegionHeight() == 32 && sprite.getWidth() != 16f)
+            sprite.setSize(16f, 16f);
+        return sprite;
     }
 
     public Sprite getAtlasSprite(String atlasName, String itemName) {

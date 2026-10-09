@@ -719,6 +719,15 @@ public class Controls {
         return colorId;
     }
 
+    /** Round 506: an item's icon at its SPRITE's size. Image(TextureRegion) sizes from the region, so a 32-px icon (the
+     *  neck pendants - Config.getItemSprite sizes those sprites to 16) would draw twice as big as the others. */
+    public static Image itemIcon(Sprite sprite) {
+        com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable drawable =
+                new com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable(sprite);
+        drawable.setMinSize(sprite.getWidth(), sprite.getHeight());
+        return new Image(drawable);
+    }
+
     public static TypingLabel newTypingLabel(String text) {
         TypingLabel ret = new TypingLabel(text == null ? "" : text, getSkin(), getTextraFont());
         String pn = Current.player().getName();

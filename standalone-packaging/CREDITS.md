@@ -133,6 +133,11 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   ocean's whirlpools) - **Heroes of Might and Magic III** adventure-map objects, © New World Computing / The 3DO
   Company, 1999; supplied by the user.
 
+## Item art
+
+- **Neck pendants** (the gold chain and the lotus bud, coin, leaf and feather pendants of the fifteen mana items that
+  hang at the neck) - **Shikashi's Fantasy Icons Pack** by **Shikashi**; supplied by the user.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

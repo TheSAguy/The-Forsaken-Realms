@@ -927,6 +927,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 if (newLoadout != null) {
                     for (Map.Entry<String, Long> entry : newLoadout.entrySet()) {
                         ItemData item = getItemFromInventory(entry.getValue());
+                        if (item != null && !slotTakes(entry.getKey(), item)) { // round 506: the item moved slots since
+                            System.out.println("[TFR-ItemRefresh] deck loadout: " + item.name + " no longer goes in "
+                                    + entry.getKey() + " - left off");
+                            continue;
+                        }
                         if (item != null) {
                             item.isEquipped = true;
                             equippedItems.put(entry.getKey(), entry.getValue());
@@ -1192,6 +1197,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private void refreshItemDefinitionsFromCatalog() {
         int refreshed = 0, changed = 0, unknown = 0;
         java.util.Set<String> changedNames = new java.util.TreeSet<>();
+        java.util.Set<String> reslotted = new java.util.TreeSet<>(); // round 506
         // Round 163: the storage and every guard's gear take the catalog too - a balance change must
         // reach a stored or worn copy the same as one in the pack. Guards are loaded before this runs.
         java.util.List<ItemData> everywhere = new ArrayList<>(inventoryItems);
@@ -1226,6 +1232,17 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             item.commandOnUse = catalog.commandOnUse;
             item.shardsNeeded = catalog.shardsNeeded;
             item.dialogOnUse = catalog.dialogOnUse;
+            // Round 506 (the user: the Left, Right and Boots mana items "re-distribute them to neck"): an item the
+            // catalog moved to another slot takes it. A copy worn in the old slot comes off when the equipment loads
+            // (slotTakes), a deck's loadout skips it, and a guard wearing two of one slot sends one back to storage.
+            if (catalog.equipmentSlot != null && !catalog.equipmentSlot.equals(item.equipmentSlot)) {
+                System.out.println("[TFR-ItemRefresh] " + item.name + " moved from " + item.equipmentSlot + " to "
+                        + catalog.equipmentSlot);
+                item.equipmentSlot = catalog.equipmentSlot;
+                reslotted.add(item.name);
+                changed++;
+                changedNames.add(item.name);
+            }
             refreshed++;
             if (differs) {
                 changed++;
@@ -1236,6 +1253,32 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             System.out.println("[TFR-ItemRefresh] " + refreshed + " inventory item(s) re-read from items.json, " + changed
                     + " with a changed definition " + changedNames
                     + (unknown > 0 ? ", " + unknown + " not in the catalog (kept as saved)" : ""));
+        if (!reslotted.isEmpty())
+            sendDuplicateGuardSlotsToStorage(reslotted);
+    }
+
+    /** Round 506: a guard wears one item per slot - one that a re-slotted item now shares a slot with keeps it, the
+     *  re-slotted one goes back to the Armory storage. */
+    private void sendDuplicateGuardSlotsToStorage(java.util.Set<String> reslotted) {
+        for (forge.adventure.data.RoamingGuardData guard : roamingGuards) {
+            java.util.Set<String> taken = new java.util.HashSet<>();
+            for (ItemData item : guard.equipment)
+                if (item != null && item.equipmentSlot != null && !reslotted.contains(item.name))
+                    taken.add(item.equipmentSlot);
+            for (ItemData item : new ArrayList<>(guard.equipment)) {
+                if (item == null || item.equipmentSlot == null || !reslotted.contains(item.name))
+                    continue;
+                if (taken.add(item.equipmentSlot))
+                    continue;
+                guard.equipment.remove(item);
+                item.isEquipped = false;
+                armoryStorage.add(item);
+                System.out.println("[TFR-ItemRefresh] a " + guard.tier + " guard already wears a " + item.equipmentSlot
+                        + " item - " + item.name + " back to the Armory storage");
+                loadNotices.add(item.name + " moved to the " + item.equipmentSlot + " slot - a guard already wore one there,"
+                        + " so it went back to the Armory storage.");
+            }
+        }
     }
 
     public ItemData getItemFromInventory(Long id) {
@@ -1528,8 +1571,18 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
                 assert (slots.length == items.length);
                 // Prevent items with wrong names. If it triggered in inventory, it'll trigger here as well.
+                java.util.Set<String> movedOff = new java.util.TreeSet<>();
                 for (int i = 0; i < slots.length; i++) {
                     ItemData itemData = getItemFromInventory(items[i]);
+                    if (itemData != null && !slotTakes(slots[i], itemData)) {
+                        // Round 506: the item moved to another slot since this save (refreshItemDefinitionsFromCatalog)
+                        // - it comes off; the player puts it on again in its new slot.
+                        itemData.isEquipped = false;
+                        movedOff.add(itemData.name);
+                        System.out.println("[TFR-ItemRefresh] " + itemData.name + " was worn in " + slots[i]
+                                + " - it is a " + itemData.equipmentSlot + " item now, taken off");
+                        continue;
+                    }
                     if (itemData != null) {
                         if (itemData.longID == null)
                             itemData = itemData.clone();
@@ -1542,6 +1595,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                         }
                     }
                 }
+                if (!movedOff.isEmpty()) // round 506
+                    loadNotices.add(String.join(", ", movedOff) + (movedOff.size() == 1 ? " has" : " have")
+                            + " a new equipment slot and came off - put " + (movedOff.size() == 1 ? "it" : "them")
+                            + " on again.");
             } catch (Exception ignored) {}
         }
         if (data.containsKey("boosters")) {
@@ -3149,6 +3206,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     /** Round 502: why the last equip() was refused (the main-item or the companion limit) - Ascendance.refusalFor. */
     private transient String lastEquipRefusal;
+    /** Round 506: what a load changed for the player to read (an item that moved slots came off) - shown by the HUD. */
+    private final transient java.util.List<String> loadNotices = new java.util.ArrayList<>();
+
+    /** Round 506: the load's notices, once - AscendanceDisplayActor shows them when the save is on screen. */
+    public java.util.List<String> takeLoadNotices() {
+        java.util.List<String> notices = new java.util.ArrayList<>(loadNotices);
+        loadNotices.clear();
+        return notices;
+    }
     /** Round 502: a save loaded or a run started - the HUD checks the companion limit once it is on screen. */
     private transient boolean companionCheckDue;
 
