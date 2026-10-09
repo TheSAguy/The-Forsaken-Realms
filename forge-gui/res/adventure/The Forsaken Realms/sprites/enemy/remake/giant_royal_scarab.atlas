@@ -1,5 +1,5 @@
 giant_royal_scarab.png
-size: 1504,724
+size: 1136,654
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,256 +8,79 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 94, 66
+  size: 142, 118
 Idle
-  xy: 94, 64
-  size: 94, 66
+  xy: 142, 64
+  size: 142, 118
 Idle
-  xy: 188, 64
-  size: 94, 66
+  xy: 284, 64
+  size: 142, 118
 Idle
-  xy: 282, 64
-  size: 94, 66
-Idle
-  xy: 376, 64
-  size: 94, 66
-Idle
-  xy: 470, 64
-  size: 94, 66
-Idle
-  xy: 564, 64
-  size: 94, 66
-Idle
-  xy: 658, 64
-  size: 94, 66
-Idle
-  xy: 752, 64
-  size: 94, 66
-Idle
-  xy: 846, 64
-  size: 94, 66
+  xy: 426, 64
+  size: 142, 118
 Walk
-  xy: 0, 130
-  size: 94, 66
+  xy: 0, 182
+  size: 142, 118
 Walk
-  xy: 94, 130
-  size: 94, 66
+  xy: 142, 182
+  size: 142, 118
 Walk
-  xy: 188, 130
-  size: 94, 66
+  xy: 284, 182
+  size: 142, 118
 Walk
-  xy: 282, 130
-  size: 94, 66
-Walk
-  xy: 376, 130
-  size: 94, 66
-Walk
-  xy: 470, 130
-  size: 94, 66
+  xy: 426, 182
+  size: 142, 118
 Attack
-  xy: 0, 196
-  size: 94, 66
+  xy: 0, 300
+  size: 142, 118
 Attack
-  xy: 94, 196
-  size: 94, 66
+  xy: 142, 300
+  size: 142, 118
 Attack
-  xy: 188, 196
-  size: 94, 66
+  xy: 284, 300
+  size: 142, 118
 Attack
-  xy: 282, 196
-  size: 94, 66
+  xy: 426, 300
+  size: 142, 118
 Attack
-  xy: 376, 196
-  size: 94, 66
+  xy: 568, 300
+  size: 142, 118
 Attack
-  xy: 470, 196
-  size: 94, 66
+  xy: 710, 300
+  size: 142, 118
 Attack
-  xy: 564, 196
-  size: 94, 66
+  xy: 852, 300
+  size: 142, 118
+Attack
+  xy: 994, 300
+  size: 142, 118
 Hit
-  xy: 0, 262
-  size: 94, 66
+  xy: 0, 418
+  size: 142, 118
 Hit
-  xy: 94, 262
-  size: 94, 66
+  xy: 142, 418
+  size: 142, 118
 Hit
-  xy: 188, 262
-  size: 94, 66
+  xy: 284, 418
+  size: 142, 118
 Hit
-  xy: 282, 262
-  size: 94, 66
-Hit
-  xy: 376, 262
-  size: 94, 66
-Hit
-  xy: 470, 262
-  size: 94, 66
+  xy: 426, 418
+  size: 142, 118
 Death
-  xy: 0, 328
-  size: 94, 66
+  xy: 0, 536
+  size: 142, 118
 Death
-  xy: 94, 328
-  size: 94, 66
+  xy: 142, 536
+  size: 142, 118
 Death
-  xy: 188, 328
-  size: 94, 66
+  xy: 284, 536
+  size: 142, 118
 Death
-  xy: 282, 328
-  size: 94, 66
+  xy: 426, 536
+  size: 142, 118
 Death
-  xy: 376, 328
-  size: 94, 66
+  xy: 568, 536
+  size: 142, 118
 Death
-  xy: 470, 328
-  size: 94, 66
-Death
-  xy: 564, 328
-  size: 94, 66
-Death
-  xy: 658, 328
-  size: 94, 66
-Death
-  xy: 752, 328
-  size: 94, 66
-Death
-  xy: 846, 328
-  size: 94, 66
-Death
-  xy: 940, 328
-  size: 94, 66
-Death
-  xy: 1034, 328
-  size: 94, 66
-Death
-  xy: 1128, 328
-  size: 94, 66
-Death
-  xy: 1222, 328
-  size: 94, 66
-Death
-  xy: 1316, 328
-  size: 94, 66
-Death
-  xy: 1410, 328
-  size: 94, 66
-Wake
-  xy: 0, 394
-  size: 94, 66
-Wake
-  xy: 94, 394
-  size: 94, 66
-Wake
-  xy: 188, 394
-  size: 94, 66
-Wake
-  xy: 282, 394
-  size: 94, 66
-Wake
-  xy: 376, 394
-  size: 94, 66
-Wake
-  xy: 470, 394
-  size: 94, 66
-Wake
-  xy: 564, 394
-  size: 94, 66
-Wake
-  xy: 658, 394
-  size: 94, 66
-IdleUp
-  xy: 0, 460
-  size: 94, 66
-IdleUp
-  xy: 94, 460
-  size: 94, 66
-IdleUp
-  xy: 188, 460
-  size: 94, 66
-IdleUp
-  xy: 282, 460
-  size: 94, 66
-IdleUp
-  xy: 376, 460
-  size: 94, 66
-IdleUp
-  xy: 470, 460
-  size: 94, 66
-IdleUp
-  xy: 564, 460
-  size: 94, 66
-IdleUp
-  xy: 658, 460
-  size: 94, 66
-IdleUp
-  xy: 752, 460
-  size: 94, 66
-IdleUp
-  xy: 846, 460
-  size: 94, 66
-IdleDown
-  xy: 0, 526
-  size: 94, 66
-IdleDown
-  xy: 94, 526
-  size: 94, 66
-IdleDown
-  xy: 188, 526
-  size: 94, 66
-IdleDown
-  xy: 282, 526
-  size: 94, 66
-IdleDown
-  xy: 376, 526
-  size: 94, 66
-IdleDown
-  xy: 470, 526
-  size: 94, 66
-IdleDown
-  xy: 564, 526
-  size: 94, 66
-IdleDown
-  xy: 658, 526
-  size: 94, 66
-IdleDown
-  xy: 752, 526
-  size: 94, 66
-IdleDown
-  xy: 846, 526
-  size: 94, 66
-WalkUp
-  xy: 0, 592
-  size: 94, 66
-WalkUp
-  xy: 94, 592
-  size: 94, 66
-WalkUp
-  xy: 188, 592
-  size: 94, 66
-WalkUp
-  xy: 282, 592
-  size: 94, 66
-WalkUp
-  xy: 376, 592
-  size: 94, 66
-WalkUp
-  xy: 470, 592
-  size: 94, 66
-WalkDown
-  xy: 0, 658
-  size: 94, 66
-WalkDown
-  xy: 94, 658
-  size: 94, 66
-WalkDown
-  xy: 188, 658
-  size: 94, 66
-WalkDown
-  xy: 282, 658
-  size: 94, 66
-WalkDown
-  xy: 376, 658
-  size: 94, 66
-WalkDown
-  xy: 470, 658
-  size: 94, 66
+  xy: 710, 536
+  size: 142, 118

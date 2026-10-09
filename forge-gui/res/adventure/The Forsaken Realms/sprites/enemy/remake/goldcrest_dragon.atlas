@@ -1,0 +1,86 @@
+goldcrest_dragon.png
+size: 1232,714
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 154, 130
+Idle
+  xy: 154, 64
+  size: 154, 130
+Idle
+  xy: 308, 64
+  size: 154, 130
+Idle
+  xy: 462, 64
+  size: 154, 130
+Walk
+  xy: 0, 194
+  size: 154, 130
+Walk
+  xy: 154, 194
+  size: 154, 130
+Walk
+  xy: 308, 194
+  size: 154, 130
+Walk
+  xy: 462, 194
+  size: 154, 130
+Attack
+  xy: 0, 324
+  size: 154, 130
+Attack
+  xy: 154, 324
+  size: 154, 130
+Attack
+  xy: 308, 324
+  size: 154, 130
+Attack
+  xy: 462, 324
+  size: 154, 130
+Attack
+  xy: 616, 324
+  size: 154, 130
+Attack
+  xy: 770, 324
+  size: 154, 130
+Attack
+  xy: 924, 324
+  size: 154, 130
+Attack
+  xy: 1078, 324
+  size: 154, 130
+Hit
+  xy: 0, 454
+  size: 154, 130
+Hit
+  xy: 154, 454
+  size: 154, 130
+Hit
+  xy: 308, 454
+  size: 154, 130
+Hit
+  xy: 462, 454
+  size: 154, 130
+Death
+  xy: 0, 584
+  size: 154, 130
+Death
+  xy: 154, 584
+  size: 154, 130
+Death
+  xy: 308, 584
+  size: 154, 130
+Death
+  xy: 462, 584
+  size: 154, 130
+Death
+  xy: 616, 584
+  size: 154, 130
+Death
+  xy: 770, 584
+  size: 154, 130

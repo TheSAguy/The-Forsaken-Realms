@@ -1,5 +1,5 @@
 the_scarab_god.png
-size: 1440,754
+size: 1136,654
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,253 +8,79 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 96, 69
+  size: 142, 118
 Idle
-  xy: 96, 64
-  size: 96, 69
+  xy: 142, 64
+  size: 142, 118
 Idle
-  xy: 192, 64
-  size: 96, 69
+  xy: 284, 64
+  size: 142, 118
 Idle
-  xy: 288, 64
-  size: 96, 69
-Idle
-  xy: 384, 64
-  size: 96, 69
-Idle
-  xy: 480, 64
-  size: 96, 69
-Idle
-  xy: 576, 64
-  size: 96, 69
-Idle
-  xy: 672, 64
-  size: 96, 69
-Idle
-  xy: 768, 64
-  size: 96, 69
-Idle
-  xy: 864, 64
-  size: 96, 69
+  xy: 426, 64
+  size: 142, 118
 Walk
-  xy: 0, 133
-  size: 96, 69
+  xy: 0, 182
+  size: 142, 118
 Walk
-  xy: 96, 133
-  size: 96, 69
+  xy: 142, 182
+  size: 142, 118
 Walk
-  xy: 192, 133
-  size: 96, 69
+  xy: 284, 182
+  size: 142, 118
 Walk
-  xy: 288, 133
-  size: 96, 69
-Walk
-  xy: 384, 133
-  size: 96, 69
-Walk
-  xy: 480, 133
-  size: 96, 69
+  xy: 426, 182
+  size: 142, 118
 Attack
-  xy: 0, 202
-  size: 96, 69
+  xy: 0, 300
+  size: 142, 118
 Attack
-  xy: 96, 202
-  size: 96, 69
+  xy: 142, 300
+  size: 142, 118
 Attack
-  xy: 192, 202
-  size: 96, 69
+  xy: 284, 300
+  size: 142, 118
 Attack
-  xy: 288, 202
-  size: 96, 69
+  xy: 426, 300
+  size: 142, 118
 Attack
-  xy: 384, 202
-  size: 96, 69
+  xy: 568, 300
+  size: 142, 118
 Attack
-  xy: 480, 202
-  size: 96, 69
+  xy: 710, 300
+  size: 142, 118
 Attack
-  xy: 576, 202
-  size: 96, 69
+  xy: 852, 300
+  size: 142, 118
+Attack
+  xy: 994, 300
+  size: 142, 118
 Hit
-  xy: 0, 271
-  size: 96, 69
+  xy: 0, 418
+  size: 142, 118
 Hit
-  xy: 96, 271
-  size: 96, 69
+  xy: 142, 418
+  size: 142, 118
 Hit
-  xy: 192, 271
-  size: 96, 69
+  xy: 284, 418
+  size: 142, 118
 Hit
-  xy: 288, 271
-  size: 96, 69
-Hit
-  xy: 384, 271
-  size: 96, 69
-Hit
-  xy: 480, 271
-  size: 96, 69
+  xy: 426, 418
+  size: 142, 118
 Death
-  xy: 0, 340
-  size: 96, 69
+  xy: 0, 536
+  size: 142, 118
 Death
-  xy: 96, 340
-  size: 96, 69
+  xy: 142, 536
+  size: 142, 118
 Death
-  xy: 192, 340
-  size: 96, 69
+  xy: 284, 536
+  size: 142, 118
 Death
-  xy: 288, 340
-  size: 96, 69
+  xy: 426, 536
+  size: 142, 118
 Death
-  xy: 384, 340
-  size: 96, 69
+  xy: 568, 536
+  size: 142, 118
 Death
-  xy: 480, 340
-  size: 96, 69
-Death
-  xy: 576, 340
-  size: 96, 69
-Death
-  xy: 672, 340
-  size: 96, 69
-Death
-  xy: 768, 340
-  size: 96, 69
-Death
-  xy: 864, 340
-  size: 96, 69
-Death
-  xy: 960, 340
-  size: 96, 69
-Death
-  xy: 1056, 340
-  size: 96, 69
-Death
-  xy: 1152, 340
-  size: 96, 69
-Death
-  xy: 1248, 340
-  size: 96, 69
-Death
-  xy: 1344, 340
-  size: 96, 69
-Wake
-  xy: 0, 409
-  size: 96, 69
-Wake
-  xy: 96, 409
-  size: 96, 69
-Wake
-  xy: 192, 409
-  size: 96, 69
-Wake
-  xy: 288, 409
-  size: 96, 69
-Wake
-  xy: 384, 409
-  size: 96, 69
-Wake
-  xy: 480, 409
-  size: 96, 69
-Wake
-  xy: 576, 409
-  size: 96, 69
-Wake
-  xy: 672, 409
-  size: 96, 69
-IdleUp
-  xy: 0, 478
-  size: 96, 69
-IdleUp
-  xy: 96, 478
-  size: 96, 69
-IdleUp
-  xy: 192, 478
-  size: 96, 69
-IdleUp
-  xy: 288, 478
-  size: 96, 69
-IdleUp
-  xy: 384, 478
-  size: 96, 69
-IdleUp
-  xy: 480, 478
-  size: 96, 69
-IdleUp
-  xy: 576, 478
-  size: 96, 69
-IdleUp
-  xy: 672, 478
-  size: 96, 69
-IdleUp
-  xy: 768, 478
-  size: 96, 69
-IdleUp
-  xy: 864, 478
-  size: 96, 69
-IdleDown
-  xy: 0, 547
-  size: 96, 69
-IdleDown
-  xy: 96, 547
-  size: 96, 69
-IdleDown
-  xy: 192, 547
-  size: 96, 69
-IdleDown
-  xy: 288, 547
-  size: 96, 69
-IdleDown
-  xy: 384, 547
-  size: 96, 69
-IdleDown
-  xy: 480, 547
-  size: 96, 69
-IdleDown
-  xy: 576, 547
-  size: 96, 69
-IdleDown
-  xy: 672, 547
-  size: 96, 69
-IdleDown
-  xy: 768, 547
-  size: 96, 69
-IdleDown
-  xy: 864, 547
-  size: 96, 69
-WalkUp
-  xy: 0, 616
-  size: 96, 69
-WalkUp
-  xy: 96, 616
-  size: 96, 69
-WalkUp
-  xy: 192, 616
-  size: 96, 69
-WalkUp
-  xy: 288, 616
-  size: 96, 69
-WalkUp
-  xy: 384, 616
-  size: 96, 69
-WalkUp
-  xy: 480, 616
-  size: 96, 69
-WalkDown
-  xy: 0, 685
-  size: 96, 69
-WalkDown
-  xy: 96, 685
-  size: 96, 69
-WalkDown
-  xy: 192, 685
-  size: 96, 69
-WalkDown
-  xy: 288, 685
-  size: 96, 69
-WalkDown
-  xy: 384, 685
-  size: 96, 69
-WalkDown
-  xy: 480, 685
-  size: 96, 69
+  xy: 710, 536
+  size: 142, 118

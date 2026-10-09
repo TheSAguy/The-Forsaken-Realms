@@ -22049,7 +22049,7 @@
     },
     {
         "name": "Mimic",
-        "sprite": "sprites/enemy/remake/mimic.atlas",
+        "sprite": "sprites/enemy/aberration/mimic.atlas",
         "deck": [
             "decks/standard/mimic.dck"
         ],
@@ -22130,8 +22130,7 @@
             "IdentityBlue",
             "IdentityDimir"
         ],
-        "tier": "Uncommon",
-        "scale": 0.1757
+        "tier": "Uncommon"
     },
     {
         "name": "Mindclaw Shaman",
@@ -39942,7 +39941,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.2321,
+        "scale": 0.1548,
         "life": 40,
         "rewards": [
             {
@@ -134222,7 +134221,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.2407
+        "scale": 0.1548
     },
     {
         "name": "Grave Revenant",

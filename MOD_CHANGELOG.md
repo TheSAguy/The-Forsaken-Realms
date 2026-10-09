@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 509: the Mimic keeps its chest, two pack scarabs, seven new dragon sprites (2026-10-08)
+
+The Procedural Pixel Creatures session, from the user's verdict on round 507's pack side-by-sides.
+
+- **The Mimic** is a chest again (the user: "Don't change the Mimic. It should look like a chest"): its entry is the
+  pre-507 one to the byte (the stock `aberration/mimic.atlas`, no scale) and `remake/mimic.*` is deleted. The Fog Trap
+  keeps the one-eyed door.
+- **The Giant Royal Scarab and the Scarab God** (the two Rares; the user agreed to "the two Rares at least") wear the
+  user's bug-monster sheet, green and blue colorways of a big front-facing insect, in place of the generator's small
+  beetles - the same remake paths, so enemies.json changes only their scales (0.15). The two Common scarabs keep the
+  generator's.
+- **Seven new dragons**, atlases only (the user: "could we keep both, just add in more dragons"): the rendered dragons
+  stay, and the big-dragon sheet's four colorways become the Cinderwing (red), Goldcrest (gold), Rimewing (ice) and
+  Duskwing (blue-violet) Dragons, with three hue-turned siblings - the Mossthorn (green), Stormcrest (slate blue) and
+  Tidecrest (teal) Dragons - under `sprites/enemy/remake/<name>.atlas`. No enemies.json entries yet: the TFR session
+  writes them, their decks and rosters in round 510.
+- **Checks**: `validate_plane_data.py` unchanged; the sprite audit is clean on the new atlases (its one flag is the Fog
+  Trap's shadow line, as in 507). Not seen in play.
+
 ## Round 508: Ascendance's rewards re-tuned - Mechanic and Medic replace Mend (2026-10-08)
 
 The user: "For the level up selects, change Bronze Coins +2 to +1. Shardwell ... start at +2 and the second would be +3

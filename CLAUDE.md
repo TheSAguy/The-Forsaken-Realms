@@ -67,6 +67,13 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 509): **LOCAL + UNRELEASED (data only)** - the user's verdict on the pack side-by-sides (the
+Procedural Pixel Creatures session): the Mimic back on its stock chest (entry restored to the byte, remake/mimic.* gone;
+the Fog Trap keeps the eye-door), the Giant Royal Scarab and the Scarab God on the bug-monster sheet (scales only), and
+seven NEW dragon atlases under sprites/enemy/remake/ (cinderwing, goldcrest, rimewing, duskwing, mossthorn, stormcrest,
+tidecrest - the BigDragons colorways and hue-turns; the rendered dragons stay) with NO enemies.json entries - the peer
+(#30) writes those, their decks and biome rosters in round 510. Packaged by the peer with 508 when the game closes.
+
 ## STATE 2026-10-08 (round 508): **LOCAL + UNRELEASED** - Ascendance rewards re-tuned (the user's list): Bronze Coins 1,
 Shardwell +2 then +3 (`Choice.first`), Marshal +4 life, Mender 30%/60%; the one-time Mend became two lasting picks,
 Mechanic (repairs -75%, `InventoryScene.repairCost`) and Medic (guard downtime -50%, `RoamingGuards.recoveryDaysNow`).
