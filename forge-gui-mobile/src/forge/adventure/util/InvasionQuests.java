@@ -153,6 +153,7 @@ public final class InvasionQuests {
                 stage.setTargetEnemyData(picked);
                 quest.putEnemyToken("$(enemy_" + stage.id + ")", picked);
                 AdventureQuestController.instance().setLastInvasionLeader(quest.getID(), picked.getName());
+                renameLeaderInText(quest, stage, before, picked); // round 516
             }
         }
         if (leader == null)
@@ -166,6 +167,24 @@ public final class InvasionQuests {
                 + leader.getName() + " (" + leader.tier + ")" + (leader == before ? " (as issued)" : " (was "
                 + (before == null ? "none" : before.getName() + " (" + before.tier + ")") + ")") + ", reward "
                 + (rewardMoved ? gold + " gold +" + rep + " reputation" : "as issued"));
+    }
+
+    /** Round 516 (code review): the quest's text was filled with the leader it was issued with (replaceTokens runs once,
+     *  at issue, and the $(enemy_N) token is gone from it) - after a re-pick the log named that stand-in while only the
+     *  picked leader completes the stage. Its name becomes the picked one's in the stage's name, description and
+     *  dialogs and in the quest's description. */
+    private static void renameLeaderInText(AdventureQuestData quest, AdventureQuestStage stage, EnemyData before,
+                                           EnemyData picked) {
+        String was = before == null ? null : before.getName(), now = picked.getName();
+        if (was == null || was.isEmpty() || now == null || was.equals(now))
+            return;
+        stage.name = stage.name == null ? null : stage.name.replace(was, now);
+        stage.description = stage.description == null ? null : stage.description.replace(was, now);
+        for (forge.adventure.data.DialogData dialog : new forge.adventure.data.DialogData[]{stage.prologue, stage.epilogue})
+            if (dialog != null && dialog.text != null)
+                dialog.text = dialog.text.replace(was, now);
+        quest.description = quest.description == null ? null : quest.description.replace(was, now);
+        System.out.println("[TFR-Invasion] " + quest.name + ": the quest text now names " + now + " (was " + was + ")");
     }
 
     /** The epilogue's reward line was filled at issue ("(+2 Local Reputation, +500 [+Gold])"): rewrite it and the paid

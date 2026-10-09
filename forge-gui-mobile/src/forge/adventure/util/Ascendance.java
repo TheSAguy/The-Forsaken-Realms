@@ -1036,7 +1036,9 @@ public final class Ascendance {
     public static void save(forge.adventure.util.SaveFileData data, AscendanceState s) {
         data.store("ascendanceOn", s.on);
         data.store("ascendancePower", s.power);
-        data.store("ascendanceCurve", 3); // round 497: the curve starts at level 0 (2) and costs by difficulty (3)
+        // Round 497: the curve starts at level 0 (2) and costs by difficulty (3). Round 516 (code review): the version the
+        // Power is really priced on - a load whose config failed keeps its old mark, so the migration is not skipped for good.
+        data.store("ascendanceCurve", s.curve);
         data.storeObject("ascendancePendingLevels", new ArrayList<>(s.pendingLevels)); // round 494
         data.storeObject("ascendanceOffer", new ArrayList<>(s.offer));
         data.storeObject("ascendancePickIds", new ArrayList<>(s.picks.keySet()));
@@ -1054,7 +1056,14 @@ public final class Ascendance {
         s.on = data.containsKey("ascendanceOn") && data.readBool("ascendanceOn");
         s.power = data.containsKey("ascendancePower") ? Math.max(0, data.readInt("ascendancePower")) : 0;
         int curve = data.containsKey("ascendanceCurve") ? data.readInt("ascendanceCurve") : 1;
-        if (s.on && curve < 2 && data().xpToNext.length > 0) {
+        // Round 516 (code review): without the config's curve nothing can be re-priced - keep the saved mark, so the
+        // migration runs on a later load that has it.
+        boolean curveLoaded = data().xpToNext.length > 0;
+        s.curve = curveLoaded ? 3 : curve;
+        if (!curveLoaded && s.on && curve < 3)
+            System.out.println("[TFR-Ascend] ascendance.json has no curve - this save's Power stays on curve " + curve
+                    + " until a load that can re-price it");
+        if (s.on && curve < 2 && curveLoaded) {
             // Round 497: a character saved before level 0 existed keeps the level it had - its Power gains the new
             // first step, so its waiting choices and level sheet still match.
             s.power += data().xpToNext[0];
@@ -1062,7 +1071,7 @@ public final class Ascendance {
                     + levelFor(s.power, 1f));
         }
         float factor = costFactor(difficulty);
-        if (s.on && curve < 3 && factor != 1f) {
+        if (s.on && curve < 3 && factor != 1f && curveLoaded) {
             // Round 497: and before the difficulty's level cost - the same level and the same share of the way to the
             // next, re-priced, so nothing it was given is earned twice.
             int level = levelFor(s.power, 1f);

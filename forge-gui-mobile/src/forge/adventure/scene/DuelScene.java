@@ -919,8 +919,11 @@ public class DuelScene extends ForgeScene {
             }
         }
         // Round 494: Ascendance's Morning Vigor (+life in the first duels each day) and Shardwell (+mana shards) - the
-        // player's own duels only: not a spectated guard fight (aiControlsPlayerSide), not an Inn tournament.
-        if (!aiControlsPlayerSide && eventData == null) {
+        // player's own duels only: not a spectated guard fight (aiControlsPlayerSide), not an Inn tournament. Round 516
+        // (code review): nor a Deck Tester match (EnemyData.fixedDeck is only set on its synthetic opponent) - a test
+        // game used up the day's Morning Vigor.
+        boolean deckTester = enemy != null && enemy.getData() != null && enemy.getData().fixedDeck != null;
+        if (!aiControlsPlayerSide && eventData == null && !deckTester) {
             int vigor = forge.adventure.util.Ascendance.morningVigorLife();
             int shardBonus = forge.adventure.util.Ascendance.duelStartShards();
             if (vigor > 0 || shardBonus > 0) {

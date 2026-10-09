@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 516: the nine code-review findings on rounds 473-515 fixed (2026-10-09)
+
+The Procedural Pixel Creatures session's read-only review of tfr-v1.19..HEAD (sound, nothing release-blocking) found
+nine smaller faults; the user: "fix them".
+
+1. **A quest no longer completes at a closed castle gate unless the place carries its tags.**
+   `AdventureQuestStage.arriveAtGate`: the `anyPOI` branch now requires `placeTags.containsAll(POITags)` like
+   `checkIfTargetLocation`. "Find a Dungeon/Cave", "Go to a town" and "Wait for The Tinker" could complete at any of
+   the five Chapter-1 gates.
+2. **An invasion's quest log names the leader who really completes it.** `InvasionQuests.renameLeaderInText`: after the
+   leader is re-picked (round 481), the stand-in's name becomes the picked one's in the stage's name, description and
+   dialogs and in the quest's description. `replaceTokens` ran once at issue, so the token was already gone.
+3. **Esc closes a town's dialogs and the HUD's own** (round 491's close never reached them).
+   - `HudScene.keyDown` handed every key to `MapStage.dialogInput` (Up/Down/Use only) while a town dialog was up. A HUD
+     dialog sets MapStage's flag too (`hudIsShowingDialog`).
+   - New `GameHUD.closeDialogOnBack`, called before that hand-off, presses the closing button of the HUD's dialog, else
+     the town's or world's; `GameHUD.keyDown` uses it too.
+   - A dialog with no closing button (a story choice: "(Leave)", "(Continue)") keeps the key, so the Esc menu never
+     opens over it.
+   - `releaseBack` clears the key-up marker when a closed window reopened its parent.
+4. **A second character loaded in the same session is held to its main-item limit.**
+   `AscendanceDisplayActor`: a load (`takeCompanionCheck`) now runs `enforceMainLimit` too. `wasActive` lives for the
+   whole session, so a second save never crossed the "on" edge.
+5. **The Sphinx's Sanctum gets a slot on its day.** `DungeonRotation.activateFromReserve`: in the week its
+   `notBeforeDay` opens, a held kind still below its share comes in even at the target - one over, like a quest's
+   force-spawn; the next despawn evens it out (`bringIn`, factored out of the draw). Counting its slot from day 1
+   instead would have let another kind fill it on day 2.
+6. **The New Game+ refund pays what was charged.** `EconomyBuildings.addScaled` (used only by `standingCost` and
+   `NewGamePlusRefund`) goes through `buildCost`, the Architect discount included. The refund is read before the old
+   run's picks reset. A shop re-assign's "You're credited" text shows `buildCost` too; its charge already did.
+7. **Esc closes more dialogs.** `Controls.CLOSE_LABELS` gains "Turn Back" (the Legendary gate), "Decline" (the chest's
+   duplicate offer) and "Understood" (the Warden's notice, the defeat dialog). The review's other suggestion - letting
+   Esc fall through when no label matches - was not taken: on a story choice that would open the Esc menu over it, so
+   such a dialog keeps the key (3).
+8. **Deck Tester matches get no Morning Vigor and no Shardwell** (`DuelScene`: `EnemyData.fixedDeck` marks its
+   opponent). A test game used up the day's Vigor.
+9. **The curve version is saved as it really is.** `AscendanceState.curve`: `Ascendance.load` sets 3 only when the
+   config's curve was there to re-price with, else keeps the saved mark (logged), and `save` stores it. Before, a
+   config that failed to load still stamped 3, skipping the migration for good.
+
+**Agent-tested**: Esc on a town notice ("This shop can't be rebuilt..." / OK, in Orazca) closed it and stayed in town;
+Esc on the Warden's "(Leave)" story dialog left it open and opened no menu. The others are checked by reading the
+code (each is a small, local change).
+
 ## Round 515: the minotaurs, the nezumi and the halflings from the Universal LPC Spritesheet parts (2026-10-09)
 
 The Procedural Pixel Creatures session's fifth LPC batch (the user: "Do 20 more"): 21 enemies, closing the stock

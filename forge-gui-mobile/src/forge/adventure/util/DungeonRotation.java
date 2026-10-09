@@ -708,25 +708,46 @@ public class DungeonRotation {
                 break;
             PointOfInterest pick = from.get(world.getRandom().nextInt(from.size()));
             eligibleReserve.remove(pick);
-            int[] pickTally = tally.get(typeKey(pick));
-            if (pickTally != null)
-                pickTally[1]++;
-            pick.setActive(true);
-            int restocked = restock(pick); // round 299: a spot the player emptied before comes back full
-            if (restocked > 0)
-                System.out.println("[DungeonRotation] " + pick.getDisplayName() + " restocked: " + restocked
-                        + " enemies/rewards from an earlier visit are back");
-            world.getPoiRespawnDay().remove(pick.getID());
-            world.getPoiFailedAttempts().remove(pick.getID());
-            world.getPoiLootedDay().remove(pick.getID()); // round 128
-            world.getPoiLootHeldDay().remove(pick.getID()); // round 290: nor does one back from reserve
-            world.getPoiDespawnDay().put(pick.getID(), currentDay + rollDays(world, despawnMinDays(), despawnMaxDays()));
-            DungeonSources.onAppeared(world, pick, currentDay); // round 377: a source from today
-            System.out.println("[DungeonRotation] " + pick.getDisplayName() + " has appeared on the map");
+            bringIn(world, pick, currentDay, tally);
             activeCount++;
             changed = true;
         }
+        // Round 516 (code review of round 513): a place held back by notBeforeDay took no slot when the world was made,
+        // so on its day the map is already at its target without it. In the week its day opens, a kind still below its
+        // share brings one in anyway - one over the target, like a quest's force-spawn; the next despawn evens it out.
+        for (PointOfInterest p : new java.util.ArrayList<>(eligibleReserve)) {
+            int from = p.getData() == null ? 0 : p.getData().notBeforeDay;
+            if (from <= 0 || currentDay >= from + 7)
+                continue;
+            int[] t = tally.get(typeKey(p));
+            if (t == null || t[1] >= typeQuota(t[0]))
+                continue;
+            eligibleReserve.remove(p);
+            bringIn(world, p, currentDay, tally);
+            System.out.println("[DungeonRotation] " + p.getDisplayName() + " - its first day (" + from
+                    + ") has come; in above the target (round 516)");
+            changed = true;
+        }
         return changed;
+    }
+
+    /** One reserve place onto the map today: restocked, its bookkeeping cleared, a fresh lifespan, a source from today. */
+    private static void bringIn(World world, PointOfInterest pick, int currentDay, java.util.Map<String, int[]> tally) {
+        int[] pickTally = tally.get(typeKey(pick));
+        if (pickTally != null)
+            pickTally[1]++;
+        pick.setActive(true);
+        int restocked = restock(pick); // round 299: a spot the player emptied before comes back full
+        if (restocked > 0)
+            System.out.println("[DungeonRotation] " + pick.getDisplayName() + " restocked: " + restocked
+                    + " enemies/rewards from an earlier visit are back");
+        world.getPoiRespawnDay().remove(pick.getID());
+        world.getPoiFailedAttempts().remove(pick.getID());
+        world.getPoiLootedDay().remove(pick.getID()); // round 128
+        world.getPoiLootHeldDay().remove(pick.getID()); // round 290: nor does one back from reserve
+        world.getPoiDespawnDay().put(pick.getID(), currentDay + rollDays(world, despawnMinDays(), despawnMaxDays()));
+        DungeonSources.onAppeared(world, pick, currentDay); // round 377: a source from today
+        System.out.println("[DungeonRotation] " + pick.getDisplayName() + " has appeared on the map");
     }
 
     /**

@@ -462,7 +462,10 @@ public class Controls {
 
     /** Round 491: the labels a dialog's closing button carries, in the order they are looked for. "OK" only counts on a
      *  dialog with no other button (a notice); "(Continue)" and the like never do, so Esc cannot skip story text. */
-    private static final String[] CLOSE_LABELS = {"Back", "Close", "Cancel", "Abort", "Not now", "No", "Leave"};
+    private static final String[] CLOSE_LABELS = {"Back", "Close", "Cancel", "Abort", "Not now", "No", "Leave",
+            // Round 516 (code review): the Legendary gate's, a quest offer's and the notices' own closing words - these
+            // dialogs kept Esc and did nothing.
+            "Turn Back", "Decline", "Understood"};
 
     /**
      * Round 491 (the user: "There are multiple 'Back' buttons, but 'Esc' - Escape, only works on the entry screen and not

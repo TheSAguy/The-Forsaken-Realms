@@ -67,6 +67,11 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-09 (round 516): **LOCAL + UNRELEASED** - the peer's code review of 473-515 (nine findings) fixed (the
+user: "fix them"): quest gate tags, the invasion leader's name, Esc in towns and on HUD dialogs (`GameHUD.closeDialogOnBack`
+before `MapStage.dialogInput`), the main-item limit on a second load, the Sanctum's day-8 slot, the NG+ refund at the
+Architect price, three more Esc close labels, no Vigor/Shardwell in Deck Tester, the saved curve mark.
+
 ## STATE 2026-10-09 (round 515): **LOCAL + UNRELEASED (data only)** - LPC batch 5 (the Procedural Pixel Creatures
 session; the user: "Do 20 more"): the eleven minotaurs (LPC's horned minotaur head and hoofs on fur, the warriors
 muscular with legion gear and axes, Zedruu a robed boss elder), the eight nezumi (the rat head on grey/black/brown/white

@@ -74,6 +74,10 @@ public abstract class HudScene extends Scene implements InputProcessor, IAfterMa
 
     @Override
     public boolean keyDown(int keycode) {
+        // Round 516 (code review): Esc / Back closes an open dialog first - MapStage.dialogInput below takes every key
+        // while a town's or the HUD's dialog is up, and it knows only Up/Down/Use.
+        if (forge.adventure.util.KeyBinding.Back.isPressed(keycode) && hud.closeDialogOnBack(keycode))
+            return true;
         if (MapStage.getInstance().isDialogOnlyInput()) {
             MapStage.getInstance().stop();
             return MapStage.getInstance().dialogInput(keycode);
@@ -91,6 +95,7 @@ public abstract class HudScene extends Scene implements InputProcessor, IAfterMa
     public boolean keyUp(int keycode) {
         if (MapStage.getInstance().isDialogOnlyInput()) {
             MapStage.getInstance().stop();
+            hud.releaseBack(keycode); // round 516
             return true;
         }
         if (hud.keyUp(keycode))

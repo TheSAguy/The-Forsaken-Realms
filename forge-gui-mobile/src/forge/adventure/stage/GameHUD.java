@@ -1208,14 +1208,8 @@ public class GameHUD extends Stage {
         }
         // Round 491: a town's or the world's own dialog (a building's window, a gate, a notice) closes on Esc / Back
         // through its closing button, instead of the HUD's Esc-bound menu button opening over it.
-        if (KeyBinding.Back.isPressed(keycode) && !console.isVisible()) {
-            GameStage shown = MapStage.getInstance().isInMap() ? MapStage.getInstance() : WorldStage.getInstance();
-            if (shown.isDialogOnlyInput()) {
-                forge.adventure.util.Controls.pressDialogClose(shown.getDialog());
-                backClosedDialog = keycode;
-                return true;
-            }
-        }
+        if (KeyBinding.Back.isPressed(keycode) && closeDialogOnBack(keycode))
+            return true;
         ui.pressDown(keycode);
         if (keycode == Input.Keys.F9 || keycode == Input.Keys.F10) {
             toggleConsole();
@@ -1234,6 +1228,37 @@ public class GameHUD extends Stage {
             pressedButton.fire(eventTouchDown);
         }
         return super.keyDown(keycode);
+    }
+
+    /**
+     * Round 516 (code review of round 491): Esc / Back on an open dialog - the HUD's own first, then the town's or the
+     * world's - presses its closing button (Controls.pressDialogClose). HudScene calls this BEFORE it hands a key to
+     * MapStage.dialogInput, which takes every key while a town dialog, or a HUD dialog (hudIsShowingDialog), is up and
+     * only knows Up/Down/Use - so round 491's close never ran in a town or on the HUD's own dialogs. True while a dialog
+     * is open: one with no closing button (a story choice) keeps the key, so the Esc-bound menu never opens over it.
+     */
+    public boolean closeDialogOnBack(int keycode) {
+        if (console.isVisible())
+            return false;
+        com.badlogic.gdx.scenes.scene2d.ui.Dialog open = null;
+        if (dialogOnlyInput) {
+            open = dialog;
+        } else {
+            GameStage shown = MapStage.getInstance().isInMap() ? MapStage.getInstance() : WorldStage.getInstance();
+            if (shown.isDialogOnlyInput())
+                open = shown.getDialog();
+        }
+        if (open == null)
+            return false;
+        forge.adventure.util.Controls.pressDialogClose(open);
+        backClosedDialog = keycode; // its release must not fire the Esc-bound menu button
+        return true;
+    }
+
+    /** Round 516: a release HudScene kept for a dialog (a closed window reopened its parent) still clears the marker. */
+    public void releaseBack(int keycode) {
+        if (keycode == backClosedDialog)
+            backClosedDialog = -1;
     }
 
     private boolean dialogInput(int keycode) {

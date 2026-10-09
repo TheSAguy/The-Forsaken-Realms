@@ -223,13 +223,15 @@ public class AdventureQuestStage implements Serializable {
         if (status != ACTIVE || objective != Travel || place == null || place.getData() == null)
             return false;
         boolean matches;
+        List<String> placeTags = place.getData().questTags == null ? java.util.Collections.emptyList()
+                : Arrays.asList(place.getData().questTags);
         if (targetPOI != null) {
             matches = targetPOI.getPosition().equals(place.getPosition());
         } else if (anyPOI) {
-            matches = true;
+            // Round 516 (code review): "any place" still means any place WITH the stage's tags, as checkIfTargetLocation
+            // reads it - "Find a Dungeon/Cave", "Go to a town" or "Wait for The Tinker" completed at a shut castle gate.
+            matches = placeTags.containsAll(POITags);
         } else {
-            List<String> placeTags = place.getData().questTags == null ? java.util.Collections.emptyList()
-                    : Arrays.asList(place.getData().questTags);
             matches = !POITags.isEmpty() && placeTags.containsAll(POITags);
         }
         if (!matches)

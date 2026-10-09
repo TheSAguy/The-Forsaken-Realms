@@ -71,11 +71,15 @@ public class AscendanceDisplayActor extends com.badlogic.gdx.scenes.scene2d.Grou
         forge.adventure.player.AdventurePlayer player = WorldSave.getCurrentSave() == null ? null
                 : WorldSave.getCurrentSave().getPlayer();
         boolean active = player != null && Ascendance.isActive();
-        if (active && !wasActive) // switched back on in Settings, or a save with it loaded: wear only what fits
-            Ascendance.enforceMainLimit(player, "Ascendance on");
-        // Round 502: the companion limit holds with or without Ascendance - checked when a save loads or a run starts
-        // (AdventurePlayer.requestCompanionCheck) and when Settings switch Ascendance on or off.
-        if (player != null && (player.takeCompanionCheck() || active != wasActive))
+        // Round 502: a save loaded or a run started (AdventurePlayer.requestCompanionCheck). Round 516 (code review): the
+        // main-item limit is checked then too - wasActive lives for the whole session, so a second character loaded in it
+        // never crossed the "on" edge and kept main items over its limit.
+        boolean loaded = player != null && player.takeCompanionCheck();
+        if (active && (!wasActive || loaded)) // switched back on in Settings, or a save with it loaded: wear only what fits
+            Ascendance.enforceMainLimit(player, loaded ? "save loaded" : "Ascendance on");
+        // Round 502: the companion limit holds with or without Ascendance - checked when a save loads or a run starts and
+        // when Settings switch Ascendance on or off.
+        if (player != null && (loaded || active != wasActive))
             Ascendance.enforceCompanionLimit(player, active ? "Ascendance" : "no Ascendance");
         if (active && player.ascendance().deferredLoaded) // round 505: saved while a quest's dialog held its Power
             Ascendance.payDeferred();

@@ -1488,9 +1488,12 @@ public class EconomyBuildings {
     }
 
     static void addScaled(int[] into, int[] base) {
+        // Round 516 (code review): what the building flows CHARGED - buildCost, Ascendance's Architect discount included -
+        // not the undiscounted scaledCost; the New Game+ refund (standingCost, NewGamePlusRefund) is read before the old
+        // run's picks reset, so an Architect player is refunded what was paid, never more.
         for (int i = 0; i < 4; i++)
             if (base[i] > 0)
-                into[i] += scaledCost(base[i]);
+                into[i] += buildCost(base[i]);
     }
 
     private static void addExact(int[] into, int[] cost) {
@@ -2112,7 +2115,7 @@ public class EconomyBuildings {
         root.text = currentShopName == null
                 ? "What kind of card shop?"
                 : "Re-assign this shop's type." + (refund > 0
-                        ? " You're credited " + scaledCost(refund) + " [+Gold] for the current "
+                        ? " You're credited " + buildCost(refund) + " [+Gold] for the current " // round 516: as charged
                           + oldTier + " shop." : "");
 
         List<DialogData> tierOptions = new ArrayList<>();

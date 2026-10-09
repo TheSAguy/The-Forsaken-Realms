@@ -29,6 +29,10 @@ public class AscendanceState {
     public String deferredSource = "";
     /** Round 505: set by load when Power was held - the HUD pays it (no dialog is left to wait for after a load). */
     public boolean deferredLoaded;
+    /** Round 516 (code review): the curve version this save's Power is priced on (Ascendance.load's migrations; 3 =
+     *  level 0 + the difficulty's cost). A new run is on the current one; a load keeps the saved mark when the config
+     *  could not be read, so the migration still runs on a later load. */
+    public int curve = 3;
 
     public void reset() {
         on = false;
@@ -42,5 +46,6 @@ public class AscendanceState {
         deferredPower = 0;
         deferredSource = "";
         deferredLoaded = false;
+        curve = 3;
     }
 }
