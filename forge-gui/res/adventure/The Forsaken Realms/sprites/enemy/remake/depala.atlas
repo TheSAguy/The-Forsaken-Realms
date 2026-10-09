@@ -1,0 +1,179 @@
+depala.png
+size: 630,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 55
+Idle
+  xy: 70, 64
+  size: 70, 55
+Idle
+  xy: 140, 64
+  size: 70, 55
+Idle
+  xy: 210, 64
+  size: 70, 55
+Walk
+  xy: 0, 119
+  size: 70, 55
+Walk
+  xy: 70, 119
+  size: 70, 55
+Walk
+  xy: 140, 119
+  size: 70, 55
+Walk
+  xy: 210, 119
+  size: 70, 55
+Walk
+  xy: 280, 119
+  size: 70, 55
+Walk
+  xy: 350, 119
+  size: 70, 55
+Walk
+  xy: 420, 119
+  size: 70, 55
+Walk
+  xy: 490, 119
+  size: 70, 55
+Attack
+  xy: 0, 174
+  size: 70, 55
+Attack
+  xy: 70, 174
+  size: 70, 55
+Attack
+  xy: 140, 174
+  size: 70, 55
+Attack
+  xy: 210, 174
+  size: 70, 55
+Attack
+  xy: 280, 174
+  size: 70, 55
+Attack
+  xy: 350, 174
+  size: 70, 55
+Attack
+  xy: 420, 174
+  size: 70, 55
+Attack
+  xy: 490, 174
+  size: 70, 55
+Hit
+  xy: 0, 229
+  size: 70, 55
+Hit
+  xy: 70, 229
+  size: 70, 55
+Hit
+  xy: 140, 229
+  size: 70, 55
+Hit
+  xy: 210, 229
+  size: 70, 55
+Death
+  xy: 0, 284
+  size: 70, 55
+Death
+  xy: 70, 284
+  size: 70, 55
+Death
+  xy: 140, 284
+  size: 70, 55
+Death
+  xy: 210, 284
+  size: 70, 55
+Death
+  xy: 280, 284
+  size: 70, 55
+Death
+  xy: 350, 284
+  size: 70, 55
+Death
+  xy: 420, 284
+  size: 70, 55
+Death
+  xy: 490, 284
+  size: 70, 55
+Death
+  xy: 560, 284
+  size: 70, 55
+IdleUp
+  xy: 0, 339
+  size: 70, 55
+IdleUp
+  xy: 70, 339
+  size: 70, 55
+IdleUp
+  xy: 140, 339
+  size: 70, 55
+IdleUp
+  xy: 210, 339
+  size: 70, 55
+IdleDown
+  xy: 0, 394
+  size: 70, 55
+IdleDown
+  xy: 70, 394
+  size: 70, 55
+IdleDown
+  xy: 140, 394
+  size: 70, 55
+IdleDown
+  xy: 210, 394
+  size: 70, 55
+WalkUp
+  xy: 0, 449
+  size: 70, 55
+WalkUp
+  xy: 70, 449
+  size: 70, 55
+WalkUp
+  xy: 140, 449
+  size: 70, 55
+WalkUp
+  xy: 210, 449
+  size: 70, 55
+WalkUp
+  xy: 280, 449
+  size: 70, 55
+WalkUp
+  xy: 350, 449
+  size: 70, 55
+WalkUp
+  xy: 420, 449
+  size: 70, 55
+WalkUp
+  xy: 490, 449
+  size: 70, 55
+WalkDown
+  xy: 0, 504
+  size: 70, 55
+WalkDown
+  xy: 70, 504
+  size: 70, 55
+WalkDown
+  xy: 140, 504
+  size: 70, 55
+WalkDown
+  xy: 210, 504
+  size: 70, 55
+WalkDown
+  xy: 280, 504
+  size: 70, 55
+WalkDown
+  xy: 350, 504
+  size: 70, 55
+WalkDown
+  xy: 420, 504
+  size: 70, 55
+WalkDown
+  xy: 490, 504
+  size: 70, 55

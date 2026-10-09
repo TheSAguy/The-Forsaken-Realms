@@ -1,0 +1,173 @@
+arni.png
+size: 846,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 58
+Idle
+  xy: 94, 64
+  size: 94, 58
+Idle
+  xy: 188, 64
+  size: 94, 58
+Idle
+  xy: 282, 64
+  size: 94, 58
+Walk
+  xy: 0, 122
+  size: 94, 58
+Walk
+  xy: 94, 122
+  size: 94, 58
+Walk
+  xy: 188, 122
+  size: 94, 58
+Walk
+  xy: 282, 122
+  size: 94, 58
+Walk
+  xy: 376, 122
+  size: 94, 58
+Walk
+  xy: 470, 122
+  size: 94, 58
+Walk
+  xy: 564, 122
+  size: 94, 58
+Walk
+  xy: 658, 122
+  size: 94, 58
+Attack
+  xy: 0, 180
+  size: 94, 58
+Attack
+  xy: 94, 180
+  size: 94, 58
+Attack
+  xy: 188, 180
+  size: 94, 58
+Attack
+  xy: 282, 180
+  size: 94, 58
+Attack
+  xy: 376, 180
+  size: 94, 58
+Attack
+  xy: 470, 180
+  size: 94, 58
+Hit
+  xy: 0, 238
+  size: 94, 58
+Hit
+  xy: 94, 238
+  size: 94, 58
+Hit
+  xy: 188, 238
+  size: 94, 58
+Hit
+  xy: 282, 238
+  size: 94, 58
+Death
+  xy: 0, 296
+  size: 94, 58
+Death
+  xy: 94, 296
+  size: 94, 58
+Death
+  xy: 188, 296
+  size: 94, 58
+Death
+  xy: 282, 296
+  size: 94, 58
+Death
+  xy: 376, 296
+  size: 94, 58
+Death
+  xy: 470, 296
+  size: 94, 58
+Death
+  xy: 564, 296
+  size: 94, 58
+Death
+  xy: 658, 296
+  size: 94, 58
+Death
+  xy: 752, 296
+  size: 94, 58
+IdleUp
+  xy: 0, 354
+  size: 94, 58
+IdleUp
+  xy: 94, 354
+  size: 94, 58
+IdleUp
+  xy: 188, 354
+  size: 94, 58
+IdleUp
+  xy: 282, 354
+  size: 94, 58
+IdleDown
+  xy: 0, 412
+  size: 94, 58
+IdleDown
+  xy: 94, 412
+  size: 94, 58
+IdleDown
+  xy: 188, 412
+  size: 94, 58
+IdleDown
+  xy: 282, 412
+  size: 94, 58
+WalkUp
+  xy: 0, 470
+  size: 94, 58
+WalkUp
+  xy: 94, 470
+  size: 94, 58
+WalkUp
+  xy: 188, 470
+  size: 94, 58
+WalkUp
+  xy: 282, 470
+  size: 94, 58
+WalkUp
+  xy: 376, 470
+  size: 94, 58
+WalkUp
+  xy: 470, 470
+  size: 94, 58
+WalkUp
+  xy: 564, 470
+  size: 94, 58
+WalkUp
+  xy: 658, 470
+  size: 94, 58
+WalkDown
+  xy: 0, 528
+  size: 94, 58
+WalkDown
+  xy: 94, 528
+  size: 94, 58
+WalkDown
+  xy: 188, 528
+  size: 94, 58
+WalkDown
+  xy: 282, 528
+  size: 94, 58
+WalkDown
+  xy: 376, 528
+  size: 94, 58
+WalkDown
+  xy: 470, 528
+  size: 94, 58
+WalkDown
+  xy: 564, 528
+  size: 94, 58
+WalkDown
+  xy: 658, 528
+  size: 94, 58

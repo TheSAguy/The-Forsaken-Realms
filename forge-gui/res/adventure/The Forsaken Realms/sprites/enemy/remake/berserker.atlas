@@ -1,0 +1,173 @@
+berserker.png
+size: 846,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 56
+Idle
+  xy: 94, 64
+  size: 94, 56
+Idle
+  xy: 188, 64
+  size: 94, 56
+Idle
+  xy: 282, 64
+  size: 94, 56
+Walk
+  xy: 0, 120
+  size: 94, 56
+Walk
+  xy: 94, 120
+  size: 94, 56
+Walk
+  xy: 188, 120
+  size: 94, 56
+Walk
+  xy: 282, 120
+  size: 94, 56
+Walk
+  xy: 376, 120
+  size: 94, 56
+Walk
+  xy: 470, 120
+  size: 94, 56
+Walk
+  xy: 564, 120
+  size: 94, 56
+Walk
+  xy: 658, 120
+  size: 94, 56
+Attack
+  xy: 0, 176
+  size: 94, 56
+Attack
+  xy: 94, 176
+  size: 94, 56
+Attack
+  xy: 188, 176
+  size: 94, 56
+Attack
+  xy: 282, 176
+  size: 94, 56
+Attack
+  xy: 376, 176
+  size: 94, 56
+Attack
+  xy: 470, 176
+  size: 94, 56
+Hit
+  xy: 0, 232
+  size: 94, 56
+Hit
+  xy: 94, 232
+  size: 94, 56
+Hit
+  xy: 188, 232
+  size: 94, 56
+Hit
+  xy: 282, 232
+  size: 94, 56
+Death
+  xy: 0, 288
+  size: 94, 56
+Death
+  xy: 94, 288
+  size: 94, 56
+Death
+  xy: 188, 288
+  size: 94, 56
+Death
+  xy: 282, 288
+  size: 94, 56
+Death
+  xy: 376, 288
+  size: 94, 56
+Death
+  xy: 470, 288
+  size: 94, 56
+Death
+  xy: 564, 288
+  size: 94, 56
+Death
+  xy: 658, 288
+  size: 94, 56
+Death
+  xy: 752, 288
+  size: 94, 56
+IdleUp
+  xy: 0, 344
+  size: 94, 56
+IdleUp
+  xy: 94, 344
+  size: 94, 56
+IdleUp
+  xy: 188, 344
+  size: 94, 56
+IdleUp
+  xy: 282, 344
+  size: 94, 56
+IdleDown
+  xy: 0, 400
+  size: 94, 56
+IdleDown
+  xy: 94, 400
+  size: 94, 56
+IdleDown
+  xy: 188, 400
+  size: 94, 56
+IdleDown
+  xy: 282, 400
+  size: 94, 56
+WalkUp
+  xy: 0, 456
+  size: 94, 56
+WalkUp
+  xy: 94, 456
+  size: 94, 56
+WalkUp
+  xy: 188, 456
+  size: 94, 56
+WalkUp
+  xy: 282, 456
+  size: 94, 56
+WalkUp
+  xy: 376, 456
+  size: 94, 56
+WalkUp
+  xy: 470, 456
+  size: 94, 56
+WalkUp
+  xy: 564, 456
+  size: 94, 56
+WalkUp
+  xy: 658, 456
+  size: 94, 56
+WalkDown
+  xy: 0, 512
+  size: 94, 56
+WalkDown
+  xy: 94, 512
+  size: 94, 56
+WalkDown
+  xy: 188, 512
+  size: 94, 56
+WalkDown
+  xy: 282, 512
+  size: 94, 56
+WalkDown
+  xy: 376, 512
+  size: 94, 56
+WalkDown
+  xy: 470, 512
+  size: 94, 56
+WalkDown
+  xy: 564, 512
+  size: 94, 56
+WalkDown
+  xy: 658, 512
+  size: 94, 56

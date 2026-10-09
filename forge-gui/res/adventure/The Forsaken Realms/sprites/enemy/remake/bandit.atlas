@@ -1,0 +1,179 @@
+bandit.png
+size: 612,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 68, 54
+Idle
+  xy: 68, 64
+  size: 68, 54
+Idle
+  xy: 136, 64
+  size: 68, 54
+Idle
+  xy: 204, 64
+  size: 68, 54
+Walk
+  xy: 0, 118
+  size: 68, 54
+Walk
+  xy: 68, 118
+  size: 68, 54
+Walk
+  xy: 136, 118
+  size: 68, 54
+Walk
+  xy: 204, 118
+  size: 68, 54
+Walk
+  xy: 272, 118
+  size: 68, 54
+Walk
+  xy: 340, 118
+  size: 68, 54
+Walk
+  xy: 408, 118
+  size: 68, 54
+Walk
+  xy: 476, 118
+  size: 68, 54
+Attack
+  xy: 0, 172
+  size: 68, 54
+Attack
+  xy: 68, 172
+  size: 68, 54
+Attack
+  xy: 136, 172
+  size: 68, 54
+Attack
+  xy: 204, 172
+  size: 68, 54
+Attack
+  xy: 272, 172
+  size: 68, 54
+Attack
+  xy: 340, 172
+  size: 68, 54
+Attack
+  xy: 408, 172
+  size: 68, 54
+Attack
+  xy: 476, 172
+  size: 68, 54
+Hit
+  xy: 0, 226
+  size: 68, 54
+Hit
+  xy: 68, 226
+  size: 68, 54
+Hit
+  xy: 136, 226
+  size: 68, 54
+Hit
+  xy: 204, 226
+  size: 68, 54
+Death
+  xy: 0, 280
+  size: 68, 54
+Death
+  xy: 68, 280
+  size: 68, 54
+Death
+  xy: 136, 280
+  size: 68, 54
+Death
+  xy: 204, 280
+  size: 68, 54
+Death
+  xy: 272, 280
+  size: 68, 54
+Death
+  xy: 340, 280
+  size: 68, 54
+Death
+  xy: 408, 280
+  size: 68, 54
+Death
+  xy: 476, 280
+  size: 68, 54
+Death
+  xy: 544, 280
+  size: 68, 54
+IdleUp
+  xy: 0, 334
+  size: 68, 54
+IdleUp
+  xy: 68, 334
+  size: 68, 54
+IdleUp
+  xy: 136, 334
+  size: 68, 54
+IdleUp
+  xy: 204, 334
+  size: 68, 54
+IdleDown
+  xy: 0, 388
+  size: 68, 54
+IdleDown
+  xy: 68, 388
+  size: 68, 54
+IdleDown
+  xy: 136, 388
+  size: 68, 54
+IdleDown
+  xy: 204, 388
+  size: 68, 54
+WalkUp
+  xy: 0, 442
+  size: 68, 54
+WalkUp
+  xy: 68, 442
+  size: 68, 54
+WalkUp
+  xy: 136, 442
+  size: 68, 54
+WalkUp
+  xy: 204, 442
+  size: 68, 54
+WalkUp
+  xy: 272, 442
+  size: 68, 54
+WalkUp
+  xy: 340, 442
+  size: 68, 54
+WalkUp
+  xy: 408, 442
+  size: 68, 54
+WalkUp
+  xy: 476, 442
+  size: 68, 54
+WalkDown
+  xy: 0, 496
+  size: 68, 54
+WalkDown
+  xy: 68, 496
+  size: 68, 54
+WalkDown
+  xy: 136, 496
+  size: 68, 54
+WalkDown
+  xy: 204, 496
+  size: 68, 54
+WalkDown
+  xy: 272, 496
+  size: 68, 54
+WalkDown
+  xy: 340, 496
+  size: 68, 54
+WalkDown
+  xy: 408, 496
+  size: 68, 54
+WalkDown
+  xy: 476, 496
+  size: 68, 54

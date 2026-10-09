@@ -1,0 +1,173 @@
+torbran.png
+size: 846,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 59
+Idle
+  xy: 94, 64
+  size: 94, 59
+Idle
+  xy: 188, 64
+  size: 94, 59
+Idle
+  xy: 282, 64
+  size: 94, 59
+Walk
+  xy: 0, 123
+  size: 94, 59
+Walk
+  xy: 94, 123
+  size: 94, 59
+Walk
+  xy: 188, 123
+  size: 94, 59
+Walk
+  xy: 282, 123
+  size: 94, 59
+Walk
+  xy: 376, 123
+  size: 94, 59
+Walk
+  xy: 470, 123
+  size: 94, 59
+Walk
+  xy: 564, 123
+  size: 94, 59
+Walk
+  xy: 658, 123
+  size: 94, 59
+Attack
+  xy: 0, 182
+  size: 94, 59
+Attack
+  xy: 94, 182
+  size: 94, 59
+Attack
+  xy: 188, 182
+  size: 94, 59
+Attack
+  xy: 282, 182
+  size: 94, 59
+Attack
+  xy: 376, 182
+  size: 94, 59
+Attack
+  xy: 470, 182
+  size: 94, 59
+Hit
+  xy: 0, 241
+  size: 94, 59
+Hit
+  xy: 94, 241
+  size: 94, 59
+Hit
+  xy: 188, 241
+  size: 94, 59
+Hit
+  xy: 282, 241
+  size: 94, 59
+Death
+  xy: 0, 300
+  size: 94, 59
+Death
+  xy: 94, 300
+  size: 94, 59
+Death
+  xy: 188, 300
+  size: 94, 59
+Death
+  xy: 282, 300
+  size: 94, 59
+Death
+  xy: 376, 300
+  size: 94, 59
+Death
+  xy: 470, 300
+  size: 94, 59
+Death
+  xy: 564, 300
+  size: 94, 59
+Death
+  xy: 658, 300
+  size: 94, 59
+Death
+  xy: 752, 300
+  size: 94, 59
+IdleUp
+  xy: 0, 359
+  size: 94, 59
+IdleUp
+  xy: 94, 359
+  size: 94, 59
+IdleUp
+  xy: 188, 359
+  size: 94, 59
+IdleUp
+  xy: 282, 359
+  size: 94, 59
+IdleDown
+  xy: 0, 418
+  size: 94, 59
+IdleDown
+  xy: 94, 418
+  size: 94, 59
+IdleDown
+  xy: 188, 418
+  size: 94, 59
+IdleDown
+  xy: 282, 418
+  size: 94, 59
+WalkUp
+  xy: 0, 477
+  size: 94, 59
+WalkUp
+  xy: 94, 477
+  size: 94, 59
+WalkUp
+  xy: 188, 477
+  size: 94, 59
+WalkUp
+  xy: 282, 477
+  size: 94, 59
+WalkUp
+  xy: 376, 477
+  size: 94, 59
+WalkUp
+  xy: 470, 477
+  size: 94, 59
+WalkUp
+  xy: 564, 477
+  size: 94, 59
+WalkUp
+  xy: 658, 477
+  size: 94, 59
+WalkDown
+  xy: 0, 536
+  size: 94, 59
+WalkDown
+  xy: 94, 536
+  size: 94, 59
+WalkDown
+  xy: 188, 536
+  size: 94, 59
+WalkDown
+  xy: 282, 536
+  size: 94, 59
+WalkDown
+  xy: 376, 536
+  size: 94, 59
+WalkDown
+  xy: 470, 536
+  size: 94, 59
+WalkDown
+  xy: 564, 536
+  size: 94, 59
+WalkDown
+  xy: 658, 536
+  size: 94, 59

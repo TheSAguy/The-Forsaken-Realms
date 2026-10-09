@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 520: the dwarves from the Universal LPC Spritesheet parts (2026-10-09)
+
+The Procedural Pixel Creatures session's seventh LPC batch: 24 enemies, closing the stock `humanoid/dwarf` folder
+(selections in the generator repo's `lpc_selections/make_520.py`). The named ones are dressed from their card art in
+Forge's picture cache.
+
+- **The look**: LPC's plump head with the big winter beard (or the full beard); a horned helmet where the stock sprite
+  wears one - the spangenhelm with upward horns (LPC's "horned" helmet is a dark closed helm, not a viking one); the
+  berserkers muscular and bare-armed under a bronze barbarian helm with downward horns. No cloth hood on a bearded
+  caster: it covers the beard and the figure reads as a hooded monk.
+- **The rank and file**: the Dwarf Lord (gold horned helm, red cape, gold shield, war axe), the Dwarf (steel, a brown
+  shield), the Axgard Dwarf (ginger, a silver shield), the Bandit (hooded, a crossbow), the Dwarf Demolisher (a brass
+  kettle hat, overalls, a pickaxe in the walk, a club swing), the Dwarf Mercenary (hood, cape, a longsword), the White
+  Dwarf (white beard, silver kettle hat, white tabard, a mace), the Dwarf Warlord (muscular, horned, steel pauldrons),
+  the Dwarf Pilot (a leather cap, round glasses, a crossbow), the Berserker.
+- **The named dwarves**: Torbran (a crested norman helm, red cape, plate, his great axe), Toralf (a red-haired muscular
+  god with a hammer), Arni (ginger, a fur mantle, an axe), Cadric (a white-bearded elder casting), Commodore Guff (a
+  red beard under a purple wizard's hat), Koll (a dark-skinned smith in a vest and apron, a hammer), Hofri (black
+  topknot and beard, white and blue, a hammer), Reyav (bronze, a big moustache, gold plate), Sram (white beard, glasses,
+  a crystal).
+- **The cavalry and pilot sprites, on foot** (LPC has no mounts): Magda (dark braid, maroon leather, an axe), Syr Faren
+  (a red-haired human knight with a green scarf and a hammer), Cayth (an elderly woman, grey bob, red coat and white
+  mantle, commanding empty-handed), Depala (ponytail, red scarf, white blouse, a crossbow), Vihaan (a bespectacled
+  human in a brown coat, casting).
+- **Files**: 24 new atlases under `sprites/enemy/remake/`; enemies.json 24 sprite paths + 24 scales (0.28-0.33; no
+  bosses). `CREDITS.md`'s LPC line now covers 179 enemies over seven rounds (no new authors);
+  `standalone-packaging/CREDITS_LPC.md` regenerated for all seven (earlier rounds' entries unchanged).
+- **Checks**: `validate_plane_data.py` unchanged; the sprite audit is clean on the twenty-four. Not seen in play.
+
 ## Round 519: the merfolk from the Universal LPC Spritesheet parts (2026-10-09)
 
 The Procedural Pixel Creatures session's sixth LPC batch: 26 enemies, closing the stock `humanoid/merfolk` folder

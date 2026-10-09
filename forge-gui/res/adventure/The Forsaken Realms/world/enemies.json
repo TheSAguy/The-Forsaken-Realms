@@ -2631,7 +2631,7 @@
     {
         "name": "Axgard Dwarf",
         "nameOverride": "Dwarven Grunt",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_8.atlas",
+        "sprite": "sprites/enemy/remake/axgard_dwarf.atlas",
         "deck": [
             "decks/standard/axgard_dwarf.dck"
         ],
@@ -2706,7 +2706,7 @@
             "Minion"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.3023
     },
     {
         "name": "Badger",
@@ -2782,7 +2782,7 @@
     {
         "name": "Bandit",
         "nameOverride": "Bandit Scavenger",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_7.atlas",
+        "sprite": "sprites/enemy/remake/bandit.atlas",
         "deck": [
             "decks/standard/bandit.dck"
         ],
@@ -2854,7 +2854,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.3171
     },
     {
         "name": "Bandit Archer",
@@ -3614,7 +3614,7 @@
     {
         "name": "Berserker",
         "nameOverride": "Dwarven Berserker",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_5.atlas",
+        "sprite": "sprites/enemy/remake/berserker.atlas",
         "deck": [
             "decks/standard/berserker.json"
         ],
@@ -3651,7 +3651,7 @@
             "BiomeRed"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Big Zombie",
@@ -9401,7 +9401,7 @@
     },
     {
         "name": "Dwarf",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_2.atlas",
+        "sprite": "sprites/enemy/remake/dwarf.atlas",
         "deck": [
             "decks/standard/dwarf.json"
         ],
@@ -9484,12 +9484,13 @@
             "IdentityBoros",
             "BiomeRed"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3023
     },
     {
         "name": "Dwarf Demolisher",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_3.atlas",
+        "sprite": "sprites/enemy/remake/dwarf_demolisher.atlas",
         "deck": [
             "decks/standard/dwarfdemolisher.dck"
         ],
@@ -9558,12 +9559,12 @@
             "Subterranean"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Dwarf Mercenary",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_4.atlas",
+        "sprite": "sprites/enemy/remake/dwarf_mercenary.atlas",
         "deck": [
             "decks/standard/dwarfmercenary.dck"
         ],
@@ -9644,12 +9645,12 @@
             "Minion"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Dwarf Pilot",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarfpilot.atlas",
+        "sprite": "sprites/enemy/remake/dwarf_pilot.atlas",
         "deck": [
             "decks/standard/dwarfpilot.dck"
         ],
@@ -9720,12 +9721,12 @@
             "Artificer"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.2826
     },
     {
         "name": "Dwarf Warlord",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarflarge.atlas",
+        "sprite": "sprites/enemy/remake/dwarf_warlord.atlas",
         "deck": [
             "decks/standard/dwarf_whitecastle.dck"
         ],
@@ -9733,7 +9734,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 0.7647,
+        "scale": 0.2889,
         "life": 32,
         "rewards": [
             {
@@ -32839,7 +32840,7 @@
     },
     {
         "name": "White Dwarf",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_6.atlas",
+        "sprite": "sprites/enemy/remake/white_dwarf.atlas",
         "deck": [
             "decks/standard/white_dwarf.dck"
         ],
@@ -32872,7 +32873,7 @@
             "BiomeWhite"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Wild Rat",
@@ -40453,13 +40454,13 @@
     },
     {
         "name": "Commodore Guff",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_5.atlas",
+        "sprite": "sprites/enemy/remake/commodore_guff.atlas",
         "deck": [
             "decks/legends/commodore_guff.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.0833,
+        "scale": 0.2955,
         "life": 40,
         "rewards": [
             {
@@ -47244,13 +47245,13 @@
     },
     {
         "name": "Magda",
-        "sprite": "sprites/enemy/humanoid/dwarf/bear_cavalry.atlas",
+        "sprite": "sprites/enemy/remake/magda.atlas",
         "deck": [
             "decks/legends/magda.dck"
         ],
         "ai": "",
         "speed": 27,
-        "scale": 1,
+        "scale": 0.3095,
         "life": 21,
         "rewards": [
             {
@@ -62460,13 +62461,13 @@
     },
     {
         "name": "Syr Faren",
-        "sprite": "sprites/enemy/humanoid/dwarf/bear_cavalry.atlas",
+        "sprite": "sprites/enemy/remake/syr_faren.atlas",
         "deck": [
             "decks/legends/syr_faren.dck"
         ],
         "ai": "",
         "speed": 35,
-        "scale": 1,
+        "scale": 0.3023,
         "life": 32,
         "rewards": [
             {
@@ -62596,13 +62597,13 @@
     },
     {
         "name": "Torbran",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_5.atlas",
+        "sprite": "sprites/enemy/remake/torbran.atlas",
         "deck": [
             "decks/legends/torbran.dck"
         ],
         "ai": "",
         "speed": 36,
-        "scale": 1.0833,
+        "scale": 0.2889,
         "life": 31,
         "rewards": [
             {
@@ -64514,13 +64515,13 @@
     },
     {
         "name": "Toralf",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_5.atlas",
+        "sprite": "sprites/enemy/remake/toralf.atlas",
         "deck": [
             "decks/legends/toralf.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3023,
         "life": 42,
         "rewards": [
             {
@@ -72117,7 +72118,7 @@
     },
     {
         "name": "Cadric",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_5.atlas",
+        "sprite": "sprites/enemy/remake/cadric.atlas",
         "deck": [
             "decks/legends/cadric.dck"
         ],
@@ -72181,11 +72182,11 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Cayth",
-        "sprite": "sprites/enemy/humanoid/dwarf/polar_cavalry.atlas",
+        "sprite": "sprites/enemy/remake/cayth.atlas",
         "deck": [
             "decks/legends/cayth.dck"
         ],
@@ -72248,11 +72249,12 @@
         "colors": "WUR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.325
     },
     {
         "name": "Depala",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarfpilot.atlas",
+        "sprite": "sprites/enemy/remake/depala.atlas",
         "deck": [
             "decks/legends/depala.dck"
         ],
@@ -72316,11 +72318,11 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Hofri",
-        "sprite": "sprites/enemy/humanoid/dwarf/carver.atlas",
+        "sprite": "sprites/enemy/remake/hofri.atlas",
         "deck": [
             "decks/legends/hofri.dck"
         ],
@@ -72384,7 +72386,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.2889
     },
     {
         "name": "Irini",
@@ -72456,7 +72458,7 @@
     },
     {
         "name": "Koll",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_7.atlas",
+        "sprite": "sprites/enemy/remake/koll.atlas",
         "deck": [
             "decks/legends/koll.dck"
         ],
@@ -72520,7 +72522,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.3
+        "scale": 0.3095
     },
     {
         "name": "Reveka",
@@ -72592,7 +72594,7 @@
     },
     {
         "name": "Reyav",
-        "sprite": "sprites/enemy/humanoid/dwarf/miner.atlas",
+        "sprite": "sprites/enemy/remake/reyav.atlas",
         "deck": [
             "decks/legends/reyav.dck"
         ],
@@ -72656,7 +72658,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Migloz",
@@ -73857,7 +73859,7 @@
     },
     {
         "name": "Sram",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarfpilot.atlas",
+        "sprite": "sprites/enemy/remake/sram.atlas",
         "deck": [
             "decks/legends/sram.dck"
         ],
@@ -73921,7 +73923,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Yahenni",
@@ -77362,7 +77364,7 @@
     },
     {
         "name": "Arni",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf_5.atlas",
+        "sprite": "sprites/enemy/remake/arni.atlas",
         "deck": [
             "decks/legends/arni.dck"
         ],
@@ -77431,7 +77433,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Fynn",
@@ -82014,7 +82016,7 @@
     },
     {
         "name": "Vihaan",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarfpilot.atlas",
+        "sprite": "sprites/enemy/remake/vihaan.atlas",
         "deck": [
             "decks/legends/vihaan.dck"
         ],
@@ -82078,7 +82080,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Obzedat",
@@ -100297,7 +100299,7 @@
     {
         "name": "Dwarf Lord",
         "nameOverride": "Daru Warchief",
-        "sprite": "sprites/enemy/humanoid/dwarf/dwarf.atlas",
+        "sprite": "sprites/enemy/remake/dwarf_lord.atlas",
         "deck": [
             "decks/elite/dwarf_lord.dck"
         ],
@@ -100531,7 +100533,7 @@
             "Leader"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Sun Titan",

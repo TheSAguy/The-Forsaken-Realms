@@ -1,0 +1,173 @@
+white_dwarf.png
+size: 756,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 55
+Idle
+  xy: 84, 64
+  size: 84, 55
+Idle
+  xy: 168, 64
+  size: 84, 55
+Idle
+  xy: 252, 64
+  size: 84, 55
+Walk
+  xy: 0, 119
+  size: 84, 55
+Walk
+  xy: 84, 119
+  size: 84, 55
+Walk
+  xy: 168, 119
+  size: 84, 55
+Walk
+  xy: 252, 119
+  size: 84, 55
+Walk
+  xy: 336, 119
+  size: 84, 55
+Walk
+  xy: 420, 119
+  size: 84, 55
+Walk
+  xy: 504, 119
+  size: 84, 55
+Walk
+  xy: 588, 119
+  size: 84, 55
+Attack
+  xy: 0, 174
+  size: 84, 55
+Attack
+  xy: 84, 174
+  size: 84, 55
+Attack
+  xy: 168, 174
+  size: 84, 55
+Attack
+  xy: 252, 174
+  size: 84, 55
+Attack
+  xy: 336, 174
+  size: 84, 55
+Attack
+  xy: 420, 174
+  size: 84, 55
+Hit
+  xy: 0, 229
+  size: 84, 55
+Hit
+  xy: 84, 229
+  size: 84, 55
+Hit
+  xy: 168, 229
+  size: 84, 55
+Hit
+  xy: 252, 229
+  size: 84, 55
+Death
+  xy: 0, 284
+  size: 84, 55
+Death
+  xy: 84, 284
+  size: 84, 55
+Death
+  xy: 168, 284
+  size: 84, 55
+Death
+  xy: 252, 284
+  size: 84, 55
+Death
+  xy: 336, 284
+  size: 84, 55
+Death
+  xy: 420, 284
+  size: 84, 55
+Death
+  xy: 504, 284
+  size: 84, 55
+Death
+  xy: 588, 284
+  size: 84, 55
+Death
+  xy: 672, 284
+  size: 84, 55
+IdleUp
+  xy: 0, 339
+  size: 84, 55
+IdleUp
+  xy: 84, 339
+  size: 84, 55
+IdleUp
+  xy: 168, 339
+  size: 84, 55
+IdleUp
+  xy: 252, 339
+  size: 84, 55
+IdleDown
+  xy: 0, 394
+  size: 84, 55
+IdleDown
+  xy: 84, 394
+  size: 84, 55
+IdleDown
+  xy: 168, 394
+  size: 84, 55
+IdleDown
+  xy: 252, 394
+  size: 84, 55
+WalkUp
+  xy: 0, 449
+  size: 84, 55
+WalkUp
+  xy: 84, 449
+  size: 84, 55
+WalkUp
+  xy: 168, 449
+  size: 84, 55
+WalkUp
+  xy: 252, 449
+  size: 84, 55
+WalkUp
+  xy: 336, 449
+  size: 84, 55
+WalkUp
+  xy: 420, 449
+  size: 84, 55
+WalkUp
+  xy: 504, 449
+  size: 84, 55
+WalkUp
+  xy: 588, 449
+  size: 84, 55
+WalkDown
+  xy: 0, 504
+  size: 84, 55
+WalkDown
+  xy: 84, 504
+  size: 84, 55
+WalkDown
+  xy: 168, 504
+  size: 84, 55
+WalkDown
+  xy: 252, 504
+  size: 84, 55
+WalkDown
+  xy: 336, 504
+  size: 84, 55
+WalkDown
+  xy: 420, 504
+  size: 84, 55
+WalkDown
+  xy: 504, 504
+  size: 84, 55
+WalkDown
+  xy: 588, 504
+  size: 84, 55

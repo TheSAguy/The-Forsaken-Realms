@@ -1,0 +1,179 @@
+dwarf_pilot.png
+size: 684,622
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 62
+Idle
+  xy: 76, 64
+  size: 76, 62
+Idle
+  xy: 152, 64
+  size: 76, 62
+Idle
+  xy: 228, 64
+  size: 76, 62
+Walk
+  xy: 0, 126
+  size: 76, 62
+Walk
+  xy: 76, 126
+  size: 76, 62
+Walk
+  xy: 152, 126
+  size: 76, 62
+Walk
+  xy: 228, 126
+  size: 76, 62
+Walk
+  xy: 304, 126
+  size: 76, 62
+Walk
+  xy: 380, 126
+  size: 76, 62
+Walk
+  xy: 456, 126
+  size: 76, 62
+Walk
+  xy: 532, 126
+  size: 76, 62
+Attack
+  xy: 0, 188
+  size: 76, 62
+Attack
+  xy: 76, 188
+  size: 76, 62
+Attack
+  xy: 152, 188
+  size: 76, 62
+Attack
+  xy: 228, 188
+  size: 76, 62
+Attack
+  xy: 304, 188
+  size: 76, 62
+Attack
+  xy: 380, 188
+  size: 76, 62
+Attack
+  xy: 456, 188
+  size: 76, 62
+Attack
+  xy: 532, 188
+  size: 76, 62
+Hit
+  xy: 0, 250
+  size: 76, 62
+Hit
+  xy: 76, 250
+  size: 76, 62
+Hit
+  xy: 152, 250
+  size: 76, 62
+Hit
+  xy: 228, 250
+  size: 76, 62
+Death
+  xy: 0, 312
+  size: 76, 62
+Death
+  xy: 76, 312
+  size: 76, 62
+Death
+  xy: 152, 312
+  size: 76, 62
+Death
+  xy: 228, 312
+  size: 76, 62
+Death
+  xy: 304, 312
+  size: 76, 62
+Death
+  xy: 380, 312
+  size: 76, 62
+Death
+  xy: 456, 312
+  size: 76, 62
+Death
+  xy: 532, 312
+  size: 76, 62
+Death
+  xy: 608, 312
+  size: 76, 62
+IdleUp
+  xy: 0, 374
+  size: 76, 62
+IdleUp
+  xy: 76, 374
+  size: 76, 62
+IdleUp
+  xy: 152, 374
+  size: 76, 62
+IdleUp
+  xy: 228, 374
+  size: 76, 62
+IdleDown
+  xy: 0, 436
+  size: 76, 62
+IdleDown
+  xy: 76, 436
+  size: 76, 62
+IdleDown
+  xy: 152, 436
+  size: 76, 62
+IdleDown
+  xy: 228, 436
+  size: 76, 62
+WalkUp
+  xy: 0, 498
+  size: 76, 62
+WalkUp
+  xy: 76, 498
+  size: 76, 62
+WalkUp
+  xy: 152, 498
+  size: 76, 62
+WalkUp
+  xy: 228, 498
+  size: 76, 62
+WalkUp
+  xy: 304, 498
+  size: 76, 62
+WalkUp
+  xy: 380, 498
+  size: 76, 62
+WalkUp
+  xy: 456, 498
+  size: 76, 62
+WalkUp
+  xy: 532, 498
+  size: 76, 62
+WalkDown
+  xy: 0, 560
+  size: 76, 62
+WalkDown
+  xy: 76, 560
+  size: 76, 62
+WalkDown
+  xy: 152, 560
+  size: 76, 62
+WalkDown
+  xy: 228, 560
+  size: 76, 62
+WalkDown
+  xy: 304, 560
+  size: 76, 62
+WalkDown
+  xy: 380, 560
+  size: 76, 62
+WalkDown
+  xy: 456, 560
+  size: 76, 62
+WalkDown
+  xy: 532, 560
+  size: 76, 62

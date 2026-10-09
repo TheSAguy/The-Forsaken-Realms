@@ -98,7 +98,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (155 enemies from rounds 498, 500, 501, 514, 515 and 519 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (179 enemies from rounds 498, 500, 501, 514, 515, 519 and 520 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -108,10 +108,13 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Howlpack Exile, the eleven minotaurs - the Amonkhet Minotaur Warrior, Neheb, Moraug, the Minotaur, Firesong and
   Sunspeaker, the Minotaur Warcaller, Mogis, Sethron, Gornog, Tahngarth, Zedruu - the eight nezumi - the Nezumi
   Leader, Marrow-Gnawer, Greasefang, Vren, the Nezumi Ninja, Ashcoat, Nashi, Wick - the halflings the Cheff and
-  Gaddock Teeg, and the twenty-six merfolk - Kiora, Thassa, Alandra, Emry, Orysa, the Merfolk Elite, Emperor Mihail,
+  Gaddock Teeg, the twenty-six merfolk - Kiora, Thassa, Alandra, Emry, Orysa, the Merfolk Elite, Emperor Mihail,
   Morska, Sidisi, the Merfolk Fighter, Kenessos, Jori En, Padeem, Dalakos, the Merfolk Lord, Prime Speaker Zegana,
   Svyelun, Talrand, the Merfolk King, the Astral Visionary, Neerdiv, the Merfolk Soldier, Thrasios and Vial Smasher,
-  Tatyova, Adrix and Nev, Grandmother Goby) - composed
+  Tatyova, Adrix and Nev, Grandmother Goby - and the twenty-four dwarves - the Dwarf Lord, the Dwarf, the Axgard
+  Dwarf, the Bandit, Koll, the Berserker, Arni, Torbran, Toralf, Cadric, Commodore Guff, the Dwarf Demolisher, the Dwarf
+  Mercenary, the White Dwarf, the Dwarf Warlord, Hofri, Reyav, the Dwarf Pilot, Depala, Sram, Vihaan, Magda, Syr Faren,
+  Cayth) - composed
   from the parts of the Universal LPC Spritesheet Character Generator (Liberated Pixel Cup contributors), each part
   under its own license (OGA-BY 3.0, CC-BY 3.0/4.0, CC-BY-SA 3.0, CC0), the composed sprites CC-BY or CC-BY-SA; the
   merfolk's trident is LPC's spear (CC-BY-SA 3.0) with tines and a crossbar added for this game; the

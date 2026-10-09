@@ -1,0 +1,173 @@
+hofri.png
+size: 720,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 60
+Idle
+  xy: 80, 64
+  size: 80, 60
+Idle
+  xy: 160, 64
+  size: 80, 60
+Idle
+  xy: 240, 64
+  size: 80, 60
+Walk
+  xy: 0, 124
+  size: 80, 60
+Walk
+  xy: 80, 124
+  size: 80, 60
+Walk
+  xy: 160, 124
+  size: 80, 60
+Walk
+  xy: 240, 124
+  size: 80, 60
+Walk
+  xy: 320, 124
+  size: 80, 60
+Walk
+  xy: 400, 124
+  size: 80, 60
+Walk
+  xy: 480, 124
+  size: 80, 60
+Walk
+  xy: 560, 124
+  size: 80, 60
+Attack
+  xy: 0, 184
+  size: 80, 60
+Attack
+  xy: 80, 184
+  size: 80, 60
+Attack
+  xy: 160, 184
+  size: 80, 60
+Attack
+  xy: 240, 184
+  size: 80, 60
+Attack
+  xy: 320, 184
+  size: 80, 60
+Attack
+  xy: 400, 184
+  size: 80, 60
+Hit
+  xy: 0, 244
+  size: 80, 60
+Hit
+  xy: 80, 244
+  size: 80, 60
+Hit
+  xy: 160, 244
+  size: 80, 60
+Hit
+  xy: 240, 244
+  size: 80, 60
+Death
+  xy: 0, 304
+  size: 80, 60
+Death
+  xy: 80, 304
+  size: 80, 60
+Death
+  xy: 160, 304
+  size: 80, 60
+Death
+  xy: 240, 304
+  size: 80, 60
+Death
+  xy: 320, 304
+  size: 80, 60
+Death
+  xy: 400, 304
+  size: 80, 60
+Death
+  xy: 480, 304
+  size: 80, 60
+Death
+  xy: 560, 304
+  size: 80, 60
+Death
+  xy: 640, 304
+  size: 80, 60
+IdleUp
+  xy: 0, 364
+  size: 80, 60
+IdleUp
+  xy: 80, 364
+  size: 80, 60
+IdleUp
+  xy: 160, 364
+  size: 80, 60
+IdleUp
+  xy: 240, 364
+  size: 80, 60
+IdleDown
+  xy: 0, 424
+  size: 80, 60
+IdleDown
+  xy: 80, 424
+  size: 80, 60
+IdleDown
+  xy: 160, 424
+  size: 80, 60
+IdleDown
+  xy: 240, 424
+  size: 80, 60
+WalkUp
+  xy: 0, 484
+  size: 80, 60
+WalkUp
+  xy: 80, 484
+  size: 80, 60
+WalkUp
+  xy: 160, 484
+  size: 80, 60
+WalkUp
+  xy: 240, 484
+  size: 80, 60
+WalkUp
+  xy: 320, 484
+  size: 80, 60
+WalkUp
+  xy: 400, 484
+  size: 80, 60
+WalkUp
+  xy: 480, 484
+  size: 80, 60
+WalkUp
+  xy: 560, 484
+  size: 80, 60
+WalkDown
+  xy: 0, 544
+  size: 80, 60
+WalkDown
+  xy: 80, 544
+  size: 80, 60
+WalkDown
+  xy: 160, 544
+  size: 80, 60
+WalkDown
+  xy: 240, 544
+  size: 80, 60
+WalkDown
+  xy: 320, 544
+  size: 80, 60
+WalkDown
+  xy: 400, 544
+  size: 80, 60
+WalkDown
+  xy: 480, 544
+  size: 80, 60
+WalkDown
+  xy: 560, 544
+  size: 80, 60
