@@ -67,6 +67,14 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 507): **LOCAL + UNRELEASED (data only)** - the Pitchfork Farmer's atlas regions re-fitted to
+its figures (the one bad grid found by the Procedural Pixel Creatures session's sweep of all 587 hand-made enemy atlases,
+`grid_sweep.py` in the generator repo; the user: "sweep for other pack sheets cut on a bad grid, like the Axe Orc was") and
+the Mimic + Fog Trap on the user's gate-mimic RPG Maker sheet (the toothy and the eye rows; both wore the 16 px chest;
+2 new remake atlases, enemies.json 2 paths + 2 scales, CREDITS.md's second-set line). The other "pack coverage wins"
+(deathspirit, bugmonster) were already covered by rounds 479/487; the scarabs and BigDragons went to the user as a
+side-by-side, decision pending. The peer (#30) packages with its 505b + 506 when the game closes. Not seen in play.
+
 ## STATE 2026-10-08 (round 506): **LOCAL + UNRELEASED** - the 15 Left/Right/Boots mana items are Neck items (the user:
 "re-distribute them to neck"), with pendant icons on Shikashi's Fantasy Icons Pack's necklace (`sprites/items_neck.png`,
 32 px drawn in the 16 box - `Config.getItemSprite` + `Controls.itemIcon`). Old saves: the catalog's new slot is taken,

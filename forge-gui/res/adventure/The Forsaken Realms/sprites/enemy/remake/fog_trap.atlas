@@ -1,0 +1,86 @@
+fog_trap.png
+size: 1056,594
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 132, 106
+Idle
+  xy: 132, 64
+  size: 132, 106
+Idle
+  xy: 264, 64
+  size: 132, 106
+Idle
+  xy: 396, 64
+  size: 132, 106
+Walk
+  xy: 0, 170
+  size: 132, 106
+Walk
+  xy: 132, 170
+  size: 132, 106
+Walk
+  xy: 264, 170
+  size: 132, 106
+Walk
+  xy: 396, 170
+  size: 132, 106
+Attack
+  xy: 0, 276
+  size: 132, 106
+Attack
+  xy: 132, 276
+  size: 132, 106
+Attack
+  xy: 264, 276
+  size: 132, 106
+Attack
+  xy: 396, 276
+  size: 132, 106
+Attack
+  xy: 528, 276
+  size: 132, 106
+Attack
+  xy: 660, 276
+  size: 132, 106
+Attack
+  xy: 792, 276
+  size: 132, 106
+Attack
+  xy: 924, 276
+  size: 132, 106
+Hit
+  xy: 0, 382
+  size: 132, 106
+Hit
+  xy: 132, 382
+  size: 132, 106
+Hit
+  xy: 264, 382
+  size: 132, 106
+Hit
+  xy: 396, 382
+  size: 132, 106
+Death
+  xy: 0, 488
+  size: 132, 106
+Death
+  xy: 132, 488
+  size: 132, 106
+Death
+  xy: 264, 488
+  size: 132, 106
+Death
+  xy: 396, 488
+  size: 132, 106
+Death
+  xy: 528, 488
+  size: 132, 106
+Death
+  xy: 660, 488
+  size: 132, 106

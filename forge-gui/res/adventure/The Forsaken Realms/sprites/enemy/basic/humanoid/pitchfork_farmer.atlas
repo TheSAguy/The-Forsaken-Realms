@@ -4,22 +4,22 @@ format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Avatar
-  xy: 9, 0
+  xy: 10, 0
   size: 17, 20
 Idle
-  xy: 9, 0
+  xy: 10, 0
   size: 17, 20
 Idle
-  xy: 59, 0
+  xy: 62, 0
   size: 17, 20
 Idle
-  xy: 112, 0
+  xy: 109, 0
   size: 17, 20
 Idle
   xy: 163, 0
   size: 17, 20
 Walk
-  xy: 9, 20
+  xy: 10, 20
   size: 17, 20
 Walk
   xy: 54, 20
@@ -31,7 +31,7 @@ Walk
   xy: 143, 20
   size: 17, 20
 Walk
-  xy: 187, 20
+  xy: 188, 20
   size: 17, 20
 Walk
   xy: 230, 20
@@ -49,17 +49,17 @@ Attack
   xy: 152, 40
   size: 17, 20
 Hit
-  xy: 9, 60
+  xy: 10, 60
   size: 17, 20
 Hit
-  xy: 50, 60
+  xy: 10, 60
   size: 17, 20
 Death
-  xy: 0, 80
+  xy: 45, 80
   size: 17, 20
 Death
-  xy: 54, 80
+  xy: 62, 80
   size: 17, 20
 Death
-  xy: 129, 80
+  xy: 138, 80
   size: 17, 20

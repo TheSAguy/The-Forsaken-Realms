@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 507: the Pitchfork Farmer's frames re-fitted, the Mimic and the Fog Trap from the gate-mimic sheet (2026-10-08)
+
+The Procedural Pixel Creatures session, from the user's "sweep for other pack sheets cut on a bad grid, like the Axe
+Orc was" and "the remaining pack coverage wins".
+
+- **The sweep** (the generator repo's new `grid_sweep.py`): every hand-made enemy atlas of the plane, 587 of them, checked
+  for blank frames, figures cut by a frame edge and the region-fit tool's verdict, the 36 strongest suspects reviewed
+  frame by frame. One bad grid: the **Pitchfork Farmer**, from the same Pixel Character Pack as the Axe Orc, with an empty
+  first Death frame, a dot for its second Hit frame and clipped figures. Its atlas regions are re-fitted to the figures
+  (`atlas_fit_regions.py`, as in round 492; the PNG untouched): every frame whole, the Hit shown twice as the sheet drew
+  it once. The Plumed Knight of that pack sits 2-4 px off center and is left alone; everything else the numbers flagged is
+  tightly packed cells, projectiles or flash frames.
+- **The Mimic and the Fog Trap** wear the user's gate-mimic RPG Maker sheet (`mimicgate.png`, a door with an eye and
+  teeth): its four rows are states, not directions - teeth, the eye alone, two closed doors - so the sheet is read as a
+  recolor sheet and the Mimic takes the toothy row, the Fog Trap the eye. Both wore the 16 px stock chest. New atlases
+  under `sprites/enemy/remake/`; enemies.json 2 sprite paths + 2 scales (0.18; the entries had no scale, their tier
+  lines take a trailing comma). The second-set line in `CREDITS.md` names them.
+- **Not imported**: the coverage sheet's deathspirit and bugmonster targets (the reapers and wraiths, the scarabs) all
+  wear remakes since rounds 479 and 487. The scarabs on the bug sheet and seven dragons on the BigDragons sheet went to
+  the user as a side-by-side at in-game size; their call.
+- **Checks**: `validate_plane_data.py` unchanged; the sprite audit's flags on the two new atlases are the shadow line
+  under the hovering doors. Not seen in play.
+
 ## Round 506: the fifteen Left, Right and Boots mana items hang at the neck (2026-10-08)
 
 The user, after the item audit: "For the mana/land items, can we take the Right, Boots and Left, should be 15 in total

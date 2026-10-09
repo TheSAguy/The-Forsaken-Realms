@@ -12325,7 +12325,7 @@
     },
     {
         "name": "Fog Trap",
-        "sprite": "sprites/enemy/aberration/mimic.atlas",
+        "sprite": "sprites/enemy/remake/fog_trap.atlas",
         "deck": [
             "decks/standard/turbofog.dck"
         ],
@@ -12405,7 +12405,8 @@
             "IdentityGreen",
             "IdentitySelesnya"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.1757
     },
     {
         "name": "Forest Giant",
@@ -22048,7 +22049,7 @@
     },
     {
         "name": "Mimic",
-        "sprite": "sprites/enemy/aberration/mimic.atlas",
+        "sprite": "sprites/enemy/remake/mimic.atlas",
         "deck": [
             "decks/standard/mimic.dck"
         ],
@@ -22129,7 +22130,8 @@
             "IdentityBlue",
             "IdentityDimir"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.1757
     },
     {
         "name": "Mindclaw Shaman",
