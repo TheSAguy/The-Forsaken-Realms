@@ -296,7 +296,7 @@ public class InventoryScene extends UIScene {
         int initialCost;
         try {
             //TODO apply modifiers from reputation..
-            initialCost = (int) (data.cost * 0.4f);
+            initialCost = repairCost(data);
         } catch (Exception e) {
             initialCost = 500;
         }
@@ -319,6 +319,11 @@ public class InventoryScene extends UIScene {
                 removeDialog();
             }, this::removeDialog)
         );
+    }
+
+    /** 0.4x the item's cost; round 508: times Ascendance's Mechanic (repairs 75% cheaper). */
+    private static int repairCost(ItemData data) {
+        return (int) (data.cost * 0.4f * forge.adventure.util.Ascendance.repairCostFactor());
     }
 
     private static InventoryScene object;
@@ -551,7 +556,7 @@ public class InventoryScene extends UIScene {
             // buy/upgrade/re-roll buttons") - repair() already re-checks this itself and shows a
             // "not enough credits" dialog instead of repairing, but nothing previously reflected
             // it in the button's own visual state. Same 0.4x-of-item-cost formula repair() uses.
-            repairButton.setDisabled(Current.player().getGold() < (int) (data.cost * 0.4f));
+            repairButton.setDisabled(Current.player().getGold() < repairCost(data));
             String status = data.isCracked ? " (" + Forge.getLocalizer().getMessage("lblCracked") + ")" : "";
             setDescription(data.getDisplayName() + status + "\n[%98]" // round 460: upstream's display name
                     + forge.adventure.util.Ascendance.withItemLimits(Current.player(), data, data.getDescription())); // rounds 493 + 502

@@ -99,6 +99,9 @@ public class AscendanceData {
         /** Lasting only: picks it can take before it stops being offered. */
         public int maxPicks = 1;
         public float value;
+        /** Round 508, lasting only: the FIRST pick's value when it differs; each later pick adds {@code value} (the
+         *  user: Shardwell "start at +2 and the second would be +3"). 0 = every pick adds {@code value}. */
+        public float first;
         /** Relative chance of being offered. */
         public float weight = 1f;
     }

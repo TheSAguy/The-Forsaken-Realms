@@ -688,7 +688,7 @@ public class RoamingGuardRuntime {
             RoamingGuards.onDefeated(guard, day);
             GameHUD.getInstance().addNotification("[RED]Your " + RoamingGuards.displayName(guard.tier)
                     + " guard fell to a raider at " + where + " and is out of commission for "
-                    + RoamingGuards.recoveryDays() + " days.", true);
+                    + RoamingGuards.recoveryDaysNow() + " days.", true); // round 508: Medic
             return mage;
         }
         String town = mage != null && mage.territoryTarget != null
@@ -713,7 +713,7 @@ public class RoamingGuardRuntime {
         RoamingGuards.onDefeated(guard, day);
         GameHUD.getInstance().addNotification("[RED]Your " + RoamingGuards.displayName(guard.tier)
                 + " guard fell at " + town + " and is out of commission for "
-                + RoamingGuards.recoveryDays() + " days.", true);
+                + RoamingGuards.recoveryDaysNow() + " days.", true); // round 508: Medic
         return mage; // the mage carries on to the town, which now defends itself
     }
 
@@ -780,7 +780,7 @@ public class RoamingGuardRuntime {
             RoamingGuards.onDefeated(guard, day);
             GameHUD.getInstance().addNotification("[RED]Your " + RoamingGuards.displayName(guard.tier)
                     + " guard's fight at " + townName + " never finished - it counts as a loss. Out of commission for "
-                    + RoamingGuards.recoveryDays() + " days.", true);
+                    + RoamingGuards.recoveryDaysNow() + " days.", true); // round 508: Medic
         }
     }
 

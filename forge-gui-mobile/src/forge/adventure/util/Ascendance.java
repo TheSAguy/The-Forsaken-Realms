@@ -791,8 +791,15 @@ public final class Ascendance {
 
     /** A lasting reward's total: its per-pick value times the picks taken. */
     private static float total(String id) {
-        AscendanceData.Choice c = choice(id);
-        return c == null ? 0f : c.value * picks(id);
+        return totalAt(choice(id), picks(id));
+    }
+
+    /** Round 508: the total after {@code picks} picks - {@code first} for the first when the choice sets one (Shardwell
+     *  +2, then +3), {@code value} for each pick after it. */
+    private static float totalAt(AscendanceData.Choice c, int picks) {
+        if (c == null || picks <= 0)
+            return 0f;
+        return c.first > 0f ? c.first + c.value * (picks - 1) : c.value * picks;
     }
 
     // The effects, read where the game computes each value. Neutral (1, or 0) without the pick.
@@ -826,6 +833,11 @@ public final class Ascendance {
     public static int duelStartShards() { return Math.round(total("shardwell")); }
     /** Envoy: color reputation LOST from a won duel, times this. */
     public static float reputationLossFactor() { return Math.max(0f, 1f - total("envoy")); }
+    /** Round 508, Mechanic (the one-time Mend became it - the user: "Change 'Mend' to Mechanic and reduce item repair cost
+     *  by 75%"): an item repair's gold, times this. */
+    public static float repairCostFactor() { return Math.max(0f, 1f - total("mechanic")); }
+    /** Round 508, Medic (the user: "Guards heal time reduced by 50%"): a defeated roaming guard's days out, times this. */
+    public static float guardRecoveryFactor() { return Math.max(0.1f, 1f - total("medic")); }
     /** Architect: building and town-restore costs, times this. */
     public static float buildCostFactor() { return Math.max(0.1f, 1f - total("architect")); }
 
@@ -930,7 +942,7 @@ public final class Ascendance {
             return "[%95]" + AscendanceRewards.name(id) + "[]\n[%75]" + AscendanceRewards.describe(id, c.value, level);
         int next = picks(id) + 1;
         String rank = next < RANKS.length ? RANKS[next] : " " + next;
-        float now = c.value * picks(id), then = c.value * next;
+        float now = totalAt(c, picks(id)), then = totalAt(c, next); // round 508: a different first pick (Shardwell)
         String effect;
         switch (id) {
             case "vigor": effect = "+" + Math.round(c.value) + " [+Life] in the first " + next + " duel" + (next == 1 ? "" : "s") + " each day"; break;
@@ -942,9 +954,11 @@ public final class Ascendance {
             case "stubborn": effect = "Defeats cost " + pct(then) + " less [+Life] and [+Gold]" + (now > 0 ? " (now " + pct(now) + ")" : ""); break;
             case "mender": effect = pct(Math.min(1f, then)) + " chance a worn item escapes cracking" + (now > 0 ? " (now " + pct(now) + ")" : ""); break;
             case "spoilsman": effect = "+" + Math.round(then) + " card" + (then >= 2 ? "s" : "") + " on a first win against an enemy"; break;
-            case "shardwell": effect = "+" + Math.round(then) + " [+Shards] at the start of each duel"; break;
+            case "shardwell": effect = "+" + Math.round(then) + " [+Shards] at the start of each duel" + (now > 0 ? " (now +" + Math.round(now) + ")" : ""); break;
             case "envoy": effect = "Color reputation lost from wins -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
             case "architect": effect = "Building and town restore costs -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
+            case "mechanic": effect = "Item repairs cost " + pct(Math.min(1f, then)) + " less [+Gold]"; break; // round 508
+            case "medic": effect = "Downed roaming guards heal in " + pct(Math.min(1f, then)) + " less time"; break; // round 508
             default: effect = id;
         }
         return "[%95]" + lastingName(id) + rank + "[]\n[%75]" + effect;
@@ -968,8 +982,25 @@ public final class Ascendance {
             case "shardwell": return "Shardwell";
             case "envoy": return "Envoy";
             case "architect": return "Architect";
+            case "mechanic": return "Mechanic"; // round 508
+            case "medic": return "Medic";
             default: return id;
         }
+    }
+
+    /** Round 508: Medic just taken - every roaming guard still out of commission has its remaining days cut by the same
+     *  share (rounded up, at least a day), so the pick helps the guards already down, not only the next defeat. */
+    private static void shortenDowntimes() {
+        int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        float factor = guardRecoveryFactor();
+        for (RoamingGuardData guard : RoamingGuards.roster())
+            if (guard.isOutOfCommission(day)) {
+                int left = guard.downUntilDay - day;
+                int before = guard.downUntilDay;
+                guard.downUntilDay = day + Math.max(1, (int) Math.ceil(left * factor));
+                System.out.println("[TFR-Ascend] Medic: a " + RoamingGuards.displayName(guard.tier) + " guard out until day "
+                        + before + " is back on day " + guard.downUntilDay);
+            }
     }
 
     /** Take {@code id} from the current offer: a lasting pick counts, a one-time reward is paid at the level it was
@@ -987,6 +1018,8 @@ public final class Ascendance {
             result = lastingName(id) + RANKS[Math.min(RANKS.length - 1, s.picks.get(id))];
             if ("swiftFeet".equals(id)) // the player sprite caches its speed until the equipment signal
                 WorldSave.getCurrentSave().getPlayer().refreshEquipmentEffects();
+            if ("medic".equals(id)) // round 508: a guard already down heals in the shorter time too
+                shortenDowntimes();
         } else {
             result = AscendanceRewards.give(id, c.value, level);
         }

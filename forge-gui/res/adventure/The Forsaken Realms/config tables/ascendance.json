@@ -88,21 +88,23 @@
     { "id": "booster" },                    // a pack of an edition the player has unlocked
     { "id": "mapFragment" },                // a piece of a treasure map still missing
     { "id": "blueprint" },                  // a shop blueprint not owned, from the tiers reputation allows
-    { "id": "coins",       "value": 2 },    // Bronze Challenge Coins
+    { "id": "coins",       "value": 1 },    // Bronze Challenge Coins (round 508: 2 -> 1)
     { "id": "goodwill",    "value": 2 },    // reputation in the player's own town with the least
-    { "id": "mend" },                       // every cracked item repaired, every downed roaming guard healed
-    // lasting
+    // (round 508: "mend" - repair everything, heal the guards - became the lasting Mechanic and Medic below)
+    // lasting; "first" (round 508) is the first pick's value when it differs, each later pick adding "value"
     { "id": "vigor",       "lasting": true, "maxPicks": 3, "value": 3 },    // +3 life in the first N duels each day
     { "id": "haggler",     "lasting": true, "maxPicks": 3, "value": 0.05 }, // -5% shop prices a pick
     { "id": "swiftFeet",   "lasting": true, "maxPicks": 3, "value": 0.05 }, // +5% overworld speed
     { "id": "prospector",  "lasting": true, "maxPicks": 3, "value": 0.15 }, // +15% resource pickups and mines
     { "id": "farSight",    "lasting": true, "maxPicks": 2, "value": 0.15 }, // +15% vision radius
-    { "id": "marshal",     "lasting": true, "maxPicks": 3, "value": 2 },    // roaming guards +2 life
+    { "id": "marshal",     "lasting": true, "maxPicks": 3, "value": 4 },    // roaming guards +4 life (round 508: 2 -> 4)
     { "id": "stubborn",    "lasting": true, "maxPicks": 2, "value": 0.25 }, // defeats cost 25% less life and gold
-    { "id": "mender",      "lasting": true, "maxPicks": 2, "value": 0.25 }, // 25% chance an item doesn't crack
+    { "id": "mender",      "lasting": true, "maxPicks": 2, "value": 0.30 }, // 30%, then 60%, an item doesn't crack (round 508)
     { "id": "spoilsman",   "lasting": true, "maxPicks": 2, "value": 1 },    // +1 card on a first win
-    { "id": "shardwell",   "lasting": true, "maxPicks": 2, "value": 1 },    // +1 mana shard at duel start
+    { "id": "shardwell",   "lasting": true, "maxPicks": 2, "first": 2, "value": 1 }, // +2, then +3 mana shards at duel start (round 508)
     { "id": "envoy",       "lasting": true, "maxPicks": 2, "value": 0.15 }, // -15% color reputation lost from wins
-    { "id": "architect",   "lasting": true, "maxPicks": 3, "value": 0.10 }  // -10% building and restore costs
+    { "id": "architect",   "lasting": true, "maxPicks": 3, "value": 0.10 }, // -10% building and restore costs
+    { "id": "mechanic",    "lasting": true, "maxPicks": 1, "value": 0.75 }, // item repairs cost 75% less (round 508)
+    { "id": "medic",       "lasting": true, "maxPicks": 1, "value": 0.50 }  // downed guards heal in 50% less time (round 508)
   ]
 }

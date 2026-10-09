@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 508: Ascendance's rewards re-tuned - Mechanic and Medic replace Mend (2026-10-08)
+
+The user: "For the level up selects, change Bronze Coins +2 to +1. Shardwell ... start at +2 and the second would be +3
+(so the second pick would add 1). Change 'Mend' to Mechanic and reduce item repair cost by 75%. Add 'Medic' - Guards
+heal time reduced by 50%. Marshal ... Change it to +4 life. Mender ... change to 30% and then 60%."
+
+- **`ascendance.json`**: Bronze Coins 2 -> 1 (the text says "Coin" for one); Marshal +2 -> +4 life a pick (+4/+8/+12);
+  Mender 25% -> 30% a pick (30%, then 60%); Shardwell `"first": 2, "value": 1` - +2 shards at a duel's start, then +3.
+  `AscendanceData.Choice.first` (new): the first pick's value when it differs, each later pick adding `value`
+  (`Ascendance.totalAt`; the offer's "(now ...)" reads it too).
+- **Mend (one-time: every repair and every guard healed at once) is gone**, split into two lasting picks, one each:
+  - **Mechanic**: item repairs cost 75% less (`Ascendance.repairCostFactor`, in `InventoryScene.repairCost` - 0.4x the
+    item's cost, the only repair in the game).
+  - **Medic**: a defeated roaming guard is out 50% less time (`RoamingGuards.recoveryDaysNow`, 15 days for the default
+    30; the defeat notices say the shortened number). Taking it also halves the time left for guards already down.
+  - An offer saved with "mend" in it re-rolls (it no longer exists); the pool has 11 one-time and 14 lasting rewards.
+- **Picks already taken keep counting**: a save with Marshal or Mender gets the new values at once.
+- **Agent-tested**: Shardwell I, II -> a duel started with 3 shards (`[TFR-DuelEffects] ... shards=3`); Mechanic, Medic,
+  Marshal, Mender I-II taken; "mend" is no reward any more. Not seen in play: a Mechanic repair price, a Medic downtime.
+
 ## Round 507: the Pitchfork Farmer's frames re-fitted, the Mimic and the Fog Trap from the gate-mimic sheet (2026-10-08)
 
 The Procedural Pixel Creatures session, from the user's "sweep for other pack sheets cut on a bad grid, like the Axe

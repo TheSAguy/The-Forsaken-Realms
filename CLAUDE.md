@@ -67,6 +67,10 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 508): **LOCAL + UNRELEASED** - Ascendance rewards re-tuned (the user's list): Bronze Coins 1,
+Shardwell +2 then +3 (`Choice.first`), Marshal +4 life, Mender 30%/60%; the one-time Mend became two lasting picks,
+Mechanic (repairs -75%, `InventoryScene.repairCost`) and Medic (guard downtime -50%, `RoamingGuards.recoveryDaysNow`).
+
 ## STATE 2026-10-08 (round 507): **LOCAL + UNRELEASED (data only)** - the Pitchfork Farmer's atlas regions re-fitted to
 its figures (the one bad grid found by the Procedural Pixel Creatures session's sweep of all 587 hand-made enemy atlases,
 `grid_sweep.py` in the generator repo; the user: "sweep for other pack sheets cut on a bad grid, like the Axe Orc was") and

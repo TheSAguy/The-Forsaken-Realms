@@ -5,7 +5,6 @@ import forge.Forge;
 import forge.adventure.data.ItemData;
 import forge.adventure.data.ItemListData;
 import forge.adventure.data.RewardData;
-import forge.adventure.data.RoamingGuardData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.pointofintrest.PointOfInterestChanges;
@@ -21,7 +20,9 @@ import java.util.Random;
  * Round 494 - Ascendance's one-time rewards (the pick-1-of-3 on a level that is not a milestone): what each id is
  * called, what it would give at a level, whether it can give anything at all, and the giving. Amounts scale with the
  * level the choice was earned at (ascendance.json "value" x level). Cards, an item, a booster and a map piece are turned
- * over on the reward screen like any loot; resources, reputation and repairs are paid on the spot.
+ * over on the reward screen like any loot; resources and reputation are paid on the spot. (Round 508: "mend" - every
+ * repair and every guard healed at once - became the lasting Mechanic and Medic, Ascendance.repairCostFactor and
+ * guardRecoveryFactor.)
  */
 final class AscendanceRewards {
     private AscendanceRewards() {
@@ -42,7 +43,6 @@ final class AscendanceRewards {
             case "blueprint": return "A blueprint";
             case "coins": return "Bronze Coins";
             case "goodwill": return "Goodwill";
-            case "mend": return "Mend";
             default: return id;
         }
     }
@@ -67,10 +67,9 @@ final class AscendanceRewards {
             case "booster": return "A pack of an edition you have unlocked";
             case "mapFragment": return "[+MapFragmentWaste] A piece of a treasure map you are still missing";
             case "blueprint": return "A shop blueprint you don't have yet";
-            case "coins": return "+" + Math.round(value) + " [+BronzeChallengeCoin] Bronze Challenge Coins";
+            case "coins": return "+" + Math.round(value) + " [+BronzeChallengeCoin] Bronze Challenge Coin" + (Math.round(value) == 1 ? "" : "s");
             case "goodwill": PointOfInterest town = leastRespectedTown();
                 return "+" + Math.round(value) + " reputation in " + (town == null ? "your town" : town.getDisplayName());
-            case "mend": return "Repair every cracked item; downed roaming guards back on their feet";
             default: return id;
         }
     }
@@ -85,7 +84,6 @@ final class AscendanceRewards {
             case "mapFragment": return !regionsMissingPieces().isEmpty();
             case "blueprint": return !unknownBlueprints().isEmpty();
             case "goodwill": return leastRespectedTown() != null;
-            case "mend": return !crackedItems().isEmpty() || !downedGuards().isEmpty();
             default: return false;
         }
     }
@@ -146,7 +144,7 @@ final class AscendanceRewards {
                     if (coin != null)
                         loot.add(new Reward(coin));
                 }
-                result = "+" + loot.size + " [+BronzeChallengeCoin] Bronze Coins";
+                result = "+" + loot.size + " [+BronzeChallengeCoin] Bronze Coin" + (loot.size == 1 ? "" : "s");
                 break;
             case "goodwill": {
                 PointOfInterest town = leastRespectedTown();
@@ -157,16 +155,6 @@ final class AscendanceRewards {
                 PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(town.getID());
                 changes.addMapReputation(Math.round(value));
                 result = "+" + Math.round(value) + " reputation in " + town.getDisplayName() + " (now " + changes.getMapReputation() + ")";
-                break;
-            }
-            case "mend": {
-                List<ItemData> cracked = crackedItems();
-                for (ItemData item : cracked)
-                    item.isCracked = false;
-                List<RoamingGuardData> downed = downedGuards();
-                for (RoamingGuardData guard : downed)
-                    guard.downUntilDay = 0;
-                result = cracked.size() + " item(s) repaired, " + downed.size() + " guard(s) healed";
                 break;
             }
             default: result = id;
@@ -243,22 +231,5 @@ final class AscendanceRewards {
             }
         }
         return best;
-    }
-
-    private static List<ItemData> crackedItems() {
-        List<ItemData> out = new ArrayList<>();
-        for (ItemData item : WorldSave.getCurrentSave().getPlayer().getItems())
-            if (item != null && item.isCracked)
-                out.add(item);
-        return out;
-    }
-
-    private static List<RoamingGuardData> downedGuards() {
-        List<RoamingGuardData> out = new ArrayList<>();
-        int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
-        for (RoamingGuardData guard : RoamingGuards.roster())
-            if (guard.isOutOfCommission(day))
-                out.add(guard);
-        return out;
     }
 }

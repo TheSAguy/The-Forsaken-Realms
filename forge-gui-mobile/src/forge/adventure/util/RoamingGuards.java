@@ -55,6 +55,12 @@ public class RoamingGuards {
         return c == null || c.recoveryDays <= 0 ? 30 : c.recoveryDays;
     }
 
+    /** Round 508: the days a guard defeated now is out - recoveryDays, times Ascendance's Medic (the user: "Guards heal
+     *  time reduced by 50%"). */
+    public static int recoveryDaysNow() {
+        return Math.max(1, Math.round(recoveryDays() * Ascendance.guardRecoveryFactor()));
+    }
+
     /** Shards to cut a defeated guard's recovery short (round 152, user request). */
     public static int healShardCost() {
         RoamingGuardConfig c = config();
@@ -548,7 +554,7 @@ public class RoamingGuards {
 
     /** Records a defeat: the guard is out of commission for the configured recovery window. */
     public static void onDefeated(RoamingGuardData guard, int currentDay) {
-        guard.downUntilDay = currentDay + recoveryDays();
+        guard.downUntilDay = currentDay + recoveryDaysNow();
         guard.deployed = false;
         guard.missionPoiId = "";
         guard.missionPillage = false; // round 490
