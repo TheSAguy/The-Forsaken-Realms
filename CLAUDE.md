@@ -67,6 +67,13 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-09 (round 517): **LOCAL + UNRELEASED** - Power has an icon (the Shikashi sun: `items_power.png`, 32-px
+`Power` + 16-px `PowerGlyph` for text, `Ascendance.ICON`) and a duel's Power is a loot card paid on Done
+(`Reward.Type.Power`, `Ascendance.appendDuelPower`/`collectPower`). Chests (15) and diamonds (25 at 15%) can give
+Power. The Demon's Bargain waits for day 8 and keeps its demon (the cave champion skips authored/talking placements).
+An Inn tournament pays its Power once (`finalizeEvent` guard). The HUD's lower panels line up with gold/shards, with one
+bar between them (`PANEL_JUNCTION_OVERLAP` 3.25).
+
 ## STATE 2026-10-09 (round 516): **LOCAL + UNRELEASED** - the peer's code review of 473-515 (nine findings) fixed (the
 user: "fix them"): quest gate tags, the invasion leader's name, Esc in towns and on HUD dialogs (`GameHUD.closeDialogOnBack`
 before `MapStage.dialogInput`), the main-item limit on a second load, the Sanctum's day-8 slot, the NG+ refund at the

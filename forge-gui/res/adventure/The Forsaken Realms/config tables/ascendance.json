@@ -51,6 +51,11 @@
   "innMatchWin": 15,
   "innChampion": 30,
   "treasureFound": 75,
+  // Round 517: the overworld chest's seventh outcome (one in seven, with Ascendance on), and the diamond's chance to pay
+  // Power instead of a resource (after its ambush, blueprint and vigor rolls).
+  "chestPower": 15,
+  "diamondPower": 25,
+  "diamondPowerChance": 0.15,
   // Quests that pay no Power (round 496 listed the intro, 28; round 497 pays it again - it is the step to level 1).
   "noPowerQuestIds": [],
   // Round 505b: the intro's 50 waits for the tutorial-or-skip choice; on the tutorial path it is dropped and the tutorial

@@ -43,6 +43,7 @@ public class ChestEvents {
     private static final int EVENT_THIEF_MERCHANT = 3;
     private static final int EVENT_DUPLICATE = 4;
     private static final int EVENT_ILLEGAL_ARENA = 5;
+    private static final int EVENT_POWER = 6; // round 517: only rolled with Ascendance on
 
     // Shop blueprint from a chest (user spec 2026-08-30: "add it to diamond AND the Chest Drop").
     private static final float CHEST_BLUEPRINT_CHANCE = 0.25f;
@@ -56,8 +57,15 @@ public class ChestEvents {
             System.out.println("[ChestEvents] Chest opened, event=blueprint");
             return;
         }
-        int roll = world.getRandom().nextInt(6);
+        // Round 517 (the user: "add a 'Power' reward to the overworld chest ... Maybe 15"): with Ascendance on, a
+        // seventh, equal outcome - a cache of Power (ascendance.json chestPower).
+        boolean power = Ascendance.isActive() && Ascendance.data().chestPower > 0;
+        int roll = world.getRandom().nextInt(power ? 7 : 6);
         System.out.println("[ChestEvents] Chest opened, event=" + roll);
+        if (roll == EVENT_POWER) {
+            Ascendance.award(Ascendance.data().chestPower, "a chest");
+            return;
+        }
         switch (roll) {
             case EVENT_GOLD:
                 triggerGoldChest(world);

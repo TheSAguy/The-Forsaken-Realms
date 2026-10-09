@@ -145,7 +145,8 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 ## Item art
 
 - **Neck pendants** (the gold chain and the lotus bud, coin, leaf and feather pendants of the fifteen mana items that
-  hang at the neck) - **Shikashi's Fantasy Icons Pack** by **Shikashi**; supplied by the user.
+  hang at the neck) and **the Power icon** (the radiant sun of Ascendance's Power) - **Shikashi's Fantasy Icons Pack**
+  by **Shikashi**; supplied by the user.
 
 ## License
 

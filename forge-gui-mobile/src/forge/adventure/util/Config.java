@@ -827,6 +827,13 @@ public class Config {
         return sprite;
     }
 
+    /** Round 517: whether an item icon can stand in a line of text as an inline [+Name] glyph - only a 16-px region; a
+     *  32-px one (the neck pendants, the Power sun) draws past its advance and over the next words. */
+    public boolean isTextGlyph(String itemName) {
+        Sprite sprite = itemName == null ? null : getItemSprite(itemName);
+        return sprite != null && sprite.getRegionWidth() <= 16 && sprite.getRegionHeight() <= 16;
+    }
+
     public Sprite getAtlasSprite(String atlasName, String itemName) {
         Sprite sprite;
         ObjectMap<String, Sprite> sprites = atlasSprites.get(atlasName);

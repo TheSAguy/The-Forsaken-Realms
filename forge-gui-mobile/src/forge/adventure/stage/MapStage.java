@@ -930,6 +930,11 @@ public class MapStage extends GameStage {
         return value != null && Boolean.parseBoolean(value.toString());
     }
 
+    /** Round 517: a Tiled string property that holds something (a dialog's JSON, a name). */
+    private static boolean hasText(Object value) {
+        return value != null && !value.toString().trim().isEmpty();
+    }
+
     private void loadCollision(TiledMapTileLayer layer) {
         for (int x = 0; x < layer.getWidth(); x++) {
             for (int y = 0; y < layer.getHeight(); y++) {
@@ -1049,6 +1054,11 @@ public class MapStage extends GameStage {
                 // territory re-theme in loadObjects() applies before swapping an enemy out.
                 if (existing == null || isScriptedPlacement(existing)
                         || AdventureQuestController.instance().isQuestTargetPlacement(existing, poi))
+                    continue;
+                // Round 517 (the user, of the Demon's Bargain: "the first time I visited it, he was a spider, I left and
+                // returned and he was the demon, as he should be"): nor a placement the map keeps as authored (round
+                // 345), nor one that talks - the demon was the cave's only enemy, so the champion took his place.
+                if (isTrueProperty(prop.get("keepAuthored")) || hasText(prop.get("dialog")) || hasText(prop.get("defeatDialog")))
                     continue;
                 candidates.add(objectId);
             }
@@ -1539,7 +1549,7 @@ public class MapStage extends GameStage {
                             // Round 139: this cave's champion takes over the placement chosen in
                             // prepareCaveChampion(). After the re-theme above, so a promotion is
                             // never itself re-themed back into an ordinary local encounter.
-                            if (id == caveChampionObjectId && caveChampionData != null) {
+                            if (id == caveChampionObjectId && caveChampionData != null && !asAuthored) { // round 517
                                 System.out.println("[TFR-CaveChampion] promoting placement " + id + " from "
                                         + EN.getName() + " to " + caveChampionData.getName());
                                 EN = caveChampionData;
@@ -2593,6 +2603,7 @@ public class MapStage extends GameStage {
         // dungeon/town twin of WorldStage.setWinner's call. See
         // AdventurePlayer.appendCoinRansomReward.
         Current.player().appendCoinRansomReward(loot, currentMob.getName());
+        forge.adventure.util.Ascendance.appendDuelPower(loot); // round 517: the duel's Power, paid when collected
         // VeggieShark report (v1.13 thread): an empty payout opened a bare loot screen - the chest and its OK button,
         // nothing else. It now logs one [TFR-Payout] line and only opens the screen when there is something on it;
         // everything below (champion bookkeeping, removal, the defeat dialog) runs either way.

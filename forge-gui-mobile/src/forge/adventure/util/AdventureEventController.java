@@ -27,6 +27,13 @@ public class AdventureEventController implements Serializable {
     private static final long serialVersionUID = -8111985415988509005L;
 
     public void finalizeEvent(AdventureEventData completedEvent) {
+        // Round 517 (the user's log: "+75 Power - Inn tournament" three times over one tournament): EventScene calls this
+        // from every refresh() of an Awarded event and again from back(). Only the first call - while the player still
+        // holds the event - records the result and pays; it removes the event, so the rest do nothing.
+        if (completedEvent == null || !Current.player().getEvents().contains(completedEvent)) {
+            System.out.println("[TFR-Event] finalize called again for an event already finalized - ignored");
+            return;
+        }
         Current.player().getStatistic().setResult(completedEvent);
         Ascendance.onInnEventEnded(completedEvent); // round 493
         Current.player().removeEvent(completedEvent);

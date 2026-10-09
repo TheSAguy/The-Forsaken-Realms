@@ -14264,6 +14264,67 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 517: Power gets its icon and a loot card; chests and diamonds can give Power; the HUD's columns line up (2026-10-09)
+
+The user picked icon A of the choices (Shikashi's Fantasy Icons Pack, the radiant sun at cell 15,3): "Can we add that
+icon to all Power areas. Also, let's make a card out of it and when you win a duel, have it as a reward, and only apply
+the Power once you open/collect your reward." Then: "add a 'Power' reward to the overworld chest and and diamond as a
+possible reward. Maybe 15 and 25?" The HUD requests came through the Procedural Pixel Creatures session: "improve the
+layout of the HUD - the wood, stone and Power are all just a little mis-aligned", then "remove the double bar above
+Power, so it matches the bar between gold and wood".
+
+1. **The Power icon.** A new `items.atlas` page, `sprites/items_power.png`, holds two regions:
+   - `Power` (32 px) for the loot card and the HUD panel;
+   - `PowerGlyph` (16 px) for text, cut down from the 32-px sun (yellow kept where 2 of 4 pixels are, an ink outline).
+     A 32-px region inline draws past its advance and over the next words.
+
+   `Ascendance.ICON` (`[+PowerGlyph]`) is on the award notice, the Ascendance status dialog and the statistics page.
+   The HUD panel draws the 32-px sun as an Image beside "Asc N". CREDITS.md's item-art line names it.
+2. **A duel's Power is a loot card, paid when collected.**
+   - New `Reward.Type.Power` (`Reward.power(count, source)`), drawn like the Gold/Wood/Stone cards.
+   - `Ascendance.onDuelWon` queues the scaled amount (`pendingDuelPower`).
+   - `MapStage.getReward` and the world's loot both add the card (`appendDuelPower`).
+   - Done on the loot screen pays it (`AdventurePlayer.addReward` -> `collectPower`). Left on the screen, it is lost like
+     the rest of the loot.
+   - Arena wins still pay at once. A fight that never reaches a loot screen is paid at the next win
+     (`payUncollectedDuelPower`, logged).
+   - A second report of the same win is ignored (the agent bridge reports one twice).
+   - A load or a new run clears the queue.
+3. **Chests and diamonds can give Power** (Ascendance on only; scaled by the leveling speed like every award). These are
+   in `ascendance.json`:
+   - a world chest rolls a seventh, equal outcome: `chestPower` 15 (`ChestEvents.EVENT_POWER`);
+   - a diamond's mystery pickup gives `diamondPower` 25 at `diamondPowerChance` 0.15 (`ResourceSpawns`).
+4. **The Demon's Bargain waits for day 8**, like the Sphinx's Sanctum (round 513): `notBeforeDay` 8 in
+   `points_of_interest.json`.
+5. **The Demon's Bargain's demon is there on the first visit.** The user saw a spider first and the demon on the return.
+   The log showed `[TFR-CaveChampion] DemonsBargain: Skrelv takes placement 50`: the cave champion took the demon's
+   placement, the cave's only enemy. `MapStage.prepareCaveChampion` now skips a placement that is `keepAuthored` or
+   carries a `dialog` or `defeatDialog` (`hasText`), and an authored placement is never promoted.
+6. **An Inn tournament pays its Power once.** The user's log showed "+75 Power - Inn tournament" three times:
+   `EventScene` calls `AdventureEventController.finalizeEvent` from every refresh of an awarded event. It now returns when
+   the player no longer holds the event (logged `[TFR-Event]`).
+7. **The HUD's wood, stone and Power line up with gold and shards.**
+   - Both lower panels stand on the upper frame's x (`gamehud`, 405 of 480) and are 75 wide, fitted to the right edge.
+   - Their icons are centered on the Gold glyph's center (money + 6). Their numbers start on its numbers' column
+     (money + 13.5), measured off agent screenshots at 8 px a unit.
+   - The resource icons are 14 (were 16), and the rows sit 2 in from the frame.
+   - The Ascendance panel tucks its top frame 3.25 under the wood/stone panel (`PANEL_JUNCTION_OVERLAP`), so one bar
+     separates them, as between gold and wood. The two stone bands measure 37 and 38 px; before, the lower one was 63.
+   - The Ascendance panel is 27 tall (was 24), so the sun and "Asc N" keep their room under that bar.
+8. **The repair dialog leaves a 32-px icon out of its text** (`Config.isTextGlyph`). The neck pendants' icons overran the
+   item's name.
+
+**The user's question, answered (no change):** visiting a place pays Power once, on the first visit - 3 for a
+dungeon/cave, 5 for a town. That was the notice at the Demon's Bargain.
+
+**Agent-tested**:
+- A won duel showed a "10 Power" card with the sun; the total moved 70 -> 80 only on Done.
+- A console award showed "+3 [sun] - console" in the sun's own colors.
+- The HUD screenshots: the columns line up and there is one bar between the panels.
+
+The chest and diamond rolls, the cave champion skip and the tournament guard were checked by reading the code and the
+user's log.
+
 ## Round 516: the nine code-review findings on rounds 473-515 fixed (2026-10-09)
 
 The Procedural Pixel Creatures session's read-only review of tfr-v1.19..HEAD (sound, nothing release-blocking) found

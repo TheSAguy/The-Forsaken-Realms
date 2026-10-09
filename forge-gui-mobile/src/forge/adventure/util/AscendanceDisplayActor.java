@@ -15,23 +15,34 @@ import forge.adventure.world.WorldSave;
  */
 public class AscendanceDisplayActor extends com.badlogic.gdx.scenes.scene2d.Group {
     /** The most the panel takes; it fits itself to the stage's right edge (fitTo). */
-    private static final int PANEL_WIDTH = 72;
+    private static final int PANEL_WIDTH = 75; // round 517: the upper panel's width (gamehud, 75), was 72
     /** Round 511 (the user: "I thought the yellow bar was a progress bar to the next level, but it does not match the
      *  current XP level, and when I reached level 2, it was still full"): the panel stood 72 wide at x 425 of a 480 HUD,
      *  so its right 17 units - where the bar's empty end lay - were off the screen and a half-filled bar looked full. Now
      *  "Asc 7" sits on top and the bar runs the panel's whole width underneath, empty at a level-up and full at the next. */
-    private static final int PANEL_HEIGHT = 24;
+    /** Round 517: 27 (was 24) - GameHUD tucks the top frame 3.25 under the wood/stone panel (one bar between them, as
+     *  between gold and wood), and the panel grows down by as much so the sun and "Asc 7" keep their room. */
+    private static final int PANEL_HEIGHT = 27;
+    /** Round 517: the frame's stone border at the top - the label row ends under it. */
+    private static final float TOP_FRAME = 4;
     private static final float PAD = 6;
     private static final float BAR_Y = 5;
     private static final float BAR_HEIGHT = 4;
     private static final float LABEL_Y = 9;
 
+    /** Round 517: the Power icon's box - the size the Gold/Shards glyphs draw at in the rows above. */
+    private static final float ICON_SIZE = 12;
+
     private final Image background;
     private final TypingLabel label;
+    private final Image powerIcon;
     private final Image barBack;
     private final Image barFill;
     private final com.badlogic.gdx.math.Vector2 origin = new com.badlogic.gdx.math.Vector2();
     private float panelWidth = -1;
+    /** Round 517: the icon and text columns (GameHUD.alignColumns - under the Gold row's glyph and number). The icon is an
+     *  Image, not an inline [+Power] glyph: a 32-px glyph advances less than it draws, and the text ran into it. */
+    private float iconX = PAD, textX = PAD + ICON_SIZE + 3;
     private float share;
     private int shownPower = -1;
     private int shownPending = -1;
@@ -46,6 +57,10 @@ public class AscendanceDisplayActor extends com.badlogic.gdx.scenes.scene2d.Grou
         label = Controls.newTypingLabel("");
         label.setAlignment(Align.left);
         addActor(label);
+
+        com.badlogic.gdx.graphics.g2d.Sprite power = Config.instance().getItemSprite("Power"); // round 517
+        powerIcon = power == null ? new Image() : Controls.itemIcon(power);
+        addActor(powerIcon);
 
         barBack = new Image(Controls.getSkin().getDrawable("white-pixel"));
         barBack.setColor(new Color(0.12f, 0.10f, 0.08f, 1f));
@@ -91,7 +106,7 @@ public class AscendanceDisplayActor extends com.badlogic.gdx.scenes.scene2d.Grou
         if (!active)
             return;
         if (getStage() != null) // round 511: never past the screen's right edge
-            fitTo(getStage().getWidth() - localToStageCoordinates(origin.set(0, 0)).x - 1f);
+            fitTo(getStage().getWidth() - localToStageCoordinates(origin.set(0, 0)).x); // round 517: to the edge
         int power = Ascendance.power();
         int pending = Ascendance.pendingChoices();
         int level = Ascendance.level();
@@ -103,7 +118,7 @@ public class AscendanceDisplayActor extends com.badlogic.gdx.scenes.scene2d.Grou
         int[] progress = Ascendance.progress(); // [Power into this level, Power this level needs]
         share = progress[1] <= 0 ? 0f : Math.max(0f, Math.min(1f, progress[0] / (float) progress[1]));
         barFill.setWidth(barWidth() * share);
-        label.restart("[%80]Asc " + level + (pending > 0 ? "[GOLD]![]" : ""));
+        label.restart("[%80]Asc " + level + (pending > 0 ? "[GOLD]![]" : "")); // round 517: the icon is powerIcon
     }
 
     private float barWidth() {
@@ -116,9 +131,24 @@ public class AscendanceDisplayActor extends com.badlogic.gdx.scenes.scene2d.Grou
         if (Math.abs(w - panelWidth) < 0.5f)
             return;
         panelWidth = w;
+        relayout();
+    }
+
+    /** Round 517: the icon column and the text column, relative to this panel (GameHUD measures them off the Gold row). */
+    public void alignColumns(float iconColumn, float textColumn) {
+        iconX = iconColumn;
+        textX = textColumn;
+        relayout();
+    }
+
+    private void relayout() {
+        float w = panelWidth;
         background.setSize(w, PANEL_HEIGHT);
-        label.setSize(w - 2 * PAD, PANEL_HEIGHT - LABEL_Y);
-        label.setPosition(PAD, LABEL_Y);
+        // Round 517: the sun on the icon column, centered in the label row; "Asc 7" on the number column.
+        float rowHeight = PANEL_HEIGHT - TOP_FRAME - LABEL_Y;
+        powerIcon.setBounds(iconX, LABEL_Y + (rowHeight - ICON_SIZE) / 2f, ICON_SIZE, ICON_SIZE);
+        label.setSize(Math.max(10f, w - textX - PAD), rowHeight);
+        label.setPosition(textX, LABEL_Y);
         barBack.setBounds(PAD, BAR_Y, barWidth(), BAR_HEIGHT);
         barFill.setBounds(PAD, BAR_Y, barWidth() * share, BAR_HEIGHT);
         setSize(w, PANEL_HEIGHT);

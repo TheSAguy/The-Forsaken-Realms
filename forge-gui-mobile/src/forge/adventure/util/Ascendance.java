@@ -519,6 +519,7 @@ public final class Ascendance {
         AscendanceState s = player.ascendance();
         s.reset();
         s.on = enabledForNewRuns();
+        clearPendingDuelPower(); // round 517
         player.requestCompanionCheck(); // round 502: the kept gear is checked once the run is on screen
         System.out.println("[TFR-Ascend] " + why + ": Ascendance " + (s.on ? "on - level 0, " + mainSlotAllowance(0)
                 + " main item(s), " + companionAllowance(0) + " companion(s)" : "off (config.json ascendanceEnabled)"));
@@ -526,17 +527,78 @@ public final class Ascendance {
 
     /** Award Power for {@code source} (times the config's levelingSpeed); level-ups pay their rewards at once. */
     public static void award(int base, String source) {
-        AscendanceState s = state();
-        if (s == null || !isActive() || base <= 0)
+        if (base <= 0)
             return;
-        int amount = Math.max(1, Math.round(base * Math.max(0f, data().levelingSpeed)));
+        awardExact(scaled(base), source);
+    }
+
+    /** {@code base} times the config's levelingSpeed - what an award pays. */
+    private static int scaled(int base) {
+        return Math.max(1, Math.round(base * Math.max(0f, data().levelingSpeed)));
+    }
+
+    /** Round 517: the icon every Power figure in text carries - items.atlas "PowerGlyph", Shikashi's radiant sun cut to
+     *  16 px (the 32-px "Power" region, which the loot card and the HUD panel draw, overruns a line of text). */
+    public static final String ICON = "[+PowerGlyph]";
+
+    private static void awardExact(int amount, String source) {
+        AscendanceState s = state();
+        if (s == null || !isActive() || amount <= 0)
+            return;
         int before = levelFor(s.power);
         s.power += amount;
         int after = levelFor(s.power);
         System.out.println("[TFR-Ascend] +" + amount + " Power - " + source + " (total " + s.power + ", level " + after + ")");
-        GameHUD.getInstance().addNotification("[%85]+" + amount + " Power - " + source);
+        // Round 517: authored on the paper, so the sun keeps its colors (the black tint drew it solid black).
+        GameHUD.getInstance().addNotification(onPaper("[BLACK][%85]+" + amount + " " + ICON + " - " + source), true);
         for (int level = before + 1; level <= after; level++)
             onLevelUp(level);
+    }
+
+    // Round 517 (the user: "when you win a duel, have it as a reward, and only apply the Power once you open/collect your
+    // reward"): a won duel's Power waits for its loot screen - MapStage.getReward / WorldStage add it as a Power card
+    // (appendDuelPower), and collecting the card pays it (AdventurePlayer.addReward -> collectPower). Left on the
+    // screen, it is lost like the rest of the loot.
+    private static int pendingDuelPower;
+    private static String pendingDuelSource = "";
+    /** The enemy whose win it is - a second report of the same duel (the agent bridge's win screen) queues nothing. */
+    private static EnemySprite pendingDuelEnemy;
+
+    /** The loot of the duel just won gains its Power card (nothing when the duel paid none). */
+    public static void appendDuelPower(com.badlogic.gdx.utils.Array<Reward> loot) {
+        if (pendingDuelPower <= 0 || loot == null)
+            return;
+        loot.add(Reward.power(pendingDuelPower, pendingDuelSource));
+        System.out.println("[TFR-Ascend] " + pendingDuelPower + " Power on the loot screen - " + pendingDuelSource);
+        pendingDuelPower = 0;
+        pendingDuelSource = "";
+        pendingDuelEnemy = null;
+    }
+
+    /** A Power card collected from a loot screen - already scaled by the leveling speed. */
+    public static void collectPower(int amount, String source) {
+        awardExact(amount, source == null || source.isEmpty() ? "loot" : source);
+    }
+
+    /** A duel's Power that never reached a loot screen (a fight with no loot path) is paid rather than lost. */
+    private static void payUncollectedDuelPower(String why) {
+        if (pendingDuelPower <= 0)
+            return;
+        int amount = pendingDuelPower;
+        String source = pendingDuelSource;
+        pendingDuelPower = 0;
+        pendingDuelSource = "";
+        pendingDuelEnemy = null;
+        System.out.println("[TFR-Ascend] " + amount + " Power for " + source + " never reached a loot screen (" + why
+                + ") - paid now");
+        awardExact(amount, source);
+    }
+
+    /** A save loaded or a run started: nothing is waiting from another game. */
+    private static void clearPendingDuelPower() {
+        pendingDuelPower = 0;
+        pendingDuelSource = "";
+        pendingDuelEnemy = null;
     }
 
     private static void onLevelUp(int level) {
@@ -640,8 +702,20 @@ public final class Ascendance {
         int top = rank < d.outgrownBandTop.length ? d.outgrownBandTop[rank] : 999;
         float outgrown = level > top ? Math.max(d.outgrownFloor, 1f - d.outgrownStep * (level - top)) : 1f;
         int amount = Math.max(1, Math.round(d.duelBase[rank] * factor * outgrown));
-        award(amount, "beat " + e.getName() + " (" + EnemyData.tierDisplayName(e.tier) + (why.isEmpty() ? "" : ", " + why)
-                + (outgrown < 1f ? ", outgrown " + Math.round(outgrown * 100) + "%" : "") + ")");
+        String source = "beat " + e.getName() + " (" + EnemyData.tierDisplayName(e.tier) + (why.isEmpty() ? "" : ", " + why)
+                + (outgrown < 1f ? ", outgrown " + Math.round(outgrown * 100) + "%" : "") + ")";
+        if (arena) { // an Arena match has no loot screen of its own - paid at once, as before
+            award(amount, source);
+            return;
+        }
+        if (pendingDuelPower > 0 && enemy == pendingDuelEnemy) { // round 517: the same duel reported twice
+            System.out.println("[TFR-Ascend] " + e.getName() + "'s win was reported again - its Power already waits");
+            return;
+        }
+        payUncollectedDuelPower("another duel was won first"); // round 517
+        pendingDuelPower = scaled(amount);
+        pendingDuelSource = source;
+        pendingDuelEnemy = enemy;
     }
 
     /** AdventureQuestController.showQuestDialogs: a quest done. An invasion pays by the toughest troop it lost. */
@@ -1053,6 +1127,7 @@ public final class Ascendance {
     /** AdventurePlayer.load: absent keys (every save before round 493) read as "off". */
     public static void load(forge.adventure.util.SaveFileData data, AscendanceState s, String difficulty) {
         s.reset();
+        clearPendingDuelPower(); // round 517: a loot screen of the game before is gone
         s.on = data.containsKey("ascendanceOn") && data.readBool("ascendanceOn");
         s.power = data.containsKey("ascendancePower") ? Math.max(0, data.readInt("ascendancePower")) : 0;
         int curve = data.containsKey("ascendanceCurve") ? data.readInt("ascendanceCurve") : 1;

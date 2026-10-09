@@ -306,7 +306,9 @@ public class InventoryScene extends UIScene {
             return;
         }
         final int cost = initialCost;
-        showDialog(createGenericDialog("", "[+" + data.iconName + "] " + data.getDisplayName() + "\n" +
+        // Round 517: a 32-px icon (the neck pendants) is left out of the line - inline it overran the item's name.
+        String icon = Config.instance().isTextGlyph(data.iconName) ? "[+" + data.iconName + "] " : "";
+        showDialog(createGenericDialog("", icon + data.getDisplayName() + "\n" +
             Forge.getLocalizer().getMessage("lblRepairCost", "[+GoldCoin] " + cost),
             Forge.getLocalizer().getMessage("lblYes"),
             Forge.getLocalizer().getMessage("lblNo"), () -> {

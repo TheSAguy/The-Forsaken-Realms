@@ -2269,6 +2269,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             case Shards:
                 addShards(reward.getCount());
                 break;
+            case Power: // round 517: a won duel's Power, paid when its card is collected
+                forge.adventure.util.Ascendance.collectPower(reward.getCount(), reward.getPowerSource());
+                break;
             // Mod addition (The Forsaken Realms, 2026-08-10): Stone as a Reward type.
             // Logged since 2026-08-27 - a playtest report ("reward screen vanished, not sure I
             // got anything") was unanswerable from the log without a grant line.

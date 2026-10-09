@@ -2009,3 +2009,15 @@ NeckPetalmane
 NeckScarecrow
   xy: 448, 0
   size: 32, 32
+
+items_power.png
+size: 48,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Power
+  xy: 0, 0
+  size: 32, 32
+PowerGlyph
+  xy: 32, 0
+  size: 16, 16

@@ -22,7 +22,11 @@ public class Reward {
         // unread. User report: "I got a blue-print, but was not very obvious. Might have missed the
         // pop-up... Let's show a card or something with a Scroll/Blue-print on it that you need to
         // click (Like when you get a card)".
-        Blueprint;
+        Blueprint,
+        // Round 517 (the user: "let's make a card out of it and when you win a duel, have it as a reward, and only apply
+        // the Power once you open/collect your reward"): Ascendance Power on a won duel's loot screen - paid by
+        // AdventurePlayer.addReward when collected; its card shows the "Power" icon of items.atlas.
+        Power;
         private final String labelKey = "lbl" + this.name();
         /**
          * @return The pre-cached localizer key name (e.g., "lblLife", "lblShards", "lblGold").
@@ -67,6 +71,20 @@ public class Reward {
 
     public String getBlueprintShopName() {
         return blueprintShopName;
+    }
+
+    // Round 517: what the Power was for ("beat Wild Rat (Apprentice, first win)") - the notice says it when collected.
+    String powerSource = "";
+
+    /** Round 517: a won duel's Power, already scaled by the leveling speed - collected as it stands. */
+    public static Reward power(int count, String source) {
+        Reward reward = new Reward(Type.Power, count);
+        reward.powerSource = source == null ? "" : source;
+        return reward;
+    }
+
+    public String getPowerSource() {
+        return powerSource;
     }
 
     /** Round 406: gold standing in for cards a reward list promised and could not pay. */

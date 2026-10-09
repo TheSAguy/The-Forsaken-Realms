@@ -370,6 +370,15 @@ public class ResourceSpawns {
                 grantVigor();
                 return;
             }
+            // Round 517 (the user: "add a 'Power' reward to the overworld chest and and diamond as a possible reward.
+            // Maybe 15 and 25"): with Ascendance on, the diamond's light can be Power (ascendance.json diamondPower /
+            // diamondPowerChance). Prospector does not touch it - it is not a resource.
+            if (Ascendance.isActive() && Ascendance.data().diamondPower > 0
+                    && world.getRandom().nextFloat() < Ascendance.data().diamondPowerChance) {
+                Ascendance.award(Ascendance.data().diamondPower, "a diamond's light");
+                System.out.println("[ResourceSpawns] Mystery pickup: " + Ascendance.data().diamondPower + " Power");
+                return;
+            }
             // Otherwise it resolves into one of the four ordinary resources, value rolled now.
             type = world.getRandom().nextInt(4);
             value = type == TYPE_GOLD

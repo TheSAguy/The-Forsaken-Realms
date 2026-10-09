@@ -269,7 +269,8 @@ public class PlayerStatisticScene extends UIScene {
                 int[] progress = forge.adventure.util.Ascendance.progress();
                 String title = forge.adventure.util.Ascendance.title();
                 TextraLabel ascendance = Controls.newTextraLabel("[BLACK]Ascendance " + forge.adventure.util.Ascendance.level()
-                        + (title.isEmpty() ? "" : " - " + title) + "\n[BLACK][%85]Power " + progress[0] + " / " + progress[1]
+                        + (title.isEmpty() ? "" : " - " + title) + "\n[BLACK][%85][WHITE]" + forge.adventure.util.Ascendance.ICON
+                        + "[BLACK] Power " + progress[0] + " / " + progress[1] // round 517: the icon in its own colors
                         + " to level " + (forge.adventure.util.Ascendance.level() + 1));
                 ascendance.setWrap(true);
                 Table box = new Table();

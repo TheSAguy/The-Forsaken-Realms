@@ -514,6 +514,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             // "Wood"/"Stone" regions (the economy resource glyphs), so the Gold path just works.
             case Wood:
             case Stone:
+            case Power: // round 517: a won duel's Power - the "Power" region of items.atlas
             case Gold: {
                 Sprite backSprite = Config.instance().getItemSprite("CardBack");
                 Sprite item = Config.instance().getItemSprite(reward.type.toString());
@@ -1231,6 +1232,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             case Shards:
             case Wood:
             case Stone:
+            case Power: // round 517
                 display = reward.type.toString();
                 break;
             case Item:

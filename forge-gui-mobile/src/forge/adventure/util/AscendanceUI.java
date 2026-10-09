@@ -70,7 +70,7 @@ public final class AscendanceUI {
         int[] progress = Ascendance.progress();
         String title = Ascendance.title();
         addRow(dialog, "[GOLD]Ascendance " + Ascendance.level() + "[]" + (title.isEmpty() ? "" : " - " + title));
-        addRow(dialog, "[%85]Power " + progress[0] + " / " + progress[1] + " to the next level");
+        addRow(dialog, "[%85]" + Ascendance.ICON + " Power " + progress[0] + " / " + progress[1] + " to the next level"); // round 517
         int next = Ascendance.nextMainSlotLevel();
         addRow(dialog, "[%85]" + Ascendance.mainItemsLabel(player) + (next > 0 ? " - one more at Ascendance " + next : ""));
         int nextCompanion = Ascendance.nextCompanionLevel(); // round 502

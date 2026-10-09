@@ -89,6 +89,8 @@ public class GameHUD extends Stage {
     // territoryColor so multiple in-flight mages stay distinguishable from each other and from the
     // player's own white marker.
     private final Map<EnemySprite, Image> mageMinimapMarkers = new HashMap<>();
+    /** Round 517: how far the Ascendance panel's top frame tucks under the wood/stone panel's (see the layout below). */
+    private static final float PANEL_JUNCTION_OVERLAP = 3.25f;
     private static final Map<String, Color> MAGE_MARKER_COLORS = new HashMap<>();
     static {
         MAGE_MARKER_COLORS.put("white", Color.LIGHT_GRAY); // pure white would be indistinguishable from the player's own marker
@@ -251,8 +253,21 @@ public class GameHUD extends Stage {
         // doc comment for why forking hud.json is avoided). No gap to money - butts directly
         // against it so its own bordered panel reads as a continuation of the same column
         // instead of a separate floating box.
-        resourceDisplayActor.setPosition(money.getX(), money.getY() - resourceDisplayActor.getHeight());
-        ascendanceDisplayActor.setPosition(resourceDisplayActor.getX(), resourceDisplayActor.getY() - ascendanceDisplayActor.getHeight()); // round 493
+        // Round 517 (the user: "improve the layout of the HUD - the wood, stone and Power are all just a little
+        // mis-aligned"): both panels share the upper panel's frame - the "gamehud" image (x 405 of 480 in hud.json, 195
+        // of 270 in hud_portrait.json, 75 wide to the edge) - and fit to the right edge; their icons are centered on the
+        // Gold and Shards glyphs' center (money + 6) and their numbers start on the numbers' column (money + 13.5),
+        // measured off the agent's screenshot of "[+Gold] 250".
+        com.badlogic.gdx.scenes.scene2d.Actor frame = ui.findActor("gamehud");
+        float columnX = frame != null ? frame.getX() : keyCollection.getX() - 5;
+        resourceDisplayActor.alignColumns(money.getX() - 0.5f - columnX, money.getX() + 13.5f - columnX);
+        ascendanceDisplayActor.alignColumns(money.getX() - columnX, money.getX() + 13.5f - columnX);
+        resourceDisplayActor.setPosition(columnX, money.getY() - resourceDisplayActor.getHeight());
+        // Round 517 (the user: "remove the double bar above Power, so it matches the bar between gold and wood"): the
+        // Ascendance panel tucks its top frame 3.25 units under the wood/stone panel's bottom one - the overlap the
+        // gold/wood junction has (its stone band measured 37 px at 8 px a unit, this one's 63 before).
+        ascendanceDisplayActor.setPosition(columnX, resourceDisplayActor.getY() - ascendanceDisplayActor.getHeight()
+                + PANEL_JUNCTION_OVERLAP); // round 493
         // In line with the top menu bar (2026-08-08 tighten-up - was floating below the bar
         // chained off bookmarkActor). Matches the bar buttons' own height/row so it reads as part
         // of the bar. Renamed "World" -> "Info" and moved/narrowed 2026-08-15 (user screenshot:

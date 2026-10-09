@@ -28,17 +28,24 @@ import forge.adventure.player.AdventurePlayer;
  */
 public class ResourceDisplayActor extends Group {
 
-    private static final int PANEL_WIDTH = 72;
+    private static final int PANEL_WIDTH = 75; // round 517: the upper panel's width (gamehud, 75), was 72
     private static final int PANEL_HEIGHT = 18;
-    private static final int ICON_SIZE = 16;
+    /** Round 517: 14 (was 16) - the lumber art is 14 of its 16 cells, and at 14 it matches the Gold/Shards glyphs above. */
+    private static final int ICON_SIZE = 14;
     private static final int PADDING = 8;
+    /** Round 517: each row drawn this far in from the panel's top/bottom edge - the lumber row sat against the frame. */
+    private static final float ROW_INSET = 2;
     private static final String ICON_ATLAS = "maps/tileset/resource_icons.atlas";
 
     private final TypingLabel lumberLabel;
     private final TypingLabel stoneLabel;
     private final Image background;
+    private final java.util.List<Image> icons = new java.util.ArrayList<>();
     private final com.badlogic.gdx.math.Vector2 origin = new com.badlogic.gdx.math.Vector2();
     private float panelWidth = PANEL_WIDTH;
+    /** Round 517: the icon and number columns, relative to the panel - GameHUD.alignColumns puts them under the
+     *  Gold/Shards rows' own (the user: "the wood, stone and Power are all just a little mis-aligned"). */
+    private float iconX = PADDING, textX = PADDING + 16 + 6;
     private int lastLumber = Integer.MIN_VALUE;
     private int lastStone = Integer.MIN_VALUE;
 
@@ -49,8 +56,8 @@ public class ResourceDisplayActor extends Group {
         addActor(background);
 
         float iconYInset = (PANEL_HEIGHT - ICON_SIZE) / 2f;
-        addIcon("Lumber", PANEL_HEIGHT + iconYInset);
-        addIcon("Stone", iconYInset);
+        addIcon("Lumber", PANEL_HEIGHT - ROW_INSET + iconYInset);
+        addIcon("Stone", ROW_INSET + iconYInset);
 
         // 2026-08-08 tighten-up: consistent 6px icon-to-number gap (was 2, cramped against the
         // icon), and the number text no longer carries its own leading space (see refresh
@@ -60,13 +67,13 @@ public class ResourceDisplayActor extends Group {
 
         lumberLabel = Controls.newTypingLabel("");
         lumberLabel.setSize(labelWidth, PANEL_HEIGHT);
-        lumberLabel.setPosition(labelX, PANEL_HEIGHT);
+        lumberLabel.setPosition(labelX, PANEL_HEIGHT - ROW_INSET);
         lumberLabel.setAlignment(Align.left);
         addActor(lumberLabel);
 
         stoneLabel = Controls.newTypingLabel("");
         stoneLabel.setSize(labelWidth, PANEL_HEIGHT);
-        stoneLabel.setPosition(labelX, 0);
+        stoneLabel.setPosition(labelX, ROW_INSET);
         stoneLabel.setAlignment(Align.left);
         addActor(stoneLabel);
 
@@ -89,15 +96,28 @@ public class ResourceDisplayActor extends Group {
         super.act(delta);
         if (getStage() == null)
             return;
-        float w = Math.max(40f, Math.min(PANEL_WIDTH, getStage().getWidth() - localToStageCoordinates(origin.set(0, 0)).x - 1f));
+        float w = Math.max(40f, Math.min(PANEL_WIDTH, getStage().getWidth() - localToStageCoordinates(origin.set(0, 0)).x)); // round 517: to the edge
         if (Math.abs(w - panelWidth) < 0.5f)
             return;
         panelWidth = w;
-        background.setWidth(w);
-        float labelWidth = Math.max(10f, w - (PADDING + ICON_SIZE + 6) - PADDING);
-        lumberLabel.setWidth(labelWidth);
-        stoneLabel.setWidth(labelWidth);
-        setWidth(w);
+        relayout();
+    }
+
+    /** Round 517: the icon column and the number column, relative to this panel (GameHUD measures them off the Gold row). */
+    public void alignColumns(float iconColumn, float textColumn) {
+        iconX = iconColumn;
+        textX = textColumn;
+        relayout();
+    }
+
+    private void relayout() {
+        background.setWidth(panelWidth);
+        for (Image icon : icons)
+            icon.setX(iconX);
+        float labelWidth = Math.max(10f, panelWidth - textX - PADDING);
+        lumberLabel.setBounds(textX, PANEL_HEIGHT - ROW_INSET, labelWidth, PANEL_HEIGHT);
+        stoneLabel.setBounds(textX, ROW_INSET, labelWidth, PANEL_HEIGHT);
+        setWidth(panelWidth);
     }
 
     private void addIcon(String regionName, float y) {
@@ -106,7 +126,8 @@ public class ResourceDisplayActor extends Group {
             return;
         Image icon = new Image(new TextureRegionDrawable(region));
         icon.setSize(ICON_SIZE, ICON_SIZE);
-        icon.setPosition(PADDING, y);
+        icon.setPosition(iconX, y);
+        icons.add(icon);
         addActor(icon);
     }
 

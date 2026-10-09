@@ -60,6 +60,11 @@ public class AscendanceData {
     public int innMatchWin = 15;
     public int innChampion = 30;
     public int treasureFound = 75;
+    /** Round 517 (the user: "Let's add a 'Power' reward to the overworld chest and and diamond as a possible reward. Maybe
+     *  15 and 25?"): a chest's seventh outcome, and a diamond's chance to pay Power instead of a resource. */
+    public int chestPower = 15;
+    public int diamondPower = 25;
+    public float diamondPowerChance = 0.15f;
     /** Round 496: quests that pay no Power (empty since round 497 - the intro's 50 is the step to level 1). */
     public int[] noPowerQuestIds = {};
     /** Round 505b: the tutorial quests. Power a quest's dialog was holding (the intro's 50, round 505) is dropped when

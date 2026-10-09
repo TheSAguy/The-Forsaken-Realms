@@ -4591,7 +4591,7 @@
 		]
 	},
 	{
-		"name": "DemonsBargain", "retireOnQuestFlag": "DemonsBargainSettled",
+		"name": "DemonsBargain", "retireOnQuestFlag": "DemonsBargainSettled", "notBeforeDay": 8,
 		"displayName": "Demon's Bargain",
 		"type": "cave",
 		"count": 1,

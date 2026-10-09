@@ -1009,6 +1009,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         // 2026-09-01) - see AdventurePlayer.appendCoinRansomReward. Keyed on the
                         // RAW name, matching what DuelScene stamped the mark with.
                         Current.player().appendCoinRansomReward(loot, currentMob.getName());
+                        forge.adventure.util.Ascendance.appendDuelPower(loot); // round 517: paid when collected
                         // The overworld twin of MapStage.getReward(): no bare loot screen for an empty payout.
                         boolean showLoot = RewardScene.announceDuelPayout(loot, currentMob.getName());
                         if (showLoot)
