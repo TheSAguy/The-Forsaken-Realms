@@ -67,6 +67,19 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-09 (16:18 UTC): **v1.20 "Power & Plunder" RELEASED** - tag `tfr-v1.20` @ `4a5633ea005`, published
+16:18:22 UTC, Latest. Rounds 473-518 on top of v1.19. The engine is still the 10.07 daily (upstream `e7fca289313`): the
+user chose to ship on it, so the 34 upstream commits since then (the 10.08 and 10.09 dailies, incl. an Adventure duel
+soft-lock fix and the boss-dialog/coin-flip clash fix in DuelScene/MatchController) are the first work of v1.21.
+Assets in `C:\TFR\release\v1.20`:
+- `The-Forsaken-Realms-v1.20.zip` 351.0 MB;
+- `forsaken-realms-1.20-signed-aligned.apk` 13.6 MB (com.thesaguy.forsakenrealms, versionCode 12000, signer EE:60:39:25);
+- `assets.zip` 302.8 MB (build.txt pair 2026-10-09 16:14:56; Android from `C:\TFR-build` via R: in under 2 min).
+
+Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed and Art sections and five lines, and added
+the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
+the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
+
 ## STATE 2026-10-09 (round 518): **LOCAL + UNRELEASED** - the Ascendance choice dialog has a Re-roll beside "Not now":
 a new offer for the waiting level (away from the old three), once per level (`AscendanceState.rerolledLevel`, saved), for
 `difficultyRerollCost` shards - Easy 35, Normal 40, Hard 45, Insane 50.
