@@ -62,6 +62,10 @@ public class AscendanceData {
     public int treasureFound = 75;
     /** Round 496: quests that pay no Power (empty since round 497 - the intro's 50 is the step to level 1). */
     public int[] noPowerQuestIds = {};
+    /** Round 505b: the tutorial quests. Power a quest's dialog was holding (the intro's 50, round 505) is dropped when
+     *  that dialog started one of these - the tutorial is the intro's end on that path and pays its own story Power when
+     *  it is done. The user: "Started at level 1. I chose to do the tutorial." */
+    public int[] tutorialQuestIds = {53};
 
     // ---- level rewards
     /** Levels that give +1 max life (with their title, and a main slot through mainSlotLevels). */

@@ -67,6 +67,10 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 505b): **LOCAL + UNRELEASED** - the tutorial path's step to level 1 is the tutorial quest's
+own 50 (quest 53 at the Warden): `tutorialQuestIds` drops the intro's held 50 on that path (the user: "Started at level
+1. I chose to do the tutorial"); the skip path still pays it at the choice.
+
 ## STATE 2026-10-08 (round 505): **LOCAL + UNRELEASED** - the intro's 50 Power waits for the tutorial-or-skip choice
 (the user: "I just started a new game and was immediately level 1"): quest 28 completes as the start map loads and its
 prologue is the choice, so a quest completing in the pass its prologue is first shown holds its Power until the dialogs

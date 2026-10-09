@@ -698,6 +698,14 @@ public final class Ascendance {
         String source = s.deferredSource;
         s.deferredPower = 0;
         s.deferredSource = "";
+        // Round 505b: the dialog started the tutorial - the tutorial quest pays when it is done, the intro nothing.
+        AdventurePlayer player = WorldSave.getCurrentSave().getPlayer();
+        for (AdventureQuestData quest : player.getQuests())
+            if (quest != null && contains(data().tutorialQuestIds, quest.getID())) {
+                System.out.println("[TFR-Ascend] " + amount + " Power for " + source + " dropped - the tutorial ("
+                        + quest.name + ") pays when it is done");
+                return;
+            }
         award(amount, source);
     }
 

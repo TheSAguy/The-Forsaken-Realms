@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 505b: on the tutorial path the tutorial pays the step to level 1 (2026-10-08)
+
+The user, on 505: "Just started a new game same issue. Started at level 1. I chose to do the tutorial." Round 505 paid
+the intro's 50 when its dialog closed - and on the tutorial path the dialog closes as the tutorial begins.
+
+- **`ascendance.json` `tutorialQuestIds` [53]**: `Ascendance.payDeferred` drops the held Power when the dialog started
+  one of them (`[TFR-Ascend] 50 Power for story: Entering The Forsaken Realms dropped - the tutorial (Welcome to The
+  Forsaken Realms) pays when it is done`). Quest 53 is a story quest and pays 50 on completion - level 1 when the
+  Warden is found at Orazca. The skip path still pays the 50 as its dialog closes.
+- **Agent-tested**: the tutorial path stays at level 0 / 0 Power with "Welcome to The Forsaken Realms" active; the skip
+  path is at level 1 / 50 with "Raise the Banner".
+
 ## Round 505: the intro's 50 Power waits for the tutorial-or-skip choice (2026-10-08)
 
 The user: "I just started a new game and was immediately level 1. That does not seem correct. I did not even choose yet

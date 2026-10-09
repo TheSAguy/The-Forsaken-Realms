@@ -53,6 +53,9 @@
   "treasureFound": 75,
   // Quests that pay no Power (round 496 listed the intro, 28; round 497 pays it again - it is the step to level 1).
   "noPowerQuestIds": [],
+  // Round 505b: the intro's 50 waits for the tutorial-or-skip choice; on the tutorial path it is dropped and the tutorial
+  // quest (53, "Welcome to The Forsaken Realms", a story quest) pays its 50 when it is done - level 1 at the Warden.
+  "tutorialQuestIds": [53],
 
   // Level rewards: +1 max life at these levels; main-slot items (Neck, Body, Left, Right, Boots) 1, +1 at each of
   // mainSlotLevels; the titles; a roaming guard's main-slot items by its rank.
