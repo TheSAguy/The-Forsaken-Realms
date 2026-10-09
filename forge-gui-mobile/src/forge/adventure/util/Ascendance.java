@@ -1123,6 +1123,32 @@ public final class Ascendance {
         }
     }
 
+    /** Round 522: the reward icons - sprites/ascendance_icons.atlas, one 96-px region per one-time reward (named by its
+     *  id) and per rank of a lasting one ("haggler_2"). */
+    public static final String ICON_ATLAS = "sprites/ascendance_icons.atlas";
+
+    /** Round 522: the icon region of reward {@code id} as the dialog offers it now - a lasting one at the rank this pick
+     *  would reach. */
+    public static String iconRegion(String id) {
+        AscendanceData.Choice c = choice(id);
+        if (c == null || !c.lasting)
+            return id;
+        return id + "_" + Math.max(1, Math.min(Math.max(1, c.maxPicks), picks(id) + 1));
+    }
+
+    /** Round 522: the icon of a Level-sheet line - a lasting pick's ("Haggler II" -> haggler_2); null for any other line
+     *  (a one-time reward's text carries its own icon). */
+    public static String historyIconRegion(String text) {
+        if (text == null)
+            return null;
+        for (AscendanceData.Choice c : data().choices)
+            if (c != null && c.lasting)
+                for (int rank = 1; rank < RANKS.length; rank++)
+                    if (text.equals(lastingName(c.id) + RANKS[rank]))
+                        return c.id + "_" + rank;
+        return null;
+    }
+
     /** Round 508: Medic just taken - every roaming guard still out of commission has its remaining days cut by the same
      *  share (rounded up, at least a day), so the pick helps the guards already down, not only the next defeat. */
     private static void shortenDowntimes() {

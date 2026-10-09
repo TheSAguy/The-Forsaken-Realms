@@ -156,8 +156,13 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 ## Item art
 
 - **Neck pendants** (the gold chain and the lotus bud, coin, leaf and feather pendants of the fifteen mana items that
-  hang at the neck) and **the Power icon** (the radiant sun of Ascendance's Power) - **Shikashi's Fantasy Icons Pack**
-  by **Shikashi**; supplied by the user.
+  hang at the neck), **the Power icon** (the radiant sun of Ascendance's Power) and **the Goodwill hearts** (an
+  Ascendance reward) - **Shikashi's Fantasy Icons Pack** by **Shikashi**; supplied by the user.
+- **Ascendance reward icons** (the pictures on the level-up choices and the Level sheet) - the Basic, Advanced and
+  Expert secondary-skill icons of **Heroes of Might and Magic III** (First Aid, Estates, Logistics, Scouting,
+  Leadership, Resistance, Armorer, Luck and Diplomacy), © New World Computing / The 3DO Company, 1999; and for
+  Prospector, Architect, Mechanic and Medic the free **32 Medieval Skill Icons** pack (mining, masonry, smithing,
+  medicine), with our thanks to its creator, the silver and gold rank rims added for this game; supplied by the user.
 
 ## License
 

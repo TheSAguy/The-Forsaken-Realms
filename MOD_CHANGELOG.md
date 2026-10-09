@@ -14264,6 +14264,59 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 522: every Ascendance reward has an icon, each rank of a lasting one grander than the last (2026-10-09)
+
+The user: "I'd like to find Icons for all the Level upgrades we have. Especially the ones that have multiple upgrades. I
+want each upgrade to kinda look like the first, but each time more impressive." Two rounds of previews: first
+Shikashi's pixel sheet, then the sets the user added. The user picked the second ("Let's implement these icons"); for
+Shardwell: "just use the base games Shard icon and combine two for level 2".
+
+- **`sprites/ascendance_icons.png/.atlas`** (new, 800x600): 43 regions of 96 px, each with a 2-px extruded gutter
+  (linear filtering drew a line of the cell above without it).
+  - Lasting rewards, one region per rank, `<id>_<rank>`. Heroes III's Basic/Advanced/Expert skill icons, a two-rank
+    perk taking Basic and Expert:
+
+    | Perk | Heroes III skill |
+    |---|---|
+    | Morning Vigor | First Aid (bronze, silver, gold caduceus) |
+    | Haggler | Estates |
+    | Swift Feet | Logistics |
+    | Far Sight | Scouting |
+    | Marshal | Leadership |
+    | Stubborn | Resistance |
+    | Mender | Armorer |
+    | Spoilsman | Luck |
+    | Envoy | Diplomacy |
+
+    Estates, Logistics and Scouting come from the 256-px sheets; the rest from the 80-px skill grid.
+  - Prospector and Architect: the medieval skill icons "mining" and "masonry", rank II with a silver rim and rank III
+    with a gold rim and glow (drawn for this game).
+  - Mechanic ("smithing") and Medic ("medicine"): one rank each, from the same medieval set.
+  - Shardwell: the game's own Shards icon, one shard, then two.
+  - One-time rewards, one region named by the id:
+    - the game's own icons for gold, shards, wood, stone, the card back (rare cards), Item, the Waste map fragment and
+      the Bronze Challenge Coin;
+    - the red book the map's booster pickups are drawn as (booster);
+    - the map's blue-lined scroll (blueprint);
+    - Shikashi's hearts (goodwill).
+  - Built by a script (`build_ascendance_icons.py` in the session's scratch folder) from the user's downloads.
+- **The choice dialog** (`AscendanceUI.withIcon`): each reward button shows its icon (26 units) left of its text. An
+  empty cell as wide on the right keeps the text centered. A lasting reward shows the rank this pick would reach
+  (`Ascendance.iconRegion`).
+- **The Level sheet**: a lasting pick's line shows its icon at the rank it reached (`Ascendance.historyIconRegion`
+  maps "Haggler II" to `haggler_2`). Other lines keep their own inline icons, and an empty cell keeps the column.
+- Robustness:
+  - A rank past the drawn ones (a config that raised `maxPicks`) shows the highest drawn.
+  - A missing region logs `[TFR-Ascend] no icon ...` and the button stays text-only.
+  - A missing atlas logs once and turns the icons off.
+- CREDITS.md "Item art": the Heroes III skill icons (© New World Computing / The 3DO Company), the 32 Medieval Skill
+  Icons pack (its author is not named in the download - thanks to its creator) and Shikashi's hearts.
+
+**Agent-tested** (slot 7):
+- The choice dialog showed the stone, wood and Medic icons, then the Luck, Resistance and card-back icons, with the
+  text centered.
+- The Level sheet showed Haggler I and II (the Estates piles, growing) and Marshal I (one trumpet).
+
 ## Round 521: the goblins from the Universal LPC Spritesheet parts (2026-10-09)
 
 The Procedural Pixel Creatures session's eighth LPC batch: 32 enemies, closing the stock `humanoid/goblin` folder

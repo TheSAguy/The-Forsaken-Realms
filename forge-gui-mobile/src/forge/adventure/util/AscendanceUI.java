@@ -57,6 +57,7 @@ public final class AscendanceUI {
                 if (Ascendance.pendingChoices() > 0) // the next waiting level, as soon as this dialog has gone
                     Gdx.app.postRunnable(AscendanceUI::openChoice);
             });
+            withIcon(button, Ascendance.iconRegion(id)); // round 522
             dialog.getButtonTable().add(button).width(width()).colspan(2).padTop(2f).row();
         }
         // Round 518 (the user: "Let's add a Skill Re-roll. Can only do it once per level"): a new offer for shards, beside
@@ -138,10 +139,17 @@ public final class AscendanceUI {
             text.setWrap(true);
             text.skipToTheEnd();
             rows.add(number).width(22f).top().left();
-            rows.add(text).width(width() - 30f).left().padBottom(2f).row();
+            // Round 522: a lasting pick's icon at the rank it reached; other lines carry their own icon in the text.
+            com.badlogic.gdx.scenes.scene2d.ui.Image icon = icon(Ascendance.historyIconRegion(what));
+            if (icon != null)
+                rows.add(icon).size(SHEET_ICON).top().padRight(3f);
+            else
+                rows.add().width(SHEET_ICON).padRight(3f);
+            rows.add(text).width(width() - 30f - SHEET_ICON - 3f).left().padBottom(2f).row();
         }
         if (Ascendance.level() < 1)
-            rows.add(Controls.newTypingLabel("[%85]Nothing yet - the first level comes with the first wins.")).width(width()).row();
+            rows.add(Controls.newTypingLabel("[%85]Nothing yet - the first level comes with the first wins.")).width(width())
+                    .colspan(3).row();
         com.badlogic.gdx.scenes.scene2d.ui.ScrollPane pane = new com.badlogic.gdx.scenes.scene2d.ui.ScrollPane(rows);
         pane.setScrollingDisabled(true, false);
         pane.setFadeScrollBars(false);
@@ -157,6 +165,59 @@ public final class AscendanceUI {
                     pane.getStage().setScrollFocus(pane);
             }
         });
+    }
+
+    /** Round 522: the reward icon's box on a choice button, and on a Level-sheet line. */
+    private static final float CHOICE_ICON = 26f;
+    private static final float SHEET_ICON = 12f;
+    private static boolean iconAtlasMissing;
+
+    /** Round 522 (the user: "find Icons for all the Level upgrades we have ... each upgrade to kinda look like the first,
+     *  but each time more impressive"): the reward's icon left of its text - Heroes III's Basic/Advanced/Expert skill
+     *  pictures, medieval skill icons with silver and gold rims, the game's own resource icons - and an empty cell as wide
+     *  on the right, so the text stays centered on the button. */
+    private static void withIcon(TextraButton button, String region) {
+        com.badlogic.gdx.scenes.scene2d.ui.Image image = icon(region);
+        if (image == null)
+            return;
+        com.github.tommyettinger.textra.TextraLabel label = button.getTextraLabel();
+        button.clearChildren();
+        button.add(image).size(CHOICE_ICON).pad(2f, 4f, 2f, 2f);
+        button.add(label).expandX().fillX();
+        button.add().width(CHOICE_ICON + 6f);
+    }
+
+    /** Round 522: an icon of Ascendance.ICON_ATLAS, or null. A lasting rank past the drawn ones (a config that raised
+     *  maxPicks) shows the highest drawn. */
+    private static com.badlogic.gdx.scenes.scene2d.ui.Image icon(String region) {
+        if (region == null || iconAtlasMissing)
+            return null;
+        try {
+            com.badlogic.gdx.graphics.g2d.Sprite sprite = Config.instance().getAtlasSprite(Ascendance.ICON_ATLAS, region);
+            int bar = region.lastIndexOf('_');
+            if (sprite == null && bar > 0) {
+                int rank;
+                try {
+                    rank = Integer.parseInt(region.substring(bar + 1));
+                } catch (NumberFormatException e) {
+                    rank = 0;
+                }
+                for (rank--; sprite == null && rank >= 1; rank--)
+                    sprite = Config.instance().getAtlasSprite(Ascendance.ICON_ATLAS, region.substring(0, bar + 1) + rank);
+            }
+            if (sprite == null) {
+                System.out.println("[TFR-Ascend] no icon '" + region + "' in " + Ascendance.ICON_ATLAS);
+                return null;
+            }
+            com.badlogic.gdx.scenes.scene2d.ui.Image image = new com.badlogic.gdx.scenes.scene2d.ui.Image(
+                    new com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable(sprite));
+            image.setScaling(com.badlogic.gdx.utils.Scaling.fit);
+            return image;
+        } catch (RuntimeException e) { // the atlas itself missing (an older plane folder): no icons, once
+            iconAtlasMissing = true;
+            System.out.println("[TFR-Ascend] reward icons unavailable (" + Ascendance.ICON_ATLAS + "): " + e.getMessage());
+            return null;
+        }
     }
 
     private static Dialog prepare(GameStage stage) {
