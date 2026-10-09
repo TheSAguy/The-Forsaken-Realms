@@ -1,0 +1,179 @@
+merfolk_king.png
+size: 648,676
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 68
+Idle
+  xy: 72, 64
+  size: 72, 68
+Idle
+  xy: 144, 64
+  size: 72, 68
+Idle
+  xy: 216, 64
+  size: 72, 68
+Walk
+  xy: 0, 132
+  size: 72, 68
+Walk
+  xy: 72, 132
+  size: 72, 68
+Walk
+  xy: 144, 132
+  size: 72, 68
+Walk
+  xy: 216, 132
+  size: 72, 68
+Walk
+  xy: 288, 132
+  size: 72, 68
+Walk
+  xy: 360, 132
+  size: 72, 68
+Walk
+  xy: 432, 132
+  size: 72, 68
+Walk
+  xy: 504, 132
+  size: 72, 68
+Attack
+  xy: 0, 200
+  size: 72, 68
+Attack
+  xy: 72, 200
+  size: 72, 68
+Attack
+  xy: 144, 200
+  size: 72, 68
+Attack
+  xy: 216, 200
+  size: 72, 68
+Attack
+  xy: 288, 200
+  size: 72, 68
+Attack
+  xy: 360, 200
+  size: 72, 68
+Attack
+  xy: 432, 200
+  size: 72, 68
+Attack
+  xy: 504, 200
+  size: 72, 68
+Hit
+  xy: 0, 268
+  size: 72, 68
+Hit
+  xy: 72, 268
+  size: 72, 68
+Hit
+  xy: 144, 268
+  size: 72, 68
+Hit
+  xy: 216, 268
+  size: 72, 68
+Death
+  xy: 0, 336
+  size: 72, 68
+Death
+  xy: 72, 336
+  size: 72, 68
+Death
+  xy: 144, 336
+  size: 72, 68
+Death
+  xy: 216, 336
+  size: 72, 68
+Death
+  xy: 288, 336
+  size: 72, 68
+Death
+  xy: 360, 336
+  size: 72, 68
+Death
+  xy: 432, 336
+  size: 72, 68
+Death
+  xy: 504, 336
+  size: 72, 68
+Death
+  xy: 576, 336
+  size: 72, 68
+IdleUp
+  xy: 0, 404
+  size: 72, 68
+IdleUp
+  xy: 72, 404
+  size: 72, 68
+IdleUp
+  xy: 144, 404
+  size: 72, 68
+IdleUp
+  xy: 216, 404
+  size: 72, 68
+IdleDown
+  xy: 0, 472
+  size: 72, 68
+IdleDown
+  xy: 72, 472
+  size: 72, 68
+IdleDown
+  xy: 144, 472
+  size: 72, 68
+IdleDown
+  xy: 216, 472
+  size: 72, 68
+WalkUp
+  xy: 0, 540
+  size: 72, 68
+WalkUp
+  xy: 72, 540
+  size: 72, 68
+WalkUp
+  xy: 144, 540
+  size: 72, 68
+WalkUp
+  xy: 216, 540
+  size: 72, 68
+WalkUp
+  xy: 288, 540
+  size: 72, 68
+WalkUp
+  xy: 360, 540
+  size: 72, 68
+WalkUp
+  xy: 432, 540
+  size: 72, 68
+WalkUp
+  xy: 504, 540
+  size: 72, 68
+WalkDown
+  xy: 0, 608
+  size: 72, 68
+WalkDown
+  xy: 72, 608
+  size: 72, 68
+WalkDown
+  xy: 144, 608
+  size: 72, 68
+WalkDown
+  xy: 216, 608
+  size: 72, 68
+WalkDown
+  xy: 288, 608
+  size: 72, 68
+WalkDown
+  xy: 360, 608
+  size: 72, 68
+WalkDown
+  xy: 432, 608
+  size: 72, 68
+WalkDown
+  xy: 504, 608
+  size: 72, 68

@@ -1,0 +1,179 @@
+the_astral_visionary.png
+size: 666,640
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 64
+Idle
+  xy: 74, 64
+  size: 74, 64
+Idle
+  xy: 148, 64
+  size: 74, 64
+Idle
+  xy: 222, 64
+  size: 74, 64
+Walk
+  xy: 0, 128
+  size: 74, 64
+Walk
+  xy: 74, 128
+  size: 74, 64
+Walk
+  xy: 148, 128
+  size: 74, 64
+Walk
+  xy: 222, 128
+  size: 74, 64
+Walk
+  xy: 296, 128
+  size: 74, 64
+Walk
+  xy: 370, 128
+  size: 74, 64
+Walk
+  xy: 444, 128
+  size: 74, 64
+Walk
+  xy: 518, 128
+  size: 74, 64
+Attack
+  xy: 0, 192
+  size: 74, 64
+Attack
+  xy: 74, 192
+  size: 74, 64
+Attack
+  xy: 148, 192
+  size: 74, 64
+Attack
+  xy: 222, 192
+  size: 74, 64
+Attack
+  xy: 296, 192
+  size: 74, 64
+Attack
+  xy: 370, 192
+  size: 74, 64
+Attack
+  xy: 444, 192
+  size: 74, 64
+Attack
+  xy: 518, 192
+  size: 74, 64
+Hit
+  xy: 0, 256
+  size: 74, 64
+Hit
+  xy: 74, 256
+  size: 74, 64
+Hit
+  xy: 148, 256
+  size: 74, 64
+Hit
+  xy: 222, 256
+  size: 74, 64
+Death
+  xy: 0, 320
+  size: 74, 64
+Death
+  xy: 74, 320
+  size: 74, 64
+Death
+  xy: 148, 320
+  size: 74, 64
+Death
+  xy: 222, 320
+  size: 74, 64
+Death
+  xy: 296, 320
+  size: 74, 64
+Death
+  xy: 370, 320
+  size: 74, 64
+Death
+  xy: 444, 320
+  size: 74, 64
+Death
+  xy: 518, 320
+  size: 74, 64
+Death
+  xy: 592, 320
+  size: 74, 64
+IdleUp
+  xy: 0, 384
+  size: 74, 64
+IdleUp
+  xy: 74, 384
+  size: 74, 64
+IdleUp
+  xy: 148, 384
+  size: 74, 64
+IdleUp
+  xy: 222, 384
+  size: 74, 64
+IdleDown
+  xy: 0, 448
+  size: 74, 64
+IdleDown
+  xy: 74, 448
+  size: 74, 64
+IdleDown
+  xy: 148, 448
+  size: 74, 64
+IdleDown
+  xy: 222, 448
+  size: 74, 64
+WalkUp
+  xy: 0, 512
+  size: 74, 64
+WalkUp
+  xy: 74, 512
+  size: 74, 64
+WalkUp
+  xy: 148, 512
+  size: 74, 64
+WalkUp
+  xy: 222, 512
+  size: 74, 64
+WalkUp
+  xy: 296, 512
+  size: 74, 64
+WalkUp
+  xy: 370, 512
+  size: 74, 64
+WalkUp
+  xy: 444, 512
+  size: 74, 64
+WalkUp
+  xy: 518, 512
+  size: 74, 64
+WalkDown
+  xy: 0, 576
+  size: 74, 64
+WalkDown
+  xy: 74, 576
+  size: 74, 64
+WalkDown
+  xy: 148, 576
+  size: 74, 64
+WalkDown
+  xy: 222, 576
+  size: 74, 64
+WalkDown
+  xy: 296, 576
+  size: 74, 64
+WalkDown
+  xy: 370, 576
+  size: 74, 64
+WalkDown
+  xy: 444, 576
+  size: 74, 64
+WalkDown
+  xy: 518, 576
+  size: 74, 64

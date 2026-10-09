@@ -1,0 +1,179 @@
+emry.png
+size: 684,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 55
+Idle
+  xy: 76, 64
+  size: 76, 55
+Idle
+  xy: 152, 64
+  size: 76, 55
+Idle
+  xy: 228, 64
+  size: 76, 55
+Walk
+  xy: 0, 119
+  size: 76, 55
+Walk
+  xy: 76, 119
+  size: 76, 55
+Walk
+  xy: 152, 119
+  size: 76, 55
+Walk
+  xy: 228, 119
+  size: 76, 55
+Walk
+  xy: 304, 119
+  size: 76, 55
+Walk
+  xy: 380, 119
+  size: 76, 55
+Walk
+  xy: 456, 119
+  size: 76, 55
+Walk
+  xy: 532, 119
+  size: 76, 55
+Attack
+  xy: 0, 174
+  size: 76, 55
+Attack
+  xy: 76, 174
+  size: 76, 55
+Attack
+  xy: 152, 174
+  size: 76, 55
+Attack
+  xy: 228, 174
+  size: 76, 55
+Attack
+  xy: 304, 174
+  size: 76, 55
+Attack
+  xy: 380, 174
+  size: 76, 55
+Attack
+  xy: 456, 174
+  size: 76, 55
+Attack
+  xy: 532, 174
+  size: 76, 55
+Hit
+  xy: 0, 229
+  size: 76, 55
+Hit
+  xy: 76, 229
+  size: 76, 55
+Hit
+  xy: 152, 229
+  size: 76, 55
+Hit
+  xy: 228, 229
+  size: 76, 55
+Death
+  xy: 0, 284
+  size: 76, 55
+Death
+  xy: 76, 284
+  size: 76, 55
+Death
+  xy: 152, 284
+  size: 76, 55
+Death
+  xy: 228, 284
+  size: 76, 55
+Death
+  xy: 304, 284
+  size: 76, 55
+Death
+  xy: 380, 284
+  size: 76, 55
+Death
+  xy: 456, 284
+  size: 76, 55
+Death
+  xy: 532, 284
+  size: 76, 55
+Death
+  xy: 608, 284
+  size: 76, 55
+IdleUp
+  xy: 0, 339
+  size: 76, 55
+IdleUp
+  xy: 76, 339
+  size: 76, 55
+IdleUp
+  xy: 152, 339
+  size: 76, 55
+IdleUp
+  xy: 228, 339
+  size: 76, 55
+IdleDown
+  xy: 0, 394
+  size: 76, 55
+IdleDown
+  xy: 76, 394
+  size: 76, 55
+IdleDown
+  xy: 152, 394
+  size: 76, 55
+IdleDown
+  xy: 228, 394
+  size: 76, 55
+WalkUp
+  xy: 0, 449
+  size: 76, 55
+WalkUp
+  xy: 76, 449
+  size: 76, 55
+WalkUp
+  xy: 152, 449
+  size: 76, 55
+WalkUp
+  xy: 228, 449
+  size: 76, 55
+WalkUp
+  xy: 304, 449
+  size: 76, 55
+WalkUp
+  xy: 380, 449
+  size: 76, 55
+WalkUp
+  xy: 456, 449
+  size: 76, 55
+WalkUp
+  xy: 532, 449
+  size: 76, 55
+WalkDown
+  xy: 0, 504
+  size: 76, 55
+WalkDown
+  xy: 76, 504
+  size: 76, 55
+WalkDown
+  xy: 152, 504
+  size: 76, 55
+WalkDown
+  xy: 228, 504
+  size: 76, 55
+WalkDown
+  xy: 304, 504
+  size: 76, 55
+WalkDown
+  xy: 380, 504
+  size: 76, 55
+WalkDown
+  xy: 456, 504
+  size: 76, 55
+WalkDown
+  xy: 532, 504
+  size: 76, 55

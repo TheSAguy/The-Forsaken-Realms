@@ -1,0 +1,176 @@
+talrand.png
+size: 522,622
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 58, 62
+Idle
+  xy: 58, 64
+  size: 58, 62
+Idle
+  xy: 116, 64
+  size: 58, 62
+Idle
+  xy: 174, 64
+  size: 58, 62
+Walk
+  xy: 0, 126
+  size: 58, 62
+Walk
+  xy: 58, 126
+  size: 58, 62
+Walk
+  xy: 116, 126
+  size: 58, 62
+Walk
+  xy: 174, 126
+  size: 58, 62
+Walk
+  xy: 232, 126
+  size: 58, 62
+Walk
+  xy: 290, 126
+  size: 58, 62
+Walk
+  xy: 348, 126
+  size: 58, 62
+Walk
+  xy: 406, 126
+  size: 58, 62
+Attack
+  xy: 0, 188
+  size: 58, 62
+Attack
+  xy: 58, 188
+  size: 58, 62
+Attack
+  xy: 116, 188
+  size: 58, 62
+Attack
+  xy: 174, 188
+  size: 58, 62
+Attack
+  xy: 232, 188
+  size: 58, 62
+Attack
+  xy: 290, 188
+  size: 58, 62
+Attack
+  xy: 348, 188
+  size: 58, 62
+Hit
+  xy: 0, 250
+  size: 58, 62
+Hit
+  xy: 58, 250
+  size: 58, 62
+Hit
+  xy: 116, 250
+  size: 58, 62
+Hit
+  xy: 174, 250
+  size: 58, 62
+Death
+  xy: 0, 312
+  size: 58, 62
+Death
+  xy: 58, 312
+  size: 58, 62
+Death
+  xy: 116, 312
+  size: 58, 62
+Death
+  xy: 174, 312
+  size: 58, 62
+Death
+  xy: 232, 312
+  size: 58, 62
+Death
+  xy: 290, 312
+  size: 58, 62
+Death
+  xy: 348, 312
+  size: 58, 62
+Death
+  xy: 406, 312
+  size: 58, 62
+Death
+  xy: 464, 312
+  size: 58, 62
+IdleUp
+  xy: 0, 374
+  size: 58, 62
+IdleUp
+  xy: 58, 374
+  size: 58, 62
+IdleUp
+  xy: 116, 374
+  size: 58, 62
+IdleUp
+  xy: 174, 374
+  size: 58, 62
+IdleDown
+  xy: 0, 436
+  size: 58, 62
+IdleDown
+  xy: 58, 436
+  size: 58, 62
+IdleDown
+  xy: 116, 436
+  size: 58, 62
+IdleDown
+  xy: 174, 436
+  size: 58, 62
+WalkUp
+  xy: 0, 498
+  size: 58, 62
+WalkUp
+  xy: 58, 498
+  size: 58, 62
+WalkUp
+  xy: 116, 498
+  size: 58, 62
+WalkUp
+  xy: 174, 498
+  size: 58, 62
+WalkUp
+  xy: 232, 498
+  size: 58, 62
+WalkUp
+  xy: 290, 498
+  size: 58, 62
+WalkUp
+  xy: 348, 498
+  size: 58, 62
+WalkUp
+  xy: 406, 498
+  size: 58, 62
+WalkDown
+  xy: 0, 560
+  size: 58, 62
+WalkDown
+  xy: 58, 560
+  size: 58, 62
+WalkDown
+  xy: 116, 560
+  size: 58, 62
+WalkDown
+  xy: 174, 560
+  size: 58, 62
+WalkDown
+  xy: 232, 560
+  size: 58, 62
+WalkDown
+  xy: 290, 560
+  size: 58, 62
+WalkDown
+  xy: 348, 560
+  size: 58, 62
+WalkDown
+  xy: 406, 560
+  size: 58, 62

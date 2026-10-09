@@ -1,0 +1,179 @@
+kiora.png
+size: 648,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 55
+Idle
+  xy: 72, 64
+  size: 72, 55
+Idle
+  xy: 144, 64
+  size: 72, 55
+Idle
+  xy: 216, 64
+  size: 72, 55
+Walk
+  xy: 0, 119
+  size: 72, 55
+Walk
+  xy: 72, 119
+  size: 72, 55
+Walk
+  xy: 144, 119
+  size: 72, 55
+Walk
+  xy: 216, 119
+  size: 72, 55
+Walk
+  xy: 288, 119
+  size: 72, 55
+Walk
+  xy: 360, 119
+  size: 72, 55
+Walk
+  xy: 432, 119
+  size: 72, 55
+Walk
+  xy: 504, 119
+  size: 72, 55
+Attack
+  xy: 0, 174
+  size: 72, 55
+Attack
+  xy: 72, 174
+  size: 72, 55
+Attack
+  xy: 144, 174
+  size: 72, 55
+Attack
+  xy: 216, 174
+  size: 72, 55
+Attack
+  xy: 288, 174
+  size: 72, 55
+Attack
+  xy: 360, 174
+  size: 72, 55
+Attack
+  xy: 432, 174
+  size: 72, 55
+Attack
+  xy: 504, 174
+  size: 72, 55
+Hit
+  xy: 0, 229
+  size: 72, 55
+Hit
+  xy: 72, 229
+  size: 72, 55
+Hit
+  xy: 144, 229
+  size: 72, 55
+Hit
+  xy: 216, 229
+  size: 72, 55
+Death
+  xy: 0, 284
+  size: 72, 55
+Death
+  xy: 72, 284
+  size: 72, 55
+Death
+  xy: 144, 284
+  size: 72, 55
+Death
+  xy: 216, 284
+  size: 72, 55
+Death
+  xy: 288, 284
+  size: 72, 55
+Death
+  xy: 360, 284
+  size: 72, 55
+Death
+  xy: 432, 284
+  size: 72, 55
+Death
+  xy: 504, 284
+  size: 72, 55
+Death
+  xy: 576, 284
+  size: 72, 55
+IdleUp
+  xy: 0, 339
+  size: 72, 55
+IdleUp
+  xy: 72, 339
+  size: 72, 55
+IdleUp
+  xy: 144, 339
+  size: 72, 55
+IdleUp
+  xy: 216, 339
+  size: 72, 55
+IdleDown
+  xy: 0, 394
+  size: 72, 55
+IdleDown
+  xy: 72, 394
+  size: 72, 55
+IdleDown
+  xy: 144, 394
+  size: 72, 55
+IdleDown
+  xy: 216, 394
+  size: 72, 55
+WalkUp
+  xy: 0, 449
+  size: 72, 55
+WalkUp
+  xy: 72, 449
+  size: 72, 55
+WalkUp
+  xy: 144, 449
+  size: 72, 55
+WalkUp
+  xy: 216, 449
+  size: 72, 55
+WalkUp
+  xy: 288, 449
+  size: 72, 55
+WalkUp
+  xy: 360, 449
+  size: 72, 55
+WalkUp
+  xy: 432, 449
+  size: 72, 55
+WalkUp
+  xy: 504, 449
+  size: 72, 55
+WalkDown
+  xy: 0, 504
+  size: 72, 55
+WalkDown
+  xy: 72, 504
+  size: 72, 55
+WalkDown
+  xy: 144, 504
+  size: 72, 55
+WalkDown
+  xy: 216, 504
+  size: 72, 55
+WalkDown
+  xy: 288, 504
+  size: 72, 55
+WalkDown
+  xy: 360, 504
+  size: 72, 55
+WalkDown
+  xy: 432, 504
+  size: 72, 55
+WalkDown
+  xy: 504, 504
+  size: 72, 55

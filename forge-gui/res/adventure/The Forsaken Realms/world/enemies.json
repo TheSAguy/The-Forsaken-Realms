@@ -18974,7 +18974,7 @@
     },
     {
         "name": "Kiora",
-        "sprite": "sprites/enemy/humanoid/merfolk/kiora.atlas",
+        "sprite": "sprites/enemy/remake/kiora.atlas",
         "deck": [
             "decks/miniboss/kiora.dck"
         ],
@@ -19077,7 +19077,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 1.5
+        "scale": 0.4535
     },
     {
         "name": "Knight",
@@ -21627,7 +21627,7 @@
     {
         "name": "Merfolk Elite",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/merfolk/naga.atlas",
+        "sprite": "sprites/enemy/remake/merfolk_elite.atlas",
         "deck": [
             "decks/standard/merfolk_elite.dck"
         ],
@@ -21636,7 +21636,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.4643,
+        "scale": 0.3171,
         "life": 25,
         "rewards": [
             {
@@ -21718,7 +21718,7 @@
     },
     {
         "name": "Merfolk Fighter",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk.atlas",
+        "sprite": "sprites/enemy/remake/merfolk_fighter.atlas",
         "deck": [
             "decks/standard/merfolk_lords.dck"
         ],
@@ -21775,11 +21775,12 @@
             "BiomeBlue",
             "Minion"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3171
     },
     {
         "name": "Merfolk Lord",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk_lord.atlas",
+        "sprite": "sprites/enemy/remake/merfolk_lord.atlas",
         "deck": [
             "decks/standard/merfolk_lord2.dck"
         ],
@@ -21837,11 +21838,12 @@
             "IdentitySimic",
             "BiomeBlue"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.3171
     },
     {
         "name": "Merfolk Soldier",
-        "sprite": "sprites/enemy/humanoid/merfolk/mermaid.atlas",
+        "sprite": "sprites/enemy/remake/merfolk_soldier.atlas",
         "deck": [
             "decks/standard/merfolk_v_goblins.dck"
         ],
@@ -21888,7 +21890,8 @@
             "BiomeBlue",
             "Minion"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3171
     },
     {
         "name": "Merfolk warrior",
@@ -38970,13 +38973,13 @@
     },
     {
         "name": "Thassa",
-        "sprite": "sprites/enemy/humanoid/merfolk/kiora.atlas",
+        "sprite": "sprites/enemy/remake/thassa.atlas",
         "deck": [
             "decks/legends/thassa.dck"
         ],
         "ai": "",
         "speed": 37,
-        "scale": 1.0,
+        "scale": 0.3023,
         "life": 44,
         "rewards": [
             {
@@ -42055,13 +42058,13 @@
     },
     {
         "name": "Thrasios and Vial Smasher",
-        "sprite": "sprites/enemy/humanoid/merfolk/mermaid.atlas",
+        "sprite": "sprites/enemy/remake/thrasios_and_vial_smasher.atlas",
         "deck": [
             "decks/legends/thrasios_and_vial_smasher.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.3095,
         "life": 40,
         "rewards": [
             {
@@ -50990,13 +50993,13 @@
     },
     {
         "name": "Prime Speaker Zegana",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk_lord.atlas",
+        "sprite": "sprites/enemy/remake/prime_speaker_zegana.atlas",
         "deck": [
             "decks/legends/prime_speaker_zegana.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.2889,
         "life": 30,
         "rewards": [
             {
@@ -62736,13 +62739,13 @@
     },
     {
         "name": "Emperor Mihail",
-        "sprite": "sprites/enemy/humanoid/merfolk/naga.atlas",
+        "sprite": "sprites/enemy/remake/emperor_mihail.atlas",
         "deck": [
             "decks/legends/emperor_mihail.dck"
         ],
         "ai": "",
         "speed": 48,
-        "scale": 0.4643,
+        "scale": 0.26,
         "life": 27,
         "rewards": [
             {
@@ -62872,13 +62875,13 @@
     },
     {
         "name": "Kenessos",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk.atlas",
+        "sprite": "sprites/enemy/remake/kenessos.atlas",
         "deck": [
             "decks/legends/kenessos.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -62940,13 +62943,13 @@
     },
     {
         "name": "Svyelun",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk_lord.atlas",
+        "sprite": "sprites/enemy/remake/svyelun.atlas",
         "deck": [
             "decks/legends/svyelun.dck"
         ],
         "ai": "",
         "speed": 41,
-        "scale": 1,
+        "scale": 0.3023,
         "life": 42,
         "rewards": [
             {
@@ -63012,13 +63015,13 @@
     },
     {
         "name": "Tatyova",
-        "sprite": "sprites/enemy/humanoid/merfolk/mermaid.atlas",
+        "sprite": "sprites/enemy/remake/tatyova.atlas",
         "deck": [
             "decks/legends/tatyova.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -70188,13 +70191,13 @@
     },
     {
         "name": "Talrand",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk_lord.atlas",
+        "sprite": "sprites/enemy/remake/talrand.atlas",
         "deck": [
             "decks/legends/talrand.dck"
         ],
         "ai": "",
         "speed": 27,
-        "scale": 1,
+        "scale": 0.2955,
         "life": 20,
         "rewards": [
             {
@@ -70392,13 +70395,13 @@
     },
     {
         "name": "Jori En",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk.atlas",
+        "sprite": "sprites/enemy/remake/jori_en.atlas",
         "deck": [
             "decks/legends/jori_en.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -73630,7 +73633,7 @@
     },
     {
         "name": "Padeem",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk.atlas",
+        "sprite": "sprites/enemy/remake/padeem.atlas",
         "deck": [
             "decks/legends/padeem.dck"
         ],
@@ -73693,7 +73696,8 @@
         "colors": "U",
         "spawnRate": 0,
         "tier": "Mythic",
-        "difficulty": 3
+        "difficulty": 3,
+        "scale": 0.3171
     },
     {
         "name": "Pia Nalaar",
@@ -83312,7 +83316,7 @@
     },
     {
         "name": "Alandra",
-        "sprite": "sprites/enemy/humanoid/merfolk/kiora.atlas",
+        "sprite": "sprites/enemy/remake/alandra.atlas",
         "deck": [
             "decks/legends/alandra.dck"
         ],
@@ -83375,7 +83379,8 @@
         "colors": "U",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3171
     },
     {
         "name": "Alquist Proft",
@@ -84293,7 +84298,7 @@
     },
     {
         "name": "Dalakos",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk.atlas",
+        "sprite": "sprites/enemy/remake/dalakos.atlas",
         "deck": [
             "decks/legends/dalakos.dck"
         ],
@@ -84356,7 +84361,8 @@
         "colors": "UR",
         "spawnRate": 1,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3023
     },
     {
         "name": "Zurzoth",
@@ -87578,12 +87584,12 @@
     },
     {
         "name": "Morska",
-        "sprite": "sprites/enemy/humanoid/merfolk/naga.atlas",
+        "sprite": "sprites/enemy/remake/morska.atlas",
         "deck": [
             "decks/legends/morska.dck"
         ],
         "ai": "",
-        "scale": 0.4643,
+        "scale": 0.2826,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -89760,7 +89766,7 @@
     },
     {
         "name": "Adrix and Nev",
-        "sprite": "sprites/enemy/humanoid/merfolk/mermaid.atlas",
+        "sprite": "sprites/enemy/remake/adrix_and_nev.atlas",
         "deck": [
             "decks/legends/adrix_and_nev.dck"
         ],
@@ -89823,7 +89829,8 @@
         "colors": "UG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.3095
     },
     {
         "name": "Esix",
@@ -93633,12 +93640,12 @@
     },
     {
         "name": "Sidisi",
-        "sprite": "sprites/enemy/humanoid/merfolk/naga.atlas",
+        "sprite": "sprites/enemy/remake/sidisi.atlas",
         "deck": [
             "decks/legends/sidisi.dck"
         ],
         "ai": "",
-        "scale": 0.4643,
+        "scale": 0.3333,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -95272,7 +95279,7 @@
     },
     {
         "name": "Emry",
-        "sprite": "sprites/enemy/humanoid/merfolk/kiora.atlas",
+        "sprite": "sprites/enemy/remake/emry.atlas",
         "deck": [
             "decks/legends/emry.dck"
         ],
@@ -95336,7 +95343,8 @@
         "colors": "U",
         "spawnRate": 0,
         "tier": "Common",
-        "difficulty": 0.1
+        "difficulty": 0.1,
+        "scale": 0.3171
     },
     {
         "name": "Rankle",
@@ -97673,13 +97681,13 @@
     },
     {
         "name": "Orysa",
-        "sprite": "sprites/enemy/humanoid/merfolk/kiora.atlas",
+        "sprite": "sprites/enemy/remake/orysa.atlas",
         "deck": [
             "decks/legends/orysa.dck"
         ],
         "ai": "",
         "speed": 30,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 22,
         "rewards": [
             {
@@ -100929,7 +100937,7 @@
     {
         "name": "Merfolk King",
         "nameOverride": "Lord of Atlantis",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk_lord.atlas",
+        "sprite": "sprites/enemy/remake/merfolk_king.atlas",
         "deck": [
             "decks/elite/merfolk_king.dck"
         ],
@@ -101053,7 +101061,8 @@
             "BiomeBlue",
             "Leader"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.26
     },
     {
         "name": "Forest Titan",
@@ -113171,7 +113180,7 @@
     },
     {
         "name": "The Astral Visionary",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk_lord.atlas",
+        "sprite": "sprites/enemy/remake/the_astral_visionary.atlas",
         "deck": [
             "decks/miniboss/shandalar97_blue_starcryst.dck"
         ],
@@ -113404,7 +113413,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 1.5
+        "scale": 0.4062
     },
     {
         "name": "Nether Fiend of Shandalar",
@@ -125340,7 +125349,7 @@
     },
     {
         "name": "Grandmother Goby",
-        "sprite": "sprites/enemy/humanoid/merfolk/mermaid.atlas",
+        "sprite": "sprites/enemy/remake/grandmother_goby.atlas",
         "deck": [
             "decks/legends/grandmother_goby.dck"
         ],
@@ -125403,7 +125412,8 @@
         "colors": "U",
         "spawnRate": 1,
         "difficulty": 2,
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.3171
     },
     {
         "name": "Kitsa",
@@ -125542,7 +125552,7 @@
     },
     {
         "name": "Neerdiv",
-        "sprite": "sprites/enemy/humanoid/merfolk/merfolk_lord.atlas",
+        "sprite": "sprites/enemy/remake/neerdiv.atlas",
         "deck": [
             "decks/legends/neerdiv.dck"
         ],
@@ -125605,7 +125615,8 @@
         "colors": "U",
         "spawnRate": 1,
         "difficulty": 1,
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3095
     },
     {
         "name": "Rikala",

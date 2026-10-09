@@ -1,0 +1,179 @@
+sidisi.png
+size: 738,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 50
+Idle
+  xy: 82, 64
+  size: 82, 50
+Idle
+  xy: 164, 64
+  size: 82, 50
+Idle
+  xy: 246, 64
+  size: 82, 50
+Walk
+  xy: 0, 114
+  size: 82, 50
+Walk
+  xy: 82, 114
+  size: 82, 50
+Walk
+  xy: 164, 114
+  size: 82, 50
+Walk
+  xy: 246, 114
+  size: 82, 50
+Walk
+  xy: 328, 114
+  size: 82, 50
+Walk
+  xy: 410, 114
+  size: 82, 50
+Walk
+  xy: 492, 114
+  size: 82, 50
+Walk
+  xy: 574, 114
+  size: 82, 50
+Attack
+  xy: 0, 164
+  size: 82, 50
+Attack
+  xy: 82, 164
+  size: 82, 50
+Attack
+  xy: 164, 164
+  size: 82, 50
+Attack
+  xy: 246, 164
+  size: 82, 50
+Attack
+  xy: 328, 164
+  size: 82, 50
+Attack
+  xy: 410, 164
+  size: 82, 50
+Attack
+  xy: 492, 164
+  size: 82, 50
+Attack
+  xy: 574, 164
+  size: 82, 50
+Hit
+  xy: 0, 214
+  size: 82, 50
+Hit
+  xy: 82, 214
+  size: 82, 50
+Hit
+  xy: 164, 214
+  size: 82, 50
+Hit
+  xy: 246, 214
+  size: 82, 50
+Death
+  xy: 0, 264
+  size: 82, 50
+Death
+  xy: 82, 264
+  size: 82, 50
+Death
+  xy: 164, 264
+  size: 82, 50
+Death
+  xy: 246, 264
+  size: 82, 50
+Death
+  xy: 328, 264
+  size: 82, 50
+Death
+  xy: 410, 264
+  size: 82, 50
+Death
+  xy: 492, 264
+  size: 82, 50
+Death
+  xy: 574, 264
+  size: 82, 50
+Death
+  xy: 656, 264
+  size: 82, 50
+IdleUp
+  xy: 0, 314
+  size: 82, 50
+IdleUp
+  xy: 82, 314
+  size: 82, 50
+IdleUp
+  xy: 164, 314
+  size: 82, 50
+IdleUp
+  xy: 246, 314
+  size: 82, 50
+IdleDown
+  xy: 0, 364
+  size: 82, 50
+IdleDown
+  xy: 82, 364
+  size: 82, 50
+IdleDown
+  xy: 164, 364
+  size: 82, 50
+IdleDown
+  xy: 246, 364
+  size: 82, 50
+WalkUp
+  xy: 0, 414
+  size: 82, 50
+WalkUp
+  xy: 82, 414
+  size: 82, 50
+WalkUp
+  xy: 164, 414
+  size: 82, 50
+WalkUp
+  xy: 246, 414
+  size: 82, 50
+WalkUp
+  xy: 328, 414
+  size: 82, 50
+WalkUp
+  xy: 410, 414
+  size: 82, 50
+WalkUp
+  xy: 492, 414
+  size: 82, 50
+WalkUp
+  xy: 574, 414
+  size: 82, 50
+WalkDown
+  xy: 0, 464
+  size: 82, 50
+WalkDown
+  xy: 82, 464
+  size: 82, 50
+WalkDown
+  xy: 164, 464
+  size: 82, 50
+WalkDown
+  xy: 246, 464
+  size: 82, 50
+WalkDown
+  xy: 328, 464
+  size: 82, 50
+WalkDown
+  xy: 410, 464
+  size: 82, 50
+WalkDown
+  xy: 492, 464
+  size: 82, 50
+WalkDown
+  xy: 574, 464
+  size: 82, 50

@@ -1,0 +1,176 @@
+adrix_and_nev.png
+size: 468,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 52, 56
+Idle
+  xy: 52, 64
+  size: 52, 56
+Idle
+  xy: 104, 64
+  size: 52, 56
+Idle
+  xy: 156, 64
+  size: 52, 56
+Walk
+  xy: 0, 120
+  size: 52, 56
+Walk
+  xy: 52, 120
+  size: 52, 56
+Walk
+  xy: 104, 120
+  size: 52, 56
+Walk
+  xy: 156, 120
+  size: 52, 56
+Walk
+  xy: 208, 120
+  size: 52, 56
+Walk
+  xy: 260, 120
+  size: 52, 56
+Walk
+  xy: 312, 120
+  size: 52, 56
+Walk
+  xy: 364, 120
+  size: 52, 56
+Attack
+  xy: 0, 176
+  size: 52, 56
+Attack
+  xy: 52, 176
+  size: 52, 56
+Attack
+  xy: 104, 176
+  size: 52, 56
+Attack
+  xy: 156, 176
+  size: 52, 56
+Attack
+  xy: 208, 176
+  size: 52, 56
+Attack
+  xy: 260, 176
+  size: 52, 56
+Attack
+  xy: 312, 176
+  size: 52, 56
+Hit
+  xy: 0, 232
+  size: 52, 56
+Hit
+  xy: 52, 232
+  size: 52, 56
+Hit
+  xy: 104, 232
+  size: 52, 56
+Hit
+  xy: 156, 232
+  size: 52, 56
+Death
+  xy: 0, 288
+  size: 52, 56
+Death
+  xy: 52, 288
+  size: 52, 56
+Death
+  xy: 104, 288
+  size: 52, 56
+Death
+  xy: 156, 288
+  size: 52, 56
+Death
+  xy: 208, 288
+  size: 52, 56
+Death
+  xy: 260, 288
+  size: 52, 56
+Death
+  xy: 312, 288
+  size: 52, 56
+Death
+  xy: 364, 288
+  size: 52, 56
+Death
+  xy: 416, 288
+  size: 52, 56
+IdleUp
+  xy: 0, 344
+  size: 52, 56
+IdleUp
+  xy: 52, 344
+  size: 52, 56
+IdleUp
+  xy: 104, 344
+  size: 52, 56
+IdleUp
+  xy: 156, 344
+  size: 52, 56
+IdleDown
+  xy: 0, 400
+  size: 52, 56
+IdleDown
+  xy: 52, 400
+  size: 52, 56
+IdleDown
+  xy: 104, 400
+  size: 52, 56
+IdleDown
+  xy: 156, 400
+  size: 52, 56
+WalkUp
+  xy: 0, 456
+  size: 52, 56
+WalkUp
+  xy: 52, 456
+  size: 52, 56
+WalkUp
+  xy: 104, 456
+  size: 52, 56
+WalkUp
+  xy: 156, 456
+  size: 52, 56
+WalkUp
+  xy: 208, 456
+  size: 52, 56
+WalkUp
+  xy: 260, 456
+  size: 52, 56
+WalkUp
+  xy: 312, 456
+  size: 52, 56
+WalkUp
+  xy: 364, 456
+  size: 52, 56
+WalkDown
+  xy: 0, 512
+  size: 52, 56
+WalkDown
+  xy: 52, 512
+  size: 52, 56
+WalkDown
+  xy: 104, 512
+  size: 52, 56
+WalkDown
+  xy: 156, 512
+  size: 52, 56
+WalkDown
+  xy: 208, 512
+  size: 52, 56
+WalkDown
+  xy: 260, 512
+  size: 52, 56
+WalkDown
+  xy: 312, 512
+  size: 52, 56
+WalkDown
+  xy: 364, 512
+  size: 52, 56

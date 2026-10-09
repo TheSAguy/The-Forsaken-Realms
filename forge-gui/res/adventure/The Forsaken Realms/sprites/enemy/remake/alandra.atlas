@@ -1,0 +1,176 @@
+alandra.png
+size: 504,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 55
+Idle
+  xy: 56, 64
+  size: 56, 55
+Idle
+  xy: 112, 64
+  size: 56, 55
+Idle
+  xy: 168, 64
+  size: 56, 55
+Walk
+  xy: 0, 119
+  size: 56, 55
+Walk
+  xy: 56, 119
+  size: 56, 55
+Walk
+  xy: 112, 119
+  size: 56, 55
+Walk
+  xy: 168, 119
+  size: 56, 55
+Walk
+  xy: 224, 119
+  size: 56, 55
+Walk
+  xy: 280, 119
+  size: 56, 55
+Walk
+  xy: 336, 119
+  size: 56, 55
+Walk
+  xy: 392, 119
+  size: 56, 55
+Attack
+  xy: 0, 174
+  size: 56, 55
+Attack
+  xy: 56, 174
+  size: 56, 55
+Attack
+  xy: 112, 174
+  size: 56, 55
+Attack
+  xy: 168, 174
+  size: 56, 55
+Attack
+  xy: 224, 174
+  size: 56, 55
+Attack
+  xy: 280, 174
+  size: 56, 55
+Attack
+  xy: 336, 174
+  size: 56, 55
+Hit
+  xy: 0, 229
+  size: 56, 55
+Hit
+  xy: 56, 229
+  size: 56, 55
+Hit
+  xy: 112, 229
+  size: 56, 55
+Hit
+  xy: 168, 229
+  size: 56, 55
+Death
+  xy: 0, 284
+  size: 56, 55
+Death
+  xy: 56, 284
+  size: 56, 55
+Death
+  xy: 112, 284
+  size: 56, 55
+Death
+  xy: 168, 284
+  size: 56, 55
+Death
+  xy: 224, 284
+  size: 56, 55
+Death
+  xy: 280, 284
+  size: 56, 55
+Death
+  xy: 336, 284
+  size: 56, 55
+Death
+  xy: 392, 284
+  size: 56, 55
+Death
+  xy: 448, 284
+  size: 56, 55
+IdleUp
+  xy: 0, 339
+  size: 56, 55
+IdleUp
+  xy: 56, 339
+  size: 56, 55
+IdleUp
+  xy: 112, 339
+  size: 56, 55
+IdleUp
+  xy: 168, 339
+  size: 56, 55
+IdleDown
+  xy: 0, 394
+  size: 56, 55
+IdleDown
+  xy: 56, 394
+  size: 56, 55
+IdleDown
+  xy: 112, 394
+  size: 56, 55
+IdleDown
+  xy: 168, 394
+  size: 56, 55
+WalkUp
+  xy: 0, 449
+  size: 56, 55
+WalkUp
+  xy: 56, 449
+  size: 56, 55
+WalkUp
+  xy: 112, 449
+  size: 56, 55
+WalkUp
+  xy: 168, 449
+  size: 56, 55
+WalkUp
+  xy: 224, 449
+  size: 56, 55
+WalkUp
+  xy: 280, 449
+  size: 56, 55
+WalkUp
+  xy: 336, 449
+  size: 56, 55
+WalkUp
+  xy: 392, 449
+  size: 56, 55
+WalkDown
+  xy: 0, 504
+  size: 56, 55
+WalkDown
+  xy: 56, 504
+  size: 56, 55
+WalkDown
+  xy: 112, 504
+  size: 56, 55
+WalkDown
+  xy: 168, 504
+  size: 56, 55
+WalkDown
+  xy: 224, 504
+  size: 56, 55
+WalkDown
+  xy: 280, 504
+  size: 56, 55
+WalkDown
+  xy: 336, 504
+  size: 56, 55
+WalkDown
+  xy: 392, 504
+  size: 56, 55

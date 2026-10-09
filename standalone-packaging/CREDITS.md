@@ -98,7 +98,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (129 enemies from rounds 498, 500, 501, 514 and 515 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (155 enemies from rounds 498, 500, 501, 514, 515 and 519 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -107,10 +107,14 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   kobolds of Kher Keep, the seven orcs - Orc Brute, Grakk, Orc Hunter, Tersa, Orc Warrior, Zurgo, Rootha - the
   Howlpack Exile, the eleven minotaurs - the Amonkhet Minotaur Warrior, Neheb, Moraug, the Minotaur, Firesong and
   Sunspeaker, the Minotaur Warcaller, Mogis, Sethron, Gornog, Tahngarth, Zedruu - the eight nezumi - the Nezumi
-  Leader, Marrow-Gnawer, Greasefang, Vren, the Nezumi Ninja, Ashcoat, Nashi, Wick - and the halflings the Cheff and
-  Gaddock Teeg) - composed
+  Leader, Marrow-Gnawer, Greasefang, Vren, the Nezumi Ninja, Ashcoat, Nashi, Wick - the halflings the Cheff and
+  Gaddock Teeg, and the twenty-six merfolk - Kiora, Thassa, Alandra, Emry, Orysa, the Merfolk Elite, Emperor Mihail,
+  Morska, Sidisi, the Merfolk Fighter, Kenessos, Jori En, Padeem, Dalakos, the Merfolk Lord, Prime Speaker Zegana,
+  Svyelun, Talrand, the Merfolk King, the Astral Visionary, Neerdiv, the Merfolk Soldier, Thrasios and Vial Smasher,
+  Tatyova, Adrix and Nev, Grandmother Goby) - composed
   from the parts of the Universal LPC Spritesheet Character Generator (Liberated Pixel Cup contributors), each part
   under its own license (OGA-BY 3.0, CC-BY 3.0/4.0, CC-BY-SA 3.0, CC0), the composed sprites CC-BY or CC-BY-SA; the
+  merfolk's trident is LPC's spear (CC-BY-SA 3.0) with tines and a crossbar added for this game; the
   parts, authors, licenses and sources per enemy are in `CREDITS_LPC.md`. Authors: Johannes Sjölund (wulax), Stephen
   Challener (Redshrike), bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy),
   TheraHedwig, MuffinElZangano, Durrani, Matthew Krohn (makrohn), Pierre Vigier (pvigier), Nila122, William.Thomsponj,
@@ -118,7 +122,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Daniel Eddeland (daneeklu), gr3yh47, Joe White, Thane Brimhall (pennomi), laetissima, Carlo Enrico Victoria
   (Nemisys), Michael Whitlock (bigbeargames), Tuomo Untinen (reemax), Napsio (Vitruvian Studio), Mandi Paugh, Marcel
   van de Steeg (MadMarcel), Fabzy, Luke Mehl, DarkwallLKE, Charles Sanchez (CharlesGabriel), Zi Ye, AntumDeluge, Shaun
-  Williams - and
+  Williams, Lanea Zimmerman (Sharm), Barbara Riviera, thecilekli, Tracy - and
   our thanks to every contributor the generator's credits leave unnamed; the parts and their source pages are listed at
   https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator and on https://opengameart.org.
 

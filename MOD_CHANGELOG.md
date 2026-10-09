@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 519: the merfolk from the Universal LPC Spritesheet parts (2026-10-09)
+
+The Procedural Pixel Creatures session's sixth LPC batch: 26 enemies, closing the stock `humanoid/merfolk` folder
+(selections in the generator repo's `lpc_selections/make_519.py`).
+
+- **The look**: human heads on sea skins (cyan, azure, aegean, teal, neptune, ice, cornflower, pale green, indigo) with a
+  fin crest, or side fins (LPC's dragon ears) where hair is worn. The three merfolk on the stock fish-man sprite take
+  the lizard head with a fin as a fish face; Sidisi, a naga, the lizard head and tail on dark green.
+- **The trident**: LPC's own trident is drawn only in a 128 px walk area, held level across the body - as wide as the
+  figure is tall, so `enemy_scale.py`'s body box (the larger side) read a trident merfolk as 54 px against 41 bare and
+  drew it at three quarters of its rank. The warriors carry a new part instead, `weapon_polearm_spear_trident`: LPC's
+  spear (CC-BY-SA 3.0) with two tines and a crossbar added at its head (the generator repo's
+  `tools/lpc/parts/make_spear_trident.py`); it measures 42. The credits note the change.
+- **The kiora sprite**: Kiora (a boss: azure, navy hair, a red trident - she keeps her drawn size), Thassa (ice-white in
+  a white dress, gold tiara and trident), Alandra (a blue robe, casting), Emry (teal, a blue crystal), Orysa (white hair,
+  a sky dress, dancing empty-handed).
+- **The fish-man sprite**: the Merfolk Elite (aegean, leather and steel, a steel trident), Emperor Mihail (emerald,
+  crown and navy cape, a gold trident), Morska (denim, a bowler and a brown coat, a dagger), Sidisi (black dress, gold
+  necklace, a green crystal; no tiara - LPC's floats above the lizard head in the back view, the sprite audit caught it).
+- **The merfolk sprite**: the Merfolk Fighter (cyan, a silver trident and round shield), Kenessos (a white-robed priest),
+  Jori En (a diver with a dagger), Padeem (a bald blue vedalken in a navy frock coat, a crystal), Dalakos (an apron and a
+  mace).
+- **The merfolk lord sprite**: the Merfolk Lord (gold legion armor, trident and shield), Prime Speaker Zegana (pale
+  green, silver tiara, casting), Svyelun (powder blue, navy dress, a silver trident), Talrand (a wizard's hat), the
+  Merfolk King (crown, blue cape, gold trident), the Astral Visionary (a boss: indigo, a celestial hat and a purple
+  crystal, at his drawn size), Neerdiv (a bandana and a dagger).
+- **The mermaid sprite**: the Merfolk Soldier (cyan, a yellow shield and a silver trident), Thrasios (bronze legion
+  armor and trident), Tatyova (green hair, a gnarled staff), Adrix and Nev (casting empty-handed), Grandmother Goby (an
+  elderly head, lavender and purple, a cane).
+- **Files**: 26 new atlases under `sprites/enemy/remake/`; enemies.json 26 sprite paths + 26 scales (the 24 ranked
+  0.26-0.33, the crowned King and Mihail smallest - the crown counts as height; the two bosses 0.45 and 0.41 for their
+  drawn sizes; entries that had no scale take one, so their last lines gain a trailing comma). `CREDITS.md`'s LPC line now covers 155 enemies over six rounds
+  (four new authors, for the blouse, bodice, celestial hat and three hair styles); `standalone-packaging/CREDITS_LPC.md`
+  regenerated for all six (earlier rounds' entries unchanged).
+- **Checks**: `validate_plane_data.py` unchanged (the same informational findings, none about these enemies); the
+  sprite audit is clean on the twenty-six. Not seen in play.
+
 ## Round 518: the Ascendance choice can be re-rolled once a level, for shards (2026-10-09)
 
 The user, on the "Ascendance 6 - choose one" dialog: "Let's add a Skill Re-roll. Can only do it once per level. Let's have

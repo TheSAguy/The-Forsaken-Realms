@@ -1,0 +1,176 @@
+orysa.png
+size: 396,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 44, 55
+Idle
+  xy: 44, 64
+  size: 44, 55
+Idle
+  xy: 88, 64
+  size: 44, 55
+Idle
+  xy: 132, 64
+  size: 44, 55
+Walk
+  xy: 0, 119
+  size: 44, 55
+Walk
+  xy: 44, 119
+  size: 44, 55
+Walk
+  xy: 88, 119
+  size: 44, 55
+Walk
+  xy: 132, 119
+  size: 44, 55
+Walk
+  xy: 176, 119
+  size: 44, 55
+Walk
+  xy: 220, 119
+  size: 44, 55
+Walk
+  xy: 264, 119
+  size: 44, 55
+Walk
+  xy: 308, 119
+  size: 44, 55
+Attack
+  xy: 0, 174
+  size: 44, 55
+Attack
+  xy: 44, 174
+  size: 44, 55
+Attack
+  xy: 88, 174
+  size: 44, 55
+Attack
+  xy: 132, 174
+  size: 44, 55
+Attack
+  xy: 176, 174
+  size: 44, 55
+Attack
+  xy: 220, 174
+  size: 44, 55
+Attack
+  xy: 264, 174
+  size: 44, 55
+Hit
+  xy: 0, 229
+  size: 44, 55
+Hit
+  xy: 44, 229
+  size: 44, 55
+Hit
+  xy: 88, 229
+  size: 44, 55
+Hit
+  xy: 132, 229
+  size: 44, 55
+Death
+  xy: 0, 284
+  size: 44, 55
+Death
+  xy: 44, 284
+  size: 44, 55
+Death
+  xy: 88, 284
+  size: 44, 55
+Death
+  xy: 132, 284
+  size: 44, 55
+Death
+  xy: 176, 284
+  size: 44, 55
+Death
+  xy: 220, 284
+  size: 44, 55
+Death
+  xy: 264, 284
+  size: 44, 55
+Death
+  xy: 308, 284
+  size: 44, 55
+Death
+  xy: 352, 284
+  size: 44, 55
+IdleUp
+  xy: 0, 339
+  size: 44, 55
+IdleUp
+  xy: 44, 339
+  size: 44, 55
+IdleUp
+  xy: 88, 339
+  size: 44, 55
+IdleUp
+  xy: 132, 339
+  size: 44, 55
+IdleDown
+  xy: 0, 394
+  size: 44, 55
+IdleDown
+  xy: 44, 394
+  size: 44, 55
+IdleDown
+  xy: 88, 394
+  size: 44, 55
+IdleDown
+  xy: 132, 394
+  size: 44, 55
+WalkUp
+  xy: 0, 449
+  size: 44, 55
+WalkUp
+  xy: 44, 449
+  size: 44, 55
+WalkUp
+  xy: 88, 449
+  size: 44, 55
+WalkUp
+  xy: 132, 449
+  size: 44, 55
+WalkUp
+  xy: 176, 449
+  size: 44, 55
+WalkUp
+  xy: 220, 449
+  size: 44, 55
+WalkUp
+  xy: 264, 449
+  size: 44, 55
+WalkUp
+  xy: 308, 449
+  size: 44, 55
+WalkDown
+  xy: 0, 504
+  size: 44, 55
+WalkDown
+  xy: 44, 504
+  size: 44, 55
+WalkDown
+  xy: 88, 504
+  size: 44, 55
+WalkDown
+  xy: 132, 504
+  size: 44, 55
+WalkDown
+  xy: 176, 504
+  size: 44, 55
+WalkDown
+  xy: 220, 504
+  size: 44, 55
+WalkDown
+  xy: 264, 504
+  size: 44, 55
+WalkDown
+  xy: 308, 504
+  size: 44, 55

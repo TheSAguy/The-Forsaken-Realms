@@ -80,6 +80,16 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-09 (round 519): **LOCAL + UNRELEASED (data only)** - LPC batch 6 (the Procedural Pixel Creatures
+session): the twenty-six merfolk, the stock `humanoid/merfolk` folder closed - human heads on sea skins with fin crests
+or side fins, the fish-man sprite's three as lizard heads with fins, Sidisi a naga (lizard head and tail), Padeem a bald
+vedalken; Kiora and the Astral Visionary bosses at their drawn size. The warriors carry a new part, the spear-length
+trident (LPC's spear with tines: LPC's own trident is held level and measured as body, three quarters size). 26 new
+atlases under `sprites/enemy/remake/`, enemies.json 26 paths + 26 scales, CREDITS.md's LPC line (155 enemies, rounds
+498 + 500 + 501 + 514 + 515 + 519), CREDITS_LPC.md regenerated for the six rounds. The peer (#30) verifies and packages
+when the game closes. Not seen in play. Next LPC batches: dwarves (24, round 520), goblins (32, round 521), elves (84),
+the human classes.
+
 ## STATE 2026-10-09 (round 518): **LOCAL + UNRELEASED** - the Ascendance choice dialog has a Re-roll beside "Not now":
 a new offer for the waiting level (away from the old three), once per level (`AscendanceState.rerolledLevel`, saved), for
 `difficultyRerollCost` shards - Easy 35, Normal 40, Hard 45, Insane 50.
