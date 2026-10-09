@@ -1,0 +1,173 @@
+kobold_worker.png
+size: 900,703
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 100, 71
+Idle
+  xy: 100, 64
+  size: 100, 71
+Idle
+  xy: 200, 64
+  size: 100, 71
+Idle
+  xy: 300, 64
+  size: 100, 71
+Walk
+  xy: 0, 135
+  size: 100, 71
+Walk
+  xy: 100, 135
+  size: 100, 71
+Walk
+  xy: 200, 135
+  size: 100, 71
+Walk
+  xy: 300, 135
+  size: 100, 71
+Walk
+  xy: 400, 135
+  size: 100, 71
+Walk
+  xy: 500, 135
+  size: 100, 71
+Walk
+  xy: 600, 135
+  size: 100, 71
+Walk
+  xy: 700, 135
+  size: 100, 71
+Attack
+  xy: 0, 206
+  size: 100, 71
+Attack
+  xy: 100, 206
+  size: 100, 71
+Attack
+  xy: 200, 206
+  size: 100, 71
+Attack
+  xy: 300, 206
+  size: 100, 71
+Attack
+  xy: 400, 206
+  size: 100, 71
+Attack
+  xy: 500, 206
+  size: 100, 71
+Hit
+  xy: 0, 277
+  size: 100, 71
+Hit
+  xy: 100, 277
+  size: 100, 71
+Hit
+  xy: 200, 277
+  size: 100, 71
+Hit
+  xy: 300, 277
+  size: 100, 71
+Death
+  xy: 0, 348
+  size: 100, 71
+Death
+  xy: 100, 348
+  size: 100, 71
+Death
+  xy: 200, 348
+  size: 100, 71
+Death
+  xy: 300, 348
+  size: 100, 71
+Death
+  xy: 400, 348
+  size: 100, 71
+Death
+  xy: 500, 348
+  size: 100, 71
+Death
+  xy: 600, 348
+  size: 100, 71
+Death
+  xy: 700, 348
+  size: 100, 71
+Death
+  xy: 800, 348
+  size: 100, 71
+IdleUp
+  xy: 0, 419
+  size: 100, 71
+IdleUp
+  xy: 100, 419
+  size: 100, 71
+IdleUp
+  xy: 200, 419
+  size: 100, 71
+IdleUp
+  xy: 300, 419
+  size: 100, 71
+IdleDown
+  xy: 0, 490
+  size: 100, 71
+IdleDown
+  xy: 100, 490
+  size: 100, 71
+IdleDown
+  xy: 200, 490
+  size: 100, 71
+IdleDown
+  xy: 300, 490
+  size: 100, 71
+WalkUp
+  xy: 0, 561
+  size: 100, 71
+WalkUp
+  xy: 100, 561
+  size: 100, 71
+WalkUp
+  xy: 200, 561
+  size: 100, 71
+WalkUp
+  xy: 300, 561
+  size: 100, 71
+WalkUp
+  xy: 400, 561
+  size: 100, 71
+WalkUp
+  xy: 500, 561
+  size: 100, 71
+WalkUp
+  xy: 600, 561
+  size: 100, 71
+WalkUp
+  xy: 700, 561
+  size: 100, 71
+WalkDown
+  xy: 0, 632
+  size: 100, 71
+WalkDown
+  xy: 100, 632
+  size: 100, 71
+WalkDown
+  xy: 200, 632
+  size: 100, 71
+WalkDown
+  xy: 300, 632
+  size: 100, 71
+WalkDown
+  xy: 400, 632
+  size: 100, 71
+WalkDown
+  xy: 500, 632
+  size: 100, 71
+WalkDown
+  xy: 600, 632
+  size: 100, 71
+WalkDown
+  xy: 700, 632
+  size: 100, 71

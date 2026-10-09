@@ -1,0 +1,173 @@
+howlpack_exile.png
+size: 504,523
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 51
+Idle
+  xy: 56, 64
+  size: 56, 51
+Idle
+  xy: 112, 64
+  size: 56, 51
+Idle
+  xy: 168, 64
+  size: 56, 51
+Walk
+  xy: 0, 115
+  size: 56, 51
+Walk
+  xy: 56, 115
+  size: 56, 51
+Walk
+  xy: 112, 115
+  size: 56, 51
+Walk
+  xy: 168, 115
+  size: 56, 51
+Walk
+  xy: 224, 115
+  size: 56, 51
+Walk
+  xy: 280, 115
+  size: 56, 51
+Walk
+  xy: 336, 115
+  size: 56, 51
+Walk
+  xy: 392, 115
+  size: 56, 51
+Attack
+  xy: 0, 166
+  size: 56, 51
+Attack
+  xy: 56, 166
+  size: 56, 51
+Attack
+  xy: 112, 166
+  size: 56, 51
+Attack
+  xy: 168, 166
+  size: 56, 51
+Attack
+  xy: 224, 166
+  size: 56, 51
+Attack
+  xy: 280, 166
+  size: 56, 51
+Hit
+  xy: 0, 217
+  size: 56, 51
+Hit
+  xy: 56, 217
+  size: 56, 51
+Hit
+  xy: 112, 217
+  size: 56, 51
+Hit
+  xy: 168, 217
+  size: 56, 51
+Death
+  xy: 0, 268
+  size: 56, 51
+Death
+  xy: 56, 268
+  size: 56, 51
+Death
+  xy: 112, 268
+  size: 56, 51
+Death
+  xy: 168, 268
+  size: 56, 51
+Death
+  xy: 224, 268
+  size: 56, 51
+Death
+  xy: 280, 268
+  size: 56, 51
+Death
+  xy: 336, 268
+  size: 56, 51
+Death
+  xy: 392, 268
+  size: 56, 51
+Death
+  xy: 448, 268
+  size: 56, 51
+IdleUp
+  xy: 0, 319
+  size: 56, 51
+IdleUp
+  xy: 56, 319
+  size: 56, 51
+IdleUp
+  xy: 112, 319
+  size: 56, 51
+IdleUp
+  xy: 168, 319
+  size: 56, 51
+IdleDown
+  xy: 0, 370
+  size: 56, 51
+IdleDown
+  xy: 56, 370
+  size: 56, 51
+IdleDown
+  xy: 112, 370
+  size: 56, 51
+IdleDown
+  xy: 168, 370
+  size: 56, 51
+WalkUp
+  xy: 0, 421
+  size: 56, 51
+WalkUp
+  xy: 56, 421
+  size: 56, 51
+WalkUp
+  xy: 112, 421
+  size: 56, 51
+WalkUp
+  xy: 168, 421
+  size: 56, 51
+WalkUp
+  xy: 224, 421
+  size: 56, 51
+WalkUp
+  xy: 280, 421
+  size: 56, 51
+WalkUp
+  xy: 336, 421
+  size: 56, 51
+WalkUp
+  xy: 392, 421
+  size: 56, 51
+WalkDown
+  xy: 0, 472
+  size: 56, 51
+WalkDown
+  xy: 56, 472
+  size: 56, 51
+WalkDown
+  xy: 112, 472
+  size: 56, 51
+WalkDown
+  xy: 168, 472
+  size: 56, 51
+WalkDown
+  xy: 224, 472
+  size: 56, 51
+WalkDown
+  xy: 280, 472
+  size: 56, 51
+WalkDown
+  xy: 336, 472
+  size: 56, 51
+WalkDown
+  xy: 392, 472
+  size: 56, 51

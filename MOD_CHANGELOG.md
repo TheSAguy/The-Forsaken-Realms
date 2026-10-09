@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 514: the kobolds, the orcs and the Howlpack Exile from the Universal LPC Spritesheet parts (2026-10-09)
+
+The Procedural Pixel Creatures session's fourth LPC batch (the user: "Do the next 20"): 20 enemies on the stock
+`humanoid/kobold`, `humanoid/orc` and `humanoid/werewolf` sprites, each its own kit (selections in the generator repo's
+`lpc_selections/make_514.py`).
+
+- **The twelve kobolds of Kher Keep** - Kobold Dragoncaller, Nogi, Kobold Pyromancer, Kobold Shaman, Rohgahh, Kobold
+  Slinger, Kobold Trapmaster, Kobold Warrior, Rograkh and Ardenn, Kobold Worker, Rosnakht, King Rohgahh - the lizard head
+  with backswept horns and a tail on earth-toned skins (ochre, umber, bronze, chocolate, sepia, amber) and crude gear: a
+  red hood and a fire crystal for the Dragoncaller, hoods and staffs for Nogi and the Shaman, a sling, a dagger and
+  leather cap, a spear and crusader shield, a nasal helmet, a pickaxe and overalls for the Worker (the pick is carried;
+  the swing is a club's), a horned helmet and scimitar for Rohgahh, a tattered cape for Rosnakht, a gold crown, red cape
+  and saber for King Rohgahh (a boss, so he keeps his drawn size).
+- **The seven orcs** - Orc Brute (muscular, bare-chested, a club), Grakk (viking helmet, war axe), Orc Hunter (forest
+  hood, recurve bow), Tersa (a red-haired human with a war axe, as her card), Orc Warrior (nasal helmet, chainmail,
+  longsword and painted shield), Zurgo (horned helmet, pauldrons, war axe), Rootha (a female orc in Prismari blue and
+  red, casting) - on the orc heads in green and dark green; LPC's torso items skip the muscular body, so the brutes go
+  bare.
+- **The Howlpack Exile**: the wolf head and tail on grey fur, a tattered cape, clawing bare-handed.
+- **Files**: 20 new atlases under `sprites/enemy/remake/`; enemies.json 20 sprite paths + 20 scales (0.28-0.35 for the
+  ranked ones, King Rohgahh 0.59 for his boss size). `CREDITS.md`'s LPC line now covers 108 enemies over rounds 498,
+  500, 501 and 514 (one author added, Shaun Williams); `standalone-packaging/CREDITS_LPC.md` regenerated for the four
+  rounds.
+- **Checks**: `validate_plane_data.py` unchanged; the sprite audit is clean on the twenty. Not seen in play.
+
 ## Round 513: the Sphinx's Sanctum waits for the second week; the lasting picks leave the status (2026-10-09)
 
 The user: "I thought we said the Sphinx cave should not appear in the first week." No such rule was ever written down

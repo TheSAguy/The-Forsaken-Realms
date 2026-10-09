@@ -98,12 +98,14 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (88 enemies from rounds 498, 500 and 501 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (108 enemies from rounds 498, 500, 501 and 514 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
-  Phyrexians, the undead, the viashino and the werewolves; and the viashino sprites' cast - the Viashino, Glarb, Ognis,
+  Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
   the Dark Enchanter, Mindclaw Shaman, Bontu, Yurlok, the Wild-Magic Sorcerer, Rhonas, Tishana, Rivaz, Atogatog, Vorel,
-  Simic Wizard, Clement, Hakbal, Roalesk, Shaman of Zedruu, Chishiro, Tsagan and Laughing Jasper Flint) - composed
+  Simic Wizard, Clement, Hakbal, Roalesk, Shaman of Zedruu, Chishiro, Tsagan and Laughing Jasper Flint; and the twelve
+  kobolds of Kher Keep, the seven orcs - Orc Brute, Grakk, Orc Hunter, Tersa, Orc Warrior, Zurgo, Rootha - and the
+  Howlpack Exile) - composed
   from the parts of the Universal LPC Spritesheet Character Generator (Liberated Pixel Cup contributors), each part
   under its own license (OGA-BY 3.0, CC-BY 3.0/4.0, CC-BY-SA 3.0, CC0), the composed sprites CC-BY or CC-BY-SA; the
   parts, authors, licenses and sources per enemy are in `CREDITS_LPC.md`. Authors: Johannes Sjölund (wulax), Stephen
@@ -112,7 +114,8 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Dr. Jamgo, Ahmad3366, Manuel Riecke (MrBeast), Sander Frenken (castelonia), the DCSS artists, Inboxninja, dalonedrau,
   Daniel Eddeland (daneeklu), gr3yh47, Joe White, Thane Brimhall (pennomi), laetissima, Carlo Enrico Victoria
   (Nemisys), Michael Whitlock (bigbeargames), Tuomo Untinen (reemax), Napsio (Vitruvian Studio), Mandi Paugh, Marcel
-  van de Steeg (MadMarcel), Fabzy, Luke Mehl, DarkwallLKE, Charles Sanchez (CharlesGabriel), Zi Ye, AntumDeluge - and
+  van de Steeg (MadMarcel), Fabzy, Luke Mehl, DarkwallLKE, Charles Sanchez (CharlesGabriel), Zi Ye, AntumDeluge, Shaun
+  Williams - and
   our thanks to every contributor the generator's credits leave unnamed; the parts and their source pages are listed at
   https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator and on https://opengameart.org.
 

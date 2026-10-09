@@ -19214,7 +19214,7 @@
     {
         "name": "Kobold Dragoncaller",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/kobold/kobolddragoncaller.atlas",
+        "sprite": "sprites/enemy/remake/kobold_dragoncaller.atlas",
         "deck": [
             "decks/standard/kobolddragoncaller.dck"
         ],
@@ -19222,7 +19222,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.9286,
+        "scale": 0.3095,
         "life": 12,
         "rewards": [
             {
@@ -19282,7 +19282,7 @@
     {
         "name": "Kobold Pyromancer",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/kobold/koboldpyromancer.atlas",
+        "sprite": "sprites/enemy/remake/kobold_pyromancer.atlas",
         "deck": [
             "decks/standard/kobold_pyromancer_r111.dck"
         ],
@@ -19290,7 +19290,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.9286,
+        "scale": 0.325,
         "life": 20,
         "rewards": [
             {
@@ -19350,7 +19350,7 @@
     {
         "name": "Kobold Shaman",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/kobold/koboldshaman.atlas",
+        "sprite": "sprites/enemy/remake/kobold_shaman.atlas",
         "deck": [
             "decks/standard/roshnakhtheroic.dck"
         ],
@@ -19358,7 +19358,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.9286,
+        "scale": 0.3023,
         "life": 12,
         "rewards": [
             {
@@ -19417,7 +19417,7 @@
     {
         "name": "Kobold Slinger",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/kobold/koboldslinger.atlas",
+        "sprite": "sprites/enemy/remake/kobold_slinger.atlas",
         "deck": [
             "decks/standard/kobold.dck"
         ],
@@ -19425,7 +19425,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.8667,
+        "scale": 0.325,
         "life": 12,
         "rewards": [
             {
@@ -19485,7 +19485,7 @@
     {
         "name": "Kobold Trapmaster",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/kobold/koboldtrapmaster.atlas",
+        "sprite": "sprites/enemy/remake/kobold_trapmaster.atlas",
         "deck": [
             "decks/standard/koboldtrapmaster.dck"
         ],
@@ -19493,7 +19493,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 1.0,
+        "scale": 0.2889,
         "life": 12,
         "rewards": [
             {
@@ -19552,7 +19552,7 @@
     {
         "name": "Kobold Warrior",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/kobold/koboldwarrior.atlas",
+        "sprite": "sprites/enemy/remake/kobold_warrior.atlas",
         "deck": [
             "decks/standard/kobold_warrior_r111.dck"
         ],
@@ -19560,7 +19560,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.7647,
+        "scale": 0.3333,
         "life": 12,
         "rewards": [
             {
@@ -19617,7 +19617,7 @@
     },
     {
         "name": "Kobold Worker",
-        "sprite": "sprites/enemy/humanoid/kobold/koboldworker.atlas",
+        "sprite": "sprites/enemy/remake/kobold_worker.atlas",
         "deck": [
             "decks/standard/kobold_worker_r111.dck"
         ],
@@ -19625,7 +19625,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.9286,
+        "scale": 0.2889,
         "life": 12,
         "rewards": [
             {
@@ -23939,7 +23939,7 @@
     {
         "name": "Orc Brute",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/orc/orc_brute.atlas",
+        "sprite": "sprites/enemy/remake/orc_brute.atlas",
         "deck": [
             "decks/standard/orc_brute.dck"
         ],
@@ -23947,7 +23947,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.52,
+        "scale": 0.3514,
         "life": 18,
         "rewards": [
             {
@@ -23997,7 +23997,7 @@
     {
         "name": "Orc Hunter",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/orc/orc_hunter.atlas",
+        "sprite": "sprites/enemy/remake/orc_hunter.atlas",
         "deck": [
             "decks/standard/orc_hunter.dck"
         ],
@@ -24005,7 +24005,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.65,
+        "scale": 0.3171,
         "life": 18,
         "rewards": [
             {
@@ -24055,7 +24055,7 @@
     {
         "name": "Orc Warrior",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/orc/orc_warrior.atlas",
+        "sprite": "sprites/enemy/remake/orc_warrior.atlas",
         "deck": [
             "decks/standard/orc_warrior.dck"
         ],
@@ -24063,7 +24063,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.65,
+        "scale": 0.2889,
         "life": 18,
         "rewards": [
             {
@@ -34598,7 +34598,7 @@
     },
     {
         "name": "Howlpack Exile",
-        "sprite": "sprites/enemy/humanoid/werewolf/werewolf.atlas",
+        "sprite": "sprites/enemy/remake/howlpack_exile.atlas",
         "deck": [
             "decks/standard/INN/inn_werewolf_easy.dck"
         ],
@@ -34666,7 +34666,7 @@
             "BiomeGreen"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3514
     },
     {
         "name": "Hulking Skaab",
@@ -49313,13 +49313,13 @@
     },
     {
         "name": "Zurgo",
-        "sprite": "sprites/enemy/humanoid/orc/orc_warrior.atlas",
+        "sprite": "sprites/enemy/remake/zurgo.atlas",
         "deck": [
             "decks/legends/zurgo.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.65,
+        "scale": 0.2955,
         "life": 30,
         "rewards": [
             {
@@ -78043,7 +78043,7 @@
     },
     {
         "name": "Nogi",
-        "sprite": "sprites/enemy/humanoid/kobold/kobolddragoncaller.atlas",
+        "sprite": "sprites/enemy/remake/nogi.atlas",
         "deck": [
             "decks/legends/nogi.dck"
         ],
@@ -78107,11 +78107,11 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.9286
+        "scale": 0.3023
     },
     {
         "name": "Rograkh and Ardenn",
-        "sprite": "sprites/enemy/humanoid/kobold/koboldwarrior.atlas",
+        "sprite": "sprites/enemy/remake/rograkh_and_ardenn.atlas",
         "deck": [
             "decks/legends/rograkh_and_ardenn.dck"
         ],
@@ -78180,11 +78180,11 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.7647
+        "scale": 0.2955
     },
     {
         "name": "Rohgahh",
-        "sprite": "sprites/enemy/humanoid/kobold/koboldshaman.atlas",
+        "sprite": "sprites/enemy/remake/rohgahh.atlas",
         "deck": [
             "decks/legends/rohgahh.dck"
         ],
@@ -78248,11 +78248,11 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.9286
+        "scale": 0.2889
     },
     {
         "name": "Rosnakht",
-        "sprite": "sprites/enemy/humanoid/kobold/koboldworker.atlas",
+        "sprite": "sprites/enemy/remake/rosnakht.atlas",
         "deck": [
             "decks/legends/rosnakht.dck"
         ],
@@ -78316,7 +78316,7 @@
         "spawnRate": 0,
         "tier": "Common",
         "difficulty": 0.1,
-        "scale": 0.9286
+        "scale": 0.325
     },
     {
         "name": "Akim",
@@ -79961,12 +79961,12 @@
     },
     {
         "name": "Tersa",
-        "sprite": "sprites/enemy/humanoid/orc/orc_hunter.atlas",
+        "sprite": "sprites/enemy/remake/tersa.atlas",
         "deck": [
             "decks/legends/tersa.dck"
         ],
         "ai": "",
-        "scale": 0.65,
+        "scale": 0.3095,
         "speed": 22,
         "life": 13,
         "rewards": [
@@ -89481,12 +89481,12 @@
     },
     {
         "name": "Rootha",
-        "sprite": "sprites/enemy/humanoid/orc/orc_warrior.atlas",
+        "sprite": "sprites/enemy/remake/rootha.atlas",
         "deck": [
             "decks/legends/rootha.dck"
         ],
         "ai": "",
-        "scale": 0.65,
+        "scale": 0.3171,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -98893,7 +98893,7 @@
     },
     {
         "name": "King Rohgahh",
-        "sprite": "sprites/enemy/humanoid/kobold/koboldworker.atlas",
+        "sprite": "sprites/enemy/remake/king_rohgahh.atlas",
         "deck": [
             "decks/elite/king_rohgahh.dck"
         ],
@@ -98902,7 +98902,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 2.1429,
+        "scale": 0.5882,
         "life": 25,
         "rewards": [
             {
@@ -124523,13 +124523,13 @@
     },
     {
         "name": "Grakk",
-        "sprite": "sprites/enemy/humanoid/orc/orc_brute.atlas",
+        "sprite": "sprites/enemy/remake/grakk.atlas",
         "deck": [
             "decks/legends/grakk.dck"
         ],
         "ai": "",
         "speed": 43,
-        "scale": 0.52,
+        "scale": 0.3095,
         "life": 36,
         "rewards": [
             {

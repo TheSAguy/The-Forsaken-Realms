@@ -1,0 +1,179 @@
+kobold_dragoncaller.png
+size: 738,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 53
+Idle
+  xy: 82, 64
+  size: 82, 53
+Idle
+  xy: 164, 64
+  size: 82, 53
+Idle
+  xy: 246, 64
+  size: 82, 53
+Walk
+  xy: 0, 117
+  size: 82, 53
+Walk
+  xy: 82, 117
+  size: 82, 53
+Walk
+  xy: 164, 117
+  size: 82, 53
+Walk
+  xy: 246, 117
+  size: 82, 53
+Walk
+  xy: 328, 117
+  size: 82, 53
+Walk
+  xy: 410, 117
+  size: 82, 53
+Walk
+  xy: 492, 117
+  size: 82, 53
+Walk
+  xy: 574, 117
+  size: 82, 53
+Attack
+  xy: 0, 170
+  size: 82, 53
+Attack
+  xy: 82, 170
+  size: 82, 53
+Attack
+  xy: 164, 170
+  size: 82, 53
+Attack
+  xy: 246, 170
+  size: 82, 53
+Attack
+  xy: 328, 170
+  size: 82, 53
+Attack
+  xy: 410, 170
+  size: 82, 53
+Attack
+  xy: 492, 170
+  size: 82, 53
+Attack
+  xy: 574, 170
+  size: 82, 53
+Hit
+  xy: 0, 223
+  size: 82, 53
+Hit
+  xy: 82, 223
+  size: 82, 53
+Hit
+  xy: 164, 223
+  size: 82, 53
+Hit
+  xy: 246, 223
+  size: 82, 53
+Death
+  xy: 0, 276
+  size: 82, 53
+Death
+  xy: 82, 276
+  size: 82, 53
+Death
+  xy: 164, 276
+  size: 82, 53
+Death
+  xy: 246, 276
+  size: 82, 53
+Death
+  xy: 328, 276
+  size: 82, 53
+Death
+  xy: 410, 276
+  size: 82, 53
+Death
+  xy: 492, 276
+  size: 82, 53
+Death
+  xy: 574, 276
+  size: 82, 53
+Death
+  xy: 656, 276
+  size: 82, 53
+IdleUp
+  xy: 0, 329
+  size: 82, 53
+IdleUp
+  xy: 82, 329
+  size: 82, 53
+IdleUp
+  xy: 164, 329
+  size: 82, 53
+IdleUp
+  xy: 246, 329
+  size: 82, 53
+IdleDown
+  xy: 0, 382
+  size: 82, 53
+IdleDown
+  xy: 82, 382
+  size: 82, 53
+IdleDown
+  xy: 164, 382
+  size: 82, 53
+IdleDown
+  xy: 246, 382
+  size: 82, 53
+WalkUp
+  xy: 0, 435
+  size: 82, 53
+WalkUp
+  xy: 82, 435
+  size: 82, 53
+WalkUp
+  xy: 164, 435
+  size: 82, 53
+WalkUp
+  xy: 246, 435
+  size: 82, 53
+WalkUp
+  xy: 328, 435
+  size: 82, 53
+WalkUp
+  xy: 410, 435
+  size: 82, 53
+WalkUp
+  xy: 492, 435
+  size: 82, 53
+WalkUp
+  xy: 574, 435
+  size: 82, 53
+WalkDown
+  xy: 0, 488
+  size: 82, 53
+WalkDown
+  xy: 82, 488
+  size: 82, 53
+WalkDown
+  xy: 164, 488
+  size: 82, 53
+WalkDown
+  xy: 246, 488
+  size: 82, 53
+WalkDown
+  xy: 328, 488
+  size: 82, 53
+WalkDown
+  xy: 410, 488
+  size: 82, 53
+WalkDown
+  xy: 492, 488
+  size: 82, 53
+WalkDown
+  xy: 574, 488
+  size: 82, 53

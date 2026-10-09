@@ -1,0 +1,173 @@
+rosnakht.png
+size: 1062,640
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 118, 64
+Idle
+  xy: 118, 64
+  size: 118, 64
+Idle
+  xy: 236, 64
+  size: 118, 64
+Idle
+  xy: 354, 64
+  size: 118, 64
+Walk
+  xy: 0, 128
+  size: 118, 64
+Walk
+  xy: 118, 128
+  size: 118, 64
+Walk
+  xy: 236, 128
+  size: 118, 64
+Walk
+  xy: 354, 128
+  size: 118, 64
+Walk
+  xy: 472, 128
+  size: 118, 64
+Walk
+  xy: 590, 128
+  size: 118, 64
+Walk
+  xy: 708, 128
+  size: 118, 64
+Walk
+  xy: 826, 128
+  size: 118, 64
+Attack
+  xy: 0, 192
+  size: 118, 64
+Attack
+  xy: 118, 192
+  size: 118, 64
+Attack
+  xy: 236, 192
+  size: 118, 64
+Attack
+  xy: 354, 192
+  size: 118, 64
+Attack
+  xy: 472, 192
+  size: 118, 64
+Attack
+  xy: 590, 192
+  size: 118, 64
+Hit
+  xy: 0, 256
+  size: 118, 64
+Hit
+  xy: 118, 256
+  size: 118, 64
+Hit
+  xy: 236, 256
+  size: 118, 64
+Hit
+  xy: 354, 256
+  size: 118, 64
+Death
+  xy: 0, 320
+  size: 118, 64
+Death
+  xy: 118, 320
+  size: 118, 64
+Death
+  xy: 236, 320
+  size: 118, 64
+Death
+  xy: 354, 320
+  size: 118, 64
+Death
+  xy: 472, 320
+  size: 118, 64
+Death
+  xy: 590, 320
+  size: 118, 64
+Death
+  xy: 708, 320
+  size: 118, 64
+Death
+  xy: 826, 320
+  size: 118, 64
+Death
+  xy: 944, 320
+  size: 118, 64
+IdleUp
+  xy: 0, 384
+  size: 118, 64
+IdleUp
+  xy: 118, 384
+  size: 118, 64
+IdleUp
+  xy: 236, 384
+  size: 118, 64
+IdleUp
+  xy: 354, 384
+  size: 118, 64
+IdleDown
+  xy: 0, 448
+  size: 118, 64
+IdleDown
+  xy: 118, 448
+  size: 118, 64
+IdleDown
+  xy: 236, 448
+  size: 118, 64
+IdleDown
+  xy: 354, 448
+  size: 118, 64
+WalkUp
+  xy: 0, 512
+  size: 118, 64
+WalkUp
+  xy: 118, 512
+  size: 118, 64
+WalkUp
+  xy: 236, 512
+  size: 118, 64
+WalkUp
+  xy: 354, 512
+  size: 118, 64
+WalkUp
+  xy: 472, 512
+  size: 118, 64
+WalkUp
+  xy: 590, 512
+  size: 118, 64
+WalkUp
+  xy: 708, 512
+  size: 118, 64
+WalkUp
+  xy: 826, 512
+  size: 118, 64
+WalkDown
+  xy: 0, 576
+  size: 118, 64
+WalkDown
+  xy: 118, 576
+  size: 118, 64
+WalkDown
+  xy: 236, 576
+  size: 118, 64
+WalkDown
+  xy: 354, 576
+  size: 118, 64
+WalkDown
+  xy: 472, 576
+  size: 118, 64
+WalkDown
+  xy: 590, 576
+  size: 118, 64
+WalkDown
+  xy: 708, 576
+  size: 118, 64
+WalkDown
+  xy: 826, 576
+  size: 118, 64

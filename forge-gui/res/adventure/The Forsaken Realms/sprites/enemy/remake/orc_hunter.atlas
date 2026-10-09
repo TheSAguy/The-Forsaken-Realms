@@ -1,0 +1,179 @@
+orc_hunter.png
+size: 648,613
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 61
+Idle
+  xy: 72, 64
+  size: 72, 61
+Idle
+  xy: 144, 64
+  size: 72, 61
+Idle
+  xy: 216, 64
+  size: 72, 61
+Walk
+  xy: 0, 125
+  size: 72, 61
+Walk
+  xy: 72, 125
+  size: 72, 61
+Walk
+  xy: 144, 125
+  size: 72, 61
+Walk
+  xy: 216, 125
+  size: 72, 61
+Walk
+  xy: 288, 125
+  size: 72, 61
+Walk
+  xy: 360, 125
+  size: 72, 61
+Walk
+  xy: 432, 125
+  size: 72, 61
+Walk
+  xy: 504, 125
+  size: 72, 61
+Attack
+  xy: 0, 186
+  size: 72, 61
+Attack
+  xy: 72, 186
+  size: 72, 61
+Attack
+  xy: 144, 186
+  size: 72, 61
+Attack
+  xy: 216, 186
+  size: 72, 61
+Attack
+  xy: 288, 186
+  size: 72, 61
+Attack
+  xy: 360, 186
+  size: 72, 61
+Attack
+  xy: 432, 186
+  size: 72, 61
+Attack
+  xy: 504, 186
+  size: 72, 61
+Hit
+  xy: 0, 247
+  size: 72, 61
+Hit
+  xy: 72, 247
+  size: 72, 61
+Hit
+  xy: 144, 247
+  size: 72, 61
+Hit
+  xy: 216, 247
+  size: 72, 61
+Death
+  xy: 0, 308
+  size: 72, 61
+Death
+  xy: 72, 308
+  size: 72, 61
+Death
+  xy: 144, 308
+  size: 72, 61
+Death
+  xy: 216, 308
+  size: 72, 61
+Death
+  xy: 288, 308
+  size: 72, 61
+Death
+  xy: 360, 308
+  size: 72, 61
+Death
+  xy: 432, 308
+  size: 72, 61
+Death
+  xy: 504, 308
+  size: 72, 61
+Death
+  xy: 576, 308
+  size: 72, 61
+IdleUp
+  xy: 0, 369
+  size: 72, 61
+IdleUp
+  xy: 72, 369
+  size: 72, 61
+IdleUp
+  xy: 144, 369
+  size: 72, 61
+IdleUp
+  xy: 216, 369
+  size: 72, 61
+IdleDown
+  xy: 0, 430
+  size: 72, 61
+IdleDown
+  xy: 72, 430
+  size: 72, 61
+IdleDown
+  xy: 144, 430
+  size: 72, 61
+IdleDown
+  xy: 216, 430
+  size: 72, 61
+WalkUp
+  xy: 0, 491
+  size: 72, 61
+WalkUp
+  xy: 72, 491
+  size: 72, 61
+WalkUp
+  xy: 144, 491
+  size: 72, 61
+WalkUp
+  xy: 216, 491
+  size: 72, 61
+WalkUp
+  xy: 288, 491
+  size: 72, 61
+WalkUp
+  xy: 360, 491
+  size: 72, 61
+WalkUp
+  xy: 432, 491
+  size: 72, 61
+WalkUp
+  xy: 504, 491
+  size: 72, 61
+WalkDown
+  xy: 0, 552
+  size: 72, 61
+WalkDown
+  xy: 72, 552
+  size: 72, 61
+WalkDown
+  xy: 144, 552
+  size: 72, 61
+WalkDown
+  xy: 216, 552
+  size: 72, 61
+WalkDown
+  xy: 288, 552
+  size: 72, 61
+WalkDown
+  xy: 360, 552
+  size: 72, 61
+WalkDown
+  xy: 432, 552
+  size: 72, 61
+WalkDown
+  xy: 504, 552
+  size: 72, 61

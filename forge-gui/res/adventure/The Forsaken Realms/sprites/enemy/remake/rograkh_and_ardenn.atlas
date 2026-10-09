@@ -1,0 +1,173 @@
+rograkh_and_ardenn.png
+size: 612,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 68, 59
+Idle
+  xy: 68, 64
+  size: 68, 59
+Idle
+  xy: 136, 64
+  size: 68, 59
+Idle
+  xy: 204, 64
+  size: 68, 59
+Walk
+  xy: 0, 123
+  size: 68, 59
+Walk
+  xy: 68, 123
+  size: 68, 59
+Walk
+  xy: 136, 123
+  size: 68, 59
+Walk
+  xy: 204, 123
+  size: 68, 59
+Walk
+  xy: 272, 123
+  size: 68, 59
+Walk
+  xy: 340, 123
+  size: 68, 59
+Walk
+  xy: 408, 123
+  size: 68, 59
+Walk
+  xy: 476, 123
+  size: 68, 59
+Attack
+  xy: 0, 182
+  size: 68, 59
+Attack
+  xy: 68, 182
+  size: 68, 59
+Attack
+  xy: 136, 182
+  size: 68, 59
+Attack
+  xy: 204, 182
+  size: 68, 59
+Attack
+  xy: 272, 182
+  size: 68, 59
+Attack
+  xy: 340, 182
+  size: 68, 59
+Hit
+  xy: 0, 241
+  size: 68, 59
+Hit
+  xy: 68, 241
+  size: 68, 59
+Hit
+  xy: 136, 241
+  size: 68, 59
+Hit
+  xy: 204, 241
+  size: 68, 59
+Death
+  xy: 0, 300
+  size: 68, 59
+Death
+  xy: 68, 300
+  size: 68, 59
+Death
+  xy: 136, 300
+  size: 68, 59
+Death
+  xy: 204, 300
+  size: 68, 59
+Death
+  xy: 272, 300
+  size: 68, 59
+Death
+  xy: 340, 300
+  size: 68, 59
+Death
+  xy: 408, 300
+  size: 68, 59
+Death
+  xy: 476, 300
+  size: 68, 59
+Death
+  xy: 544, 300
+  size: 68, 59
+IdleUp
+  xy: 0, 359
+  size: 68, 59
+IdleUp
+  xy: 68, 359
+  size: 68, 59
+IdleUp
+  xy: 136, 359
+  size: 68, 59
+IdleUp
+  xy: 204, 359
+  size: 68, 59
+IdleDown
+  xy: 0, 418
+  size: 68, 59
+IdleDown
+  xy: 68, 418
+  size: 68, 59
+IdleDown
+  xy: 136, 418
+  size: 68, 59
+IdleDown
+  xy: 204, 418
+  size: 68, 59
+WalkUp
+  xy: 0, 477
+  size: 68, 59
+WalkUp
+  xy: 68, 477
+  size: 68, 59
+WalkUp
+  xy: 136, 477
+  size: 68, 59
+WalkUp
+  xy: 204, 477
+  size: 68, 59
+WalkUp
+  xy: 272, 477
+  size: 68, 59
+WalkUp
+  xy: 340, 477
+  size: 68, 59
+WalkUp
+  xy: 408, 477
+  size: 68, 59
+WalkUp
+  xy: 476, 477
+  size: 68, 59
+WalkDown
+  xy: 0, 536
+  size: 68, 59
+WalkDown
+  xy: 68, 536
+  size: 68, 59
+WalkDown
+  xy: 136, 536
+  size: 68, 59
+WalkDown
+  xy: 204, 536
+  size: 68, 59
+WalkDown
+  xy: 272, 536
+  size: 68, 59
+WalkDown
+  xy: 340, 536
+  size: 68, 59
+WalkDown
+  xy: 408, 536
+  size: 68, 59
+WalkDown
+  xy: 476, 536
+  size: 68, 59

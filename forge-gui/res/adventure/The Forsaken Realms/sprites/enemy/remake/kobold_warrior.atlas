@@ -1,0 +1,179 @@
+kobold_warrior.png
+size: 648,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 54
+Idle
+  xy: 72, 64
+  size: 72, 54
+Idle
+  xy: 144, 64
+  size: 72, 54
+Idle
+  xy: 216, 64
+  size: 72, 54
+Walk
+  xy: 0, 118
+  size: 72, 54
+Walk
+  xy: 72, 118
+  size: 72, 54
+Walk
+  xy: 144, 118
+  size: 72, 54
+Walk
+  xy: 216, 118
+  size: 72, 54
+Walk
+  xy: 288, 118
+  size: 72, 54
+Walk
+  xy: 360, 118
+  size: 72, 54
+Walk
+  xy: 432, 118
+  size: 72, 54
+Walk
+  xy: 504, 118
+  size: 72, 54
+Attack
+  xy: 0, 172
+  size: 72, 54
+Attack
+  xy: 72, 172
+  size: 72, 54
+Attack
+  xy: 144, 172
+  size: 72, 54
+Attack
+  xy: 216, 172
+  size: 72, 54
+Attack
+  xy: 288, 172
+  size: 72, 54
+Attack
+  xy: 360, 172
+  size: 72, 54
+Attack
+  xy: 432, 172
+  size: 72, 54
+Attack
+  xy: 504, 172
+  size: 72, 54
+Hit
+  xy: 0, 226
+  size: 72, 54
+Hit
+  xy: 72, 226
+  size: 72, 54
+Hit
+  xy: 144, 226
+  size: 72, 54
+Hit
+  xy: 216, 226
+  size: 72, 54
+Death
+  xy: 0, 280
+  size: 72, 54
+Death
+  xy: 72, 280
+  size: 72, 54
+Death
+  xy: 144, 280
+  size: 72, 54
+Death
+  xy: 216, 280
+  size: 72, 54
+Death
+  xy: 288, 280
+  size: 72, 54
+Death
+  xy: 360, 280
+  size: 72, 54
+Death
+  xy: 432, 280
+  size: 72, 54
+Death
+  xy: 504, 280
+  size: 72, 54
+Death
+  xy: 576, 280
+  size: 72, 54
+IdleUp
+  xy: 0, 334
+  size: 72, 54
+IdleUp
+  xy: 72, 334
+  size: 72, 54
+IdleUp
+  xy: 144, 334
+  size: 72, 54
+IdleUp
+  xy: 216, 334
+  size: 72, 54
+IdleDown
+  xy: 0, 388
+  size: 72, 54
+IdleDown
+  xy: 72, 388
+  size: 72, 54
+IdleDown
+  xy: 144, 388
+  size: 72, 54
+IdleDown
+  xy: 216, 388
+  size: 72, 54
+WalkUp
+  xy: 0, 442
+  size: 72, 54
+WalkUp
+  xy: 72, 442
+  size: 72, 54
+WalkUp
+  xy: 144, 442
+  size: 72, 54
+WalkUp
+  xy: 216, 442
+  size: 72, 54
+WalkUp
+  xy: 288, 442
+  size: 72, 54
+WalkUp
+  xy: 360, 442
+  size: 72, 54
+WalkUp
+  xy: 432, 442
+  size: 72, 54
+WalkUp
+  xy: 504, 442
+  size: 72, 54
+WalkDown
+  xy: 0, 496
+  size: 72, 54
+WalkDown
+  xy: 72, 496
+  size: 72, 54
+WalkDown
+  xy: 144, 496
+  size: 72, 54
+WalkDown
+  xy: 216, 496
+  size: 72, 54
+WalkDown
+  xy: 288, 496
+  size: 72, 54
+WalkDown
+  xy: 360, 496
+  size: 72, 54
+WalkDown
+  xy: 432, 496
+  size: 72, 54
+WalkDown
+  xy: 504, 496
+  size: 72, 54

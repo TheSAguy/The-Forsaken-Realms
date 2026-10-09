@@ -67,6 +67,15 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-09 (round 514): **LOCAL + UNRELEASED (data only)** - LPC batch 4 (the Procedural Pixel Creatures
+session; the user: "Do the next 20"): the twelve kobolds of Kher Keep (lizard heads with backswept horns on earth-toned
+skins, crude gear; King Rohgahh a boss at his drawn size), the seven orcs (orc heads in green and dark green, the brutes
+muscular and bare; Tersa a red-haired human, Rootha a female orc caster) and the Howlpack Exile (grey wolf), each its own
+kit. 20 new atlases under `sprites/enemy/remake/`, enemies.json 20 paths + 20 scales, CREDITS.md's LPC line (108 enemies,
+rounds 498 + 500 + 501 + 514; Shaun Williams added), CREDITS_LPC.md regenerated for the four rounds. The peer (#30)
+packages with its 512 + 513 when the game closes. Not seen in play. Next LPC batches: minotaurs (11), merfolk (26),
+dwarves (24), goblins (32), elves (84), the human classes.
+
 ## STATE 2026-10-09 (round 513): **LOCAL + UNRELEASED** - the Sphinx's Sanctum is held in the rotation reserve until day
 8 (`PointOfInterestData.notBeforeDay`, `DungeonRotation.isNotYet`: new world, reserve draw, day tick, quest targets);
 the Ascendance status dialog drops the lasting picks' line (the Level sheet has them).
