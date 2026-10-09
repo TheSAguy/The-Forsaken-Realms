@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 518: the Ascendance choice can be re-rolled once a level, for shards (2026-10-09)
+
+The user, on the "Ascendance 6 - choose one" dialog: "Let's add a Skill Re-roll. Can only do it once per level. Let's have
+it be 50 shards on Insane and -5 per lower level."
+
+- **The Re-roll button** sits beside "Not now" (`AscendanceUI.openChoice`; the offer buttons span both columns now):
+  "Re-roll 40 [+Shards]". It draws a new offer for the waiting level and the dialog opens again on it.
+  - The price is `ascendance.json` `difficultyRerollCost` by `difficultyNames`: Easy 35, Normal 40, Hard 45, Insane 50
+    (`Ascendance.rerollCost`; a difficulty the table does not list pays Normal's 40).
+  - Once a level: `AscendanceState.rerolledLevel` (saved as `ascendanceRerolledLevel`) marks the waiting level whose
+    offer was re-rolled. The button then reads "Re-rolled", greyed. The next waiting level has its own re-roll.
+  - Greyed too while the shards are short; `Ascendance.reroll` checks again and logs a refusal.
+- **The new offer avoids the old one** (`rollOffer(s, avoid)`): the three it replaces are drawn only when too few other
+  rewards are left to fill it. The rule of at least one lasting and one one-time reward holds. `addDraw` replaces the
+  bare `draw(...).id` calls, so an empty pool no longer risks a null.
+- Logged: `[TFR-Ascend] level N re-rolled for 40 shards` and the offer line with "(re-rolled from [...])".
+
+**Agent-tested** (slot 7, Normal):
+- The dialog showed "Re-roll 40" with the shard icon; pressing it took 110 -> 70 shards and gave three different
+  rewards, with the button "Re-rolled" and greyed.
+- A save and a load kept the mark.
+- After the pick, level 2 offered "Re-roll 40" again.
+- With 5 shards the button was greyed and a press did nothing.
+
 ## Round 517: Power gets its icon and a loot card; chests and diamonds can give Power; the HUD's columns line up (2026-10-09)
 
 The user picked icon A of the choices (Shikashi's Fantasy Icons Pack, the radiant sun at cell 15,3): "Can we add that

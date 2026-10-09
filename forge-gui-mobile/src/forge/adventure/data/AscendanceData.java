@@ -93,6 +93,9 @@ public class AscendanceData {
     // ---- round 494: the pick-1-of-3 rewards
     /** How many rewards a choice offers. */
     public int offerSize = 3;
+    /** Round 518 (the user: "Let's add a Skill Re-roll. Can only do it once per level. Let's have it be 50 shards on
+     *  Insane and -5 per lower level"): the choice dialog's Re-roll costs this many shards, by difficultyNames. */
+    public int[] difficultyRerollCost = {35, 40, 45, 50};
     /** The pool. A one-time reward's {@code value} scales with the level it was earned at (gold: value x level); a
      *  lasting one's is per pick (Haggler 0.05 = -5% a pick, the user: "the next time it would be -10% and the 3rd
      *  -15%"). What each id does is util/Ascendance's; the numbers are here. */

@@ -965,22 +965,83 @@ public final class Ascendance {
 
     /** At least one lasting and one one-time reward while any are left (the user: "a choice of 3"), weighted. */
     private static void rollOffer(AscendanceState s) {
+        rollOffer(s, java.util.Collections.emptySet());
+    }
+
+    /** Round 518: {@code avoid} (the offer a Re-roll replaces) is drawn only when too few others are left to fill it. */
+    private static void rollOffer(AscendanceState s, java.util.Set<String> avoid) {
         int level = s.pendingLevels.get(0);
         List<AscendanceData.Choice> lasting = new ArrayList<>(), once = new ArrayList<>();
+        List<AscendanceData.Choice> freshLasting = new ArrayList<>(), freshOnce = new ArrayList<>();
         for (AscendanceData.Choice c : data().choices)
-            if (offerable(c, level))
+            if (offerable(c, level)) {
                 (c.lasting ? lasting : once).add(c);
+                if (!avoid.contains(c.id))
+                    (c.lasting ? freshLasting : freshOnce).add(c);
+            }
         s.offer.clear();
-        if (!lasting.isEmpty())
-            s.offer.add(draw(lasting).id);
-        if (!once.isEmpty())
-            s.offer.add(draw(once).id);
-        List<AscendanceData.Choice> rest = new ArrayList<>(lasting);
-        rest.addAll(once);
-        while (s.offer.size() < Math.max(1, data().offerSize) && !rest.isEmpty())
-            s.offer.add(draw(rest).id);
+        addDraw(s, freshLasting.isEmpty() ? lasting : freshLasting);
+        addDraw(s, freshOnce.isEmpty() ? once : freshOnce);
+        List<AscendanceData.Choice> rest = new ArrayList<>(freshLasting);
+        rest.addAll(freshOnce);
+        int size = Math.max(1, data().offerSize);
+        while (s.offer.size() < size && addDraw(s, rest)) {
+            // draw until the offer is full or the fresh ones run out
+        }
+        List<AscendanceData.Choice> any = new ArrayList<>(lasting); // the avoided ones, only to fill the offer
+        any.addAll(once);
+        while (s.offer.size() < size && addDraw(s, any)) {
+            // likewise
+        }
         java.util.Collections.shuffle(s.offer, RAND);
-        System.out.println("[TFR-Ascend] offer for level " + level + ": " + s.offer);
+        System.out.println("[TFR-Ascend] offer for level " + level + ": " + s.offer
+                + (avoid.isEmpty() ? "" : " (re-rolled from " + avoid + ")"));
+    }
+
+    /** Round 518: one draw from {@code from} onto the offer; false when nothing is left to draw. */
+    private static boolean addDraw(AscendanceState s, List<AscendanceData.Choice> from) {
+        AscendanceData.Choice picked = draw(from);
+        if (picked == null)
+            return false;
+        s.offer.add(picked.id);
+        return true;
+    }
+
+    /** Round 518: the Re-roll's price in shards on this character's difficulty (difficultyRerollCost). */
+    public static int rerollCost() {
+        AscendanceData d = data();
+        AdventurePlayer player = WorldSave.getCurrentSave() == null ? null : WorldSave.getCurrentSave().getPlayer();
+        String difficulty = player == null || player.getDifficulty() == null ? "Normal" : player.getDifficulty().name;
+        for (int i = 0; i < Math.min(d.difficultyNames.length, d.difficultyRerollCost.length); i++)
+            if (d.difficultyNames[i] != null && d.difficultyNames[i].equalsIgnoreCase(difficulty))
+                return Math.max(0, d.difficultyRerollCost[i]);
+        return 40; // a difficulty the table does not list: Normal's
+    }
+
+    /** Round 518: whether the waiting level's offer can still be re-rolled (once per level). */
+    public static boolean canReroll() {
+        AscendanceState s = state();
+        return s != null && isActive() && !s.pendingLevels.isEmpty() && s.rerolledLevel != s.pendingLevels.get(0);
+    }
+
+    /** Round 518: the choice dialog's Re-roll - pays rerollCost() shards and draws a new offer for the waiting level,
+     *  away from the one it replaces. Once per level. Returns false (and changes nothing) when it cannot. */
+    public static boolean reroll() {
+        AscendanceState s = state();
+        if (!canReroll())
+            return false;
+        AdventurePlayer player = WorldSave.getCurrentSave().getPlayer();
+        int cost = rerollCost();
+        if (player.getShards() < cost) {
+            System.out.println("[TFR-Ascend] re-roll refused: " + player.getShards() + " shards, it costs " + cost);
+            return false;
+        }
+        java.util.Set<String> old = new java.util.HashSet<>(currentOffer());
+        player.takeShards(cost);
+        s.rerolledLevel = s.pendingLevels.get(0);
+        System.out.println("[TFR-Ascend] level " + s.rerolledLevel + " re-rolled for " + cost + " shards");
+        rollOffer(s, old);
+        return true;
     }
 
     /** One weighted draw, removed from the list - and the same id never twice in an offer. */
@@ -1122,6 +1183,7 @@ public final class Ascendance {
         data.store("ascendanceVigorUsed", s.vigorUsed);
         data.store("ascendanceDeferredPower", s.deferredPower); // round 505
         data.store("ascendanceDeferredSource", s.deferredSource == null ? "" : s.deferredSource);
+        data.store("ascendanceRerolledLevel", s.rerolledLevel); // round 518
     }
 
     /** AdventurePlayer.load: absent keys (every save before round 493) read as "off". */
@@ -1206,6 +1268,7 @@ public final class Ascendance {
         s.deferredPower = data.containsKey("ascendanceDeferredPower") ? Math.max(0, data.readInt("ascendanceDeferredPower")) : 0;
         s.deferredSource = data.containsKey("ascendanceDeferredSource") ? data.readString("ascendanceDeferredSource") : "";
         s.deferredLoaded = s.deferredPower > 0;
+        s.rerolledLevel = data.containsKey("ascendanceRerolledLevel") ? data.readInt("ascendanceRerolledLevel") : 0; // round 518
     }
 
     // ------------------------------------------------------------------------------------------------ cheats

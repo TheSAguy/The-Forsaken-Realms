@@ -82,6 +82,9 @@
   // nothing to give (every blueprint owned, every map piece found) is never offered.
   // One-time "value" scales with the level the choice was earned at; lasting "value" is per pick and stacks.
   "offerSize": 3,
+  // Round 518: the choice dialog's Re-roll - a new offer for the waiting level, once per level, for this many shards by
+  // difficulty (difficultyNames above). The user: "50 shards on Insane and -5 per lower level".
+  "difficultyRerollCost": [35, 40, 45, 50],
   "choices": [
     // one-time
     { "id": "gold",        "value": 40 },   // 40 x level gold

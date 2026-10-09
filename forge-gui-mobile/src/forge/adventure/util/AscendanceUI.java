@@ -14,7 +14,8 @@ import java.util.List;
 
 /**
  * Round 494 - Ascendance's dialogs, opened by tapping the HUD's "Asc" panel (AscendanceDisplayActor): the pick-1-of-3
- * reward while one waits (one after another until none is left, or "Not now"), else the status - level, title, Power,
+ * reward while one waits (one after another until none is left, or "Not now"; round 518: a "Re-roll" once a level, for
+ * shards), else the status - level, title, Power,
  * main items, the lasting rewards taken. Built on the stage's own dialog (the world map's or the town's), like
  * WorldStage's bonfire and gate dialogs, so Esc closes it (round 491) and the bridge sees its buttons.
  */
@@ -56,8 +57,19 @@ public final class AscendanceUI {
                 if (Ascendance.pendingChoices() > 0) // the next waiting level, as soon as this dialog has gone
                     Gdx.app.postRunnable(AscendanceUI::openChoice);
             });
-            dialog.getButtonTable().add(button).width(width()).padTop(2f).row();
+            dialog.getButtonTable().add(button).width(width()).colspan(2).padTop(2f).row();
         }
+        // Round 518 (the user: "Let's add a Skill Re-roll. Can only do it once per level"): a new offer for shards, beside
+        // "Not now"; greyed when this level's re-roll is used or the shards are short.
+        int cost = Ascendance.rerollCost();
+        boolean open = Ascendance.canReroll();
+        TextraButton reroll = Controls.newTextButton(open ? "Re-roll " + cost + " [+Shards]" : "Re-rolled", () -> {
+            stage.hideDialog();
+            Ascendance.reroll();
+            Gdx.app.postRunnable(AscendanceUI::openChoice);
+        });
+        reroll.setDisabled(!open || WorldSave.getCurrentSave().getPlayer().getShards() < cost);
+        dialog.getButtonTable().add(reroll).width(width() / 2f).padTop(4f).padRight(4f);
         dialog.getButtonTable().add(Controls.newTextButton("Not now", stage::hideDialog)).width(width() / 2f).padTop(4f).row();
         dialog.setKeepWithinStage(true);
         stage.showDialog();

@@ -33,6 +33,8 @@ public class AscendanceState {
      *  level 0 + the difficulty's cost). A new run is on the current one; a load keeps the saved mark when the config
      *  could not be read, so the migration still runs on a later load. */
     public int curve = 3;
+    /** Round 518: the waiting level whose offer was re-rolled (once per level); 0 = none yet. */
+    public int rerolledLevel;
 
     public void reset() {
         on = false;
@@ -47,5 +49,6 @@ public class AscendanceState {
         deferredSource = "";
         deferredLoaded = false;
         curve = 3;
+        rerolledLevel = 0;
     }
 }

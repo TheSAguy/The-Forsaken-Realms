@@ -67,6 +67,10 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-09 (round 518): **LOCAL + UNRELEASED** - the Ascendance choice dialog has a Re-roll beside "Not now":
+a new offer for the waiting level (away from the old three), once per level (`AscendanceState.rerolledLevel`, saved), for
+`difficultyRerollCost` shards - Easy 35, Normal 40, Hard 45, Insane 50.
+
 ## STATE 2026-10-09 (round 517): **LOCAL + UNRELEASED** - Power has an icon (the Shikashi sun: `items_power.png`, 32-px
 `Power` + 16-px `PowerGlyph` for text, `Ascendance.ICON`) and a duel's Power is a loot card paid on Done
 (`Reward.Type.Power`, `Ascendance.appendDuelPower`/`collectPower`). Chests (15) and diamonds (25 at 15%) can give
