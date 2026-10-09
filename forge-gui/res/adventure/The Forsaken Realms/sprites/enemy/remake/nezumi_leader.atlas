@@ -1,0 +1,173 @@
+nezumi_leader.png
+size: 1026,631
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 114, 63
+Idle
+  xy: 114, 64
+  size: 114, 63
+Idle
+  xy: 228, 64
+  size: 114, 63
+Idle
+  xy: 342, 64
+  size: 114, 63
+Walk
+  xy: 0, 127
+  size: 114, 63
+Walk
+  xy: 114, 127
+  size: 114, 63
+Walk
+  xy: 228, 127
+  size: 114, 63
+Walk
+  xy: 342, 127
+  size: 114, 63
+Walk
+  xy: 456, 127
+  size: 114, 63
+Walk
+  xy: 570, 127
+  size: 114, 63
+Walk
+  xy: 684, 127
+  size: 114, 63
+Walk
+  xy: 798, 127
+  size: 114, 63
+Attack
+  xy: 0, 190
+  size: 114, 63
+Attack
+  xy: 114, 190
+  size: 114, 63
+Attack
+  xy: 228, 190
+  size: 114, 63
+Attack
+  xy: 342, 190
+  size: 114, 63
+Attack
+  xy: 456, 190
+  size: 114, 63
+Attack
+  xy: 570, 190
+  size: 114, 63
+Hit
+  xy: 0, 253
+  size: 114, 63
+Hit
+  xy: 114, 253
+  size: 114, 63
+Hit
+  xy: 228, 253
+  size: 114, 63
+Hit
+  xy: 342, 253
+  size: 114, 63
+Death
+  xy: 0, 316
+  size: 114, 63
+Death
+  xy: 114, 316
+  size: 114, 63
+Death
+  xy: 228, 316
+  size: 114, 63
+Death
+  xy: 342, 316
+  size: 114, 63
+Death
+  xy: 456, 316
+  size: 114, 63
+Death
+  xy: 570, 316
+  size: 114, 63
+Death
+  xy: 684, 316
+  size: 114, 63
+Death
+  xy: 798, 316
+  size: 114, 63
+Death
+  xy: 912, 316
+  size: 114, 63
+IdleUp
+  xy: 0, 379
+  size: 114, 63
+IdleUp
+  xy: 114, 379
+  size: 114, 63
+IdleUp
+  xy: 228, 379
+  size: 114, 63
+IdleUp
+  xy: 342, 379
+  size: 114, 63
+IdleDown
+  xy: 0, 442
+  size: 114, 63
+IdleDown
+  xy: 114, 442
+  size: 114, 63
+IdleDown
+  xy: 228, 442
+  size: 114, 63
+IdleDown
+  xy: 342, 442
+  size: 114, 63
+WalkUp
+  xy: 0, 505
+  size: 114, 63
+WalkUp
+  xy: 114, 505
+  size: 114, 63
+WalkUp
+  xy: 228, 505
+  size: 114, 63
+WalkUp
+  xy: 342, 505
+  size: 114, 63
+WalkUp
+  xy: 456, 505
+  size: 114, 63
+WalkUp
+  xy: 570, 505
+  size: 114, 63
+WalkUp
+  xy: 684, 505
+  size: 114, 63
+WalkUp
+  xy: 798, 505
+  size: 114, 63
+WalkDown
+  xy: 0, 568
+  size: 114, 63
+WalkDown
+  xy: 114, 568
+  size: 114, 63
+WalkDown
+  xy: 228, 568
+  size: 114, 63
+WalkDown
+  xy: 342, 568
+  size: 114, 63
+WalkDown
+  xy: 456, 568
+  size: 114, 63
+WalkDown
+  xy: 570, 568
+  size: 114, 63
+WalkDown
+  xy: 684, 568
+  size: 114, 63
+WalkDown
+  xy: 798, 568
+  size: 114, 63

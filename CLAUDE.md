@@ -67,6 +67,15 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-09 (round 515): **LOCAL + UNRELEASED (data only)** - LPC batch 5 (the Procedural Pixel Creatures
+session; the user: "Do 20 more"): the eleven minotaurs (LPC's horned minotaur head and hoofs on fur, the warriors
+muscular with legion gear and axes, Zedruu a robed boss elder), the eight nezumi (the rat head on grey/black/brown/white
+fur, katanas, daggers, hoods, Wick casting) and the two halflings (the small human head; the Cheff a boss in cap and
+apron, Gaddock Teeg capped with a staff) - 21 enemies, the three stock folders closed. 21 new atlases under
+`sprites/enemy/remake/`, enemies.json 21 paths + 21 scales, CREDITS.md's LPC line (129 enemies, rounds 498 + 500 + 501 +
+514 + 515), CREDITS_LPC.md regenerated for the five rounds. The peer (#30) verifies and packages when the game closes.
+Not seen in play. Next LPC batches: merfolk (26), dwarves (24), goblins (32), elves (84), the human classes.
+
 ## STATE 2026-10-09 (round 514): **LOCAL + UNRELEASED (data only)** - LPC batch 4 (the Procedural Pixel Creatures
 session; the user: "Do the next 20"): the twelve kobolds of Kher Keep (lizard heads with backswept horns on earth-toned
 skins, crude gear; King Rohgahh a boss at his drawn size), the seven orcs (orc heads in green and dark green, the brutes

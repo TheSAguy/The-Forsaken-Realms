@@ -1,0 +1,176 @@
+zedruu.png
+size: 486,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 54, 60
+Idle
+  xy: 54, 64
+  size: 54, 60
+Idle
+  xy: 108, 64
+  size: 54, 60
+Idle
+  xy: 162, 64
+  size: 54, 60
+Walk
+  xy: 0, 124
+  size: 54, 60
+Walk
+  xy: 54, 124
+  size: 54, 60
+Walk
+  xy: 108, 124
+  size: 54, 60
+Walk
+  xy: 162, 124
+  size: 54, 60
+Walk
+  xy: 216, 124
+  size: 54, 60
+Walk
+  xy: 270, 124
+  size: 54, 60
+Walk
+  xy: 324, 124
+  size: 54, 60
+Walk
+  xy: 378, 124
+  size: 54, 60
+Attack
+  xy: 0, 184
+  size: 54, 60
+Attack
+  xy: 54, 184
+  size: 54, 60
+Attack
+  xy: 108, 184
+  size: 54, 60
+Attack
+  xy: 162, 184
+  size: 54, 60
+Attack
+  xy: 216, 184
+  size: 54, 60
+Attack
+  xy: 270, 184
+  size: 54, 60
+Attack
+  xy: 324, 184
+  size: 54, 60
+Hit
+  xy: 0, 244
+  size: 54, 60
+Hit
+  xy: 54, 244
+  size: 54, 60
+Hit
+  xy: 108, 244
+  size: 54, 60
+Hit
+  xy: 162, 244
+  size: 54, 60
+Death
+  xy: 0, 304
+  size: 54, 60
+Death
+  xy: 54, 304
+  size: 54, 60
+Death
+  xy: 108, 304
+  size: 54, 60
+Death
+  xy: 162, 304
+  size: 54, 60
+Death
+  xy: 216, 304
+  size: 54, 60
+Death
+  xy: 270, 304
+  size: 54, 60
+Death
+  xy: 324, 304
+  size: 54, 60
+Death
+  xy: 378, 304
+  size: 54, 60
+Death
+  xy: 432, 304
+  size: 54, 60
+IdleUp
+  xy: 0, 364
+  size: 54, 60
+IdleUp
+  xy: 54, 364
+  size: 54, 60
+IdleUp
+  xy: 108, 364
+  size: 54, 60
+IdleUp
+  xy: 162, 364
+  size: 54, 60
+IdleDown
+  xy: 0, 424
+  size: 54, 60
+IdleDown
+  xy: 54, 424
+  size: 54, 60
+IdleDown
+  xy: 108, 424
+  size: 54, 60
+IdleDown
+  xy: 162, 424
+  size: 54, 60
+WalkUp
+  xy: 0, 484
+  size: 54, 60
+WalkUp
+  xy: 54, 484
+  size: 54, 60
+WalkUp
+  xy: 108, 484
+  size: 54, 60
+WalkUp
+  xy: 162, 484
+  size: 54, 60
+WalkUp
+  xy: 216, 484
+  size: 54, 60
+WalkUp
+  xy: 270, 484
+  size: 54, 60
+WalkUp
+  xy: 324, 484
+  size: 54, 60
+WalkUp
+  xy: 378, 484
+  size: 54, 60
+WalkDown
+  xy: 0, 544
+  size: 54, 60
+WalkDown
+  xy: 54, 544
+  size: 54, 60
+WalkDown
+  xy: 108, 544
+  size: 54, 60
+WalkDown
+  xy: 162, 544
+  size: 54, 60
+WalkDown
+  xy: 216, 544
+  size: 54, 60
+WalkDown
+  xy: 270, 544
+  size: 54, 60
+WalkDown
+  xy: 324, 544
+  size: 54, 60
+WalkDown
+  xy: 378, 544
+  size: 54, 60

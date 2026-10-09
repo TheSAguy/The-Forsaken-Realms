@@ -1,0 +1,173 @@
+the_cheff.png
+size: 558,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 58
+Idle
+  xy: 62, 64
+  size: 62, 58
+Idle
+  xy: 124, 64
+  size: 62, 58
+Idle
+  xy: 186, 64
+  size: 62, 58
+Walk
+  xy: 0, 122
+  size: 62, 58
+Walk
+  xy: 62, 122
+  size: 62, 58
+Walk
+  xy: 124, 122
+  size: 62, 58
+Walk
+  xy: 186, 122
+  size: 62, 58
+Walk
+  xy: 248, 122
+  size: 62, 58
+Walk
+  xy: 310, 122
+  size: 62, 58
+Walk
+  xy: 372, 122
+  size: 62, 58
+Walk
+  xy: 434, 122
+  size: 62, 58
+Attack
+  xy: 0, 180
+  size: 62, 58
+Attack
+  xy: 62, 180
+  size: 62, 58
+Attack
+  xy: 124, 180
+  size: 62, 58
+Attack
+  xy: 186, 180
+  size: 62, 58
+Attack
+  xy: 248, 180
+  size: 62, 58
+Attack
+  xy: 310, 180
+  size: 62, 58
+Hit
+  xy: 0, 238
+  size: 62, 58
+Hit
+  xy: 62, 238
+  size: 62, 58
+Hit
+  xy: 124, 238
+  size: 62, 58
+Hit
+  xy: 186, 238
+  size: 62, 58
+Death
+  xy: 0, 296
+  size: 62, 58
+Death
+  xy: 62, 296
+  size: 62, 58
+Death
+  xy: 124, 296
+  size: 62, 58
+Death
+  xy: 186, 296
+  size: 62, 58
+Death
+  xy: 248, 296
+  size: 62, 58
+Death
+  xy: 310, 296
+  size: 62, 58
+Death
+  xy: 372, 296
+  size: 62, 58
+Death
+  xy: 434, 296
+  size: 62, 58
+Death
+  xy: 496, 296
+  size: 62, 58
+IdleUp
+  xy: 0, 354
+  size: 62, 58
+IdleUp
+  xy: 62, 354
+  size: 62, 58
+IdleUp
+  xy: 124, 354
+  size: 62, 58
+IdleUp
+  xy: 186, 354
+  size: 62, 58
+IdleDown
+  xy: 0, 412
+  size: 62, 58
+IdleDown
+  xy: 62, 412
+  size: 62, 58
+IdleDown
+  xy: 124, 412
+  size: 62, 58
+IdleDown
+  xy: 186, 412
+  size: 62, 58
+WalkUp
+  xy: 0, 470
+  size: 62, 58
+WalkUp
+  xy: 62, 470
+  size: 62, 58
+WalkUp
+  xy: 124, 470
+  size: 62, 58
+WalkUp
+  xy: 186, 470
+  size: 62, 58
+WalkUp
+  xy: 248, 470
+  size: 62, 58
+WalkUp
+  xy: 310, 470
+  size: 62, 58
+WalkUp
+  xy: 372, 470
+  size: 62, 58
+WalkUp
+  xy: 434, 470
+  size: 62, 58
+WalkDown
+  xy: 0, 528
+  size: 62, 58
+WalkDown
+  xy: 62, 528
+  size: 62, 58
+WalkDown
+  xy: 124, 528
+  size: 62, 58
+WalkDown
+  xy: 186, 528
+  size: 62, 58
+WalkDown
+  xy: 248, 528
+  size: 62, 58
+WalkDown
+  xy: 310, 528
+  size: 62, 58
+WalkDown
+  xy: 372, 528
+  size: 62, 58
+WalkDown
+  xy: 434, 528
+  size: 62, 58

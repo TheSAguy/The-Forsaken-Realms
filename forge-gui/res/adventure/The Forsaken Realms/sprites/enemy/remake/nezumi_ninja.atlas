@@ -1,0 +1,173 @@
+nezumi_ninja.png
+size: 990,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 110, 60
+Idle
+  xy: 110, 64
+  size: 110, 60
+Idle
+  xy: 220, 64
+  size: 110, 60
+Idle
+  xy: 330, 64
+  size: 110, 60
+Walk
+  xy: 0, 124
+  size: 110, 60
+Walk
+  xy: 110, 124
+  size: 110, 60
+Walk
+  xy: 220, 124
+  size: 110, 60
+Walk
+  xy: 330, 124
+  size: 110, 60
+Walk
+  xy: 440, 124
+  size: 110, 60
+Walk
+  xy: 550, 124
+  size: 110, 60
+Walk
+  xy: 660, 124
+  size: 110, 60
+Walk
+  xy: 770, 124
+  size: 110, 60
+Attack
+  xy: 0, 184
+  size: 110, 60
+Attack
+  xy: 110, 184
+  size: 110, 60
+Attack
+  xy: 220, 184
+  size: 110, 60
+Attack
+  xy: 330, 184
+  size: 110, 60
+Attack
+  xy: 440, 184
+  size: 110, 60
+Attack
+  xy: 550, 184
+  size: 110, 60
+Hit
+  xy: 0, 244
+  size: 110, 60
+Hit
+  xy: 110, 244
+  size: 110, 60
+Hit
+  xy: 220, 244
+  size: 110, 60
+Hit
+  xy: 330, 244
+  size: 110, 60
+Death
+  xy: 0, 304
+  size: 110, 60
+Death
+  xy: 110, 304
+  size: 110, 60
+Death
+  xy: 220, 304
+  size: 110, 60
+Death
+  xy: 330, 304
+  size: 110, 60
+Death
+  xy: 440, 304
+  size: 110, 60
+Death
+  xy: 550, 304
+  size: 110, 60
+Death
+  xy: 660, 304
+  size: 110, 60
+Death
+  xy: 770, 304
+  size: 110, 60
+Death
+  xy: 880, 304
+  size: 110, 60
+IdleUp
+  xy: 0, 364
+  size: 110, 60
+IdleUp
+  xy: 110, 364
+  size: 110, 60
+IdleUp
+  xy: 220, 364
+  size: 110, 60
+IdleUp
+  xy: 330, 364
+  size: 110, 60
+IdleDown
+  xy: 0, 424
+  size: 110, 60
+IdleDown
+  xy: 110, 424
+  size: 110, 60
+IdleDown
+  xy: 220, 424
+  size: 110, 60
+IdleDown
+  xy: 330, 424
+  size: 110, 60
+WalkUp
+  xy: 0, 484
+  size: 110, 60
+WalkUp
+  xy: 110, 484
+  size: 110, 60
+WalkUp
+  xy: 220, 484
+  size: 110, 60
+WalkUp
+  xy: 330, 484
+  size: 110, 60
+WalkUp
+  xy: 440, 484
+  size: 110, 60
+WalkUp
+  xy: 550, 484
+  size: 110, 60
+WalkUp
+  xy: 660, 484
+  size: 110, 60
+WalkUp
+  xy: 770, 484
+  size: 110, 60
+WalkDown
+  xy: 0, 544
+  size: 110, 60
+WalkDown
+  xy: 110, 544
+  size: 110, 60
+WalkDown
+  xy: 220, 544
+  size: 110, 60
+WalkDown
+  xy: 330, 544
+  size: 110, 60
+WalkDown
+  xy: 440, 544
+  size: 110, 60
+WalkDown
+  xy: 550, 544
+  size: 110, 60
+WalkDown
+  xy: 660, 544
+  size: 110, 60
+WalkDown
+  xy: 770, 544
+  size: 110, 60

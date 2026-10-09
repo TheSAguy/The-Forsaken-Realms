@@ -1,0 +1,173 @@
+ashcoat.png
+size: 540,523
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 60, 51
+Idle
+  xy: 60, 64
+  size: 60, 51
+Idle
+  xy: 120, 64
+  size: 60, 51
+Idle
+  xy: 180, 64
+  size: 60, 51
+Walk
+  xy: 0, 115
+  size: 60, 51
+Walk
+  xy: 60, 115
+  size: 60, 51
+Walk
+  xy: 120, 115
+  size: 60, 51
+Walk
+  xy: 180, 115
+  size: 60, 51
+Walk
+  xy: 240, 115
+  size: 60, 51
+Walk
+  xy: 300, 115
+  size: 60, 51
+Walk
+  xy: 360, 115
+  size: 60, 51
+Walk
+  xy: 420, 115
+  size: 60, 51
+Attack
+  xy: 0, 166
+  size: 60, 51
+Attack
+  xy: 60, 166
+  size: 60, 51
+Attack
+  xy: 120, 166
+  size: 60, 51
+Attack
+  xy: 180, 166
+  size: 60, 51
+Attack
+  xy: 240, 166
+  size: 60, 51
+Attack
+  xy: 300, 166
+  size: 60, 51
+Hit
+  xy: 0, 217
+  size: 60, 51
+Hit
+  xy: 60, 217
+  size: 60, 51
+Hit
+  xy: 120, 217
+  size: 60, 51
+Hit
+  xy: 180, 217
+  size: 60, 51
+Death
+  xy: 0, 268
+  size: 60, 51
+Death
+  xy: 60, 268
+  size: 60, 51
+Death
+  xy: 120, 268
+  size: 60, 51
+Death
+  xy: 180, 268
+  size: 60, 51
+Death
+  xy: 240, 268
+  size: 60, 51
+Death
+  xy: 300, 268
+  size: 60, 51
+Death
+  xy: 360, 268
+  size: 60, 51
+Death
+  xy: 420, 268
+  size: 60, 51
+Death
+  xy: 480, 268
+  size: 60, 51
+IdleUp
+  xy: 0, 319
+  size: 60, 51
+IdleUp
+  xy: 60, 319
+  size: 60, 51
+IdleUp
+  xy: 120, 319
+  size: 60, 51
+IdleUp
+  xy: 180, 319
+  size: 60, 51
+IdleDown
+  xy: 0, 370
+  size: 60, 51
+IdleDown
+  xy: 60, 370
+  size: 60, 51
+IdleDown
+  xy: 120, 370
+  size: 60, 51
+IdleDown
+  xy: 180, 370
+  size: 60, 51
+WalkUp
+  xy: 0, 421
+  size: 60, 51
+WalkUp
+  xy: 60, 421
+  size: 60, 51
+WalkUp
+  xy: 120, 421
+  size: 60, 51
+WalkUp
+  xy: 180, 421
+  size: 60, 51
+WalkUp
+  xy: 240, 421
+  size: 60, 51
+WalkUp
+  xy: 300, 421
+  size: 60, 51
+WalkUp
+  xy: 360, 421
+  size: 60, 51
+WalkUp
+  xy: 420, 421
+  size: 60, 51
+WalkDown
+  xy: 0, 472
+  size: 60, 51
+WalkDown
+  xy: 60, 472
+  size: 60, 51
+WalkDown
+  xy: 120, 472
+  size: 60, 51
+WalkDown
+  xy: 180, 472
+  size: 60, 51
+WalkDown
+  xy: 240, 472
+  size: 60, 51
+WalkDown
+  xy: 300, 472
+  size: 60, 51
+WalkDown
+  xy: 360, 472
+  size: 60, 51
+WalkDown
+  xy: 420, 472
+  size: 60, 51

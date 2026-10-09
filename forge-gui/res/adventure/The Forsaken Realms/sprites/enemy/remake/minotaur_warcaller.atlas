@@ -1,0 +1,173 @@
+minotaur_warcaller.png
+size: 792,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 60
+Idle
+  xy: 88, 64
+  size: 88, 60
+Idle
+  xy: 176, 64
+  size: 88, 60
+Idle
+  xy: 264, 64
+  size: 88, 60
+Walk
+  xy: 0, 124
+  size: 88, 60
+Walk
+  xy: 88, 124
+  size: 88, 60
+Walk
+  xy: 176, 124
+  size: 88, 60
+Walk
+  xy: 264, 124
+  size: 88, 60
+Walk
+  xy: 352, 124
+  size: 88, 60
+Walk
+  xy: 440, 124
+  size: 88, 60
+Walk
+  xy: 528, 124
+  size: 88, 60
+Walk
+  xy: 616, 124
+  size: 88, 60
+Attack
+  xy: 0, 184
+  size: 88, 60
+Attack
+  xy: 88, 184
+  size: 88, 60
+Attack
+  xy: 176, 184
+  size: 88, 60
+Attack
+  xy: 264, 184
+  size: 88, 60
+Attack
+  xy: 352, 184
+  size: 88, 60
+Attack
+  xy: 440, 184
+  size: 88, 60
+Hit
+  xy: 0, 244
+  size: 88, 60
+Hit
+  xy: 88, 244
+  size: 88, 60
+Hit
+  xy: 176, 244
+  size: 88, 60
+Hit
+  xy: 264, 244
+  size: 88, 60
+Death
+  xy: 0, 304
+  size: 88, 60
+Death
+  xy: 88, 304
+  size: 88, 60
+Death
+  xy: 176, 304
+  size: 88, 60
+Death
+  xy: 264, 304
+  size: 88, 60
+Death
+  xy: 352, 304
+  size: 88, 60
+Death
+  xy: 440, 304
+  size: 88, 60
+Death
+  xy: 528, 304
+  size: 88, 60
+Death
+  xy: 616, 304
+  size: 88, 60
+Death
+  xy: 704, 304
+  size: 88, 60
+IdleUp
+  xy: 0, 364
+  size: 88, 60
+IdleUp
+  xy: 88, 364
+  size: 88, 60
+IdleUp
+  xy: 176, 364
+  size: 88, 60
+IdleUp
+  xy: 264, 364
+  size: 88, 60
+IdleDown
+  xy: 0, 424
+  size: 88, 60
+IdleDown
+  xy: 88, 424
+  size: 88, 60
+IdleDown
+  xy: 176, 424
+  size: 88, 60
+IdleDown
+  xy: 264, 424
+  size: 88, 60
+WalkUp
+  xy: 0, 484
+  size: 88, 60
+WalkUp
+  xy: 88, 484
+  size: 88, 60
+WalkUp
+  xy: 176, 484
+  size: 88, 60
+WalkUp
+  xy: 264, 484
+  size: 88, 60
+WalkUp
+  xy: 352, 484
+  size: 88, 60
+WalkUp
+  xy: 440, 484
+  size: 88, 60
+WalkUp
+  xy: 528, 484
+  size: 88, 60
+WalkUp
+  xy: 616, 484
+  size: 88, 60
+WalkDown
+  xy: 0, 544
+  size: 88, 60
+WalkDown
+  xy: 88, 544
+  size: 88, 60
+WalkDown
+  xy: 176, 544
+  size: 88, 60
+WalkDown
+  xy: 264, 544
+  size: 88, 60
+WalkDown
+  xy: 352, 544
+  size: 88, 60
+WalkDown
+  xy: 440, 544
+  size: 88, 60
+WalkDown
+  xy: 528, 544
+  size: 88, 60
+WalkDown
+  xy: 616, 544
+  size: 88, 60

@@ -1,0 +1,176 @@
+gaddock_teeg.png
+size: 576,622
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 64, 62
+Idle
+  xy: 64, 64
+  size: 64, 62
+Idle
+  xy: 128, 64
+  size: 64, 62
+Idle
+  xy: 192, 64
+  size: 64, 62
+Walk
+  xy: 0, 126
+  size: 64, 62
+Walk
+  xy: 64, 126
+  size: 64, 62
+Walk
+  xy: 128, 126
+  size: 64, 62
+Walk
+  xy: 192, 126
+  size: 64, 62
+Walk
+  xy: 256, 126
+  size: 64, 62
+Walk
+  xy: 320, 126
+  size: 64, 62
+Walk
+  xy: 384, 126
+  size: 64, 62
+Walk
+  xy: 448, 126
+  size: 64, 62
+Attack
+  xy: 0, 188
+  size: 64, 62
+Attack
+  xy: 64, 188
+  size: 64, 62
+Attack
+  xy: 128, 188
+  size: 64, 62
+Attack
+  xy: 192, 188
+  size: 64, 62
+Attack
+  xy: 256, 188
+  size: 64, 62
+Attack
+  xy: 320, 188
+  size: 64, 62
+Attack
+  xy: 384, 188
+  size: 64, 62
+Hit
+  xy: 0, 250
+  size: 64, 62
+Hit
+  xy: 64, 250
+  size: 64, 62
+Hit
+  xy: 128, 250
+  size: 64, 62
+Hit
+  xy: 192, 250
+  size: 64, 62
+Death
+  xy: 0, 312
+  size: 64, 62
+Death
+  xy: 64, 312
+  size: 64, 62
+Death
+  xy: 128, 312
+  size: 64, 62
+Death
+  xy: 192, 312
+  size: 64, 62
+Death
+  xy: 256, 312
+  size: 64, 62
+Death
+  xy: 320, 312
+  size: 64, 62
+Death
+  xy: 384, 312
+  size: 64, 62
+Death
+  xy: 448, 312
+  size: 64, 62
+Death
+  xy: 512, 312
+  size: 64, 62
+IdleUp
+  xy: 0, 374
+  size: 64, 62
+IdleUp
+  xy: 64, 374
+  size: 64, 62
+IdleUp
+  xy: 128, 374
+  size: 64, 62
+IdleUp
+  xy: 192, 374
+  size: 64, 62
+IdleDown
+  xy: 0, 436
+  size: 64, 62
+IdleDown
+  xy: 64, 436
+  size: 64, 62
+IdleDown
+  xy: 128, 436
+  size: 64, 62
+IdleDown
+  xy: 192, 436
+  size: 64, 62
+WalkUp
+  xy: 0, 498
+  size: 64, 62
+WalkUp
+  xy: 64, 498
+  size: 64, 62
+WalkUp
+  xy: 128, 498
+  size: 64, 62
+WalkUp
+  xy: 192, 498
+  size: 64, 62
+WalkUp
+  xy: 256, 498
+  size: 64, 62
+WalkUp
+  xy: 320, 498
+  size: 64, 62
+WalkUp
+  xy: 384, 498
+  size: 64, 62
+WalkUp
+  xy: 448, 498
+  size: 64, 62
+WalkDown
+  xy: 0, 560
+  size: 64, 62
+WalkDown
+  xy: 64, 560
+  size: 64, 62
+WalkDown
+  xy: 128, 560
+  size: 64, 62
+WalkDown
+  xy: 192, 560
+  size: 64, 62
+WalkDown
+  xy: 256, 560
+  size: 64, 62
+WalkDown
+  xy: 320, 560
+  size: 64, 62
+WalkDown
+  xy: 384, 560
+  size: 64, 62
+WalkDown
+  xy: 448, 560
+  size: 64, 62

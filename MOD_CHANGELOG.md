@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 515: the minotaurs, the nezumi and the halflings from the Universal LPC Spritesheet parts (2026-10-09)
+
+The Procedural Pixel Creatures session's fifth LPC batch (the user: "Do 20 more"): 21 enemies, closing the stock
+`humanoid/minotaur`, `humanoid/nezumi` and `humanoid/halfling` folders, each its own kit (selections in the generator
+repo's `lpc_selections/make_515.py`).
+
+- **The eleven minotaurs**: LPC's minotaur head (its own horns) and hoofs on fur. The warriors muscular and bare-chested
+  with legion gear - the Amonkhet Minotaur Warrior (brown, bronze, war axe), Neheb (black fur, gold, a halberd), Moraug
+  (copper, war axe), the Minotaur Warcaller (iron, mace and crusader shield), Mogis (dark red, gold, war axe), Sethron
+  (grey, longsword), Gornog (copper, a scythe), Tahngarth (gold fur, scimitar); the Minotaur a brown brute with a club;
+  Firesong and Sunspeaker a tan caster in white and red; Zedruu a grey elder in white robes with a gold necklace, casting
+  (a boss, so he keeps his drawn size).
+- **The eight nezumi**: the rat head on grey, black, brown and white fur - the Nezumi Leader (red bandana, leather,
+  katana), Marrow-Gnawer (black, tattered cape, dagger), Greasefang (brown, black jacket, shades, a mace), Vren (grey,
+  hooded, dagger), the Nezumi Ninja (black, masked, katana), Ashcoat (grey, dagger), Nashi (white, purple hood, dagger),
+  Wick (brown, black hood, casting).
+- **The two halflings** on the small human head: the Cheff (white cap and apron, red shirt, a kitchen knife; a boss at
+  his drawn size) and Gaddock Teeg (forest cap, vest, a staff).
+- **Files**: 21 new atlases under `sprites/enemy/remake/`; enemies.json 21 sprite paths + 21 scales (0.28-0.35 for the
+  ranked ones, Zedruu 0.45 and the Cheff 0.43 for their boss sizes; two entries had no scale, so their last lines take
+  a trailing comma). `CREDITS.md`'s LPC line now covers 129 enemies over five rounds; `standalone-packaging/CREDITS_LPC.md`
+  regenerated for all five.
+- **Checks**: `validate_plane_data.py` unchanged; the sprite audit is clean on the twenty-one. Not seen in play.
+
 ## Round 514: the kobolds, the orcs and the Howlpack Exile from the Universal LPC Spritesheet parts (2026-10-09)
 
 The Procedural Pixel Creatures session's fourth LPC batch (the user: "Do the next 20"): 20 enemies on the stock

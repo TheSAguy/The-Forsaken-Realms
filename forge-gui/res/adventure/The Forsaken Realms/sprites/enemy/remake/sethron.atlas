@@ -1,0 +1,173 @@
+sethron.png
+size: 1368,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 152, 60
+Idle
+  xy: 152, 64
+  size: 152, 60
+Idle
+  xy: 304, 64
+  size: 152, 60
+Idle
+  xy: 456, 64
+  size: 152, 60
+Walk
+  xy: 0, 124
+  size: 152, 60
+Walk
+  xy: 152, 124
+  size: 152, 60
+Walk
+  xy: 304, 124
+  size: 152, 60
+Walk
+  xy: 456, 124
+  size: 152, 60
+Walk
+  xy: 608, 124
+  size: 152, 60
+Walk
+  xy: 760, 124
+  size: 152, 60
+Walk
+  xy: 912, 124
+  size: 152, 60
+Walk
+  xy: 1064, 124
+  size: 152, 60
+Attack
+  xy: 0, 184
+  size: 152, 60
+Attack
+  xy: 152, 184
+  size: 152, 60
+Attack
+  xy: 304, 184
+  size: 152, 60
+Attack
+  xy: 456, 184
+  size: 152, 60
+Attack
+  xy: 608, 184
+  size: 152, 60
+Attack
+  xy: 760, 184
+  size: 152, 60
+Hit
+  xy: 0, 244
+  size: 152, 60
+Hit
+  xy: 152, 244
+  size: 152, 60
+Hit
+  xy: 304, 244
+  size: 152, 60
+Hit
+  xy: 456, 244
+  size: 152, 60
+Death
+  xy: 0, 304
+  size: 152, 60
+Death
+  xy: 152, 304
+  size: 152, 60
+Death
+  xy: 304, 304
+  size: 152, 60
+Death
+  xy: 456, 304
+  size: 152, 60
+Death
+  xy: 608, 304
+  size: 152, 60
+Death
+  xy: 760, 304
+  size: 152, 60
+Death
+  xy: 912, 304
+  size: 152, 60
+Death
+  xy: 1064, 304
+  size: 152, 60
+Death
+  xy: 1216, 304
+  size: 152, 60
+IdleUp
+  xy: 0, 364
+  size: 152, 60
+IdleUp
+  xy: 152, 364
+  size: 152, 60
+IdleUp
+  xy: 304, 364
+  size: 152, 60
+IdleUp
+  xy: 456, 364
+  size: 152, 60
+IdleDown
+  xy: 0, 424
+  size: 152, 60
+IdleDown
+  xy: 152, 424
+  size: 152, 60
+IdleDown
+  xy: 304, 424
+  size: 152, 60
+IdleDown
+  xy: 456, 424
+  size: 152, 60
+WalkUp
+  xy: 0, 484
+  size: 152, 60
+WalkUp
+  xy: 152, 484
+  size: 152, 60
+WalkUp
+  xy: 304, 484
+  size: 152, 60
+WalkUp
+  xy: 456, 484
+  size: 152, 60
+WalkUp
+  xy: 608, 484
+  size: 152, 60
+WalkUp
+  xy: 760, 484
+  size: 152, 60
+WalkUp
+  xy: 912, 484
+  size: 152, 60
+WalkUp
+  xy: 1064, 484
+  size: 152, 60
+WalkDown
+  xy: 0, 544
+  size: 152, 60
+WalkDown
+  xy: 152, 544
+  size: 152, 60
+WalkDown
+  xy: 304, 544
+  size: 152, 60
+WalkDown
+  xy: 456, 544
+  size: 152, 60
+WalkDown
+  xy: 608, 544
+  size: 152, 60
+WalkDown
+  xy: 760, 544
+  size: 152, 60
+WalkDown
+  xy: 912, 544
+  size: 152, 60
+WalkDown
+  xy: 1064, 544
+  size: 152, 60

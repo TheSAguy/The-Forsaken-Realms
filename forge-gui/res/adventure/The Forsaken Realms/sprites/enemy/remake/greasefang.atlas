@@ -1,0 +1,173 @@
+greasefang.png
+size: 720,523
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 51
+Idle
+  xy: 80, 64
+  size: 80, 51
+Idle
+  xy: 160, 64
+  size: 80, 51
+Idle
+  xy: 240, 64
+  size: 80, 51
+Walk
+  xy: 0, 115
+  size: 80, 51
+Walk
+  xy: 80, 115
+  size: 80, 51
+Walk
+  xy: 160, 115
+  size: 80, 51
+Walk
+  xy: 240, 115
+  size: 80, 51
+Walk
+  xy: 320, 115
+  size: 80, 51
+Walk
+  xy: 400, 115
+  size: 80, 51
+Walk
+  xy: 480, 115
+  size: 80, 51
+Walk
+  xy: 560, 115
+  size: 80, 51
+Attack
+  xy: 0, 166
+  size: 80, 51
+Attack
+  xy: 80, 166
+  size: 80, 51
+Attack
+  xy: 160, 166
+  size: 80, 51
+Attack
+  xy: 240, 166
+  size: 80, 51
+Attack
+  xy: 320, 166
+  size: 80, 51
+Attack
+  xy: 400, 166
+  size: 80, 51
+Hit
+  xy: 0, 217
+  size: 80, 51
+Hit
+  xy: 80, 217
+  size: 80, 51
+Hit
+  xy: 160, 217
+  size: 80, 51
+Hit
+  xy: 240, 217
+  size: 80, 51
+Death
+  xy: 0, 268
+  size: 80, 51
+Death
+  xy: 80, 268
+  size: 80, 51
+Death
+  xy: 160, 268
+  size: 80, 51
+Death
+  xy: 240, 268
+  size: 80, 51
+Death
+  xy: 320, 268
+  size: 80, 51
+Death
+  xy: 400, 268
+  size: 80, 51
+Death
+  xy: 480, 268
+  size: 80, 51
+Death
+  xy: 560, 268
+  size: 80, 51
+Death
+  xy: 640, 268
+  size: 80, 51
+IdleUp
+  xy: 0, 319
+  size: 80, 51
+IdleUp
+  xy: 80, 319
+  size: 80, 51
+IdleUp
+  xy: 160, 319
+  size: 80, 51
+IdleUp
+  xy: 240, 319
+  size: 80, 51
+IdleDown
+  xy: 0, 370
+  size: 80, 51
+IdleDown
+  xy: 80, 370
+  size: 80, 51
+IdleDown
+  xy: 160, 370
+  size: 80, 51
+IdleDown
+  xy: 240, 370
+  size: 80, 51
+WalkUp
+  xy: 0, 421
+  size: 80, 51
+WalkUp
+  xy: 80, 421
+  size: 80, 51
+WalkUp
+  xy: 160, 421
+  size: 80, 51
+WalkUp
+  xy: 240, 421
+  size: 80, 51
+WalkUp
+  xy: 320, 421
+  size: 80, 51
+WalkUp
+  xy: 400, 421
+  size: 80, 51
+WalkUp
+  xy: 480, 421
+  size: 80, 51
+WalkUp
+  xy: 560, 421
+  size: 80, 51
+WalkDown
+  xy: 0, 472
+  size: 80, 51
+WalkDown
+  xy: 80, 472
+  size: 80, 51
+WalkDown
+  xy: 160, 472
+  size: 80, 51
+WalkDown
+  xy: 240, 472
+  size: 80, 51
+WalkDown
+  xy: 320, 472
+  size: 80, 51
+WalkDown
+  xy: 400, 472
+  size: 80, 51
+WalkDown
+  xy: 480, 472
+  size: 80, 51
+WalkDown
+  xy: 560, 472
+  size: 80, 51

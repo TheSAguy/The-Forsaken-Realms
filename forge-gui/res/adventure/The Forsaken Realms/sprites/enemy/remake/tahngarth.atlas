@@ -1,0 +1,173 @@
+tahngarth.png
+size: 972,694
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 108, 70
+Idle
+  xy: 108, 64
+  size: 108, 70
+Idle
+  xy: 216, 64
+  size: 108, 70
+Idle
+  xy: 324, 64
+  size: 108, 70
+Walk
+  xy: 0, 134
+  size: 108, 70
+Walk
+  xy: 108, 134
+  size: 108, 70
+Walk
+  xy: 216, 134
+  size: 108, 70
+Walk
+  xy: 324, 134
+  size: 108, 70
+Walk
+  xy: 432, 134
+  size: 108, 70
+Walk
+  xy: 540, 134
+  size: 108, 70
+Walk
+  xy: 648, 134
+  size: 108, 70
+Walk
+  xy: 756, 134
+  size: 108, 70
+Attack
+  xy: 0, 204
+  size: 108, 70
+Attack
+  xy: 108, 204
+  size: 108, 70
+Attack
+  xy: 216, 204
+  size: 108, 70
+Attack
+  xy: 324, 204
+  size: 108, 70
+Attack
+  xy: 432, 204
+  size: 108, 70
+Attack
+  xy: 540, 204
+  size: 108, 70
+Hit
+  xy: 0, 274
+  size: 108, 70
+Hit
+  xy: 108, 274
+  size: 108, 70
+Hit
+  xy: 216, 274
+  size: 108, 70
+Hit
+  xy: 324, 274
+  size: 108, 70
+Death
+  xy: 0, 344
+  size: 108, 70
+Death
+  xy: 108, 344
+  size: 108, 70
+Death
+  xy: 216, 344
+  size: 108, 70
+Death
+  xy: 324, 344
+  size: 108, 70
+Death
+  xy: 432, 344
+  size: 108, 70
+Death
+  xy: 540, 344
+  size: 108, 70
+Death
+  xy: 648, 344
+  size: 108, 70
+Death
+  xy: 756, 344
+  size: 108, 70
+Death
+  xy: 864, 344
+  size: 108, 70
+IdleUp
+  xy: 0, 414
+  size: 108, 70
+IdleUp
+  xy: 108, 414
+  size: 108, 70
+IdleUp
+  xy: 216, 414
+  size: 108, 70
+IdleUp
+  xy: 324, 414
+  size: 108, 70
+IdleDown
+  xy: 0, 484
+  size: 108, 70
+IdleDown
+  xy: 108, 484
+  size: 108, 70
+IdleDown
+  xy: 216, 484
+  size: 108, 70
+IdleDown
+  xy: 324, 484
+  size: 108, 70
+WalkUp
+  xy: 0, 554
+  size: 108, 70
+WalkUp
+  xy: 108, 554
+  size: 108, 70
+WalkUp
+  xy: 216, 554
+  size: 108, 70
+WalkUp
+  xy: 324, 554
+  size: 108, 70
+WalkUp
+  xy: 432, 554
+  size: 108, 70
+WalkUp
+  xy: 540, 554
+  size: 108, 70
+WalkUp
+  xy: 648, 554
+  size: 108, 70
+WalkUp
+  xy: 756, 554
+  size: 108, 70
+WalkDown
+  xy: 0, 624
+  size: 108, 70
+WalkDown
+  xy: 108, 624
+  size: 108, 70
+WalkDown
+  xy: 216, 624
+  size: 108, 70
+WalkDown
+  xy: 324, 624
+  size: 108, 70
+WalkDown
+  xy: 432, 624
+  size: 108, 70
+WalkDown
+  xy: 540, 624
+  size: 108, 70
+WalkDown
+  xy: 648, 624
+  size: 108, 70
+WalkDown
+  xy: 756, 624
+  size: 108, 70

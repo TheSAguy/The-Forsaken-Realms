@@ -1,0 +1,173 @@
+minotaur.png
+size: 810,703
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 71
+Idle
+  xy: 90, 64
+  size: 90, 71
+Idle
+  xy: 180, 64
+  size: 90, 71
+Idle
+  xy: 270, 64
+  size: 90, 71
+Walk
+  xy: 0, 135
+  size: 90, 71
+Walk
+  xy: 90, 135
+  size: 90, 71
+Walk
+  xy: 180, 135
+  size: 90, 71
+Walk
+  xy: 270, 135
+  size: 90, 71
+Walk
+  xy: 360, 135
+  size: 90, 71
+Walk
+  xy: 450, 135
+  size: 90, 71
+Walk
+  xy: 540, 135
+  size: 90, 71
+Walk
+  xy: 630, 135
+  size: 90, 71
+Attack
+  xy: 0, 206
+  size: 90, 71
+Attack
+  xy: 90, 206
+  size: 90, 71
+Attack
+  xy: 180, 206
+  size: 90, 71
+Attack
+  xy: 270, 206
+  size: 90, 71
+Attack
+  xy: 360, 206
+  size: 90, 71
+Attack
+  xy: 450, 206
+  size: 90, 71
+Hit
+  xy: 0, 277
+  size: 90, 71
+Hit
+  xy: 90, 277
+  size: 90, 71
+Hit
+  xy: 180, 277
+  size: 90, 71
+Hit
+  xy: 270, 277
+  size: 90, 71
+Death
+  xy: 0, 348
+  size: 90, 71
+Death
+  xy: 90, 348
+  size: 90, 71
+Death
+  xy: 180, 348
+  size: 90, 71
+Death
+  xy: 270, 348
+  size: 90, 71
+Death
+  xy: 360, 348
+  size: 90, 71
+Death
+  xy: 450, 348
+  size: 90, 71
+Death
+  xy: 540, 348
+  size: 90, 71
+Death
+  xy: 630, 348
+  size: 90, 71
+Death
+  xy: 720, 348
+  size: 90, 71
+IdleUp
+  xy: 0, 419
+  size: 90, 71
+IdleUp
+  xy: 90, 419
+  size: 90, 71
+IdleUp
+  xy: 180, 419
+  size: 90, 71
+IdleUp
+  xy: 270, 419
+  size: 90, 71
+IdleDown
+  xy: 0, 490
+  size: 90, 71
+IdleDown
+  xy: 90, 490
+  size: 90, 71
+IdleDown
+  xy: 180, 490
+  size: 90, 71
+IdleDown
+  xy: 270, 490
+  size: 90, 71
+WalkUp
+  xy: 0, 561
+  size: 90, 71
+WalkUp
+  xy: 90, 561
+  size: 90, 71
+WalkUp
+  xy: 180, 561
+  size: 90, 71
+WalkUp
+  xy: 270, 561
+  size: 90, 71
+WalkUp
+  xy: 360, 561
+  size: 90, 71
+WalkUp
+  xy: 450, 561
+  size: 90, 71
+WalkUp
+  xy: 540, 561
+  size: 90, 71
+WalkUp
+  xy: 630, 561
+  size: 90, 71
+WalkDown
+  xy: 0, 632
+  size: 90, 71
+WalkDown
+  xy: 90, 632
+  size: 90, 71
+WalkDown
+  xy: 180, 632
+  size: 90, 71
+WalkDown
+  xy: 270, 632
+  size: 90, 71
+WalkDown
+  xy: 360, 632
+  size: 90, 71
+WalkDown
+  xy: 450, 632
+  size: 90, 71
+WalkDown
+  xy: 540, 632
+  size: 90, 71
+WalkDown
+  xy: 630, 632
+  size: 90, 71

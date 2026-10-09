@@ -1,0 +1,176 @@
+wick.png
+size: 486,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 54, 53
+Idle
+  xy: 54, 64
+  size: 54, 53
+Idle
+  xy: 108, 64
+  size: 54, 53
+Idle
+  xy: 162, 64
+  size: 54, 53
+Walk
+  xy: 0, 117
+  size: 54, 53
+Walk
+  xy: 54, 117
+  size: 54, 53
+Walk
+  xy: 108, 117
+  size: 54, 53
+Walk
+  xy: 162, 117
+  size: 54, 53
+Walk
+  xy: 216, 117
+  size: 54, 53
+Walk
+  xy: 270, 117
+  size: 54, 53
+Walk
+  xy: 324, 117
+  size: 54, 53
+Walk
+  xy: 378, 117
+  size: 54, 53
+Attack
+  xy: 0, 170
+  size: 54, 53
+Attack
+  xy: 54, 170
+  size: 54, 53
+Attack
+  xy: 108, 170
+  size: 54, 53
+Attack
+  xy: 162, 170
+  size: 54, 53
+Attack
+  xy: 216, 170
+  size: 54, 53
+Attack
+  xy: 270, 170
+  size: 54, 53
+Attack
+  xy: 324, 170
+  size: 54, 53
+Hit
+  xy: 0, 223
+  size: 54, 53
+Hit
+  xy: 54, 223
+  size: 54, 53
+Hit
+  xy: 108, 223
+  size: 54, 53
+Hit
+  xy: 162, 223
+  size: 54, 53
+Death
+  xy: 0, 276
+  size: 54, 53
+Death
+  xy: 54, 276
+  size: 54, 53
+Death
+  xy: 108, 276
+  size: 54, 53
+Death
+  xy: 162, 276
+  size: 54, 53
+Death
+  xy: 216, 276
+  size: 54, 53
+Death
+  xy: 270, 276
+  size: 54, 53
+Death
+  xy: 324, 276
+  size: 54, 53
+Death
+  xy: 378, 276
+  size: 54, 53
+Death
+  xy: 432, 276
+  size: 54, 53
+IdleUp
+  xy: 0, 329
+  size: 54, 53
+IdleUp
+  xy: 54, 329
+  size: 54, 53
+IdleUp
+  xy: 108, 329
+  size: 54, 53
+IdleUp
+  xy: 162, 329
+  size: 54, 53
+IdleDown
+  xy: 0, 382
+  size: 54, 53
+IdleDown
+  xy: 54, 382
+  size: 54, 53
+IdleDown
+  xy: 108, 382
+  size: 54, 53
+IdleDown
+  xy: 162, 382
+  size: 54, 53
+WalkUp
+  xy: 0, 435
+  size: 54, 53
+WalkUp
+  xy: 54, 435
+  size: 54, 53
+WalkUp
+  xy: 108, 435
+  size: 54, 53
+WalkUp
+  xy: 162, 435
+  size: 54, 53
+WalkUp
+  xy: 216, 435
+  size: 54, 53
+WalkUp
+  xy: 270, 435
+  size: 54, 53
+WalkUp
+  xy: 324, 435
+  size: 54, 53
+WalkUp
+  xy: 378, 435
+  size: 54, 53
+WalkDown
+  xy: 0, 488
+  size: 54, 53
+WalkDown
+  xy: 54, 488
+  size: 54, 53
+WalkDown
+  xy: 108, 488
+  size: 54, 53
+WalkDown
+  xy: 162, 488
+  size: 54, 53
+WalkDown
+  xy: 216, 488
+  size: 54, 53
+WalkDown
+  xy: 270, 488
+  size: 54, 53
+WalkDown
+  xy: 324, 488
+  size: 54, 53
+WalkDown
+  xy: 378, 488
+  size: 54, 53

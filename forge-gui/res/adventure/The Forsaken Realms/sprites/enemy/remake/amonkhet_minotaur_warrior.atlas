@@ -1,0 +1,173 @@
+amonkhet_minotaur_warrior.png
+size: 846,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 60
+Idle
+  xy: 94, 64
+  size: 94, 60
+Idle
+  xy: 188, 64
+  size: 94, 60
+Idle
+  xy: 282, 64
+  size: 94, 60
+Walk
+  xy: 0, 124
+  size: 94, 60
+Walk
+  xy: 94, 124
+  size: 94, 60
+Walk
+  xy: 188, 124
+  size: 94, 60
+Walk
+  xy: 282, 124
+  size: 94, 60
+Walk
+  xy: 376, 124
+  size: 94, 60
+Walk
+  xy: 470, 124
+  size: 94, 60
+Walk
+  xy: 564, 124
+  size: 94, 60
+Walk
+  xy: 658, 124
+  size: 94, 60
+Attack
+  xy: 0, 184
+  size: 94, 60
+Attack
+  xy: 94, 184
+  size: 94, 60
+Attack
+  xy: 188, 184
+  size: 94, 60
+Attack
+  xy: 282, 184
+  size: 94, 60
+Attack
+  xy: 376, 184
+  size: 94, 60
+Attack
+  xy: 470, 184
+  size: 94, 60
+Hit
+  xy: 0, 244
+  size: 94, 60
+Hit
+  xy: 94, 244
+  size: 94, 60
+Hit
+  xy: 188, 244
+  size: 94, 60
+Hit
+  xy: 282, 244
+  size: 94, 60
+Death
+  xy: 0, 304
+  size: 94, 60
+Death
+  xy: 94, 304
+  size: 94, 60
+Death
+  xy: 188, 304
+  size: 94, 60
+Death
+  xy: 282, 304
+  size: 94, 60
+Death
+  xy: 376, 304
+  size: 94, 60
+Death
+  xy: 470, 304
+  size: 94, 60
+Death
+  xy: 564, 304
+  size: 94, 60
+Death
+  xy: 658, 304
+  size: 94, 60
+Death
+  xy: 752, 304
+  size: 94, 60
+IdleUp
+  xy: 0, 364
+  size: 94, 60
+IdleUp
+  xy: 94, 364
+  size: 94, 60
+IdleUp
+  xy: 188, 364
+  size: 94, 60
+IdleUp
+  xy: 282, 364
+  size: 94, 60
+IdleDown
+  xy: 0, 424
+  size: 94, 60
+IdleDown
+  xy: 94, 424
+  size: 94, 60
+IdleDown
+  xy: 188, 424
+  size: 94, 60
+IdleDown
+  xy: 282, 424
+  size: 94, 60
+WalkUp
+  xy: 0, 484
+  size: 94, 60
+WalkUp
+  xy: 94, 484
+  size: 94, 60
+WalkUp
+  xy: 188, 484
+  size: 94, 60
+WalkUp
+  xy: 282, 484
+  size: 94, 60
+WalkUp
+  xy: 376, 484
+  size: 94, 60
+WalkUp
+  xy: 470, 484
+  size: 94, 60
+WalkUp
+  xy: 564, 484
+  size: 94, 60
+WalkUp
+  xy: 658, 484
+  size: 94, 60
+WalkDown
+  xy: 0, 544
+  size: 94, 60
+WalkDown
+  xy: 94, 544
+  size: 94, 60
+WalkDown
+  xy: 188, 544
+  size: 94, 60
+WalkDown
+  xy: 282, 544
+  size: 94, 60
+WalkDown
+  xy: 376, 544
+  size: 94, 60
+WalkDown
+  xy: 470, 544
+  size: 94, 60
+WalkDown
+  xy: 564, 544
+  size: 94, 60
+WalkDown
+  xy: 658, 544
+  size: 94, 60
