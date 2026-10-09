@@ -168064,5 +168064,566 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1
+    },
+    {
+        "name": "Cinderwing Dragon",
+        "sprite": "sprites/enemy/remake/cinderwing_dragon.atlas",
+        "deck": [
+            "decks/standard/tfr2/cinderwing_dragon.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 37,
+        "life": 28,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Flying",
+            "Fire",
+            "IdentityRed",
+            "BiomeRed"
+        ],
+        "tier": "Rare",
+        "scale": 0.1585
+    },
+    {
+        "name": "Goldcrest Dragon",
+        "sprite": "sprites/enemy/remake/goldcrest_dragon.atlas",
+        "deck": [
+            "decks/standard/tfr2/goldcrest_dragon.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 36,
+        "life": 27,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "RW",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Flying",
+            "IdentityRed",
+            "IdentityWhite",
+            "IdentityBoros",
+            "BiomeRed",
+            "BiomeWhite"
+        ],
+        "tier": "Rare",
+        "scale": 0.1585
+    },
+    {
+        "name": "Rimewing Dragon",
+        "sprite": "sprites/enemy/remake/rimewing_dragon.atlas",
+        "deck": [
+            "decks/standard/tfr2/rimewing_dragon.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 35,
+        "life": 26,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "WU",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Flying",
+            "Snow",
+            "IdentityWhite",
+            "IdentityBlue",
+            "IdentityAzorius",
+            "BiomeWhite",
+            "BiomeBlue"
+        ],
+        "tier": "Rare",
+        "scale": 0.1548
+    },
+    {
+        "name": "Duskwing Dragon",
+        "sprite": "sprites/enemy/remake/duskwing_dragon.atlas",
+        "deck": [
+            "decks/standard/tfr2/duskwing_dragon.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 36,
+        "life": 25,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "UB",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Flying",
+            "IdentityBlue",
+            "IdentityBlack",
+            "IdentityDimir",
+            "BiomeBlue",
+            "BiomeBlack"
+        ],
+        "tier": "Rare",
+        "scale": 0.1585
+    },
+    {
+        "name": "Mossthorn Dragon",
+        "sprite": "sprites/enemy/remake/mossthorn_dragon.atlas",
+        "deck": [
+            "decks/standard/tfr2/mossthorn_dragon.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 34,
+        "life": 28,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "G",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Flying",
+            "IdentityGreen",
+            "BiomeGreen"
+        ],
+        "tier": "Rare",
+        "scale": 0.1585
+    },
+    {
+        "name": "Stormcrest Dragon",
+        "sprite": "sprites/enemy/remake/stormcrest_dragon.atlas",
+        "deck": [
+            "decks/standard/tfr2/stormcrest_dragon.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 37,
+        "life": 25,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "U",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Flying",
+            "IdentityBlue",
+            "BiomeBlue"
+        ],
+        "tier": "Rare",
+        "scale": 0.1585
+    },
+    {
+        "name": "Tidecrest Dragon",
+        "sprite": "sprites/enemy/remake/tidecrest_dragon.atlas",
+        "deck": [
+            "decks/standard/tfr2/tidecrest_dragon.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 35,
+        "life": 26,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "UG",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Flying",
+            "Water",
+            "IdentityBlue",
+            "IdentityGreen",
+            "IdentitySimic",
+            "BiomeBlue",
+            "BiomeGreen"
+        ],
+        "tier": "Rare",
+        "scale": 0.1548
     }
 ]

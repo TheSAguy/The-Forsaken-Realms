@@ -67,6 +67,10 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 510): **LOCAL + UNRELEASED (data only)** - seven new Rare dragons on round 509's sprites
+(Cinderwing R, Goldcrest RW, Rimewing WU, Duskwing UB, Mossthorn G, Stormcrest U, Tidecrest UG): enemies.json entries,
+generated 60-card decks in `decks/standard/tfr2/`, each in its colors' land rosters. Agent-tested.
+
 ## STATE 2026-10-08 (round 509): **LOCAL + UNRELEASED (data only)** - the user's verdict on the pack side-by-sides (the
 Procedural Pixel Creatures session): the Mimic back on its stock chest (entry restored to the byte, remake/mimic.* gone;
 the Fog Trap keeps the eye-door), the Giant Royal Scarab and the Scarab God on the bug-monster sheet (scales only), and

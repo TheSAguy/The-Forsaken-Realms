@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 510: seven new Rare dragons roam the lands (2026-10-08)
+
+The user, on the BigDragons side-by-side: "could we keep both, just add in more dragons (You can never have too many
+dragons in a fantasy game!)". Round 509 (the Procedural Pixel Creatures session) made seven sprites from the sheet's
+colorways; this round gives them their data.
+
+- **The seven** (`world/enemies.json`, appended; Rare, flying, `spawnRate` 1, difficulty 2; rewards on the Rare dragon
+  pattern - Thornback Wyvern's: commons and uncommons from the deck, 40-140 gold, a Rare Dragon card 60%, a deck rare
+  70%, shards): Cinderwing Dragon (R, 28 life), Goldcrest Dragon (RW - the gold colorway; no Boros dragon existed, 27),
+  Rimewing Dragon (WU, 26), Duskwing Dragon (UB, 25), Mossthorn Dragon (G, 28), Stormcrest Dragon (U, 25), Tidecrest
+  Dragon (UG, 26). Tags: Dragon, Mythical, Flying, the Identity and Biome tags of their colors and guild (Fire, Snow,
+  Water where they fit). Scales 0.15-0.16 from `enemy_scale.py` (Rare).
+- **Decks** (`decks/standard/tfr2/<slug>.dck`, 60 cards): round 382's generator (`deckgen382.py`'s "dragon" theme at
+  the Master rank - Dragons first, then Drakes and Wyverns, removal and dragon payoffs, duals of exactly those colors)
+  run in the scratchpad with a seven-row roster; no Rare WU, U or UG dragon deck existed to reuse.
+- **Where**: each joins the "enemies" roster of each of its colors' lands (`world/biomes/*.json`): white +2, blue +4,
+  black +1, red +2, green +2.
+- **Checks**: `validate_plane_data.py` and `deck_legality_audit.py` have nothing on them. Agent: all seven spawned and
+  drew on the world map in their colorways; Duskwing Dragon fought (25 life, 20 on the terrain) and won with its deck,
+  every card resolved.
+
 ## Round 509: the Mimic keeps its chest, two pack scarabs, seven new dragon sprites (2026-10-08)
 
 The Procedural Pixel Creatures session, from the user's verdict on round 507's pack side-by-sides.
