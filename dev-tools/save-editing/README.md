@@ -99,3 +99,9 @@ the collection count is identical, and life/gold/resources are intact.
 - **2026-09-28 (round 358)** - a new run in save 1 (day 16): `stormcrown_dragons.txt` (slot 1, Izzet) and
   `dawnwood_vanguard.txt` (slot 2, Selesnya), 40 each; backup `.prededit23.bak`; verified: slot 0 and stats unchanged,
   collection +6 free Forests.
+- **2026-10-09** - a new run in save 1 (life 10, collection 136 names / 175 cards, slot 0 "Blue" mono-U): the user's
+  "Create me a deck from save 1 in first open space" -> slot 1 **"Stolen Tides"** (`stolen_tides.txt`, 40, U/B control
+  around the three Corrupted Conscience: Stronghold Assassin, Drain Life, Midnight Charm and Stinging Barrier for
+  removal, Counterspell and 2 Psychic Barrier, the fliers Serum Sovereign / Watchful Blisterzoa / Extractor Demon /
+  Serum Raker, two walls; 10 Island + 7 Swamp); backup `.prededit25.bak`; verified: slot 0 and stats unchanged,
+  collection +1 free Swamp.
