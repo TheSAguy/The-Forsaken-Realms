@@ -646,21 +646,59 @@ public final class Ascendance {
 
     /** AdventureQuestController.showQuestDialogs: a quest done. An invasion pays by the toughest troop it lost. */
     public static void onQuestCompleted(AdventureQuestData quest) {
+        onQuestCompleted(quest, false);
+    }
+
+    /** {@code afterDialogs}: the quest completed in the same pass its prologue was first shown, so its Power waits until
+     *  the queued dialogs are read (payDeferred). Round 505 - the intro, quest 28, has no stages: it completes the moment
+     *  the start map loads and its prologue IS the tutorial-or-skip choice; the user: "I just started a new game and was
+     *  immediately level 1. That does not seem correct. I did not even choose yet to do or skip the tutorial." */
+    public static void onQuestCompleted(AdventureQuestData quest, boolean afterDialogs) {
         if (!isActive() || quest == null)
             return;
         AscendanceData d = data();
+        int amount;
+        String source;
         if (InvasionQuests.isInvasion(quest)) {
             int rank = Math.max(0, Math.min(d.invasion.length - 1, InvasionQuests.toughestTroopRank(quest)));
-            award(d.invasion[rank], "invasion repelled");
+            amount = d.invasion[rank];
+            source = "invasion repelled";
         } else if (contains(d.noPowerQuestIds, quest.getID())) {
             // Round 496 (the user: "I started two games, one I chose the tutorial and the other I skipped. Both started me
             // off at level 2"): the intro quest completes the moment either start ends - it pays nothing.
             System.out.println("[TFR-Ascend] no Power for " + quest.name + " (noPowerQuestIds)");
+            return;
         } else if (quest.storyQuest) {
-            award(d.storyQuest, "story: " + quest.name);
+            amount = d.storyQuest;
+            source = "story: " + quest.name;
         } else {
-            award(d.sideQuest, "quest: " + quest.name);
+            amount = d.sideQuest;
+            source = "quest: " + quest.name;
         }
+        AscendanceState s = state();
+        if (!afterDialogs || s == null) {
+            award(amount, source);
+            return;
+        }
+        s.deferredPower += amount;
+        s.deferredSource = source;
+        System.out.println("[TFR-Ascend] " + amount + " Power for " + source + " waits until its dialog is read");
+    }
+
+    /** Round 505: pay the Power a quest's dialog was holding - AdventureQuestController once its last queued dialog
+     *  closes, the HUD after a load (a save made while the dialog was open). */
+    public static void payDeferred() {
+        AscendanceState s = state();
+        if (s == null)
+            return;
+        s.deferredLoaded = false;
+        if (s.deferredPower <= 0)
+            return;
+        int amount = s.deferredPower;
+        String source = s.deferredSource;
+        s.deferredPower = 0;
+        s.deferredSource = "";
+        award(amount, source);
     }
 
     /** WorldStage.handlePointsOfInterestCollision: walking into a place for the first time. */
@@ -965,6 +1003,8 @@ public final class Ascendance {
         data.storeObject("ascendanceHistory", new ArrayList<>(s.history)); // round 496: the level sheet
         data.store("ascendanceVigorDay", s.vigorDay);
         data.store("ascendanceVigorUsed", s.vigorUsed);
+        data.store("ascendanceDeferredPower", s.deferredPower); // round 505
+        data.store("ascendanceDeferredSource", s.deferredSource == null ? "" : s.deferredSource);
     }
 
     /** AdventurePlayer.load: absent keys (every save before round 493) read as "off". */
@@ -1037,6 +1077,10 @@ public final class Ascendance {
         }
         s.vigorDay = data.containsKey("ascendanceVigorDay") ? data.readInt("ascendanceVigorDay") : -1;
         s.vigorUsed = data.containsKey("ascendanceVigorUsed") ? data.readInt("ascendanceVigorUsed") : 0;
+        // Round 505: Power a dialog was holding when the game saved - the HUD pays it once the save is on screen.
+        s.deferredPower = data.containsKey("ascendanceDeferredPower") ? Math.max(0, data.readInt("ascendanceDeferredPower")) : 0;
+        s.deferredSource = data.containsKey("ascendanceDeferredSource") ? data.readString("ascendanceDeferredSource") : "";
+        s.deferredLoaded = s.deferredPower > 0;
     }
 
     // ------------------------------------------------------------------------------------------------ cheats

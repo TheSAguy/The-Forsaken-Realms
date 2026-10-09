@@ -67,6 +67,11 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 505): **LOCAL + UNRELEASED** - the intro's 50 Power waits for the tutorial-or-skip choice
+(the user: "I just started a new game and was immediately level 1"): quest 28 completes as the start map loads and its
+prologue is the choice, so a quest completing in the pass its prologue is first shown holds its Power until the dialogs
+are read (`Ascendance.payDeferred`, saved as `ascendanceDeferredPower`). Agent-tested both paths.
+
 ## STATE 2026-10-08 (round 504): **LOCAL + UNRELEASED (data only)** - Mackenzie, a new roaming legend (the user: "Take
 my current save 1, deck and create a new angel enemy, call her Mackenzie"): save 1's selected deck "Angels of the Dusk"
 as `decks/legends/mackenzie.dck`, an Archmage boss after Victor in enemies.json, named in roaming_champions.json, the

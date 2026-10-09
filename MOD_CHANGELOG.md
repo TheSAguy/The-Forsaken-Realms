@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 505: the intro's 50 Power waits for the tutorial-or-skip choice (2026-10-08)
+
+The user: "I just started a new game and was immediately level 1. That does not seem correct. I did not even choose yet
+to do or skip the tutorial." The log showed why: the intro quest (28, "Entering The Forsaken Realms") has no stages, so
+it completes the moment the start map loads - and its prologue IS the tutorial-or-skip choice, shown after. Round 497
+pays its 50 Power (the step to level 1), so the level came before the choice.
+
+- **A quest that completes in the same pass its prologue is first shown** (`AdventureQuestController.showQuestDialogs`)
+  now holds its Power (`Ascendance.onQuestCompleted(quest, true)` -> `AscendanceState.deferredPower`/`deferredSource`)
+  until the queued dialogs are read: `displayNextDialog` pays it when the queue drains (`Ascendance.payDeferred`). Only
+  the intro does this today; any other quest still pays on completion.
+- **Saved while the dialog was open**: the held Power is saved (`ascendanceDeferredPower`, `ascendanceDeferredSource`),
+  and the HUD pays it once that save is on screen (no dialog is left to wait for after a load).
+- **Agent-tested**: a new game sits at level 0 / 0 Power while the choice is open; "Skip the introduction" -> level 1
+  (50) when its last dialog closes; the tutorial path -> level 1 when "Let's talk to the mage over there." closes.
+
 ## Round 504: Mackenzie, a dusk angel legend with the user's save-1 deck (2026-10-08)
 
 The user: "Take my current save 1, deck and create a new angel enemy, call her Mackenzie." Built the way round 382 built

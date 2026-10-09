@@ -71,6 +71,8 @@ public class AscendanceDisplayActor extends com.badlogic.gdx.scenes.scene2d.Grou
         // (AdventurePlayer.requestCompanionCheck) and when Settings switch Ascendance on or off.
         if (player != null && (player.takeCompanionCheck() || active != wasActive))
             Ascendance.enforceCompanionLimit(player, active ? "Ascendance" : "no Ascendance");
+        if (active && player.ascendance().deferredLoaded) // round 505: saved while a quest's dialog held its Power
+            Ascendance.payDeferred();
         wasActive = active;
         setVisible(active);
         if (!active)

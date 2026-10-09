@@ -23,6 +23,12 @@ public class AscendanceState {
     /** Round 494: Morning Vigor - the day it last counted duels, and how many it has covered that day. */
     public int vigorDay = -1;
     public int vigorUsed;
+    /** Round 505: a quest's Power held until its dialog is read (the intro's 50 waits for the tutorial-or-skip choice),
+     *  and what it is for. Saved, so a save made while the dialog was open pays it on the next load. */
+    public int deferredPower;
+    public String deferredSource = "";
+    /** Round 505: set by load when Power was held - the HUD pays it (no dialog is left to wait for after a load). */
+    public boolean deferredLoaded;
 
     public void reset() {
         on = false;
@@ -33,5 +39,8 @@ public class AscendanceState {
         history.clear();
         vigorDay = -1;
         vigorUsed = 0;
+        deferredPower = 0;
+        deferredSource = "";
+        deferredLoaded = false;
     }
 }

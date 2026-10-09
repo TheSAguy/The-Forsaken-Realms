@@ -371,7 +371,9 @@ public class AdventureQuestController implements Serializable {
             }
             finishedQuests.add(quest);
             updateQuestComplete(quest);
-            Ascendance.onQuestCompleted(quest); // round 493
+            // Round 493; round 505: a quest whose prologue was queued in this very pass (the intro: no stages, its
+            // prologue is the tutorial-or-skip choice) pays when the dialogs are read - displayNextDialog's drain.
+            Ascendance.onQuestCompleted(quest, prologue != null);
         }
 
         if (activeDialog == null && !dialogQueue.isEmpty()){
@@ -396,6 +398,7 @@ public class AdventureQuestController implements Serializable {
     public void displayNextDialog(MapStage stage){
         if (dialogQueue.peek() == null) {
             activeDialog = null;
+            Ascendance.payDeferred(); // round 505: the Power a quest's dialog was holding, now that it is read
             return;
         }
 
