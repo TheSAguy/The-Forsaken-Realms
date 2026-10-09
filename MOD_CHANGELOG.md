@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 511: the Ascendance bar shows the way to the next level (2026-10-08)
+
+The user: "I thought the yellow bar was a progress bar to the next level, but it does not match the current XP level,
+and when I reached level 2, it was still full. Can we make it a progress bar from one level to the next showing you
+the progress?" It always was one ([Power into this level] / [Power the level needs]) - but the panel stood 72 units
+wide at x 425 of the 480-unit HUD, so its right 17 units, where the bar's empty end lay, were off the screen: at 23 of
+40 the visible part looked full. The wood/stone panel above it ran off the same way (its right border unseen).
+
+- **`AscendanceDisplayActor`**: fits its width to the stage's right edge every frame (`fitTo`, at most 72); "Asc 7"
+  on top and the bar under it across the panel's whole width (the panel is 24 tall, was 18), empty at a level-up and
+  full at the next; it redraws on a level change too.
+- **`ResourceDisplayActor`**: fits the same way, so the column's two panels end at the screen's edge together.
+- **Agent-tested**: a new game at level 1 with 23 of 30 showed the bar three quarters full; at level 2 with 5 of 50 a
+  tenth; both panels' right borders on screen.
+
 ## Round 510: seven new Rare dragons roam the lands (2026-10-08)
 
 The user, on the BigDragons side-by-side: "could we keep both, just add in more dragons (You can never have too many

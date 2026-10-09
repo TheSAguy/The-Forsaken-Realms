@@ -36,12 +36,15 @@ public class ResourceDisplayActor extends Group {
 
     private final TypingLabel lumberLabel;
     private final TypingLabel stoneLabel;
+    private final Image background;
+    private final com.badlogic.gdx.math.Vector2 origin = new com.badlogic.gdx.math.Vector2();
+    private float panelWidth = PANEL_WIDTH;
     private int lastLumber = Integer.MIN_VALUE;
     private int lastStone = Integer.MIN_VALUE;
 
     public ResourceDisplayActor() {
         Drawable panelBackground = Controls.getSkin().getDrawable("windowMain10Patch");
-        Image background = new Image(panelBackground);
+        background = new Image(panelBackground);
         background.setSize(PANEL_WIDTH, PANEL_HEIGHT * 2);
         addActor(background);
 
@@ -77,6 +80,24 @@ public class ResourceDisplayActor extends Group {
         // Show the real (usually zero) starting value immediately instead.
         refreshLumber();
         refreshStone();
+    }
+
+    /** Round 511: 72 wide at x 425 of the 480-wide HUD ran 17 units off the screen (its right border unseen) - it fits
+     *  itself to the stage's right edge now, like the Ascendance panel under it. */
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (getStage() == null)
+            return;
+        float w = Math.max(40f, Math.min(PANEL_WIDTH, getStage().getWidth() - localToStageCoordinates(origin.set(0, 0)).x - 1f));
+        if (Math.abs(w - panelWidth) < 0.5f)
+            return;
+        panelWidth = w;
+        background.setWidth(w);
+        float labelWidth = Math.max(10f, w - (PADDING + ICON_SIZE + 6) - PADDING);
+        lumberLabel.setWidth(labelWidth);
+        stoneLabel.setWidth(labelWidth);
+        setWidth(w);
     }
 
     private void addIcon(String regionName, float y) {
