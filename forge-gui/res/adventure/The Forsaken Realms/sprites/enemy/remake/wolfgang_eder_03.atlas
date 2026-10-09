@@ -1,0 +1,176 @@
+wolfgang_eder_03.png
+size: 396,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 44, 59
+Idle
+  xy: 44, 64
+  size: 44, 59
+Idle
+  xy: 88, 64
+  size: 44, 59
+Idle
+  xy: 132, 64
+  size: 44, 59
+Walk
+  xy: 0, 123
+  size: 44, 59
+Walk
+  xy: 44, 123
+  size: 44, 59
+Walk
+  xy: 88, 123
+  size: 44, 59
+Walk
+  xy: 132, 123
+  size: 44, 59
+Walk
+  xy: 176, 123
+  size: 44, 59
+Walk
+  xy: 220, 123
+  size: 44, 59
+Walk
+  xy: 264, 123
+  size: 44, 59
+Walk
+  xy: 308, 123
+  size: 44, 59
+Attack
+  xy: 0, 182
+  size: 44, 59
+Attack
+  xy: 44, 182
+  size: 44, 59
+Attack
+  xy: 88, 182
+  size: 44, 59
+Attack
+  xy: 132, 182
+  size: 44, 59
+Attack
+  xy: 176, 182
+  size: 44, 59
+Attack
+  xy: 220, 182
+  size: 44, 59
+Attack
+  xy: 264, 182
+  size: 44, 59
+Hit
+  xy: 0, 241
+  size: 44, 59
+Hit
+  xy: 44, 241
+  size: 44, 59
+Hit
+  xy: 88, 241
+  size: 44, 59
+Hit
+  xy: 132, 241
+  size: 44, 59
+Death
+  xy: 0, 300
+  size: 44, 59
+Death
+  xy: 44, 300
+  size: 44, 59
+Death
+  xy: 88, 300
+  size: 44, 59
+Death
+  xy: 132, 300
+  size: 44, 59
+Death
+  xy: 176, 300
+  size: 44, 59
+Death
+  xy: 220, 300
+  size: 44, 59
+Death
+  xy: 264, 300
+  size: 44, 59
+Death
+  xy: 308, 300
+  size: 44, 59
+Death
+  xy: 352, 300
+  size: 44, 59
+IdleUp
+  xy: 0, 359
+  size: 44, 59
+IdleUp
+  xy: 44, 359
+  size: 44, 59
+IdleUp
+  xy: 88, 359
+  size: 44, 59
+IdleUp
+  xy: 132, 359
+  size: 44, 59
+IdleDown
+  xy: 0, 418
+  size: 44, 59
+IdleDown
+  xy: 44, 418
+  size: 44, 59
+IdleDown
+  xy: 88, 418
+  size: 44, 59
+IdleDown
+  xy: 132, 418
+  size: 44, 59
+WalkUp
+  xy: 0, 477
+  size: 44, 59
+WalkUp
+  xy: 44, 477
+  size: 44, 59
+WalkUp
+  xy: 88, 477
+  size: 44, 59
+WalkUp
+  xy: 132, 477
+  size: 44, 59
+WalkUp
+  xy: 176, 477
+  size: 44, 59
+WalkUp
+  xy: 220, 477
+  size: 44, 59
+WalkUp
+  xy: 264, 477
+  size: 44, 59
+WalkUp
+  xy: 308, 477
+  size: 44, 59
+WalkDown
+  xy: 0, 536
+  size: 44, 59
+WalkDown
+  xy: 44, 536
+  size: 44, 59
+WalkDown
+  xy: 88, 536
+  size: 44, 59
+WalkDown
+  xy: 132, 536
+  size: 44, 59
+WalkDown
+  xy: 176, 536
+  size: 44, 59
+WalkDown
+  xy: 220, 536
+  size: 44, 59
+WalkDown
+  xy: 264, 536
+  size: 44, 59
+WalkDown
+  xy: 308, 536
+  size: 44, 59

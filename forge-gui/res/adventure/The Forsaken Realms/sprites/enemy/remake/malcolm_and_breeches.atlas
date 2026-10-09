@@ -1,0 +1,173 @@
+malcolm_and_breeches.png
+size: 738,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 57
+Idle
+  xy: 82, 64
+  size: 82, 57
+Idle
+  xy: 164, 64
+  size: 82, 57
+Idle
+  xy: 246, 64
+  size: 82, 57
+Walk
+  xy: 0, 121
+  size: 82, 57
+Walk
+  xy: 82, 121
+  size: 82, 57
+Walk
+  xy: 164, 121
+  size: 82, 57
+Walk
+  xy: 246, 121
+  size: 82, 57
+Walk
+  xy: 328, 121
+  size: 82, 57
+Walk
+  xy: 410, 121
+  size: 82, 57
+Walk
+  xy: 492, 121
+  size: 82, 57
+Walk
+  xy: 574, 121
+  size: 82, 57
+Attack
+  xy: 0, 178
+  size: 82, 57
+Attack
+  xy: 82, 178
+  size: 82, 57
+Attack
+  xy: 164, 178
+  size: 82, 57
+Attack
+  xy: 246, 178
+  size: 82, 57
+Attack
+  xy: 328, 178
+  size: 82, 57
+Attack
+  xy: 410, 178
+  size: 82, 57
+Hit
+  xy: 0, 235
+  size: 82, 57
+Hit
+  xy: 82, 235
+  size: 82, 57
+Hit
+  xy: 164, 235
+  size: 82, 57
+Hit
+  xy: 246, 235
+  size: 82, 57
+Death
+  xy: 0, 292
+  size: 82, 57
+Death
+  xy: 82, 292
+  size: 82, 57
+Death
+  xy: 164, 292
+  size: 82, 57
+Death
+  xy: 246, 292
+  size: 82, 57
+Death
+  xy: 328, 292
+  size: 82, 57
+Death
+  xy: 410, 292
+  size: 82, 57
+Death
+  xy: 492, 292
+  size: 82, 57
+Death
+  xy: 574, 292
+  size: 82, 57
+Death
+  xy: 656, 292
+  size: 82, 57
+IdleUp
+  xy: 0, 349
+  size: 82, 57
+IdleUp
+  xy: 82, 349
+  size: 82, 57
+IdleUp
+  xy: 164, 349
+  size: 82, 57
+IdleUp
+  xy: 246, 349
+  size: 82, 57
+IdleDown
+  xy: 0, 406
+  size: 82, 57
+IdleDown
+  xy: 82, 406
+  size: 82, 57
+IdleDown
+  xy: 164, 406
+  size: 82, 57
+IdleDown
+  xy: 246, 406
+  size: 82, 57
+WalkUp
+  xy: 0, 463
+  size: 82, 57
+WalkUp
+  xy: 82, 463
+  size: 82, 57
+WalkUp
+  xy: 164, 463
+  size: 82, 57
+WalkUp
+  xy: 246, 463
+  size: 82, 57
+WalkUp
+  xy: 328, 463
+  size: 82, 57
+WalkUp
+  xy: 410, 463
+  size: 82, 57
+WalkUp
+  xy: 492, 463
+  size: 82, 57
+WalkUp
+  xy: 574, 463
+  size: 82, 57
+WalkDown
+  xy: 0, 520
+  size: 82, 57
+WalkDown
+  xy: 82, 520
+  size: 82, 57
+WalkDown
+  xy: 164, 520
+  size: 82, 57
+WalkDown
+  xy: 246, 520
+  size: 82, 57
+WalkDown
+  xy: 328, 520
+  size: 82, 57
+WalkDown
+  xy: 410, 520
+  size: 82, 57
+WalkDown
+  xy: 492, 520
+  size: 82, 57
+WalkDown
+  xy: 574, 520
+  size: 82, 57

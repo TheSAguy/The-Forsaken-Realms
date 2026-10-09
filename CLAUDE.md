@@ -80,6 +80,14 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-09 (round 521): **LOCAL + UNRELEASED (data only)** - LPC batch 8 (the Procedural Pixel Creatures
+session): the thirty-two goblins, the stock `humanoid/goblin` folder closed - LPC's goblin head on green, coral, red,
+umber, apple, peach and blue skins; the named ones from their card art (Krenko's red cape and spiked crown, Squee in red
+robes, Pashalik Mons in bronze armor); the goblin-king sprite a muscular crowned body; the wolf riders on foot; Slobad
+and Goblin King Phil bosses at their drawn size. 32 new atlases under `sprites/enemy/remake/`, enemies.json 32 paths +
+32 scales, CREDITS.md's LPC line (211 enemies, eight rounds), CREDITS_LPC.md regenerated. The peer (#30) verifies and
+packages. Not seen in play. Next LPC batches: elves (84), the human classes (~300).
+
 ## STATE 2026-10-09 (round 520): **LOCAL + UNRELEASED (data only)** - LPC batch 7 (the Procedural Pixel Creatures
 session): the twenty-four dwarves, the stock `humanoid/dwarf` folder closed - LPC's plump head with the big winter
 beard, horned spangenhelms, the berserkers muscular under bronze barbarian helms; the named ones dressed from their card

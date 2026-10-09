@@ -1,0 +1,176 @@
+grumgully.png
+size: 432,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 48, 55
+Idle
+  xy: 48, 64
+  size: 48, 55
+Idle
+  xy: 96, 64
+  size: 48, 55
+Idle
+  xy: 144, 64
+  size: 48, 55
+Walk
+  xy: 0, 119
+  size: 48, 55
+Walk
+  xy: 48, 119
+  size: 48, 55
+Walk
+  xy: 96, 119
+  size: 48, 55
+Walk
+  xy: 144, 119
+  size: 48, 55
+Walk
+  xy: 192, 119
+  size: 48, 55
+Walk
+  xy: 240, 119
+  size: 48, 55
+Walk
+  xy: 288, 119
+  size: 48, 55
+Walk
+  xy: 336, 119
+  size: 48, 55
+Attack
+  xy: 0, 174
+  size: 48, 55
+Attack
+  xy: 48, 174
+  size: 48, 55
+Attack
+  xy: 96, 174
+  size: 48, 55
+Attack
+  xy: 144, 174
+  size: 48, 55
+Attack
+  xy: 192, 174
+  size: 48, 55
+Attack
+  xy: 240, 174
+  size: 48, 55
+Attack
+  xy: 288, 174
+  size: 48, 55
+Hit
+  xy: 0, 229
+  size: 48, 55
+Hit
+  xy: 48, 229
+  size: 48, 55
+Hit
+  xy: 96, 229
+  size: 48, 55
+Hit
+  xy: 144, 229
+  size: 48, 55
+Death
+  xy: 0, 284
+  size: 48, 55
+Death
+  xy: 48, 284
+  size: 48, 55
+Death
+  xy: 96, 284
+  size: 48, 55
+Death
+  xy: 144, 284
+  size: 48, 55
+Death
+  xy: 192, 284
+  size: 48, 55
+Death
+  xy: 240, 284
+  size: 48, 55
+Death
+  xy: 288, 284
+  size: 48, 55
+Death
+  xy: 336, 284
+  size: 48, 55
+Death
+  xy: 384, 284
+  size: 48, 55
+IdleUp
+  xy: 0, 339
+  size: 48, 55
+IdleUp
+  xy: 48, 339
+  size: 48, 55
+IdleUp
+  xy: 96, 339
+  size: 48, 55
+IdleUp
+  xy: 144, 339
+  size: 48, 55
+IdleDown
+  xy: 0, 394
+  size: 48, 55
+IdleDown
+  xy: 48, 394
+  size: 48, 55
+IdleDown
+  xy: 96, 394
+  size: 48, 55
+IdleDown
+  xy: 144, 394
+  size: 48, 55
+WalkUp
+  xy: 0, 449
+  size: 48, 55
+WalkUp
+  xy: 48, 449
+  size: 48, 55
+WalkUp
+  xy: 96, 449
+  size: 48, 55
+WalkUp
+  xy: 144, 449
+  size: 48, 55
+WalkUp
+  xy: 192, 449
+  size: 48, 55
+WalkUp
+  xy: 240, 449
+  size: 48, 55
+WalkUp
+  xy: 288, 449
+  size: 48, 55
+WalkUp
+  xy: 336, 449
+  size: 48, 55
+WalkDown
+  xy: 0, 504
+  size: 48, 55
+WalkDown
+  xy: 48, 504
+  size: 48, 55
+WalkDown
+  xy: 96, 504
+  size: 48, 55
+WalkDown
+  xy: 144, 504
+  size: 48, 55
+WalkDown
+  xy: 192, 504
+  size: 48, 55
+WalkDown
+  xy: 240, 504
+  size: 48, 55
+WalkDown
+  xy: 288, 504
+  size: 48, 55
+WalkDown
+  xy: 336, 504
+  size: 48, 55

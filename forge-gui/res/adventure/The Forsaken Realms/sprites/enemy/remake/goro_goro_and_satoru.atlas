@@ -1,0 +1,173 @@
+goro_goro_and_satoru.png
+size: 774,631
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 86, 63
+Idle
+  xy: 86, 64
+  size: 86, 63
+Idle
+  xy: 172, 64
+  size: 86, 63
+Idle
+  xy: 258, 64
+  size: 86, 63
+Walk
+  xy: 0, 127
+  size: 86, 63
+Walk
+  xy: 86, 127
+  size: 86, 63
+Walk
+  xy: 172, 127
+  size: 86, 63
+Walk
+  xy: 258, 127
+  size: 86, 63
+Walk
+  xy: 344, 127
+  size: 86, 63
+Walk
+  xy: 430, 127
+  size: 86, 63
+Walk
+  xy: 516, 127
+  size: 86, 63
+Walk
+  xy: 602, 127
+  size: 86, 63
+Attack
+  xy: 0, 190
+  size: 86, 63
+Attack
+  xy: 86, 190
+  size: 86, 63
+Attack
+  xy: 172, 190
+  size: 86, 63
+Attack
+  xy: 258, 190
+  size: 86, 63
+Attack
+  xy: 344, 190
+  size: 86, 63
+Attack
+  xy: 430, 190
+  size: 86, 63
+Hit
+  xy: 0, 253
+  size: 86, 63
+Hit
+  xy: 86, 253
+  size: 86, 63
+Hit
+  xy: 172, 253
+  size: 86, 63
+Hit
+  xy: 258, 253
+  size: 86, 63
+Death
+  xy: 0, 316
+  size: 86, 63
+Death
+  xy: 86, 316
+  size: 86, 63
+Death
+  xy: 172, 316
+  size: 86, 63
+Death
+  xy: 258, 316
+  size: 86, 63
+Death
+  xy: 344, 316
+  size: 86, 63
+Death
+  xy: 430, 316
+  size: 86, 63
+Death
+  xy: 516, 316
+  size: 86, 63
+Death
+  xy: 602, 316
+  size: 86, 63
+Death
+  xy: 688, 316
+  size: 86, 63
+IdleUp
+  xy: 0, 379
+  size: 86, 63
+IdleUp
+  xy: 86, 379
+  size: 86, 63
+IdleUp
+  xy: 172, 379
+  size: 86, 63
+IdleUp
+  xy: 258, 379
+  size: 86, 63
+IdleDown
+  xy: 0, 442
+  size: 86, 63
+IdleDown
+  xy: 86, 442
+  size: 86, 63
+IdleDown
+  xy: 172, 442
+  size: 86, 63
+IdleDown
+  xy: 258, 442
+  size: 86, 63
+WalkUp
+  xy: 0, 505
+  size: 86, 63
+WalkUp
+  xy: 86, 505
+  size: 86, 63
+WalkUp
+  xy: 172, 505
+  size: 86, 63
+WalkUp
+  xy: 258, 505
+  size: 86, 63
+WalkUp
+  xy: 344, 505
+  size: 86, 63
+WalkUp
+  xy: 430, 505
+  size: 86, 63
+WalkUp
+  xy: 516, 505
+  size: 86, 63
+WalkUp
+  xy: 602, 505
+  size: 86, 63
+WalkDown
+  xy: 0, 568
+  size: 86, 63
+WalkDown
+  xy: 86, 568
+  size: 86, 63
+WalkDown
+  xy: 172, 568
+  size: 86, 63
+WalkDown
+  xy: 258, 568
+  size: 86, 63
+WalkDown
+  xy: 344, 568
+  size: 86, 63
+WalkDown
+  xy: 430, 568
+  size: 86, 63
+WalkDown
+  xy: 516, 568
+  size: 86, 63
+WalkDown
+  xy: 602, 568
+  size: 86, 63

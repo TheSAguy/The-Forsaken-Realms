@@ -1,0 +1,173 @@
+redshift.png
+size: 630,622
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 62
+Idle
+  xy: 70, 64
+  size: 70, 62
+Idle
+  xy: 140, 64
+  size: 70, 62
+Idle
+  xy: 210, 64
+  size: 70, 62
+Walk
+  xy: 0, 126
+  size: 70, 62
+Walk
+  xy: 70, 126
+  size: 70, 62
+Walk
+  xy: 140, 126
+  size: 70, 62
+Walk
+  xy: 210, 126
+  size: 70, 62
+Walk
+  xy: 280, 126
+  size: 70, 62
+Walk
+  xy: 350, 126
+  size: 70, 62
+Walk
+  xy: 420, 126
+  size: 70, 62
+Walk
+  xy: 490, 126
+  size: 70, 62
+Attack
+  xy: 0, 188
+  size: 70, 62
+Attack
+  xy: 70, 188
+  size: 70, 62
+Attack
+  xy: 140, 188
+  size: 70, 62
+Attack
+  xy: 210, 188
+  size: 70, 62
+Attack
+  xy: 280, 188
+  size: 70, 62
+Attack
+  xy: 350, 188
+  size: 70, 62
+Hit
+  xy: 0, 250
+  size: 70, 62
+Hit
+  xy: 70, 250
+  size: 70, 62
+Hit
+  xy: 140, 250
+  size: 70, 62
+Hit
+  xy: 210, 250
+  size: 70, 62
+Death
+  xy: 0, 312
+  size: 70, 62
+Death
+  xy: 70, 312
+  size: 70, 62
+Death
+  xy: 140, 312
+  size: 70, 62
+Death
+  xy: 210, 312
+  size: 70, 62
+Death
+  xy: 280, 312
+  size: 70, 62
+Death
+  xy: 350, 312
+  size: 70, 62
+Death
+  xy: 420, 312
+  size: 70, 62
+Death
+  xy: 490, 312
+  size: 70, 62
+Death
+  xy: 560, 312
+  size: 70, 62
+IdleUp
+  xy: 0, 374
+  size: 70, 62
+IdleUp
+  xy: 70, 374
+  size: 70, 62
+IdleUp
+  xy: 140, 374
+  size: 70, 62
+IdleUp
+  xy: 210, 374
+  size: 70, 62
+IdleDown
+  xy: 0, 436
+  size: 70, 62
+IdleDown
+  xy: 70, 436
+  size: 70, 62
+IdleDown
+  xy: 140, 436
+  size: 70, 62
+IdleDown
+  xy: 210, 436
+  size: 70, 62
+WalkUp
+  xy: 0, 498
+  size: 70, 62
+WalkUp
+  xy: 70, 498
+  size: 70, 62
+WalkUp
+  xy: 140, 498
+  size: 70, 62
+WalkUp
+  xy: 210, 498
+  size: 70, 62
+WalkUp
+  xy: 280, 498
+  size: 70, 62
+WalkUp
+  xy: 350, 498
+  size: 70, 62
+WalkUp
+  xy: 420, 498
+  size: 70, 62
+WalkUp
+  xy: 490, 498
+  size: 70, 62
+WalkDown
+  xy: 0, 560
+  size: 70, 62
+WalkDown
+  xy: 70, 560
+  size: 70, 62
+WalkDown
+  xy: 140, 560
+  size: 70, 62
+WalkDown
+  xy: 210, 560
+  size: 70, 62
+WalkDown
+  xy: 280, 560
+  size: 70, 62
+WalkDown
+  xy: 350, 560
+  size: 70, 62
+WalkDown
+  xy: 420, 560
+  size: 70, 62
+WalkDown
+  xy: 490, 560
+  size: 70, 62

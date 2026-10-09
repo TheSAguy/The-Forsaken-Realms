@@ -4249,7 +4249,7 @@
     },
     {
         "name": "Boggart",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_2.atlas",
+        "sprite": "sprites/enemy/remake/boggart.atlas",
         "deck": [
             "decks/standard/eyeblight.dck"
         ],
@@ -4296,7 +4296,7 @@
             "Minion"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.3095
     },
     {
         "name": "Bone Dragon",
@@ -14265,7 +14265,7 @@
     {
         "name": "Goblin",
         "nameOverride": "Goblin Worker",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin.atlas",
+        "sprite": "sprites/enemy/remake/goblin.atlas",
         "deck": [
             "decks/standard/goblin_warrior_easy.dck"
         ],
@@ -14319,11 +14319,11 @@
             "Minion"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.3095
     },
     {
         "name": "Goblin Artificer",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_bomber.atlas",
+        "sprite": "sprites/enemy/remake/goblin_artificer.atlas",
         "deck": [
             "decks/standard/goblin_artificer.dck"
         ],
@@ -14331,7 +14331,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 34,
-        "scale": 0.8667,
+        "scale": 0.3095,
         "life": 27,
         "rewards": [
             {
@@ -14398,7 +14398,7 @@
     },
     {
         "name": "Goblin Chief",
-        "sprite": "sprites/enemy/humanoid/goblin/wolf_rider_2.atlas",
+        "sprite": "sprites/enemy/remake/goblin_chief.atlas",
         "deck": [
             "decks/standard/goblin_chief_medium.dck"
         ],
@@ -14448,11 +14448,11 @@
             "BiomeRed"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Goblin Fanatic",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_3.atlas",
+        "sprite": "sprites/enemy/remake/goblin_fanatic.atlas",
         "deck": [
             "decks/standard/goblin_fanatic.dck"
         ],
@@ -14502,11 +14502,11 @@
             "Minion"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Goblin King",
-        "sprite": "sprites/enemy/humanoid/goblin/goblinking.atlas",
+        "sprite": "sprites/enemy/remake/goblin_king.atlas",
         "deck": [
             "decks/standard/goblinking.dck"
         ],
@@ -14514,7 +14514,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "speed": 27,
-        "scale": 0.4062,
+        "scale": 0.2549,
         "life": 18,
         "rewards": [
             {
@@ -14567,7 +14567,7 @@
     },
     {
         "name": "Goblin Pack",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_group.atlas",
+        "sprite": "sprites/enemy/remake/goblin_pack.atlas",
         "deck": [
             "decks/standard/goblin_bad.json"
         ],
@@ -14628,11 +14628,11 @@
             "IdentityRed"
         ],
         "tier": "Common",
-        "scale": 0.65
+        "scale": 0.3095
     },
     {
         "name": "Goblin Rager",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_2.atlas",
+        "sprite": "sprites/enemy/remake/goblin_rager.atlas",
         "deck": [
             "decks/standard/goblinrager.dck"
         ],
@@ -14662,11 +14662,11 @@
             "Beginner"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.325
     },
     {
         "name": "Goblin Stalker",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_4.atlas",
+        "sprite": "sprites/enemy/remake/goblin_stalker.atlas",
         "deck": [
             "decks/standard/evilgoblin.dck"
         ],
@@ -14714,11 +14714,11 @@
             "Minion"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.3171
     },
     {
         "name": "Goblin Warrior",
-        "sprite": "sprites/enemy/humanoid/goblin/wolf_rider.atlas",
+        "sprite": "sprites/enemy/remake/goblin_warrior.atlas",
         "deck": [
             "decks/standard/goblin_mid.json"
         ],
@@ -14766,7 +14766,7 @@
             "Minion"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Golem",
@@ -28339,7 +28339,7 @@
     },
     {
         "name": "Slobad",
-        "sprite": "sprites/enemy/humanoid/goblin/slobad.atlas",
+        "sprite": "sprites/enemy/remake/slobad.atlas",
         "deck": [
             "decks/miniboss/slobad.dck"
         ],
@@ -28348,7 +28348,7 @@
         "spawnRate": 1,
         "difficulty": 0.8,
         "speed": 15,
-        "scale": 0.5376,
+        "scale": 0.6528,
         "life": 40,
         "rewards": [
             {
@@ -36806,13 +36806,13 @@
     },
     {
         "name": "Krenko",
-        "sprite": "sprites/enemy/humanoid/goblin/slobad.atlas",
+        "sprite": "sprites/enemy/remake/krenko.atlas",
         "deck": [
             "decks/legends/krenko.dck"
         ],
         "ai": "",
         "speed": 35,
-        "scale": 0.2549,
+        "scale": 0.26,
         "life": 31,
         "rewards": [
             {
@@ -59939,13 +59939,13 @@
     },
     {
         "name": "Toggo and Krark",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_4.atlas",
+        "sprite": "sprites/enemy/remake/toggo_and_krark.atlas",
         "deck": [
             "decks/legends/krark_and_toggo.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.3,
+        "scale": 0.3095,
         "life": 32,
         "rewards": [
             {
@@ -60012,13 +60012,13 @@
     },
     {
         "name": "Pashalik Mons",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin.atlas",
+        "sprite": "sprites/enemy/remake/pashalik_mons.atlas",
         "deck": [
             "decks/legends/pashalik_mons.dck"
         ],
         "ai": "",
         "speed": 43,
-        "scale": 1.3,
+        "scale": 0.3023,
         "life": 31,
         "rewards": [
             {
@@ -60080,13 +60080,13 @@
     },
     {
         "name": "Kiki-Jiki",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_2.atlas",
+        "sprite": "sprites/enemy/remake/kiki_jiki.atlas",
         "deck": [
             "decks/legends/kiki-jiki.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.3,
+        "scale": 0.325,
         "life": 32,
         "rewards": [
             {
@@ -60153,13 +60153,13 @@
     },
     {
         "name": "General Kreat",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_3.atlas",
+        "sprite": "sprites/enemy/remake/general_kreat.atlas",
         "deck": [
             "decks/legends/general_kreat.dck"
         ],
         "ai": "",
         "speed": 28,
-        "scale": 1.1818,
+        "scale": 0.3023,
         "life": 23,
         "rewards": [
             {
@@ -60221,13 +60221,13 @@
     },
     {
         "name": "Muxus",
-        "sprite": "sprites/enemy/humanoid/goblin/goblinking.atlas",
+        "sprite": "sprites/enemy/remake/muxus.atlas",
         "deck": [
             "decks/legends/muxus.dck"
         ],
         "ai": "",
         "speed": 46,
-        "scale": 0.4062,
+        "scale": 0.2653,
         "life": 31,
         "rewards": [
             {
@@ -60289,13 +60289,13 @@
     },
     {
         "name": "Redshift",
-        "sprite": "sprites/enemy/humanoid/goblin/wolf_rider_2.atlas",
+        "sprite": "sprites/enemy/remake/redshift.atlas",
         "deck": [
             "decks/legends/redshift.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.2826,
         "life": 30,
         "rewards": [
             {
@@ -75470,7 +75470,7 @@
     },
     {
         "name": "Malcolm and Breeches",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_bomber.atlas",
+        "sprite": "sprites/enemy/remake/malcolm_and_breeches.atlas",
         "deck": [
             "decks/legends/malcolm_and_breeches.dck"
         ],
@@ -75550,7 +75550,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 0.8667
+        "scale": 0.3095
     },
     {
         "name": "Ramirez",
@@ -76737,7 +76737,7 @@
     },
     {
         "name": "Mizzix",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_bomber.atlas",
+        "sprite": "sprites/enemy/remake/mizzix.atlas",
         "deck": [
             "decks/legends/mizzix.dck"
         ],
@@ -76806,7 +76806,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 0.8667
+        "scale": 0.2955
     },
     {
         "name": "Elsha",
@@ -81101,7 +81101,7 @@
     },
     {
         "name": "Squee",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_bomber.atlas",
+        "sprite": "sprites/enemy/remake/squee.atlas",
         "deck": [
             "decks/legends/squee.dck"
         ],
@@ -81175,7 +81175,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.8667
+        "scale": 0.2653
     },
     {
         "name": "Mirri",
@@ -87654,7 +87654,7 @@
     },
     {
         "name": "Goro-Goro and Satoru",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_3.atlas",
+        "sprite": "sprites/enemy/remake/goro_goro_and_satoru.atlas",
         "deck": [
             "decks/legends/goro-goro_and_satoru.dck"
         ],
@@ -87718,7 +87718,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Loot",
@@ -88423,7 +88423,7 @@
     },
     {
         "name": "Shattergang Brothers",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_group.atlas",
+        "sprite": "sprites/enemy/remake/shattergang_brothers.atlas",
         "deck": [
             "decks/legends/shattergang_brothers.dck"
         ],
@@ -88487,7 +88487,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.65
+        "scale": 0.325
     },
     {
         "name": "Karona",
@@ -91437,12 +91437,12 @@
     },
     {
         "name": "Wort",
-        "sprite": "sprites/enemy/humanoid/goblin/goblinking.atlas",
+        "sprite": "sprites/enemy/remake/wort.atlas",
         "deck": [
             "decks/legends/wort.dck"
         ],
         "ai": "",
-        "scale": 0.4062,
+        "scale": 0.3171,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -95424,12 +95424,12 @@
     },
     {
         "name": "Grumgully",
-        "sprite": "sprites/enemy/humanoid/goblin/goblinking.atlas",
+        "sprite": "sprites/enemy/remake/grumgully.atlas",
         "deck": [
             "decks/legends/grumgully.dck"
         ],
         "ai": "",
-        "scale": 0.4062,
+        "scale": 0.3171,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -97847,13 +97847,13 @@
     },
     {
         "name": "Sanar",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_bomber.atlas",
+        "sprite": "sprites/enemy/remake/sanar.atlas",
         "deck": [
             "decks/legends/sanar.dck"
         ],
         "ai": "",
         "speed": 26,
-        "scale": 0.8667,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -99387,7 +99387,7 @@
     },
     {
         "name": "Goblin King Phil",
-        "sprite": "sprites/enemy/humanoid/goblin/goblinking.atlas",
+        "sprite": "sprites/enemy/remake/goblin_king_phil.atlas",
         "deck": [
             "decks/miniboss/goblinkingphil.dck"
         ],
@@ -99626,7 +99626,7 @@
         ],
         "colors": "UBR",
         "tier": "Uncommon",
-        "scale": 0.7616
+        "scale": 0.4874
     },
     {
         "name": "King Kane Ferguson",
@@ -106565,7 +106565,7 @@
     },
     {
         "name": "Wolfgang Eder '03",
-        "sprite": "sprites/enemy/humanoid/goblin/goblinking.atlas",
+        "sprite": "sprites/enemy/remake/wolfgang_eder_03.atlas",
         "deck": [
             "decks/standard/wc03_wolfgang_eder.dck"
         ],
@@ -106774,7 +106774,7 @@
         ],
         "colors": "BR",
         "tier": "Uncommon",
-        "scale": 0.4062
+        "scale": 0.2826
     },
     {
         "name": "Peer Kroger '03",
@@ -123043,13 +123043,13 @@
     },
     {
         "name": "Grub",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_3.atlas",
+        "sprite": "sprites/enemy/remake/grub.atlas",
         "deck": [
             "decks/legends/grub.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 80,
         "rewards": [
             {
@@ -123115,13 +123115,13 @@
     },
     {
         "name": "Auntie Ool",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_4.atlas",
+        "sprite": "sprites/enemy/remake/auntie_ool.atlas",
         "deck": [
             "decks/legends/auntie_ool.dck"
         ],
         "ai": "",
         "speed": 60,
-        "scale": 1.3,
+        "scale": 0.3095,
         "life": 60,
         "rewards": [
             {
@@ -123616,13 +123616,13 @@
     },
     {
         "name": "The Grand Goatnapper",
-        "sprite": "sprites/enemy/humanoid/goblin/wolf_rider_2.atlas",
+        "sprite": "sprites/enemy/remake/the_grand_goatnapper.atlas",
         "deck": [
             "decks/legends/the_grand_goatnapper.dck"
         ],
         "ai": "",
         "speed": 60,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 60,
         "rewards": [
             {
@@ -124344,14 +124344,14 @@
     },
     {
         "name": "Zo-Zu the Punisher",
-        "sprite": "sprites/enemy/humanoid/goblin/goblin_4.atlas",
+        "sprite": "sprites/enemy/remake/zo_zu_the_punisher.atlas",
         "deck": [
             "decks/legends/mystery_list.dck"
         ],
         "ai": "",
         "spawnRate": 0,
         "difficulty": 0.1,
-        "scale": 1.3,
+        "scale": 0.3095,
         "speed": 0,
         "life": 1,
         "rewards": [],

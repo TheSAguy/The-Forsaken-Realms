@@ -1,0 +1,173 @@
+goblin_fanatic.png
+size: 558,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 54
+Idle
+  xy: 62, 64
+  size: 62, 54
+Idle
+  xy: 124, 64
+  size: 62, 54
+Idle
+  xy: 186, 64
+  size: 62, 54
+Walk
+  xy: 0, 118
+  size: 62, 54
+Walk
+  xy: 62, 118
+  size: 62, 54
+Walk
+  xy: 124, 118
+  size: 62, 54
+Walk
+  xy: 186, 118
+  size: 62, 54
+Walk
+  xy: 248, 118
+  size: 62, 54
+Walk
+  xy: 310, 118
+  size: 62, 54
+Walk
+  xy: 372, 118
+  size: 62, 54
+Walk
+  xy: 434, 118
+  size: 62, 54
+Attack
+  xy: 0, 172
+  size: 62, 54
+Attack
+  xy: 62, 172
+  size: 62, 54
+Attack
+  xy: 124, 172
+  size: 62, 54
+Attack
+  xy: 186, 172
+  size: 62, 54
+Attack
+  xy: 248, 172
+  size: 62, 54
+Attack
+  xy: 310, 172
+  size: 62, 54
+Hit
+  xy: 0, 226
+  size: 62, 54
+Hit
+  xy: 62, 226
+  size: 62, 54
+Hit
+  xy: 124, 226
+  size: 62, 54
+Hit
+  xy: 186, 226
+  size: 62, 54
+Death
+  xy: 0, 280
+  size: 62, 54
+Death
+  xy: 62, 280
+  size: 62, 54
+Death
+  xy: 124, 280
+  size: 62, 54
+Death
+  xy: 186, 280
+  size: 62, 54
+Death
+  xy: 248, 280
+  size: 62, 54
+Death
+  xy: 310, 280
+  size: 62, 54
+Death
+  xy: 372, 280
+  size: 62, 54
+Death
+  xy: 434, 280
+  size: 62, 54
+Death
+  xy: 496, 280
+  size: 62, 54
+IdleUp
+  xy: 0, 334
+  size: 62, 54
+IdleUp
+  xy: 62, 334
+  size: 62, 54
+IdleUp
+  xy: 124, 334
+  size: 62, 54
+IdleUp
+  xy: 186, 334
+  size: 62, 54
+IdleDown
+  xy: 0, 388
+  size: 62, 54
+IdleDown
+  xy: 62, 388
+  size: 62, 54
+IdleDown
+  xy: 124, 388
+  size: 62, 54
+IdleDown
+  xy: 186, 388
+  size: 62, 54
+WalkUp
+  xy: 0, 442
+  size: 62, 54
+WalkUp
+  xy: 62, 442
+  size: 62, 54
+WalkUp
+  xy: 124, 442
+  size: 62, 54
+WalkUp
+  xy: 186, 442
+  size: 62, 54
+WalkUp
+  xy: 248, 442
+  size: 62, 54
+WalkUp
+  xy: 310, 442
+  size: 62, 54
+WalkUp
+  xy: 372, 442
+  size: 62, 54
+WalkUp
+  xy: 434, 442
+  size: 62, 54
+WalkDown
+  xy: 0, 496
+  size: 62, 54
+WalkDown
+  xy: 62, 496
+  size: 62, 54
+WalkDown
+  xy: 124, 496
+  size: 62, 54
+WalkDown
+  xy: 186, 496
+  size: 62, 54
+WalkDown
+  xy: 248, 496
+  size: 62, 54
+WalkDown
+  xy: 310, 496
+  size: 62, 54
+WalkDown
+  xy: 372, 496
+  size: 62, 54
+WalkDown
+  xy: 434, 496
+  size: 62, 54

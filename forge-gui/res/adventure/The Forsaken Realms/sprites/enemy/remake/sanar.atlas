@@ -1,0 +1,173 @@
+sanar.png
+size: 648,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 53
+Idle
+  xy: 72, 64
+  size: 72, 53
+Idle
+  xy: 144, 64
+  size: 72, 53
+Idle
+  xy: 216, 64
+  size: 72, 53
+Walk
+  xy: 0, 117
+  size: 72, 53
+Walk
+  xy: 72, 117
+  size: 72, 53
+Walk
+  xy: 144, 117
+  size: 72, 53
+Walk
+  xy: 216, 117
+  size: 72, 53
+Walk
+  xy: 288, 117
+  size: 72, 53
+Walk
+  xy: 360, 117
+  size: 72, 53
+Walk
+  xy: 432, 117
+  size: 72, 53
+Walk
+  xy: 504, 117
+  size: 72, 53
+Attack
+  xy: 0, 170
+  size: 72, 53
+Attack
+  xy: 72, 170
+  size: 72, 53
+Attack
+  xy: 144, 170
+  size: 72, 53
+Attack
+  xy: 216, 170
+  size: 72, 53
+Attack
+  xy: 288, 170
+  size: 72, 53
+Attack
+  xy: 360, 170
+  size: 72, 53
+Hit
+  xy: 0, 223
+  size: 72, 53
+Hit
+  xy: 72, 223
+  size: 72, 53
+Hit
+  xy: 144, 223
+  size: 72, 53
+Hit
+  xy: 216, 223
+  size: 72, 53
+Death
+  xy: 0, 276
+  size: 72, 53
+Death
+  xy: 72, 276
+  size: 72, 53
+Death
+  xy: 144, 276
+  size: 72, 53
+Death
+  xy: 216, 276
+  size: 72, 53
+Death
+  xy: 288, 276
+  size: 72, 53
+Death
+  xy: 360, 276
+  size: 72, 53
+Death
+  xy: 432, 276
+  size: 72, 53
+Death
+  xy: 504, 276
+  size: 72, 53
+Death
+  xy: 576, 276
+  size: 72, 53
+IdleUp
+  xy: 0, 329
+  size: 72, 53
+IdleUp
+  xy: 72, 329
+  size: 72, 53
+IdleUp
+  xy: 144, 329
+  size: 72, 53
+IdleUp
+  xy: 216, 329
+  size: 72, 53
+IdleDown
+  xy: 0, 382
+  size: 72, 53
+IdleDown
+  xy: 72, 382
+  size: 72, 53
+IdleDown
+  xy: 144, 382
+  size: 72, 53
+IdleDown
+  xy: 216, 382
+  size: 72, 53
+WalkUp
+  xy: 0, 435
+  size: 72, 53
+WalkUp
+  xy: 72, 435
+  size: 72, 53
+WalkUp
+  xy: 144, 435
+  size: 72, 53
+WalkUp
+  xy: 216, 435
+  size: 72, 53
+WalkUp
+  xy: 288, 435
+  size: 72, 53
+WalkUp
+  xy: 360, 435
+  size: 72, 53
+WalkUp
+  xy: 432, 435
+  size: 72, 53
+WalkUp
+  xy: 504, 435
+  size: 72, 53
+WalkDown
+  xy: 0, 488
+  size: 72, 53
+WalkDown
+  xy: 72, 488
+  size: 72, 53
+WalkDown
+  xy: 144, 488
+  size: 72, 53
+WalkDown
+  xy: 216, 488
+  size: 72, 53
+WalkDown
+  xy: 288, 488
+  size: 72, 53
+WalkDown
+  xy: 360, 488
+  size: 72, 53
+WalkDown
+  xy: 432, 488
+  size: 72, 53
+WalkDown
+  xy: 504, 488
+  size: 72, 53

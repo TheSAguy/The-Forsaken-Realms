@@ -1,0 +1,173 @@
+goblin_king.png
+size: 720,685
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 69
+Idle
+  xy: 80, 64
+  size: 80, 69
+Idle
+  xy: 160, 64
+  size: 80, 69
+Idle
+  xy: 240, 64
+  size: 80, 69
+Walk
+  xy: 0, 133
+  size: 80, 69
+Walk
+  xy: 80, 133
+  size: 80, 69
+Walk
+  xy: 160, 133
+  size: 80, 69
+Walk
+  xy: 240, 133
+  size: 80, 69
+Walk
+  xy: 320, 133
+  size: 80, 69
+Walk
+  xy: 400, 133
+  size: 80, 69
+Walk
+  xy: 480, 133
+  size: 80, 69
+Walk
+  xy: 560, 133
+  size: 80, 69
+Attack
+  xy: 0, 202
+  size: 80, 69
+Attack
+  xy: 80, 202
+  size: 80, 69
+Attack
+  xy: 160, 202
+  size: 80, 69
+Attack
+  xy: 240, 202
+  size: 80, 69
+Attack
+  xy: 320, 202
+  size: 80, 69
+Attack
+  xy: 400, 202
+  size: 80, 69
+Hit
+  xy: 0, 271
+  size: 80, 69
+Hit
+  xy: 80, 271
+  size: 80, 69
+Hit
+  xy: 160, 271
+  size: 80, 69
+Hit
+  xy: 240, 271
+  size: 80, 69
+Death
+  xy: 0, 340
+  size: 80, 69
+Death
+  xy: 80, 340
+  size: 80, 69
+Death
+  xy: 160, 340
+  size: 80, 69
+Death
+  xy: 240, 340
+  size: 80, 69
+Death
+  xy: 320, 340
+  size: 80, 69
+Death
+  xy: 400, 340
+  size: 80, 69
+Death
+  xy: 480, 340
+  size: 80, 69
+Death
+  xy: 560, 340
+  size: 80, 69
+Death
+  xy: 640, 340
+  size: 80, 69
+IdleUp
+  xy: 0, 409
+  size: 80, 69
+IdleUp
+  xy: 80, 409
+  size: 80, 69
+IdleUp
+  xy: 160, 409
+  size: 80, 69
+IdleUp
+  xy: 240, 409
+  size: 80, 69
+IdleDown
+  xy: 0, 478
+  size: 80, 69
+IdleDown
+  xy: 80, 478
+  size: 80, 69
+IdleDown
+  xy: 160, 478
+  size: 80, 69
+IdleDown
+  xy: 240, 478
+  size: 80, 69
+WalkUp
+  xy: 0, 547
+  size: 80, 69
+WalkUp
+  xy: 80, 547
+  size: 80, 69
+WalkUp
+  xy: 160, 547
+  size: 80, 69
+WalkUp
+  xy: 240, 547
+  size: 80, 69
+WalkUp
+  xy: 320, 547
+  size: 80, 69
+WalkUp
+  xy: 400, 547
+  size: 80, 69
+WalkUp
+  xy: 480, 547
+  size: 80, 69
+WalkUp
+  xy: 560, 547
+  size: 80, 69
+WalkDown
+  xy: 0, 616
+  size: 80, 69
+WalkDown
+  xy: 80, 616
+  size: 80, 69
+WalkDown
+  xy: 160, 616
+  size: 80, 69
+WalkDown
+  xy: 240, 616
+  size: 80, 69
+WalkDown
+  xy: 320, 616
+  size: 80, 69
+WalkDown
+  xy: 400, 616
+  size: 80, 69
+WalkDown
+  xy: 480, 616
+  size: 80, 69
+WalkDown
+  xy: 560, 616
+  size: 80, 69

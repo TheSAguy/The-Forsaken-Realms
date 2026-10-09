@@ -1,0 +1,173 @@
+the_grand_goatnapper.png
+size: 846,703
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 71
+Idle
+  xy: 94, 64
+  size: 94, 71
+Idle
+  xy: 188, 64
+  size: 94, 71
+Idle
+  xy: 282, 64
+  size: 94, 71
+Walk
+  xy: 0, 135
+  size: 94, 71
+Walk
+  xy: 94, 135
+  size: 94, 71
+Walk
+  xy: 188, 135
+  size: 94, 71
+Walk
+  xy: 282, 135
+  size: 94, 71
+Walk
+  xy: 376, 135
+  size: 94, 71
+Walk
+  xy: 470, 135
+  size: 94, 71
+Walk
+  xy: 564, 135
+  size: 94, 71
+Walk
+  xy: 658, 135
+  size: 94, 71
+Attack
+  xy: 0, 206
+  size: 94, 71
+Attack
+  xy: 94, 206
+  size: 94, 71
+Attack
+  xy: 188, 206
+  size: 94, 71
+Attack
+  xy: 282, 206
+  size: 94, 71
+Attack
+  xy: 376, 206
+  size: 94, 71
+Attack
+  xy: 470, 206
+  size: 94, 71
+Hit
+  xy: 0, 277
+  size: 94, 71
+Hit
+  xy: 94, 277
+  size: 94, 71
+Hit
+  xy: 188, 277
+  size: 94, 71
+Hit
+  xy: 282, 277
+  size: 94, 71
+Death
+  xy: 0, 348
+  size: 94, 71
+Death
+  xy: 94, 348
+  size: 94, 71
+Death
+  xy: 188, 348
+  size: 94, 71
+Death
+  xy: 282, 348
+  size: 94, 71
+Death
+  xy: 376, 348
+  size: 94, 71
+Death
+  xy: 470, 348
+  size: 94, 71
+Death
+  xy: 564, 348
+  size: 94, 71
+Death
+  xy: 658, 348
+  size: 94, 71
+Death
+  xy: 752, 348
+  size: 94, 71
+IdleUp
+  xy: 0, 419
+  size: 94, 71
+IdleUp
+  xy: 94, 419
+  size: 94, 71
+IdleUp
+  xy: 188, 419
+  size: 94, 71
+IdleUp
+  xy: 282, 419
+  size: 94, 71
+IdleDown
+  xy: 0, 490
+  size: 94, 71
+IdleDown
+  xy: 94, 490
+  size: 94, 71
+IdleDown
+  xy: 188, 490
+  size: 94, 71
+IdleDown
+  xy: 282, 490
+  size: 94, 71
+WalkUp
+  xy: 0, 561
+  size: 94, 71
+WalkUp
+  xy: 94, 561
+  size: 94, 71
+WalkUp
+  xy: 188, 561
+  size: 94, 71
+WalkUp
+  xy: 282, 561
+  size: 94, 71
+WalkUp
+  xy: 376, 561
+  size: 94, 71
+WalkUp
+  xy: 470, 561
+  size: 94, 71
+WalkUp
+  xy: 564, 561
+  size: 94, 71
+WalkUp
+  xy: 658, 561
+  size: 94, 71
+WalkDown
+  xy: 0, 632
+  size: 94, 71
+WalkDown
+  xy: 94, 632
+  size: 94, 71
+WalkDown
+  xy: 188, 632
+  size: 94, 71
+WalkDown
+  xy: 282, 632
+  size: 94, 71
+WalkDown
+  xy: 376, 632
+  size: 94, 71
+WalkDown
+  xy: 470, 632
+  size: 94, 71
+WalkDown
+  xy: 564, 632
+  size: 94, 71
+WalkDown
+  xy: 658, 632
+  size: 94, 71

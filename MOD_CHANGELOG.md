@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 521: the goblins from the Universal LPC Spritesheet parts (2026-10-09)
+
+The Procedural Pixel Creatures session's eighth LPC batch: 32 enemies, closing the stock `humanoid/goblin` folder
+(selections in the generator repo's `lpc_selections/make_521.py`). The named ones are dressed from their card art in
+Forge's picture cache.
+
+- **The look**: LPC's goblin head on the stock sprites' and the cards' skins - green for the rank and file and the
+  king's court, coral for the pink boggarts, red and red-orange (Kiki-Jiki, Zo-Zu, General Kreat, Goro-Goro, Redshift,
+  the Rager), umber for the brown stalkers, apple for Krenko, peach for Wort, blue for Grumgully. Helmets in steel: in
+  dark iron the nasal helm sits on the goblin head as a black cone. Hair over the ears reads human, so the Boggart goes
+  bare-headed and Wort wears a ponytail.
+- **The rank and file**: the Goblin (a dagger), the Boggart, the Goblin Rager (muscular, a club), the Goblin Fanatic
+  (red bandana, striped shirt), the Goblin Stalker (hooded in black), the Goblin Artificer (goggles, overalls, a
+  hammer), the Goblin Warrior (a steel morion, a wooden shield, a saber), the Goblin Chief (a horned steel helm, red
+  cape, war axe), the Goblin Pack (a spear) - the wolf riders on foot, the group sprites one goblin each.
+- **The named goblins**: Krenko (red cape, spiked silver crown, a dagger), Pashalik Mons (closed bronze armor),
+  Kiki-Jiki (red-orange, beads, casting), General Kreat (legion helm, red cape, a saber), Goro-Goro (an obi and a
+  katana), Grub (a grey bun, a staff), Toggo and Krark, Auntie Ool (a black robe, a staff), Zo-Zu (red, iron pauldrons),
+  Malcolm and Breeches (a pirate: bandana, eyepatch, striped shirt, saber), Mizzix (goggles, a purple wizard's hat, a
+  crystal), Squee (crown and red robes), Sanar (a student with a wand), Redshift (goggles, a jetpack), the Grand
+  Goatnapper (hooded, a club), Muxus (crown, gold-trimmed cape), Wort (grey ponytail, beads), Grumgully (a red mane and
+  beard), Wolfgang Eder '03 (a top hat and frock coat), the Shattergang Brothers (goggles, a crystal).
+- **The goblin-king sprite** becomes a muscular body (LPC has no fat one) with a crown and cape: the Goblin King, and
+  Goblin King Phil (a boss: red crown, purple cape, gold legion gear, at his drawn size). Slobad (a boss: goggles, an
+  apron, a hammer) keeps his drawn size too.
+- **Files**: 32 new atlases under `sprites/enemy/remake/`; enemies.json 32 sprite paths + 32 scales (the 30 ranked
+  0.26-0.33, Slobad 0.65 and Goblin King Phil 0.49 for their drawn sizes). `CREDITS.md`'s LPC line now covers 211
+  enemies over eight rounds (one new author, for the jetpack); `standalone-packaging/CREDITS_LPC.md` regenerated for
+  all eight (earlier rounds' entries unchanged).
+- **Checks**: `validate_plane_data.py` unchanged; the sprite audit is clean on the thirty-two. Not seen in play.
+
 ## Round 520: the dwarves from the Universal LPC Spritesheet parts (2026-10-09)
 
 The Procedural Pixel Creatures session's seventh LPC batch: 24 enemies, closing the stock `humanoid/dwarf` folder

@@ -1,0 +1,173 @@
+krenko.png
+size: 540,676
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 60, 68
+Idle
+  xy: 60, 64
+  size: 60, 68
+Idle
+  xy: 120, 64
+  size: 60, 68
+Idle
+  xy: 180, 64
+  size: 60, 68
+Walk
+  xy: 0, 132
+  size: 60, 68
+Walk
+  xy: 60, 132
+  size: 60, 68
+Walk
+  xy: 120, 132
+  size: 60, 68
+Walk
+  xy: 180, 132
+  size: 60, 68
+Walk
+  xy: 240, 132
+  size: 60, 68
+Walk
+  xy: 300, 132
+  size: 60, 68
+Walk
+  xy: 360, 132
+  size: 60, 68
+Walk
+  xy: 420, 132
+  size: 60, 68
+Attack
+  xy: 0, 200
+  size: 60, 68
+Attack
+  xy: 60, 200
+  size: 60, 68
+Attack
+  xy: 120, 200
+  size: 60, 68
+Attack
+  xy: 180, 200
+  size: 60, 68
+Attack
+  xy: 240, 200
+  size: 60, 68
+Attack
+  xy: 300, 200
+  size: 60, 68
+Hit
+  xy: 0, 268
+  size: 60, 68
+Hit
+  xy: 60, 268
+  size: 60, 68
+Hit
+  xy: 120, 268
+  size: 60, 68
+Hit
+  xy: 180, 268
+  size: 60, 68
+Death
+  xy: 0, 336
+  size: 60, 68
+Death
+  xy: 60, 336
+  size: 60, 68
+Death
+  xy: 120, 336
+  size: 60, 68
+Death
+  xy: 180, 336
+  size: 60, 68
+Death
+  xy: 240, 336
+  size: 60, 68
+Death
+  xy: 300, 336
+  size: 60, 68
+Death
+  xy: 360, 336
+  size: 60, 68
+Death
+  xy: 420, 336
+  size: 60, 68
+Death
+  xy: 480, 336
+  size: 60, 68
+IdleUp
+  xy: 0, 404
+  size: 60, 68
+IdleUp
+  xy: 60, 404
+  size: 60, 68
+IdleUp
+  xy: 120, 404
+  size: 60, 68
+IdleUp
+  xy: 180, 404
+  size: 60, 68
+IdleDown
+  xy: 0, 472
+  size: 60, 68
+IdleDown
+  xy: 60, 472
+  size: 60, 68
+IdleDown
+  xy: 120, 472
+  size: 60, 68
+IdleDown
+  xy: 180, 472
+  size: 60, 68
+WalkUp
+  xy: 0, 540
+  size: 60, 68
+WalkUp
+  xy: 60, 540
+  size: 60, 68
+WalkUp
+  xy: 120, 540
+  size: 60, 68
+WalkUp
+  xy: 180, 540
+  size: 60, 68
+WalkUp
+  xy: 240, 540
+  size: 60, 68
+WalkUp
+  xy: 300, 540
+  size: 60, 68
+WalkUp
+  xy: 360, 540
+  size: 60, 68
+WalkUp
+  xy: 420, 540
+  size: 60, 68
+WalkDown
+  xy: 0, 608
+  size: 60, 68
+WalkDown
+  xy: 60, 608
+  size: 60, 68
+WalkDown
+  xy: 120, 608
+  size: 60, 68
+WalkDown
+  xy: 180, 608
+  size: 60, 68
+WalkDown
+  xy: 240, 608
+  size: 60, 68
+WalkDown
+  xy: 300, 608
+  size: 60, 68
+WalkDown
+  xy: 360, 608
+  size: 60, 68
+WalkDown
+  xy: 420, 608
+  size: 60, 68

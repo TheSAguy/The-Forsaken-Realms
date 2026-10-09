@@ -1,0 +1,173 @@
+goblin_king_phil.png
+size: 846,685
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 69
+Idle
+  xy: 94, 64
+  size: 94, 69
+Idle
+  xy: 188, 64
+  size: 94, 69
+Idle
+  xy: 282, 64
+  size: 94, 69
+Walk
+  xy: 0, 133
+  size: 94, 69
+Walk
+  xy: 94, 133
+  size: 94, 69
+Walk
+  xy: 188, 133
+  size: 94, 69
+Walk
+  xy: 282, 133
+  size: 94, 69
+Walk
+  xy: 376, 133
+  size: 94, 69
+Walk
+  xy: 470, 133
+  size: 94, 69
+Walk
+  xy: 564, 133
+  size: 94, 69
+Walk
+  xy: 658, 133
+  size: 94, 69
+Attack
+  xy: 0, 202
+  size: 94, 69
+Attack
+  xy: 94, 202
+  size: 94, 69
+Attack
+  xy: 188, 202
+  size: 94, 69
+Attack
+  xy: 282, 202
+  size: 94, 69
+Attack
+  xy: 376, 202
+  size: 94, 69
+Attack
+  xy: 470, 202
+  size: 94, 69
+Hit
+  xy: 0, 271
+  size: 94, 69
+Hit
+  xy: 94, 271
+  size: 94, 69
+Hit
+  xy: 188, 271
+  size: 94, 69
+Hit
+  xy: 282, 271
+  size: 94, 69
+Death
+  xy: 0, 340
+  size: 94, 69
+Death
+  xy: 94, 340
+  size: 94, 69
+Death
+  xy: 188, 340
+  size: 94, 69
+Death
+  xy: 282, 340
+  size: 94, 69
+Death
+  xy: 376, 340
+  size: 94, 69
+Death
+  xy: 470, 340
+  size: 94, 69
+Death
+  xy: 564, 340
+  size: 94, 69
+Death
+  xy: 658, 340
+  size: 94, 69
+Death
+  xy: 752, 340
+  size: 94, 69
+IdleUp
+  xy: 0, 409
+  size: 94, 69
+IdleUp
+  xy: 94, 409
+  size: 94, 69
+IdleUp
+  xy: 188, 409
+  size: 94, 69
+IdleUp
+  xy: 282, 409
+  size: 94, 69
+IdleDown
+  xy: 0, 478
+  size: 94, 69
+IdleDown
+  xy: 94, 478
+  size: 94, 69
+IdleDown
+  xy: 188, 478
+  size: 94, 69
+IdleDown
+  xy: 282, 478
+  size: 94, 69
+WalkUp
+  xy: 0, 547
+  size: 94, 69
+WalkUp
+  xy: 94, 547
+  size: 94, 69
+WalkUp
+  xy: 188, 547
+  size: 94, 69
+WalkUp
+  xy: 282, 547
+  size: 94, 69
+WalkUp
+  xy: 376, 547
+  size: 94, 69
+WalkUp
+  xy: 470, 547
+  size: 94, 69
+WalkUp
+  xy: 564, 547
+  size: 94, 69
+WalkUp
+  xy: 658, 547
+  size: 94, 69
+WalkDown
+  xy: 0, 616
+  size: 94, 69
+WalkDown
+  xy: 94, 616
+  size: 94, 69
+WalkDown
+  xy: 188, 616
+  size: 94, 69
+WalkDown
+  xy: 282, 616
+  size: 94, 69
+WalkDown
+  xy: 376, 616
+  size: 94, 69
+WalkDown
+  xy: 470, 616
+  size: 94, 69
+WalkDown
+  xy: 564, 616
+  size: 94, 69
+WalkDown
+  xy: 658, 616
+  size: 94, 69

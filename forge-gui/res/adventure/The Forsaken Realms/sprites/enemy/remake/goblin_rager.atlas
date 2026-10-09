@@ -1,0 +1,173 @@
+goblin_rager.png
+size: 864,703
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 71
+Idle
+  xy: 96, 64
+  size: 96, 71
+Idle
+  xy: 192, 64
+  size: 96, 71
+Idle
+  xy: 288, 64
+  size: 96, 71
+Walk
+  xy: 0, 135
+  size: 96, 71
+Walk
+  xy: 96, 135
+  size: 96, 71
+Walk
+  xy: 192, 135
+  size: 96, 71
+Walk
+  xy: 288, 135
+  size: 96, 71
+Walk
+  xy: 384, 135
+  size: 96, 71
+Walk
+  xy: 480, 135
+  size: 96, 71
+Walk
+  xy: 576, 135
+  size: 96, 71
+Walk
+  xy: 672, 135
+  size: 96, 71
+Attack
+  xy: 0, 206
+  size: 96, 71
+Attack
+  xy: 96, 206
+  size: 96, 71
+Attack
+  xy: 192, 206
+  size: 96, 71
+Attack
+  xy: 288, 206
+  size: 96, 71
+Attack
+  xy: 384, 206
+  size: 96, 71
+Attack
+  xy: 480, 206
+  size: 96, 71
+Hit
+  xy: 0, 277
+  size: 96, 71
+Hit
+  xy: 96, 277
+  size: 96, 71
+Hit
+  xy: 192, 277
+  size: 96, 71
+Hit
+  xy: 288, 277
+  size: 96, 71
+Death
+  xy: 0, 348
+  size: 96, 71
+Death
+  xy: 96, 348
+  size: 96, 71
+Death
+  xy: 192, 348
+  size: 96, 71
+Death
+  xy: 288, 348
+  size: 96, 71
+Death
+  xy: 384, 348
+  size: 96, 71
+Death
+  xy: 480, 348
+  size: 96, 71
+Death
+  xy: 576, 348
+  size: 96, 71
+Death
+  xy: 672, 348
+  size: 96, 71
+Death
+  xy: 768, 348
+  size: 96, 71
+IdleUp
+  xy: 0, 419
+  size: 96, 71
+IdleUp
+  xy: 96, 419
+  size: 96, 71
+IdleUp
+  xy: 192, 419
+  size: 96, 71
+IdleUp
+  xy: 288, 419
+  size: 96, 71
+IdleDown
+  xy: 0, 490
+  size: 96, 71
+IdleDown
+  xy: 96, 490
+  size: 96, 71
+IdleDown
+  xy: 192, 490
+  size: 96, 71
+IdleDown
+  xy: 288, 490
+  size: 96, 71
+WalkUp
+  xy: 0, 561
+  size: 96, 71
+WalkUp
+  xy: 96, 561
+  size: 96, 71
+WalkUp
+  xy: 192, 561
+  size: 96, 71
+WalkUp
+  xy: 288, 561
+  size: 96, 71
+WalkUp
+  xy: 384, 561
+  size: 96, 71
+WalkUp
+  xy: 480, 561
+  size: 96, 71
+WalkUp
+  xy: 576, 561
+  size: 96, 71
+WalkUp
+  xy: 672, 561
+  size: 96, 71
+WalkDown
+  xy: 0, 632
+  size: 96, 71
+WalkDown
+  xy: 96, 632
+  size: 96, 71
+WalkDown
+  xy: 192, 632
+  size: 96, 71
+WalkDown
+  xy: 288, 632
+  size: 96, 71
+WalkDown
+  xy: 384, 632
+  size: 96, 71
+WalkDown
+  xy: 480, 632
+  size: 96, 71
+WalkDown
+  xy: 576, 632
+  size: 96, 71
+WalkDown
+  xy: 672, 632
+  size: 96, 71

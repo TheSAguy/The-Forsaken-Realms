@@ -1,0 +1,179 @@
+shattergang_brothers.png
+size: 684,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 53
+Idle
+  xy: 76, 64
+  size: 76, 53
+Idle
+  xy: 152, 64
+  size: 76, 53
+Idle
+  xy: 228, 64
+  size: 76, 53
+Walk
+  xy: 0, 117
+  size: 76, 53
+Walk
+  xy: 76, 117
+  size: 76, 53
+Walk
+  xy: 152, 117
+  size: 76, 53
+Walk
+  xy: 228, 117
+  size: 76, 53
+Walk
+  xy: 304, 117
+  size: 76, 53
+Walk
+  xy: 380, 117
+  size: 76, 53
+Walk
+  xy: 456, 117
+  size: 76, 53
+Walk
+  xy: 532, 117
+  size: 76, 53
+Attack
+  xy: 0, 170
+  size: 76, 53
+Attack
+  xy: 76, 170
+  size: 76, 53
+Attack
+  xy: 152, 170
+  size: 76, 53
+Attack
+  xy: 228, 170
+  size: 76, 53
+Attack
+  xy: 304, 170
+  size: 76, 53
+Attack
+  xy: 380, 170
+  size: 76, 53
+Attack
+  xy: 456, 170
+  size: 76, 53
+Attack
+  xy: 532, 170
+  size: 76, 53
+Hit
+  xy: 0, 223
+  size: 76, 53
+Hit
+  xy: 76, 223
+  size: 76, 53
+Hit
+  xy: 152, 223
+  size: 76, 53
+Hit
+  xy: 228, 223
+  size: 76, 53
+Death
+  xy: 0, 276
+  size: 76, 53
+Death
+  xy: 76, 276
+  size: 76, 53
+Death
+  xy: 152, 276
+  size: 76, 53
+Death
+  xy: 228, 276
+  size: 76, 53
+Death
+  xy: 304, 276
+  size: 76, 53
+Death
+  xy: 380, 276
+  size: 76, 53
+Death
+  xy: 456, 276
+  size: 76, 53
+Death
+  xy: 532, 276
+  size: 76, 53
+Death
+  xy: 608, 276
+  size: 76, 53
+IdleUp
+  xy: 0, 329
+  size: 76, 53
+IdleUp
+  xy: 76, 329
+  size: 76, 53
+IdleUp
+  xy: 152, 329
+  size: 76, 53
+IdleUp
+  xy: 228, 329
+  size: 76, 53
+IdleDown
+  xy: 0, 382
+  size: 76, 53
+IdleDown
+  xy: 76, 382
+  size: 76, 53
+IdleDown
+  xy: 152, 382
+  size: 76, 53
+IdleDown
+  xy: 228, 382
+  size: 76, 53
+WalkUp
+  xy: 0, 435
+  size: 76, 53
+WalkUp
+  xy: 76, 435
+  size: 76, 53
+WalkUp
+  xy: 152, 435
+  size: 76, 53
+WalkUp
+  xy: 228, 435
+  size: 76, 53
+WalkUp
+  xy: 304, 435
+  size: 76, 53
+WalkUp
+  xy: 380, 435
+  size: 76, 53
+WalkUp
+  xy: 456, 435
+  size: 76, 53
+WalkUp
+  xy: 532, 435
+  size: 76, 53
+WalkDown
+  xy: 0, 488
+  size: 76, 53
+WalkDown
+  xy: 76, 488
+  size: 76, 53
+WalkDown
+  xy: 152, 488
+  size: 76, 53
+WalkDown
+  xy: 228, 488
+  size: 76, 53
+WalkDown
+  xy: 304, 488
+  size: 76, 53
+WalkDown
+  xy: 380, 488
+  size: 76, 53
+WalkDown
+  xy: 456, 488
+  size: 76, 53
+WalkDown
+  xy: 532, 488
+  size: 76, 53
