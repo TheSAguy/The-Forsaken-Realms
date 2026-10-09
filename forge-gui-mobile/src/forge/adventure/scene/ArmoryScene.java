@@ -300,7 +300,9 @@ public class ArmoryScene extends UIScene {
         storageTitle.setText("[%70]Armory Storage (" + ArmoryStorage.items().size() + ")");
         if (playerMode()) {
             String mainItems = forge.adventure.util.Ascendance.mainItemsLabel(Current.player()); // round 493
-            dollTitle.setText("[%70]" + Current.player().getName() + (mainItems.isEmpty() ? "" : " - " + mainItems));
+            String companions = forge.adventure.util.Ascendance.companionsLabel(Current.player()); // round 502
+            dollTitle.setText("[%70]" + Current.player().getName() + (mainItems.isEmpty() ? "" : " - " + mainItems)
+                    + " - " + companions);
             inventoryTitle.setText("[%70]Inventory (" + Current.player().getItems().size() + ")");
         } else {
             String rank = RoamingGuards.displayName(guard.tier);
@@ -422,7 +424,8 @@ public class ArmoryScene extends UIScene {
         ItemData data = itemAt.get(button);
         boolean stored = inStorage.contains(button);
         setDescription(data.getDisplayName() + (data.isCracked ? " (" + Forge.getLocalizer().getMessage("lblCracked") + ")" : "")
-                + "\n[%98]" + data.getDescription()); // round 489: as InventoryScene shows it
+                + "\n[%98]" + (playerMode() // round 489: as InventoryScene shows it; round 502: with the limits
+                ? forge.adventure.util.Ascendance.withItemLimits(Current.player(), data, data.getDescription()) : data.getDescription()));
         if (playerMode()) {
             deleteButton.setDisabled(stored || data.questItem);
             sellButton.setDisabled(stored || data.questItem);

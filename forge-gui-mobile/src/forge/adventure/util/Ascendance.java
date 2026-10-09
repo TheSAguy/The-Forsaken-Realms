@@ -8,6 +8,7 @@ import forge.adventure.data.AdventureQuestData;
 import forge.adventure.data.AscendanceData;
 import forge.adventure.data.AscendanceState;
 import forge.adventure.data.ConfigData;
+import forge.adventure.data.EffectData;
 import forge.adventure.data.EnemyData;
 import forge.adventure.data.ItemData;
 import forge.adventure.data.RoamingGuardData;
@@ -16,6 +17,7 @@ import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.stage.GameHUD;
 import forge.adventure.stage.WorldStage;
 import forge.adventure.world.WorldSave;
+import forge.item.IPaperCard;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -39,6 +41,8 @@ import java.util.List;
  * postCapXpToNext per level, rising, +postCapLife each. levelingSpeed scales every award.</li>
  * <li>The player can switch all of it off in Settings (SettingData.ascendanceDisabled).</li>
  * <li><b>Roaming guards</b> wear main-slot items by rank: Apprentice 2, Adept 3, Master 4, Archmage 5.</li>
+ * <li><b>Companions</b> (round 502), items that start a creature on the battlefield, in any slot: 1, then 2 at 15 and 3 at
+ * 25 - and companionsWithoutAscendance for a character without it.</li>
  * <li>Only a character started by New Game or New Game+ has it (AscendanceState.on). An older save plays as before.</li>
  * </ul>
  * Every number is in "config tables/ascendance.json" (AscendanceData). [TFR-Ascend] logs every award and level.
@@ -253,8 +257,11 @@ public final class Ascendance {
                 + " (neck, body, hands, boots)" + (next > 0 ? " - Ascendance " + next + " brings one more." : ".");
     }
 
-    /** The refusal for an item that equip() would not put on - for the screens' message. */
+    /** The refusal for an item that equip() would not put on - for the screens' message. Round 502: equip() keeps the
+     *  reason it gave (the main-item limit or the companion limit), so the message names the right one. */
     public static String refusalFor(AdventurePlayer player, ItemData item) {
+        if (player.lastEquipRefusal() != null)
+            return player.lastEquipRefusal();
         String why = item == null ? null : equipRefusal(player, item, item.equipmentSlot);
         return why != null ? why : "Your power allows no more main items yet.";
     }
@@ -264,14 +271,6 @@ public final class Ascendance {
         if (!isActive())
             return "";
         return "Main items " + mainItemsWorn(player) + " / " + mainSlotAllowance();
-    }
-
-    /** A line under a main-slot item's description: how many are worn of how many allowed, and when one more comes. */
-    public static String mainItemsLine(AdventurePlayer player, ItemData item) {
-        if (!isActive() || item == null || !isMainSlot(item.equipmentSlot))
-            return "";
-        int next = nextMainSlotLevel();
-        return "\n[%85]" + mainItemsLabel(player) + (next > 0 ? " - one more at Ascendance " + next : "");
     }
 
     /** Take main-slot items off, last slot first, until the count fits the allowance (New Game+, a deck's loadout). */
@@ -290,6 +289,180 @@ public final class Ascendance {
         System.out.println("[TFR-Ascend] " + why + ": " + removed.size() + " main item(s) taken off to fit " + allowed
                 + " at Ascendance " + level() + " - " + removed);
         GameHUD.getInstance().addNotification("Your power allows " + allowed + " main item" + (allowed == 1 ? "" : "s")
+                + " - " + String.join(", ", removed) + " went back in the bag.");
+    }
+
+    // ------------------------------------------------------------------------------------------------ companions (round 502)
+    // The item audit (docs/audits/2026-10-08-items-mana-and-units.md) found 127 items that start a creature on the
+    // battlefield, in every slot - the user: "I think we need to possible re-allocate some of them to prevent someone from
+    // starting a duel with 3 or 4 creatures", then "Go with the companion limit, 2 at Ascendance 15 and 3 at 25". A
+    // companion is such an item, worn in ANY slot (the gauntlets' Left2/Right2 and the Token slot too): a rule on the
+    // item, not the slot, so every item keeps its slot and its theme. Unlike the main-item limit it holds without
+    // Ascendance as well (companionsWithoutAscendance) - switching leveling off must not lift it.
+
+    /** The slots kept longest when companions must come off: Boots, the companion slot of old, first. */
+    private static final List<String> COMPANION_KEEP_ORDER = java.util.Arrays.asList(
+            "Boots", "Body", "Neck", "Left", "Right", "Token", "Left2", "Right2");
+
+    private static final java.util.Map<String, Integer> CREATURES = new java.util.HashMap<>();
+
+    /** Creatures this item starts on the battlefield - its startBattleWithCard and ...Tapped cards that are creatures (the
+     *  command zone is not the battlefield; an "enters the battlefield" token maker makes nothing at the start, Player.java
+     *  puts start cards in play without a trigger). Cached by the item's name and cards. */
+    public static int startingCreatures(ItemData item) {
+        if (item == null || item.effect == null)
+            return 0;
+        EffectData e = item.effect;
+        if (e.startBattleWithCard == null && e.startBattleWithCardTapped == null)
+            return 0;
+        String key = item.name + "|" + java.util.Arrays.toString(e.startBattleWithCard) + "|"
+                + java.util.Arrays.toString(e.startBattleWithCardTapped);
+        Integer known = CREATURES.get(key);
+        if (known != null)
+            return known;
+        int creatures = 0;
+        for (IPaperCard card : e.startBattleWithCards())
+            if (isCreature(card))
+                creatures++;
+        for (IPaperCard card : e.startBattleWithCardsTapped())
+            if (isCreature(card))
+                creatures++;
+        CREATURES.put(key, creatures);
+        return creatures;
+    }
+
+    private static boolean isCreature(IPaperCard card) {
+        return card != null && card.getRules() != null && card.getRules().getType().isCreature();
+    }
+
+    public static boolean isCompanion(ItemData item) {
+        return startingCreatures(item) > 0;
+    }
+
+    /** Companions the player may wear now: by level with Ascendance, companionsWithoutAscendance without it. */
+    public static int companionAllowance() {
+        return isActive() ? companionAllowance(level()) : Math.max(1, data().companionsWithoutAscendance);
+    }
+
+    public static int companionAllowance(int level) {
+        AscendanceData d = data();
+        int allowed = d.companionBase;
+        for (int l : d.companionLevels)
+            if (level >= l)
+                allowed++;
+        return Math.max(1, allowed);
+    }
+
+    /** The next level that allows one more companion, or -1 when none is left (or the character has no Ascendance). */
+    public static int nextCompanionLevel() {
+        if (!isActive())
+            return -1;
+        int level = level();
+        for (int l : data().companionLevels)
+            if (l > level)
+                return l;
+        return -1;
+    }
+
+    /** Worn companions' names, leaving out what is in {@code exceptSlot} (what an equip there would take off; null for
+     *  none). */
+    private static List<String> companionsWornNames(AdventurePlayer player, String exceptSlot) {
+        List<String> names = new ArrayList<>();
+        for (String slot : player.equippedSlots()) {
+            if (slot.equals(exceptSlot))
+                continue;
+            ItemData worn = player.getEquippedItem(player.itemInSlot(slot));
+            if (isCompanion(worn))
+                names.add(worn.name);
+        }
+        return names;
+    }
+
+    public static int companionsWorn(AdventurePlayer player) {
+        return companionsWornNames(player, null).size();
+    }
+
+    /** Why this item may not go into {@code slot} now (what is worn there comes off, so a companion for a companion is
+     *  always a fair swap), or null when it may. */
+    public static String companionRefusal(AdventurePlayer player, ItemData item, String slot) {
+        if (!isCompanion(item))
+            return null;
+        int allowed = companionAllowance();
+        List<String> worn = companionsWornNames(player, slot);
+        if (worn.size() < allowed)
+            return null;
+        int next = nextCompanionLevel();
+        String rule = allowed == 1 ? "1 companion (an item that starts a creature in play)"
+                : allowed + " companions (items that start a creature in play)";
+        return (isActive() ? "Your power allows " + rule + (next > 0 ? " - Ascendance " + next + " brings one more." : ".")
+                : "You may wear " + rule + ".") + " Worn: " + String.join(", ", worn) + ".";
+    }
+
+    /** "Companions 0 / 1" for the Armory screen and the Ascendance status. */
+    public static String companionsLabel(AdventurePlayer player) {
+        return "Companions " + companionsWorn(player) + " / " + companionAllowance();
+    }
+
+    /** The limits an item counts against, as one line for the inventory and Armory descriptions: "Main items 1 / 2 - one
+     *  more at Ascendance 10", "Companions 0 / 1 - one more at Ascendance 15", or both counts for a main-slot companion.
+     *  ItemData.getDescription marks the companion itself ("Slot: Right - Companion"), in shops too. */
+    public static String itemLimitLine(AdventurePlayer player, ItemData item) {
+        boolean main = isActive() && item != null && isMainSlot(item.equipmentSlot);
+        boolean companion = isCompanion(item);
+        String text;
+        if (main && companion) {
+            text = mainItemsLabel(player) + ", c" + companionsLabel(player).substring(1);
+        } else if (main) {
+            int next = nextMainSlotLevel();
+            text = mainItemsLabel(player) + (next > 0 ? " - one more at Ascendance " + next : "");
+        } else if (companion) {
+            int next = nextCompanionLevel();
+            text = companionsLabel(player) + (next > 0 ? " - one more at Ascendance " + next : "");
+        } else {
+            return "";
+        }
+        return "[%85]" + text;
+    }
+
+    /** The description with the limit line right under it - no blank line between (the description ends in a line
+     *  break, and the box shows only a few lines before it scrolls). */
+    public static String withItemLimits(AdventurePlayer player, ItemData item, String description) {
+        String line = itemLimitLine(player, item);
+        if (line.isEmpty())
+            return description;
+        int end = description.length();
+        while (end > 0 && description.charAt(end - 1) == '\n')
+            end--;
+        return description.substring(0, end) + "\n" + line;
+    }
+
+    /** Take companions off until the count fits: a save loaded, a new run, Ascendance switched on, a deck's loadout. The
+     *  gauntlets' second hands and the Token slot go first, Boots last. */
+    public static void enforceCompanionLimit(AdventurePlayer player, String why) {
+        int allowed = companionAllowance();
+        if (companionsWorn(player) <= allowed)
+            return;
+        List<String> slots = new ArrayList<>();
+        for (String slot : player.equippedSlots())
+            if (isCompanion(player.getEquippedItem(player.itemInSlot(slot))))
+                slots.add(slot);
+        slots.sort(java.util.Comparator.comparingInt(slot -> {
+            int keep = COMPANION_KEEP_ORDER.indexOf(slot);
+            return keep < 0 ? COMPANION_KEEP_ORDER.size() : keep;
+        }));
+        List<String> removed = new ArrayList<>();
+        for (int i = slots.size() - 1; i >= 0 && companionsWorn(player) > allowed; i--) {
+            if (player.itemInSlot(slots.get(i)) == null) // a gauntlet taken off took its second hand with it
+                continue;
+            String name = player.takeOffSlot(slots.get(i));
+            if (name != null)
+                removed.add(name);
+        }
+        if (removed.isEmpty())
+            return;
+        System.out.println("[TFR-Companion] " + why + ": " + removed.size() + " companion(s) taken off to fit " + allowed
+                + (isActive() ? " at Ascendance " + level() : " (no Ascendance)") + " - " + removed);
+        GameHUD.getInstance().addNotification("You may wear " + allowed + " companion" + (allowed == 1 ? "" : "s")
                 + " - " + String.join(", ", removed) + " went back in the bag.");
     }
 
@@ -346,8 +519,9 @@ public final class Ascendance {
         AscendanceState s = player.ascendance();
         s.reset();
         s.on = enabledForNewRuns();
+        player.requestCompanionCheck(); // round 502: the kept gear is checked once the run is on screen
         System.out.println("[TFR-Ascend] " + why + ": Ascendance " + (s.on ? "on - level 0, " + mainSlotAllowance(0)
-                + " main item(s)" : "off (config.json ascendanceEnabled)"));
+                + " main item(s), " + companionAllowance(0) + " companion(s)" : "off (config.json ascendanceEnabled)"));
     }
 
     /** Award Power for {@code source} (times the config's levelingSpeed); level-ups pay their rewards at once. */
@@ -378,6 +552,8 @@ public final class Ascendance {
         }
         if (contains(d.mainSlotLevels, level))
             gifts.add(mainSlotAllowance(level) + " main items");
+        if (contains(d.companionLevels, level)) // round 502
+            gifts.add(companionAllowance(level) + " companions");
         String title = contains(d.titleLevels, level) ? titleAt(level) : "";
         boolean choice = gifts.isEmpty() && title.isEmpty() && !pastCurve;
         if (choice) {
@@ -911,7 +1087,7 @@ public final class Ascendance {
         AdventurePlayer player = WorldSave.getCurrentSave().getPlayer();
         return "Ascendance " + level() + (title().isEmpty() ? "" : " (" + title() + ")") + ", " + s.power + " Power, "
                 + p[0] + "/" + p[1] + " to next; main items " + mainItemsWorn(player) + "/" + mainSlotAllowance()
-                + "; choices waiting " + s.pendingLevels.size() + " " + s.pendingLevels + "; lasting " + s.picks
+                + "; companions " + companionsWorn(player) + "/" + companionAllowance() + "; choices waiting " + s.pendingLevels.size() + " " + s.pendingLevels + "; lasting " + s.picks
                 + "; max life " + player.getMaxLife();
     }
 }

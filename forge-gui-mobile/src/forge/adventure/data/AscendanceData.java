@@ -74,6 +74,12 @@ public class AscendanceData {
     public String[] titles = {"Unbound", "Reclaimer", "Warden of Ash", "Seal-breaker", "Sovereign", "Ascendant"};
     /** A roaming guard's main-slot items, by its rank. */
     public int[] guardMainSlots = {2, 3, 4, 5};
+    /** Round 502 - companions, worn items that start a creature on the battlefield, in any slot. The user: "Go with the
+     *  companion limit, 2 at Ascendance 15 and 3 at 25". companionBase at level 0, +1 at each of companionLevels. */
+    public int companionBase = 1;
+    public int[] companionLevels = {15, 25};
+    /** A character without Ascendance (an older save, or leveling switched off) has no level to grow with: this many. */
+    public int companionsWithoutAscendance = 3;
 
     // ---- round 494: the pick-1-of-3 rewards
     /** How many rewards a choice offers. */

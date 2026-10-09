@@ -1,6 +1,8 @@
 # Item audit - mana/land and units at duel start (2026-10-08)
 
 *Round 499 (same day): the 13 Common mana/land items listed below were made Uncommon.*
+*Round 502 (same day): option 1, the companion limit - the user: "Go with the companion limit, 2 at Ascendance 15 and 3 at
+25". 1 companion, +1 at 15 and 25, 3 without Ascendance; no items moved. The fast-mana limit was not taken up.*
 
 Asked by the user: "List me all items that add mana/land. I.E. Dungeon Map - Tap for 1 colorless. I need to know the slot
 and rarity. Same for all items that add units on the battlefield. Slot and rarity. I think we need to possibly re-allocate

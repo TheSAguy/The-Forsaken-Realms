@@ -74,6 +74,9 @@ public final class AscendanceUI {
         addRow(dialog, "[%85]Power " + progress[0] + " / " + progress[1] + " to the next level");
         int next = Ascendance.nextMainSlotLevel();
         addRow(dialog, "[%85]" + Ascendance.mainItemsLabel(player) + (next > 0 ? " - one more at Ascendance " + next : ""));
+        int nextCompanion = Ascendance.nextCompanionLevel(); // round 502
+        addRow(dialog, "[%85]" + Ascendance.companionsLabel(player)
+                + (nextCompanion > 0 ? " - one more at Ascendance " + nextCompanion : ""));
         StringBuilder lasting = new StringBuilder();
         for (Map.Entry<String, Integer> pick : player.ascendance().picks.entrySet()) {
             if (lasting.length() > 0)

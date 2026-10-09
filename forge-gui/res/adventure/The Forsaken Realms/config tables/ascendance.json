@@ -62,6 +62,12 @@
   "titleLevels": [5, 10, 15, 20, 25, 30],
   "titles": ["Unbound", "Reclaimer", "Warden of Ash", "Seal-breaker", "Sovereign", "Ascendant"],
   "guardMainSlots": [2, 3, 4, 5],
+  // Round 502, companions: worn items that start a creature on the battlefield, in any slot (the gauntlets' second
+  // hands and the Token slot too). companionBase at level 0, +1 at each of companionLevels. A character without
+  // Ascendance (an older save, or leveling switched off in Settings) may wear companionsWithoutAscendance.
+  "companionBase": 1,
+  "companionLevels": [15, 25],
+  "companionsWithoutAscendance": 3,
 
   // Round 494: every level that is not a milestone offers offerSize of these; the player takes one. Each offer holds at
   // least one lasting and one one-time reward while any are left; a lasting one stops at maxPicks, a one-time one with

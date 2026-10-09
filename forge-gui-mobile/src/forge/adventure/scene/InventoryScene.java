@@ -553,8 +553,8 @@ public class InventoryScene extends UIScene {
             // it in the button's own visual state. Same 0.4x-of-item-cost formula repair() uses.
             repairButton.setDisabled(Current.player().getGold() < (int) (data.cost * 0.4f));
             String status = data.isCracked ? " (" + Forge.getLocalizer().getMessage("lblCracked") + ")" : "";
-            setDescription(data.getDisplayName() + status + "\n[%98]" + data.getDescription() // round 460: upstream's display name
-                    + forge.adventure.util.Ascendance.mainItemsLine(Current.player(), data)); // round 493
+            setDescription(data.getDisplayName() + status + "\n[%98]" // round 460: upstream's display name
+                    + forge.adventure.util.Ascendance.withItemLimits(Current.player(), data, data.getDescription())); // rounds 493 + 502
         }
         else if (deckLocation.containsKey(actor)){
             Deck data = (deckLocation.get(actor));

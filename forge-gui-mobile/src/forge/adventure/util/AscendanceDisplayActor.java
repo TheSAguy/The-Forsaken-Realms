@@ -62,10 +62,15 @@ public class AscendanceDisplayActor extends com.badlogic.gdx.scenes.scene2d.Grou
     @Override
     public void act(float delta) {
         super.act(delta);
-        boolean active = WorldSave.getCurrentSave() != null && WorldSave.getCurrentSave().getPlayer() != null
-                && Ascendance.isActive();
+        forge.adventure.player.AdventurePlayer player = WorldSave.getCurrentSave() == null ? null
+                : WorldSave.getCurrentSave().getPlayer();
+        boolean active = player != null && Ascendance.isActive();
         if (active && !wasActive) // switched back on in Settings, or a save with it loaded: wear only what fits
-            Ascendance.enforceMainLimit(WorldSave.getCurrentSave().getPlayer(), "Ascendance on");
+            Ascendance.enforceMainLimit(player, "Ascendance on");
+        // Round 502: the companion limit holds with or without Ascendance - checked when a save loads or a run starts
+        // (AdventurePlayer.requestCompanionCheck) and when Settings switch Ascendance on or off.
+        if (player != null && (player.takeCompanionCheck() || active != wasActive))
+            Ascendance.enforceCompanionLimit(player, active ? "Ascendance" : "no Ascendance");
         wasActive = active;
         setVisible(active);
         if (!active)

@@ -935,6 +935,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 }
                 // Round 493: a loadout saved before a lower limit (Ascendance off then on) wears only what fits.
                 forge.adventure.util.Ascendance.enforceMainLimit(this, "deck loadout");
+                forge.adventure.util.Ascendance.enforceCompanionLimit(this, "deck loadout"); // round 502
 
                 onEquipmentChange.emit();
             }
@@ -1874,6 +1875,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // Round 411: notoriety. Absent before this round - every older save starts at 0 wins in a row.
         notorietyStreak = data.containsKey("notorietyStreak") ? Math.max(0, data.readInt("notorietyStreak")) : 0;
         forge.adventure.util.Ascendance.load(data, ascendance, difficultyData.name); // round 493: absent before it - off
+        requestCompanionCheck(); // round 502: an older save may wear more companions than the limit allows
         // Shop-type blueprints (2026-08-30). Absent on every pre-round-71 save; the containsKey
         // guard leaves the set EMPTY there, which isShopTypeUnlocked() deliberately reads as
         // "legacy save, everything unlocked" rather than "nothing unlocked" - see the field.
@@ -3145,9 +3147,35 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
     }
 
+    /** Round 502: why the last equip() was refused (the main-item or the companion limit) - Ascendance.refusalFor. */
+    private transient String lastEquipRefusal;
+    /** Round 502: a save loaded or a run started - the HUD checks the companion limit once it is on screen. */
+    private transient boolean companionCheckDue;
+
+    public String lastEquipRefusal() {
+        return lastEquipRefusal;
+    }
+
+    public void requestCompanionCheck() {
+        companionCheckDue = true;
+    }
+
+    /** True once after requestCompanionCheck() - AscendanceDisplayActor runs Ascendance.enforceCompanionLimit then. */
+    public boolean takeCompanionCheck() {
+        boolean due = companionCheckDue;
+        companionCheckDue = false;
+        return due;
+    }
+
+    /** Round 502: the slots something is worn in. */
+    public java.util.List<String> equippedSlots() {
+        return new java.util.ArrayList<>(equippedItems.keySet());
+    }
+
     /** @return false when Ascendance's main-slot limit refused the item (round 493 - the caller says why, through
-     *  Ascendance.equipRefusal); true for every equip and unequip that happened. */
+     *  Ascendance.refusalFor) or the companion limit did (round 502); true for every equip and unequip that happened. */
     public boolean equip(ItemData item) {
+        lastEquipRefusal = null;
         java.util.List<String> candidates = slotCandidates(item);
         // Already worn in one of its candidate slots? Then this is an unequip.
         for (String slot : candidates) {
@@ -3180,9 +3208,18 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (target == null) {
             if (refusal != null && !equippedItems.containsKey(candidates.get(0))) {
                 System.out.println("[TFR-Ascend] " + item.name + " not worn - " + refusal);
+                lastEquipRefusal = refusal;
                 return false;
             }
             target = candidates.get(0);
+        }
+        // Round 502: the companion limit - what is worn in the target slot comes off, so a companion for a companion is
+        // always a fair swap.
+        String companion = forge.adventure.util.Ascendance.companionRefusal(this, item, target);
+        if (companion != null) {
+            System.out.println("[TFR-Companion] " + item.name + " not worn in " + target + " - " + companion);
+            lastEquipRefusal = companion;
+            return false;
         }
         ItemData displaced = getEquippedItem(equippedItems.get(target));
         if (displaced != null && !displaced.longID.equals(item.longID))

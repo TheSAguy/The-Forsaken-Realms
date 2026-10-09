@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 502: the companion limit - one item that starts a creature, two at Ascendance 15, three at 25 (2026-10-08)
+
+The item audit (docs/audits/2026-10-08-items-mana-and-units.md) found 127 items that put a creature on the battlefield
+at a duel's start, in every slot - the user: "I think we need to possible re-allocate some of them to prevent someone
+from starting a duel with 3 or 4 creatures". Of the audit's options (a rule, re-allocating to Boots, or both) the user
+took the rule: "Go with the companion limit, 2 at Ascendance 15 and 3 at 25".
+
+- **A companion** is a worn item whose `startBattleWithCard` / `...Tapped` cards include a creature (a creature card or
+  a creature token; the command zone does not count, and an "enters the battlefield" token maker makes nothing at the
+  start). Any slot counts - the gauntlets' Left2/Right2 and the Token slot too - so the rule is on the item, and every
+  item keeps its slot, rarity and theme. Read from the card database at run time (`Ascendance.startingCreatures`,
+  cached), so a new item is covered without a tag. A multi-creature item (Kobold King's Blade, Cursed Ring, Cheat) is
+  one companion.
+- **The allowance**: 1 at Ascendance 0, +1 at 15 and 25 (`ascendance.json` `companionBase`, `companionLevels`). Levels
+  15 and 25 name it in their banner and on the level sheet ("2 companions"). **Without Ascendance** - an older save, or
+  leveling switched off in Settings - the limit still holds at `companionsWithoutAscendance` = 3 (my pick, not the
+  user's: switching leveling off opens all five main slots, so it should not lift this limit as well. It still caps
+  the old worst case of 8+ creatures; one number to change).
+- **Equipping** (`AdventurePlayer.equip`): after the main-item check, a companion that would go over the allowance is
+  refused with the reason and what is worn ("Your power allows 1 companion (an item that starts a creature in play) -
+  Ascendance 15 brings one more. Worn: Token of Spirit."). What sits in the target slot comes off, so a companion for a
+  companion is always a fair swap. equip() keeps the reason (`lastEquipRefusal`), and `Ascendance.refusalFor` shows
+  the right limit on the inventory and Armory screens and in the agent bridge.
+- **Over the limit already** (a save from before this round, New Game+'s kept gear, Ascendance switched on, a deck's
+  loadout): companions come off until the count fits. Boots are kept longest, then Body, Neck, Left, Right; the
+  Token slot and the second hands go first. A notification names what went back in the bag. Load and new runs set a
+  flag (`requestCompanionCheck`) that the HUD's Ascendance actor acts on once the save is on screen; it also checks
+  when Settings switch Ascendance on or off. The loadout switch checks at once.
+- **Shown**: `ItemData.getDescription` marks a companion on its slot line ("Slot: Neck - Companion", "(2 creatures)"
+  for more), in shops and rewards too. The inventory and Armory descriptions end with one count line, right under
+  the description (no blank line any more): "Companions 1 / 1 - one more at Ascendance 15", "Main items 1 / 2 - one
+  more at Ascendance 10", or both counts for a main-slot companion. The Armory's paperdoll title adds
+  "Companions 0 / 1"; the Ascendance status dialog adds a line. Agent bridge: `player.companions` ("1/1") and each
+  item's `companion` (its creature count).
+- **Not limited**: roaming guards (their main slots are limited by rank since round 493; their fights are theirs).
+- **Log**: `[TFR-Companion]` for every refusal and every enforced take-off.
+- **Tested** (agent, new game and a reload): detection matches the audit on the eight items tried (Token of Spirit
+  and Decay, Scarecrow Socks, Steel Shield, Kobold Boots x2, Chicken Egg, Acorn Amulet; Dungeon Map is not one);
+  level 1 refuses a second companion and allows a swap; level 15 allows 2 and refuses a third; level 25 allows 3; a
+  save with three companions loaded without Ascendance at an allowance of 1 took off Token of Spirit and Chicken Egg
+  and kept the Neck's Acorn Amulet, with the notification. Gauntlet second hands are counted by the same loop but were
+  not tried in play.
+
 ## Round 501: the last hero sprites and the viashino sprites' enemies from the Universal LPC Spritesheet parts (2026-10-08)
 
 The Procedural Pixel Creatures session's third LPC batch (the user: "Do the next 30 humanoids via LPC"): 30 enemies -

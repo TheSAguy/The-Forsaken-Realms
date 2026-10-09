@@ -67,6 +67,12 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 502): **LOCAL + UNRELEASED** - the companion limit (the user, after the item audit: "Go with
+the companion limit, 2 at Ascendance 15 and 3 at 25"): a worn item that starts a creature on the battlefield, in any slot,
+is a companion; 1 allowed, +1 at Ascendance 15 and 25; 3 without Ascendance (`companionsWithoutAscendance`, my pick).
+Refused on equip with the reason; extras come off on load / new run / Ascendance toggled / loadout. `Ascendance.java`
+"companions" section, `ascendance.json`, `[TFR-Companion]`. Agent-tested.
+
 ## STATE 2026-10-08 (round 501): **LOCAL + UNRELEASED (data only)** - LPC batch 3 (the Procedural Pixel Creatures
 session; the user: "Do the next 30 humanoids via LPC"): 30 enemies - the last nine 16 px hero sprites (the dwarf, the
 two Phyrexians, the undead as a zombie and a skeleton, the two viashino, the two werewolves as wolf heads on fur) and the

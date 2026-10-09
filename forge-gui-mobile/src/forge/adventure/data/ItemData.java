@@ -109,8 +109,13 @@ public class ItemData implements Serializable, Cloneable {
         String baseDescription = !translatedDescription.isEmpty() ? translatedDescription : this.description;
         if(baseDescription != null && !baseDescription.isEmpty())
             result += baseDescription + "\n";
-        if(this.equipmentSlot != null && !this.equipmentSlot.isEmpty())
-            result += "Slot: " + this.equipmentSlot + "\n";
+        if(this.equipmentSlot != null && !this.equipmentSlot.isEmpty()) {
+            // Round 502: a companion (an item that starts a creature in play - Ascendance's companion limit) says so
+            // wherever it is shown, shops and rewards too.
+            int creatures = forge.adventure.util.Ascendance.startingCreatures(this);
+            result += "Slot: " + this.equipmentSlot + (creatures == 0 ? "" : " - Companion"
+                    + (creatures > 1 ? " (" + creatures + " creatures)" : "")) + "\n";
+        }
         if(effect != null)
             result += effect.getDescription();
         if(shardsNeeded != 0)

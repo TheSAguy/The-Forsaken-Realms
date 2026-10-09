@@ -227,6 +227,8 @@ final class AgentObserver {
                 im.put("shardsToUse", it.shardsNeeded);
             }
             if (it.questItem) im.put("questItem", true);
+            int creatures = forge.adventure.util.Ascendance.startingCreatures(it); // round 502
+            if (creatures > 0) im.put("companion", creatures);
             im.put("sell", (int) (it.cost * 0.25f));
             items.add(im);
         }
@@ -271,6 +273,8 @@ final class AgentObserver {
             asc.put("picks", new java.util.LinkedHashMap<>(p.ascendance().picks));
             m.put("ascendance", asc);
         }
+        // Round 502: the companion limit holds for every character, with or without Ascendance.
+        m.put("companions", forge.adventure.util.Ascendance.companionsWorn(p) + "/" + forge.adventure.util.Ascendance.companionAllowance());
         return m;
     }
 
