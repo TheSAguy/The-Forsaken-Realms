@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 504: Mackenzie, a dusk angel legend with the user's save-1 deck (2026-10-08)
+
+The user: "Take my current save 1, deck and create a new angel enemy, call her Mackenzie." Built the way round 382 built
+Victor from the save-1 "Vampire Deck".
+
+- **The deck**: save 1's selected deck (slot 1, "Angels of the Dusk", 40 cards, W/B), read with
+  `dev-tools/save-editing/DumpDecks` (read-only) as it is today - the user has changed it since it was built on 10-06
+  (Archangel of Thune, Lyra Dawnbringer, Mikaeus, Starnheim Unleashed, Wojek Investigator in). `decks/legends/mackenzie.dck`.
+- **The enemy** (`world/enemies.json`, after Victor): Archmage (Mythic), boss, best of three, no ante, 50 life,
+  flying, speed 48, difficulty 3, `spawnRate` 0; colors WB; tags Angel, Celestial, Flying, Holy, Leader, IdentityWhite,
+  IdentityBlack, IdentityOrzhov; rewards on Seraph of the Burning Brand's pattern (8 + 4 cards from her deck, 6 W/B
+  commons and uncommons, a rare or mythic Angel, 200 gold, 6 shards - out in the world the legend cut applies).
+- **Where she is met**: `roaming_champions.json` names her, so she is sighted through the legend table like the other
+  roaming champions - in white or black land at Unhappy or War, announced, a gold dot, three days.
+- **The sprite**: no angel art in the user's folders is unused (the six angel sheets went into rounds 179 and 382), so
+  she is the Ragnarok valkyrie (Valkyrie of the Last Field's sprite) recolored for "the Dusk": brown feathers to violet,
+  blonde hair to silver, the red cape to plum; skin, steel and the gold trim kept, the ember wisps left warm.
+  `sprites/enemy/tfr2/mackenzie.atlas/.png` (frames unchanged). Its source is already in CREDITS.md (round 179). Scale
+  0.1786 from `enemy_scale.py` (the boss floor).
+- **Checks**: `validate_plane_data.py` and `deck_legality_audit.py` have nothing on her. Agent: spawned, sighted
+  ("A legend has been sighted to the north: Mackenzie (Archmage)!"), chased at 5 tiles, fought at 50 life, every card
+  resolved; she beat the test character's starter deck.
+
 ## Round 503: LPC credits - a general thanks where the generator names no author (2026-10-08)
 
 The user: "if we don't know the authors, just say thanks in general and point to the website." `CREDITS.md`'s LPC bullet

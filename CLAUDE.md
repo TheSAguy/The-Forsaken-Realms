@@ -67,6 +67,11 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 504): **LOCAL + UNRELEASED (data only)** - Mackenzie, a new roaming legend (the user: "Take
+my current save 1, deck and create a new angel enemy, call her Mackenzie"): save 1's selected deck "Angels of the Dusk"
+as `decks/legends/mackenzie.dck`, an Archmage boss after Victor in enemies.json, named in roaming_champions.json, the
+valkyrie sprite recolored violet/silver/plum (`sprites/enemy/tfr2/mackenzie`). Agent-tested.
+
 ## STATE 2026-10-08 (round 503): **LOCAL + UNRELEASED (credits only)** - the LPC credits thank unnamed contributors in
 general and point to the generator's repository and OpenGameArt (the user: "if we don't know the authors, just say thanks
 in general and point to the website"); CREDITS.md's LPC bullet + CREDITS_LPC.md regenerated (the Procedural Pixel

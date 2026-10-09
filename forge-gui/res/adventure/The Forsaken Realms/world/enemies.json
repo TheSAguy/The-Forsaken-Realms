@@ -164072,6 +164072,90 @@
         "scale": 0.4642
     },
     {
+        "name": "Mackenzie",
+        "sprite": "sprites/enemy/tfr2/mackenzie.atlas",
+        "deck": [
+            "decks/legends/mackenzie.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "boss": true,
+        "spawnRate": 0,
+        "difficulty": 3,
+        "speed": 48,
+        "life": 50,
+        "gamesPerMatch": 3,
+        "noAnte": true,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 8,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 200
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 6,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "colors": [
+                    "White",
+                    "Black"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ],
+                "subTypes": [
+                    "Angel"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 1,
+                "count": 6
+            }
+        ],
+        "colors": "WB",
+        "questTags": [
+            "Angel",
+            "Celestial",
+            "Flying",
+            "Holy",
+            "Leader",
+            "IdentityWhite",
+            "IdentityBlack",
+            "IdentityOrzhov"
+        ],
+        "tier": "Mythic",
+        "scale": 0.1786
+    },
+    {
         "name": "Dreadmount Rider",
         "sprite": "sprites/enemy/tfr2/dreadmount_rider.atlas",
         "deck": [

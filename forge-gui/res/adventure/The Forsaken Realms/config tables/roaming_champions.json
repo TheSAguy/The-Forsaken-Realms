@@ -16,7 +16,7 @@
   // legendRewardCardFactor, PlaceRewards.applyLegendCut).
   //
   // Round 382: the twelve new legends (the art-import round) - spawnRate 0, best of three, no roster and
-  // no arena; this list is their only route.
+  // no arena; this list is their only route. Round 504: Mackenzie (the user's save-1 deck, like Victor's).
   "names": [
     "Arcades Sabboth", "Baron Levilain", "Baron Von Gant", "Bazaar Keeper", "Chromium (Boss)",
     "Elf Queen Guay", "Gaea, the Worldsoul", "Goblin King Phil", "Karona (Boss)", "King Kane Ferguson",
@@ -25,6 +25,6 @@
     "Time Walker", "Twister of Time", "Urza Planeswalker", "Vaevictis Asmadi", "Valyx the Tormentor",
     "Seraph of the Burning Brand", "Sunscale Dragon", "Skyvault Dragon", "Sixblade Naga", "Nightscale Dragon",
     "Victor", "Pyreclaw Dragon", "Cinderstone Brute", "Thornscale Dragon", "Bogspawn Horror", "Ossuary Dragon",
-    "Blightborn Mutant"
+    "Blightborn Mutant", "Mackenzie"
   ]
 }
