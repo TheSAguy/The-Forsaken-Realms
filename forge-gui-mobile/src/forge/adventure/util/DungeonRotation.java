@@ -436,12 +436,15 @@ public class DungeonRotation {
         for (PointOfInterest poi : rotatable) {
             String type = typeKey(poi);
             int n = shown.getOrDefault(type, 0);
-            if (n < typeQuota(tally.get(type)[0])) {
+            if (n < typeQuota(tally.get(type)[0]) && !isNotYet(poi, world.getCurrentDay())) { // round 513
                 shown.put(type, n + 1);
                 activeTarget++;
                 DungeonSources.onAppeared(world, poi, world.getCurrentDay()); // round 377: their age starts
             } else {
                 poi.setActive(false); // reserve pool - no cooldown, immediately swappable
+                if (isNotYet(poi, world.getCurrentDay()))
+                    System.out.println("[DungeonRotation] new world: " + poi.getDisplayName()
+                            + " held in the reserve until day " + poi.getData().notBeforeDay + " (round 513)");
             }
         }
         world.setPoiActiveTarget(activeTarget);
@@ -554,6 +557,15 @@ public class DungeonRotation {
                         + poi.getData().retireOnQuestFlag);
                 continue;
             }
+            if (isNotYet(poi, newDayCount) && activeQuestStatus(poi) == QUEST_NONE) {
+                // Round 513: showing before its day (a world made before this round) - back to the reserve, no cooldown.
+                poi.setActive(false);
+                world.getPoiDespawnDay().remove(id);
+                changed = true;
+                System.out.println("[DungeonRotation] " + poi.getDisplayName() + " back to the reserve until day "
+                        + poi.getData().notBeforeDay);
+                continue;
+            }
             Integer despawnDay = world.getPoiDespawnDay().get(id);
             if (despawnDay == null) {
                 // First sight of this POI (fresh world, newly activated, or a save predating the
@@ -641,6 +653,19 @@ public class DungeonRotation {
         return flag != null && !flag.isEmpty() && Current.player() != null && Current.player().checkQuestFlag(flag);
     }
 
+    /** Round 513 (the user: "the Sphinx cave should not appear in the first week"): a place whose
+     *  PointOfInterestData.notBeforeDay is still ahead. A new world starts it in the reserve, the reserve skips it, the
+     *  day tick puts back one already showing (a world made before this round), and no quest picks it - until that day. */
+    public static boolean isNotYet(PointOfInterest poi) {
+        World world = WorldSave.getCurrentSave() == null ? null : WorldSave.getCurrentSave().getWorld();
+        return world != null && isNotYet(poi, world.getCurrentDay());
+    }
+
+    private static boolean isNotYet(PointOfInterest poi, int day) {
+        int from = poi == null || poi.getData() == null ? 0 : poi.getData().notBeforeDay;
+        return from > 0 && day < from;
+    }
+
     // don't bounce straight back.
     private static boolean activateFromReserve(World world, int currentDay) {
         int activeCount = 0;
@@ -654,6 +679,8 @@ public class DungeonRotation {
             }
             if (isRetired(poi))
                 continue; // round 334: never comes back
+            if (isNotYet(poi, currentDay))
+                continue; // round 513: not before its day
             Integer cooldownUntil = world.getPoiRespawnDay().get(poi.getID());
             if (cooldownUntil == null || currentDay >= cooldownUntil)
                 eligibleReserve.add(poi);

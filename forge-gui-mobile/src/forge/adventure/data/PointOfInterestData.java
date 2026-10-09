@@ -31,6 +31,10 @@ public class PointOfInterestData implements Serializable {
     /** Round 334: a quest flag that retires this place for good - once the player holds it, the place leaves the map
      *  on the next day and never rotates back (the Sphinx's Sanctum after its riddles are answered). */
     public String retireOnQuestFlag;
+    /** Round 513: a rotating place held in the reserve until this day (1-indexed, World.getCurrentDay) - the user, of the
+     *  Sphinx's Sanctum and its 4,000 gold: "the Sphinx cave should not appear in the first week" (8 = from Week 1's
+     *  first day). 0 = any day. DungeonRotation.isNotYet. */
+    public int notBeforeDay;
     /** Round 433: rotating kinds that share one name here share ONE place on the map - their group shows as many as a
      *  single kind of them would (DungeonRotation.typeKey). Deep Caverns' four kinds: one at a time, not one per land. */
     public String rotationGroup;
@@ -85,6 +89,7 @@ public class PointOfInterestData implements Serializable {
         displayName= other.displayName;
         questFlagsToActivate = other.questFlagsToActivate;
         retireOnQuestFlag = other.retireOnQuestFlag; // round 433: both mod fields carried
+        notBeforeDay = other.notBeforeDay; // round 513
         rotationGroup = other.rotationGroup;
         leavesWhenBeaten = other.leavesWhenBeaten; // round 466
         returnStartCards = other.returnStartCards;

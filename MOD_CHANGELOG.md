@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 513: the Sphinx's Sanctum waits for the second week; the lasting picks leave the status (2026-10-09)
+
+The user: "I thought we said the Sphinx cave should not appear in the first week." No such rule was ever written down
+or built - no changelog entry, no code, no earlier request found - so it is built now. And, of the Ascendance status
+dialog: "Not sure why 'Spoilsman' is showing here. We can remove since it's on the Level sheet."
+
+- **`PointOfInterestData.notBeforeDay`** (new, 1-indexed like `World.getCurrentDay`, 0 = any day): a rotating place
+  held in the reserve until that day. `DungeonRotation.isNotYet`: a new world starts it in the reserve
+  (`[DungeonRotation] new world: Sphinx's Sanctum held in the reserve until day 8`), `activateFromReserve` skips it,
+  the day tick puts back one already showing in a world made before this round (`... back to the reserve until day
+  8`; not if a quest already targets it), and `AdventureQuestStage` drops it from the target pools with the retired
+  places. From day 8 it is an ordinary reserve place again - below its kind's share, so first in line when the
+  rotation next opens a slot.
+- **`points_of_interest.json`**: `"notBeforeDay": 8` on RiddlesLair (the Sphinx's Sanctum, 4,000 gold once a game since
+  round 334) - day 8 is the first day of the HUD's "Week 1".
+- **The status dialog** (`AscendanceUI.openStatus`) no longer lists the lasting picks ("Spoilsman x1"); the Level sheet
+  shows every pick at the level it came at.
+- **Agent-tested**: a new world held all five Sanctum spots in the reserve and `teleport to poi "Sphinx's Sanctum"` found
+  none. The day-tick path for an older world was not seen (roaming duels kept interrupting the waits).
+
 ## Round 512: the neck mana items - half the crack on Easy and Normal, and the four boots renamed (2026-10-08)
 
 The user, on round 506's two open points: "They should be able to crack, but let's say 50% less chance. Let's rename

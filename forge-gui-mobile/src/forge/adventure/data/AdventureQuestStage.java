@@ -136,6 +136,7 @@ public class AdventureQuestStage implements Serializable {
         // TFR round 347: a place retired for good (DungeonRotation.isRetired - its once-per-game prize is paid) is never a
         // target; the inactive fallback below would bind it and DungeonRotation.onQuestTargetBound() force-spawn it.
         validPOIs.removeIf(DungeonRotation::isRetired);
+        validPOIs.removeIf(DungeonRotation::isNotYet); // round 513: nor a place whose first day is still ahead
         if (!allowInactivePOI) {
             List<PointOfInterest> activeMatched = new ArrayList<>(validPOIs);
             activeMatched.removeIf(q -> !q.getActive()); //inactive POIs do not appear on map until conditions are met to activate them

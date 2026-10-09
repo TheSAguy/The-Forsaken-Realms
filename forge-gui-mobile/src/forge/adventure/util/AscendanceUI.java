@@ -11,7 +11,6 @@ import forge.adventure.stage.WorldStage;
 import forge.adventure.world.WorldSave;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Round 494 - Ascendance's dialogs, opened by tapping the HUD's "Asc" panel (AscendanceDisplayActor): the pick-1-of-3
@@ -77,13 +76,8 @@ public final class AscendanceUI {
         int nextCompanion = Ascendance.nextCompanionLevel(); // round 502
         addRow(dialog, "[%85]" + Ascendance.companionsLabel(player)
                 + (nextCompanion > 0 ? " - one more at Ascendance " + nextCompanion : ""));
-        StringBuilder lasting = new StringBuilder();
-        for (Map.Entry<String, Integer> pick : player.ascendance().picks.entrySet()) {
-            if (lasting.length() > 0)
-                lasting.append(", ");
-            lasting.append(Ascendance.lastingName(pick.getKey())).append(" x").append(pick.getValue());
-        }
-        addRow(dialog, "[%85]" + (lasting.length() == 0 ? "No lasting rewards yet." : lasting.toString()));
+        // Round 513 (the user: "Not sure why 'Spoilsman' is showing here. We can remove since it's on the Level sheet"):
+        // the lasting picks' line is gone - the Level sheet lists every pick by the level it came at.
         dialog.getButtonTable().add(Controls.newTextButton("Level sheet", () -> { // round 496
             stage.hideDialog();
             Gdx.app.postRunnable(AscendanceUI::openLevelSheet);

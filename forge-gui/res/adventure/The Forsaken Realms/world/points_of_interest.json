@@ -4618,7 +4618,7 @@
 		]
 	},
 	{
-		"name": "RiddlesLair", "retireOnQuestFlag": "riddlesLairComplete",
+		"name": "RiddlesLair", "retireOnQuestFlag": "riddlesLairComplete", "notBeforeDay": 8,
 		"displayName": "Sphinx's Sanctum",
 		"type": "cave",
 		"count": 1,
