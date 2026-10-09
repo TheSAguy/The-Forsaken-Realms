@@ -1232,6 +1232,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             item.commandOnUse = catalog.commandOnUse;
             item.shardsNeeded = catalog.shardsNeeded;
             item.dialogOnUse = catalog.dialogOnUse;
+            item.easyCrackSave = catalog.easyCrackSave; // round 512
+            // Round 512: a renamed item (ItemListData.RENAMED resolved its old name to the catalog's) takes the new name.
+            if (catalog.name != null && !catalog.name.equals(item.name)) {
+                System.out.println("[TFR-ItemRefresh] " + item.name + " is now " + catalog.name);
+                item.name = catalog.name;
+                changed++;
+                changedNames.add(item.name);
+            }
             // Round 506 (the user: the Left, Right and Boots mana items "re-distribute them to neck"): an item the
             // catalog moved to another slot takes it. A copy worn in the old slot comes off when the equipment loads
             // (slotTakes), a deck's loadout skips it, and a guard wearing two of one slot sends one back to storage.

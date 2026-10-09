@@ -50,6 +50,11 @@ public class ItemData implements Serializable, Cloneable {
     // spent one. The count left lives on the player (AdventurePlayer.usesLeft), not on this shared catalog entry.
     public int uses;
     public int repairShards;
+    /** Round 512: the chance this item escapes the crack a lost duel gives it on Easy and Normal (0 = none). The user,
+     *  on the eleven Left/Right mana items that hang at the neck since round 506 (Easy and Normal crack only Boots, Body
+     *  and Neck): "They should be able to crack, but let's say 50% less chance". 0 in an older save's copy until the
+     *  catalog refresh. */
+    public float easyCrackSave;
 
 
     public ItemData()
@@ -74,6 +79,7 @@ public class ItemData implements Serializable, Cloneable {
         dialogOnUse       = cpy.dialogOnUse;
         uses              = cpy.uses; // round 336
         repairShards      = cpy.repairShards;
+        easyCrackSave     = cpy.easyCrackSave; // round 512
     }
 
     public Sprite sprite() {

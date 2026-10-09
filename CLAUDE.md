@@ -67,6 +67,11 @@ agent test before release: a new world, a duel (loss path), Settings, an old sav
 release. NOTHING is unreleased. Next merge from upstream after `e7fca289313`. Next version: 1.20 / 12000. Open for the
 user: the lost-treasure design's four decisions (`docs/design/2026-10-07-lost-treasure.md`).
 
+## STATE 2026-10-08 (round 512): **LOCAL + UNRELEASED** - the eleven former hand mana items escape half the cracks on
+Easy/Normal (`ItemData.easyCrackSave` 0.5, `Current.escapesEasyCrack`); Joraga Boots / Utopia Anklet / Petalmane Pants /
+Scarecrow Socks renamed Joraga Leaf Pendant / Utopia Necklace / Petalmane Charm / Scarecrow's Feather - old names resolve
+through `ItemListData.RENAMED` and saved copies are renamed on load.
+
 ## STATE 2026-10-08 (round 511): **LOCAL + UNRELEASED** - the HUD's Ascendance panel (and the wood/stone one above it)
 fit the screen's right edge - they ran 17 units off it, hiding the bar's empty end; the bar now runs under "Asc N"
 across the whole panel (the user: "make it a progress bar from one level to the next").

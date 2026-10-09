@@ -926,7 +926,7 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Utopia Anklet",
+        "name":  "Utopia Necklace",
         "description":  "0/2 taps for any color",
         "equipmentSlot":  "Neck",
         "iconName":  "NeckUtopia",
@@ -1114,7 +1114,7 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Petalmane Pants",
+        "name":  "Petalmane Charm",
         "description":  "1/2 spirit, gets ki when spirit/arcane, 1 and remove X ki for X mana",
         "equipmentSlot":  "Neck",
         "iconName":  "NeckPetalmane",
@@ -1332,7 +1332,7 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Joraga Boots",
+        "name":  "Joraga Leaf Pendant",
         "description":  "1/1, level up to tap for GG, then let all elves tap for GG",
         "equipmentSlot":  "Neck",
         "iconName":  "NeckJoraga",
@@ -1674,7 +1674,7 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Scarecrow Socks",
+        "name":  "Scarecrow\u0027s Feather",
         "description":  "2/1 reach, filters mana once a turn",
         "equipmentSlot":  "Neck",
         "iconName":  "NeckScarecrow",
@@ -2011,7 +2011,8 @@
                                                    "Golden Egg|ELD"
                                                ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Uncommon",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Urza\u0027s Bauble",
@@ -2218,7 +2219,8 @@
                                                    "Lotus Petal|TMP"
                                                ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Uncommon",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Black Lotus",
@@ -2232,7 +2234,8 @@
                                                    "Black Lotus|LEA"
                                                ]
                    },
-        "rarity":  "Rare"
+        "rarity":  "Rare",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Pyrite Gauntlet",
@@ -2271,7 +2274,8 @@
                                                    "Chromatic Sphere|MRD"
                                                ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Uncommon",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Tome of the Builder",
@@ -2309,7 +2313,8 @@
                                                    "Kaleidostone|CFX"
                                                ]
                    },
-        "rarity":  "Rare"
+        "rarity":  "Rare",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Sunbeam Gauntlet",
@@ -2585,7 +2590,8 @@
                                                    "Vessel of Volatility|SOI"
                                                ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Uncommon",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Amulet of Compleation",
@@ -5702,7 +5708,8 @@
                                                    "Sol Ring"
                                                ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Uncommon",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Mox Emerald",
@@ -6082,7 +6089,8 @@
                                                                 "Presence of the Hydra"
                                                             ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Uncommon",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Death Ring",
@@ -6174,7 +6182,8 @@
                                                    "Dungeon Map"
                                                ]
                    },
-        "rarity":  "Rare"
+        "rarity":  "Rare",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Concordant Boots",
@@ -6408,7 +6417,8 @@
                                                    "c_a_gold_sac"
                                                ]
                    },
-        "rarity":  "Rare"
+        "rarity":  "Rare",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Treasure",
@@ -6420,7 +6430,8 @@
                                                    "c_a_treasure_sac"
                                                ]
                    },
-        "rarity":  "Rare"
+        "rarity":  "Rare",
+        "easyCrackSave":  0.5
     },
     {
         "name":  "Magic Shard",

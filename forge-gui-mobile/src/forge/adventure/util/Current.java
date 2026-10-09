@@ -38,7 +38,8 @@ public class Current {
 
         final ItemData itemData = player().getRandomEquippedItem();
         if (itemData != null && !(Config.instance().getSettingData().disableCrackedItems)
-                && !Ascendance.itemEscapesCracking(itemData)) { // round 494: Mender
+                && !Ascendance.itemEscapesCracking(itemData) // round 494: Mender
+                && !escapesEasyCrack(itemData)) { // round 512
             itemData.isCracked = true;
             player().equip(itemData); // un-equip
             InventoryScene.instance().clearItemDescription();
@@ -50,5 +51,17 @@ public class Current {
         }
 
         return baseMessage;
+    }
+
+    private static final java.util.Random CRACK_RAND = new java.util.Random();
+
+    /** Round 512: on Easy and Normal an item with easyCrackSave (the eleven mana items that left the hands for the neck
+     *  in round 506 - those difficulties crack only Boots, Body and Neck) escapes the crack that often. */
+    private static boolean escapesEasyCrack(ItemData item) {
+        if (item.easyCrackSave <= 0f || player().isHardorInsaneDifficulty() || CRACK_RAND.nextFloat() >= item.easyCrackSave)
+            return false;
+        System.out.println("[TFR-Crack] " + item.name + " escapes cracking (" + Math.round(item.easyCrackSave * 100)
+                + "% on Easy/Normal)");
+        return true;
     }
 }

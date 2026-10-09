@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 512: the neck mana items - half the crack on Easy and Normal, and the four boots renamed (2026-10-08)
+
+The user, on round 506's two open points: "They should be able to crack, but let's say 50% less chance. Let's rename
+also please."
+
+- **Cracking**: Easy and Normal crack only a Boots, Body or Neck item on a lost duel, so the eleven that left the
+  hands for the neck in 506 (Sol Ring, Black Lotus, Lotus Petal, Chromatic Sphere, Golden Egg, Kaleidostone, Volatile
+  Prayerbook, Presence of the Hydra, Dungeon Map, Treasure, Change) could not crack there before and now could. They
+  carry `"easyCrackSave": 0.5` (items.json; `ItemData.easyCrackSave`, copied by the catalog refresh): on Easy and
+  Normal a crack that lands on one is escaped half the time (`Current.escapesEasyCrack`, `[TFR-Crack]`), after Mender's
+  own roll. Hard and Insane crack them at the full chance, as before the move.
+- **The four renamed** (their creatures and pendant icons unchanged): Joraga Boots -> **Joraga Leaf Pendant**, Utopia
+  Anklet -> **Utopia Necklace**, Petalmane Pants -> **Petalmane Charm**, Scarecrow Socks -> **Scarecrow's Feather**.
+  Every reference moved too: enemies.json reward lists (15), the Player Capitol's shop lists (player_capital.tmx, 9),
+  EconomyBuildings' item list, the content filter's items.csv.
+- **Old names still work**: `ItemListData.getItem` resolves an old name to the renamed item (`RENAMED`), so a save, a
+  map or a list that still names "Joraga Boots" gets the Joraga Leaf Pendant; the catalog refresh renames a saved copy
+  on load (`[TFR-ItemRefresh] Utopia Anklet is now Utopia Necklace`), worn copies staying worn.
+- **Agent-tested**: a save holding the four under their old names (one worn) loaded with all four renamed and the worn
+  one still on; `give item "Joraga Boots"` gave a Joraga Leaf Pendant. The half-chance crack was not seen in play (it
+  needs a lost duel to pick one of the eleven).
+
 ## Round 511: the Ascendance bar shows the way to the next level (2026-10-08)
 
 The user: "I thought the yellow bar was a progress bar to the next level, but it does not match the current XP level,

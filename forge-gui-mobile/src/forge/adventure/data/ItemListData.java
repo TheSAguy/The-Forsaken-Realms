@@ -22,14 +22,24 @@ public class ItemListData {
             ContentFilterTables.filterItems(itemList);
         }
     }
+    /** Round 512: items renamed since a save, a map or a reward list was written - the old name (lower case) resolves to
+     *  the item under its new one. The user, on the four mana creatures that hang at the neck since round 506: "Let's
+     *  rename also please". AdventurePlayer's catalog refresh renames a saved copy on load. */
+    private static final java.util.Map<String, String> RENAMED = java.util.Map.of(
+            "joraga boots", "Joraga Leaf Pendant",
+            "utopia anklet", "Utopia Necklace",
+            "petalmane pants", "Petalmane Charm",
+            "scarecrow socks", "Scarecrow's Feather");
+
     public static ItemData getItem(String name) {
-        if (itemList == null)
+        if (itemList == null || name == null)
             return null;
         for (ItemData orig : new Array.ArrayIterator<>(itemList)) {
             if (orig.name.equalsIgnoreCase(name))
                 return orig.clone();
         }
-        return null;
+        String renamed = RENAMED.get(name.toLowerCase(java.util.Locale.ROOT));
+        return renamed == null ? null : getItem(renamed);
     }
     /** All shop-worthy item names of one rarity (Common/Uncommon/Rare/Mythic) - quest items,
      *  Landscape Sketchbooks, and excludeFromGeneralSale trophy items excluded, same rule
