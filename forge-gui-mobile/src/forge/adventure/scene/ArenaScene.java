@@ -1526,6 +1526,35 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         loadArenaData(data, seed, false);
     }
 
+    /** Round 525: the chance one coin holder joins the player's arena bracket - by how many can: 1 -> 50%, 2 -> 75%,
+     *  3 or more -> always. */
+    private static final float[] COIN_FOE_CHANCE = {0f, 0.5f, 0.75f, 1f};
+
+    /** Round 525: the enemy holding one of the player's Bronze Coins who joins this bracket, or null. Holders the content
+     *  filter excludes or the roster no longer has cannot; in the Level-2 (Challenging) bracket only Masters and
+     *  Archmages can, as for its pool (round 475). */
+    private EnemyData pickCoinRansomFoe(boolean masterPlusOnly) {
+        java.util.List<String> holders = Current.player().coinRansomHolders();
+        if (holders.isEmpty())
+            return null;
+        java.util.List<EnemyData> eligible = new java.util.ArrayList<>();
+        for (String name : holders) {
+            EnemyData data = WorldData.getEnemy(name);
+            if (data == null || !ContentFilterTables.isEnemyIncluded(name))
+                continue;
+            if (masterPlusOnly && EnemyData.tierRank(data.tier) < 2)
+                continue;
+            eligible.add(data);
+        }
+        float chance = COIN_FOE_CHANCE[Math.min(eligible.size(), COIN_FOE_CHANCE.length - 1)];
+        float roll = rand.nextFloat();
+        EnemyData picked = eligible.isEmpty() || roll >= chance ? null : eligible.get(rand.nextInt(eligible.size()));
+        System.out.println("[TFR-ArenaCoin] coin holders: " + eligible.size() + " can join of " + holders.size() + " "
+                + holders + (masterPlusOnly ? " (Level 2: Master+ only)" : "") + " - chance " + Math.round(chance * 100f)
+                + "%, roll " + Math.round(roll * 100f) + " - " + (picked == null ? "none joins" : picked.getName() + " joins"));
+        return picked;
+    }
+
     /** isChallenge (2026-08-11, Arena Level 2 Challenge mode, MOD_SCOPE.md #20): forces every
      *  fight in this run to best-of-1 regardless of each enemy's own EnemyData.gamesPerMatch -
      *  about a third of the Challenge pool (bosses/mini-bosses/Planeswalkers) default to
@@ -1619,9 +1648,20 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             if (adeptPool.isEmpty() && masterPool.isEmpty() && archmagePool.isEmpty())
                 tierWeighted = false;
         }
+        // Round 525 (the user: "For player Arena, If you have a Coin duel opponent, then have that opponent have a 50%
+        // chance of joining a regular Arena match. If you have 2 Coin Opponents ... 75% that one of then would be one of
+        // the competitors in the arena brackets. If you have 3+, it should be 100% ... For Arena level 2. Only a Master+ can
+        // join."): in the player's own arena one enemy holding a Bronze Coin of the player's may take a bracket slot. Beating
+        // them pays the coin back at the bracket's end, as for any holder (coinRansomFoesBeaten).
+        EnemyData coinFoe = playerOwnedArena ? pickCoinRansomFoe(challengePayoutBracket) : null;
+        int coinFoeSlot = coinFoe == null ? -1 : rand.nextInt(numberOfEnemies);
+        if (coinFoe != null)
+            System.out.println("[TFR-ArenaCoin] " + coinFoe.getName() + " takes bracket slot " + (coinFoeSlot + 1) + " of "
+                    + numberOfEnemies + (coinFoeSlot == numberOfEnemies - 1 ? " - the player's first opponent" : ""));
         StringBuilder bracketLog = new StringBuilder();
         for (int i = 0; i < numberOfEnemies; i++) {
-            EnemyData enemyData = tierWeighted ? pickTierWeighted(adeptPool, masterPool, archmagePool) : null;
+            EnemyData enemyData = i == coinFoeSlot ? coinFoe
+                    : tierWeighted ? pickTierWeighted(adeptPool, masterPool, archmagePool) : null;
             while (enemyData == null)
                 enemyData = WorldData.getEnemy(poolNames.get(rand.nextInt(poolNames.size())));
             bracketLog.append(i > 0 ? ", " : "").append(enemyData.getName()).append(" (").append(EnemyData.tierDisplayName(enemyData.tier)).append(')');

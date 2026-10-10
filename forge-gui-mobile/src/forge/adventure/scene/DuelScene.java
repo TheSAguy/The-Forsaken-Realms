@@ -932,6 +932,14 @@ public class DuelScene extends ForgeScene {
                 ascendance.extraManaShards = shardBonus;
                 playerEffects.add(ascendance);
             }
+            // Round 525: Opening Gambit - the player's seat weighs more in the first game's coin toss (the engine's
+            // GameAction.weightedCoinToss logs the roll).
+            float tossWeight = forge.adventure.util.Ascendance.coinTossWeight();
+            if (tossWeight != 1f) {
+                humanPlayer.setCoinTossWeight(tossWeight);
+                System.out.println("[TFR-Ascend] Opening Gambit: the coin toss favors the player "
+                        + Math.round(100f * forge.adventure.util.Ascendance.openingTossChance()) + "%");
+            }
         }
         // Round 163 (MOD_SCOPE #118): a roaming guard's own equipment. Its effects go on the guard's
         // seat and its items' opponent effects on the mage's, exactly as the player's do above.

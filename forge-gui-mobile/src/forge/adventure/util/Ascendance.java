@@ -914,6 +914,14 @@ public final class Ascendance {
     public static float guardRecoveryFactor() { return Math.max(0.1f, 1f - total("medic")); }
     /** Architect: building and town-restore costs, times this. */
     public static float buildCostFactor() { return Math.max(0.1f, 1f - total("architect")); }
+    /** Round 525, Opening Gambit (the user: "50% more likely to win coin flip to start a duel ... a 75% chance of
+     *  starting"): the chance to win the first game's coin toss - 50%, times 1 + the pick's value. */
+    public static float openingTossChance() { return Math.min(1f, 0.5f * (1f + total("coinToss"))); }
+    /** Round 525: Opening Gambit as the player seat's weight in the engine's toss against an opponent at 1 (75% -> 3). */
+    public static float coinTossWeight() {
+        float chance = openingTossChance();
+        return chance >= 0.999f ? 1000f : chance / (1f - chance);
+    }
 
     /** Morning Vigor: the life added to this duel - "+3 life for the first duel each day", one more duel each pick.
      *  Counts the duel (call once, at a duel's start). */
@@ -1094,6 +1102,7 @@ public final class Ascendance {
             case "architect": effect = "Building and town restore costs -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
             case "mechanic": effect = "Item repairs cost " + pct(Math.min(1f, then)) + " less [+Gold]"; break; // round 508
             case "medic": effect = "Downed roaming guards heal in " + pct(Math.min(1f, then)) + " less time"; break; // round 508
+            case "coinToss": effect = "Win the opening coin toss " + pct(Math.min(1f, 0.5f * (1f + then))) + " of the time"; break; // round 525
             default: effect = id;
         }
         return "[%95]" + lastingName(id) + rank + "[]\n[%75]" + effect;
@@ -1119,6 +1128,7 @@ public final class Ascendance {
             case "architect": return "Architect";
             case "mechanic": return "Mechanic"; // round 508
             case "medic": return "Medic";
+            case "coinToss": return "Opening Gambit"; // round 525
             default: return id;
         }
     }

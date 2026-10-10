@@ -14264,6 +14264,53 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 525: Opening Gambit wins the coin toss 75% of the time; coin holders join the player's own Arena (2026-10-10)
+
+The user: "Let's add the following level up perk. 50% more likely to win coin flip to start a duel. One time perk. If my
+math is correct, this should mean you have a 75% chance of starting." And: "For player Arena, If you have a Coin duel
+opponent, then have that opponent have a 50% chance of joining a regular Arena match. If you have 2 Coin Opponents, have
+the chances be 75% that one of then would be one of the competitors in the arena brackets. If you have 3+, it should be
+100% that one of them would be a competitor. For Arena level 2. Only a Master+ can join."
+
+- **Opening Gambit** (Ascendance lasting reward, one rank; `ascendance.json` `coinToss`, value 0.5): the first game's
+  coin toss at 50% x 1.5 = 75%.
+  - Engine (CORE_ENGINE_CHANGES "Round 525"):
+    - `RegisteredPlayer.coinTossWeight` (default 1).
+    - `GameAction.weightedCoinToss`, used by `determineFirstTurnPlayer` for game 1. A weighted pick only when a seat's
+      weight is not 1, else the stock `Aggregates.random`; logged `[TFR-CoinToss]`.
+  - `DuelScene` sets the player's seat to `Ascendance.coinTossWeight()` (0.75 / 0.25 = 3).
+  - Same scope as Morning Vigor and Shardwell: the player's own duels, not a spectated guard fight, an Inn tournament
+    or Deck Tester.
+  - Later games of a match keep the rule that the loser starts.
+  - Icon: Shikashi's crowned gold coin, appended to `ascendance_icons.atlas` as `coinToss_1` in a free cell. The Heroes
+    III source images are gone from Downloads, so the page was extended in place, not rebuilt.
+- **Coin holders in the player's Arena** (`ArenaScene.pickCoinRansomFoe`).
+  - In a player-owned arena, before the bracket is drawn, one enemy holding a Bronze Coin of the player's may take a
+    random bracket slot:
+    - with 1 eligible holder: 50%;
+    - with 2: 75%;
+    - with 3 or more: always.
+  - In the Level-2 (Challenging) bracket only Masters and Archmages are eligible, as for its pool (round 475).
+  - Holders the content filter excludes, or the roster no longer has, never join.
+  - Beating a holder in the bracket pays the coin back at the bracket's end, as before (`coinRansomFoesBeaten`).
+  - Logged `[TFR-ArenaCoin] coin holders: ...` and `... takes bracket slot N of M` ("the player's first opponent" when
+    it is the last slot).
+- CREDITS.md: Shikashi's line names the Opening Gambit coin.
+
+**Agent-tested** (slot 7, scratch-only console commands that gave enemies a Bronze Coin and ran the pick 400 times):
+
+| Holders | Bracket | Joined | Expected |
+|---|---|---|---|
+| none | regular | never | never |
+| 1 | regular | 47% | 50% |
+| 2 | regular | 76% | 75% |
+| 3 | regular | always | always |
+| an Adept + an Archmage | Level 2 | 49%, the Archmage | 50% |
+| 3, two of them Master+ | Level 2 | 75%, never the Adept | 75% |
+
+A duel after "asc pick coinToss" logged "Opening Gambit: the coin toss favors the player 75%" and
+`[TFR-CoinToss] weighted toss (Shaman (Adept) 25%, Poran 75%)`.
+
 ## Round 524: on Android, the mod's own HUD controls take a tap again instead of opening the joystick (2026-10-10)
 
 A player's report on Discord (Alikus, Android, with a screenshot): "On Android i can't press Ascendance and info

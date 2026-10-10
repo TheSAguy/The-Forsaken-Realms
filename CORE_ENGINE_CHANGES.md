@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 525 - Opening Gambit's weighted coin toss
+
+- **`forge-game/.../player/RegisteredPlayer.java`** - `coinTossWeight` (default 1) with its getter/setter: a seat's weight
+  in the first game's coin toss.
+- **`forge-game/.../GameAction.java`** - `determineFirstTurnPlayer`: game 1's `Aggregates.random(game.getPlayers())` is
+  now `weightedCoinToss()`, a weighted pick that falls back to that same `Aggregates.random` when every weight is 1 (the
+  stock case); it logs `[TFR-CoinToss]` when it weighs. An upstream change to this method's coin toss is a conflict to
+  re-apply by hand.
+- **Mod-touched**: `scene/DuelScene.java` (the player's seat weight), `util/Ascendance.java` (`coinToss`), `scene/ArenaScene.java`
+  (coin holders in the player's bracket).
+
 ### Round 497 - Ascendance from level 0, costs by difficulty
 
 - **`player/AdventurePlayer.java`** - `Ascendance.load(data, ascendance, difficultyData.name)` (the difficulty re-prices an

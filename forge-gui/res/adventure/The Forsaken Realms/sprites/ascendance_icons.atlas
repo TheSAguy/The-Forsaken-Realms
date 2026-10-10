@@ -133,3 +133,6 @@ coins
 goodwill
   xy: 202, 502
   size: 96, 96
+coinToss_1
+  xy: 302, 502
+  size: 96, 96

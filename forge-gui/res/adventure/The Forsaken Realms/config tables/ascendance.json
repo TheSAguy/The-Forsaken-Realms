@@ -113,6 +113,9 @@
     { "id": "envoy",       "lasting": true, "maxPicks": 2, "value": 0.15 }, // -15% color reputation lost from wins
     { "id": "architect",   "lasting": true, "maxPicks": 3, "value": 0.10 }, // -10% building and restore costs
     { "id": "mechanic",    "lasting": true, "maxPicks": 1, "value": 0.75 }, // item repairs cost 75% less (round 508)
-    { "id": "medic",       "lasting": true, "maxPicks": 1, "value": 0.50 }  // downed guards heal in 50% less time (round 508)
+    { "id": "medic",       "lasting": true, "maxPicks": 1, "value": 0.50 }, // downed guards heal in 50% less time (round 508)
+    // Round 525 (the user: "50% more likely to win coin flip to start a duel. One time perk ... you have a 75% chance of
+    // starting"): Opening Gambit - the first game's coin toss at 50% x (1 + value).
+    { "id": "coinToss",    "lasting": true, "maxPicks": 1, "value": 0.50 }
   ]
 }

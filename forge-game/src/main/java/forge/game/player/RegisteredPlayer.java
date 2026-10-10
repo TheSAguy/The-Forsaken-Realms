@@ -25,6 +25,9 @@ public class RegisteredPlayer {
     private int startingLife = 20;
     private int startingHand = 7;
     private int manaShards = 0;
+    // TFR (round 525): this player's weight in the first game's coin toss (GameAction.determineFirstTurnPlayer) - 1 for
+    // everyone is the stock fair toss; the Adventure's Opening Gambit perk sets 3 on the player's seat (3 to 1 = 75%).
+    private float coinTossWeight = 1f;
     private Iterable<IPaperCard> extraCardsOnBattlefield = null;
     // TFR (2026-09-03): cards that start on the battlefield TAPPED - the town-assault defender's
     // basic land. Placed by Player.initVariantsZones() exactly like extraCardsOnBattlefield.
@@ -72,6 +75,14 @@ public class RegisteredPlayer {
     }
     public final void setManaShards(int manaShards) {
         this.manaShards = manaShards;
+    }
+
+    // TFR (round 525): see coinTossWeight.
+    public final float getCoinTossWeight() {
+        return coinTossWeight;
+    }
+    public final void setCoinTossWeight(float weight) {
+        this.coinTossWeight = Math.max(0f, weight);
     }
 
     public boolean hasEnableETBCountersEffect() {

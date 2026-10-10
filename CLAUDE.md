@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (round 525): **LOCAL + UNRELEASED** - Opening Gambit (Ascendance, one rank: the first game's coin toss
+at 75% - engine `RegisteredPlayer.coinTossWeight` + `GameAction.weightedCoinToss`), and Bronze-Coin holders joining the
+player's own Arena bracket (1 -> 50%, 2 -> 75%, 3+ -> always; Level-2 Master+ only; `ArenaScene.pickCoinRansomFoe`).
+
 ## STATE 2026-10-10 (16:11 UTC): **v1.20.1 Android hotfix RELEASED** - tag `tfr-v1.20.1` @ `2681afca2ce`, published WITHOUT
 the Latest badge (v1.20 stays Latest so PC players get its zip; the app's update check reads releases.atom, which lists
 1.20.1 first - checked). The user: "a hot-fix release for Android only" - round 524 (the HUD controls take a tap) plus

@@ -2401,6 +2401,39 @@ public class GameAction {
         } while (game.getAge() == GameStage.RestartedByKarn);
     }
 
+    /**
+     * TFR (round 525): the first game's coin toss, weighted by each seat's RegisteredPlayer.getCoinTossWeight() - the
+     * Adventure's Opening Gambit perk ("50% more likely to win coin flip to start a duel": 3 to 1, a 75% toss). With every
+     * weight at 1 (the stock case) this is exactly the old Aggregates.random pick.
+     */
+    private Player weightedCoinToss() {
+        List<Player> players = game.getPlayers();
+        float total = 0f;
+        boolean weighted = false;
+        for (Player p : players) {
+            float w = p.getRegisteredPlayer() == null ? 1f : p.getRegisteredPlayer().getCoinTossWeight();
+            weighted |= w != 1f;
+            total += w;
+        }
+        if (!weighted || total <= 0f)
+            return Aggregates.random(players);
+        float roll = MyRandom.getRandom().nextFloat() * total;
+        Player winner = players.get(players.size() - 1);
+        for (Player p : players) {
+            roll -= p.getRegisteredPlayer() == null ? 1f : p.getRegisteredPlayer().getCoinTossWeight();
+            if (roll < 0f) {
+                winner = p;
+                break;
+            }
+        }
+        StringBuilder odds = new StringBuilder();
+        for (Player p : players)
+            odds.append(odds.length() == 0 ? "" : ", ").append(p.getName()).append(' ')
+                    .append(Math.round(100f * (p.getRegisteredPlayer() == null ? 1f : p.getRegisteredPlayer().getCoinTossWeight()) / total)).append('%');
+        System.out.println("[TFR-CoinToss] weighted toss (" + odds + ") - " + winner.getName() + " wins it");
+        return winner;
+    }
+
     private Player determineFirstTurnPlayer(final GameOutcome lastGameOutcome) {
         // Only cut/coin toss if it's the first game of the match
         Player goesFirst = null;
@@ -2435,7 +2468,7 @@ public class GameAction {
 
         boolean isFirstGame = lastGameOutcome == null;
         if (isFirstGame) {
-            goesFirst = Aggregates.random(game.getPlayers());
+            goesFirst = weightedCoinToss(); // TFR (round 525): was Aggregates.random(game.getPlayers())
         } else {
             for (Player p : game.getPlayers()) {
                 if (!lastGameOutcome.isWinner(p.getRegisteredPlayer())) {
