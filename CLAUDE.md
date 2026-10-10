@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (round 531): **LOCAL + UNRELEASED (data only)** - the level-up choice pays more: gold 70 a level
+(was 40), wood and stone 15 (was 12); shards unchanged (`ascendance.json`).
+
 ## STATE 2026-10-10 (round 530): **LOCAL + UNRELEASED** - an obelisk gives a map-piece card: the loot screen shows
 the piece just found (`Reward.Type.MapPiece`, face from `TreasureHunt.renderPiece`) and the Spade beside the first; both
 granted before the screen opens (`Reward.alreadyGranted`, skipped by `AdventurePlayer.addReward`).

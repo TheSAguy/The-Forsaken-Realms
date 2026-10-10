@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 531: richer gold, wood and stone on the level-up choice (2026-10-10)
+
+The user, with a screenshot of the Ascendance 7 choice (Haggler I, Gold +280, Stone +84): "For the Level up choice,
+increase resource value by 25% and Gold by 75%".
+
+- `ascendance.json` one-time choices:
+  - gold 40 -> 70 a level (+75%);
+  - wood and stone 12 -> 15 a level (+25%).
+  - At level 7: Gold +490 (was 280), Stone +105 (was 84).
+- Shards (4 a level) are left alone: they are the premium currency (re-rolls, digs, repairs), not a building resource.
+- Data only. The choice text and the Level sheet read the values from the file (`AscendanceRewards.amount`).
+
 ## Round 530: an obelisk gives a map-piece card (2026-10-10)
 
 The user: "When you grab the Obelisk on the overworld, you should get a reward card, with the fragment of map on it.

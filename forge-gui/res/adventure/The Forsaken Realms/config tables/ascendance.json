@@ -86,11 +86,12 @@
   // difficulty (difficultyNames above). The user: "50 shards on Insane and -5 per lower level".
   "difficultyRerollCost": [35, 40, 45, 50],
   "choices": [
-    // one-time
-    { "id": "gold",        "value": 40 },   // 40 x level gold
+    // one-time. Round 531, the user: "For the Level up choice, increase resource value by 25% and Gold by 75%" - gold
+    // 40 -> 70, wood and stone 12 -> 15 (shards, the premium currency, stay at 4).
+    { "id": "gold",        "value": 70 },   // 70 x level gold
     { "id": "shards",      "value": 4 },    // 4 x level shards
-    { "id": "wood",        "value": 12 },   // 12 x level wood
-    { "id": "stone",       "value": 12 },   // 12 x level stone
+    { "id": "wood",        "value": 15 },   // 15 x level wood
+    { "id": "stone",       "value": 15 },   // 15 x level stone
     { "id": "rareCards" },                  // in the deck's colors: 1 rare (L2-12), 2 rares (L13-22), a rare + a mythic (L23+)
     { "id": "item" },                       // Common (L2-12), Uncommon (L13-22), Rare (L23+)
     { "id": "booster" },                    // a pack of an edition the player has unlocked
