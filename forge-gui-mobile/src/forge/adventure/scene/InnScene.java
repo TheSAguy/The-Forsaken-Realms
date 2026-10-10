@@ -184,7 +184,11 @@ public class InnScene extends UIScene {
         }
 
         initLocalEvent();
-        if (localEvent == null){
+        if (localEvent == null && wonUntilDay > 0) { // round 527: this week's tournament here is already won
+            eventDescription.setText("[GREY]Won - next on day " + wonUntilDay); // short: the label is one line wide
+            event.setDisabled(true);
+            reroll.setDisabled(true);
+        } else if (localEvent == null){
             eventDescription.setText("[GREY]No events at this time");
             event.setDisabled(true);
             reroll.setDisabled(true);
@@ -274,8 +278,12 @@ public class InnScene extends UIScene {
         data.eventRules.shardsToEnter = current.shardsToEnter;
     }
 
+    /** Round 527: the day this Inn's next tournament opens when one was won here this week, else 0. */
+    private static int wonUntilDay;
+
     private static void initLocalEvent() {
         localEvent = null;
+        wonUntilDay = 0;
         AdventureEventData replacingStaleEvent = null;
         boolean playerTown = isPlayerOwnedTown();
         for (AdventureEventData data :  AdventurePlayer.current().getEvents()){
@@ -327,6 +335,19 @@ public class InnScene extends UIScene {
             }
         }
         AdventureEventController controller = AdventureEventController.instance();
+        // Round 527 (the user: "you can only Win one Inn Tournament per town/Capitol per week. So after a win, no more
+        // would be offered till the start of the next week, Day 8, 15, 22, etc."): no new tournament is dealt in a town
+        // whose Inn was won this week. A tournament the player is in, or whose rewards are due, was returned above.
+        forge.adventure.world.World world = forge.adventure.util.Current.world();
+        Integer wonWeek = world == null ? null : world.getInnWinWeek().get(localPointOfInterestId);
+        if (wonWeek != null && wonWeek == world.getCurrentWeek()) {
+            wonUntilDay = forge.adventure.world.World.nextWeekBoundary(world.getCurrentDay());
+            System.out.println("[TFR-InnWeekly] " + localPointOfInterestId + ": won this week - no tournament until day "
+                    + wonUntilDay);
+            if (replacingStaleEvent != null) // a stale tournament stays out too; the week's turn deals a fresh one
+                replacingStaleEvent = null;
+            return;
+        }
         localEvent = controller.createEvent(localPointOfInterestId, playerTown);
         if (localEvent != null) {
             controller.initializeEvent(localEvent, localPointOfInterestId, localObjectId, changes);

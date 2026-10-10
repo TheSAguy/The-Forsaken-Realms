@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 527: one Inn tournament win per town a week (2026-10-10)
+
+The user: "Let's make it that you can only Win one Inn Tournament per town/Capitol per week. So after a win, no more
+would be offered till the start of the next week, Day 8, 15, 22, etc."
+
+- **`World.innWinWeek`** (new, saved as `innWinWeek`; cleared for a new world and when a place is removed, like
+  `arenaWinWeek`): the Inn's town POI id -> the week (`getCurrentWeek()`, day 8 starts week 1) its tournament was won.
+- **The win is recorded** where round 369 pays the Inn's town +1 reputation (`AdventureEventData`, first award of a won
+  tournament). Logged `[TFR-InnWeekly] tournament won at ... - the next one here from day N`.
+- **`InnScene.initLocalEvent`** deals no new tournament in a town whose Inn was won this week.
+  - The event line reads "Won - next on day N", and Info and Re-roll are greyed.
+  - The line is short on purpose: the longer "Won this week - next tournament on day N" ran off the screen.
+  - A tournament the player is in, or whose rewards are due, is returned before the check, so it is never cut off.
+  - Stock Forge's once-per-real-day gate (`nextEventDate`) still applies on top.
+- Before: a won tournament is finalized and removed, so the next visit dealt a fresh one, on the next real-world day at
+  the latest.
+
+**Agent-tested** (slot 7, day 1, Llanowar; a scratch-only console command marked the town won and opened its Inn):
+- unmarked, the Inn showed "Sealed Deck available";
+- marked, "Won - next on day 8" with Info and Re-roll greyed.
+
 ## Round 526: the Level sheet - a description beside every pick, an icon on every line, title medals (2026-10-10)
 
 The user, with a Level sheet screenshot: "On the Level sheet. Add a brief description of what each does. Like when you

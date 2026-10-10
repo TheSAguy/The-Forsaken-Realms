@@ -1065,6 +1065,15 @@ public class AdventureEventData implements Serializable {
         // Round 369 (the user: "Winning an Inn Tournament should raise local reputation by 1"): the Inn's own place -
         // its town's Reputation, the number shown on entering it. Once, on the first award only.
         if (firstAward && playerWon && sourceID != null && forge.adventure.world.WorldSave.getCurrentSave() != null) {
+            // Round 527 (the user: "you can only Win one Inn Tournament per town/Capitol per week"): this town's Inn deals
+            // no new tournament until the week turns (InnScene.initLocalEvent).
+            forge.adventure.world.World world = forge.adventure.world.WorldSave.getCurrentSave().getWorld();
+            if (world != null) {
+                world.getInnWinWeek().put(sourceID, world.getCurrentWeek());
+                System.out.println("[TFR-InnWeekly] tournament won at " + sourceID + " in week " + world.getCurrentWeek()
+                        + " (day " + world.getCurrentDay() + ") - the next one here from day "
+                        + forge.adventure.world.World.nextWeekBoundary(world.getCurrentDay()));
+            }
             PointOfInterestChanges changes = forge.adventure.world.WorldSave.getCurrentSave().getPointOfInterestChanges(sourceID);
             if (changes != null) {
                 changes.addMapReputation(1);
