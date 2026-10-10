@@ -80,6 +80,13 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (16:11 UTC): **v1.20.1 Android hotfix RELEASED** - tag `tfr-v1.20.1` @ `2681afca2ce`, published WITHOUT
+the Latest badge (v1.20 stays Latest so PC players get its zip; the app's update check reads releases.atom, which lists
+1.20.1 first - checked). The user: "a hot-fix release for Android only" - round 524 (the HUD controls take a tap) plus
+519-523. Assets in `C:\TFRelease1.20.1`: `forsaken-realms-1.20.1-signed-aligned.apk` 13.6 MB (versionCode 12001,
+signer EE:60:39:25, `onHudControl` in the dex), `assets.zip` 307.1 MB (build.txt pair 2026-10-10 16:07:37). No PC zip.
+modVersion 1.20.1. NOTHING unreleased. Next version: 1.21 / 12100.
+
 ## STATE 2026-10-10 (round 524): **LOCAL + UNRELEASED** - Android: the mod's code-built HUD controls (Info, Speed-Up,
 Wait, the day/wood-stone/Ascendance panels, the treasure maps' button) were dead - the touchpad opened under the finger
 and took the tap (Alikus on Discord). `GameHUD.onHudControl` keeps those touches, and any Button or listener under the
