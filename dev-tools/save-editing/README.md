@@ -115,3 +115,7 @@ the collection count is identical, and life/gold/resources are intact.
   Syphoner, Flesh-Eater Imp, Bonepicker Skirge, Necrogen Communion, 2 Anoint with Affliction, 2 Black Sun's Twilight,
   Vraska's Fall, Infectious Inquiry; 9 Island + 8 Swamp) over "Stolen Tides"; backup `.prededit26.bak`; verified with
   Inspect: stats and empty slots unchanged, collection +1 free Swamp.
+- **2026-10-10** - the user: "check my decks" then "update both decks". Their own in-game edit of "Tide of Phyresis"
+  (-1 Chrome Prowler, +Thrummingbird, +Dissipation Field; 41 cards) kept, then trimmed to 40 with new cards: +Mana Leak,
+  +Preordain, -2 Bring the Ending, -Stinging Barrier. "Dimir Contagion": +Thrummingbird for Bonepicker Skirge, +Mana Leak
+  for a Prologue to Phyresis. Backup `.prededit27.bak`; verified with Inspect: both 40, stats and collection unchanged.
