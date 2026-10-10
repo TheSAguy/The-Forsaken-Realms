@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 523: eighteen mounted knights - LPC riders on bluecarrot16's horses (2026-10-09)
+
+The Procedural Pixel Creatures session's mounted pilot (the user: "Let's try out the 18 you recommend", then "Please
+install these"): the 18 enemies on the stock `humanoid/human/knight/cavalier`, `cavalier_2`, `death_knight` and
+`death_knight_2` sprites (16 px riders) now ride. Selections in the generator repo's `lpc_selections/make_523.py`.
+
+- **How**: the horses are "[LPC] Horses" by bluecarrot16, cut into a background and a foreground layer per frame by
+  bigbeargames ("[LPC] Horse Riding"), five coats; the generator's new `mounted_to_forge.py` draws an LPC character
+  between the layers by bigbeargames' recipe and offsets (the rider's top half at the frame's offset, the legs astride
+  from a thrust frame, the near foot, hair, weapon and shield over the horse). Standing and walking the rider holds the
+  reins; the attack is the character's own swing, thrust, cast or shot over the standing horse. Four directions, walk 4
+  frames (the horses' own cycle), death a flash and a fade.
+- **The death knights**: the Dark Knight (dark iron, a closed helm, red cape, on the red-brown horse like his stock
+  sprite's red one - dark iron on the black horse was a blot), Evereth (armet, purple cape, a saber), Ria Ivor (pale,
+  white-haired, a dagger), Syr Konrad (black hair, purple cloak, casting with a purple crystal), Jakub Slemr '97
+  (barbute, black tabard, a mace, brown horse), Tom van de Logt '01 (bascinet, war axe, gray horse), the Death Knight (a
+  skeleton in a dark horned helm with a scythe), Syr Gwyn (red cape, a red glowing sword), Felothar (great helm,
+  crusader shield, gray horse) - all on black horses unless named.
+- **The cavaliers** (from their card art): Cerise (gold plate, blonde, a gold lance couched, the white horse), Will
+  (silver, white hair, a blue glowing sword), Adun (green tabard, black shield, the chestnut), Márton Stromgald (steel,
+  red tabard and cape), Shanid (steel and a fur mantle, a mace), Nath (a green-skinned elf in forest leather), the Khan
+  (a horse archer with a recurve bow), the Horseman (leather and a spear), the Knight Mercenary (chainmail, a shield,
+  gray horse).
+- **Size**: the game's body measure takes the mounted figure (61-66 px), so they draw at 0.20-0.21 against a footman's
+  0.30 - the rider about 70% of a foot soldier, the horse filling the rank's box like any creature.
+- **Notes**: plate needs LPC's arm plates or the rider wears a sleeveless vest; swords show in the attack only (the
+  reins pose is a thrust frame and a sword has no thrust); a glowsword sparkle that floated alone in one frame is
+  dropped by the converter (isolated specks of 1-3 px). The horses are bareback (LPC Horse Extended's saddles and
+  6-frame walk have no riding layers yet).
+- **Files**: 18 new atlases under `sprites/enemy/remake/`; enemies.json 18 sprite paths + 18 scales (no bosses).
+  `CREDITS.md`: the LPC line (229 enemies over nine rounds, tskaufma added for the glowsword) and a new **[LPC] Horses**
+  bullet (bluecarrot16; bigbeargames' riding layers and recipe); `standalone-packaging/CREDITS_LPC.md` regenerated (each
+  mounted enemy lists its horse; earlier entries unchanged).
+- **Checks**: `validate_plane_data.py` unchanged; the sprite audit is clean on the eighteen. Not seen in play.
+
 ## Round 522: every Ascendance reward has an icon, each rank of a lasting one grander than the last (2026-10-09)
 
 The user: "I'd like to find Icons for all the Level upgrades we have. Especially the ones that have multiple upgrades. I

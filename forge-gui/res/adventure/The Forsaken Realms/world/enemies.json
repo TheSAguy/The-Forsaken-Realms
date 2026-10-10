@@ -7848,7 +7848,7 @@
     },
     {
         "name": "Dark Knight",
-        "sprite": "sprites/enemy/humanoid/human/knight/death_knight.atlas",
+        "sprite": "sprites/enemy/remake/dark_knight.atlas",
         "deck": [
             "decks/standard/dark_knight_r111.dck"
         ],
@@ -7929,7 +7929,8 @@
             "BiomeBlack",
             "Minion"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2131
     },
     {
         "name": "Dark Spirit",
@@ -8098,7 +8099,7 @@
     },
     {
         "name": "Death Knight",
-        "sprite": "sprites/enemy/humanoid/human/knight/death_knight_2.atlas",
+        "sprite": "sprites/enemy/remake/death_knight.atlas",
         "deck": [
             "decks/standard/death_knight.dck"
         ],
@@ -8180,7 +8181,8 @@
             "BiomeBlack",
             "Minion"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2
     },
     {
         "name": "Demon",
@@ -17545,7 +17547,7 @@
     {
         "name": "Horseman",
         "nameOverride": "Human Horseman",
-        "sprite": "sprites/enemy/humanoid/human/knight/cavalier_2.atlas",
+        "sprite": "sprites/enemy/remake/horseman.atlas",
         "deck": [
             "decks/standard/horsemanship.dck"
         ],
@@ -17590,7 +17592,8 @@
             "BiomeWhite",
             "Minion"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.2063
     },
     {
         "name": "Hulking Brute",
@@ -18832,7 +18835,7 @@
     {
         "name": "Khan",
         "nameOverride": "Human Raider",
-        "sprite": "sprites/enemy/humanoid/human/knight/cavalier.atlas",
+        "sprite": "sprites/enemy/remake/khan.atlas",
         "deck": [
             "decks/standard/mardu.dck"
         ],
@@ -18914,7 +18917,8 @@
             "IdentityMardu",
             "BiomeRed"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.197
     },
     {
         "name": "Khenra Warrior",
@@ -19130,7 +19134,7 @@
     {
         "name": "Knight Mercenary",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/human/knight/cavalier_2.atlas",
+        "sprite": "sprites/enemy/remake/knight_mercenary.atlas",
         "deck": [
             "decks/standard/knightmercenary.dck"
         ],
@@ -19210,7 +19214,8 @@
             "IdentityAzorius",
             "Minion"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.2097
     },
     {
         "name": "Kobold Dragoncaller",
@@ -43381,13 +43386,13 @@
     },
     {
         "name": "Will",
-        "sprite": "sprites/enemy/humanoid/human/knight/cavalier.atlas",
+        "sprite": "sprites/enemy/remake/will.atlas",
         "deck": [
             "decks/legends/will.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.2063,
         "life": 40,
         "rewards": [
             {
@@ -43456,13 +43461,13 @@
     },
     {
         "name": "Syr Gwyn",
-        "sprite": "sprites/enemy/humanoid/human/knight/death_knight_2.atlas",
+        "sprite": "sprites/enemy/remake/syr_gwyn.atlas",
         "deck": [
             "decks/legends/syr_gwyn.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.2097,
         "life": 40,
         "rewards": [
             {
@@ -46487,13 +46492,13 @@
     },
     {
         "name": "Felothar",
-        "sprite": "sprites/enemy/humanoid/human/knight/death_knight_2.atlas",
+        "sprite": "sprites/enemy/remake/felothar.atlas",
         "deck": [
             "decks/legends/felothar.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.2131,
         "life": 30,
         "rewards": [
             {
@@ -53789,13 +53794,13 @@
     },
     {
         "name": "Adun",
-        "sprite": "sprites/enemy/humanoid/human/knight/cavalier.atlas",
+        "sprite": "sprites/enemy/remake/adun.atlas",
         "deck": [
             "decks/legends/adun_oakenshield.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.2097,
         "life": 30,
         "rewards": [
             {
@@ -58747,13 +58752,13 @@
     },
     {
         "name": "Evereth",
-        "sprite": "sprites/enemy/humanoid/human/knight/death_knight.atlas",
+        "sprite": "sprites/enemy/remake/evereth.atlas",
         "deck": [
             "decks/legends/evereth.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.2131,
         "life": 30,
         "rewards": [
             {
@@ -59034,13 +59039,13 @@
     },
     {
         "name": "Ria Ivor",
-        "sprite": "sprites/enemy/humanoid/human/knight/death_knight.atlas",
+        "sprite": "sprites/enemy/remake/ria_ivor.atlas",
         "deck": [
             "decks/legends/ria_ivor.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.2097,
         "life": 30,
         "rewards": [
             {
@@ -62529,13 +62534,13 @@
     },
     {
         "name": "Syr Konrad",
-        "sprite": "sprites/enemy/humanoid/human/knight/death_knight.atlas",
+        "sprite": "sprites/enemy/remake/syr_konrad.atlas",
         "deck": [
             "decks/legends/syr_konrad.dck"
         ],
         "ai": "",
         "speed": 29,
-        "scale": 1,
+        "scale": 0.2097,
         "life": 18,
         "rewards": [
             {
@@ -88219,7 +88224,7 @@
     },
     {
         "name": "Shanid",
-        "sprite": "sprites/enemy/humanoid/human/knight/cavalier_2.atlas",
+        "sprite": "sprites/enemy/remake/shanid.atlas",
         "deck": [
             "decks/legends/shanid.dck"
         ],
@@ -88282,7 +88287,8 @@
         "colors": "WBR",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.2131
     },
     {
         "name": "Lynde",
@@ -91300,7 +91306,7 @@
     },
     {
         "name": "Nath",
-        "sprite": "sprites/enemy/humanoid/human/knight/cavalier_2.atlas",
+        "sprite": "sprites/enemy/remake/nath.atlas",
         "deck": [
             "decks/legends/nath.dck"
         ],
@@ -91363,7 +91369,8 @@
         "colors": "BG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.2097
     },
     {
         "name": "Oona",
@@ -98296,13 +98303,13 @@
     },
     {
         "name": "Márton Stromgald",
-        "sprite": "sprites/enemy/humanoid/human/knight/cavalier.atlas",
+        "sprite": "sprites/enemy/remake/m_rton_stromgald.atlas",
         "deck": [
             "decks/legends/márton_stromgald.dck"
         ],
         "ai": "",
         "speed": 41,
-        "scale": 1,
+        "scale": 0.2131,
         "life": 50,
         "rewards": [
             {
@@ -101197,7 +101204,7 @@
     },
     {
         "name": "Jakub Slemr '97",
-        "sprite": "sprites/enemy/humanoid/human/knight/death_knight.atlas",
+        "sprite": "sprites/enemy/remake/jakub_slemr_97.atlas",
         "deck": [
             "decks/standard/wc97_jakub_slemr.dck"
         ],
@@ -101399,7 +101406,8 @@
             }
         ],
         "colors": "WUBRG",
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2131
     },
     {
         "name": "Janosch Kuhn '97",
@@ -104438,7 +104446,7 @@
     },
     {
         "name": "Tom van de Logt '01",
-        "sprite": "sprites/enemy/humanoid/human/knight/death_knight.atlas",
+        "sprite": "sprites/enemy/remake/tom_van_de_logt_01.atlas",
         "deck": [
             "decks/standard/wc01_tom_van_de_logt.dck"
         ],
@@ -104646,7 +104654,8 @@
             }
         ],
         "colors": "BR",
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2097
     },
     {
         "name": "Alex Borteh '01",
@@ -124401,7 +124410,7 @@
     },
     {
         "name": "Cerise",
-        "sprite": "sprites/enemy/humanoid/human/knight/cavalier.atlas",
+        "sprite": "sprites/enemy/remake/cerise.atlas",
         "deck": [
             "decks/legends/cerise.dck"
         ],
@@ -124464,7 +124473,8 @@
         "colors": "W",
         "spawnRate": 1,
         "difficulty": 2,
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.2131
     },
     {
         "name": "Emiel",

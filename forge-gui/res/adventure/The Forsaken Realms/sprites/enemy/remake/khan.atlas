@@ -1,0 +1,134 @@
+khan.png
+size: 576,874
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 90
+Idle
+  xy: 72, 64
+  size: 72, 90
+Idle
+  xy: 144, 64
+  size: 72, 90
+Idle
+  xy: 216, 64
+  size: 72, 90
+Walk
+  xy: 0, 154
+  size: 72, 90
+Walk
+  xy: 72, 154
+  size: 72, 90
+Walk
+  xy: 144, 154
+  size: 72, 90
+Walk
+  xy: 216, 154
+  size: 72, 90
+Attack
+  xy: 0, 244
+  size: 72, 90
+Attack
+  xy: 72, 244
+  size: 72, 90
+Attack
+  xy: 144, 244
+  size: 72, 90
+Attack
+  xy: 216, 244
+  size: 72, 90
+Attack
+  xy: 288, 244
+  size: 72, 90
+Attack
+  xy: 360, 244
+  size: 72, 90
+Attack
+  xy: 432, 244
+  size: 72, 90
+Attack
+  xy: 504, 244
+  size: 72, 90
+Hit
+  xy: 0, 334
+  size: 72, 90
+Hit
+  xy: 72, 334
+  size: 72, 90
+Hit
+  xy: 144, 334
+  size: 72, 90
+Hit
+  xy: 216, 334
+  size: 72, 90
+Death
+  xy: 0, 424
+  size: 72, 90
+Death
+  xy: 72, 424
+  size: 72, 90
+Death
+  xy: 144, 424
+  size: 72, 90
+Death
+  xy: 216, 424
+  size: 72, 90
+Death
+  xy: 288, 424
+  size: 72, 90
+Death
+  xy: 360, 424
+  size: 72, 90
+IdleUp
+  xy: 0, 514
+  size: 72, 90
+IdleUp
+  xy: 72, 514
+  size: 72, 90
+IdleUp
+  xy: 144, 514
+  size: 72, 90
+IdleUp
+  xy: 216, 514
+  size: 72, 90
+IdleDown
+  xy: 0, 604
+  size: 72, 90
+IdleDown
+  xy: 72, 604
+  size: 72, 90
+IdleDown
+  xy: 144, 604
+  size: 72, 90
+IdleDown
+  xy: 216, 604
+  size: 72, 90
+WalkUp
+  xy: 0, 694
+  size: 72, 90
+WalkUp
+  xy: 72, 694
+  size: 72, 90
+WalkUp
+  xy: 144, 694
+  size: 72, 90
+WalkUp
+  xy: 216, 694
+  size: 72, 90
+WalkDown
+  xy: 0, 784
+  size: 72, 90
+WalkDown
+  xy: 72, 784
+  size: 72, 90
+WalkDown
+  xy: 144, 784
+  size: 72, 90
+WalkDown
+  xy: 216, 784
+  size: 72, 90

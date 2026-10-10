@@ -80,6 +80,13 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-09 (round 523): **LOCAL + UNRELEASED (data only)** - eighteen mounted knights (the Procedural Pixel
+Creatures session): the enemies on the stock cavalier, cavalier_2, death_knight and death_knight_2 sprites are LPC riders
+on bluecarrot16's "[LPC] Horses" (bigbeargames' riding layers and recipe, the generator's `mounted_to_forge.py`), four
+directions, walk 4 frames; drawn at 0.20-0.21 (the rider ~70% of a footman). 18 new atlases under
+`sprites/enemy/remake/`, enemies.json 18 paths + 18 scales, CREDITS.md (the LPC line, 229 enemies, and a new [LPC]
+Horses bullet), CREDITS_LPC.md regenerated. The peer (#30) verifies and packages. Not seen in play.
+
 ## STATE 2026-10-09 (round 522): **LOCAL + UNRELEASED** - Ascendance reward icons: `sprites/ascendance_icons.atlas` (43
 regions, 96 px, extruded gutters; lasting `<id>_<rank>`, one-time by id). Heroes III Basic/Advanced/Expert skill icons for
 nine perks, medieval skill icons with silver/gold rims for Prospector/Architect, plus Mechanic/Medic, and the game's

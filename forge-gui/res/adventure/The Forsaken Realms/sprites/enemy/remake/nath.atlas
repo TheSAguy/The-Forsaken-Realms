@@ -1,0 +1,128 @@
+nath.png
+size: 528,820
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 84
+Idle
+  xy: 88, 64
+  size: 88, 84
+Idle
+  xy: 176, 64
+  size: 88, 84
+Idle
+  xy: 264, 64
+  size: 88, 84
+Walk
+  xy: 0, 148
+  size: 88, 84
+Walk
+  xy: 88, 148
+  size: 88, 84
+Walk
+  xy: 176, 148
+  size: 88, 84
+Walk
+  xy: 264, 148
+  size: 88, 84
+Attack
+  xy: 0, 232
+  size: 88, 84
+Attack
+  xy: 88, 232
+  size: 88, 84
+Attack
+  xy: 176, 232
+  size: 88, 84
+Attack
+  xy: 264, 232
+  size: 88, 84
+Attack
+  xy: 352, 232
+  size: 88, 84
+Attack
+  xy: 440, 232
+  size: 88, 84
+Hit
+  xy: 0, 316
+  size: 88, 84
+Hit
+  xy: 88, 316
+  size: 88, 84
+Hit
+  xy: 176, 316
+  size: 88, 84
+Hit
+  xy: 264, 316
+  size: 88, 84
+Death
+  xy: 0, 400
+  size: 88, 84
+Death
+  xy: 88, 400
+  size: 88, 84
+Death
+  xy: 176, 400
+  size: 88, 84
+Death
+  xy: 264, 400
+  size: 88, 84
+Death
+  xy: 352, 400
+  size: 88, 84
+Death
+  xy: 440, 400
+  size: 88, 84
+IdleUp
+  xy: 0, 484
+  size: 88, 84
+IdleUp
+  xy: 88, 484
+  size: 88, 84
+IdleUp
+  xy: 176, 484
+  size: 88, 84
+IdleUp
+  xy: 264, 484
+  size: 88, 84
+IdleDown
+  xy: 0, 568
+  size: 88, 84
+IdleDown
+  xy: 88, 568
+  size: 88, 84
+IdleDown
+  xy: 176, 568
+  size: 88, 84
+IdleDown
+  xy: 264, 568
+  size: 88, 84
+WalkUp
+  xy: 0, 652
+  size: 88, 84
+WalkUp
+  xy: 88, 652
+  size: 88, 84
+WalkUp
+  xy: 176, 652
+  size: 88, 84
+WalkUp
+  xy: 264, 652
+  size: 88, 84
+WalkDown
+  xy: 0, 736
+  size: 88, 84
+WalkDown
+  xy: 88, 736
+  size: 88, 84
+WalkDown
+  xy: 176, 736
+  size: 88, 84
+WalkDown
+  xy: 264, 736
+  size: 88, 84

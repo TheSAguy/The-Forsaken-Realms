@@ -1,0 +1,128 @@
+evereth.png
+size: 528,811
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 83
+Idle
+  xy: 88, 64
+  size: 88, 83
+Idle
+  xy: 176, 64
+  size: 88, 83
+Idle
+  xy: 264, 64
+  size: 88, 83
+Walk
+  xy: 0, 147
+  size: 88, 83
+Walk
+  xy: 88, 147
+  size: 88, 83
+Walk
+  xy: 176, 147
+  size: 88, 83
+Walk
+  xy: 264, 147
+  size: 88, 83
+Attack
+  xy: 0, 230
+  size: 88, 83
+Attack
+  xy: 88, 230
+  size: 88, 83
+Attack
+  xy: 176, 230
+  size: 88, 83
+Attack
+  xy: 264, 230
+  size: 88, 83
+Attack
+  xy: 352, 230
+  size: 88, 83
+Attack
+  xy: 440, 230
+  size: 88, 83
+Hit
+  xy: 0, 313
+  size: 88, 83
+Hit
+  xy: 88, 313
+  size: 88, 83
+Hit
+  xy: 176, 313
+  size: 88, 83
+Hit
+  xy: 264, 313
+  size: 88, 83
+Death
+  xy: 0, 396
+  size: 88, 83
+Death
+  xy: 88, 396
+  size: 88, 83
+Death
+  xy: 176, 396
+  size: 88, 83
+Death
+  xy: 264, 396
+  size: 88, 83
+Death
+  xy: 352, 396
+  size: 88, 83
+Death
+  xy: 440, 396
+  size: 88, 83
+IdleUp
+  xy: 0, 479
+  size: 88, 83
+IdleUp
+  xy: 88, 479
+  size: 88, 83
+IdleUp
+  xy: 176, 479
+  size: 88, 83
+IdleUp
+  xy: 264, 479
+  size: 88, 83
+IdleDown
+  xy: 0, 562
+  size: 88, 83
+IdleDown
+  xy: 88, 562
+  size: 88, 83
+IdleDown
+  xy: 176, 562
+  size: 88, 83
+IdleDown
+  xy: 264, 562
+  size: 88, 83
+WalkUp
+  xy: 0, 645
+  size: 88, 83
+WalkUp
+  xy: 88, 645
+  size: 88, 83
+WalkUp
+  xy: 176, 645
+  size: 88, 83
+WalkUp
+  xy: 264, 645
+  size: 88, 83
+WalkDown
+  xy: 0, 728
+  size: 88, 83
+WalkDown
+  xy: 88, 728
+  size: 88, 83
+WalkDown
+  xy: 176, 728
+  size: 88, 83
+WalkDown
+  xy: 264, 728
+  size: 88, 83

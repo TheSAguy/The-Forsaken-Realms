@@ -1,0 +1,128 @@
+knight_mercenary.png
+size: 972,847
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 162, 87
+Idle
+  xy: 162, 64
+  size: 162, 87
+Idle
+  xy: 324, 64
+  size: 162, 87
+Idle
+  xy: 486, 64
+  size: 162, 87
+Walk
+  xy: 0, 151
+  size: 162, 87
+Walk
+  xy: 162, 151
+  size: 162, 87
+Walk
+  xy: 324, 151
+  size: 162, 87
+Walk
+  xy: 486, 151
+  size: 162, 87
+Attack
+  xy: 0, 238
+  size: 162, 87
+Attack
+  xy: 162, 238
+  size: 162, 87
+Attack
+  xy: 324, 238
+  size: 162, 87
+Attack
+  xy: 486, 238
+  size: 162, 87
+Attack
+  xy: 648, 238
+  size: 162, 87
+Attack
+  xy: 810, 238
+  size: 162, 87
+Hit
+  xy: 0, 325
+  size: 162, 87
+Hit
+  xy: 162, 325
+  size: 162, 87
+Hit
+  xy: 324, 325
+  size: 162, 87
+Hit
+  xy: 486, 325
+  size: 162, 87
+Death
+  xy: 0, 412
+  size: 162, 87
+Death
+  xy: 162, 412
+  size: 162, 87
+Death
+  xy: 324, 412
+  size: 162, 87
+Death
+  xy: 486, 412
+  size: 162, 87
+Death
+  xy: 648, 412
+  size: 162, 87
+Death
+  xy: 810, 412
+  size: 162, 87
+IdleUp
+  xy: 0, 499
+  size: 162, 87
+IdleUp
+  xy: 162, 499
+  size: 162, 87
+IdleUp
+  xy: 324, 499
+  size: 162, 87
+IdleUp
+  xy: 486, 499
+  size: 162, 87
+IdleDown
+  xy: 0, 586
+  size: 162, 87
+IdleDown
+  xy: 162, 586
+  size: 162, 87
+IdleDown
+  xy: 324, 586
+  size: 162, 87
+IdleDown
+  xy: 486, 586
+  size: 162, 87
+WalkUp
+  xy: 0, 673
+  size: 162, 87
+WalkUp
+  xy: 162, 673
+  size: 162, 87
+WalkUp
+  xy: 324, 673
+  size: 162, 87
+WalkUp
+  xy: 486, 673
+  size: 162, 87
+WalkDown
+  xy: 0, 760
+  size: 162, 87
+WalkDown
+  xy: 162, 760
+  size: 162, 87
+WalkDown
+  xy: 324, 760
+  size: 162, 87
+WalkDown
+  xy: 486, 760
+  size: 162, 87

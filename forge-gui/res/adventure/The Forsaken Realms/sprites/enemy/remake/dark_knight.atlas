@@ -1,0 +1,128 @@
+dark_knight.png
+size: 972,811
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 162, 83
+Idle
+  xy: 162, 64
+  size: 162, 83
+Idle
+  xy: 324, 64
+  size: 162, 83
+Idle
+  xy: 486, 64
+  size: 162, 83
+Walk
+  xy: 0, 147
+  size: 162, 83
+Walk
+  xy: 162, 147
+  size: 162, 83
+Walk
+  xy: 324, 147
+  size: 162, 83
+Walk
+  xy: 486, 147
+  size: 162, 83
+Attack
+  xy: 0, 230
+  size: 162, 83
+Attack
+  xy: 162, 230
+  size: 162, 83
+Attack
+  xy: 324, 230
+  size: 162, 83
+Attack
+  xy: 486, 230
+  size: 162, 83
+Attack
+  xy: 648, 230
+  size: 162, 83
+Attack
+  xy: 810, 230
+  size: 162, 83
+Hit
+  xy: 0, 313
+  size: 162, 83
+Hit
+  xy: 162, 313
+  size: 162, 83
+Hit
+  xy: 324, 313
+  size: 162, 83
+Hit
+  xy: 486, 313
+  size: 162, 83
+Death
+  xy: 0, 396
+  size: 162, 83
+Death
+  xy: 162, 396
+  size: 162, 83
+Death
+  xy: 324, 396
+  size: 162, 83
+Death
+  xy: 486, 396
+  size: 162, 83
+Death
+  xy: 648, 396
+  size: 162, 83
+Death
+  xy: 810, 396
+  size: 162, 83
+IdleUp
+  xy: 0, 479
+  size: 162, 83
+IdleUp
+  xy: 162, 479
+  size: 162, 83
+IdleUp
+  xy: 324, 479
+  size: 162, 83
+IdleUp
+  xy: 486, 479
+  size: 162, 83
+IdleDown
+  xy: 0, 562
+  size: 162, 83
+IdleDown
+  xy: 162, 562
+  size: 162, 83
+IdleDown
+  xy: 324, 562
+  size: 162, 83
+IdleDown
+  xy: 486, 562
+  size: 162, 83
+WalkUp
+  xy: 0, 645
+  size: 162, 83
+WalkUp
+  xy: 162, 645
+  size: 162, 83
+WalkUp
+  xy: 324, 645
+  size: 162, 83
+WalkUp
+  xy: 486, 645
+  size: 162, 83
+WalkDown
+  xy: 0, 728
+  size: 162, 83
+WalkDown
+  xy: 162, 728
+  size: 162, 83
+WalkDown
+  xy: 324, 728
+  size: 162, 83
+WalkDown
+  xy: 486, 728
+  size: 162, 83

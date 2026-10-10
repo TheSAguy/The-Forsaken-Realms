@@ -1,0 +1,128 @@
+felothar.png
+size: 972,820
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 162, 84
+Idle
+  xy: 162, 64
+  size: 162, 84
+Idle
+  xy: 324, 64
+  size: 162, 84
+Idle
+  xy: 486, 64
+  size: 162, 84
+Walk
+  xy: 0, 148
+  size: 162, 84
+Walk
+  xy: 162, 148
+  size: 162, 84
+Walk
+  xy: 324, 148
+  size: 162, 84
+Walk
+  xy: 486, 148
+  size: 162, 84
+Attack
+  xy: 0, 232
+  size: 162, 84
+Attack
+  xy: 162, 232
+  size: 162, 84
+Attack
+  xy: 324, 232
+  size: 162, 84
+Attack
+  xy: 486, 232
+  size: 162, 84
+Attack
+  xy: 648, 232
+  size: 162, 84
+Attack
+  xy: 810, 232
+  size: 162, 84
+Hit
+  xy: 0, 316
+  size: 162, 84
+Hit
+  xy: 162, 316
+  size: 162, 84
+Hit
+  xy: 324, 316
+  size: 162, 84
+Hit
+  xy: 486, 316
+  size: 162, 84
+Death
+  xy: 0, 400
+  size: 162, 84
+Death
+  xy: 162, 400
+  size: 162, 84
+Death
+  xy: 324, 400
+  size: 162, 84
+Death
+  xy: 486, 400
+  size: 162, 84
+Death
+  xy: 648, 400
+  size: 162, 84
+Death
+  xy: 810, 400
+  size: 162, 84
+IdleUp
+  xy: 0, 484
+  size: 162, 84
+IdleUp
+  xy: 162, 484
+  size: 162, 84
+IdleUp
+  xy: 324, 484
+  size: 162, 84
+IdleUp
+  xy: 486, 484
+  size: 162, 84
+IdleDown
+  xy: 0, 568
+  size: 162, 84
+IdleDown
+  xy: 162, 568
+  size: 162, 84
+IdleDown
+  xy: 324, 568
+  size: 162, 84
+IdleDown
+  xy: 486, 568
+  size: 162, 84
+WalkUp
+  xy: 0, 652
+  size: 162, 84
+WalkUp
+  xy: 162, 652
+  size: 162, 84
+WalkUp
+  xy: 324, 652
+  size: 162, 84
+WalkUp
+  xy: 486, 652
+  size: 162, 84
+WalkDown
+  xy: 0, 736
+  size: 162, 84
+WalkDown
+  xy: 162, 736
+  size: 162, 84
+WalkDown
+  xy: 324, 736
+  size: 162, 84
+WalkDown
+  xy: 486, 736
+  size: 162, 84

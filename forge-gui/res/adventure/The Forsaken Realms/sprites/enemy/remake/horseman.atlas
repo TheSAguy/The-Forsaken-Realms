@@ -1,0 +1,134 @@
+horseman.png
+size: 576,829
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 85
+Idle
+  xy: 72, 64
+  size: 72, 85
+Idle
+  xy: 144, 64
+  size: 72, 85
+Idle
+  xy: 216, 64
+  size: 72, 85
+Walk
+  xy: 0, 149
+  size: 72, 85
+Walk
+  xy: 72, 149
+  size: 72, 85
+Walk
+  xy: 144, 149
+  size: 72, 85
+Walk
+  xy: 216, 149
+  size: 72, 85
+Attack
+  xy: 0, 234
+  size: 72, 85
+Attack
+  xy: 72, 234
+  size: 72, 85
+Attack
+  xy: 144, 234
+  size: 72, 85
+Attack
+  xy: 216, 234
+  size: 72, 85
+Attack
+  xy: 288, 234
+  size: 72, 85
+Attack
+  xy: 360, 234
+  size: 72, 85
+Attack
+  xy: 432, 234
+  size: 72, 85
+Attack
+  xy: 504, 234
+  size: 72, 85
+Hit
+  xy: 0, 319
+  size: 72, 85
+Hit
+  xy: 72, 319
+  size: 72, 85
+Hit
+  xy: 144, 319
+  size: 72, 85
+Hit
+  xy: 216, 319
+  size: 72, 85
+Death
+  xy: 0, 404
+  size: 72, 85
+Death
+  xy: 72, 404
+  size: 72, 85
+Death
+  xy: 144, 404
+  size: 72, 85
+Death
+  xy: 216, 404
+  size: 72, 85
+Death
+  xy: 288, 404
+  size: 72, 85
+Death
+  xy: 360, 404
+  size: 72, 85
+IdleUp
+  xy: 0, 489
+  size: 72, 85
+IdleUp
+  xy: 72, 489
+  size: 72, 85
+IdleUp
+  xy: 144, 489
+  size: 72, 85
+IdleUp
+  xy: 216, 489
+  size: 72, 85
+IdleDown
+  xy: 0, 574
+  size: 72, 85
+IdleDown
+  xy: 72, 574
+  size: 72, 85
+IdleDown
+  xy: 144, 574
+  size: 72, 85
+IdleDown
+  xy: 216, 574
+  size: 72, 85
+WalkUp
+  xy: 0, 659
+  size: 72, 85
+WalkUp
+  xy: 72, 659
+  size: 72, 85
+WalkUp
+  xy: 144, 659
+  size: 72, 85
+WalkUp
+  xy: 216, 659
+  size: 72, 85
+WalkDown
+  xy: 0, 744
+  size: 72, 85
+WalkDown
+  xy: 72, 744
+  size: 72, 85
+WalkDown
+  xy: 144, 744
+  size: 72, 85
+WalkDown
+  xy: 216, 744
+  size: 72, 85

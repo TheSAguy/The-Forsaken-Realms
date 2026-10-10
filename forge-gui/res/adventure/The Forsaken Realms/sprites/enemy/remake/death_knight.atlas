@@ -1,0 +1,128 @@
+death_knight.png
+size: 624,856
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 104, 88
+Idle
+  xy: 104, 64
+  size: 104, 88
+Idle
+  xy: 208, 64
+  size: 104, 88
+Idle
+  xy: 312, 64
+  size: 104, 88
+Walk
+  xy: 0, 152
+  size: 104, 88
+Walk
+  xy: 104, 152
+  size: 104, 88
+Walk
+  xy: 208, 152
+  size: 104, 88
+Walk
+  xy: 312, 152
+  size: 104, 88
+Attack
+  xy: 0, 240
+  size: 104, 88
+Attack
+  xy: 104, 240
+  size: 104, 88
+Attack
+  xy: 208, 240
+  size: 104, 88
+Attack
+  xy: 312, 240
+  size: 104, 88
+Attack
+  xy: 416, 240
+  size: 104, 88
+Attack
+  xy: 520, 240
+  size: 104, 88
+Hit
+  xy: 0, 328
+  size: 104, 88
+Hit
+  xy: 104, 328
+  size: 104, 88
+Hit
+  xy: 208, 328
+  size: 104, 88
+Hit
+  xy: 312, 328
+  size: 104, 88
+Death
+  xy: 0, 416
+  size: 104, 88
+Death
+  xy: 104, 416
+  size: 104, 88
+Death
+  xy: 208, 416
+  size: 104, 88
+Death
+  xy: 312, 416
+  size: 104, 88
+Death
+  xy: 416, 416
+  size: 104, 88
+Death
+  xy: 520, 416
+  size: 104, 88
+IdleUp
+  xy: 0, 504
+  size: 104, 88
+IdleUp
+  xy: 104, 504
+  size: 104, 88
+IdleUp
+  xy: 208, 504
+  size: 104, 88
+IdleUp
+  xy: 312, 504
+  size: 104, 88
+IdleDown
+  xy: 0, 592
+  size: 104, 88
+IdleDown
+  xy: 104, 592
+  size: 104, 88
+IdleDown
+  xy: 208, 592
+  size: 104, 88
+IdleDown
+  xy: 312, 592
+  size: 104, 88
+WalkUp
+  xy: 0, 680
+  size: 104, 88
+WalkUp
+  xy: 104, 680
+  size: 104, 88
+WalkUp
+  xy: 208, 680
+  size: 104, 88
+WalkUp
+  xy: 312, 680
+  size: 104, 88
+WalkDown
+  xy: 0, 768
+  size: 104, 88
+WalkDown
+  xy: 104, 768
+  size: 104, 88
+WalkDown
+  xy: 208, 768
+  size: 104, 88
+WalkDown
+  xy: 312, 768
+  size: 104, 88
