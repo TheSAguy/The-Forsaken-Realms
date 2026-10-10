@@ -83,7 +83,7 @@ the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from 
 ## STATE 2026-10-10 (16:11 UTC): **v1.20.1 Android hotfix RELEASED** - tag `tfr-v1.20.1` @ `2681afca2ce`, published WITHOUT
 the Latest badge (v1.20 stays Latest so PC players get its zip; the app's update check reads releases.atom, which lists
 1.20.1 first - checked). The user: "a hot-fix release for Android only" - round 524 (the HUD controls take a tap) plus
-519-523. Assets in `C:\TFRelease1.20.1`: `forsaken-realms-1.20.1-signed-aligned.apk` 13.6 MB (versionCode 12001,
+519-523. Assets in `C:\TFR\release\v1.20.1`: `forsaken-realms-1.20.1-signed-aligned.apk` 13.6 MB (versionCode 12001,
 signer EE:60:39:25, `onHudControl` in the dex), `assets.zip` 307.1 MB (build.txt pair 2026-10-10 16:07:37). No PC zip.
 modVersion 1.20.1. NOTHING unreleased. Next version: 1.21 / 12100.
 
