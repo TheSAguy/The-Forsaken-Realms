@@ -1196,7 +1196,7 @@
     },
     {
         "name": "Ancient Vampire",
-        "sprite": "sprites/enemy/undead/vampire_4.atlas",
+        "sprite": "sprites/enemy/remake/ancient_vampire.atlas",
         "deck": [
             "decks/standard/ancientvampire.dck"
         ],
@@ -1205,7 +1205,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 38,
-        "scale": 0.8125,
+        "scale": 0.5,
         "life": 25,
         "rewards": [
             {
@@ -17024,7 +17024,7 @@
     },
     {
         "name": "High Vampire",
-        "sprite": "sprites/enemy/undead/vampire_2.atlas",
+        "sprite": "sprites/enemy/remake/high_vampire.atlas",
         "deck": [
             "decks/standard/vampire.json"
         ],
@@ -17107,7 +17107,8 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.5
     },
     {
         "name": "Hippo",
@@ -31709,7 +31710,7 @@
     },
     {
         "name": "Vampire",
-        "sprite": "sprites/enemy/undead/vampire.atlas",
+        "sprite": "sprites/enemy/remake/vampire.atlas",
         "deck": [
             "decks/standard/vampire.dck"
         ],
@@ -31746,11 +31747,12 @@
             "BiomeBlack",
             "Minion"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.52
     },
     {
         "name": "Vampire Lord",
-        "sprite": "sprites/enemy/undead/vampire_3.atlas",
+        "sprite": "sprites/enemy/remake/vampire_lord.atlas",
         "deck": [
             "decks/standard/vampire_blood_token_fly.dck"
         ],
@@ -31780,7 +31782,8 @@
             "IdentityRed",
             "BiomeRed"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.52
     },
     {
         "name": "Viashino",
@@ -34323,7 +34326,7 @@
     },
     {
         "name": "Falkenrath Neonate",
-        "sprite": "sprites/enemy/undead/vampire_4.atlas",
+        "sprite": "sprites/enemy/remake/falkenrath_neonate.atlas",
         "deck": [
             "decks/standard/INN/inn_falkenrath_easy.dck",
             "decks/standard/INN/inn_falkenrath_easy2.dck"
@@ -34333,7 +34336,7 @@
         "difficulty": 0.1,
         "speed": 20,
         "life": 10,
-        "scale": 0.8125,
+        "scale": 0.5,
         "rewards": [
             {
                 "type": "deckCard",
@@ -34378,7 +34381,7 @@
     },
     {
         "name": "Falkenrath Tormentor",
-        "sprite": "sprites/enemy/undead/vampire_2.atlas",
+        "sprite": "sprites/enemy/remake/falkenrath_tormentor.atlas",
         "deck": [
             "decks/standard/INN/inn_falkenrath_medium.dck"
         ],
@@ -34429,7 +34432,8 @@
             "BiomeBlack",
             "BiomeRed"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.5
     },
     {
         "name": "Gavony Farmhand",
@@ -35705,13 +35709,13 @@
     },
     {
         "name": "Edgar Markov",
-        "sprite": "sprites/enemy/undead/vampire_2.atlas",
+        "sprite": "sprites/enemy/remake/edgar_markov.atlas",
         "deck": [
             "decks/legends/edgar_markov.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.5,
         "life": 50,
         "rewards": [
             {
@@ -39220,13 +39224,13 @@
     },
     {
         "name": "Sengir",
-        "sprite": "sprites/enemy/undead/vampire.atlas",
+        "sprite": "sprites/enemy/remake/sengir.atlas",
         "deck": [
             "decks/legends/sengir_and_falthis.dck"
         ],
         "ai": "",
         "speed": 42,
-        "scale": 1,
+        "scale": 0.52,
         "life": 48,
         "rewards": [
             {
@@ -49957,13 +49961,13 @@
     },
     {
         "name": "Baron Bertram",
-        "sprite": "sprites/enemy/undead/vampire_4.atlas",
+        "sprite": "sprites/enemy/remake/baron_bertram.atlas",
         "deck": [
             "decks/legends/baron_bertram.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.8125,
+        "scale": 0.5,
         "life": 30,
         "rewards": [
             {
@@ -55324,14 +55328,14 @@
     },
     {
         "name": "Ascendant Evincar",
-        "sprite": "sprites/enemy/undead/vampire_3.atlas",
+        "sprite": "sprites/enemy/remake/ascendant_evincar.atlas",
         "deck": [
             "decks/legends/ascendant_evincar.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 54,
-        "scale": 1,
+        "scale": 0.52,
         "life": 33,
         "rewards": [
             {
@@ -55530,14 +55534,14 @@
     },
     {
         "name": "Kazarov",
-        "sprite": "sprites/enemy/undead/vampire_4.atlas",
+        "sprite": "sprites/enemy/remake/kazarov.atlas",
         "deck": [
             "decks/legends/kazarov.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 0.8125,
+        "scale": 0.5,
         "life": 30,
         "rewards": [
             {
@@ -55878,13 +55882,13 @@
     },
     {
         "name": "Florian",
-        "sprite": "sprites/enemy/undead/vampire.atlas",
+        "sprite": "sprites/enemy/remake/florian.atlas",
         "deck": [
             "decks/legends/florian.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.52,
         "life": 30,
         "rewards": [
             {
@@ -56083,14 +56087,14 @@
     },
     {
         "name": "Strefan",
-        "sprite": "sprites/enemy/undead/vampire_3.atlas",
+        "sprite": "sprites/enemy/remake/strefan.atlas",
         "deck": [
             "decks/legends/strefan.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 0.52,
         "life": 30,
         "rewards": [
             {
@@ -56152,13 +56156,13 @@
     },
     {
         "name": "Timothar",
-        "sprite": "sprites/enemy/undead/vampire_4.atlas",
+        "sprite": "sprites/enemy/remake/timothar.atlas",
         "deck": [
             "decks/legends/timothar.dck"
         ],
         "ai": "",
         "speed": 38,
-        "scale": 0.8125,
+        "scale": 0.5,
         "life": 28,
         "rewards": [
             {
@@ -58538,13 +58542,13 @@
     },
     {
         "name": "Clavileño",
-        "sprite": "sprites/enemy/undead/vampire_3.atlas",
+        "sprite": "sprites/enemy/remake/clavile_o.atlas",
         "deck": [
             "decks/legends/clavileño.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.52,
         "life": 30,
         "rewards": [
             {
@@ -58820,13 +58824,13 @@
     },
     {
         "name": "Vito",
-        "sprite": "sprites/enemy/undead/vampire_2.atlas",
+        "sprite": "sprites/enemy/remake/vito.atlas",
         "deck": [
             "decks/legends/vito.dck"
         ],
         "ai": "",
         "speed": 53,
-        "scale": 1,
+        "scale": 0.5,
         "life": 32,
         "rewards": [
             {
@@ -70744,13 +70748,13 @@
     },
     {
         "name": "Zagras",
-        "sprite": "sprites/enemy/undead/vampire.atlas",
+        "sprite": "sprites/enemy/remake/zagras.atlas",
         "deck": [
             "decks/legends/zagras.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.52,
         "life": 30,
         "rewards": [
             {
@@ -75183,7 +75187,7 @@
     },
     {
         "name": "Mirko",
-        "sprite": "sprites/enemy/undead/vampire.atlas",
+        "sprite": "sprites/enemy/remake/mirko.atlas",
         "deck": [
             "decks/legends/mirko.dck"
         ],
@@ -75252,11 +75256,12 @@
         "colors": "UB",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.52
     },
     {
         "name": "Szadek",
-        "sprite": "sprites/enemy/undead/vampire_3.atlas",
+        "sprite": "sprites/enemy/remake/szadek.atlas",
         "deck": [
             "decks/legends/szadek.dck"
         ],
@@ -75320,7 +75325,8 @@
         "colors": "UB",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.52
     },
     {
         "name": "Captain Storm",
@@ -86096,7 +86102,7 @@
     },
     {
         "name": "Anowon",
-        "sprite": "sprites/enemy/undead/vampire.atlas",
+        "sprite": "sprites/enemy/remake/anowon.atlas",
         "deck": [
             "decks/legends/anowon.dck"
         ],
@@ -86164,7 +86170,8 @@
         "colors": "UB",
         "spawnRate": 1,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.52
     },
     {
         "name": "Ratadrabik",
@@ -86957,7 +86964,7 @@
     },
     {
         "name": "Vish Kal",
-        "sprite": "sprites/enemy/undead/vampire_3.atlas",
+        "sprite": "sprites/enemy/remake/vish_kal.atlas",
         "deck": [
             "decks/legends/vish_kal.dck"
         ],
@@ -87020,7 +87027,8 @@
         "colors": "WB",
         "spawnRate": 1,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.52
     },
     {
         "name": "Yuriko",
@@ -95713,7 +95721,7 @@
     },
     {
         "name": "Valentin",
-        "sprite": "sprites/enemy/undead/vampire_4.atlas",
+        "sprite": "sprites/enemy/remake/valentin.atlas",
         "deck": [
             "decks/legends/valentin.dck"
         ],
@@ -95777,7 +95785,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.8125
+        "scale": 0.5
     },
     {
         "name": "Willowdusk",
@@ -96190,7 +96198,7 @@
     },
     {
         "name": "Evelyn",
-        "sprite": "sprites/enemy/undead/vampire_2.atlas",
+        "sprite": "sprites/enemy/remake/evelyn.atlas",
         "deck": [
             "decks/legends/evelyn.dck"
         ],
@@ -96253,7 +96261,8 @@
         "colors": "UBR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.5
     },
     {
         "name": "Ob Nixilis",
@@ -97450,13 +97459,13 @@
     },
     {
         "name": "Arnyn",
-        "sprite": "sprites/enemy/undead/vampire_2.atlas",
+        "sprite": "sprites/enemy/remake/arnyn.atlas",
         "deck": [
             "decks/legends/arnyn.dck"
         ],
         "ai": "",
         "speed": 28,
-        "scale": 1,
+        "scale": 0.5,
         "life": 18,
         "rewards": [
             {

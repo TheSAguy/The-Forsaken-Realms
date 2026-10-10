@@ -140,6 +140,11 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   OGA-BY 3.0), http://opengameart.org/content/lpc-horses; cut into riding layers, with the rider offsets and the drawing
   recipe the game's converter follows, by **bigbeargames** ("[LPC] Horse Riding",
   https://opengameart.org/content/lpc-horse-riding-updated-091).
+- **4-direction vampires** (24 enemies, round 529: the Vampire, Vampire Lord, High Vampire and Ancient Vampire and the
+  legends on their sprites, Edgar Markov and Sengir - in six recolored looks) - **CraftPix.net**, "vampire 4 direction
+  pixel sprite" and "4 direction vampire pixel pack 2" (OGA-BY 3.0),
+  https://opengameart.org/content/vampire-4-direction-pixel-sprite and
+  https://opengameart.org/content/4-direction-vampire-pixel-pack-2; supplied by the user.
 
 ## World art
 

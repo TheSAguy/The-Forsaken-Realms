@@ -1,0 +1,161 @@
+anowon.png
+size: 594,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 66, 59
+Idle
+  xy: 66, 64
+  size: 66, 59
+Idle
+  xy: 132, 64
+  size: 66, 59
+Idle
+  xy: 198, 64
+  size: 66, 59
+Walk
+  xy: 0, 123
+  size: 66, 59
+Walk
+  xy: 66, 123
+  size: 66, 59
+Walk
+  xy: 132, 123
+  size: 66, 59
+Walk
+  xy: 198, 123
+  size: 66, 59
+Walk
+  xy: 264, 123
+  size: 66, 59
+Walk
+  xy: 330, 123
+  size: 66, 59
+Attack
+  xy: 0, 182
+  size: 66, 59
+Attack
+  xy: 66, 182
+  size: 66, 59
+Attack
+  xy: 132, 182
+  size: 66, 59
+Attack
+  xy: 198, 182
+  size: 66, 59
+Attack
+  xy: 264, 182
+  size: 66, 59
+Attack
+  xy: 330, 182
+  size: 66, 59
+Attack
+  xy: 396, 182
+  size: 66, 59
+Attack
+  xy: 462, 182
+  size: 66, 59
+Hit
+  xy: 0, 241
+  size: 66, 59
+Hit
+  xy: 66, 241
+  size: 66, 59
+Hit
+  xy: 132, 241
+  size: 66, 59
+Hit
+  xy: 198, 241
+  size: 66, 59
+Death
+  xy: 0, 300
+  size: 66, 59
+Death
+  xy: 66, 300
+  size: 66, 59
+Death
+  xy: 132, 300
+  size: 66, 59
+Death
+  xy: 198, 300
+  size: 66, 59
+Death
+  xy: 264, 300
+  size: 66, 59
+Death
+  xy: 330, 300
+  size: 66, 59
+Death
+  xy: 396, 300
+  size: 66, 59
+Death
+  xy: 462, 300
+  size: 66, 59
+Death
+  xy: 528, 300
+  size: 66, 59
+IdleUp
+  xy: 0, 359
+  size: 66, 59
+IdleUp
+  xy: 66, 359
+  size: 66, 59
+IdleUp
+  xy: 132, 359
+  size: 66, 59
+IdleUp
+  xy: 198, 359
+  size: 66, 59
+IdleDown
+  xy: 0, 418
+  size: 66, 59
+IdleDown
+  xy: 66, 418
+  size: 66, 59
+IdleDown
+  xy: 132, 418
+  size: 66, 59
+IdleDown
+  xy: 198, 418
+  size: 66, 59
+WalkUp
+  xy: 0, 477
+  size: 66, 59
+WalkUp
+  xy: 66, 477
+  size: 66, 59
+WalkUp
+  xy: 132, 477
+  size: 66, 59
+WalkUp
+  xy: 198, 477
+  size: 66, 59
+WalkUp
+  xy: 264, 477
+  size: 66, 59
+WalkUp
+  xy: 330, 477
+  size: 66, 59
+WalkDown
+  xy: 0, 536
+  size: 66, 59
+WalkDown
+  xy: 66, 536
+  size: 66, 59
+WalkDown
+  xy: 132, 536
+  size: 66, 59
+WalkDown
+  xy: 198, 536
+  size: 66, 59
+WalkDown
+  xy: 264, 536
+  size: 66, 59
+WalkDown
+  xy: 330, 536
+  size: 66, 59

@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 529: twenty-four vampires from CraftPix's 4-direction vampires, Edgar Markov and Sengir their own (2026-10-10)
+
+The Procedural Pixel Creatures session (the user: "see if the Vampires art is any good", then "Proceed, but I do think
+Edgar Markov, Sengir should get their own look"): the 24 enemies on the stock `undead/vampire`, `vampire_2`,
+`vampire_3` and `vampire_4` sprites (12-16 px bodies) take CraftPix.net's two 4-direction vampires (OGA-BY 3.0; ~23 px
+bodies, red eyes, fangs, pointed ears), converted by the generator repo's new `craftpix_to_forge.py` with recolored
+looks from `packs/craftpix/vampire/looks.json`.
+
+- **The art**: per animation a sheet, four directions - Idle 4, Walk 6, Attack 12 (a blood tendril lifts the vampire
+  off the ground, he turns to blood and bursts with a star flash; thinned to 8), Hurt 4 (a red flash) as the Hit, Death
+  11 (he dissolves into smoke; thinned to 9). The pack's layers (body, head, then the effects) are recolored body and
+  head only, so the blood and smoke keep their colors; the house shadow replaces the pack's.
+- **The looks**: the `vampire` group (Vampire, Florian, Zagras, Mirko, Anowon) the brown-haired vampire with a
+  green-lined cape; the `vampire_3` group (Vampire Lord, Ascendant Evincar, Strefan, Clavileño, Szadek, Vish Kal) the
+  same with a crimson lining and black trousers; the `vampire_2` group (High Vampire, Falkenrath Tormentor, Vito,
+  Evelyn, Arnyn) the spiky-haired vampire lord in a blue high collar with bat-wing spines; the `vampire_4` group (Ancient
+  Vampire, Falkenrath Neonate, Baron Bertram, Kazarov, Timothar, Valentin) the lord in purple. Their own (the user):
+  **Sengir** (his card: bald, crimson robes and gold) - the first vampire with a pale head, a crimson suit and a gold
+  lining; **Edgar Markov** (his card: long white hair, crimson armor and cape) - the lord with white hair, a crimson cape
+  and a silver collar.
+- **Files**: 24 new atlases under `sprites/enemy/remake/` (Clavileño's is `clavile_o`); enemies.json 24 sprite paths +
+  24 scales (0.50-0.52: the figures are small, so the body takes a larger scale; no bosses). `CREDITS.md`: a new
+  **4-direction vampires** bullet (CraftPix.net, OGA-BY 3.0, both pages).
+- **Checks**: `validate_plane_data.py` unchanged; the sprite audit flags the effects, not defects - the attack's
+  lifted-off frames (the vampire floats on the blood tendril above his shadow) and the death's scattering smoke puffs.
+  Not seen in play.
+
 ## Round 528: no black ground inside large structure areas (2026-10-10)
 
 The user, with two screenshots (a vine field beside a green town, a dead-tree grove in the Wasteland): "Can you look at

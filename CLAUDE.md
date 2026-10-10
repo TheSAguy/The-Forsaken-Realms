@@ -80,6 +80,13 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (round 529): **LOCAL + UNRELEASED (data only)** - twenty-four vampires (the Procedural Pixel
+Creatures session): the enemies on the stock undead/vampire, vampire_2, vampire_3 and vampire_4 sprites take
+CraftPix.net's 4-direction vampires (OGA-BY 3.0, the generator's `craftpix_to_forge.py`) in four group looks (green,
+crimson lining, blue, purple), Sengir (bald, crimson, gold) and Edgar Markov (white hair, crimson, silver) their own.
+24 new atlases under `sprites/enemy/remake/`, enemies.json 24 paths + 24 scales (0.50-0.52), CREDITS.md's new
+4-direction vampires bullet. The peer (#30) verifies and packages. Not seen in play.
+
 ## STATE 2026-10-10 (round 528): **LOCAL + UNRELEASED** - no black ground inside large structure areas: a surrounded
 structure tile with a see-through center picture (two plant sheets, 83% / 59% clear) gets the ground drawn under it
 (`BiomeTexture.isCenterOpaque`, `World.collectDrawingInfo`).

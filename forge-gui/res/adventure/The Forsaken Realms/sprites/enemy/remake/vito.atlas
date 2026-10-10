@@ -1,0 +1,161 @@
+vito.png
+size: 594,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 66, 60
+Idle
+  xy: 66, 64
+  size: 66, 60
+Idle
+  xy: 132, 64
+  size: 66, 60
+Idle
+  xy: 198, 64
+  size: 66, 60
+Walk
+  xy: 0, 124
+  size: 66, 60
+Walk
+  xy: 66, 124
+  size: 66, 60
+Walk
+  xy: 132, 124
+  size: 66, 60
+Walk
+  xy: 198, 124
+  size: 66, 60
+Walk
+  xy: 264, 124
+  size: 66, 60
+Walk
+  xy: 330, 124
+  size: 66, 60
+Attack
+  xy: 0, 184
+  size: 66, 60
+Attack
+  xy: 66, 184
+  size: 66, 60
+Attack
+  xy: 132, 184
+  size: 66, 60
+Attack
+  xy: 198, 184
+  size: 66, 60
+Attack
+  xy: 264, 184
+  size: 66, 60
+Attack
+  xy: 330, 184
+  size: 66, 60
+Attack
+  xy: 396, 184
+  size: 66, 60
+Attack
+  xy: 462, 184
+  size: 66, 60
+Hit
+  xy: 0, 244
+  size: 66, 60
+Hit
+  xy: 66, 244
+  size: 66, 60
+Hit
+  xy: 132, 244
+  size: 66, 60
+Hit
+  xy: 198, 244
+  size: 66, 60
+Death
+  xy: 0, 304
+  size: 66, 60
+Death
+  xy: 66, 304
+  size: 66, 60
+Death
+  xy: 132, 304
+  size: 66, 60
+Death
+  xy: 198, 304
+  size: 66, 60
+Death
+  xy: 264, 304
+  size: 66, 60
+Death
+  xy: 330, 304
+  size: 66, 60
+Death
+  xy: 396, 304
+  size: 66, 60
+Death
+  xy: 462, 304
+  size: 66, 60
+Death
+  xy: 528, 304
+  size: 66, 60
+IdleUp
+  xy: 0, 364
+  size: 66, 60
+IdleUp
+  xy: 66, 364
+  size: 66, 60
+IdleUp
+  xy: 132, 364
+  size: 66, 60
+IdleUp
+  xy: 198, 364
+  size: 66, 60
+IdleDown
+  xy: 0, 424
+  size: 66, 60
+IdleDown
+  xy: 66, 424
+  size: 66, 60
+IdleDown
+  xy: 132, 424
+  size: 66, 60
+IdleDown
+  xy: 198, 424
+  size: 66, 60
+WalkUp
+  xy: 0, 484
+  size: 66, 60
+WalkUp
+  xy: 66, 484
+  size: 66, 60
+WalkUp
+  xy: 132, 484
+  size: 66, 60
+WalkUp
+  xy: 198, 484
+  size: 66, 60
+WalkUp
+  xy: 264, 484
+  size: 66, 60
+WalkUp
+  xy: 330, 484
+  size: 66, 60
+WalkDown
+  xy: 0, 544
+  size: 66, 60
+WalkDown
+  xy: 66, 544
+  size: 66, 60
+WalkDown
+  xy: 132, 544
+  size: 66, 60
+WalkDown
+  xy: 198, 544
+  size: 66, 60
+WalkDown
+  xy: 264, 544
+  size: 66, 60
+WalkDown
+  xy: 330, 544
+  size: 66, 60
