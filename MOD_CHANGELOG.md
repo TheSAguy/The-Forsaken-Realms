@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 524: on Android, the mod's own HUD controls take a tap again instead of opening the joystick (2026-10-10)
+
+A player's report on Discord (Alikus, Android, with a screenshot): "On Android i can't press Ascendance and info
+buttons, base game ones i can ... when i try to tap them, movement joystick appears preventing me from pressing them."
+
+- **The cause.** `GameHUD.touchDown`, on Android, opens the movement touchpad under any touch that is not inside a
+  fixed list of HUD actors - the stock ones from `hud.json`. The touchpad is drawn on top, so it took the tap and the
+  control under it never saw it. None of the controls this mod builds in code was on the list, so all of them were dead
+  on Android:
+  - the Info button (World Standings);
+  - the Speed-Up and Wait boxes;
+  - the day panel;
+  - the wood/stone panel and the Ascendance panel;
+  - the treasure maps' button.
+- **The fix.** `onHudControl` is checked before the touchpad opens:
+  - it names those controls, measured in stage coordinates (`containsStagePoint` - they sit inside groups, which the
+    list's parent-relative bounds do not account for);
+  - it also keeps any touch whose hit actor, or an ancestor below the `ui` root, is a Button or has a listener, so a
+    future control is covered too.
+
+  An empty patch of map still hits the `ui` root and opens the joystick as before. Desktop is unaffected (the check
+  is inside the Android branch).
+- **Tested** on desktop through a scratch-only console command that asked `onHudControl` about stage points (the touch
+  path itself is Android-only):
+  - true on the Ascendance panel, Info, the wood/stone panel, Speed-Up, Wait and the menu button;
+  - false on three empty map points, whose hit is the `UIActor` root.
+
+  Not yet seen on a device.
+
 ## Round 523: eighteen mounted knights - LPC riders on bluecarrot16's horses (2026-10-09)
 
 The Procedural Pixel Creatures session's mounted pilot (the user: "Let's try out the 18 you recommend", then "Please

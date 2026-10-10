@@ -80,6 +80,11 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (round 524): **LOCAL + UNRELEASED** - Android: the mod's code-built HUD controls (Info, Speed-Up,
+Wait, the day/wood-stone/Ascendance panels, the treasure maps' button) were dead - the touchpad opened under the finger
+and took the tap (Alikus on Discord). `GameHUD.onHudControl` keeps those touches, and any Button or listener under the
+finger. Not yet seen on a device; it needs an APK (a hotfix release) to reach Android players.
+
 ## STATE 2026-10-09 (round 523): **LOCAL + UNRELEASED (data only)** - eighteen mounted knights (the Procedural Pixel
 Creatures session): the enemies on the stock cavalier, cavalier_2, death_knight and death_knight_2 sprites are LPC riders
 on bluecarrot16's "[LPC] Horses" (bigbeargames' riding layers and recipe, the generator's `mounted_to_forge.py`), four

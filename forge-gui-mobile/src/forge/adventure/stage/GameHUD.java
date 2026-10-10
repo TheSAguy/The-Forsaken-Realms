@@ -498,6 +498,38 @@ public class GameHUD extends Stage {
         return super.touchDragged(screenX, screenY, pointer);
     }
 
+    /**
+     * Round 524 (Alikus on Discord, Android: "i can't press Ascendance and info buttons, base game ones i can ... when i
+     * try to tap them, movement joystick appears preventing me from pressing them"): the touchpad's list below names only
+     * hud.json's own actors, so a touch on anything this mod builds in code opened the joystick under the finger, and the
+     * joystick - drawn on top - took the tap. Those controls are named here: the Info button, the Speed-Up and Wait boxes,
+     * the day panel, the wood/stone and Ascendance panels and the treasure maps' button. So is any other button or actor
+     * with a listener under the finger, so a future one is covered too. Stage coordinates throughout - these actors sit
+     * inside groups, which the hud.json checks' parent-relative bounds do not account for.
+     */
+    private boolean onHudControl(Vector2 stagePoint) {
+        Actor[] built = {worldStandingsActor, speedCheckBox, waitCheckBox, timeOfDayActor, resourceDisplayActor,
+                ascendanceDisplayActor, treasureMapsButton};
+        for (Actor actor : built)
+            if (containsStagePoint(actor, stagePoint))
+                return true;
+        for (Actor actor = hit(stagePoint.x, stagePoint.y, true); actor != null && actor != ui && actor != getRoot();
+             actor = actor.getParent())
+            if (actor instanceof Button || actor.getListeners().size > 0)
+                return true;
+        return false;
+    }
+
+    private final Vector2 controlOrigin = new Vector2();
+
+    private boolean containsStagePoint(Actor actor, Vector2 stagePoint) {
+        if (actor == null || actor.getStage() != this || !actor.ascendantsVisible())
+            return false;
+        actor.localToStageCoordinates(controlOrigin.set(0, 0));
+        return stagePoint.x >= controlOrigin.x && stagePoint.x < controlOrigin.x + actor.getWidth()
+                && stagePoint.y >= controlOrigin.y && stagePoint.y < controlOrigin.y + actor.getHeight();
+    }
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenToStageCoordinates(touchDownCoords.set(screenX, screenY));
@@ -539,6 +571,7 @@ public class GameHUD extends Stage {
                     && !(Controls.actorContainsVector(exitToWorldMapActor, touchDownCoords)) //not inside exit button
                     && !(Controls.actorContainsVector(bookmarkActor, touchDownCoords)) //not inside bookmark button
                     && !(Controls.actorContainsVector(abilityButtonMap, touchDownCoords)) //not inside abilityButtonMap
+                    && !onHudControl(touchDownCoords) // round 524: nor on a control this mod built in code
                     && (Controls.actorContainsVector(ui, touchDownCoords)) //inside display bounds
                     && pointer < 1) { //not more than 1 pointer
                 touchpad.setBounds(touchDownCoords.x - TOUCHPAD_SCALE / 2, touchDownCoords.y - TOUCHPAD_SCALE / 2, TOUCHPAD_SCALE, TOUCHPAD_SCALE);
