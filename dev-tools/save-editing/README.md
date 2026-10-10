@@ -105,3 +105,13 @@ the collection count is identical, and life/gold/resources are intact.
   removal, Counterspell and 2 Psychic Barrier, the fliers Serum Sovereign / Watchful Blisterzoa / Extractor Demon /
   Serum Raker, two walls; 10 Island + 7 Swamp); backup `.prededit25.bak`; verified: slot 0 and stats unchanged,
   collection +1 free Swamp.
+- **2026-10-09 (later)** - the same run (life 15, 366 names / 446 cards), the user: "Update my decks. Slot 1 should be
+  strongest possible blue only deck, slot 2 strongest deck from all cards" (the deck screen counts from 1, so deck
+  slots 0 and 1). Poison, since Insane's 2.5x enemy life makes 10 poison far quicker than 30-115 damage: slot 0
+  **"Tide of Phyresis"** (`tide_of_phyresis.txt`, mono-U, 40: 2 Blighted Agent, Core Prowler, 3 Corrupted Conscience,
+  2 Prologue to Phyresis, proliferate - 2 Experimental Augury, Steady Progress, Vivisurgeon's Insight, Inexorable Tide,
+  Gitaxian Anatomist - counters, 2 Chrome Prowler, Stinging Barrier, Consecrated Sphinx; 16 Island + The Surgical Bay)
+  over "Blue"; slot 1 **"Dimir Contagion"** (`dimir_contagion.txt`, U/B, 40: the blue poison core plus 2 Pestilent
+  Syphoner, Flesh-Eater Imp, Bonepicker Skirge, Necrogen Communion, 2 Anoint with Affliction, 2 Black Sun's Twilight,
+  Vraska's Fall, Infectious Inquiry; 9 Island + 8 Swamp) over "Stolen Tides"; backup `.prededit26.bak`; verified with
+  Inspect: stats and empty slots unchanged, collection +1 free Swamp.
