@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (round 528): **LOCAL + UNRELEASED** - no black ground inside large structure areas: a surrounded
+structure tile with a see-through center picture (two plant sheets, 83% / 59% clear) gets the ground drawn under it
+(`BiomeTexture.isCenterOpaque`, `World.collectDrawingInfo`).
+
 ## STATE 2026-10-10 (round 527): **LOCAL + UNRELEASED** - one Inn tournament win per town a week: `World.innWinWeek` (saved),
 recorded on a won tournament's first award; `InnScene` deals no new tournament there until the week turns ("Won - next on
 day N").

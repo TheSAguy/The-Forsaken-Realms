@@ -29,6 +29,9 @@ public class BiomeTexture implements Serializable {
     ArrayList<IntMap<Pixmap>> edgeImages = new ArrayList<>();
     /** Round 300: the image index of each BiomeData.overlays entry (-1 where its region is missing). */
     private final ArrayList<Integer> overlayImages = new ArrayList<>();
+    /** Round 528: image index -> whether its full (center) tile covers the whole cell; filled on first ask. Transient - a
+     *  loaded texture regenerates its images and starts it afresh. */
+    private transient IntMap<Boolean> centerOpaque;
 
     public BiomeTexture(BiomeData data, int tileSize) {
         this.data = data;
@@ -49,6 +52,7 @@ public class BiomeTexture implements Serializable {
 
     private void generate() {
         FThreads.invokeInEdtNowOrLater(() -> {
+            centerOpaque = null; // round 528: new images, new answers
 
             if (images != null) {
                 for (ArrayList<Pixmap> val : images) {
@@ -192,6 +196,37 @@ public class BiomeTexture implements Serializable {
     /** Round 300: the image index to draw BiomeData.overlays[k] with, or -1. */
     public int overlayImage(int k) {
         return k >= 0 && k < overlayImages.size() ? overlayImages.get(k) : -1;
+    }
+
+    /**
+     * Round 528 (the user, with two screenshots: "when there are large areas with Terrain Structures, the map creates
+     * these black spots"): does image {@code subIndex}'s full tile - the one a tile surrounded on all eight sides draws -
+     * cover the whole cell? World.collectDrawingInfo lets a fully surrounded layer hide everything under it, which is
+     * right for ground and for a solid forest sheet, but this plane's vine and dead-tree structures are plants on
+     * see-through tiles: deep inside such an area the ground was skipped and the gaps drew black. Any pixel not fully
+     * opaque answers false; an image not loaded yet answers true (the old assumption) and is asked again later.
+     */
+    public boolean isCenterOpaque(int subIndex) {
+        if (subIndex < 0 || subIndex >= images.size() || images.get(subIndex).size() <= BigPictures.Center.value)
+            return true;
+        if (centerOpaque == null)
+            centerOpaque = new IntMap<>();
+        Boolean known = centerOpaque.get(subIndex);
+        if (known != null)
+            return known;
+        Pixmap center = images.get(subIndex).get(BigPictures.Center.value);
+        boolean opaque = true;
+        for (int y = 0; y < center.getHeight() && opaque; y++)
+            for (int x = 0; x < center.getWidth(); x++)
+                if ((center.getPixel(x, y) & 0xff) != 0xff) {
+                    opaque = false;
+                    break;
+                }
+        centerOpaque.put(subIndex, opaque);
+        if (!opaque)
+            System.out.println("[TFR-Terrain] " + (data == null ? "?" : data.name) + " image " + subIndex
+                    + ": its full tile is see-through - the ground is drawn under it");
+        return opaque;
     }
 
     public Pixmap getPixmap(int biomeSubIndex) {

@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 528: no black ground inside large structure areas (2026-10-10)
+
+The user, with two screenshots (a vine field beside a green town, a dead-tree grove in the Wasteland): "Can you look at
+the map gen. Is seems when there are large areas with Terrain Structures, the map creates these black spots."
+
+- **The cause** - `World.collectDrawingInfo`:
+  - A structure (or terrain) tile whose eight neighbors all carry the same structure gets the autotile's full
+    "center" picture.
+  - The layer walk then treated any full-neighborhood entry as covering the cell. Everything before it was skipped,
+    and no ground entry was added under it at all (`if (biomeTerrain != 0 && neighbors != full)`).
+  - Right for ground and a solid forest sheet. But two of this plane's structure sheets are plants on see-through
+    tiles: their center picture is 83% and 59% fully transparent, so those gaps drew black.
+  - Only fully surrounded cells qualify, hence "large areas": the test world (slot 7) has 14 such cells.
+- **The fix:**
+  - `BiomeTexture.isCenterOpaque(index)` checks once per image whether its full tile is opaque (any pixel below full
+    alpha answers false), caches it, and logs `[TFR-Terrain] ... its full tile is see-through - the ground is drawn
+    under it`.
+  - `collectDrawingInfo` adds the ground under a surrounded tile whose picture is see-through.
+  - Only an opaque full entry hides the layers below it.
+  - An image not loaded yet answers true (the old behavior).
+- **Agent-tested against a baseline** (slot 7; a scratch-only console command found the surrounded see-through cells
+  by measuring each center picture):
+  - at a dead-tree grove (tile 195,313) the packaged build drew two black cells, and the fixed build draws the ground
+    under the same trees;
+  - a pixel diff of the two screenshots changes only those two cells and the player's animation frame;
+  - at a Wasteland dirt patch (a center with a few faint pixels) the two builds draw the same pixels.
+
 ## Round 527: one Inn tournament win per town a week (2026-10-10)
 
 The user: "Let's make it that you can only Win one Inn Tournament per town/Capitol per week. So after a win, no more

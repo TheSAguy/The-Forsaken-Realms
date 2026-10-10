@@ -1650,7 +1650,13 @@ public class World implements Disposable, SaveFileContent {
                     bitIndex--;
                 }
             }
-            if (biomeTerrain != 0 && neighbors != 0b111_111_111) {
+            // Round 528: the tile's own picture for its terrain (the structure or terrain image drawn on top).
+            int drawable = drawableTerrainIndex(i, biomeTerrain, biomeIndex, x, y);
+            // Round 528 (the user: "when there are large areas with Terrain Structures, the map creates these black
+            // spots"): a fully surrounded structure tile skipped the ground under it - fine for a solid forest, but the
+            // vine and dead-tree sheets are plants on see-through tiles, and their gaps drew black. The ground goes under
+            // any tile whose picture is not opaque (BiomeTexture.isCenterOpaque).
+            if (biomeTerrain != 0 && (neighbors != 0b111_111_111 || !regions.isCenterOpaque(drawable))) {
                 bitIndex = 8;
                 int baseNeighbors = 0;
                 for (int ny = 1; ny > -2; ny--) {
@@ -1668,8 +1674,7 @@ public class World implements Disposable, SaveFileContent {
             //
             // Round 289: the list is upstream's reused `drawingInfoCache` rather than a fresh ArrayList per
             // call - safe to take, since it is cleared on entry and never escapes this method.
-            drawingInfoCache.add(new DrawingInformation(neighbors, regions,
-                    drawableTerrainIndex(i, biomeTerrain, biomeIndex, x, y), i, biomeTerrain != 0));
+            drawingInfoCache.add(new DrawingInformation(neighbors, regions, drawable, i, biomeTerrain != 0));
             // Round 300: this biome's draw-time overlay patches, over its plain ground - see overlayAt().
             if (biomeTerrain == 0 && !barrier && i < data.GetBiomes().size()) {
                 BiomeTerrainData[] overlays = data.GetBiomes().get(i).overlays;
@@ -1696,7 +1701,8 @@ public class World implements Disposable, SaveFileContent {
         int lastFullNeighbour = -1;
         int counter = 0;
         for (DrawingInformation info : drawingInfoCache) {
-            if (info.neighbors == 0b111_111_111) lastFullNeighbour = counter;
+            // Round 528: only an opaque full tile hides the layers under it - see isCenterOpaque().
+            if (info.neighbors == 0b111_111_111 && info.regions.isCenterOpaque(info.terrain)) lastFullNeighbour = counter;
             counter++;
         }
         if (lastFullNeighbour < 0 && !drawingInfoCache.isEmpty()) {
