@@ -119,3 +119,7 @@ the collection count is identical, and life/gold/resources are intact.
   (-1 Chrome Prowler, +Thrummingbird, +Dissipation Field; 41 cards) kept, then trimmed to 40 with new cards: +Mana Leak,
   +Preordain, -2 Bring the Ending, -Stinging Barrier. "Dimir Contagion": +Thrummingbird for Bonepicker Skirge, +Mana Leak
   for a Prologue to Phyresis. Backup `.prededit27.bak`; verified with Inspect: both 40, stats and collection unchanged.
+- **2026-10-10 (later)** - the user: "update my decks" (513 cards now, ~100 new). Tide of Phyresis: +Thrummingbird
+  (the 2nd) for Chrome Prowler, +Experimental Augury (the 3rd) for Steady Progress. Dimir Contagion: +Thrummingbird for
+  Steady Progress, +Gulping Scraptrap for Prologue to Phyresis, +Thriving Isle for an Island. Backup `.prededit28.bak`;
+  verified with Inspect: both 40, stats and collection unchanged.
