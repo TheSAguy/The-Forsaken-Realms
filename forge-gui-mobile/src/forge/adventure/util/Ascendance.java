@@ -622,7 +622,8 @@ public final class Ascendance {
             s.pendingLevels.add(level);
             gifts.add("a reward to choose - tap the Asc panel");
         } else { // round 496: the level sheet's line for a fixed level
-            record(level, String.join(", ", gifts) + (title.isEmpty() ? "" : " - " + title));
+            record(level, String.join(", ", gifts) + (title.isEmpty() ? "" : " - " + title),
+                    titleIndex(level) >= 0 ? "title_" + (titleIndex(level) + 1) : "life"); // round 526: its icon
         }
         System.out.println("[TFR-Ascend] LEVEL " + level + (title.isEmpty() ? "" : " - " + title) + ": "
                 + String.join(", ", gifts) + " (choices waiting: " + s.pendingLevels.size() + ")");
@@ -640,12 +641,15 @@ public final class Ascendance {
 
     /** Round 496: what a level gave, for the level sheet (the user: "We should add a Level sheet that shows what you picked
      *  on each level"). */
-    private static void record(int level, String what) {
+    private static void record(int level, String what, String icon) {
         AscendanceState s = state();
         if (s == null)
             return;
         s.history.removeIf(entry -> entry.startsWith(level + "|"));
         s.history.add(level + "|" + what);
+        s.historyIcons.removeIf(entry -> entry.startsWith(level + "|")); // round 526: the line's icon
+        if (icon != null)
+            s.historyIcons.add(level + "|" + icon);
     }
 
     /** Round 496: level -> what it gave, oldest first; waiting levels and levels from before the sheet existed have none. */
@@ -1086,6 +1090,12 @@ public final class Ascendance {
         int next = picks(id) + 1;
         String rank = next < RANKS.length ? RANKS[next] : " " + next;
         float now = totalAt(c, picks(id)), then = totalAt(c, next); // round 508: a different first pick (Shardwell)
+        return "[%95]" + lastingName(id) + rank + "[]\n[%75]" + effectText(id, c, next, then, now);
+    }
+
+    /** A lasting reward's effect at {@code rank} (its total {@code then}); "(now ...)" after it when {@code now} > 0. Round 526:
+     *  shared by the choice dialog and the Level sheet. */
+    private static String effectText(String id, AscendanceData.Choice c, int next, float then, float now) {
         String effect;
         switch (id) {
             case "vigor": effect = "+" + Math.round(c.value) + " [+Life] in the first " + next + " duel" + (next == 1 ? "" : "s") + " each day"; break;
@@ -1105,7 +1115,75 @@ public final class Ascendance {
             case "coinToss": effect = "Win the opening coin toss " + pct(Math.min(1f, 0.5f * (1f + then))) + " of the time"; break; // round 525
             default: effect = id;
         }
-        return "[%95]" + lastingName(id) + rank + "[]\n[%75]" + effect;
+        return effect;
+    }
+
+    /** Round 526: what a lasting reward does at {@code rank} - the Level sheet's description of a pick. */
+    public static String rankEffect(String id, int rank) {
+        AscendanceData.Choice c = choice(id);
+        return c == null || !c.lasting || rank < 1 ? null : effectText(id, c, rank, totalAt(c, rank), 0f);
+    }
+
+    /** Round 526 (the user: "On the Level sheet. Add a brief description of what each does. Like when you choose"): a
+     *  lasting pick's line ("Haggler II") gets what that rank does; null for any other line. */
+    public static String levelSheetDescription(String text) {
+        String region = historyIconRegion(text);
+        int bar = region == null ? -1 : region.lastIndexOf('_');
+        if (bar < 0)
+            return null;
+        try {
+            return rankEffect(region.substring(0, bar), Integer.parseInt(region.substring(bar + 1)));
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    /** Round 526 (the user: "We need to find icons for the rest ... Need a Title Icon(s) for the major levels"): a
+     *  level-sheet line's icon - the one recorded with it, else read from its text (lines from before round 526). */
+    public static String levelSheetIcon(int level, String text) {
+        AscendanceState s = state();
+        if (s != null)
+            for (String entry : s.historyIcons)
+                if (entry.startsWith(level + "|"))
+                    return entry.substring(entry.indexOf('|') + 1);
+        return iconFromText(level, text);
+    }
+
+    /** Round 526: the icon of a line recorded before round 526, from what it says. */
+    private static String iconFromText(int level, String text) {
+        if (text == null)
+            return null;
+        AscendanceData d = data();
+        int title = titleIndex(level);
+        if (title >= 0)
+            return "title_" + (title + 1);
+        if (level > curveTop())
+            return "life";
+        String lasting = historyIconRegion(text);
+        if (lasting != null)
+            return lasting;
+        if (text.contains("[+BronzeChallengeCoin]")) return "coins";
+        if (text.contains("[+Gold]")) return "gold";
+        if (text.contains("[+Shards]")) return "shards";
+        if (text.contains("[+Wood]")) return "wood";
+        if (text.contains("[+Stone]")) return "stone";
+        if (text.contains("[+MapFragment")) return "mapFragment";
+        if (text.contains(" reputation in ")) return "goodwill";
+        if (text.matches("a \\S+ pack")) return "booster";
+        if (text.contains("blueprint")) return "blueprint";
+        if (text.matches("\\d+ cards?")) return "rareCards";
+        if (text.startsWith("no ") || text.contains("[+Life]"))
+            return null;
+        return "item"; // the one free-text line: the item's own name
+    }
+
+    /** Round 526: the position of {@code level} among the title levels, or -1. */
+    private static int titleIndex(int level) {
+        int[] levels = data().titleLevels;
+        for (int i = 0; levels != null && i < levels.length; i++)
+            if (levels[i] == level)
+                return i;
+        return -1;
     }
 
     private static String pct(float share) {
@@ -1196,7 +1274,7 @@ public final class Ascendance {
         }
         System.out.println("[TFR-Ascend] level " + level + " reward chosen: " + id + " -> " + result + " (still waiting: "
                 + s.pendingLevels.size() + ")");
-        record(level, result); // round 496: the level sheet
+        record(level, result, c.lasting ? id + "_" + s.picks.get(id) : id); // round 496: the level sheet; 526: its icon
         GameHUD.getInstance().addNotification(result); // round 496: black on the paper; icons keep their colors
         return result;
     }
@@ -1215,6 +1293,7 @@ public final class Ascendance {
         data.storeObject("ascendancePickIds", new ArrayList<>(s.picks.keySet()));
         data.storeObject("ascendancePickCounts", new ArrayList<>(s.picks.values()));
         data.storeObject("ascendanceHistory", new ArrayList<>(s.history)); // round 496: the level sheet
+        data.storeObject("ascendanceHistoryIcons", new ArrayList<>(s.historyIcons)); // round 526
         data.store("ascendanceVigorDay", s.vigorDay);
         data.store("ascendanceVigorUsed", s.vigorUsed);
         data.store("ascendanceDeferredPower", s.deferredPower); // round 505
@@ -1297,6 +1376,13 @@ public final class Ascendance {
                 for (String entry : history)
                     if (entry != null)
                         s.history.add(entry);
+        }
+        if (data.containsKey("ascendanceHistoryIcons")) { // round 526: absent before it - the sheet reads the text
+            List<String> icons = (List<String>) data.readObject("ascendanceHistoryIcons");
+            if (icons != null)
+                for (String entry : icons)
+                    if (entry != null)
+                        s.historyIcons.add(entry);
         }
         s.vigorDay = data.containsKey("ascendanceVigorDay") ? data.readInt("ascendanceVigorDay") : -1;
         s.vigorUsed = data.containsKey("ascendanceVigorUsed") ? data.readInt("ascendanceVigorUsed") : 0;

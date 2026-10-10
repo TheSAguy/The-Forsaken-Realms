@@ -1,6 +1,6 @@
 
 ascendance_icons.png
-size: 800,600
+size: 800,700
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -135,4 +135,25 @@ goodwill
   size: 96, 96
 coinToss_1
   xy: 302, 502
+  size: 96, 96
+title_1
+  xy: 402, 502
+  size: 96, 96
+title_2
+  xy: 502, 502
+  size: 96, 96
+title_3
+  xy: 602, 502
+  size: 96, 96
+title_4
+  xy: 702, 502
+  size: 96, 96
+title_5
+  xy: 2, 602
+  size: 96, 96
+title_6
+  xy: 102, 602
+  size: 96, 96
+life
+  xy: 202, 602
   size: 96, 96

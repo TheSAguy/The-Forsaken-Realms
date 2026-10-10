@@ -14264,6 +14264,46 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 526: the Level sheet - a description beside every pick, an icon on every line, title medals (2026-10-10)
+
+The user, with a Level sheet screenshot: "On the Level sheet. Add a brief description of what each does. Like when you
+choose. We need to find icons for the rest. The coin can just be the coin. Need to find one for Reputation. Need a Title
+Icon(s) for the major levels. 5, 10, 15, etc." And: "Not sure if we added this before. Winning an Inn Tournament should
+increase reputation with that town by +1."
+
+- **Descriptions.** A lasting pick's line reads "Haggler II - Shop prices -10% [+Gold]", the rank it reached, as the
+  choice dialog words it. `Ascendance.effectText` is factored out of `describe` and shared; `rankEffect(id, rank)` and
+  `levelSheetDescription(text)` serve the sheet.
+- **An icon on every line** (`Ascendance.levelSheetIcon`):
+  - Lasting picks, one-time rewards, the title levels and the +1-life levels past 30 all get one.
+  - A new line records its icon (`AscendanceState.historyIcons`, saved as `ascendanceHistoryIcons`): `choose` passes
+    `<id>_<rank>` or the id, and `onLevelUp` passes `title_<n>` or `life`.
+  - Lines from before this round are read from their text (`iconFromText`): the title levels, the past-30 levels, a
+    pick's exact name, the reward glyphs, "reputation in", "a ... pack", "blueprint", "N cards". Anything else is the
+    item reward, the only free-text line.
+- **New icons** in `ascendance_icons.atlas` (the page grew a row to 800x700; `set_icon_regions.py` in the session
+  scratch folder):
+  - **Reputation** (`goodwill`): the medieval "speech and diplomacy" handshake replaces Shikashi's hearts.
+  - **Titles** `title_1`..`title_6`: steps 1, 2, 4, 6, 8 and 10 of CraftPix's achievement trophy ladder, for levels 5,
+    10, 15, 20, 25, 30 - Unbound, Reclaimer, Warden of Ash, Seal-breaker, Sovereign, Ascendant. A medal, then more
+    trophies in a frame that turns gold. A title past the drawn six shows the sixth.
+  - **`life`**: the game's heart, for the +1-life levels past 30.
+  - The coin line already had the Bronze Challenge Coin.
+- **Inn tournament reputation** was already in: round 369 (the user's own earlier ask) gives the Inn's town +1 on the
+  first award of a won tournament, with a "Tournament champion!" notice. The user's 2026-10-08 log shows it firing
+  ("[TFR-InnReputation] tournament won at ... Orazca ... local reputation now 4"). No change.
+- CREDITS.md: the medieval set now also gives the reputation handshake; the CraftPix title medals; Shikashi's line
+  drops the hearts.
+
+**Agent-tested** (slot 7): after picks of Haggler I and II, a Bronze Coin, gold, Opening Gambit and stone, the Level
+sheet showed every line's icon:
+- the Estates piles and "Shop prices -5%" / "-10%";
+- the coin, the gold, the stone;
+- Opening Gambit's coin with "Win the opening coin toss 75% of the time";
+- levels 5 and 10 (recorded before this round) with the first two title medals, read from their text.
+
+The waiting levels keep an empty icon cell.
+
 ## Round 525: Opening Gambit wins the coin toss 75% of the time; coin holders join the player's own Arena (2026-10-10)
 
 The user: "Let's add the following level up perk. 50% more likely to win coin flip to start a duel. One time perk. If my

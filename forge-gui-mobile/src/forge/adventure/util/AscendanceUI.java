@@ -131,6 +131,12 @@ public final class AscendanceUI {
         com.badlogic.gdx.scenes.scene2d.ui.Table rows = new com.badlogic.gdx.scenes.scene2d.ui.Table();
         for (int level = 1; level <= Ascendance.level(); level++) { // round 497: level 1 is a level-up now
             String what = history.get(level);
+            // Round 526: every recorded line's icon (a pick, a one-time reward, a title, the heart past 30), and a pick's
+            // description beside it.
+            String iconRegion = what == null ? null : Ascendance.levelSheetIcon(level, what);
+            String description = what == null ? null : Ascendance.levelSheetDescription(what);
+            if (description != null)
+                what = what + " [%75]- " + description;
             if (what == null)
                 what = waiting.contains(level) ? "[GOLD]a reward waits - tap the Asc panel[]" : "[%80](before the level sheet)";
             TypingLabel number = Controls.newTypingLabel("[%85]" + level);
@@ -140,7 +146,7 @@ public final class AscendanceUI {
             text.skipToTheEnd();
             rows.add(number).width(22f).top().left();
             // Round 522: a lasting pick's icon at the rank it reached; other lines carry their own icon in the text.
-            com.badlogic.gdx.scenes.scene2d.ui.Image icon = icon(Ascendance.historyIconRegion(what));
+            com.badlogic.gdx.scenes.scene2d.ui.Image icon = icon(iconRegion);
             if (icon != null)
                 rows.add(icon).size(SHEET_ICON).top().padRight(3f);
             else

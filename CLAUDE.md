@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (round 526): **LOCAL + UNRELEASED** - the Level sheet: each pick's description at its rank, an icon on
+every line (`AscendanceState.historyIcons` + a text fallback for older lines), CraftPix trophy medals for the six title
+levels, the medieval handshake for reputation, the heart past 30. Inn-tournament reputation already existed (round 369).
+
 ## STATE 2026-10-10 (round 525): **LOCAL + UNRELEASED** - Opening Gambit (Ascendance, one rank: the first game's coin toss
 at 75% - engine `RegisteredPlayer.coinTossWeight` + `GameAction.weightedCoinToss`), and Bronze-Coin holders joining the
 player's own Arena bracket (1 -> 50%, 2 -> 75%, 3+ -> always; Level-2 Master+ only; `ArenaScene.pickCoinRansomFoe`).

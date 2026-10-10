@@ -20,6 +20,9 @@ public class AscendanceState {
     public final java.util.LinkedHashMap<String, Integer> picks = new java.util.LinkedHashMap<>();
     /** Round 496: the level sheet - "level|what it gave", one per level reached since round 496. */
     public final java.util.ArrayList<String> history = new java.util.ArrayList<>();
+    /** Round 526: each level-sheet line's icon - "level|region" of Ascendance.ICON_ATLAS; absent for lines from before it
+     *  (the sheet reads those from their text). */
+    public final java.util.ArrayList<String> historyIcons = new java.util.ArrayList<>();
     /** Round 494: Morning Vigor - the day it last counted duels, and how many it has covered that day. */
     public int vigorDay = -1;
     public int vigorUsed;
@@ -43,6 +46,7 @@ public class AscendanceState {
         offer.clear();
         picks.clear();
         history.clear();
+        historyIcons.clear();
         vigorDay = -1;
         vigorUsed = 0;
         deferredPower = 0;
