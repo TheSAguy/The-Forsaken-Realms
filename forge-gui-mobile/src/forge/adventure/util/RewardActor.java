@@ -120,7 +120,8 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             // we let the AssetManager or global FrameBuffer pool manage the lifecycle safely
             Forge.safeDispose(generatedTooltip);
         }
-        Forge.safeDispose(T, Talt, Tnotext, Taltnotext);
+        Forge.safeDispose(T, Talt, Tnotext, Taltnotext, mapPieceTexture);
+        mapPieceTexture = null;
     }
 
     @Override
@@ -503,6 +504,16 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                 setItemTooltips(item, backSprite, false);
                 processSprite(backSprite, item, Controls.newTextraLabel("[%200]Blueprint\n"
                         + EconomyBuildings.shopDisplayName(reward.getBlueprintShopName())), 0, -10, false);
+                needsToBeDisposed = true;
+                break;
+            }
+            // Round 530: an obelisk's map piece - its face is the piece itself, torn from the region's treasure map.
+            case MapPiece: {
+                Sprite backSprite = Config.instance().getItemSprite("CardBack");
+                Sprite piece = mapPieceSprite();
+                setItemTooltips(piece, backSprite, false);
+                processSprite(backSprite, piece, Controls.newTextraLabel("[%200]"
+                        + TreasureHunt.pieceCardTitle(reward.getMapRegion(), reward.getCount())), 0, -10, false, 30);
                 needsToBeDisposed = true;
                 break;
             }
@@ -889,6 +900,11 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
     }
 
     private void processSprite(Sprite sprite, Sprite item, TextraLabel itemText, int modX, int modY, boolean isBooster) {
+        processSprite(sprite, item, itemText, modX, modY, isBooster, 0);
+    }
+
+    /** itemLift (round 530): card pixels the icon sits above the middle - the tall map piece clears its two-line title. */
+    private void processSprite(Sprite sprite, Sprite item, TextraLabel itemText, int modX, int modY, boolean isBooster, float itemLift) {
         if (!Gdx.app.getType().equals(Application.ApplicationType.HeadlessDesktop) && !FThreads.isGuiThread()) {
             return;
         }
@@ -913,7 +929,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             if (!isBooster) {
                 float iw = item.getWidth() * 4;
                 float ih = item.getHeight() * 4;
-                Forge.getGraphics().getBatch().draw(item, pw / 2f - iw / 2f, (ph / 2f - ih / 2f), iw, ih);
+                Forge.getGraphics().getBatch().draw(item, pw / 2f - iw / 2f, (ph / 2f - ih / 2f) + itemLift, iw, ih);
             } else
                 Forge.getGraphics().getBatch().draw(item, pw / 4f, ph / 4f, pw / 2f, ph / 2f);
         }
@@ -947,6 +963,37 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             } catch (Exception ignored) {
                 // region absent in this plane's atlas - try the next candidate
             }
+        }
+        return Config.instance().getItemSprite("CardBack");
+    }
+
+    // Round 530: the map-piece card's face, owned by this actor (dispose()).
+    private Texture mapPieceTexture;
+
+    /** Round 530: the piece the card shows, drawn 1:1 on the card (processSprite draws an icon at 4x its size); the
+     *  region's Map Fragment icon when the world or its hunt is missing. */
+    private Sprite mapPieceSprite() {
+        forge.adventure.world.World world = Current.world();
+        int region = reward.getMapRegion();
+        int[] h = world == null ? null : TreasureHunt.hunt(world, region);
+        if (h != null && reward.getMapPiece() >= 0) {
+            com.badlogic.gdx.graphics.Pixmap pixmap = TreasureHunt.renderPiece(world, h, reward.getMapPiece());
+            Forge.safeDispose(mapPieceTexture);
+            mapPieceTexture = new Texture(pixmap);
+            float w = pixmap.getWidth() / 4f, ht = pixmap.getHeight() / 4f;
+            pixmap.dispose();
+            Sprite sprite = new Sprite(mapPieceTexture);
+            sprite.setSize(w, ht);
+            return sprite;
+        }
+        System.out.println("[TFR-Treasure] map-piece card without its hunt (region " + region + ") - the fragment icon instead");
+        try {
+            Sprite icon = Config.instance().getItemSprite(TreasureHunt.OBELISK_REGIONS[Math.max(0, region)]
+                    .replace("Obelisk", "MapFragment"));
+            if (icon != null)
+                return icon;
+        } catch (Exception ignored) {
+            // no such region in this plane's items.atlas
         }
         return Config.instance().getItemSprite("CardBack");
     }
@@ -1011,6 +1058,9 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                             preview_w - 64,
                             Align.center, true);
                 }
+                else if (Reward.Type.MapPiece.equals(reward.getType())) // round 530
+                    layout.setText(font, TreasureHunt.pieceCardTitle(reward.getMapRegion(), reward.getCount()).replace("\n", " - "),
+                            Color.WHITE, preview_w - 64, Align.center, true);
                 else
                     layout.setText(font, itemExists ? item.getDisplayName() : getReward().type.name(), Color.WHITE, preview_w - 64, Align.center, true);
                 Forge.getGraphics().drawText(font, layout, 32, preview_h - 70);
@@ -1020,6 +1070,8 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                     layout.reset();
                 } else if (getReward().getDeck() != null) {
                     description = getReward().getDeck().getName();
+                } else if (Reward.Type.MapPiece.equals(reward.getType())) { // round 530
+                    description = TreasureHunt.pieceCardDescription(reward.getMapRegion(), reward.getCount());
                 } else {
                     description = "Adds " + getReward().getCount() + " " + getReward().type;
                 }
@@ -1240,6 +1292,10 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                 break;
             case Blueprint:
                 display = "Blueprint: " + EconomyBuildings.shopDisplayName(reward.getBlueprintShopName());
+                labelStyle = "dialog";
+                break;
+            case MapPiece: // round 530
+                display = TreasureHunt.pieceCardTitle(reward.getMapRegion(), reward.getCount()).replace("\n", ": ");
                 labelStyle = "dialog";
                 break;
             case CardPack:

@@ -26,7 +26,12 @@ public class Reward {
         // Round 517 (the user: "let's make a card out of it and when you win a duel, have it as a reward, and only apply
         // the Power once you open/collect your reward"): Ascendance Power on a won duel's loot screen - paid by
         // AdventurePlayer.addReward when collected; its card shows the "Power" icon of items.atlas.
-        Power;
+        Power,
+        // Round 530 (the user: "When you grab the Obelisk on the overworld, you should get a reward card, with the
+        // fragment of map on it. Currently it just evaporates and you don't really feel like you get anything"): the
+        // treasure-map piece an obelisk gave, its face the piece itself (TreasureHunt.renderPiece). Fitted into the map
+        // before the card shows, like a blueprint's reveal - collecting it adds nothing.
+        MapPiece;
         private final String labelKey = "lbl" + this.name();
         /**
          * @return The pre-cached localizer key name (e.g., "lblLife", "lblShards", "lblGold").
@@ -85,6 +90,40 @@ public class Reward {
 
     public String getPowerSource() {
         return powerSource;
+    }
+
+    // MapPiece only (round 530): the hunt's region (TreasureHunt.REGIONS index) and which of its 3x3 pieces (row*3+col);
+    // the count is how many pieces that map has now.
+    int mapRegion = -1, mapPiece = -1;
+    // Round 530: a card showing what the player already has (an obelisk's piece, the Spade the first one gives) - the
+    // reveal of a grant made beforehand, so closing the screen loses nothing; AdventurePlayer.addReward skips it.
+    boolean alreadyGranted;
+
+    /** Round 530: region's map piece (row*3+col), already fitted - the map's nth piece. */
+    public static Reward mapPiece(int region, int piece, int nth) {
+        Reward reward = new Reward(Type.MapPiece, nth);
+        reward.mapRegion = region;
+        reward.mapPiece = piece;
+        reward.alreadyGranted = true;
+        return reward;
+    }
+
+    /** Round 530: the card of something already given. */
+    public static Reward alreadyGranted(Reward reward) {
+        reward.alreadyGranted = true;
+        return reward;
+    }
+
+    public int getMapRegion() {
+        return mapRegion;
+    }
+
+    public int getMapPiece() {
+        return mapPiece;
+    }
+
+    public boolean isAlreadyGranted() {
+        return alreadyGranted;
     }
 
     /** Round 406: gold standing in for cards a reward list promised and could not pay. */

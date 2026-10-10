@@ -1,15 +1,20 @@
 package forge.adventure.util;
 
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.utils.Array;
+import forge.Forge;
 import forge.adventure.character.EnemySprite;
 import forge.adventure.character.PlayerSprite;
 import forge.adventure.data.BiomeData;
 import forge.adventure.data.BiomeStructureData;
 import forge.adventure.data.ConfigData;
 import forge.adventure.data.EnemyData;
+import forge.adventure.data.ItemData;
+import forge.adventure.data.ItemListData;
 import forge.adventure.data.RewardData;
 import forge.adventure.data.WorldData;
 import forge.adventure.pointofintrest.PointOfInterest;
+import forge.adventure.scene.RewardScene;
 import forge.adventure.stage.GameHUD;
 import forge.adventure.stage.MapStage;
 import forge.adventure.stage.WorldStage;
@@ -387,7 +392,51 @@ public final class TreasureHunt {
             System.out.println("[TFR-Treasure] " + name + " obelisk at (" + h[H_OBX] + "," + h[H_OBY] + ") touched - fragment "
                     + h[H_FRAGS] + "/" + FRAGMENTS + (first ? " (the first: the Spade given)" : "")
                     + "; it rises again on day " + (h[H_OBDAY] + OBELISK_DAYS));
+            showPieceCard(h, first);
+            return; // one obelisk a frame - the loot screen is up now
         }
+    }
+
+    /**
+     * Round 530 (the user: "When you grab the Obelisk on the overworld, you should get a reward card, with the fragment of
+     * map on it. Currently it just evaporates and you don't really feel like you get anything"): the piece just fitted,
+     * as a card on the loot screen - and the Spade beside it with the first. Both are the player's already, like a
+     * blueprint's reveal (ResourceSpawns.grantRandomBlueprint), so leaving the screen any way loses nothing.
+     */
+    private static void showPieceCard(int[] h, boolean withSpade) {
+        Array<Reward> reveal = new Array<>();
+        reveal.add(Reward.mapPiece(h[H_REGION], newestPiece(h), h[H_FRAGS]));
+        ItemData spade = withSpade ? ItemListData.getItem(SPADE_ITEM) : null;
+        if (spade != null)
+            reveal.add(Reward.alreadyGranted(new Reward(spade)));
+        RewardScene.instance().loadRewards(reveal, RewardScene.Type.Loot, null);
+        Forge.switchScene(RewardScene.instance());
+        System.out.println("[TFR-Treasure] the " + REGION_NAMES[h[H_REGION]] + " map's piece " + newestPiece(h)
+                + " shown as a card" + (spade != null ? ", the Spade beside it" : ""));
+    }
+
+    /** The piece the map's latest fragment revealed (row*3+col): the center first, then the world's order. */
+    public static int newestPiece(int[] h) {
+        return h[H_FRAGS] <= 1 ? 4 : h[H_ORDER + Math.min(FRAGMENTS, h[H_FRAGS]) - 2];
+    }
+
+    /** Round 530: the map-piece card's title, "Blue Map" over "Piece 3 of 9". */
+    public static String pieceCardTitle(int region, int nth) {
+        return (region >= 0 && region < REGION_NAMES.length ? REGION_NAMES[region] : "Treasure") + " Map\nPiece " + nth
+                + " of " + FRAGMENTS;
+    }
+
+    /** Round 530: what the map-piece card's details say. */
+    public static String pieceCardDescription(int region, int nth) {
+        String name = region >= 0 && region < REGION_NAMES.length ? REGION_NAMES[region] : "Treasure";
+        String where = " Open Treasure Maps from your inventory to see the whole map.";
+        if (nth <= 1)
+            return "The center of the " + name + " treasure map, with an X on the treasure. Each " + name
+                    + " obelisk you find adds a piece of the land around it." + where;
+        if (nth >= FRAGMENTS)
+            return "The last piece - the " + name + " map is whole, and an X marks the treasure on your world map.";
+        return "Piece " + nth + " of " + FRAGMENTS + " of the " + name + " treasure map - more of the land around the X."
+                + where;
     }
 
     /** With all nine pieces, stepping onto the X digs there at once - once until the player steps away. Round 480, the
@@ -792,6 +841,49 @@ public final class TreasureHunt {
                 }
             }
         }
+        return out;
+    }
+
+    /**
+     * Round 530: one piece of the hunt's map as a torn scrap - the piece's land from renderMap() (the X on the center
+     * piece) on a strip of paper with a ragged, inked edge. A new Pixmap the caller disposes.
+     */
+    public static Pixmap renderPiece(World world, int[] h, int piece) {
+        Pixmap map = renderMap(world, h);
+        int piecePx = map.getWidth() / 3;
+        int margin = Math.max(4, piecePx / 20);
+        int size = piecePx + 2 * margin;
+        // How far the tear eats into the paper along each edge (left, right, top, bottom), drifting a pixel at a time so
+        // the edge reads torn rather than noisy; seeded by the treasure and the piece, so a piece always tears the same.
+        Random tear = new Random(97L * h[H_TX] + 13L * h[H_TY] + piece);
+        int[][] inset = new int[4][size];
+        for (int[] edge : inset) {
+            int v = tear.nextInt(margin);
+            for (int i = 0; i < size; i++) {
+                v = Math.max(0, Math.min(margin - 1, v + tear.nextInt(3) - 1));
+                edge[i] = v;
+            }
+        }
+        boolean[][] paper = new boolean[size][size];
+        for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+                paper[x][y] = x >= inset[0][y] && x < size - inset[1][y] && y >= inset[2][x] && y < size - inset[3][x];
+        Pixmap out = new Pixmap(size, size, Pixmap.Format.RGBA8888);
+        out.setBlending(Pixmap.Blending.None);
+        out.setColor(0f, 0f, 0f, 0f);
+        out.fill();
+        for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+                if (paper[x][y])
+                    out.drawPixel(x, y, rgba(0.85f, 0.76f, 0.58f));
+        out.drawPixmap(map, (piece % 3) * piecePx, (piece / 3) * piecePx, piecePx, piecePx, margin, margin, piecePx, piecePx);
+        map.dispose();
+        int ink = rgba(0.35f, 0.25f, 0.15f);
+        for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+                if (paper[x][y] && (x == 0 || y == 0 || x == size - 1 || y == size - 1 || !paper[x - 1][y]
+                        || !paper[x + 1][y] || !paper[x][y - 1] || !paper[x][y + 1]))
+                    out.drawPixel(x, y, ink);
         return out;
     }
 

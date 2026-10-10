@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 530: an obelisk gives a map-piece card (2026-10-10)
+
+The user: "When you grab the Obelisk on the overworld, you should get a reward card, with the fragment of map on it.
+Currently it just evaporates and you don't really feel like you get anything."
+
+- **The card:**
+  - Touching an obelisk now opens the loot screen with one card, `Reward.Type.MapPiece`.
+  - Its face is the piece just found, cut from the hunt's own map picture (`TreasureHunt.renderPiece`): the same sepia
+    land the Treasure Maps screen shows, on a scrap of paper with a torn, inked edge. The center piece carries the X.
+  - Its title reads "Blue Map / Piece 3 of 9". Its details say what the piece is, and the ninth says the map is whole.
+  - The first obelisk also shows the Spade's card beside it.
+- **Granted first, shown second** - the blueprint reveal's pattern (`ResourceSpawns.grantRandomBlueprint`):
+  - The piece and the Spade are the player's before the screen opens.
+  - A new `Reward.alreadyGranted` flag makes `AdventurePlayer.addReward` skip both cards, so leaving the screen any
+    way loses nothing and Done never adds a second Spade.
+- **Card layout:** `RewardActor.processSprite` takes an icon lift, so the tall piece clears its two-line title.
+- **Log:** `[TFR-Treasure] the Blue map's piece 7 shown as a card` (plus ", the Spade beside it" with the first).
+- **Agent-tested** (slot 7, with the `treasure obelisk` and `treasure fragments` console commands):
+  - The first piece shows the X, with the Spade card beside it. Collecting leaves exactly one Spade, and the map reads
+    1/9.
+  - A middle piece shows alone.
+  - At 8/9 the missing piece was the bottom middle. The ninth card showed that same land, matching the whole map's
+    bottom-middle piece pixel for pixel; the log says piece 7.
+  - The fix found on the way: `newestPiece` capped the count at 8, so the ninth card would have shown the seventh
+    piece's land.
+
 ## Round 529: twenty-four vampires from CraftPix's 4-direction vampires, Edgar Markov and Sengir their own (2026-10-10)
 
 The Procedural Pixel Creatures session (the user: "see if the Vampires art is any good", then "Proceed, but I do think

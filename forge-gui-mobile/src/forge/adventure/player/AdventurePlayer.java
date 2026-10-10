@@ -2237,6 +2237,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void addReward(Reward reward) {
+        if (reward.isAlreadyGranted())
+            return; // round 530: a reveal card (an obelisk's map piece, the Spade) - given before the card showed
         switch (reward.getType()) {
             case Card:
                 cards.add(reward.getCard());

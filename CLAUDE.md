@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (round 530): **LOCAL + UNRELEASED** - an obelisk gives a map-piece card: the loot screen shows
+the piece just found (`Reward.Type.MapPiece`, face from `TreasureHunt.renderPiece`) and the Spade beside the first; both
+granted before the screen opens (`Reward.alreadyGranted`, skipped by `AdventurePlayer.addReward`).
+
 ## STATE 2026-10-10 (round 529): **LOCAL + UNRELEASED (data only)** - twenty-four vampires (the Procedural Pixel
 Creatures session): the enemies on the stock undead/vampire, vampire_2, vampire_3 and vampire_4 sprites take
 CraftPix.net's 4-direction vampires (OGA-BY 3.0, the generator's `craftpix_to_forge.py`) in four group looks (green,
