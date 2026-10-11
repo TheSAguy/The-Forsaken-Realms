@@ -1,0 +1,16 @@
+{
+ "race": "Viashino",
+ "note": "Round 544 (the user, from the 25-candidate sheet: 'Viashino: 1, 2, 3, 4, 7, 9, 10, 12, 21, 23'). One pool for both genders.",
+ "picks": [
+  {"region": "rivaz", "gender": "shared", "card": "Rivaz of the Claw", "artist": "Joshua Raphael", "file": "Rivaz of the Claw1.full.jpg", "u": 0.55, "v": 0.35, "zoom": 0.6},
+  {"region": "bey", "gender": "shared", "card": "Viashino Bey", "artist": "Bradley Williams", "file": "Viashino Bey.full.jpg", "u": 0.55, "v": 0.5, "zoom": 0.55},
+  {"region": "bladescout", "gender": "shared", "card": "Viashino Bladescout", "artist": "Dany Orizio", "file": "Viashino Bladescout.full.jpg", "u": 0.75, "v": 0.25, "zoom": 0.5},
+  {"region": "branchrider", "gender": "shared", "card": "Viashino Branchrider", "artist": "Andrew Mar", "file": "Viashino Branchrider.full.jpg", "u": 0.5, "v": 0.25, "zoom": 0.55},
+  {"region": "firstblade", "gender": "shared", "card": "Viashino Firstblade", "artist": "Matt Stewart", "file": "Viashino Firstblade.full.jpg", "u": 0.45, "v": 0.4, "zoom": 0.6},
+  {"region": "heretic", "gender": "shared", "card": "Viashino Heretic", "artist": "Douglas Shuler", "file": "Viashino Heretic.full.jpg", "u": 0.62, "v": 0.4, "zoom": 0.65},
+  {"region": "lashclaw", "gender": "shared", "card": "Viashino Lashclaw", "artist": "Caio Monteiro", "file": "Viashino Lashclaw.full.jpg", "u": 0.6, "v": 0.3, "zoom": 0.55},
+  {"region": "pyromancer", "gender": "shared", "card": "Viashino Pyromancer", "artist": "Jesper Ejsing", "file": "Viashino Pyromancer.full.jpg", "u": 0.64, "v": 0.38, "zoom": 0.55},
+  {"region": "slasher", "gender": "shared", "card": "Viashino Slasher", "artist": "Glenn Fabry", "file": "Viashino Slasher.full.jpg", "u": 0.42, "v": 0.35, "zoom": 0.65},
+  {"region": "spearhunter", "gender": "shared", "card": "Viashino Spearhunter", "artist": "Carl Critchlow", "file": "Viashino Spearhunter.full.jpg", "u": 0.5, "v": 0.35, "zoom": 0.65}
+ ]
+}

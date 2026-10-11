@@ -222,6 +222,12 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   *Voldaren Bloodcaster* by **Kim Sokol**; *Queen Kayla bin-Kroog* by **Cristi Balanescu**; and *Welcoming Vampire* by
   **Lorenzo Mastroianni**.
 
+- **Viashino portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits: *Rivaz of the Claw* by **Joshua Raphael**; *Viashino Bey* by **Bradley Williams**; *Viashino Bladescout*
+  by **Dany Orizio**; *Viashino Branchrider* by **Andrew Mar**; *Viashino Firstblade* by **Matt Stewart**; *Viashino
+  Heretic* by **Douglas Shuler**; *Viashino Lashclaw* by **Caio Monteiro**; *Viashino Pyromancer* by **Jesper
+  Ejsing**; *Viashino Slasher* by **Glenn Fabry**; and *Viashino Spearhunter* by **Carl Critchlow**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

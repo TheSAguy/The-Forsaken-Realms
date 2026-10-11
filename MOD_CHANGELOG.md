@@ -14264,6 +14264,17 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 544: Viashino portraits (2026-10-11)
+
+The user, from the 25-candidate sheet: "Viashino: 1, 2, 3, 4, 7, 9, 10, 12, 21, 23".
+
+- **Ten card arts**, one pool for both genders (`dev-tools/portraits/viashino.json`,
+  `sprites/heroes/portraits/viashino.atlas`), framed on the head:
+  - Rivaz of the Claw and Viashino Bey, Bladescout, Branchrider, Firstblade, Heretic, Lashclaw, Pyromancer, Slasher and
+    Spearhunter.
+- Artists read off the cached images and credited. Data only.
+- **Agent-tested:** the ten step through on Create a Character.
+
 ## Round 543: Vampire portraits - male and female pools (2026-10-11)
 
 The user, from a male and a female candidate sheet: "Vampire Male: 1, 2, 4, 5, 7, 10, 11, 12, 14, 19, 21. 26. 27, 29 /

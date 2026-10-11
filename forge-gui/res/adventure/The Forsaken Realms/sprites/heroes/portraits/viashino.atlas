@@ -1,0 +1,85 @@
+viashino.png
+size: 1632,544
+format: RGBA8888
+filter: MipMapLinearLinear,Linear
+repeat: none
+Viashino_m
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Viashino_m
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Viashino_m
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Viashino_m
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Viashino_m
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Viashino_m
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Viashino_m
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Viashino_m
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Viashino_m
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Viashino_m
+  xy: 824, 280
+  size: 256, 256
+  index: 9
+Viashino_f
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Viashino_f
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Viashino_f
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Viashino_f
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Viashino_f
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Viashino_f
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Viashino_f
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Viashino_f
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Viashino_f
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Viashino_f
+  xy: 824, 280
+  size: 256, 256
+  index: 9
