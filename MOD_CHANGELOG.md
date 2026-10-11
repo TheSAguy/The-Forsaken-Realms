@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 532: Arena tier bars and a bracket fixed for the day (2026-10-10)
+
+The user, with a screenshot of the Orazca Arena: "Can we add 4 small bars at the bottom of each portrait showing their
+level. Long Gold one for Archmage, Slightly shorter Silver for Master, Even shorter, brown for Adept, and a short red line
+for Apprentice ... Also, have the brackets be fixed for 1 day. Currently when you enter and leave and enter again, its a
+totally new bracket of opponents. I want it to be fixed for 24 hours at a time."
+
+- **Tier bars** (`ArenaScene.tierBar`, `placeTierBar`):
+  - Each enemy portrait gets a bar a pixel under its frame:
+    - Archmage: gold, 16 px;
+    - Master: silver, 12 px;
+    - Adept: brown, 8 px;
+    - Apprentice: red, 4 px.
+  - The frame is 20 px. Each bar has two rows, light over dark. The player has none.
+  - The first try sat on the frame's tan bottom edge, and the brown and silver bars all but vanished there, so the bars
+    moved onto the dark ground below.
+  - A winner's bar climbs with its portrait (`moveFighter`); a loser keeps its bar under the red X.
+  - The bar textures are rebuilt with each bracket and disposed in `loadArenaData`, because a Pixmap-made texture is
+    not managed.
+- **A bracket fixed for the day** (`dailyBracketSeed`):
+  - A building's field is drawn from a seed made of the world seed, the venue (`weeklyArenaKey`: the place and the
+    mode), the arena object, the player arena's level and the day.
+  - Walking out and back in, or a reload, meets the same opponents until the day turns.
+  - The round-525 coin holder draws from its own seed.
+  - Every slot draws its enemy even when a coin holder takes it, so a coin won back mid-day changes that one seat and no
+    other.
+  - The fights between other entrants stay random.
+  - The Chest's Illegal Arena (no building) stays a fresh draw.
+  - `[TFR-ArenaTier]` adds "day=N (fixed for the day)".
+- **Agent-tested** in the Player Capitol arena (slot 7, Capitol raised and arena rebuilt by cheats, saved as slot 20):
+  - Day 1 drew the same field in two separate game sessions.
+  - Leaving and re-entering gave a pixel-identical portrait row.
+  - Day 3 drew a new field.
+  - After round 1 the four winners' bars stood under their new frames.
+
 ## Round 531: richer gold, wood and stone on the level-up choice (2026-10-10)
 
 The user, with a screenshot of the Ascendance 7 choice (Haggler I, Gold +280, Stone +84): "For the Level up choice,

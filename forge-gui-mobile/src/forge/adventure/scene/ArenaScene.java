@@ -287,14 +287,15 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     /** Round 125: one bracket seat of the tier-weighted Arena (Adept 50% / Master 35% / Archmage
      *  15%). A target tier with no names in this pool falls through to the next-closest tier
      *  that has some; null only if all three are empty (the caller then uses the plain pick). */
-    private EnemyData pickTierWeighted(java.util.List<EnemyData> adept, java.util.List<EnemyData> master, java.util.List<EnemyData> archmage) {
-        int roll = rand.nextInt(100);
+    private EnemyData pickTierWeighted(java.util.List<EnemyData> adept, java.util.List<EnemyData> master, java.util.List<EnemyData> archmage,
+                                       Random draw) {
+        int roll = draw.nextInt(100);
         java.util.List<java.util.List<EnemyData>> order = roll < 50 ? java.util.Arrays.asList(adept, master, archmage)
                 : roll < 85 ? java.util.Arrays.asList(master, adept, archmage)
                 : java.util.Arrays.asList(archmage, master, adept);
         for (java.util.List<EnemyData> bucket : order)
             if (!bucket.isEmpty())
-                return bucket.get(rand.nextInt(bucket.size()));
+                return bucket.get(draw.nextInt(bucket.size()));
         return null;
     }
 
@@ -1038,6 +1039,14 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         }
         if (Forge.isLandscapeMode()) {
             actor.toFront();
+            for (int i = 0; i < fighters.size; i++) { // round 532: the tier bar climbs with its portrait
+                ArenaRecord record = fighters.get(i);
+                if (record.actor == actor && record.tierBar != null) {
+                    record.tierBar.toFront();
+                    record.tierBar.addAction(Actions.sequence(Actions.moveBy(0f, gridSize * 2f, 1),
+                            Actions.moveBy((float) (gridSize * stepsToTheSide * (leftPlayer ? 1 : -1)), 0f, 1)));
+                }
+            }
             actor.addAction(Actions.sequence(Actions.moveBy(0f, gridSize * 2f, 1), Actions.moveBy((float) (gridSize * stepsToTheSide * (leftPlayer ? 1 : -1)), 0f, 1), new Action() {
                 @Override
                 public boolean act(float v) {
@@ -1526,6 +1535,58 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         loadArenaData(data, seed, false);
     }
 
+    /** Round 532: the seed of a building's bracket today - the world, the venue (weeklyArenaKey: the place and the mode),
+     *  the arena object and level, and the day. */
+    private long dailyBracketSeed(boolean playerOwned) {
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        String venue = weeklyArenaKey();
+        long seed = world.getSeed() * 1_000_003L + world.getCurrentDay();
+        seed = seed * 31L + (venue == null ? 0 : venue.hashCode());
+        seed = seed * 31L + arenaObjectId;
+        return seed * 31L + (playerOwned ? arenaBuildingLevel() : 0);
+    }
+
+    // Round 532 (the user: "Can we add 4 small bars at the bottom of each portrait showing their level. Long Gold one for
+    // Archmage, Slightly shorter Silver for Master, Even shorter, brown for Adept, and a short red line for Apprentice"):
+    // a bar on the bottom edge of each enemy's frame, two rows (light over dark) so it reads on the frame's tan edge.
+    // Widths in spot pixels (the Spot is 20): Apprentice, Adept, Master, Archmage.
+    private static final int[] TIER_BAR_WIDTH = {4, 8, 12, 16};
+    private static final int[][] TIER_BAR_COLORS = {{0xe04838ff, 0x902018ff}, {0xb07038ff, 0x6c4020ff},
+            {0xe6e8f0ff, 0x9496a8ff}, {0xffd84aff, 0xc08c18ff}};
+    // Rebuilt with each bracket (disposed in loadArenaData): a Pixmap-made texture is not managed, so none outlives it.
+    private final com.badlogic.gdx.graphics.Texture[] tierBarTextures = new com.badlogic.gdx.graphics.Texture[4];
+
+    private Image tierBar(String tier) {
+        int rank = Math.max(0, Math.min(3, EnemyData.tierRank(tier)));
+        int w = TIER_BAR_WIDTH[rank];
+        if (tierBarTextures[rank] == null) {
+            com.badlogic.gdx.graphics.Pixmap pixmap = new com.badlogic.gdx.graphics.Pixmap(w, 2, com.badlogic.gdx.graphics.Pixmap.Format.RGBA8888);
+            pixmap.setColor(TIER_BAR_COLORS[rank][0]);
+            pixmap.drawLine(0, 0, w - 1, 0);
+            pixmap.setColor(TIER_BAR_COLORS[rank][1]);
+            pixmap.drawLine(0, 1, w - 1, 1);
+            tierBarTextures[rank] = new com.badlogic.gdx.graphics.Texture(pixmap);
+            pixmap.dispose();
+        }
+        Image bar = new Image(tierBarTextures[rank]);
+        float unit = gridSize / 20f;
+        bar.setSize(w * unit, 2 * unit);
+        return bar;
+    }
+
+    /** Round 532: an enemy's tier bar, centered a pixel under the spot its portrait sits in - on the dark ground, where
+     *  all four colors read (on the frame's own tan edge the brown and silver all but vanished). */
+    private void placeTierBar(ArenaRecord record) {
+        if (record.tierBar == null)
+            return;
+        Actor fighter = record.actor;
+        float spotX = fighter.getX() - (gridSize - fighter.getWidth()) / 2f;
+        float spotY = fighter.getY() - (gridSize - fighter.getHeight()) / 2f;
+        record.tierBar.setPosition(spotX + (gridSize - record.tierBar.getWidth()) / 2f,
+                spotY - record.tierBar.getHeight() - gridSize / 20f);
+        arenaPlane.addActor(record.tierBar);
+    }
+
     /** Round 525: the chance one coin holder joins the player's arena bracket - by how many can: 1 -> 50%, 2 -> 75%,
      *  3 or more -> always. */
     private static final float[] COIN_FOE_CHANCE = {0f, 0.5f, 0.75f, 1f};
@@ -1533,7 +1594,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     /** Round 525: the enemy holding one of the player's Bronze Coins who joins this bracket, or null. Holders the content
      *  filter excludes or the roster no longer has cannot; in the Level-2 (Challenging) bracket only Masters and
      *  Archmages can, as for its pool (round 475). */
-    private EnemyData pickCoinRansomFoe(boolean masterPlusOnly) {
+    private EnemyData pickCoinRansomFoe(boolean masterPlusOnly, Random draw) {
         java.util.List<String> holders = Current.player().coinRansomHolders();
         if (holders.isEmpty())
             return null;
@@ -1547,8 +1608,8 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             eligible.add(data);
         }
         float chance = COIN_FOE_CHANCE[Math.min(eligible.size(), COIN_FOE_CHANCE.length - 1)];
-        float roll = rand.nextFloat();
-        EnemyData picked = eligible.isEmpty() || roll >= chance ? null : eligible.get(rand.nextInt(eligible.size()));
+        float roll = draw.nextFloat();
+        EnemyData picked = eligible.isEmpty() || roll >= chance ? null : eligible.get(draw.nextInt(eligible.size()));
         System.out.println("[TFR-ArenaCoin] coin holders: " + eligible.size() + " can join of " + holders.size() + " "
                 + holders + (masterPlusOnly ? " (Level 2: Master+ only)" : "") + " - chance " + Math.round(chance * 100f)
                 + "%, roll " + Math.round(roll * 100f) + " - " + (picked == null ? "none joins" : picked.getName() + " joins"));
@@ -1574,6 +1635,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         enemies.clear();
         fighters.clear();
         arenaPlane.clear();
+        for (int i = 0; i < tierBarTextures.length; i++) { // round 532: the last bracket's bars went with the plane
+            Forge.safeDispose(tierBarTextures[i]);
+            tierBarTextures[i] = null;
+        }
         beatenChampions.clear(); // round 311
         lastDefeatedEnemyData = null;
         defeatedThisBracket.clear(); // round 133
@@ -1653,17 +1718,27 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // the competitors in the arena brackets. If you have 3+, it should be 100% ... For Arena level 2. Only a Master+ can
         // join."): in the player's own arena one enemy holding a Bronze Coin of the player's may take a bracket slot. Beating
         // them pays the coin back at the bracket's end, as for any holder (coinRansomFoesBeaten).
-        EnemyData coinFoe = playerOwnedArena ? pickCoinRansomFoe(challengePayoutBracket) : null;
-        int coinFoeSlot = coinFoe == null ? -1 : rand.nextInt(numberOfEnemies);
+        // Round 532 (the user: "have the brackets be fixed for 1 day. Currently when you enter and leave and enter again,
+        // its a totally new bracket of opponents. I want it to be fixed for 24 hours at a time"): a building's field is
+        // drawn from a seed of the world, the venue and the day (dailyBracketSeed), so walking out and back in - or a
+        // reload - meets the same opponents until the day turns. The coin holder draws from its own seed and every slot
+        // draws its enemy even when a coin holder takes it, so a coin won back mid-day changes that one seat and no
+        // other. The fights between other entrants (simulateFight) stay random.
+        long daySeed = fromBuilding ? dailyBracketSeed(playerOwnedArena) : 0L;
+        Random draw = fromBuilding ? new Random(daySeed) : rand;
+        Random coinDraw = fromBuilding ? new Random(daySeed * 31L + 17L) : rand;
+        EnemyData coinFoe = playerOwnedArena ? pickCoinRansomFoe(challengePayoutBracket, coinDraw) : null;
+        int coinFoeSlot = coinFoe == null ? -1 : coinDraw.nextInt(numberOfEnemies);
         if (coinFoe != null)
             System.out.println("[TFR-ArenaCoin] " + coinFoe.getName() + " takes bracket slot " + (coinFoeSlot + 1) + " of "
                     + numberOfEnemies + (coinFoeSlot == numberOfEnemies - 1 ? " - the player's first opponent" : ""));
         StringBuilder bracketLog = new StringBuilder();
         for (int i = 0; i < numberOfEnemies; i++) {
-            EnemyData enemyData = i == coinFoeSlot ? coinFoe
-                    : tierWeighted ? pickTierWeighted(adeptPool, masterPool, archmagePool) : null;
+            EnemyData enemyData = tierWeighted ? pickTierWeighted(adeptPool, masterPool, archmagePool, draw) : null;
             while (enemyData == null)
-                enemyData = WorldData.getEnemy(poolNames.get(rand.nextInt(poolNames.size())));
+                enemyData = WorldData.getEnemy(poolNames.get(draw.nextInt(poolNames.size())));
+            if (i == coinFoeSlot)
+                enemyData = coinFoe;
             bracketLog.append(i > 0 ? ", " : "").append(enemyData.getName()).append(" (").append(EnemyData.tierDisplayName(enemyData.tier)).append(')');
             // Arena matches disable ante (user spec 2026-08-11) - clone rather than mutate the
             // shared roster EnemyData, same pattern the Capitol-defense duel uses for its own
@@ -1674,11 +1749,14 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 arenaEnemyData.gamesPerMatch = 1;
             EnemySprite enemy = new EnemySprite(arenaEnemyData);
             enemies.add(enemy);
-            fighters.add(new ArenaRecord(new Image(enemy.getAvatar()), enemyData.getName()));
+            ArenaRecord record = new ArenaRecord(new Image(enemy.getAvatar()), enemyData.getName());
+            record.tierBar = tierBar(enemyData.tier);
+            fighters.add(record);
         }
         System.out.println("[TFR-ArenaTier] " + (tierWeighted ? "weighted Adept 50 / Master 35 / Archmage 15" : "plain pool pick")
                 + " challenge=" + isChallenge + " fromBuilding=" + fromBuilding + " playerOwned=" + playerOwnedArena
                 + " level=" + arenaBuildingLevel() + " aiCapital=" + isAiCapitalArena() + " pool=" + poolNames.size()
+                + (fromBuilding ? " day=" + WorldSave.getCurrentSave().getWorld().getCurrentDay() + " (fixed for the day)" : "")
                 + " bracket: " + bracketLog);
         fighters.add(new ArenaRecord(new Image(Current.player().avatar()), Current.player().getName()));
         player = fighters.get(fighters.size - 1).actor;
@@ -1771,6 +1849,8 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 }
             }
         }
+        for (int i = 0; i < fighters.size; i++) // round 532: over the frames, so added last
+            placeTierBar(fighters.get(i));
         drawArena();
         refreshArenaBuildingButtons();
     }
@@ -1818,6 +1898,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     class ArenaRecord {
         Actor actor;
         String name;
+        Image tierBar; // round 532: the enemy's tier, under its portrait; null for the player
 
         ArenaRecord(Actor a, String n) {
             actor = a;
