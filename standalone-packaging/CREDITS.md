@@ -228,6 +228,15 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Heretic* by **Douglas Shuler**; *Viashino Lashclaw* by **Caio Monteiro**; *Viashino Pyromancer* by **Jesper
   Ejsing**; *Viashino Slasher* by **Glenn Fabry**; and *Viashino Spearhunter* by **Carl Critchlow**.
 
+- **Werewolf portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits: *Tovolar, the Midnight Scourge* and *Ravager of the Fells* by **Chris Rahn**; *Arlinn, the Moon's Fury* by
+  **Anna Steinbauer**; *Ulrich, Uncontested Alpha* and *Werewolf of Ancient Hunger* by **Slawomir Maniak**; *Howlpack
+  Alpha* by **Svetlin Velinov**; *Terror of Kruin Pass* by **David Rapoza**; *Nightfall Predator* by **Steve
+  Prescott**; *Ironfang* by **Christopher Moeller**; *Merciless Predator* by **Michael C. Hayes**; *Gatstaf Howler* by
+  **Mark Evans**; *Krallenhorde Wantons* by **Randy Gallegos**; *Werewolf Ransacker* by **David Palumbo**; *Wildblood
+  Pack* by **Greg Staples**; *Moonrage Brute* by **Karl Kopinski**; *Werewolf Pack Leader* by **Miranda Meeks**;
+  *Howlpack of Estwald* by **Kev Walker**; and *Tovolar's Packleader* by **Cristi Balanescu**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

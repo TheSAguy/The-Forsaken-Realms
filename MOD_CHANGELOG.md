@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 546: Werewolf portraits (2026-10-11)
+
+The user, from the 35-candidate sheet: "2, 3, 5, 6, 8, 9, 10, 11, 12, 13, 14, 16, 16, 17, 19, 20, 22, 30, 33" (16 twice,
+taken once).
+
+- **Eighteen card arts**, one pool for both genders (`dev-tools/portraits/werewolf.json`,
+  `sprites/heroes/portraits/werewolf.atlas`), framed on the head:
+  - Tovolar (the Midnight Scourge), Ravager of the Fells, Arlinn (the Moon's Fury), Ulrich (Uncontested Alpha),
+    Howlpack Alpha, Terror of Kruin Pass, Nightfall Predator, Ironfang, Merciless Predator;
+  - Gatstaf Howler, Krallenhorde Wantons, Werewolf Ransacker, Wildblood Pack, Moonrage Brute, Werewolf Pack Leader,
+    Howlpack of Estwald, Tovolar's Packleader, Werewolf of Ancient Hunger.
+- The Midnight Hunt cards use their color printings: the cache's first copy of several is the black-and-white Double
+  Feature.
+- The candidate sheet dropped six non-werewolves (Moonveil Regent, Spectral Adversary, Bloodbat Summoner, Kessig
+  Naturalist, Duskwatch Recruiter, Unnatural Moonrise).
+- Artists read off the cached images and credited. Data only.
+- **Agent-tested:** the eighteen step through on Create a Character.
+
 ## Round 545: slower leveling on Normal, Hard and Insane (2026-10-11)
 
 The user: "Let's slow down level gain. Let's leave easy as is, increase Normal by 5%, Hard, 10% Insane 15%. So you'd need

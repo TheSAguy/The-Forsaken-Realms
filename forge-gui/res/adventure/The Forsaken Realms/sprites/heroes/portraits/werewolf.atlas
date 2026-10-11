@@ -1,0 +1,149 @@
+werewolf.png
+size: 1632,816
+format: RGBA8888
+filter: MipMapLinearLinear,Linear
+repeat: none
+Werewolf_m
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Werewolf_m
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Werewolf_m
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Werewolf_m
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Werewolf_m
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Werewolf_m
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Werewolf_m
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Werewolf_m
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Werewolf_m
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Werewolf_m
+  xy: 824, 280
+  size: 256, 256
+  index: 9
+Werewolf_m
+  xy: 1096, 280
+  size: 256, 256
+  index: 10
+Werewolf_m
+  xy: 1368, 280
+  size: 256, 256
+  index: 11
+Werewolf_m
+  xy: 8, 552
+  size: 256, 256
+  index: 12
+Werewolf_m
+  xy: 280, 552
+  size: 256, 256
+  index: 13
+Werewolf_m
+  xy: 552, 552
+  size: 256, 256
+  index: 14
+Werewolf_m
+  xy: 824, 552
+  size: 256, 256
+  index: 15
+Werewolf_m
+  xy: 1096, 552
+  size: 256, 256
+  index: 16
+Werewolf_m
+  xy: 1368, 552
+  size: 256, 256
+  index: 17
+Werewolf_f
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Werewolf_f
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Werewolf_f
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Werewolf_f
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Werewolf_f
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Werewolf_f
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Werewolf_f
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Werewolf_f
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Werewolf_f
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Werewolf_f
+  xy: 824, 280
+  size: 256, 256
+  index: 9
+Werewolf_f
+  xy: 1096, 280
+  size: 256, 256
+  index: 10
+Werewolf_f
+  xy: 1368, 280
+  size: 256, 256
+  index: 11
+Werewolf_f
+  xy: 8, 552
+  size: 256, 256
+  index: 12
+Werewolf_f
+  xy: 280, 552
+  size: 256, 256
+  index: 13
+Werewolf_f
+  xy: 552, 552
+  size: 256, 256
+  index: 14
+Werewolf_f
+  xy: 824, 552
+  size: 256, 256
+  index: 15
+Werewolf_f
+  xy: 1096, 552
+  size: 256, 256
+  index: 16
+Werewolf_f
+  xy: 1368, 552
+  size: 256, 256
+  index: 17

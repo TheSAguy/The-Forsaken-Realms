@@ -1,0 +1,24 @@
+{
+ "race": "Werewolf",
+ "note": "Round 546 (the user, from the 35-candidate sheet: '2, 3, 5, 6, 8, 9, 10, 11, 12, 13, 14, 16, 16, 17, 19, 20, 22, 30, 33' - 16 twice, taken once). One pool for both genders.",
+ "picks": [
+  {"region": "tovolar_scourge", "gender": "shared", "card": "Tovolar, the Midnight Scourge", "artist": "Chris Rahn", "file": "MID/Tovolar, the Midnight Scourge1.fullborder.jpg", "u": 0.55, "v": 0.32, "zoom": 0.55},
+  {"region": "ravager", "gender": "shared", "card": "Ravager of the Fells", "artist": "Chris Rahn", "file": "SIS/Ravager of the Fells.full.jpg", "u": 0.42, "v": 0.42, "zoom": 0.62},
+  {"region": "arlinn_fury", "gender": "shared", "card": "Arlinn, the Moon's Fury", "artist": "Anna Steinbauer", "file": "MID/Arlinn, the Moon's Fury1.full.jpg", "u": 0.55, "v": 0.3, "zoom": 0.6},
+  {"region": "ulrich_alpha", "gender": "shared", "card": "Ulrich, Uncontested Alpha", "artist": "Slawomir Maniak", "file": "Ulrich, Uncontested Alpha.full.jpg", "u": 0.5, "v": 0.38, "zoom": 0.62},
+  {"region": "howlpack_alpha", "gender": "shared", "card": "Howlpack Alpha", "artist": "Svetlin Velinov", "file": "Howlpack Alpha.full.jpg", "u": 0.68, "v": 0.62, "zoom": 0.65},
+  {"region": "terror_kruin", "gender": "shared", "card": "Terror of Kruin Pass", "artist": "David Rapoza", "file": "Terror of Kruin Pass.full.jpg", "u": 0.4, "v": 0.32, "zoom": 0.6},
+  {"region": "nightfall", "gender": "shared", "card": "Nightfall Predator", "artist": "Steve Prescott", "file": "Nightfall Predator.full.jpg", "u": 0.65, "v": 0.45, "zoom": 0.6},
+  {"region": "ironfang", "gender": "shared", "card": "Ironfang", "artist": "Christopher Moeller", "file": "Ironfang.full.jpg", "u": 0.35, "v": 0.45, "zoom": 0.65},
+  {"region": "merciless", "gender": "shared", "card": "Merciless Predator", "artist": "Michael C. Hayes", "file": "Merciless Predator.full.jpg", "u": 0.52, "v": 0.42, "zoom": 0.62},
+  {"region": "gatstaf", "gender": "shared", "card": "Gatstaf Howler", "artist": "Mark Evans", "file": "Gatstaf Howler.full.jpg", "u": 0.32, "v": 0.38, "zoom": 0.62},
+  {"region": "wantons", "gender": "shared", "card": "Krallenhorde Wantons", "artist": "Randy Gallegos", "file": "Krallenhorde Wantons.full.jpg", "u": 0.48, "v": 0.45, "zoom": 0.6},
+  {"region": "ransacker", "gender": "shared", "card": "Werewolf Ransacker", "artist": "David Palumbo", "file": "Werewolf Ransacker.full.jpg", "u": 0.62, "v": 0.38, "zoom": 0.62},
+  {"region": "wildblood", "gender": "shared", "card": "Wildblood Pack", "artist": "Greg Staples", "file": "Wildblood Pack.full.jpg", "u": 0.48, "v": 0.4, "zoom": 0.62},
+  {"region": "moonrage", "gender": "shared", "card": "Moonrage Brute", "artist": "Karl Kopinski", "file": "MID/Moonrage Brute1.fullborder.jpg", "u": 0.7, "v": 0.32, "zoom": 0.62},
+  {"region": "pack_leader", "gender": "shared", "card": "Werewolf Pack Leader", "artist": "Miranda Meeks", "file": "Werewolf Pack Leader1.full.jpg", "u": 0.62, "v": 0.4, "zoom": 0.65},
+  {"region": "estwald", "gender": "shared", "card": "Howlpack of Estwald", "artist": "Kev Walker", "file": "Howlpack of Estwald.full.jpg", "u": 0.58, "v": 0.42, "zoom": 0.6},
+  {"region": "packleader_tov", "gender": "shared", "card": "Tovolar's Packleader", "artist": "Cristi Balanescu", "file": "MID/Tovolar's Packleader1.full.jpg", "u": 0.48, "v": 0.38, "zoom": 0.6},
+  {"region": "ancient_hunger", "gender": "shared", "card": "Werewolf of Ancient Hunger", "artist": "Slawomir Maniak", "file": "Werewolf of Ancient Hunger.full.jpg", "u": 0.62, "v": 0.38, "zoom": 0.65}
+ ]
+}
