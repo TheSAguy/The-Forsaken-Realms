@@ -410,6 +410,9 @@ public class DuelScene extends ForgeScene {
         // against this enemy" reads the record without this win in it.
         if (winner && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
             forge.adventure.util.Ascendance.onDuelWon(enemy, enemyName, isArena);
+        // Round 559: the Capitol Temple's weekly tally - the same duels, without the Arena (its fighters do not die).
+        if (winner && !isArena && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
+            forge.adventure.util.TempleOfferings.recordKill(enemy.getData());
         Forge.advFreezePlayerControls = winner;
         endRunnable = () -> Gdx.app.postRunnable(() -> {
             GameHUD.getInstance().updateBGM();

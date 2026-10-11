@@ -14264,6 +14264,66 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 559: the Capitol Temple, and a line under every building on the build menu (2026-10-11)
+
+The user, with the gilded blue temple circled: "This is how the temple works. After you build it and you enter it, it
+will show you a kill count by color for the 5 colors. Think of it as a horizontal bar chart with the color symbol and
+the number of kills for the week. Multi color enemies will be split, so a red/green will be .5 per color. 3 color will
+be split 3 ways, ect. At the end of the week, you get a rare card for the color with the most kills. 2 uncommons for
+the second place and 4 commons for 3rd. Randomly All from the sets you've unlocked ... - Player Cap only. Probably
+Utility group. Also, on the build menu, we need to give a very short description of each building/what it does."
+
+- **The Temple** (`EconomyBuildings.TEMPLE` = 11):
+  - Capitol-only, in the Utility submenu beside the Archaeologist.
+  - Costs 300 gold + 100 stone, difficulty-scaled. No price was given; this sits between the Archaeologist (175 stone)
+    and the Bank (500 gold).
+  - **Art:** dungeon_entrances' BlueTemple, gilded (55% onto a gold ramp, the user's pick from the candidate sheet). It
+    is now `Temple` in `new_buildings.atlas`, whose page grew to 272x32. Added by the scratch tool `temple_sprite.py`.
+- **The tally** (`World.templeKills` W U B R G + `templeWeek`, saved; older saves start empty):
+  - It counts every duel the player wins except the Arena and an Inn tournament: the same duels that pay Power, plus
+    the Arena's exclusion.
+  - The enemy's colors share one kill. A colorless enemy counts nothing.
+  - It counts from the first day, with or without a Temple. It pays only if the Capitol has one when the week turns.
+- **The payout** (`TempleOfferings.onDaysPassed`, from the daily economy tick):
+  - When a new week starts (day 8, 15, ...):
+    - 1st place: 1 rare.
+    - 2nd place: 2 uncommons.
+    - 3rd place: 4 commons.
+  - The cards are of that color and come from the player's unlocked sets, with no lands and one printing per name.
+    Mono-colored cards are drawn first; if there are none, any card with the color.
+  - Ties rank in WUBRG order, the chart's order.
+  - The cards are added at once and turned over on a loot screen, as the Scientist's are. A notice names them.
+  - Then the tally clears.
+- **The Temple screen:**
+  - A bar chart: each color's mana symbol, a bar in its color scaled to the leader, the count (8, 2.5, 0.33) and
+    1st/2nd/3rd.
+  - Above it, a line on how it pays. Below it, the days left in the week.
+  - Destroy Building and Close.
+- **Build-menu descriptions:** every building button has a short second line.
+  - Mines: "Produces 20 [+Shards] every week" (the actual weekly amount).
+  - Bank: "Deposit gold to earn 5% interest a week".
+  - Trader: "Buy and sell wood and stone for gold".
+  - Outlook: "Wider vision around the town; harder to capture".
+  - Teleporter: "Fast travel between your towns and the Capitol".
+  - Archaeologist: "Expeditions that dig up cards you don't own".
+  - Temple: "Weekly cards for the colors you defeat most".
+  - Card Shop: "Sells cards - you choose which kind".
+  - The category buttons list what they still offer ("Utility - Outlook, Teleporter, Archaeologist, Temple"); Industry
+    reads "Mines that produce resources every week".
+- **Logs:**
+  - `[TFR-Temple] <enemy> (<colors>) +x each - week n tally W .. U .. B .. R .. G ..`
+  - `[TFR-Temple] week n ended (<tally>) - k card(s): <names> (1st U 8.33, 1 rare) ...`
+- **GUIDE:** the Temple in the Capitol's building list and the economy-buildings paragraph. **CREDITS:** the Temple on
+  Sythian Bard's dungeon-entrance line.
+- **Agent-tested** (slot 7, the Capitol raised, scratch-only console commands, never committed: `templekill <enemy>` and
+  `skipto <day>`, which runs the day tick):
+  - The menus showed every description; built buildings drop off a category's list.
+  - The Temple was built for 300 gold + 100 stone and drawn gilded.
+  - Its screen read 0 for every color, then W 0.33, U 8.33 (1st), B 6.33 (2nd), R 0.5, G 3.5 (3rd) after 8 blue kills,
+    6 black, 3 green, a red/green and a white/blue/black. A colorless kill was not counted.
+  - Skipping to day 8 paid 7 cards: Shapesharer (blue rare), Corrosive Mentor and Nectar Faerie (black uncommons) and 4
+    green commons.
+
 ## Round 558: a fleeing enemy drops half its loot (2026-10-11)
 
 The user: "Also, for Intimidating, they should give 50% of their rewards to you."

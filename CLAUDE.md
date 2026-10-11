@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-11 (round 559): **LOCAL + UNRELEASED** - the Capitol Temple (weekly kills by color as a bar chart; the
+week's top three colors pay 1 rare / 2 uncommons / 4 commons) and a short description under every build-menu button.
+
 ## STATE 2026-10-11 (round 558): **LOCAL + UNRELEASED** - an Intimidating flee drops half the enemy's loot (gold and
 resources halved, half the cards and items, half the Power).
 

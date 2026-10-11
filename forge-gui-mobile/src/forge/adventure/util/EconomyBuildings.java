@@ -82,6 +82,10 @@ public class EconomyBuildings {
     // in the Capitol can be upgraded into an Exchange - see openUpgradeToExchangeConfirmDialog()/
     // upgradeTraderToExchange() below.
     public static final int TRADER = 10;
+    // Round 559 (the user: "Let's go with this guy I circled ... Player Cap only. Probably Utility group"): the Temple, a
+    // Capitol-only Utility building that pays cards each week for the colors the player defeats most. Everything it does
+    // lives in TempleOfferings; here it is one more type id on the same one-per-town machinery.
+    public static final int TEMPLE = 11;
 
     // Byte-safe map flag (0-6) used only to gate "one economy building per town" declaratively
     // and to discriminate which option the player picked in buildChooseBuildingDialog(). The
@@ -159,6 +163,7 @@ public class EconomyBuildings {
             case TELEPORTER: return "Teleporter";
             case ARCHAEOLOGIST: return "Archaeologist";
             case TRADER: return "Trader";
+            case TEMPLE: return "Temple"; // round 559
             default: return "Card Shop";
         }
     }
@@ -191,6 +196,8 @@ public class EconomyBuildings {
             return getArchaeologistSprite();
         if (type == TRADER)
             return Config.instance().getAtlasSprite(NEW_BUILDINGS_ATLAS, "Trader");
+        if (type == TEMPLE) // round 559: dungeon_entrances' BlueTemple, gilded - the user's pick
+            return Config.instance().getAtlasSprite(NEW_BUILDINGS_ATLAS, "Temple");
         String region = atlasRegion(type);
         if (region == null)
             return null;
@@ -1364,6 +1371,9 @@ public class EconomyBuildings {
             // amount given; chosen to sit below Exchange's 150g (cheaper, earlier-game) and well
             // below Bank's 500g. Revisit if it feels off in testing.
             case TRADER:        return new int[]{200, 0, 0, 0};
+            // Round 559: no price given - a stone building with a weekly card payout, between the Archaeologist (175
+            // stone) and the Bank (500 gold).
+            case TEMPLE:        return new int[]{300, 0, 100, 0};
             default:            return new int[]{100, 5, 0, 0}; // NONE / plain shop
         }
     }
@@ -2111,7 +2121,7 @@ public class EconomyBuildings {
         java.util.Set<String> builtHere = stage.getBuiltShopTypeNames();
 
         DialogData root = new DialogData();
-        root.name = "Card Shop";
+        root.name = currentShopName == null ? "Card Shop\n[%70]Sells cards - you choose which kind[%]" : "Card Shop"; // round 559
         root.text = currentShopName == null
                 ? "What kind of card shop?"
                 : "Re-assign this shop's type." + (refund > 0
@@ -2325,7 +2335,9 @@ public class EconomyBuildings {
         if (type == TELEPORTER)
             label = buildingName(type) + " (" + costText + ", "
                     + (countTownTeleporters() + (capitolHasTeleporter() ? 1 : 0)) + "/" + (MAX_TOWN_TELEPORTERS + 1) + " built)";
-        option.name = label;
+        // Round 559 (the user: "on the build menu, we need to give a very short description of each building/what it
+        // does. For people first building something"): one short line under the name and the price.
+        option.name = label + "\n[%70]" + buildingBlurb(type) + "[%]";
         option.isDisabled = exact ? !canAffordExactCost(c) : !canAffordCost(c[0], c[1], c[2], c[3]);
         if (type == NONE) {
             // Edition-restriction stale-bake-in fix (2026-08-13, adversarial review) - this is the
@@ -2354,6 +2366,47 @@ public class EconomyBuildings {
             option.action = new DialogData.ActionData[]{spend, setShopRebuiltAction(objectId), setEconomyTypeAction(type), setBuiltFlagAction(type)};
         }
         return option;
+    }
+
+    /** Round 559: what a building does, in a few words - the second line of its build-menu button. */
+    static String buildingBlurb(int type) {
+        switch (type) {
+            case SHARD_MINE:
+            case GOLD_MINE:
+            case LUMBER_MILL:
+            case STONE_MINE:
+                return "Produces " + mineWeeklyAmount(type) + " " + resourceGlyph(type) + " every week";
+            case BANK: return "Deposit gold to earn " + Math.round(INTEREST_RATE * 100) + "% interest a week";
+            case EXCHANGE: return "Trade gold for wood, stone and shards";
+            case TRADER: return "Buy and sell wood and stone for gold";
+            case OUTLOOK: return "Wider vision around the town; harder to capture";
+            case TELEPORTER: return "Fast travel between your towns and the Capitol";
+            case ARCHAEOLOGIST: return "Expeditions that dig up cards you don't own";
+            case TEMPLE: return "Weekly cards for the colors you defeat most";
+            default: return "Sells cards";
+        }
+    }
+
+    private static String resourceGlyph(int type) {
+        switch (type) {
+            case SHARD_MINE: return "[+Shards]";
+            case GOLD_MINE: return "[+Gold]";
+            case LUMBER_MILL: return "[+Wood]";
+            default: return "[+Stone]";
+        }
+    }
+
+    /** Round 559: a category button's second line - the buildings it still offers. */
+    private static String categoryLine(String name, List<DialogData> options) {
+        StringBuilder sb = new StringBuilder();
+        for (DialogData option : options) {
+            String label = option.name == null ? "" : option.name;
+            int cut = label.indexOf(" (");
+            if (cut < 0 || "Back".equals(label))
+                continue;
+            sb.append(sb.length() == 0 ? "" : ", ").append(label, 0, cut);
+        }
+        return sb.length() == 0 ? name : name + "\n[%70]" + sb + "[%]";
     }
 
     // "Is there anything left to build in this submenu" checks (2026-08-09, user request: an
@@ -2428,6 +2481,7 @@ public class EconomyBuildings {
                 financialOptions.add(buildOption(BANK, objectId));
             if (traderOffered)
                 financialOptions.add(buildOption(TRADER, objectId));
+            financial.name = categoryLine(financial.name, financialOptions); // round 559
             financialOptions.add(financialBack);
             financial.options = financialOptions.toArray(new DialogData[0]);
             rootOptions.add(financial);
@@ -2448,6 +2502,7 @@ public class EconomyBuildings {
                     buildOption(STONE_MINE, objectId),
                     industryBack
             };
+            industry.name = "Industry\n[%70]Mines that produce resources every week[%]"; // round 559
             rootOptions.add(industry);
         }
 
@@ -2460,7 +2515,8 @@ public class EconomyBuildings {
         // Archaeologist (2026-08-11): Capitol-only, same as Financial's Bank/Exchange - see the
         // ARCHAEOLOGIST constant's own comment for why it can't be built in ordinary towns.
         boolean archaeologistOffered = isCapitol && typeAvailable(stage, ARCHAEOLOGIST);
-        if (typeAvailable(stage, OUTLOOK) || teleporterOffered || archaeologistOffered) {
+        boolean templeOffered = isCapitol && typeAvailable(stage, TEMPLE); // round 559: Capitol-only, like the Archaeologist
+        if (typeAvailable(stage, OUTLOOK) || teleporterOffered || archaeologistOffered || templeOffered) {
             DialogData utilityBack = new DialogData();
             utilityBack.name = "Back";
             backButtons.add(utilityBack);
@@ -2473,6 +2529,9 @@ public class EconomyBuildings {
                 utilityOptions.add(buildOption(TELEPORTER, objectId));
             if (archaeologistOffered)
                 utilityOptions.add(buildOption(ARCHAEOLOGIST, objectId));
+            if (templeOffered)
+                utilityOptions.add(buildOption(TEMPLE, objectId));
+            utility.name = categoryLine(utility.name, utilityOptions); // round 559
             utilityOptions.add(utilityBack);
             utility.options = utilityOptions.toArray(new DialogData[0]);
             rootOptions.add(utility);
@@ -3180,6 +3239,7 @@ public class EconomyBuildings {
         // outside the per-town loop below - unlocks the edition the moment the 7-day timer
         // elapses, not only when the player happens to revisit the Lab.
         AdventurePlayer.current().checkResearchCompletion(newDayCount);
+        TempleOfferings.onDaysPassed(newDayCount); // round 559: a new week - the Temple's offering, and a fresh tally
         // Bounded scan over the world's own fixed POI registry (2026-08-25 perf fix - user
         // report: day-end stutter "not as bad [as the claimWastelandRing fix], but there...
         // getting worse"). getAllPointOfInterestChanges() returns every PointOfInterestChanges

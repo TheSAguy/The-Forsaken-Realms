@@ -1,5 +1,5 @@
 new_buildings.png
-size: 240,32
+size: 272,32
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -26,4 +26,7 @@ Archaeologist
   size: 32, 32
 Trader
   xy: 208, 0
+  size: 32, 32
+Temple
+  xy: 240, 0
   size: 32, 32

@@ -282,7 +282,7 @@ the same Job Board offers the upgrade. The Capitol is a walled, castle-sized tow
 its own, two guards instead of one, and **24 building slots** - 16 open ones plus five colored Land
 Shops, a Utility Land Shop, a Booster Shop and an Armory, against an ordinary town's 9 (8 open
 slots and an Armory). It also offers buildings no ordinary town does: the Bank, the Exchange, the
-Archaeologist, the Research Lab, Rare and Mythic card shops, and an Arena you can upgrade.
+Archaeologist, the Temple, the Research Lab, Rare and Mythic card shops, and an Arena you can upgrade.
 Upgrading carries Orazca's reputation, buildings and guards forward, and adds +2 town reputation
 on top for good measure. The Capitol's Job Board offers the usual town quests and the Capitol's own, such as
 finding the five AI capitals.
@@ -344,7 +344,9 @@ Shards - the Exchange takes over the Trader's slot, so a town has one or the oth
 both), an **Outlook** (expands your fog-of-war vision radius - 2x in a town, 3x in your
 Capitol), a **Teleporter** network for fast travel between any two Teleporter-equipped locations,
 and an **Archaeologist** who can be sent on week-long expeditions for a chance at boosters and
-rare items. Guards can be hired to defend a town, paid weekly out of your own coffers.
+rare items. A **Temple** (Capitol-only) counts the duels you win each week by the enemy's colors (a two-color
+enemy counts half for each) and, when the week ends, pays 1 rare card of the color you defeated most, 2 uncommons of
+the second and 4 commons of the third, from the sets you have unlocked. Guards can be hired to defend a town, paid weekly out of your own coffers.
 
 **Restoring a town.** A ruin's Job Board offers the restoration. The fee grows with your realm: 200 gold and 20 wood
 while you hold fewer than five towns, then 50 gold and 10 wood more for every five you hold (250 + 30 from five

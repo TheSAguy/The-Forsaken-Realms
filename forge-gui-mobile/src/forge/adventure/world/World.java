@@ -425,6 +425,11 @@ public class World implements Disposable, SaveFileContent {
     // offered till the start of the next week, Day 8, 15, 22, etc."). Key = the Inn's town POI id (its tournament's
     // sourceID), value = the week (getCurrentWeek()) of its last won tournament. Absent on older saves = never won.
     private final java.util.Map<String, Integer> innWinWeek = new java.util.HashMap<>();
+    // Round 559 (the Capitol Temple): this week's duel wins by enemy color, W U B R G - a two-color enemy adds half to each
+    // color, a three-color one a third. templeWeek is the week the tally belongs to (getCurrentWeek()); when a new week
+    // starts, the Temple pays out and the tally clears (TempleOfferings.onDaysPassed). Absent on older saves = empty.
+    private final float[] templeKills = new float[5];
+    private int templeWeek = -1;
     // Round 139 (user spec 2026-09-07: caves host one arena-exclusive champion "maybe not 100%
     // spawn chance, but let's say 25%"). Key = cave POI id, value = the champion's enemy name, or
     // "" for a cave that rolled and came up empty. BOTH outcomes are recorded, which is the whole
@@ -477,6 +482,20 @@ public class World implements Disposable, SaveFileContent {
     /** Round 527: town POI id -> the week its Inn tournament was last won. */
     public java.util.Map<String, Integer> getInnWinWeek() {
         return innWinWeek;
+    }
+
+    /** Round 559: this week's duel wins by enemy color, W U B R G (fractions for a multicolor enemy). */
+    public float[] getTempleKills() {
+        return templeKills;
+    }
+
+    /** Round 559: the week the Temple's tally belongs to, -1 before the first count. */
+    public int getTempleWeek() {
+        return templeWeek;
+    }
+
+    public void setTempleWeek(int week) {
+        templeWeek = week;
     }
 
     /** Round 139: cave POI id -> its rolled champion's name, or "" for "rolled, none". */
@@ -1318,6 +1337,12 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             innWinWeek.putAll((java.util.Map<String, Integer>) saveFileData.readObject("innWinWeek"));
         }
+        java.util.Arrays.fill(templeKills, 0f); // round 559
+        if (saveFileData.containsKey("templeKills")) {
+            float[] saved = (float[]) saveFileData.readObject("templeKills");
+            System.arraycopy(saved, 0, templeKills, 0, Math.min(templeKills.length, saved.length));
+        }
+        templeWeek = saveFileData.containsKey("templeWeek") ? saveFileData.readInt("templeWeek") : -1;
         caveChampion.clear();
         if (saveFileData.containsKey("caveChampion")) {
             //noinspection unchecked
@@ -1466,6 +1491,8 @@ public class World implements Disposable, SaveFileContent {
         data.store("groundArt", groundArt);
         data.storeObject("arenaWinWeek", arenaWinWeek);
         data.storeObject("innWinWeek", innWinWeek); // round 527
+        data.storeObject("templeKills", templeKills.clone()); // round 559
+        data.store("templeWeek", templeWeek);
         data.storeObject("caveChampion", caveChampion);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
         data.storeObject("legendSightingCount", legendSightingCount); // round 375
@@ -2725,6 +2752,8 @@ public class World implements Disposable, SaveFileContent {
             groundArt = groundArtSignature();
             arenaWinWeek.clear(); // round 135
             innWinWeek.clear(); // round 527
+            java.util.Arrays.fill(templeKills, 0f); // round 559
+            templeWeek = -1;
             caveChampion.clear(); // round 139 - a new world's caves must roll their own champions
             // Weighted spawn tier system, Layer 3 (2026-08-23, redesigned 2026-08-25) - must be
             // cleared here same as the poi* maps above: New Game+ reuses this exact World instance

@@ -157,6 +157,9 @@ public class ShopActor extends MapActor {
             case EconomyBuildings.ARCHAEOLOGIST:
                 EconomyBuildings.openArchaeologistDialog(stage, objectId);
                 return;
+            case EconomyBuildings.TEMPLE: // round 559
+                forge.adventure.util.TempleOfferings.openTempleDialog(stage, objectId);
+                return;
             default:
                 // Guaranteed first-Armory Torch (user spec, 2026-08-13, redesigned 2026-08-14 -
                 // see EconomyBuildings.injectGuaranteedTorchIfOwed()'s own comment for the full
