@@ -1,0 +1,18 @@
+{
+ "race": "Red Dragon",
+ "note": "Round 540 (the user, from the 30-candidate sheet: 'Let's do: 6, 8, 9, 15, 17, 18, 20, 24, 26, 27, 29, 30'). A dragon's one avatar region (Dragon_r) serves both genders, so every pick is shared.",
+ "picks": [
+  {"region": "utvara", "gender": "shared", "card": "Utvara Hellkite", "artist": "Mark Zug", "file": "Utvara Hellkite1.full.jpg", "u": 0.62, "v": 0.32, "zoom": 0.66},
+  {"region": "drakuseth", "gender": "shared", "card": "Drakuseth, Maw of Flames", "artist": "Grzegorz Rutkowski", "file": "Drakuseth, Maw of Flames1.full.jpg", "u": 0.55, "v": 0.36, "zoom": 0.66},
+  {"region": "lathliss", "gender": "shared", "card": "Lathliss, Dragon Queen", "artist": "Alex Konstad", "file": "Lathliss, Dragon Queen1.full.jpg", "u": 0.5, "v": 0.35, "zoom": 0.7},
+  {"region": "goldspan", "gender": "shared", "card": "Goldspan Dragon", "artist": "Andrew Mar", "file": "Goldspan Dragon1.full.jpg", "u": 0.62, "v": 0.45, "zoom": 0.7},
+  {"region": "forgestoker", "gender": "shared", "card": "Forgestoker Dragon", "artist": "Todd Lockwood", "file": "Forgestoker Dragon.full.jpg", "u": 0.72, "v": 0.3, "zoom": 0.85},
+  {"region": "hoardsmelter", "gender": "shared", "card": "Hoard-Smelter Dragon", "artist": "Eric Deschamps", "file": "Hoard-Smelter Dragon.full.jpg", "u": 0.5, "v": 0.4, "zoom": 0.75},
+  {"region": "rorix", "gender": "shared", "card": "Rorix Bladewing", "artist": "Clint Cearley", "file": "Rorix Bladewing.full.jpg", "u": 0.68, "v": 0.32, "zoom": 0.66},
+  {"region": "inferno", "gender": "shared", "card": "Inferno of the Star Mounts", "artist": "Jesper Ejsing", "file": "Inferno of the Star Mounts1.full.jpg", "u": 0.5, "v": 0.32, "zoom": 0.62},
+  {"region": "lightning", "gender": "shared", "card": "Lightning Dragon", "artist": "Ron Spencer", "file": "Lightning Dragon.full.jpg", "u": 0.6, "v": 0.35, "zoom": 0.7},
+  {"region": "tyrant", "gender": "shared", "card": "Dragon Tyrant", "artist": "Kev Walker", "file": "Dragon Tyrant.full.jpg", "u": 0.65, "v": 0.35, "zoom": 0.7},
+  {"region": "archwing", "gender": "shared", "card": "Archwing Dragon", "artist": "Daarken", "file": "Archwing Dragon.full.jpg", "u": 0.35, "v": 0.45, "zoom": 0.7},
+  {"region": "hellkite_tyrant", "gender": "shared", "card": "Hellkite Tyrant", "artist": "Aleksi Briclot", "file": "Hellkite Tyrant1.full.jpg", "u": 0.55, "v": 0.3, "zoom": 0.66}
+ ]
+}

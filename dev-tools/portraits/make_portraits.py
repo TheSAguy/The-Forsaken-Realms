@@ -29,7 +29,7 @@ def crop(pick):
     side = pick['zoom'] * sq_side
     left = sq_left + pick['u'] * sq_side - side / 2
     top = sq_top + pick['v'] * sq_side - side / 2
-    top = min(max(top, 0.112 * h), 0.55 * h - side)
+    top = min(max(top, 0.118 * h), 0.55 * h - side)
     left = min(max(left, 0.085 * w), 0.915 * w - side)
     return card.crop((round(left), round(top), round(left + side), round(top + side))).resize((SIZE, SIZE), Image.LANCZOS)
 

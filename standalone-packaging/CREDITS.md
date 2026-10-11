@@ -194,6 +194,13 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **Jana Schirmer & Johannes Voss**; *Jin-Gitaxias, Core Augur* by **Eric Deschamps**; *Urabrask the Hidden* by
   **Brad Rigney**; *Vorinclex, Voice of Hunger* by **Karl Kopinski**; and *Phyrexian Obliterator* by **Maxim Kostin**.
 
+- **Red Dragon portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits: *Utvara Hellkite* by **Mark Zug**; *Drakuseth, Maw of Flames* by **Grzegorz Rutkowski**; *Lathliss,
+  Dragon Queen* by **Alex Konstad**; *Goldspan Dragon* by **Andrew Mar**; *Forgestoker Dragon* by **Todd Lockwood**;
+  *Hoard-Smelter Dragon* by **Eric Deschamps**; *Rorix Bladewing* by **Clint Cearley**; *Inferno of the Star Mounts*
+  by **Jesper Ejsing**; *Lightning Dragon* by **Ron Spencer**; *Dragon Tyrant* by **Kev Walker**; *Archwing Dragon* by
+  **Daarken**; and *Hellkite Tyrant* by **Aleksi Briclot**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

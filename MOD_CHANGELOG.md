@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 540: Red Dragon portraits (2026-10-11)
+
+The user, from the 30-candidate sheet: "Let's do: 6, 8, 9, 15, 17, 18, 20, 24, 26, 27, 29, 30. Then let's install so I
+can see how they look."
+
+- **The twelve:** Utvara Hellkite, Drakuseth, Lathliss, Goldspan Dragon, Forgestoker Dragon, Hoard-Smelter Dragon,
+  Rorix Bladewing, Inferno of the Star Mounts, Lightning Dragon, Dragon Tyrant, Archwing Dragon, Hellkite Tyrant.
+  - Each is framed on the dragon's head (`dev-tools/portraits/red_dragon.json`).
+  - They fill the race's one avatar region, `Dragon_r`, which serves both genders. It held a single pixel portrait
+    before.
+- **Artists read off the cached images**, all twelve credited.
+- **The crop's top edge moved from 11.2% to 11.8% of the card's height.** Older frames (Forgestoker's) start their art
+  lower, and a strip of frame showed. `make_portraits.py` rebuilt every race with it.
+- **Page:** `avatar_cards.png` is 1632 x 1088 (24 portraits).
+
 ## Round 539: twelve Phyrexian portraits; the portrait tool reads heroes.json (2026-10-11)
 
 The user, from round 538's candidate sheet: "Let's use: 1, 2, 3, 5, 6, 10, 11, 12, 13 14 15, 17."
