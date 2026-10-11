@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
 import forge.adventure.data.EnemyData;
 import forge.adventure.player.AdventurePlayer;
