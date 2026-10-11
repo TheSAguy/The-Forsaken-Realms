@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 535: the agent's settle accepts a lost ante (2026-10-10)
+
+Found while testing round 532 in the agent game (slot 7 near Orazca): roaming enemies interrupt `wait days=1`, the
+auto-played duels are lost, and the DuelScene's "Card Lost" prompt (OK / Buy Back (50 gold) / (Save: 200 gold) Bronze
+Coin) stops every unattended run - only a hand-typed `cmd click text="OK"` went on.
+
+- `settle` (`dev-tools/agent/tfr_agent.py`, client only - nothing to build or package):
+  - It taps OK on a lost ante, the way it already keeps a won card with OK. It accepts the loss and never spends the
+    player's gold on Buy Back or a Bronze Coin.
+  - It logs `ante lost - accepting the loss (no Buy Back, no Bronze Coin): [buttons] -> tapping OK`.
+  - Round 176 deliberately stopped there instead: its watched session's settle gave a card away with three coins in the
+    pack. `settle --ask-ante` keeps that stop for a session where the player makes the choice.
+- The tfr-play skill's settle line (outside this repo) says the same.
+- **Agent-tested** (slot 7, cheats, an empty deck, `spawn enemy "Wild Rat"`, two lost duels; not saved):
+  - Plain `settle` tapped OK on the three-button prompt and returned to an idle GameScene. Gold 250 -> 150 (the 100-gold
+    defeat penalty, no Buy Back), with all three Bronze Coins kept.
+  - `settle --ask-ante` stopped at the prompt with its buttons. A plain `settle` from there tapped OK (gold 150 -> 50,
+    coins 3).
+  - The log showed `[TFR-AnteBuyBack] ... offering=true` and `[TFR-CoinRansom] offering=true` both times, with no gold
+    waiver.
+
+**Files touched**: `dev-tools/agent/tfr_agent.py`.
+
 ## Round 534: twenty LPC humanoids for round 108's 16 px enemy-art sprites (2026-10-10)
 
 The Procedural Pixel Creatures session (the user: "Please proceed with the next 20 humanoid characters", after a scan of

@@ -10,6 +10,7 @@ its own APPDATA profile, so it never touches the player's saves, settings or log
 Then, from anywhere:
     python tfr_agent.py boot                      # wait for the bridge and a scene that takes commands
     python tfr_agent.py settle                    # back to an idle map: duel, win/lose view, reward screen, dialogs
+    python tfr_agent.py settle --ask-ante         # ... but stop at a lost ante's Buy Back / Bronze Coin choice
     python tfr_agent.py dialogs [choose=TEXT]     # walk single-option dialogs; take the option containing TEXT
     python tfr_agent.py state                     # the observation (add --cheat for the fog-free view)
     python tfr_agent.py state --brief             # scene, player, nearby pois/enemies/actors, dialog, ui, forgeUi
@@ -168,9 +169,10 @@ def boot(timeout=180):
 SETTLE_BUTTONS = ("back to adventure", "quit match", "quit", "ok", "continue", "done", "close")
 
 
-def settle(rounds=40, wait_each=60):
+def settle(rounds=40, wait_each=60, ask_ante=False):
     """Back to an idle GameScene/TileMapScene: sit through a duel (the AI pilots the seat), tap the win/lose
-    view's button, press Done on a reward screen, walk single-option dialogs. Returns at a real choice."""
+    view's button and the ante prompts' OK, press Done on a reward screen, walk single-option dialogs. Returns
+    at a real choice - and at a lost ante's Buy Back / Bronze Coin choice when ask_ante is set."""
     s = {}
     for i in range(rounds):
         s = call("GET", "/wait?timeout=%d" % wait_each, timeout=wait_each + 15)
@@ -178,11 +180,24 @@ def settle(rounds=40, wait_each=60):
         prompts = [b for b in (s.get("forgeUi") or []) if b.get("prompt")]
         if prompts:
             texts = [(b.get("text") or "").lower() for b in prompts]
-            # A LOST ante (Use Bronze Coin / Buy Back) is a real decision - never answer it with "OK". The first
-            # watched session's settle pressed OK there and gave the card away with three coins in the pack.
+            # A LOST ante ("Card Lost": OK / Buy Back (N gold) / (Save: N gold) Bronze Coin). Round 535: settle accepts
+            # the loss with OK, the way it keeps a won card with OK - it never spends the player's gold or a Bronze Coin.
+            # Round 176 stopped here instead (its watched session's settle gave a card away with three coins in the
+            # pack), and every unattended run - a roaming enemy interrupting `wait days=1`, the auto-played duel lost -
+            # then sat at the prompt. `settle --ask-ante` keeps round 176's stop for a session where the player decides.
             if any("bronze coin" in t or t.startswith("buy back") for t in texts):
-                say("ante lost - a real choice, not settled:", [b.get("text") for b in prompts])
-                return s
+                if ask_ante:
+                    say("ante lost - a real choice, not settled:", [b.get("text") for b in prompts])
+                    return s
+                ok = next((b for b in prompts if (b.get("text") or "").lower() == "ok"), None)
+                if ok is None:
+                    say("ante lost without an OK button - not settled:", [b.get("text") for b in prompts])
+                    return s
+                say("ante lost - accepting the loss (no Buy Back, no Bronze Coin):", [b.get("text") for b in prompts],
+                    "-> tapping OK")
+                call("POST", "/cmd", {"cmd": "click", "id": ok["id"]})
+                time.sleep(2.5)
+                continue
             pick = next((b for b in prompts if (b.get("text") or "").lower() in SETTLE_BUTTONS), None)
             if pick is None:
                 say("forge prompt with unknown buttons", [b.get("text") for b in prompts], "- waiting")
@@ -262,8 +277,8 @@ def main(argv):
     elif verb == "settle":
         # Round 175 (the round-161 e2e driver's settle()): back to an idle map scene - sit a duel out,
         # tap the win/lose view's button, Done on a reward screen, walk single-option dialogs. Stops at
-        # a real choice and prints it.
-        s = settle()
+        # a real choice and prints it. Round 535: a lost ante is accepted with OK; --ask-ante stops there.
+        s = settle(ask_ante="--ask-ante" in rest)
         print(json.dumps(brief(s), indent=1))
     elif verb == "shot":
         q = "?file=" + urllib.parse.quote(rest[0]) if rest else ""

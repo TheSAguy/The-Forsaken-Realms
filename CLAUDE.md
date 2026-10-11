@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (round 535): **LOCAL (agent client only - nothing to package)** - the agent's `settle` taps OK on a
+lost ante's "Card Lost" prompt (accepts the loss, never Buy Back or a Bronze Coin); `settle --ask-ante` keeps round
+176's stop there. Agent-tested on slot 7 (two lost duels to a spawned Wild Rat).
+
 ## STATE 2026-10-10 (round 534): **LOCAL + UNRELEASED (data only)** - twenty LPC humanoids (the Procedural Pixel
 Creatures session) replace round 108's 16 px enemy-art sprites: 7 casters, 6 undead, 7 demons (generator
 `lpc_selections/make_534.py`). 20 new atlases under `sprites/enemy/remake/`, enemies.json 20 paths + 20 scales
