@@ -1,0 +1,18 @@
+{
+ "race": "Blue Dragon",
+ "note": "Round 553 (the user, from the 26-candidate sheet: 'Blue Dragon: 1, 3, 4, 6, 7, 11, 13. 15. 17. 20, 21, 25.'). A dragon's one avatar region (Dragon_u) serves both genders.",
+ "picks": [
+  {"region": "blue_dragon", "gender": "shared", "card": "Blue Dragon", "artist": "Svetlin Velinov", "file": "Blue Dragon1.full.jpg", "u": 0.5, "v": 0.425, "zoom": 0.65},
+  {"region": "ojutai_soul_of_winter", "gender": "shared", "card": "Ojutai, Soul of Winter", "artist": "Chase Stone", "file": "Ojutai, Soul of Winter.full.jpg", "u": 0.59, "v": 0.612, "zoom": 0.6},
+  {"region": "murktide_regent", "gender": "shared", "card": "Murktide Regent", "artist": "Rowynn Ellis", "file": "Murktide Regent1.full.jpg", "u": 0.5, "v": 0.262, "zoom": 0.55},
+  {"region": "marang_river_regent", "gender": "shared", "card": "Marang River Regent", "artist": "Brian Valeza", "file": "TDM/Marang River Regent3.full.jpg", "u": 0.213, "v": 0.575, "zoom": 0.5},
+  {"region": "shimmer_dragon", "gender": "shared", "card": "Shimmer Dragon", "artist": "Lie Setiawan", "file": "Shimmer Dragon.full.jpg", "u": 0.5, "v": 0.187, "zoom": 0.6},
+  {"region": "sapphire_drake", "gender": "shared", "card": "Sapphire Drake", "artist": "Steve Prescott", "file": "Sapphire Drake.full.jpg", "u": 0.733, "v": 0.413, "zoom": 0.55},
+  {"region": "cerulean_drake", "gender": "shared", "card": "Cerulean Drake", "artist": "Daniel Ljunggren", "file": "Cerulean Drake.full.jpg", "u": 0.846, "v": 0.545, "zoom": 0.55},
+  {"region": "mirrorwing_dragon", "gender": "shared", "card": "Mirrorwing Dragon", "artist": "Min Yum", "file": "Mirrorwing Dragon.full.jpg", "u": 0.231, "v": 0.112, "zoom": 0.6},
+  {"region": "archive_dragon", "gender": "shared", "card": "Archive Dragon", "artist": "Tyler Walpole", "file": "Archive Dragon.full.jpg", "u": 0.59, "v": 0.262, "zoom": 0.55},
+  {"region": "phantasmal_dragon", "gender": "shared", "card": "Phantasmal Dragon", "artist": "Wayne Reynolds", "file": "Phantasmal Dragon.full.jpg", "u": 0.679, "v": 0.562, "zoom": 0.85},
+  {"region": "young_blue_dragon", "gender": "shared", "card": "Young Blue Dragon", "artist": "Tuan Duong Chu", "file": "Young Blue Dragon.full.jpg", "u": 0.487, "v": 0.112, "zoom": 0.6},
+  {"region": "arcades_the_strategist", "gender": "shared", "card": "Arcades, the Strategist", "artist": "Even Amundsen", "file": "Arcades, the Strategist.full.jpg", "u": 0.572, "v": 0.275, "zoom": 0.6}
+ ]
+}

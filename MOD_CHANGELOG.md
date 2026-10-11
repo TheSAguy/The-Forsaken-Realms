@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 553: Blue Dragon portraits; the treasure-map button on the world map only (2026-10-11)
+
+The user, from the 26-candidate sheet: "Blue Dragon: 1, 3, 4, 6, 7, 11, 13. 15. 17. 20, 21, 25." Then, with a
+screenshot of the button over a town: "The Map Icon does not need to show in Dungeons and Towns. Only Overworld."
+
+- **Twelve card arts** fill the race's one avatar region, `Dragon_u`, which serves both genders
+  (`dev-tools/portraits/blue_dragon.json`, `sprites/heroes/portraits/blue_dragon.atlas`):
+  - Blue Dragon, Ojutai (Soul of Winter), Murktide Regent, Marang River Regent, Shimmer Dragon, Sapphire Drake,
+    Cerulean Drake, Mirrorwing Dragon, Archive Dragon, Phantasmal Dragon, Young Blue Dragon, Arcades.
+  - Each crop is centered on the head. Phantasmal Dragon's body fills its art, so its crop is wide.
+  - The candidate sheet dropped seven red or purple dragons.
+  - Artists read off the cached images and credited.
+- **The treasure maps' button** (round 478, beside the portrait panel) now shows only on the world map
+  (`GameHUD.draw`: hidden while `MapStage.isInMap()`). The maps are read and dug there.
+- **Agent-tested** (slot 7 with a Blue map piece): the button stood on the overworld and was gone inside Orazca.
+
 ## Round 552: Black Dragon portraits (2026-10-11)
 
 The user, from the 27-candidate sheet: "Black Dragon: 1, 3, 6, 9, 15, 16, 19, 20, 25, 26, 27".

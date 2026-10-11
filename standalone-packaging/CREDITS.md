@@ -266,6 +266,13 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Glushakov**; *Ebon Drake* by **Pete Venters**; *Teneb, the Harvester* by **Zoltan Boros & Gabor Szikszai**; *Nicol
   Bolas, Dragon-God* by **Raymond Swanland**; and *Crosis, the Purger* by **Chris Rahn**.
 
+- **Blue Dragon portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits: *Blue Dragon* by **Svetlin Velinov**; *Ojutai, Soul of Winter* by **Chase Stone**; *Murktide Regent* by
+  **Rowynn Ellis**; *Marang River Regent* by **Brian Valeza**; *Shimmer Dragon* by **Lie Setiawan**; *Sapphire Drake*
+  by **Steve Prescott**; *Cerulean Drake* by **Daniel Ljunggren**; *Mirrorwing Dragon* by **Min Yum**; *Archive
+  Dragon* by **Tyler Walpole**; *Phantasmal Dragon* by **Wayne Reynolds**; *Young Blue Dragon* by **Tuan Duong Chu**;
+  and *Arcades, the Strategist* by **Even Amundsen**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

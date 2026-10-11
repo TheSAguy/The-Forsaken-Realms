@@ -1,0 +1,53 @@
+blue_dragon.png
+size: 1632,544
+format: RGBA8888
+filter: MipMapLinearLinear,Linear
+repeat: none
+Dragon_u
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Dragon_u
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Dragon_u
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Dragon_u
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Dragon_u
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Dragon_u
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Dragon_u
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Dragon_u
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Dragon_u
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Dragon_u
+  xy: 824, 280
+  size: 256, 256
+  index: 9
+Dragon_u
+  xy: 1096, 280
+  size: 256, 256
+  index: 10
+Dragon_u
+  xy: 1368, 280
+  size: 256, 256
+  index: 11

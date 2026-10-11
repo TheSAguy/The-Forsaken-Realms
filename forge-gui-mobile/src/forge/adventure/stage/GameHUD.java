@@ -603,8 +603,11 @@ public class GameHUD extends Stage {
         int xPos = (int) gameStage.player.getX();
         act(Gdx.graphics.getDeltaTime()); //act the Hud
         updateHiddenEnemyChevrons();
-        if (treasureMapsButton != null) // round 478: the treasure maps' button once a piece is found
-            treasureMapsButton.setVisible(forge.adventure.util.TreasureHunt.anyPieces(WorldSave.getCurrentSave().getWorld()));
+        // Round 478: the treasure maps' button once a piece is found. Round 553 (the user: "The Map Icon does not need to show
+        // in Dungeons and Towns. Only Overworld"): on the world map only - the maps are read and dug there.
+        if (treasureMapsButton != null)
+            treasureMapsButton.setVisible(!MapStage.getInstance().isInMap()
+                    && forge.adventure.util.TreasureHunt.anyPieces(WorldSave.getCurrentSave().getWorld()));
         super.draw(); //draw the Hud
         // Round 329 (the user, right after this round's banner change: "I just loaded my game and the screen was black,
         // no terrain"). The HUD shares one SpriteBatch with the world (round 316, upstream #12011), and scene2d leaves

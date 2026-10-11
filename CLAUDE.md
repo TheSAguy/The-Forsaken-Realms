@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-11 (round 553): **LOCAL + UNRELEASED** - Blue Dragon portraits (twelve in `Dragon_u`); the
+treasure-map button on the world map only.
+
 ## STATE 2026-10-11 (round 552): **LOCAL + UNRELEASED** - Black Dragon portraits (eleven in `Dragon_b`).
 
 ## STATE 2026-10-11 (round 551): **LOCAL + UNRELEASED** - perks Scientist (a rare of each color from every completed
