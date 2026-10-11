@@ -896,15 +896,22 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     if (collided)
                         return;
                     // Round 557: the Intimidating perk - an enemy the player has a winning record against may flee
-                    // instead of fighting. No duel, no loot; it is gone from the map.
+                    // instead of fighting. No duel; it is gone from the map. Round 558: it drops half its loot, shown on
+                    // the loot screen once this frame is over (so a second contact in the same frame cannot start a duel).
                     if (forge.adventure.util.Ascendance.intimidates(mob)) {
-                        GameHUD.getInstance().addNotification("The " + mob.getTieredDisplayName()
-                                + " takes one look at you and flees!");
+                        String fled = "The " + mob.getTieredDisplayName();
+                        GameHUD.getInstance().addNotification(fled + " takes one look at you and flees, dropping half its loot!");
+                        Array<Reward> loot = forge.adventure.util.Ascendance.fleeLoot(mob);
                         mob.removeAfterEffects();
                         foregroundSprites.removeActor(mob);
                         enemies.remove(i);
-                        i--;
-                        continue;
+                        Gdx.app.postRunnable(() -> {
+                            if (RewardScene.announceDuelPayout(loot, fled)) {
+                                RewardScene.instance().loadRewards(loot, RewardScene.Type.Loot, null);
+                                Forge.switchScene(RewardScene.instance());
+                            }
+                        });
+                        break;
                     }
                     collided = true;
                     player.setAnimation(CharacterSprite.AnimationTypes.Attack);

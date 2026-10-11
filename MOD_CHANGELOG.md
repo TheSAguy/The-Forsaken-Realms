@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 558: a fleeing enemy drops half its loot (2026-10-11)
+
+The user: "Also, for Intimidating, they should give 50% of their rewards to you."
+
+- **`Ascendance.fleeLoot`:** the loot a win over the enemy would pay, halved, on the ordinary loot screen.
+  - Gold, shards, wood and stone pay half their amount.
+  - Of the cards and items, half are kept, picked at random.
+  - An odd half rounds by a coin flip, so it averages 50%.
+  - Its +Life (paid once a game) waits for a won fight.
+  - The Power a win would pay comes at half, rounded (at least 1).
+  - The enemy's deck is generated first, because its deck-card rewards draw from it.
+- **Nothing is recorded:** no win, no quest step, no reputation.
+- **The notice** reads "The Wild Rat (Apprentice) takes one look at you and flees, dropping half its loot!".
+  - The loot screen opens once the frame is over.
+  - The collision loop stops at the flee, as it does at a duel, so a second contact in the same frame cannot start a
+    fight.
+- The perk's text adds "dropping half its loot".
+- `[TFR-Ascend] Intimidating: <enemy> drops half its loot - n reward(s) on a win, k of m cards/items kept, j on the
+  screen`.
+- **Agent-tested** on slot 7 with Intimidating III, a 3-1 record and the certain test value (agent copy only). Two Wild
+  Rats fled:
+  - The first paid 34 gold and 1 Power.
+  - The second paid 13 gold, 1 stone and 1 Power.
+  - Each had one card on a win, and the coin flip dropped it both times.
+
 ## Round 557: the Intimidating perk (2026-10-11)
 
 The user: "Intimidating: 5%, 10% & 15% chance of an enemy fleeing a duel. Only on Overworld. Only on enemies you have a

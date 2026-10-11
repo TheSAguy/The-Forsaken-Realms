@@ -943,7 +943,7 @@ public final class Ascendance {
      * enemies you have a winning record on"): whether an overworld enemy that has just reached the player flees instead
      * of fighting. Only an ordinary roamer - never a boss, a color's mage, a legend, a pillage raider or a quest's enemy -
      * and only one the player has beaten more often than it has beaten them (the win/loss record, by enemy name).
-     * WorldStage calls it once per contact; a fleeing enemy leaves the map with no duel, no loot and no Power.
+     * WorldStage calls it once per contact; a fleeing enemy leaves the map with no duel and half its loot (fleeLoot).
      */
     public static boolean intimidates(EnemySprite mob) {
         float chance = total("intimidating");
@@ -960,6 +960,58 @@ public final class Ascendance {
         System.out.println("[TFR-Ascend] Intimidating: " + mob.getName() + " (record " + record.getKey() + "-"
                 + record.getValue() + ") rolls " + pct(roll) + " against " + pct(chance) + (flees ? " - flees" : " - fights"));
         return flees;
+    }
+
+    /**
+     * Round 558 (the user: "for Intimidating, they should give 50% of their rewards to you"): what a fleeing enemy
+     * drops - the loot a win over it would pay, halved. Gold, shards, wood and stone pay half their amount; of the cards
+     * and items, half are kept, picked at random; an odd half rounds by a coin flip, so it averages 50%. Its +Life (paid
+     * once a game) waits for a won fight. The Power a win would pay comes at half, rounded. Nothing is recorded: no win,
+     * no quest step, no reputation. The deck is generated first, since an enemy's deck-card rewards draw from it.
+     */
+    public static com.badlogic.gdx.utils.Array<Reward> fleeLoot(EnemySprite mob) {
+        com.badlogic.gdx.utils.Array<Reward> half = new com.badlogic.gdx.utils.Array<>();
+        if (mob == null || mob.getData() == null)
+            return half;
+        forge.adventure.util.Current.setLatestDeck(mob.getData().generateDeck(
+                WorldSave.getCurrentSave().getPlayer().isFantasyMode(), false));
+        com.badlogic.gdx.utils.Array<Reward> pieces = new com.badlogic.gdx.utils.Array<>();
+        int full = 0;
+        for (Reward reward : mob.getRewards()) {
+            if (reward == null)
+                continue;
+            full++;
+            switch (reward.getType()) {
+                case Life:
+                    break;
+                case Gold: case Shards: case Wood: case Stone: {
+                    int n = halfOf(reward.getCount());
+                    if (n > 0)
+                        half.add(new Reward(reward.getType(), n));
+                    break;
+                }
+                default:
+                    pieces.add(reward);
+            }
+        }
+        pieces.shuffle();
+        int keep = halfOf(pieces.size);
+        for (int i = 0; i < keep; i++)
+            half.add(pieces.get(i));
+        onDuelWon(mob, mob.getName(), false);
+        if (pendingDuelPower > 0 && pendingDuelEnemy == mob) {
+            pendingDuelPower = Math.max(1, Math.round(pendingDuelPower * 0.5f));
+            pendingDuelSource = mob.getName() + " fled (half)";
+        }
+        appendDuelPower(half);
+        System.out.println("[TFR-Ascend] Intimidating: " + mob.getName() + " drops half its loot - " + full
+                + " reward(s) on a win, " + keep + " of " + pieces.size + " cards/items kept, " + half.size + " on the screen");
+        return half;
+    }
+
+    /** Half of n, an odd half rounded by a coin flip. */
+    private static int halfOf(int n) {
+        return n / 2 + (n % 2 == 1 && RAND.nextBoolean() ? 1 : 0);
     }
 
     /** Round 551: a research has completed (AdventurePlayer.checkResearchCompletion) - the Scientist's rares. */
@@ -1203,8 +1255,8 @@ public final class Ascendance {
             case "gambler": effect = GAMBLER_REROLLS + " re-rolls a level, each " + rerollCostAt(c.value) + " [+Shards] (one is "
                     + baseRerollCost() + " now)"; break; // round 536
             case "sellPrice": effect = "Cards sell for " + pct(then) + " more [+Gold]" + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // round 548
-            case "intimidating": effect = pct(then) + " chance an overworld enemy you have beaten more often than it has beaten you flees instead of fighting"
-                    + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // round 557
+            case "intimidating": effect = pct(then) + " chance an overworld enemy you have beaten more often than it has beaten you flees instead of fighting, dropping half its loot"
+                    + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // rounds 557, 558
             case "scientist": effect = "Each research you complete gives " + Math.round(c.value) + " rare card of each color from that set"; break; // round 551
             case "researcher": effect = "Research costs " + pct(c.value) + " less [+Shards] and takes " + c.days + " days less"; break; // round 551
             default: effect = id;
