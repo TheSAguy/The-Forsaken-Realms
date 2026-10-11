@@ -209,6 +209,19 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Maniak**; *Narfi, Betrayer King* by **Daarken**; *Draugr Necromancer* by **David Rapoza**; *Ghoulcaller Gisa* by
   **Karla Ortiz**; and *Accursed Marauder* by **Paolo Parente**.
 
+- **Vampire portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits. Male: *Sorin Markov* by **Michael Komarck**; *Sorin, Imperious Bloodlord* by **Chase Stone**; *Edgar
+  Markov* by **Martina Fackova**; *Edgar, Charmed Groom* by **Volkan Baga**; *Anowon, the Ruin Sage* by **Dan Scott**;
+  *Baron Sengir* by **Pete Venters**; *Sengir Vampire* by **Jeff Easley**; *Stromkirk Noble* by **James Ryman**;
+  *Falkenrath Noble* by **Slawomir Maniak**; *Legion Lieutenant* by **Zezhou Chen**; *Timothar, Baron of Bats* by
+  **Jason A. Engle**; *Florian, Voldaren Scion* by **Justine Cruz**; *Bloodtithe Harvester* by **Lucas Graciano**; and
+  *Bloodline Keeper* by **Jason Chan**. Female: *Olivia, Crimson Bride* by **Anna Steinbauer**; *Olivia, Mobilized for
+  War* by **Eric Deschamps**; *Drana, Liberator of Malakir* and *Drana, Kalastria Bloodchief* by **Mike Bierek**;
+  *Elenda, the Dusk Rose* by **Chris Rahn**; *Anje Falkenrath* by **Cynthia Sheppard**; *Falkenrath Aristocrat* by
+  **Igor Kieryluk**; *Kalastria Highborn* by **D. Alexander Gregory**; *Vampire Socialite* by **Suzanne Helmigh**;
+  *Voldaren Bloodcaster* by **Kim Sokol**; *Queen Kayla bin-Kroog* by **Cristi Balanescu**; and *Welcoming Vampire* by
+  **Lorenzo Mastroianni**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

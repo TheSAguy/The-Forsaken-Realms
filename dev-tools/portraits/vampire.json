@@ -1,0 +1,32 @@
+{
+ "race": "Vampire",
+ "note": "Round 543 (the user, from the two sheets: 'Vampire Male: 1, 2, 4, 5, 7, 10, 11, 12, 14, 19, 21. 26. 27, 29 / Vampire Female: 2, 3, 4, 5, 7, 8, 10, 11, 12, 14, 16, 17'). Separate pools: 14 male, 12 female.",
+ "picks": [
+  {"region": "sorin_markov", "gender": "m", "card": "Sorin Markov", "artist": "Michael Komarck", "file": "Sorin Markov.full.jpg", "u": 0.38, "v": 0.3, "zoom": 0.55},
+  {"region": "sorin_ib", "gender": "m", "card": "Sorin, Imperious Bloodlord", "artist": "Chase Stone", "file": "INR/Sorin, Imperious Bloodlord1.full.jpg", "u": 0.4, "v": 0.25, "zoom": 0.5},
+  {"region": "edgar_markov", "gender": "m", "card": "Edgar Markov", "artist": "Martina Fackova", "file": "Edgar Markov.full.jpg", "u": 0.55, "v": 0.3, "zoom": 0.5},
+  {"region": "edgar_groom", "gender": "m", "card": "Edgar, Charmed Groom", "artist": "Volkan Baga", "file": "VOW/Edgar, Charmed Groom1.full.jpg", "u": 0.48, "v": 0.3, "zoom": 0.55},
+  {"region": "anowon", "gender": "m", "card": "Anowon, the Ruin Sage", "artist": "Dan Scott", "file": "Anowon, the Ruin Sage.full.jpg", "u": 0.45, "v": 0.3, "zoom": 0.55},
+  {"region": "baron_sengir", "gender": "m", "card": "Baron Sengir", "artist": "Pete Venters", "file": "Baron Sengir.full.jpg", "u": 0.55, "v": 0.42, "zoom": 0.8},
+  {"region": "sengir_vampire", "gender": "m", "card": "Sengir Vampire", "artist": "Jeff Easley", "file": "Sengir Vampire1.full.jpg", "u": 0.45, "v": 0.35, "zoom": 0.6},
+  {"region": "stromkirk_noble", "gender": "m", "card": "Stromkirk Noble", "artist": "James Ryman", "file": "Stromkirk Noble.full.jpg", "u": 0.55, "v": 0.3, "zoom": 0.5},
+  {"region": "falkenrath_noble", "gender": "m", "card": "Falkenrath Noble", "artist": "Slawomir Maniak", "file": "Falkenrath Noble.full.jpg", "u": 0.42, "v": 0.38, "zoom": 0.75},
+  {"region": "legion_lieutenant", "gender": "m", "card": "Legion Lieutenant", "artist": "Zezhou Chen", "file": "Legion Lieutenant.full.jpg", "u": 0.38, "v": 0.25, "zoom": 0.45},
+  {"region": "timothar", "gender": "m", "card": "Timothar, Baron of Bats", "artist": "Jason A. Engle", "file": "Timothar, Baron of Bats1.full.jpg", "u": 0.42, "v": 0.3, "zoom": 0.55},
+  {"region": "florian", "gender": "m", "card": "Florian, Voldaren Scion", "artist": "Justine Cruz", "file": "DSC/Florian, Voldaren Scion.full.jpg", "u": 0.5, "v": 0.32, "zoom": 0.55},
+  {"region": "bloodtithe", "gender": "m", "card": "Bloodtithe Harvester", "artist": "Lucas Graciano", "file": "INR/Bloodtithe Harvester1.full.jpg", "u": 0.42, "v": 0.3, "zoom": 0.55},
+  {"region": "bloodline_keeper", "gender": "m", "card": "Bloodline Keeper", "artist": "Jason Chan", "file": "SIS/Bloodline Keeper.full.jpg", "u": 0.38, "v": 0.32, "zoom": 0.55},
+  {"region": "olivia_bride", "gender": "f", "card": "Olivia, Crimson Bride", "artist": "Anna Steinbauer", "file": "VOW/Olivia, Crimson Bride1.full.jpg", "u": 0.42, "v": 0.2, "zoom": 0.45},
+  {"region": "olivia_war", "gender": "f", "card": "Olivia, Mobilized for War", "artist": "Eric Deschamps", "file": "Olivia, Mobilized for War1.full.jpg", "u": 0.55, "v": 0.32, "zoom": 0.5},
+  {"region": "drana_liberator", "gender": "f", "card": "Drana, Liberator of Malakir", "artist": "Mike Bierek", "file": "Drana, Liberator of Malakir.full.jpg", "u": 0.45, "v": 0.25, "zoom": 0.5},
+  {"region": "drana_bloodchief", "gender": "f", "card": "Drana, Kalastria Bloodchief", "artist": "Mike Bierek", "file": "Drana, Kalastria Bloodchief.full.jpg", "u": 0.5, "v": 0.3, "zoom": 0.55},
+  {"region": "elenda", "gender": "f", "card": "Elenda, the Dusk Rose", "artist": "Chris Rahn", "file": "Elenda, the Dusk Rose1.full.jpg", "u": 0.42, "v": 0.27, "zoom": 0.5},
+  {"region": "anje_falkenrath", "gender": "f", "card": "Anje Falkenrath", "artist": "Cynthia Sheppard", "file": "Anje Falkenrath.full.jpg", "u": 0.55, "v": 0.27, "zoom": 0.5},
+  {"region": "falkenrath_aristocrat", "gender": "f", "card": "Falkenrath Aristocrat", "artist": "Igor Kieryluk", "file": "Falkenrath Aristocrat.full.jpg", "u": 0.5, "v": 0.27, "zoom": 0.5},
+  {"region": "kalastria_highborn", "gender": "f", "card": "Kalastria Highborn", "artist": "D. Alexander Gregory", "file": "Kalastria Highborn.full.jpg", "u": 0.55, "v": 0.3, "zoom": 0.5},
+  {"region": "vampire_socialite", "gender": "f", "card": "Vampire Socialite", "artist": "Suzanne Helmigh", "file": "MID/Vampire Socialite.fullborder.jpg", "u": 0.6, "v": 0.32, "zoom": 0.6},
+  {"region": "voldaren_bloodcaster", "gender": "f", "card": "Voldaren Bloodcaster", "artist": "Kim Sokol", "file": "INR/Voldaren Bloodcaster.full.jpg", "u": 0.5, "v": 0.32, "zoom": 0.55},
+  {"region": "queen_kayla", "gender": "f", "card": "Queen Kayla bin-Kroog", "artist": "Cristi Balanescu", "file": "Queen Kayla bin-Kroog1.full.jpg", "u": 0.42, "v": 0.3, "zoom": 0.5},
+  {"region": "welcoming_vampire", "gender": "f", "card": "Welcoming Vampire", "artist": "Lorenzo Mastroianni", "file": "Welcoming Vampire1.full.jpg", "u": 0.45, "v": 0.25, "zoom": 0.45}
+ ]
+}

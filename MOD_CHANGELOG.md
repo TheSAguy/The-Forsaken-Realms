@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 543: Vampire portraits - male and female pools (2026-10-11)
+
+The user, from a male and a female candidate sheet: "Vampire Male: 1, 2, 4, 5, 7, 10, 11, 12, 14, 19, 21. 26. 27, 29 /
+Vampire Female: 2, 3, 4, 5, 7, 8, 10, 11, 12, 14, 16, 17".
+
+- **The first race with gendered pools** (`dev-tools/portraits/vampire.json`, `"gender": "m"` / `"f"`).
+  - 14 male in `Vampire_m`: Sorin Markov, Sorin (Imperious Bloodlord, INR), Edgar Markov, Edgar (Charmed Groom),
+    Anowon, Baron Sengir, Sengir Vampire, Stromkirk Noble, Falkenrath Noble, Legion Lieutenant, Timothar, Florian (DSC),
+    Bloodtithe Harvester (INR), Bloodline Keeper.
+  - 12 female in `Vampire_f`: Olivia (Crimson Bride, VOW), Olivia (Mobilized for War), both Dranas, Elenda, Anje
+    Falkenrath, Falkenrath Aristocrat, Kalastria Highborn, Vampire Socialite (MID), Voldaren Bloodcaster (INR), Queen
+    Kayla bin-Kroog, Welcoming Vampire.
+- **Printings:**
+  - The cache's first printing of several Crimson Vow / Midnight Hunt cards is the black-and-white *Double Feature*
+    (DBL) or a showcase. The color printing was picked for each.
+  - `candidates.py` (scratch) takes `"Name # set/file.jpg"` for an exact printing.
+- Artists read off the cached images and credited.
+- **Agent-tested:** on Create a Character, Vampire shows the 14 when Male and the 12 when Female.
+
 ## Round 542: one portrait atlas a race, loaded when shown; Undead portraits (2026-10-11)
 
 The user, from the 37-candidate sheet: "1, 2, 4, 5, 6, 8, 10, 17, 21, 23, 24, 32, 33, 35, 36".
