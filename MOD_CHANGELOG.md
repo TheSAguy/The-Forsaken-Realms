@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 560: Elf portraits - male and female pools (2026-10-11)
+
+The user, from a male and a female sheet: "Elf Male: 7, 10, 13, 21, 32, 36, 39, 41, 46, 47,60, 64, 65, 68 / Elf
+Female: 2, 8, 10, 14, 17, 25, 26, 31, 40, 42, 47, 48, 53, 54, 69, 71, 7".
+
+- **The candidates:** 691 cached cards whose type line names an Elf (no Alchemy rebalances), scanned in seven pages of
+  100. A male sheet (71) and a female sheet (77) were picked from them by eye.
+- **14 male** in `Elf_m`:
+  - Celeborn the Wise, Dionus, Eladamri (Korvecdal), Elvish Reclaimer, Harald, Joraga Warcaller, Legolas (Master
+    Archer).
+  - Llanowar Elves, Nath of the Gilt-Leaf, Pelt Collector, Sunblade Elf, Thranduil (the Elvenking), Tolsimir
+    Wolfblood, Urianger Augurelt.
+- **17 female** in `Elf_f`:
+  - Arwen (Mortal Queen), Boreal Druid, Celebrity Fencer, Darling of the Masses, Disciple of Freyalise, both Emmaras
+    (Tandris, Soul of the Accord), Galadriel (Gift-Giver), Jaheira (Friend of the Forest).
+  - Kagha, Mayael the Anima, Meria, both Nissas (Sage Animist, Worldsoul Speaker), Shessra, Sumala Woodshaper.
+  - Bloodline Shaman: the list's trailing "7".
+- **Framing:**
+  - Each crop is on the face (`dev-tools/portraits/elf.json`, `sprites/heroes/portraits/elf.atlas`, 1632x1632).
+  - Meria's and Nissa Sage Animist's faces sit at the art box's top edge, so their crops start there.
+- **Credits:** artists read off the cached images. The Middle-earth and Final Fantasy crossover cards carry their
+  owners' notices. Data only.
+
 ## Round 559: the Capitol Temple, and a line under every building on the build menu (2026-10-11)
 
 The user, with the gilded blue temple circled: "This is how the temple works. After you build it and you enter it, it

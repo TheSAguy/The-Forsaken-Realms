@@ -1,0 +1,129 @@
+elf.png
+size: 1632,1632
+format: RGBA8888
+filter: MipMapLinearLinear,Linear
+repeat: none
+Elf_m
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Elf_m
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Elf_m
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Elf_m
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Elf_m
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Elf_m
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Elf_m
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Elf_m
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Elf_m
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Elf_m
+  xy: 824, 280
+  size: 256, 256
+  index: 9
+Elf_m
+  xy: 1096, 280
+  size: 256, 256
+  index: 10
+Elf_m
+  xy: 1368, 280
+  size: 256, 256
+  index: 11
+Elf_m
+  xy: 8, 552
+  size: 256, 256
+  index: 12
+Elf_m
+  xy: 280, 552
+  size: 256, 256
+  index: 13
+Elf_f
+  xy: 552, 552
+  size: 256, 256
+  index: 0
+Elf_f
+  xy: 824, 552
+  size: 256, 256
+  index: 1
+Elf_f
+  xy: 1096, 552
+  size: 256, 256
+  index: 2
+Elf_f
+  xy: 1368, 552
+  size: 256, 256
+  index: 3
+Elf_f
+  xy: 8, 824
+  size: 256, 256
+  index: 4
+Elf_f
+  xy: 280, 824
+  size: 256, 256
+  index: 5
+Elf_f
+  xy: 552, 824
+  size: 256, 256
+  index: 6
+Elf_f
+  xy: 824, 824
+  size: 256, 256
+  index: 7
+Elf_f
+  xy: 1096, 824
+  size: 256, 256
+  index: 8
+Elf_f
+  xy: 1368, 824
+  size: 256, 256
+  index: 9
+Elf_f
+  xy: 8, 1096
+  size: 256, 256
+  index: 10
+Elf_f
+  xy: 280, 1096
+  size: 256, 256
+  index: 11
+Elf_f
+  xy: 552, 1096
+  size: 256, 256
+  index: 12
+Elf_f
+  xy: 824, 1096
+  size: 256, 256
+  index: 13
+Elf_f
+  xy: 1096, 1096
+  size: 256, 256
+  index: 14
+Elf_f
+  xy: 1368, 1096
+  size: 256, 256
+  index: 15
+Elf_f
+  xy: 8, 1368
+  size: 256, 256
+  index: 16

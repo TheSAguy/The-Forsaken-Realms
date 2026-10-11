@@ -305,6 +305,22 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Monteiro**; *Earthquake Dragon* by **Johan Grenier**; *Dragon Broodmother* by **Jaime Jones**; *Needlethorn Drake*
   by **Donato Giancola**; *Drakewing Krasis* by **Johann Bodin**; and *Destructor Dragon* by **Peter Mohrbacher**.
 
+- **Elf portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits; the
+  Lord of the Rings and Hobbit cards (Celeborn, Legolas, Thranduil, Arwen, Galadriel) also © Middle-earth Enterprises,
+  and Urianger Augurelt (Final Fantasy) also © Square Enix. Male: *Celeborn the Wise* by **Wangjie Li**; *Dionus,
+  Elvish Archdruid* by **Bodax**; *Eladamri, Korvecdal* and *Pelt Collector* by **Zoltan Boros**; *Elvish Reclaimer*
+  by **Victor Adame Minguez**; *Harald, King of Skemfar* by **Grzegorz Rutkowski**; *Joraga Warcaller* by **Steven
+  Belledin**; *Legolas, Master Archer* by **Campbell White**; *Llanowar Elves* and *Nath of the Gilt-Leaf* by **Kev
+  Walker**; *Sunblade Elf* by **Lucas Graciano**; *Thranduil, the Elvenking* by **Magali Villeneuve**; *Tolsimir
+  Wolfblood* by **Donato Giancola**; and *Urianger Augurelt* by **Vilhelmas Banys**. Female: *Arwen, Mortal Queen* by
+  **Miranda Meeks**; *Boreal Druid* by **Dan Dos Santos**; *Celebrity Fencer* by **Inka Schulz**; *Darling of the
+  Masses* and *Jaheira, Friend of the Forest* by **Mila Pesic**; *Disciple of Freyalise* by **Valera Lutfullina**;
+  *Emmara Tandris* by **Mark Winters**; *Emmara, Soul of the Accord* by **Kai Carpenter**; *Galadriel, Gift-Giver* and
+  *Kagha, Shadow Archdruid* by **Alexander Mokhov**; *Mayael the Anima* by **Jason Chan**; *Meria, Scholar of
+  Antiquity* by **Aurore Folny**; *Nissa, Sage Animist* by **Wesley Burt**; *Nissa, Worldsoul Speaker* by **Magali
+  Villeneuve**; *Shessra, Death's Whisper* by **Marie Magny**; *Sumala Woodshaper* by **Sara Winters**; and *Bloodline
+  Shaman* by **Rebecca Guay**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**
