@@ -64,7 +64,9 @@ public final class AscendanceUI {
         // "Not now"; greyed when this level's re-roll is used or the shards are short.
         int cost = Ascendance.rerollCost();
         boolean open = Ascendance.canReroll();
-        TextraButton reroll = Controls.newTextButton(open ? "Re-roll " + cost + " [+Shards]" : "Re-rolled", () -> {
+        // Round 536: with the Gambler's two re-rolls a level, the button says how many are left.
+        String left = Ascendance.rerollsPerLevel() > 1 ? " [%80](" + Ascendance.rerollsLeft() + " left)" : "";
+        TextraButton reroll = Controls.newTextButton(open ? "Re-roll " + cost + " [+Shards]" + left : "Re-rolled", () -> {
             stage.hideDialog();
             Ascendance.reroll();
             Gdx.app.postRunnable(AscendanceUI::openChoice);

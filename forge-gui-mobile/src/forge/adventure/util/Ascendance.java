@@ -532,9 +532,10 @@ public final class Ascendance {
         awardExact(scaled(base), source);
     }
 
-    /** {@code base} times the config's levelingSpeed - what an award pays. */
+    /** {@code base} times the config's levelingSpeed and the Zealot's bonus (round 536) - what an award pays. A won duel's
+     *  Power is scaled here too, so its loot card shows the boosted figure. */
     private static int scaled(int base) {
-        return Math.max(1, Math.round(base * Math.max(0f, data().levelingSpeed)));
+        return Math.max(1, Math.round(base * Math.max(0f, data().levelingSpeed) * powerGainFactor()));
     }
 
     /** Round 517: the icon every Power figure in text carries - items.atlas "PowerGlyph", Shikashi's radiant sun cut to
@@ -921,6 +922,8 @@ public final class Ascendance {
     /** Round 525, Opening Gambit (the user: "50% more likely to win coin flip to start a duel ... a 75% chance of
      *  starting"): the chance to win the first game's coin toss - 50%, times 1 + the pick's value. */
     public static float openingTossChance() { return Math.min(1f, 0.5f * (1f + total("coinToss"))); }
+    /** Round 536 (the user: "+5%, +10% and +15% Power gain. So 3 tiers"): Zealot - every Power award, times this. */
+    public static float powerGainFactor() { return 1f + total("powerGain"); }
     /** Round 525: Opening Gambit as the player seat's weight in the engine's toss against an opponent at 1 (75% -> 3). */
     public static float coinTossWeight() {
         float chance = openingTossChance();
@@ -1019,8 +1022,8 @@ public final class Ascendance {
         return true;
     }
 
-    /** Round 518: the Re-roll's price in shards on this character's difficulty (difficultyRerollCost). */
-    public static int rerollCost() {
+    /** Round 518: the Re-roll's full price in shards on this character's difficulty (difficultyRerollCost). */
+    private static int baseRerollCost() {
         AscendanceData d = data();
         AdventurePlayer player = WorldSave.getCurrentSave() == null ? null : WorldSave.getCurrentSave().getPlayer();
         String difficulty = player == null || player.getDifficulty() == null ? "Normal" : player.getDifficulty().name;
@@ -1030,14 +1033,43 @@ public final class Ascendance {
         return 40; // a difficulty the table does not list: Normal's
     }
 
-    /** Round 518: whether the waiting level's offer can still be re-rolled (once per level). */
-    public static boolean canReroll() {
+    /** Round 536 (the user: "Re-roll Ascension perks twice at 50% cost. So if you do re-roll twice it will cost the same as
+     *  without the perk"): the price at {@code share} of the full one - the Gambler's value. */
+    private static int rerollCostAt(float share) {
+        return Math.max(0, Math.round(baseRerollCost() * share));
+    }
+
+    /** What one Re-roll costs now - the full price, or the Gambler's share of it. */
+    public static int rerollCost() {
+        AscendanceData.Choice gambler = choice("gambler");
+        return picks("gambler") > 0 && gambler != null ? rerollCostAt(gambler.value) : baseRerollCost();
+    }
+
+    /** Round 536 (the user: "You also get to re-roll twice per level vs. 1 without"): re-rolls a level allows. */
+    public static int rerollsPerLevel() {
+        return picks("gambler") > 0 ? GAMBLER_REROLLS : 1;
+    }
+
+    private static final int GAMBLER_REROLLS = 2;
+
+    /** Round 536: re-rolls the waiting level has left (0 with none waiting). */
+    public static int rerollsLeft() {
         AscendanceState s = state();
-        return s != null && isActive() && !s.pendingLevels.isEmpty() && s.rerolledLevel != s.pendingLevels.get(0);
+        if (s == null || !isActive() || s.pendingLevels.isEmpty())
+            return 0;
+        int used = s.rerolledLevel == s.pendingLevels.get(0) ? s.rerollCount : 0;
+        return Math.max(0, rerollsPerLevel() - used);
+    }
+
+    /** Round 518: whether the waiting level's offer can still be re-rolled (once per level; round 536: twice with the
+     *  Gambler). */
+    public static boolean canReroll() {
+        return rerollsLeft() > 0;
     }
 
     /** Round 518: the choice dialog's Re-roll - pays rerollCost() shards and draws a new offer for the waiting level,
-     *  away from the one it replaces. Once per level. Returns false (and changes nothing) when it cannot. */
+     *  away from the one it replaces. Once per level (twice with the Gambler). Returns false (and changes nothing) when it
+     *  cannot. */
     public static boolean reroll() {
         AscendanceState s = state();
         if (!canReroll())
@@ -1050,8 +1082,14 @@ public final class Ascendance {
         }
         java.util.Set<String> old = new java.util.HashSet<>(currentOffer());
         player.takeShards(cost);
-        s.rerolledLevel = s.pendingLevels.get(0);
-        System.out.println("[TFR-Ascend] level " + s.rerolledLevel + " re-rolled for " + cost + " shards");
+        int level = s.pendingLevels.get(0);
+        if (s.rerolledLevel != level) {
+            s.rerolledLevel = level;
+            s.rerollCount = 0;
+        }
+        s.rerollCount++;
+        System.out.println("[TFR-Ascend] level " + level + " re-rolled for " + cost + " shards (" + s.rerollCount + " of "
+                + rerollsPerLevel() + " this level)");
         rollOffer(s, old);
         return true;
     }
@@ -1113,6 +1151,9 @@ public final class Ascendance {
             case "mechanic": effect = "Item repairs cost " + pct(Math.min(1f, then)) + " less [+Gold]"; break; // round 508
             case "medic": effect = "Downed roaming guards heal in " + pct(Math.min(1f, then)) + " less time"; break; // round 508
             case "coinToss": effect = "Win the opening coin toss " + pct(Math.min(1f, 0.5f * (1f + then))) + " of the time"; break; // round 525
+            case "powerGain": effect = "Power gained +" + pct(then) + " " + ICON + (now > 0 ? " (now +" + pct(now) + ")" : ""); break; // round 536
+            case "gambler": effect = GAMBLER_REROLLS + " re-rolls a level, each " + rerollCostAt(c.value) + " [+Shards] (one is "
+                    + baseRerollCost() + " now)"; break; // round 536
             default: effect = id;
         }
         return effect;
@@ -1207,6 +1248,8 @@ public final class Ascendance {
             case "mechanic": return "Mechanic"; // round 508
             case "medic": return "Medic";
             case "coinToss": return "Opening Gambit"; // round 525
+            case "powerGain": return "Zealot"; // round 536
+            case "gambler": return "Gambler";
             default: return id;
         }
     }
@@ -1299,6 +1342,7 @@ public final class Ascendance {
         data.store("ascendanceDeferredPower", s.deferredPower); // round 505
         data.store("ascendanceDeferredSource", s.deferredSource == null ? "" : s.deferredSource);
         data.store("ascendanceRerolledLevel", s.rerolledLevel); // round 518
+        data.store("ascendanceRerollCount", s.rerollCount); // round 536
     }
 
     /** AdventurePlayer.load: absent keys (every save before round 493) read as "off". */
@@ -1391,6 +1435,9 @@ public final class Ascendance {
         s.deferredSource = data.containsKey("ascendanceDeferredSource") ? data.readString("ascendanceDeferredSource") : "";
         s.deferredLoaded = s.deferredPower > 0;
         s.rerolledLevel = data.containsKey("ascendanceRerolledLevel") ? data.readInt("ascendanceRerolledLevel") : 0; // round 518
+        // Round 536: a save from before the count spent its one re-roll on rerolledLevel.
+        s.rerollCount = data.containsKey("ascendanceRerollCount") ? data.readInt("ascendanceRerollCount")
+                : s.rerolledLevel > 0 ? 1 : 0;
     }
 
     // ------------------------------------------------------------------------------------------------ cheats

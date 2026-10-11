@@ -38,6 +38,8 @@ public class AscendanceState {
     public int curve = 3;
     /** Round 518: the waiting level whose offer was re-rolled (once per level); 0 = none yet. */
     public int rerolledLevel;
+    /** Round 536: re-rolls spent on rerolledLevel - the Gambler perk allows two. */
+    public int rerollCount;
 
     public void reset() {
         on = false;
@@ -54,5 +56,6 @@ public class AscendanceState {
         deferredLoaded = false;
         curve = 3;
         rerolledLevel = 0;
+        rerollCount = 0;
     }
 }

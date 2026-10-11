@@ -117,6 +117,12 @@
     { "id": "medic",       "lasting": true, "maxPicks": 1, "value": 0.50 }, // downed guards heal in 50% less time (round 508)
     // Round 525 (the user: "50% more likely to win coin flip to start a duel. One time perk ... you have a 75% chance of
     // starting"): Opening Gambit - the first game's coin toss at 50% x (1 + value).
-    { "id": "coinToss",    "lasting": true, "maxPicks": 1, "value": 0.50 }
+    { "id": "coinToss",    "lasting": true, "maxPicks": 1, "value": 0.50 },
+    // Round 536 (the user: "+5%, +10% and +15% Power gain. So 3 tiers"): Zealot - every Power award +5% a pick.
+    { "id": "powerGain",   "lasting": true, "maxPicks": 3, "value": 0.05 },
+    // Round 536 (the user: "Re-roll Ascension perks twice at 50% cost. So if you do re-roll twice it will cost the same as
+    // without the perk. You also get to re-roll twice per level vs. 1 without"): Gambler - two re-rolls a level, each at
+    // this share of the difficulty's price (difficultyRerollCost).
+    { "id": "gambler",     "lasting": true, "maxPicks": 1, "value": 0.50 }
   ]
 }

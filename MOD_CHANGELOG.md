@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 536: two Ascendance perks - Zealot (Power gain) and Gambler (re-rolls) (2026-10-11)
+
+The user: "I want to add the following Ascension perks. +5%, +10% and +15% Power gain. So 3 tiers. Re-roll Ascension perks
+twice at 50% cost. So if you do re-roll twice it will cost the same as without the perk. You also get to re-roll twice per
+level vs. 1 without."
+
+- **Zealot I-III** (`ascendance.json` "powerGain", lasting, 3 picks, 0.05 each):
+  - `Ascendance.powerGainFactor()` multiplies every Power award in `scaled()`, so a won duel's Power card shows the
+    boosted figure too.
+  - Console jumps (`asc set`) stay exact.
+- **Gambler** ("gambler", lasting, 1 pick, value 0.50):
+  - Two re-rolls a level (`rerollsPerLevel`), each at half the difficulty's price (`rerollCostAt`).
+  - On Normal that is 20 + 20 = 40, the old single re-roll's price.
+  - `AscendanceState.rerollCount` (saved as `ascendanceRerollCount`; a save without it spent its one re-roll on
+    `rerolledLevel`) counts the re-rolls on the waiting level, and a new level starts at zero.
+  - The dialog's button reads "Re-roll 20 [+Shards] (2 left)", then "(1 left)", then "Re-rolled".
+- **Icons** (`sprites/ascendance_icons`, row 6), built from Shikashi's pack by the scratch script
+  `icons/perk536.py`; a preview was sent first:
+  - `powerGain_1..3`: the Power sun (15,3) with one, two and three green rank chevrons drawn at the icon's own pixel
+    scale. A stack of one, two and three suns was tried first; three half-suns read as clutter.
+  - `gambler_1`: the dice (13,13).
+- **Agent-tested** (slot 7):
+  - `asc give 100` paid 100, then 105, 110 and 115 after each Zealot pick; a fourth pick was refused.
+  - With the Gambler: shards went 210 -> 190 -> 170 over two re-rolls, then "Re-rolled" was greyed out.
+  - The next level offered "(2 left)" again.
+  - The Level sheet shows Zealot I-III and Gambler I with their icons and descriptions.
+
 ## Round 535: the agent's settle accepts a lost ante (2026-10-10)
 
 Found while testing round 532 in the agent game (slot 7 near Orazca): roaming enemies interrupt `wait days=1`, the

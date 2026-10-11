@@ -157,3 +157,15 @@ title_6
 life
   xy: 202, 602
   size: 96, 96
+powerGain_1
+  xy: 302, 602
+  size: 96, 96
+powerGain_2
+  xy: 402, 602
+  size: 96, 96
+powerGain_3
+  xy: 502, 602
+  size: 96, 96
+gambler_1
+  xy: 602, 602
+  size: 96, 96
