@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 537: Deep Caverns removed (2026-10-11)
+
+The user: "Let's remove the 'Deep Cave' I think that's the name. It's the very large cave we already limited in a previous
+round." Round 433 cut it to one at a time (`rotationGroup`).
+
+- `points_of_interest.json`, its four entries (CaveBA, CaveCD, CaveGB, CaveRJ - `maps/map/cave/cave_huge.tmx`):
+  - `"count": 0`, so a new world places none.
+  - `"notBeforeDay": 100000`, round 513's hold, for worlds that already have copies:
+    - a copy showing goes back to the reserve at the next day tick (unless a quest targets it);
+    - the reserve never brings one back;
+    - no quest picks one (`AdventureQuestStage`).
+- The entries stay, so a save that placed them still loads: a POI reads its data by name, and a missing entry would
+  load as null. The biomes' POI lists still name them and place 0. The map file stays in the repo, unused.
+- Data only.
+- **Agent-tested:** a new game's world generation placed no Deep Caverns. The log has no line for it, while the same
+  mechanism's "held in the reserve until day 8" lines show for the Sphinx's Sanctum and Demon's Bargain.
+
 ## Round 536: two Ascendance perks - Zealot (Power gain) and Gambler (re-rolls) (2026-10-11)
 
 The user: "I want to add the following Ascension perks. +5%, +10% and +15% Power gain. So 3 tiers. Re-roll Ascension perks
