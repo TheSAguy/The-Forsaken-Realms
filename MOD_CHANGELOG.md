@@ -14264,6 +14264,20 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 547: White Dragon portraits (2026-10-11)
+
+The user, from the 27-candidate sheet: "1, 2, 3, 4, 8, 11, 12, 14, 15, 18, 23, 26, 27".
+
+- **Thirteen card arts** fill the race's one avatar region, `Dragon_w`, which serves both genders
+  (`dev-tools/portraits/white_dragon.json`, `sprites/heroes/portraits/white_dragon.atlas`), framed on the head:
+  - White Dragon, Alabaster Dragon, Pearl Dragon, Ancestor Dragon, Timeless Dragon, Dragonlord Dromoka, Dromoka the
+    Eternal;
+  - Ancient Gold Dragon, Ancient Brass Dragon, Sunscorch Regent, Silver Drake, Belltoll Dragon, Transcendent Dragon.
+- The candidate sheet dropped five that were not white dragons: Teneb, Prismatic, Crystal and Astral Dragon, and
+  Stardrake, whose cached image is another card's.
+- Artists read off the cached images and credited. Data only.
+- **Agent-tested:** the thirteen step through on Create a Character.
+
 ## Round 546: Werewolf portraits (2026-10-11)
 
 The user, from the 35-candidate sheet: "2, 3, 5, 6, 8, 9, 10, 11, 12, 13, 14, 16, 16, 17, 19, 20, 22, 30, 33" (16 twice,

@@ -1,0 +1,19 @@
+{
+ "race": "White Dragon",
+ "note": "Round 547 (the user, from the 27-candidate sheet: '1, 2, 3, 4, 8, 11, 12, 14, 15, 18, 23, 26, 27'). A dragon's one avatar region (Dragon_w) serves both genders.",
+ "picks": [
+  {"region": "white_dragon", "gender": "shared", "card": "White Dragon", "artist": "Billy Christian", "file": "White Dragon1.full.jpg", "u": 0.42, "v": 0.48, "zoom": 0.88},
+  {"region": "alabaster", "gender": "shared", "card": "Alabaster Dragon", "artist": "Ted Naifeh", "file": "Alabaster Dragon.full.jpg", "u": 0.7, "v": 0.32, "zoom": 0.6},
+  {"region": "pearl", "gender": "shared", "card": "Pearl Dragon", "artist": "Ian Miller", "file": "Pearl Dragon.full.jpg", "u": 0.55, "v": 0.35, "zoom": 0.7},
+  {"region": "ancestor", "gender": "shared", "card": "Ancestor Dragon", "artist": "Shinchuen Chen", "file": "Ancestor Dragon.full.jpg", "u": 0.62, "v": 0.32, "zoom": 0.6},
+  {"region": "timeless", "gender": "shared", "card": "Timeless Dragon", "artist": "Anastasia Ovchinnikova", "file": "Timeless Dragon1.full.jpg", "u": 0.5, "v": 0.5, "zoom": 1.0},
+  {"region": "dromoka_lord", "gender": "shared", "card": "Dragonlord Dromoka", "artist": "Eric Deschamps", "file": "Dragonlord Dromoka1.full.jpg", "u": 0.62, "v": 0.38, "zoom": 0.62},
+  {"region": "dromoka_eternal", "gender": "shared", "card": "Dromoka, the Eternal", "artist": "Eric Deschamps", "file": "Dromoka, the Eternal.full.jpg", "u": 0.65, "v": 0.45, "zoom": 0.62},
+  {"region": "ancient_gold", "gender": "shared", "card": "Ancient Gold Dragon", "artist": "Simon Dominic", "file": "Ancient Gold Dragon1.full.jpg", "u": 0.68, "v": 0.4, "zoom": 0.6},
+  {"region": "ancient_brass", "gender": "shared", "card": "Ancient Brass Dragon", "artist": "Johan Grenier", "file": "Ancient Brass Dragon1.full.jpg", "u": 0.62, "v": 0.45, "zoom": 0.62},
+  {"region": "sunscorch", "gender": "shared", "card": "Sunscorch Regent", "artist": "Matt Stewart", "file": "Sunscorch Regent.full.jpg", "u": 0.45, "v": 0.5, "zoom": 0.85},
+  {"region": "silver_drake", "gender": "shared", "card": "Silver Drake", "artist": "Alan Pollack", "file": "Silver Drake.full.jpg", "u": 0.52, "v": 0.45, "zoom": 0.65},
+  {"region": "belltoll", "gender": "shared", "card": "Belltoll Dragon", "artist": "Zack Stella", "file": "Belltoll Dragon.full.jpg", "u": 0.45, "v": 0.35, "zoom": 0.8},
+  {"region": "transcendent", "gender": "shared", "card": "Transcendent Dragon", "artist": "Diego Gisbert", "file": "TDC/Transcendent Dragon1.full.jpg", "u": 0.45, "v": 0.4, "zoom": 0.7}
+ ]
+}

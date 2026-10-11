@@ -237,6 +237,13 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Pack* by **Greg Staples**; *Moonrage Brute* by **Karl Kopinski**; *Werewolf Pack Leader* by **Miranda Meeks**;
   *Howlpack of Estwald* by **Kev Walker**; and *Tovolar's Packleader* by **Cristi Balanescu**.
 
+- **White Dragon portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits: *White Dragon* by **Billy Christian**; *Alabaster Dragon* by **Ted Naifeh**; *Pearl Dragon* by **Ian
+  Miller**; *Ancestor Dragon* by **Shinchuen Chen**; *Timeless Dragon* by **Anastasia Ovchinnikova**; *Dragonlord
+  Dromoka* and *Dromoka, the Eternal* by **Eric Deschamps**; *Ancient Gold Dragon* by **Simon Dominic**; *Ancient Brass
+  Dragon* by **Johan Grenier**; *Sunscorch Regent* by **Matt Stewart**; *Silver Drake* by **Alan Pollack**; *Belltoll
+  Dragon* by **Zack Stella**; and *Transcendent Dragon* by **Diego Gisbert**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**
