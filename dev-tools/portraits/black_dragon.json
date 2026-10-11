@@ -1,0 +1,17 @@
+{
+ "race": "Black Dragon",
+ "note": "Round 552 (the user, from the 27-candidate sheet: 'Black Dragon: 1, 3, 6, 9, 15, 16, 19, 20, 25, 26, 27'). A dragon's one avatar region (Dragon_b) serves both genders.",
+ "picks": [
+  {"region": "black_dragon", "gender": "shared", "card": "Black Dragon", "artist": "Mark Zug", "file": "Black Dragon1.full.jpg", "u": 0.5, "v": 0.505, "zoom": 0.905},
+  {"region": "silumgar_the_drifting_de", "gender": "shared", "card": "Silumgar, the Drifting Death", "artist": "Steven Belledin", "file": "Silumgar, the Drifting Death.full.jpg", "u": 0.5, "v": 0.56, "zoom": 0.62},
+  {"region": "ebon_dragon", "gender": "shared", "card": "Ebon Dragon", "artist": "Donato Giancola", "file": "Ebon Dragon.full.jpg", "u": 0.5, "v": 0.447, "zoom": 0.905},
+  {"region": "vampiric_dragon", "gender": "shared", "card": "Vampiric Dragon", "artist": "Gary Ruddell", "file": "Vampiric Dragon.full.jpg", "u": 0.681, "v": 0.39, "zoom": 0.829},
+  {"region": "brainstealer_dragon", "gender": "shared", "card": "Brainstealer Dragon", "artist": "Joshua Raphael", "file": "Brainstealer Dragon1.full.jpg", "u": 0.651, "v": 0.298, "zoom": 0.754},
+  {"region": "fatalis_the_black_dragon", "gender": "shared", "card": "Fatalis, the Black Dragon", "artist": "Toy(e)", "file": "SLD/Fatalis, the Black Dragon.full.jpg", "u": 0.5, "v": 0.505, "zoom": 0.799},
+  {"region": "chardalyn_dragon", "gender": "shared", "card": "Chardalyn Dragon", "artist": "Sergey Glushakov", "file": "Chardalyn Dragon.full.jpg", "u": 0.244, "v": 0.39, "zoom": 0.829},
+  {"region": "ebon_drake", "gender": "shared", "card": "Ebon Drake", "artist": "Pete Venters", "file": "Ebon Drake.full.jpg", "u": 0.5, "v": 0.505, "zoom": 0.98},
+  {"region": "teneb_the_harvester", "gender": "shared", "card": "Teneb, the Harvester", "artist": "Zoltan Boros & Gabor Szikszai", "file": "Teneb, the Harvester1.full.jpg", "u": 0.123, "v": 0.586, "zoom": 0.754},
+  {"region": "nicol_bolas_dragon_god", "gender": "shared", "card": "Nicol Bolas, Dragon-God", "artist": "Raymond Swanland", "file": "Nicol Bolas, Dragon-God1.full.jpg", "u": 0.5, "v": 0.39, "zoom": 0.754},
+  {"region": "crosis_the_purger", "gender": "shared", "card": "Crosis, the Purger", "artist": "Chris Rahn", "file": "Crosis, the Purger.full.jpg", "u": 0.681, "v": 0.654, "zoom": 0.829}
+ ]
+}

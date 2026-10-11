@@ -259,6 +259,13 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   *Reya Dawnbringer* by **Matthew D. Wilson**; *Exalted Angel* by **Michael Sutfin**; *Sigarda, Champion of Light* by
   **Howard Lyon**; *Angel of Vitality* by **Johannes Voss**; and *Sephara, Sky's Blade* by **Livia Prima**.
 
+- **Black Dragon portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits: *Black Dragon* by **Mark Zug**; *Silumgar, the Drifting Death* by **Steven Belledin**; *Ebon Dragon* by
+  **Donato Giancola**; *Vampiric Dragon* by **Gary Ruddell**; *Brainstealer Dragon* by **Joshua Raphael**; *Fatalis,
+  the Black Dragon* (Secret Lair x Monster Hunter, © Capcom) by **Toy(e)**; *Chardalyn Dragon* by **Sergey
+  Glushakov**; *Ebon Drake* by **Pete Venters**; *Teneb, the Harvester* by **Zoltan Boros & Gabor Szikszai**; *Nicol
+  Bolas, Dragon-God* by **Raymond Swanland**; and *Crosis, the Purger* by **Chris Rahn**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

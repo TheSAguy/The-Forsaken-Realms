@@ -14264,6 +14264,19 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 552: Black Dragon portraits (2026-10-11)
+
+The user, from the 27-candidate sheet: "Black Dragon: 1, 3, 6, 9, 15, 16, 19, 20, 25, 26, 27".
+
+- **Eleven card arts** fill the race's one avatar region, `Dragon_b`, which serves both genders
+  (`dev-tools/portraits/black_dragon.json`, `sprites/heroes/portraits/black_dragon.atlas`):
+  - Black Dragon, Silumgar the Drifting Death, Ebon Dragon, Vampiric Dragon, Brainstealer Dragon, Fatalis, Chardalyn
+    Dragon, Ebon Drake, Teneb, Nicol Bolas (Dragon-God), Crosis.
+- **Framing:** each crop is centered on the dragon's head, read off the full art.
+  - Fatalis's printing (Secret Lair) carries a name banner across the art's top, so its crop starts below it.
+- The candidate sheet dropped two whose art centers on a rider or a goblin (Risen Necroregent, Dragon Shadow).
+- Artists read off the cached images and credited (Fatalis with Capcom's notice). Data only.
+
 ## Round 551: the Scientist and Researcher perks (2026-10-11)
 
 The user: "New Onetime perk: Scientist. You get 1 rare card of each color (so 5 in total). from the set you complete
