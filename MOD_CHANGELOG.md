@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 545: slower leveling on Normal, Hard and Insane (2026-10-11)
+
+The user: "Let's slow down level gain. Let's leave easy as is, increase Normal by 5%, Hard, 10% Insane 15%. So you'd need
+more XP to gain a level."
+
+- **`ascendance.json` `difficultyLevelCost`:** 0.8 / 1.0 / 1.2 / 1.4 became 0.8 / 1.05 / 1.32 / 1.61.
+  - Each is the old value plus the user's percent: Normal x1.05, Hard 1.2 x 1.10, Insane 1.4 x 1.15. Easy unchanged.
+  - Every level from 1 on costs that much more Power. The intro's 0 -> 1 step stays unscaled.
+- **Saves keep their level:**
+  - A save stores raw Power, and the level is read from the table. Without a migration, a dearer table would have taken
+    levels away from characters that already hold those levels' rewards.
+  - Each save now stores the factor its Power was priced at (`ascendanceCostFactor`).
+  - `Ascendance.load` re-prices a save priced at another factor (`reprice`): the same level and the same share of the way
+    to the next. This is round 497's re-price made general.
+  - A save from before this round reads as priced at the old table (`legacyCostFactor`).
+  - A future change to the table migrates the same way.
+  - `[TFR-Ascend] level cost 1.0 -> 1.05 (Normal): Power 7930 -> 8320, still level 25 (was 25)`.
+- **Agent-tested** (slot 7, Normal, level 25):
+  - 7930 Power and 0/570 to the next level became 8320 and 0/600, still level 25, with the 20 waiting choices unchanged.
+  - Saved and loaded again it stayed at 8320, so it is not re-priced twice.
+
 ## Round 544: Viashino portraits (2026-10-11)
 
 The user, from the 25-candidate sheet: "Viashino: 1, 2, 3, 4, 7, 9, 10, 12, 21, 23".

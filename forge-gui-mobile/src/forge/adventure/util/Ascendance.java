@@ -1343,6 +1343,28 @@ public final class Ascendance {
         data.store("ascendanceDeferredSource", s.deferredSource == null ? "" : s.deferredSource);
         data.store("ascendanceRerolledLevel", s.rerolledLevel); // round 518
         data.store("ascendanceRerollCount", s.rerollCount); // round 536
+        data.store("ascendanceCostFactor", costFactor()); // round 545: what this Power was priced at
+    }
+
+    /** Round 545: the level cost every difficulty had before round 545 - the price of a save that never stored its own
+     *  (ascendanceCostFactor). */
+    private static float legacyCostFactor(String difficulty) {
+        if (difficulty == null)
+            return 1f;
+        switch (difficulty.toLowerCase()) {
+            case "easy": return 0.8f;
+            case "hard": return 1.2f;
+            case "insane": return 1.4f;
+            default: return 1f;
+        }
+    }
+
+    /** Power priced at level cost {@code from}, re-priced to {@code to}: the same level and the same share of the way to
+     *  the next, so nothing it was given is earned twice or lost (round 497's re-price, made general in round 545). */
+    private static int reprice(int power, float from, float to) {
+        int level = levelFor(power, from);
+        int into = power - powerAtLevel(level, from);
+        return powerAtLevel(level, to) + Math.round(into * (powerToNext(level, to) / (float) powerToNext(level, from)));
     }
 
     /** AdventurePlayer.load: absent keys (every save before round 493) read as "off". */
@@ -1377,6 +1399,20 @@ public final class Ascendance {
                     + Math.round(into * (powerToNext(level, factor) / (float) powerToNext(level, 1f)));
             System.out.println("[TFR-Ascend] a save from before the difficulty's level cost (" + difficulty + " x" + factor
                     + "): Power " + before + " -> " + s.power + ", still level " + levelFor(s.power, factor));
+        }
+        // Round 545 (the user: "slow down level gain ... increase Normal by 5%, Hard, 10% Insane 15%"): a save priced at
+        // another level cost - the table changed since it was made - keeps its level and its share of the way to the
+        // next. A save from before the cost was stored was priced at the old table (legacyCostFactor).
+        if (s.on && curve >= 3 && curveLoaded) {
+            float priced = data.containsKey("ascendanceCostFactor") ? data.readFloat("ascendanceCostFactor")
+                    : legacyCostFactor(difficulty);
+            if (priced > 0f && Math.abs(priced - factor) > 0.0001f) {
+                int before = s.power;
+                s.power = reprice(s.power, priced, factor);
+                System.out.println("[TFR-Ascend] level cost " + priced + " -> " + factor + " (" + difficulty + "): Power "
+                        + before + " -> " + s.power + ", still level " + levelFor(s.power, factor) + " (was "
+                        + levelFor(before, priced) + ")");
+            }
         }
         loadChoices(data, s); // round 494
     }

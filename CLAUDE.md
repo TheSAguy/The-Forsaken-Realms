@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-11 (round 545): **LOCAL + UNRELEASED** - level cost Easy 0.8 / Normal 1.05 / Hard 1.32 / Insane
+1.61; saves store their price (`ascendanceCostFactor`) and are re-priced on load to the same level.
+
 ## STATE 2026-10-11 (round 544): **LOCAL + UNRELEASED** - Viashino portraits (ten, shared).
 
 ## STATE 2026-10-11 (round 543): **LOCAL + UNRELEASED** - Vampire portraits, the first with male (14) and female
