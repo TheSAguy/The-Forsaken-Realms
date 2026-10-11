@@ -273,6 +273,18 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Dragon* by **Tyler Walpole**; *Phantasmal Dragon* by **Wayne Reynolds**; *Young Blue Dragon* by **Tuan Duong Chu**;
   and *Arcades, the Strategist* by **Even Amundsen**.
 
+- **Devil portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits.
+  Male: *Ob Nixilis, the Hate-Twisted* and *Prosper, Tome-Bound* by **Yongjae Choi**; *Rakdos, the Showstopper* by
+  **Viktor Titov**; *Rakdos, Patron of Chaos* by **Joshua Raphael**; *Asmodeus the Archfiend* by **Aleksi Briclot**;
+  *Razaketh, the Foulblooded* by **Chris Rallis**; *Hulking Devil* by **Joseph Meehan**; *Demonlord Belzenlok* by
+  **Tyler Jacobson**; *Zevlor, Elturel Exile* by **David Rapoza**; *Raphael, Fiendish Savior* by **Livia Prima**;
+  *Kaervek the Merciless* by **Heonhwa Choe**; *Rakdos Headliner* by **Ekaterina Burmak**; *Body Dropper* by **Jakub
+  Kasper**; *Lorcan, Warlock Collector* by **Andrew Mar**; and *Taborax, Hope's Demise* by **G-host Lee**. Female:
+  *Zariel, Archduke of Avernus* by **Heonhwa Choe**; *Farideh, Devil's Chosen* by **Magali Villeneuve**; *Exava,
+  Rakdos Blood Witch* by **Aleksi Briclot**; *Lyzolda, the Blood Witch* by **Jim Nelson**; *Grim Hireling* by **Tomas
+  Duchek**; *Valor Singer* by **Justyna Dura**; *Judith, the Scourge Diva* by **Wesley Burt**; and *Rix Maadi Reveler*
+  by **Sara Winters**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

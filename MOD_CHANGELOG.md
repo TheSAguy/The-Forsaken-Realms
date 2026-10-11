@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 554: Devil portraits - male and female pools (2026-10-11)
+
+The user, asking for the candidates split "into two slides M vs. Female", then: "Devil Male; 8, 12, 13, 15, 16,19, 21,
+22, 23, 29, 30, 37, 39, 48, 59 / Devil Female; 1, 3, 5, 6, 11, 18, 20, 21".
+
+- **The look:** the race's pixel portraits are red-skinned, horned humanoids, so the candidates were humanoid devils,
+  demons and tieflings rather than the big demons.
+- **More female candidates:** the first sheet was thin. The card scripts' `Types:` lines (Tiefling, Devil) found a dozen
+  more tieflings and devils, plus two Rakdos performers.
+- **15 male** in `Devil_m`: Ob Nixilis (the Hate-Twisted), Rakdos (the Showstopper and Patron of Chaos), Asmodeus,
+  Razaketh, Hulking Devil, Demonlord Belzenlok, Zevlor, Raphael, Kaervek, Prosper, Rakdos Headliner, Body Dropper,
+  Lorcan, Taborax.
+- **8 female** in `Devil_f`: Zariel, Farideh, Exava, Lyzolda, Grim Hireling, Valor Singer, Judith, Rix Maadi Reveler.
+- **Framing:** each crop is framed on the face (`dev-tools/portraits/devil.json`, `sprites/heroes/portraits/devil.atlas`,
+  1632 x 1088).
+- Artists read off the cached images and credited. Data only.
+
 ## Round 553: Blue Dragon portraits; the treasure-map button on the world map only (2026-10-11)
 
 The user, from the 26-candidate sheet: "Blue Dragon: 1, 3, 4, 6, 7, 11, 13. 15. 17. 20, 21, 25." Then, with a
