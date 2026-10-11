@@ -333,7 +333,9 @@ public class ResearchScene extends UIScene {
             return a.getName().compareToIgnoreCase(b.getName());
         });
 
-        int cost = EconomyBuildings.scaledCost(AdventurePlayer.researchShardCost());
+        // Round 551: the Researcher perk's discount on top of the difficulty's scaling.
+        int cost = Math.round(EconomyBuildings.scaledCost(AdventurePlayer.researchShardCost())
+                * forge.adventure.util.Ascendance.researchCostFactor());
         for (CardEdition ed : candidates) {
             String code = ed.getCode();
             int owned = ownedByEdition.getOrDefault(code, 0);

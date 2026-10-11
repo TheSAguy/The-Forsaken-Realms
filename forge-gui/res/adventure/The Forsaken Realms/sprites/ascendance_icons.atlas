@@ -178,3 +178,9 @@ sellPrice_2
 sellPrice_3
   xy: 102, 702
   size: 96, 96
+scientist_1
+  xy: 202, 702
+  size: 96, 96
+researcher_1
+  xy: 302, 702
+  size: 96, 96

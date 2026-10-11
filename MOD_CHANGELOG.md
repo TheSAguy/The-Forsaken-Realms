@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 551: the Scientist and Researcher perks (2026-10-11)
+
+The user: "New Onetime perk: Scientist. You get 1 rare card of each color (so 5 in total). from the set you complete
+research on. New Onetime perk: Researcher. Reduce research cost by 50% and 3 days faster."
+
+- **Both are lasting picks taken once** (`ascendance.json`, `maxPicks` 1, like Opening Gambit). Their effect stays.
+- **Researcher** (`"researcher"`, value 0.50, the new `Choice.days` field 3):
+  - The Research Lab's price is halved (`ResearchScene`, on top of the difficulty scaling).
+  - Every research takes 3 days less (`AdventurePlayer.effectiveResearchDays`, never under one). It is read at every
+    check, so a research already running finishes sooner too.
+- **Scientist** (`"scientist"`, value 1):
+  - Each research that completes gives one rare of each color from that set (`AscendanceRewards.scientistRares`, called
+    through `Ascendance.onResearchComplete` from `checkResearchCompletion`).
+  - The pick per color: a mono-colored rare of it, else any rare with it, else a mythic the same way; lands left out; a
+    color the set has none of is skipped.
+  - The cards are added at once, because completion can come from the day tick. They are then shown on a reveal screen
+    whose cards are marked already granted (round 530), so collecting adds nothing twice.
+  - `[TFR-Ascend] Scientist: DOM research complete - 5 rare(s): White: ..., ...`.
+- **Icons** (`sprites/ascendance_icons`): Shikashi's red flask (`scientist_1`) and magnifying glass (`researcher_1`).
+- **Agent-tested** (slot 7, Normal, a scratch-only console command, never committed, that starts research as if begun N
+  days ago):
+  - Without the perk, M19 begun 4 days ago had 3 days left at 40 shards.
+  - With Researcher it took 4 days and completed, at 20 shards.
+  - With Scientist, a completed Dominaria research revealed Urza's Ruinous Blast, The Mirari Conjecture, Kazarov,
+    Two-Headed Giant and Sylvan Awakening, each "Owned: 1".
+
 ## Round 550: Angel portraits - male and female pools (2026-10-11)
 
 The user, first: "Did you give me male and female angel pics? they all look like female." Then, from a new male sheet and

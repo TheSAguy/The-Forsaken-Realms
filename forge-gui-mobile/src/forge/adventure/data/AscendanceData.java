@@ -112,5 +112,7 @@ public class AscendanceData {
         public float first;
         /** Relative chance of being offered. */
         public float weight = 1f;
+        /** Round 551, lasting only: days the pick takes off a timer (Researcher: 3 off each research). */
+        public int days;
     }
 }

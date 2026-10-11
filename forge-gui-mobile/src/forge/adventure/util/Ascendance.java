@@ -928,6 +928,26 @@ public final class Ascendance {
     public static float powerGainFactor() { return 1f + total("powerGain"); }
     /** Round 548 (the user: "Card Sell Price +10%, +15%, +20%"): Appraiser - what a card sells for, times this. */
     public static float sellPriceFactor() { return 1f + total("sellPrice"); }
+    /** Round 551 (the user: "Researcher. Reduce research cost by 50% and 3 days faster"): the research price, times this. */
+    public static float researchCostFactor() {
+        AscendanceData.Choice c = choice("researcher");
+        return picks("researcher") > 0 && c != null ? Math.max(0f, 1f - c.value) : 1f;
+    }
+    /** Round 551: days Researcher takes off every research. */
+    public static int researchDaysCut() {
+        AscendanceData.Choice c = choice("researcher");
+        return picks("researcher") > 0 && c != null ? Math.max(0, c.days) : 0;
+    }
+    /** Round 551: a research has completed (AdventurePlayer.checkResearchCompletion) - the Scientist's rares. */
+    public static void onResearchComplete(String editionCode) {
+        AscendanceRewards.scientistRares(editionCode);
+    }
+    /** Round 551 (the user: "Scientist. You get 1 rare card of each color (so 5 in total). from the set you complete
+     *  research on"): rares of each color a completed research gives - 0 without the pick. */
+    public static int scientistRaresPerColor() {
+        AscendanceData.Choice c = choice("scientist");
+        return picks("scientist") > 0 && c != null ? Math.max(1, Math.round(c.value)) : 0;
+    }
     /** Round 525: Opening Gambit as the player seat's weight in the engine's toss against an opponent at 1 (75% -> 3). */
     public static float coinTossWeight() {
         float chance = openingTossChance();
@@ -1159,6 +1179,8 @@ public final class Ascendance {
             case "gambler": effect = GAMBLER_REROLLS + " re-rolls a level, each " + rerollCostAt(c.value) + " [+Shards] (one is "
                     + baseRerollCost() + " now)"; break; // round 536
             case "sellPrice": effect = "Cards sell for " + pct(then) + " more [+Gold]" + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // round 548
+            case "scientist": effect = "Each research you complete gives " + Math.round(c.value) + " rare card of each color from that set"; break; // round 551
+            case "researcher": effect = "Research costs " + pct(c.value) + " less [+Shards] and takes " + c.days + " days less"; break; // round 551
             default: effect = id;
         }
         return effect;
@@ -1256,6 +1278,8 @@ public final class Ascendance {
             case "powerGain": return "Zealot"; // round 536
             case "gambler": return "Gambler";
             case "sellPrice": return "Appraiser"; // round 548
+            case "scientist": return "Scientist"; // round 551
+            case "researcher": return "Researcher";
             default: return id;
         }
     }

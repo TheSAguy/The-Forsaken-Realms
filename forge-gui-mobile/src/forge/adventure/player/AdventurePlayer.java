@@ -2992,6 +2992,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         int d = Config.instance().getTuningData().researchDays;
         return d > 0 ? d : 7;
     }
+    /** Round 551: a research's length for this character - researchDays(), less the Researcher perk's days, never under
+     *  one. Read at every check, so a research running when the perk is taken finishes sooner too. */
+    public static int effectiveResearchDays() {
+        return Math.max(1, researchDays() - forge.adventure.util.Ascendance.researchDaysCut());
+    }
     /** Tunable via config tables/settings.json (researchShardCost); falls back to 100. */
     public static int researchShardCost() {
         int c = Config.instance().getTuningData().researchShardCost;
@@ -3025,14 +3030,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public int getResearchDaysLeft(String editionCode, int currentDay) {
         Integer start = researchInProgress.get(editionCode);
-        return start == null ? -1 : Math.max(0, researchDays() - (currentDay - start));
+        return start == null ? -1 : Math.max(0, effectiveResearchDays() - (currentDay - start));
     }
 
     public void startResearch(String editionCode, int currentDay) {
         researchInProgress.put(editionCode, currentDay);
         // Diagnostic-only logging - greppable in forge.log as "[TFR-Research]".
         System.out.println("[TFR-Research] started " + editionCode + " on day " + currentDay
-                + " (completes day " + (currentDay + researchDays()) + "; " + researchInProgress.size() + " in progress)");
+                + " (completes day " + (currentDay + effectiveResearchDays()) + "; " + researchInProgress.size() + " in progress)");
     }
 
     public void clearResearch() {
@@ -3052,7 +3057,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         java.util.Iterator<java.util.Map.Entry<String, Integer>> it = researchInProgress.entrySet().iterator();
         while (it.hasNext()) {
             java.util.Map.Entry<String, Integer> r = it.next();
-            if (currentDay - r.getValue() < researchDays())
+            if (currentDay - r.getValue() < effectiveResearchDays())
                 continue;
             String done = r.getKey();
             it.remove();
@@ -3067,6 +3072,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             // fire from the daily overworld tick or lazily on ResearchScene.enter().
             setCharacterFlag("researchComplete", 1);
             System.out.println("[TFR-MainQuest] researchComplete -> 1");
+            forge.adventure.util.Ascendance.onResearchComplete(done); // round 551: the Scientist perk
         }
     }
 

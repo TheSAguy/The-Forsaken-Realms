@@ -166,6 +166,68 @@ final class AscendanceRewards {
         return result;
     }
 
+    private static final String[] COLOR_NAMES = {"White", "Blue", "Black", "Red", "Green"};
+    private static final byte[] COLOR_BITS = {forge.card.MagicColor.WHITE, forge.card.MagicColor.BLUE,
+            forge.card.MagicColor.BLACK, forge.card.MagicColor.RED, forge.card.MagicColor.GREEN};
+
+    /**
+     * Round 551 (the user: "New Onetime perk: Scientist. You get 1 rare card of each color (so 5 in total). from the set
+     * you complete research on"): with the Scientist perk, a completed research gives scientistRaresPerColor() rares of
+     * each color from that edition - a mono-colored rare of the color, else any rare with it, else a mythic; a color the
+     * set has none of is skipped. The cards are the player's at once (completion can come from the day tick), then shown
+     * on a reveal screen whose cards are marked already granted (round 530), so leaving it any way loses nothing.
+     */
+    public static void scientistRares(String editionCode) {
+        int perColor = Ascendance.scientistRaresPerColor();
+        if (perColor <= 0 || editionCode == null)
+            return;
+        java.util.List<forge.item.PaperCard> inSet = new ArrayList<>();
+        for (forge.item.PaperCard card : forge.model.FModel.getMagicDb().getCommonCards().getAllCards())
+            if (editionCode.equals(card.getEdition()) && !card.getRules().getType().isLand())
+                inSet.add(card);
+        AdventurePlayer player = WorldSave.getCurrentSave().getPlayer();
+        Array<Reward> reveal = new Array<>();
+        StringBuilder log = new StringBuilder();
+        for (int c = 0; c < COLOR_BITS.length; c++) {
+            List<forge.item.PaperCard> pool = scientistPool(inSet, COLOR_BITS[c]);
+            for (int i = 0; i < perColor && !pool.isEmpty(); i++) {
+                forge.item.PaperCard card = pool.remove(RAND.nextInt(pool.size()));
+                player.addCard(card);
+                reveal.add(Reward.alreadyGranted(new Reward(card)));
+                log.append(log.length() == 0 ? "" : ", ").append(COLOR_NAMES[c]).append(": ").append(card.getName());
+            }
+        }
+        System.out.println("[TFR-Ascend] Scientist: " + editionCode + " research complete - " + reveal.size + " rare(s): "
+                + (log.length() == 0 ? "the set has no rares" : log));
+        if (reveal.size == 0)
+            return;
+        forge.adventure.stage.GameHUD.getInstance().addNotification("Scientist: " + reveal.size + " rare" + (reveal.size == 1 ? "" : "s")
+                + " from the " + editionCode + " research.");
+        com.badlogic.gdx.Gdx.app.postRunnable(() -> { // after the scene the completion came from has settled
+            RewardScene.instance().loadRewards(reveal, RewardScene.Type.Loot, null);
+            Forge.switchScene(RewardScene.instance());
+        });
+    }
+
+    /** Round 551: the set's cards for one color - mono rares, else rares with the color, else mythics the same way. */
+    private static List<forge.item.PaperCard> scientistPool(List<forge.item.PaperCard> inSet, byte color) {
+        for (forge.card.CardRarity rarity : new forge.card.CardRarity[]{forge.card.CardRarity.Rare, forge.card.CardRarity.MythicRare})
+            for (boolean monoOnly : new boolean[]{true, false}) {
+                List<forge.item.PaperCard> pool = new ArrayList<>();
+                java.util.Set<String> names = new java.util.HashSet<>();
+                for (forge.item.PaperCard card : inSet) {
+                    forge.card.ColorSet colors = card.getRules().getColor();
+                    if (card.getRarity() != rarity || !colors.hasAnyColor(color) || (monoOnly && !colors.isMonoColor()))
+                        continue;
+                    if (names.add(card.getName()))
+                        pool.add(card);
+                }
+                if (!pool.isEmpty())
+                    return pool;
+            }
+        return new ArrayList<>();
+    }
+
     /** {@code count} cards of {@code rarity} in the player's colors (RewardData's "colorID"). */
     private static Array<Reward> cards(int count, String rarity) {
         RewardData data = new RewardData();
