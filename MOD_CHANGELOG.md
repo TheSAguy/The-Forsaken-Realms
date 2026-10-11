@@ -14264,6 +14264,20 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 556: Green Dragon portraits (2026-10-11)
+
+The user, from the 19-candidate sheet: "Green Dragon: 1. 3. 7. 12, 14, 17, 18,19".
+
+- **Eight card arts** fill the race's one avatar region, `Dragon_g`, which serves both genders
+  (`dev-tools/portraits/green_dragon.json`, `sprites/heroes/portraits/green_dragon.atlas`):
+  - Green Dragon, Emerald Dragon, Lurking Green Dragon, Earthquake Dragon, Dragon Broodmother, Needlethorn Drake,
+    Drakewing Krasis, Destructor Dragon.
+  - Each crop is on the head; Earthquake Dragon, a walking mountain, is cropped wide.
+- **The candidate sheet:**
+  - It dropped the non-dragons, the red and black ones, and both Dromokas, which are White Dragon portraits already.
+  - With this round every dragon race has card portraits.
+- Artists read off the cached images and credited. Data only.
+
 ## Round 555: Dwarf portraits - male and female pools (2026-10-11)
 
 The user, from a male and a female sheet: "Dwarf Male: 4, 7, 8, 20, 24, 25, 26, 31, 35, 36, 38, 40, 41, 44. Dwarf

@@ -299,6 +299,11 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Skald* by **Svetlin Velinov**; *Moradin's Disciples* by **Justine Cruz**; and *Mirrormere Guardian* by **Anton
   Solovianchyk**.
 
+- **Green Dragon portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits: *Green Dragon* by **Ilse Gort**; *Emerald Dragon* by **Diego Gisbert**; *Lurking Green Dragon* by **Caio
+  Monteiro**; *Earthquake Dragon* by **Johan Grenier**; *Dragon Broodmother* by **Jaime Jones**; *Needlethorn Drake*
+  by **Donato Giancola**; *Drakewing Krasis* by **Johann Bodin**; and *Destructor Dragon* by **Peter Mohrbacher**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

@@ -1,0 +1,14 @@
+{
+ "race": "Green Dragon",
+ "note": "Round 556 (the user, from the 19-candidate sheet: 'Green Dragon: 1. 3. 7. 12, 14, 17, 18,19'). A dragon's one avatar region (Dragon_g) serves both genders.",
+ "picks": [
+  {"region": "green_dragon", "gender": "shared", "card": "Green Dragon", "artist": "Ilse Gort", "file": "Green Dragon1.full.jpg", "u": 0.3, "v": 0.65, "zoom": 0.6},
+  {"region": "emerald_dragon", "gender": "shared", "card": "Emerald Dragon", "artist": "Diego Gisbert", "file": "Emerald Dragon.full.jpg", "u": 0.58, "v": 0.22, "zoom": 0.55},
+  {"region": "lurking_green_dragon", "gender": "shared", "card": "Lurking Green Dragon", "artist": "Caio Monteiro", "file": "Lurking Green Dragon.full.jpg", "u": 0.25, "v": 0.7, "zoom": 0.55},
+  {"region": "earthquake_dragon", "gender": "shared", "card": "Earthquake Dragon", "artist": "Johan Grenier", "file": "Earthquake Dragon1.full.jpg", "u": 0.45, "v": 0.42, "zoom": 0.95},
+  {"region": "dragon_broodmother", "gender": "shared", "card": "Dragon Broodmother", "artist": "Jaime Jones", "file": "Dragon Broodmother.full.jpg", "u": 0.65, "v": 0.35, "zoom": 0.55},
+  {"region": "needlethorn_drake", "gender": "shared", "card": "Needlethorn Drake", "artist": "Donato Giancola", "file": "Needlethorn Drake.full.jpg", "u": 0.4, "v": 0.28, "zoom": 0.55},
+  {"region": "drakewing_krasis", "gender": "shared", "card": "Drakewing Krasis", "artist": "Johann Bodin", "file": "Drakewing Krasis.full.jpg", "u": 0.65, "v": 0.2, "zoom": 0.55},
+  {"region": "destructor_dragon", "gender": "shared", "card": "Destructor Dragon", "artist": "Peter Mohrbacher", "file": "Destructor Dragon.full.jpg", "u": 0.36, "v": 0.26, "zoom": 0.55}
+ ]
+}

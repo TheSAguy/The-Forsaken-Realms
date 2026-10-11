@@ -1,0 +1,37 @@
+green_dragon.png
+size: 1632,544
+format: RGBA8888
+filter: MipMapLinearLinear,Linear
+repeat: none
+Dragon_g
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Dragon_g
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Dragon_g
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Dragon_g
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Dragon_g
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Dragon_g
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Dragon_g
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Dragon_g
+  xy: 280, 280
+  size: 256, 256
+  index: 7
