@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 539: twelve Phyrexian portraits; the portrait tool reads heroes.json (2026-10-11)
+
+The user, from round 538's candidate sheet: "Let's use: 1, 2, 3, 5, 6, 10, 11, 12, 13 14 15, 17."
+
+- **The Phyrexian pool is the user's twelve**, in their order:
+  - Gix, Nissa (Ascended Animist), Phyrexian Plaguelord, Vraska (Betrayal's Sting);
+  - Sheoldred, the Apocalypse; Jin-Gitaxias, Progress Tyrant; Elesh Norn, Grand Cenobite (MM2);
+  - Sheoldred, Whispering One (HA5); Jin-Gitaxias, Core Augur (IMA); Urabrask the Hidden (CLB);
+  - Vorinclex, Voice of Hunger (IMA); Phyrexian Obliterator.
+  - Xantcha and K'rrik left.
+  - The faces are framed tight. The four creatures without a face to frame (both Jin-Gitaxias, Urabrask, Elesh Norn)
+    show most of their art.
+- **Artists read off the cached images:** Chris Rahn, Chase Stone, Igor Kieryluk, Jana Schirmer & Johannes Voss, Eric
+  Deschamps, Brad Rigney, Karl Kopinski, Maxim Kostin. The CREDITS bullet is rewritten for the twelve.
+- **`make_portraits.py`** takes each race's pools from `world/heroes.json` (`maleAvatar` / `femaleAvatar`) instead of
+  `<race>_m/_f`.
+  - A dragon's single region (`Dragon_r` for both) gets every pick once - the next race, Red Dragon, needs that.
+- **Page:** `avatar_cards.png` 1632 x 544 (6 a row), 12 `Phyrexian_m` + 12 `Phyrexian_f` regions.
+
 ## Round 538: Phyrexian player portraits from card art (2026-10-11)
 
 The user, with the Create a Character screen's pixel Phyrexian portrait circled: "I'd like to replace the default player

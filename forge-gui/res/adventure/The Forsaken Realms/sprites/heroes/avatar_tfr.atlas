@@ -656,7 +656,7 @@ Vampire_f
   size: 16, 16
 
 avatar_cards.png
-size: 1632,272
+size: 1632,544
 format: RGBA8888
 filter: MipMapLinearLinear,Linear
 repeat: none
@@ -684,6 +684,30 @@ Phyrexian_m
   xy: 1368, 8
   size: 256, 256
   index: 5
+Phyrexian_m
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Phyrexian_m
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Phyrexian_m
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Phyrexian_m
+  xy: 824, 280
+  size: 256, 256
+  index: 9
+Phyrexian_m
+  xy: 1096, 280
+  size: 256, 256
+  index: 10
+Phyrexian_m
+  xy: 1368, 280
+  size: 256, 256
+  index: 11
 Phyrexian_f
   xy: 8, 8
   size: 256, 256
@@ -708,3 +732,27 @@ Phyrexian_f
   xy: 1368, 8
   size: 256, 256
   index: 5
+Phyrexian_f
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Phyrexian_f
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Phyrexian_f
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Phyrexian_f
+  xy: 824, 280
+  size: 256, 256
+  index: 9
+Phyrexian_f
+  xy: 1096, 280
+  size: 256, 256
+  index: 10
+Phyrexian_f
+  xy: 1368, 280
+  size: 256, 256
+  index: 11

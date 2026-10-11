@@ -187,10 +187,12 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 
 ## Player portraits
 
-- **Phyrexian portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped to the face:
-  *Gix, Yawgmoth Praetor* by **Pete Venters**, *Phyrexian Plaguelord* by **Raf Kayupov**, *K'rrik, Son of Yawgmoth*,
-  *Nissa, Ascended Animist* and *Vraska, Betrayal's Sting* by **Chase Stone**, and *Xantcha, Sleeper Agent* by
-  **Heather Hudson**.
+- **Phyrexian portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits: *Gix, Yawgmoth Praetor* by **Pete Venters**; *Nissa, Ascended Animist*, *Vraska, Betrayal's Sting* and
+  *Jin-Gitaxias, Progress Tyrant* by **Chase Stone**; *Phyrexian Plaguelord* by **Raf Kayupov**; *Sheoldred, the
+  Apocalypse* by **Chris Rahn**; *Elesh Norn, Grand Cenobite* by **Igor Kieryluk**; *Sheoldred, Whispering One* by
+  **Jana Schirmer & Johannes Voss**; *Jin-Gitaxias, Core Augur* by **Eric Deschamps**; *Urabrask the Hidden* by
+  **Brad Rigney**; *Vorinclex, Voice of Hunger* by **Karl Kopinski**; and *Phyrexian Obliterator* by **Maxim Kostin**.
 
 ## License
 
