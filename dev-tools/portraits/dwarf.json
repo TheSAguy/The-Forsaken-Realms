@@ -1,0 +1,30 @@
+{
+ "race": "Dwarf",
+ "note": "Round 555 (the user, from a male and a female sheet: 'Dwarf Male: 4, 7, 8, 20, 24, 25, 26, 31, 35, 36, 38, 40, 41, 44. Dwarf Female; 3, 5, 8, 9, 13, 14, 17 (From the male sheet, use 29, 30 49 for female)'). 14 male, 10 female.",
+ "picks": [
+  {"region": "balthor_the_stout", "gender": "m", "card": "Balthor the Stout", "artist": "Ron Spears", "file": "Balthor the Stout.full.jpg", "u": 0.55, "v": 0.46, "zoom": 0.55},
+  {"region": "brazen_dwarf", "gender": "m", "card": "Brazen Dwarf", "artist": "Gabor Szikszai", "file": "Brazen Dwarf.full.jpg", "u": 0.5, "v": 0.32, "zoom": 0.55},
+  {"region": "bruenor_battlehammer", "gender": "m", "card": "Bruenor Battlehammer", "artist": "Wayne Reynolds", "file": "Bruenor Battlehammer1.full.jpg", "u": 0.55, "v": 0.3, "zoom": 0.55},
+  {"region": "dwarven_warriors", "gender": "m", "card": "Dwarven Warriors", "artist": "Douglas Shuler", "file": "Dwarven Warriors1.full.jpg", "u": 0.5, "v": 0.35, "zoom": 0.6},
+  {"region": "gimli_counter_of_kills", "gender": "m", "card": "Gimli, Counter of Kills", "artist": "Viko Menezes", "file": "Gimli, Counter of Kills1.full.jpg", "u": 0.55, "v": 0.32, "zoom": 0.55},
+  {"region": "gimli_mournful_avenger", "gender": "m", "card": "Gimli, Mournful Avenger", "artist": "Bartlomiej Gawel", "file": "Gimli, Mournful Avenger1.full.jpg", "u": 0.42, "v": 0.32, "zoom": 0.55},
+  {"region": "giott_king_of_the_dwarve", "gender": "m", "card": "Giott, King of the Dwarves", "artist": "Ben Wootten", "file": "FIN/Giott, King of the Dwarves1.full.jpg", "u": 0.5, "v": 0.38, "zoom": 0.6},
+  {"region": "nori_teller_of_tales", "gender": "m", "card": "Nori, Teller of Tales", "artist": "Marco Teixeira", "file": "HOB/Nori, Teller of Tales.full.jpg", "u": 0.5, "v": 0.38, "zoom": 0.6},
+  {"region": "rimrock_knight", "gender": "m", "card": "Rimrock Knight", "artist": "Chris Rallis", "file": "PIO/Rimrock Knight.full.jpg", "u": 0.5, "v": 0.25, "zoom": 0.55},
+  {"region": "rubble_rouser", "gender": "m", "card": "Rubble Rouser", "artist": "Craig J Spearing", "file": "SOS/Rubble Rouser.fullborder.jpg", "u": 0.6, "v": 0.3, "zoom": 0.55},
+  {"region": "thorin_company_s_leader", "gender": "m", "card": "Thorin, Company's Leader", "artist": "Eric Deschamps", "file": "HOC/Thorin, Company's Leader.full.jpg", "u": 0.5, "v": 0.47, "zoom": 0.5},
+  {"region": "thorin_mountain_king", "gender": "m", "card": "Thorin, Mountain-king", "artist": "Javier Charro", "file": "HOB/Thorin, Mountain-king1.full.jpg", "u": 0.47, "v": 0.38, "zoom": 0.5},
+  {"region": "torbran_thane_of_red_fel", "gender": "m", "card": "Torbran, Thane of Red Fell", "artist": "Wayne Reynolds", "file": "Torbran, Thane of Red Fell1.full.jpg", "u": 0.58, "v": 0.4, "zoom": 0.5},
+  {"region": "bloodfire_dwarf", "gender": "m", "card": "Bloodfire Dwarf", "artist": "Ron Spencer", "file": "Bloodfire Dwarf.full.jpg", "u": 0.57, "v": 0.42, "zoom": 0.5},
+  {"region": "blazing_firesinger", "gender": "f", "card": "Blazing Firesinger", "artist": "Ashly Lovett", "file": "SOS/Blazing Firesinger.fullborder.jpg", "u": 0.45, "v": 0.4, "zoom": 0.55},
+  {"region": "dedicated_dollmaker", "gender": "f", "card": "Dedicated Dollmaker", "artist": "Michele Giorgi", "file": "Dedicated Dollmaker.full.jpg", "u": 0.3, "v": 0.31, "zoom": 0.5},
+  {"region": "dwarfhold_champion", "gender": "f", "card": "Dwarfhold Champion", "artist": "Miguel Mercado", "file": "Dwarfhold Champion.full.jpg", "u": 0.5, "v": 0.35, "zoom": 0.55},
+  {"region": "erebor_flamesmith", "gender": "f", "card": "Erebor Flamesmith", "artist": "LJ Koh", "file": "Erebor Flamesmith1.full.jpg", "u": 0.6, "v": 0.3, "zoom": 0.55},
+  {"region": "magda_brazen_outlaw", "gender": "f", "card": "Magda, Brazen Outlaw", "artist": "Slawomir Maniak", "file": "Magda, Brazen Outlaw1.full.jpg", "u": 0.48, "v": 0.25, "zoom": 0.55},
+  {"region": "magda_the_hoardmaster", "gender": "f", "card": "Magda, the Hoardmaster", "artist": "Diego Gisbert", "file": "Magda, the Hoardmaster1.full.jpg", "u": 0.47, "v": 0.32, "zoom": 0.55},
+  {"region": "stockpiling_celebrant", "gender": "f", "card": "Stockpiling Celebrant", "artist": "Raluca Marinescu", "file": "Stockpiling Celebrant.full.jpg", "u": 0.5, "v": 0.25, "zoom": 0.55},
+  {"region": "master_skald", "gender": "f", "card": "Master Skald", "artist": "Svetlin Velinov", "file": "Master Skald.full.jpg", "u": 0.46, "v": 0.36, "zoom": 0.45},
+  {"region": "moradin_s_disciples", "gender": "f", "card": "Moradin's Disciples", "artist": "Justine Cruz", "file": "Moradin's Disciples.full.jpg", "u": 0.5, "v": 0.28, "zoom": 0.65},
+  {"region": "mirrormere_guardian", "gender": "f", "card": "Mirrormere Guardian", "artist": "Anton Solovianchyk", "file": "Mirrormere Guardian1.full.jpg", "u": 0.55, "v": 0.3, "zoom": 0.45}
+ ]
+}

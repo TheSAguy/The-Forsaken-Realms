@@ -285,6 +285,20 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Duchek**; *Valor Singer* by **Justyna Dura**; *Judith, the Scourge Diva* by **Wesley Burt**; and *Rix Maadi Reveler*
   by **Sara Winters**.
 
+- **Dwarf portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits;
+  the Lord of the Rings and Hobbit cards (the Gimlis, Nori, the Thorins, Erebor Flamesmith, Mirrormere Guardian) also
+  © Middle-earth Enterprises, and Giott (Final Fantasy) also © Square Enix. Male: *Balthor the Stout* by **Ron
+  Spears**; *Brazen Dwarf* by **Gabor Szikszai**; *Bruenor Battlehammer* and *Torbran, Thane of Red Fell* by **Wayne
+  Reynolds**; *Dwarven Warriors* by **Douglas Shuler**; *Gimli, Counter of Kills* by **Viko Menezes**; *Gimli,
+  Mournful Avenger* by **Bartlomiej Gawel**; *Giott, King of the Dwarves* by **Ben Wootten**; *Nori, Teller of Tales*
+  by **Marco Teixeira**; *Rimrock Knight* by **Chris Rallis**; *Rubble Rouser* by **Craig J Spearing**; *Thorin,
+  Company's Leader* by **Eric Deschamps**; *Thorin, Mountain-king* by **Javier Charro**; and *Bloodfire Dwarf* by
+  **Ron Spencer**. Female: *Blazing Firesinger* by **Ashly Lovett**; *Dedicated Dollmaker* by **Michele Giorgi**;
+  *Dwarfhold Champion* by **Miguel Mercado**; *Erebor Flamesmith* by **LJ Koh**; *Magda, Brazen Outlaw* by **Slawomir
+  Maniak**; *Magda, the Hoardmaster* by **Diego Gisbert**; *Stockpiling Celebrant* by **Raluca Marinescu**; *Master
+  Skald* by **Svetlin Velinov**; *Moradin's Disciples* by **Justine Cruz**; and *Mirrormere Guardian* by **Anton
+  Solovianchyk**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

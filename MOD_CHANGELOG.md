@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 555: Dwarf portraits - male and female pools (2026-10-11)
+
+The user, from a male and a female sheet: "Dwarf Male: 4, 7, 8, 20, 24, 25, 26, 31, 35, 36, 38, 40, 41, 44. Dwarf
+Female; 3, 5, 8, 9, 13, 14, 17 (From the male sheet, use 29, 30 49 for female)".
+
+- **The candidates:** all 163 cached cards whose type line names a Dwarf (the card scripts' `Types:`), split by eye
+  into a male sheet (54) and a female sheet (18).
+- **14 male** in `Dwarf_m`: Balthor the Stout, Brazen Dwarf, Bruenor, Dwarven Warriors, both Gimlis, Giott, Nori,
+  Rimrock Knight, Rubble Rouser, both Thorins (Company's Leader, Mountain-king), Torbran, Bloodfire Dwarf.
+- **10 female** in `Dwarf_f`: Blazing Firesinger, Dedicated Dollmaker, Dwarfhold Champion, Erebor Flamesmith, both
+  Magdas, Stockpiling Celebrant, and from the male sheet Master Skald, Moradin's Disciples and Mirrormere Guardian.
+- **Framing:** each crop is on the face (`dev-tools/portraits/dwarf.json`, `sprites/heroes/portraits/dwarf.atlas`).
+- **Credits:** artists read off the cached images. The Middle-earth and Final Fantasy crossover cards carry their
+  owners' notices. Data only.
+
 ## Round 554: Devil portraits - male and female pools (2026-10-11)
 
 The user, asking for the candidates split "into two slides M vs. Female", then: "Devil Male; 8, 12, 13, 15, 16,19, 21,
