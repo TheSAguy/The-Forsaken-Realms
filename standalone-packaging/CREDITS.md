@@ -245,6 +245,19 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Dragon* by **Johan Grenier**; *Sunscorch Regent* by **Matt Stewart**; *Silver Drake* by **Alan Pollack**; *Belltoll
   Dragon* by **Zack Stella**; and *Transcendent Dragon* by **Diego Gisbert**.
 
+- **Angel portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits.
+  Male: *Angel of Sanctions* by **Min Yum**; *Angel of Condemnation* by **Slawomir Maniak**; *Angel of Suffering* by
+  **Martina Fačková**; *Archway Angel* by **Milivoj Ćeran**; *Eradicator Valkyrie* by **Tyler Jacobson**; *Guardian
+  Seraph* by **Paul Bonner**; *Sephiroth, One-Winged Angel* by **Wisnu Tan**; *Sunblade Angel* by **Johannes Voss**;
+  *Voltstorm Angel* by **Andrew Theophilopoulos**; and *Zamriel, Seraph of Steel* by **Chris Rallis**. Female:
+  *Baneslayer Angel* by **Greg Staples**; *Serra Angel* by **Mark Zug**; *Archangel Avacyn* and *Archangel of Thune*
+  by **James Ryman**; *Avacyn, Angel of Hope*, *Gisela, Blade of Goldnight* and *Angelic Overseer* by **Jason Chan**;
+  *Sigarda, Host of Herons* and *Lyra Dawnbringer* by **Chris Rahn**; *Bruna, the Fading Light* by **Clint Cearley**;
+  *Resplendent Angel* and *Shalai, Voice of Plenty* by **Victor Adame Minguez**; *Linvala, Keeper of Silence* by
+  **Igor Kieryluk**; *Linvala, the Preserver* by **Magali Villeneuve**; *Akroma, Angel of Fury* by **Daren Bader**;
+  *Reya Dawnbringer* by **Matthew D. Wilson**; *Exalted Angel* by **Michael Sutfin**; *Sigarda, Champion of Light* by
+  **Howard Lyon**; *Angel of Vitality* by **Johannes Voss**; and *Sephara, Sky's Blade* by **Livia Prima**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

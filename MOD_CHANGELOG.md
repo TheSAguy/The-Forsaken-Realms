@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 550: Angel portraits - male and female pools (2026-10-11)
+
+The user, first: "Did you give me male and female angel pics? they all look like female." Then, from a new male sheet and
+the main sheet: "Angel Male: 1, 3, 5, 9, 11, 14, 16, 20, 22, 24. Angel Female: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 16,
+18, 21, 25, 28, 33, 39, 42".
+
+- **The male sheet:** the first sheet's male angels were two. A scan of all 125 angel cards in the cache picked 22 more
+  that read male or either way.
+- **10 male** in `Angel_m`: Angel of Sanctions, Angel of Suffering, Archway Angel, Eradicator Valkyrie, Guardian Seraph,
+  Sephiroth, Sunblade Angel, Voltstorm Angel, Zamriel and Angel of Condemnation.
+- **20 female** in `Angel_f`: Baneslayer, Serra (8E), both Avacyns, Sigarda (Host of Herons and Champion of Light),
+  Bruna, Gisela, Lyra, Resplendent Angel, Shalai, both Linvalas, Akroma (Angel of Fury), Reya (CNS), Exalted Angel,
+  Angelic Overseer, Angel of Vitality, Archangel of Thune, Sephara.
+- `dev-tools/portraits/angel.json`, `sprites/heroes/portraits/angel.atlas` (1632 x 1360).
+- Artists read off the cached images and credited. Data only.
+
 ## Round 549: faster notices, a notices log, no bold (2026-10-11)
 
 On Discord, Dove: "The little notifications in the corner are kinda a pain. They get backed up so far with all the EXP

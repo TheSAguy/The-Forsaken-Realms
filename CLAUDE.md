@@ -80,6 +80,8 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-11 (round 550): **LOCAL + UNRELEASED** - Angel portraits, 10 male and 20 female.
+
 ## STATE 2026-10-11 (round 549): **LOCAL + UNRELEASED** - notices: own queue (0.4 s in, 5 s / 2.5 s busy, up to 3
 a banner), Power gains to the log only, a Log button (last 20), no bold.
 

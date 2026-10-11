@@ -1,0 +1,125 @@
+angel.png
+size: 1632,1360
+format: RGBA8888
+filter: MipMapLinearLinear,Linear
+repeat: none
+Angel_m
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Angel_m
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Angel_m
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Angel_m
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Angel_m
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Angel_m
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Angel_m
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Angel_m
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Angel_m
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Angel_m
+  xy: 824, 280
+  size: 256, 256
+  index: 9
+Angel_f
+  xy: 1096, 280
+  size: 256, 256
+  index: 0
+Angel_f
+  xy: 1368, 280
+  size: 256, 256
+  index: 1
+Angel_f
+  xy: 8, 552
+  size: 256, 256
+  index: 2
+Angel_f
+  xy: 280, 552
+  size: 256, 256
+  index: 3
+Angel_f
+  xy: 552, 552
+  size: 256, 256
+  index: 4
+Angel_f
+  xy: 824, 552
+  size: 256, 256
+  index: 5
+Angel_f
+  xy: 1096, 552
+  size: 256, 256
+  index: 6
+Angel_f
+  xy: 1368, 552
+  size: 256, 256
+  index: 7
+Angel_f
+  xy: 8, 824
+  size: 256, 256
+  index: 8
+Angel_f
+  xy: 280, 824
+  size: 256, 256
+  index: 9
+Angel_f
+  xy: 552, 824
+  size: 256, 256
+  index: 10
+Angel_f
+  xy: 824, 824
+  size: 256, 256
+  index: 11
+Angel_f
+  xy: 1096, 824
+  size: 256, 256
+  index: 12
+Angel_f
+  xy: 1368, 824
+  size: 256, 256
+  index: 13
+Angel_f
+  xy: 8, 1096
+  size: 256, 256
+  index: 14
+Angel_f
+  xy: 280, 1096
+  size: 256, 256
+  index: 15
+Angel_f
+  xy: 552, 1096
+  size: 256, 256
+  index: 16
+Angel_f
+  xy: 824, 1096
+  size: 256, 256
+  index: 17
+Angel_f
+  xy: 1096, 1096
+  size: 256, 256
+  index: 18
+Angel_f
+  xy: 1368, 1096
+  size: 256, 256
+  index: 19
