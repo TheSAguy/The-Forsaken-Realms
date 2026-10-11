@@ -48,12 +48,46 @@ public class HeroListData {
 
     }
 
+    // Round 542 (round 538's card-art portraits, the user: "replace the default player portraits with in game card
+    // pictures"): a race's portraits come from its own atlas when the plane ships one - PORTRAIT_DIR + the race name in
+    // lower case, spaces as underscores (sprites/heroes/portraits/red_dragon.atlas), built by
+    // dev-tools/portraits/make_portraits.py - with the same region names as the pixel avatar atlas. One atlas a race, loaded
+    // the first time that race's portrait is asked for: in play only the player's own race sits in memory, where one
+    // shared page of every race would grow past 100 MB of texture. Without one, the pixel portraits as before.
+    private static final String PORTRAIT_DIR = "sprites/heroes/portraits/";
+    private final ObjectMap<String, TextureAtlas> portraitAtlases = new ObjectMap<>();
+
+    private TextureAtlas portraitAtlas(HeroData data) {
+        if (data.name == null)
+            return null;
+        if (!portraitAtlases.containsKey(data.name)) {
+            String path = PORTRAIT_DIR + data.name.toLowerCase().replace(' ', '_') + ".atlas";
+            TextureAtlas atlas = null;
+            try {
+                FileHandle handle = Config.instance().getFile(path); // null when the plane has no such file
+                if (handle != null && handle.exists())
+                    atlas = Config.instance().getAtlas(path);
+            } catch (Exception e) {
+                System.err.println("[TFR-Portraits] " + path + " could not load (" + e + ") - the pixel portraits stand");
+            }
+            portraitAtlases.put(data.name, atlas);
+            System.out.println("[TFR-Portraits] " + data.name + ": " + (atlas != null ? "card portraits from " + path
+                    : "no " + path + " - the pixel portraits"));
+        }
+        return portraitAtlases.get(data.name);
+    }
+
     public TextureRegion getAvatar(int heroRace, boolean isFemale, int avatarIndex) {
         HeroData data = instance().heroes[heroRace];
-        Array<Sprite> sprites = instance().avatarSprites.get(isFemale ? data.femaleAvatar : data.maleAvatar);
+        String region = isFemale ? data.femaleAvatar : data.maleAvatar;
+        TextureAtlas portraits = instance().portraitAtlas(data);
+        String key = (portraits != null ? "portrait:" : "") + region;
+        Array<Sprite> sprites = instance().avatarSprites.get(key);
         if (sprites == null) {
-            sprites = instance().avatarAtlas.createSprites(isFemale ? data.femaleAvatar : data.maleAvatar);
-            instance().avatarSprites.put(isFemale ? data.femaleAvatar : data.maleAvatar, sprites);
+            sprites = portraits != null ? portraits.createSprites(region) : new Array<>();
+            if (sprites.isEmpty()) // no portrait atlas, or none of this gender in it
+                sprites = instance().avatarAtlas.createSprites(region);
+            instance().avatarSprites.put(key, sprites);
         }
         avatarIndex %= sprites.size;
         if (avatarIndex < 0) {

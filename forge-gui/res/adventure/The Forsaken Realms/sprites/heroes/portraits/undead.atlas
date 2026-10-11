@@ -1,0 +1,125 @@
+undead.png
+size: 1632,816
+format: RGBA8888
+filter: MipMapLinearLinear,Linear
+repeat: none
+Undead_m
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Undead_m
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Undead_m
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Undead_m
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Undead_m
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Undead_m
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Undead_m
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Undead_m
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Undead_m
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Undead_m
+  xy: 824, 280
+  size: 256, 256
+  index: 9
+Undead_m
+  xy: 1096, 280
+  size: 256, 256
+  index: 10
+Undead_m
+  xy: 1368, 280
+  size: 256, 256
+  index: 11
+Undead_m
+  xy: 8, 552
+  size: 256, 256
+  index: 12
+Undead_m
+  xy: 280, 552
+  size: 256, 256
+  index: 13
+Undead_m
+  xy: 552, 552
+  size: 256, 256
+  index: 14
+Undead_f
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Undead_f
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Undead_f
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Undead_f
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Undead_f
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Undead_f
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Undead_f
+  xy: 8, 280
+  size: 256, 256
+  index: 6
+Undead_f
+  xy: 280, 280
+  size: 256, 256
+  index: 7
+Undead_f
+  xy: 552, 280
+  size: 256, 256
+  index: 8
+Undead_f
+  xy: 824, 280
+  size: 256, 256
+  index: 9
+Undead_f
+  xy: 1096, 280
+  size: 256, 256
+  index: 10
+Undead_f
+  xy: 1368, 280
+  size: 256, 256
+  index: 11
+Undead_f
+  xy: 8, 552
+  size: 256, 256
+  index: 12
+Undead_f
+  xy: 280, 552
+  size: 256, 256
+  index: 13
+Undead_f
+  xy: 552, 552
+  size: 256, 256
+  index: 14

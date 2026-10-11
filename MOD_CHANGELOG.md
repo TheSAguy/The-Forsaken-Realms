@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 542: one portrait atlas a race, loaded when shown; Undead portraits (2026-10-11)
+
+The user, from the 37-candidate sheet: "1, 2, 4, 5, 6, 8, 10, 17, 21, 23, 24, 32, 33, 35, 36".
+
+- **Why the layout changed:**
+  - Rounds 538-540 put every race's card portraits on one page of the avatar atlas.
+  - With three races that page was 1632 x 1904, and the whole of it sits in texture memory from the first portrait on.
+  - All twenty races would pass 100 MB, too much for Android.
+- **Now each race has its own atlas:** `sprites/heroes/portraits/<race>.atlas` + `.png` (lower case, spaces as
+  underscores), with the region names of the pixel atlas.
+  - `HeroListData.getAvatar` loads it the first time that race's portrait is asked for and keeps it (`portraitAtlas`,
+    cached per race, `[TFR-Portraits]` logs which), so in play only the player's own race is in memory.
+  - A race without one - or without that gender in it - keeps its pixel portraits.
+  - `avatar_tfr.atlas` is back to its pre-538 state (the pixel fallback) and `avatar_cards.png` is gone.
+- **`make_portraits.py`** writes one atlas a race from its JSON (6 a row: a 12-portrait race is 1632 x 544) and deletes
+  the atlas of a race whose JSON is gone.
+- **Undead:** the user's fifteen (`dev-tools/portraits/undead.json`), one pool for both genders:
+  - Lord of the Undead (10E), Lich Lord of Unx, Wilhelt, Death Baron, Josu Vess, Geralf's Messenger, Dread Wanderer;
+  - Corpse Knight, Lord of the Accursed, Mikaeus the Unhallowed, Undead Gladiator, Narfi, Draugr Necromancer,
+    Ghoulcaller Gisa, Accursed Marauder.
+  - Artists read off the cached images and credited.
+- **Agent-tested:**
+  - All fifteen Undead step through on Create a Character.
+  - Phyrexian and Red Dragon show their card portraits through the new loader.
+  - Elf keeps its pixel portraits.
+  - The fallback first logged a caught NullPointerException (`Config.getFile` answers null for a missing file, not a
+    handle). It checks for null now.
+
 ## Round 541: no town raids in the first week - two on Easy (2026-10-11)
 
 The user: "Let's make sure no Raids can happen week 1. and non for the first 2 weeks on Easy. (The event when there are

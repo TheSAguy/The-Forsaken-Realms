@@ -1,23 +1,25 @@
-"""Card-art player portraits (round 538): every dev-tools/portraits/<race>.json becomes that race's avatar pool on the
-second page of sprites/heroes/avatar_tfr.atlas - smooth and mipmapped, where the first page is Nearest pixel art.
+"""Card-art player portraits (rounds 538, 542): every dev-tools/portraits/<race>.json becomes that race's own atlas,
+sprites/heroes/portraits/<race>.atlas + .png (race name in lower case, spaces as underscores), which HeroListData loads
+the first time that race's portrait is shown - so only the races in use sit in memory. Smooth and mipmapped, where the
+pixel avatar atlas (avatar_tfr.atlas, the fallback, left as it is) is Nearest.
 
 Each pick crops a square from a card image in Forge's card cache (%LOCALAPPDATA%/Forge/Cache/pics/cards): its center
 (u, v) and side (zoom) are fractions of the "candidate square" - 40% of the card's height, from 10.5% down, centered -
 kept inside the art box. "gender": "shared" puts it in both the race's pools, "m" or "f" in one; the pools are the
-race's maleAvatar / femaleAvatar regions in world/heroes.json (a dragon's one region serves both, so every pick goes in
-it). A race's old pixel regions leave the first page. Cells are 256 px with 8-px extruded gutters (linear filtering and mipmaps
-stay inside a cell).
+race's maleAvatar / femaleAvatar region names in world/heroes.json (a dragon's one region serves both, so every pick
+goes in it). Cells are 256 px with 8-px extruded gutters (linear filtering and mipmaps stay inside a cell). A portrait
+atlas whose race has no JSON any more is deleted.
 
-python -I dev-tools/portraits/make_portraits.py <TFR repo root> <card cache dir> [--preview <png>]"""
+python -I dev-tools/portraits/make_portraits.py <TFR repo root> <card cache dir>"""
 import glob, json, os, re, sys
 from PIL import Image
 
 ROOT, CACHE = sys.argv[1], sys.argv[2]
-PREVIEW = sys.argv[4] if len(sys.argv) > 4 and sys.argv[3] == '--preview' else None
-HEROES = os.path.join(ROOT, 'forge-gui', 'res', 'adventure', 'The Forsaken Realms', 'sprites', 'heroes')
-atlas_path = os.path.join(HEROES, 'avatar_tfr.atlas')
-assert os.path.isfile(atlas_path), 'not a TFR repo root: ' + ROOT
-PAGE, SIZE, PAD, COLS = 'avatar_cards.png', 256, 8, 6
+PLANE = os.path.join(ROOT, 'forge-gui', 'res', 'adventure', 'The Forsaken Realms')
+OUT = os.path.join(PLANE, 'sprites', 'heroes', 'portraits')
+assert os.path.isdir(os.path.join(PLANE, 'sprites', 'heroes')), 'not a TFR repo root: ' + ROOT
+os.makedirs(OUT, exist_ok=True)
+SIZE, PAD, COLS = 256, 8, 6
 STRIDE = SIZE + 2 * PAD
 
 
@@ -34,66 +36,42 @@ def crop(pick):
     return card.crop((round(left), round(top), round(left + side), round(top + side))).resize((SIZE, SIZE), Image.LANCZOS)
 
 
-heroes_text = open(os.path.join(ROOT, 'forge-gui', 'res', 'adventure', 'The Forsaken Realms', 'world', 'heroes.json'),
-                   encoding='utf-8').read()
+def slug(race):
+    return race.lower().replace(' ', '_')
+
+
+heroes_text = open(os.path.join(PLANE, 'world', 'heroes.json'), encoding='utf-8').read()
 heroes = {h['name']: h for h in json.loads(re.sub(r'^\s*//.*$', '', heroes_text, flags=re.M))['heroes']}
-races = []
+made = set()
 for path in sorted(glob.glob(os.path.join(ROOT, 'dev-tools', 'portraits', '*.json'))):
     race = json.load(open(path, encoding='utf-8'))
     hero = heroes[race['race']]
-    race['_pools'] = {'m': hero['maleAvatar'], 'f': hero['femaleAvatar']}
-    races.append(race)
-cells = []  # (race, pick, image)
-for race in races:
-    for pick in race['picks']:
-        cells.append((race['race'], pick, crop(pick)))
-rows = (len(cells) + COLS - 1) // COLS
-page = Image.new('RGBA', (min(COLS, len(cells)) * STRIDE, rows * STRIDE))
-for i, (_, pick, img) in enumerate(cells):
-    cell = img.convert('RGBA')
-    out = Image.new('RGBA', (STRIDE, STRIDE))
-    src, dst = cell.load(), out.load()
-    for y in range(STRIDE):  # the cell, its edge pixels extruded into the gutter
-        for x in range(STRIDE):
-            dst[x, y] = src[min(max(x - PAD, 0), SIZE - 1), min(max(y - PAD, 0), SIZE - 1)]
-    pick['_xy'] = ((i % COLS) * STRIDE + PAD, (i // COLS) * STRIDE + PAD)
-    page.paste(out, ((i % COLS) * STRIDE, (i // COLS) * STRIDE))
-page.save(os.path.join(HEROES, PAGE))
-
-text = open(atlas_path, encoding='utf-8', newline='').read()
-nl = '\r\n' if '\r\n' in text else '\n'
-lines = text.split(nl)
-if PAGE in lines:  # this tool's page from an earlier run
-    cut = lines.index(PAGE)
-    while cut > 0 and lines[cut - 1] == '':
-        cut -= 1
-    lines = lines[:cut]
-drop = {name for r in races for name in r['_pools'].values()}
-kept, i, removed = [], 0, 0
-while i < len(lines):
-    if lines[i] in drop:
-        i += 1
-        while i < len(lines) and lines[i].startswith('  '):
-            i += 1
-        removed += 1
-        continue
-    kept.append(lines[i])
-    i += 1
-while kept and kept[-1] == '':
-    kept.pop()
-kept += ['', PAGE, 'size: %d,%d' % page.size, 'format: RGBA8888', 'filter: MipMapLinearLinear,Linear', 'repeat: none']
-for race in races:
-    pools = race['_pools']
+    pools = {'m': hero['maleAvatar'], 'f': hero['femaleAvatar']}
+    picks = race['picks']
+    rows = (len(picks) + COLS - 1) // COLS
+    page = Image.new('RGBA', (min(COLS, len(picks)) * STRIDE, rows * STRIDE))
+    for i, pick in enumerate(picks):
+        cell = crop(pick).convert('RGBA')
+        out = Image.new('RGBA', (STRIDE, STRIDE))
+        src, dst = cell.load(), out.load()
+        for y in range(STRIDE):  # the cell, its edge pixels extruded into the gutter
+            for x in range(STRIDE):
+                dst[x, y] = src[min(max(x - PAD, 0), SIZE - 1), min(max(y - PAD, 0), SIZE - 1)]
+        pick['_xy'] = ((i % COLS) * STRIDE + PAD, (i // COLS) * STRIDE + PAD)
+        page.paste(out, ((i % COLS) * STRIDE, (i // COLS) * STRIDE))
+    name = slug(race['race'])
+    page.save(os.path.join(OUT, name + '.png'))
+    lines = [name + '.png', 'size: %d,%d' % page.size, 'format: RGBA8888', 'filter: MipMapLinearLinear,Linear',
+             'repeat: none']
     one = pools['m'] == pools['f']  # a dragon: one region for both
     for gender in (('m',) if one else ('m', 'f')):
-        pool = [p for p in race['picks'] if one or p['gender'] in ('shared', gender)]
+        pool = [p for p in picks if one or p['gender'] in ('shared', gender)]
         for idx, p in enumerate(pool):
-            kept += [pools[gender], '  xy: %d, %d' % p['_xy'], '  size: %d, %d' % (SIZE, SIZE), '  index: %d' % idx]
-open(atlas_path, 'w', encoding='utf-8', newline='').write(nl.join(kept) + nl)
-print('page', page.size, '-', len(cells), 'portraits for', [r['race'] for r in races], '- old regions removed:', removed)
-
-if PREVIEW:
-    sheet = Image.new('RGB', (len(cells) * (SIZE + 8) + 8, SIZE + 16), (228, 208, 166))
-    for i, (_, _, img) in enumerate(cells):
-        sheet.paste(img, (8 + i * (SIZE + 8), 8))
-    sheet.save(PREVIEW)
+            lines += [pools[gender], '  xy: %d, %d' % p['_xy'], '  size: %d, %d' % (SIZE, SIZE), '  index: %d' % idx]
+    open(os.path.join(OUT, name + '.atlas'), 'w', encoding='utf-8', newline='\n').write('\n'.join(lines) + '\n')
+    made.add(name)
+    print('%-12s %2d portraits -> portraits/%s.atlas (%dx%d)' % (race['race'], len(picks), name, page.size[0], page.size[1]))
+for stale in glob.glob(os.path.join(OUT, '*.atlas')) + glob.glob(os.path.join(OUT, '*.png')):
+    if os.path.splitext(os.path.basename(stale))[0] not in made:
+        os.remove(stale)
+        print('removed stale', os.path.basename(stale))

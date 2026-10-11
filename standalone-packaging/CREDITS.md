@@ -201,6 +201,14 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   by **Jesper Ejsing**; *Lightning Dragon* by **Ron Spencer**; *Dragon Tyrant* by **Kev Walker**; *Archwing Dragon* by
   **Daarken**; and *Hellkite Tyrant* by **Aleksi Briclot**.
 
+- **Undead portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits: *Lord of the Undead* by **Brom**; *Lich Lord of Unx* by **Dave Allsop**; *Wilhelt, the Rotcleaver* by
+  **Chris Rallis**; *Death Baron* by **Nils Hamm**; *Josu Vess, Lich Knight* by **Tyler Jacobson**; *Geralf's
+  Messenger* by **Kev Walker**; *Dread Wanderer* by **Josh Hass**; *Corpse Knight* by **Karl Kopinski**; *Lord of the
+  Accursed* by **Grzegorz Rutkowski**; *Mikaeus, the Unhallowed* by **Chris Rahn**; *Undead Gladiator* by **Slawomir
+  Maniak**; *Narfi, Betrayer King* by **Daarken**; *Draugr Necromancer* by **David Rapoza**; *Ghoulcaller Gisa* by
+  **Karla Ortiz**; and *Accursed Marauder* by **Paolo Parente**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

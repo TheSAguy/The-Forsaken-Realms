@@ -1,0 +1,21 @@
+{
+ "race": "Undead",
+ "note": "Round 542 (the user, from the 37-candidate sheet: '1, 2, 4, 5, 6, 8, 10, 17, 21, 23, 24, 32, 33, 35, 36'). One pool for both genders (undead art seldom reads as either).",
+ "picks": [
+  {"region": "lord_undead", "gender": "shared", "card": "Lord of the Undead", "artist": "Brom", "file": "10E/Lord of the Undead.full.jpg", "u": 0.3, "v": 0.35, "zoom": 0.7},
+  {"region": "lich_lord_unx", "gender": "shared", "card": "Lich Lord of Unx", "artist": "Dave Allsop", "file": "Lich Lord of Unx.full.jpg", "u": 0.5, "v": 0.32, "zoom": 0.62},
+  {"region": "wilhelt", "gender": "shared", "card": "Wilhelt, the Rotcleaver", "artist": "Chris Rallis", "file": "Wilhelt, the Rotcleaver1.full.jpg", "u": 0.42, "v": 0.32, "zoom": 0.6},
+  {"region": "death_baron", "gender": "shared", "card": "Death Baron", "artist": "Nils Hamm", "file": "Death Baron1.full.jpg", "u": 0.5, "v": 0.45, "zoom": 0.85},
+  {"region": "josu_vess", "gender": "shared", "card": "Josu Vess, Lich Knight", "artist": "Tyler Jacobson", "file": "Josu Vess, Lich Knight.full.jpg", "u": 0.68, "v": 0.32, "zoom": 0.6},
+  {"region": "geralfs_messenger", "gender": "shared", "card": "Geralf's Messenger", "artist": "Kev Walker", "file": "Geralf's Messenger.full.jpg", "u": 0.45, "v": 0.35, "zoom": 0.65},
+  {"region": "dread_wanderer", "gender": "shared", "card": "Dread Wanderer", "artist": "Josh Hass", "file": "Dread Wanderer.full.jpg", "u": 0.45, "v": 0.35, "zoom": 0.62},
+  {"region": "corpse_knight", "gender": "shared", "card": "Corpse Knight", "artist": "Karl Kopinski", "file": "Corpse Knight.full.jpg", "u": 0.55, "v": 0.3, "zoom": 0.55},
+  {"region": "lord_accursed", "gender": "shared", "card": "Lord of the Accursed", "artist": "Grzegorz Rutkowski", "file": "Lord of the Accursed.full.jpg", "u": 0.5, "v": 0.26, "zoom": 0.46},
+  {"region": "mikaeus", "gender": "shared", "card": "Mikaeus, the Unhallowed", "artist": "Chris Rahn", "file": "Mikaeus, the Unhallowed1.full.jpg", "u": 0.5, "v": 0.32, "zoom": 0.55},
+  {"region": "undead_gladiator", "gender": "shared", "card": "Undead Gladiator", "artist": "Slawomir Maniak", "file": "Undead Gladiator1.full.jpg", "u": 0.4, "v": 0.35, "zoom": 0.5},
+  {"region": "narfi", "gender": "shared", "card": "Narfi, Betrayer King", "artist": "Daarken", "file": "Narfi, Betrayer King1.full.jpg", "u": 0.58, "v": 0.42, "zoom": 0.6},
+  {"region": "draugr_necromancer", "gender": "shared", "card": "Draugr Necromancer", "artist": "David Rapoza", "file": "Draugr Necromancer1.full.jpg", "u": 0.4, "v": 0.42, "zoom": 0.65},
+  {"region": "ghoulcaller_gisa", "gender": "shared", "card": "Ghoulcaller Gisa", "artist": "Karla Ortiz", "file": "Ghoulcaller Gisa1.full.jpg", "u": 0.6, "v": 0.4, "zoom": 0.65},
+  {"region": "accursed_marauder", "gender": "shared", "card": "Accursed Marauder", "artist": "Paolo Parente", "file": "Accursed Marauder1.full.jpg", "u": 0.35, "v": 0.45, "zoom": 0.6}
+ ]
+}
