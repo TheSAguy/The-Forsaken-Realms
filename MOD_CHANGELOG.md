@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 557: the Intimidating perk (2026-10-11)
+
+The user: "Intimidating: 5%, 10% & 15% chance of an enemy fleeing a duel. Only on Overworld. Only on enemies you have a
+winning record on."
+
+- **Intimidating I-III** (`ascendance.json` "intimidating", lasting, 3 picks, 0.05 each).
+- **When it rolls:** when an overworld enemy reaches the player (`WorldStage`, before the duel starts),
+  `Ascendance.intimidates` rolls the perk's chance.
+- **Who can flee:**
+  - Only an ordinary roamer: never a boss, a color's mage, a legend, a pillage raider or a quest's enemy.
+  - Only one the player has beaten more often than it has beaten them (the win/loss record, by enemy name).
+  - Fights inside towns and dungeons never roll.
+- **A fleeing enemy** leaves the map: no duel, no loot, no Power, no record. The notice reads "The Wild Rat (Apprentice)
+  takes one look at you and flees!".
+- `[TFR-Ascend] Intimidating: <enemy> (record W-L) rolls x% against y% - flees|fights`.
+- **Icon:** Shikashi's grin (4,0) with the green rank chevrons. The scratch tool `icons/perk_chevrons.py` now takes any
+  icon.
+- **Agent-tested** (slot 7, Intimidating III, a test value making the roll certain in the agent copy only, and a
+  scratch-only console command, never committed, that sets a record):
+  - A Wild Rat with a 3-1 record fled on contact.
+  - With 1-3, the next Wild Rat fought.
+
 ## Round 556: Green Dragon portraits (2026-10-11)
 
 The user, from the 19-candidate sheet: "Green Dragon: 1. 3. 7. 12, 14, 17, 18,19".

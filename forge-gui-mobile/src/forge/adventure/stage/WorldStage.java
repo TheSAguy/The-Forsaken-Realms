@@ -895,6 +895,17 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 if (!mageOnCooldownToday && player.collideWith(mob)) {
                     if (collided)
                         return;
+                    // Round 557: the Intimidating perk - an enemy the player has a winning record against may flee
+                    // instead of fighting. No duel, no loot; it is gone from the map.
+                    if (forge.adventure.util.Ascendance.intimidates(mob)) {
+                        GameHUD.getInstance().addNotification("The " + mob.getTieredDisplayName()
+                                + " takes one look at you and flees!");
+                        mob.removeAfterEffects();
+                        foregroundSprites.removeActor(mob);
+                        enemies.remove(i);
+                        i--;
+                        continue;
+                    }
                     collided = true;
                     player.setAnimation(CharacterSprite.AnimationTypes.Attack);
                     player.playEffect(Paths.EFFECT_SPARKS, 0.5f);

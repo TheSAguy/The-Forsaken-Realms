@@ -938,6 +938,30 @@ public final class Ascendance {
         AscendanceData.Choice c = choice("researcher");
         return picks("researcher") > 0 && c != null ? Math.max(0, c.days) : 0;
     }
+    /**
+     * Round 557 (the user: "Intimidating: 5%, 10% & 15% chance of an enemy fleeing a duel. Only on Overworld. Only on
+     * enemies you have a winning record on"): whether an overworld enemy that has just reached the player flees instead
+     * of fighting. Only an ordinary roamer - never a boss, a color's mage, a legend, a pillage raider or a quest's enemy -
+     * and only one the player has beaten more often than it has beaten them (the win/loss record, by enemy name).
+     * WorldStage calls it once per contact; a fleeing enemy leaves the map with no duel, no loot and no Power.
+     */
+    public static boolean intimidates(EnemySprite mob) {
+        float chance = total("intimidating");
+        if (chance <= 0f || mob == null || mob.getData() == null)
+            return false;
+        if (mob.getData().boss || mob.territoryColor != null || mob.pillageTown != null || mob.legendExpiryDay >= 0
+                || mob.questStageID != null)
+            return false;
+        Pair<Integer, Integer> record = WorldSave.getCurrentSave().getPlayer().getStatistic().getWinLossRecord().get(mob.getName());
+        if (record == null || record.getKey() <= record.getValue())
+            return false;
+        float roll = RAND.nextFloat();
+        boolean flees = roll < chance;
+        System.out.println("[TFR-Ascend] Intimidating: " + mob.getName() + " (record " + record.getKey() + "-"
+                + record.getValue() + ") rolls " + pct(roll) + " against " + pct(chance) + (flees ? " - flees" : " - fights"));
+        return flees;
+    }
+
     /** Round 551: a research has completed (AdventurePlayer.checkResearchCompletion) - the Scientist's rares. */
     public static void onResearchComplete(String editionCode) {
         AscendanceRewards.scientistRares(editionCode);
@@ -1179,6 +1203,8 @@ public final class Ascendance {
             case "gambler": effect = GAMBLER_REROLLS + " re-rolls a level, each " + rerollCostAt(c.value) + " [+Shards] (one is "
                     + baseRerollCost() + " now)"; break; // round 536
             case "sellPrice": effect = "Cards sell for " + pct(then) + " more [+Gold]" + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // round 548
+            case "intimidating": effect = pct(then) + " chance an overworld enemy you have beaten more often than it has beaten you flees instead of fighting"
+                    + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // round 557
             case "scientist": effect = "Each research you complete gives " + Math.round(c.value) + " rare card of each color from that set"; break; // round 551
             case "researcher": effect = "Research costs " + pct(c.value) + " less [+Shards] and takes " + c.days + " days less"; break; // round 551
             default: effect = id;
@@ -1280,6 +1306,7 @@ public final class Ascendance {
             case "sellPrice": return "Appraiser"; // round 548
             case "scientist": return "Scientist"; // round 551
             case "researcher": return "Researcher";
+            case "intimidating": return "Intimidating"; // round 557
             default: return id;
         }
     }
