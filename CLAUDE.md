@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (round 533): **LOCAL + UNRELEASED** - the character sheet's Level sheet button opens the waiting
+Ascendance choice on the map (as the HUD's Asc panel does) when one waits; else the sheet as before.
+
 ## STATE 2026-10-10 (round 532): **LOCAL + UNRELEASED** - Arena tier bars (gold/silver/brown/red under each enemy
 portrait, climbing with winners) and a building's bracket fixed for the day (`ArenaScene.dailyBracketSeed`).
 

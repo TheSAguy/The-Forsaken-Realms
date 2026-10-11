@@ -275,8 +275,7 @@ public class PlayerStatisticScene extends UIScene {
                 ascendance.setWrap(true);
                 Table box = new Table();
                 box.add(ascendance).width(width).left().row();
-                box.add(Controls.newTextButton("[%80]Level sheet",
-                        () -> forge.adventure.util.AscendanceUI.openLevelSheet(this))).left().padTop(2f).padBottom(6f).row();
+                box.add(Controls.newTextButton("[%80]Level sheet", this::levelSheet)).left().padTop(2f).padBottom(6f).row();
                 box.add(blessingScroll).width(width).left().row();
                 blessingBox.setActor(box);
             } else {
@@ -352,6 +351,20 @@ public class PlayerStatisticScene extends UIScene {
     public boolean quests() {
         Forge.switchScene(QuestLogScene.instance(lastGameScene),true);
         return true;
+    }
+
+    /** Round 533 (the user: "when you click on the 'Level Sheet', it should basically take you to the same spot as if you
+     *  clicked on the 'Asc' on the main HUD. If you have a current level select pending"): with a reward waiting, back to
+     *  the town or world and its choice opens there, as the HUD panel's tap does; else the sheet over this screen. */
+    private void levelSheet() {
+        if (forge.adventure.util.Ascendance.pendingChoices() <= 0) {
+            forge.adventure.util.AscendanceUI.openLevelSheet(this);
+            return;
+        }
+        System.out.println("[TFR-Ascend] character sheet's Level sheet with " + forge.adventure.util.Ascendance.pendingChoices()
+                + " reward(s) waiting - back to the map for the choice");
+        back();
+        com.badlogic.gdx.Gdx.app.postRunnable(forge.adventure.util.AscendanceUI::openFromHud);
     }
 
     @Override

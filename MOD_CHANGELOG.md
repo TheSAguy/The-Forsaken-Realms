@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 533: the character sheet's Level sheet opens a waiting reward (2026-10-10)
+
+The user, with a screenshot of the character sheet: "On the character portrait, when you click on the 'Level Sheet', it
+should basically take you to the same spot as if you clicked on the 'Asc' on the main HUD. If you have a current level
+select pending."
+
+- `PlayerStatisticScene.levelSheet()`:
+  - With a reward waiting (`Ascendance.pendingChoices() > 0`), the button leaves the character sheet the way Back does
+    (to the town or world scene it came from). It then opens `AscendanceUI.openFromHud()` there - the same choice dialog
+    the HUD's Asc panel opens.
+  - It logs `[TFR-Ascend] character sheet's Level sheet with N reward(s) waiting - back to the map for the choice`.
+  - With nothing waiting, it opens the Level sheet over the character sheet as before.
+- **Agent-tested** (slot 7, `asc give 3000`, Info -> Status -> Level sheet): the world map came back with "Ascendance 1 -
+  choose one (24 waiting)", its three offers, Re-roll and Not now.
+
 ## Round 532: Arena tier bars and a bracket fixed for the day (2026-10-10)
 
 The user, with a screenshot of the Orazca Arena: "Can we add 4 small bars at the bottom of each portrait showing their
