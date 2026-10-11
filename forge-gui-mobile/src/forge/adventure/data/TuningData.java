@@ -410,6 +410,10 @@ public class TuningData {
     public int pillageRewardWood = 50;
     public int pillageRewardStone = 50;
     public int pillageFailReputation = 2;
+    // Round 541 (the user: "make sure no Raids can happen week 1. and non for the first 2 weeks on Easy"): the first
+    // calendar week (World.weekOf - 0 is days 1-7) whose weekly roll may start a pillage, by difficulty
+    // (Easy, Normal, Hard, Insane - TerritoryControl.difficultyIndex()).
+    public int[] pillageFirstWeekByDifficulty = {2, 1, 1, 1};
     // Round 488: the Archaeologist's chance of a treasure-map fragment per expedition (0-1). Below 0 (the default) means
     // "as often as a Rare item": the 5% item chance x the item pool's Rare share (about 1.5%).
     public float archaeologistMapFragmentChance = -1f;

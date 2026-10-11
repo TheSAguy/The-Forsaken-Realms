@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 541: no town raids in the first week - two on Easy (2026-10-11)
+
+The user: "Let's make sure no Raids can happen week 1. and non for the first 2 weeks on Easy. (The event when there are
+enough dungeons around a town to trigger)."
+
+- Round 484's pillage rolls once a calendar week (`TownPillage.rollWeek`), and its first roll came with the first tick
+  of week 0 - so a town could be raided from day 1.
+- New `pillageFirstWeekByDifficulty` (`settings.json` / `TuningData`): `[2, 1, 1, 1]` for Easy, Normal, Hard, Insane.
+  - It is the first calendar week (`World.weekOf`, 0 = days 1-7) whose roll may start a pillage.
+  - So: from day 8, and from day 15 on Easy.
+- An earlier week's roll is skipped: `[TFR-Pillage] week 0 (day 1): no pillage before day 8 on this difficulty - no
+  roll`. The week is still marked, so the next roll comes with the next week.
+- `TownPillage.firstPillageWeek()` reads the table by `TerritoryControl.difficultyIndex()`.
+- **Agent-tested** (new games):
+  - Normal logged "week 0 (day 1): no pillage before day 8".
+  - Easy logged "no pillage before day 15".
+  - A Normal run to day 8 was cut short by a stream of roaming duels. Past the gate, the roll is round 484's code,
+    unchanged.
+
 ## Round 540: Red Dragon portraits (2026-10-11)
 
 The user, from the 30-candidate sheet: "Let's do: 6, 8, 9, 15, 17, 18, 20, 24, 26, 27, 29, 30. Then let's install so I

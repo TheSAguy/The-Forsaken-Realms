@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-11 (round 541): **LOCAL + UNRELEASED** - no town raid before day 8, day 15 on Easy
+(`pillageFirstWeekByDifficulty`, `TownPillage.firstPillageWeek`).
+
 ## STATE 2026-10-11 (round 540): **LOCAL + UNRELEASED** - Red Dragon portraits: twelve card arts in `Dragon_r`
 (`dev-tools/portraits/red_dragon.json`).
 

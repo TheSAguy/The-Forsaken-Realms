@@ -91,8 +91,23 @@ public final class TownPillage {
 
     // ------------------------------------------------------------------------------------------------ the weekly roll
 
+    /** Round 541 (the user: "make sure no Raids can happen week 1. and non for the first 2 weeks on Easy"): the first
+     *  calendar week (World.weekOf) whose roll may start a pillage - day 8 by default, day 15 on Easy. */
+    static int firstPillageWeek() {
+        int[] table = tuning().pillageFirstWeekByDifficulty;
+        if (table == null || table.length == 0)
+            return 0;
+        return Math.max(0, table[Math.min(Math.max(0, TerritoryControl.difficultyIndex()), table.length - 1)]);
+    }
+
     private static void rollWeek(World world, int day) {
         TuningData t = tuning();
+        int firstWeek = firstPillageWeek();
+        if (World.weekOf(day) < firstWeek) {
+            System.out.println("[TFR-Pillage] week " + World.weekOf(day) + " (day " + day + "): no pillage before day "
+                    + (firstWeek * 7 + 1) + " on this difficulty - no roll");
+            return;
+        }
         List<PointOfInterest> dungeons = hostileDungeons(world);
         List<PointOfInterest> hits = new ArrayList<>();
         int qualifying = 0;

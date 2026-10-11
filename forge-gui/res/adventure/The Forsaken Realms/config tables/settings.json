@@ -225,6 +225,10 @@
     "pillageRewardWood": 50,
     "pillageRewardStone": 50,
     "pillageFailReputation": 2,
+    // Round 541 (the user: "make sure no Raids can happen week 1. and non for the first 2 weeks on Easy"): the first
+    // calendar week whose roll may start a pillage (0 = days 1-7, 1 = from day 8, 2 = from day 15), by difficulty -
+    // Easy, Normal, Hard, Insane.
+    "pillageFirstWeekByDifficulty": [2, 1, 1, 1],
     // Round 488: the Archaeologist's chance of a treasure-map fragment per expedition (0-1). -1 = as often as a
     // Rare item from the dig (5% item chance x the pool's Rare share, about 1.5%).
     "archaeologistMapFragmentChance": -1,
