@@ -14264,6 +14264,51 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 534: twenty LPC humanoids for round 108's 16 px enemy-art sprites (2026-10-10)
+
+The Procedural Pixel Creatures session (the user: "Please proceed with the next 20 humanoid characters", after a scan of
+the Desktop `Enemy Art` folder found nothing left to import and 36 enemies still on round 108's 16 px "Basic" sprites):
+the twenty of those that fit an LPC body, each dressed after its 16 px original, built by the generator repo's
+`lpc_selections/make_534.py` (`lpc_to_forge.py` through `lpc_batch.py`).
+
+- **The casters** (`basic/magical`):
+  - Adept Necromancer: a pale face with green eyes in a charcoal hood, grey robe, tattered cape, staff.
+  - Deft Sorceress: long blonde hair, a blue robe, a gold necklace, staff.
+  - Expert Druid: chestnut hair and beard, oak-colored horns for the antlers, a green robe, a gnarled staff.
+  - Novice Pyromancer: a red ponytail, a red robe, an orange fire crystal.
+  - Vile Witch: green skin, a big nose, a purple wizard hat and robe, a dark gnarled staff.
+  - Fluttering Pixie: orange pixie hair, transparent sky-blue wings, a pink blouse, a wand.
+  - Magical Fairy: long blonde hair, teal monarch wings, a pink dress.
+- **The undead** (`basic/undead`; the two crawlers stay):
+  - Brittle Archer: a skeleton with a bow and quiver.
+  - Decrepit Bones: a skeleton with a club.
+  - Grave Revenant: a black face with red eyes in a black hood, with a scythe.
+  - Mutilated Stumbler: a green zombie in a brown shirt.
+  - Bound Cadaver: a bandaged zombie.
+  - Dune Ghoul: a smoke-grey zombie in desert rags.
+- **The demons** (`basic/demon`):
+  - Depraved Blackguard: red, curled horns and a tail, steel plate, a longsword.
+  - Tainted Scoundrel: red, swept-back horns, a black vest, a dagger.
+  - Grinning Gremlin: a red goblin head with horns, bat wings and a tail.
+  - Pointed Demonspawn: charcoal, with pointed ears, yellow eyes and an orange sash.
+  - Skewering Stalker: a red face hooded in black, a maroon cape, a spear.
+  - Clawed Abomination: a charcoal troll-headed brute with bronze bracers.
+  - Foul Gouger: a black boar-headed brute in bronze pauldrons, with a waraxe.
+- **Not converted** (16 stay on their 16 px sprites):
+  - Their shapes are not LPC's walking body: the two crawlers, the slaads, the myconid, the ettin, the cyclops, Red Cap,
+    the Dwende, the Nefarious Scamp (a bat) and the Goblin Wolf Rider (LPC has no wolf mount).
+  - The Blinded Grimlock and the Antlered Rascal fit LPC but fall outside the twenty.
+- **Files**:
+  - 20 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 20 sprite paths + 20 scales (0.30-0.37; six had no scale before).
+  - `CREDITS_LPC.md` regenerated: 249 enemies, additions only.
+  - `CREDITS.md`'s LPC line: 249 enemies, round 534, the twenty names, OGA-BY 4.0 and a new author, **The Foreman**
+    (the LPC fairy wings).
+- **Checks**:
+  - The sprite audit is clean on all twenty, and every atlas has an Avatar.
+  - `validate_plane_data.py` shows its three informational sections unchanged.
+  - Not seen in play.
+
 ## Round 533: the character sheet's Level sheet opens a waiting reward (2026-10-10)
 
 The user, with a screenshot of the character sheet: "On the character portrait, when you click on the 'Level Sheet', it

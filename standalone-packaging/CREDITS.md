@@ -98,7 +98,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (229 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521 and 523 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (249 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523 and 534 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -118,12 +118,16 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Fanatic, General Kreat, Goro-Goro and Satoru, Grub, the Goblin Stalker, Toggo and Krark, Auntie Ool, Zo-Zu the
   Punisher, the Goblin Artificer, Malcolm and Breeches, Mizzix, Squee, Sanar, the Goblin Warrior, the Goblin Chief,
   Redshift, the Grand Goatnapper, the Goblin King, Muxus, Wort, Grumgully, Goblin King Phil, Wolfgang Eder '03, the
-  Goblin Pack, the Shattergang Brothers, Slobad, Krenko - and the eighteen riders of the mounted knights, on the horses
+  Goblin Pack, the Shattergang Brothers, Slobad, Krenko - the eighteen riders of the mounted knights, on the horses
   below - the Dark Knight, Evereth, Ria Ivor, Syr Konrad, Jakub Slemr '97, Tom van de Logt '01, the Death Knight, Syr
-  Gwyn, Felothar, the Khan, Will, Adun, Márton Stromgald, Cerise, the Horseman, the Knight Mercenary, Shanid, Nath) -
+  Gwyn, Felothar, the Khan, Will, Adun, Márton Stromgald, Cerise, the Horseman, the Knight Mercenary, Shanid, Nath - and
+  twenty enemies of the first enemy-art round's small sprites - the Adept Necromancer, Deft Sorceress, Expert Druid,
+  Novice Pyromancer, Vile Witch, Fluttering Pixie, Magical Fairy, Brittle Archer, Decrepit Bones, Grave Revenant,
+  Mutilated Stumbler, Bound Cadaver, Dune Ghoul, Depraved Blackguard, Tainted Scoundrel, Grinning Gremlin, Pointed
+  Demonspawn, Skewering Stalker, Clawed Abomination, Foul Gouger) -
   composed
   from the parts of the Universal LPC Spritesheet Character Generator (Liberated Pixel Cup contributors), each part
-  under its own license (OGA-BY 3.0, CC-BY 3.0/4.0, CC-BY-SA 3.0, CC0), the composed sprites CC-BY or CC-BY-SA; the
+  under its own license (OGA-BY 3.0/4.0, CC-BY 3.0/4.0, CC-BY-SA 3.0, CC0), the composed sprites CC-BY or CC-BY-SA; the
   merfolk's trident is LPC's spear (CC-BY-SA 3.0) with tines and a crossbar added for this game; the
   parts, authors, licenses and sources per enemy are in `CREDITS_LPC.md`. Authors: Johannes Sjölund (wulax), Stephen
   Challener (Redshrike), bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy),
@@ -132,7 +136,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Daniel Eddeland (daneeklu), gr3yh47, Joe White, Thane Brimhall (pennomi), laetissima, Carlo Enrico Victoria
   (Nemisys), Michael Whitlock (bigbeargames), Tuomo Untinen (reemax), Napsio (Vitruvian Studio), Mandi Paugh, Marcel
   van de Steeg (MadMarcel), Fabzy, Luke Mehl, DarkwallLKE, Charles Sanchez (CharlesGabriel), Zi Ye, AntumDeluge, Shaun
-  Williams, Lanea Zimmerman (Sharm), Barbara Riviera, thecilekli, Tracy, macmanmatty, tskaufma - and
+  Williams, Lanea Zimmerman (Sharm), Barbara Riviera, thecilekli, Tracy, macmanmatty, tskaufma, The Foreman - and
   our thanks to every contributor the generator's credits leave unnamed; the parts and their source pages are listed at
   https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator and on https://opengameart.org.
 - **[LPC] Horses** (the mounts of the eighteen mounted knights, round 523: the Dark Knight, the Death Knight, the

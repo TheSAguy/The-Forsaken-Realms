@@ -80,6 +80,14 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-10 (round 534): **LOCAL + UNRELEASED (data only)** - twenty LPC humanoids (the Procedural Pixel
+Creatures session) replace round 108's 16 px enemy-art sprites: 7 casters, 6 undead, 7 demons (generator
+`lpc_selections/make_534.py`). 20 new atlases under `sprites/enemy/remake/`, enemies.json 20 paths + 20 scales
+(0.30-0.37), CREDITS_LPC.md 249 enemies, CREDITS.md's LPC line (+ The Foreman, OGA-BY 4.0). 16 enemies stay on the
+Basic sprites (crawlers, slaads, myconid, ettin, cyclops, Red Cap, Dwende, Scamp, Goblin Wolf Rider; the Blinded
+Grimlock and Antlered Rascal fit LPC, outside the twenty).
+The peer (#30) verifies and packages. Not seen in play.
+
 ## STATE 2026-10-10 (round 533): **LOCAL + UNRELEASED** - the character sheet's Level sheet button opens the waiting
 Ascendance choice on the map (as the HUD's Asc panel does) when one waits; else the sheet as before.
 

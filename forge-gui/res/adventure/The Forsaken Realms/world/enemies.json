@@ -129966,7 +129966,7 @@
     },
     {
         "name": "Depraved Blackguard",
-        "sprite": "sprites/enemy/basic/demon/depraved_blackguard.atlas",
+        "sprite": "sprites/enemy/remake/depraved_blackguard.atlas",
         "deck": [
             "decks/standard/depraved_blackguard.dck"
         ],
@@ -130027,7 +130027,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.1818
+        "scale": 0.2955
     },
     {
         "name": "Rascally Demonling",
@@ -130159,7 +130159,7 @@
     },
     {
         "name": "Clawed Abomination",
-        "sprite": "sprites/enemy/basic/demon/clawed_abomination.atlas",
+        "sprite": "sprites/enemy/remake/clawed_abomination.atlas",
         "deck": [
             "decks/standard/clawed_abomination.dck"
         ],
@@ -130218,7 +130218,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.325
     },
     {
         "name": "Crimson Imp",
@@ -130415,7 +130415,7 @@
     },
     {
         "name": "Foul Gouger",
-        "sprite": "sprites/enemy/basic/demon/foul_gouger.atlas",
+        "sprite": "sprites/enemy/remake/foul_gouger.atlas",
         "deck": [
             "decks/standard/foul_gouger.dck"
         ],
@@ -130474,11 +130474,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.3714
     },
     {
         "name": "Grinning Gremlin",
-        "sprite": "sprites/enemy/basic/demon/grinning_gremlin.atlas",
+        "sprite": "sprites/enemy/remake/grinning_gremlin.atlas",
         "deck": [
             "decks/standard/grinning_gremlin.dck"
         ],
@@ -130537,7 +130537,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3171
     },
     {
         "name": "Nefarious Scamp",
@@ -130672,7 +130672,7 @@
     },
     {
         "name": "Pointed Demonspawn",
-        "sprite": "sprites/enemy/basic/demon/pointed_demonspawn.atlas",
+        "sprite": "sprites/enemy/remake/pointed_demonspawn.atlas",
         "deck": [
             "decks/standard/pointed_demonspawn.dck"
         ],
@@ -130731,11 +130731,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Skewering Stalker",
-        "sprite": "sprites/enemy/basic/demon/skewering_stalker.atlas",
+        "sprite": "sprites/enemy/remake/skewering_stalker.atlas",
         "deck": [
             "decks/standard/skewering_stalker.dck"
         ],
@@ -130793,11 +130793,12 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3095
     },
     {
         "name": "Tainted Scoundrel",
-        "sprite": "sprites/enemy/basic/demon/tainted_scoundrel.atlas",
+        "sprite": "sprites/enemy/remake/tainted_scoundrel.atlas",
         "deck": [
             "decks/standard/tainted_scoundrel.dck"
         ],
@@ -130858,7 +130859,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Warp Skull",
@@ -133814,7 +133815,7 @@
     },
     {
         "name": "Bound Cadaver",
-        "sprite": "sprites/enemy/basic/undead/bound_cadaver.atlas",
+        "sprite": "sprites/enemy/remake/bound_cadaver.atlas",
         "deck": [
             "decks/standard/bound_cadaver.dck"
         ],
@@ -133872,11 +133873,12 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3171
     },
     {
         "name": "Brittle Archer",
-        "sprite": "sprites/enemy/basic/undead/brittle_archer.atlas",
+        "sprite": "sprites/enemy/remake/brittle_archer.atlas",
         "deck": [
             "decks/standard/brittle_archer.dck"
         ],
@@ -133935,7 +133937,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Carcass Feeder",
@@ -134004,7 +134006,7 @@
     },
     {
         "name": "Decrepit Bones",
-        "sprite": "sprites/enemy/basic/undead/decrepit_bones.atlas",
+        "sprite": "sprites/enemy/remake/decrepit_bones.atlas",
         "deck": [
             "decks/standard/decrepit_bones.dck"
         ],
@@ -134062,7 +134064,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3171
     },
     {
         "name": "Dismembered Crawler",
@@ -134259,7 +134262,7 @@
     },
     {
         "name": "Grave Revenant",
-        "sprite": "sprites/enemy/basic/undead/grave_revenant.atlas",
+        "sprite": "sprites/enemy/remake/grave_revenant.atlas",
         "deck": [
             "decks/standard/grave_revenant.dck"
         ],
@@ -134319,11 +134322,12 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.3095
     },
     {
         "name": "Mutilated Stumbler",
-        "sprite": "sprites/enemy/basic/undead/mutilated_stumbler.atlas",
+        "sprite": "sprites/enemy/remake/mutilated_stumbler.atlas",
         "deck": [
             "decks/standard/mutilated_stumbler.dck"
         ],
@@ -134382,7 +134386,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Royal Scarab",
@@ -134449,7 +134453,7 @@
     },
     {
         "name": "Dune Ghoul",
-        "sprite": "sprites/enemy/basic/undead/dune_ghoul.atlas",
+        "sprite": "sprites/enemy/remake/dune_ghoul.atlas",
         "deck": [
             "decks/standard/dune_ghoul.dck"
         ],
@@ -134510,7 +134514,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Skittering Hand",
@@ -134767,7 +134771,7 @@
     },
     {
         "name": "Adept Necromancer",
-        "sprite": "sprites/enemy/basic/magical/adept_necromancer.atlas",
+        "sprite": "sprites/enemy/remake/adept_necromancer.atlas",
         "deck": [
             "decks/standard/adept_necromancer.dck"
         ],
@@ -134825,7 +134829,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.325
     },
     {
         "name": "Corrupted Treant",
@@ -134892,7 +134897,7 @@
     },
     {
         "name": "Deft Sorceress",
-        "sprite": "sprites/enemy/basic/magical/deft_sorceress.atlas",
+        "sprite": "sprites/enemy/remake/deft_sorceress.atlas",
         "deck": [
             "decks/standard/deft_sorceress.dck"
         ],
@@ -134951,7 +134956,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Loam Elemental",
@@ -135020,7 +135025,7 @@
     },
     {
         "name": "Expert Druid",
-        "sprite": "sprites/enemy/basic/magical/expert_druid.atlas",
+        "sprite": "sprites/enemy/remake/expert_druid.atlas",
         "deck": [
             "decks/standard/expert_druid.dck"
         ],
@@ -135078,7 +135083,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3023
     },
     {
         "name": "Ember Elemental",
@@ -135145,7 +135151,7 @@
     },
     {
         "name": "Fluttering Pixie",
-        "sprite": "sprites/enemy/basic/magical/fluttering_pixie.atlas",
+        "sprite": "sprites/enemy/remake/fluttering_pixie.atlas",
         "deck": [
             "decks/standard/fluttering_pixie.dck"
         ],
@@ -135207,7 +135213,7 @@
         ],
         "tier": "Common",
         "flying": true,
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Glowing Wisp",
@@ -135469,7 +135475,7 @@
     },
     {
         "name": "Magical Fairy",
-        "sprite": "sprites/enemy/basic/magical/magical_fairy.atlas",
+        "sprite": "sprites/enemy/remake/magical_fairy.atlas",
         "deck": [
             "decks/standard/magical_fairy.dck"
         ],
@@ -135530,11 +135536,11 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Novice Pyromancer",
-        "sprite": "sprites/enemy/basic/magical/novice_pyromancer.atlas",
+        "sprite": "sprites/enemy/remake/novice_pyromancer.atlas",
         "deck": [
             "decks/standard/novice_pyromancer.dck"
         ],
@@ -135593,11 +135599,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3171
     },
     {
         "name": "Vile Witch",
-        "sprite": "sprites/enemy/basic/magical/vile_witch.atlas",
+        "sprite": "sprites/enemy/remake/vile_witch.atlas",
         "deck": [
             "decks/standard/vile_witch.dck"
         ],
@@ -135656,7 +135662,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Tide Elemental",

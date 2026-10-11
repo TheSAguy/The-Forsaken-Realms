@@ -1,0 +1,173 @@
+depraved_blackguard.png
+size: 1458,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 162, 59
+Idle
+  xy: 162, 64
+  size: 162, 59
+Idle
+  xy: 324, 64
+  size: 162, 59
+Idle
+  xy: 486, 64
+  size: 162, 59
+Walk
+  xy: 0, 123
+  size: 162, 59
+Walk
+  xy: 162, 123
+  size: 162, 59
+Walk
+  xy: 324, 123
+  size: 162, 59
+Walk
+  xy: 486, 123
+  size: 162, 59
+Walk
+  xy: 648, 123
+  size: 162, 59
+Walk
+  xy: 810, 123
+  size: 162, 59
+Walk
+  xy: 972, 123
+  size: 162, 59
+Walk
+  xy: 1134, 123
+  size: 162, 59
+Attack
+  xy: 0, 182
+  size: 162, 59
+Attack
+  xy: 162, 182
+  size: 162, 59
+Attack
+  xy: 324, 182
+  size: 162, 59
+Attack
+  xy: 486, 182
+  size: 162, 59
+Attack
+  xy: 648, 182
+  size: 162, 59
+Attack
+  xy: 810, 182
+  size: 162, 59
+Hit
+  xy: 0, 241
+  size: 162, 59
+Hit
+  xy: 162, 241
+  size: 162, 59
+Hit
+  xy: 324, 241
+  size: 162, 59
+Hit
+  xy: 486, 241
+  size: 162, 59
+Death
+  xy: 0, 300
+  size: 162, 59
+Death
+  xy: 162, 300
+  size: 162, 59
+Death
+  xy: 324, 300
+  size: 162, 59
+Death
+  xy: 486, 300
+  size: 162, 59
+Death
+  xy: 648, 300
+  size: 162, 59
+Death
+  xy: 810, 300
+  size: 162, 59
+Death
+  xy: 972, 300
+  size: 162, 59
+Death
+  xy: 1134, 300
+  size: 162, 59
+Death
+  xy: 1296, 300
+  size: 162, 59
+IdleUp
+  xy: 0, 359
+  size: 162, 59
+IdleUp
+  xy: 162, 359
+  size: 162, 59
+IdleUp
+  xy: 324, 359
+  size: 162, 59
+IdleUp
+  xy: 486, 359
+  size: 162, 59
+IdleDown
+  xy: 0, 418
+  size: 162, 59
+IdleDown
+  xy: 162, 418
+  size: 162, 59
+IdleDown
+  xy: 324, 418
+  size: 162, 59
+IdleDown
+  xy: 486, 418
+  size: 162, 59
+WalkUp
+  xy: 0, 477
+  size: 162, 59
+WalkUp
+  xy: 162, 477
+  size: 162, 59
+WalkUp
+  xy: 324, 477
+  size: 162, 59
+WalkUp
+  xy: 486, 477
+  size: 162, 59
+WalkUp
+  xy: 648, 477
+  size: 162, 59
+WalkUp
+  xy: 810, 477
+  size: 162, 59
+WalkUp
+  xy: 972, 477
+  size: 162, 59
+WalkUp
+  xy: 1134, 477
+  size: 162, 59
+WalkDown
+  xy: 0, 536
+  size: 162, 59
+WalkDown
+  xy: 162, 536
+  size: 162, 59
+WalkDown
+  xy: 324, 536
+  size: 162, 59
+WalkDown
+  xy: 486, 536
+  size: 162, 59
+WalkDown
+  xy: 648, 536
+  size: 162, 59
+WalkDown
+  xy: 810, 536
+  size: 162, 59
+WalkDown
+  xy: 972, 536
+  size: 162, 59
+WalkDown
+  xy: 1134, 536
+  size: 162, 59
