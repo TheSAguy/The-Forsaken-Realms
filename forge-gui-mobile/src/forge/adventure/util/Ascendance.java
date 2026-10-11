@@ -924,6 +924,8 @@ public final class Ascendance {
     public static float openingTossChance() { return Math.min(1f, 0.5f * (1f + total("coinToss"))); }
     /** Round 536 (the user: "+5%, +10% and +15% Power gain. So 3 tiers"): Zealot - every Power award, times this. */
     public static float powerGainFactor() { return 1f + total("powerGain"); }
+    /** Round 548 (the user: "Card Sell Price +10%, +15%, +20%"): Appraiser - what a card sells for, times this. */
+    public static float sellPriceFactor() { return 1f + total("sellPrice"); }
     /** Round 525: Opening Gambit as the player seat's weight in the engine's toss against an opponent at 1 (75% -> 3). */
     public static float coinTossWeight() {
         float chance = openingTossChance();
@@ -1154,6 +1156,7 @@ public final class Ascendance {
             case "powerGain": effect = "Power gained +" + pct(then) + " " + ICON + (now > 0 ? " (now +" + pct(now) + ")" : ""); break; // round 536
             case "gambler": effect = GAMBLER_REROLLS + " re-rolls a level, each " + rerollCostAt(c.value) + " [+Shards] (one is "
                     + baseRerollCost() + " now)"; break; // round 536
+            case "sellPrice": effect = "Cards sell for " + pct(then) + " more [+Gold]" + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // round 548
             default: effect = id;
         }
         return effect;
@@ -1250,6 +1253,7 @@ public final class Ascendance {
             case "coinToss": return "Opening Gambit"; // round 525
             case "powerGain": return "Zealot"; // round 536
             case "gambler": return "Gambler";
+            case "sellPrice": return "Appraiser"; // round 548
             default: return id;
         }
     }

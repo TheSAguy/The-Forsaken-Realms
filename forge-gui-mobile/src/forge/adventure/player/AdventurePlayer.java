@@ -1453,6 +1453,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             }
         }
 
+        // Round 548 (the user: "Change the card sell price to Hard 30%. Insane 20%"): the sell factor is the difficulty's
+        // as the config has it now - a save carries the value from the day it was made, so a changed table never reached
+        // an existing game.
+        if (configuredDifficulty != null && configuredDifficulty.sellFactor > 0
+                && configuredDifficulty.sellFactor != this.difficultyData.sellFactor) {
+            System.out.println("[TFR-Sell] " + this.difficultyData.name + " sell factor " + this.difficultyData.sellFactor
+                    + " -> " + configuredDifficulty.sellFactor + " (config.json)");
+            this.difficultyData.sellFactor = configuredDifficulty.sellFactor;
+        }
         if (configuredDifficulty != null && (this.difficultyData.shardSellRatio == data.readFloat("shardSellRatio") || data.readFloat("shardSellRatio") == 0))
             this.difficultyData.shardSellRatio = configuredDifficulty.shardSellRatio;
         else
@@ -3066,7 +3075,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         decks.set(selectedDeckIndex, deck);
     }
 
+    /** What a card sells for: cardBaseSellPrice, raised by the Appraiser perk (round 548). */
     public int cardSellPrice(PaperCard card) {
+        int base = cardBaseSellPrice(card);
+        float appraiser = forge.adventure.util.Ascendance.sellPriceFactor();
+        return appraiser == 1f ? base : Math.round(base * appraiser);
+    }
+
+    /** Round 548: the sell price before the Appraiser perk - the base the ante's Buy Back is priced from, so the perk
+     *  never makes buying a card back dearer. */
+    public int cardBaseSellPrice(PaperCard card) {
         if (card.hasNoSellValue()) {
             return 0;
         }

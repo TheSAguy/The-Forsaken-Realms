@@ -125,6 +125,9 @@
     // Round 536 (the user: "Re-roll Ascension perks twice at 50% cost. So if you do re-roll twice it will cost the same as
     // without the perk. You also get to re-roll twice per level vs. 1 without"): Gambler - two re-rolls a level, each at
     // this share of the difficulty's price (difficultyRerollCost).
-    { "id": "gambler",     "lasting": true, "maxPicks": 1, "value": 0.50 }
+    { "id": "gambler",     "lasting": true, "maxPicks": 1, "value": 0.50 },
+    // Round 548 (the user: "Add a level perk. Card Sell Price +10%, +15%, +20%"): Appraiser - cards sell for 10%,
+    // then 15%, then 20% more (the price after the difficulty's share and the town's mood).
+    { "id": "sellPrice",   "lasting": true, "maxPicks": 3, "first": 0.10, "value": 0.05 }
   ]
 }

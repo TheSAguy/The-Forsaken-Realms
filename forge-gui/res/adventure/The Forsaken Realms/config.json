@@ -165,7 +165,7 @@
       "spawnRank": 2,         
       "goldLoss": 0.3,
       "lifeLoss": 0.3,  
-      "sellFactor": 0.25,
+      "sellFactor": 0.3, // round 548 (the user: "Change the card sell price to Hard 30%. Insane 20%"): was 0.25
       "shardSellRatio": 0.6,
       // Round 150: Standard now generates from the RACE's own sets too. The old
       // "<color>_<difficulty>.json" files were three jumpstartPacks, and jumpstart-style
@@ -210,7 +210,7 @@
       "spawnRank": 3,
       "goldLoss": 0.5,
       "lifeLoss": 0.3,
-      "sellFactor": 0.05,
+      "sellFactor": 0.2, // round 548: was 0.05
       "shardSellRatio": 0.3,
       // Round 150: Standard now generates from the RACE's own sets too. The old
       // "<color>_<difficulty>.json" files were three jumpstartPacks, and jumpstart-style

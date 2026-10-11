@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-11 (round 548): **LOCAL + UNRELEASED** - card sell factor Hard 0.3 / Insane 0.2 (loads take the
+config's); the Appraiser perk (+10/15/20% sell price; Buy Back priced without it).
+
 ## STATE 2026-10-11 (round 547): **LOCAL + UNRELEASED** - White Dragon portraits (thirteen in `Dragon_w`).
 
 ## STATE 2026-10-11 (round 546): **LOCAL + UNRELEASED** - Werewolf portraits (eighteen, shared).

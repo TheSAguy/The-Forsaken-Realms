@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 548: card sell prices on Hard and Insane; the Appraiser perk (2026-10-11)
+
+The user: "Change the card sell price to Hard 30%. Insane 20%. Add a level perk. Card Sell Price +10%, +15%, +20%."
+
+- **Sell factor** (`config.json`): Hard 0.25 -> 0.3, Insane 0.05 -> 0.2. Easy 0.6 and Normal 0.5 unchanged. GUIDE
+  updated.
+- **Existing games get it too:**
+  - A save stored the sell factor of the day it was made, and a load read that back, so a changed table never reached a
+    running game.
+  - `AdventurePlayer.load` now takes the difficulty's factor from `config.json`, logged as `[TFR-Sell] Insane sell
+    factor 0.05 -> 0.2 (config.json)`.
+- **Appraiser I-III** (`ascendance.json` "sellPrice", lasting, 3 picks, first 0.10 then 0.05):
+  - Cards sell for 10%, 15%, 20% more.
+  - The perk multiplies the price after the difficulty's share and the town's mood (`Ascendance.sellPriceFactor`,
+    `AdventurePlayer.cardSellPrice`).
+  - `cardBaseSellPrice` is the price without it. The ante's Buy Back is priced from that (`DuelScene`), so the perk
+    never makes buying a card back dearer.
+- **Icons** `sellPrice_1..3`: Shikashi's hand catching coins (12,12) with round 536's green rank chevrons
+  (`icons/perk548.py`, scratch). The icon page grew a row to 800 x 800.
+- **Agent-tested** (with a scratch-only console command, never committed, that prints a few cards' sell prices):
+  - Nine Insane saves made at 0.05 load at 0.2 (a Silverblade Paladin sells for 60).
+  - Normal stays at 0.5.
+  - On a Normal save, Appraiser I, II and III took a 75-gold card to 83, 86 and 90, while its base stayed 75.
+
 ## Round 547: White Dragon portraits (2026-10-11)
 
 The user, from the 27-candidate sheet: "1, 2, 3, 4, 8, 11, 12, 14, 15, 18, 23, 26, 27".

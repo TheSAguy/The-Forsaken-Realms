@@ -1170,7 +1170,7 @@ apply.
 
 - **Hold Z** to move at 1.5x on the overworld. Time moves faster too.
 - **Selling** cards pays a share of value set by your difficulty - 60% Easy, 50% Normal,
-  25% Hard, 5% Insane (shown as the sale price on the new-game screen); the town's opinion of
+  30% Hard, 20% Insane (shown as the sale price on the new-game screen); the town's opinion of
   you adjusts it from there.
 - **Max life grows with your realm:** +1 for every five towns you hold, +1 for the Capitol, and +1
   for each Ring City you have visited, for as long as no AI color holds it.

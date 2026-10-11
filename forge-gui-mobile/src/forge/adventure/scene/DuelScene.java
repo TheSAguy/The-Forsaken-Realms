@@ -623,7 +623,8 @@ public class DuelScene extends ForgeScene {
         // the Auto-Sell branch already applies via its own sellPrice>0 check, since FOptionPane's
         // button list has no per-button disabled state to grey one out instead.
         int buyBackPrice = (!won && eventData == null)
-                ? Math.max(Math.round(Current.player().cardSellPrice(card) * Config.instance().getTuningData().anteBuyBackMultiplier),
+                // Round 548: the base price - the Appraiser perk raises what a card sells for, not its buy-back.
+                ? Math.max(Math.round(Current.player().cardBaseSellPrice(card) * Config.instance().getTuningData().anteBuyBackMultiplier),
                         anteBuyBackMinPrice(card))
                 : 0;
         boolean offerBuyBack = buyBackPrice > 0 && Current.player().getGold() >= buyBackPrice;
