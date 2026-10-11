@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 549: faster notices, a notices log, no bold (2026-10-11)
+
+On Discord, Dove: "The little notifications in the corner are kinda a pain. They get backed up so far with all the EXP
+gain notifications, and entering area's. Would be nice if they cycled faster, showed more then one of a time, didn't show
+the EXP, or all of the above." Vr01: "And a log of the announcement so you don't miss one". The user: "I'd be 2 or 3
+caves/POI down then get them from the ones I visited a while ago ... speed up when the notices show up so they feel more
+timely. Let's also add a log button in the bottom left hand corner, then when you click on it, it would show the last 20
+entries. The bold font on this is hard to read" (a "Defeated at Von Gant's Fortress - 2 attempts remaining ..." banner).
+
+- **Why they lagged:** every notice was a 15-second action on the banner pane (2 s in, 10 s held, 3 s out), queued after
+  the one before - ten notices took two and a half minutes.
+- **Now `GameHUD` keeps its own queue (`showNextNotices`):**
+  - A banner slides in in 0.4 s.
+  - It holds 5 s alone, or 2.5 s once another notice waits.
+  - It fades in 0.6 s.
+  - It takes up to three waiting notices of the same tint in one banner, each starting from plain formatting (`[ ]`).
+  - `[TFR-Notices] banner of N notice(s), M waiting`.
+- **Power gains go to the log only** (`GameHUD.logNotification`, from `Ascendance.awardExact`). The Asc panel shows the
+  bar move, and a level-up keeps its banner.
+- **The Log button:**
+  - In landscape it sits in the bottom-left corner, and the banners now rise to just above it. In portrait it takes the
+    bottom bar's slot left of Info.
+  - It opens the last 20 notices, newest first, each with its day, on the banners' own paper and tint.
+  - The log and the queue are cleared with a load (`clearNotifications`).
+  - The button is on the Android touchpad's exclusion list (round 524).
+- **Bold:**
+  - `[*]` smears on the paper (three messages had already dropped it). Every notice now has it stripped
+    (`normalizeNotice`), and the dungeon-defeat warning (`DungeonRotation`) no longer uses it.
+- **Agent-tested** (slot 7, a scratch-only console command, never committed, raising six notices at once):
+  - The banners went 1, then 3, then 2, and were gone by 14 s.
+  - The defeat warning shows plain.
+  - The Log listed all six with their day.
+  - A Power gain landed in the log and raised no banner.
+  - The first try mis-launched: `cmd` splits the classpath argument at `;`, so the game ran the jar's old HUD. Test
+    classes now go in one folder.
+
 ## Round 548: card sell prices on Hard and Insane; the Appraiser perk (2026-10-11)
 
 The user: "Change the card sell price to Hard 30%. Insane 20%. Add a level perk. Card Sell Price +10%, +15%, +20%."

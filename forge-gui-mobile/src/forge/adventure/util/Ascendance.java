@@ -550,8 +550,10 @@ public final class Ascendance {
         s.power += amount;
         int after = levelFor(s.power);
         System.out.println("[TFR-Ascend] +" + amount + " Power - " + source + " (total " + s.power + ", level " + after + ")");
-        // Round 517: authored on the paper, so the sun keeps its colors (the black tint drew it solid black).
-        GameHUD.getInstance().addNotification(onPaper("[BLACK][%85]+" + amount + " " + ICON + " - " + source), true);
+        // Round 517: authored on the paper, so the sun keeps its colors (the black tint drew it solid black). Round 549
+        // (Dove on Discord: "They get backed up so far with all the EXP gain notifications ... didn't show the EXP"): to
+        // the notices' log only - the HUD's Asc panel shows the bar move, and a level-up still gets its banner.
+        GameHUD.getInstance().logNotification(onPaper("[BLACK][%85]+" + amount + " " + ICON + " - " + source), true);
         for (int level = before + 1; level <= after; level++)
             onLevelUp(level);
     }

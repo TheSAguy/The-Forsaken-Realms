@@ -782,8 +782,8 @@ public class DungeonRotation {
             if (remaining > 0) {
                 // Bold, not color markup - notifications render tint-black, which erases inline
                 // colors (see GameHUD.addNotification()'s comment).
-                GameHUD.getInstance().addNotification("Defeated at " + poi.getDisplayName() + " - [*]"
-                        + remaining + " attempt" + (remaining == 1 ? "" : "s") + " remaining[*] before it is lost!");
+                GameHUD.getInstance().addNotification("Defeated at " + poi.getDisplayName() + " - "
+                        + remaining + " attempt" + (remaining == 1 ? "" : "s") + " remaining before it is lost!"); // round 549: no bold - it smears
                 System.out.println("[DungeonRotation] defeat at side-quest target " + poi.getDisplayName() + ", " + remaining + " attempt(s) remaining");
                 return;
             }

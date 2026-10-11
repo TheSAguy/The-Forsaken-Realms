@@ -124,6 +124,9 @@ public class GameHUD extends Stage {
     private final ResourceDisplayActor resourceDisplayActor;
     private final forge.adventure.util.AscendanceDisplayActor ascendanceDisplayActor; // round 493
     private final TextraButton worldStandingsActor;
+    // Round 549 (Vr01 on Discord: "And a log of the announcement so you don't miss one"; the user: "add a log button in the
+    // bottom left hand corner, then when you click on it, it would show the last 20 entries"): the notices' log.
+    private final TextraButton noticeLogButton;
     private final InputEvent eventTouchDown, eventTouchUp;
     private final TextraButton deckActor, openMapActor, menuActor, logbookActor, inventoryActor, exitToWorldMapActor, bookmarkActor;
     public final UIActor ui;
@@ -212,6 +215,7 @@ public class GameHUD extends Stage {
         // not hud.json, same "don't fork the shared layout file" reasoning as resourceDisplayActor
         // - chains off bookmarkActor's own hud.json-driven position the same way.
         worldStandingsActor = Controls.newTextButton("[%80]Info", this::openWorldStandings);
+        noticeLogButton = Controls.newTextButton("[%80]Log", this::openNoticeLog); // round 549
         //create touchpad
         touchpad = new Touchpad(10, Controls.getSkin());
         touchpad.setBounds(15, 15, TOUCHPAD_SCALE, TOUCHPAD_SCALE);
@@ -298,6 +302,15 @@ public class GameHUD extends Stage {
         // to see your tier on the OTHER feature's flag would leave War-tier town bans and
         // capital tolls active with no way to view the standing causing them.
         worldStandingsActor.setVisible(isTerritoryControlEnabled() || ColorReputation.isEnabled());
+        // Round 549: the Log button in the bottom-left corner - in landscape below the notices (which now rise to just
+        // above it), in portrait on the bottom bar's row, one slot left of Info.
+        if (Forge.isLandscapeMode()) {
+            noticeLogButton.setSize(LOG_BUTTON_W, menuActor.getHeight() * 0.8f);
+            noticeLogButton.setPosition(2, 2);
+        } else {
+            noticeLogButton.setSize(menuActor.getWidth(), menuActor.getHeight());
+            noticeLogButton.setPosition(Math.max(0, worldStandingsActor.getX() - menuActor.getWidth()), menuActor.getY());
+        }
         lifePoints.setText("[%95][+Life]");
         enemyCounterText = Controls.newTypingLabel(Forge.getLocalizer().getMessage("lblRemainingEnemies", String.valueOf(0)));
         enemyCounterText.setColor(Color.BLACK);
@@ -425,6 +438,7 @@ public class GameHUD extends Stage {
         menuGroup.addActor(bookmarkActor);
         menuGroup.addActor(worldStandingsActor);
         ui.addActor(menuGroup);
+        ui.addActor(noticeLogButton); // round 549: not in menuGroup, which a town hides - the log is wanted everywhere
         //AVATAR
         avatarGroup.addActor(avatar);
         avatarGroup.addActor(avatarborder);
@@ -509,7 +523,7 @@ public class GameHUD extends Stage {
      */
     private boolean onHudControl(Vector2 stagePoint) {
         Actor[] built = {worldStandingsActor, speedCheckBox, waitCheckBox, timeOfDayActor, resourceDisplayActor,
-                ascendanceDisplayActor, treasureMapsButton};
+                ascendanceDisplayActor, treasureMapsButton, noticeLogButton};
         for (Actor actor : built)
             if (containsStagePoint(actor, stagePoint))
                 return true;
@@ -1487,6 +1501,150 @@ public class GameHUD extends Stage {
      * the safe black tint.
      */
     public void addNotification(String text, boolean authored) {
+        String[] notice = normalizeNotice(text, authored);
+        forge.adventure.agent.AgentBridge.noteNotification(notice[0]); // round 161: the agent reads these too
+        logNotice(notice);
+        noticeQueue.add(notice);
+        if (!noticeShowing)
+            showNextNotices();
+    }
+
+    /** Round 549 (Dove on Discord: "They get backed up so far with all the EXP gain notifications ... didn't show the
+     *  EXP"): a notice for the log only - no banner. The Power gains go here. */
+    public void logNotification(String text, boolean authored) {
+        String[] notice = normalizeNotice(text, authored);
+        forge.adventure.agent.AgentBridge.noteNotification(notice[0]);
+        logNotice(notice);
+    }
+
+    // Round 549 (Dove: "They get backed up so far ... Would be nice if they cycled faster, showed more then one of a time";
+    // the user: "I'd be 2 or 3 caves/POI down then get them from the ones I visited a while ago ... speed up when the
+    // notices show up so they feel more timely"). Every notice was a 15-second action on the pane - 2 s in, 10 s held, 3 s
+    // out - queued after the one before, so ten notices took two and a half minutes. Now our own queue: a banner slides in
+    // in 0.4 s, holds NOTICE_HOLD alone or NOTICE_HOLD_BUSY while more wait, fades in 0.6 s, and takes up to
+    // NOTICES_AT_ONCE waiting notices of the same tint in one go.
+    private static final float NOTICE_IN = 0.4f, NOTICE_HOLD = 5f, NOTICE_HOLD_BUSY = 2.5f, NOTICE_OUT = 0.6f;
+    private static final int NOTICES_AT_ONCE = 3;
+    private static final int NOTICE_LOG_SIZE = 20;
+    private static final float LOG_BUTTON_W = 26f;
+    private final java.util.ArrayDeque<String[]> noticeQueue = new java.util.ArrayDeque<>(); // {text, "w" | "b"}
+    private final java.util.ArrayDeque<String[]> noticeLog = new java.util.ArrayDeque<>(); // {text, tint, day}, newest first
+    private boolean noticeShowing;
+
+    private void logNotice(String[] notice) {
+        int day = WorldSave.getCurrentSave() != null && WorldSave.getCurrentSave().getWorld() != null
+                ? WorldSave.getCurrentSave().getWorld().getCurrentDay() : 0;
+        noticeLog.addFirst(new String[]{notice[0], notice[1], String.valueOf(day)});
+        while (noticeLog.size() > NOTICE_LOG_SIZE)
+            noticeLog.removeLast();
+    }
+
+    /** The next banner: the oldest waiting notice and up to NOTICES_AT_ONCE - 1 more of the same tint behind it. */
+    private void showNextNotices() {
+        String[] first = noticeQueue.poll();
+        if (first == null) {
+            noticeShowing = false;
+            return;
+        }
+        noticeShowing = true;
+        StringBuilder text = new StringBuilder(first[0]);
+        int count = 1;
+        while (count < NOTICES_AT_ONCE && !noticeQueue.isEmpty() && noticeQueue.peek()[1].equals(first[1])) {
+            text.append("\n[ ]").append(noticeQueue.poll()[0]); // [ ] - each notice starts from plain formatting
+            count++;
+        }
+        final String shown = text.toString();
+        final boolean whiteTint = "w".equals(first[1]);
+        System.out.println("[TFR-Notices] banner of " + count + " notice" + (count == 1 ? "" : "s") + ", " + noticeQueue.size()
+                + " waiting");
+        Action preconfigureNotification = new Action() {
+            @Override
+            public boolean act(float delta) {
+                keepBannerOnTop(); // round 329
+                notificationText.setWrap(false);
+                notificationText.setText(shown);
+                notificationText.setColor(whiteTint ? Color.WHITE : Color.BLACK);
+                notificationText.setWidth(Math.min(notificationText.getPrefWidth(), Forge.isLandscapeMode() ? getWidth() * 0.25f : getWidth() - 25));
+                notificationText.setWrap(true);
+                notificationText.layout();
+                notificationPane.setSize(notificationText.getWidth() + 10, notificationText.getPrefHeight() + 20);
+                notificationPane.setPosition(5, Forge.isLandscapeMode() ? -notificationPane.getHeight() : getHeight());
+                notificationPane.getColor().a = 1f;
+                notificationPane.layout();
+                notificationText.layout();
+                return true;
+            }
+        };
+        Action hold = new Action() { // held until NOTICE_HOLD, or NOTICE_HOLD_BUSY once another notice waits
+            private float elapsed;
+
+            @Override
+            public boolean act(float delta) {
+                elapsed += delta;
+                return elapsed >= (noticeQueue.isEmpty() ? NOTICE_HOLD : NOTICE_HOLD_BUSY);
+            }
+        };
+        Action slideIn = Forge.isLandscapeMode()
+                ? Actions.moveTo(5, noticeLogButton.getY() + noticeLogButton.getHeight() + 2, NOTICE_IN)
+                : Actions.moveToAligned(5, getHeight(), Align.topLeft, NOTICE_IN);
+        notificationPane.clearActions();
+        notificationPane.addAction(Actions.sequence(preconfigureNotification, slideIn, hold,
+                Actions.alpha(0f, NOTICE_OUT), Actions.sizeTo(0, 0), Actions.run(this::showNextNotices)));
+    }
+
+    /** Round 549: the Log button - the last NOTICE_LOG_SIZE notices, newest first, each with its day, on the banners'
+     *  own paper so they read as they did. */
+    private void openNoticeLog() {
+        if (console.isVisible())
+            return;
+        GameStage stage = MapStage.getInstance().isInMap() ? MapStage.getInstance() : WorldStage.getInstance();
+        if (stage.isDialogOnlyInput())
+            return;
+        com.badlogic.gdx.scenes.scene2d.ui.Dialog dialog = stage.getDialog();
+        dialog.getContentTable().clear();
+        dialog.getButtonTable().clear();
+        dialog.clearListeners();
+        float width = Forge.isLandscapeMode() ? 250f : 230f;
+        TextraLabel title = Controls.newTextraLabel("[GOLD]Notices[] [%80](the last " + NOTICE_LOG_SIZE + ")");
+        dialog.getContentTable().add(title).padBottom(3f).row();
+        com.badlogic.gdx.scenes.scene2d.ui.Table rows = new com.badlogic.gdx.scenes.scene2d.ui.Table();
+        if (noticeLog.isEmpty())
+            rows.add(Controls.newTextraLabel("[%85]Nothing yet.")).width(width - 12f).left().row();
+        for (String[] entry : noticeLog) {
+            TextraLabel day = Controls.newTextraLabel("[%70]Day " + entry[2]);
+            day.setColor(Color.BLACK);
+            TextraLabel line = Controls.newTextraLabel("[%85]" + entry[0]);
+            line.setColor("w".equals(entry[1]) ? Color.WHITE : Color.BLACK);
+            line.setWrap(true);
+            rows.add(day).left().top().padRight(4f);
+            rows.add(line).width(width - 52f).left().padBottom(4f).row();
+        }
+        ScrollPane pane = new ScrollPane(rows, Controls.getSkin().get("paper", ScrollPane.ScrollPaneStyle.class));
+        pane.setScrollingDisabled(true, false);
+        pane.setFadeScrollBars(false);
+        rows.pack();
+        float cap = Forge.isLandscapeMode() ? 160f : 320f;
+        dialog.getContentTable().add(pane).width(width).height(Math.min(cap, rows.getPrefHeight() + 24f)).row();
+        pane.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() { // the wheel scrolls the list, not the map under it
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                if (pointer == -1 && pane.getStage() != null)
+                    pane.getStage().setScrollFocus(pane);
+            }
+        });
+        dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).width(width / 2f).row();
+        dialog.setKeepWithinStage(true);
+        stage.showDialog();
+        System.out.println("[TFR-Notices] log opened - " + noticeLog.size() + " entr" + (noticeLog.size() == 1 ? "y" : "ies"));
+    }
+
+    /** A notice's text as shown, and its tint ("w" white with its own color tags, "b" black). */
+    private String[] normalizeNotice(String text, boolean authored) {
+        // Round 549 (the user, of "Defeated at Von Gant's Fortress - 2 attempts remaining ...": "The bold font on this is
+        // hard to read"): bold [*] smears on the paper (rounds 136/146/192 already took it out of three messages) - out of
+        // every notice, quest texts included.
+        if (text != null)
+            text = text.replace("[*]", "");
         boolean authoredMarkup = authored;
         // Round 367 (the user's screenshot: "Received [gold] 500." with the coin drawn solid black): the black tint below
         // multiplies into icon glyphs too. A plain message whose ONLY markup is icons ([+Gold], [+Shards] ...) is safe to
@@ -1505,56 +1663,13 @@ public class GameHUD extends Stage {
             System.out.println("[TFR-Banner] untagged text under the white tint, opened [BLACK]: " + text);
             text = "[BLACK]" + text;
         }
-        final String shown = text;
-        final boolean whiteTint = authoredMarkup;
-        forge.adventure.agent.AgentBridge.noteNotification(shown); // round 161: the agent reads these too
-        Action preconfigureNotification = new Action() {
-            @Override
-            public boolean act(float delta) {
-                keepBannerOnTop(); // round 329
-                notificationText.setWrap(false);
-                // Deliberately the plain tint-BLACK approach: a [BLACK]-markup-prefix + WHITE-tint
-                // variant was tried (to let inline color tags like [RED] through - black tint
-                // MULTIPLIES glyph colors, erasing them) and REVERTED: real notification payloads
-                // (quest objective texts) carry their own style/reset tokens, and any reset mid-
-                // string snapped the remainder back to white - a reported regression ("some of the
-                // text colors changed... from black to white"). Inline COLOR therefore cannot work
-                // in tint-BLACK notifications; fully-authored messages can opt in to WHITE tint
-                // via addNotification(text, true) - see that overload's comment.
-                notificationText.setText(shown);
-                notificationText.setColor(whiteTint ? Color.WHITE : Color.BLACK);
-                notificationText.setWidth(Math.min(notificationText.getPrefWidth(), Forge.isLandscapeMode() ? getWidth() * 0.25f : getWidth() - 25));
-                notificationText.setWrap(true);
-                notificationText.layout();
-
-                notificationPane.setSize(notificationText.getWidth() + 10, notificationText.getPrefHeight() + 20);
-
-                notificationPane.setPosition(5, Forge.isLandscapeMode() ? -notificationPane.getHeight() : getHeight());
-
-                notificationPane.getColor().a = 1f;
-                notificationPane.layout();
-                notificationText.layout();
-                return true;
-            }
-        };
-
-        Action newNotification;
-
-        if (Forge.isLandscapeMode()) {
-            newNotification = Actions.after(Actions.sequence(preconfigureNotification,
-                    Actions.moveTo(5, 0, 2f),
-                    Actions.delay(10f),
-                    Actions.alpha(0f, 3f),
-                    Actions.sizeTo(0, 0)));
-        } else {
-            newNotification = Actions.after(Actions.sequence(preconfigureNotification,
-                    Actions.moveToAligned(5, getHeight(), Align.topLeft, 2f),
-                    Actions.delay(10f),
-                    Actions.alpha(0f, 3f),
-                    Actions.sizeTo(0, 0)));
-        }
-
-        notificationPane.addAction(newNotification);
+        // Deliberately the plain tint-BLACK approach for an ordinary notice: a [BLACK]-markup-prefix + WHITE-tint variant
+        // was tried (to let inline color tags like [RED] through - black tint MULTIPLIES glyph colors, erasing them) and
+        // REVERTED: real notification payloads (quest objective texts) carry their own style/reset tokens, and any reset
+        // mid-string snapped the remainder back to white - a reported regression ("some of the text colors changed...
+        // from black to white"). Inline COLOR therefore cannot work in tint-BLACK notifications; fully-authored messages
+        // can opt in to WHITE tint via addNotification(text, true) - see that overload's comment.
+        return new String[]{text == null ? "" : text, authoredMarkup ? "w" : "b"};
     }
 
     /**
@@ -1576,6 +1691,9 @@ public class GameHUD extends Stage {
         // Action SEQUENCE queued on the pane, and resetting the label never touched the queue - so
         // seven new games' worth of banners were still waiting to play when the old save loaded.
         notificationPane.clearActions();
+        noticeQueue.clear(); // round 549: our own queue - and the log, which belonged to the game before
+        noticeLog.clear();
+        noticeShowing = false;
         notificationText.setText("");
         notificationPane.setBounds(5, Forge.isLandscapeMode() ? -notificationText.getPrefHeight() : getHeight(), getWidth() * 0.4f, 25);
         notificationPane.setStyle(Controls.getSkin().get("paper", ScrollPane.ScrollPaneStyle.class));
