@@ -483,66 +483,6 @@ Dwarf_f
 Dwarf_f
   xy: 144, 240
   size: 16, 16
-Phyrexian_m
-  xy: 0, 256
-  size: 16, 16
-Phyrexian_m
-  xy: 16, 256
-  size: 16, 16
-Phyrexian_m
-  xy: 32, 256
-  size: 16, 16
-Phyrexian_m
-  xy: 48, 256
-  size: 16, 16
-Phyrexian_m
-  xy: 64, 256
-  size: 16, 16
-Phyrexian_m
-  xy: 80, 256
-  size: 16, 16
-Phyrexian_m
-  xy: 96, 256
-  size: 16, 16
-Phyrexian_m
-  xy: 112, 256
-  size: 16, 16
-Phyrexian_m
-  xy: 128, 256
-  size: 16, 16
-Phyrexian_m
-  xy: 144, 256
-  size: 16, 16
-Phyrexian_f
-  xy: 0, 272
-  size: 16, 16
-Phyrexian_f
-  xy: 16, 272
-  size: 16, 16
-Phyrexian_f
-  xy: 32, 272
-  size: 16, 16
-Phyrexian_f
-  xy: 48, 272
-  size: 16, 16
-Phyrexian_f
-  xy: 64, 272
-  size: 16, 16
-Phyrexian_f
-  xy: 80, 272
-  size: 16, 16
-Phyrexian_f
-  xy: 96, 272
-  size: 16, 16
-Phyrexian_f
-  xy: 112, 272
-  size: 16, 16
-Phyrexian_f
-  xy: 128, 272
-  size: 16, 16
-Phyrexian_f
-  size: 16, 16
-  xy: 144, 272
 Werewolf_m
   xy: 0, 288
   size: 16, 16
@@ -714,3 +654,57 @@ Vampire_m
 Vampire_f
   xy: 0, 480
   size: 16, 16
+
+avatar_cards.png
+size: 1632,272
+format: RGBA8888
+filter: MipMapLinearLinear,Linear
+repeat: none
+Phyrexian_m
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Phyrexian_m
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Phyrexian_m
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Phyrexian_m
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Phyrexian_m
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Phyrexian_m
+  xy: 1368, 8
+  size: 256, 256
+  index: 5
+Phyrexian_f
+  xy: 8, 8
+  size: 256, 256
+  index: 0
+Phyrexian_f
+  xy: 280, 8
+  size: 256, 256
+  index: 1
+Phyrexian_f
+  xy: 552, 8
+  size: 256, 256
+  index: 2
+Phyrexian_f
+  xy: 824, 8
+  size: 256, 256
+  index: 3
+Phyrexian_f
+  xy: 1096, 8
+  size: 256, 256
+  index: 4
+Phyrexian_f
+  xy: 1368, 8
+  size: 256, 256
+  index: 5

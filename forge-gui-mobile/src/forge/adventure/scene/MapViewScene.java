@@ -988,7 +988,9 @@ public class MapViewScene extends UIScene {
     public void enter() {
         refreshMap();
         miniMapPlayer.setDrawable(new TextureRegionDrawable(Current.player().avatar()));
-        miniMapPlayer.setSize(Current.player().avatar().getRegionWidth(), Current.player().avatar().getRegionHeight());
+        // Round 538: a card-art portrait is 256 px - the marker keeps the 16-unit size of the pixel portraits.
+        miniMapPlayer.setSize(Math.min(16, Current.player().avatar().getRegionWidth()),
+                Math.min(16, Current.player().avatar().getRegionHeight()));
         avatarX = getMapX(WorldStage.getInstance().getPlayerSprite().getX()) - miniMapPlayer.getWidth() / 2;
         avatarY = getMapY(WorldStage.getInstance().getPlayerSprite().getY()) - miniMapPlayer.getHeight() / 2;
         miniMapPlayer.setPosition(avatarX, avatarY);

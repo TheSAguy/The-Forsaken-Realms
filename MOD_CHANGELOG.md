@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 538: Phyrexian player portraits from card art (2026-10-11)
+
+The user, with the Create a Character screen's pixel Phyrexian portrait circled: "I'd like to replace the default player
+portraits with in game card pictures. can we start with the Phyrexian so I can see how it looks. for races like that,
+there won't be male and female pics. they will use the same pool. Other races might have gender. Let's do 6 or so images."
+
+- **The six**, one pool for both genders, cropped to the face from the card images in Forge's cache:
+  - Gix, Yawgmoth Praetor (Pete Venters);
+  - Phyrexian Plaguelord (Raf Kayupov);
+  - K'rrik, Son of Yawgmoth (Chase Stone);
+  - Nissa, Ascended Animist (Chase Stone);
+  - Xantcha, Sleeper Agent (Heather Hudson);
+  - Vraska, Betrayal's Sting (Chase Stone).
+  - Chosen from a sheet of 18 candidates (the Phyrexian-language showcase printings skipped).
+  - The artists were read off the cached images themselves: two edition-file guesses (Kev Walker, Mark Winters) were
+    other printings.
+- **Where they live:** a second page of `sprites/heroes/avatar_tfr.atlas`, `avatar_cards.png`.
+  - 256-px cells with 8-px extruded gutters, `filter: MipMapLinearLinear,Linear` (the first page stays Nearest pixel
+    art).
+  - Each portrait is under both `Phyrexian_m` and `Phyrexian_f` (`index` 0-5); the 20 old pixel regions are gone.
+  - A save keeps its avatar index, so an existing Phyrexian character gets the portrait at its old index modulo six.
+- **The tool:** `dev-tools/portraits/make_portraits.py` builds the page from every `dev-tools/portraits/<race>.json`.
+  - Each pick has its card image, artist, crop (u, v, zoom) and `"gender": "shared" | "m" | "f"`.
+  - It removes those races' old regions; a new race is one more JSON file.
+- **Sizing:**
+  - Every portrait view but one sizes the image by its layout (the HUD, the character sheet, the New Game screen, the
+    event and standings lists at 16, the duel's avatar box). The arena shrinks a big portrait itself (round 186).
+  - The exception, the world map's player marker (`MapViewScene`), took the region's pixel size, so it is capped at 16
+    units.
+- **Agent-tested** (a new Phyrexian character):
+  - all six step through on the Create a Character screen;
+  - the HUD portrait is sharp (dimmed only by a town's overlay);
+  - the world-map marker sits in its gold ring at the old size;
+  - the character sheet shows the portrait at 64 with the color-identity corner over it, as with the pixel portraits.
+- CREDITS: a "Player portraits" section; the Shikashi line now names the Zealot and Gambler icons of round 536.
+
 ## Round 537: Deep Caverns removed (2026-10-11)
 
 The user: "Let's remove the 'Deep Cave' I think that's the name. It's the very large cave we already limited in a previous

@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-11 (round 538): **LOCAL + UNRELEASED** - Phyrexian player portraits are card art (six, both
+genders; `avatar_tfr.atlas` page 2 `avatar_cards.png`, built by `dev-tools/portraits/make_portraits.py` from
+`<race>.json`); the world-map marker is capped at 16 units.
+
 ## STATE 2026-10-11 (round 537): **LOCAL + UNRELEASED (data only)** - Deep Caverns removed: its four entries place 0
 and are held out of play for good in older worlds (`notBeforeDay` 100000).
 
