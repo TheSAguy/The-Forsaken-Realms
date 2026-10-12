@@ -80,6 +80,12 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-12 (round 581): **LOCAL + UNRELEASED (data + dev tool)** - one size per tier: `enemy_scale.py` leaves
+small pieces apart from the body out of its box (PIECE_MIN 15%) and gives creatures wider than tall the hero's AREA,
+longest side capped at 1.6x the hero's (LONG_CAP); upright ones keep the larger side; nothing shrinks. enemies.json 354
+scales (Manananggal 0.57 -> 0.93, Crocodile 0.29 -> 0.46, Tyrant Rex 0.14 -> 0.21), 9 footprint lines. The peer (#30)
+packages.
+
 ## STATE 2026-10-12 (round 580): **LOCAL + UNRELEASED** - a recovered ante card (Buy Back / Bronze Coin) goes back to
 every deck the loss took it from, and to no other (AdventurePlayer.LostCardRemoval / restoreLostCard).
 

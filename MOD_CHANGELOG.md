@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 581: one size per tier - long, flat and split-up creatures no longer draw small (2026-10-12)
+
+The user, after a Master Manananggal looked "almost smaller than me on the map": "Are we sure the creatures scale (Size
+on map) according to level?", then "Implement one size per tier."
+
+- **Nothing had been lost**: every scale was current, and the in-game tier cue (Apprentice 0.81, Adept 1, Master 1.25,
+  Archmage 1.5) is still applied. Round 178's measure was the cause: `enemy_scale.py` gave a creature its tier's size
+  along the LARGER SIDE of its body box.
+  - A long or flat creature (a crocodile 44 x 10, a wyrm, spread wings) drew as a sliver - 156 sprites are 1.6 or more
+    times wider than tall.
+  - The Manananggal's frame holds its flying torso, a baked shadow and its dropped legs below a gap. The legs survived
+    the 10% trim, so the box measured 23 px and the torso drew about 9 px tall.
+- **`dev-tools/enemy_scale.py`, the new measure**:
+  - Pieces of a frame apart from the body that hold under `PIECE_MIN` (15%) of its opaque pixels are left out of the
+    box: dropped legs, a baked shadow, a floating spark.
+  - A creature wider than tall gets the hero's AREA (the square root of the trimmed box's width x height, the hero
+    measured the same way: 11.4 px) when that is bigger than the larger-side scale.
+  - `LONG_CAP` (1.6) holds its longest side to 1.6 times the hero's, so a crocodile stays a crocodile.
+  - Upright creatures keep the larger side (their height). Measured by area, a slim LPC figure would outgrow the
+    chunky hero sprites - Squee and Muxus would have grown 50%.
+  - Nothing roaming shrinks. Bosses and set pieces keep their floor (30) and ceiling (48): The Lichlord of Azar and
+    Mackenzie are raised to 30, Ghalta lowered to 48.
+- **`world/enemies.json`**: 354 scale values, nothing else. The biggest growths: Manananggal 0.57 -> 0.93, Worm 0.36 ->
+  0.58, Crocodile 0.29 -> 0.46, Ashen Spinewyrm 0.15 -> 0.25, Ojer Pakpatiq 0.24 -> 0.37, Green Beast 0.20 -> 0.30,
+  Tyrant Rex 0.14 -> 0.21, Symbiote 0.30 -> 0.44, Void Dragon 0.14 -> 0.20.
+- **Footprints** (`sprite_footprints.py --write`, round 578's field): the new sizes change which atlases need one.
+  Added to badger, bello, boar, bristleback_boar, kitsa, red_beast, stinky_skunk and common's cerodon; removed from the
+  Manananggal.
+- **Checks**: `validate_plane_data.py` shows its three usual sections. Not seen in play; the preview (the hero beside 12
+  creatures, now and new) is in the generator repo's `reports/forge/scale581_preview.png`.
+
 ## Round 580: a recovered ante card goes back to every deck it left (2026-10-12)
 
 The user: "can you tell me how "Tide of Phyresis" went to 37 cards", then "Yes, please do that fix."

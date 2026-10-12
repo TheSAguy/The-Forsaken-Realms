@@ -9,7 +9,6 @@ Avatar
 Idle
   xy: 0, 0
   size: 22, 30
-  footprint: 0, 1, 22, 29
 Walk
   xy: 0, 30
   size: 22, 30

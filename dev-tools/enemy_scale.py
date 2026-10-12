@@ -26,6 +26,10 @@ Usage (from the repo root):
     python dev-tools/enemy_scale.py                  dry run: summary + the biggest changes
     python dev-tools/enemy_scale.py --write          write the scales into world/enemies.json
     python dev-tools/enemy_scale.py --check x.atlas  the body box and scale of one atlas (for new art)
+
+ROUND 581 (the user: "Implement one size per tier"): pieces apart from the body under PIECE_MIN of the opaque pixels are
+left out of the box, and a creature wider than tall gets the hero's AREA when that is bigger (LONG_CAP on its longest
+side) - see LONG_CAP below.
 """
 import argparse, collections, json, os, statistics, sys
 
@@ -46,6 +50,16 @@ BOSS_MIN = 30
 # round 336 (armadi on Discord: Zhulodok is gigantic on the map, like 25 percent of the screen): and never OVER 48 - three
 # tiles, twice an Archmage. A titan set piece drew at 145, a roaming legend at 82; a boss reads as a boss at 48.
 BOSS_MAX = 48
+# round 581 (the user, after a Master Manananggal drew smaller than the hero: "Implement one size per tier"): the larger
+# side gave a long or flat creature - a crocodile, a wyrm, spread wings - its tier's size along that side only, so it
+# drew as a sliver. A creature WIDER than it is tall now gets the hero's AREA (the square root of the trimmed box's
+# width x height, the hero measured the same way) when that is bigger, with LONG_CAP holding its longest side to 1.6
+# times the hero's (a crocodile stays a crocodile, not a three-tile log). Upright creatures keep the larger side (their
+# height): measured by area a slim LPC figure would outgrow the chunky hero sprites. Nothing shrinks. Bosses and set
+# pieces keep the larger-side measure for their floor and ceiling.
+LONG_CAP = 1.6
+# round 581: a piece of the frame apart from the body counts only if it holds this share of the opaque pixels
+PIECE_MIN = 0.15
 _pages = {}
 
 
@@ -88,16 +102,20 @@ def pose_images(atlas_path, per_anim=4):
     return out
 
 
-def sprite_body(atlas_path):
-    """The largest pose, capped at POSE_CAP times the typical one (see POSE_CAP)."""
+def sprite_body(atlas_path, measure="side"):
+    """The largest pose, capped at POSE_CAP times the typical one (see POSE_CAP). measure "side" = the trimmed box's
+    larger side, "area" = the square root of its width x height (round 581); "aspect" = the median width / height."""
     idle, walk = [], []
     for kind, img in pose_images(atlas_path):
-        s = body_side(img)
-        if s:
+        box = body_box(img)
+        if box:
+            s = max(box) if measure == "side" else box[0] / box[1] if measure == "aspect" else (box[0] * box[1]) ** 0.5
             (idle if kind == "Idle" else walk).append(s)
     sides = idle + walk
     if not sides:
         return None
+    if measure == "aspect":
+        return statistics.median(sides)
     if idle and walk and statistics.median(idle) < 0.6 * statistics.median(walk):
         typical = statistics.median(walk)        # the crocodile: an Idle that is only eyes above the water
     else:
@@ -105,11 +123,46 @@ def sprite_body(atlas_path):
     return min(max(sides), POSE_CAP * typical)
 
 
-def body_side(img, trim=TRIM):
-    """Larger side of the trimmed body box, in atlas pixels; None for an empty frame."""
+def main_pieces(px, w, h):
+    """The opaque pixels of the pieces holding at least PIECE_MIN of them, or None when nothing is dropped."""
+    seen, pieces, total = set(), [], 0
+    for y0 in range(h):
+        for x0 in range(w):
+            if not px[x0, y0] or (x0, y0) in seen:
+                continue
+            stack, piece = [(x0, y0)], []
+            seen.add((x0, y0))
+            while stack:
+                x, y = stack.pop()
+                piece.append((x, y))
+                for dx in (-1, 0, 1):
+                    for dy in (-1, 0, 1):
+                        nx, ny = x + dx, y + dy
+                        if 0 <= nx < w and 0 <= ny < h and px[nx, ny] and (nx, ny) not in seen:
+                            seen.add((nx, ny))
+                            stack.append((nx, ny))
+            pieces.append(piece)
+            total += len(piece)
+    big = [p for p in pieces if len(p) >= PIECE_MIN * total]
+    if len(big) == len(pieces) or not big:
+        return None
+    return [xy for p in big for xy in p]
+
+
+def body_box(img, trim=TRIM):
+    """(width, height) of the trimmed body box, in atlas pixels; None for an empty frame. Round 581: pieces of the frame
+    that do not touch the body - a creature's dropped legs, a baked shadow, a floating spark - are left out when they
+    hold under PIECE_MIN of its opaque pixels (8-connected)."""
     a = img.getchannel("A").point(lambda v: 1 if v >= 32 else 0)
     w, h = a.size
     px = a.load()
+    keep = main_pieces(px, w, h)
+    if keep is not None:
+        a = Image.new("L", (w, h), 0)
+        q = a.load()
+        for x, y in keep:
+            q[x, y] = 1
+        px = a.load()
     cols = [sum(px[x, y] for y in range(h)) for x in range(w)]
     rows = [sum(px[x, y] for x in range(w)) for y in range(h)]
     total = sum(cols)
@@ -132,17 +185,23 @@ def body_side(img, trim=TRIM):
                 break
         return hi + 1 - lo
 
-    return max(span(cols), span(rows))
+    return span(cols), span(rows)
 
 
-def hero_body():
+def body_side(img, trim=TRIM):
+    """Larger side of the trimmed body box, in atlas pixels; None for an empty frame."""
+    box = body_box(img, trim)
+    return max(box) if box else None
+
+
+def hero_body(measure="side"):
     sizes = []
     for base in (os.path.join(ss.COMMON, "sprites", "heroes"), os.path.join(ss.PLANE, "sprites", "enemy", "heroes")):
         for root, _, files in os.walk(base):
             for f in files:
                 if f.endswith(".atlas"):
                     try:
-                        s = sprite_body(os.path.join(root, f))
+                        s = sprite_body(os.path.join(root, f), measure)
                         if s:
                             sizes.append(s)
                     except Exception:
@@ -169,17 +228,47 @@ def proposed(e, hero, cache):
     return round(min(8.0, max(0.05, hero / side)), 4)
 
 
+def proposed_area(e, heroes, cache):
+    """Round 581: the larger-side scale; for a creature wider than tall, the hero's area when bigger (longest side held
+    to LONG_CAP x the hero's)."""
+    sp = e.get("sprite")
+    if not sp:
+        return None
+    key = ("area", sp)
+    if key not in cache:
+        p, _ = ss.resolve(sp)
+        val = None
+        if p:
+            try:
+                val = (sprite_body(p, "area"), sprite_body(p, "side"), sprite_body(p, "aspect"))
+            except Exception:
+                val = None
+        cache[key] = val
+    val = cache[key]
+    if not val or not val[0] or not val[1]:
+        return None
+    (hero_area, hero_side), (area, side, aspect) = heroes, val
+    scale = hero_side / side                                    # round 178's rule: the larger side
+    if aspect > 1.0:                                            # wider than tall: the hero's area, long side capped
+        scale = max(scale, min(hero_area / area, LONG_CAP * hero_side / side))
+    return round(min(8.0, max(0.05, scale)), 4)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--check")
     a = ap.parse_args()
     hero, n = hero_body()
+    hero_area, _ = hero_body("area")
     if a.check:
         img = idle_image(a.check)
-        side = sprite_body(a.check)
-        print("%s: Idle %dx%d, body %s px; hero body %.1f px (%d heroes) -> scale %.4f" % (
-            os.path.basename(a.check), img.size[0], img.size[1], side, hero, n, hero / side))
+        side, area, aspect = sprite_body(a.check), sprite_body(a.check, "area"), sprite_body(a.check, "aspect")
+        scale = hero / side
+        if aspect > 1.0:
+            scale = max(scale, min(hero_area / area, LONG_CAP * hero / side))
+        print("%s: Idle %dx%d, body %s px side / %.1f px area; hero %.1f / %.1f px (%d heroes) -> scale %.4f" % (
+            os.path.basename(a.check), img.size[0], img.size[1], side, area, hero, hero_area, n, scale))
         return
     p = os.path.join(ss.PLANE, "world", "enemies.json")
     raw = open(p, "rb").read()
@@ -208,7 +297,7 @@ def main():
                 e["scale"] = new
                 changed += 1
             continue
-        new = proposed(e, hero, cache)
+        new = proposed_area(e, (hero_area, hero), cache)
         if new is None:
             unresolved.append(e["name"])
             continue
@@ -217,7 +306,8 @@ def main():
             ratios.append((new / old if old else 99, e["name"], old, new))
             e["scale"] = new
             changed += 1
-    print("hero body %.1f px (median of %d hero sprites, trim %d%%)" % (hero, n, TRIM * 100))
+    print("hero body %.1f px side / %.1f px area (median of %d hero sprites, trim %d%%); long side cap %.1f" % (
+        hero, hero_area, n, TRIM * 100, LONG_CAP))
     print("scales changed: %d (bosses / set pieces raised to the %d floor: %d); unresolved sprites: %d %s" % (
         changed, BOSS_MIN, len(raised), len(unresolved), unresolved[:8]))
     if raised:
