@@ -321,6 +321,21 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Villeneuve**; *Shessra, Death's Whisper* by **Marie Magny**; *Sumala Woodshaper* by **Sara Winters**; and *Bloodline
   Shaman* by **Rebecca Guay**.
 
+- **Goblin portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits;
+  Battle-Scarred Goblin (the Lord of the Rings) also © Middle-earth Enterprises. Male: *Adder-Staff Boggart* by **Jeff
+  Miracola**; *Battle-Scarred Goblin* by **Hristo D. Chukov**; *Bazaar Trader* by **Matt Cavotta**; *Beetleback Chief*
+  by **Wayne England**; *Boneclub Berserker* by **Slawomir Maniak**; *Boom Scholar* by **Brian Valeza**; *Brash
+  Taunter* by **Edgar Sánchez Hidalgo**; *Deep Goblin Skulltaker* by **Cristi Balanescu**; *Dynamite Diver* and
+  *Goblin Hero* by **Pete Venters**; *Goblin Assassin* by **Dave Dorman**; *Goblin Gang Leader* by **Jakub Kasper**;
+  *Goblin General* by **Keith Parkinson**; *Goblin Kaboomist* by **Kev Walker**; *Goblin Pyromancer* by **Edward P.
+  Beard, Jr.**; *Goblin Warchief* and *Krenko, Mob Boss* by **Karl Kopinski**; *Goblin Wizard* by **Daniel Gelon**;
+  *Legion Warboss* by **Alex Konstad**; and *Muxus, Goblin Grandee* by **Dmitry Burmak**. Female: *Auntie Ool,
+  Cursewretch* by **Daniel Zrom**; *Auntie's Snitch* by **Warren Mahy**; *Cheering Fanatic* by **Filip Burburan**;
+  *Clamor Shaman* by **Tomasz Jedruszek**; *Ecstatic Electromancer* by **Caio Monteiro**; *General Kreat, the
+  Boltbringer* by **Takeuchi Moto**; *Goblin Glasswright* by **David Auden Nash**; *Goblin Welder* by **Zoltan Boros &
+  Scott Okumura**; *Grub, Notorious Auntie* by **Jesper Ejsing**; *Guttersnipe* by **Andrey Kuzinskiy**; *Heirloom
+  Auntie* by **Raph Lomotan**; and *Mad Auntie* by **Wayne Reynolds**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

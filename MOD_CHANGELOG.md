@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 562: Goblin portraits - male and female pools (2026-10-11)
+
+The user, from a male and a female sheet: "Goblin Male: 1, 6, 7, 8, 12, 13, 14. 21, 22, 26, 29, 30, 31, 32, 35, 42, 43,
+54, 56, 58 / Goblin Female: 2, 3, 5, 6, 10, 12, 13, 15, 17, 21, 22, 24".
+
+- **The candidates:** 547 cached cards whose type line names a Goblin, scanned in six pages of 100. A male sheet (73)
+  and a female sheet (36; goblin gender is often unclear, so the user was free to move any) were picked from them.
+- **20 male** in `Goblin_m`:
+  - Adder-Staff Boggart, Battle-Scarred Goblin, Bazaar Trader, Beetleback Chief, Boneclub Berserker, Boom Scholar,
+    Brash Taunter, Deep Goblin Skulltaker, Dynamite Diver, Goblin Assassin.
+  - Goblin Gang Leader, Goblin General, Goblin Hero, Goblin Kaboomist, Goblin Pyromancer, Goblin Warchief, Goblin
+    Wizard, Krenko (Mob Boss), Legion Warboss, Muxus.
+- **12 female** in `Goblin_f`: Auntie Ool, Auntie's Snitch, Cheering Fanatic, Clamor Shaman, Ecstatic Electromancer,
+  General Kreat, Goblin Glasswright, Goblin Welder, Grub (Notorious Auntie), Guttersnipe, Heirloom Auntie, Mad Auntie.
+- **Framing:** each crop is on the face (`dev-tools/portraits/goblin.json`, `sprites/heroes/portraits/goblin.atlas`,
+  1632x1632).
+- **Credits:** artists read off the cached images. Battle-Scarred Goblin carries the Middle-earth notice. Data only.
+
 ## Round 561: the Log button on the world map only; the Blue Tower's top Doppelganger stays in its room (2026-10-11)
 
 The user, with a screenshot of the Blue Tower: "For the Blue Tower dungeon, the top enemy is totally outside. He starts
