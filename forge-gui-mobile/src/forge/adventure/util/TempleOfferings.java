@@ -214,8 +214,14 @@ public final class TempleOfferings {
         float most = 0f;
         for (float k : kills)
             most = Math.max(most, k);
+        // round 576: rows most honored first (the payout's order, so the place tags read top-down), then the
+        // colors with no honor in WUBRG order
+        List<Integer> rows = new ArrayList<>(ranked);
+        for (int c = 0; c < LETTERS.length; c++)
+            if (!rows.contains(c))
+                rows.add(c);
         Table chart = new Table();
-        for (int c = 0; c < LETTERS.length; c++) {
+        for (int c : rows) {
             chart.add(Controls.newTextraLabel("[+" + LETTERS[c] + "]")).padRight(4f).padBottom(2f);
             Image bar = new Image(new TextureRegionDrawable(whitePixel()));
             bar.setColor(BAR_COLORS[c]);
@@ -229,8 +235,7 @@ public final class TempleOfferings {
             chart.add(Controls.newTextraLabel(count)).width(56f).left().padLeft(4f).padBottom(2f).row();
         }
         dialog.getContentTable().add(chart).padTop(4f).padBottom(4f).row();
-        EconomyBuildings.addContentRow(dialog, "[%80]The week ends in " + daysLeft + (daysLeft == 1 ? " day" : " days")
-                + " (day " + (day + daysLeft) + ").[%]");
+        EconomyBuildings.addContentRow(dialog, "[%80]The week ends in " + daysLeft + (daysLeft == 1 ? " day" : " days") + ".[%]");
         EconomyBuildings.addButtonRow(dialog, "Destroy Building", true, () ->
                 EconomyBuildings.openDestroyConfirmDialog(stage, objectId, () -> refreshTempleDialog(stage, objectId)));
         dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).width(240f).row();

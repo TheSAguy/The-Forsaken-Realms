@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 576: the Temple's colors sorted by honor; no "(day N)" (2026-10-12)
+
+The user, with a screenshot of the Temple: "can we dynamically sort the colors so the most is at the top ... Also, you
+can remove the (day x) in parentheses."
+
+- `TempleOfferings.refreshTempleDialog()`:
+  - The chart rows follow `ranking(kills)`, the payout's order: most honored first, ties in WUBRG order. The 1st, 2nd
+    and 3rd tags now read top-down.
+  - Colors with no honor this week follow, in WUBRG order.
+  - The footer reads "The week ends in N days." without the "(day X)".
+- Not built or seen in play here: the peer (#30) runs Maven and packages.
+
 ## Round 575: portrait top-ups - Devil female, Green Dragon, Metathran female (2026-10-12)
 
 The user: "Let's top up the portraits for the smaller ones", then from three top-up sheets: "Devil: 1, 2, 4 / Dragon: 4,
