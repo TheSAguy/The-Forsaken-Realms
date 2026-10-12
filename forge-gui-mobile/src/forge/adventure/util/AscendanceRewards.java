@@ -70,8 +70,8 @@ final class AscendanceRewards {
             case "mapFragment": return "[+MapFragmentWaste] A piece of a treasure map you are still missing";
             case "blueprint": return "A shop blueprint you don't have yet";
             case "coins": return "+" + Math.round(value) + " [+BronzeChallengeCoin] Bronze Challenge Coin" + (Math.round(value) == 1 ? "" : "s");
-            case "goodwill": PointOfInterest town = leastRespectedTown();
-                return "+" + Math.round(value) + " reputation in " + (town == null ? "your town" : town.getDisplayName());
+            case "goodwill": PointOfInterest town = goodwillTown();
+                return "+" + Math.round(value) + " reputation in " + (town == null ? "your Capitol" : town.getDisplayName());
             default: return id;
         }
     }
@@ -85,7 +85,7 @@ final class AscendanceRewards {
             case "booster": return !boosterEditions().isEmpty();
             case "mapFragment": return !regionsMissingPieces().isEmpty();
             case "blueprint": return !unknownBlueprints().isEmpty();
-            case "goodwill": return leastRespectedTown() != null;
+            case "goodwill": return goodwillTown() != null;
             default: return false;
         }
     }
@@ -149,7 +149,7 @@ final class AscendanceRewards {
                 result = "+" + loot.size + " [+BronzeChallengeCoin] Bronze Coin" + (loot.size == 1 ? "" : "s");
                 break;
             case "goodwill": {
-                PointOfInterest town = leastRespectedTown();
+                PointOfInterest town = goodwillTown();
                 if (town == null) {
                     result = "no town to favor";
                     break;
@@ -279,21 +279,10 @@ final class AscendanceRewards {
         return out;
     }
 
-    /** The user: "Goodwill should be for your own towns only" - the restored or captured town (the Capitol included) with
-     *  the least reputation. */
-    private static PointOfInterest leastRespectedTown() {
-        PointOfInterest best = null;
-        int bestRep = Integer.MAX_VALUE;
-        for (PointOfInterest poi : WorldSave.getCurrentSave().getWorld().getAllPointOfInterest()) {
-            PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
-            if (!TownRestoration.isTownRestored(changes))
-                continue;
-            int rep = changes.getMapReputation();
-            if (rep < bestRep) {
-                bestRep = rep;
-                best = poi;
-            }
-        }
-        return best;
+    /** Round 577 (the user: "Let's make 'Goodwill' to always be your capitol") - was the player's own town with the least
+     *  reputation (the user: "Goodwill should be for your own towns only"). Null until the Capitol is raised, so the choice
+     *  is not offered before then. */
+    private static PointOfInterest goodwillTown() {
+        return TownRestoration.findCapitol();
     }
 }

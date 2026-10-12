@@ -102,7 +102,7 @@
     { "id": "mapFragment" },                // a piece of a treasure map still missing
     { "id": "blueprint" },                  // a shop blueprint not owned, from the tiers reputation allows
     { "id": "coins",       "value": 1 },    // Bronze Challenge Coins (round 508: 2 -> 1)
-    { "id": "goodwill",    "value": 3 },    // reputation in the player's own town with the least
+    { "id": "goodwill",    "value": 3 },    // reputation in the player's Capitol (round 577; not offered before it exists)
     // (round 508: "mend" - repair everything, heal the guards - became the lasting Mechanic and Medic below)
     // lasting; "first" (round 508) is the first pick's value when it differs, each later pick adding "value"
     { "id": "vigor",       "lasting": true, "maxPicks": 3, "value": 3 },    // +3 life in the first N duels each day

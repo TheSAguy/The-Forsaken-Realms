@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-12 (round 577): **LOCAL + UNRELEASED** - the Ascendance Goodwill choice always pays the Capitol
+(`AscendanceRewards.goodwillTown()` = `TownRestoration.findCapitol()`), not offered before the Capitol exists. The peer
+(#30) builds and packages.
+
 ## STATE 2026-10-12 (round 576): **LOCAL + UNRELEASED** - the Temple chart sorts its color rows by honor (the payout's
 `ranking(kills)`, then the unhonored colors in WUBRG) and the footer drops "(day N)" (`TempleOfferings.java`). The peer
 (#30) builds and packages.

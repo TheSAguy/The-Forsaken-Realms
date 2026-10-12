@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 577: Goodwill always favors your Capitol (2026-10-12)
+
+The user, with a screenshot of the Goodwill reward ("+3 reputation in Camp Windlass"): "Let's make 'Goodwill' to always
+be your capitol."
+
+- `AscendanceRewards.goodwillTown()` (was `leastRespectedTown()`) returns `TownRestoration.findCapitol()`. Before, it
+  picked the player's restored or captured town with the least reputation.
+- The text, the offer check and the payout use it, so the choice names and pays the Capitol.
+- Before the Capitol is raised the choice is not offered (`canGive` is false).
+- `ascendance.json`: the goodwill comment updated (the value stays 3).
+- Not built or seen in play here: the peer (#30) builds and packages.
+
 ## Round 576: the Temple's colors sorted by honor; no "(day N)" (2026-10-12)
 
 The user, with a screenshot of the Temple: "can we dynamically sort the colors so the most is at the top ... Also, you
