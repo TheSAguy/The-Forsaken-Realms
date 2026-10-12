@@ -282,10 +282,11 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **Tyler Jacobson**; *Zevlor, Elturel Exile* by **David Rapoza**; *Raphael, Fiendish Savior* by **Livia Prima**;
   *Kaervek the Merciless* by **Heonhwa Choe**; *Rakdos Headliner* by **Ekaterina Burmak**; *Body Dropper* by **Jakub
   Kasper**; *Lorcan, Warlock Collector* by **Andrew Mar**; and *Taborax, Hope's Demise* by **G-host Lee**. Female:
-  *Zariel, Archduke of Avernus* by **Heonhwa Choe**; *Farideh, Devil's Chosen* by **Magali Villeneuve**; *Exava,
-  Rakdos Blood Witch* by **Aleksi Briclot**; *Lyzolda, the Blood Witch* by **Jim Nelson**; *Grim Hireling* by **Tomas
-  Duchek**; *Valor Singer* by **Justyna Dura**; *Judith, the Scourge Diva* by **Wesley Burt**; and *Rix Maadi Reveler*
-  by **Sara Winters**.
+  *Zariel, Archduke of Avernus* and *Headliner Scarlett* by **Heonhwa Choe**; *Farideh, Devil's Chosen* by **Magali
+  Villeneuve**; *Exava, Rakdos Blood Witch* by **Aleksi Briclot**; *Lyzolda, the Blood Witch* by **Jim Nelson**; *Grim
+  Hireling* by **Tomas Duchek**; *Valor Singer* by **Justyna Dura**; *Judith, the Scourge Diva* by **Wesley Burt**;
+  *Rix Maadi Reveler* by **Sara Winters**; *Karlach, Raging Tiefling* by **Billy Christian**; and *Dawnhand Eulogist*
+  by **Evyn Fong**.
 
 - **Dwarf portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits;
   the Lord of the Rings and Hobbit cards (the Gimlis, Nori, the Thorins, Erebor Flamesmith, Mirrormere Guardian) also
@@ -304,7 +305,9 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 - **Green Dragon portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
   portraits: *Green Dragon* by **Ilse Gort**; *Emerald Dragon* by **Diego Gisbert**; *Lurking Green Dragon* by **Caio
   Monteiro**; *Earthquake Dragon* by **Johan Grenier**; *Dragon Broodmother* by **Jaime Jones**; *Needlethorn Drake*
-  by **Donato Giancola**; *Drakewing Krasis* by **Johann Bodin**; and *Destructor Dragon* by **Peter Mohrbacher**.
+  by **Donato Giancola**; *Drakewing Krasis* by **Johann Bodin**; *Destructor Dragon* by **Peter Mohrbacher**;
+  *Disruptive Stormbrood* by **Dan Mumford**; *Karrthus, Tyrant of Jund* by **Dave Kendall**; *Old Gnawbone* by
+  **Filip Burburan**; *Rith, the Awakener* by **Mathias Kollros**; and *Sagu Wildling* by **Justine Jones**.
 
 - **Elf portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits; the
   Lord of the Rings and Hobbit cards (Celeborn, Legolas, Thranduil, Arwen, Galadriel) also © Middle-earth Enterprises,
@@ -381,8 +384,9 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Rallis**; *Sage's Row Savant* by **Bastien L. Deharme**; and *Vedalken Humiliator* by **Jehan Choo**. Female:
   *Aether Swooper* by **James Ryman**; *Ascended Lawmage* by **Ryan Yee**; *Azorius Guildmage* by **David Astruga**;
   *Deputy of Detention* by **G-host Lee**; *Emporium Thopterist* by **Ryan Alexander Lee**; *Nimble Innovator* by
-  **Slawomir Maniak**; *Nin, the Pain Artist* by **Brad Rigney**; *Vedalken Aethermage* by **William Simpson**; and
-  *Vedalken Infiltrator* by **Izzy**.
+  **Slawomir Maniak**; *Nin, the Pain Artist* by **Brad Rigney**; *Vedalken Aethermage* by **William Simpson**;
+  *Vedalken Infiltrator* by **Izzy**; *Esper Stormblade* by **Matt Stewart**; *Curio Vendor* by **Igor Kieryluk**; and
+  *Skatewing Spy* by **Grzegorz Rutkowski**.
 
 - **Human portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits.
   Male: *Abdel Adrian, Gorion's Ward* by **Karl Kopinski**; *Baird, Steward of Argive* by **Christine Choi**; *Crovax,

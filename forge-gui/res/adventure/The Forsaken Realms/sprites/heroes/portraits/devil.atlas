@@ -1,5 +1,5 @@
 devil.png
-size: 1632,1088
+size: 1632,1360
 format: RGBA8888
 filter: MipMapLinearLinear,Linear
 repeat: none
@@ -95,3 +95,15 @@ Devil_f
   xy: 1096, 824
   size: 256, 256
   index: 7
+Devil_f
+  xy: 1368, 824
+  size: 256, 256
+  index: 8
+Devil_f
+  xy: 8, 1096
+  size: 256, 256
+  index: 9
+Devil_f
+  xy: 280, 1096
+  size: 256, 256
+  index: 10

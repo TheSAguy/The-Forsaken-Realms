@@ -1,6 +1,6 @@
 {
  "race": "Metathran",
- "note": "Round 571 (the user, from one combined sheet - the Metathran cards and Vedalken look-alikes: 'Metathran Male: 1, 4, 5, 7, 10, 16, 30, 38, 45, 55 / Metathran Female: 6, 8, 9, 15, 17, 31, 33, 47, 56'). 10 male, 9 female.",
+ "note": "Round 571 (the user, from one combined sheet - the Metathran cards and Vedalken look-alikes: 'Metathran Male: 1, 4, 5, 7, 10, 16, 30, 38, 45, 55 / Metathran Female: 6, 8, 9, 15, 17, 31, 33, 47, 56'). 10 male, 9 female. Round 575 (portrait top-up, the user: 'Metathran female: 2, 15, 20'): +3 female.",
  "picks": [
   {"region": "metathran_elite", "gender": "m", "card": "Metathran Elite", "artist": "Jim Nelson", "file": "Metathran Elite.full.jpg", "u": 0.52, "v": 0.4, "zoom": 0.55},
   {"region": "sky_weaver", "gender": "m", "card": "Sky Weaver", "artist": "Christopher Moeller", "file": "Sky Weaver.full.jpg", "u": 0.22, "v": 0.4, "zoom": 0.4},
@@ -20,6 +20,9 @@
   {"region": "nimble_innovator", "gender": "f", "card": "Nimble Innovator", "artist": "Slawomir Maniak", "file": "Nimble Innovator.full.jpg", "u": 0.42, "v": 0.31, "zoom": 0.35},
   {"region": "nin_the_pain_artist", "gender": "f", "card": "Nin, the Pain Artist", "artist": "Brad Rigney", "file": "Nin, the Pain Artist.full.jpg", "u": 0.63, "v": 0.27, "zoom": 0.4},
   {"region": "vedalken_aethermage", "gender": "f", "card": "Vedalken Aethermage", "artist": "William Simpson", "file": "Vedalken Aethermage.full.jpg", "u": 0.48, "v": 0.33, "zoom": 0.35},
-  {"region": "vedalken_infiltrator", "gender": "f", "card": "Vedalken Infiltrator", "artist": "Izzy", "file": "Vedalken Infiltrator.full.jpg", "u": 0.37, "v": 0.37, "zoom": 0.5}
+  {"region": "vedalken_infiltrator", "gender": "f", "card": "Vedalken Infiltrator", "artist": "Izzy", "file": "Vedalken Infiltrator.full.jpg", "u": 0.37, "v": 0.37, "zoom": 0.5},
+  {"region": "esper_stormblade", "gender": "f", "card": "Esper Stormblade", "artist": "Matt Stewart", "file": "Esper Stormblade.full.jpg", "u": 0.43, "v": 0.13, "zoom": 0.25},
+  {"region": "curio_vendor", "gender": "f", "card": "Curio Vendor", "artist": "Igor Kieryluk", "file": "Curio Vendor.full.jpg", "u": 0.33, "v": 0.24, "zoom": 0.35},
+  {"region": "skatewing_spy", "gender": "f", "card": "Skatewing Spy", "artist": "Grzegorz Rutkowski", "file": "RNA/Skatewing Spy.fullborder.jpg", "u": 0.27, "v": 0.18, "zoom": 0.25}
  ]
 }

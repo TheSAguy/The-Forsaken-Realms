@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 575: portrait top-ups - Devil female, Green Dragon, Metathran female (2026-10-12)
+
+The user: "Let's top up the portraits for the smaller ones", then from three top-up sheets: "Devil: 1, 2, 4 / Dragon: 4,
+7, 11, 13, 14 / Metathran female: 2, 15, 20".
+
+- **Devil female 8 -> 11:**
+  - Headliner Scarlett, Karlach (Raging Tiefling), Dawnhand Eulogist.
+  - The sheet drew on the devil and tiefling cards never shown before, plus Tieflings and black/red Warlocks.
+- **Green Dragon 8 -> 13:**
+  - Disruptive Stormbrood, Karrthus, Old Gnawbone, Rith (the Awakener), Sagu Wildling.
+  - The sheet drew on any green-including Dragon or Drake, leaving out those already shown or used by another dragon
+    race.
+- **Metathran female 9 -> 12:**
+  - Esper Stormblade, Curio Vendor, Skatewing Spy.
+  - All Vedalken that were not picked last time.
+- **Files:** the picks are appended to `dev-tools/portraits/devil.json`, `green_dragon.json` and `metathran.json`; the
+  three atlases are rebuilt.
+- **Credits:** the three CREDITS bullets were regenerated from the pools, with artists read off the cached images. Data
+  only.
+
 ## Round 574: the player Capitol's Arena line shows on a zoomed-out map (2026-10-12)
 
 The user, with a zoomed-out map screenshot: "My arena is not showing up on the mini-map. I think I have 2 days left. I

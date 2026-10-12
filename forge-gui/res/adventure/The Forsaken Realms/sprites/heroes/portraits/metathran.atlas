@@ -79,3 +79,15 @@ Metathran_f
   xy: 8, 824
   size: 256, 256
   index: 8
+Metathran_f
+  xy: 280, 824
+  size: 256, 256
+  index: 9
+Metathran_f
+  xy: 552, 824
+  size: 256, 256
+  index: 10
+Metathran_f
+  xy: 824, 824
+  size: 256, 256
+  index: 11
