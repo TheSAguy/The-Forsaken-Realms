@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 574: the player Capitol's Arena line shows on a zoomed-out map (2026-10-12)
+
+The user, with a zoomed-out map screenshot: "My arena is not showing up on the mini-map. I think I have 2 days left. I
+only have a level 1."
+
+- **Cause:** the line was built (`[TFR-MapView] ... Orazca Arena=1d`) and then hidden by the label placement.
+  - The Capitol sits in a ring of the player's towns. Shifted down past its own "7", the line ran into the
+    neighbouring town's "1".
+  - Round 292's rule then hid it for sitting nearer that town than the Capitol: a shifted number must not read as
+    another place's. Zoomed in, there is room, and it showed.
+- **Fix** (`MapViewScene.placeDetail`):
+  - A label now tries ABOVE its place as well as below, by the same rules (`shiftedClear`; a label above hangs from
+    its bottom edge). The nearer clear spot wins, below on a tie.
+  - Arena lines name themselves ("Arena: 1 day"), so they can't be taken for a neighbour's number. They are exempt from
+    the nearer-another-place rule (`selfNamedDetails`), and still never overlap anything.
+  - Town numbers and every other label place as before.
+- **Agent-tested** on a copy of the user's own save (slot 1, copied to agent slot 22; the user's file untouched):
+  - Before: zoomed out, the Capitol's line was missing, as in the screenshot.
+  - After: "Arena: 1 day" shows at full and middle zoom, just below the Capitol's cluster. Every town number is where
+    it was.
+
 ## Round 573: Human portraits - the last race; every race now has card-art portraits (2026-10-12)
 
 The user, from a male and a female sheet: "Human Male: 1, 7, 19, 42, 44, 48, 50, 57, 60,76, 85 / Human Female: 10, 15,

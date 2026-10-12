@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-12 (round 574): **LOCAL + UNRELEASED** - the Capitol's Arena countdown stays on the zoomed-out map
+(labels try above as well as below; arena lines exempt from the nearer-another-place rule).
+
 ## STATE 2026-10-12 (round 573): **LOCAL + UNRELEASED** - Human portraits (11 male, 13 female): every race has card-art
 portraits now.
 

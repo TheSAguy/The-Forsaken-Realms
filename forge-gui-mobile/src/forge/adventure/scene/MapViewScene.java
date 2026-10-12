@@ -53,6 +53,9 @@ public class MapViewScene extends UIScene {
     /** WORLD position each entry of {@code details} is anchored to, index-aligned with it - so a zoom
      *  step can lay the labels out again from scratch instead of nudging them (round 162). */
     private final List<float[]> detailAnchors = Lists.newArrayList();
+    /** Round 573: overlay labels that say whose they are ("Arena: 1 day") - never mistaken for a neighbour's number, so
+     *  placeDetail() does not hide them for sitting nearer another place. They still never overlap anything. */
+    private final java.util.Set<TypingLabel> selfNamedDetails = new java.util.HashSet<>();
     /** Round 292: the quest and bookmark labels ("pins") and their WORLD anchors, index-aligned - laid out
      *  from the anchor at every zoom step by layoutPins(), exactly like the overlay labels. */
     private final List<TypingLabel> pins = Lists.newArrayList();
@@ -489,6 +492,28 @@ public class MapViewScene extends UIScene {
         float[] anchor = detailAnchors.get(i);
         float ax = img.getScaleX() * getMapX(anchor[0]) + img.getX();
         float ay = img.getScaleY() * getMapY(anchor[1]) + img.getY();
+        boolean selfNamed = selfNamedDetails.contains(label); // round 573
+        // Round 573 (the user: "My arena is not showing up on the mini-map"): in a dense cluster - the player's Capitol
+        // ringed by its towns - the line below runs into a neighbour's label and was hidden at every zoom out. Below
+        // is tried first, as before; ABOVE as well, by the same rules, and the nearer clear spot wins (below on a tie).
+        Rectangle below = shiftedClear(label, anchor, ax, ay, placed, false, selfNamed);
+        Rectangle above = shiftedClear(label, anchor, ax, ay, placed, true, selfNamed);
+        Rectangle rect = below == null ? above
+                : above == null || Math.abs(below.y - (ay - label.getHeight() / 2)) <= Math.abs(above.y - (ay - label.getHeight() / 2)) ? below : above;
+        boolean show = rect != null;
+        label.setVisible(show);
+        if (show) {
+            label.setPosition(rect.x, rect.y);
+            placed.add(new Placed(rect, anchor));
+        }
+        return show;
+    }
+
+    /** Round 292's placement in one direction (round 573: {@code up} or down): centred on the place, then shifted a
+     *  line at a time past anything in the way - the spot, or null when none is clear or it would read as another
+     *  place's label (a self-naming label is exempt from that last test). */
+    private Rectangle shiftedClear(TypingLabel label, float[] anchor, float ax, float ay, List<Placed> placed,
+                                   boolean up, boolean selfNamed) {
         Rectangle rect = new Rectangle(ax - label.getWidth() / 2, ay - label.getHeight() / 2,
                 label.getWidth(), label.getHeight());
         int shifts = 0;
@@ -497,17 +522,13 @@ public class MapViewScene extends UIScene {
         while (hit != null && shifts < MAX_LABEL_SHIFTS) {
             if (!samePlace(hit.anchor, anchor))
                 pushedByAnotherPlace = true;
-            rect.y -= label.getHeight();
+            rect.y += up ? label.getHeight() : -label.getHeight();
             shifts++;
             hit = firstOverlap(rect, placed);
         }
-        boolean show = hit == null && !(pushedByAnotherPlace && closerToAnotherPlace(rect, anchor, ax, ay));
-        label.setVisible(show);
-        if (show) {
-            label.setPosition(rect.x, rect.y);
-            placed.add(new Placed(rect, anchor));
-        }
-        return show;
+        if (hit != null || (pushedByAnotherPlace && !selfNamed && closerToAnotherPlace(rect, anchor, ax, ay, up)))
+            return null;
+        return rect;
     }
 
     private static Placed firstOverlap(Rectangle rect, List<Placed> placed) {
@@ -523,9 +544,10 @@ public class MapViewScene extends UIScene {
     }
 
     /** Round 292: would a reader take this shifted label for another place's? Measured from the label's TOP edge,
-     *  the edge it hangs from, against every place drawn on the map. */
-    private boolean closerToAnotherPlace(Rectangle rect, float[] anchor, float ax, float ay) {
-        float px = rect.x + rect.width / 2, py = rect.y + rect.height;
+     *  the edge it hangs from, against every place drawn on the map. Round 573: a label placed ABOVE its place hangs
+     *  from its BOTTOM edge ({@code above}). */
+    private boolean closerToAnotherPlace(Rectangle rect, float[] anchor, float ax, float ay, boolean above) {
+        float px = rect.x + rect.width / 2, py = above ? rect.y : rect.y + rect.height;
         float own = Vector2.dst2(px, py, ax, ay);
         for (float[] place : places) {
             if (samePlace(place, anchor))
@@ -648,6 +670,7 @@ public class MapViewScene extends UIScene {
                                 List<Rectangle> placedLabelRects, StringBuilder logLine) {
         String when = daysLeft <= 0 ? "[GREEN]ready" : "[RED]" + daysLeft + (daysLeft == 1 ? " day" : " days");
         TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] " + venue + ": " + when);
+        selfNamedDetails.add(label); // round 573: it names itself - see placeDetail()
         placeDetailLabel(label, poi.getCenter().x, poi.getCenter().y, placedLabelRects);
         logLine.append(' ').append(poi.getDisplayName()).append(' ').append(venue).append('=')
                 .append(daysLeft <= 0 ? "ready" : daysLeft + "d").append(';');
@@ -830,6 +853,7 @@ public class MapViewScene extends UIScene {
             table.removeActor(detail);
         details.clear();
         detailAnchors.clear();
+        selfNamedDetails.clear();
     }
 
     /**
