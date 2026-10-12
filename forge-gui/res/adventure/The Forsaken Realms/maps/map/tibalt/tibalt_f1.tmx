@@ -168,7 +168,7 @@
   </object>
   <object id="208" template="../../../../common/maps/obj/waypoint.tx" x="477.342" y="26.1053"/>
   <object id="209" template="../../../../common/maps/obj/waypoint.tx" x="319.342" y="140.772"/>
-  <object id="210" template="../../../../common/maps/obj/waypoint.tx" x="314.675" y="26.4386"/>
+  <object id="210" template="../../../../common/maps/obj/waypoint.tx" x="316.7" y="36.4"/>
   <object id="211" template="../../../../common/maps/obj/manashards.tx" x="451.675" y="312.105"/>
   <object id="212" template="../../../../common/maps/obj/manashards.tx" x="125.009" y="186.105"/>
   <object id="213" template="../../../../common/maps/obj/waypoint.tx" x="383.342" y="310.105"/>

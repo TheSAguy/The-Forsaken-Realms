@@ -158,7 +158,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="368" y="32"/>
-  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="336" y="48"/>
+  <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="334" y="68"/>
+  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="320" y="53"/>
  </objectgroup>
 </map>

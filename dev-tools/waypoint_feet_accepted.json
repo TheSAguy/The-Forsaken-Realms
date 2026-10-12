@@ -1,0 +1,163 @@
+{
+ "_doc": "Round 562: patrol legs that waypoint_routes_qa.py --feet flags and a reviewed pass ACCEPTED as deliberate - fliers and swimmers over terrain, lava creatures in lava, booster guards whose route never runs. Keyed \"<enemy object id>:<waypoint object id>\" per map. The audit counts these instead of re-raising them; fix_routes.py --feet never moves them. Remove an entry to reopen the question.",
+ "accepted": {
+  "barbariancamp/barbariancamp_bandit.tmx": {
+   "61:92": "the Bandit Archer's own start: it stands in the stone ring, and so does its home"
+  },
+  "barbariancamp/barbariancamp_goblin_3.tmx": {
+   "55:72": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs",
+   "77:72": "flier (Phoenix) over the forest"
+  },
+  "cave/cave_colorless_07.tmx": {
+   "8:2": "flier (Young Red Dragon) over the pit's rim"
+  },
+  "cave/cave_green_08.tmx": {
+   "7:5": "flier (Queen of the Gilded Brood) over the pit's rim"
+  },
+  "cave/cave_red_06.tmx": {
+   "8:2": "flier (Green Dragonkin Renegade) over the pit's rim"
+  },
+  "cave/inn_cave_river_entrance.tmx": {
+   "14:56": "flier (Wandering Geist) over a gravestone"
+  },
+  "djinnpalace/djinpalace_entrance.tmx": {
+   "103:101": "swimmer (Jellyfish) in the river",
+   "105:135": "flier (Ancient Silver Dragon) over the shore"
+  },
+  "evilgrove/evilgrove_4_cursedforest.tmx": {
+   "54:69": "swimmer (Crocodile) in the river",
+   "54:70": "swimmer (Crocodile) in the river",
+   "95:105": "flier (Giant Fly) over the pond"
+  },
+  "evilgrove/evilgrove_5_swamp.tmx": {
+   "55:82": "flier (Dragonfly) over the swamp",
+   "79:82": "flier (Dragonfly) over the swamp",
+   "89:82": "flier (Dragonfly) over the swamp"
+  },
+  "evilgrove/evilgrove_6_shade.tmx": {
+   "60:66": "flier (Dragonfly) over the pond",
+   "61:65": "flier (Dragonfly) over the pond"
+  },
+  "fallen_empires/svyelunite_temple.tmx": {
+   "40021:111": "aquatic boss (Homarid Deep Spawn) in the water, where its start is too",
+   "50021:111": "aquatic boss (Homarid Deep Spawn) in the water, where its start is too"
+  },
+  "fort/fort_blue_2_canyon.tmx": {
+   "63:67": "flier (Drake) over the river"
+  },
+  "fort/fort_colorless_4_ooze.tmx": {
+   "53:89": "flier (Necrogoyf) over the ooze pool"
+  },
+  "fort/fort_colorless_5_evil.tmx": {
+   "61:65": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs; a swimmer (Jellyfish) in the river besides",
+   "61:67": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs; a swimmer (Jellyfish) in the river besides"
+  },
+  "graveyard_crypt/graveyard.tmx": {
+   "55:94": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs",
+   "58:88": "swimmer (Crocodile) in the river",
+   "59:88": "swimmer (Crocodile) in the river"
+  },
+  "graveyard_crypt/graveyard_2.tmx": {
+   "84:77": "flier (Raven, Bat) over the water",
+   "86:77": "flier (Raven, Bat) over the water"
+  },
+  "graveyard_crypt/graveyard_3.tmx": {
+   "68:78": "flier (Wraith) over the lake",
+   "75:78": "flier (Wraith) over the lake",
+   "69:82": "swimmer (Crocodile) in the river"
+  },
+  "graveyard_crypt/graveyard_4.tmx": {
+   "83:85": "swimmer (Crocodile) in the river"
+  },
+  "grolnok/grolnok.tmx": {
+   "102:238": "swimmer (Crocodile) in the river",
+   "160:142": "not fixable by moving the waypoint: every spot with the feet on the floor cuts a leg off the game's navigation graph (and enemy 160 already freezes at 142 - its 142->143 leg has no nav path); 38% of the feet on the path corner",
+   "203:142": "not fixable by moving the waypoint: every spot with the feet on the floor cuts a leg off the game's navigation graph (and enemy 160 already freezes at 142 - its 142->143 leg has no nav path); 38% of the feet on the path corner"
+  },
+  "lavaforge/lavaforge_2_burningsands.tmx": {
+   "73:76": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs; a lava creature (Magma Fire Elemental) besides",
+   "73:77": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs; a lava creature (Magma Fire Elemental) besides",
+   "75:79": "flier (Phoenix) over the building's roof"
+  },
+  "main_story/temple_of_liliana/bog.tmx": {
+   "199:252": "flier (Dimir Faerie) over the water",
+   "263:252": "flier (Dimir Faerie) over the water"
+  },
+  "main_story/templeofchandra.tmx": {
+   "44:79": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:80": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:81": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:82": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:83": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:84": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:85": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:87": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:88": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:89": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:90": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:91": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:92": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:93": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:95": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:96": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:120": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:79": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:80": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:81": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:82": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:83": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:84": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:85": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:87": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:88": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:89": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:90": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:91": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:92": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:93": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:95": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:96": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:120": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:79": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:80": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:81": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:82": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:83": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:84": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:85": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:87": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:88": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:89": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:90": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:91": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:92": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:93": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:95": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:96": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:120": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)"
+  },
+  "main_story_explore/primal_jungle.tmx": {
+   "36:37": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs"
+  },
+  "nest/nest_blue_1.tmx": {
+   "63:93": "flier (Bird) over the rocks",
+   "69:72": "swimmer (Jellyfish) in the sea",
+   "69:83": "swimmer (Jellyfish) in the sea",
+   "69:84": "swimmer (Jellyfish) in the sea"
+  },
+  "vampirecastle/vampirecastle_2.tmx": {
+   "50:86": "flier (High Vampire) over the ruined wall"
+  },
+  "vampirecastle/vampirecastle_4.tmx": {
+   "71:111": "the Gargoyle's own perch: its start is on the same pedestal"
+  },
+  "zedruu/zedruu.tmx": {
+   "206:237": "not fixable by moving the waypoint: the Dwarf Mercenary frame draws its body 18-29 px right of its position, so on this one-tile path the position (which the nav graph uses) and the drawn body cannot both be on the path; its start has the same offset"
+  },
+  "zedruu/zedruu_f4.tmx": {
+   "213:180": "lava creature (Magma Fire Elemental) in the lava pools",
+   "213:184": "lava creature (Magma Fire Elemental) in the lava pools",
+   "213:191": "lava creature (Magma Fire Elemental) in the lava pools"
+  }
+ }
+}

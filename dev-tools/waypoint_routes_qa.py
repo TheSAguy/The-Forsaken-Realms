@@ -24,10 +24,34 @@ Three things this reports, in descending severity:
 "blocked"/"outside" are not automatically bugs - a flier or a swimmer may belong there, which is the
 same judgment `stranded_enemies.py` documents. For a mage in a tower it is a bug.
 
+--feet (round 562) adds a fifth, stricter finding for the legs that pass the four above:
+
+  feet      the enemy's FEET at the waypoint are mostly off the reachable floor. standable() gives a
+            waypoint a full tile of slack up and down, and that is too kind: a patrol moves the
+            sprite's bottom-left corner exactly onto the waypoint (MovementBehavior hands the waypoint's
+            Vector2 to the path, and CharacterSprite.draw() anchors the frame at getX()/getY()), so a
+            waypoint on a room's OUTER top edge passes because the row below it is floor, while every
+            lap draws the whole body above the wall. The Blue Tower Doppelganger did exactly that three
+            times (rounds 283, 561).
+
+            The feet are the bottom 4 px rows of the VISIBLE art, across its columns: the opaque box of
+            the enemy's Idle frame at the size CharacterSprite.draw() draws it (frame x EnemyData.scale x
+            the tier cue). Not the frame itself - many frames are mostly transparent margin, and an LPC
+            frame's width would put the feet in thin air. A feet pixel is "floor" when a reachable
+            player box covers it. The leg passes when at least half of its feet pixels are floor: a
+            sprite on the top row of a room overlaps the wall art above it, which is how every enemy in
+            a top-down room looks, but more than half of the feet in a wall is a body off the floor.
+
+            Booster guards are pinned to their post (MapStage.assignLootGuards -> guardPost), so the
+            game never walks their routes; this tool still reports them, the fix tool skips them.
+
 usage: python dev-tools/waypoint_routes_qa.py                 # every plane map with routes
        python dev-tools/waypoint_routes_qa.py <map.tmx> [...]
+       python dev-tools/waypoint_routes_qa.py --feet [<map.tmx> ...]   # also the strict feet check
 """
 import glob
+import json
+import math
 import os
 import re
 import sys
@@ -38,6 +62,10 @@ sys.path.insert(0, HERE)
 import pixel_collision_qa as q
 
 PLANE = os.path.join(HERE, '..', 'forge-gui', 'res', 'adventure', 'The Forsaken Realms', 'maps', 'map')
+PLANE_ROOT = os.path.join(HERE, '..', 'forge-gui', 'res', 'adventure', 'The Forsaken Realms')
+FEET_ROWS = 4          # px above the waypoint's y that count as the feet
+FEET_PASS = 0.5        # share of the feet that must be on reachable floor
+PLAYER_BOX = (10, 6)   # pixel_collision_qa's default player box; a "floor" pixel is one such a box covers
 
 
 def waypoint_objects(tmx_path):
@@ -127,11 +155,118 @@ def standable(free, reachable, wpx, hpx, th, x, y):
     return legal, reach
 
 
+def feet_box(x, y, feet=None):
+    """(x0, y0, x1, y1) in .tmx pixels, y down, half-open: the feet of an enemy whose bottom-left corner
+    stands on (x, y). `feet` is enemy_feet()'s (left, right, lift) for it; without one, a 16 px sprite's
+    collision box (CharacterSprite.updateBoundingRect(): x + 4 to x + width - 2) standing on y."""
+    left, right, lift = feet or DEFAULT_FEET
+    bottom = int(math.floor(y - lift))
+    return (int(math.floor(x + left)), bottom - FEET_ROWS, int(math.ceil(x + right)), bottom)
+
+
+def feet_on_floor(reachable, wpx, hpx, x, y, feet=None, player=PLAYER_BOX):
+    """Share (0..1) of the feet pixels at (x, y) that a reachable player box covers.
+
+    `reachable` is the corner mask reachable_from_entries() returns (box top-left corners), so a pixel
+    is floor when a reachable corner sits within one box of it, up and to the left."""
+    pw, ph = player
+    x0, y0, x1, y1 = feet_box(x, y, feet)
+    good = total = 0
+    for py in range(y0, y1):
+        for px in range(x0, x1):
+            total += 1
+            if not (0 <= px < wpx and 0 <= py < hpx):
+                continue
+            hit = False
+            for cy in range(max(0, py - ph + 1), py + 1):
+                row = cy * wpx
+                for cx in range(max(0, px - pw + 1), px + 1):
+                    if reachable[row + cx]:
+                        hit = True
+                        break
+                if hit:
+                    break
+            good += hit
+    return good / float(total) if total else 0.0
+
+
+DEFAULT_FEET = (4.0, 14.0, 0.0)
+ACCEPTED_FEET = os.path.join(HERE, 'waypoint_feet_accepted.json')
+
+
+def feet_accepted():
+    """{map path under maps/map: {"<enemy id>:<waypoint id>": reason}} - the feet legs a reviewed pass
+    accepted as deliberate (a flier over water, a lava creature in lava, a pinned booster guard). Same
+    idea as pixel_collision_qa.ACCEPTED_UNREACHABLE: a settled question is counted, not re-raised."""
+    try:
+        return json.load(open(ACCEPTED_FEET, encoding='utf-8')).get('accepted', {})
+    except (OSError, ValueError):
+        return {}
+_FEET = None
+
+
+def enemy_feet():
+    """{enemy name: (left, right, lift)} - where an enemy's VISIBLE feet are, in px from the point it
+    stands on: the opaque box of its Idle frame (alpha >= 128), at the size CharacterSprite.draw() draws
+    it - atlas frame x EnemyData.scale x TuningData.tierSizeMultiplier(tier, frame height x scale,
+    boss || keepSize). Many frames carry transparent margins (an LPC frame is 64 px wide around a 16 px
+    body), so the frame's own width would put the "feet" in thin air; `lift` is the empty rows under
+    the art. The tier cue and the frame cap come from the plane's settings.json, else the Java defaults.
+    An enemy whose atlas cannot be read is left out; callers fall back to DEFAULT_FEET."""
+    global _FEET
+    if _FEET is not None:
+        return _FEET
+    import enemy_scale as es
+    import sprite_sizes as ss
+    tune = {'enemyTierScaleCommon': 0.8125, 'enemyTierScaleUncommon': 1.0, 'enemyTierScaleRare': 1.25,
+            'enemyTierScaleMythic': 1.5, 'enemySpriteFrameCap': 1.4}
+    try:
+        cfg = json.load(open(os.path.join(PLANE_ROOT, 'config tables', 'settings.json'), encoding='utf-8'))
+        for k in tune:
+            if k in cfg:
+                tune[k] = float(cfg[k])
+    except (OSError, ValueError):
+        pass
+    cue_of = {'Common': tune['enemyTierScaleCommon'], 'Uncommon': tune['enemyTierScaleUncommon'],
+              'Rare': tune['enemyTierScaleRare'], 'Mythic': tune['enemyTierScaleMythic']}
+    frames, out = {}, {}
+    for e in json.load(open(os.path.join(PLANE_ROOT, 'world', 'enemies.json'), encoding='utf-8')):
+        sp = e.get('sprite') or ''
+        if sp not in frames:
+            frames[sp] = None
+            path, _where = ss.resolve(sp) if sp else (None, None)
+            img = es.idle_image(path) if path else None
+            if img is not None:
+                box = img.getchannel('A').point(lambda a: 255 if a >= 128 else 0).getbbox()
+                if box:
+                    frames[sp] = (img.width, img.height, box)
+        fr = frames[sp]
+        if not fr:
+            continue
+        fw, fh, (bx0, _by0, bx1, by1) = fr
+        scale = float(e.get('scale', 1.0))
+        if scale < 0:
+            scale = 1.0
+        cue = cue_of.get(e.get('tier') or 'Common', 1.0)
+        mult, base_h = cue, fh * scale
+        if not (e.get('boss') or e.get('keepSize')) and base_h > 0 and tune['enemySpriteFrameCap'] > 0:
+            ceiling = cue * 16.0 * tune['enemySpriteFrameCap']
+            if base_h * cue > ceiling:
+                mult = cue * ceiling / (base_h * cue)
+        k = scale * mult
+        out[e['name']] = (bx0 * k, bx1 * k, (fh - by1) * k)
+    _FEET = out
+    return out
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('-')]
+    feet = '--feet' in sys.argv
+    feet_of = enemy_feet() if feet else {}
+    accepted = feet_accepted() if feet else {}
     maps = args or sorted(glob.glob(os.path.join(PLANE, '**', '*.tmx'), recursive=True))
-    bad_maps = tot_routes = tot_legs = 0
-    findings = []
+    bad_maps = tot_routes = tot_legs = n_accepted = 0
+    findings, stale = [], []
     for path in maps:
         try:
             rs = routes(path)
@@ -146,6 +281,9 @@ def main():
             print('  !! %s: %s' % (os.path.basename(path), e))
             continue
         rows = []
+        feet_seen = set()   # a leg repeated in one route is one finding
+        rel = os.path.relpath(path, PLANE).replace('\\', '/')
+        ok_here = accepted.get(rel, {})
         for eid, name, ex, ey, ls, propname in rs:
             tot_routes += 1
             for kind, payload in ls:
@@ -165,12 +303,25 @@ def main():
                         rows.append(('blocked', eid, name, wid, wx, wy))
                     elif reachable is not None and not reach:
                         rows.append(('outside', eid, name, wid, wx, wy))
+                    elif feet and (eid, wid) not in feet_seen:
+                        feet_seen.add((eid, wid))
+                        share = feet_on_floor(reachable if reachable is not None else free,
+                                              wpx, hpx, wx, wy, feet_of.get(name))
+                        key = '%d:%d' % (eid, wid)
+                        if share >= FEET_PASS:
+                            if key in ok_here:
+                                stale.append((rel, key))
+                        elif key in ok_here:
+                            n_accepted += 1
+                        else:
+                            rows.append(('feet', eid, name, wid, wx, wy, share))
             if propname != 'waypoints':
                 rows.append(('case', eid, name, propname, ex, ey))
         if rows:
             bad_maps += 1
-            print('\n=== %s' % os.path.relpath(path, PLANE).replace('\\', '/'))
-            for kind, eid, name, wid, wx, wy in rows:
+            print('\n=== %s' % rel)
+            for row in rows:
+                kind, eid, name, wid, wx, wy = row[:6]
                 if kind == 'case':
                     print('  CASE     enemy %-4s %-20s property is "%s", not "waypoints"'
                           % (eid, name[:20], wid))
@@ -180,12 +331,19 @@ def main():
                 elif kind == 'dangling':
                     print('  DANGLING enemy %-4s %-20s waypoint id %s resolves to nothing'
                           % (eid, name[:20], wid))
+                elif kind == 'feet':
+                    print('  FEET     enemy %-4s %-20s waypoint %-4s at (%.1f, %.1f) - %d%% of its feet on the floor'
+                          % (eid, name[:20], wid, wx, wy, round(row[6] * 100)))
                 else:
                     print('  %-8s enemy %-4s %-20s waypoint %-4s at (%.1f, %.1f)'
                           % (kind.upper(), eid, name[:20], wid, wx, wy))
             findings.extend((path, r) for r in rows)
     print('\n%d map(s) with routes checked: %d route(s), %d leg(s), %d map(s) with findings'
           % (len(maps), tot_routes, tot_legs, bad_maps))
+    if feet:
+        print('%d feet leg(s) accepted as deliberate (%s)' % (n_accepted, os.path.basename(ACCEPTED_FEET)))
+        for rel, key in stale:
+            print('  STALE    %s %s is accepted but now passes - drop it from the file' % (rel, key))
     return 1 if findings else 0
 
 

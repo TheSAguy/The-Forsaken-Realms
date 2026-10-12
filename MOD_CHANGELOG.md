@@ -14443,6 +14443,59 @@ Roaming guard focus: a free mulligan for guards."
   - Temple Priest was refused before a Temple and taken after building one. The week's offering (U 3, B 2, G 1) paid 14
     cards: 2 blue rares, 4 black uncommons, 8 green commons.
 
+## Round 565: stray patrol waypoints - a strict feet check, 36 waypoints moved on 26 maps (2026-10-12)
+
+The user, after round 561 (the Blue Tower Doppelganger walked out of its room for the third time): add a strict "feet"
+mode to `waypoint_routes_qa.py`, render and classify every flagged leg as a real stray or deliberate (flying, swimming,
+lava), move the real ones with minimal nudges that stay on the patrol line and off guarded loot, and show a review
+sheet before committing. Approved from the sheet as proposed.
+
+- **Why the old audit missed it:** `standable()` gives a waypoint a full tile of slack up and down. A patrol moves the
+  sprite's bottom-left corner exactly onto the waypoint (MovementBehavior hands its Vector2 to the path;
+  `CharacterSprite.draw()` anchors the frame there), so a waypoint on a room's outer top edge passed while the whole
+  body drew outside.
+- **`waypoint_routes_qa.py --feet`** (the default run prints exactly what it did before):
+  - The feet are the bottom 4 px of the VISIBLE art across its columns: the opaque box of the Idle frame, at the size
+    `CharacterSprite.draw()` draws it (frame x `EnemyData.scale` x the tier cue, with the round-261 frame cap;
+    `enemy_feet()`). Not the frame: 367 of 2,127 enemies (mostly `sprites/enemy/remake`, 154 px frames at ~0.3) draw
+    their body 16+ px right of their position.
+  - A feet pixel is floor when a reachable player box covers it. A leg fails when under half its feet are floor - a
+    sprite on a room's top row overlaps the wall art, which is how every enemy there looks.
+  - **The previous session's scratch check over-reported:** its box reached 5 px BELOW the waypoint, so a waypoint on a
+    room's bottom row failed. 48 of its 144 legs pass here, among them magetower_13 waypoint 105 (correctly placed).
+  - `dev-tools/waypoint_feet_accepted.json` (new) holds the reviewed deliberate legs, "<enemy>:<waypoint>" per map with a
+    reason; the audit counts them and flags an entry that has started to pass (STALE).
+- **139 legs flagged, classified from renders** (scratch TMX renderer: tile layers, tile objects, flips, loot and
+  routes marked; non-floor tinted):
+  - **99 deliberate** (accepted): fliers and swimmers over water, pits, trees or roofs; lava creatures in lava - the 51
+    templeofchandra legs are its three Magma Elementals following the lava channels (round 286b had moved their
+    blocked legs to the nearest legal tile, the lava's edge); booster guards, whose route never runs (pinned to their
+    post by `MapStage.assignLootGuards`); a Bandit Archer and a Gargoyle whose own start is in the same spot.
+  - **38 real**: ground walkers on tents, boulders, huts, trees and furniture, past the map's edge, or above a room's top
+    wall like the Doppelganger (fort_blue_3's Esper Artificer); fliers inside walls indoors (crypt_5, tibalt_f1,
+    vampirecastle_4C) or off the map (vampirecastle_1).
+- **`fix_routes.py --feet`** - a nudge must land the feet 100% on floor for the enemy that failed (every other enemy
+  through the waypoint keeps half), keep the lower body 2 px off every reward, slide along its own leg when that is
+  not 1.5x longer than any other direction, stay a tile from the route's other points (so a fix never collapses a
+  patrol), move at most two tiles, and keep every leg that had a path on the game's navigation graph
+  (`guard_patrols/tfrmaps.NavSim`, which models the 8 px fixture shift). The last rule was added after it caught two
+  zedruu moves that would have frozen their Dwarf Mercenaries.
+- **Moved: 36 waypoints on 26 maps**, 31 by the tool, 5 by hand (each on the sheet):
+  - crypt_5 95/96: both 20 px left, so the Necrogoyf's 32 px pace stays in the room rather than squeezing into the
+    corridor mouth.
+  - catlair_green_1 88 (the Tiger, 3 tiles - forest above, its chest below) and grove_8 126/127 (the Hydra of
+    Shandalaar now sways in its clearing instead of walking into the trees): beyond the two-tile limit, the user's call.
+- **Left, accepted with the reason recorded:**
+  - grolnok 142: every spot with the feet on the floor cuts a leg off the nav graph.
+  - zedruu 237: the Dwarf Mercenary's frame draws it 18-29 px right of its position, so on a one-tile path the position
+    and the body cannot both fit.
+- **Checks:** the strict audit reports 0 findings (102 accepted, none stale); `fix_routes.py --feet` finds nothing left;
+  the default audit's output and `validate_plane_data.py`'s report are unchanged from the base; every moved leg keeps a
+  nav path; the map diff is one line per waypoint (x/y only). Not seen in play.
+- **Not done, raised as separate tasks:** the wide remake frames (body off-centre, collision box ~40 px around an 11 px
+  body) and patrol legs the nav graph cannot path at all (grolnok's Treefolk 160 already freezes at waypoint 142 - its
+  next leg has no path; MapStage idles such a mob for good).
+
 ## Round 564: level-up rewards - Rare cards doubled, Goodwill +3 (2026-10-11)
 
 The user: "Rare cards in your deck's colors: 1 rare (levels 2-12), 2 rares (13-22), a rare and a mythic (23+) to Be: 2

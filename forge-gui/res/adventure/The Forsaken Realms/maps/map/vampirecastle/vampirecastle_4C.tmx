@@ -293,7 +293,7 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
-  <object id="102" template="../../../../common/maps/obj/waypoint.tx" x="752.167" y="47.75"/>
+  <object id="102" template="../../../../common/maps/obj/waypoint.tx" x="754.3" y="49.9"/>
   <object id="103" template="../../../../common/maps/obj/waypoint.tx" x="752.167" y="111.75"/>
 </objectgroup>
 </map>

@@ -689,7 +689,7 @@
   <object id="49" template="../../../../common/maps/obj/waypoint.tx" x="640.667" y="683.333" />
   <object id="50" template="../../../../common/maps/obj/waypoint.tx" x="672.273" y="702.878" />
   <object id="51" template="../../../../common/maps/obj/waypoint.tx" x="712.515" y="661.515" />
-  <object id="52" template="../../../../common/maps/obj/waypoint.tx" x="749.818" y="698.909" />
+  <object id="52" template="../../../../common/maps/obj/waypoint.tx" x="749.8" y="688.9" />
   <object id="53" template="../../../../common/maps/obj/waypoint.tx" x="785.94" y="640.515" />
   <object id="54" template="../../../../common/maps/obj/waypoint.tx" x="927.333" y="575.667" />
   <object id="56" template="../../../../common/maps/obj/collision.tx" x="228.182" y="1.09091" width="7.86364" height="29.7727" />

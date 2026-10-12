@@ -102,6 +102,9 @@ a banner only.
 ## STATE 2026-10-11 (round 566): **LOCAL + UNRELEASED** - perks Temple Priest (double Temple cards), Focused (a free
 first mulligan, from level 15; engine: RegisteredPlayer.freeMulligan) and Guard Focus (the same for roaming guards).
 
+## STATE 2026-10-12 (round 565): **LOCAL + UNRELEASED** - stray patrol waypoints: a strict feet check
+(`waypoint_routes_qa.py --feet`, `fix_routes.py --feet`, `waypoint_feet_accepted.json`) and 36 waypoints moved on 26 maps.
+
 ## STATE 2026-10-11 (round 564): **LOCAL + UNRELEASED** - level-up Rare cards doubled (2 / 4 / 2 rares + 2 mythics), Goodwill +3.
 
 ## STATE 2026-10-11 (round 563): **LOCAL + UNRELEASED** - Kor portraits, 13 male and 11 female.

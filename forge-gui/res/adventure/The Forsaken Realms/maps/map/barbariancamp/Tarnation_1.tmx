@@ -122,7 +122,7 @@
   <object id="100" template="../../../../common/maps/obj/waypoint.tx" x="207" y="441.333"/>
   <object id="101" template="../../../../common/maps/obj/waypoint.tx" x="148.667" y="564.667"/>
   <object id="102" template="../../../../common/maps/obj/waypoint.tx" x="102.667" y="519.333"/>
-  <object id="103" template="../../../../common/maps/obj/waypoint.tx" x="522" y="414"/>
+  <object id="103" template="../../../../common/maps/obj/waypoint.tx" x="521" y="406"/>
   <object id="104" template="../../../../common/maps/obj/manashards.tx" x="41.3333" y="500.333"/>
   <object id="106" template="../../../../common/maps/obj/manashards.tx" x="527.333" y="559.333"/>
   <object id="108" template="../../../../common/maps/obj/entry_right.tx" x="60.5" y="74.1667" width="21" height="21">
