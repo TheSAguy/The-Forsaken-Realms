@@ -14264,6 +14264,46 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 566: three perks - Temple Priest, Focused (a free mulligan) and Guard Focus (2026-10-11)
+
+The user: "Add a perk, one time. Double Temple rewards. Maybe Temple priest? So if chosen, your temple will pay double
+the card rewards. How difficult will it be to add this: 'Focused: a free mulligan (after level 15)' Since it touches
+the Forge engine ... If complicated, let's skip. - So if you have this perk, you can mulligan for free once. Meaning
+you won't have to lose a card." Then: "Since focused is possible. Let's add one for your guards also: Something like.
+Roaming guard focus: a free mulligan for guards."
+
+- **Temple Priest** (`ascendance.json` "templePriest", one pick, value 2):
+  - The Temple's weekly offering pays twice the cards: 2 rares, 4 uncommons, 8 commons (`Ascendance.templeCardMultiplier`
+    in `TempleOfferings.pay`).
+  - The Temple screen's line counts them, and the log line adds "(Temple Priest x2)".
+  - Offered only once the Capitol has a Temple.
+- **Focused** (`ascendance.json` "focused", one pick, `minLevel` 15):
+  - The player's first mulligan in each game is free: you mulligan back to a full hand. A second mulligan costs one card,
+    and so on, as usual.
+  - **Engine:** Forge already gives every seat a free first mulligan in multiplayer and Brawl
+    (`AbstractMulligan.firstMulliganFree`, every mulligan rule). `RegisteredPlayer.freeMulligan` gives it to one seat;
+    `MulliganService` reads it.
+  - DuelScene sets it on the player's seat in the player's own duels - not a guard's fight, an Inn match or Deck Tester,
+    like the other duel-start perks.
+  - The design doc's note that mulligan perks were "engine-level and off limits" is superseded by the user's call: the
+    engine change is two small edits (`CORE_ENGINE_CHANGES.md`).
+- **Guard Focus** (`ascendance.json` "guardFocus", one pick, `minLevel` 15): the player's roaming guards get the same
+  free first mulligan.
+  - A watched fight sets it in DuelScene; a headless one in `WorldStage.simulateGuardDuel`'s seat hook, next to the
+    guard's gear.
+  - Not offered on a plane without roaming guards.
+- **`AscendanceData.Choice.minLevel`** (new): a choice is not offered for a level below it. Focused's "after level 15" is
+  taken as from level 15.
+- **Icons:** from Shikashi's pack - the candle (Temple Priest), the playing card (Focused), the helmet (Guard Focus).
+  `ascendance_icons.png` grew to 800x900.
+- **Agent-tested** (slot 7; the console's `asc pick`, plus scratch-only commands never committed: `templekill`, `skipto`
+  and `guardsim`, which starts a headless guard fight):
+  - Focused was refused at level 1 and taken at 18. Every duel after it logged `[TFR-Mulligan] Poran: the first
+    mulligan is free (London)`.
+  - A headless guard fight had no such line; after Guard Focus the next logged `[TFR-Mulligan] Master Guard: ...`.
+  - Temple Priest was refused before a Temple and taken after building one. The week's offering (U 3, B 2, G 1) paid 14
+    cards: 2 blue rares, 4 black uncommons, 8 green commons.
+
 ## Round 564: level-up rewards - Rare cards doubled, Goodwill +3 (2026-10-11)
 
 The user: "Rare cards in your deck's colors: 1 rare (levels 2-12), 2 rares (13-22), a rare and a mythic (23+) to Be: 2

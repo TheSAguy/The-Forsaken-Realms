@@ -114,5 +114,7 @@ public class AscendanceData {
         public float weight = 1f;
         /** Round 551, lasting only: days the pick takes off a timer (Researcher: 3 off each research). */
         public int days;
+        /** Round 566: not offered for a level below this (Focused: "after level 15"). 0 = any level. */
+        public int minLevel;
     }
 }

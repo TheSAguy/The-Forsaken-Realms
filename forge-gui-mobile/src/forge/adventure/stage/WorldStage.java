@@ -1413,9 +1413,16 @@ public class WorldStage extends GameStage implements SaveFileContent {
         EffectData archmageStart = DuelScene.archmageStartEffect(mage.getData()); // round 390: as in the watched fight
         if (archmageStart != null)
             gearOnMage.add(archmageStart);
+        // Round 566: Guard Focus - the guard's first mulligan costs no card, as in a watched fight.
+        final boolean guardFocus = forge.adventure.util.Ascendance.guardFreeMulligan();
         DeckTesterSimulator.runBatch(
                 RoamingGuards.displayName(guard.tier) + " Guard", deck, guard.maxLife + forge.adventure.util.Ascendance.guardLifeBonus(), // round 494: Marshal
-                gear.size == 0 ? null : rp -> DuelScene.applyEffects(rp, gear),
+                gear.size == 0 && !guardFocus ? null : rp -> {
+                    if (gear.size > 0)
+                        DuelScene.applyEffects(rp, gear);
+                    if (guardFocus)
+                        rp.setFreeMulligan(true);
+                },
                 mage.getName(), mageDeck, mageLife,
                 gearOnMage.size == 0 ? null : rp -> DuelScene.applyEffects(rp, gearOnMage),
                 1, null, result -> {

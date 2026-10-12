@@ -38,25 +38,32 @@ public class MulliganService {
 
         for (Player player : whoCanMulligan) {
             MulliganDefs.MulliganRule rule = StaticData.instance().getMulliganRule();
+            // TFR (round 566): a seat registered with a free mulligan (the Adventure's Focused perk) gets the free first
+            // mulligan the game otherwise gives everyone only in multiplayer and Brawl.
+            boolean free = firstMullFree;
+            if (!free && player.getRegisteredPlayer() != null && player.getRegisteredPlayer().hasFreeMulligan()) {
+                free = true;
+                System.out.println("[TFR-Mulligan] " + player.getName() + ": the first mulligan is free (" + rule + ")");
+            }
             AbstractMulligan mulligan;
             switch (rule) {
                 case Original:
-                    mulligan = new OriginalMulligan(player, firstMullFree);
+                    mulligan = new OriginalMulligan(player, free);
                     break;
                 case Paris:
-                    mulligan = new ParisMulligan(player, firstMullFree);
+                    mulligan = new ParisMulligan(player, free);
                     break;
                 case Vancouver:
-                    mulligan = new VancouverMulligan(player, firstMullFree);
+                    mulligan = new VancouverMulligan(player, free);
                     break;
                 case London:
-                    mulligan = new LondonMulligan(player, firstMullFree);
+                    mulligan = new LondonMulligan(player, free);
                     break;
                 case Houston:
-                    mulligan = new HoustonMulligan(player, firstMullFree);
+                    mulligan = new HoustonMulligan(player, free);
                     break;
                 default:
-                    mulligan = new VancouverMulligan(player, firstMullFree);
+                    mulligan = new VancouverMulligan(player, free);
                     break;
             }
 

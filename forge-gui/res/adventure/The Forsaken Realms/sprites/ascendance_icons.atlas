@@ -1,6 +1,6 @@
 
 ascendance_icons.png
-size: 800,800
+size: 800,900
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -192,4 +192,13 @@ intimidating_2
   size: 96, 96
 intimidating_3
   xy: 602, 702
+  size: 96, 96
+templePriest_1
+  xy: 702, 702
+  size: 96, 96
+focused_1
+  xy: 2, 802
+  size: 96, 96
+guardFocus_1
+  xy: 102, 802
   size: 96, 96

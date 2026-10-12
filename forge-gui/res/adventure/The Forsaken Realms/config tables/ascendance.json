@@ -139,6 +139,15 @@
     { "id": "researcher",  "lasting": true, "maxPicks": 1, "value": 0.50, "days": 3 },
     // Round 557 (the user: "Intimidating: 5%, 10% & 15% chance of an enemy fleeing a duel. Only on Overworld. Only on
     // enemies you have a winning record on"): a "value" chance a pick (Ascendance.intimidates).
-    { "id": "intimidating", "lasting": true, "maxPicks": 3, "value": 0.05 }
+    { "id": "intimidating", "lasting": true, "maxPicks": 3, "value": 0.05 },
+    // Round 566 (the user: "Add a perk, one time. Double Temple rewards. Maybe Temple priest?"): the Temple's weekly
+    // offering pays "value" times the cards - offered only once the Capitol has a Temple.
+    { "id": "templePriest", "lasting": true, "maxPicks": 1, "value": 2 },
+    // Round 566 (the user: "Focused: a free mulligan (after level 15) ... you won't have to lose a card"): the player's
+    // first mulligan in each game is free (the engine's free-mulligan rule, for the player's seat); from level 15.
+    { "id": "focused",     "lasting": true, "maxPicks": 1, "minLevel": 15 },
+    // Round 566 (the user: "Roaming guard focus: a free mulligan for guards"): the player's roaming guards' first
+    // mulligan is free, in a watched fight and a headless one alike; from level 15, as Focused.
+    { "id": "guardFocus",  "lasting": true, "maxPicks": 1, "minLevel": 15 }
   ]
 }

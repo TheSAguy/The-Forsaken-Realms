@@ -944,7 +944,14 @@ public class DuelScene extends ForgeScene {
                 System.out.println("[TFR-Ascend] Opening Gambit: the coin toss favors the player "
                         + Math.round(100f * forge.adventure.util.Ascendance.openingTossChance()) + "%");
             }
+            // Round 566: Focused - the player's first mulligan costs no card (the engine's MulliganService logs it).
+            if (forge.adventure.util.Ascendance.freeMulligan())
+                humanPlayer.setFreeMulligan(true);
         }
+        // Round 566: Guard Focus - a watched roaming guard's first mulligan costs no card (the headless fight sets the
+        // same on its seat in WorldStage.simulateGuardDuel).
+        if (guardDeck != null && forge.adventure.util.Ascendance.guardFreeMulligan())
+            humanPlayer.setFreeMulligan(true);
         // Round 163 (MOD_SCOPE #118): a roaming guard's own equipment. Its effects go on the guard's
         // seat and its items' opponent effects on the mage's, exactly as the player's do above.
         if (guardEffects != null) {

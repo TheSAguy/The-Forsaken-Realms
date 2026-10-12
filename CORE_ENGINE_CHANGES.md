@@ -38,6 +38,18 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 566 - a free first mulligan for one seat (Focused, Guard Focus)
+
+- **`forge-game/.../player/RegisteredPlayer.java`** - `freeMulligan` (default false) with `hasFreeMulligan`/`setFreeMulligan`:
+  this seat's first mulligan costs no card.
+- **`forge-game/.../mulligan/MulliganService.java`** - `initializeMulligans`: each seat's mulligan is built with
+  `firstMullFree || its RegisteredPlayer's freeMulligan`, so the free first mulligan multiplayer and Brawl already give
+  everyone can be given to one seat (the existing `AbstractMulligan.firstMulliganFree` does the rest, for every
+  mulligan rule). It logs `[TFR-Mulligan]` when a seat gets it this way. An upstream change to how `firstMullFree` is
+  decided or passed is a conflict to re-apply by hand.
+- **Mod-touched**: `scene/DuelScene.java` (the player's seat with Focused; a watched guard's seat with Guard Focus),
+  `stage/WorldStage.java` (a headless guard fight's seat), `util/Ascendance.java`, `data/AscendanceData.java` (`minLevel`).
+
 ### Round 525 - Opening Gambit's weighted coin toss
 
 - **`forge-game/.../player/RegisteredPlayer.java`** - `coinTossWeight` (default 1) with its getter/setter: a seat's weight

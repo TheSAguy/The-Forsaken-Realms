@@ -139,11 +139,12 @@ public final class TempleOfferings {
         Array<Reward> reveal = new Array<>();
         StringBuilder log = new StringBuilder();
         StringBuilder notice = new StringBuilder();
+        int times = Ascendance.templeCardMultiplier(); // round 566: Temple Priest
         for (int place = 0; place < PLACE_COUNT.length && place < ranked.size(); place++) {
             int c = ranked.get(place);
             List<PaperCard> pool = pool(inSets, BITS[c], PLACE_RARITY[place]);
             int got = 0;
-            for (int i = 0; i < PLACE_COUNT[place] && !pool.isEmpty(); i++) {
+            for (int i = 0; i < PLACE_COUNT[place] * times && !pool.isEmpty(); i++) {
                 PaperCard card = pool.remove(RAND.nextInt(pool.size()));
                 player.addCard(card);
                 reveal.add(Reward.alreadyGranted(new Reward(card)));
@@ -154,10 +155,11 @@ public final class TempleOfferings {
             notice.append(notice.length() == 0 ? "" : ", ").append(got).append(' ').append(NAMES[c]).append(' ')
                     .append(kind).append(got == 1 ? "" : "s");
             log.append(" (").append(PLACE_NAMES[place]).append(' ').append(LETTERS[c]).append(' ').append(fmt(kills[c]))
-                    .append(", ").append(got).append(' ').append(kind).append(got == PLACE_COUNT[place] ? "" : " - pool ran out")
+                    .append(", ").append(got).append(' ').append(kind).append(got == PLACE_COUNT[place] * times ? "" : " - pool ran out")
                     .append(")");
         }
-        System.out.println("[TFR-Temple] week " + (week + 1) + " ended (" + tally(kills) + ") - " + reveal.size + " card(s): " + log);
+        System.out.println("[TFR-Temple] week " + (week + 1) + " ended (" + tally(kills) + ") - " + reveal.size + " card(s)"
+                + (times > 1 ? " (Temple Priest x" + times + ")" : "") + ": " + log);
         if (reveal.size == 0)
             return;
         GameHUD.getInstance().addNotification("The Temple's offering for week " + (week + 1) + ": " + notice + ".");
@@ -203,9 +205,11 @@ public final class TempleOfferings {
         int day = world.getCurrentDay();
         int daysLeft = World.nextWeekBoundary(day) - day;
         EconomyBuildings.addContentRow(dialog, "Temple");
+        int times = Ascendance.templeCardMultiplier(); // round 566: Temple Priest
         EconomyBuildings.addContentRow(dialog, "[%80]Defeat enemies to honor their colors. When the week ends, the most "
-                + "honored color gives 1 rare card, the second 2 uncommons and the third 4 commons, from the sets you "
-                + "have unlocked.[%]");
+                + "honored color gives " + cardsText(PLACE_COUNT[0] * times, "rare card") + ", the second "
+                + cardsText(PLACE_COUNT[1] * times, "uncommon") + " and the third " + cardsText(PLACE_COUNT[2] * times, "common")
+                + ", from the sets you have unlocked" + (times > 1 ? " (Temple Priest)" : "") + ".[%]");
         List<Integer> ranked = ranking(kills);
         float most = 0f;
         for (float k : kills)
@@ -242,6 +246,10 @@ public final class TempleOfferings {
             pixmap.dispose();
         }
         return white;
+    }
+
+    private static String cardsText(int n, String what) {
+        return n + " " + what + (n == 1 ? "" : "s");
     }
 
     /** 8, 2.5 or 1.33 - a whole count without its decimals. */
