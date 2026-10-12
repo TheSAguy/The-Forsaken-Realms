@@ -61,8 +61,10 @@ final class AscendanceRewards {
             case "shards": return "+" + amount(value, level) + " [+Shards]";
             case "wood": return "+" + amount(value, level) + " [+Wood]";
             case "stone": return "+" + amount(value, level) + " [+Stone]";
-            case "rareCards": return level >= 23 ? "A rare and a mythic in your deck's colors"
-                    : level >= 13 ? "Two rares in your deck's colors" : "A rare in your deck's colors";
+            // Round 564 (the user: "2 rare (levels 2-12), 4 rares (13-22), 2 rare and 2 mythic (23+)") - was 1 / 2 /
+            // a rare and a mythic.
+            case "rareCards": return level >= 23 ? "Two rares and two mythics in your deck's colors"
+                    : level >= 13 ? "Four rares in your deck's colors" : "Two rares in your deck's colors";
             case "item": return "A random " + itemRarity(level).toLowerCase() + " item";
             case "booster": return "A pack of an edition you have unlocked";
             case "mapFragment": return "[+MapFragmentWaste] A piece of a treasure map you are still missing";
@@ -100,11 +102,11 @@ final class AscendanceRewards {
             case "wood": player.addWood(amount(value, level)); result = "+" + amount(value, level) + " [+Wood]"; break;
             case "stone": player.addStone(amount(value, level)); result = "+" + amount(value, level) + " [+Stone]"; break;
             case "rareCards":
-                if (level >= 23) {
-                    loot.addAll(cards(1, "Rare"));
-                    loot.addAll(cards(1, "Mythic Rare"));
+                if (level >= 23) { // round 564: doubled at every band
+                    loot.addAll(cards(2, "Rare"));
+                    loot.addAll(cards(2, "Mythic Rare"));
                 } else {
-                    loot.addAll(cards(level >= 13 ? 2 : 1, "Rare"));
+                    loot.addAll(cards(level >= 13 ? 4 : 2, "Rare"));
                 }
                 result = loot.size + " card" + (loot.size == 1 ? "" : "s");
                 break;

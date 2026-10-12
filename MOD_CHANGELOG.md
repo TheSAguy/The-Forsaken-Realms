@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 564: level-up rewards - Rare cards doubled, Goodwill +3 (2026-10-11)
+
+The user: "Rare cards in your deck's colors: 1 rare (levels 2-12), 2 rares (13-22), a rare and a mythic (23+) to Be: 2
+rare (levels 2-12), 4 rares (13-22), a 2 rare and 2 mythic (23+). Goodwill to +3 reputation in your least-liked town".
+
+- **Rare cards** (`AscendanceRewards`, the one-time "rareCards" choice), in the deck's colors:
+
+  | Levels | Was | Now |
+  |---|---|---|
+  | 2-12 | 1 rare | 2 rares |
+  | 13-22 | 2 rares | 4 rares |
+  | 23+ | a rare and a mythic | 2 rares and 2 mythics |
+
+  The choice's text reads the same bands ("Two rares and two mythics in your deck's colors").
+- **Goodwill** (`ascendance.json` "goodwill" value 2 -> 3): +3 reputation in the player's own town with the least.
+- **Agent-tested** (slot 7, Blue Starter deck selected, the console's `asc pick`): Rare cards at levels 1, 13 and 23 gave 2,
+  4 and 4 cards on the reward screen. Goodwill was not offered there, as that save holds no town; it is a data value
+  the existing code pays as written.
+
 ## Round 563: Kor portraits - male and female pools (2026-10-11)
 
 The user, from a male and a female sheet: "Kor Male: 1, 5, 10, 12, 16, 18, 21, 23. 27, 33, 36, 37, 40 / Kor Female: 1,
