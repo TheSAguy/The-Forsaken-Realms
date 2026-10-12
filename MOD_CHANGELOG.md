@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 567: the notice log shows six entries and scrolls; the town greeting stays out of it (2026-10-11)
+
+The user, with a screenshot of the log: "Does the notice board scroll? I don't think is should be bigger than 6 entries,
+after that you need to scroll." The screenshot also showed the same "Orazca / Reputation: 6" three times.
+
+- **It always scrolled, but only past a fixed 160-px box.** The user's five entries fit in it, so nothing scrolled.
+  - Now `GameHUD.openNoticeLog` sizes the box to the first `NOTICE_LOG_VISIBLE` (6) entries, using their laid-out row
+    heights, so a two-line entry counts as tall as it is.
+  - The rest scroll, and the seventh shows cut at the edge as the cue.
+  - The old 160 / 320 px stays as the most the screen allows.
+- **The town greeting** ("Orazca" + "Reputation: 6", each time the player walks into a town from the world map) is still
+  shown as a banner but no longer logged (`addNotification(text, authored, log)`, private). It is a greeting, not
+  news.
+- **Agent-tested** (slot 7, a scratch-only `noticetest` console command, never committed):
+  - Entered Orazca, then added 9 notices (every third two lines long).
+  - The log opened on six entries with the seventh cut at the edge.
+  - `[TFR-Notices] log opened - 9 entries`: the Orazca greeting was shown, not logged.
+
 ## Round 566: three perks - Temple Priest, Focused (a free mulligan) and Guard Focus (2026-10-11)
 
 The user: "Add a perk, one time. Double Temple rewards. Maybe Temple priest? So if chosen, your temple will pay double

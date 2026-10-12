@@ -717,7 +717,9 @@ public class GameHUD extends Stage {
                     int rep = TileMapScene.instance().getPointOfInterestChanges().getMapReputation();
                     String reputationText = TileMapScene.instance().rootPoint.getDisplayName() + "\n" + Forge.getLocalizer().getMessage("advReputation") + ": " + (rep > 0 ? "[GREEN]" : rep < 0 ? "[RED]" : "[WHITE]") + rep + "[/]";
                     if (fromWorldMap) {
-                        addNotification(reputationText);
+                        // Round 567 (the user's log showed three "Orazca / Reputation: 6"): the town greeting is a banner,
+                        // not news - shown, never logged.
+                        addNotification(reputationText, false, false);
                         fromWorldMap = false;
                     }
                 }
@@ -1506,9 +1508,15 @@ public class GameHUD extends Stage {
      * the safe black tint.
      */
     public void addNotification(String text, boolean authored) {
+        addNotification(text, authored, true);
+    }
+
+    /** Round 567: {@code log} false shows the banner without adding it to the notice log (the town greeting). */
+    private void addNotification(String text, boolean authored, boolean log) {
         String[] notice = normalizeNotice(text, authored);
         forge.adventure.agent.AgentBridge.noteNotification(notice[0]); // round 161: the agent reads these too
-        logNotice(notice);
+        if (log)
+            logNotice(notice);
         noticeQueue.add(notice);
         if (!noticeShowing)
             showNextNotices();
@@ -1531,6 +1539,7 @@ public class GameHUD extends Stage {
     private static final float NOTICE_IN = 0.4f, NOTICE_HOLD = 5f, NOTICE_HOLD_BUSY = 2.5f, NOTICE_OUT = 0.6f;
     private static final int NOTICES_AT_ONCE = 3;
     private static final int NOTICE_LOG_SIZE = 20;
+    private static final int NOTICE_LOG_VISIBLE = 6; // round 567: entries shown before the log scrolls
     private static final float LOG_BUTTON_W = 26f;
     private final java.util.ArrayDeque<String[]> noticeQueue = new java.util.ArrayDeque<>(); // {text, "w" | "b"}
     private final java.util.ArrayDeque<String[]> noticeLog = new java.util.ArrayDeque<>(); // {text, tint, day}, newest first
@@ -1628,8 +1637,13 @@ public class GameHUD extends Stage {
         pane.setScrollingDisabled(true, false);
         pane.setFadeScrollBars(false);
         rows.pack();
+        // Round 567 (the user: "I don't think is should be bigger than 6 entries, after that you need to scroll"): the box
+        // is as tall as the first NOTICE_LOG_VISIBLE entries, the rest scroll; never taller than the screen allows.
+        float visible = 0f;
+        for (int r = 0; r < Math.min(NOTICE_LOG_VISIBLE, rows.getRows()); r++)
+            visible += rows.getRowHeight(r);
         float cap = Forge.isLandscapeMode() ? 160f : 320f;
-        dialog.getContentTable().add(pane).width(width).height(Math.min(cap, rows.getPrefHeight() + 24f)).row();
+        dialog.getContentTable().add(pane).width(width).height(Math.min(cap, visible + 24f)).row();
         pane.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() { // the wheel scrolls the list, not the map under it
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
