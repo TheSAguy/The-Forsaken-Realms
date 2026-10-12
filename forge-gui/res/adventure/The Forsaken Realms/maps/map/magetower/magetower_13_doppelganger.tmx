@@ -310,8 +310,8 @@
   </object>
   <object id="104" template="../../../../common/maps/obj/waypoint.tx" x="128" y="352"/>
   <object id="105" template="../../../../common/maps/obj/waypoint.tx" x="112" y="320"/>
-  <object id="106" template="../../../../common/maps/obj/waypoint.tx" x="176" y="224"/>
-  <object id="107" template="../../../../common/maps/obj/waypoint.tx" x="224" y="224"/>
+  <object id="106" template="../../../../common/maps/obj/waypoint.tx" x="200" y="254"/>
+  <object id="107" template="../../../../common/maps/obj/waypoint.tx" x="248" y="254"/>
    <object id="108" template="../../../../common/maps/obj/enemy.tx" x="123" y="336">
    <properties>
     <property name="enemy" value="Skeleton"/>

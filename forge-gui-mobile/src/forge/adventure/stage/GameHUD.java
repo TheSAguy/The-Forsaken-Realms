@@ -438,7 +438,7 @@ public class GameHUD extends Stage {
         menuGroup.addActor(bookmarkActor);
         menuGroup.addActor(worldStandingsActor);
         ui.addActor(menuGroup);
-        ui.addActor(noticeLogButton); // round 549: not in menuGroup, which a town hides - the log is wanted everywhere
+        ui.addActor(noticeLogButton); // round 549: not in menuGroup; round 561: shown on the world map only (draw())
         //AVATAR
         avatarGroup.addActor(avatar);
         avatarGroup.addActor(avatarborder);
@@ -608,6 +608,8 @@ public class GameHUD extends Stage {
         if (treasureMapsButton != null)
             treasureMapsButton.setVisible(!MapStage.getInstance().isInMap()
                     && forge.adventure.util.TreasureHunt.anyPieces(WorldSave.getCurrentSave().getWorld()));
+        // Round 561 (the user, of a dungeon: "log button does not need to show here. Should only show in Overworld").
+        noticeLogButton.setVisible(!MapStage.getInstance().isInMap());
         super.draw(); //draw the Hud
         // Round 329 (the user, right after this round's banner change: "I just loaded my game and the screen was black,
         // no terrain"). The HUD shares one SpriteBatch with the world (round 316, upstream #12011), and scene2d leaves

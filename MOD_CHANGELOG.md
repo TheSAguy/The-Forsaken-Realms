@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 561: the Log button on the world map only; the Blue Tower's top Doppelganger stays in its room (2026-10-11)
+
+The user, with a screenshot of the Blue Tower: "For the Blue Tower dungeon, the top enemy is totally outside. He starts
+inside then moves out. Also, log button does not need to show here. Should only show in Overworld."
+
+- **Log button:** `GameHUD.draw` shows it only while no map is open, as the treasure-map button does (round 553). The
+  notice log itself is unchanged; it is read from the world map.
+- **The Blue Tower Doppelganger** (`magetower_13_doppelganger.tmx`, enemy 74) - the third report on this enemy:
+  - **Cause:** its patrol (waypoints 106, 107 - added by round 257's patrol pass, 107 moved by round 283) sat at
+    y=224, the top room's OUTER edge. A patrol moves the sprite's feet onto the waypoint, so every lap drew the whole
+    body above the wall.
+  - **Why the audit passed it:** round 283's `waypoint_routes_qa.py` gives every waypoint a full tile of vertical
+    slack, and row 14 below the edge is floor.
+  - **Fix:** 106 -> (200, 254) and 107 -> (248, 254). The patrol now runs along the room's floor, level with the
+    enemy's own start (y 255.5), clear of the chest it guards at tile 11.
+  - **Checks:** both points pass a stricter feet check (the 4 px above the waypoint must be reachable floor) and the
+    original audit. The map was rendered with its tiles to confirm.
+  - The strict check flags 146 legs on about 30 maps. Many are deliberate (lava, water, flying), so they were left for
+    a reviewed pass, offered as a separate task.
+
 ## Round 560: Elf portraits - male and female pools (2026-10-11)
 
 The user, from a male and a female sheet: "Elf Male: 7, 10, 13, 21, 32, 36, 39, 41, 46, 47,60, 64, 65, 68 / Elf

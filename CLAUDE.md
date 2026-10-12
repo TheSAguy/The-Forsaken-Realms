@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-11 (round 561): **LOCAL + UNRELEASED** - the Log button on the world map only; the Blue Tower's top
+Doppelganger patrols inside its room (waypoints 106/107 moved off the outer wall edge).
+
 ## STATE 2026-10-11 (round 560): **LOCAL + UNRELEASED** - Elf portraits, 14 male and 17 female.
 
 ## STATE 2026-10-11 (round 559): **LOCAL + UNRELEASED** - the Capitol Temple (weekly kills by color as a bar chart; the
