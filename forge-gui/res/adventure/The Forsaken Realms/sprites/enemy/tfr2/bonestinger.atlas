@@ -9,6 +9,7 @@ Avatar
 IdleRight
   xy: 0, 64
   size: 76, 55
+  footprint: 13, 15, 47, 36
 IdleRight
   xy: 76, 64
   size: 76, 55

@@ -33,6 +33,7 @@ Wake
 Idle 
   xy: 0, 128
   size: 32, 32    
+  footprint: 6, 4, 23, 28
 Idle 
   xy: 32, 128
   size: 32, 32 

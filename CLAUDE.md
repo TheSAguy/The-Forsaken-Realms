@@ -80,6 +80,12 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-12 (round 578): **LOCAL + UNRELEASED** - enemies stand in their tile: an atlas `footprint` field on the
+Idle frame (948 enemy atlases, 71 of them stock under adventure/common; `dev-tools/sprite_footprints.py --write` after
+ANY new enemy art - `validate_plane_data.py` flags a missing one) makes the creature, not its frame, the actor
+(`CharacterSprite.readFootprint/sizeToFootprint`): body in the placed tile, duel box = body, walkers on the ground, no
+hop on turning. 13 of round 565's waypoints back at their authored spots. Built clean here; the peer (#30) packages.
+
 ## STATE 2026-10-12 (round 577): **LOCAL + UNRELEASED** - the Ascendance Goodwill choice always pays the Capitol
 (`AscendanceRewards.goodwillTown()` = `TownRestoration.findCapitol()`), not offered before the Capitol exists. The peer
 (#30) builds and packages.

@@ -76,7 +76,7 @@
     <property name="waypoints" value="216,215"/>
    </properties>
   </object>
-  <object id="173" template="../../../../common/maps/obj/waypoint.tx" x="327.209" y="294.093"/>
+  <object id="173" template="../../../../common/maps/obj/waypoint.tx" x="327.209" y="290.093"/>
   <object id="178" template="../../../../common/maps/obj/enemy.tx" x="218.946" y="201.624">
    <properties>
     <property name="enemy" value="Dwarf Mercenary"/>

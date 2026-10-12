@@ -14264,6 +14264,60 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 578: enemies stand in their tile - atlas footprints (2026-10-12)
+
+Found by round 565's waypoint feet audit: many enemy frames are far wider than the creature. The user saw the before/after
+sheets (zedruu's Dwarf Mercenary, turning and attacking, a roster sample) and said "Go on the fix and do all."
+
+- **The cause:** the game anchored the FRAME at the enemy's position (`CharacterSprite.draw()` at `getX()/getY()`), and
+  `EnemySprite.updateBoundingRect()` makes the whole drawn frame the duel box.
+  - A remake's cells are as wide as its widest pose. The Dwarf Mercenary's Idle body is columns 59-96 of a 154 px cell;
+    its Attack lunge reaches 152. At k 0.3023 it drew 46.6 x 17.8 px with an 11 px body 17.8-29.0 px right of its spot.
+    On zedruu.tmx its start and both waypoints drew in the trees beside a one-tile path.
+  - The duel started 17.8 px before the player reached the body; 627 enemies had a box 8+ px wider than their body.
+  - Many frames also carry empty rows under the feet (vampires, Grolnok: 8-23 rows), so walkers floated.
+  - 50 enemies hopped 8+ px sideways on turning (the body off-centre in a cell the game mirrors in place).
+  - The crown, Manasight dots, effects (`getCenter`), the overworld chase's terrain check (`WorldStage`, `mob.getWidth()`)
+    and `unfreezeRange` all read the frame.
+- **Why not crop the atlases:** Left frames are in-place mirrors (`FlipAnimation`), so a crop must stay symmetric or
+  turning jumps. A symmetric crop moved 367 offenders to 338 - the lunges set the width. Per-animation crops jump on every
+  attack, and no crop can draw a left-facing lunge left of the anchor.
+- **The fix** (`CharacterSprite`, `EnemySprite`): an atlas may carry `footprint: x, y, w, h` on its Idle frame (libGDX keeps
+  unknown region fields: `AtlasRegion.findValue`). With it:
+  - the actor's box is the body's columns, never narrower than min(one tile of its rank, body + 6 px), from the feet to the
+    frame's top (`sizeToFootprint`; the constructor sizes the first box the same way);
+  - the frame is drawn so the body sits centred in the box - a mirrored frame from the other side (`isFlipX`) - and a
+    walker's lowest drawn pixel (its shadow) on its spot. Fliers (`EnemyData.flying`) keep their hover. A lunge draws
+    outside the box. A Mimic in disguise is unchanged.
+  - An atlas without the field draws exactly as before; a field that does not fit its frame is ignored with a
+    `[TFR-Footprint]` line.
+- **The data** (`dev-tools/sprite_footprints.py --write`): 948 enemy atlases (1,178 enemies; 71 stock atlases under
+  adventure/common) get the field, one line each - those where it moves an enemy 2+ px or narrows its box 4+ px. Columns
+  and top are the opaque box (alpha >= 128) of all Idle frames; the bottom is the lowest drawn pixel.
+  - Bodies centred 16+ px right of the spot: 376 -> 96 (all of them bodies 32+ px wide). The Dwarf Mercenary: box
+    46.6 x 17.8 -> 16 x 17.5, body centre 23.4 -> 8.0.
+  - 158 enemies move 8+ px sideways (max 40.9), 160 boxes narrow by 16+ px (max 73.3), 204 walkers come down 2+ px (max 11.8).
+- **Maps:**
+  - 13 waypoints round 565 had moved only because of the offset are back at the map's own spot (Tarnation_1 103,
+    cave_black_13 6, cave_21D 88/91, cave_red_04 2, crypt_5 95/96, bog 255/256, skep_outer 163, vampirecastle_1 78/79,
+    zedruu 174). Eight of those maps are byte-for-byte their pre-565 selves.
+  - 4 waypoints nudged 4-11 px (grove_8_hydra 85, merfolkpool_3 80, zedruu_f2 173, monastery_1 74 beside the oil lamp).
+  - 5 starts whose authored tile sat half on a wall edge, hidden before by the offset, moved 3-8 px onto the floor (Kor
+    Duelist, Gorilla, Poisonous Snake, Minotaur, Yeti).
+  - `waypoint_feet_accepted.json`: 18 entries now pass and are gone (zedruu 206:237 and grolnok 160/203:142, once "not
+    fixable", among them); the Phoenix 75:80 (flier) and the Magma Elementals' 78 (lava) added.
+  - No nav leg lost on the nav replica. Every placement's start: feet on floor 1,601 -> 1,612 of 1,693; the 8 worse ones
+    are all fliers.
+- **Tools:** `waypoint_routes_qa.enemy_feet()` takes the drawn body from `sprite_footprints.enemy_geometry()`, which also
+  reads settings.json past its // comments (json.load never could; the old code ran on the Java defaults).
+  `validate_plane_data.py` reports a `sprite-footprint` section when an atlas lacks or carries a stale field.
+  - **Run `sprite_footprints.py --write` after any enemy art lands** (remake installs, pack imports, LPC batches): a
+    regenerated atlas loses the field and draws frame-anchored until then.
+- Built clean (MVN EXIT 0, the jar carries `[TFR-Footprint]`); not seen in play here - the peer (#30) packages. To look
+  at: zedruu's Dwarf Mercenary on the path, a duel starting at the body, a vampire standing on the floor.
+- Not done: the crown-size floor (`EnemySprite.applyCrownSizeFloor`) is undone by `draw()` resizing every frame - older
+  than this round, untouched.
+
 ## Round 577: Goodwill always favors your Capitol (2026-10-12)
 
 The user, with a screenshot of the Goodwill reward ("+3 reputation in Camp Windlass"): "Let's make 'Goodwill' to always

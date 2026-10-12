@@ -122,7 +122,7 @@
     <property name="teleport" value=""/>
    </properties>
   </object>
-  <object id="2" template="../../../../common/maps/obj/waypoint.tx" x="279.9" y="176"/>
+  <object id="2" template="../../../../common/maps/obj/waypoint.tx" x="296" y="168"/>
   <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="456" y="120"/>
   <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="136" y="72"/>
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="264" y="184"/>

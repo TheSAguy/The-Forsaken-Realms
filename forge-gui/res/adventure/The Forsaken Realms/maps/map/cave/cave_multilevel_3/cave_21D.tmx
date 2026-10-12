@@ -95,10 +95,10 @@
 </property>
    </properties>
   </object>
-  <object id="88" template="../../../../../common/maps/obj/waypoint.tx" x="319.4" y="354.9"/>
+  <object id="88" template="../../../../../common/maps/obj/waypoint.tx" x="330.667" y="350.667"/>
   <object id="89" template="../../../../../common/maps/obj/waypoint.tx" x="336" y="206"/>
   <object id="90" template="../../../../../common/maps/obj/waypoint.tx" x="286" y="367.333"/>
-  <object id="91" template="../../../../../common/maps/obj/waypoint.tx" x="250" y="401.3"/>
+  <object id="91" template="../../../../../common/maps/obj/waypoint.tx" x="254" y="405.333"/>
   <object id="92" template="../../../../../common/maps/obj/waypoint.tx" x="279.333" y="538"/>
   <object id="93" template="../../../../../common/maps/obj/waypoint.tx" x="298" y="650.667"/>
   <object id="95" template="../../../obj/stone.tx" x="302.437" y="573.802"/>

@@ -136,7 +136,7 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
-  <object id="111" template="../../../../common/maps/obj/enemy.tx" x="71.024" y="381.417">
+  <object id="111" template="../../../../common/maps/obj/enemy.tx" x="79.024" y="381.417">
    <properties>
     <property name="enemy" value="Yeti"/>
     <property name="threatRange" type="int" value="20"/>

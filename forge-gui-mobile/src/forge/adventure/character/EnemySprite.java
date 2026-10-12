@@ -203,6 +203,8 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                     data.boss || data.keepSize); // round 261: the box has to shrink with the art, or it lies
         setWidth(getWidth() * scale);
         setHeight(getHeight() * scale);
+        if (hasFootprint()) // round 578: the creature's box, as CharacterSprite.draw() sizes it every frame
+            sizeToFootprint(getHeight(), scale, data.tier);
         if (disguisedAsLoot()) { // round 452: a chest's size, whatever its rank (CharacterSprite.draw() holds it there)
             setWidth(LOOT_DISGUISE_PIXELS);
             setHeight(LOOT_DISGUISE_PIXELS);

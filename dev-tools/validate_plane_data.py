@@ -984,6 +984,20 @@ for deck_path in sorted(glob.glob(os.path.join(PLANE, "decks", "starter", "*.jso
                 issue("starter-bucket-overlap", "%s can catch the same card (%s)" % (where, shape))
 counts["starter-decks-checked"] = starter_checked
 
+# ---------------------------------------------------------------- enemy atlas footprints (round 578)
+# An enemy atlas whose frame would draw the creature 2+ px off its spot carries a `footprint` field on its Idle frame
+# (dev-tools/sprite_footprints.py; CharacterSprite draws the body in its tile from it). New or regenerated art - a
+# remake install, a pack import, an LPC batch - comes without it, and the enemy draws frame-anchored again: up to two
+# tiles right of where the map put it, with the whole frame as its duel box. Report it here, before packaging.
+try:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import sprite_footprints as _sf
+    for _path, _what, _sprite in _sf.pending():
+        issue("sprite-footprint", "%s: footprint field to %s - run dev-tools/sprite_footprints.py --write"
+              % (_sprite, {"add": "add", "remove": "remove", "stale": "refresh"}[_what]))
+except Exception as _e:   # a broken check must not hide every other section
+    issue("sprite-footprint", "the check could not run: %s" % _e)
+
 # ---------------------------------------------------------------- report
 lines = []
 lines.append("Data validation for: %s" % PLANE)

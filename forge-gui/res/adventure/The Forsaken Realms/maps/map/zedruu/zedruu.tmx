@@ -85,7 +85,7 @@
   </object>
   <object id="171" template="../../../../common/maps/obj/waypoint.tx" x="55.5087" y="551.438"/>
   <object id="173" template="../../../../common/maps/obj/waypoint.tx" x="41.5086" y="151.438" width="13" height="11.6667"/>
-  <object id="174" template="../../../../common/maps/obj/waypoint.tx" x="244.8" y="82.4" width="9.33333" height="10.6667"/>
+  <object id="174" template="../../../../common/maps/obj/waypoint.tx" x="257.842" y="86.439" width="9.33333" height="10.6667"/>
   <object id="175" template="../../../../common/maps/obj/waypoint.tx" x="638.342" y="194.105"/>
   <object id="177" template="../../../../common/maps/obj/waypoint.tx" x="635.569" y="63.7414"/>
   <object id="178" template="../../../../common/maps/obj/enemy.tx" x="516.342" y="117.105">

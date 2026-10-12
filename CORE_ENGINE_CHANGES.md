@@ -38,6 +38,21 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 578 - enemies stand in their tile (atlas footprints)
+
+- **`forge-gui-mobile/src/forge/adventure/character/CharacterSprite.java`** - new `footprintX0/Width/Lift`,
+  `readFootprint()` (end of `load()`: the optional `footprint: x, y, w, h` field on the atlas's first Idle/IdleRight
+  region, via libGDX's `AtlasRegion.findValue`), `hasFootprint()`, `footprintOnGround()`, `sizeToFootprint()`. `draw()`
+  computes the frame size into locals: with a footprint the actor's box is the body (padded to min(rank tile, body +
+  6 px)) and the frame is drawn offset so the body sits in it (`isFlipX` for mirrored frames, walkers lowered onto
+  their spot); otherwise it sets width/height exactly as before. An upstream change to `draw()`'s sizing or its
+  `batch.draw` call is a conflict to re-apply by hand.
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - the constructor sizes its first box with
+  `sizeToFootprint()` after the scale lines.
+- **Stock data: 71 enemy atlases under `forge-gui/res/adventure/common/sprites/enemy/`** carry one added line each (the
+  `footprint:` field on their first Idle region). On a merge conflict take upstream's file and re-run
+  `python dev-tools/sprite_footprints.py --write`.
+
 ### Round 566 - a free first mulligan for one seat (Focused, Guard Focus)
 
 - **`forge-game/.../player/RegisteredPlayer.java`** - `freeMulligan` (default false) with `hasFreeMulligan`/`setFreeMulligan`:

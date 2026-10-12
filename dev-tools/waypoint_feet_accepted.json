@@ -4,19 +4,6 @@
   "barbariancamp/barbariancamp_bandit.tmx": {
    "61:92": "the Bandit Archer's own start: it stands in the stone ring, and so does its home"
   },
-  "barbariancamp/barbariancamp_goblin_3.tmx": {
-   "55:72": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs",
-   "77:72": "flier (Phoenix) over the forest"
-  },
-  "cave/cave_colorless_07.tmx": {
-   "8:2": "flier (Young Red Dragon) over the pit's rim"
-  },
-  "cave/cave_green_08.tmx": {
-   "7:5": "flier (Queen of the Gilded Brood) over the pit's rim"
-  },
-  "cave/cave_red_06.tmx": {
-   "8:2": "flier (Green Dragonkin Renegade) over the pit's rim"
-  },
   "cave/inn_cave_river_entrance.tmx": {
    "14:56": "flier (Wandering Geist) over a gravestone"
   },
@@ -29,11 +16,6 @@
    "54:70": "swimmer (Crocodile) in the river",
    "95:105": "flier (Giant Fly) over the pond"
   },
-  "evilgrove/evilgrove_5_swamp.tmx": {
-   "55:82": "flier (Dragonfly) over the swamp",
-   "79:82": "flier (Dragonfly) over the swamp",
-   "89:82": "flier (Dragonfly) over the swamp"
-  },
   "evilgrove/evilgrove_6_shade.tmx": {
    "60:66": "flier (Dragonfly) over the pond",
    "61:65": "flier (Dragonfly) over the pond"
@@ -45,9 +27,6 @@
   "fort/fort_blue_2_canyon.tmx": {
    "63:67": "flier (Drake) over the river"
   },
-  "fort/fort_colorless_4_ooze.tmx": {
-   "53:89": "flier (Necrogoyf) over the ooze pool"
-  },
   "fort/fort_colorless_5_evil.tmx": {
    "61:65": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs; a swimmer (Jellyfish) in the river besides",
    "61:67": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs; a swimmer (Jellyfish) in the river besides"
@@ -58,8 +37,7 @@
    "59:88": "swimmer (Crocodile) in the river"
   },
   "graveyard_crypt/graveyard_2.tmx": {
-   "84:77": "flier (Raven, Bat) over the water",
-   "86:77": "flier (Raven, Bat) over the water"
+   "84:77": "flier (Raven, Bat) over the water"
   },
   "graveyard_crypt/graveyard_3.tmx": {
    "68:78": "flier (Wraith) over the lake",
@@ -70,14 +48,12 @@
    "83:85": "swimmer (Crocodile) in the river"
   },
   "grolnok/grolnok.tmx": {
-   "102:238": "swimmer (Crocodile) in the river",
-   "160:142": "not fixable by moving the waypoint: every spot with the feet on the floor cuts a leg off the game's navigation graph (and enemy 160 already freezes at 142 - its 142->143 leg has no nav path); 38% of the feet on the path corner",
-   "203:142": "not fixable by moving the waypoint: every spot with the feet on the floor cuts a leg off the game's navigation graph (and enemy 160 already freezes at 142 - its 142->143 leg has no nav path); 38% of the feet on the path corner"
+   "102:238": "swimmer (Crocodile) in the river"
   },
   "lavaforge/lavaforge_2_burningsands.tmx": {
    "73:76": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs; a lava creature (Magma Fire Elemental) besides",
    "73:77": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs; a lava creature (Magma Fire Elemental) besides",
-   "75:79": "flier (Phoenix) over the building's roof"
+   "75:80": "flier (Phoenix) over the cliff's edge (round 578: the body now draws in its tile)"
   },
   "main_story/temple_of_liliana/bog.tmx": {
    "199:252": "flier (Dimir Faerie) over the water",
@@ -134,25 +110,15 @@
    "46:93": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
    "46:95": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
    "46:96": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
-   "46:120": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)"
-  },
-  "main_story_explore/primal_jungle.tmx": {
-   "36:37": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs"
+   "46:120": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "44:78": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "45:78": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)",
+   "46:78": "lava: the three Magma Elementals follow the lava channels across the temple (round 286b moved their blocked legs to the nearest legal tile, which is why these sit on the lava edge)"
   },
   "nest/nest_blue_1.tmx": {
    "63:93": "flier (Bird) over the rocks",
    "69:72": "swimmer (Jellyfish) in the sea",
-   "69:83": "swimmer (Jellyfish) in the sea",
-   "69:84": "swimmer (Jellyfish) in the sea"
-  },
-  "vampirecastle/vampirecastle_2.tmx": {
-   "50:86": "flier (High Vampire) over the ruined wall"
-  },
-  "vampirecastle/vampirecastle_4.tmx": {
-   "71:111": "the Gargoyle's own perch: its start is on the same pedestal"
-  },
-  "zedruu/zedruu.tmx": {
-   "206:237": "not fixable by moving the waypoint: the Dwarf Mercenary frame draws its body 18-29 px right of its position, so on this one-tile path the position (which the nav graph uses) and the drawn body cannot both be on the path; its start has the same offset"
+   "69:83": "swimmer (Jellyfish) in the sea"
   },
   "zedruu/zedruu_f4.tmx": {
    "213:180": "lava creature (Magma Fire Elemental) in the lava pools",

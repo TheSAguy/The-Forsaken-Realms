@@ -207,56 +207,20 @@ _FEET = None
 
 def enemy_feet():
     """{enemy name: (left, right, lift)} - where an enemy's VISIBLE feet are, in px from the point it
-    stands on: the opaque box of its Idle frame (alpha >= 128), at the size CharacterSprite.draw() draws
-    it - atlas frame x EnemyData.scale x TuningData.tierSizeMultiplier(tier, frame height x scale,
+    stands on: the opaque box (alpha >= 128) of its Idle frames, where CharacterSprite.draw() draws it -
+    atlas frame x EnemyData.scale x TuningData.tierSizeMultiplier(tier, frame height x scale,
     boss || keepSize). Many frames carry transparent margins (an LPC frame is 64 px wide around a 16 px
     body), so the frame's own width would put the "feet" in thin air; `lift` is the empty rows under
-    the art. The tier cue and the frame cap come from the plane's settings.json, else the Java defaults.
-    An enemy whose atlas cannot be read is left out; callers fall back to DEFAULT_FEET."""
+    the feet. Round 578: an atlas with a `footprint` field draws its body in its tile and a walker on the
+    ground, so the geometry comes from sprite_footprints.enemy_geometry(), which knows both ways the game
+    draws (and reads settings.json past its // comments, which json.load never could - this used the Java
+    defaults every run). An enemy whose atlas cannot be read is left out; callers fall back to DEFAULT_FEET."""
     global _FEET
     if _FEET is not None:
         return _FEET
-    import enemy_scale as es
-    import sprite_sizes as ss
-    tune = {'enemyTierScaleCommon': 0.8125, 'enemyTierScaleUncommon': 1.0, 'enemyTierScaleRare': 1.25,
-            'enemyTierScaleMythic': 1.5, 'enemySpriteFrameCap': 1.4}
-    try:
-        cfg = json.load(open(os.path.join(PLANE_ROOT, 'config tables', 'settings.json'), encoding='utf-8'))
-        for k in tune:
-            if k in cfg:
-                tune[k] = float(cfg[k])
-    except (OSError, ValueError):
-        pass
-    cue_of = {'Common': tune['enemyTierScaleCommon'], 'Uncommon': tune['enemyTierScaleUncommon'],
-              'Rare': tune['enemyTierScaleRare'], 'Mythic': tune['enemyTierScaleMythic']}
-    frames, out = {}, {}
-    for e in json.load(open(os.path.join(PLANE_ROOT, 'world', 'enemies.json'), encoding='utf-8')):
-        sp = e.get('sprite') or ''
-        if sp not in frames:
-            frames[sp] = None
-            path, _where = ss.resolve(sp) if sp else (None, None)
-            img = es.idle_image(path) if path else None
-            if img is not None:
-                box = img.getchannel('A').point(lambda a: 255 if a >= 128 else 0).getbbox()
-                if box:
-                    frames[sp] = (img.width, img.height, box)
-        fr = frames[sp]
-        if not fr:
-            continue
-        fw, fh, (bx0, _by0, bx1, by1) = fr
-        scale = float(e.get('scale', 1.0))
-        if scale < 0:
-            scale = 1.0
-        cue = cue_of.get(e.get('tier') or 'Common', 1.0)
-        mult, base_h = cue, fh * scale
-        if not (e.get('boss') or e.get('keepSize')) and base_h > 0 and tune['enemySpriteFrameCap'] > 0:
-            ceiling = cue * 16.0 * tune['enemySpriteFrameCap']
-            if base_h * cue > ceiling:
-                mult = cue * ceiling / (base_h * cue)
-        k = scale * mult
-        out[e['name']] = (bx0 * k, bx1 * k, (fh - by1) * k)
-    _FEET = out
-    return out
+    import sprite_footprints as sf
+    _FEET = {name: (g['body_l'], g['body_r'], g['feet']) for name, g in sf.enemy_geometry().items()}
+    return _FEET
 
 
 def main():

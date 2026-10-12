@@ -167,7 +167,7 @@
    </properties>
   </object>
   <object id="73" template="../../../../common/maps/obj/waypoint.tx" x="272" y="224"/>
-  <object id="74" template="../../../../common/maps/obj/waypoint.tx" x="256" y="240"/>
+  <object id="74" template="../../../../common/maps/obj/waypoint.tx" x="264" y="232"/>
   <object id="76" template="../../../../common/maps/obj/waypoint.tx" x="112" y="32"/>
   <object id="77" template="../../../../common/maps/obj/waypoint.tx" x="144" y="32"/>
    <object id="78" template="../../../../common/maps/obj/enemy.tx" x="115.869" y="29.9355">

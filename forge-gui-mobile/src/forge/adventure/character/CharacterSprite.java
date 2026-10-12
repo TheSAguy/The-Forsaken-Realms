@@ -39,6 +39,20 @@ public class CharacterSprite extends MapActor {
         tierCue = tier;
     }
 
+    /** Round 578: where the creature is inside its frame - the atlas's optional `footprint: x, y, w, h` field on its
+     *  Idle frame (dev-tools/sprite_footprints.py writes it): the body's first column and width, and the empty rows
+     *  under its lowest drawn pixel, in atlas px. A remake's frame is as wide as its widest pose (an attack lunge),
+     *  and the game anchored the FRAME at the position, so the body drew a tile or more right of / above where the
+     *  map put it and the whole frame was the duel box. -1 = no footprint: the frame is the actor, as in stock. */
+    private float footprintX0 = -1f;
+    private float footprintWidth = 0f;
+    private float footprintLift = 0f;
+    private static final String FOOTPRINT_FIELD = "footprint";
+    /** One tile at rank cue 1.0, and the most a side of a body narrower than its rank's tile is padded by - a stock
+     *  16 px humanoid's frame has about that around its body. Mirrored in dev-tools/sprite_footprints.py. */
+    private static final float FOOTPRINT_TILE = 16f;
+    private static final float FOOTPRINT_MARGIN = 3f;
+
     private static final Color batchColor = new Color();
     private static final Vector2 moveAngle = new Vector2();
     public CharacterSprite(int id, String path) {
@@ -129,8 +143,54 @@ public class CharacterSprite extends MapActor {
             }
         }
 
+        readFootprint(path);
         setAnimation(AnimationTypes.Idle);
         setDirection(AnimationDirections.Right);
+    }
+
+    /** Round 578 - see footprintX0. The field sits on the Idle frame findRegion() returns ("IdleRight" in an atlas
+     *  with no plain side view); every other frame is taken to hold the body where that one does, which is what
+     *  anchoring them all at getX()/getY() already assumed. A field that does not fit its frame is ignored. */
+    private void readFootprint(String path) {
+        footprintX0 = -1f;
+        TextureAtlas atlas = Config.instance().getAtlas(path);
+        TextureAtlas.AtlasRegion ref = atlas == null ? null : atlas.findRegion("Idle");
+        if (ref == null && atlas != null)
+            ref = atlas.findRegion("IdleRight");
+        int[] fp = ref == null ? null : ref.findValue(FOOTPRINT_FIELD);
+        if (fp == null || fp.length < 4 || fp[0] < 0 || fp[1] < 0 || fp[2] <= 0 || fp[3] <= 0
+                || fp[0] + fp[2] > ref.getRegionWidth() || fp[1] + fp[3] > ref.getRegionHeight()) {
+            if (fp != null)
+                System.out.println("[TFR-Footprint] " + path + ": footprint " + java.util.Arrays.toString(fp)
+                        + " does not fit its " + ref.getRegionWidth() + "x" + ref.getRegionHeight() + " frame - ignored");
+            return;
+        }
+        footprintX0 = fp[0];
+        footprintWidth = fp[2];
+        footprintLift = ref.getRegionHeight() - (fp[1] + fp[3]);
+    }
+
+    public boolean hasFootprint() {
+        return footprintX0 >= 0f;
+    }
+
+    /** Round 578: a walker's feet go on its position; a flier (EnemyData.flying) keeps the hover it was drawn with. */
+    private boolean footprintOnGround() {
+        if (this instanceof EnemySprite) {
+            forge.adventure.data.EnemyData data = ((EnemySprite) this).getData();
+            return data == null || !data.flying;
+        }
+        return true;
+    }
+
+    /** Round 578: the actor's box for a sprite with a footprint, given its frame's drawn height and the draw scale:
+     *  the body's columns, never narrower than min(one tile of its rank, body + 2 margins), from the feet to the
+     *  frame's top. draw() offsets the frame to match; EnemySprite's constructor sizes its first box with it. */
+    protected void sizeToFootprint(float frameHeight, float scale, String tier) {
+        float body = footprintWidth * scale;
+        float tile = FOOTPRINT_TILE * (tier == null ? 1f : Config.instance().getTuningData().tierScale(tier));
+        setWidth(Math.max(body, Math.min(tile, body + 2f * FOOTPRINT_MARGIN)));
+        setHeight(frameHeight - (footprintOnGround() ? footprintLift * scale : 0f));
     }
 
     static public Animation<TextureRegion> FlipAnimation(Animation<TextureRegion> anim) {
@@ -319,18 +379,35 @@ public class CharacterSprite extends MapActor {
             scale *= Config.instance().getTuningData().tierSizeMultiplier(tier,
                     currentFrame.getRegionHeight() * scale, keepNativeSize);
 
-        setHeight(currentFrame.getRegionHeight() * scale);
-        setWidth(currentFrame.getRegionWidth() * scale);
+        float frameWidth = currentFrame.getRegionWidth() * scale;
+        float frameHeight = currentFrame.getRegionHeight() * scale;
+        float drawX = getX();
+        float drawY = getY();
         if (this instanceof EnemySprite && ((EnemySprite) this).disguisedAsLoot()) { // round 452: a Mimic is a chest's size
-            setHeight(EnemySprite.LOOT_DISGUISE_PIXELS);
-            setWidth(EnemySprite.LOOT_DISGUISE_PIXELS);
+            frameWidth = EnemySprite.LOOT_DISGUISE_PIXELS;
+            frameHeight = EnemySprite.LOOT_DISGUISE_PIXELS;
+            setHeight(frameHeight);
+            setWidth(frameWidth);
+        } else if (hasFootprint()) {
+            // Round 578: the box is the creature (sizeToFootprint) and the frame is drawn so the body sits in it - a
+            // mirrored frame (FlipAnimation) has the body at the other side. The rest of the frame (a lunge, a tail
+            // swept back) draws outside the box.
+            sizeToFootprint(frameHeight, scale, tier);
+            float bodyLeft = currentFrame.isFlipX()
+                    ? currentFrame.getRegionWidth() - footprintX0 - footprintWidth : footprintX0;
+            drawX += (getWidth() - footprintWidth * scale) / 2f - bodyLeft * scale;
+            if (footprintOnGround())
+                drawY -= footprintLift * scale;
+        } else {
+            setHeight(frameHeight);
+            setWidth(frameWidth);
         }
 
         Color originalBatchColor = batch.getColor();
         batchColor.set(originalBatchColor.r, originalBatchColor.g, originalBatchColor.b, originalBatchColor.a);
 
         batch.setColor(getColor());
-        batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+        batch.draw(currentFrame, drawX, drawY, frameWidth, frameHeight);
         batch.setColor(batchColor);
 
         super.draw(batch, parentAlpha);

@@ -15,6 +15,7 @@ IdleLeft
 IdleRight
   xy: 46, 123
   size: 46, 48
+  footprint: 7, 3, 39, 45
 IdleUp
   xy: 46, 171
   size: 46, 48

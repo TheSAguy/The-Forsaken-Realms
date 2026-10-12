@@ -114,6 +114,6 @@
    </properties>
   </object>
   <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="224" y="16"/>
-  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="224" y="32"/>
+  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="224" y="37"/>
  </objectgroup>
 </map>

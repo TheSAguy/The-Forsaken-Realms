@@ -156,7 +156,7 @@
   <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="184" y="184"/>
   <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="664" y="120"/>
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="408" y="232"/>
-  <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="701" y="142"/>
+  <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="712" y="152"/>
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="232" y="168"/>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="528" y="240">
    <properties>

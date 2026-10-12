@@ -9,6 +9,7 @@ Avatar
 Idle
   xy: 0, 64
   size: 82, 68
+  footprint: 23, 13, 36, 55
 Idle
   xy: 82, 64
   size: 82, 68

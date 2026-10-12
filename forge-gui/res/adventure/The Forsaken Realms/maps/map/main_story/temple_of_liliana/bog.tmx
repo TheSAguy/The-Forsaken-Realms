@@ -649,8 +649,8 @@
   <object id="252" template="../../../../../common/maps/obj/waypoint.tx" x="256" y="384"/>
   <object id="253" template="../../../../../common/maps/obj/waypoint.tx" x="400" y="128"/>
   <object id="254" template="../../../../../common/maps/obj/waypoint.tx" x="400" y="208"/>
-  <object id="255" template="../../../../../common/maps/obj/waypoint.tx" x="295" y="528"/>
-  <object id="256" template="../../../../../common/maps/obj/waypoint.tx" x="295" y="464"/>
+  <object id="255" template="../../../../../common/maps/obj/waypoint.tx" x="304" y="528"/>
+  <object id="256" template="../../../../../common/maps/obj/waypoint.tx" x="304" y="464"/>
   <object id="257" template="../../../../../common/maps/obj/waypoint.tx" x="272" y="464"/>
   <object id="258" template="../../../../../common/maps/obj/waypoint.tx" x="272" y="347"/>
   <object id="260" template="../../../../../common/maps/obj/waypoint.tx" x="304" y="208"/>
