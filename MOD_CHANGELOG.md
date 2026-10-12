@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 571: Metathran portraits - Metathran and Vedalken look-alikes, male and female pools (2026-10-11)
+
+The user, from one combined sheet: "Metathran Male: 1, 4, 5, 7, 10, 16, 30, 38, 45, 55 / Metathran Female: 6, 8, 9, 15,
+17, 31, 33, 47, 56".
+
+- **The candidates:** only 8 cards are Metathran, and 3 of those show airships. The sheet filled out with Vedalken, who
+  share the blue skin and bare heads: 5 Metathran-line cards and 56 Vedalken, 61 in all.
+  - Vedalken gender is often unclear, so it was one sheet, and the user assigned each pick to a pool.
+- **10 male** in `Metathran_m`: Metathran Elite, Sky Weaver, Stormscape Battlemage, Aether Theorist, Bastion Inventor,
+  Dispersal Technician, Mizzium Meddler, Sage's Row Savant, Surveillance Monitor, Vedalken Humiliator.
+- **9 female** in `Metathran_f`: Aether Swooper, Ascended Lawmage, Azorius Guildmage, Deputy of Detention, Emporium
+  Thopterist, Nimble Innovator, Nin the Pain Artist, Vedalken Aethermage, Vedalken Infiltrator.
+- **Framing:** each crop is on the face (`dev-tools/portraits/metathran.json`, `sprites/heroes/portraits/metathran.atlas`,
+  1632x1088).
+- **Credits:** artists read off the cached images. Data only.
+
 ## Round 570: the Spoils of War perk - a roaming guard's win brings home a rare (2026-10-11)
 
 The user: "I'd like to add a perk, One time. Your roaming guards get 1 rare from enemies they defeat. From their decks. It

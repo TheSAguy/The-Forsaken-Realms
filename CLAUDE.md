@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-11 (round 571): **LOCAL + UNRELEASED** - Metathran portraits (Metathran + Vedalken look-alikes), 10 male
+and 9 female.
+
 ## STATE 2026-10-11 (round 570): **LOCAL + UNRELEASED** - the Spoils of War perk (a roaming guard's win takes a rare from
 the beaten enemy's deck into the collection).
 

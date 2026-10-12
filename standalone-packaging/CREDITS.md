@@ -374,6 +374,16 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Druid* by **Mathias Kollros**; *Tatyova, Steward of Tides* by **Howard Lyon**; and *Vodalian Hexcatcher* by **Dmitry
   Burmak**.
 
+- **Metathran portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the
+  portraits; the Metathran cards and Vedalken look-alikes. Male: *Metathran Elite* by **Jim Nelson**; *Sky Weaver* and
+  *Stormscape Battlemage* by **Christopher Moeller**; *Aether Theorist* by **Lucas Graciano**; *Bastion Inventor* by
+  **Tony Foti**; *Dispersal Technician* and *Surveillance Monitor* by **Scott Murphy**; *Mizzium Meddler* by **Chris
+  Rallis**; *Sage's Row Savant* by **Bastien L. Deharme**; and *Vedalken Humiliator* by **Jehan Choo**. Female:
+  *Aether Swooper* by **James Ryman**; *Ascended Lawmage* by **Ryan Yee**; *Azorius Guildmage* by **David Astruga**;
+  *Deputy of Detention* by **G-host Lee**; *Emporium Thopterist* by **Ryan Alexander Lee**; *Nimble Innovator* by
+  **Slawomir Maniak**; *Nin, the Pain Artist* by **Brad Rigney**; *Vedalken Aethermage* by **William Simpson**; and
+  *Vedalken Infiltrator* by **Izzy**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

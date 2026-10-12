@@ -1,0 +1,25 @@
+{
+ "race": "Metathran",
+ "note": "Round 571 (the user, from one combined sheet - the Metathran cards and Vedalken look-alikes: 'Metathran Male: 1, 4, 5, 7, 10, 16, 30, 38, 45, 55 / Metathran Female: 6, 8, 9, 15, 17, 31, 33, 47, 56'). 10 male, 9 female.",
+ "picks": [
+  {"region": "metathran_elite", "gender": "m", "card": "Metathran Elite", "artist": "Jim Nelson", "file": "Metathran Elite.full.jpg", "u": 0.52, "v": 0.4, "zoom": 0.55},
+  {"region": "sky_weaver", "gender": "m", "card": "Sky Weaver", "artist": "Christopher Moeller", "file": "Sky Weaver.full.jpg", "u": 0.22, "v": 0.4, "zoom": 0.4},
+  {"region": "stormscape_battlemage", "gender": "m", "card": "Stormscape Battlemage", "artist": "Christopher Moeller", "file": "Stormscape Battlemage.full.jpg", "u": 0.54, "v": 0.27, "zoom": 0.35},
+  {"region": "aether_theorist", "gender": "m", "card": "Aether Theorist", "artist": "Lucas Graciano", "file": "Aether Theorist.full.jpg", "u": 0.34, "v": 0.27, "zoom": 0.45},
+  {"region": "bastion_inventor", "gender": "m", "card": "Bastion Inventor", "artist": "Tony Foti", "file": "Bastion Inventor.full.jpg", "u": 0.5, "v": 0.29, "zoom": 0.35},
+  {"region": "dispersal_technician", "gender": "m", "card": "Dispersal Technician", "artist": "Scott Murphy", "file": "Dispersal Technician.full.jpg", "u": 0.4, "v": 0.24, "zoom": 0.35},
+  {"region": "mizzium_meddler", "gender": "m", "card": "Mizzium Meddler", "artist": "Chris Rallis", "file": "Mizzium Meddler.full.jpg", "u": 0.53, "v": 0.47, "zoom": 0.35},
+  {"region": "sage_s_row_savant", "gender": "m", "card": "Sage's Row Savant", "artist": "Bastien L. Deharme", "file": "Sage's Row Savant.full.jpg", "u": 0.3, "v": 0.3, "zoom": 0.35},
+  {"region": "surveillance_monitor", "gender": "m", "card": "Surveillance Monitor", "artist": "Scott Murphy", "file": "Surveillance Monitor.full.jpg", "u": 0.4, "v": 0.35, "zoom": 0.4},
+  {"region": "vedalken_humiliator", "gender": "m", "card": "Vedalken Humiliator", "artist": "Jehan Choo", "file": "Vedalken Humiliator.full.jpg", "u": 0.8, "v": 0.21, "zoom": 0.4},
+  {"region": "aether_swooper", "gender": "f", "card": "Aether Swooper", "artist": "James Ryman", "file": "Aether Swooper.full.jpg", "u": 0.82, "v": 0.17, "zoom": 0.35},
+  {"region": "ascended_lawmage", "gender": "f", "card": "Ascended Lawmage", "artist": "Ryan Yee", "file": "Ascended Lawmage.full.jpg", "u": 0.17, "v": 0.13, "zoom": 0.3},
+  {"region": "azorius_guildmage", "gender": "f", "card": "Azorius Guildmage", "artist": "David Astruga", "file": "Azorius Guildmage.full.jpg", "u": 0.62, "v": 0.28, "zoom": 0.35},
+  {"region": "deputy_of_detention", "gender": "f", "card": "Deputy of Detention", "artist": "G-host Lee", "file": "Deputy of Detention.full.jpg", "u": 0.47, "v": 0.23, "zoom": 0.35},
+  {"region": "emporium_thopterist", "gender": "f", "card": "Emporium Thopterist", "artist": "Ryan Alexander Lee", "file": "Emporium Thopterist.full.jpg", "u": 0.43, "v": 0.64, "zoom": 0.4},
+  {"region": "nimble_innovator", "gender": "f", "card": "Nimble Innovator", "artist": "Slawomir Maniak", "file": "Nimble Innovator.full.jpg", "u": 0.42, "v": 0.31, "zoom": 0.35},
+  {"region": "nin_the_pain_artist", "gender": "f", "card": "Nin, the Pain Artist", "artist": "Brad Rigney", "file": "Nin, the Pain Artist.full.jpg", "u": 0.63, "v": 0.27, "zoom": 0.4},
+  {"region": "vedalken_aethermage", "gender": "f", "card": "Vedalken Aethermage", "artist": "William Simpson", "file": "Vedalken Aethermage.full.jpg", "u": 0.48, "v": 0.33, "zoom": 0.35},
+  {"region": "vedalken_infiltrator", "gender": "f", "card": "Vedalken Infiltrator", "artist": "Izzy", "file": "Vedalken Infiltrator.full.jpg", "u": 0.37, "v": 0.37, "zoom": 0.5}
+ ]
+}
