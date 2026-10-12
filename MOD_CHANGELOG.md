@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 579: seven imported sprites no longer move backwards (2026-10-12)
+
+The user, with a duel screenshot of the Verdant Wyrm: "This Wyrm was flying backwards. Can you please confirm it's the only
+one doing that." The game takes a plain `Idle`/`Walk` frame as facing right and mirrors it for left. All 241 imported
+`tfr`/`tfr2` sheets that rely on that mirroring were checked by eye (walk and attack frames enlarged). The facing
+detector's "left" calls on the generated and LPC sprites are false alarms: those are built facing right.
+
+- **Whole sheet mirrored** (every frame faced left): Verdant Wyrm, Crimson Skywyrm, Shredmaw Monger.
+- **Mostly left; the left frames mirrored**:
+  - Ogre Matriarch: all but Walk 5.
+  - Bloodveil Countess: Idle, Walk 0-1 and 3-5, Attack 0-2 and 4-5. Her front-on Hit and Death stay.
+- **Mixed sheets; only the wrong-facing frames mirrored**:
+  - Void Dragon: Idle 2-3, Walk 0-1, Attack 0-2, Hit, Death 0.
+  - Duchess of Thorns: Attack 0-1 (the mirror image of her walk).
+- **How**: each frame is mirrored inside its own atlas cell. The .atlas files are unchanged and the Avatars stay.
+  `sprite_footprints.py --check`: 0 need writing (the Duchess's footprint frame, Idle 0, is not one of the flipped ones).
+- Files: 7 PNGs under `sprites/enemy/tfr/`. Not seen in play.
+
 ## Round 578: enemies stand in their tile - atlas footprints (2026-10-12)
 
 Found by round 565's waypoint feet audit: many enemy frames are far wider than the creature. The user saw the before/after

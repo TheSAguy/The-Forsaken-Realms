@@ -80,6 +80,11 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-12 (round 579): **LOCAL + UNRELEASED (art only)** - seven imported sprites drawn facing left mirrored
+so they stop moving backwards (frames flipped in their own cells; atlases untouched): Verdant Wyrm, Crimson Skywyrm,
+Shredmaw Monger whole; Ogre Matriarch, Bloodveil Countess mostly; Void Dragon and Duchess of Thorns their wrong frames.
+All 241 mirrored tfr/tfr2 sheets checked by eye. The peer (#30) packages.
+
 ## STATE 2026-10-12 (round 578): **LOCAL + UNRELEASED** - enemies stand in their tile: an atlas `footprint` field on the
 Idle frame (948 enemy atlases, 71 of them stock under adventure/common; `dev-tools/sprite_footprints.py --write` after
 ANY new enemy art - `validate_plane_data.py` flags a missing one) makes the creature, not its frame, the actor
