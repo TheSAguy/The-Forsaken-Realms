@@ -384,6 +384,19 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **Slawomir Maniak**; *Nin, the Pain Artist* by **Brad Rigney**; *Vedalken Aethermage* by **William Simpson**; and
   *Vedalken Infiltrator* by **Izzy**.
 
+- **Human portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits.
+  Male: *Abdel Adrian, Gorion's Ward* by **Karl Kopinski**; *Baird, Steward of Argive* by **Christine Choi**; *Crovax,
+  Ascendant Hero* by **Pete Venters**; *Jodah, Archmage Eternal* by **Yongjae Choi**; *Kamahl, Fist of Krosa* by
+  **Matthew D. Wilson**; *Kenrith, the Returned King* by **Kieran Yanner**; *King Darien XLVIII* by **Donato
+  Giancola**; *Naban, Dean of Iteration* by **Ryan Alexander Lee**; *Oskar, Rubbish Reclaimer* by **Leonardo
+  Santanna**; *Teyo, Lightshield Expert* by **Anna Steinbauer**; and *Will, Scion of Peace* by **Ryan Pancoast**.
+  Female: *Braids, Conjurer Adept* by **Zoltan Boros & Gabor Szikszai**; *Danitha, New Benalia's Light* by **Randy
+  Vargas**; *Eriette of the Charmed Apple* by **Magali Villeneuve**; *Halana, Kessig Ranger* by **Zoltan Boros**;
+  *Hanna, Ship's Navigator* by **Chris Rallis**; *Inga Rune-Eyes* by **Bram Sels**; *Linden, the Steadfast Queen* and
+  *Thalia, the Survivor* by **Ryan Pancoast**; *Lovisa Coldeyes* by **Brian Snoddy**; *Nikara, Lair Scavenger* by
+  **Grzegorz Rutkowski**; *Syr Elenora, the Discerning* by **Mila Pesic**; *Sylvia Brightspear* by **Carmen Sinek**;
+  and *Teysa, Orzhov Scion* by **Sara Winters**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 573: Human portraits - the last race; every race now has card-art portraits (2026-10-12)
+
+The user, from a male and a female sheet: "Human Male: 1, 7, 19, 42, 44, 48, 50, 57, 60,76, 85 / Human Female: 10, 15,
+17, 21, 22, 24, 42, 44, 54, 71, 72, 75, 78".
+
+- **The candidates:** 4,714 cards name a Human, too many to scan by eye, so the pool was narrowed first (scratch tool
+  `human_filter.py`).
+  - It kept the legendary Human creatures from Magic's own worlds: 848 with a cached image, on nine scan pages.
+  - It dropped cards printed only in Universes Beyond / crossover, Alchemy, Online-only or Un- sets.
+  - A few crossovers that also have a promo printing slipped through and were left out by eye.
+  - A male sheet (88) and a female sheet (86) were picked from them.
+- **11 male** in `Human_m`: Abdel Adrian, Baird (Steward of Argive), Crovax (Ascendant Hero), Jodah (Archmage Eternal),
+  Kamahl (Fist of Krosa), Kenrith, King Darien XLVIII, Naban, Oskar, Teyo (Lightshield Expert), Will (Scion of Peace).
+- **13 female** in `Human_f`: Braids (Conjurer Adept), Danitha (New Benalia's Light), Eriette, Halana, Hanna, Inga
+  Rune-Eyes, Linden, Lovisa Coldeyes, Nikara, Syr Elenora, Sylvia Brightspear, Teysa (Orzhov Scion), Thalia (the
+  Survivor).
+- **Framing:** each crop is on the face (`dev-tools/portraits/human.json`, `sprites/heroes/portraits/human.atlas`,
+  1632x1088).
+- **Credits:** artists read off the cached images. Data only.
+- **All 20 playable races** in `world/heroes.json` now have a card-art portrait atlas (rounds 538-573). The pixel
+  avatars (`avatar_tfr.atlas`) stay as the fallback.
+
 ## Round 572: Zealot 8% / 15% / 25%; the Angel shop's blueprint tier (2026-10-11)
 
 The user: "Review this log, confirming everything is okay" (a player's v1.20 forge.log from Discord, an Insane run from
