@@ -1656,13 +1656,17 @@ public class EconomyBuildings {
         for (String name : new String[]{
                 "White", "Blue", "Black", "Red", "Green",
                 "Azorius", "Boros", "Dimir", "Golgari", "Gruul",
-                "Izzet", "Orzhov", "Rakdos", "Selesnya", "Simic"})
+                "Izzet", "Orzhov", "Rakdos", "Selesnya", "Simic",
+                // Round 572: the Angel shop is in player_town.tmx's rareShopList and always was; this table had it as
+                // Common, so the 250 flat-shopList towns priced and gated its blueprint a tier low (the audit below
+                // logged "tier fallback is STALE: Angel" in a player's v1.20 log).
+                "Angel"})
             tiers.put(name, MapStage.TIER_RARE);
         // Common in the player templates - the two generic card shops and the tribal shops these
         // five towns offer, plus the booster shops.
         for (String name : new String[]{
                 "Creature", "Instant",
-                "Angel", "Elf", "Goblin", "Human", "Merfolk", "Zombie",
+                "Elf", "Goblin", "Human", "Merfolk", "Zombie",
                 "BoosterPackShop", "AlphaBoosterPackShop", "BetaBoosterPackShop",
                 "GammaBoosterPackShop", "DeltaBoosterPackShop",
                 // Not listed by the player templates; Common in every map that does list them.

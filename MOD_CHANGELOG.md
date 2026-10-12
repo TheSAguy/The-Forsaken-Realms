@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 572: Zealot 8% / 15% / 25%; the Angel shop's blueprint tier (2026-10-11)
+
+The user: "Review this log, confirming everything is okay" (a player's v1.20 forge.log from Discord, an Insane run from
+level 5 to 8) and "Let's change Zealot to 8%, 15%, 25%".
+
+- **Zealot** (`ascendance.json` "powerGain"): +8%, +15%, +25% Power at ranks I-III (was 5/10/15).
+  - The steps are uneven (+8, +7, +10), so `AscendanceData.Choice.ranks` (new) holds the total after each pick.
+  - `Ascendance.totalAt` reads it before `value`/`first`. The perk text, the Level sheet and the award all read that
+    total.
+  - A save that already has Zealot picks gets the new values.
+- **The log review:** nothing breaks; the run closed cleanly. One real finding, fixed here:
+  - `[TFR-Blueprint] tier fallback is STALE: Angel is Rare in player_town.tmx but FLAT_TOWN_SHOP_TIERS says Common`.
+  - The Angel shop has been in the player town maps' `rareShopList` since the plane was made, and
+    `EconomyBuildings.FLAT_TOWN_SHOP_TIERS` listed it as Common. So in the 250 basic-land towns (the flat-shopList
+    templates), an Angel shop's blueprint was priced and gated as Common.
+  - It is Rare in the table now, matching the maps.
+- **Seen in the log and left as they are:**
+  - Stock Forge noise: missing Alchemy card images, the AI's Jaddi Lifestrider warnings, Echo Mage's failed target, and
+    Reality Fracture (FRA) edition entries naming three cards this build has no scripts for.
+  - `[TFR-Dialog]` unwinding a stale stack entry: the round's own safeguard working.
+  - `[TFR-EnemyLife]` printing Insane-scaled life for Inn opponents with `eventOverride=true`: the tournament's own
+    starting life is what is used; the line only prints the number it set aside.
+- **Agent-tested** (slot 7, `asc give 1000` at each rank): 1000, then 1080, 1150 and 1250 Power with Zealot I, II and
+  III.
+
 ## Round 571: Metathran portraits - Metathran and Vedalken look-alikes, male and female pools (2026-10-11)
 
 The user, from one combined sheet: "Metathran Male: 1, 4, 5, 7, 10, 16, 30, 38, 45, 55 / Metathran Female: 6, 8, 9, 15,

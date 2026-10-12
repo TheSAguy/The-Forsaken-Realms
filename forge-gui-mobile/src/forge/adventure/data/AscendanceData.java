@@ -116,5 +116,8 @@ public class AscendanceData {
         public int days;
         /** Round 566: not offered for a level below this (Focused: "after level 15"). 0 = any level. */
         public int minLevel;
+        /** Round 572, lasting only: the TOTAL after each pick, when the steps are uneven (Zealot 0.08, 0.15, 0.25 - the
+         *  user: "8%, 15%, 25%"). Overrides {@code value} and {@code first}; past its end the last entry holds. */
+        public float[] ranks;
     }
 }

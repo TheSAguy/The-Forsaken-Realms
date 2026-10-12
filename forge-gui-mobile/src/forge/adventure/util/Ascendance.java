@@ -880,6 +880,8 @@ public final class Ascendance {
     private static float totalAt(AscendanceData.Choice c, int picks) {
         if (c == null || picks <= 0)
             return 0f;
+        if (c.ranks != null && c.ranks.length > 0) // round 572: uneven steps (Zealot 8/15/25%)
+            return c.ranks[Math.min(picks, c.ranks.length) - 1];
         return c.first > 0f ? c.first + c.value * (picks - 1) : c.value * picks;
     }
 
