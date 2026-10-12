@@ -336,6 +336,18 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Scott Okumura**; *Grub, Notorious Auntie* by **Jesper Ejsing**; *Guttersnipe* by **Andrey Kuzinskiy**; *Heirloom
   Auntie* by **Raph Lomotan**; and *Mad Auntie* by **Wayne Reynolds**.
 
+- **Kor portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits.
+  Male: *Ardenn, Intrepid Archaeologist* and *Cliffhaven Sell-Sword* by **Jason Rainville**; *Expedition Healer* by
+  **Heonhwa Choe**; *Kitesail Apprentice* by **Austin Hsu**; *Kor Castigator* by **Greg Opalinski**; *Kor
+  Line-Slinger* by **Steve Prescott**; *Kor Scythemaster* by **Ryan Pancoast**; *Lightbringer* by **Paolo Parente**;
+  *Makindi Shieldmate* by **Howard Lyon**; *Shaman en-Kor* by **Jeff Miracola**; *Squad Commander* by **Ekaterina
+  Burmak**; *Stone Haven Medic* by **Anna Steinbauer**; and *Valiant Veteran* by **Nestor Ossandon Leal**. Female:
+  *Akiri, Fearless Voyager* by **Ekaterina Burmak**; *Akiri, Line-Slinger* by **David Gaillet**; *Cliffside Lookout*
+  by **Eric Deschamps**; *Conciliator's Duelist* by **Andrew Mar**; *Ertha Jo, Frontier Mentor* by **Michal Ivan**;
+  *Farsight Adept* by **Cristi Balanescu**; *Kor Blademaster* by **Darren Tan**; *Kor Bladewhirl* by **Steven
+  Belledin**; *Ondu Spiritdancer* by **Tran Nguyen**; *Skyclave Cleric* by **Johannes Voss**; and *Stoneforge Mystic*
+  by **Livia Prima**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

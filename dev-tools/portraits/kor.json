@@ -1,0 +1,30 @@
+{
+ "race": "Kor",
+ "note": "Round 563 (the user, from a male and a female sheet: 'Kor Male: 1, 5, 10, 12, 16, 18, 21, 23. 27, 33, 36, 37, 40 / Kor Female: 1, 2, 7, 9, 11, 12, 15, 16,27, 31. 33'). 13 male, 11 female.",
+ "picks": [
+  {"region": "ardenn_intrepid_archaeol", "gender": "m", "card": "Ardenn, Intrepid Archaeologist", "artist": "Jason Rainville", "file": "Ardenn, Intrepid Archaeologist1.full.jpg", "u": 0.22, "v": 0.235, "zoom": 0.4},
+  {"region": "cliffhaven_sell_sword", "gender": "m", "card": "Cliffhaven Sell-Sword", "artist": "Jason Rainville", "file": "Cliffhaven Sell-Sword.full.jpg", "u": 0.42, "v": 0.33, "zoom": 0.4},
+  {"region": "expedition_healer", "gender": "m", "card": "Expedition Healer", "artist": "Heonhwa Choe", "file": "Expedition Healer.full.jpg", "u": 0.32, "v": 0.27, "zoom": 0.45},
+  {"region": "kitesail_apprentice", "gender": "m", "card": "Kitesail Apprentice", "artist": "Austin Hsu", "file": "Kitesail Apprentice.full.jpg", "u": 0.52, "v": 0.235, "zoom": 0.4},
+  {"region": "kor_castigator", "gender": "m", "card": "Kor Castigator", "artist": "Greg Opalinski", "file": "Kor Castigator.full.jpg", "u": 0.6, "v": 0.35, "zoom": 0.4},
+  {"region": "kor_line_slinger", "gender": "m", "card": "Kor Line-Slinger", "artist": "Steve Prescott", "file": "Kor Line-Slinger.full.jpg", "u": 0.3, "v": 0.235, "zoom": 0.4},
+  {"region": "kor_scythemaster", "gender": "m", "card": "Kor Scythemaster", "artist": "Ryan Pancoast", "file": "Kor Scythemaster.full.jpg", "u": 0.45, "v": 0.27, "zoom": 0.4},
+  {"region": "lightbringer", "gender": "m", "card": "Lightbringer", "artist": "Paolo Parente", "file": "Lightbringer.full.jpg", "u": 0.53, "v": 0.235, "zoom": 0.4},
+  {"region": "makindi_shieldmate", "gender": "m", "card": "Makindi Shieldmate", "artist": "Howard Lyon", "file": "Makindi Shieldmate.full.jpg", "u": 0.55, "v": 0.24, "zoom": 0.4},
+  {"region": "shaman_en_kor", "gender": "m", "card": "Shaman en-Kor", "artist": "Jeff Miracola", "file": "Shaman en-Kor.full.jpg", "u": 0.5, "v": 0.38, "zoom": 0.45},
+  {"region": "squad_commander", "gender": "m", "card": "Squad Commander", "artist": "Ekaterina Burmak", "file": "Squad Commander1.full.jpg", "u": 0.68, "v": 0.33, "zoom": 0.4},
+  {"region": "stone_haven_medic", "gender": "m", "card": "Stone Haven Medic", "artist": "Anna Steinbauer", "file": "Stone Haven Medic.full.jpg", "u": 0.58, "v": 0.26, "zoom": 0.45},
+  {"region": "valiant_veteran", "gender": "m", "card": "Valiant Veteran", "artist": "Nestor Ossandon Leal", "file": "Valiant Veteran1.full.jpg", "u": 0.42, "v": 0.26, "zoom": 0.45},
+  {"region": "akiri_fearless_voyager", "gender": "f", "card": "Akiri, Fearless Voyager", "artist": "Ekaterina Burmak", "file": "Akiri, Fearless Voyager1.full.jpg", "u": 0.37, "v": 0.235, "zoom": 0.4},
+  {"region": "akiri_line_slinger", "gender": "f", "card": "Akiri, Line-Slinger", "artist": "David Gaillet", "file": "Akiri, Line-Slinger.full.jpg", "u": 0.7, "v": 0.6, "zoom": 0.45},
+  {"region": "cliffside_lookout", "gender": "f", "card": "Cliffside Lookout", "artist": "Eric Deschamps", "file": "Cliffside Lookout.full.jpg", "u": 0.42, "v": 0.29, "zoom": 0.4},
+  {"region": "conciliator_s_duelist", "gender": "f", "card": "Conciliator's Duelist", "artist": "Andrew Mar", "file": "SOS/Conciliator's Duelist1.full.jpg", "u": 0.35, "v": 0.27, "zoom": 0.4},
+  {"region": "ertha_jo_frontier_mentor", "gender": "f", "card": "Ertha Jo, Frontier Mentor", "artist": "Michal Ivan", "file": "Ertha Jo, Frontier Mentor.full.jpg", "u": 0.2, "v": 0.28, "zoom": 0.45},
+  {"region": "farsight_adept", "gender": "f", "card": "Farsight Adept", "artist": "Cristi Balanescu", "file": "Farsight Adept.full.jpg", "u": 0.4, "v": 0.38, "zoom": 0.45},
+  {"region": "kor_blademaster", "gender": "f", "card": "Kor Blademaster", "artist": "Darren Tan", "file": "Kor Blademaster.full.jpg", "u": 0.48, "v": 0.235, "zoom": 0.4},
+  {"region": "kor_bladewhirl", "gender": "f", "card": "Kor Bladewhirl", "artist": "Steven Belledin", "file": "Kor Bladewhirl.full.jpg", "u": 0.5, "v": 0.33, "zoom": 0.4},
+  {"region": "ondu_spiritdancer", "gender": "f", "card": "Ondu Spiritdancer", "artist": "Tran Nguyen", "file": "Ondu Spiritdancer1.full.jpg", "u": 0.3, "v": 0.29, "zoom": 0.45},
+  {"region": "skyclave_cleric", "gender": "f", "card": "Skyclave Cleric", "artist": "Johannes Voss", "file": "Skyclave Cleric.full.jpg", "u": 0.55, "v": 0.2, "zoom": 0.3},
+  {"region": "stoneforge_mystic", "gender": "f", "card": "Stoneforge Mystic", "artist": "Livia Prima", "file": "Stoneforge Mystic1.full.jpg", "u": 0.48, "v": 0.29, "zoom": 0.45}
+ ]
+}

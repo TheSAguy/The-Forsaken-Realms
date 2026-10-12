@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 563: Kor portraits - male and female pools (2026-10-11)
+
+The user, from a male and a female sheet: "Kor Male: 1, 5, 10, 12, 16, 18, 21, 23. 27, 33, 36, 37, 40 / Kor Female: 1,
+2, 7, 9, 11, 12, 15, 16,27, 31. 33".
+
+- **The candidates:** all 90 cached cards whose type line names a Kor, on one scan page. A male sheet (41) and a female
+  sheet (33) were picked from them; group shots, cats and buildings were left out.
+- **13 male** in `Kor_m`: Ardenn, Cliffhaven Sell-Sword, Expedition Healer, Kitesail Apprentice, Kor Castigator, Kor
+  Line-Slinger, Kor Scythemaster, Lightbringer, Makindi Shieldmate, Shaman en-Kor, Squad Commander, Stone Haven Medic,
+  Valiant Veteran.
+- **11 female** in `Kor_f`: both Akiris (Fearless Voyager, Line-Slinger), Cliffside Lookout, Conciliator's Duelist,
+  Ertha Jo, Farsight Adept, Kor Blademaster, Kor Bladewhirl, Ondu Spiritdancer, Skyclave Cleric, Stoneforge Mystic.
+- **Framing:** each crop is on the face (`dev-tools/portraits/kor.json`, `sprites/heroes/portraits/kor.atlas`,
+  1632x1088). Akiri, Line-Slinger hangs upside down in her art, so her portrait does too. Skyclave Cleric's face is
+  small in a wide scene, so her crop is the tightest.
+- **Credits:** artists read off the cached images. Data only.
+
 ## Round 562: Goblin portraits - male and female pools (2026-10-11)
 
 The user, from a male and a female sheet: "Goblin Male: 1, 6, 7, 8, 12, 13, 14. 21, 22, 26, 29, 30, 31, 32, 35, 42, 43,
