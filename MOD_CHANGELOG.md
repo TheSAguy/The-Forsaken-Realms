@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 569: Merfolk portraits - male and female pools (2026-10-11)
+
+The user, from a male and a female sheet: "Mer Male: 2, 3, 4, 8, 11,12, 14, 23, 27, 35, 36, 51 / Mer Female: 2, 3, 8, 9,
+16, 18, 19, 20, 34, 43, 44, 48".
+
+- **The candidates:** 345 cached cards whose type line names a Merfolk, on four scan pages. A male sheet (61) and a
+  female sheet (51) were picked from them.
+- **12 male** in `Merfolk_m`: Araumi, Attuma, Augur of Bolas, Coralhelm Commander, Dalakos, Deeproot Elite, Emperor
+  Mihail II, Jace's Sentinel, Kopala, Merfolk Thaumaturgist, Merrow Harbinger, Sygg (Wanderbrine Shield).
+- **12 female** in `Merfolk_f`: Alandra, Cascade Seer, Cosi's Trickster, Daughter of the Deep, Hydro-Channeler, three
+  Kioras (of Salt and Sand, Sovereign of the Deep, the Rising Tide), Roil Cartographer, both Tatyovas, Vodalian
+  Hexcatcher.
+- **Framing:** each crop is on the face (`dev-tools/portraits/merfolk.json`, `sprites/heroes/portraits/merfolk.atlas`,
+  1632x1088). Attuma and Emperor Mihail are small figures in wide scenes, so their crops are the tightest.
+- **Credits:** artists read off the cached images. The two Marvel crossover cards carry Marvel's notice. Data only.
+
 ## Round 568: Leonin portraits - male and female pools (2026-10-11)
 
 The user, from a male and a female sheet: "L Male: 3, 4, 7, 10, 12, 13, 15, 22, 23,25, 29, 35, 38, 39, 42 / L Female: 2,

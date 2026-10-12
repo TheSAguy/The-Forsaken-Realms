@@ -1,0 +1,30 @@
+{
+ "race": "Merfolk",
+ "note": "Round 569 (the user, from a male and a female sheet: 'Mer Male: 2, 3, 4, 8, 11,12, 14, 23, 27, 35, 36, 51 / Mer Female: 2, 3, 8, 9, 16, 18, 19, 20, 34, 43, 44, 48'). 12 male, 12 female.",
+ "picks": [
+  {"region": "araumi_of_the_dead_tide", "gender": "m", "card": "Araumi of the Dead Tide", "artist": "Daarken", "file": "Araumi of the Dead Tide1.full.jpg", "u": 0.52, "v": 0.27, "zoom": 0.4},
+  {"region": "attuma_atlantean_warlord", "gender": "m", "card": "Attuma, Atlantean Warlord", "artist": "Nanna Marie Steffensen", "file": "MSH/Attuma, Atlantean Warlord.full.jpg", "u": 0.64, "v": 0.31, "zoom": 0.3},
+  {"region": "augur_of_bolas", "gender": "m", "card": "Augur of Bolas", "artist": "Slawomir Maniak", "file": "Augur of Bolas.full.jpg", "u": 0.33, "v": 0.235, "zoom": 0.4},
+  {"region": "coralhelm_commander", "gender": "m", "card": "Coralhelm Commander", "artist": "Jaime Jones", "file": "Coralhelm Commander.full.jpg", "u": 0.4, "v": 0.235, "zoom": 0.4},
+  {"region": "dalakos_crafter_of_wonde", "gender": "m", "card": "Dalakos, Crafter of Wonders", "artist": "Ryan Pancoast", "file": "Dalakos, Crafter of Wonders1.full.jpg", "u": 0.42, "v": 0.235, "zoom": 0.4},
+  {"region": "deeproot_elite", "gender": "m", "card": "Deeproot Elite", "artist": "Winona Nelson", "file": "Deeproot Elite.full.jpg", "u": 0.78, "v": 0.235, "zoom": 0.4},
+  {"region": "emperor_mihail_ii", "gender": "m", "card": "Emperor Mihail II", "artist": "Pindurski", "file": "Emperor Mihail II1.full.jpg", "u": 0.38, "v": 0.17, "zoom": 0.3},
+  {"region": "jace_s_sentinel", "gender": "m", "card": "Jace's Sentinel", "artist": "Alex Konstad", "file": "Jace's Sentinel.full.jpg", "u": 0.47, "v": 0.235, "zoom": 0.4},
+  {"region": "kopala_warden_of_waves", "gender": "m", "card": "Kopala, Warden of Waves", "artist": "Magali Villeneuve", "file": "Kopala, Warden of Waves.full.jpg", "u": 0.48, "v": 0.235, "zoom": 0.4},
+  {"region": "merfolk_thaumaturgist", "gender": "m", "card": "Merfolk Thaumaturgist", "artist": "Steve Prescott", "file": "Merfolk Thaumaturgist.full.jpg", "u": 0.53, "v": 0.27, "zoom": 0.4},
+  {"region": "merrow_harbinger", "gender": "m", "card": "Merrow Harbinger", "artist": "Steve Prescott", "file": "Merrow Harbinger.full.jpg", "u": 0.52, "v": 0.32, "zoom": 0.5},
+  {"region": "sygg_wanderbrine_shield", "gender": "m", "card": "Sygg, Wanderbrine Shield", "artist": "Justin Gerard", "file": "ECL/Sygg, Wanderbrine Shield1.full.jpg", "u": 0.47, "v": 0.38, "zoom": 0.45},
+  {"region": "alandra_sky_dreamer", "gender": "f", "card": "Alandra, Sky Dreamer", "artist": "Caroline Gariba", "file": "Alandra, Sky Dreamer.full.jpg", "u": 0.45, "v": 0.28, "zoom": 0.35},
+  {"region": "cascade_seer", "gender": "f", "card": "Cascade Seer", "artist": "Brian Valeza", "file": "Cascade Seer.full.jpg", "u": 0.53, "v": 0.4, "zoom": 0.35},
+  {"region": "cosi_s_trickster", "gender": "f", "card": "Cosi's Trickster", "artist": "Igor Kieryluk", "file": "Cosi's Trickster.full.jpg", "u": 0.58, "v": 0.27, "zoom": 0.35},
+  {"region": "daughter_of_the_deep", "gender": "f", "card": "Daughter of the Deep", "artist": "Kevin Glint", "file": "MSC/Daughter of the Deep.full.jpg", "u": 0.45, "v": 0.24, "zoom": 0.4},
+  {"region": "hydro_channeler", "gender": "f", "card": "Hydro-Channeler", "artist": "Mila Pesic", "file": "SOS/Hydro-Channeler.full.jpg", "u": 0.48, "v": 0.3, "zoom": 0.4},
+  {"region": "kiora_of_salt_and_sand", "gender": "f", "card": "Kiora of Salt and Sand", "artist": "Chris Rahn", "file": "FRA/Kiora of Salt and Sand.fullborder.jpg", "u": 0.48, "v": 0.235, "zoom": 0.3},
+  {"region": "kiora_sovereign_of_the_d", "gender": "f", "card": "Kiora, Sovereign of the Deep", "artist": "Chris Rallis", "file": "Kiora, Sovereign of the Deep1.full.jpg", "u": 0.55, "v": 0.28, "zoom": 0.35},
+  {"region": "kiora_the_rising_tide", "gender": "f", "card": "Kiora, the Rising Tide", "artist": "Magali Villeneuve", "file": "FDN/Kiora, the Rising Tide2.full.jpg", "u": 0.52, "v": 0.25, "zoom": 0.35},
+  {"region": "roil_cartographer", "gender": "f", "card": "Roil Cartographer", "artist": "Miranda Meeks", "file": "Roil Cartographer1.full.jpg", "u": 0.37, "v": 0.26, "zoom": 0.4},
+  {"region": "tatyova_benthic_druid", "gender": "f", "card": "Tatyova, Benthic Druid", "artist": "Mathias Kollros", "file": "Tatyova, Benthic Druid1.full.jpg", "u": 0.48, "v": 0.235, "zoom": 0.4},
+  {"region": "tatyova_steward_of_tides", "gender": "f", "card": "Tatyova, Steward of Tides", "artist": "Howard Lyon", "file": "Tatyova, Steward of Tides1.full.jpg", "u": 0.4, "v": 0.22, "zoom": 0.35},
+  {"region": "vodalian_hexcatcher", "gender": "f", "card": "Vodalian Hexcatcher", "artist": "Dmitry Burmak", "file": "Vodalian Hexcatcher1.full.jpg", "u": 0.47, "v": 0.52, "zoom": 0.45}
+ ]
+}

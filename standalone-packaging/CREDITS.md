@@ -361,6 +361,19 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **Aaron Miller**; *Mirri, Cat Warrior* by **Daren Bader**; *Mirri, Weatherlight Duelist* by **Richard Kane
   Ferguson**; *Skyhunter Cub* by **Pete Venters**; and *Sunspear Shikari* by **Samuel Perin**.
 
+- **Merfolk portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits;
+  Attuma, Atlantean Warlord and Daughter of the Deep also © Marvel. Male: *Araumi of the Dead Tide* by **Daarken**;
+  *Attuma, Atlantean Warlord* by **Nanna Marie Steffensen**; *Augur of Bolas* by **Slawomir Maniak**; *Coralhelm
+  Commander* by **Jaime Jones**; *Dalakos, Crafter of Wonders* by **Ryan Pancoast**; *Deeproot Elite* by **Winona
+  Nelson**; *Emperor Mihail II* by **Pindurski**; *Jace's Sentinel* by **Alex Konstad**; *Kopala, Warden of Waves* by
+  **Magali Villeneuve**; *Merfolk Thaumaturgist* and *Merrow Harbinger* by **Steve Prescott**; and *Sygg, Wanderbrine
+  Shield* by **Justin Gerard**. Female: *Alandra, Sky Dreamer* by **Caroline Gariba**; *Cascade Seer* by **Brian
+  Valeza**; *Cosi's Trickster* by **Igor Kieryluk**; *Daughter of the Deep* by **Kevin Glint**; *Hydro-Channeler* by
+  **Mila Pesic**; *Kiora of Salt and Sand* by **Chris Rahn**; *Kiora, Sovereign of the Deep* by **Chris Rallis**;
+  *Kiora, the Rising Tide* by **Magali Villeneuve**; *Roil Cartographer* by **Miranda Meeks**; *Tatyova, Benthic
+  Druid* by **Mathias Kollros**; *Tatyova, Steward of Tides* by **Howard Lyon**; and *Vodalian Hexcatcher* by **Dmitry
+  Burmak**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**
