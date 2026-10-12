@@ -1,0 +1,32 @@
+{
+ "race": "Leonin",
+ "note": "Round 568 (the user, from a male and a female sheet: 'L Male: 3, 4, 7, 10, 12, 13, 15, 22, 23,25, 29, 35, 38, 39, 42 / L Female: 2, 5, 11, 12,13, 14, 17, 18, 19, 24, 26'). 15 male, 11 female.",
+ "picks": [
+  {"region": "ajani_nacatl_avenger", "gender": "m", "card": "Ajani, Nacatl Avenger", "artist": "Chris Rallis", "file": "Ajani, Nacatl Avenger1.full.jpg", "u": 0.43, "v": 0.21, "zoom": 0.35},
+  {"region": "armored_guardian", "gender": "m", "card": "Armored Guardian", "artist": "Arnie Swekel", "file": "Armored Guardian.full.jpg", "u": 0.52, "v": 0.235, "zoom": 0.4},
+  {"region": "brimaz_king_of_oreskos", "gender": "m", "card": "Brimaz, King of Oreskos", "artist": "Peter Diamond", "file": "Brimaz, King of Oreskos.full.jpg", "u": 0.52, "v": 0.27, "zoom": 0.45},
+  {"region": "hero_of_the_pride", "gender": "m", "card": "Hero of the Pride", "artist": "Wisnu Tan", "file": "Hero of the Pride.full.jpg", "u": 0.47, "v": 0.235, "zoom": 0.4},
+  {"region": "jareth_leonine_titan", "gender": "m", "card": "Jareth, Leonine Titan", "artist": "Daren Bader", "file": "Jareth, Leonine Titan.full.jpg", "u": 0.53, "v": 0.25, "zoom": 0.4},
+  {"region": "jazal_goldmane", "gender": "m", "card": "Jazal Goldmane", "artist": "Aaron Miller", "file": "Jazal Goldmane1.full.jpg", "u": 0.45, "v": 0.25, "zoom": 0.4},
+  {"region": "jedit_ojanen_mercenary", "gender": "m", "card": "Jedit Ojanen, Mercenary", "artist": "Ilse Gort", "file": "Jedit Ojanen, Mercenary1.full.jpg", "u": 0.37, "v": 0.27, "zoom": 0.4},
+  {"region": "leonin_battlemage", "gender": "m", "card": "Leonin Battlemage", "artist": "Stephen Tappin", "file": "Leonin Battlemage.full.jpg", "u": 0.43, "v": 0.26, "zoom": 0.4},
+  {"region": "leonin_elder", "gender": "m", "card": "Leonin Elder", "artist": "Todd Lockwood", "file": "Leonin Elder.full.jpg", "u": 0.55, "v": 0.27, "zoom": 0.4},
+  {"region": "leonin_lightbringer", "gender": "m", "card": "Leonin Lightbringer", "artist": "Ernanda Souza", "file": "Leonin Lightbringer.full.jpg", "u": 0.5, "v": 0.3, "zoom": 0.4},
+  {"region": "leonin_warleader", "gender": "m", "card": "Leonin Warleader", "artist": "Jakub Kasper", "file": "Leonin Warleader.full.jpg", "u": 0.42, "v": 0.3, "zoom": 0.45},
+  {"region": "pride_guardian", "gender": "m", "card": "Pride Guardian", "artist": "Chris Rahn", "file": "Pride Guardian.full.jpg", "u": 0.38, "v": 0.25, "zoom": 0.45},
+  {"region": "sabertooth_nishoba", "gender": "m", "card": "Sabertooth Nishoba", "artist": "Gary Ruddell", "file": "Sabertooth Nishoba.full.jpg", "u": 0.48, "v": 0.4, "zoom": 0.5},
+  {"region": "taj_nar_swordsmith", "gender": "m", "card": "Taj-Nar Swordsmith", "artist": "Todd Lockwood", "file": "Taj-Nar Swordsmith.full.jpg", "u": 0.62, "v": 0.42, "zoom": 0.45},
+  {"region": "zahur_glory_s_past", "gender": "m", "card": "Zahur, Glory's Past", "artist": "Alex Stone", "file": "DFT/Zahur, Glory's Past2.full.jpg", "u": 0.42, "v": 0.27, "zoom": 0.45},
+  {"region": "alms_collector", "gender": "f", "card": "Alms Collector", "artist": "Bram Sels", "file": "Alms Collector1.full.jpg", "u": 0.3, "v": 0.235, "zoom": 0.4},
+  {"region": "blade_of_the_sixth_pride", "gender": "f", "card": "Blade of the Sixth Pride", "artist": "Lars Grant-West", "file": "Blade of the Sixth Pride.full.jpg", "u": 0.68, "v": 0.28, "zoom": 0.4},
+  {"region": "kemba_kha_regent", "gender": "f", "card": "Kemba, Kha Regent", "artist": "Ernanda Souza", "file": "Kemba, Kha Regent1.full.jpg", "u": 0.47, "v": 0.235, "zoom": 0.4},
+  {"region": "kitt_kanto_mayhem_diva", "gender": "f", "card": "Kitt Kanto, Mayhem Diva", "artist": "Fariba Khamseh", "file": "Kitt Kanto, Mayhem Diva1.full.jpg", "u": 0.61, "v": 0.19, "zoom": 0.3},
+  {"region": "leonin_den_guard", "gender": "f", "card": "Leonin Den-Guard", "artist": "Todd Lockwood", "file": "Leonin Den-Guard.full.jpg", "u": 0.5, "v": 0.235, "zoom": 0.4},
+  {"region": "leonin_shikari", "gender": "f", "card": "Leonin Shikari", "artist": "Wayne England", "file": "Leonin Shikari.full.jpg", "u": 0.38, "v": 0.27, "zoom": 0.4},
+  {"region": "leonin_vanguard", "gender": "f", "card": "Leonin Vanguard", "artist": "Aaron Miller", "file": "Leonin Vanguard.full.jpg", "u": 0.53, "v": 0.38, "zoom": 0.45},
+  {"region": "mirri_cat_warrior", "gender": "f", "card": "Mirri, Cat Warrior", "artist": "Daren Bader", "file": "Mirri, Cat Warrior.full.jpg", "u": 0.43, "v": 0.32, "zoom": 0.45},
+  {"region": "mirri_weatherlight_dueli", "gender": "f", "card": "Mirri, Weatherlight Duelist", "artist": "Richard Kane Ferguson", "file": "Mirri, Weatherlight Duelist1.full.jpg", "u": 0.47, "v": 0.3, "zoom": 0.4},
+  {"region": "skyhunter_cub", "gender": "f", "card": "Skyhunter Cub", "artist": "Pete Venters", "file": "Skyhunter Cub.full.jpg", "u": 0.43, "v": 0.3, "zoom": 0.45},
+  {"region": "sunspear_shikari", "gender": "f", "card": "Sunspear Shikari", "artist": "Samuel Perin", "file": "Sunspear Shikari.full.jpg", "u": 0.47, "v": 0.42, "zoom": 0.45}
+ ]
+}

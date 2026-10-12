@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 568: Leonin portraits - male and female pools (2026-10-11)
+
+The user, from a male and a female sheet: "L Male: 3, 4, 7, 10, 12, 13, 15, 22, 23,25, 29, 35, 38, 39, 42 / L Female: 2,
+5, 11, 12,13, 14, 17, 18, 19, 24, 26".
+
+- **The candidates:** 153 cached cat-folk cards - Cats with a humanoid class (Warrior, Soldier, Cleric ...) or "Leonin"
+  in the card - on two scan pages. A male sheet (43) and a female sheet (29) were picked from them.
+- **15 male** in `Leonin_m`:
+  - Ajani (Nacatl Avenger), Armored Guardian, Brimaz, Hero of the Pride, Jareth, Jazal Goldmane, Jedit Ojanen
+    (Mercenary), Leonin Battlemage.
+  - Leonin Elder, Leonin Lightbringer, Leonin Warleader, Pride Guardian, Sabertooth Nishoba, Taj-Nar Swordsmith, Zahur.
+- **11 female** in `Leonin_f`: Alms Collector, Blade of the Sixth Pride, Kemba (Kha Regent), Kitt Kanto, Leonin
+  Den-Guard, Leonin Shikari, Leonin Vanguard, both Mirris (Cat Warrior, Weatherlight Duelist), Skyhunter Cub, Sunspear
+  Shikari.
+- **Framing:** each crop is on the face (`dev-tools/portraits/leonin.json`, `sprites/heroes/portraits/leonin.atlas`,
+  1632x1360).
+- **Credits:** artists read off the cached images. Data only.
+
 ## Round 567: the notice log shows six entries and scrolls; the town greeting stays out of it (2026-10-11)
 
 The user, with a screenshot of the log: "Does the notice board scroll? I don't think is should be bigger than 6 entries,

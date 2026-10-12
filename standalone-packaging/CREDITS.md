@@ -349,6 +349,18 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Belledin**; *Ondu Spiritdancer* by **Tran Nguyen**; *Skyclave Cleric* by **Johannes Voss**; and *Stoneforge Mystic*
   by **Livia Prima**.
 
+- **Leonin portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits.
+  Male: *Ajani, Nacatl Avenger* by **Chris Rallis**; *Armored Guardian* by **Arnie Swekel**; *Brimaz, King of Oreskos*
+  by **Peter Diamond**; *Hero of the Pride* by **Wisnu Tan**; *Jareth, Leonine Titan* by **Daren Bader**; *Jazal
+  Goldmane* by **Aaron Miller**; *Jedit Ojanen, Mercenary* by **Ilse Gort**; *Leonin Battlemage* by **Stephen
+  Tappin**; *Leonin Elder* and *Taj-Nar Swordsmith* by **Todd Lockwood**; *Leonin Lightbringer* by **Ernanda Souza**;
+  *Leonin Warleader* by **Jakub Kasper**; *Pride Guardian* by **Chris Rahn**; *Sabertooth Nishoba* by **Gary
+  Ruddell**; and *Zahur, Glory's Past* by **Alex Stone**. Female: *Alms Collector* by **Bram Sels**; *Blade of the
+  Sixth Pride* by **Lars Grant-West**; *Kemba, Kha Regent* by **Ernanda Souza**; *Kitt Kanto, Mayhem Diva* by **Fariba
+  Khamseh**; *Leonin Den-Guard* by **Todd Lockwood**; *Leonin Shikari* by **Wayne England**; *Leonin Vanguard* by
+  **Aaron Miller**; *Mirri, Cat Warrior* by **Daren Bader**; *Mirri, Weatherlight Duelist* by **Richard Kane
+  Ferguson**; *Skyhunter Cub* by **Pete Venters**; and *Sunspear Shikari* by **Samuel Perin**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**
