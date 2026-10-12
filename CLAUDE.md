@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-12 (round 580): **LOCAL + UNRELEASED** - a recovered ante card (Buy Back / Bronze Coin) goes back to
+every deck the loss took it from, and to no other (AdventurePlayer.LostCardRemoval / restoreLostCard).
+
 ## STATE 2026-10-12 (round 579): **LOCAL + UNRELEASED (art only)** - seven imported sprites drawn facing left mirrored
 so they stop moving backwards (frames flipped in their own cells; atlases untouched): Verdant Wyrm, Crimson Skywyrm,
 Shredmaw Monger whole; Ogre Matriarch, Bloodveil Countess mostly; Void Dragon and Duchess of Thorns their wrong frames.

@@ -3771,10 +3771,50 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return copiesUsed;
     }
 
-    public void removeLostCardFromPools(PaperCard card) {
-        if (card.isVeryBasicLand() && !card.isFoil()) {
-            return;
+    /**
+     * Round 580: what {@link #removeLostCardFromPools} took for ONE lost ante copy - the collection copy and the copies
+     * it pulled out of each deck section - so a Buy Back or a Bronze Coin can put back exactly that.
+     * <p>
+     * The user's save 1 (2026-10-12): an unselected deck went from 40 to 37 cards. A loss strips the card from every
+     * deck that would hold more copies than the collection has left, but recovery only added a copy to the SELECTED deck:
+     * the other decks never got theirs back, and the selected deck gained a copy it had never lost when the player
+     * owned spares (their Dimir deck reached 41).
+     */
+    public static final class LostCardRemoval {
+        public final PaperCard card;
+        /** False for a plain basic land: the loss leaves the collection and the decks alone. */
+        final boolean fromCollection;
+        final List<Deck> decks = new ArrayList<>();
+        final List<DeckSection> sections = new ArrayList<>();
+        final List<Integer> counts = new ArrayList<>();
+
+        LostCardRemoval(PaperCard card, boolean fromCollection) {
+            this.card = card;
+            this.fromCollection = fromCollection;
         }
+
+        void took(Deck deck, DeckSection section, int count) {
+            decks.add(deck);
+            sections.add(section);
+            counts.add(count);
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < decks.size(); i++) {
+                sb.append(i == 0 ? "" : ", ").append(decks.get(i).getName()).append(' ')
+                        .append(sections.get(i)).append(" x").append(counts.get(i));
+            }
+            return sb.length() == 0 ? "no deck" : sb.toString();
+        }
+    }
+
+    public LostCardRemoval removeLostCardFromPools(PaperCard card) {
+        if (card.isVeryBasicLand() && !card.isFoil()) {
+            return new LostCardRemoval(card, false);
+        }
+        LostCardRemoval removal = new LostCardRemoval(card, true);
 
         int leftInPool = Current.player().getCards().count(card) - 1;
 
@@ -3793,6 +3833,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 int nToRemoveFromSection = Math.min(cntInSection, nToRemoveFromThisDeck);
                 if (nToRemoveFromSection > 0) {
                     deck.get(section).remove(card, nToRemoveFromSection);
+                    removal.took(deck, section, nToRemoveFromSection);
                     nToRemoveFromThisDeck -= nToRemoveFromSection;
                     if (nToRemoveFromThisDeck <= 0) {
                         break;
@@ -3805,8 +3846,26 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             }
 
             deck.getMain().remove(card, nToRemoveFromThisDeck);
+            removal.took(deck, DeckSection.Main, nToRemoveFromThisDeck);
         }
         Current.player().getCards().remove(card, 1);
+        System.out.println("[TFR-AnteLoss] " + card.getName() + " left the collection (" + leftInPool
+                + " left) and " + removal);
+        return removal;
+    }
+
+    /** Round 580: a recovered ante copy (Buy Back or Bronze Coin) goes back to the collection and to every deck section
+     *  {@link #removeLostCardFromPools} took it from - and to no deck it never left. */
+    public void restoreLostCard(LostCardRemoval removal) {
+        if (!removal.fromCollection) {
+            System.out.println("[TFR-AnteRestore] " + removal.card.getName() + " never left the collection");
+            return;
+        }
+        addCard(removal.card);
+        for (int i = 0; i < removal.decks.size(); i++) {
+            removal.decks.get(i).getOrCreate(removal.sections.get(i)).add(removal.card, removal.counts.get(i));
+        }
+        System.out.println("[TFR-AnteRestore] " + removal.card.getName() + " back in the collection and " + removal);
     }
 
     public CardPool getCollectionCards(boolean allCards) {

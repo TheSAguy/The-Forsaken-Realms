@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 580: a recovered ante card goes back to every deck it left (2026-10-12)
+
+The user: "can you tell me how "Tide of Phyresis" went to 37 cards", then "Yes, please do that fix."
+
+- **The bug** (seen four times in the user's save 1, 10-12 October):
+  - Losing an ante card (`AdventurePlayer.removeLostCardFromPools`) takes it from EVERY deck that would hold more
+    copies than the collection has left, not only the deck that was played.
+  - A Buy Back or a Bronze Coin (`DuelScene`) returned the card to the collection and added a copy to the SELECTED deck
+    only.
+  - So an unselected deck lost the card for good. Their Tide of Phyresis lost Dissipation Field, a Corrupted
+    Conscience, a Counterspell and a Thrummingbird.
+  - The selected deck also gained a copy it had never lost whenever the player owned spares: their Dimir Contagion
+    reached 41.
+- **The fix:**
+  - `removeLostCardFromPools` now returns a `LostCardRemoval`: the copies it took from each deck section.
+  - `restoreLostCard` puts exactly those back: the collection copy, and each deck section the card left. A deck the
+    loss never touched is left alone.
+  - `DuelScene.anteRemovals` holds this loss's pending removals. Buy Back takes the latest pending loss of that card,
+    so buying back one of two lost copies leaves the decks as a single loss would. The Bronze Coin restores the rest.
+  - This list replaces `anteAlreadyRecovered`, the 2026-09-01 guard against handing a bought-back card over a second
+    time, which still holds.
+  - A plain basic land never left the collection, so recovering one adds nothing (it used to add a copy).
+- **Logged:** `[TFR-AnteLoss]` and `[TFR-AnteRestore]` name each deck section the card left and came back to.
+- **Agent-tested** on a copy of the user's save 1 (agent slot 22; their file untouched), through the real Card Lost
+  popup (a scratch console command fed it the loss):
+  - Buy Back, Corrupted Conscience (3 owned, 3 in each deck): both decks went 3 -> 2 -> 3.
+  - Doom Blade (2 owned, Dimir 1): no deck lost it, and Buy Back added none.
+  - Then the Bronze Coin on Thrummingbird: back in Dimir, and Doom Blade was not handed over a second time.
+  - Two Corrupted Conscience lost (both decks 3 -> 1): Buy Back on the first gave 2, the coin on the second gave 3.
+- **Not repaired here:** decks a past loss already shrank keep their count. The user's save 1 today: Tide 39 (one
+  Thrummingbird short), Dimir 41 (one extra).
+
 ## Round 579: seven imported sprites no longer move backwards (2026-10-12)
 
 The user, with a duel screenshot of the Verdant Wyrm: "This Wyrm was flying backwards. Can you please confirm it's the only

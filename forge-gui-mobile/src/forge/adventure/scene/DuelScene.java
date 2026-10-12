@@ -174,6 +174,7 @@ public class DuelScene extends ForgeScene {
         boolean winner = false;
         List<PaperCard> anteWonCards = Collections.emptyList();
         List<PaperCard> anteLostCards = Collections.emptyList();
+        anteRemovals.clear();
         try {
             // Defensive null-check (2026-08-13, found via the user's own forge.log after
             // extended play - a real, reproducible NPE, not the different one already fixed
@@ -268,7 +269,7 @@ public class DuelScene extends ForgeScene {
                     }
                     for (PaperCard card : anteResult.lostCards) {
                         // We could clean this up by trying to combine all the lostCards into a mapping, but good enough for now
-                        Current.player().removeLostCardFromPools(card);
+                        anteRemovals.add(Current.player().removeLostCardFromPools(card));
                     }
                 }
                 anteWonCards = new ArrayList<>(anteResult.wonCards);
@@ -508,19 +509,27 @@ public class DuelScene extends ForgeScene {
     }
 
     /**
-     * Ante cards already recovered by an individual Buy Back during THIS loss, so a later
-     * whole-ante Bronze Coin ransom does not hand them over a second time.
-     * <p>
-     * 2026-09-01 release review. The two recovery routes are offered on the SAME popup and are not
-     * mutually exclusive across cards: with a 2-card ante the player can Buy Back card A on popup
-     * 1, then choose Use Bronze Coin on popup 2 - and payCoinRansomForAll() runs over the FULL
-     * lost list, so A was added to the collection and to the deck twice, while the buy-back gold
-     * stayed spent. DuelScene is a singleton, so this must be cleared per duel, not per instance.
+     * Round 580: this loss's ante copies not yet recovered, each with the deck sections it was taken from
+     * (AdventurePlayer.LostCardRemoval). A recovery consumes its entry, so a later whole-ante Bronze Coin ransom
+     * never hands a bought-back card over a second time - the 2026-09-01 release review's double recovery (Buy
+     * Back card A on popup 1, then the coin on popup 2 returned A again). DuelScene is a singleton, so GameEnd clears
+     * this per duel.
      */
-    private final List<PaperCard> anteAlreadyRecovered = new ArrayList<>();
+    private final List<AdventurePlayer.LostCardRemoval> anteRemovals = new ArrayList<>();
+
+    /** Round 580: recovers one copy of {@code card}. The latest unrecovered loss of it goes first, so buying back one of
+     *  two lost copies leaves the decks as a single loss would have. */
+    private void recoverAnteCard(PaperCard card) {
+        for (int i = anteRemovals.size() - 1; i >= 0; i--) {
+            if (anteRemovals.get(i).card.equals(card)) {
+                Current.player().restoreLostCard(anteRemovals.remove(i));
+                return;
+            }
+        }
+        System.out.println("[TFR-AnteRestore] " + card.getName() + " has no pending loss to recover");
+    }
 
     private void showAnteResults(List<PaperCard> wonCards, List<PaperCard> lostCards, Runnable onDone) {
-        anteAlreadyRecovered.clear();
         // Show won cards one at a time, then lost cards, then continue
         showAnteCardsSequentially(wonCards, 0, true, () ->
             showAnteCardsSequentially(lostCards, 0, false, onDone));
@@ -540,7 +549,7 @@ public class DuelScene extends ForgeScene {
         // nothing left to decide about them, and showing "Card Lost" for a card just recovered
         // would be a lie.
         Runnable ransomAll = won ? null : () -> {
-            payCoinRansomForAll(cards);
+            payCoinRansomForAll();
             onDone.run();
         };
         showAnteCardPopup(won ? "Card Gained" : "Card Lost", card, won, next, ransomAll);
@@ -570,20 +579,12 @@ public class DuelScene extends ForgeScene {
 
     /** Pays one Bronze Coin: every ante card from this loss comes back, and the defeat's gold
      *  penalty is waived (life loss still applies - see AdventurePlayer.defeated()). */
-    private void payCoinRansomForAll(List<PaperCard> lostCards) {
+    private void payCoinRansomForAll() {
         Current.player().payCoinRansom(enemy != null ? enemy.getName() : null);
-        for (PaperCard lost : lostCards) {
-            // remove(Object), not contains(): it consumes exactly ONE occurrence, so a player who
-            // anted two copies of the same card and bought back one still gets the other returned.
-            if (anteAlreadyRecovered.remove(lost))
-                continue;
-            Current.player().addCard(lost);
-            // Same in-place restore Buy Back does (2026-08-20 user report) - the cards were part
-            // of this deck when they were ante'd away, so recovering them puts them back there
-            // rather than only into the collection.
-            if (Current.player().getSelectedDeck() != null)
-                Current.player().getSelectedDeck().getMain().add(lost);
-        }
+        // Every copy not already bought back on an earlier popup of this loss (those left anteRemovals). Round 580: each
+        // goes back to every deck it left - the 2026-08-20 in-place restore, for all decks, not only the selected one.
+        while (!anteRemovals.isEmpty())
+            Current.player().restoreLostCard(anteRemovals.remove(anteRemovals.size() - 1));
     }
 
     // Ante Buy Back price floor by rarity (2026-08-17 user report: 150% of a heavily
@@ -719,16 +720,11 @@ public class DuelScene extends ForgeScene {
             }
             if (offerBuyBack && result == 1) {
                 Current.player().takeGold(buyBackPrice);
-                Current.player().addCard(card);
-                // Remember it so a Bronze Coin ransom later in the same loss skips it - see
-                // anteAlreadyRecovered.
-                anteAlreadyRecovered.add(card);
                 // 2026-08-20 user report: "When you buy back your ante card you lose, it should
-                // go to the current active deck. Currently going to inventory." The card was part
-                // of this deck when it was ante'd away, so buying it back restores it in place
-                // (addCard above only returns it to the collection).
-                if (Current.player().getSelectedDeck() != null)
-                    Current.player().getSelectedDeck().getMain().add(card);
+                // go to the current active deck. Currently going to inventory." Round 580: back to
+                // the collection and to every deck the loss took it from (see anteRemovals), which
+                // a Bronze Coin later in the same loss then skips.
+                recoverAnteCard(card);
             }
             if (onDone != null) onDone.run();
         });
