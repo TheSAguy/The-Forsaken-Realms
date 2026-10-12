@@ -1288,7 +1288,7 @@ public final class Ascendance {
             case "templePriest": effect = "Your Temple's weekly offering pays " + Math.round(c.value) + " times the cards"; break; // round 566
             case "focused": effect = "Your first mulligan in each game is free - you keep a full hand"; break; // round 566
             case "guardFocus": effect = "Your roaming guards' first mulligan in each game is free"; break; // round 566
-            case "guardSpoils": effect = "Each enemy your roaming guards beat gives you a rare card from its deck"; break; // round 570
+            case "guardSpoils": effect = "Each enemy your roaming guards beat leaves a rare card from its deck at your Armory"; break; // rounds 570, 582
             default: effect = id;
         }
         return effect;

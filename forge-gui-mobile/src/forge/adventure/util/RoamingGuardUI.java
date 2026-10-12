@@ -47,6 +47,13 @@ public class RoamingGuardUI {
             scene.removeDialog();
             openRoster(scene, changes, poiName, objectId);
         });
+        // Round 582: the cards the guards took with Spoils of War wait here until collected.
+        int spoils = HeldCards.spoils().countAll();
+        if (spoils > 0)
+            EconomyBuildings.addButtonRow(dialog, "Collect Spoils (" + spoils + (spoils == 1 ? " card)" : " cards)"), true, () -> {
+                scene.removeDialog();
+                HeldCards.collectSpoils();
+            });
         EconomyBuildings.addButtonRow(dialog, "Close", true, scene::removeDialog);
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);

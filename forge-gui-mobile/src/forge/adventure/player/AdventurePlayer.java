@@ -108,6 +108,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // guards. One per character; saved as an ItemData[] exactly like the inventory above. Every move in or
     // out goes through forge.adventure.util.ArmoryStorage, so an item is never in two places at once.
     private final ArrayList<ItemData> armoryStorage = new ArrayList<>();
+    // Round 582: cards waiting at a building until the player collects them (forge.adventure.util.HeldCards) - the
+    // Temple's weekly offerings (and how many weeks they come from) and the roaming guards' Spoils of War.
+    private final CardPool templeOffering = new CardPool();
+    private int templeOfferingWeeks;
+    private final CardPool guardSpoils = new CardPool();
     private final Array<Deck> boostersOwned = new Array<>();
     private final HashMap<String, Long> equippedItems = new HashMap<>();
     private final ArrayList<HashMap<String, Long>> deckLoadouts = new ArrayList<>();
@@ -707,6 +712,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         clearDecks();
         inventoryItems.clear();
         armoryStorage.clear(); // round 163
+        templeOffering.clear(); // round 582
+        templeOfferingWeeks = 0;
+        guardSpoils.clear();
         boostersOwned.clear();
         equippedItems.clear();
         deckLoadouts.clear();
@@ -1127,6 +1135,17 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             }
             armoryStorage.clear();
         }
+        // Round 582: cards still waiting at the Temple or the Armory are the player's, and a New Game+ keeps the cards -
+        // there is no Capitol to collect them from in the new run, so they join the collection.
+        if (!templeOffering.isEmpty() || !guardSpoils.isEmpty()) {
+            System.out.println("[TFR-NewGamePlus] uncollected cards: " + templeOffering.countAll() + " Temple, "
+                    + guardSpoils.countAll() + " Spoils of War - added to the collection");
+            addCards(templeOffering);
+            addCards(guardSpoils);
+            templeOffering.clear();
+            templeOfferingWeeks = 0;
+            guardSpoils.clear();
+        }
         // Round 493: a run back at Ascendance 0 wears one main item - the rest of the kept gear goes in the bag.
         forge.adventure.util.Ascendance.enforceMainLimit(this, "New Game+");
     }
@@ -1185,6 +1204,24 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     /** Round 163: the Armory storage. Mutate it through forge.adventure.util.ArmoryStorage only. */
     public ArrayList<ItemData> getArmoryStorage() {
         return armoryStorage;
+    }
+
+    /** Round 582: the Temple's uncollected offerings. Mutate through forge.adventure.util.HeldCards only. */
+    public CardPool getTempleOffering() {
+        return templeOffering;
+    }
+
+    public int getTempleOfferingWeeks() {
+        return templeOfferingWeeks;
+    }
+
+    public void setTempleOfferingWeeks(int weeks) {
+        templeOfferingWeeks = weeks;
+    }
+
+    /** Round 582: the roaming guards' uncollected Spoils of War. Mutate through forge.adventure.util.HeldCards only. */
+    public CardPool getGuardSpoils() {
+        return guardSpoils;
     }
 
     /**
@@ -1580,6 +1617,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 System.err.println("[TFR-Armory] could not read the Armory storage from the save: " + e);
             }
         }
+        // Round 582: the cards waiting at the Temple and the Armory. A save from before has none.
+        if (data.containsKey("templeOffering"))
+            templeOffering.addAll(CardPool.fromCardList(Lists.newArrayList((String[]) data.readObject("templeOffering"))));
+        templeOfferingWeeks = data.containsKey("templeOfferingWeeks") ? data.readInt("templeOfferingWeeks") : 0;
+        if (data.containsKey("guardSpoils"))
+            guardSpoils.addAll(CardPool.fromCardList(Lists.newArrayList((String[]) data.readObject("guardSpoils"))));
         refreshItemDefinitionsFromCatalog(); // round 124: saved items take the catalog's current definition
         if (data.containsKey("equippedSlots") && data.containsKey("equippedItems")) {
             try {
@@ -2075,6 +2118,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
         data.storeObject("inventory", inventoryItems.toArray(new ItemData[0]));
         data.storeObject("armoryStorage", armoryStorage.toArray(new ItemData[0])); // round 163
+        if (!templeOffering.isEmpty()) // round 582
+            data.storeObject("templeOffering", templeOffering.toCardList("\n").split("\n"));
+        data.store("templeOfferingWeeks", templeOfferingWeeks);
+        if (!guardSpoils.isEmpty())
+            data.storeObject("guardSpoils", guardSpoils.toCardList("\n").split("\n"));
 
         ArrayList<String> slots = new ArrayList<>();
         ArrayList<Long> items = new ArrayList<>();

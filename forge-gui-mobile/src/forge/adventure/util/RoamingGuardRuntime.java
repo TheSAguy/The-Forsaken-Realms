@@ -132,7 +132,8 @@ public class RoamingGuardRuntime {
     /**
      * Round 570 (the user: "Your roaming guards get 1 rare from enemies they defeat. From their decks. It will go directly
      * into inventory"): with Spoils of War, a guard's win takes one rare - else a mythic - at random from the beaten
-     * enemy's deck, straight into the player's collection with a notice. A deck with neither gives nothing.
+     * enemy's deck, with a notice. A deck with neither gives nothing. Round 582: the card waits at the Armory until the
+     * player collects it there (HeldCards).
      */
     private static void guardSpoils(RoamingGuardData guard, EnemySprite foe, forge.deck.Deck deck) {
         if (!Ascendance.guardSpoils() || deck == null || foe == null)
@@ -153,10 +154,11 @@ public class RoamingGuardRuntime {
             return;
         }
         forge.item.PaperCard card = pool.get(new java.util.Random().nextInt(pool.size()));
-        AdventurePlayer.current().addCard(card);
+        HeldCards.holdSpoils(card);
         System.out.println("[TFR-Ascend] Spoils of War: " + who + " beat " + foe.getName() + " - " + card.getName()
-                + " (" + card.getRarity() + ", " + card.getEdition() + ") to the collection");
-        GameHUD.getInstance().addNotification("Your " + who + " guard took " + card.getName() + " from " + foe.getName() + ".");
+                + " (" + card.getRarity() + ", " + card.getEdition() + ") held at the Armory");
+        GameHUD.getInstance().addNotification("Your " + who + " guard took " + card.getName() + " from " + foe.getName()
+                + ". Collect it at the Armory.");
     }
 
     // ------------------------------------------------------------------ per-frame

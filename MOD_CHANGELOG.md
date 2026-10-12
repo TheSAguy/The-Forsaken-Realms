@@ -14264,6 +14264,46 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 582: the Temple's offerings and the guards' spoils wait to be collected (2026-10-12)
+
+The user, with a screenshot of the Temple: "Instead of just having the weekly cards go to your inventory, let's have a
+"collect reward" button ... and have it keep the card there till you come collect them. Need to make sure it can hold
+more than 1 week's worth of cards ... It should act like when you open a booster. Let's actually do the same for the
+guards that collect cards. In the armory somewhere, add the same button to get the cards the guards collected."
+
+- **Two piles, saved with the player** (`AdventurePlayer` `templeOffering` + `templeOfferingWeeks`, `guardSpoils`;
+  handled by the new `util/HeldCards`):
+  - A pile keeps growing until it is collected: any number of weeks of offerings, any number of spoils.
+  - A save from before has empty piles.
+  - A New Game+ moves anything still waiting into the collection (it keeps the cards, and the new run has no Capitol
+    to collect from).
+- **The Temple** (`TempleOfferings`):
+  - At the week's end the offering joins the pile instead of the collection. The notice says it is ready, with the
+    week's colors, and to collect it at the Temple. The loot screen no longer pops up wherever the player is.
+  - The dialog's week line adds "Waiting for you: N cards from M weeks".
+  - "Collect Offering" sits beside Destroy Building, with Close below spanning both. The dialog already filled a
+    landscape screen, and a third full-width button pushed its title off the top (seen in the agent test).
+- **The Armory** (Spoils of War, `RoamingGuardRuntime.guardSpoils`):
+  - A guard's rare joins the pile. The notice adds "Collect it at the Armory." The perk text now says the card is left
+    at your Armory.
+  - At the Capitol's Armory, Manage Guards reads "Manage Guards (N cards)" while spoils wait.
+  - Its Guards window (Local / Roaming) gains "Collect Spoils (N cards)".
+- **Collecting opens the cards as a booster does** (the reward screen's `EventReward` page): face down, flipped by the
+  first Done, added to the collection by the second, with the "All" auto-sell box.
+  - From the Armory, `RewardScene.closeShopAndReveal` first closes the shop page as its own Done does. Loading the reveal
+    into the open shop page would leave it on the back stack. Done returns to the town.
+- **Logged:** `[TFR-HeldCards]` for every card held and every collection.
+- **Agent-tested** on a copy of the user's save 1 (agent slot 22; their file untouched):
+  - Kills recorded over two week turns: 14 cards held from 2 weeks, two notices, the collection unchanged (1,286).
+  - Saved and reloaded: the pile and two test spoils were still there.
+  - The Temple: Collect Offering showed 14 face-down cards, Done flipped them (New / Owned tags), Done added them
+    (1,286 -> 1,300) and returned to the town.
+  - The Armory (raised to Level 2 on the copy): "Manage Guards (2 cards waiting)" overflowed its button, so it reads
+    "(2 cards)" now. Collect Spoils showed the 2 cards; Done added them (1,302) and returned to Orazca, not to the
+    shop page.
+  - The Temple layout re-checked after the half-button change: the title shows, and the dialog fits.
+- **Not changed:** a destroyed Temple keeps its pile with the player; a rebuilt Temple shows it again.
+
 ## Round 581: one size per tier - long, flat and split-up creatures no longer draw small (2026-10-12)
 
 The user, after a Master Manananggal looked "almost smaller than me on the map": "Are we sure the creatures scale (Size

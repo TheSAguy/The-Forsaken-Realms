@@ -633,6 +633,17 @@ public class RewardScene extends UIScene {
         Forge.switchToLast();
     }
 
+    /**
+     * Round 582: the Armory's Collect Spoils. Closes this shop page as its Done does (back to the town), then opens the
+     * cards as a booster opens (Type.EventReward). Loading the reveal into the open shop page instead would leave this
+     * scene on the back stack, and closing the reveal would bring it back.
+     */
+    public void closeShopAndReveal(Array<Reward> rewards) {
+        done(true);
+        loadRewards(rewards, Type.EventReward, null);
+        Forge.switchScene(this);
+    }
+
     public void reactivateInputs() {
         Gdx.input.setInputProcessor(stage);
         doneButton.toFront();
@@ -1082,9 +1093,18 @@ public class RewardScene extends UIScene {
                 // Armories from the type re-roll on ANY plane.
                 boolean armoryFeatures = isArmory && Config.instance().getConfigData().armoryGuardsEnabled && playerOwnedTown;
                 int armoryLevel = changes.getBuildingLevel(shopActor.getObjectId());
+                // Round 163/166: the Capitol's Armory (the storage and the roaming guards are kept there).
+                forge.adventure.pointofintrest.PointOfInterest storageRoot = TileMapScene.instance().rootPoint;
+                boolean capitolArmory = storageRoot != null && storageRoot.getData() != null
+                        && TownRestoration.CAPITOL_POI_NAME.equals(storageRoot.getData().name);
                 guardsButton.setVisible(armoryFeatures && armoryLevel >= 2);
-                if (guardsButton.isVisible())
+                if (guardsButton.isVisible()) {
+                    // Round 582: the guards' Spoils of War wait here - Collect Spoils is in Manage Guards.
+                    int spoils = capitolArmory ? forge.adventure.util.HeldCards.spoils().countAll() : 0;
+                    guardsButton.setText(spoils > 0 ? "[%80]Manage Guards (" + spoils + (spoils == 1 ? " card)" : " cards)")
+                            : "Manage Guards");
                     addToSelectable(guardsButton);
+                }
                 upgradeButton.setVisible(armoryFeatures && armoryLevel < 2);
                 if (upgradeButton.isVisible()) {
                     // Text refreshed here too (round 4, difficulty price multiplier) - was
@@ -1115,9 +1135,6 @@ public class RewardScene extends UIScene {
                 // Round 163: the Armory storage. Round 166 (user: "We only need the Item Storage at the
                 // Capitol, so let's do it only at Level 2 Armory"): the Capitol's Level 2 Armory only - the
                 // guards it feeds are hired there, and Manage Guards carries the same gate.
-                forge.adventure.pointofintrest.PointOfInterest storageRoot = TileMapScene.instance().rootPoint;
-                boolean capitolArmory = storageRoot != null && storageRoot.getData() != null
-                        && TownRestoration.CAPITOL_POI_NAME.equals(storageRoot.getData().name);
                 storageButton.setVisible(armoryFeatures && armoryLevel >= 2 && capitolArmory);
                 if (storageButton.isVisible()) {
                     refreshStorageButton();

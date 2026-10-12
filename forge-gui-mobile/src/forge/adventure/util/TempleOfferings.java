@@ -1,6 +1,5 @@
 package forge.adventure.util;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,13 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import forge.Forge;
 import forge.adventure.data.EnemyData;
-import forge.adventure.player.AdventurePlayer;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.pointofintrest.PointOfInterestChanges;
-import forge.adventure.scene.RewardScene;
 import forge.adventure.stage.GameHUD;
 import forge.adventure.stage.MapStage;
 import forge.adventure.world.World;
@@ -39,7 +35,8 @@ import java.util.Set;
  * <p>
  * The tally (World.getTempleKills) counts every duel the player wins except the Arena and an Inn tournament - from the
  * first day, whether or not a Temple stands; it pays only if the Capitol has one when the week turns. Ties rank in WUBRG
- * order, the order of the chart. The cards are added at once and shown on a loot screen, as the Scientist's rares are.
+ * order, the order of the chart. Round 582: the cards wait at the Temple, week after week, until the player collects
+ * them there (HeldCards) - opened as a booster is.
  */
 public final class TempleOfferings {
     static final String[] LETTERS = {"W", "U", "B", "R", "G"};
@@ -135,8 +132,7 @@ public final class TempleOfferings {
         for (PaperCard card : forge.model.FModel.getMagicDb().getCommonCards().getAllCards())
             if (unlocked.contains(card.getEdition()) && !card.getRules().getType().isLand())
                 inSets.add(card);
-        AdventurePlayer player = WorldSave.getCurrentSave().getPlayer();
-        Array<Reward> reveal = new Array<>();
+        List<PaperCard> offering = new ArrayList<>();
         StringBuilder log = new StringBuilder();
         StringBuilder notice = new StringBuilder();
         int times = Ascendance.templeCardMultiplier(); // round 566: Temple Priest
@@ -146,8 +142,7 @@ public final class TempleOfferings {
             int got = 0;
             for (int i = 0; i < PLACE_COUNT[place] * times && !pool.isEmpty(); i++) {
                 PaperCard card = pool.remove(RAND.nextInt(pool.size()));
-                player.addCard(card);
-                reveal.add(Reward.alreadyGranted(new Reward(card)));
+                offering.add(card);
                 log.append(log.length() == 0 ? "" : ", ").append(card.getName());
                 got++;
             }
@@ -158,15 +153,14 @@ public final class TempleOfferings {
                     .append(", ").append(got).append(' ').append(kind).append(got == PLACE_COUNT[place] * times ? "" : " - pool ran out")
                     .append(")");
         }
-        System.out.println("[TFR-Temple] week " + (week + 1) + " ended (" + tally(kills) + ") - " + reveal.size + " card(s)"
+        System.out.println("[TFR-Temple] week " + (week + 1) + " ended (" + tally(kills) + ") - " + offering.size() + " card(s)"
                 + (times > 1 ? " (Temple Priest x" + times + ")" : "") + ": " + log);
-        if (reveal.size == 0)
+        if (offering.isEmpty())
             return;
-        GameHUD.getInstance().addNotification("The Temple's offering for week " + (week + 1) + ": " + notice + ".");
-        Gdx.app.postRunnable(() -> { // after the day tick it came from
-            RewardScene.instance().loadRewards(reveal, RewardScene.Type.Loot, null);
-            Forge.switchScene(RewardScene.instance());
-        });
+        // Round 582: the offering waits at the Temple, with any earlier weeks', until the player collects it there.
+        HeldCards.holdTempleOffering(offering);
+        GameHUD.getInstance().addNotification("The Temple's offering for week " + (week + 1) + " is ready: " + notice
+                + ". Collect it at the Temple.");
     }
 
     /** One color's cards of a rarity in the unlocked sets, one printing a name - mono-colored first, else any with it. */
@@ -235,10 +229,27 @@ public final class TempleOfferings {
             chart.add(Controls.newTextraLabel(count)).width(56f).left().padLeft(4f).padBottom(2f).row();
         }
         dialog.getContentTable().add(chart).padTop(4f).padBottom(4f).row();
-        EconomyBuildings.addContentRow(dialog, "[%80]The week ends in " + daysLeft + (daysLeft == 1 ? " day" : " days") + ".[%]");
-        EconomyBuildings.addButtonRow(dialog, "Destroy Building", true, () ->
-                EconomyBuildings.openDestroyConfirmDialog(stage, objectId, () -> refreshTempleDialog(stage, objectId)));
-        dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).width(240f).row();
+        // Round 582: the offerings not yet collected - every week's since the last visit. On the week's line and beside
+        // Destroy Building, so the dialog grows no taller: it already fills a landscape screen.
+        int waiting = HeldCards.temple().countAll();
+        int weeks = HeldCards.templeWeeks();
+        EconomyBuildings.addContentRow(dialog, "[%80]The week ends in " + daysLeft + (daysLeft == 1 ? " day" : " days") + "."
+                + (waiting > 0 ? " Waiting for you: " + cardsText(waiting, "card") + (weeks > 0 ? " from " + cardsText(weeks, "week") : "")
+                + "." : "") + "[%]");
+        Runnable destroy = () -> EconomyBuildings.openDestroyConfirmDialog(stage, objectId, () -> refreshTempleDialog(stage, objectId));
+        if (waiting > 0) {
+            int[] column = {0};
+            EconomyBuildings.addHalfButton(dialog, column, "Collect Offering", true, () -> {
+                stage.hideDialog();
+                HeldCards.collectTemple();
+            });
+            EconomyBuildings.addHalfButton(dialog, column, "Destroy Building", true, destroy);
+            float half = Forge.isLandscapeMode() ? 140f : 118f; // EconomyBuildings.addHalfButton's width
+            dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).colspan(2).width(2 * half).row();
+        } else {
+            EconomyBuildings.addButtonRow(dialog, "Destroy Building", true, destroy);
+            dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).width(240f).row();
+        }
         dialog.setKeepWithinStage(true);
     }
 
