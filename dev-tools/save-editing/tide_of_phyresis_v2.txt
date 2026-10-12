@@ -1,0 +1,20 @@
+# Tide of Phyresis v2 (2026-10-12) - save 1 slot index 0 (the user's "slot 1"). Mono-U poison, back to 40.
+# It had dropped to 37 (1 Corrupted Conscience, Counterspell and Dissipation Field left it).
+# In: 3rd Corrupted Conscience, 2 more Thrummingbird (4 owned now), Counterspell, Mana Drain (new) for Mana Leak.
+# Out: Mana Leak, 1 Psychic Barrier.
+2 Blighted Agent
+4 Thrummingbird
+1 Core Prowler
+1 Gitaxian Anatomist
+1 Consecrated Sphinx
+3 Corrupted Conscience
+3 Experimental Augury
+1 Inexorable Tide
+1 Vivisurgeon's Insight
+2 Prologue to Phyresis
+1 Preordain
+1 Counterspell
+1 Mana Drain
+1 Psychic Barrier
+1 The Surgical Bay
+16 Island
