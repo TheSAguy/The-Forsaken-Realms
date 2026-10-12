@@ -118,6 +118,45 @@ public class RoamingGuardRuntime {
     public static void clearDuel() {
         duellingGuard = null;
         duellingMage = null;
+        foeDeck = null; // round 570
+    }
+
+    /** Round 570: the deck the guard's foe plays in a headless fight (WorldStage.simulateGuardDuel); a watched fight
+     *  leaves it null and the foe's deck is the one DuelScene played, Current.latestDeck(). */
+    private static forge.deck.Deck foeDeck;
+
+    public static void setFoeDeck(forge.deck.Deck deck) {
+        foeDeck = deck;
+    }
+
+    /**
+     * Round 570 (the user: "Your roaming guards get 1 rare from enemies they defeat. From their decks. It will go directly
+     * into inventory"): with Spoils of War, a guard's win takes one rare - else a mythic - at random from the beaten
+     * enemy's deck, straight into the player's collection with a notice. A deck with neither gives nothing.
+     */
+    private static void guardSpoils(RoamingGuardData guard, EnemySprite foe, forge.deck.Deck deck) {
+        if (!Ascendance.guardSpoils() || deck == null || foe == null)
+            return;
+        List<forge.item.PaperCard> rares = new ArrayList<>(), mythics = new ArrayList<>();
+        for (forge.item.PaperCard card : deck.getMain().toFlatList()) {
+            if (card == null || card.getRules().getType().isBasicLand())
+                continue;
+            if (card.getRarity() == forge.card.CardRarity.Rare)
+                rares.add(card);
+            else if (card.getRarity() == forge.card.CardRarity.MythicRare)
+                mythics.add(card);
+        }
+        List<forge.item.PaperCard> pool = rares.isEmpty() ? mythics : rares;
+        String who = RoamingGuards.displayName(guard.tier);
+        if (pool.isEmpty()) {
+            System.out.println("[TFR-Ascend] Spoils of War: " + who + " beat " + foe.getName() + " - no rare in its deck");
+            return;
+        }
+        forge.item.PaperCard card = pool.get(new java.util.Random().nextInt(pool.size()));
+        AdventurePlayer.current().addCard(card);
+        System.out.println("[TFR-Ascend] Spoils of War: " + who + " beat " + foe.getName() + " - " + card.getName()
+                + " (" + card.getRarity() + ", " + card.getEdition() + ") to the collection");
+        GameHUD.getInstance().addNotification("Your " + who + " guard took " + card.getName() + " from " + foe.getName() + ".");
     }
 
     // ------------------------------------------------------------------ per-frame
@@ -665,9 +704,12 @@ public class RoamingGuardRuntime {
     public static EnemySprite onDuelFinished(boolean guardWon) {
         RoamingGuardData guard = duellingGuard;
         EnemySprite mage = duellingMage;
+        forge.deck.Deck deck = foeDeck != null ? foeDeck : forge.adventure.util.Current.latestDeck(); // round 570
         clearDuel();
         if (guard == null)
             return null;
+        if (guardWon)
+            guardSpoils(guard, mage, deck); // round 570: Spoils of War
         guard.inDuel = false;
         int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
         if (mage != null && mage.pillageTown != null) {

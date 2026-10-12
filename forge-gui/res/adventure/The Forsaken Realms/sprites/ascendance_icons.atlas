@@ -202,3 +202,6 @@ focused_1
 guardFocus_1
   xy: 102, 802
   size: 96, 96
+guardSpoils_1
+  xy: 202, 802
+  size: 96, 96

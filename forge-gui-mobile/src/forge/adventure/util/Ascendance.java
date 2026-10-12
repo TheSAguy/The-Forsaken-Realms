@@ -1038,6 +1038,10 @@ public final class Ascendance {
     public static boolean guardFreeMulligan() {
         return picks("guardFocus") > 0;
     }
+    /** Round 570 (the user: "Your roaming guards get 1 rare from enemies they defeat"): Spoils of War. */
+    public static boolean guardSpoils() {
+        return picks("guardSpoils") > 0;
+    }
     /** Round 525: Opening Gambit as the player seat's weight in the engine's toss against an opponent at 1 (75% -> 3). */
     public static float coinTossWeight() {
         float chance = openingTossChance();
@@ -1091,7 +1095,7 @@ public final class Ascendance {
             return false;
         if ("templePriest".equals(c.id) && !TempleOfferings.capitolHasTemple()) // round 566: nothing to serve yet
             return false;
-        if ("guardFocus".equals(c.id) && !RoamingGuards.isEnabled()) // round 566: a plane without roaming guards
+        if (("guardFocus".equals(c.id) || "guardSpoils".equals(c.id)) && !RoamingGuards.isEnabled()) // rounds 566, 570
             return false;
         if (c.lasting)
             return picks(c.id) < c.maxPicks;
@@ -1282,6 +1286,7 @@ public final class Ascendance {
             case "templePriest": effect = "Your Temple's weekly offering pays " + Math.round(c.value) + " times the cards"; break; // round 566
             case "focused": effect = "Your first mulligan in each game is free - you keep a full hand"; break; // round 566
             case "guardFocus": effect = "Your roaming guards' first mulligan in each game is free"; break; // round 566
+            case "guardSpoils": effect = "Each enemy your roaming guards beat gives you a rare card from its deck"; break; // round 570
             default: effect = id;
         }
         return effect;
@@ -1385,6 +1390,7 @@ public final class Ascendance {
             case "templePriest": return "Temple Priest"; // round 566
             case "focused": return "Focused";
             case "guardFocus": return "Guard Focus";
+            case "guardSpoils": return "Spoils of War"; // round 570
             default: return id;
         }
     }

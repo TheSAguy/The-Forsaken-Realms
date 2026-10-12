@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 570: the Spoils of War perk - a roaming guard's win brings home a rare (2026-10-11)
+
+The user: "I'd like to add a perk, One time. Your roaming guards get 1 rare from enemies they defeat. From their decks. It
+will go directly into inventory."
+
+- **Spoils of War** (`ascendance.json` "guardSpoils", one pick; not offered on a plane without roaming guards).
+- **What it pays:** when one of the player's roaming guards wins a fight (an attacking mage at a gate, or a pillaged
+  town's raider), `RoamingGuardRuntime.guardSpoils` takes one rare from the beaten enemy's deck.
+  - A mythic is taken if the deck has no rare. A deck with neither gives nothing.
+  - The card is picked at random, basic lands excluded.
+  - It goes straight into the player's collection, with the notice "Your Archmage guard took Devil's Play from Abyssal
+    Baron."
+- **"From their decks"** is the deck actually played in that fight:
+  - A headless fight's foe deck is handed over by `WorldStage.simulateGuardDuel` (`RoamingGuardRuntime.setFoeDeck`).
+  - A watched fight's is the one DuelScene played (`Current.latestDeck()`).
+- `[TFR-Ascend] Spoils of War: <guard> beat <enemy> - <card> (<rarity>, <set>) to the collection`, or "- no rare in its
+  deck".
+- **Icon:** Shikashi's treasure chest.
+- **Agent-tested** (slot 7; an Archmage guard via `guard add`; a scratch-only `guardsim` command, never committed, that
+  registers a headless guard fight and runs it):
+  - Before the pick, a win paid nothing.
+  - After it, four fights against an Abyssal Baron: the one win gave Devil's Play (Rare, SIS); the three losses gave
+    nothing.
+
 ## Round 569: Merfolk portraits - male and female pools (2026-10-11)
 
 The user, from a male and a female sheet: "Mer Male: 2, 3, 4, 8, 11,12, 14, 23, 27, 35, 36, 51 / Mer Female: 2, 3, 8, 9,

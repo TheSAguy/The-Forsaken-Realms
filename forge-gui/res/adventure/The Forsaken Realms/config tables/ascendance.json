@@ -148,6 +148,9 @@
     { "id": "focused",     "lasting": true, "maxPicks": 1, "minLevel": 15 },
     // Round 566 (the user: "Roaming guard focus: a free mulligan for guards"): the player's roaming guards' first
     // mulligan is free, in a watched fight and a headless one alike; from level 15, as Focused.
-    { "id": "guardFocus",  "lasting": true, "maxPicks": 1, "minLevel": 15 }
+    { "id": "guardFocus",  "lasting": true, "maxPicks": 1, "minLevel": 15 },
+    // Round 570 (the user: "Your roaming guards get 1 rare from enemies they defeat. From their decks. It will go directly
+    // into inventory"): Spoils of War - a rare (else a mythic) from the beaten enemy's deck, straight to the collection.
+    { "id": "guardSpoils", "lasting": true, "maxPicks": 1 }
   ]
 }

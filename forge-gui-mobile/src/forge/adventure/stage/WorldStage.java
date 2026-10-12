@@ -1396,6 +1396,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // enemyLifeFactor and the day/night terrain rule (DuelScene does that for every fight the
         // player sees); the simulation passed the raw catalog value, so on Insane a watched mage
         // had 2.5x the life of the same mage simulated. Same number both ways now.
+        RoamingGuardRuntime.setFoeDeck(mageDeck); // round 570: Spoils of War takes its rare from this deck
         int mageLife = Math.round(mage.getData().life * Current.player().getDifficulty().enemyLifeFactor);
         if (!MapStage.getInstance().isInMap()) {
             int tileSize = Current.world().getTileSize();
