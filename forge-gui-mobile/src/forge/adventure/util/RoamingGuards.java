@@ -267,9 +267,15 @@ public class RoamingGuards {
         // a CardDb.CardRequest.compose() body, and this is the one operation in this feature that
         // cannot be undone if it is wrong.
         CardPool taken = new CardPool();
+        int freeBasics = 0;
         for (java.util.Map.Entry<PaperCard, Integer> entry : main) {
             PaperCard card = entry.getKey();
             int wanted = entry.getValue();
+            if (freeBasic(card)) { // round 588: the guard's own, free - the collection and the other decks keep theirs
+                taken.add(card, wanted);
+                freeBasics += wanted;
+                continue;
+            }
             // Take only what the player actually holds. A deck can legitimately list more copies
             // than the collection has if the collection was edited underneath it, and silently
             // creating cards on the way back would be worse than carrying a slightly short deck.
@@ -297,7 +303,11 @@ public class RoamingGuards {
         stripFromOtherDecks(player, taken, deckIndex);
         guard.deckName = deck.getName();
         guard.deckCards = taken.countAll() == 0 ? new String[0] : taken.toCardList("\n").split("\n");
+        guard.basicsKept = true; // round 588
         player.clearDeck(deckIndex);
+        if (freeBasics > 0)
+            System.out.println("[TFR-RoamGuard] " + freeBasics + " basic land(s) go with the deck free - they stay in the"
+                    + " collection and in every other deck");
         System.out.println("[TFR-RoamGuard] collection after hand-over: " + player.getCards().countAll()
                 + " cards (" + player.getCards().countDistinct() + " distinct)");
         System.out.println("[TFR-RoamGuard] took deck \"" + guard.deckName + "\" (" + taken.countAll()
@@ -320,6 +330,8 @@ public class RoamingGuards {
                 continue;
             int removed = 0;
             for (java.util.Map.Entry<PaperCard, Integer> entry : taken) {
+                if (freeBasic(entry.getKey())) // round 588: never left the collection
+                    continue;
                 int have = other.getMain().count(entry.getKey());
                 if (have <= 0)
                     continue;
@@ -358,8 +370,21 @@ public class RoamingGuards {
             return 0;
         int total = 0;
         for (java.util.Map.Entry<PaperCard, Integer> entry : deck.getMain())
-            total += Math.min(entry.getValue(), player.getCards().count(entry.getKey()));
+            total += freeBasic(entry.getKey()) ? entry.getValue() // round 588: free, always all of them
+                    : Math.min(entry.getValue(), player.getCards().count(entry.getKey()));
         return total;
+    }
+
+    /**
+     * Round 588 (the user: "Since basic lands are free, you can add any amount for free, Is there a way to avoid basic
+     * lands being seen as 'shared'? Each deck should just get their own basic lands."): a plain basic land - Plains,
+     * Island, Swamp, Mountain or Forest, not foil - the kind the deck editor's Add Basic Lands hands out free, as the ante
+     * already treats it (AdventurePlayer.removeLostCardFromPools). A guard's deck carries its own: they never leave the
+     * collection, no other deck loses one, none counts as shared, and none comes back with the deck. Wastes, snow basics
+     * and foils are ordinary cards.
+     */
+    public static boolean freeBasic(PaperCard card) {
+        return card != null && card.isVeryBasicLand() && !card.isFoil();
     }
 
     /** The same minimum DuelScene enforces, so a guard can never carry a deck the player could not
@@ -385,6 +410,8 @@ public class RoamingGuards {
                 continue;
             int shared = 0;
             for (java.util.Map.Entry<PaperCard, Integer> entry : source.getMain()) {
+                if (freeBasic(entry.getKey())) // round 588: each deck keeps its own
+                    continue;
                 // Round 160: what this deck would actually LOSE - its shortfall once the source
                 // deck's copies leave the collection - not merely what the two lists have in common.
                 int have = other.getMain().count(entry.getKey());
@@ -416,6 +443,8 @@ public class RoamingGuards {
             return 0;
         int loss = 0;
         for (java.util.Map.Entry<PaperCard, Integer> entry : source.getMain()) {
+            if (freeBasic(entry.getKey())) // round 588: each deck keeps its own
+                continue;
             int have = duel.getMain().count(entry.getKey());
             if (have <= 0)
                 continue;
@@ -433,6 +462,17 @@ public class RoamingGuards {
             return;
         AdventurePlayer player = AdventurePlayer.current();
         CardPool returned = CardPool.fromCardList(java.util.Arrays.asList(guard.deckCards));
+        // Round 588: a deck given since then left its plain basic lands in the collection - they do not come back too.
+        if (guard.basicsKept) {
+            CardPool basics = new CardPool();
+            for (java.util.Map.Entry<PaperCard, Integer> entry : returned)
+                if (freeBasic(entry.getKey()))
+                    basics.add(entry.getKey(), entry.getValue());
+            returned.removeAll(basics);
+            if (basics.countAll() > 0)
+                System.out.println("[TFR-RoamGuard] " + basics.countAll() + " basic land(s) of \"" + guard.deckName
+                        + "\" never left the collection - not added again");
+        }
         int before = player.getCards().countAll();
         player.getCards().addAll(returned);
         System.out.println("[TFR-RoamGuard] collection " + before + " -> " + player.getCards().countAll()
@@ -441,6 +481,7 @@ public class RoamingGuards {
                 + guard.deckName + "\" to the collection");
         guard.deckCards = new String[0];
         guard.deckName = "";
+        guard.basicsKept = false;
     }
 
     /**
@@ -576,6 +617,7 @@ public class RoamingGuards {
             sub.store("maxLife", g.maxLife);
             sub.store("deckName", g.deckName == null ? "" : g.deckName);
             sub.storeObject("deckCards", g.deckCards == null ? new String[0] : g.deckCards);
+            sub.store("basicsKept", g.basicsKept); // round 588
             // Round 148: nine flags now - four ranks then five colours - on the one string. A
             // save written before this reads back four chars and the colour loop below simply
             // never fires, leaving every colour allowed, which is the right default.
@@ -617,6 +659,7 @@ public class RoamingGuards {
             g.deckName = sub.containsKey("deckName") ? sub.readString("deckName") : "";
             Object cards = sub.containsKey("deckCards") ? sub.readObject("deckCards") : null;
             g.deckCards = cards instanceof String[] ? (String[]) cards : new String[0];
+            g.basicsKept = sub.containsKey("basicsKept") && sub.readBool("basicsKept"); // round 588: absent before it
             String engage = sub.containsKey("engage") ? sub.readString("engage") : "1111";
             for (int t = 0; t < g.engageTier.length; t++)
                 g.engageTier[t] = t < engage.length() && engage.charAt(t) == '1';

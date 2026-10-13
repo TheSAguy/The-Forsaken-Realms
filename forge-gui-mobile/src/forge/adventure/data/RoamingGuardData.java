@@ -22,6 +22,9 @@ public class RoamingGuardData {
      *  deck, which can be edited while the guard holds it. */
     public String deckName = "";
     public String[] deckCards = new String[0];
+    /** Round 588: the deck was handed over with its plain basic lands left in the collection (RoamingGuards.freeBasic),
+     *  so they do not come back with it. False for a deck given before that - its basics did leave, and return. */
+    public boolean basicsKept;
 
     /** Which enemy ranks this guard is allowed to engage, in the tier ladder's own ascending order
      *  (Apprentice, Adept, Master, Archmage). An unchecked rank is avoided, not fought. */

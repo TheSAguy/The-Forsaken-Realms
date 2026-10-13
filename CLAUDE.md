@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-13 (round 588): **LOCAL + UNRELEASED** - plain basic lands are free in a guard's deck hand-over: never
+shared, never stripped from other decks, never returned twice (RoamingGuards.freeBasic, RoamingGuardData.basicsKept).
+
 ## STATE 2026-10-13 (round 587): **LOCAL + UNRELEASED** - an Inn tournament's background AI-vs-AI simulations no longer
 move a reloaded (or later) round on: EventScene.SimRun ties each batch to its tournament and round.
 

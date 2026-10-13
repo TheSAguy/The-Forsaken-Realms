@@ -203,6 +203,7 @@ public class RoamingGuardUI {
         EconomyBuildings.addContentRow(dialog, "Choose a deck for your " + RoamingGuards.displayName(guard.tier)
                 + ". [RED]Those cards leave your collection and the slot empties[] until you take the deck "
                 + "back. Cards shared with your other decks are removed from those too - you only own one copy."
+                + " Basic lands are free: the guard gets its own, and your other decks keep theirs." // round 588
                 + (pages > 1 ? " Page " + (at + 1) + "/" + pages + "." : ""));
         int[] column = {0};
         int from = at * DECK_PAGE, to = Math.min(slots.size(), from + DECK_PAGE);

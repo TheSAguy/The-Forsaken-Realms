@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 588: basic lands are never "shared" when a guard takes a deck (2026-10-13)
+
+The user, about save 2's Tide of Phyresis and Void Engine: "Since basic lands are free, you can add any amount for free,
+Is there a way to avoid basic lands being seen as 'shared'? Each deck should just get their own basic lands."
+
+- **Where "shared" came from:**
+  - The Armory's Give a Deck warns "! Void Engine shares cards with: Tide of Phyresis (1)".
+  - Cards are counted by printing. Tide's 16 Islands use up some printings completely, so Void Engine's one Island
+    counted as Tide's.
+  - Worse, the hand-over stripped that Island from Tide (40 -> 39 cards), and taking the deck back never put it back.
+- **The fix** (`RoamingGuards.freeBasic`): a plain basic land - Plains, Island, Swamp, Mountain or Forest, not foil -
+  is free, as the deck editor's Add Basic Lands and the ante already treat it.
+  - A guard's deck carries its own: they stay in the collection, no other deck loses one, and none comes back with
+    the deck.
+  - None counts in the picker's "shares cards with" warning, the duel-deck check or the deliverable count.
+  - Wastes, snow basics and foils stay ordinary cards.
+- **Older saves:** `RoamingGuardData.basicsKept` (saved) marks a deck given under this rule. A guard holding a deck
+  from before keeps returning its basics, since those did leave the collection.
+- **Text:** the picker adds "Basic lands are free: the guard gets its own, and your other decks keep theirs."
+- **Logged:** `[TFR-RoamGuard]` names the basic lands that go free, and the ones a returning deck does not add again.
+- **Agent-tested** on a copy of the user's save 2 (agent slot 23), with a scratch command running the real hand-over
+  and return:
+  - Before: the warning showed `{Tide of Phyresis=1}`; Tide went to 39 cards and stayed there after the return.
+  - After: no warning; the guard carried all 40; the collection kept its 43 Islands and Tide its 16. The return added
+    none (still 43).
+  - The same both ways: Tide handed over, Void Engine kept its Island.
+
 ## Round 587: an Inn tournament no longer skips its Final after a reload (2026-10-13)
 
 The user: "I think the tournament ended on round 2, instead of 3. And it said I won, but got the prizes for round 2."
