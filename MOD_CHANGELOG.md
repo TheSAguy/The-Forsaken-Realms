@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 586: a lost Arena bracket draws a new field for the day (2026-10-13)
+
+The user, with a Great Lighthouse Arena screenshot: "the arena roster ... should stay fixed for the day, unless you play
+in it. If you play and win, it's a moot point, since you can't play again. But if you play and lose, the roster should
+reset again for the day."
+
+- **Today's losses, per building:** `World.arenaLossesToday` (+ `arenaLossDay`), keyed by the venue (the place and its
+  mode) and the arena object. Saved with the world; a new day or a new world empties it.
+- **`ArenaScene.lose()`** records the loss. It covers both a lost match and a concession: leaving mid-bracket asks you
+  to concede.
+- **`dailyBracketSeed`:** with no loss today it is round 532's seed, unchanged, so nobody's current bracket moves on
+  update. After a loss the seed is scrambled (`mix64`, MurmurHash3's finalizer, over seed + losses x the golden
+  ratio). The new field then holds until the next loss or the next day.
+- **Why scrambled:** the first version added the loss count to the seed, and `java.util.Random`'s first draws barely
+  move for a nearby seed. In the agent test the first seat kept its opponent, Master Blue Wizard.
+  - Measured over 1,000 seeds: the first seat repeated 61% of the time adding the count, 1.4% scrambled (about 1 in
+    64, chance).
+  - On average 0.12 of the 7 seats repeat.
+- **Logged:** `[TFR-ArenaTier]`'s bracket line adds "losses today N"; a loss prints "bracket lost at <venue> - loss N
+  today".
+- **Agent-tested** (the user's save copy, Orazca Arena, day 22):
+  - Two visits with 0 losses showed the same field.
+  - Entered the bracket, won round 1, conceded: "loss 1 today".
+  - The next two visits showed a new field, the same both times.
+  - That run used the unscrambled seed; the scramble only changes which field a loss draws.
+
 ## Round 585: days pass 20% faster (2026-10-13)
 
 The user: "I want to speed the day length up by 20% please. So how fast a day goes by needs to be 20% faster."

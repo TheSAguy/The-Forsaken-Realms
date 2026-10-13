@@ -788,6 +788,14 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         doneButton.layout();
         startButton.setDisabled(true);
         arenaStarted = false;
+        // Round 586 (the user: "if you play and lose, the roster should reset again for the day"): the next visit draws
+        // a new field (dailyBracketSeed). A loss or a concession; a win closes the venue for the week anyway.
+        if (bracketVenue != null) {
+            int losses = WorldSave.getCurrentSave().getWorld().addArenaLoss(bracketVenue);
+            System.out.println("[TFR-ArenaTier] bracket lost at " + bracketVenue + " - loss " + losses
+                    + " today, the next visit draws a new field");
+            bracketVenue = null;
+        }
         AdventureQuestController.instance().updateArenaComplete(false);
         AdventureQuestController.instance().showQuestDialogs(MapStage.getInstance());
     }
@@ -1536,15 +1544,36 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     }
 
     /** Round 532: the seed of a building's bracket today - the world, the venue (weeklyArenaKey: the place and the mode),
-     *  the arena object and level, and the day. */
+     *  the arena object and level, and the day. Round 586: and the brackets lost there today, so a loss draws a new
+     *  field, fixed again until the next loss or the next day. */
     private long dailyBracketSeed(boolean playerOwned) {
         forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
         String venue = weeklyArenaKey();
         long seed = world.getSeed() * 1_000_003L + world.getCurrentDay();
         seed = seed * 31L + (venue == null ? 0 : venue.hashCode());
         seed = seed * 31L + arenaObjectId;
-        return seed * 31L + (playerOwned ? arenaBuildingLevel() : 0);
+        seed = seed * 31L + (playerOwned ? arenaBuildingLevel() : 0);
+        int losses = world.getArenaLossesToday(lossVenueKey());
+        // java.util.Random's first draws barely move when its seed moves by a little - adding the count kept the first
+        // seat's enemy in the agent test - so a loss scrambles the whole seed. No loss: the round-532 seed, unchanged.
+        return losses == 0 ? seed : mix64(seed + losses * 0x9E3779B97F4A7C15L);
     }
+
+    /** Round 586: MurmurHash3's 64-bit finalizer - every input bit moves about half the output bits. */
+    private static long mix64(long z) {
+        z = (z ^ (z >>> 33)) * 0xff51afd7ed558ccdL;
+        z = (z ^ (z >>> 33)) * 0xc4ceb9fe1a85ec53L;
+        return z ^ (z >>> 33);
+    }
+
+    /** Round 586: the arena building this bracket is fought at, as World's today's-losses key - the venue and the object. */
+    private String lossVenueKey() {
+        return weeklyArenaKey() + "#" + arenaObjectId;
+    }
+
+    /** Round 586: set when a building's bracket is drawn (null for one with no building behind it) - lose() records the
+     *  loss there. */
+    private String bracketVenue;
 
     // Round 532 (the user: "Can we add 4 small bars at the bottom of each portrait showing their level. Long Gold one for
     // Archmage, Slightly shorter Silver for Master, Even shorter, brown for Adept, and a short red line for Apprentice"):
@@ -1725,6 +1754,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // draws its enemy even when a coin holder takes it, so a coin won back mid-day changes that one seat and no
         // other. The fights between other entrants (simulateFight) stay random.
         long daySeed = fromBuilding ? dailyBracketSeed(playerOwnedArena) : 0L;
+        bracketVenue = fromBuilding && weeklyArenaKey() != null ? lossVenueKey() : null; // round 586
         Random draw = fromBuilding ? new Random(daySeed) : rand;
         Random coinDraw = fromBuilding ? new Random(daySeed * 31L + 17L) : rand;
         EnemyData coinFoe = playerOwnedArena ? pickCoinRansomFoe(challengePayoutBracket, coinDraw) : null;
@@ -1756,7 +1786,9 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         System.out.println("[TFR-ArenaTier] " + (tierWeighted ? "weighted Adept 50 / Master 35 / Archmage 15" : "plain pool pick")
                 + " challenge=" + isChallenge + " fromBuilding=" + fromBuilding + " playerOwned=" + playerOwnedArena
                 + " level=" + arenaBuildingLevel() + " aiCapital=" + isAiCapitalArena() + " pool=" + poolNames.size()
-                + (fromBuilding ? " day=" + WorldSave.getCurrentSave().getWorld().getCurrentDay() + " (fixed for the day)" : "")
+                + (fromBuilding ? " day=" + WorldSave.getCurrentSave().getWorld().getCurrentDay() + " (fixed for the day"
+                        + (bracketVenue == null ? "" : ", losses today " + WorldSave.getCurrentSave().getWorld().getArenaLossesToday(bracketVenue))
+                        + ")" : "")
                 + " bracket: " + bracketLog);
         fighters.add(new ArenaRecord(new Image(Current.player().avatar()), Current.player().getName()));
         player = fighters.get(fighters.size - 1).actor;

@@ -425,6 +425,12 @@ public class World implements Disposable, SaveFileContent {
     // offered till the start of the next week, Day 8, 15, 22, etc."). Key = the Inn's town POI id (its tournament's
     // sourceID), value = the week (getCurrentWeek()) of its last won tournament. Absent on older saves = never won.
     private final java.util.Map<String, Integer> innWinWeek = new java.util.HashMap<>();
+    // Round 586 (the user: "the arena roster ... should stay fixed for the day, unless you play in it ... if you play and
+    // lose, the roster should reset again for the day"): today's lost brackets by arena building (ArenaScene's venue
+    // key), each one re-drawing that building's field (ArenaScene.dailyBracketSeed). Only arenaLossDay's entries are
+    // kept; a new day empties it. Absent on older saves = no losses.
+    private final java.util.Map<String, Integer> arenaLossesToday = new java.util.HashMap<>();
+    private int arenaLossDay = -1;
     // Round 559 (the Capitol Temple): this week's duel wins by enemy color, W U B R G - a two-color enemy adds half to each
     // color, a three-color one a third. templeWeek is the week the tally belongs to (getCurrentWeek()); when a new week
     // starts, the Temple pays out and the tally clears (TempleOfferings.onDaysPassed). Absent on older saves = empty.
@@ -482,6 +488,22 @@ public class World implements Disposable, SaveFileContent {
     /** Round 527: town POI id -> the week its Inn tournament was last won. */
     public java.util.Map<String, Integer> getInnWinWeek() {
         return innWinWeek;
+    }
+
+    /** Round 586: brackets lost today at this arena building. */
+    public int getArenaLossesToday(String venue) {
+        if (arenaLossDay != getCurrentDay())
+            return 0;
+        return arenaLossesToday.getOrDefault(venue, 0);
+    }
+
+    /** Round 586: a bracket lost at this arena building - its field re-draws for the rest of the day. */
+    public int addArenaLoss(String venue) {
+        if (arenaLossDay != getCurrentDay()) {
+            arenaLossesToday.clear();
+            arenaLossDay = getCurrentDay();
+        }
+        return arenaLossesToday.merge(venue, 1, Integer::sum);
     }
 
     /** Round 559: this week's duel wins by enemy color, W U B R G (fractions for a multicolor enemy). */
@@ -1337,6 +1359,12 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             innWinWeek.putAll((java.util.Map<String, Integer>) saveFileData.readObject("innWinWeek"));
         }
+        arenaLossesToday.clear(); // round 586
+        if (saveFileData.containsKey("arenaLossesToday")) {
+            //noinspection unchecked
+            arenaLossesToday.putAll((java.util.Map<String, Integer>) saveFileData.readObject("arenaLossesToday"));
+        }
+        arenaLossDay = saveFileData.containsKey("arenaLossDay") ? saveFileData.readInt("arenaLossDay") : -1;
         java.util.Arrays.fill(templeKills, 0f); // round 559
         if (saveFileData.containsKey("templeKills")) {
             float[] saved = (float[]) saveFileData.readObject("templeKills");
@@ -1491,6 +1519,8 @@ public class World implements Disposable, SaveFileContent {
         data.store("groundArt", groundArt);
         data.storeObject("arenaWinWeek", arenaWinWeek);
         data.storeObject("innWinWeek", innWinWeek); // round 527
+        data.storeObject("arenaLossesToday", new java.util.HashMap<>(arenaLossesToday)); // round 586
+        data.store("arenaLossDay", arenaLossDay);
         data.storeObject("templeKills", templeKills.clone()); // round 559
         data.store("templeWeek", templeWeek);
         data.storeObject("caveChampion", caveChampion);
@@ -2752,6 +2782,8 @@ public class World implements Disposable, SaveFileContent {
             groundArt = groundArtSignature();
             arenaWinWeek.clear(); // round 135
             innWinWeek.clear(); // round 527
+            arenaLossesToday.clear(); // round 586
+            arenaLossDay = -1;
             java.util.Arrays.fill(templeKills, 0f); // round 559
             templeWeek = -1;
             caveChampion.clear(); // round 139 - a new world's caves must roll their own champions
