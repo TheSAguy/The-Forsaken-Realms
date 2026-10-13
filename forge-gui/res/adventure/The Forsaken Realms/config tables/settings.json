@@ -15,7 +15,9 @@
     // dungeon rotation, mage travel - is untouched.
     // Round 449: 270 -> 243, the user's "Let's have a day go by a little faster... speed it up by 10%"
     // - the same 10% step as round 268. A day now passes in 4m03s of wall clock.
-    "dayLengthSeconds": 243.0,
+    // Round 585: 243 -> 194.4, the user's "I want to speed the day length up by 20% ... how fast a day goes by needs
+    // to be 20% faster" - 20% shorter, the method of rounds 268 and 449. A day now passes in 3m14s of wall clock.
+    "dayLengthSeconds": 194.4,
 
     // Territory growth: how fast the player's Capitol claims land (tiles per day).
     "capitolExpansionTilesPerDay": 1,

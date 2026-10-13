@@ -14264,6 +14264,19 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 585: days pass 20% faster (2026-10-13)
+
+The user: "I want to speed the day length up by 20% please. So how fast a day goes by needs to be 20% faster."
+
+- `config tables/settings.json` `dayLengthSeconds` 243 -> 194.4: a day passes in 3m14s of wall clock instead of 4m03s.
+  Data only.
+- 20% shorter, the method rounds 268 and 449 used for their 10% steps.
+- What follows from it:
+  - Everything counted in days arrives 25% sooner in real time: mine payouts and guard wages, territory growth,
+    research, quest and dungeon timers, the Temple's and the Arena's weeks.
+  - Spawn rolls run on real time, so each in-game day sees about 20% fewer of them. The encounters per real minute
+    are unchanged.
+
 ## Round 584: player portraits show the body, not just the face (2026-10-13)
 
 The user, with a Sheoldred example (a green box spanning the art's full height): "Can we make the image selection boxes

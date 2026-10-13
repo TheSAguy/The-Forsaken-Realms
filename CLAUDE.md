@@ -80,6 +80,8 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-13 (round 585): **LOCAL + UNRELEASED (data)** - a day passes in 3m14s (dayLengthSeconds 243 -> 194.4).
+
 ## STATE 2026-10-13 (round 584): **LOCAL + UNRELEASED (art)** - player portraits crop the art's full height (body, not face) for
 all 405 portraits; five frame-specific art boxes.
 
