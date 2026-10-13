@@ -650,6 +650,17 @@ public class EventScene extends MenuScene implements IAfterMatch {
             proceedAfterAiResolution();
             return;
         }
+        // Round 587: these are already being simulated - the player walked out of the Inn and back in while they ran.
+        // The running batch finishes the round (and proceeds on this, the scene on screen); simulating them again would
+        // count each match twice.
+        SimRun running = simRun;
+        if (running != null && running.event == currentEvent && running.round == currentEvent.currentRound
+                && running.pending.get() > 0) {
+            System.out.println("[TFR-InnAISim] round " + currentEvent.currentRound + ": " + running.pending.get()
+                    + " simulation(s) still running - this round waits for them");
+            advance.setDisabled(true);
+            return;
+        }
 
         // Each pairing runs gamesPerMatch (this event's own bo-N rules) independent single games
         // via the same real Match/Game engine the Arena's Deck Tester uses - not a proper
@@ -663,10 +674,21 @@ public class EventScene extends MenuScene implements IAfterMatch {
         System.out.println("[TFR-InnAISim] round " + currentEvent.currentRound + ": simulating "
                 + aiMatchesToSimulate.size() + " AI-vs-AI match(es)");
         int gamesPerMatch = Math.max(1, currentEvent.eventRules.gamesPerMatch);
-        AtomicInteger pending = new AtomicInteger(aiMatchesToSimulate.size());
+        SimRun run = new SimRun(currentEvent, currentEvent.currentRound, aiMatchesToSimulate.size());
+        simRun = run;
         for (AdventureEventData.AdventureEventMatch match : aiMatchesToSimulate) {
             DeckTesterSimulator.runBatch(match.p1.getName(), match.p1.getDeck(), match.p2.getName(), match.p2.getDeck(),
                     gamesPerMatch, null, result -> {
+                        // Round 587: a result for a tournament or round no longer on screen changes nothing. The user's
+                        // log: round 3's simulation was still running when they loaded a save from round 2; it came back
+                        // afterwards, its scene had no human match queued, and finishRound() moved the LOADED event -
+                        // currentEvent is static - to round 3, so their round-2 win was taken for the Final.
+                        if (simRun != run || currentEvent != run.event || run.event.currentRound != run.round) {
+                            System.out.println("[TFR-InnAISim] " + match.p1.getName() + " vs " + match.p2.getName()
+                                    + " finished for round " + run.round + " of a tournament state no longer on screen"
+                                    + " (a save was loaded, or the round moved on) - ignored");
+                            return;
+                        }
                         boolean p1Wins;
                         if (result.deckAWins != result.deckBWins)
                             p1Wins = result.deckAWins > result.deckBWins;
@@ -684,11 +706,39 @@ public class EventScene extends MenuScene implements IAfterMatch {
                         System.out.println("[TFR-InnAISim] " + match.p1.getName() + " vs " + match.p2.getName()
                                 + " -> " + match.p1.getName() + " " + result.deckAWins + ", " + match.p2.getName()
                                 + " " + result.deckBWins + " (" + result.draws + " draws) - winner: " + match.winner.getName());
-                        if (pending.decrementAndGet() == 0)
-                            proceedAfterAiResolution();
+                        if (run.pending.decrementAndGet() == 0) {
+                            simRun = null;
+                            // Round 587: the scene on screen proceeds (a walk out and back in built a new one); none
+                            // when the player has left the Inn - the round's AI matches now have winners, so the next
+                            // press of the button goes straight on.
+                            if (object != null && Forge.getCurrentScene() == object)
+                                object.proceedAfterAiResolution();
+                            else
+                                System.out.println("[TFR-InnAISim] round " + run.round + " simulated while away from the"
+                                        + " Inn - it goes on at the next visit");
+                        }
                     });
         }
     }
+
+    /**
+     * Round 587: the AI-vs-AI simulations in flight - the tournament and round they belong to, and how many are still
+     * running. Static like currentEvent and the scene instance, so a result that arrives after a save was loaded, or
+     * after the player walked out and a new EventScene was built, can tell whether it still belongs to what is on screen.
+     */
+    private static final class SimRun {
+        final AdventureEventData event;
+        final int round;
+        final AtomicInteger pending;
+
+        SimRun(AdventureEventData event, int round, int count) {
+            this.event = event;
+            this.round = round;
+            this.pending = new AtomicInteger(count);
+        }
+    }
+
+    private static SimRun simRun;
 
     /** The tail end of the old startRound() (launch the human's duel, or advance the round
      *  immediately) - factored out 2026-08-17 so both the synchronous coin-flip path and the

@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-13 (round 587): **LOCAL + UNRELEASED** - an Inn tournament's background AI-vs-AI simulations no longer
+move a reloaded (or later) round on: EventScene.SimRun ties each batch to its tournament and round.
+
 ## STATE 2026-10-13 (round 586): **LOCAL + UNRELEASED** - losing (or conceding) an Arena bracket re-draws that building's
 field for the rest of the day (World.arenaLossesToday, ArenaScene.dailyBracketSeed + mix64).
 

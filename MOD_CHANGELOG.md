@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 587: an Inn tournament no longer skips its Final after a reload (2026-10-13)
+
+The user: "I think the tournament ended on round 2, instead of 3. And it said I won, but got the prizes for round 2."
+
+- **What the log showed** (their Capitol's Inn, day 11, 8 players, 3 rounds):
+  - They won round 1 and lost round 2 to Reveka. Round 3's AI-vs-AI simulation (Halo Warden vs Reveka) started in the
+    background.
+  - They loaded a save from before round 2 and played round 2 again.
+  - Then the old round-3 simulation finished, and the tournament jumped to round 3.
+  - Their round-2 win over Reveka was then taken for the Final: "tournament won ... (2 matches won)", with the 2-win
+    prizes. Halo Warden was never played.
+- **Why:**
+  - `EventScene.currentEvent` is static, but the scene is rebuilt at every visit.
+  - A simulation's callback proceeds on the scene that launched it. That old scene had no human match queued for
+    round 3, so it called `finishRound()`, which moved the LOADED tournament from round 2 to 3.
+  - `finishRound()` ends the event whenever the round counter reaches the last round.
+- **The fix** (`EventScene.SimRun`, static): each batch of simulations records its tournament and round.
+  - A result for a tournament or round no longer on screen (a save loaded, or the round moved on) is ignored and
+    logged.
+  - When the last one finishes, the scene on screen proceeds. If the player has left the Inn, nothing proceeds: the
+    round's AI matches have their winners, and the next press of the button goes straight on.
+  - Walking out and back in while simulations run no longer starts a second set: the running set finishes the round.
+- **Not reproduced** in the agent game: the race needs a reload in the seconds a simulation runs. Checked against
+  the user's log line by line.
+
 ## Round 586: a lost Arena bracket draws a new field for the day (2026-10-13)
 
 The user, with a Great Lighthouse Arena screenshot: "the arena roster ... should stay fixed for the day, unless you play
