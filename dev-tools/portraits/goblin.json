@@ -12,7 +12,7 @@
   {"region": "deep_goblin_skulltaker", "gender": "m", "card": "Deep Goblin Skulltaker", "artist": "Cristi Balanescu", "file": "Deep Goblin Skulltaker.full.jpg", "u": 0.42, "v": 0.38, "zoom": 0.4},
   {"region": "dynamite_diver", "gender": "m", "card": "Dynamite Diver", "artist": "Pete Venters", "file": "DFT/Dynamite Diver.fullborder.jpg", "u": 0.48, "v": 0.27, "zoom": 0.45},
   {"region": "goblin_assassin", "gender": "m", "card": "Goblin Assassin", "artist": "Dave Dorman", "file": "Goblin Assassin.full.jpg", "u": 0.68, "v": 0.24, "zoom": 0.4},
-  {"region": "goblin_gang_leader", "gender": "m", "card": "Goblin Gang Leader", "artist": "Jakub Kasper", "file": "Goblin Gang Leader.full.jpg", "u": 0.38, "v": 0.32, "zoom": 0.5},
+  {"region": "goblin_gang_leader", "gender": "m", "card": "Goblin Gang Leader", "artist": "Jakub Kasper", "file": "Goblin Gang Leader.full.jpg", "u": 0.38, "v": 0.32, "zoom": 0.5, "art": [0.19, 0.13, 0.91, 0.55]},
   {"region": "goblin_general", "gender": "m", "card": "Goblin General", "artist": "Keith Parkinson", "file": "Goblin General.full.jpg", "u": 0.47, "v": 0.32, "zoom": 0.45},
   {"region": "goblin_hero", "gender": "m", "card": "Goblin Hero", "artist": "Pete Venters", "file": "Goblin Hero.full.jpg", "u": 0.45, "v": 0.38, "zoom": 0.5},
   {"region": "goblin_kaboomist", "gender": "m", "card": "Goblin Kaboomist", "artist": "Kev Walker", "file": "Goblin Kaboomist.full.jpg", "u": 0.28, "v": 0.42, "zoom": 0.5},

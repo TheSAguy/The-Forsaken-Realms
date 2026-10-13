@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 584: player portraits show the body, not just the face (2026-10-13)
+
+The user, with a Sheoldred example (a green box spanning the art's full height): "Can we make the image selection boxes
+bigger, on probably all portraits (not just Phyrexian). I want to see more of the body of the images."
+
+- **The crop** (`dev-tools/portraits/make_portraits.py`):
+  - Every portrait's square is now about the art's full height: `body` (default 1.0) times the candidate square, 40%
+    of the card's height. Before, it was face-sized: `zoom` 0.5-0.9.
+  - It stays centered across on the same character (the pick's `u`).
+  - `zoom` stays in the JSONs as a record of the face crops and is no longer read.
+  - The bigger square is also sharper: the art is now shrunk to 256 px instead of enlarged.
+- **Art boxes:** a pick's new `art` [left, top, right, bottom] replaces the usual art box (0.085, 0.118, 0.915, 0.55)
+  where a frame differs. Five need it:
+  - Nissa, Ascended Animist and Vraska, Betrayal's Sting (ONE planeswalkers) and Nicol Bolas, Dragon-God: their
+    art ends above a higher type line.
+  - Fatalis, the Black Dragon (Secret Lair): its second name bar, "Ziatora, the Incinerator".
+  - Goblin Gang Leader (the retro-future frame): its mana symbols run down the left of the art.
+- **Checked:**
+  - All 405 portraits (20 races) on per-race preview sheets: `make_portraits.py ... --preview <dir>`, new.
+  - Each card that looked doubtful, with its square drawn on the full card.
+  - All ten planeswalkers among the picks; the other seven sit clear of their type lines.
+- **Files:** the 20 `sprites/heroes/portraits/<race>.png` pages are rebuilt. The `.atlas` files are unchanged (same
+  cells). The same cards, so CREDITS stays as it is.
+
 ## Round 583: slower leveling - first wins pay x1.5, levelingSpeed 0.85 (2026-10-12)
 
 The user: "I feel like XP is gained too fast currently and need to figure out the best way to slow it down", then, after
