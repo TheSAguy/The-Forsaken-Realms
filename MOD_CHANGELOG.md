@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 583: slower leveling - first wins pay x1.5, levelingSpeed 0.85 (2026-10-12)
+
+The user: "I feel like XP is gained too fast currently and need to figure out the best way to slow it down", then, after
+the breakdown below: "Let's cut first time wins to 1.5 and levelingSpeed 1 -> 0.85."
+
+- **The breakdown** (the user's Oct 11-12 logs: 3,211 Power from 154 awards, an Insane run at level 16):
+  - Duels paid 75%: 72 wins, 58 of them first wins against that enemy, which alone came to 61% of all Power. With
+    about 2,000 enemy names nearly every win is a first win, so the x2 meant to reward a new foe doubled most duels.
+  - The other 25% (first visits, Arena brackets, restored towns, caves, the Inn, quests) is about the share the
+    curve was built for (its x1.4).
+- **The change** (`config tables/ascendance.json`, data only):
+  - `firstWinFactor` 2 -> 1.5.
+  - `levelingSpeed` 1.0 -> 0.85: every award, duel or not.
+  - On that sample: 3,211 -> about 2,315 Power, 28% less. Each level takes about 40% longer.
+- **Untouched:**
+  - Bosses (x3), legends (x2.5), town fights and treasure guardians (x2), champions and attacking mages (x1.5).
+    The highest multiplier still applies, so a boss beaten for the first time still pays x3.
+  - The level curve and the difficulty costs. A save keeps its Power and level; only what comes next is smaller.
+  - Raising `xpToNext` was ruled out: a save would drop levels and get those level-ups' rewards a second time.
+
 ## Round 582: the Temple's offerings and the guards' spoils wait to be collected (2026-10-12)
 
 The user, with a screenshot of the Temple: "Instead of just having the weekly cards go to your inventory, let's have a

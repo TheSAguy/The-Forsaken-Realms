@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-12 (round 583): **LOCAL + UNRELEASED (data)** - slower leveling: first wins x1.5 (was 2), levelingSpeed 0.85
+(about 28% less Power).
+
 ## STATE 2026-10-12 (round 582): **LOCAL + UNRELEASED** - the Temple's weekly offerings and the guards' Spoils of War
 wait at the building until collected (HeldCards); collecting opens them as a booster does.
 

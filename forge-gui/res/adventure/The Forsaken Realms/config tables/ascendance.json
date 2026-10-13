@@ -13,8 +13,9 @@
   // save keeps the factor its Power was priced at and is re-priced on load to the same level and share (Ascendance.load).
   "difficultyNames": ["Easy", "Normal", "Hard", "Insane"],
   "difficultyLevelCost": [0.8, 1.05, 1.32, 1.61],
-  // Leveling speed: every award is multiplied by this (2 = twice as fast, 0.5 = half as fast).
-  "levelingSpeed": 1.0,
+  // Leveling speed: every award is multiplied by this (2 = twice as fast, 0.5 = half as fast). Round 583 (the user: "I
+  // feel like XP is gained too fast"): 1.0 -> 0.85, with firstWinFactor 2 -> 1.5 below - about 28% less Power overall.
+  "levelingSpeed": 0.85,
   // Max life given at each milestone level (lifeLevels below).
   "milestoneLife": 1,
   // Past level 30 there is no cap, but each level is much slower - 2,000 Power for 30 -> 31 (about 40 wins at that
@@ -27,7 +28,9 @@
   "duelBase": [10, 18, 28, 40],
   "bossFactor": 3,
   "legendFactor": 2.5,
-  "firstWinFactor": 2,
+  // Round 583: 2 -> 1.5. With about 2,000 enemy names nearly every win is a first win - 58 of the user's 72 logged wins
+  // were, 61% of all their Power - so this one doubled most duels instead of rewarding a new foe.
+  "firstWinFactor": 1.5,
   "townFightFactor": 2,
   "treasureGuardianFactor": 2,
   "championFactor": 1.5,
