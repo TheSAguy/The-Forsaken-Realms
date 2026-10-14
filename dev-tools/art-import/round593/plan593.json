@@ -1,0 +1,442 @@
+[
+ {
+  "n": 1,
+  "name": "DragonsLairWhite",
+  "display": "Dragon's Lair",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_DragonsLairWhite",
+  "category": "low",
+  "art": "S9 r2c2",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791946555305.png",
+   "box": [
+    64,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Dragon's Lair (white): a bone-white dragon skull"
+ },
+ {
+  "n": 2,
+  "name": "DragonsLairBlue",
+  "display": "Dragon's Lair",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_DragonsLairBlue",
+  "category": "low",
+  "art": "S9 r3c1",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791946555305.png",
+   "box": [
+    32,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Dragon's Lair (blue): an ice-teal dragon skull"
+ },
+ {
+  "n": 3,
+  "name": "DragonsLairBlack",
+  "display": "Dragon's Lair",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_DragonsLairBlack",
+  "category": "low",
+  "art": "S9 r4c1",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791946555305.png",
+   "box": [
+    32,
+    128,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Dragon's Lair (black): a black dragon skull, green eyes"
+ },
+ {
+  "n": 4,
+  "name": "DragonsLairRed",
+  "display": "Dragon's Lair",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_DragonsLairRed",
+  "category": "reuse",
+  "art": "S9 r6c1",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791946555305.png",
+   "box": [
+    32,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Dragon's Lair (red): a lava dragon skull, fire in its jaw"
+ },
+ {
+  "n": 5,
+  "name": "DragonsLairGreen",
+  "display": "Dragon's Lair",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_DragonsLairGreen",
+  "category": "low",
+  "art": "S9 r0c2",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791946555305.png",
+   "box": [
+    64,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Dragon's Lair (green): a moss-grown dragon skull"
+ },
+ {
+  "n": 6,
+  "name": "EvilGrove5",
+  "display": "Black Dragon Mountain",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_EvilGrove5",
+  "category": "low",
+  "art": "S9 r4c3",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791946555305.png",
+   "box": [
+    96,
+    128,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Black Dragon Mountain: a black dragon skull in the rock"
+ },
+ {
+  "n": 7,
+  "name": "SkullCaveB",
+  "display": "Skull Cave",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_SkullCaveR",
+  "category": "reuse",
+  "art": "S9 r5c6",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791946555305.png",
+   "box": [
+    192,
+    160,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Skull Cave (black): its own skull rock - it shares one picture with the red Skull Cave today"
+ },
+ {
+  "n": 8,
+  "name": "CaveG8",
+  "display": "Cave",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_CaveG9",
+  "category": "low",
+  "art": "S2 r0c2",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791936435516.png",
+   "box": [
+    64,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Cave (green): its own mossy cave - it shares E_CaveG9 with another green Cave today"
+ },
+ {
+  "n": 9,
+  "name": "CaveR2",
+  "display": "Cave",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_CaveR1",
+  "category": "low",
+  "art": "S1 r5c4",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791934544803.png",
+   "box": [
+    128,
+    160,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Cave (red): its own lava cave - it shares E_CaveR1 with another red Cave today"
+ },
+ {
+  "n": 10,
+  "name": "MerfolkPool",
+  "display": "Merfolk Pool",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_MerfolkPool_401",
+  "category": "low",
+  "art": "S6 r2c0",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791945634622.png",
+   "box": [
+    0,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Merfolk Pool: a merfolk statue on a sea rock"
+ },
+ {
+  "n": 11,
+  "name": "MerfolkPool1",
+  "display": "Merfolk Pool",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_MerfolkPool1_401",
+  "category": "low",
+  "art": "S6 r2c3",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791945634622.png",
+   "box": [
+    96,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Merfolk Pool: a merfolk statue (variant)"
+ },
+ {
+  "n": 12,
+  "name": "MerfolkPool4",
+  "display": "Merfolk Pool",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_MerfolkPool4",
+  "category": "low",
+  "art": "S6 r0c2",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791945634622.png",
+   "box": [
+    64,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Merfolk Pool: a moss-green merfolk statue"
+ },
+ {
+  "n": 13,
+  "name": "FortBlue5",
+  "display": "Sea Temple",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_FortBlue5",
+  "category": "reuse",
+  "art": "S3 r4c4",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791944730108.png",
+   "box": [
+    128,
+    128,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Sea Temple: a sea-teal temple"
+ },
+ {
+  "n": 14,
+  "name": "Temple of Chandra",
+  "display": "Temple of Chandra",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_Temple_of_Chandra",
+  "category": "low",
+  "art": "S3 r6c3",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791944730108.png",
+   "box": [
+    96,
+    192,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Temple of Chandra: a volcano temple"
+ },
+ {
+  "n": 15,
+  "name": "Grove6",
+  "display": "Long Forgotten Temple",
+  "atlas": "dungeon_entrances_2.atlas",
+  "region": "E_Grove6",
+  "category": "low",
+  "art": "S3 r0c5",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791944730108.png",
+   "box": [
+    160,
+    0,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Long Forgotten Temple: a jungle-swallowed temple"
+ },
+ {
+  "n": 16,
+  "name": "Monastery1",
+  "display": "Monastery",
+  "atlas": "buildings.atlas",
+  "region": "Building8",
+  "category": "reuse",
+  "art": "S3 r2c2",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791944730108.png",
+   "box": [
+    64,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Monastery: a white temple (stock art today)"
+ },
+ {
+  "n": 17,
+  "name": "ElfTown",
+  "display": "Secluded Elven Encampment",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "BlueTempleOvergrown",
+  "category": "reuse",
+  "art": "S3 r1c4",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791944730108.png",
+   "box": [
+    128,
+    32,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Secluded Elven Encampment: an overgrown temple (old atlas today)"
+ },
+ {
+  "n": 18,
+  "name": "Maze1",
+  "display": "Maze",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "GreyTemple",
+  "category": "reuse",
+  "art": "S3 r7c0",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791944730108.png",
+   "box": [
+    0,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Maze: a ruined temple (old atlas today)"
+ },
+ {
+  "n": 19,
+  "name": "Maze2",
+  "display": "Maze",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "GreyHall",
+  "category": "reuse",
+  "art": "S3 r7c2",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791944730108.png",
+   "box": [
+    64,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Maze: a ruined temple (old atlas today)"
+ },
+ {
+  "n": 20,
+  "name": "Maze3",
+  "display": "Maze",
+  "atlas": "dungeon_entrances.atlas",
+  "region": "RuinsWater",
+  "category": "low",
+  "art": "S3 r7c6",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791944730108.png",
+   "box": [
+    192,
+    224,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Maze: a sandstone ruin (old atlas today)"
+ },
+ {
+  "n": 21,
+  "name": "Ancient Opal Cavern",
+  "display": "Ancient Opal Cavern",
+  "atlas": "buildings.atlas",
+  "region": "ForgottenCave",
+  "category": "low",
+  "art": "S5 r2c1",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791945266506.png",
+   "box": [
+    32,
+    64,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "Ancient Opal Cavern: a milky opal-white glow (stock art today)"
+ },
+ {
+  "n": 22,
+  "name": "inn_Cave_river",
+  "display": "River Cave",
+  "atlas": "inn_buildings.atlas",
+  "region": "Cave",
+  "category": "low",
+  "art": "S1 r3c1",
+  "src": {
+   "sheet": "pixellab-Using-the-reference-image-for--1791934544803.png",
+   "box": [
+    32,
+    96,
+    32,
+    32
+   ]
+  },
+  "fit": "32",
+  "why": "River Cave: a cave with water at its foot (stock art today)"
+ }
+]

@@ -80,6 +80,11 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 593): **LOCAL + UNRELEASED (art + data)** - 22 dungeon entrances from the user's F:\NEW
+PixelLab sheets (cut-off cells never used): dragon skulls for the Dragon's Lairs, merfolk statues, color temples, ruined
+Mazes; no picture shared by two places now. dev-tools/art-import/round593 (plan + installer); old pictures kept as
+Spare_/SpareLow_ regions and exported (the user's 7 favorites under Reuse).
+
 ## STATE 2026-10-14 (round 592): **LOCAL (agent client only - nothing to package)** - the agent's `settle` stops at once
 on a Forge prompt whose buttons it does not know (it waited ~2 minutes for nothing) and prints its `forgeUi` ids.
 Tested offline with fake bridge states.

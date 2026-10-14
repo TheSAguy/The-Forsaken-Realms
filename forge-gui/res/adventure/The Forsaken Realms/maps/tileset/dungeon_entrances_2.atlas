@@ -1,5 +1,5 @@
 dungeon_entrances_2.png
-size: 512,1068
+size: 512,1136
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -213,7 +213,7 @@ E_CaveRJ
   orig: 32, 32
   offset: 0, 0
   index: -1
-E_DragonsLairRed
+Spare_E_DragonsLairRed
   rotate: false
   xy: 200, 606
   size: 48, 34
@@ -591,7 +591,7 @@ E_CaveZombie
   orig: 32, 32
   offset: 0, 0
   index: -1
-E_DragonsLairBlack
+SpareLow_E_DragonsLairBlack
   rotate: false
   xy: 306, 170
   size: 32, 32
@@ -1011,7 +1011,7 @@ E_CaveUGen13
   orig: 32, 32
   offset: 0, 0
   index: -1
-E_DragonsLairBlue
+SpareLow_E_DragonsLairBlue
   rotate: false
   xy: 306, 306
   size: 32, 32
@@ -1095,7 +1095,7 @@ E_EvilGrove4
   orig: 32, 32
   offset: 0, 0
   index: -1
-E_EvilGrove5
+SpareLow_E_EvilGrove5
   rotate: false
   xy: 204, 340
   size: 32, 32
@@ -1144,7 +1144,7 @@ E_Grove5
   orig: 48, 38
   offset: 0, 0
   index: -1
-E_Grove6
+SpareLow_E_Grove6
   rotate: false
   xy: 442, 340
   size: 32, 32
@@ -1207,7 +1207,7 @@ E_MerfolkPool3
   orig: 48, 42
   offset: 0, 0
   index: -1
-E_MerfolkPool4
+SpareLow_E_MerfolkPool4
   rotate: false
   xy: 238, 374
   size: 32, 32
@@ -1263,14 +1263,14 @@ E_CaveGB
   orig: 48, 48
   offset: 0, 0
   index: -1
-E_DragonsLairGreen
+SpareLow_E_DragonsLairGreen
   rotate: false
   xy: 100, 408
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-E_DragonsLairWhite
+SpareLow_E_DragonsLairWhite
   rotate: false
   xy: 150, 408
   size: 48, 48
@@ -1648,7 +1648,7 @@ E_FortBlue4
   orig: 32, 32
   offset: 0, 0
   index: -1
-E_FortBlue5
+Spare_E_FortBlue5
   rotate: false
   xy: 170, 824
   size: 32, 32
@@ -1977,14 +1977,14 @@ E_Maze
   orig: 32, 32
   offset: 0, 0
   index: -1
-E_MerfolkPool_401
+SpareLow_E_MerfolkPool_401
   rotate: false
   xy: 136, 892
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-E_MerfolkPool1_401
+SpareLow_E_MerfolkPool1_401
   rotate: false
   xy: 68, 892
   size: 32, 32
@@ -2124,7 +2124,7 @@ E_SkullCaveB2
   orig: 32, 32
   offset: 0, 0
   index: -1
-E_Temple_of_Chandra
+SpareLow_E_Temple_of_Chandra
   rotate: false
   xy: 374, 926
   size: 32, 32
@@ -2309,6 +2309,160 @@ E_CaveCGen09_401
 E_CaveCGen10_401
   rotate: false
   xy: 340, 756
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_DragonsLairWhite_593
+  rotate: false
+  xy: 238, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_DragonsLairBlue_593
+  rotate: false
+  xy: 136, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_DragonsLairBlack_593
+  rotate: false
+  xy: 102, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_DragonsLairRed_593
+  rotate: false
+  xy: 204, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_DragonsLairGreen_593
+  rotate: false
+  xy: 170, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_EvilGrove5_593
+  rotate: false
+  xy: 306, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_SkullCaveB
+  rotate: false
+  xy: 136, 1104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveG8
+  rotate: false
+  xy: 34, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR2
+  rotate: false
+  xy: 68, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MerfolkPool
+  rotate: false
+  xy: 0, 1104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MerfolkPool1
+  rotate: false
+  xy: 34, 1104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MerfolkPool4_593
+  rotate: false
+  xy: 68, 1104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_FortBlue5_593
+  rotate: false
+  xy: 340, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Temple_of_Chandra_593
+  rotate: false
+  xy: 170, 1104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Grove6_593
+  rotate: false
+  xy: 374, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Monastery1
+  rotate: false
+  xy: 102, 1104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_ElfTown
+  rotate: false
+  xy: 272, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Maze1
+  rotate: false
+  xy: 408, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Maze2
+  rotate: false
+  xy: 442, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Maze3
+  rotate: false
+  xy: 476, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Ancient_Opal_Cavern
+  rotate: false
+  xy: 0, 1070
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_inn_Cave_river
+  rotate: false
+  xy: 204, 1104
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 593: 22 dungeon entrances from the user's new sheets (2026-10-14)
+
+The user: "I have some more dungeon entrances we can use. (F:\NEW). Try not to use icons that are 'cut-off' like the
+ones I've shown here." After the numbered review page: "Okay to proceed with dungeon install. I like the original 4, 7,
+13, 16, 17, 18, 19. Let's keep those for any future dungeons that need art."
+
+- **The art:** ten 256x256 PixelLab sheets, each an 8x8 grid of 32 px cells: 640 pictures, one theme a row (temples,
+  orb shrines, merfolk statues, keeps, hive domes, dragon skulls, caves).
+  - **Cut off:** a cell whose art touches its top, left or right edge. That is 21, including the two the user circled
+    (jungle temples whose canopy runs off the top). None is used. Art resting on the bottom edge is whole.
+  - **Proposed:** 30 places matched by name, land and type; 8 dropped as no better than today; 22 went to the user.
+- **The 22** (dev-tools/art-import/round593: plan593.json + install_entrances.py, round 401's installer with a writer
+  that keeps every atlas field):
+  - The five Dragon's Lairs and Black Dragon Mountain: dragon skulls in each land's color. The white, red and green
+    lairs were 48 px landmarks; they are 32 now, as the page said.
+  - The black Skull Cave and two plain Caves (green, red) get pictures of their own. They shared one with another
+    place; now no picture is shared by two places.
+  - Three Merfolk Pools: merfolk statues on sea rocks (one moss-green).
+  - Sea Temple (teal), Temple of Chandra (volcano), Long Forgotten Temple (jungle), the Monastery (white; stock art),
+    Secluded Elven Encampment (overgrown), the three Mazes (ruined temples; old atlas).
+  - Ancient Opal Cavern (a milky opal glow) and River Cave (water at its foot), both on stock art before.
+- **The old pictures:** #4, 7, 13, 16, 17, 18, 19 are kept for future dungeons (category "reuse": `Spare_` regions in
+  this atlas; the stock ones stay in their common atlases), the rest are `SpareLow_`. All 22 exported to
+  Pictures\Screenshots\Art_to_Tweak\Entrance_Spares\{Reuse,Low} as `r593_*.png`, listed in spares593.csv.
+- `dungeon_entrances_2` page 1 512x1068 -> 512x1136; 22 POI entries' spriteAtlas/sprite changed, nothing else.
+- **Saves** pick the new pictures up on load (a place's art comes from its data, round 380).
+- **Verified:** all 351 dungeon-type places resolve to a picture; the 22 show exactly their chosen cells (pixel
+  compare); no region is shared; the validator shows its usual three sections.
+
 ## Round 592: the agent's settle stops at once on a prompt it does not know (2026-10-14)
 
 The user, through peer #31: "Make the unknown-prompt case stop right away" - the follow-up named in the round-535 audit.

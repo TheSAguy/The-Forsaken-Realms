@@ -255,7 +255,7 @@
 		"type": "dungeon",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_FortBlue5",
+		"sprite": "E_FortBlue5_593",
 		"map": "../The Forsaken Realms/maps/map/fort/fort_blue_5_temple.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -1015,7 +1015,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveG9",
+		"sprite": "E_CaveG8",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_mimic.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -1260,7 +1260,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveR1",
+		"sprite": "E_CaveR2",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_treasure.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -1730,8 +1730,8 @@
 		"displayName": "Secluded Elven Encampment",
 		"type": "dungeon",
 		"count": 2,
-		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
-		"sprite": "BlueTempleOvergrown",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_ElfTown",
 		"map": "../The Forsaken Realms/maps/map/hostiletown/elftown.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -1827,7 +1827,7 @@
 		"type": "cave",
 		"count": 2,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_EvilGrove5",
+		"sprite": "E_EvilGrove5_593",
 		"map": "../The Forsaken Realms/maps/map/evilgrove/evilgrove_7_dragon.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -2425,7 +2425,7 @@
 		"type": "cave",
 		"count": 2,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_Grove6",
+		"sprite": "E_Grove6_593",
 		"map": "../The Forsaken Realms/maps/map/grove/grove_7_snake.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -3038,8 +3038,8 @@
 		"displayName": "Maze",
 		"type": "dungeon",
 		"count": 2,
-		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
-		"sprite": "GreyTemple",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_Maze1",
 		"map": "../The Forsaken Realms/maps/map/maze/maze_2.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -3054,8 +3054,8 @@
 		"displayName": "Maze",
 		"type": "dungeon",
 		"count": 2,
-		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
-		"sprite": "GreyHall",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_Maze2",
 		"map": "../The Forsaken Realms/maps/map/maze/maze_3.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -3070,8 +3070,8 @@
 		"displayName": "Maze",
 		"type": "dungeon",
 		"count": 1,
-		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
-		"sprite": "RuinsWater",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_Maze3",
 		"map": "../The Forsaken Realms/maps/map/maze/maze_4.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -3087,7 +3087,7 @@
 		"type": "cave",
 		"count": 3,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_MerfolkPool_401",
+		"sprite": "E_MerfolkPool",
 		"map": "../The Forsaken Realms/maps/map/merfolkpool/merfolkpool_1.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -3116,7 +3116,7 @@
 		"type": "cave",
 		"count": 3,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_MerfolkPool1_401",
+		"sprite": "E_MerfolkPool1",
 		"map": "../The Forsaken Realms/maps/map/merfolkpool/merfolkpool_2.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -3161,7 +3161,7 @@
 		"type": "cave",
 		"count": 3,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_MerfolkPool4",
+		"sprite": "E_MerfolkPool4_593",
 		"map": "../The Forsaken Realms/maps/map/merfolkpool/merfolkpool_5.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -3191,8 +3191,8 @@
 		"displayName": "Monastery",
 		"type": "dungeon",
 		"count": 5,
-		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
-		"sprite": "Building8",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_Monastery1",
 		"map": "../The Forsaken Realms/maps/map/monastery/monastery_2.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -3870,7 +3870,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_SkullCaveR",
+		"sprite": "E_SkullCaveB",
 		"map": "../The Forsaken Realms/maps/map/skullcave/skullcave_1.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -4018,7 +4018,7 @@
 		"type": "dungeon",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_Temple_of_Chandra",
+		"sprite": "E_Temple_of_Chandra_593",
 		"map": "../The Forsaken Realms/maps/map/main_story/templeofchandra.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -4531,8 +4531,8 @@
 		"displayName": "River Cave",
 		"type": "cave",
 		"count": 2,
-		"spriteAtlas": "../The Forsaken Realms/maps/tileset/inn_buildings.atlas",
-		"sprite": "Cave",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_inn_Cave_river",
 		"map": "../The Forsaken Realms/maps/map/cave/inn_cave_river_entrance.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -4636,7 +4636,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_DragonsLairWhite",
+		"sprite": "E_DragonsLairWhite_593",
 		"map": "../The Forsaken Realms/maps/map/lair/dragons_lair_white.tmx",
 		"radiusFactor": 0.6,
 		"questTags": [
@@ -4650,7 +4650,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_DragonsLairBlue",
+		"sprite": "E_DragonsLairBlue_593",
 		"map": "../The Forsaken Realms/maps/map/lair/dragons_lair_blue.tmx",
 		"radiusFactor": 0.6,
 		"questTags": [
@@ -4664,7 +4664,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_DragonsLairBlack",
+		"sprite": "E_DragonsLairBlack_593",
 		"map": "../The Forsaken Realms/maps/map/lair/dragons_lair_black.tmx",
 		"radiusFactor": 0.6,
 		"questTags": [
@@ -4678,7 +4678,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_DragonsLairRed",
+		"sprite": "E_DragonsLairRed_593",
 		"map": "../The Forsaken Realms/maps/map/lair/dragons_lair_red.tmx",
 		"radiusFactor": 0.6,
 		"questTags": [
@@ -4692,7 +4692,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_DragonsLairGreen",
+		"sprite": "E_DragonsLairGreen_593",
 		"map": "../The Forsaken Realms/maps/map/lair/dragons_lair_green.tmx",
 		"radiusFactor": 0.6,
 		"questTags": [
@@ -4732,8 +4732,8 @@
 		"displayName": "Ancient Opal Cavern",
 		"type": "dungeon",
 		"count": 1,
-		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
-		"sprite": "ForgottenCave",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_Ancient_Opal_Cavern",
 		"map": "../The Forsaken Realms/maps/map/cave/Ancient_Opal_Cavern.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
