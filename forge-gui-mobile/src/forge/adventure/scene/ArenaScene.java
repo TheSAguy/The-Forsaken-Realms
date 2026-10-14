@@ -1645,6 +1645,59 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         return picked;
     }
 
+    /** Round 594 (the user: "On the Player Arena Lvl 2. At least 2 opponents needs to always be Archmages"). */
+    private static final int LEVEL2_MIN_ARCHMAGES = 2;
+
+    /**
+     * Round 594: tops the player's Level-2 (Challenging) field up to LEVEL2_MIN_ARCHMAGES Archmages - the coin holder
+     * counts when it is one - each extra one replacing a random non-Archmage seat (never the coin holder's), drawn from the
+     * day's own random so the field stays fixed for the day. Archmages not already in the field go first. A pool without
+     * an Archmage leaves the field as drawn.
+     */
+    private void ensureLevel2Archmages(EnemyData[] field, java.util.List<String> poolNames, int coinSlot, EnemyData coinFoe,
+                                       Random draw) {
+        java.util.List<EnemyData> archmages = new java.util.ArrayList<>();
+        for (String name : poolNames) {
+            EnemyData pooled = WorldData.getEnemy(name);
+            if (pooled != null && EnemyData.tierRank(pooled.tier) >= 3)
+                archmages.add(pooled);
+        }
+        int count = 0;
+        for (int i = 0; i < field.length; i++) {
+            EnemyData seat = i == coinSlot ? coinFoe : field[i];
+            if (seat != null && EnemyData.tierRank(seat.tier) >= 3)
+                count++;
+        }
+        if (archmages.isEmpty()) {
+            System.out.println("[TFR-ArenaTier] Level-2: " + count + " Archmage(s) and none in the pool to add");
+            return;
+        }
+        int before = count;
+        while (count < LEVEL2_MIN_ARCHMAGES) {
+            java.util.List<Integer> seats = new java.util.ArrayList<>();
+            for (int i = 0; i < field.length; i++)
+                if (i != coinSlot && EnemyData.tierRank(field[i].tier) < 3)
+                    seats.add(i);
+            if (seats.isEmpty())
+                break;
+            java.util.Set<String> present = new java.util.HashSet<>();
+            for (EnemyData seat : field)
+                present.add(seat.getName());
+            java.util.List<EnemyData> fresh = new java.util.ArrayList<>();
+            for (EnemyData a : archmages)
+                if (!present.contains(a.getName()))
+                    fresh.add(a);
+            java.util.List<EnemyData> from = fresh.isEmpty() ? archmages : fresh;
+            int seat = seats.get(draw.nextInt(seats.size()));
+            EnemyData added = from.get(draw.nextInt(from.size()));
+            System.out.println("[TFR-ArenaTier] Level-2: seat " + (seat + 1) + " " + field[seat].getName() + " ("
+                    + EnemyData.tierDisplayName(field[seat].tier) + ") -> " + added.getName() + " (Archmage)");
+            field[seat] = added;
+            count++;
+        }
+        System.out.println("[TFR-ArenaTier] Level-2: Archmages " + before + " -> " + count + " (at least " + LEVEL2_MIN_ARCHMAGES + ")");
+    }
+
     /** isChallenge (2026-08-11, Arena Level 2 Challenge mode, MOD_SCOPE.md #20): forces every
      *  fight in this run to best-of-1 regardless of each enemy's own EnemyData.gamesPerMatch -
      *  about a third of the Challenge pool (bosses/mini-bosses/Planeswalkers) default to
@@ -1763,12 +1816,19 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             System.out.println("[TFR-ArenaCoin] " + coinFoe.getName() + " takes bracket slot " + (coinFoeSlot + 1) + " of "
                     + numberOfEnemies + (coinFoeSlot == numberOfEnemies - 1 ? " - the player's first opponent" : ""));
         StringBuilder bracketLog = new StringBuilder();
+        // Round 594: the field is drawn first, slot by slot as before (the same draws, so the same field for the day), so
+        // the Level-2 bracket can be topped up with Archmages before the seats are built.
+        EnemyData[] field = new EnemyData[numberOfEnemies];
         for (int i = 0; i < numberOfEnemies; i++) {
             EnemyData enemyData = tierWeighted ? pickTierWeighted(adeptPool, masterPool, archmagePool, draw) : null;
             while (enemyData == null)
                 enemyData = WorldData.getEnemy(poolNames.get(draw.nextInt(poolNames.size())));
-            if (i == coinFoeSlot)
-                enemyData = coinFoe;
+            field[i] = enemyData;
+        }
+        if (challengePayoutBracket)
+            ensureLevel2Archmages(field, poolNames, coinFoeSlot, coinFoe, draw);
+        for (int i = 0; i < numberOfEnemies; i++) {
+            EnemyData enemyData = i == coinFoeSlot ? coinFoe : field[i];
             bracketLog.append(i > 0 ? ", " : "").append(enemyData.getName()).append(" (").append(EnemyData.tierDisplayName(enemyData.tier)).append(')');
             // Arena matches disable ante (user spec 2026-08-11) - clone rather than mutate the
             // shared roster EnemyData, same pattern the Capitol-defense duel uses for its own

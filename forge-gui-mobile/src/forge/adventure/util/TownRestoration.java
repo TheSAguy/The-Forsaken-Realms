@@ -586,8 +586,9 @@ public class TownRestoration {
         if (!swaps)
             return;
         String now = TileMapScene.resolveMapPath(point);
-        forge.adventure.stage.GameHUD.getInstance().addNotification(point.getDisplayName()
-                + " is restored! Step back in to see it rebuilt.");
+        // Round 594 (the user: "When you restore a town, no need to display that message on overworld, log only").
+        forge.adventure.stage.GameHUD.getInstance().logNotification(point.getDisplayName()
+                + " is restored! Step back in to see it rebuilt.", false);
         System.out.println("[TFR-TownLayout] " + point.getDisplayName() + " restored - out to the world map, the next visit"
                 + " loads " + now);
         stage.exitDungeon(false, false);

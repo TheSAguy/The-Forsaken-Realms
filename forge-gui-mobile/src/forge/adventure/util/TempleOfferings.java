@@ -68,6 +68,13 @@ public final class TempleOfferings {
 
     /** DuelScene: the player won a duel (not the Arena, not an Inn tournament) - the enemy's colors share one kill. */
     public static void recordKill(EnemyData enemy) {
+        recordKill(enemy, "you");
+    }
+
+    /** Round 594 (the user: "Your Guard victories, both local and roaming should count towards the temple counts"): the
+     *  same count for a win by one of the player's guards - a town guard repelling a mage (TerritoryControl), a roaming
+     *  guard beating a mage or a raider, watched or simulated (RoamingGuardRuntime). {@code by} is for the log only. */
+    public static void recordKill(EnemyData enemy, String by) {
         if (enemy == null)
             return;
         World world = WorldSave.getCurrentSave().getWorld();
@@ -93,7 +100,7 @@ public final class TempleOfferings {
             if (colors.contains(LETTERS[c]))
                 kills[c] += 1f / n;
         System.out.println("[TFR-Temple] " + enemy.getName() + " (" + colors + ") +" + fmt(1f / n) + " each - week "
-                + (week + 1) + " tally " + tally(kills));
+                + (week + 1) + " tally " + tally(kills) + " - beaten by " + by);
     }
 
     /** EconomyBuildings.processPaydays: a new day. When it starts a new week, the Temple pays and the tally clears. */

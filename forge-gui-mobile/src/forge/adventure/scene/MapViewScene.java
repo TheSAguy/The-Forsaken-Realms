@@ -603,6 +603,59 @@ public class MapViewScene extends UIScene {
             }
         }
         addArenaCountdowns(allPois, placedLabelRects);
+        addInnTournaments(allPois, placedLabelRects);
+    }
+
+    /**
+     * Round 594 (the user: "Would be nice to see what inn tournaments are going on in one of the views. Maybe the
+     * 'Details' view?"): one line at each town whose Inn holds a tournament for the player - in this view, beside the
+     * Arena countdowns, rather than Details, which round 156 cleared of the Inns' set names so its Under Attack, Pillaged
+     * and Guards labels stay readable. What the Inn would show: this week's tournament (format and set), or how far the
+     * player is in one. A tournament dealt in an earlier week that the Inn will replace on the next visit (round 368), a
+     * finished or abandoned one, and a town not visited are left out; Inns not visited have no tournament yet.
+     */
+    private void addInnTournaments(List<PointOfInterest> pois, List<Rectangle> placedLabelRects) {
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        if (world == null || Current.player() == null)
+            return;
+        int week = forge.adventure.util.SpawnTierWeighting.currentWeek(world);
+        java.util.Map<String, PointOfInterest> byId = new java.util.HashMap<>();
+        for (PointOfInterest poi : pois)
+            byId.put(poi.getID(), poi);
+        StringBuilder logLine = new StringBuilder();
+        for (forge.adventure.data.AdventureEventData e : Current.player().getEvents()) {
+            PointOfInterest poi = e.sourceID == null ? null : byId.get(e.sourceID);
+            if (poi == null || !WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).isVisited())
+                continue;
+            String state;
+            switch (e.eventStatus) {
+                case Available:
+                    if (week > 0 && e.createdWeek != week)
+                        continue; // the Inn deals this week's on the next visit
+                    state = e.cardBlockName == null ? "" : " - " + e.cardBlockName;
+                    break;
+                case Entered:
+                case Ready:
+                    state = " - [GREEN]entered";
+                    break;
+                case Started:
+                    state = " - [GREEN]round " + Math.max(1, e.currentRound);
+                    break;
+                case Completed:
+                    state = " - [GREEN]prizes waiting";
+                    break;
+                default:
+                    continue; // Awarded / Abandoned: over
+            }
+            String format = e.format == null ? "Tournament" : e.format.name();
+            TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] Inn: " + format + state);
+            selfNamedDetails.add(label); // like the Arena lines, it names its own venue
+            placeDetailLabel(label, poi.getCenter().x, poi.getCenter().y, placedLabelRects);
+            logLine.append(' ').append(poi.getDisplayName()).append('=').append(format).append('/').append(e.eventStatus)
+                    .append(e.cardBlockName == null ? "" : "/" + e.cardBlockName).append(';');
+        }
+        if (logLine.length() > 0)
+            System.out.println("[TFR-MapView] reputation view: Inn tournaments (week " + week + ") -" + logLine);
     }
 
     /**

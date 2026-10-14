@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 594: nine fixes from the user's playtest list (2026-10-14)
+
+The user sent screenshots and a list: "Some things to look into".
+
+- **Quest days** ("I don't see the number of days remaining on my quest 'Heart of a Champion'"). A side quest's clock
+  started at the next day tick, so a quest taken today showed no days until tomorrow; the user's save had it unstamped.
+  `QuestExpiry.onAccepted` (from AdventurePlayer.addQuest) starts it the day the quest is taken. Agent-seen: a quest
+  given by cheat showed "(14 days left)" at once.
+- **The magnifier** ("very far from this dungeon" - Demon's Bargain). Its altar casts a soft shadow over the left 14 px
+  of its 48 px region, and the unvisited magnifier sat at the region's edge.
+  - New `dev-tools/poi_footprints.py` writes a `footprint: x, y, w, h` field (round 578's name) on the
+    dungeon_entrances_2 regions whose solid art (alpha >= 200, so a shadow does not count) starts or ends 4+ px in -
+    64 regions. `--check` exits 1 when an install needs it re-run.
+  - `Config.getPOIFootprint` finds the region again (createSprites hands out plain Sprites);
+    `PointOfInterestMapSprite.markerLeft/Right` put the magnifier and the bookmark star at the solid art's edges.
+    Art without the field, and a town's swapped-in art, draw as before. Stock common atlases are not written.
+  - Round 593's installer keeps the field when it rewrites the atlas (401's would drop it).
+- **The Temple** ("Your Guard victories, both local and roaming should count towards the temple counts").
+  `TempleOfferings.recordKill(enemy, by)`: a town guard repelling a mage (TerritoryControl.resolveGuardDefense) and a
+  roaming guard's win over a mage or a raider, watched or simulated (RoamingGuardRuntime.onDuelFinished). DuelScene
+  already leaves guard duels out, so nothing counts twice. `[TFR-Temple] ... - beaten by your Master guard at X`.
+- **The notice log**:
+  - "when you reach each stage of Notoriety": `AdventurePlayer.logNotorietyStage` logs (no banner) each level
+    reached with its Walls ("Notoriety level 2 - 10 wins in a row: every foe starts with a 1/2 Wall."; the
+    difficulty's lowest rank says who), each bonus wall (45, 50 wins: the flying 3/6 and the life), and the end of a
+    streak that had a level ("Notoriety lost - your streak of 11 wins is over."). Both seen in the agent game.
+  - "a little color-coding ... attacks of non-player towns in orange. Player in red": the whole "sends a mage toward"
+    line, and the town's fall, in dark orange (#B85A00) or red (#B3261E), banner and log alike
+    (`TerritoryControl.PLAYER_TOWN_TINT / OTHER_TOWN_TINT`). The player-town attack keeps "PLAYER OWNED TOWN!".
+  - "When you restore a town, no need to display that message on overworld, log only": logNotification.
+- **The diamond** ("The 'Bless' I received from a diamond ... had no life icon"): the notice carries [+Life].
+- **Player Arena Level 2** ("At least 2 opponents needs to always be Archmages"): `ArenaScene.ensureLevel2Archmages`
+  tops the Challenging field up to two Archmages (the coin holder counts when it is one), each replacing a random
+  non-Archmage seat, never the coin holder's, drawn from the day's own random - the field stays fixed for the day.
+  The field is now drawn before the seats are built, with the same draws, so today's brackets are unchanged.
+  `[TFR-ArenaTier] Level-2: Archmages 0 -> 2`. Not seen in play (no Level-2 arena in the test save).
+- **Inn tournaments on the map** ("Maybe the 'Details' view?"): in the Reputation view instead, beside the Arena
+  countdowns - round 156 cleared Details of the Inns' set names so its Under Attack, Pillaged and Guards labels stay
+  readable. One line at each visited town whose Inn holds the player's tournament: "Inn: Draft - <set>" this week,
+  "entered", "round N" or "prizes waiting"; an earlier week's tournament the Inn will replace, and a finished one, are
+  left out. Not seen in play (the test save had visited no working Inn).
+- **Also seen** in the agent game on a copy of save 1: round 591's Phyrexian hero sheet in duels and walks, and round
+  593's moss dragon skull with its magnifier.
+
 ## Round 593: 22 dungeon entrances from the user's new sheets (2026-10-14)
 
 The user: "I have some more dungeon entrances we can use. (F:\NEW). Try not to use icons that are 'cut-off' like the

@@ -1932,10 +1932,15 @@ public class TerritoryControl {
         if (opening)
             return; // round 422: up to 30 at once on Insane - the wave is not announced mage by mage
         if (targetPlayerOwned)
-            GameHUD.getInstance().addNotification("[BLACK]" + message + " [RED]PLAYER OWNED TOWN!", true);
+            GameHUD.getInstance().addNotification(PLAYER_TOWN_TINT + message + " PLAYER OWNED TOWN!", true);
         else
-            GameHUD.getInstance().addNotification(message);
+            GameHUD.getInstance().addNotification(OTHER_TOWN_TINT + message, true);
     }
+
+    /** Round 594 (the user, of the notice log: "Can we add a little color-coding. Maybe attacks of non-player towns in
+     *  orange. Player in red"): the whole line of an attack - and of the town's fall - in one of these, banner and log
+     *  alike. Darker than [RED]/[ORANGE] so they read on the paper. */
+    static final String PLAYER_TOWN_TINT = "[#B3261E]", OTHER_TOWN_TINT = "[#B85A00]";
 
     /**
      * Round 422 (the user: "At the very start of the game, give each AI some free attacking mages. Easy - 1, Normal - 2,
@@ -2294,6 +2299,8 @@ public class TerritoryControl {
                 GameHUD.getInstance().addNotification("[GREEN]Your " + EconomyBuildings.guardTierDisplayName(guardTier)
                         + " guard repelled " + capitalize(mage.territoryColor) + "'s attack at "
                         + target.getDisplayName() + "!", true);
+                TempleOfferings.recordKill(mage.getData(), "your " + EconomyBuildings.guardTierDisplayName(guardTier)
+                        + " guard at " + target.getDisplayName()); // round 594
                 return false;
             }
             changes.removeGuardAt(strongestIndex);
@@ -3012,7 +3019,7 @@ public class TerritoryControl {
             // with its defender and returns long before here, announcing itself where it happens.
             message = displayName + " has fallen to " + capitalize(mage.territoryColor) + "!";
         System.out.println("[TerritoryControl] " + message);
-        GameHUD.getInstance().addNotification(message);
+        GameHUD.getInstance().addNotification((wasPlayerOwned ? PLAYER_TOWN_TINT : OTHER_TOWN_TINT) + message, true); // round 594
 
         // New lose condition (2026-08-15 user request): "if there are no neutral towns left and
         // the player does not own any towns, they also lose" - covers a player who never built up

@@ -860,6 +860,23 @@ public class Config {
         return sprites;
     }
 
+    /**
+     * Round 594 (the user: "The magnifying glass was very far from this dungeon" - Demon's Bargain, whose altar casts a
+     * soft shadow across the left 14 px of its region): the `footprint: x, y, w, h` field of the atlas region this POI
+     * sprite was made from - where the solid art sits inside it, y down - or null. dev-tools/poi_footprints.py writes it
+     * on entrance art with a wide shadow or margin. libGDX keeps an unknown region field (AtlasRegion.findValue), but
+     * createSprites() hands out plain Sprites, so the region is found again by the sprite's place in that list.
+     */
+    public int[] getPOIFootprint(PointOfInterestData d, Sprite sprite) {
+        if (d == null || sprite == null)
+            return null;
+        int index = getPOISprites(d).indexOf(sprite, true);
+        if (index < 0)
+            return null;
+        Array<TextureAtlas.AtlasRegion> regions = getAtlas(d.spriteAtlas).findRegions(d.sprite);
+        return index < regions.size ? regions.get(index).findValue("footprint") : null;
+    }
+
     public Array<Sprite> getAnimatedSprites(String path, String animationName) {
         Array<Sprite> sprites;
         ObjectMap<String, Array<Sprite>> mapSprites = animatedSprites.get(path);

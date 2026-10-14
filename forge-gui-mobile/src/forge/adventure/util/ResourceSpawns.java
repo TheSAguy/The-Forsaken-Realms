@@ -425,7 +425,8 @@ public class ResourceSpawns {
             blessing.lifeModifier += MYSTERY_VIGOR_LIFE; // keep what they had; the life rides along
             Current.player().addBlessing(blessing);      // re-announce it to anything listening
         }
-        String message = "The diamond's light fills you: +" + MYSTERY_VIGOR_LIFE + " life in your next duel!";
+        // Round 594 (the user: "The 'Bless' I received from a diamond on the overworld had no life icon on it").
+        String message = "The diamond's light fills you: [+Life] +" + MYSTERY_VIGOR_LIFE + " life in your next duel!";
         System.out.println("[ResourceSpawns] " + message + " (blessing \"" + blessing.name + "\" now [+Life] "
                 + blessing.lifeModifier + ")");
         GameHUD.getInstance().addNotification(message);

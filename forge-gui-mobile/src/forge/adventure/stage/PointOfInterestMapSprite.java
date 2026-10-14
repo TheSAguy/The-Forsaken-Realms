@@ -112,6 +112,34 @@ public class PointOfInterestMapSprite extends MapSprite {
                     + shiftX + "," + shiftY + " px with its entry box (round 329)");
     }
 
+    // Round 594: the solid art's columns inside the POI's own region (Config.getPOIFootprint), read once; null = the
+    // whole region. Used only while the POI's own sprite is what is drawn - a town's swapped-in art has none.
+    private int[] footprint;
+    private boolean footprintRead;
+
+    private int[] ownFootprint() {
+        if (!footprintRead) {
+            footprintRead = true;
+            footprint = forge.adventure.util.Config.instance().getPOIFootprint(pointOfInterest.getData(), pointOfInterest.getSprite());
+            if (footprint != null && footprint.length >= 4 && ART_SHIFT_LOGGED_FOR.add("fp:" + pointOfInterest.getID()))
+                System.out.println("[TFR-MapIcon] " + pointOfInterest.getDisplayName() + ": solid art at x " + footprint[0]
+                        + "-" + (footprint[0] + footprint[2]) + " of " + texture.getRegionWidth() + " - markers follow it (round 594)");
+        }
+        return footprint != null && footprint.length >= 4 && texture == pointOfInterest.getSprite() ? footprint : null;
+    }
+
+    @Override
+    protected float markerLeft() {
+        int[] fp = ownFootprint();
+        return fp == null ? super.markerLeft() : fp[0];
+    }
+
+    @Override
+    protected float markerRight() {
+        int[] fp = ownFootprint();
+        return fp == null ? super.markerRight() : fp[0] + fp[2];
+    }
+
     @Override
     protected float artShiftX() {
         return shiftX;

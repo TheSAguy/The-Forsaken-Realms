@@ -158,6 +158,16 @@ public class MapSprite extends Actor {
         return 0f;
     }
 
+    // Round 594: where the unvisited magnifier and the bookmark star sit along the art - its region's left and right
+    // edges, unless the art's solid part is narrower (PointOfInterestMapSprite, from the atlas footprint).
+    protected float markerLeft() {
+        return 0f;
+    }
+
+    protected float markerRight() {
+        return getWidth();
+    }
+
     //BitmapFont font;
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -247,14 +257,14 @@ public class MapSprite extends Actor {
         Color markerTint = batch.getColor();
         if (isCaveDungeon && !isOldorVisited && spriteMagnifier != null) {
             spriteMagnifier.setScale(0.7f, 0.7f);
-            spriteMagnifier.setPosition(x - 7, y + 2);
+            spriteMagnifier.setPosition(x + markerLeft() - 7, y + 2);
             spriteMagnifier.setColor(markerTint.r, markerTint.g, markerTint.b, 1f);
             spriteMagnifier.draw(batch, parentAlpha);
             spriteMagnifier.setColor(Color.WHITE);
         }
         if (isBookmarked && spriteStar != null) {
             spriteStar.setScale(0.7f, 0.7f);
-            spriteStar.setPosition(x + getWidth() - 8, y + getHeight() / 1.5f);
+            spriteStar.setPosition(x + markerRight() - 8, y + getHeight() / 1.5f);
             spriteStar.setColor(markerTint.r, markerTint.g, markerTint.b, 1f);
             spriteStar.draw(batch, parentAlpha);
             spriteStar.setColor(Color.WHITE);

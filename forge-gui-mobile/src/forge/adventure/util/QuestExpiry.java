@@ -81,6 +81,26 @@ public class QuestExpiry {
             WorldStage.getInstance().showQuestsFailedDialog(failedNames);
     }
 
+    /**
+     * Round 594 (the user: "I don't see the number of days remaining on my quest 'Heart of a Champion'"): the clock
+     * starts the day a quest is accepted, so the quest log shows its days at once. It used to wait for the next day
+     * tick, and a quest taken today showed no days until tomorrow. A quest already stamped keeps its stamp.
+     */
+    public static void onAccepted(AdventureQuestData quest) {
+        if (!isEnabled() || quest == null || quest.storyQuest || isChainQuest(quest) || WorldSave.getCurrentSave() == null)
+            return;
+        World world = WorldSave.getCurrentSave().getWorld();
+        if (world == null)
+            return;
+        String key = String.valueOf(quest.getID());
+        if (world.getQuestAcceptedDay().containsKey(key))
+            return;
+        world.getQuestAcceptedDay().put(key, world.getCurrentDay());
+        world.getQuestDayLimit().put(key, sideQuestDays());
+        System.out.println("[QuestExpiry] " + quest.getName() + " accepted on day " + world.getCurrentDay() + " - "
+                + sideQuestDays() + " days");
+    }
+
     /** Chain side quests (the converted "relic trail" line, 2026-08-26 review finding) are
      *  exempt from the expiry timer: quests 45-51 are only ever issued by their predecessor's
      *  one-shot epilogue and are never board-offerable (their questSourceTags deliberately match

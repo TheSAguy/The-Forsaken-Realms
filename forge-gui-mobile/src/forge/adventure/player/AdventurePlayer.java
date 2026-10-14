@@ -445,6 +445,55 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         System.out.println("[TFR-Notoriety] " + (won ? "won" : "lost") + " - wins in a row " + before + " -> "
                 + notorietyStreak + ", level " + levelBefore + " -> " + notorietyLevel()
                 + (difficultyData != null ? " (" + difficultyData.name + ")" : ""));
+        logNotorietyStage(before, levelBefore);
+    }
+
+    /**
+     * Round 594 (the user, of the notice log: "Let's add on there when you reach each stage of Notoriety"): a log line,
+     * no banner, for each level reached (with the Walls it puts in play), each bonus wall reached, and the streak's end
+     * once it had a level.
+     */
+    private void logNotorietyStage(int before, int levelBefore) {
+        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
+        if (tuning == null)
+            return;
+        java.util.List<String> lines = new java.util.ArrayList<>();
+        int level = notorietyLevel();
+        if (level > levelBefore && tuning.notorietyWallsPlain != null) {
+            java.util.List<String> walls = new java.util.ArrayList<>();
+            for (int index : tuning.notorietyWallIndexes(Math.min(level, tuning.notorietyWallsPlain.length)))
+                walls.add(wallSize(tuning.notorietyWallsPlain[index]) + " Wall");
+            int minRank = tuning.notorietyMinRankFor(difficultyData == null ? null : difficultyData.name);
+            String who = minRank <= 0 ? "every foe starts" : minRank == 1 ? "Adepts and stronger start"
+                    : minRank == 2 ? "Masters and Archmages start" : "Archmages start";
+            lines.add("Notoriety level " + level + " - " + notorietyStreak + " wins in a row: " + who + " with a "
+                    + String.join(" and a ", walls) + ".");
+        }
+        if (tuning.notorietyBonusWallWins != null)
+            for (int i = 0; i < tuning.notorietyBonusWallWins.length; i++) {
+                int wins = tuning.notorietyBonusWallWins[i];
+                if (before < wins && notorietyStreak >= wins) {
+                    int percent = tuning.notorietyBonusWallLifePercent != null && i < tuning.notorietyBonusWallLifePercent.length
+                            ? tuning.notorietyBonusWallLifePercent[i] : 0;
+                    String bonus = tuning.notorietyBonusWalls != null && i < tuning.notorietyBonusWalls.length
+                            ? tuning.notorietyBonusWalls[i] : "";
+                    lines.add("Notoriety - " + wins + " wins in a row: every foe also starts with a "
+                            + (bonus.contains("flying") ? "flying " : "") + wallSize(bonus) + " Wall"
+                            + (percent > 0 ? " and +" + percent + "% life." : "."));
+                }
+            }
+        if (notorietyStreak == 0 && levelBefore > 0)
+            lines.add("Notoriety lost - your streak of " + before + " wins is over.");
+        for (String line : lines) {
+            System.out.println("[TFR-Notoriety] log: " + line);
+            forge.adventure.stage.GameHUD.getInstance().logNotification(line, false);
+        }
+    }
+
+    /** Round 594: "1/2" from a Wall token script name such as tfr_wall2_reach_1_2. */
+    private static String wallSize(String script) {
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("_(\\d+)_(\\d+)$").matcher(script == null ? "" : script);
+        return m.find() ? m.group(1) + "/" + m.group(2) : "?";
     }
 
     /** Round 411: test cheat - set the streak outright. */
@@ -3675,6 +3724,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             }
         }
         quests.add(q);
+        forge.adventure.util.QuestExpiry.onAccepted(q); // round 594: its days show from the day it is taken
         if (noTrackedQuests || q.autoTrack)
             AdventureQuestController.trackQuest(q);
         q.activateNextStages();
