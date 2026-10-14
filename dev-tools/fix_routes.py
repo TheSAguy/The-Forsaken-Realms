@@ -34,7 +34,7 @@ HOW A WAYPOINT MOVES
   Distances print in tiles so the diff is reviewable, and a waypoint shared by several enemies is
   called out: pulling it inside is right for all of them, but it should not be a surprise.
 
---feet (round 562) - THE STRICT PASS
+--feet (round 565) - THE STRICT PASS
 
   Moves the legs `waypoint_routes_qa.py --feet` reports: a waypoint the old test passes while the
   enemy's visible feet stand mostly off the floor (a tent, a boulder, the outer wall of a room, off the
@@ -258,6 +258,9 @@ def nav_legs(nav, m, wid):
     replica of the game's navigation graph (guard_patrols/tfrmaps.NavSim). 'start' is the walk from the
     enemy's own position to its first waypoint. A leg with no path freezes the enemy for good: MapStage
     idles a mob whose path is empty, and the behaviour never completes."""
+    # Round 595: a later leg sets off from a hair off waypoint A, as the game does (the mob stops within 2 px
+    # of A, so findShortestPath() links a NEW vertex to its 10 nearest) - not from A's own vertex (NavSim's
+    # origin_key), which is stricter than the game and called legs frozen that walk.
     out = {}
     wpo = m.waypoints()
     for e in m.enemies():
@@ -269,7 +272,7 @@ def nav_legs(nav, m, wid):
             out[(e.id, 'start', wid)] = nav.path((e.x, m.hpx - e.y), ('w', wid))[0]
         for a, b in zip(ids, ids[1:] + ids[:1]):
             if wid in (a, b) and a != b:
-                out[(e.id, a, b)] = nav.path((wpo[a].x, m.hpx - wpo[a].y), ('w', b), origin_key=('w', a))[0]
+                out[(e.id, a, b)] = nav.path((wpo[a].x + 0.01, m.hpx - wpo[a].y + 0.01), ('w', b))[0]
     return out
 
 

@@ -330,7 +330,7 @@
   <object id="310" template="../../../../common/maps/obj/waypoint.tx" x="176.342" y="182.272" width="13" height="11.6667"/>
   <object id="311" template="../../../../common/maps/obj/waypoint.tx" x="254.842" y="146.272" width="13" height="11.6667"/>
   <object id="312" template="../../../../common/maps/obj/waypoint.tx" x="253.842" y="57.7719" width="13" height="11.6667"/>
-  <object id="313" template="../../../../common/maps/obj/waypoint.tx" x="205.842" y="151.272" width="13" height="11.6667"/>
+  <object id="313" template="../../../../common/maps/obj/waypoint.tx" x="205.5" y="160.3" width="13" height="11.6667"/>
   <object id="314" template="../../../../common/maps/obj/waypoint.tx" x="206.842" y="256.772" width="13" height="11.6667"/>
   <object id="315" template="../../../../common/maps/obj/waypoint.tx" x="193.706" y="230.317" width="13" height="11.6667"/>
   <object id="316" template="../../../../common/maps/obj/waypoint.tx" x="87.3421" y="230.772" width="13" height="11.6667"/>

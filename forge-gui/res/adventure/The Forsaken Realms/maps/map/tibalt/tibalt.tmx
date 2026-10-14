@@ -251,7 +251,7 @@
   </object>
   <object id="237" template="../../../../common/maps/obj/waypoint.tx" x="892.175" y="127.439"/>
   <object id="238" template="../../../../common/maps/obj/waypoint.tx" x="842.509" y="39.1053"/>
-  <object id="239" template="../../../../common/maps/obj/waypoint.tx" x="894.509" y="195.772"/>
+  <object id="239" template="../../../../common/maps/obj/waypoint.tx" x="894.2" y="187.8"/>
   <object id="240" template="../../../../common/maps/obj/waypoint.tx" x="973.175" y="295.105"/>
   <object id="241" template="../../../../common/maps/obj/waypoint.tx" x="970.842" y="357.105"/>
   <object id="242" template="../../../../common/maps/obj/waypoint.tx" x="941.509" y="499.439"/>

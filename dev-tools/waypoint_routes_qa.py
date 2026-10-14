@@ -24,7 +24,7 @@ Three things this reports, in descending severity:
 "blocked"/"outside" are not automatically bugs - a flier or a swimmer may belong there, which is the
 same judgment `stranded_enemies.py` documents. For a mage in a tower it is a bug.
 
---feet (round 562) adds a fifth, stricter finding for the legs that pass the four above:
+--feet (round 565) adds a fifth, stricter finding for the legs that pass the four above:
 
   feet      the enemy's FEET at the waypoint are mostly off the reachable floor. standable() gives a
             waypoint a full tile of slack up and down, and that is too kind: a patrol moves the
@@ -45,9 +45,32 @@ same judgment `stranded_enemies.py` documents. For a mage in a tower it is a bug
             Booster guards are pinned to their post (MapStage.assignLootGuards -> guardPost), so the
             game never walks their routes; this tool still reports them, the fix tool skips them.
 
+--nav (round 595) asks a different question of every walking route: can the game PATH each leg?
+
+  nav       a leg the navigation graph has no path for. MapStage idles a mob whose A* path is empty and
+            asks again every frame, so the leg never completes and the enemy stands still for good - a
+            frozen patrol that every pixel test calls clean, because the player's 10x6 box slips between
+            two trees where the graph's tile-centre vertices cannot.
+
+            The graph is guard_patrols/tfrmaps.NavSim (NavigationMap.initializeGeometryGraph: tile-centre
+            vertices outside the collision fixtures, which are inflated and shifted 8 px left; each
+            waypoint linked to its 4 nearest ray-visible vertices). The legs are walked as the game walks
+            them: the first from the enemy's own position, every later one from a hair off the waypoint
+            just reached - a mob stops within 2 px of a waypoint and never exactly on it, so
+            findShortestPath() adds it as a NEW vertex linked to its 10 nearest ray-visible vertices,
+            which can bridge two parts of the graph that the waypoint's own 4 links cannot. (NavSim's
+            origin_key mode - depart from the waypoint vertex itself - is stricter than the game and
+            called 11 more legs frozen than this.) NavSim keeps the sub-3x3 px collision specks that
+            MapStage merges away; comparing both on the plane changed no verdict.
+
+            Fliers (EnemyData.flying, or the map's own `flying` property) skip the graph, and booster
+            guards never walk; neither is checked. Legs a reviewed pass accepted are counted, not
+            re-raised (`accepted_nav` in waypoint_feet_accepted.json, "<enemy>:<from>-><to>").
+
 usage: python dev-tools/waypoint_routes_qa.py                 # every plane map with routes
        python dev-tools/waypoint_routes_qa.py <map.tmx> [...]
        python dev-tools/waypoint_routes_qa.py --feet [<map.tmx> ...]   # also the strict feet check
+       python dev-tools/waypoint_routes_qa.py --nav [<map.tmx> ...]    # also legs the nav graph cannot path
 """
 import glob
 import json
@@ -202,6 +225,60 @@ def feet_accepted():
         return json.load(open(ACCEPTED_FEET, encoding='utf-8')).get('accepted', {})
     except (OSError, ValueError):
         return {}
+
+
+def nav_accepted():
+    """{map path under maps/map: {"<enemy id>:<from>-><to>": reason}} - frozen legs a reviewed pass accepted
+    (round 595), from the same file's `accepted_nav`."""
+    try:
+        return json.load(open(ACCEPTED_FEET, encoding='utf-8')).get('accepted_nav', {})
+    except (OSError, ValueError):
+        return {}
+
+
+_NAV = {}
+
+
+def nav_frozen(tmx_path):
+    """[(enemy id, name, from, to)] - the legs of this map's walking routes that the game's navigation graph
+    cannot path ('start' = the walk from the enemy's own position). See --nav in the module docstring."""
+    if not _NAV:
+        sys.path.insert(0, os.path.join(HERE, 'guard_patrols'))
+        import tfrmaps
+        tfrmaps.load_tools(HERE)
+        _NAV['T'] = tfrmaps
+        _NAV['edata'] = tfrmaps.load_enemy_data(PLANE_ROOT)
+    T = _NAV['T']
+    m = T.TMap(tmx_path, PLANE)
+    _rows, guard_of = T.match_guards(m)
+    wpo = m.waypoints()
+    nav, out = None, []
+    for e in m.enemies():
+        route = (e.props.get('waypoints') or '').strip()
+        if not route or guard_of.get(e.id, (None, None))[1] == 'booster':
+            continue
+        facts = T.enemy_facts(m, e, _NAV['edata'], set())
+        if facts['flying']:
+            continue
+        steps = []
+        for kind, payload in legs(route):
+            ids = [i for i in ([payload] if kind == 'wp' else (payload if kind == 'random' else [])) if i in wpo]
+            if ids:
+                steps.append(ids)
+        if not steps:
+            continue
+        walk = [('start', (e.x, m.hpx - e.y), b) for b in steps[0]]
+        for k, ids in enumerate(steps):
+            for a in ids:
+                for b in steps[(k + 1) % len(steps)]:
+                    if a != b:   # a hair off A: where the mob really stands when it sets off
+                        walk.append((a, (wpo[a].x + 0.01, m.hpx - wpo[a].y + 0.01), b))
+        for frm, origin, b in walk:
+            if nav is None:
+                nav = T.NavSim(m)
+            if nav.path(origin, ('w', b))[0] is None:
+                out.append((e.id, facts['name'], frm, b))
+    return out
 _FEET = None
 
 
@@ -226,8 +303,11 @@ def enemy_feet():
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('-')]
     feet = '--feet' in sys.argv
+    nav = '--nav' in sys.argv
     feet_of = enemy_feet() if feet else {}
     accepted = feet_accepted() if feet else {}
+    nav_ok = nav_accepted() if nav else {}
+    n_nav_accepted = 0
     maps = args or sorted(glob.glob(os.path.join(PLANE, '**', '*.tmx'), recursive=True))
     bad_maps = tot_routes = tot_legs = n_accepted = 0
     findings, stale = [], []
@@ -281,6 +361,13 @@ def main():
                             rows.append(('feet', eid, name, wid, wx, wy, share))
             if propname != 'waypoints':
                 rows.append(('case', eid, name, propname, ex, ey))
+        if nav:
+            for eid, name, frm, to in nav_frozen(path):
+                key = '%d:%s->%d' % (eid, frm, to)
+                if key in nav_ok.get(rel, {}):
+                    n_nav_accepted += 1
+                else:
+                    rows.append(('nav', eid, name, frm, to, None))
         if rows:
             bad_maps += 1
             print('\n=== %s' % rel)
@@ -295,6 +382,9 @@ def main():
                 elif kind == 'dangling':
                     print('  DANGLING enemy %-4s %-20s waypoint id %s resolves to nothing'
                           % (eid, name[:20], wid))
+                elif kind == 'nav':
+                    print('  NAV      enemy %-4s %-20s leg %s -> %s has no path on the nav graph - the enemy freezes'
+                          % (eid, name[:20], wid, wx))
                 elif kind == 'feet':
                     print('  FEET     enemy %-4s %-20s waypoint %-4s at (%.1f, %.1f) - %d%% of its feet on the floor'
                           % (eid, name[:20], wid, wx, wy, round(row[6] * 100)))
@@ -308,6 +398,8 @@ def main():
         print('%d feet leg(s) accepted as deliberate (%s)' % (n_accepted, os.path.basename(ACCEPTED_FEET)))
         for rel, key in stale:
             print('  STALE    %s %s is accepted but now passes - drop it from the file' % (rel, key))
+    if nav:
+        print('%d frozen leg(s) accepted (%s, accepted_nav)' % (n_nav_accepted, os.path.basename(ACCEPTED_FEET)))
     return 1 if findings else 0
 
 

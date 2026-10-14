@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 595: frozen patrols - `waypoint_routes_qa.py --nav`; Omenport's Stella Lee and tibalt's Bear walk again (2026-10-14)
+
+The user, starting the follow-up round 565 proposed: "start the nav-graph frozen patrols audit".
+
+- **The problem:** MapStage idles a walking mob whose A* path is empty and asks again every frame, so the leg never
+  completes and the enemy stands still for good. Every pixel audit calls such a route clean: the player's 10x6 box slips
+  between two trees where the graph's tile-centre vertices (`NavigationMap.initializeGeometryGraph`) cannot.
+- **Replica fidelity, checked against the Java first:**
+  - A walking mob never stands exactly on a waypoint (the behaviour completes within 2 px), so `findShortestPath()`
+    adds its position as a NEW vertex linked to its 10 nearest ray-visible vertices. These links can bridge two parts
+    of the graph that the waypoint's own 4 build-time links cannot.
+  - `tfrmaps.NavSim`'s `origin_key` mode (depart from the waypoint's own vertex) is stricter than the game: on the
+    plane it called 11 more legs frozen than the game-faithful model, every one explained by that alone.
+  - **Correction to round 565:** its "grolnok's Treefolk 160 already freezes at waypoint 142" was that artifact; the
+    leg walks (172 px). `fix_routes.py --feet`'s nav check used the same mode and now departs from beside the waypoint.
+  - MapStage merges collision rects and drops merged rects under 3x3 px; NavSim keeps those specks. Compared on the
+    plane, no verdict changed, so NavSim keeps its geometry.
+- **`waypoint_routes_qa.py --nav`:**
+  - Walks every route as the game does: the first leg from the enemy's own position, every later leg from a hair off
+    the waypoint just reached.
+  - Skips fliers (`EnemyData.flying` or the map's own `flying` property) and pinned booster guards.
+  - Reviewed legs go in `accepted_nav` in `waypoint_feet_accepted.json`, keyed "<enemy>:<from>-><to>".
+- **The plane:** 3 of 6,217 walking legs had no path.
+  - **Omenport, Stella Lee (E254), start -> 313:** she never moved. Her start and waypoint 314 are on one part of the
+    graph; 313's four links reached only the road's part. 313 moved 9 px toward her start (205.8, 151.3 -> 205.5, 160.3)
+    and now links to her side.
+  - **tibalt, Bear (E234), 237 -> 239:** the tree band splits the graph; it walked 238 -> 237 and stopped there for
+    good. 239 moved 8 px toward 237 (894.5, 195.8 -> 894.2, 187.8) and now links across.
+  - **skep_outer, Knight (E241), start -> 75 - accepted, not moved:** the dialog NPC starts in the tent camp behind
+    skep's gated wall, which the player cannot reach either. Stock Forge places it there too, and moving it would be a
+    story change.
+  - Both moves slide along the patrol's own line. The feet stay 100% on floor, loot clear. Every leg touching the
+    waypoint has a path, also with the departure jittered 1-1.5 px around each waypoint and with NavSim's own rects.
+- **Housekeeping:**
+  - graveyard's Crocodiles 58/59 at waypoint 85 (swimmers in the river) are accepted in the feet list. A post-578 change
+    to their drawn body had made them FEET findings again; it is the same call as their waypoint 88.
+  - Round 565's two tool docstrings said "round 562"; corrected.
+- **Checks:** `--nav` reports 0 (1 accepted), `--feet` 0 (90 accepted, none stale), `fix_routes.py --feet` finds
+  nothing to move, and the default audit's 19 maps are unchanged. The map diff is two lines. Not seen in play: watch
+  Stella Lee walk up her road in Omenport, and tibalt's Bear pass the tree band.
+
 ## Round 594: nine fixes from the user's playtest list (2026-10-14)
 
 The user sent screenshots and a list: "Some things to look into".

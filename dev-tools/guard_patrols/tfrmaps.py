@@ -701,7 +701,10 @@ class NavSim(object):
         """(length px, [points]) of the A* path from a position to a waypoint vertex, or (None, []).
 
         `origin_key` names a vertex the walker is standing on (the previous waypoint): findShortestPath() then
-        finds the origin already in the graph and uses that vertex's own edges instead of linking it anew."""
+        finds the origin already in the graph and uses that vertex's own edges instead of linking it anew.
+        Round 595: a WALKING mob never stands exactly on a waypoint (it stops within 2 px), so the game links its
+        position anew to its 10 nearest vertices - pass a point a hair off the waypoint and no origin_key to
+        replay a patrol leg; origin_key is stricter than the game and calls legs frozen that walk."""
         if dest_key not in self.pos:
             return None, []
         if origin_key is not None and origin_key in self.pos:

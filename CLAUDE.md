@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 595): **LOCAL + UNRELEASED** - frozen patrols: `waypoint_routes_qa.py --nav` (legs the
+nav graph cannot path); Omenport's Stella Lee and tibalt's Bear walk again (one waypoint each, 8-9 px).
+
 ## STATE 2026-10-14 (round 594): **LOCAL + UNRELEASED** - the user's nine playtest fixes: quest days from the day a
 quest is taken (QuestExpiry.onAccepted); the magnifier/star at the solid art's edges (atlas `footprint:` on 64 entrance
 regions, dev-tools/poi_footprints.py --check after any entrance install); guard wins count at the Temple; Notoriety

@@ -34,7 +34,9 @@
   "graveyard_crypt/graveyard.tmx": {
    "55:94": "booster guard - pinned to its post (MapStage.assignLootGuards), the route never runs",
    "58:88": "swimmer (Crocodile) in the river",
-   "59:88": "swimmer (Crocodile) in the river"
+   "59:88": "swimmer (Crocodile) in the river",
+   "58:85": "swimmer (Crocodile) in the river - flagged once the Crocodile's drawn body changed after round 578; the same call as its waypoint 88",
+   "59:85": "swimmer (Crocodile) in the river - flagged once the Crocodile's drawn body changed after round 578; the same call as its waypoint 88"
   },
   "graveyard_crypt/graveyard_2.tmx": {
    "84:77": "flier (Raven, Bat) over the water"
@@ -124,6 +126,12 @@
    "213:180": "lava creature (Magma Fire Elemental) in the lava pools",
    "213:184": "lava creature (Magma Fire Elemental) in the lava pools",
    "213:191": "lava creature (Magma Fire Elemental) in the lava pools"
+  }
+ },
+ "_doc_nav": "Round 595: `accepted_nav` - legs waypoint_routes_qa.py --nav reports (no path on the nav graph, so the enemy freezes) that a reviewed pass ACCEPTED. Keyed \"<enemy object id>:<from>-><to>\" per map, from = a waypoint id or \"start\" (the walk from the enemy's own position).",
+ "accepted_nav": {
+  "skep/skep_outer.tmx": {
+   "241:start->75": "the Knight (a dialog NPC) starts in the tent camp behind skep's gated wall, a part the player cannot reach either; stock Forge's skep_outer places it there too. Moving it would be a story change, not a route fix"
   }
  }
 }
