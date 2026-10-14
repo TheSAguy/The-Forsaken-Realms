@@ -255,14 +255,82 @@ public class RoamingGuardRuntime {
             RoamingGuardData guard = town == null ? null : pickPillageGuard(day);
             if (guard == null)
                 continue;
-            boolean teleports = setOut(guard, town, true);
-            System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " dispatched to the pillage at "
-                    + town.getDisplayName() + " (gear " + ArmoryStorage.gearNames(guard) + ")"
-                    + (teleports ? " - TELEPORTED" : " - travelling"));
-            GameHUD.getInstance().addNotification("Your " + RoamingGuards.displayName(guard.tier)
-                    + " guard sets out to drive the raiders from " + town.getDisplayName() + "."
-                    + (teleports ? " (teleported)" : ""));
+            sendToPillage(guard, town);
         }
+    }
+
+    private static void sendToPillage(RoamingGuardData guard, PointOfInterest town) {
+        boolean teleports = setOut(guard, town, true);
+        System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " dispatched to the pillage at "
+                + town.getDisplayName() + " (gear " + ArmoryStorage.gearNames(guard) + ")"
+                + (teleports ? " - TELEPORTED" : " - travelling"));
+        GameHUD.getInstance().addNotification("Your " + RoamingGuards.displayName(guard.tier)
+                + " guard sets out to drive the raiders from " + town.getDisplayName() + "."
+                + (teleports ? " (teleported)" : ""));
+    }
+
+    /**
+     * Round 589 (the user's guard stayed home through a raid with "Help with pillaged towns" unticked, and nothing said
+     * why): TownPillage.start() calls this as a pillage begins. With a roaming guard hired, the player now hears that one
+     * sets out - sent here and now rather than next frame, so a second pillage from the same weekly roll sees it taken -
+     * or why none does. Without a guard it says nothing; the pillage notice is enough. A guard held back only for now
+     * (busy, on its way home, hurt) is still sent by assignMissions once it is free.
+     */
+    public static void onPillageStarted(PointOfInterest town, int day) {
+        if (!RoamingGuards.isEnabled() || RoamingGuards.roster().isEmpty())
+            return;
+        RoamingGuardData guard = pickPillageGuard(day);
+        if (guard != null) {
+            sendToPillage(guard, town);
+            return;
+        }
+        String why = noPillageGuardReason(town, day);
+        System.out.println("[TFR-RoamGuard] no guard for the pillage at " + town.getDisplayName() + " - " + why);
+        GameHUD.getInstance().addNotification(why);
+    }
+
+    /** Round 589: the notice when pickPillageGuard finds nobody - what holds back each guard with the order (two at
+     *  most), or that no guard has it. */
+    private static String noPillageGuardReason(PointOfInterest town, int day) {
+        List<String> held = new ArrayList<>();
+        List<RoamingGuardData> waiting = new ArrayList<>();
+        for (RoamingGuardData guard : RoamingGuards.roster()) {
+            if (!guard.helpPillage)
+                continue;
+            String who = "your " + RoamingGuards.displayName(guard.tier) + " guard ";
+            if (guard.isOutOfCommission(day)) {
+                held.add(who + "is hurt (" + (guard.downUntilDay - day) + " more day(s))");
+                waiting.add(guard);
+            } else if (guard.deckCards.length == 0) {
+                held.add(who + "has no deck");
+            } else if (!engagesAnyRank(guard)) {
+                held.add(who + "avoids every rank");
+            } else if (guard.returningHome) {
+                held.add(who + "is on its way back to the Capitol");
+                waiting.add(guard);
+            } else if (!guard.isIdle()) {
+                PointOfInterest at = poiById(guard.missionPoiId);
+                held.add(who + (guard.missionPillage ? "is fighting raiders" : "is defending")
+                        + (at == null ? "" : " at " + at.getDisplayName()));
+                waiting.add(guard);
+            }
+        }
+        if (held.isEmpty())
+            return "No guard rides to " + town.getDisplayName() + ": none of yours has \"Help with pillaged towns\" ticked"
+                    + " (Capitol Armory, Manage Guards).";
+        StringBuilder sb = new StringBuilder("No guard rides to ").append(town.getDisplayName())
+                .append(waiting.isEmpty() ? ": " : " yet: ")
+                .append(String.join("; ", held.subList(0, Math.min(2, held.size()))));
+        if (held.size() > 2)
+            sb.append(" (and ").append(held.size() - 2).append(" more)");
+        sb.append('.');
+        if (waiting.size() == 1 && held.size() == 1)
+            sb.append(" It rides out once free.");
+        else if (waiting.size() == 1)
+            sb.append(" Your ").append(RoamingGuards.displayName(waiting.get(0).tier)).append(" guard rides out once free.");
+        else if (waiting.size() > 1)
+            sb.append(" The first one free rides out.");
+        return sb.toString();
     }
 
     /** Puts a guard on the road to {@code target}; true when it teleported there. Shared by both kinds of mission. */
@@ -300,13 +368,18 @@ public class RoamingGuardRuntime {
                 continue;
             if (guard.deckCards.length == 0)
                 continue;
-            boolean anyRank = false;
-            for (String tier : RoamingGuards.TIERS_ASCENDING)
-                anyRank |= RoamingGuards.willEngage(guard, tier);
-            if (anyRank)
+            if (engagesAnyRank(guard))
                 return guard;
         }
         return null;
+    }
+
+    /** Round 490's rule for pillage duty: any one rank ticked will do (raiders carry no territory color). */
+    private static boolean engagesAnyRank(RoamingGuardData guard) {
+        for (String tier : RoamingGuards.TIERS_ASCENDING)
+            if (RoamingGuards.willEngage(guard, tier))
+                return true;
+        return false;
     }
 
     /**

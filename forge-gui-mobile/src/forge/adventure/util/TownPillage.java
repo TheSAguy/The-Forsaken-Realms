@@ -216,6 +216,7 @@ public final class TownPillage {
                 + dungeonsNear(world, poi, hostileDungeons(world)).size() + " dungeon(s) within "
                 + t.pillageRadiusTiles + " tiles, " + atOnce + " raider(s) at a time, " + t.pillageKills + " to beat by day "
                 + (day + t.pillageDays));
+        RoamingGuardRuntime.onPillageStarted(poi, day); // round 589: a guard sets out, or the notice says why none does
     }
 
     // ------------------------------------------------------------------------------------------------ the days

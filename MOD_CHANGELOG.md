@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 589: a town raid says whether a roaming guard rides out, and why not (2026-10-14)
+
+The user's guard stayed at the Capitol through a raid because "Help with pillaged towns" was unticked (off by default),
+and nothing said why. Offered in round 588; the user picked "build it" (only for players who own a guard).
+
+- **When a pillage starts** (`TownPillage.start` -> `RoamingGuardRuntime.onPillageStarted`), with at least one roaming
+  guard hired:
+  - A guard that can go is sent **right away** with the usual "Your Master guard sets out to drive the raiders from X."
+    Before, it went on the next frame. Sending it at once means a second raid from the same weekly roll sees it taken.
+  - Otherwise a notice says why none goes:
+    - No guard has the order: `No guard rides to X: none of yours has "Help with pillaged towns" ticked (Capitol
+      Armory, Manage Guards).`
+    - Guards with the order but held back (two named at most): hurt (N more days), no deck, avoids every rank, on its
+      way back to the Capitol, or fighting raiders / defending at a town. `No guard rides to X yet: your Apprentice
+      guard is fighting raiders at Y. It rides out once free.`
+    - "yet" and the last sentence appear only when one is held back for now (busy, returning, hurt); the per-frame
+      dispatch still sends it once free.
+- **No guard hired:** nothing new. The raid notice is enough.
+- **Refactor:** the pillage dispatch is now `sendToPillage` and the rank test `engagesAnyRank`, shared by the per-frame
+  loop and the new call.
+- **Logged:** `[TFR-RoamGuard] no guard for the pillage at X - <the notice>`.
+- **Agent-tested** on a copy of the user's save 1 (agent slot 22, cheats):
+  - No guards: the raid notice alone.
+  - A Master guard without the order: the "none of yours has ... ticked" notice.
+  - An Apprentice with the order: dispatched at once ("sets out").
+  - A third raid while it was out: the "yet ... It rides out once free" notice.
+  - All four read in full in the notice log.
+
 ## Round 588: basic lands are never "shared" when a guard takes a deck (2026-10-13)
 
 The user, about save 2's Tide of Phyresis and Void Engine: "Since basic lands are free, you can add any amount for free,
