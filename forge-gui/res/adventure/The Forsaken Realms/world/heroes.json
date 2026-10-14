@@ -11,7 +11,7 @@
     {"name": "Metathran", "female": "sprites/heroes/metathran_f.atlas", "male": "sprites/heroes/metathran_m.atlas", "femaleAvatar": "Metathran_f", "maleAvatar": "Metathran_m"},
     {"name": "Undead", "female": "sprites/heroes/undead_f.atlas", "male": "sprites/heroes/undead_m.atlas", "femaleAvatar": "Undead_f", "maleAvatar": "Undead_m"},
     {"name": "Viashino", "female": "sprites/heroes/viashino_f.atlas", "male": "sprites/heroes/viashino_m.atlas", "femaleAvatar": "Viashino_f", "maleAvatar": "Viashino_m"},
-    {"name": "Phyrexian", "female": "sprites/heroes/phyrexian_r.atlas", "male": "sprites/heroes/phyrexian_u.atlas", "femaleAvatar": "Phyrexian_f", "maleAvatar": "Phyrexian_m"},
+    {"name": "Phyrexian", "female": "sprites/heroes/phyrexian_biomech_r.atlas", "male": "sprites/heroes/phyrexian_biomech_u.atlas", "femaleAvatar": "Phyrexian_f", "maleAvatar": "Phyrexian_m", "scale": 0.375},
     {"name": "Dwarf", "female": "sprites/heroes/dwarf_f.atlas", "male": "sprites/heroes/dwarf_m.atlas", "femaleAvatar": "Dwarf_f", "maleAvatar": "Dwarf_m"},
     {"name": "Werewolf", "female": "sprites/heroes/werewolf_f.atlas", "male": "sprites/heroes/werewolf_m.atlas", "femaleAvatar": "Werewolf_f", "maleAvatar": "Werewolf_m"},
     {"name": "Leonin", "female": "sprites/heroes/leonin_f.atlas", "male": "sprites/heroes/leonin_m.atlas", "femaleAvatar": "Leonin_f", "maleAvatar": "Leonin_m"},

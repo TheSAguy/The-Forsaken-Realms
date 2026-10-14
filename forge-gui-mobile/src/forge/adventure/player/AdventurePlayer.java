@@ -2219,6 +2219,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return HeroListData.instance().getHero(heroRace, isFemale);
     }
 
+    /** Round 591: the draw scale of spriteName()'s sheet - see HeroListData.getScale. */
+    public float spriteScale() {
+        return HeroListData.instance().getScale(heroRace);
+    }
+
     public FileHandle sprite() {
         return Config.instance().getFile(HeroListData.instance().getHero(heroRace, isFemale));
     }

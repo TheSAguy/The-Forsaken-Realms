@@ -53,6 +53,29 @@ public class CharacterSprite extends MapActor {
     private static final float FOOTPRINT_TILE = 16f;
     private static final float FOOTPRINT_MARGIN = 3f;
 
+    /** Round 591: a hero sheet drawn below its own size (heroes.json "scale", the Pixelate Phyrexian's 64 px art at
+     *  0.375) - 1 = drawn as authored, as every stock 16 px hero is. */
+    private float heroScale = 1f;
+
+    /** Round 591: the player and the roaming guards on a hero sheet with a heroes.json "scale". The frame draws at that
+     *  scale (times a guard's rank cue) with its body - the footprint - centred on the actor, but the actor itself
+     *  stays the 16 px box every stock hero frame gave it (a guard's: times its cue), so collisions, doorways, map
+     *  entries and the camera behave exactly as before. Call after setTierCue. */
+    public void setHeroScale(float scale) {
+        heroScale = scale > 0f ? scale : 1f;
+        if (heroScale != 1f) {
+            float side = heroBox();
+            setSize(side, side);
+            System.out.println("[TFR-Hero] " + atlasPath + " drawn at scale " + heroScale + " on a " + side + " px box"
+                    + (hasFootprint() ? "" : " (no footprint: the frame is centred)"));
+        }
+    }
+
+    private float heroBox() {
+        return FOOTPRINT_TILE * (tierCue == null ? 1f
+                : Config.instance().getTuningData().tierSizeMultiplier(tierCue, FOOTPRINT_TILE, false));
+    }
+
     private static final Color batchColor = new Color();
     private static final Vector2 moveAngle = new Vector2();
     public CharacterSprite(int id, String path) {
@@ -375,7 +398,9 @@ public class CharacterSprite extends MapActor {
                 keepNativeSize = enemyData.boss || enemyData.keepSize;
             }
         }
-        if (tier != null)
+        if (heroScale != 1f) // round 591: a guard's cue is the one its stock 16 px hero frame got
+            scale = heroScale * heroBox() / FOOTPRINT_TILE;
+        else if (tier != null)
             scale *= Config.instance().getTuningData().tierSizeMultiplier(tier,
                     currentFrame.getRegionHeight() * scale, keepNativeSize);
 
@@ -388,6 +413,19 @@ public class CharacterSprite extends MapActor {
             frameHeight = EnemySprite.LOOT_DISGUISE_PIXELS;
             setHeight(frameHeight);
             setWidth(frameWidth);
+        } else if (heroScale != 1f) {
+            // Round 591 (setHeroScale): the box stays the stock hero's; the body sits centred on it, feet on its floor
+            float box = heroBox();
+            setWidth(box);
+            setHeight(box);
+            if (hasFootprint()) {
+                float bodyLeft = currentFrame.isFlipX()
+                        ? currentFrame.getRegionWidth() - footprintX0 - footprintWidth : footprintX0;
+                drawX += (box - footprintWidth * scale) / 2f - bodyLeft * scale;
+                drawY -= footprintLift * scale;
+            } else {
+                drawX += (box - frameWidth) / 2f;
+            }
         } else if (hasFootprint()) {
             // Round 578: the box is the creature (sizeToFootprint) and the frame is drawn so the body sits in it - a
             // mirrored frame (FlipAnimation) has the body at the other side. The rest of the frame (a lunge, a tail

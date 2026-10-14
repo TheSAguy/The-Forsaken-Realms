@@ -6903,7 +6903,7 @@
     },
     {
         "name": "Copper Host Brutalizer",
-        "sprite": "sprites/enemy/aberration/phyrexian/copperhostbrutalizer.atlas",
+        "sprite": "sprites/enemy/remake/copper_host_brutalizer.atlas",
         "deck": [
             "decks/miniboss/copperhostbrutalizer.dck"
         ],
@@ -6979,7 +6979,8 @@
             "Copper Host",
             "Humanoid"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3095
     },
     {
         "name": "Copper Host Infector",
@@ -9239,7 +9240,7 @@
     },
     {
         "name": "Dross Gladiator",
-        "sprite": "sprites/enemy/aberration/phyrexian/drossgladiator.atlas",
+        "sprite": "sprites/enemy/remake/dross_gladiator.atlas",
         "deck": [
             "decks/standard/drossgladiator.json"
         ],
@@ -9316,7 +9317,8 @@
             "Humanoid",
             "IdentityBlack"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3095
     },
     {
         "name": "Dross Grimnarch",
@@ -43830,13 +43832,13 @@
     },
     {
         "name": "Gix",
-        "sprite": "sprites/enemy/aberration/phyrexian/drossgladiator.atlas",
+        "sprite": "sprites/enemy/remake/gix.atlas",
         "deck": [
             "decks/legends/gix.dck"
         ],
         "ai": "",
         "speed": 38,
-        "scale": 1,
+        "scale": 0.3095,
         "life": 31,
         "rewards": [
             {
@@ -65729,13 +65731,13 @@
     },
     {
         "name": "Vraan",
-        "sprite": "sprites/enemy/aberration/phyrexian/drossgladiator.atlas",
+        "sprite": "sprites/enemy/remake/vraan.atlas",
         "deck": [
             "decks/legends/vraan.dck"
         ],
         "ai": "",
         "speed": 53,
-        "scale": 1,
+        "scale": 0.3095,
         "life": 32,
         "rewards": [
             {
@@ -69026,13 +69028,13 @@
     },
     {
         "name": "Rothga",
-        "sprite": "sprites/enemy/aberration/phyrexian/copperhostbrutalizer.atlas",
+        "sprite": "sprites/enemy/remake/rothga.atlas",
         "deck": [
             "decks/legends/rothga.dck"
         ],
         "ai": "",
         "speed": 41,
-        "scale": 1,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -69167,13 +69169,13 @@
     },
     {
         "name": "Zopandrel",
-        "sprite": "sprites/enemy/aberration/phyrexian/copperhostbrutalizer.atlas",
+        "sprite": "sprites/enemy/remake/zopandrel.atlas",
         "deck": [
             "decks/legends/zopandrel.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0,
+        "scale": 0.3095,
         "life": 46,
         "rewards": [
             {
@@ -72677,7 +72679,7 @@
     },
     {
         "name": "Migloz",
-        "sprite": "sprites/enemy/aberration/phyrexian/copperhostbrutalizer.atlas",
+        "sprite": "sprites/enemy/remake/migloz.atlas",
         "deck": [
             "decks/legends/migloz.dck"
         ],
@@ -72740,7 +72742,8 @@
         "colors": "RG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3095
     },
     {
         "name": "Sethron",
@@ -76411,7 +76414,7 @@
     },
     {
         "name": "Vishgraz",
-        "sprite": "sprites/enemy/aberration/phyrexian/copperhostbrutalizer.atlas",
+        "sprite": "sprites/enemy/remake/vishgraz.atlas",
         "deck": [
             "decks/legends/vishgraz.dck"
         ],
@@ -76474,7 +76477,8 @@
         "colors": "WBG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3095
     },
     {
         "name": "Zabaz",

@@ -14264,6 +14264,60 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 591: the Phyrexian player race gets the user's hand-made biomechanoid (2026-10-14)
+
+The Procedural Pixel Creatures session. The user made a Phyrexian turnaround (front, side, back) and ten Kling clips,
+cleaned in Pixelate: idle, walk and attack for each view, and a death from the front. The user's choices, from a
+map-size preview: "18 px tall, half detail, red for the female slot, blue-steel for the male slot, and an oil-black
+version for the Phyrexian enemies."
+
+- **The hero sheets**:
+  - `sprites/heroes/phyrexian_biomech_r` (red, the female slot) and `phyrexian_biomech_u` (blue-steel, the male slot),
+    built by the generator's new `tools/forge_remake/pixelate_to_player.py`.
+  - Frames are 66x72 at half the clips' detail: 64 px art, the density of the LPC characters.
+  - Each view has Idle 12, Walk 6 and Attack 8, a Hit flash with a one-pixel recoil, and the front death (11 frames) in
+    every direction.
+  - Only Right, Up and Down are in the sheet: the game mirrors Right for Left and draws the diagonals with the side view.
+  - A ground shadow, and a round-578 footprint on IdleRight.
+  - `heroes.json`: the Phyrexian entry points at them and carries a new `"scale": 0.375`, which draws the 48 px body
+    18 world px tall.
+  - The stock `common/sprites/heroes/phyrexian_r/_u` files are untouched.
+- **The engine** (a hero sheet may now draw below its own size):
+  - `HeroData.scale` (default 1, so every other race and plane is unchanged), `HeroListData.getScale` and
+    `AdventurePlayer.spriteScale`.
+  - `CharacterSprite.setHeroScale` draws the frame at that scale, with its body (the footprint) centred on the actor.
+  - **The actor keeps the 16x16 box every stock hero frame gave it**, so collisions, doorways, map entries, POI touches
+    and the camera are exactly as before. #31's advice: a smaller box would let the player slip through wall gaps.
+  - `PlayerSprite` applies it on creation and when a loaded save changes the race.
+  - The roaming guards (`RoamingGuardRuntime.spriteFor`, drawn on the player's sheet) get the same scale. Their rank
+    cue is the one a 16 px hero frame got, and their box is 16 x that cue, as before.
+  - Logged: `[TFR-Hero] <sheet> drawn at scale S on a N px box`.
+- **The oil-black enemies** (tint hue 150, chroma x0.5, lightness x0.75):
+  - Dross Gladiator, Gix and Vraan (they were on `aberration/phyrexian/drossgladiator`).
+  - Copper Host Brutalizer, Rothga, Zopandrel, Migloz and Vishgraz (they were on `copperhostbrutalizer`).
+  - They share the player's frames in the enemy format: side-view Idle/Walk/Attack/Hit/Death, IdleUp/IdleDown/WalkUp/
+    WalkDown, and a whole-body Avatar.
+  - Scale 0.31 from `enemy_scale.py`, with a footprint each.
+  - The other 23 Phyrexians on 16 px sprites (goblins, angels, scientists...) are other shapes and stay.
+- **Agent-tested** on a copy of the user's save 1 (Will, a male Phyrexian; agent slot 22 and settings.json restored
+  after):
+  - The save loads straight onto the blue-steel sheet, with the card-art portrait.
+  - All four views were seen on the world map and in a map.
+  - Walking onto a POI enters it, and inside the map a signpost trigger fires.
+  - Leaving and the Capitol teleport work.
+  - Three roaming duels started and ended normally.
+  - A spawned oil-black enemy renders on the world map.
+  - Not seen: a roaming guard on the new sheet (none strolled in this save), and the red female sheet in play.
+- **Checks**:
+  - enemies.json against HEAD: exactly the 8 enemies, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections (enum 18, starter-bucket 30, unknown-key 1).
+  - The sprite audit flags the oil-black sheets' last Death frames (the body bursts into debris over its fading shadow)
+    and one WalkDown frame (the feet lift off the shadow): the Pixelate art, as with the earlier Pixelate enemies.
+- **Generator**: `pixelate_frames.py` holds the sheet cleaning that `pixelate_to_forge.py` and the new
+  `pixelate_to_player.py` share. Re-converting the Chimera, Kozilek, the Phoenix and a tinted test gives byte-identical
+  output.
+
 ## Round 590: every enemy on the stock elf sprites becomes an LPC character (2026-10-14)
 
 The Procedural Pixel Creatures session (the user picked "Elf LPC batch" from the open art work, then, after the first

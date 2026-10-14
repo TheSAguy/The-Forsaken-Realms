@@ -80,6 +80,13 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 591): **LOCAL + UNRELEASED (engine + art)** - the Phyrexian player race wears the user's
+Pixelate biomechanoid (red female `phyrexian_biomech_r`, blue-steel male `_u`; heroes.json `"scale": 0.375`, 18 px tall).
+New engine hook: HeroData.scale -> CharacterSprite.setHeroScale (PlayerSprite, RoamingGuardRuntime.spriteFor) draws a hero
+sheet scaled with its body centred on the STOCK 16x16 box (collisions unchanged). 8 oil-black enemy remakes (Dross
+Gladiator, Gix, Vraan, Copper Host Brutalizer, Rothga, Zopandrel, Migloz, Vishgraz; scale 0.31). Agent-tested on a copy
+of save 1. The jar was built by PPC #4 (MVN EXIT 0, 14:06); #31 packages.
+
 ## STATE 2026-10-14 (round 590): **LOCAL + UNRELEASED (art + data)** - all 83 enemies on the stock 16 px `humanoid/elf`
 sprites are LPC characters (the Procedural Pixel Creatures session; generator `lpc_selections/make_590.py`), each named
 one dressed from its legend deck's commander card. 83 new atlases under `sprites/enemy/remake/`, enemies.json 83 paths +

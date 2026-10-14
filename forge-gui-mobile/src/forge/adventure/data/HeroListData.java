@@ -48,6 +48,12 @@ public class HeroListData {
 
     }
 
+    /** Round 591: the draw scale of a race's hero sheets (heroes.json "scale"; 1 when absent or not positive). */
+    public float getScale(int raceIndex) {
+        HeroData data = instance().heroes[raceIndex];
+        return data.scale > 0f ? data.scale : 1f;
+    }
+
     // Round 542 (round 538's card-art portraits, the user: "replace the default player portraits with in game card
     // pictures"): a race's portraits come from its own atlas when the plane ships one - PORTRAIT_DIR + the race name in
     // lower case, spaces as underscores (sprites/heroes/portraits/red_dragon.atlas), built by

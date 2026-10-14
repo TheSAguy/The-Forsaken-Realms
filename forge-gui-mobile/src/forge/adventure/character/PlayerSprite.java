@@ -22,6 +22,7 @@ public class PlayerSprite extends CharacterSprite {
 
     public PlayerSprite(GameStage gameStage) {
         super(AdventurePlayer.current().spriteName());
+        setHeroScale(AdventurePlayer.current().spriteScale()); // round 591
         this.gameStage = gameStage;
         setOriginX(getWidth() / 2);
         Current.player().onPlayerChanged(PlayerSprite.this::updatePlayer);
@@ -35,6 +36,7 @@ public class PlayerSprite extends CharacterSprite {
 
     private void updatePlayer() {
         load(AdventurePlayer.current().spriteName());
+        setHeroScale(AdventurePlayer.current().spriteScale()); // round 591: a loaded save may be another race
     }
 
     public void LoadPos() {

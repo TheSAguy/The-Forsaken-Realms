@@ -1,0 +1,375 @@
+phyrexian_biomech_r.png
+size: 792,1080
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+IdleRight
+  xy: 0, 0
+  size: 66, 72
+  footprint: 26, 13, 16, 51
+IdleRight
+  xy: 66, 0
+  size: 66, 72
+IdleRight
+  xy: 132, 0
+  size: 66, 72
+IdleRight
+  xy: 198, 0
+  size: 66, 72
+IdleRight
+  xy: 264, 0
+  size: 66, 72
+IdleRight
+  xy: 330, 0
+  size: 66, 72
+IdleRight
+  xy: 396, 0
+  size: 66, 72
+IdleRight
+  xy: 462, 0
+  size: 66, 72
+IdleRight
+  xy: 528, 0
+  size: 66, 72
+IdleRight
+  xy: 594, 0
+  size: 66, 72
+IdleRight
+  xy: 660, 0
+  size: 66, 72
+IdleRight
+  xy: 726, 0
+  size: 66, 72
+IdleUp
+  xy: 0, 72
+  size: 66, 72
+IdleUp
+  xy: 66, 72
+  size: 66, 72
+IdleUp
+  xy: 132, 72
+  size: 66, 72
+IdleUp
+  xy: 198, 72
+  size: 66, 72
+IdleUp
+  xy: 264, 72
+  size: 66, 72
+IdleUp
+  xy: 330, 72
+  size: 66, 72
+IdleUp
+  xy: 396, 72
+  size: 66, 72
+IdleUp
+  xy: 462, 72
+  size: 66, 72
+IdleUp
+  xy: 528, 72
+  size: 66, 72
+IdleUp
+  xy: 594, 72
+  size: 66, 72
+IdleUp
+  xy: 660, 72
+  size: 66, 72
+IdleUp
+  xy: 726, 72
+  size: 66, 72
+IdleDown
+  xy: 0, 144
+  size: 66, 72
+IdleDown
+  xy: 66, 144
+  size: 66, 72
+IdleDown
+  xy: 132, 144
+  size: 66, 72
+IdleDown
+  xy: 198, 144
+  size: 66, 72
+IdleDown
+  xy: 264, 144
+  size: 66, 72
+IdleDown
+  xy: 330, 144
+  size: 66, 72
+IdleDown
+  xy: 396, 144
+  size: 66, 72
+IdleDown
+  xy: 462, 144
+  size: 66, 72
+IdleDown
+  xy: 528, 144
+  size: 66, 72
+IdleDown
+  xy: 594, 144
+  size: 66, 72
+IdleDown
+  xy: 660, 144
+  size: 66, 72
+IdleDown
+  xy: 726, 144
+  size: 66, 72
+WalkRight
+  xy: 0, 216
+  size: 66, 72
+WalkRight
+  xy: 66, 216
+  size: 66, 72
+WalkRight
+  xy: 132, 216
+  size: 66, 72
+WalkRight
+  xy: 198, 216
+  size: 66, 72
+WalkRight
+  xy: 264, 216
+  size: 66, 72
+WalkRight
+  xy: 330, 216
+  size: 66, 72
+WalkUp
+  xy: 0, 288
+  size: 66, 72
+WalkUp
+  xy: 66, 288
+  size: 66, 72
+WalkUp
+  xy: 132, 288
+  size: 66, 72
+WalkUp
+  xy: 198, 288
+  size: 66, 72
+WalkUp
+  xy: 264, 288
+  size: 66, 72
+WalkUp
+  xy: 330, 288
+  size: 66, 72
+WalkDown
+  xy: 0, 360
+  size: 66, 72
+WalkDown
+  xy: 66, 360
+  size: 66, 72
+WalkDown
+  xy: 132, 360
+  size: 66, 72
+WalkDown
+  xy: 198, 360
+  size: 66, 72
+WalkDown
+  xy: 264, 360
+  size: 66, 72
+WalkDown
+  xy: 330, 360
+  size: 66, 72
+AttackRight
+  xy: 0, 432
+  size: 66, 72
+AttackRight
+  xy: 66, 432
+  size: 66, 72
+AttackRight
+  xy: 132, 432
+  size: 66, 72
+AttackRight
+  xy: 198, 432
+  size: 66, 72
+AttackRight
+  xy: 264, 432
+  size: 66, 72
+AttackRight
+  xy: 330, 432
+  size: 66, 72
+AttackRight
+  xy: 396, 432
+  size: 66, 72
+AttackRight
+  xy: 462, 432
+  size: 66, 72
+AttackUp
+  xy: 0, 504
+  size: 66, 72
+AttackUp
+  xy: 66, 504
+  size: 66, 72
+AttackUp
+  xy: 132, 504
+  size: 66, 72
+AttackUp
+  xy: 198, 504
+  size: 66, 72
+AttackUp
+  xy: 264, 504
+  size: 66, 72
+AttackUp
+  xy: 330, 504
+  size: 66, 72
+AttackUp
+  xy: 396, 504
+  size: 66, 72
+AttackUp
+  xy: 462, 504
+  size: 66, 72
+AttackDown
+  xy: 0, 576
+  size: 66, 72
+AttackDown
+  xy: 66, 576
+  size: 66, 72
+AttackDown
+  xy: 132, 576
+  size: 66, 72
+AttackDown
+  xy: 198, 576
+  size: 66, 72
+AttackDown
+  xy: 264, 576
+  size: 66, 72
+AttackDown
+  xy: 330, 576
+  size: 66, 72
+AttackDown
+  xy: 396, 576
+  size: 66, 72
+AttackDown
+  xy: 462, 576
+  size: 66, 72
+HitRight
+  xy: 0, 648
+  size: 66, 72
+HitRight
+  xy: 66, 648
+  size: 66, 72
+HitRight
+  xy: 132, 648
+  size: 66, 72
+HitRight
+  xy: 198, 648
+  size: 66, 72
+HitUp
+  xy: 0, 720
+  size: 66, 72
+HitUp
+  xy: 66, 720
+  size: 66, 72
+HitUp
+  xy: 132, 720
+  size: 66, 72
+HitUp
+  xy: 198, 720
+  size: 66, 72
+HitDown
+  xy: 0, 792
+  size: 66, 72
+HitDown
+  xy: 66, 792
+  size: 66, 72
+HitDown
+  xy: 132, 792
+  size: 66, 72
+HitDown
+  xy: 198, 792
+  size: 66, 72
+DeathRight
+  xy: 0, 864
+  size: 66, 72
+DeathRight
+  xy: 66, 864
+  size: 66, 72
+DeathRight
+  xy: 132, 864
+  size: 66, 72
+DeathRight
+  xy: 198, 864
+  size: 66, 72
+DeathRight
+  xy: 264, 864
+  size: 66, 72
+DeathRight
+  xy: 330, 864
+  size: 66, 72
+DeathRight
+  xy: 396, 864
+  size: 66, 72
+DeathRight
+  xy: 462, 864
+  size: 66, 72
+DeathRight
+  xy: 528, 864
+  size: 66, 72
+DeathRight
+  xy: 594, 864
+  size: 66, 72
+DeathRight
+  xy: 660, 864
+  size: 66, 72
+DeathUp
+  xy: 0, 936
+  size: 66, 72
+DeathUp
+  xy: 66, 936
+  size: 66, 72
+DeathUp
+  xy: 132, 936
+  size: 66, 72
+DeathUp
+  xy: 198, 936
+  size: 66, 72
+DeathUp
+  xy: 264, 936
+  size: 66, 72
+DeathUp
+  xy: 330, 936
+  size: 66, 72
+DeathUp
+  xy: 396, 936
+  size: 66, 72
+DeathUp
+  xy: 462, 936
+  size: 66, 72
+DeathUp
+  xy: 528, 936
+  size: 66, 72
+DeathUp
+  xy: 594, 936
+  size: 66, 72
+DeathUp
+  xy: 660, 936
+  size: 66, 72
+DeathDown
+  xy: 0, 1008
+  size: 66, 72
+DeathDown
+  xy: 66, 1008
+  size: 66, 72
+DeathDown
+  xy: 132, 1008
+  size: 66, 72
+DeathDown
+  xy: 198, 1008
+  size: 66, 72
+DeathDown
+  xy: 264, 1008
+  size: 66, 72
+DeathDown
+  xy: 330, 1008
+  size: 66, 72
+DeathDown
+  xy: 396, 1008
+  size: 66, 72
+DeathDown
+  xy: 462, 1008
+  size: 66, 72
+DeathDown
+  xy: 528, 1008
+  size: 66, 72
+DeathDown
+  xy: 594, 1008
+  size: 66, 72
+DeathDown
+  xy: 660, 1008
+  size: 66, 72
