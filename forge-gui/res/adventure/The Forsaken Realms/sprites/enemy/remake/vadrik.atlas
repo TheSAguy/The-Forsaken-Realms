@@ -1,0 +1,177 @@
+vadrik.png
+size: 414,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 46, 53
+  footprint: 13, 1, 20, 52
+Idle
+  xy: 46, 64
+  size: 46, 53
+Idle
+  xy: 92, 64
+  size: 46, 53
+Idle
+  xy: 138, 64
+  size: 46, 53
+Walk
+  xy: 0, 117
+  size: 46, 53
+Walk
+  xy: 46, 117
+  size: 46, 53
+Walk
+  xy: 92, 117
+  size: 46, 53
+Walk
+  xy: 138, 117
+  size: 46, 53
+Walk
+  xy: 184, 117
+  size: 46, 53
+Walk
+  xy: 230, 117
+  size: 46, 53
+Walk
+  xy: 276, 117
+  size: 46, 53
+Walk
+  xy: 322, 117
+  size: 46, 53
+Attack
+  xy: 0, 170
+  size: 46, 53
+Attack
+  xy: 46, 170
+  size: 46, 53
+Attack
+  xy: 92, 170
+  size: 46, 53
+Attack
+  xy: 138, 170
+  size: 46, 53
+Attack
+  xy: 184, 170
+  size: 46, 53
+Attack
+  xy: 230, 170
+  size: 46, 53
+Attack
+  xy: 276, 170
+  size: 46, 53
+Hit
+  xy: 0, 223
+  size: 46, 53
+Hit
+  xy: 46, 223
+  size: 46, 53
+Hit
+  xy: 92, 223
+  size: 46, 53
+Hit
+  xy: 138, 223
+  size: 46, 53
+Death
+  xy: 0, 276
+  size: 46, 53
+Death
+  xy: 46, 276
+  size: 46, 53
+Death
+  xy: 92, 276
+  size: 46, 53
+Death
+  xy: 138, 276
+  size: 46, 53
+Death
+  xy: 184, 276
+  size: 46, 53
+Death
+  xy: 230, 276
+  size: 46, 53
+Death
+  xy: 276, 276
+  size: 46, 53
+Death
+  xy: 322, 276
+  size: 46, 53
+Death
+  xy: 368, 276
+  size: 46, 53
+IdleUp
+  xy: 0, 329
+  size: 46, 53
+IdleUp
+  xy: 46, 329
+  size: 46, 53
+IdleUp
+  xy: 92, 329
+  size: 46, 53
+IdleUp
+  xy: 138, 329
+  size: 46, 53
+IdleDown
+  xy: 0, 382
+  size: 46, 53
+IdleDown
+  xy: 46, 382
+  size: 46, 53
+IdleDown
+  xy: 92, 382
+  size: 46, 53
+IdleDown
+  xy: 138, 382
+  size: 46, 53
+WalkUp
+  xy: 0, 435
+  size: 46, 53
+WalkUp
+  xy: 46, 435
+  size: 46, 53
+WalkUp
+  xy: 92, 435
+  size: 46, 53
+WalkUp
+  xy: 138, 435
+  size: 46, 53
+WalkUp
+  xy: 184, 435
+  size: 46, 53
+WalkUp
+  xy: 230, 435
+  size: 46, 53
+WalkUp
+  xy: 276, 435
+  size: 46, 53
+WalkUp
+  xy: 322, 435
+  size: 46, 53
+WalkDown
+  xy: 0, 488
+  size: 46, 53
+WalkDown
+  xy: 46, 488
+  size: 46, 53
+WalkDown
+  xy: 92, 488
+  size: 46, 53
+WalkDown
+  xy: 138, 488
+  size: 46, 53
+WalkDown
+  xy: 184, 488
+  size: 46, 53
+WalkDown
+  xy: 230, 488
+  size: 46, 53
+WalkDown
+  xy: 276, 488
+  size: 46, 53
+WalkDown
+  xy: 322, 488
+  size: 46, 53

@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 599): **LOCAL + UNRELEASED (art + data)** - LPC backlog batch 2 of 5: the other 72 wizards
+(generator `lpc_selections/make_599.py`); the whole humanoid/human/wizard folder is LPC now. enemies.json 72 paths +
+scales (0.27-0.34), 34 footprints, CREDITS_LPC.md 500 characters, CREDITS.md's LPC bullet. #31 packages. Not seen in play.
+
 ## STATE 2026-10-14 (round 603): **LOCAL + UNRELEASED (art + data)** - the user's Pixelate Angel Warrior for 19 angels:
 11 white/gold, Giada/Bruna/Linvala blue, Tiana/Feather/Rienne/Anya red, Shalai and Hallar/Sigarda green (generator
 `pixelate/angel_warrior/convert.sh`); ranked 0.16, bosses Guardian Angel and Serra keep their size. Orthodoxy Angel and

@@ -1,0 +1,176 @@
+rakdos_wizard.png
+size: 450,613
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 50, 61
+Idle
+  xy: 50, 64
+  size: 50, 61
+Idle
+  xy: 100, 64
+  size: 50, 61
+Idle
+  xy: 150, 64
+  size: 50, 61
+Walk
+  xy: 0, 125
+  size: 50, 61
+Walk
+  xy: 50, 125
+  size: 50, 61
+Walk
+  xy: 100, 125
+  size: 50, 61
+Walk
+  xy: 150, 125
+  size: 50, 61
+Walk
+  xy: 200, 125
+  size: 50, 61
+Walk
+  xy: 250, 125
+  size: 50, 61
+Walk
+  xy: 300, 125
+  size: 50, 61
+Walk
+  xy: 350, 125
+  size: 50, 61
+Attack
+  xy: 0, 186
+  size: 50, 61
+Attack
+  xy: 50, 186
+  size: 50, 61
+Attack
+  xy: 100, 186
+  size: 50, 61
+Attack
+  xy: 150, 186
+  size: 50, 61
+Attack
+  xy: 200, 186
+  size: 50, 61
+Attack
+  xy: 250, 186
+  size: 50, 61
+Attack
+  xy: 300, 186
+  size: 50, 61
+Hit
+  xy: 0, 247
+  size: 50, 61
+Hit
+  xy: 50, 247
+  size: 50, 61
+Hit
+  xy: 100, 247
+  size: 50, 61
+Hit
+  xy: 150, 247
+  size: 50, 61
+Death
+  xy: 0, 308
+  size: 50, 61
+Death
+  xy: 50, 308
+  size: 50, 61
+Death
+  xy: 100, 308
+  size: 50, 61
+Death
+  xy: 150, 308
+  size: 50, 61
+Death
+  xy: 200, 308
+  size: 50, 61
+Death
+  xy: 250, 308
+  size: 50, 61
+Death
+  xy: 300, 308
+  size: 50, 61
+Death
+  xy: 350, 308
+  size: 50, 61
+Death
+  xy: 400, 308
+  size: 50, 61
+IdleUp
+  xy: 0, 369
+  size: 50, 61
+IdleUp
+  xy: 50, 369
+  size: 50, 61
+IdleUp
+  xy: 100, 369
+  size: 50, 61
+IdleUp
+  xy: 150, 369
+  size: 50, 61
+IdleDown
+  xy: 0, 430
+  size: 50, 61
+IdleDown
+  xy: 50, 430
+  size: 50, 61
+IdleDown
+  xy: 100, 430
+  size: 50, 61
+IdleDown
+  xy: 150, 430
+  size: 50, 61
+WalkUp
+  xy: 0, 491
+  size: 50, 61
+WalkUp
+  xy: 50, 491
+  size: 50, 61
+WalkUp
+  xy: 100, 491
+  size: 50, 61
+WalkUp
+  xy: 150, 491
+  size: 50, 61
+WalkUp
+  xy: 200, 491
+  size: 50, 61
+WalkUp
+  xy: 250, 491
+  size: 50, 61
+WalkUp
+  xy: 300, 491
+  size: 50, 61
+WalkUp
+  xy: 350, 491
+  size: 50, 61
+WalkDown
+  xy: 0, 552
+  size: 50, 61
+WalkDown
+  xy: 50, 552
+  size: 50, 61
+WalkDown
+  xy: 100, 552
+  size: 50, 61
+WalkDown
+  xy: 150, 552
+  size: 50, 61
+WalkDown
+  xy: 200, 552
+  size: 50, 61
+WalkDown
+  xy: 250, 552
+  size: 50, 61
+WalkDown
+  xy: 300, 552
+  size: 50, 61
+WalkDown
+  xy: 350, 552
+  size: 50, 61

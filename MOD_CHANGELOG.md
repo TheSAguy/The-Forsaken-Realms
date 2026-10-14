@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 599: the LPC backlog, batch 2 - the other 72 wizards (2026-10-14)
+
+The Procedural Pixel Creatures session, the second of the five LPC batches (rounds 598-602; the angels came between as
+round 603), built by the generator repo's `lpc_selections/make_599.py`.
+
+- **The enemies**: the other 72 of the stock 16 px `humanoid/human/wizard` folder, on 21 sprites (red_wiz3, teferi,
+  dimir_wiz, white_wiz2, archivist, geistmage, mage_2, green_wiz1, corrupted_greenwiz, rakdos_wiz, mage, enchanter,
+  runescribe, corrupted_redwiz, jace, simic_wiz, corrupted_bluewiz, white_wiz3, wizard, wizard_2, jaya). With round 598
+  the whole folder (140) is LPC.
+- **How they were dressed**:
+  - The named legends follow their deck's commander card: Urza and Zur in purple, Kinnan's red scarf, Satya's blue
+    headscarf, Rusko's goggles, Bruvac's tall white hat, Baral's red hood and gold blade arm, Juri's harlequin mask,
+    Zaffai's red curls.
+  - The non-humans take LPC's nearest heads: Momir Vig a pale-green Simic elf, Dovin Baan a blue vedalken, Plargg an
+    orc, Reveka a dwarf, and Bria (an otter) the brown rat head.
+  - Pol Jamaar, Ral, Plargg and Sifa Grent, whose cards are not in Forge's picture cache, follow their cards as known.
+  - The "Corrupted" wizards wear their color with purple and red eyes.
+  - The generic wizards keep their sprite's colors and rank; the World Champions are plain mages in their decks' colors.
+  - Jace and Teferi are bosses and keep their drawn size.
+- **Files**:
+  - 72 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 72 sprite paths and scales, 0.27-0.34.
+  - A footprint on 34 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 500 characters, additions only.
+  - `CREDITS.md`'s LPC bullet: 472 enemies, round 599 and the 72 names; no new authors.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 72, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole, viewed on a sheet; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 603: the user's Pixelate Angel Warrior for 19 angels (2026-10-14)
 
 The Procedural Pixel Creatures session. The user: "The Angel art is ready". The still was made from PROMPTS.md's

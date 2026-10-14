@@ -1,0 +1,176 @@
+bruvac.png
+size: 396,631
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 44, 63
+Idle
+  xy: 44, 64
+  size: 44, 63
+Idle
+  xy: 88, 64
+  size: 44, 63
+Idle
+  xy: 132, 64
+  size: 44, 63
+Walk
+  xy: 0, 127
+  size: 44, 63
+Walk
+  xy: 44, 127
+  size: 44, 63
+Walk
+  xy: 88, 127
+  size: 44, 63
+Walk
+  xy: 132, 127
+  size: 44, 63
+Walk
+  xy: 176, 127
+  size: 44, 63
+Walk
+  xy: 220, 127
+  size: 44, 63
+Walk
+  xy: 264, 127
+  size: 44, 63
+Walk
+  xy: 308, 127
+  size: 44, 63
+Attack
+  xy: 0, 190
+  size: 44, 63
+Attack
+  xy: 44, 190
+  size: 44, 63
+Attack
+  xy: 88, 190
+  size: 44, 63
+Attack
+  xy: 132, 190
+  size: 44, 63
+Attack
+  xy: 176, 190
+  size: 44, 63
+Attack
+  xy: 220, 190
+  size: 44, 63
+Attack
+  xy: 264, 190
+  size: 44, 63
+Hit
+  xy: 0, 253
+  size: 44, 63
+Hit
+  xy: 44, 253
+  size: 44, 63
+Hit
+  xy: 88, 253
+  size: 44, 63
+Hit
+  xy: 132, 253
+  size: 44, 63
+Death
+  xy: 0, 316
+  size: 44, 63
+Death
+  xy: 44, 316
+  size: 44, 63
+Death
+  xy: 88, 316
+  size: 44, 63
+Death
+  xy: 132, 316
+  size: 44, 63
+Death
+  xy: 176, 316
+  size: 44, 63
+Death
+  xy: 220, 316
+  size: 44, 63
+Death
+  xy: 264, 316
+  size: 44, 63
+Death
+  xy: 308, 316
+  size: 44, 63
+Death
+  xy: 352, 316
+  size: 44, 63
+IdleUp
+  xy: 0, 379
+  size: 44, 63
+IdleUp
+  xy: 44, 379
+  size: 44, 63
+IdleUp
+  xy: 88, 379
+  size: 44, 63
+IdleUp
+  xy: 132, 379
+  size: 44, 63
+IdleDown
+  xy: 0, 442
+  size: 44, 63
+IdleDown
+  xy: 44, 442
+  size: 44, 63
+IdleDown
+  xy: 88, 442
+  size: 44, 63
+IdleDown
+  xy: 132, 442
+  size: 44, 63
+WalkUp
+  xy: 0, 505
+  size: 44, 63
+WalkUp
+  xy: 44, 505
+  size: 44, 63
+WalkUp
+  xy: 88, 505
+  size: 44, 63
+WalkUp
+  xy: 132, 505
+  size: 44, 63
+WalkUp
+  xy: 176, 505
+  size: 44, 63
+WalkUp
+  xy: 220, 505
+  size: 44, 63
+WalkUp
+  xy: 264, 505
+  size: 44, 63
+WalkUp
+  xy: 308, 505
+  size: 44, 63
+WalkDown
+  xy: 0, 568
+  size: 44, 63
+WalkDown
+  xy: 44, 568
+  size: 44, 63
+WalkDown
+  xy: 88, 568
+  size: 44, 63
+WalkDown
+  xy: 132, 568
+  size: 44, 63
+WalkDown
+  xy: 176, 568
+  size: 44, 63
+WalkDown
+  xy: 220, 568
+  size: 44, 63
+WalkDown
+  xy: 264, 568
+  size: 44, 63
+WalkDown
+  xy: 308, 568
+  size: 44, 63

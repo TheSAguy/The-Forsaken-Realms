@@ -1,0 +1,176 @@
+geralf.png
+size: 396,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 44, 57
+Idle
+  xy: 44, 64
+  size: 44, 57
+Idle
+  xy: 88, 64
+  size: 44, 57
+Idle
+  xy: 132, 64
+  size: 44, 57
+Walk
+  xy: 0, 121
+  size: 44, 57
+Walk
+  xy: 44, 121
+  size: 44, 57
+Walk
+  xy: 88, 121
+  size: 44, 57
+Walk
+  xy: 132, 121
+  size: 44, 57
+Walk
+  xy: 176, 121
+  size: 44, 57
+Walk
+  xy: 220, 121
+  size: 44, 57
+Walk
+  xy: 264, 121
+  size: 44, 57
+Walk
+  xy: 308, 121
+  size: 44, 57
+Attack
+  xy: 0, 178
+  size: 44, 57
+Attack
+  xy: 44, 178
+  size: 44, 57
+Attack
+  xy: 88, 178
+  size: 44, 57
+Attack
+  xy: 132, 178
+  size: 44, 57
+Attack
+  xy: 176, 178
+  size: 44, 57
+Attack
+  xy: 220, 178
+  size: 44, 57
+Attack
+  xy: 264, 178
+  size: 44, 57
+Hit
+  xy: 0, 235
+  size: 44, 57
+Hit
+  xy: 44, 235
+  size: 44, 57
+Hit
+  xy: 88, 235
+  size: 44, 57
+Hit
+  xy: 132, 235
+  size: 44, 57
+Death
+  xy: 0, 292
+  size: 44, 57
+Death
+  xy: 44, 292
+  size: 44, 57
+Death
+  xy: 88, 292
+  size: 44, 57
+Death
+  xy: 132, 292
+  size: 44, 57
+Death
+  xy: 176, 292
+  size: 44, 57
+Death
+  xy: 220, 292
+  size: 44, 57
+Death
+  xy: 264, 292
+  size: 44, 57
+Death
+  xy: 308, 292
+  size: 44, 57
+Death
+  xy: 352, 292
+  size: 44, 57
+IdleUp
+  xy: 0, 349
+  size: 44, 57
+IdleUp
+  xy: 44, 349
+  size: 44, 57
+IdleUp
+  xy: 88, 349
+  size: 44, 57
+IdleUp
+  xy: 132, 349
+  size: 44, 57
+IdleDown
+  xy: 0, 406
+  size: 44, 57
+IdleDown
+  xy: 44, 406
+  size: 44, 57
+IdleDown
+  xy: 88, 406
+  size: 44, 57
+IdleDown
+  xy: 132, 406
+  size: 44, 57
+WalkUp
+  xy: 0, 463
+  size: 44, 57
+WalkUp
+  xy: 44, 463
+  size: 44, 57
+WalkUp
+  xy: 88, 463
+  size: 44, 57
+WalkUp
+  xy: 132, 463
+  size: 44, 57
+WalkUp
+  xy: 176, 463
+  size: 44, 57
+WalkUp
+  xy: 220, 463
+  size: 44, 57
+WalkUp
+  xy: 264, 463
+  size: 44, 57
+WalkUp
+  xy: 308, 463
+  size: 44, 57
+WalkDown
+  xy: 0, 520
+  size: 44, 57
+WalkDown
+  xy: 44, 520
+  size: 44, 57
+WalkDown
+  xy: 88, 520
+  size: 44, 57
+WalkDown
+  xy: 132, 520
+  size: 44, 57
+WalkDown
+  xy: 176, 520
+  size: 44, 57
+WalkDown
+  xy: 220, 520
+  size: 44, 57
+WalkDown
+  xy: 264, 520
+  size: 44, 57
+WalkDown
+  xy: 308, 520
+  size: 44, 57

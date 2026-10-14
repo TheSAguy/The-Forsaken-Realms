@@ -1,0 +1,180 @@
+master_red_wizard.png
+size: 684,631
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 63
+  footprint: 24, 1, 28, 61
+Idle
+  xy: 76, 64
+  size: 76, 63
+Idle
+  xy: 152, 64
+  size: 76, 63
+Idle
+  xy: 228, 64
+  size: 76, 63
+Walk
+  xy: 0, 127
+  size: 76, 63
+Walk
+  xy: 76, 127
+  size: 76, 63
+Walk
+  xy: 152, 127
+  size: 76, 63
+Walk
+  xy: 228, 127
+  size: 76, 63
+Walk
+  xy: 304, 127
+  size: 76, 63
+Walk
+  xy: 380, 127
+  size: 76, 63
+Walk
+  xy: 456, 127
+  size: 76, 63
+Walk
+  xy: 532, 127
+  size: 76, 63
+Attack
+  xy: 0, 190
+  size: 76, 63
+Attack
+  xy: 76, 190
+  size: 76, 63
+Attack
+  xy: 152, 190
+  size: 76, 63
+Attack
+  xy: 228, 190
+  size: 76, 63
+Attack
+  xy: 304, 190
+  size: 76, 63
+Attack
+  xy: 380, 190
+  size: 76, 63
+Attack
+  xy: 456, 190
+  size: 76, 63
+Attack
+  xy: 532, 190
+  size: 76, 63
+Hit
+  xy: 0, 253
+  size: 76, 63
+Hit
+  xy: 76, 253
+  size: 76, 63
+Hit
+  xy: 152, 253
+  size: 76, 63
+Hit
+  xy: 228, 253
+  size: 76, 63
+Death
+  xy: 0, 316
+  size: 76, 63
+Death
+  xy: 76, 316
+  size: 76, 63
+Death
+  xy: 152, 316
+  size: 76, 63
+Death
+  xy: 228, 316
+  size: 76, 63
+Death
+  xy: 304, 316
+  size: 76, 63
+Death
+  xy: 380, 316
+  size: 76, 63
+Death
+  xy: 456, 316
+  size: 76, 63
+Death
+  xy: 532, 316
+  size: 76, 63
+Death
+  xy: 608, 316
+  size: 76, 63
+IdleUp
+  xy: 0, 379
+  size: 76, 63
+IdleUp
+  xy: 76, 379
+  size: 76, 63
+IdleUp
+  xy: 152, 379
+  size: 76, 63
+IdleUp
+  xy: 228, 379
+  size: 76, 63
+IdleDown
+  xy: 0, 442
+  size: 76, 63
+IdleDown
+  xy: 76, 442
+  size: 76, 63
+IdleDown
+  xy: 152, 442
+  size: 76, 63
+IdleDown
+  xy: 228, 442
+  size: 76, 63
+WalkUp
+  xy: 0, 505
+  size: 76, 63
+WalkUp
+  xy: 76, 505
+  size: 76, 63
+WalkUp
+  xy: 152, 505
+  size: 76, 63
+WalkUp
+  xy: 228, 505
+  size: 76, 63
+WalkUp
+  xy: 304, 505
+  size: 76, 63
+WalkUp
+  xy: 380, 505
+  size: 76, 63
+WalkUp
+  xy: 456, 505
+  size: 76, 63
+WalkUp
+  xy: 532, 505
+  size: 76, 63
+WalkDown
+  xy: 0, 568
+  size: 76, 63
+WalkDown
+  xy: 76, 568
+  size: 76, 63
+WalkDown
+  xy: 152, 568
+  size: 76, 63
+WalkDown
+  xy: 228, 568
+  size: 76, 63
+WalkDown
+  xy: 304, 568
+  size: 76, 63
+WalkDown
+  xy: 380, 568
+  size: 76, 63
+WalkDown
+  xy: 456, 568
+  size: 76, 63
+WalkDown
+  xy: 532, 568
+  size: 76, 63

@@ -98,7 +98,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (400 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590 and 598 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (472 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598 and 599 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -143,7 +143,16 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Wizard, Queen Marchesa, Marina, Gisa, Ayara, Irini, Leinore, Cormela, Sorceress Queen Kaja, Adept Green Wizard,
   Karametra, Tocasia, Oviya, Jinnie Fay, Bess, Dina, Legend of the Taiga, Tropical Islander of Treva, Summoner of
   Shandalar, Adept Black Wizard, Curselord, Necromancer, Cloaked Old Man, Mairsil, Legend of the Underground Sea,
-  Bayou Dweller of Darigaaz; and round 597's 28 player heroes, a woman and a man of every race
+  Bayou Dweller of Darigaaz; round 599's seventy-two wizards - Chandra's Firestarter, Chandra's Lavamancer, Master Red
+  Wizard, Mishra, Baral, Plargg, Sarkhan, Teferi, Vadrik, Kambal, Sai, Sevinne, Zaffai, Bennie Bracks, Liliana's
+  Alchemist, Urza, Geralf, The Raven Man, Antoine Ruel '01, Carlos Romao '02, Adept White Wizard, Tom van de Logt '00,
+  Daniel Zink '03, Legend of the Savannah, Scrublander of Dromar, Archivist, Laboratory Assistant, Lier, Bruvac, Gwafa
+  Hazid, Geistmage, Obsessed Stitcher, Riku, Satya, Ral, Master Blue Wizard, Kinnan, Pol Jamaar, Bria, Hakim,
+  Apprentice Green Wizard, Haldan and Pako, Raphael Levy '02, Dave Humpherys '03, Corrupted Green Wizard, Rukarumel,
+  Nikara and Yannik, Meren of Clan Nel Toth, Rakdos Wizard, The Lord of Pain, Chainer, Juri, Apprentice Blue Wizard,
+  Reveka, Zak Dolan '94, Apprentice Red Wizard, Zur, Rusko, Runelord, Tawnos, Ghen, Corrupted Red Wizard, Kaervek,
+  Corrupted Blue Wizard, Jace, Arcanis, Snow Wizard, Momir Vig, Master White Wizard, Muzzio, Dovin Baan, Sifa Grent;
+  and round 597's 28 player heroes, a woman and a man of every race
   the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,
   Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire) -
   composed
