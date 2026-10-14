@@ -2577,7 +2577,7 @@
     {
         "name": "Auramancer",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/elf/deftsorceress.atlas",
+        "sprite": "sprites/enemy/remake/auramancer.atlas",
         "deck": [
             "decks/standard/enchantress.dck"
         ],
@@ -2585,7 +2585,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 1.0,
+        "scale": 0.3095,
         "life": 20,
         "rewards": [
             {
@@ -10574,7 +10574,7 @@
     },
     {
         "name": "Elf",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/elf.atlas",
         "deck": [
             "decks/standard/elf_bad.json"
         ],
@@ -10617,11 +10617,12 @@
             "BiomeGreen",
             "Minion"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.2889
     },
     {
         "name": "Elf Vagabond",
-        "sprite": "sprites/enemy/humanoid/elf/druid_2.atlas",
+        "sprite": "sprites/enemy/remake/elf_vagabond.atlas",
         "deck": [
             "decks/standard/elfvagabond.dck"
         ],
@@ -10650,11 +10651,12 @@
             "IdentityGreen",
             "Beginner"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3023
     },
     {
         "name": "Elf warrior",
-        "sprite": "sprites/enemy/humanoid/elf/hunter.atlas",
+        "sprite": "sprites/enemy/remake/elf_warrior.atlas",
         "deck": [
             "decks/standard/elf_mid.json"
         ],
@@ -10698,7 +10700,7 @@
             "Minion"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Elk",
@@ -14880,7 +14882,7 @@
     },
     {
         "name": "Golgari Elf",
-        "sprite": "sprites/enemy/humanoid/elf/elf_golgari.atlas",
+        "sprite": "sprites/enemy/remake/golgari_elf.atlas",
         "deck": [
             "decks/standard/elf_golgari.dck"
         ],
@@ -14946,7 +14948,8 @@
             "IdentityGolgari",
             "Leader"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.3171
     },
     {
         "name": "Golgari Fungus",
@@ -16974,7 +16977,7 @@
     },
     {
         "name": "High Elf",
-        "sprite": "sprites/enemy/humanoid/elf/druid_2.atlas",
+        "sprite": "sprites/enemy/remake/high_elf.atlas",
         "deck": [
             "decks/standard/elf_good.json"
         ],
@@ -17020,7 +17023,8 @@
             "BiomeGreen",
             "Minion"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.3171
     },
     {
         "name": "High Vampire",
@@ -20730,7 +20734,7 @@
     {
         "name": "Loamspeaker",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/loamspeaker.atlas",
         "deck": [
             "decks/standard/loamspeaker.dck"
         ],
@@ -20809,7 +20813,7 @@
             "IdentityGreen"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.325
     },
     {
         "name": "Lord Pestilence",
@@ -21360,7 +21364,7 @@
     },
     {
         "name": "Master Green Wizard",
-        "sprite": "sprites/enemy/humanoid/elf/green_wiz3.atlas",
+        "sprite": "sprites/enemy/remake/master_green_wizard.atlas",
         "deck": [
             "decks/standard/greenwizard_hard_ramp.dck",
             "decks/standard/greenwizard_hard_rampbis.dck",
@@ -21411,7 +21415,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Master Red Wizard",
@@ -27318,7 +27322,7 @@
     },
     {
         "name": "Shaman",
-        "sprite": "sprites/enemy/humanoid/elf/shaman_2.atlas",
+        "sprite": "sprites/enemy/remake/shaman.atlas",
         "deck": [
             "decks/standard/shaman.json"
         ],
@@ -27399,7 +27403,8 @@
             "IdentityGruul",
             "BiomeRed"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3023
     },
     {
         "name": "Shaman of Zedruu",
@@ -36426,13 +36431,13 @@
     },
     {
         "name": "Saskia",
-        "sprite": "sprites/enemy/humanoid/elf/shaman_2.atlas",
+        "sprite": "sprites/enemy/remake/saskia.atlas",
         "deck": [
             "decks/legends/saskia.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.3023,
         "life": 50,
         "rewards": [
             {
@@ -39080,13 +39085,13 @@
     },
     {
         "name": "Winota",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/winota.atlas",
         "deck": [
             "decks/legends/winota.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.3023,
         "life": 40,
         "rewards": [
             {
@@ -40246,13 +40251,13 @@
     },
     {
         "name": "Atla Palani",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/atla_palani.atlas",
         "deck": [
             "decks/legends/atla_palani.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -40763,13 +40768,13 @@
     },
     {
         "name": "Disa",
-        "sprite": "sprites/enemy/humanoid/elf/hunter_2.atlas",
+        "sprite": "sprites/enemy/remake/disa.atlas",
         "deck": [
             "decks/legends/disa.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.2955,
         "life": 40,
         "rewards": [
             {
@@ -46089,13 +46094,13 @@
     },
     {
         "name": "Inalla",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/inalla.atlas",
         "deck": [
             "decks/legends/inalla.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -46343,13 +46348,13 @@
     },
     {
         "name": "Mina and Denn",
-        "sprite": "sprites/enemy/humanoid/elf/lizardrider.atlas",
+        "sprite": "sprites/enemy/remake/mina_and_denn.atlas",
         "deck": [
             "decks/legends/mina_and_denn.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.2826,
         "life": 40,
         "rewards": [
             {
@@ -47440,13 +47445,13 @@
     },
     {
         "name": "Rashmi",
-        "sprite": "sprites/enemy/humanoid/elf/green_wiz3.atlas",
+        "sprite": "sprites/enemy/remake/rashmi.atlas",
         "deck": [
             "decks/legends/rashmi.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -49777,13 +49782,13 @@
     },
     {
         "name": "Sisay",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/sisay.atlas",
         "deck": [
             "decks/legends/sisay.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -50710,13 +50715,13 @@
     },
     {
         "name": "Trostani",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/trostani.atlas",
         "deck": [
             "decks/legends/trostani.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -51372,13 +51377,13 @@
     },
     {
         "name": "Eshki",
-        "sprite": "sprites/enemy/humanoid/elf/hunter.atlas",
+        "sprite": "sprites/enemy/remake/eshki.atlas",
         "deck": [
             "decks/legends/eshki.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -57851,13 +57856,13 @@
     },
     {
         "name": "Wayta",
-        "sprite": "sprites/enemy/humanoid/elf/shaman_2.atlas",
+        "sprite": "sprites/enemy/remake/wayta.atlas",
         "deck": [
             "decks/legends/wayta.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.2889,
         "life": 30,
         "rewards": [
             {
@@ -57919,13 +57924,13 @@
     },
     {
         "name": "Huatli",
-        "sprite": "sprites/enemy/humanoid/elf/green_wiz3.atlas",
+        "sprite": "sprites/enemy/remake/huatli.atlas",
         "deck": [
             "decks/legends/huatli.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -59673,13 +59678,13 @@
     },
     {
         "name": "Saryth",
-        "sprite": "sprites/enemy/humanoid/elf/shaman_2.atlas",
+        "sprite": "sprites/enemy/remake/saryth.atlas",
         "deck": [
             "decks/legends/saryth.dck"
         ],
         "ai": "",
         "speed": 35,
-        "scale": 1,
+        "scale": 0.3023,
         "life": 29,
         "rewards": [
             {
@@ -60367,13 +60372,13 @@
     },
     {
         "name": "Kolvori",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/kolvori.atlas",
         "deck": [
             "decks/legends/kolvori.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 45,
         "rewards": [
             {
@@ -60435,13 +60440,13 @@
     },
     {
         "name": "Nylea",
-        "sprite": "sprites/enemy/humanoid/elf/hunter.atlas",
+        "sprite": "sprites/enemy/remake/nylea.atlas",
         "deck": [
             "decks/legends/nylea.dck"
         ],
         "ai": "",
         "speed": 36,
-        "scale": 1.0833,
+        "scale": 0.2889,
         "life": 34,
         "rewards": [
             {
@@ -62199,13 +62204,13 @@
     },
     {
         "name": "Linden",
-        "sprite": "sprites/enemy/humanoid/elf/shaman_2.atlas",
+        "sprite": "sprites/enemy/remake/linden.atlas",
         "deck": [
             "decks/legends/linden.dck"
         ],
         "ai": "",
         "speed": 60,
-        "scale": 1,
+        "scale": 0.2955,
         "life": 33,
         "rewards": [
             {
@@ -63235,13 +63240,13 @@
     },
     {
         "name": "Rona",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/rona.atlas",
         "deck": [
             "decks/legends/rona.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -64232,13 +64237,13 @@
     },
     {
         "name": "Birgi",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/birgi.atlas",
         "deck": [
             "decks/legends/birgi.dck"
         ],
         "ai": "",
         "speed": 28,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 20,
         "rewards": [
             {
@@ -64593,13 +64598,13 @@
     },
     {
         "name": "Eladamri",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/eladamri.atlas",
         "deck": [
             "decks/legends/eladamri.dck"
         ],
         "ai": "",
         "speed": 20,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 11,
         "rewards": [
             {
@@ -64812,13 +64817,13 @@
     },
     {
         "name": "Marwyn",
-        "sprite": "sprites/enemy/humanoid/elf/hunter.atlas",
+        "sprite": "sprites/enemy/remake/marwyn.atlas",
         "deck": [
             "decks/legends/marwyn.dck"
         ],
         "ai": "",
         "speed": 36,
-        "scale": 1.0833,
+        "scale": 0.3095,
         "life": 32,
         "rewards": [
             {
@@ -64885,13 +64890,13 @@
     },
     {
         "name": "Miara and Numa",
-        "sprite": "sprites/enemy/humanoid/elf/shaman_2.atlas",
+        "sprite": "sprites/enemy/remake/miara_and_numa.atlas",
         "deck": [
             "decks/legends/miara_and_numa.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.2889,
         "life": 30,
         "rewards": [
             {
@@ -65452,13 +65457,13 @@
     },
     {
         "name": "Mayael",
-        "sprite": "sprites/enemy/humanoid/elf/druid_2.atlas",
+        "sprite": "sprites/enemy/remake/mayael.atlas",
         "deck": [
             "decks/legends/mayael.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -67174,13 +67179,13 @@
     },
     {
         "name": "Jolene",
-        "sprite": "sprites/enemy/humanoid/elf/hunter_2.atlas",
+        "sprite": "sprites/enemy/remake/jolene.atlas",
         "deck": [
             "decks/legends/jolene.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -67675,13 +67680,13 @@
     },
     {
         "name": "Jolrael",
-        "sprite": "sprites/enemy/humanoid/elf/green_wiz3.atlas",
+        "sprite": "sprites/enemy/remake/jolrael.atlas",
         "deck": [
             "decks/legends/jolrael.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -67968,13 +67973,13 @@
     },
     {
         "name": "Subira",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/subira.atlas",
         "deck": [
             "decks/legends/subira.dck"
         ],
         "ai": "",
         "speed": 54,
-        "scale": 1.0833,
+        "scale": 0.2955,
         "life": 28,
         "rewards": [
             {
@@ -68036,13 +68041,13 @@
     },
     {
         "name": "Anikthea",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/anikthea.atlas",
         "deck": [
             "decks/legends/anikthea.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.2889,
         "life": 30,
         "rewards": [
             {
@@ -69720,13 +69725,13 @@
     },
     {
         "name": "Jalira",
-        "sprite": "sprites/enemy/humanoid/elf/deftsorceress.atlas",
+        "sprite": "sprites/enemy/remake/jalira.atlas",
         "deck": [
             "decks/legends/jalira.dck"
         ],
         "ai": "",
         "speed": 48,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 34,
         "rewards": [
             {
@@ -70134,13 +70139,13 @@
     },
     {
         "name": "Rielle",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/rielle.atlas",
         "deck": [
             "decks/legends/rielle.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -70474,14 +70479,14 @@
     },
     {
         "name": "Kaza",
-        "sprite": "sprites/enemy/humanoid/elf/deftsorceress.atlas",
+        "sprite": "sprites/enemy/remake/kaza.atlas",
         "deck": [
             "decks/legends/kaza.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -72050,7 +72055,7 @@
     },
     {
         "name": "Selvala",
-        "sprite": "sprites/enemy/humanoid/elf/hunter_2.atlas",
+        "sprite": "sprites/enemy/remake/selvala.atlas",
         "deck": [
             "decks/legends/selvala.dck"
         ],
@@ -72124,7 +72129,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.2889
     },
     {
         "name": "Cadric",
@@ -73791,7 +73796,7 @@
     },
     {
         "name": "Saheeli",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/saheeli.atlas",
         "deck": [
             "decks/legends/saheeli.dck"
         ],
@@ -73865,7 +73870,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Sram",
@@ -74005,7 +74010,7 @@
     },
     {
         "name": "Izoni",
-        "sprite": "sprites/enemy/humanoid/elf/shaman_2.atlas",
+        "sprite": "sprites/enemy/remake/izoni.atlas",
         "deck": [
             "decks/legends/izoni.dck"
         ],
@@ -74073,7 +74078,8 @@
         "colors": "BG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.2889
     },
     {
         "name": "Mazirek",
@@ -74146,7 +74152,7 @@
     },
     {
         "name": "Savra",
-        "sprite": "sprites/enemy/humanoid/elf/elf_golgari.atlas",
+        "sprite": "sprites/enemy/remake/savra.atlas",
         "deck": [
             "decks/legends/savra.dck"
         ],
@@ -74209,7 +74215,8 @@
         "colors": "BG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3095
     },
     {
         "name": "Varolz",
@@ -77518,7 +77525,7 @@
     },
     {
         "name": "Lathril",
-        "sprite": "sprites/enemy/humanoid/elf/lizardrider.atlas",
+        "sprite": "sprites/enemy/remake/lathril.atlas",
         "deck": [
             "decks/legends/lathril.dck"
         ],
@@ -77581,7 +77588,8 @@
         "colors": "BG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3023
     },
     {
         "name": "Maja",
@@ -80475,7 +80483,7 @@
     },
     {
         "name": "Thelon",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/thelon.atlas",
         "deck": [
             "decks/legends/thelon.dck"
         ],
@@ -80538,7 +80546,8 @@
         "colors": "BG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3171
     },
     {
         "name": "Xavier Sal",
@@ -80829,7 +80838,7 @@
     },
     {
         "name": "Shanna",
-        "sprite": "sprites/enemy/humanoid/elf/green_wiz3.atlas",
+        "sprite": "sprites/enemy/remake/shanna.atlas",
         "deck": [
             "decks/legends/shanna.dck"
         ],
@@ -80898,7 +80907,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Gerrard",
@@ -80974,7 +80983,7 @@
     },
     {
         "name": "Hanna",
-        "sprite": "sprites/enemy/humanoid/elf/deftsorceress.atlas",
+        "sprite": "sprites/enemy/remake/hanna.atlas",
         "deck": [
             "decks/legends/hanna.dck"
         ],
@@ -81037,7 +81046,8 @@
         "colors": "WU",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3171
     },
     {
         "name": "Tahngarth",
@@ -81759,7 +81769,7 @@
     },
     {
         "name": "Lilah",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/lilah.atlas",
         "deck": [
             "decks/legends/lilah.dck"
         ],
@@ -81822,11 +81832,12 @@
         "colors": "UR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.2955
     },
     {
         "name": "Miriam",
-        "sprite": "sprites/enemy/humanoid/elf/hunter_2.atlas",
+        "sprite": "sprites/enemy/remake/miriam.atlas",
         "deck": [
             "decks/legends/miriam.dck"
         ],
@@ -81890,11 +81901,11 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Stella Lee",
-        "sprite": "sprites/enemy/humanoid/elf/deftsorceress.atlas",
+        "sprite": "sprites/enemy/remake/stella_lee.atlas",
         "deck": [
             "decks/legends/stella_lee.dck"
         ],
@@ -81957,11 +81968,12 @@
         "colors": "UR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.2889
     },
     {
         "name": "Taii Wakeen",
-        "sprite": "sprites/enemy/humanoid/elf/hunter_2.atlas",
+        "sprite": "sprites/enemy/remake/taii_wakeen.atlas",
         "deck": [
             "decks/legends/taii_wakeen.dck"
         ],
@@ -82025,7 +82037,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Vihaan",
@@ -82316,7 +82328,7 @@
     },
     {
         "name": "Azusa",
-        "sprite": "sprites/enemy/humanoid/elf/druid_2.atlas",
+        "sprite": "sprites/enemy/remake/azusa.atlas",
         "deck": [
             "decks/legends/azusa.dck"
         ],
@@ -82391,7 +82403,8 @@
         "colors": "G",
         "spawnRate": 1,
         "tier": "Mythic",
-        "difficulty": 3
+        "difficulty": 3,
+        "scale": 0.3171
     },
     {
         "name": "Hapatra",
@@ -82611,7 +82624,7 @@
     },
     {
         "name": "Halana and Alena",
-        "sprite": "sprites/enemy/humanoid/elf/hunter_2.atlas",
+        "sprite": "sprites/enemy/remake/halana_and_alena.atlas",
         "deck": [
             "decks/legends/halana_and_alena.dck"
         ],
@@ -82685,7 +82698,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Bess",
@@ -83264,7 +83277,7 @@
     },
     {
         "name": "Yeva",
-        "sprite": "sprites/enemy/humanoid/elf/elf_golgari.atlas",
+        "sprite": "sprites/enemy/remake/yeva.atlas",
         "deck": [
             "decks/legends/yeva.dck"
         ],
@@ -83327,7 +83340,8 @@
         "colors": "G",
         "spawnRate": 1,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3095
     },
     {
         "name": "Alandra",
@@ -84110,7 +84124,7 @@
     },
     {
         "name": "Eloise",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/eloise.atlas",
         "deck": [
             "decks/legends/eloise.dck"
         ],
@@ -84173,7 +84187,8 @@
         "colors": "UB",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.2955
     },
     {
         "name": "Tetsuko",
@@ -87386,7 +87401,7 @@
     },
     {
         "name": "Kestia",
-        "sprite": "sprites/enemy/humanoid/elf/deftsorceress.atlas",
+        "sprite": "sprites/enemy/remake/kestia.atlas",
         "deck": [
             "decks/legends/kestia.dck"
         ],
@@ -87449,7 +87464,8 @@
         "colors": "WUG",
         "spawnRate": 1,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3095
     },
     {
         "name": "Yurlok",
@@ -87521,7 +87537,7 @@
     },
     {
         "name": "Jenson",
-        "sprite": "sprites/enemy/humanoid/elf/green_wiz3.atlas",
+        "sprite": "sprites/enemy/remake/jenson.atlas",
         "deck": [
             "decks/legends/jenson_carthalion.dck"
         ],
@@ -87597,7 +87613,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Morska",
@@ -88588,12 +88604,12 @@
     },
     {
         "name": "Aminatou",
-        "sprite": "sprites/enemy/humanoid/elf/green_wiz3.atlas",
+        "sprite": "sprites/enemy/remake/aminatou.atlas",
         "deck": [
             "decks/legends/aminatou.dck"
         ],
         "ai": "",
-        "scale": 1.0833,
+        "scale": 0.2826,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -88797,7 +88813,7 @@
     },
     {
         "name": "Narci",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/narci.atlas",
         "deck": [
             "decks/legends/narci.dck"
         ],
@@ -88861,7 +88877,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Obuun",
@@ -89989,7 +90005,7 @@
     },
     {
         "name": "Zimone",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/zimone.atlas",
         "deck": [
             "decks/legends/zimone.dck"
         ],
@@ -90064,7 +90080,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Kamiz",
@@ -91673,7 +91689,7 @@
     },
     {
         "name": "Emmara",
-        "sprite": "sprites/enemy/humanoid/elf/elf_golgari.atlas",
+        "sprite": "sprites/enemy/remake/emmara.atlas",
         "deck": [
             "decks/legends/emmara.dck"
         ],
@@ -91746,7 +91762,8 @@
         "colors": "WG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.3095
     },
     {
         "name": "Tolsimir",
@@ -92595,7 +92612,7 @@
     },
     {
         "name": "Vannifar",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/vannifar.atlas",
         "deck": [
             "decks/legends/vannifar.dck"
         ],
@@ -92663,7 +92680,8 @@
         "colors": "UG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.3095
     },
     {
         "name": "Vorel",
@@ -96484,7 +96502,7 @@
     },
     {
         "name": "Mrs. Klaus",
-        "sprite": "sprites/enemy/humanoid/elf/deftsorceress.atlas",
+        "sprite": "sprites/enemy/remake/mrs_klaus.atlas",
         "deck": [
             "decks/legends/mrs_klaus.dck"
         ],
@@ -96547,11 +96565,12 @@
         "colors": "RG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.3095
     },
     {
         "name": "Radha",
-        "sprite": "sprites/enemy/humanoid/elf/hunter.atlas",
+        "sprite": "sprites/enemy/remake/radha.atlas",
         "deck": [
             "decks/legends/radha.dck"
         ],
@@ -96630,7 +96649,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Shalai and Hallar",
@@ -97641,13 +97660,13 @@
     },
     {
         "name": "Esika",
-        "sprite": "sprites/enemy/humanoid/elf/deftsorceress.atlas",
+        "sprite": "sprites/enemy/remake/esika.atlas",
         "deck": [
             "decks/legends/esika.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -98348,13 +98367,13 @@
     },
     {
         "name": "Autumn Willow",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/autumn_willow.atlas",
         "deck": [
             "decks/legends/autumn_willow.dck"
         ],
         "ai": "",
         "speed": 39,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 27,
         "rewards": [
             {
@@ -99903,7 +99922,7 @@
     },
     {
         "name": "Elf Queen Guay",
-        "sprite": "sprites/enemy/humanoid/elf/deftsorceress.atlas",
+        "sprite": "sprites/enemy/remake/elf_queen_guay.atlas",
         "deck": [
             "decks/miniboss/elfqueenguay.dck"
         ],
@@ -100051,7 +100070,7 @@
         ],
         "colors": "WUG",
         "tier": "Uncommon",
-        "scale": 1.875
+        "scale": 0.5078
     },
     {
         "name": "Valyx the Tormentor",
@@ -101641,7 +101660,7 @@
     },
     {
         "name": "Svend Geertsen '97",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/svend_geertsen_97.atlas",
         "deck": [
             "decks/standard/wc97_svend_geertsen.dck"
         ],
@@ -101843,7 +101862,8 @@
             }
         ],
         "colors": "G",
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3095
     },
     {
         "name": "Paul McCabe '97",
@@ -102060,7 +102080,7 @@
     },
     {
         "name": "Brian Selden '98",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/brian_selden_98.atlas",
         "deck": [
             "decks/standard/wc98_brian_selden.dck"
         ],
@@ -102269,7 +102289,7 @@
         ],
         "colors": "WUBRG",
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Ben Rubin '98",
@@ -103205,7 +103225,7 @@
     },
     {
         "name": "Matt Linde '99",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/matt_linde_99.atlas",
         "deck": [
             "decks/standard/wc99_matt_linde.dck"
         ],
@@ -103407,7 +103427,8 @@
             }
         ],
         "colors": "G",
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3171
     },
     {
         "name": "Jakub Šlemr '99",
@@ -103825,7 +103846,7 @@
     },
     {
         "name": "Janosch Kühn '00",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/janosch_k_hn_00.atlas",
         "deck": [
             "decks/standard/wc00_janosch_kuhn.dck"
         ],
@@ -104034,7 +104055,7 @@
         ],
         "colors": "RG",
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.2955
     },
     {
         "name": "Tom van de Logt '00",
@@ -104251,7 +104272,7 @@
     },
     {
         "name": "Nicolas Labarre '00",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/nicolas_labarre_00.atlas",
         "deck": [
             "decks/standard/wc00_nicolas_labarre.dck"
         ],
@@ -104453,7 +104474,8 @@
             }
         ],
         "colors": "WG",
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.3095
     },
     {
         "name": "Tom van de Logt '01",
@@ -105084,7 +105106,7 @@
     },
     {
         "name": "Jan Tomcani '01",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/jan_tomcani_01.atlas",
         "deck": [
             "decks/standard/wc01_jan_tomcani.dck"
         ],
@@ -105293,7 +105315,7 @@
         ],
         "colors": "BRG",
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Carlos Romao '02",
@@ -105510,7 +105532,7 @@
     },
     {
         "name": "Sim Han How '02",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/sim_han_how_02.atlas",
         "deck": [
             "decks/standard/wc02_sim_han_how.dck"
         ],
@@ -105718,7 +105740,8 @@
             }
         ],
         "colors": "UGR",
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2889
     },
     {
         "name": "Brian Kibler '02",
@@ -109382,7 +109405,7 @@
     },
     {
         "name": "Olle Rade '96",
-        "sprite": "sprites/enemy/humanoid/elf/shaman.atlas",
+        "sprite": "sprites/enemy/remake/olle_rade_96.atlas",
         "deck": [
             "decks/standard/wc96_olle_rade.dck"
         ],
@@ -109591,7 +109614,7 @@
         ],
         "colors": "RG",
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Legend of the Savannah",
@@ -114667,7 +114690,7 @@
     },
     {
         "name": "Beast Master of Shandalar",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/beast_master_of_shandalar.atlas",
         "deck": [
             "decks/standard/shandalar97_green_beastmaster.dck"
         ],
@@ -114875,7 +114898,8 @@
             "Druid",
             "BiomeGreen"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3023
     },
     {
         "name": "Summoner of Shandalar",
@@ -115090,7 +115114,7 @@
     },
     {
         "name": "The Great Druid",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/the_great_druid.atlas",
         "deck": [
             "decks/miniboss/shandalar97_green_morgane.dck"
         ],
@@ -115323,7 +115347,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Uncommon",
-        "scale": 1.875
+        "scale": 0.5669
     },
     {
         "name": "Kiska-Ra of Shandalar",
@@ -123418,13 +123442,13 @@
     },
     {
         "name": "Maralen",
-        "sprite": "sprites/enemy/humanoid/elf/shaman_2.atlas",
+        "sprite": "sprites/enemy/remake/maralen.atlas",
         "deck": [
             "decks/legends/maralen.dck"
         ],
         "ai": "",
         "speed": 60,
-        "scale": 1,
+        "scale": 0.3095,
         "life": 60,
         "rewards": [
             {
@@ -123491,13 +123515,13 @@
     },
     {
         "name": "Morcant",
-        "sprite": "sprites/enemy/humanoid/elf/hunter_2.atlas",
+        "sprite": "sprites/enemy/remake/morcant.atlas",
         "deck": [
             "decks/legends/morcant.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.0833,
+        "scale": 0.2889,
         "life": 80,
         "rewards": [
             {
@@ -123942,13 +123966,13 @@
     },
     {
         "name": "Freyalise",
-        "sprite": "sprites/enemy/humanoid/elf/elf_golgari.atlas",
+        "sprite": "sprites/enemy/remake/freyalise.atlas",
         "deck": [
             "decks/legends/freyalise.dck"
         ],
         "ai": "",
         "speed": 42,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 75,
         "rewards": [
             {
@@ -124920,7 +124944,7 @@
     },
     {
         "name": "Autumn Willow (An-Havva)",
-        "sprite": "sprites/enemy/humanoid/elf/druid_2.atlas",
+        "sprite": "sprites/enemy/remake/autumn_willow_an_havva.atlas",
         "deck": [
             "decks/legends/autumn_willow_anhavva.dck"
         ],
@@ -124988,11 +125012,12 @@
         "colors": "G",
         "spawnRate": 1,
         "difficulty": 3,
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.325
     },
     {
         "name": "Daughter of Autumn",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/daughter_of_autumn.atlas",
         "deck": [
             "decks/legends/daughter_of_autumn.dck"
         ],
@@ -125055,7 +125080,8 @@
         "colors": "GW",
         "spawnRate": 1,
         "difficulty": 2,
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2955
     },
     {
         "name": "Feroz",
@@ -125127,7 +125153,7 @@
     },
     {
         "name": "Greensleeves",
-        "sprite": "sprites/enemy/humanoid/elf/elf_golgari.atlas",
+        "sprite": "sprites/enemy/remake/greensleeves.atlas",
         "deck": [
             "decks/legends/greensleeves.dck"
         ],
@@ -125195,7 +125221,8 @@
         "colors": "G",
         "spawnRate": 1,
         "difficulty": 1,
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3171
     },
     {
         "name": "Joven and Chandler",
@@ -125508,7 +125535,7 @@
     },
     {
         "name": "Mu Yanling",
-        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "sprite": "sprites/enemy/remake/mu_yanling.atlas",
         "deck": [
             "decks/legends/mu_yanling.dck"
         ],
@@ -125571,7 +125598,8 @@
         "colors": "U",
         "spawnRate": 1,
         "difficulty": 2,
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.3171
     },
     {
         "name": "Neerdiv",

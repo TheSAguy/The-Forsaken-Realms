@@ -98,7 +98,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (249 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523 and 534 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (332 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534 and 590 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -120,11 +120,20 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Redshift, the Grand Goatnapper, the Goblin King, Muxus, Wort, Grumgully, Goblin King Phil, Wolfgang Eder '03, the
   Goblin Pack, the Shattergang Brothers, Slobad, Krenko - the eighteen riders of the mounted knights, on the horses
   below - the Dark Knight, Evereth, Ria Ivor, Syr Konrad, Jakub Slemr '97, Tom van de Logt '01, the Death Knight, Syr
-  Gwyn, Felothar, the Khan, Will, Adun, Márton Stromgald, Cerise, the Horseman, the Knight Mercenary, Shanid, Nath - and
+  Gwyn, Felothar, the Khan, Will, Adun, Márton Stromgald, Cerise, the Horseman, the Knight Mercenary, Shanid, Nath -
   twenty enemies of the first enemy-art round's small sprites - the Adept Necromancer, Deft Sorceress, Expert Druid,
   Novice Pyromancer, Vile Witch, Fluttering Pixie, Magical Fairy, Brittle Archer, Decrepit Bones, Grave Revenant,
   Mutilated Stumbler, Bound Cadaver, Dune Ghoul, Depraved Blackguard, Tainted Scoundrel, Grinning Gremlin, Pointed
-  Demonspawn, Skewering Stalker, Clawed Abomination, Foul Gouger) -
+  Demonspawn, Skewering Stalker, Clawed Abomination, Foul Gouger - and the eighty-three enemies of the elf sprites
+  (humans among them) - the Elf warrior, Eshki, Marwyn, Nylea, Radha, Disa, Halana and Alena, Jolene, Miriam, Morcant,
+  Selvala, Taii Wakeen, Lathril, Mina and Denn, Emmara, Freyalise, the Golgari Elf, Greensleeves, Savra, Yeva, Autumn
+  Willow (An-Havva), Azusa, the Elf Vagabond, the High Elf, Mayael, the Auramancer, Elf Queen Guay, Esika, Hanna,
+  Jalira, Kaza, Kestia, Mrs. Klaus, Stella Lee, Autumn Willow, the Beast Master of Shandalar, the Daughter of Autumn,
+  Eladamri, the Elf, Eloise, Inalla, Kolvori, Lilah, Mu Yanling, The Great Druid, Thelon, Trostani, Vannifar, Winota,
+  Matt Linde '99, Nicolas Labarre '00, Sim Han How '02, Svend Geertsen '97, Aminatou, Huatli, Jenson, Jolrael, the
+  Master Green Wizard, Rashmi, Shanna, Anikthea, Atla Palani, Birgi, the Loamspeaker, Narci, Rielle, Rona, Saheeli,
+  Sisay, Subira, Zimone, Brian Selden '98, Jan Tomcani '01, Janosch Kühn '00, Olle Rade '96, Izoni, Linden, Maralen,
+  Miara and Numa, Saryth, Saskia, the Shaman, Wayta) -
   composed
   from the parts of the Universal LPC Spritesheet Character Generator (Liberated Pixel Cup contributors), each part
   under its own license (OGA-BY 3.0/4.0, CC-BY 3.0/4.0, CC-BY-SA 3.0, CC0), the composed sprites CC-BY or CC-BY-SA; the
@@ -136,7 +145,8 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Daniel Eddeland (daneeklu), gr3yh47, Joe White, Thane Brimhall (pennomi), laetissima, Carlo Enrico Victoria
   (Nemisys), Michael Whitlock (bigbeargames), Tuomo Untinen (reemax), Napsio (Vitruvian Studio), Mandi Paugh, Marcel
   van de Steeg (MadMarcel), Fabzy, Luke Mehl, DarkwallLKE, Charles Sanchez (CharlesGabriel), Zi Ye, AntumDeluge, Shaun
-  Williams, Lanea Zimmerman (Sharm), Barbara Riviera, thecilekli, Tracy, macmanmatty, tskaufma, The Foreman - and
+  Williams, Lanea Zimmerman (Sharm), Barbara Riviera, thecilekli, Tracy, macmanmatty, tskaufma, The Foreman, Yamilian,
+  kcilds/Rocetti/Eredah, Page, Radomir Dopieralski - and
   our thanks to every contributor the generator's credits leave unnamed; the parts and their source pages are listed at
   https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator and on https://opengameart.org.
 - **[LPC] Horses** (the mounts of the eighteen mounted knights, round 523: the Dark Knight, the Death Knight, the

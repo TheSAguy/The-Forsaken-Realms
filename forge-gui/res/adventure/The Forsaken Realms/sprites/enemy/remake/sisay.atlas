@@ -1,0 +1,174 @@
+sisay.png
+size: 774,649
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 86, 65
+  footprint: 18, 1, 51, 53
+Idle
+  xy: 86, 64
+  size: 86, 65
+Idle
+  xy: 172, 64
+  size: 86, 65
+Idle
+  xy: 258, 64
+  size: 86, 65
+Walk
+  xy: 0, 129
+  size: 86, 65
+Walk
+  xy: 86, 129
+  size: 86, 65
+Walk
+  xy: 172, 129
+  size: 86, 65
+Walk
+  xy: 258, 129
+  size: 86, 65
+Walk
+  xy: 344, 129
+  size: 86, 65
+Walk
+  xy: 430, 129
+  size: 86, 65
+Walk
+  xy: 516, 129
+  size: 86, 65
+Walk
+  xy: 602, 129
+  size: 86, 65
+Attack
+  xy: 0, 194
+  size: 86, 65
+Attack
+  xy: 86, 194
+  size: 86, 65
+Attack
+  xy: 172, 194
+  size: 86, 65
+Attack
+  xy: 258, 194
+  size: 86, 65
+Attack
+  xy: 344, 194
+  size: 86, 65
+Attack
+  xy: 430, 194
+  size: 86, 65
+Hit
+  xy: 0, 259
+  size: 86, 65
+Hit
+  xy: 86, 259
+  size: 86, 65
+Hit
+  xy: 172, 259
+  size: 86, 65
+Hit
+  xy: 258, 259
+  size: 86, 65
+Death
+  xy: 0, 324
+  size: 86, 65
+Death
+  xy: 86, 324
+  size: 86, 65
+Death
+  xy: 172, 324
+  size: 86, 65
+Death
+  xy: 258, 324
+  size: 86, 65
+Death
+  xy: 344, 324
+  size: 86, 65
+Death
+  xy: 430, 324
+  size: 86, 65
+Death
+  xy: 516, 324
+  size: 86, 65
+Death
+  xy: 602, 324
+  size: 86, 65
+Death
+  xy: 688, 324
+  size: 86, 65
+IdleUp
+  xy: 0, 389
+  size: 86, 65
+IdleUp
+  xy: 86, 389
+  size: 86, 65
+IdleUp
+  xy: 172, 389
+  size: 86, 65
+IdleUp
+  xy: 258, 389
+  size: 86, 65
+IdleDown
+  xy: 0, 454
+  size: 86, 65
+IdleDown
+  xy: 86, 454
+  size: 86, 65
+IdleDown
+  xy: 172, 454
+  size: 86, 65
+IdleDown
+  xy: 258, 454
+  size: 86, 65
+WalkUp
+  xy: 0, 519
+  size: 86, 65
+WalkUp
+  xy: 86, 519
+  size: 86, 65
+WalkUp
+  xy: 172, 519
+  size: 86, 65
+WalkUp
+  xy: 258, 519
+  size: 86, 65
+WalkUp
+  xy: 344, 519
+  size: 86, 65
+WalkUp
+  xy: 430, 519
+  size: 86, 65
+WalkUp
+  xy: 516, 519
+  size: 86, 65
+WalkUp
+  xy: 602, 519
+  size: 86, 65
+WalkDown
+  xy: 0, 584
+  size: 86, 65
+WalkDown
+  xy: 86, 584
+  size: 86, 65
+WalkDown
+  xy: 172, 584
+  size: 86, 65
+WalkDown
+  xy: 258, 584
+  size: 86, 65
+WalkDown
+  xy: 344, 584
+  size: 86, 65
+WalkDown
+  xy: 430, 584
+  size: 86, 65
+WalkDown
+  xy: 516, 584
+  size: 86, 65
+WalkDown
+  xy: 602, 584
+  size: 86, 65

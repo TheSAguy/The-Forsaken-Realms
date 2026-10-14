@@ -1,0 +1,176 @@
+saryth.png
+size: 468,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 52, 55
+Idle
+  xy: 52, 64
+  size: 52, 55
+Idle
+  xy: 104, 64
+  size: 52, 55
+Idle
+  xy: 156, 64
+  size: 52, 55
+Walk
+  xy: 0, 119
+  size: 52, 55
+Walk
+  xy: 52, 119
+  size: 52, 55
+Walk
+  xy: 104, 119
+  size: 52, 55
+Walk
+  xy: 156, 119
+  size: 52, 55
+Walk
+  xy: 208, 119
+  size: 52, 55
+Walk
+  xy: 260, 119
+  size: 52, 55
+Walk
+  xy: 312, 119
+  size: 52, 55
+Walk
+  xy: 364, 119
+  size: 52, 55
+Attack
+  xy: 0, 174
+  size: 52, 55
+Attack
+  xy: 52, 174
+  size: 52, 55
+Attack
+  xy: 104, 174
+  size: 52, 55
+Attack
+  xy: 156, 174
+  size: 52, 55
+Attack
+  xy: 208, 174
+  size: 52, 55
+Attack
+  xy: 260, 174
+  size: 52, 55
+Attack
+  xy: 312, 174
+  size: 52, 55
+Hit
+  xy: 0, 229
+  size: 52, 55
+Hit
+  xy: 52, 229
+  size: 52, 55
+Hit
+  xy: 104, 229
+  size: 52, 55
+Hit
+  xy: 156, 229
+  size: 52, 55
+Death
+  xy: 0, 284
+  size: 52, 55
+Death
+  xy: 52, 284
+  size: 52, 55
+Death
+  xy: 104, 284
+  size: 52, 55
+Death
+  xy: 156, 284
+  size: 52, 55
+Death
+  xy: 208, 284
+  size: 52, 55
+Death
+  xy: 260, 284
+  size: 52, 55
+Death
+  xy: 312, 284
+  size: 52, 55
+Death
+  xy: 364, 284
+  size: 52, 55
+Death
+  xy: 416, 284
+  size: 52, 55
+IdleUp
+  xy: 0, 339
+  size: 52, 55
+IdleUp
+  xy: 52, 339
+  size: 52, 55
+IdleUp
+  xy: 104, 339
+  size: 52, 55
+IdleUp
+  xy: 156, 339
+  size: 52, 55
+IdleDown
+  xy: 0, 394
+  size: 52, 55
+IdleDown
+  xy: 52, 394
+  size: 52, 55
+IdleDown
+  xy: 104, 394
+  size: 52, 55
+IdleDown
+  xy: 156, 394
+  size: 52, 55
+WalkUp
+  xy: 0, 449
+  size: 52, 55
+WalkUp
+  xy: 52, 449
+  size: 52, 55
+WalkUp
+  xy: 104, 449
+  size: 52, 55
+WalkUp
+  xy: 156, 449
+  size: 52, 55
+WalkUp
+  xy: 208, 449
+  size: 52, 55
+WalkUp
+  xy: 260, 449
+  size: 52, 55
+WalkUp
+  xy: 312, 449
+  size: 52, 55
+WalkUp
+  xy: 364, 449
+  size: 52, 55
+WalkDown
+  xy: 0, 504
+  size: 52, 55
+WalkDown
+  xy: 52, 504
+  size: 52, 55
+WalkDown
+  xy: 104, 504
+  size: 52, 55
+WalkDown
+  xy: 156, 504
+  size: 52, 55
+WalkDown
+  xy: 208, 504
+  size: 52, 55
+WalkDown
+  xy: 260, 504
+  size: 52, 55
+WalkDown
+  xy: 312, 504
+  size: 52, 55
+WalkDown
+  xy: 364, 504
+  size: 52, 55

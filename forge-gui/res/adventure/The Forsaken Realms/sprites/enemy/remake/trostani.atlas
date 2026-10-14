@@ -1,0 +1,177 @@
+trostani.png
+size: 450,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 50, 56
+  footprint: 14, 1, 22, 54
+Idle
+  xy: 50, 64
+  size: 50, 56
+Idle
+  xy: 100, 64
+  size: 50, 56
+Idle
+  xy: 150, 64
+  size: 50, 56
+Walk
+  xy: 0, 120
+  size: 50, 56
+Walk
+  xy: 50, 120
+  size: 50, 56
+Walk
+  xy: 100, 120
+  size: 50, 56
+Walk
+  xy: 150, 120
+  size: 50, 56
+Walk
+  xy: 200, 120
+  size: 50, 56
+Walk
+  xy: 250, 120
+  size: 50, 56
+Walk
+  xy: 300, 120
+  size: 50, 56
+Walk
+  xy: 350, 120
+  size: 50, 56
+Attack
+  xy: 0, 176
+  size: 50, 56
+Attack
+  xy: 50, 176
+  size: 50, 56
+Attack
+  xy: 100, 176
+  size: 50, 56
+Attack
+  xy: 150, 176
+  size: 50, 56
+Attack
+  xy: 200, 176
+  size: 50, 56
+Attack
+  xy: 250, 176
+  size: 50, 56
+Attack
+  xy: 300, 176
+  size: 50, 56
+Hit
+  xy: 0, 232
+  size: 50, 56
+Hit
+  xy: 50, 232
+  size: 50, 56
+Hit
+  xy: 100, 232
+  size: 50, 56
+Hit
+  xy: 150, 232
+  size: 50, 56
+Death
+  xy: 0, 288
+  size: 50, 56
+Death
+  xy: 50, 288
+  size: 50, 56
+Death
+  xy: 100, 288
+  size: 50, 56
+Death
+  xy: 150, 288
+  size: 50, 56
+Death
+  xy: 200, 288
+  size: 50, 56
+Death
+  xy: 250, 288
+  size: 50, 56
+Death
+  xy: 300, 288
+  size: 50, 56
+Death
+  xy: 350, 288
+  size: 50, 56
+Death
+  xy: 400, 288
+  size: 50, 56
+IdleUp
+  xy: 0, 344
+  size: 50, 56
+IdleUp
+  xy: 50, 344
+  size: 50, 56
+IdleUp
+  xy: 100, 344
+  size: 50, 56
+IdleUp
+  xy: 150, 344
+  size: 50, 56
+IdleDown
+  xy: 0, 400
+  size: 50, 56
+IdleDown
+  xy: 50, 400
+  size: 50, 56
+IdleDown
+  xy: 100, 400
+  size: 50, 56
+IdleDown
+  xy: 150, 400
+  size: 50, 56
+WalkUp
+  xy: 0, 456
+  size: 50, 56
+WalkUp
+  xy: 50, 456
+  size: 50, 56
+WalkUp
+  xy: 100, 456
+  size: 50, 56
+WalkUp
+  xy: 150, 456
+  size: 50, 56
+WalkUp
+  xy: 200, 456
+  size: 50, 56
+WalkUp
+  xy: 250, 456
+  size: 50, 56
+WalkUp
+  xy: 300, 456
+  size: 50, 56
+WalkUp
+  xy: 350, 456
+  size: 50, 56
+WalkDown
+  xy: 0, 512
+  size: 50, 56
+WalkDown
+  xy: 50, 512
+  size: 50, 56
+WalkDown
+  xy: 100, 512
+  size: 50, 56
+WalkDown
+  xy: 150, 512
+  size: 50, 56
+WalkDown
+  xy: 200, 512
+  size: 50, 56
+WalkDown
+  xy: 250, 512
+  size: 50, 56
+WalkDown
+  xy: 300, 512
+  size: 50, 56
+WalkDown
+  xy: 350, 512
+  size: 50, 56

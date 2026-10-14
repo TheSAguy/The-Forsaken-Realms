@@ -1,0 +1,180 @@
+elf_queen_guay.png
+size: 684,685
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 69
+  footprint: 24, 1, 28, 67
+Idle
+  xy: 76, 64
+  size: 76, 69
+Idle
+  xy: 152, 64
+  size: 76, 69
+Idle
+  xy: 228, 64
+  size: 76, 69
+Walk
+  xy: 0, 133
+  size: 76, 69
+Walk
+  xy: 76, 133
+  size: 76, 69
+Walk
+  xy: 152, 133
+  size: 76, 69
+Walk
+  xy: 228, 133
+  size: 76, 69
+Walk
+  xy: 304, 133
+  size: 76, 69
+Walk
+  xy: 380, 133
+  size: 76, 69
+Walk
+  xy: 456, 133
+  size: 76, 69
+Walk
+  xy: 532, 133
+  size: 76, 69
+Attack
+  xy: 0, 202
+  size: 76, 69
+Attack
+  xy: 76, 202
+  size: 76, 69
+Attack
+  xy: 152, 202
+  size: 76, 69
+Attack
+  xy: 228, 202
+  size: 76, 69
+Attack
+  xy: 304, 202
+  size: 76, 69
+Attack
+  xy: 380, 202
+  size: 76, 69
+Attack
+  xy: 456, 202
+  size: 76, 69
+Attack
+  xy: 532, 202
+  size: 76, 69
+Hit
+  xy: 0, 271
+  size: 76, 69
+Hit
+  xy: 76, 271
+  size: 76, 69
+Hit
+  xy: 152, 271
+  size: 76, 69
+Hit
+  xy: 228, 271
+  size: 76, 69
+Death
+  xy: 0, 340
+  size: 76, 69
+Death
+  xy: 76, 340
+  size: 76, 69
+Death
+  xy: 152, 340
+  size: 76, 69
+Death
+  xy: 228, 340
+  size: 76, 69
+Death
+  xy: 304, 340
+  size: 76, 69
+Death
+  xy: 380, 340
+  size: 76, 69
+Death
+  xy: 456, 340
+  size: 76, 69
+Death
+  xy: 532, 340
+  size: 76, 69
+Death
+  xy: 608, 340
+  size: 76, 69
+IdleUp
+  xy: 0, 409
+  size: 76, 69
+IdleUp
+  xy: 76, 409
+  size: 76, 69
+IdleUp
+  xy: 152, 409
+  size: 76, 69
+IdleUp
+  xy: 228, 409
+  size: 76, 69
+IdleDown
+  xy: 0, 478
+  size: 76, 69
+IdleDown
+  xy: 76, 478
+  size: 76, 69
+IdleDown
+  xy: 152, 478
+  size: 76, 69
+IdleDown
+  xy: 228, 478
+  size: 76, 69
+WalkUp
+  xy: 0, 547
+  size: 76, 69
+WalkUp
+  xy: 76, 547
+  size: 76, 69
+WalkUp
+  xy: 152, 547
+  size: 76, 69
+WalkUp
+  xy: 228, 547
+  size: 76, 69
+WalkUp
+  xy: 304, 547
+  size: 76, 69
+WalkUp
+  xy: 380, 547
+  size: 76, 69
+WalkUp
+  xy: 456, 547
+  size: 76, 69
+WalkUp
+  xy: 532, 547
+  size: 76, 69
+WalkDown
+  xy: 0, 616
+  size: 76, 69
+WalkDown
+  xy: 76, 616
+  size: 76, 69
+WalkDown
+  xy: 152, 616
+  size: 76, 69
+WalkDown
+  xy: 228, 616
+  size: 76, 69
+WalkDown
+  xy: 304, 616
+  size: 76, 69
+WalkDown
+  xy: 380, 616
+  size: 76, 69
+WalkDown
+  xy: 456, 616
+  size: 76, 69
+WalkDown
+  xy: 532, 616
+  size: 76, 69

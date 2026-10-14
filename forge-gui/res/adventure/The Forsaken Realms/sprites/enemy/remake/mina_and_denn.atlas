@@ -1,0 +1,174 @@
+mina_and_denn.png
+size: 756,703
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 71
+  footprint: 17, 1, 50, 59
+Idle
+  xy: 84, 64
+  size: 84, 71
+Idle
+  xy: 168, 64
+  size: 84, 71
+Idle
+  xy: 252, 64
+  size: 84, 71
+Walk
+  xy: 0, 135
+  size: 84, 71
+Walk
+  xy: 84, 135
+  size: 84, 71
+Walk
+  xy: 168, 135
+  size: 84, 71
+Walk
+  xy: 252, 135
+  size: 84, 71
+Walk
+  xy: 336, 135
+  size: 84, 71
+Walk
+  xy: 420, 135
+  size: 84, 71
+Walk
+  xy: 504, 135
+  size: 84, 71
+Walk
+  xy: 588, 135
+  size: 84, 71
+Attack
+  xy: 0, 206
+  size: 84, 71
+Attack
+  xy: 84, 206
+  size: 84, 71
+Attack
+  xy: 168, 206
+  size: 84, 71
+Attack
+  xy: 252, 206
+  size: 84, 71
+Attack
+  xy: 336, 206
+  size: 84, 71
+Attack
+  xy: 420, 206
+  size: 84, 71
+Hit
+  xy: 0, 277
+  size: 84, 71
+Hit
+  xy: 84, 277
+  size: 84, 71
+Hit
+  xy: 168, 277
+  size: 84, 71
+Hit
+  xy: 252, 277
+  size: 84, 71
+Death
+  xy: 0, 348
+  size: 84, 71
+Death
+  xy: 84, 348
+  size: 84, 71
+Death
+  xy: 168, 348
+  size: 84, 71
+Death
+  xy: 252, 348
+  size: 84, 71
+Death
+  xy: 336, 348
+  size: 84, 71
+Death
+  xy: 420, 348
+  size: 84, 71
+Death
+  xy: 504, 348
+  size: 84, 71
+Death
+  xy: 588, 348
+  size: 84, 71
+Death
+  xy: 672, 348
+  size: 84, 71
+IdleUp
+  xy: 0, 419
+  size: 84, 71
+IdleUp
+  xy: 84, 419
+  size: 84, 71
+IdleUp
+  xy: 168, 419
+  size: 84, 71
+IdleUp
+  xy: 252, 419
+  size: 84, 71
+IdleDown
+  xy: 0, 490
+  size: 84, 71
+IdleDown
+  xy: 84, 490
+  size: 84, 71
+IdleDown
+  xy: 168, 490
+  size: 84, 71
+IdleDown
+  xy: 252, 490
+  size: 84, 71
+WalkUp
+  xy: 0, 561
+  size: 84, 71
+WalkUp
+  xy: 84, 561
+  size: 84, 71
+WalkUp
+  xy: 168, 561
+  size: 84, 71
+WalkUp
+  xy: 252, 561
+  size: 84, 71
+WalkUp
+  xy: 336, 561
+  size: 84, 71
+WalkUp
+  xy: 420, 561
+  size: 84, 71
+WalkUp
+  xy: 504, 561
+  size: 84, 71
+WalkUp
+  xy: 588, 561
+  size: 84, 71
+WalkDown
+  xy: 0, 632
+  size: 84, 71
+WalkDown
+  xy: 84, 632
+  size: 84, 71
+WalkDown
+  xy: 168, 632
+  size: 84, 71
+WalkDown
+  xy: 252, 632
+  size: 84, 71
+WalkDown
+  xy: 336, 632
+  size: 84, 71
+WalkDown
+  xy: 420, 632
+  size: 84, 71
+WalkDown
+  xy: 504, 632
+  size: 84, 71
+WalkDown
+  xy: 588, 632
+  size: 84, 71

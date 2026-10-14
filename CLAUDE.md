@@ -80,6 +80,13 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 590): **LOCAL + UNRELEASED (art + data)** - all 83 enemies on the stock 16 px `humanoid/elf`
+sprites are LPC characters (the Procedural Pixel Creatures session; generator `lpc_selections/make_590.py`), each named
+one dressed from its legend deck's commander card. 83 new atlases under `sprites/enemy/remake/`, enemies.json 83 paths +
+scales (0.28-0.33; the bosses Elf Queen Guay 0.51 / The Great Druid 0.57 keep their drawn size), footprint lines on 53,
+CREDITS_LPC.md 332 enemies, CREDITS.md's LPC line (+ Yamilian, kcilds/Rocetti/Eredah, Page, Radomir Dopieralski).
+Nissa keeps her 64 px sprite. #31 verifies and packages. Not seen in play.
+
 ## STATE 2026-10-14 (round 589): **LOCAL + UNRELEASED** - a town raid now says whether a roaming guard rides out (sent
 at once) or why none does - no "Help with pillaged towns" order, hurt, no deck, busy (RoamingGuardRuntime.onPillageStarted).
 

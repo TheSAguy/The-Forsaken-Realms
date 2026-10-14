@@ -1,0 +1,176 @@
+sim_han_how_02.png
+size: 414,613
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 46, 61
+Idle
+  xy: 46, 64
+  size: 46, 61
+Idle
+  xy: 92, 64
+  size: 46, 61
+Idle
+  xy: 138, 64
+  size: 46, 61
+Walk
+  xy: 0, 125
+  size: 46, 61
+Walk
+  xy: 46, 125
+  size: 46, 61
+Walk
+  xy: 92, 125
+  size: 46, 61
+Walk
+  xy: 138, 125
+  size: 46, 61
+Walk
+  xy: 184, 125
+  size: 46, 61
+Walk
+  xy: 230, 125
+  size: 46, 61
+Walk
+  xy: 276, 125
+  size: 46, 61
+Walk
+  xy: 322, 125
+  size: 46, 61
+Attack
+  xy: 0, 186
+  size: 46, 61
+Attack
+  xy: 46, 186
+  size: 46, 61
+Attack
+  xy: 92, 186
+  size: 46, 61
+Attack
+  xy: 138, 186
+  size: 46, 61
+Attack
+  xy: 184, 186
+  size: 46, 61
+Attack
+  xy: 230, 186
+  size: 46, 61
+Attack
+  xy: 276, 186
+  size: 46, 61
+Hit
+  xy: 0, 247
+  size: 46, 61
+Hit
+  xy: 46, 247
+  size: 46, 61
+Hit
+  xy: 92, 247
+  size: 46, 61
+Hit
+  xy: 138, 247
+  size: 46, 61
+Death
+  xy: 0, 308
+  size: 46, 61
+Death
+  xy: 46, 308
+  size: 46, 61
+Death
+  xy: 92, 308
+  size: 46, 61
+Death
+  xy: 138, 308
+  size: 46, 61
+Death
+  xy: 184, 308
+  size: 46, 61
+Death
+  xy: 230, 308
+  size: 46, 61
+Death
+  xy: 276, 308
+  size: 46, 61
+Death
+  xy: 322, 308
+  size: 46, 61
+Death
+  xy: 368, 308
+  size: 46, 61
+IdleUp
+  xy: 0, 369
+  size: 46, 61
+IdleUp
+  xy: 46, 369
+  size: 46, 61
+IdleUp
+  xy: 92, 369
+  size: 46, 61
+IdleUp
+  xy: 138, 369
+  size: 46, 61
+IdleDown
+  xy: 0, 430
+  size: 46, 61
+IdleDown
+  xy: 46, 430
+  size: 46, 61
+IdleDown
+  xy: 92, 430
+  size: 46, 61
+IdleDown
+  xy: 138, 430
+  size: 46, 61
+WalkUp
+  xy: 0, 491
+  size: 46, 61
+WalkUp
+  xy: 46, 491
+  size: 46, 61
+WalkUp
+  xy: 92, 491
+  size: 46, 61
+WalkUp
+  xy: 138, 491
+  size: 46, 61
+WalkUp
+  xy: 184, 491
+  size: 46, 61
+WalkUp
+  xy: 230, 491
+  size: 46, 61
+WalkUp
+  xy: 276, 491
+  size: 46, 61
+WalkUp
+  xy: 322, 491
+  size: 46, 61
+WalkDown
+  xy: 0, 552
+  size: 46, 61
+WalkDown
+  xy: 46, 552
+  size: 46, 61
+WalkDown
+  xy: 92, 552
+  size: 46, 61
+WalkDown
+  xy: 138, 552
+  size: 46, 61
+WalkDown
+  xy: 184, 552
+  size: 46, 61
+WalkDown
+  xy: 230, 552
+  size: 46, 61
+WalkDown
+  xy: 276, 552
+  size: 46, 61
+WalkDown
+  xy: 322, 552
+  size: 46, 61

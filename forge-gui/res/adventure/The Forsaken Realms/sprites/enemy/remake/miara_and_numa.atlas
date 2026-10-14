@@ -1,0 +1,180 @@
+miara_and_numa.png
+size: 756,622
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 62
+  footprint: 18, 1, 48, 60
+Idle
+  xy: 84, 64
+  size: 84, 62
+Idle
+  xy: 168, 64
+  size: 84, 62
+Idle
+  xy: 252, 64
+  size: 84, 62
+Walk
+  xy: 0, 126
+  size: 84, 62
+Walk
+  xy: 84, 126
+  size: 84, 62
+Walk
+  xy: 168, 126
+  size: 84, 62
+Walk
+  xy: 252, 126
+  size: 84, 62
+Walk
+  xy: 336, 126
+  size: 84, 62
+Walk
+  xy: 420, 126
+  size: 84, 62
+Walk
+  xy: 504, 126
+  size: 84, 62
+Walk
+  xy: 588, 126
+  size: 84, 62
+Attack
+  xy: 0, 188
+  size: 84, 62
+Attack
+  xy: 84, 188
+  size: 84, 62
+Attack
+  xy: 168, 188
+  size: 84, 62
+Attack
+  xy: 252, 188
+  size: 84, 62
+Attack
+  xy: 336, 188
+  size: 84, 62
+Attack
+  xy: 420, 188
+  size: 84, 62
+Attack
+  xy: 504, 188
+  size: 84, 62
+Attack
+  xy: 588, 188
+  size: 84, 62
+Hit
+  xy: 0, 250
+  size: 84, 62
+Hit
+  xy: 84, 250
+  size: 84, 62
+Hit
+  xy: 168, 250
+  size: 84, 62
+Hit
+  xy: 252, 250
+  size: 84, 62
+Death
+  xy: 0, 312
+  size: 84, 62
+Death
+  xy: 84, 312
+  size: 84, 62
+Death
+  xy: 168, 312
+  size: 84, 62
+Death
+  xy: 252, 312
+  size: 84, 62
+Death
+  xy: 336, 312
+  size: 84, 62
+Death
+  xy: 420, 312
+  size: 84, 62
+Death
+  xy: 504, 312
+  size: 84, 62
+Death
+  xy: 588, 312
+  size: 84, 62
+Death
+  xy: 672, 312
+  size: 84, 62
+IdleUp
+  xy: 0, 374
+  size: 84, 62
+IdleUp
+  xy: 84, 374
+  size: 84, 62
+IdleUp
+  xy: 168, 374
+  size: 84, 62
+IdleUp
+  xy: 252, 374
+  size: 84, 62
+IdleDown
+  xy: 0, 436
+  size: 84, 62
+IdleDown
+  xy: 84, 436
+  size: 84, 62
+IdleDown
+  xy: 168, 436
+  size: 84, 62
+IdleDown
+  xy: 252, 436
+  size: 84, 62
+WalkUp
+  xy: 0, 498
+  size: 84, 62
+WalkUp
+  xy: 84, 498
+  size: 84, 62
+WalkUp
+  xy: 168, 498
+  size: 84, 62
+WalkUp
+  xy: 252, 498
+  size: 84, 62
+WalkUp
+  xy: 336, 498
+  size: 84, 62
+WalkUp
+  xy: 420, 498
+  size: 84, 62
+WalkUp
+  xy: 504, 498
+  size: 84, 62
+WalkUp
+  xy: 588, 498
+  size: 84, 62
+WalkDown
+  xy: 0, 560
+  size: 84, 62
+WalkDown
+  xy: 84, 560
+  size: 84, 62
+WalkDown
+  xy: 168, 560
+  size: 84, 62
+WalkDown
+  xy: 252, 560
+  size: 84, 62
+WalkDown
+  xy: 336, 560
+  size: 84, 62
+WalkDown
+  xy: 420, 560
+  size: 84, 62
+WalkDown
+  xy: 504, 560
+  size: 84, 62
+WalkDown
+  xy: 588, 560
+  size: 84, 62

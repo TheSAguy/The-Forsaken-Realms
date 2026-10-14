@@ -1,0 +1,176 @@
+miriam.png
+size: 414,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 46, 58
+Idle
+  xy: 46, 64
+  size: 46, 58
+Idle
+  xy: 92, 64
+  size: 46, 58
+Idle
+  xy: 138, 64
+  size: 46, 58
+Walk
+  xy: 0, 122
+  size: 46, 58
+Walk
+  xy: 46, 122
+  size: 46, 58
+Walk
+  xy: 92, 122
+  size: 46, 58
+Walk
+  xy: 138, 122
+  size: 46, 58
+Walk
+  xy: 184, 122
+  size: 46, 58
+Walk
+  xy: 230, 122
+  size: 46, 58
+Walk
+  xy: 276, 122
+  size: 46, 58
+Walk
+  xy: 322, 122
+  size: 46, 58
+Attack
+  xy: 0, 180
+  size: 46, 58
+Attack
+  xy: 46, 180
+  size: 46, 58
+Attack
+  xy: 92, 180
+  size: 46, 58
+Attack
+  xy: 138, 180
+  size: 46, 58
+Attack
+  xy: 184, 180
+  size: 46, 58
+Attack
+  xy: 230, 180
+  size: 46, 58
+Attack
+  xy: 276, 180
+  size: 46, 58
+Hit
+  xy: 0, 238
+  size: 46, 58
+Hit
+  xy: 46, 238
+  size: 46, 58
+Hit
+  xy: 92, 238
+  size: 46, 58
+Hit
+  xy: 138, 238
+  size: 46, 58
+Death
+  xy: 0, 296
+  size: 46, 58
+Death
+  xy: 46, 296
+  size: 46, 58
+Death
+  xy: 92, 296
+  size: 46, 58
+Death
+  xy: 138, 296
+  size: 46, 58
+Death
+  xy: 184, 296
+  size: 46, 58
+Death
+  xy: 230, 296
+  size: 46, 58
+Death
+  xy: 276, 296
+  size: 46, 58
+Death
+  xy: 322, 296
+  size: 46, 58
+Death
+  xy: 368, 296
+  size: 46, 58
+IdleUp
+  xy: 0, 354
+  size: 46, 58
+IdleUp
+  xy: 46, 354
+  size: 46, 58
+IdleUp
+  xy: 92, 354
+  size: 46, 58
+IdleUp
+  xy: 138, 354
+  size: 46, 58
+IdleDown
+  xy: 0, 412
+  size: 46, 58
+IdleDown
+  xy: 46, 412
+  size: 46, 58
+IdleDown
+  xy: 92, 412
+  size: 46, 58
+IdleDown
+  xy: 138, 412
+  size: 46, 58
+WalkUp
+  xy: 0, 470
+  size: 46, 58
+WalkUp
+  xy: 46, 470
+  size: 46, 58
+WalkUp
+  xy: 92, 470
+  size: 46, 58
+WalkUp
+  xy: 138, 470
+  size: 46, 58
+WalkUp
+  xy: 184, 470
+  size: 46, 58
+WalkUp
+  xy: 230, 470
+  size: 46, 58
+WalkUp
+  xy: 276, 470
+  size: 46, 58
+WalkUp
+  xy: 322, 470
+  size: 46, 58
+WalkDown
+  xy: 0, 528
+  size: 46, 58
+WalkDown
+  xy: 46, 528
+  size: 46, 58
+WalkDown
+  xy: 92, 528
+  size: 46, 58
+WalkDown
+  xy: 138, 528
+  size: 46, 58
+WalkDown
+  xy: 184, 528
+  size: 46, 58
+WalkDown
+  xy: 230, 528
+  size: 46, 58
+WalkDown
+  xy: 276, 528
+  size: 46, 58
+WalkDown
+  xy: 322, 528
+  size: 46, 58

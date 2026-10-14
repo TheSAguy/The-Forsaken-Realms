@@ -14264,6 +14264,86 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 590: every enemy on the stock elf sprites becomes an LPC character (2026-10-14)
+
+The Procedural Pixel Creatures session (the user picked "Elf LPC batch" from the open art work, then, after the first
+25's contact sheet, "Complete all Elfs"): the 83 enemies on the ten stock 16 px `humanoid/elf` sprites take LPC
+characters, built by the generator repo's `lpc_selections/make_590.py` (`lpc_to_forge.py` through `lpc_batch.py`).
+The stock "elf" folder dresses humans too, so each named enemy is dressed from its legend deck's commander card.
+
+- **hunter, hunter_2, lizardrider** (14):
+  - The Elf warrior: a blond elf in green leather with a longsword.
+  - Eshki: a gold circlet, teal armor and a spear.
+  - Marwyn: an elf archer in green.
+  - Nylea: blue skin, pearl antlers and a silver great bow.
+  - Radha: red braids, red leather and a saber.
+  - Disa: a black ponytail, a fur collar and a dagger.
+  - Halana and Alena: a hooded archer.
+  - Jolene: an auburn braid and gloves; she attacks with a jab.
+  - Miriam: curly hair, a wide hat and a green cape.
+  - Morcant: an elf noble with an antler crown, in a copper gown.
+  - Selvala: a tricorne, a fur collar and a rapier.
+  - Taii Wakeen: a crossbow in place of her rifle.
+  - Lathril: a blue-grey elf in green with a longsword.
+  - Mina and Denn: Denn, a purple elf with red hair and a scimitar. LPC has no lizard mount, so the riders go on foot.
+- **elf_golgari, druid_2** (11):
+  - Emmara, Freyalise, Yeva, Azusa (a monk in a white kimono) and Autumn Willow (An-Havva).
+  - The Golgari Elf: grey skin, white hair and a green crystal.
+  - Greensleeves: a moss-green wild man.
+  - Savra: a black dress, an iron tiara and a scythe.
+  - The Elf Vagabond, the High Elf (a gold circlet and a diamond staff) and Mayael (a black bob, white eyes).
+- **deftsorceress** (9):
+  - The Auramancer, Esika (white curls, dark blue), Hanna (brass plate), Jalira (black leather), Kaza (a blue hood),
+    Kestia, Mrs. Klaus (her deck's Meria: red hair, maroon leather) and Stella Lee (a wide hat).
+  - Elf Queen Guay (boss): a gold crown and a gold loop staff.
+- **druid** (19):
+  - Autumn Willow, the Beast Master of Shandalar (a bearded spearman in furs), the Daughter of Autumn and Eladamri.
+  - The Elf: Llanowar's bare-chested swordsman with a scimitar.
+  - Eloise (a black tricorne and a dagger), Inalla, Kolvori (a white gown and a gold horn staff), Lilah (a black wide
+    hat), Mu Yanling (a blue kimono), Thelon, Trostani (pale green), Vannifar (lavender) and Winota (a spear).
+  - The Great Druid (boss): an antlered elder with a white beard and a gnarled staff.
+  - Four World Champions: Matt Linde '99, Nicolas Labarre '00, Sim Han How '02 and Svend Geertsen '97.
+- **green_wiz3** (7):
+  - Aminatou, Huatli (gold legion armor and a saber), Jenson (a bow), Jolrael and Rashmi.
+  - The Master Green Wizard: a green wizard hat and a white beard.
+  - Shanna: a shield and a longsword.
+- **shaman** (15):
+  - Anikthea, Atla Palani, Birgi (a red cloak with a fur collar), the Loamspeaker (a brown hood) and Narci.
+  - Rielle (an elderly face under a purple hood), Rona (steel plate and a blue crystal) and Saheeli.
+  - Sisay (a scimitar), Subira (a spear) and Zimone.
+  - Four World Champions: Brian Selden '98, Jan Tomcani '01, Janosch Kühn '00 and Olle Rade '96.
+- **shaman_2** (8):
+  - Izoni (grey skin, bone horns, a scythe) and Linden (gold plate, a tiara and a longsword).
+  - Maralen (curled horns), Miara and Numa (antlers and a bow), and Saryth (pale green, a serpent's tail).
+  - Saskia (red braids and a waraxe), the Shaman (a horned helm) and Wayta (a spear).
+- **How they were dressed**:
+  - Card art came from Forge's picture cache, or from Scryfall where the cache had none (Eshki, Marwyn, Morcant, Birgi,
+    Esika, Kolvori, Linden).
+  - Huatli, Rona, Maralen and Mu Yanling follow another printing of the same character.
+  - The eight World Champions are plain mages and fighters in their decks' colors.
+  - Linden and Savra wear tiaras: `enemy_scale.py` counts LPC's tall crowns as body height, and with a crown they drew
+    a size smaller than the rest (0.25 against 0.28-0.33).
+- **Not converted:** Nissa (`humanoid/elf/nissa`) already has a 64 px sprite.
+- **Files**:
+  - 83 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 83 sprite paths and 83 scales, 0.28-0.33 for the ranked 81 (`enemy_scale.py --write`).
+  - The two bosses keep their drawn size: Elf Queen Guay 1.875 -> 0.51, The Great Druid 1.875 -> 0.57.
+  - `sprite_footprints.py --write`: a footprint line on 53 of the new atlases; the other 30 are casters whose
+    frame already fits the body. `--check` passes.
+  - `CREDITS_LPC.md` regenerated: 332 enemies, additions only.
+  - `CREDITS.md`'s LPC line: 332 enemies, round 590 and the 83 names. Four new authors: **Yamilian** (braid2),
+    **kcilds/Rocetti/Eredah** (spiked hair), **Page** (page hair) and **Radomir Dopieralski** (pigtails).
+- **Checks**:
+  - Every atlas has a whole Avatar, viewed on a sheet; `avatar_crop_qa.py` flags none of them.
+  - The sprite audit flags one frame: Taii Wakeen's Death, where LPC's hurt fall drops the crossbow apart from the body
+    (the art, like Ognis's flail in round 501).
+  - It also flags Linden's first Attack frame, where the longsword's windup floats above her head and her body reads
+    as the detached piece (the art).
+  - `validate_plane_data.py` shows its three informational sections unchanged (enum 18, starter-bucket 30,
+    unknown-key 1).
+  - enemies.json against HEAD: exactly these 83 enemies changed, and only `sprite` and `scale`.
+  - Not seen in play.
+
 ## Round 589: a town raid says whether a roaming guard rides out, and why not (2026-10-14)
 
 The user's guard stayed at the Capitol through a raid because "Help with pillaged towns" was unticked (off by default),

@@ -1,0 +1,174 @@
+linden.png
+size: 1386,676
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 154, 68
+  footprint: 58, 10, 38, 58
+Idle
+  xy: 154, 64
+  size: 154, 68
+Idle
+  xy: 308, 64
+  size: 154, 68
+Idle
+  xy: 462, 64
+  size: 154, 68
+Walk
+  xy: 0, 132
+  size: 154, 68
+Walk
+  xy: 154, 132
+  size: 154, 68
+Walk
+  xy: 308, 132
+  size: 154, 68
+Walk
+  xy: 462, 132
+  size: 154, 68
+Walk
+  xy: 616, 132
+  size: 154, 68
+Walk
+  xy: 770, 132
+  size: 154, 68
+Walk
+  xy: 924, 132
+  size: 154, 68
+Walk
+  xy: 1078, 132
+  size: 154, 68
+Attack
+  xy: 0, 200
+  size: 154, 68
+Attack
+  xy: 154, 200
+  size: 154, 68
+Attack
+  xy: 308, 200
+  size: 154, 68
+Attack
+  xy: 462, 200
+  size: 154, 68
+Attack
+  xy: 616, 200
+  size: 154, 68
+Attack
+  xy: 770, 200
+  size: 154, 68
+Hit
+  xy: 0, 268
+  size: 154, 68
+Hit
+  xy: 154, 268
+  size: 154, 68
+Hit
+  xy: 308, 268
+  size: 154, 68
+Hit
+  xy: 462, 268
+  size: 154, 68
+Death
+  xy: 0, 336
+  size: 154, 68
+Death
+  xy: 154, 336
+  size: 154, 68
+Death
+  xy: 308, 336
+  size: 154, 68
+Death
+  xy: 462, 336
+  size: 154, 68
+Death
+  xy: 616, 336
+  size: 154, 68
+Death
+  xy: 770, 336
+  size: 154, 68
+Death
+  xy: 924, 336
+  size: 154, 68
+Death
+  xy: 1078, 336
+  size: 154, 68
+Death
+  xy: 1232, 336
+  size: 154, 68
+IdleUp
+  xy: 0, 404
+  size: 154, 68
+IdleUp
+  xy: 154, 404
+  size: 154, 68
+IdleUp
+  xy: 308, 404
+  size: 154, 68
+IdleUp
+  xy: 462, 404
+  size: 154, 68
+IdleDown
+  xy: 0, 472
+  size: 154, 68
+IdleDown
+  xy: 154, 472
+  size: 154, 68
+IdleDown
+  xy: 308, 472
+  size: 154, 68
+IdleDown
+  xy: 462, 472
+  size: 154, 68
+WalkUp
+  xy: 0, 540
+  size: 154, 68
+WalkUp
+  xy: 154, 540
+  size: 154, 68
+WalkUp
+  xy: 308, 540
+  size: 154, 68
+WalkUp
+  xy: 462, 540
+  size: 154, 68
+WalkUp
+  xy: 616, 540
+  size: 154, 68
+WalkUp
+  xy: 770, 540
+  size: 154, 68
+WalkUp
+  xy: 924, 540
+  size: 154, 68
+WalkUp
+  xy: 1078, 540
+  size: 154, 68
+WalkDown
+  xy: 0, 608
+  size: 154, 68
+WalkDown
+  xy: 154, 608
+  size: 154, 68
+WalkDown
+  xy: 308, 608
+  size: 154, 68
+WalkDown
+  xy: 462, 608
+  size: 154, 68
+WalkDown
+  xy: 616, 608
+  size: 154, 68
+WalkDown
+  xy: 770, 608
+  size: 154, 68
+WalkDown
+  xy: 924, 608
+  size: 154, 68
+WalkDown
+  xy: 1078, 608
+  size: 154, 68

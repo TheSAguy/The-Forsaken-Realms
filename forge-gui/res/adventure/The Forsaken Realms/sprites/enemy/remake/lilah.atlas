@@ -1,0 +1,176 @@
+lilah.png
+size: 396,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 44, 58
+Idle
+  xy: 44, 64
+  size: 44, 58
+Idle
+  xy: 88, 64
+  size: 44, 58
+Idle
+  xy: 132, 64
+  size: 44, 58
+Walk
+  xy: 0, 122
+  size: 44, 58
+Walk
+  xy: 44, 122
+  size: 44, 58
+Walk
+  xy: 88, 122
+  size: 44, 58
+Walk
+  xy: 132, 122
+  size: 44, 58
+Walk
+  xy: 176, 122
+  size: 44, 58
+Walk
+  xy: 220, 122
+  size: 44, 58
+Walk
+  xy: 264, 122
+  size: 44, 58
+Walk
+  xy: 308, 122
+  size: 44, 58
+Attack
+  xy: 0, 180
+  size: 44, 58
+Attack
+  xy: 44, 180
+  size: 44, 58
+Attack
+  xy: 88, 180
+  size: 44, 58
+Attack
+  xy: 132, 180
+  size: 44, 58
+Attack
+  xy: 176, 180
+  size: 44, 58
+Attack
+  xy: 220, 180
+  size: 44, 58
+Attack
+  xy: 264, 180
+  size: 44, 58
+Hit
+  xy: 0, 238
+  size: 44, 58
+Hit
+  xy: 44, 238
+  size: 44, 58
+Hit
+  xy: 88, 238
+  size: 44, 58
+Hit
+  xy: 132, 238
+  size: 44, 58
+Death
+  xy: 0, 296
+  size: 44, 58
+Death
+  xy: 44, 296
+  size: 44, 58
+Death
+  xy: 88, 296
+  size: 44, 58
+Death
+  xy: 132, 296
+  size: 44, 58
+Death
+  xy: 176, 296
+  size: 44, 58
+Death
+  xy: 220, 296
+  size: 44, 58
+Death
+  xy: 264, 296
+  size: 44, 58
+Death
+  xy: 308, 296
+  size: 44, 58
+Death
+  xy: 352, 296
+  size: 44, 58
+IdleUp
+  xy: 0, 354
+  size: 44, 58
+IdleUp
+  xy: 44, 354
+  size: 44, 58
+IdleUp
+  xy: 88, 354
+  size: 44, 58
+IdleUp
+  xy: 132, 354
+  size: 44, 58
+IdleDown
+  xy: 0, 412
+  size: 44, 58
+IdleDown
+  xy: 44, 412
+  size: 44, 58
+IdleDown
+  xy: 88, 412
+  size: 44, 58
+IdleDown
+  xy: 132, 412
+  size: 44, 58
+WalkUp
+  xy: 0, 470
+  size: 44, 58
+WalkUp
+  xy: 44, 470
+  size: 44, 58
+WalkUp
+  xy: 88, 470
+  size: 44, 58
+WalkUp
+  xy: 132, 470
+  size: 44, 58
+WalkUp
+  xy: 176, 470
+  size: 44, 58
+WalkUp
+  xy: 220, 470
+  size: 44, 58
+WalkUp
+  xy: 264, 470
+  size: 44, 58
+WalkUp
+  xy: 308, 470
+  size: 44, 58
+WalkDown
+  xy: 0, 528
+  size: 44, 58
+WalkDown
+  xy: 44, 528
+  size: 44, 58
+WalkDown
+  xy: 88, 528
+  size: 44, 58
+WalkDown
+  xy: 132, 528
+  size: 44, 58
+WalkDown
+  xy: 176, 528
+  size: 44, 58
+WalkDown
+  xy: 220, 528
+  size: 44, 58
+WalkDown
+  xy: 264, 528
+  size: 44, 58
+WalkDown
+  xy: 308, 528
+  size: 44, 58
