@@ -1,6 +1,6 @@
 
 ascendance_icons.png
-size: 800,900
+size: 800,1000
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -204,4 +204,25 @@ guardFocus_1
   size: 96, 96
 guardSpoils_1
   xy: 202, 802
+  size: 96, 96
+warmonger_1
+  xy: 302, 802
+  size: 96, 96
+warmonger_2
+  xy: 402, 802
+  size: 96, 96
+auraOfFear_1
+  xy: 502, 802
+  size: 96, 96
+auraOfFear_2
+  xy: 602, 802
+  size: 96, 96
+auraOfFear_3
+  xy: 702, 802
+  size: 96, 96
+legendSeeker_1
+  xy: 2, 902
+  size: 96, 96
+insight_1
+  xy: 102, 902
   size: 96, 96

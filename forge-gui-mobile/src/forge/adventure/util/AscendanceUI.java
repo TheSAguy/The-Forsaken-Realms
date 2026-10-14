@@ -50,6 +50,9 @@ public final class AscendanceUI {
         int level = Ascendance.offerLevel();
         int waiting = Ascendance.pendingChoices();
         addRow(dialog, "[GOLD]Ascendance " + level + "[] - choose one" + (waiting > 1 ? " [%80](" + waiting + " waiting)" : ""));
+        // Round 596: Insight's fourth reward - the rows a little closer, so the dialog stays on the screen (every reward's
+        // description is one line, so four rows fit with the heading).
+        boolean four = offer.size() >= 4;
         for (String id : offer) {
             TextraButton button = Controls.newTextButton(Ascendance.describe(id, level), () -> {
                 stage.hideDialog();
@@ -58,7 +61,7 @@ public final class AscendanceUI {
                     Gdx.app.postRunnable(AscendanceUI::openChoice);
             });
             withIcon(button, Ascendance.iconRegion(id)); // round 522
-            dialog.getButtonTable().add(button).width(width()).colspan(2).padTop(2f).row();
+            dialog.getButtonTable().add(button).width(width()).colspan(2).padTop(four ? 1f : 2f).row();
         }
         // Round 518 (the user: "Let's add a Skill Re-roll. Can only do it once per level"): a new offer for shards, beside
         // "Not now"; greyed when this level's re-roll is used or the shards are short.
@@ -189,6 +192,9 @@ public final class AscendanceUI {
         if (image == null)
             return;
         com.github.tommyettinger.textra.TextraLabel label = button.getTextraLabel();
+        // Round 596: a long description (Scientist, Spoils of War) ran wider than the button and squeezed its icon out -
+        // it wraps beside the icon now.
+        label.setWrap(true);
         button.clearChildren();
         button.add(image).size(CHOICE_ICON).pad(2f, 4f, 2f, 2f);
         button.add(label).expandX().fillX();

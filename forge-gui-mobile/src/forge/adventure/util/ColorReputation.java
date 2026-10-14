@@ -319,7 +319,8 @@ public class ColorReputation {
             // Round 494: Ascendance's Envoy shrinks the losses (target and allies), never the enemies' gain.
             int target = Math.round((mono ? FIGHT_TARGET : FIGHT_TARGET / 2) * multiplier * Ascendance.reputationLossFactor());
             int ally = Math.round((mono ? FIGHT_ALLY : FIGHT_ALLY / 2) * multiplier * Ascendance.reputationLossFactor());
-            int enemy = (mono ? FIGHT_ENEMY : FIGHT_ENEMY / 2) * multiplier;
+            // Round 596: Warmonger, Envoy's opposite, grows the enemies' gain (and only that).
+            int enemy = Math.round((mono ? FIGHT_ENEMY : FIGHT_ENEMY / 2) * multiplier * Ascendance.reputationGainFactor());
             applyPattern(color, target, ally, enemy);
         }
     }

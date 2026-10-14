@@ -1103,6 +1103,15 @@ public class DuelScene extends ForgeScene {
                     + (lifeBeforeNotoriety != lifeBeforeTerrainModifier ? " -> terrainAdjusted=" + lifeBeforeNotoriety : "")
                     + (notorietyLifePercent > 0 ? " -> notoriety +" + notorietyLifePercent + "%=" + enemyStartingLife : "")
                     + " (eventOverride=" + (eventData != null) + ")");
+            // Round 596 (the user: "Aura of fear: 10% fewer hit points for enemies (cumulative 3 times)"): the player's own
+            // duels - not an event (its rules set the life), not a roaming guard's fight - never under 1.
+            float fear = eventData == null && guardDeck == null ? forge.adventure.util.Ascendance.enemyLifeFactor() : 1f;
+            if (fear < 1f) {
+                int lifeBeforeFear = enemyStartingLife;
+                enemyStartingLife = Math.max(1, Math.round(enemyStartingLife * fear));
+                System.out.println("[TFR-Ascend] Aura of Fear: " + currentEnemy.getName() + " starts at " + enemyStartingLife
+                        + " life, not " + lifeBeforeFear + " (x" + fear + ")");
+            }
             aiPlayer.setStartingLife(eventData != null ? eventData.eventRules.startingLife : enemyStartingLife);
 
             Array<EffectData> equipmentEffects = new Array<>();

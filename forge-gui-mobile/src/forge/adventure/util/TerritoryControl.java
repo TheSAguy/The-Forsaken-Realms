@@ -2301,6 +2301,8 @@ public class TerritoryControl {
                         + target.getDisplayName() + "!", true);
                 TempleOfferings.recordKill(mage.getData(), "your " + EconomyBuildings.guardTierDisplayName(guardTier)
                         + " guard at " + target.getDisplayName()); // round 594
+                Ascendance.onGuardWon(mage.getData(), true, "Your " + EconomyBuildings.guardTierDisplayName(guardTier)
+                        + " guard at " + target.getDisplayName()); // round 596: Power, log only
                 return false;
             }
             changes.removeGuardAt(strongestIndex);

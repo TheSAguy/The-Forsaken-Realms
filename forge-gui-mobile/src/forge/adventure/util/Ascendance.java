@@ -725,6 +725,29 @@ public final class Ascendance {
         pendingDuelEnemy = enemy;
     }
 
+    /**
+     * Round 596 (the user: "The player should received XP (Power) from Guards that win duels (both Roaming and Local).
+     * This only needs to be noted in the message Log. Not a pop-up message."): a guard's won fight pays the beaten enemy's
+     * rank duelBase x guardWinFactor - x mageFactor when it was an attacking mage - less the outgrown share, none of the
+     * player's first-win or boss bonuses. Paid at once and to the notice log only (awardExact); a level-up it causes keeps
+     * its banner. {@code by} names the guard for the log line.
+     */
+    public static void onGuardWon(EnemyData e, boolean attackingMage, String by) {
+        if (!isActive() || e == null)
+            return;
+        AscendanceData d = data();
+        int rank = Math.max(0, Math.min(d.duelBase.length - 1, EnemyData.tierRank(e.tier)));
+        float factor = d.guardWinFactor * (attackingMage ? Math.max(1f, d.mageFactor) : 1f);
+        if (factor <= 0f)
+            return;
+        int level = level();
+        int top = rank < d.outgrownBandTop.length ? d.outgrownBandTop[rank] : 999;
+        float outgrown = level > top ? Math.max(d.outgrownFloor, 1f - d.outgrownStep * (level - top)) : 1f;
+        int amount = Math.max(1, Math.round(d.duelBase[rank] * factor * outgrown));
+        award(amount, by + " beat " + e.getName() + " (" + EnemyData.tierDisplayName(e.tier)
+                + (attackingMage ? ", attacking mage" : "") + (outgrown < 1f ? ", outgrown " + Math.round(outgrown * 100) + "%" : "") + ")");
+    }
+
     /** AdventureQuestController.showQuestDialogs: a quest done. An invasion pays by the toughest troop it lost. */
     public static void onQuestCompleted(AdventureQuestData quest) {
         onQuestCompleted(quest, false);
@@ -916,6 +939,15 @@ public final class Ascendance {
     public static int duelStartShards() { return Math.round(total("shardwell")); }
     /** Envoy: color reputation LOST from a won duel, times this. */
     public static float reputationLossFactor() { return Math.max(0f, 1f - total("envoy")); }
+    /** Round 596, Warmonger (Envoy's opposite): color reputation GAINED from a won duel, times this. */
+    public static float reputationGainFactor() { return 1f + total("warmonger"); }
+    /** Round 596, Aura of Fear: an enemy's starting life in the player's own duels, times this. */
+    public static float enemyLifeFactor() { return Math.max(0.1f, 1f - total("auraOfFear")); }
+    /** Round 596, Insight (the user: "Get 4 perk choices vs. 3. One time"): rewards in a level's offer - offerSize plus
+     *  the pick's value. */
+    public static int offerSize() { return Math.max(1, data().offerSize + Math.round(total("insight"))); }
+    /** Round 596, Legend Seeker: the legend sighting roll's chance, times this. */
+    public static float legendChanceFactor() { return 1f + total("legendSeeker"); }
     /** Round 508, Mechanic (the one-time Mend became it - the user: "Change 'Mend' to Mechanic and reduce item repair cost
      *  by 75%"): an item repair's gold, times this. */
     public static float repairCostFactor() { return Math.max(0f, 1f - total("mechanic")); }
@@ -1099,6 +1131,9 @@ public final class Ascendance {
             return false;
         if (("guardFocus".equals(c.id) || "guardSpoils".equals(c.id)) && !RoamingGuards.isEnabled()) // rounds 566, 570
             return false;
+        // Round 596 (the user: "Mutually exclusive from Envoy. So if you picked one, the other should never show"):
+        if (("envoy".equals(c.id) && picks("warmonger") > 0) || ("warmonger".equals(c.id) && picks("envoy") > 0))
+            return false;
         if (c.lasting)
             return picks(c.id) < c.maxPicks;
         return AscendanceRewards.canGive(c.id, level);
@@ -1125,7 +1160,7 @@ public final class Ascendance {
         addDraw(s, freshOnce.isEmpty() ? once : freshOnce);
         List<AscendanceData.Choice> rest = new ArrayList<>(freshLasting);
         rest.addAll(freshOnce);
-        int size = Math.max(1, data().offerSize);
+        int size = offerSize();
         while (s.offer.size() < size && addDraw(s, rest)) {
             // draw until the offer is full or the fresh ones run out
         }
@@ -1272,7 +1307,8 @@ public final class Ascendance {
             case "mender": effect = pct(Math.min(1f, then)) + " chance a worn item escapes cracking" + (now > 0 ? " (now " + pct(now) + ")" : ""); break;
             case "spoilsman": effect = "+" + Math.round(then) + " card" + (then >= 2 ? "s" : "") + " on a first win against an enemy"; break;
             case "shardwell": effect = "+" + Math.round(then) + " [+Shards] at the start of each duel" + (now > 0 ? " (now +" + Math.round(now) + ")" : ""); break;
-            case "envoy": effect = "Color reputation lost from wins -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
+            case "envoy": effect = "Reputation lost from wins -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : "")
+                    + "; no Warmonger"; break; // round 596: the exclusion said on both
             case "architect": effect = "Building and town restore costs -" + pct(then) + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
             case "mechanic": effect = "Item repairs cost " + pct(Math.min(1f, then)) + " less [+Gold]"; break; // round 508
             case "medic": effect = "Downed roaming guards heal in " + pct(Math.min(1f, then)) + " less time"; break; // round 508
@@ -1281,14 +1317,22 @@ public final class Ascendance {
             case "gambler": effect = GAMBLER_REROLLS + " re-rolls a level, each " + rerollCostAt(c.value) + " [+Shards] (one is "
                     + baseRerollCost() + " now)"; break; // round 536
             case "sellPrice": effect = "Cards sell for " + pct(then) + " more [+Gold]" + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // round 548
-            case "intimidating": effect = pct(then) + " chance an overworld enemy you have beaten more often than it has beaten you flees instead of fighting, dropping half its loot"
+            // Round 596: the three long lines shortened - the choice row is two lines (and four rows with Insight).
+            case "intimidating": effect = pct(then) + " chance a foe you usually beat flees, leaving half its loot"
                     + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // rounds 557, 558
-            case "scientist": effect = "Each research you complete gives " + Math.round(c.value) + " rare card of each color from that set"; break; // round 551
+            case "scientist": effect = "Each completed research: " + Math.round(c.value) + " rare of each color from its set"; break; // round 551
             case "researcher": effect = "Research costs " + pct(c.value) + " less [+Shards] and takes " + c.days + " days less"; break; // round 551
             case "templePriest": effect = "Your Temple's weekly offering pays " + Math.round(c.value) + " times the cards"; break; // round 566
             case "focused": effect = "Your first mulligan in each game is free - you keep a full hand"; break; // round 566
             case "guardFocus": effect = "Your roaming guards' first mulligan in each game is free"; break; // round 566
-            case "guardSpoils": effect = "Each enemy your roaming guards beat leaves a rare card from its deck at your Armory"; break; // rounds 570, 582
+            case "guardSpoils": effect = "Guard wins leave a rare from the foe's deck at the Armory"; break; // rounds 570, 582
+            case "warmonger": effect = "Reputation gained from wins +" + pct(then) + (now > 0 ? " (now +" + pct(now) + ")" : "")
+                    + "; no Envoy"; break; // round 596
+            case "auraOfFear": effect = "Enemies start your duels with " + pct(Math.min(0.9f, then)) + " less [+Life]"
+                    + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // round 596
+            case "legendSeeker": effect = "Legends are sighted " + pct(then) + " more often"; break; // round 596
+            case "insight": effect = "Choose from " + (data().offerSize + Math.round(then)) + " rewards at each level, not "
+                    + data().offerSize; break; // round 596
             default: effect = id;
         }
         return effect;
@@ -1393,6 +1437,10 @@ public final class Ascendance {
             case "focused": return "Focused";
             case "guardFocus": return "Guard Focus";
             case "guardSpoils": return "Spoils of War"; // round 570
+            case "warmonger": return "Warmonger"; // round 596
+            case "auraOfFear": return "Aura of Fear";
+            case "legendSeeker": return "Legend Seeker";
+            case "insight": return "Insight";
             default: return id;
         }
     }

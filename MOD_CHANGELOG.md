@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 596: level rewards, four new perks, Power for guard wins (2026-10-14)
+
+The user, on the leveling perks: "Shards should be same as Wood/Stone at 15x. Let's up gold to 85x. Warmonger: Opposite
+of Envoy. +15%/30% color reputation gain from wins. (Mutually exclusive from Envoy ...) Aura of fear: 10% fewer hit
+points for enemies (cumulative 3 times). Legend seeker: 15% higher chance to encounter legends." Then: "The player should
+receive XP (Power) from Guards that win duels (both Roaming and Local). This only needs to be noted in the message Log"
+and "One more leveling perk: Get 4 perk choices vs. 3. One time. Not sure the name."
+
+- **Level rewards** (config tables/ascendance.json): gold 70 -> 85 x level, shards 4 -> 15 x level (wood and stone stay
+  15). Seen: Shards +315 at level 21.
+- **New perks** (lasting; icons from Shikashi's pack, previewed to the user, `sprites/ascendance_icons`):
+  - **Warmonger** I-II (crossed swords): the reputation a won duel gives the beaten color's enemies, x1.15 / x1.30
+    (`Ascendance.reputationGainFactor`, ColorReputation.onPlayerWonDuel). Envoy and Warmonger exclude each other:
+    once either is taken the other is never offered (`offerable`); each one's text says so.
+  - **Aura of Fear** I-III (a hooded figure in a purple aura): an enemy's starting life in the player's own duels
+    x0.9 / 0.8 / 0.7, never under 1 - not an Inn event's (its rules set the life), not a roaming guard's fight
+    (DuelScene, after the notoriety bonus life). Seen: `[TFR-Ascend] Aura of Fear: Market Trader starts at 27 life,
+    not 38 (x0.7)`.
+  - **Legend Seeker** (a legend's scroll): the legend sighting roll's chance x1.15 (LegendSpawns.chanceFor).
+  - **Insight** (a brain; name ours - the user had none): every later level's offer holds 4 rewards, not 3
+    (`Ascendance.offerSize`). Seen: four rewards, re-roll and all.
+- **Power for guard wins** (`Ascendance.onGuardWon`, new `guardWinFactor` 1.0): a town guard repelling a mage
+  (TerritoryControl.resolveGuardDefense) and a roaming guard's win over a mage or a raider, watched or simulated
+  (RoamingGuardRuntime.onDuelFinished), pay the beaten rank's duelBase x guardWinFactor - x mageFactor (1.5) for an
+  attacking mage - less the outgrown share, none of the player's first-win/boss bonuses. To the notice log only
+  ("+N [Power] - Your Master guard at X beat ..."); a level-up it causes keeps its banner. Not seen in play.
+- **The choice dialog** (AscendanceUI): a long description ran wider than its button and squeezed the icon out
+  (Scientist, Spoils of War showed none). The label wraps beside the icon now; the three long texts are shorter
+  (Intimidating, Scientist, Spoils of War), so each reward is two lines and four rows fit with the heading; rows sit
+  1 px apart with four. Seen in the agent game at 1280x720.
+
 ## Round 595: frozen patrols - `waypoint_routes_qa.py --nav`; Omenport's Stella Lee and tibalt's Bear walk again (2026-10-14)
 
 The user, starting the follow-up round 565 proposed: "start the nav-graph frozen patrols audit".

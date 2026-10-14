@@ -35,6 +35,10 @@
   "treasureGuardianFactor": 2,
   "championFactor": 1.5,
   "mageFactor": 1.5,
+  // Round 596 (the user: "The player should receive XP (Power) from Guards that win duels (both Roaming and Local). This
+  // only needs to be noted in the message Log"): a guard's win pays the enemy rank's duelBase times this - times
+  // mageFactor when it beat an attacking mage, less the outgrown share, none of the first-win or boss bonuses.
+  "guardWinFactor": 1.0,
   // Outgrown: above the band top a rank's wins pay 10% less per level, never under 20%.
   "outgrownBandTop": [8, 15, 22, 999],
   "outgrownStep": 0.10,
@@ -92,9 +96,10 @@
   "difficultyRerollCost": [35, 40, 45, 50],
   "choices": [
     // one-time. Round 531, the user: "For the Level up choice, increase resource value by 25% and Gold by 75%" - gold
-    // 40 -> 70, wood and stone 12 -> 15 (shards, the premium currency, stay at 4).
-    { "id": "gold",        "value": 70 },   // 70 x level gold
-    { "id": "shards",      "value": 4 },    // 4 x level shards
+    // 40 -> 70, wood and stone 12 -> 15 (shards, the premium currency, stay at 4). Round 596 (the user: "Shards should be
+    // same as Wood/Stone at 15x. Let's up gold to 85x"): gold 70 -> 85, shards 4 -> 15.
+    { "id": "gold",        "value": 85 },   // 85 x level gold
+    { "id": "shards",      "value": 15 },   // 15 x level shards
     { "id": "wood",        "value": 15 },   // 15 x level wood
     { "id": "stone",       "value": 15 },   // 15 x level stone
     // Round 564 (the user): rareCards doubled - 2 rares (L2-12), 4 rares (L13-22), 2 rares + 2 mythics (L23+), in
@@ -155,6 +160,19 @@
     { "id": "guardFocus",  "lasting": true, "maxPicks": 1, "minLevel": 15 },
     // Round 570 (the user: "Your roaming guards get 1 rare from enemies they defeat. From their decks. It will go directly
     // into inventory"): Spoils of War - a rare (else a mythic) from the beaten enemy's deck, straight to the collection.
-    { "id": "guardSpoils", "lasting": true, "maxPicks": 1 }
+    { "id": "guardSpoils", "lasting": true, "maxPicks": 1 },
+    // Round 596 (the user: "Warmonger: Opposite of Envoy. +15%/30% color reputation gain from wins. (Mutually exclusive
+    // from Envoy. So if you picked one, the other should never show.)"): the reputation a won duel gives the beaten
+    // color's enemies, times 1 + the total. Envoy and Warmonger exclude each other (Ascendance.offerable).
+    { "id": "warmonger",   "lasting": true, "maxPicks": 2, "value": 0.15 },
+    // Round 596 (the user: "Aura of fear: 10% fewer hit points for enemies (cumulative 3 times)"): an enemy's starting
+    // life in the player's own duels, times 1 - the total (not an Inn event's, not a roaming guard's fight).
+    { "id": "auraOfFear",  "lasting": true, "maxPicks": 3, "value": 0.10 },
+    // Round 596 (the user: "Legend seeker: 15% higher chance to encounter legends"): the legend sighting roll's chance,
+    // times 1 + value.
+    { "id": "legendSeeker", "lasting": true, "maxPicks": 1, "value": 0.15 },
+    // Round 596 (the user: "One more leveling perk: Get 4 perk choices vs. 3. One time. Not sure the name"): Insight -
+    // every later level's offer holds offerSize + value rewards (Ascendance.offerSize).
+    { "id": "insight",     "lasting": true, "maxPicks": 1, "value": 1 }
   ]
 }

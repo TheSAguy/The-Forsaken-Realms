@@ -786,8 +786,11 @@ public class RoamingGuardRuntime {
             return null;
         if (guardWon)
             guardSpoils(guard, mage, deck); // round 570: Spoils of War
-        if (guardWon && mage != null) // round 594: a guard's win counts for the Temple, mage or raider, watched or simulated
+        if (guardWon && mage != null) { // round 594: a guard's win counts for the Temple, mage or raider, watched or simulated
             TempleOfferings.recordKill(mage.getData(), "your roaming " + RoamingGuards.displayName(guard.tier) + " guard");
+            Ascendance.onGuardWon(mage.getData(), mage.territoryColor != null,
+                    "Your roaming " + RoamingGuards.displayName(guard.tier) + " guard"); // round 596: Power, log only
+        }
         guard.inDuel = false;
         int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
         if (mage != null && mage.pillageTown != null) {

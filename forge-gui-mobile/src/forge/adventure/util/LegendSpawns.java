@@ -67,9 +67,10 @@ public final class LegendSpawns {
         LegendSpawnData d = data();
         if (d == null || colorLetterOf(landName) == null || !ColorReputation.isEnabled())
             return 0f;
+        // Round 596, Legend Seeker (the user: "15% higher chance to encounter legends"): the chance times its factor.
         switch (ColorReputation.getStatus(landName)) {
-            case WAR:     return clamp(d.warChance);
-            case UNHAPPY: return clamp(d.unhappyChance);
+            case WAR:     return clamp(d.warChance * Ascendance.legendChanceFactor());
+            case UNHAPPY: return clamp(d.unhappyChance * Ascendance.legendChanceFactor());
             default:      return 0f;
         }
     }

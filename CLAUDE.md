@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 596): **LOCAL + UNRELEASED** - level rewards gold 85x / shards 15x; perks Warmonger
+(excludes Envoy), Aura of Fear (enemy life -10% a rank), Legend Seeker (+15% legends), Insight (4 rewards an offer);
+guard wins pay Power to the log (Ascendance.onGuardWon, guardWinFactor); the choice dialog wraps long texts beside icons.
+
 ## STATE 2026-10-14 (round 595): **LOCAL + UNRELEASED** - frozen patrols: `waypoint_routes_qa.py --nav` (legs the
 nav graph cannot path); Omenport's Stella Lee and tibalt's Bear walk again (one waypoint each, 8-9 px).
 
