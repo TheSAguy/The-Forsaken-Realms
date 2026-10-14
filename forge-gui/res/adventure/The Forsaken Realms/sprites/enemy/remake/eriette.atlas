@@ -1,0 +1,177 @@
+eriette.png
+size: 414,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 46, 56
+  footprint: 13, 1, 21, 54
+Idle
+  xy: 46, 64
+  size: 46, 56
+Idle
+  xy: 92, 64
+  size: 46, 56
+Idle
+  xy: 138, 64
+  size: 46, 56
+Walk
+  xy: 0, 120
+  size: 46, 56
+Walk
+  xy: 46, 120
+  size: 46, 56
+Walk
+  xy: 92, 120
+  size: 46, 56
+Walk
+  xy: 138, 120
+  size: 46, 56
+Walk
+  xy: 184, 120
+  size: 46, 56
+Walk
+  xy: 230, 120
+  size: 46, 56
+Walk
+  xy: 276, 120
+  size: 46, 56
+Walk
+  xy: 322, 120
+  size: 46, 56
+Attack
+  xy: 0, 176
+  size: 46, 56
+Attack
+  xy: 46, 176
+  size: 46, 56
+Attack
+  xy: 92, 176
+  size: 46, 56
+Attack
+  xy: 138, 176
+  size: 46, 56
+Attack
+  xy: 184, 176
+  size: 46, 56
+Attack
+  xy: 230, 176
+  size: 46, 56
+Attack
+  xy: 276, 176
+  size: 46, 56
+Hit
+  xy: 0, 232
+  size: 46, 56
+Hit
+  xy: 46, 232
+  size: 46, 56
+Hit
+  xy: 92, 232
+  size: 46, 56
+Hit
+  xy: 138, 232
+  size: 46, 56
+Death
+  xy: 0, 288
+  size: 46, 56
+Death
+  xy: 46, 288
+  size: 46, 56
+Death
+  xy: 92, 288
+  size: 46, 56
+Death
+  xy: 138, 288
+  size: 46, 56
+Death
+  xy: 184, 288
+  size: 46, 56
+Death
+  xy: 230, 288
+  size: 46, 56
+Death
+  xy: 276, 288
+  size: 46, 56
+Death
+  xy: 322, 288
+  size: 46, 56
+Death
+  xy: 368, 288
+  size: 46, 56
+IdleUp
+  xy: 0, 344
+  size: 46, 56
+IdleUp
+  xy: 46, 344
+  size: 46, 56
+IdleUp
+  xy: 92, 344
+  size: 46, 56
+IdleUp
+  xy: 138, 344
+  size: 46, 56
+IdleDown
+  xy: 0, 400
+  size: 46, 56
+IdleDown
+  xy: 46, 400
+  size: 46, 56
+IdleDown
+  xy: 92, 400
+  size: 46, 56
+IdleDown
+  xy: 138, 400
+  size: 46, 56
+WalkUp
+  xy: 0, 456
+  size: 46, 56
+WalkUp
+  xy: 46, 456
+  size: 46, 56
+WalkUp
+  xy: 92, 456
+  size: 46, 56
+WalkUp
+  xy: 138, 456
+  size: 46, 56
+WalkUp
+  xy: 184, 456
+  size: 46, 56
+WalkUp
+  xy: 230, 456
+  size: 46, 56
+WalkUp
+  xy: 276, 456
+  size: 46, 56
+WalkUp
+  xy: 322, 456
+  size: 46, 56
+WalkDown
+  xy: 0, 512
+  size: 46, 56
+WalkDown
+  xy: 46, 512
+  size: 46, 56
+WalkDown
+  xy: 92, 512
+  size: 46, 56
+WalkDown
+  xy: 138, 512
+  size: 46, 56
+WalkDown
+  xy: 184, 512
+  size: 46, 56
+WalkDown
+  xy: 230, 512
+  size: 46, 56
+WalkDown
+  xy: 276, 512
+  size: 46, 56
+WalkDown
+  xy: 322, 512
+  size: 46, 56

@@ -1,0 +1,176 @@
+killian.png
+size: 414,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 46, 54
+Idle
+  xy: 46, 64
+  size: 46, 54
+Idle
+  xy: 92, 64
+  size: 46, 54
+Idle
+  xy: 138, 64
+  size: 46, 54
+Walk
+  xy: 0, 118
+  size: 46, 54
+Walk
+  xy: 46, 118
+  size: 46, 54
+Walk
+  xy: 92, 118
+  size: 46, 54
+Walk
+  xy: 138, 118
+  size: 46, 54
+Walk
+  xy: 184, 118
+  size: 46, 54
+Walk
+  xy: 230, 118
+  size: 46, 54
+Walk
+  xy: 276, 118
+  size: 46, 54
+Walk
+  xy: 322, 118
+  size: 46, 54
+Attack
+  xy: 0, 172
+  size: 46, 54
+Attack
+  xy: 46, 172
+  size: 46, 54
+Attack
+  xy: 92, 172
+  size: 46, 54
+Attack
+  xy: 138, 172
+  size: 46, 54
+Attack
+  xy: 184, 172
+  size: 46, 54
+Attack
+  xy: 230, 172
+  size: 46, 54
+Attack
+  xy: 276, 172
+  size: 46, 54
+Hit
+  xy: 0, 226
+  size: 46, 54
+Hit
+  xy: 46, 226
+  size: 46, 54
+Hit
+  xy: 92, 226
+  size: 46, 54
+Hit
+  xy: 138, 226
+  size: 46, 54
+Death
+  xy: 0, 280
+  size: 46, 54
+Death
+  xy: 46, 280
+  size: 46, 54
+Death
+  xy: 92, 280
+  size: 46, 54
+Death
+  xy: 138, 280
+  size: 46, 54
+Death
+  xy: 184, 280
+  size: 46, 54
+Death
+  xy: 230, 280
+  size: 46, 54
+Death
+  xy: 276, 280
+  size: 46, 54
+Death
+  xy: 322, 280
+  size: 46, 54
+Death
+  xy: 368, 280
+  size: 46, 54
+IdleUp
+  xy: 0, 334
+  size: 46, 54
+IdleUp
+  xy: 46, 334
+  size: 46, 54
+IdleUp
+  xy: 92, 334
+  size: 46, 54
+IdleUp
+  xy: 138, 334
+  size: 46, 54
+IdleDown
+  xy: 0, 388
+  size: 46, 54
+IdleDown
+  xy: 46, 388
+  size: 46, 54
+IdleDown
+  xy: 92, 388
+  size: 46, 54
+IdleDown
+  xy: 138, 388
+  size: 46, 54
+WalkUp
+  xy: 0, 442
+  size: 46, 54
+WalkUp
+  xy: 46, 442
+  size: 46, 54
+WalkUp
+  xy: 92, 442
+  size: 46, 54
+WalkUp
+  xy: 138, 442
+  size: 46, 54
+WalkUp
+  xy: 184, 442
+  size: 46, 54
+WalkUp
+  xy: 230, 442
+  size: 46, 54
+WalkUp
+  xy: 276, 442
+  size: 46, 54
+WalkUp
+  xy: 322, 442
+  size: 46, 54
+WalkDown
+  xy: 0, 496
+  size: 46, 54
+WalkDown
+  xy: 46, 496
+  size: 46, 54
+WalkDown
+  xy: 92, 496
+  size: 46, 54
+WalkDown
+  xy: 138, 496
+  size: 46, 54
+WalkDown
+  xy: 184, 496
+  size: 46, 54
+WalkDown
+  xy: 230, 496
+  size: 46, 54
+WalkDown
+  xy: 276, 496
+  size: 46, 54
+WalkDown
+  xy: 322, 496
+  size: 46, 54

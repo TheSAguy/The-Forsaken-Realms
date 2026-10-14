@@ -1,0 +1,180 @@
+high_priest_of_shandalar.png
+size: 720,640
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 64
+  footprint: 24, 1, 32, 62
+Idle
+  xy: 80, 64
+  size: 80, 64
+Idle
+  xy: 160, 64
+  size: 80, 64
+Idle
+  xy: 240, 64
+  size: 80, 64
+Walk
+  xy: 0, 128
+  size: 80, 64
+Walk
+  xy: 80, 128
+  size: 80, 64
+Walk
+  xy: 160, 128
+  size: 80, 64
+Walk
+  xy: 240, 128
+  size: 80, 64
+Walk
+  xy: 320, 128
+  size: 80, 64
+Walk
+  xy: 400, 128
+  size: 80, 64
+Walk
+  xy: 480, 128
+  size: 80, 64
+Walk
+  xy: 560, 128
+  size: 80, 64
+Attack
+  xy: 0, 192
+  size: 80, 64
+Attack
+  xy: 80, 192
+  size: 80, 64
+Attack
+  xy: 160, 192
+  size: 80, 64
+Attack
+  xy: 240, 192
+  size: 80, 64
+Attack
+  xy: 320, 192
+  size: 80, 64
+Attack
+  xy: 400, 192
+  size: 80, 64
+Attack
+  xy: 480, 192
+  size: 80, 64
+Attack
+  xy: 560, 192
+  size: 80, 64
+Hit
+  xy: 0, 256
+  size: 80, 64
+Hit
+  xy: 80, 256
+  size: 80, 64
+Hit
+  xy: 160, 256
+  size: 80, 64
+Hit
+  xy: 240, 256
+  size: 80, 64
+Death
+  xy: 0, 320
+  size: 80, 64
+Death
+  xy: 80, 320
+  size: 80, 64
+Death
+  xy: 160, 320
+  size: 80, 64
+Death
+  xy: 240, 320
+  size: 80, 64
+Death
+  xy: 320, 320
+  size: 80, 64
+Death
+  xy: 400, 320
+  size: 80, 64
+Death
+  xy: 480, 320
+  size: 80, 64
+Death
+  xy: 560, 320
+  size: 80, 64
+Death
+  xy: 640, 320
+  size: 80, 64
+IdleUp
+  xy: 0, 384
+  size: 80, 64
+IdleUp
+  xy: 80, 384
+  size: 80, 64
+IdleUp
+  xy: 160, 384
+  size: 80, 64
+IdleUp
+  xy: 240, 384
+  size: 80, 64
+IdleDown
+  xy: 0, 448
+  size: 80, 64
+IdleDown
+  xy: 80, 448
+  size: 80, 64
+IdleDown
+  xy: 160, 448
+  size: 80, 64
+IdleDown
+  xy: 240, 448
+  size: 80, 64
+WalkUp
+  xy: 0, 512
+  size: 80, 64
+WalkUp
+  xy: 80, 512
+  size: 80, 64
+WalkUp
+  xy: 160, 512
+  size: 80, 64
+WalkUp
+  xy: 240, 512
+  size: 80, 64
+WalkUp
+  xy: 320, 512
+  size: 80, 64
+WalkUp
+  xy: 400, 512
+  size: 80, 64
+WalkUp
+  xy: 480, 512
+  size: 80, 64
+WalkUp
+  xy: 560, 512
+  size: 80, 64
+WalkDown
+  xy: 0, 576
+  size: 80, 64
+WalkDown
+  xy: 80, 576
+  size: 80, 64
+WalkDown
+  xy: 160, 576
+  size: 80, 64
+WalkDown
+  xy: 240, 576
+  size: 80, 64
+WalkDown
+  xy: 320, 576
+  size: 80, 64
+WalkDown
+  xy: 400, 576
+  size: 80, 64
+WalkDown
+  xy: 480, 576
+  size: 80, 64
+WalkDown
+  xy: 560, 576
+  size: 80, 64

@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 600: the LPC backlog, batch 3 - 83 clerics, warlocks and shamans (2026-10-14)
+
+The Procedural Pixel Creatures session, the third of the five LPC batches, built by the generator repo's
+`lpc_selections/make_600.py`.
+
+- **The enemies**: all 83 on the stock 16 px `humanoid/human/cleric` (47), `warlock` (19) and `shaman` (17) sprites.
+- **How they were dressed**:
+  - The named legends follow their deck's commander card: Teysa's cane, Angus Mackenzie's ram horns, Garza Zol and Anje
+    as pale vampires, Arabella as a doll in a white bonnet, Hylda the ice queen, Hapatra's gold headdress, Toluz's top
+    hat, Exava and Judith with horns, Fynn in a horned bronze helm.
+  - Henrika, Runo, Pia Nalaar, Alpharael, Haliya, Bre, Venser, Worzel and Cynette, whose cards are not in Forge's
+    picture cache, follow their cards as known. Worzel is a scarecrow in a sack hood; Bre a red-braided warrior with an
+    axe.
+  - The generic clerics, monks, witches and cultists keep their sprite's colors; the World Champions are plain casters.
+  - Five bosses (Chandra, Garruk, The Sainted One, Dark Ages Preacher, Swamp Queen Tojira) keep their drawn size.
+- **Files**:
+  - 83 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 83 sprite paths and scales, 0.28-0.33.
+  - A footprint on 51 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 583 characters, additions only.
+  - `CREDITS.md`'s LPC bullet: 555 enemies, round 600 and the 83 names; no new authors.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 83, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole, viewed on a sheet; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 599: the LPC backlog, batch 2 - the other 72 wizards (2026-10-14)
 
 The Procedural Pixel Creatures session, the second of the five LPC batches (rounds 598-602; the angels came between as

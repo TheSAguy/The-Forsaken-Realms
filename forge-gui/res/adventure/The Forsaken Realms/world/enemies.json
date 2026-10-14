@@ -637,7 +637,7 @@
     },
     {
         "name": "Aether Channeler",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_3.atlas",
+        "sprite": "sprites/enemy/remake/aether_channeler.atlas",
         "deck": [
             "decks/standard/aether_channeler.dck"
         ],
@@ -711,7 +711,7 @@
             "Mystic"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Akroma",
@@ -1857,7 +1857,7 @@
     },
     {
         "name": "Apprentice White Wizard",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/apprentice_white_wizard.atlas",
         "deck": [
             "decks/standard/whitewizard_easy_ajani.dck",
             "decks/standard/whitewizard_easy_wanderer.dck",
@@ -1926,7 +1926,7 @@
             "BiomeWhite"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Arcane Golem",
@@ -5430,7 +5430,7 @@
     },
     {
         "name": "Chandra",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/chandra.atlas",
         "deck": [
             "decks/miniboss/Fire of Kaladesh.dck"
         ],
@@ -5533,7 +5533,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Uncommon",
-        "scale": 2.2159
+        "scale": 0.5945
     },
     {
         "name": "Chandra's Acolyte",
@@ -6434,7 +6434,7 @@
     },
     {
         "name": "Cleric",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric.atlas",
+        "sprite": "sprites/enemy/remake/cleric.atlas",
         "deck": [
             "decks/standard/cleric.json"
         ],
@@ -6515,7 +6515,7 @@
             "BiomeWhite"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.3171
     },
     {
         "name": "Cloaker",
@@ -7122,7 +7122,7 @@
     },
     {
         "name": "Corrupted Cleric",
-        "sprite": "sprites/enemy/humanoid/human/cleric/corrupted_cleric.atlas",
+        "sprite": "sprites/enemy/remake/corrupted_cleric.atlas",
         "deck": [
             "decks/standard/corruptedcleric.dck"
         ],
@@ -7174,7 +7174,7 @@
             "Corrupted"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.3171
     },
     {
         "name": "Corrupted Green Wizard",
@@ -8019,7 +8019,7 @@
     },
     {
         "name": "Dawnhart Witch",
-        "sprite": "sprites/enemy/humanoid/human/warlock/dawnhart_witch.atlas",
+        "sprite": "sprites/enemy/remake/dawnhart_witch.atlas",
         "deck": [
             "decks/standard/dawnhart_witch.dck"
         ],
@@ -8099,7 +8099,7 @@
             "BiomeWhite"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Death Knight",
@@ -8721,7 +8721,7 @@
     },
     {
         "name": "Disciple of Teferi",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk.atlas",
+        "sprite": "sprites/enemy/remake/disciple_of_teferi.atlas",
         "deck": [
             "decks/standard/disciple_of_teferi.dck"
         ],
@@ -8797,7 +8797,7 @@
             "Identity Jeskai"
         ],
         "tier": "Rare",
-        "scale": 1.3
+        "scale": 0.3171
     },
     {
         "name": "Djinn",
@@ -11710,7 +11710,7 @@
     },
     {
         "name": "False Monk",
-        "sprite": "sprites/enemy/humanoid/human/warlock/false_monk.atlas",
+        "sprite": "sprites/enemy/remake/false_monk.atlas",
         "deck": [
             "decks/standard/false_monk_r111.dck"
         ],
@@ -11787,7 +11787,7 @@
             "IdentityBlack"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.3171
     },
     {
         "name": "Farmer",
@@ -13211,7 +13211,7 @@
     },
     {
         "name": "Garruk",
-        "sprite": "sprites/enemy/humanoid/human/shaman/garruk.atlas",
+        "sprite": "sprites/enemy/remake/garruk.atlas",
         "deck": [
             "decks/miniboss/garruk.dck"
         ],
@@ -13299,7 +13299,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 1.6249
+        "scale": 0.4756
     },
     {
         "name": "Geist",
@@ -16901,7 +16901,7 @@
     },
     {
         "name": "High Cultist",
-        "sprite": "sprites/enemy/humanoid/human/warlock/high_cultist.atlas",
+        "sprite": "sprites/enemy/remake/high_cultist.atlas",
         "deck": [
             "decks/standard/cultist.dck"
         ],
@@ -16978,7 +16978,7 @@
             "IdentityBlack"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.3171
     },
     {
         "name": "High Elf",
@@ -22535,7 +22535,7 @@
     },
     {
         "name": "Monk",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk.atlas",
+        "sprite": "sprites/enemy/remake/monk.atlas",
         "deck": [
             "decks/standard/monk.json"
         ],
@@ -22615,7 +22615,7 @@
             "BiomeWhite"
         ],
         "tier": "Uncommon",
-        "scale": 1.3
+        "scale": 0.325
     },
     {
         "name": "Monkey",
@@ -24300,7 +24300,7 @@
     },
     {
         "name": "Orzhov Cleric",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric_orzhov.atlas",
+        "sprite": "sprites/enemy/remake/orzhov_cleric.atlas",
         "deck": [
             "decks/standard/cleric_orzhov.dck"
         ],
@@ -24383,7 +24383,7 @@
             "IdentityOrzhov"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.3171
     },
     {
         "name": "Owl",
@@ -25660,7 +25660,7 @@
     },
     {
         "name": "Priest Fanatic",
-        "sprite": "sprites/enemy/humanoid/human/cleric/fanatic_priest.atlas",
+        "sprite": "sprites/enemy/remake/priest_fanatic.atlas",
         "deck": [
             "decks/standard/fanaticpriest.dck"
         ],
@@ -25714,7 +25714,8 @@
             "Human",
             "Holy"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.325
     },
     {
         "name": "Pyromancer",
@@ -33979,7 +33980,7 @@
     },
     {
         "name": "Avacynian Preacher",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric.atlas",
+        "sprite": "sprites/enemy/remake/avacynian_preacher.atlas",
         "deck": [
             "decks/standard/INN/inn_cleric_easy.dck"
         ],
@@ -34048,7 +34049,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.325
     },
     {
         "name": "Bog Hermit",
@@ -34933,7 +34934,7 @@
     },
     {
         "name": "Missionary of Saint Traft",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/missionary_of_saint_traft.atlas",
         "deck": [
             "decks/standard/INN/inn_cleric_traft_easy.dck"
         ],
@@ -35004,7 +35005,7 @@
             "BiomeWhite"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3171
     },
     {
         "name": "Obsessed Stitcher",
@@ -35063,7 +35064,7 @@
     },
     {
         "name": "Sigardian Priest",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk.atlas",
+        "sprite": "sprites/enemy/remake/sigardian_priest.atlas",
         "deck": [
             "decks/standard/INN/inn_cleric_sigarda_easy.dck"
         ],
@@ -35136,7 +35137,7 @@
             "BiomeWhite"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.3171
     },
     {
         "name": "Shrieking Skaab",
@@ -36512,13 +36513,13 @@
     },
     {
         "name": "Breya",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/breya.atlas",
         "deck": [
             "decks/legends/breya.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 50,
         "rewards": [
             {
@@ -37158,13 +37159,13 @@
     },
     {
         "name": "Garth",
-        "sprite": "sprites/enemy/humanoid/human/warlock/high_cultist.atlas",
+        "sprite": "sprites/enemy/remake/garth.atlas",
         "deck": [
             "decks/legends/garth.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.3,
+        "scale": 0.3171,
         "life": 50,
         "rewards": [
             {
@@ -39886,13 +39887,13 @@
     },
     {
         "name": "Victor, Valgavoth's Seneschal",
-        "sprite": "sprites/enemy/humanoid/human/cleric/corrupted_cleric.atlas",
+        "sprite": "sprites/enemy/remake/victor_valgavoth_s_seneschal.atlas",
         "deck": [
             "decks/legends/victor.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.3,
+        "scale": 0.325,
         "life": 40,
         "rewards": [
             {
@@ -41038,13 +41039,13 @@
     },
     {
         "name": "Tymna and Tana",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/tymna_and_tana.atlas",
         "deck": [
             "decks/legends/tymna_and_tana.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.1818,
+        "scale": 0.3095,
         "life": 40,
         "rewards": [
             {
@@ -41191,13 +41192,13 @@
     },
     {
         "name": "Dihada",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/dihada.atlas",
         "deck": [
             "decks/legends/dihada.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.0833,
+        "scale": 0.3095,
         "life": 40,
         "rewards": [
             {
@@ -41394,13 +41395,13 @@
     },
     {
         "name": "Sydri",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/sydri.atlas",
         "deck": [
             "decks/legends/sydri.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.1818,
+        "scale": 0.3023,
         "life": 40,
         "rewards": [
             {
@@ -41460,13 +41461,13 @@
     },
     {
         "name": "Estrid",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric.atlas",
+        "sprite": "sprites/enemy/remake/estrid.atlas",
         "deck": [
             "decks/legends/estrid.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -42590,13 +42591,13 @@
     },
     {
         "name": "Eriette",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/eriette.atlas",
         "deck": [
             "decks/legends/eriette.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -42662,13 +42663,13 @@
     },
     {
         "name": "Hylda",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric.atlas",
+        "sprite": "sprites/enemy/remake/hylda.atlas",
         "deck": [
             "decks/legends/hylda.dck"
         ],
         "ai": "",
         "speed": 30,
-        "scale": 1.1818,
+        "scale": 0.3095,
         "life": 40,
         "rewards": [
             {
@@ -43327,13 +43328,13 @@
     },
     {
         "name": "Rowan",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/rowan.atlas",
         "deck": [
             "decks/legends/rowan.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.1818,
+        "scale": 0.3023,
         "life": 40,
         "rewards": [
             {
@@ -45582,14 +45583,14 @@
     },
     {
         "name": "Asmira",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/asmira.atlas",
         "deck": [
             "decks/legends/asmira.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 34,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -47933,13 +47934,13 @@
     },
     {
         "name": "Admiral Brass",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/admiral_brass.atlas",
         "deck": [
             "decks/legends/admiral_brass.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.2955,
         "life": 30,
         "rewards": [
             {
@@ -48226,13 +48227,13 @@
     },
     {
         "name": "Narset",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_3.atlas",
+        "sprite": "sprites/enemy/remake/narset.atlas",
         "deck": [
             "decks/legends/narset.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -49697,13 +49698,13 @@
     },
     {
         "name": "Jhoira",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/jhoira.atlas",
         "deck": [
             "decks/legends/jhoira.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -50063,13 +50064,13 @@
     },
     {
         "name": "Teysa",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric_orzhov.atlas",
+        "sprite": "sprites/enemy/remake/teysa.atlas",
         "deck": [
             "decks/legends/teysa.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -53860,13 +53861,13 @@
     },
     {
         "name": "Angus",
-        "sprite": "sprites/enemy/humanoid/human/cleric/fanatic_priest.atlas",
+        "sprite": "sprites/enemy/remake/angus.atlas",
         "deck": [
             "decks/legends/angus_mackenzie.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -55267,13 +55268,13 @@
     },
     {
         "name": "Trynn and Silvar",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_2.atlas",
+        "sprite": "sprites/enemy/remake/trynn_and_silvar.atlas",
         "deck": [
             "decks/legends/trynn_and_silvar.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -55409,14 +55410,14 @@
     },
     {
         "name": "Garza Zol",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/garza_zol.atlas",
         "deck": [
             "decks/legends/garza_zol.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -55821,13 +55822,13 @@
     },
     {
         "name": "Anje",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric_orzhov.atlas",
+        "sprite": "sprites/enemy/remake/anje.atlas",
         "deck": [
             "decks/legends/anje.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.1818,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -55962,14 +55963,14 @@
     },
     {
         "name": "Henrika",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/henrika.atlas",
         "deck": [
             "decks/legends/henrika.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 52,
         "rewards": [
             {
@@ -56031,13 +56032,13 @@
     },
     {
         "name": "Runo",
-        "sprite": "sprites/enemy/humanoid/human/warlock/high_cultist.atlas",
+        "sprite": "sprites/enemy/remake/runo.atlas",
         "deck": [
             "decks/legends/runo_stromkirk.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.3,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -57158,13 +57159,13 @@
     },
     {
         "name": "Arabella",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/arabella.atlas",
         "deck": [
             "decks/legends/arabella.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.2955,
         "life": 30,
         "rewards": [
             {
@@ -58417,13 +58418,13 @@
     },
     {
         "name": "Amalia",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric_orzhov.atlas",
+        "sprite": "sprites/enemy/remake/amalia.atlas",
         "deck": [
             "decks/legends/amalia.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -58485,14 +58486,14 @@
     },
     {
         "name": "Carmen",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_2.atlas",
+        "sprite": "sprites/enemy/remake/carmen.atlas",
         "deck": [
             "decks/legends/carmen.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -63461,13 +63462,13 @@
     },
     {
         "name": "Ashnod",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/ashnod.atlas",
         "deck": [
             "decks/legends/ashnod.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.1818,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -65531,13 +65532,13 @@
     },
     {
         "name": "Sen Triplets",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/sen_triplets.atlas",
         "deck": [
             "decks/legends/sen_triplets.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -65803,14 +65804,14 @@
     },
     {
         "name": "Kinzu",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/kinzu.atlas",
         "deck": [
             "decks/legends/kinzu.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 19,
-        "scale": 1.0833,
+        "scale": 0.3095,
         "life": 12,
         "rewards": [
             {
@@ -67837,13 +67838,13 @@
     },
     {
         "name": "Niambi",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric.atlas",
+        "sprite": "sprites/enemy/remake/niambi.atlas",
         "deck": [
             "decks/legends/niambi.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -68667,13 +68668,13 @@
     },
     {
         "name": "Queen Kayla",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/queen_kayla.atlas",
         "deck": [
             "decks/legends/queen_kayla.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -69521,14 +69522,14 @@
     },
     {
         "name": "Adeliz",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/adeliz.atlas",
         "deck": [
             "decks/legends/adeliz.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -69590,13 +69591,13 @@
     },
     {
         "name": "Azami",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/azami.atlas",
         "deck": [
             "decks/legends/azami.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -69663,13 +69664,13 @@
     },
     {
         "name": "Deekah",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric.atlas",
+        "sprite": "sprites/enemy/remake/deekah.atlas",
         "deck": [
             "decks/legends/deekah.dck"
         ],
         "ai": "",
         "speed": 53,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 31,
         "rewards": [
             {
@@ -69799,14 +69800,14 @@
     },
     {
         "name": "Kess",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric_orzhov.atlas",
+        "sprite": "sprites/enemy/remake/kess.atlas",
         "deck": [
             "decks/legends/kess.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -70281,13 +70282,13 @@
     },
     {
         "name": "The Archimandrite",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_3.atlas",
+        "sprite": "sprites/enemy/remake/the_archimandrite.atlas",
         "deck": [
             "decks/legends/the_archimandrite.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -71337,7 +71338,7 @@
     },
     {
         "name": "Lavinia",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric.atlas",
+        "sprite": "sprites/enemy/remake/lavinia.atlas",
         "deck": [
             "decks/legends/lavinia.dck"
         ],
@@ -71411,7 +71412,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Agrus Kos",
@@ -73727,7 +73728,7 @@
     },
     {
         "name": "Pia Nalaar",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/pia_nalaar.atlas",
         "deck": [
             "decks/legends/pia_nalaar.dck"
         ],
@@ -73801,7 +73802,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Saheeli",
@@ -75728,7 +75729,7 @@
     },
     {
         "name": "Zara",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/zara.atlas",
         "deck": [
             "decks/legends/zara.dck"
         ],
@@ -75792,7 +75793,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Ayula",
@@ -77469,12 +77470,12 @@
     },
     {
         "name": "Fynn",
-        "sprite": "sprites/enemy/humanoid/human/shaman/garruk.atlas",
+        "sprite": "sprites/enemy/remake/fynn.atlas",
         "deck": [
             "decks/legends/fynn.dck"
         ],
         "ai": "",
-        "scale": 1.0833,
+        "scale": 0.2889,
         "speed": 28,
         "life": 21,
         "rewards": [
@@ -80705,7 +80706,7 @@
     },
     {
         "name": "Raff",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_3.atlas",
+        "sprite": "sprites/enemy/remake/raff.atlas",
         "deck": [
             "decks/legends/raff.dck"
         ],
@@ -80774,7 +80775,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Arvad",
@@ -82200,7 +82201,7 @@
     },
     {
         "name": "Tomik",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_2.atlas",
+        "sprite": "sprites/enemy/remake/tomik.atlas",
         "deck": [
             "decks/legends/tomik.dck"
         ],
@@ -82269,7 +82270,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Veko",
@@ -82421,7 +82422,7 @@
     },
     {
         "name": "Hapatra",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric_orzhov.atlas",
+        "sprite": "sprites/enemy/remake/hapatra.atlas",
         "deck": [
             "decks/legends/hapatra.dck"
         ],
@@ -82485,7 +82486,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Ellivere",
@@ -82851,12 +82852,12 @@
     },
     {
         "name": "Kamahl",
-        "sprite": "sprites/enemy/humanoid/human/shaman/garruk.atlas",
+        "sprite": "sprites/enemy/remake/kamahl.atlas",
         "deck": [
             "decks/legends/kamahl.dck"
         ],
         "ai": "",
-        "scale": 1.0833,
+        "scale": 0.3171,
         "speed": 38,
         "life": 22,
         "rewards": [
@@ -83427,7 +83428,7 @@
     },
     {
         "name": "Alquist Proft",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_3.atlas",
+        "sprite": "sprites/enemy/remake/alquist_proft.atlas",
         "deck": [
             "decks/legends/alquist_proft.dck"
         ],
@@ -83491,7 +83492,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Captain Howler",
@@ -84619,7 +84620,7 @@
     },
     {
         "name": "Jeska",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/jeska.atlas",
         "deck": [
             "decks/legends/jeska.dck"
         ],
@@ -84688,7 +84689,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Kalemne",
@@ -85412,7 +85413,7 @@
     },
     {
         "name": "Delney",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_2.atlas",
+        "sprite": "sprites/enemy/remake/delney.atlas",
         "deck": [
             "decks/legends/delney.dck"
         ],
@@ -85476,7 +85477,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Denry Klin",
@@ -85919,7 +85920,7 @@
     },
     {
         "name": "Thalisse",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric_orzhov.atlas",
+        "sprite": "sprites/enemy/remake/thalisse.atlas",
         "deck": [
             "decks/legends/thalisse.dck"
         ],
@@ -85983,7 +85984,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Wyleth",
@@ -88192,12 +88193,12 @@
     },
     {
         "name": "Ghired",
-        "sprite": "sprites/enemy/humanoid/human/shaman/garruk.atlas",
+        "sprite": "sprites/enemy/remake/ghired.atlas",
         "deck": [
             "decks/legends/ghired.dck"
         ],
         "ai": "",
-        "scale": 1.0833,
+        "scale": 0.3023,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -88333,7 +88334,7 @@
     },
     {
         "name": "Lynde",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/lynde.atlas",
         "deck": [
             "decks/legends/lynde.dck"
         ],
@@ -88397,7 +88398,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Leori",
@@ -90305,7 +90306,7 @@
     },
     {
         "name": "Toluz",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric_orzhov.atlas",
+        "sprite": "sprites/enemy/remake/toluz.atlas",
         "deck": [
             "decks/legends/toluz.dck"
         ],
@@ -90369,11 +90370,11 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.2826
     },
     {
         "name": "Exava",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/exava.atlas",
         "deck": [
             "decks/legends/exava.dck"
         ],
@@ -90437,11 +90438,11 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3023
     },
     {
         "name": "Judith",
-        "sprite": "sprites/enemy/humanoid/human/shaman/chandra.atlas",
+        "sprite": "sprites/enemy/remake/judith.atlas",
         "deck": [
             "decks/legends/judith.dck"
         ],
@@ -90510,7 +90511,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Tesak",
@@ -91930,7 +91931,7 @@
     },
     {
         "name": "Felisa",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/felisa.atlas",
         "deck": [
             "decks/legends/felisa.dck"
         ],
@@ -91995,11 +91996,11 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Killian",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_2.atlas",
+        "sprite": "sprites/enemy/remake/killian.atlas",
         "deck": [
             "decks/legends/killian.dck"
         ],
@@ -92068,7 +92069,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Shaile",
@@ -92769,7 +92770,7 @@
     },
     {
         "name": "Alpharael",
-        "sprite": "sprites/enemy/humanoid/human/warlock/high_cultist.atlas",
+        "sprite": "sprites/enemy/remake/alpharael.atlas",
         "deck": [
             "decks/legends/alpharael.dck"
         ],
@@ -92838,11 +92839,11 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.3
+        "scale": 0.3171
     },
     {
         "name": "Haliya",
-        "sprite": "sprites/enemy/humanoid/human/warlock/dawnhart_witch.atlas",
+        "sprite": "sprites/enemy/remake/haliya.atlas",
         "deck": [
             "decks/legends/haliya.dck"
         ],
@@ -92911,7 +92912,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Kilo",
@@ -93421,7 +93422,7 @@
     },
     {
         "name": "Lagrella",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/lagrella.atlas",
         "deck": [
             "decks/legends/lagrella.dck"
         ],
@@ -93485,7 +93486,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3171
     },
     {
         "name": "Perrie",
@@ -103450,7 +103451,7 @@
     },
     {
         "name": "Jakub Šlemr '99",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/jakub_lemr_99.atlas",
         "deck": [
             "decks/standard/wc99_jakub_slemr.dck"
         ],
@@ -103653,7 +103654,7 @@
         ],
         "colors": "B",
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Jon Finkel '00",
@@ -107496,7 +107497,7 @@
     },
     {
         "name": "Dominic Symens '94",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/dominic_symens_94.atlas",
         "deck": [
             "decks/standard/wc94_dominic_symens.dck"
         ],
@@ -107717,7 +107718,7 @@
         ],
         "colors": "UBRG",
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Cyrille deFoucaud '94",
@@ -112372,7 +112373,7 @@
     },
     {
         "name": "High Priest of Shandalar",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/high_priest_of_shandalar.atlas",
         "deck": [
             "decks/standard/shandalar97_white_highpriest.dck"
         ],
@@ -112580,11 +112581,11 @@
             "BiomeWhite"
         ],
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.2826
     },
     {
         "name": "The Sainted One",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/the_sainted_one.atlas",
         "deck": [
             "decks/miniboss/shandalar97_white_alsadim.dck"
         ],
@@ -112818,7 +112819,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 1.7727
+        "scale": 0.4062
     },
     {
         "name": "Shapeshifter of Shandalar",
@@ -118731,7 +118732,7 @@
     },
     {
         "name": "Dark Ages Preacher",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric.atlas",
+        "sprite": "sprites/enemy/remake/dark_ages_preacher.atlas",
         "deck": [
             "decks/miniboss/shandalar97_dark_ages_preacher.dck"
         ],
@@ -118849,11 +118850,11 @@
         ],
         "boss": true,
         "tier": "Uncommon",
-        "scale": 2.2159
+        "scale": 0.6094
     },
     {
         "name": "Swamp Queen Tojira",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witch.atlas",
+        "sprite": "sprites/enemy/remake/swamp_queen_tojira.atlas",
         "deck": [
             "decks/miniboss/shandalar97_swamp_queen_tojira.dck"
         ],
@@ -118971,7 +118972,7 @@
             "BiomeBlack"
         ],
         "tier": "Common",
-        "scale": 2.4999
+        "scale": 0.625
     },
     {
         "name": "Nightstalker",
@@ -122963,7 +122964,7 @@
     },
     {
         "name": "Domri Rade",
-        "sprite": "sprites/enemy/humanoid/human/shaman/garruk2.atlas",
+        "sprite": "sprites/enemy/remake/domri_rade.atlas",
         "deck": [
             "decks/arena/domri_rade.dck"
         ],
@@ -122997,7 +122998,7 @@
         "questTags": [],
         "gamesPerMatch": 3,
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Mysterious Mage",
@@ -123249,13 +123250,13 @@
     },
     {
         "name": "Bre",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric_orzhov.atlas",
+        "sprite": "sprites/enemy/remake/bre.atlas",
         "deck": [
             "decks/legends/bre.dck"
         ],
         "ai": "",
         "speed": 60,
-        "scale": 1.7727,
+        "scale": 0.4535,
         "life": 60,
         "rewards": [
             {
@@ -124263,13 +124264,13 @@
     },
     {
         "name": "Venser",
-        "sprite": "sprites/enemy/humanoid/human/cleric/monk_3.atlas",
+        "sprite": "sprites/enemy/remake/venser.atlas",
         "deck": [
             "decks/legends/venser.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.0833,
+        "scale": 0.2889,
         "life": 80,
         "rewards": [
             {
@@ -124344,13 +124345,13 @@
     },
     {
         "name": "Worzel",
-        "sprite": "sprites/enemy/humanoid/human/cleric/priest.atlas",
+        "sprite": "sprites/enemy/remake/worzel.atlas",
         "deck": [
             "decks/legends/worzel.dck"
         ],
         "ai": "",
         "speed": 43,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 76,
         "rewards": [
             {
@@ -125353,7 +125354,7 @@
     },
     {
         "name": "Cynette",
-        "sprite": "sprites/enemy/humanoid/human/cleric/cleric.atlas",
+        "sprite": "sprites/enemy/remake/cynette.atlas",
         "deck": [
             "decks/legends/cynette.dck"
         ],
@@ -125417,7 +125418,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "tier": "Uncommon",
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Grandmother Goby",

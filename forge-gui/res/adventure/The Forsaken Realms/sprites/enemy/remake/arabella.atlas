@@ -1,0 +1,176 @@
+arabella.png
+size: 450,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 50, 58
+Idle
+  xy: 50, 64
+  size: 50, 58
+Idle
+  xy: 100, 64
+  size: 50, 58
+Idle
+  xy: 150, 64
+  size: 50, 58
+Walk
+  xy: 0, 122
+  size: 50, 58
+Walk
+  xy: 50, 122
+  size: 50, 58
+Walk
+  xy: 100, 122
+  size: 50, 58
+Walk
+  xy: 150, 122
+  size: 50, 58
+Walk
+  xy: 200, 122
+  size: 50, 58
+Walk
+  xy: 250, 122
+  size: 50, 58
+Walk
+  xy: 300, 122
+  size: 50, 58
+Walk
+  xy: 350, 122
+  size: 50, 58
+Attack
+  xy: 0, 180
+  size: 50, 58
+Attack
+  xy: 50, 180
+  size: 50, 58
+Attack
+  xy: 100, 180
+  size: 50, 58
+Attack
+  xy: 150, 180
+  size: 50, 58
+Attack
+  xy: 200, 180
+  size: 50, 58
+Attack
+  xy: 250, 180
+  size: 50, 58
+Attack
+  xy: 300, 180
+  size: 50, 58
+Hit
+  xy: 0, 238
+  size: 50, 58
+Hit
+  xy: 50, 238
+  size: 50, 58
+Hit
+  xy: 100, 238
+  size: 50, 58
+Hit
+  xy: 150, 238
+  size: 50, 58
+Death
+  xy: 0, 296
+  size: 50, 58
+Death
+  xy: 50, 296
+  size: 50, 58
+Death
+  xy: 100, 296
+  size: 50, 58
+Death
+  xy: 150, 296
+  size: 50, 58
+Death
+  xy: 200, 296
+  size: 50, 58
+Death
+  xy: 250, 296
+  size: 50, 58
+Death
+  xy: 300, 296
+  size: 50, 58
+Death
+  xy: 350, 296
+  size: 50, 58
+Death
+  xy: 400, 296
+  size: 50, 58
+IdleUp
+  xy: 0, 354
+  size: 50, 58
+IdleUp
+  xy: 50, 354
+  size: 50, 58
+IdleUp
+  xy: 100, 354
+  size: 50, 58
+IdleUp
+  xy: 150, 354
+  size: 50, 58
+IdleDown
+  xy: 0, 412
+  size: 50, 58
+IdleDown
+  xy: 50, 412
+  size: 50, 58
+IdleDown
+  xy: 100, 412
+  size: 50, 58
+IdleDown
+  xy: 150, 412
+  size: 50, 58
+WalkUp
+  xy: 0, 470
+  size: 50, 58
+WalkUp
+  xy: 50, 470
+  size: 50, 58
+WalkUp
+  xy: 100, 470
+  size: 50, 58
+WalkUp
+  xy: 150, 470
+  size: 50, 58
+WalkUp
+  xy: 200, 470
+  size: 50, 58
+WalkUp
+  xy: 250, 470
+  size: 50, 58
+WalkUp
+  xy: 300, 470
+  size: 50, 58
+WalkUp
+  xy: 350, 470
+  size: 50, 58
+WalkDown
+  xy: 0, 528
+  size: 50, 58
+WalkDown
+  xy: 50, 528
+  size: 50, 58
+WalkDown
+  xy: 100, 528
+  size: 50, 58
+WalkDown
+  xy: 150, 528
+  size: 50, 58
+WalkDown
+  xy: 200, 528
+  size: 50, 58
+WalkDown
+  xy: 250, 528
+  size: 50, 58
+WalkDown
+  xy: 300, 528
+  size: 50, 58
+WalkDown
+  xy: 350, 528
+  size: 50, 58

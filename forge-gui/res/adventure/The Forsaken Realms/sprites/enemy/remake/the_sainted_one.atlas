@@ -1,0 +1,180 @@
+the_sainted_one.png
+size: 684,676
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 68
+  footprint: 25, 1, 27, 67
+Idle
+  xy: 76, 64
+  size: 76, 68
+Idle
+  xy: 152, 64
+  size: 76, 68
+Idle
+  xy: 228, 64
+  size: 76, 68
+Walk
+  xy: 0, 132
+  size: 76, 68
+Walk
+  xy: 76, 132
+  size: 76, 68
+Walk
+  xy: 152, 132
+  size: 76, 68
+Walk
+  xy: 228, 132
+  size: 76, 68
+Walk
+  xy: 304, 132
+  size: 76, 68
+Walk
+  xy: 380, 132
+  size: 76, 68
+Walk
+  xy: 456, 132
+  size: 76, 68
+Walk
+  xy: 532, 132
+  size: 76, 68
+Attack
+  xy: 0, 200
+  size: 76, 68
+Attack
+  xy: 76, 200
+  size: 76, 68
+Attack
+  xy: 152, 200
+  size: 76, 68
+Attack
+  xy: 228, 200
+  size: 76, 68
+Attack
+  xy: 304, 200
+  size: 76, 68
+Attack
+  xy: 380, 200
+  size: 76, 68
+Attack
+  xy: 456, 200
+  size: 76, 68
+Attack
+  xy: 532, 200
+  size: 76, 68
+Hit
+  xy: 0, 268
+  size: 76, 68
+Hit
+  xy: 76, 268
+  size: 76, 68
+Hit
+  xy: 152, 268
+  size: 76, 68
+Hit
+  xy: 228, 268
+  size: 76, 68
+Death
+  xy: 0, 336
+  size: 76, 68
+Death
+  xy: 76, 336
+  size: 76, 68
+Death
+  xy: 152, 336
+  size: 76, 68
+Death
+  xy: 228, 336
+  size: 76, 68
+Death
+  xy: 304, 336
+  size: 76, 68
+Death
+  xy: 380, 336
+  size: 76, 68
+Death
+  xy: 456, 336
+  size: 76, 68
+Death
+  xy: 532, 336
+  size: 76, 68
+Death
+  xy: 608, 336
+  size: 76, 68
+IdleUp
+  xy: 0, 404
+  size: 76, 68
+IdleUp
+  xy: 76, 404
+  size: 76, 68
+IdleUp
+  xy: 152, 404
+  size: 76, 68
+IdleUp
+  xy: 228, 404
+  size: 76, 68
+IdleDown
+  xy: 0, 472
+  size: 76, 68
+IdleDown
+  xy: 76, 472
+  size: 76, 68
+IdleDown
+  xy: 152, 472
+  size: 76, 68
+IdleDown
+  xy: 228, 472
+  size: 76, 68
+WalkUp
+  xy: 0, 540
+  size: 76, 68
+WalkUp
+  xy: 76, 540
+  size: 76, 68
+WalkUp
+  xy: 152, 540
+  size: 76, 68
+WalkUp
+  xy: 228, 540
+  size: 76, 68
+WalkUp
+  xy: 304, 540
+  size: 76, 68
+WalkUp
+  xy: 380, 540
+  size: 76, 68
+WalkUp
+  xy: 456, 540
+  size: 76, 68
+WalkUp
+  xy: 532, 540
+  size: 76, 68
+WalkDown
+  xy: 0, 608
+  size: 76, 68
+WalkDown
+  xy: 76, 608
+  size: 76, 68
+WalkDown
+  xy: 152, 608
+  size: 76, 68
+WalkDown
+  xy: 228, 608
+  size: 76, 68
+WalkDown
+  xy: 304, 608
+  size: 76, 68
+WalkDown
+  xy: 380, 608
+  size: 76, 68
+WalkDown
+  xy: 456, 608
+  size: 76, 68
+WalkDown
+  xy: 532, 608
+  size: 76, 68

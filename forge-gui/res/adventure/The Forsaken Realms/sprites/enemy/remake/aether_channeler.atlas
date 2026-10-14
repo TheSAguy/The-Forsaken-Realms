@@ -1,0 +1,176 @@
+aether_channeler.png
+size: 396,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 44, 56
+Idle
+  xy: 44, 64
+  size: 44, 56
+Idle
+  xy: 88, 64
+  size: 44, 56
+Idle
+  xy: 132, 64
+  size: 44, 56
+Walk
+  xy: 0, 120
+  size: 44, 56
+Walk
+  xy: 44, 120
+  size: 44, 56
+Walk
+  xy: 88, 120
+  size: 44, 56
+Walk
+  xy: 132, 120
+  size: 44, 56
+Walk
+  xy: 176, 120
+  size: 44, 56
+Walk
+  xy: 220, 120
+  size: 44, 56
+Walk
+  xy: 264, 120
+  size: 44, 56
+Walk
+  xy: 308, 120
+  size: 44, 56
+Attack
+  xy: 0, 176
+  size: 44, 56
+Attack
+  xy: 44, 176
+  size: 44, 56
+Attack
+  xy: 88, 176
+  size: 44, 56
+Attack
+  xy: 132, 176
+  size: 44, 56
+Attack
+  xy: 176, 176
+  size: 44, 56
+Attack
+  xy: 220, 176
+  size: 44, 56
+Attack
+  xy: 264, 176
+  size: 44, 56
+Hit
+  xy: 0, 232
+  size: 44, 56
+Hit
+  xy: 44, 232
+  size: 44, 56
+Hit
+  xy: 88, 232
+  size: 44, 56
+Hit
+  xy: 132, 232
+  size: 44, 56
+Death
+  xy: 0, 288
+  size: 44, 56
+Death
+  xy: 44, 288
+  size: 44, 56
+Death
+  xy: 88, 288
+  size: 44, 56
+Death
+  xy: 132, 288
+  size: 44, 56
+Death
+  xy: 176, 288
+  size: 44, 56
+Death
+  xy: 220, 288
+  size: 44, 56
+Death
+  xy: 264, 288
+  size: 44, 56
+Death
+  xy: 308, 288
+  size: 44, 56
+Death
+  xy: 352, 288
+  size: 44, 56
+IdleUp
+  xy: 0, 344
+  size: 44, 56
+IdleUp
+  xy: 44, 344
+  size: 44, 56
+IdleUp
+  xy: 88, 344
+  size: 44, 56
+IdleUp
+  xy: 132, 344
+  size: 44, 56
+IdleDown
+  xy: 0, 400
+  size: 44, 56
+IdleDown
+  xy: 44, 400
+  size: 44, 56
+IdleDown
+  xy: 88, 400
+  size: 44, 56
+IdleDown
+  xy: 132, 400
+  size: 44, 56
+WalkUp
+  xy: 0, 456
+  size: 44, 56
+WalkUp
+  xy: 44, 456
+  size: 44, 56
+WalkUp
+  xy: 88, 456
+  size: 44, 56
+WalkUp
+  xy: 132, 456
+  size: 44, 56
+WalkUp
+  xy: 176, 456
+  size: 44, 56
+WalkUp
+  xy: 220, 456
+  size: 44, 56
+WalkUp
+  xy: 264, 456
+  size: 44, 56
+WalkUp
+  xy: 308, 456
+  size: 44, 56
+WalkDown
+  xy: 0, 512
+  size: 44, 56
+WalkDown
+  xy: 44, 512
+  size: 44, 56
+WalkDown
+  xy: 88, 512
+  size: 44, 56
+WalkDown
+  xy: 132, 512
+  size: 44, 56
+WalkDown
+  xy: 176, 512
+  size: 44, 56
+WalkDown
+  xy: 220, 512
+  size: 44, 56
+WalkDown
+  xy: 264, 512
+  size: 44, 56
+WalkDown
+  xy: 308, 512
+  size: 44, 56

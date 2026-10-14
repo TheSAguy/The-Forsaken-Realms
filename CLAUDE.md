@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 600): **LOCAL + UNRELEASED (art + data)** - LPC backlog batch 3 of 5: the 83 clerics,
+warlocks and shamans (generator `lpc_selections/make_600.py`). enemies.json 83 paths + scales (0.28-0.33), 51 footprints,
+CREDITS_LPC.md 583 characters, CREDITS.md's LPC bullet (555 enemies). #31 packages. Not seen in play.
+
 ## STATE 2026-10-14 (round 599): **LOCAL + UNRELEASED (art + data)** - LPC backlog batch 2 of 5: the other 72 wizards
 (generator `lpc_selections/make_599.py`); the whole humanoid/human/wizard folder is LPC now. enemies.json 72 paths +
 scales (0.27-0.34), 34 footprints, CREDITS_LPC.md 500 characters, CREDITS.md's LPC bullet. #31 packages. Not seen in play.

@@ -1,0 +1,174 @@
+admiral_brass.png
+size: 738,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 58
+  footprint: 24, 2, 35, 55
+Idle
+  xy: 82, 64
+  size: 82, 58
+Idle
+  xy: 164, 64
+  size: 82, 58
+Idle
+  xy: 246, 64
+  size: 82, 58
+Walk
+  xy: 0, 122
+  size: 82, 58
+Walk
+  xy: 82, 122
+  size: 82, 58
+Walk
+  xy: 164, 122
+  size: 82, 58
+Walk
+  xy: 246, 122
+  size: 82, 58
+Walk
+  xy: 328, 122
+  size: 82, 58
+Walk
+  xy: 410, 122
+  size: 82, 58
+Walk
+  xy: 492, 122
+  size: 82, 58
+Walk
+  xy: 574, 122
+  size: 82, 58
+Attack
+  xy: 0, 180
+  size: 82, 58
+Attack
+  xy: 82, 180
+  size: 82, 58
+Attack
+  xy: 164, 180
+  size: 82, 58
+Attack
+  xy: 246, 180
+  size: 82, 58
+Attack
+  xy: 328, 180
+  size: 82, 58
+Attack
+  xy: 410, 180
+  size: 82, 58
+Hit
+  xy: 0, 238
+  size: 82, 58
+Hit
+  xy: 82, 238
+  size: 82, 58
+Hit
+  xy: 164, 238
+  size: 82, 58
+Hit
+  xy: 246, 238
+  size: 82, 58
+Death
+  xy: 0, 296
+  size: 82, 58
+Death
+  xy: 82, 296
+  size: 82, 58
+Death
+  xy: 164, 296
+  size: 82, 58
+Death
+  xy: 246, 296
+  size: 82, 58
+Death
+  xy: 328, 296
+  size: 82, 58
+Death
+  xy: 410, 296
+  size: 82, 58
+Death
+  xy: 492, 296
+  size: 82, 58
+Death
+  xy: 574, 296
+  size: 82, 58
+Death
+  xy: 656, 296
+  size: 82, 58
+IdleUp
+  xy: 0, 354
+  size: 82, 58
+IdleUp
+  xy: 82, 354
+  size: 82, 58
+IdleUp
+  xy: 164, 354
+  size: 82, 58
+IdleUp
+  xy: 246, 354
+  size: 82, 58
+IdleDown
+  xy: 0, 412
+  size: 82, 58
+IdleDown
+  xy: 82, 412
+  size: 82, 58
+IdleDown
+  xy: 164, 412
+  size: 82, 58
+IdleDown
+  xy: 246, 412
+  size: 82, 58
+WalkUp
+  xy: 0, 470
+  size: 82, 58
+WalkUp
+  xy: 82, 470
+  size: 82, 58
+WalkUp
+  xy: 164, 470
+  size: 82, 58
+WalkUp
+  xy: 246, 470
+  size: 82, 58
+WalkUp
+  xy: 328, 470
+  size: 82, 58
+WalkUp
+  xy: 410, 470
+  size: 82, 58
+WalkUp
+  xy: 492, 470
+  size: 82, 58
+WalkUp
+  xy: 574, 470
+  size: 82, 58
+WalkDown
+  xy: 0, 528
+  size: 82, 58
+WalkDown
+  xy: 82, 528
+  size: 82, 58
+WalkDown
+  xy: 164, 528
+  size: 82, 58
+WalkDown
+  xy: 246, 528
+  size: 82, 58
+WalkDown
+  xy: 328, 528
+  size: 82, 58
+WalkDown
+  xy: 410, 528
+  size: 82, 58
+WalkDown
+  xy: 492, 528
+  size: 82, 58
+WalkDown
+  xy: 574, 528
+  size: 82, 58

@@ -98,7 +98,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (472 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598 and 599 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (555 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599 and 600 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -152,7 +152,16 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Nikara and Yannik, Meren of Clan Nel Toth, Rakdos Wizard, The Lord of Pain, Chainer, Juri, Apprentice Blue Wizard,
   Reveka, Zak Dolan '94, Apprentice Red Wizard, Zur, Rusko, Runelord, Tawnos, Ghen, Corrupted Red Wizard, Kaervek,
   Corrupted Blue Wizard, Jace, Arcanis, Snow Wizard, Momir Vig, Master White Wizard, Muzzio, Dovin Baan, Sifa Grent;
-  and round 597's 28 player heroes, a woman and a man of every race
+  round 600's eighty-three clerics, warlocks and shamans - Cleric, Avacynian Preacher, Dark Ages Preacher, Estrid,
+  Hylda, Niambi, Deekah, Lavinia, Cynette, Orzhov Cleric, Teysa, Anje, Amalia, Kess, Hapatra, Thalisse, Toluz, Bre,
+  Corrupted Cleric, Victor, Valgavoth's Seneschal, Priest Fanatic, Angus, Monk, Disciple of Teferi, Sigardian Priest,
+  Trynn and Silvar, Carmen, Tomik, Delney, Killian, Aether Channeler, Narset, The Archimandrite, Raff, Alquist Proft,
+  Venser, Apprentice White Wizard, Missionary of Saint Traft, Sydri, Asmira, Arabella, Queen Kayla, Azami, Lagrella,
+  Worzel, High Priest of Shandalar, The Sainted One, Chandra, Tymna and Tana, Rowan, Jhoira, Ashnod, Adeliz, Pia
+  Nalaar, Zara, Jeska, Lynde, Exava, Judith, Garruk, Fynn, Kamahl, Ghired, Domri Rade, Breya, Dihada, Eriette, Admiral
+  Brass, Garza Zol, Henrika, Sen Triplets, Kinzu, Felisa, Jakub Šlemr '99, Dominic Symens '94, Swamp Queen Tojira,
+  High Cultist, Garth, Runo, Alpharael, False Monk, Dawnhart Witch, Haliya; and round 597's 28 player heroes, a woman
+  and a man of every race
   the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,
   Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire) -
   composed
