@@ -1,0 +1,156 @@
+sigarda.png
+size: 2704,929
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 208, 173
+  footprint: 54, 55, 126, 106
+Idle
+  xy: 208, 64
+  size: 208, 173
+Idle
+  xy: 416, 64
+  size: 208, 173
+Idle
+  xy: 624, 64
+  size: 208, 173
+Idle
+  xy: 832, 64
+  size: 208, 173
+Idle
+  xy: 1040, 64
+  size: 208, 173
+Idle
+  xy: 1248, 64
+  size: 208, 173
+Idle
+  xy: 1456, 64
+  size: 208, 173
+Idle
+  xy: 1664, 64
+  size: 208, 173
+Idle
+  xy: 1872, 64
+  size: 208, 173
+Idle
+  xy: 2080, 64
+  size: 208, 173
+Idle
+  xy: 2288, 64
+  size: 208, 173
+Walk
+  xy: 0, 237
+  size: 208, 173
+Walk
+  xy: 208, 237
+  size: 208, 173
+Walk
+  xy: 416, 237
+  size: 208, 173
+Walk
+  xy: 624, 237
+  size: 208, 173
+Walk
+  xy: 832, 237
+  size: 208, 173
+Walk
+  xy: 1040, 237
+  size: 208, 173
+Walk
+  xy: 1248, 237
+  size: 208, 173
+Walk
+  xy: 1456, 237
+  size: 208, 173
+Attack
+  xy: 0, 410
+  size: 208, 173
+Attack
+  xy: 208, 410
+  size: 208, 173
+Attack
+  xy: 416, 410
+  size: 208, 173
+Attack
+  xy: 624, 410
+  size: 208, 173
+Attack
+  xy: 832, 410
+  size: 208, 173
+Attack
+  xy: 1040, 410
+  size: 208, 173
+Attack
+  xy: 1248, 410
+  size: 208, 173
+Attack
+  xy: 1456, 410
+  size: 208, 173
+Attack
+  xy: 1664, 410
+  size: 208, 173
+Attack
+  xy: 1872, 410
+  size: 208, 173
+Attack
+  xy: 2080, 410
+  size: 208, 173
+Attack
+  xy: 2288, 410
+  size: 208, 173
+Hit
+  xy: 0, 583
+  size: 208, 173
+Hit
+  xy: 208, 583
+  size: 208, 173
+Hit
+  xy: 416, 583
+  size: 208, 173
+Hit
+  xy: 624, 583
+  size: 208, 173
+Death
+  xy: 0, 756
+  size: 208, 173
+Death
+  xy: 208, 756
+  size: 208, 173
+Death
+  xy: 416, 756
+  size: 208, 173
+Death
+  xy: 624, 756
+  size: 208, 173
+Death
+  xy: 832, 756
+  size: 208, 173
+Death
+  xy: 1040, 756
+  size: 208, 173
+Death
+  xy: 1248, 756
+  size: 208, 173
+Death
+  xy: 1456, 756
+  size: 208, 173
+Death
+  xy: 1664, 756
+  size: 208, 173
+Death
+  xy: 1872, 756
+  size: 208, 173
+Death
+  xy: 2080, 756
+  size: 208, 173
+Death
+  xy: 2288, 756
+  size: 208, 173
+Death
+  xy: 2496, 756
+  size: 208, 173

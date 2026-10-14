@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 603: the user's Pixelate Angel Warrior for 19 angels (2026-10-14)
+
+The Procedural Pixel Creatures session. The user: "The Angel art is ready". The still was made from PROMPTS.md's
+warrior-angel design; idle, walk, attack and death came from Kling and Pixelate. They are converted by
+`pixelate_to_forge.py`, eleven keys in the generator's `pixelate/angel_warrior/convert.sh`.
+
+- **The angels**, one design in four colors (tint.py; the whole figure turns, as with the slivers):
+  - White and gold (11): Angel Warrior, Avacyn, Serra the Benevolent (boss), Guardian Angel (boss), Angelic Page,
+    Sephara, Arch Angel of Shandalar, Angel Overseer, Kasla and Reidane.
+  - Blue (3): Giada, Bruna, Linvala.
+  - Red (4): Tiana, Feather, Rienne, Anya.
+  - Green (2): Shalai and Hallar, Sigarda.
+  - PROMPTS.md's table listed 15. Avacyn, Serra, Linvala and Anya share the Angel Warrior's 16 px sprite and would
+    have stayed on it.
+  - Red and green are deepened (chroma x1.4, a little darker): the plain hues read salmon pink and mint.
+- **The clips**:
+  - The idle came exported at 256 and is shrunk back.
+  - The death ends at frame 11, before the dust takes the key's green.
+  - Three of the eight walk frames have their wingtips cut flat, where the clip touched its edge.
+- **Not converted**: Orthodoxy Angel (the Phyrexian angel design) and Maelstrom Angel and Domain Keeper of Cromat (the
+  maelstrom design) wait for their own clips.
+- **Files**:
+  - 19 new atlases under `sprites/enemy/remake/`, each with a footprint.
+  - enemies.json: 19 sprite paths and scales. The ranked 17 draw at 0.16 (the wingspan counts in the round-581 size).
+    Guardian Angel and Serra the Benevolent are bosses and keep their drawn size (0.25).
+- **Checks**:
+  - enemies.json against HEAD: exactly these 19, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections (enum 18, starter-bucket 30, unknown-key 1).
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - The sprite audit flags the last five Death frames of each (the body lies down and dissolves into feathers): the
+    Pixelate art, as with the earlier Pixelate deaths.
+  - Not seen in play.
+
 ## Round 598: the LPC backlog, batch 1 - 68 wizards (2026-10-14)
 
 The Procedural Pixel Creatures session. The user asked for a list of the enemies on 16 px sprites that do not fit LPC

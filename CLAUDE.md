@@ -80,6 +80,11 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 603): **LOCAL + UNRELEASED (art + data)** - the user's Pixelate Angel Warrior for 19 angels:
+11 white/gold, Giada/Bruna/Linvala blue, Tiana/Feather/Rienne/Anya red, Shalai and Hallar/Sigarda green (generator
+`pixelate/angel_warrior/convert.sh`); ranked 0.16, bosses Guardian Angel and Serra keep their size. Orthodoxy Angel and
+the two maelstrom angels wait for their designs' clips. Rounds 599-602 (LPC batches 2-5) come next. #31 packages.
+
 ## STATE 2026-10-14 (round 598): **LOCAL + UNRELEASED (art + data)** - LPC backlog batch 1 of 5 (rounds 598-602, the
 435 clear fits; the 61 non-fits, 32 borderline and 17 angels left out): the 68 enemies on six stock
 `humanoid/human/wizard` sprites are LPC characters (generator `lpc_selections/make_598.py`), named ones dressed from

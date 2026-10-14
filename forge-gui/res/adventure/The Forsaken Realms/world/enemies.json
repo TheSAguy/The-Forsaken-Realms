@@ -1270,7 +1270,7 @@
     },
     {
         "name": "Angel Overseer",
-        "sprite": "sprites/enemy/celestial/angel_2.atlas",
+        "sprite": "sprites/enemy/remake/angel_overseer.atlas",
         "deck": [
             "decks/standard/azoriusangel.dck"
         ],
@@ -1279,7 +1279,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 22,
-        "scale": 1.0,
+        "scale": 0.1646,
         "life": 18,
         "rewards": [
             {
@@ -1325,7 +1325,7 @@
     },
     {
         "name": "Angel Warrior",
-        "sprite": "sprites/enemy/celestial/angelwarrior.atlas",
+        "sprite": "sprites/enemy/remake/angel_warrior.atlas",
         "deck": [
             "decks/standard/angelwarrior.dck"
         ],
@@ -1404,11 +1404,12 @@
             "Mythical",
             "Warrior"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.1646
     },
     {
         "name": "Angelic Page",
-        "sprite": "sprites/enemy/celestial/angel_1.atlas",
+        "sprite": "sprites/enemy/remake/angelic_page.atlas",
         "deck": [
             "decks/standard/angel.json"
         ],
@@ -1469,7 +1470,8 @@
             "Holy",
             "IdentityWhite"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.1646
     },
     {
         "name": "Ape",
@@ -16130,7 +16132,7 @@
     },
     {
         "name": "Guardian Angel",
-        "sprite": "sprites/enemy/celestial/akroma.atlas",
+        "sprite": "sprites/enemy/remake/guardian_angel.atlas",
         "deck": [
             "decks/miniboss/angel_rainbow_encounter.dck"
         ],
@@ -16284,7 +16286,7 @@
         ],
         "tier": "Mythic",
         "flying": true,
-        "scale": 0.75
+        "scale": 0.2468
     },
     {
         "name": "Harpy",
@@ -36911,14 +36913,14 @@
     },
     {
         "name": "Giada",
-        "sprite": "sprites/enemy/celestial/angel_2.atlas",
+        "sprite": "sprites/enemy/remake/giada.atlas",
         "deck": [
             "decks/legends/giada.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 51,
-        "scale": 1,
+        "scale": 0.1646,
         "life": 53,
         "rewards": [
             {
@@ -39562,13 +39564,13 @@
     },
     {
         "name": "Avacyn",
-        "sprite": "sprites/enemy/celestial/angelwarrior.atlas",
+        "sprite": "sprites/enemy/remake/avacyn.atlas",
         "deck": [
             "decks/legends/avacyn.dck"
         ],
         "ai": "",
         "speed": 49,
-        "scale": 1.0,
+        "scale": 0.1646,
         "life": 53,
         "rewards": [
             {
@@ -56650,14 +56652,14 @@
     },
     {
         "name": "Bruna",
-        "sprite": "sprites/enemy/celestial/angel_2.atlas",
+        "sprite": "sprites/enemy/remake/bruna.atlas",
         "deck": [
             "decks/legends/bruna.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0,
+        "scale": 0.1646,
         "life": 30,
         "rewards": [
             {
@@ -56872,14 +56874,14 @@
     },
     {
         "name": "Sigarda",
-        "sprite": "sprites/enemy/celestial/maelstrom_angel.atlas",
+        "sprite": "sprites/enemy/remake/sigarda.atlas",
         "deck": [
             "decks/legends/sigarda.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.6583,
+        "scale": 0.1646,
         "life": 30,
         "rewards": [
             {
@@ -57016,14 +57018,14 @@
     },
     {
         "name": "Sephara",
-        "sprite": "sprites/enemy/celestial/angel_1.atlas",
+        "sprite": "sprites/enemy/remake/sephara.atlas",
         "deck": [
             "decks/legends/sephara.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 0.1646,
         "life": 49,
         "rewards": [
             {
@@ -60841,14 +60843,14 @@
     },
     {
         "name": "Linvala",
-        "sprite": "sprites/enemy/celestial/angelwarrior.atlas",
+        "sprite": "sprites/enemy/remake/linvala.atlas",
         "deck": [
             "decks/legends/linvala.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 0.1646,
         "life": 30,
         "rewards": [
             {
@@ -61068,14 +61070,14 @@
     },
     {
         "name": "Rienne",
-        "sprite": "sprites/enemy/celestial/maelstrom_angel.atlas",
+        "sprite": "sprites/enemy/remake/rienne.atlas",
         "deck": [
             "decks/legends/rienne.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.6583,
+        "scale": 0.1646,
         "life": 30,
         "rewards": [
             {
@@ -69449,14 +69451,14 @@
     },
     {
         "name": "Reidane",
-        "sprite": "sprites/enemy/celestial/angel_2.atlas",
+        "sprite": "sprites/enemy/remake/reidane.atlas",
         "deck": [
             "decks/legends/reidane.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 38,
-        "scale": 1,
+        "scale": 0.1646,
         "life": 26,
         "rewards": [
             {
@@ -71491,7 +71493,7 @@
     },
     {
         "name": "Feather",
-        "sprite": "sprites/enemy/celestial/angel_1.atlas",
+        "sprite": "sprites/enemy/remake/feather.atlas",
         "deck": [
             "decks/legends/feather.dck"
         ],
@@ -71560,7 +71562,8 @@
         "colors": "WR",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.1646
     },
     {
         "name": "General Ferrous",
@@ -80626,7 +80629,7 @@
     },
     {
         "name": "Tiana",
-        "sprite": "sprites/enemy/celestial/angel_1.atlas",
+        "sprite": "sprites/enemy/remake/tiana.atlas",
         "deck": [
             "decks/legends/tiana.dck"
         ],
@@ -80695,7 +80698,8 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "flying": true
+        "flying": true,
+        "scale": 0.1646
     },
     {
         "name": "Raff",
@@ -85259,7 +85263,7 @@
     },
     {
         "name": "Anya",
-        "sprite": "sprites/enemy/celestial/angelwarrior.atlas",
+        "sprite": "sprites/enemy/remake/anya.atlas",
         "deck": [
             "decks/legends/anya.dck"
         ],
@@ -85323,7 +85327,8 @@
         "colors": "WR",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.1646
     },
     {
         "name": "Danitha",
@@ -88753,7 +88758,7 @@
     },
     {
         "name": "Kasla",
-        "sprite": "sprites/enemy/celestial/angel_2.atlas",
+        "sprite": "sprites/enemy/remake/kasla.atlas",
         "deck": [
             "decks/legends/kasla.dck"
         ],
@@ -88817,7 +88822,8 @@
         "colors": "WUR",
         "spawnRate": 1,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.1646
     },
     {
         "name": "Narci",
@@ -96662,7 +96668,7 @@
     },
     {
         "name": "Shalai and Hallar",
-        "sprite": "sprites/enemy/celestial/angel_1.atlas",
+        "sprite": "sprites/enemy/remake/shalai_and_hallar.atlas",
         "deck": [
             "decks/legends/shalai_and_hallar.dck"
         ],
@@ -96736,7 +96742,8 @@
         "colors": "WRG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.1646
     },
     {
         "name": "Syr Ginger",
@@ -112150,7 +112157,7 @@
     },
     {
         "name": "Arch Angel of Shandalar",
-        "sprite": "sprites/enemy/celestial/angel_1.atlas",
+        "sprite": "sprites/enemy/remake/arch_angel_of_shandalar.atlas",
         "deck": [
             "decks/standard/shandalar97_white_archangel.dck"
         ],
@@ -112358,7 +112365,8 @@
             "Angel",
             "BiomeWhite"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.1646
     },
     {
         "name": "High Priest of Shandalar",
@@ -119962,7 +119970,7 @@
     },
     {
         "name": "Serra the Benevolent",
-        "sprite": "sprites/enemy/celestial/angelwarrior.atlas",
+        "sprite": "sprites/enemy/remake/serra_the_benevolent.atlas",
         "deck": [
             "decks/boss/serra.dck"
         ],
@@ -120169,7 +120177,7 @@
         "colors": "W",
         "tier": "Rare",
         "flying": true,
-        "scale": 1.5
+        "scale": 0.2468
     },
     {
         "name": "Recaller of Ancestry",
