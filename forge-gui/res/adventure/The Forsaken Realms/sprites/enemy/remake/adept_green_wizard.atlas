@@ -1,0 +1,180 @@
+adept_green_wizard.png
+size: 648,631
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 63
+  footprint: 22, 1, 29, 61
+Idle
+  xy: 72, 64
+  size: 72, 63
+Idle
+  xy: 144, 64
+  size: 72, 63
+Idle
+  xy: 216, 64
+  size: 72, 63
+Walk
+  xy: 0, 127
+  size: 72, 63
+Walk
+  xy: 72, 127
+  size: 72, 63
+Walk
+  xy: 144, 127
+  size: 72, 63
+Walk
+  xy: 216, 127
+  size: 72, 63
+Walk
+  xy: 288, 127
+  size: 72, 63
+Walk
+  xy: 360, 127
+  size: 72, 63
+Walk
+  xy: 432, 127
+  size: 72, 63
+Walk
+  xy: 504, 127
+  size: 72, 63
+Attack
+  xy: 0, 190
+  size: 72, 63
+Attack
+  xy: 72, 190
+  size: 72, 63
+Attack
+  xy: 144, 190
+  size: 72, 63
+Attack
+  xy: 216, 190
+  size: 72, 63
+Attack
+  xy: 288, 190
+  size: 72, 63
+Attack
+  xy: 360, 190
+  size: 72, 63
+Attack
+  xy: 432, 190
+  size: 72, 63
+Attack
+  xy: 504, 190
+  size: 72, 63
+Hit
+  xy: 0, 253
+  size: 72, 63
+Hit
+  xy: 72, 253
+  size: 72, 63
+Hit
+  xy: 144, 253
+  size: 72, 63
+Hit
+  xy: 216, 253
+  size: 72, 63
+Death
+  xy: 0, 316
+  size: 72, 63
+Death
+  xy: 72, 316
+  size: 72, 63
+Death
+  xy: 144, 316
+  size: 72, 63
+Death
+  xy: 216, 316
+  size: 72, 63
+Death
+  xy: 288, 316
+  size: 72, 63
+Death
+  xy: 360, 316
+  size: 72, 63
+Death
+  xy: 432, 316
+  size: 72, 63
+Death
+  xy: 504, 316
+  size: 72, 63
+Death
+  xy: 576, 316
+  size: 72, 63
+IdleUp
+  xy: 0, 379
+  size: 72, 63
+IdleUp
+  xy: 72, 379
+  size: 72, 63
+IdleUp
+  xy: 144, 379
+  size: 72, 63
+IdleUp
+  xy: 216, 379
+  size: 72, 63
+IdleDown
+  xy: 0, 442
+  size: 72, 63
+IdleDown
+  xy: 72, 442
+  size: 72, 63
+IdleDown
+  xy: 144, 442
+  size: 72, 63
+IdleDown
+  xy: 216, 442
+  size: 72, 63
+WalkUp
+  xy: 0, 505
+  size: 72, 63
+WalkUp
+  xy: 72, 505
+  size: 72, 63
+WalkUp
+  xy: 144, 505
+  size: 72, 63
+WalkUp
+  xy: 216, 505
+  size: 72, 63
+WalkUp
+  xy: 288, 505
+  size: 72, 63
+WalkUp
+  xy: 360, 505
+  size: 72, 63
+WalkUp
+  xy: 432, 505
+  size: 72, 63
+WalkUp
+  xy: 504, 505
+  size: 72, 63
+WalkDown
+  xy: 0, 568
+  size: 72, 63
+WalkDown
+  xy: 72, 568
+  size: 72, 63
+WalkDown
+  xy: 144, 568
+  size: 72, 63
+WalkDown
+  xy: 216, 568
+  size: 72, 63
+WalkDown
+  xy: 288, 568
+  size: 72, 63
+WalkDown
+  xy: 360, 568
+  size: 72, 63
+WalkDown
+  xy: 432, 568
+  size: 72, 63
+WalkDown
+  xy: 504, 568
+  size: 72, 63

@@ -1,0 +1,180 @@
+legend_of_the_underground_sea.png
+size: 666,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 74, 55
+  footprint: 25, 1, 24, 53
+Idle
+  xy: 74, 64
+  size: 74, 55
+Idle
+  xy: 148, 64
+  size: 74, 55
+Idle
+  xy: 222, 64
+  size: 74, 55
+Walk
+  xy: 0, 119
+  size: 74, 55
+Walk
+  xy: 74, 119
+  size: 74, 55
+Walk
+  xy: 148, 119
+  size: 74, 55
+Walk
+  xy: 222, 119
+  size: 74, 55
+Walk
+  xy: 296, 119
+  size: 74, 55
+Walk
+  xy: 370, 119
+  size: 74, 55
+Walk
+  xy: 444, 119
+  size: 74, 55
+Walk
+  xy: 518, 119
+  size: 74, 55
+Attack
+  xy: 0, 174
+  size: 74, 55
+Attack
+  xy: 74, 174
+  size: 74, 55
+Attack
+  xy: 148, 174
+  size: 74, 55
+Attack
+  xy: 222, 174
+  size: 74, 55
+Attack
+  xy: 296, 174
+  size: 74, 55
+Attack
+  xy: 370, 174
+  size: 74, 55
+Attack
+  xy: 444, 174
+  size: 74, 55
+Attack
+  xy: 518, 174
+  size: 74, 55
+Hit
+  xy: 0, 229
+  size: 74, 55
+Hit
+  xy: 74, 229
+  size: 74, 55
+Hit
+  xy: 148, 229
+  size: 74, 55
+Hit
+  xy: 222, 229
+  size: 74, 55
+Death
+  xy: 0, 284
+  size: 74, 55
+Death
+  xy: 74, 284
+  size: 74, 55
+Death
+  xy: 148, 284
+  size: 74, 55
+Death
+  xy: 222, 284
+  size: 74, 55
+Death
+  xy: 296, 284
+  size: 74, 55
+Death
+  xy: 370, 284
+  size: 74, 55
+Death
+  xy: 444, 284
+  size: 74, 55
+Death
+  xy: 518, 284
+  size: 74, 55
+Death
+  xy: 592, 284
+  size: 74, 55
+IdleUp
+  xy: 0, 339
+  size: 74, 55
+IdleUp
+  xy: 74, 339
+  size: 74, 55
+IdleUp
+  xy: 148, 339
+  size: 74, 55
+IdleUp
+  xy: 222, 339
+  size: 74, 55
+IdleDown
+  xy: 0, 394
+  size: 74, 55
+IdleDown
+  xy: 74, 394
+  size: 74, 55
+IdleDown
+  xy: 148, 394
+  size: 74, 55
+IdleDown
+  xy: 222, 394
+  size: 74, 55
+WalkUp
+  xy: 0, 449
+  size: 74, 55
+WalkUp
+  xy: 74, 449
+  size: 74, 55
+WalkUp
+  xy: 148, 449
+  size: 74, 55
+WalkUp
+  xy: 222, 449
+  size: 74, 55
+WalkUp
+  xy: 296, 449
+  size: 74, 55
+WalkUp
+  xy: 370, 449
+  size: 74, 55
+WalkUp
+  xy: 444, 449
+  size: 74, 55
+WalkUp
+  xy: 518, 449
+  size: 74, 55
+WalkDown
+  xy: 0, 504
+  size: 74, 55
+WalkDown
+  xy: 74, 504
+  size: 74, 55
+WalkDown
+  xy: 148, 504
+  size: 74, 55
+WalkDown
+  xy: 222, 504
+  size: 74, 55
+WalkDown
+  xy: 296, 504
+  size: 74, 55
+WalkDown
+  xy: 370, 504
+  size: 74, 55
+WalkDown
+  xy: 444, 504
+  size: 74, 55
+WalkDown
+  xy: 518, 504
+  size: 74, 55

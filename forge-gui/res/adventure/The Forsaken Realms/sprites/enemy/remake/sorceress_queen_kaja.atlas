@@ -1,0 +1,180 @@
+sorceress_queen_kaja.png
+size: 594,685
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 66, 69
+  footprint: 20, 1, 26, 67
+Idle
+  xy: 66, 64
+  size: 66, 69
+Idle
+  xy: 132, 64
+  size: 66, 69
+Idle
+  xy: 198, 64
+  size: 66, 69
+Walk
+  xy: 0, 133
+  size: 66, 69
+Walk
+  xy: 66, 133
+  size: 66, 69
+Walk
+  xy: 132, 133
+  size: 66, 69
+Walk
+  xy: 198, 133
+  size: 66, 69
+Walk
+  xy: 264, 133
+  size: 66, 69
+Walk
+  xy: 330, 133
+  size: 66, 69
+Walk
+  xy: 396, 133
+  size: 66, 69
+Walk
+  xy: 462, 133
+  size: 66, 69
+Attack
+  xy: 0, 202
+  size: 66, 69
+Attack
+  xy: 66, 202
+  size: 66, 69
+Attack
+  xy: 132, 202
+  size: 66, 69
+Attack
+  xy: 198, 202
+  size: 66, 69
+Attack
+  xy: 264, 202
+  size: 66, 69
+Attack
+  xy: 330, 202
+  size: 66, 69
+Attack
+  xy: 396, 202
+  size: 66, 69
+Attack
+  xy: 462, 202
+  size: 66, 69
+Hit
+  xy: 0, 271
+  size: 66, 69
+Hit
+  xy: 66, 271
+  size: 66, 69
+Hit
+  xy: 132, 271
+  size: 66, 69
+Hit
+  xy: 198, 271
+  size: 66, 69
+Death
+  xy: 0, 340
+  size: 66, 69
+Death
+  xy: 66, 340
+  size: 66, 69
+Death
+  xy: 132, 340
+  size: 66, 69
+Death
+  xy: 198, 340
+  size: 66, 69
+Death
+  xy: 264, 340
+  size: 66, 69
+Death
+  xy: 330, 340
+  size: 66, 69
+Death
+  xy: 396, 340
+  size: 66, 69
+Death
+  xy: 462, 340
+  size: 66, 69
+Death
+  xy: 528, 340
+  size: 66, 69
+IdleUp
+  xy: 0, 409
+  size: 66, 69
+IdleUp
+  xy: 66, 409
+  size: 66, 69
+IdleUp
+  xy: 132, 409
+  size: 66, 69
+IdleUp
+  xy: 198, 409
+  size: 66, 69
+IdleDown
+  xy: 0, 478
+  size: 66, 69
+IdleDown
+  xy: 66, 478
+  size: 66, 69
+IdleDown
+  xy: 132, 478
+  size: 66, 69
+IdleDown
+  xy: 198, 478
+  size: 66, 69
+WalkUp
+  xy: 0, 547
+  size: 66, 69
+WalkUp
+  xy: 66, 547
+  size: 66, 69
+WalkUp
+  xy: 132, 547
+  size: 66, 69
+WalkUp
+  xy: 198, 547
+  size: 66, 69
+WalkUp
+  xy: 264, 547
+  size: 66, 69
+WalkUp
+  xy: 330, 547
+  size: 66, 69
+WalkUp
+  xy: 396, 547
+  size: 66, 69
+WalkUp
+  xy: 462, 547
+  size: 66, 69
+WalkDown
+  xy: 0, 616
+  size: 66, 69
+WalkDown
+  xy: 66, 616
+  size: 66, 69
+WalkDown
+  xy: 132, 616
+  size: 66, 69
+WalkDown
+  xy: 198, 616
+  size: 66, 69
+WalkDown
+  xy: 264, 616
+  size: 66, 69
+WalkDown
+  xy: 330, 616
+  size: 66, 69
+WalkDown
+  xy: 396, 616
+  size: 66, 69
+WalkDown
+  xy: 462, 616
+  size: 66, 69

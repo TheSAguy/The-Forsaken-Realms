@@ -1,0 +1,176 @@
+cloaked_old_man.png
+size: 450,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 50, 54
+Idle
+  xy: 50, 64
+  size: 50, 54
+Idle
+  xy: 100, 64
+  size: 50, 54
+Idle
+  xy: 150, 64
+  size: 50, 54
+Walk
+  xy: 0, 118
+  size: 50, 54
+Walk
+  xy: 50, 118
+  size: 50, 54
+Walk
+  xy: 100, 118
+  size: 50, 54
+Walk
+  xy: 150, 118
+  size: 50, 54
+Walk
+  xy: 200, 118
+  size: 50, 54
+Walk
+  xy: 250, 118
+  size: 50, 54
+Walk
+  xy: 300, 118
+  size: 50, 54
+Walk
+  xy: 350, 118
+  size: 50, 54
+Attack
+  xy: 0, 172
+  size: 50, 54
+Attack
+  xy: 50, 172
+  size: 50, 54
+Attack
+  xy: 100, 172
+  size: 50, 54
+Attack
+  xy: 150, 172
+  size: 50, 54
+Attack
+  xy: 200, 172
+  size: 50, 54
+Attack
+  xy: 250, 172
+  size: 50, 54
+Attack
+  xy: 300, 172
+  size: 50, 54
+Hit
+  xy: 0, 226
+  size: 50, 54
+Hit
+  xy: 50, 226
+  size: 50, 54
+Hit
+  xy: 100, 226
+  size: 50, 54
+Hit
+  xy: 150, 226
+  size: 50, 54
+Death
+  xy: 0, 280
+  size: 50, 54
+Death
+  xy: 50, 280
+  size: 50, 54
+Death
+  xy: 100, 280
+  size: 50, 54
+Death
+  xy: 150, 280
+  size: 50, 54
+Death
+  xy: 200, 280
+  size: 50, 54
+Death
+  xy: 250, 280
+  size: 50, 54
+Death
+  xy: 300, 280
+  size: 50, 54
+Death
+  xy: 350, 280
+  size: 50, 54
+Death
+  xy: 400, 280
+  size: 50, 54
+IdleUp
+  xy: 0, 334
+  size: 50, 54
+IdleUp
+  xy: 50, 334
+  size: 50, 54
+IdleUp
+  xy: 100, 334
+  size: 50, 54
+IdleUp
+  xy: 150, 334
+  size: 50, 54
+IdleDown
+  xy: 0, 388
+  size: 50, 54
+IdleDown
+  xy: 50, 388
+  size: 50, 54
+IdleDown
+  xy: 100, 388
+  size: 50, 54
+IdleDown
+  xy: 150, 388
+  size: 50, 54
+WalkUp
+  xy: 0, 442
+  size: 50, 54
+WalkUp
+  xy: 50, 442
+  size: 50, 54
+WalkUp
+  xy: 100, 442
+  size: 50, 54
+WalkUp
+  xy: 150, 442
+  size: 50, 54
+WalkUp
+  xy: 200, 442
+  size: 50, 54
+WalkUp
+  xy: 250, 442
+  size: 50, 54
+WalkUp
+  xy: 300, 442
+  size: 50, 54
+WalkUp
+  xy: 350, 442
+  size: 50, 54
+WalkDown
+  xy: 0, 496
+  size: 50, 54
+WalkDown
+  xy: 50, 496
+  size: 50, 54
+WalkDown
+  xy: 100, 496
+  size: 50, 54
+WalkDown
+  xy: 150, 496
+  size: 50, 54
+WalkDown
+  xy: 200, 496
+  size: 50, 54
+WalkDown
+  xy: 250, 496
+  size: 50, 54
+WalkDown
+  xy: 300, 496
+  size: 50, 54
+WalkDown
+  xy: 350, 496
+  size: 50, 54

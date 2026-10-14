@@ -1,0 +1,180 @@
+volcanic_islander_of_crosis.png
+size: 720,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 59
+  footprint: 26, 2, 29, 57
+Idle
+  xy: 80, 64
+  size: 80, 59
+Idle
+  xy: 160, 64
+  size: 80, 59
+Idle
+  xy: 240, 64
+  size: 80, 59
+Walk
+  xy: 0, 123
+  size: 80, 59
+Walk
+  xy: 80, 123
+  size: 80, 59
+Walk
+  xy: 160, 123
+  size: 80, 59
+Walk
+  xy: 240, 123
+  size: 80, 59
+Walk
+  xy: 320, 123
+  size: 80, 59
+Walk
+  xy: 400, 123
+  size: 80, 59
+Walk
+  xy: 480, 123
+  size: 80, 59
+Walk
+  xy: 560, 123
+  size: 80, 59
+Attack
+  xy: 0, 182
+  size: 80, 59
+Attack
+  xy: 80, 182
+  size: 80, 59
+Attack
+  xy: 160, 182
+  size: 80, 59
+Attack
+  xy: 240, 182
+  size: 80, 59
+Attack
+  xy: 320, 182
+  size: 80, 59
+Attack
+  xy: 400, 182
+  size: 80, 59
+Attack
+  xy: 480, 182
+  size: 80, 59
+Attack
+  xy: 560, 182
+  size: 80, 59
+Hit
+  xy: 0, 241
+  size: 80, 59
+Hit
+  xy: 80, 241
+  size: 80, 59
+Hit
+  xy: 160, 241
+  size: 80, 59
+Hit
+  xy: 240, 241
+  size: 80, 59
+Death
+  xy: 0, 300
+  size: 80, 59
+Death
+  xy: 80, 300
+  size: 80, 59
+Death
+  xy: 160, 300
+  size: 80, 59
+Death
+  xy: 240, 300
+  size: 80, 59
+Death
+  xy: 320, 300
+  size: 80, 59
+Death
+  xy: 400, 300
+  size: 80, 59
+Death
+  xy: 480, 300
+  size: 80, 59
+Death
+  xy: 560, 300
+  size: 80, 59
+Death
+  xy: 640, 300
+  size: 80, 59
+IdleUp
+  xy: 0, 359
+  size: 80, 59
+IdleUp
+  xy: 80, 359
+  size: 80, 59
+IdleUp
+  xy: 160, 359
+  size: 80, 59
+IdleUp
+  xy: 240, 359
+  size: 80, 59
+IdleDown
+  xy: 0, 418
+  size: 80, 59
+IdleDown
+  xy: 80, 418
+  size: 80, 59
+IdleDown
+  xy: 160, 418
+  size: 80, 59
+IdleDown
+  xy: 240, 418
+  size: 80, 59
+WalkUp
+  xy: 0, 477
+  size: 80, 59
+WalkUp
+  xy: 80, 477
+  size: 80, 59
+WalkUp
+  xy: 160, 477
+  size: 80, 59
+WalkUp
+  xy: 240, 477
+  size: 80, 59
+WalkUp
+  xy: 320, 477
+  size: 80, 59
+WalkUp
+  xy: 400, 477
+  size: 80, 59
+WalkUp
+  xy: 480, 477
+  size: 80, 59
+WalkUp
+  xy: 560, 477
+  size: 80, 59
+WalkDown
+  xy: 0, 536
+  size: 80, 59
+WalkDown
+  xy: 80, 536
+  size: 80, 59
+WalkDown
+  xy: 160, 536
+  size: 80, 59
+WalkDown
+  xy: 240, 536
+  size: 80, 59
+WalkDown
+  xy: 320, 536
+  size: 80, 59
+WalkDown
+  xy: 400, 536
+  size: 80, 59
+WalkDown
+  xy: 480, 536
+  size: 80, 59
+WalkDown
+  xy: 560, 536
+  size: 80, 59

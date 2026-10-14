@@ -1,0 +1,176 @@
+leinore.png
+size: 450,622
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 50, 62
+Idle
+  xy: 50, 64
+  size: 50, 62
+Idle
+  xy: 100, 64
+  size: 50, 62
+Idle
+  xy: 150, 64
+  size: 50, 62
+Walk
+  xy: 0, 126
+  size: 50, 62
+Walk
+  xy: 50, 126
+  size: 50, 62
+Walk
+  xy: 100, 126
+  size: 50, 62
+Walk
+  xy: 150, 126
+  size: 50, 62
+Walk
+  xy: 200, 126
+  size: 50, 62
+Walk
+  xy: 250, 126
+  size: 50, 62
+Walk
+  xy: 300, 126
+  size: 50, 62
+Walk
+  xy: 350, 126
+  size: 50, 62
+Attack
+  xy: 0, 188
+  size: 50, 62
+Attack
+  xy: 50, 188
+  size: 50, 62
+Attack
+  xy: 100, 188
+  size: 50, 62
+Attack
+  xy: 150, 188
+  size: 50, 62
+Attack
+  xy: 200, 188
+  size: 50, 62
+Attack
+  xy: 250, 188
+  size: 50, 62
+Attack
+  xy: 300, 188
+  size: 50, 62
+Hit
+  xy: 0, 250
+  size: 50, 62
+Hit
+  xy: 50, 250
+  size: 50, 62
+Hit
+  xy: 100, 250
+  size: 50, 62
+Hit
+  xy: 150, 250
+  size: 50, 62
+Death
+  xy: 0, 312
+  size: 50, 62
+Death
+  xy: 50, 312
+  size: 50, 62
+Death
+  xy: 100, 312
+  size: 50, 62
+Death
+  xy: 150, 312
+  size: 50, 62
+Death
+  xy: 200, 312
+  size: 50, 62
+Death
+  xy: 250, 312
+  size: 50, 62
+Death
+  xy: 300, 312
+  size: 50, 62
+Death
+  xy: 350, 312
+  size: 50, 62
+Death
+  xy: 400, 312
+  size: 50, 62
+IdleUp
+  xy: 0, 374
+  size: 50, 62
+IdleUp
+  xy: 50, 374
+  size: 50, 62
+IdleUp
+  xy: 100, 374
+  size: 50, 62
+IdleUp
+  xy: 150, 374
+  size: 50, 62
+IdleDown
+  xy: 0, 436
+  size: 50, 62
+IdleDown
+  xy: 50, 436
+  size: 50, 62
+IdleDown
+  xy: 100, 436
+  size: 50, 62
+IdleDown
+  xy: 150, 436
+  size: 50, 62
+WalkUp
+  xy: 0, 498
+  size: 50, 62
+WalkUp
+  xy: 50, 498
+  size: 50, 62
+WalkUp
+  xy: 100, 498
+  size: 50, 62
+WalkUp
+  xy: 150, 498
+  size: 50, 62
+WalkUp
+  xy: 200, 498
+  size: 50, 62
+WalkUp
+  xy: 250, 498
+  size: 50, 62
+WalkUp
+  xy: 300, 498
+  size: 50, 62
+WalkUp
+  xy: 350, 498
+  size: 50, 62
+WalkDown
+  xy: 0, 560
+  size: 50, 62
+WalkDown
+  xy: 50, 560
+  size: 50, 62
+WalkDown
+  xy: 100, 560
+  size: 50, 62
+WalkDown
+  xy: 150, 560
+  size: 50, 62
+WalkDown
+  xy: 200, 560
+  size: 50, 62
+WalkDown
+  xy: 250, 560
+  size: 50, 62
+WalkDown
+  xy: 300, 560
+  size: 50, 62
+WalkDown
+  xy: 350, 560
+  size: 50, 62

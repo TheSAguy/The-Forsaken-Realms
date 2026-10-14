@@ -1,0 +1,177 @@
+shaile.png
+size: 684,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 56
+  footprint: 18, 1, 40, 54
+Idle
+  xy: 76, 64
+  size: 76, 56
+Idle
+  xy: 152, 64
+  size: 76, 56
+Idle
+  xy: 228, 64
+  size: 76, 56
+Walk
+  xy: 0, 120
+  size: 76, 56
+Walk
+  xy: 76, 120
+  size: 76, 56
+Walk
+  xy: 152, 120
+  size: 76, 56
+Walk
+  xy: 228, 120
+  size: 76, 56
+Walk
+  xy: 304, 120
+  size: 76, 56
+Walk
+  xy: 380, 120
+  size: 76, 56
+Walk
+  xy: 456, 120
+  size: 76, 56
+Walk
+  xy: 532, 120
+  size: 76, 56
+Attack
+  xy: 0, 176
+  size: 76, 56
+Attack
+  xy: 76, 176
+  size: 76, 56
+Attack
+  xy: 152, 176
+  size: 76, 56
+Attack
+  xy: 228, 176
+  size: 76, 56
+Attack
+  xy: 304, 176
+  size: 76, 56
+Attack
+  xy: 380, 176
+  size: 76, 56
+Attack
+  xy: 456, 176
+  size: 76, 56
+Hit
+  xy: 0, 232
+  size: 76, 56
+Hit
+  xy: 76, 232
+  size: 76, 56
+Hit
+  xy: 152, 232
+  size: 76, 56
+Hit
+  xy: 228, 232
+  size: 76, 56
+Death
+  xy: 0, 288
+  size: 76, 56
+Death
+  xy: 76, 288
+  size: 76, 56
+Death
+  xy: 152, 288
+  size: 76, 56
+Death
+  xy: 228, 288
+  size: 76, 56
+Death
+  xy: 304, 288
+  size: 76, 56
+Death
+  xy: 380, 288
+  size: 76, 56
+Death
+  xy: 456, 288
+  size: 76, 56
+Death
+  xy: 532, 288
+  size: 76, 56
+Death
+  xy: 608, 288
+  size: 76, 56
+IdleUp
+  xy: 0, 344
+  size: 76, 56
+IdleUp
+  xy: 76, 344
+  size: 76, 56
+IdleUp
+  xy: 152, 344
+  size: 76, 56
+IdleUp
+  xy: 228, 344
+  size: 76, 56
+IdleDown
+  xy: 0, 400
+  size: 76, 56
+IdleDown
+  xy: 76, 400
+  size: 76, 56
+IdleDown
+  xy: 152, 400
+  size: 76, 56
+IdleDown
+  xy: 228, 400
+  size: 76, 56
+WalkUp
+  xy: 0, 456
+  size: 76, 56
+WalkUp
+  xy: 76, 456
+  size: 76, 56
+WalkUp
+  xy: 152, 456
+  size: 76, 56
+WalkUp
+  xy: 228, 456
+  size: 76, 56
+WalkUp
+  xy: 304, 456
+  size: 76, 56
+WalkUp
+  xy: 380, 456
+  size: 76, 56
+WalkUp
+  xy: 456, 456
+  size: 76, 56
+WalkUp
+  xy: 532, 456
+  size: 76, 56
+WalkDown
+  xy: 0, 512
+  size: 76, 56
+WalkDown
+  xy: 76, 512
+  size: 76, 56
+WalkDown
+  xy: 152, 512
+  size: 76, 56
+WalkDown
+  xy: 228, 512
+  size: 76, 56
+WalkDown
+  xy: 304, 512
+  size: 76, 56
+WalkDown
+  xy: 380, 512
+  size: 76, 56
+WalkDown
+  xy: 456, 512
+  size: 76, 56
+WalkDown
+  xy: 532, 512
+  size: 76, 56

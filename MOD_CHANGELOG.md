@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 598: the LPC backlog, batch 1 - 68 wizards (2026-10-14)
+
+The Procedural Pixel Creatures session. The user asked for a list of the enemies on 16 px sprites that do not fit LPC
+(61: centaurs, gorgons, naga, aven, myr, praetors, slaads, dwende, crawlers... - plus 32 borderline and 17 angels kept
+for the Pixelate Angel Warrior), then said: "Start the LPC batches with the 435 clear fits; leave the borderline ones
+and the angels out for now." Rounds 598-602 are the five batches; this is the first, built by the generator repo's
+`lpc_selections/make_598.py`.
+
+- **The enemies**: the 68 on six stock `humanoid/human/wizard` sprites - red_wiz2 (17), blue_wiz2 (12), black_wizard (11),
+  black_wiz3 (11), green_wiz2 (10) and black_wiz2 (7).
+- **How they were dressed**:
+  - The named legends follow their deck's commander card. Yawgmoth in black robes and a red cape, Queen Marchesa's
+    silver tiara, Hazezon's white beard and scimitar, Gisa with her shovel, Ayara as a lavender elf, Dina a green dryad,
+    Shaile with white wings (LPC has no owl head).
+  - Santa (his deck's commander is Feldon) wears LPC's Santa coat and a red Christmas cap.
+  - Jorn, Alrund and Oviya, whose cards are not in Forge's picture cache, follow their cards as known.
+  - The generic wizards keep their sprite's colors and rank: an Apprentice hooded, an Adept in a wizard hat, a Master
+    bearded and caped.
+  - The World Champions are plain mages in their decks' colors; the dual-land legends wear their two colors.
+  - The six bosses (Liliana, Sorceress Queen Kaja, The Dragon Lord, Tibalt's Torturer, Uncle Istvan, Chainer Dementia
+    Master) keep their drawn size.
+  - Alrund wears a tiara, not LPC's tall crown, which `enemy_scale.py` would count as body height.
+- **Files**:
+  - 68 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 68 sprite paths and scales - 0.27-0.32 for the ranked 62 (a tall wizard hat counts as height), the
+    bosses rescaled to keep their drawn size.
+  - `sprite_footprints.py --write`: a footprint on 39 of them; the other 29 are casters whose frame already fits.
+  - `CREDITS_LPC.md` regenerated: 428 characters, additions only (the same command reproduces round 597's file
+    exactly).
+  - `CREDITS.md`'s LPC bullet: 400 enemies, round 598 and the 68 names; no new authors.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 68 enemies, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections (enum 18, starter-bucket 30, unknown-key 1).
+  - The sprite audit flags none of them.
+  - Every atlas has a whole Avatar, viewed on a sheet; `avatar_crop_qa.py` flags none of them.
+  - Not seen in play.
+
 ## Round 597: every player race that is people gets an LPC hero sheet (2026-10-14)
 
 The Procedural Pixel Creatures side session "LPC hero sheets for the other player races". The user's standing wish after

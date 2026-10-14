@@ -80,6 +80,12 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 598): **LOCAL + UNRELEASED (art + data)** - LPC backlog batch 1 of 5 (rounds 598-602, the
+435 clear fits; the 61 non-fits, 32 borderline and 17 angels left out): the 68 enemies on six stock
+`humanoid/human/wizard` sprites are LPC characters (generator `lpc_selections/make_598.py`), named ones dressed from
+their commander cards. enemies.json 68 paths + scales (0.27-0.32; 6 bosses keep their size), 39 footprints,
+CREDITS_LPC.md 428 characters, CREDITS.md's LPC bullet. #31 verifies and packages. Not seen in play.
+
 ## STATE 2026-10-14 (round 597): **LOCAL + UNRELEASED (art + data)** - every other player race that is people wears an
 LPC hero sheet in the round-591 format: a woman and a man each for Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran,
 Undead, Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire (28 new `sprites/heroes/lpc_<race>_<f|m>` sheets; the

@@ -1,0 +1,180 @@
+chandra_s_immolator.png
+size: 684,613
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 61
+  footprint: 27, 1, 23, 59
+Idle
+  xy: 76, 64
+  size: 76, 61
+Idle
+  xy: 152, 64
+  size: 76, 61
+Idle
+  xy: 228, 64
+  size: 76, 61
+Walk
+  xy: 0, 125
+  size: 76, 61
+Walk
+  xy: 76, 125
+  size: 76, 61
+Walk
+  xy: 152, 125
+  size: 76, 61
+Walk
+  xy: 228, 125
+  size: 76, 61
+Walk
+  xy: 304, 125
+  size: 76, 61
+Walk
+  xy: 380, 125
+  size: 76, 61
+Walk
+  xy: 456, 125
+  size: 76, 61
+Walk
+  xy: 532, 125
+  size: 76, 61
+Attack
+  xy: 0, 186
+  size: 76, 61
+Attack
+  xy: 76, 186
+  size: 76, 61
+Attack
+  xy: 152, 186
+  size: 76, 61
+Attack
+  xy: 228, 186
+  size: 76, 61
+Attack
+  xy: 304, 186
+  size: 76, 61
+Attack
+  xy: 380, 186
+  size: 76, 61
+Attack
+  xy: 456, 186
+  size: 76, 61
+Attack
+  xy: 532, 186
+  size: 76, 61
+Hit
+  xy: 0, 247
+  size: 76, 61
+Hit
+  xy: 76, 247
+  size: 76, 61
+Hit
+  xy: 152, 247
+  size: 76, 61
+Hit
+  xy: 228, 247
+  size: 76, 61
+Death
+  xy: 0, 308
+  size: 76, 61
+Death
+  xy: 76, 308
+  size: 76, 61
+Death
+  xy: 152, 308
+  size: 76, 61
+Death
+  xy: 228, 308
+  size: 76, 61
+Death
+  xy: 304, 308
+  size: 76, 61
+Death
+  xy: 380, 308
+  size: 76, 61
+Death
+  xy: 456, 308
+  size: 76, 61
+Death
+  xy: 532, 308
+  size: 76, 61
+Death
+  xy: 608, 308
+  size: 76, 61
+IdleUp
+  xy: 0, 369
+  size: 76, 61
+IdleUp
+  xy: 76, 369
+  size: 76, 61
+IdleUp
+  xy: 152, 369
+  size: 76, 61
+IdleUp
+  xy: 228, 369
+  size: 76, 61
+IdleDown
+  xy: 0, 430
+  size: 76, 61
+IdleDown
+  xy: 76, 430
+  size: 76, 61
+IdleDown
+  xy: 152, 430
+  size: 76, 61
+IdleDown
+  xy: 228, 430
+  size: 76, 61
+WalkUp
+  xy: 0, 491
+  size: 76, 61
+WalkUp
+  xy: 76, 491
+  size: 76, 61
+WalkUp
+  xy: 152, 491
+  size: 76, 61
+WalkUp
+  xy: 228, 491
+  size: 76, 61
+WalkUp
+  xy: 304, 491
+  size: 76, 61
+WalkUp
+  xy: 380, 491
+  size: 76, 61
+WalkUp
+  xy: 456, 491
+  size: 76, 61
+WalkUp
+  xy: 532, 491
+  size: 76, 61
+WalkDown
+  xy: 0, 552
+  size: 76, 61
+WalkDown
+  xy: 76, 552
+  size: 76, 61
+WalkDown
+  xy: 152, 552
+  size: 76, 61
+WalkDown
+  xy: 228, 552
+  size: 76, 61
+WalkDown
+  xy: 304, 552
+  size: 76, 61
+WalkDown
+  xy: 380, 552
+  size: 76, 61
+WalkDown
+  xy: 456, 552
+  size: 76, 61
+WalkDown
+  xy: 532, 552
+  size: 76, 61

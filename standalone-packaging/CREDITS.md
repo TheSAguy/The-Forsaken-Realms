@@ -98,7 +98,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (332 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534 and 590 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (400 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590 and 598 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -133,7 +133,17 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Matt Linde '99, Nicolas Labarre '00, Sim Han How '02, Svend Geertsen '97, Aminatou, Huatli, Jenson, Jolrael, the
   Master Green Wizard, Rashmi, Shanna, Anikthea, Atla Palani, Birgi, the Loamspeaker, Narci, Rielle, Rona, Saheeli,
   Sisay, Subira, Zimone, Brian Selden '98, Jan Tomcani '01, Janosch Kühn '00, Olle Rade '96, Izoni, Linden, Maralen,
-  Miara and Numa, Saryth, Saskia, the Shaman, Wayta; and round 597's 28 player heroes, a woman and a man of every race
+  Miara and Numa, Saryth, Saskia, the Shaman, Wayta; round 598's sixty-eight wizards - Adept Red Wizard, Chandra's
+  Acolyte, Chandra's Immolator, Chandra's Pyromancer, Chandra's Scorcher, Santa, Santa (Elite), Hazezon, Rasputin,
+  Paul McCabe '97, Mark Le Pine '99, Cyrille deFoucaud '94, Henry Stern '95, Legend of the Badlands, Plateau Dweller
+  of Rith, War Mage of Shandalar, The Dragon Lord, Adept Blue Wizard, Illusionist, Jorn, Heidar, Brenard, Alrund,
+  Gadwick, Janosch Kuhn '97, Alex Borteh '01, Legend of the Tundra, Volcanic Islander of Crosis, Thought Invoker of
+  Shandalar, Apprentice Black Wizard, Liliana's Herbalist, Yawgmoth, Endrek, Shaile, Peer Kroger '03, Alexander Blumke
+  '95, Henry Stern '96, Tibalt's Torturer, Uncle Istvan, Chainer Dementia Master, Bog Witch, Liliana, Master Black
+  Wizard, Queen Marchesa, Marina, Gisa, Ayara, Irini, Leinore, Cormela, Sorceress Queen Kaja, Adept Green Wizard,
+  Karametra, Tocasia, Oviya, Jinnie Fay, Bess, Dina, Legend of the Taiga, Tropical Islander of Treva, Summoner of
+  Shandalar, Adept Black Wizard, Curselord, Necromancer, Cloaked Old Man, Mairsil, Legend of the Underground Sea,
+  Bayou Dweller of Darigaaz; and round 597's 28 player heroes, a woman and a man of every race
   the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,
   Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire) -
   composed

@@ -1,0 +1,176 @@
+santa.png
+size: 450,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 50, 60
+Idle
+  xy: 50, 64
+  size: 50, 60
+Idle
+  xy: 100, 64
+  size: 50, 60
+Idle
+  xy: 150, 64
+  size: 50, 60
+Walk
+  xy: 0, 124
+  size: 50, 60
+Walk
+  xy: 50, 124
+  size: 50, 60
+Walk
+  xy: 100, 124
+  size: 50, 60
+Walk
+  xy: 150, 124
+  size: 50, 60
+Walk
+  xy: 200, 124
+  size: 50, 60
+Walk
+  xy: 250, 124
+  size: 50, 60
+Walk
+  xy: 300, 124
+  size: 50, 60
+Walk
+  xy: 350, 124
+  size: 50, 60
+Attack
+  xy: 0, 184
+  size: 50, 60
+Attack
+  xy: 50, 184
+  size: 50, 60
+Attack
+  xy: 100, 184
+  size: 50, 60
+Attack
+  xy: 150, 184
+  size: 50, 60
+Attack
+  xy: 200, 184
+  size: 50, 60
+Attack
+  xy: 250, 184
+  size: 50, 60
+Attack
+  xy: 300, 184
+  size: 50, 60
+Hit
+  xy: 0, 244
+  size: 50, 60
+Hit
+  xy: 50, 244
+  size: 50, 60
+Hit
+  xy: 100, 244
+  size: 50, 60
+Hit
+  xy: 150, 244
+  size: 50, 60
+Death
+  xy: 0, 304
+  size: 50, 60
+Death
+  xy: 50, 304
+  size: 50, 60
+Death
+  xy: 100, 304
+  size: 50, 60
+Death
+  xy: 150, 304
+  size: 50, 60
+Death
+  xy: 200, 304
+  size: 50, 60
+Death
+  xy: 250, 304
+  size: 50, 60
+Death
+  xy: 300, 304
+  size: 50, 60
+Death
+  xy: 350, 304
+  size: 50, 60
+Death
+  xy: 400, 304
+  size: 50, 60
+IdleUp
+  xy: 0, 364
+  size: 50, 60
+IdleUp
+  xy: 50, 364
+  size: 50, 60
+IdleUp
+  xy: 100, 364
+  size: 50, 60
+IdleUp
+  xy: 150, 364
+  size: 50, 60
+IdleDown
+  xy: 0, 424
+  size: 50, 60
+IdleDown
+  xy: 50, 424
+  size: 50, 60
+IdleDown
+  xy: 100, 424
+  size: 50, 60
+IdleDown
+  xy: 150, 424
+  size: 50, 60
+WalkUp
+  xy: 0, 484
+  size: 50, 60
+WalkUp
+  xy: 50, 484
+  size: 50, 60
+WalkUp
+  xy: 100, 484
+  size: 50, 60
+WalkUp
+  xy: 150, 484
+  size: 50, 60
+WalkUp
+  xy: 200, 484
+  size: 50, 60
+WalkUp
+  xy: 250, 484
+  size: 50, 60
+WalkUp
+  xy: 300, 484
+  size: 50, 60
+WalkUp
+  xy: 350, 484
+  size: 50, 60
+WalkDown
+  xy: 0, 544
+  size: 50, 60
+WalkDown
+  xy: 50, 544
+  size: 50, 60
+WalkDown
+  xy: 100, 544
+  size: 50, 60
+WalkDown
+  xy: 150, 544
+  size: 50, 60
+WalkDown
+  xy: 200, 544
+  size: 50, 60
+WalkDown
+  xy: 250, 544
+  size: 50, 60
+WalkDown
+  xy: 300, 544
+  size: 50, 60
+WalkDown
+  xy: 350, 544
+  size: 50, 60

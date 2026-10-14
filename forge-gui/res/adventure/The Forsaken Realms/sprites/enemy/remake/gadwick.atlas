@@ -1,0 +1,180 @@
+gadwick.png
+size: 612,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 68, 55
+  footprint: 22, 1, 25, 54
+Idle
+  xy: 68, 64
+  size: 68, 55
+Idle
+  xy: 136, 64
+  size: 68, 55
+Idle
+  xy: 204, 64
+  size: 68, 55
+Walk
+  xy: 0, 119
+  size: 68, 55
+Walk
+  xy: 68, 119
+  size: 68, 55
+Walk
+  xy: 136, 119
+  size: 68, 55
+Walk
+  xy: 204, 119
+  size: 68, 55
+Walk
+  xy: 272, 119
+  size: 68, 55
+Walk
+  xy: 340, 119
+  size: 68, 55
+Walk
+  xy: 408, 119
+  size: 68, 55
+Walk
+  xy: 476, 119
+  size: 68, 55
+Attack
+  xy: 0, 174
+  size: 68, 55
+Attack
+  xy: 68, 174
+  size: 68, 55
+Attack
+  xy: 136, 174
+  size: 68, 55
+Attack
+  xy: 204, 174
+  size: 68, 55
+Attack
+  xy: 272, 174
+  size: 68, 55
+Attack
+  xy: 340, 174
+  size: 68, 55
+Attack
+  xy: 408, 174
+  size: 68, 55
+Attack
+  xy: 476, 174
+  size: 68, 55
+Hit
+  xy: 0, 229
+  size: 68, 55
+Hit
+  xy: 68, 229
+  size: 68, 55
+Hit
+  xy: 136, 229
+  size: 68, 55
+Hit
+  xy: 204, 229
+  size: 68, 55
+Death
+  xy: 0, 284
+  size: 68, 55
+Death
+  xy: 68, 284
+  size: 68, 55
+Death
+  xy: 136, 284
+  size: 68, 55
+Death
+  xy: 204, 284
+  size: 68, 55
+Death
+  xy: 272, 284
+  size: 68, 55
+Death
+  xy: 340, 284
+  size: 68, 55
+Death
+  xy: 408, 284
+  size: 68, 55
+Death
+  xy: 476, 284
+  size: 68, 55
+Death
+  xy: 544, 284
+  size: 68, 55
+IdleUp
+  xy: 0, 339
+  size: 68, 55
+IdleUp
+  xy: 68, 339
+  size: 68, 55
+IdleUp
+  xy: 136, 339
+  size: 68, 55
+IdleUp
+  xy: 204, 339
+  size: 68, 55
+IdleDown
+  xy: 0, 394
+  size: 68, 55
+IdleDown
+  xy: 68, 394
+  size: 68, 55
+IdleDown
+  xy: 136, 394
+  size: 68, 55
+IdleDown
+  xy: 204, 394
+  size: 68, 55
+WalkUp
+  xy: 0, 449
+  size: 68, 55
+WalkUp
+  xy: 68, 449
+  size: 68, 55
+WalkUp
+  xy: 136, 449
+  size: 68, 55
+WalkUp
+  xy: 204, 449
+  size: 68, 55
+WalkUp
+  xy: 272, 449
+  size: 68, 55
+WalkUp
+  xy: 340, 449
+  size: 68, 55
+WalkUp
+  xy: 408, 449
+  size: 68, 55
+WalkUp
+  xy: 476, 449
+  size: 68, 55
+WalkDown
+  xy: 0, 504
+  size: 68, 55
+WalkDown
+  xy: 68, 504
+  size: 68, 55
+WalkDown
+  xy: 136, 504
+  size: 68, 55
+WalkDown
+  xy: 204, 504
+  size: 68, 55
+WalkDown
+  xy: 272, 504
+  size: 68, 55
+WalkDown
+  xy: 340, 504
+  size: 68, 55
+WalkDown
+  xy: 408, 504
+  size: 68, 55
+WalkDown
+  xy: 476, 504
+  size: 68, 55

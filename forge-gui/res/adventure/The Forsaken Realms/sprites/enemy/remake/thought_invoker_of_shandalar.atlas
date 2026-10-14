@@ -1,0 +1,176 @@
+thought_invoker_of_shandalar.png
+size: 396,640
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 44, 64
+Idle
+  xy: 44, 64
+  size: 44, 64
+Idle
+  xy: 88, 64
+  size: 44, 64
+Idle
+  xy: 132, 64
+  size: 44, 64
+Walk
+  xy: 0, 128
+  size: 44, 64
+Walk
+  xy: 44, 128
+  size: 44, 64
+Walk
+  xy: 88, 128
+  size: 44, 64
+Walk
+  xy: 132, 128
+  size: 44, 64
+Walk
+  xy: 176, 128
+  size: 44, 64
+Walk
+  xy: 220, 128
+  size: 44, 64
+Walk
+  xy: 264, 128
+  size: 44, 64
+Walk
+  xy: 308, 128
+  size: 44, 64
+Attack
+  xy: 0, 192
+  size: 44, 64
+Attack
+  xy: 44, 192
+  size: 44, 64
+Attack
+  xy: 88, 192
+  size: 44, 64
+Attack
+  xy: 132, 192
+  size: 44, 64
+Attack
+  xy: 176, 192
+  size: 44, 64
+Attack
+  xy: 220, 192
+  size: 44, 64
+Attack
+  xy: 264, 192
+  size: 44, 64
+Hit
+  xy: 0, 256
+  size: 44, 64
+Hit
+  xy: 44, 256
+  size: 44, 64
+Hit
+  xy: 88, 256
+  size: 44, 64
+Hit
+  xy: 132, 256
+  size: 44, 64
+Death
+  xy: 0, 320
+  size: 44, 64
+Death
+  xy: 44, 320
+  size: 44, 64
+Death
+  xy: 88, 320
+  size: 44, 64
+Death
+  xy: 132, 320
+  size: 44, 64
+Death
+  xy: 176, 320
+  size: 44, 64
+Death
+  xy: 220, 320
+  size: 44, 64
+Death
+  xy: 264, 320
+  size: 44, 64
+Death
+  xy: 308, 320
+  size: 44, 64
+Death
+  xy: 352, 320
+  size: 44, 64
+IdleUp
+  xy: 0, 384
+  size: 44, 64
+IdleUp
+  xy: 44, 384
+  size: 44, 64
+IdleUp
+  xy: 88, 384
+  size: 44, 64
+IdleUp
+  xy: 132, 384
+  size: 44, 64
+IdleDown
+  xy: 0, 448
+  size: 44, 64
+IdleDown
+  xy: 44, 448
+  size: 44, 64
+IdleDown
+  xy: 88, 448
+  size: 44, 64
+IdleDown
+  xy: 132, 448
+  size: 44, 64
+WalkUp
+  xy: 0, 512
+  size: 44, 64
+WalkUp
+  xy: 44, 512
+  size: 44, 64
+WalkUp
+  xy: 88, 512
+  size: 44, 64
+WalkUp
+  xy: 132, 512
+  size: 44, 64
+WalkUp
+  xy: 176, 512
+  size: 44, 64
+WalkUp
+  xy: 220, 512
+  size: 44, 64
+WalkUp
+  xy: 264, 512
+  size: 44, 64
+WalkUp
+  xy: 308, 512
+  size: 44, 64
+WalkDown
+  xy: 0, 576
+  size: 44, 64
+WalkDown
+  xy: 44, 576
+  size: 44, 64
+WalkDown
+  xy: 88, 576
+  size: 44, 64
+WalkDown
+  xy: 132, 576
+  size: 44, 64
+WalkDown
+  xy: 176, 576
+  size: 44, 64
+WalkDown
+  xy: 220, 576
+  size: 44, 64
+WalkDown
+  xy: 264, 576
+  size: 44, 64
+WalkDown
+  xy: 308, 576
+  size: 44, 64

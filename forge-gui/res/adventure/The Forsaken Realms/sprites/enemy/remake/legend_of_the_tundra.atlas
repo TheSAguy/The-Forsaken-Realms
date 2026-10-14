@@ -1,0 +1,180 @@
+legend_of_the_tundra.png
+size: 594,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 66, 56
+  footprint: 20, 1, 26, 54
+Idle
+  xy: 66, 64
+  size: 66, 56
+Idle
+  xy: 132, 64
+  size: 66, 56
+Idle
+  xy: 198, 64
+  size: 66, 56
+Walk
+  xy: 0, 120
+  size: 66, 56
+Walk
+  xy: 66, 120
+  size: 66, 56
+Walk
+  xy: 132, 120
+  size: 66, 56
+Walk
+  xy: 198, 120
+  size: 66, 56
+Walk
+  xy: 264, 120
+  size: 66, 56
+Walk
+  xy: 330, 120
+  size: 66, 56
+Walk
+  xy: 396, 120
+  size: 66, 56
+Walk
+  xy: 462, 120
+  size: 66, 56
+Attack
+  xy: 0, 176
+  size: 66, 56
+Attack
+  xy: 66, 176
+  size: 66, 56
+Attack
+  xy: 132, 176
+  size: 66, 56
+Attack
+  xy: 198, 176
+  size: 66, 56
+Attack
+  xy: 264, 176
+  size: 66, 56
+Attack
+  xy: 330, 176
+  size: 66, 56
+Attack
+  xy: 396, 176
+  size: 66, 56
+Attack
+  xy: 462, 176
+  size: 66, 56
+Hit
+  xy: 0, 232
+  size: 66, 56
+Hit
+  xy: 66, 232
+  size: 66, 56
+Hit
+  xy: 132, 232
+  size: 66, 56
+Hit
+  xy: 198, 232
+  size: 66, 56
+Death
+  xy: 0, 288
+  size: 66, 56
+Death
+  xy: 66, 288
+  size: 66, 56
+Death
+  xy: 132, 288
+  size: 66, 56
+Death
+  xy: 198, 288
+  size: 66, 56
+Death
+  xy: 264, 288
+  size: 66, 56
+Death
+  xy: 330, 288
+  size: 66, 56
+Death
+  xy: 396, 288
+  size: 66, 56
+Death
+  xy: 462, 288
+  size: 66, 56
+Death
+  xy: 528, 288
+  size: 66, 56
+IdleUp
+  xy: 0, 344
+  size: 66, 56
+IdleUp
+  xy: 66, 344
+  size: 66, 56
+IdleUp
+  xy: 132, 344
+  size: 66, 56
+IdleUp
+  xy: 198, 344
+  size: 66, 56
+IdleDown
+  xy: 0, 400
+  size: 66, 56
+IdleDown
+  xy: 66, 400
+  size: 66, 56
+IdleDown
+  xy: 132, 400
+  size: 66, 56
+IdleDown
+  xy: 198, 400
+  size: 66, 56
+WalkUp
+  xy: 0, 456
+  size: 66, 56
+WalkUp
+  xy: 66, 456
+  size: 66, 56
+WalkUp
+  xy: 132, 456
+  size: 66, 56
+WalkUp
+  xy: 198, 456
+  size: 66, 56
+WalkUp
+  xy: 264, 456
+  size: 66, 56
+WalkUp
+  xy: 330, 456
+  size: 66, 56
+WalkUp
+  xy: 396, 456
+  size: 66, 56
+WalkUp
+  xy: 462, 456
+  size: 66, 56
+WalkDown
+  xy: 0, 512
+  size: 66, 56
+WalkDown
+  xy: 66, 512
+  size: 66, 56
+WalkDown
+  xy: 132, 512
+  size: 66, 56
+WalkDown
+  xy: 198, 512
+  size: 66, 56
+WalkDown
+  xy: 264, 512
+  size: 66, 56
+WalkDown
+  xy: 330, 512
+  size: 66, 56
+WalkDown
+  xy: 396, 512
+  size: 66, 56
+WalkDown
+  xy: 462, 512
+  size: 66, 56
