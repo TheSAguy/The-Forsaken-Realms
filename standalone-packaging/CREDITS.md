@@ -133,7 +133,9 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Matt Linde '99, Nicolas Labarre '00, Sim Han How '02, Svend Geertsen '97, Aminatou, Huatli, Jenson, Jolrael, the
   Master Green Wizard, Rashmi, Shanna, Anikthea, Atla Palani, Birgi, the Loamspeaker, Narci, Rielle, Rona, Saheeli,
   Sisay, Subira, Zimone, Brian Selden '98, Jan Tomcani '01, Janosch Kühn '00, Olle Rade '96, Izoni, Linden, Maralen,
-  Miara and Numa, Saryth, Saskia, the Shaman, Wayta) -
+  Miara and Numa, Saryth, Saskia, the Shaman, Wayta; and round 597's 28 player heroes, a woman and a man of every race
+  the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,
+  Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire) -
   composed
   from the parts of the Universal LPC Spritesheet Character Generator (Liberated Pixel Cup contributors), each part
   under its own license (OGA-BY 3.0/4.0, CC-BY 3.0/4.0, CC-BY-SA 3.0, CC0), the composed sprites CC-BY or CC-BY-SA; the

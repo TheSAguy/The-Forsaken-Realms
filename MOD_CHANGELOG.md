@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 597: every player race that is people gets an LPC hero sheet (2026-10-14)
+
+The Procedural Pixel Creatures side session "LPC hero sheets for the other player races". The user's standing wish after
+round 591 (the Phyrexian): every other player race in the same hero format, from LPC; then "Let's do ALL Player Race
+Characters". The user approved the looks from a map-size preview beside the current 16 px heroes ("The heroes look good
+- install them as round 597").
+
+- **28 hero sheets**, `sprites/heroes/lpc_<race>_f` and `_m`, for Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran,
+  Undead, Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire:
+  - Built by the generator's new `tools/forge_remake/lpc_to_player.py` from LPC selections
+    (`lpc_selections/make_players.py`). Each one is dressed from its race's stock hero and portrait cards: the Human's
+    blue cloak, the Elf's greens, the Dwarf woman's cyan crystal and red bun and the man's white-horned helm, the
+    Merfolk's lilac and gold trident, the Vampire's white hair and dark coats.
+  - Each pair carries two different weapons (an archer and a spearman, a sword-and-shield knight and a swordswoman...).
+    The Werewolves fight with their claws; the Leonin man's mane is hair and a beard round the face (LPC's wolf head
+    read as a fox).
+  - Rows Idle, Walk, Attack, Hit and Death, each Right, Left, Up and Down. Left is LPC's own west row (a shield stays on
+    its arm), not the game's mirror of Right; the diagonals draw the side view.
+  - Walk is every other frame of LPC's eight, the stock heroes' pace (eight frames at 0.2 s skated at the player's 40 px
+    a second). The death is LPC's fall facing the viewer, in every direction (LPC draws it only that way).
+  - A ground shadow, and a round-578 footprint on IdleRight made symmetric about the cell centre, so all four
+    directions stand on the same spot.
+- **heroes.json**: only those 14 lines change - the two paths and a `"scale"`: 0.383 (an LPC body 18 px tall, like the
+  Phyrexian), 0.3404 for the Dwarves and Goblins (16 px). No race added, removed or moved (saves store the race index).
+  The stock `common/sprites/heroes` files and the plane's older angel/goblin/merfolk/vampire sheets are untouched. The
+  five dragons (Procedural Pixel Creatures #4 is making them) and the Phyrexian keep theirs.
+- **Credits**: `CREDITS_LPC.md` regenerated - 360 characters, the 28 player heroes added (no new authors). Linden and
+  Savra now credit the tiara they have worn since round 590's fix, not the crown. CREDITS.md's LPC bullet names the
+  player heroes.
+- **Tested** in the agent game (new games as a male Devil, a female Dwarf and a female Angel): the camp, the portal out,
+  the overworld, Orazca in and out, walking every way. `[TFR-Hero] sprites/heroes/lpc_devil_m.atlas drawn at scale
+  0.383 on a 16.0 px box` (the Dwarf's 0.3404), no footprint warnings, no exceptions. Not seen: a roaming guard on the
+  new sheets, the other eleven races in play.
+- Generator: `lpc_to_player.py`, `make_players.py`, `player_contact.py` (review sheets), `install_players.py`
+  (copies the sheets and sets heroes.json's paths + scale), lpc_batch.py and lpc_credits_md.py take player entries
+  (commit 5d041d6).
+
 ## Round 596: level rewards, four new perks, Power for guard wins (2026-10-14)
 
 The user, on the leveling perks: "Shards should be same as Wood/Stone at 15x. Let's up gold to 85x. Warmonger: Opposite

@@ -1,0 +1,330 @@
+lpc_vampire_f.png
+size: 594,1100
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+IdleRight
+  xy: 0, 0
+  size: 66, 55
+  footprint: 13, 2, 40, 53
+IdleRight
+  xy: 66, 0
+  size: 66, 55
+IdleRight
+  xy: 132, 0
+  size: 66, 55
+IdleRight
+  xy: 198, 0
+  size: 66, 55
+IdleLeft
+  xy: 0, 55
+  size: 66, 55
+IdleLeft
+  xy: 66, 55
+  size: 66, 55
+IdleLeft
+  xy: 132, 55
+  size: 66, 55
+IdleLeft
+  xy: 198, 55
+  size: 66, 55
+IdleUp
+  xy: 0, 110
+  size: 66, 55
+IdleUp
+  xy: 66, 110
+  size: 66, 55
+IdleUp
+  xy: 132, 110
+  size: 66, 55
+IdleUp
+  xy: 198, 110
+  size: 66, 55
+IdleDown
+  xy: 0, 165
+  size: 66, 55
+IdleDown
+  xy: 66, 165
+  size: 66, 55
+IdleDown
+  xy: 132, 165
+  size: 66, 55
+IdleDown
+  xy: 198, 165
+  size: 66, 55
+WalkRight
+  xy: 0, 220
+  size: 66, 55
+WalkRight
+  xy: 66, 220
+  size: 66, 55
+WalkRight
+  xy: 132, 220
+  size: 66, 55
+WalkRight
+  xy: 198, 220
+  size: 66, 55
+WalkLeft
+  xy: 0, 275
+  size: 66, 55
+WalkLeft
+  xy: 66, 275
+  size: 66, 55
+WalkLeft
+  xy: 132, 275
+  size: 66, 55
+WalkLeft
+  xy: 198, 275
+  size: 66, 55
+WalkUp
+  xy: 0, 330
+  size: 66, 55
+WalkUp
+  xy: 66, 330
+  size: 66, 55
+WalkUp
+  xy: 132, 330
+  size: 66, 55
+WalkUp
+  xy: 198, 330
+  size: 66, 55
+WalkDown
+  xy: 0, 385
+  size: 66, 55
+WalkDown
+  xy: 66, 385
+  size: 66, 55
+WalkDown
+  xy: 132, 385
+  size: 66, 55
+WalkDown
+  xy: 198, 385
+  size: 66, 55
+AttackRight
+  xy: 0, 440
+  size: 66, 55
+AttackRight
+  xy: 66, 440
+  size: 66, 55
+AttackRight
+  xy: 132, 440
+  size: 66, 55
+AttackRight
+  xy: 198, 440
+  size: 66, 55
+AttackRight
+  xy: 264, 440
+  size: 66, 55
+AttackRight
+  xy: 330, 440
+  size: 66, 55
+AttackLeft
+  xy: 0, 495
+  size: 66, 55
+AttackLeft
+  xy: 66, 495
+  size: 66, 55
+AttackLeft
+  xy: 132, 495
+  size: 66, 55
+AttackLeft
+  xy: 198, 495
+  size: 66, 55
+AttackLeft
+  xy: 264, 495
+  size: 66, 55
+AttackLeft
+  xy: 330, 495
+  size: 66, 55
+AttackUp
+  xy: 0, 550
+  size: 66, 55
+AttackUp
+  xy: 66, 550
+  size: 66, 55
+AttackUp
+  xy: 132, 550
+  size: 66, 55
+AttackUp
+  xy: 198, 550
+  size: 66, 55
+AttackUp
+  xy: 264, 550
+  size: 66, 55
+AttackUp
+  xy: 330, 550
+  size: 66, 55
+AttackDown
+  xy: 0, 605
+  size: 66, 55
+AttackDown
+  xy: 66, 605
+  size: 66, 55
+AttackDown
+  xy: 132, 605
+  size: 66, 55
+AttackDown
+  xy: 198, 605
+  size: 66, 55
+AttackDown
+  xy: 264, 605
+  size: 66, 55
+AttackDown
+  xy: 330, 605
+  size: 66, 55
+HitRight
+  xy: 0, 660
+  size: 66, 55
+HitRight
+  xy: 66, 660
+  size: 66, 55
+HitRight
+  xy: 132, 660
+  size: 66, 55
+HitRight
+  xy: 198, 660
+  size: 66, 55
+HitLeft
+  xy: 0, 715
+  size: 66, 55
+HitLeft
+  xy: 66, 715
+  size: 66, 55
+HitLeft
+  xy: 132, 715
+  size: 66, 55
+HitLeft
+  xy: 198, 715
+  size: 66, 55
+HitUp
+  xy: 0, 770
+  size: 66, 55
+HitUp
+  xy: 66, 770
+  size: 66, 55
+HitUp
+  xy: 132, 770
+  size: 66, 55
+HitUp
+  xy: 198, 770
+  size: 66, 55
+HitDown
+  xy: 0, 825
+  size: 66, 55
+HitDown
+  xy: 66, 825
+  size: 66, 55
+HitDown
+  xy: 132, 825
+  size: 66, 55
+HitDown
+  xy: 198, 825
+  size: 66, 55
+DeathRight
+  xy: 0, 880
+  size: 66, 55
+DeathRight
+  xy: 66, 880
+  size: 66, 55
+DeathRight
+  xy: 132, 880
+  size: 66, 55
+DeathRight
+  xy: 198, 880
+  size: 66, 55
+DeathRight
+  xy: 264, 880
+  size: 66, 55
+DeathRight
+  xy: 330, 880
+  size: 66, 55
+DeathRight
+  xy: 396, 880
+  size: 66, 55
+DeathRight
+  xy: 462, 880
+  size: 66, 55
+DeathRight
+  xy: 528, 880
+  size: 66, 55
+DeathLeft
+  xy: 0, 935
+  size: 66, 55
+DeathLeft
+  xy: 66, 935
+  size: 66, 55
+DeathLeft
+  xy: 132, 935
+  size: 66, 55
+DeathLeft
+  xy: 198, 935
+  size: 66, 55
+DeathLeft
+  xy: 264, 935
+  size: 66, 55
+DeathLeft
+  xy: 330, 935
+  size: 66, 55
+DeathLeft
+  xy: 396, 935
+  size: 66, 55
+DeathLeft
+  xy: 462, 935
+  size: 66, 55
+DeathLeft
+  xy: 528, 935
+  size: 66, 55
+DeathUp
+  xy: 0, 990
+  size: 66, 55
+DeathUp
+  xy: 66, 990
+  size: 66, 55
+DeathUp
+  xy: 132, 990
+  size: 66, 55
+DeathUp
+  xy: 198, 990
+  size: 66, 55
+DeathUp
+  xy: 264, 990
+  size: 66, 55
+DeathUp
+  xy: 330, 990
+  size: 66, 55
+DeathUp
+  xy: 396, 990
+  size: 66, 55
+DeathUp
+  xy: 462, 990
+  size: 66, 55
+DeathUp
+  xy: 528, 990
+  size: 66, 55
+DeathDown
+  xy: 0, 1045
+  size: 66, 55
+DeathDown
+  xy: 66, 1045
+  size: 66, 55
+DeathDown
+  xy: 132, 1045
+  size: 66, 55
+DeathDown
+  xy: 198, 1045
+  size: 66, 55
+DeathDown
+  xy: 264, 1045
+  size: 66, 55
+DeathDown
+  xy: 330, 1045
+  size: 66, 55
+DeathDown
+  xy: 396, 1045
+  size: 66, 55
+DeathDown
+  xy: 462, 1045
+  size: 66, 55
+DeathDown
+  xy: 528, 1045
+  size: 66, 55

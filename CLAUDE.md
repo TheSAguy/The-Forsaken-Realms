@@ -80,6 +80,15 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 597): **LOCAL + UNRELEASED (art + data)** - every other player race that is people wears an
+LPC hero sheet in the round-591 format: a woman and a man each for Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran,
+Undead, Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire (28 new `sprites/heroes/lpc_<race>_<f|m>` sheets; the
+stock `common/` sheets and the plane's old angel/goblin/merfolk/vampire sheets stay, unused). heroes.json: those 14
+lines only - the two paths + `"scale"` 0.383 (18 px tall), Dwarf and Goblin 0.3404 (16 px). The five dragons (PPC #4,
+next) and the Phyrexian (591) are untouched. CREDITS_LPC.md 360 characters (+28 player heroes; Linden/Savra's tiara
+credit corrected), CREDITS.md's LPC bullet. Agent-tested (Devil M, Dwarf F, Angel F: new games, camp, portal, Orazca in
+and out; `[TFR-Hero]` 16.0 px box). No Java. #31 packages.
+
 ## STATE 2026-10-14 (round 596): **LOCAL + UNRELEASED** - level rewards gold 85x / shards 15x; perks Warmonger
 (excludes Envoy), Aura of Fear (enemy life -10% a rank), Legend Seeker (+15% legends), Insight (4 rewards an offer);
 guard wins pay Power to the log (Ascendance.onGuardWon, guardWinFactor); the choice dialog wraps long texts beside icons.
