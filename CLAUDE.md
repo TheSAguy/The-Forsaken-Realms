@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 592): **LOCAL (agent client only - nothing to package)** - the agent's `settle` stops at once
+on a Forge prompt whose buttons it does not know (it waited ~2 minutes for nothing) and prints its `forgeUi` ids.
+Tested offline with fake bridge states.
+
 ## STATE 2026-10-14 (round 591): **LOCAL + UNRELEASED (engine + art)** - the Phyrexian player race wears the user's
 Pixelate biomechanoid (red female `phyrexian_biomech_r`, blue-steel male `_u`; heroes.json `"scale": 0.375`, 18 px tall).
 New engine hook: HeroData.scale -> CharacterSprite.setHeroScale (PlayerSprite, RoamingGuardRuntime.spriteFor) draws a hero

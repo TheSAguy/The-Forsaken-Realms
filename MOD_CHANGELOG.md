@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 592: the agent's settle stops at once on a prompt it does not know (2026-10-14)
+
+The user, through peer #31: "Make the unknown-prompt case stop right away" - the follow-up named in the round-535 audit.
+
+- `settle` (`dev-tools/agent/tfr_agent.py`, client only - nothing to build or package):
+  - A Forge prompt whose buttons it does not know (none of Back to Adventure / Quit Match / Quit / OK / Continue / Done /
+    Close, and not the Card Lost ante prompt) now ends `settle` at once. It logs `forge prompt with unknown buttons -
+    not settled: [buttons]` and prints the state, `forgeUi` ids included, for the caller to answer with `cmd click id=fN`.
+  - It used to wait it out: 3 s a pass for 40 passes. `/wait` returns at once while an overlay button is open
+    (`AgentObserver.isIdle`), so nothing changed and every unknown prompt cost about two minutes before `settle` returned
+    the same state.
+- The tfr-play skill's settle line (outside this repo) says the same.
+- **Tested offline** (fake bridge states fed to `settle()`; no game run): an unknown prompt returns after one `/wait` (40
+  before), also right after Back to Adventure; Card Lost still taps OK by default and stops with `--ask-ante`; Card Gained
+  taps OK, not Auto-Sell; two lost cards tap OK twice. The old code fails the two unknown-prompt cases only.
+
+**Files touched**: `dev-tools/agent/tfr_agent.py`.
+
 ## Round 591: the Phyrexian player race gets the user's hand-made biomechanoid (2026-10-14)
 
 The Procedural Pixel Creatures session. The user made a Phyrexian turnaround (front, side, back) and ten Kling clips,

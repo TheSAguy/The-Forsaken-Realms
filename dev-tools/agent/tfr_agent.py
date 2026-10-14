@@ -172,7 +172,8 @@ SETTLE_BUTTONS = ("back to adventure", "quit match", "quit", "ok", "continue", "
 def settle(rounds=40, wait_each=60, ask_ante=False):
     """Back to an idle GameScene/TileMapScene: sit through a duel (the AI pilots the seat), tap the win/lose
     view's button and the ante prompts' OK, press Done on a reward screen, walk single-option dialogs. Returns
-    at a real choice - and at a lost ante's Buy Back / Bronze Coin choice when ask_ante is set."""
+    at a real choice and at a prompt it does not know - and at a lost ante's Buy Back / Bronze Coin choice when
+    ask_ante is set."""
     s = {}
     for i in range(rounds):
         s = call("GET", "/wait?timeout=%d" % wait_each, timeout=wait_each + 15)
@@ -200,9 +201,11 @@ def settle(rounds=40, wait_each=60, ask_ante=False):
                 continue
             pick = next((b for b in prompts if (b.get("text") or "").lower() in SETTLE_BUTTONS), None)
             if pick is None:
-                say("forge prompt with unknown buttons", [b.get("text") for b in prompts], "- waiting")
-                time.sleep(3)
-                continue
+                # Round 592: a prompt settle does not know is the caller's to answer - stop at once and print it. It
+                # used to be waited out (3 s a pass, 40 passes), but /wait returns at once while a prompt is open
+                # (AgentObserver.isIdle), so nothing changed and every unknown prompt cost about two minutes.
+                say("forge prompt with unknown buttons - not settled:", [b.get("text") for b in prompts])
+                return s
             say("forge prompt", [b.get("text") for b in prompts], "-> tapping", pick["text"])
             call("POST", "/cmd", {"cmd": "click", "id": pick["id"]})
             time.sleep(2.5)
