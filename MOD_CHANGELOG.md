@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 619: the intro pays its full 50 Power again - finishing it reaches level 1 (2026-10-15)
+
+Found during round 618's guide pass: since round 583's levelingSpeed 0.85 the intro's story quest paid 43 Power, not the
+50 that level 1 costs on every difficulty, so a new character stayed at level 0 (`+43 Power - story: Entering The
+Forsaken Realms (total 43, level 0)` in the user's log). The user: "make the intro quest pay its full 50 Power (exempt
+from the leveling speed) so finishing the intro reaches level 1 again."
+
+- **`fullPowerQuestIds`** (ascendance.json; AscendanceData, default [28, 53]): these quests pay their Power as written,
+  not times levelingSpeed (or Zealot) - the intro, "Entering The Forsaken Realms" (28), and the tutorial, "Welcome to
+  The Forsaken Realms" (53), the step to level 1 on each path.
+- The intro's Power waits for its dialog (round 505); it is now held as the amount it will pay (scaled when held, or in
+  full) and paid as is - a save holding the old unscaled 50 from before this round pays that 50 too.
+- GUIDE.md's Power table says so.
+- **Seen in the agent game**: a new game, introduction skipped - `+50 Power - story: Entering The Forsaken Realms
+  (total 50, level 1)`, a reward waiting. The tutorial path's completion was not played through (same award path).
+
 ## Round 618: the Game Guide & FAQ brought up to 1.21; README; the v1.21 release notes drafted (2026-10-15)
 
 The user: "Can you update the game guide and any other documentation to be up to speed with 1.21." The guide had last

@@ -818,10 +818,19 @@ public final class Ascendance {
             source = "quest: " + quest.name;
         }
         AscendanceState s = state();
+        // Round 619: the intro and the tutorial pay in full - the step to level 1 (fullPowerQuestIds).
+        boolean full = contains(d.fullPowerQuestIds, quest.getID());
         if (!afterDialogs || s == null) {
-            award(amount, source);
+            if (full) {
+                System.out.println("[TFR-Ascend] " + quest.name + " pays its " + amount + " Power in full (fullPowerQuestIds)");
+                awardExact(amount, source);
+            } else {
+                award(amount, source);
+            }
             return;
         }
+        // Round 619: held as the amount it will pay, scaled already unless it pays in full.
+        amount = full ? amount : scaled(amount);
         s.deferredPower += amount;
         s.deferredSource = source;
         System.out.println("[TFR-Ascend] " + amount + " Power for " + source + " waits until its dialog is read");
@@ -848,7 +857,7 @@ public final class Ascendance {
                         + quest.name + ") pays when it is done");
                 return;
             }
-        award(amount, source);
+        awardExact(amount, source); // round 619: the held amount is what it pays (scaled when it was held, or in full)
     }
 
     /** WorldStage.handlePointsOfInterestCollision: walking into a place for the first time. */

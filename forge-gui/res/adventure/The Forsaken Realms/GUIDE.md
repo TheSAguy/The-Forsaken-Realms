@@ -461,7 +461,7 @@ never stack:
 | Restoring a town | 26 |
 | Taking a town, capital or Ring City by force | 34 |
 | Raising the Capitol | 85 |
-| A side quest / a story quest | 17 / 43 |
+| A side quest / a story quest (the introduction, or the tutorial, pays its 50 in full - that is level 1) | 17 / 43 |
 | Stopping an invasion, by its toughest invader: Apprentice / Adept / Master / Archmage | 43 / 64 / 85 / 128 |
 | Driving the raiders from a pillaged town | 21 |
 | Winning an Arena bracket (each match also pays its duel) | 34 |

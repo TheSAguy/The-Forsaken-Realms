@@ -73,6 +73,10 @@
   // Round 505b: the intro's 50 waits for the tutorial-or-skip choice; on the tutorial path it is dropped and the tutorial
   // quest (53, "Welcome to The Forsaken Realms", a story quest) pays its 50 when it is done - level 1 at the Warden.
   "tutorialQuestIds": [53],
+  // Round 619 (the user: "make the intro quest pay its full 50 Power (exempt from the leveling speed) so finishing the
+  // intro reaches level 1 again"): these quests pay their Power as written, not times levelingSpeed - the intro (28)
+  // and the tutorial (53) are the step to level 1.
+  "fullPowerQuestIds": [28, 53],
 
   // Level rewards: +1 max life at these levels; main-slot items (Head, Neck, Body, Left, Right, Legs, Boots - round 607
   // added Head and Legs and the 6th and 7th item at 35 and 40) 1, +1 at each of mainSlotLevels; the titles; a roaming

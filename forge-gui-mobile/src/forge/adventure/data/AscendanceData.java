@@ -73,6 +73,11 @@ public class AscendanceData {
      *  that dialog started one of these - the tutorial is the intro's end on that path and pays its own story Power when
      *  it is done. The user: "Started at level 1. I chose to do the tutorial." */
     public int[] tutorialQuestIds = {53};
+    /** Round 619 (the user: "make the intro quest pay its full 50 Power (exempt from the leveling speed) so finishing the
+     *  intro reaches level 1 again"): quests whose Power is paid as written - not times levelingSpeed or Zealot. The
+     *  intro (28) and the tutorial (53) are the step to level 1, which costs 50 on every difficulty; since round 583's
+     *  levelingSpeed 0.85 they paid 43 and left a new character at level 0. */
+    public int[] fullPowerQuestIds = {28, 53};
 
     // ---- level rewards
     /** Levels that give +1 max life (with their title, and a main slot through mainSlotLevels). */
