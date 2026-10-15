@@ -2126,3 +2126,27 @@ EvershrikeSlippers
 StarfishOnYourFootBoot605
   xy: 0, 32
   size: 16, 16
+
+items_r609.png
+size: 192,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+PipersCharmPendant
+  xy: 0, 0
+  size: 32, 32
+PhoenixPendant
+  xy: 32, 0
+  size: 32, 32
+PhoenixCharmPendant
+  xy: 64, 0
+  size: 32, 32
+CelestialPrismPendant
+  xy: 96, 0
+  size: 32, 32
+GoosePendant
+  xy: 128, 0
+  size: 32, 32
+CoralHelm
+  xy: 160, 0
+  size: 16, 16

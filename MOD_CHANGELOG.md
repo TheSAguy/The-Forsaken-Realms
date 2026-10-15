@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 609: the slot audit's fixes - Coral Helm, five Neck pendants, three names, Cheat out of the boss pools (2026-10-15)
+
+The user, after round 607: "Do another audit of item names and icons per slot, now that we have 7. Can I also get a
+count per slot." The audit (545 equippable items: Right 106, Left 95, Boots 83, Body 68, Neck 66, Head 45, Legs 21,
+Ability2 25, Token 12, Medal 7, Ability1 6, Heart 5, Blessing 4, Pocket 1, Slotless 1; 128 more have no slot) found
+Head, Legs, Boots, Body and both hands consistent but for the items below. The user: "Fix them in round 609".
+
+- **Icons** (`sprites/items_r609.png`, a new 192x32 page of items.atlas):
+  - **Coral Helm** (Head) showed the Kite Shield: now the Glorious Helm's shape in a coral ramp (`CoralHelm`).
+  - **Neck pendants** - the round-506 pendant chain (NeckTreasure's chain, its coin cut away) with the item's own art
+    hanging from it: Piper's Charm (the pipe), Phoenix (silver chain - the Common one) and Phoenix Charm (gold chain -
+    the Rare; the two shared one icon before), Celestial Prism (the blue crystal), Cheat (the goose). Previewed to the
+    user.
+- **Renamed** (items.json, enemies.json, items.csv, player_capital.tmx, EconomyBuildings): Volatile Prayerbook ->
+  **Volatile Pendant**, Lookout's Harness -> **Lookout's Leggings**, Cryptologist's Fins -> **Cryptologist's Breeches**.
+  `ItemListData.RENAMED` resolves the old names, and round 605's "Lookout's Climbing Boots" / "Cryptologist's
+  Flippers" now point straight at the new ones.
+- **Cheat** (Mythic, 50,000 gold, starts a duel with Blightsteel Colossus, Urabrask and Avatar of Slaughter - a test
+  item) is out of the `rewards/itemNames` pools of the 12 bosses that could drop it (Ancient Silver Dragon, Dark
+  Enchanter, Emrakul, Guardian Angel, Kozilek, Myr Superion, Sliver Queen, Sorin, The Hydra of Shandalaar, Torturer,
+  Valyx, Wounded Sliver). The item itself stays (console `give item`, old saves).
+- **Seen in the agent game**: `give item` with the three old names added Volatile Pendant, Lookout's Leggings and
+  Cryptologist's Breeches; Coral Helm worn on the head, Phoenix Charm at the neck; the pendants at full size in the bag.
+
 ## Round 607: Head and Legs equipment slots, levels to 40 (2026-10-14)
 
 The user: "what if we add a Pants and helmet equipment slots? We up the max level to 40 and unlock them at 35 and 40.

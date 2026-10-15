@@ -46,7 +46,7 @@ public class ItemListData {
             java.util.Map.entry("yore-tiller anklet", "Yore-Tiller Clogs"),
             java.util.Map.entry("silvergill tailband", "Silvergill Flippers"),
             java.util.Map.entry("deathspitter boots", "Deathspitter Skirt"),
-            java.util.Map.entry("lookout's climbing boots", "Lookout's Harness"),
+            java.util.Map.entry("lookout's climbing boots", "Lookout's Leggings"),
             java.util.Map.entry("bearhide boots", "Bearhide Breeches"),
             java.util.Map.entry("glimmerbell bondband", "Glimmerbell Striders"),
             java.util.Map.entry("bloodsworn bite", "Bloodsworn Boots"),
@@ -58,7 +58,7 @@ public class ItemListData {
             java.util.Map.entry("spectral sliverband", "Spectral Slivertreads"),
             java.util.Map.entry("sabertooth bondband", "Sabertooth Striders"),
             java.util.Map.entry("dragonhide boots", "Draped Dragonhide"),
-            java.util.Map.entry("cryptologist's flippers", "Cryptologist's Fins"),
+            java.util.Map.entry("cryptologist's flippers", "Cryptologist's Breeches"),
             java.util.Map.entry("blistering boots", "Blistering Breeches"),
             java.util.Map.entry("sporecap boots", "Spore Skirt"),
             java.util.Map.entry("barrier boots", "Barrier Breeches"),
@@ -76,7 +76,10 @@ public class ItemListData {
             java.util.Map.entry("fleshwright boots", "Fleshwright Chaps"),
             java.util.Map.entry("immortal anklet", "Immortal Treads"),
             java.util.Map.entry("evershrike anklet", "Evershrike Slippers"),
-            java.util.Map.entry("flamecaster boots", "Flamecaster Pants"));
+            java.util.Map.entry("flamecaster boots", "Flamecaster Pants"),
+            java.util.Map.entry("volatile prayerbook", "Volatile Pendant"),
+            java.util.Map.entry("lookout's harness", "Lookout's Leggings"),
+            java.util.Map.entry("cryptologist's fins", "Cryptologist's Breeches"));
 
     public static ItemData getItem(String name) {
         if (itemList == null || name == null)

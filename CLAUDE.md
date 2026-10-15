@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-15 (round 609): **LOCAL + UNRELEASED (data + art)** - slot audit fixes: Coral Helm icon + five Neck
+pendant icons (items_r609.png), Volatile Pendant / Lookout's Leggings / Cryptologist's Breeches (RENAMED aliases), the
+Cheat test item out of 12 boss reward pools. Counts per slot in the changelog. Agent-tested.
+
 ## STATE 2026-10-14 (round 607): **LOCAL + UNRELEASED (code + data + art)** - Head and Legs main slots (MAIN_SLOTS 7;
 doll buttons in ui/inventory*.json + armory*.json); 45 headwear Neck -> Head, 21 leg pieces Boots -> Legs (17 round-605 names
 restored, RENAMED turned around); worn items re-seat into their new slot on load (AdventurePlayer.reseat); levels to 40

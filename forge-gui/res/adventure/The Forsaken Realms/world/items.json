@@ -1432,7 +1432,7 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Lookout\u0027s Harness",
+        "name":  "Lookout\u0027s Leggings",
         "description":  "1/1 ally that can pay 4W to give your board +1/+1",
         "equipmentSlot":  "Legs",
         "iconName":  "Lookout\u0027sHarness",
@@ -1766,7 +1766,7 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Cryptologist\u0027s Fins",
+        "name":  "Cryptologist\u0027s Breeches",
         "description":  "0/1 merfolk wizard. 1U: looter; twice more: T: draw.",
         "equipmentSlot":  "Legs",
         "iconName":  "Cryptologist\u0027sFins",
@@ -2580,7 +2580,7 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Volatile Prayerbook",
+        "name":  "Volatile Pendant",
         "description":  "Pay 1R for RRRR",
         "equipmentSlot":  "Neck",
         "iconName":  "NeckVolatilePrayerbook",
@@ -5590,7 +5590,7 @@
         "name":  "Phoenix Charm",
         "description":  "Draft a Phoenix card, or conjure one to be cast with mana of any color",
         "equipmentSlot":  "Neck",
-        "iconName":  "PhoenixCharm",
+        "iconName":  "PhoenixCharmPendant",
         "cost":  8000,
         "effect":  {
                        "startBattleWithCardInCommandZone":  [
@@ -5610,7 +5610,7 @@
         "name":  "Phoenix",
         "description":  "Draft a Phoenix card, or conjure one to be cast with mana of any color",
         "equipmentSlot":  "Neck",
-        "iconName":  "PhoenixCharm",
+        "iconName":  "PhoenixPendant",
         "effect":  {
                        "startBattleWithCardInCommandZone":  [
                                                                 "Phoenix Charm"
@@ -5641,7 +5641,7 @@
     {
         "name":  "Piper\u0027s Charm",
         "equipmentSlot":  "Neck",
-        "iconName":  "PipersCharm",
+        "iconName":  "PipersCharmPendant",
         "cost":  1500,
         "effect":  {
                        "startBattleWithCardInCommandZone":  [
@@ -6008,7 +6008,7 @@
     {
         "name":  "Cheat",
         "equipmentSlot":  "Neck",
-        "iconName":  "Goose",
+        "iconName":  "GoosePendant",
         "cost":  50000,
         "effect":  {
                        "startBattleWithCard":  [
@@ -7321,7 +7321,7 @@
         "name":  "Celestial Prism",
         "description":  "Pay 2 and tap to convert one mana to any color. +2 max life.",
         "equipmentSlot":  "Neck",
-        "iconName":  "CelestialPrism",
+        "iconName":  "CelestialPrismPendant",
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -7955,7 +7955,7 @@
         "name":  "Coral Helm",
         "description":  "Pay 3 and discard randomly to give target creature +2/+2.",
         "equipmentSlot":  "Head",
-        "iconName":  "KiteShield",
+        "iconName":  "CoralHelm",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Coral Helm|ATQ"
