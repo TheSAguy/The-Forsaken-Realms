@@ -45,6 +45,11 @@ public class HistoryScene extends UIScene {
             WorldHistory.GREEN, WorldHistory.PLAYER, WorldHistory.WASTE};
     private static final float LAND_SHADE = 0.72f;
     private static final float BAR_WIDTH = 46f;
+    /** Round 635 (the user: "add the Mountain ranges to this map, since that prevents the spread of territory, like
+     *  water"): the barrier's tiles, three rock tones mixed tile by tile. They never change, so they are read from the
+     *  world when the page opens rather than recorded; their land is left out of the Land shares. */
+    private static final int[][] ROCK = {{46, 42, 40}, {60, 55, 51}, {80, 73, 66}};
+    private final java.util.BitSet mountains = new java.util.BitSet();
 
     private final Table mapArea, panel, controls;
     private Texture white;
@@ -109,6 +114,13 @@ public class HistoryScene extends UIScene {
         lastDay = Math.max(last, h.startDay);
         cursor = h.cursor();
         milestones = h.milestones();
+        mountains.clear();
+        forge.adventure.world.World world = Current.world();
+        if (world != null && world.hasBarrier())
+            for (int row = 0; row < h.height; row++)
+                for (int x = 0; x < h.width; x++)
+                    if (world.isBarrierRow(x, row))
+                        mountains.set(row * h.width + x);
         if (landPixmap == null || landPixmap.getWidth() != h.width || landPixmap.getHeight() != h.height) {
             disposeMap();
             landPixmap = new Pixmap(h.width, h.height, Pixmap.Format.RGBA8888);
@@ -138,6 +150,14 @@ public class HistoryScene extends UIScene {
 
     private void putLand(ByteBuffer px, int index, int code) {
         int p = index * 4;
+        if (mountains.get(index)) { // round 635: rock, whoever's land it lies in
+            int[] rock = ROCK[Math.floorMod(index * 73856093 ^ (index / 7) * 19349663, ROCK.length)];
+            px.put(p, (byte) rock[0]);
+            px.put(p + 1, (byte) rock[1]);
+            px.put(p + 2, (byte) rock[2]);
+            px.put(p + 3, (byte) 255);
+            return;
+        }
         px.put(p, (byte) land(code, 0));
         px.put(p + 1, (byte) land(code, 1));
         px.put(p + 2, (byte) land(code, 2));
@@ -158,7 +178,7 @@ public class HistoryScene extends UIScene {
         List<WorldHistory.Town> towns = history.towns();
         for (int i = 0; i < cursor.town.length && i < towns.size(); i++) {
             int code = cursor.town[i];
-            if (code == WorldHistory.NONE)
+            if (code == WorldHistory.NONE || (code & WorldHistory.KIND_CASTLE) != 0)
                 continue;
             int owner = code & 7;
             boolean capital = (code & WorldHistory.KIND_CAPITAL) != 0;
@@ -177,7 +197,37 @@ public class HistoryScene extends UIScene {
                 townPixmap.fillCircle(t.x, t.row, 2);
             }
         }
+        // Round 635: the five castles over the towns - a keep with three merlons and a gate, in the color's own shade
+        // while it stands; grey and cracked once it has fallen.
+        for (int i = 0; i < cursor.town.length && i < towns.size(); i++) {
+            int code = cursor.town[i];
+            if ((code & WorldHistory.KIND_CASTLE) != 0)
+                paintCastle(towns.get(i), code & 7);
+        }
         townTexture.draw(townPixmap, 0, 0);
+    }
+
+    private void paintCastle(WorldHistory.Town t, int owner) {
+        int x = t.x, y = t.row;
+        boolean fallen = owner == WorldHistory.WASTE;
+        townPixmap.setColor(16 / 255f, 16 / 255f, 20 / 255f, 1f); // the outline
+        townPixmap.fillRectangle(x - 7, y - 5, 15, 12);
+        for (int m = -7; m <= 5; m += 6)
+            townPixmap.fillRectangle(x + m, y - 9, 3, 5);
+        if (fallen)
+            townPixmap.setColor(120 / 255f, 112 / 255f, 100 / 255f, 1f);
+        else
+            townPixmap.setColor(Math.min(255, RGB[owner][0] * 1.08f + 12) / 255f,
+                    Math.min(255, RGB[owner][1] * 1.08f + 12) / 255f, Math.min(255, RGB[owner][2] * 1.08f + 12) / 255f, 1f);
+        townPixmap.fillRectangle(x - 6, y - 4, 13, 10);
+        for (int m = -6; m <= 6; m += 6)
+            townPixmap.fillRectangle(x + m, y - 8, 1, 4);
+        townPixmap.setColor(16 / 255f, 16 / 255f, 20 / 255f, 1f); // the gate
+        townPixmap.fillRectangle(x - 1, y + 1, 3, 5);
+        if (fallen) { // the crack
+            townPixmap.drawLine(x - 5, y - 3, x - 1, y + 1);
+            townPixmap.drawLine(x + 1, y - 4, x + 5, y + 2);
+        }
     }
 
     /** Moves the replay to {@code target}: forward record by record, back from the first page. */
@@ -253,6 +303,12 @@ public class HistoryScene extends UIScene {
             shareLabels[code] = label("");
             panel.add(shareLabels[code]).left().width(28f).row();
         }
+        if (!mountains.isEmpty()) { // round 635: the key to the rock and the castle symbol
+            Image rockSwatch = new Image(white);
+            rockSwatch.setColor(ROCK[1][0] / 255f, ROCK[1][1] / 255f, ROCK[1][2] / 255f, 1f);
+            panel.add(rockSwatch).size(8f, 8f).padRight(4f);
+            panel.add(label("[%80]Mountains")).left().colspan(4).row();
+        }
         captionDay = label("");
         captionText = label("");
         captionText.setWrap(true);
@@ -302,8 +358,10 @@ public class HistoryScene extends UIScene {
     }
 
     private void refreshButtons() {
-        if (playButton != null)
+        if (playButton != null) {
             playButton.setText(playing ? "[%80]Pause" : "[%80]Play");
+            playButton.setDisabled(history != null && lastDay <= history.startDay); // round 631: one day, nothing to play
+        }
         for (int i = 0; i < speedButtons.length; i++)
             if (speedButtons[i] != null)
                 speedButtons[i].setText((i == speed ? "[%80][#F0BE30]" : "[%80]") + SPEED_LABELS[i]);
@@ -311,12 +369,16 @@ public class HistoryScene extends UIScene {
 
     private void refreshLabels() {
         dayLabel.setText("[%85]Day " + cursor.day + " of " + lastDay);
+        // Round 635: mountain tiles are not land anyone holds - out of every share.
+        int[] rock = new int[cursor.tileCounts.length];
+        for (int i = mountains.nextSetBit(0); i >= 0 && i < cursor.tiles.length; i = mountains.nextSetBit(i + 1))
+            rock[cursor.tiles[i]]++;
         int landTotal = 0;
         for (int c = 1; c < cursor.tileCounts.length; c++)
-            landTotal += cursor.tileCounts[c];
+            landTotal += cursor.tileCounts[c] - rock[c];
         for (int code : LEGEND) {
             countLabels[code].setText("[%85][#F0DCA0]" + cursor.townCounts[code]);
-            float share = landTotal == 0 ? 0f : cursor.tileCounts[code] / (float) landTotal;
+            float share = landTotal == 0 ? 0f : (cursor.tileCounts[code] - rock[code]) / (float) landTotal;
             bars[code].setWidth(Math.max(1f, BAR_WIDTH * share));
             shareLabels[code].setText("[%70][#AAAAAA]" + Math.round(share * 100) + "%");
         }
@@ -331,8 +393,15 @@ public class HistoryScene extends UIScene {
             captionText.setText("[%85]" + latest.text);
         } else if (history.startDay > 1) {
             captionDay.setText("");
+            // Round 631 (the user, on a save older than the replay: "cant' play the History"): with one day recorded there
+            // is nothing to play yet - say so, and that it fills in from here.
             captionText.setText("[%75][#AAAAAA]History is recorded from day " + history.startDay
-                    + ", when this game first ran on a version with it.");
+                    + ", when this game first ran on a version with it."
+                    + (lastDay <= history.startDay ? " Every day you play from now on is added - Play shows them once"
+                    + " there is more than today." : ""));
+        } else if (lastDay <= history.startDay) {
+            captionDay.setText("");
+            captionText.setText("[%75][#AAAAAA]Only today so far - every day you play is added to the replay.");
         } else {
             captionDay.setText("");
             captionText.setText("");

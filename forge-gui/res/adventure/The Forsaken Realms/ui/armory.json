@@ -248,6 +248,15 @@
     },
     {
       "type": "TextButton",
+      "name": "sets",
+      "text": "[%80]Sets",
+      "width": 56,
+      "height": 30,
+      "x": 144,
+      "y": 222
+    },
+    {
+      "type": "TextButton",
       "name": "use",
       "text": "tr(lblUse)",
       "binding": "Use",

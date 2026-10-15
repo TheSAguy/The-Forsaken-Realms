@@ -41,8 +41,14 @@ public final class WorldHistory {
     /** Owner code of a town that is not on the map on that day (not there yet, or gone). */
     public static final int NONE = 0;
     public static final int KIND_CAPITAL = 8;
+    /** Round 635 (the user: "add the 5 AI Castles on there ... a slightly different symbol. Since they can fall and is a
+     *  major event"): a color's castle - its color while the color stands, WASTE once it has fallen. Not a town: the
+     *  legend's town counts leave castles out. */
+    public static final int KIND_CASTLE = 16;
+    /** A town record is townIndex << TOWN_SHIFT | kind | owner (format 1 packed townIndex << 4, before castles). */
+    private static final int TOWN_SHIFT = 5, CODE_MASK = 31;
     public static final String[] NAMES = {"Sea", "Unclaimed", "White", "Blue", "Black", "Red", "Green", "You"};
-    private static final int FORMAT = 1;
+    private static final int FORMAT = 2;
     private static final String[] BIOME_NAMES = {null, "waste", "white", "blue", "black", "red", "green", "player"};
     private static final String[][] TOWN_NOUNS = {{"Plains", "2"}, {"Island", "3"}, {"Swamp", "4"}, {"Mountain", "5"},
             {"Forest", "6"}};
@@ -59,7 +65,7 @@ public final class WorldHistory {
         }
     }
 
-    /** What changed on one day: tiles packed as index << 3 | owner, towns as townIndex << 4 | kind | owner. */
+    /** What changed on one day: tiles packed as index << 3 | owner, towns as townIndex << 5 | kind | owner. */
     public static final class Record {
         public final int day;
         int[] tiles = new int[16];
@@ -154,7 +160,7 @@ public final class WorldHistory {
         BitSet seen = new BitSet(towns.size());
         int tileSize = world.getTileSize();
         for (PointOfInterest poi : world.getAllPointOfInterest()) {
-            int code = townCode(poi);
+            int code = townCode(world, poi);
             if (code < 0)
                 continue;
             Vector2 pos = poi.getPosition();
@@ -174,20 +180,47 @@ public final class WorldHistory {
             seen.set(idx);
             if (currentTown[idx] != code) {
                 currentTown[idx] = code;
-                rec.addTown(idx << 4 | code);
+                rec.addTown(idx << TOWN_SHIFT | code);
             }
         }
         for (int idx = 0; idx < towns.size(); idx++) {
-            if (!seen.get(idx) && currentTown[idx] != NONE) {
-                currentTown[idx] = NONE;
-                rec.addTown(idx << 4);
+            if (seen.get(idx) || currentTown[idx] == NONE)
+                continue;
+            // A castle whose POI left the map stays on it as fallen, if its color is defeated (round 635).
+            int code = (currentTown[idx] & KIND_CASTLE) != 0 && world.isColorDefeated(castleColor(towns.get(idx).name))
+                    ? WASTE | KIND_CASTLE : NONE;
+            if (currentTown[idx] != code) {
+                currentTown[idx] = code;
+                rec.addTown(idx << TOWN_SHIFT | code);
             }
         }
     }
 
-    /** Owner | kind of a town POI, or -1 for anything that is not a town anyone can hold. */
-    static int townCode(PointOfInterest poi) {
+    /** "white" for "White Castle" - the color word World.isColorDefeated() takes; null for anything else. */
+    static String castleColor(String name) {
+        if (name == null || !name.endsWith(" Castle"))
+            return null;
+        String color = name.substring(0, name.length() - " Castle".length()).toLowerCase(java.util.Locale.ROOT);
+        for (int c = WHITE; c <= GREEN; c++)
+            if (NAMES[c].toLowerCase(java.util.Locale.ROOT).equals(color))
+                return color;
+        return null;
+    }
+
+    /** Owner | kind of a town POI or a color's castle, or -1 for anything that is not a town anyone can hold. */
+    static int townCode(World world, PointOfInterest poi) {
         String type = poi.getData().type;
+        if ("castle".equals(type)) { // round 635: the five color castles - their color, or WASTE once fallen
+            String color = castleColor(poi.getData().name);
+            if (color == null)
+                return -1;
+            if (world.isColorDefeated(color))
+                return WASTE | KIND_CASTLE;
+            for (int c = WHITE; c <= GREEN; c++)
+                if (NAMES[c].equalsIgnoreCase(color))
+                    return c | KIND_CASTLE;
+            return -1;
+        }
         if (!"town".equals(type) && !"capital".equals(type))
             return -1;
         int kind = "capital".equals(type) ? KIND_CAPITAL : 0;
@@ -268,11 +301,19 @@ public final class WorldHistory {
             Record rec = records.get(r);
             for (int i = 0; i < rec.townCount; i++) {
                 int packed = rec.towns[i];
-                int idx = packed >>> 4, code = packed & 15;
+                int idx = packed >>> TOWN_SHIFT, code = packed & CODE_MASK;
                 int before = owner[idx];
                 owner[idx] = code;
                 if (r == 0)
                     continue; // the first page is where things stood, not news
+                if ((code & KIND_CASTLE) != 0 || (before & KIND_CASTLE) != 0) {
+                    // Round 635: a castle's fall is everyone's news, not only the player's.
+                    int was = before & 7;
+                    if ((code & 7) == WASTE && was >= WHITE && was <= GREEN)
+                        out.add(new Milestone(rec.day, "The " + towns.get(idx).name + " fell - " + NAMES[was]
+                                + " is defeated"));
+                    continue;
+                }
                 String text = milestoneText(towns.get(idx).name, before, code);
                 if (text != null)
                     out.add(new Milestone(rec.day, text));
@@ -346,13 +387,13 @@ public final class WorldHistory {
                         changedTiles.accept(idx);
                 }
                 for (int i = 0; i < rec.townCount; i++) {
-                    int idx = rec.towns[i] >>> 4, code = rec.towns[i] & 15;
+                    int idx = rec.towns[i] >>> TOWN_SHIFT, code = rec.towns[i] & CODE_MASK;
                     if (idx >= town.length)
                         continue;
-                    if (town[idx] != NONE)
+                    if (town[idx] != NONE && (town[idx] & KIND_CASTLE) == 0) // a castle is not a town (round 635)
                         townCounts[town[idx] & 7]--;
                     town[idx] = code;
-                    if (code != NONE)
+                    if (code != NONE && (code & KIND_CASTLE) == 0)
                         townCounts[code & 7]++;
                     townChanged = true;
                 }
@@ -399,8 +440,8 @@ public final class WorldHistory {
     static WorldHistory fromBytes(byte[] blob) throws IOException {
         try (DataInputStream in = new DataInputStream(new InflaterInputStream(new ByteArrayInputStream(blob)))) {
             int format = in.readInt();
-            if (format != FORMAT)
-                throw new IOException("history format " + format + ", this build reads " + FORMAT);
+            if (format != FORMAT && format != 1)
+                throw new IOException("history format " + format + ", this build reads 1 and " + FORMAT);
             int w = in.readInt(), h = in.readInt(), start = in.readInt();
             byte[] base = new byte[w * h];
             in.readFully(base);
@@ -423,15 +464,18 @@ public final class WorldHistory {
                 rec.tileCount = n;
                 n = in.readInt();
                 rec.towns = new int[Math.max(1, n)];
-                for (int i = 0; i < n; i++)
-                    rec.towns[i] = in.readInt();
+                for (int i = 0; i < n; i++) {
+                    int packed = in.readInt();
+                    // Format 1 (round 626) packed townIndex << 4 with no castles; re-pack it as this build does.
+                    rec.towns[i] = format == 1 ? (packed >>> 4) << TOWN_SHIFT | (packed & 15) : packed;
+                }
                 rec.townCount = n;
                 history.records.add(rec);
                 // Bring the live state up to the end, for the next day's diff.
                 for (int i = 0; i < rec.tileCount; i++)
                     history.current[rec.tiles[i] >>> 3] = (byte) (rec.tiles[i] & 7);
                 for (int i = 0; i < rec.townCount; i++)
-                    history.currentTown[rec.towns[i] >>> 4] = rec.towns[i] & 15;
+                    history.currentTown[rec.towns[i] >>> TOWN_SHIFT] = rec.towns[i] & CODE_MASK;
             }
             return history;
         }

@@ -38,6 +38,28 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 635 - the History map's castles and mountains; plain-ink notice popups
+
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `showNextNotices()` shows a white-tint banner through
+  the new `plainInk()` (color tags -> [BLACK], [WHITE] kept); the notice log is untouched.
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `isBarrierRow(x, row)`: the barrier tile by its row from
+  the top (biomeMap's layout), for the History page.
+- `world/WorldHistory.java`, `scene/HistoryScene.java` (mod-added, round 626): castles as KIND_CASTLE (town records now
+  townIndex << 5, FORMAT 2, format 1 re-packed on load), the castle symbol, rock for the barrier, Play disabled with
+  one recorded day.
+
+### Round 631 - the Sets page
+
+- **`forge-gui-mobile/src/forge/adventure/data/ItemData.java`** - `getDescription()` appends
+  `ItemSets.descriptionLine(this)` for a gear set's piece ("Gear set: ... - you wear n of 7"). Three lines.
+- **`.../scene/InventoryScene.java`** - a `setsButton` (ImageButton from ui/inventory*.json, Gold Armor icon) opening
+  `SetsScene.show(null)`; visible when the plane has sets.
+- **`.../scene/ArmoryScene.java`** - a `sets` text button (ui/armory*.json) opening `SetsScene.show(guard)`, shown on a
+  guard's screen only.
+- **New (mod-added)**: `scene/SetsScene.java`; `data/ItemSetData` gains color / where / itemWhere / Tier.oracle;
+  `util/ItemSets` gains colorWord, familyLine, whereToFind, locate, ownedCount, descriptionLine.
+
 ### Round 630 - the walkers' Pledges; the Eldraine sketchbook
 
 - **`forge-gui-mobile/src/forge/adventure/data/ItemListData.java`** - one `RENAMED` entry (our round-512 table):

@@ -239,6 +239,15 @@
     },
     {
       "type": "TextButton",
+      "name": "sets",
+      "text": "[%80]Sets",
+      "width": 60,
+      "height": 30,
+      "x": 8,
+      "y": 363
+    },
+    {
+      "type": "TextButton",
       "name": "equip",
       "text": "tr(lblEquip)",
       "width": 60,

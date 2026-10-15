@@ -84,6 +84,7 @@ public class ArmoryScene extends UIScene {
     private final TextraButton sellButton;
     private final TextraButton deleteButton;
     private final TextraButton transferButton;
+    private final com.badlogic.gdx.scenes.scene2d.Actor setsButton; // round 631, a guard's screen only
     private final TextraLabel dollTitle;
     private final TextraLabel storageTitle;
     private final TextraLabel inventoryTitle;
@@ -107,6 +108,8 @@ public class ArmoryScene extends UIScene {
         ui.onButtonPress("sell", this::showSellConfirm);
         ui.onButtonPress("delete", this::showDeleteConfirm);
         ui.onButtonPress("transfer", this::transfer);
+        ui.onButtonPress("sets", () -> SetsScene.show(guard)); // round 631: a guard's gear sets
+        setsButton = ui.findActor("sets");
         equipButton = ui.findActor("equip");
         useButton = ui.findActor("use");
         sellButton = ui.findActor("sell");
@@ -320,6 +323,8 @@ public class ArmoryScene extends UIScene {
         deleteButton.setVisible(player);
         useButton.setVisible(player);
         equipButton.setVisible(player);
+        if (setsButton != null) // round 631: in Dispose's place, which a guard's screen hides
+            setsButton.setVisible(!player && SetsScene.available());
 
         refreshDoll();
     }

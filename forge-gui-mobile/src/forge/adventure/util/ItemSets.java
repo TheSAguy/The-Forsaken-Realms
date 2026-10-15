@@ -165,6 +165,87 @@ public final class ItemSets {
         return false;
     }
 
+    // ------------------------------------------------------------------ round 631: what the screens say
+
+    private static final String[] COLOR_LETTERS = {"W", "U", "B", "R", "G"};
+    private static final String[] COLOR_WORDS = {"white", "blue", "black", "red", "green"};
+
+    /** "white" for "W". */
+    public static String colorWord(String letter) {
+        for (int i = 0; i < COLOR_LETTERS.length; i++)
+            if (COLOR_LETTERS[i].equalsIgnoreCase(letter))
+                return COLOR_WORDS[i];
+        return letter == null ? "" : letter;
+    }
+
+    /** "Regalia - white", "Bane - against white", "Legend". */
+    public static String familyLine(ItemSetData set) {
+        if (set.color != null && !set.color.isEmpty())
+            return set.family + " - " + set.color;
+        if (set.against != null && !set.against.isEmpty())
+            return set.family + " - against " + colorWord(set.against);
+        return set.family;
+    }
+
+    /** Where a piece is found, from the set's {@code itemWhere} (empty when the file has none). */
+    public static String whereToFind(ItemSetData set, String itemName) {
+        for (int i = 0; i < set.items.length && i < set.itemWhere.length; i++)
+            if (set.items[i].equalsIgnoreCase(itemName))
+                return set.itemWhere[i];
+        return "";
+    }
+
+    /**
+     * Where the player's copy of a set piece is, or null when they own none: worn by {@code guard} (the guard's page),
+     * worn by the player, in the bag, in the Armory storage, or worn by one of their roaming guards.
+     */
+    public static String locate(AdventurePlayer player, RoamingGuardData guard, String itemName) {
+        if (player == null || itemName == null)
+            return null;
+        if (guard != null)
+            for (ItemData item : guard.equipment)
+                if (item != null && itemName.equalsIgnoreCase(item.name))
+                    return "worn by this guard";
+        for (ItemData item : wornBy(player))
+            if (itemName.equalsIgnoreCase(item.name))
+                return item.isCracked ? "worn, but cracked" : "worn by you";
+        for (ItemData item : player.getItems())
+            if (item != null && itemName.equalsIgnoreCase(item.name))
+                return item.isCracked ? "in your bag, cracked" : "in your bag";
+        for (ItemData item : player.getArmoryStorage())
+            if (item != null && itemName.equalsIgnoreCase(item.name))
+                return "in the Armory storage";
+        for (RoamingGuardData other : RoamingGuards.roster())
+            if (other != guard)
+                for (ItemData item : other.equipment)
+                    if (item != null && itemName.equalsIgnoreCase(item.name))
+                        return "worn by your " + RoamingGuards.displayName(other.tier) + " guard";
+        return null;
+    }
+
+    /** How many of a set's pieces the player owns anywhere (distinct names). */
+    public static int ownedCount(AdventurePlayer player, ItemSetData set) {
+        int n = 0;
+        for (String item : set.items)
+            if (owns(player, item))
+                n++;
+        return n;
+    }
+
+    /**
+     * The line an item's description gains when it belongs to a set (shops, rewards and the inventory alike): the set,
+     * its family, and how many of its pieces the player wears now.
+     */
+    public static String descriptionLine(ItemData item) {
+        ItemSetData set = item == null ? null : setOf(item.name);
+        if (set == null)
+            return "";
+        AdventurePlayer player = Current.player();
+        Integer worn = player == null ? null : worn(wornBy(player)).get(set);
+        return "Gear set: " + set.name + " (" + familyLine(set) + ") - you wear " + (worn == null ? 0 : worn) + " of "
+                + set.items.length;
+    }
+
     /**
      * An Arena prize that is a set piece the player already owns is swapped for a piece of the same set from the same
      * prize list that they do not own yet, while there is one - so the Arena finishes a set instead of repeating it.

@@ -9,7 +9,7 @@
       "width": 270,
       "height": 480
     },
-	{
+    {
       "type": "Image",
       "image": "ui/equipment.png",
       "x": 8,
@@ -151,7 +151,7 @@
       "height": 20,
       "x": 107,
       "y": 301
-    }     ,
+    },
     {
       "type": "ImageButton",
       "name": "Equipment_Right",
@@ -172,13 +172,22 @@
     },
     {
       "type": "ImageButton",
+      "name": "setsButton",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 17,
+      "y": 324
+    },
+    {
+      "type": "ImageButton",
       "name": "Equipment_Right2",
       "style": "item_frame_static",
       "width": 20,
       "height": 20,
       "x": 107,
       "y": 256
-    }     ,
+    },
     {
       "type": "Scroll",
       "name": "inventory",
@@ -193,7 +202,7 @@
       "y": 8,
       "width": 254,
       "height": 98
-    }    ,
+    },
     {
       "type": "Label",
       "name": "item_description",
@@ -210,7 +219,7 @@
       "height": 30,
       "x": 8,
       "y": 363
-    }  ,
+    },
     {
       "type": "TextButton",
       "name": "equip",
@@ -219,7 +228,7 @@
       "height": 30,
       "x": 75,
       "y": 363
-    } ,
+    },
     {
       "type": "TextButton",
       "name": "use",

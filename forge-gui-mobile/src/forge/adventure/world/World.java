@@ -2418,6 +2418,11 @@ public class World implements Disposable, SaveFileContent {
         return isBarrierRaw(x, height - y - 1);
     }
 
+    /** Round 635: the History map's mountain ranges - a barrier tile by its row from the top (biomeMap's layout). */
+    public boolean isBarrierRow(int x, int row) {
+        return isBarrierRaw(x, row);
+    }
+
     private boolean isBarrierRaw(int x, int rawY) {
         return barrierMap != null && x >= 0 && rawY >= 0 && x < width && rawY < height && barrierMap[x][rawY];
     }

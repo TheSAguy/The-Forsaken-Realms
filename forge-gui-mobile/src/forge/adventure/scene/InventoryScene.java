@@ -47,6 +47,7 @@ public class InventoryScene extends UIScene {
     // a new difficulty-scaling rule.
     TextraButton sellButton;
     Button treasureMapsButton; // round 478
+    Button setsButton; // round 631
     Texture equipOverlay, unusableOverlay;
     Dialog useDialog, deleteDialog, sellDialog;
     int columns = 0;
@@ -239,6 +240,24 @@ public class InventoryScene extends UIScene {
                 public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                     treasureMapsButton.setChecked(false);
                     TreasureMapScene.show();
+                }
+            });
+        }
+        // Round 631: the gear sets' page, from the doll's bottom-left square (the treasure maps' twin at the bottom right).
+        setsButton = ui.findActor("setsButton");
+        if (setsButton != null) {
+            Sprite setsIcon = Config.instance().getItemSprite("GoldArmor");
+            if (setsIcon != null) {
+                Image icon = new Image(setsIcon);
+                icon.setTouchable(com.badlogic.gdx.scenes.scene2d.Touchable.disabled);
+                icon.setPosition((setsButton.getWidth() - icon.getWidth()) / 2, (setsButton.getHeight() - icon.getHeight()) / 2);
+                setsButton.addActor(icon);
+            }
+            setsButton.addListener(new com.badlogic.gdx.scenes.scene2d.utils.ClickListener() {
+                @Override
+                public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                    setsButton.setChecked(false);
+                    SetsScene.show(null);
                 }
             });
         }
@@ -766,6 +785,8 @@ public class InventoryScene extends UIScene {
         updateInventory();
         if (treasureMapsButton != null) // round 478
             treasureMapsButton.setVisible(TreasureHunt.anyPieces(Current.world()));
+        if (setsButton != null) // round 631
+            setsButton.setVisible(SetsScene.available());
         //inventory.add().expand();
         super.enter();
     }

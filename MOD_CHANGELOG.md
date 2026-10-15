@@ -14264,6 +14264,63 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 635: the History map shows the five AI castles and the mountain ranges; plain-ink notice popups (2026-10-15)
+
+The user, on the History replay (round 626): "I think you need to add the 5 AI Castles on there. they should have a
+slightly different symbol. Since they can fall and is a major event." and "Let's add the Mountain ranges to this map,
+since that prevents the spread of territory, like water." And, loading a save from before round 626: "I just loaded my
+game and cant' play the History. Is that because it was not a new game?" (yes - its history starts that day).
+
+- **Castles** (`world/WorldHistory`): the five color castles (POI type castle, "<Color> Castle") are recorded with the
+  towns under a new kind, KIND_CASTLE = 16 - their color while it stands, WASTE once World.isColorDefeated() (a castle
+  whose POI leaves the map stays as fallen). Not towns: the legend's town counts leave them out. A fall is everyone's
+  news, so it is a milestone caption: "The White Castle fell - White is defeated".
+  - A town record is now townIndex << 5 | kind | owner (FORMAT 2); a format-1 history (round 626, << 4) is re-packed
+    on load. Castles enter an older history on its next recorded day.
+  - `HistoryScene.paintCastle`: a keep (13 x 10 tiles, three merlons, a gate) in the color's shade over the towns;
+    grey and cracked once fallen.
+- **Mountains**: the barrier layer (round 294) is drawn as rock, three tones mixed tile by tile, read from the world
+  when the page opens (`World.isBarrierRow`, by row from the top - it never changes, so it is not recorded). Rock tiles
+  are left out of every Land share; a "Mountains" key under the legend.
+- **One recorded day**: Play is disabled and the caption says every day played from now on is added (an older save, or
+  a new game on its first day).
+- **Notice popups in plain ink** (the user, with a screenshot of three orange "has fallen to" lines: "Let's not color
+  code the popups, just the log."): `GameHUD.plainInk` turns every color tag of a banner into [BLACK] ([WHITE] stays -
+  it only frames icon glyphs); the notice log keeps round 594's tints and the rest. Seen: "Green has fallen!" black in
+  the popup, red in the Log.
+- GUIDE: the History paragraph.
+- Seen in the agent game (slot 5, a format-1 history from day 1): rock between the color circles, the castles beside
+  their capitals from their first recorded day, `defeat color white` -> a grey cracked keep, and after `defeat color
+  blue` + a day: "Day 58 - The Blue Castle fell - Blue is defeated".
+
+## Round 631: the Sets page - every gear set, its pieces, bonuses and where to find them (2026-10-15)
+
+The user's gear-sets request (round 629): "an interface that shows the bonuses per set for both player and guards".
+Mock-up sent first (list, one set, the doll button).
+
+- **`scene/SetsScene`** (`ui/sets.json`, `sets_portrait.json`; the treasure maps' parchment page):
+  - The list: every set, worn sets first (then owned, then Regalia / Bane / Legend) - its seven icons (owned in full
+    color, missing dimmed, worn checked with the inventory's overlay), the family line ("Regalia - white", "Bane -
+    against white", "Legend"), worn and owned counts (worn in green from 3) and the bonus it gives now.
+  - One set (tap its row or name): each piece with its slot and where it is (worn by you / this guard, in your bag,
+    in the Armory storage, worn by your <Rank> guard, cracked) or, when missing, where to find it; the 3 / 5 / 7
+    bonuses with the cards' rules text, active ones in green, the 5-piece card "replaced by the full card" at 7;
+    where to find the set. Back returns to the list, then leaves.
+  - For a guard, "worn" is that guard's gear; "owned" is always the player's (a guard's gear comes from the player).
+- **Buttons**: the inventory doll's free bottom-left square (the treasure maps' twin, Gold Armor icon; inventory.json
+  17,220 / portrait 17,324), and a **Sets** text button on a roaming guard's Armory screen in Dispose's place (hidden
+  for the player, shown for a guard).
+- **Descriptions**: every set piece's description gains "Gear set: Dawnward Regalia (Regalia - white) - you wear 3 of
+  7" (`ItemSets.descriptionLine`, in ItemData.getDescription - shops and rewards too).
+- **item_sets.json** gains `color` (Regalia), `where` (the set), `itemWhere` (each piece) and each tier's `oracle`,
+  written by `make_gear_sets.py --repo <root> --json-only` from the shops, the Arena prize lists (one name a line - a
+  dialog's escaped quote broke quote pairing across a map), enemy drops and the Armories; the four items round 631's
+  successor adds say "not in the game yet".
+- GUIDE: the Sets page bullet under Gear Sets.
+- Seen in the agent game: the doll button -> the list (Dawnward 3/7 worn, +2 life), a set's page (worn by you, in your
+  bag, where to find the rest), the player's Armory without a Sets button, an Archmage guard's Armory with one ->
+  "Archmage Guard - Gear Sets".
+
 ## Round 634: the Humongous Ettin gets the user's hand-made two-headed giant (2026-10-15)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/ettin/convert.sh`. This is A15 of the

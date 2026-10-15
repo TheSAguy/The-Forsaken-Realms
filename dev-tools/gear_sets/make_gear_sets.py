@@ -9,7 +9,7 @@ The one source of the sets. Writes:
 Bonuses sit on top of the items' own: 3 pieces +2 life (a Bane set +3, only against its color), 5 the set's card in the
 command zone, 7 its full version in that card's place. Never a creature.
 
-usage: python make_gear_sets.py --repo <TFR repo root> [--preview <png>]   (nothing is written without --repo; --preview
+usage: python make_gear_sets.py --repo <TFR repo root> [--preview <png>] [--json-only]   (nothing is written without --repo; --preview
        alone only draws the card sheet)
 """
 import argparse
@@ -218,11 +218,88 @@ def card_script(card, colors):
     return '\n'.join(out) + '\n'
 
 
-def sets_json():
+# ---------------------------------------------------------------------------------------------------- where to find them
+# Round 631 (the Sets page): a short "where" per piece and per set, from the data that places them - the shops that list
+# a piece, the Arena prize lists (round 3's item of each capital, the Capitol's two), the enemies that drop it, and the
+# Armories (every piece without excludeFromGeneralSale, by rarity). Rerun after a placement changes.
+CAPITAL_MAPS = {'plains_capital.tmx': 'the Plains Capital Arena', 'island_capital.tmx': 'the Island Capital Arena',
+                'swamp_capital.tmx': 'the Swamp Capital Arena', 'mountain_capital.tmx': 'the Mountain Capital Arena',
+                'forest_capital.tmx': 'the Forest Capital Arena'}
+
+
+def _quoted_names(path):
+    import html
+    import re
+    # One name a line, as the prize lists hold them: pairing quotes across the file breaks on a dialog's escaped quote.
+    text = html.unescape(open(path, encoding='utf-8').read())
+    return set(re.findall(r'^[ \t]*"([^"\n]+)",?[ \t]*\r?$', text, re.M))
+
+
+def sources(plane):
+    """item name -> {'shops': [...], 'arenas': [...], 'drops': [...], 'armory': rarity or None}"""
+    import re
+    catalog = {i['name']: i for i in json.load(open(os.path.join(plane, 'world', 'items.json'), encoding='utf-8'))}
+    names = {n for st in SETS for n in st['items']}
+    out = {n: {'shops': [], 'arenas': [], 'drops': [], 'armory': None, 'exists': n in catalog} for n in names}
+    for n in names:
+        it = catalog.get(n)
+        if it and not it.get('excludeFromGeneralSale'):
+            out[n]['armory'] = it.get('rarity', 'Common')
+    for sh in json.load(open(os.path.join(plane, 'world', 'shops.json'), encoding='utf-8')):
+        label = re.sub(r'(?<!^)([A-Z])', r' \1', sh['name']) + ' shops'
+        for r in sh.get('rewards') or []:
+            for n in r.get('itemNames') or []:
+                if n in out and label not in out[n]['shops']:
+                    out[n]['shops'].append(label)
+    for fn, label in CAPITAL_MAPS.items():
+        found = _quoted_names(os.path.join(plane, 'maps', 'map', 'main_story', fn))
+        for n in names & found:
+            out[n]['arenas'].append(label)
+    found = _quoted_names(os.path.join(plane, 'maps', 'map', 'towns', 'player_capital.tmx'))
+    for n in names & found:
+        out[n]['arenas'].append("your Capitol's Arena")
+    for e in json.load(open(os.path.join(plane, 'world', 'enemies.json'), encoding='utf-8')):
+        who = e.get('nameOverride') or e['name']
+        for r in e.get('rewards') or []:
+            n = r.get('itemName')
+            if n in out and who not in out[n]['drops']:
+                out[n]['drops'].append(who)
+    return out
+
+
+def piece_where(src):
+    """One short line: shops, Arenas, a boss or two, the Armories - at most three places."""
+    parts = src['shops'] + src['arenas']
+    if src['drops']:
+        parts.append('drops from ' + ' / '.join(sorted(src['drops'])[:2]))
+    if src['armory']:
+        parts.append('Armories (%s)' % src['armory'])
+    if not src['exists']:
+        return 'not in the game yet'
+    return ', '.join(parts[:3]) if parts else 'no shop or drop yet'
+
+
+def set_where(st, src):
+    places = []
+    for n in st['items']:
+        for p in src[n]['shops'] + src[n]['arenas']:
+            if p not in places:
+                places.append(p)
+    if any(src[n]['armory'] for n in st['items']):
+        places.append('the Armories')
+    if any(src[n]['drops'] for n in st['items']):
+        places.append('some pieces drop from bosses')
+    return '; '.join(places)
+
+
+def sets_json(plane):
+    src = sources(plane)
     out = []
     for st in SETS:
         three = {'pieces': 3, 'effect': {'lifeModifier': 3 if st['family'] == 'Bane' else 2},
                  'text': ('+3 life against %s' % COLOR_LOWER[st['against']]) if st['family'] == 'Bane' else '+2 life'}
+        three['oracle'] = ('+3 life in a duel against a %s enemy' % COLOR_LOWER[st['against']]
+                           if st['family'] == 'Bane' else '+2 life in every duel')
         if st['family'] == 'Bane':
             three['onlyAgainst'] = True
         five_effect = {'startBattleWithCardInCommandZone': [st['card5'][0]]}
@@ -233,10 +310,15 @@ def sets_json():
             seven_effect['startBattleWithCard'] = ['c_a_treasure_sac', 'c_a_treasure_sac']
         out.append({
             'id': st['id'], 'name': st['name'], 'family': st['family'], 'against': st.get('against'),
+            'color': COLOR_LOWER[st['color']] if st['family'] == 'Regalia' else None,
             'items': st['items'],
+            'itemWhere': [piece_where(src[n]) for n in st['items']],
+            'where': set_where(st, src),
             'tiers': [three,
-                      {'pieces': 5, 'effect': five_effect, 'text': st['card5'][0]},
-                      {'pieces': 7, 'effect': seven_effect, 'replaces': 5, 'text': st['card7'][0]}],
+                      {'pieces': 5, 'effect': five_effect, 'text': st['card5'][0],
+                       'oracle': st['card5'][2].replace('\\n', ' ')},
+                      {'pieces': 7, 'effect': seven_effect, 'replaces': 5, 'text': st['card7'][0],
+                       'oracle': st['card7'][2].replace('\\n', ' ')}],
         })
     return out
 
@@ -297,6 +379,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--repo')
     ap.add_argument('--preview')
+    ap.add_argument('--json-only', action='store_true', help='rewrite item_sets.json only (round 631: the where lines)')
     a = ap.parse_args()
     root = a.repo or 'C:/TFR/repo'
     plane = os.path.join(root, 'forge-gui', 'res', 'adventure', 'The Forsaken Realms')
@@ -317,9 +400,13 @@ def main():
         print('preview', a.preview)
     if not a.repo:
         return
+    data = sets_json(plane)
     with open(os.path.join(plane, 'world', 'item_sets.json'), 'w', encoding='utf-8', newline='\n') as fh:
-        json.dump(sets_json(), fh, indent=2, ensure_ascii=False)
+        json.dump(data, fh, indent=2, ensure_ascii=False)
         fh.write('\n')
+    if a.json_only:
+        print('wrote item_sets.json (%d sets)' % len(SETS))
+        return
     for st, card, f in faces:
         with open(os.path.join(common, 'custom_cards', slug(card[0]) + '.txt'), 'w', encoding='utf-8', newline='\n') as fh:
             fh.write(card_script(card, st['colors']))

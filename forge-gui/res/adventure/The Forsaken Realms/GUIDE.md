@@ -152,8 +152,11 @@ where the colors - and you - fight it out.
 **Watch it happen.** The map screen's **History** button replays your game from its first day to today, the
 whole world on one screen with the fog of war lifted: each color's land filling in, town dots changing hands, a legend with every power's
 towns and share of the land, and a caption for your own milestones (towns you restore, take or lose, the
-Capitol). Play, pause, change the speed or drag the slider to any day. The history is recorded as you play, so
-a game started before version 1.22 replays from the first day it was loaded on 1.22.
+Capitol). The five AI castles are drawn as small keeps in their color - grey and cracked once one has fallen, with
+a caption for the fall - and the mountain ranges show as rock, which no territory crosses (their ground is left
+out of the land shares). Play, pause, change the speed or drag the slider to any day. The history is recorded as
+you play, so a game started before version 1.22 replays from the first day it was loaded on 1.22 - until a second
+day is recorded there is nothing to play yet.
 
 ### Winning and Losing
 
@@ -1023,6 +1026,11 @@ one set and you get its bonus **on top of** what the items do themselves:
 - **Regalia** sets (one per color, Uncommon) play to their color. **Bane** sets (Rare) are built from the two colors
   that are their target's enemies on the color wheel - wear the Sunbane Raiment when you go to war with White.
   **Legend** sets reward a theme.
+- **The Sets page**: the armor button in the bottom-left square of the inventory's paper doll lists every set - its
+  seven pieces (the ones you own in full color, the ones worn checked), how many you wear and own, and the bonus it
+  gives now. Tap a set for each piece's place or where to find it, and the full 3 / 5 / 7 bonuses. A roaming guard's
+  Armory screen has a **Sets** button for that guard. Every set piece's description also names its set and how many
+  of it you wear.
 
 | Set | Pieces | 5 pieces | 7 pieces add |
 |---|---|---|---|

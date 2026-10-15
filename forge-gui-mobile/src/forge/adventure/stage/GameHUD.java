@@ -1545,6 +1545,14 @@ public class GameHUD extends Stage {
     private final java.util.ArrayDeque<String[]> noticeLog = new java.util.ArrayDeque<>(); // {text, tint, day}, newest first
     private boolean noticeShowing;
 
+    /** A banner's text with its colors taken out: [#hex] and named color tags become [BLACK], [WHITE] (icons) stays. */
+    static String plainInk(String text) {
+        if (text == null)
+            return null;
+        return text.replaceAll("\\[#[0-9A-Fa-f]{3,8}\\]", "[BLACK]")
+                .replaceAll("\\[(?!WHITE\\]|BLACK\\])[A-Z][A-Z_]*\\]", "[BLACK]");
+    }
+
     private void logNotice(String[] notice) {
         int day = WorldSave.getCurrentSave() != null && WorldSave.getCurrentSave().getWorld() != null
                 ? WorldSave.getCurrentSave().getWorld().getCurrentDay() : 0;
@@ -1567,8 +1575,11 @@ public class GameHUD extends Stage {
             text.append("\n[ ]").append(noticeQueue.poll()[0]); // [ ] - each notice starts from plain formatting
             count++;
         }
-        final String shown = text.toString();
         final boolean whiteTint = "w".equals(first[1]);
+        // Round 635 (the user: "Let's not color code the popups, just the log"): the banner reads in plain ink - every
+        // color tag becomes [BLACK]; [WHITE] stays, as it only ever frames an icon glyph ([WHITE][+Gold][BLACK]). The
+        // notice log keeps the colors (round 594's town tints and the rest).
+        final String shown = whiteTint ? plainInk(text.toString()) : text.toString();
         System.out.println("[TFR-Notices] banner of " + count + " notice" + (count == 1 ? "" : "s") + ", " + noticeQueue.size()
                 + " waiting");
         Action preconfigureNotification = new Action() {
