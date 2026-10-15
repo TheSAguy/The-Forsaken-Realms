@@ -82,7 +82,7 @@ the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from 
 
 ## STATE 2026-10-15 (16:26 UTC): **v1.21 "Faces & Fates" RELEASED** - tag `tfr-v1.21` @ `5d2157e96cc`, published
 16:26:05 UTC, Latest. Rounds 519-620 on top of v1.20 (519-524 had shipped only in the Android hotfix 1.20.1). Engine =
-the 10.14 daily (upstream `34a8662b796`, round 612). Assets in `C:\TFRelease1.21`:
+the 10.14 daily (upstream `34a8662b796`, round 612). Assets in `C:\TFR\release\v1.21`:
 - `The-Forsaken-Realms-v1.21.zip` 434.3 MB;
 - `forsaken-realms-1.21-signed-aligned.apk` 13.1 MB (com.thesaguy.forsakenrealms, versionCode 12100, signer EE:60:39:25);
 - `assets.zip` 388.0 MB (build.txt pair 2026-10-15 16:21:59; Android from `C:\TFR-build` via R:).
