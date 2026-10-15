@@ -91,6 +91,10 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (round 638): **LOCAL + UNRELEASED (art + data)** - the Artifact Warrior and Bosh become the
+RPG Maker armored golem, recolored steel blue and rust red (generator `packs/rpgmaker/imports5.json`). enemies.json 2
+paths + scales. #32 packages. Not seen in play.
+
 ## STATE 2026-10-15 (round 636): **LOCAL + UNRELEASED (art + data)** - the Dismembered and the Unwinding Crawler get
 the user's hand-made brain-dome crawler (Pixelate; one still, the brain tinted red / violet; generator
 `pixelate/crawler/convert.sh`). enemies.json 2 paths + scales. #32 packages. Not seen in play.

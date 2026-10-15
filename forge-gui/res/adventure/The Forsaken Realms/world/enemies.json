@@ -2467,7 +2467,7 @@
     },
     {
         "name": "Artifact Warrior",
-        "sprite": "sprites/enemy/construct/artifactsoldier.atlas",
+        "sprite": "sprites/enemy/remake/artifact_warrior.atlas",
         "deck": [
             "decks/standard/artifactwarrior.dck"
         ],
@@ -2537,7 +2537,7 @@
             "Robot"
         ],
         "tier": "Mythic",
-        "scale": 1.0833
+        "scale": 0.3333
     },
     {
         "name": "Ashmouth Devil",
@@ -94641,7 +94641,7 @@
     },
     {
         "name": "Bosh",
-        "sprite": "sprites/enemy/construct/artifactsoldier.atlas",
+        "sprite": "sprites/enemy/remake/bosh.atlas",
         "deck": [
             "decks/legends/bosh.dck"
         ],
@@ -94705,7 +94705,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.3333
     },
     {
         "name": "Graaz",

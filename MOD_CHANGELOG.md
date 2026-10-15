@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 638: the Artifact Warrior and Bosh become armored golems (2026-10-15)
+
+The Procedural Pixel Creatures session, from the generator repo's `packs/rpgmaker/imports5.json` (`pack_import.py`).
+These are A21-22 of the low-quality list: the two enemies on the stock 16 px `construct/artifactsoldier` sprite. The
+user picked the small armored golem from the RPG Maker golem sheet the round-476 imports use, "with slightly different
+coloring".
+
+- **Artifact Warrior** (blue deck): the green armored golem turned steel blue. The grey one has no color for a tint to
+  turn and stayed a twin of the Golem Sentinel.
+- **Bosh** (Bosh, Iron Golem; red deck): the bronze armored golem turned rust red.
+- Both differ from every golem already on that body: Blue Golem, Kilo, Arcane Golem, Time Walker, Alibou, Iron Golem,
+  Golem Sentinel, Golos, Green Prototype and the others.
+- **Files**:
+  - 2 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 2 sprite paths and scales (Artifact Warrior 0.3333, Bosh 0.3333).
+  - No credits change: the RPG Maker pack is already credited.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 2, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit's 2 "review" flags are the house shadow ellipse under the attack's leap, the same flag Alibou and the Green Prototype carry on this body.
+  - Both Avatars are whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 636: the two crawlers get the user's hand-made brain-dome crawler (2026-10-15)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/crawler/convert.sh`. These are A18-19 of
