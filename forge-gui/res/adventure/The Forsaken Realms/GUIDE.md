@@ -1003,6 +1003,55 @@ that spot and take the half back up - a teleport anchor you place yourself. One 
 a town or dungeon it does nothing and the shard comes back. The Bonfire and the Yin-Yang rune are
 Rare items: look for them in Armories.
 
+### Gear Sets
+
+Some equipment belongs to one of fifteen **gear sets** of seven pieces, one for each main slot. Wear several pieces of
+one set and you get its bonus **on top of** what the items do themselves:
+
+| Pieces worn | Bonus |
+|---|---|
+| 3 | +2 life in every duel - a **Bane** set gives +3 life instead, but only against an enemy of its color |
+| 5 | the set's card starts in your command zone (beside the battlefield, like a boss's Presence) |
+| 7 | the card's full version takes its place |
+
+- Only different pieces count: two copies of one piece are one piece. A piece that cracks after a lost duel comes off,
+  and the set drops a tier until you wear it again.
+- You can wear two partial sets at once (say 4 + 3 at level 35). Sets never put a creature into play, so they never
+  touch your companion limit.
+- Your **roaming guards** get set bonuses too. A guard wears 2 / 3 / 5 / 7 main items by rank (Apprentice / Adept /
+  Master / Archmage), so an Adept reaches the 3-piece bonus, a Master the card and an Archmage the whole set.
+- **Regalia** sets (one per color, Uncommon) play to their color. **Bane** sets (Rare) are built from the two colors
+  that are their target's enemies on the color wheel - wear the Sunbane Raiment when you go to war with White.
+  **Legend** sets reward a theme.
+
+| Set | Pieces | 5 pieces | 7 pieces add |
+|---|---|---|---|
+| **Dawnward Regalia** - Regalia (White) | Mask of Hypochondria, Jewel of Blessings, Nomad Armor, Thunder Lasso, Prayerbook of Vigor, Vindicator Greaves, Empyrial Greaves | At the beginning of your upkeep, you gain 1 life. | Creatures you control get +0/+1. |
+| **Tidewise Regalia** - Regalia (Blue) | Roiling Stormcrown, Tidal Amulet, Cephalid Armor, Giant's Bracer, Prayerbook of Fortunes, Barrier Breeches, Sovereign Greaves | At the beginning of your upkeep, scry 1. | The first instant or sorcery spell you cast each turn costs {1} less to cast. |
+| **Gravebound Regalia** - Regalia (Black) | Mask of Mortiphobia, Amulet of Scorn, Cabal Armor, Enormous Energy Blade, Little Black Book, Leech Breeches, Princely Greaves | Whenever a creature you control dies, each opponent loses 1 life. | Whenever a creature you control dies, you gain 1 life. |
+| **Emberclad Regalia** - Regalia (Red) | Mask of Pyromania, Jewel of War, Barbarian Armor, Ramosian Greatsword, Tome of Triumph, Hellkite Greaves, Firefrightener Shoes | Whenever you cast your first instant or sorcery spell each turn, Emberclad Presence deals 1 damage to each opponent. | Whenever you cast your first instant or sorcery spell each turn, Emberclad Regalia deals 2 damage to each opponent. |
+| **Wildgrove Regalia** - Regalia (Green) | Mask of Narcissism, Jewel of Rage, Centaur Armor, Colossal Dreadmace, Map to the World Tree, Godsire Greaves, Greenseeker's Shoes | Creatures you control with power 4 or greater have trample. | Creature spells you cast with power 4 or greater cost {1} less to cast. |
+| **Sunbane Raiment** - Bane (against white) | Mask of Valgavoth, Amulet of Fury, Armor of Urami, Unhallowed Sigil, Staff of Azar, Alesha's War Skirt, Witch's Shoes | White spells your opponents cast cost {1} more to cast. | Whenever an opponent casts a white spell, you gain 1 life. |
+| **Tidebane Raiment** - Bane (against blue) | Pinnacle Circlet, Amulet of Favor, Grovetender's Robes, Shaman's Staff, Warren Tender's Baton, Spore Skirt, Concordant Boots | Blue spells your opponents cast cost {1} more to cast. | Whenever an opponent casts a blue spell, you gain 1 life. |
+| **Nightbane Raiment** - Bane (against black) | Glorious Helm, Amulet of Mirth, Sanctuary Armor, Skyclave Maul, Guard's Shield, Lookout's Leggings, Ley Line Walker Boots | Black spells your opponents cast cost {1} more to cast. | Whenever an opponent casts a black spell, you gain 1 life. |
+| **Flamebane Raiment** - Bane (against red) | Caretaker's Cap, Amulet of Mischief, Oracle's Robes, Serra's Prayer Book, The Blackstaff of Waterdeep, Pack Leader Pants, Peddler's Shoes | Red spells your opponents cast cost {1} more to cast. | Whenever an opponent casts a red spell, you gain 1 life. |
+| **Wildbane Raiment** - Bane (against green) | Crown of the False God, Amulet of Agony, Librarian's Robes, Poet's Quill, Tome of the Trove, Cutthroat Skirt, Immortal Treads | Green spells your opponents cast cost {1} more to cast. | Whenever an opponent casts a green spell, you gain 1 life. |
+| **Dragonlord's Hoard** - Legend | Breaching Stormcrown, Phoenix Charm, Crucible Armor, Sword of the Ur-Dragon, Triassic Egg, Draped Dragonhide, Faerie Slippers | Dragon spells you cast cost {1} less to cast. | Dragons you control get +1/+0. |
+| **Stonewall Bulwark** - Legend | High Ground Helm, Basilisk Collar, Glacial Armor, Aegis of the Meek, Shield of Air, Greaves of Glare, Kry Greaves | Creatures you control with defender get +0/+2. | Whenever a creature you control with defender blocks, you gain 1 life. |
+| **Fblthp's Lost Things** - Legend | Fblthp's Lost Hat, Fblthp's Lost Locket, Fblthp's Lost Shirt, Fblthp's Lost Fishing Pole, Fblthp's Lost Bauble, Fblthp's Lost Trousers, Fblthp's Lost Socks | At the beginning of your upkeep, if you have no cards in hand, draw a card. | You began this game with one more card in hand. |
+| **Ironclad** - Legend | War Helm, Amulet of Vigor, Steel Armor, Steel Shield, Steel Sword, Steel Greaves, Iron Boots | Equip abilities you activate cost {1} less to activate. | Equipped creatures you control get +1/+1. |
+| **Gilded Paragon** - Legend | Crown of the Vale, Golden Egg, Mithril Armor, Gold Shield, Staff of the Ages, Mithril Greaves, Mithril Boots | You start with a Treasure. Whenever you sacrifice a Treasure, you gain 1 life. | You start with two Treasures. Whenever you sacrifice a Treasure, you gain 2 life. |
+
+**Where to find them.** Every piece is sold in the Armories by its rarity, and most also drop from a named boss.
+- Each color's **Equipment shop** sells its color's Regalia.
+- Each AI capital's **Arena** prize is a piece of its own Regalia or of the Bane set aimed at one of its enemies: the
+  Plains Capital the Dawnward Regalia and the Flamebane Raiment, the Island Capital Tidewise and Wildbane, the Swamp
+  Capital Gravebound and Sunbane, the Mountain Capital Emberclad and Tidebane, the Forest Capital Wildgrove and Nightbane.
+- Your Capitol's **Arena** adds Ironclad and Gilded Paragon; its **Level 2** Arena adds Dragonlord's Hoard, Stonewall
+  Bulwark and Fblthp's Lost Things (and Mithril Armor).
+- An Arena that would hand you a set piece you already own gives you a piece of that set you are missing instead,
+  while there is one in its prize list.
+
 ## Notes on Difficulty
 
 Insane difficulty roughly doubles the stakes of everything above: reputation swings matter more,
@@ -1293,7 +1342,7 @@ Other Armory notes:
 - Prices are 25% cheaper in your own towns and 25% pricier in an AI color town, before reputation.
 - **Storage.** Your Capitol's Level 2 Armory has a storage: put spare equipment (anything with a slot
   that you are not wearing) in from your inventory, and take it back out there. A roaming guard's
-  **Equipment** button dresses it from that storage, one item per slot - with Ascendance up to 2 / 3 / 4 / 5 main
+  **Equipment** button dresses it from that storage, one item per slot - with Ascendance up to 2 / 3 / 5 / 7 main
   items for an Apprentice / Adept / Master / Archmage guard, and never the Staff, Utility or gauntlet slots.
   What a guard wears fights with it - its own bonuses on its side, its items' opponent effects on
   the mage's - whether you watch the duel or let it simulate, and boots make it walk faster.

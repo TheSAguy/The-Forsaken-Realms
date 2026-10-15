@@ -80,13 +80,14 @@
 
   // Level rewards: +1 max life at these levels; main-slot items (Head, Neck, Body, Left, Right, Legs, Boots - round 607
   // added Head and Legs and the 6th and 7th item at 35 and 40) 1, +1 at each of mainSlotLevels; the titles; a roaming
-  // guard's main-slot items by its rank.
+  // guard's main-slot items by its rank (round 629: 2 / 3 / 5 / 7 for the seven slots, so each rank reaches one gear-set
+  // tier - Adept 3 pieces, Master 5, Archmage the whole set).
   "lifeLevels": [5, 10, 15, 20, 25, 30, 35, 40],
   "mainSlotsBase": 1,
   "mainSlotLevels": [5, 10, 15, 20, 35, 40],
   "titleLevels": [5, 10, 15, 20, 25, 30, 35, 40],
   "titles": ["Unbound", "Reclaimer", "Warden of Ash", "Seal-breaker", "Sovereign", "Ascendant", "Weavebinder", "Eternal"],
-  "guardMainSlots": [2, 3, 4, 5],
+  "guardMainSlots": [2, 3, 5, 7],
   // Round 502, companions: worn items that start a creature on the battlefield, in any slot (the gauntlets' second
   // hands and the Token slot too). companionBase at level 0, +1 at each of companionLevels. A character without
   // Ascendance (an older save, or leveling switched off in Settings) may wear companionsWithoutAscendance.

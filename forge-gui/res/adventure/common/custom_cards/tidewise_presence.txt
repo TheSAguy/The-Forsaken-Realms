@@ -1,0 +1,7 @@
+Name:Tidewise Presence
+ManaCost:no cost
+Colors:blue
+Types:Enchantment
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ TrigScry | TriggerDescription$ At the beginning of your upkeep, scry 1.
+SVar:TrigScry:DB$ Scry | ScryNum$ 1
+Oracle:At the beginning of your upkeep, scry 1.

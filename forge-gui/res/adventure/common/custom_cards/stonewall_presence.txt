@@ -1,0 +1,5 @@
+Name:Stonewall Presence
+ManaCost:no cost
+Types:Enchantment
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature.withDefender+YouCtrl | AddToughness$ 2 | Description$ Creatures you control with defender get +0/+2.
+Oracle:Creatures you control with defender get +0/+2.

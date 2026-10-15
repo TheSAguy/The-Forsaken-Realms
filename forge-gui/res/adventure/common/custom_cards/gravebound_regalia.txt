@@ -1,0 +1,9 @@
+Name:Gravebound Regalia
+ManaCost:no cost
+Colors:black
+Types:Enchantment
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.YouCtrl | TriggerZones$ Command | Execute$ TrigDrain | TriggerDescription$ Whenever a creature you control dies, each opponent loses 1 life.
+SVar:TrigDrain:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ 1
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.YouCtrl | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ Whenever a creature you control dies, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+Oracle:Whenever a creature you control dies, each opponent loses 1 life.\nWhenever a creature you control dies, you gain 1 life.

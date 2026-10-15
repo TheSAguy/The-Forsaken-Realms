@@ -1,0 +1,8 @@
+Name:Tidebane Raiment
+ManaCost:no cost
+Colors:red,green
+Types:Enchantment
+S:Mode$ RaiseCost | EffectZone$ Command | ValidCard$ Card.Blue | Type$ Spell | Activator$ Opponent | Amount$ 1 | Description$ Blue spells your opponents cast cost {1} more to cast.
+T:Mode$ SpellCast | ValidCard$ Card.Blue | ValidActivatingPlayer$ Opponent | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ Whenever an opponent casts a blue spell, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+Oracle:Blue spells your opponents cast cost {1} more to cast.\nWhenever an opponent casts a blue spell, you gain 1 life.

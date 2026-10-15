@@ -1,0 +1,8 @@
+Name:Nightbane Raiment
+ManaCost:no cost
+Colors:green,white
+Types:Enchantment
+S:Mode$ RaiseCost | EffectZone$ Command | ValidCard$ Card.Black | Type$ Spell | Activator$ Opponent | Amount$ 1 | Description$ Black spells your opponents cast cost {1} more to cast.
+T:Mode$ SpellCast | ValidCard$ Card.Black | ValidActivatingPlayer$ Opponent | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ Whenever an opponent casts a black spell, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+Oracle:Black spells your opponents cast cost {1} more to cast.\nWhenever an opponent casts a black spell, you gain 1 life.

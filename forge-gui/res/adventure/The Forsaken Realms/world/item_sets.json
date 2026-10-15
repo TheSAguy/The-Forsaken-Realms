@@ -1,0 +1,660 @@
+[
+  {
+    "id": "dawnward",
+    "name": "Dawnward Regalia",
+    "family": "Regalia",
+    "against": null,
+    "items": [
+      "Mask of Hypochondria",
+      "Jewel of Blessings",
+      "Nomad Armor",
+      "Thunder Lasso",
+      "Prayerbook of Vigor",
+      "Vindicator Greaves",
+      "Empyrial Greaves"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 2
+        },
+        "text": "+2 life"
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Dawnward Presence"
+          ]
+        },
+        "text": "Dawnward Presence"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Dawnward Regalia"
+          ]
+        },
+        "replaces": 5,
+        "text": "Dawnward Regalia"
+      }
+    ]
+  },
+  {
+    "id": "tidewise",
+    "name": "Tidewise Regalia",
+    "family": "Regalia",
+    "against": null,
+    "items": [
+      "Roiling Stormcrown",
+      "Tidal Amulet",
+      "Cephalid Armor",
+      "Giant's Bracer",
+      "Prayerbook of Fortunes",
+      "Barrier Breeches",
+      "Sovereign Greaves"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 2
+        },
+        "text": "+2 life"
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Tidewise Presence"
+          ]
+        },
+        "text": "Tidewise Presence"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Tidewise Regalia"
+          ]
+        },
+        "replaces": 5,
+        "text": "Tidewise Regalia"
+      }
+    ]
+  },
+  {
+    "id": "gravebound",
+    "name": "Gravebound Regalia",
+    "family": "Regalia",
+    "against": null,
+    "items": [
+      "Mask of Mortiphobia",
+      "Amulet of Scorn",
+      "Cabal Armor",
+      "Enormous Energy Blade",
+      "Little Black Book",
+      "Leech Breeches",
+      "Princely Greaves"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 2
+        },
+        "text": "+2 life"
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Gravebound Presence"
+          ]
+        },
+        "text": "Gravebound Presence"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Gravebound Regalia"
+          ]
+        },
+        "replaces": 5,
+        "text": "Gravebound Regalia"
+      }
+    ]
+  },
+  {
+    "id": "emberclad",
+    "name": "Emberclad Regalia",
+    "family": "Regalia",
+    "against": null,
+    "items": [
+      "Mask of Pyromania",
+      "Jewel of War",
+      "Barbarian Armor",
+      "Ramosian Greatsword",
+      "Tome of Triumph",
+      "Hellkite Greaves",
+      "Firefrightener Shoes"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 2
+        },
+        "text": "+2 life"
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Emberclad Presence"
+          ]
+        },
+        "text": "Emberclad Presence"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Emberclad Regalia"
+          ]
+        },
+        "replaces": 5,
+        "text": "Emberclad Regalia"
+      }
+    ]
+  },
+  {
+    "id": "wildgrove",
+    "name": "Wildgrove Regalia",
+    "family": "Regalia",
+    "against": null,
+    "items": [
+      "Mask of Narcissism",
+      "Jewel of Rage",
+      "Centaur Armor",
+      "Colossal Dreadmace",
+      "Map to the World Tree",
+      "Godsire Greaves",
+      "Greenseeker's Shoes"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 2
+        },
+        "text": "+2 life"
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Wildgrove Presence"
+          ]
+        },
+        "text": "Wildgrove Presence"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Wildgrove Regalia"
+          ]
+        },
+        "replaces": 5,
+        "text": "Wildgrove Regalia"
+      }
+    ]
+  },
+  {
+    "id": "sunbane",
+    "name": "Sunbane Raiment",
+    "family": "Bane",
+    "against": "W",
+    "items": [
+      "Mask of Valgavoth",
+      "Amulet of Fury",
+      "Armor of Urami",
+      "Unhallowed Sigil",
+      "Staff of Azar",
+      "Alesha's War Skirt",
+      "Witch's Shoes"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 3
+        },
+        "text": "+3 life against white",
+        "onlyAgainst": true
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Sunbane Ward"
+          ]
+        },
+        "text": "Sunbane Ward"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Sunbane Raiment"
+          ]
+        },
+        "replaces": 5,
+        "text": "Sunbane Raiment"
+      }
+    ]
+  },
+  {
+    "id": "tidebane",
+    "name": "Tidebane Raiment",
+    "family": "Bane",
+    "against": "U",
+    "items": [
+      "Pinnacle Circlet",
+      "Amulet of Favor",
+      "Grovetender's Robes",
+      "Shaman's Staff",
+      "Warren Tender's Baton",
+      "Spore Skirt",
+      "Concordant Boots"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 3
+        },
+        "text": "+3 life against blue",
+        "onlyAgainst": true
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Tidebane Ward"
+          ]
+        },
+        "text": "Tidebane Ward"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Tidebane Raiment"
+          ]
+        },
+        "replaces": 5,
+        "text": "Tidebane Raiment"
+      }
+    ]
+  },
+  {
+    "id": "nightbane",
+    "name": "Nightbane Raiment",
+    "family": "Bane",
+    "against": "B",
+    "items": [
+      "Glorious Helm",
+      "Amulet of Mirth",
+      "Sanctuary Armor",
+      "Skyclave Maul",
+      "Guard's Shield",
+      "Lookout's Leggings",
+      "Ley Line Walker Boots"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 3
+        },
+        "text": "+3 life against black",
+        "onlyAgainst": true
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Nightbane Ward"
+          ]
+        },
+        "text": "Nightbane Ward"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Nightbane Raiment"
+          ]
+        },
+        "replaces": 5,
+        "text": "Nightbane Raiment"
+      }
+    ]
+  },
+  {
+    "id": "flamebane",
+    "name": "Flamebane Raiment",
+    "family": "Bane",
+    "against": "R",
+    "items": [
+      "Caretaker's Cap",
+      "Amulet of Mischief",
+      "Oracle's Robes",
+      "Serra's Prayer Book",
+      "The Blackstaff of Waterdeep",
+      "Pack Leader Pants",
+      "Peddler's Shoes"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 3
+        },
+        "text": "+3 life against red",
+        "onlyAgainst": true
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Flamebane Ward"
+          ]
+        },
+        "text": "Flamebane Ward"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Flamebane Raiment"
+          ]
+        },
+        "replaces": 5,
+        "text": "Flamebane Raiment"
+      }
+    ]
+  },
+  {
+    "id": "wildbane",
+    "name": "Wildbane Raiment",
+    "family": "Bane",
+    "against": "G",
+    "items": [
+      "Crown of the False God",
+      "Amulet of Agony",
+      "Librarian's Robes",
+      "Poet's Quill",
+      "Tome of the Trove",
+      "Cutthroat Skirt",
+      "Immortal Treads"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 3
+        },
+        "text": "+3 life against green",
+        "onlyAgainst": true
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Wildbane Ward"
+          ]
+        },
+        "text": "Wildbane Ward"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Wildbane Raiment"
+          ]
+        },
+        "replaces": 5,
+        "text": "Wildbane Raiment"
+      }
+    ]
+  },
+  {
+    "id": "dragonlord",
+    "name": "Dragonlord's Hoard",
+    "family": "Legend",
+    "against": null,
+    "items": [
+      "Breaching Stormcrown",
+      "Phoenix Charm",
+      "Crucible Armor",
+      "Sword of the Ur-Dragon",
+      "Triassic Egg",
+      "Draped Dragonhide",
+      "Faerie Slippers"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 2
+        },
+        "text": "+2 life"
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Dragonlord's Presence"
+          ]
+        },
+        "text": "Dragonlord's Presence"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Dragonlord's Hoard"
+          ]
+        },
+        "replaces": 5,
+        "text": "Dragonlord's Hoard"
+      }
+    ]
+  },
+  {
+    "id": "stonewall",
+    "name": "Stonewall Bulwark",
+    "family": "Legend",
+    "against": null,
+    "items": [
+      "High Ground Helm",
+      "Basilisk Collar",
+      "Glacial Armor",
+      "Aegis of the Meek",
+      "Shield of Air",
+      "Greaves of Glare",
+      "Kry Greaves"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 2
+        },
+        "text": "+2 life"
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Stonewall Presence"
+          ]
+        },
+        "text": "Stonewall Presence"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Stonewall Bulwark"
+          ]
+        },
+        "replaces": 5,
+        "text": "Stonewall Bulwark"
+      }
+    ]
+  },
+  {
+    "id": "fblthp",
+    "name": "Fblthp's Lost Things",
+    "family": "Legend",
+    "against": null,
+    "items": [
+      "Fblthp's Lost Hat",
+      "Fblthp's Lost Locket",
+      "Fblthp's Lost Shirt",
+      "Fblthp's Lost Fishing Pole",
+      "Fblthp's Lost Bauble",
+      "Fblthp's Lost Trousers",
+      "Fblthp's Lost Socks"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 2
+        },
+        "text": "+2 life"
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Fblthp's Presence"
+          ]
+        },
+        "text": "Fblthp's Presence"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Fblthp's Lost Things"
+          ],
+          "changeStartCards": 1
+        },
+        "replaces": 5,
+        "text": "Fblthp's Lost Things"
+      }
+    ]
+  },
+  {
+    "id": "ironclad",
+    "name": "Ironclad",
+    "family": "Legend",
+    "against": null,
+    "items": [
+      "War Helm",
+      "Amulet of Vigor",
+      "Steel Armor",
+      "Steel Shield",
+      "Steel Sword",
+      "Steel Greaves",
+      "Iron Boots"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 2
+        },
+        "text": "+2 life"
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Ironclad Presence"
+          ]
+        },
+        "text": "Ironclad Presence"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Ironclad"
+          ]
+        },
+        "replaces": 5,
+        "text": "Ironclad"
+      }
+    ]
+  },
+  {
+    "id": "paragon",
+    "name": "Gilded Paragon",
+    "family": "Legend",
+    "against": null,
+    "items": [
+      "Crown of the Vale",
+      "Golden Egg",
+      "Mithril Armor",
+      "Gold Shield",
+      "Staff of the Ages",
+      "Mithril Greaves",
+      "Mithril Boots"
+    ],
+    "tiers": [
+      {
+        "pieces": 3,
+        "effect": {
+          "lifeModifier": 2
+        },
+        "text": "+2 life"
+      },
+      {
+        "pieces": 5,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Paragon's Presence"
+          ],
+          "startBattleWithCard": [
+            "c_a_treasure_sac"
+          ]
+        },
+        "text": "Paragon's Presence"
+      },
+      {
+        "pieces": 7,
+        "effect": {
+          "startBattleWithCardInCommandZone": [
+            "Gilded Paragon"
+          ],
+          "startBattleWithCard": [
+            "c_a_treasure_sac",
+            "c_a_treasure_sac"
+          ]
+        },
+        "replaces": 5,
+        "text": "Gilded Paragon"
+      }
+    ]
+  }
+]

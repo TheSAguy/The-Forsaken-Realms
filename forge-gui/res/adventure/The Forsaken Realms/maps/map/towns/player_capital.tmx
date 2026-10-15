@@ -17942,7 +17942,15 @@
     &quot;Beastbreaker Boots&quot;,
     &quot;Mask of Narcissism&quot;,
     &quot;Chitinous Club&quot;,
-    &quot;Presence of the Hydra&quot;
+    &quot;Presence of the Hydra&quot;,
+    &quot;War Helm&quot;,
+    &quot;Amulet of Vigor&quot;,
+    &quot;Steel Shield&quot;,
+    &quot;Iron Boots&quot;,
+    &quot;Crown of the Vale&quot;,
+    &quot;Golden Egg&quot;,
+    &quot;Staff of the Ages&quot;,
+    &quot;Mithril Boots&quot;
    ]
   }
  ]
@@ -18141,7 +18149,10 @@
     &quot;Kite Shield&quot;,
     &quot;Shell Wand&quot;,
     &quot;Manasight Amulet&quot;,
-    &quot;The Underworld Cookbook&quot;
+    &quot;The Underworld Cookbook&quot;,
+    &quot;Faerie Slippers&quot;,
+    &quot;Greaves of Glare&quot;,
+    &quot;Fblthp's Lost Socks&quot;
    ]
   },
   {
@@ -18303,7 +18314,8 @@
     &quot;Immortal Treads&quot;,
     &quot;Marble Mace&quot;,
     &quot;Life Matrix&quot;,
-    &quot;Gauntlets of Chaos&quot;
+    &quot;Gauntlets of Chaos&quot;,
+    &quot;Breaching Stormcrown&quot;
    ]
   },
   {
@@ -18426,7 +18438,8 @@
     &quot;Armor of the Hivelord&quot;,
     &quot;Cheat&quot;,
     &quot;Staff of the Demoncaller&quot;,
-    &quot;Ring of Three Wishes&quot;
+    &quot;Ring of Three Wishes&quot;,
+    &quot;Mithril Armor&quot;
    ]
   }
  ],
@@ -18618,7 +18631,10 @@
     &quot;Kite Shield&quot;,
     &quot;Shell Wand&quot;,
     &quot;Manasight Amulet&quot;,
-    &quot;The Underworld Cookbook&quot;
+    &quot;The Underworld Cookbook&quot;,
+    &quot;Faerie Slippers&quot;,
+    &quot;Greaves of Glare&quot;,
+    &quot;Fblthp's Lost Socks&quot;
    ]
   },
   {
@@ -18780,7 +18796,8 @@
     &quot;Immortal Treads&quot;,
     &quot;Marble Mace&quot;,
     &quot;Life Matrix&quot;,
-    &quot;Gauntlets of Chaos&quot;
+    &quot;Gauntlets of Chaos&quot;,
+    &quot;Breaching Stormcrown&quot;
    ]
   },
   {
@@ -18903,7 +18920,8 @@
     &quot;Armor of the Hivelord&quot;,
     &quot;Cheat&quot;,
     &quot;Staff of the Demoncaller&quot;,
-    &quot;Ring of Three Wishes&quot;
+    &quot;Ring of Three Wishes&quot;,
+    &quot;Mithril Armor&quot;
    ]
   }
  ],
@@ -19095,7 +19113,10 @@
     &quot;Kite Shield&quot;,
     &quot;Shell Wand&quot;,
     &quot;Manasight Amulet&quot;,
-    &quot;The Underworld Cookbook&quot;
+    &quot;The Underworld Cookbook&quot;,
+    &quot;Faerie Slippers&quot;,
+    &quot;Greaves of Glare&quot;,
+    &quot;Fblthp's Lost Socks&quot;
    ]
   },
   {
@@ -19257,7 +19278,8 @@
     &quot;Immortal Treads&quot;,
     &quot;Marble Mace&quot;,
     &quot;Life Matrix&quot;,
-    &quot;Gauntlets of Chaos&quot;
+    &quot;Gauntlets of Chaos&quot;,
+    &quot;Breaching Stormcrown&quot;
    ]
   },
   {
@@ -19380,7 +19402,8 @@
     &quot;Armor of the Hivelord&quot;,
     &quot;Cheat&quot;,
     &quot;Staff of the Demoncaller&quot;,
-    &quot;Ring of Three Wishes&quot;
+    &quot;Ring of Three Wishes&quot;,
+    &quot;Mithril Armor&quot;
    ]
   },
   {
@@ -19403,7 +19426,27 @@
     &quot;Jandor's Ring&quot;,
     &quot;Dungeon Map&quot;,
     &quot;Mad Staff&quot;,
-    &quot;Disrupting Scepter&quot;
+    &quot;Disrupting Scepter&quot;,
+    &quot;Breaching Stormcrown&quot;,
+    &quot;Phoenix Charm&quot;,
+    &quot;Crucible Armor&quot;,
+    &quot;Sword of the Ur-Dragon&quot;,
+    &quot;Triassic Egg&quot;,
+    &quot;Draped Dragonhide&quot;,
+    &quot;Faerie Slippers&quot;,
+    &quot;High Ground Helm&quot;,
+    &quot;Basilisk Collar&quot;,
+    &quot;Glacial Armor&quot;,
+    &quot;Aegis of the Meek&quot;,
+    &quot;Shield of Air&quot;,
+    &quot;Greaves of Glare&quot;,
+    &quot;Kry Greaves&quot;,
+    &quot;Fblthp's Lost Hat&quot;,
+    &quot;Fblthp's Lost Shirt&quot;,
+    &quot;Fblthp's Lost Fishing Pole&quot;,
+    &quot;Fblthp's Lost Bauble&quot;,
+    &quot;Fblthp's Lost Socks&quot;,
+    &quot;Mithril Armor&quot;
    ]
   }
  ]

@@ -292,6 +292,7 @@ public class WorldSave {
                     // Round 626: a save from before the History replay starts its history today - after
                     // pointOfInterestChanges, whose restored flags make a town the player's.
                     currentSave.world.ensureHistory();
+                    forge.adventure.util.Ascendance.enforceGuardLimits(); // round 629: a guard over its rank's limit
                     WorldStage.getInstance().load(mainData.readSubData("worldStage"));
                     // Round 394: a save from before the per-kind balance gets its dungeon mix balanced once - after the
                     // stage load, so "farthest from the player first" knows where the player stands.

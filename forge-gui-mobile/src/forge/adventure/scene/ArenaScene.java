@@ -1317,7 +1317,11 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             Array<Reward> data = new Array<>();
             for (int i = 0; i < roundsWon; i++) {
                 for (int j = 0; j < arenaData.rewards[i].length; j++) {
-                    data.addAll(arenaData.rewards[i][j].generate(false, null, true));
+                    Array<Reward> rolled = arenaData.rewards[i][j].generate(false, null, true);
+                    // Round 629: a set piece the player already owns gives way to one of the same set they lack.
+                    forge.adventure.util.ItemSets.preferUnownedSetPieces(rolled, arenaData.rewards[i][j].itemNames,
+                            forge.util.MyRandom.getRandom());
+                    data.addAll(rolled);
                 }
             }
             // Round 311 (user: "Beating a 'Champion' there, should not trigger the Champion reward payout. Just a

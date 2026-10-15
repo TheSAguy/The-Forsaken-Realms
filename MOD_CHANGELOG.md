@@ -14264,6 +14264,55 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 629: gear sets - fifteen sets of seven, a bonus at 3 / 5 / 7 pieces (2026-10-15)
+
+The user: "create gear sets and have you get additional bonuses when you have these sets ... start at 3 out of 7 you get
+a small bonus, then it gets bigger ... can't be OP", and "We need to ensure that these sets are available in the
+appropriate Armories/Arena rewards pool ... Before each had 2 sets, but that was when we only had 5 slots." Their calls
+(plan: Bannerloard/gear_sets_proposal.md): guards 2 / 3 / 5 / 7 main items; the bonus on top of the items' own stats;
+no creature bonuses; 15 sets (5 Regalia, 5 Bane, 5 Legend); Bane +3 life against its color only; Legend = Dragonlord,
+Bulwark, Fblthp's Lost, and the materials as two sets. Names were left to me. This round is the mechanic and the
+distribution; the Sets page (630) and the tinted icons + the four new items (631) follow.
+
+- **The sets** (`world/item_sets.json`, written by `dev-tools/gear_sets/make_gear_sets.py --repo <root>`, the single
+  source): each set has one item per main slot (Head, Neck, Body, Right, Left, Legs, Boots) and three tiers -
+  - 3 pieces: +2 life (`lifeModifier`); a Bane set +3, only against an enemy whose colors hold its color (`onlyAgainst`).
+  - 5 pieces: the set's card in the command zone (`startBattleWithCardInCommandZone`, "<X> Presence" / Bane "<X> Ward").
+  - 7 pieces: the card's full version, named after the set, REPLACES the 5-piece card (`replaces: 5`).
+  - Regalia (Uncommon, one per color): Dawnward, Tidewise, Gravebound, Emberclad, Wildgrove. Bane (Rare): Sunbane,
+    Tidebane, Nightbane, Flamebane, Wildbane Raiment - built from the two colors that are the target's enemies; the
+    card taxes the target color's spells. Legend: Dragonlord's Hoard, Stonewall Bulwark ("Bulwark" is a real card),
+    Fblthp's Lost Things (the 7-piece also draws an extra opening card), Ironclad, Gilded Paragon (Treasures).
+  - 30 bonus cards: scripts in `common/custom_cards/`, faces in `common/custom_card_pics/` (488 x 680, the set's
+    tinted icons on a card frame; 848 KB). No name clashes with the 34,152 card names. No card puts a creature into
+    play, so companions are never touched.
+- **`util/ItemSets`** (+ `data/ItemSetData`): loads the file once (`[TFR-Sets] 15 gear sets, 105 items`); counts
+  DISTINCT, uncracked pieces worn (two copies are one piece; a cracked piece is off the doll anyway); `bonusEffects`
+  returns the reached tiers as EffectData and logs one line a set: `[TFR-Sets] player: Sunbane Raiment 3/7 -> +3 life
+  against white`, or `(... : not against this foe)`.
+  - Player: `DuelScene` adds them after the equipment loop, only when items are allowed (events without items get none).
+  - Guards: `ArmoryStorage.effectsOf(guard, opponentColors)`, in both the watched and the simulated guard duel.
+- **Guards wear 2 / 3 / 5 / 7 main items** by rank (was 2 / 3 / 4 / 5; `ascendance.json guardMainSlots`,
+  `AscendanceData` default). A Master reaches the card, an Archmage the whole set. `Ascendance.enforceGuardLimits()` on
+  load re-applies the limits to every guard (nothing comes off with higher limits; it keeps old saves honest).
+- **Where the sets are found** (`dev-tools/gear_sets/arena_prizes.py --repo <root>`, idempotent, writes only names the
+  catalog holds - rerun after round 631 adds the four new items):
+  - The five AI capitals' Arena (round 3's item): its own Regalia + the Bane set aimed at one of its enemies + its map
+    fragment (Plains: Dawnward + Flamebane; Island: Tidewise + Wildbane; Swamp: Gravebound + Sunbane; Mountain:
+    Emberclad + Tidebane; Forest: Wildgrove + Nightbane), 9 -> 15 names each. Replaces round 432's two sets of four.
+  - The Player Capitol: Level 1's round-3 list 56 -> 64 (Ironclad + Gilded Paragon, Mithril Armor at Level 2 only);
+    Level 2's sure item 16 -> 36 (Dragonlord, Stonewall, Fblthp, Mithril Armor) and its rarity pools Mythic 23 -> 24,
+    Rare 155 -> 156, Uncommon 178 -> 181.
+  - The five `<Color>Equipment` shops add their Regalia (6 -> 13 names) and show 4 (was 3).
+  - `ArenaScene`: an Arena prize the player already owns (inventory, Armory storage or a guard) becomes a missing piece
+    of the same set from that prize list (`[TFR-Sets] Arena prize: X is already owned - Y instead`).
+- GUIDE.md / .html: "### Gear Sets" (rules, all 15 sets with their 5 / 7 texts, where to find them) and the guard line.
+- **Until round 631**: Fblthp's Lost Locket, Fblthp's Lost Trousers, Steel Greaves and Mithril Greaves are not items yet,
+  so Fblthp's Lost Things tops out at 5 / 7 and Ironclad and Gilded Paragon at 6 / 7 (the guide already lists them).
+- Seen in the agent game (slot 5, day 56, level 40): all 7 Dawnward pieces -> +2 life and the Dawnward Regalia card in
+  the command zone; Dawnward 4 + Sunbane 3 against a White Wizard -> +2 and +3 life; against a Wandering Treefolk ->
+  +2 and "not against this foe". Not seen: a guard with a set, the Arena swap.
+
 ## Round 632: the five Phyrexian praetors get the user's hand-made praetor (2026-10-15)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/praetor/convert.sh`. These are A4-8 of the

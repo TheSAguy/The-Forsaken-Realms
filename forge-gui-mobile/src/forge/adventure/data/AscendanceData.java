@@ -88,8 +88,9 @@ public class AscendanceData {
     /** Titles at titleLevels, in the same order. */
     public int[] titleLevels = {5, 10, 15, 20, 25, 30};
     public String[] titles = {"Unbound", "Reclaimer", "Warden of Ash", "Seal-breaker", "Sovereign", "Ascendant"};
-    /** A roaming guard's main-slot items, by its rank. */
-    public int[] guardMainSlots = {2, 3, 4, 5};
+    /** A roaming guard's main-slot items, by its rank. Round 629: 2 / 3 / 5 / 7 for the seven slots - each rank reaches
+     *  one gear-set tier (Adept 3, Master 5, Archmage the whole set). */
+    public int[] guardMainSlots = {2, 3, 5, 7};
     /** Round 502 - companions, worn items that start a creature on the battlefield, in any slot. The user: "Go with the
      *  companion limit, 2 at Ascendance 15 and 3 at 25". companionBase at level 0, +1 at each of companionLevels. */
     public int companionBase = 1;

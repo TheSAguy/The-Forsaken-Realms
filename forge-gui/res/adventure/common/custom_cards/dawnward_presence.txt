@@ -1,0 +1,7 @@
+Name:Dawnward Presence
+ManaCost:no cost
+Colors:white
+Types:Enchantment
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ At the beginning of your upkeep, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+Oracle:At the beginning of your upkeep, you gain 1 life.

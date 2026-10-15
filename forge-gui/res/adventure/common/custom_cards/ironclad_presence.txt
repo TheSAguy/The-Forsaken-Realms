@@ -1,0 +1,5 @@
+Name:Ironclad Presence
+ManaCost:no cost
+Types:Enchantment
+S:Mode$ ReduceCost | EffectZone$ Command | ValidCard$ Card | ValidSpell$ Activated.Equip | Activator$ You | Amount$ 1 | Description$ Equip abilities you activate cost {1} less to activate.
+Oracle:Equip abilities you activate cost {1} less to activate.

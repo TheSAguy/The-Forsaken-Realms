@@ -1383,7 +1383,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 Forge.advFreezePlayerControls = false;
                 duelScene.initDuels(player, guardFoe, false, null, true);
                 duelScene.useGuardLoadout(deck, guard.maxLife + forge.adventure.util.Ascendance.guardLifeBonus(), // round 494: Marshal
-                        ArmoryStorage.effectsOf(guard)); // round 163: its gear
+                        ArmoryStorage.effectsOf(guard, guardFoe.getData() != null ? guardFoe.getData().colors : null)); // round 163: its gear; round 629: its sets
                 Forge.switchScene(duelScene);
             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                     guardFoe.getAtlasPath(), RoamingGuards.displayName(guard.tier) + " Guard",
@@ -1421,7 +1421,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // Round 163 (MOD_SCOPE #118): the guard's equipment rides into the headless fight through the
         // same DuelScene.applyEffects() the watched fight uses - its own effects on its seat, its
         // items' opponent effects on the mage's. Parity is the rule ("simulate" is presentation only).
-        final Array<EffectData> gear = ArmoryStorage.effectsOf(guard);
+        final Array<EffectData> gear = ArmoryStorage.effectsOf(guard, mage.getData().colors); // round 629: with its gear sets
         final Array<EffectData> gearOnMage = ArmoryStorage.opponentEffectsOf(guard);
         EffectData archmageStart = DuelScene.archmageStartEffect(mage.getData()); // round 390: as in the watched fight
         if (archmageStart != null)

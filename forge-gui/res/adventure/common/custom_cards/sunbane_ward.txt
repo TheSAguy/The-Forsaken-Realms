@@ -1,0 +1,6 @@
+Name:Sunbane Ward
+ManaCost:no cost
+Colors:black,red
+Types:Enchantment
+S:Mode$ RaiseCost | EffectZone$ Command | ValidCard$ Card.White | Type$ Spell | Activator$ Opponent | Amount$ 1 | Description$ White spells your opponents cast cost {1} more to cast.
+Oracle:White spells your opponents cast cost {1} more to cast.

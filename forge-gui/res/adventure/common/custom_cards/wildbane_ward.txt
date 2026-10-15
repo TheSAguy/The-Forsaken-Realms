@@ -1,0 +1,6 @@
+Name:Wildbane Ward
+ManaCost:no cost
+Colors:blue,black
+Types:Enchantment
+S:Mode$ RaiseCost | EffectZone$ Command | ValidCard$ Card.Green | Type$ Spell | Activator$ Opponent | Amount$ 1 | Description$ Green spells your opponents cast cost {1} more to cast.
+Oracle:Green spells your opponents cast cost {1} more to cast.

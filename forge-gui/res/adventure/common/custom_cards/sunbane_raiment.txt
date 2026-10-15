@@ -1,0 +1,8 @@
+Name:Sunbane Raiment
+ManaCost:no cost
+Colors:black,red
+Types:Enchantment
+S:Mode$ RaiseCost | EffectZone$ Command | ValidCard$ Card.White | Type$ Spell | Activator$ Opponent | Amount$ 1 | Description$ White spells your opponents cast cost {1} more to cast.
+T:Mode$ SpellCast | ValidCard$ Card.White | ValidActivatingPlayer$ Opponent | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ Whenever an opponent casts a white spell, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+Oracle:White spells your opponents cast cost {1} more to cast.\nWhenever an opponent casts a white spell, you gain 1 life.

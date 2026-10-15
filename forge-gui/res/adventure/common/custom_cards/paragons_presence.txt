@@ -1,0 +1,6 @@
+Name:Paragon's Presence
+ManaCost:no cost
+Types:Enchantment
+T:Mode$ Sacrificed | ValidCard$ Treasure.YouCtrl | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ Whenever you sacrifice a Treasure, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+Oracle:You start with a Treasure. Whenever you sacrifice a Treasure, you gain 1 life.

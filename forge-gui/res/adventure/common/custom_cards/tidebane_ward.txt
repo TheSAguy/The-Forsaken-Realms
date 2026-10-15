@@ -1,0 +1,6 @@
+Name:Tidebane Ward
+ManaCost:no cost
+Colors:red,green
+Types:Enchantment
+S:Mode$ RaiseCost | EffectZone$ Command | ValidCard$ Card.Blue | Type$ Spell | Activator$ Opponent | Amount$ 1 | Description$ Blue spells your opponents cast cost {1} more to cast.
+Oracle:Blue spells your opponents cast cost {1} more to cast.

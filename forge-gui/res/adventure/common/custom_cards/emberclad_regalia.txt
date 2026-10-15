@@ -1,0 +1,7 @@
+Name:Emberclad Regalia
+ManaCost:no cost
+Colors:red
+Types:Enchantment
+T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | ActivatorThisTurnCast$ EQ1 | TriggerZones$ Command | Execute$ TrigDamage | TriggerDescription$ Whenever you cast your first instant or sorcery spell each turn, CARDNAME deals 2 damage to each opponent.
+SVar:TrigDamage:DB$ DealDamage | Defined$ Player.Opponent | NumDmg$ 2
+Oracle:Whenever you cast your first instant or sorcery spell each turn, Emberclad Regalia deals 2 damage to each opponent.

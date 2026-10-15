@@ -1,0 +1,6 @@
+Name:Fblthp's Lost Things
+ManaCost:no cost
+Types:Enchantment
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | IsPresent$ Card.YouOwn | PresentZone$ Hand | PresentCompare$ EQ0 | Execute$ TrigDraw | TriggerDescription$ At the beginning of your upkeep, if you have no cards in hand, draw a card.
+SVar:TrigDraw:DB$ Draw | NumCards$ 1
+Oracle:At the beginning of your upkeep, if you have no cards in hand, draw a card.\nYou began this game with one more card in hand.

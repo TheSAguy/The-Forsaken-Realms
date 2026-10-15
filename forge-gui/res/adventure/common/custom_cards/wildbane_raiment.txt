@@ -1,0 +1,8 @@
+Name:Wildbane Raiment
+ManaCost:no cost
+Colors:blue,black
+Types:Enchantment
+S:Mode$ RaiseCost | EffectZone$ Command | ValidCard$ Card.Green | Type$ Spell | Activator$ Opponent | Amount$ 1 | Description$ Green spells your opponents cast cost {1} more to cast.
+T:Mode$ SpellCast | ValidCard$ Card.Green | ValidActivatingPlayer$ Opponent | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ Whenever an opponent casts a green spell, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+Oracle:Green spells your opponents cast cost {1} more to cast.\nWhenever an opponent casts a green spell, you gain 1 life.

@@ -1,0 +1,6 @@
+Name:Gilded Paragon
+ManaCost:no cost
+Types:Enchantment
+T:Mode$ Sacrificed | ValidCard$ Treasure.YouCtrl | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ Whenever you sacrifice a Treasure, you gain 2 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 2
+Oracle:You start with two Treasures. Whenever you sacrifice a Treasure, you gain 2 life.

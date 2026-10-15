@@ -91,6 +91,8 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (round 629): **LOCAL + UNRELEASED (code + data)** - gear sets: 15 sets of seven main-slot items (5 Regalia, 5 Bane, 5 Legend; `world/item_sets.json` from `dev-tools/gear_sets/make_gear_sets.py`), bonus on top of the items at 3 pieces (+2 life; Bane +3 against its color only), 5 (the set's "Presence"/"Ward" card in the command zone) and 7 (the full card replaces it); 30 custom cards + faces in `common/`. util/ItemSets (`[TFR-Sets]` lines) feeds DuelScene (player) and ArmoryStorage.effectsOf(guard, colors) (watched + simulated guard duels). Guards wear 2 / 3 / 5 / 7 main items. Distribution (`dev-tools/gear_sets/arena_prizes.py`, rerun after 631): AI capital Arenas = own Regalia + a Bane set + map fragment; the Capitol's Arenas add the Legend sets; color Equipment shops add their Regalia (show 4); an owned Arena set piece swaps to a missing one. GUIDE "### Gear Sets". Seen in the agent game (Dawnward 7/7 card, Sunbane vs white / not white). The four new items (Fblthp's Lost Locket/Trousers, Steel/Mithril Greaves) + tinted icons = round 631; the Sets page = round 630.
+
 ## STATE 2026-10-15 (round 632): **LOCAL + UNRELEASED (art + data)** - the five Phyrexian praetors (Tsabo
 Tavoc, Solphim, Dross Grimnarch, Sheoldred, Drivnod) get the user's hand-made praetor (Pixelate; one still, the flesh
 tinted per praetor; generator `pixelate/praetor/convert.sh`). enemies.json 5 paths + scales (0.15). #32 packages with 629.

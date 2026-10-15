@@ -1,0 +1,8 @@
+Name:Dawnward Regalia
+ManaCost:no cost
+Colors:white
+Types:Enchantment
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ At the beginning of your upkeep, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature.YouCtrl | AddToughness$ 1 | Description$ Creatures you control get +0/+1.
+Oracle:At the beginning of your upkeep, you gain 1 life.\nCreatures you control get +0/+1.

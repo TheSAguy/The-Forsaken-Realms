@@ -1,0 +1,7 @@
+Name:Stonewall Bulwark
+ManaCost:no cost
+Types:Enchantment
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature.withDefender+YouCtrl | AddToughness$ 2 | Description$ Creatures you control with defender get +0/+2.
+T:Mode$ Blocks | ValidCard$ Creature.YouCtrl+withDefender | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ Whenever a creature you control with defender blocks, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+Oracle:Creatures you control with defender get +0/+2.\nWhenever a creature you control with defender blocks, you gain 1 life.

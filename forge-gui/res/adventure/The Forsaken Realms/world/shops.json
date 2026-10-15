@@ -853,14 +853,21 @@
   "rewards": [
    {
     "type": "item",
-    "count": 3,
+    "count": 4,
     "itemNames": [
      "Life Amulet",
      "Gold Armor",
      "Mirror Shield",
      "Entrancing Lyre",
      "Nine-Ringed Bo",
-     "Kite Shield"
+     "Kite Shield",
+     "Mask of Hypochondria",
+     "Jewel of Blessings",
+     "Nomad Armor",
+     "Thunder Lasso",
+     "Prayerbook of Vigor",
+     "Vindicator Greaves",
+     "Empyrial Greaves"
     ]
    }
   ]
@@ -900,14 +907,21 @@
   "rewards": [
    {
     "type": "item",
-    "count": 3,
+    "count": 4,
     "itemNames": [
      "Axt",
      "Aladdin's Ring",
      "Flame Sword",
      "Heavy Arbalest",
      "Jeweled Amulet",
-     "Ring of Immortals"
+     "Ring of Immortals",
+     "Mask of Pyromania",
+     "Jewel of War",
+     "Barbarian Armor",
+     "Ramosian Greatsword",
+     "Tome of Triumph",
+     "Hellkite Greaves",
+     "Firefrightener Shoes"
     ]
    }
   ]
@@ -947,14 +961,21 @@
   "rewards": [
    {
     "type": "item",
-    "count": 3,
+    "count": 4,
     "itemNames": [
      "Traveler's Amulet",
      "Magic Shard",
      "Spell Book",
      "Mithril Armor",
      "Mithril Boots",
-     "Mithril Shield"
+     "Mithril Shield",
+     "Roiling Stormcrown",
+     "Tidal Amulet",
+     "Cephalid Armor",
+     "Giant's Bracer",
+     "Prayerbook of Fortunes",
+     "Barrier Breeches",
+     "Sovereign Greaves"
     ]
    }
   ]
@@ -994,14 +1015,21 @@
   "rewards": [
    {
     "type": "item",
-    "count": 3,
+    "count": 4,
     "itemNames": [
      "Death Ring",
      "Dark Amulet",
      "Mad Staff",
      "Dark Armor",
      "Dark Boots",
-     "Dark Shield"
+     "Dark Shield",
+     "Mask of Mortiphobia",
+     "Amulet of Scorn",
+     "Cabal Armor",
+     "Enormous Energy Blade",
+     "Little Black Book",
+     "Leech Breeches",
+     "Princely Greaves"
     ]
    }
   ]
@@ -1041,14 +1069,21 @@
   "rewards": [
    {
     "type": "item",
-    "count": 3,
+    "count": 4,
     "itemNames": [
      "Jungle Shield",
      "Ring of Three Wishes",
      "Heart-Piercer",
      "Wood Bow",
      "Steel Sword",
-     "Unerring Sling"
+     "Unerring Sling",
+     "Mask of Narcissism",
+     "Jewel of Rage",
+     "Centaur Armor",
+     "Colossal Dreadmace",
+     "Map to the World Tree",
+     "Godsire Greaves",
+     "Greenseeker's Shoes"
     ]
    }
   ]

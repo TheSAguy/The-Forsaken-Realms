@@ -167,6 +167,15 @@ public final class ArmoryStorage {
         return out;
     }
 
+    /** Round 629: the guard's duel effects plus its worn gear sets' bonuses, against a foe of these colors (a Bane set's
+     *  life counts against its color). The watched and the simulated guard fight both take this. */
+    public static Array<EffectData> effectsOf(RoamingGuardData guard, String opponentColors) {
+        Array<EffectData> out = effectsOf(guard);
+        out.addAll(ItemSets.bonusEffects(guard.equipment, opponentColors,
+                RoamingGuards.displayName(guard.tier) + " guard"));
+        return out;
+    }
+
     /** What the guard's gear does to its OPPONENT (a Medal's land for the mage, and so on). */
     public static Array<EffectData> opponentEffectsOf(RoamingGuardData guard) {
         Array<EffectData> out = new Array<>();

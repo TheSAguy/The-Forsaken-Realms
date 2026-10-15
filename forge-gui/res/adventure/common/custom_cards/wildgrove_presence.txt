@@ -1,0 +1,6 @@
+Name:Wildgrove Presence
+ManaCost:no cost
+Colors:green
+Types:Enchantment
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature.YouCtrl+powerGE4 | AddKeyword$ Trample | Description$ Creatures you control with power 4 or greater have trample.
+Oracle:Creatures you control with power 4 or greater have trample.

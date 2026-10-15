@@ -1,0 +1,6 @@
+Name:Nightbane Ward
+ManaCost:no cost
+Colors:green,white
+Types:Enchantment
+S:Mode$ RaiseCost | EffectZone$ Command | ValidCard$ Card.Black | Type$ Spell | Activator$ Opponent | Amount$ 1 | Description$ Black spells your opponents cast cost {1} more to cast.
+Oracle:Black spells your opponents cast cost {1} more to cast.

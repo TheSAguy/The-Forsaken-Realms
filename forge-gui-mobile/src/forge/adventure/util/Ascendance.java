@@ -506,7 +506,8 @@ public final class Ascendance {
 
     // ------------------------------------------------------------------------------------------------ roaming guards
 
-    /** The user: "Let's limit the roaming guards equipment slots also. Apprentice - 2, Adept - 3, Master - 4 and Archmage 5." */
+    /** The user: "Let's limit the roaming guards equipment slots also. Apprentice - 2, Adept - 3, Master - 4 and Archmage 5."
+     *  Round 629 (seven slots, gear sets): 2 / 3 / 5 / 7 - guardMainSlots in ascendance.json. */
     public static int guardMainAllowance(String tier) {
         int[] byRank = data().guardMainSlots;
         int rank = Math.max(0, EnemyData.tierRank(tier));
@@ -548,6 +549,13 @@ public final class Ascendance {
                     System.out.println("[TFR-Ascend] " + RoamingGuards.displayName(guard.tier) + " guard wears " + allowed
                             + " main items - " + item.name + " back to the storage");
                 }
+    }
+
+    /** Round 629: every roaming guard held to its rank's limit when a save loads - a guard dressed while leveling was off
+     *  kept every item (retier() was the only caller). */
+    public static void enforceGuardLimits() {
+        for (RoamingGuardData guard : RoamingGuards.roster())
+            enforceGuardLimit(guard);
     }
 
     // ------------------------------------------------------------------------------------------------ Power

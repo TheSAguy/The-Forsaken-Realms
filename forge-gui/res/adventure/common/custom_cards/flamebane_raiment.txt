@@ -1,0 +1,8 @@
+Name:Flamebane Raiment
+ManaCost:no cost
+Colors:white,blue
+Types:Enchantment
+S:Mode$ RaiseCost | EffectZone$ Command | ValidCard$ Card.Red | Type$ Spell | Activator$ Opponent | Amount$ 1 | Description$ Red spells your opponents cast cost {1} more to cast.
+T:Mode$ SpellCast | ValidCard$ Card.Red | ValidActivatingPlayer$ Opponent | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ Whenever an opponent casts a red spell, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+Oracle:Red spells your opponents cast cost {1} more to cast.\nWhenever an opponent casts a red spell, you gain 1 life.

@@ -38,6 +38,21 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 629 - gear sets (3 / 5 / 7 pieces) and guard slots 2 / 3 / 5 / 7
+
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - after the player's equipment loop (inside the
+  `!aiControlsPlayerSide && allowsItems` block): `playerEffects.addAll(ItemSets.bonusEffects(ItemSets.wornBy(advPlayer),
+  enemy colors, "player"))`. One statement.
+- **`.../util/ArmoryStorage.java`** - new overload `effectsOf(guard, opponentColors)` = `effectsOf(guard)` plus the
+  guard's set bonuses.
+- **`.../stage/WorldStage.java`** - the watched and the simulated guard duels call that overload (two call sites).
+- **`.../scene/ArenaScene.java`** - a round's rolled prizes go through `ItemSets.preferUnownedSetPieces` before
+  `data.addAll` (an owned set piece becomes an unowned piece of the same set from that prize list).
+- **`.../data/AscendanceData.java`** - `guardMainSlots` default `{2, 3, 5, 7}` (was 2 / 3 / 4 / 5).
+- **`.../util/Ascendance.java`** - `enforceGuardLimits()` (every guard on the roster through `enforceGuardLimit`).
+- **`.../world/WorldSave.java`** - the load calls `Ascendance.enforceGuardLimits()` after `ensureHistory()`.
+- **New (mod-added)**: `data/ItemSetData.java`, `util/ItemSets.java` (reads `world/item_sets.json`).
+
 ### Round 626 - the History replay
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - a `history` field (`WorldHistory`), saved as

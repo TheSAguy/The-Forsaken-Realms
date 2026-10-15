@@ -933,6 +933,10 @@ public class DuelScene extends ForgeScene {
                     System.err.println("Item " + id + " not found.");
                 }
             }
+            // Round 629: gear sets - 3, 5 or 7 worn pieces of one set add its bonus on top of the items' own; a Bane
+            // set's life counts against an enemy of its color (util/ItemSets).
+            playerEffects.addAll(forge.adventure.util.ItemSets.bonusEffects(forge.adventure.util.ItemSets.wornBy(advPlayer),
+                    enemy != null && enemy.getData() != null ? enemy.getData().colors : null, "player"));
         }
         // Round 494: Ascendance's Morning Vigor (+life in the first duels each day) and Shardwell (+mana shards) - the
         // player's own duels only: not a spectated guard fight (aiControlsPlayerSide), not an Inn tournament. Round 516
