@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 637: gear sets show themselves only once you wear a piece (2026-10-15)
+
+The user: "For the Item sets, let's only have the key/icon show up when you wear one of the set pieces, and then, only
+display information on that set when you click on the key. So other set info will be hidden unless you wear a piece of
+a set."
+
+- **The key**: the inventory doll's Sets button shows only while the player wears a piece of some set
+  (`ItemSets.wearsAnySet`, refreshed on every inventory rebuild, so an equip or unequip shows or hides it); a guard's
+  Armory "Sets" button only while that guard wears one.
+- **The page** lists only the sets with a piece worn (by the player, or by that guard). With one such set it opens on
+  that set and Back leaves; with more, the short list, then a set. Title: "Gear Sets - wearing pieces of N sets, M
+  active". No set worn (a guard after a transfer): one line saying so.
+- **Descriptions**: an item's "Gear set: ..." line shows only when the player wears a piece of that set ("you wear n of
+  7") or one of their roaming guards does ("your <Rank> guard wears n of 7") - in shops and rewards too, so a set no
+  one of the player's wears stays unnamed. The GUIDE's set table is unchanged (the guide is the spoiler page).
+- GUIDE: the Sets page bullet.
+- Seen in the agent game: no key without a piece; the Mask of Hypochondria alone -> the key opens on Dawnward Regalia,
+  Back to the inventory; + the Amulet of Fury -> a list of Dawnward Regalia and Sunbane Raiment only.
+
 ## Round 638: the Artifact Warrior and Bosh become armored golems (2026-10-15)
 
 The Procedural Pixel Creatures session, from the generator repo's `packs/rpgmaker/imports5.json` (`pack_import.py`).

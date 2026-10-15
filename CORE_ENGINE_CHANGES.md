@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 637 - gear sets shown only once a piece is worn
+
+- **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`** - `refreshSetsButton()` (enter and every
+  updateInventory): the Sets key only while the player wears a set piece.
+- **`.../scene/ArmoryScene.java`** - the guard's Sets button only while that guard wears a set piece.
+- Mod-added: `scene/SetsScene` (worn sets only, one set opens directly), `util/ItemSets` (wearsAnySet; the description
+  line only for a set the player or a guard wears).
+
 ### Round 635 - the History map's castles and mountains; plain-ink notice popups
 
 - **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `showNextNotices()` shows a white-tint banner through

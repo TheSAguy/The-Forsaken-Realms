@@ -223,6 +223,12 @@ public final class ItemSets {
         return null;
     }
 
+    /** Round 637 (the user: "only have the key/icon show up when you wear one of the set pieces"): whether these worn
+     *  items hold a piece of any set (cracked pieces are off and do not count). */
+    public static boolean wearsAnySet(Iterable<ItemData> items) {
+        return !worn(items).isEmpty();
+    }
+
     /** How many of a set's pieces the player owns anywhere (distinct names). */
     public static int ownedCount(AdventurePlayer player, ItemSetData set) {
         int n = 0;
@@ -241,9 +247,20 @@ public final class ItemSets {
         if (set == null)
             return "";
         AdventurePlayer player = Current.player();
-        Integer worn = player == null ? null : worn(wornBy(player)).get(set);
-        return "Gear set: " + set.name + " (" + familyLine(set) + ") - you wear " + (worn == null ? 0 : worn) + " of "
-                + set.items.length;
+        if (player == null)
+            return "";
+        Integer worn = worn(wornBy(player)).get(set);
+        if (worn != null)
+            return "Gear set: " + set.name + " (" + familyLine(set) + ") - you wear " + worn + " of " + set.items.length;
+        // Round 637 (the user: "other set info will be hidden unless you wear a piece of a set"): a set nobody of the
+        // player's wears stays unnamed - in shops and rewards too.
+        for (RoamingGuardData guard : RoamingGuards.roster()) {
+            Integer guardWorn = worn(guard.equipment).get(set);
+            if (guardWorn != null)
+                return "Gear set: " + set.name + " (" + familyLine(set) + ") - your " + RoamingGuards.displayName(guard.tier)
+                        + " guard wears " + guardWorn + " of " + set.items.length;
+        }
+        return "";
     }
 
     /**

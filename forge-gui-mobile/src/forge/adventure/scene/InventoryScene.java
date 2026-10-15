@@ -772,6 +772,14 @@ public class InventoryScene extends UIScene {
         }
         // make sure repair is clickable
         repairButton.setZIndex(ui.getChildren().size);
+        refreshSetsButton(); // round 637: an equip or unequip can show or hide it
+    }
+
+    /** Rounds 631 + 637: the Sets key shows only while the player wears a piece of some set. */
+    private void refreshSetsButton() {
+        if (setsButton != null)
+            setsButton.setVisible(SetsScene.available() && forge.adventure.util.ItemSets.wearsAnySet(
+                    forge.adventure.util.ItemSets.wornBy(Current.player())));
     }
 
     @Override
@@ -785,8 +793,7 @@ public class InventoryScene extends UIScene {
         updateInventory();
         if (treasureMapsButton != null) // round 478
             treasureMapsButton.setVisible(TreasureHunt.anyPieces(Current.world()));
-        if (setsButton != null) // round 631
-            setsButton.setVisible(SetsScene.available());
+        refreshSetsButton();
         //inventory.add().expand();
         super.enter();
     }

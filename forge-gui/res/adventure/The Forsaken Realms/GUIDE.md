@@ -1026,11 +1026,12 @@ one set and you get its bonus **on top of** what the items do themselves:
 - **Regalia** sets (one per color, Uncommon) play to their color. **Bane** sets (Rare) are built from the two colors
   that are their target's enemies on the color wheel - wear the Sunbane Raiment when you go to war with White.
   **Legend** sets reward a theme.
-- **The Sets page**: the armor button in the bottom-left square of the inventory's paper doll lists every set - its
-  seven pieces (the ones you own in full color, the ones worn checked), how many you wear and own, and the bonus it
-  gives now. Tap a set for each piece's place or where to find it, and the full 3 / 5 / 7 bonuses. A roaming guard's
-  Armory screen has a **Sets** button for that guard. Every set piece's description also names its set and how many
-  of it you wear.
+- **The Sets page**: once you wear a piece of a set, an armor button appears in the bottom-left square of the
+  inventory's paper doll. It shows the sets you wear pieces of - each one's seven pieces (the ones you own in full
+  color, the ones worn checked), how many you wear and own, and the bonus it gives now; wear pieces of just one set and
+  it opens on that set: each piece's place or where to find it, and the full 3 / 5 / 7 bonuses. A set you wear nothing
+  of stays a mystery - its pieces don't name it either, until you put one on. A roaming guard's Armory screen has a
+  **Sets** button too, while the guard wears a set piece.
 
 | Set | Pieces | 5 pieces | 7 pieces add |
 |---|---|---|---|

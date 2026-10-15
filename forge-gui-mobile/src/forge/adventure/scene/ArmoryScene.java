@@ -323,8 +323,9 @@ public class ArmoryScene extends UIScene {
         deleteButton.setVisible(player);
         useButton.setVisible(player);
         equipButton.setVisible(player);
-        if (setsButton != null) // round 631: in Dispose's place, which a guard's screen hides
-            setsButton.setVisible(!player && SetsScene.available());
+        if (setsButton != null) // round 631: in Dispose's place, which a guard's screen hides; 637: while it wears a piece
+            setsButton.setVisible(!player && SetsScene.available()
+                    && forge.adventure.util.ItemSets.wearsAnySet(guard.equipment));
 
         refreshDoll();
     }

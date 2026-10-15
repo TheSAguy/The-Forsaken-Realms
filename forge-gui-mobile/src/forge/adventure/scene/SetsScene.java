@@ -40,6 +40,10 @@ import java.util.Map;
  * <p>
  * "Worn" is whoever the page is for (the player, or that guard); "owned" is always the player's - carried, stored or worn
  * by any guard - since a guard's gear comes from the player.
+ * <p>
+ * Round 637 (the user: "only have the key/icon show up when you wear one of the set pieces, and then, only display
+ * information on that set when you click on the key. So other set info will be hidden unless you wear a piece of a
+ * set"): the list holds only the sets with a piece worn, and with just one such set the page opens on it (Back leaves).
  */
 public class SetsScene extends UIScene {
     private static SetsScene object;
@@ -53,6 +57,7 @@ public class SetsScene extends UIScene {
     private final Table area;
     private RoamingGuardData guard; // null = the player
     private ItemSetData shown;       // null = the list
+    private boolean onlyOne;         // round 637: one worn set - the page opened on it, so Back leaves
     private Texture equipOverlay;
 
     private SetsScene() {
@@ -80,19 +85,29 @@ public class SetsScene extends UIScene {
     public static void show(RoamingGuardData guard) {
         SetsScene scene = instance();
         scene.guard = guard;
-        scene.shown = null;
+        List<ItemSetData> worn = scene.wornSets();
+        scene.onlyOne = worn.size() == 1;
+        scene.shown = scene.onlyOne ? worn.get(0) : null;
         scene.rebuild();
         if (Forge.getCurrentScene() != scene)
             Forge.switchScene(scene, true);
     }
 
     private void onReturn() {
-        if (shown != null) {
+        if (shown != null && !onlyOne) {
             shown = null;
             rebuild();
             return;
         }
         back();
+    }
+
+    /** The sets with a piece worn by the page's subject, the most pieces first (round 637: no other set shows). */
+    private List<ItemSetData> wornSets() {
+        Map<ItemSetData, Integer> worn = ItemSets.worn(wornItems());
+        List<ItemSetData> sets = new ArrayList<>(worn.keySet());
+        sets.sort((a, b) -> Integer.compare(count(worn, b), count(worn, a)));
+        return sets;
     }
 
     // ------------------------------------------------------------------ what the page is about
@@ -183,7 +198,7 @@ public class SetsScene extends UIScene {
     private void buildAll() {
         AdventurePlayer player = Current.player();
         Map<ItemSetData, Integer> worn = ItemSets.worn(wornItems());
-        List<ItemSetData> sets = new ArrayList<>(Arrays.asList(ItemSets.all()));
+        List<ItemSetData> sets = wornSets(); // round 637: only the sets with a piece worn
         sets.sort((a, b) -> {
             int c = Integer.compare(count(worn, b), count(worn, a));
             if (c == 0)
@@ -196,7 +211,12 @@ public class SetsScene extends UIScene {
         for (ItemSetData set : sets)
             if (count(worn, set) >= 3)
                 active++;
-        titleLabel.setText(subject() + "Gear Sets - " + active + (active == 1 ? " set" : " sets") + " active");
+        titleLabel.setText(subject() + "Gear Sets - wearing pieces of " + sets.size() + (sets.size() == 1 ? " set" : " sets")
+                + ", " + active + " active");
+        if (sets.isEmpty()) {
+            area.add(label("[%80]" + DIM + "No set piece is worn. Wear a piece of a gear set to see its set here.")).left();
+            return;
+        }
 
         boolean landscape = Forge.isLandscapeMode();
         Table list = new Table();
