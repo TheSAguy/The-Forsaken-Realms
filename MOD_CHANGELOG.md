@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 606: robed LPC women keep their robe when they attack - 16 enemies rebuilt (2026-10-14)
+
+The Procedural Pixel Creatures session, a bug fix in shipped LPC art (found while building the borderline LPC trials).
+
+- **The bug**: LPC's female robe (`torso_clothes_robe`) has no `thrust` or `shoot` sheets - only walk, slash,
+  spellcast and hurt. A woman in that robe whose attack is a staff, crystal or spear thrust was drawn **bare** in every
+  Attack frame; the composer simply had no robe frames for it. Walk, idle, hit and death were fine.
+- **The 16**: Novice Pyromancer, Vile Witch (round 534); Rielle (590); Legend of the Tundra, Bog Witch, Adept Green
+  Wizard, Karametra, Legend of the Underground Sea (598); Master Red Wizard, Legend of the Savannah, Apprentice Green
+  Wizard, Corrupted Green Wizard (599); Disciple of Teferi, Swamp Queen Tojira, Dawnhart Witch (600); Challenger 21
+  (602). Robed women with a sword, cane or no weapon (slash and spellcast attacks) were never affected.
+- **The fix** (generator `lpc_to_forge.py`, `under_robe`): when the robe meets a thrust or shoot attack, the converter
+  puts a long-sleeved shirt and a plain skirt of the robe's color under it (the shirt in its own `under_robe` slot, the
+  skirt only when no legs item is chosen). The robe covers them in every other animation; in the attack they show as a
+  dress of the same color. The shirt fills the robe's V-neck and the skirt's hem shows at the feet - the only change to
+  idle and walk (about 80 px a frame). Every future LPC batch gets it automatically.
+- **Files**:
+  - The 16 atlases + pages under `sprites/enemy/remake/`, rebuilt in place (same names, each with its footprint).
+  - `CREDITS_LPC.md` regenerated: the shirt and skirt parts added to these 16 (32 lines), no new authors, the
+    composed licenses unchanged.
+  - enemies.json unchanged: `enemy_scale.py --write` moved no scale.
+- **Checks**:
+  - Before/after sheet of idle, walk and two attack frames for all 16: dressed in the attack, the same character
+    otherwise.
+  - `sprite_footprints.py --check` exit 0; `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them; every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 605: every Boots item looks like footwear - 54 new boot icons, 45 renamed (2026-10-14)
 
 The user: "do an audit of all our equipment. I found several "boot" items that look like rings. Let's make sure all
