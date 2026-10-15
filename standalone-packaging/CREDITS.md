@@ -98,7 +98,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (555 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599 and 600 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (656 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600 and 601 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -160,7 +160,18 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Worzel, High Priest of Shandalar, The Sainted One, Chandra, Tymna and Tana, Rowan, Jhoira, Ashnod, Adeliz, Pia
   Nalaar, Zara, Jeska, Lynde, Exava, Judith, Garruk, Fynn, Kamahl, Ghired, Domri Rade, Breya, Dihada, Eriette, Admiral
   Brass, Garza Zol, Henrika, Sen Triplets, Kinzu, Felisa, Jakub Šlemr '99, Dominic Symens '94, Swamp Queen Tojira,
-  High Cultist, Garth, Runo, Alpharael, False Monk, Dawnhart Witch, Haliya; and round 597's 28 player heroes, a woman
+  High Cultist, Garth, Runo, Alpharael, False Monk, Dawnhart Witch, Haliya; round 601's hundred and one soldiers,
+  knights and rogues - Armored Knight, Rafiq, Syr Elenora, Harbin, Wyleth, Eldraine Knight, Najeela, Saint Elenda, Syr
+  Carah, Maja, Alesha, Danitha, Licia, Daghatar, Adeline, Kytheon, Adriana, Adventurer, Human Mercenary, Thalia,
+  General Tazri, Archer, Archer Elite, Tetsuo, Tor Wauki, Esper Artificer, Cosima, Kai Budde '99, Jon Finkel '00,
+  Human Bard, Sami, Human Captain, Vona, Syr Alin, Anafenza, False Knight, Arguel, Isshin, Knight, Halvar, Brian
+  Hacker '98, Brian Kibler '02, Marc Hernandez '95, Tom Chanpheng '96, Farmer, Gavony Farmhand, Norin, Yasova, Bog
+  Hermit, Human Looter, Pirate, Borderland Ranger, Ramirez, Pirate 2, Pirate 3, Pirate Captain 2, Don Andres, Pirate
+  Captain, Captain Storm, Xavier Sal, Rogue, Winter, Satoru, Tetsuko, Yuriko, Massacre Girl, Rahilda, Cathar, Gerrard,
+  Orthion, Kyler, Odric, Heliod, Farid, Calix, General Ferrous, Baru, Human elite, Hajar, Tajic, Baron Von Gant, Baron
+  Levilain, Human, General Jarkeld, Human guard, Arvad, Warrior, Kynaios and Tiro, Mangara, Ellivere, Bertrand Lestree
+  '94, Mark Justice '95, Mark Justice '96, Beastmaster, Halfdane, Moritte, Surrak, Istvan, Cazur and Ukkima, Ulrich,
+  Rishkar; and round 597's 28 player heroes, a woman
   and a man of every race
   the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,
   Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire) -

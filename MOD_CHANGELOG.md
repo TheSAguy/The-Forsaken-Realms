@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 601: the LPC backlog, batch 4 - 101 soldiers, knights and rogues (2026-10-14)
+
+The Procedural Pixel Creatures session, the fourth of the five LPC batches, built by the generator repo's
+`lpc_selections/make_601.py`.
+
+- **The enemies**: all 101 on the stock 16 px `humanoid/{knight, paladin_2, swordsman_2, swordsman_3}` and
+  `humanoid/human/{soldier, rogue, warrior, knight, peasant, archer, artificer, bard}` sprites.
+- **How they were dressed**:
+  - The named legends follow their deck's commander card: Thalia in silver with a rapier, Isshin's red samurai
+    armor and katana, Heliod in gold with a spear, Tetsuo's topknot, Don Andres's morion, Ramirez's plumed cavalier
+    hat, Xavier Sal's captain's tricorne, Tajic's legion helm and red cape, Odric's blue glowing sword, Moritte's
+    antlers, Licia, Arguel, Vona and Arvad as pale vampires, Orthion a white-bearded dwarf.
+  - Halvar, Norin, Sami and Istvan, whose cards are not in Forge's picture cache, follow their cards as known.
+    Adriana's deck names another commander, so she follows her own card (Adriana, Captain of the Guard).
+  - The generic knights, soldiers, pirates and peasants keep their sprite's colors and gear; the World Champions
+    fight in their sprite's kit in their decks' colors. LPC has no lute: the bards carry a rapier.
+  - Two bosses (Baron Von Gant, Baron Levilain) keep their drawn size.
+- **A converter fix** (generator `lpc_to_forge.py`, `lone_pixels_cleared`): the female `legs_armour` part has a
+  stray pixel 15 rows above the head in the first frame of its oversize slash, left and right. It made every cell
+  of those 8 sheets 15 px taller, and the sprite audit flagged it. The converter now drops a 1-2 px island with
+  nothing else within 3 px. Of this batch it also took a 2 px bow fragment cut off at the archers' hurt-frame edge
+  (their cells went from 84 to 58 px wide) and one detached club pixel on the Farmer's front view; the other 89
+  rebuilt byte-identical.
+- **Files**:
+  - 101 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 101 sprite paths and scales, 0.28-0.33 (the two Barons 0.48-0.49).
+  - A footprint on 86 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 684 characters, additions only.
+  - `CREDITS.md`'s LPC bullet: 656 enemies, round 601 and the 101 names; no new authors.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 101, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them (8 before the converter fix).
+  - Every Avatar is whole, viewed on a sheet; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 600: the LPC backlog, batch 3 - 83 clerics, warlocks and shamans (2026-10-14)
 
 The Procedural Pixel Creatures session, the third of the five LPC batches, built by the generator repo's

@@ -1,0 +1,174 @@
+farmer.png
+size: 828,703
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 92, 71
+  footprint: 35, 5, 22, 56
+Idle
+  xy: 92, 64
+  size: 92, 71
+Idle
+  xy: 184, 64
+  size: 92, 71
+Idle
+  xy: 276, 64
+  size: 92, 71
+Walk
+  xy: 0, 135
+  size: 92, 71
+Walk
+  xy: 92, 135
+  size: 92, 71
+Walk
+  xy: 184, 135
+  size: 92, 71
+Walk
+  xy: 276, 135
+  size: 92, 71
+Walk
+  xy: 368, 135
+  size: 92, 71
+Walk
+  xy: 460, 135
+  size: 92, 71
+Walk
+  xy: 552, 135
+  size: 92, 71
+Walk
+  xy: 644, 135
+  size: 92, 71
+Attack
+  xy: 0, 206
+  size: 92, 71
+Attack
+  xy: 92, 206
+  size: 92, 71
+Attack
+  xy: 184, 206
+  size: 92, 71
+Attack
+  xy: 276, 206
+  size: 92, 71
+Attack
+  xy: 368, 206
+  size: 92, 71
+Attack
+  xy: 460, 206
+  size: 92, 71
+Hit
+  xy: 0, 277
+  size: 92, 71
+Hit
+  xy: 92, 277
+  size: 92, 71
+Hit
+  xy: 184, 277
+  size: 92, 71
+Hit
+  xy: 276, 277
+  size: 92, 71
+Death
+  xy: 0, 348
+  size: 92, 71
+Death
+  xy: 92, 348
+  size: 92, 71
+Death
+  xy: 184, 348
+  size: 92, 71
+Death
+  xy: 276, 348
+  size: 92, 71
+Death
+  xy: 368, 348
+  size: 92, 71
+Death
+  xy: 460, 348
+  size: 92, 71
+Death
+  xy: 552, 348
+  size: 92, 71
+Death
+  xy: 644, 348
+  size: 92, 71
+Death
+  xy: 736, 348
+  size: 92, 71
+IdleUp
+  xy: 0, 419
+  size: 92, 71
+IdleUp
+  xy: 92, 419
+  size: 92, 71
+IdleUp
+  xy: 184, 419
+  size: 92, 71
+IdleUp
+  xy: 276, 419
+  size: 92, 71
+IdleDown
+  xy: 0, 490
+  size: 92, 71
+IdleDown
+  xy: 92, 490
+  size: 92, 71
+IdleDown
+  xy: 184, 490
+  size: 92, 71
+IdleDown
+  xy: 276, 490
+  size: 92, 71
+WalkUp
+  xy: 0, 561
+  size: 92, 71
+WalkUp
+  xy: 92, 561
+  size: 92, 71
+WalkUp
+  xy: 184, 561
+  size: 92, 71
+WalkUp
+  xy: 276, 561
+  size: 92, 71
+WalkUp
+  xy: 368, 561
+  size: 92, 71
+WalkUp
+  xy: 460, 561
+  size: 92, 71
+WalkUp
+  xy: 552, 561
+  size: 92, 71
+WalkUp
+  xy: 644, 561
+  size: 92, 71
+WalkDown
+  xy: 0, 632
+  size: 92, 71
+WalkDown
+  xy: 92, 632
+  size: 92, 71
+WalkDown
+  xy: 184, 632
+  size: 92, 71
+WalkDown
+  xy: 276, 632
+  size: 92, 71
+WalkDown
+  xy: 368, 632
+  size: 92, 71
+WalkDown
+  xy: 460, 632
+  size: 92, 71
+WalkDown
+  xy: 552, 632
+  size: 92, 71
+WalkDown
+  xy: 644, 632
+  size: 92, 71

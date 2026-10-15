@@ -80,6 +80,11 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 601): **LOCAL + UNRELEASED (art + data)** - LPC backlog batch 4 of 5: the 101 soldiers,
+knights and rogues (generator `lpc_selections/make_601.py`; `lpc_to_forge.py` now drops LPC's lone stray pixels).
+enemies.json 101 paths + scales (0.28-0.33, Barons 0.48-0.49), 86 footprints, CREDITS_LPC.md 684 characters,
+CREDITS.md's LPC bullet (656 enemies). #31 packages. Not seen in play.
+
 ## STATE 2026-10-14 (round 600): **LOCAL + UNRELEASED (art + data)** - LPC backlog batch 3 of 5: the 83 clerics,
 warlocks and shamans (generator `lpc_selections/make_600.py`). enemies.json 83 paths + scales (0.28-0.33), 51 footprints,
 CREDITS_LPC.md 583 characters, CREDITS.md's LPC bullet (555 enemies). #31 packages. Not seen in play.

@@ -1,0 +1,174 @@
+cathar.png
+size: 1404,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 156, 59
+  footprint: 58, 1, 40, 57
+Idle
+  xy: 156, 64
+  size: 156, 59
+Idle
+  xy: 312, 64
+  size: 156, 59
+Idle
+  xy: 468, 64
+  size: 156, 59
+Walk
+  xy: 0, 123
+  size: 156, 59
+Walk
+  xy: 156, 123
+  size: 156, 59
+Walk
+  xy: 312, 123
+  size: 156, 59
+Walk
+  xy: 468, 123
+  size: 156, 59
+Walk
+  xy: 624, 123
+  size: 156, 59
+Walk
+  xy: 780, 123
+  size: 156, 59
+Walk
+  xy: 936, 123
+  size: 156, 59
+Walk
+  xy: 1092, 123
+  size: 156, 59
+Attack
+  xy: 0, 182
+  size: 156, 59
+Attack
+  xy: 156, 182
+  size: 156, 59
+Attack
+  xy: 312, 182
+  size: 156, 59
+Attack
+  xy: 468, 182
+  size: 156, 59
+Attack
+  xy: 624, 182
+  size: 156, 59
+Attack
+  xy: 780, 182
+  size: 156, 59
+Hit
+  xy: 0, 241
+  size: 156, 59
+Hit
+  xy: 156, 241
+  size: 156, 59
+Hit
+  xy: 312, 241
+  size: 156, 59
+Hit
+  xy: 468, 241
+  size: 156, 59
+Death
+  xy: 0, 300
+  size: 156, 59
+Death
+  xy: 156, 300
+  size: 156, 59
+Death
+  xy: 312, 300
+  size: 156, 59
+Death
+  xy: 468, 300
+  size: 156, 59
+Death
+  xy: 624, 300
+  size: 156, 59
+Death
+  xy: 780, 300
+  size: 156, 59
+Death
+  xy: 936, 300
+  size: 156, 59
+Death
+  xy: 1092, 300
+  size: 156, 59
+Death
+  xy: 1248, 300
+  size: 156, 59
+IdleUp
+  xy: 0, 359
+  size: 156, 59
+IdleUp
+  xy: 156, 359
+  size: 156, 59
+IdleUp
+  xy: 312, 359
+  size: 156, 59
+IdleUp
+  xy: 468, 359
+  size: 156, 59
+IdleDown
+  xy: 0, 418
+  size: 156, 59
+IdleDown
+  xy: 156, 418
+  size: 156, 59
+IdleDown
+  xy: 312, 418
+  size: 156, 59
+IdleDown
+  xy: 468, 418
+  size: 156, 59
+WalkUp
+  xy: 0, 477
+  size: 156, 59
+WalkUp
+  xy: 156, 477
+  size: 156, 59
+WalkUp
+  xy: 312, 477
+  size: 156, 59
+WalkUp
+  xy: 468, 477
+  size: 156, 59
+WalkUp
+  xy: 624, 477
+  size: 156, 59
+WalkUp
+  xy: 780, 477
+  size: 156, 59
+WalkUp
+  xy: 936, 477
+  size: 156, 59
+WalkUp
+  xy: 1092, 477
+  size: 156, 59
+WalkDown
+  xy: 0, 536
+  size: 156, 59
+WalkDown
+  xy: 156, 536
+  size: 156, 59
+WalkDown
+  xy: 312, 536
+  size: 156, 59
+WalkDown
+  xy: 468, 536
+  size: 156, 59
+WalkDown
+  xy: 624, 536
+  size: 156, 59
+WalkDown
+  xy: 780, 536
+  size: 156, 59
+WalkDown
+  xy: 936, 536
+  size: 156, 59
+WalkDown
+  xy: 1092, 536
+  size: 156, 59

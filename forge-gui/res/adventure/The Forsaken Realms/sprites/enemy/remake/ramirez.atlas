@@ -1,0 +1,174 @@
+ramirez.png
+size: 774,613
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 86, 61
+  footprint: 24, 2, 39, 58
+Idle
+  xy: 86, 64
+  size: 86, 61
+Idle
+  xy: 172, 64
+  size: 86, 61
+Idle
+  xy: 258, 64
+  size: 86, 61
+Walk
+  xy: 0, 125
+  size: 86, 61
+Walk
+  xy: 86, 125
+  size: 86, 61
+Walk
+  xy: 172, 125
+  size: 86, 61
+Walk
+  xy: 258, 125
+  size: 86, 61
+Walk
+  xy: 344, 125
+  size: 86, 61
+Walk
+  xy: 430, 125
+  size: 86, 61
+Walk
+  xy: 516, 125
+  size: 86, 61
+Walk
+  xy: 602, 125
+  size: 86, 61
+Attack
+  xy: 0, 186
+  size: 86, 61
+Attack
+  xy: 86, 186
+  size: 86, 61
+Attack
+  xy: 172, 186
+  size: 86, 61
+Attack
+  xy: 258, 186
+  size: 86, 61
+Attack
+  xy: 344, 186
+  size: 86, 61
+Attack
+  xy: 430, 186
+  size: 86, 61
+Hit
+  xy: 0, 247
+  size: 86, 61
+Hit
+  xy: 86, 247
+  size: 86, 61
+Hit
+  xy: 172, 247
+  size: 86, 61
+Hit
+  xy: 258, 247
+  size: 86, 61
+Death
+  xy: 0, 308
+  size: 86, 61
+Death
+  xy: 86, 308
+  size: 86, 61
+Death
+  xy: 172, 308
+  size: 86, 61
+Death
+  xy: 258, 308
+  size: 86, 61
+Death
+  xy: 344, 308
+  size: 86, 61
+Death
+  xy: 430, 308
+  size: 86, 61
+Death
+  xy: 516, 308
+  size: 86, 61
+Death
+  xy: 602, 308
+  size: 86, 61
+Death
+  xy: 688, 308
+  size: 86, 61
+IdleUp
+  xy: 0, 369
+  size: 86, 61
+IdleUp
+  xy: 86, 369
+  size: 86, 61
+IdleUp
+  xy: 172, 369
+  size: 86, 61
+IdleUp
+  xy: 258, 369
+  size: 86, 61
+IdleDown
+  xy: 0, 430
+  size: 86, 61
+IdleDown
+  xy: 86, 430
+  size: 86, 61
+IdleDown
+  xy: 172, 430
+  size: 86, 61
+IdleDown
+  xy: 258, 430
+  size: 86, 61
+WalkUp
+  xy: 0, 491
+  size: 86, 61
+WalkUp
+  xy: 86, 491
+  size: 86, 61
+WalkUp
+  xy: 172, 491
+  size: 86, 61
+WalkUp
+  xy: 258, 491
+  size: 86, 61
+WalkUp
+  xy: 344, 491
+  size: 86, 61
+WalkUp
+  xy: 430, 491
+  size: 86, 61
+WalkUp
+  xy: 516, 491
+  size: 86, 61
+WalkUp
+  xy: 602, 491
+  size: 86, 61
+WalkDown
+  xy: 0, 552
+  size: 86, 61
+WalkDown
+  xy: 86, 552
+  size: 86, 61
+WalkDown
+  xy: 172, 552
+  size: 86, 61
+WalkDown
+  xy: 258, 552
+  size: 86, 61
+WalkDown
+  xy: 344, 552
+  size: 86, 61
+WalkDown
+  xy: 430, 552
+  size: 86, 61
+WalkDown
+  xy: 516, 552
+  size: 86, 61
+WalkDown
+  xy: 602, 552
+  size: 86, 61

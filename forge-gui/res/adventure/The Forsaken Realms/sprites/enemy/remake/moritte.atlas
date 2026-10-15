@@ -1,0 +1,176 @@
+moritte.png
+size: 468,622
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 52, 62
+Idle
+  xy: 52, 64
+  size: 52, 62
+Idle
+  xy: 104, 64
+  size: 52, 62
+Idle
+  xy: 156, 64
+  size: 52, 62
+Walk
+  xy: 0, 126
+  size: 52, 62
+Walk
+  xy: 52, 126
+  size: 52, 62
+Walk
+  xy: 104, 126
+  size: 52, 62
+Walk
+  xy: 156, 126
+  size: 52, 62
+Walk
+  xy: 208, 126
+  size: 52, 62
+Walk
+  xy: 260, 126
+  size: 52, 62
+Walk
+  xy: 312, 126
+  size: 52, 62
+Walk
+  xy: 364, 126
+  size: 52, 62
+Attack
+  xy: 0, 188
+  size: 52, 62
+Attack
+  xy: 52, 188
+  size: 52, 62
+Attack
+  xy: 104, 188
+  size: 52, 62
+Attack
+  xy: 156, 188
+  size: 52, 62
+Attack
+  xy: 208, 188
+  size: 52, 62
+Attack
+  xy: 260, 188
+  size: 52, 62
+Attack
+  xy: 312, 188
+  size: 52, 62
+Hit
+  xy: 0, 250
+  size: 52, 62
+Hit
+  xy: 52, 250
+  size: 52, 62
+Hit
+  xy: 104, 250
+  size: 52, 62
+Hit
+  xy: 156, 250
+  size: 52, 62
+Death
+  xy: 0, 312
+  size: 52, 62
+Death
+  xy: 52, 312
+  size: 52, 62
+Death
+  xy: 104, 312
+  size: 52, 62
+Death
+  xy: 156, 312
+  size: 52, 62
+Death
+  xy: 208, 312
+  size: 52, 62
+Death
+  xy: 260, 312
+  size: 52, 62
+Death
+  xy: 312, 312
+  size: 52, 62
+Death
+  xy: 364, 312
+  size: 52, 62
+Death
+  xy: 416, 312
+  size: 52, 62
+IdleUp
+  xy: 0, 374
+  size: 52, 62
+IdleUp
+  xy: 52, 374
+  size: 52, 62
+IdleUp
+  xy: 104, 374
+  size: 52, 62
+IdleUp
+  xy: 156, 374
+  size: 52, 62
+IdleDown
+  xy: 0, 436
+  size: 52, 62
+IdleDown
+  xy: 52, 436
+  size: 52, 62
+IdleDown
+  xy: 104, 436
+  size: 52, 62
+IdleDown
+  xy: 156, 436
+  size: 52, 62
+WalkUp
+  xy: 0, 498
+  size: 52, 62
+WalkUp
+  xy: 52, 498
+  size: 52, 62
+WalkUp
+  xy: 104, 498
+  size: 52, 62
+WalkUp
+  xy: 156, 498
+  size: 52, 62
+WalkUp
+  xy: 208, 498
+  size: 52, 62
+WalkUp
+  xy: 260, 498
+  size: 52, 62
+WalkUp
+  xy: 312, 498
+  size: 52, 62
+WalkUp
+  xy: 364, 498
+  size: 52, 62
+WalkDown
+  xy: 0, 560
+  size: 52, 62
+WalkDown
+  xy: 52, 560
+  size: 52, 62
+WalkDown
+  xy: 104, 560
+  size: 52, 62
+WalkDown
+  xy: 156, 560
+  size: 52, 62
+WalkDown
+  xy: 208, 560
+  size: 52, 62
+WalkDown
+  xy: 260, 560
+  size: 52, 62
+WalkDown
+  xy: 312, 560
+  size: 52, 62
+WalkDown
+  xy: 364, 560
+  size: 52, 62
