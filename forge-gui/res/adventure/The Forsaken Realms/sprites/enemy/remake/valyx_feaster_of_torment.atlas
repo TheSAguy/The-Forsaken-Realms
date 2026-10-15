@@ -1,0 +1,174 @@
+valyx_feaster_of_torment.png
+size: 918,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 102, 56
+  footprint: 25, 1, 53, 54
+Idle
+  xy: 102, 64
+  size: 102, 56
+Idle
+  xy: 204, 64
+  size: 102, 56
+Idle
+  xy: 306, 64
+  size: 102, 56
+Walk
+  xy: 0, 120
+  size: 102, 56
+Walk
+  xy: 102, 120
+  size: 102, 56
+Walk
+  xy: 204, 120
+  size: 102, 56
+Walk
+  xy: 306, 120
+  size: 102, 56
+Walk
+  xy: 408, 120
+  size: 102, 56
+Walk
+  xy: 510, 120
+  size: 102, 56
+Walk
+  xy: 612, 120
+  size: 102, 56
+Walk
+  xy: 714, 120
+  size: 102, 56
+Attack
+  xy: 0, 176
+  size: 102, 56
+Attack
+  xy: 102, 176
+  size: 102, 56
+Attack
+  xy: 204, 176
+  size: 102, 56
+Attack
+  xy: 306, 176
+  size: 102, 56
+Attack
+  xy: 408, 176
+  size: 102, 56
+Attack
+  xy: 510, 176
+  size: 102, 56
+Hit
+  xy: 0, 232
+  size: 102, 56
+Hit
+  xy: 102, 232
+  size: 102, 56
+Hit
+  xy: 204, 232
+  size: 102, 56
+Hit
+  xy: 306, 232
+  size: 102, 56
+Death
+  xy: 0, 288
+  size: 102, 56
+Death
+  xy: 102, 288
+  size: 102, 56
+Death
+  xy: 204, 288
+  size: 102, 56
+Death
+  xy: 306, 288
+  size: 102, 56
+Death
+  xy: 408, 288
+  size: 102, 56
+Death
+  xy: 510, 288
+  size: 102, 56
+Death
+  xy: 612, 288
+  size: 102, 56
+Death
+  xy: 714, 288
+  size: 102, 56
+Death
+  xy: 816, 288
+  size: 102, 56
+IdleUp
+  xy: 0, 344
+  size: 102, 56
+IdleUp
+  xy: 102, 344
+  size: 102, 56
+IdleUp
+  xy: 204, 344
+  size: 102, 56
+IdleUp
+  xy: 306, 344
+  size: 102, 56
+IdleDown
+  xy: 0, 400
+  size: 102, 56
+IdleDown
+  xy: 102, 400
+  size: 102, 56
+IdleDown
+  xy: 204, 400
+  size: 102, 56
+IdleDown
+  xy: 306, 400
+  size: 102, 56
+WalkUp
+  xy: 0, 456
+  size: 102, 56
+WalkUp
+  xy: 102, 456
+  size: 102, 56
+WalkUp
+  xy: 204, 456
+  size: 102, 56
+WalkUp
+  xy: 306, 456
+  size: 102, 56
+WalkUp
+  xy: 408, 456
+  size: 102, 56
+WalkUp
+  xy: 510, 456
+  size: 102, 56
+WalkUp
+  xy: 612, 456
+  size: 102, 56
+WalkUp
+  xy: 714, 456
+  size: 102, 56
+WalkDown
+  xy: 0, 512
+  size: 102, 56
+WalkDown
+  xy: 102, 512
+  size: 102, 56
+WalkDown
+  xy: 204, 512
+  size: 102, 56
+WalkDown
+  xy: 306, 512
+  size: 102, 56
+WalkDown
+  xy: 408, 512
+  size: 102, 56
+WalkDown
+  xy: 510, 512
+  size: 102, 56
+WalkDown
+  xy: 612, 512
+  size: 102, 56
+WalkDown
+  xy: 714, 512
+  size: 102, 56

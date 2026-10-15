@@ -1,0 +1,173 @@
+crimson_slaad.png
+size: 450,505
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 50, 49
+Idle
+  xy: 50, 64
+  size: 50, 49
+Idle
+  xy: 100, 64
+  size: 50, 49
+Idle
+  xy: 150, 64
+  size: 50, 49
+Walk
+  xy: 0, 113
+  size: 50, 49
+Walk
+  xy: 50, 113
+  size: 50, 49
+Walk
+  xy: 100, 113
+  size: 50, 49
+Walk
+  xy: 150, 113
+  size: 50, 49
+Walk
+  xy: 200, 113
+  size: 50, 49
+Walk
+  xy: 250, 113
+  size: 50, 49
+Walk
+  xy: 300, 113
+  size: 50, 49
+Walk
+  xy: 350, 113
+  size: 50, 49
+Attack
+  xy: 0, 162
+  size: 50, 49
+Attack
+  xy: 50, 162
+  size: 50, 49
+Attack
+  xy: 100, 162
+  size: 50, 49
+Attack
+  xy: 150, 162
+  size: 50, 49
+Attack
+  xy: 200, 162
+  size: 50, 49
+Attack
+  xy: 250, 162
+  size: 50, 49
+Hit
+  xy: 0, 211
+  size: 50, 49
+Hit
+  xy: 50, 211
+  size: 50, 49
+Hit
+  xy: 100, 211
+  size: 50, 49
+Hit
+  xy: 150, 211
+  size: 50, 49
+Death
+  xy: 0, 260
+  size: 50, 49
+Death
+  xy: 50, 260
+  size: 50, 49
+Death
+  xy: 100, 260
+  size: 50, 49
+Death
+  xy: 150, 260
+  size: 50, 49
+Death
+  xy: 200, 260
+  size: 50, 49
+Death
+  xy: 250, 260
+  size: 50, 49
+Death
+  xy: 300, 260
+  size: 50, 49
+Death
+  xy: 350, 260
+  size: 50, 49
+Death
+  xy: 400, 260
+  size: 50, 49
+IdleUp
+  xy: 0, 309
+  size: 50, 49
+IdleUp
+  xy: 50, 309
+  size: 50, 49
+IdleUp
+  xy: 100, 309
+  size: 50, 49
+IdleUp
+  xy: 150, 309
+  size: 50, 49
+IdleDown
+  xy: 0, 358
+  size: 50, 49
+IdleDown
+  xy: 50, 358
+  size: 50, 49
+IdleDown
+  xy: 100, 358
+  size: 50, 49
+IdleDown
+  xy: 150, 358
+  size: 50, 49
+WalkUp
+  xy: 0, 407
+  size: 50, 49
+WalkUp
+  xy: 50, 407
+  size: 50, 49
+WalkUp
+  xy: 100, 407
+  size: 50, 49
+WalkUp
+  xy: 150, 407
+  size: 50, 49
+WalkUp
+  xy: 200, 407
+  size: 50, 49
+WalkUp
+  xy: 250, 407
+  size: 50, 49
+WalkUp
+  xy: 300, 407
+  size: 50, 49
+WalkUp
+  xy: 350, 407
+  size: 50, 49
+WalkDown
+  xy: 0, 456
+  size: 50, 49
+WalkDown
+  xy: 50, 456
+  size: 50, 49
+WalkDown
+  xy: 100, 456
+  size: 50, 49
+WalkDown
+  xy: 150, 456
+  size: 50, 49
+WalkDown
+  xy: 200, 456
+  size: 50, 49
+WalkDown
+  xy: 250, 456
+  size: 50, 49
+WalkDown
+  xy: 300, 456
+  size: 50, 49
+WalkDown
+  xy: 350, 456
+  size: 50, 49

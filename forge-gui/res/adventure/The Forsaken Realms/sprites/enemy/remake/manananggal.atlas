@@ -1,0 +1,174 @@
+manananggal.png
+size: 810,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 56
+  footprint: 25, 1, 41, 54
+Idle
+  xy: 90, 64
+  size: 90, 56
+Idle
+  xy: 180, 64
+  size: 90, 56
+Idle
+  xy: 270, 64
+  size: 90, 56
+Walk
+  xy: 0, 120
+  size: 90, 56
+Walk
+  xy: 90, 120
+  size: 90, 56
+Walk
+  xy: 180, 120
+  size: 90, 56
+Walk
+  xy: 270, 120
+  size: 90, 56
+Walk
+  xy: 360, 120
+  size: 90, 56
+Walk
+  xy: 450, 120
+  size: 90, 56
+Walk
+  xy: 540, 120
+  size: 90, 56
+Walk
+  xy: 630, 120
+  size: 90, 56
+Attack
+  xy: 0, 176
+  size: 90, 56
+Attack
+  xy: 90, 176
+  size: 90, 56
+Attack
+  xy: 180, 176
+  size: 90, 56
+Attack
+  xy: 270, 176
+  size: 90, 56
+Attack
+  xy: 360, 176
+  size: 90, 56
+Attack
+  xy: 450, 176
+  size: 90, 56
+Hit
+  xy: 0, 232
+  size: 90, 56
+Hit
+  xy: 90, 232
+  size: 90, 56
+Hit
+  xy: 180, 232
+  size: 90, 56
+Hit
+  xy: 270, 232
+  size: 90, 56
+Death
+  xy: 0, 288
+  size: 90, 56
+Death
+  xy: 90, 288
+  size: 90, 56
+Death
+  xy: 180, 288
+  size: 90, 56
+Death
+  xy: 270, 288
+  size: 90, 56
+Death
+  xy: 360, 288
+  size: 90, 56
+Death
+  xy: 450, 288
+  size: 90, 56
+Death
+  xy: 540, 288
+  size: 90, 56
+Death
+  xy: 630, 288
+  size: 90, 56
+Death
+  xy: 720, 288
+  size: 90, 56
+IdleUp
+  xy: 0, 344
+  size: 90, 56
+IdleUp
+  xy: 90, 344
+  size: 90, 56
+IdleUp
+  xy: 180, 344
+  size: 90, 56
+IdleUp
+  xy: 270, 344
+  size: 90, 56
+IdleDown
+  xy: 0, 400
+  size: 90, 56
+IdleDown
+  xy: 90, 400
+  size: 90, 56
+IdleDown
+  xy: 180, 400
+  size: 90, 56
+IdleDown
+  xy: 270, 400
+  size: 90, 56
+WalkUp
+  xy: 0, 456
+  size: 90, 56
+WalkUp
+  xy: 90, 456
+  size: 90, 56
+WalkUp
+  xy: 180, 456
+  size: 90, 56
+WalkUp
+  xy: 270, 456
+  size: 90, 56
+WalkUp
+  xy: 360, 456
+  size: 90, 56
+WalkUp
+  xy: 450, 456
+  size: 90, 56
+WalkUp
+  xy: 540, 456
+  size: 90, 56
+WalkUp
+  xy: 630, 456
+  size: 90, 56
+WalkDown
+  xy: 0, 512
+  size: 90, 56
+WalkDown
+  xy: 90, 512
+  size: 90, 56
+WalkDown
+  xy: 180, 512
+  size: 90, 56
+WalkDown
+  xy: 270, 512
+  size: 90, 56
+WalkDown
+  xy: 360, 512
+  size: 90, 56
+WalkDown
+  xy: 450, 512
+  size: 90, 56
+WalkDown
+  xy: 540, 512
+  size: 90, 56
+WalkDown
+  xy: 630, 512
+  size: 90, 56

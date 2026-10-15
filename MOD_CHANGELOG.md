@@ -14264,6 +14264,51 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 627: twenty-four more LPC enemies - giants, a mummy, the Valyx demons, folk creatures, slaadi, gorgons (2026-10-15)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_627.py`. From the remaining
+low-quality list the user took my recommendations for C76 and C79, B57-60, 62, 66, 70 and 73-75, and A2, 13, 16 and 47-55.
+The naga (A43-46) follow in round 628: they need a serpent body.
+
+- **Giants**: the Wandering Giant (bald, a gray beard, a red skirt and a club), the Bungisngis (gold, LPC's cyclops eye,
+  a club) and the Kapre of the Old Balete (dark, long-haired and bearded, a club), all on LPC's muscular body.
+- **The Mummy**: LPC's zombie body, which is beige, in bandages.
+- **The demons** (the round-608 recipe: troll or wartotaur heads, horns, bat wings and a tail):
+  - **Valyx Feaster of Torment**: plum, black wings, a war axe.
+  - **Valyx the Tormentor**: blood red on red wings, with a flail. LPC's whip draws only in its own animation.
+  - **Valgavoth**: pale on white wings, casting, after his card.
+  - **Tevesh Szat**: midnight blue on black wings, casting.
+  - The two Valyx are bosses and keep their drawn size.
+- **Folk creatures**:
+  - **Sirena**: a lilac merfolk woman with a fin crest (the round-519 recipe), green hair and a trident.
+  - **Hex Witch**: pale, in a purple dress and a yellow wizard hat, with a dark staff.
+  - **Ekek**: a woman with the aven falcon head in dark red (a new maroon variant of the round-624 head) on red wings.
+  - **Manananggal**: a pale, purple-haired woman on bat wings.
+  - **Nuno sa Punso**: an old man with a white beard and a cane.
+- **The slaadi**: muscular lizard-heads, the Crimson in red and the Murky in blue.
+- **The gorgons**: LPC's long dreadlocks are their snake hair. Dressed from their cards:
+  - **Vraska**: in black and red, with a dagger.
+  - **Visara**: white, with black hair.
+  - **Tam**: pale green, with white hair, in green.
+  - **Damia**: green dress.
+  - **Pharika**: green, with a gold mantle and a staff.
+  - **Hythonia**: green, in black.
+  - **Omo**: in gray robes, with a staff.
+  - **Gorgon and Gorgon 2**: a scimitar and a dagger.
+- **Files**:
+  - 24 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 24 sprite paths and scales (0.30-0.34; the two bosses 0.49 and 0.50, the same drawn size).
+  - A footprint on 16 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 901 characters, additions only. No new authors.
+  - `CREDITS.md`: the LPC bullet (873 enemies).
+- **Checks**:
+  - enemies.json against HEAD: exactly these 24, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 625: nine more LPC enemies - a fairy, an imp, two mushroom folk, an angel, a skeleton, a rat (2026-10-15)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_625.py`. The user picked

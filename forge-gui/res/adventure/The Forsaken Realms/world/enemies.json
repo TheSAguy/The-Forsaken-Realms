@@ -15113,7 +15113,7 @@
     },
     {
         "name": "Gorgon",
-        "sprite": "sprites/enemy/monstrosity/gorgone.atlas",
+        "sprite": "sprites/enemy/remake/gorgon.atlas",
         "deck": [
             "decks/standard/gorgon.dck"
         ],
@@ -15194,12 +15194,13 @@
             "IdentityGolgari",
             "BiomeGreen"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3095
     },
     {
         "name": "Gorgon 2",
         "nameOverride": "Gorgon Sculptor",
-        "sprite": "sprites/enemy/monstrosity/gorgonen.atlas",
+        "sprite": "sprites/enemy/remake/gorgon_2.atlas",
         "deck": [
             "decks/standard/gorgon_2.dck"
         ],
@@ -15281,7 +15282,7 @@
             "BiomeGreen"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Gorilla",
@@ -22771,7 +22772,7 @@
     },
     {
         "name": "Mummy",
-        "sprite": "sprites/enemy/undead/mummy.atlas",
+        "sprite": "sprites/enemy/remake/mummy.atlas",
         "deck": [
             "decks/standard/mummy.dck"
         ],
@@ -22779,7 +22780,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.8667,
+        "scale": 0.3171,
         "life": 11,
         "rewards": [
             {
@@ -31544,7 +31545,7 @@
     },
     {
         "name": "Valyx Feaster of Torment",
-        "sprite": "sprites/enemy/fiend/valyx.atlas",
+        "sprite": "sprites/enemy/remake/valyx_feaster_of_torment.atlas",
         "deck": [
             "decks/miniboss/valyx.dck"
         ],
@@ -31727,7 +31728,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 1.0263
+        "scale": 0.5
     },
     {
         "name": "Vampire",
@@ -32443,7 +32444,7 @@
     },
     {
         "name": "Wandering Giant",
-        "sprite": "sprites/enemy/giant/wanderinggiant.atlas",
+        "sprite": "sprites/enemy/remake/wandering_giant.atlas",
         "deck": [
             "decks/standard/wanderinggiant.dck"
         ],
@@ -32508,7 +32509,7 @@
             "IdentityBoros"
         ],
         "tier": "Uncommon",
-        "scale": 1.0
+        "scale": 0.3171
     },
     {
         "name": "Wandering Treefolk",
@@ -35906,14 +35907,14 @@
     },
     {
         "name": "Valgavoth",
-        "sprite": "sprites/enemy/fiend/valyx.atlas",
+        "sprite": "sprites/enemy/remake/valgavoth.atlas",
         "deck": [
             "decks/legends/valgavoth.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 45,
-        "scale": 0.6842,
+        "scale": 0.325,
         "life": 50,
         "rewards": [
             {
@@ -38316,13 +38317,13 @@
     },
     {
         "name": "Visara",
-        "sprite": "sprites/enemy/monstrosity/gorgonen.atlas",
+        "sprite": "sprites/enemy/remake/visara.atlas",
         "deck": [
             "decks/legends/visara.dck"
         ],
         "ai": "",
         "speed": 30,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 19,
         "rewards": [
             {
@@ -41885,13 +41886,13 @@
     },
     {
         "name": "Damia",
-        "sprite": "sprites/enemy/monstrosity/gorgone.atlas",
+        "sprite": "sprites/enemy/remake/damia.atlas",
         "deck": [
             "decks/legends/damia.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -44213,13 +44214,13 @@
     },
     {
         "name": "Pharika",
-        "sprite": "sprites/enemy/monstrosity/gorgone.atlas",
+        "sprite": "sprites/enemy/remake/pharika.atlas",
         "deck": [
             "decks/legends/pharika.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.325,
         "life": 40,
         "rewards": [
             {
@@ -45658,13 +45659,13 @@
     },
     {
         "name": "Hythonia",
-        "sprite": "sprites/enemy/monstrosity/gorgonen.atlas",
+        "sprite": "sprites/enemy/remake/hythonia.atlas",
         "deck": [
             "decks/legends/hythonia.dck"
         ],
         "ai": "",
         "speed": 27,
-        "scale": 1.0833,
+        "scale": 0.3171,
         "life": 19,
         "rewards": [
             {
@@ -67627,13 +67628,13 @@
     },
     {
         "name": "Vraska",
-        "sprite": "sprites/enemy/monstrosity/gorgone.atlas",
+        "sprite": "sprites/enemy/remake/vraska.atlas",
         "deck": [
             "decks/legends/vraska.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -83784,7 +83785,7 @@
     },
     {
         "name": "Omo",
-        "sprite": "sprites/enemy/monstrosity/gorgonen.atlas",
+        "sprite": "sprites/enemy/remake/omo.atlas",
         "deck": [
             "decks/legends/omo.dck"
         ],
@@ -83848,7 +83849,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.0833
+        "scale": 0.3095
     },
     {
         "name": "Sai",
@@ -86949,7 +86950,7 @@
     },
     {
         "name": "Tevesh Szat",
-        "sprite": "sprites/enemy/fiend/valyx.atlas",
+        "sprite": "sprites/enemy/remake/tevesh_szat.atlas",
         "deck": [
             "decks/legends/tevesh_szat.dck"
         ],
@@ -87013,7 +87014,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.6842
+        "scale": 0.325
     },
     {
         "name": "Vish Kal",
@@ -98054,13 +98055,13 @@
     },
     {
         "name": "Tam",
-        "sprite": "sprites/enemy/monstrosity/gorgone.atlas",
+        "sprite": "sprites/enemy/remake/tam.atlas",
         "deck": [
             "decks/legends/tam.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -100116,7 +100117,7 @@
     },
     {
         "name": "Valyx the Tormentor",
-        "sprite": "sprites/enemy/fiend/valyx.atlas",
+        "sprite": "sprites/enemy/remake/valyx_the_tormentor.atlas",
         "deck": [
             "decks/miniboss/valyx.dck"
         ],
@@ -100373,7 +100374,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 1.0263
+        "scale": 0.4875
     },
     {
         "name": "Dwarf Lord",
@@ -133299,7 +133300,7 @@
     },
     {
         "name": "Crimson Slaad",
-        "sprite": "sprites/enemy/basic/monster/crimson_slaad.atlas",
+        "sprite": "sprites/enemy/remake/crimson_slaad.atlas",
         "deck": [
             "decks/standard/crimson_slaad.dck"
         ],
@@ -133357,7 +133358,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3421
     },
     {
         "name": "Crushing Cyclops",
@@ -133617,7 +133619,7 @@
     },
     {
         "name": "Murky Slaad",
-        "sprite": "sprites/enemy/basic/monster/murky_slaad.atlas",
+        "sprite": "sprites/enemy/remake/murky_slaad.atlas",
         "deck": [
             "decks/standard/murky_slaad.dck"
         ],
@@ -133678,7 +133680,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.3421
     },
     {
         "name": "Ochre Jelly",
@@ -138001,7 +138003,7 @@
     },
     {
         "name": "Kapre of the Old Balete",
-        "sprite": "sprites/enemy/mythic/kapre_old_balete.atlas",
+        "sprite": "sprites/enemy/remake/kapre_of_the_old_balete.atlas",
         "deck": [
             "decks/standard/kapre_old_balete.dck"
         ],
@@ -138060,7 +138062,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.8125
+        "scale": 0.3171
     },
     {
         "name": "Troll Warlord",
@@ -140839,7 +140841,7 @@
     },
     {
         "name": "Bungisngis",
-        "sprite": "sprites/enemy/basic/monster/bungisngis.atlas",
+        "sprite": "sprites/enemy/remake/bungisngis.atlas",
         "deck": [
             "decks/standard/bungisngis.dck"
         ],
@@ -140898,7 +140900,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.8667
+        "scale": 0.3171
     },
     {
         "name": "Busaw",
@@ -141406,7 +141408,7 @@
     },
     {
         "name": "Ekek",
-        "sprite": "sprites/enemy/basic/monster/ekek.atlas",
+        "sprite": "sprites/enemy/remake/ekek.atlas",
         "deck": [
             "decks/standard/ekek.dck"
         ],
@@ -141465,7 +141467,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.8667
+        "scale": 0.3171
     },
     {
         "name": "Kolyog",
@@ -141595,7 +141597,7 @@
     },
     {
         "name": "Manananggal",
-        "sprite": "sprites/enemy/basic/monster/manananggal.atlas",
+        "sprite": "sprites/enemy/remake/manananggal.atlas",
         "deck": [
             "decks/standard/manananggal.dck"
         ],
@@ -141654,11 +141656,11 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.9286
+        "scale": 0.3171
     },
     {
         "name": "Nuno sa Punso",
-        "sprite": "sprites/enemy/basic/spirit/nuno_sa_punso.atlas",
+        "sprite": "sprites/enemy/remake/nuno_sa_punso.atlas",
         "deck": [
             "decks/standard/nuno_sa_punso.dck"
         ],
@@ -141717,7 +141719,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3171
     },
     {
         "name": "Fighting Rooster",
@@ -141910,7 +141912,7 @@
     },
     {
         "name": "Sirena",
-        "sprite": "sprites/enemy/basic/humanoid/sirena.atlas",
+        "sprite": "sprites/enemy/remake/sirena.atlas",
         "deck": [
             "decks/standard/sirena.dck"
         ],
@@ -141969,7 +141971,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.9286
+        "scale": 0.3023
     },
     {
         "name": "Syokoy",
@@ -142225,7 +142227,7 @@
     },
     {
         "name": "Hex Witch",
-        "sprite": "sprites/enemy/basic/humanoid/hex_witch.atlas",
+        "sprite": "sprites/enemy/remake/hex_witch.atlas",
         "deck": [
             "decks/standard/hex_witch.dck"
         ],
@@ -142284,7 +142286,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.8667
+        "scale": 0.3023
     },
     {
         "name": "Katipunero Scout",
