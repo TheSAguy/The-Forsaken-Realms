@@ -123,7 +123,7 @@ public final class ResourcePurse {
         int losses = record == null ? 0 : record.getRight();
         // Loot is deliberately unseeded, like RewardData.generate()'s drops.
         Array<Reward> purse = pay(enemyName, data, wins, losses, Current.player().getDifficulty().name, tuning, new Random(),
-                replacedEntries, Math.max(1, factor));
+                replacedEntries, Math.max(1, factor), Ascendance.purseFactor()); // round 604: Challenger's Mark
         if (hadBetterRecord(wins, losses) && tuning.resourcePurseLosingRecordFactor > 1f && purse.size > 0)
             forge.adventure.stage.GameHUD.getInstance().addNotification("Payback! " + enemyName + " had the better of you - a richer purse.");
         return purse;
@@ -142,6 +142,12 @@ public final class ResourcePurse {
 
     static Array<Reward> pay(String enemyName, EnemyData data, int wins, int losses, String difficulty, TuningData tuning,
                              Random random, int replacedEntries, int championFactor) {
+        return pay(enemyName, data, wins, losses, difficulty, tuning, random, replacedEntries, championFactor, 1f);
+    }
+
+    /** Round 604: {@code perkFactor} is the player's Challenger's Mark (Ascendance.purseFactor), 1 without it. */
+    static Array<Reward> pay(String enemyName, EnemyData data, int wins, int losses, String difficulty, TuningData tuning,
+                             Random random, int replacedEntries, int championFactor, float perkFactor) {
         Array<Reward> result = new Array<>();
         int tier = tierIndex(data.tier);
         if (tier < 0)
@@ -159,7 +165,8 @@ public final class ResourcePurse {
         float recordFactor = enemyWasAhead ? Math.max(0f, tuning.resourcePurseLosingRecordFactor) : 1f;
         float spread = Math.max(0f, Math.min(0.9f, tuning.resourcePurseVariance));
         float luck = 1f + (random.nextFloat() * 2f - 1f) * spread;
-        int purse = Math.max(0, Math.round(base * difficultyFactor * colorFactor * firstWinFactor * recordFactor * luck * championFactor));
+        int purse = Math.max(0, Math.round(base * difficultyFactor * colorFactor * firstWinFactor * recordFactor * luck * championFactor
+                * Math.max(0f, perkFactor)));
         if (purse <= 0) {
             System.out.println("[TFR-ResourcePurse] " + enemyName + " (" + RANKS[tier] + "): the purse works out to nothing"
                     + " (base " + base + ", difficulty x" + fmt(difficultyFactor) + ") - no resources paid");
@@ -190,7 +197,8 @@ public final class ResourcePurse {
                 + (firstWin ? " x" + fmt(firstWinFactor) + " first win" : "")
                 + (enemyWasAhead ? " x" + fmt(recordFactor) + " it had the better record (" + losses + " loss" + (losses == 1 ? "" : "es")
                         + " to " + Math.max(0, wins - 1) + " win" + (wins - 1 == 1 ? "" : "s") + " before this duel)" : "")
-                + " x" + fmt(luck) + " luck" + (championFactor > 1 ? " x" + championFactor + " CHAMPION" : "") + " -> "
+                + " x" + fmt(luck) + " luck" + (championFactor > 1 ? " x" + championFactor + " CHAMPION" : "")
+                + (perkFactor != 1f ? " x" + fmt(perkFactor) + " Challenger's Mark" : "") + " -> "
                 + gold + " gold" + (units > 0 ? " + " + units + " " + RESOURCES[rolled] : " (the bonus roll came up gold too)")
                 + "; bonus " + bonus + " rolled on gold " + fmt(weights[GOLD]) + " / shards " + fmt(weights[SHARDS])
                 + " / wood " + fmt(weights[WOOD]) + " / stone " + fmt(weights[STONE])

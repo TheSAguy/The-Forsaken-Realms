@@ -173,6 +173,21 @@
     { "id": "legendSeeker", "lasting": true, "maxPicks": 1, "value": 0.15 },
     // Round 596 (the user: "One more leveling perk: Get 4 perk choices vs. 3. One time. Not sure the name"): Insight -
     // every later level's offer holds offerSize + value rewards (Ascendance.offerSize).
-    { "id": "insight",     "lasting": true, "maxPicks": 1, "value": 1 }
+    { "id": "insight",     "lasting": true, "maxPicks": 1, "value": 1 },
+    // Round 604 (the user: "For the perks you recommended. Let's implement 1-6"). Pact of Embers: +cards to the opening
+    // hand and life (negative) in the player's own duels.
+    { "id": "pactOfEmbers", "lasting": true, "maxPicks": 1, "cards": 1, "life": -4, "minLevel": 8 },
+    // Splinter Cache: rank I starts each duel with a Clue, rank II a Treasure too (token scripts); rank II from level 15.
+    { "id": "splinterCache", "lasting": true, "maxPicks": 2, "minLevel": 6, "rankLevels": [6, 15],
+      "tokens": ["c_a_clue_draw", "c_a_treasure_sac"] },
+    // Challenger's Mark: enemies start with 1 + value times their life; wins pay +cards and the purse times 1 + purse.
+    // Never with Aura of Fear.
+    { "id": "challenger",  "lasting": true, "maxPicks": 1, "value": 0.20, "cards": 1, "purse": 0.25, "minLevel": 10 },
+    // Hunter's Ledger: the value-th win over an enemy (by name) adds a rare from its deck, else a mythic.
+    { "id": "hunterLedger", "lasting": true, "maxPicks": 1, "value": 3, "minLevel": 8 },
+    // Law of Stakes: the first ante re-roll each day costs no shards.
+    { "id": "lawOfStakes", "lasting": true, "maxPicks": 1, "minLevel": 4 },
+    // Home Ground: +life in a duel fought on the player's own land (the player biome).
+    { "id": "homeGround",  "lasting": true, "maxPicks": 1, "life": 3, "minLevel": 6 }
   ]
 }

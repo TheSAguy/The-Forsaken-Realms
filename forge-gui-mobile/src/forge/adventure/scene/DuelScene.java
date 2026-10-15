@@ -926,11 +926,21 @@ public class DuelScene extends ForgeScene {
         if (!aiControlsPlayerSide && eventData == null && !deckTester) {
             int vigor = forge.adventure.util.Ascendance.morningVigorLife();
             int shardBonus = forge.adventure.util.Ascendance.duelStartShards();
-            if (vigor > 0 || shardBonus > 0) {
+            // Round 604: Pact of Embers (+cards, -life), Home Ground (+life on the player's land), Splinter Cache (tokens).
+            int pactCards = forge.adventure.util.Ascendance.pactCards();
+            int life = vigor - forge.adventure.util.Ascendance.pactLifeCost() + forge.adventure.util.Ascendance.homeGroundLifeHere();
+            String[] tokens = forge.adventure.util.Ascendance.splinterTokens();
+            if (life != 0 || shardBonus > 0 || pactCards > 0 || tokens.length > 0) {
                 EffectData ascendance = new EffectData();
-                ascendance.lifeModifier = vigor;
+                ascendance.lifeModifier = life;
                 ascendance.extraManaShards = shardBonus;
+                ascendance.changeStartCards = pactCards;
+                if (tokens.length > 0)
+                    ascendance.startBattleWithCard = tokens;
                 playerEffects.add(ascendance);
+                if (pactCards > 0 || tokens.length > 0)
+                    System.out.println("[TFR-Ascend] duel start: life " + (life >= 0 ? "+" : "") + life + ", hand +" + pactCards
+                            + ", tokens " + java.util.Arrays.toString(tokens));
             }
             // Round 525: Opening Gambit - the player's seat weighs more in the first game's coin toss (the engine's
             // GameAction.weightedCoinToss logs the roll).
@@ -1106,11 +1116,12 @@ public class DuelScene extends ForgeScene {
             // Round 596 (the user: "Aura of fear: 10% fewer hit points for enemies (cumulative 3 times)"): the player's own
             // duels - not an event (its rules set the life), not a roaming guard's fight - never under 1.
             float fear = eventData == null && guardDeck == null ? forge.adventure.util.Ascendance.enemyLifeFactor() : 1f;
-            if (fear < 1f) {
+            // Round 604: Challenger's Mark raises it (x1.2) - the factor is not only ever below 1 now.
+            if (fear != 1f) {
                 int lifeBeforeFear = enemyStartingLife;
                 enemyStartingLife = Math.max(1, Math.round(enemyStartingLife * fear));
-                System.out.println("[TFR-Ascend] Aura of Fear: " + currentEnemy.getName() + " starts at " + enemyStartingLife
-                        + " life, not " + lifeBeforeFear + " (x" + fear + ")");
+                System.out.println("[TFR-Ascend] " + (fear < 1f ? "Aura of Fear: " : "Challenger's Mark: ") + currentEnemy.getName()
+                        + " starts at " + enemyStartingLife + " life, not " + lifeBeforeFear + " (x" + fear + ")");
             }
             aiPlayer.setStartingLife(eventData != null ? eventData.eventRules.startingLife : enemyStartingLife);
 

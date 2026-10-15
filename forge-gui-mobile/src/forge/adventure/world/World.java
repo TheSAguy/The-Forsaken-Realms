@@ -6797,6 +6797,15 @@ public class World implements Disposable, SaveFileContent {
         return playerBiomeIndexCache < 0 ? 0L : 1L << playerBiomeIndexCache;
     }
 
+    /** Round 604, Home Ground: is this tile (y-up, as isPersistentlyRevealed) the player's own land - the player biome
+     *  a capture or a restored town's growth painted? */
+    public boolean isPlayerLand(int x, int y) {
+        long playerBit = playerBiomeBit();
+        if (playerBit == 0 || biomeMap == null || x < 0 || x >= width || y < 0 || y >= height)
+            return false;
+        return (biomeMap[x][height - y - 1] & playerBit) != 0;
+    }
+
     /**
      * The PERSISTENT (player-position-independent) Revealed tier: ground the player actually owns
      * (the player biome bit painted by captures/expansion - exact per tile, not a circle), plus

@@ -759,6 +759,10 @@ public class MatchController extends NetworkGuiGame {
             TuningData tuning = Config.instance().getTuningData();
             int baseCost = EconomyBuildings.scaledCost(tuning.anteRerollBaseShardCost);
             int cost = Math.round(baseCost * (float) Math.pow(tuning.anteRerollEscalationRate, rerollCount));
+            // Round 604, Law of Stakes: the first re-roll each day is free (and the paid ones after it start at the base).
+            boolean free = forge.adventure.util.Ascendance.freeAnteRerollToday();
+            if (free)
+                cost = 0;
             // ALWAYS offer the confirm (2026-08-17 user report: "I did not see the Ante Re-roll
             // option") - the previous version pre-checked affordability and silently skipped the
             // whole dialog when the player couldn't afford it, which reads identically to "the
@@ -771,7 +775,8 @@ public class MatchController extends NetworkGuiGame {
             // 2026-08-20 ("put the Re-roll button on the right and Keep on the left");
             // default selection stays on Keep, same as the old defaultYes=false.
             boolean wantsReroll = SOptionPane.showOptionDialog(
-                    "Re-roll this ante for " + cost + " Shards?", "Re-roll Ante", null,
+                    free ? "Re-roll this ante for free? (Law of Stakes, once a day)" : "Re-roll this ante for " + cost + " Shards?",
+                    "Re-roll Ante", null,
                     java.util.Arrays.asList("Keep", "Re-roll")) == 1;
             if (!wantsReroll)
                 break;
@@ -780,6 +785,11 @@ public class MatchController extends NetworkGuiGame {
                 message("You don't have enough Shards for this Re-roll (need " + cost + ", have "
                         + player.getShards() + ").", "Not Enough Shards");
                 break;
+            }
+            if (free) {
+                forge.adventure.util.Ascendance.useFreeAnteReroll();
+                currentItems = reroll.get();
+                continue;
             }
             player.takeShards(cost);
             // Round 123 (code review S3-1): the purse deduction alone was undone by DuelScene.GameEnd()'s

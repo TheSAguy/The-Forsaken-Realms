@@ -1,6 +1,6 @@
 
 ascendance_icons.png
-size: 800,1000
+size: 800,1100
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -225,4 +225,25 @@ legendSeeker_1
   size: 96, 96
 insight_1
   xy: 102, 902
+  size: 96, 96
+pactOfEmbers_1
+  xy: 202, 902
+  size: 96, 96
+splinterCache_1
+  xy: 302, 902
+  size: 96, 96
+splinterCache_2
+  xy: 402, 902
+  size: 96, 96
+challenger_1
+  xy: 502, 902
+  size: 96, 96
+hunterLedger_1
+  xy: 602, 902
+  size: 96, 96
+lawOfStakes_1
+  xy: 702, 902
+  size: 96, 96
+homeGround_1
+  xy: 2, 1002
   size: 96, 96

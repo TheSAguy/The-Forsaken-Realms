@@ -80,6 +80,11 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 604): **LOCAL + UNRELEASED (code + data + art)** - six new Ascendance perks: Pact of Embers,
+Splinter Cache I-II, Challenger's Mark (excludes Aura of Fear), Hunter's Ledger, Law of Stakes, Home Ground (Choice fields
+cards/life/purse/tokens/rankLevels; AscendanceState.stakesDay saved; World.isPlayerLand); 7 icons in ascendance_icons.
+All seen in the agent game but Law of Stakes (the agent skips the ante prompt).
+
 ## STATE 2026-10-14 (round 602): **LOCAL + UNRELEASED (art + data)** - LPC backlog batch 5 of 5: the 111 undead,
 leonin, kor, faeries and fiends (generator `lpc_selections/make_602.py`); the backlog's 435 clear fits are all LPC now.
 enemies.json 111 paths + scales (0.28-0.33, bosses 0.44-0.53), 84 footprints, CREDITS_LPC.md 795 characters, CREDITS.md's

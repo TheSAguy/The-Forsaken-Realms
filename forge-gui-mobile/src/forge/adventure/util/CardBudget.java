@@ -131,7 +131,8 @@ public final class CardBudget {
         int difficultyBonus = easy ? Math.max(0, tuning.cardBudgetEasyBonus) : 0;
         int rankBase = champion ? championFactor * Math.max(0, base(tuning, tier, true)) : Math.max(0, base(tuning, tier, firstWin));
         int budget = rankBase + gearApplied + difficultyBonus
-                + (firstWin && !champion ? Ascendance.firstWinCardBonus() : 0); // round 494: Spoilsman
+                + (firstWin && !champion ? Ascendance.firstWinCardBonus() : 0) // round 494: Spoilsman
+                + Ascendance.challengerCards(); // round 604: Challenger's Mark
 
         List<Reward> cards = new ArrayList<>();
         Array<Reward> result = new Array<>();
@@ -243,6 +244,18 @@ public final class CardBudget {
             unpayable += bonusWanted - bonusNames.size();
         }
 
+        // Round 604, Hunter's Ledger: the third win over this enemy adds a rare (else a mythic) from its deck - one not
+        // paid already when the deck has one, on top of the budget.
+        if (deckNoBasicLands != null) {
+            PaperCard ledger = Ascendance.hunterLedgerCard(enemyName, wins, unpaid(deckNoBasicLands, paidNames));
+            if (ledger == null)
+                ledger = Ascendance.hunterLedgerCard(enemyName, wins, deckNoBasicLands);
+            if (ledger != null) {
+                paidNames.add(ledger.getName());
+                kept.add(new Reward(ledger));
+            }
+        }
+
         for (Reward reward : kept)
             result.add(reward);
         int goldPerCard = tuning.deckCardFallbackGold;
@@ -253,7 +266,8 @@ public final class CardBudget {
                 + (champion ? ", CHAMPION x" + championFactor : "")
                 + "): the list rolled " + candidates + " card(s), budget " + budget
                 + " (" + rankBase + " base" + (gearApplied > 0 ? " +" + gearApplied + " gear" : "")
-                + (difficultyBonus > 0 ? " +" + difficultyBonus + " Easy" : "") + ") -> kept "
+                + (difficultyBonus > 0 ? " +" + difficultyBonus + " Easy" : "")
+                + (Ascendance.challengerCards() > 0 ? " +" + Ascendance.challengerCards() + " Challenger's Mark" : "") + ") -> kept "
                 + fromList + (bestFirst ? " best-first" : " at random")
                 + (secondCopies.size() + secondCopiesPaid > 0 ? " (" + (secondCopies.size() + secondCopiesPaid)
                         + " second cop" + (secondCopies.size() + secondCopiesPaid == 1 ? "y" : "ies") + " set aside)" : "")

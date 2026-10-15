@@ -121,5 +121,17 @@ public class AscendanceData {
         /** Round 572, lasting only: the TOTAL after each pick, when the steps are uneven (Zealot 0.08, 0.15, 0.25 - the
          *  user: "8%, 15%, 25%"). Overrides {@code value} and {@code first}; past its end the last entry holds. */
         public float[] ranks;
+        /** Round 604, lasting only: cards a pick adds - Pact of Embers' opening hand, Challenger's Mark's loot. */
+        public int cards;
+        /** Round 604, lasting only: starting life a pick adds (negative: Pact of Embers' price; Home Ground's +3). */
+        public int life;
+        /** Round 604, lasting only: the share more a won duel's resource purse pays (Challenger's Mark). */
+        public float purse;
+        /** Round 604, lasting only: token scripts a pick puts in play at a duel's start, one more each rank (Splinter
+         *  Cache: a Clue, then a Treasure too). */
+        public String[] tokens;
+        /** Round 604, lasting only: the level each rank is first offered at, when later ranks wait longer than minLevel
+         *  (Splinter Cache's Treasure from 15). Past its end the last entry holds. */
+        public int[] rankLevels;
     }
 }

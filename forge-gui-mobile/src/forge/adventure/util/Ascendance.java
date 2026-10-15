@@ -941,8 +941,106 @@ public final class Ascendance {
     public static float reputationLossFactor() { return Math.max(0f, 1f - total("envoy")); }
     /** Round 596, Warmonger (Envoy's opposite): color reputation GAINED from a won duel, times this. */
     public static float reputationGainFactor() { return 1f + total("warmonger"); }
-    /** Round 596, Aura of Fear: an enemy's starting life in the player's own duels, times this. */
-    public static float enemyLifeFactor() { return Math.max(0.1f, 1f - total("auraOfFear")); }
+    /** Round 596, Aura of Fear: an enemy's starting life in the player's own duels, times this. Round 604: Challenger's
+     *  Mark raises it instead (the two exclude each other). */
+    public static float enemyLifeFactor() {
+        return Math.max(0.1f, 1f - total("auraOfFear")) * (1f + (picks("challenger") > 0 ? choice("challenger").value : 0f));
+    }
+
+    // ---- Round 604 (the user: "For the perks you recommended. Let's implement 1-6"): six perks from the design pass -
+    // Pact of Embers, Splinter Cache, Challenger's Mark, Hunter's Ledger, Law of Stakes, Home Ground. Numbers in
+    // ascendance.json (Choice.cards / life / purse / tokens); 0 / empty without the pick.
+
+    private static int choiceInt(String id, java.util.function.ToIntFunction<AscendanceData.Choice> field) {
+        AscendanceData.Choice c = choice(id);
+        return c == null || picks(id) <= 0 ? 0 : field.applyAsInt(c);
+    }
+
+    /** Pact of Embers: cards added to the opening hand of the player's own duels. */
+    public static int pactCards() { return choiceInt("pactOfEmbers", c -> Math.max(0, c.cards)); }
+    /** Pact of Embers: starting life it costs (a positive number, subtracted). */
+    public static int pactLifeCost() { return choiceInt("pactOfEmbers", c -> Math.max(0, -c.life)); }
+    /** Home Ground: life added to a duel fought on the player's own land. */
+    public static int homeGroundLife() { return choiceInt("homeGround", c -> Math.max(0, c.life)); }
+    /** Home Ground: life added to the duel starting now - the pick, and the player standing on their own land (in one of
+     *  their towns too: the world player waits at its gate, on their land). */
+    public static int homeGroundLifeHere() {
+        int life = homeGroundLife();
+        WorldStage stage = WorldStage.getInstance();
+        if (life <= 0 || stage == null || stage.getPlayerSprite() == null || WorldSave.getCurrentSave() == null)
+            return 0;
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        int tx = (int) ((stage.getPlayerSprite().getX() + stage.getPlayerSprite().getWidth() / 2f) / world.getTileSize());
+        int ty = (int) ((stage.getPlayerSprite().getY() + stage.getPlayerSprite().getHeight() / 2f) / world.getTileSize());
+        boolean home = world.isPlayerLand(tx, ty);
+        System.out.println("[TFR-Ascend] Home Ground: tile (" + tx + "," + ty + ") is " + (home ? "your land, +" + life + " life"
+                : "not your land"));
+        return home ? life : 0;
+    }
+
+    /** Challenger's Mark: cards added to a won duel's loot. */
+    public static int challengerCards() { return choiceInt("challenger", c -> Math.max(0, c.cards)); }
+    /** Challenger's Mark: a won duel's resource purse, times this. */
+    public static float purseFactor() {
+        AscendanceData.Choice c = choice("challenger");
+        return c == null || picks("challenger") <= 0 ? 1f : 1f + Math.max(0f, c.purse);
+    }
+
+    /** Splinter Cache: the token scripts in play at the start of the player's own duels - the first one per rank. */
+    public static String[] splinterTokens() {
+        AscendanceData.Choice c = choice("splinterCache");
+        int n = picks("splinterCache");
+        if (c == null || c.tokens == null || n <= 0)
+            return new String[0];
+        return java.util.Arrays.copyOf(c.tokens, Math.min(n, c.tokens.length));
+    }
+
+    /** Law of Stakes: is today's free ante re-roll still there? */
+    public static boolean freeAnteRerollToday() {
+        AscendanceState s = state();
+        return s != null && picks("lawOfStakes") > 0 && s.stakesDay != WorldSave.getCurrentSave().getWorld().getCurrentDay();
+    }
+
+    /** Law of Stakes: the free re-roll was used - none more until tomorrow. */
+    public static void useFreeAnteReroll() {
+        AscendanceState s = state();
+        if (s == null)
+            return;
+        s.stakesDay = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        System.out.println("[TFR-Ascend] Law of Stakes: today's free ante re-roll used (day " + s.stakesDay + ")");
+    }
+
+    /**
+     * Hunter's Ledger (the user's pick from the design pass, inspired by Puzzle Quest's monster capture): the loot of the
+     * player's {@code value}-th win over an enemy - the third - holds one rare from that enemy's deck, else a mythic. The
+     * win record grows by one a win, so it pays once per enemy name. Null without the pick, on any other win, or for a
+     * deck with neither rarity. CardBudget adds it to the loot.
+     */
+    public static forge.item.PaperCard hunterLedgerCard(String enemyName, int wins, List<forge.item.PaperCard> deck) {
+        AscendanceData.Choice c = choice("hunterLedger");
+        if (c == null || picks("hunterLedger") <= 0 || deck == null || wins != Math.max(1, Math.round(c.value)))
+            return null;
+        List<forge.item.PaperCard> rares = new ArrayList<>(), mythics = new ArrayList<>();
+        for (forge.item.PaperCard card : deck) {
+            if (card == null || card.getRules().getType().isBasicLand())
+                continue;
+            if (card.getRarity() == forge.card.CardRarity.Rare)
+                rares.add(card);
+            else if (card.getRarity() == forge.card.CardRarity.MythicRare)
+                mythics.add(card);
+        }
+        List<forge.item.PaperCard> pool = rares.isEmpty() ? mythics : rares;
+        if (pool.isEmpty()) {
+            System.out.println("[TFR-Ascend] Hunter's Ledger: " + enemyName + " (win " + wins + ") - no rare or mythic in its deck");
+            return null;
+        }
+        forge.item.PaperCard card = pool.get(RAND.nextInt(pool.size()));
+        System.out.println("[TFR-Ascend] Hunter's Ledger: " + enemyName + " (win " + wins + ") pays " + card.getName() + " ("
+                + card.getRarity() + ", " + card.getEdition() + ")");
+        GameHUD.getInstance().logNotification("Hunter's Ledger: your third win over " + enemyName + " pays " + card.getName()
+                + ".", false);
+        return card;
+    }
     /** Round 596, Insight (the user: "Get 4 perk choices vs. 3. One time"): rewards in a level's offer - offerSize plus
      *  the pick's value. */
     public static int offerSize() { return Math.max(1, data().offerSize + Math.round(total("insight"))); }
@@ -1127,12 +1225,18 @@ public final class Ascendance {
             return false;
         if (level < c.minLevel) // round 566
             return false;
+        if (c.lasting && c.rankLevels != null && c.rankLevels.length > 0 // round 604: a later rank waits longer
+                && level < c.rankLevels[Math.min(picks(c.id), c.rankLevels.length - 1)])
+            return false;
         if ("templePriest".equals(c.id) && !TempleOfferings.capitolHasTemple()) // round 566: nothing to serve yet
             return false;
         if (("guardFocus".equals(c.id) || "guardSpoils".equals(c.id)) && !RoamingGuards.isEnabled()) // rounds 566, 570
             return false;
         // Round 596 (the user: "Mutually exclusive from Envoy. So if you picked one, the other should never show"):
         if (("envoy".equals(c.id) && picks("warmonger") > 0) || ("warmonger".equals(c.id) && picks("envoy") > 0))
+            return false;
+        // Round 604: Challenger's Mark (harder foes, richer loot) and Aura of Fear (weaker foes) exclude each other.
+        if (("challenger".equals(c.id) && picks("auraOfFear") > 0) || ("auraOfFear".equals(c.id) && picks("challenger") > 0))
             return false;
         if (c.lasting)
             return picks(c.id) < c.maxPicks;
@@ -1333,6 +1437,15 @@ public final class Ascendance {
             case "legendSeeker": effect = "Legends are sighted " + pct(then) + " more often"; break; // round 596
             case "insight": effect = "Choose from " + (data().offerSize + Math.round(then)) + " rewards at each level, not "
                     + data().offerSize; break; // round 596
+            // Round 604: kept to about 60 characters - a choice row is two lines.
+            case "pactOfEmbers": effect = "+" + c.cards + " card in your opening hand, " + c.life + " [+Life] each duel"; break;
+            case "splinterCache": effect = "Start each duel with a Clue" + (next > 1 ? " and a Treasure" : "") + " token"
+                    + (next > 1 ? "s" : ""); break;
+            case "challenger": effect = "Foes +" + pct(c.value) + " [+Life]; wins +" + c.cards + " card, +" + pct(c.purse)
+                    + " purse; no Aura of Fear"; break;
+            case "hunterLedger": effect = "Your " + (Math.round(c.value) == 3 ? "third" : "#" + Math.round(c.value)) + " win over a foe pays a rare from its deck"; break;
+            case "lawOfStakes": effect = "Your first ante re-roll each day is free"; break;
+            case "homeGround": effect = "+" + c.life + " [+Life] in duels fought on your own land"; break;
             default: effect = id;
         }
         return effect;
@@ -1441,6 +1554,12 @@ public final class Ascendance {
             case "auraOfFear": return "Aura of Fear";
             case "legendSeeker": return "Legend Seeker";
             case "insight": return "Insight";
+            case "pactOfEmbers": return "Pact of Embers"; // round 604
+            case "splinterCache": return "Splinter Cache";
+            case "challenger": return "Challenger's Mark";
+            case "hunterLedger": return "Hunter's Ledger";
+            case "lawOfStakes": return "Law of Stakes";
+            case "homeGround": return "Home Ground";
             default: return id;
         }
     }
@@ -1530,6 +1649,7 @@ public final class Ascendance {
         data.storeObject("ascendanceHistoryIcons", new ArrayList<>(s.historyIcons)); // round 526
         data.store("ascendanceVigorDay", s.vigorDay);
         data.store("ascendanceVigorUsed", s.vigorUsed);
+        data.store("ascendanceStakesDay", s.stakesDay); // round 604: Law of Stakes
         data.store("ascendanceDeferredPower", s.deferredPower); // round 505
         data.store("ascendanceDeferredSource", s.deferredSource == null ? "" : s.deferredSource);
         data.store("ascendanceRerolledLevel", s.rerolledLevel); // round 518
@@ -1657,6 +1777,7 @@ public final class Ascendance {
         }
         s.vigorDay = data.containsKey("ascendanceVigorDay") ? data.readInt("ascendanceVigorDay") : -1;
         s.vigorUsed = data.containsKey("ascendanceVigorUsed") ? data.readInt("ascendanceVigorUsed") : 0;
+        s.stakesDay = data.containsKey("ascendanceStakesDay") ? data.readInt("ascendanceStakesDay") : -1; // round 604
         // Round 505: Power a dialog was holding when the game saved - the HUD pays it once the save is on screen.
         s.deferredPower = data.containsKey("ascendanceDeferredPower") ? Math.max(0, data.readInt("ascendanceDeferredPower")) : 0;
         s.deferredSource = data.containsKey("ascendanceDeferredSource") ? data.readString("ascendanceDeferredSource") : "";

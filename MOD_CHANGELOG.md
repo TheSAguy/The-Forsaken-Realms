@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 604: six new perks - Pact of Embers, Splinter Cache, Challenger's Mark, Hunter's Ledger, Law of Stakes, Home Ground (2026-10-14)
+
+The user, on the design pass's perk recommendations: "For the perks you recommended. Let's implement 1-6. After you look
+at the new art I just gave you. Get the appropriate icons for each."
+
+- **The perks** (lasting, config tables/ascendance.json; the numbers are the design pass's; new Choice fields `cards`,
+  `life`, `purse`, `tokens`, `rankLevels`):
+  - **Pact of Embers** (from level 8): +1 card in the opening hand, -4 starting life, in the player's own duels
+    (DuelScene's Ascendance EffectData: `changeStartCards`, `lifeModifier`).
+  - **Splinter Cache** I-II (from 6; rank II from 15 via `rankLevels`): every duel starts with a Clue token, rank II a
+    Treasure too (`startBattleWithCard` with the token scripts `c_a_clue_draw`, `c_a_treasure_sac`).
+  - **Challenger's Mark** (from 10): enemies start with x1.2 life (`enemyLifeFactor`, now able to go above 1); a won
+    duel's card budget +1 and its resource purse x1.25 (CardBudget, `ResourcePurse.pay`'s new `perkFactor`). It and
+    Aura of Fear exclude each other (`offerable`), and its text says so.
+  - **Hunter's Ledger** (from 8): the third win over an enemy name adds one rare from its deck to the loot - one not
+    paid already when there is one - else a mythic (`Ascendance.hunterLedgerCard`, CardBudget). The win record only
+    passes 3 once, so it pays once per name. Logged to the notice log.
+  - **Law of Stakes** (from 4): the first ante re-roll each day is free (MatchController.revealAnteCards; saved day
+    `ascendanceStakesDay`, AscendanceState.stakesDay). The paid re-rolls after it start at the base price.
+  - **Home Ground** (from 6): +3 starting life when the duel is fought on the player's own land - the player biome
+    under the world player (`World.isPlayerLand`, `Ascendance.homeGroundLifeHere`), so a fight in one of the player's
+    towns counts too.
+- **Icons** (`sprites/ascendance_icons`, page grown to 800x1100; previewed to the user): from the packs sorted into
+  ART/Icons this session - the 16x16 RPG Item Pack's scroll (Pact), steel gauntlet (Challenger) and candle (Home
+  Ground), and the 64 px crafting materials' red crystals (Splinter Cache, with rank chevrons), antler (Hunter's Ledger)
+  and gold bars (Law of Stakes). The painted 64 px art is fitted smoothly to 84 px.
+- **Seen in the agent game** (a copy of save 1, then fresh characters): `[TFR-Ascend] duel start: life -1, hand +1,
+  tokens [c_a_clue_draw, c_a_treasure_sac]` with Clue tokens on the battlefield; `Home Ground: tile (352,349) is your
+  land, +3 life` beside the Capitol and `is not your land` out in the wild; `Hunter's Ledger: Wild Rat (win 3) pays
+  Tangled Colony (R, WOE)`; `Challenger's Mark: Halfling Bard starts at 16 life, not 13 (x1.2)`, `budget 3 (2 base +1
+  Challenger's Mark)` and `purse ... x1.25 Challenger's Mark`; Challenger refused while Aura of Fear is held; the picks
+  survive a save and load. **Law of Stakes is not seen**: the agent's seat skips the ante prompt.
+- **Fixed on the way**: the enemy-life factor applied only when below 1 (Aura of Fear), so Challenger's x1.2 did
+  nothing in the first test build.
+
 ## Round 602: the LPC backlog, batch 5 - 111 undead, leonin, kor, faeries and fiends (2026-10-14)
 
 The Procedural Pixel Creatures session, the last of the five LPC batches, built by the generator repo's
