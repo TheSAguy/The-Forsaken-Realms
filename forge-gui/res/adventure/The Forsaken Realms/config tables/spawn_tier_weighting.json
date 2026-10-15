@@ -94,5 +94,15 @@
   //   spawn gate lets them in - settings.json notorietyRankStepWins).
   "notorietyWinsPerLevel": 5,
   "notorietyMaxLevel": 10,
-  "notorietyPerLevel": { "commonScale": -0.06, "uncommonScale": 0.0, "rareScale": 0.12, "mythicScale": 0.20 }
+  "notorietyPerLevel": { "commonScale": -0.06, "uncommonScale": 0.0, "rareScale": 0.12, "mythicScale": 0.20 },
+  // Round 613 (the user: "Based on your win ratio, I want to increase, or decrease the spawn levels on enemies"): over
+  // the last winRatioWindow duels you fought (the duels notoriety counts - not the Arena, an Inn event, Deck Tester or a
+  // guard's fight), from winRatioMinDuels[i] on record the row shifts up to winRatioMaxShift[i] percentage points out of
+  // Common into the higher ranks (a good record) or back into Common (a poor one). Full at a win ratio of winRatioHigh
+  // (20/25, 40/50) or winRatioLow (5/25, 10/50), none at 0.5, linear between. After every other layer; on top of the week.
+  "winRatioWindow": 50,
+  "winRatioMinDuels": [25, 50],
+  "winRatioMaxShift": [5, 10],
+  "winRatioHigh": 0.8,
+  "winRatioLow": 0.2
 }

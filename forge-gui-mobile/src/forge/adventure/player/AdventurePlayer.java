@@ -425,6 +425,25 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return notorietyStreak;
     }
 
+    /** Round 613: the win-ratio tilt's record, oldest first ('W' / 'L'). */
+    public String recentDuels() {
+        return recentDuels == null ? "" : recentDuels;
+    }
+
+    /** Round 613: one more duel on the record; the oldest falls off past the window. */
+    private void recordRecentDuel(boolean won) {
+        int window = forge.adventure.util.SpawnTierWeighting.winRatioWindow();
+        String record = recentDuels() + (won ? "W" : "L");
+        recentDuels = record.length() > window ? record.substring(record.length() - window) : record;
+        forge.adventure.util.SpawnTierWeighting.logWinRatio(won ? "won" : "lost");
+    }
+
+    /** Round 613, console "winratio W L": set the record to W wins and L losses (spread evenly), for testing. */
+    public String cheatSetRecentDuels(int wins, int losses) {
+        recentDuels = forge.adventure.util.SpawnTierWeighting.spread(Math.max(0, wins), Math.max(0, losses));
+        return forge.adventure.util.SpawnTierWeighting.describeWinRatio();
+    }
+
     /** Round 411: the notoriety level the current streak buys - 0 none, 1 = 0/1 Wall, ... capped at the wall lists. */
     public int notorietyLevel() {
         forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
@@ -439,6 +458,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      * (Bronze Coin or not) clears it.
      */
     public void recordNotoriety(boolean won) {
+        recordRecentDuel(won); // round 613: the same duels feed the win-ratio tilt
         int before = notorietyStreak;
         int levelBefore = notorietyLevel();
         notorietyStreak = won ? before + 1 : 0;
@@ -785,6 +805,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404
         notorietyStreak = 0; // round 411
+        recentDuels = ""; // round 613
         ascendance.reset(); // round 493
         unlockedShopTypes.clear();
         startingColorId = null;
@@ -838,6 +859,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private final java.util.Map<String, Integer> enemyWinStreaks = new java.util.HashMap<>();
     // Round 411: notoriety - the player's wins in a row against anyone, saved as "notorietyStreak".
     private int notorietyStreak = 0;
+    // Round 613: the win-ratio tilt's record - the player's last duels (notoriety's duels), oldest first, 'W' or 'L', at
+    // most SpawnTierWeightData.winRatioWindow; saved as "recentDuels".
+    private String recentDuels = "";
     // Round 493: Ascendance, the player's level (util/Ascendance) - saved under its own keys, off for older saves.
     private final forge.adventure.data.AscendanceState ascendance = new forge.adventure.data.AscendanceState();
 
@@ -1097,6 +1121,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404: a new run's enemies have not learned your tricks yet
         notorietyStreak = 0; // round 411: nor heard of you
+        recentDuels = ""; // round 613: a new run's record starts clean
         // Round 493 (the user: "Not 100% sure how NG+ will work, I think you start over"): back to Ascendance 0 - and a
         // New Game+ is how an older save gets Ascendance at all.
         forge.adventure.util.Ascendance.startRun(this, "New Game+");
@@ -2056,6 +2081,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
         // Round 411: notoriety. Absent before this round - every older save starts at 0 wins in a row.
         notorietyStreak = data.containsKey("notorietyStreak") ? Math.max(0, data.readInt("notorietyStreak")) : 0;
+        // Round 613: the win-ratio record. A save from before it starts from its lifetime wins and losses, spread over the
+        // window at the same ratio - its record already shows how the player fares.
+        if (data.containsKey("recentDuels"))
+            recentDuels = data.readString("recentDuels");
+        else
+            recentDuels = forge.adventure.util.SpawnTierWeighting.seedRecentDuels(statistic.totalWins(), statistic.totalLoss());
         forge.adventure.util.Ascendance.load(data, ascendance, difficultyData.name); // round 493: absent before it - off
         requestCompanionCheck(); // round 502: an older save may wear more companions than the limit allows
         // Shop-type blueprints (2026-08-30). Absent on every pre-round-71 save; the containsKey
@@ -2156,6 +2187,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         data.storeObject("winStreakNames", winStreakNameList);
         data.storeObject("winStreakCounts", winStreakCountList);
         data.store("notorietyStreak", notorietyStreak); // round 411
+        data.store("recentDuels", recentDuels == null ? "" : recentDuels); // round 613
         forge.adventure.util.Ascendance.save(data, ascendance); // round 493
         data.storeObject("unlockedShopTypes", new ArrayList<>(unlockedShopTypes));
         // store() with a null String throws (writeUTF) - persist "" and read it back as null.

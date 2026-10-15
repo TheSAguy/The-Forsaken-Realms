@@ -62,4 +62,15 @@ public class SpawnTierWeightData {
     public TierDelta notorietyPerLevel;
     public int notorietyWinsPerLevel = 5;
     public int notorietyMaxLevel = 10;
+    /** Round 613 (the user: "Based on your win ratio, I want to increase, or decrease the spawn levels on enemies ... At
+     *  25 duels ... up to 5% or decrease it by up to -5%. Then at 50+ duels ... up to 10% ... High end of ratio should be
+     *  20/25 wins. Low end 5/25 wins"): the win-ratio tilt. Over the player's last winRatioWindow duels (the duels
+     *  notoriety counts), once winRatioMinDuels[i] of them are on record the shift may reach winRatioMaxShift[i]
+     *  percentage points of the row: + moves that share of Common up into Uncommon, Rare and Mythic (in their own
+     *  proportions), - moves it back down. Linear in the win ratio, full at winRatioHigh / winRatioLow, 0 halfway. */
+    public int winRatioWindow = 50;
+    public int[] winRatioMinDuels = {25, 50};
+    public float[] winRatioMaxShift = {5f, 10f};
+    public float winRatioHigh = 0.8f;
+    public float winRatioLow = 0.2f;
 }

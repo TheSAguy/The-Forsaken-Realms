@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 613: the win-ratio spawn tilt - a good record brings harder enemies, a poor one easier (2026-10-15)
+
+The user: "Based on your win ratio, I want to increase, or decrease the spawn levels on enemies. This should be in
+addition to the weekly increase we have ... At 25 duels ... up to 5% or decrease it by up to -5%. Then at 50+ duels,
+increase up to 10% or decrease it by up to -10%. High end of ratio should be 20/25 wins. Low end 5/25 wins. after 50,
+40/50 high end and 10/50 low end." Then, on the worked math: "go with your suggestions ... Yes it overlaps, but people
+are throwing games on purpose. They can't really throw their ratio :)."
+
+- **The record** (`AdventurePlayer.recentDuels`, saved as "recentDuels"): the player's last 50 duels, the ones notoriety
+  counts (not the Arena, an Inn event, Deck Tester or a guard's fight). A rolling window, so a recent run of losses
+  eases the world within weeks. A save from before this round starts from its lifetime wins and losses, spread over the
+  window at the same ratio (`[TFR-WinRatio] an older save: ...`).
+- **The shift** (`SpawnTierWeighting.winRatioShift`, spawn_tier_weighting.json `winRatioWindow` 50, `winRatioMinDuels`
+  [25, 50], `winRatioMaxShift` [5, 10], `winRatioHigh` 0.8, `winRatioLow` 0.2): under 25 duels none; 25-49 up to +-5
+  points; 50 up to +-10. Shift = cap x (ratio - 0.5) / 0.3, held to +-cap - full at 20/25 and 40/50, -full at 5/25 and
+  10/50, 0 at an even record, linear between (15/25 = +1.7, 30/50 = +3.3, 35/50 = +6.7).
+- **What it moves**: percentage points of the finished tier row (week bracket, territory, difficulty, fog and
+  notoriety all applied first) out of Common into Uncommon, Rare and Mythic in their own proportions - or, below an even
+  record, back into Common. A rank the week has closed stays shut. Weeks 4-6 (65/24/10/1): +10 -> 55/30.9/12.9/1.3,
+  -10 -> 75/17.1/7.1/0.7.
+- It stacks with notoriety on purpose (the user: people throw games to reset the streak; they cannot throw a ratio).
+- **Seen in the agent game** (a copy of save 1): `an older save: the record starts from its lifetime 154-24 as 43-7 -
+  ... spawn shift +10.0 points`; a won duel logged; with `winratio 40 10`: `[TFR-SpawnTier] week 2 on NEUTRAL, Insane ...:
+  Apprentice 49.6% Adept 40.9% Master 9.5% Archmage 0.0% | win ratio +10.0 -> Apprentice 39.6% Adept 49.0% Master
+  11.4% Archmage 0.0%` (week 2 keeps Archmages closed). The user's save 1 is at +10 from its first load.
+- `[TFR-WinRatio]` after every counted duel (the record, the ratio, the shift), the shift and the row after it on the
+  `[TFR-SpawnTier]` line; console `winratio` shows it and
+  `winratio W L` sets a record for testing.
+
 ## Round 612: the engine to the 10.14 daily (upstream `34a8662b796`) (2026-10-15)
 
 The user installed the official 10.14 snapshot (`forge-installer-2.0.16-SNAPSHOT-10.14.jar`) into `E:\GAMES\Forge_2`,

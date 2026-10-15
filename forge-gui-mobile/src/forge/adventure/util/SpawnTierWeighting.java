@@ -120,8 +120,15 @@ public class SpawnTierWeighting {
         SpawnTierWeightData.TierDelta factor = difficultyFactor(data, difficulty);
         SpawnTierWeightData.TierDelta tilt = notorietyTilt(data); // round 447
         logRowOnce(bracket, delta, factor, tilt, key, week, difficulty);
-        if (delta == null && factor == null && tilt == null)
-            return Math.max(0f, baseFor(bracket, tier));
+        float shift = winRatioShift(); // round 613: last, on the finished row
+        if (delta == null && factor == null && tilt == null) {
+            if (shift == 0f)
+                return Math.max(0f, baseFor(bracket, tier));
+            float[] row = new float[TIERS.length];
+            for (int i = 0; i < TIERS.length; i++)
+                row[i] = Math.max(0f, baseFor(bracket, TIERS[i]));
+            return shifted(row, shift, tier);
+        }
         float adjusted = rowValue(bracket, delta, factor, tilt, tier);
         // Round 183: renormalize the row back to the week bracket's OWN total. The four adjusted numbers describe a
         // MIX, and every territory row before this round summed to zero change by hand (+10/+2/-4/-8 etc.) for a
@@ -136,7 +143,134 @@ public class SpawnTierWeighting {
         if (rowTotal <= 0f)
             return adjusted;
         float bracketTotal = bracket.common + bracket.uncommon + bracket.rare + bracket.mythic;
-        return adjusted * (bracketTotal / rowTotal);
+        if (shift == 0f)
+            return adjusted * (bracketTotal / rowTotal);
+        float[] row = new float[TIERS.length];
+        for (int i = 0; i < TIERS.length; i++)
+            row[i] = rowValue(bracket, delta, factor, tilt, TIERS[i]) * (bracketTotal / rowTotal);
+        return shifted(row, shift, tier);
+    }
+
+    // ------------------------------------------------------------------------------------------------ round 613
+    // The win-ratio tilt (the user: "Based on your win ratio, I want to increase, or decrease the spawn levels on enemies.
+    // This should be in addition to the weekly increase we have"). The record is AdventurePlayer.recentDuels(): the last
+    // winRatioWindow duels notoriety counts. Shift = maxShift x (ratio - 0.5) / 0.3 at the defaults, held to +-maxShift -
+    // full at 20/25 and 40/50, -full at 5/25 and 10/50, none at an even record. Points of the row's own total move out of
+    // Common into the higher ranks in their proportions (+), or back into Common (-): a rank the week has closed stays shut.
+
+    /** The tier mix of {@code row} (Common, Uncommon, Rare, Mythic; summing to the bracket's total) with {@code shift}
+     *  percentage points moved; the value for {@code tier}. */
+    private static float shifted(float[] row, float shift, String tier) {
+        shiftRow(row, shift);
+        for (int i = 0; i < TIERS.length; i++)
+            if (TIERS[i].equals(tier == null ? "Common" : tier))
+                return Math.max(0f, row[i]);
+        return Math.max(0f, row[0]);
+    }
+
+    /** The shift applied to the whole row, in place. */
+    private static void shiftRow(float[] row, float shift) {
+        float total = row[0] + row[1] + row[2] + row[3];
+        float higher = row[1] + row[2] + row[3];
+        float move = Math.abs(shift) * total / 100f;
+        if (shift > 0f && higher > 0f) {
+            move = Math.min(move, row[0]);
+            for (int i = 1; i < 4; i++)
+                row[i] += move * row[i] / higher;
+            row[0] -= move;
+        } else if (shift < 0f && higher > 0f) {
+            move = Math.min(move, higher);
+            for (int i = 1; i < 4; i++)
+                row[i] -= move * row[i] / higher;
+            row[0] += move;
+        }
+    }
+
+    public static int winRatioWindow() {
+        SpawnTierWeightData data = Config.instance().getSpawnTierWeightData();
+        return data == null ? 50 : Math.max(1, data.winRatioWindow);
+    }
+
+    private static String record() {
+        try {
+            forge.adventure.player.AdventurePlayer player = forge.adventure.player.AdventurePlayer.current();
+            return player == null ? "" : player.recentDuels();
+        } catch (RuntimeException e) {
+            return ""; // no game loaded yet
+        }
+    }
+
+    /** The shift in percentage points (+ harder, - easier) for the current record; 0 under the first tier's count. */
+    public static float winRatioShift() {
+        return winRatioShift(record());
+    }
+
+    static float winRatioShift(String record) {
+        SpawnTierWeightData data = Config.instance().getSpawnTierWeightData();
+        if (data == null || record == null || data.winRatioMinDuels == null || data.winRatioMaxShift == null)
+            return 0f;
+        int n = record.length();
+        float cap = 0f;
+        for (int i = 0; i < Math.min(data.winRatioMinDuels.length, data.winRatioMaxShift.length); i++)
+            if (n >= data.winRatioMinDuels[i])
+                cap = data.winRatioMaxShift[i];
+        float half = (data.winRatioHigh - data.winRatioLow) / 2f;
+        if (cap <= 0f || n == 0 || half <= 0f)
+            return 0f;
+        int wins = 0;
+        for (int i = 0; i < n; i++)
+            if (record.charAt(i) == 'W')
+                wins++;
+        float ratio = wins / (float) n;
+        float mid = (data.winRatioHigh + data.winRatioLow) / 2f;
+        return cap * Math.max(-1f, Math.min(1f, (ratio - mid) / half));
+    }
+
+    /** W wins and L losses spread evenly over a record (oldest first) - for seeding and the console. */
+    public static String spread(int wins, int losses) {
+        StringBuilder sb = new StringBuilder();
+        int n = wins + losses;
+        int placed = 0;
+        for (int i = 0; i < n; i++) {
+            boolean win = Math.round((i + 1) * wins / (float) n) > placed;
+            if (win)
+                placed++;
+            sb.append(win ? 'W' : 'L');
+        }
+        return sb.toString();
+    }
+
+    /** A save from before round 613: its lifetime wins and losses, scaled into the window at the same ratio. */
+    public static String seedRecentDuels(int wins, int losses) {
+        int total = Math.max(0, wins) + Math.max(0, losses);
+        if (total == 0)
+            return "";
+        int n = Math.min(total, winRatioWindow());
+        int w = Math.round(n * Math.max(0, wins) / (float) total);
+        String seeded = spread(w, n - w);
+        System.out.println("[TFR-WinRatio] an older save: the record starts from its lifetime " + wins + "-" + losses
+                + " as " + w + "-" + (n - w) + " - " + describe(seeded));
+        return seeded;
+    }
+
+    public static String describeWinRatio() {
+        return describe(record());
+    }
+
+    private static String describe(String record) {
+        int wins = 0;
+        for (int i = 0; i < record.length(); i++)
+            if (record.charAt(i) == 'W')
+                wins++;
+        float shift = winRatioShift(record);
+        return "last " + record.length() + " duels " + wins + "-" + (record.length() - wins)
+                + (record.isEmpty() ? "" : " (" + Math.round(100f * wins / record.length()) + "% won)")
+                + ", spawn shift " + (shift > 0 ? "+" : "") + String.format(java.util.Locale.ROOT, "%.1f", shift) + " points";
+    }
+
+    /** [TFR-WinRatio] after each counted duel. */
+    public static void logWinRatio(String what) {
+        System.out.println("[TFR-WinRatio] " + what + " - " + describeWinRatio());
     }
 
     /** One tier's target before the row is renormalized: the territory row (if any), then the difficulty's multiplier,
@@ -339,6 +473,19 @@ public class SpawnTierWeighting {
             float share = rowTotal > 0f ? 100f * adjusted[i] / rowTotal : 0f;
             line.append(' ').append(EnemyData.tierDisplayName(TIERS[i])).append(' ')
                     .append(Math.round(share * 10f) / 10f).append('%');
+        }
+        // Round 613: the win-ratio shift and the row it leaves.
+        float ratioShift = winRatioShift();
+        if (ratioShift != 0f && rowTotal > 0f) {
+            float[] pct = new float[TIERS.length];
+            for (int i = 0; i < TIERS.length; i++)
+                pct[i] = 100f * adjusted[i] / rowTotal;
+            shiftRow(pct, ratioShift);
+            line.append(" | win ratio ").append(ratioShift > 0 ? "+" : "").append(Math.round(ratioShift * 10f) / 10f)
+                    .append(" ->");
+            for (int i = 0; i < TIERS.length; i++)
+                line.append(' ').append(EnemyData.tierDisplayName(TIERS[i])).append(' ')
+                        .append(Math.round(pct[i] * 10f) / 10f).append('%');
         }
         // Round 183: the color skew belongs on the same line - it is the other half of "what am I about to meet",
         // and a per-candidate log of it would print once per enemy per roll.

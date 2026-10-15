@@ -1084,6 +1084,12 @@ public class ConsoleCommandInterpreter {
             forge.adventure.util.AscendanceUI.openFromHud();
             return "Ascendance dialog opened (" + forge.adventure.util.Ascendance.pendingChoices() + " waiting)";
         });
+        // Round 613: "winratio" shows the win-ratio tilt; "winratio W L" sets the record (spread evenly) for testing.
+        registerCommand(new String[]{"winratio"}, s -> {
+            if (s.length >= 2)
+                return Current.player().cheatSetRecentDuels(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
+            return forge.adventure.util.SpawnTierWeighting.describeWinRatio();
+        });
         registerCommand(new String[]{"asc", "pick"}, s -> {
             if (s.length < 1)
                 return "Command needs 1 parameter: a reward id from ascendance.json";
