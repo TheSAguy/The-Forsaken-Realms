@@ -91,6 +91,8 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (round 621): **LOCAL + UNRELEASED (data)** - fixes taken from official Forge's adventure content after a review of the 10.14 release against the fork point (upstream `8c52e257e99`): eight RoL boss decks (Estrid/Ertai/Amareth Enchanted Evening -> Treachery - a Pegasus loop; Nymris, Urza, Grandmother Sengir, Vaevictis, Arcades), the Skep's blank reward page (skep_outer.tmx), RoL 1.076 Opal Cavern / Idyllic Beachfront / two Fblthp items. Arzakon's fix NOT taken (its [Commander] line - never played; the user: no Commander). Open for the user: Svyelunite reward stage, Bandit Slingshot vehicles deck, Crypt of Broken Rules, Otherworldly Market; RoL 1.077 waits for a daily.
+
 ## STATE 2026-10-15 (round 620): **LOCAL + UNRELEASED (code + data + art)** - win-ratio help tokens (tfr_ratio_* Clue/Treasure
 with "why" text; enemy 75/90/95%, player 50/25%, from 50 duels; SpawnTierWeighting.winRatioEnemyTokens/PlayerTokens).
 

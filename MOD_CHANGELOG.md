@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 621: fixes taken from official Forge's adventure content - a duel-hang deck, the Skep's blank reward page, Realm of Legends rebalances (2026-10-15)
+
+The user: "Please review the mods from the latest official Forge release and let me know what changes have been made
+since we last took stuff from them. List what's worth taking", then "take the four recommended fixes as round 621" -
+and "Realm of Legends is Commander and we don't do Commander, so make sure all Commander is drop/update as needed."
+
+- **The review.** This plane was copied from Shandalar's world data at upstream `8c52e257e99` (2026-08-03). Engine
+  merges update the stock planes, never this one (`Config.getFile` reads the plane's own copy first, `common/` second),
+  so a fix in a stock plane reaches us only when it is copied by hand - except a `common/` file we never copied, which
+  arrives with the merge. `E:\GAMES\Forge_2\res\adventure` (the 10.14 daily) equals upstream `34a8662b796` byte for byte
+  (less the `.xcf` sources). 59 upstream content commits since the fork, almost all Realm of Legends. Already here: the
+  eight RoL dungeons we imported (Isolated Hut, An-Havva Inn, Ancient Opal Cavern, Eclipsed Elven Court, Ashling's
+  Domain, Idyllic Beachfront, Peaceful Clearing, Planeswalker Dueling Club), Svyelunite Temple (462), and through
+  `common/` the Master Blue Wizard tempo deck, the pixel-art backgrounds and the Landscape Sketchbook alias. Left for the
+  user (reported, not taken): the Svyelunite reward stage (#12177), the Bandit Slingshot's vehicles deck (#11735 - its
+  new flyers deck is already ours through `common/`), Crypt of Broken Rules (RoL 1.075, Commander decks), the
+  Otherworldly Market + ten Universes Beyond shops. Skipped: localization, the MSH Jumpstart, RoL's castles and banlist,
+  the precons, six repainted icons. Upstream master already holds RoL 1.077 "Reality Fracture" (`b8f8eaace3b`, about 20
+  new small dungeons) - not in a daily yet.
+- **Eight Realm of Legends boss decks** (`decks/legends/`; each was byte-identical to upstream's pre-fix file and is now
+  upstream's current one):
+  - Estrid, Ertai, Amareth: Enchanted Evening -> Treachery (upstream `f3dbc822f90`, "to avoid infinite loop"). Estrid's
+    Archon of Sun's Grace makes a Pegasus whenever an enchantment enters; under Enchanted Evening every Pegasus is one.
+  - Amareth's two lower-case card names; Nymris's Slitherwisp `piko` -> `iko`.
+  - Urza: The Reality Chip -> Metalworker. Grandmother Sengir: Arena of the Ancients -> Ashen Powder. Vaevictis: Crop
+    Rotation + Defense of the Heart -> Rain of Salt + Rain of Tears. Arcades: Back to Basics -> Rhystic Study.
+  - Every incoming card has a script, and none is on `restricted_cards.json`'s lists (restricted or commander-only).
+- **Not taken - Commander:** upstream's Arzakon fix only changes that deck's `[Commander]` line (1996 World Champion ->
+  Arzakon). An Adventure duel never plays the `[Commander]` card (round 147's audit), so here it would change nothing.
+- **The Skep's reward page** (`maps/map/skep/skep_outer.tmx`, upstream #12128): "(Continue)" after the Sliver Queen
+  opened a sub-dialog with no text and one nameless option, and the reward - Armor of the Hivelord, Lord Garrin and his
+  six mercenaries leaving - waited behind that blank button. The actions now sit on "(Continue)" itself
+  (`MapDialog.loadDialog` closes an empty node that carries actions). A scan of every dialog in the plane's maps finds
+  no other nameless option. (Upstream's other map in that fix, `demontower/portal_2.tmx`, was already right here.)
+- **Realm of Legends 1.076 rebalances** (`ff6b6c3d1a0`) for places we imported:
+  - Ancient Opal Cavern: the Nephilim Epochal no longer starts with Dragon Arch ("removed dungeon card the AI
+    misused"). The Hard/Insane copy (object 61) starts with Hero of Precinct One, Maskwood Nexus, Tome and Sphinx of the
+    Guildpact; the Easy/Normal copy (object 91) with Sphinx and Tome of the Guildpact.
+  - Idyllic Beachfront: the dungeon effect drops Bubble Matrix (the chest still holds one).
+  - Fblthp's Lost Socks [+Life] -10 -> -5; Fblthp's Lost Fishing Pole +2 -> +4 (`items.json` and the `items.csv`
+    snapshot).
+- Checks: `validate_plane_data.py` reports the same findings as before the round. Data only, no build.
+- Not seen in play.
+
 ## Round 620: the win-ratio help tokens - a Clue or Treasure for the enemy or for you, cards that say why (2026-10-15)
 
 The user: "For your winning ratio, starting at 50 duels ... I want to give the player or the opponent, the following

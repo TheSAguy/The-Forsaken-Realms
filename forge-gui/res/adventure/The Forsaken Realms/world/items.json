@@ -1888,7 +1888,7 @@
         "equipmentSlot":  "Boots",
         "iconName":  "Fblthp\u0027sLostSocks",
         "effect":  {
-                       "lifeModifier":  -10,
+                       "lifeModifier":  -5,
                        "startBattleWithCard":  [
                                                    "Humongulus"
                                                ]
@@ -3569,7 +3569,7 @@
         "equipmentSlot":  "Right",
         "iconName":  "Fblthp\u0027sLostFishingPole",
         "effect":  {
-                       "lifeModifier":  2,
+                       "lifeModifier":  4,
                        "startBattleWithCard":  [
                                                    "Fishing Pole|FDN"
                                                ]
