@@ -1,0 +1,156 @@
+humongous_ettin.png
+size: 2262,949
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 174, 177
+  footprint: 41, 58, 100, 112
+Idle
+  xy: 174, 64
+  size: 174, 177
+Idle
+  xy: 348, 64
+  size: 174, 177
+Idle
+  xy: 522, 64
+  size: 174, 177
+Idle
+  xy: 696, 64
+  size: 174, 177
+Idle
+  xy: 870, 64
+  size: 174, 177
+Idle
+  xy: 1044, 64
+  size: 174, 177
+Idle
+  xy: 1218, 64
+  size: 174, 177
+Idle
+  xy: 1392, 64
+  size: 174, 177
+Idle
+  xy: 1566, 64
+  size: 174, 177
+Idle
+  xy: 1740, 64
+  size: 174, 177
+Idle
+  xy: 1914, 64
+  size: 174, 177
+Walk
+  xy: 0, 241
+  size: 174, 177
+Walk
+  xy: 174, 241
+  size: 174, 177
+Walk
+  xy: 348, 241
+  size: 174, 177
+Walk
+  xy: 522, 241
+  size: 174, 177
+Walk
+  xy: 696, 241
+  size: 174, 177
+Walk
+  xy: 870, 241
+  size: 174, 177
+Walk
+  xy: 1044, 241
+  size: 174, 177
+Walk
+  xy: 1218, 241
+  size: 174, 177
+Attack
+  xy: 0, 418
+  size: 174, 177
+Attack
+  xy: 174, 418
+  size: 174, 177
+Attack
+  xy: 348, 418
+  size: 174, 177
+Attack
+  xy: 522, 418
+  size: 174, 177
+Attack
+  xy: 696, 418
+  size: 174, 177
+Attack
+  xy: 870, 418
+  size: 174, 177
+Attack
+  xy: 1044, 418
+  size: 174, 177
+Attack
+  xy: 1218, 418
+  size: 174, 177
+Attack
+  xy: 1392, 418
+  size: 174, 177
+Attack
+  xy: 1566, 418
+  size: 174, 177
+Attack
+  xy: 1740, 418
+  size: 174, 177
+Attack
+  xy: 1914, 418
+  size: 174, 177
+Hit
+  xy: 0, 595
+  size: 174, 177
+Hit
+  xy: 174, 595
+  size: 174, 177
+Hit
+  xy: 348, 595
+  size: 174, 177
+Hit
+  xy: 522, 595
+  size: 174, 177
+Death
+  xy: 0, 772
+  size: 174, 177
+Death
+  xy: 174, 772
+  size: 174, 177
+Death
+  xy: 348, 772
+  size: 174, 177
+Death
+  xy: 522, 772
+  size: 174, 177
+Death
+  xy: 696, 772
+  size: 174, 177
+Death
+  xy: 870, 772
+  size: 174, 177
+Death
+  xy: 1044, 772
+  size: 174, 177
+Death
+  xy: 1218, 772
+  size: 174, 177
+Death
+  xy: 1392, 772
+  size: 174, 177
+Death
+  xy: 1566, 772
+  size: 174, 177
+Death
+  xy: 1740, 772
+  size: 174, 177
+Death
+  xy: 1914, 772
+  size: 174, 177
+Death
+  xy: 2088, 772
+  size: 174, 177

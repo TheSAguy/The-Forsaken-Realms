@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 634: the Humongous Ettin gets the user's hand-made two-headed giant (2026-10-15)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/ettin/convert.sh`. This is A15 of the
+low-quality list: the one enemy on the stock 16 px `basic/monster/humongous_ettin` sprite.
+
+- **The art**:
+  - The user made one still in ChatGPT from a two-headed barbarian and a D&D ettin: a hunched, heavily muscled hill
+    giant with two heads (one bald and tusked, one with black braids and red war paint), crossed leather straps, a
+    studded war skirt with a red rag, and a knotted log club. It faces the viewer.
+  - Then four Kling clips and Pixelate sheets: an overhead club smash with a dust burst, and a topple into brown dust.
+  - The death's dust drifted into the key's green once the body was down, so the clip ends on frame 14 and fades.
+  - The skin was kept tan-brown, never olive, so the key could not take it.
+- **Files**:
+  - 1 new atlas under `sprites/enemy/remake/`.
+  - enemies.json: the sprite path and scale (0.1548).
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly this one, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags nothing.
+  - The Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+- **Source files**: moved to the Art Library repository, `Units/Custom/Humongous Ettin`.
+
 ## Round 630: the Warden keeps his promise - Liliana's and Chandra's Pledges; the Eldraine sketchbook (2026-10-15)
 
 A player on Discord (2026-10-15): "I got Lilianas Stone after defeating her, what am i supposed to do with it? I talked

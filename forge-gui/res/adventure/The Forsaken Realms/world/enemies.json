@@ -133557,7 +133557,7 @@
     },
     {
         "name": "Humongous Ettin",
-        "sprite": "sprites/enemy/basic/monster/humongous_ettin.atlas",
+        "sprite": "sprites/enemy/remake/humongous_ettin.atlas",
         "deck": [
             "decks/standard/humongous_ettin.dck"
         ],
@@ -133616,7 +133616,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 1.0833
+        "scale": 0.1548
     },
     {
         "name": "Murky Slaad",
