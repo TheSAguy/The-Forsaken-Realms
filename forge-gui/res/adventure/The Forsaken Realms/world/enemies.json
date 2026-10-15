@@ -3102,8 +3102,7 @@
         "name": "Bandit Slingshot",
         "sprite": "sprites/enemy/humanoid/human/bandit/banditslingshot.atlas",
         "deck": [
-            "decks/standard/banditslingshot_flyers.dck",
-            "decks/standard/banditslingshot_vehicles.dck"
+            "decks/standard/banditslingshot_flyers.dck"
         ],
         "ai": "",
         "randomizeDeck": true,
@@ -3164,7 +3163,7 @@
                 "addMaxCount": 90
             }
         ],
-        "colors": "BR",
+        "colors": "R",
         "questTags": [
             "Wandering",
             "Warrior",

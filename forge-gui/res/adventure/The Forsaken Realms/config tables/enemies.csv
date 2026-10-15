@@ -42,7 +42,7 @@ Bandit,BR,bandit,13,Uncommon,N,0.1,Y
 Bandit Archer,BR,banditarcher_blink,15,Uncommon,N,0.1,Y
 Bandit Leader,BR,banditleader_bolas,25,Uncommon,N,0.1,Y
 Bandit Scoundrel,BR,bandit_scoundrel_r111,13,Uncommon,N,0.1,Y
-Bandit Slingshot,BR,banditslingshot_flyers,20,Rare,N,0.1,Y
+Bandit Slingshot,R,banditslingshot_flyers,20,Rare,N,0.1,Y
 Bandit Trapmaster,BR,bandittrapper_hazezon,20,Rare,N,0.1,Y
 Barbarian,R,barbarian,17,Uncommon,N,1.0,Y
 Bat,B,bat,15,Common,N,0.1,Y

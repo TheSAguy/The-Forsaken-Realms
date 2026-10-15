@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 622: Svyelunite pays at the temple; the Bandit Slingshot keeps only its slinger deck (2026-10-15)
+
+The user, from round 621's open list: "Take both: drop Svyelunite's Return to Town stage and the Bandit Slingshot's
+vehicles deck, as round 622." Both follow upstream fixes (#12177, #11735).
+
+- **Svyelunite Temple** (quest 99 "The Tides Give, the Tides Take", `world/quests.json`): stage 2 "Return to Town" is
+  gone. The quest now completes when the 18th opponent falls (the `FE_Svyelunite_OpponentsDefeated` map flag), and its
+  epilogue - the victors kneeling before you at the temple - plays where it is set. Before, a quest taken from the
+  temple's heralds bound "here" to the temple itself (`AdventureQuestStage`: a `here` stage takes `mostRecentPOI`), so the
+  "town" to return to was the temple you were standing in. A save with the quest already open keeps the old two stages
+  (its quest data is saved with it); newly accepted copies have one.
+- **Bandit Slingshot** (`world/enemies.json`): only `banditslingshot_flyers.dck`, the mono-red old-border slinger deck
+  upstream wrote in #11735 (60 cards: Fireslinger, Ghitu Slinger, Slingshot Goblin, Unerring Sling, walls, burn). That deck
+  already reached us through `common/` with an earlier engine merge, so half its fights used it; the black-red "Blaine the
+  Pain 2" vehicles deck is no longer drawn. **Judgment call:** its `colors` go from "BR" to "R" to match - colors drive
+  the map's color dots, "defeat a black enemy" quest counts and the loot-color pick; it spawns only from map placements
+  (no biome lists it), so where it appears does not change. Its flavor tags (IdentityBlack/Red/Rakdos) and Rare tier are
+  unchanged. `config tables/enemies.csv` snapshot updated.
+- Checks: `validate_plane_data.py` - the same findings as before (one enemy deck reference fewer). Data only, no build.
+- Not seen in play.
+
 ## Round 621: fixes taken from official Forge's adventure content - a duel-hang deck, the Skep's blank reward page, Realm of Legends rebalances (2026-10-15)
 
 The user: "Please review the mods from the latest official Forge release and let me know what changes have been made

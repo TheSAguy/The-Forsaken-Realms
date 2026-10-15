@@ -17148,20 +17148,6 @@
 				"POIToken": "",
 				"mapFlag": "FE_Svyelunite_OpponentsDefeated",
 				"mapFlagValue": 18
-			},
-			{
-				"id": 2,
-				"name": "Return to Town",
-				"description": "Return to the town where you accepted the request.",
-				"here": true,
-				"objective": "Travel",
-				"prerequisiteIDs": [
-					1
-				],
-				"prologue": {},
-				"epilogue": {},
-				"failureDialog": {},
-				"POIToken": ""
 			}
 		],
 		"questSourceTags": [
