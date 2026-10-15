@@ -14264,6 +14264,48 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 608: the 32 borderline enemies become LPC characters - giants, demons, satyrs, harpies, insects (2026-10-14)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_608.py`. The backlog survey
+had set these 32 aside as borderline LPC fits. They were built as trials first, and the user reviewed them on a numbered
+side-by-side sheet and kept all 32. #9 Yorvo, #17 Jetmir, #31 Gitaxian Scientist and #32 Ertai are marked as possible
+later fixes, low priority.
+
+- **The enemies**:
+  - The stock 16 px `giant/firegiant` (6), `forestgiant` (3) and `ascendedtitan` sprites.
+  - `fiend/abyssalbaron` (4) and `spikedravager` (4).
+  - `fey/satyr` (5), `satyr_2` (2) and `xira` (2).
+  - `monstrosity/harpy` and `harpy_2` (3).
+  - `aberration/phyrexian/gitaxianscientist` (2).
+- **How they were dressed** (LPC has no goat legs, talons, insect heads or giant bodies):
+  - Giants are the muscular body. The tier sizes them like everyone else; Osgir and Yorvo keep their hand-set larger
+    size (keepSize).
+  - Demons are the muscular body with a troll, minotaur or wartotaur head, horns, bat wings and a tail.
+  - Satyrs have curled horns, shaggy fur-colored pants and hooves. Rhys, Lluwen and Trystan, who use satyr sprites,
+    are elves.
+  - Harpies are women on feathered wings; Aphemia has a skull head.
+  - Xira and Szarel are the alien head on dragonfly wings. Xira wears no tiara: on the alien head it floats in the back
+    view, the sprite audit's one catch.
+  - The Gitaxians are robed, with crystals.
+  - Named ones follow their deck's commander card. Ojer Kaslem, Ertai, Szarel, Lluwen and Trystan follow their cards
+    as known; their art is not in Forge's picture cache.
+  - The bosses (Xira, Cateran Overlord) keep their drawn size.
+  - Lluwen is the first new enemy to get round 606's shirt and skirt under her robe.
+- **Files**:
+  - 32 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 32 sprite paths and scales, 0.29-0.33 (Osgir 0.52, Yorvo 0.46; the bosses 0.45 and 0.77).
+  - A footprint on 29 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 827 characters, additions only.
+  - `CREDITS.md`'s LPC bullet: 799 enemies, round 608 and the 32 names; no new authors.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 32, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections. A fourth, ref-item (73), comes from #31's round 607, whose
+    item renames were uncommitted in the working tree at the time; it is not this round's.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole, viewed on a sheet; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 606: robed LPC women keep their robe when they attack - 16 enemies rebuilt (2026-10-14)
 
 The Procedural Pixel Creatures session, a bug fix in shipped LPC art (found while building the borderline LPC trials).

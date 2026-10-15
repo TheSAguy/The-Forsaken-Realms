@@ -1,0 +1,180 @@
+satyr_grove_guardian.png
+size: 630,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 56
+  footprint: 22, 1, 27, 55
+Idle
+  xy: 70, 64
+  size: 70, 56
+Idle
+  xy: 140, 64
+  size: 70, 56
+Idle
+  xy: 210, 64
+  size: 70, 56
+Walk
+  xy: 0, 120
+  size: 70, 56
+Walk
+  xy: 70, 120
+  size: 70, 56
+Walk
+  xy: 140, 120
+  size: 70, 56
+Walk
+  xy: 210, 120
+  size: 70, 56
+Walk
+  xy: 280, 120
+  size: 70, 56
+Walk
+  xy: 350, 120
+  size: 70, 56
+Walk
+  xy: 420, 120
+  size: 70, 56
+Walk
+  xy: 490, 120
+  size: 70, 56
+Attack
+  xy: 0, 176
+  size: 70, 56
+Attack
+  xy: 70, 176
+  size: 70, 56
+Attack
+  xy: 140, 176
+  size: 70, 56
+Attack
+  xy: 210, 176
+  size: 70, 56
+Attack
+  xy: 280, 176
+  size: 70, 56
+Attack
+  xy: 350, 176
+  size: 70, 56
+Attack
+  xy: 420, 176
+  size: 70, 56
+Attack
+  xy: 490, 176
+  size: 70, 56
+Hit
+  xy: 0, 232
+  size: 70, 56
+Hit
+  xy: 70, 232
+  size: 70, 56
+Hit
+  xy: 140, 232
+  size: 70, 56
+Hit
+  xy: 210, 232
+  size: 70, 56
+Death
+  xy: 0, 288
+  size: 70, 56
+Death
+  xy: 70, 288
+  size: 70, 56
+Death
+  xy: 140, 288
+  size: 70, 56
+Death
+  xy: 210, 288
+  size: 70, 56
+Death
+  xy: 280, 288
+  size: 70, 56
+Death
+  xy: 350, 288
+  size: 70, 56
+Death
+  xy: 420, 288
+  size: 70, 56
+Death
+  xy: 490, 288
+  size: 70, 56
+Death
+  xy: 560, 288
+  size: 70, 56
+IdleUp
+  xy: 0, 344
+  size: 70, 56
+IdleUp
+  xy: 70, 344
+  size: 70, 56
+IdleUp
+  xy: 140, 344
+  size: 70, 56
+IdleUp
+  xy: 210, 344
+  size: 70, 56
+IdleDown
+  xy: 0, 400
+  size: 70, 56
+IdleDown
+  xy: 70, 400
+  size: 70, 56
+IdleDown
+  xy: 140, 400
+  size: 70, 56
+IdleDown
+  xy: 210, 400
+  size: 70, 56
+WalkUp
+  xy: 0, 456
+  size: 70, 56
+WalkUp
+  xy: 70, 456
+  size: 70, 56
+WalkUp
+  xy: 140, 456
+  size: 70, 56
+WalkUp
+  xy: 210, 456
+  size: 70, 56
+WalkUp
+  xy: 280, 456
+  size: 70, 56
+WalkUp
+  xy: 350, 456
+  size: 70, 56
+WalkUp
+  xy: 420, 456
+  size: 70, 56
+WalkUp
+  xy: 490, 456
+  size: 70, 56
+WalkDown
+  xy: 0, 512
+  size: 70, 56
+WalkDown
+  xy: 70, 512
+  size: 70, 56
+WalkDown
+  xy: 140, 512
+  size: 70, 56
+WalkDown
+  xy: 210, 512
+  size: 70, 56
+WalkDown
+  xy: 280, 512
+  size: 70, 56
+WalkDown
+  xy: 350, 512
+  size: 70, 56
+WalkDown
+  xy: 420, 512
+  size: 70, 56
+WalkDown
+  xy: 490, 512
+  size: 70, 56

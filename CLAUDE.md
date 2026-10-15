@@ -80,6 +80,11 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 608): **LOCAL + UNRELEASED (art + data)** - the 32 borderline LPC enemies (giants, demons,
+satyrs, harpies, insects, Gitaxians; generator `lpc_selections/make_608.py`), all kept by the user after a numbered review;
+#9 Yorvo, #17 Jetmir, #31 Gitaxian Scientist and #32 Ertai are low-priority later fixes. enemies.json 32 paths + scales,
+29 footprints, CREDITS_LPC.md 827 characters, CREDITS.md's LPC bullet (799 enemies). #31 packages. Not seen in play.
+
 ## STATE 2026-10-14 (round 606): **LOCAL + UNRELEASED (art)** - 16 shipped LPC women in a robe no longer attack bare
 (LPC's robe has no thrust sheets; generator `lpc_to_forge.py` now puts a shirt + skirt of its color under it). 16 atlases
 rebuilt in place, CREDITS_LPC.md (+32 part lines), enemies.json unchanged. #31 packages. Not seen in play.

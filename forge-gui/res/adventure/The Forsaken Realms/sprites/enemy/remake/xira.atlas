@@ -1,0 +1,177 @@
+xira.png
+size: 810,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 90, 58
+  footprint: 26, 1, 39, 56
+Idle
+  xy: 90, 64
+  size: 90, 58
+Idle
+  xy: 180, 64
+  size: 90, 58
+Idle
+  xy: 270, 64
+  size: 90, 58
+Walk
+  xy: 0, 122
+  size: 90, 58
+Walk
+  xy: 90, 122
+  size: 90, 58
+Walk
+  xy: 180, 122
+  size: 90, 58
+Walk
+  xy: 270, 122
+  size: 90, 58
+Walk
+  xy: 360, 122
+  size: 90, 58
+Walk
+  xy: 450, 122
+  size: 90, 58
+Walk
+  xy: 540, 122
+  size: 90, 58
+Walk
+  xy: 630, 122
+  size: 90, 58
+Attack
+  xy: 0, 180
+  size: 90, 58
+Attack
+  xy: 90, 180
+  size: 90, 58
+Attack
+  xy: 180, 180
+  size: 90, 58
+Attack
+  xy: 270, 180
+  size: 90, 58
+Attack
+  xy: 360, 180
+  size: 90, 58
+Attack
+  xy: 450, 180
+  size: 90, 58
+Attack
+  xy: 540, 180
+  size: 90, 58
+Hit
+  xy: 0, 238
+  size: 90, 58
+Hit
+  xy: 90, 238
+  size: 90, 58
+Hit
+  xy: 180, 238
+  size: 90, 58
+Hit
+  xy: 270, 238
+  size: 90, 58
+Death
+  xy: 0, 296
+  size: 90, 58
+Death
+  xy: 90, 296
+  size: 90, 58
+Death
+  xy: 180, 296
+  size: 90, 58
+Death
+  xy: 270, 296
+  size: 90, 58
+Death
+  xy: 360, 296
+  size: 90, 58
+Death
+  xy: 450, 296
+  size: 90, 58
+Death
+  xy: 540, 296
+  size: 90, 58
+Death
+  xy: 630, 296
+  size: 90, 58
+Death
+  xy: 720, 296
+  size: 90, 58
+IdleUp
+  xy: 0, 354
+  size: 90, 58
+IdleUp
+  xy: 90, 354
+  size: 90, 58
+IdleUp
+  xy: 180, 354
+  size: 90, 58
+IdleUp
+  xy: 270, 354
+  size: 90, 58
+IdleDown
+  xy: 0, 412
+  size: 90, 58
+IdleDown
+  xy: 90, 412
+  size: 90, 58
+IdleDown
+  xy: 180, 412
+  size: 90, 58
+IdleDown
+  xy: 270, 412
+  size: 90, 58
+WalkUp
+  xy: 0, 470
+  size: 90, 58
+WalkUp
+  xy: 90, 470
+  size: 90, 58
+WalkUp
+  xy: 180, 470
+  size: 90, 58
+WalkUp
+  xy: 270, 470
+  size: 90, 58
+WalkUp
+  xy: 360, 470
+  size: 90, 58
+WalkUp
+  xy: 450, 470
+  size: 90, 58
+WalkUp
+  xy: 540, 470
+  size: 90, 58
+WalkUp
+  xy: 630, 470
+  size: 90, 58
+WalkDown
+  xy: 0, 528
+  size: 90, 58
+WalkDown
+  xy: 90, 528
+  size: 90, 58
+WalkDown
+  xy: 180, 528
+  size: 90, 58
+WalkDown
+  xy: 270, 528
+  size: 90, 58
+WalkDown
+  xy: 360, 528
+  size: 90, 58
+WalkDown
+  xy: 450, 528
+  size: 90, 58
+WalkDown
+  xy: 540, 528
+  size: 90, 58
+WalkDown
+  xy: 630, 528
+  size: 90, 58

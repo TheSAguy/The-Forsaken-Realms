@@ -1,0 +1,180 @@
+szarel.png
+size: 774,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 86, 57
+  footprint: 21, 1, 44, 56
+Idle
+  xy: 86, 64
+  size: 86, 57
+Idle
+  xy: 172, 64
+  size: 86, 57
+Idle
+  xy: 258, 64
+  size: 86, 57
+Walk
+  xy: 0, 121
+  size: 86, 57
+Walk
+  xy: 86, 121
+  size: 86, 57
+Walk
+  xy: 172, 121
+  size: 86, 57
+Walk
+  xy: 258, 121
+  size: 86, 57
+Walk
+  xy: 344, 121
+  size: 86, 57
+Walk
+  xy: 430, 121
+  size: 86, 57
+Walk
+  xy: 516, 121
+  size: 86, 57
+Walk
+  xy: 602, 121
+  size: 86, 57
+Attack
+  xy: 0, 178
+  size: 86, 57
+Attack
+  xy: 86, 178
+  size: 86, 57
+Attack
+  xy: 172, 178
+  size: 86, 57
+Attack
+  xy: 258, 178
+  size: 86, 57
+Attack
+  xy: 344, 178
+  size: 86, 57
+Attack
+  xy: 430, 178
+  size: 86, 57
+Attack
+  xy: 516, 178
+  size: 86, 57
+Attack
+  xy: 602, 178
+  size: 86, 57
+Hit
+  xy: 0, 235
+  size: 86, 57
+Hit
+  xy: 86, 235
+  size: 86, 57
+Hit
+  xy: 172, 235
+  size: 86, 57
+Hit
+  xy: 258, 235
+  size: 86, 57
+Death
+  xy: 0, 292
+  size: 86, 57
+Death
+  xy: 86, 292
+  size: 86, 57
+Death
+  xy: 172, 292
+  size: 86, 57
+Death
+  xy: 258, 292
+  size: 86, 57
+Death
+  xy: 344, 292
+  size: 86, 57
+Death
+  xy: 430, 292
+  size: 86, 57
+Death
+  xy: 516, 292
+  size: 86, 57
+Death
+  xy: 602, 292
+  size: 86, 57
+Death
+  xy: 688, 292
+  size: 86, 57
+IdleUp
+  xy: 0, 349
+  size: 86, 57
+IdleUp
+  xy: 86, 349
+  size: 86, 57
+IdleUp
+  xy: 172, 349
+  size: 86, 57
+IdleUp
+  xy: 258, 349
+  size: 86, 57
+IdleDown
+  xy: 0, 406
+  size: 86, 57
+IdleDown
+  xy: 86, 406
+  size: 86, 57
+IdleDown
+  xy: 172, 406
+  size: 86, 57
+IdleDown
+  xy: 258, 406
+  size: 86, 57
+WalkUp
+  xy: 0, 463
+  size: 86, 57
+WalkUp
+  xy: 86, 463
+  size: 86, 57
+WalkUp
+  xy: 172, 463
+  size: 86, 57
+WalkUp
+  xy: 258, 463
+  size: 86, 57
+WalkUp
+  xy: 344, 463
+  size: 86, 57
+WalkUp
+  xy: 430, 463
+  size: 86, 57
+WalkUp
+  xy: 516, 463
+  size: 86, 57
+WalkUp
+  xy: 602, 463
+  size: 86, 57
+WalkDown
+  xy: 0, 520
+  size: 86, 57
+WalkDown
+  xy: 86, 520
+  size: 86, 57
+WalkDown
+  xy: 172, 520
+  size: 86, 57
+WalkDown
+  xy: 258, 520
+  size: 86, 57
+WalkDown
+  xy: 344, 520
+  size: 86, 57
+WalkDown
+  xy: 430, 520
+  size: 86, 57
+WalkDown
+  xy: 516, 520
+  size: 86, 57
+WalkDown
+  xy: 602, 520
+  size: 86, 57

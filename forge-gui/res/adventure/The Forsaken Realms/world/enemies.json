@@ -1,7 +1,7 @@
 [
     {
         "name": "Abyssal Baron",
-        "sprite": "sprites/enemy/fiend/abyssalbaron.atlas",
+        "sprite": "sprites/enemy/remake/abyssal_baron.atlas",
         "deck": [
             "decks/standard/demon_swamp.dck"
         ],
@@ -64,7 +64,7 @@
             "Leader"
         ],
         "tier": "Rare",
-        "scale": 0.9286
+        "scale": 0.3333
     },
     {
         "name": "Adept Black Wizard",
@@ -12050,7 +12050,7 @@
     },
     {
         "name": "Fire Giant",
-        "sprite": "sprites/enemy/giant/firegiant.atlas",
+        "sprite": "sprites/enemy/remake/fire_giant.atlas",
         "deck": [
             "decks/standard/firegiant.dck"
         ],
@@ -12058,7 +12058,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 36,
-        "scale": 1.0,
+        "scale": 0.3095,
         "life": 33,
         "rewards": [
             {
@@ -12426,7 +12426,7 @@
     },
     {
         "name": "Forest Giant",
-        "sprite": "sprites/enemy/giant/forestgiant.atlas",
+        "sprite": "sprites/enemy/remake/forest_giant.atlas",
         "deck": [
             "decks/standard/foresttitan.dck"
         ],
@@ -12434,7 +12434,7 @@
         "spawnRate": 1,
         "difficulty": 3,
         "speed": 41,
-        "scale": 1.0,
+        "scale": 0.3023,
         "life": 46,
         "rewards": [
             {
@@ -14057,7 +14057,7 @@
     },
     {
         "name": "Gitaxian Scientist",
-        "sprite": "sprites/enemy/aberration/phyrexian/gitaxianscientist.atlas",
+        "sprite": "sprites/enemy/remake/gitaxian_scientist.atlas",
         "deck": [
             "decks/standard/gitaxianscientist.dck"
         ],
@@ -14138,7 +14138,7 @@
             "IdentitySimic"
         ],
         "tier": "Uncommon",
-        "scale": 0.9286
+        "scale": 0.325
     },
     {
         "name": "Gitaxian Underling",
@@ -16299,7 +16299,7 @@
     },
     {
         "name": "Harpy",
-        "sprite": "sprites/enemy/monstrosity/harpy.atlas",
+        "sprite": "sprites/enemy/remake/harpy.atlas",
         "deck": [
             "decks/standard/harpy.dck"
         ],
@@ -16379,12 +16379,13 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3171
     },
     {
         "name": "Harpy 2",
         "nameOverride": "Harpy Crone",
-        "sprite": "sprites/enemy/monstrosity/harpy_2.atlas",
+        "sprite": "sprites/enemy/remake/harpy_2.atlas",
         "deck": [
             "decks/standard/harpy_2.dck"
         ],
@@ -16466,7 +16467,8 @@
             "IdentityDimir",
             "BiomeBlack"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3171
     },
     {
         "name": "Heart-Piercer Manticore",
@@ -26694,7 +26696,7 @@
     },
     {
         "name": "Satyr",
-        "sprite": "sprites/enemy/fey/satyr.atlas",
+        "sprite": "sprites/enemy/remake/satyr.atlas",
         "deck": [
             "decks/standard/satyr.dck"
         ],
@@ -26776,11 +26778,11 @@
             "BiomeGreen"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Satyr Grove Guardian",
-        "sprite": "sprites/enemy/fey/satyr_2.atlas",
+        "sprite": "sprites/enemy/remake/satyr_grove_guardian.atlas",
         "deck": [
             "decks/standard/satyr_hard.dck"
         ],
@@ -26861,7 +26863,8 @@
             "IdentityGruul",
             "BiomeGreen"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.3095
     },
     {
         "name": "Scarab",
@@ -29007,7 +29010,7 @@
     },
     {
         "name": "Spiked Ravager",
-        "sprite": "sprites/enemy/fiend/spikedravager.atlas",
+        "sprite": "sprites/enemy/remake/spiked_ravager.atlas",
         "deck": [
             "decks/standard/demon_demonicpact.dck"
         ],
@@ -29072,7 +29075,7 @@
             "BiomeBlack"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.325
     },
     {
         "name": "Spirit",
@@ -29388,7 +29391,7 @@
     },
     {
         "name": "Sun Giant",
-        "sprite": "sprites/enemy/giant/ascendedtitan.atlas",
+        "sprite": "sprites/enemy/remake/sun_giant.atlas",
         "deck": [
             "decks/standard/sun titan.dck"
         ],
@@ -29396,7 +29399,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 39,
-        "scale": 1.0833,
+        "scale": 0.3095,
         "life": 28,
         "rewards": [
             {
@@ -33572,7 +33575,7 @@
     },
     {
         "name": "Xira",
-        "sprite": "sprites/enemy/fey/xira.atlas",
+        "sprite": "sprites/enemy/remake/xira.atlas",
         "deck": [
             "decks/miniboss/xira.dck"
         ],
@@ -33581,7 +33584,7 @@
         "spawnRate": 1,
         "difficulty": 0.8,
         "speed": 23,
-        "scale": 1.3929,
+        "scale": 0.4535,
         "life": 35,
         "rewards": [
             {
@@ -42317,13 +42320,13 @@
     },
     {
         "name": "Xenagos",
-        "sprite": "sprites/enemy/fey/satyr_2.atlas",
+        "sprite": "sprites/enemy/remake/xenagos.atlas",
         "deck": [
             "decks/legends/xenagos.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.2955,
         "life": 40,
         "rewards": [
             {
@@ -42832,13 +42835,13 @@
     },
     {
         "name": "Ojer Kaslem",
-        "sprite": "sprites/enemy/giant/forestgiant.atlas",
+        "sprite": "sprites/enemy/remake/ojer_kaslem.atlas",
         "deck": [
             "decks/legends/ojer_kaslem.dck"
         ],
         "ai": "",
         "speed": 42,
-        "scale": 1.0,
+        "scale": 0.2955,
         "life": 47,
         "rewards": [
             {
@@ -43998,13 +44001,13 @@
     },
     {
         "name": "Ojer Axonil",
-        "sprite": "sprites/enemy/giant/firegiant.atlas",
+        "sprite": "sprites/enemy/remake/ojer_axonil.atlas",
         "deck": [
             "decks/legends/ojer_axonil.dck"
         ],
         "ai": "",
         "speed": 28,
-        "scale": 1.0,
+        "scale": 0.325,
         "life": 41,
         "rewards": [
             {
@@ -45739,14 +45742,14 @@
     },
     {
         "name": "Aphemia",
-        "sprite": "sprites/enemy/monstrosity/harpy_2.atlas",
+        "sprite": "sprites/enemy/remake/aphemia.atlas",
         "deck": [
             "decks/legends/aphemia.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 37,
-        "scale": 1,
+        "scale": 0.3171,
         "life": 29,
         "rewards": [
             {
@@ -45884,13 +45887,13 @@
     },
     {
         "name": "Phlage",
-        "sprite": "sprites/enemy/giant/firegiant.atlas",
+        "sprite": "sprites/enemy/remake/phlage.atlas",
         "deck": [
             "decks/legends/phlage.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -48340,13 +48343,13 @@
     },
     {
         "name": "Jetmir",
-        "sprite": "sprites/enemy/fiend/spikedravager.atlas",
+        "sprite": "sprites/enemy/remake/jetmir.atlas",
         "deck": [
             "decks/legends/jetmir.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0833,
+        "scale": 0.2889,
         "life": 30,
         "rewards": [
             {
@@ -48430,13 +48433,13 @@
     },
     {
         "name": "Aegar",
-        "sprite": "sprites/enemy/giant/firegiant.atlas",
+        "sprite": "sprites/enemy/remake/aegar.atlas",
         "deck": [
             "decks/legends/aegar.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.0,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -56968,14 +56971,14 @@
     },
     {
         "name": "Taborax",
-        "sprite": "sprites/enemy/fiend/abyssalbaron.atlas",
+        "sprite": "sprites/enemy/remake/taborax.atlas",
         "deck": [
             "decks/legends/taborax.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 45,
-        "scale": 0.9286,
+        "scale": 0.3171,
         "life": 41,
         "rewards": [
             {
@@ -62709,13 +62712,13 @@
     },
     {
         "name": "Yorvo",
-        "sprite": "sprites/enemy/giant/forestgiant.atlas",
+        "sprite": "sprites/enemy/remake/yorvo.atlas",
         "deck": [
             "decks/legends/yorvo.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.5,
+        "scale": 0.4643,
         "life": 47,
         "rewards": [
             {
@@ -64042,13 +64045,13 @@
     },
     {
         "name": "Ertai",
-        "sprite": "sprites/enemy/aberration/phyrexian/gitaxianscientist.atlas",
+        "sprite": "sprites/enemy/remake/ertai.atlas",
         "deck": [
             "decks/legends/ertai.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.9286,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -64695,13 +64698,13 @@
     },
     {
         "name": "Rhys",
-        "sprite": "sprites/enemy/fey/satyr.atlas",
+        "sprite": "sprites/enemy/remake/rhys.atlas",
         "deck": [
             "decks/legends/rhys.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.2889,
         "life": 30,
         "rewards": [
             {
@@ -79808,12 +79811,12 @@
     },
     {
         "name": "Osgir",
-        "sprite": "sprites/enemy/giant/firegiant.atlas",
+        "sprite": "sprites/enemy/remake/osgir.atlas",
         "deck": [
             "decks/legends/osgir.dck"
         ],
         "ai": "",
-        "scale": 1.68,
+        "scale": 0.52,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -82581,7 +82584,7 @@
     },
     {
         "name": "Gallia",
-        "sprite": "sprites/enemy/fey/satyr.atlas",
+        "sprite": "sprites/enemy/remake/gallia.atlas",
         "deck": [
             "decks/legends/gallia.dck"
         ],
@@ -82657,7 +82660,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Halana and Alena",
@@ -86752,7 +86755,7 @@
     },
     {
         "name": "Nefarox",
-        "sprite": "sprites/enemy/fiend/abyssalbaron.atlas",
+        "sprite": "sprites/enemy/remake/nefarox.atlas",
         "deck": [
             "decks/legends/nefarox.dck"
         ],
@@ -86817,7 +86820,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.9286
+        "scale": 0.3171
     },
     {
         "name": "Skullbriar",
@@ -91167,12 +91170,12 @@
     },
     {
         "name": "Brion",
-        "sprite": "sprites/enemy/giant/firegiant.atlas",
+        "sprite": "sprites/enemy/remake/brion.atlas",
         "deck": [
             "decks/legends/brion.dck"
         ],
         "ai": "",
-        "scale": 1.0,
+        "scale": 0.3095,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -93238,12 +93241,12 @@
     },
     {
         "name": "Szarel",
-        "sprite": "sprites/enemy/fey/xira.atlas",
+        "sprite": "sprites/enemy/remake/szarel.atlas",
         "deck": [
             "decks/legends/szarel.dck"
         ],
         "ai": "",
-        "scale": 0.9286,
+        "scale": 0.3095,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -95075,12 +95078,12 @@
     },
     {
         "name": "Regna and Krav",
-        "sprite": "sprites/enemy/fiend/spikedravager.atlas",
+        "sprite": "sprites/enemy/remake/regna_and_krav.atlas",
         "deck": [
             "decks/legends/regna_and_krav.dck"
         ],
         "ai": "",
-        "scale": 1.0833,
+        "scale": 0.3095,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -98135,13 +98138,13 @@
     },
     {
         "name": "Lluwen",
-        "sprite": "sprites/enemy/fey/satyr.atlas",
+        "sprite": "sprites/enemy/remake/lluwen.atlas",
         "deck": [
             "decks/legends/lluwen.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.1818,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -119357,7 +119360,7 @@
     },
     {
         "name": "Cateran Overlord",
-        "sprite": "sprites/enemy/fiend/spikedravager.atlas",
+        "sprite": "sprites/enemy/remake/cateran_overlord.atlas",
         "deck": [
             "decks/miniboss/shandalar97_cateran_overlord.dck"
         ],
@@ -119475,7 +119478,7 @@
         ],
         "boss": true,
         "tier": "Common",
-        "scale": 2.4999
+        "scale": 0.7692
     },
     {
         "name": "Cateran Slaver",
@@ -120868,14 +120871,14 @@
     },
     {
         "name": "Krampus (Elite)",
-        "sprite": "sprites/enemy/fiend/abyssalbaron.atlas",
+        "sprite": "sprites/enemy/remake/krampus_elite.atlas",
         "deck": [
             "decks/elite/krampus.dck"
         ],
         "ai": "",
         "spawnRate": 0,
         "speed": 20,
-        "scale": 0.9286,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -123866,13 +123869,13 @@
     },
     {
         "name": "Trystan",
-        "sprite": "sprites/enemy/fey/satyr.atlas",
+        "sprite": "sprites/enemy/remake/trystan.atlas",
         "deck": [
             "decks/legends/trystan.dck"
         ],
         "ai": "",
         "speed": 60,
-        "scale": 1.1818,
+        "scale": 0.3095,
         "life": 60,
         "rewards": [
             {
