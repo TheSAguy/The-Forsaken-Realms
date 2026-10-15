@@ -1,0 +1,47 @@
+{
+  "width": 270,
+  "height": 480,
+  "yDown": true,
+  "elements": [
+    {
+      "type": "Image",
+      "name": "lastScreen",
+      "width": 270,
+      "height": 480
+    },
+    {
+      "type": "Table",
+      "name": "historyMap",
+      "x": 6,
+      "y": 6,
+      "width": 258,
+      "height": 258
+    },
+    {
+      "type": "Table",
+      "name": "historyPanel",
+      "x": 6,
+      "y": 268,
+      "width": 258,
+      "height": 178
+    },
+    {
+      "type": "Table",
+      "name": "historyControls",
+      "x": 6,
+      "y": 452,
+      "width": 206,
+      "height": 22
+    },
+    {
+      "type": "TextButton",
+      "name": "return",
+      "text": "[%80]Close",
+      "binding": "Back",
+      "width": 50,
+      "height": 20,
+      "x": 214,
+      "y": 453
+    }
+  ]
+}

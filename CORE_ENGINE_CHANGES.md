@@ -38,6 +38,20 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 626 - the History replay
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - a `history` field (`WorldHistory`), saved as
+  `replayHistory` in `save()` and read in `load()`, cleared in `generateNew()`; `biomeMapForHistory()`, `getHistory()`,
+  `ensureHistory()`, `recordHistory(day)`, `debugNextDay()`.
+- **`.../world/WorldSave.java`** - `ensureHistory()` at the end of `generateNewWorld()` and in the load after
+  `rebuildFogOfWarPixmap()`.
+- **`.../stage/WorldStage.java`** - the day tick calls `world.recordHistory(dayAfter)` after the standings record (the
+  `[TFR-DayTick]` line gains `history=` and `minimap=`); `debugSkipDays` (console) also runs the clock branch.
+- **`.../scene/MapViewScene.java`** - `onButtonPress("history", HistoryScene::show)` (the button is in this plane's
+  `ui/map.json` / `map_portrait.json` only).
+- **`.../stage/ConsoleCommandInterpreter.java`** - `days skip`, `history`.
+- **New (mod-added)**: `world/WorldHistory.java`, `scene/HistoryScene.java`.
+
 ### Round 615 - duel Undo defaults to Single step
 
 - **`forge-gui/src/main/java/forge/localinstance/properties/ForgePreferences.java`** - `UI_UNDO_MODE` defaults to

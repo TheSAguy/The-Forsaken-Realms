@@ -112,6 +112,7 @@ public class MapViewScene extends UIScene {
         ui.onButtonPress("reputation", this::reputation);
         ui.onButtonPress("names", this::names);
         ui.onButtonPress("attacks", this::attacks); // round 156
+        ui.onButtonPress("history", HistoryScene::show); // round 626: the History replay (this plane's map.json only)
         ui.onButtonPress("zoomIn", this::zoomIn);
         ui.onButtonPress("zoomOut", this::zoomOut);
         scroll = new ScrollPane(null,Controls.getSkin()) {

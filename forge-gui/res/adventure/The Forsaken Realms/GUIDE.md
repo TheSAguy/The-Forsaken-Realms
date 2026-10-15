@@ -149,6 +149,12 @@ purple); a dot inside someone else's land is an attack on its way.
 **Late in the game.** The Wasteland is gone. Every border now touches another, and the frontier towns are
 where the colors - and you - fight it out.
 
+**Watch it happen.** The map screen's **History** button replays your game from its first day to today, the
+whole world on one screen with the fog of war lifted: each color's land filling in, town dots changing hands, a legend with every power's
+towns and share of the land, and a caption for your own milestones (towns you restore, take or lose, the
+Capitol). Play, pause, change the speed or drag the slider to any day. The history is recorded as you play, so
+a game started before version 1.22 replays from the first day it was loaded on 1.22.
+
 ### Winning and Losing
 
 Losing a duel never ends a run - it costs gold, life and your ante (see

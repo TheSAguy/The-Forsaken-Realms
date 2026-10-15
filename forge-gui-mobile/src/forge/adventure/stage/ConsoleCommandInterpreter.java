@@ -1090,6 +1090,21 @@ public class ConsoleCommandInterpreter {
                 return Current.player().cheatSetRecentDuels(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
             return forge.adventure.util.SpawnTierWeighting.describeWinRatio();
         });
+        // Round 626: test cheats for the History replay. "days skip <n>" runs n in-game days, one a frame, through the world
+        // map's own day tick (territory growth, raids, the history record); "history" opens the replay.
+        registerCommand(new String[]{"days", "skip"}, s -> {
+            int n = s.length > 0 ? Integer.parseInt(s[0]) : 1;
+            if (n < 1 || n > 1000)
+                return "Skip 1 to 1000 days";
+            WorldStage.debugSkipDays += n;
+            return "Skipping " + n + " day(s), one a frame, on the world map";
+        });
+        registerCommand(new String[]{"history"}, s -> {
+            if (Current.world() == null || !Current.world().isTerritoryControlEnabled())
+                return "No history on this plane";
+            forge.adventure.scene.HistoryScene.show();
+            return "History replay opened";
+        });
         registerCommand(new String[]{"asc", "pick"}, s -> {
             if (s.length < 1)
                 return "Command needs 1 parameter: a reward id from ascendance.json";

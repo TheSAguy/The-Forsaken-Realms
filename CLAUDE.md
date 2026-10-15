@@ -97,6 +97,8 @@ Manananggal, Nuno sa Punso, the two slaadi and the nine gorgons (dreadlocks as s
 `lpc_selections/make_627.py`). enemies.json 24 paths + scales, CREDITS_LPC.md 901 characters, CREDITS.md (873 LPC enemies).
 #32 packages. Not seen in play. The naga are round 628.
 
+## STATE 2026-10-15 (round 626): **LOCAL + UNRELEASED (code + data)** - the History replay: the map screen's History button plays the whole world from the first recorded day to today as a political map (world/WorldHistory records every tile's and town's owner at the start, then the daily changes - 1-2 ms a day, ~222 KB for 56 days in the save; scene/HistoryScene; ui/history*.json). New worlds record from day 1, older saves from the day first loaded. Legend = towns + land share per power; caption = the player's milestones. Console: `days skip <n>`, `history`. Seen in the agent game (landscape + portrait).
+
 ## STATE 2026-10-15 (round 625): **LOCAL + UNRELEASED (art + data)** - nine more LPC enemies (Aghoy, Nefarious
 Scamp, Fungal Myconid, Red Cap, Domain Keeper of Cromat, Bandit Archer, Bone Raider, Tallow Rat, Undead Goblin); the two
 mushroom folk wear a hand-drawn cap part (generator `lpc_selections/make_625.py` + `tools/lpc/make_mushroom_caps.py`).

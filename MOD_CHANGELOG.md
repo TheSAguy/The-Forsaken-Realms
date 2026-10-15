@@ -14309,6 +14309,50 @@ The naga (A43-46) follow in round 628: they need a serpent body.
   - Every Avatar is whole; `avatar_crop_qa.py` flags none.
   - Not seen in play.
 
+## Round 626: the History replay - the whole realm on one screen, from the first day to today (2026-10-15)
+
+The user: "The game Civilization 3 had a replay feature that showed the game from turn 1 and how cities grew on the map
+... A button on the Mini-map that you click and it will play a history timeline of how towns were captured and
+territory spread. It needs to show the entire map on the screen." Their calls: reveal the whole map (fog lifted), a
+political map (approved from a mock-up drawn from save slot 4 at day 210), captions for the player's own milestones
+only, and every power's town count in the legend.
+
+- **Nothing recorded the past before this round** - the biome map is repainted in place each day, and only the weekly
+  town counts of the Standings chart were kept. So the replay starts with a recorder:
+  - **`world/WorldHistory`**: the owner of every tile (sea, unclaimed, the five colors, the player - the strongest
+    owning biome on the tile, road bits ignored) and of every town on the day the history starts, then once a day only
+    what changed since - growth rings, captures, raids, restorations, whatever the cause. Towns are keyed by their tile
+    (a capture re-keys the POI id, never its place); a town's owner follows TerritoryControl.getTownCounts()'s rule (a
+    restored town is the player's, otherwise the color noun of its name), plus its kind (town or capital).
+  - Hooks: `WorldSave.generateNewWorld()` starts a new world's history on day 1; `WorldSave`'s load starts one TODAY for
+    a save without it (after pointOfInterestChanges, whose restored flags make a town the player's); `WorldStage`'s day
+    tick records each new day (`[TFR-DayTick]` gains `history=` and `minimap=`); `World.generateNew()` clears it (New
+    Game+ starts again at its first tick). Saved in the world's SaveFileData as one deflated blob (`replayHistory`).
+  - Measured in the agent game: 1-2 ms a day; about 1,000-2,000 changed tiles a day while the colors grow; the save
+    held 222 KB for 56 days (so roughly 1 MB by day 250).
+- **`scene/HistoryScene`** (`ui/history.json` + `history_portrait.json`), opened by the map screen's new **History**
+  button (`ui/map.json`, `map_portrait.json`):
+  - The whole 700 x 700 world fitted to the screen as two 1-pixel-a-tile textures - the land (each color a shade
+    darker, so its towns stand out) and the town dots over it (capitals larger, with a dark center).
+  - Plays from the first recorded day to today at 3 / 6 / 12 days a second (1x / 2x / 4x, 2x by default); |< restarts,
+    Play/Pause, a slider scrubs to any day (forward repaints only the changed tiles; back starts again from the first
+    page). Opening it records today first, so the replay ends where the game stands.
+  - Legend: every power's towns and share of the land on the shown day. Caption: the player's latest milestone - "You
+    restored X", "You took X from Red", "Black took X from you", "X fell to ruin", "You raised the Capitol at X". A save
+    from before this round says its history starts on the day it was first loaded.
+- Console (cheats): `days skip <n>` runs n in-game days one a frame through the world map's own day tick (territory,
+  raids, the record - mages walk in real time, so they capture little); `history` opens the replay.
+- GUIDE.md: "Watch it happen" under Territory Control.
+- **Seen in the agent game** (a new world): `days skip 40` - `[TFR-History] started on day 1: 309 towns, 279018 land
+  tiles`, then a line a day; the replay played days 1-41 with the five colors growing from their castles; `capitol
+  raise` + `days skip 15` - "Day 42: You raised the Capitol at Orazca", You 1 town, gold land; the map screen's History
+  button opens it; saved to slot 5 and loaded - the replay still runs from day 1 (`saved: days 1-56, 222 KB`); a copy
+  of the user's day-84 save (agent slot 25) - `started on day 84: 296 towns`, the replay shows that day with the note.
+  Portrait (a 1080 x 1920 agent window): the map on top, the legend and caption under it, the slider over the
+  buttons, Pause while playing. Not seen: a capture by a mage in the replay, a real Android device.
+- Known: the record is taken at the day tick, so something done late in a day is stamped the next day (the Capitol
+  raised on day 41 reads "Day 42").
+
 ## Round 625: nine more LPC enemies - a fairy, an imp, two mushroom folk, an angel, a skeleton, a rat (2026-10-15)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_625.py`. The user picked

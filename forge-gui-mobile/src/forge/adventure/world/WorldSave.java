@@ -289,6 +289,9 @@ public class WorldSave {
                     // Revealed tier (owned-town vision circles) was computed against an empty
                     // cache. No-op when fog of war is off.
                     currentSave.world.rebuildFogOfWarPixmap();
+                    // Round 626: a save from before the History replay starts its history today - after
+                    // pointOfInterestChanges, whose restored flags make a town the player's.
+                    currentSave.world.ensureHistory();
                     WorldStage.getInstance().load(mainData.readSubData("worldStage"));
                     // Round 394: a save from before the per-kind balance gets its dungeon mix balanced once - after the
                     // stage load, so "farthest from the player first" knows where the player stands.
@@ -449,6 +452,7 @@ public class WorldSave {
             System.out.println("[TFR-NeutralTowns] post-setup persistence check: " + stillSeeded
                     + " town(s) still flagged neutralSeeded in this save");
         }
+        currentSave.world.ensureHistory(); // round 626: the History replay's first page, where the new world starts
         liveGame = true;     // round 183 (E4): a real game now exists; a blocked save state is over
         saveBlocked = false;
         return currentSave;

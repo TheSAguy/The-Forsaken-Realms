@@ -45,6 +45,8 @@ public class World implements Disposable, SaveFileContent {
     private WorldData data;
     private Pixmap biomeImage;
     private long[][] biomeMap;
+    // Round 626: the History replay's record (WorldHistory) - null until the history starts (see ensureHistory()).
+    private WorldHistory history;
     public int[][] terrainMap;
     private static final int collisionBit = 0b10000000000000000000000000000000;
     private static final int isStructureBit = 0b01000000000000000000000000000000;
@@ -1252,6 +1254,17 @@ public class World implements Disposable, SaveFileContent {
             colorEditionShards.putAll((java.util.Map<String, java.util.List<String>>) saveFileData.readObject("colorEditionShards"));
         }
 
+        // Round 626: the History replay's record. A save without one starts it in WorldSave's load, once
+        // pointOfInterestChanges (whose restored flags make a town the player's) has loaded too.
+        history = null;
+        if (saveFileData.containsKey("replayHistory")) {
+            try {
+                history = WorldHistory.fromBytes((byte[]) saveFileData.readObject("replayHistory"));
+            } catch (Exception e) {
+                System.err.println("[TFR-History] the saved history could not be read (" + e + ") - it starts again today");
+            }
+        }
+
         standingsHistoryWeeks.clear();
         standingsHistoryCounts.clear();
         standingsHistoryLastWeek = -1;
@@ -1546,6 +1559,16 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
         data.store("openingWaveSent", openingWaveSent); // round 422
         data.store("ngPlusWaveMages", ngPlusWaveMages); // round 425
+        if (history != null) { // round 626
+            try {
+                byte[] blob = history.toBytes();
+                data.storeObject("replayHistory", blob);
+                System.out.println("[TFR-History] saved: days " + history.startDay + "-" + history.lastDay() + ", "
+                        + blob.length / 1024 + " KB");
+            } catch (java.io.IOException e) {
+                System.err.println("[TFR-History] not saved: " + e);
+            }
+        }
         return data;
     }
 
@@ -2261,6 +2284,30 @@ public class World implements Disposable, SaveFileContent {
         }
     }
 
+    /** Round 626: WorldHistory reads the biome map directly (one pass over every tile a day). */
+    long[][] biomeMapForHistory() {
+        return biomeMap;
+    }
+
+    /** Round 626: the History replay's record, or null on a plane without Territory Control. */
+    public WorldHistory getHistory() {
+        return history;
+    }
+
+    /** Round 626: starts the replay history today when there is none yet - a new world, New Game+, or a save from
+     *  before the replay existed. Inert on a plane without Territory Control. */
+    public void ensureHistory() {
+        if (history == null && isTerritoryControlEnabled() && biomeMap != null)
+            history = WorldHistory.start(this, getCurrentDay());
+    }
+
+    /** Round 626: the day-end entry - what changed since the last record, as day {@code day}. */
+    public void recordHistory(int day) {
+        ensureHistory();
+        if (history != null)
+            history.record(this, day);
+    }
+
     public WorldData getData() {
         return data;
     }
@@ -2754,6 +2801,7 @@ public class World implements Disposable, SaveFileContent {
             standingsHistoryWeeks.clear();
             standingsHistoryCounts.clear();
             standingsHistoryLastWeek = -1; // fresh world has no history yet, same reasoning as above
+            history = null; // round 626: WorldSave.generateNewWorld() starts a new world's replay history
             playerTownVisionAreas.clear(); // fresh world, no owned towns yet
             resourceSpawns.clear();
             resourceSpawnsSeeded = false; // fresh world reseeds its 20 on the first tick
@@ -6622,6 +6670,11 @@ public class World implements Disposable, SaveFileContent {
 
     public int getCurrentDay() {
         return dayCount;
+    }
+
+    /** Round 626: the console's "days skip" - the next day at once (WorldStage runs its day tick for it). */
+    public void debugNextDay() {
+        dayCount++;
     }
 
     public boolean isNight() {

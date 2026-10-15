@@ -150,6 +150,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // "Wait" toggle (see GameHUD's wait checkbox): lets time advance while the player stands
     // still, same idea as resting. Cleared automatically the moment the player moves again.
     private boolean waitingForTime = false;
+    /** Round 626: days the console's "days skip" still owes - one a frame, through the normal day tick (testing). */
+    public static int debugSkipDays;
     // Debug "100x Speed" toggle (see GameHUD's speed checkbox) - fast-forwards the day/night
     // clock for testing. Multiplies only the delta passed to advanceTime(), nothing else runs
     // faster (spawns, movement, etc. are unaffected). Was raised from 50x to speed up Territory
@@ -726,13 +728,17 @@ public class WorldStage extends GameStage implements SaveFileContent {
         drawNavigationArrow();
         if (player.isMoving())
             waitingForTime = false; // moving cancels an active wait
-        if (player.isMoving() || waitingForTime) {
+        if (player.isMoving() || waitingForTime || debugSkipDays > 0) {
             World world = WorldSave.getCurrentSave().getWorld();
             int dayBefore = world.getCurrentDay();
             float timeDelta = fastTimeEnabled ? delta * fastTimeMultiplier() : delta;
             if (isRunKeyHeld())
                 timeDelta *= RUN_KEY_SPEED_MULTIPLIER;
             world.advanceTime(timeDelta);
+            if (debugSkipDays > 0) { // round 626: console "days skip" - one whole day a frame, through the day tick below
+                debugSkipDays--;
+                world.debugNextDay();
+            }
             int dayAfter = world.getCurrentDay();
             if (dayAfter != dayBefore) {
                 // [TFR-DayTick] per-subsystem timing (2026-08-26, user request while chasing the
@@ -759,6 +765,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 java.util.Map<String, Integer> standingsCounts = TerritoryControl.getTownCounts(world);
                 standingsCounts.remove("Colorless"); // chart is 5 AI colors + Player only
                 world.recordStandingsHistoryIfNewWeek(standingsCounts);
+                long tStandings = System.nanoTime();
+                // Round 626: the History replay - what changed today (tiles and towns), recorded once a day.
+                world.recordHistory(dayAfter);
+                long tHistory = System.nanoTime();
                 // Round 190: one batched minimap rebake for every subsystem above that dirtied it,
                 // AFTER all of them so a single refresh serves the lot. See MapMarkerRefresh.
                 MapMarkerRefresh.flush(world, dayAfter);
@@ -769,7 +779,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         + " dungeons=" + (tDungeons - tTerritory) / 1_000_000 + "ms"
                         + " quests=" + (tQuests - tDungeons) / 1_000_000 + "ms"
                         + " fog=" + (tFog - tQuests) / 1_000_000 + "ms"
-                        + " standings=" + (tickEnd - tFog) / 1_000_000 + "ms"
+                        + " standings=" + (tStandings - tFog) / 1_000_000 + "ms"
+                        + " history=" + (tHistory - tStandings) / 1_000_000 + "ms"
+                        + " minimap=" + (tickEnd - tHistory) / 1_000_000 + "ms"
                         + " total=" + (tickEnd - tickStart) / 1_000_000 + "ms");
                 // Round 144 (code review 4.1): the systemic weakness in this code base is native
                 // resource lifetime - libGDX Pixmap/Texture/TiledMap free only on dispose(), and
