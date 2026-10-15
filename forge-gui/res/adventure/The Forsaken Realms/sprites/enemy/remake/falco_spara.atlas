@@ -1,0 +1,174 @@
+falco_spara.png
+size: 864,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 57
+  footprint: 23, 4, 50, 53
+Idle
+  xy: 96, 64
+  size: 96, 57
+Idle
+  xy: 192, 64
+  size: 96, 57
+Idle
+  xy: 288, 64
+  size: 96, 57
+Walk
+  xy: 0, 121
+  size: 96, 57
+Walk
+  xy: 96, 121
+  size: 96, 57
+Walk
+  xy: 192, 121
+  size: 96, 57
+Walk
+  xy: 288, 121
+  size: 96, 57
+Walk
+  xy: 384, 121
+  size: 96, 57
+Walk
+  xy: 480, 121
+  size: 96, 57
+Walk
+  xy: 576, 121
+  size: 96, 57
+Walk
+  xy: 672, 121
+  size: 96, 57
+Attack
+  xy: 0, 178
+  size: 96, 57
+Attack
+  xy: 96, 178
+  size: 96, 57
+Attack
+  xy: 192, 178
+  size: 96, 57
+Attack
+  xy: 288, 178
+  size: 96, 57
+Attack
+  xy: 384, 178
+  size: 96, 57
+Attack
+  xy: 480, 178
+  size: 96, 57
+Hit
+  xy: 0, 235
+  size: 96, 57
+Hit
+  xy: 96, 235
+  size: 96, 57
+Hit
+  xy: 192, 235
+  size: 96, 57
+Hit
+  xy: 288, 235
+  size: 96, 57
+Death
+  xy: 0, 292
+  size: 96, 57
+Death
+  xy: 96, 292
+  size: 96, 57
+Death
+  xy: 192, 292
+  size: 96, 57
+Death
+  xy: 288, 292
+  size: 96, 57
+Death
+  xy: 384, 292
+  size: 96, 57
+Death
+  xy: 480, 292
+  size: 96, 57
+Death
+  xy: 576, 292
+  size: 96, 57
+Death
+  xy: 672, 292
+  size: 96, 57
+Death
+  xy: 768, 292
+  size: 96, 57
+IdleUp
+  xy: 0, 349
+  size: 96, 57
+IdleUp
+  xy: 96, 349
+  size: 96, 57
+IdleUp
+  xy: 192, 349
+  size: 96, 57
+IdleUp
+  xy: 288, 349
+  size: 96, 57
+IdleDown
+  xy: 0, 406
+  size: 96, 57
+IdleDown
+  xy: 96, 406
+  size: 96, 57
+IdleDown
+  xy: 192, 406
+  size: 96, 57
+IdleDown
+  xy: 288, 406
+  size: 96, 57
+WalkUp
+  xy: 0, 463
+  size: 96, 57
+WalkUp
+  xy: 96, 463
+  size: 96, 57
+WalkUp
+  xy: 192, 463
+  size: 96, 57
+WalkUp
+  xy: 288, 463
+  size: 96, 57
+WalkUp
+  xy: 384, 463
+  size: 96, 57
+WalkUp
+  xy: 480, 463
+  size: 96, 57
+WalkUp
+  xy: 576, 463
+  size: 96, 57
+WalkUp
+  xy: 672, 463
+  size: 96, 57
+WalkDown
+  xy: 0, 520
+  size: 96, 57
+WalkDown
+  xy: 96, 520
+  size: 96, 57
+WalkDown
+  xy: 192, 520
+  size: 96, 57
+WalkDown
+  xy: 288, 520
+  size: 96, 57
+WalkDown
+  xy: 384, 520
+  size: 96, 57
+WalkDown
+  xy: 480, 520
+  size: 96, 57
+WalkDown
+  xy: 576, 520
+  size: 96, 57
+WalkDown
+  xy: 672, 520
+  size: 96, 57

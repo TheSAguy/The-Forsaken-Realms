@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 624: the eleven aven become LPC aven with drawn bird heads (2026-10-15)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_624.py`. These are #32-42 of the
+low-quality list: the eleven enemies on the stock 16 px `humanoid/aven` falcon-headed and ibis-headed sprites. No
+free art has a bird-headed humanoid (LPC has none; the LPC birds are 32 px animals), so the heads were drawn for the game.
+
+- **How they are made**:
+  - An LPC body with LPC's feathered wings and a bird head. The user kept the mock's heads as drawn.
+  - The two heads are LPC head parts (`tools/lpc/make_aven_heads.py`, in the generator's extra part root). Every frame
+    of LPC's human head was measured and the bird head drawn in its place, so it follows the walk's bob, each attack's
+    lean, and the fall: the head bows from the face to the crown.
+  - The falcon head goes on the falcon sprite's six, the ibis head on the ibis sprite's five.
+- **Dressed from their cards**:
+  - **Falcon-headed / Ibis-headed Aven Warrior**: Amonkhet warriors in a kilt, a gold collar and sandals, with a gold
+    spear (brown wings / white wings).
+  - **Derevi**: brown, with a white scarf, casting.
+  - **Reyhan and Ishai**: as Ishai, a monk in navy with a red sash and a blue crystal staff.
+  - **Falco Spara**: in dark iron armor and a black cape on black wings, with a saber.
+  - **Teshar**: in white robes, with a silver spear.
+  - **Kianne**: as Imbraham, a scholar in blue robes on gray wings, casting.
+  - **Kangee**: in gold armor, with a gold staff.
+  - **Kykar**: in gray with a red sash, casting.
+  - **Kefnet**: the god in white with a gold collar, on gold wings, with a gold staff.
+  - **Xho Cai**: a monk in teal with a red sash and red beads, casting.
+- **Files**:
+  - 11 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 11 sprite paths and scales (0.31-0.33).
+  - A footprint on 8 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 868 characters. The heads are credited to The Forsaken Realms (CC0). Three earlier
+    lines lose a dangling "; " (a part with no source page).
+  - `CREDITS.md`: the LPC bullet (840 enemies, the aven "with bird heads drawn for this game").
+- **Checks**:
+  - enemies.json against HEAD: exactly these 11, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 623: the six centaurs become LPC centaurs (2026-10-15)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_623.py` with its new

@@ -1,0 +1,180 @@
+kangee.png
+size: 720,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 53
+  footprint: 19, 1, 43, 52
+Idle
+  xy: 80, 64
+  size: 80, 53
+Idle
+  xy: 160, 64
+  size: 80, 53
+Idle
+  xy: 240, 64
+  size: 80, 53
+Walk
+  xy: 0, 117
+  size: 80, 53
+Walk
+  xy: 80, 117
+  size: 80, 53
+Walk
+  xy: 160, 117
+  size: 80, 53
+Walk
+  xy: 240, 117
+  size: 80, 53
+Walk
+  xy: 320, 117
+  size: 80, 53
+Walk
+  xy: 400, 117
+  size: 80, 53
+Walk
+  xy: 480, 117
+  size: 80, 53
+Walk
+  xy: 560, 117
+  size: 80, 53
+Attack
+  xy: 0, 170
+  size: 80, 53
+Attack
+  xy: 80, 170
+  size: 80, 53
+Attack
+  xy: 160, 170
+  size: 80, 53
+Attack
+  xy: 240, 170
+  size: 80, 53
+Attack
+  xy: 320, 170
+  size: 80, 53
+Attack
+  xy: 400, 170
+  size: 80, 53
+Attack
+  xy: 480, 170
+  size: 80, 53
+Attack
+  xy: 560, 170
+  size: 80, 53
+Hit
+  xy: 0, 223
+  size: 80, 53
+Hit
+  xy: 80, 223
+  size: 80, 53
+Hit
+  xy: 160, 223
+  size: 80, 53
+Hit
+  xy: 240, 223
+  size: 80, 53
+Death
+  xy: 0, 276
+  size: 80, 53
+Death
+  xy: 80, 276
+  size: 80, 53
+Death
+  xy: 160, 276
+  size: 80, 53
+Death
+  xy: 240, 276
+  size: 80, 53
+Death
+  xy: 320, 276
+  size: 80, 53
+Death
+  xy: 400, 276
+  size: 80, 53
+Death
+  xy: 480, 276
+  size: 80, 53
+Death
+  xy: 560, 276
+  size: 80, 53
+Death
+  xy: 640, 276
+  size: 80, 53
+IdleUp
+  xy: 0, 329
+  size: 80, 53
+IdleUp
+  xy: 80, 329
+  size: 80, 53
+IdleUp
+  xy: 160, 329
+  size: 80, 53
+IdleUp
+  xy: 240, 329
+  size: 80, 53
+IdleDown
+  xy: 0, 382
+  size: 80, 53
+IdleDown
+  xy: 80, 382
+  size: 80, 53
+IdleDown
+  xy: 160, 382
+  size: 80, 53
+IdleDown
+  xy: 240, 382
+  size: 80, 53
+WalkUp
+  xy: 0, 435
+  size: 80, 53
+WalkUp
+  xy: 80, 435
+  size: 80, 53
+WalkUp
+  xy: 160, 435
+  size: 80, 53
+WalkUp
+  xy: 240, 435
+  size: 80, 53
+WalkUp
+  xy: 320, 435
+  size: 80, 53
+WalkUp
+  xy: 400, 435
+  size: 80, 53
+WalkUp
+  xy: 480, 435
+  size: 80, 53
+WalkUp
+  xy: 560, 435
+  size: 80, 53
+WalkDown
+  xy: 0, 488
+  size: 80, 53
+WalkDown
+  xy: 80, 488
+  size: 80, 53
+WalkDown
+  xy: 160, 488
+  size: 80, 53
+WalkDown
+  xy: 240, 488
+  size: 80, 53
+WalkDown
+  xy: 320, 488
+  size: 80, 53
+WalkDown
+  xy: 400, 488
+  size: 80, 53
+WalkDown
+  xy: 480, 488
+  size: 80, 53
+WalkDown
+  xy: 560, 488
+  size: 80, 53

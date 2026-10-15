@@ -11456,7 +11456,7 @@
     },
     {
         "name": "Falcon-headed Aven Warrior",
-        "sprite": "sprites/enemy/humanoid/aven/falconheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/falcon_headed_aven_warrior.atlas",
         "deck": [
             "decks/standard/amonkhet_aven_w.dck"
         ],
@@ -11539,7 +11539,8 @@
             "IdentityWhite",
             "BiomeWhite"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.3095
     },
     {
         "name": "Fallen Angel",
@@ -18184,7 +18185,7 @@
     },
     {
         "name": "Ibis-headed Aven Warrior",
-        "sprite": "sprites/enemy/humanoid/aven/ibisheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/ibis_headed_aven_warrior.atlas",
         "deck": [
             "decks/standard/amonkhet_aven_u.dck"
         ],
@@ -18268,7 +18269,7 @@
             "Warrior"
         ],
         "tier": "Common",
-        "scale": 1.0367
+        "scale": 0.3095
     },
     {
         "name": "Ice Elemental",
@@ -35570,14 +35571,14 @@
     },
     {
         "name": "Derevi",
-        "sprite": "sprites/enemy/humanoid/aven/falconheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/derevi.atlas",
         "deck": [
             "decks/legends/derevi.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 1,
+        "scale": 0.325,
         "life": 50,
         "rewards": [
             {
@@ -41668,14 +41669,14 @@
     },
     {
         "name": "Reyhan and Ishai",
-        "sprite": "sprites/enemy/humanoid/aven/falconheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/reyhan_and_ishai.atlas",
         "deck": [
             "decks/legends/reyhan_and_ishai.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 1,
+        "scale": 0.325,
         "life": 40,
         "rewards": [
             {
@@ -51210,14 +51211,14 @@
     },
     {
         "name": "Falco Spara",
-        "sprite": "sprites/enemy/humanoid/aven/falconheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/falco_spara.atlas",
         "deck": [
             "decks/legends/falco_spara.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -53187,14 +53188,14 @@
     },
     {
         "name": "Kangee",
-        "sprite": "sprites/enemy/humanoid/aven/ibisheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/kangee.atlas",
         "deck": [
             "decks/legends/kangee.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 1.0367,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -53399,14 +53400,14 @@
     },
     {
         "name": "Kykar",
-        "sprite": "sprites/enemy/humanoid/aven/ibisheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/kykar.atlas",
         "deck": [
             "decks/legends/kykar.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0367,
+        "scale": 0.325,
         "life": 30,
         "rewards": [
             {
@@ -53473,14 +53474,14 @@
     },
     {
         "name": "Teshar",
-        "sprite": "sprites/enemy/humanoid/aven/falconheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/teshar.atlas",
         "deck": [
             "decks/legends/teshar.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 39,
-        "scale": 1,
+        "scale": 0.3095,
         "life": 31,
         "rewards": [
             {
@@ -54838,14 +54839,14 @@
     },
     {
         "name": "Kefnet",
-        "sprite": "sprites/enemy/humanoid/aven/ibisheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/kefnet.atlas",
         "deck": [
             "decks/legends/kefnet.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0367,
+        "scale": 0.325,
         "life": 27,
         "rewards": [
             {
@@ -77061,7 +77062,7 @@
     },
     {
         "name": "Xho Cai",
-        "sprite": "sprites/enemy/humanoid/aven/ibisheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/xho_cai.atlas",
         "deck": [
             "decks/legends/xho_cai.dck"
         ],
@@ -77126,7 +77127,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.0367
+        "scale": 0.325
     },
     {
         "name": "Jinnie Fay",
@@ -89973,7 +89974,7 @@
     },
     {
         "name": "Kianne",
-        "sprite": "sprites/enemy/humanoid/aven/falconheadedaven.atlas",
+        "sprite": "sprites/enemy/remake/kianne.atlas",
         "deck": [
             "decks/legends/kianne.dck"
         ],
@@ -90037,7 +90038,8 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "flying": true
+        "flying": true,
+        "scale": 0.325
     },
     {
         "name": "Zimone",

@@ -1,0 +1,180 @@
+kefnet.png
+size: 828,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 92, 53
+  footprint: 25, 1, 43, 52
+Idle
+  xy: 92, 64
+  size: 92, 53
+Idle
+  xy: 184, 64
+  size: 92, 53
+Idle
+  xy: 276, 64
+  size: 92, 53
+Walk
+  xy: 0, 117
+  size: 92, 53
+Walk
+  xy: 92, 117
+  size: 92, 53
+Walk
+  xy: 184, 117
+  size: 92, 53
+Walk
+  xy: 276, 117
+  size: 92, 53
+Walk
+  xy: 368, 117
+  size: 92, 53
+Walk
+  xy: 460, 117
+  size: 92, 53
+Walk
+  xy: 552, 117
+  size: 92, 53
+Walk
+  xy: 644, 117
+  size: 92, 53
+Attack
+  xy: 0, 170
+  size: 92, 53
+Attack
+  xy: 92, 170
+  size: 92, 53
+Attack
+  xy: 184, 170
+  size: 92, 53
+Attack
+  xy: 276, 170
+  size: 92, 53
+Attack
+  xy: 368, 170
+  size: 92, 53
+Attack
+  xy: 460, 170
+  size: 92, 53
+Attack
+  xy: 552, 170
+  size: 92, 53
+Attack
+  xy: 644, 170
+  size: 92, 53
+Hit
+  xy: 0, 223
+  size: 92, 53
+Hit
+  xy: 92, 223
+  size: 92, 53
+Hit
+  xy: 184, 223
+  size: 92, 53
+Hit
+  xy: 276, 223
+  size: 92, 53
+Death
+  xy: 0, 276
+  size: 92, 53
+Death
+  xy: 92, 276
+  size: 92, 53
+Death
+  xy: 184, 276
+  size: 92, 53
+Death
+  xy: 276, 276
+  size: 92, 53
+Death
+  xy: 368, 276
+  size: 92, 53
+Death
+  xy: 460, 276
+  size: 92, 53
+Death
+  xy: 552, 276
+  size: 92, 53
+Death
+  xy: 644, 276
+  size: 92, 53
+Death
+  xy: 736, 276
+  size: 92, 53
+IdleUp
+  xy: 0, 329
+  size: 92, 53
+IdleUp
+  xy: 92, 329
+  size: 92, 53
+IdleUp
+  xy: 184, 329
+  size: 92, 53
+IdleUp
+  xy: 276, 329
+  size: 92, 53
+IdleDown
+  xy: 0, 382
+  size: 92, 53
+IdleDown
+  xy: 92, 382
+  size: 92, 53
+IdleDown
+  xy: 184, 382
+  size: 92, 53
+IdleDown
+  xy: 276, 382
+  size: 92, 53
+WalkUp
+  xy: 0, 435
+  size: 92, 53
+WalkUp
+  xy: 92, 435
+  size: 92, 53
+WalkUp
+  xy: 184, 435
+  size: 92, 53
+WalkUp
+  xy: 276, 435
+  size: 92, 53
+WalkUp
+  xy: 368, 435
+  size: 92, 53
+WalkUp
+  xy: 460, 435
+  size: 92, 53
+WalkUp
+  xy: 552, 435
+  size: 92, 53
+WalkUp
+  xy: 644, 435
+  size: 92, 53
+WalkDown
+  xy: 0, 488
+  size: 92, 53
+WalkDown
+  xy: 92, 488
+  size: 92, 53
+WalkDown
+  xy: 184, 488
+  size: 92, 53
+WalkDown
+  xy: 276, 488
+  size: 92, 53
+WalkDown
+  xy: 368, 488
+  size: 92, 53
+WalkDown
+  xy: 460, 488
+  size: 92, 53
+WalkDown
+  xy: 552, 488
+  size: 92, 53
+WalkDown
+  xy: 644, 488
+  size: 92, 53

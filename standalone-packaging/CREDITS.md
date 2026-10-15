@@ -99,7 +99,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (829 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600, 601, 602, 608, 616, 617 and 623 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (840 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600, 601, 602, 608, 616, 617, 623 and 624 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -193,7 +193,9 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   and mages - Longbow Yeoman, Pitchfork Farmer, Axe Orc, Dawnblade Prince, Levy Spearman, Court Mage, Archmage of the
   Tides, Halberd Veteran, Bandit Scoundrel, Chandler, Joven, Brallin and Shabraz, Bandit Trapmaster, Kirol,
   Pyromancer, Shu Yun, Cavalier Captain, Levy Swordsman, Outrider, Shieldwall Sergeant; round 623's six centaurs -
-  Centaur, Iroas, Yarus, Centaur Warrior, Karador, Nikya; and round 597's 28 player heroes, a
+  Centaur, Iroas, Yarus, Centaur Warrior, Karador, Nikya; round 624's eleven aven, with bird heads drawn for this game
+  - Falcon-headed Aven Warrior, Derevi, Reyhan and Ishai, Falco Spara, Teshar, Kianne, Ibis-headed Aven Warrior,
+  Kangee, Kykar, Kefnet, Xho Cai; and round 597's 28 player heroes, a
   woman
   and a man of every race
   the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,
