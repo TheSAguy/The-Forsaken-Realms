@@ -958,6 +958,16 @@ public class DuelScene extends ForgeScene {
                     System.out.println("[TFR-Ascend] duel start: life " + (life >= 0 ? "+" : "") + life + ", hand +" + pactCards
                             + ", tokens " + java.util.Arrays.toString(tokens));
             }
+            // Round 620: the win-ratio help - a poor record over the last 50 duels starts the player with a Treasure,
+            // and a Clue too (SpawnTierWeighting.winRatioPlayerTokens; the cards say why).
+            String[] help = forge.adventure.util.SpawnTierWeighting.winRatioPlayerTokens();
+            if (help.length > 0) {
+                EffectData ratioHelp = new EffectData();
+                ratioHelp.startBattleWithCard = help;
+                playerEffects.add(ratioHelp);
+                System.out.println("[TFR-WinRatio] the player starts with " + String.join(", ", help) + " - "
+                        + forge.adventure.util.SpawnTierWeighting.describeWinRatio());
+            }
             // Round 525: Opening Gambit - the player's seat weighs more in the first game's coin toss (the engine's
             // GameAction.weightedCoinToss logs the roll).
             float tossWeight = forge.adventure.util.Ascendance.coinTossWeight();
@@ -1223,6 +1233,25 @@ public class DuelScene extends ForgeScene {
                     System.out.println("[TFR-Notoriety] " + currentEnemy.getName() + " (" + EnemyData.tierDisplayName(currentEnemy.tier)
                             + ") starts with " + String.join(" + ", shown) + " - " + Current.player().notorietyStreak()
                             + " wins in a row, level " + Current.player().notorietyLevel());
+                }
+            }
+
+            // Round 620: the win-ratio help for the enemy - a strong record over the player's last 50 duels starts each
+            // enemy seat with a Clue, a Treasure, or both (SpawnTierWeighting.winRatioEnemyTokens). The Walls' duels.
+            if (eventData == null && guardDeck == null && currentEnemy.fixedDeck == null) {
+                java.util.List<IPaperCard> help = new java.util.ArrayList<>();
+                for (String script : forge.adventure.util.SpawnTierWeighting.winRatioEnemyTokens()) {
+                    forge.item.PaperToken token = forge.model.FModel.getMagicDb().getAllTokens().getToken(script);
+                    if (token == null)
+                        System.err.println("[TFR-WinRatio] token script " + script + " not found");
+                    else
+                        help.add(token);
+                }
+                if (!help.isEmpty()) {
+                    aiPlayer.addExtraCardsOnBattlefield(help);
+                    System.out.println("[TFR-WinRatio] " + currentEnemy.getName() + " starts with "
+                            + String.join(", ", forge.adventure.util.SpawnTierWeighting.winRatioEnemyTokens()) + " - "
+                            + forge.adventure.util.SpawnTierWeighting.describeWinRatio());
                 }
             }
 

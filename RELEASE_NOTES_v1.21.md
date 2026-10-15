@@ -29,6 +29,8 @@ character started on v1.20 or later, or a New Game+.
 
 - The Capitol Temple: offerings, honor by color, and spoils you collect.
 - Spawns adapt to your last 50 duels: a strong record brings tougher enemies, a weak one eases off.
+- Your last 50 duels also hand out help: a Clue and/or a Treasure for the enemy when you win 75% or more, or for you
+  at 50% or less - the cards say why.
 - Days pass 20% faster.
 - Arena: a fresh bracket after a loss. Inn tournaments: one win per town per week.
 

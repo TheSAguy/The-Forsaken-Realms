@@ -104,5 +104,14 @@
   "winRatioMinDuels": [25, 50],
   "winRatioMaxShift": [5, 10],
   "winRatioHigh": 0.8,
-  "winRatioLow": 0.2
+  "winRatioLow": 0.2,
+  // Round 620 (the user: help tokens by the win ratio, from 50 duels on): the first row the ratio meets puts its token
+  // scripts in play at the start of a duel. The enemy (ratio at least): 95% a Clue and a Treasure, 90% a Treasure, 75% a
+  // Clue. You (ratio at most): 25% a Treasure and a Clue, 50% a Treasure. The cards say why (tfr_ratio_*, made by
+  // dev-tools/ratio_tokens/make_ratio_tokens.py). Same duels as the Walls: not Inn events or your guards' fights.
+  "winRatioHelpMinDuels": 50,
+  "winRatioEnemyAtLeast": [0.95, 0.90, 0.75],
+  "winRatioEnemyTokens": ["tfr_ratio_enemy_clue,tfr_ratio_enemy_treasure", "tfr_ratio_enemy_treasure", "tfr_ratio_enemy_clue"],
+  "winRatioPlayerAtMost": [0.25, 0.50],
+  "winRatioPlayerTokens": ["tfr_ratio_player_treasure,tfr_ratio_player_clue", "tfr_ratio_player_treasure"]
 }

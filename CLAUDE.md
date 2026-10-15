@@ -80,6 +80,9 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-15 (round 620): **LOCAL + UNRELEASED (code + data + art)** - win-ratio help tokens (tfr_ratio_* Clue/Treasure
+with "why" text; enemy 75/90/95%, player 50/25%, from 50 duels; SpawnTierWeighting.winRatioEnemyTokens/PlayerTokens).
+
 ## STATE 2026-10-15 (round 619): **LOCAL + UNRELEASED (code + data)** - the intro (28) and tutorial (53) pay their 50 Power
 unscaled (fullPowerQuestIds) - finishing the intro reaches level 1 again.
 

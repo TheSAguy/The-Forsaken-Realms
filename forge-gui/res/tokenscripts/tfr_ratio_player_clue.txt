@@ -1,0 +1,6 @@
+Name:Clue Token
+ManaCost:no cost
+Types:Artifact Clue
+A:AB$ Draw | Cost$ 2 Sac<1/CARDNAME/this token> | NumCards$ 1 | SpellDescription$ Draw a card.
+SVar:SacMe:1
+Oracle:{2}, Sacrifice this token: Draw a card.\n"We see you need a little help." (Your last 50 duels: 25% or fewer won.)

@@ -73,4 +73,15 @@ public class SpawnTierWeightData {
     public float[] winRatioMaxShift = {5f, 10f};
     public float winRatioHigh = 0.8f;
     public float winRatioLow = 0.2f;
+    /** Round 620 (the user: "starting at 50 duels ... At 75%+ winning: A clue token for the enemy. At 90%+ winning: A
+     *  treasure token for the enemy" - then "75-89 Clue, 90-94% Treasure, 95% both" - and for the player a Clue at 25% or
+     *  less won and a Treasure at 50% or less): with winRatioHelpMinDuels on record, the first row whose threshold the
+     *  win ratio meets puts its tokens (comma-separated token scripts) in play at the start of a duel - the enemy's rows
+     *  from the top ratio down (at least), the player's from the bottom up (at most). */
+    public int winRatioHelpMinDuels = 50;
+    public float[] winRatioEnemyAtLeast = {0.95f, 0.90f, 0.75f};
+    public String[] winRatioEnemyTokens = {"tfr_ratio_enemy_clue,tfr_ratio_enemy_treasure", "tfr_ratio_enemy_treasure",
+            "tfr_ratio_enemy_clue"};
+    public float[] winRatioPlayerAtMost = {0.25f, 0.50f};
+    public String[] winRatioPlayerTokens = {"tfr_ratio_player_treasure,tfr_ratio_player_clue", "tfr_ratio_player_treasure"};
 }

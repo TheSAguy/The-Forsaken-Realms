@@ -268,6 +268,35 @@ public class SpawnTierWeighting {
                 + ", spawn shift " + (shift > 0 ? "+" : "") + String.format(java.util.Locale.ROOT, "%.1f", shift) + " points";
     }
 
+    /** Round 620: the token scripts the enemy starts with for the player's record (empty under winRatioHelpMinDuels). */
+    public static String[] winRatioEnemyTokens() {
+        SpawnTierWeightData data = Config.instance().getSpawnTierWeightData();
+        return data == null ? new String[0] : ratioTokens(data, data.winRatioEnemyAtLeast, data.winRatioEnemyTokens, true);
+    }
+
+    /** Round 620: the token scripts the player starts with for their record. */
+    public static String[] winRatioPlayerTokens() {
+        SpawnTierWeightData data = Config.instance().getSpawnTierWeightData();
+        return data == null ? new String[0] : ratioTokens(data, data.winRatioPlayerAtMost, data.winRatioPlayerTokens, false);
+    }
+
+    private static String[] ratioTokens(SpawnTierWeightData data, float[] thresholds, String[] tokens, boolean atLeast) {
+        String record = record();
+        if (thresholds == null || tokens == null || record.length() < Math.max(1, data.winRatioHelpMinDuels))
+            return new String[0];
+        int wins = 0;
+        for (int i = 0; i < record.length(); i++)
+            if (record.charAt(i) == 'W')
+                wins++;
+        float ratio = wins / (float) record.length();
+        for (int i = 0; i < Math.min(thresholds.length, tokens.length); i++) {
+            boolean met = atLeast ? ratio >= thresholds[i] - 1e-6f : ratio <= thresholds[i] + 1e-6f;
+            if (met && tokens[i] != null && !tokens[i].trim().isEmpty())
+                return tokens[i].trim().split("\\s*,\\s*");
+        }
+        return new String[0];
+    }
+
     /** [TFR-WinRatio] after each counted duel. */
     public static void logWinRatio(String what) {
         System.out.println("[TFR-WinRatio] " + what + " - " + describeWinRatio());

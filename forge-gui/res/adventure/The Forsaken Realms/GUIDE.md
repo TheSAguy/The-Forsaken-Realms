@@ -57,7 +57,8 @@ The short version for returning players. Each item links to where the guide cove
 - **Head and Legs slots:** wear 6 main items at level 35 and 7 at level 40, and every item's art now matches its
   slot. See [Equipment Slots](#equipment-slots).
 - **The Capitol Temple:** offerings, honor by color, and spoils you collect. See [The Temple](#the-temple).
-- **Spawns adapt to your last 50 duels:** a strong record brings tougher enemies, a weak one eases off. See
+- **Spawns adapt to your last 50 duels:** a strong record brings tougher enemies, a weak one eases off - and from
+  50 duels on, a Clue or Treasure for the enemy when you win 75% or more, or for you at 50% or less. See
   [Enemies That Adapt to You](#enemies-that-adapt-to-you).
 - **Days pass 20% faster.** See [Time, Day & Night](#time-day--night).
 - **Arena:** a fresh bracket after a loss. **Inn tournaments:** one win per town per week. See
@@ -1093,6 +1094,22 @@ Normal, weeks 4-6, the Wasteland - 65 / 24 / 10 / 1 becomes 55 / 31 / 13 / 1 at 
 Unlike a streak, one loss doesn't wipe it, and a bad run eases the world within weeks, since only the last 50 duels
 count. It covers every creature roaming the world map, raiders included. (A save from before 1.21 starts its record
 from its lifetime wins and losses, at the same ratio.)
+
+**Help tokens.** Once 50 duels are on record, your win ratio also puts tokens in play at the start of a duel - a
+Clue ({2}, sacrifice it: draw a card) or a Treasure (tap, sacrifice it: one mana of any color). Each card says why
+it's there, the way the Walls do:
+
+| Your last 50 duels | Who gets help | Tokens |
+|---|---|---|
+| 95% or more won | the enemy | a Clue and a Treasure |
+| 90-94% won | the enemy | a Treasure |
+| 75-89% won | the enemy | a Clue |
+| 26-50% won | you | a Treasure |
+| 25% or fewer won | you | a Treasure and a Clue |
+
+The enemy's cards read "You're a formidable opponent - I need some help.", yours "We see you need a little help."
+They come in the same duels as the Walls - not Inn tournaments, the Deck Tester or your guards' fights - and every
+enemy of a chained fight brings its own.
 
 
 ---

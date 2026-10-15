@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 620: the win-ratio help tokens - a Clue or Treasure for the enemy or for you, cards that say why (2026-10-15)
+
+The user: "For your winning ratio, starting at 50 duels ... I want to give the player or the opponent, the following
+cards, depending on the ratio. I'd like for you to make copies of these cards, so we can add text to them, so the player
+knows why they are on the battlefield (same as we do for the walls)" - with the AFR Treasure and the OTJ Clue - then:
+"75-89 Clue, 90-94% Treasure, 95% both", and for the player a Treasure at 50% won or less, both at 25% or less.
+
+- **Four tokens** (`forge-gui/res/tokenscripts/tfr_ratio_{enemy,player}_{clue,treasure}.txt`, faces in
+  `adventure/common/custom_card_pics/`, made by `dev-tools/ratio_tokens/make_ratio_tokens.py`): AFR's Treasure (Dan
+  Scott, from Forge's image cache) and OTJ's Clue (Clint Lockwood, from the user's picture), with two lines under the
+  rules text - "You're a formidable opponent - I need some help." / "We see you need a little help." and the reason
+  ("Your last 50 duels: 75% or more won"). The rules text carries the same line.
+- **When** (spawn_tier_weighting.json `winRatioHelpMinDuels` 50, `winRatioEnemyAtLeast` [0.95, 0.90, 0.75] with
+  `winRatioEnemyTokens`, `winRatioPlayerAtMost` [0.25, 0.50] with `winRatioPlayerTokens`; the first row met wins):
+  with 50 duels on record (round 613's), the enemy starts with a Clue and a Treasure at 95%+ won, a Treasure at 90-94%,
+  a Clue at 75-89%; the player with a Treasure at 26-50%, a Treasure and a Clue at 25% or less.
+- **Where**: the player's own duels (DuelScene's Ascendance block - not a guard's fight, an Inn event or Deck Tester);
+  each enemy seat beside its notoriety Walls (not an Inn event, a guard's fight or Deck Tester). `[TFR-WinRatio]` logs it.
+- GUIDE.md ("Help tokens" under Enemies That Adapt to You, What's New), RELEASE_NOTES_v1.21.md.
+- **Seen in the agent game**: `winratio 48 2` - `Wild Rat starts with tfr_ratio_enemy_clue, tfr_ratio_enemy_treasure`,
+  the Clue face on its side of the board; `winratio 10 40` - `the player starts with tfr_ratio_player_treasure,
+  tfr_ratio_player_clue`, both faces on the player's side.
+
 ## Round 619: the intro pays its full 50 Power again - finishing it reaches level 1 (2026-10-15)
 
 Found during round 618's guide pass: since round 583's levelingSpeed 0.85 the intro's story quest paid 43 Power, not the
