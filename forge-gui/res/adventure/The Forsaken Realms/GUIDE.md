@@ -1052,6 +1052,15 @@ one set and you get its bonus **on top of** what the items do themselves:
 - An Arena that would hand you a set piece you already own gives you a piece of that set you are missing instead,
   while there is one in its prize list.
 
+### The Walkers' Pledges
+
+Beating Chandra or Liliana in her temple leaves you her **stone**. Take it to the Warden - at the temple door, or at
+Orazca if the temple is gone - and he cuts the chain that held her: the stone becomes her **Pledge**, a Mythic Neck
+item. Wear it and her **Favor** sits in your command zone: at your first upkeep you draft a card from her spellbook -
+three random cards from it are shown and one goes to your hand (26 cards for Liliana, the 17 Chandra planeswalkers
+for Chandra). Once a duel; a roaming guard can wear a Pledge too. The Warden's main-story talks come
+first: if he has something to tell you, hear him out, then speak to him again.
+
 ## Notes on Difficulty
 
 Insane difficulty roughly doubles the stakes of everything above: reputation swings matter more,

@@ -2150,3 +2150,15 @@ GoosePendant
 CoralHelm
   xy: 160, 0
   size: 16, 16
+
+items_r630.png
+size: 64,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+LilianasPledge
+  xy: 0, 0
+  size: 32, 32
+ChandrasPledge
+  xy: 32, 0
+  size: 32, 32

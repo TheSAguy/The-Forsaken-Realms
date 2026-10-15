@@ -91,6 +91,8 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (round 630): **LOCAL + UNRELEASED (data + 2 small Java)** - the Warden keeps his promise: carrying Liliana's / Chandra's Stone, the Warden (temple door, or Orazca's three maps) trades it for her Pledge (Mythic Neck; "<Walker>'s Favor" in the command zone drafts one card from her boss spellbook at your first upkeep). `dev-tools/walker_pledges/make_pledges.py` writes items, icons (items_r630.png), cards + faces, Warden dialogs and the temple Wardens' name. The misspelled "Thrones of Eldraine" sketchbook (unlocked nothing) is gone; ItemListData.RENAMED converts saved copies. Item audit: nothing else idle or dangling. Seen in the agent game (both trades, the draft in a duel). Sets page / icons + 4 new items = rounds 631 / next.
+
 ## STATE 2026-10-15 (round 633): **LOCAL + UNRELEASED (art + data)** - the three myr (Myr Superion [boss], Urtet,
 Brudiclad) get the user's hand-made myr (Pixelate; one still, the bronze tinted per myr; generator
 `pixelate/myr/convert.sh`, Kling's attack flare painted out by `deflare.py`). enemies.json 3 paths + scales. #32

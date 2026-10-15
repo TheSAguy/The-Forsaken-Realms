@@ -1,0 +1,8 @@
+Name:Chandra's Favor
+ManaCost:no cost
+Colors:red
+Types:Enchantment
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | CheckSVar$ YourTurns | SVarCompare$ EQ1 | Execute$ TrigDraft | TriggerDescription$ At the beginning of your first upkeep, draft a card from Chandra's spellbook. (Look at three random cards from it and put one of them into your hand.)
+SVar:TrigDraft:DB$ Draft | Zone$ Hand | Spellbook$ Chandra Ablaze,Chandra; Acolyte of Flame,Chandra; Awakened Inferno,Chandra; Bold Pyromancer,Chandra; Dressed to Kill,Chandra; Fire Artisan,Chandra; Fire of Kaladesh,Chandra; Flamecaller,Chandra; Flame's Catalyst,Chandra; Flame's Fury,Chandra; Heart of Fire,Chandra Nalaar,Chandra; Novice Pyromancer,Chandra; Pyrogenius,Chandra; Pyromaster,Chandra; the Firebrand,Chandra; Torch of Defiance
+SVar:YourTurns:Count$YourTurns
+Oracle:At the beginning of your first upkeep, draft a card from Chandra's spellbook. (Look at three random cards from it and put one of them into your hand.)

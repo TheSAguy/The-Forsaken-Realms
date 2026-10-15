@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 630: the Warden keeps his promise - Liliana's and Chandra's Pledges; the Eldraine sketchbook (2026-10-15)
+
+A player on Discord (2026-10-15): "I got Lilianas Stone after defeating her, what am i supposed to do with it? I talked
+to the guardian in the first room, but he just loops his dialogue." Nothing used the stone (stock Forge never did
+either), while the Warden at both walker temples says "Defeat her and I can bring her back to herself. A walker who
+owes you her mind may stand with you in battles yet to come." The user picked the recommended fix ("Let's go your
+recommendation") and asked whether other items needed the same: an audit of every item with no slot, effect or use
+found only the two stones and one broken sketchbook (every item name the maps, quests, shops and drops reference
+exists).
+
+- **The Pledges** (`dev-tools/walker_pledges/make_pledges.py --repo <root>`, one source, idempotent):
+  - While you carry the stone, the Warden at the temple door takes it ("(Hand him Liliana's Stone)" / "\"Not yet.\"")
+    and gives you **Liliana's Pledge** / **Chandra's Pledge** through a reward screen (removeItem + grantRewards). With
+    the Pledge and no stone he has a short line of his own; without either, his old intro is unchanged. The three root
+    nodes are mutually exclusive: MapDialog.activate() loads every passing root node and the last one shows.
+  - **Orazca's Warden** (orazca.tmx, orazca_restored.tmx, player_capital.tmx) takes a stone too - a cleared temple
+    leaves the map. His stone nodes go first and his default line gets "carries no stone", so a pending main-quest
+    node later in his list still wins (seen: "Where do I start?" showed first, the trade on the next talk).
+  - The temple Wardens get `displayNameOverride` "The Warden" (Orazca's had it; the temple dialogs were titled
+    "-Adept Black Wizard-").
+  - A Pledge: Mythic, Neck, cost 10000, excludeFromGeneralSale; effect `startBattleWithCardInCommandZone`
+    ["Liliana's Favor" / "Chandra's Favor"]. Icons: the gold-chain prism pendant with the gem recolored (violet /
+    flame), `sprites/items_r630.png` (LilianasPledge, ChandrasPledge).
+  - **Liliana's / Chandra's Favor** (`common/custom_cards/`): "At the beginning of your first upkeep, draft a card from
+    Liliana's spellbook" (Count$YourTurns EQ1, DB$ Draft to hand). The spellbook is the boss card's own list, read from
+    waker_of_the_dead.txt / fire_of_kaladesh.txt (Liliana 26 with the duplicate dropped, Chandra 17 planeswalkers);
+    every name is checked against cardsfolder (DraftEffect has no null check). Faces on the boss cards' frames with
+    the art of Liliana of the Veil (UMA, Steve Argyle) and Chandra, Torch of Defiance (FRA, Kieran Yanner) from the
+    card cache; both build in Forge's card factory (one trigger each).
+  - The stones' descriptions point at the Warden. items.csv snapshot rows added.
+- **Landscape Sketchbook - Thrones of Eldraine** matched no edition (it unlocked nothing) and the Archaeologist could
+  still find it: out of items.json, items.csv and the Archaeologist list; `ItemListData.RENAMED` turns any saved copy
+  into the working "Throne of Eldraine" one (seen: `give item` of the old name lands the new one).
+- GUIDE: "### The Walkers' Pledges" after Gear Sets.
+- Seen in the agent game (slot 5): the temple Warden's stone node -> hand over -> reward screen -> Pledge in the bag,
+  stone gone; his pledge line on the next talk; Liliana's Favor in the command zone and a drafted Liliana of the Dark
+  Realms on the battlefield by turn 6; Chandra's Stone traded at the Capitol's Warden. Not seen: a guard wearing a
+  Pledge, the new Warden name over the temple dialog.
+
 ## Round 633: the three myr get the user's hand-made myr (2026-10-15)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/myr/convert.sh`. These are A23-25 of the

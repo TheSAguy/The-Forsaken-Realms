@@ -26,8 +26,10 @@ public class ItemListData {
      *  the item under its new one. The user, on the four mana creatures that hang at the neck since round 506: "Let's
      *  rename also please". AdventurePlayer's catalog refresh renames a saved copy on load. Round 605 (the user:
      *  "Let's make sure all Boot items have boot icons. (Possibly re-name)"): the Boots-slot rings, anklets, pants
-     *  and skirts. */
+     *  and skirts. Round 630: the misspelled "Thrones of Eldraine" sketchbook (no such edition - it unlocked nothing)
+     *  becomes the working Throne of Eldraine one. */
     private static final java.util.Map<String, String> RENAMED = java.util.Map.ofEntries(
+            java.util.Map.entry("landscape sketchbook - thrones of eldraine", "Landscape Sketchbook - Throne of Eldraine"),
             java.util.Map.entry("joraga boots", "Joraga Leaf Pendant"),
             java.util.Map.entry("utopia anklet", "Utopia Necklace"),
             java.util.Map.entry("petalmane pants", "Petalmane Charm"),

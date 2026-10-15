@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 630 - the walkers' Pledges; the Eldraine sketchbook
+
+- **`forge-gui-mobile/src/forge/adventure/data/ItemListData.java`** - one `RENAMED` entry (our round-512 table):
+  "landscape sketchbook - thrones of eldraine" -> "Landscape Sketchbook - Throne of Eldraine" (the misspelled item
+  matched no edition and unlocked nothing; saved copies convert on load). The entry is gone from items.json.
+- `util/EconomyBuildings.java` (mod-added) - the misspelled sketchbook out of the Archaeologist's item list.
+- Everything else is data: the Pledges (items.json), Liliana's / Chandra's Favor (common/custom_cards), the Warden
+  dialogs (two temple maps + Orazca's three), from `dev-tools/walker_pledges/make_pledges.py`.
+
 ### Round 629 - gear sets (3 / 5 / 7 pieces) and guard slots 2 / 3 / 5 / 7
 
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - after the player's equipment loop (inside the
