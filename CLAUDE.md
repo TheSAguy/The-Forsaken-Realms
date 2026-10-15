@@ -91,6 +91,11 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (round 628): **LOCAL + UNRELEASED (art + data)** - the four naga (Naga Warrior, Omarthis,
+Lonis, Kadena) become LPC upper bodies on a serpent tail drawn for the game (generator `lpc_selections/make_628.py` +
+`naga_to_forge.py`). enemies.json 4 paths + scales (0.31-0.34), CREDITS_LPC.md 905 characters, CREDITS.md (877 LPC
+enemies). #32 packages. Not seen in play.
+
 ## STATE 2026-10-15 (round 627): **LOCAL + UNRELEASED (art + data)** - twenty-four more LPC enemies: the Wandering
 Giant, Mummy, the four Valyx demons (two bosses), Sirena, Bungisngis, Hex Witch, Kapre, Ekek (the falcon head in maroon),
 Manananggal, Nuno sa Punso, the two slaadi and the nine gorgons (dreadlocks as snake hair) (generator

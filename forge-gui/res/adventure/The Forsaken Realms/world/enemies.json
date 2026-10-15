@@ -23007,7 +23007,7 @@
     },
     {
         "name": "Naga Warrior",
-        "sprite": "sprites/enemy/humanoid/naga/nagawarrior.atlas",
+        "sprite": "sprites/enemy/remake/naga_warrior.atlas",
         "deck": [
             "decks/standard/nagawarrior.dck"
         ],
@@ -23090,7 +23090,7 @@
             "IdentitySimic"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.3333
     },
     {
         "name": "Nahiri",
@@ -42528,13 +42528,13 @@
     },
     {
         "name": "Omarthis",
-        "sprite": "sprites/enemy/humanoid/naga/nagawarrior.atlas",
+        "sprite": "sprites/enemy/remake/omarthis.atlas",
         "deck": [
             "decks/legends/omarthis.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.1818,
+        "scale": 0.3421,
         "life": 40,
         "rewards": [
             {
@@ -92367,7 +92367,7 @@
     },
     {
         "name": "Lonis",
-        "sprite": "sprites/enemy/humanoid/naga/nagawarrior.atlas",
+        "sprite": "sprites/enemy/remake/lonis.atlas",
         "deck": [
             "decks/legends/lonis.dck"
         ],
@@ -92436,7 +92436,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.3095
     },
     {
         "name": "Momir Vig",
@@ -93649,7 +93649,7 @@
     },
     {
         "name": "Kadena",
-        "sprite": "sprites/enemy/humanoid/naga/nagawarrior.atlas",
+        "sprite": "sprites/enemy/remake/kadena.atlas",
         "deck": [
             "decks/legends/kadena.dck"
         ],
@@ -93713,7 +93713,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.1818
+        "scale": 0.325
     },
     {
         "name": "Sidisi",

@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 628: the four naga - LPC upper bodies on serpent tails (2026-10-15)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_628.py` with its new
+`naga_to_forge.py`. These are A43-46 of the low-quality list, on my recommendation "LPC with a snake tail, the centaur
+trick": the four enemies on the stock 16 px `humanoid/naga` sprite.
+
+- **How they are made**:
+  - An LPC character, cut at the hips, stands on a serpent tail drawn for the game. No free art has one.
+  - The tail is a tube along a smooth path that tapers from the hips to the tip. It is shaded across its width: a lit
+    back, a pale belly with scute lines and scale marks from the side, the belly facing you from the front, and a dark
+    dorsal stripe from behind, all with a one-pixel outline.
+  - From the side it runs back along the ground and curls up at the tip. From the front and back it curls to one side.
+  - The walk sends a hump of 2-3 px back along the tail over 8 steps; the idle sways the tip.
+  - The torso keeps LPC's layer order. A spear's lower half is drawn in front of the tail (round 623's method).
+- **Dressed from their cards**:
+  - **Naga Warrior**: teal like its stock sprite, in black leather with a red sash and a spear.
+  - **Omarthis**: pale and spectral on a ghost-blue tail, in white, casting.
+  - **Lonis**: a snake elf with elven ears and mint skin, in dark leather on a jade tail, with a dagger.
+  - **Kadena**: a lizard head in emerald, in black with a gold mantle and a gold staff.
+- **Files**:
+  - 4 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 4 sprite paths and scales (0.31-0.34).
+  - A footprint on 3 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 905 characters, additions only. Each naga lists its tail, credited to The Forsaken
+    Realms (CC0).
+  - `CREDITS.md`: the LPC bullet (877 enemies).
+- **Checks**:
+  - enemies.json against HEAD: exactly these 4, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 627: twenty-four more LPC enemies - giants, a mummy, the Valyx demons, folk creatures, slaadi, gorgons (2026-10-15)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_627.py`. From the remaining

@@ -1,0 +1,171 @@
+kadena.png
+size: 848,505
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 106, 49
+  footprint: 24, 1, 58, 48
+Idle
+  xy: 106, 64
+  size: 106, 49
+Idle
+  xy: 212, 64
+  size: 106, 49
+Idle
+  xy: 318, 64
+  size: 106, 49
+Walk
+  xy: 0, 113
+  size: 106, 49
+Walk
+  xy: 106, 113
+  size: 106, 49
+Walk
+  xy: 212, 113
+  size: 106, 49
+Walk
+  xy: 318, 113
+  size: 106, 49
+Walk
+  xy: 424, 113
+  size: 106, 49
+Walk
+  xy: 530, 113
+  size: 106, 49
+Walk
+  xy: 636, 113
+  size: 106, 49
+Walk
+  xy: 742, 113
+  size: 106, 49
+Attack
+  xy: 0, 162
+  size: 106, 49
+Attack
+  xy: 106, 162
+  size: 106, 49
+Attack
+  xy: 212, 162
+  size: 106, 49
+Attack
+  xy: 318, 162
+  size: 106, 49
+Attack
+  xy: 424, 162
+  size: 106, 49
+Attack
+  xy: 530, 162
+  size: 106, 49
+Attack
+  xy: 636, 162
+  size: 106, 49
+Attack
+  xy: 742, 162
+  size: 106, 49
+Hit
+  xy: 0, 211
+  size: 106, 49
+Hit
+  xy: 106, 211
+  size: 106, 49
+Hit
+  xy: 212, 211
+  size: 106, 49
+Hit
+  xy: 318, 211
+  size: 106, 49
+Death
+  xy: 0, 260
+  size: 106, 49
+Death
+  xy: 106, 260
+  size: 106, 49
+Death
+  xy: 212, 260
+  size: 106, 49
+Death
+  xy: 318, 260
+  size: 106, 49
+Death
+  xy: 424, 260
+  size: 106, 49
+Death
+  xy: 530, 260
+  size: 106, 49
+IdleUp
+  xy: 0, 309
+  size: 106, 49
+IdleUp
+  xy: 106, 309
+  size: 106, 49
+IdleUp
+  xy: 212, 309
+  size: 106, 49
+IdleUp
+  xy: 318, 309
+  size: 106, 49
+IdleDown
+  xy: 0, 358
+  size: 106, 49
+IdleDown
+  xy: 106, 358
+  size: 106, 49
+IdleDown
+  xy: 212, 358
+  size: 106, 49
+IdleDown
+  xy: 318, 358
+  size: 106, 49
+WalkUp
+  xy: 0, 407
+  size: 106, 49
+WalkUp
+  xy: 106, 407
+  size: 106, 49
+WalkUp
+  xy: 212, 407
+  size: 106, 49
+WalkUp
+  xy: 318, 407
+  size: 106, 49
+WalkUp
+  xy: 424, 407
+  size: 106, 49
+WalkUp
+  xy: 530, 407
+  size: 106, 49
+WalkUp
+  xy: 636, 407
+  size: 106, 49
+WalkUp
+  xy: 742, 407
+  size: 106, 49
+WalkDown
+  xy: 0, 456
+  size: 106, 49
+WalkDown
+  xy: 106, 456
+  size: 106, 49
+WalkDown
+  xy: 212, 456
+  size: 106, 49
+WalkDown
+  xy: 318, 456
+  size: 106, 49
+WalkDown
+  xy: 424, 456
+  size: 106, 49
+WalkDown
+  xy: 530, 456
+  size: 106, 49
+WalkDown
+  xy: 636, 456
+  size: 106, 49
+WalkDown
+  xy: 742, 456
+  size: 106, 49

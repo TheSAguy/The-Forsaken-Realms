@@ -1,0 +1,168 @@
+omarthis.png
+size: 704,505
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 49
+  footprint: 17, 1, 55, 48
+Idle
+  xy: 88, 64
+  size: 88, 49
+Idle
+  xy: 176, 64
+  size: 88, 49
+Idle
+  xy: 264, 64
+  size: 88, 49
+Walk
+  xy: 0, 113
+  size: 88, 49
+Walk
+  xy: 88, 113
+  size: 88, 49
+Walk
+  xy: 176, 113
+  size: 88, 49
+Walk
+  xy: 264, 113
+  size: 88, 49
+Walk
+  xy: 352, 113
+  size: 88, 49
+Walk
+  xy: 440, 113
+  size: 88, 49
+Walk
+  xy: 528, 113
+  size: 88, 49
+Walk
+  xy: 616, 113
+  size: 88, 49
+Attack
+  xy: 0, 162
+  size: 88, 49
+Attack
+  xy: 88, 162
+  size: 88, 49
+Attack
+  xy: 176, 162
+  size: 88, 49
+Attack
+  xy: 264, 162
+  size: 88, 49
+Attack
+  xy: 352, 162
+  size: 88, 49
+Attack
+  xy: 440, 162
+  size: 88, 49
+Attack
+  xy: 528, 162
+  size: 88, 49
+Hit
+  xy: 0, 211
+  size: 88, 49
+Hit
+  xy: 88, 211
+  size: 88, 49
+Hit
+  xy: 176, 211
+  size: 88, 49
+Hit
+  xy: 264, 211
+  size: 88, 49
+Death
+  xy: 0, 260
+  size: 88, 49
+Death
+  xy: 88, 260
+  size: 88, 49
+Death
+  xy: 176, 260
+  size: 88, 49
+Death
+  xy: 264, 260
+  size: 88, 49
+Death
+  xy: 352, 260
+  size: 88, 49
+Death
+  xy: 440, 260
+  size: 88, 49
+IdleUp
+  xy: 0, 309
+  size: 88, 49
+IdleUp
+  xy: 88, 309
+  size: 88, 49
+IdleUp
+  xy: 176, 309
+  size: 88, 49
+IdleUp
+  xy: 264, 309
+  size: 88, 49
+IdleDown
+  xy: 0, 358
+  size: 88, 49
+IdleDown
+  xy: 88, 358
+  size: 88, 49
+IdleDown
+  xy: 176, 358
+  size: 88, 49
+IdleDown
+  xy: 264, 358
+  size: 88, 49
+WalkUp
+  xy: 0, 407
+  size: 88, 49
+WalkUp
+  xy: 88, 407
+  size: 88, 49
+WalkUp
+  xy: 176, 407
+  size: 88, 49
+WalkUp
+  xy: 264, 407
+  size: 88, 49
+WalkUp
+  xy: 352, 407
+  size: 88, 49
+WalkUp
+  xy: 440, 407
+  size: 88, 49
+WalkUp
+  xy: 528, 407
+  size: 88, 49
+WalkUp
+  xy: 616, 407
+  size: 88, 49
+WalkDown
+  xy: 0, 456
+  size: 88, 49
+WalkDown
+  xy: 88, 456
+  size: 88, 49
+WalkDown
+  xy: 176, 456
+  size: 88, 49
+WalkDown
+  xy: 264, 456
+  size: 88, 49
+WalkDown
+  xy: 352, 456
+  size: 88, 49
+WalkDown
+  xy: 440, 456
+  size: 88, 49
+WalkDown
+  xy: 528, 456
+  size: 88, 49
+WalkDown
+  xy: 616, 456
+  size: 88, 49

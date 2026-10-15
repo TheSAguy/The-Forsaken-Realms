@@ -99,7 +99,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (873 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600, 601, 602, 608, 616, 617, 623, 624, 625 and 627 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (877 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600, 601, 602, 608, 616, 617, 623, 624, 625, 627 and 628 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -200,8 +200,9 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Archer, Bone Raider, Tallow Rat, Undead Goblin; round 627's twenty-four - giants, a mummy, the Valyx demons,
   Philippine folk creatures, slaadi and the gorgons - Wandering Giant, Mummy, Valyx Feaster of Torment, Valgavoth,
   Tevesh Szat, Valyx the Tormentor, Sirena, Bungisngis, Hex Witch, Kapre of the Old Balete, Ekek, Manananggal, Nuno sa
-  Punso, Crimson Slaad, Murky Slaad, Gorgon, Damia, Pharika, Vraska, Tam, Gorgon 2, Visara, Hythonia, Omo; and round
-  597's 28 player heroes, a
+  Punso, Crimson Slaad, Murky Slaad, Gorgon, Damia, Pharika, Vraska, Tam, Gorgon 2, Visara, Hythonia, Omo; round 628's
+  four naga, on serpent tails drawn for this game - Naga Warrior, Omarthis, Lonis, Kadena; and round 597's 28 player
+  heroes, a
   woman
   and a man of every race
   the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,
