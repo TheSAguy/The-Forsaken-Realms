@@ -14264,6 +14264,46 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 623: the six centaurs become LPC centaurs (2026-10-15)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_623.py` with its new
+`centaur_to_forge.py`. The user's option A for #26-31 of the low-quality list: the six enemies on the stock 16 px
+`fey/centaur` and `fey/centaur_2` sprites.
+
+- **How they are made**:
+  - An LPC character's upper body stands on a horse body: BenCreating's "LPC Horse Extended", which is bluecarrot16's
+    [LPC] Horses with improved animations.
+  - Each frame's horse head and neck are masked off, and the character, cut at the hips, stands where they were. It
+    rides the walk's bob.
+  - The torso keeps LPC's own layer order, so a sword held behind the head stays behind it.
+  - A bow or a spear that reaches below the hips is drawn in front of the horse from the side and the front, and
+    behind it from the back.
+  - Four directions and the house shadow. The portrait is the whole figure, halved like every creature wider than
+    64 px.
+- **Dressed from their cards**:
+  - **Centaur**: long black hair, brown leather, a recurve bow and a quiver, on the brown horse.
+  - **Centaur Warrior** (Common): an archer in leather, on the gray horse.
+  - **Iroas**, God of Victory: dark-skinned, in a gold horned helm and gold plate, with a red cape, a red painted
+    shield and a gold spear, on the black horse.
+  - **Yarus**, Roar of the Old Gods: a white-maned elder with a winter beard and a scimitar, on the gold horse.
+  - **Karador**, Ghost Chieftain: a pale spectral chieftain with antlers, a tattered cape and a spear, on the white
+    horse.
+  - **Nikya** of the Old Ways: a red mohawk, bone beads and a gnarled staff, on the brown horse.
+- **Files**:
+  - 6 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 6 sprite paths and scales (0.22-0.25).
+  - A footprint on 6 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 857 characters, additions only. Each centaur lists its horse.
+  - `CREDITS.md`: the LPC bullet (829 enemies), and the [LPC] Horses bullet now names BenCreating's LPC Horse
+    Extended for the centaurs. No other new authors.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 6, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 622: Svyelunite pays at the temple; the Bandit Slingshot keeps only its slinger deck (2026-10-15)
 
 The user, from round 621's open list: "Take both: drop Svyelunite's Return to Town stage and the Bandit Slingshot's

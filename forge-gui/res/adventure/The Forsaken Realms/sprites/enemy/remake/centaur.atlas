@@ -1,0 +1,153 @@
+centaur.png
+size: 640,865
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 89
+  footprint: 4, 7, 73, 70
+Idle
+  xy: 80, 64
+  size: 80, 89
+Idle
+  xy: 160, 64
+  size: 80, 89
+Idle
+  xy: 240, 64
+  size: 80, 89
+Walk
+  xy: 0, 153
+  size: 80, 89
+Walk
+  xy: 80, 153
+  size: 80, 89
+Walk
+  xy: 160, 153
+  size: 80, 89
+Walk
+  xy: 240, 153
+  size: 80, 89
+Walk
+  xy: 320, 153
+  size: 80, 89
+Walk
+  xy: 400, 153
+  size: 80, 89
+Attack
+  xy: 0, 242
+  size: 80, 89
+Attack
+  xy: 80, 242
+  size: 80, 89
+Attack
+  xy: 160, 242
+  size: 80, 89
+Attack
+  xy: 240, 242
+  size: 80, 89
+Attack
+  xy: 320, 242
+  size: 80, 89
+Attack
+  xy: 400, 242
+  size: 80, 89
+Attack
+  xy: 480, 242
+  size: 80, 89
+Attack
+  xy: 560, 242
+  size: 80, 89
+Hit
+  xy: 0, 331
+  size: 80, 89
+Hit
+  xy: 80, 331
+  size: 80, 89
+Hit
+  xy: 160, 331
+  size: 80, 89
+Hit
+  xy: 240, 331
+  size: 80, 89
+Death
+  xy: 0, 420
+  size: 80, 89
+Death
+  xy: 80, 420
+  size: 80, 89
+Death
+  xy: 160, 420
+  size: 80, 89
+Death
+  xy: 240, 420
+  size: 80, 89
+Death
+  xy: 320, 420
+  size: 80, 89
+Death
+  xy: 400, 420
+  size: 80, 89
+IdleUp
+  xy: 0, 509
+  size: 80, 89
+IdleUp
+  xy: 80, 509
+  size: 80, 89
+IdleUp
+  xy: 160, 509
+  size: 80, 89
+IdleUp
+  xy: 240, 509
+  size: 80, 89
+IdleDown
+  xy: 0, 598
+  size: 80, 89
+IdleDown
+  xy: 80, 598
+  size: 80, 89
+IdleDown
+  xy: 160, 598
+  size: 80, 89
+IdleDown
+  xy: 240, 598
+  size: 80, 89
+WalkUp
+  xy: 0, 687
+  size: 80, 89
+WalkUp
+  xy: 80, 687
+  size: 80, 89
+WalkUp
+  xy: 160, 687
+  size: 80, 89
+WalkUp
+  xy: 240, 687
+  size: 80, 89
+WalkUp
+  xy: 320, 687
+  size: 80, 89
+WalkUp
+  xy: 400, 687
+  size: 80, 89
+WalkDown
+  xy: 0, 776
+  size: 80, 89
+WalkDown
+  xy: 80, 776
+  size: 80, 89
+WalkDown
+  xy: 160, 776
+  size: 80, 89
+WalkDown
+  xy: 240, 776
+  size: 80, 89
+WalkDown
+  xy: 320, 776
+  size: 80, 89
+WalkDown
+  xy: 400, 776
+  size: 80, 89

@@ -1,0 +1,147 @@
+yarus.png
+size: 684,847
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 114, 87
+  footprint: 18, 7, 79, 68
+Idle
+  xy: 114, 64
+  size: 114, 87
+Idle
+  xy: 228, 64
+  size: 114, 87
+Idle
+  xy: 342, 64
+  size: 114, 87
+Walk
+  xy: 0, 151
+  size: 114, 87
+Walk
+  xy: 114, 151
+  size: 114, 87
+Walk
+  xy: 228, 151
+  size: 114, 87
+Walk
+  xy: 342, 151
+  size: 114, 87
+Walk
+  xy: 456, 151
+  size: 114, 87
+Walk
+  xy: 570, 151
+  size: 114, 87
+Attack
+  xy: 0, 238
+  size: 114, 87
+Attack
+  xy: 114, 238
+  size: 114, 87
+Attack
+  xy: 228, 238
+  size: 114, 87
+Attack
+  xy: 342, 238
+  size: 114, 87
+Attack
+  xy: 456, 238
+  size: 114, 87
+Attack
+  xy: 570, 238
+  size: 114, 87
+Hit
+  xy: 0, 325
+  size: 114, 87
+Hit
+  xy: 114, 325
+  size: 114, 87
+Hit
+  xy: 228, 325
+  size: 114, 87
+Hit
+  xy: 342, 325
+  size: 114, 87
+Death
+  xy: 0, 412
+  size: 114, 87
+Death
+  xy: 114, 412
+  size: 114, 87
+Death
+  xy: 228, 412
+  size: 114, 87
+Death
+  xy: 342, 412
+  size: 114, 87
+Death
+  xy: 456, 412
+  size: 114, 87
+Death
+  xy: 570, 412
+  size: 114, 87
+IdleUp
+  xy: 0, 499
+  size: 114, 87
+IdleUp
+  xy: 114, 499
+  size: 114, 87
+IdleUp
+  xy: 228, 499
+  size: 114, 87
+IdleUp
+  xy: 342, 499
+  size: 114, 87
+IdleDown
+  xy: 0, 586
+  size: 114, 87
+IdleDown
+  xy: 114, 586
+  size: 114, 87
+IdleDown
+  xy: 228, 586
+  size: 114, 87
+IdleDown
+  xy: 342, 586
+  size: 114, 87
+WalkUp
+  xy: 0, 673
+  size: 114, 87
+WalkUp
+  xy: 114, 673
+  size: 114, 87
+WalkUp
+  xy: 228, 673
+  size: 114, 87
+WalkUp
+  xy: 342, 673
+  size: 114, 87
+WalkUp
+  xy: 456, 673
+  size: 114, 87
+WalkUp
+  xy: 570, 673
+  size: 114, 87
+WalkDown
+  xy: 0, 760
+  size: 114, 87
+WalkDown
+  xy: 114, 760
+  size: 114, 87
+WalkDown
+  xy: 228, 760
+  size: 114, 87
+WalkDown
+  xy: 342, 760
+  size: 114, 87
+WalkDown
+  xy: 456, 760
+  size: 114, 87
+WalkDown
+  xy: 570, 760
+  size: 114, 87

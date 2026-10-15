@@ -1,0 +1,153 @@
+nikya.png
+size: 784,838
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 98, 86
+  footprint: 22, 5, 55, 68
+Idle
+  xy: 98, 64
+  size: 98, 86
+Idle
+  xy: 196, 64
+  size: 98, 86
+Idle
+  xy: 294, 64
+  size: 98, 86
+Walk
+  xy: 0, 150
+  size: 98, 86
+Walk
+  xy: 98, 150
+  size: 98, 86
+Walk
+  xy: 196, 150
+  size: 98, 86
+Walk
+  xy: 294, 150
+  size: 98, 86
+Walk
+  xy: 392, 150
+  size: 98, 86
+Walk
+  xy: 490, 150
+  size: 98, 86
+Attack
+  xy: 0, 236
+  size: 98, 86
+Attack
+  xy: 98, 236
+  size: 98, 86
+Attack
+  xy: 196, 236
+  size: 98, 86
+Attack
+  xy: 294, 236
+  size: 98, 86
+Attack
+  xy: 392, 236
+  size: 98, 86
+Attack
+  xy: 490, 236
+  size: 98, 86
+Attack
+  xy: 588, 236
+  size: 98, 86
+Attack
+  xy: 686, 236
+  size: 98, 86
+Hit
+  xy: 0, 322
+  size: 98, 86
+Hit
+  xy: 98, 322
+  size: 98, 86
+Hit
+  xy: 196, 322
+  size: 98, 86
+Hit
+  xy: 294, 322
+  size: 98, 86
+Death
+  xy: 0, 408
+  size: 98, 86
+Death
+  xy: 98, 408
+  size: 98, 86
+Death
+  xy: 196, 408
+  size: 98, 86
+Death
+  xy: 294, 408
+  size: 98, 86
+Death
+  xy: 392, 408
+  size: 98, 86
+Death
+  xy: 490, 408
+  size: 98, 86
+IdleUp
+  xy: 0, 494
+  size: 98, 86
+IdleUp
+  xy: 98, 494
+  size: 98, 86
+IdleUp
+  xy: 196, 494
+  size: 98, 86
+IdleUp
+  xy: 294, 494
+  size: 98, 86
+IdleDown
+  xy: 0, 580
+  size: 98, 86
+IdleDown
+  xy: 98, 580
+  size: 98, 86
+IdleDown
+  xy: 196, 580
+  size: 98, 86
+IdleDown
+  xy: 294, 580
+  size: 98, 86
+WalkUp
+  xy: 0, 666
+  size: 98, 86
+WalkUp
+  xy: 98, 666
+  size: 98, 86
+WalkUp
+  xy: 196, 666
+  size: 98, 86
+WalkUp
+  xy: 294, 666
+  size: 98, 86
+WalkUp
+  xy: 392, 666
+  size: 98, 86
+WalkUp
+  xy: 490, 666
+  size: 98, 86
+WalkDown
+  xy: 0, 752
+  size: 98, 86
+WalkDown
+  xy: 98, 752
+  size: 98, 86
+WalkDown
+  xy: 196, 752
+  size: 98, 86
+WalkDown
+  xy: 294, 752
+  size: 98, 86
+WalkDown
+  xy: 392, 752
+  size: 98, 86
+WalkDown
+  xy: 490, 752
+  size: 98, 86

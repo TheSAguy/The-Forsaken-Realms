@@ -91,6 +91,11 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (round 623): **LOCAL + UNRELEASED (art + data)** - the six centaurs (Centaur, Centaur Warrior,
+Iroas, Yarus, Karador, Nikya) become LPC centaurs: an LPC upper body on BenCreating's LPC Horse Extended (generator
+`lpc_selections/make_623.py` + `centaur_to_forge.py`). enemies.json 6 paths + scales (0.22-0.25), CREDITS_LPC.md 857
+characters, CREDITS.md (829 LPC enemies; the [LPC] Horses bullet names the Horse Extended). #32 packages. Not seen in play.
+
 ## STATE 2026-10-15 (round 622): **LOCAL + UNRELEASED (data)** - Svyelunite quest 99 completes at the 18th win (its "Return to Town" stage dropped, upstream #12177; open quests in old saves keep two stages); the Bandit Slingshot keeps only the mono-red slinger deck (#11735) and its colors go BR -> R.
 
 ## STATE 2026-10-15 (round 621): **LOCAL + UNRELEASED (data)** - fixes taken from official Forge's adventure content after a review of the 10.14 release against the fork point (upstream `8c52e257e99`): eight RoL boss decks (Estrid/Ertai/Amareth Enchanted Evening -> Treachery - a Pegasus loop; Nymris, Urza, Grandmother Sengir, Vaevictis, Arcades), the Skep's blank reward page (skep_outer.tmx), RoL 1.076 Opal Cavern / Idyllic Beachfront / two Fblthp items. Arzakon's fix NOT taken (its [Commander] line - never played; the user: no Commander). Open for the user: Crypt of Broken Rules (Commander decks), Otherworldly Market; RoL 1.077 waits for a daily.

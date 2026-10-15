@@ -4887,7 +4887,7 @@
     },
     {
         "name": "Centaur",
-        "sprite": "sprites/enemy/fey/centaur.atlas",
+        "sprite": "sprites/enemy/remake/centaur.atlas",
         "deck": [
             "decks/standard/centaur.json"
         ],
@@ -4920,11 +4920,11 @@
             "BiomeGreen"
         ],
         "tier": "Rare",
-        "scale": 1.0833
+        "scale": 0.2407
     },
     {
         "name": "Centaur Warrior",
-        "sprite": "sprites/enemy/fey/centaur_2.atlas",
+        "sprite": "sprites/enemy/remake/centaur_warrior.atlas",
         "deck": [
             "decks/standard/centaur_warrior.dck"
         ],
@@ -4959,7 +4959,7 @@
             "Minion"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.2407
     },
     {
         "name": "Cephalid",
@@ -40914,13 +40914,13 @@
     },
     {
         "name": "Karador",
-        "sprite": "sprites/enemy/fey/centaur_2.atlas",
+        "sprite": "sprites/enemy/remake/karador.atlas",
         "deck": [
             "decks/legends/karador.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.0833,
+        "scale": 0.2281,
         "life": 40,
         "rewards": [
             {
@@ -44055,13 +44055,13 @@
     },
     {
         "name": "Iroas",
-        "sprite": "sprites/enemy/fey/centaur.atlas",
+        "sprite": "sprites/enemy/remake/iroas.atlas",
         "deck": [
             "decks/legends/iroas.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.0833,
+        "scale": 0.2241,
         "life": 40,
         "rewards": [
             {
@@ -74375,7 +74375,7 @@
     },
     {
         "name": "Nikya",
-        "sprite": "sprites/enemy/fey/centaur_2.atlas",
+        "sprite": "sprites/enemy/remake/nikya.atlas",
         "deck": [
             "decks/legends/nikya.dck"
         ],
@@ -74439,7 +74439,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.25
     },
     {
         "name": "Ruric Thar",
@@ -74512,7 +74512,7 @@
     },
     {
         "name": "Yarus",
-        "sprite": "sprites/enemy/fey/centaur.atlas",
+        "sprite": "sprites/enemy/remake/yarus.atlas",
         "deck": [
             "decks/legends/yarus.dck"
         ],
@@ -74576,7 +74576,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 1.0833
+        "scale": 0.2453
     },
     {
         "name": "Grimgrin",
