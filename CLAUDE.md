@@ -91,6 +91,8 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (round 639): **LOCAL + UNRELEASED (code)** - the Inn's one-time Coin refund now covers every player's first tournament, tutorial or not (EventScene.firstTournamentNetOpen: no finished tournament + innTournamentQuestGiven 0; a refund or any finished tournament sets the flag, which outlives NG+). The user's slot 2 save got its Silver Challenge Coin back (dev-tools/save-editing/AddItem.java, .preadd1.bak). Refund path not seen in play.
+
 ## STATE 2026-10-15 (round 637): **LOCAL + UNRELEASED (code)** - gear sets reveal themselves by wearing: the inventory's Sets key (and a guard's Armory Sets button) shows only while a set piece is worn; the page lists only worn sets and opens straight on the set when there is one; an item's "Gear set:" description line shows only when the player or one of their guards wears a piece of that set. Seen in the agent game.
 
 ## STATE 2026-10-15 (round 638): **LOCAL + UNRELEASED (art + data)** - the Artifact Warrior and Bosh become the

@@ -784,10 +784,24 @@ public class EventScene extends MenuScene implements IAfterMatch {
      * plainly that it fires once, and why [TFR-InnRefund] names every gate on each loss.
      * Do NOT "fix" this by dropping the gate without asking: Coin entry staying a real risk after
      * the tutorial is the point.
+     * <p>
+     * Round 639 (the user, who skipped the introduction, lost their first tournament and kept no Coin: "make the
+     * one-time refund apply to every player's first tournament, tutorial or not"): "Skip the introduction" never runs
+     * the tutorial that hands quest 74 out, so that player never had the net. It now also opens for a player who has
+     * never finished a tournament and never had quest 74 (firstTournamentNetOpen) - still once per player: the
+     * INN_TOURNAMENT_QUEST_FLAG it reads is set when the net is used and when any tournament finishes
+     * (PlayerStatistic.setResult), and it outlives a New Game+.
      */
     private boolean innTutorialQuestActive() {
         return AdventurePlayer.current().getQuests().stream().anyMatch(q ->
                 q.getID() == INN_TOURNAMENT_TUTORIAL_QUEST_ID && !q.completed && !q.failed);
+    }
+
+    /** Round 639: the first-tournament net for a player the tutorial never reached (see above). */
+    private boolean firstTournamentNetOpen() {
+        AdventurePlayer player = AdventurePlayer.current();
+        return player.getCharacterFlag(AdventurePlayer.INN_TOURNAMENT_QUEST_FLAG) == 0
+                && player.getStatistic().completedEventCount() == 0;
     }
 
     public void setWinner(boolean winner, boolean isArena) {
@@ -826,6 +840,8 @@ public class EventScene extends MenuScene implements IAfterMatch {
             boolean paidWithCoin = currentEvent.enteredWithCoinItem != null;
             boolean alreadyEarned = hasEarnedCoinFromEvent();
             boolean tutorialActive = innTutorialQuestActive();
+            boolean firstTournament = firstTournamentNetOpen(); // round 639
+            boolean refund = paidWithCoin && !alreadyEarned && (tutorialActive || firstTournament);
             System.out.println("[TFR-InnRefund] loss in round " + currentEvent.currentRound + "/"
                     + currentEvent.rounds + " wins=" + currentEvent.matchesWon
                     + " coinRewardAt=" + coinRewardWinThreshold()
@@ -833,8 +849,11 @@ public class EventScene extends MenuScene implements IAfterMatch {
                     + (paidWithCoin ? "(" + currentEvent.enteredWithCoinItem + ")" : "")
                     + " alreadyEarnedCoin=" + alreadyEarned
                     + " tutorialQuestActive=" + tutorialActive
-                    + " -> refund=" + (paidWithCoin && !alreadyEarned && tutorialActive));
-            if (paidWithCoin && !alreadyEarned && tutorialActive) {
+                    + " firstTournament=" + firstTournament
+                    + " -> refund=" + refund);
+            if (refund) {
+                // Round 639: the net is spent - this player's next tournament, in this run or a New Game+, risks the Coin.
+                AdventurePlayer.current().setCharacterFlag(AdventurePlayer.INN_TOURNAMENT_QUEST_FLAG, 1);
                 AdventurePlayer.current().addItem(currentEvent.enteredWithCoinItem);
                 // Deferred to the end of setWinner - see showPendingCoinRefundDialog().
                 pendingCoinRefundItem = currentEvent.enteredWithCoinItem;

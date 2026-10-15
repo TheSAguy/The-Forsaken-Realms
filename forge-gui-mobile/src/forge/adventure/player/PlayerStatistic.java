@@ -194,6 +194,10 @@ public class PlayerStatistic implements SaveFileContent {
 
     public void setResult(AdventureEventData completedEvent) {
         completedEvents.add(completedEvent);
+        // Round 639: a finished tournament spends the one-time first-tournament Coin net for good - the flag outlives
+        // a New Game+, where this list is cleared (EventScene.firstTournamentNetOpen).
+        if (forge.adventure.util.Current.player() != null)
+            forge.adventure.util.Current.player().setCharacterFlag(AdventurePlayer.INN_TOURNAMENT_QUEST_FLAG, 1);
         AdventureQuestController.instance().updateEventComplete(completedEvent);
     }
 }

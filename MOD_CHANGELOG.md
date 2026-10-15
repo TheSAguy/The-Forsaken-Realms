@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 639: every player's first tournament has the one-time Coin refund, tutorial or not (2026-10-15)
+
+The user lost round 1 of their first Inn tournament (Sealed, entered with a Silver Challenge Coin) and kept no Coin:
+"I did not get my coin back... Can you see why." The log: `[TFR-InnRefund] loss in round 1/3 ... paidWithCoin=true
+(Silver Challenge Coin) alreadyEarnedCoin=false tutorialQuestActive=false -> refund=false`. The refund was a one-time
+tutorial net gated on quest 74 ("Participate in an Inn Tournament"), which only the tutorial's "Win a duel" step hands
+out - and their save took "Skip the introduction - straight to building your Capitol" (issueQuest 43), so it never
+came. Their call: "make the one-time refund apply to every player's first tournament, tutorial or not, and put the
+Silver Challenge Coin back in my slot 2 save."
+
+- `EventScene.firstTournamentNetOpen()`: the net is also open for a player who has never finished a tournament and has
+  never had quest 74 (`innTournamentQuestGiven` flag 0, `completedEventCount() == 0`). The refund rule is now
+  paidWithCoin && no Coin earned in the event yet && (quest 74 active || first tournament); `[TFR-InnRefund]` names the
+  new `firstTournament` gate.
+- Still once per player: a refund sets `innTournamentQuestGiven`, and so does every finished tournament
+  (`PlayerStatistic.setResult`) - the flag outlives a New Game+, where the event list is cleared. (Round 259's load
+  seeding already sets it for a save with a finished tournament - seen on the user's save: "seeded
+  innTournamentQuestGiven from this save's 1 finished tournament(s)".)
+- The user's slot 2 save got its Silver Challenge Coin back (`dev-tools/save-editing/AddItem.java`, new: a catalog
+  clone with a fresh longID appended to the inventory; backup `2_save_slot.sav.preadd1.bak`); a copy loaded in the
+  agent game shows it in the bag.
+- Not seen in play: a refund through the new gate (the agent cannot force a loss).
+
 ## Round 637: gear sets show themselves only once you wear a piece (2026-10-15)
 
 The user: "For the Item sets, let's only have the key/icon show up when you wear one of the set pieces, and then, only

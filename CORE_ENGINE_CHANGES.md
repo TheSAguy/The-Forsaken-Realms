@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 639 - the first-tournament Coin refund without the tutorial
+
+- **`forge-gui-mobile/src/forge/adventure/scene/EventScene.java`** - `firstTournamentNetOpen()`; the loss branch of
+  `setWinner()` refunds when quest 74 is active OR it is the player's first tournament, and sets
+  `AdventurePlayer.INN_TOURNAMENT_QUEST_FLAG` on a refund.
+- **`.../player/PlayerStatistic.java`** - `setResult(AdventureEventData)` sets the same flag (a finished tournament
+  spends the net).
+
 ### Round 637 - gear sets shown only once a piece is worn
 
 - **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`** - `refreshSetsButton()` (enter and every

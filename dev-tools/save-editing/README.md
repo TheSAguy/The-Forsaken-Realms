@@ -26,6 +26,7 @@ A `.sav` is zlib-compressed **Java serialization** (`forge.adventure.util.SaveFi
 | `BuildDecks2.java` | Writes decklists into deck slots. Dry-run by default; `--write` to apply; takes its own `.bak`. |
 | `DumpSave.java` | Lower-level structural dump, for when you need to see keys rather than decks. |
 | `card_table.py` | **Read-only** (round 177): turns an `Inspect` dump into per-color reading lists for deck building - cost, type, P/T, best rarity, oracle - joined from `forge-gui/res/cardsfolder` + `editions`. `python card_table.py inspect_slot1.txt [out dir]` (the dump is in the Windows code page; the tool reads it as cp1252). |
+| `AddItem.java` | (round 639) Adds one item from a plane's `items.json` to a save's inventory, built as `ItemListData.getItem()` builds it (a clone with a fresh longID): `java AddItem <save> <items.json> "<Item Name>" [--write]`. Dry run by default, `.preadd<N>.bak`, re-reads and counts after writing. Game closed. |
 | `WriteDecks.java` | **Generic** deck writer (2026-09-04): `java WriteDecks <save> [--show] [--write] slot=<n>:<Deck Name>:<listfile> ...` - list files are `<count> <Card Name>` lines (`mono_white.txt` etc. here are the round-111 examples); resolves owned printings, adds free unsellable TRK basics to the collection for any shortfall exactly like the editor's Add Basic Lands, dry run by default, `.prededit3.bak`, re-reads and prints every slot after writing. |
 
 ## Running them
