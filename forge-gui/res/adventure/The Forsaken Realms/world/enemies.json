@@ -9327,7 +9327,7 @@
     },
     {
         "name": "Dross Grimnarch",
-        "sprite": "sprites/enemy/aberration/phyrexian/drossgrimnarch.atlas",
+        "sprite": "sprites/enemy/remake/dross_grimnarch.atlas",
         "deck": [
             "decks/standard/drossgrimnarch.dck"
         ],
@@ -9406,7 +9406,8 @@
             "IdentityBlue",
             "IdentityDimir"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.1512
     },
     {
         "name": "Dwarf",
@@ -44917,13 +44918,13 @@
     },
     {
         "name": "Sheoldred",
-        "sprite": "sprites/enemy/aberration/phyrexian/drossgrimnarch.atlas",
+        "sprite": "sprites/enemy/remake/sheoldred.atlas",
         "deck": [
             "decks/legends/sheoldred.dck"
         ],
         "ai": "",
         "speed": 46,
-        "scale": 1.0,
+        "scale": 0.1512,
         "life": 47,
         "rewards": [
             {
@@ -64185,13 +64186,13 @@
     },
     {
         "name": "Tsabo Tavoc",
-        "sprite": "sprites/enemy/aberration/phyrexian/drossgrimnarch.atlas",
+        "sprite": "sprites/enemy/remake/tsabo_tavoc.atlas",
         "deck": [
             "decks/legends/tsabo_tavoc.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.1512,
         "life": 30,
         "rewards": [
             {
@@ -65677,13 +65678,13 @@
     },
     {
         "name": "Drivnod",
-        "sprite": "sprites/enemy/aberration/phyrexian/drossgrimnarch.atlas",
+        "sprite": "sprites/enemy/remake/drivnod.atlas",
         "deck": [
             "decks/legends/drivnod.dck"
         ],
         "ai": "",
         "speed": 37,
-        "scale": 1,
+        "scale": 0.1512,
         "life": 28,
         "rewards": [
             {
@@ -68540,13 +68541,13 @@
     },
     {
         "name": "Solphim",
-        "sprite": "sprites/enemy/aberration/phyrexian/drossgrimnarch.atlas",
+        "sprite": "sprites/enemy/remake/solphim.atlas",
         "deck": [
             "decks/legends/solphim.dck"
         ],
         "ai": "",
         "speed": 30,
-        "scale": 1,
+        "scale": 0.1512,
         "life": 20,
         "rewards": [
             {

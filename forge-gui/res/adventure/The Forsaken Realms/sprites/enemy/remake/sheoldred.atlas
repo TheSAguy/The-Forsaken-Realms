@@ -1,0 +1,156 @@
+sheoldred.png
+size: 1742,749
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 134, 137
+  footprint: 18, 14, 101, 118
+Idle
+  xy: 134, 64
+  size: 134, 137
+Idle
+  xy: 268, 64
+  size: 134, 137
+Idle
+  xy: 402, 64
+  size: 134, 137
+Idle
+  xy: 536, 64
+  size: 134, 137
+Idle
+  xy: 670, 64
+  size: 134, 137
+Idle
+  xy: 804, 64
+  size: 134, 137
+Idle
+  xy: 938, 64
+  size: 134, 137
+Idle
+  xy: 1072, 64
+  size: 134, 137
+Idle
+  xy: 1206, 64
+  size: 134, 137
+Idle
+  xy: 1340, 64
+  size: 134, 137
+Idle
+  xy: 1474, 64
+  size: 134, 137
+Walk
+  xy: 0, 201
+  size: 134, 137
+Walk
+  xy: 134, 201
+  size: 134, 137
+Walk
+  xy: 268, 201
+  size: 134, 137
+Walk
+  xy: 402, 201
+  size: 134, 137
+Walk
+  xy: 536, 201
+  size: 134, 137
+Walk
+  xy: 670, 201
+  size: 134, 137
+Walk
+  xy: 804, 201
+  size: 134, 137
+Walk
+  xy: 938, 201
+  size: 134, 137
+Attack
+  xy: 0, 338
+  size: 134, 137
+Attack
+  xy: 134, 338
+  size: 134, 137
+Attack
+  xy: 268, 338
+  size: 134, 137
+Attack
+  xy: 402, 338
+  size: 134, 137
+Attack
+  xy: 536, 338
+  size: 134, 137
+Attack
+  xy: 670, 338
+  size: 134, 137
+Attack
+  xy: 804, 338
+  size: 134, 137
+Attack
+  xy: 938, 338
+  size: 134, 137
+Attack
+  xy: 1072, 338
+  size: 134, 137
+Attack
+  xy: 1206, 338
+  size: 134, 137
+Attack
+  xy: 1340, 338
+  size: 134, 137
+Attack
+  xy: 1474, 338
+  size: 134, 137
+Hit
+  xy: 0, 475
+  size: 134, 137
+Hit
+  xy: 134, 475
+  size: 134, 137
+Hit
+  xy: 268, 475
+  size: 134, 137
+Hit
+  xy: 402, 475
+  size: 134, 137
+Death
+  xy: 0, 612
+  size: 134, 137
+Death
+  xy: 134, 612
+  size: 134, 137
+Death
+  xy: 268, 612
+  size: 134, 137
+Death
+  xy: 402, 612
+  size: 134, 137
+Death
+  xy: 536, 612
+  size: 134, 137
+Death
+  xy: 670, 612
+  size: 134, 137
+Death
+  xy: 804, 612
+  size: 134, 137
+Death
+  xy: 938, 612
+  size: 134, 137
+Death
+  xy: 1072, 612
+  size: 134, 137
+Death
+  xy: 1206, 612
+  size: 134, 137
+Death
+  xy: 1340, 612
+  size: 134, 137
+Death
+  xy: 1474, 612
+  size: 134, 137
+Death
+  xy: 1608, 612
+  size: 134, 137

@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 632: the five Phyrexian praetors get the user's hand-made praetor (2026-10-15)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/praetor/convert.sh`. These are A4-8 of the
+low-quality list: the five enemies on the stock 16 px `aberration/phyrexian/drossgrimnarch` sprite.
+
+- **The art**:
+  - The user made one still in ChatGPT from two Phyrexian card arts: crimson flesh over a black bone-and-metal frame, a
+    flared hammer-crest head, a column of fanged mouths down the chest, and four long clawed arms. It faces the viewer,
+    like the stock sprite.
+  - Then four Kling clips (idle, walk, attack, death) and Pixelate sheets, converted by `pixelate_to_forge.py`.
+  - The attack's arm blur had taken on the green key, so the conversion despills every green-leaning pixel (the
+    praetor has no green).
+- **One design, five praetors**: only the crimson flesh is tinted (OKLCH hue 23 +-40); the black metal, the teeth and
+  the pale eyes stay.
+  - **Tsabo Tavoc** (BR): crimson, as made.
+  - **Solphim** (R): molten orange.
+  - **Dross Grimnarch** (BU): blue-violet.
+  - **Sheoldred** (B): a dark plum.
+  - **Drivnod** (B): pale flesh.
+- **Files**:
+  - 5 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 5 sprite paths and scales (0.15).
+  - A footprint on all 5.
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 5, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit's 13 "review" flags on the walks are the house shadow ellipse, one empty row under a lifted claw;
+    none are stray art.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+- **Source files**: the still, the padded still, the clips and the sheets moved to the Art Library repository,
+  `Units/Custom/Phyrexian Praetor`.
+
 ## Round 628: the four naga - LPC upper bodies on serpent tails (2026-10-15)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_628.py` with its new
