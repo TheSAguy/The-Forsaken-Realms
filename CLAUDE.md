@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-15 (round 615): **LOCAL + UNRELEASED (code)** - duel Undo defaults to Single step (ForgePreferences core
+one-liner; Config.applyUndoDefault moves each profile once - SettingData.undoDefaultApplied); "Undo in Duels" in the
+Adventure Settings.
+
 ## STATE 2026-10-15 (round 614): **LOCAL + UNRELEASED (art + data)** - the five Dwende wear the user's Pixelate
 mushroom-capped dwende, four of them as hat-only hue tints (new tint.py hue window). 5 atlases, enemies.json sprite +
 scale (0.19). #31 packages. Not seen in play.

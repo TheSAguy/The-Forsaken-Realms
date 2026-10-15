@@ -435,6 +435,22 @@ public class SettingsScene extends UIScene {
         });
         addLabel(localizer.getMessageorUseDefault("lblCardPlayOption", "Card Play Animation Style"));
         settingGroup.add(cardPlayAnim).align(Align.right).pad(2);
+        // Round 615 (the user: "Default Undo to Single step in TFR ... keep the Settings choice"): upstream's duel Undo
+        // (the 10.14 merge) has its setting only in Classic's settings - here too. Single step is TFR's default.
+        String[] undoModes = {ForgeConstants.UNDO_MODE_OFF, ForgeConstants.UNDO_MODE_SINGLE, ForgeConstants.UNDO_MODE_FREE};
+        String currentUndo = FModel.getPreferences().getPref(ForgePreferences.FPref.UI_UNDO_MODE);
+        SelectBox<String> undoMode = Controls.newComboBox(undoModes,
+                java.util.Arrays.asList(undoModes).contains(currentUndo) ? currentUndo : ForgeConstants.UNDO_MODE_SINGLE, o -> {
+            String mode = o == null ? ForgeConstants.UNDO_MODE_SINGLE : (String) o;
+            if (!mode.equals(FModel.getPreferences().getPref(ForgePreferences.FPref.UI_UNDO_MODE))) {
+                FModel.getPreferences().setPref(ForgePreferences.FPref.UI_UNDO_MODE, mode);
+                FModel.getPreferences().save();
+                System.out.println("[TFR-Undo] Settings: duel Undo " + mode);
+            }
+            return null;
+        });
+        addLabel(localizer.getMessageorUseDefault("lblUndoMode", "Undo in Duels"));
+        settingGroup.add(undoMode).align(Align.right).pad(2);
         // Round 464 (the user: "Add both an on/off setting and have it start without a tap"): Forge's own Coin Flip
         // Animation switch - the opening toss and every card's coin flip - here too, not only in Classic's settings.
         // Round 472 (the 10.07 merge): upstream renamed it UI_COIN_DICE_ANIMATION and it now also covers the new dice

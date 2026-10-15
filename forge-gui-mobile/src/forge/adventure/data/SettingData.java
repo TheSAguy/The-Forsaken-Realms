@@ -58,4 +58,8 @@ public class SettingData {
     // settings to turn it all off"): true switches Ascendance off entirely - no Power, no main-slot limit, no HUD panel.
     // Stored as "disabled" so a settings file from before it reads as on (the default).
     public boolean ascendanceDisabled;
+    // Round 615 (the user: "Default Undo to Single step in TFR ... keep the Settings choice"): set once the profile's
+    // Undo mode was moved to Single step - every save of Forge's preferences since the 10.14 merge wrote upstream's
+    // "Free" into the file. After that the player's own choice in Settings stands.
+    public boolean undoDefaultApplied;
 }

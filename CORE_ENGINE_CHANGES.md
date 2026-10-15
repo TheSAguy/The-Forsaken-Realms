@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 615 - duel Undo defaults to Single step
+
+- **`forge-gui/src/main/java/forge/localinstance/properties/ForgePreferences.java`** - `UI_UNDO_MODE` defaults to
+  `ForgeConstants.UNDO_MODE_SINGLE` (upstream: `UNDO_MODE_FREE`, the 10.14 merge). One line; on a merge keep ours.
+  The rest is in our own files: SettingData.undoDefaultApplied, Config.applyUndoDefault (once per profile - every
+  preferences save since the merge had written "Free"), and an "Undo in Duels" choice in the Adventure SettingsScene.
+
 ### Round 612 - the engine to the 10.14 daily (upstream `34a8662b796`)
 
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the merge's one conflict. Upstream's

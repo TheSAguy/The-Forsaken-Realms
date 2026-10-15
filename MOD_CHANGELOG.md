@@ -14264,6 +14264,20 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 615: duel Undo defaults to Single step; the Adventure's Settings get the choice (2026-10-15)
+
+The 10.14 merge (round 612) brought upstream's duel Undo, "Free" (several steps back) by default. The user: "Default
+Undo to Single step in TFR (players can take back their last action only); keep the Settings choice."
+
+- **Default** (`ForgePreferences.UI_UNDO_MODE`, core one-liner in CORE_ENGINE_CHANGES "Round 615"): Single step.
+- **Existing profiles**: Forge writes every preference, defaults included, so each save since the merge stored "Free".
+  `Config.applyUndoDefault` moves the profile to Single step ONCE (`SettingData.undoDefaultApplied`, in the Adventure's
+  settings.json); from then on the player's choice stands.
+- **Settings** (Adventure SettingsScene, under Card Play Animation Style): "Undo in Duels" - Off / Single step / Free.
+  Upstream put the choice only in Classic's settings.
+- **Seen in the agent game**: the profile's `UI_UNDO_MODE=Free` became `Single step` on the first launch and
+  `undoDefaultApplied` was saved; the Settings row is below the fold, which the agent cannot scroll - not seen.
+
 ## Round 614: the five Dwende get the user's hand-made mushroom-capped dwende (2026-10-15)
 
 The Procedural Pixel Creatures session. The Dwende (duwende: the tiny house and anthill spirits of Philippine folklore)

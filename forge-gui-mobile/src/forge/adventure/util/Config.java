@@ -88,6 +88,7 @@ public class Config {
         } catch (Exception e) {
             settingsData = new SettingData();
         }
+        applyUndoDefault(); // round 615
         if (settingsData.plane == null || settingsData.plane.isEmpty()) {
             if (adventures != null && adventures.length >= 1) {
                 // TFR (2026-08-27, Android round): this game's own plane is the default. The
@@ -918,6 +919,25 @@ public class Config {
         }
 
         return adventures;
+    }
+
+    /** Round 615: once per profile, duel Undo to Single step (the user: "Default Undo to Single step in TFR (players
+     *  can take back their last action only); keep the Settings choice"). */
+    private void applyUndoDefault() {
+        if (settingsData.undoDefaultApplied)
+            return;
+        try {
+            ForgePreferences prefs = FModel.getPreferences();
+            String before = prefs.getPref(ForgePreferences.FPref.UI_UNDO_MODE);
+            prefs.setPref(ForgePreferences.FPref.UI_UNDO_MODE, ForgeConstants.UNDO_MODE_SINGLE);
+            prefs.save();
+            settingsData.undoDefaultApplied = true;
+            saveSettings();
+            System.out.println("[TFR-Undo] duel Undo set to " + ForgeConstants.UNDO_MODE_SINGLE + " once (was " + before
+                    + ") - the player's Settings choice stands from here on");
+        } catch (RuntimeException e) {
+            System.out.println("[TFR-Undo] Undo default not applied yet (preferences not ready): " + e);
+        }
     }
 
     public void saveSettings() {
