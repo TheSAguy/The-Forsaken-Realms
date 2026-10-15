@@ -912,10 +912,10 @@
         "rarity":  "Mythic"
     },
     {
-        "name":  "Cutthroat Skirt",
+        "name":  "Cutthroat Boots",
         "description":  "3/2 vampire, level up for deathtouch",
         "equipmentSlot":  "Boots",
-        "iconName":  "CutthroatSkirt",
+        "iconName":  "CutthroatBoots",
         "cost":  5000,
         "effect":  {
                        "lifeModifier":  -4,
@@ -981,7 +981,7 @@
         "name":  "Courier\u0027s Boots",
         "description":  "1/1 goblin, sac to give haste",
         "equipmentSlot":  "Boots",
-        "iconName":  "Courier\u0027sBoots",
+        "iconName":  "Courier\u0027sBootsBoot605",
         "effect":  {
                        "opponent":  {
                                         "lifeModifier":  -3
@@ -1008,10 +1008,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Symbiote Bondband",
+        "name":  "Symbiote Striders",
         "description":  "2/2 that gives a +1/+1 counter to any creature that mutates and also 2 life",
         "equipmentSlot":  "Boots",
-        "iconName":  "SymbioteBondband",
+        "iconName":  "SymbioteStriders",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Essence Symbiote|IKO"
@@ -1020,10 +1020,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Imposter\u0027s Sliverband",
+        "name":  "Imposter\u0027s Slivertreads",
         "description":  "A 3/3 artifact sliver with no abilities",
         "equipmentSlot":  "Boots",
-        "iconName":  "MistformSliverband",
+        "iconName":  "Imposter\u0027sSlivertreads",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Venser\u0027s Sliver|TSP"
@@ -1072,10 +1072,10 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Sky Skiff Turnkey",
+        "name":  "Sky Skiff Boots",
         "description":  "2/3 flying vehicle with crew 1",
         "equipmentSlot":  "Boots",
-        "iconName":  "SkySkiffTurnkey",
+        "iconName":  "SkySkiffBoots",
         "effect":  {
                        "lifeModifier":  3,
                        "startBattleWithCard":  [
@@ -1127,10 +1127,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Enduring Sliverband",
+        "name":  "Enduring Slivertreads",
         "description":  "2/2 sliver; slivers gain 2, T: Get a +1/+1 counter at sorcery speed",
         "equipmentSlot":  "Boots",
-        "iconName":  "EnduringSliverband",
+        "iconName":  "EnduringSlivertreads",
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -1140,10 +1140,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Jade Anklet",
+        "name":  "Jade Slippers",
         "description":  "Artifact that becomes a 4/4 until EOT when you cast a spirit or arcane",
         "equipmentSlot":  "Boots",
-        "iconName":  "JadeAnklet",
+        "iconName":  "JadeSlippers",
         "effect":  {
                        "lifeModifier":  4,
                        "startBattleWithCard":  [
@@ -1153,10 +1153,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Coiled Anklet",
+        "name":  "Coiled Sandals",
         "description":  "3/3 Serpent token",
         "equipmentSlot":  "Boots",
-        "iconName":  "CoiledAnklet",
+        "iconName":  "CoiledSandals",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "komas_coil"
@@ -1165,10 +1165,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Witch-Maw Anklet",
+        "name":  "Witch-Maw Slippers",
         "description":  "1/1 that gets two +1/+1 counters for each of your spells. Trample at 10+ power",
         "equipmentSlot":  "Boots",
-        "iconName":  "Witch-MawAnklet",
+        "iconName":  "WitchMawSlippers",
         "effect":  {
                        "changeStartCards":  -1,
                        "lifeModifier":  -8,
@@ -1230,10 +1230,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Mamba Bondband",
+        "name":  "Mamba Striders",
         "description":  "1/1 that gives -2/-2 on mutate",
         "equipmentSlot":  "Boots",
-        "iconName":  "MambaBondband",
+        "iconName":  "MambaStriders",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Zagoth Mamba|IKO"
@@ -1257,7 +1257,7 @@
         "name":  "Sheldon\u0027s Shoes",
         "description":  "2/2 that dark confidants each player during your upkeep",
         "equipmentSlot":  "Boots",
-        "iconName":  "Sheldon\u0027sShoes",
+        "iconName":  "Sheldon\u0027sShoesBoot605",
         "effect":  {
                        "changeStartCards":  -1,
                        "startBattleWithCard":  [
@@ -1280,10 +1280,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Gixian Graft",
+        "name":  "Gixian Graftboots",
         "description":  "3/1 phyrexian, when it dies, copy it into grave, unearth 1B",
         "equipmentSlot":  "Boots",
-        "iconName":  "GixianGraft",
+        "iconName":  "GixianGraftboots",
         "effect":  {
                        "lifeModifier":  -3,
                        "startBattleWithCard":  [
@@ -1293,10 +1293,10 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Artificial Sliverband",
+        "name":  "Artificial Slivertreads",
         "description":  "1/1 artifact, 1, T, discard to make a 1/1 metallic sliver",
         "equipmentSlot":  "Boots",
-        "iconName":  "ArtificialSliverband",
+        "iconName":  "ArtificialSlivertreads",
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -1348,7 +1348,7 @@
         "name":  "Hellkite Greaves",
         "description":  "1/1 Goblin Shaman, pay 2R and triple sac for Hellkite Overlord",
         "equipmentSlot":  "Boots",
-        "iconName":  "HellkiteGreaves",
+        "iconName":  "HellkiteGreavesBoot605",
         "effect":  {
                        "lifeModifier":  3,
                        "startBattleWithCard":  [
@@ -1358,10 +1358,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Yore-Tiller Anklet",
+        "name":  "Yore-Tiller Clogs",
         "description":  "2/2 that reanimates tapped and attacking on attack",
         "equipmentSlot":  "Boots",
-        "iconName":  "Yore-TillerAnklet",
+        "iconName":  "YoreTillerClogs",
         "effect":  {
                        "changeStartCards":  -1,
                        "lifeModifier":  -8,
@@ -1372,10 +1372,10 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Silvergill Tailband",
+        "name":  "Silvergill Flippers",
         "description":  "1/1 merfolk that taps to give -X/-0 where X is merfolk and faerie count",
         "equipmentSlot":  "Boots",
-        "iconName":  "SilvergillTailband",
+        "iconName":  "SilvergillFlippers",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Silvergill Douser|LRW"
@@ -1420,10 +1420,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Deathspitter Skirt",
+        "name":  "Deathspitter Boots",
         "description":  "3/2 dinosaur, enrage 2 to opp",
         "equipmentSlot":  "Boots",
-        "iconName":  "DeathspitterSkirt",
+        "iconName":  "DeathspitterBoots",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Frilled Deathspitter|RIX"
@@ -1432,10 +1432,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Lookout\u0027s Harness",
+        "name":  "Lookout\u0027s Climbing Boots",
         "description":  "1/1 ally that can pay 4W to give your board +1/+1",
         "equipmentSlot":  "Boots",
-        "iconName":  "Lookout\u0027sHarness",
+        "iconName":  "Lookout\u0027sClimbingBoots",
         "effect":  {
                        "lifeModifier":  5,
                        "startBattleWithCard":  [
@@ -1445,10 +1445,10 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Bearhide Breeches",
+        "name":  "Bearhide Boots",
         "description":  "2/2 bear, 3GG and exile from grave to make two 2/2s",
         "equipmentSlot":  "Boots",
-        "iconName":  "BearhideBreeches",
+        "iconName":  "BearhideBoots",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Mother Bear"
@@ -1460,7 +1460,7 @@
         "name":  "Vindicator Greaves",
         "description":  "2/4 knight, 2W twice for 3/6 +1/+1 all, 3 more levels for 4/8 +2/+2 all",
         "equipmentSlot":  "Boots",
-        "iconName":  "VindicatorGreaves",
+        "iconName":  "VindicatorGreavesBoot605",
         "cost":  5000,
         "effect":  {
                        "lifeModifier":  -3,
@@ -1483,10 +1483,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Glimmerbell Bondband",
+        "name":  "Glimmerbell Striders",
         "description":  "1/3 flyer that can pay 1U to untap itself",
         "equipmentSlot":  "Boots",
-        "iconName":  "GlimmerbellBondband",
+        "iconName":  "GlimmerbellStriders",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Glimmerbell|IKO"
@@ -1535,10 +1535,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Bloodsworn Bite",
+        "name":  "Bloodsworn Boots",
         "description":  "2/1 vampire with flying, can\u0027t block, pay R to give a vampire haste",
         "equipmentSlot":  "Boots",
-        "iconName":  "BloodswornBite",
+        "iconName":  "BloodswornBoots",
         "effect":  {
                        "lifeModifier":  3,
                        "startBattleWithCard":  [
@@ -1548,10 +1548,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Victual Sliverband",
+        "name":  "Victual Slivertreads",
         "description":  "2/2 sliver; slivers gain 2 and sac: gain 4",
         "equipmentSlot":  "Boots",
-        "iconName":  "VictualSliverband",
+        "iconName":  "VictualSlivertreads",
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -1574,10 +1574,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Dune-Brood Anklet",
+        "name":  "Dune-Brood Sandals",
         "description":  "3/3 that gives a 1/1 for each land on attack",
         "equipmentSlot":  "Boots",
-        "iconName":  "Dune-BroodAnklet",
+        "iconName":  "DuneBroodSandals",
         "effect":  {
                        "lifeModifier":  -8,
                        "startBattleWithCard":  [
@@ -1637,10 +1637,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Packsong Pants",
+        "name":  "Packsong Boots",
         "description":  "1/1 wolf, +1/+1 counter/turn if you have another wolf/werewolf, gain life when it dies",
         "equipmentSlot":  "Boots",
-        "iconName":  "PacksongPants",
+        "iconName":  "PacksongBoots",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Packsong Pup|VOW"
@@ -1649,10 +1649,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Acidic Sliverband",
+        "name":  "Acidic Slivertreads",
         "description":  "2/2 sliver; slivers gain 2 and sac: shock for 2",
         "equipmentSlot":  "Boots",
-        "iconName":  "AcidicSliverband",
+        "iconName":  "AcidicSlivertreads",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Acidic Sliver|STH"
@@ -1661,10 +1661,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Anklet of the End",
+        "name":  "Boots of the End",
         "description":  "2/2 that gives other colorless +1/+1. Colorless spells w/ 7+ MV are 1 cheaper",
         "equipmentSlot":  "Boots",
-        "iconName":  "AnkletoftheEnd",
+        "iconName":  "BootsoftheEnd",
         "effect":  {
                        "lifeModifier":  -4,
                        "startBattleWithCard":  [
@@ -1687,10 +1687,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Spectral Sliverband",
+        "name":  "Spectral Slivertreads",
         "description":  "2/2 sliver; slivers gain 2: +1/+1 until EOT",
         "equipmentSlot":  "Boots",
-        "iconName":  "SpectralSliverband",
+        "iconName":  "SpectralSlivertreads",
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -1700,10 +1700,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Sabertooth Bondband",
+        "name":  "Sabertooth Striders",
         "description":  "3/1 cat",
         "equipmentSlot":  "Boots",
-        "iconName":  "SabertoothBondband",
+        "iconName":  "SabertoothStriders",
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -1743,7 +1743,7 @@
         "name":  "Godsire Greaves",
         "description":  "1/1 Elf Shaman, pay 2G and triple sac for Godsire",
         "equipmentSlot":  "Boots",
-        "iconName":  "GodsireGreaves",
+        "iconName":  "GodsireGreavesBoot605",
         "effect":  {
                        "lifeModifier":  3,
                        "startBattleWithCard":  [
@@ -1753,10 +1753,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Draped Dragonhide",
+        "name":  "Dragonhide Boots",
         "description":  "2/3 dragon with flying and limited to 4 or die firebreathing",
         "equipmentSlot":  "Boots",
-        "iconName":  "DrapedDragonhide",
+        "iconName":  "DragonhideBoots",
         "effect":  {
                        "lifeModifier":  -2,
                        "startBattleWithCard":  [
@@ -1766,10 +1766,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Cryptologist\u0027s Fins",
+        "name":  "Cryptologist\u0027s Flippers",
         "description":  "0/1 merfolk wizard. 1U: looter; twice more: T: draw.",
         "equipmentSlot":  "Boots",
-        "iconName":  "Cryptologist\u0027sFins",
+        "iconName":  "Cryptologist\u0027sFlippers",
         "cost":  5000,
         "effect":  {
                        "startBattleWithCard":  [
@@ -1779,10 +1779,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Blistering Breeches",
+        "name":  "Blistering Boots",
         "description":  "5/2 wall.",
         "equipmentSlot":  "Boots",
-        "iconName":  "BlisteringBreeches",
+        "iconName":  "BlisteringBoots",
         "cost":  5000,
         "effect":  {
                        "startBattleWithCard":  [
@@ -1795,7 +1795,7 @@
         "name":  "Greaves of Glare",
         "description":  "0/5 wall, can block any # of creatures.",
         "equipmentSlot":  "Boots",
-        "iconName":  "GreavesofGlare",
+        "iconName":  "GreavesofGlareBoot605",
         "cost":  5000,
         "effect":  {
                        "startBattleWithCard":  [
@@ -1818,10 +1818,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Spore Skirt",
+        "name":  "Sporecap Boots",
         "description":  "0/1 flying wall, taps down for 4 turns on block.",
         "equipmentSlot":  "Boots",
-        "iconName":  "WhipWrap",
+        "iconName":  "SporecapBoots",
         "cost":  3000,
         "effect":  {
                        "startBattleWithCard":  [
@@ -1844,10 +1844,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Barrier Breeches",
+        "name":  "Barrier Boots",
         "description":  "0/6 flying wall.",
         "equipmentSlot":  "Boots",
-        "iconName":  "BarrierBreeches",
+        "iconName":  "BarrierBoots",
         "cost":  6000,
         "effect":  {
                        "startBattleWithCard":  [
@@ -1857,10 +1857,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Glint-Eye Anklet",
+        "name":  "Glint-Eye Slippers",
         "description":  "2/2 that draws equal to damage on hit. 1 and discard for +1/+1 until EOT.",
         "equipmentSlot":  "Boots",
-        "iconName":  "Glint-EyeAnklet",
+        "iconName":  "GlintEyeSlippers",
         "effect":  {
                        "changeStartCards":  -2,
                        "startBattleWithCard":  [
@@ -1870,10 +1870,10 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Ink-Treader Anklet",
+        "name":  "Ink-Treaders",
         "description":  "3/3 that radiates all single target instants and sorceries",
         "equipmentSlot":  "Boots",
-        "iconName":  "Ink-TreaderAnklet",
+        "iconName":  "InkTreaders",
         "effect":  {
                        "lifeModifier":  -4,
                        "startBattleWithCard":  [
@@ -1896,10 +1896,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Raptor Bondband",
+        "name":  "Raptor Striders",
         "description":  "4/2 dinosaur",
         "equipmentSlot":  "Boots",
-        "iconName":  "RaptorBondband",
+        "iconName":  "RaptorStriders",
         "effect":  {
                        "lifeModifier":  -2,
                        "startBattleWithCard":  [
@@ -1909,10 +1909,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Plated Sliverband",
+        "name":  "Plated Slivertreads",
         "description":  "1/1 sliver; all slivers get +0/+1",
         "equipmentSlot":  "Boots",
-        "iconName":  "PlatedSliverband",
+        "iconName":  "PlatedSlivertreads",
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -2719,10 +2719,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Pack Leader Pants",
+        "name":  "Pack Leader Boots",
         "description":  "2/2 dog, Other dogs get +1/+1 and attack safely",
         "equipmentSlot":  "Boots",
-        "iconName":  "PackLeaderPants",
+        "iconName":  "PackLeaderBoots",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Pack Leader"
@@ -2756,10 +2756,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Girlfriend\u0027s Skirt",
+        "name":  "Girlfriend\u0027s Heels",
         "description":  "2/2 lesbians w/ first strike. When opp. has more cards, prepare a date.",
         "equipmentSlot":  "Boots",
-        "iconName":  "Girlfriend\u0027sSkirt",
+        "iconName":  "Girlfriend\u0027sHeels",
         "effect":  {
                        "lifeModifier":  -2,
                        "startBattleWithCard":  [
@@ -2769,10 +2769,10 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Leech Breeches",
+        "name":  "Leech Waders",
         "description":  "2/2. When you gain life 1st time, prepare: B: Opp loses 2 life.",
         "equipmentSlot":  "Boots",
-        "iconName":  "LeechBreeches",
+        "iconName":  "LeechWaders",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Leech Collector"
@@ -2806,10 +2806,10 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Alesha\u0027s War Skirt",
+        "name":  "Alesha\u0027s War Boots",
         "description":  "3/2 transfem legend w/ first strike. On atk, pay B/W B/W to revive 2\u003c power attacking.",
         "equipmentSlot":  "Boots",
-        "iconName":  "Alesha\u0027sWarSkirt",
+        "iconName":  "Alesha\u0027sWarBoots",
         "effect":  {
                        "lifeModifier":  -3,
                        "changeStartCards":  -1,
@@ -2820,10 +2820,10 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Acolyte\u0027s Anklet",
+        "name":  "Acolyte\u0027s Sandals",
         "description":  "2/2 trans guy, pay 2 and discard to specialize into a variety of forms.",
         "equipmentSlot":  "Boots",
-        "iconName":  "Acolyte\u0027sAnklet",
+        "iconName":  "Acolyte\u0027sSandals",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Klement, Novice Acolyte"
@@ -4672,10 +4672,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Generous Pants",
+        "name":  "Generous Boots",
         "description":  "Gift your foe a 5/5 reach trampler. Get better win rewards.",
         "equipmentSlot":  "Boots",
-        "iconName":  "GenerousPants",
+        "iconName":  "GenerousBoots",
         "cost":  1000,
         "effect":  {
                        "cardRewardBonus":  1,
@@ -4881,10 +4881,10 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Faerie Anklet",
+        "name":  "Faerie Slippers",
         "description":  "1/3 flier. Pay 1GG for a random effect.",
         "equipmentSlot":  "Boots",
-        "iconName":  "FaerieAnklet",
+        "iconName":  "FaerieSlippers",
         "effect":  {
                        "lifeModifier":  3,
                        "startBattleWithCard":  [
@@ -4894,10 +4894,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Fleshwright Chaps",
+        "name":  "Fleshwright Boots",
         "description":  "3/1 flying zombie, 1U and discard 2 to reanimate tapper",
         "equipmentSlot":  "Boots",
-        "iconName":  "FleshwrightChaps",
+        "iconName":  "FleshwrightBoots",
         "effect":  {
                        "lifeModifier":  -4,
                        "startBattleWithCard":  [
@@ -6747,7 +6747,7 @@
                                                ]
                    },
         "description":  "Brings life to both friend and foe",
-        "iconName":  "LightBoots",
+        "iconName":  "LightbringersBoots",
         "rarity":  "Common"
     },
     {
@@ -7063,7 +7063,7 @@
     {
         "name":  "Slobad\u0027s Iron Boots",
         "equipmentSlot":  "Boots",
-        "iconName":  "MetallicBoots",
+        "iconName":  "Slobad\u0027sIronBoots",
         "cost":  10000,
         "effect":  {
                        "lifeModifier":  1,
@@ -7597,10 +7597,10 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Immortal Anklet",
+        "name":  "Immortal Treads",
         "description":  "Pay 3 and tap to counter a spell targeting a permanent you control.",
         "equipmentSlot":  "Boots",
-        "iconName":  "ImmortalAnklet",
+        "iconName":  "ImmortalTreads",
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Ring of Immortals|LEG"
@@ -7766,10 +7766,10 @@
         "rarity":  "Uncommon"
     },
     {
-        "name":  "Evershrike Anklet",
+        "name":  "Evershrike Slippers",
         "description":  "2/2 flyer, +2/+2 for each aura on it, can revive with an aura from hand.",
         "equipmentSlot":  "Boots",
-        "iconName":  "EvershrikeAnklet",
+        "iconName":  "EvershrikeSlippers",
         "effect":  {
             "lifeModifier":  -5,
             "startBattleWithCard":  [
@@ -7779,10 +7779,10 @@
         "rarity":  "Rare"
     },
     {
-        "name":  "Flamecaster Pants",
+        "name":  "Flamecaster Boots",
         "description":  "3/2 elemental with reach, burn opp 2 when you cast a MV 4+ spell.",
         "equipmentSlot":  "Boots",
-        "iconName":  "FlamecasterPants",
+        "iconName":  "FlamecasterBoots",
         "effect":  {
             "lifeModifier":  -3,
             "startBattleWithCard":  [
@@ -7807,7 +7807,7 @@
         "name":  "Starfish On Your Foot",
         "description":  "0/1 starfish. U: regenerate. Get a 0/1 token at end step if you regened",
         "equipmentSlot":  "Boots",
-        "iconName":  "StarfishOnYourFoot",
+        "iconName":  "StarfishOnYourFootBoot605",
         "effect":  {
             "startBattleWithCard":  [
                 "Spiny Starfish"

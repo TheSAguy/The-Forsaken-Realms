@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 605: every Boots item looks like footwear - 54 new boot icons, 45 renamed (2026-10-14)
+
+The user: "do an audit of all our equipment. I found several "boot" items that look like rings. Let's make sure all
+"Boot" items have boot icons. (Possibly re-name). Same for all other slots. Can't have a boot for chest as an example."
+
+- **The audit** (every equippable item of world/items.json drawn by slot; the item's description says "Slot: X"):
+  Left / Right (weapons, shields, gauntlets, rings and held things), Body, the staff and utility slots and the special
+  slots (Blessing, Heart, Medal, Token, Pocket) fit their slot. **Boots** did not: 44 of its 104 items showed a ring,
+  an anklet, pants, a skirt or breeches, plus the Starfish On Your Foot's bare star. **Neck** holds 45 helms, masks,
+  hats and crowns beside its amulets - left for the user to decide.
+- **54 new boot icons** (`sprites/items_boots.png`, a new 256x64 page of items.atlas; regions named after the item, a
+  `Boot605` suffix where the old name was taken): each is one of the plane's 16 px boot shapes (or the 16x16 RPG Item
+  Pack's four) repainted with the OLD icon's palette, so the Jade item is still green and Bloodsworn still red. The
+  starfish now sits on a boot. Previewed to the user before the build.
+- **45 renamed** (items.json, enemies.json, items.csv, player_capital.tmx, island_capital.tmx, green_castle_f1.tmx,
+  EconomyBuildings):
+  - Anklets: Jade / Witch-Maw / Glint-Eye / Faerie / Evershrike Slippers, Coiled / Dune-Brood / Acolyte's Sandals,
+    Yore-Tiller Clogs, Ink-Treaders, Immortal Treads, Boots of the End.
+  - Sliverbands -> Slivertreads (Imposter's, Enduring, Artificial, Victual, Acidic, Spectral, Plated); Bondbands ->
+    Striders (Symbiote, Mamba, Glimmerbell, Sabertooth, Raptor).
+  - Pants, skirts, breeches, chaps -> Boots (Cutthroat, Deathspitter, Packsong, Pack Leader, Generous, Flamecaster,
+    Bearhide, Blistering, Barrier, Fleshwright, Alesha's War, Sporecap), Leech Waders, Girlfriend's Heels.
+  - Cryptologist's Flippers, Silvergill Flippers, Dragonhide Boots, Lookout's Climbing Boots, Sky Skiff Boots, Gixian
+    Graftboots, Bloodsworn Boots.
+  - New art, names kept: Courier's Boots, Sheldon's Shoes, Lightbringers Boots, Slobad's Iron Boots, Hellkite /
+    Vindicator / Godsire Greaves, Greaves of Glare, Starfish On Your Foot.
+- **Saves**: `ItemListData.RENAMED` (now `Map.ofEntries` - `Map.of` stops at 10 pairs) resolves the 45 old names; the
+  load-time catalog refresh renames a saved copy and gives it the new icon, worn ones stay worn (round 512's path).
+- **Seen in the agent game** (a copy of save 1): `[TFR-ItemRefresh] Enduring Sliverband is now Enduring Slivertreads`
+  with its new icon; `give item "Jade Anklet"` / `"Generous Pants"` added Jade Slippers / Generous Boots; the inventory
+  shows the new boots.
+- Effects, slots, prices and rarities are unchanged; descriptions only describe the companion creature, so none
+  needed a change.
+
 ## Round 604: six new perks - Pact of Embers, Splinter Cache, Challenger's Mark, Hunter's Ledger, Law of Stakes, Home Ground (2026-10-14)
 
 The user, on the design pass's perk recommendations: "For the perks you recommended. Let's implement 1-6. After you look

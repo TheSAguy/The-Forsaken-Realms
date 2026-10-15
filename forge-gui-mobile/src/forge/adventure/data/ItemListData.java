@@ -24,12 +24,59 @@ public class ItemListData {
     }
     /** Round 512: items renamed since a save, a map or a reward list was written - the old name (lower case) resolves to
      *  the item under its new one. The user, on the four mana creatures that hang at the neck since round 506: "Let's
-     *  rename also please". AdventurePlayer's catalog refresh renames a saved copy on load. */
-    private static final java.util.Map<String, String> RENAMED = java.util.Map.of(
-            "joraga boots", "Joraga Leaf Pendant",
-            "utopia anklet", "Utopia Necklace",
-            "petalmane pants", "Petalmane Charm",
-            "scarecrow socks", "Scarecrow's Feather");
+     *  rename also please". AdventurePlayer's catalog refresh renames a saved copy on load. Round 605 (the user:
+     *  "Let's make sure all Boot items have boot icons. (Possibly re-name)"): the Boots-slot rings, anklets, pants
+     *  and skirts. */
+    private static final java.util.Map<String, String> RENAMED = java.util.Map.ofEntries(
+            java.util.Map.entry("joraga boots", "Joraga Leaf Pendant"),
+            java.util.Map.entry("utopia anklet", "Utopia Necklace"),
+            java.util.Map.entry("petalmane pants", "Petalmane Charm"),
+            java.util.Map.entry("scarecrow socks", "Scarecrow's Feather"),
+            java.util.Map.entry("cutthroat skirt", "Cutthroat Boots"),
+            java.util.Map.entry("symbiote bondband", "Symbiote Striders"),
+            java.util.Map.entry("imposter's sliverband", "Imposter's Slivertreads"),
+            java.util.Map.entry("sky skiff turnkey", "Sky Skiff Boots"),
+            java.util.Map.entry("enduring sliverband", "Enduring Slivertreads"),
+            java.util.Map.entry("jade anklet", "Jade Slippers"),
+            java.util.Map.entry("coiled anklet", "Coiled Sandals"),
+            java.util.Map.entry("witch-maw anklet", "Witch-Maw Slippers"),
+            java.util.Map.entry("mamba bondband", "Mamba Striders"),
+            java.util.Map.entry("gixian graft", "Gixian Graftboots"),
+            java.util.Map.entry("artificial sliverband", "Artificial Slivertreads"),
+            java.util.Map.entry("yore-tiller anklet", "Yore-Tiller Clogs"),
+            java.util.Map.entry("silvergill tailband", "Silvergill Flippers"),
+            java.util.Map.entry("deathspitter skirt", "Deathspitter Boots"),
+            java.util.Map.entry("lookout's harness", "Lookout's Climbing Boots"),
+            java.util.Map.entry("bearhide breeches", "Bearhide Boots"),
+            java.util.Map.entry("glimmerbell bondband", "Glimmerbell Striders"),
+            java.util.Map.entry("bloodsworn bite", "Bloodsworn Boots"),
+            java.util.Map.entry("victual sliverband", "Victual Slivertreads"),
+            java.util.Map.entry("dune-brood anklet", "Dune-Brood Sandals"),
+            java.util.Map.entry("packsong pants", "Packsong Boots"),
+            java.util.Map.entry("acidic sliverband", "Acidic Slivertreads"),
+            java.util.Map.entry("anklet of the end", "Boots of the End"),
+            java.util.Map.entry("spectral sliverband", "Spectral Slivertreads"),
+            java.util.Map.entry("sabertooth bondband", "Sabertooth Striders"),
+            java.util.Map.entry("draped dragonhide", "Dragonhide Boots"),
+            java.util.Map.entry("cryptologist's fins", "Cryptologist's Flippers"),
+            java.util.Map.entry("blistering breeches", "Blistering Boots"),
+            java.util.Map.entry("spore skirt", "Sporecap Boots"),
+            java.util.Map.entry("barrier breeches", "Barrier Boots"),
+            java.util.Map.entry("glint-eye anklet", "Glint-Eye Slippers"),
+            java.util.Map.entry("ink-treader anklet", "Ink-Treaders"),
+            java.util.Map.entry("raptor bondband", "Raptor Striders"),
+            java.util.Map.entry("plated sliverband", "Plated Slivertreads"),
+            java.util.Map.entry("pack leader pants", "Pack Leader Boots"),
+            java.util.Map.entry("girlfriend's skirt", "Girlfriend's Heels"),
+            java.util.Map.entry("leech breeches", "Leech Waders"),
+            java.util.Map.entry("alesha's war skirt", "Alesha's War Boots"),
+            java.util.Map.entry("acolyte's anklet", "Acolyte's Sandals"),
+            java.util.Map.entry("generous pants", "Generous Boots"),
+            java.util.Map.entry("faerie anklet", "Faerie Slippers"),
+            java.util.Map.entry("fleshwright chaps", "Fleshwright Boots"),
+            java.util.Map.entry("immortal anklet", "Immortal Treads"),
+            java.util.Map.entry("evershrike anklet", "Evershrike Slippers"),
+            java.util.Map.entry("flamecaster pants", "Flamecaster Boots"));
 
     public static ItemData getItem(String name) {
         if (itemList == null || name == null)

@@ -80,6 +80,11 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-14 (round 605): **LOCAL + UNRELEASED (data + art)** - Boots slot audit: 54 boot icons on the new page
+items_boots.png (old icon palettes on 16 px boot shapes), 45 renamed (anklets/bands/pants/skirts -> footwear) in items.json,
+enemies.json, items.csv, 3 maps, EconomyBuildings; ItemListData.RENAMED (Map.ofEntries) converts saves. OPEN: the Neck slot's
+45 helms/masks/hats/crowns - the user decides (label "Head & Neck", or a Head slot).
+
 ## STATE 2026-10-14 (round 604): **LOCAL + UNRELEASED (code + data + art)** - six new Ascendance perks: Pact of Embers,
 Splinter Cache I-II, Challenger's Mark (excludes Aura of Fear), Hunter's Ledger, Law of Stakes, Home Ground (Choice fields
 cards/life/purse/tokens/rankLevels; AscendanceState.stakesDay saved; World.isPlayerLand); 7 icons in ascendance_icons.
