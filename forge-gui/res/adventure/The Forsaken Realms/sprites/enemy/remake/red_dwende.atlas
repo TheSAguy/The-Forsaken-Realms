@@ -1,0 +1,156 @@
+red_dwende.png
+size: 3406,844
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 262, 156
+  footprint: 96, 47, 72, 96
+Idle
+  xy: 262, 64
+  size: 262, 156
+Idle
+  xy: 524, 64
+  size: 262, 156
+Idle
+  xy: 786, 64
+  size: 262, 156
+Idle
+  xy: 1048, 64
+  size: 262, 156
+Idle
+  xy: 1310, 64
+  size: 262, 156
+Idle
+  xy: 1572, 64
+  size: 262, 156
+Idle
+  xy: 1834, 64
+  size: 262, 156
+Idle
+  xy: 2096, 64
+  size: 262, 156
+Idle
+  xy: 2358, 64
+  size: 262, 156
+Idle
+  xy: 2620, 64
+  size: 262, 156
+Idle
+  xy: 2882, 64
+  size: 262, 156
+Walk
+  xy: 0, 220
+  size: 262, 156
+Walk
+  xy: 262, 220
+  size: 262, 156
+Walk
+  xy: 524, 220
+  size: 262, 156
+Walk
+  xy: 786, 220
+  size: 262, 156
+Walk
+  xy: 1048, 220
+  size: 262, 156
+Walk
+  xy: 1310, 220
+  size: 262, 156
+Walk
+  xy: 1572, 220
+  size: 262, 156
+Walk
+  xy: 1834, 220
+  size: 262, 156
+Attack
+  xy: 0, 376
+  size: 262, 156
+Attack
+  xy: 262, 376
+  size: 262, 156
+Attack
+  xy: 524, 376
+  size: 262, 156
+Attack
+  xy: 786, 376
+  size: 262, 156
+Attack
+  xy: 1048, 376
+  size: 262, 156
+Attack
+  xy: 1310, 376
+  size: 262, 156
+Attack
+  xy: 1572, 376
+  size: 262, 156
+Attack
+  xy: 1834, 376
+  size: 262, 156
+Attack
+  xy: 2096, 376
+  size: 262, 156
+Attack
+  xy: 2358, 376
+  size: 262, 156
+Attack
+  xy: 2620, 376
+  size: 262, 156
+Attack
+  xy: 2882, 376
+  size: 262, 156
+Hit
+  xy: 0, 532
+  size: 262, 156
+Hit
+  xy: 262, 532
+  size: 262, 156
+Hit
+  xy: 524, 532
+  size: 262, 156
+Hit
+  xy: 786, 532
+  size: 262, 156
+Death
+  xy: 0, 688
+  size: 262, 156
+Death
+  xy: 262, 688
+  size: 262, 156
+Death
+  xy: 524, 688
+  size: 262, 156
+Death
+  xy: 786, 688
+  size: 262, 156
+Death
+  xy: 1048, 688
+  size: 262, 156
+Death
+  xy: 1310, 688
+  size: 262, 156
+Death
+  xy: 1572, 688
+  size: 262, 156
+Death
+  xy: 1834, 688
+  size: 262, 156
+Death
+  xy: 2096, 688
+  size: 262, 156
+Death
+  xy: 2358, 688
+  size: 262, 156
+Death
+  xy: 2620, 688
+  size: 262, 156
+Death
+  xy: 2882, 688
+  size: 262, 156
+Death
+  xy: 3144, 688
+  size: 262, 156

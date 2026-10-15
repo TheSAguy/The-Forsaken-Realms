@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-15 (round 614): **LOCAL + UNRELEASED (art + data)** - the five Dwende wear the user's Pixelate
+mushroom-capped dwende, four of them as hat-only hue tints (new tint.py hue window). 5 atlases, enemies.json sprite +
+scale (0.19). #31 packages. Not seen in play.
+
 ## STATE 2026-10-15 (round 613): **LOCAL + UNRELEASED (code + data)** - the win-ratio spawn tilt: the last 50 counted duels
 (AdventurePlayer.recentDuels, saved; older saves seeded from lifetime W-L) shift the tier row up to +-5 points at 25 duels,
 +-10 at 50 (full at 80% / 20% won), out of or into Common, after every other layer (SpawnTierWeighting.winRatioShift);

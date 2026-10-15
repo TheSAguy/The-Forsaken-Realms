@@ -140917,7 +140917,7 @@
     },
     {
         "name": "Blue Dwende",
-        "sprite": "sprites/enemy/basic/spirit/blue_dwende.atlas",
+        "sprite": "sprites/enemy/remake/blue_dwende.atlas",
         "deck": [
             "decks/standard/blue_dwende.dck"
         ],
@@ -140976,11 +140976,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.4444
+        "scale": 0.1884
     },
     {
         "name": "Ember Dwende",
-        "sprite": "sprites/enemy/basic/spirit/ember_dwende.atlas",
+        "sprite": "sprites/enemy/remake/ember_dwende.atlas",
         "deck": [
             "decks/standard/ember_dwende.dck"
         ],
@@ -141039,11 +141039,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.4444
+        "scale": 0.1884
     },
     {
         "name": "Red Dwende",
-        "sprite": "sprites/enemy/basic/spirit/red_dwende.atlas",
+        "sprite": "sprites/enemy/remake/red_dwende.atlas",
         "deck": [
             "decks/standard/red_dwende.dck"
         ],
@@ -141102,11 +141102,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.4444
+        "scale": 0.1884
     },
     {
         "name": "Golden Dwende",
-        "sprite": "sprites/enemy/basic/spirit/golden_dwende.atlas",
+        "sprite": "sprites/enemy/remake/golden_dwende.atlas",
         "deck": [
             "decks/standard/golden_dwende.dck"
         ],
@@ -141165,11 +141165,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.4444
+        "scale": 0.1884
     },
     {
         "name": "Evil Dwende",
-        "sprite": "sprites/enemy/basic/spirit/evil_dwende.atlas",
+        "sprite": "sprites/enemy/remake/evil_dwende.atlas",
         "deck": [
             "decks/standard/evil_dwende.dck"
         ],
@@ -141228,7 +141228,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.4444
+        "scale": 0.1884
     },
     {
         "name": "Ekek",

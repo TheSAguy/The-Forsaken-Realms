@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 614: the five Dwende get the user's hand-made mushroom-capped dwende (2026-10-15)
+
+The Procedural Pixel Creatures session. The Dwende (duwende: the tiny house and anthill spirits of Philippine folklore)
+wore the 12 px overworld sprites of the PUNY_MYTH-CREATURES pack - a hat over a face. They are ENEMIES, so the Angel
+Warrior's route (round 603): one ChatGPT still and four Kling clips, cleaned in Pixelate.
+
+- **The art**: an old goblin-man under a huge blue spotted mushroom-cap hat, white beard, brown robe with a rope belt,
+  a crooked walking stick (`ART/Units/Custom/Dwende`). Clips: idle, walk, a stick thrust with a burst of sparkle
+  dust (from the padded still), and a death where he shrinks under his hat and bursts into dust. Converted by the
+  generator's `pixelate_to_forge.py` (`pixelate/dwende/convert.sh`).
+- **The five colors**: Blue Dwende as made. The other four turn ONLY the hat and the sparkle dust, so the skin,
+  beard, robe and stick stay the same. This uses a new hue-window tint (tint.py `from_hue`/`window`/`light_rest`;
+  pixelate_to_forge.py `--tint-from 235 --tint-window 50`): the blue hat at OKLCH hue 250-270 and the pale cyan puff
+  at 195-210 move, while the warm tones at 30-60 are untouched.
+  - Ember: orange, hue 52, light x1.15. Red: hue 27. Golden: hue 92, light x1.35.
+  - Evil: a purple hat (hue 305, light x0.8) on a body darkened x0.75.
+  - Without `--tint-from` the tint is unchanged (a whole-figure tint gives byte-identical output to before).
+- **Files**:
+  - 5 new atlases under `sprites/enemy/remake/` (blue_, ember_, red_, golden_, evil_dwende).
+  - enemies.json: the five sprite paths and scales (0.19 - the Pixelate figure is drawn bigger than LPC's; the tier
+    sets the size on the map, Common as before and Uncommon for the Evil Dwende).
+  - No credits line: the art is the user's own.
+- **Checks**:
+  - enemies.json against HEAD: exactly these five, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - The sprite audit "reviews" 12 frames each, all expected and like round 603's angel feathers: 3 Attack frames
+    (the sparkle puff flies free of the stick) and 9 Death frames (the dust and sparkles of the burst).
+  - Not seen in play.
+
 ## Round 613: the win-ratio spawn tilt - a good record brings harder enemies, a poor one easier (2026-10-15)
 
 The user: "Based on your win ratio, I want to increase, or decrease the spawn levels on enemies. This should be in
