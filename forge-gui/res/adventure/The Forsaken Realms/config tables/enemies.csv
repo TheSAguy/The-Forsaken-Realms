@@ -195,9 +195,12 @@ Goblin Artificer,R,goblin_artificer,27,Rare,N,2.0,Y
 Goblin Chief,BR,goblin_chief_medium,15,Rare,N,0.1,Y
 Goblin Fanatic,GR,goblin_fanatic,15,Uncommon,N,0.1,Y
 Goblin King,R,goblinking,18,Uncommon,N,1.0,Y
+Goblin Nightwolf Rider,BR,goblin_nightwolf_rider,13,Common,N,0.1,Y
 Goblin Pack,R,goblin_bad.json,20,Common,N,0.1,Y
+Goblin Panther Rider,BG,goblin_panther_rider,47,Mythic,N,3.0,Y
 Goblin Rager,R,goblinrager,13,Common,N,0.2,Y
 Goblin Stalker,BR,evilgoblin,15,Uncommon,N,0.1,Y
+Goblin Tiger Rider,RG,goblin_tiger_rider,48,Mythic,N,3.0,Y
 Goblin Warrior,R,goblin_mid.json,12,Uncommon,N,0.1,Y
 Golem,GW,golem.json,13,Common,N,0.1,Y
 Golem Sentinel,C,golem_sentinel,20,Uncommon,N,0.1,Y

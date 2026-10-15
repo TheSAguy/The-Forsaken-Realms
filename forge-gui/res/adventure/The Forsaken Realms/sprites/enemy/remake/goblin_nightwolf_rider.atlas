@@ -1,0 +1,134 @@
+goblin_nightwolf_rider.png
+size: 832,982
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 104, 102
+Idle
+  xy: 104, 64
+  size: 104, 102
+Idle
+  xy: 208, 64
+  size: 104, 102
+Idle
+  xy: 312, 64
+  size: 104, 102
+Walk
+  xy: 0, 166
+  size: 104, 102
+Walk
+  xy: 104, 166
+  size: 104, 102
+Walk
+  xy: 208, 166
+  size: 104, 102
+Walk
+  xy: 312, 166
+  size: 104, 102
+Attack
+  xy: 0, 268
+  size: 104, 102
+Attack
+  xy: 104, 268
+  size: 104, 102
+Attack
+  xy: 208, 268
+  size: 104, 102
+Attack
+  xy: 312, 268
+  size: 104, 102
+Attack
+  xy: 416, 268
+  size: 104, 102
+Attack
+  xy: 520, 268
+  size: 104, 102
+Attack
+  xy: 624, 268
+  size: 104, 102
+Attack
+  xy: 728, 268
+  size: 104, 102
+Hit
+  xy: 0, 370
+  size: 104, 102
+Hit
+  xy: 104, 370
+  size: 104, 102
+Hit
+  xy: 208, 370
+  size: 104, 102
+Hit
+  xy: 312, 370
+  size: 104, 102
+Death
+  xy: 0, 472
+  size: 104, 102
+Death
+  xy: 104, 472
+  size: 104, 102
+Death
+  xy: 208, 472
+  size: 104, 102
+Death
+  xy: 312, 472
+  size: 104, 102
+Death
+  xy: 416, 472
+  size: 104, 102
+Death
+  xy: 520, 472
+  size: 104, 102
+IdleUp
+  xy: 0, 574
+  size: 104, 102
+IdleUp
+  xy: 104, 574
+  size: 104, 102
+IdleUp
+  xy: 208, 574
+  size: 104, 102
+IdleUp
+  xy: 312, 574
+  size: 104, 102
+IdleDown
+  xy: 0, 676
+  size: 104, 102
+IdleDown
+  xy: 104, 676
+  size: 104, 102
+IdleDown
+  xy: 208, 676
+  size: 104, 102
+IdleDown
+  xy: 312, 676
+  size: 104, 102
+WalkUp
+  xy: 0, 778
+  size: 104, 102
+WalkUp
+  xy: 104, 778
+  size: 104, 102
+WalkUp
+  xy: 208, 778
+  size: 104, 102
+WalkUp
+  xy: 312, 778
+  size: 104, 102
+WalkDown
+  xy: 0, 880
+  size: 104, 102
+WalkDown
+  xy: 104, 880
+  size: 104, 102
+WalkDown
+  xy: 208, 880
+  size: 104, 102
+WalkDown
+  xy: 312, 880
+  size: 104, 102

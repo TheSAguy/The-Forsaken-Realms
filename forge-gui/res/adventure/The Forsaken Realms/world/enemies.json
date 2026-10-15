@@ -132294,7 +132294,7 @@
     },
     {
         "name": "Goblin Wolf Rider",
-        "sprite": "sprites/enemy/basic/humanoid/goblin_wolf_rider.atlas",
+        "sprite": "sprites/enemy/remake/goblin_wolf_rider.atlas",
         "deck": [
             "decks/standard/goblin_wolf_rider.dck"
         ],
@@ -132354,7 +132354,178 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.2131
+    },
+    {
+        "name": "Goblin Nightwolf Rider",
+        "sprite": "sprites/enemy/remake/goblin_nightwolf_rider.atlas",
+        "deck": [
+            "decks/standard/goblin_nightwolf_rider.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 24,
+        "life": 13,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4
+            },
+            {
+                "type": "gold",
+                "probability": 0.7,
+                "count": 10,
+                "addMaxCount": 90
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 3,
+                "rarity": [
+                    "Rare"
+                ]
+            }
+        ],
+        "colors": "BR",
+        "questTags": [
+            "Humanoid",
+            "IdentityBlack",
+            "BiomeBlack",
+            "IdentityRed",
+            "BiomeRed"
+        ],
+        "tier": "Common",
+        "scale": 0.2131
+    },
+    {
+        "name": "Goblin Tiger Rider",
+        "sprite": "sprites/enemy/remake/goblin_tiger_rider.atlas",
+        "deck": [
+            "decks/standard/goblin_tiger_rider.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 3,
+        "speed": 46,
+        "life": 48,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon",
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 0.7,
+                "count": 10,
+                "addMaxCount": 90
+            },
+            {
+                "type": "shards",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 2
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 2,
+                "addMaxCount": 4,
+                "colors": [
+                    "Red",
+                    "Green"
+                ],
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "RG",
+        "questTags": [
+            "Humanoid",
+            "IdentityRed",
+            "BiomeRed",
+            "IdentityGreen",
+            "BiomeGreen",
+            "BiomeColorless"
+        ],
+        "tier": "Mythic",
+        "scale": 0.2097
+    },
+    {
+        "name": "Goblin Panther Rider",
+        "sprite": "sprites/enemy/remake/goblin_panther_rider.atlas",
+        "deck": [
+            "decks/standard/goblin_panther_rider.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 3,
+        "speed": 48,
+        "life": 47,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon",
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 0.7,
+                "count": 10,
+                "addMaxCount": 90
+            },
+            {
+                "type": "shards",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 2
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 2,
+                "addMaxCount": 4,
+                "colors": [
+                    "Black",
+                    "Green"
+                ],
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "BG",
+        "questTags": [
+            "Humanoid",
+            "IdentityBlack",
+            "BiomeBlack",
+            "IdentityGreen",
+            "BiomeGreen",
+            "BiomeColorless"
+        ],
+        "tier": "Mythic",
+        "scale": 0.2097
     },
     {
         "name": "Halfling Assassin",

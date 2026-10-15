@@ -1,0 +1,134 @@
+goblin_tiger_rider.png
+size: 800,973
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 100, 101
+Idle
+  xy: 100, 64
+  size: 100, 101
+Idle
+  xy: 200, 64
+  size: 100, 101
+Idle
+  xy: 300, 64
+  size: 100, 101
+Walk
+  xy: 0, 165
+  size: 100, 101
+Walk
+  xy: 100, 165
+  size: 100, 101
+Walk
+  xy: 200, 165
+  size: 100, 101
+Walk
+  xy: 300, 165
+  size: 100, 101
+Attack
+  xy: 0, 266
+  size: 100, 101
+Attack
+  xy: 100, 266
+  size: 100, 101
+Attack
+  xy: 200, 266
+  size: 100, 101
+Attack
+  xy: 300, 266
+  size: 100, 101
+Attack
+  xy: 400, 266
+  size: 100, 101
+Attack
+  xy: 500, 266
+  size: 100, 101
+Attack
+  xy: 600, 266
+  size: 100, 101
+Attack
+  xy: 700, 266
+  size: 100, 101
+Hit
+  xy: 0, 367
+  size: 100, 101
+Hit
+  xy: 100, 367
+  size: 100, 101
+Hit
+  xy: 200, 367
+  size: 100, 101
+Hit
+  xy: 300, 367
+  size: 100, 101
+Death
+  xy: 0, 468
+  size: 100, 101
+Death
+  xy: 100, 468
+  size: 100, 101
+Death
+  xy: 200, 468
+  size: 100, 101
+Death
+  xy: 300, 468
+  size: 100, 101
+Death
+  xy: 400, 468
+  size: 100, 101
+Death
+  xy: 500, 468
+  size: 100, 101
+IdleUp
+  xy: 0, 569
+  size: 100, 101
+IdleUp
+  xy: 100, 569
+  size: 100, 101
+IdleUp
+  xy: 200, 569
+  size: 100, 101
+IdleUp
+  xy: 300, 569
+  size: 100, 101
+IdleDown
+  xy: 0, 670
+  size: 100, 101
+IdleDown
+  xy: 100, 670
+  size: 100, 101
+IdleDown
+  xy: 200, 670
+  size: 100, 101
+IdleDown
+  xy: 300, 670
+  size: 100, 101
+WalkUp
+  xy: 0, 771
+  size: 100, 101
+WalkUp
+  xy: 100, 771
+  size: 100, 101
+WalkUp
+  xy: 200, 771
+  size: 100, 101
+WalkUp
+  xy: 300, 771
+  size: 100, 101
+WalkDown
+  xy: 0, 872
+  size: 100, 101
+WalkDown
+  xy: 100, 872
+  size: 100, 101
+WalkDown
+  xy: 200, 872
+  size: 100, 101
+WalkDown
+  xy: 300, 872
+  size: 100, 101

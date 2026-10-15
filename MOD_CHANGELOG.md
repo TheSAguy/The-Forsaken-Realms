@@ -14264,6 +14264,59 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 616: the Goblin Wolf Rider rides a real wolf, and three new goblin riders (2026-10-15)
+
+The Procedural Pixel Creatures session. The user asked for #18 of the low-quality list (the Goblin Wolf Rider, a 16 px
+sprite) to ride "a cat or wolf vs. horse", picked the gray wolf of the trial, and asked for the other three mounts as
+NEW enemies "whatever gap we have in numbers".
+
+- **The art** (the generator's new `beast_mounted_to_forge.py`):
+  - An LPC goblin rides a beast from the user's RPG Maker animal sheets (the `animals` download: the wolf-dog,
+    tiger and cougar sheets), doubled from 48 to 96 px, so the beast's pixels are twice the rider's.
+  - Side views: LPC's chair sit seated on the beast's back line, redrawn per frame so the rider rides the walk's bob.
+    Front: the rider behind the head. Back: the rider over the rump.
+  - Attack: the spear thrust over the standing beast, the spear drawn whole.
+  - Hit, death (fades), the up and down views and the whole-figure portrait follow mounted_to_forge.py.
+- **The four riders**:
+  - Goblin Wolf Rider (existing, Uncommon RG): a green goblin in brown leather with a spear, on the gray wolf.
+  - Goblin Nightwolf Rider (NEW, Common, BR): a dark-green goblin in a black hood and black leather, on the black
+    wolf. Spawns in red and black.
+  - Goblin Tiger Rider (NEW, Mythic, RG): a goblin warlord in a bronze helm and bronze plate with a red cape, on the
+    tiger. Spawns in red, green and colorless.
+  - Goblin Panther Rider (NEW, Mythic, BG): an olive goblin in a forest hood and tattered black cape, on the black
+    panther. Spawns in black, green and colorless.
+- **Why those tiers**: every colored biome is thinnest at Mythic (33-42 non-boss enemies; green lowest at 33) and next
+  at Common (80-91), against 200-300 Uncommon and Rare; the colorless biome has only 7 Mythics.
+- **The new entries** (enemies.json, after the Goblin Wolf Rider):
+  - Nightwolf: life 13, difficulty 0.1, speed 24, the Common reward pattern.
+  - Tiger and Panther: life 48 / 47, difficulty 3, speed 46 / 48, the Mythic reward pattern (deck cards up to Mythic,
+    gold, shards, rare/mythic cards of their colors).
+  - questTags Humanoid + Identity/Biome per color (+ BiomeColorless for the two Mythics).
+- **Decks** (new, 60 cards each, every name checked against cardsfolder, none over 4):
+  - `goblin_nightwolf_rider.dck`: BR goblin aggro - Raging Goblin, Mogg Flunkies, Goblin Piker, Vampire Lacerator,
+    Gravedigger, Howlpack Wolf, Marauding Boneslasher, Goblin Arsonist; Shock, Disfigure, Lightning Strike.
+  - `goblin_tiger_rider.dck`: RG Mythic aggro - Goblin Guide, Goblin Rabblemaster, Legion Warboss, Burning-Tree
+    Emissary, Kird Ape, Bonecrusher Giant, Glorybringer; Lightning Bolt, Atarka's Command, Embercleave, Domri's
+    Ambush, Rancor; shock and check lands.
+  - `goblin_panther_rider.dck`: BG Mythic midrange - Tarmogoyf, Scavenging Ooze, Grim Flayer, Plaguecrafter,
+    Polukranos, The Gitrog Monster, Pelakka Wurm; Fatal Push, Abrupt Decay, Thoughtseize, Assassin's Trophy,
+    Liliana of the Veil; shock and check lands.
+- **Files**:
+  - 4 atlases under `sprites/enemy/remake/` (scale 0.21; the tier sets the size on the map).
+  - enemies.json: the Goblin Wolf Rider's sprite and scale, and the 3 new entries.
+  - The 3 decks under `decks/standard/`.
+  - `world/biomes/red|black|green|colorless.json`: the new names in `enemies`.
+  - `config tables/enemies.csv`: 3 snapshot rows (the game regenerates it at launch).
+  - `CREDITS_LPC.md` regenerated (the riders' LPC parts, additions only; no new authors).
+  - `CREDITS.md`: the LPC bullet (803 enemies) and the RPG Maker bullet (the four mounts).
+- **Checks**:
+  - enemies.json against HEAD by name: the 3 added, only the Goblin Wolf Rider changed (sprite, scale).
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them; every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - `deck_legality_audit.py`: none of the new decks (its 45 failing deck files are older shared decks).
+  - Not seen in play.
+
 ## Round 615: duel Undo defaults to Single step; the Adventure's Settings get the choice (2026-10-15)
 
 The 10.14 merge (round 612) brought upstream's duel Undo, "Free" (several steps back) by default. The user: "Default

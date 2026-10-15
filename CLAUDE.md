@@ -80,6 +80,11 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-15 (round 616): **LOCAL + UNRELEASED (art + data + decks)** - the Goblin Wolf Rider is an LPC goblin
+on a gray wolf (RPG Maker animals sheet; generator `beast_mounted_to_forge.py`), and three NEW riders fill the roster's
+thin tiers: Goblin Nightwolf Rider (Common BR, black wolf), Goblin Tiger Rider (Mythic RG), Goblin Panther Rider (Mythic BG)
+with new decks and biome spawns. #31 reviews the gameplay side and packages. Not seen in play.
+
 ## STATE 2026-10-15 (round 615): **LOCAL + UNRELEASED (code)** - duel Undo defaults to Single step (ForgePreferences core
 one-liner; Config.applyUndoDefault moves each profile once - SettingData.undoDefaultApplied); "Undo in Duels" in the
 Adventure Settings.

@@ -39,6 +39,8 @@
                         "BlackCrystal"
                     ],
     "enemies":  [
+                    "Goblin Nightwolf Rider",
+                    "Goblin Panther Rider",
                     "Cutpurse",
                     "Hooded Skulk",
                     "Orc Deathcaller",

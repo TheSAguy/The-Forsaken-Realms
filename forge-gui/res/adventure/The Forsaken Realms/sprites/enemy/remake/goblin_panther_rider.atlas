@@ -1,0 +1,134 @@
+goblin_panther_rider.png
+size: 800,964
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 100, 100
+Idle
+  xy: 100, 64
+  size: 100, 100
+Idle
+  xy: 200, 64
+  size: 100, 100
+Idle
+  xy: 300, 64
+  size: 100, 100
+Walk
+  xy: 0, 164
+  size: 100, 100
+Walk
+  xy: 100, 164
+  size: 100, 100
+Walk
+  xy: 200, 164
+  size: 100, 100
+Walk
+  xy: 300, 164
+  size: 100, 100
+Attack
+  xy: 0, 264
+  size: 100, 100
+Attack
+  xy: 100, 264
+  size: 100, 100
+Attack
+  xy: 200, 264
+  size: 100, 100
+Attack
+  xy: 300, 264
+  size: 100, 100
+Attack
+  xy: 400, 264
+  size: 100, 100
+Attack
+  xy: 500, 264
+  size: 100, 100
+Attack
+  xy: 600, 264
+  size: 100, 100
+Attack
+  xy: 700, 264
+  size: 100, 100
+Hit
+  xy: 0, 364
+  size: 100, 100
+Hit
+  xy: 100, 364
+  size: 100, 100
+Hit
+  xy: 200, 364
+  size: 100, 100
+Hit
+  xy: 300, 364
+  size: 100, 100
+Death
+  xy: 0, 464
+  size: 100, 100
+Death
+  xy: 100, 464
+  size: 100, 100
+Death
+  xy: 200, 464
+  size: 100, 100
+Death
+  xy: 300, 464
+  size: 100, 100
+Death
+  xy: 400, 464
+  size: 100, 100
+Death
+  xy: 500, 464
+  size: 100, 100
+IdleUp
+  xy: 0, 564
+  size: 100, 100
+IdleUp
+  xy: 100, 564
+  size: 100, 100
+IdleUp
+  xy: 200, 564
+  size: 100, 100
+IdleUp
+  xy: 300, 564
+  size: 100, 100
+IdleDown
+  xy: 0, 664
+  size: 100, 100
+IdleDown
+  xy: 100, 664
+  size: 100, 100
+IdleDown
+  xy: 200, 664
+  size: 100, 100
+IdleDown
+  xy: 300, 664
+  size: 100, 100
+WalkUp
+  xy: 0, 764
+  size: 100, 100
+WalkUp
+  xy: 100, 764
+  size: 100, 100
+WalkUp
+  xy: 200, 764
+  size: 100, 100
+WalkUp
+  xy: 300, 764
+  size: 100, 100
+WalkDown
+  xy: 0, 864
+  size: 100, 100
+WalkDown
+  xy: 100, 864
+  size: 100, 100
+WalkDown
+  xy: 200, 864
+  size: 100, 100
+WalkDown
+  xy: 300, 864
+  size: 100, 100
