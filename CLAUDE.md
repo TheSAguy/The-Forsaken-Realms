@@ -91,6 +91,10 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (round 636): **LOCAL + UNRELEASED (art + data)** - the Dismembered and the Unwinding Crawler get
+the user's hand-made brain-dome crawler (Pixelate; one still, the brain tinted red / violet; generator
+`pixelate/crawler/convert.sh`). enemies.json 2 paths + scales. #32 packages. Not seen in play.
+
 ## STATE 2026-10-15 (rounds 631 + 635): **LOCAL + UNRELEASED (code + data)** - 631 = the Sets page (scene/SetsScene, ui/sets*.json): every gear set with its pieces (owned / missing / worn), worn + owned counts and the bonus now; one set's pieces with where each is or where to find it, the 3/5/7 bonuses with card text, where to find the set. From the inventory doll's bottom-left button and a roaming guard's Armory "Sets" button; set pieces' descriptions name their set. item_sets.json gains color / where / itemWhere / oracle (`make_gear_sets.py --json-only`). 635 = the History map shows the five AI castles (KIND_CASTLE, a keep symbol, grey + cracked when fallen, a "fell" caption; history FORMAT 2, format 1 re-packed) and the mountain ranges (the barrier as rock, out of the land shares); one recorded day disables Play and says why; notice popups in plain ink (the Log keeps colors). Seen in the agent game.
 
 ## STATE 2026-10-15 (round 634): **LOCAL + UNRELEASED (art + data)** - the Humongous Ettin gets the user's

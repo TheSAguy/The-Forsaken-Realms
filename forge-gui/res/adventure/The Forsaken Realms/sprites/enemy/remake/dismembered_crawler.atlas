@@ -1,0 +1,155 @@
+dismembered_crawler.png
+size: 1924,914
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 148, 170
+Idle
+  xy: 148, 64
+  size: 148, 170
+Idle
+  xy: 296, 64
+  size: 148, 170
+Idle
+  xy: 444, 64
+  size: 148, 170
+Idle
+  xy: 592, 64
+  size: 148, 170
+Idle
+  xy: 740, 64
+  size: 148, 170
+Idle
+  xy: 888, 64
+  size: 148, 170
+Idle
+  xy: 1036, 64
+  size: 148, 170
+Idle
+  xy: 1184, 64
+  size: 148, 170
+Idle
+  xy: 1332, 64
+  size: 148, 170
+Idle
+  xy: 1480, 64
+  size: 148, 170
+Idle
+  xy: 1628, 64
+  size: 148, 170
+Walk
+  xy: 0, 234
+  size: 148, 170
+Walk
+  xy: 148, 234
+  size: 148, 170
+Walk
+  xy: 296, 234
+  size: 148, 170
+Walk
+  xy: 444, 234
+  size: 148, 170
+Walk
+  xy: 592, 234
+  size: 148, 170
+Walk
+  xy: 740, 234
+  size: 148, 170
+Walk
+  xy: 888, 234
+  size: 148, 170
+Walk
+  xy: 1036, 234
+  size: 148, 170
+Attack
+  xy: 0, 404
+  size: 148, 170
+Attack
+  xy: 148, 404
+  size: 148, 170
+Attack
+  xy: 296, 404
+  size: 148, 170
+Attack
+  xy: 444, 404
+  size: 148, 170
+Attack
+  xy: 592, 404
+  size: 148, 170
+Attack
+  xy: 740, 404
+  size: 148, 170
+Attack
+  xy: 888, 404
+  size: 148, 170
+Attack
+  xy: 1036, 404
+  size: 148, 170
+Attack
+  xy: 1184, 404
+  size: 148, 170
+Attack
+  xy: 1332, 404
+  size: 148, 170
+Attack
+  xy: 1480, 404
+  size: 148, 170
+Attack
+  xy: 1628, 404
+  size: 148, 170
+Hit
+  xy: 0, 574
+  size: 148, 170
+Hit
+  xy: 148, 574
+  size: 148, 170
+Hit
+  xy: 296, 574
+  size: 148, 170
+Hit
+  xy: 444, 574
+  size: 148, 170
+Death
+  xy: 0, 744
+  size: 148, 170
+Death
+  xy: 148, 744
+  size: 148, 170
+Death
+  xy: 296, 744
+  size: 148, 170
+Death
+  xy: 444, 744
+  size: 148, 170
+Death
+  xy: 592, 744
+  size: 148, 170
+Death
+  xy: 740, 744
+  size: 148, 170
+Death
+  xy: 888, 744
+  size: 148, 170
+Death
+  xy: 1036, 744
+  size: 148, 170
+Death
+  xy: 1184, 744
+  size: 148, 170
+Death
+  xy: 1332, 744
+  size: 148, 170
+Death
+  xy: 1480, 744
+  size: 148, 170
+Death
+  xy: 1628, 744
+  size: 148, 170
+Death
+  xy: 1776, 744
+  size: 148, 170

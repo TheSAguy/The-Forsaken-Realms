@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 636: the two crawlers get the user's hand-made brain-dome crawler (2026-10-15)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/crawler/convert.sh`. These are A18-19 of
+the low-quality list: the Dismembered Crawler and the Unwinding Crawler on their stock 16 px `basic/undead` sprites. The
+user asked for the crawler on both.
+
+- **The art**:
+  - The user made one still in ChatGPT from Psychosis Crawler: a brain in a clear glass dome on a black segmented body
+    with six long jointed spider legs, dark red sinew at the joints. It faces the viewer.
+  - Then four Kling clips and Pixelate sheets: a scuttling walk; a rear-up, two-legged stab; the dome cracking and the
+    body sinking into dark oil.
+- **One design, two crawlers**: the brain and the joint sinew are tinted together (they sit next to each other in hue);
+  the glass and the black legs stay.
+  - **Dismembered Crawler**: blood red.
+  - **Unwinding Crawler**: violet.
+- **Files**:
+  - 2 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 2 sprite paths and scales (0.1981).
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 2, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit's 34 "review" flags are not stray art: 22 are the house shadow ellipse an empty row under a lifted leg, 12 the dying body under the dome's flying glass, which the audit reads as the art's first run. The death ends on the oil puddle (frame 15), so no lone speck is left to fade.
+  - Both Avatars are whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+- **Source files**: moved to the Art Library repository, `Units/Custom/Crawler`.
+
 ## Round 635: the History map shows the five AI castles and the mountain ranges; plain-ink notice popups (2026-10-15)
 
 The user, on the History replay (round 626): "I think you need to add the 5 AI Castles on there. they should have a

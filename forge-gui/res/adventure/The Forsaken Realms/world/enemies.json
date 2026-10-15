@@ -134325,7 +134325,7 @@
     },
     {
         "name": "Dismembered Crawler",
-        "sprite": "sprites/enemy/basic/undead/dismembered_crawler.atlas",
+        "sprite": "sprites/enemy/remake/dismembered_crawler.atlas",
         "deck": [
             "decks/standard/dismembered_crawler.dck"
         ],
@@ -134384,7 +134384,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.244
+        "scale": 0.1981
     },
     {
         "name": "Ghastly Eye",
@@ -134900,7 +134900,7 @@
     },
     {
         "name": "Unwinding Crawler",
-        "sprite": "sprites/enemy/basic/undead/unwinding_crawler.atlas",
+        "sprite": "sprites/enemy/remake/unwinding_crawler.atlas",
         "deck": [
             "decks/standard/unwinding_crawler.dck"
         ],
@@ -134959,7 +134959,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.2154
+        "scale": 0.1981
     },
     {
         "name": "Vampire Bat",
