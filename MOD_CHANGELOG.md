@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 633: the three myr get the user's hand-made myr (2026-10-15)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/myr/convert.sh`. These are A23-25 of the
+low-quality list: the three enemies on the stock 16 px `construct/myr` sprite.
+
+- **The art**:
+  - The user made one still in ChatGPT from Myr Superion and Darksteel Myr: a lean clockwork soldier of bronze plates
+    over a black skeleton, a long curved beaked helm with one cyan eye, cyan spirals on the plates, long clawed arms
+    and backward-jointed legs. Then four Kling clips and Pixelate sheets.
+  - The still came back on a transparent background. It was put on the green key by hand, with its teal glow edges
+    trimmed to cyan so the key could not take them.
+  - Kling made the attack's eye flare a pale mint cloud as wide as the frame. `pixelate/myr/deflare.py` paints it out,
+    so the cells stay 140 px wide.
+- **One design, three myr**: only the bronze plates are tinted (OKLCH hue 66 +-40); the cyan eye and spirals and the
+  black joints stay.
+  - **Myr Superion** (the boss): bronze, as made. It keeps its drawn size.
+  - **Urtet**: silver-blue steel.
+  - **Brudiclad**: copper-red.
+- **Files**:
+  - 3 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 3 sprite paths and scales (Myr Superion 0.4588, Urtet 0.1529, Brudiclad
+    0.1529).
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 3, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit's 18 "review" flags, six a myr, are not stray art. Four are the house shadow ellipse, an empty row
+    under a lifted foot. Two are the fallen body under the death's sparks, which the audit reads as the art's first
+    run.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+- **Source files**: moved to the Art Library repository, `Units/Custom/Myr`.
+
 ## Round 629: gear sets - fifteen sets of seven, a bonus at 3 / 5 / 7 pieces (2026-10-15)
 
 The user: "create gear sets and have you get additional bonuses when you have these sets ... start at 3 out of 7 you get

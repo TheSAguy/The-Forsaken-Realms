@@ -1,0 +1,156 @@
+brudiclad.png
+size: 1820,644
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 140, 116
+  footprint: 31, 5, 78, 109
+Idle
+  xy: 140, 64
+  size: 140, 116
+Idle
+  xy: 280, 64
+  size: 140, 116
+Idle
+  xy: 420, 64
+  size: 140, 116
+Idle
+  xy: 560, 64
+  size: 140, 116
+Idle
+  xy: 700, 64
+  size: 140, 116
+Idle
+  xy: 840, 64
+  size: 140, 116
+Idle
+  xy: 980, 64
+  size: 140, 116
+Idle
+  xy: 1120, 64
+  size: 140, 116
+Idle
+  xy: 1260, 64
+  size: 140, 116
+Idle
+  xy: 1400, 64
+  size: 140, 116
+Idle
+  xy: 1540, 64
+  size: 140, 116
+Walk
+  xy: 0, 180
+  size: 140, 116
+Walk
+  xy: 140, 180
+  size: 140, 116
+Walk
+  xy: 280, 180
+  size: 140, 116
+Walk
+  xy: 420, 180
+  size: 140, 116
+Walk
+  xy: 560, 180
+  size: 140, 116
+Walk
+  xy: 700, 180
+  size: 140, 116
+Walk
+  xy: 840, 180
+  size: 140, 116
+Walk
+  xy: 980, 180
+  size: 140, 116
+Attack
+  xy: 0, 296
+  size: 140, 116
+Attack
+  xy: 140, 296
+  size: 140, 116
+Attack
+  xy: 280, 296
+  size: 140, 116
+Attack
+  xy: 420, 296
+  size: 140, 116
+Attack
+  xy: 560, 296
+  size: 140, 116
+Attack
+  xy: 700, 296
+  size: 140, 116
+Attack
+  xy: 840, 296
+  size: 140, 116
+Attack
+  xy: 980, 296
+  size: 140, 116
+Attack
+  xy: 1120, 296
+  size: 140, 116
+Attack
+  xy: 1260, 296
+  size: 140, 116
+Attack
+  xy: 1400, 296
+  size: 140, 116
+Attack
+  xy: 1540, 296
+  size: 140, 116
+Hit
+  xy: 0, 412
+  size: 140, 116
+Hit
+  xy: 140, 412
+  size: 140, 116
+Hit
+  xy: 280, 412
+  size: 140, 116
+Hit
+  xy: 420, 412
+  size: 140, 116
+Death
+  xy: 0, 528
+  size: 140, 116
+Death
+  xy: 140, 528
+  size: 140, 116
+Death
+  xy: 280, 528
+  size: 140, 116
+Death
+  xy: 420, 528
+  size: 140, 116
+Death
+  xy: 560, 528
+  size: 140, 116
+Death
+  xy: 700, 528
+  size: 140, 116
+Death
+  xy: 840, 528
+  size: 140, 116
+Death
+  xy: 980, 528
+  size: 140, 116
+Death
+  xy: 1120, 528
+  size: 140, 116
+Death
+  xy: 1260, 528
+  size: 140, 116
+Death
+  xy: 1400, 528
+  size: 140, 116
+Death
+  xy: 1540, 528
+  size: 140, 116
+Death
+  xy: 1680, 528
+  size: 140, 116

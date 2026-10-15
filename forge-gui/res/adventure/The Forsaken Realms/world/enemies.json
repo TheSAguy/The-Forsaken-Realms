@@ -22833,7 +22833,7 @@
     },
     {
         "name": "Myr Superion",
-        "sprite": "sprites/enemy/construct/myr.atlas",
+        "sprite": "sprites/enemy/remake/myr_superion.atlas",
         "deck": [
             "decks/miniboss/myr_superion.dck"
         ],
@@ -22842,7 +22842,7 @@
         "spawnRate": 1,
         "difficulty": 0.5,
         "speed": 18,
-        "scale": 3.0,
+        "scale": 0.4588,
         "life": 25,
         "rewards": [
             {
@@ -51932,13 +51932,13 @@
     },
     {
         "name": "Urtet",
-        "sprite": "sprites/enemy/construct/myr.atlas",
+        "sprite": "sprites/enemy/remake/urtet.atlas",
         "deck": [
             "decks/legends/urtet.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.1529,
         "life": 30,
         "rewards": [
             {
@@ -63189,13 +63189,13 @@
     },
     {
         "name": "Brudiclad",
-        "sprite": "sprites/enemy/construct/myr.atlas",
+        "sprite": "sprites/enemy/remake/brudiclad.atlas",
         "deck": [
             "decks/legends/brudiclad.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.1529,
         "life": 30,
         "rewards": [
             {
