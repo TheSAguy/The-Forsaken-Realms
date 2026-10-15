@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-15 (round 618): **LOCAL + UNRELEASED (docs)** - GUIDE.md/GUIDE.html up to 1.21 (Ascendance, Equipment Slots,
+treasure hunts, raids, Temple, adapting enemies, What's New 1.21, 6 FAQ entries), README, RELEASE_NOTES_v1.21.md draft.
+OPEN: the intro pays 43 Power < level 1's 50 since round 583.
+
 ## STATE 2026-10-15 (round 617): **LOCAL + UNRELEASED (art + data)** - 20 small stock/Basic sprites become LPC
 (generator `lpc_selections/make_617.py`; the Cavalier Captain and the Outrider on LPC horses). enemies.json 20 paths +
 scales, 15 footprints, CREDITS_LPC.md 851 characters, CREDITS.md (823 LPC enemies, the horse riders). #31 packages. Not seen

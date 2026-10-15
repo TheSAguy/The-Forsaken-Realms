@@ -19,7 +19,9 @@ so every fight is a real card duel with real decks.
 - **Territory that moves** — castles and Capitols expand and contract their borders daily; own
   the ground and you travel it faster.
 - **Build a Capitol** — own five towns and one becomes *Orazca*, a true seat of power with
-  buildings no ordinary town offers: Bank, Exchange, Archaeologist.
+  buildings no ordinary town offers: Bank, Exchange, Archaeologist, Research Lab, Temple and an Arena.
+- **Grow your hero** — *Ascendance*: earn Power from duels, quests and exploration, climb 40 levels,
+  and pick from 35 lasting perks; wear more gear as you rise, across seven main equipment slots.
 - **Day, night & the march of time** — enemies fight harder on white plains at noon and in black
   swamps at midnight; shops restock weekly, mines pay on payday, quests burn down in real days.
 - **Dungeons that live and die** — every dungeon has a lifespan; cleared or failed ones fade from
@@ -29,9 +31,10 @@ so every fight is a real card duel with real decks.
 - **Sets unlock as you go** — editions unlock as you find their cards in the world and research
   what you've found; different lands hold different expansions.
 
-**By the numbers:** 1,900+ enemies · 330+ dungeons · 33,000+ cards to find · 640+ items.
+**By the numbers:** 2,100+ enemies · 350+ dungeons, caves and lairs · 33,000+ cards to find · 670+ items ·
+20 playable races.
 
-A full player guide ships with the game (`GAME_GUIDE.md`).
+A full player guide ships with the game (`GAME_GUIDE.html` / `GAME_GUIDE.md`).
 
 > **Fair warning: this game is HARD — on purpose.** Expect to lose duels, lose territory,
 > and claw your way back. That's the design.
@@ -42,8 +45,8 @@ A full player guide ships with the game (`GAME_GUIDE.md`).
 2. Download the latest release zip and unzip it anywhere.
 3. Run **`The Forsaken Realms.exe`** (or `The Forsaken Realms.cmd`).
 
-Currently **tested on Windows PC only**. The engine itself is cross-platform Java, but other
-platforms are untested territory for now.
+Tested on **Windows PC**. Every release also ships an **Android** build (playable, but tested far
+less), and the engine itself is cross-platform Java.
 
 Saves and settings live in `%APPDATA%\ForsakenRealms`. The card-art cache is shared with a
 stock Forge install if you have one, so you never re-download images you already own. A stock

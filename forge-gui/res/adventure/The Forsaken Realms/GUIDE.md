@@ -11,7 +11,7 @@ are in the [FAQ](#faq) at the end.
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [What's New in 1.17](#whats-new-in-117)
+2. [What's New in 1.21](#whats-new-in-121)
 3. [Starting Out](#starting-out)
 4. [Changes from the Base Game](#changes-from-the-base-game)
 5. [Early Game Advice](#early-game-advice)
@@ -41,31 +41,31 @@ the early game is meant to be a fight.
 *Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android
 version - playable, but it gets far less testing than the desktop builds.*
 
-## What's New in 1.17
+## What's New in 1.21
 
-The short version for returning players. Each item links to where the guide covers it in full.
+The short version for returning players. Each item links to where the guide covers it in full. (Coming from 1.17?
+1.18 to 1.20 added notoriety, [Ascendance](#ascendance---your-level) - your character's level - the
+[lost-treasure hunts](#lost-treasure-hunts) and castle keys, and [town raids](#town-raids); all are covered below.)
 
-- **Enemies learn your tricks.** Beat the same enemy enough times in a row - five on Normal, four on Hard,
-  three on Insane - and from then on it starts each duel with a **Wastes** in play, until it beats you once and
-  its count starts over. Not on Easy. **Archmages** now start every duel with a Wastes too (not in town, Ring City, capital or Capitol fights,
-  or Inn tournaments). See [Notes on Difficulty](#notes-on-difficulty).
-- **New Game+ asks what comes along:** cards only, cards and the resources you carry, or those plus a refund
-  of what you invested in the towns and buildings you still hold - and whether to keep your items. Every
-  New Game+ starts with exactly five coins, and your roaming guards hand back their decks and gear. See
-  [New Game+](#new-game).
-- **Well over a hundred dungeons, caves, castles and lairs have new map pictures** - the old front-view caves
-  are now three-quarter-view caves of their own land.
-- **Each kind of dungeon at its share of the map** - no more clusters of one kind. Existing worlds rebalance
-  once on load.
-- **The Bronze Coin button shows the gold it saves** on the "Card Lost" screen.
-- **Arena-only sets are out:** MTG Arena's digital-only sets (Alchemy and the other cards with perpetual,
-  seek or conjure) no longer turn up in shops, boosters, rewards or enemy decks. To play with them, tick
-  **Allow digital-only cards** in Settings (just below the Alchemy variants option) and restart; the choice is kept
-  in your own profile, so updates don't undo it.
-- **A quest that sends you to a boss lair that has vanished brings the lair back.**
-- **The map:** decoration lies under you, a town outside the center has one road into the Ring Cities, and the
-  water line along some land borders is gone.
-- **Engine:** Forge 2.0.16 (the 10.01 build).
+- **New looks:** new artwork across the world, and card-art player portraits for every race. See [Races](#races).
+- **Leveling to 40:** levels 31-40 give perk choices; level 35 is "Weavebinder" and level 40 is "Eternal". See
+  [Ascendance](#ascendance---your-level).
+- **About 20 new perks**, among them Opening Gambit, Gambler, Aura of Fear, Warmonger, Insight (4 choices), Pact of
+  Embers, Challenger's Mark, Hunter's Ledger, Law of Stakes and Home Ground.
+- **The Level sheet** now has descriptions and icons. Level-up rewards are richer, and leveling is slower on the
+  harder difficulties.
+- **Head and Legs slots:** wear 6 main items at level 35 and 7 at level 40, and every item's art now matches its
+  slot. See [Equipment Slots](#equipment-slots).
+- **The Capitol Temple:** offerings, honor by color, and spoils you collect. See [The Temple](#the-temple).
+- **Spawns adapt to your last 50 duels:** a strong record brings tougher enemies, a weak one eases off. See
+  [Enemies That Adapt to You](#enemies-that-adapt-to-you).
+- **Days pass 20% faster.** See [Time, Day & Night](#time-day--night).
+- **Arena:** a fresh bracket after a loss. **Inn tournaments:** one win per town per week. See
+  [Ante, Tournaments & Hostile Lands](#ante-tournaments--hostile-lands) and [Inn Tournaments](#inn-tournaments).
+- **A notices log**, faster notices, and many playtest fixes. See
+  [Smaller Things Worth Knowing](#smaller-things-worth-knowing).
+- **Engine:** Forge 2.0.16 (the 10.14 build), which brings duel **Undo** - Single step by default; change it under
+  Settings, "Undo in Duels".
 
 ## Starting Out
 
@@ -75,14 +75,16 @@ The short version for returning players. Each item links to where the guide cove
   screen explains what each race actually grants before you commit. Twenty races, including the
   Goblin, Angel, Merfolk and Vampire - the full list is in [Races](#races).
 - **Difficulty** affects more than combat: enemy roaming-encounter tiers, what buildings and
-  research cost, what your cards sell for, and how many editions you start with unlocked are all
-  difficulty-scaled.
+  research cost, what your cards sell for, how much Power each [Ascendance](#ascendance---your-level)
+  level costs, and how many editions you start with unlocked are all difficulty-scaled.
 - **You start with next to nothing.** You wake in a cave a short walk from **Orazca**, the ruined
   town at the heart of the map, with a **Homeward rune** that will always carry you home. The
   opening quest, "Oaths at the Ring", sends you around the five **Ring Cities** that circle Orazca,
   and each hands over part of your starting kit: gold, Shards, Wood, Stone, your starting items and
   your Challenge Coins. (Skip the introduction and you get the whole kit at once.) Starting gear with
-  a slot of its own - Leather Boots, say - goes straight on if that slot is empty.
+  a slot of its own - Leather Boots, say - goes straight on if that slot is empty and your level allows another
+  main item: at level 0 that is one, so any other piece of the kit waits in your bag (see
+  [Equipment Slots](#equipment-slots)).
 - Your starting deck is a real, playable toolkit — expect to reshape it as you loot and buy cards,
   not to carry it unmodified into the late game.
 
@@ -118,7 +120,8 @@ on a color's land anywhere from 10% faster (Partner) to 10% slower (War). Push a
 to **War** and you can take the fight to it: storm one of its towns (once a week per town) and a
 win makes the town yours, or storm its capital against two Archmages at once - taking a capital
 halves the war mages that color can field. Bring down a color's **castle** by beating the Lord
-inside and the color falls for good. Mind the castle's champion on the way in: one of the color's
+inside and the color falls for good - its gates are sealed, though: you need that color's Secret Entrance Key,
+dug up with its treasure, or War with it (see [Lost Treasure Hunts](#lost-treasure-hunts)). Mind the castle's champion on the way in: one of the color's
 own Archmages walks the ring of paths around the keep, notices you from five tiles off and gives
 chase - two of them on Insane, always on opposite sides of the ring. Once the color falls, the
 consequences ripple outward: its towns and capital
@@ -173,7 +176,8 @@ day and a Day/Week tracker keeps the calendar visible. The tracker counts the da
 (1-7) and numbers the weeks from 0, so day 8 shows as "Day 1, Week 1". When this guide says "week 1",
 it means days 1-7 - the HUD's Week 0.
 
-A **Speed-Up** toggle fast-forwards time when you're waiting on the world rather than exploring it
+At normal speed a day lasts 194.4 seconds - about 3 minutes 14 seconds of play - so a week goes by in under 23
+minutes. A **Speed-Up** toggle runs the clock 50 times faster when you're waiting on the world rather than exploring it
 (holding **Z** speeds things up too). Monsters keep pace with the clock: a game day brings the same
 number of them at any speed, and new ones stop coming while about 14 are already roaming within 24
 tiles of you, so the screen never fills up.
@@ -256,8 +260,8 @@ that roams.
 - **Where.** Only on the land of a color that is **Unhappy or at War** with you. A legend walks a
   color's land when it carries that color; the few colorless ones walk any hostile land. Never on your
   own land, the Wasteland, or a Neutral, Happy or Partner color's land.
-- **How often.** Rarely: about one sighting every three days of travel on Unhappy land and one every day
-  and a half at War, with at least two days between sightings and only one legend out at a time.
+- **How often.** Rarely: about one sighting every four to five days of travel on Unhappy land and one every two
+  days or so at War, with at least two days between sightings and only one legend out at a time.
 - **Which one.** The ones you haven't met come first - a legend you have already seen returns only once
   the others have had their turn - and the same legend is never out twice at once.
 - **The sighting.** A legend never arrives unannounced: you are told which one it is and in which
@@ -273,6 +277,79 @@ The legends include the twelve added in 1.16: the Seraph of the Burning Brand an
 (white), the Skyvault Dragon and the Sixblade Naga (blue), the Nightscale Dragon and **Victor**, the vampire
 Archmage (black), the Pyreclaw Dragon and the Cinderstone Brute (red), the Thornscale Dragon and the Bogspawn
 Horror (green), and the colorless Ossuary Dragon and Blightborn Mutant.
+
+### Lost Treasure Hunts
+
+Six treasures lie buried in every world, one in each region: the Wastes and the five colors' lands. A region here is
+the land as the world was made - the White hunt stays in the old White lands, whoever holds them now. Each treasure
+has a map torn into nine pieces, and an Archmage guarding it.
+
+- **The map.** A treasure map covers 30 by 30 tiles in nine pieces of 10 by 10. The first piece you find is always the
+  center one, with a red **X** on the treasure; every piece after it shows more of the land around it, so the spot gets
+  easier to recognize. The **Treasure Maps** button - on the world map beside your portrait, and in your inventory -
+  shows all six maps once you've found a piece; tap one to see it.
+- **Obelisks: one piece a week per region.** Each region has one obelisk standing at a time, on open ground you can
+  walk to. Walk onto it and it gives you the next piece of that region's map, shown as a card on the loot screen, then
+  sinks away. A week after it rose it rises again somewhere else in the region, found or not, so obelisks give at most
+  one piece per region a week.
+- **Map Fragments.** A Wastes, White, Blue, Black, Red or Green **Map Fragment** is a piece in item form: use it from
+  your inventory and it fits the next piece into that map. A whole map, or one whose treasure you've dug up, refuses it
+  and it stays in your bag (it sells, but no shop stocks it). Fragments come from:
+  - **the five AI capitals' Arenas** - win all three rounds and the prize is that color's fragment 1 time in 9, in
+    place of one of the capital's eight items;
+  - **the Archaeologist** - about 1 expedition in 65 brings back a fragment for a map that still needs one;
+  - **a level-up reward**, offered while any map still lacks pieces (see [Ascendance](#ascendance---your-level)).
+- **The Spade.** Your first piece, from an obelisk or a fragment, comes with an old **Spade**. Wear it in a utility
+  slot and use it from the HUD on the world map: each dig costs 5 Shards and leaves a hole, which stays until that
+  region's treasure is found - a record of where you've already looked. Dig within 2 tiles of a treasure and its
+  guardian rises. You can't dig inside a town or dungeon, and a dig in lands whose treasure you've already claimed is
+  refused, with the Shards handed back.
+- **The X.** With all nine pieces an X marks the spot on your world map, and walking onto it digs there at once - the
+  same 5 Shards.
+- **The guardian** is an Archmage with half again its usual life. Lose and the treasure stays buried - dig there
+  again to call the guardian back. Win and you take the guardian's own loot plus the treasure: 1,000 gold, 40 Shards
+  and four Rare or Mythic cards of the region's color (colorless in the Wastes), 64 Power (see
+  [Ascendance](#ascendance---your-level)), and the region's prize:
+  - each color's treasure holds that color's **Secret Entrance Key** (below);
+  - the Wastes treasure holds the **Cartographer's Compass**: while you carry it, your world map shows every obelisk
+    standing right now.
+
+  Once a treasure is yours, the holes dug for it fill in.
+
+**Castle Keys.** The five colors' castles - the White, Blue, Black, Red and Green Castle - are sealed. There are two
+ways in: carry that color's **Secret Entrance Key**, dug up with its treasure, or be at **War** with the color and
+fight through the front gate. Arrive with neither and the gate turns you back and tells you so. Reaching the sealed
+gate still counts for the main quest's "Find the ... Castle" stage; taking the seal inside needs the way in. The keys,
+the Spade and the Compass are quest items - they can't be sold or thrown away.
+
+### Town Raids
+
+Raiders from the nearby dungeons can fall on a town - one of yours, or a neutral town you know.
+
+- **Which towns.** Orazca and your Capitol, your other towns, and working neutral towns you've been inside - never a
+  ruin, an AI color's town, a town an attack mage is already marching on, or one already being raided. The town also
+  needs at least **4 hostile dungeons or caves** on the map near it - rotating dungeons and caves, boss lairs and the
+  places that leave once cleared, found or not. "Near" grows with the weeks: within 15 tiles in days 8-14, 17 tiles in
+  days 15-21 and 20 tiles from day 22.
+- **When.** As each week begins (days 8, 15, 22 and so on), every town that qualifies has a 10% chance of a raid, and
+  at most two raids start in a week. No raids in the first week (days 1-7) - and on Easy, none before day 15.
+- **The raiders** come out of those nearby dungeons: the creatures living inside, or, from one you haven't been in,
+  the creatures of its land. While you're within 20 tiles of the town, 3 or 4 of them (the number is set for each raid)
+  stand 3 to 7 tiles outside its walls, and each one that falls is replaced until no more are needed. They chase you
+  like any roamer, stay near the town while you're away, and leave the map when the raid ends.
+- **The job.** Beat **5 raiders within 7 days** and the town thanks you: **+1 town reputation, 50 Wood and 50 Stone**
+  (and 21 Power). Let the days run out and it thinks less of you: **-2 town reputation**. If the town falls to an AI
+  color or is sacked to ruins in the meantime, the raid simply ends.
+- **Keeping track.** A notice tells you when a raid starts, at each raider beaten and with 2 days left. Your quest log
+  lists every raided town with its count, direction and days left, and the world map's Details view marks it
+  "Pillaged! 2/5".
+- **Your roaming guards can help.** Tick **Help with pillaged towns** on a roaming guard's orders (your Capitol's
+  Armory, Manage Guards). When a raid starts, a free guard with that order rides out - one guard per raided town - and
+  raiders turn up around it just as they do around you. It hunts the ranks its orders allow, fighting each raider as
+  it fights a mage at a gate, watched or simulated, and every raider it beats counts toward the five, reward included.
+  A guard that loses is out of action for some days, and the raider goes back where it stood. When no guard can go,
+  the raid's notice says why: none has the order ticked, or the one that has it is hurt, busy or on its way home - and
+  then it rides out once it's free.
 
 ### The Capitol
 
@@ -314,7 +391,8 @@ enemy's name - and your **first victory** over each kind of enemy is the big one
 - **Cards.** A repeat win pays 1 / 2 / 2 / 3 cards by rank. A first victory pays 2 / 3 / 4 / 5,
   keeps the best rarities the enemy rolled, and adds one more non-land card from its deck (Common
   or Uncommon; Rare too on Easy). Masters and Archmages always keep their best cards first; an
-  Apprentice or Adept pays at random on a repeat win. Gear that adds reward cards still adds them,
+  Apprentice or Adept pays at random on a repeat win. Gear and the Ascendance perks that add reward cards
+  (Spoilsman, Challenger's Mark, Hunter's Ledger) still add them,
   and Easy pays one more card per win. A payout never hands you the same card twice while there is
   something new to give: when the enemy's deck runs out of new cards, the rest come from the sets of
   the enemy's color, in its deck's colors. A second copy, or gold, is the last resort.
@@ -331,8 +409,184 @@ enemy's name - and your **first victory** over each kind of enemy is the big one
 - A **champion met outside the Arena** - a cave's champion, or a color's war champion roaming its land
   at War - pays twice what an ordinary enemy of its rank pays for a first win: twice the cards, best
   rarities first, and twice the purse, plus its own signature card when it has one.
+- **An enemy that flees.** With the Intimidating perk, an ordinary roaming enemy you've beaten more often than it
+  has beaten you may flee on contact instead of fighting - 5%, 10% or 15% of the time with ranks I, II or III. It
+  drops half its loot: half its gold, Shards, Wood and Stone, a random half of its cards and items (an odd one goes
+  either way on a coin flip) and half the Power a win would pay; a +Life reward waits for a real win. Nothing else
+  counts - no win, no quest step, no reputation. Bosses, a color's mages, legends, raiders and quest creatures never
+  flee, and nothing flees inside a town or dungeon.
+- **Power.** With Ascendance, a win's loot also holds a Power card - see
+  [Ascendance](#ascendance---your-level).
 - Every number here is a setting: `cardBudget...` (1 to 5 cards each) and `resourcePurse...` in
   the plane's `config tables/settings.json`.
+
+### Ascendance - Your Level
+
+Since 1.20 your character has a level: **Ascendance**. You earn **Power** (the sun icon) from almost everything you do,
+and every level pays something - every fifth level a fixed milestone (+1 max life, a title and room for more gear),
+every other level a reward you pick. The **Asc** panel on the HUD, under your Wood and Stone, shows your level and a
+bar to the next; a gold **!** beside the level means a reward is waiting. Each Power award is listed in the notice
+Log, and a level-up gets a banner.
+
+Ascendance comes with a **New Game** or a **New Game+**. A character started before 1.20 has none and plays as it
+always did. A New Game+ starts it over at level 0.
+
+**Power from duels.** A won duel pays by the enemy's rank, times the **one** highest bonus that applies - bonuses
+never stack:
+
+| A win over... | Apprentice | Adept | Master | Archmage |
+|---|---|---|---|---|
+| An enemy you have beaten before | 9 | 15 | 24 | 34 |
+| An enemy you have never beaten (a first win), a champion (a cave's, or a color's arena champion) or an attacking war mage (x1.5) | 13 | 23 | 36 | 51 |
+| A town or capital you storm, the defense of your Capitol, or a treasure guardian (x2) | 17 | 31 | 48 | 68 |
+| A [legend](#legends) (x2.5) | 21 | 38 | 60 | 85 |
+| A boss (x3) | 26 | 46 | 71 | 102 |
+
+- **It's paid with the loot.** A win's Power shows as a card among its loot and is yours when you collect it. An Arena
+  match pays at once; Inn tournament matches pay at the tournament's end instead (below).
+- **Outgrown enemies pay less.** Above level 8 an Apprentice's win pays 10% less for each level you have over it, above
+  15 an Adept's and above 22 a Master's - but never less than 20% (from level 16, 23 and 30). Archmages never. A boss's
+  or legend's own rank counts the same way.
+- **Your guards earn for you.** When a roaming guard wins a fight, or a town's guard turns back a war mage, you get the
+  beaten enemy's repeat-win Power (half again against an attacking mage), less the outgrown share - noted in the Log only.
+- A lost duel, and a Deck Tester game, pay nothing.
+
+**Power from everything else:**
+
+| What you did | Power |
+|---|---|
+| First visit to a town or capital | 4 |
+| First visit to any other place | 3 |
+| Clearing an ordinary cave / dungeon (every enemy beaten) | 7 / 13 |
+| Restoring a town | 26 |
+| Taking a town, capital or Ring City by force | 34 |
+| Raising the Capitol | 85 |
+| A side quest / a story quest | 17 / 43 |
+| Stopping an invasion, by its toughest invader: Apprentice / Adept / Master / Archmage | 43 / 64 / 85 / 128 |
+| Driving the raiders from a pillaged town | 21 |
+| Winning an Arena bracket (each match also pays its duel) | 34 |
+| An Inn tournament: each match won, and more for winning it without a loss | about 13 each, +26 |
+| Digging up a treasure (its guardian's duel pays as well) | 64 |
+| An overworld chest - one outcome in seven | 13 |
+| A Mystery pickup (the diamond) - now and then, in place of a resource | 21 |
+
+These are the plane's numbers in `config tables/ascendance.json` times its leveling speed, 0.85. The **Zealot** perk
+adds its share on top of all of them.
+
+**Levels.** You start at level 0, and level 1 costs 50 Power on every difficulty. After that each level costs more -
+30 for level 2, then 50, 75, 100 and so on, up to 630 for level 30 and 1,010 for level 40 - times your difficulty's
+level cost: **Easy x0.8, Normal x1.05, Hard x1.32, Insane x1.61** (rounded to 5). The Power you need in all:
+
+| Level | Easy | Normal | Hard | Insane |
+|---|---|---|---|---|
+| 5 | 255 | 315 | 385 | 460 |
+| 10 | 1,035 | 1,340 | 1,670 | 2,030 |
+| 15 | 2,490 | 3,245 | 4,070 | 4,955 |
+| 20 | 4,270 | 5,580 | 7,005 | 8,535 |
+| 25 | 6,355 | 8,320 | 10,450 | 12,740 |
+| 30 | 8,755 | 11,470 | 14,400 | 17,570 |
+| 35 | 11,675 | 15,300 | 19,220 | 23,445 |
+| 40 | 15,395 | 20,180 | 25,360 | 30,930 |
+
+**Past 40** there is no cap, but the going is slow: level 41 costs 2,000 Power times your difficulty's cost (2,100 on
+Normal), each level after it 250 more, and each one pays **+1 max life** and nothing else. If an update changes the
+costs, your save keeps its level and its share of the way to the next.
+
+**Every fifth level** is a milestone: **+1 max life** and a **title**, and most raise how many main items or companions
+you may wear (see [Equipment Slots](#equipment-slots)):
+
+| Level | Title | Main items | Companions |
+|---|---|---|---|
+| 0-4 | - | 1 | 1 |
+| 5 | Unbound | 2 | 1 |
+| 10 | Reclaimer | 3 | 1 |
+| 15 | Warden of Ash | 4 | 2 |
+| 20 | Seal-breaker | 5 | 2 |
+| 25 | Sovereign | 5 | 3 |
+| 30 | Ascendant | 5 | 3 |
+| 35 | Weavebinder | 6 | 3 |
+| 40 | Eternal | 7 | 3 |
+
+**Every other level** up to 39 offers a choice: tap the Asc panel and take **one of three rewards** (four with the
+Insight perk). An offer holds at least one lasting perk and one one-time reward while any are left, and closing it
+doesn't change it. **Not now** leaves it waiting; choices stack up, and each pays at the level it was earned, so
+waiting costs nothing.
+
+*One-time rewards*, scaled to the level the choice was earned at:
+
+- **Gold**, 85 a level (1,020 at level 12), or **Shards**, **Wood** or **Stone**, 15 a level.
+- **Rare cards** in your deck's colors: two rares (levels 1-12), four rares (13-22), or two rares and two mythics (23 on).
+- **An item**: a random Common (levels 1-12), Uncommon (13-22) or Rare (23 on).
+- **A booster pack** of an edition you have unlocked.
+- **A map fragment**: a treasure-map piece you're still missing (offered only while there is one).
+- **A blueprint** you don't know yet (only while one is left).
+- **A Bronze Challenge Coin.**
+- **Goodwill**: +3 reputation in your Capitol (only once it stands).
+
+Cards, items, packs and map pieces are turned over on a reward screen like any loot.
+
+*Lasting perks* last the whole run, and most have ranks: take one again and it goes up a rank, until its last. Some
+are only offered from a certain level, two pairs exclude each other, and a perk at its last rank isn't offered again.
+They are all listed below.
+
+**Re-roll.** Don't like an offer? **Re-roll** it once per level for 35 / 40 / 45 / 50 Shards (Easy / Normal / Hard /
+Insane). The new offer avoids the rewards it replaces while there are others to show. The **Gambler** perk allows two
+re-rolls a level at half price - 18 / 20 / 23 / 25 Shards each.
+
+**Your Level sheet.** With no reward waiting, tapping the Asc panel shows your level and title, the Power to the next
+level and the main items and companions you wear, with a **Level sheet** button: every level you have reached and what
+it gave, each perk with what its rank does. Your character sheet has the same button - with a reward waiting it takes
+you straight to the choice.
+
+**Turning it off.** Settings has a **Leveling (Ascendance)** switch. Off, you earn no Power, there is no main-item limit
+(for your guards either), the Asc panel is hidden and your perks do nothing. What you've gained stays - your max life
+too - and switching it back on carries on from there; any main items over your limit then go back in your bag. The
+companion limit holds either way: 3 without Ascendance.
+
+**The lasting perks:**
+
+| Perk | Ranks | What each rank does | First offered at level |
+|---|---|---|---|
+| Appraiser | 3 | Cards sell for 10% / 15% / 20% more (an ante Buy Back still costs what it did). | 1 |
+| Architect | 3 | Buildings and town restores cost 10% / 20% / 30% less. | 1 |
+| Aura of Fear | 3 | Enemies start your duels with 10% / 20% / 30% less life. Never with Challenger's Mark. | 1 |
+| Challenger's Mark | 1 | Enemies start your duels with 20% more life; your wins pay +1 card and a 25% larger resource purse. Never with Aura of Fear. | 11 |
+| Envoy | 2 | A win costs you 15% / 30% less reputation with the beaten color and its allies. Never with Warmonger. | 1 |
+| Far Sight | 2 | Your sight radius +15% / +30%. | 1 |
+| Focused | 1 | Your first mulligan in each game is free - you keep a full hand. | 16 |
+| Gambler | 1 | Two re-rolls a level instead of one, each at half price. | 1 |
+| Guard Focus | 1 | Your roaming guards' first mulligan in each game is free. | 16 |
+| Haggler | 3 | Shop prices -5% / -10% / -15%. | 1 |
+| Home Ground | 1 | +3 life in duels fought on your own land, your towns included. | 6 |
+| Hunter's Ledger | 1 | Your third win over an enemy (by name) adds a rare from its deck to the loot, else a mythic - once per enemy. | 8 |
+| Insight | 1 | Every later level offers 4 rewards, not 3. | 1 |
+| Intimidating | 3 | 5% / 10% / 15% chance that a roaming enemy you have a winning record against flees on the overworld, leaving half its loot and half its Power. Never a boss, war mage, legend, raider or quest enemy. | 1 |
+| Law of Stakes | 1 | Your first ante re-roll each day is free. | 4 |
+| Legend Seeker | 1 | [Legends](#legends) are sighted 15% more often. | 1 |
+| Marshal | 3 | Your roaming guards fight with +4 / +8 / +12 life. | 1 |
+| Mechanic | 1 | Repairing a cracked item costs 75% less. | 1 |
+| Medic | 1 | A defeated roaming guard is out 15 days, not 30 - guards already out heal sooner too. | 1 |
+| Mender | 2 | 30% / 60% chance that the item a defeat would crack holds together. | 1 |
+| Morning Vigor | 3 | +3 life in your first 1 / 2 / 3 duels each day. | 1 |
+| Opening Gambit | 1 | You win the opening coin toss 75% of the time. | 1 |
+| Pact of Embers | 1 | +1 card in your opening hand and -4 starting life, every duel. | 8 |
+| Prospector | 3 | Resource pickups on the map and your mines' weekly income +15% / +30% / +45%. | 1 |
+| Researcher | 1 | Research costs half the Shards and takes 3 days less - 4 instead of 7. | 1 |
+| Scientist | 1 | Each research that completes gives you a rare of each color from that set (up to five). | 1 |
+| Shardwell | 2 | +2 / +3 mana shards at the start of each duel. | 1 |
+| Splinter Cache | 2 | You start each duel with a Clue token; rank II adds a Treasure token. | 6 (rank II: 16) |
+| Spoils of War | 1 | Each win of a roaming guard leaves a rare from the beaten enemy's deck (else a mythic) at your Armory, under Collect Spoils. | 1 |
+| Spoilsman | 2 | +1 / +2 cards on a first win over an enemy (not a champion's). | 1 |
+| Stubborn | 2 | A lost duel costs 25% / 50% less gold and life. | 1 |
+| Swift Feet | 3 | Overworld speed +5% / +10% / +15%. | 1 |
+| Temple Priest | 1 | Your Temple's weekly offering pays twice the cards. Offered once your Capitol has a Temple. | 1 |
+| Warmonger | 2 | A win gives you 15% / 30% more reputation with the beaten color's enemies. Never with Envoy. | 1 |
+| Zealot | 3 | +8% / +15% / +25% Power from everything. | 1 |
+
+Perks that change a duel work in your own duels - the Arena included, not Inn tournaments - and the guard perks in your
+roaming guards' fights. The extra cards from Challenger's Mark, Hunter's Ledger and Spoilsman come with the wins that
+pay by rank (see [What a Win Pays](#what-a-win-pays)). Focused, Guard Focus and Splinter Cache's second rank are allowed
+from level 15, and Challenger's Mark from 10, but those are milestone levels, so the first offer comes a level later.
 
 ### Buildings & the Economy
 
@@ -343,10 +597,9 @@ your Capitol can also be upgraded into an Exchange, which trades at better rates
 Shards - the Exchange takes over the Trader's slot, so a town has one or the other, never
 both), an **Outlook** (expands your fog-of-war vision radius - 2x in a town, 3x in your
 Capitol), a **Teleporter** network for fast travel between any two Teleporter-equipped locations,
-and an **Archaeologist** who can be sent on week-long expeditions for a chance at boosters and
-rare items. A **Temple** (Capitol-only) counts the duels you win each week by the enemy's colors (a two-color
-enemy counts half for each) and, when the week ends, pays 1 rare card of the color you defeated most, 2 uncommons of
-the second and 4 commons of the third, from the sets you have unlocked. Guards can be hired to defend a town, paid weekly out of your own coffers.
+and an **Archaeologist** who can be sent on week-long expeditions for a chance at boosters, rare items and
+treasure-map fragments. A **Temple** (Capitol-only) turns the duels you and your guards win into a weekly offering of
+cards - see [The Temple](#the-temple). Guards can be hired to defend a town, paid weekly out of your own coffers.
 
 **Restoring a town.** A ruin's Job Board offers the restoration. The fee grows with your realm: 200 gold and 20 wood
 while you hold fewer than five towns, then 50 gold and 10 wood more for every five you hold (250 + 30 from five
@@ -359,9 +612,36 @@ starts out the same way.
 
 **Town reputation caps building.** Each point of a town's own reputation allows three buildings
 there. You get +1 for restoring the town, +2 when it becomes your Capitol, +1 for each attacking mage
-you beat there, +1 for winning its Inn tournament, +1 when you clear a dungeon near it, and more from
+you beat there, +1 for winning its Inn tournament, +1 when you clear a dungeon near it, +1 for driving raiders
+off it (and -2 if you don't - see [Town Raids](#town-raids)), and more from
 its Job Board quests. **Destroy Building** clears a slot, with no refund. A Capitol's colored Land Shop
 can be repaired (50 gold) once you've visited that color's AI capital.
+
+### The Temple
+
+The **Temple** is a Capitol-only building (300 gold and 100 Stone on Normal; 25% less on Easy, 25% more on Hard, 50%
+more on Insane) that turns your victories into cards.
+
+- **Honor.** Every duel you win honors the colors of the enemy you beat - a two-color enemy counts half for each
+  color, a three-color one a third. Colorless enemies, Arena duels and Inn tournaments don't count. Your guards' wins
+  do: a town guard turning back a mage, and a roaming guard beating a mage or a raider, watched or simulated. The count
+  runs from day one, Temple or not, so a Temple built mid-week pays for the whole week.
+- **The chart.** Inside, the Temple shows this week's honor as a bar for each color, the most honored at the top with
+  1st, 2nd and 3rd marked (ties go in White, Blue, Black, Red, Green order), and how many days the week has left.
+- **The offering.** When the week ends (days 8, 15, 22 and so on), the most honored color gives **1 Rare card**, the
+  second **2 Uncommons** and the third **4 Commons** - non-land cards of that color from the sets you have unlocked,
+  one-color cards first. With fewer than three colors honored, fewer places pay. Then the count starts over. A week that
+  ends with no Temple in your Capitol pays nothing.
+- **Collect Offering.** The cards wait at the Temple - a notice tells you the offering is ready - and keep piling up,
+  week after week, until you come for them. The line under the chart says how many cards are waiting, from how many
+  weeks, and **Collect Offering** (beside Destroy Building) opens them the way a booster opens: face down, turned over
+  by Done, added to your collection by the second Done, with the "All" box to auto-sell. A destroyed Temple keeps your
+  waiting cards for you - rebuild it and they're there - and New Game+ adds anything still waiting to your collection.
+- **Temple Priest.** This perk ([Ascendance](#ascendance---your-level)) doubles every offering: 2 Rares, 4 Uncommons
+  and 8 Commons. It's offered only once your Capitol has a Temple.
+
+Your roaming guards' **Spoils of War** (another perk) wait the same way at your Capitol's Armory: Manage Guards shows
+how many cards wait, and the Guards window's **Collect Spoils** opens them.
 
 ### Progressive Set Unlocks
 
@@ -390,7 +670,10 @@ every enemy but leave loot behind and it waits for you to come back for the loot
 quarter of the days it had left. Stripping its loot while its guards still stand also cuts it to a
 quarter. Side-quest-linked dungeons get extra grace: three failed attempts before they're
 gone for good, and 30 extra days while a quest still points at them. Story-critical locations never
-disappear.
+disappear - except a few that leave once cleared: the five Strixhaven classrooms, the Court of Paliano, the Temples of
+Chandra and Liliana, the Aerie, and six of the [Legendary Dungeons](#legendary-dungeons) - the Ancient Opal Cavern,
+Eclipsed Elven Court, Ashling's Domain, Planeswalker Dueling Club, Idyllic Beachfront and Peaceful Clearing: a full
+clear and the walk out take them off the map until they return.
 
 While an ordinary dungeon stands, it sends creatures into the land around it, more the longer it
 stands - see [Where the Monsters Come From](#where-the-monsters-come-from).
@@ -431,8 +714,8 @@ its fourth).
   several such quests, each gets an equal turn.
 - **Invasions** (goblins, merfolk, the undead, elves, soldiers, orcs, giants, demons, knights, bandits and
   vampires) ask for a few wins against the invaders - 2 on Easy, 3 on Normal and Hard, 4 on Insane - then
-  for their leader. The leader matches your rank, and comes one rank tougher once the town that asks has
-  10 or more reputation with you. The reward grows with the leader's rank: 300 / 500 / 800 / 1,200 gold
+  for their leader. The leader is one rank above the toughest invader you beat (an Archmage at most), and on Hard
+  and Insane he starts with a Gemstone Mine in play. The reward grows with the leader's rank: 300 / 500 / 800 / 1,200 gold
   and 2 or 3 local reputation. A town won't offer the same invasion twice in a row.
 - **Eviction Notice** sends you to clear one of the nearer dungeons or caves - a different one each time.
 - **Svyelunite Temple**, on a blue shore, is a battle already under way between the Vodalian merfolk and the
@@ -458,12 +741,25 @@ Beyond the tavern, remember the world itself takes sides: depending on your stan
 color, their lands are more hostile or more friendly — travel speed, shop prices, town access,
 and who their mages hunt all follow your reputation. And once you've built your Capitol, it hosts
 an **advanced Arena** with a challenge tier (and champion fights) no ordinary town offers.
-Arena fighters play their own decks, the same ones they'd bring to a fight in the wild. The
-brackets at the five AI capitals, and at your own Arena until you upgrade it to level 2, never
-seat Apprentice-tier fighters: about half the field are Adepts, a third Masters and the rest
-Archmages. Win all three rounds at an AI capital and you take one item from that capital's own set of eight, in its
-color's style - helper shoes, a Planeswalker amulet, a color ring, a mask, armor and weapons - and no two capitals
-share an item.
+
+Arena fighters play their own decks, the same ones they'd bring to a fight in the wild, and a bar under each portrait
+shows its rank: a short red bar for an Apprentice, brown for an Adept, silver for a Master and a long gold one for an
+Archmage. The brackets at the five AI capitals, and at your own Arena until you upgrade it to level 2, never seat
+Apprentice-tier fighters: about half the field are Adepts, a third Masters and the rest Archmages. A Level 2 Arena's
+Challenging bracket seats only Masters and Archmages, at least two of them Archmages.
+
+- **The field is fixed for the day.** An Arena draws its bracket once a day: walk out and back in, or reload, and you
+  meet the same opponents until the day turns. Lose there - or concede by leaving mid-bracket - and your next visit
+  draws a new field, which holds until your next loss or the next day.
+- **One prize a week.** Win a bracket and that Arena (each mode of it) stays closed to you until the week turns
+  (days 8, 15, 22 and so on).
+- **Coin holders join your own Arena.** When enemies hold your Bronze Coins, one of them may take a seat in your own
+  Arena's bracket: a 50% chance with one such enemy, 75% with two, certain with three or more (in the Challenging
+  bracket, only a Master or Archmage holder). Beat it there and you take the coin back.
+- **AI capital prizes.** Win all three rounds at an AI capital and you take one item from that capital's own set of
+  eight, in its color's style - helper shoes, a Planeswalker amulet, a color ring, a mask, armor and weapons - and no two
+  capitals share an item. One time in nine the prize is that color's **Map Fragment** instead (see
+  [Lost Treasure Hunts](#lost-treasure-hunts)).
 
 ### Item Economy & Shops
 
@@ -554,8 +850,8 @@ their own custom deck and drops.
 
 ### Blue
 
-Blue's territory leans heavily on caves and flooded ruins - the **Sea Temple**, **Deep Caverns**,
-and **Djinn's Palace** among them. **Idyllic Beachfront** is the newest full dungeon here, home to
+Blue's territory leans heavily on caves and flooded ruins - the **Sea Temple** and **Djinn's Palace** among
+them. **Idyllic Beachfront** is the newest full dungeon here, home to
 six new bosses plus a returning favorite (Plagon) now folded into the same fight.
 
 ### Black
@@ -615,17 +911,66 @@ wave of equipment tied to the plane's newest dungeons (boots, crowns, armor, and
 built around the specific card it grants you at the start of a fight). Check what a boss drops
 before you commit to fighting them if a specific item is your goal.
 
-**Your equipment slots.** The character doll on the inventory and Armory screens shows every slot you
-have. Besides the usual ones - both hands, body, boots, neck, the medal and the staff slot - there are:
+### Equipment Slots
 
-- **Two utility slots** for Runes, Omenstones, Torches and the Bonfire, so you can carry, say, a Torch
-  and a rune at once. Two lights don't add up: only the stronger one counts.
-- A **Blessing** slot (the Blessings of Speed, Windwalker's Blessing), a **Heart** slot (the Captive
-  Souls), a **Pocket** slot (the Generous Ingot) and a **Token** slot (the Tokens of Bounty, Blades,
-  Insight and the rest). These always worked; they now show on the doll, under the first ability slot and
-  beside the medal.
+The character doll on the inventory and Armory screens shows every slot you have. Pick an empty slot and the screen
+tells you what goes there, with the items that fit listed beside it.
 
-Pick an empty slot and the screen tells you what goes there.
+**The seven main slots** hold your armor and what you carry in your hands:
+
+| Slot | What goes there | Items |
+|---|---|---|
+| Head | helms, masks, hats, crowns | 45 |
+| Neck | amulets, pendants and mana trinkets | 66 |
+| Body | armor, robes, cloaks | 68 |
+| Left hand | weapons, shields, books, wands, trinkets | 95 |
+| Right hand | the same | 106 |
+| Legs | pants, skirts, breeches, greaves | 21 |
+| Boots | boots, shoes, slippers | 83 |
+
+**How many you may wear.** With [Ascendance](#ascendance---your-level), your level limits how many **main items** you
+wear at once, whichever of the seven slots they are in: **1** to start, **2** at level 5, **3** at 10, **4** at 15,
+**5** at 20, **6** at 35 and all **7** at 40. Only filling an *empty* main slot counts - swapping the item in a slot
+you already wear is always allowed. An item's description shows the count ("Main items 2 / 3 - one more at Ascendance
+15"), and so does the Armory's doll. If you ever wear more than your level allows - a New Game+ that kept your gear, or
+Ascendance switched back on in Settings - the extra items go back in your bag: Head first, then Legs, Boots, the hands
+and Body, Neck last. A character without Ascendance has no main-item limit.
+
+**Gauntlets.** Two Mythic gauntlets (5,000 gold; each costs you 2 life in every duel) open a hand slot of their own.
+The **Sinistral Gauntlet**, worn in your left hand, opens a second right hand; the **Dextral Gauntlet**, worn in your
+right, a second left. The extra hand is a bonus: what you wear in it never counts toward the main-item limit (the
+gauntlet itself does). Take the gauntlet off and the extra hand's item comes off with it.
+
+**The other slots** never count toward the limit:
+
+- **Staff** - the five colored Staffs and the Staff of Speed, used from the HUD.
+- **Two Utility slots** - runes, Omenstones, Torches, the Bonfire, the Yin-Yang rune, the Spade and the Staffs of
+  Flight, Healing and Invisibility. Anything that fits one fits the other, so you can carry, say, a Torch and a rune at
+  once. Two lights don't add up: only the stronger one counts.
+- **Blessing** - the Blessings of Speed and Windwalker's Blessing.
+- **Heart** - the Captive Souls.
+- **Token** - the Tokens of Bounty, Blades, Insight and the rest.
+- **Pocket** - the Generous Ingot.
+- **Medal** - the seven medals that set a duel's handicap and its rewards.
+
+**Companions.** An item that starts your duels with a creature of yours on the battlefield is a **companion**, and its
+description says so ("Slot: Right - Companion"). You may wear **1** companion, **2** from Ascendance 15 and **3** from
+25; a character without Ascendance (or with it switched off in Settings) may wear 3. The limit counts every slot, the
+gauntlets' extra hands and the Token slot included, and an item that brings two creatures still counts once. Trading
+one companion for another is always allowed. Over the limit, the extras come off - the extra hands and the Token first,
+Boots last.
+
+**Your roaming guards** are dressed from your Capitol's Armory storage, one item per slot - never in the Staff or
+Utility slots or a gauntlet's extra hand. With Ascendance a guard wears main items by its rank: **2** for an Apprentice,
+**3** for an Adept, **4** for a Master and **5** for an Archmage. A guard lowered in rank sends what no longer fits back
+to the storage.
+
+**Cracked items.** Lose to a boss (anywhere but the Arena), or run out of life and get carried home, and one item you
+wear **cracks**: on Easy and Normal one of your Head, Neck, Body, Legs or Boots items, on Hard and Insane any item at
+all. A cracked item comes off and can't be worn until you repair it from the inventory, for 40% of its list price. On
+Easy and Normal, eleven mana items worn at the neck (Black Lotus, Lotus Petal, Sol Ring and the like) escape a crack
+half the time. The **Mender** perk can save the item, **Mechanic** makes repairs 75% cheaper, and Settings can switch
+cracking off.
 
 **Runes and Omenstones** are reusable teleports that cost a shard per use. Everyone starts with a
 **Homeward rune**, which takes you home - to just outside Orazca, or your Capitol once it stands.
@@ -670,7 +1015,9 @@ share takes over above 2,500 gold on Easy, 2,000 on Normal, 1,500 on Hard and ab
 Gold in the Bank is safe.) Life: 10% of your max life on Easy, 20% on Normal, 30% on Hard and Insane.
 And your ante. Handing over a Bronze Coin on the "Card Lost" screen saves your gold and your anted
 cards (the life loss still applies). If your life runs out you're carried home: to your Capitol, or to
-Orazca before it stands. Losing inside a rotating dungeon usually makes that dungeon vanish.
+Orazca before it stands. Losing inside a rotating dungeon usually makes that dungeon vanish. Lose to a boss, or run
+out of life, and one item you wear cracks too (see [Equipment Slots](#equipment-slots)); the Stubborn perk cuts the
+gold and life a defeat costs.
 
 **Enemies learn your tricks.** Beat the same enemy five times in a row on Normal, four on Hard or three on
 Insane, and every duel after that it starts with a **Wastes** in play - a notice tells you the first time, as that
@@ -682,38 +1029,6 @@ enemy, whichever of its decks it brings, and covers every duel but Inn tournamen
 **Archmages** start every duel with a Wastes as well, except in town, Ring City, capital and Capitol fights
 and Inn tournaments - so an Archmage on a streak starts with two.
 
-**Notoriety: word of your wins spreads.** Win five duels in a row - against anyone - and from your sixth duel
-on, enemies start with a **Wall** token in play: a 0/1 Wall from the 6th duel, 1/2 from the 11th, 2/4 from the
-16th and 3/6 from the 21st. Keep winning and a **second Wall** joins it: from the 26th duel the enemy has the 3/6
-plus a 0/1, and the second one grows the same way - 1/2 from the 31st, 2/4 from the 36th and 3/6 from the 41st on.
-Every Wall has defender, so it blocks but never attacks; from the 1/2 on it also deals damage when it blocks.
-Apprentices and Adepts bring plain Walls, Masters Walls with reach and Archmages Walls with flying. Which enemies do it
-depends on the difficulty:
-
-| Difficulty | Enemies that bring a Wall |
-|---|---|
-| Easy | Archmages |
-| Normal | Masters and Archmages |
-| Hard | Adepts, Masters and Archmages |
-| Insane | Everyone |
-
-Past that, two more Walls come for **every** enemy on every difficulty: a flying 3/6 Wall from your 46th duel, and a
-second flying 3/6 from the 51st. Each also gives the enemy 25% more life - +25% from the 46th duel, +50% from the
-51st. So on Insane an enemy facing a 50-win streak starts with four Walls and half again its life.
-
-Word of a streak also draws stronger opponents. Every 5 wins in a row tilts the roaming spawns toward higher ranks
-(fewer Apprentices, more Masters and Archmages), and from 30 wins in a row the toughest creatures of the land can come
-out sooner than your total wins would allow. Dungeons and caves you enter for the first time feel it too: from 10 wins
-in a row some of their creatures step up a rank, and from 20 some step up two - at 30 wins about one in four goes up a
-rank and one in five goes up two. A place keeps what you found in it until it rotates away. Lose once and it all
-starts over with your streak.
-
-Each Wall card says why it's there, under a bold **Notoriety** line with the wins it stands for; the 45+ and 50+
-cards also print the life they add. Lose once (a Bronze Coin still counts as a
-loss) and your streak starts over. It counts the same duels as an enemy's own streak above, except the Arena: an Arena
-duel neither adds to your streak nor resets it, though Arena fighters still bring the Walls it has earned. New Game+
-starts it from zero.
-
 **The first two weeks are eased.** In week 1 (days 1-7) a monster starts its duel with half its life,
 but never fewer than 20; in week 2 (days 8-14) with three quarters, never fewer than 25. A monster that
 already has less keeps what it has. Bosses, legends, Arena and Inn fights, war mages and your guards'
@@ -723,6 +1038,61 @@ stronger inhabitants only as the weeks go by.
 Difficulty also scales what a win pays in gold and resources (half again as much on Easy, a quarter more on
 Normal, the base amount on Hard and a fifth less on Insane), and a new world on Normal, Hard or Insane starts
 with slightly fewer functioning Neutral towns and ruins to restore.
+
+### Enemies That Adapt to You
+
+Two parts of your own record shape the enemies you meet, on top of the climb week by week: your **notoriety** - how
+many duels you've won in a row - and your **win ratio** over your last 50 duels. Both count the same duels: every duel
+you fight yourself except Arena duels (which neither add nor reset anything), Inn tournaments, the Deck Tester and your
+guards' fights. A Bronze Coin still counts as a loss. New Game+ starts both from zero.
+
+**Notoriety: the Walls.** Win five duels in a row - against anyone - and from your sixth duel on, enemies start with a
+**Wall** token in play: a 0/1 Wall from the 6th duel, 1/2 from the 11th, 2/4 from the 16th and 3/6 from the 21st. Keep
+winning and a **second Wall** joins it: from the 26th duel the enemy has the 3/6 plus a 0/1, and the second one grows
+the same way - 1/2 from the 31st, 2/4 from the 36th and 3/6 from the 41st on. Every Wall has defender, so it blocks but
+never attacks; from the 1/2 on it also deals damage when it blocks. Apprentices and Adepts bring plain Walls, Masters
+Walls with reach and Archmages Walls with flying. Which enemies do it depends on the difficulty:
+
+| Difficulty | Enemies that bring a Wall |
+|---|---|
+| Easy | Archmages |
+| Normal | Masters and Archmages |
+| Hard | Adepts, Masters and Archmages |
+| Insane | Everyone |
+
+Past that, two more Walls come for **every** enemy on every difficulty: a flying 3/6 Wall from your 46th duel, and a
+second flying 3/6 from the 51st. Each also gives the enemy 25% more life - +25% from the 46th duel, +50% from the 51st.
+So on Insane an enemy facing a 50-win streak starts with four Walls and half again its life. Each Wall card says why
+it's there, under a bold **Notoriety** line with the wins it stands for; the 45+ and 50+ cards also print the life they
+add. Your notice log notes each step as you reach it ("Notoriety level 2 - 10 wins in a row: ...") and the end of a
+streak. Arena fighters still bring the Walls your streak has earned.
+
+**Notoriety: stronger opponents.** Word of a streak also draws tougher foes:
+
+- **Roaming ranks.** Every 5 wins in a row, up to 50, tilts the roaming spawns toward higher ranks: each step weighs
+  Apprentices 6% lighter and Masters 12% and Archmages 20% heavier (Adepts stay as they are). On Insane, in weeks 7-10,
+  on the Wasteland, the Apprentice / Adept / Master / Archmage mix goes from 30 / 39 / 25 / 6 with no streak to
+  19 / 35 / 35 / 10 at 25 wins and 10 / 32 / 44 / 14 at 50 - where your total wins let them in (next point).
+- **The total-wins gate.** Many of the realm's tougher creatures only roam once your total wins reach a step - 20, 60
+  and 151 wins. From 30 wins in a row, the next step opens early.
+- **Dungeons and caves** you enter for the first time: from 10 wins in a row, 20% of their creatures step up a rank;
+  from 20, 25% step up one rank and 5% two; from 30, 25% and 20%; from 40, 25% and 30%; from 50, 25% and 40%. A place
+  keeps what you found in it until it rotates away.
+
+Lose once and your streak, its Walls and its tilt all start over.
+
+**Your win ratio.** The game remembers your last 50 counted duels. With fewer than 25 on record nothing happens. From
+25 duels the roaming rank mix shifts by up to 5 percentage points, and at 50 duels by up to 10. The full shift comes
+at 80% won (20 of 25, 40 of 50) - toward tougher ranks - and at 20% won (5 of 25, 10 of 50) - toward easier ones. An
+even record changes nothing, and in between the shift is in proportion: 30 of 50 won is +3.3 points, 35 of 50 is +6.7.
+The points move out of Apprentices into Adepts, Masters and Archmages in their own proportions - or, below an even
+record, back into Apprentices. It comes on top of the week, the land, the difficulty and your notoriety, and like
+them it can't open a rank the week hasn't: week 1 still has no Masters, and Archmages roam only from week 4. Example:
+Normal, weeks 4-6, the Wasteland - 65 / 24 / 10 / 1 becomes 55 / 31 / 13 / 1 at +10 and 75 / 17 / 7 / 1 at -10.
+
+Unlike a streak, one loss doesn't wipe it, and a bad run eases the world within weeks, since only the last 50 duels
+count. It covers every creature roaming the world map, raiders included. (A save from before 1.21 starts its record
+from its lifetime wins and losses, at the same ratio.)
 
 
 ---
@@ -737,7 +1107,8 @@ than guess. Nothing here is required reading.
 
 Five factions, one shared pool. **Your standing with the five colors sums to zero** — the five are
 a wheel, and almost every action pushes one way and pulls the others. You cannot be everyone's
-friend; picking allies is the point. (The few exceptions are listed below.)
+friend; picking allies is the point. (The few exceptions are listed below - among them two Ascendance perks that
+tilt every win in your favor.)
 
 **The wheel.** Each color has two allies and two enemies:
 
@@ -770,10 +1141,12 @@ Green +2, White +2. Now White −8, Blue −11, Black +3, Red +9, Green +7 - sti
 White and Blue creatures: +2 Red a win, while White and Blue sink with every one. If one color is at
 +80, the other four share about −80.
 
-**The exceptions.** Only three things add or take reputation outside the wheel: some color quests
+**The exceptions.** Only these add or take reputation outside the wheel: some color quests
 pay a flat +1 or +2 with the color that asked, the five "Find the ... Capital" quests (from your
-Capitol) pay +2 with each of your own colors, and bringing down a color's castle costs a flat 50
-with that color.
+Capitol) pay +2 with each of your own colors, bringing down a color's castle costs a flat 50
+with that color - and two [Ascendance](#ascendance---your-level) perks: **Envoy** shrinks what a win
+costs the beaten color and its allies (15% / 30%), and **Warmonger** grows what it gives that color's
+enemies (15% / 30%).
 
 **The five tiers**, and what each actually does:
 
@@ -897,7 +1270,8 @@ Other Armory notes:
 - Prices are 25% cheaper in your own towns and 25% pricier in an AI color town, before reputation.
 - **Storage.** Your Capitol's Level 2 Armory has a storage: put spare equipment (anything with a slot
   that you are not wearing) in from your inventory, and take it back out there. A roaming guard's
-  **Equipment** button dresses it from that storage, one item per slot.
+  **Equipment** button dresses it from that storage, one item per slot - with Ascendance up to 2 / 3 / 4 / 5 main
+  items for an Apprentice / Adept / Master / Archmage guard, and never the Staff, Utility or gauntlet slots.
   What a guard wears fights with it - its own bonuses on its side, its items' opponent effects on
   the mage's - whether you watch the duel or let it simulate, and boots make it walk faster.
   Dismissing or losing a guard returns its equipment to the storage; only the deck can be forfeited.
@@ -978,7 +1352,14 @@ exploring its ground are real ways to pick up cards you couldn't buy.
 ### Races
 
 Your race decides your look, your four card sets and two of your five starting shop blueprints. It
-doesn't change any stats. Standard, Constructed and Pile starting decks are built from your race's sets,
+doesn't change any stats.
+
+**Your look.** Your portrait is a Magic card's art, cropped to show the whole figure - 405 of them in all. Eleven races
+have a male and a female pool (Angel, Devil, Dwarf, Elf, Goblin, Human, Kor, Leonin, Merfolk, Metathran and Vampire);
+the Phyrexian, Undead, Viashino, Werewolf and the five dragons share one pool between both. Step through them on the
+Create a Character screen. On the map, fourteen races walk as hand-dressed characters, each pair carrying two
+different weapons; the Phyrexian is a biomechanoid (red for the female, blue-steel for the male), and the five dragon
+races are a young dragon in their own color. Standard, Constructed and Pile starting decks are built from your race's sets,
 no AI color ever holds them, and your own towns' Inn tournaments use them.
 
 | Race | Sets | Tribal shops |
@@ -1029,7 +1410,8 @@ loss costs nothing beyond the entry - the coin is the only prize.
 
 **One coin per enemy.** If a Fox already holds a coin of yours, the option won't be offered again
 against Foxes until you've won it back. (Bosses, Arena fights and tournament matches never take
-one at all.)
+one at all.) A coin holder can also turn up in your own Arena's bracket - see
+[Ante, Tournaments & Hostile Lands](#ante-tournaments--hostile-lands).
 
 ### Inn Tournaments
 
@@ -1047,7 +1429,12 @@ unless you've entered it or have prizes waiting. The entry fee scales with the t
   Jumpstart products, whatever your race, and the entry is 500 gold or 50 Shards (or a Bronze
   Coin). After you have played one Jumpstart tournament - on any run, New Game+ included - Inns
   only offer Draft and Sealed.
-- **Winning a tournament** raises that town's reputation with you by 1.
+- **Winning a tournament** raises that town's reputation with you by 1 - once a week per town: after a win, that
+  Inn deals no new tournament until the week turns (days 8, 15, 22...), and its line reads "Won - next on day N".
+- **Simulated AI rounds** belong to their own tournament and round: walk out of the Inn while they run and the next
+  press of the button carries on, and loading an earlier save mid-tournament can no longer end it a round early.
+- The world map's **Reputation view** shows, at each town you've visited, what its Inn is running this week -
+  "Inn: Draft - <set>", or "entered", the round you're in, or "prizes waiting".
 - Tournament wins **don't** count toward your win/loss record, and don't push up the enemy tiers
   you meet in the world.
 - A **ruined town's** Inn is boarded up until you restore the town at its Job Board — restoring it
@@ -1154,17 +1541,20 @@ A New Game+ is a **new game plus your collection**. Press Start and it asks what
   3 on Hard and every 2 on Insane (your Capitol counts as a town), at most 5 per color. They come once, on
   top of the colors' usual attacks.
 - **Keep items and equipment** (on by default) - your bag, what you wear and your Armory's storage come along
-  (the storage into your bag). Off, you start with the new game's kit.
+  (the storage into your bag). Off, you start with the new game's kit. With Ascendance back at level 0 you may
+  wear one main item and one companion, so the rest of what you wore goes into your bag.
 
-Everything else resets to a fresh run: shop blueprints, researched editions, research in progress, quests and
-story flags, color reputation, statistics, blessings, legend sightings, enemies' win streaks, your notoriety and any Bronze
-Coins enemies were holding. **Every New Game+ starts with exactly five coins** - 1 Challenge, 1 Silver and 3
+Everything else resets to a fresh run: your Ascendance level, Power and perks, shop blueprints, researched
+editions, research in progress, quests and
+story flags, color reputation, statistics, blessings, legend sightings, enemies' win streaks, your notoriety and
+win-ratio record, and any Bronze Coins enemies were holding. Temple offerings and guard spoils still waiting are added
+to your collection. **Every New Game+ starts with exactly five coins** - 1 Challenge, 1 Silver and 3
 Bronze - whatever you carried. Your **roaming guards are released**: each one's deck goes into an empty deck
 slot and its gear into your Armory's storage. The one thing that doesn't come back is the Jumpstart
 tournament: that's once per player.
 
 Things worth knowing before you press it: your **max life returns to the difficulty's starting value**
-(accumulated bonuses are not carried), an **in-progress tournament is discarded**, including cards
+(accumulated bonuses, Ascendance's included, are not carried), an **in-progress tournament is discarded**, including cards
 you've drafted but not yet banked, and the first two weeks' [eased monsters](#notes-on-difficulty) don't
 apply.
 
@@ -1176,6 +1566,8 @@ apply.
   you adjusts it from there.
 - **Max life grows with your realm:** +1 for every five towns you hold, +1 for the Capitol, and +1
   for each Ring City you have visited, for as long as no AI color holds it.
+- **Max life grows with your level:** +1 at every fifth [Ascendance](#ascendance---your-level) level, 5 to 40, and
+  +1 for every level past 40.
 - **+Life rewards pay once per game** - beat the same legend twice and only the first win raises
   your max life.
 - A **Mystery pickup** (the diamond) can bless you: about one pickup in ten grants **+3 starting
@@ -1184,6 +1576,14 @@ apply.
   it. Dispatched mages are capped at Adept in week 1 and Master in weeks 2–3.
 - Settings has an **"avoid restricted edition art"** toggle (on by default) that steers card art
   away from the black-and-white printings.
+- **Notices** come and go quickly: a banner stays 5 seconds, or 2.5 while more are waiting, and carries up to three
+  at once. The **Log** button on the world map (bottom left; in portrait, beside Info) lists the last 20, newest
+  first, each with its day - six at a time, scroll for the rest. Some news goes only to the log: Power you gain, each
+  notoriety step, a guard's Power, a restored town. A mage marching on one of your towns is tinted red, on anyone
+  else's orange.
+- **Undo in Duels** (Settings, below Card Play Animation Style): **Off**, **Single step** (the default - take back
+  your last action) or **Free** (keep stepping back, one action at a time, until something hidden is revealed - a
+  card drawn, say - or your opponent acts). When a take-back is possible, the prompt's Cancel button reads **Undo**.
 - A run is only lost in the three ways listed under [Winning and Losing](#winning-and-losing):
   your Capitol falls, one AI color holds three Ring Cities, or no free town is left while you hold
   nothing. A lost duel never ends it.
@@ -1234,7 +1634,8 @@ bringing down all five colors' castles. See [Winning and Losing](#winning-and-lo
 ### What does losing a duel cost?
 
 A share of the gold you carry (2% / 5% / 10% / 15% from Easy to Insane, at least 50 / 100 / 150 / 200,
-everything if you carry less - the Bank is safe), 10-30% of your max life, and your ante. See
+everything if you carry less - the Bank is safe), 10-30% of your max life, and your ante - and a loss to a boss,
+or running out of life, cracks one item you wear. See
 [Notes on Difficulty](#notes-on-difficulty).
 
 ### What does my race change?
@@ -1267,7 +1668,7 @@ on its land and what you meet there. The tiers are in
 ### What is the "Net-0" rule? Why does beating one color change the others?
 
 Reputation is only ever moved around the color wheel, never created, so your five standings always add up
-to zero. Beating a creature costs its color 2 and each of its allies 1, and gives each of its enemies 2.
+to zero - unless you take the Envoy or Warmonger perk, which tilt every win in your favor. Beating a creature costs its color 2 and each of its allies 1, and gives each of its enemies 2.
 You can't be everyone's Partner. Worked example and exceptions:
 [Color Reputation, in Detail](#color-reputation-in-detail).
 
@@ -1323,7 +1724,43 @@ Up to 10 side quests at once, each lasting 15 days. Story quests never expire. S
 ### Where did my blessing, token or captive soul go?
 
 Nowhere - they were always equipped and working. Their slots (Blessing, Heart, Pocket and Token) now
-show on the character doll on the inventory and Armory screens. See the [Item Guide](#item-guide).
+show on the character doll on the inventory and Armory screens. See [Equipment Slots](#equipment-slots).
+
+### What is Power? How do I level up?
+
+Power is Ascendance's experience: duels pay by the enemy's rank (more for a first win, a boss or a legend), and so do
+quests, first visits, cleared caves and dungeons, towns and the Arena. Every fifth level gives +1 max life and a title;
+the others let you pick a reward or a lasting perk. Only New Game and New Game+ characters have it, and Settings can
+switch it off. See [Ascendance](#ascendance---your-level).
+
+### Why can't I put this item on?
+
+Your Ascendance level limits how many main items (head, neck, body, hands, legs, boots) you wear - 1 to start, up to 7
+at level 40 - and how many companions (items that start a creature in play): 1, 2 at level 15, 3 at 25. Swapping what's
+already in a slot always works, and a cracked item must be repaired first. See [Equipment Slots](#equipment-slots).
+
+### What are the obelisks? How do I find a treasure?
+
+Each region - the Wastes and the five colors' lands - hides one treasure. Its obelisk gives one piece of that
+region's map a week; Map Fragments from the AI capitals' Arenas and the Archaeologist add more. Dig with the Spade
+(5 Shards a dig) within 2 tiles of the X, or walk onto the X once the map is whole, and beat the guardian. The colors'
+treasures hold the keys to their castles. See [Lost Treasure Hunts](#lost-treasure-hunts).
+
+### Why can't I get into a color's castle?
+
+Its gates are sealed: carry that color's Secret Entrance Key, dug up with its treasure, or be at War with it. See
+[Lost Treasure Hunts](#lost-treasure-hunts).
+
+### One of my towns is being pillaged - what do I do?
+
+Beat 5 of the raiders around it within 7 days for +1 town reputation, 50 Wood and 50 Stone; let the days run out and
+it's -2 reputation. A roaming guard with "Help with pillaged towns" ticked rides out to help. See
+[Town Raids](#town-raids).
+
+### Why are the enemies getting tougher (or easier)?
+
+The weeks, your standing with the land's color, the dark, a win streak and - from 25 duels on - your win ratio over
+your last 50 duels all shift the ranks you meet. See [Enemies That Adapt to You](#enemies-that-adapt-to-you).
 
 ### Can I play this on Android?
 
@@ -1333,7 +1770,7 @@ Yes. Every release includes an Android version (Android 8.0 or newer), installed
 2. Open it and allow installs from your browser or file manager when asked (it's signed by us, not the
    Play Store).
 3. Grant the storage permission it asks for.
-4. On first launch, tap Download for the game data (about 220 MB, use Wi-Fi). The app restarts, and after
+4. On first launch, tap Download for the game data (a few hundred MB, use Wi-Fi). The app restarts, and after
    that it plays offline.
 
 It installs alongside the official Forge app. Installing a newer APK over the old one keeps your saves.
@@ -1355,7 +1792,7 @@ game built on the Forge rules engine.
 ### How do I update the game to the latest version of Forge?
 
 You can't, and you don't need to. Each release is pinned to one tested Forge build, named in its release
-notes - 1.16 runs on Forge 2.0.16 (the 09.30 build). Forge's own updater is switched off on purpose,
+notes - 1.21 runs on Forge 2.0.16 (the 10.14 build). Forge's own updater is switched off on purpose,
 because a different engine underneath can break your world. Engine updates come to you with new Forsaken
 Realms releases.
 
@@ -1381,7 +1818,7 @@ session (grab it before restarting, or pick the matching dated file). Screenshot
 
 ---
 
-*This guide covers The Forsaken Realms v1.16, as of 2026-10-01. See `MOD_CHANGELOG.md` in the
+*This guide covers The Forsaken Realms v1.21, as of 2026-10-15. See `MOD_CHANGELOG.md` in the
 repository for the full history of how the game got here, if you're curious.*
 
 ## Support & Community

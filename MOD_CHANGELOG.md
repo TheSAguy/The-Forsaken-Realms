@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 618: the Game Guide & FAQ brought up to 1.21; README; the v1.21 release notes drafted (2026-10-15)
+
+The user: "Can you update the game guide and any other documentation to be up to speed with 1.21." The guide had last
+been brought up to date for 1.17 and had nothing on 1.18-1.21. Two research passes checked every number against the
+current code and config; the guide took them with links fixed and a few cuts.
+
+- **GUIDE.md** (and GUIDE.html, regenerated - `guide_html.py --check`: 88 headings, 170 links, all resolve):
+  - "What's New in 1.21" replaces 1.17's, following the user's trimmed release notes, with a pointer for 1.17 players.
+  - New sections: **Ascendance - Your Level** (Power by source, the level costs by difficulty, milestones, rewards,
+    re-roll, the Level sheet, all 35 perks), **Equipment Slots** (the seven main slots with item counts, the main-item
+    and companion limits, gauntlets, guards, cracking), **Lost Treasure Hunts** and Castle Keys, **Town Raids** (the
+    radius by week), **The Temple**, and **Enemies That Adapt to You** (notoriety, now one section, and the win ratio).
+  - Updated: the Arena (rank bars, the field fixed for the day and redrawn after a loss, coin holders, Level 2's
+    Archmages, the Map Fragment prize), Inn tournaments (one win per town a week), the fleeing enemy, the day length
+    (194.4 s; Speed-Up x50), legend frequency, invasion leaders (round 481), leave-on-clear story places, raids in town
+    reputation, castles' keys, New Game+, max life, lost-duel cracking, races' portraits and hero sprites, the notices
+    Log, Undo in Duels, Deep Caverns gone, the engine (10.14), the footer.
+  - Six new FAQ entries (Power, the item limit, obelisks, castles, pillaged towns, tougher or easier enemies).
+- **README.md**: leveling, the Capitol's newer buildings, current counts (2,100+ enemies, 350+ dungeons and caves,
+  670+ items, 20 races), the Android build.
+- **RELEASE_NOTES_v1.21.md**: the draft as the user trimmed it, with "New game recommended" at the top.
+- Found on the way, not changed here: since round 583's levelingSpeed 0.85 the intro's story quest pays 43 Power,
+  not the 50 that level 1 costs, so the intro alone no longer reaches level 1 (`+43 Power - story: Entering The
+  Forsaken Realms (total 43, level 0)` in the user's log).
+
 ## Round 617: twenty small stock and Basic sprites become LPC characters (2026-10-15)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_617.py`. From the numbered
