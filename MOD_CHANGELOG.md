@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 610: the town raid radius grows by week - 15, 17, 20 tiles (2026-10-15)
+
+The user, after the count on save 1 (4+ dungeons within 15 tiles: 1 of 18 raidable towns; within 20: 9): "Let's have
+it scale. 15 Week 1 ... Then 17 week 2, finally 20 week 3. (day 22+). Easy can start week 2."
+
+- **`pillageRadiusByWeek`** (settings.json; TuningData, default [15, 15, 17, 20]): the radius that counts a town's
+  hostile dungeons and caves, by calendar week (World.weekOf: days 1-7, 8-14, 15-21, then 22 on - the last entry holds).
+  `pillageRadiusTiles` only counts when the table is empty. `TownPillage.radiusTiles(day)` serves the weekly roll, a
+  pillage's start log and the console's `pillage info` (which now says the radius).
+- **When raids may start is unchanged** (round 541's `pillageFirstWeekByDifficulty` [2, 1, 1, 1]): none in days 1-7;
+  Normal, Hard and Insane from day 8 (radius 15); Easy from day 15 (already 17). The user's "week 1" is days 8-14,
+  the first week a raid can start - their "week 3 (day 22+)" fixes the count.
+- Still 4 dungeons needed, 10% a qualifying town a week, at most 2 raids a week. On save 1's day-13 map: 1 town
+  qualifies at 15, 9 would at 20 (about 0.8 raids a week).
+- **Seen in the agent game** (a copy of save 1, day 13): `pillage info` - "radius 15 tiles". Days 15 and 22 not seen:
+  every wait was interrupted by a roamer on day 13.
+
 ## Round 611: the five dragon player races get the user's hand-made dragon (2026-10-15)
 
 The Procedural Pixel Creatures session, the Phyrexian's route (round 591) for the dragons. LPC has no dragon body, so

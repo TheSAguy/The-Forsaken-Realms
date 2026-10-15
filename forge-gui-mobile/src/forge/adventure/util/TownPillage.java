@@ -31,7 +31,8 @@ import java.util.Random;
  * <li><b>The roll</b>: once a calendar week (World.weekOf) every town that qualifies rolls pillageChancePercent, and at
  * most pillageMaxPerWeek start. A town qualifies when it is the player's (the Capitol, Orazca, a restored or captured
  * town) or a working neutral town the player has entered; not ruined, not already pillaged, not the target of an AI
- * attack mage; and with pillageDungeonsNeeded hostile dungeons or caves on the map within pillageRadiusTiles.</li>
+ * attack mage; and with pillageDungeonsNeeded hostile dungeons or caves on the map within the week's radius
+ * (pillageRadiusByWeek, round 610: 15 tiles from day 8, 17 from day 15, 20 from day 22).</li>
  * <li><b>The raiders</b> come out of those dungeons (DungeonSources.pick: the dungeon's inhabitants, or its land's
  * creatures) at the player's rank. Once the player is within pillageSpawnRangeTiles of the town, 3-4 of them stand
  * around it (pillageRaidersAtOnce, fixed per pillage), topped up as they fall, never more than are still to beat. They
@@ -100,6 +101,16 @@ public final class TownPillage {
         return Math.max(0, table[Math.min(Math.max(0, TerritoryControl.difficultyIndex()), table.length - 1)]);
     }
 
+    /** Round 610: the radius in tiles that counts a town's dungeons on {@code day} - pillageRadiusByWeek by calendar week,
+     *  its last entry holding; pillageRadiusTiles when the table is empty. */
+    static int radiusTiles(int day) {
+        TuningData t = tuning();
+        int[] byWeek = t.pillageRadiusByWeek;
+        if (byWeek == null || byWeek.length == 0)
+            return t.pillageRadiusTiles;
+        return Math.max(1, byWeek[Math.min(Math.max(0, World.weekOf(day)), byWeek.length - 1)]);
+    }
+
     private static void rollWeek(World world, int day) {
         TuningData t = tuning();
         int firstWeek = firstPillageWeek();
@@ -127,7 +138,7 @@ public final class TownPillage {
             started++;
         }
         System.out.println("[TFR-Pillage] week " + World.weekOf(day) + " (day " + day + "): " + qualifying
-                + " town(s) qualify, " + hits.size() + " rolled under " + t.pillageChancePercent + "%, " + started
+                + " town(s) qualify within " + radiusTiles(day) + " tiles, " + hits.size() + " rolled under " + t.pillageChancePercent + "%, " + started
                 + " pillage(s) start (at most " + t.pillageMaxPerWeek + ")");
     }
 
@@ -195,7 +206,7 @@ public final class TownPillage {
     }
 
     private static List<PointOfInterest> dungeonsNear(World world, PointOfInterest town, List<PointOfInterest> dungeons) {
-        float reach = tuning().pillageRadiusTiles * (float) world.getTileSize();
+        float reach = radiusTiles(world.getCurrentDay()) * (float) world.getTileSize(); // round 610: by week
         List<PointOfInterest> out = new ArrayList<>();
         for (PointOfInterest d : dungeons)
             if (d.getCenter().dst2(town.getCenter()) <= reach * reach)
@@ -214,7 +225,7 @@ public final class TownPillage {
                 + "! Beat " + t.pillageKills + " of them within " + t.pillageDays + " days.");
         System.out.println("[TFR-Pillage] " + poi.getDisplayName() + " is pillaged from day " + day + " - "
                 + dungeonsNear(world, poi, hostileDungeons(world)).size() + " dungeon(s) within "
-                + t.pillageRadiusTiles + " tiles, " + atOnce + " raider(s) at a time, " + t.pillageKills + " to beat by day "
+                + radiusTiles(day) + " tiles, " + atOnce + " raider(s) at a time, " + t.pillageKills + " to beat by day "
                 + (day + t.pillageDays));
         RoamingGuardRuntime.onPillageStarted(poi, day); // round 589: a guard sets out, or the notice says why none does
     }
@@ -509,7 +520,8 @@ public final class TownPillage {
         World world = Current.world();
         if (world == null)
             return "No world";
-        StringBuilder sb = new StringBuilder("week roll done for week " + world.getPillageWeek() + ";");
+        StringBuilder sb = new StringBuilder("week roll done for week " + world.getPillageWeek() + "; radius "
+                + radiusTiles(world.getCurrentDay()) + " tiles;"); // round 610
         for (Map.Entry<String, int[]> entry : world.getPillages().entrySet()) {
             PointOfInterest poi = findPoi(world, entry.getKey());
             int[] p = entry.getValue();

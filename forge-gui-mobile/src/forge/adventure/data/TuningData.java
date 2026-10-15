@@ -402,6 +402,9 @@ public class TuningData {
     public int pillageMaxPerWeek = 2;
     public int pillageDungeonsNeeded = 4;
     public int pillageRadiusTiles = 15;
+    /** Round 610 (the user: "Let's have it scale. 15 Week 1 ... Then 17 week 2, finally 20 week 3 (day 22+)"): the radius
+     *  by calendar week (World.weekOf - 0 is days 1-7), the last entry holding after; empty = pillageRadiusTiles. */
+    public int[] pillageRadiusByWeek = {15, 15, 17, 20};
     public int pillageKills = 5;
     public int pillageDays = 7;
     public int[] pillageRaidersAtOnce = {3, 4};

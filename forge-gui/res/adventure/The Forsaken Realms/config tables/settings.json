@@ -219,6 +219,10 @@
     "pillageMaxPerWeek": 2,
     "pillageDungeonsNeeded": 4,
     "pillageRadiusTiles": 15,
+    // Round 610 (the user: "Let's have it scale. 15 Week 1 ... Then 17 week 2, finally 20 week 3 (day 22+)"): the radius
+    // by calendar week - days 1-7, 8-14, 15-21, then 22 on (the last entry holds); it replaces pillageRadiusTiles, which
+    // only counts when this is empty. Raids still start no earlier than pillageFirstWeekByDifficulty below.
+    "pillageRadiusByWeek": [15, 15, 17, 20],
     "pillageKills": 5,
     "pillageDays": 7,
     "pillageRaidersAtOnce": [3, 4],
