@@ -157,7 +157,7 @@ public class HostedMatch {
         SoundSystem.instance.setBackgroundMusic(this.matchPlaylist == null ? MusicPlaylist.MATCH : this.matchPlaylist);
 
         game = match.createGame();
-        game.EXPERIMENTAL_RESTORE_SNAPSHOT = FModel.getPreferences().getPrefBoolean(FPref.MATCH_EXPERIMENTAL_RESTORE);
+        //game.EXPERIMENTAL_RESTORE_SNAPSHOT = FModel.getPreferences().getPrefBoolean(FPref.MATCH_EXPERIMENTAL_RESTORE);
         game.AI_TIMEOUT = FModel.getPreferences().getPrefInt(FPref.MATCH_AI_TIMEOUT);
 
         StaticData.instance().setSourceImageForClone(FModel.getPreferences().getPrefBoolean(FPref.UI_CLONE_MODE_SOURCE));
@@ -528,7 +528,12 @@ public class HostedMatch {
         }
     }
 
-    private void addNextGameDecision(final PlayerControllerHuman controller, final NextGameDecision decision) {
+    private static boolean stillPlaying(final PlayerControllerHuman controller) {
+        // A spectator's controller has no player
+        return controller.getPlayer() == null || controller.getPlayer().getOriginalLobbyPlayer() == controller.getLobbyPlayer();
+    }
+
+    private synchronized void addNextGameDecision(final PlayerControllerHuman controller, final NextGameDecision decision) {
         if (decision == NextGameDecision.QUIT) {
             FThreads.invokeInEdtNowOrLater(() -> {
                 endCurrentGame();
@@ -541,7 +546,13 @@ public class HostedMatch {
         }
 
         nextGameDecisions.put(controller, decision);
-        if (nextGameDecisions.size() < humanControllers.size()) {
+        tallyNextGameDecisions();
+    }
+
+    /** Starts the next game once every human still playing has chosen. A seat the AI took over is not waited for. */
+    public synchronized void tallyNextGameDecisions() {
+        nextGameDecisions.keySet().removeIf(c -> c != null && !stillPlaying(c));
+        if (nextGameDecisions.isEmpty() || nextGameDecisions.size() < humanControllers.stream().filter(HostedMatch::stillPlaying).count()) {
             return;
         }
 

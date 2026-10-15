@@ -80,6 +80,11 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-15 (round 612): **LOCAL + UNRELEASED (engine merge)** - ENGINE = THE 10.14 DAILY (upstream
+`34a8662b796`, base install E:\GAMES\Forge_2 build 2026-10-14 21:20:27; engineBuildVersion 2.0.16-SNAPSHOT-10.14).
+One conflict (DuelScene intro dialogs, both kept). Upstream undo (Free by default) now in Adventure duels - reported.
+Next merge from upstream after `34a8662b796`.
+
 ## STATE 2026-10-15 (round 610): **LOCAL + UNRELEASED (code + data)** - town raid radius by week (pillageRadiusByWeek
 [15, 15, 17, 20] - days 8-14 at 15, 15-21 at 17, 22+ at 20; TownPillage.radiusTiles); raid start days unchanged (Easy day 15).
 

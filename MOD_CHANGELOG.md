@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 612: the engine to the 10.14 daily (upstream `34a8662b796`) (2026-10-15)
+
+The user installed the official 10.14 snapshot (`forge-installer-2.0.16-SNAPSHOT-10.14.jar`) into `E:\GAMES\Forge_2`,
+which stopped the packager (base install vs. engine), then: "Okay to merge."
+
+- **The target.** `build.txt` 2026-10-14 21:20:27 (UTC). Upstream's `34a8662b796` ("fix vprompt", 21:17:04 UTC) is the
+  last commit before it - the next two landed on 10-15. 91 commits since round 472's `e7fca289313`, 263 files.
+  `engineBuildVersion` -> `2.0.16-SNAPSHOT-10.14`. No Android files changed upstream.
+- **One textual conflict, `DuelScene`** (CORE_ENGINE_CHANGES "Round 612"): upstream holds the opening coin toss until a
+  boss / chaos / missing-deck intro dialog is closed (`MatchController.setIntroShowing`, released by the dialog's
+  `introDone`); our side had changed the same dialog calls (the tiered enemy name, round 404's win-streak notice). Both
+  kept: our names and text, their release on all three dialogs - and our win-streak notice, an intro dialog too, now
+  holds the coin as well (else the coin would fly over it). Imports: both.
+- **Semantic review of the 14 files both sides changed since 10.07** (Game, GameAction, Player, Forge, AdventureDeckEditor,
+  MapDialog, MatchController, FCardPanel, FControlGameEventHandler, IGuiGame, ForgeConstants, ForgePreferences,
+  en-US.properties, DuelScene): nothing of ours uses what upstream removed (the alt zone-tab layout, two rotate prefs,
+  `DRAFT_RANKINGS_FILE`, the old experimental restore); our coin toss (rounds 464, 525), mulligan switch (566), ante
+  re-roll and Law of Stakes (604) merged clean. Builds; a duel on the user's save played through in the agent game,
+  no exception in the log.
+- **What players will notice (upstream):**
+  - **Undo** (#12226 and follow-ups): a new UndoManager rewinds a duel to an earlier priority prompt; Settings "Undo
+    mode" Off / Single step / **Free (the default)**, an optional separate Undo button. It stops at hidden information
+    (a card drawn, cards milled). It works in Adventure duels too - reported to the user, left at upstream's default.
+  - The coin always closes on its own (ours already did in the Adventure); it waits for an intro dialog.
+  - Castles: the gate dialog "YOU ARE NOT WORTHY, BEGONE!" now steps the player back off the gate (all five of our
+    castles use that text).
+  - Landscape Sketchbooks whose names match no edition fixed (#12227; old item names mapped in AdventureDeckEditor);
+    stale boss dialogue portraits between duels fixed (#12176).
+  - Rules/AI: simultaneous entry (#12188), venture rooms (#12237), no self-goad (#12239), Eureka/Hypergenesis (#12204),
+    The Earth Crystal, Reckless Detective, Xanathar/Whispersteel Dagger; new cards (MDD, YSOS, YFRA); deck statistics,
+    a marching target box, card zoom/match layouts, netplay fixes (not used by the Adventure).
+- Next merge starts at upstream `34a8662b796`.
+
 ## Round 610: the town raid radius grows by week - 15, 17, 20 tiles (2026-10-15)
 
 The user, after the count on save 1 (4+ dungeons within 15 tiles: 1 of 18 raidable towns; within 20: 9): "Let's have

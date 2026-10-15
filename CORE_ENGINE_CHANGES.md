@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 612 - the engine to the 10.14 daily (upstream `34a8662b796`)
+
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the merge's one conflict. Upstream's
+  `showIntro` / `MatchController.setIntroShowing(...)` before `startMatch`, and `introDone` passed to the intro dialogs,
+  taken; our tiered display name and round 404's win-streak text kept in those calls; `showIntro` also true for our
+  win-streak notice (`winStreakNote != null`), whose dialog releases the hold the same way. Imports `Input` (theirs) and
+  `Sprite` (ours). Watch: any new intro dialog of ours must release `setIntroShowing(false)` or the coin waits 60 s.
+
 ### Round 578 - enemies stand in their tile (atlas footprints)
 
 - **`forge-gui-mobile/src/forge/adventure/character/CharacterSprite.java`** - new `footprintX0/Width/Lift`,

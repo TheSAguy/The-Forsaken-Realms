@@ -110,8 +110,6 @@ public class Forge implements ApplicationListener {
     public static boolean showFPS = false;
     public static boolean allowCardBG = false;
     public static boolean altPlayerLayout = false;
-    public static boolean altZoneTabs = false;
-    public static String altZoneTabMode = "Off";
     public static boolean animatedCardTapUntap = false;
     public static String enableUIMask = "Crop";
     public static String selector = "Default";
@@ -174,6 +172,10 @@ public class Forge implements ApplicationListener {
     }
 
     private Forge() {
+    }
+
+    public static TransitionScreen getTransitionScreen() {
+        return transitionScreen;
     }
 
     private ForgePreferences getForgePreferences() {
@@ -266,7 +268,6 @@ public class Forge implements ApplicationListener {
         reversedPrompt = getForgePreferences().getPrefBoolean(FPref.UI_REVERSE_PROMPT_BUTTON);
         autoAIDeckSelection = getForgePreferences().getPrefBoolean(FPref.UI_AUTO_AIDECK_SELECTION);
         altPlayerLayout = getForgePreferences().getPrefBoolean(FPref.UI_ALT_PLAYERINFOLAYOUT);
-        setAltZoneTabMode(getForgePreferences().getPref(FPref.UI_ALT_PLAYERZONETABS));
         animatedCardTapUntap = getForgePreferences().getPrefBoolean(FPref.UI_ANIMATED_CARD_TAPUNTAP);
         enableUIMask = getForgePreferences().getPref(FPref.UI_ENABLE_BORDER_MASKING);
         if (getForgePreferences().getPref(FPref.UI_ENABLE_BORDER_MASKING).equals("true")) //override old settings if not updated
@@ -303,19 +304,6 @@ public class Forge implements ApplicationListener {
             //see if app or assets need updating
             FThreads.invokeInBackgroundThread(() -> AssetsDownloader.checkForUpdates(exited, runnable));
         }
-    }
-
-    public static void setAltZoneTabMode(String mode) {
-        Forge.altZoneTabMode = mode;
-        switch (Forge.altZoneTabMode) {
-            case "Vertical", "Horizontal" -> Forge.altZoneTabs = true;
-            case "Off" -> Forge.altZoneTabs = false;
-            default -> Forge.altZoneTabs = false;
-        }
-    }
-
-    public static boolean isHorizontalTabLayout() {
-        return Forge.altZoneTabs && "Horizontal".equalsIgnoreCase(Forge.altZoneTabMode);
     }
 
     public static boolean hasGamepad() {
@@ -449,11 +437,6 @@ public class Forge implements ApplicationListener {
         GuiBase.setAdventureDirectory(ForgeConstants.ADVENTURE_COMMON_DIR);
         advStartup = false;
         isMobileAdventureMode = true;
-        //force it for adventure mode if the prefs is not updated from boolean value to string value
-        if ("true".equalsIgnoreCase(FModel.getPreferences().getPref(FPref.UI_ALT_PLAYERZONETABS)) ||
-            "false".equalsIgnoreCase(FModel.getPreferences().getPref(FPref.UI_ALT_PLAYERZONETABS))) {
-            setAltZoneTabMode("Vertical");
-        }
         //pixl cursor for adventure
         setCursor(null, "0");
         if (!GuiBase.isAndroid() || !getDeviceAdapter().getGamepads().isEmpty())
@@ -895,7 +878,6 @@ public class Forge implements ApplicationListener {
             FSkinTexture.invalidateAdventureTextures();
             GuiBase.setAdventureDirectory(null);
             setCursor(FSkin.getCursor().get(0), "0");
-            setAltZoneTabMode(FModel.getPreferences().getPref(FPref.UI_ALT_PLAYERZONETABS));
             Gdx.input.setInputProcessor(getInputProcessor());
             clearTransitionScreen();
             openHomeDefault();

@@ -1,6 +1,7 @@
 package forge.adventure.scene;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -54,6 +55,7 @@ import forge.screens.TransitionScreen;
 import forge.screens.match.MatchController;
 import forge.sound.MusicPlaylist;
 import forge.sound.SoundSystem;
+import forge.toolbox.FButton;
 import forge.toolbox.FCardPanel;
 import forge.toolbox.FDisplayObject;
 import forge.toolbox.FOptionPane;
@@ -140,7 +142,7 @@ public class DuelScene extends ForgeScene {
             float h = getHeight();
             float w = h / FCardPanel.ASPECT_RATIO;
             float xPos = (getWidth() - w) / 2;
-            CardRenderer.drawCard(g, cardView, xPos, 0, w, h, CardStackPosition.Top, true);
+            CardRenderer.drawCard(g, cardView, xPos, 0, w, h, CardStackPosition.Top);
         }
     }
 
@@ -505,7 +507,21 @@ public class DuelScene extends ForgeScene {
         return new FOptionPane(message, null, title, icon, null, ImmutableList.of(Forge.getLocalizer().getMessage("lblOK")), -1, result -> {
             if (runnable != null)
                 runnable.run();
-        });
+        }){
+            // Override FOptionPane keydown so it will not soft lock..
+            @Override
+            public boolean keyDown(final int keyCode) {
+                switch (keyCode) {
+                    case Input.Keys.ESCAPE:
+                    case Input.Keys.BACK:
+                        FButton button = this.getButton(0);
+                        if (button != null)
+                            button.trigger();
+                        return true;
+                }
+                return super.keyDown(keyCode);
+            }
+        };
     }
 
     /**
@@ -1261,6 +1277,10 @@ public class DuelScene extends ForgeScene {
         rules.setWarnAboutAICards(false);
 
         //hostedMatch.setEndGameHook(() -> DuelScene.this.GameEnd());
+        final boolean showIntro = chaosBattle || isDeckMissing || enemy.getData().boss
+            || (enemy.getData().copyPlayerDeck && Current.player().isUsingCustomDeck())
+            || winStreakNote != null; // round 612: our win-streak notice (round 404) holds the coin toss too
+        MatchController.setIntroShowing(showIntro);
         hostedMatch.startMatch(rules, appliedVariants, players, guiMap, bossBattle ? MusicPlaylist.BOSS : MusicPlaylist.MATCH);
         MatchController.instance.setGameView(hostedMatch.getGameView());
         boolean showMessages = enemy.getData().boss || (enemy.getData().copyPlayerDeck && Current.player().isUsingCustomDeck());
@@ -1268,11 +1288,13 @@ public class DuelScene extends ForgeScene {
         if (winStreakNote != null && !(chaosBattle || showMessages || isDeckMissing)) {
             // Round 404: an ordinary duel with an enemy on a win streak - its own notice, the boss dialog's shape.
             final FBufferedImage fb = getFBEnemyAvatar();
-            bossDialogue = createFOption(winStreakNote, enemy.getTieredDisplayName(), fb, null);
+            bossDialogue = createFOption(winStreakNote, enemy.getTieredDisplayName(), fb,
+                    () -> MatchController.setIntroShowing(false)); // round 612: upstream's intro hold, released
             matchOverlay = new LoadingOverlay(() -> FThreads.delayInEDT(300, () -> FThreads.invokeInEdtNowOrLater(() ->
                     bossDialogue.show())), false, true);
         } else if (chaosBattle || showMessages || isDeckMissing) {
             final FBufferedImage fb = getFBEnemyAvatar();
+            final Runnable introDone = () -> MatchController.setIntroShowing(false);
             String Intro = enemy.getBossIntro();
             if (Intro != null && winStreakNote != null)
                 Intro = Intro + "\n\n" + winStreakNote; // round 404: a boss on a win streak says both
@@ -1281,14 +1303,14 @@ public class DuelScene extends ForgeScene {
             // used to pass fb::dispose. Disposing it here would blank the enemy avatar for every later
             // boss dialog in the session, so the dispose goes and the tiered name stays.
             if (Intro != null) {
-                bossDialogue = createFOption((Intro), enemy.getTieredDisplayName(), fb, null);
+                bossDialogue = createFOption((Intro), enemy.getTieredDisplayName(), fb, introDone);
             } else {
                 int randomKey = Aggregates.randomInt(1, 35);
                 String lookupKey = introKeysMap.get(randomKey);
 
                 bossDialogue = createFOption((isDeckMissing ? isDeckMissingMsg : localizer.getMessage(lookupKey))
                                 + (winStreakNote != null ? "\n\n" + winStreakNote : ""), // round 404
-                        enemy.getTieredDisplayName(), fb, null);
+                        enemy.getTieredDisplayName(), fb, introDone);
             }
             matchOverlay = new LoadingOverlay(() -> FThreads.delayInEDT(300, () -> FThreads.invokeInEdtNowOrLater(() ->
                     bossDialogue.show())), false, true);
@@ -1571,6 +1593,8 @@ public class DuelScene extends ForgeScene {
     public void initDuels(PlayerSprite playerSprite, EnemySprite enemySprite, boolean isArena, AdventureEventData eventData, boolean aiControlsPlayerSide) {
         this.player = playerSprite;
         this.enemy = enemySprite;
+        //Discard the previous opponent's cached portrait before the next duel.
+        enemyAvatar.clear();
         this.isArena = isArena;
         this.eventData = eventData;
         this.aiControlsPlayerSide = aiControlsPlayerSide;
