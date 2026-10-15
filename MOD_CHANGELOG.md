@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 625: nine more LPC enemies - a fairy, an imp, two mushroom folk, an angel, a skeleton, a rat (2026-10-15)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_625.py`. The user picked
+these from the low-quality list as doable in LPC "with a few tweaks": A1, A12, A14, A17, A20, B63, B71, C77 and C78.
+
+- **The tweak**: LPC has no mushroom, so a spotted mushroom cap was drawn for the game. It is an LPC hat part
+  (`tools/lpc/make_mushroom_caps.py`) set over the head in every frame, in red with white spots and in lavender.
+- **The enemies, dressed from their stock sprites**:
+  - **Aghoy**: a green-haired fairy with elven ears, green pixie wings, a green dress and a wand.
+  - **Nefarious Scamp**: a purple goblin imp with curled horns, bat wings and a tail, and a dagger.
+  - **Fungal Myconid**: blue-gray and red-eyed under the lavender cap.
+  - **Red Cap**: a pale goblin under the red spotted cap, with a dagger.
+  - **Domain Keeper of Cromat**: a dark-haired angel in white and blue on white wings, with a longsword.
+  - **Bandit Archer**: red-haired with a crossbow. LPC's face mask colors the whole face, so his red mask is a scarf
+    at the neck.
+  - **Bone Raider**: a skeleton with a saber.
+  - **Tallow Rat**: a white rat in rags with a dagger. LPC's "fur_white" is gray; porcelain is white with a pink tail.
+  - **Undead Goblin**: a rotting green goblin in maroon, with a mace.
+- **Files**:
+  - 9 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 9 sprite paths and scales (0.28-0.34).
+  - A footprint on 6 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 877 characters, additions only. The cap is credited to The Forsaken Realms (CC0).
+  - `CREDITS.md`: the LPC bullet (849 enemies).
+- **Checks**:
+  - enemies.json against HEAD: exactly these 9, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 624: the eleven aven become LPC aven with drawn bird heads (2026-10-15)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_624.py`. These are #32-42 of the

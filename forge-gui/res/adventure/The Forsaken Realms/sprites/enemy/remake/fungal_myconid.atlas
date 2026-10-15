@@ -1,0 +1,176 @@
+fungal_myconid.png
+size: 414,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 46, 57
+Idle
+  xy: 46, 64
+  size: 46, 57
+Idle
+  xy: 92, 64
+  size: 46, 57
+Idle
+  xy: 138, 64
+  size: 46, 57
+Walk
+  xy: 0, 121
+  size: 46, 57
+Walk
+  xy: 46, 121
+  size: 46, 57
+Walk
+  xy: 92, 121
+  size: 46, 57
+Walk
+  xy: 138, 121
+  size: 46, 57
+Walk
+  xy: 184, 121
+  size: 46, 57
+Walk
+  xy: 230, 121
+  size: 46, 57
+Walk
+  xy: 276, 121
+  size: 46, 57
+Walk
+  xy: 322, 121
+  size: 46, 57
+Attack
+  xy: 0, 178
+  size: 46, 57
+Attack
+  xy: 46, 178
+  size: 46, 57
+Attack
+  xy: 92, 178
+  size: 46, 57
+Attack
+  xy: 138, 178
+  size: 46, 57
+Attack
+  xy: 184, 178
+  size: 46, 57
+Attack
+  xy: 230, 178
+  size: 46, 57
+Attack
+  xy: 276, 178
+  size: 46, 57
+Hit
+  xy: 0, 235
+  size: 46, 57
+Hit
+  xy: 46, 235
+  size: 46, 57
+Hit
+  xy: 92, 235
+  size: 46, 57
+Hit
+  xy: 138, 235
+  size: 46, 57
+Death
+  xy: 0, 292
+  size: 46, 57
+Death
+  xy: 46, 292
+  size: 46, 57
+Death
+  xy: 92, 292
+  size: 46, 57
+Death
+  xy: 138, 292
+  size: 46, 57
+Death
+  xy: 184, 292
+  size: 46, 57
+Death
+  xy: 230, 292
+  size: 46, 57
+Death
+  xy: 276, 292
+  size: 46, 57
+Death
+  xy: 322, 292
+  size: 46, 57
+Death
+  xy: 368, 292
+  size: 46, 57
+IdleUp
+  xy: 0, 349
+  size: 46, 57
+IdleUp
+  xy: 46, 349
+  size: 46, 57
+IdleUp
+  xy: 92, 349
+  size: 46, 57
+IdleUp
+  xy: 138, 349
+  size: 46, 57
+IdleDown
+  xy: 0, 406
+  size: 46, 57
+IdleDown
+  xy: 46, 406
+  size: 46, 57
+IdleDown
+  xy: 92, 406
+  size: 46, 57
+IdleDown
+  xy: 138, 406
+  size: 46, 57
+WalkUp
+  xy: 0, 463
+  size: 46, 57
+WalkUp
+  xy: 46, 463
+  size: 46, 57
+WalkUp
+  xy: 92, 463
+  size: 46, 57
+WalkUp
+  xy: 138, 463
+  size: 46, 57
+WalkUp
+  xy: 184, 463
+  size: 46, 57
+WalkUp
+  xy: 230, 463
+  size: 46, 57
+WalkUp
+  xy: 276, 463
+  size: 46, 57
+WalkUp
+  xy: 322, 463
+  size: 46, 57
+WalkDown
+  xy: 0, 520
+  size: 46, 57
+WalkDown
+  xy: 46, 520
+  size: 46, 57
+WalkDown
+  xy: 92, 520
+  size: 46, 57
+WalkDown
+  xy: 138, 520
+  size: 46, 57
+WalkDown
+  xy: 184, 520
+  size: 46, 57
+WalkDown
+  xy: 230, 520
+  size: 46, 57
+WalkDown
+  xy: 276, 520
+  size: 46, 57
+WalkDown
+  xy: 322, 520
+  size: 46, 57

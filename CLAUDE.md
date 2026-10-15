@@ -91,6 +91,12 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (round 625): **LOCAL + UNRELEASED (art + data)** - nine more LPC enemies (Aghoy, Nefarious
+Scamp, Fungal Myconid, Red Cap, Domain Keeper of Cromat, Bandit Archer, Bone Raider, Tallow Rat, Undead Goblin); the two
+mushroom folk wear a hand-drawn cap part (generator `lpc_selections/make_625.py` + `tools/lpc/make_mushroom_caps.py`).
+enemies.json 9 paths + scales (0.28-0.34), CREDITS_LPC.md 877 characters, CREDITS.md (849 LPC enemies). #32 packages. Not
+seen in play.
+
 ## STATE 2026-10-15 (round 624): **LOCAL + UNRELEASED (art + data)** - the eleven aven (Falcon-headed/Ibis-headed Aven
 Warrior, Derevi, Reyhan and Ishai, Falco Spara, Teshar, Kianne, Kangee, Kykar, Kefnet, Xho Cai) become LPC bodies with
 feathered wings and hand-drawn falcon/ibis heads (generator `lpc_selections/make_624.py` + `tools/lpc/make_aven_heads.py`).

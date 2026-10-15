@@ -2861,7 +2861,7 @@
     },
     {
         "name": "Bandit Archer",
-        "sprite": "sprites/enemy/humanoid/human/bandit/banditarcher.atlas",
+        "sprite": "sprites/enemy/remake/bandit_archer.atlas",
         "deck": [
             "decks/standard/banditarcher_blink.dck",
             "decks/standard/banditarcher_damage.dck"
@@ -2871,7 +2871,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8125,
+        "scale": 0.3095,
         "life": 15,
         "rewards": [
             {
@@ -31054,7 +31054,7 @@
     },
     {
         "name": "Undead Goblin",
-        "sprite": "sprites/enemy/undead/goblinzombie.atlas",
+        "sprite": "sprites/enemy/remake/undead_goblin.atlas",
         "deck": [
             "decks/standard/monobgoblins.dck"
         ],
@@ -31062,7 +31062,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.8125,
+        "scale": 0.3095,
         "life": 20,
         "rewards": [
             {
@@ -111944,7 +111944,7 @@
     },
     {
         "name": "Domain Keeper of Cromat",
-        "sprite": "sprites/enemy/celestial/angel_2.atlas",
+        "sprite": "sprites/enemy/remake/domain_keeper_of_cromat.atlas",
         "deck": [
             "decks/standard/legendary_cromat.dck"
         ],
@@ -112183,7 +112183,8 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "flying": true
+        "flying": true,
+        "scale": 0.3023
     },
     {
         "name": "Arch Angel of Shandalar",
@@ -130621,7 +130622,7 @@
     },
     {
         "name": "Nefarious Scamp",
-        "sprite": "sprites/enemy/basic/demon/nefarious_scamp.atlas",
+        "sprite": "sprites/enemy/remake/nefarious_scamp.atlas",
         "deck": [
             "decks/standard/nefarious_scamp.dck"
         ],
@@ -130682,7 +130683,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.4444
+        "scale": 0.3171
     },
     {
         "name": "Pit Balor",
@@ -133488,7 +133489,7 @@
     },
     {
         "name": "Fungal Myconid",
-        "sprite": "sprites/enemy/basic/monster/fungal_myconid.atlas",
+        "sprite": "sprites/enemy/remake/fungal_myconid.atlas",
         "deck": [
             "decks/standard/fungal_myconid.dck"
         ],
@@ -133548,7 +133549,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.2889
     },
     {
         "name": "Humongous Ettin",
@@ -133810,7 +133812,7 @@
     },
     {
         "name": "Red Cap",
-        "sprite": "sprites/enemy/basic/monster/red_cap.atlas",
+        "sprite": "sprites/enemy/remake/red_cap.atlas",
         "deck": [
             "decks/standard/red_cap.dck"
         ],
@@ -133871,7 +133873,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.2826
     },
     {
         "name": "Shrieker Mushroom",
@@ -136926,7 +136928,7 @@
     },
     {
         "name": "Bone Raider",
-        "sprite": "sprites/enemy/basic/undead/bone_raider.atlas",
+        "sprite": "sprites/enemy/remake/bone_raider.atlas",
         "deck": [
             "decks/standard/bone_raider.dck"
         ],
@@ -136985,7 +136987,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.9286
+        "scale": 0.3095
     },
     {
         "name": "Hedge Slime",
@@ -140522,7 +140524,7 @@
     },
     {
         "name": "Aghoy",
-        "sprite": "sprites/enemy/basic/spirit/aghoy.atlas",
+        "sprite": "sprites/enemy/remake/aghoy.atlas",
         "deck": [
             "decks/standard/aghoy.dck"
         ],
@@ -140581,7 +140583,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.3
+        "scale": 0.3023
     },
     {
         "name": "Amaranhig",
@@ -149635,7 +149637,7 @@
     },
     {
         "name": "Tallow Rat",
-        "sprite": "sprites/enemy/tfr/tallow_rat.atlas",
+        "sprite": "sprites/enemy/remake/tallow_rat.atlas",
         "deck": [
             "decks/standard/tfr/tallow_rat.dck"
         ],
@@ -149703,7 +149705,7 @@
             "BiomeBlack"
         ],
         "tier": "Common",
-        "scale": 0.7222
+        "scale": 0.3421
     },
     {
         "name": "Tendrilmane, the Pale Lion",
