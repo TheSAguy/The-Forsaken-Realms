@@ -1,0 +1,174 @@
+skeleton_soldier.png
+size: 756,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 57
+  footprint: 23, 3, 38, 53
+Idle
+  xy: 84, 64
+  size: 84, 57
+Idle
+  xy: 168, 64
+  size: 84, 57
+Idle
+  xy: 252, 64
+  size: 84, 57
+Walk
+  xy: 0, 121
+  size: 84, 57
+Walk
+  xy: 84, 121
+  size: 84, 57
+Walk
+  xy: 168, 121
+  size: 84, 57
+Walk
+  xy: 252, 121
+  size: 84, 57
+Walk
+  xy: 336, 121
+  size: 84, 57
+Walk
+  xy: 420, 121
+  size: 84, 57
+Walk
+  xy: 504, 121
+  size: 84, 57
+Walk
+  xy: 588, 121
+  size: 84, 57
+Attack
+  xy: 0, 178
+  size: 84, 57
+Attack
+  xy: 84, 178
+  size: 84, 57
+Attack
+  xy: 168, 178
+  size: 84, 57
+Attack
+  xy: 252, 178
+  size: 84, 57
+Attack
+  xy: 336, 178
+  size: 84, 57
+Attack
+  xy: 420, 178
+  size: 84, 57
+Hit
+  xy: 0, 235
+  size: 84, 57
+Hit
+  xy: 84, 235
+  size: 84, 57
+Hit
+  xy: 168, 235
+  size: 84, 57
+Hit
+  xy: 252, 235
+  size: 84, 57
+Death
+  xy: 0, 292
+  size: 84, 57
+Death
+  xy: 84, 292
+  size: 84, 57
+Death
+  xy: 168, 292
+  size: 84, 57
+Death
+  xy: 252, 292
+  size: 84, 57
+Death
+  xy: 336, 292
+  size: 84, 57
+Death
+  xy: 420, 292
+  size: 84, 57
+Death
+  xy: 504, 292
+  size: 84, 57
+Death
+  xy: 588, 292
+  size: 84, 57
+Death
+  xy: 672, 292
+  size: 84, 57
+IdleUp
+  xy: 0, 349
+  size: 84, 57
+IdleUp
+  xy: 84, 349
+  size: 84, 57
+IdleUp
+  xy: 168, 349
+  size: 84, 57
+IdleUp
+  xy: 252, 349
+  size: 84, 57
+IdleDown
+  xy: 0, 406
+  size: 84, 57
+IdleDown
+  xy: 84, 406
+  size: 84, 57
+IdleDown
+  xy: 168, 406
+  size: 84, 57
+IdleDown
+  xy: 252, 406
+  size: 84, 57
+WalkUp
+  xy: 0, 463
+  size: 84, 57
+WalkUp
+  xy: 84, 463
+  size: 84, 57
+WalkUp
+  xy: 168, 463
+  size: 84, 57
+WalkUp
+  xy: 252, 463
+  size: 84, 57
+WalkUp
+  xy: 336, 463
+  size: 84, 57
+WalkUp
+  xy: 420, 463
+  size: 84, 57
+WalkUp
+  xy: 504, 463
+  size: 84, 57
+WalkUp
+  xy: 588, 463
+  size: 84, 57
+WalkDown
+  xy: 0, 520
+  size: 84, 57
+WalkDown
+  xy: 84, 520
+  size: 84, 57
+WalkDown
+  xy: 168, 520
+  size: 84, 57
+WalkDown
+  xy: 252, 520
+  size: 84, 57
+WalkDown
+  xy: 336, 520
+  size: 84, 57
+WalkDown
+  xy: 420, 520
+  size: 84, 57
+WalkDown
+  xy: 504, 520
+  size: 84, 57
+WalkDown
+  xy: 588, 520
+  size: 84, 57

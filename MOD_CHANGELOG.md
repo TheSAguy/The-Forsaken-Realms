@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 602: the LPC backlog, batch 5 - 111 undead, leonin, kor, faeries and fiends (2026-10-14)
+
+The Procedural Pixel Creatures session, the last of the five LPC batches, built by the generator repo's
+`lpc_selections/make_602.py`. With it every one of the 435 clear LPC fits of the backlog survey is an LPC character
+(rounds 598-602); the 32 borderline ones and the 61 that are not people-shaped stay on their old art.
+
+- **The enemies**: all 111 on the stock 16 px sprites of `undead/` (43), `humanoid/leonin/` (14),
+  `aberration/phyrexian/` (13), `fey/` (10), `fiend/` (9), `humanoid/kor/` (8), `construct/scarecrow` (4),
+  `aberration/challenger` (3), `giant/cyclops` + `cyclops_2`, `mythic/ivory_sovereign`, and the Basic Antlered Rascal,
+  Blinded Grimlock, Crushing Cyclops and Amaranhig.
+- **How they were dressed**:
+  - The named legends follow their deck's commander card. Glissa is a dark-green elf, Volrath gray with white hair,
+    Greven bald in iron, and Mondrak in white with feathered wings.
+  - The leonin go by their fur and mane: Ajani white with his scarred eye, Lord Windgrace a black panther.
+  - The kor are pale with white hair; Meloku and Tamiyo are blue-gray moonfolk.
+  - The faeries wear LPC wings: Oona pale blue, Alela purple, Nymris a dragonfly knight with a bow, Rankle on bat
+    wings.
+  - Xander and Anhelo are vampires; Rocco, Zurzoth and Henzie are red devils.
+  - Borborygmos is a horned cyclops (the three cyclopes wear LPC's single eye), Balthor a dwarf zombie in a horned
+    helm, Brago a spectral king, Tinybones a skeleton in a top hat.
+  - Tamiyo, Qala, Aatchik, Ozox, Oura and Henzie, whose cards are not in Forge's picture cache, follow their cards as
+    known.
+  - The generic undead, Phyrexians, faeries and scarecrows keep their sprite's colors and gear. The zombies are LPC's
+    zombie head on a muted green body (LPC's own zombie body is beige - the Tomb Guardian's mummy wears it).
+  - Ranked kings wear tiaras, not crowns (a crown counts as body height). The five bosses (Nahiri, Scarecrow Captain,
+    Sorin, Tibalt, King Kane Ferguson) keep their drawn size.
+- **Files**:
+  - 111 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 111 sprite paths and scales, 0.28-0.33 (the bosses 0.44-0.53).
+  - A footprint on 84 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 795 characters, additions only.
+  - `CREDITS.md`'s LPC bullet: 767 enemies, round 602 and the 111 names, and one new author, kirts (the cyclops eye,
+    CC0).
+- **Checks**:
+  - enemies.json against HEAD: exactly these 111, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole, viewed on a sheet; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 601: the LPC backlog, batch 4 - 101 soldiers, knights and rogues (2026-10-14)
 
 The Procedural Pixel Creatures session, the fourth of the five LPC batches, built by the generator repo's

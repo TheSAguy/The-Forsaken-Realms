@@ -98,7 +98,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (656 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600 and 601 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (767 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600, 601 and 602 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -171,7 +171,20 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Orthion, Kyler, Odric, Heliod, Farid, Calix, General Ferrous, Baru, Human elite, Hajar, Tajic, Baron Von Gant, Baron
   Levilain, Human, General Jarkeld, Human guard, Arvad, Warrior, Kynaios and Tiro, Mangara, Ellivere, Bertrand Lestree
   '94, Mark Justice '95, Mark Justice '96, Beastmaster, Halfdane, Moritte, Surrak, Istvan, Cazur and Ukkima, Ulrich,
-  Rishkar; and round 597's 28 player heroes, a woman
+  Rishkar; round 602's hundred and eleven undead, leonin, kor, faeries and fiends - Challenger 20, Challenger 21,
+  Challenger 22, Copper Host Infector, Glissa, Aatchik, Furnace Goblin, Ovika, Furnace Tormentor, Greven, Gitaxian
+  Underling, Volrath, Unctus, Orthodoxy Duelist, Mondrak, Vexyr, Antlered Rascal, Blinded Grimlock, Crushing Cyclops,
+  Amaranhig, Scarecrow, Scarecrow Captain, Rendmaw, Old Stickfingers, Dimir Faerie, Eldraine Faerie, Faerie, Talion,
+  Nymris, Oona, Alela, Rankle, Oura, Tegwyll, Minotaur Flayer, Klothys, Tibalt, Rocco, Anhelo, Henzie, Xander,
+  Zurzoth, Gorm and Virtus, Cyclops, Borborygmos, Kor Warrior, Nahiri, Akiri and Silas, Ertha Jo, Orah, Meloku, Elas
+  il-Kor, Tamiyo, Leonin Warrior, Leonin Weaponmaster, Jareth, Lord Windgrace, Kemba, Brimaz, Roxanne, Kitt Kanto,
+  Phabine, Ajani, Qala, Mirri, Denry Klin, Rigo, The Ivory Sovereign, Zombie, Greater Zombie, Escaped Skaab, The
+  Gitrog Monster (Innistrad), Ghoulcaller Ghoul, Big Zombie, Hobbling Zombie, Skaab, Balthor, Ghoul, Shrieking Skaab,
+  Undead Roamer, Undead Shuffler, Hulking Brute, Grimgrin, Sand Ghoul, Tomb Guardian, Skeleton, Reassembling Skeleton,
+  Skeleton Champion, Skeleton Soldier, Tinybones, Ozox, Royal Sentinel, Graven Revenant, Wilhelt, Lazav, The Master of
+  Keys, Doppelganger, Erebos, Gonti, Yahenni, Etrata, Sakashima, Shapeshifter of Shandalar, Plaguelord, Ludevic and
+  Kraum, Unholy Knight, Brago, Rayami, Ihsan's Shade, King Kane Ferguson, Sorin; and round 597's 28 player heroes, a
+  woman
   and a man of every race
   the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,
   Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire) -
@@ -187,7 +200,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   (Nemisys), Michael Whitlock (bigbeargames), Tuomo Untinen (reemax), Napsio (Vitruvian Studio), Mandi Paugh, Marcel
   van de Steeg (MadMarcel), Fabzy, Luke Mehl, DarkwallLKE, Charles Sanchez (CharlesGabriel), Zi Ye, AntumDeluge, Shaun
   Williams, Lanea Zimmerman (Sharm), Barbara Riviera, thecilekli, Tracy, macmanmatty, tskaufma, The Foreman, Yamilian,
-  kcilds/Rocetti/Eredah, Page, Radomir Dopieralski - and
+  kcilds/Rocetti/Eredah, Page, Radomir Dopieralski, kirts - and
   our thanks to every contributor the generator's credits leave unnamed; the parts and their source pages are listed at
   https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator and on https://opengameart.org.
 - **[LPC] Horses** (the mounts of the eighteen mounted knights, round 523: the Dark Knight, the Death Knight, the

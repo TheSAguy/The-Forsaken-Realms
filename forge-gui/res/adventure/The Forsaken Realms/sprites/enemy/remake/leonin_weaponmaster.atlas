@@ -1,0 +1,174 @@
+leonin_weaponmaster.png
+size: 846,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 57
+  footprint: 25, 1, 45, 55
+Idle
+  xy: 94, 64
+  size: 94, 57
+Idle
+  xy: 188, 64
+  size: 94, 57
+Idle
+  xy: 282, 64
+  size: 94, 57
+Walk
+  xy: 0, 121
+  size: 94, 57
+Walk
+  xy: 94, 121
+  size: 94, 57
+Walk
+  xy: 188, 121
+  size: 94, 57
+Walk
+  xy: 282, 121
+  size: 94, 57
+Walk
+  xy: 376, 121
+  size: 94, 57
+Walk
+  xy: 470, 121
+  size: 94, 57
+Walk
+  xy: 564, 121
+  size: 94, 57
+Walk
+  xy: 658, 121
+  size: 94, 57
+Attack
+  xy: 0, 178
+  size: 94, 57
+Attack
+  xy: 94, 178
+  size: 94, 57
+Attack
+  xy: 188, 178
+  size: 94, 57
+Attack
+  xy: 282, 178
+  size: 94, 57
+Attack
+  xy: 376, 178
+  size: 94, 57
+Attack
+  xy: 470, 178
+  size: 94, 57
+Hit
+  xy: 0, 235
+  size: 94, 57
+Hit
+  xy: 94, 235
+  size: 94, 57
+Hit
+  xy: 188, 235
+  size: 94, 57
+Hit
+  xy: 282, 235
+  size: 94, 57
+Death
+  xy: 0, 292
+  size: 94, 57
+Death
+  xy: 94, 292
+  size: 94, 57
+Death
+  xy: 188, 292
+  size: 94, 57
+Death
+  xy: 282, 292
+  size: 94, 57
+Death
+  xy: 376, 292
+  size: 94, 57
+Death
+  xy: 470, 292
+  size: 94, 57
+Death
+  xy: 564, 292
+  size: 94, 57
+Death
+  xy: 658, 292
+  size: 94, 57
+Death
+  xy: 752, 292
+  size: 94, 57
+IdleUp
+  xy: 0, 349
+  size: 94, 57
+IdleUp
+  xy: 94, 349
+  size: 94, 57
+IdleUp
+  xy: 188, 349
+  size: 94, 57
+IdleUp
+  xy: 282, 349
+  size: 94, 57
+IdleDown
+  xy: 0, 406
+  size: 94, 57
+IdleDown
+  xy: 94, 406
+  size: 94, 57
+IdleDown
+  xy: 188, 406
+  size: 94, 57
+IdleDown
+  xy: 282, 406
+  size: 94, 57
+WalkUp
+  xy: 0, 463
+  size: 94, 57
+WalkUp
+  xy: 94, 463
+  size: 94, 57
+WalkUp
+  xy: 188, 463
+  size: 94, 57
+WalkUp
+  xy: 282, 463
+  size: 94, 57
+WalkUp
+  xy: 376, 463
+  size: 94, 57
+WalkUp
+  xy: 470, 463
+  size: 94, 57
+WalkUp
+  xy: 564, 463
+  size: 94, 57
+WalkUp
+  xy: 658, 463
+  size: 94, 57
+WalkDown
+  xy: 0, 520
+  size: 94, 57
+WalkDown
+  xy: 94, 520
+  size: 94, 57
+WalkDown
+  xy: 188, 520
+  size: 94, 57
+WalkDown
+  xy: 282, 520
+  size: 94, 57
+WalkDown
+  xy: 376, 520
+  size: 94, 57
+WalkDown
+  xy: 470, 520
+  size: 94, 57
+WalkDown
+  xy: 564, 520
+  size: 94, 57
+WalkDown
+  xy: 658, 520
+  size: 94, 57

@@ -1,0 +1,180 @@
+elas_il_kor.png
+size: 630,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 53
+  footprint: 22, 1, 27, 52
+Idle
+  xy: 70, 64
+  size: 70, 53
+Idle
+  xy: 140, 64
+  size: 70, 53
+Idle
+  xy: 210, 64
+  size: 70, 53
+Walk
+  xy: 0, 117
+  size: 70, 53
+Walk
+  xy: 70, 117
+  size: 70, 53
+Walk
+  xy: 140, 117
+  size: 70, 53
+Walk
+  xy: 210, 117
+  size: 70, 53
+Walk
+  xy: 280, 117
+  size: 70, 53
+Walk
+  xy: 350, 117
+  size: 70, 53
+Walk
+  xy: 420, 117
+  size: 70, 53
+Walk
+  xy: 490, 117
+  size: 70, 53
+Attack
+  xy: 0, 170
+  size: 70, 53
+Attack
+  xy: 70, 170
+  size: 70, 53
+Attack
+  xy: 140, 170
+  size: 70, 53
+Attack
+  xy: 210, 170
+  size: 70, 53
+Attack
+  xy: 280, 170
+  size: 70, 53
+Attack
+  xy: 350, 170
+  size: 70, 53
+Attack
+  xy: 420, 170
+  size: 70, 53
+Attack
+  xy: 490, 170
+  size: 70, 53
+Hit
+  xy: 0, 223
+  size: 70, 53
+Hit
+  xy: 70, 223
+  size: 70, 53
+Hit
+  xy: 140, 223
+  size: 70, 53
+Hit
+  xy: 210, 223
+  size: 70, 53
+Death
+  xy: 0, 276
+  size: 70, 53
+Death
+  xy: 70, 276
+  size: 70, 53
+Death
+  xy: 140, 276
+  size: 70, 53
+Death
+  xy: 210, 276
+  size: 70, 53
+Death
+  xy: 280, 276
+  size: 70, 53
+Death
+  xy: 350, 276
+  size: 70, 53
+Death
+  xy: 420, 276
+  size: 70, 53
+Death
+  xy: 490, 276
+  size: 70, 53
+Death
+  xy: 560, 276
+  size: 70, 53
+IdleUp
+  xy: 0, 329
+  size: 70, 53
+IdleUp
+  xy: 70, 329
+  size: 70, 53
+IdleUp
+  xy: 140, 329
+  size: 70, 53
+IdleUp
+  xy: 210, 329
+  size: 70, 53
+IdleDown
+  xy: 0, 382
+  size: 70, 53
+IdleDown
+  xy: 70, 382
+  size: 70, 53
+IdleDown
+  xy: 140, 382
+  size: 70, 53
+IdleDown
+  xy: 210, 382
+  size: 70, 53
+WalkUp
+  xy: 0, 435
+  size: 70, 53
+WalkUp
+  xy: 70, 435
+  size: 70, 53
+WalkUp
+  xy: 140, 435
+  size: 70, 53
+WalkUp
+  xy: 210, 435
+  size: 70, 53
+WalkUp
+  xy: 280, 435
+  size: 70, 53
+WalkUp
+  xy: 350, 435
+  size: 70, 53
+WalkUp
+  xy: 420, 435
+  size: 70, 53
+WalkUp
+  xy: 490, 435
+  size: 70, 53
+WalkDown
+  xy: 0, 488
+  size: 70, 53
+WalkDown
+  xy: 70, 488
+  size: 70, 53
+WalkDown
+  xy: 140, 488
+  size: 70, 53
+WalkDown
+  xy: 210, 488
+  size: 70, 53
+WalkDown
+  xy: 280, 488
+  size: 70, 53
+WalkDown
+  xy: 350, 488
+  size: 70, 53
+WalkDown
+  xy: 420, 488
+  size: 70, 53
+WalkDown
+  xy: 490, 488
+  size: 70, 53

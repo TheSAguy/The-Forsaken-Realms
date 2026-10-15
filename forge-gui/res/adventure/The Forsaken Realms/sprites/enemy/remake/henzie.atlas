@@ -1,0 +1,174 @@
+henzie.png
+size: 792,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 54
+  footprint: 21, 1, 46, 52
+Idle
+  xy: 88, 64
+  size: 88, 54
+Idle
+  xy: 176, 64
+  size: 88, 54
+Idle
+  xy: 264, 64
+  size: 88, 54
+Walk
+  xy: 0, 118
+  size: 88, 54
+Walk
+  xy: 88, 118
+  size: 88, 54
+Walk
+  xy: 176, 118
+  size: 88, 54
+Walk
+  xy: 264, 118
+  size: 88, 54
+Walk
+  xy: 352, 118
+  size: 88, 54
+Walk
+  xy: 440, 118
+  size: 88, 54
+Walk
+  xy: 528, 118
+  size: 88, 54
+Walk
+  xy: 616, 118
+  size: 88, 54
+Attack
+  xy: 0, 172
+  size: 88, 54
+Attack
+  xy: 88, 172
+  size: 88, 54
+Attack
+  xy: 176, 172
+  size: 88, 54
+Attack
+  xy: 264, 172
+  size: 88, 54
+Attack
+  xy: 352, 172
+  size: 88, 54
+Attack
+  xy: 440, 172
+  size: 88, 54
+Hit
+  xy: 0, 226
+  size: 88, 54
+Hit
+  xy: 88, 226
+  size: 88, 54
+Hit
+  xy: 176, 226
+  size: 88, 54
+Hit
+  xy: 264, 226
+  size: 88, 54
+Death
+  xy: 0, 280
+  size: 88, 54
+Death
+  xy: 88, 280
+  size: 88, 54
+Death
+  xy: 176, 280
+  size: 88, 54
+Death
+  xy: 264, 280
+  size: 88, 54
+Death
+  xy: 352, 280
+  size: 88, 54
+Death
+  xy: 440, 280
+  size: 88, 54
+Death
+  xy: 528, 280
+  size: 88, 54
+Death
+  xy: 616, 280
+  size: 88, 54
+Death
+  xy: 704, 280
+  size: 88, 54
+IdleUp
+  xy: 0, 334
+  size: 88, 54
+IdleUp
+  xy: 88, 334
+  size: 88, 54
+IdleUp
+  xy: 176, 334
+  size: 88, 54
+IdleUp
+  xy: 264, 334
+  size: 88, 54
+IdleDown
+  xy: 0, 388
+  size: 88, 54
+IdleDown
+  xy: 88, 388
+  size: 88, 54
+IdleDown
+  xy: 176, 388
+  size: 88, 54
+IdleDown
+  xy: 264, 388
+  size: 88, 54
+WalkUp
+  xy: 0, 442
+  size: 88, 54
+WalkUp
+  xy: 88, 442
+  size: 88, 54
+WalkUp
+  xy: 176, 442
+  size: 88, 54
+WalkUp
+  xy: 264, 442
+  size: 88, 54
+WalkUp
+  xy: 352, 442
+  size: 88, 54
+WalkUp
+  xy: 440, 442
+  size: 88, 54
+WalkUp
+  xy: 528, 442
+  size: 88, 54
+WalkUp
+  xy: 616, 442
+  size: 88, 54
+WalkDown
+  xy: 0, 496
+  size: 88, 54
+WalkDown
+  xy: 88, 496
+  size: 88, 54
+WalkDown
+  xy: 176, 496
+  size: 88, 54
+WalkDown
+  xy: 264, 496
+  size: 88, 54
+WalkDown
+  xy: 352, 496
+  size: 88, 54
+WalkDown
+  xy: 440, 496
+  size: 88, 54
+WalkDown
+  xy: 528, 496
+  size: 88, 54
+WalkDown
+  xy: 616, 496
+  size: 88, 54

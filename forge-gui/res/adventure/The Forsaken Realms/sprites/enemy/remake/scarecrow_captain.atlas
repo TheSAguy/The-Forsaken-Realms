@@ -1,0 +1,174 @@
+scarecrow_captain.png
+size: 864,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 60
+  footprint: 29, 1, 38, 58
+Idle
+  xy: 96, 64
+  size: 96, 60
+Idle
+  xy: 192, 64
+  size: 96, 60
+Idle
+  xy: 288, 64
+  size: 96, 60
+Walk
+  xy: 0, 124
+  size: 96, 60
+Walk
+  xy: 96, 124
+  size: 96, 60
+Walk
+  xy: 192, 124
+  size: 96, 60
+Walk
+  xy: 288, 124
+  size: 96, 60
+Walk
+  xy: 384, 124
+  size: 96, 60
+Walk
+  xy: 480, 124
+  size: 96, 60
+Walk
+  xy: 576, 124
+  size: 96, 60
+Walk
+  xy: 672, 124
+  size: 96, 60
+Attack
+  xy: 0, 184
+  size: 96, 60
+Attack
+  xy: 96, 184
+  size: 96, 60
+Attack
+  xy: 192, 184
+  size: 96, 60
+Attack
+  xy: 288, 184
+  size: 96, 60
+Attack
+  xy: 384, 184
+  size: 96, 60
+Attack
+  xy: 480, 184
+  size: 96, 60
+Hit
+  xy: 0, 244
+  size: 96, 60
+Hit
+  xy: 96, 244
+  size: 96, 60
+Hit
+  xy: 192, 244
+  size: 96, 60
+Hit
+  xy: 288, 244
+  size: 96, 60
+Death
+  xy: 0, 304
+  size: 96, 60
+Death
+  xy: 96, 304
+  size: 96, 60
+Death
+  xy: 192, 304
+  size: 96, 60
+Death
+  xy: 288, 304
+  size: 96, 60
+Death
+  xy: 384, 304
+  size: 96, 60
+Death
+  xy: 480, 304
+  size: 96, 60
+Death
+  xy: 576, 304
+  size: 96, 60
+Death
+  xy: 672, 304
+  size: 96, 60
+Death
+  xy: 768, 304
+  size: 96, 60
+IdleUp
+  xy: 0, 364
+  size: 96, 60
+IdleUp
+  xy: 96, 364
+  size: 96, 60
+IdleUp
+  xy: 192, 364
+  size: 96, 60
+IdleUp
+  xy: 288, 364
+  size: 96, 60
+IdleDown
+  xy: 0, 424
+  size: 96, 60
+IdleDown
+  xy: 96, 424
+  size: 96, 60
+IdleDown
+  xy: 192, 424
+  size: 96, 60
+IdleDown
+  xy: 288, 424
+  size: 96, 60
+WalkUp
+  xy: 0, 484
+  size: 96, 60
+WalkUp
+  xy: 96, 484
+  size: 96, 60
+WalkUp
+  xy: 192, 484
+  size: 96, 60
+WalkUp
+  xy: 288, 484
+  size: 96, 60
+WalkUp
+  xy: 384, 484
+  size: 96, 60
+WalkUp
+  xy: 480, 484
+  size: 96, 60
+WalkUp
+  xy: 576, 484
+  size: 96, 60
+WalkUp
+  xy: 672, 484
+  size: 96, 60
+WalkDown
+  xy: 0, 544
+  size: 96, 60
+WalkDown
+  xy: 96, 544
+  size: 96, 60
+WalkDown
+  xy: 192, 544
+  size: 96, 60
+WalkDown
+  xy: 288, 544
+  size: 96, 60
+WalkDown
+  xy: 384, 544
+  size: 96, 60
+WalkDown
+  xy: 480, 544
+  size: 96, 60
+WalkDown
+  xy: 576, 544
+  size: 96, 60
+WalkDown
+  xy: 672, 544
+  size: 96, 60

@@ -1,0 +1,180 @@
+kitt_kanto.png
+size: 684,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 57
+  footprint: 20, 1, 36, 55
+Idle
+  xy: 76, 64
+  size: 76, 57
+Idle
+  xy: 152, 64
+  size: 76, 57
+Idle
+  xy: 228, 64
+  size: 76, 57
+Walk
+  xy: 0, 121
+  size: 76, 57
+Walk
+  xy: 76, 121
+  size: 76, 57
+Walk
+  xy: 152, 121
+  size: 76, 57
+Walk
+  xy: 228, 121
+  size: 76, 57
+Walk
+  xy: 304, 121
+  size: 76, 57
+Walk
+  xy: 380, 121
+  size: 76, 57
+Walk
+  xy: 456, 121
+  size: 76, 57
+Walk
+  xy: 532, 121
+  size: 76, 57
+Attack
+  xy: 0, 178
+  size: 76, 57
+Attack
+  xy: 76, 178
+  size: 76, 57
+Attack
+  xy: 152, 178
+  size: 76, 57
+Attack
+  xy: 228, 178
+  size: 76, 57
+Attack
+  xy: 304, 178
+  size: 76, 57
+Attack
+  xy: 380, 178
+  size: 76, 57
+Attack
+  xy: 456, 178
+  size: 76, 57
+Attack
+  xy: 532, 178
+  size: 76, 57
+Hit
+  xy: 0, 235
+  size: 76, 57
+Hit
+  xy: 76, 235
+  size: 76, 57
+Hit
+  xy: 152, 235
+  size: 76, 57
+Hit
+  xy: 228, 235
+  size: 76, 57
+Death
+  xy: 0, 292
+  size: 76, 57
+Death
+  xy: 76, 292
+  size: 76, 57
+Death
+  xy: 152, 292
+  size: 76, 57
+Death
+  xy: 228, 292
+  size: 76, 57
+Death
+  xy: 304, 292
+  size: 76, 57
+Death
+  xy: 380, 292
+  size: 76, 57
+Death
+  xy: 456, 292
+  size: 76, 57
+Death
+  xy: 532, 292
+  size: 76, 57
+Death
+  xy: 608, 292
+  size: 76, 57
+IdleUp
+  xy: 0, 349
+  size: 76, 57
+IdleUp
+  xy: 76, 349
+  size: 76, 57
+IdleUp
+  xy: 152, 349
+  size: 76, 57
+IdleUp
+  xy: 228, 349
+  size: 76, 57
+IdleDown
+  xy: 0, 406
+  size: 76, 57
+IdleDown
+  xy: 76, 406
+  size: 76, 57
+IdleDown
+  xy: 152, 406
+  size: 76, 57
+IdleDown
+  xy: 228, 406
+  size: 76, 57
+WalkUp
+  xy: 0, 463
+  size: 76, 57
+WalkUp
+  xy: 76, 463
+  size: 76, 57
+WalkUp
+  xy: 152, 463
+  size: 76, 57
+WalkUp
+  xy: 228, 463
+  size: 76, 57
+WalkUp
+  xy: 304, 463
+  size: 76, 57
+WalkUp
+  xy: 380, 463
+  size: 76, 57
+WalkUp
+  xy: 456, 463
+  size: 76, 57
+WalkUp
+  xy: 532, 463
+  size: 76, 57
+WalkDown
+  xy: 0, 520
+  size: 76, 57
+WalkDown
+  xy: 76, 520
+  size: 76, 57
+WalkDown
+  xy: 152, 520
+  size: 76, 57
+WalkDown
+  xy: 228, 520
+  size: 76, 57
+WalkDown
+  xy: 304, 520
+  size: 76, 57
+WalkDown
+  xy: 380, 520
+  size: 76, 57
+WalkDown
+  xy: 456, 520
+  size: 76, 57
+WalkDown
+  xy: 532, 520
+  size: 76, 57

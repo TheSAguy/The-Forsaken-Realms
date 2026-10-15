@@ -1,0 +1,174 @@
+king_kane_ferguson.png
+size: 1368,685
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 152, 69
+  footprint: 58, 1, 36, 68
+Idle
+  xy: 152, 64
+  size: 152, 69
+Idle
+  xy: 304, 64
+  size: 152, 69
+Idle
+  xy: 456, 64
+  size: 152, 69
+Walk
+  xy: 0, 133
+  size: 152, 69
+Walk
+  xy: 152, 133
+  size: 152, 69
+Walk
+  xy: 304, 133
+  size: 152, 69
+Walk
+  xy: 456, 133
+  size: 152, 69
+Walk
+  xy: 608, 133
+  size: 152, 69
+Walk
+  xy: 760, 133
+  size: 152, 69
+Walk
+  xy: 912, 133
+  size: 152, 69
+Walk
+  xy: 1064, 133
+  size: 152, 69
+Attack
+  xy: 0, 202
+  size: 152, 69
+Attack
+  xy: 152, 202
+  size: 152, 69
+Attack
+  xy: 304, 202
+  size: 152, 69
+Attack
+  xy: 456, 202
+  size: 152, 69
+Attack
+  xy: 608, 202
+  size: 152, 69
+Attack
+  xy: 760, 202
+  size: 152, 69
+Hit
+  xy: 0, 271
+  size: 152, 69
+Hit
+  xy: 152, 271
+  size: 152, 69
+Hit
+  xy: 304, 271
+  size: 152, 69
+Hit
+  xy: 456, 271
+  size: 152, 69
+Death
+  xy: 0, 340
+  size: 152, 69
+Death
+  xy: 152, 340
+  size: 152, 69
+Death
+  xy: 304, 340
+  size: 152, 69
+Death
+  xy: 456, 340
+  size: 152, 69
+Death
+  xy: 608, 340
+  size: 152, 69
+Death
+  xy: 760, 340
+  size: 152, 69
+Death
+  xy: 912, 340
+  size: 152, 69
+Death
+  xy: 1064, 340
+  size: 152, 69
+Death
+  xy: 1216, 340
+  size: 152, 69
+IdleUp
+  xy: 0, 409
+  size: 152, 69
+IdleUp
+  xy: 152, 409
+  size: 152, 69
+IdleUp
+  xy: 304, 409
+  size: 152, 69
+IdleUp
+  xy: 456, 409
+  size: 152, 69
+IdleDown
+  xy: 0, 478
+  size: 152, 69
+IdleDown
+  xy: 152, 478
+  size: 152, 69
+IdleDown
+  xy: 304, 478
+  size: 152, 69
+IdleDown
+  xy: 456, 478
+  size: 152, 69
+WalkUp
+  xy: 0, 547
+  size: 152, 69
+WalkUp
+  xy: 152, 547
+  size: 152, 69
+WalkUp
+  xy: 304, 547
+  size: 152, 69
+WalkUp
+  xy: 456, 547
+  size: 152, 69
+WalkUp
+  xy: 608, 547
+  size: 152, 69
+WalkUp
+  xy: 760, 547
+  size: 152, 69
+WalkUp
+  xy: 912, 547
+  size: 152, 69
+WalkUp
+  xy: 1064, 547
+  size: 152, 69
+WalkDown
+  xy: 0, 616
+  size: 152, 69
+WalkDown
+  xy: 152, 616
+  size: 152, 69
+WalkDown
+  xy: 304, 616
+  size: 152, 69
+WalkDown
+  xy: 456, 616
+  size: 152, 69
+WalkDown
+  xy: 608, 616
+  size: 152, 69
+WalkDown
+  xy: 760, 616
+  size: 152, 69
+WalkDown
+  xy: 912, 616
+  size: 152, 69
+WalkDown
+  xy: 1064, 616
+  size: 152, 69

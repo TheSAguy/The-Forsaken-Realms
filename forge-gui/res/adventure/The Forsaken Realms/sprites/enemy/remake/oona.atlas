@@ -1,0 +1,177 @@
+oona.png
+size: 792,568
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 56
+  footprint: 23, 1, 42, 54
+Idle
+  xy: 88, 64
+  size: 88, 56
+Idle
+  xy: 176, 64
+  size: 88, 56
+Idle
+  xy: 264, 64
+  size: 88, 56
+Walk
+  xy: 0, 120
+  size: 88, 56
+Walk
+  xy: 88, 120
+  size: 88, 56
+Walk
+  xy: 176, 120
+  size: 88, 56
+Walk
+  xy: 264, 120
+  size: 88, 56
+Walk
+  xy: 352, 120
+  size: 88, 56
+Walk
+  xy: 440, 120
+  size: 88, 56
+Walk
+  xy: 528, 120
+  size: 88, 56
+Walk
+  xy: 616, 120
+  size: 88, 56
+Attack
+  xy: 0, 176
+  size: 88, 56
+Attack
+  xy: 88, 176
+  size: 88, 56
+Attack
+  xy: 176, 176
+  size: 88, 56
+Attack
+  xy: 264, 176
+  size: 88, 56
+Attack
+  xy: 352, 176
+  size: 88, 56
+Attack
+  xy: 440, 176
+  size: 88, 56
+Attack
+  xy: 528, 176
+  size: 88, 56
+Hit
+  xy: 0, 232
+  size: 88, 56
+Hit
+  xy: 88, 232
+  size: 88, 56
+Hit
+  xy: 176, 232
+  size: 88, 56
+Hit
+  xy: 264, 232
+  size: 88, 56
+Death
+  xy: 0, 288
+  size: 88, 56
+Death
+  xy: 88, 288
+  size: 88, 56
+Death
+  xy: 176, 288
+  size: 88, 56
+Death
+  xy: 264, 288
+  size: 88, 56
+Death
+  xy: 352, 288
+  size: 88, 56
+Death
+  xy: 440, 288
+  size: 88, 56
+Death
+  xy: 528, 288
+  size: 88, 56
+Death
+  xy: 616, 288
+  size: 88, 56
+Death
+  xy: 704, 288
+  size: 88, 56
+IdleUp
+  xy: 0, 344
+  size: 88, 56
+IdleUp
+  xy: 88, 344
+  size: 88, 56
+IdleUp
+  xy: 176, 344
+  size: 88, 56
+IdleUp
+  xy: 264, 344
+  size: 88, 56
+IdleDown
+  xy: 0, 400
+  size: 88, 56
+IdleDown
+  xy: 88, 400
+  size: 88, 56
+IdleDown
+  xy: 176, 400
+  size: 88, 56
+IdleDown
+  xy: 264, 400
+  size: 88, 56
+WalkUp
+  xy: 0, 456
+  size: 88, 56
+WalkUp
+  xy: 88, 456
+  size: 88, 56
+WalkUp
+  xy: 176, 456
+  size: 88, 56
+WalkUp
+  xy: 264, 456
+  size: 88, 56
+WalkUp
+  xy: 352, 456
+  size: 88, 56
+WalkUp
+  xy: 440, 456
+  size: 88, 56
+WalkUp
+  xy: 528, 456
+  size: 88, 56
+WalkUp
+  xy: 616, 456
+  size: 88, 56
+WalkDown
+  xy: 0, 512
+  size: 88, 56
+WalkDown
+  xy: 88, 512
+  size: 88, 56
+WalkDown
+  xy: 176, 512
+  size: 88, 56
+WalkDown
+  xy: 264, 512
+  size: 88, 56
+WalkDown
+  xy: 352, 512
+  size: 88, 56
+WalkDown
+  xy: 440, 512
+  size: 88, 56
+WalkDown
+  xy: 528, 512
+  size: 88, 56
+WalkDown
+  xy: 616, 512
+  size: 88, 56

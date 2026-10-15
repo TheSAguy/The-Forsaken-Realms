@@ -1,0 +1,174 @@
+scarecrow.png
+size: 846,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 94, 55
+  footprint: 29, 1, 36, 53
+Idle
+  xy: 94, 64
+  size: 94, 55
+Idle
+  xy: 188, 64
+  size: 94, 55
+Idle
+  xy: 282, 64
+  size: 94, 55
+Walk
+  xy: 0, 119
+  size: 94, 55
+Walk
+  xy: 94, 119
+  size: 94, 55
+Walk
+  xy: 188, 119
+  size: 94, 55
+Walk
+  xy: 282, 119
+  size: 94, 55
+Walk
+  xy: 376, 119
+  size: 94, 55
+Walk
+  xy: 470, 119
+  size: 94, 55
+Walk
+  xy: 564, 119
+  size: 94, 55
+Walk
+  xy: 658, 119
+  size: 94, 55
+Attack
+  xy: 0, 174
+  size: 94, 55
+Attack
+  xy: 94, 174
+  size: 94, 55
+Attack
+  xy: 188, 174
+  size: 94, 55
+Attack
+  xy: 282, 174
+  size: 94, 55
+Attack
+  xy: 376, 174
+  size: 94, 55
+Attack
+  xy: 470, 174
+  size: 94, 55
+Hit
+  xy: 0, 229
+  size: 94, 55
+Hit
+  xy: 94, 229
+  size: 94, 55
+Hit
+  xy: 188, 229
+  size: 94, 55
+Hit
+  xy: 282, 229
+  size: 94, 55
+Death
+  xy: 0, 284
+  size: 94, 55
+Death
+  xy: 94, 284
+  size: 94, 55
+Death
+  xy: 188, 284
+  size: 94, 55
+Death
+  xy: 282, 284
+  size: 94, 55
+Death
+  xy: 376, 284
+  size: 94, 55
+Death
+  xy: 470, 284
+  size: 94, 55
+Death
+  xy: 564, 284
+  size: 94, 55
+Death
+  xy: 658, 284
+  size: 94, 55
+Death
+  xy: 752, 284
+  size: 94, 55
+IdleUp
+  xy: 0, 339
+  size: 94, 55
+IdleUp
+  xy: 94, 339
+  size: 94, 55
+IdleUp
+  xy: 188, 339
+  size: 94, 55
+IdleUp
+  xy: 282, 339
+  size: 94, 55
+IdleDown
+  xy: 0, 394
+  size: 94, 55
+IdleDown
+  xy: 94, 394
+  size: 94, 55
+IdleDown
+  xy: 188, 394
+  size: 94, 55
+IdleDown
+  xy: 282, 394
+  size: 94, 55
+WalkUp
+  xy: 0, 449
+  size: 94, 55
+WalkUp
+  xy: 94, 449
+  size: 94, 55
+WalkUp
+  xy: 188, 449
+  size: 94, 55
+WalkUp
+  xy: 282, 449
+  size: 94, 55
+WalkUp
+  xy: 376, 449
+  size: 94, 55
+WalkUp
+  xy: 470, 449
+  size: 94, 55
+WalkUp
+  xy: 564, 449
+  size: 94, 55
+WalkUp
+  xy: 658, 449
+  size: 94, 55
+WalkDown
+  xy: 0, 504
+  size: 94, 55
+WalkDown
+  xy: 94, 504
+  size: 94, 55
+WalkDown
+  xy: 188, 504
+  size: 94, 55
+WalkDown
+  xy: 282, 504
+  size: 94, 55
+WalkDown
+  xy: 376, 504
+  size: 94, 55
+WalkDown
+  xy: 470, 504
+  size: 94, 55
+WalkDown
+  xy: 564, 504
+  size: 94, 55
+WalkDown
+  xy: 658, 504
+  size: 94, 55

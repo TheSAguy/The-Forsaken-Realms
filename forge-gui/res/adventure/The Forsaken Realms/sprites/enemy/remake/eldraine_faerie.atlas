@@ -1,0 +1,174 @@
+eldraine_faerie.png
+size: 792,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 58
+  footprint: 43, 4, 21, 53
+Idle
+  xy: 88, 64
+  size: 88, 58
+Idle
+  xy: 176, 64
+  size: 88, 58
+Idle
+  xy: 264, 64
+  size: 88, 58
+Walk
+  xy: 0, 122
+  size: 88, 58
+Walk
+  xy: 88, 122
+  size: 88, 58
+Walk
+  xy: 176, 122
+  size: 88, 58
+Walk
+  xy: 264, 122
+  size: 88, 58
+Walk
+  xy: 352, 122
+  size: 88, 58
+Walk
+  xy: 440, 122
+  size: 88, 58
+Walk
+  xy: 528, 122
+  size: 88, 58
+Walk
+  xy: 616, 122
+  size: 88, 58
+Attack
+  xy: 0, 180
+  size: 88, 58
+Attack
+  xy: 88, 180
+  size: 88, 58
+Attack
+  xy: 176, 180
+  size: 88, 58
+Attack
+  xy: 264, 180
+  size: 88, 58
+Attack
+  xy: 352, 180
+  size: 88, 58
+Attack
+  xy: 440, 180
+  size: 88, 58
+Hit
+  xy: 0, 238
+  size: 88, 58
+Hit
+  xy: 88, 238
+  size: 88, 58
+Hit
+  xy: 176, 238
+  size: 88, 58
+Hit
+  xy: 264, 238
+  size: 88, 58
+Death
+  xy: 0, 296
+  size: 88, 58
+Death
+  xy: 88, 296
+  size: 88, 58
+Death
+  xy: 176, 296
+  size: 88, 58
+Death
+  xy: 264, 296
+  size: 88, 58
+Death
+  xy: 352, 296
+  size: 88, 58
+Death
+  xy: 440, 296
+  size: 88, 58
+Death
+  xy: 528, 296
+  size: 88, 58
+Death
+  xy: 616, 296
+  size: 88, 58
+Death
+  xy: 704, 296
+  size: 88, 58
+IdleUp
+  xy: 0, 354
+  size: 88, 58
+IdleUp
+  xy: 88, 354
+  size: 88, 58
+IdleUp
+  xy: 176, 354
+  size: 88, 58
+IdleUp
+  xy: 264, 354
+  size: 88, 58
+IdleDown
+  xy: 0, 412
+  size: 88, 58
+IdleDown
+  xy: 88, 412
+  size: 88, 58
+IdleDown
+  xy: 176, 412
+  size: 88, 58
+IdleDown
+  xy: 264, 412
+  size: 88, 58
+WalkUp
+  xy: 0, 470
+  size: 88, 58
+WalkUp
+  xy: 88, 470
+  size: 88, 58
+WalkUp
+  xy: 176, 470
+  size: 88, 58
+WalkUp
+  xy: 264, 470
+  size: 88, 58
+WalkUp
+  xy: 352, 470
+  size: 88, 58
+WalkUp
+  xy: 440, 470
+  size: 88, 58
+WalkUp
+  xy: 528, 470
+  size: 88, 58
+WalkUp
+  xy: 616, 470
+  size: 88, 58
+WalkDown
+  xy: 0, 528
+  size: 88, 58
+WalkDown
+  xy: 88, 528
+  size: 88, 58
+WalkDown
+  xy: 176, 528
+  size: 88, 58
+WalkDown
+  xy: 264, 528
+  size: 88, 58
+WalkDown
+  xy: 352, 528
+  size: 88, 58
+WalkDown
+  xy: 440, 528
+  size: 88, 58
+WalkDown
+  xy: 528, 528
+  size: 88, 58
+WalkDown
+  xy: 616, 528
+  size: 88, 58

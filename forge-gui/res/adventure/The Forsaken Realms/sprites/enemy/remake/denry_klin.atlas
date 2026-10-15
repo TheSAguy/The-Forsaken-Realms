@@ -1,0 +1,176 @@
+denry_klin.png
+size: 486,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 54, 57
+Idle
+  xy: 54, 64
+  size: 54, 57
+Idle
+  xy: 108, 64
+  size: 54, 57
+Idle
+  xy: 162, 64
+  size: 54, 57
+Walk
+  xy: 0, 121
+  size: 54, 57
+Walk
+  xy: 54, 121
+  size: 54, 57
+Walk
+  xy: 108, 121
+  size: 54, 57
+Walk
+  xy: 162, 121
+  size: 54, 57
+Walk
+  xy: 216, 121
+  size: 54, 57
+Walk
+  xy: 270, 121
+  size: 54, 57
+Walk
+  xy: 324, 121
+  size: 54, 57
+Walk
+  xy: 378, 121
+  size: 54, 57
+Attack
+  xy: 0, 178
+  size: 54, 57
+Attack
+  xy: 54, 178
+  size: 54, 57
+Attack
+  xy: 108, 178
+  size: 54, 57
+Attack
+  xy: 162, 178
+  size: 54, 57
+Attack
+  xy: 216, 178
+  size: 54, 57
+Attack
+  xy: 270, 178
+  size: 54, 57
+Attack
+  xy: 324, 178
+  size: 54, 57
+Hit
+  xy: 0, 235
+  size: 54, 57
+Hit
+  xy: 54, 235
+  size: 54, 57
+Hit
+  xy: 108, 235
+  size: 54, 57
+Hit
+  xy: 162, 235
+  size: 54, 57
+Death
+  xy: 0, 292
+  size: 54, 57
+Death
+  xy: 54, 292
+  size: 54, 57
+Death
+  xy: 108, 292
+  size: 54, 57
+Death
+  xy: 162, 292
+  size: 54, 57
+Death
+  xy: 216, 292
+  size: 54, 57
+Death
+  xy: 270, 292
+  size: 54, 57
+Death
+  xy: 324, 292
+  size: 54, 57
+Death
+  xy: 378, 292
+  size: 54, 57
+Death
+  xy: 432, 292
+  size: 54, 57
+IdleUp
+  xy: 0, 349
+  size: 54, 57
+IdleUp
+  xy: 54, 349
+  size: 54, 57
+IdleUp
+  xy: 108, 349
+  size: 54, 57
+IdleUp
+  xy: 162, 349
+  size: 54, 57
+IdleDown
+  xy: 0, 406
+  size: 54, 57
+IdleDown
+  xy: 54, 406
+  size: 54, 57
+IdleDown
+  xy: 108, 406
+  size: 54, 57
+IdleDown
+  xy: 162, 406
+  size: 54, 57
+WalkUp
+  xy: 0, 463
+  size: 54, 57
+WalkUp
+  xy: 54, 463
+  size: 54, 57
+WalkUp
+  xy: 108, 463
+  size: 54, 57
+WalkUp
+  xy: 162, 463
+  size: 54, 57
+WalkUp
+  xy: 216, 463
+  size: 54, 57
+WalkUp
+  xy: 270, 463
+  size: 54, 57
+WalkUp
+  xy: 324, 463
+  size: 54, 57
+WalkUp
+  xy: 378, 463
+  size: 54, 57
+WalkDown
+  xy: 0, 520
+  size: 54, 57
+WalkDown
+  xy: 54, 520
+  size: 54, 57
+WalkDown
+  xy: 108, 520
+  size: 54, 57
+WalkDown
+  xy: 162, 520
+  size: 54, 57
+WalkDown
+  xy: 216, 520
+  size: 54, 57
+WalkDown
+  xy: 270, 520
+  size: 54, 57
+WalkDown
+  xy: 324, 520
+  size: 54, 57
+WalkDown
+  xy: 378, 520
+  size: 54, 57
