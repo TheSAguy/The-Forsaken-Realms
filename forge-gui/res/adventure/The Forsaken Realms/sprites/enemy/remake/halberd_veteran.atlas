@@ -1,0 +1,180 @@
+halberd_veteran.png
+size: 738,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 54
+  footprint: 14, 1, 55, 53
+Idle
+  xy: 82, 64
+  size: 82, 54
+Idle
+  xy: 164, 64
+  size: 82, 54
+Idle
+  xy: 246, 64
+  size: 82, 54
+Walk
+  xy: 0, 118
+  size: 82, 54
+Walk
+  xy: 82, 118
+  size: 82, 54
+Walk
+  xy: 164, 118
+  size: 82, 54
+Walk
+  xy: 246, 118
+  size: 82, 54
+Walk
+  xy: 328, 118
+  size: 82, 54
+Walk
+  xy: 410, 118
+  size: 82, 54
+Walk
+  xy: 492, 118
+  size: 82, 54
+Walk
+  xy: 574, 118
+  size: 82, 54
+Attack
+  xy: 0, 172
+  size: 82, 54
+Attack
+  xy: 82, 172
+  size: 82, 54
+Attack
+  xy: 164, 172
+  size: 82, 54
+Attack
+  xy: 246, 172
+  size: 82, 54
+Attack
+  xy: 328, 172
+  size: 82, 54
+Attack
+  xy: 410, 172
+  size: 82, 54
+Attack
+  xy: 492, 172
+  size: 82, 54
+Attack
+  xy: 574, 172
+  size: 82, 54
+Hit
+  xy: 0, 226
+  size: 82, 54
+Hit
+  xy: 82, 226
+  size: 82, 54
+Hit
+  xy: 164, 226
+  size: 82, 54
+Hit
+  xy: 246, 226
+  size: 82, 54
+Death
+  xy: 0, 280
+  size: 82, 54
+Death
+  xy: 82, 280
+  size: 82, 54
+Death
+  xy: 164, 280
+  size: 82, 54
+Death
+  xy: 246, 280
+  size: 82, 54
+Death
+  xy: 328, 280
+  size: 82, 54
+Death
+  xy: 410, 280
+  size: 82, 54
+Death
+  xy: 492, 280
+  size: 82, 54
+Death
+  xy: 574, 280
+  size: 82, 54
+Death
+  xy: 656, 280
+  size: 82, 54
+IdleUp
+  xy: 0, 334
+  size: 82, 54
+IdleUp
+  xy: 82, 334
+  size: 82, 54
+IdleUp
+  xy: 164, 334
+  size: 82, 54
+IdleUp
+  xy: 246, 334
+  size: 82, 54
+IdleDown
+  xy: 0, 388
+  size: 82, 54
+IdleDown
+  xy: 82, 388
+  size: 82, 54
+IdleDown
+  xy: 164, 388
+  size: 82, 54
+IdleDown
+  xy: 246, 388
+  size: 82, 54
+WalkUp
+  xy: 0, 442
+  size: 82, 54
+WalkUp
+  xy: 82, 442
+  size: 82, 54
+WalkUp
+  xy: 164, 442
+  size: 82, 54
+WalkUp
+  xy: 246, 442
+  size: 82, 54
+WalkUp
+  xy: 328, 442
+  size: 82, 54
+WalkUp
+  xy: 410, 442
+  size: 82, 54
+WalkUp
+  xy: 492, 442
+  size: 82, 54
+WalkUp
+  xy: 574, 442
+  size: 82, 54
+WalkDown
+  xy: 0, 496
+  size: 82, 54
+WalkDown
+  xy: 82, 496
+  size: 82, 54
+WalkDown
+  xy: 164, 496
+  size: 82, 54
+WalkDown
+  xy: 246, 496
+  size: 82, 54
+WalkDown
+  xy: 328, 496
+  size: 82, 54
+WalkDown
+  xy: 410, 496
+  size: 82, 54
+WalkDown
+  xy: 492, 496
+  size: 82, 54
+WalkDown
+  xy: 574, 496
+  size: 82, 54

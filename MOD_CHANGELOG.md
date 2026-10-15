@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 617: twenty small stock and Basic sprites become LPC characters (2026-10-15)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_617.py`. From the numbered
+low-quality list the user picked #62-67, 73, 75, 77-79, 81-85 and 93-96 as "close enough LPC characters". #80 Bandit
+Archer was not on the list and keeps its sprite; Brallin, who shares it, is done.
+
+- **The enemies**: Longbow Yeoman, Pitchfork Farmer, Axe Orc, Dawnblade Prince, Levy Spearman, Court Mage, Archmage
+  of the Tides, Halberd Veteran, Bandit Scoundrel, Chandler, Joven, Brallin and Shabraz, Bandit Trapmaster, Kirol,
+  Pyromancer, Shu Yun, Cavalier Captain, Levy Swordsman, Outrider, Shieldwall Sergeant. Their sprites were the round-108
+  Basic set and small 20-28 px stock (`basic/humanoid/`, `mythic/`, `humanoid/human/bandit/`, `humanoid/human/shaman/`).
+- **How they were dressed**:
+  - From their sprites: the yeoman's blue hood and longbow; the farmer's straw hat and overalls, with the generator's
+    trident part as his pitchfork; the axe orc's horned helm; the levies in kettle and nasal helms; the court mage's
+    blue wizard hat; the bandits' red bandanas and shields; the trapmaster's goggles; the pyromancer's red robe.
+  - LPC's plain face mask read as a red face, so the bandits wear head bandanas instead.
+  - Brallin and Shu Yun follow their cards: a long-haired corsair with a scimitar, and a bald monk in a blue robe with
+    prayer beads. Kirol is a pale Lorehold cleric with a mace.
+  - The Cavalier Captain and the Outrider ride LPC horses (mounted_to_forge.py, round 523): the white horse with a
+    couched spear, and the brown one.
+  - The bosses Chandler and Joven keep their drawn size. The Mythic Dawnblade Prince wears a tiara and a red glowing
+    sword.
+- **Files**:
+  - 20 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 20 sprite paths and scales, 0.21-0.33 (the bosses 0.70 and 0.71).
+  - A footprint on 15 of the atlases.
+  - `CREDITS_LPC.md` regenerated: 851 characters, additions only.
+  - `CREDITS.md`: the LPC bullet (823 enemies) and the [LPC] Horses bullet (the two new riders); no new authors.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 20, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 616: the Goblin Wolf Rider rides a real wolf, and three new goblin riders (2026-10-15)
 
 The Procedural Pixel Creatures session. The user asked for #18 of the low-quality list (the Goblin Wolf Rider, a 16 px

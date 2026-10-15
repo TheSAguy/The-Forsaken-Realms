@@ -1,0 +1,179 @@
+pitchfork_farmer.png
+size: 648,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 58
+Idle
+  xy: 72, 64
+  size: 72, 58
+Idle
+  xy: 144, 64
+  size: 72, 58
+Idle
+  xy: 216, 64
+  size: 72, 58
+Walk
+  xy: 0, 122
+  size: 72, 58
+Walk
+  xy: 72, 122
+  size: 72, 58
+Walk
+  xy: 144, 122
+  size: 72, 58
+Walk
+  xy: 216, 122
+  size: 72, 58
+Walk
+  xy: 288, 122
+  size: 72, 58
+Walk
+  xy: 360, 122
+  size: 72, 58
+Walk
+  xy: 432, 122
+  size: 72, 58
+Walk
+  xy: 504, 122
+  size: 72, 58
+Attack
+  xy: 0, 180
+  size: 72, 58
+Attack
+  xy: 72, 180
+  size: 72, 58
+Attack
+  xy: 144, 180
+  size: 72, 58
+Attack
+  xy: 216, 180
+  size: 72, 58
+Attack
+  xy: 288, 180
+  size: 72, 58
+Attack
+  xy: 360, 180
+  size: 72, 58
+Attack
+  xy: 432, 180
+  size: 72, 58
+Attack
+  xy: 504, 180
+  size: 72, 58
+Hit
+  xy: 0, 238
+  size: 72, 58
+Hit
+  xy: 72, 238
+  size: 72, 58
+Hit
+  xy: 144, 238
+  size: 72, 58
+Hit
+  xy: 216, 238
+  size: 72, 58
+Death
+  xy: 0, 296
+  size: 72, 58
+Death
+  xy: 72, 296
+  size: 72, 58
+Death
+  xy: 144, 296
+  size: 72, 58
+Death
+  xy: 216, 296
+  size: 72, 58
+Death
+  xy: 288, 296
+  size: 72, 58
+Death
+  xy: 360, 296
+  size: 72, 58
+Death
+  xy: 432, 296
+  size: 72, 58
+Death
+  xy: 504, 296
+  size: 72, 58
+Death
+  xy: 576, 296
+  size: 72, 58
+IdleUp
+  xy: 0, 354
+  size: 72, 58
+IdleUp
+  xy: 72, 354
+  size: 72, 58
+IdleUp
+  xy: 144, 354
+  size: 72, 58
+IdleUp
+  xy: 216, 354
+  size: 72, 58
+IdleDown
+  xy: 0, 412
+  size: 72, 58
+IdleDown
+  xy: 72, 412
+  size: 72, 58
+IdleDown
+  xy: 144, 412
+  size: 72, 58
+IdleDown
+  xy: 216, 412
+  size: 72, 58
+WalkUp
+  xy: 0, 470
+  size: 72, 58
+WalkUp
+  xy: 72, 470
+  size: 72, 58
+WalkUp
+  xy: 144, 470
+  size: 72, 58
+WalkUp
+  xy: 216, 470
+  size: 72, 58
+WalkUp
+  xy: 288, 470
+  size: 72, 58
+WalkUp
+  xy: 360, 470
+  size: 72, 58
+WalkUp
+  xy: 432, 470
+  size: 72, 58
+WalkUp
+  xy: 504, 470
+  size: 72, 58
+WalkDown
+  xy: 0, 528
+  size: 72, 58
+WalkDown
+  xy: 72, 528
+  size: 72, 58
+WalkDown
+  xy: 144, 528
+  size: 72, 58
+WalkDown
+  xy: 216, 528
+  size: 72, 58
+WalkDown
+  xy: 288, 528
+  size: 72, 58
+WalkDown
+  xy: 360, 528
+  size: 72, 58
+WalkDown
+  xy: 432, 528
+  size: 72, 58
+WalkDown
+  xy: 504, 528
+  size: 72, 58

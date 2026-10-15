@@ -1,0 +1,134 @@
+cavalier_captain.png
+size: 576,811
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 83
+Idle
+  xy: 72, 64
+  size: 72, 83
+Idle
+  xy: 144, 64
+  size: 72, 83
+Idle
+  xy: 216, 64
+  size: 72, 83
+Walk
+  xy: 0, 147
+  size: 72, 83
+Walk
+  xy: 72, 147
+  size: 72, 83
+Walk
+  xy: 144, 147
+  size: 72, 83
+Walk
+  xy: 216, 147
+  size: 72, 83
+Attack
+  xy: 0, 230
+  size: 72, 83
+Attack
+  xy: 72, 230
+  size: 72, 83
+Attack
+  xy: 144, 230
+  size: 72, 83
+Attack
+  xy: 216, 230
+  size: 72, 83
+Attack
+  xy: 288, 230
+  size: 72, 83
+Attack
+  xy: 360, 230
+  size: 72, 83
+Attack
+  xy: 432, 230
+  size: 72, 83
+Attack
+  xy: 504, 230
+  size: 72, 83
+Hit
+  xy: 0, 313
+  size: 72, 83
+Hit
+  xy: 72, 313
+  size: 72, 83
+Hit
+  xy: 144, 313
+  size: 72, 83
+Hit
+  xy: 216, 313
+  size: 72, 83
+Death
+  xy: 0, 396
+  size: 72, 83
+Death
+  xy: 72, 396
+  size: 72, 83
+Death
+  xy: 144, 396
+  size: 72, 83
+Death
+  xy: 216, 396
+  size: 72, 83
+Death
+  xy: 288, 396
+  size: 72, 83
+Death
+  xy: 360, 396
+  size: 72, 83
+IdleUp
+  xy: 0, 479
+  size: 72, 83
+IdleUp
+  xy: 72, 479
+  size: 72, 83
+IdleUp
+  xy: 144, 479
+  size: 72, 83
+IdleUp
+  xy: 216, 479
+  size: 72, 83
+IdleDown
+  xy: 0, 562
+  size: 72, 83
+IdleDown
+  xy: 72, 562
+  size: 72, 83
+IdleDown
+  xy: 144, 562
+  size: 72, 83
+IdleDown
+  xy: 216, 562
+  size: 72, 83
+WalkUp
+  xy: 0, 645
+  size: 72, 83
+WalkUp
+  xy: 72, 645
+  size: 72, 83
+WalkUp
+  xy: 144, 645
+  size: 72, 83
+WalkUp
+  xy: 216, 645
+  size: 72, 83
+WalkDown
+  xy: 0, 728
+  size: 72, 83
+WalkDown
+  xy: 72, 728
+  size: 72, 83
+WalkDown
+  xy: 144, 728
+  size: 72, 83
+WalkDown
+  xy: 216, 728
+  size: 72, 83

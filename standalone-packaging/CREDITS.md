@@ -99,7 +99,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (803 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600, 601, 602, 608 and 616 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (823 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600, 601, 602, 608, 616 and 617 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -189,7 +189,11 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Kaslem, Yorvo, Sun Giant, Abyssal Baron, Taborax, Nefarox, Krampus (Elite), Spiked Ravager, Cateran Overlord,
   Jetmir, Regna and Krav, Satyr, Satyr Grove Guardian, Xenagos, Gallia, Rhys, Lluwen, Trystan, Harpy, Harpy 2,
   Aphemia, Xira, Szarel, Gitaxian Scientist, Ertai; round 616's four goblin riders on RPG Maker beasts - Goblin Wolf
-  Rider, Goblin Nightwolf Rider, Goblin Tiger Rider, Goblin Panther Rider; and round 597's 28 player heroes, a
+  Rider, Goblin Nightwolf Rider, Goblin Tiger Rider, Goblin Panther Rider; round 617's twenty yeomen, levies, bandits
+  and mages - Longbow Yeoman, Pitchfork Farmer, Axe Orc, Dawnblade Prince, Levy Spearman, Court Mage, Archmage of the
+  Tides, Halberd Veteran, Bandit Scoundrel, Chandler, Joven, Brallin and Shabraz, Bandit Trapmaster, Kirol,
+  Pyromancer, Shu Yun, Cavalier Captain, Levy Swordsman, Outrider, Shieldwall Sergeant; and round 597's 28 player
+  heroes, a
   woman
   and a man of every race
   the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,
@@ -210,7 +214,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   our thanks to every contributor the generator's credits leave unnamed; the parts and their source pages are listed at
   https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator and on https://opengameart.org.
 - **[LPC] Horses** (the mounts of the eighteen mounted knights, round 523: the Dark Knight, the Death Knight, the
-  cavaliers and the death knights' legends) - **bluecarrot16** (CC-BY 3.0 / GPL 3.0 / GPL 2.0 / OGA-BY 3.0, used under
+  cavaliers and the death knights' legends; and the Cavalier Captain and the Outrider, round 617) - **bluecarrot16** (CC-BY 3.0 / GPL 3.0 / GPL 2.0 / OGA-BY 3.0, used under
   OGA-BY 3.0), http://opengameart.org/content/lpc-horses; cut into riding layers, with the rider offsets and the drawing
   recipe the game's converter follows, by **bigbeargames** ("[LPC] Horse Riding",
   https://opengameart.org/content/lpc-horse-riding-updated-091).

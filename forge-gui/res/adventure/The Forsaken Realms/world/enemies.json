@@ -3022,7 +3022,7 @@
     },
     {
         "name": "Bandit Scoundrel",
-        "sprite": "sprites/enemy/humanoid/human/bandit/bandit.atlas",
+        "sprite": "sprites/enemy/remake/bandit_scoundrel.atlas",
         "deck": [
             "decks/standard/bandit_scoundrel_r111.dck"
         ],
@@ -3031,7 +3031,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8667,
+        "scale": 0.3023,
         "life": 13,
         "rewards": [
             {
@@ -3179,7 +3179,7 @@
     },
     {
         "name": "Bandit Trapmaster",
-        "sprite": "sprites/enemy/humanoid/human/bandit/bandittrapster.atlas",
+        "sprite": "sprites/enemy/remake/bandit_trapmaster.atlas",
         "deck": [
             "decks/standard/bandittrapper_hazezon.dck"
         ],
@@ -3187,7 +3187,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.7647,
+        "scale": 0.2955,
         "life": 20,
         "rewards": [
             {
@@ -25730,7 +25730,7 @@
     {
         "name": "Pyromancer",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/human/shaman/pyromancer.atlas",
+        "sprite": "sprites/enemy/remake/pyromancer.atlas",
         "deck": [
             "decks/standard/pyromancer.dck"
         ],
@@ -25738,7 +25738,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.8125,
+        "scale": 0.325,
         "life": 12,
         "rewards": [
             {
@@ -54983,14 +54983,14 @@
     },
     {
         "name": "Brallin and Shabraz",
-        "sprite": "sprites/enemy/humanoid/human/bandit/banditarcher.atlas",
+        "sprite": "sprites/enemy/remake/brallin_and_shabraz.atlas",
         "deck": [
             "decks/legends/brallin_and_shabraz.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.8125,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -76994,7 +76994,7 @@
     },
     {
         "name": "Shu Yun",
-        "sprite": "sprites/enemy/humanoid/human/shaman/pyromancer.atlas",
+        "sprite": "sprites/enemy/remake/shu_yun.atlas",
         "deck": [
             "decks/legends/shu_yun.dck"
         ],
@@ -77058,7 +77058,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.8125
+        "scale": 0.3171
     },
     {
         "name": "Xho Cai",
@@ -97980,13 +97980,13 @@
     },
     {
         "name": "Kirol",
-        "sprite": "sprites/enemy/humanoid/human/bandit/bandittrapster.atlas",
+        "sprite": "sprites/enemy/remake/kirol.atlas",
         "deck": [
             "decks/legends/kirol.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.7647,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -118057,7 +118057,7 @@
     },
     {
         "name": "Chandler",
-        "sprite": "sprites/enemy/humanoid/human/bandit/bandit.atlas",
+        "sprite": "sprites/enemy/remake/chandler.atlas",
         "deck": [
             "decks/miniboss/shandalar97_chandler.dck"
         ],
@@ -118174,11 +118174,11 @@
         ],
         "boss": true,
         "tier": "Common",
-        "scale": 2.0001
+        "scale": 0.6977
     },
     {
         "name": "Joven",
-        "sprite": "sprites/enemy/humanoid/human/bandit/bandit.atlas",
+        "sprite": "sprites/enemy/remake/joven.atlas",
         "deck": [
             "decks/miniboss/shandalar97_joven.dck"
         ],
@@ -118295,7 +118295,7 @@
         ],
         "boss": true,
         "tier": "Common",
-        "scale": 2.0001
+        "scale": 0.7143
     },
     {
         "name": "Kogla (Boss)",
@@ -136105,7 +136105,7 @@
     },
     {
         "name": "Dawnblade Prince",
-        "sprite": "sprites/enemy/mythic/dawnblade_prince.atlas",
+        "sprite": "sprites/enemy/remake/dawnblade_prince.atlas",
         "deck": [
             "decks/standard/dawnblade_prince.dck"
         ],
@@ -136164,7 +136164,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 1.1818
+        "scale": 0.2889
     },
     {
         "name": "Rusalka of the Drowned Mere",
@@ -136294,7 +136294,7 @@
     },
     {
         "name": "Archmage of the Tides",
-        "sprite": "sprites/enemy/mythic/archmage_of_tides.atlas",
+        "sprite": "sprites/enemy/remake/archmage_of_the_tides.atlas",
         "deck": [
             "decks/standard/archmage_of_tides.dck"
         ],
@@ -136353,7 +136353,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "The Reaper",
@@ -137240,7 +137240,7 @@
     },
     {
         "name": "Levy Swordsman",
-        "sprite": "sprites/enemy/basic/humanoid/levy_swordsman.atlas",
+        "sprite": "sprites/enemy/remake/levy_swordsman.atlas",
         "deck": [
             "decks/standard/levy_swordsman.dck"
         ],
@@ -137299,11 +137299,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.2955
     },
     {
         "name": "Levy Spearman",
-        "sprite": "sprites/enemy/basic/humanoid/levy_spearman.atlas",
+        "sprite": "sprites/enemy/remake/levy_spearman.atlas",
         "deck": [
             "decks/standard/levy_spearman.dck"
         ],
@@ -137362,11 +137362,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Shieldwall Sergeant",
-        "sprite": "sprites/enemy/basic/humanoid/shieldwall_sergeant.atlas",
+        "sprite": "sprites/enemy/remake/shieldwall_sergeant.atlas",
         "deck": [
             "decks/standard/shieldwall_sergeant.dck"
         ],
@@ -137425,11 +137425,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.2889
     },
     {
         "name": "Halberd Veteran",
-        "sprite": "sprites/enemy/basic/humanoid/halberd_veteran.atlas",
+        "sprite": "sprites/enemy/remake/halberd_veteran.atlas",
         "deck": [
             "decks/standard/halberd_veteran.dck"
         ],
@@ -137488,11 +137488,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 1.0833
+        "scale": 0.3023
     },
     {
         "name": "Longbow Yeoman",
-        "sprite": "sprites/enemy/basic/humanoid/longbow_yeoman.atlas",
+        "sprite": "sprites/enemy/remake/longbow_yeoman.atlas",
         "deck": [
             "decks/standard/longbow_yeoman.dck"
         ],
@@ -137551,7 +137551,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0833
+        "scale": 0.3171
     },
     {
         "name": "Crossbow Marksman",
@@ -137618,7 +137618,7 @@
     },
     {
         "name": "Cavalier Captain",
-        "sprite": "sprites/enemy/basic/humanoid/cavalier_captain.atlas",
+        "sprite": "sprites/enemy/remake/cavalier_captain.atlas",
         "deck": [
             "decks/standard/cavalier_captain.dck"
         ],
@@ -137678,11 +137678,11 @@
             "Leader"
         ],
         "tier": "Uncommon",
-        "scale": 0.7647
+        "scale": 0.2131
     },
     {
         "name": "Outrider",
-        "sprite": "sprites/enemy/basic/humanoid/outrider.atlas",
+        "sprite": "sprites/enemy/remake/outrider.atlas",
         "deck": [
             "decks/standard/outrider.dck"
         ],
@@ -137741,11 +137741,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.6842
+        "scale": 0.2097
     },
     {
         "name": "Court Mage",
-        "sprite": "sprites/enemy/basic/humanoid/court_mage.atlas",
+        "sprite": "sprites/enemy/remake/court_mage.atlas",
         "deck": [
             "decks/standard/court_mage.dck"
         ],
@@ -137804,7 +137804,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.0
+        "scale": 0.2955
     },
     {
         "name": "Sirena, Tide-Singer",
@@ -142726,7 +142726,7 @@
     },
     {
         "name": "Pitchfork Farmer",
-        "sprite": "sprites/enemy/basic/humanoid/pitchfork_farmer.atlas",
+        "sprite": "sprites/enemy/remake/pitchfork_farmer.atlas",
         "deck": [
             "decks/standard/pitchfork_farmer.dck"
         ],
@@ -142785,7 +142785,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.8125
+        "scale": 0.2826
     },
     {
         "name": "Plumed Knight",
@@ -142852,7 +142852,7 @@
     },
     {
         "name": "Axe Orc",
-        "sprite": "sprites/enemy/basic/humanoid/axe_orc.atlas",
+        "sprite": "sprites/enemy/remake/axe_orc.atlas",
         "deck": [
             "decks/standard/axe_orc.dck"
         ],
@@ -142911,7 +142911,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.8125
+        "scale": 0.2889
     },
     {
         "name": "Woodland Rover",

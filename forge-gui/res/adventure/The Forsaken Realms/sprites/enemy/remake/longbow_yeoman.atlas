@@ -1,0 +1,180 @@
+longbow_yeoman.png
+size: 612,613
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 68, 61
+  footprint: 8, 8, 52, 52
+Idle
+  xy: 68, 64
+  size: 68, 61
+Idle
+  xy: 136, 64
+  size: 68, 61
+Idle
+  xy: 204, 64
+  size: 68, 61
+Walk
+  xy: 0, 125
+  size: 68, 61
+Walk
+  xy: 68, 125
+  size: 68, 61
+Walk
+  xy: 136, 125
+  size: 68, 61
+Walk
+  xy: 204, 125
+  size: 68, 61
+Walk
+  xy: 272, 125
+  size: 68, 61
+Walk
+  xy: 340, 125
+  size: 68, 61
+Walk
+  xy: 408, 125
+  size: 68, 61
+Walk
+  xy: 476, 125
+  size: 68, 61
+Attack
+  xy: 0, 186
+  size: 68, 61
+Attack
+  xy: 68, 186
+  size: 68, 61
+Attack
+  xy: 136, 186
+  size: 68, 61
+Attack
+  xy: 204, 186
+  size: 68, 61
+Attack
+  xy: 272, 186
+  size: 68, 61
+Attack
+  xy: 340, 186
+  size: 68, 61
+Attack
+  xy: 408, 186
+  size: 68, 61
+Attack
+  xy: 476, 186
+  size: 68, 61
+Hit
+  xy: 0, 247
+  size: 68, 61
+Hit
+  xy: 68, 247
+  size: 68, 61
+Hit
+  xy: 136, 247
+  size: 68, 61
+Hit
+  xy: 204, 247
+  size: 68, 61
+Death
+  xy: 0, 308
+  size: 68, 61
+Death
+  xy: 68, 308
+  size: 68, 61
+Death
+  xy: 136, 308
+  size: 68, 61
+Death
+  xy: 204, 308
+  size: 68, 61
+Death
+  xy: 272, 308
+  size: 68, 61
+Death
+  xy: 340, 308
+  size: 68, 61
+Death
+  xy: 408, 308
+  size: 68, 61
+Death
+  xy: 476, 308
+  size: 68, 61
+Death
+  xy: 544, 308
+  size: 68, 61
+IdleUp
+  xy: 0, 369
+  size: 68, 61
+IdleUp
+  xy: 68, 369
+  size: 68, 61
+IdleUp
+  xy: 136, 369
+  size: 68, 61
+IdleUp
+  xy: 204, 369
+  size: 68, 61
+IdleDown
+  xy: 0, 430
+  size: 68, 61
+IdleDown
+  xy: 68, 430
+  size: 68, 61
+IdleDown
+  xy: 136, 430
+  size: 68, 61
+IdleDown
+  xy: 204, 430
+  size: 68, 61
+WalkUp
+  xy: 0, 491
+  size: 68, 61
+WalkUp
+  xy: 68, 491
+  size: 68, 61
+WalkUp
+  xy: 136, 491
+  size: 68, 61
+WalkUp
+  xy: 204, 491
+  size: 68, 61
+WalkUp
+  xy: 272, 491
+  size: 68, 61
+WalkUp
+  xy: 340, 491
+  size: 68, 61
+WalkUp
+  xy: 408, 491
+  size: 68, 61
+WalkUp
+  xy: 476, 491
+  size: 68, 61
+WalkDown
+  xy: 0, 552
+  size: 68, 61
+WalkDown
+  xy: 68, 552
+  size: 68, 61
+WalkDown
+  xy: 136, 552
+  size: 68, 61
+WalkDown
+  xy: 204, 552
+  size: 68, 61
+WalkDown
+  xy: 272, 552
+  size: 68, 61
+WalkDown
+  xy: 340, 552
+  size: 68, 61
+WalkDown
+  xy: 408, 552
+  size: 68, 61
+WalkDown
+  xy: 476, 552
+  size: 68, 61

@@ -1,0 +1,174 @@
+brallin_and_shabraz.png
+size: 756,658
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 84, 66
+  footprint: 18, 1, 49, 54
+Idle
+  xy: 84, 64
+  size: 84, 66
+Idle
+  xy: 168, 64
+  size: 84, 66
+Idle
+  xy: 252, 64
+  size: 84, 66
+Walk
+  xy: 0, 130
+  size: 84, 66
+Walk
+  xy: 84, 130
+  size: 84, 66
+Walk
+  xy: 168, 130
+  size: 84, 66
+Walk
+  xy: 252, 130
+  size: 84, 66
+Walk
+  xy: 336, 130
+  size: 84, 66
+Walk
+  xy: 420, 130
+  size: 84, 66
+Walk
+  xy: 504, 130
+  size: 84, 66
+Walk
+  xy: 588, 130
+  size: 84, 66
+Attack
+  xy: 0, 196
+  size: 84, 66
+Attack
+  xy: 84, 196
+  size: 84, 66
+Attack
+  xy: 168, 196
+  size: 84, 66
+Attack
+  xy: 252, 196
+  size: 84, 66
+Attack
+  xy: 336, 196
+  size: 84, 66
+Attack
+  xy: 420, 196
+  size: 84, 66
+Hit
+  xy: 0, 262
+  size: 84, 66
+Hit
+  xy: 84, 262
+  size: 84, 66
+Hit
+  xy: 168, 262
+  size: 84, 66
+Hit
+  xy: 252, 262
+  size: 84, 66
+Death
+  xy: 0, 328
+  size: 84, 66
+Death
+  xy: 84, 328
+  size: 84, 66
+Death
+  xy: 168, 328
+  size: 84, 66
+Death
+  xy: 252, 328
+  size: 84, 66
+Death
+  xy: 336, 328
+  size: 84, 66
+Death
+  xy: 420, 328
+  size: 84, 66
+Death
+  xy: 504, 328
+  size: 84, 66
+Death
+  xy: 588, 328
+  size: 84, 66
+Death
+  xy: 672, 328
+  size: 84, 66
+IdleUp
+  xy: 0, 394
+  size: 84, 66
+IdleUp
+  xy: 84, 394
+  size: 84, 66
+IdleUp
+  xy: 168, 394
+  size: 84, 66
+IdleUp
+  xy: 252, 394
+  size: 84, 66
+IdleDown
+  xy: 0, 460
+  size: 84, 66
+IdleDown
+  xy: 84, 460
+  size: 84, 66
+IdleDown
+  xy: 168, 460
+  size: 84, 66
+IdleDown
+  xy: 252, 460
+  size: 84, 66
+WalkUp
+  xy: 0, 526
+  size: 84, 66
+WalkUp
+  xy: 84, 526
+  size: 84, 66
+WalkUp
+  xy: 168, 526
+  size: 84, 66
+WalkUp
+  xy: 252, 526
+  size: 84, 66
+WalkUp
+  xy: 336, 526
+  size: 84, 66
+WalkUp
+  xy: 420, 526
+  size: 84, 66
+WalkUp
+  xy: 504, 526
+  size: 84, 66
+WalkUp
+  xy: 588, 526
+  size: 84, 66
+WalkDown
+  xy: 0, 592
+  size: 84, 66
+WalkDown
+  xy: 84, 592
+  size: 84, 66
+WalkDown
+  xy: 168, 592
+  size: 84, 66
+WalkDown
+  xy: 252, 592
+  size: 84, 66
+WalkDown
+  xy: 336, 592
+  size: 84, 66
+WalkDown
+  xy: 420, 592
+  size: 84, 66
+WalkDown
+  xy: 504, 592
+  size: 84, 66
+WalkDown
+  xy: 588, 592
+  size: 84, 66
