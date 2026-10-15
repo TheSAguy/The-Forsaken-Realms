@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 611: the five dragon player races get the user's hand-made dragon (2026-10-15)
+
+The Procedural Pixel Creatures session, the Phyrexian's route (round 591) for the dragons. LPC has no dragon body, so
+they come from Pixelate clips.
+
+- **The art**: the user's ChatGPT turnaround of a young red dragon, from the user's four reference cards (Hellkite Whelp,
+  Fearsome Whelp, Young Blue Dragon, Thunder Dragon), and ten Kling clips cut into Pixelate sheets: idle, walk and a
+  fire-breath attack in the front, side and back views, and a front death that crumbles into ash. Converted by the
+  generator's `pixelate_to_player.py` (`pixelate/dragon_hero/convert.sh`, `--despill-all` for the fire's lime fringe on
+  the green key).
+- **The five colors**: red as made, the others tint.py OKLCH tints of it:
+  - Blue: hue 250. Green: hue 140.
+  - White: an icy near-gray, hue 250, chroma x0.15, light x1.5, with pale frost breath.
+  - Black: a blue-black, hue 270, chroma x0.2, light x0.5.
+  - The planned white and black tints kept the red's warmth and read muddy pink and dark red-brown.
+- **Files**:
+  - `sprites/heroes/dragon_hero_{r,w,u,g,b}.atlas/.png`, new: the hero format (IdleRight/Up/Down, Walk-, Attack-, Hit-
+    and Death- the same), a 106x85 cell (the wings flare wide in the front attack), the round-578 footprint on
+    IdleRight.
+  - `world/heroes.json`: the five dragon lines point both female and male at them, with `"scale": 0.4286` (round 591's
+    hero scale). The body is 18 world px tall on the map, like every other race, centered on the stock 16 px box, so
+    collisions are unchanged.
+  - The stock `common/sprites/heroes/dragonplayer_*` are left in place; the portraits (Dragon_r...) are unchanged.
+  - No credits line: the art is the user's own, as with the Phyrexian (591) and the Angel Warrior (603).
+- **Checks**:
+  - The five-color preview sheet was viewed and sent to the user.
+  - `convert.sh` re-run from the copied sheets reproduces all five pages byte-for-byte.
+  - heroes.json changes only the five dragon lines; the race order (saves store an index) is unchanged.
+  - Not yet seen in play: the agent visual test is pending (the agent game was busy with round 610's test).
+
 ## Round 609: the slot audit's fixes - Coral Helm, five Neck pendants, three names, Cheat out of the boss pools (2026-10-15)
 
 The user, after round 607: "Do another audit of item names and icons per slot, now that we have 7. Can I also get a

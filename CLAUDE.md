@@ -80,6 +80,10 @@ Notes = `RELEASE_NOTES_v1.20.md`; the name was my pick, the user cut the Fixed a
 the "bigger release / share your logs" note and "You must start a new game for all the new features!". Live + agent =
 the release. NOTHING is unreleased. Next version: 1.21 / 12100. Next merge from upstream after `e7fca289313`.
 
+## STATE 2026-10-15 (round 611): **LOCAL + UNRELEASED (art + data)** - the five dragon player races wear the user's
+Pixelate dragon (red as made; white, blue, green, black as tints): sprites/heroes/dragon_hero_*.atlas/.png + heroes.json
+"scale" 0.4286 (18 px tall). #31 packages. Agent visual test pending; not seen in play.
+
 ## STATE 2026-10-15 (round 609): **LOCAL + UNRELEASED (data + art)** - slot audit fixes: Coral Helm icon + five Neck
 pendant icons (items_r609.png), Volatile Pendant / Lookout's Leggings / Cryptologist's Breeches (RENAMED aliases), the
 Cheat test item out of 12 boss reward pools. Counts per slot in the changelog. Agent-tested.
