@@ -247,3 +247,9 @@ lawOfStakes_1
 homeGround_1
   xy: 2, 1002
   size: 96, 96
+title_7
+  xy: 102, 1002
+  size: 96, 96
+title_8
+  xy: 202, 1002
+  size: 96, 96

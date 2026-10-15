@@ -984,6 +984,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 if (newLoadout != null) {
                     for (Map.Entry<String, Long> entry : newLoadout.entrySet()) {
                         ItemData item = getItemFromInventory(entry.getValue());
+                        if (item != null && !slotTakes(entry.getKey(), item)
+                                && !newLoadout.containsKey(item.equipmentSlot) && !equippedItems.containsKey(item.equipmentSlot)) {
+                            // Round 607: a loadout's helm (Neck -> Head) or pants (Boots -> Legs) moves with it.
+                            item.isEquipped = true;
+                            equippedItems.put(item.equipmentSlot, entry.getValue());
+                            System.out.println("[TFR-ItemRefresh] deck loadout: " + item.name + " moved from " + entry.getKey()
+                                    + " to " + item.equipmentSlot);
+                            continue;
+                        }
                         if (item != null && !slotTakes(entry.getKey(), item)) { // round 506: the item moved slots since
                             System.out.println("[TFR-ItemRefresh] deck loadout: " + item.name + " no longer goes in "
                                     + entry.getKey() + " - left off");
@@ -1683,6 +1692,13 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 java.util.Set<String> movedOff = new java.util.TreeSet<>();
                 for (int i = 0; i < slots.length; i++) {
                     ItemData itemData = getItemFromInventory(items[i]);
+                    if (itemData != null && !slotTakes(slots[i], itemData) && reseat(itemData, slots)) {
+                        // Round 607: the helms went from Neck to Head, the pants from Boots to Legs - a worn one stays
+                        // worn, in its new slot (free in every save from before the slot existed).
+                        System.out.println("[TFR-ItemRefresh] " + itemData.name + " was worn in " + slots[i]
+                                + " - it is a " + itemData.equipmentSlot + " item now, still worn there");
+                        continue;
+                    }
                     if (itemData != null && !slotTakes(slots[i], itemData)) {
                         // Round 506: the item moved to another slot since this save (refreshItemDefinitionsFromCatalog)
                         // - it comes off; the player puts it on again in its new slot.
@@ -3007,8 +3023,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 items.add(item);
             } else {
                 switch (item.equipmentSlot) {
-                    // limit to these for easy and normal
-                    case "Boots", "Body", "Neck" -> items.add(item);
+                    // limit to these for easy and normal (round 607: the worn armor - Head and Legs too)
+                    case "Boots", "Body", "Neck", "Head", "Legs" -> items.add(item);
                 }
             }
         }
@@ -3024,8 +3040,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 return true;
             } else {
                 switch (item.equipmentSlot) {
-                    // limit to these for easy and normal
-                    case "Boots", "Body", "Neck" -> {
+                    // limit to these for easy and normal (round 607: Head and Legs too)
+                    case "Boots", "Body", "Neck", "Head", "Legs" -> {
                         return true;
                     }
                 }
@@ -3370,6 +3386,23 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         boolean due = companionCheckDue;
         companionCheckDue = false;
         return due;
+    }
+
+    /**
+     * Round 607: a saved item worn in a slot it no longer takes goes into its own slot instead, when the save worn nothing
+     * there - the helms that moved from Neck to Head, the pants from Boots to Legs. The main-item count is unchanged (one
+     * item, one slot). {@code savedSlots}: every slot the save wears something in.
+     */
+    private boolean reseat(ItemData item, String[] savedSlots) {
+        String target = item.equipmentSlot;
+        if (target == null || target.isEmpty() || equippedItems.containsKey(target)
+                || java.util.Arrays.asList(savedSlots).contains(target))
+            return false;
+        if (item.longID == null)
+            return false;
+        item.isEquipped = true;
+        equippedItems.put(target, item.longID);
+        return true;
     }
 
     /** Round 502: the slots something is worn in. */

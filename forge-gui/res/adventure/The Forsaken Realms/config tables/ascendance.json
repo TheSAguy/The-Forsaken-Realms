@@ -6,7 +6,10 @@
   // Built as (at-level wins for the level, 2 rising by 1.1 and capped at 13) x (one at-level win, 10 + 0.85 x level)
   // x 1.4 (the share that is not duels), rounded to 5: level 10 at about 58 wins, 20 at about 187, 30 at about 317.
   "xpToNext": [50, 30, 50, 75, 100, 130, 160, 190, 230, 265, 310, 350, 370, 385, 400, 415, 430, 445, 460, 475, 490,
-               505, 520, 540, 555, 570, 585, 600, 615, 630],
+               505, 520, 540, 555, 570, 585, 600, 615, 630,
+               // Round 607 (the user: "We up the max level to 40 ... 31-40 would keep the perk selections"): levels
+               // 31-40, +40 a level; past 40 the post-curve pace below (2000, +250 a level) as past 30 before.
+               650, 690, 730, 770, 810, 850, 890, 930, 970, 1010],
   // Leveling cost by difficulty (round 497): the Power every level from 1 on costs, times this. The step 0 -> 1 is not
   // scaled, so the intro is level 1 on every difficulty. Round 545 (the user: "slow down level gain. Let's leave easy
   // as is, increase Normal by 5%, Hard, 10% Insane 15%"): 0.8 / 1.0 / 1.2 / 1.4 became 0.8 / 1.05 / 1.32 / 1.61. A
@@ -18,8 +21,8 @@
   "levelingSpeed": 0.85,
   // Max life given at each milestone level (lifeLevels below).
   "milestoneLife": 1,
-  // Past level 30 there is no cap, but each level is much slower - 2,000 Power for 30 -> 31 (about 40 wins at that
-  // stage, against 13 before), 250 more for each level after - and gives only postCapLife max life.
+  // Past level 40 (30 until round 607) there is no cap, but each level is much slower - 2,000 Power for 40 -> 41, 250
+  // more for each level after - and gives only postCapLife max life.
   "postCapXpToNext": 2000,
   "postCapXpStep": 250,
   "postCapLife": 1,
@@ -71,13 +74,14 @@
   // quest (53, "Welcome to The Forsaken Realms", a story quest) pays its 50 when it is done - level 1 at the Warden.
   "tutorialQuestIds": [53],
 
-  // Level rewards: +1 max life at these levels; main-slot items (Neck, Body, Left, Right, Boots) 1, +1 at each of
-  // mainSlotLevels; the titles; a roaming guard's main-slot items by its rank.
-  "lifeLevels": [5, 10, 15, 20, 25, 30],
+  // Level rewards: +1 max life at these levels; main-slot items (Head, Neck, Body, Left, Right, Legs, Boots - round 607
+  // added Head and Legs and the 6th and 7th item at 35 and 40) 1, +1 at each of mainSlotLevels; the titles; a roaming
+  // guard's main-slot items by its rank.
+  "lifeLevels": [5, 10, 15, 20, 25, 30, 35, 40],
   "mainSlotsBase": 1,
-  "mainSlotLevels": [5, 10, 15, 20],
-  "titleLevels": [5, 10, 15, 20, 25, 30],
-  "titles": ["Unbound", "Reclaimer", "Warden of Ash", "Seal-breaker", "Sovereign", "Ascendant"],
+  "mainSlotLevels": [5, 10, 15, 20, 35, 40],
+  "titleLevels": [5, 10, 15, 20, 25, 30, 35, 40],
+  "titles": ["Unbound", "Reclaimer", "Warden of Ash", "Seal-breaker", "Sovereign", "Ascendant", "Weavebinder", "Eternal"],
   "guardMainSlots": [2, 3, 4, 5],
   // Round 502, companions: worn items that start a creature on the battlefield, in any slot (the gauntlets' second
   // hands and the Token slot too). companionBase at level 0, +1 at each of companionLevels. A character without

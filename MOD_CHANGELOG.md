@@ -14264,6 +14264,46 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 607: Head and Legs equipment slots, levels to 40 (2026-10-14)
+
+The user: "what if we add a Pants and helmet equipment slots? We up the max level to 40 and unlock them at 35 and 40.
+(The two additional slots, not specifically those two). At 41+ we do what we do now for 31+. so 31-40 would keep the perk
+selections." Then, on the proposal: "Build it as proposed: Head and Legs slots, main items 6 at 35 and 7 at 40, levels
+31-40 with perks (650 to 1010 cost), titles Weavebinder and Eternal with +1 life at 35 and 40, 41+ like today's 31+."
+
+- **Two new main slots, Head and Legs** (`Ascendance.MAIN_SLOTS`, last in the list so a limit takes them off first):
+  - On the doll where the user circled them: Head over the head (landscape y 16, portrait 120; 20 / 124 in the
+    Armory, under its title line), Legs between the thighs (y 152 / 256) - `ui/inventory*.json`, `ui/armory*.json`.
+  - Empty-slot texts ("Head - a helm, a mask, a hat or a crown. A main item."); the refusal names all six kinds;
+    Head and Legs items can crack on Easy and Normal like the other armor (`getRandomEquippedItem`).
+  - Both slots exist from the start; the main-item LIMIT is what grows: 5 at 20, **6 at 35, 7 at 40**.
+- **Items** (world/items.json, items.csv):
+  - **Head**: the 45 helms, masks, hats, crowns, the hood, the horns and the veil leave Neck (it keeps 66 amulets).
+  - **Legs**: 21 pieces whose art was pants, a skirt or breeches leave Boots with that art back - the four Greaves
+    (Hellkite, Vindicator, Godsire, Glare) and 17 names round 605 had changed, restored: Cutthroat Skirt, Deathspitter
+    Skirt, Lookout's Harness, Bearhide / Blistering / Barrier / Leech Breeches, Packsong / Pack Leader / Generous /
+    Flamecaster Pants, Draped Dragonhide, Cryptologist's Fins, Spore Skirt, Girlfriend's Skirt, Alesha's War Skirt,
+    Fleshwright Chaps (also in enemies.json, player_capital.tmx, island_capital.tmx, EconomyBuildings). Boots keeps 83,
+    the anklet and ring conversions among them; `items_boots.png` drops the 21 boot drawings it no longer needs.
+  - `ItemListData.RENAMED`: the 17 round-605 names now resolve back to the originals.
+- **Saves**: a worn item whose slot moved stays worn - in its new slot, when the save wore nothing there
+  (`AdventurePlayer.reseat`; deck loadouts too) - instead of round 506's "came off, put it on again".
+- **Levels 31-40** (config tables/ascendance.json): `xpToNext` runs on 650, 690 ... 1010 (+40 a level; level 40 is
+  about 1.75 times level 30's Power); 31-34 and 36-39 offer a pick-1-of-3 reward; **35 Weavebinder** and **40 Eternal**
+  give +1 max life, a title and the 6th / 7th main item; **41+** cost 2000, +250 a level, +1 life each (the old post-30
+  rule). Title medals `title_7` / `title_8`: the top medal with a violet Weave sky and a dawn-gold sky (the CraftPix
+  source pack is no longer on disk).
+- **Curve version 4**: a save past 30 from before (priced 2000, 2250 ... from 30) keeps its level and its share of the
+  way to the next; the choice levels it passed wait for their picks; the +1 life those levels gave stays.
+- **Seen in the agent game**:
+  - A level-33 save made on the old build: `[TFR-Ascend] a save from the 30-level curve: Power 18573 -> 13644, still
+    level 33; choices now waiting at [31, 32, 33]`.
+  - Leveling on: 35 "Weavebinder", 6 main items, +1 life; 40 "Eternal", 7 main items; 41 and 42 +1 life each, no
+    choice; 40 -> 41 costs 2100 on Normal.
+  - Head and Legs worn on the doll and in the Armory ("Main items 5 / 7").
+  - An old-build save wearing War Helm in Neck and Packsong Boots in Boots: `Packsong Boots is now Packsong Pants`,
+    `War Helm was worn in Neck - it is a Head item now, still worn there`, the same for the pants in Legs.
+
 ## Round 608: the 32 borderline enemies become LPC characters - giants, demons, satyrs, harpies, insects (2026-10-14)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_608.py`. The backlog survey

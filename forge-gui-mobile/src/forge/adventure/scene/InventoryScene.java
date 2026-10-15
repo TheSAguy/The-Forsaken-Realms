@@ -119,6 +119,8 @@ public class InventoryScene extends UIScene {
             case "Ability1": what = "Staff - a colored staff you use from the HUD."; break;
             case "Ability2": case "Ability3": what = "Utility - a rune, a torch or a staff you use from the HUD."; break;
             case "Left2": case "Right2": what = "Second hand - granted by the gauntlet you wear."; break;
+            case "Head": what = "Head - a helm, a mask, a hat or a crown. A main item."; break; // round 607
+            case "Legs": what = "Legs - pants, a skirt, breeches or greaves. A main item."; break; // round 607
             default: what = slot; break;
         }
         return what + "\n[%98]Empty. The items that fit are listed on the right.";

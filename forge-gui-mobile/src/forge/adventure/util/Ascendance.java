@@ -34,11 +34,11 @@ import java.util.List;
  * player has outgrown - and from quests, first visits, clears, restored and captured towns, the Capitol, a stopped
  * pillage, an Arena bracket, an Inn tournament and a treasure. Never from a loss, a guard's fight, Deck Tester or
  * anything inside a duel.</li>
- * <li><b>Levels</b> 1-30 on the config table's curve. Every 5th level: +1 max life (milestoneLife) and a title; 5, 10, 15
- * and 20 also allow one more <b>main-slot item</b> (Neck, Body, Left, Right, Boots - the gauntlets' Left2/Right2 are a
- * bonus and never count). Every other level: a pick-1-of-3 reward (pendingChoices; the choices themselves are the next
- * round). Past 30 there is no cap (the user: "make the leveling MUCH slower after 30 and give +1 life for each level"):
- * postCapXpToNext per level, rising, +postCapLife each. levelingSpeed scales every award.</li>
+ * <li><b>Levels</b> 1-40 on the config table's curve (30 until round 607). Every 5th level: +1 max life (milestoneLife)
+ * and a title; 5, 10, 15, 20, 35 and 40 also allow one more <b>main-slot item</b> (Head, Neck, Body, Left, Right, Legs,
+ * Boots - the gauntlets' Left2/Right2 are a bonus and never count). Every other level: a pick-1-of-3 reward. Past 40
+ * there is no cap (the user: "make the leveling MUCH slower after 30 and give +1 life for each level", moved to 40 in
+ * round 607): postCapXpToNext per level, rising, +postCapLife each. levelingSpeed scales every award.</li>
  * <li>The player can switch all of it off in Settings (SettingData.ascendanceDisabled).</li>
  * <li><b>Roaming guards</b> wear main-slot items by rank: Apprentice 2, Adept 3, Master 4, Archmage 5.</li>
  * <li><b>Companions</b> (round 502), items that start a creature on the battlefield, in any slot: 1, then 2 at 15 and 3 at
@@ -51,9 +51,11 @@ public final class Ascendance {
     private Ascendance() {
     }
 
-    /** The five main equipment slots the level limits (the user: "just the 5 main slots: Neck, Chest, Left Hand, Right
-     *  Hand and Boots"). Left2/Right2, granted by a gauntlet, are not among them. */
-    public static final String[] MAIN_SLOTS = {"Neck", "Body", "Left", "Right", "Boots"};
+    /** The main equipment slots the level limits (the user: "just the 5 main slots: Neck, Chest, Left Hand, Right
+     *  Hand and Boots"). Left2/Right2, granted by a gauntlet, are not among them. Round 607 (the user: "what if we add a
+     *  Pants and helmet equipment slots? ... unlock them at 35 and 40 (The two additional slots, not specifically those
+     *  two)"): Legs and Head, last - so they come off first when a limit takes items off. */
+    public static final String[] MAIN_SLOTS = {"Neck", "Body", "Left", "Right", "Boots", "Legs", "Head"};
 
     private static AscendanceData data;
 
@@ -108,7 +110,7 @@ public final class Ascendance {
         return s == null ? 0 : s.pendingLevels.size();
     }
 
-    /** The last level on the curve (30); past it the levels go on, much slower (postCapXpToNext). Round 497 (the user:
+    /** The last level on the curve (40 since round 607); past it the levels go on, much slower (postCapXpToNext). Round 497 (the user:
      *  "let's start at level 0"): a character starts at level 0 and xpToNext[0] is the step 0 -> 1. */
     public static int curveTop() {
         return data().xpToNext.length;
@@ -122,10 +124,46 @@ public final class Ascendance {
 
     /** {@code factor} (difficultyLevelCost) scales every level from 1 on, rounded to 5; the step 0 -> 1 never. */
     static int powerToNext(int level, float factor) {
+        return powerToNext(level, factor, curveTop());
+    }
+
+    /** Round 607: the price on a curve that ends at {@code top} - the migration prices a save made when it ended at 30. */
+    private static int powerToNext(int level, float factor, int top) {
         AscendanceData d = data();
-        int raw = level >= 0 && level < d.xpToNext.length ? d.xpToNext[level]
-                : Math.max(1, d.postCapXpToNext + d.postCapXpStep * (level - curveTop()));
+        int raw = level >= 0 && level < Math.min(top, d.xpToNext.length) ? d.xpToNext[level]
+                : Math.max(1, d.postCapXpToNext + d.postCapXpStep * (level - top));
         return level < 1 || factor == 1f ? raw : Math.max(5, Math.round(raw * factor / 5f) * 5);
+    }
+
+    /** Round 607: the curve's end before round 607 - levels past it cost postCapXpToNext and paid +1 life, no choice. */
+    private static final int OLD_CURVE_TOP = 30;
+
+    private static int levelForTop(int power, float factor, int top) {
+        int level = 0;
+        int spent = 0;
+        while (level < 999) {
+            int need = powerToNext(level, factor, top);
+            if (power < spent + need)
+                return level;
+            spent += need;
+            level++;
+        }
+        return level;
+    }
+
+    private static int powerAtLevelTop(int level, float factor, int top) {
+        int total = 0;
+        for (int l = 0; l < level; l++)
+            total += powerToNext(l, factor, top);
+        return total;
+    }
+
+    /** Round 607: does reaching {@code level} offer a pick-1-of-3 reward - onLevelUp's rule (no life, main item,
+     *  companion or title at it, and on the curve)? */
+    private static boolean isChoiceLevel(int level) {
+        AscendanceData d = data();
+        return level >= 1 && level <= curveTop() && !contains(d.lifeLevels, level) && !contains(d.mainSlotLevels, level)
+                && !contains(d.companionLevels, level) && !contains(d.titleLevels, level);
     }
 
     /** Round 497: the difficulty's level cost (difficultyLevelCost) - 1 for a name the table does not list. */
@@ -225,7 +263,7 @@ public final class Ascendance {
         return mainSlotAllowance(level());
     }
 
-    /** The next level that allows one more main-slot item, or -1 when all five are open. */
+    /** The next level that allows one more main-slot item, or -1 when all are open. */
     public static int nextMainSlotLevel() {
         int level = level();
         for (int l : data().mainSlotLevels)
@@ -254,7 +292,7 @@ public final class Ascendance {
             return null;
         int next = nextMainSlotLevel();
         return "Your power allows " + allowed + " main item" + (allowed == 1 ? "" : "s")
-                + " (neck, body, hands, boots)" + (next > 0 ? " - Ascendance " + next + " brings one more." : ".");
+                + " (head, neck, body, hands, legs, boots)" + (next > 0 ? " - Ascendance " + next + " brings one more." : ".");
     }
 
     /** The refusal for an item that equip() would not put on - for the screens' message. Round 502: equip() keeps the
@@ -302,7 +340,7 @@ public final class Ascendance {
 
     /** The slots kept longest when companions must come off: Boots, the companion slot of old, first. */
     private static final List<String> COMPANION_KEEP_ORDER = java.util.Arrays.asList(
-            "Boots", "Body", "Neck", "Left", "Right", "Token", "Left2", "Right2");
+            "Boots", "Legs", "Body", "Neck", "Head", "Left", "Right", "Token", "Left2", "Right2"); // round 607: Legs, Head
 
     private static final java.util.Map<String, Integer> CREATURES = new java.util.HashMap<>();
 
@@ -1688,7 +1726,7 @@ public final class Ascendance {
         // Round 516 (code review): without the config's curve nothing can be re-priced - keep the saved mark, so the
         // migration runs on a later load that has it.
         boolean curveLoaded = data().xpToNext.length > 0;
-        s.curve = curveLoaded ? 3 : curve;
+        s.curve = curveLoaded ? 4 : curve; // round 607: 4 = the curve runs to 40
         if (!curveLoaded && s.on && curve < 3)
             System.out.println("[TFR-Ascend] ascendance.json has no curve - this save's Power stays on curve " + curve
                     + " until a load that can re-price it");
@@ -1725,7 +1763,28 @@ public final class Ascendance {
                         + levelFor(before, priced) + ")");
             }
         }
+        // Round 607 (the user: "We up the max level to 40 ... 31-40 would keep the perk selections"): the curve runs to 40
+        // now. A save past 30 from before (priced 2000, 2250, ... from 30) keeps its level and its share of the way to the
+        // next, and every choice level it passed (31-34, 36-39) waits for its pick. The +1 life those levels gave stays.
+        List<Integer> newChoices = new ArrayList<>();
+        if (s.on && curve < 4 && curveLoaded && curveTop() > OLD_CURVE_TOP) {
+            int oldLevel = levelForTop(s.power, factor, OLD_CURVE_TOP);
+            if (oldLevel > OLD_CURVE_TOP) {
+                int before = s.power;
+                float share = (s.power - powerAtLevelTop(oldLevel, factor, OLD_CURVE_TOP))
+                        / (float) powerToNext(oldLevel, factor, OLD_CURVE_TOP);
+                s.power = powerAtLevel(oldLevel, factor) + Math.round(share * powerToNext(oldLevel, factor));
+                for (int l = OLD_CURVE_TOP + 1; l <= Math.min(oldLevel, curveTop()); l++)
+                    if (isChoiceLevel(l))
+                        newChoices.add(l);
+                System.out.println("[TFR-Ascend] a save from the 30-level curve: Power " + before + " -> " + s.power
+                        + ", still level " + levelFor(s.power, factor) + "; choices now waiting at " + newChoices);
+            }
+        }
         loadChoices(data, s); // round 494
+        for (int l : newChoices) // round 607
+            if (!s.pendingLevels.contains(l))
+                s.pendingLevels.add(l);
     }
 
     /** Round 494: the choice state. A round-493 save kept only a count of waiting choices: rebuild their levels from the

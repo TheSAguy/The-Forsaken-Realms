@@ -2023,169 +2023,106 @@ PowerGlyph
   size: 16, 16
 
 items_boots.png
-size: 256,64
+size: 256,48
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-CutthroatBoots
+Courier'sBootsBoot605
   xy: 0, 0
   size: 16, 16
-Courier'sBootsBoot605
+SymbioteStriders
   xy: 16, 0
   size: 16, 16
-SymbioteStriders
+Imposter'sSlivertreads
   xy: 32, 0
   size: 16, 16
-Imposter'sSlivertreads
+SkySkiffBoots
   xy: 48, 0
   size: 16, 16
-SkySkiffBoots
+EnduringSlivertreads
   xy: 64, 0
   size: 16, 16
-EnduringSlivertreads
+JadeSlippers
   xy: 80, 0
   size: 16, 16
-JadeSlippers
+CoiledSandals
   xy: 96, 0
   size: 16, 16
-CoiledSandals
+WitchMawSlippers
   xy: 112, 0
   size: 16, 16
-WitchMawSlippers
+MambaStriders
   xy: 128, 0
   size: 16, 16
-MambaStriders
+Sheldon'sShoesBoot605
   xy: 144, 0
   size: 16, 16
-Sheldon'sShoesBoot605
+GixianGraftboots
   xy: 160, 0
   size: 16, 16
-GixianGraftboots
+ArtificialSlivertreads
   xy: 176, 0
   size: 16, 16
-ArtificialSlivertreads
+YoreTillerClogs
   xy: 192, 0
   size: 16, 16
-HellkiteGreavesBoot605
+SilvergillFlippers
   xy: 208, 0
   size: 16, 16
-YoreTillerClogs
+GlimmerbellStriders
   xy: 224, 0
   size: 16, 16
-SilvergillFlippers
+BloodswornBoots
   xy: 240, 0
   size: 16, 16
-DeathspitterBoots
+VictualSlivertreads
   xy: 0, 16
   size: 16, 16
-Lookout'sClimbingBoots
+DuneBroodSandals
   xy: 16, 16
   size: 16, 16
-BearhideBoots
+AcidicSlivertreads
   xy: 32, 16
   size: 16, 16
-VindicatorGreavesBoot605
+BootsoftheEnd
   xy: 48, 16
   size: 16, 16
-GlimmerbellStriders
+SpectralSlivertreads
   xy: 64, 16
   size: 16, 16
-BloodswornBoots
+SabertoothStriders
   xy: 80, 16
   size: 16, 16
-VictualSlivertreads
+GlintEyeSlippers
   xy: 96, 16
   size: 16, 16
-DuneBroodSandals
+InkTreaders
   xy: 112, 16
   size: 16, 16
-PacksongBoots
+RaptorStriders
   xy: 128, 16
   size: 16, 16
-AcidicSlivertreads
+PlatedSlivertreads
   xy: 144, 16
   size: 16, 16
-BootsoftheEnd
+Acolyte'sSandals
   xy: 160, 16
   size: 16, 16
-SpectralSlivertreads
+FaerieSlippers
   xy: 176, 16
   size: 16, 16
-SabertoothStriders
+LightbringersBoots
   xy: 192, 16
   size: 16, 16
-GodsireGreavesBoot605
+Slobad'sIronBoots
   xy: 208, 16
   size: 16, 16
-DragonhideBoots
+ImmortalTreads
   xy: 224, 16
   size: 16, 16
-Cryptologist'sFlippers
+EvershrikeSlippers
   xy: 240, 16
   size: 16, 16
-BlisteringBoots
-  xy: 0, 32
-  size: 16, 16
-GreavesofGlareBoot605
-  xy: 16, 32
-  size: 16, 16
-SporecapBoots
-  xy: 32, 32
-  size: 16, 16
-BarrierBoots
-  xy: 48, 32
-  size: 16, 16
-GlintEyeSlippers
-  xy: 64, 32
-  size: 16, 16
-InkTreaders
-  xy: 80, 32
-  size: 16, 16
-RaptorStriders
-  xy: 96, 32
-  size: 16, 16
-PlatedSlivertreads
-  xy: 112, 32
-  size: 16, 16
-PackLeaderBoots
-  xy: 128, 32
-  size: 16, 16
-Girlfriend'sHeels
-  xy: 144, 32
-  size: 16, 16
-LeechWaders
-  xy: 160, 32
-  size: 16, 16
-Alesha'sWarBoots
-  xy: 176, 32
-  size: 16, 16
-Acolyte'sSandals
-  xy: 192, 32
-  size: 16, 16
-GenerousBoots
-  xy: 208, 32
-  size: 16, 16
-FaerieSlippers
-  xy: 224, 32
-  size: 16, 16
-FleshwrightBoots
-  xy: 240, 32
-  size: 16, 16
-LightbringersBoots
-  xy: 0, 48
-  size: 16, 16
-Slobad'sIronBoots
-  xy: 16, 48
-  size: 16, 16
-ImmortalTreads
-  xy: 32, 48
-  size: 16, 16
-EvershrikeSlippers
-  xy: 48, 48
-  size: 16, 16
-FlamecasterBoots
-  xy: 64, 48
-  size: 16, 16
 StarfishOnYourFootBoot605
-  xy: 80, 48
+  xy: 0, 32
   size: 16, 16
