@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 641: seven more LPC enemies - a stump-man, a horse-headed hunter, a fish-man, a devil (2026-10-15)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_641.py`. From the remaining
+low-quality list the user took my recommendations for B56, 61, 64, 65, 67 and 72, and asked for B68, the Horror of
+Tibalt, as an LPC devil. Sol'Kanar shares its stock sprite and keeps it, waiting for its own Pixelate art.
+
+- **The tweak**: LPC has no horse head of a person's size (its horse's head is about 14 x 10 px), so one was drawn for
+  the game. It is an LPC head part (`tools/lpc/make_horse_head.py`) standing on the neck in every frame.
+- **The enemies, dressed from their stock sprites**:
+  - **Taong Tuod**: a bark-brown, troll-headed brute with a leafy green crown and a log club.
+  - **Bloodied Skeleton**: a skeleton in a tattered maroon cape with a red sash and a scythe.
+  - **Tikbalang, Wild Hunter**: the horse-headed giant hunter in leather, with a great bow.
+  - **Syokoy**: a teal fish-man (round 519's merfolk recipe) with a trident.
+  - **Malakat**: a grey wolf-man.
+  - **Busaw**: a sickly green, tusked ghoul.
+  - **Horror of Tibalt**: a red devil like round 597's Devil hero (curled horns, black bat wings and tail) with a
+    trident.
+- **Files**:
+  - 7 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 7 sprite paths and scales (0.30-0.35).
+  - `CREDITS_LPC.md` regenerated: 912 characters, additions only. The horse head is credited to The Forsaken
+    Realms (CC0).
+  - `CREDITS.md`: the LPC bullet (884 enemies).
+- **Checks**:
+  - enemies.json against HEAD: exactly these 7, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of them.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 640: the three Phyrexian angels get the user's hand-made angel (2026-10-15)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/phyrexian_angel/convert.sh`. These are

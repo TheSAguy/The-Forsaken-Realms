@@ -1,0 +1,173 @@
+busaw.png
+size: 468,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 52, 57
+Idle
+  xy: 52, 64
+  size: 52, 57
+Idle
+  xy: 104, 64
+  size: 52, 57
+Idle
+  xy: 156, 64
+  size: 52, 57
+Walk
+  xy: 0, 121
+  size: 52, 57
+Walk
+  xy: 52, 121
+  size: 52, 57
+Walk
+  xy: 104, 121
+  size: 52, 57
+Walk
+  xy: 156, 121
+  size: 52, 57
+Walk
+  xy: 208, 121
+  size: 52, 57
+Walk
+  xy: 260, 121
+  size: 52, 57
+Walk
+  xy: 312, 121
+  size: 52, 57
+Walk
+  xy: 364, 121
+  size: 52, 57
+Attack
+  xy: 0, 178
+  size: 52, 57
+Attack
+  xy: 52, 178
+  size: 52, 57
+Attack
+  xy: 104, 178
+  size: 52, 57
+Attack
+  xy: 156, 178
+  size: 52, 57
+Attack
+  xy: 208, 178
+  size: 52, 57
+Attack
+  xy: 260, 178
+  size: 52, 57
+Hit
+  xy: 0, 235
+  size: 52, 57
+Hit
+  xy: 52, 235
+  size: 52, 57
+Hit
+  xy: 104, 235
+  size: 52, 57
+Hit
+  xy: 156, 235
+  size: 52, 57
+Death
+  xy: 0, 292
+  size: 52, 57
+Death
+  xy: 52, 292
+  size: 52, 57
+Death
+  xy: 104, 292
+  size: 52, 57
+Death
+  xy: 156, 292
+  size: 52, 57
+Death
+  xy: 208, 292
+  size: 52, 57
+Death
+  xy: 260, 292
+  size: 52, 57
+Death
+  xy: 312, 292
+  size: 52, 57
+Death
+  xy: 364, 292
+  size: 52, 57
+Death
+  xy: 416, 292
+  size: 52, 57
+IdleUp
+  xy: 0, 349
+  size: 52, 57
+IdleUp
+  xy: 52, 349
+  size: 52, 57
+IdleUp
+  xy: 104, 349
+  size: 52, 57
+IdleUp
+  xy: 156, 349
+  size: 52, 57
+IdleDown
+  xy: 0, 406
+  size: 52, 57
+IdleDown
+  xy: 52, 406
+  size: 52, 57
+IdleDown
+  xy: 104, 406
+  size: 52, 57
+IdleDown
+  xy: 156, 406
+  size: 52, 57
+WalkUp
+  xy: 0, 463
+  size: 52, 57
+WalkUp
+  xy: 52, 463
+  size: 52, 57
+WalkUp
+  xy: 104, 463
+  size: 52, 57
+WalkUp
+  xy: 156, 463
+  size: 52, 57
+WalkUp
+  xy: 208, 463
+  size: 52, 57
+WalkUp
+  xy: 260, 463
+  size: 52, 57
+WalkUp
+  xy: 312, 463
+  size: 52, 57
+WalkUp
+  xy: 364, 463
+  size: 52, 57
+WalkDown
+  xy: 0, 520
+  size: 52, 57
+WalkDown
+  xy: 52, 520
+  size: 52, 57
+WalkDown
+  xy: 104, 520
+  size: 52, 57
+WalkDown
+  xy: 156, 520
+  size: 52, 57
+WalkDown
+  xy: 208, 520
+  size: 52, 57
+WalkDown
+  xy: 260, 520
+  size: 52, 57
+WalkDown
+  xy: 312, 520
+  size: 52, 57
+WalkDown
+  xy: 364, 520
+  size: 52, 57

@@ -3930,7 +3930,7 @@
     },
     {
         "name": "Bloodied Skeleton",
-        "sprite": "sprites/enemy/undead/bloodiedskeleton.atlas",
+        "sprite": "sprites/enemy/remake/bloodied_skeleton.atlas",
         "deck": [
             "decks/standard/bloodiedskeleton.dck"
         ],
@@ -3962,7 +3962,7 @@
             "Beginner"
         ],
         "tier": "Common",
-        "scale": 1.625
+        "scale": 0.3095
     },
     {
         "name": "Blue Golem",
@@ -17457,7 +17457,7 @@
     },
     {
         "name": "Horror of Tibalt",
-        "sprite": "sprites/enemy/fiend/akaname.atlas",
+        "sprite": "sprites/enemy/remake/horror_of_tibalt.atlas",
         "deck": [
             "decks/standard/tibalt_horror.dck"
         ],
@@ -17465,7 +17465,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8876,
+        "scale": 0.3171,
         "life": 17,
         "rewards": [
             {
@@ -138130,7 +138130,7 @@
     },
     {
         "name": "Tikbalang, Wild Hunter",
-        "sprite": "sprites/enemy/mythic/tikbalang.atlas",
+        "sprite": "sprites/enemy/remake/tikbalang_wild_hunter.atlas",
         "deck": [
             "decks/standard/tikbalang.dck"
         ],
@@ -138189,7 +138189,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.9286
+        "scale": 0.3095
     },
     {
         "name": "Marksman of the Deep Wood",
@@ -140905,7 +140905,7 @@
     },
     {
         "name": "Busaw",
-        "sprite": "sprites/enemy/basic/undead/busaw.atlas",
+        "sprite": "sprites/enemy/remake/busaw.atlas",
         "deck": [
             "decks/standard/busaw.dck"
         ],
@@ -140964,7 +140964,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.8125
+        "scale": 0.3095
     },
     {
         "name": "Buwaya",
@@ -141535,7 +141535,7 @@
     },
     {
         "name": "Malakat",
-        "sprite": "sprites/enemy/basic/monster/malakat.atlas",
+        "sprite": "sprites/enemy/remake/malakat.atlas",
         "deck": [
             "decks/standard/malakat.dck"
         ],
@@ -141594,7 +141594,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.9286
+        "scale": 0.3514
     },
     {
         "name": "Manananggal",
@@ -141976,7 +141976,7 @@
     },
     {
         "name": "Syokoy",
-        "sprite": "sprites/enemy/basic/humanoid/syokoy.atlas",
+        "sprite": "sprites/enemy/remake/syokoy.atlas",
         "deck": [
             "decks/standard/syokoy.dck"
         ],
@@ -142035,11 +142035,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3171
     },
     {
         "name": "Taong Tuod",
-        "sprite": "sprites/enemy/basic/monster/taong_tuod.atlas",
+        "sprite": "sprites/enemy/remake/taong_tuod.atlas",
         "deck": [
             "decks/standard/taong_tuod.dck"
         ],
@@ -142098,7 +142098,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 1.0
+        "scale": 0.3023
     },
     {
         "name": "Tiburones",
