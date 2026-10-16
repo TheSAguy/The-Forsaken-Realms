@@ -113,6 +113,10 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 653): **LOCAL + UNRELEASED (art + data)** - Tekuthal gets the user's hand-made floating
+horror (Pixelate; generator `pixelate/tekuthal/convert.sh`; a whip attack with motion-blur smears, the death ends before
+it sinks out of frame). enemies.json 1 path + scale. Not seen in play.
+
 ## STATE 2026-10-16 (round 656): **LOCAL + UNRELEASED (code)** - overworld Wood/Stone/Shards pickups +15 at pickup (ResourceSpawns.OTHER_PICKUP_BONUS; 17-25 before Prospector; existing spawns too). Not seen in play.
 
 ## STATE 2026-10-16 (round 655): **LOCAL + UNRELEASED (art)** - a 1px black outline inside the regions of the two painted green entrances, E_ElfTown and E_Grove7 (Lake of the Hydra), on dungeon_entrances_2.png (`dev-tools/poi_outline.py`; Grove7's feathered fringe cut at alpha 128). The user is to judge it in play.

@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 653: Tekuthal gets the user's hand-made floating horror (2026-10-16)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/tekuthal/convert.sh`. This is F85 of list 2
+(`Bannerloard/leftover_low_quality_2.md`). Tekuthal shared the 20 px stock `fiend/aerie_guard` sprite with the Aerie
+Guard, Sala and Kamiz, who keep it for now.
+
+- **The art**:
+  - The user made one still in ChatGPT from the card Tekuthal, Inquiry Dominus: a floating Phyrexian horror, a dark
+    blue-black dome ringed with blue orbs over a mass of ribbed, flesh-pink tentacles, some tipped with blue orbs.
+  - `pixelate/key_still.py --margin 80` put it on the exact key and widened the canvas, art untouched, because the two
+    side tentacles came 55-68 px from the edges. Then four Kling clips and Pixelate sheets.
+- **Trims and choices**:
+  - The attack is a whip strike: it rears back, lashes its tentacles out to both sides and coils back. Its widest frames
+    reach about 2.5 times the body's width. Kling drew the fast swings as motion-blur smears, which are kept: they read
+    as a whoosh.
+  - The death: it shudders, debris flies off, and it goes limp and starts to sink. From the clip's frame 10 on it sinks
+    out of the frame, which the atlas would cut along a straight line below its shadow, so it ends there, then the
+    fade.
+  - Kling's watermark and the flying debris specks are cleared (`pixelate/clean_strays.py`). No color on the creature is
+    near the key, so `--despill-all` clears the key tint the smears picked up.
+- **Files**:
+  - 1 new atlas under `sprites/enemy/remake/`.
+  - enemies.json: the sprite path and scale (0.2281).
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly this one, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit's 4 "review" flags are the converter's faint shadow (alpha up to 92) apart from the body in frames where it rises; a 9 px "artifact" of death debris was cleared by `clean_strays.py`'s new speck size.
+  - The Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+- **Source files**: moved to the Art Library repository, `Units/Custom/Tekuthal`.
+
 ## Round 656: overworld Wood, Stone and Shards pickups pay 15 more (2026-10-16)
 
 The user: "For all overworld resource spawns - Wood, Stone and Shards. Please add 15 to the base value. I want them to feel

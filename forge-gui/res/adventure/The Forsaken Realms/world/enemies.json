@@ -63335,14 +63335,14 @@
     },
     {
         "name": "Tekuthal",
-        "sprite": "sprites/enemy/fiend/aerie_guard.atlas",
+        "sprite": "sprites/enemy/remake/tekuthal.atlas",
         "deck": [
             "decks/legends/tekuthal.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 0.7222,
+        "scale": 0.2281,
         "life": 30,
         "rewards": [
             {

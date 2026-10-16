@@ -1,0 +1,156 @@
+tekuthal.png
+size: 3588,1129
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 276, 213
+  footprint: 88, 73, 120, 85
+Idle
+  xy: 276, 64
+  size: 276, 213
+Idle
+  xy: 552, 64
+  size: 276, 213
+Idle
+  xy: 828, 64
+  size: 276, 213
+Idle
+  xy: 1104, 64
+  size: 276, 213
+Idle
+  xy: 1380, 64
+  size: 276, 213
+Idle
+  xy: 1656, 64
+  size: 276, 213
+Idle
+  xy: 1932, 64
+  size: 276, 213
+Idle
+  xy: 2208, 64
+  size: 276, 213
+Idle
+  xy: 2484, 64
+  size: 276, 213
+Idle
+  xy: 2760, 64
+  size: 276, 213
+Idle
+  xy: 3036, 64
+  size: 276, 213
+Walk
+  xy: 0, 277
+  size: 276, 213
+Walk
+  xy: 276, 277
+  size: 276, 213
+Walk
+  xy: 552, 277
+  size: 276, 213
+Walk
+  xy: 828, 277
+  size: 276, 213
+Walk
+  xy: 1104, 277
+  size: 276, 213
+Walk
+  xy: 1380, 277
+  size: 276, 213
+Walk
+  xy: 1656, 277
+  size: 276, 213
+Walk
+  xy: 1932, 277
+  size: 276, 213
+Attack
+  xy: 0, 490
+  size: 276, 213
+Attack
+  xy: 276, 490
+  size: 276, 213
+Attack
+  xy: 552, 490
+  size: 276, 213
+Attack
+  xy: 828, 490
+  size: 276, 213
+Attack
+  xy: 1104, 490
+  size: 276, 213
+Attack
+  xy: 1380, 490
+  size: 276, 213
+Attack
+  xy: 1656, 490
+  size: 276, 213
+Attack
+  xy: 1932, 490
+  size: 276, 213
+Attack
+  xy: 2208, 490
+  size: 276, 213
+Attack
+  xy: 2484, 490
+  size: 276, 213
+Attack
+  xy: 2760, 490
+  size: 276, 213
+Attack
+  xy: 3036, 490
+  size: 276, 213
+Hit
+  xy: 0, 703
+  size: 276, 213
+Hit
+  xy: 276, 703
+  size: 276, 213
+Hit
+  xy: 552, 703
+  size: 276, 213
+Hit
+  xy: 828, 703
+  size: 276, 213
+Death
+  xy: 0, 916
+  size: 276, 213
+Death
+  xy: 276, 916
+  size: 276, 213
+Death
+  xy: 552, 916
+  size: 276, 213
+Death
+  xy: 828, 916
+  size: 276, 213
+Death
+  xy: 1104, 916
+  size: 276, 213
+Death
+  xy: 1380, 916
+  size: 276, 213
+Death
+  xy: 1656, 916
+  size: 276, 213
+Death
+  xy: 1932, 916
+  size: 276, 213
+Death
+  xy: 2208, 916
+  size: 276, 213
+Death
+  xy: 2484, 916
+  size: 276, 213
+Death
+  xy: 2760, 916
+  size: 276, 213
+Death
+  xy: 3036, 916
+  size: 276, 213
+Death
+  xy: 3312, 916
+  size: 276, 213
