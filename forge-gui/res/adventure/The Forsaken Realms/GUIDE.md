@@ -248,8 +248,9 @@ while it stands. The land itself adds only a share of its own:
 - **One creature, three ranks.** Most creatures come as an **Apprentice, an Adept or a Master** - the same
   creature, drawn bigger at each rank, with more life and a better deck. The decks share most of their cards: an
   Apprentice plays at least 60 cards of mostly commons, an Adept trims that to 50 with better ones, a Master to 40
-  with rares. The week, the land and your record pick the rank; the land picks the creature. Bosses, champions,
-  legends and the Archmages are one of a kind and keep their own decks.
+  with rares. The week, the land and your record pick the rank; the land picks the creature. The creatures waiting
+  inside a dungeon roll their rank the same way on your first visit (and keep it until the place moves on). Bosses,
+  champions, legends and the Archmages are one of a kind and keep their own decks.
 - **Which creatures.** A dungeon you haven't been inside sends ordinary creatures of its color. Once
   you've been in, it sends the very creatures that live there - the weaker ones first, the stronger only
   as the weeks go by. They come at you from the dungeon's side, at the usual distance.

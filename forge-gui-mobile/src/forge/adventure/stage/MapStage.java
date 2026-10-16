@@ -1463,6 +1463,7 @@ public class MapStage extends GameStage {
                         Object enemy = prop.get("enemy");
                         if (enemy != null && !enemy.toString().isEmpty()) {
                             EnemyData EN = WorldData.getEnemy(enemy.toString());
+                            boolean rolledByLand = false; // round 647: a biome roll picked it - its rank is rolled already
                             // Round 345 (the user, of the Demon's Bargain: its demon "was a random guy" - the
                             // territory re-theme had swapped him): a placement the map marks keepAuthored loads as
                             // authored, the way a boss or a quest target does.
@@ -1494,6 +1495,7 @@ public class MapStage extends GameStage {
                                 Vector2 poiPos = AdventureQuestController.instance().mostRecentPOI.getPosition();
                                 int currentBiome = forge.adventure.world.World.highestBiome(world.getBiome((int) poiPos.x / world.getTileSize(), (int) poiPos.y / world.getTileSize()));
                                 EN = world.getData().GetBiomes().get(currentBiome).getEnemy(Current.player().getStatistic().rank());
+                                rolledByLand = true;
                             } else if (!asAuthored && championColor == null) {
                                 // Content filter tables (user spec 2026-08-12): an Include=N
                                 // enemy is skipped from ordinary dungeon population. Same
@@ -1510,9 +1512,26 @@ public class MapStage extends GameStage {
                                 PointOfInterest mostRecentPOI = AdventureQuestController.instance().mostRecentPOI;
                                 if (mostRecentPOI != null) {
                                     EnemyData reThemed = TerritoryControl.reThemedEnemyFor(Current.world(), mostRecentPOI, EN.difficulty);
-                                    if (reThemed != null)
+                                    if (reThemed != null) {
                                         EN = reThemed;
+                                        rolledByLand = true; // the land's own roll already chose its rank
+                                    }
                                 }
+                            }
+                            // Round 647 (the user: "let hand-placed ordinary dungeon enemies roll their rank by the week,
+                            // like roaming ones"): on the first visit - no recorded pick yet - an ordinary placement of a
+                            // family creature (EnemyTiers) takes the rank the week's tier row rolls in this land, before
+                            // the win-streak upgrade below may lift it further. The roster record keeps it for this
+                            // incarnation of the place.
+                            if (!asAuthored && championColor == null && !rolledByLand && EN != null && id != caveChampionObjectId
+                                    && (changes == null || changes.getFixedEnemy(id) == null)
+                                    && (prop.get("dialog") == null || prop.get("dialog").toString().isEmpty())
+                                    && (prop.get("defeatDialog") == null || prop.get("defeatDialog").toString().isEmpty())
+                                    && !DungeonSources.isSpecial(EN)) {
+                                EnemyData rolled = forge.adventure.util.EnemyTiers.rollPlacement(EN,
+                                        AdventureQuestController.instance().mostRecentPOI, id);
+                                if (rolled != null)
+                                    EN = rolled;
                             }
                             // Round 447 (the user: dungeon enemies "depending on your win streak ... could go up by one or
                             // two levels", "only for the active dungeon, once it cycles, it will reset"): on the first visit

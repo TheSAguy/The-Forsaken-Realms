@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 647: a dungeon's own creatures roll their rank by the week too (2026-10-15)
+
+The user, after round 643: "let hand-placed ordinary dungeon enemies roll their rank by the week, like roaming ones."
+
+- **Where**: MapStage's `enemy` placement case, after the re-theme and before the round-447 win-streak upgrade. On the
+  first visit (no roster record for the placement yet), an ordinary placement of a family creature takes the rank the
+  week's tier row rolls in the land the place stands on now - `EnemyTiers.rollPlacement`, the same
+  `SpawnTierWeighting.targetTierWeight` row the roaming roll uses (difficulty, territory and the win-ratio tilt
+  included), Archmage left out (a family has none). DungeonUpgrades then lifts it from that rank as before.
+- **Not rolled**: placements kept as authored (bosses, story fighters, quest targets, `keepAuthored`), castle and cave
+  champions, dialog carriers, special creatures (`DungeonSources.isSpecial`), the unique enemies, and a placement the
+  land's own roll already picked (a re-theme, or a missing enemy's biome stand-in) - its rank is rolled already.
+- **Kept**: the round-201 roster records the result as `Name|Tier`, so later visits meet the same ranks until the place
+  rotates (DungeonRotation clears the roster). Places visited before this round keep their recorded creatures.
+- **Log**: `[TFR-EnemyTiers] Skull Cave #50: Devil placed as Apprentice -> Adept (week 8, black row 43/32/21)`.
+- **Seen in the agent game**: Skull Cave (week 8, black) - Devils as Apprentice and Adept, Scourgemasters as Adept and
+  Master, Cosmic Horrors (placed as Master) as Apprentice. GUIDE: the "One creature, three ranks" bullet says so.
+
 ## Round 646: Yorvo, Jetmir and Ertai dressed again (2026-10-15)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_646.py`. These are D80, D81

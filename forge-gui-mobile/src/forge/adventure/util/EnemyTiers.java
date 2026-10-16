@@ -29,6 +29,8 @@ import java.util.Map;
  * ({@link #expand}), so the week's tier row picks the tier and the creature is any of the biome's. A variant is a
  * clone of the catalog entry with the tier, its decks and its life - its size, name suffix, loot budget, Power and
  * Walls follow from the tier as they always did.</li>
+ * <li>A map's own placement (round 647): on the first visit an ordinary placement of a family creature takes the rank
+ * the week's tier row rolls in that land ({@link #rollPlacement}), before DungeonUpgrades' win-streak lift.</li>
  * <li>Saves keep enemies by name; a variant saves as "Name|Tier" ({@link #saveName}) and
  * {@link WorldData#getEnemy} resolves it back ({@link #resolveSaved}). An older save's plain name loads the catalog
  * tier.</li>
@@ -147,6 +149,46 @@ public final class EnemyTiers {
         List<EnemyData> out = new ArrayList<>(TIERS.length);
         for (String t : TIERS)
             out.add(variant(catalog, t));
+        return out;
+    }
+
+    /**
+     * Round 647 (the user: "let hand-placed ordinary dungeon enemies roll their rank by the week, like roaming ones"):
+     * the rank a map's own placement of a family creature takes on the first visit - the week's tier row in the land
+     * the place stands on now (SpawnTierWeighting.targetTierWeight, the same row the roaming roll uses), Archmage left
+     * out (a family has none). Null when it is not a family creature, the weighting is off or the row is empty; MapStage
+     * then keeps the placement as written. The caller records the result in the place's roster.
+     */
+    public static EnemyData rollPlacement(EnemyData placed, forge.adventure.pointofintrest.PointOfInterest poi, int objectId) {
+        if (!isFamily(placed) || !SpawnTierWeighting.isEnabled() || Current.world() == null)
+            return null;
+        EnemyData catalog = WorldData.getEnemy(placed.name);
+        if (catalog == null)
+            return null;
+        int week = SpawnTierWeighting.currentWeek(Current.world());
+        String land = poi == null ? null : TerritoryControl.currentColorAtPoi(Current.world(), poi);
+        float[] weights = new float[TIERS.length];
+        float total = 0f;
+        for (int i = 0; i < TIERS.length; i++) {
+            weights[i] = Math.max(0f, SpawnTierWeighting.targetTierWeight(TIERS[i], week, land));
+            total += weights[i];
+        }
+        if (total <= 0f)
+            return null;
+        float r = forge.util.MyRandom.getRandom().nextFloat() * total;
+        int pick = TIERS.length - 1;
+        for (int i = 0; i < TIERS.length; i++) {
+            r -= weights[i];
+            if (r <= 0f) {
+                pick = i;
+                break;
+            }
+        }
+        EnemyData out = variant(catalog, TIERS[pick]);
+        System.out.println("[TFR-EnemyTiers] " + (poi == null ? "?" : poi.getDisplayName()) + " #" + objectId + ": "
+                + catalog.getName() + " placed as " + EnemyData.tierDisplayName(catalog.tier) + " -> "
+                + EnemyData.tierDisplayName(out.tier) + " (week " + week + ", " + land + " row "
+                + String.format("%.0f/%.0f/%.0f", weights[0], weights[1], weights[2]) + ")");
         return out;
     }
 
