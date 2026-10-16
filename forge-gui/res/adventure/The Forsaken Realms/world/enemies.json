@@ -24145,7 +24145,7 @@
     },
     {
         "name": "Orthodoxy Angel",
-        "sprite": "sprites/enemy/aberration/phyrexian/phyrexianangel.atlas",
+        "sprite": "sprites/enemy/remake/orthodoxy_angel.atlas",
         "deck": [
             "decks/standard/phyrexianangel.dck"
         ],
@@ -24225,7 +24225,7 @@
         ],
         "tier": "Uncommon",
         "flying": true,
-        "scale": 0.9286
+        "scale": 0.1605
     },
     {
         "name": "Orthodoxy Duelist",
@@ -36598,14 +36598,14 @@
     },
     {
         "name": "Atraxa",
-        "sprite": "sprites/enemy/aberration/phyrexian/phyrexianangel.atlas",
+        "sprite": "sprites/enemy/remake/atraxa.atlas",
         "deck": [
             "decks/legends/atraxa.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.9286,
+        "scale": 0.1605,
         "life": 50,
         "rewards": [
             {
@@ -41537,14 +41537,14 @@
     },
     {
         "name": "Ixhel",
-        "sprite": "sprites/enemy/aberration/phyrexian/phyrexianangel.atlas",
+        "sprite": "sprites/enemy/remake/ixhel.atlas",
         "deck": [
             "decks/legends/ixhel.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 0.9286,
+        "scale": 0.1605,
         "life": 40,
         "rewards": [
             {

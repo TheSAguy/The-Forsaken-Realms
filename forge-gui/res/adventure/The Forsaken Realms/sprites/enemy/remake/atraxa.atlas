@@ -1,0 +1,156 @@
+atraxa.png
+size: 2418,909
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 186, 169
+  footprint: 43, 42, 105, 124
+Idle
+  xy: 186, 64
+  size: 186, 169
+Idle
+  xy: 372, 64
+  size: 186, 169
+Idle
+  xy: 558, 64
+  size: 186, 169
+Idle
+  xy: 744, 64
+  size: 186, 169
+Idle
+  xy: 930, 64
+  size: 186, 169
+Idle
+  xy: 1116, 64
+  size: 186, 169
+Idle
+  xy: 1302, 64
+  size: 186, 169
+Idle
+  xy: 1488, 64
+  size: 186, 169
+Idle
+  xy: 1674, 64
+  size: 186, 169
+Idle
+  xy: 1860, 64
+  size: 186, 169
+Idle
+  xy: 2046, 64
+  size: 186, 169
+Walk
+  xy: 0, 233
+  size: 186, 169
+Walk
+  xy: 186, 233
+  size: 186, 169
+Walk
+  xy: 372, 233
+  size: 186, 169
+Walk
+  xy: 558, 233
+  size: 186, 169
+Walk
+  xy: 744, 233
+  size: 186, 169
+Walk
+  xy: 930, 233
+  size: 186, 169
+Walk
+  xy: 1116, 233
+  size: 186, 169
+Walk
+  xy: 1302, 233
+  size: 186, 169
+Attack
+  xy: 0, 402
+  size: 186, 169
+Attack
+  xy: 186, 402
+  size: 186, 169
+Attack
+  xy: 372, 402
+  size: 186, 169
+Attack
+  xy: 558, 402
+  size: 186, 169
+Attack
+  xy: 744, 402
+  size: 186, 169
+Attack
+  xy: 930, 402
+  size: 186, 169
+Attack
+  xy: 1116, 402
+  size: 186, 169
+Attack
+  xy: 1302, 402
+  size: 186, 169
+Attack
+  xy: 1488, 402
+  size: 186, 169
+Attack
+  xy: 1674, 402
+  size: 186, 169
+Attack
+  xy: 1860, 402
+  size: 186, 169
+Attack
+  xy: 2046, 402
+  size: 186, 169
+Hit
+  xy: 0, 571
+  size: 186, 169
+Hit
+  xy: 186, 571
+  size: 186, 169
+Hit
+  xy: 372, 571
+  size: 186, 169
+Hit
+  xy: 558, 571
+  size: 186, 169
+Death
+  xy: 0, 740
+  size: 186, 169
+Death
+  xy: 186, 740
+  size: 186, 169
+Death
+  xy: 372, 740
+  size: 186, 169
+Death
+  xy: 558, 740
+  size: 186, 169
+Death
+  xy: 744, 740
+  size: 186, 169
+Death
+  xy: 930, 740
+  size: 186, 169
+Death
+  xy: 1116, 740
+  size: 186, 169
+Death
+  xy: 1302, 740
+  size: 186, 169
+Death
+  xy: 1488, 740
+  size: 186, 169
+Death
+  xy: 1674, 740
+  size: 186, 169
+Death
+  xy: 1860, 740
+  size: 186, 169
+Death
+  xy: 2046, 740
+  size: 186, 169
+Death
+  xy: 2232, 740
+  size: 186, 169

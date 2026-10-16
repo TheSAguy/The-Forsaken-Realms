@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 640: the three Phyrexian angels get the user's hand-made angel (2026-10-15)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/phyrexian_angel/convert.sh`. These are
+A9-11 of the low-quality list: the Orthodoxy Angel, Atraxa and Ixhel on the stock 16 px
+`aberration/phyrexian/phyrexianangel` sprite.
+
+- **The art**:
+  - The user made one still in ChatGPT from two Phyrexian angel references: a gaunt porcelain angel with a screaming
+    mask, a crown of crescent blades, torn crimson wings on black struts, a long spined bone tail and an orb staff. It
+    faces the viewer.
+  - Then four Kling clips and Pixelate sheets. The walk is a real wing beat: wide on the upstroke, folded on the
+    downstroke. The attack swings the orb staff; the death shatters her into black oil and porcelain shards.
+- **One design, three angels**: only the crimson of the wing membranes and the orb is tinted (OKLCH hue 24 +-30); the
+  porcelain, the black frame and the crown stay. The tint comes after the key is gone, so green is safe.
+  - **Orthodoxy Angel** (WG): a sickly green.
+  - **Atraxa** (WUBG): teal.
+  - **Ixhel** (WBG): violet.
+- **Files**:
+  - 3 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 3 sprite paths and scales (Orthodoxy Angel 0.1605, Atraxa 0.1605, Ixhel
+    0.1605).
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 3, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit's 18 "review" flags are all the house shadow ellipse, a gap under her while she hovers in the walk and the attack; the death's shards raise none.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+- **Source files**: moved to the Art Library repository, `Units/Custom/Phyrexian Angel`.
+
 ## Round 639: every player's first tournament has the one-time Coin refund, tutorial or not (2026-10-15)
 
 The user lost round 1 of their first Inn tournament (Sealed, entered with a Silver Challenge Coin) and kept no Coin:
