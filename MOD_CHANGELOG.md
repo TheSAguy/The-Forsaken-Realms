@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 671: the chain pendants get the bottom of their chain back (2026-10-16)
+
+The user, of Piper's Charm in a shop: "It looks like this necklace got clipped off."
+
+- **Why**: round 609 built five Neck pendant icons from round 506's NeckTreasure. Each took the chain with the coin
+  cut away and hung the item's own art from the right strand. The chain's bottom ran behind the coin, so cutting the
+  coin away cut it too, and the left strand ended in the air. Round 630's two Pledges reuse the Celestial Prism's icon
+  and had the same break.
+- **The fix** (`dev-tools/item_icons/close_pendant_chains.py`):
+  - Each icon is now NeckTreasure's whole chain (its rows 0-18, and row 19's two beads beside the coin) with the
+    icon drawn over it, so the chain is whole and passes behind the item.
+  - The chain takes the icon's own colors, so the Phoenix's stays silver.
+  - Fixed: Piper's Charm, Phoenix, Phoenix Charm, Celestial Prism, Goose (items_r609.png), and Liliana's and
+    Chandra's Pledges (items_r630.png). The regions are unchanged.
+- The before/after sheet is in the Art Library (`r671_pendant_chains.png`), with the two pages.
+
 ## Round 670: Griselbrand gets the user's hand-made art (2026-10-16)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/griselbrand/convert.sh`. This is F126 of

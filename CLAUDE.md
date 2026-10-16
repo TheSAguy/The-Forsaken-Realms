@@ -117,6 +117,10 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 671): **LOCAL + UNRELEASED (art)** - the seven chain pendant icons (Piper's Charm, Phoenix x2,
+Celestial Prism, Goose, Liliana's / Chandra's Pledge) get the bottom of their chain back (`dev-tools/item_icons/
+close_pendant_chains.py`: NeckTreasure's whole chain under each icon). items_r609.png + items_r630.png. Previewed.
+
 ## STATE 2026-10-16 (round 670): **LOCAL + UNRELEASED (art + data)** - Griselbrand gets the user's hand-made Pixelate art
 (generator `pixelate/griselbrand/`: take 2 from a wider still, desmear.py clears Kling's slash streak, the converter's
 new --match-palette). enemies.json 1 path + scale. Not seen in play.
