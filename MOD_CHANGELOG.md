@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 654: territory no longer spreads across the mountains - claims are contiguous (2026-10-16)
+
+The user, with a History map: green and blue "spread across/under the mountains to take territory that was not really
+close to them" - "Just like the mountains make towns on the other side of them further, what can we do to have the
+same happen for territory creep? ... it should not spread under/over the mountains, that should form a
+natural/impenetrable barrier."
+
+- **Why it happened**: `World.claimWastelandRing()` gives a tile to the strongest pull, and a pull is straight-line
+  distance x weight. Round 294 made the barrier's own tiles untouchable (nobody's ground), but a castle's ring and pull
+  still reached THROUGH them, so land on the far side of a ridge went to whoever stood closest in a straight line.
+- **The rule**: a claim is contiguous. A tile a ring wins is claimed only when one of its four neighbours already
+  belongs to the claimant (or it lies within 2 tiles of the claim's own center, which seeds a Capitol's first ring).
+  The barrier and water are never anybody's, so a claim has to go round a range - it cannot jump it. A won tile with
+  no owned neighbour waits; after the scan a flood claims waiting tiles from every tile claimed this call, so a ring
+  that rounds the end of a range fills the far side the same day. Takeovers obey it too (no stealing a rival's land
+  across the mountains). The pull contest itself is unchanged.
+- **Code**: the per-tile claim moved out of the scan loop into `World.claimOneTile()` (state in a `ClaimRun`, so the
+  scan and the flood claim the same way); `touchesOwner()`; the counter `World.claimTilesCutOff` (won but unreachable)
+  is in the daily `[TFR-ClaimPerf]` line as `cutOff=`.
+- **Old saves**: land already taken across the barrier would have stayed forever (its owner's straight-line pull
+  keeps it). `World.dropDisconnectedTerritory()` runs ONCE (save key `territoryContiguity` = 654; new worlds start at
+  654) from TerritoryControl's daily expansion, before the day's growth: every owner's land is flooded 4 ways from the
+  tiles around its pull sources (castle keep, towns' discs); what the flood does not reach goes back to wasteland, for
+  the ring of whoever reaches it now. Expansion-claimed tiles keep their (wasteland-space) ground; a tile still painted
+  the color's own way gets plain wasteland ground. An owner with no source keeps everything. `[TFR-Contiguity]`.
+  This also drops any other piece cut off from all of its owner's places (an enclave a rival's advance isolated), and
+  land reached only across water: water blocks the same way (the user, round 635: mountains prevent spread "like
+  water").
+- **Seen in the agent game**, on a copy of the user's slot 2 (day 270): the one-time pass dropped blue 154, black 32,
+  green 24 and player 97 tiles (the player's 97 = a sliver west of Orazca cut off from its disc; blue's included a
+  pocket across an inlet on its east coast). Day 271's full re-contest: blue claimed 1,347 tiles where the user's own
+  log shows 1,594 for the same day on the old build - the rest, with ~1,200 more across all colors, held back as
+  `cutOff`. Twelve days on: towns and castles keep growing (287 TownGrowth lines), cutOff ~800 a day, territory
+  58-102 ms a day (no change), no errors.
+
 ## Round 652: Nest Warden's Armor comes back, as a land armor (2026-10-16)
 
 The user, after the post-648 recheck of Realm of Legends: "add Nest Warden's Armor as a land armor like the others, with

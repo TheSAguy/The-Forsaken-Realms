@@ -91,6 +91,11 @@ public class World implements Disposable, SaveFileContent {
     // 1 = the town's center (PointOfInterest.getCenter()).
     public static final int TOWN_TERRITORY_ANCHOR = 1;
     private int townTerritoryAnchor = TOWN_TERRITORY_ANCHOR;
+    // Round 654 (territory is contiguous - claimWastelandRing()): 0 = a save from before, whose colors may hold land
+    // on the far side of the barrier; TerritoryControl drops what no longer connects to its owner ONCE, at the next
+    // day's expansion (dropDisconnectedTerritory()). A new world never had any.
+    public static final int TERRITORY_CONTIGUITY = 654;
+    private int territoryContiguity = TERRITORY_CONTIGUITY;
 
     // Day/night cycle: dayProgress is the fraction of the current day elapsed, in [0,1), where
     // 0 = midnight. It only advances via advanceTime(), which WorldStage calls once per frame
@@ -1194,6 +1199,7 @@ public class World implements Disposable, SaveFileContent {
         fogOfWarStage2Revealed = saveFileData.containsKey("fogOfWarStage2Revealed") && saveFileData.readBool("fogOfWarStage2Revealed");
         mapIconLayout = saveFileData.containsKey("mapIconLayout") ? saveFileData.readInt("mapIconLayout") : 0; // round 249
         townTerritoryAnchor = saveFileData.containsKey("townTerritoryAnchor") ? saveFileData.readInt("townTerritoryAnchor") : 0; // round 293
+        territoryContiguity = saveFileData.containsKey("territoryContiguity") ? saveFileData.readInt("territoryContiguity") : 0; // round 654
 
         colorNextAttackDay.clear();
         if (saveFileData.containsKey("colorNextAttackDay")) {
@@ -1491,6 +1497,7 @@ public class World implements Disposable, SaveFileContent {
         data.store("fogOfWarStage2Revealed", fogOfWarStage2Revealed);
         data.store("mapIconLayout", mapIconLayout); // round 249
         data.store("townTerritoryAnchor", townTerritoryAnchor); // round 293
+        data.store("territoryContiguity", territoryContiguity); // round 654
         data.storeObject("colorTerritoryRadius", colorTerritoryRadius);
         data.storeObject("defeatedColors", defeatedColors);
         data.storeObject("forcedPlayerTargetPending", forcedPlayerTargetPending);
@@ -2821,6 +2828,7 @@ public class World implements Disposable, SaveFileContent {
             fogOfWarStage2Revealed = false;
             mapIconLayout = MAP_ICON_LAYOUT; // round 249: the post-sweep redrawAllPoiMarkers() bakes this world's icons centered
             townTerritoryAnchor = TOWN_TERRITORY_ANCHOR; // round 293: a new world's towns only ever grow from their center
+            territoryContiguity = TERRITORY_CONTIGUITY; // round 654: a new world's territory only ever grows contiguously
             ResourceSpawns.forceResync();
             poiDespawnDay.clear();
             poiRespawnDay.clear();
@@ -4390,6 +4398,141 @@ public class World implements Disposable, SaveFileContent {
         townTerritoryAnchor = TOWN_TERRITORY_ANCHOR;
     }
 
+    /** Round 654: does this save still hold territory claimed across the barrier before claims became contiguous? */
+    public boolean territoryNeedsContiguity() {
+        return territoryContiguity < TERRITORY_CONTIGUITY && isTerritoryControlEnabled();
+    }
+
+    public void markTerritoryContiguous() {
+        territoryContiguity = TERRITORY_CONTIGUITY;
+    }
+
+    /**
+     * Round 654: the one-time repair for saves from before contiguous claims (claimWastelandRing()). For every owner with
+     * at least one pull source, the land it holds is flooded 4 ways from the tiles around its sources (its castle keep,
+     * its towns' discs); whatever the flood does not reach - land it took on the far side of a mountain range, or any
+     * other piece cut off from all of its places - goes back to wasteland, for the ring of whoever reaches it now. An
+     * owner with no source keeps everything (nothing to measure from). Ground: a tile expansion claimed already holds
+     * wasteland content under the color (the colorless bit underneath - claimOneTile()), so only its owner bit goes; a
+     * tile still painted the color's own way gets plain wasteland ground. Returns the tiles dropped per owner.
+     */
+    public Map<String, Integer> dropDisconnectedTerritory(Map<String, List<float[]>> sources,
+                                                          BiConsumer<Integer, Integer> onTileRepainted,
+                                                          BiConsumer<Integer, Integer> onChunkNeedsReload) {
+        Map<String, Integer> dropped = new java.util.LinkedHashMap<>();
+        if (data == null || biomeMap == null || terrainMap == null || sources == null)
+            return dropped;
+        List<BiomeData> biomes = data.GetBiomes();
+        int colorlessIndex = -1;
+        Map<String, Integer> indexOf = new HashMap<>();
+        for (int i = 0; i < biomes.size(); i++) {
+            String name = biomes.get(i).name;
+            if ("waste".equalsIgnoreCase(name))
+                colorlessIndex = i;
+            if (name != null)
+                indexOf.put(name.toLowerCase(), i);
+        }
+        if (colorlessIndex < 0)
+            return dropped;
+        BiomeData colorless = biomes.get(colorlessIndex);
+        long roadBit = roadMask();
+        Set<Long> touched = new HashSet<>();
+        int minX = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE, minY = Integer.MAX_VALUE, maxY = Integer.MIN_VALUE;
+        for (Map.Entry<String, List<float[]>> entry : sources.entrySet()) {
+            Integer owner = indexOf.get(entry.getKey().toLowerCase());
+            List<float[]> list = entry.getValue();
+            if (owner == null || list == null || list.isEmpty())
+                continue;
+            boolean[][] reached = new boolean[width][height];
+            java.util.ArrayDeque<int[]> queue = new java.util.ArrayDeque<>();
+            for (float[] source : list) {
+                int sx = (int) source[0], sy = (int) source[1];
+                int seed = Math.max(2, (int) Math.ceil(source[3]));
+                for (int x = Math.max(0, sx - seed); x <= Math.min(width - 1, sx + seed); x++)
+                    for (int y = Math.max(0, sy - seed); y <= Math.min(height - 1, sy + seed); y++) {
+                        if (reached[x][y] || (x - sx) * (x - sx) + (y - sy) * (y - sy) > seed * seed)
+                            continue;
+                        if (highestBiome(getBiome(x, y) & ~roadBit) != owner)
+                            continue;
+                        reached[x][y] = true;
+                        queue.add(new int[]{x, y});
+                    }
+            }
+            while (!queue.isEmpty()) {
+                int[] t = queue.poll();
+                for (int[] step : FOUR_WAYS) {
+                    int nx = t[0] + step[0], ny = t[1] + step[1];
+                    if (nx < 0 || ny < 0 || nx >= width || ny >= height || reached[nx][ny])
+                        continue;
+                    if (highestBiome(getBiome(nx, ny) & ~roadBit) != owner)
+                        continue;
+                    reached[nx][ny] = true;
+                    queue.add(new int[]{nx, ny});
+                }
+            }
+            int count = 0;
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    if (reached[x][y])
+                        continue;
+                    long bits = getBiome(x, y);
+                    if (highestBiome(bits & ~roadBit) != owner)
+                        continue;
+                    int rawY = height - y - 1;
+                    boolean road = (bits & roadBit) != 0;
+                    boolean wasteUnderneath = (bits & (1L << colorlessIndex)) != 0;
+                    biomeMap[x][rawY] = (biomeMap[x][rawY] & ~(1L << owner)) | (1L << colorlessIndex);
+                    if (!road && !wasteUnderneath) {
+                        // still the color's own ground: plain wasteland ground, the same terrain noise a claim uses
+                        int terrainCounter = 1;
+                        terrainMap[x][rawY] = 0;
+                        if (colorless.terrain != null) {
+                            for (BiomeTerrainData terrain : colorless.terrain) {
+                                float noise = ((float) getTerritoryNoise().eval(x / (float) width * (data.noiseZoomBiome * terrain.resolution), rawY / (float) height * (data.noiseZoomBiome * terrain.resolution)) + 1) / 2;
+                                if (noise >= terrain.min && noise <= terrain.max)
+                                    terrainMap[x][rawY] = terrainCounter;
+                                terrainCounter++;
+                            }
+                        }
+                        if (colorless.collision)
+                            terrainMap[x][rawY] |= collisionBit;
+                    }
+                    if (!road)
+                        redrawMinimapTile(x, rawY);
+                    updateFogOfWarPixmap(x, rawY);
+                    touched.add(packTile(x, y));
+                    minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+                    minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+                    count++;
+                }
+            }
+            if (count > 0)
+                dropped.put(entry.getKey(), count);
+        }
+        if (onTileRepainted != null && !touched.isEmpty()) {
+            Set<Long> repaint = new HashSet<>();
+            for (long packed : touched) {
+                int tx = (int) (packed >> 32), ty = (int) packed;
+                for (int ox = -1; ox <= 1; ox++)
+                    for (int oy = -1; oy <= 1; oy++)
+                        repaint.add(packTile(tx + ox, ty + oy));
+            }
+            for (long packed : repaint)
+                onTileRepainted.accept((int) (packed >> 32), (int) packed);
+        }
+        if (biomeImage != null && minX <= maxX)
+            redrawPoiMarkers(minX - 5, minY - 5, maxX + 5, maxY + 5);
+        if (onChunkNeedsReload != null && minX <= maxX) {
+            int chunkSize = getChunkSize();
+            for (int cx = Math.floorDiv(minX, chunkSize); cx <= Math.floorDiv(maxX, chunkSize); cx++)
+                for (int cy = Math.floorDiv(minY, chunkSize); cy <= Math.floorDiv(maxY, chunkSize); cy++)
+                    onChunkNeedsReload.accept(cx, cy);
+        }
+        System.out.println("[TFR-Contiguity] territory cut off from its owner's places, back to wasteland: "
+                + (dropped.isEmpty() ? "none" : dropped.toString()));
+        return dropped;
+    }
+
     private void rebakeMinimapAfterTerritoryControl() {
         Pixmap pix = new Pixmap(width * data.miniMapTileSize, height * data.miniMapTileSize, Pixmap.Format.RGBA8888);
         pix.setColor(1, 0, 0, 1);
@@ -5661,6 +5804,8 @@ public class World implements Disposable, SaveFileContent {
     // leaving it to be guessed - round 190 is the standing reminder of how that goes, where four
     // confidently-named suspects all measured 0.0ms. Read and reset by TerritoryControl each day.
     public static long claimTilesVisited, claimTilesAlreadyMine, claimTilesUntouchable, claimTilesContested;
+    // Round 654: tiles a ring won but could not reach - no land of the claimant's touches them (behind the barrier).
+    public static long claimTilesCutOff;
     public static long claimSourceComparisons;
 
     // outClaimedTiles (2026-08-13 FoW fix): lets the player-Capitol expansion reveal exactly the
@@ -5764,6 +5909,10 @@ public class World implements Disposable, SaveFileContent {
         // claimed set here and handing it directly to doodad placement (see below) means there's only
         // ever one definition of "does this color own this tile," not two that can drift apart.
         Set<Long> claimedTiles = new HashSet<>();
+        // Round 654: what claimOneTile() needs and counts, so the scan below and the flood after it claim the same way.
+        ClaimRun run = new ClaimRun(roadBit, colorIndex, colorlessIndex, colorBiome, colorlessBiome, redirectStructures,
+                colorBiomeXStart, colorBiomeYStart, colorBiomeWidth, colorBiomeHeight, claimedTiles);
+        Set<Long> waiting = new HashSet<>();
         // Per-column analytic y-range (2026-08-25 perf fix: "freeze at the end of every day, gets
         // worse the longer a playthrough runs"). This loop used to scan the FULL (2*outerRadiusTiles
         // +1)^2 bounding box and reject non-ring tiles one at a time via the distSq check below -
@@ -5902,111 +6051,41 @@ public class World implements Disposable, SaveFileContent {
                 if (loses)
                     continue;
 
-                int rawY = height - wy - 1;
-                long existingRoadBit = biomeMap[wx][rawY] & roadBit; // preserve roads, same as repaintBiomeAroundTown()
-                if (isRoadTile) {
-                    // Ownership-bits-only claim for road tiles (2026-08-15 FoW fix, see the
-                    // classification comment above): flip the owner bits so the player bit (and
-                    // AI colors' own bits, same code path) actually lands on roads, but leave
-                    // EVERYTHING else about a road tile alone - terrainMap stays 0 (the invariant
-                    // the road-drawing passes set and rely on), no structure/doodad generation
-                    // (skipped via not joining claimedTiles), and no redrawMinimapTile (the
-                    // minimap's road pixel must stay a road pixel). updateFogOfWarPixmap still
-                    // runs so the tile's fog stage updates immediately.
-                    biomeMap[wx][rawY] = existingRoadBit | (1L << colorlessIndex) | (1L << colorIndex);
-                    tilesClaimed++;
-                    updateFogOfWarPixmap(wx, rawY);
-                    minX = Math.min(minX, wx); maxX = Math.max(maxX, wx);
-                    minY = Math.min(minY, wy); maxY = Math.max(maxY, wy);
+                // Round 654 (the user, of the History map: green and blue "spread across/under the mountains to take
+                // territory that was not really close to them" - "it should not spread under/over the mountains, that
+                // should form a natural/impenetrable barrier"): territory is CONTIGUOUS. A tile this ring wins is claimed
+                // only when it touches (4 ways) land the claimant already holds; the barrier and water are never anybody's,
+                // so a claim has to go round a mountain range instead of jumping it. A won tile that touches nothing yet
+                // waits: the flood after this loop takes it as soon as a neighbour is claimed - which is what lets a ring
+                // close round the end of a range and fill the far side the same day.
+                // The claim's own center seeds it (distSq <= 4): a Capitol's first ring starts from ground that may not
+                // be painted the player's yet.
+                if (distSq > 4 && !touchesOwner(wx, wy, colorIndex, roadBit)) {
+                    waiting.add(packTile(wx, wy));
                     continue;
                 }
-                // The colorless bit is KEPT underneath the color's own bit (unlike repaintBiome-
-                // AroundTown()'s single-bit overwrite) - this is the actual fix for the long-
-                // standing "blue border" artifact at expansion boundaries and along roads.
-                // Mechanism, derived from generateBiomeSprite() directly: the renderer draws every
-                // set bit's layer bottom-up, needs at least one full-coverage base layer, and if
-                // none qualifies it promotes the FIRST set bit - which is base/ocean, literal blue
-                // water - to full. A single-bit claimed tile breaks its NEIGHBORS' waste layers'
-                // full-neighborhood checks (and road tiles, skipped by this loop entirely, keep
-                // ocean|waste|road while everything around them loses waste), so wherever a nearby
-                // tile's own base coverage failed, ocean got promoted and rendered as blue flanks.
-                // Keeping waste underneath restores neighbor-bit symmetry: the waste layer renders
-                // as a genuine full base under the color's edge pieces - the exact multi-bit
-                // blending mechanism stock world-gen boundaries already rely on - so ocean never
-                // gets promoted, and the claim edge reads as a soft transition instead of a hard
-                // cut. Ownership is unaffected: highestBiome() still reports the color, since every
-                // AI color's biome index is above colorless's (world.json order: base, colorless,
-                // then the 5 colors, then player). The ocean bit itself stays dropped - re-adding
-                // THAT was the reverted checkerboard regression (see MOD_CHANGELOG.md's ocean-bit
-                // entry); this keeps a bit whose own terrain table matches the tile's
-                // colorless-recipe terrain values exactly (redirectStructures ARE colorless
-                // clones), so there's no shared-terrainMap misinterpretation risk.
-                biomeMap[wx][rawY] = existingRoadBit | (1L << colorlessIndex) | (1L << colorIndex);
-
-                // Native computation, not a reskin - mirrors generateNew()'s Pass B exactly (same
-                // terrain-variant noise formula/seed via getTerritoryNoise(), same structure-position
-                // formula, using this color's own colorBiomeXStart/YStart/Width/Height since
-                // redirectStructures' WFC pattern was built at that same scale) so a tile claimed by
-                // daily expansion comes out exactly as dense/varied as one claimed at world-gen time.
-                // translateStructure() (reskinning whatever single structure wasteland's own WFC
-                // pattern had already placed at this spot, 1:1) could only preserve or drop existing
-                // density, never add it the way native computation can - this was the actual root
-                // cause of "black skips an area with the fill" / "white looks flat on the minimap
-                // where it spreads": daily expansion still had the exact density cap Pass B was built
-                // to eliminate for the initial circle, just never extended to it (MOD_SCOPE.md #7).
-                int terrainCounter = 1;
-                terrainMap[wx][rawY] = 0;
-                if (colorlessBiome.terrain != null) {
-                    for (BiomeTerrainData terrain : colorlessBiome.terrain) {
-                        float terrainNoise = ((float) getTerritoryNoise().eval(wx / (float) width * (data.noiseZoomBiome * terrain.resolution), rawY / (float) height * (data.noiseZoomBiome * terrain.resolution)) + 1) / 2;
-                        if (terrainNoise >= terrain.min && terrainNoise <= terrain.max) {
-                            terrainMap[wx][rawY] = terrainCounter;
-                        }
-                        terrainCounter++;
-                    }
-                }
-                if (colorBiome.collision)
-                    terrainMap[wx][rawY] |= collisionBit;
-                if (redirectStructures != null) {
-                    for (BiomeStructureData structureData : redirectStructures) {
-                        BiomeStructure structure = getOrBuildNativePattern(structureData, colorBiomeWidth, colorBiomeHeight);
-                        int structureXStart = wx - (colorBiomeXStart - colorBiomeWidth / 2) - (int) ((structureData.x * colorBiomeWidth) - (structureData.width * colorBiomeWidth / 2));
-                        int structureYStart = rawY - (colorBiomeYStart - colorBiomeHeight / 2) - (int) ((structureData.y * colorBiomeHeight) - (structureData.height * colorBiomeHeight / 2));
-
-                        int structureIndex = structure.objectID(structureXStart, structureYStart);
-                        if (structureIndex >= 0) {
-                            terrainMap[wx][rawY] = terrainCounter + structureIndex;
-                            if (structure.collision(structureXStart, structureYStart))
-                                terrainMap[wx][rawY] |= collisionBit;
-                            terrainMap[wx][rawY] |= isStructureBit;
-                            tilesWithStructure++;
-                        }
-                        terrainCounter += structure.structureObjectCount();
-                    }
-                }
-                tilesClaimed++;
-                claimedTiles.add(packTile(wx, wy));
-
-                // This tile's terrainMap was just written in colorless index space above, and
-                // drawMinimapTile() works that out for itself now (round 272) instead of being told -
-                // see holdsWasteSpaceValue() for why being told was not safe.
-                //
-                // THE ONE RESIDUAL, measured rather than assumed: a tile this method claims INSIDE the
-                // colour's own castle keep gets a wasteland-space value at a position where
-                // holdsWasteSpaceValue() answers "the colour's own space". It happens where world-gen
-                // left a hole in the colour's claim that close to its castle - 43 such tiles inside
-                // white's keep in the user's save 2, ~3% of the disc - and expansion later fills it.
-                // Around 13% of tiles carry a structure, so the ceiling is a few dozen mis-drawn tiles
-                // map-wide against the ~215 this round fixes. The exact cure is to stop deriving the
-                // space and record it per tile (terrainMap bit 29 is free) - MOD_CHANGELOG round 272.
-                redrawMinimapTile(wx, rawY); // real content, not a flat stamp
-                updateFogOfWarPixmap(wx, rawY);
-
-                minX = Math.min(minX, wx); maxX = Math.max(maxX, wx);
-                minY = Math.min(minY, wy); maxY = Math.max(maxY, wy);
+                claimOneTile(run, wx, wy, isRoadTile);
             }
             }
         }
+        // Round 654: the flood - each claimed tile hands the claim on to its waiting neighbours.
+        java.util.ArrayDeque<Long> frontier = new java.util.ArrayDeque<>(run.order);
+        while (!frontier.isEmpty() && !waiting.isEmpty()) {
+            long packed = frontier.poll();
+            int tx = (int) (packed >> 32), ty = (int) packed;
+            for (int[] step : FOUR_WAYS) {
+                long next = packTile(tx + step[0], ty + step[1]);
+                if (!waiting.remove(next))
+                    continue;
+                int nx = tx + step[0], ny = ty + step[1];
+                claimOneTile(run, nx, ny, (getBiome(nx, ny) & roadBit) != 0);
+                frontier.add(next);
+            }
+        }
+        claimTilesCutOff += waiting.size();
+        tilesClaimed = run.tilesClaimed;
+        tilesWithStructure = run.tilesWithStructure;
+        minX = run.minX; maxX = run.maxX; minY = run.minY; maxY = run.maxY;
         // Repaint the live chunk textures only AFTER every tile's biomeMap/terrainMap write is
         // final - NOT per tile inside the loop above (the old behavior). generateBiomeSprite()
         // blends each tile against its 8 neighbors' current bits, so a mid-loop patch drew each
@@ -6099,6 +6178,156 @@ public class World implements Disposable, SaveFileContent {
     // now takes the land's own density - a grown edge looks like the land around it. DOODAD_SET 331 re-scatters the
     // saves that already have the bands.
     private static final float DOODAD_DENSITY_MULTIPLIER = 1f;
+
+    // Round 654: the state one claimWastelandRing() call shares between its scan and its flood.
+    private static final class ClaimRun {
+        final long roadBit;
+        final int colorIndex, colorlessIndex, xStart, yStart, width, height;
+        final BiomeData colorBiome, colorlessBiome;
+        final BiomeStructureData[] redirectStructures;
+        final Set<Long> claimedTiles;
+        final List<Long> order = new ArrayList<>();
+        int tilesClaimed, tilesWithStructure;
+        int minX = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE, minY = Integer.MAX_VALUE, maxY = Integer.MIN_VALUE;
+
+        ClaimRun(long roadBit, int colorIndex, int colorlessIndex, BiomeData colorBiome, BiomeData colorlessBiome,
+                 BiomeStructureData[] redirectStructures, int xStart, int yStart, int width, int height,
+                 Set<Long> claimedTiles) {
+            this.roadBit = roadBit;
+            this.colorIndex = colorIndex;
+            this.colorlessIndex = colorlessIndex;
+            this.colorBiome = colorBiome;
+            this.colorlessBiome = colorlessBiome;
+            this.redirectStructures = redirectStructures;
+            this.xStart = xStart;
+            this.yStart = yStart;
+            this.width = width;
+            this.height = height;
+            this.claimedTiles = claimedTiles;
+        }
+    }
+
+    private static final int[][] FOUR_WAYS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+    /** Round 654: does any of the four tiles beside this one (world coordinates, y up) belong to this biome? */
+    private boolean touchesOwner(int wx, int wy, int ownerIndex, long roadBit) {
+        for (int[] step : FOUR_WAYS) {
+            int nx = wx + step[0], ny = wy + step[1];
+            if (nx < 0 || ny < 0 || nx >= width || ny >= height)
+                continue;
+            if (highestBiome(getBiome(nx, ny) & ~roadBit) == ownerIndex)
+                return true;
+        }
+        return false;
+    }
+
+    /** One tile of a claimWastelandRing() claim - moved out of its loop in round 654 so the flood can claim the same way. */
+    private void claimOneTile(ClaimRun r, int wx, int wy, boolean isRoadTile) {
+        int rawY = height - wy - 1;
+        long existingRoadBit = biomeMap[wx][rawY] & r.roadBit; // preserve roads, same as repaintBiomeAroundTown()
+        if (isRoadTile) {
+            // Ownership-bits-only claim for road tiles (2026-08-15 FoW fix, see the
+            // classification comment above): flip the owner bits so the player bit (and
+            // AI colors' own bits, same code path) actually lands on roads, but leave
+            // EVERYTHING else about a road tile alone - terrainMap stays 0 (the invariant
+            // the road-drawing passes set and rely on), no structure/doodad generation
+            // (skipped via not joining claimedTiles), and no redrawMinimapTile (the
+            // minimap's road pixel must stay a road pixel). updateFogOfWarPixmap still
+            // runs so the tile's fog stage updates immediately.
+            biomeMap[wx][rawY] = existingRoadBit | (1L << r.colorlessIndex) | (1L << r.colorIndex);
+            r.tilesClaimed++;
+            r.order.add(packTile(wx, wy));
+            updateFogOfWarPixmap(wx, rawY);
+            r.minX = Math.min(r.minX, wx); r.maxX = Math.max(r.maxX, wx);
+            r.minY = Math.min(r.minY, wy); r.maxY = Math.max(r.maxY, wy);
+            return;
+        }
+        // The colorless bit is KEPT underneath the color's own bit (unlike repaintBiome-
+        // AroundTown()'s single-bit overwrite) - this is the actual fix for the long-
+        // standing "blue border" artifact at expansion boundaries and along roads.
+        // Mechanism, derived from generateBiomeSprite() directly: the renderer draws every
+        // set bit's layer bottom-up, needs at least one full-coverage base layer, and if
+        // none qualifies it promotes the FIRST set bit - which is base/ocean, literal blue
+        // water - to full. A single-bit claimed tile breaks its NEIGHBORS' waste layers'
+        // full-neighborhood checks (and road tiles, skipped by this loop entirely, keep
+        // ocean|waste|road while everything around them loses waste), so wherever a nearby
+        // tile's own base coverage failed, ocean got promoted and rendered as blue flanks.
+        // Keeping waste underneath restores neighbor-bit symmetry: the waste layer renders
+        // as a genuine full base under the color's edge pieces - the exact multi-bit
+        // blending mechanism stock world-gen boundaries already rely on - so ocean never
+        // gets promoted, and the claim edge reads as a soft transition instead of a hard
+        // cut. Ownership is unaffected: highestBiome() still reports the color, since every
+        // AI color's biome index is above colorless's (world.json order: base, colorless,
+        // then the 5 colors, then player). The ocean bit itself stays dropped - re-adding
+        // THAT was the reverted checkerboard regression (see MOD_CHANGELOG.md's ocean-bit
+        // entry); this keeps a bit whose own terrain table matches the tile's
+        // colorless-recipe terrain values exactly (redirectStructures ARE colorless
+        // clones), so there's no shared-terrainMap misinterpretation risk.
+        biomeMap[wx][rawY] = existingRoadBit | (1L << r.colorlessIndex) | (1L << r.colorIndex);
+
+        // Native computation, not a reskin - mirrors generateNew()'s Pass B exactly (same
+        // terrain-variant noise formula/seed via getTerritoryNoise(), same structure-position
+        // formula, using this color's own colorBiomeXStart/YStart/Width/Height since
+        // redirectStructures' WFC pattern was built at that same scale) so a tile claimed by
+        // daily expansion comes out exactly as dense/varied as one claimed at world-gen time.
+        // translateStructure() (reskinning whatever single structure wasteland's own WFC
+        // pattern had already placed at this spot, 1:1) could only preserve or drop existing
+        // density, never add it the way native computation can - this was the actual root
+        // cause of "black skips an area with the fill" / "white looks flat on the minimap
+        // where it spreads": daily expansion still had the exact density cap Pass B was built
+        // to eliminate for the initial circle, just never extended to it (MOD_SCOPE.md #7).
+        int terrainCounter = 1;
+        terrainMap[wx][rawY] = 0;
+        if (r.colorlessBiome.terrain != null) {
+            for (BiomeTerrainData terrain : r.colorlessBiome.terrain) {
+                float terrainNoise = ((float) getTerritoryNoise().eval(wx / (float) width * (data.noiseZoomBiome * terrain.resolution), rawY / (float) height * (data.noiseZoomBiome * terrain.resolution)) + 1) / 2;
+                if (terrainNoise >= terrain.min && terrainNoise <= terrain.max) {
+                    terrainMap[wx][rawY] = terrainCounter;
+                }
+                terrainCounter++;
+            }
+        }
+        if (r.colorBiome.collision)
+            terrainMap[wx][rawY] |= collisionBit;
+        if (r.redirectStructures != null) {
+            for (BiomeStructureData structureData : r.redirectStructures) {
+                BiomeStructure structure = getOrBuildNativePattern(structureData, r.width, r.height);
+                int structureXStart = wx - (r.xStart - r.width / 2) - (int) ((structureData.x * r.width) - (structureData.width * r.width / 2));
+                int structureYStart = rawY - (r.yStart - r.height / 2) - (int) ((structureData.y * r.height) - (structureData.height * r.height / 2));
+
+                int structureIndex = structure.objectID(structureXStart, structureYStart);
+                if (structureIndex >= 0) {
+                    terrainMap[wx][rawY] = terrainCounter + structureIndex;
+                    if (structure.collision(structureXStart, structureYStart))
+                        terrainMap[wx][rawY] |= collisionBit;
+                    terrainMap[wx][rawY] |= isStructureBit;
+                    r.tilesWithStructure++;
+                }
+                terrainCounter += structure.structureObjectCount();
+            }
+        }
+        r.tilesClaimed++;
+        r.claimedTiles.add(packTile(wx, wy));
+        r.order.add(packTile(wx, wy));
+
+        // This tile's terrainMap was just written in colorless index space above, and
+        // drawMinimapTile() works that out for itself now (round 272) instead of being told -
+        // see holdsWasteSpaceValue() for why being told was not safe.
+        //
+        // THE ONE RESIDUAL, measured rather than assumed: a tile this method claims INSIDE the
+        // colour's own castle keep gets a wasteland-space value at a position where
+        // holdsWasteSpaceValue() answers "the colour's own space". It happens where world-gen
+        // left a hole in the colour's claim that close to its castle - 43 such tiles inside
+        // white's keep in the user's save 2, ~3% of the disc - and expansion later fills it.
+        // Around 13% of tiles carry a structure, so the ceiling is a few dozen mis-drawn tiles
+        // map-wide against the ~215 this round fixes. The exact cure is to stop deriving the
+        // space and record it per tile (terrainMap bit 29 is free) - MOD_CHANGELOG round 272.
+        redrawMinimapTile(wx, rawY); // real content, not a flat stamp
+        updateFogOfWarPixmap(wx, rawY);
+
+        r.minX = Math.min(r.minX, wx); r.maxX = Math.max(r.maxX, wx);
+        r.minY = Math.min(r.minY, wy); r.maxY = Math.max(r.maxY, wy);
+    }
 
     // Packs a world tile coordinate into one long key for a Set<Long> membership test - x/y are
     // always small, non-negative map indices here, well within 32 bits each.

@@ -547,7 +547,9 @@ public class TerritoryControl {
                 + " sourceComparisons=" + World.claimSourceComparisons
                 + (World.claimTilesContested > 0
                     ? " (avg " + (World.claimSourceComparisons / World.claimTilesContested) + " sources/contested tile)"
-                    : ""));
+                    : "")
+                + " cutOff=" + World.claimTilesCutOff); // round 654: won but not reachable - behind the barrier
+        World.claimTilesCutOff = 0;
         World.claimTilesVisited = 0;
         World.claimTilesAlreadyMine = 0;
         World.claimTilesUntouchable = 0;
@@ -759,6 +761,14 @@ public class TerritoryControl {
         // growth, so the repair works from each town's radius as it stood. See recenterTownTerritories().
         if (world.townTerritoriesNeedRecenter() && recenterTownTerritories(world, pullSources, playerTowns))
             world.markTownTerritoriesRecentered();
+        // Round 654: claims are contiguous now (World.claimWastelandRing), so land a color took across the mountains
+        // before cannot be reached again - a save from before drops what no longer connects to its owner's places,
+        // once, ahead of today's growth.
+        if (world.territoryNeedsContiguity()) {
+            world.dropDisconnectedTerritory(pullSources, WorldStage.getInstance()::refreshBackgroundTile,
+                    WorldStage.getInstance()::reloadBackgroundChunkObjects);
+            world.markTerritoryContiguous();
+        }
         expSources1 = System.nanoTime() - tPhase;
         tPhase = System.nanoTime();
         // Captured towns grow their own small territory, RECOLOR_RADIUS -> TOWN_MAX_TERRITORY_RADIUS
