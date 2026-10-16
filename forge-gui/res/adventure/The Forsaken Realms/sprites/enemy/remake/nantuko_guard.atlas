@@ -1,0 +1,174 @@
+nantuko_guard.png
+size: 864,631
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 63
+  footprint: 30, 2, 37, 60
+Idle
+  xy: 96, 64
+  size: 96, 63
+Idle
+  xy: 192, 64
+  size: 96, 63
+Idle
+  xy: 288, 64
+  size: 96, 63
+Walk
+  xy: 0, 127
+  size: 96, 63
+Walk
+  xy: 96, 127
+  size: 96, 63
+Walk
+  xy: 192, 127
+  size: 96, 63
+Walk
+  xy: 288, 127
+  size: 96, 63
+Walk
+  xy: 384, 127
+  size: 96, 63
+Walk
+  xy: 480, 127
+  size: 96, 63
+Walk
+  xy: 576, 127
+  size: 96, 63
+Walk
+  xy: 672, 127
+  size: 96, 63
+Attack
+  xy: 0, 190
+  size: 96, 63
+Attack
+  xy: 96, 190
+  size: 96, 63
+Attack
+  xy: 192, 190
+  size: 96, 63
+Attack
+  xy: 288, 190
+  size: 96, 63
+Attack
+  xy: 384, 190
+  size: 96, 63
+Attack
+  xy: 480, 190
+  size: 96, 63
+Hit
+  xy: 0, 253
+  size: 96, 63
+Hit
+  xy: 96, 253
+  size: 96, 63
+Hit
+  xy: 192, 253
+  size: 96, 63
+Hit
+  xy: 288, 253
+  size: 96, 63
+Death
+  xy: 0, 316
+  size: 96, 63
+Death
+  xy: 96, 316
+  size: 96, 63
+Death
+  xy: 192, 316
+  size: 96, 63
+Death
+  xy: 288, 316
+  size: 96, 63
+Death
+  xy: 384, 316
+  size: 96, 63
+Death
+  xy: 480, 316
+  size: 96, 63
+Death
+  xy: 576, 316
+  size: 96, 63
+Death
+  xy: 672, 316
+  size: 96, 63
+Death
+  xy: 768, 316
+  size: 96, 63
+IdleUp
+  xy: 0, 379
+  size: 96, 63
+IdleUp
+  xy: 96, 379
+  size: 96, 63
+IdleUp
+  xy: 192, 379
+  size: 96, 63
+IdleUp
+  xy: 288, 379
+  size: 96, 63
+IdleDown
+  xy: 0, 442
+  size: 96, 63
+IdleDown
+  xy: 96, 442
+  size: 96, 63
+IdleDown
+  xy: 192, 442
+  size: 96, 63
+IdleDown
+  xy: 288, 442
+  size: 96, 63
+WalkUp
+  xy: 0, 505
+  size: 96, 63
+WalkUp
+  xy: 96, 505
+  size: 96, 63
+WalkUp
+  xy: 192, 505
+  size: 96, 63
+WalkUp
+  xy: 288, 505
+  size: 96, 63
+WalkUp
+  xy: 384, 505
+  size: 96, 63
+WalkUp
+  xy: 480, 505
+  size: 96, 63
+WalkUp
+  xy: 576, 505
+  size: 96, 63
+WalkUp
+  xy: 672, 505
+  size: 96, 63
+WalkDown
+  xy: 0, 568
+  size: 96, 63
+WalkDown
+  xy: 96, 568
+  size: 96, 63
+WalkDown
+  xy: 192, 568
+  size: 96, 63
+WalkDown
+  xy: 288, 568
+  size: 96, 63
+WalkDown
+  xy: 384, 568
+  size: 96, 63
+WalkDown
+  xy: 480, 568
+  size: 96, 63
+WalkDown
+  xy: 576, 568
+  size: 96, 63
+WalkDown
+  xy: 672, 568
+  size: 96, 63

@@ -117,6 +117,10 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 667): **LOCAL + UNRELEASED (art + data)** - the Nantuko Guard, Mazirek and Amzu on a drawn
+mantis head (heads_nantuko green / kraul; generator `lpc_selections/make_667.py`). enemies.json 3 paths + scales,
+CREDITS_LPC.md + CREDITS.md (979 LPC enemies). Not seen in play.
+
 ## STATE 2026-10-16 (round 666): **LOCAL + UNRELEASED (art + data)** - Sala (heads_octopus), the Homarid, the Mindskinner,
 Ragost, Rikala and the four FEM Homarids (heads_homarid + red/green/purple/yellow recolors), the Khenra Warrior, Hazoret
 and Oketra (heads_khenra black/crimson/white) - drawn LPC heads from the user's ChatGPT sheets; generator

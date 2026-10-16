@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 667: the Nantuko Guard, Mazirek and Amzu on a drawn mantis head (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_667.py`. This is list 3's F130:
+the three shared the stock `humanoid/nantuko/deadlymantis` sprite.
+
+- **The head**: `heads_nantuko` comes from the user's ChatGPT sheet, on a magenta key because the chitin is green. It is a
+  mantis head with big compound eyes, antennae and mandibles. "kraul" is a dark red-brown recolor of it for the two
+  kraul.
+- **The enemies**:
+  - **Nantuko Guard** (0.2826): green, in forest leather, with a scythe for its blade-arms.
+  - **Mazirek** (0.2955), the Kraul Death Priest: on dark insect wings, in black robes, with a gnarled staff.
+  - **Amzu** (0.2826), Swarm's Hunger: on brown insect wings, in black leather, with a dagger.
+- **Files**:
+  - 3 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 3 sprite paths and scales.
+  - `CREDITS_LPC.md` regenerated: 1007 characters, additions only. The head is credited to The Forsaken Realms (CC0).
+  - `CREDITS.md`: the LPC bullet (979 enemies).
+- **Checks**:
+  - enemies.json against HEAD: exactly these 3, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags nothing.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 666: Sala, the homarids and the khenra on drawn LPC heads (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_666.py`. Three more head parts

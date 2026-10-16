@@ -23239,7 +23239,7 @@
     },
     {
         "name": "Nantuko Guard",
-        "sprite": "sprites/enemy/humanoid/nantuko/deadlymantis.atlas",
+        "sprite": "sprites/enemy/remake/nantuko_guard.atlas",
         "deck": [
             "decks/standard/nantuko_morpher.dck"
         ],
@@ -23247,7 +23247,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.5417,
+        "scale": 0.2826,
         "life": 25,
         "rewards": [
             {
@@ -74179,13 +74179,13 @@
     },
     {
         "name": "Mazirek",
-        "sprite": "sprites/enemy/humanoid/nantuko/deadlymantis.atlas",
+        "sprite": "sprites/enemy/remake/mazirek.atlas",
         "deck": [
             "decks/legends/mazirek.dck"
         ],
         "ai": "",
         "flying": true,
-        "scale": 0.5417,
+        "scale": 0.2955,
         "speed": 44,
         "life": 20,
         "rewards": [
@@ -76296,7 +76296,7 @@
     },
     {
         "name": "Amzu",
-        "sprite": "sprites/enemy/humanoid/nantuko/deadlymantis.atlas",
+        "sprite": "sprites/enemy/remake/amzu.atlas",
         "deck": [
             "decks/legends/amzu.dck"
         ],
@@ -76361,7 +76361,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.5417
+        "scale": 0.2826
     },
     {
         "name": "Fumulus",
