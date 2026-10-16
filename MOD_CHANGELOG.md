@@ -14264,6 +14264,58 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 651: 22 LPC enemies from the smallest stock sprites, the legends dressed as their cards (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_651.py`. After the first
+low-quality list was finished, a sweep of every enemy not on remade art (527: 480 stock, 47 Basic) found the stock
+sprites drawn 26 px or smaller: list 2, section F (`Bannerloard/leftover_low_quality_2.md`, numbered 85-101). The user
+picked ten of those sprites for LPC: F86, 87, 89, 90 and 94-99. F88 (the Archaeologist's NPCs) stays as it is; the
+rest wait for other art. Every enemy on the ten sprites gets its own dress, and the legends that shared a generic
+bandit, witch or gladiator sprite are dressed from their cards, which Forge had cached.
+
+- **The enemies**:
+  - **Goblins and soldiers**:
+    - Goblin Cutthroat: red bandana and dagger.
+    - Goblin Reaver: a dark green goblin in a viking helmet, with a flail.
+    - Hexcaller Warlock: a grey, gaunt caster in a purple wizard's hat, with a gold loop staff.
+    - Plumed Knight: steel plate with a red crest.
+  - **The torturer's sprite**:
+    - Torturer: the boss, an executioner in a black sack hood, with a war axe. It keeps its drawn size; scale 0.4643.
+    - Circu: a hooded, gaunt Dimir lobotomist with a blade.
+    - Tasigur: pale and bare-chested, with long black hair, gold bracers and a gold staff.
+  - **The witches**:
+    - Flying Witch: green-skinned, on black bat wings.
+    - Witch: red-haired, in purple.
+    - Agatha: dark curls and a red gown, as on her card.
+    - Grandmother Sengir: a grey hooded crone with a cane.
+    - Willowdusk: a dark-skinned dryad with white hair.
+  - **The gladiator's sprite**:
+    - Gladiator: a helmed fighter with a sword and shield.
+    - Tovolar: a black werewolf.
+    - Harald: the bare-chested elf king, with red hair, a dark crown and a spear.
+  - **The bandit leader's sprite**:
+    - Bandit Leader: a bearded axeman.
+    - Kotis: the Sibsig zombie champion, in gold armor and crown, with a scimitar.
+    - Coram: an armored brute with a mace.
+  - **The slingshot bandit's sprite**:
+    - Bandit Slingshot.
+    - Wolfkin Outcast: a brown werewolf.
+    - The Jolly Balloon Man: a ringmaster in a red top hat and red and white stripes, with a cane.
+    - Joven and Chandler: dressed as Joven, bearded, in a white shirt and black vest.
+- **Files**:
+  - 22 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 22 sprite paths and scales (0.25-0.46).
+  - `CREDITS_LPC.md` regenerated: 934 characters, additions only. No new author.
+  - `CREDITS.md`: the LPC bullet (906 enemies).
+  - No deck or tier change: the tier families key on the name, and a variant takes the catalog's sprite and scale.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 22, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of the 22; `sprite_footprints.py --write` gave 15 of them a footprint.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 648: six Realm of Legends items come back - three hats, a Jewel, a blade and robes (2026-10-16)
 
 The user, after a check of the 10.14 install's Realm of Legends against this plane: "import the six items (hats in the

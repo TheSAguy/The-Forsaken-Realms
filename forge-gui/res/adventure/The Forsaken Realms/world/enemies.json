@@ -2941,7 +2941,7 @@
     },
     {
         "name": "Bandit Leader",
-        "sprite": "sprites/enemy/humanoid/human/bandit/banditleader.atlas",
+        "sprite": "sprites/enemy/remake/bandit_leader.atlas",
         "deck": [
             "decks/standard/banditleader_bolas.dck",
             "decks/standard/banditleader_hellbent.dck",
@@ -2952,7 +2952,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.7647,
+        "scale": 0.3171,
         "life": 25,
         "rewards": [
             {
@@ -3100,7 +3100,7 @@
     },
     {
         "name": "Bandit Slingshot",
-        "sprite": "sprites/enemy/humanoid/human/bandit/banditslingshot.atlas",
+        "sprite": "sprites/enemy/remake/bandit_slingshot.atlas",
         "deck": [
             "decks/standard/banditslingshot_flyers.dck"
         ],
@@ -3109,7 +3109,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.7222,
+        "scale": 0.3023,
         "life": 20,
         "rewards": [
             {
@@ -12274,7 +12274,7 @@
     },
     {
         "name": "Flying Witch",
-        "sprite": "sprites/enemy/humanoid/human/warlock/flyingwitch.atlas",
+        "sprite": "sprites/enemy/remake/flying_witch.atlas",
         "deck": [
             "decks/standard/flying_witch_r111.dck"
         ],
@@ -12283,7 +12283,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.65,
+        "scale": 0.3095,
         "life": 11,
         "rewards": [
             {
@@ -14223,7 +14223,7 @@
     {
         "name": "Gladiator",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/human/warrior/gladiator.atlas",
+        "sprite": "sprites/enemy/remake/gladiator.atlas",
         "deck": [
             "decks/standard/gladiator.dck"
         ],
@@ -14275,7 +14275,7 @@
             "Gladiator"
         ],
         "tier": "Mythic",
-        "scale": 0.6842
+        "scale": 0.2889
     },
     {
         "name": "Goblin",
@@ -30433,7 +30433,7 @@
     },
     {
         "name": "Torturer",
-        "sprite": "sprites/enemy/humanoid/human/bandit/bandittorturer.atlas",
+        "sprite": "sprites/enemy/remake/torturer.atlas",
         "deck": [
             "decks/miniboss/torturer.dck"
         ],
@@ -30442,7 +30442,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 17,
-        "scale": 1.1471,
+        "scale": 0.4643,
         "life": 30,
         "rewards": [
             {
@@ -33064,7 +33064,7 @@
     {
         "name": "Witch",
         "nameOverride": "Accursed Witch",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witchlarge.atlas",
+        "sprite": "sprites/enemy/remake/witch.atlas",
         "deck": [
             "decks/standard/witch.dck"
         ],
@@ -33072,7 +33072,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "speed": 29,
-        "scale": 0.7222,
+        "scale": 0.2955,
         "life": 18,
         "rewards": [
             {
@@ -35403,7 +35403,7 @@
     },
     {
         "name": "Wolfkin Outcast",
-        "sprite": "sprites/enemy/humanoid/human/bandit/banditslingshot.atlas",
+        "sprite": "sprites/enemy/remake/wolfkin_outcast.atlas",
         "deck": [
             "decks/standard/INN/inn_wolfkin_easy.dck",
             "decks/standard/INN/inn_wolfkin_easy2.dck"
@@ -35413,7 +35413,7 @@
         "difficulty": 0.1,
         "speed": 21,
         "life": 13,
-        "scale": 0.7222,
+        "scale": 0.3514,
         "rewards": [
             {
                 "type": "deckCard",
@@ -42745,13 +42745,13 @@
     },
     {
         "name": "Agatha",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witchlarge.atlas",
+        "sprite": "sprites/enemy/remake/agatha.atlas",
         "deck": [
             "decks/legends/agatha.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.7222,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -51299,13 +51299,13 @@
     },
     {
         "name": "Kotis",
-        "sprite": "sprites/enemy/humanoid/human/bandit/banditleader.atlas",
+        "sprite": "sprites/enemy/remake/kotis.atlas",
         "deck": [
             "decks/legends/kotis.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.7647,
+        "scale": 0.26,
         "life": 30,
         "rewards": [
             {
@@ -52686,13 +52686,13 @@
     },
     {
         "name": "Tovolar",
-        "sprite": "sprites/enemy/humanoid/human/warrior/gladiator.atlas",
+        "sprite": "sprites/enemy/remake/tovolar.atlas",
         "deck": [
             "decks/legends/tovolar.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.6842,
+        "scale": 0.3514,
         "life": 30,
         "rewards": [
             {
@@ -55489,13 +55489,13 @@
     },
     {
         "name": "Grandmother Sengir",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witchlarge.atlas",
+        "sprite": "sprites/enemy/remake/grandmother_sengir.atlas",
         "deck": [
             "decks/legends/grandmother_sengir.dck"
         ],
         "ai": "",
         "speed": 20,
-        "scale": 0.7222,
+        "scale": 0.3095,
         "life": 13,
         "rewards": [
             {
@@ -57452,13 +57452,13 @@
     },
     {
         "name": "The Jolly Balloon Man",
-        "sprite": "sprites/enemy/humanoid/human/bandit/banditslingshot.atlas",
+        "sprite": "sprites/enemy/remake/the_jolly_balloon_man.atlas",
         "deck": [
             "decks/legends/the_jolly_balloon_man.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.7222,
+        "scale": 0.2826,
         "life": 30,
         "rewards": [
             {
@@ -64766,13 +64766,13 @@
     },
     {
         "name": "Harald",
-        "sprite": "sprites/enemy/humanoid/human/warrior/gladiator.atlas",
+        "sprite": "sprites/enemy/remake/harald.atlas",
         "deck": [
             "decks/legends/harald.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.6842,
+        "scale": 0.2549,
         "life": 30,
         "rewards": [
             {
@@ -75080,12 +75080,12 @@
     },
     {
         "name": "Circu",
-        "sprite": "sprites/enemy/humanoid/human/bandit/bandittorturer.atlas",
+        "sprite": "sprites/enemy/remake/circu.atlas",
         "deck": [
             "decks/legends/circu.dck"
         ],
         "ai": "",
-        "scale": 0.7647,
+        "scale": 0.3171,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -89142,12 +89142,12 @@
     },
     {
         "name": "Coram",
-        "sprite": "sprites/enemy/humanoid/human/bandit/banditleader.atlas",
+        "sprite": "sprites/enemy/remake/coram.atlas",
         "deck": [
             "decks/legends/coram.dck"
         ],
         "ai": "",
-        "scale": 0.7647,
+        "scale": 0.3095,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -93801,12 +93801,12 @@
     },
     {
         "name": "Tasigur",
-        "sprite": "sprites/enemy/humanoid/human/bandit/bandittorturer.atlas",
+        "sprite": "sprites/enemy/remake/tasigur.atlas",
         "deck": [
             "decks/legends/tasigur.dck"
         ],
         "ai": "",
-        "scale": 0.7647,
+        "scale": 0.3095,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -95857,7 +95857,7 @@
     },
     {
         "name": "Willowdusk",
-        "sprite": "sprites/enemy/humanoid/human/warlock/witchlarge.atlas",
+        "sprite": "sprites/enemy/remake/willowdusk.atlas",
         "deck": [
             "decks/legends/willowdusk.dck"
         ],
@@ -95921,7 +95921,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.7222
+        "scale": 0.3171
     },
     {
         "name": "Sarulf",
@@ -125284,13 +125284,13 @@
     },
     {
         "name": "Joven and Chandler",
-        "sprite": "sprites/enemy/humanoid/human/bandit/banditslingshot.atlas",
+        "sprite": "sprites/enemy/remake/joven_and_chandler.atlas",
         "deck": [
             "decks/legends/joven_and_chandler.dck"
         ],
         "ai": "",
         "speed": 41,
-        "scale": 0.7222,
+        "scale": 0.3023,
         "life": 28,
         "rewards": [
             {
@@ -137062,7 +137062,7 @@
     },
     {
         "name": "Goblin Cutthroat",
-        "sprite": "sprites/enemy/basic/humanoid/goblin_cutthroat.atlas",
+        "sprite": "sprites/enemy/remake/goblin_cutthroat.atlas",
         "deck": [
             "decks/standard/goblin_cutthroat.dck"
         ],
@@ -137121,11 +137121,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.9286
+        "scale": 0.3095
     },
     {
         "name": "Goblin Reaver",
-        "sprite": "sprites/enemy/basic/humanoid/goblin_reaver.atlas",
+        "sprite": "sprites/enemy/remake/goblin_reaver.atlas",
         "deck": [
             "decks/standard/goblin_reaver.dck"
         ],
@@ -137184,11 +137184,11 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.8667
+        "scale": 0.3095
     },
     {
         "name": "Hexcaller Warlock",
-        "sprite": "sprites/enemy/basic/humanoid/hexcaller_warlock.atlas",
+        "sprite": "sprites/enemy/remake/hexcaller_warlock.atlas",
         "deck": [
             "decks/standard/hexcaller_warlock.dck"
         ],
@@ -137247,7 +137247,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.8125
+        "scale": 0.2955
     },
     {
         "name": "Levy Swordsman",
@@ -142800,7 +142800,7 @@
     },
     {
         "name": "Plumed Knight",
-        "sprite": "sprites/enemy/basic/humanoid/plumed_knight.atlas",
+        "sprite": "sprites/enemy/remake/plumed_knight.atlas",
         "deck": [
             "decks/standard/plumed_knight.dck"
         ],
@@ -142859,7 +142859,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.7647
+        "scale": 0.26
     },
     {
         "name": "Axe Orc",

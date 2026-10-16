@@ -1,0 +1,180 @@
+hexcaller_warlock.png
+size: 720,622
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 80, 62
+  footprint: 25, 1, 31, 61
+Idle
+  xy: 80, 64
+  size: 80, 62
+Idle
+  xy: 160, 64
+  size: 80, 62
+Idle
+  xy: 240, 64
+  size: 80, 62
+Walk
+  xy: 0, 126
+  size: 80, 62
+Walk
+  xy: 80, 126
+  size: 80, 62
+Walk
+  xy: 160, 126
+  size: 80, 62
+Walk
+  xy: 240, 126
+  size: 80, 62
+Walk
+  xy: 320, 126
+  size: 80, 62
+Walk
+  xy: 400, 126
+  size: 80, 62
+Walk
+  xy: 480, 126
+  size: 80, 62
+Walk
+  xy: 560, 126
+  size: 80, 62
+Attack
+  xy: 0, 188
+  size: 80, 62
+Attack
+  xy: 80, 188
+  size: 80, 62
+Attack
+  xy: 160, 188
+  size: 80, 62
+Attack
+  xy: 240, 188
+  size: 80, 62
+Attack
+  xy: 320, 188
+  size: 80, 62
+Attack
+  xy: 400, 188
+  size: 80, 62
+Attack
+  xy: 480, 188
+  size: 80, 62
+Attack
+  xy: 560, 188
+  size: 80, 62
+Hit
+  xy: 0, 250
+  size: 80, 62
+Hit
+  xy: 80, 250
+  size: 80, 62
+Hit
+  xy: 160, 250
+  size: 80, 62
+Hit
+  xy: 240, 250
+  size: 80, 62
+Death
+  xy: 0, 312
+  size: 80, 62
+Death
+  xy: 80, 312
+  size: 80, 62
+Death
+  xy: 160, 312
+  size: 80, 62
+Death
+  xy: 240, 312
+  size: 80, 62
+Death
+  xy: 320, 312
+  size: 80, 62
+Death
+  xy: 400, 312
+  size: 80, 62
+Death
+  xy: 480, 312
+  size: 80, 62
+Death
+  xy: 560, 312
+  size: 80, 62
+Death
+  xy: 640, 312
+  size: 80, 62
+IdleUp
+  xy: 0, 374
+  size: 80, 62
+IdleUp
+  xy: 80, 374
+  size: 80, 62
+IdleUp
+  xy: 160, 374
+  size: 80, 62
+IdleUp
+  xy: 240, 374
+  size: 80, 62
+IdleDown
+  xy: 0, 436
+  size: 80, 62
+IdleDown
+  xy: 80, 436
+  size: 80, 62
+IdleDown
+  xy: 160, 436
+  size: 80, 62
+IdleDown
+  xy: 240, 436
+  size: 80, 62
+WalkUp
+  xy: 0, 498
+  size: 80, 62
+WalkUp
+  xy: 80, 498
+  size: 80, 62
+WalkUp
+  xy: 160, 498
+  size: 80, 62
+WalkUp
+  xy: 240, 498
+  size: 80, 62
+WalkUp
+  xy: 320, 498
+  size: 80, 62
+WalkUp
+  xy: 400, 498
+  size: 80, 62
+WalkUp
+  xy: 480, 498
+  size: 80, 62
+WalkUp
+  xy: 560, 498
+  size: 80, 62
+WalkDown
+  xy: 0, 560
+  size: 80, 62
+WalkDown
+  xy: 80, 560
+  size: 80, 62
+WalkDown
+  xy: 160, 560
+  size: 80, 62
+WalkDown
+  xy: 240, 560
+  size: 80, 62
+WalkDown
+  xy: 320, 560
+  size: 80, 62
+WalkDown
+  xy: 400, 560
+  size: 80, 62
+WalkDown
+  xy: 480, 560
+  size: 80, 62
+WalkDown
+  xy: 560, 560
+  size: 80, 62

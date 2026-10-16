@@ -1,0 +1,174 @@
+plumed_knight.png
+size: 1386,640
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 154, 64
+  footprint: 58, 1, 38, 63
+Idle
+  xy: 154, 64
+  size: 154, 64
+Idle
+  xy: 308, 64
+  size: 154, 64
+Idle
+  xy: 462, 64
+  size: 154, 64
+Walk
+  xy: 0, 128
+  size: 154, 64
+Walk
+  xy: 154, 128
+  size: 154, 64
+Walk
+  xy: 308, 128
+  size: 154, 64
+Walk
+  xy: 462, 128
+  size: 154, 64
+Walk
+  xy: 616, 128
+  size: 154, 64
+Walk
+  xy: 770, 128
+  size: 154, 64
+Walk
+  xy: 924, 128
+  size: 154, 64
+Walk
+  xy: 1078, 128
+  size: 154, 64
+Attack
+  xy: 0, 192
+  size: 154, 64
+Attack
+  xy: 154, 192
+  size: 154, 64
+Attack
+  xy: 308, 192
+  size: 154, 64
+Attack
+  xy: 462, 192
+  size: 154, 64
+Attack
+  xy: 616, 192
+  size: 154, 64
+Attack
+  xy: 770, 192
+  size: 154, 64
+Hit
+  xy: 0, 256
+  size: 154, 64
+Hit
+  xy: 154, 256
+  size: 154, 64
+Hit
+  xy: 308, 256
+  size: 154, 64
+Hit
+  xy: 462, 256
+  size: 154, 64
+Death
+  xy: 0, 320
+  size: 154, 64
+Death
+  xy: 154, 320
+  size: 154, 64
+Death
+  xy: 308, 320
+  size: 154, 64
+Death
+  xy: 462, 320
+  size: 154, 64
+Death
+  xy: 616, 320
+  size: 154, 64
+Death
+  xy: 770, 320
+  size: 154, 64
+Death
+  xy: 924, 320
+  size: 154, 64
+Death
+  xy: 1078, 320
+  size: 154, 64
+Death
+  xy: 1232, 320
+  size: 154, 64
+IdleUp
+  xy: 0, 384
+  size: 154, 64
+IdleUp
+  xy: 154, 384
+  size: 154, 64
+IdleUp
+  xy: 308, 384
+  size: 154, 64
+IdleUp
+  xy: 462, 384
+  size: 154, 64
+IdleDown
+  xy: 0, 448
+  size: 154, 64
+IdleDown
+  xy: 154, 448
+  size: 154, 64
+IdleDown
+  xy: 308, 448
+  size: 154, 64
+IdleDown
+  xy: 462, 448
+  size: 154, 64
+WalkUp
+  xy: 0, 512
+  size: 154, 64
+WalkUp
+  xy: 154, 512
+  size: 154, 64
+WalkUp
+  xy: 308, 512
+  size: 154, 64
+WalkUp
+  xy: 462, 512
+  size: 154, 64
+WalkUp
+  xy: 616, 512
+  size: 154, 64
+WalkUp
+  xy: 770, 512
+  size: 154, 64
+WalkUp
+  xy: 924, 512
+  size: 154, 64
+WalkUp
+  xy: 1078, 512
+  size: 154, 64
+WalkDown
+  xy: 0, 576
+  size: 154, 64
+WalkDown
+  xy: 154, 576
+  size: 154, 64
+WalkDown
+  xy: 308, 576
+  size: 154, 64
+WalkDown
+  xy: 462, 576
+  size: 154, 64
+WalkDown
+  xy: 616, 576
+  size: 154, 64
+WalkDown
+  xy: 770, 576
+  size: 154, 64
+WalkDown
+  xy: 924, 576
+  size: 154, 64
+WalkDown
+  xy: 1078, 576
+  size: 154, 64

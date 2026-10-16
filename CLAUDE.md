@@ -113,6 +113,11 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 651): **LOCAL + UNRELEASED (art + data)** - 22 LPC enemies from list 2's smallest stock sprites
+(F86/87/89/90/94-99; the legends on shared bandit/witch/gladiator sprites dressed from their cards; generator
+`lpc_selections/make_651.py`). enemies.json 22 paths + scales, CREDITS_LPC.md 934 characters, CREDITS.md (906
+LPC enemies). Not seen in play.
+
 ## STATE 2026-10-16 (round 648): **LOCAL + UNRELEASED (data + art)** - six Realm of Legends items return under the cross-plane import rules: Jewel of Winds (Blue Equipment, blue's Jewel), Soothsayer's Hat (Blue Equipment; new icon items_r648.png), Gourmand's Hat (Green), Heirloom Blade (Black), Reliquary Robes (White; land-armor rule, one card fewer in the opening hand), Fortune Teller's Hat (Atemsis, the blue war champion, drops it); hats in Head. `dev-tools/rol_items/import_r648.py`. The Crypt of Broken Rules stays out (Commander). Worn and dueled in the agent game.
 
 ## STATE 2026-10-16 (rounds 649 + 650): **LOCAL + UNRELEASED (art + data)** - the user's hand-made Pixelate art for the

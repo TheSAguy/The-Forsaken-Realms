@@ -1,0 +1,180 @@
+the_jolly_balloon_man.png
+size: 504,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 60
+  footprint: 15, 1, 26, 59
+Idle
+  xy: 56, 64
+  size: 56, 60
+Idle
+  xy: 112, 64
+  size: 56, 60
+Idle
+  xy: 168, 64
+  size: 56, 60
+Walk
+  xy: 0, 124
+  size: 56, 60
+Walk
+  xy: 56, 124
+  size: 56, 60
+Walk
+  xy: 112, 124
+  size: 56, 60
+Walk
+  xy: 168, 124
+  size: 56, 60
+Walk
+  xy: 224, 124
+  size: 56, 60
+Walk
+  xy: 280, 124
+  size: 56, 60
+Walk
+  xy: 336, 124
+  size: 56, 60
+Walk
+  xy: 392, 124
+  size: 56, 60
+Attack
+  xy: 0, 184
+  size: 56, 60
+Attack
+  xy: 56, 184
+  size: 56, 60
+Attack
+  xy: 112, 184
+  size: 56, 60
+Attack
+  xy: 168, 184
+  size: 56, 60
+Attack
+  xy: 224, 184
+  size: 56, 60
+Attack
+  xy: 280, 184
+  size: 56, 60
+Attack
+  xy: 336, 184
+  size: 56, 60
+Attack
+  xy: 392, 184
+  size: 56, 60
+Hit
+  xy: 0, 244
+  size: 56, 60
+Hit
+  xy: 56, 244
+  size: 56, 60
+Hit
+  xy: 112, 244
+  size: 56, 60
+Hit
+  xy: 168, 244
+  size: 56, 60
+Death
+  xy: 0, 304
+  size: 56, 60
+Death
+  xy: 56, 304
+  size: 56, 60
+Death
+  xy: 112, 304
+  size: 56, 60
+Death
+  xy: 168, 304
+  size: 56, 60
+Death
+  xy: 224, 304
+  size: 56, 60
+Death
+  xy: 280, 304
+  size: 56, 60
+Death
+  xy: 336, 304
+  size: 56, 60
+Death
+  xy: 392, 304
+  size: 56, 60
+Death
+  xy: 448, 304
+  size: 56, 60
+IdleUp
+  xy: 0, 364
+  size: 56, 60
+IdleUp
+  xy: 56, 364
+  size: 56, 60
+IdleUp
+  xy: 112, 364
+  size: 56, 60
+IdleUp
+  xy: 168, 364
+  size: 56, 60
+IdleDown
+  xy: 0, 424
+  size: 56, 60
+IdleDown
+  xy: 56, 424
+  size: 56, 60
+IdleDown
+  xy: 112, 424
+  size: 56, 60
+IdleDown
+  xy: 168, 424
+  size: 56, 60
+WalkUp
+  xy: 0, 484
+  size: 56, 60
+WalkUp
+  xy: 56, 484
+  size: 56, 60
+WalkUp
+  xy: 112, 484
+  size: 56, 60
+WalkUp
+  xy: 168, 484
+  size: 56, 60
+WalkUp
+  xy: 224, 484
+  size: 56, 60
+WalkUp
+  xy: 280, 484
+  size: 56, 60
+WalkUp
+  xy: 336, 484
+  size: 56, 60
+WalkUp
+  xy: 392, 484
+  size: 56, 60
+WalkDown
+  xy: 0, 544
+  size: 56, 60
+WalkDown
+  xy: 56, 544
+  size: 56, 60
+WalkDown
+  xy: 112, 544
+  size: 56, 60
+WalkDown
+  xy: 168, 544
+  size: 56, 60
+WalkDown
+  xy: 224, 544
+  size: 56, 60
+WalkDown
+  xy: 280, 544
+  size: 56, 60
+WalkDown
+  xy: 336, 544
+  size: 56, 60
+WalkDown
+  xy: 392, 544
+  size: 56, 60

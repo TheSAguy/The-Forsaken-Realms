@@ -1,0 +1,180 @@
+tasigur.png
+size: 684,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 54
+  footprint: 24, 1, 28, 53
+Idle
+  xy: 76, 64
+  size: 76, 54
+Idle
+  xy: 152, 64
+  size: 76, 54
+Idle
+  xy: 228, 64
+  size: 76, 54
+Walk
+  xy: 0, 118
+  size: 76, 54
+Walk
+  xy: 76, 118
+  size: 76, 54
+Walk
+  xy: 152, 118
+  size: 76, 54
+Walk
+  xy: 228, 118
+  size: 76, 54
+Walk
+  xy: 304, 118
+  size: 76, 54
+Walk
+  xy: 380, 118
+  size: 76, 54
+Walk
+  xy: 456, 118
+  size: 76, 54
+Walk
+  xy: 532, 118
+  size: 76, 54
+Attack
+  xy: 0, 172
+  size: 76, 54
+Attack
+  xy: 76, 172
+  size: 76, 54
+Attack
+  xy: 152, 172
+  size: 76, 54
+Attack
+  xy: 228, 172
+  size: 76, 54
+Attack
+  xy: 304, 172
+  size: 76, 54
+Attack
+  xy: 380, 172
+  size: 76, 54
+Attack
+  xy: 456, 172
+  size: 76, 54
+Attack
+  xy: 532, 172
+  size: 76, 54
+Hit
+  xy: 0, 226
+  size: 76, 54
+Hit
+  xy: 76, 226
+  size: 76, 54
+Hit
+  xy: 152, 226
+  size: 76, 54
+Hit
+  xy: 228, 226
+  size: 76, 54
+Death
+  xy: 0, 280
+  size: 76, 54
+Death
+  xy: 76, 280
+  size: 76, 54
+Death
+  xy: 152, 280
+  size: 76, 54
+Death
+  xy: 228, 280
+  size: 76, 54
+Death
+  xy: 304, 280
+  size: 76, 54
+Death
+  xy: 380, 280
+  size: 76, 54
+Death
+  xy: 456, 280
+  size: 76, 54
+Death
+  xy: 532, 280
+  size: 76, 54
+Death
+  xy: 608, 280
+  size: 76, 54
+IdleUp
+  xy: 0, 334
+  size: 76, 54
+IdleUp
+  xy: 76, 334
+  size: 76, 54
+IdleUp
+  xy: 152, 334
+  size: 76, 54
+IdleUp
+  xy: 228, 334
+  size: 76, 54
+IdleDown
+  xy: 0, 388
+  size: 76, 54
+IdleDown
+  xy: 76, 388
+  size: 76, 54
+IdleDown
+  xy: 152, 388
+  size: 76, 54
+IdleDown
+  xy: 228, 388
+  size: 76, 54
+WalkUp
+  xy: 0, 442
+  size: 76, 54
+WalkUp
+  xy: 76, 442
+  size: 76, 54
+WalkUp
+  xy: 152, 442
+  size: 76, 54
+WalkUp
+  xy: 228, 442
+  size: 76, 54
+WalkUp
+  xy: 304, 442
+  size: 76, 54
+WalkUp
+  xy: 380, 442
+  size: 76, 54
+WalkUp
+  xy: 456, 442
+  size: 76, 54
+WalkUp
+  xy: 532, 442
+  size: 76, 54
+WalkDown
+  xy: 0, 496
+  size: 76, 54
+WalkDown
+  xy: 76, 496
+  size: 76, 54
+WalkDown
+  xy: 152, 496
+  size: 76, 54
+WalkDown
+  xy: 228, 496
+  size: 76, 54
+WalkDown
+  xy: 304, 496
+  size: 76, 54
+WalkDown
+  xy: 380, 496
+  size: 76, 54
+WalkDown
+  xy: 456, 496
+  size: 76, 54
+WalkDown
+  xy: 532, 496
+  size: 76, 54
