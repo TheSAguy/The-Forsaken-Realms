@@ -8156,6 +8156,14 @@
         "cost":  6000,
         "effect":  {"lifeModifier": -6, "startBattleWithCard": ["Fortune Teller's Talent|BLC"]},
         "rarity":  "Rare"
+    },
+    {
+        "name":  "Nest Warden's Armor",
+        "description":  "Taps for C. 1, T: move a counter from one of your permanents onto another, as a sorcery.",
+        "equipmentSlot":  "Body",
+        "iconName":  "NestWarden'sArmor",
+        "effect":  {"changeStartCards": -1, "startBattleWithCard": ["Nesting Grounds|C20"]},
+        "rarity":  "Uncommon"
     }
 
 

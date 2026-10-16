@@ -113,6 +113,8 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 652): **LOCAL + UNRELEASED (data)** - Nest Warden's Armor returns from Realm of Legends (Nesting Grounds, a plain land - it was removed in August with the Commander robes): Body, Uncommon, the land-armor rule (one card fewer in the opening hand; RoL's +2 life dropped), Red Equipment shop. `dev-tools/rol_items/import_r652.py`. Worn and dueled in the agent game.
+
 ## STATE 2026-10-16 (round 651): **LOCAL + UNRELEASED (art + data)** - 22 LPC enemies from list 2's smallest stock sprites
 (F86/87/89/90/94-99; the legends on shared bandit/witch/gladiator sprites dressed from their cards; generator
 `lpc_selections/make_651.py`). enemies.json 22 paths + scales, CREDITS_LPC.md 934 characters, CREDITS.md (906

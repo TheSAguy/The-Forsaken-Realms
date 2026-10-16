@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 652: Nest Warden's Armor comes back, as a land armor (2026-10-16)
+
+The user, after the post-648 recheck of Realm of Legends: "add Nest Warden's Armor as a land armor like the others, with
+a shop source you pick." `dev-tools/rol_items/import_r652.py <repo>` (idempotent; uses round 648's writers).
+
+- **Why it was missing**: the 2026-08-10 Item Economy round removed it together with the Commander robes (Opal Cloak,
+  Commander's / Student's Robes, Witch's Cloak), but its card, Nesting Grounds, is a plain land - no
+  `AI:RemoveDeck:NonCommander`, no color identity, no "commander" in its text. It passes the cross-plane import rules
+  (CLAUDE.md); round 648's report had lumped it with the robes by mistake.
+- **The item**: Body, Uncommon, icon `NestWarden'sArmor` (still in items.atlas). Nesting Grounds starts in play for one
+  card fewer in the opening hand - the land-armor rule of Nomad / Cephalid / Cabal / Centaur / Barbarian Armor and
+  Reliquary Robes. Realm of Legends also gave +2 life; dropped, like the others. Description checked against the card:
+  "Taps for C. 1, T: move a counter from one of your permanents onto another, as a sorcery."
+- **Where**: the Red Equipment shop - a colorless land fits any shop, and red's list was the one round 648 left as it
+  was (blue +2, white, green and black +1 each).
+- **Checks**: `validate_plane_data.py` - its three usual sections. Seen in the agent game: given, worn in the Body
+  slot, a duel started with Nesting Grounds on the battlefield. Not seen: the Red Equipment shop offering it (4 of its
+  14 show).
+
 ## Round 651: 22 LPC enemies from the smallest stock sprites, the legends dressed as their cards (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_651.py`. After the first
