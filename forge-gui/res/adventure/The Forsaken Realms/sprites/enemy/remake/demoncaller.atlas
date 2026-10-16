@@ -1,0 +1,141 @@
+demoncaller.png
+size: 2730,974
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 210, 182
+  footprint: 51, 67, 104, 96
+Idle
+  xy: 210, 64
+  size: 210, 182
+Idle
+  xy: 420, 64
+  size: 210, 182
+Idle
+  xy: 630, 64
+  size: 210, 182
+Idle
+  xy: 840, 64
+  size: 210, 182
+Idle
+  xy: 1050, 64
+  size: 210, 182
+Idle
+  xy: 1260, 64
+  size: 210, 182
+Idle
+  xy: 1470, 64
+  size: 210, 182
+Idle
+  xy: 1680, 64
+  size: 210, 182
+Idle
+  xy: 1890, 64
+  size: 210, 182
+Idle
+  xy: 2100, 64
+  size: 210, 182
+Idle
+  xy: 2310, 64
+  size: 210, 182
+Walk
+  xy: 0, 246
+  size: 210, 182
+Walk
+  xy: 210, 246
+  size: 210, 182
+Walk
+  xy: 420, 246
+  size: 210, 182
+Walk
+  xy: 630, 246
+  size: 210, 182
+Walk
+  xy: 840, 246
+  size: 210, 182
+Walk
+  xy: 1050, 246
+  size: 210, 182
+Walk
+  xy: 1260, 246
+  size: 210, 182
+Walk
+  xy: 1470, 246
+  size: 210, 182
+Attack
+  xy: 0, 428
+  size: 210, 182
+Attack
+  xy: 210, 428
+  size: 210, 182
+Attack
+  xy: 420, 428
+  size: 210, 182
+Attack
+  xy: 630, 428
+  size: 210, 182
+Attack
+  xy: 840, 428
+  size: 210, 182
+Attack
+  xy: 1050, 428
+  size: 210, 182
+Attack
+  xy: 1260, 428
+  size: 210, 182
+Hit
+  xy: 0, 610
+  size: 210, 182
+Hit
+  xy: 210, 610
+  size: 210, 182
+Hit
+  xy: 420, 610
+  size: 210, 182
+Hit
+  xy: 630, 610
+  size: 210, 182
+Death
+  xy: 0, 792
+  size: 210, 182
+Death
+  xy: 210, 792
+  size: 210, 182
+Death
+  xy: 420, 792
+  size: 210, 182
+Death
+  xy: 630, 792
+  size: 210, 182
+Death
+  xy: 840, 792
+  size: 210, 182
+Death
+  xy: 1050, 792
+  size: 210, 182
+Death
+  xy: 1260, 792
+  size: 210, 182
+Death
+  xy: 1470, 792
+  size: 210, 182
+Death
+  xy: 1680, 792
+  size: 210, 182
+Death
+  xy: 1890, 792
+  size: 210, 182
+Death
+  xy: 2100, 792
+  size: 210, 182
+Death
+  xy: 2310, 792
+  size: 210, 182
+Death
+  xy: 2520, 792
+  size: 210, 182

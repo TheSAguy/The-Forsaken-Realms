@@ -8364,7 +8364,7 @@
     },
     {
         "name": "Demoncaller",
-        "sprite": "sprites/enemy/fiend/krampus.atlas",
+        "sprite": "sprites/enemy/remake/demoncaller.atlas",
         "deck": [
             "decks/standard/demoncaller.dck"
         ],
@@ -8372,7 +8372,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8667,
+        "scale": 0.2063,
         "life": 20,
         "rewards": [
             {
@@ -77899,7 +77899,7 @@
     },
     {
         "name": "Varragoth",
-        "sprite": "sprites/enemy/fiend/krampus.atlas",
+        "sprite": "sprites/enemy/remake/varragoth.atlas",
         "deck": [
             "decks/legends/varragoth.dck"
         ],
@@ -77963,7 +77963,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.8667
+        "scale": 0.2063
     },
     {
         "name": "Liberator",
@@ -96483,7 +96483,7 @@
     },
     {
         "name": "Krampus",
-        "sprite": "sprites/enemy/fiend/krampus.atlas",
+        "sprite": "sprites/enemy/remake/krampus.atlas",
         "deck": [
             "decks/legends/krampus.dck"
         ],
@@ -96547,7 +96547,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 1,
-        "scale": 0.8667
+        "scale": 0.1806
     },
     {
         "name": "Rudolph",

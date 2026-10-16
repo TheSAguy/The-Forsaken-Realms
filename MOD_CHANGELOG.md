@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 663: Krampus, Varragoth and the Demoncaller get the user's hand-made art (2026-10-16)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/krampus/convert.sh` and
+`pixelate/varragoth/convert.sh`. This is F91 of list 2: the three enemies shared the 23 px stock `fiend/krampus` sprite.
+
+- **The art**: two ChatGPT stills from the cards, then four Kling clips and Pixelate sheets each.
+  - Krampus: a goat-skulled horror in a ragged red hood with white fur and chains, facing right.
+  - Varragoth, Bloodsky Sire: a horned, spiked blue-black demon in a tattered crimson cloak, with a long axe-polearm,
+    facing the viewer.
+  - `pixelate/key_still.py` put both stills on the exact key and widened their canvases, art untouched: Krampus's horns
+    and hooves, and Varragoth's axe and knob, came close to the edges.
+- **Trims and fixes**:
+  - **Krampus's attack**: Kling drew pink swirl rings round the chain strike. The new `pixelate/krampus/deswirl.py`
+    clears them in two passes. The first removes colors Krampus himself never has, read from his idle clip. The second
+    finds the rings' white cores, which share his fur trim's color, by shape: a white piece floating in the air is a
+    ring, while the fur trim lies along the cloak.
+  - **Krampus's death**: it stood still for ten frames before falling, so the new `pixelate/pick_frames.py` keeps the
+    stance, the stagger and the fall, then the fade. The burst of debris after the fall is left out.
+  - **Varragoth's attack**: it raised the axe and chopped, then raised a white dust cloud and chopped again. It ends on
+    the first impact.
+  - **Varragoth's death**: it staggers, sheds its spikes and collapses into a heap. The flying shards are cleared.
+  - None of the three has a color near the key, so `--despill-all` clears the key tint on chains and smears.
+  - Kling's watermark touched the fallen bodies in the deaths' corner: `clean_strays.py` gained a `corner` option that
+    clears light, unsaturated pixels there.
+- **The Demoncaller** (black-red) is Varragoth's art with the crimson cloak turned ember orange (a hue-window tint).
+- **Files**:
+  - 3 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 3 sprite paths and scales (Krampus 0.1806, Varragoth 0.2063, Demoncaller
+    0.2063).
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 3, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit's 13 "review" flags are all death frames: the fallen bodies and heaps with shards and debris above them, which the audit reads as a separate run.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+- **Source files**: moved to the Art Library repository, `Units/Custom/Krampus` and `Units/Custom/Varragoth`.
+
 ## Round 662: the Goblin Warlord on a drawn goblin-king head (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_662.py`. This is F101 of

@@ -1,0 +1,141 @@
+krampus.png
+size: 2568,1044
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 214, 196
+  footprint: 66, 75, 106, 109
+Idle
+  xy: 214, 64
+  size: 214, 196
+Idle
+  xy: 428, 64
+  size: 214, 196
+Idle
+  xy: 642, 64
+  size: 214, 196
+Idle
+  xy: 856, 64
+  size: 214, 196
+Idle
+  xy: 1070, 64
+  size: 214, 196
+Idle
+  xy: 1284, 64
+  size: 214, 196
+Idle
+  xy: 1498, 64
+  size: 214, 196
+Idle
+  xy: 1712, 64
+  size: 214, 196
+Idle
+  xy: 1926, 64
+  size: 214, 196
+Idle
+  xy: 2140, 64
+  size: 214, 196
+Idle
+  xy: 2354, 64
+  size: 214, 196
+Walk
+  xy: 0, 260
+  size: 214, 196
+Walk
+  xy: 214, 260
+  size: 214, 196
+Walk
+  xy: 428, 260
+  size: 214, 196
+Walk
+  xy: 642, 260
+  size: 214, 196
+Walk
+  xy: 856, 260
+  size: 214, 196
+Walk
+  xy: 1070, 260
+  size: 214, 196
+Walk
+  xy: 1284, 260
+  size: 214, 196
+Walk
+  xy: 1498, 260
+  size: 214, 196
+Attack
+  xy: 0, 456
+  size: 214, 196
+Attack
+  xy: 214, 456
+  size: 214, 196
+Attack
+  xy: 428, 456
+  size: 214, 196
+Attack
+  xy: 642, 456
+  size: 214, 196
+Attack
+  xy: 856, 456
+  size: 214, 196
+Attack
+  xy: 1070, 456
+  size: 214, 196
+Attack
+  xy: 1284, 456
+  size: 214, 196
+Attack
+  xy: 1498, 456
+  size: 214, 196
+Attack
+  xy: 1712, 456
+  size: 214, 196
+Attack
+  xy: 1926, 456
+  size: 214, 196
+Attack
+  xy: 2140, 456
+  size: 214, 196
+Attack
+  xy: 2354, 456
+  size: 214, 196
+Hit
+  xy: 0, 652
+  size: 214, 196
+Hit
+  xy: 214, 652
+  size: 214, 196
+Hit
+  xy: 428, 652
+  size: 214, 196
+Hit
+  xy: 642, 652
+  size: 214, 196
+Death
+  xy: 0, 848
+  size: 214, 196
+Death
+  xy: 214, 848
+  size: 214, 196
+Death
+  xy: 428, 848
+  size: 214, 196
+Death
+  xy: 642, 848
+  size: 214, 196
+Death
+  xy: 856, 848
+  size: 214, 196
+Death
+  xy: 1070, 848
+  size: 214, 196
+Death
+  xy: 1284, 848
+  size: 214, 196
+Death
+  xy: 1498, 848
+  size: 214, 196

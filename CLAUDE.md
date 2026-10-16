@@ -117,6 +117,11 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 663): **LOCAL + UNRELEASED (art + data)** - Krampus, Varragoth and the Demoncaller (an
+ember-cloaked Varragoth) get the user's hand-made Pixelate art (generator `pixelate/krampus/` + `pixelate/varragoth/`;
+the new `krampus/deswirl.py` clears Kling's swirl rings, `pixelate/pick_frames.py` picks a clip's frames). enemies.json 3
+paths + scales. Not seen in play.
+
 ## STATE 2026-10-16 (round 662): **LOCAL + UNRELEASED (art + data)** - the Goblin Warlord on a drawn goblin-king head
 (heads_goblin_king from the user's magenta-key ChatGPT sheet; `make_image_head.py --neutral-greys`; selection
 `lpc_selections/make_662.py`). enemies.json 1 path + scale, CREDITS_LPC.md + CREDITS.md (912 LPC enemies). Not seen in
