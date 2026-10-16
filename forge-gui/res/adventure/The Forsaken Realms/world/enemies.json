@@ -142107,7 +142107,7 @@
     },
     {
         "name": "Tiburones",
-        "sprite": "sprites/enemy/basic/humanoid/tiburones.atlas",
+        "sprite": "sprites/enemy/remake/tiburones.atlas",
         "deck": [
             "decks/standard/tiburones.dck"
         ],
@@ -142166,7 +142166,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.9286
+        "scale": 0.3023
     },
     {
         "name": "Tiyanak",

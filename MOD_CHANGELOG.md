@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 659: Tiburones becomes a shark-headed LPC warrior - the first head drawn for LPC (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_659.py`. This is F92 of
+list 2 (`Bannerloard/leftover_low_quality_2.md`): Tiburones was on a 24 px stock shark head.
+
+- **The new technique, the user's idea**:
+  - ChatGPT draws only a creature's HEAD, in the three views an LPC head part needs (front, right profile, back), on
+    the green key. The generator's new `tools/lpc/make_image_head.py` turns that sheet into an LPC head part.
+  - The part sits where LPC's human male head is in every frame of every animation, anchored at the jaw, so anything
+    drawn below the jaw hangs over the chest. The west view is the east one mirrored.
+  - All three views share one scale (the front 26 px wide), a 16-color palette and a 1 px dark outline. The teeth and
+    eyes, which a plain shrink washes out, are painted back.
+  - Any creature-headed humanoid can now be an LPC enemy on a normal body.
+- **Tiburones**: the shark head from the card Shredder Tiburon - slate grey with violet ridges, a toothy maw, red eyes,
+  a dorsal fin and a beard of violet octopus tentacles - on a muscular grey body, with iron bracers, navy trousers, a
+  tattered purple cape and a trident.
+- **Files**:
+  - 1 new atlas under `sprites/enemy/remake/`.
+  - enemies.json: the sprite path and scale (0.3023).
+  - `CREDITS_LPC.md` regenerated: additions only, with the shark head credited to The Forsaken Realms (CC0).
+  - `CREDITS.md`: the LPC bullet (907 enemies).
+- **Checks**:
+  - enemies.json against HEAD: exactly this one, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags nothing.
+  - The Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 658: the Victory and Defeat screens open the History replay (2026-10-16)
 
 The user, with the defeat dialog ("Will, You Died!!!"): "On the Victory and Defeat screens, can we add a link to the
