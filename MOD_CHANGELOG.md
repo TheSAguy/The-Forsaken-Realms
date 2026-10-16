@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 662: the Goblin Warlord on a drawn goblin-king head (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_662.py`. This is F101 of
+list 2: the Goblin Warlord (Mythic, red) was on a 26 px stock sprite.
+
+- **The head**: `heads_goblin_king` comes from the user's ChatGPT sheet, drawn on a magenta key because goblin skin is
+  green, and made into a part by `tools/lpc/make_image_head.py`. The user's references were the classic Goblin King
+  and a modern goblin king. The head has green skin, long ears, an eyepatch, one yellow eye, fangs, and a spiked iron
+  crown with a red gem.
+  - ChatGPT's iron was green-tinted. The tool's new `--neutral-greys` option makes near-grey pixels pure grey, and a
+    32-color palette keeps a grey beside the greens.
+- **The body**: bright green skin, black leather under a brown fur mantle, iron bracers, a red cape, and a scimitar.
+- **Files**:
+  - 1 new atlas under `sprites/enemy/remake/`.
+  - enemies.json: the sprite path and scale (0.2826).
+  - `CREDITS_LPC.md` regenerated: 940 characters, additions only. The head is credited to The Forsaken Realms (CC0).
+  - `CREDITS.md`: the LPC bullet (912 enemies).
+- **Checks**:
+  - enemies.json against HEAD: exactly this one, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags nothing.
+  - The Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 661: Kenrith, Immortal King - the undead Kenrith roams black land with a zombie deck (2026-10-16)
 
 The user, in the Procedural Pixel Creatures session: "a living and dead Kenrith. Adjust the decks as needed." Round 660

@@ -1,0 +1,174 @@
+goblin_warlord.png
+size: 774,721
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 86, 73
+  footprint: 18, 2, 51, 60
+Idle
+  xy: 86, 64
+  size: 86, 73
+Idle
+  xy: 172, 64
+  size: 86, 73
+Idle
+  xy: 258, 64
+  size: 86, 73
+Walk
+  xy: 0, 137
+  size: 86, 73
+Walk
+  xy: 86, 137
+  size: 86, 73
+Walk
+  xy: 172, 137
+  size: 86, 73
+Walk
+  xy: 258, 137
+  size: 86, 73
+Walk
+  xy: 344, 137
+  size: 86, 73
+Walk
+  xy: 430, 137
+  size: 86, 73
+Walk
+  xy: 516, 137
+  size: 86, 73
+Walk
+  xy: 602, 137
+  size: 86, 73
+Attack
+  xy: 0, 210
+  size: 86, 73
+Attack
+  xy: 86, 210
+  size: 86, 73
+Attack
+  xy: 172, 210
+  size: 86, 73
+Attack
+  xy: 258, 210
+  size: 86, 73
+Attack
+  xy: 344, 210
+  size: 86, 73
+Attack
+  xy: 430, 210
+  size: 86, 73
+Hit
+  xy: 0, 283
+  size: 86, 73
+Hit
+  xy: 86, 283
+  size: 86, 73
+Hit
+  xy: 172, 283
+  size: 86, 73
+Hit
+  xy: 258, 283
+  size: 86, 73
+Death
+  xy: 0, 356
+  size: 86, 73
+Death
+  xy: 86, 356
+  size: 86, 73
+Death
+  xy: 172, 356
+  size: 86, 73
+Death
+  xy: 258, 356
+  size: 86, 73
+Death
+  xy: 344, 356
+  size: 86, 73
+Death
+  xy: 430, 356
+  size: 86, 73
+Death
+  xy: 516, 356
+  size: 86, 73
+Death
+  xy: 602, 356
+  size: 86, 73
+Death
+  xy: 688, 356
+  size: 86, 73
+IdleUp
+  xy: 0, 429
+  size: 86, 73
+IdleUp
+  xy: 86, 429
+  size: 86, 73
+IdleUp
+  xy: 172, 429
+  size: 86, 73
+IdleUp
+  xy: 258, 429
+  size: 86, 73
+IdleDown
+  xy: 0, 502
+  size: 86, 73
+IdleDown
+  xy: 86, 502
+  size: 86, 73
+IdleDown
+  xy: 172, 502
+  size: 86, 73
+IdleDown
+  xy: 258, 502
+  size: 86, 73
+WalkUp
+  xy: 0, 575
+  size: 86, 73
+WalkUp
+  xy: 86, 575
+  size: 86, 73
+WalkUp
+  xy: 172, 575
+  size: 86, 73
+WalkUp
+  xy: 258, 575
+  size: 86, 73
+WalkUp
+  xy: 344, 575
+  size: 86, 73
+WalkUp
+  xy: 430, 575
+  size: 86, 73
+WalkUp
+  xy: 516, 575
+  size: 86, 73
+WalkUp
+  xy: 602, 575
+  size: 86, 73
+WalkDown
+  xy: 0, 648
+  size: 86, 73
+WalkDown
+  xy: 86, 648
+  size: 86, 73
+WalkDown
+  xy: 172, 648
+  size: 86, 73
+WalkDown
+  xy: 258, 648
+  size: 86, 73
+WalkDown
+  xy: 344, 648
+  size: 86, 73
+WalkDown
+  xy: 430, 648
+  size: 86, 73
+WalkDown
+  xy: 516, 648
+  size: 86, 73
+WalkDown
+  xy: 602, 648
+  size: 86, 73

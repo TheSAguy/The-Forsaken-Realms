@@ -136627,7 +136627,7 @@
     },
     {
         "name": "Goblin Warlord",
-        "sprite": "sprites/enemy/mythic/goblin_warlord.atlas",
+        "sprite": "sprites/enemy/remake/goblin_warlord.atlas",
         "deck": [
             "decks/standard/goblin_warlord.dck"
         ],
@@ -136687,7 +136687,7 @@
             "Leader"
         ],
         "tier": "Mythic",
-        "scale": 0.7647
+        "scale": 0.2826
     },
     {
         "name": "Crimson Minotaur Lord",

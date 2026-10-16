@@ -9995,3 +9995,16 @@ sources.
 - Leather Belt [belt_leather] - torso/waist/belt_leather: bluecarrot16, Johannes Sjölund (wulax), Matthew Krohn (makrohn); OGA-BY 3.0; https://opengameart.org/content/lpc-combat-armor-for-women, https://opengameart.org/content/lpc-pirates
 - Sygg [heads_sygg] - head/heads/sygg: The Forsaken Realms; CC0
 
+## Goblin Warlord (round 662) - composed sprite CC-BY
+
+- Solid [cape_solid] - cape/solid/bg: Nila122, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more, https://opengameart.org/content/lpc-roman-armor
+- Body Color [body] - body/bodies/male: bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani, https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle, https://opengameart.org/content/lpc-revised-character-basics, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-runcycle-for-male-muscular-and-pregnant-character-bases-with-modular-heads, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-character-bases
+- Pants [legs_pants] - legs/pants/male: bluecarrot16, JaidynReiman, ElizaWy, Matthew Krohn (makrohn), Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-expanded-pants
+- Basic Boots [feet_boots_basic] - feet/boots/basic: JaidynReiman, bluecarrot16, Nila122; OGA-BY 3.0; https://opengameart.org/content/lpc-clothes-and-hair, https://opengameart.org/content/lpc-expanded-socks-shoes
+- Leather [torso_armour_leather] - torso/armour/leather: Johannes Sjölund (wulax), bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-clothing-updates, https://opengameart.org/content/lpc-expanded-armor
+- Bracers [arms_bracers] - arms/bracers: Matthew Krohn (makrohn), Johannes Sjölund (wulax), JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+- Mantal [shoulders_mantal] - shoulders/mantal: bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-pirates
+- Solid [cape_solid] - cape/solid/fg: bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more, https://opengameart.org/content/lpc-roman-armor, http://opengameart.org/content/lpc-clothing-updates
+- Goblin_king [heads_goblin_king] - head/heads/goblin_king: The Forsaken Realms; CC0
+- Scimitar [weapon_sword_scimitar] - weapon/sword/scimitar: Pierre Vigier and DCSS artists (see https://github.com/crawl/tiles/blob/master/ARTISTS.md); OGA-BY 3.0; https://opengameart.org/content/lpc-dcss-swords
+

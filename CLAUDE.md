@@ -117,6 +117,11 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 662): **LOCAL + UNRELEASED (art + data)** - the Goblin Warlord on a drawn goblin-king head
+(heads_goblin_king from the user's magenta-key ChatGPT sheet; `make_image_head.py --neutral-greys`; selection
+`lpc_selections/make_662.py`). enemies.json 1 path + scale, CREDITS_LPC.md + CREDITS.md (912 LPC enemies). Not seen in
+play.
+
 ## STATE 2026-10-16 (round 661): **LOCAL + UNRELEASED (data)** - "Kenrith, Immortal King", the undead Kenrith (round
 660's sprite), is a mono-black roaming champion: enemies.json entry after Kenrith (life 50, Rare, Kenrith's rewards
 minus the named card), zombie-lord deck `decks/legends/kenrith_immortal_king.dck`, roaming_champions.json, black.json
