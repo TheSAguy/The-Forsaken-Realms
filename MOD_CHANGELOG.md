@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 665: the engine to the 10.16 daily (upstream `64569999b8b`) (2026-10-16)
+
+The user installed the official 10.16 snapshot (`forge-installer-2.0.16-SNAPSHOT-10.16.jar`) into `E:\GAMES\Forge_2`:
+"E:\GAMES\Forge_2 has been updated. Can you please update the engine. Also, see what changed for RoL."
+
+- **The target.**
+  - `build.txt` reads 2026-10-16 18:22:56 UTC. Upstream's tip `64569999b8b` (17:41 UTC) is the last commit before it.
+  - The install's Realm of Legends `enemies.json` matches that commit byte for byte.
+  - 13 commits and 243 files since round 612's `34a8662b796`.
+  - `engineBuildVersion` -> `2.0.16-SNAPSHOT-10.16`. No Android files changed upstream.
+- **No textual conflicts.** Five files changed on both sides, and all merged automatically: MatchController, IGuiGame,
+  ForgeConstants, ForgePreferences and Realm of Legends quests.json.
+  - Upstream removed `IGuiGame.getGamestate()` and MatchController's copy of it. Nothing of ours calls it.
+  - The merge was committed at once (`cfdcbd982c6`), before the build, because the Procedural Pixel Creatures
+    session was writing round 664 in the same checkout. These docs follow in their own commit.
+- **Checked:**
+  - It builds.
+  - In the agent game, on a copy of the user's save (day 270), the save loaded on the new engine.
+  - A full duel against a tier-deck Carapace Stalker played to its end.
+  - Orazca went in and out.
+  - No exception in the log.
+- **What players will notice (upstream):**
+  - **The AI has a visible clock** (#12265). When the computer opponent thinks for more than 2 seconds, a shrinking
+    bar shows on its avatar. All its nested thinking now shares one deadline: Forge's AI timeout, 5 seconds by
+    default. Attack planning is included now. When time runs out, the AI plays the best it has found so far. Expect
+    fewer long stalls on big boards, and a slightly rougher attack now and then on a very crowded one.
+  - **Local replays** (#12266) record ordinary Forge games. Adventure and Adventure-event duels are left out, and
+    TFR's duels are those types, so nothing is recorded in TFR. Forge's own settings page gains "Record replays".
+  - Rules fixes:
+    - Bilbo, Thief in the Night and nine more now offer their Adventure spells (#12248).
+    - Two new MDD cards.
+    - Edition updates (MBC, PLST, PMEI, SLC, SLD).
+  - Mobile: no drag preview while panning. Netplay, Quest-mode and desktop fixes don't reach the Adventure.
+- **Realm of Legends 1.077 / 1.078** ("Huge Reality Fracture Update", then fixes) came with the merge. It adds
+  40 places, 70 items and 60 enemies, rebalances items, and moves many places to the side-boss types. TFR's plane
+  loads none of RoL's files, so none of it changes our game by itself. What could be imported is reported to the
+  user separately, under the cross-plane import rules.
+- Next merge starts at upstream `64569999b8b`.
+
 ## Round 664: 52 LPC enemies - list 3's people, angels, demons and giants, and list 2's last three (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_664.py`. List 3

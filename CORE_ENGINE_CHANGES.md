@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 665 - the engine to the 10.16 daily (upstream `64569999b8b`)
+
+- No conflicts. Upstream removed `IGuiGame.getGamestate()` (and MatchController's override); nothing of ours used it.
+  Watch: `ReplaySession.begin` (HostedMatch) skips `GameType.Adventure` / `AdventureEvent` - a new TFR duel mode on
+  another game type would start recording replays (`UI_RECORD_REPLAYS`, default on). `AITimeoutTracker` now arms one
+  deadline per AI think (attack planning included); TFR code that runs long AI work on the game thread should call
+  `AITimeoutTracker.check()` in its loops if it ever wants to honor it.
+
 ### Round 639 - the first-tournament Coin refund without the tutorial
 
 - **`forge-gui-mobile/src/forge/adventure/scene/EventScene.java`** - `firstTournamentNetOpen()`; the loss branch of

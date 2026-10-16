@@ -117,6 +117,12 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 665): **LOCAL + UNRELEASED (engine merge)** - ENGINE = THE 10.16 DAILY (upstream
+`64569999b8b`, base install E:\GAMES\Forge_2 build 2026-10-16 18:22:56; engineBuildVersion 2.0.16-SNAPSHOT-10.16).
+No conflicts (merge `cfdcbd982c6`). Upstream: an AI think-time bar + one shared AI deadline (attacks too), local
+replays (Adventure excluded), RoL 1.077/1.078 (unused by TFR). Seen in the agent game. Next merge from upstream after
+`64569999b8b`.
+
 ## STATE 2026-10-16 (round 664): **LOCAL + UNRELEASED (art + data)** - 52 LPC enemies: list 3's 17 sprites drawn 27-32 px
 (people, undead, angels, demons, giants; the legends dressed from their cards) + list 2's Amphin Warrior (heads_sygg
 "green"), Aerie Guard (aven) and Kamiz. Generator `lpc_selections/make_664.py`. enemies.json 52 paths + scales,
