@@ -1,5 +1,5 @@
 jetmir.png
-size: 504,577
+size: 558,577
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,169 +8,169 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 56, 57
+  size: 62, 57
 Idle
-  xy: 56, 64
-  size: 56, 57
+  xy: 62, 64
+  size: 62, 57
 Idle
-  xy: 112, 64
-  size: 56, 57
+  xy: 124, 64
+  size: 62, 57
 Idle
-  xy: 168, 64
-  size: 56, 57
+  xy: 186, 64
+  size: 62, 57
 Walk
   xy: 0, 121
-  size: 56, 57
+  size: 62, 57
 Walk
-  xy: 56, 121
-  size: 56, 57
+  xy: 62, 121
+  size: 62, 57
 Walk
-  xy: 112, 121
-  size: 56, 57
+  xy: 124, 121
+  size: 62, 57
 Walk
-  xy: 168, 121
-  size: 56, 57
+  xy: 186, 121
+  size: 62, 57
 Walk
-  xy: 224, 121
-  size: 56, 57
+  xy: 248, 121
+  size: 62, 57
 Walk
-  xy: 280, 121
-  size: 56, 57
+  xy: 310, 121
+  size: 62, 57
 Walk
-  xy: 336, 121
-  size: 56, 57
+  xy: 372, 121
+  size: 62, 57
 Walk
-  xy: 392, 121
-  size: 56, 57
+  xy: 434, 121
+  size: 62, 57
 Attack
   xy: 0, 178
-  size: 56, 57
+  size: 62, 57
 Attack
-  xy: 56, 178
-  size: 56, 57
+  xy: 62, 178
+  size: 62, 57
 Attack
-  xy: 112, 178
-  size: 56, 57
+  xy: 124, 178
+  size: 62, 57
 Attack
-  xy: 168, 178
-  size: 56, 57
+  xy: 186, 178
+  size: 62, 57
 Attack
-  xy: 224, 178
-  size: 56, 57
+  xy: 248, 178
+  size: 62, 57
 Attack
-  xy: 280, 178
-  size: 56, 57
+  xy: 310, 178
+  size: 62, 57
 Attack
-  xy: 336, 178
-  size: 56, 57
+  xy: 372, 178
+  size: 62, 57
 Hit
   xy: 0, 235
-  size: 56, 57
+  size: 62, 57
 Hit
-  xy: 56, 235
-  size: 56, 57
+  xy: 62, 235
+  size: 62, 57
 Hit
-  xy: 112, 235
-  size: 56, 57
+  xy: 124, 235
+  size: 62, 57
 Hit
-  xy: 168, 235
-  size: 56, 57
+  xy: 186, 235
+  size: 62, 57
 Death
   xy: 0, 292
-  size: 56, 57
+  size: 62, 57
 Death
-  xy: 56, 292
-  size: 56, 57
+  xy: 62, 292
+  size: 62, 57
 Death
-  xy: 112, 292
-  size: 56, 57
+  xy: 124, 292
+  size: 62, 57
 Death
-  xy: 168, 292
-  size: 56, 57
+  xy: 186, 292
+  size: 62, 57
 Death
-  xy: 224, 292
-  size: 56, 57
+  xy: 248, 292
+  size: 62, 57
 Death
-  xy: 280, 292
-  size: 56, 57
+  xy: 310, 292
+  size: 62, 57
 Death
-  xy: 336, 292
-  size: 56, 57
+  xy: 372, 292
+  size: 62, 57
 Death
-  xy: 392, 292
-  size: 56, 57
+  xy: 434, 292
+  size: 62, 57
 Death
-  xy: 448, 292
-  size: 56, 57
+  xy: 496, 292
+  size: 62, 57
 IdleUp
   xy: 0, 349
-  size: 56, 57
+  size: 62, 57
 IdleUp
-  xy: 56, 349
-  size: 56, 57
+  xy: 62, 349
+  size: 62, 57
 IdleUp
-  xy: 112, 349
-  size: 56, 57
+  xy: 124, 349
+  size: 62, 57
 IdleUp
-  xy: 168, 349
-  size: 56, 57
+  xy: 186, 349
+  size: 62, 57
 IdleDown
   xy: 0, 406
-  size: 56, 57
+  size: 62, 57
 IdleDown
-  xy: 56, 406
-  size: 56, 57
+  xy: 62, 406
+  size: 62, 57
 IdleDown
-  xy: 112, 406
-  size: 56, 57
+  xy: 124, 406
+  size: 62, 57
 IdleDown
-  xy: 168, 406
-  size: 56, 57
+  xy: 186, 406
+  size: 62, 57
 WalkUp
   xy: 0, 463
-  size: 56, 57
+  size: 62, 57
 WalkUp
-  xy: 56, 463
-  size: 56, 57
+  xy: 62, 463
+  size: 62, 57
 WalkUp
-  xy: 112, 463
-  size: 56, 57
+  xy: 124, 463
+  size: 62, 57
 WalkUp
-  xy: 168, 463
-  size: 56, 57
+  xy: 186, 463
+  size: 62, 57
 WalkUp
-  xy: 224, 463
-  size: 56, 57
+  xy: 248, 463
+  size: 62, 57
 WalkUp
-  xy: 280, 463
-  size: 56, 57
+  xy: 310, 463
+  size: 62, 57
 WalkUp
-  xy: 336, 463
-  size: 56, 57
+  xy: 372, 463
+  size: 62, 57
 WalkUp
-  xy: 392, 463
-  size: 56, 57
+  xy: 434, 463
+  size: 62, 57
 WalkDown
   xy: 0, 520
-  size: 56, 57
+  size: 62, 57
 WalkDown
-  xy: 56, 520
-  size: 56, 57
+  xy: 62, 520
+  size: 62, 57
 WalkDown
-  xy: 112, 520
-  size: 56, 57
+  xy: 124, 520
+  size: 62, 57
 WalkDown
-  xy: 168, 520
-  size: 56, 57
+  xy: 186, 520
+  size: 62, 57
 WalkDown
-  xy: 224, 520
-  size: 56, 57
+  xy: 248, 520
+  size: 62, 57
 WalkDown
-  xy: 280, 520
-  size: 56, 57
+  xy: 310, 520
+  size: 62, 57
 WalkDown
-  xy: 336, 520
-  size: 56, 57
+  xy: 372, 520
+  size: 62, 57
 WalkDown
-  xy: 392, 520
-  size: 56, 57
+  xy: 434, 520
+  size: 62, 57

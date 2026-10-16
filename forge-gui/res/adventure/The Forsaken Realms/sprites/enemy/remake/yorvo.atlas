@@ -1,5 +1,5 @@
 yorvo.png
-size: 738,568
+size: 720,568
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,167 +8,167 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 82, 56
-  footprint: 22, 1, 39, 54
+  size: 80, 56
+  footprint: 22, 1, 37, 54
 Idle
-  xy: 82, 64
-  size: 82, 56
+  xy: 80, 64
+  size: 80, 56
 Idle
-  xy: 164, 64
-  size: 82, 56
+  xy: 160, 64
+  size: 80, 56
 Idle
-  xy: 246, 64
-  size: 82, 56
+  xy: 240, 64
+  size: 80, 56
 Walk
   xy: 0, 120
-  size: 82, 56
+  size: 80, 56
 Walk
-  xy: 82, 120
-  size: 82, 56
+  xy: 80, 120
+  size: 80, 56
 Walk
-  xy: 164, 120
-  size: 82, 56
+  xy: 160, 120
+  size: 80, 56
 Walk
-  xy: 246, 120
-  size: 82, 56
+  xy: 240, 120
+  size: 80, 56
 Walk
-  xy: 328, 120
-  size: 82, 56
+  xy: 320, 120
+  size: 80, 56
 Walk
-  xy: 410, 120
-  size: 82, 56
+  xy: 400, 120
+  size: 80, 56
 Walk
-  xy: 492, 120
-  size: 82, 56
+  xy: 480, 120
+  size: 80, 56
 Walk
-  xy: 574, 120
-  size: 82, 56
+  xy: 560, 120
+  size: 80, 56
 Attack
   xy: 0, 176
-  size: 82, 56
+  size: 80, 56
 Attack
-  xy: 82, 176
-  size: 82, 56
+  xy: 80, 176
+  size: 80, 56
 Attack
-  xy: 164, 176
-  size: 82, 56
+  xy: 160, 176
+  size: 80, 56
 Attack
-  xy: 246, 176
-  size: 82, 56
+  xy: 240, 176
+  size: 80, 56
 Attack
-  xy: 328, 176
-  size: 82, 56
+  xy: 320, 176
+  size: 80, 56
 Attack
-  xy: 410, 176
-  size: 82, 56
+  xy: 400, 176
+  size: 80, 56
 Hit
   xy: 0, 232
-  size: 82, 56
+  size: 80, 56
 Hit
-  xy: 82, 232
-  size: 82, 56
+  xy: 80, 232
+  size: 80, 56
 Hit
-  xy: 164, 232
-  size: 82, 56
+  xy: 160, 232
+  size: 80, 56
 Hit
-  xy: 246, 232
-  size: 82, 56
+  xy: 240, 232
+  size: 80, 56
 Death
   xy: 0, 288
-  size: 82, 56
+  size: 80, 56
 Death
-  xy: 82, 288
-  size: 82, 56
+  xy: 80, 288
+  size: 80, 56
 Death
-  xy: 164, 288
-  size: 82, 56
+  xy: 160, 288
+  size: 80, 56
 Death
-  xy: 246, 288
-  size: 82, 56
+  xy: 240, 288
+  size: 80, 56
 Death
-  xy: 328, 288
-  size: 82, 56
+  xy: 320, 288
+  size: 80, 56
 Death
-  xy: 410, 288
-  size: 82, 56
+  xy: 400, 288
+  size: 80, 56
 Death
-  xy: 492, 288
-  size: 82, 56
+  xy: 480, 288
+  size: 80, 56
 Death
-  xy: 574, 288
-  size: 82, 56
+  xy: 560, 288
+  size: 80, 56
 Death
-  xy: 656, 288
-  size: 82, 56
+  xy: 640, 288
+  size: 80, 56
 IdleUp
   xy: 0, 344
-  size: 82, 56
+  size: 80, 56
 IdleUp
-  xy: 82, 344
-  size: 82, 56
+  xy: 80, 344
+  size: 80, 56
 IdleUp
-  xy: 164, 344
-  size: 82, 56
+  xy: 160, 344
+  size: 80, 56
 IdleUp
-  xy: 246, 344
-  size: 82, 56
+  xy: 240, 344
+  size: 80, 56
 IdleDown
   xy: 0, 400
-  size: 82, 56
+  size: 80, 56
 IdleDown
-  xy: 82, 400
-  size: 82, 56
+  xy: 80, 400
+  size: 80, 56
 IdleDown
-  xy: 164, 400
-  size: 82, 56
+  xy: 160, 400
+  size: 80, 56
 IdleDown
-  xy: 246, 400
-  size: 82, 56
+  xy: 240, 400
+  size: 80, 56
 WalkUp
   xy: 0, 456
-  size: 82, 56
+  size: 80, 56
 WalkUp
-  xy: 82, 456
-  size: 82, 56
+  xy: 80, 456
+  size: 80, 56
 WalkUp
-  xy: 164, 456
-  size: 82, 56
+  xy: 160, 456
+  size: 80, 56
 WalkUp
-  xy: 246, 456
-  size: 82, 56
+  xy: 240, 456
+  size: 80, 56
 WalkUp
-  xy: 328, 456
-  size: 82, 56
+  xy: 320, 456
+  size: 80, 56
 WalkUp
-  xy: 410, 456
-  size: 82, 56
+  xy: 400, 456
+  size: 80, 56
 WalkUp
-  xy: 492, 456
-  size: 82, 56
+  xy: 480, 456
+  size: 80, 56
 WalkUp
-  xy: 574, 456
-  size: 82, 56
+  xy: 560, 456
+  size: 80, 56
 WalkDown
   xy: 0, 512
-  size: 82, 56
+  size: 80, 56
 WalkDown
-  xy: 82, 512
-  size: 82, 56
+  xy: 80, 512
+  size: 80, 56
 WalkDown
-  xy: 164, 512
-  size: 82, 56
+  xy: 160, 512
+  size: 80, 56
 WalkDown
-  xy: 246, 512
-  size: 82, 56
+  xy: 240, 512
+  size: 80, 56
 WalkDown
-  xy: 328, 512
-  size: 82, 56
+  xy: 320, 512
+  size: 80, 56
 WalkDown
-  xy: 410, 512
-  size: 82, 56
+  xy: 400, 512
+  size: 80, 56
 WalkDown
-  xy: 492, 512
-  size: 82, 56
+  xy: 480, 512
+  size: 80, 56
 WalkDown
-  xy: 574, 512
-  size: 82, 56
+  xy: 560, 512
+  size: 80, 56

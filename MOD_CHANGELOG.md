@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 646: Yorvo, Jetmir and Ertai dressed again (2026-10-15)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_646.py`. These are D80, D81
+and D83 of the low-quality list: three of round 608's borderline LPC enemies, redone as recommended. The Gitaxian
+Scientist (D82) keeps its round-608 sprite.
+
+- **The enemies, dressed again from their cards**:
+  - **Yorvo, Lord of Garenbrig**: round 608's gold tiara over long green hair read as a woman. He is now the bearded
+    giant: long grey hair and a grey beard, steel pauldrons and armored arms, a forest-green cloak and kilt, the mace.
+  - **Jetmir, Nexus of Revels**: the white cat-person without the black curled horns, which the card does not have.
+    He now wears a gold mantle over the navy robe and red cape and casts with a gold staff.
+  - **Ertai, the Corrupted**: the hood is off, so the pale, gaunt Phyrexian head shows, with red eyes. Iron pauldrons
+    and an armored arm stand for the grafts; the navy robe, black cape and blue crystal staff stay.
+- **Files**:
+  - 3 replaced atlases under `sprites/enemy/remake/` (same paths).
+  - enemies.json: Jetmir's scale 0.2889 -> 0.3023 (`enemy_scale.py`); the sprite paths and the other two scales are unchanged.
+  - `CREDITS_LPC.md` regenerated: the same 912 characters, and these three now show the parts they wear. Their headings
+    read "round 608, redone in round 646" (the generator's `lpc_credits_md.py` learned redos). No author drops out.
+    `CREDITS.md` is unchanged.
+- **Checks**:
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags none of the three; `sprite_footprints.py --write` put Yorvo's and Ertai's footprints back on their new atlases (Jetmir has none, as before).
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 644: every unique enemy's deck gets one card stronger (2026-10-15)
 
 The user: "go through all Bosses / War Champions / Legends and Arch Mages and swap out 1 card to make the deck stronger

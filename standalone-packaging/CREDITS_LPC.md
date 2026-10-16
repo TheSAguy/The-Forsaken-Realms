@@ -8614,17 +8614,18 @@ sources.
 - Winter Beard [beards_winter] - beards/beard/winter: bluecarrot16; CC0; https://opengameart.org/content/lpc-santa
 - Club [weapon_blunt_club] - weapon/blunt/club: bluecarrot16; CC-BY 4.0; https://opengameart.org/content/lpc-more-weapons
 
-## Yorvo (round 608) - composed sprite CC-BY-SA
+## Yorvo (round 608, redone in round 646) - composed sprite CC-BY-SA
 
+- Solid [cape_solid] - cape/solid/bg: Nila122, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more, https://opengameart.org/content/lpc-roman-armor
 - Mace [weapon_blunt_mace] - weapon/blunt/mace: Johannes Sjölund (wulax), bluecarrot16; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-extended-weapon-animations
 - Body Color [body] - body/bodies/muscular: bluecarrot16, JaidynReiman, Evert, TheraHedwig, MuffinElZangano, Durrani, Sander Frenken (castelonia), Benjamin K. Smith (BenCreating), Eliza Wyatt (ElizaWy), dalonedrau, Stephen Challener (Redshrike); CC-BY-SA 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-barbarian-sprite-base, https://opengameart.org/content/lpc-muscular-swing-animation, https://opengameart.org/content/lpc-muscular-hurt-animation, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-revised-character-basics, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-character-bases, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani
 - Legion skirt [legs_skirts_legion] - legs/skirts/legion: bluecarrot16, Nila122, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-roman-armor, http://opengameart.org/content/lpc-clothing-updates, https://opengameart.org/content/lpc-expanded-armour
-- Bracers [arms_bracers] - arms/bracers: Matthew Krohn (makrohn), Johannes Sjölund (wulax), JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
-- Mantal [shoulders_mantal] - shoulders/mantal: bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-pirates
+- Pauldrons [shoulders_pauldrons] - shoulders/pauldrons: Matthew Krohn (makrohn), Johannes Sjölund (wulax), bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, http://opengameart.org/content/lpc-clothing-updates
+- Armour [arms_armour] - arms/armour/plate/male: Michael Whitlock (bigbeargames), Matthew Krohn (makrohn), Johannes Sjölund (wulax), bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, http://opengameart.org/content/lpc-clothing-updates
+- Solid [cape_solid] - cape/solid/fg: bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more, https://opengameart.org/content/lpc-roman-armor, http://opengameart.org/content/lpc-clothing-updates
 - Human Male [heads_human_male] - head/heads/human/male: bluecarrot16, Benjamin K. Smith (BenCreating), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-character-bases
 - Winter Beard [beards_winter] - beards/beard/winter: bluecarrot16; CC0; https://opengameart.org/content/lpc-santa
 - Long [hair_long] - hair/long: JaidynReiman, Manuel Riecke (MrBeast); CC-BY-SA 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-expanded-hair
-- Tiara [hat_formal_tiara] - hat/formal/tiara: Luke Mehl; CC-BY-SA 3.0; https://opengameart.org/content/female-mage-clothing-set, https://opengameart.org/content/lpc-expanded-hats-facial-helmets
 
 ## Sun Giant (round 608) - composed sprite CC-BY-SA
 
@@ -8700,18 +8701,19 @@ sources.
 - Troll [heads_troll] - head/heads/troll: bluecarrot16, AntumDeluge, Tuomo Untinen (reemax); CC-BY 3.0; https://opengameart.org/content/musclemanogreminotaur, https://opengameart.org/content/trolls-0, https://opengameart.org/content/lpc-folk
 - Curled Horns [head_horns_curled] - head/horns/curled: Nila122; OGA-BY 3.0; https://opengameart.org/content/lpc-lizard-headgear
 
-## Jetmir (round 608) - composed sprite CC-BY
+## Jetmir (round 608, redone in round 646) - composed sprite CC-BY
 
 - Cat Tail [tail_cat] - body/tail/cat: JaidynReiman; OGA-BY 3.0+; https://opengameart.org/content/lpc-furry-ears-tails-for-rpg-sprites
 - Solid [cape_solid] - cape/solid/bg: Nila122, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more, https://opengameart.org/content/lpc-roman-armor
 - Cat Ears [head_ears_cat] - head/ears/cat: JaidynReiman; OGA-BY 3.0+; https://opengameart.org/content/lpc-furry-ears-tails-for-rpg-sprites
+- Loop staff [weapon_magic_loop] - weapon/magic/loop: bluecarrot16; CC-BY 4.0; https://opengameart.org/content/lpc-more-weapons
 - Body Color [body] - body/bodies/male: bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani, https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle, https://opengameart.org/content/lpc-revised-character-basics, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-runcycle-for-male-muscular-and-pregnant-character-bases-with-modular-heads, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-character-bases
 - Plain skirt [legs_skirts_plain] - legs/skirts/plain: bluecarrot16, Pierre Vigier (pvigier), Johannes Sjölund (wulax), Ahmad3366, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 - Longsleeve [torso_clothes_longsleeve] - torso/clothes/longsleeve/longsleeve/male: JaidynReiman, Johannes Sjölund (wulax); OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, http://opengameart.org/content/lpc-clothing-updates, https://opengameart.org/content/lpc-revised-character-basics, https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing, https://opengameart.org/content/lpc-expanded-sit-run-jump-more, https://opengameart.org/content/lpc-expanded-simple-shirts
 - Sash [belt_sash] - torso/waist/sash: bluecarrot16, Nila122; OGA-BY 3.0; https://opengameart.org/content/more-lpc-clothes-and-hair, https://opengameart.org/content/lpc-pirates
+- Mantal [shoulders_mantal] - shoulders/mantal: bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-pirates
 - Solid [cape_solid] - cape/solid/fg: bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more, https://opengameart.org/content/lpc-roman-armor, http://opengameart.org/content/lpc-clothing-updates
 - Human Male [heads_human_male] - head/heads/human/male: bluecarrot16, Benjamin K. Smith (BenCreating), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-character-bases
-- Curled Horns [head_horns_curled] - head/horns/curled: Nila122; OGA-BY 3.0; https://opengameart.org/content/lpc-lizard-headgear
 
 ## Regna and Krav (round 608) - composed sprite CC-BY-SA
 
@@ -8856,17 +8858,18 @@ sources.
 - Solid [cape_solid] - cape/solid/fg: bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more, https://opengameart.org/content/lpc-roman-armor, http://opengameart.org/content/lpc-clothing-updates
 - Alien [heads_alien] - head/heads/alien: bluecarrot16, Benjamin K. Smith (BenCreating), Nila122; OGA-BY 3.0; https://opengameart.org/content/drakes-and-lizardfolk, https://opengameart.org/content/lpc-character-bases
 
-## Ertai (round 608) - composed sprite CC-BY
+## Ertai (round 608, redone in round 646) - composed sprite CC-BY
 
 - Solid [cape_solid] - cape/solid/bg: Nila122, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more, https://opengameart.org/content/lpc-roman-armor
 - Crystal [weapon_magic_crystal] - weapon/magic/crystal: bluecarrot16; CC-BY 4.0; https://opengameart.org/content/lpc-more-weapons
 - Body Color [body] - body/bodies/male: bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani, https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle, https://opengameart.org/content/lpc-revised-character-basics, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-runcycle-for-male-muscular-and-pregnant-character-bases-with-modular-heads, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-character-bases
 - Plain skirt [legs_skirts_plain] - legs/skirts/plain: bluecarrot16, Pierre Vigier (pvigier), Johannes Sjölund (wulax), Ahmad3366, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 - Longsleeve [torso_clothes_longsleeve] - torso/clothes/longsleeve/longsleeve/male: JaidynReiman, Johannes Sjölund (wulax); OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, http://opengameart.org/content/lpc-clothing-updates, https://opengameart.org/content/lpc-revised-character-basics, https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing, https://opengameart.org/content/lpc-expanded-sit-run-jump-more, https://opengameart.org/content/lpc-expanded-simple-shirts
+- Pauldrons [shoulders_pauldrons] - shoulders/pauldrons: Matthew Krohn (makrohn), Johannes Sjölund (wulax), bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, http://opengameart.org/content/lpc-clothing-updates
+- Armour [arms_armour] - arms/armour/plate/male: Michael Whitlock (bigbeargames), Matthew Krohn (makrohn), Johannes Sjölund (wulax), bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, http://opengameart.org/content/lpc-clothing-updates
 - Sash [belt_sash] - torso/waist/sash: bluecarrot16, Nila122; OGA-BY 3.0; https://opengameart.org/content/more-lpc-clothes-and-hair, https://opengameart.org/content/lpc-pirates
 - Solid [cape_solid] - cape/solid/fg: bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more, https://opengameart.org/content/lpc-roman-armor, http://opengameart.org/content/lpc-clothing-updates
 - Human Male Gaunt [heads_human_male_gaunt] - head/heads/human/male_gaunt: Stephen Challener (Redshrike), bluecarrot16; OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-folk
-- Hood [hat_hood_cloth] - hat/cloth/hood: Johannes Sjölund (wulax), JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-expanded-hats-facial-helmets
 
 ## Goblin Wolf Rider (round 616) - composed sprite CC-BY-SA
 
