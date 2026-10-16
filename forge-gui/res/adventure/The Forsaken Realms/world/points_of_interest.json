@@ -6389,5 +6389,56 @@
 			"BiomeBlue",
 			"Hostile"
 		]
+	},
+	{
+		"name": "Hexhaven Tower",
+		"displayName": "Hexhaven Tower",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+		"sprite": "HexhavenTower",
+		"map": "../The Forsaken Realms/maps/map/cave/Hexhaven_Tower_1.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 20,
+		"appearsInBiome": "waste",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Echoverse Overlay",
+		"displayName": "Echoverse Overlay",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+		"sprite": "RealityOverlay",
+		"map": "../The Forsaken Realms/maps/map/cave/Echoverse_Overlay.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 20,
+		"appearsInBiome": "waste",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Theorist's Sanctum",
+		"displayName": "Theorist's Sanctum",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Building79",
+		"map": "../The Forsaken Realms/maps/map/cave/Theorists_Sanctum.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 20,
+		"appearsInBiome": "waste",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
 	}
 ]

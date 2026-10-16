@@ -1,0 +1,8 @@
+Name:Jace's Echo
+ManaCost:no cost
+Colors:blue
+Types:Enchantment
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | CheckSVar$ YourTurns | SVarCompare$ EQ1 | Execute$ TrigEmpower | TriggerDescription$ At the beginning of your first upkeep, empower Jace 5. (Put five loyalty counters on a Jace token you control. If you don't control one, first create a blue Jace planeswalker token with "[-1]: Surveil 1" and "[-3]: Draw a card.")
+SVar:TrigEmpower:DB$ Empower | Type$ Jace | Num$ 5
+SVar:YourTurns:Count$YourTurns
+Oracle:At the beginning of your first upkeep, empower Jace 5. (Put five loyalty counters on a Jace token you control. If you don't control one, first create a blue Jace planeswalker token with "[-1]: Surveil 1" and "[-3]: Draw a card.")

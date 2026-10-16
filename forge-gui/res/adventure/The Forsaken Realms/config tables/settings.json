@@ -223,6 +223,9 @@
     // by calendar week - days 1-7, 8-14, 15-21, then 22 on (the last entry holds); it replaces pillageRadiusTiles, which
     // only counts when this is empty. Raids still start no earlier than pillageFirstWeekByDifficulty below.
     "pillageRadiusByWeek": [15, 15, 17, 20],
+    // Round 668: the day a level-gated place (points_of_interest.json appearsAtLevel - Hexhaven Tower, the Echoverse
+    // Overlay, the Theorist's Sanctum at level 20) appears for a character without Ascendance. 0 = never.
+    "levelPlacesFallbackDay": 60,
     "pillageKills": 5,
     "pillageDays": 7,
     "pillageRaidersAtOnce": [3, 4],

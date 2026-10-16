@@ -1126,6 +1126,15 @@ public class ConsoleCommandInterpreter {
                     return "endscreen won | lost | died | boss";
             }
         });
+        // Round 668: the places that come with the player's level (LevelPlaces) - where they are, or put them on the map now.
+        registerCommand(new String[]{"levelplaces"}, s -> {
+            String which = s.length > 0 ? s[0].toLowerCase() : "";
+            if ("now".equals(which))
+                return forge.adventure.util.LevelPlaces.place("console", true);
+            if ("info".equals(which))
+                return forge.adventure.util.LevelPlaces.info();
+            return "levelplaces info | now";
+        });
         registerCommand(new String[]{"asc", "pick"}, s -> {
             if (s.length < 1)
                 return "Command needs 1 parameter: a reward id from ascendance.json";

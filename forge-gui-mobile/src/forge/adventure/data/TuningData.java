@@ -405,6 +405,9 @@ public class TuningData {
     /** Round 610 (the user: "Let's have it scale. 15 Week 1 ... Then 17 week 2, finally 20 week 3 (day 22+)"): the radius
      *  by calendar week (World.weekOf - 0 is days 1-7), the last entry holding after; empty = pillageRadiusTiles. */
     public int[] pillageRadiusByWeek = {15, 15, 17, 20};
+    /** Round 668: the day a place with PointOfInterestData.appearsAtLevel appears for a character without Ascendance
+     *  (an older save, or leveling switched off in Settings) - the level never comes for them. 0 = never. LevelPlaces. */
+    public int levelPlacesFallbackDay = 60;
     public int pillageKills = 5;
     public int pillageDays = 7;
     public int[] pillageRaidersAtOnce = {3, 4};

@@ -753,6 +753,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 TerritoryControl.processDaysPassed(dayAfter - dayBefore, dayAfter);
                 long tTerritory = System.nanoTime();
                 DungeonRotation.processDaysPassed(dayAfter);
+                forge.adventure.util.LevelPlaces.check("day " + dayAfter); // round 668
                 long tDungeons = System.nanoTime();
                 QuestExpiry.processDaysPassed(dayAfter);
                 long tQuests = System.nanoTime();
@@ -2949,8 +2950,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         return Math.max(0, legend.legendExpiryDay - Current.world().getCurrentDay());
     }
 
-    /** Round 239's compass, shared since round 350 by the sighting message and the quest log. */
-    private static String compassDirection(float dx, float dy) {
+    /** Round 239's compass, shared since round 350 by the sighting message and the quest log (round 668: and LevelPlaces). */
+    public static String compassDirection(float dx, float dy) {
         String[] compass = {"east", "north-east", "north", "north-west", "west", "south-west", "south", "south-east"};
         float degrees = (com.badlogic.gdx.math.MathUtils.atan2(dy, dx) * com.badlogic.gdx.math.MathUtils.radiansToDegrees + 360f) % 360f;
         return compass[Math.round(degrees / 45f) % 8];
@@ -3124,6 +3125,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         setBounds(WorldSave.getCurrentSave().getWorld().getWidthInPixels(), WorldSave.getCurrentSave().getWorld().getHeightInPixels());
         GridPoint2 pos = background.translateFromWorldToChunk(player.getX(), player.getY());
         background.loadChunk(pos.x, pos.y);
+        if (!enterSpawnPOI && !Forge.advFreezePlayerControls)
+            forge.adventure.util.LevelPlaces.check("overworld entered"); // round 668: a level just reached, or a load
         super.enter();
     }
 

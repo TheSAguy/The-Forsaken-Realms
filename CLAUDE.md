@@ -117,6 +117,13 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 668): **LOCAL + UNRELEASED (code + data + art)** - three end-game Realm of Legends dungeons:
+Hexhaven Tower (4 floors, the Ur-Sphinx), the Echoverse Overlay, the Theorist's Sanctum - 25 legends with their
+Commander decks rebuilt at 60 (`dev-tools/rol_import/rebuild_commander_deck.py`), 10 items, text refit to this realm.
+They appear at Ascendance 20 (util/LevelPlaces + PointOfInterestData.appearsAtLevel/appearsInBiome, placed in the
+wasteland by World.addPointOfInterestInBiome; no Ascendance: day 60). Jace's Echo (command zone) gives the five Way
+necklaces their Jace. `import_r668.py`. Seen in the agent game (placement, floors, three duels, the necklace's Jace).
+
 ## STATE 2026-10-16 (round 667): **LOCAL + UNRELEASED (art + data)** - the Nantuko Guard, Mazirek and Amzu on a drawn
 mantis head (heads_nantuko green / kraul; generator `lpc_selections/make_667.py`). enemies.json 3 paths + scales,
 CREDITS_LPC.md + CREDITS.md (979 LPC enemies). Not seen in play.

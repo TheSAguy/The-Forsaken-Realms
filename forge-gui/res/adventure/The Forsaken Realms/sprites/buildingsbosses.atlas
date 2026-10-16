@@ -204,3 +204,9 @@ Ashling Domain
 Imperial Office
   xy: 384,448
   size: 48,48
+HexhavenTower
+  xy: 109, 157
+  size: 30, 46
+RealityOverlay
+  xy: 393, 5
+  size: 52, 48

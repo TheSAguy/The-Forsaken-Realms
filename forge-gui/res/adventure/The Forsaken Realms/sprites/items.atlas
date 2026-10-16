@@ -1185,6 +1185,31 @@ YinYangHalf
 YinYangRuneDark
   xy: 64, 1072
   size: 16, 16
+VexingBoots
+  xy: 0, 176
+  size: 16, 16
+FulcrumGauntlet
+  xy: 16, 240
+  size: 16, 16
+PantsoftheFattestButt
+  xy: 32, 480
+  size: 16, 16
+MindSculptorNecklace
+  xy: 80, 784
+  size: 16, 16
+DeathbringerNecklace
+  xy: 48, 816
+  size: 16, 16
+HealerNecklace
+  xy: 48, 848
+  size: 16, 16
+WarlordNecklace
+  xy: 112, 832
+  size: 16, 16
+ParadoxNecklace
+  xy: 32, 832
+  size: 16, 16
+
 items.png
 size: 480,1008
 format: RGBA8888

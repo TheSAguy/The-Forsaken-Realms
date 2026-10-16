@@ -14264,6 +14264,80 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 668: three end-game legend dungeons from Realm of Legends 1.077 - they appear at level 20 (2026-10-16)
+
+The user, after the audit of Realm of Legends' 1.077/1.078 update: "Let's do the First batch: the three legend
+dungeons. Make sure to update all quest portions as needed to be independent from RoL and make sense in our world.
+Since they are end-game, let's not have them appear till the player reaches level 20+". This was done under the
+cross-plane import rules: no Commander, no foreign quest lines, no unkept promises, and every reference resolves.
+
+- **The places** (points_of_interest.json):
+  - **Hexhaven Tower**: four floors, each with a door to the next. There are six Strixhaven sphinx-masters, and the
+    Ur-Sphinx waits on top.
+  - **The Echoverse Overlay**: a bridge maze over the void, with nine echoed legends and Titanbones.
+  - **The Theorist's Sanctum**: six Echo planeswalkers stand before the Theorist (Jace) and Tam.
+  - Each is a "dungeon" tagged Hostile, NoRotate and Legendary, so it gets the end-game warning at the door and the red
+    triple-skull marker, and it never rotates. Realm of Legends had typed them sideboss* with only a "Story" tag.
+- **Level 20** (util/LevelPlaces, PointOfInterestData.appearsAtLevel / appearsInBiome):
+  - No land lists these places, so world generation never makes them.
+  - Once the character reaches Ascendance 20, they are placed in the wasteland and their ground is uncovered.
+    `World.addPointOfInterestInBiome` picks the spot the way world generation would.
+  - The player gets this notice: "Your spark has grown too strong for the realm to hide its deepest places from you.
+    New on your map: ... - the hardest duels in the realm." It says where each one lies, or "(all to the west)".
+    Level 20's title is Seal-breaker.
+  - A character without Ascendance (an older save, or leveling off in Settings) gets them on day 60
+    (settings.json `levelPlacesFallbackDay`).
+  - The check runs on the day tick and whenever the overworld is entered. That covers a level reached in a duel,
+    and a save from before this round. Each place comes once.
+  - Spacing follows world generation's own, 4 tiles from a place on the map and 3 from a hidden one. The wasteland
+    holds the rotation's hidden reserve dungeons too, and the first try (6 tiles) placed only one of the three.
+  - Console: `levelplaces info` and `levelplaces now`. [TFR-LevelPlaces] logs each placement.
+- **The maps** (maps/map/cave/, `dev-tools/rol_import/import_r668.py`):
+  - The tower's doors and the treasure template were repointed from Realm of Legends.
+  - The text was refit to this realm. Hexhaven is the great mage school the realm swallowed whole "long before you
+    woke". The Echoverse is "pieces of other worlds this realm has swallowed" ("It seems the realm keeps a copy of
+    everything it takes").
+  - In the Theorist's multiverse, one mind is trying to write its way out by remaking everything else. When he falls,
+    the fractures close "like water", and "the realm is whole again".
+  - The spark replaces the manasight stone.
+- **The 25 legends**:
+  - They use Realm of Legends' entries, sprites and rewards. Where this plane has a remake of the same sprite, the
+    remake is used: the Theorist is the remade Jace, Echo Kiora the remade Kiora, and so on.
+  - Every deck was a 100-card Commander deck. Each is rebuilt as a 60-card deck around its legend
+    (`dev-tools/rol_import/rebuild_commander_deck.py`).
+    - Out: commander-only cards, cards that need a commander, the restricted list (Sol Ring was in 22 of the 25),
+      digital-only cards, cards the AI drops, and two cards Forge lacks.
+    - Strength comes from Forge's draft rankings, with a bonus for the legend's tribe. The legend goes in twice.
+    - Copies are 3 / 2 / 1 down the ranking. Lands follow the curve, with the pips' basics and the pool's best
+      nonbasics.
+  - Life is 30 for the floor legends, 50 for the Ur-Sphinx and the Theorist, and 40 for Tam. All are Rare, except the
+    Ur-Sphinx, Tam and the Theorist, which are Mythic and best of three. All are difficulty 3 with spawnRate 0.
+  - Also: enemies.csv rows, round 644's ledger (`built-r668`), enemy_scale (20 scales) and two footprints.
+- **The items**:
+  - Vexing Boots (the Ur-Sphinx), Fulcrum Gauntlet (Echo Karn), Pants of the Fattest Butt (Echo Yargle; Legs, not
+    Boots), Mind Sculptor, Deathbringer, Healer and Warlord Necklaces (the Theorist), and Paradox Necklace (Tam).
+  - The two Landscape Sketchbooks Realm of Legends left without a source: Secrets of Strixhaven (from the Ur-Sphinx)
+    and Reality Fracture (from Titanbones).
+  - Descriptions say what the cards do. The icons are regions this plane's items.png already held.
+- **Jace's Echo** (`dev-tools/rol_import/make_jaces_echo.py`):
+  - Each "Way of the ..." necklace empowers Jace as its card ENTERS, but an item's card never enters. The agent game
+    showed Way of the Mind Sculptor in play on turn 1 with no Jace, so all five were planeswalker bonuses with no
+    planeswalker.
+  - The necklaces now also carry Jace's Echo, a command-zone card that empowers Jace 5 at the first upkeep (the
+    Pledges' pattern, round 630). Its face uses the blue Jace boss frame, with art by Ekaterina Burmak (CREDITS.md).
+  - Seen: the Jace token on the player's side.
+- **Seen in the agent game** (a copy of the user's save, day 270, at Ascendance 3):
+  - At level 3, `levelplaces info` showed "not yet". After `asc set 20` and a day, all three appeared in the
+    wasteland with the notice.
+  - The tower's doors climbed floors 1-4. The intro dialogs showed the new text.
+  - Duels against Ingris Stingerquill, the Ur-Sphinx (125 life at the save's 2.5x, his sphinx deck) and Echo Liliana
+    loaded their 60-card decks with the dungeon effects (Hexhaven Dueling Arena, Theorist's Sanctum).
+  - No exception in the log.
+  - Not seen: winning in any of the three (the test character lost each), and so the Theorist's defeat text and the
+    drops in play.
+- **Checks**: `validate_plane_data.py` shows only its three usual sections. `poi_outline.py --audit` reports 0 entrance
+  sprites without an outline. Nothing for the new decks in `deck_legality_audit.py`.
+
 ## Round 667: the Nantuko Guard, Mazirek and Amzu on a drawn mantis head (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_667.py`. This is list 3's F130:

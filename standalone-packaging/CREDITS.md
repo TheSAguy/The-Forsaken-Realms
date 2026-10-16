@@ -18,7 +18,8 @@ Forsaken Realms ports a substantial amount of their content: the legendary
 boss encounters and their decks, eight dungeons (Ashling's Domain, Eclipsed
 Elven Court, Planeswalker Dueling Club, Idyllic Beachfront, Peaceful Clearing,
 An-Havva Inn, Ancient Opal Cavern, Isolated Hut), an expanded item catalog,
-building/boss artwork, and starter deck concepts.
+building/boss artwork, and starter deck concepts. From their 1.077 "Reality Fracture" update, three end-game
+dungeons (Hexhaven Tower, the Echoverse Overlay, the Theorist's Sanctum) with their legends and items.
 
 ## The Shandalar Old Border team
 
@@ -490,6 +491,9 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **Slawomir Maniak**; *Nin, the Pain Artist* by **Brad Rigney**; *Vedalken Aethermage* by **William Simpson**;
   *Vedalken Infiltrator* by **Izzy**; *Esper Stormblade* by **Matt Stewart**; *Curio Vendor* by **Igor Kieryluk**; and
   *Skatewing Spy* by **Grzegorz Rutkowski**.
+
+- **Jace's Echo** (a command-zone card the Theorist's necklaces carry) - its face uses *The Theorist, Jace Beleren*
+  by **Ekaterina Burmak**, card art from *Magic: The Gathering*, © Wizards of the Coast LLC.
 
 - **Human portraits** - card art from *Magic: The Gathering*, © Wizards of the Coast LLC, cropped for the portraits.
   Male: *Abdel Adrian, Gorion's Ward* by **Karl Kopinski**; *Baird, Steward of Argive* by **Christine Choi**; *Crovax,

@@ -289,6 +289,12 @@
    1.0
   ]
  },
+ "decks/legends/aerid_konstrari.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
  "decks/legends/aesi.dck": {
   "old": "Ior Ruin Expedition",
   "new": "Legacy's Allure",
@@ -1529,6 +1535,12 @@
    1.0
   ]
  },
+ "decks/legends/denzilore_fatehold.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
  "decks/legends/depala.dck": {
   "old": "Crush Contraband",
   "new": "Jabari's Influence",
@@ -1648,6 +1660,102 @@
    0.11,
    0.98
   ]
+ },
+ "decks/legends/echo_avacyn.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_codie.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_edgar.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_ghalta.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_gideon.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_karn.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_kiora.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_liliana.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_lyra.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_nissa.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_ob_nixilis.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_ruric_thar.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_tamiyo.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_vraska.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_yargle.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
+ "decks/legends/echo_yuriko.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
  },
  "decks/legends/edgar_markov.dck": {
   "old": "Mercadia's Downfall",
@@ -2839,6 +2947,12 @@
    0.97
   ]
  },
+ "decks/legends/ingris_stingerquill.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
  "decks/legends/inniaz.dck": {
   "old": "Faerie Seer",
   "new": "Snapcaster Mage",
@@ -3744,6 +3858,12 @@
    0.11,
    0.91
   ]
+ },
+ "decks/legends/kwia_vigorbloom.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
  },
  "decks/legends/kykar.dck": {
   "old": "Lapse of Certainty",
@@ -6435,6 +6555,12 @@
    0.9
   ]
  },
+ "decks/legends/tam_the_possibility.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
  "decks/legends/tanazir.dck": {
   "old": "Triton Shorestalker",
   "new": "Shoreline Looter",
@@ -6835,6 +6961,12 @@
    1.0
   ]
  },
+ "decks/legends/the_theorist.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
+ },
  "decks/legends/the_ur-dragon.dck": {
   "old": "Dracogenesis",
   "new": "Debtors' Knell",
@@ -6844,6 +6976,12 @@
    0.01,
    0.98
   ]
+ },
+ "decks/legends/the_ur-sphinx.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
  },
  "decks/legends/thelon.dck": {
   "old": "Crawling Infestation",
@@ -6944,6 +7082,12 @@
    0.02,
    0.87
   ]
+ },
+ "decks/legends/titanbones.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
  },
  "decks/legends/tivit.dck": {
   "old": "Monologue Tax",
@@ -7154,6 +7298,12 @@
    0.11,
    0.91
   ]
+ },
+ "decks/legends/uldaros_theorix.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r668"
  },
  "decks/legends/ulrich.dck": {
   "old": "Second Harvest",

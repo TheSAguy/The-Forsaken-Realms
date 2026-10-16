@@ -45,6 +45,13 @@ public class PointOfInterestData implements Serializable {
     public String[] returnStartCards;
     /** Round 468: returnStartCards go to each opponent once more per clear, up to this many times (the arena: 3). */
     public int returnStartCardsMax = 1;
+    /** Round 668 (the user, of the three end-game legend dungeons brought over from Realm of Legends: "Since they are
+     *  end-game, let's not have them appear till the player reaches level 20+"): world generation never makes this
+     *  place; it is put on the map once the character's Ascendance level reaches this (without Ascendance: on
+     *  TuningData.levelPlacesFallbackDay). 0 = an ordinary place. LevelPlaces. */
+    public int appearsAtLevel;
+    /** Round 668: the land (BiomeData.name, e.g. "waste") an appearsAtLevel place is put in. */
+    public String appearsInBiome;
     public DialogData.ActionData.QuestFlag[] questFlagsToActivate = new DialogData.ActionData.QuestFlag[0];
     public String displayName;
 
@@ -94,6 +101,8 @@ public class PointOfInterestData implements Serializable {
         leavesWhenBeaten = other.leavesWhenBeaten; // round 466
         returnStartCards = other.returnStartCards;
         returnStartCardsMax = other.returnStartCardsMax; // round 468
+        appearsAtLevel = other.appearsAtLevel; // round 668
+        appearsInBiome = other.appearsInBiome;
     }
 
     public String getDisplayName() {

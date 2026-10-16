@@ -4155,6 +4155,77 @@ public class World implements Disposable, SaveFileContent {
     }
 
     /**
+     * Round 668: places a brand-new POI in one land, the way world generation would - a point inside that biome's
+     * ellipse (minRadius..maxRadius of its half-size from its start point) whose highest biome is that land, clear of the
+     * barrier and of every other place - at least keepAwayTiles from each point in keepAway. Registers it, clears its
+     * ground and repaints the minimap; the caller refreshes the overworld chunk. Null when no spot was found.
+     * LevelPlaces' places (PointOfInterestData.appearsAtLevel) come this way.
+     */
+    public PointOfInterest addPointOfInterestInBiome(PointOfInterestData poiData, String biomeName, float minRadius,
+                                                     float maxRadius, List<Vector2> keepAway, int keepAwayTiles) {
+        if (poiData == null || mapPoiIds == null || biomeName == null)
+            return null;
+        List<BiomeData> biomes = data.GetBiomes();
+        int biomeIndex = -1;
+        for (int i = 0; i < biomes.size(); i++) {
+            if (biomeName.equals(biomes.get(i).name)) {
+                biomeIndex = i;
+                break;
+            }
+        }
+        if (biomeIndex < 0) {
+            System.out.println("[World] no land called " + biomeName + " for " + poiData.name);
+            return null;
+        }
+        BiomeData biome = biomes.get(biomeIndex);
+        for (int attempt = 0; attempt < 3000; attempt++) {
+            double radius = minRadius + random.nextDouble() * (maxRadius - minRadius);
+            double theta = random.nextDouble() * 2 * Math.PI;
+            int wx = (int) (radius * Math.cos(theta) * biome.width * width / 2 + biome.startPointX * width);
+            int wy = (int) (radius * Math.sin(theta) * biome.height * height / 2 + (height - biome.startPointY * height));
+            if (wx < 2 || wy < 2 || wx >= width - 2 || wy >= height - 2)
+                continue;
+            if (biomeIndex != highestBiome(getBiome(wx, wy)))
+                continue;
+            if (barrierNearPlace(wx, wy))
+                continue;
+            // About world generation's own spacing (a place's box), not addPointOfInterestNear's 5: the wasteland holds
+            // the rotation's hidden reserve dungeons too, and a 13x13 box round each left no room at all (the agent
+            // game, day 271: two of three places found no spot in 6,000 tries). A hidden one may come back - 3 tiles.
+            boolean tooClose = false;
+            for (PointOfInterest other : getAllPointOfInterest()) {
+                int px = (int) (other.getPosition().x / data.tileSize);
+                int py = (int) (other.getPosition().y / data.tileSize);
+                int clear = other.getActive() ? 4 : 3;
+                if (Math.abs(px - wx) <= clear && Math.abs(py - wy) <= clear) {
+                    tooClose = true;
+                    break;
+                }
+            }
+            if (!tooClose && keepAway != null) {
+                for (Vector2 p : keepAway) {
+                    float dx = p.x / data.tileSize - wx, dy = p.y / data.tileSize - wy;
+                    if (dx * dx + dy * dy < (float) keepAwayTiles * keepAwayTiles) {
+                        tooClose = true;
+                        break;
+                    }
+                }
+            }
+            if (tooClose)
+                continue;
+            PointOfInterest newPoint = new PointOfInterest(poiData, new Vector2(wx * data.tileSize, wy * data.tileSize), random);
+            clearTerrain(wx, wy, 3);
+            mapPoiIds.add(newPoint);
+            refreshWorldMapMarkers();
+            System.out.println("[World] placed " + poiData.name + " at tile " + wx + "," + wy + " in " + biomeName
+                    + " (attempt " + (attempt + 1) + ")");
+            return newPoint;
+        }
+        System.out.println("[World] no free spot for " + poiData.name + " in " + biomeName);
+        return null;
+    }
+
+    /**
      * Round 250: the map-image rectangle {x, y, w, h} (image pixels, y down) that redrawPoiMarkers() draws this POI's
      * icon into, or null when it draws none. The same branches and sizes as that method - keep the two in step.
      */

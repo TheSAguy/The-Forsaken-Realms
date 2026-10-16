@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 668 - places that come with the player's level (LevelPlaces)
+
+- **`PointOfInterestData`** - `appearsAtLevel`, `appearsInBiome` (+ the copy constructor). World generation never
+  places such a place (no land lists it); `util/LevelPlaces` (ours) does, at that Ascendance level.
+- **`World.addPointOfInterestInBiome`** - new, beside `addPointOfInterestNear`: a spot inside one biome's ellipse whose
+  highest biome is that land, clear of the barrier, 4 tiles from an active place and 3 from a hidden one.
+- **`WorldStage`** - `LevelPlaces.check` on the day tick (after DungeonRotation) and at the end of `enter()` (not on the
+  spawn entry, not after a run ended); `compassDirection` is public for its notice.
+- **`TuningData.levelPlacesFallbackDay`**, **`ConsoleCommandInterpreter`** `levelplaces info|now`.
+
 ### Round 665 - the engine to the 10.16 daily (upstream `64569999b8b`)
 
 - No conflicts. Upstream removed `IGuiGame.getGamestate()` (and MatchController's override); nothing of ours used it.

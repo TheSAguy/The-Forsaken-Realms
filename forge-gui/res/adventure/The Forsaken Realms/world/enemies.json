@@ -168997,5 +168997,1772 @@
         ],
         "tier": "Rare",
         "scale": 0.1548
+    },
+    {
+        "name": "Ingris Stingerquill",
+        "sprite": "sprites/enemy/remake/faerie_dragon.atlas",
+        "deck": [
+            "decks/legends/ingris_stingerquill.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Ingris Stingerquill"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "BR",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.2321
+    },
+    {
+        "name": "Denzilore Fatehold",
+        "sprite": "sprites/enemy/monstrosity/androsphinx.atlas",
+        "deck": [
+            "decks/legends/denzilore_fatehold.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Denzilore Fatehold"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "WU",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.5069
+    },
+    {
+        "name": "Echo Codie",
+        "sprite": "sprites/enemy/remake/eye.atlas",
+        "deck": [
+            "decks/legends/echo_codie.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Codie, Ravenous Codex"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "WUBRG",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.3714
+    },
+    {
+        "name": "Aerid Konstrari",
+        "sprite": "sprites/enemy/remake/criosphinx.atlas",
+        "deck": [
+            "decks/legends/aerid_konstrari.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Aerid Konstrari"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "RG",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.2889
+    },
+    {
+        "name": "Kwia Vigorbloom",
+        "sprite": "sprites/enemy/remake/criosphinx.atlas",
+        "deck": [
+            "decks/legends/kwia_vigorbloom.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Kwia Vigorbloom"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "WG",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.2889
+    },
+    {
+        "name": "Uldaros Theorix",
+        "sprite": "sprites/enemy/monstrosity/shardsoul_slayer.atlas",
+        "deck": [
+            "decks/legends/uldaros_theorix.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Uldaros Theorix"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "UB",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.5
+    },
+    {
+        "name": "The Ur-Sphinx",
+        "sprite": "sprites/enemy/monstrosity/androsphinx.atlas",
+        "deck": [
+            "decks/legends/the_ur-sphinx.dck"
+        ],
+        "ai": "",
+        "speed": 45,
+        "flying": true,
+        "life": 50,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Landscape Sketchbook - Secrets of Strixhaven"
+            },
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Vexing Boots"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "The Ur-Sphinx"
+            },
+            {
+                "type": "deckCard",
+                "count": 4,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 3,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 500,
+                "addMaxCount": 2000
+            },
+            {
+                "type": "shards",
+                "count": 10,
+                "addMaxCount": 30
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "probability": 0.3,
+                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+            },
+            {
+                "type": "landSketchbookShop",
+                "probability": 0.3,
+                "count": 1
+            }
+        ],
+        "colors": "WUB",
+        "gamesPerMatch": 3,
+        "spawnRate": 0,
+        "tier": "Mythic",
+        "difficulty": 3,
+        "scale": 0.5069
+    },
+    {
+        "name": "Titanbones",
+        "sprite": "sprites/enemy/remake/skeleton.atlas",
+        "deck": [
+            "decks/legends/titanbones.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Landscape Sketchbook - Reality Fracture"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Titanbones, Towering Heart"
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 50,
+                "addMaxCount": 250
+            },
+            {
+                "type": "shards",
+                "count": 1,
+                "addMaxCount": 5
+            }
+        ],
+        "colors": "G",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.2955
+    },
+    {
+        "name": "Echo Tamiyo",
+        "sprite": "sprites/enemy/humanoid/kor/kor_blue.atlas",
+        "deck": [
+            "decks/legends/echo_tamiyo.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Tamiyo, Upriser Crowned"
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 50,
+                "addMaxCount": 250
+            },
+            {
+                "type": "shards",
+                "count": 1,
+                "addMaxCount": 5
+            }
+        ],
+        "colors": "WR",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3
+    },
+    {
+        "name": "Echo Karn",
+        "sprite": "sprites/enemy/construct/artifactsoldier.atlas",
+        "deck": [
+            "decks/legends/echo_karn.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Fulcrum Gauntlet"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Karn, Gilded Guardian"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            },
+            {
+                "type": "card",
+                "probability": 0.1,
+                "count": 1,
+                "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "probability": 0.2,
+                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+            },
+            {
+                "type": "landSketchbookShop",
+                "probability": 0.1,
+                "count": 1
+            }
+        ],
+        "colors": "WUBRG",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 1.0833
+    },
+    {
+        "name": "Echo Yargle",
+        "sprite": "sprites/enemy/aberration/froghemoth.atlas",
+        "deck": [
+            "decks/legends/echo_yargle.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Pants of the Fattest Butt"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Yargle, Goliath of Otaria"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            },
+            {
+                "type": "card",
+                "probability": 0.1,
+                "count": 1,
+                "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "probability": 0.2,
+                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+            },
+            {
+                "type": "landSketchbookShop",
+                "probability": 0.1,
+                "count": 1
+            }
+        ],
+        "colors": "U",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.3095
+    },
+    {
+        "name": "Echo Lyra",
+        "sprite": "sprites/enemy/celestial/angel_2.atlas",
+        "deck": [
+            "decks/legends/echo_lyra.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Lyra, Tolarian Archangel"
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 50,
+                "addMaxCount": 250
+            },
+            {
+                "type": "shards",
+                "count": 1,
+                "addMaxCount": 5
+            }
+        ],
+        "colors": "U",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3
+    },
+    {
+        "name": "Echo Yuriko",
+        "sprite": "sprites/enemy/humanoid/paladin_2.atlas",
+        "deck": [
+            "decks/legends/echo_yuriko.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Yuriko, Blade of the Mighty"
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 50,
+                "addMaxCount": 250
+            },
+            {
+                "type": "shards",
+                "count": 1,
+                "addMaxCount": 5
+            }
+        ],
+        "colors": "W",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.9286
+    },
+    {
+        "name": "Echo Edgar",
+        "sprite": "sprites/enemy/remake/werewolf.atlas",
+        "deck": [
+            "decks/legends/echo_edgar.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Edgar, Moonlit Sovereign"
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 50,
+                "addMaxCount": 250
+            },
+            {
+                "type": "shards",
+                "count": 1,
+                "addMaxCount": 5
+            }
+        ],
+        "colors": "G",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.2889
+    },
+    {
+        "name": "Echo Ghalta",
+        "sprite": "sprites/enemy/beast/dinosaur/dinosaur_triceratops.atlas",
+        "deck": [
+            "decks/legends/echo_ghalta.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Ghalta the Immovable"
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 50,
+                "addMaxCount": 250
+            },
+            {
+                "type": "shards",
+                "count": 1,
+                "addMaxCount": 5
+            }
+        ],
+        "colors": "W",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.8498
+    },
+    {
+        "name": "Echo Kiora",
+        "sprite": "sprites/enemy/remake/kiora.atlas",
+        "deck": [
+            "decks/legends/echo_kiora.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Kiora of Fire and Ashes"
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 50,
+                "addMaxCount": 250
+            },
+            {
+                "type": "shards",
+                "count": 1,
+                "addMaxCount": 5
+            }
+        ],
+        "colors": "R",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.3023
+    },
+    {
+        "name": "Echo Ruric Thar",
+        "sprite": "sprites/enemy/remake/homarid.atlas",
+        "deck": [
+            "decks/legends/echo_ruric_thar.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Ruric Thar, Biomagus"
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 50,
+                "addMaxCount": 250
+            },
+            {
+                "type": "shards",
+                "count": 1,
+                "addMaxCount": 5
+            }
+        ],
+        "colors": "U",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.2889
+    },
+    {
+        "name": "Echo Liliana",
+        "sprite": "sprites/enemy/remake/cleric.atlas",
+        "deck": [
+            "decks/legends/echo_liliana.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Liliana the Faultless"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "W",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.3171
+    },
+    {
+        "name": "Echo Nissa",
+        "sprite": "sprites/enemy/humanoid/elf/druid.atlas",
+        "deck": [
+            "decks/legends/echo_nissa.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Nissa, Leyline Tamer"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "WUBR",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3
+    },
+    {
+        "name": "Echo Vraska",
+        "sprite": "sprites/enemy/monstrosity/gorgonen.atlas",
+        "deck": [
+            "decks/legends/echo_vraska.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Vraska, Soul of Stone"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "WUR",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 1.0833
+    },
+    {
+        "name": "Echo Gideon",
+        "sprite": "sprites/enemy/humanoid/human/knight/death_knight_2.atlas",
+        "deck": [
+            "decks/legends/echo_gideon.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Gideon the Oathless"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "B",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3
+    },
+    {
+        "name": "Echo Ob Nixilis",
+        "sprite": "sprites/enemy/celestial/peerlesssolar.atlas",
+        "deck": [
+            "decks/legends/echo_ob_nixilis.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Ob Nixilis, the Ascended"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "W",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.5652
+    },
+    {
+        "name": "Echo Avacyn",
+        "sprite": "sprites/enemy/remake/fallen_angel.atlas",
+        "deck": [
+            "decks/legends/echo_avacyn.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Avacyn, Angel of Horror"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "B",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.3095
+    },
+    {
+        "name": "The Theorist",
+        "sprite": "sprites/enemy/remake/jace.atlas",
+        "deck": [
+            "decks/legends/the_theorist.dck"
+        ],
+        "ai": "",
+        "speed": 45,
+        "life": 50,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Mind Sculptor Necklace"
+            },
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Deathbringer Necklace"
+            },
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Healer Necklace"
+            },
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Warlord Necklace"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Jace, Multiverse Architect"
+            },
+            {
+                "type": "deckCard",
+                "count": 6,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 2000,
+                "addMaxCount": 6000
+            },
+            {
+                "type": "shards",
+                "count": 20,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "addMaxCount": 2,
+                "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+            },
+            {
+                "type": "landSketchbookShop",
+                "count": 1
+            }
+        ],
+        "colors": "WUBR",
+        "gamesPerMatch": 3,
+        "spawnRate": 0,
+        "tier": "Mythic",
+        "difficulty": 3,
+        "scale": 0.3171
+    },
+    {
+        "name": "Tam the Possibility",
+        "sprite": "sprites/enemy/monstrosity/gorgone.atlas",
+        "deck": [
+            "decks/legends/tam_the_possibility.dck"
+        ],
+        "ai": "",
+        "speed": 45,
+        "life": 40,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Paradox Necklace"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Tam, the Possibility"
+            },
+            {
+                "type": "deckCard",
+                "count": 4,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 3,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 500,
+                "addMaxCount": 2000
+            },
+            {
+                "type": "shards",
+                "count": 10,
+                "addMaxCount": 30
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "probability": 0.3,
+                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+            },
+            {
+                "type": "landSketchbookShop",
+                "probability": 0.3,
+                "count": 1
+            }
+        ],
+        "colors": "WUBRG",
+        "gamesPerMatch": 3,
+        "spawnRate": 0,
+        "tier": "Mythic",
+        "difficulty": 3
     }
 ]
