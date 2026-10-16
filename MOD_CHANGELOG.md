@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 657: every world-map entrance carries a 1px black outline - and that is the rule now (2026-10-16)
+
+The user, after round 655's Elf Town and Lake of the Hydra: "I like the 1px outline more. can we please apply that to
+all cave entrances that don't have one. Let's also make that the rule for entrances moving forward."
+
+- **Which**: every place sprite of an entrance type (cave, dungeon, the three side-boss lairs) - 338 sprites. An
+  outline score (`poi_outline.py`): the share of silhouette edge pixels that are dark (luminance < 45) or much darker
+  than the pixel just inside (< 0.55x and < 110) - a light-gray border does not count, a dark one of any color does.
+  Below 0.30 plainly none (39 sprites); 0.30-0.65 was checked by eye (156 sprites - dark-outlined caves on a soft drop
+  shadow score there): 28 had none, 128 are outlined (`reviewed_ok`); from 0.65 one more (Grove6). 68 outlined in all:
+  the painted PixelLab and Heroes III entrances (CaveGB, CaveUGen03's waterfall, the white temples and caves, Slimefoot's
+  Lair, the mermaid pools, the thatched huts, Kenrith's Court, Scarecrow Farm, the Planeswalker Dueling Club, the
+  Valor's Reach arena, Demon's Bargain, Slobad's Factory, the Svyelunite Temple, Kiora's Island...).
+- **How** (`dev-tools/poi_outline.py`, round 655's method): inside each region (size, position and footprint as they
+  were); silhouette alpha >= 128 less specks of 3 pixels or fewer (Demon's Bargain had a stray pixel that became a lone
+  dot); black ring outside where there is room, the edge pixels themselves on the region border; opaque body. A sprite
+  already outlined (score >= 0.9) is skipped, so re-running never doubles an outline.
+- **Upstream sprites**: Kiora's Island and the Svyelunite Temple live in `adventure/common`'s buildingsbosses atlas. They
+  were copied, outlined, onto a new plane page `maps/tileset/entrances_outlined.atlas/.png`, and their two places in
+  points_of_interest.json point there - the upstream file is untouched (engine merges stay clean).
+- **The rule** (CLAUDE.md, "World-map entrances carry a 1px black outline"): `python dev-tools/poi_outline.py --audit
+  <repo>` lists every entrance sprite with no outline and not reviewed, exit 1 if any - run it after adding or changing
+  one; `--apply <repo> dev-tools/entrance_outlines.json --write` outlines the listed ones. It reports 0 now.
+- **Pages edited**: maps/tileset/dungeon_entrances_2.png (61), dungeon_entrances.png (3), sprites/buildingsbosses.png (2).
+- **Seen in the agent game** (a copy of the user's slot 2): Kiora's Island drawn from the new page, outlined; the page
+  loads (`entrances_outlined.atlas... Found!`), no errors. The Svyelunite Temple is not on the map in that save (its
+  quest). Previews of all 68, before / after, checked first.
+
 ## Round 653: Tekuthal gets the user's hand-made floating horror (2026-10-16)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/tekuthal/convert.sh`. This is F85 of list 2

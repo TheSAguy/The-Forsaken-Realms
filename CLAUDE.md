@@ -39,6 +39,8 @@ round and before it is packaged: each conflict (file and feature), what upstream
 impact on the game (what players will notice, saves, risk, what to test). Trivial textual conflicts get one line. If a
 conflict forces a choice between upstream's behavior and ours, ask before choosing.
 
+**World-map entrances carry a 1px black outline (standing user rule, 2026-10-16: "I like the 1px outline more ... Let's also make that the rule for entrances moving forward.")** Every cave, dungeon and side-boss place sprite has a 1px black outline round its silhouette, drawn inside its own atlas region (size, position and footprint unchanged). New or changed entrance art: run `python dev-tools/poi_outline.py --audit <repo>` - it lists entrances with no outline (exit 1); outline them with `--apply` (add them to dev-tools/entrance_outlines.json "outline"), or, when the score is in the 0.30-0.65 band and the sprite does carry a dark outline (a soft drop shadow lowers the score), add it to "reviewed_ok". Never edit an adventure/common page: copy the sprite onto the plane (`--apply` does that) and repoint its places.
+
 **Importing content from Realm of Legends or any other plane (standing user rule, 2026-10-16: "No Commander. No quest
 lines not pertinent to our mod. No gifts they promise ... I don't want another 'Liliana's Stone' situation, or Commander
 cards or quest lure that's specific to RoL.")** Every map, enemy, deck, item, shop or dialog taken from another plane
@@ -112,6 +114,8 @@ the 10.14 daily (upstream `34a8662b796`, round 612). Assets in `C:\TFR\release\v
 Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and cut the raid and flee lines, added
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
+
+## STATE 2026-10-16 (round 657): **LOCAL + UNRELEASED (art + data)** - all 68 world-map entrance sprites without an outline got round 655's 1px black outline (`dev-tools/poi_outline.py --apply`, list + reviewed set in dev-tools/entrance_outlines.json); Kiora's Island + the Svyelunite Temple (upstream common sprites) copied onto the plane page maps/tileset/entrances_outlined and repointed. Standing rule + `--audit` check (0 reported). Seen in the agent game.
 
 ## STATE 2026-10-16 (round 653): **LOCAL + UNRELEASED (art + data)** - Tekuthal gets the user's hand-made floating
 horror (Pixelate; generator `pixelate/tekuthal/convert.sh`; a whip attack with motion-blur smears, the death ends before

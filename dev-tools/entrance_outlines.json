@@ -1,0 +1,796 @@
+{
+ "_doc": [
+  "Round 657 (the user: 'apply that [1px black outline] to all cave entrances that don't have one. Let's also make that the rule for entrances moving forward').",
+  "outline: the entrance sprites that had no outline, outlined by dev-tools/poi_outline.py --apply (re-running skips any already outlined).",
+  "reviewed_ok: entrance sprites whose outline score sits in 0.30-0.65 (a dark-outlined cave on a soft drop shadow scores there) that were checked by eye and already carry an outline - poi_outline.py --audit does not report them.",
+  "A NEW entrance sprite: run poi_outline.py --audit; outline what it reports, or add it here once checked."
+ ],
+ "outline": [
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCD"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGB"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveW"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveWGen03"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveUGen03"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveW1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveWGen10"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Monastery4"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen08"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveWGen01"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Monastery"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveW3"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+   "RuinsBrown"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_FortBlue1"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+   "Tranquil Clearing"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Quest_PrimalJungle"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Monastery2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_GreyPalace_Snow_Abbey"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCGen08"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Castle2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Maze"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveUGen08"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Quest_ShardMines"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_FortBlue2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveUGen05"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Grove1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCGen04"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Castle3"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_AncientDiamondMine"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCA"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCGen12"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+   "Idyllic Beachfront"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Great_Aurora_Eclipsed_Elven_Court"
+  ],
+  [
+   "../common/maps/tileset/buildingsbosses.atlas",
+   "Kiora"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveWGen04"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Grove5"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Graveyard1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_MageTower_Witherbloom_Classroom"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveW2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen05"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveUGen12"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+   "SandTowerTall"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Slimefoot_Slimefoot_s_Lair"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCGen06"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_MerfolkPool3"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_WhiteCastle_Von_Gant_s_Fortress"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Grove_The_Honey_Cove"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_SandPalace_Djinn_s_Palace"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Building157_Vampire_Castle"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Scarecrow_Farm_401"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CatLair_Leonin_Camp"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Planeswalker_Dueling_Club"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+   "SandTowerTallRuined"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveG1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_SkullCaveR"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_BarbarianCamp5"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Prismari_Classroom"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Zedruu_City_401"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Kavu_Lair"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveC3"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Valor_s_Reach_Arena"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveC8"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_DemonsBargain"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Slobad_Slobad_s_Factory"
+  ],
+  [
+   "../common/maps/tileset/buildingsbosses.atlas",
+   "SvyeluniteTemple"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveBGen02"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Grove4"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Grove6_593"
+  ]
+ ],
+ "reviewed_ok": [
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveRGen02"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveRB"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveRE"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen11"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveR8"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen02"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveG4"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveBGen06"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveBGen05"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveRGen01"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveC1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveC6"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveWGen08"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveR6"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveRGen13"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_GroveFaerieDragon"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveR7"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveR"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveW4"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveWGen11"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveR1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_inn_lodge_1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen10"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCGen01"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_RiddlesLair"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveW5"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen12"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCGen11"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveC2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCB"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Jacehold"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveU4"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveUGen11"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Grove2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Factory2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen06"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_GitaxianLab"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveB5"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveBGen04"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Fort1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Quest_LibraryOfVarsil"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveG6"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveC7"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveRGen11"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Lavaforge_Kobold"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Quest_BanditCave"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen13"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveWGen12"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveAmphin"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveU2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Court_of_Paliano"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Teferi_Hideout"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen03"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_SkullCaveR2_401"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveW6"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_FortBlue4"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCGen05"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveWGen05"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_BarbarianCamp4"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_SkullCaveR1_401"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen01"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+   "Gruul Guildgate"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveUGen07"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveU1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveBA"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveC5"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveEldrazi"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "CatLair"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveUGen02"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_DemonTower"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Quest_DigSite"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveBGen01"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Graveyard"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveC9"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveWGen06"
+  ],
+  [
+   "../common/maps/tileset/buildingsbosses.atlas",
+   "SlimeCave"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+   "CalamityCave"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_EvilGrove4"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Graveyard2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveUGen01"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveBGen13"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Fort3_401"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Fort7"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_FurnaceBase"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveB6"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Aerie"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveGGen04"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_GroveGreenDragon"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveUGen10"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Maze1"
+  ],
+  [
+   "../common/maps/tileset/buildings.atlas",
+   "WasteTown"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Crawlspace"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Building79"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveRGen06"
+  ],
+  [
+   "../common/maps/tileset/buildingsbosses.atlas",
+   "Skep"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveU"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_VampireCastle_Vampire_Castle"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Building52_Black_Tower"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveR5"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Dream_Halls"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_FortMultilevel"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Fort5"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_inn_forgotten_lodge_1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveCGen13"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveUGen06"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_FortBlue3"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_MageTower7Church"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Quandrix_Classroom"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Fort2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveTroll"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_MageTowerU5"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveC4"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_MageTowerC6"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Monastery1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_MageTowerU4"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_FortBlue5_593"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_SkullCaveB2"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveBGen03"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_LavaForge1"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveR3"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_DjinnPalace"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Temple_of_Chandra_593"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Lich_s_Mirror"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Building128"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_Silverquill_Classroom"
+  ],
+  [
+   "../common/maps/tileset/buildings.atlas",
+   "SwampTown"
+  ],
+  [
+   "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+   "E_CaveZombie"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Building84"
+  ]
+ ]
+}

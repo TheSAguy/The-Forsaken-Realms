@@ -1,0 +1,11 @@
+entrances_outlined.png
+size: 109,46
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Kiora
+  xy: 0, 0
+  size: 59, 46
+SvyeluniteTemple
+  xy: 61, 0
+  size: 48, 32
