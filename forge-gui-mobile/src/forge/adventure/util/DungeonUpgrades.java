@@ -69,7 +69,13 @@ public final class DungeonUpgrades {
             // same): a rank this week's row closes - no Masters in week 1 - is not reached by an upgrade either.
             if (SpawnTierWeighting.isEnabled() && SpawnTierWeighting.targetTierWeight(SpawnTierWeighting.tiers()[to], week, null) <= 0f)
                 continue;
-            EnemyData pick = pick(land, placed, SpawnTierWeighting.tiers()[to], ceiling, rand);
+            // Round 643: a family creature steps up as ITSELF - the Adept Bear becomes the Master Bear; the Archmage
+            // rank is unique creatures, picked from the land as before.
+            EnemyData pick = to <= 2 && EnemyTiers.isFamily(placed)
+                    ? EnemyTiers.variant(forge.adventure.data.WorldData.getEnemy(placed.name), SpawnTierWeighting.tiers()[to])
+                    : null;
+            if (pick == null || !SpawnTierWeighting.tiers()[to].equals(pick.tier))
+                pick = pick(land, placed, SpawnTierWeighting.tiers()[to], ceiling, rand);
             if (pick != null) {
                 System.out.println("[TFR-DungeonUpgrade] " + poi.getDisplayName() + " #" + objectId + ": " + placed.getName()
                         + " (" + EnemyData.tierDisplayName(placed.tier) + ") -> " + pick.getName() + " ("

@@ -1576,8 +1576,8 @@ public class MapStage extends GameStage {
                             // once fixed (it re-writes the same name) and is what captures the
                             // champion promotion above - prepareCaveChampion() no longer runs at all
                             // for a fixed roster, so the champion has to come back from here.
-                            if (changes != null && EN != null)
-                                changes.setFixedEnemy(id, EN.getName());
+                            if (changes != null && EN != null) // round 643: a tier variant keeps its tier ("Bear|Rare")
+                                changes.setFixedEnemy(id, forge.adventure.util.EnemyTiers.saveName(EN, EN.getName()));
                             EnemySprite mob = new EnemySprite(id, EN);
                             if (id == caveChampionObjectId && caveChampionData != null)
                                 mob.championLoot = true; // round 413: its arena list pays through the champion budget

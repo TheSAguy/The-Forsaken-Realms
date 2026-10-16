@@ -76,6 +76,7 @@ public class WorldData implements Serializable {
                     for (int i = 0; i < allEnemies.size; i++)
                         catalog[i] = allEnemies.get(i);
                     ContentFilterTables.registerEnemies(catalog);
+                    forge.adventure.util.EnemyTiers.applyCatalog(allEnemies); // round 643: family decks
                 }
             }
         }
@@ -91,7 +92,8 @@ public class WorldData implements Serializable {
             if(data.getName() != null && data.getName().equals(enemy))
                 return data;
         }
-        return null;
+        // Round 643: a family enemy saved at another tier than its own ("Bear|Rare", EnemyTiers.saveName).
+        return forge.adventure.util.EnemyTiers.resolveSaved(enemy);
     }
 
     public static ArrayList<String> getTownNames(String name) {

@@ -3323,7 +3323,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
             // deck/rewards. The raw name round-trips exactly; old saves that already stored an
             // override string still resolve through the same fallback they always used.
             String rawName = enemy.getValue().getData().name;
-            names.add(rawName != null && !rawName.isEmpty() ? rawName : enemy.getValue().getData().getName());
+            // Round 643: a family enemy at another tier than its own saves as "Name|Tier" (EnemyTiers.saveName).
+            names.add(forge.adventure.util.EnemyTiers.saveName(enemy.getValue().getData(),
+                    rawName != null && !rawName.isEmpty() ? rawName : enemy.getValue().getData().getName()));
             x.add(enemy.getValue().getX());
             y.add(enemy.getValue().getY());
             questStageIDs.add(enemy.getValue().questStageID);

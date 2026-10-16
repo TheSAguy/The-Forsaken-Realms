@@ -70,7 +70,9 @@ public class BiomeData implements Serializable {
                     continue;
                 for (String enemyName : enemies) {
                     if (data.getName().equals(enemyName)) {
-                        enemyList.add(data);
+                        // Round 643: a family enemy enters the roll once per tier (Apprentice, Adept, Master) - the
+                        // week's tier row picks the tier, the roster the creature. See EnemyTiers.
+                        enemyList.addAll(forge.adventure.util.EnemyTiers.expand(data));
                         break;
                     }
                 }
