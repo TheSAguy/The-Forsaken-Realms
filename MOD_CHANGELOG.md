@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 673: Kaalia and Lyra as LPC characters (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_673.py`. This is part of list
+3's F113: five enemies wore the stock `celestial/seraphim` sprite, a ball of gold rings round one eye. The user split
+them. The ring angel stays for Holy Apparition, Child of Alara and Twister of Time, and gets a hand-made Pixelate remake
+later. Kaalia is a woman and Lyra an angel in their cards, so they become LPC characters.
+
+- **Kaalia** (Kaalia of the Vast): long red hair, a steel breastplate over red sleeves, a red skirt, a black cape and a
+  longsword. She has no wings: the wings in her art belong to her angels, demons and dragons.
+- **Lyra** (Lyra Dawnbringer): a dark-skinned angel with long dark hair, on round 664's white feathered wings. Gold
+  plate stands for her stained-glass armor, over a grey robe skirt, with a spear.
+- **Files**:
+  - 2 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 2 sprite paths and scales (Kaalia 0.3023, Lyra 0.3095).
+  - `CREDITS_LPC.md` regenerated: 1009 characters, additions only. No new author.
+  - `CREDITS.md`: the LPC bullet (981 enemies).
+- **Checks**:
+  - enemies.json against HEAD: exactly these 2, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - `sprite_artifact_audit.py`: no flags on the new atlases.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 672: Oketra gets a cat head (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_672.py`. This is a redo

@@ -35812,13 +35812,13 @@
     },
     {
         "name": "Kaalia",
-        "sprite": "sprites/enemy/celestial/seraphim.atlas",
+        "sprite": "sprites/enemy/remake/kaalia.atlas",
         "deck": [
             "decks/legends/kaalia.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.619,
+        "scale": 0.3023,
         "life": 50,
         "rewards": [
             {
@@ -61009,14 +61009,14 @@
     },
     {
         "name": "Lyra",
-        "sprite": "sprites/enemy/celestial/seraphim.atlas",
+        "sprite": "sprites/enemy/remake/lyra.atlas",
         "deck": [
             "decks/legends/lyra.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 38,
-        "scale": 0.619,
+        "scale": 0.3095,
         "life": 29,
         "rewards": [
             {
