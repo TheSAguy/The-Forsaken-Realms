@@ -14264,6 +14264,92 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 644: every unique enemy's deck gets one card stronger (2026-10-15)
+
+The user: "go through all Bosses / War Champions / Legends and Arch Mages and swap out 1 card to make the deck stronger
+in your opinion." `dev-tools/enemy_tiers/upgrade_unique_decks.py`, run once; its ledger
+`dev-tools/enemy_tiers/unique_upgrades.json` makes a re-run skip every deck it already changed.
+
+- **Who**: the 1,072 unique enemies of round 642 (Archmages, bosses, legends, the spawnRate-0 arena / war / roaming
+  champions, the "Apprentice Red Wizard" style families) - 1,108 deck files.
+- **Strength** = the best percentile a card reached in any set's draft pick order (`res/draft/rankings/*.rnk`, 193
+  sets; 1.0 = a first pick). The CubeCobra list only marks a card as proven: it is never swapped out and wins ties going
+  in. A first try ranked the cube above every set and put The One Ring into 55 decks and Animate Dead into 57; it was
+  thrown away before anything was written.
+- **Out**: the weakest RANKED spell. Never a land, a legendary card (a legend deck's cast), a cube card, the enemy's own
+  card (a named card in its rewards, or one that carries its name - the first try swapped Myr Superion's own Myr
+  Superion), or a line over four copies (those decks are built on it).
+- **In**: the best card of the same card types, mana value within 1, inside the deck's colors, the copy limit and
+  legend rule kept, not restricted / Alchemy / AI RemoveDeck, and +0.25 percentile at least; then fit (the weak card's
+  colors, a shared creature type, an edition the deck prints from). A tribal deck keeps its type. No card goes into more
+  than 6 decks.
+- **Result**: 1,071 swaps with 813 different cards (none in more than 4 decks); the 13 generated (.json) decks get
+  one more rare (rares + 1/count); 24 decks had no ranked card with a real upgrade and are unchanged. Examples: Karona
+  Prismatic Boon -> Counterspell, Ghalta Gigantosaurus -> Ripjaw Raptor, Baral Unwind -> Cryptic Command, Sliver Queen
+  Diffusion Sliver -> Necrotic Sliver.
+- **Where**: each deck at its own path in the plane folder. A deck that lived in `adventure/common` is copied into the
+  plane, which `Config.getFile` reads first - the upstream file is never edited (engine merges stay clean).
+- **Checks**: `deck_legality_audit.py` - nothing new (its plane hits are the Svyelunite event decks and the copied
+  Kiora / Walter joke decks, all over the limit as written upstream). The full list of swaps:
+  `C:\Users\User\Claude_Code\Bannerloard\enemy_tiers_upgrades.md`.
+
+## Round 643: an ordinary enemy spawns as an Apprentice, an Adept or a Master (2026-10-15)
+
+The game side of round 642. `util/EnemyTiers` reads `world/enemy_tiers.json`; without the table nothing changes.
+
+- **The catalog** (`WorldData.getAllEnemies` -> `EnemyTiers.applyCatalog`): a family enemy plays its own tier's family
+  deck everywhere it appears as written - a map placement, an arena seat, a town defender. Log:
+  `[TFR-EnemyTiers] 1058 enemy families` and `... catalog enemies play their family deck`.
+- **The roaming roll** (`BiomeData.getEnemyList` -> `EnemyTiers.expand`): a family enemy of a biome's roster enters the
+  roll once per tier. `getEnemy`'s weighting already gives each tier the week's target and shares it among that tier's
+  candidates, so the tier mix is exactly what the week row, the territory, the fog zone and the win-ratio tilt set; the
+  creature is any of the biome's. Every caller of `getEnemy` gets it: roaming spawns, an unvisited dungeon's sends, a
+  dungeon re-theme, a map placement whose enemy is missing.
+- **A variant** (`EnemyTiers.variant`, cached a name and tier) is a clone of the catalog entry with the tier, that tier's
+  decks and its life. Size (the tier cue at draw), the "(Adept)" name suffix, the card budget, the resource purse,
+  Power, Walls and the Arena bars all read `tier`, so they follow by themselves. Kills, first wins and statistics stay
+  by name: one Bear, three ranks. `difficulty` (the creature's gate) is unchanged - the week row decides the rank.
+- **Dungeon upgrades** (round 447): a family creature steps up as itself - the Adept Bear becomes the Master Bear.
+  The Archmage rank still comes from the land's own Mythic creatures.
+- **Saves** keep enemies by name; a variant saves as `Name|Tier` (`EnemyTiers.saveName`; the world's roaming list and
+  a dungeon's fixed roster) and `WorldData.getEnemy` resolves it (`resolveSaved`). Old saves' plain names load the
+  catalog tier. Quests serialize whole EnemyData objects, which carry the tier already.
+- **Not changed**: the unique enemies, the attacking mages (named "Adept Red Wizard" entries), the Arena pools, town
+  defenders and the other catalog pickers (they meet a family enemy at its own tier, with its family deck).
+- `validate_plane_data.py` checks the table: every name an enemy, a triple per deck, three lives, every deck found.
+
+## Round 642: Apprentice / Adept / Master decks for every ordinary enemy (2026-10-15)
+
+The user: "take each enemy ... and create Apprentice, Adept and Master versions for each. (Archmage should be unique
+art) ... share a lot, except that the Adept deck has slightly better cards", then the sizes "Apprentice min deck size
+60 ... [Adept] 50 ... more cards that will overlap, when the excess is removed from the higher levels", and "Bosses /
+War Champions / Legends and Arch Mages [stay] unique". A 20-enemy pilot was reviewed first (scratchpad; the user saw
+the 60/50/40 table).
+
+- **Tool**: `dev-tools/enemy_tiers/make_tier_families.py <repo>` writes `decks/tiers/` (3,309 files) and
+  `world/enemy_tiers.json`. Deterministic (md5 tie-breaks); re-running rewrites the same files.
+- **Unique (no family)**: tier Mythic, boss, legend, spawnRate <= 0, a name that starts with a tier word - 1,072.
+  **Families**: the other 1,058 enemies, 1,103 deck files (an enemy with several decks gets a family for each).
+- **Yardstick**: round 46's mean rarity, C 1 / U 2 / R 4 / M 8, basics out. A card's rarity = the one it was printed
+  at most in real sets.
+- **Apprentice**: the enemy's own deck grown to 60 (more copies of its commons, like-for-like commons, basics in its
+  land ratio), then stepped down to 1.85. **Adept**: the Apprentice minus its weakest cards to 50, stepped up to 2.15 -
+  a card the Apprentice downgraded returns to the original first. **Master**: the Adept minus its weakest to 40,
+  stepped up to 3.15. A deck over 60 shrinks in the same proportion (99 -> 82 -> 66).
+- **A step** swaps a whole line for a like-for-like card (colors, card types, mana value +-1, a shared creature type
+  and the deck's editions preferred; never restricted / Alchemy / AI RemoveDeck), chaining Rare -> Uncommon ->
+  Common; then a looser match (one of its colors, its first card type, mana value +-2); going down, rare and uncommon
+  non-basic lands give way to basics; last, copies are traded with the deck's own cards. Copy limits are kept (a few
+  source decks broke them: 9 Evolving Wilds; and 7 Seven Dwarves never become 7 of a four-copy card).
+- **Generated decks** (`.json` templates, 53): three templates, count 60 / 50 / 40, rares 0.1 / 0.3 / 0.55.
+- **Life** per tier: the enemy's own at its own tier, scaled at the others by the roaming families' median life
+  (Apprentice 12, Adept 20, Master 25).
+- **Result**: Adept 1,050/1,050 and Master 1,050/1,050 in band; Apprentice 1,045 (5 stay at 2.2 - every spell already
+  at four copies, nothing plainer to trade: Drake, Simic Wizard, Sliver_Green, Unholy Skull, Domain Keeper of Cromat).
+  Shared cards, whole deck: Apprentice = Adept 90% of the Adept, Adept = Master 81% of the Master, all three 68%
+  (spells alone 83% / 68% / 47%). Mean scores by label: Common 1.50 / 2.29 / 3.28, Uncommon 1.78 / 2.24 / 3.24, Rare
+  1.79 / 2.26 / 3.31. `deck_legality_audit.py`: no tier deck over a copy limit.
+
 ## Round 645: Sol'Kanar gets the user's hand-made swamp demon (2026-10-15)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/solkanar/convert.sh`. This is B69 of the

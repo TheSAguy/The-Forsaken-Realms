@@ -1,0 +1,10790 @@
+{
+ "decks/arena/domri_rade.dck": {
+  "old": "Colossal Majesty",
+  "new": "Jugan Defends the Temple",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.29,
+   0.99
+  ]
+ },
+ "decks/arena/dovin_baan.dck": {
+  "old": "Divination",
+  "new": "Braingeyser",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.54,
+   0.97
+  ]
+ },
+ "decks/arena/kaervek.dck": {
+  "old": "Bump in the Night",
+  "new": "Thoughtseize",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.2,
+   1.0
+  ]
+ },
+ "decks/arena/meren_of_clan_nel_toth.dck": {
+  "old": "Vampire of the Dire Moon",
+  "new": "Guul Draz Assassin",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.68,
+   0.99
+  ]
+ },
+ "decks/arena/sidar_kondo.dck": {
+  "old": "Intangible Virtue",
+  "new": "Wedding Announcement",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.54,
+   0.97
+  ]
+ },
+ "decks/boss/akroma.dck": {
+  "old": "Angel of Finality",
+  "new": "Battle Angels of Tyr",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.75,
+   1.0
+  ]
+ },
+ "decks/boss/baronlegant.dck": {
+  "old": "Piety Charm",
+  "new": "Path to Exile",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.16,
+   1.0
+  ]
+ },
+ "decks/boss/bazaarkeeper.dck": {
+  "old": "Guided Passage",
+  "new": "Rampant Growth",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.29,
+   0.98
+  ]
+ },
+ "decks/boss/emrakul.dck": {
+  "old": "Titan's Presence",
+  "new": "Kozilek's Command",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.4,
+   0.94
+  ]
+ },
+ "decks/boss/gaea.dck": {
+  "old": "Seeds of Innocence",
+  "new": "Cultivate",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/boss/ghalta.dck": {
+  "old": "Gigantosaurus",
+  "new": "Ripjaw Raptor",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.3,
+   0.92
+  ]
+ },
+ "decks/boss/griselbrand.dck": {
+  "old": "Demon's Disciple",
+  "new": "Nullpriest of Oblivion",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.62,
+   0.98
+  ]
+ },
+ "decks/boss/karona.dck": {
+  "old": "Prismatic Boon",
+  "new": "Counterspell",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.25,
+   1.0
+  ]
+ },
+ "decks/boss/lathliss.dck": {
+  "old": "Dragonlord's Servant",
+  "new": "Goblin Rabblemaster",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.32,
+   0.96
+  ]
+ },
+ "decks/boss/lorthos.dck": {
+  "old": "Quest for Ula's Temple",
+  "new": "Counterbalance",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/boss/serra.dck": {
+  "old": "Purify",
+  "new": "Battle Screech",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.23,
+   0.99
+  ]
+ },
+ "decks/boss/sliver_shandalar.dck": {
+  "old": "Groundshaker Sliver",
+  "new": "Constricting Sliver",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.26,
+   0.67
+  ]
+ },
+ "decks/boss/urza.dck": {
+  "old": "Urza's Miter",
+  "new": "Snake Basket",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.27,
+   1.0
+  ]
+ },
+ "decks/elite/krampus.dck": {
+  "old": "Glacial Crevasses",
+  "new": "Aggravated Assault",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.24,
+   1.0
+  ]
+ },
+ "decks/elite/mill_mole.dck": {
+  "old": "Back to Basics",
+  "new": "Control Magic",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.99
+  ]
+ },
+ "decks/elite/santa.dck": {
+  "old": "Wirewood Channeler",
+  "new": "Deranged Hermit",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.59,
+   1.0
+  ]
+ },
+ "decks/legends/aatchik.dck": {
+  "old": "Crawling Infestation",
+  "new": "Innkeeper's Talent",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.97
+  ]
+ },
+ "decks/legends/abigale.dck": {
+  "old": "Phyrexian Soulgorger",
+  "new": "Su-Chi",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.98
+  ]
+ },
+ "decks/legends/aclazotz.dck": {
+  "old": "Necrogen Mists",
+  "new": "No Mercy",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   1.0
+  ]
+ },
+ "decks/legends/adeliz.dck": {
+  "old": "Case of the Ransacked Lab",
+  "new": "Threads of Disloyalty",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   1.0
+  ]
+ },
+ "decks/legends/admiral_brass.dck": {
+  "old": "Timestream Navigator",
+  "new": "Kitesail Larcenist",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.23,
+   0.98
+  ]
+ },
+ "decks/legends/adrix_and_nev.dck": {
+  "old": "Crafty Cutpurse",
+  "new": "Urza, Lord High Artificer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.99
+  ]
+ },
+ "decks/legends/adun_oakenshield.dck": {
+  "old": "Fervor",
+  "new": "Seismic Assault",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.44,
+   0.99
+  ]
+ },
+ "decks/legends/aegar.dck": {
+  "old": "Howl of the Horde",
+  "new": "Mizzium Mortars",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   1.0
+  ]
+ },
+ "decks/legends/aesi.dck": {
+  "old": "Ior Ruin Expedition",
+  "new": "Legacy's Allure",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.28,
+   1.0
+  ]
+ },
+ "decks/legends/aeve.dck": {
+  "old": "Branching Evolution",
+  "new": "Hunter's Talent",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.94
+  ]
+ },
+ "decks/legends/agatha.dck": {
+  "old": "Nature's Will",
+  "new": "Fight Rigging",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.96
+  ]
+ },
+ "decks/legends/agrus_kos.dck": {
+  "old": "Deflecting Palm",
+  "new": "Aurelia's Fury",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   1.0
+  ]
+ },
+ "decks/legends/ajani.dck": {
+  "old": "Riot Control",
+  "new": "Teferi's Protection",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.94
+  ]
+ },
+ "decks/legends/akawalli.dck": {
+  "old": "Grasping Shadows",
+  "new": "Attrition",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/akim.dck": {
+  "old": "Martial Impetus",
+  "new": "Court of Grace",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.98
+  ]
+ },
+ "decks/legends/akiri_and_silas.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "Sword of Feast and Famine",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/akroma_and_keleth.dck": {
+  "old": "Segovian Angel",
+  "new": "Serra Avenger",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.96
+  ]
+ },
+ "decks/legends/akul.dck": {
+  "old": "Persistent Specimen",
+  "new": "Orcish Bowmasters",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.98
+  ]
+ },
+ "decks/legends/alandra.dck": {
+  "old": "Eyekite",
+  "new": "Gilded Drake",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.2,
+   0.91
+  ]
+ },
+ "decks/legends/albiorix.dck": {
+  "old": "Second Harvest",
+  "new": "Force of Will",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/alela.dck": {
+  "old": "All That Glitters",
+  "new": "Oblivion Ring",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.97
+  ]
+ },
+ "decks/legends/alesha.dck": {
+  "old": "Minion's Return",
+  "new": "Bitterblossom",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/alibou.dck": {
+  "old": "Secret Rendezvous",
+  "new": "Starnheim Unleashed",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   1.0
+  ]
+ },
+ "decks/legends/alpharael.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "The Meathook Massacre",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/alrund.dck": {
+  "old": "Mindsplice Apparatus",
+  "new": "Cryptic Coat",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/amalia.dck": {
+  "old": "Crush Contraband",
+  "new": "Akroma's Will",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.97
+  ]
+ },
+ "decks/legends/amareth.dck": {
+  "old": "Greater Auramancy",
+  "new": "On Thin Ice",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.96
+  ]
+ },
+ "decks/legends/amzu.dck": {
+  "old": "Delta Bloodflies",
+  "new": "Nantuko Shade",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.85
+  ]
+ },
+ "decks/legends/anafenza.dck": {
+  "old": "Unrooted Ancestor",
+  "new": "Twilight Prophet",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/angus_mackenzie.dck": {
+  "old": "Fog Patch",
+  "new": "Stampede",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.95
+  ]
+ },
+ "decks/legends/anhelo.dck": {
+  "old": "Rite of the Raging Storm",
+  "new": "Court of Ire",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.49,
+   0.99
+  ]
+ },
+ "decks/legends/anikthea.dck": {
+  "old": "Death's Oasis",
+  "new": "Abzan Ascendancy",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.97
+  ]
+ },
+ "decks/legends/animar.dck": {
+  "old": "Branching Evolution",
+  "new": "Gaea's Anthem",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.99
+  ]
+ },
+ "decks/legends/anje.dck": {
+  "old": "Call to the Netherworld",
+  "new": "Exsanguinate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   1.0
+  ]
+ },
+ "decks/legends/annie_flash.dck": {
+  "old": "Push the Limit",
+  "new": "Improvisation Capstone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/anzrag.dck": {
+  "old": "Cindervines",
+  "new": "Stormbind",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.98
+  ]
+ },
+ "decks/legends/ao.dck": {
+  "old": "Dragonback Lancer",
+  "new": "Brimaz, King of Oreskos",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   1.0
+  ]
+ },
+ "decks/legends/aphemia.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Animate Dead",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/arabella.dck": {
+  "old": "Tibalt's Trickery",
+  "new": "Pulse of the Forge",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/arahbo.dck": {
+  "old": "Leonin Arbiter",
+  "new": "Ocelot Pride",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.23,
+   1.0
+  ]
+ },
+ "decks/legends/arasta.dck": {
+  "old": "Kruphix's Insight",
+  "new": "Hide in Plain Sight",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.98
+  ]
+ },
+ "decks/legends/arcades_sabboth.dck": {
+  "old": "Whip Silk",
+  "new": "Rancor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.94
+  ]
+ },
+ "decks/legends/arcanis.dck": {
+  "old": "Helm of Awakening",
+  "new": "Aeolipile",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   1.0
+  ]
+ },
+ "decks/legends/arixmethes.dck": {
+  "old": "Consuming Tide",
+  "new": "Bribery",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/arjun.dck": {
+  "old": "Molten Psyche",
+  "new": "Hammer of Bogardan",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/arni.dck": {
+  "old": "Tibalt's Trickery",
+  "new": "Starstorm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.98
+  ]
+ },
+ "decks/legends/arnyn.dck": {
+  "old": "Forum Necroscribe",
+  "new": "Gisa, the Hellraiser",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.96
+  ]
+ },
+ "decks/legends/arthur.dck": {
+  "old": "Cut a Deal",
+  "new": "Balance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/arvad.dck": {
+  "old": "Paraselene",
+  "new": "Wrath of God",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/arzakon.dck": {
+  "old": "Circle of Protection: Artifacts",
+  "new": "Glorious Anthem",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.38,
+   0.98
+  ]
+ },
+ "decks/legends/ascendant_evincar.dck": {
+  "old": "Bubbling Muck",
+  "new": "Mind Twist",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/ashcoat.dck": {
+  "old": "Revenge of the Rats",
+  "new": "Damnation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.2,
+   1.0
+  ]
+ },
+ "decks/legends/ashling.dck": {
+  "old": "Grave Sifter",
+  "new": "Fecund Greenshell",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.99
+  ]
+ },
+ "decks/legends/ashnod.dck": {
+  "old": "Goblin Engineer",
+  "new": "Draconautics Engineer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.32,
+   0.99
+  ]
+ },
+ "decks/legends/asmira.dck": {
+  "old": "Fog Patch",
+  "new": "Krosan Grip",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.97
+  ]
+ },
+ "decks/legends/atemsis.dck": {
+  "old": "Unwind",
+  "new": "Mana Drain",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/athreos.dck": {
+  "old": "Boon Reflection",
+  "new": "Felidar Retreat",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.95
+  ]
+ },
+ "decks/legends/atla_palani.dck": {
+  "old": "Martyr's Cause",
+  "new": "Mobilization",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/atraxa.dck": {
+  "old": "Urza Assembles the Titans",
+  "new": "Worship",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   1.0
+  ]
+ },
+ "decks/legends/atris.dck": {
+  "old": "Fortune's Favor",
+  "new": "Capsize",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   1.0
+  ]
+ },
+ "decks/legends/atsushi.dck": {
+  "old": "Dracogenesis",
+  "new": "Form of the Dragon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/auntie_ool.dck": {
+  "old": "Lasting Tarfire",
+  "new": "Spiteful Banditry",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.98
+  ]
+ },
+ "decks/legends/aurelia.dck": {
+  "old": "Idyllic Tutor",
+  "new": "Day of Judgment",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   1.0
+  ]
+ },
+ "decks/legends/autumn_willow.dck": {
+  "old": "Nature's Claim",
+  "new": "Inscription of Abundance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.97
+  ]
+ },
+ "decks/legends/autumn_willow_anhavva.dck": {
+  "old": "Earth Surge",
+  "new": "Sylvan Scavenging",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.95
+  ]
+ },
+ "decks/legends/avacyn.dck": {
+  "old": "Rule of Law",
+  "new": "Lassoed by the Law",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.95
+  ]
+ },
+ "decks/legends/ayara.dck": {
+  "old": "Plague of Vermin",
+  "new": "Blood Money",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/ayula.dck": {
+  "old": "Gravity Well",
+  "new": "Call of the Wild",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/legends/azami.dck": {
+  "old": "Unstoppable Plan",
+  "new": "The Legend of Kuruk",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/aziza.dck": {
+  "old": "Secret Rendezvous",
+  "new": "White Sun's Twilight",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.98
+  ]
+ },
+ "decks/legends/azlask.dck": {
+  "old": "Not of This World",
+  "new": "Elminster's Simulacrum",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/azor.dck": {
+  "old": "Unstoppable Plan",
+  "new": "Grafted Identity",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.94
+  ]
+ },
+ "decks/legends/azusa.dck": {
+  "old": "Lost in the Woods",
+  "new": "Path of Annihilation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/balmor.dck": {
+  "old": "Ideas Unbound",
+  "new": "Multiple Choice",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.98
+  ]
+ },
+ "decks/legends/balthor.dck": {
+  "old": "Cemetery Tampering",
+  "new": "Phyrexian Arena",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/baral.dck": {
+  "old": "Unwind",
+  "new": "Cryptic Command",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/baron_bertram.dck": {
+  "old": "Luxurious Locomotive",
+  "new": "Helm of Possession",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   1.0
+  ]
+ },
+ "decks/legends/baylen.dck": {
+  "old": "For the Common Good",
+  "new": "Valgavoth's Onslaught",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/beledros.dck": {
+  "old": "Polluted Bonds",
+  "new": "Grave Pact",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.98
+  ]
+ },
+ "decks/legends/bello.dck": {
+  "old": "Teapot Slinger",
+  "new": "Redcap Gutter-Dweller",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.35,
+   0.99
+  ]
+ },
+ "decks/legends/beluna.dck": {
+  "old": "Boldwyr Aggressor",
+  "new": "Inferno Titan",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.99
+  ]
+ },
+ "decks/legends/belzenlok.dck": {
+  "old": "Staff of the Death Magus",
+  "new": "Chromatic Lantern",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/bennie_bracks.dck": {
+  "old": "Cellar Door",
+  "new": "Sword of Body and Mind",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/betor.dck": {
+  "old": "Colfenor's Urn",
+  "new": "Sword of Fire and Ice",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/beza.dck": {
+  "old": "Flare of Fortitude",
+  "new": "Return to Dust",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.28,
+   0.94
+  ]
+ },
+ "decks/legends/birgi.dck": {
+  "old": "Open the Omenpaths",
+  "new": "Char",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.98
+  ]
+ },
+ "decks/legends/bonny_pall.dck": {
+  "old": "Sandwurm Convergence",
+  "new": "Web of Life and Destiny",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.95
+  ]
+ },
+ "decks/legends/bontu.dck": {
+  "old": "Trespasser's Curse",
+  "new": "The Meathook Massacre",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/borborygmos.dck": {
+  "old": "Tibalt's Trickery",
+  "new": "Lightning Bolt",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/bosh.dck": {
+  "old": "Unwinding Clock",
+  "new": "Helm of Obedience",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/brago.dck": {
+  "old": "Dovin's Veto",
+  "new": "Spell Pierce",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/brallin_and_shabraz.dck": {
+  "old": "Change of Fortune",
+  "new": "Nibelheim Aflame",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/bre.dck": {
+  "old": "Collective Inferno",
+  "new": "Pyrohemia",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.98
+  ]
+ },
+ "decks/legends/breena.dck": {
+  "old": "Secret Rendezvous",
+  "new": "Winds of Abandon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   1.0
+  ]
+ },
+ "decks/legends/brenard.dck": {
+  "old": "Second Harvest",
+  "new": "Might of Oaks",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/breya.dck": {
+  "old": "Anointed Procession",
+  "new": "Kinbinding",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   1.0
+  ]
+ },
+ "decks/legends/brimaz.dck": {
+  "old": "Orzhov Locket",
+  "new": "Umezawa's Jitte",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   1.0
+  ]
+ },
+ "decks/legends/brion.dck": {
+  "old": "Crush Contraband",
+  "new": "Akroma's Will",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.97
+  ]
+ },
+ "decks/legends/bristly_bill.dck": {
+  "old": "Staff of the Wild Magus",
+  "new": "Lightning Greaves",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/brokkos.dck": {
+  "old": "Gladecover Scout",
+  "new": "Great Divide Guide",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.95
+  ]
+ },
+ "decks/legends/brudiclad.dck": {
+  "old": "Brass's Bounty",
+  "new": "Flame Wave",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/bruna.dck": {
+  "old": "Twinblade Blessing",
+  "new": "History of Benalia",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.94
+  ]
+ },
+ "decks/legends/bruse_tarl.dck": {
+  "old": "Firdoch Core",
+  "new": "Crucible of Worlds",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   1.0
+  ]
+ },
+ "decks/legends/bruvac.dck": {
+  "old": "Flood of Tears",
+  "new": "Capture of Jingzhou",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/buxton.dck": {
+  "old": "Stocking the Pantry",
+  "new": "Ranger Class",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.93
+  ]
+ },
+ "decks/legends/byrke.dck": {
+  "old": "Stocking the Pantry",
+  "new": "Welcome to Sweettooth",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.92
+  ]
+ },
+ "decks/legends/cadric.dck": {
+  "old": "Hero's Heirloom",
+  "new": "Sword of War and Peace",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   1.0
+  ]
+ },
+ "decks/legends/calamity.dck": {
+  "old": "Vicious Shadows",
+  "new": "Fiery Emancipation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.96
+  ]
+ },
+ "decks/legends/calix.dck": {
+  "old": "All That Glitters",
+  "new": "Sheltered by Ghosts",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.94
+  ]
+ },
+ "decks/legends/camellia.dck": {
+  "old": "For the Common Good",
+  "new": "Esper Origins",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/captain_storm.dck": {
+  "old": "Buried Treasure",
+  "new": "Sculpting Steel",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/carmen.dck": {
+  "old": "Fanatical Devotion",
+  "new": "Court of Grace",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.98
+  ]
+ },
+ "decks/legends/cayth.dck": {
+  "old": "Izzet Generatorium",
+  "new": "Basilisk Collar",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   1.0
+  ]
+ },
+ "decks/legends/cazur_and_ukkima.dck": {
+  "old": "Triton Shorestalker",
+  "new": "Mercurial Spelldancer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.9
+  ]
+ },
+ "decks/legends/charix.dck": {
+  "old": "Unwind",
+  "new": "Daze",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/chatterfang.dck": {
+  "old": "Second Harvest",
+  "new": "Stonewood Invocation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/child_of_alara.dck": {
+  "old": "Invasion of Theros",
+  "new": "Invasion of New Phyrexia",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.99
+  ]
+ },
+ "decks/legends/chorus_of_the_conclave.dck": {
+  "old": "Dryad's Caress",
+  "new": "Awakening of Vitu-Ghazi",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.94
+  ]
+ },
+ "decks/legends/chromium.dck": {
+  "old": "Interdict",
+  "new": "Cyclonic Rift",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.99
+  ]
+ },
+ "decks/legends/circu.dck": {
+  "old": "Staff of the Death Magus",
+  "new": "Loxodon Warhammer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/clavile\u00f1o.dck": {
+  "old": "Village Rites",
+  "new": "Dark Ritual",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.29,
+   1.0
+  ]
+ },
+ "decks/legends/clement.dck": {
+  "old": "Leyline of Abundance",
+  "new": "The Huntsman's Redemption",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.94
+  ]
+ },
+ "decks/legends/commander_eesha.dck": {
+  "old": "Retether",
+  "new": "Wrath of God",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/commodore_guff.dck": {
+  "old": "Ichormoon Gauntlet",
+  "new": "Thopter Fabricator",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.98
+  ]
+ },
+ "decks/legends/cormela.dck": {
+  "old": "Stormsplitter",
+  "new": "Reckless Embermage",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.95
+  ]
+ },
+ "decks/legends/cosima.dck": {
+  "old": "Consulate Dreadnought",
+  "new": "Aether Vial",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   1.0
+  ]
+ },
+ "decks/legends/cromat.dck": {
+  "old": "Exotic Disease",
+  "new": "Season of Loss",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.99
+  ]
+ },
+ "decks/legends/crosis.dck": {
+  "old": "Pain Magnification",
+  "new": "Avengers: Under Siege",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.97
+  ]
+ },
+ "decks/legends/daghatar.dck": {
+  "old": "Retribution of the Ancients",
+  "new": "Bitterblossom",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   1.0
+  ]
+ },
+ "decks/legends/damia.dck": {
+  "old": "Realms Uncharted",
+  "new": "Terrific Team-Up",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.93
+  ]
+ },
+ "decks/legends/darigaaz.dck": {
+  "old": "Riveteers Ascendancy",
+  "new": "Greed",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.99
+  ]
+ },
+ "decks/legends/deekah.dck": {
+  "old": "Swarm Intelligence",
+  "new": "Kiora Bests the Sea God",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/depala.dck": {
+  "old": "Crush Contraband",
+  "new": "Jabari's Influence",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.98
+  ]
+ },
+ "decks/legends/derevi.dck": {
+  "old": "Bower Passage",
+  "new": "Moldervine Cloak",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.97
+  ]
+ },
+ "decks/legends/dihada.dck": {
+  "old": "Flare of Fortitude",
+  "new": "Settle the Wreckage",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.28,
+   0.97
+  ]
+ },
+ "decks/legends/dina.dck": {
+  "old": "Barrier Breach",
+  "new": "Chord of Calling",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.92
+  ]
+ },
+ "decks/legends/disa.dck": {
+  "old": "Cemetery Tampering",
+  "new": "No Mercy",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/don_andres.dck": {
+  "old": "Hedonist's Trove",
+  "new": "Virtue of Persistence",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/doran.dck": {
+  "old": "Colfenor's Urn",
+  "new": "Champion's Helm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/dragonhawk.dck": {
+  "old": "Return the Favor",
+  "new": "Galvanic Discharge",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.96
+  ]
+ },
+ "decks/legends/drakuseth.dck": {
+  "old": "Dracogenesis",
+  "new": "Eldrazi Conscription",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/drivnod.dck": {
+  "old": "Village Rites",
+  "new": "Entomb",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.29,
+   1.0
+  ]
+ },
+ "decks/legends/dromar.dck": {
+  "old": "Warped Devotion",
+  "new": "Breeding Pit",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.97
+  ]
+ },
+ "decks/legends/duskana.dck": {
+  "old": "Manglehorn",
+  "new": "Deathmist Raptor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.98
+  ]
+ },
+ "decks/legends/edgar_markov.dck": {
+  "old": "Mercadia's Downfall",
+  "new": "Volcanic Geyser",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.97
+  ]
+ },
+ "decks/legends/egon.dck": {
+  "old": "Cemetery Tampering",
+  "new": "Grave Pact",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.98
+  ]
+ },
+ "decks/legends/eirdu.dck": {
+  "old": "Celestial Force",
+  "new": "Nulldrifter",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.2,
+   0.76
+  ]
+ },
+ "decks/legends/eladamri.dck": {
+  "old": "Elvish Guidance",
+  "new": "Kudzu",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.95
+  ]
+ },
+ "decks/legends/elas_il-kor.dck": {
+  "old": "Case of the Uneaten Feast",
+  "new": "Quarantine Field",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.14,
+   0.96
+  ]
+ },
+ "decks/legends/eligeth_and_anara.dck": {
+  "old": "Spellbook",
+  "new": "Chrome Mox",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   1.0
+  ]
+ },
+ "decks/legends/elsha.dck": {
+  "old": "Shiny Impetus",
+  "new": "Honden of Infinite Rage",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.94
+  ]
+ },
+ "decks/legends/eluge.dck": {
+  "old": "Complete the Circuit",
+  "new": "Force of Will",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   1.0
+  ]
+ },
+ "decks/legends/emmara.dck": {
+  "old": "Harvest Season",
+  "new": "Explosive Vegetation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/emperor_mihail.dck": {
+  "old": "Lullmage Mentor",
+  "new": "True-Name Nemesis",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/emrakul.dck": {
+  "old": "Idol of False Gods",
+  "new": "Grindstone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   1.0
+  ]
+ },
+ "decks/legends/emry.dck": {
+  "old": "Slagstone Refinery",
+  "new": "Paradox Engine",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   1.0
+  ]
+ },
+ "decks/legends/ephara.dck": {
+  "old": "Unwind",
+  "new": "Fact or Fiction",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.97
+  ]
+ },
+ "decks/legends/erebos.dck": {
+  "old": "Agent of Erebos",
+  "new": "Nightmare Shepherd",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.97
+  ]
+ },
+ "decks/legends/eriette.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Thrull Retainer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/ertai.dck": {
+  "old": "Psychic Surgery",
+  "new": "Propaganda",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/ertha_jo.dck": {
+  "old": "Illusionist's Bracers",
+  "new": "Horn of Gondor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/eshki.dck": {
+  "old": "Kozilek's Unsealing",
+  "new": "Binding Grasp",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.31,
+   0.91
+  ]
+ },
+ "decks/legends/esix.dck": {
+  "old": "Second Harvest",
+  "new": "Sunder",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/estrid.dck": {
+  "old": "Greater Auramancy",
+  "new": "Origin of Spider-Man",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.96
+  ]
+ },
+ "decks/legends/etali.dck": {
+  "old": "Cursed Mirror",
+  "new": "Warmaker Gunship",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.98
+  ]
+ },
+ "decks/legends/etrata.dck": {
+  "old": "Arcane Adaptation",
+  "new": "Legacy's Allure",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   1.0
+  ]
+ },
+ "decks/legends/euru.dck": {
+  "old": "Second Harvest",
+  "new": "Signature Slam",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.92
+  ]
+ },
+ "decks/legends/evelyn.dck": {
+  "old": "Planar Incision",
+  "new": "Brainstorm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.95
+  ]
+ },
+ "decks/legends/evereth.dck": {
+  "old": "Brass's Bounty",
+  "new": "Insurrection",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/exava.dck": {
+  "old": "Yathan Tombguard",
+  "new": "Kalitas, Traitor of Ghet",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/experiment_kraj.dck": {
+  "old": "Stocking the Pantry",
+  "new": "Innkeeper's Talent",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.97
+  ]
+ },
+ "decks/legends/falco_spara.dck": {
+  "old": "Branching Evolution",
+  "new": "Ayula's Influence",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.96
+  ]
+ },
+ "decks/legends/farid.dck": {
+  "old": "Sleeper Dart",
+  "new": "Sword of Truth and Justice",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/feather.dck": {
+  "old": "Decanter of Endless Water",
+  "new": "Grafted Wargear",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.98
+  ]
+ },
+ "decks/legends/feldon.dck": {
+  "old": "Fires of Invention",
+  "new": "Visions of Phyrexia",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/felisa.dck": {
+  "old": "Martyr's Cause",
+  "new": "The Restoration of Eiganjo",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.92
+  ]
+ },
+ "decks/legends/felix.dck": {
+  "old": "Mark of Sakiko",
+  "new": "Gaea's Anthem",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/felothar.dck": {
+  "old": "Tower Defense",
+  "new": "Resize",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.92
+  ]
+ },
+ "decks/legends/finneas.dck": {
+  "old": "Rite of Harmony",
+  "new": "March of the Multitudes",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.95
+  ]
+ },
+ "decks/legends/firesong_and_sunspeaker.dck": {
+  "old": "Mangara's Blessing",
+  "new": "Formation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.97
+  ]
+ },
+ "decks/legends/firja.dck": {
+  "old": "Flare of Fortitude",
+  "new": "Exile",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.28,
+   0.94
+  ]
+ },
+ "decks/legends/florian.dck": {
+  "old": "Tibalt's Trickery",
+  "new": "Incinerate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.95
+  ]
+ },
+ "decks/legends/freyalise.dck": {
+  "old": "Mana Reflection",
+  "new": "Primeval Bounty",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.97
+  ]
+ },
+ "decks/legends/fumulus.dck": {
+  "old": "Delta Bloodflies",
+  "new": "Pestilent Syphoner",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.72
+  ]
+ },
+ "decks/legends/fynn.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "And\u00faril, Flame of the West",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.99
+  ]
+ },
+ "decks/legends/gaddock.dck": {
+  "old": "Wheel of Sun and Moon",
+  "new": "Griffin Guide",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.95
+  ]
+ },
+ "decks/legends/gadwick.dck": {
+  "old": "Dissipation Field",
+  "new": "Persuasion",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/gahiji.dck": {
+  "old": "Skyknight Vanguard",
+  "new": "Tajic, Legion's Edge",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.7,
+   0.96
+  ]
+ },
+ "decks/legends/galazeth.dck": {
+  "old": "Unstoppable Plan",
+  "new": "Invoke Prejudice",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/gargos.dck": {
+  "old": "Boundless Realms",
+  "new": "Titania's Command",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.98
+  ]
+ },
+ "decks/legends/garth.dck": {
+  "old": "Coalition Victory",
+  "new": "Mascot Exhibition",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.99
+  ]
+ },
+ "decks/legends/garza_zol.dck": {
+  "old": "Koskun Falls",
+  "new": "The Cruelty of Gix",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.95
+  ]
+ },
+ "decks/legends/general_ferrous.dck": {
+  "old": "Tome of the Guildpact",
+  "new": "Thran Dynamo",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.97
+  ]
+ },
+ "decks/legends/general_jarkeld.dck": {
+  "old": "Anointed Procession",
+  "new": "The Legend of Yangchen",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.99
+  ]
+ },
+ "decks/legends/general_kreat.dck": {
+  "old": "Brightstone Ritual",
+  "new": "Fault Line",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/general_tazri.dck": {
+  "old": "Pyre of Heroes",
+  "new": "Swiftfoot Boots",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/geralf.dck": {
+  "old": "Step Between Worlds",
+  "new": "Bribery",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   1.0
+  ]
+ },
+ "decks/legends/gerrard.dck": {
+  "old": "Alchemist's Vial",
+  "new": "Sword of Light and Shadow",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/gev.dck": {
+  "old": "Tectonic Hazard",
+  "new": "Chain Lightning",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/ghave.dck": {
+  "old": "Acorn Catapult",
+  "new": "Skysovereign, Consul Flagship",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.15,
+   1.0
+  ]
+ },
+ "decks/legends/giada.dck": {
+  "old": "Angel of the Ruins",
+  "new": "Platinum Angel",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.3,
+   1.0
+  ]
+ },
+ "decks/legends/gisa.dck": {
+  "old": "Codex Shredder",
+  "new": "Pithing Needle",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/gisela.dck": {
+  "old": "Deflecting Palm",
+  "new": "Lightning Helix",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.94
+  ]
+ },
+ "decks/legends/gishath.dck": {
+  "old": "Nature's Claim",
+  "new": "Lightning Strike",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.93
+  ]
+ },
+ "decks/legends/gix.dck": {
+  "old": "Font of Agonies",
+  "new": "Call of the Ring",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.93
+  ]
+ },
+ "decks/legends/glarb.dck": {
+  "old": "Baneful Omen",
+  "new": "The Rise of Sozin",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/glissa.dck": {
+  "old": "Expand the Sphere",
+  "new": "Overrun",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.99
+  ]
+ },
+ "decks/legends/go-shintai.dck": {
+  "old": "Seal of Primordium",
+  "new": "Jugan Defends the Temple",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.99
+  ]
+ },
+ "decks/legends/golos.dck": {
+  "old": "Brilliant Ultimatum",
+  "new": "Austere Command",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   1.0
+  ]
+ },
+ "decks/legends/gonti.dck": {
+  "old": "Triton Shorestalker",
+  "new": "Suspicious Stowaway",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.92
+  ]
+ },
+ "decks/legends/goreclaw.dck": {
+  "old": "Copper Host Crusher",
+  "new": "Vorinclex, Voice of Hunger",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.95
+  ]
+ },
+ "decks/legends/gorm_and_virtus.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Oversold Cemetery",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.92
+  ]
+ },
+ "decks/legends/gornog.dck": {
+  "old": "Cursed Mirror",
+  "new": "Cori-Steel Cutter",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.93
+  ]
+ },
+ "decks/legends/graaz.dck": {
+  "old": "Spectrum Sentinel",
+  "new": "Painter's Servant",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/grakmaw.dck": {
+  "old": "Unbound Flourishing",
+  "new": "Squirrel Nest",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.92
+  ]
+ },
+ "decks/legends/grand_arbiter.dck": {
+  "old": "Restore the Peace",
+  "new": "Arcane Denial",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.95
+  ]
+ },
+ "decks/legends/grandmother_sengir.dck": {
+  "old": "Koskun Falls",
+  "new": "Attrition",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/greasefang.dck": {
+  "old": "Kitsune Ace",
+  "new": "Valley Questcaller",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.14,
+   1.0
+  ]
+ },
+ "decks/legends/grenzo.dck": {
+  "old": "Harnesser of Storms",
+  "new": "Amped Raptor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/greven.dck": {
+  "old": "Soul Channeling",
+  "new": "Necromancy",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.93
+  ]
+ },
+ "decks/legends/grimgrin.dck": {
+  "old": "Consuming Tide",
+  "new": "Concentrate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.95
+  ]
+ },
+ "decks/legends/grist.dck": {
+  "old": "Squirming Emergence",
+  "new": "Maelstrom Pulse",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/grothama.dck": {
+  "old": "Fortitude",
+  "new": "Song of the Dryads",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.89
+  ]
+ },
+ "decks/legends/grub.dck": {
+  "old": "Rundvelt Hordemaster",
+  "new": "Goblin Sharpshooter",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/grumgully.dck": {
+  "old": "Stocking the Pantry",
+  "new": "Hunter's Talent",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.94
+  ]
+ },
+ "decks/legends/grunn.dck": {
+  "old": "Haunted Cloak",
+  "new": "Staff of Domination",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   1.0
+  ]
+ },
+ "decks/legends/gyome.dck": {
+  "old": "Crypt Incursion",
+  "new": "Diabolic Edict",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/gyruda.dck": {
+  "old": "Infernal Genesis",
+  "new": "Virtue of Persistence",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   1.0
+  ]
+ },
+ "decks/legends/gyrus.dck": {
+  "old": "Consign to Dust",
+  "new": "Tel-Jilad Justice",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.92
+  ]
+ },
+ "decks/legends/hajar.dck": {
+  "old": "Hero's Heirloom",
+  "new": "Rings of Brighthearth",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   1.0
+  ]
+ },
+ "decks/legends/hakbal.dck": {
+  "old": "Branching Evolution",
+  "new": "Earthbender Ascension",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.96
+  ]
+ },
+ "decks/legends/hakim.dck": {
+  "old": "Traveler's Cloak",
+  "new": "Counterbalance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   1.0
+  ]
+ },
+ "decks/legends/haldan_and_pako.dck": {
+  "old": "Ketria Crystal",
+  "new": "Nevinyrral's Disk",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/halfdane.dck": {
+  "old": "Aura Extraction",
+  "new": "Abeyance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.97
+  ]
+ },
+ "decks/legends/haliya.dck": {
+  "old": "Leyline of Hope",
+  "new": "Opal Archangel",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.99
+  ]
+ },
+ "decks/legends/halvar.dck": {
+  "old": "Crush Contraband",
+  "new": "Eightfold Maze",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.95
+  ]
+ },
+ "decks/legends/hamza.dck": {
+  "old": "Stalwart Successor",
+  "new": "Containment Priest",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   1.0
+  ]
+ },
+ "decks/legends/hanna.dck": {
+  "old": "Blacksmith's Skill",
+  "new": "Final Showdown",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.93
+  ]
+ },
+ "decks/legends/harald.dck": {
+  "old": "Moldervine Reclamation",
+  "new": "The Last Ronin",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.99
+  ]
+ },
+ "decks/legends/harbin.dck": {
+  "old": "Dovin's Veto",
+  "new": "Sphinx's Revelation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.98
+  ]
+ },
+ "decks/legends/hazel.dck": {
+  "old": "Second Harvest",
+  "new": "Broken Visage",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/hazezon.dck": {
+  "old": "Hammer Mage",
+  "new": "Jaya Ballard, Task Mage",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.19,
+   1.0
+  ]
+ },
+ "decks/legends/hazoret.dck": {
+  "old": "Count on Luck",
+  "new": "The Legend of Roku",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.96
+  ]
+ },
+ "decks/legends/heidar.dck": {
+  "old": "Illusionist's Bracers",
+  "new": "Thought Vessel",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.96
+  ]
+ },
+ "decks/legends/helga.dck": {
+  "old": "Foundation Breaker",
+  "new": "Ashaya, Soul of the Wild",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.26,
+   0.99
+  ]
+ },
+ "decks/legends/heliod.dck": {
+  "old": "Boon Reflection",
+  "new": "Friendly Neighborhood",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.99
+  ]
+ },
+ "decks/legends/henrika.dck": {
+  "old": "Invoke Despair",
+  "new": "Ancient Craving",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   0.99
+  ]
+ },
+ "decks/legends/henzie.dck": {
+  "old": "Glittering Stockpile",
+  "new": "Urabrask's Forge",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.94
+  ]
+ },
+ "decks/legends/high_marshal_arguel.dck": {
+  "old": "Village Rites",
+  "new": "Black Sun's Twilight",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.29,
+   0.95
+  ]
+ },
+ "decks/legends/hofri.dck": {
+  "old": "Sigarda's Aid",
+  "new": "Pacifism",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.93
+  ]
+ },
+ "decks/legends/honest_rutstein.dck": {
+  "old": "Crashing Drawbridge",
+  "new": "Arcbound Ravager",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.15,
+   1.0
+  ]
+ },
+ "decks/legends/hope_of_ghirapur.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "Sword of Hearth and Home",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/legends/horde_of_notions.dck": {
+  "old": "Boundless Realms",
+  "new": "Tooth and Nail",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.97
+  ]
+ },
+ "decks/legends/huatli.dck": {
+  "old": "Kinjalli's Caller",
+  "new": "Guide of Souls",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.28,
+   1.0
+  ]
+ },
+ "decks/legends/hugs.dck": {
+  "old": "Boundless Realms",
+  "new": "Snarl Song",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/legends/hurska.dck": {
+  "old": "Nature's Will",
+  "new": "Verdant Embrace",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.96
+  ]
+ },
+ "decks/legends/hylda.dck": {
+  "old": "Unwind",
+  "new": "Capsize",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/hythonia.dck": {
+  "old": "Venomous Hierophant",
+  "new": "Masked Gorgon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.96
+  ]
+ },
+ "decks/legends/ihsans_shade.dck": {
+  "old": "Boggart Trawler",
+  "new": "Murderous Rider",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.32,
+   0.99
+  ]
+ },
+ "decks/legends/ilharg.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "Skullclamp",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.98
+  ]
+ },
+ "decks/legends/illuna.dck": {
+  "old": "Consuming Tide",
+  "new": "Time Warp",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.97
+  ]
+ },
+ "decks/legends/inalla.dck": {
+  "old": "Cursed Mirror",
+  "new": "Samurai's Katana",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.92
+  ]
+ },
+ "decks/legends/infinite_guideline_station.dck": {
+  "old": "Dovin's Veto",
+  "new": "Swords to Plowshares",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.97
+  ]
+ },
+ "decks/legends/inniaz.dck": {
+  "old": "Faerie Seer",
+  "new": "Snapcaster Mage",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.95
+  ]
+ },
+ "decks/legends/intet.dck": {
+  "old": "Dracogenesis",
+  "new": "Form of the Dragon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/irini.dck": {
+  "old": "Minion's Return",
+  "new": "Phyrexian Arena",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.99
+  ]
+ },
+ "decks/legends/iroas.dck": {
+  "old": "Anointed Procession",
+  "new": "Avengers Assemble!",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.99
+  ]
+ },
+ "decks/legends/ishkanah.dck": {
+  "old": "Chainweb Aracnir",
+  "new": "Radioactive Spider",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.91
+  ]
+ },
+ "decks/legends/isperia.dck": {
+  "old": "Rally of Wings",
+  "new": "Path to Exile",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/isshin.dck": {
+  "old": "Bone-Cairn Butcher",
+  "new": "Butcher of the Horde",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.97
+  ]
+ },
+ "decks/legends/istvan.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "Black Vise",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/isu.dck": {
+  "old": "Snow Devil",
+  "new": "Threads of Disloyalty",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/ixhel.dck": {
+  "old": "Staff of Compleation",
+  "new": "Power Matrix",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   1.0
+  ]
+ },
+ "decks/legends/izoni.dck": {
+  "old": "Caustic Caterpillar",
+  "new": "Bristly Bill, Spine Sower",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   0.99
+  ]
+ },
+ "decks/legends/jadar.dck": {
+  "old": "Darkness",
+  "new": "Entomb",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.19,
+   1.0
+  ]
+ },
+ "decks/legends/jalira.dck": {
+  "old": "Brainstone",
+  "new": "Smuggler's Copter",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.99
+  ]
+ },
+ "decks/legends/jarad.dck": {
+  "old": "Cemetery Tampering",
+  "new": "Court of Ambition",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.94
+  ]
+ },
+ "decks/legends/jared.dck": {
+  "old": "Invasion of Alara",
+  "new": "Invasion of Innistrad",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.87
+  ]
+ },
+ "decks/legends/jareth.dck": {
+  "old": "Dogged Hunter",
+  "new": "Dion, Bahamut's Dominant",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   1.0
+  ]
+ },
+ "decks/legends/jeleva.dck": {
+  "old": "Brass's Bounty",
+  "new": "Devastation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.98
+  ]
+ },
+ "decks/legends/jenara.dck": {
+  "old": "Light of Hope",
+  "new": "Reprieve",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.92
+  ]
+ },
+ "decks/legends/jetmir.dck": {
+  "old": "Dire-Strain Rampage",
+  "new": "Savage Twister",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/jhoira.dck": {
+  "old": "Unwinding Clock",
+  "new": "Gauntlet of Power",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/jinnie_fay.dck": {
+  "old": "For the Common Good",
+  "new": "Malevolent Rumble",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.95
+  ]
+ },
+ "decks/legends/jodah.dck": {
+  "old": "Coalition Victory",
+  "new": "Kindred Dominance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.96
+  ]
+ },
+ "decks/legends/jolene.dck": {
+  "old": "Winds of Qal Sisma",
+  "new": "Oxidize",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.92
+  ]
+ },
+ "decks/legends/jolrael.dck": {
+  "old": "Far Wanderings",
+  "new": "Natural Order",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.39,
+   0.95
+  ]
+ },
+ "decks/legends/jori_en.dck": {
+  "old": "Unwind",
+  "new": "Psionic Blast",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.95
+  ]
+ },
+ "decks/legends/jorn.dck": {
+  "old": "Frostpeak Yeti",
+  "new": "Thieving Magpie",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.98
+  ]
+ },
+ "decks/legends/joven_and_chandler.dck": {
+  "old": "Glittering Stockpile",
+  "new": "Chainsaw",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.91
+  ]
+ },
+ "decks/legends/judith.dck": {
+  "old": "Tectonic Hazard",
+  "new": "Fireball",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/jugan.dck": {
+  "old": "Bower Passage",
+  "new": "Awakening Zone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.92
+  ]
+ },
+ "decks/legends/junji.dck": {
+  "old": "Soldevi Adnate",
+  "new": "Dark Confidant",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.97
+  ]
+ },
+ "decks/legends/juri.dck": {
+  "old": "Brass's Bounty",
+  "new": "Fire Tempest",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.98
+  ]
+ },
+ "decks/legends/kaalia.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Animate Dead",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/kadena.dck": {
+  "old": "Great Oak Guardian",
+  "new": "Weatherseed Treefolk",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.32,
+   0.97
+  ]
+ },
+ "decks/legends/kaheera.dck": {
+  "old": "Barrier Breach",
+  "new": "Arachnogenesis",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.92
+  ]
+ },
+ "decks/legends/kairi.dck": {
+  "old": "Quicksilver Fountain",
+  "new": "Sword of Forge and Frontier",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.96
+  ]
+ },
+ "decks/legends/kalamax.dck": {
+  "old": "Swarm Intelligence",
+  "new": "Confiscate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/kambal.dck": {
+  "old": "Strongarm Tactics",
+  "new": "Thoughtseize",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/kamiz.dck": {
+  "old": "Strionic Resonator",
+  "new": "Chromatic Lantern",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.33,
+   1.0
+  ]
+ },
+ "decks/legends/kangee.dck": {
+  "old": "Segovian Angel",
+  "new": "Giada, Font of Hope",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.93
+  ]
+ },
+ "decks/legends/karador.dck": {
+  "old": "Cemetery Tampering",
+  "new": "Seal of Doom",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.94
+  ]
+ },
+ "decks/legends/karametra.dck": {
+  "old": "Spelunking",
+  "new": "The Huntsman's Redemption",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.94
+  ]
+ },
+ "decks/legends/kari_zev.dck": {
+  "old": "Tectonic Hazard",
+  "new": "Banefire",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/karn.dck": {
+  "old": "Clock of Omens",
+  "new": "Batterskull",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   1.0
+  ]
+ },
+ "decks/legends/karrthus.dck": {
+  "old": "Dracogenesis",
+  "new": "Eldrazi Conscription",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/karumonix.dck": {
+  "old": "Codex Shredder",
+  "new": "Sword of the Animist",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.96
+  ]
+ },
+ "decks/legends/kastral.dck": {
+  "old": "Aven Shrine",
+  "new": "Sparring Regimen",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.93
+  ]
+ },
+ "decks/legends/kathril.dck": {
+  "old": "Martial Impetus",
+  "new": "An Unexpected Party",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/kaza.dck": {
+  "old": "Apex of Power",
+  "new": "Blasphemous Act",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.95
+  ]
+ },
+ "decks/legends/kazarov.dck": {
+  "old": "Scouring Sands",
+  "new": "Earthquake",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   1.0
+  ]
+ },
+ "decks/legends/kazuul.dck": {
+  "old": "Crown-Hunter Hireling",
+  "new": "Ogre Enforcer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.99
+  ]
+ },
+ "decks/legends/kefnet.dck": {
+  "old": "Mindlock Orb",
+  "new": "Possession Engine",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.98
+  ]
+ },
+ "decks/legends/keiga.dck": {
+  "old": "Haunted Cloak",
+  "new": "Lux Cannon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.96
+  ]
+ },
+ "decks/legends/kellan.dck": {
+  "old": "Map the Frontier",
+  "new": "Harmonize",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.96
+  ]
+ },
+ "decks/legends/kemba.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "Mind Stone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/legends/kenessos.dck": {
+  "old": "Quest for Ula's Temple",
+  "new": "Roiling Dragonstorm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.89
+  ]
+ },
+ "decks/legends/kenrith.dck": {
+  "old": "Happily Ever After",
+  "new": "In the Trenches",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.96
+  ]
+ },
+ "decks/legends/keranos.dck": {
+  "old": "Consuming Tide",
+  "new": "Quasiduplicate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/keruga.dck": {
+  "old": "Tranquility",
+  "new": "Rhonas's Last Stand",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.32,
+   0.97
+  ]
+ },
+ "decks/legends/kess.dck": {
+  "old": "Merchant of Secrets",
+  "new": "Vendilion Clique",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   0.98
+  ]
+ },
+ "decks/legends/kethek.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Bad Moon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.93
+  ]
+ },
+ "decks/legends/khorvath_and_sylvia.dck": {
+  "old": "Full Throttle",
+  "new": "Cone of Flame",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.95
+  ]
+ },
+ "decks/legends/kianne.dck": {
+  "old": "Hindervines",
+  "new": "Might of Oaks",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.97
+  ]
+ },
+ "decks/legends/kibo.dck": {
+  "old": "Chomping Changeling",
+  "new": "Chameleon Colossus",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/kiki-jiki.dck": {
+  "old": "Magewright's Stone",
+  "new": "Darksteel Ingot",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.15,
+   0.98
+  ]
+ },
+ "decks/legends/killian.dck": {
+  "old": "Sigarda's Aid",
+  "new": "Static Prison",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.9
+  ]
+ },
+ "decks/legends/kilo.dck": {
+  "old": "Golem Foundry",
+  "new": "Aethersphere Harvester",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   0.99
+  ]
+ },
+ "decks/legends/kinnan.dck": {
+  "old": "Blessed Respite",
+  "new": "Spell Pierce",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/kinzu.dck": {
+  "old": "Relic Putrescence",
+  "new": "Fevered Convulsions",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.94
+  ]
+ },
+ "decks/legends/kirol.dck": {
+  "old": "Flicker of Fate",
+  "new": "Just Fate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.92
+  ]
+ },
+ "decks/legends/kirri.dck": {
+  "old": "Perpetual Timepiece",
+  "new": "Mighty Servant of Leuk-o",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.96
+  ]
+ },
+ "decks/legends/kitt_kanto.dck": {
+  "old": "Sandwurm Convergence",
+  "new": "Web of Life and Destiny",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.95
+  ]
+ },
+ "decks/legends/klothys.dck": {
+  "old": "Vicious Shadows",
+  "new": "Dragon Roost",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.93
+  ]
+ },
+ "decks/legends/kogla.dck": {
+  "old": "Magus of the Candelabra",
+  "new": "Warden of the First Tree",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.97
+  ]
+ },
+ "decks/legends/kokusho.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "The Witch's Vanity",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.89
+  ]
+ },
+ "decks/legends/koll.dck": {
+  "old": "War Squeak",
+  "new": "Tectonic Reformation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.92
+  ]
+ },
+ "decks/legends/kolvori.dck": {
+  "old": "Nature's Claim",
+  "new": "Inscription of Abundance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.97
+  ]
+ },
+ "decks/legends/koma.dck": {
+  "old": "Neurok Stealthsuit",
+  "new": "Cranial Plating",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   0.95
+  ]
+ },
+ "decks/legends/korvold.dck": {
+  "old": "Flaxen Intruder",
+  "new": "Noble Hierarch",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.94
+  ]
+ },
+ "decks/legends/kothophed.dck": {
+  "old": "Prism Ring",
+  "new": "Basilisk Collar",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/kotis.dck": {
+  "old": "Dissipation Field",
+  "new": "Future Sight",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/kozilek.dck": {
+  "old": "Orb of Dreams",
+  "new": "Deathrender",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/krampus.dck": {
+  "old": "Automated Artificer",
+  "new": "Steel Overseer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/krark_and_toggo.dck": {
+  "old": "Mages' Contest",
+  "new": "Lightning Blast",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.95
+  ]
+ },
+ "decks/legends/krenko.dck": {
+  "old": "Rundvelt Hordemaster",
+  "new": "Breeches, Eager Pillager",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/kresh.dck": {
+  "old": "Rushed Rebirth",
+  "new": "Assassin's Trophy",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.97
+  ]
+ },
+ "decks/legends/kroxa.dck": {
+  "old": "Pain Magnification",
+  "new": "Theater of Horrors",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.92
+  ]
+ },
+ "decks/legends/kruphix.dck": {
+  "old": "Mana Reflection",
+  "new": "Doubling Season",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.91
+  ]
+ },
+ "decks/legends/kudo.dck": {
+  "old": "Stocking the Pantry",
+  "new": "Exploration",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.85
+  ]
+ },
+ "decks/legends/kunoros.dck": {
+  "old": "Weathered Runestone",
+  "new": "Sigiled Sword of Valeron",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.95
+  ]
+ },
+ "decks/legends/kura.dck": {
+  "old": "Spelunking",
+  "new": "Guardian Project",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.91
+  ]
+ },
+ "decks/legends/kykar.dck": {
+  "old": "Lapse of Certainty",
+  "new": "Devouring Light",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.14,
+   0.89
+  ]
+ },
+ "decks/legends/kynaios_and_tiro.dck": {
+  "old": "Lightmine Field",
+  "new": "Virtue of Loyalty",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/lagrella.dck": {
+  "old": "Essence Flux",
+  "new": "Counterspell",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   1.0
+  ]
+ },
+ "decks/legends/lathril.dck": {
+  "old": "Harvest Season",
+  "new": "Cultivate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/laughing_jasper_flint.dck": {
+  "old": "Merrow Bonegnawer",
+  "new": "Sunset Saboteur",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.98
+  ]
+ },
+ "decks/legends/lavinia.dck": {
+  "old": "Unwind",
+  "new": "Ugin's Binding",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.93
+  ]
+ },
+ "decks/legends/lazav.dck": {
+  "old": "Mindcrank",
+  "new": "Disrupting Scepter",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.98
+  ]
+ },
+ "decks/legends/liberator.dck": {
+  "old": "Walking Atlas",
+  "new": "Dragon Engine",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   0.98
+  ]
+ },
+ "decks/legends/lier.dck": {
+  "old": "Consuming Tide",
+  "new": "Ancestral Memories",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/liesa.dck": {
+  "old": "Alseid of Life's Bounty",
+  "new": "Glyph Elemental",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.29,
+   0.82
+  ]
+ },
+ "decks/legends/lilah.dck": {
+  "old": "Cloven Casting",
+  "new": "Kiora Bests the Sea God",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/linden.dck": {
+  "old": "Divine Visitation",
+  "new": "Reverence",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.93
+  ]
+ },
+ "decks/legends/linvala.dck": {
+  "old": "Dovin's Veto",
+  "new": "Sphinx's Revelation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.98
+  ]
+ },
+ "decks/legends/lluwen.dck": {
+  "old": "Second Harvest",
+  "new": "Stonewood Invocation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/lonis.dck": {
+  "old": "Rampage of the Clans",
+  "new": "Krosan Grip",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/lord_windgrace.dck": {
+  "old": "The Mending of Dominaria",
+  "new": "A Killer Among Us",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.93
+  ]
+ },
+ "decks/legends/ludevic_and_kraum.dck": {
+  "old": "Swarm Intelligence",
+  "new": "Day of the Dragons",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/lumra.dck": {
+  "old": "The Mending of Dominaria",
+  "new": "Glorious Sunrise",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.93
+  ]
+ },
+ "decks/legends/lurrus.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Thrull Retainer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/lyra.dck": {
+  "old": "Herald of the Host",
+  "new": "Lyra Dawnbringer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.42,
+   1.0
+  ]
+ },
+ "decks/legends/mabel.dck": {
+  "old": "Sazacap's Brew",
+  "new": "Comet Storm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/mackenzie.dck": {
+  "old": "Thraben Watcher",
+  "new": "Angel of Condemnation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.63,
+   0.98
+  ]
+ },
+ "decks/legends/magda.dck": {
+  "old": "Tibalt's Trickery",
+  "new": "Magma Jet",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.93
+  ]
+ },
+ "decks/legends/maha.dck": {
+  "old": "Mephitic Vapors",
+  "new": "Hymn to Tourach",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.96
+  ]
+ },
+ "decks/legends/mairsil.dck": {
+  "old": "Ethereal Usher",
+  "new": "Kairi, the Swirling Sky",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.98
+  ]
+ },
+ "decks/legends/maja.dck": {
+  "old": "Druid's Deliverance",
+  "new": "Berserk",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.91
+  ]
+ },
+ "decks/legends/malcolm_and_breeches.dck": {
+  "old": "Brass's Bounty",
+  "new": "Volcanic Wind",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.95
+  ]
+ },
+ "decks/legends/mangara.dck": {
+  "old": "Charitable Levy",
+  "new": "Always Watching",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.94
+  ]
+ },
+ "decks/legends/maralen.dck": {
+  "old": "Chomping Changeling",
+  "new": "Rhonas the Indomitable",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/marath.dck": {
+  "old": "Anointed Procession",
+  "new": "Ghostly Prison",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.96
+  ]
+ },
+ "decks/legends/marchesa.dck": {
+  "old": "Dawn Charm",
+  "new": "Hail of Arrows",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.41,
+   0.92
+  ]
+ },
+ "decks/legends/marina_vendrell.dck": {
+  "old": "Balemurk Leech",
+  "new": "Unstoppable Slasher",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.96
+  ]
+ },
+ "decks/legends/marrow-gnawer.dck": {
+  "old": "Gruesome Fate",
+  "new": "Mutilate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/marwyn.dck": {
+  "old": "Leyline of Abundance",
+  "new": "Sylvan Scavenging",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.95
+  ]
+ },
+ "decks/legends/massacre_girl.dck": {
+  "old": "Darkness Descends",
+  "new": "Wicked Pact",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.97
+  ]
+ },
+ "decks/legends/mayael.dck": {
+  "old": "Mark of Asylum",
+  "new": "Dawn of Hope",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.92
+  ]
+ },
+ "decks/legends/mazirek.dck": {
+  "old": "Branching Evolution",
+  "new": "Path of Annihilation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.97
+  ]
+ },
+ "decks/legends/medomai.dck": {
+  "old": "Hallowed Moonlight",
+  "new": "Secure the Wastes",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.91
+  ]
+ },
+ "decks/legends/melek.dck": {
+  "old": "Unwind",
+  "new": "Daze",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/meloku.dck": {
+  "old": "Swarm Intelligence",
+  "new": "Confiscate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/miara_and_numa.dck": {
+  "old": "Prowess of the Fair",
+  "new": "Attrition",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   1.0
+  ]
+ },
+ "decks/legends/migloz.dck": {
+  "old": "Expand the Sphere",
+  "new": "Call of the Herd",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/legends/mikaeus.dck": {
+  "old": "Demonic Collusion",
+  "new": "Incremental Blight",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.97
+  ]
+ },
+ "decks/legends/millicent.dck": {
+  "old": "Crush Contraband",
+  "new": "Miraculous Recovery",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.92
+  ]
+ },
+ "decks/legends/mina_and_denn.dck": {
+  "old": "Ghirapur Orrery",
+  "new": "Predator, Flagship",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/miriam.dck": {
+  "old": "Alacrian Armory",
+  "new": "Godsend",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.99
+  ]
+ },
+ "decks/legends/mirko.dck": {
+  "old": "Otherworldly Gaze",
+  "new": "Mana Drain",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/mirri.dck": {
+  "old": "Harvest Season",
+  "new": "Hide in Plain Sight",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.98
+  ]
+ },
+ "decks/legends/mishra.dck": {
+  "old": "Cursed Mirror",
+  "new": "Warmaker Gunship",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.98
+  ]
+ },
+ "decks/legends/mitotic_ultimus.dck": {
+  "old": "Charge Through",
+  "new": "Sprout Swarm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.91
+  ]
+ },
+ "decks/legends/mizzix.dck": {
+  "old": "Awaken the Sky Tyrant",
+  "new": "The Elder Dragon War",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.95
+  ]
+ },
+ "decks/legends/mm'menon.dck": {
+  "old": "Codex Shredder",
+  "new": "Aeolipile",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/mogis.dck": {
+  "old": "Stand or Fall",
+  "new": "Mana Flare",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.95
+  ]
+ },
+ "decks/legends/momir_vig.dck": {
+  "old": "Neoform",
+  "new": "Kodama's Reach",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.97
+  ]
+ },
+ "decks/legends/mondrak.dck": {
+  "old": "Anointed Procession",
+  "new": "Rabble Rousing",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.96
+  ]
+ },
+ "decks/legends/moraug.dck": {
+  "old": "Tibalt's Trickery",
+  "new": "Starstorm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.98
+  ]
+ },
+ "decks/legends/morcant.dck": {
+  "old": "Prowess of the Fair",
+  "new": "Recurring Nightmare",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.9
+  ]
+ },
+ "decks/legends/moritte.dck": {
+  "old": "For the Common Good",
+  "new": "Hurricane",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.95
+  ]
+ },
+ "decks/legends/morophon.dck": {
+  "old": "Rooftop Storm",
+  "new": "Treachery",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.94
+  ]
+ },
+ "decks/legends/mr_foxglove.dck": {
+  "old": "Secret Rendezvous",
+  "new": "Armageddon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   1.0
+  ]
+ },
+ "decks/legends/mr_orfeo.dck": {
+  "old": "Nylea's Intervention",
+  "new": "Rampant Growth",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.98
+  ]
+ },
+ "decks/legends/mrs_klaus.dck": {
+  "old": "Perpetual Timepiece",
+  "new": "Sword of Sinew and Steel",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.97
+  ]
+ },
+ "decks/legends/ms_bumbleflower.dck": {
+  "old": "Wear Down",
+  "new": "Valgavoth's Onslaught",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   1.0
+  ]
+ },
+ "decks/legends/muldrotha.dck": {
+  "old": "Cemetery Tampering",
+  "new": "Bitterblossom",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/muxus.dck": {
+  "old": "Rundvelt Hordemaster",
+  "new": "Laelia, the Blade Reforged",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.94
+  ]
+ },
+ "decks/legends/muzzio.dck": {
+  "old": "Unstoppable Plan",
+  "new": "Zoetic Glyph",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/m\u00e1rton_stromgald.dck": {
+  "old": "Cursed Mirror",
+  "new": "Boommobile",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.92
+  ]
+ },
+ "decks/legends/najal.dck": {
+  "old": "Decanter of Endless Water",
+  "new": "Icy Manipulator",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.95
+  ]
+ },
+ "decks/legends/najeela.dck": {
+  "old": "Hardened Tactician",
+  "new": "Aryel, Knight of Windgrace",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   1.0
+  ]
+ },
+ "decks/legends/narfi.dck": {
+  "old": "Rooftop Storm",
+  "new": "Future Sight",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.98
+  ]
+ },
+ "decks/legends/narset.dck": {
+  "old": "Complete the Circuit",
+  "new": "Sublime Epiphany",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.97
+  ]
+ },
+ "decks/legends/nashi.dck": {
+  "old": "Sultai Ascendancy",
+  "new": "Awaken the Honored Dead",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.92
+  ]
+ },
+ "decks/legends/nath.dck": {
+  "old": "Liliana's Caress",
+  "new": "The Meathook Massacre",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/neheb.dck": {
+  "old": "Glittering Stockpile",
+  "new": "Urabrask's Forge",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.94
+  ]
+ },
+ "decks/legends/nekusar.dck": {
+  "old": "Otherworld Atlas",
+  "new": "Mind's Eye",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/nephilim_epochal.dck": {
+  "old": "Widespread Thieving",
+  "new": "Galvanic Arc",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.92
+  ]
+ },
+ "decks/legends/neriv.dck": {
+  "old": "Divine Visitation",
+  "new": "Angelic Destiny",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.95
+  ]
+ },
+ "decks/legends/nethroi.dck": {
+  "old": "Bloodthrone Vampire",
+  "new": "Drana, Liberator of Malakir",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.36,
+   0.99
+  ]
+ },
+ "decks/legends/neyali.dck": {
+  "old": "Cut a Deal",
+  "new": "Entreat the Angels",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.99
+  ]
+ },
+ "decks/legends/nezahal.dck": {
+  "old": "Not of This World",
+  "new": "Elminster's Simulacrum",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/niambi.dck": {
+  "old": "Search for Glory",
+  "new": "Ravages of War",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.96
+  ]
+ },
+ "decks/legends/nicol_bolas.dck": {
+  "old": "Diplomatic Immunity",
+  "new": "Drake Haven",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.94
+  ]
+ },
+ "decks/legends/nikara_and_yannik.dck": {
+  "old": "Flicker of Fate",
+  "new": "Swords to Plowshares",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.97
+  ]
+ },
+ "decks/legends/nikya.dck": {
+  "old": "Manglehorn",
+  "new": "Questing Beast",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.95
+  ]
+ },
+ "decks/legends/niv-mizzet.dck": {
+  "old": "Electrostatic Field",
+  "new": "Howlsquad Heavy",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.98
+  ]
+ },
+ "decks/legends/nogi.dck": {
+  "old": "Dream Pillager",
+  "new": "Tyrant of Kher Ridges",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.99
+  ]
+ },
+ "decks/legends/numot.dck": {
+  "old": "Roiling Terrain",
+  "new": "Forked Lightning",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   1.0
+  ]
+ },
+ "decks/legends/nylea.dck": {
+  "old": "Mana Reflection",
+  "new": "Dancing from Dark to Dawn",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.95
+  ]
+ },
+ "decks/legends/o-kagachi.dck": {
+  "old": "Ribbons of the Reikai",
+  "new": "River's Rebuke",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.98
+  ]
+ },
+ "decks/legends/ob_nixilis.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Hopeless Nightmare",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.9
+  ]
+ },
+ "decks/legends/obeka.dck": {
+  "old": "Paradox Haze",
+  "new": "Inventive Iteration",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.9
+  ]
+ },
+ "decks/legends/obosh.dck": {
+  "old": "Spoils of Blood",
+  "new": "Dark Ritual",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/obzedat.dck": {
+  "old": "Feast on the Fallen",
+  "new": "Greed",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.99
+  ]
+ },
+ "decks/legends/ognis.dck": {
+  "old": "Banehound",
+  "new": "Dream Beavers",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.97
+  ]
+ },
+ "decks/legends/ojer_axonil.dck": {
+  "old": "Tectonic Hazard",
+  "new": "Demonfire",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/ojer_kaslem.dck": {
+  "old": "Colossal Majesty",
+  "new": "Moldervine Cloak",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.29,
+   0.97
+  ]
+ },
+ "decks/legends/ojer_pakpatiq.dck": {
+  "old": "Mindsplice Apparatus",
+  "new": "Cryptic Coat",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/ojer_taq.dck": {
+  "old": "Secret Rendezvous",
+  "new": "Antiquities on the Loose",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.99
+  ]
+ },
+ "decks/legends/okaun_and_zndrsplt.dck": {
+  "old": "Planar Chaos",
+  "new": "Aggravated Assault",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/oketra.dck": {
+  "old": "Soul's Attendant",
+  "new": "Mikaeus, the Lunarch",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.99
+  ]
+ },
+ "decks/legends/old_stickfingers.dck": {
+  "old": "Cemetery Tampering",
+  "new": "Pestilence",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.93
+  ]
+ },
+ "decks/legends/olivia.dck": {
+  "old": "Sazacap's Brew",
+  "new": "Deflecting Swat",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.93
+  ]
+ },
+ "decks/legends/oloro.dck": {
+  "old": "Test of Endurance",
+  "new": "Citadel Siege",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.95
+  ]
+ },
+ "decks/legends/omarthis.dck": {
+  "old": "Staff of Compleation",
+  "new": "Serrated Arrows",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.98
+  ]
+ },
+ "decks/legends/omnath.dck": {
+  "old": "Splendid Reclamation",
+  "new": "Stunted Growth",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.94
+  ]
+ },
+ "decks/legends/oona.dck": {
+  "old": "Eye Collector",
+  "new": "Sleep-Cursed Faerie",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.95
+  ]
+ },
+ "decks/legends/oros.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Legion's Initiative",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/orvar.dck": {
+  "old": "Whim of Volrath",
+  "new": "Cyclonic Rift",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.99
+  ]
+ },
+ "decks/legends/orysa.dck": {
+  "old": "Planar Incision",
+  "new": "Faebloom Trick",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.91
+  ]
+ },
+ "decks/legends/osgir.dck": {
+  "old": "Tibalt's Trickery",
+  "new": "Shock",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.92
+  ]
+ },
+ "decks/legends/otrimi.dck": {
+  "old": "Psychic Impetus",
+  "new": "Control Magic",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/oura.dck": {
+  "old": "Nightmare Sower",
+  "new": "Twining Twins",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.94
+  ]
+ },
+ "decks/legends/ovika.dck": {
+  "old": "Brightstone Ritual",
+  "new": "Electrostatic Bolt",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.91
+  ]
+ },
+ "decks/legends/oviya.dck": {
+  "old": "Tamiyo's Safekeeping",
+  "new": "Oxidize",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.24,
+   0.92
+  ]
+ },
+ "decks/legends/ozox.dck": {
+  "old": "Asphodel Wanderer",
+  "new": "Carrionette",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.14,
+   0.63
+  ]
+ },
+ "decks/legends/padeem.dck": {
+  "old": "Encroaching Mycosynth",
+  "new": "Invasion Submersible",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.94
+  ]
+ },
+ "decks/legends/palladia-mors.dck": {
+  "old": "Meltdown",
+  "new": "Disintegrate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.97
+  ]
+ },
+ "decks/legends/pantlaza.dck": {
+  "old": "Majestic Heliopterus",
+  "new": "Palani's Hatcher",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.99
+  ]
+ },
+ "decks/legends/pashalik_mons.dck": {
+  "old": "Headlong Rush",
+  "new": "Carbonize",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.94
+  ]
+ },
+ "decks/legends/perrie_the_pulverizer.dck": {
+  "old": "Power Conduit",
+  "new": "Pithing Needle",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   1.0
+  ]
+ },
+ "decks/legends/phabine.dck": {
+  "old": "Second Harvest",
+  "new": "Beacon of Destruction",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/pharika.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Animate Dead",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/phelddagrif.dck": {
+  "old": "Dingus Staff",
+  "new": "Dissection Tools",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/legends/phenax.dck": {
+  "old": "Illusionist's Bracers",
+  "new": "Aether Vial",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/phlage.dck": {
+  "old": "Tocatli Honor Guard",
+  "new": "Monastery Mentor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.98
+  ]
+ },
+ "decks/legends/phylath.dck": {
+  "old": "Bountiful Harvest",
+  "new": "Desert Twister",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.96
+  ]
+ },
+ "decks/legends/pia_nalaar.dck": {
+  "old": "Reckless Fireweaver",
+  "new": "Draconautics Engineer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   0.99
+  ]
+ },
+ "decks/legends/pir_and_toothy.dck": {
+  "old": "Branching Evolution",
+  "new": "Ayula's Influence",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.96
+  ]
+ },
+ "decks/legends/plagon.dck": {
+  "old": "Soulless Jailer",
+  "new": "Phyrexian Dragon Engine",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.94
+  ]
+ },
+ "decks/legends/plargg.dck": {
+  "old": "Fishing Pole",
+  "new": "Lightning Greaves",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   1.0
+  ]
+ },
+ "decks/legends/pol_jamaar.dck": {
+  "old": "Essence Flux",
+  "new": "Power Sink",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.9
+  ]
+ },
+ "decks/legends/polukranos.dck": {
+  "old": "Wear Down",
+  "new": "Pest Infestation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.93
+  ]
+ },
+ "decks/legends/prime_speaker_zegana.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "Buster Sword",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.94
+  ]
+ },
+ "decks/legends/progenitus.dck": {
+  "old": "Unbound Flourishing",
+  "new": "Fight Rigging",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.96
+  ]
+ },
+ "decks/legends/prossh.dck": {
+  "old": "Vicious Shadows",
+  "new": "Warstorm Surge",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.92
+  ]
+ },
+ "decks/legends/purphoros.dck": {
+  "old": "Devilish Valet",
+  "new": "Jeska, Warrior Adept",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.23,
+   1.0
+  ]
+ },
+ "decks/legends/qala.dck": {
+  "old": "Secret Rendezvous",
+  "new": "Lingering Souls",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.95
+  ]
+ },
+ "decks/legends/queen_kayla.dck": {
+  "old": "Damping Sphere",
+  "new": "Sculpting Steel",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/queza.dck": {
+  "old": "Dark Deal",
+  "new": "Finale of Eternity",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.96
+  ]
+ },
+ "decks/legends/quintorius.dck": {
+  "old": "Shattered Perception",
+  "new": "Rolling Thunder",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.98
+  ]
+ },
+ "decks/legends/radha.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "Crucible of Worlds",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/radiant.dck": {
+  "old": "Serra's Hymn",
+  "new": "On Thin Ice",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/legends/raff.dck": {
+  "old": "Hanna's Custody",
+  "new": "Conclave Tribunal",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.94
+  ]
+ },
+ "decks/legends/raffine.dck": {
+  "old": "Grozoth",
+  "new": "Sunderflock",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.99
+  ]
+ },
+ "decks/legends/rafiq.dck": {
+  "old": "All That Glitters",
+  "new": "Oblivion Ring",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.97
+  ]
+ },
+ "decks/legends/ragavan.dck": {
+  "old": "Count on Luck",
+  "new": "Fable of the Mirror-Breaker",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.92
+  ]
+ },
+ "decks/legends/ragost.dck": {
+  "old": "Weapons Manufacturing",
+  "new": "Sulfuric Vortex",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.15,
+   0.93
+  ]
+ },
+ "decks/legends/rahilda.dck": {
+  "old": "Rush of Blood",
+  "new": "Kozilek's Return",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.97
+  ]
+ },
+ "decks/legends/rakdos.dck": {
+  "old": "Tibalt's Trickery",
+  "new": "Yamabushi's Flame",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.92
+  ]
+ },
+ "decks/legends/ral.dck": {
+  "old": "Stormsplitter",
+  "new": "Talas Researcher",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/ramirez_depietro.dck": {
+  "old": "Unnatural Selection",
+  "new": "Propaganda",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/legends/ramos.dck": {
+  "old": "Invasion of Alara",
+  "new": "Invasion of Fiora",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.88
+  ]
+ },
+ "decks/legends/ranar.dck": {
+  "old": "Warhorn Blast",
+  "new": "Jabari's Influence",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.98
+  ]
+ },
+ "decks/legends/rankle.dck": {
+  "old": "Liliana's Caress",
+  "new": "Necromancy",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.93
+  ]
+ },
+ "decks/legends/rashmi.dck": {
+  "old": "Scour from Existence",
+  "new": "Opportunity",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.92
+  ]
+ },
+ "decks/legends/rasputin.dck": {
+  "old": "Liberate",
+  "new": "Spectacular Tactics",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.92
+  ]
+ },
+ "decks/legends/razaketh.dck": {
+  "old": "Doomsday Excruciator",
+  "new": "Shadowborn Demon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.97
+  ]
+ },
+ "decks/legends/reaper_king.dck": {
+  "old": "Jawbone Skulkin",
+  "new": "Painter's Servant",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/redshift.dck": {
+  "old": "Point the Way",
+  "new": "Rancor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.94
+  ]
+ },
+ "decks/legends/regna_and_krav.dck": {
+  "old": "Spectrum Sentinel",
+  "new": "Hangarback Walker",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/reidane.dck": {
+  "old": "Urza Assembles the Titans",
+  "new": "Dictate of Heliod",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.95
+  ]
+ },
+ "decks/legends/rendmaw.dck": {
+  "old": "Reap",
+  "new": "Dark Banishing",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.95
+  ]
+ },
+ "decks/legends/reveka.dck": {
+  "old": "Helm of Awakening",
+  "new": "Grindstone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   1.0
+  ]
+ },
+ "decks/legends/reyav.dck": {
+  "old": "Gate Smasher",
+  "new": "Sword of Body and Mind",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/reyhan_and_ishai.dck": {
+  "old": "Branching Evolution",
+  "new": "Profane Procession",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.99
+  ]
+ },
+ "decks/legends/rhonas.dck": {
+  "old": "Nature's Claim",
+  "new": "Resize",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.92
+  ]
+ },
+ "decks/legends/rhys.dck": {
+  "old": "Anointed Procession",
+  "new": "Felidar Retreat",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.95
+  ]
+ },
+ "decks/legends/ria_ivor.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Call of the Ring",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.93
+  ]
+ },
+ "decks/legends/rielle.dck": {
+  "old": "Burning Inquiry",
+  "new": "Fanning the Flames",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.99
+  ]
+ },
+ "decks/legends/rienne.dck": {
+  "old": "Tome of the Guildpact",
+  "new": "Planar Bridge",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   1.0
+  ]
+ },
+ "decks/legends/rigo.dck": {
+  "old": "Glimmer Bairn",
+  "new": "Hexdrinker",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.98
+  ]
+ },
+ "decks/legends/rikala.dck": {
+  "old": "Drowned Secrets",
+  "new": "Court of Cunning",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.91
+  ]
+ },
+ "decks/legends/riku.dck": {
+  "old": "Hexing Squelcher",
+  "new": "Pashalik Mons",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.15,
+   0.99
+  ]
+ },
+ "decks/legends/rin_and_seri.dck": {
+  "old": "Warp World",
+  "new": "Insurrection",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.96
+  ]
+ },
+ "decks/legends/rith.dck": {
+  "old": "Hell to Pay",
+  "new": "Subterranean Tremors",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.98
+  ]
+ },
+ "decks/legends/roalesk.dck": {
+  "old": "Plague Nurse",
+  "new": "Vorinclex",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.98
+  ]
+ },
+ "decks/legends/rocco.dck": {
+  "old": "Take to the Streets",
+  "new": "Titania's Command",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.98
+  ]
+ },
+ "decks/legends/rodolf.dck": {
+  "old": "Soul's Attendant",
+  "new": "Shaile, Dean of Radiance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.96
+  ]
+ },
+ "decks/legends/rograkh_and_ardenn.dck": {
+  "old": "Sigarda's Aid",
+  "new": "Land Tax",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.88
+  ]
+ },
+ "decks/legends/rohgahh.dck": {
+  "old": "Firdoch Core",
+  "new": "Helm of Possession",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   1.0
+  ]
+ },
+ "decks/legends/rona.dck": {
+  "old": "Unwind",
+  "new": "Cryptic Command",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/rootha.dck": {
+  "old": "Invasion of Arcavios",
+  "new": "Invasion of Karsus",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.88
+  ]
+ },
+ "decks/legends/rorix.dck": {
+  "old": "Radiate",
+  "new": "Fissure",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/rosnakht.dck": {
+  "old": "Minion of the Mighty",
+  "new": "Kobold Overlord",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.53
+  ]
+ },
+ "decks/legends/rothga.dck": {
+  "old": "Plague Nurse",
+  "new": "Tangle Angler",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.76
+  ]
+ },
+ "decks/legends/rowan.dck": {
+  "old": "Font of Agonies",
+  "new": "Oversold Cemetery",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.92
+  ]
+ },
+ "decks/legends/roxanne.dck": {
+  "old": "Apex of Power",
+  "new": "Blasphemous Act",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.95
+  ]
+ },
+ "decks/legends/rudolph.dck": {
+  "old": "Great Hart",
+  "new": "Auspicious Starrix",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.83
+  ]
+ },
+ "decks/legends/rukarumel.dck": {
+  "old": "Diffusion Sliver",
+  "new": "Acidic Sliver",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.86
+  ]
+ },
+ "decks/legends/runo_stromkirk.dck": {
+  "old": "Quest for Ula's Temple",
+  "new": "Counterbalance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/ruric_thar.dck": {
+  "old": "Cindervines",
+  "new": "Stormbind",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.98
+  ]
+ },
+ "decks/legends/rusko.dck": {
+  "old": "Unwinding Clock",
+  "new": "The Arkenstone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.99
+  ]
+ },
+ "decks/legends/ruxa.dck": {
+  "old": "Atraxa's Fall",
+  "new": "Regrowth",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.92
+  ]
+ },
+ "decks/legends/ryusei.dck": {
+  "old": "Mirror March",
+  "new": "Court of Ire",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.99
+  ]
+ },
+ "decks/legends/saheeli.dck": {
+  "old": "Unwinding Clock",
+  "new": "Ring of Renewal",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/saint_elenda.dck": {
+  "old": "Leyline of Hope",
+  "new": "Wedding Announcement",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/sakashima.dck": {
+  "old": "Ravenform",
+  "new": "Kefnet's Last Word",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.98
+  ]
+ },
+ "decks/legends/sala.dck": {
+  "old": "Tectonic Hazard",
+  "new": "Rolling Earthquake",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/salacinder_and_soot.dck": {
+  "old": "Collective Inferno",
+  "new": "There and Back Again",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.91
+  ]
+ },
+ "decks/legends/sami.dck": {
+  "old": "Drill Too Deep",
+  "new": "Char",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.98
+  ]
+ },
+ "decks/legends/sanar.dck": {
+  "old": "Treasure Hunt",
+  "new": "Winternight Stories",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.26,
+   0.93
+  ]
+ },
+ "decks/legends/sarulf.dck": {
+  "old": "Chomping Changeling",
+  "new": "Chameleon Colossus",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/saryth.dck": {
+  "old": "Heritage Reclamation",
+  "new": "Signature Slam",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.92
+  ]
+ },
+ "decks/legends/saskia.dck": {
+  "old": "Aura Mutation",
+  "new": "Murder",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.39,
+   0.92
+  ]
+ },
+ "decks/legends/satoru.dck": {
+  "old": "Triton Shorestalker",
+  "new": "Lord of Atlantis",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.98
+  ]
+ },
+ "decks/legends/satya.dck": {
+  "old": "Unwinding Clock",
+  "new": "Sword of War and Peace",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/savra.dck": {
+  "old": "Moldervine Reclamation",
+  "new": "Deadbridge Chant",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.96
+  ]
+ },
+ "decks/legends/scion_of_the_ur-dragon.dck": {
+  "old": "Dragon Tempest",
+  "new": "Seismic Assault",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.63,
+   0.99
+  ]
+ },
+ "decks/legends/sedris.dck": {
+  "old": "Change of Fortune",
+  "new": "Shatterstorm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/selvala.dck": {
+  "old": "Fracturing Gust",
+  "new": "Advent of the Wurm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.95
+  ]
+ },
+ "decks/legends/sen_triplets.dck": {
+  "old": "Unwinding Clock",
+  "new": "Pyromancer's Goggles",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/sengir_and_falthis.dck": {
+  "old": "Blood Tribute",
+  "new": "Yawgmoth's Vile Offering",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.93
+  ]
+ },
+ "decks/legends/sephara.dck": {
+  "old": "Sanctify",
+  "new": "Practiced Offense",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.99
+  ]
+ },
+ "decks/legends/sethron.dck": {
+  "old": "Didgeridoo",
+  "new": "Chrome Mox",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/shadrix.dck": {
+  "old": "Yathan Tombguard",
+  "new": "Yawgmoth, Thran Physician",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/shaile.dck": {
+  "old": "Deadeye Tracker",
+  "new": "Tourach, Dread Cantor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.48,
+   0.96
+  ]
+ },
+ "decks/legends/shalai_and_hallar.dck": {
+  "old": "Hindervines",
+  "new": "Kamahl's Will",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.9
+  ]
+ },
+ "decks/legends/shanna.dck": {
+  "old": "Sunbond",
+  "new": "Mirari's Wake",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/sharuum.dck": {
+  "old": "Dispeller's Capsule",
+  "new": "Horn of Valhalla",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.27,
+   0.99
+  ]
+ },
+ "decks/legends/shauku.dck": {
+  "old": "Virulent Plague",
+  "new": "Breeding Pit",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/sheldon.dck": {
+  "old": "Lightmine Field",
+  "new": "Worship",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/sheoldred.dck": {
+  "old": "Consuming Corruption",
+  "new": "Ob Nixilis's Cruelty",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.51,
+   0.92
+  ]
+ },
+ "decks/legends/shiko.dck": {
+  "old": "Memory Vessel",
+  "new": "Dragonwing Glider",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/shroofus.dck": {
+  "old": "Overgrown Armasaur",
+  "new": "Carnage Tyrant",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.15,
+   0.98
+  ]
+ },
+ "decks/legends/shu_yun.dck": {
+  "old": "Jace's Sanctum",
+  "new": "Persuasion",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/siani_and_esior.dck": {
+  "old": "Decanter of Endless Water",
+  "new": "Champion's Helm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/sidar_jabari.dck": {
+  "old": "Distant Melody",
+  "new": "Notorious Throng",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.37,
+   0.94
+  ]
+ },
+ "decks/legends/sidisi.dck": {
+  "old": "Sultai Ascendancy",
+  "new": "Awaken the Honored Dead",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.92
+  ]
+ },
+ "decks/legends/sifa_grent.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Fevered Convulsions",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.94
+  ]
+ },
+ "decks/legends/sigarda.dck": {
+  "old": "Fracturing Gust",
+  "new": "Advent of the Wurm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.95
+  ]
+ },
+ "decks/legends/silvos.dck": {
+  "old": "Seeds of Innocence",
+  "new": "Natural Order",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.95
+  ]
+ },
+ "decks/legends/sisay.dck": {
+  "old": "Stun",
+  "new": "Chaos Warp",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.93
+  ]
+ },
+ "decks/legends/sivitri.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Thrull Retainer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/skithiryx.dck": {
+  "old": "Snake Cult Initiation",
+  "new": "Sidequest: Hunt the Mark",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.93
+  ]
+ },
+ "decks/legends/skrelv.dck": {
+  "old": "Veil of Assimilation",
+  "new": "Horn of Valhalla",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.99
+  ]
+ },
+ "decks/legends/sliver_gravemother.dck": {
+  "old": "Death's Oasis",
+  "new": "Revival of the Ancestors",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.96
+  ]
+ },
+ "decks/legends/sliver_hivelord.dck": {
+  "old": "Bonds of Mortality",
+  "new": "Ranger Class",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.93
+  ]
+ },
+ "decks/legends/sliver_legion.dck": {
+  "old": "Diffusion Sliver",
+  "new": "Cautery Sliver",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.82
+  ]
+ },
+ "decks/legends/sliver_overlord.dck": {
+  "old": "Dovin's Veto",
+  "new": "Mindswipe",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/sliver_weftwinder.dck": {
+  "old": "Chomping Changeling",
+  "new": "Tarmogoyf",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.98
+  ]
+ },
+ "decks/legends/slogurk.dck": {
+  "old": "Excavation",
+  "new": "Proft's Eidetic Memory",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.87
+  ]
+ },
+ "decks/legends/snapdax.dck": {
+  "old": "Blacksmith's Skill",
+  "new": "Formation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.97
+  ]
+ },
+ "decks/legends/solphim.dck": {
+  "old": "Glittering Stockpile",
+  "new": "Sword of Feast and Famine",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   1.0
+  ]
+ },
+ "decks/legends/squee.dck": {
+  "old": "Boggart Shenanigans",
+  "new": "The Rollercrusher Ride",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.93
+  ]
+ },
+ "decks/legends/sram.dck": {
+  "old": "Crush Contraband",
+  "new": "Settle the Wreckage",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.97
+  ]
+ },
+ "decks/legends/stella_lee.dck": {
+  "old": "Cursed Mirror",
+  "new": "Cori-Steel Cutter",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.93
+  ]
+ },
+ "decks/legends/strefan.dck": {
+  "old": "Crimson Honor Guard",
+  "new": "Sengir Vampire",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.43,
+   1.0
+  ]
+ },
+ "decks/legends/subira.dck": {
+  "old": "Braid of Fire",
+  "new": "Honden of Infinite Rage",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.94
+  ]
+ },
+ "decks/legends/surrak.dck": {
+  "old": "Heritage Reclamation",
+  "new": "Trap Essence",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.95
+  ]
+ },
+ "decks/legends/svella.dck": {
+  "old": "Open the Omenpaths",
+  "new": "Sulfurous Blast",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/svyelun.dck": {
+  "old": "Fishliver Oil",
+  "new": "Drake Haven",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.94
+  ]
+ },
+ "decks/legends/sydri.dck": {
+  "old": "Alacrian Armory",
+  "new": "Celestial Armor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/sygg.dck": {
+  "old": "Mistcaller",
+  "new": "Tamiyo, Inquisitive Student",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.98
+  ]
+ },
+ "decks/legends/syr_alin.dck": {
+  "old": "Secret Rendezvous",
+  "new": "United Front",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.99
+  ]
+ },
+ "decks/legends/syr_carah.dck": {
+  "old": "Tectonic Hazard",
+  "new": "Bonfire of the Damned",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/syr_elenora.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "Sword of Fire and Ice",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/syr_faren.dck": {
+  "old": "Point the Way",
+  "new": "Meltstrider's Resolve",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.88
+  ]
+ },
+ "decks/legends/syr_ginger.dck": {
+  "old": "Myr Scrapling",
+  "new": "Ornithopter",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   1.0
+  ]
+ },
+ "decks/legends/syr_gwyn.dck": {
+  "old": "Colossus Hammer",
+  "new": "Fellwar Stone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.94
+  ]
+ },
+ "decks/legends/syr_konrad.dck": {
+  "old": "Morality Shift",
+  "new": "Overwhelming Forces",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.99
+  ]
+ },
+ "decks/legends/szadek.dck": {
+  "old": "Fascination",
+  "new": "Drain Power",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/szarel.dck": {
+  "old": "Splendid Reclamation",
+  "new": "Overrun",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.99
+  ]
+ },
+ "decks/legends/taborax.dck": {
+  "old": "Secret Salvage",
+  "new": "Languish",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.95
+  ]
+ },
+ "decks/legends/tahngarth.dck": {
+  "old": "Mages' Contest",
+  "new": "Flame Javelin",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.94
+  ]
+ },
+ "decks/legends/taii_wakeen.dck": {
+  "old": "Valor Made Real",
+  "new": "Abeyance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.97
+  ]
+ },
+ "decks/legends/tajic.dck": {
+  "old": "Deflecting Palm",
+  "new": "Aurelia's Fury",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   1.0
+  ]
+ },
+ "decks/legends/talion.dck": {
+  "old": "Ego Drain",
+  "new": "Damn",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   0.98
+  ]
+ },
+ "decks/legends/talrand.dck": {
+  "old": "Complete the Circuit",
+  "new": "Sunder",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   1.0
+  ]
+ },
+ "decks/legends/tam.dck": {
+  "old": "Prismatic Undercurrents",
+  "new": "From Beyond",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.9
+  ]
+ },
+ "decks/legends/tanazir.dck": {
+  "old": "Triton Shorestalker",
+  "new": "Shoreline Looter",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.9
+  ]
+ },
+ "decks/legends/tannuk.dck": {
+  "old": "Cursed Mirror",
+  "new": "Samurai's Katana",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.92
+  ]
+ },
+ "decks/legends/tasigur.dck": {
+  "old": "Commune with the Gods",
+  "new": "Cultivate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.2,
+   1.0
+  ]
+ },
+ "decks/legends/tatsunari.dck": {
+  "old": "Gossip's Talent",
+  "new": "Zoetic Glyph",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.96
+  ]
+ },
+ "decks/legends/tatyova.dck": {
+  "old": "Unwind",
+  "new": "Fact or Fiction",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.97
+  ]
+ },
+ "decks/legends/tawnos.dck": {
+  "old": "Angel of the Ruins",
+  "new": "Steel Seraph",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.3,
+   0.98
+  ]
+ },
+ "decks/legends/tayam.dck": {
+  "old": "Death's Oasis",
+  "new": "Firja's Retribution",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.95
+  ]
+ },
+ "decks/legends/tegwyll.dck": {
+  "old": "Faerie Seer",
+  "new": "Mischievous Mystic",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.93
+  ]
+ },
+ "decks/legends/tekuthal.dck": {
+  "old": "Unwind",
+  "new": "Blue Sun's Zenith",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.94
+  ]
+ },
+ "decks/legends/teneb.dck": {
+  "old": "Grapple with the Past",
+  "new": "Stampede",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.28,
+   0.95
+  ]
+ },
+ "decks/legends/tergrid.dck": {
+  "old": "Alesha's Legacy",
+  "new": "Dismember",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.94
+  ]
+ },
+ "decks/legends/terrian.dck": {
+  "old": "Ancient Brontodon",
+  "new": "Vaultborn Tyrant",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.99
+  ]
+ },
+ "decks/legends/tersa.dck": {
+  "old": "Spellweaver Helix",
+  "new": "Whispersilk Cloak",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/tesak.dck": {
+  "old": "Ambitious Assault",
+  "new": "Wizard's Lightning",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.91
+  ]
+ },
+ "decks/legends/teshar.dck": {
+  "old": "Wand of Vertebrae",
+  "new": "Umezawa's Jitte",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/tetsuo_umezawa.dck": {
+  "old": "Gate to Phyrexia",
+  "new": "Phyrexian Arena",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.2,
+   0.99
+  ]
+ },
+ "decks/legends/teval.dck": {
+  "old": "Crawling Sensation",
+  "new": "Kraven's Last Hunt",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.2,
+   0.92
+  ]
+ },
+ "decks/legends/teysa.dck": {
+  "old": "Martyr's Cause",
+  "new": "Ossification",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.9
+  ]
+ },
+ "decks/legends/thalia.dck": {
+  "old": "Thorn of Amethyst",
+  "new": "Sword of Truth and Justice",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.99
+  ]
+ },
+ "decks/legends/thassa.dck": {
+  "old": "Planar Incision",
+  "new": "Thirst for Knowledge",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.9
+  ]
+ },
+ "decks/legends/the_archimandrite.dck": {
+  "old": "Decanter of Endless Water",
+  "new": "Time Bomb",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.96
+  ]
+ },
+ "decks/legends/the_beamtown_bullies.dck": {
+  "old": "Cemetery Tampering",
+  "new": "No Mercy",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   1.0
+  ]
+ },
+ "decks/legends/the_dawning_archaic.dck": {
+  "old": "Sphinx-Bone Wand",
+  "new": "Kaldra Compleat",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.99
+  ]
+ },
+ "decks/legends/the_first_sliver.dck": {
+  "old": "Diffusion Sliver",
+  "new": "Acidic Sliver",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.86
+  ]
+ },
+ "decks/legends/the_gitrog_monster.dck": {
+  "old": "Perpetual Timepiece",
+  "new": "Reckoner Bankbuster",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.96
+  ]
+ },
+ "decks/legends/the_goose_mother.dck": {
+  "old": "Tome of the Guildpact",
+  "new": "Vanquisher's Banner",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.93
+  ]
+ },
+ "decks/legends/the_grand_goatnapper.dck": {
+  "old": "Harness the Storm",
+  "new": "Spiteful Banditry",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.98
+  ]
+ },
+ "decks/legends/the_infamous_cruelclaw.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "Loxodon Warhammer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/the_jolly_balloon_man.dck": {
+  "old": "Deflecting Palm",
+  "new": "Lightning Helix",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.94
+  ]
+ },
+ "decks/legends/the_locust_god.dck": {
+  "old": "Flood of Tears",
+  "new": "Temporal Mastery",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.96
+  ]
+ },
+ "decks/legends/the_lord_of_pain.dck": {
+  "old": "Blood Pact",
+  "new": "Feast or Famine",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.14,
+   0.99
+  ]
+ },
+ "decks/legends/the_master_of_keys.dck": {
+  "old": "Monologue Tax",
+  "new": "Sheltered by Ghosts",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.94
+  ]
+ },
+ "decks/legends/the_mimeoplasm.dck": {
+  "old": "Otherworldly Gaze",
+  "new": "Brainstorm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.95
+  ]
+ },
+ "decks/legends/the_mindskinner.dck": {
+  "old": "Fraying Sanity",
+  "new": "Thopter Spy Network",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.9
+  ]
+ },
+ "decks/legends/the_mycotyrant.dck": {
+  "old": "Cemetery Tampering",
+  "new": "Phyrexian Scriptures",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.9
+  ]
+ },
+ "decks/legends/the_necrobloom.dck": {
+  "old": "Elfsworn Giant",
+  "new": "Primeval Titan",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.31,
+   1.0
+  ]
+ },
+ "decks/legends/the_peregrine_dynamo.dck": {
+  "old": "Clock of Omens",
+  "new": "Helm of Obedience",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   1.0
+  ]
+ },
+ "decks/legends/the_pride_of_hull_clade.dck": {
+  "old": "Amaranthine Wall",
+  "new": "Snow Fortress",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.92
+  ]
+ },
+ "decks/legends/the_scarab_god.dck": {
+  "old": "Rooftop Storm",
+  "new": "Mind Control",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.94
+  ]
+ },
+ "decks/legends/the_scorpion_god.dck": {
+  "old": "Trespasser's Curse",
+  "new": "Bitterblossom",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/the_ur-dragon.dck": {
+  "old": "Dracogenesis",
+  "new": "Debtors' Knell",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.98
+  ]
+ },
+ "decks/legends/thelon.dck": {
+  "old": "Crawling Infestation",
+  "new": "Beastmaster Ascension",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.87
+  ]
+ },
+ "decks/legends/thomil.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Bad Moon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.93
+  ]
+ },
+ "decks/legends/thorna_and_twigtooth.dck": {
+  "old": "Darkness Descends",
+  "new": "Gix's Command",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.98
+  ]
+ },
+ "decks/legends/thrasios_and_vial_smasher.dck": {
+  "old": "Wilderness Reclamation",
+  "new": "Jugan Defends the Temple",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.99
+  ]
+ },
+ "decks/legends/thraximundar.dck": {
+  "old": "Necromantic Thirst",
+  "new": "Dictate of Erebos",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.89
+  ]
+ },
+ "decks/legends/thurid.dck": {
+  "old": "Capashen Unicorn",
+  "new": "Revered Unicorn",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.58
+  ]
+ },
+ "decks/legends/tiana.dck": {
+  "old": "Luxurious Locomotive",
+  "new": "Obelisk of Alara",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.99
+  ]
+ },
+ "decks/legends/timothar.dck": {
+  "old": "Pyre of Heroes",
+  "new": "Trusty Machete",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.96
+  ]
+ },
+ "decks/legends/tinybones.dck": {
+  "old": "Quest for the Nihil Stone",
+  "new": "Obsessive Pursuit",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.86
+  ]
+ },
+ "decks/legends/tishana.dck": {
+  "old": "Blessed Respite",
+  "new": "Punishing Punch",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.87
+  ]
+ },
+ "decks/legends/tivit.dck": {
+  "old": "Monologue Tax",
+  "new": "Thopter Arrest",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.93
+  ]
+ },
+ "decks/legends/tocasia.dck": {
+  "old": "Quest for Renewal",
+  "new": "Brokers Ascendancy",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.98
+  ]
+ },
+ "decks/legends/tolsimir.dck": {
+  "old": "Tome of the Guildpact",
+  "new": "The Immortal Sun",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.96
+  ]
+ },
+ "decks/legends/toluz.dck": {
+  "old": "Expose to Daylight",
+  "new": "Teferi's Protection",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.94
+  ]
+ },
+ "decks/legends/tomik.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Hopeless Nightmare",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.9
+  ]
+ },
+ "decks/legends/toralf.dck": {
+  "old": "Cursed Mirror",
+  "new": "Coercive Portal",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.94
+  ]
+ },
+ "decks/legends/torbran.dck": {
+  "old": "Invoke Calamity",
+  "new": "Pyrokinesis",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/toski.dck": {
+  "old": "Harvest Season",
+  "new": "Beacon of Creation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.92
+  ]
+ },
+ "decks/legends/tovolar.dck": {
+  "old": "Full Moon's Rise",
+  "new": "Earthbender Ascension",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.96
+  ]
+ },
+ "decks/legends/toxrill.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "The Meathook Massacre",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/traxos.dck": {
+  "old": "Damping Sphere",
+  "new": "Horn of Gondor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/treva.dck": {
+  "old": "Dovin's Veto",
+  "new": "Absorb",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.88
+  ]
+ },
+ "decks/legends/trostani.dck": {
+  "old": "For the Common Good",
+  "new": "Rhonas's Last Stand",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/trynn_and_silvar.dck": {
+  "old": "Martial Impetus",
+  "new": "Empyrial Armor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.93
+  ]
+ },
+ "decks/legends/trystan.dck": {
+  "old": "Cemetery Tampering",
+  "new": "Grave Pact",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.98
+  ]
+ },
+ "decks/legends/tsabo_tavoc.dck": {
+  "old": "Tsabo's Web",
+  "new": "Ivory Tower",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.96
+  ]
+ },
+ "decks/legends/tsagan.dck": {
+  "old": "Full Throttle",
+  "new": "Temporal Firestorm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.97
+  ]
+ },
+ "decks/legends/tymna_and_tana.dck": {
+  "old": "Rite of Harmony",
+  "new": "Terminate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.95
+  ]
+ },
+ "decks/legends/ulalek.dck": {
+  "old": "Null Elemental Blast",
+  "new": "Terror",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.93
+  ]
+ },
+ "decks/legends/ulamog.dck": {
+  "old": "Geode Golem",
+  "new": "Solemn Simulacrum",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.57,
+   1.0
+  ]
+ },
+ "decks/legends/ulasht.dck": {
+  "old": "Branching Evolution",
+  "new": "Guardian Project",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.91
+  ]
+ },
+ "decks/legends/ulrich.dck": {
+  "old": "Second Harvest",
+  "new": "Strength of Cedars",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.9
+  ]
+ },
+ "decks/legends/umbris.dck": {
+  "old": "Pyxis of Pandemonium",
+  "new": "Skullclamp",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.98
+  ]
+ },
+ "decks/legends/umori.dck": {
+  "old": "Risky Shortcut",
+  "new": "Consuming Vapors",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.96
+  ]
+ },
+ "decks/legends/unctus.dck": {
+  "old": "Encroaching Mycosynth",
+  "new": "Great Gilded Boat",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.93
+  ]
+ },
+ "decks/legends/unesh.dck": {
+  "old": "Unwind",
+  "new": "Cryptic Command",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/ureni.dck": {
+  "old": "Breaching Dragonstorm",
+  "new": "Dragonback Assault",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.14,
+   0.99
+  ]
+ },
+ "decks/legends/uril.dck": {
+  "old": "Iona's Blessing",
+  "new": "Kinbinding",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/uro.dck": {
+  "old": "Flood of Tears",
+  "new": "Capture of Jingzhou",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/urtet.dck": {
+  "old": "Myr Superion",
+  "new": "Perilous Myr",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.68
+  ]
+ },
+ "decks/legends/urza.dck": {
+  "old": "Unwinding Clock",
+  "new": "Paradox Engine",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/legends/uurg.dck": {
+  "old": "Oblivion Crown",
+  "new": "Dying to Serve",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.84
+  ]
+ },
+ "decks/legends/uvilda.dck": {
+  "old": "Cursed Mirror",
+  "new": "Chainsaw",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.91
+  ]
+ },
+ "decks/legends/vadrik.dck": {
+  "old": "Brass's Bounty",
+  "new": "Improvisation Capstone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/vadrok.dck": {
+  "old": "Glittering Stockpile",
+  "new": "Ark of Hunger",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   1.0
+  ]
+ },
+ "decks/legends/vaevictis_asmadi.dck": {
+  "old": "Dingus Staff",
+  "new": "Worn Powerstone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.93
+  ]
+ },
+ "decks/legends/valentin.dck": {
+  "old": "Blessed Respite",
+  "new": "Horobi's Whisper",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.94
+  ]
+ },
+ "decks/legends/valgavoth.dck": {
+  "old": "Not of This World",
+  "new": "Grip of Desolation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.85
+  ]
+ },
+ "decks/legends/vannifar.dck": {
+  "old": "Wilderness Reclamation",
+  "new": "Call of the Wild",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.96
+  ]
+ },
+ "decks/legends/varolz.dck": {
+  "old": "Phyrexian Soulgorger",
+  "new": "Clay Champion",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.97
+  ]
+ },
+ "decks/legends/varragoth.dck": {
+  "old": "Sadistic Glee",
+  "new": "The Witch's Vanity",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.89
+  ]
+ },
+ "decks/legends/vega.dck": {
+  "old": "Dovin's Veto",
+  "new": "Rona's Vortex",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.91
+  ]
+ },
+ "decks/legends/veko.dck": {
+  "old": "Case of the Uneaten Feast",
+  "new": "Legion's Landing",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.14,
+   0.87
+  ]
+ },
+ "decks/legends/velomachus.dck": {
+  "old": "Open the Omenpaths",
+  "new": "Incinerate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.95
+  ]
+ },
+ "decks/legends/venser.dck": {
+  "old": "Urza Assembles the Titans",
+  "new": "Elspeth Conquers Death",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.94
+  ]
+ },
+ "decks/legends/verrak.dck": {
+  "old": "Font of Agonies",
+  "new": "Chained to the Rocks",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.91
+  ]
+ },
+ "decks/legends/vexyr.dck": {
+  "old": "Tormod's Cryptkeeper",
+  "new": "Solemn Simulacrum",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   1.0
+  ]
+ },
+ "decks/legends/veyran.dck": {
+  "old": "Swarm Intelligence",
+  "new": "Shark Typhoon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.89
+  ]
+ },
+ "decks/legends/victor.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Life of Toshiro Umezawa",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.82
+  ]
+ },
+ "decks/legends/victor_vampire.dck": {
+  "old": "Canonized in Blood",
+  "new": "Seal of Doom",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.94
+  ]
+ },
+ "decks/legends/vihaan.dck": {
+  "old": "Shiny Impetus",
+  "new": "Pyrohemia",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.98
+  ]
+ },
+ "decks/legends/vilis.dck": {
+  "old": "Font of Agonies",
+  "new": "Oversold Cemetery",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.92
+  ]
+ },
+ "decks/legends/visara.dck": {
+  "old": "Bubbling Muck",
+  "new": "Mind Twist",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/legends/vishgraz.dck": {
+  "old": "Expand the Sphere",
+  "new": "Primal Command",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.93
+  ]
+ },
+ "decks/legends/vito.dck": {
+  "old": "Tainted Remedy",
+  "new": "Mindless Conscription",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.86
+  ]
+ },
+ "decks/legends/vnwxt.dck": {
+  "old": "Unstoppable Plan",
+  "new": "Coastal Piracy",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.91
+  ]
+ },
+ "decks/legends/voja.dck": {
+  "old": "Dire-Strain Rampage",
+  "new": "Savage Twister",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/volrath.dck": {
+  "old": "Homunculus Horde",
+  "new": "Kefnet the Mindful",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   1.0
+  ]
+ },
+ "decks/legends/vona.dck": {
+  "old": "Vicious Conquistador",
+  "new": "Morlun, Devourer of Spiders",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   1.0
+  ]
+ },
+ "decks/legends/vorel.dck": {
+  "old": "Branching Evolution",
+  "new": "Forbidden Lore",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.89
+  ]
+ },
+ "decks/legends/vorosh.dck": {
+  "old": "The Dragon-Kami Reborn",
+  "new": "Kudzu",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.95
+  ]
+ },
+ "decks/legends/vraan.dck": {
+  "old": "Phyrexian Altar",
+  "new": "And\u00faril, Flame of the West",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.2,
+   0.99
+  ]
+ },
+ "decks/legends/vraska.dck": {
+  "old": "Pick Your Poison",
+  "new": "Awaken the Woods",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.24,
+   0.9
+  ]
+ },
+ "decks/legends/vren.dck": {
+  "old": "Nightwhorl Hermit",
+  "new": "Vren, the Relentless",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.93
+  ]
+ },
+ "decks/legends/wayta.dck": {
+  "old": "Cacophodon",
+  "new": "Pugnacious Hammerskull",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.97
+  ]
+ },
+ "decks/legends/wick.dck": {
+  "old": "Bulk Up",
+  "new": "Torch the Tower",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.91
+  ]
+ },
+ "decks/legends/wildsear.dck": {
+  "old": "Cindervines",
+  "new": "Fires of Yavimaya",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.87
+  ]
+ },
+ "decks/legends/wilhelt.dck": {
+  "old": "Rooftop Storm",
+  "new": "Honden of Seeing Winds",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.9
+  ]
+ },
+ "decks/legends/will.dck": {
+  "old": "Riot Control",
+  "new": "Chastise",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.91
+  ]
+ },
+ "decks/legends/willowdusk.dck": {
+  "old": "Suffer the Past",
+  "new": "Last Gasp",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.93
+  ]
+ },
+ "decks/legends/winota.dck": {
+  "old": "Soulless Jailer",
+  "new": "Spellskite",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.89
+  ]
+ },
+ "decks/legends/winter.dck": {
+  "old": "Cemetery Tampering",
+  "new": "Stab Wound",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.84
+  ]
+ },
+ "decks/legends/wort.dck": {
+  "old": "Rundvelt Hordemaster",
+  "new": "Breeches, Eager Pillager",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.99
+  ]
+ },
+ "decks/legends/worzel.dck": {
+  "old": "Urza Assembles the Titans",
+  "new": "Spectra Ward",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.93
+  ]
+ },
+ "decks/legends/xander.dck": {
+  "old": "Maestros Ascendancy",
+  "new": "Abduction",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.47,
+   0.91
+  ]
+ },
+ "decks/legends/xavier_sal.dck": {
+  "old": "Second Harvest",
+  "new": "Annihilate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.95
+  ]
+ },
+ "decks/legends/xenagos.dck": {
+  "old": "Bulk Up",
+  "new": "Glacial Ray",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.94
+  ]
+ },
+ "decks/legends/xho_cai.dck": {
+  "old": "Highspire Bell-Ringer",
+  "new": "Sage of the Skies",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.98
+  ]
+ },
+ "decks/legends/xolatoyac.dck": {
+  "old": "Unwind",
+  "new": "Counterspell",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   1.0
+  ]
+ },
+ "decks/legends/xyris.dck": {
+  "old": "Ghirapur Orrery",
+  "new": "Alhammarret's Archive",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.93
+  ]
+ },
+ "decks/legends/yahenni.dck": {
+  "old": "Secret Salvage",
+  "new": "Hex",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/legends/yargle_and_multani.dck": {
+  "old": "Kaya's Ghostform",
+  "new": "Dreadhorde Invasion",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.78
+  ]
+ },
+ "decks/legends/yarus.dck": {
+  "old": "Cindervines",
+  "new": "Knollspine Invocation",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.92
+  ]
+ },
+ "decks/legends/yasova.dck": {
+  "old": "Bonds of Mortality",
+  "new": "Awakening Zone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.92
+  ]
+ },
+ "decks/legends/yawgmoth.dck": {
+  "old": "Font of Agonies",
+  "new": "Call of the Ring",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   0.93
+  ]
+ },
+ "decks/legends/yennett.dck": {
+  "old": "Emergency Powers",
+  "new": "Sublime Epiphany",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.97
+  ]
+ },
+ "decks/legends/ygra.dck": {
+  "old": "Seeds of Innocence",
+  "new": "Malevolent Rumble",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.95
+  ]
+ },
+ "decks/legends/yidris.dck": {
+  "old": "Heritage Reclamation",
+  "new": "Flame of Anor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.92
+  ]
+ },
+ "decks/legends/yorion.dck": {
+  "old": "Virtue of Knowledge",
+  "new": "Biting Tether",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.91
+  ]
+ },
+ "decks/legends/yorvo.dck": {
+  "old": "Nature's Claim",
+  "new": "Strength of the Tajuru",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.86
+  ]
+ },
+ "decks/legends/yosei.dck": {
+  "old": "Martyr's Cause",
+  "new": "Cast Out",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.92
+  ]
+ },
+ "decks/legends/yuma.dck": {
+  "old": "Aura Fracture",
+  "new": "Friendly Neighborhood",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.99
+  ]
+ },
+ "decks/legends/yusri.dck": {
+  "old": "Mages' Contest",
+  "new": "Electrodominance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.94
+  ]
+ },
+ "decks/legends/zabaz.dck": {
+  "old": "Arcbound Mouser",
+  "new": "Lion Sash",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.95
+  ]
+ },
+ "decks/legends/zacama.dck": {
+  "old": "Verdant Confluence",
+  "new": "Farewell",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.66,
+   0.99
+  ]
+ },
+ "decks/legends/zaffai.dck": {
+  "old": "Brass's Bounty",
+  "new": "Flame Wave",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/zagras.dck": {
+  "old": "Footfall Crater",
+  "new": "Seal of Fire",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.28,
+   0.88
+  ]
+ },
+ "decks/legends/zahid.dck": {
+  "old": "Prying Blade",
+  "new": "Swiftfoot Boots",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.99
+  ]
+ },
+ "decks/legends/zara.dck": {
+  "old": "Trailblazer's Boots",
+  "new": "Sword of Vengeance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.95
+  ]
+ },
+ "decks/legends/zask.dck": {
+  "old": "Delta Bloodflies",
+  "new": "Yavimaya Gnats",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.92
+  ]
+ },
+ "decks/legends/zaxara.dck": {
+  "old": "Swarm Intelligence",
+  "new": "Kiora Bests the Sea God",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/legends/zeriam.dck": {
+  "old": "Fanatical Devotion",
+  "new": "Faith's Fetters",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.92
+  ]
+ },
+ "decks/legends/zetalpa.dck": {
+  "old": "Calamity's Wake",
+  "new": "Path to Exile",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.0,
+   1.0
+  ]
+ },
+ "decks/legends/zhulodok.dck": {
+  "old": "Null Elemental Blast",
+  "new": "Kozilek's Command",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.94
+  ]
+ },
+ "decks/legends/ziatora.dck": {
+  "old": "Second Harvest",
+  "new": "Baleful Mastery",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.98
+  ]
+ },
+ "decks/legends/zilortha.dck": {
+  "old": "Gravity Well",
+  "new": "Fight Rigging",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/legends/zimone.dck": {
+  "old": "Retreat to Coralhelm",
+  "new": "The Legend of Kuruk",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.99
+  ]
+ },
+ "decks/legends/zinnia.dck": {
+  "old": "Airborne Aid",
+  "new": "Time Warp",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.97
+  ]
+ },
+ "decks/legends/zirda.dck": {
+  "old": "Illusionist's Bracers",
+  "new": "Cursed Scroll",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.95
+  ]
+ },
+ "decks/legends/zopandrel.dck": {
+  "old": "Druid's Deliverance",
+  "new": "Chord of Calling",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.92
+  ]
+ },
+ "decks/legends/zoraline.dck": {
+  "old": "Starlit Soothsayer",
+  "new": "Preacher of the Schism",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.94
+  ]
+ },
+ "decks/legends/zur.dck": {
+  "old": "Dovin's Veto",
+  "new": "Mortify",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.96
+  ]
+ },
+ "decks/legends/zurgo.dck": {
+  "old": "Anointed Procession",
+  "new": "Cathars' Crusade",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.89
+  ]
+ },
+ "decks/miniboss/Arcades Sabboth.dck": {
+  "old": "Willow Satyr",
+  "new": "Railway Brawler",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.44,
+   1.0
+  ]
+ },
+ "decks/miniboss/Fire of Kaladesh.dck": {
+  "old": "Runaway Steam-Kin",
+  "new": "Ball Lightning",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.54,
+   0.97
+  ]
+ },
+ "decks/miniboss/Palladia-Mors.dck": {
+  "old": "Willow Satyr",
+  "new": "Thragtusk",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.44,
+   1.0
+  ]
+ },
+ "decks/miniboss/Vaevictis Asmadi.dck": {
+  "old": "Willow Satyr",
+  "new": "Consuming Blob",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.44,
+   0.99
+  ]
+ },
+ "decks/miniboss/angel_rainbow_encounter.dck": {
+  "old": "Mirror Gallery",
+  "new": "Panharmonicon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.94
+  ]
+ },
+ "decks/miniboss/barronlevilain.dck": {
+  "old": "Alaborn Grenadier",
+  "new": "Spellbook Vendor",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.23,
+   0.97
+  ]
+ },
+ "decks/miniboss/bluedragon.dck": {
+  "old": "Lapis Orb of Dragonkind",
+  "new": "Thopter Fabricator",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.44,
+   0.98
+  ]
+ },
+ "decks/miniboss/chromium.dck": {
+  "old": "Demonic Torment",
+  "new": "Greed",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.5,
+   0.99
+  ]
+ },
+ "decks/miniboss/copperhostbrutalizer.dck": {
+  "old": "Expand the Sphere",
+  "new": "Increasing Savagery",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.9
+  ]
+ },
+ "decks/miniboss/darkenchanter.dck": {
+  "old": "Grim Guardian",
+  "new": "Master of the Feast",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.5,
+   0.92
+  ]
+ },
+ "decks/miniboss/elfqueenguay.dck": {
+  "old": "Fog Patch",
+  "new": "Arachnogenesis",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.92
+  ]
+ },
+ "decks/miniboss/frogboss.dck": {
+  "old": "Frogify",
+  "new": "Legacy's Allure",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.22,
+   1.0
+  ]
+ },
+ "decks/miniboss/garruk.dck": {
+  "old": "Nature's Claim",
+  "new": "Tear Asunder",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.85
+  ]
+ },
+ "decks/miniboss/goblinkingphil.dck": {
+  "old": "Taunt",
+  "new": "Ancestral Vision",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.94
+  ]
+ },
+ "decks/miniboss/hydraboss.dck": {
+  "old": "Nature's Claim",
+  "new": "Royal Treatment",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.85
+  ]
+ },
+ "decks/miniboss/jace.dck": {
+  "old": "Thrummingbird",
+  "new": "Skaab Ruinator",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.5,
+   0.96
+  ]
+ },
+ "decks/miniboss/kingkaneferguson.dck": {
+  "old": "Misinformation",
+  "new": "Smother",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.91
+  ]
+ },
+ "decks/miniboss/kiora.dck": {
+  "old": "Broken Bond",
+  "new": "Esper Origins",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.98
+  ]
+ },
+ "decks/miniboss/liliana_zombies.dck": {
+  "old": "Graf Harvest",
+  "new": "Fevered Convulsions",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.36,
+   0.94
+  ]
+ },
+ "decks/miniboss/myr_superion.dck": {
+  "old": "Hovermyr",
+  "new": "Myr Retriever",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.35,
+   0.72
+  ]
+ },
+ "decks/miniboss/nahiri.dck": {
+  "old": "Goblin Gaveleer",
+  "new": "Searslicer Goblin",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.94
+  ]
+ },
+ "decks/miniboss/nicol bolas.dck": {
+  "old": "Demonic Torment",
+  "new": "Pestilence",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.5,
+   0.93
+  ]
+ },
+ "decks/miniboss/ooze_boss.dck": {
+  "old": "Bioplasm",
+  "new": "Biowaste Blob",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.58,
+   0.91
+  ]
+ },
+ "decks/miniboss/recaller_of_ancestry.dck": {
+  "old": "Rush of Knowledge",
+  "new": "Ancestral Memories",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.51,
+   0.99
+  ]
+ },
+ "decks/miniboss/scarecrowcaptain.dck": {
+  "old": "Unearth",
+  "new": "Epic Downfall",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.53,
+   0.9
+  ]
+ },
+ "decks/miniboss/shandalar97_black_skavius.dck": {
+  "old": "Gloom",
+  "new": "Court of Ambition",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.5,
+   0.94
+  ]
+ },
+ "decks/miniboss/shandalar97_blue_starcryst.dck": {
+  "old": "Leviathan",
+  "new": "Avatar of Will",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.58,
+   0.99
+  ]
+ },
+ "decks/miniboss/shandalar97_cateran_overlord.dck": {
+  "old": "Phyrexian Driver",
+  "new": "Pit Raptor",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.33,
+   0.92
+  ]
+ },
+ "decks/miniboss/shandalar97_chandler.dck": {
+  "old": "Goblin Spy",
+  "new": "Generous Plunderer",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.85
+  ]
+ },
+ "decks/miniboss/shandalar97_colorless_arzakon.dck": {
+  "old": "Stream of Life",
+  "new": "Balance",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.32,
+   1.0
+  ]
+ },
+ "decks/miniboss/shandalar97_dark_ages_preacher.dck": {
+  "old": "Miracle Worker",
+  "new": "Warden of the Inner Sky",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.95
+  ]
+ },
+ "decks/miniboss/shandalar97_gorilla_chief.dck": {
+  "old": "Game Preserve",
+  "new": "Scurry of Gremlins",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/miniboss/shandalar97_green_morgane.dck": {
+  "old": "Stream of Life",
+  "new": "Hurricane",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.32,
+   0.95
+  ]
+ },
+ "decks/miniboss/shandalar97_joven.dck": {
+  "old": "Zodiac Goat",
+  "new": "Shivan Devastator",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.98
+  ]
+ },
+ "decks/miniboss/shandalar97_kogla.dck": {
+  "old": "Apes of Rath",
+  "new": "Silverback Elder",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.39,
+   0.94
+  ]
+ },
+ "decks/miniboss/shandalar97_slivdrazi_monstrosity.dck": {
+  "old": "Hunter Sliver",
+  "new": "Spiteful Sliver",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.91
+  ]
+ },
+ "decks/miniboss/shandalar97_swamp_queen_tojira.dck": {
+  "old": "Bloodcurdling Scream",
+  "new": "Dark Salvation",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.96
+  ]
+ },
+ "decks/miniboss/shandalar97_tibalts_torturer.dck": {
+  "old": "Bottomless Pit",
+  "new": "Breeding Pit",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.97
+  ]
+ },
+ "decks/miniboss/shandalar97_uncle_istvan.dck": {
+  "old": "Season of the Witch",
+  "new": "Recurring Nightmare",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.9
+  ]
+ },
+ "decks/miniboss/shandalar97_white_alsadim.dck": {
+  "old": "Circle of Protection: Artifacts",
+  "new": "The Mountain-king's Return",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.38,
+   0.93
+  ]
+ },
+ "decks/miniboss/slimefoot.dck": {
+  "old": "Moldervine Reclamation",
+  "new": "The Coming of Galactus",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.96
+  ]
+ },
+ "decks/miniboss/sliver_queen.dck": {
+  "old": "Diffusion Sliver",
+  "new": "Necrotic Sliver",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.85
+  ]
+ },
+ "decks/miniboss/slobad.dck": {
+  "old": "Sokenzan Smelter",
+  "new": "Goblin General",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.2,
+   0.99
+  ]
+ },
+ "decks/miniboss/sorceressqueenkaja.dck": {
+  "old": "Manta Riders",
+  "new": "Coralhelm Commander",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.15,
+   0.95
+  ]
+ },
+ "decks/miniboss/sorin.dck": {
+  "old": "Feast of Blood",
+  "new": "Battle at the Bridge",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.34,
+   0.96
+  ]
+ },
+ "decks/miniboss/teferi_boss.dck": {
+  "old": "Tocatli Honor Guard",
+  "new": "Loyal Retainers",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.07,
+   1.0
+  ]
+ },
+ "decks/miniboss/thecheff.dck": {
+  "old": "Food Fight",
+  "new": "Warleader's Call",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.15,
+   0.95
+  ]
+ },
+ "decks/miniboss/tibalt.dck": {
+  "old": "Burning Inquiry",
+  "new": "Blaze",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.98
+  ]
+ },
+ "decks/miniboss/time_walker.dck": {
+  "old": "Temporal Fissure",
+  "new": "Upheaval",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.93
+  ]
+ },
+ "decks/miniboss/torturer.dck": {
+  "old": "Smallpox",
+  "new": "Damn",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.49,
+   0.98
+  ]
+ },
+ "decks/miniboss/twister_of_time.dck": {
+  "old": "Overburden",
+  "new": "Flood",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.9
+  ]
+ },
+ "decks/miniboss/valyx.dck": {
+  "old": "Soltari Visionary",
+  "new": "Witch Hunter",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.63,
+   0.98
+  ]
+ },
+ "decks/miniboss/walter.dck": {
+  "old": "Aven Shrine",
+  "new": "Glorious Anthem",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.98
+  ]
+ },
+ "decks/miniboss/xira.dck": {
+  "old": "Caustic Wasps",
+  "new": "Deadbridge Goliath",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.28,
+   0.93
+  ]
+ },
+ "decks/miniboss/zedruubis.dck": {
+  "old": "Jinxed Idol",
+  "new": "Grafted Wargear",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.98
+  ]
+ },
+ "decks/standard/adept_necromancer.dck": {
+  "old": "Dash Hopes",
+  "new": "Corpse Dance",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.14,
+   0.92
+  ]
+ },
+ "decks/standard/aegis_paladin.dck": {
+  "old": "Brave the Elements",
+  "new": "Condemn",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.3,
+   0.91
+  ]
+ },
+ "decks/standard/ancientvampire.dck": {
+  "old": "Gift of Fangs",
+  "new": "Paralyze",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.55,
+   0.81
+  ]
+ },
+ "decks/standard/angelwarrior.dck": {
+  "old": "Marble Diamond",
+  "new": "Sword of Hearth and Home",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.6,
+   0.96
+  ]
+ },
+ "decks/standard/apprentice_scribe.dck": {
+  "old": "Talas Merchant",
+  "new": "Temporal Adept",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.09,
+   1.0
+  ]
+ },
+ "decks/standard/archmage_of_tides.dck": {
+  "old": "Delver of Secrets",
+  "new": "Exhibition Tidecaller",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.4,
+   0.95
+  ]
+ },
+ "decks/standard/artifactwarrior.dck": {
+  "old": "Howling Golem",
+  "new": "Dancing Scimitar",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.05,
+   1.0
+  ]
+ },
+ "decks/standard/aswang_sorcerer.dck": {
+  "old": "Vapor Snag",
+  "new": "Arcane Denial",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.39,
+   0.95
+  ]
+ },
+ "decks/standard/banditleader_bolas.dck": {
+  "old": "Elder Mastery",
+  "new": "The Rise of Sozin",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.3,
+   1.0
+  ]
+ },
+ "decks/standard/banditleader_hellbent.dck": {
+  "old": "Bump in the Night",
+  "new": "Marsh Casualties",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.2,
+   0.95
+  ]
+ },
+ "decks/standard/banditleader_rakdos.dck": {
+  "old": "Fists of the Demigod",
+  "new": "Disturbing Mirth",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.34,
+   0.9
+  ]
+ },
+ "decks/standard/beast_green.json": {
+  "old": "rares 0.8",
+  "new": "rares 0.817",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/beast_red.json": {
+  "old": "rares 0.8",
+  "new": "rares 0.817",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/blackwizard_easy.json": {
+  "old": "rares 0.1",
+  "new": "rares 0.113",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/blackwizard_easy_artifact.dck": {
+  "old": "Heap Doll",
+  "new": "Stonecoil Serpent",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.96
+  ]
+ },
+ "decks/standard/blackwizard_easy_badmoon.dck": {
+  "old": "Ashenmoor Cohort",
+  "new": "Shriekmaw",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.99
+  ]
+ },
+ "decks/standard/blackwizard_easy_bog.dck": {
+  "old": "Anurid Murkdiver",
+  "new": "Mikaeus, the Unhallowed",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.18,
+   0.99
+  ]
+ },
+ "decks/standard/blackwizard_easy_humans.dck": {
+  "old": "Grasping Scoundrel",
+  "new": "Marionette Apprentice",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.93
+  ]
+ },
+ "decks/standard/blackwizard_easy_mill.dck": {
+  "old": "Altar of the Brood",
+  "new": "Sigil of Distinction",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.97
+  ]
+ },
+ "decks/standard/blackwizard_easy_pile.dck": {
+  "old": "Accursed Centaur",
+  "new": "Relentless Dead",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.96
+  ]
+ },
+ "decks/standard/blackwizard_easy_thrull.dck": {
+  "old": "Abyssal Gatekeeper",
+  "new": "Hypnotic Specter",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.46,
+   0.99
+  ]
+ },
+ "decks/standard/blackwizard_hard_gravepact.dck": {
+  "old": "Death Cultist",
+  "new": "Dark Confidant",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.97
+  ]
+ },
+ "decks/standard/blackwizard_hard_knight.dck": {
+  "old": "Bloodsworn Squire",
+  "new": "Bloodthirsty Conqueror",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.99
+  ]
+ },
+ "decks/standard/blackwizard_hard_liliana.dck": {
+  "old": "Liliana's Steward",
+  "new": "Plaguebearer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   1.0
+  ]
+ },
+ "decks/standard/blackwizard_hard_sacrifice.dck": {
+  "old": "Nezumi Bone-Reader",
+  "new": "Lord Skitter, Sewer King",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.98
+  ]
+ },
+ "decks/standard/blackwizard_medium_demonicpact.dck": {
+  "old": "Demonic Torment",
+  "new": "Demonic Embrace",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.5,
+   0.87
+  ]
+ },
+ "decks/standard/blackwizard_medium_fear.dck": {
+  "old": "Thran Lens",
+  "new": "Brittle Effigy",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.91
+  ]
+ },
+ "decks/standard/blackwizard_medium_goblins.dck": {
+  "old": "Squeaking Pie Grubfellows",
+  "new": "Vampire Nighthawk",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.98
+  ]
+ },
+ "decks/standard/blue_golem.dck": {
+  "old": "Metallurgic Summonings",
+  "new": "Behold the Unspeakable",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.87
+  ]
+ },
+ "decks/standard/bluewizard_apprentice_1.dck": {
+  "old": "Eidolon of Philosophy",
+  "new": "Silent Hallcreeper",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.92
+  ]
+ },
+ "decks/standard/bluewizard_apprentice_2.dck": {
+  "old": "Mana Breach",
+  "new": "Invoke Prejudice",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.97
+  ]
+ },
+ "decks/standard/bluewizard_apprentice_3.dck": {
+  "old": "Parcel Myr",
+  "new": "The Reality Chip",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.14,
+   0.95
+  ]
+ },
+ "decks/standard/bluewizard_easy.json": {
+  "old": "rares 0.1",
+  "new": "rares 0.113",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/bluewizard_easy_artifact.dck": {
+  "old": "Myr Adapter",
+  "new": "Lodestone Myr",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.95
+  ]
+ },
+ "decks/standard/bluewizard_easy_control.dck": {
+  "old": "Merrow Levitator",
+  "new": "Sower of Temptation",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.97
+  ]
+ },
+ "decks/standard/bluewizard_easy_thassa.dck": {
+  "old": "Quest for Ula's Temple",
+  "new": "Mark of Eviction",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.89
+  ]
+ },
+ "decks/standard/bluewizard_hard_artifact.dck": {
+  "old": "Mirror Gallery",
+  "new": "The Hive",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.95
+  ]
+ },
+ "decks/standard/bluewizard_hard_bounce.dck": {
+  "old": "Frozen Aether",
+  "new": "Mind Control",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.94
+  ]
+ },
+ "decks/standard/bluewizard_hard_control.dck": {
+  "old": "Merrow Levitator",
+  "new": "Svyelun of Sea and Sky",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.97
+  ]
+ },
+ "decks/standard/bluewizard_hard_tempo.dck": {
+  "old": "You Find the Villains' Lair",
+  "new": "Mana Drain",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.22,
+   1.0
+  ]
+ },
+ "decks/standard/bluewizard_medium_donate.dck": {
+  "old": "Vapor Snag",
+  "new": "Daze",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.39,
+   1.0
+  ]
+ },
+ "decks/standard/bluewizard_medium_dragons.dck": {
+  "old": "Skyblinder Staff",
+  "new": "Everything Pizza",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.95
+  ]
+ },
+ "decks/standard/bluewizard_medium_midrange.dck": {
+  "old": "Robe of Mirrors",
+  "new": "Roost of Drakes",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.86
+  ]
+ },
+ "decks/standard/bluewizard_medium_mill.dck": {
+  "old": "Altar of the Brood",
+  "new": "Thought Vessel",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.96
+  ]
+ },
+ "decks/standard/bonedragon.dck": {
+  "old": "Boneyard Scourge",
+  "new": "Phyrexian Scuta",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.54,
+   1.0
+  ]
+ },
+ "decks/standard/crimson_minotaur_lord.dck": {
+  "old": "Brute Strength",
+  "new": "Pulse of the Forge",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.37,
+   0.99
+  ]
+ },
+ "decks/standard/dawnblade_prince.dck": {
+  "old": "Anointed Procession",
+  "new": "The Legend of Yangchen",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.99
+  ]
+ },
+ "decks/standard/deepwood_marksman.dck": {
+  "old": "Greatbow Doyen",
+  "new": "Turntimber Ranger",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.61,
+   0.97
+  ]
+ },
+ "decks/standard/dragonkin_r.dck": {
+  "old": "Rite of Flame",
+  "new": "Kaervek's Torch",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.99
+  ]
+ },
+ "decks/standard/elder_white_dragon.dck": {
+  "old": "Rebuff the Wicked",
+  "new": "The Eagles Are Coming!",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.9
+  ]
+ },
+ "decks/standard/elf_golgari.dck": {
+  "old": "Prowess of the Fair",
+  "new": "Phyrexian Arena",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.99
+  ]
+ },
+ "decks/standard/elven_archmage.dck": {
+  "old": "Faerie Miscreant",
+  "new": "Merfolk Looter",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.29,
+   0.91
+  ]
+ },
+ "decks/standard/elven_magus.dck": {
+  "old": "The Antiquities War",
+  "new": "Dream Leash",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.14,
+   0.93
+  ]
+ },
+ "decks/standard/ember_urchin.dck": {
+  "old": "Lava Spike",
+  "new": "Molten Disaster",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.36,
+   0.98
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_floodwater_homarid.dck": {
+  "old": "Mystic Decree",
+  "new": "Control Magic",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.15,
+   0.99
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_deep_spawn.dck": {
+  "old": "Awesome Presence",
+  "new": "Copy Artifact",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.81
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_green.dck": {
+  "old": "Fishliver Oil",
+  "new": "Threads of Disloyalty",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_purple.dck": {
+  "old": "Fishliver Oil",
+  "new": "Icy Prison",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.88
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_red.dck": {
+  "old": "Fishliver Oil",
+  "new": "Flood",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.9
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_shaman.dck": {
+  "old": "Tidal Control",
+  "new": "Sidequest: Card Collection",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.9
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_spawning_bed.dck": {
+  "old": "Sea Troll",
+  "new": "Azure Drake",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.99
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_warrior_5ed.dck": {
+  "old": "Mystic Might",
+  "new": "Extraordinary Journey",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.86
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_warrior_a.dck": {
+  "old": "Mystic Might",
+  "new": "Icy Prison",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.88
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_warrior_b.dck": {
+  "old": "Mystic Might",
+  "new": "Roiling Dragonstorm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.89
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_warrior_c.dck": {
+  "old": "Mystic Might",
+  "new": "Stay Hidden, Stay Silent",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.85
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_homarid_yellow.dck": {
+  "old": "Fishliver Oil",
+  "new": "Propaganda",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.96
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_river_merfolk.dck": {
+  "old": "Baleful Stare",
+  "new": "Braingeyser",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.97
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_seasinger.dck": {
+  "old": "Lingering Mirage",
+  "new": "Equilibrium",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.83
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_svyelunite_priest.dck": {
+  "old": "Pedantic Learning",
+  "new": "Secret Invasion",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.86
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_viscerid_drone.dck": {
+  "old": "Viscerid Armor",
+  "new": "Puppet Master",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.84
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_vodalian_knight.dck": {
+  "old": "Merseine",
+  "new": "Future Sight",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.98
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_vodalian_mage.dck": {
+  "old": "Vodalian Mage",
+  "new": "Cephalid Constable",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.99
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_vodalian_mage_a.dck": {
+  "old": "Vodalian Mage",
+  "new": "Serendib Sorcerer",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.98
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_vodalian_mage_b.dck": {
+  "old": "Vodalian Mage",
+  "new": "Saprazzan Heir",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.93
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_vodalian_merchant.dck": {
+  "old": "Credit Voucher",
+  "new": "Mind Stone",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.96
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_vodalian_soldier.dck": {
+  "old": "Fishliver Oil",
+  "new": "Domineer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.86
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_vodalian_soldier_b.dck": {
+  "old": "Fishliver Oil",
+  "new": "Court of Cunning",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.91
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_vodalian_soldier_c.dck": {
+  "old": "Fishliver Oil",
+  "new": "Does Machines",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.85
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_vodalian_soldier_d.dck": {
+  "old": "Fishliver Oil",
+  "new": "Counterbalance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.04,
+   1.0
+  ]
+ },
+ "decks/standard/fallen_empires_svyelunite_vodalian_war_machine.dck": {
+  "old": "Vodalian War Machine",
+  "new": "Serendib Efreet",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.96
+  ]
+ },
+ "decks/standard/fanaticpriest.dck": {
+  "old": "Durable Handicraft",
+  "new": "Morcant's Eyes",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.88
+  ]
+ },
+ "decks/standard/foresttitan.dck": {
+  "old": "Marshdrinker Giant",
+  "new": "Gruff Triplets",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.46,
+   1.0
+  ]
+ },
+ "decks/standard/ghost.json": {
+  "old": "rares 0.8",
+  "new": "rares 0.817",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/gladiator.dck": {
+  "old": "City on Fire",
+  "new": "Form of the Dragon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.27,
+   0.96
+  ]
+ },
+ "decks/standard/goblin_panther_rider.dck": {
+  "old": "Plaguecrafter",
+  "new": "Royal Assassin",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.68,
+   1.0
+  ]
+ },
+ "decks/standard/goblin_warlord.dck": {
+  "old": "Mogg Fanatic",
+  "new": "Draconautics Engineer",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.71,
+   0.99
+  ]
+ },
+ "decks/standard/golem_good.json": {
+  "old": "rares 0.7",
+  "new": "rares 0.717",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/greengolem.dck": {
+  "old": "Belt of Giant Strength",
+  "new": "Thunderous Velocipede",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.97
+  ]
+ },
+ "decks/standard/greenwizard_easy.json": {
+  "old": "rares 0.1",
+  "new": "rares 0.113",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/greenwizard_easy_elf.dck": {
+  "old": "Gift of Growth",
+  "new": "Tel-Jilad Justice",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.34,
+   0.92
+  ]
+ },
+ "decks/standard/greenwizard_easy_enchantment.dck": {
+  "old": "Nylea's Intervention",
+  "new": "Kodama's Reach",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.97
+  ]
+ },
+ "decks/standard/greenwizard_easy_vanilla.dck": {
+  "old": "Hornet Sting",
+  "new": "Trash the Town",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.86
+  ]
+ },
+ "decks/standard/greenwizard_hard_ramp.dck": {
+  "old": "Dramatic Entrance",
+  "new": "Ashling's Command",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.06,
+   1.0
+  ]
+ },
+ "decks/standard/greenwizard_hard_rampbis.dck": {
+  "old": "Fists of Ironwood",
+  "new": "Innkeeper's Talent",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.63,
+   0.97
+  ]
+ },
+ "decks/standard/greenwizard_hard_sapproling.dck": {
+  "old": "Anointed Procession",
+  "new": "Opal Archangel",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.99
+  ]
+ },
+ "decks/standard/greenwizard_medium_cheatramp.dck": {
+  "old": "Gigantosaurus",
+  "new": "Territorial Allosaurus",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.3,
+   0.97
+  ]
+ },
+ "decks/standard/greenwizard_medium_nissa.dck": {
+  "old": "Staff of the Wild Magus",
+  "new": "Nautiloid Ship",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.95
+  ]
+ },
+ "decks/standard/greenwizard_medium_snakes.dck": {
+  "old": "Kashi-Tribe Warriors",
+  "new": "Honored Hydra",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.97
+  ]
+ },
+ "decks/standard/greenwizard_medium_trample.dck": {
+  "old": "Mammoth Growth",
+  "new": "Might of Oaks",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.97
+  ]
+ },
+ "decks/standard/human_good.json": {
+  "old": "rares 0.8",
+  "new": "rares 0.817",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/human_m.dck": {
+  "old": "Accorder Paladin",
+  "new": "Intrepid Hero",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.62,
+   0.99
+  ]
+ },
+ "decks/standard/humongous_ettin.dck": {
+  "old": "Sphinx-Bone Wand",
+  "new": "Mirror Universe",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.05,
+   0.97
+  ]
+ },
+ "decks/standard/hydra.json": {
+  "old": "rares 0.8",
+  "new": "rares 0.817",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/jodah.dck": {
+  "old": "Wizard's Retort",
+  "new": "Twisted Reflection",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.4,
+   0.89
+  ]
+ },
+ "decks/standard/junddragon.dck": {
+  "old": "Preyseizer Dragon",
+  "new": "Glorybringer",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.4,
+   0.99
+  ]
+ },
+ "decks/standard/kapre_old_balete.dck": {
+  "old": "Everbark Shaman",
+  "new": "Thelonite Hermit",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.99
+  ]
+ },
+ "decks/standard/knight.json": {
+  "old": "rares 0.8",
+  "new": "rares 0.817",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/molfar.dck": {
+  "old": "Lead the Stampede",
+  "new": "Explosive Vegetation",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.35,
+   0.99
+  ]
+ },
+ "decks/standard/necrogoyf.dck": {
+  "old": "Mind Burst",
+  "new": "Bontu's Last Reckoning",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.96
+  ]
+ },
+ "decks/standard/nightmare.dck": {
+  "old": "Ashiok's Erasure",
+  "new": "Persuasion",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.0,
+   1.0
+  ]
+ },
+ "decks/standard/onyx_minotaur_lord.dck": {
+  "old": "Carnophage",
+  "new": "Apprentice Necromancer",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.66,
+   0.95
+  ]
+ },
+ "decks/standard/redwizard_easy.json": {
+  "old": "rares 0.1",
+  "new": "rares 0.113",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/redwizard_easy_1.dck": {
+  "old": "Monument to Perfection",
+  "new": "Rings of Brighthearth",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/standard/redwizard_easy_2.dck": {
+  "old": "Bludgeon Brawl",
+  "new": "Goblin Assault",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.85
+  ]
+ },
+ "decks/standard/redwizard_easy_3.dck": {
+  "old": "Scoria Elemental",
+  "new": "Fury",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.08,
+   1.0
+  ]
+ },
+ "decks/standard/redwizard_easy_burn.dck": {
+  "old": "Soul-Scar Mage",
+  "new": "Grim Lavamancer",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.19,
+   1.0
+  ]
+ },
+ "decks/standard/redwizard_easy_dragons.dck": {
+  "old": "Feedback Bolt",
+  "new": "Beacon of Destruction",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.98
+  ]
+ },
+ "decks/standard/redwizard_easy_gauntletofmight.dck": {
+  "old": "Flamekin Brawler",
+  "new": "Burnout Bashtronaut",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.16,
+   0.96
+  ]
+ },
+ "decks/standard/redwizard_hard_burn.dck": {
+  "old": "Soul-Scar Mage",
+  "new": "Dragonmaster Outcast",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.98
+  ]
+ },
+ "decks/standard/redwizard_hard_dragons.dck": {
+  "old": "Rite of Flame",
+  "new": "Torrent of Lava",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.98
+  ]
+ },
+ "decks/standard/redwizard_hard_fight.dck": {
+  "old": "Pyre Charger",
+  "new": "Alesha, Who Smiles at Death",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.31,
+   0.98
+  ]
+ },
+ "decks/standard/redwizard_hard_lavaaxe.dck": {
+  "old": "Wall of Granite",
+  "new": "Wall of Dust",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.84
+  ]
+ },
+ "decks/standard/redwizard_medium_artifact.dck": {
+  "old": "Brass Gnat",
+  "new": "Walking Ballista",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.95
+  ]
+ },
+ "decks/standard/redwizard_medium_circleofflame.dck": {
+  "old": "Grand Melee",
+  "new": "Heart of Bogardan",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.02,
+   0.92
+  ]
+ },
+ "decks/standard/redwizard_medium_giant.dck": {
+  "old": "Giant's Ire",
+  "new": "Pyrotechnics",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.96
+  ]
+ },
+ "decks/standard/redwizard_medium_hasteburn.dck": {
+  "old": "Impetuous Sunchaser",
+  "new": "Imodane's Recruiter",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.2,
+   0.98
+  ]
+ },
+ "decks/standard/redwizard_medium_ralburn.dck": {
+  "old": "Keldon Marauders",
+  "new": "Seasoned Pyromancer",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.4,
+   0.96
+  ]
+ },
+ "decks/standard/rusalka.dck": {
+  "old": "Cursecatcher",
+  "new": "Snapcaster Mage",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.17,
+   0.95
+  ]
+ },
+ "decks/standard/seraphim.dck": {
+  "old": "Dawn of a New Age",
+  "new": "Arrest",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.35,
+   0.92
+  ]
+ },
+ "decks/standard/shandalar97_chainer_dementia_master.dck": {
+  "old": "Soul Scourge",
+  "new": "Doom Whisperer",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.7,
+   1.0
+  ]
+ },
+ "decks/standard/sirena_tidesinger.dck": {
+  "old": "Riptide Turtle",
+  "new": "Brazen Borrower",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.98
+  ]
+ },
+ "decks/standard/stormtitan.dck": {
+  "old": "Giant's Amulet",
+  "new": "Synthesizer Labship",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.6,
+   0.92
+  ]
+ },
+ "decks/standard/tfr/archangel_of_the_gilded_dawn.dck": {
+  "old": "Divine Visitation",
+  "new": "Avengers Assemble!",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.09,
+   0.99
+  ]
+ },
+ "decks/standard/tfr/ashpeak_behemoth.dck": {
+  "old": "Wayward Guide-Beast",
+  "new": "Blind Creeper",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.64
+  ]
+ },
+ "decks/standard/tfr/astral_wyrm.dck": {
+  "old": "Dragon Turtle",
+  "new": "Lightning Dragon",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.74,
+   1.0
+  ]
+ },
+ "decks/standard/tfr/aurelian_dragon.dck": {
+  "old": "Firespitter Whelp",
+  "new": "Atsushi, the Blazing Sky",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.21,
+   0.98
+  ]
+ },
+ "decks/standard/tfr/cadaver_lord.dck": {
+  "old": "Startle",
+  "new": "Psionic Blast",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.6,
+   0.95
+  ]
+ },
+ "decks/standard/tfr/devil_empress.dck": {
+  "old": "Frenzied Devils",
+  "new": "Hellrider",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.34,
+   0.94
+  ]
+ },
+ "decks/standard/tfr/dunebacked_behemoth.dck": {
+  "old": "Beast Walkers",
+  "new": "Kongming's Contraptions",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.24,
+   0.99
+  ]
+ },
+ "decks/standard/tfr/glacierbacked_behemoth.dck": {
+  "old": "Floodhound",
+  "new": "Zephyr Winder",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.62
+  ]
+ },
+ "decks/standard/tfr/grovebacked_behemoth.dck": {
+  "old": "Snapping Gnarlid",
+  "new": "Feral Hydra",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.39,
+   0.96
+  ]
+ },
+ "decks/standard/tfr/harvester_of_last_breaths.dck": {
+  "old": "Gallows at Willow Hill",
+  "new": "Perilous Vault",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.5,
+   0.95
+  ]
+ },
+ "decks/standard/tfr/magma_dragon.dck": {
+  "old": "Dragon Turtle",
+  "new": "Rathi Dragon",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.74,
+   1.0
+  ]
+ },
+ "decks/standard/tfr/mother_of_webs.dck": {
+  "old": "Chainweb Aracnir",
+  "new": "Broodspinner",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.03,
+   0.9
+  ]
+ },
+ "decks/standard/tfr/neferu_the_sealed_king.dck": {
+  "old": "Cobbled Lancer",
+  "new": "Plaguebearer",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.24,
+   1.0
+  ]
+ },
+ "decks/standard/tfr/odium_of_the_last_spire.dck": {
+  "old": "Pest Control",
+  "new": "Vindicate",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   1.0
+  ]
+ },
+ "decks/standard/tfr/queen_of_the_gilded_brood.dck": {
+  "old": "Stinging Cave Crawler",
+  "new": "Scute Swarm",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.35,
+   0.88
+  ]
+ },
+ "decks/standard/tfr/sabertusk_dragon.dck": {
+  "old": "Dragon Turtle",
+  "new": "Avaricious Dragon",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.74,
+   0.99
+  ]
+ },
+ "decks/standard/tfr/shade_of_the_rootwyrm.dck": {
+  "old": "Greed's Gambit",
+  "new": "The Cruelty of Gix",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.95
+  ]
+ },
+ "decks/standard/tfr/tempest_paragon.dck": {
+  "old": "Fervent Champion",
+  "new": "Dire Fleet Daredevil",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.54,
+   0.95
+  ]
+ },
+ "decks/standard/tfr/tendrilmane_the_pale_lion.dck": {
+  "old": "Frenzied Baloth",
+  "new": "Deathmist Raptor",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.67,
+   0.98
+  ]
+ },
+ "decks/standard/tfr/tidecaller_witch.dck": {
+  "old": "Chilling Trap",
+  "new": "Spell Pierce",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.34,
+   1.0
+  ]
+ },
+ "decks/standard/tfr/tyrant_rex.dck": {
+  "old": "Wayward Guide-Beast",
+  "new": "Manifold Mouse",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.96
+  ]
+ },
+ "decks/standard/tfr/umbral_dragon.dck": {
+  "old": "Greed's Gambit",
+  "new": "Palace Siege",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.91
+  ]
+ },
+ "decks/standard/tfr/verdant_wyrm.dck": {
+  "old": "Sprite Dragon",
+  "new": "Talion's Messenger",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.7,
+   0.97
+  ]
+ },
+ "decks/standard/tfr/void_dragon.dck": {
+  "old": "Greed's Gambit",
+  "new": "Liliana's Mastery",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.91
+  ]
+ },
+ "decks/standard/tfr/warlord_of_the_grimtusk.dck": {
+  "old": "Ironclaw Orcs",
+  "new": "Orcish Bowmasters",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.63,
+   0.98
+  ]
+ },
+ "decks/standard/tfr/wishgiver_seraph.dck": {
+  "old": "Claws of Wirewood",
+  "new": "Supreme Verdict",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.42,
+   0.98
+  ]
+ },
+ "decks/standard/tfr/zealot_of_the_crimson_lash.dck": {
+  "old": "Hallowed Haunting",
+  "new": "Teleportation Circle",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.38,
+   0.89
+  ]
+ },
+ "decks/standard/tfr2/blightborn_mutant.dck": {
+  "old": "Witches' Eye",
+  "new": "Empyrial Plate",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.94
+  ]
+ },
+ "decks/standard/tfr2/bogspawn_horror.dck": {
+  "old": "Hexhaven Invigorator",
+  "new": "Froghemoth",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.94
+  ]
+ },
+ "decks/standard/tfr2/cinderstone_brute.dck": {
+  "old": "Spark Elemental",
+  "new": "Lightning Serpent",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.88
+  ]
+ },
+ "decks/standard/tfr2/nightscale_dragon.dck": {
+  "old": "Greed's Gambit",
+  "new": "The Eldest Reborn",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.06,
+   0.87
+  ]
+ },
+ "decks/standard/tfr2/ossuary_dragon.dck": {
+  "old": "Boulderborn Dragon",
+  "new": "Henge Guardian",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.48
+  ]
+ },
+ "decks/standard/tfr2/pyreclaw_dragon.dck": {
+  "old": "Awaken the Sky Tyrant",
+  "new": "Visions of Phyrexia",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.01,
+   0.97
+  ]
+ },
+ "decks/standard/tfr2/sixblade_naga.dck": {
+  "old": "Sidisi's Faithful",
+  "new": "Lighthouse Chronologist",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.3,
+   0.91
+  ]
+ },
+ "decks/standard/tfr2/skyvault_dragon.dck": {
+  "old": "Silumgar's Scorn",
+  "new": "Capsize",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.31,
+   1.0
+  ]
+ },
+ "decks/standard/tfr2/sunscale_dragon.dck": {
+  "old": "Orator of Ojutai",
+  "new": "Aven Mindcensor",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.27,
+   1.0
+  ]
+ },
+ "decks/standard/tfr2/thornscale_dragon.dck": {
+  "old": "Skyway Sniper",
+  "new": "Elvish Archers",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.24,
+   0.93
+  ]
+ },
+ "decks/standard/tikbalang.dck": {
+  "old": "Moonmist",
+  "new": "Berserk",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.24,
+   0.91
+  ]
+ },
+ "decks/standard/treefolk.json": {
+  "old": "rares 0.8",
+  "new": "rares 0.817",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/troll_warlord.dck": {
+  "old": "Vines of Vastwood",
+  "new": "Inscription of Abundance",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.47,
+   0.97
+  ]
+ },
+ "decks/standard/unblinking_eye.dck": {
+  "old": "Fraying Sanity",
+  "new": "Zephid's Embrace",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.88
+  ]
+ },
+ "decks/standard/vampire.json": {
+  "old": "rares 0.8",
+  "new": "rares 0.817",
+  "count": 1,
+  "kind": "json"
+ },
+ "decks/standard/wc00_janosch_kuhn.dck": {
+  "old": "Stone Rain",
+  "new": "Pyroclasm",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.67,
+   0.96
+  ]
+ },
+ "decks/standard/wc00_jon_finkel.dck": {
+  "old": "Crumbling Sanctuary",
+  "new": "Predator, Flagship",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.13,
+   1.0
+  ]
+ },
+ "decks/standard/wc00_nicolas_labarre.dck": {
+  "old": "Saproling Cluster",
+  "new": "Down in the Valley",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.24,
+   0.87
+  ]
+ },
+ "decks/standard/wc00_tom_van_de_logt.dck": {
+  "old": "Attunement",
+  "new": "Binding Grasp",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.27,
+   0.91
+  ]
+ },
+ "decks/standard/wc01_alex_borteh.dck": {
+  "old": "Vodalian Merchant",
+  "new": "Rootwater Hunter",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.35,
+   0.92
+  ]
+ },
+ "decks/standard/wc01_antoine_ruel.dck": {
+  "old": "Tsabo's Web",
+  "new": "Black Vise",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.12,
+   1.0
+  ]
+ },
+ "decks/standard/wc02_carlos_romao.dck": {
+  "old": "Nightscape Familiar",
+  "new": "Rotlung Reanimator",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.62,
+   0.95
+  ]
+ },
+ "decks/standard/wc02_raphael_levy.dck": {
+  "old": "Rushing River",
+  "new": "Cyclonic Rift",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.66,
+   0.99
+  ]
+ },
+ "decks/standard/wc03_daniel_zink.dck": {
+  "old": "Moment's Peace",
+  "new": "Harrow",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.38,
+   0.84
+  ]
+ },
+ "decks/standard/wc03_dave_humpherys.dck": {
+  "old": "Krosan Reclamation",
+  "new": "Allies at Last",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.07,
+   0.85
+  ]
+ },
+ "decks/standard/wc03_peer_kroger.dck": {
+  "old": "Recoup",
+  "new": "Titan's Revenge",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.47,
+   0.98
+  ]
+ },
+ "decks/standard/wc03_wolfgang_eder.dck": {
+  "old": "Goblin Grappler",
+  "new": "Molten-Core Maestro",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.14,
+   0.92
+  ]
+ },
+ "decks/standard/wc94_bertrand_lestree.dck": {
+  "old": "Argothian Pixies",
+  "new": "Spinner of Souls",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.47,
+   0.98
+  ]
+ },
+ "decks/standard/wc94_zak_dolan.dck": {
+  "old": "Ley Druid",
+  "new": "Eternal Witness",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.55,
+   0.98
+  ]
+ },
+ "decks/standard/wc95_henry_stern.dck": {
+  "old": "Crumble",
+  "new": "Fork",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.31,
+   0.92
+  ]
+ },
+ "decks/standard/wc95_mark_justice.dck": {
+  "old": "Tranquility",
+  "new": "Regrowth",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.32,
+   0.92
+  ]
+ },
+ "decks/standard/wc96_henry_stern.dck": {
+  "old": "Yotian Soldier",
+  "new": "Su-Chi",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.68,
+   0.98
+  ]
+ },
+ "decks/standard/wc96_mark_justice.dck": {
+  "old": "Feldon's Cane",
+  "new": "Chaos Orb",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.45,
+   0.89
+  ]
+ },
+ "decks/standard/wc96_olle_rade.dck": {
+  "old": "Gorilla Shaman",
+  "new": "Dragon Whisperer",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.47,
+   0.96
+  ]
+ },
+ "decks/standard/wc96_tom_chanpheng.dck": {
+  "old": "Reinforcements",
+  "new": "Lightning Blow",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.88
+  ]
+ },
+ "decks/standard/wc97_jakub_slemr.dck": {
+  "old": "Choking Sands",
+  "new": "Damnation",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.28,
+   1.0
+  ]
+ },
+ "decks/standard/wc97_janosch_kuhn.dck": {
+  "old": "Pillage",
+  "new": "Choco-Comet",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.48,
+   0.94
+  ]
+ },
+ "decks/standard/wc97_paul_mccabe.dck": {
+  "old": "Disrupt",
+  "new": "Power Sink",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.9
+  ]
+ },
+ "decks/standard/wc97_svend_geertsen.dck": {
+  "old": "Harvest Wurm",
+  "new": "Thundering Wurm",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.29,
+   0.99
+  ]
+ },
+ "decks/standard/wc98_ben_rubin.dck": {
+  "old": "Goblin Vandal",
+  "new": "Bothersome Noisemaker",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.11,
+   0.92
+  ]
+ },
+ "decks/standard/wc98_brian_hacker.dck": {
+  "old": "Nomads en-Kor",
+  "new": "Giver of Runes",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.45,
+   0.87
+  ]
+ },
+ "decks/standard/wc98_brian_selden.dck": {
+  "old": "Lobotomy",
+  "new": "Enter the God-Eternals",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.23,
+   0.98
+  ]
+ },
+ "decks/standard/wc98_randy_buehler.dck": {
+  "old": "Dissipate",
+  "new": "Capsize",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.7,
+   1.0
+  ]
+ },
+ "decks/standard/wc99_jakub_slemr.dck": {
+  "old": "Rapid Decay",
+  "new": "Expunge",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.1,
+   0.93
+  ]
+ },
+ "decks/standard/wc99_kai_budde.dck": {
+  "old": "Temporal Aperture",
+  "new": "Grindstone",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.65,
+   1.0
+  ]
+ },
+ "decks/standard/wc99_mark_le_pine.dck": {
+  "old": "Pillage",
+  "new": "Retribution",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.48,
+   0.97
+  ]
+ },
+ "decks/standard/wc99_matt_linde.dck": {
+  "old": "Elvish Lyrist",
+  "new": "Elvish Mystic",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.35,
+   0.92
+  ]
+ },
+ "decks/standard/whitewizard_easy_ajani.dck": {
+  "old": "Ajani's Mantra",
+  "new": "Banishing Light",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.12,
+   0.91
+  ]
+ },
+ "decks/standard/whitewizard_easy_angelhuman.dck": {
+  "old": "Selfless Cathar",
+  "new": "Mother of Runes",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.3,
+   0.94
+  ]
+ },
+ "decks/standard/whitewizard_easy_wanderer.dck": {
+  "old": "Unbounded Potential",
+  "new": "Exile",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.25,
+   0.94
+  ]
+ },
+ "decks/standard/whitewizard_hard_armaggedon.dck": {
+  "old": "Limited Resources",
+  "new": "Luminarch Ascension",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.48,
+   0.91
+  ]
+ },
+ "decks/standard/whitewizard_hard_enchantments.dck": {
+  "old": "Hopeful Eidolon",
+  "new": "Spirit of the Labyrinth",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.52,
+   0.81
+  ]
+ },
+ "decks/standard/whitewizard_hard_hatebears.dck": {
+  "old": "Soul's Attendant",
+  "new": "Jennifer Walters",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.22,
+   0.98
+  ]
+ },
+ "decks/standard/whitewizard_hard_humansoldier.dck": {
+  "old": "Flare of Faith",
+  "new": "White Sun's Zenith",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.08,
+   0.88
+  ]
+ },
+ "decks/standard/whitewizard_hard_humility.dck": {
+  "old": "Leyline of the Meek",
+  "new": "Divine Transformation",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.04,
+   0.92
+  ]
+ },
+ "decks/standard/whitewizard_medium_aggro.dck": {
+  "old": "Ballyrush Banneret",
+  "new": "Cosmogrand Zenith",
+  "count": 3,
+  "kind": "dck",
+  "power": [
+   0.4,
+   0.99
+  ]
+ },
+ "decks/standard/whitewizard_medium_basri.dck": {
+  "old": "Tandem Tactics",
+  "new": "Feat of Resistance",
+  "count": 1,
+  "kind": "dck",
+  "power": [
+   0.27,
+   0.89
+  ]
+ },
+ "decks/standard/whitewizard_medium_control.dck": {
+  "old": "Due Respect",
+  "new": "Final Showdown",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.93
+  ]
+ },
+ "decks/standard/whitewizard_medium_knight.dck": {
+  "old": "Lionheart Maverick",
+  "new": "Intrepid Adversary",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.19,
+   0.97
+  ]
+ },
+ "decks/standard/wildwood_minotaur.dck": {
+  "old": "Vines of Vastwood",
+  "new": "Sprout Swarm",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.47,
+   0.91
+  ]
+ },
+ "decks/standard/wolfboss.dck": {
+  "old": "Ascendant Packleader",
+  "new": "Wyluli Wolf",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.66,
+   0.96
+  ]
+ },
+ "decks/standard/young_red_dragon.dck": {
+  "old": "Sarkhan's Triumph",
+  "new": "Violent Eruption",
+  "count": 2,
+  "kind": "dck",
+  "power": [
+   0.13,
+   0.9
+  ]
+ },
+ "decks/standard/zombie_black_hard.dck": {
+  "old": "Unearth",
+  "new": "Exsanguinate",
+  "count": 4,
+  "kind": "dck",
+  "power": [
+   0.53,
+   1.0
+  ]
+ }
+}

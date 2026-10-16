@@ -91,6 +91,8 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (rounds 642-644): **LOCAL + UNRELEASED (code + data)** - enemy tier families. 642 = `dev-tools/enemy_tiers/make_tier_families.py`: the 1,058 ordinary enemies (not Mythic / boss / legend / spawnRate<=0 / tier-named) get Apprentice 60 / Adept 50 / Master 40 decks built from their own (decks/tiers/, 3,309 files) + per-tier life in world/enemy_tiers.json; 90% / 81% / 68% shared. 643 = util/EnemyTiers: the catalog plays its own tier's family deck; BiomeData puts a family enemy in the roll once per tier (the week row picks the rank); a variant saves as "Name|Tier" (WorldStage roaming list, dungeon roster; WorldData.getEnemy resolves it); DungeonUpgrades steps a family creature up as itself. 644 = `upgrade_unique_decks.py` + ledger unique_upgrades.json: one card stronger in 1,071 of the 1,108 unique decks (draft-rank strength, 813 different cards), +1 rare in the 13 generated ones; common/ decks copied into the plane, never edited. Review list: Bannerloard/enemy_tiers_upgrades.md.
+
 ## STATE 2026-10-15 (round 645): **LOCAL + UNRELEASED (art + data)** - Sol'Kanar gets the user's hand-made swamp demon
 (Pixelate; generator `pixelate/solkanar/convert.sh` + the new `pixelate/clean_strays.py`; the attack ends on the impact).
 enemies.json 1 path + scale. Not packaged at commit (a peer's uncommitted round was in the tree). Not seen in play.
