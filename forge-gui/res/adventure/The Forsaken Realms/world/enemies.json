@@ -26353,7 +26353,7 @@
     },
     {
         "name": "Royal King",
-        "sprite": "sprites/enemy/humanoid/human/knight/king_large.atlas",
+        "sprite": "sprites/enemy/remake/royal_king.atlas",
         "deck": [
             "decks/standard/whiteking.dck"
         ],
@@ -26361,7 +26361,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.619,
+        "scale": 0.325,
         "life": 24,
         "rewards": [
             {
@@ -37091,13 +37091,13 @@
     },
     {
         "name": "Kenrith",
-        "sprite": "sprites/enemy/humanoid/human/knight/king_large.atlas",
+        "sprite": "sprites/enemy/remake/kenrith.atlas",
         "deck": [
             "decks/legends/kenrith.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.619,
+        "scale": 0.3023,
         "life": 50,
         "rewards": [
             {
@@ -91588,7 +91588,7 @@
     },
     {
         "name": "Sygg",
-        "sprite": "sprites/enemy/humanoid/amphin/amphin_warrior.atlas",
+        "sprite": "sprites/enemy/remake/sygg.atlas",
         "deck": [
             "decks/legends/sygg.dck"
         ],
@@ -91662,7 +91662,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 0.8125
+        "scale": 0.3171
     },
     {
         "name": "Chorus of the Conclave",

@@ -1,0 +1,180 @@
+royal_king.png
+size: 702,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 78, 55
+  footprint: 25, 1, 29, 53
+Idle
+  xy: 78, 64
+  size: 78, 55
+Idle
+  xy: 156, 64
+  size: 78, 55
+Idle
+  xy: 234, 64
+  size: 78, 55
+Walk
+  xy: 0, 119
+  size: 78, 55
+Walk
+  xy: 78, 119
+  size: 78, 55
+Walk
+  xy: 156, 119
+  size: 78, 55
+Walk
+  xy: 234, 119
+  size: 78, 55
+Walk
+  xy: 312, 119
+  size: 78, 55
+Walk
+  xy: 390, 119
+  size: 78, 55
+Walk
+  xy: 468, 119
+  size: 78, 55
+Walk
+  xy: 546, 119
+  size: 78, 55
+Attack
+  xy: 0, 174
+  size: 78, 55
+Attack
+  xy: 78, 174
+  size: 78, 55
+Attack
+  xy: 156, 174
+  size: 78, 55
+Attack
+  xy: 234, 174
+  size: 78, 55
+Attack
+  xy: 312, 174
+  size: 78, 55
+Attack
+  xy: 390, 174
+  size: 78, 55
+Attack
+  xy: 468, 174
+  size: 78, 55
+Attack
+  xy: 546, 174
+  size: 78, 55
+Hit
+  xy: 0, 229
+  size: 78, 55
+Hit
+  xy: 78, 229
+  size: 78, 55
+Hit
+  xy: 156, 229
+  size: 78, 55
+Hit
+  xy: 234, 229
+  size: 78, 55
+Death
+  xy: 0, 284
+  size: 78, 55
+Death
+  xy: 78, 284
+  size: 78, 55
+Death
+  xy: 156, 284
+  size: 78, 55
+Death
+  xy: 234, 284
+  size: 78, 55
+Death
+  xy: 312, 284
+  size: 78, 55
+Death
+  xy: 390, 284
+  size: 78, 55
+Death
+  xy: 468, 284
+  size: 78, 55
+Death
+  xy: 546, 284
+  size: 78, 55
+Death
+  xy: 624, 284
+  size: 78, 55
+IdleUp
+  xy: 0, 339
+  size: 78, 55
+IdleUp
+  xy: 78, 339
+  size: 78, 55
+IdleUp
+  xy: 156, 339
+  size: 78, 55
+IdleUp
+  xy: 234, 339
+  size: 78, 55
+IdleDown
+  xy: 0, 394
+  size: 78, 55
+IdleDown
+  xy: 78, 394
+  size: 78, 55
+IdleDown
+  xy: 156, 394
+  size: 78, 55
+IdleDown
+  xy: 234, 394
+  size: 78, 55
+WalkUp
+  xy: 0, 449
+  size: 78, 55
+WalkUp
+  xy: 78, 449
+  size: 78, 55
+WalkUp
+  xy: 156, 449
+  size: 78, 55
+WalkUp
+  xy: 234, 449
+  size: 78, 55
+WalkUp
+  xy: 312, 449
+  size: 78, 55
+WalkUp
+  xy: 390, 449
+  size: 78, 55
+WalkUp
+  xy: 468, 449
+  size: 78, 55
+WalkUp
+  xy: 546, 449
+  size: 78, 55
+WalkDown
+  xy: 0, 504
+  size: 78, 55
+WalkDown
+  xy: 78, 504
+  size: 78, 55
+WalkDown
+  xy: 156, 504
+  size: 78, 55
+WalkDown
+  xy: 234, 504
+  size: 78, 55
+WalkDown
+  xy: 312, 504
+  size: 78, 55
+WalkDown
+  xy: 390, 504
+  size: 78, 55
+WalkDown
+  xy: 468, 504
+  size: 78, 55
+WalkDown
+  xy: 546, 504
+  size: 78, 55

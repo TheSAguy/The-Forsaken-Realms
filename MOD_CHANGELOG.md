@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 660: the Royal King, Kenrith and Sygg on drawn LPC heads, and an undead Kenrith's sprite (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_660.py`. These are list 2's
+F100 (the Royal King and Kenrith on the stock `king_large` sprite) and F93 (Sygg on the `amphin_warrior` sprite). Like
+round 659's shark, each head is a part made from the user's ChatGPT head sheet (`tools/lpc/make_image_head.py`).
+
+- **The heads**:
+  - `heads_king` comes in three variants. **living** is a white-haired old king in a broad gold crown with a red gem.
+    **undead** is the same crowned king as a zombie with green eyes, from the card Kenrith, Immortal King (drawn on a
+    magenta key, since his skin is green). **golden** is the living head with golden hair and beard
+    (`tools/lpc/recolor_head_variant.py`).
+  - `heads_sygg` is Sygg's catfish face, with membrane fins for ears, whiskers and lilac hair.
+  - The tool learned to read a magenta key, to pick which small features to paint back for each sheet, and to use a
+    20-color palette.
+- **The enemies**:
+  - **Royal King** (scale 0.325): the living head, a navy robe under a white ermine mantle, a red cape and
+    a gold scepter.
+  - **Kenrith** (scale 0.3023): his deck is Kenrith, the Returned King's, so he wears the golden-haired head
+    and white and gold, with a blue cape and a longsword.
+  - **Sygg** (scale 0.3171): the catfish head on an ochre body, with an open vest and a dagger.
+  - **Kenrith, Immortal King**: the undead head on a zombie body, a maroon robe under a black fur mantle, a red cape
+    and a longsword. This is the atlas only (`sprites/enemy/remake/kenrith_immortal_king.atlas`). The enemy, his
+    mono-black deck and his place in the world are round 661's. The card is not in Forge, so he does not drop himself.
+- **Files**:
+  - 4 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 3 sprite paths and scales.
+  - `CREDITS_LPC.md` regenerated: 939 characters, additions only. The heads are credited to The Forsaken Realms (CC0).
+  - `CREDITS.md`: the LPC bullet (911 enemies).
+- **Checks** (the three enemies):
+  - enemies.json against HEAD: exactly these 3, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit's 1 "review" flag is Sygg's fall frame where the hurt animation turns from his face to the back of his head (one stray fin pixel above it).
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 659: Tiburones becomes a shark-headed LPC warrior - the first head drawn for LPC (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_659.py`. This is F92 of
