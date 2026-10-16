@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 648: six Realm of Legends items come back - three hats, a Jewel, a blade and robes (2026-10-16)
+
+The user, after a check of the 10.14 install's Realm of Legends against this plane: "import the six items (hats in the
+Head slot, a new icon for Soothsayer's Hat) with drop sources you propose, and leave the Crypt of Broken Rules out" -
+under the new cross-plane import rules (CLAUDE.md, committed as `0c2233aaa34`): no Commander, no quest lines that are
+not ours, no promised gifts. `dev-tools/rol_items/import_r648.py <repo> --icon-source <Item__53.png>`, idempotent.
+
+- **Why these six**: the 2026-08-10 Item Economy round removed five of them because their Realm of Legends sources
+  (capitals' quests, dungeons not imported) were not here - not because anything was wrong with them. Soothsayer's Hat
+  is newer: in Realm of Legends it drops only from Whtz in the Crypt of Broken Rules, a Commander dungeon (99-card
+  `[Commander]` decks of "Rulebreaker" legends, Arcane Signet / Command Tower, a 299-card deck) - left out.
+- **The audit** (each item against the rules): every card is a plain constructed card (no `AI:RemoveDeck:NonCommander`,
+  no color identity, no "commander" in its text, none on the restricted lists); no item carries a quest, a dialog or a
+  promise; every description was checked against its card and rewritten where it was wrong (Heirloom Blade finds the
+  next creature that shares a type, not a random card).
+- **The items** (effects as Realm of Legends wrote them; the hats moved to Head as round 607 moved every hat):
+
+| Item | Slot | Card on the battlefield | Life | Rarity / cost | Where |
+|---|---|---|---|---|---|
+| Jewel of Winds | Neck | Favorable Winds (fliers +1/+1) | - | Uncommon 30000 | Blue Equipment shop - blue's Jewel, beside white's Blessings, red's War and green's Rage |
+| Soothsayer's Hat | Head | Soothsaying | +3 | Uncommon 3000 | Blue Equipment shop |
+| Gourmand's Hat | Head | Gourmand's Talent | -6 | Rare 5000 | Green Equipment shop |
+| Heirloom Blade | Right | Heirloom Blade | -3 | Uncommon 5000 | Black Equipment shop |
+| Reliquary Robes | Body | Reliquary Tower | - (one card fewer in the opening hand) | Uncommon | White Equipment shop |
+| Fortune Teller's Hat | Head | Fortune Teller's Talent | -6 | Rare 6000 | Atemsis, All-Seeing's reward list |
+
+- **Reliquary Robes** follows this plane's land-armor rule (Nomad / Cephalid / Cabal / Centaur Armor): the land starts
+  in play for one card fewer in the opening hand, not the -7 life Realm of Legends gave it.
+- **Atemsis** is the blue war champion (round 139): it roams blue land while you are at war with blue and pays its
+  whole list (round 413's champion loot; CardBudget passes items through). The item is appended at the END of its
+  rewards, so its first named card stays its signature. The Arena pays a champion only a Rare from its deck (round 311),
+  which is why Alrund and Saint Elenda - only cave-champion candidates - were not used as sources.
+- **The icon**: Soothsayer's Hat is the 16x16 RPG Item Pack's pointed hat (Item__53) recolored blue, a gold band and a
+  star added (the user picked it from three), on its own page `sprites/items_r648.png`. Realm of Legends' own icon (a
+  flat blue cap) was not used. The other five reuse icons `items.atlas` still held. CREDITS.md: Item art.
+- **Not here**: the Crypt of Broken Rules (above), the Otherworldly Market (a hub of 14 Universes Beyond booster
+  shops), the Commander robes and hats the August round removed (Opal Cloak, Commander's / Student's Robes, Witch's
+  Cloak, Nest Warden's Armor), and the ~100 older one-off story places (DUNGEON_POOL_RESEARCH.md).
+- **Checks**: `validate_plane_data.py` - nothing new (its sprite-footprint section is rounds 649 + 650's). Seen in the
+  agent game: all six given and worn - the Head, Neck, Body and Right slots show their icons; three duels started with
+  Reliquary Tower, Soothsaying, Heirloom Blade and Favorable Winds, then Gourmand's Talent, then Fortune Teller's
+  Talent on the battlefield, the life changes applied. Not seen: the shops offering them (4 of each list show) and
+  Atemsis dropping the hat at war.
+
 ## Round 650: Tiyanak gets the user's hand-made faceless shapeshifter (2026-10-16)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/tiyanak/convert.sh`. This is A3 of the

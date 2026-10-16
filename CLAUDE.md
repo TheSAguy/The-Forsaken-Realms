@@ -113,6 +113,8 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 648): **LOCAL + UNRELEASED (data + art)** - six Realm of Legends items return under the cross-plane import rules: Jewel of Winds (Blue Equipment, blue's Jewel), Soothsayer's Hat (Blue Equipment; new icon items_r648.png), Gourmand's Hat (Green), Heirloom Blade (Black), Reliquary Robes (White; land-armor rule, one card fewer in the opening hand), Fortune Teller's Hat (Atemsis, the blue war champion, drops it); hats in Head. `dev-tools/rol_items/import_r648.py`. The Crypt of Broken Rules stays out (Commander). Worn and dueled in the agent game.
+
 ## STATE 2026-10-16 (rounds 649 + 650): **LOCAL + UNRELEASED (art + data)** - the user's hand-made Pixelate art for the
 Homarid Spawning Bed (649: a compact egg clutch hatching a homarid, stationary, full-square portrait) and Tiyanak (650:
 the faceless spear shapeshifter; second attack take, ends on the thrust). Generator `pixelate/homarid_spawning_bed/` +

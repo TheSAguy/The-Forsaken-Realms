@@ -8103,6 +8103,59 @@
         "iconName":  "CartographersCompass",
         "questItem":  true,
         "rarity":  "Mythic"
+    },
+    {
+        "name":  "Jewel of Winds",
+        "description":  "Your flying creatures get +1/+1.",
+        "equipmentSlot":  "Neck",
+        "iconName":  "MoxSapphire",
+        "cost":  30000,
+        "effect":  {"startBattleWithCard": ["Favorable Winds|SCD"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Soothsayer's Hat",
+        "description":  "X: look at your top X cards and put them back in any order. 3UU: shuffle your library.",
+        "equipmentSlot":  "Head",
+        "iconName":  "Soothsayer'sHat",
+        "cost":  3000,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Soothsaying"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Gourmand's Hat",
+        "description":  "On your turn your artifacts are Food. 2G: a 3/3 Raccoon the first time you gain life each turn. 3G: also +1/+1 counters on your creatures.",
+        "equipmentSlot":  "Head",
+        "iconName":  "Gourmand'sHat",
+        "cost":  5000,
+        "effect":  {"lifeModifier": -6, "startBattleWithCard": ["Gourmand's Talent|BLC"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Heirloom Blade",
+        "description":  "Equip 1: +3/+1. When the equipped creature dies, the next creature in your library that shares a type with it goes to your hand.",
+        "equipmentSlot":  "Right",
+        "iconName":  "HeirloomBlade",
+        "cost":  5000,
+        "effect":  {"lifeModifier": -3, "startBattleWithCard": ["Heirloom Blade|C17"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Reliquary Robes",
+        "description":  "Taps for C. You have no maximum hand size.",
+        "equipmentSlot":  "Body",
+        "iconName":  "ReliquaryRobes",
+        "effect":  {"changeStartCards": -1, "startBattleWithCard": ["Reliquary Tower|C14"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Fortune Teller's Hat",
+        "description":  "Look at your top card any time. 3U: play cards from the top once you have cast a spell that turn. 2U: spells you cast from anywhere but your hand cost 2 less.",
+        "equipmentSlot":  "Head",
+        "iconName":  "FortuneTeller'sHat",
+        "cost":  6000,
+        "effect":  {"lifeModifier": -6, "startBattleWithCard": ["Fortune Teller's Talent|BLC"]},
+        "rarity":  "Rare"
     }
 
 

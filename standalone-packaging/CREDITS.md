@@ -276,6 +276,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   this game; supplied by the user.
 - **Ascendance title medals** (the Level sheet's icons for the six title levels) - steps of the **Free Game
   Achievement Vector RPG Icons** set by **CraftPix.net** (https://craftpix.net/file-licenses/); supplied by the user.
+- **The Soothsayer's Hat icon** (round 648) - the pointed hat of the free **16x16 RPG Item Pack**, recolored blue with a gold band and star for this game; supplied by the user, and our thanks to the pack's unnamed author(s).
 
 ## Player portraits
 

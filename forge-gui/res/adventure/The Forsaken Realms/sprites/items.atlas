@@ -2162,3 +2162,12 @@ LilianasPledge
 ChandrasPledge
   xy: 32, 0
   size: 32, 32
+
+items_r648.png
+size: 16,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Soothsayer'sHat
+  xy: 0, 0
+  size: 16, 16

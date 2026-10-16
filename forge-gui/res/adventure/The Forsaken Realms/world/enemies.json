@@ -66494,6 +66494,11 @@
                 "type": "shards",
                 "count": 5,
                 "addMaxCount": 15
+            },
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Fortune Teller's Hat"
             }
         ],
         "colors": "U",
