@@ -6,8 +6,8 @@ description, effect and csv row). Each takes the round's own data:
                                                substrings of the raw line text; card_swaps: {file: [(raw old, raw new,
                                                times)]} on the raw .tmx (card names in effects and rewards)
   import_pois(c, pois, new_regions)            pois: [dict(name, display, atlas, sprite, map, type, tags, level, land)]
-  import_enemies(c, enemies, round)            enemies: [dict(name, life, tier, difficulty, games, rebuild, deck,
-                                               drop_items, extra_rewards)]
+  import_enemies(c, enemies, round, items)     enemies: [dict(name, source, life, tier, difficulty, games, rebuild, deck,
+                                               drop_items, item_swaps, drop_unplayable, extra_rewards)]
   import_items(c, items, sketchbooks=())       items: [(name, slot, icon, cost, effect, rarity, description)]
   import_shops(c, shops)                       shops: {name: (description, [item names])}
 Report lines collect in c.report."""
@@ -154,7 +154,7 @@ def import_enemies(c, enemies, round_no, known_items):
     ledger = json.load(io.open(ledger_path, encoding='utf-8'))
     for spec in enemies:
         name = spec['name']
-        src = c.rol_enemies[name]
+        src = c.rol_enemies[spec.get('source', name)]  # round 674: an entry copied under a new name (Hellion)
         rel_deck = spec.get('deck') or src['deck'][0]
         summary = None
         if spec.get('rebuild', True):
@@ -180,7 +180,12 @@ def import_enemies(c, enemies, round_no, known_items):
             r = dict(r)
             if r.get('type') == 'item' and (r.get('itemName') in spec.get('drop_items', ())):
                 continue
+            if r.get('type') == 'item' and r.get('itemName') in spec.get('item_swaps', {}):
+                r['itemName'] = spec['item_swaps'][r['itemName']]  # round 674: Lyna's "Soltari Shoes"
             if r.get('type') == 'card' and r.get('cardName'):
+                if spec.get('drop_unplayable') and not c.card_ok(r['cardName']):
+                    c.report['reward cards dropped'].append('%s: %s' % (name, r['cardName']))
+                    continue
                 assert c.card_ok(r['cardName']), '%s: reward card %s' % (name, r['cardName'])
             if r.get('type') == 'item':
                 for it in ([r['itemName']] if r.get('itemName') else r.get('itemNames', [])):

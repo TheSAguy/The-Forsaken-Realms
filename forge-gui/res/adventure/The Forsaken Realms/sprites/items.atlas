@@ -1305,6 +1305,48 @@ TokenofMunitions
 TokenofNinjutsu
   xy: 176, 304
   size: 16, 16
+SphinxHelm
+  xy: 144, 352
+  size: 16, 16
+Veteran'sBlade
+  xy: 208, 656
+  size: 16, 16
+Soldier'sHelm
+  xy: 32, 304
+  size: 16, 16
+ArmorofHorrors
+  xy: 160, 64
+  size: 16, 16
+Blor'sBow
+  xy: 224, 464
+  size: 16, 16
+Blor'sShield
+  xy: 256, 160
+  size: 16, 16
+BrushwaggBoots
+  xy: 48, 128
+  size: 16, 16
+SneaklingShoes
+  xy: 96, 112
+  size: 16, 16
+ScoriaAnklet
+  xy: 96, 928
+  size: 16, 16
+CrabHat
+  xy: 96, 304
+  size: 16, 16
+ArmorofSands
+  xy: 240, 112
+  size: 16, 16
+Jester'sCap
+  xy: 80, 400
+  size: 16, 16
+KoskunArmor
+  xy: 176, 112
+  size: 16, 16
+SoltariSkirt
+  xy: 80, 464
+  size: 16, 16
 
 items.png
 size: 480,1008

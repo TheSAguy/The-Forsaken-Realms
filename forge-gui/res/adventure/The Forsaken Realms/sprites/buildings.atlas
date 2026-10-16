@@ -1200,3 +1200,6 @@ primaljungle
 OtherGraveyard
   xy: 256, 464
   size: 32, 32
+FlamingoPond
+  xy: 352, 32
+  size: 32, 32

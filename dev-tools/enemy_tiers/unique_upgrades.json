@@ -435,6 +435,12 @@
    1.0
   ]
  },
+ "decks/legends/alhammarret.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
+ },
  "decks/legends/alibou.dck": {
   "old": "Secret Rendezvous",
   "new": "Starnheim Unleashed",
@@ -875,6 +881,12 @@
    0.95
   ]
  },
+ "decks/legends/axelrod_gunnarson.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
+ },
  "decks/legends/ayara.dck": {
   "old": "Plague of Vermin",
   "new": "Blood Money",
@@ -1080,6 +1092,12 @@
    0.01,
    0.98
   ]
+ },
+ "decks/legends/blor.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
  },
  "decks/legends/bonny_pall.dck": {
   "old": "Sandwurm Convergence",
@@ -1912,6 +1930,12 @@
    0.01,
    0.99
   ]
+ },
+ "decks/legends/eron.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
  },
  "decks/legends/ertai.dck": {
   "old": "Psychic Surgery",
@@ -2829,6 +2853,12 @@
    0.93
   ]
  },
+ "decks/legends/homer.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
+ },
  "decks/legends/honest_rutstein.dck": {
   "old": "Crashing Drawbridge",
   "new": "Arcbound Ravager",
@@ -3190,6 +3220,12 @@
    0.16,
    0.96
   ]
+ },
+ "decks/legends/johan.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
  },
  "decks/legends/jolene.dck": {
   "old": "Winds of Qal Sisma",
@@ -3877,6 +3913,12 @@
    0.91
   ]
  },
+ "decks/legends/kurbis.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
+ },
  "decks/legends/kwia_vigorbloom.dck": {
   "old": null,
   "new": null,
@@ -4072,6 +4114,12 @@
    0.01,
    0.99
   ]
+ },
+ "decks/legends/lyna.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
  },
  "decks/legends/lyra.dck": {
   "old": "Herald of the Host",
@@ -4548,6 +4596,12 @@
    0.01,
    0.96
   ]
+ },
+ "decks/legends/myrel.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
  },
  "decks/legends/m\u00e1rton_stromgald.dck": {
   "old": "Cursed Mirror",
@@ -5244,6 +5298,12 @@
    0.02,
    0.92
   ]
+ },
+ "decks/legends/providence_of_night.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
  },
  "decks/legends/purphoros.dck": {
   "old": "Devilish Valet",
@@ -6907,6 +6967,12 @@
    0.99
   ]
  },
+ "decks/legends/the_madcap_jester.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
+ },
  "decks/legends/the_master_of_keys.dck": {
   "old": "Monologue Tax",
   "new": "Sheltered by Ghosts",
@@ -7195,6 +7261,12 @@
    0.97
   ]
  },
+ "decks/legends/torsten.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
+ },
  "decks/legends/toski.dck": {
   "old": "Harvest Season",
   "new": "Beacon of Creation",
@@ -7300,6 +7372,12 @@
    0.05,
    0.97
   ]
+ },
+ "decks/legends/tuknir_deathlock.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r674"
  },
  "decks/legends/tymna_and_tana.dck": {
   "old": "Rite of Harmony",

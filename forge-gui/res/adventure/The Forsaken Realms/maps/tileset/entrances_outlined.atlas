@@ -1,5 +1,5 @@
 entrances_outlined.png
-size: 143,46
+size: 224,46
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -12,3 +12,9 @@ SvyeluniteTemple
 banditcave
   xy: 111, 0
   size: 32, 32
+FlamingoPond
+  xy: 145, 0
+  size: 32, 32
+ruinedcity
+  xy: 179, 0
+  size: 45, 32

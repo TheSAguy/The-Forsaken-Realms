@@ -8538,6 +8538,132 @@
         "cost":  1000,
         "effect":  {"startBattleWithCard": ["u_1_1_ninja_unblockable"]},
         "rarity":  "Rare"
+    },
+    {
+        "name":  "Sphinx Helm",
+        "description":  "Sphinx's Tutelage - whenever you draw, the opponent mills two, again while two nonlands share a color. 5U: draw, then discard.",
+        "equipmentSlot":  "Head",
+        "iconName":  "SphinxHelm",
+        "cost":  5000,
+        "effect":  {"startBattleWithCard": ["Sphinx's Tutelage"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Veteran's Blade",
+        "description":  "Veteran's Armaments - attacking or blocking, +1/+1 for each attacking creature. It attaches itself to each Soldier that enters. Equip 2.",
+        "equipmentSlot":  "Right",
+        "iconName":  "Veteran'sBlade",
+        "cost":  4000,
+        "effect":  {"startBattleWithCard": ["Veteran's Armaments"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Soldier's Helm",
+        "description":  "Mobilization - Soldiers have vigilance. 2W: a 1/1 Soldier token.",
+        "equipmentSlot":  "Head",
+        "iconName":  "Soldier'sHelm",
+        "cost":  3000,
+        "effect":  {"startBattleWithCard": ["Mobilization"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Armor of Horrors",
+        "description":  "Three extra cards and Cosmic Horror, a 7/7 first striker - each upkeep pay 3BBB, or it is destroyed and deals 7 damage to you.",
+        "equipmentSlot":  "Body",
+        "iconName":  "ArmorofHorrors",
+        "cost":  5000,
+        "effect":  {"changeStartCards": 3, "startBattleWithCard": ["Cosmic Horror"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Blor's Bow",
+        "description":  "Short Bow - Equip 1: +1/+1, vigilance and reach.",
+        "equipmentSlot":  "Right",
+        "iconName":  "Blor'sBow",
+        "cost":  3000,
+        "effect":  {"startBattleWithCard": ["Short Bow"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Blor's Shield",
+        "description":  "Assault Suit - Equip 3: +2/+2 and haste, and the creature can't be sacrificed.",
+        "equipmentSlot":  "Left",
+        "iconName":  "Blor'sShield",
+        "cost":  4000,
+        "effect":  {"lifeModifier": -4, "startBattleWithCard": ["Assault Suit|C14"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Brushwagg Boots",
+        "description":  "A 3/2 Brushwagg - -2/+2 whenever it blocks or becomes blocked.",
+        "equipmentSlot":  "Boots",
+        "iconName":  "BrushwaggBoots",
+        "cost":  2000,
+        "effect":  {"startBattleWithCard": ["Brushwagg"]},
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Sneakling Shoes",
+        "description":  "Mischievous Sneakling - a 2/2 with changeling, every creature type.",
+        "equipmentSlot":  "Boots",
+        "iconName":  "SneaklingShoes",
+        "cost":  3000,
+        "effect":  {"lifeModifier": 2, "startBattleWithCard": ["Mischievous Sneakling"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Scoria Anklet",
+        "description":  "Scoria Wurm, a 7/7 - each upkeep flip a coin; lose, and it returns to your hand.",
+        "equipmentSlot":  "Boots",
+        "iconName":  "ScoriaAnklet",
+        "cost":  4000,
+        "effect":  {"startBattleWithCard": ["Scoria Wurm"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Crab Hat",
+        "description":  "Scuttletide - 1, discard a card: a 0/3 Crab token. Delirium: your Crabs get +1/+1.",
+        "equipmentSlot":  "Head",
+        "iconName":  "CrabHat",
+        "cost":  3000,
+        "effect":  {"startBattleWithCard": ["Scuttletide"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Armor of Sands",
+        "description":  "Endless Sands - T: add C. 2, T: exile a creature you control. 4, T, sacrifice it: return them all.",
+        "equipmentSlot":  "Body",
+        "iconName":  "ArmorofSands",
+        "cost":  3000,
+        "effect":  {"changeStartCards": -1, "startBattleWithCard": ["Endless Sands|HOU"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Jester's Cap",
+        "description":  "An extra card, and Jester's Cap - 2, T, sacrifice it: exile three cards from the opponent's library.",
+        "equipmentSlot":  "Head",
+        "iconName":  "Jester'sCap",
+        "cost":  4000,
+        "effect":  {"changeStartCards": 1, "lifeModifier": -4, "startBattleWithCard": ["Jester's Cap"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Koskun Armor",
+        "description":  "Koskun Keep - T: add C. 1, T: add R. 2, T: add B or G.",
+        "equipmentSlot":  "Body",
+        "iconName":  "KoskunArmor",
+        "cost":  3000,
+        "effect":  {"changeStartCards": -1, "startBattleWithCard": ["Koskun Keep"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Soltari Skirt",
+        "description":  "Soltari Foot Soldier - a 1/1 Soldier with shadow.",
+        "equipmentSlot":  "Legs",
+        "iconName":  "SoltariSkirt",
+        "cost":  3000,
+        "effect":  {"startBattleWithCard": ["Soltari Foot Soldier"]},
+        "rarity":  "Uncommon"
     }
 
 

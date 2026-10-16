@@ -6589,5 +6589,224 @@
 		"questTags": [
 			"NoRotate"
 		]
+	},
+	{
+		"name": "Brushwagg Underbrush",
+		"displayName": "Brushwagg Underbrush",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Grove",
+		"map": "../The Forsaken Realms/maps/map/grove/Brushwagg_Underbrush.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 8,
+		"appearsInBiome": "green",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Isolated Dunes",
+		"displayName": "Isolated Dunes",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/entrances_outlined.atlas",
+		"sprite": "ruinedcity",
+		"map": "../The Forsaken Realms/maps/map/grove/Isolated_Dunes.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 8,
+		"appearsInBiome": "green",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Baneful Cavern",
+		"displayName": "Baneful Cavern",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Building148",
+		"map": "../The Forsaken Realms/maps/map/evilgrove/Baneful_Cavern.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 8,
+		"appearsInBiome": "black",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Hellion Cave",
+		"displayName": "Hellion Cave",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Cave",
+		"map": "../The Forsaken Realms/maps/map/barbariancamp/Hellion_Cave.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 8,
+		"appearsInBiome": "red",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Hermit's Hideout",
+		"displayName": "Hermit's Hideout",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Cave",
+		"map": "../The Forsaken Realms/maps/map/merfolkpool/Hermits_Hideout.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 8,
+		"appearsInBiome": "blue",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Alhammarret's Archive",
+		"displayName": "Alhammarret's Archive",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Building97",
+		"map": "../The Forsaken Realms/maps/map/merfolkpool/Alhammarrets_Archive.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 12,
+		"appearsInBiome": "blue",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Assembly Ground",
+		"displayName": "Assembly Ground",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "BarbarianCamp",
+		"map": "../The Forsaken Realms/maps/map/fort/Assembly_Ground.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 12,
+		"appearsInBiome": "white",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Koskun Keep",
+		"displayName": "Koskun Keep",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Building50",
+		"map": "../The Forsaken Realms/maps/map/barbariancamp/Koskun_Keep.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 12,
+		"appearsInBiome": "red",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Rathi Shadow Rift",
+		"displayName": "Rathi Shadow Rift",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+		"sprite": "Snarl",
+		"map": "../The Forsaken Realms/maps/map/fort/Rathi_Shadow_Rift.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 12,
+		"appearsInBiome": "white",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Blor's Pond",
+		"displayName": "Blor's Pond",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/entrances_outlined.atlas",
+		"sprite": "FlamingoPond",
+		"map": "../The Forsaken Realms/maps/map/grove/Blors_Pond.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 15,
+		"appearsInBiome": "green",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Domain of Night",
+		"displayName": "Domain of Night",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+		"sprite": "Great Aurora",
+		"map": "../The Forsaken Realms/maps/map/cave/Domain_of_Night.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 15,
+		"appearsInBiome": "waste",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Jester's Tent",
+		"displayName": "Jester's Tent",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+		"sprite": "Black Circus",
+		"map": "../The Forsaken Realms/maps/map/merfolkpool/Jesters_Tent.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 15,
+		"appearsInBiome": "blue",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Argivian Military Camp",
+		"displayName": "Argivian Military Camp",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Building13",
+		"map": "../The Forsaken Realms/maps/map/fort/Argivian_Military_Camp.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 15,
+		"appearsInBiome": "white",
+		"questTags": [
+			"NoRotate"
+		]
 	}
 ]

@@ -21,7 +21,8 @@ An-Havva Inn, Ancient Opal Cavern, Isolated Hut), an expanded item catalog,
 building/boss artwork, and starter deck concepts. From their 1.077 "Reality Fracture" update, three end-game
 dungeons (Hexhaven Tower, the Echoverse Overlay, the Theorist's Sanctum) and nine lairs and stalls (Darksteel
 Citadel, Horrible Factory, Skeleton Ship, Cursed Graveyard, Mtenda Mesa, Tresserhorn Keep, Nekoru Nest, Jandor's
-Caravan, Thieves' Hideout) with their legends and items.
+Caravan, Thieves' Hideout), and thirteen smaller lairs (Alhammarret's Archive to the Argivian Military Camp)
+with their legends and items.
 
 ## The Shandalar Old Border team
 

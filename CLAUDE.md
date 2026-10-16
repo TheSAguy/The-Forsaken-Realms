@@ -117,6 +117,10 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 674): **LOCAL + UNRELEASED (data + art)** - the thirteen smaller Realm of Legends lairs by
+level (8 / 12 / 15), 13 enemies, 14 items; RoL's broken references fixed (Alhammarret, Tocasia's Welcome, Soltari Skirt,
+Great Hellion), rebuild_gimmick takes decks of basics, Sandwurm tuned. `import_r674.py`. Seen in the agent game.
+
 ## STATE 2026-10-16 (round 673): **LOCAL + UNRELEASED (art + data)** - Kaalia and Lyra leave the stock seraphim ring sprite
 for LPC (generator `lpc_selections/make_673.py`); the ring angel stays for Holy Apparition, Child of Alara and Twister
 of Time (a Pixelate remake is in the making). enemies.json 2 paths + scales, CREDITS_LPC.md + CREDITS.md (981 LPC

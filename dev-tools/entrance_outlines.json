@@ -4,7 +4,8 @@
   "outline: the entrance sprites that had no outline, outlined by dev-tools/poi_outline.py --apply (re-running skips any already outlined).",
   "reviewed_ok: entrance sprites whose outline score sits in 0.30-0.65 (a dark-outlined cave on a soft drop shadow scores there) that were checked by eye and already carry an outline - poi_outline.py --audit does not report them.",
   "A NEW entrance sprite: run poi_outline.py --audit; outline what it reports, or add it here once checked.",
-  "Round 669: the Realm of Legends lairs' entrances - Building21 / Building42 / Castle / Slobad reviewed (a dark outline on a soft drop shadow), banditcave (Thieves' Hideout) and Siren (Skeleton Ship) outlined."
+  "Round 669: the Realm of Legends lairs' entrances - Building21 / Building42 / Castle / Slobad reviewed (a dark outline on a soft drop shadow), banditcave (Thieves' Hideout) and Siren (Skeleton Ship) outlined.",
+  "Round 674: the smaller Realm of Legends lairs - Building148 / Building50 / Cave / Grove / Building13 reviewed (a dark outline on a soft drop shadow); FlamingoPond (Blor's Pond) and ruinedcity (Isolated Dunes), upstream sprites, outlined onto entrances_outlined; Snarl (Rathi Shadow Rift) outlined in place."
  ],
  "outline": [
   [
@@ -286,6 +287,18 @@
   [
    "../The Forsaken Realms/sprites/buildingsbosses.atlas",
    "Siren"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "FlamingoPond"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "ruinedcity"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+   "Snarl"
   ]
  ],
  "reviewed_ok": [
@@ -816,6 +829,26 @@
   [
    "../The Forsaken Realms/sprites/buildings.atlas",
    "Slobad"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Building148"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Building50"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Cave"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Grove"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Building13"
   ]
  ]
 }

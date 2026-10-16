@@ -13,7 +13,8 @@ with a one-card [Commander] section. This builds the 60-card deck a TFR boss pla
     (a type on a quarter of its creatures). The commander goes in twice. Then copies down the ranking: 3 for the top 5,
     2 for the next 7, then 1 - a legendary card at most 2, the copy limit kept - until the spells are full. At most
     6 copies at mana value 6+, at most 11 at 5+; a creature deck (40% creatures in the pool) keeps 14 creatures.
-  - A one-card horde (a line of 10+ copies - Realm of Legends' "gimmick" decks) keeps its design: the legend twice,
+  - A gimmick keeps its design (Realm of Legends' 1.077 "gimmick" decks): a horde (a nonbasic line of 10+) or a deck
+    of basics (60% of the 99). The legend twice,
     the 99 scaled to 58 by their own shares (rebuild_gimmick).
   - Names keep the set code the source line printed (its art).
 
@@ -149,7 +150,13 @@ def rebuild(cards, src, out, title):
         entries.append(name)
     b = cards.builder
     cmd = commander[0][1] if commander else None
-    if max((n for n, _, _ in secs.get('main', [])), default=0) >= 10:
+    # a gimmick: a horde (a nonbasic line of 10+) or a deck of basics (60% of the 99 - Alhammarret's 93 Islands,
+    # Torsten's 98 Plains); round 674 - basics split over printings (Myrel's 14 + 14 Plains) are no horde
+    main = secs.get('main', [])
+    total = sum(n for n, _, _ in main)
+    basics = sum(n for n, name, _ in main if b.cards.get(name, {}).get('basic'))
+    if (max((n for n, name, _ in main if not b.cards.get(name, {}).get('basic')), default=0) >= 10
+            or (total and basics >= 0.6 * total)):
         return rebuild_gimmick(cards, secs, cmd, code, dropped, out, title)
     cmd_types = b.cards.get(cmd, {}).get('sub', set()) if cmd else set()
     lands = [x for x in entries if b.cards[x]['main'] == 'Land' and not b.cards[x]['basic']]
@@ -262,9 +269,13 @@ def rebuild_gimmick(cards, secs, cmd, code, dropped, out, title):
     Walking Corpses...) is its design, not a pool to pick from: the legend twice, the 99 scaled to 58 by their own
     shares (largest remainder), a line the rebuild may not use dropped and its share given to the rest."""
     b = cards.builder
-    lines = [(n, name) for n, name, _ in secs.get('main', []) if cards.why_out(name) is None or b.cards.get(name, {}).get('basic')]
+    merged = collections.OrderedDict()  # one line per name - a basic split over printings counts once
+    for n, name, _ in secs.get('main', []):
+        if cards.why_out(name) is None or b.cards.get(name, {}).get('basic'):
+            merged[name] = merged.get(name, 0) + n
+    lines = [(n, name) for name, n in merged.items()]
     total = sum(n for n, _ in lines)
-    target = 58 if cmd else 60
+    target = 58 if cmd and cards.why_out(cmd) is None else 60  # a legend the AI drops (Johan) leaves no two slots
     shares = [(name, n * target / total) for n, name in lines]
     counts = {name: int(s) for name, s in shares}
     for name, s in sorted(shares, key=lambda x: -(x[1] - int(x[1])))[:target - sum(counts.values())]:

@@ -14264,6 +14264,60 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 674: the thirteen smaller lairs from Realm of Legends 1.077 (2026-10-16)
+
+The user, of round 665's audit: "Let's add these from RoL : 4. The small leftover lairs can come later if you want
+more variety." This round adds every one-legend lair the first two batches (668, 669) left, under the cross-plane
+import rules. `dev-tools/rol_import/import_r674.py`, on the `rol_common.py` writers.
+
+- **The places**. Each comes at its level through LevelPlaces, with the mid-game notice.
+
+  | Level | Places (land) |
+  |---|---|
+  | 8 | Brushwagg Underbrush (green), Isolated Dunes (green), Baneful Cavern (black), Hellion Cave (red), Hermit's Hideout (blue) |
+  | 12 | Alhammarret's Archive (blue), Assembly Ground (white), Koskun Keep (red), Rathi Shadow Rift (white) |
+  | 15 | Blor's Pond (green), Domain of Night (waste), Jester's Tent (blue), Argivian Military Camp (white; five shops this plane already has, and Myrel) |
+
+  - The lairs are tagged Hostile, NoRotate and Legendary. The camp is tagged only NoRotate.
+- **What Realm of Legends shipped broken, now fixed**:
+  - Alhammarret's map named him "Alhammaret", so he never appeared. His archive's prize was "Alhammaret's
+    Archvive".
+  - Myrel's Hard effect named "Toacsia's Welcome" (the card is Tocasia's Welcome).
+  - Lyna's reward was "Soltari Shoes"; the item is Soltari Skirt.
+  - The cave's "Hellion" is now the **Great Hellion**, because this plane's ordinary Hellion already has the name.
+  - Digital-only and commander-only cards are out:
+    - Archival Whorl became Lat-Nam's Legacy, and Rescue Retriever became Benalish Marshal.
+    - The Domain of Night's Volatile Rift and both Path of Ancestry were dropped.
+    - Providence of Night's own card (digital-only) is off his rewards.
+  - Text: the manasight stone (now the spark), "seemed down to the Earth", "Star swirl", "sand stretched", "rath",
+    and "the brother's war" (now the Brothers' War).
+  - Koskun Keep keeps its respawning Eron ("it never sticks"). The Koskun Armor he drops sells for little.
+- **The enemies** (13), with decks rebuilt at 60:
+  - **`rebuild_gimmick`** now also takes a deck of basics (60% of the 99): Alhammarret's 93 Islands and Torsten's 98
+    Plains keep their design. Basics split over printings no longer count as a horde (Myrel's 14 + 14 Plains came
+    out 69 cards at first). A legend the AI drops (Johan) no longer leaves its two slots empty.
+  - **Sandwurm** was a deck of deserts with one Greater Sandwurm under Johan. `tune_sandwurm` gives him 4 Greater
+    Sandwurm and 2 Sandwurm Convergence (his own reward card), with his deserts kept.
+- **The items** (14):
+  - Sphinx Helm, Soldier's Helm, Crab Hat and Jester's Cap go in Head.
+  - The Soltari Skirt goes in Legs, and Blor's Shield in the left hand.
+  - Armor of Sands and Koskun Armor follow the land-armor rule.
+  - Also: Veteran's Blade, Armor of Horrors, Blor's Bow, Brushwagg Boots, Sneakling Shoes and Scoria Anklet.
+- **Entrance outlines** (the round 657 rule):
+  - Reviewed: Building148, Building50, Cave, Grove and Building13.
+  - Outlined: Snarl (the Rathi Shadow Rift) in place.
+  - FlamingoPond (Blor's Pond) and ruinedcity (Isolated Dunes) are upstream sprites. They were copied onto
+    `entrances_outlined`, and round 669's fixed tool kept the page's sprites.
+  - The tool also repointed Tarnation, a story castle on the same ruined-city sprite. That was put back: castles are
+    outside the entrance rule. `--audit` reports 0.
+- **Seen in the agent game** (a copy of the user's save at Ascendance 15):
+  - All thirteen placed, with round 669's nine.
+  - Alhammarret stands in his archive, the Great Hellion in its cave, and the Domain of Night shows only Chromatic
+    Lantern.
+  - A Sandwurm duel ran with his deserts, Greater Sandwurm and Sandwurm Convergence.
+  - No exception in the log.
+  - Not seen: the other duels, and the camp's shops.
+
 ## Round 673: Kaalia and Lyra as LPC characters (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_673.py`. This is part of list
