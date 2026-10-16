@@ -117,6 +117,11 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 661): **LOCAL + UNRELEASED (data)** - "Kenrith, Immortal King", the undead Kenrith (round
+660's sprite), is a mono-black roaming champion: enemies.json entry after Kenrith (life 50, Rare, Kenrith's rewards
+minus the named card), zombie-lord deck `decks/legends/kenrith_immortal_king.dck`, roaming_champions.json, black.json
+roster, enemies.csv, ledger `built-r661`. Seen in the agent game (sighted, chased, his deck loaded, 125 life at 2.5x).
+
 ## STATE 2026-10-16 (round 660): **LOCAL + UNRELEASED (art + data)** - the Royal King, Kenrith (golden-haired, his
 Returned King deck) and Sygg on drawn LPC head parts (heads_king living/undead/golden, heads_sygg; generator
 `tools/lpc/make_image_head.py` + `recolor_head_variant.py`, selections `lpc_selections/make_660.py`), plus the atlas

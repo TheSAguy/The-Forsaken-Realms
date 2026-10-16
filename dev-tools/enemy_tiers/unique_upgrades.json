@@ -3399,6 +3399,12 @@
    0.96
   ]
  },
+ "decks/legends/kenrith_immortal_king.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r661"
+ },
  "decks/legends/keranos.dck": {
   "old": "Consuming Tide",
   "new": "Quasiduplicate",

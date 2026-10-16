@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 661: Kenrith, Immortal King - the undead Kenrith roams black land with a zombie deck (2026-10-16)
+
+The user, in the Procedural Pixel Creatures session: "a living and dead Kenrith. Adjust the decks as needed." Round 660
+drew both sprites. This round turns the undead one into an enemy (split with that session; round 662 is theirs).
+
+- **The enemy** (world/enemies.json, right after Kenrith):
+  - It copies Kenrith's entry, with the undead sprite (round 660's `remake/kenrith_immortal_king`, scale 0.3023).
+  - Stats: mono-black, life 50, Rare, difficulty 3, three games a match, speed 45.
+  - Rewards are Kenrith's, minus his named card. That means Valorous Greaves, 6-8 rare/mythic deck cards, 1-2 random
+    rare/mythic cards, 2000-6000 gold, 20-80 shards, and the alt-art and land-sketchbook shop rewards. Kenrith,
+    Immortal King is not a card in Forge, so he cannot drop himself.
+- **The deck** (`decks/legends/kenrith_immortal_king.dck`, 60 cards): zombie tribal built on the lords.
+  - Zombies: 4 Champion of the Perished, 4 Gravecrawler, 4 Diregraf Ghoul, 4 Graveyard Marshal, 4 Death Baron,
+    3 Cemetery Reaper, 2 Lord of the Accursed, 2 Geralf's Messenger, Josu Vess, Lich Knight, and Noxious Ghoul.
+  - Spells: 2 Liliana's Mastery, Gisa's Bidding, 3 Infernal Grasp, 2 Cast Down and Murder.
+  - Lands: 20 Swamp, 2 Castle Locthwain.
+  - Cryptbreaker and Undead Warchief are left out, because the AI drops them (`AI:RemoveDeck:Random`).
+  - deck_legality_audit reports nothing for it.
+  - Round 644's ledger marks the deck `built-r661`, so a re-run of upgrade_unique_decks.py leaves it alone.
+- **Where he appears**:
+  - He is a roaming champion: config tables/roaming_champions.json, so the legend table sights him in his color.
+  - He joins black's roster beside Kenrith with zero weight, like every champion, so quests can boost him.
+  - An enemies.csv row was added.
+- **Living Kenrith** keeps `decks/legends/kenrith.dck`, Kenrith, the Returned King's deck, which his golden-haired
+  sprite already matches. So the only deck "as needed" was the new one.
+- **Seen in the agent game** (a copy of the user's save, day 270):
+  - Spawned from the console. The legend table logged the sighting, and he gave chase.
+  - The sprite reads at game size: crown, pale face, green eye, longsword.
+  - The duel loaded `decks/legends/kenrith_immortal_king.dck`. Death Baron, Gravecrawler, Graveyard Marshal, Josu Vess
+    and Cast Down came out on his side.
+  - He had 125 life (50 x the save's 2.5 difficulty factor) and won the match. The log showed no errors.
+
 ## Round 660: the Royal King, Kenrith and Sygg on drawn LPC heads, and an undead Kenrith's sprite (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_660.py`. These are list 2's

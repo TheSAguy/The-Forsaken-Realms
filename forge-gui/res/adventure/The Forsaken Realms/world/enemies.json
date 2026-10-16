@@ -37168,6 +37168,76 @@
         "difficulty": 3
     },
     {
+        "name": "Kenrith, Immortal King",
+        "sprite": "sprites/enemy/remake/kenrith_immortal_king.atlas",
+        "deck": [
+            "decks/legends/kenrith_immortal_king.dck"
+        ],
+        "ai": "",
+        "speed": 45,
+        "scale": 0.3023,
+        "life": 50,
+        "rewards": [
+            {
+                "type": "life",
+                "count": 1
+            },
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Valorous Greaves"
+            },
+            {
+                "type": "deckCard",
+                "count": 6,
+                "addMaxCount": 8,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 2000,
+                "addMaxCount": 6000
+            },
+            {
+                "type": "shards",
+                "count": 20,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "addMaxCount": 2,
+                "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+            },
+            {
+                "type": "landSketchbookShop",
+                "count": 1
+            }
+        ],
+        "colors": "B",
+        "gamesPerMatch": 3,
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3
+    },
+    {
         "name": "Garth",
         "sprite": "sprites/enemy/remake/garth.atlas",
         "deck": [
