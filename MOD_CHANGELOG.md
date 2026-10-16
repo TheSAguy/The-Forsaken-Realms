@@ -14264,6 +14264,19 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 656: overworld Wood, Stone and Shards pickups pay 15 more (2026-10-16)
+
+The user: "For all overworld resource spawns - Wood, Stone and Shards. Please add 15 to the base value. I want them to feel
+rewarding."
+
+- `util/ResourceSpawns`: `OTHER_PICKUP_BONUS = 15` is added to the rolled 2-10 when a Shards, Wood or Stone pickup is
+  PICKED UP (award()), before Prospector's +15/30/45% - so 17-25 base, and the spawns already lying on the map (their
+  2-10 was rolled and saved when they appeared) pay it too, with no wait for them to expire. A Mystery pickup that
+  resolves into one of the three gets it as well. Gold keeps its 5-100. The pickup label and the notice show the paid
+  amount, as before.
+- Not seen in play (the agent bridge does not list pickups on the map); `[ResourceSpawns] You receive N Wood!` in the
+  log shows it.
+
 ## Round 655: a 1px black outline round the Elf Town and the Lake of the Hydra entrances (2026-10-16)
 
 The user, with a world-map shot of the two: "Could we add a 1px black border round these 2 dungeon entrances. I just want

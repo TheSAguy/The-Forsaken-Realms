@@ -25,7 +25,7 @@ import java.util.Iterator;
  * across the OVERWORLD only (they exist solely as WorldStage actors, so towns/dungeons - separate
  * MapStage scenes - can never contain one by construction). The world starts seeded with a full
  * pool; each spawn carries its own lifetime (2-10 in-game days) and is replaced by a fresh random
- * one when it expires. Pickups award directly: Gold 5-100, Shards/Wood/Stone 2-10.
+ * one when it expires. Pickups award directly: Gold 5-100, Shards/Wood/Stone 17-25 (2-10 rolled + 15, round 656).
  * <p>
  * Opt-in per-plane via config.json ("resourceSpawnsEnabled": true), defaulting to off like every
  * other mod feature - inert on Shandalar and any other stock plane.
@@ -47,6 +47,10 @@ public class ResourceSpawns {
     private static final int MAX_LIFETIME_DAYS = 10;
     private static final int GOLD_MIN = 5, GOLD_MAX = 100;
     private static final int OTHER_MIN = 2, OTHER_MAX = 10;
+    // Round 656 (the user: "For all overworld resource spawns - Wood, Stone and Shards. Please add 15 to the base value. I
+    // want them to feel rewarding"): added to the rolled 2-10 when one is PICKED UP, so the spawns already lying on the map
+    // pay it too - 17-25, before Prospector. Gold keeps its 5-100.
+    private static final int OTHER_PICKUP_BONUS = 15;
     private static final int POI_CLEARANCE_TILES = 3; // don't spawn on/right next to a town/dungeon icon
     private static final int PLACEMENT_ATTEMPTS = 200; // per spawn - plenty for a mostly-open map
     private static final int NEAR_START_RADIUS_TILES = 12; // the guaranteed new-game spawn lands within this of the start
@@ -385,6 +389,8 @@ public class ResourceSpawns {
                     ? GOLD_MIN + world.getRandom().nextInt(GOLD_MAX - GOLD_MIN + 1)
                     : OTHER_MIN + world.getRandom().nextInt(OTHER_MAX - OTHER_MIN + 1);
         }
+        if (type == TYPE_SHARDS || type == TYPE_WOOD || type == TYPE_STONE)
+            value += OTHER_PICKUP_BONUS; // round 656
         value = Math.max(1, Math.round(value * Ascendance.prospectorFactor())); // round 494: Prospector
         String what;
         switch (type) {
