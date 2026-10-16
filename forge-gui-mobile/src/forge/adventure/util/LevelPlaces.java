@@ -18,9 +18,11 @@ import java.util.List;
  * <ul>
  * <li>A place with PointOfInterestData.appearsAtLevel is never made by world generation (no land lists it).</li>
  * <li>Once the character's Ascendance level reaches it - or, for a character without Ascendance (an older save, or
- * leveling switched off in Settings), once the day reaches TuningData.levelPlacesFallbackDay - it is put on the map in
- * its appearsInBiome land, at least KEEP_APART_TILES from the others, its ground uncovered, and the player is told
- * where each one lies.</li>
+ * leveling switched off in Settings), once the day reaches TuningData.levelPlacesFallbackDay for a level-20 place and
+ * that share of it for a lower one (round 669: level 10, day 30) - it is put on the map in its appearsInBiome land, at
+ * least KEEP_APART_TILES from the others, its ground uncovered, and the player is told where each one lies: the
+ * end-game ones (level 20 and up) as the realm's deepest places, the others as places word reaches you of.</li>
+ * <li>Round 669 adds nine mid-game Realm of Legends lairs and stalls at levels 5, 10 and 15.</li>
  * <li>The check runs on the day tick and whenever the overworld is entered (after a duel, a level-up, a load), so a save
  * from before this round gets them too. A world that already has a place is left alone - each comes once.</li>
  * </ul>
@@ -56,12 +58,23 @@ public final class LevelPlaces {
         return null;
     }
 
+    /** The level the fallback day stands for - a lower level comes that much sooner. */
+    private static final int FALLBACK_LEVEL = 20;
+    /** From this level on a place is end-game: the notice speaks of the realm's deepest places. */
+    private static final int ENDGAME_LEVEL = 20;
+
+    /** Without Ascendance: the day this place appears (0 = never). */
+    private static int fallbackDay(PointOfInterestData d) {
+        int day20 = Config.instance().getTuningData().levelPlacesFallbackDay;
+        return day20 <= 0 ? 0 : Math.max(1, (day20 * d.appearsAtLevel + FALLBACK_LEVEL - 1) / FALLBACK_LEVEL);
+    }
+
     /** Is this place's moment here for the current character? */
     private static boolean due(PointOfInterestData d, World world) {
         if (Ascendance.isActive())
             return Ascendance.level() >= d.appearsAtLevel;
-        int fallback = Config.instance().getTuningData().levelPlacesFallbackDay;
-        return fallback > 0 && world.getCurrentDay() >= fallback;
+        int day = fallbackDay(d);
+        return day > 0 && world.getCurrentDay() >= day;
     }
 
     /** The day tick and WorldStage.enter(): put every place whose moment has come on the map. */
@@ -75,10 +88,11 @@ public final class LevelPlaces {
         if (world == null)
             return "no world";
         StringBuilder sb = new StringBuilder(Ascendance.isActive() ? "Ascendance " + Ascendance.level()
-                : "no Ascendance - day " + world.getCurrentDay() + " of " + Config.instance().getTuningData().levelPlacesFallbackDay);
+                : "no Ascendance - day " + world.getCurrentDay());
         for (PointOfInterestData d : levelPlaces()) {
             PointOfInterest poi = onMap(world, d.name);
-            sb.append("; ").append(d.name).append(" (level ").append(d.appearsAtLevel).append("): ");
+            sb.append("; ").append(d.name).append(" (level ").append(d.appearsAtLevel)
+                    .append(Ascendance.isActive() ? "" : ", day " + fallbackDay(d)).append("): ");
             if (poi == null)
                 sb.append(due(d, world) ? "due" : "not yet");
             else
@@ -104,8 +118,8 @@ public final class LevelPlaces {
         }
         if (due.isEmpty())
             return "nothing due";
-        List<String> told = new ArrayList<>();
-        List<String> ways = new ArrayList<>();
+        List<String> told = new ArrayList<>(), ways = new ArrayList<>(); // end-game places
+        List<String> toldMid = new ArrayList<>(), waysMid = new ArrayList<>(); // round 669: the mid-game ones
         for (PointOfInterestData d : due) {
             String land = d.appearsInBiome == null || d.appearsInBiome.isEmpty() ? "waste" : d.appearsInBiome;
             PointOfInterest placed = world.addPointOfInterestInBiome(d, land, 0.2f, 0.6f, taken, KEEP_APART_TILES);
@@ -131,23 +145,39 @@ public final class LevelPlaces {
             if (stage.getPlayerSprite() != null)
                 where = WorldStage.compassDirection(placed.getPosition().x - stage.getPlayerSprite().getX(),
                         placed.getPosition().y - stage.getPlayerSprite().getY());
-            told.add(d.getDisplayName());
-            ways.add(where);
+            boolean endgame = d.appearsAtLevel >= ENDGAME_LEVEL;
+            (endgame ? told : toldMid).add(d.getDisplayName());
+            (endgame ? ways : waysMid).add(where);
             System.out.println("[TFR-LevelPlaces] " + d.name + " placed at tile " + tx + "," + ty + " in " + land
                     + " - " + (force ? "forced" : Ascendance.isActive() ? "Ascendance " + Ascendance.level() + " of "
-                    + d.appearsAtLevel : "no Ascendance, day " + world.getCurrentDay()) + " (" + why + ")");
+                    + d.appearsAtLevel : "no Ascendance, day " + world.getCurrentDay() + " of " + fallbackDay(d))
+                    + " (" + why + ")");
         }
-        if (told.isEmpty())
+        if (told.isEmpty() && toldMid.isEmpty())
             return "no spot found";
-        // one direction for all of them reads "(all to the west)"; otherwise each place carries its own
+        StringBuilder result = new StringBuilder("placed");
+        if (!toldMid.isEmpty()) {
+            String list = listWithWays(toldMid, waysMid);
+            GameHUD.getInstance().addNotification("[BLACK]Word reaches you of places you have never seen. New on your "
+                    + "map: " + list + ".", true);
+            result.append(' ').append(list);
+        }
+        if (!told.isEmpty()) {
+            String list = listWithWays(told, ways);
+            GameHUD.getInstance().addNotification("[BLACK]Your spark has grown too strong for the realm to hide its "
+                    + "deepest places from you. New on your map: " + list + " - the hardest duels in the realm.", true);
+            result.append(' ').append(list);
+        }
+        return result.toString();
+    }
+
+    /** "A, B and C (all to the west)" when they share one direction; otherwise "A (west), B (north) and C (east)". */
+    private static String listWithWays(List<String> names, List<String> ways) {
         boolean oneWay = !ways.get(0).isEmpty() && ways.stream().allMatch(ways.get(0)::equals);
         List<String> named = new ArrayList<>();
-        for (int i = 0; i < told.size(); i++)
-            named.add(told.get(i) + (oneWay || ways.get(i).isEmpty() ? "" : " (" + ways.get(i) + ")"));
-        String list = join(named) + (oneWay ? (told.size() > 1 ? " (all to the " : " (to the ") + ways.get(0) + ")" : "");
-        GameHUD.getInstance().addNotification("[BLACK]Your spark has grown too strong for the realm to hide its "
-                + "deepest places from you. New on your map: " + list + " - the hardest duels in the realm.", true);
-        return "placed " + list;
+        for (int i = 0; i < names.size(); i++)
+            named.add(names.get(i) + (oneWay || ways.get(i).isEmpty() ? "" : " (" + ways.get(i) + ")"));
+        return join(named) + (oneWay ? (names.size() > 1 ? " (all to the " : " (to the ") + ways.get(0) + ")" : "");
     }
 
     private static String join(List<String> parts) {

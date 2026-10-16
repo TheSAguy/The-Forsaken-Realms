@@ -3,7 +3,8 @@
   "Round 657 (the user: 'apply that [1px black outline] to all cave entrances that don't have one. Let's also make that the rule for entrances moving forward').",
   "outline: the entrance sprites that had no outline, outlined by dev-tools/poi_outline.py --apply (re-running skips any already outlined).",
   "reviewed_ok: entrance sprites whose outline score sits in 0.30-0.65 (a dark-outlined cave on a soft drop shadow scores there) that were checked by eye and already carry an outline - poi_outline.py --audit does not report them.",
-  "A NEW entrance sprite: run poi_outline.py --audit; outline what it reports, or add it here once checked."
+  "A NEW entrance sprite: run poi_outline.py --audit; outline what it reports, or add it here once checked.",
+  "Round 669: the Realm of Legends lairs' entrances - Building21 / Building42 / Castle / Slobad reviewed (a dark outline on a soft drop shadow), banditcave (Thieves' Hideout) and Siren (Skeleton Ship) outlined."
  ],
  "outline": [
   [
@@ -277,6 +278,14 @@
   [
    "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
    "E_Grove6_593"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "banditcave"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+   "Siren"
   ]
  ],
  "reviewed_ok": [
@@ -791,6 +800,22 @@
   [
    "../The Forsaken Realms/sprites/buildings.atlas",
    "Building84"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Building21"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Building42"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Castle"
+  ],
+  [
+   "../The Forsaken Realms/sprites/buildings.atlas",
+   "Slobad"
   ]
  ]
 }

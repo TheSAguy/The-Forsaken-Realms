@@ -1209,6 +1209,102 @@ WarlordNecklace
 ParadoxNecklace
   xy: 32, 832
   size: 16, 16
+BruteShield
+  xy: 240, 144
+  size: 16, 16
+TimeBomb
+  xy: 304, 928
+  size: 16, 16
+DecayedPants
+  xy: 128, 480
+  size: 16, 16
+HorriblePants
+  xy: 96, 464
+  size: 16, 16
+SpitefulHelm
+  xy: 80, 368
+  size: 16, 16
+MostlyKitten-ProofPants
+  xy: 0, 480
+  size: 16, 16
+Forebear'sBlade
+  xy: 256, 752
+  size: 16, 16
+Jandor'sSaddlebags
+  xy: 48, 512
+  size: 16, 16
+ArmorofWak-Wak
+  xy: 96, 80
+  size: 16, 16
+GladiatorArmor
+  xy: 160, 112
+  size: 16, 16
+ArmorofSafety
+  xy: 256, 48
+  size: 16, 16
+ArmorofSorrow
+  xy: 208, 0
+  size: 16, 16
+IcyArmor
+  xy: 176, 48
+  size: 16, 16
+OasisOutfit
+  xy: 288, 80
+  size: 16, 16
+RainbowArmor
+  xy: 192, 64
+  size: 16, 16
+Adventurer'sOutfit
+  xy: 64, 80
+  size: 16, 16
+ArmorofSerra
+  xy: 288, 0
+  size: 16, 16
+UnholyArmor
+  xy: 256, 96
+  size: 16, 16
+Seafarer'sOutfit
+  xy: 80, 80
+  size: 16, 16
+StrongholdArmor
+  xy: 160, 80
+  size: 16, 16
+VectisBoots
+  xy: 96, 176
+  size: 16, 16
+BaneAlleyBoots
+  xy: 32, 96
+  size: 16, 16
+SwindlerShoes
+  xy: 128, 96
+  size: 16, 16
+HighMerchant'sShirt
+  xy: 368, 32
+  size: 16, 16
+ThrowingKnife
+  xy: 176, 320
+  size: 16, 16
+WhispersteelDagger
+  xy: 192, 352
+  size: 16, 16
+ThoughtDissector
+  xy: 160, 592
+  size: 16, 16
+Skulker'sHood
+  xy: 48, 400
+  size: 16, 16
+TokenoftheDevil
+  xy: 160, 624
+  size: 16, 16
+TokenofChange
+  xy: 288, 640
+  size: 16, 16
+TokenofMunitions
+  xy: 128, 544
+  size: 16, 16
+TokenofNinjutsu
+  xy: 176, 304
+  size: 16, 16
 
 items.png
 size: 480,1008

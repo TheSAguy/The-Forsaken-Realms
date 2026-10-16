@@ -8250,6 +8250,294 @@
         "iconName":  "LandscapeSketchbook",
         "questItem":  true,
         "rarity":  "Common"
+    },
+    {
+        "name":  "Brute Shield",
+        "description":  "Darksteel Brute: an indestructible artifact. 3: it becomes a 2/2 creature until end of turn.",
+        "equipmentSlot":  "Left",
+        "iconName":  "BruteShield",
+        "cost":  5000,
+        "effect":  {"startBattleWithCard": ["Darksteel Brute"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Time Bomb",
+        "description":  "A time counter each upkeep. 1, T, sacrifice it: damage equal to its counters to each creature and player.",
+        "equipmentSlot":  "Left",
+        "iconName":  "TimeBomb",
+        "cost":  4000,
+        "effect":  {"startBattleWithCard": ["Time Bomb"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Decayed Pants",
+        "description":  "Two 2/2 decayed Zombie tokens - they can't block, and each is sacrificed after it attacks.",
+        "equipmentSlot":  "Legs",
+        "iconName":  "DecayedPants",
+        "cost":  3000,
+        "effect":  {"lifeModifier": -4, "startBattleWithCard": ["b_2_2_zombie_decayed", "b_2_2_zombie_decayed"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Horrible Pants",
+        "description":  "Two Horrible Hordes - 2/2 artifact Spirits with rampage 1.",
+        "equipmentSlot":  "Legs",
+        "iconName":  "HorriblePants",
+        "cost":  3000,
+        "effect":  {"changeStartCards": -1, "startBattleWithCard": ["Horrible Hordes", "Horrible Hordes"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Spiteful Helm",
+        "description":  "Spiteful Visions: every player draws an extra card each draw step and takes 1 damage for each card drawn.",
+        "equipmentSlot":  "Head",
+        "iconName":  "SpitefulHelm",
+        "cost":  4000,
+        "effect":  {"changeStartCards": -1, "startBattleWithCard": ["Spiteful Visions"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Mostly Kitten-Proof Pants",
+        "description":  "An extremely cute 3/3 flying Cat Dragon token.",
+        "equipmentSlot":  "Legs",
+        "iconName":  "MostlyKitten-ProofPants",
+        "cost":  5000,
+        "effect":  {"lifeModifier": -5, "startBattleWithCard": ["brg_3_3_cat_dragon_flying"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Forebear's Blade",
+        "description":  "Equip 3: +3/+0, vigilance and trample. When the creature dies, attach it to another creature you control.",
+        "equipmentSlot":  "Right",
+        "iconName":  "Forebear'sBlade",
+        "cost":  5000,
+        "effect":  {"lifeModifier": -6, "startBattleWithCard": ["Forebear's Blade"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Jandor's Saddlebags",
+        "description":  "An artifact - 3, T: untap target creature.",
+        "equipmentSlot":  "Right",
+        "iconName":  "Jandor'sSaddlebags",
+        "cost":  3000,
+        "effect":  {"startBattleWithCard": ["Jandor's Saddlebags"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Armor of Wak-Wak",
+        "description":  "Island of Wak-Wak - T: a creature with flying has base power 0 until end of turn. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "ArmorofWak-Wak",
+        "cost":  2500,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Island of Wak-Wak|ARN"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Gladiator Armor",
+        "description":  "Arena - 3, T: tap your creature and one of the opponent's (their choice); they fight. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "GladiatorArmor",
+        "cost":  2500,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Arena|PHPR"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Armor of Safety",
+        "description":  "Safe Haven - 2, T: exile one of your creatures; in your upkeep, sacrifice it to bring them all back. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "ArmorofSafety",
+        "cost":  2500,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Safe Haven|TSB"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Armor of Sorrow",
+        "description":  "Sorrow's Path - T: swap two of the opponent's blockers; 2 damage to you and each of your creatures. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "ArmorofSorrow",
+        "cost":  2500,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Sorrow's Path|DRK"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Icy Armor",
+        "description":  "Ice Floe - T: tap an attacker without flying; it stays tapped while Ice Floe does. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "IcyArmor",
+        "cost":  2500,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Ice Floe|ICE"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Oasis Outfit",
+        "description":  "Oasis - T: prevent the next 1 damage to a creature this turn. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "OasisOutfit",
+        "cost":  2500,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Oasis|ARN"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Rainbow Armor",
+        "description":  "Rainbow Vale - T: one mana of any color; the opponent gains control of it at end of turn.",
+        "equipmentSlot":  "Body",
+        "iconName":  "RainbowArmor",
+        "cost":  6000,
+        "effect":  {"changeStartCards": -1, "startBattleWithCard": ["Rainbow Vale|FEM"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Adventurer's Outfit",
+        "description":  "Adventurers' Guildhouse - your green legendary creatures can band with other legends. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "Adventurer'sOutfit",
+        "cost":  3000,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Adventurers' Guildhouse"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Armor of Serra",
+        "description":  "Cathedral of Serra - your white legendary creatures can band with other legends. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "ArmorofSerra",
+        "cost":  3000,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Cathedral of Serra"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Unholy Armor",
+        "description":  "Unholy Citadel - your black legendary creatures can band with other legends. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "UnholyArmor",
+        "cost":  3000,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Unholy Citadel"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Seafarer's Outfit",
+        "description":  "Seafarer's Quay - your blue legendary creatures can band with other legends. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "Seafarer'sOutfit",
+        "cost":  3000,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Seafarer's Quay"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Stronghold Armor",
+        "description":  "Mountain Stronghold - your red legendary creatures can band with other legends. Makes no mana.",
+        "equipmentSlot":  "Body",
+        "iconName":  "StrongholdArmor",
+        "cost":  3000,
+        "effect":  {"lifeModifier": 3, "startBattleWithCard": ["Mountain Stronghold"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Vectis Boots",
+        "description":  "Vectis Agents - a 4/3 artifact Rogue. UB: -2/-0 and it can't be blocked this turn.",
+        "equipmentSlot":  "Boots",
+        "iconName":  "VectisBoots",
+        "cost":  10000,
+        "effect":  {"lifeModifier": -5, "startBattleWithCard": ["Vectis Agents"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Bane Alley Boots",
+        "description":  "Bane Alley Broker - a 0/3 Rogue. T: draw, then exile a card face down. UB, T: return one of them to hand.",
+        "equipmentSlot":  "Boots",
+        "iconName":  "BaneAlleyBoots",
+        "cost":  25000,
+        "effect":  {"lifeModifier": -6, "startBattleWithCard": ["Bane Alley Broker"]},
+        "rarity":  "Mythic"
+    },
+    {
+        "name":  "Swindler Shoes",
+        "description":  "Tavern Swindler - a 2/2 Rogue. T, pay 3 life: flip a coin; win and you gain 6.",
+        "equipmentSlot":  "Boots",
+        "iconName":  "SwindlerShoes",
+        "cost":  5000,
+        "effect":  {"startBattleWithCard": ["Tavern Swindler"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "High Merchant's Shirt",
+        "description":  "High Market - T: add C. T, sacrifice a creature: gain 1 life.",
+        "equipmentSlot":  "Body",
+        "iconName":  "HighMerchant'sShirt",
+        "cost":  6000,
+        "effect":  {"changeStartCards": -1, "startBattleWithCard": ["High Market|MMQ"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Throwing Knife",
+        "description":  "Equip 2: +2/+0. When it attacks, you may sacrifice the knife: 2 damage to any target.",
+        "equipmentSlot":  "Right",
+        "iconName":  "ThrowingKnife",
+        "cost":  3000,
+        "effect":  {"startBattleWithCard": ["Throwing Knife"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Whispersteel Dagger",
+        "description":  "Equip 3: +2/+0. When it deals combat damage, you may cast a creature from that player's graveyard this turn.",
+        "equipmentSlot":  "Right",
+        "iconName":  "WhispersteelDagger",
+        "cost":  6000,
+        "effect":  {"lifeModifier": -6, "startBattleWithCard": ["Whispersteel Dagger"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Thought Dissector",
+        "description":  "X, T: the opponent reveals cards until an artifact or X cards; you take the artifact and sacrifice this.",
+        "equipmentSlot":  "Left",
+        "iconName":  "ThoughtDissector",
+        "cost":  4000,
+        "effect":  {"startBattleWithCard": ["Thought Dissector"]},
+        "rarity":  "Uncommon"
+    },
+    {
+        "name":  "Skulker's Hood",
+        "description":  "Behind the Scenes: your creatures have skulk. 4W: your creatures get +1/+1 until end of turn.",
+        "equipmentSlot":  "Head",
+        "iconName":  "Skulker'sHood",
+        "cost":  30000,
+        "effect":  {"startBattleWithCard": ["Behind the Scenes"]},
+        "rarity":  "Mythic"
+    },
+    {
+        "name":  "Token of the Devil",
+        "description":  "A 1/1 Devil token - when it dies, 1 damage to any target.",
+        "equipmentSlot":  "Token",
+        "iconName":  "TokenoftheDevil",
+        "cost":  1000,
+        "effect":  {"startBattleWithCard": ["r_1_1_devil_burn"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Token of Change",
+        "description":  "A colorless 1/1 Shapeshifter token with changeling - every creature type.",
+        "equipmentSlot":  "Token",
+        "iconName":  "TokenofChange",
+        "cost":  1000,
+        "effect":  {"startBattleWithCard": ["c_1_1_shapeshifter_changeling"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Token of Munitions",
+        "description":  "An artifact token - when it leaves the battlefield, 2 damage to any target.",
+        "equipmentSlot":  "Token",
+        "iconName":  "TokenofMunitions",
+        "cost":  1000,
+        "effect":  {"startBattleWithCard": ["munitions"]},
+        "rarity":  "Rare"
+    },
+    {
+        "name":  "Token of Ninjutsu",
+        "description":  "A blue 1/1 Ninja token that can't be blocked.",
+        "equipmentSlot":  "Token",
+        "iconName":  "TokenofNinjutsu",
+        "cost":  1000,
+        "effect":  {"startBattleWithCard": ["u_1_1_ninja_unblockable"]},
+        "rarity":  "Rare"
     }
 
 

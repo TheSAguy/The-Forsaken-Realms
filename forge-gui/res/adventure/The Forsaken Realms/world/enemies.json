@@ -170764,5 +170764,578 @@
         "spawnRate": 0,
         "tier": "Mythic",
         "difficulty": 3
+    },
+    {
+        "name": "Memnarch",
+        "sprite": "sprites/enemy/construct/golem_2.atlas",
+        "deck": [
+            "decks/legends/memnarch.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Brute Shield"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Memnarch, the Warden"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Darksteel Reactor"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Darksteel Juggernaut"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Coretapper"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Energy Chamber"
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 4,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "C",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 2,
+        "scale": 1.3
+    },
+    {
+        "name": "Horrible Spirit",
+        "sprite": "sprites/enemy/remake/gargoyle_2.atlas",
+        "deck": [
+            "decks/legends/page.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Page, Loose Leaf"
+            },
+            {
+                "type": "card",
+                "count": 11,
+                "cardName": "Horrible Hordes"
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "C",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 2,
+        "scale": 0.3991
+    },
+    {
+        "name": "Skeleton Shipmate",
+        "sprite": "sprites/enemy/undead/skeleton_2.atlas",
+        "deck": [
+            "decks/legends/skeleton_ship.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Skeleton Ship"
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "UB",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 2,
+        "scale": 1.3
+    },
+    {
+        "name": "Vogar",
+        "sprite": "sprites/enemy/giant/gravetitan.atlas",
+        "deck": [
+            "decks/legends/vogar.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Decayed Pants"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Vogar, Necropolis Tyrant"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Endless Ranks of the Dead"
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 4,
+                "addMaxCount": 8,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "B",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 2,
+        "scale": 1.0833
+    },
+    {
+        "name": "Balefang",
+        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "deck": [
+            "decks/legends/balefang.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Balefang the Unslayable"
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 4,
+                "addMaxCount": 8,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "R",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 2
+    },
+    {
+        "name": "Lord of Tresserhorn",
+        "sprite": "sprites/enemy/undead/lich_3.atlas",
+        "deck": [
+            "decks/legends/tresserhorns_lord.dck"
+        ],
+        "ai": "",
+        "speed": 45,
+        "life": 40,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Spiteful Helm"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Tresserhorn's Lord, Returned"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Lord of Tresserhorn"
+            },
+            {
+                "type": "deckCard",
+                "count": 4,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 3,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 500,
+                "addMaxCount": 2000
+            },
+            {
+                "type": "shards",
+                "count": 10,
+                "addMaxCount": 30
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "probability": 0.3,
+                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+            },
+            {
+                "type": "landSketchbookShop",
+                "probability": 0.3,
+                "count": 1
+            }
+        ],
+        "colors": "UBR",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 1.0833
+    },
+    {
+        "name": "Wasitora",
+        "sprite": "sprites/enemy/monstrosity/heartpiercer_manticore.atlas",
+        "deck": [
+            "decks/legends/wasitora.dck"
+        ],
+        "ai": "",
+        "speed": 45,
+        "flying": true,
+        "life": 40,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Mostly Kitten-Proof Pants"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Wasitora, Nekoru Queen"
+            },
+            {
+                "type": "deckCard",
+                "count": 4,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 3,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 500,
+                "addMaxCount": 2000
+            },
+            {
+                "type": "shards",
+                "count": 10,
+                "addMaxCount": 30
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "probability": 0.3,
+                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+            },
+            {
+                "type": "landSketchbookShop",
+                "probability": 0.3,
+                "count": 1
+            }
+        ],
+        "colors": "BRG",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 3,
+        "scale": 0.8229
+    },
+    {
+        "name": "Jandor",
+        "sprite": "sprites/enemy/humanoid/human/wizard/red_wiz2.atlas",
+        "deck": [
+            "decks/legends/jandor.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "item",
+                "count": 1,
+                "itemName": "Jandor's Saddlebags"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Jandor, Fortuned Traveler"
+            },
+            {
+                "type": "deckCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            },
+            {
+                "type": "card",
+                "probability": 0.1,
+                "count": 1,
+                "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+            },
+            {
+                "type": "card",
+                "count": 1,
+                "probability": 0.2,
+                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+            },
+            {
+                "type": "landSketchbookShop",
+                "probability": 0.1,
+                "count": 1
+            }
+        ],
+        "colors": "WRG",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 2,
+        "scale": 1.3
+    },
+    {
+        "name": "Gwendlyn Di Corci",
+        "sprite": "sprites/enemy/remake/rogue.atlas",
+        "deck": [
+            "decks/legends/gwendlyn_di_corci.dck"
+        ],
+        "ai": "",
+        "speed": 60,
+        "life": 30,
+        "rewards": [
+            {
+                "type": "card",
+                "count": 1,
+                "cardName": "Gwendlyn Di Corci"
+            },
+            {
+                "type": "randomCard",
+                "count": 2,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "randomCard",
+                "count": 4,
+                "addMaxCount": 8,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "count": 100,
+                "addMaxCount": 1000
+            },
+            {
+                "type": "shards",
+                "count": 5,
+                "addMaxCount": 15
+            }
+        ],
+        "colors": "UBR",
+        "spawnRate": 0,
+        "tier": "Rare",
+        "difficulty": 2,
+        "scale": 0.3171
+    },
+    {
+        "name": "Rashida Scalebane",
+        "sprite": "sprites/enemy/remake/shaman.atlas",
+        "deck": [
+            "decks/legends/mystery_list.dck"
+        ],
+        "ai": "",
+        "speed": 0,
+        "life": 1,
+        "rewards": [],
+        "colors": "C",
+        "spawnRate": 0,
+        "tier": "Common",
+        "difficulty": 0.1,
+        "scale": 0.3023
+    },
+    {
+        "name": "Auntie Blyte",
+        "sprite": "sprites/enemy/fiend/implarge.atlas",
+        "deck": [
+            "decks/legends/mystery_list.dck"
+        ],
+        "ai": "",
+        "speed": 0,
+        "life": 1,
+        "rewards": [],
+        "colors": "C",
+        "spawnRate": 0,
+        "tier": "Common",
+        "difficulty": 0.1,
+        "scale": 1.1818
     }
 ]

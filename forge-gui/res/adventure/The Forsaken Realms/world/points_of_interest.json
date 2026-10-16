@@ -6440,5 +6440,154 @@
 			"NoRotate",
 			"Legendary"
 		]
+	},
+	{
+		"name": "Darksteel Citadel",
+		"displayName": "Darksteel Citadel",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Castle",
+		"map": "../The Forsaken Realms/maps/map/cave/Darksteel_Citadel.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 10,
+		"appearsInBiome": "waste",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Horrible Factory",
+		"displayName": "Horrible Factory",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Building21",
+		"map": "../The Forsaken Realms/maps/map/cave/Horrible_Factory.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 10,
+		"appearsInBiome": "waste",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Skeleton Ship",
+		"displayName": "Skeleton Ship",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildingsbosses.atlas",
+		"sprite": "Siren",
+		"map": "../The Forsaken Realms/maps/map/merfolkpool/Skeleton_Ship.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 10,
+		"appearsInBiome": "blue",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Cursed Graveyard",
+		"displayName": "Cursed Graveyard",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "OtherGraveyard",
+		"map": "../The Forsaken Realms/maps/map/evilgrove/Cursed_Graveyard.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 10,
+		"appearsInBiome": "black",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Mtenda Mesa",
+		"displayName": "Mtenda Mesa",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Building38",
+		"map": "../The Forsaken Realms/maps/map/fort/Mtenda_Mesa.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 10,
+		"appearsInBiome": "white",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Tresserhorn Keep",
+		"displayName": "Tresserhorn Keep",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Slobad",
+		"map": "../The Forsaken Realms/maps/map/evilgrove/Tresserhorn_Keep.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 15,
+		"appearsInBiome": "black",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Nekoru Nest",
+		"displayName": "Nekoru Nest",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Building138",
+		"map": "../The Forsaken Realms/maps/map/barbariancamp/Nekoru_Nest.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 15,
+		"appearsInBiome": "red",
+		"questTags": [
+			"Hostile",
+			"NoRotate",
+			"Legendary"
+		]
+	},
+	{
+		"name": "Jandor's Caravan",
+		"displayName": "Jandor's Caravan",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
+		"sprite": "Building42",
+		"map": "../The Forsaken Realms/maps/map/grove/Jandors_Caravan.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 5,
+		"appearsInBiome": "green",
+		"questTags": [
+			"NoRotate"
+		]
+	},
+	{
+		"name": "Thieves' Hideout",
+		"displayName": "Thieves' Hideout",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/entrances_outlined.atlas",
+		"sprite": "banditcave",
+		"map": "../The Forsaken Realms/maps/map/barbariancamp/Thieves_Hideout.tmx",
+		"radiusFactor": 0.8,
+		"appearsAtLevel": 5,
+		"appearsInBiome": "red",
+		"questTags": [
+			"NoRotate"
+		]
 	}
 ]

@@ -1,5 +1,5 @@
 entrances_outlined.png
-size: 109,46
+size: 143,46
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -9,3 +9,6 @@ Kiora
 SvyeluniteTemple
   xy: 61, 0
   size: 48, 32
+banditcave
+  xy: 111, 0
+  size: 32, 32

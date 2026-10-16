@@ -117,6 +117,12 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 669): **LOCAL + UNRELEASED (code + data + art)** - nine Realm of Legends lairs and stalls by
+level (LevelPlaces): Jandor's Caravan + Thieves' Hideout at 5; Darksteel Citadel, Horrible Factory, Skeleton Ship,
+Cursed Graveyard, Mtenda Mesa at 10; Tresserhorn Keep, Nekoru Nest at 15. 11 enemies (gimmick decks kept via
+rebuild_gimmick), 31 items, 3 shops, Auntie Blyte's tokens at half the life and once each. `import_r669.py` +
+`rol_common.py`; poi_outline.py --apply fixed (upstream by page, the plane page grows). Seen in the agent game.
+
 ## STATE 2026-10-16 (round 668): **LOCAL + UNRELEASED (code + data + art)** - three end-game Realm of Legends dungeons:
 Hexhaven Tower (4 floors, the Ur-Sphinx), the Echoverse Overlay, the Theorist's Sanctum - 25 legends with their
 Commander decks rebuilt at 60 (`dev-tools/rol_import/rebuild_commander_deck.py`), 10 items, text refit to this realm.

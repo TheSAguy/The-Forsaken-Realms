@@ -205,10 +205,12 @@ def apply(root, list_path, write):
         if outline_score(tile) >= 0.9:
             continue  # already outlined (a re-run)
         new = outlined(tile)
-        if os.path.normpath(ap).startswith(os.path.normpath(common)):
+        path = os.path.normpath(os.path.join(os.path.dirname(ap), reg['page']))
+        # Round 669: upstream by its PAGE - this plane's sprites/buildings.atlas draws from adventure/common's
+        # buildings.png, and a first run here outlined banditcave on that upstream page in place
+        if path.startswith(os.path.normpath(common)):
             moved.append((atlas, sprite, reg, new))
             continue
-        path = os.path.join(os.path.dirname(ap), reg['page'])
         page = pages.setdefault(path, Image.open(path).convert('RGBA'))
         page.paste(new, reg['xy'])
         done += 1
@@ -220,13 +222,23 @@ def apply(root, list_path, write):
         page.save(path)
         print('wrote', path)
     if moved:
+        # Round 669: the page grows - the sprites already on it (round 657's Kiora and Svyelunite Temple) stay where
+        # they are, the new ones go to their right; it used to be rewritten with only this run's sprites
         tile_dir = os.path.join(plane, 'maps', 'tileset')
-        width = sum(m[3].width for m in moved) + 2 * (len(moved) - 1)
-        height = max(m[3].height for m in moved)
+        png_path = os.path.join(tile_dir, PLANE_PAGE + '.png')
+        atlas_path = os.path.join(tile_dir, PLANE_PAGE + '.atlas')
+        old = Image.open(png_path).convert('RGBA') if os.path.exists(png_path) else None
+        old_lines = io.open(atlas_path, encoding='utf-8').read().splitlines() if os.path.exists(atlas_path) else []
+        have = {ln.strip() for ln in old_lines[5:] if ln and not ln.startswith(' ')}
+        moved = [m for m in moved if m[1] not in have]
+        x = old.width + 2 if old else 0
+        width = x + sum(m[3].width for m in moved) + 2 * max(0, len(moved) - 1)
+        height = max([m[3].height for m in moved] + ([old.height] if old else []))
         sheet = Image.new('RGBA', (width, height), (0, 0, 0, 0))
+        if old:
+            sheet.paste(old, (0, 0))
         lines = [PLANE_PAGE + '.png', 'size: %d,%d' % (width, height), 'format: RGBA8888', 'filter: Nearest,Nearest',
-                 'repeat: none']
-        x = 0
+                 'repeat: none'] + [ln for ln in old_lines[5:] if ln.strip()]
         for atlas, sprite, reg, new in moved:
             sheet.paste(new, (x, 0))
             lines.append(sprite)

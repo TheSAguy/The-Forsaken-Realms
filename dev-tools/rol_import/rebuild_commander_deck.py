@@ -13,6 +13,8 @@ with a one-card [Commander] section. This builds the 60-card deck a TFR boss pla
     (a type on a quarter of its creatures). The commander goes in twice. Then copies down the ranking: 3 for the top 5,
     2 for the next 7, then 1 - a legendary card at most 2, the copy limit kept - until the spells are full. At most
     6 copies at mana value 6+, at most 11 at 5+; a creature deck (40% creatures in the pool) keeps 14 creatures.
+  - A one-card horde (a line of 10+ copies - Realm of Legends' "gimmick" decks) keeps its design: the legend twice,
+    the 99 scaled to 58 by their own shares (rebuild_gimmick).
   - Names keep the set code the source line printed (its art).
 
 usage: python rebuild_commander_deck.py <repo root> <source.dck> <out.dck> "<deck name>"
@@ -147,6 +149,8 @@ def rebuild(cards, src, out, title):
         entries.append(name)
     b = cards.builder
     cmd = commander[0][1] if commander else None
+    if max((n for n, _, _ in secs.get('main', [])), default=0) >= 10:
+        return rebuild_gimmick(cards, secs, cmd, code, dropped, out, title)
     cmd_types = b.cards.get(cmd, {}).get('sub', set()) if cmd else set()
     lands = [x for x in entries if b.cards[x]['main'] == 'Land' and not b.cards[x]['basic']]
     spells = [x for x in entries if b.cards[x]['main'] != 'Land']
@@ -251,6 +255,58 @@ def rebuild(cards, src, out, title):
     return dict(name=title, out=out, spells=sum(deck.values()), lands=sum(land_lines.values()),
                 creatures=creature_total(), avg_mv=round(avg, 2), curve=dict(sorted(curve.items())), colors=colors,
                 dropped=dropped, distinct=len(deck), commander=cmd, tribal=sorted(tribal))
+
+
+def rebuild_gimmick(cards, secs, cmd, code, dropped, out, title):
+    """A one-card horde (Realm of Legends' 1.077 "gimmick" decks: 99 Darksteel Citadels, 99 Horrible Hordes, 40
+    Walking Corpses...) is its design, not a pool to pick from: the legend twice, the 99 scaled to 58 by their own
+    shares (largest remainder), a line the rebuild may not use dropped and its share given to the rest."""
+    b = cards.builder
+    lines = [(n, name) for n, name, _ in secs.get('main', []) if cards.why_out(name) is None or b.cards.get(name, {}).get('basic')]
+    total = sum(n for n, _ in lines)
+    target = 58 if cmd else 60
+    shares = [(name, n * target / total) for n, name in lines]
+    counts = {name: int(s) for name, s in shares}
+    for name, s in sorted(shares, key=lambda x: -(x[1] - int(x[1])))[:target - sum(counts.values())]:
+        counts[name] += 1
+    # the horde itself (a line of 20+ in the 99) keeps its count; a side line keeps the copy limit, its excess going to
+    # the deck's basic land (Balefang's 10 Crimson Hellkites came out 6)
+    horde = {name for n, name in lines if n >= 20}
+    basic = next((name for _, name in lines if b.cards.get(name, {}).get('basic')), None)
+    for name, _ in shares:
+        c = b.cards.get(name, {})
+        cap = None if name in horde or c.get('basic') or c.get('any_number') else (c.get('deck_limit') or 4)
+        if cap is not None and counts[name] > cap:
+            extra = counts[name] - cap
+            counts[name] = cap
+            if basic:
+                counts[basic] += extra
+    deck = collections.OrderedDict()
+    if cmd and cards.why_out(cmd) is None:
+        deck[cmd] = 2
+    for name, _ in shares:
+        if counts[name]:
+            deck[name] = deck.get(name, 0) + counts[name]
+    out_lines = ['[metadata]', 'Name=%s' % title, '[Main]']
+    for x, k in deck.items():
+        cd = code.get(x)
+        out_lines.append('%d %s%s' % (k, x, '|' + cd.upper() if cd and not b.cards.get(x, {}).get('basic') else ''))
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    with open(out, 'w', encoding='utf-8', newline='\n') as fh:
+        fh.write('\n'.join(out_lines) + '\n')
+    spells = sum(k for x, k in deck.items() if b.cards[x]['main'] != 'Land')
+    pips = collections.Counter()
+    for x, k in deck.items():
+        for ch, p in cards.pips(x).items():
+            pips[ch] += p * k
+    for x, k in deck.items():  # a deck of basics shows its colors through them
+        for ch, nm in BASICS.items():
+            if x == nm:
+                pips[ch] += k
+    return dict(name=title, out=out, spells=spells, lands=sum(deck.values()) - spells,
+                creatures=sum(k for x, k in deck.items() if 'Creature' in (b.cards[x]['main'] or '')),
+                avg_mv=0, curve={}, colors=''.join(ch for ch in 'WUBRG' if pips.get(ch)), dropped=dropped,
+                distinct=len(deck), commander=cmd, tribal=[], gimmick=True)
 
 
 def main(argv):

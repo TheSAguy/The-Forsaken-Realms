@@ -1197,3 +1197,6 @@ frostbittencavern
 primaljungle
   xy: 0, 928
   size: 32, 32
+OtherGraveyard
+  xy: 256, 464
+  size: 32, 32

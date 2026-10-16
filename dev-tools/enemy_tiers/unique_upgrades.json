@@ -945,6 +945,12 @@
    0.97
   ]
  },
+ "decks/legends/balefang.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r669"
+ },
  "decks/legends/balmor.dck": {
   "old": "Ideas Unbound",
   "new": "Multiple Choice",
@@ -2577,6 +2583,12 @@
    1.0
   ]
  },
+ "decks/legends/gwendlyn_di_corci.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r669"
+ },
  "decks/legends/gyome.dck": {
   "old": "Crypt Incursion",
   "new": "Diabolic Edict",
@@ -3082,6 +3094,12 @@
    0.09,
    0.99
   ]
+ },
+ "decks/legends/jandor.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r669"
  },
  "decks/legends/jarad.dck": {
   "old": "Cemetery Tampering",
@@ -4265,6 +4283,12 @@
    0.97
   ]
  },
+ "decks/legends/memnarch.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r669"
+ },
  "decks/legends/miara_and_numa.dck": {
   "old": "Prowess of the Fair",
   "new": "Attrition",
@@ -5024,6 +5048,12 @@
    0.05,
    0.94
   ]
+ },
+ "decks/legends/page.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r669"
  },
  "decks/legends/palladia-mors.dck": {
   "old": "Meltdown",
@@ -6195,6 +6225,12 @@
    0.99
   ]
  },
+ "decks/legends/skeleton_ship.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r669"
+ },
  "decks/legends/skithiryx.dck": {
   "old": "Snake Cult Initiation",
   "new": "Sidequest: Hunt the Mark",
@@ -7199,6 +7235,12 @@
    1.0
   ]
  },
+ "decks/legends/tresserhorns_lord.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r669"
+ },
  "decks/legends/treva.dck": {
   "old": "Dovin's Veto",
   "new": "Absorb",
@@ -7655,6 +7697,12 @@
    0.91
   ]
  },
+ "decks/legends/vogar.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r669"
+ },
  "decks/legends/voja.dck": {
   "old": "Dire-Strain Rampage",
   "new": "Savage Twister",
@@ -7734,6 +7782,12 @@
    0.08,
    0.93
   ]
+ },
+ "decks/legends/wasitora.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r669"
  },
  "decks/legends/wayta.dck": {
   "old": "Cacophodon",

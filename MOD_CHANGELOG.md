@@ -14264,6 +14264,92 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 669: nine lairs and stalls from Realm of Legends 1.077 - they come with the player's level (2026-10-16)
+
+The user, after round 668's end-game dungeons: "You can do round 2 also" - the second batch of the 1.077 audit (the
+best lairs and the two friendly places), under the cross-plane import rules.
+`dev-tools/rol_import/import_r669.py` builds on the new `rol_common.py` writers.
+
+- **The places**. Each comes at its level through round 668's LevelPlaces. These are mid-game legends, so the levels
+  are 5, 10 and 15.
+
+  | Place | Land | Level | What is there |
+  |---|---|---|---|
+  | Jandor's Caravan | green | 5 | A friendly duel with Jandor, and two armor stalls |
+  | Thieves' Hideout | red | 5 | A rogues' stall, Auntie Blyte's tokens, Gwendlyn hidden at the back |
+  | Darksteel Citadel | waste | 10 | Memnarch's golem factory, Darksteel and Mirrodin boosters |
+  | Horrible Factory | waste | 10 | Seven patrolling Horrible Spirits |
+  | Skeleton Ship | blue | 10 | Seven identical skeletons, a Time Bomb |
+  | Cursed Graveyard | black | 10 | Vogar, hidden until it hunts you |
+  | Mtenda Mesa | white | 10 | Rashida Scalebane's call for help against Balefang. She pays Forebear's Blade |
+  | Tresserhorn Keep | black | 15 | The Lord of Tresserhorn |
+  | Nekoru Nest | red | 15 | Wasitora's nest |
+
+  - The lairs are tagged Hostile, NoRotate and Legendary. The two friendly places are tagged only NoRotate.
+  - **LevelPlaces**:
+    - Places below level 20 get their own notice ("Word reaches you of places you have never seen. New on your
+      map: ..."). The end-game wording is kept for level 20.
+    - Without Ascendance, the day scales with the level. Day 60 stands for level 20, so a level-10 place comes on
+      day 30.
+- **The maps**:
+  - Copied beside their Realm of Legends folders, with the treasure template repointed.
+  - Fixed: the manasight stone (now the spark), "lays thick" and the "seat of lava".
+  - Fixed: the caravan's unclosed quote, and Rashida's sentence, which had no verb.
+  - Digital-only cards swapped for paper ones:
+    - Balefang's Dragon Typhoon became Dragon Tempest.
+    - The hideout's Triumphant Getaway, Thieving Aven, Impetuous Lootmonger and Polterheist became Rogue's Gloves (on
+      Gwendlyn's side) or Gonti (in the chest), Thieving Magpie, Robber of the Rich and Thief of Sanity.
+  - "Mtenda Hunter", which Forge does not have, became Mtenda Herder. These are the herders who join you against
+    Balefang.
+  - **Auntie Blyte**:
+    - Her tokens cost half the max life Realm of Legends asked: 2, 2, 1 and 3. This plane's life totals are about
+      half of theirs.
+    - Each token can be bought only while you don't hold it.
+    - She now names "the Capitol's merchants", where this plane's tokens are sold, instead of "Capitols".
+- **The enemies**:
+  - Nine legends, with decks rebuilt at 60 cards.
+  - Realm of Legends' five one-card "gimmick" decks keep their design in the new `rebuild_gimmick`: 58 Darksteel
+    Citadels for Memnarch, 58 Horrible Hordes, Vogar's 26 Walking Corpses, Balefang's 26 Dragon's Approach, and
+    Gwendlyn's three basics.
+    - The legend goes in twice, and the 99 are scaled to 58 by their own shares.
+    - A side line keeps the 4-copy limit: Balefang's Crimson Hellkites are 4. The hordes break it on purpose
+      (deck_legality_audit lists Memnarch's, as it lists upstream's rat decks).
+  - Rashida and Auntie Blyte use the plane's talk-only deck (`mystery_list.dck`, like Adriana).
+  - Gwendlyn's Thief's Hat is left out: its card, Triumphant Getaway, is digital-only.
+  - Also: enemies.csv, round 644's ledger (`built-r669`), 10 scales and 3 footprints.
+- **The items** (31):
+  - **Drops**: Brute Shield, Time Bomb, Decayed / Horrible / Mostly Kitten-Proof Pants (Legs), Spiteful Helm (Head),
+    Forebear's Blade and Jandor's Saddlebags.
+  - **Jandor's two stalls** (JandorItems1 and JandorItems2, six armors each):
+    - The two lands that make mana follow the land-armor rule (one card fewer, no life): Rainbow Armor and High
+      Merchant's Shirt (the thieves' stall).
+    - The ten utility lands (Oasis, Arena, the banding lands...) make no mana, so they cost no card. Realm of Legends'
+      +7 to +10 life (and the opponents' -5) is cut to +3. For comparison, Steel Armor is +4 for 3,000.
+  - **The thieves' stall** (ThievesItems): eight items, with Skulker's Hood in Head.
+  - **Auntie's four tokens.**
+  - Descriptions are checked against the cards. The icons are regions the plane's items.png already held.
+- **Entrance outlines** (the round 657 rule):
+  - Reviewed: Building21, Building42, Castle and Slobad (a dark outline on a soft drop shadow).
+  - Outlined: the Siren (Skeleton Ship) on this plane's buildingsbosses page, and the bandit cave.
+  - The bandit cave is an upstream sprite: this plane's `sprites/buildings.atlas` draws from adventure/common's
+    buildings.png. It was copied onto `maps/tileset/entrances_outlined` and the hideout repointed there.
+  - `poi_outline.py --apply` had outlined it on that upstream page in place (reverted). It now decides by the PAGE,
+    not the atlas, and the plane page grows instead of being rewritten. The old rewrite would have dropped Kiora and
+    the Svyelunite Temple.
+  - `--audit` reports 0.
+- **Seen in the agent game** (a copy of the user's save, day 271):
+  - The two level-5 places appeared at level 5, and the other seven at level 15.
+  - Auntie Blyte sold the munitions token for 1 max life (13 to 12), then no longer offered it.
+  - Jandor's first stall showed its six armors at 2,500 with icons. Jandor's duel loaded his deck with the caravan's
+    animals in play.
+  - Rashida's dialog hid "The dragons are slain" until the flag is set.
+  - No exception in the log.
+  - Not seen:
+    - The thieves' stall screen (it sits inside a wall cell, and the agent's walker stops one step short; a player
+      walks into it).
+    - The Balefang duel and its allies (Rashida keeps catching the agent's walker on the path).
+    - The other lairs' duels.
+
 ## Round 668: three end-game legend dungeons from Realm of Legends 1.077 - they appear at level 20 (2026-10-16)
 
 The user, after the audit of Realm of Legends' 1.077/1.078 update: "Let's do the First batch: the three legend
