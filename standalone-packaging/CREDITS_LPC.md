@@ -10651,14 +10651,14 @@ sources.
 - Plate [torso_armour_plate] - torso/armour/plate/female: JaidynReiman, bluecarrot16, Michael Whitlock (bigbeargames), Matthew Krohn (makrohn), Johannes Sjölund (wulax); OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-combat-armor-for-women, http://opengameart.org/content/lpc-clothing-updates
 - Khenra [heads_khenra] - head/heads/khenra: The Forsaken Realms; CC0
 
-## Oketra (round 666) - composed sprite CC-BY
+## Oketra (round 666, redone in round 672) - composed sprite CC-BY
 
 - Normal [weapon_ranged_bow_normal] - weapon/ranged/bow/normal: Johannes Sjölund (wulax), Pierre Vigier (pvigier); CC-BY 4.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-walk-animations-for-bows
 - Quiver [quiver] - quiver: Johannes Sjölund (wulax); OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 - Body Color [body] - body/bodies/female: Benjamin K. Smith (BenCreating), bluecarrot16, TheraHedwig, Evert, MuffinElZangano, Durrani, Pierre Vigier (pvigier), ElizaWy, Matthew Krohn (makrohn), Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-ladies, https://opengameart.org/content/lpc-7-womens-shirts, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-revised-character-basics, https://gitlab.com/vagabondgame/lpc-characters, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani, https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle
 - Slit dress [dress_slit] - dress/slit: Nila122, ElizaWy, bluecarrot16; OGA-BY 3.0; https://opengameart.org/content/lpc-clothes-and-hair, http://opengameart.org/content/lpc-clothing-updates
 - Mantal [shoulders_mantal] - shoulders/mantal/thin: bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-pirates
-- Khenra [heads_khenra] - head/heads/khenra: The Forsaken Realms; CC0
+- Cat [heads_cat] - head/heads/cat: The Forsaken Realms; CC0
 
 ## Nantuko Guard (round 667) - composed sprite CC-BY-SA
 

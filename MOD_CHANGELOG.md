@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 672: Oketra gets a cat head (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_672.py`. This is a redo
+from list 3's F104.
+
+- **Why**: round 666 dressed Oketra on the khenra jackal head recolored white, as a stand-in. Oketra the True is a cat in
+  the cards.
+- **The head**: `heads_cat` comes from the user's ChatGPT sheet (`tools/lpc/make_image_head.py`), in the khenra's
+  style. It is a regal white cat's head with blue eyes, a gold band with a lapis gem, gold ear rings and a gold-and-lapis
+  collar on the shoulders. Shrinking turned the thin gold bands brown, so the head tool's gold rule paints them back.
+- **The body**: `all.lpcr.dove`, the LPC skin nearest the head's cream fur. Ivory read pink and `fur_white` blue-grey.
+- **The outfit** is round 666's: a white slit gown, a gold mantle, a quiver and a bow.
+- **Files**:
+  - `sprites/enemy/remake/oketra.atlas` and `.png` rebuilt.
+  - enemies.json: Oketra's scale (0.3095; `enemy_scale.py --write` changed no other enemy).
+  - `CREDITS_LPC.md` regenerated: Oketra keeps her place, headed "round 666, redone in round 672". The cat head is
+    credited to The Forsaken Realms (CC0). The count stays 1007; no author changes.
+  - `CREDITS.md` is unchanged.
+- **Checks**:
+  - enemies.json against HEAD: exactly Oketra, only `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - `sprite_artifact_audit.py`: no flags on the rebuilt atlas.
+  - The Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 671: the chain pendants get the bottom of their chain back (2026-10-16)
 
 The user, of Piper's Charm in a shop: "It looks like this necklace got clipped off."

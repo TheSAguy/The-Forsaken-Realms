@@ -1,5 +1,5 @@
 oketra.png
-size: 594,649
+size: 594,622
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,173 +8,173 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 66, 65
-  footprint: 11, 2, 44, 62
+  size: 66, 62
+  footprint: 11, 2, 44, 59
 Idle
   xy: 66, 64
-  size: 66, 65
+  size: 66, 62
 Idle
   xy: 132, 64
-  size: 66, 65
+  size: 66, 62
 Idle
   xy: 198, 64
-  size: 66, 65
+  size: 66, 62
 Walk
-  xy: 0, 129
-  size: 66, 65
+  xy: 0, 126
+  size: 66, 62
 Walk
-  xy: 66, 129
-  size: 66, 65
+  xy: 66, 126
+  size: 66, 62
 Walk
-  xy: 132, 129
-  size: 66, 65
+  xy: 132, 126
+  size: 66, 62
 Walk
-  xy: 198, 129
-  size: 66, 65
+  xy: 198, 126
+  size: 66, 62
 Walk
-  xy: 264, 129
-  size: 66, 65
+  xy: 264, 126
+  size: 66, 62
 Walk
-  xy: 330, 129
-  size: 66, 65
+  xy: 330, 126
+  size: 66, 62
 Walk
-  xy: 396, 129
-  size: 66, 65
+  xy: 396, 126
+  size: 66, 62
 Walk
-  xy: 462, 129
-  size: 66, 65
+  xy: 462, 126
+  size: 66, 62
 Attack
-  xy: 0, 194
-  size: 66, 65
+  xy: 0, 188
+  size: 66, 62
 Attack
-  xy: 66, 194
-  size: 66, 65
+  xy: 66, 188
+  size: 66, 62
 Attack
-  xy: 132, 194
-  size: 66, 65
+  xy: 132, 188
+  size: 66, 62
 Attack
-  xy: 198, 194
-  size: 66, 65
+  xy: 198, 188
+  size: 66, 62
 Attack
-  xy: 264, 194
-  size: 66, 65
+  xy: 264, 188
+  size: 66, 62
 Attack
-  xy: 330, 194
-  size: 66, 65
+  xy: 330, 188
+  size: 66, 62
 Attack
-  xy: 396, 194
-  size: 66, 65
+  xy: 396, 188
+  size: 66, 62
 Attack
-  xy: 462, 194
-  size: 66, 65
+  xy: 462, 188
+  size: 66, 62
 Hit
-  xy: 0, 259
-  size: 66, 65
+  xy: 0, 250
+  size: 66, 62
 Hit
-  xy: 66, 259
-  size: 66, 65
+  xy: 66, 250
+  size: 66, 62
 Hit
-  xy: 132, 259
-  size: 66, 65
+  xy: 132, 250
+  size: 66, 62
 Hit
-  xy: 198, 259
-  size: 66, 65
+  xy: 198, 250
+  size: 66, 62
 Death
-  xy: 0, 324
-  size: 66, 65
+  xy: 0, 312
+  size: 66, 62
 Death
-  xy: 66, 324
-  size: 66, 65
+  xy: 66, 312
+  size: 66, 62
 Death
-  xy: 132, 324
-  size: 66, 65
+  xy: 132, 312
+  size: 66, 62
 Death
-  xy: 198, 324
-  size: 66, 65
+  xy: 198, 312
+  size: 66, 62
 Death
-  xy: 264, 324
-  size: 66, 65
+  xy: 264, 312
+  size: 66, 62
 Death
-  xy: 330, 324
-  size: 66, 65
+  xy: 330, 312
+  size: 66, 62
 Death
-  xy: 396, 324
-  size: 66, 65
+  xy: 396, 312
+  size: 66, 62
 Death
-  xy: 462, 324
-  size: 66, 65
+  xy: 462, 312
+  size: 66, 62
 Death
-  xy: 528, 324
-  size: 66, 65
+  xy: 528, 312
+  size: 66, 62
 IdleUp
-  xy: 0, 389
-  size: 66, 65
+  xy: 0, 374
+  size: 66, 62
 IdleUp
-  xy: 66, 389
-  size: 66, 65
+  xy: 66, 374
+  size: 66, 62
 IdleUp
-  xy: 132, 389
-  size: 66, 65
+  xy: 132, 374
+  size: 66, 62
 IdleUp
-  xy: 198, 389
-  size: 66, 65
+  xy: 198, 374
+  size: 66, 62
 IdleDown
-  xy: 0, 454
-  size: 66, 65
+  xy: 0, 436
+  size: 66, 62
 IdleDown
-  xy: 66, 454
-  size: 66, 65
+  xy: 66, 436
+  size: 66, 62
 IdleDown
-  xy: 132, 454
-  size: 66, 65
+  xy: 132, 436
+  size: 66, 62
 IdleDown
-  xy: 198, 454
-  size: 66, 65
+  xy: 198, 436
+  size: 66, 62
 WalkUp
-  xy: 0, 519
-  size: 66, 65
+  xy: 0, 498
+  size: 66, 62
 WalkUp
-  xy: 66, 519
-  size: 66, 65
+  xy: 66, 498
+  size: 66, 62
 WalkUp
-  xy: 132, 519
-  size: 66, 65
+  xy: 132, 498
+  size: 66, 62
 WalkUp
-  xy: 198, 519
-  size: 66, 65
+  xy: 198, 498
+  size: 66, 62
 WalkUp
-  xy: 264, 519
-  size: 66, 65
+  xy: 264, 498
+  size: 66, 62
 WalkUp
-  xy: 330, 519
-  size: 66, 65
+  xy: 330, 498
+  size: 66, 62
 WalkUp
-  xy: 396, 519
-  size: 66, 65
+  xy: 396, 498
+  size: 66, 62
 WalkUp
-  xy: 462, 519
-  size: 66, 65
+  xy: 462, 498
+  size: 66, 62
 WalkDown
-  xy: 0, 584
-  size: 66, 65
+  xy: 0, 560
+  size: 66, 62
 WalkDown
-  xy: 66, 584
-  size: 66, 65
+  xy: 66, 560
+  size: 66, 62
 WalkDown
-  xy: 132, 584
-  size: 66, 65
+  xy: 132, 560
+  size: 66, 62
 WalkDown
-  xy: 198, 584
-  size: 66, 65
+  xy: 198, 560
+  size: 66, 62
 WalkDown
-  xy: 264, 584
-  size: 66, 65
+  xy: 264, 560
+  size: 66, 62
 WalkDown
-  xy: 330, 584
-  size: 66, 65
+  xy: 330, 560
+  size: 66, 62
 WalkDown
-  xy: 396, 584
-  size: 66, 65
+  xy: 396, 560
+  size: 66, 62
 WalkDown
-  xy: 462, 584
-  size: 66, 65
+  xy: 462, 560
+  size: 66, 62
