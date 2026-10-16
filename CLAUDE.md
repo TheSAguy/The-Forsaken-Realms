@@ -113,6 +113,8 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 655): **LOCAL + UNRELEASED (art)** - a 1px black outline inside the regions of the two painted green entrances, E_ElfTown and E_Grove7 (Lake of the Hydra), on dungeon_entrances_2.png (`dev-tools/poi_outline.py`; Grove7's feathered fringe cut at alpha 128). The user is to judge it in play.
+
 ## STATE 2026-10-16 (round 654): **LOCAL + UNRELEASED (code)** - territory no longer spreads across the mountains: World.claimWastelandRing() claims a won tile only when it touches (4 ways) the claimant's land (or is within 2 tiles of the claim's center) - barrier and water are nobody's, so claims go round ranges; a flood after the scan fills what becomes reachable. Old saves: World.dropDisconnectedTerritory() once (save key territoryContiguity 654) returns land cut off from its owner's places to wasteland. Seen on a copy of the user's slot 2 (day 270-282).
 
 ## STATE 2026-10-16 (round 652): **LOCAL + UNRELEASED (data)** - Nest Warden's Armor returns from Realm of Legends (Nesting Grounds, a plain land - it was removed in August with the Commander robes): Body, Uncommon, the land-armor rule (one card fewer in the opening hand; RoL's +2 life dropped), Red Equipment shop. `dev-tools/rol_items/import_r652.py`. Worn and dueled in the agent game.

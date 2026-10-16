@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 655: a 1px black outline round the Elf Town and the Lake of the Hydra entrances (2026-10-16)
+
+The user, with a world-map shot of the two: "Could we add a 1px black border round these 2 dungeon entrances. I just want
+to see if it makes them look better." Both are painted sprites without the dark outline every pixel-art entrance
+around them carries: `E_ElfTown` (ElfTown, green) and `E_Grove7` (Grove7, "The Lake of the Hydra", the green hard boss
+lair - feathered alpha edges, 201 alpha levels).
+
+- `dev-tools/poi_outline.py <atlas> <region>... [--preview out.png] [--write]`: the outline is drawn INSIDE each region,
+  so its size, position and footprint stay as they were. Silhouette = alpha >= 128 (Grove7's feathered fringe below
+  that is cut, so the edge is crisp); outline = every transparent pixel 4-adjacent to it, plus the silhouette's own
+  pixels on the region's border where there is no room outside (Grove7 fills its 48x47 region on three sides, Elf
+  Town's bottom row touches its edge); silhouette pixels fully opaque; the outline pure black.
+- `maps/tileset/dungeon_entrances_2.png` edited in place (only those two regions). To undo:
+  `git checkout <this commit>~1 -- "forge-gui/res/adventure/The Forsaken Realms/maps/tileset/dungeon_entrances_2.png"`.
+- Previewed at 8x and game size (sent to the user). Not seen in play yet - the user tests it.
+
 ## Round 654: territory no longer spreads across the mountains - claims are contiguous (2026-10-16)
 
 The user, with a History map: green and blue "spread across/under the mountains to take territory that was not really
