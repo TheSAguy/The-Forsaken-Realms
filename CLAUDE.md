@@ -117,6 +117,12 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 666): **LOCAL + UNRELEASED (art + data)** - Sala (heads_octopus), the Homarid, the Mindskinner,
+Ragost, Rikala and the four FEM Homarids (heads_homarid + red/green/purple/yellow recolors), the Khenra Warrior, Hazoret
+and Oketra (heads_khenra black/crimson/white) - drawn LPC heads from the user's ChatGPT sheets; generator
+`lpc_selections/make_666.py`. enemies.json 12 paths + scales, CREDITS_LPC.md + CREDITS.md (976 LPC enemies). Not seen in
+play.
+
 ## STATE 2026-10-16 (round 665): **LOCAL + UNRELEASED (engine merge)** - ENGINE = THE 10.16 DAILY (upstream
 `64569999b8b`, base install E:\GAMES\Forge_2 build 2026-10-16 18:22:56; engineBuildVersion 2.0.16-SNAPSHOT-10.16).
 No conflicts (merge `cfdcbd982c6`). Upstream: an AI think-time bar + one shared AI deadline (attacks too), local

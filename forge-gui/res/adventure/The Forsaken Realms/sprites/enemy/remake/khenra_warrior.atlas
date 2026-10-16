@@ -1,0 +1,174 @@
+khenra_warrior.png
+size: 774,739
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 86, 75
+  footprint: 17, 2, 52, 62
+Idle
+  xy: 86, 64
+  size: 86, 75
+Idle
+  xy: 172, 64
+  size: 86, 75
+Idle
+  xy: 258, 64
+  size: 86, 75
+Walk
+  xy: 0, 139
+  size: 86, 75
+Walk
+  xy: 86, 139
+  size: 86, 75
+Walk
+  xy: 172, 139
+  size: 86, 75
+Walk
+  xy: 258, 139
+  size: 86, 75
+Walk
+  xy: 344, 139
+  size: 86, 75
+Walk
+  xy: 430, 139
+  size: 86, 75
+Walk
+  xy: 516, 139
+  size: 86, 75
+Walk
+  xy: 602, 139
+  size: 86, 75
+Attack
+  xy: 0, 214
+  size: 86, 75
+Attack
+  xy: 86, 214
+  size: 86, 75
+Attack
+  xy: 172, 214
+  size: 86, 75
+Attack
+  xy: 258, 214
+  size: 86, 75
+Attack
+  xy: 344, 214
+  size: 86, 75
+Attack
+  xy: 430, 214
+  size: 86, 75
+Hit
+  xy: 0, 289
+  size: 86, 75
+Hit
+  xy: 86, 289
+  size: 86, 75
+Hit
+  xy: 172, 289
+  size: 86, 75
+Hit
+  xy: 258, 289
+  size: 86, 75
+Death
+  xy: 0, 364
+  size: 86, 75
+Death
+  xy: 86, 364
+  size: 86, 75
+Death
+  xy: 172, 364
+  size: 86, 75
+Death
+  xy: 258, 364
+  size: 86, 75
+Death
+  xy: 344, 364
+  size: 86, 75
+Death
+  xy: 430, 364
+  size: 86, 75
+Death
+  xy: 516, 364
+  size: 86, 75
+Death
+  xy: 602, 364
+  size: 86, 75
+Death
+  xy: 688, 364
+  size: 86, 75
+IdleUp
+  xy: 0, 439
+  size: 86, 75
+IdleUp
+  xy: 86, 439
+  size: 86, 75
+IdleUp
+  xy: 172, 439
+  size: 86, 75
+IdleUp
+  xy: 258, 439
+  size: 86, 75
+IdleDown
+  xy: 0, 514
+  size: 86, 75
+IdleDown
+  xy: 86, 514
+  size: 86, 75
+IdleDown
+  xy: 172, 514
+  size: 86, 75
+IdleDown
+  xy: 258, 514
+  size: 86, 75
+WalkUp
+  xy: 0, 589
+  size: 86, 75
+WalkUp
+  xy: 86, 589
+  size: 86, 75
+WalkUp
+  xy: 172, 589
+  size: 86, 75
+WalkUp
+  xy: 258, 589
+  size: 86, 75
+WalkUp
+  xy: 344, 589
+  size: 86, 75
+WalkUp
+  xy: 430, 589
+  size: 86, 75
+WalkUp
+  xy: 516, 589
+  size: 86, 75
+WalkUp
+  xy: 602, 589
+  size: 86, 75
+WalkDown
+  xy: 0, 664
+  size: 86, 75
+WalkDown
+  xy: 86, 664
+  size: 86, 75
+WalkDown
+  xy: 172, 664
+  size: 86, 75
+WalkDown
+  xy: 258, 664
+  size: 86, 75
+WalkDown
+  xy: 344, 664
+  size: 86, 75
+WalkDown
+  xy: 430, 664
+  size: 86, 75
+WalkDown
+  xy: 516, 664
+  size: 86, 75
+WalkDown
+  xy: 602, 664
+  size: 86, 75

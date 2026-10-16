@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 666: Sala, the homarids and the khenra on drawn LPC heads (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_666.py`. Three more head parts
+come from the user's ChatGPT head sheets (`tools/lpc/make_image_head.py`), with colored variants by
+`tools/lpc/recolor_head_variant.py`.
+
+- **heads_octopus**: Sala, Deck Boss (list 2's F85). An octopus-folk pirate captain in a tricorne with a pink feather and
+  a tentacle beard. The head is anchored below the eyes, so the tentacles end mid-torso. Sala wears his card's red coat
+  and a saber.
+- **heads_homarid**: a reddish-brown lobster head with eyestalks, antennae and mouth feelers, and four recolors (red,
+  green, purple, yellow) for list 3's F117-120 and F122.
+  - The FEM Homarids of four colors carry tridents.
+  - The Homarid is brown, also with a trident.
+  - Ragost, the gastronaut, is red, with an apron and a knife.
+  - Rikala, the Homarid King, is green, with a cape and a gold trident.
+  - The Mindskinner is purple, with a tattered cape and bare claws.
+- **heads_khenra**: a black jackal in the Anubis style, with a gold band, gold ear rings and a striped gold collar that
+  sits on the shoulders (list 3's F104).
+  - The Khenra Warrior wears it black, with a scimitar.
+  - Hazoret wears it crimson, in gold armor, with a spear.
+  - Oketra wears it white, in a white gown, with a bow.
+  - Black fur has no hue to shift, so the recolor tool learned a lightness ramp that keeps the outline and the fangs.
+- **Files**:
+  - 12 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 12 sprite paths and scales (0.29-0.87).
+  - `CREDITS_LPC.md` regenerated: 1004 characters, additions only. The heads are credited to The Forsaken Realms (CC0).
+  - `CREDITS.md`: the LPC bullet (976 enemies).
+- **Checks**:
+  - enemies.json against HEAD: exactly these 12, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags nothing; `sprite_footprints.py --write` gave 11 of the 12 a footprint.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 665: the engine to the 10.16 daily (upstream `64569999b8b`) (2026-10-16)
 
 The user installed the official 10.16 snapshot (`forge-installer-2.0.16-SNAPSHOT-10.16.jar`) into `E:\GAMES\Forge_2`:

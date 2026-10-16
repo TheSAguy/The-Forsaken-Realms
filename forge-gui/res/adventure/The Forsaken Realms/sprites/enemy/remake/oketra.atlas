@@ -1,0 +1,180 @@
+oketra.png
+size: 594,649
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 66, 65
+  footprint: 11, 2, 44, 62
+Idle
+  xy: 66, 64
+  size: 66, 65
+Idle
+  xy: 132, 64
+  size: 66, 65
+Idle
+  xy: 198, 64
+  size: 66, 65
+Walk
+  xy: 0, 129
+  size: 66, 65
+Walk
+  xy: 66, 129
+  size: 66, 65
+Walk
+  xy: 132, 129
+  size: 66, 65
+Walk
+  xy: 198, 129
+  size: 66, 65
+Walk
+  xy: 264, 129
+  size: 66, 65
+Walk
+  xy: 330, 129
+  size: 66, 65
+Walk
+  xy: 396, 129
+  size: 66, 65
+Walk
+  xy: 462, 129
+  size: 66, 65
+Attack
+  xy: 0, 194
+  size: 66, 65
+Attack
+  xy: 66, 194
+  size: 66, 65
+Attack
+  xy: 132, 194
+  size: 66, 65
+Attack
+  xy: 198, 194
+  size: 66, 65
+Attack
+  xy: 264, 194
+  size: 66, 65
+Attack
+  xy: 330, 194
+  size: 66, 65
+Attack
+  xy: 396, 194
+  size: 66, 65
+Attack
+  xy: 462, 194
+  size: 66, 65
+Hit
+  xy: 0, 259
+  size: 66, 65
+Hit
+  xy: 66, 259
+  size: 66, 65
+Hit
+  xy: 132, 259
+  size: 66, 65
+Hit
+  xy: 198, 259
+  size: 66, 65
+Death
+  xy: 0, 324
+  size: 66, 65
+Death
+  xy: 66, 324
+  size: 66, 65
+Death
+  xy: 132, 324
+  size: 66, 65
+Death
+  xy: 198, 324
+  size: 66, 65
+Death
+  xy: 264, 324
+  size: 66, 65
+Death
+  xy: 330, 324
+  size: 66, 65
+Death
+  xy: 396, 324
+  size: 66, 65
+Death
+  xy: 462, 324
+  size: 66, 65
+Death
+  xy: 528, 324
+  size: 66, 65
+IdleUp
+  xy: 0, 389
+  size: 66, 65
+IdleUp
+  xy: 66, 389
+  size: 66, 65
+IdleUp
+  xy: 132, 389
+  size: 66, 65
+IdleUp
+  xy: 198, 389
+  size: 66, 65
+IdleDown
+  xy: 0, 454
+  size: 66, 65
+IdleDown
+  xy: 66, 454
+  size: 66, 65
+IdleDown
+  xy: 132, 454
+  size: 66, 65
+IdleDown
+  xy: 198, 454
+  size: 66, 65
+WalkUp
+  xy: 0, 519
+  size: 66, 65
+WalkUp
+  xy: 66, 519
+  size: 66, 65
+WalkUp
+  xy: 132, 519
+  size: 66, 65
+WalkUp
+  xy: 198, 519
+  size: 66, 65
+WalkUp
+  xy: 264, 519
+  size: 66, 65
+WalkUp
+  xy: 330, 519
+  size: 66, 65
+WalkUp
+  xy: 396, 519
+  size: 66, 65
+WalkUp
+  xy: 462, 519
+  size: 66, 65
+WalkDown
+  xy: 0, 584
+  size: 66, 65
+WalkDown
+  xy: 66, 584
+  size: 66, 65
+WalkDown
+  xy: 132, 584
+  size: 66, 65
+WalkDown
+  xy: 198, 584
+  size: 66, 65
+WalkDown
+  xy: 264, 584
+  size: 66, 65
+WalkDown
+  xy: 330, 584
+  size: 66, 65
+WalkDown
+  xy: 396, 584
+  size: 66, 65
+WalkDown
+  xy: 462, 584
+  size: 66, 65

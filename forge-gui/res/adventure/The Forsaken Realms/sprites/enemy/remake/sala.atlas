@@ -1,0 +1,174 @@
+sala.png
+size: 738,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 59
+  footprint: 24, 2, 35, 56
+Idle
+  xy: 82, 64
+  size: 82, 59
+Idle
+  xy: 164, 64
+  size: 82, 59
+Idle
+  xy: 246, 64
+  size: 82, 59
+Walk
+  xy: 0, 123
+  size: 82, 59
+Walk
+  xy: 82, 123
+  size: 82, 59
+Walk
+  xy: 164, 123
+  size: 82, 59
+Walk
+  xy: 246, 123
+  size: 82, 59
+Walk
+  xy: 328, 123
+  size: 82, 59
+Walk
+  xy: 410, 123
+  size: 82, 59
+Walk
+  xy: 492, 123
+  size: 82, 59
+Walk
+  xy: 574, 123
+  size: 82, 59
+Attack
+  xy: 0, 182
+  size: 82, 59
+Attack
+  xy: 82, 182
+  size: 82, 59
+Attack
+  xy: 164, 182
+  size: 82, 59
+Attack
+  xy: 246, 182
+  size: 82, 59
+Attack
+  xy: 328, 182
+  size: 82, 59
+Attack
+  xy: 410, 182
+  size: 82, 59
+Hit
+  xy: 0, 241
+  size: 82, 59
+Hit
+  xy: 82, 241
+  size: 82, 59
+Hit
+  xy: 164, 241
+  size: 82, 59
+Hit
+  xy: 246, 241
+  size: 82, 59
+Death
+  xy: 0, 300
+  size: 82, 59
+Death
+  xy: 82, 300
+  size: 82, 59
+Death
+  xy: 164, 300
+  size: 82, 59
+Death
+  xy: 246, 300
+  size: 82, 59
+Death
+  xy: 328, 300
+  size: 82, 59
+Death
+  xy: 410, 300
+  size: 82, 59
+Death
+  xy: 492, 300
+  size: 82, 59
+Death
+  xy: 574, 300
+  size: 82, 59
+Death
+  xy: 656, 300
+  size: 82, 59
+IdleUp
+  xy: 0, 359
+  size: 82, 59
+IdleUp
+  xy: 82, 359
+  size: 82, 59
+IdleUp
+  xy: 164, 359
+  size: 82, 59
+IdleUp
+  xy: 246, 359
+  size: 82, 59
+IdleDown
+  xy: 0, 418
+  size: 82, 59
+IdleDown
+  xy: 82, 418
+  size: 82, 59
+IdleDown
+  xy: 164, 418
+  size: 82, 59
+IdleDown
+  xy: 246, 418
+  size: 82, 59
+WalkUp
+  xy: 0, 477
+  size: 82, 59
+WalkUp
+  xy: 82, 477
+  size: 82, 59
+WalkUp
+  xy: 164, 477
+  size: 82, 59
+WalkUp
+  xy: 246, 477
+  size: 82, 59
+WalkUp
+  xy: 328, 477
+  size: 82, 59
+WalkUp
+  xy: 410, 477
+  size: 82, 59
+WalkUp
+  xy: 492, 477
+  size: 82, 59
+WalkUp
+  xy: 574, 477
+  size: 82, 59
+WalkDown
+  xy: 0, 536
+  size: 82, 59
+WalkDown
+  xy: 82, 536
+  size: 82, 59
+WalkDown
+  xy: 164, 536
+  size: 82, 59
+WalkDown
+  xy: 246, 536
+  size: 82, 59
+WalkDown
+  xy: 328, 536
+  size: 82, 59
+WalkDown
+  xy: 410, 536
+  size: 82, 59
+WalkDown
+  xy: 492, 536
+  size: 82, 59
+WalkDown
+  xy: 574, 536
+  size: 82, 59
