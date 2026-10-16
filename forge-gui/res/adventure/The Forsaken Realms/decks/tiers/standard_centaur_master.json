@@ -1,0 +1,12 @@
+{
+ "name": "Centaur",
+ "template": {
+  "count": 40,
+  "colors": [
+   "White",
+   "Green"
+  ],
+  "tribe": "Centaur",
+  "rares": 0.55
+ }
+}

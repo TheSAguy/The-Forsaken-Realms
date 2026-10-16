@@ -1,0 +1,13 @@
+{
+ "name": "Furnace Goblin",
+ "template": {
+  "count": 40,
+  "colors": [
+   "Red"
+  ],
+  "tribe": "Phyrexian",
+  "tribeCards": 1.0,
+  "tribeSynergyCards": 0.35,
+  "rares": 0.55
+ }
+}

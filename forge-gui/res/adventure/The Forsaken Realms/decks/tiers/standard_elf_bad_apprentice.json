@@ -1,0 +1,11 @@
+{
+ "name": "Elf bad",
+ "template": {
+  "count": 60,
+  "colors": [
+   "Green"
+  ],
+  "tribe": "Elf",
+  "rares": 0.1
+ }
+}

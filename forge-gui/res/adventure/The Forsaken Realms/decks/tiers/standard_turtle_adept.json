@@ -1,0 +1,13 @@
+{
+ "name": "Turtle",
+ "template": {
+  "count": 50,
+  "colors": [
+   "Blue"
+  ],
+  "tribe": "Turtle",
+  "tribeCards": 0.5,
+  "tribeSynergyCards": 0.2,
+  "rares": 0.3
+ }
+}

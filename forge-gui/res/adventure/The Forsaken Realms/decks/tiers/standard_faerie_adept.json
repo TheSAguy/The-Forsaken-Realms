@@ -1,0 +1,14 @@
+{
+ "name": "Faerie",
+ "template": {
+  "count": 50,
+  "colors": [
+   "Blue",
+   "Black",
+   "Green"
+  ],
+  "tribe": "Faerie",
+  "tribeCards": 0.5,
+  "rares": 0.3
+ }
+}

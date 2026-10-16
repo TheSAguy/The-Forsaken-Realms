@@ -1,0 +1,13 @@
+{
+ "name": "Fox",
+ "template": {
+  "count": 40,
+  "colors": [
+   "White"
+  ],
+  "tribe": "Fox",
+  "tribeCards": 0.5,
+  "tribeSynergyCards": 0.2,
+  "rares": 0.55
+ }
+}

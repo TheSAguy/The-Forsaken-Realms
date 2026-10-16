@@ -1,0 +1,11 @@
+{
+ "name": "Merfolk mid",
+ "template": {
+  "count": 40,
+  "colors": [
+   "blue"
+  ],
+  "tribe": "Merfolk",
+  "rares": 0.55
+ }
+}

@@ -1,0 +1,10 @@
+{
+ "name": "Golem bad",
+ "template": {
+  "count": 40,
+  "colors": [],
+  "tribe": "Golem",
+  "tribeCards": 0.8,
+  "rares": 0.55
+ }
+}

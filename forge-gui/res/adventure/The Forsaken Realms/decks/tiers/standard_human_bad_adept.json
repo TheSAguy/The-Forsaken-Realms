@@ -1,0 +1,13 @@
+{
+ "name": "Human bad",
+ "template": {
+  "count": 50,
+  "colors": [
+   "White",
+   "Black",
+   "Red"
+  ],
+  "tribe": "Human",
+  "rares": 0.3
+ }
+}

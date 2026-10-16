@@ -1,0 +1,12 @@
+{
+ "name": "Troll",
+ "template": {
+  "count": 50,
+  "colors": [
+   "Red",
+   "Green"
+  ],
+  "tribe": "Troll",
+  "rares": 0.3
+ }
+}

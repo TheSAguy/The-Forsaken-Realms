@@ -1,0 +1,14 @@
+{
+ "name": "Shaman",
+ "template": {
+  "count": 50,
+  "colors": [
+   "Red",
+   "Green"
+  ],
+  "tribe": "Shaman",
+  "tribeCards": 1.0,
+  "tribeSynergyCards": 0.2,
+  "rares": 0.3
+ }
+}

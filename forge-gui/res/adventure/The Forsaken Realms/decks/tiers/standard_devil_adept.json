@@ -1,0 +1,12 @@
+{
+ "name": "Devil",
+ "template": {
+  "count": 50,
+  "colors": [
+   "Red"
+  ],
+  "tribe": "Devil",
+  "tribeCards": 1.0,
+  "rares": 0.3
+ }
+}

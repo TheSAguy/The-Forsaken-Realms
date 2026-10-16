@@ -1,0 +1,14 @@
+{
+ "name": "Snake",
+ "template": {
+  "count": 40,
+  "colors": [
+   "Green",
+   "Blue"
+  ],
+  "tribe": "Snake",
+  "tribeCards": 1.0,
+  "tribeSynergyCards": 0.2,
+  "rares": 0.55
+ }
+}

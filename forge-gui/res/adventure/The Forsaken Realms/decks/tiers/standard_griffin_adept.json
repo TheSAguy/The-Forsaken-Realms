@@ -1,0 +1,11 @@
+{
+ "name": "Griffin",
+ "template": {
+  "count": 50,
+  "colors": [
+   "White"
+  ],
+  "tribe": "Griffin",
+  "rares": 0.3
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "name": "Djinn",
+ "template": {
+  "count": 40,
+  "colors": [
+   "Blue",
+   "Red"
+  ],
+  "tribe": "Djinn",
+  "tribeCards": 0.7,
+  "tribeSynergyCards": 0.0,
+  "rares": 0.55
+ }
+}

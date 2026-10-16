@@ -1,0 +1,11 @@
+{
+ "name": "Bird_Blue",
+ "template": {
+  "count": 50,
+  "colors": [
+   "Blue"
+  ],
+  "tribe": "Bird",
+  "rares": 0.3
+ }
+}

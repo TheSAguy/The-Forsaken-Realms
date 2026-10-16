@@ -1,0 +1,14 @@
+{
+ "name": "Monk",
+ "template": {
+  "count": 40,
+  "colors": [
+   "White",
+   "Red"
+  ],
+  "tribe": "Monk",
+  "tribeCards": 1.0,
+  "tribeSynergyCards": 0.2,
+  "rares": 0.55
+ }
+}

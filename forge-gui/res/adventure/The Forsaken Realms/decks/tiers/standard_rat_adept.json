@@ -1,0 +1,11 @@
+{
+ "name": "Rat",
+ "template": {
+  "count": 50,
+  "colors": [
+   "Black"
+  ],
+  "tribe": "Rat",
+  "rares": 0.3
+ }
+}

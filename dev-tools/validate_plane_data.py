@@ -860,6 +860,31 @@ deck_refs = set()
 for e in enemies or []:
     for d in e.get("deck") or []:
         deck_refs.add(d)
+# Round 643: the tier families (world/enemy_tiers.json, dev-tools/enemy_tiers/make_tier_families.py) - every name an
+# enemy, one Apprentice / Adept / Master triple per deck of its own, three lives; their decks join the checks below.
+tiers_path = os.path.join(PLANE, "world", "enemy_tiers.json")
+if os.path.exists(tiers_path):
+    by_name = {e.get("name"): e for e in enemies or []}
+    families = load_json(tiers_path)[0] or {}
+    for name, fam in families.items():
+        e = by_name.get(name)
+        if e is None:
+            issue("tier-family", "enemy_tiers.json: '%s' is not in enemies.json" % name)
+            continue
+        if len(fam.get("life") or []) != 3:
+            issue("tier-family", "enemy_tiers.json: '%s' needs three lives" % name)
+        triples = fam.get("decks") or []
+        if len(triples) != len(e.get("deck") or []):
+            issue("tier-family", "enemy_tiers.json: '%s' has %d deck triples for %d decks - rerun make_tier_families.py"
+                  % (name, len(triples), len(e.get("deck") or [])))
+        for t in triples:
+            if len(t) != 3:
+                issue("tier-family", "enemy_tiers.json: '%s' triple %s is not three decks" % (name, t))
+            for d in t:
+                if not resolve_deck(d):
+                    issue("ref-deck", "enemy_tiers.json: '%s' deck '%s' not found" % (name, d))
+                deck_refs.add(d)
+    counts["tier-families"] = len(families)
 counts["enemy-deck-refs"] = len(deck_refs)
 empty_decks = 0
 for d in sorted(deck_refs):

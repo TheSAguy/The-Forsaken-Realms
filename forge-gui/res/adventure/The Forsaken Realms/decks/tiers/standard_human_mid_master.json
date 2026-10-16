@@ -1,0 +1,12 @@
+{
+ "name": "Human mid",
+ "template": {
+  "count": 40,
+  "colors": [
+   "White",
+   "Black"
+  ],
+  "tribe": "Human",
+  "rares": 0.55
+ }
+}

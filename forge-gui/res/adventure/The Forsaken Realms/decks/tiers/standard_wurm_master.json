@@ -1,0 +1,12 @@
+{
+ "name": "Wurm",
+ "template": {
+  "count": 40,
+  "colors": [
+   "Green"
+  ],
+  "tribe": "Wurm",
+  "tribeCards": 1.0,
+  "rares": 0.55
+ }
+}

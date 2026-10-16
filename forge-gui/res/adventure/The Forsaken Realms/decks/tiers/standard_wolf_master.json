@@ -1,0 +1,13 @@
+{
+ "name": "Wolf",
+ "template": {
+  "count": 40,
+  "colors": [
+   "Green"
+  ],
+  "tribe": "Wolf",
+  "tribeCards": 1.0,
+  "tribeSynergyCards": 0.2,
+  "rares": 0.55
+ }
+}
