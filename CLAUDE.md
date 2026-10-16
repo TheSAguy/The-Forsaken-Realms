@@ -91,6 +91,10 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-15 (round 645): **LOCAL + UNRELEASED (art + data)** - Sol'Kanar gets the user's hand-made swamp demon
+(Pixelate; generator `pixelate/solkanar/convert.sh` + the new `pixelate/clean_strays.py`; the attack ends on the impact).
+enemies.json 1 path + scale. Not packaged at commit (a peer's uncommitted round was in the tree). Not seen in play.
+
 ## STATE 2026-10-15 (round 641): **LOCAL + UNRELEASED (art + data)** - seven more LPC enemies (Taong Tuod, Bloodied
 Skeleton, Tikbalang with a hand-drawn horse head part, Syokoy, Malakat, Busaw, Horror of Tibalt as a devil; generator
 `lpc_selections/make_641.py` + `tools/lpc/make_horse_head.py`). enemies.json 7 paths + scales, CREDITS_LPC.md 912

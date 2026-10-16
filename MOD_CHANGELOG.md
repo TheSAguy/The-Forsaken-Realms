@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 645: Sol'Kanar gets the user's hand-made swamp demon (2026-10-15)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/solkanar/convert.sh`. This is B69 of the
+low-quality list: Sol'Kanar on the stock `fiend/akaname` sprite. The Horror of Tibalt, which shared it, became an LPC
+devil in round 641.
+
+- **The art**:
+  - The user made one still in ChatGPT from two Sol'Kanar cards: a hulking demon of black mud and dark bark with hanging
+    roots, curled ram horns, crimson eyes and glowing crimson cracks, and a thorned bone club. It faces the viewer.
+  - The roots' olive was kept off the key's green by hand. Then four Kling clips and Pixelate sheets.
+- **Trims**:
+  - Kling's watermark left a mark at the bottom of every attack frame, away from its usual corner. The generator's new
+    `pixelate/clean_strays.py` clears every piece apart from the creature (it had stretched the cells to 253 px).
+  - The smash raised a dust cloud that fills the frame and never settles, so the attack ends on the impact.
+  - The death ends on the mud scatter, not on its last lone specks.
+- **Files**:
+  - 1 new atlas under `sprites/enemy/remake/`.
+  - enemies.json: the sprite path and scale (0.1566).
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly this one, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit's 3 "review" flags are the death's last frames: the scattered body under the flying mud, which the
+    audit reads as the art's first run.
+  - The Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+- **Source files**: moved to the Art Library repository, `Units/Custom/Sol'Kanar`.
+
 ## Round 641: seven more LPC enemies - a stump-man, a horse-headed hunter, a fish-man, a devil (2026-10-15)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_641.py`. From the remaining

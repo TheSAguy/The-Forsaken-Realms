@@ -1,0 +1,156 @@
+sol_kanar.png
+size: 2886,1109
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 222, 209
+  footprint: 49, 75, 124, 113
+Idle
+  xy: 222, 64
+  size: 222, 209
+Idle
+  xy: 444, 64
+  size: 222, 209
+Idle
+  xy: 666, 64
+  size: 222, 209
+Idle
+  xy: 888, 64
+  size: 222, 209
+Idle
+  xy: 1110, 64
+  size: 222, 209
+Idle
+  xy: 1332, 64
+  size: 222, 209
+Idle
+  xy: 1554, 64
+  size: 222, 209
+Idle
+  xy: 1776, 64
+  size: 222, 209
+Idle
+  xy: 1998, 64
+  size: 222, 209
+Idle
+  xy: 2220, 64
+  size: 222, 209
+Idle
+  xy: 2442, 64
+  size: 222, 209
+Walk
+  xy: 0, 273
+  size: 222, 209
+Walk
+  xy: 222, 273
+  size: 222, 209
+Walk
+  xy: 444, 273
+  size: 222, 209
+Walk
+  xy: 666, 273
+  size: 222, 209
+Walk
+  xy: 888, 273
+  size: 222, 209
+Walk
+  xy: 1110, 273
+  size: 222, 209
+Walk
+  xy: 1332, 273
+  size: 222, 209
+Walk
+  xy: 1554, 273
+  size: 222, 209
+Attack
+  xy: 0, 482
+  size: 222, 209
+Attack
+  xy: 222, 482
+  size: 222, 209
+Attack
+  xy: 444, 482
+  size: 222, 209
+Attack
+  xy: 666, 482
+  size: 222, 209
+Attack
+  xy: 888, 482
+  size: 222, 209
+Attack
+  xy: 1110, 482
+  size: 222, 209
+Attack
+  xy: 1332, 482
+  size: 222, 209
+Attack
+  xy: 1554, 482
+  size: 222, 209
+Attack
+  xy: 1776, 482
+  size: 222, 209
+Attack
+  xy: 1998, 482
+  size: 222, 209
+Attack
+  xy: 2220, 482
+  size: 222, 209
+Attack
+  xy: 2442, 482
+  size: 222, 209
+Hit
+  xy: 0, 691
+  size: 222, 209
+Hit
+  xy: 222, 691
+  size: 222, 209
+Hit
+  xy: 444, 691
+  size: 222, 209
+Hit
+  xy: 666, 691
+  size: 222, 209
+Death
+  xy: 0, 900
+  size: 222, 209
+Death
+  xy: 222, 900
+  size: 222, 209
+Death
+  xy: 444, 900
+  size: 222, 209
+Death
+  xy: 666, 900
+  size: 222, 209
+Death
+  xy: 888, 900
+  size: 222, 209
+Death
+  xy: 1110, 900
+  size: 222, 209
+Death
+  xy: 1332, 900
+  size: 222, 209
+Death
+  xy: 1554, 900
+  size: 222, 209
+Death
+  xy: 1776, 900
+  size: 222, 209
+Death
+  xy: 1998, 900
+  size: 222, 209
+Death
+  xy: 2220, 900
+  size: 222, 209
+Death
+  xy: 2442, 900
+  size: 222, 209
+Death
+  xy: 2664, 900
+  size: 222, 209

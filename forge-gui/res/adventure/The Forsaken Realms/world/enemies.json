@@ -89341,7 +89341,7 @@
     },
     {
         "name": "Sol'Kanar",
-        "sprite": "sprites/enemy/fiend/akaname.atlas",
+        "sprite": "sprites/enemy/remake/sol_kanar.atlas",
         "deck": [
             "decks/legends/sol'kanar.dck"
         ],
@@ -89410,7 +89410,7 @@
         "spawnRate": 1,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.8876
+        "scale": 0.1566
     },
     {
         "name": "Varina",
