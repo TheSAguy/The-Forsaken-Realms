@@ -113,6 +113,11 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (rounds 649 + 650): **LOCAL + UNRELEASED (art + data)** - the user's hand-made Pixelate art for the
+Homarid Spawning Bed (649: a compact egg clutch hatching a homarid, stationary, full-square portrait) and Tiyanak (650:
+the faceless spear shapeshifter; second attack take, ends on the thrust). Generator `pixelate/homarid_spawning_bed/` +
+`pixelate/tiyanak/` + the new `pixelate/key_still.py`. enemies.json 2 paths + scales. Not seen in play.
+
 ## STATE 2026-10-15 (round 647): **LOCAL + UNRELEASED (code)** - a dungeon's own ordinary placements of family creatures roll their rank on the first visit by the week's tier row in the land (EnemyTiers.rollPlacement from MapStage, before DungeonUpgrades; recorded in the roster as Name|Tier). Seen in the agent game (Skull Cave).
 
 ## STATE 2026-10-15 (round 646): **LOCAL + UNRELEASED (art)** - Yorvo, Jetmir and Ertai dressed again as LPC (D80,

@@ -142165,7 +142165,7 @@
     },
     {
         "name": "Tiyanak",
-        "sprite": "sprites/enemy/basic/monster/tiyanak.atlas",
+        "sprite": "sprites/enemy/remake/tiyanak.atlas",
         "deck": [
             "decks/standard/tiyanak.dck"
         ],
@@ -142224,7 +142224,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 1.1818
+        "scale": 0.1757
     },
     {
         "name": "Hex Witch",
@@ -167066,8 +167066,8 @@
     {
         "name": "FEM Homarid Spawning Bed",
         "nameOverride": "Homarid Spawning Bed",
-        "sprite": "sprites/enemy/fallen_empires/svyelunite/homarid_spawning_bed.atlas",
-        "scale": 0.2854,
+        "sprite": "sprites/enemy/remake/fem_homarid_spawning_bed.atlas",
+        "scale": 0.1831,
         "deck": [
             "decks/standard/fallen_empires_svyelunite_homarid_spawning_bed.dck"
         ],

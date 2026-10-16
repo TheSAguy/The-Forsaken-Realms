@@ -1,0 +1,147 @@
+tiyanak.png
+size: 3276,919
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 252, 171
+  footprint: 99, 47, 65, 114
+Idle
+  xy: 252, 64
+  size: 252, 171
+Idle
+  xy: 504, 64
+  size: 252, 171
+Idle
+  xy: 756, 64
+  size: 252, 171
+Idle
+  xy: 1008, 64
+  size: 252, 171
+Idle
+  xy: 1260, 64
+  size: 252, 171
+Idle
+  xy: 1512, 64
+  size: 252, 171
+Idle
+  xy: 1764, 64
+  size: 252, 171
+Idle
+  xy: 2016, 64
+  size: 252, 171
+Idle
+  xy: 2268, 64
+  size: 252, 171
+Idle
+  xy: 2520, 64
+  size: 252, 171
+Idle
+  xy: 2772, 64
+  size: 252, 171
+Walk
+  xy: 0, 235
+  size: 252, 171
+Walk
+  xy: 252, 235
+  size: 252, 171
+Walk
+  xy: 504, 235
+  size: 252, 171
+Walk
+  xy: 756, 235
+  size: 252, 171
+Walk
+  xy: 1008, 235
+  size: 252, 171
+Walk
+  xy: 1260, 235
+  size: 252, 171
+Walk
+  xy: 1512, 235
+  size: 252, 171
+Walk
+  xy: 1764, 235
+  size: 252, 171
+Attack
+  xy: 0, 406
+  size: 252, 171
+Attack
+  xy: 252, 406
+  size: 252, 171
+Attack
+  xy: 504, 406
+  size: 252, 171
+Attack
+  xy: 756, 406
+  size: 252, 171
+Attack
+  xy: 1008, 406
+  size: 252, 171
+Attack
+  xy: 1260, 406
+  size: 252, 171
+Attack
+  xy: 1512, 406
+  size: 252, 171
+Attack
+  xy: 1764, 406
+  size: 252, 171
+Attack
+  xy: 2016, 406
+  size: 252, 171
+Hit
+  xy: 0, 577
+  size: 252, 171
+Hit
+  xy: 252, 577
+  size: 252, 171
+Hit
+  xy: 504, 577
+  size: 252, 171
+Hit
+  xy: 756, 577
+  size: 252, 171
+Death
+  xy: 0, 748
+  size: 252, 171
+Death
+  xy: 252, 748
+  size: 252, 171
+Death
+  xy: 504, 748
+  size: 252, 171
+Death
+  xy: 756, 748
+  size: 252, 171
+Death
+  xy: 1008, 748
+  size: 252, 171
+Death
+  xy: 1260, 748
+  size: 252, 171
+Death
+  xy: 1512, 748
+  size: 252, 171
+Death
+  xy: 1764, 748
+  size: 252, 171
+Death
+  xy: 2016, 748
+  size: 252, 171
+Death
+  xy: 2268, 748
+  size: 252, 171
+Death
+  xy: 2520, 748
+  size: 252, 171
+Death
+  xy: 2772, 748
+  size: 252, 171
+Death
+  xy: 3024, 748
+  size: 252, 171

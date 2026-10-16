@@ -1,0 +1,168 @@
+fem_homarid_spawning_bed.png
+size: 2834,1009
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 218, 189
+  footprint: 57, 75, 106, 111
+Idle
+  xy: 218, 64
+  size: 218, 189
+Idle
+  xy: 436, 64
+  size: 218, 189
+Idle
+  xy: 654, 64
+  size: 218, 189
+Idle
+  xy: 872, 64
+  size: 218, 189
+Idle
+  xy: 1090, 64
+  size: 218, 189
+Idle
+  xy: 1308, 64
+  size: 218, 189
+Idle
+  xy: 1526, 64
+  size: 218, 189
+Idle
+  xy: 1744, 64
+  size: 218, 189
+Idle
+  xy: 1962, 64
+  size: 218, 189
+Idle
+  xy: 2180, 64
+  size: 218, 189
+Idle
+  xy: 2398, 64
+  size: 218, 189
+Walk
+  xy: 0, 253
+  size: 218, 189
+Walk
+  xy: 218, 253
+  size: 218, 189
+Walk
+  xy: 436, 253
+  size: 218, 189
+Walk
+  xy: 654, 253
+  size: 218, 189
+Walk
+  xy: 872, 253
+  size: 218, 189
+Walk
+  xy: 1090, 253
+  size: 218, 189
+Walk
+  xy: 1308, 253
+  size: 218, 189
+Walk
+  xy: 1526, 253
+  size: 218, 189
+Walk
+  xy: 1744, 253
+  size: 218, 189
+Walk
+  xy: 1962, 253
+  size: 218, 189
+Walk
+  xy: 2180, 253
+  size: 218, 189
+Walk
+  xy: 2398, 253
+  size: 218, 189
+Attack
+  xy: 0, 442
+  size: 218, 189
+Attack
+  xy: 218, 442
+  size: 218, 189
+Attack
+  xy: 436, 442
+  size: 218, 189
+Attack
+  xy: 654, 442
+  size: 218, 189
+Attack
+  xy: 872, 442
+  size: 218, 189
+Attack
+  xy: 1090, 442
+  size: 218, 189
+Attack
+  xy: 1308, 442
+  size: 218, 189
+Attack
+  xy: 1526, 442
+  size: 218, 189
+Attack
+  xy: 1744, 442
+  size: 218, 189
+Attack
+  xy: 1962, 442
+  size: 218, 189
+Attack
+  xy: 2180, 442
+  size: 218, 189
+Attack
+  xy: 2398, 442
+  size: 218, 189
+Hit
+  xy: 0, 631
+  size: 218, 189
+Hit
+  xy: 218, 631
+  size: 218, 189
+Hit
+  xy: 436, 631
+  size: 218, 189
+Hit
+  xy: 654, 631
+  size: 218, 189
+Death
+  xy: 0, 820
+  size: 218, 189
+Death
+  xy: 218, 820
+  size: 218, 189
+Death
+  xy: 436, 820
+  size: 218, 189
+Death
+  xy: 654, 820
+  size: 218, 189
+Death
+  xy: 872, 820
+  size: 218, 189
+Death
+  xy: 1090, 820
+  size: 218, 189
+Death
+  xy: 1308, 820
+  size: 218, 189
+Death
+  xy: 1526, 820
+  size: 218, 189
+Death
+  xy: 1744, 820
+  size: 218, 189
+Death
+  xy: 1962, 820
+  size: 218, 189
+Death
+  xy: 2180, 820
+  size: 218, 189
+Death
+  xy: 2398, 820
+  size: 218, 189
+Death
+  xy: 2616, 820
+  size: 218, 189

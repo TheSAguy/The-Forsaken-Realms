@@ -14264,6 +14264,55 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 650: Tiyanak gets the user's hand-made faceless shapeshifter (2026-10-16)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/tiyanak/convert.sh`. This is A3 of the
+low-quality list: Tiyanak was on a 14 px Basic sprite.
+
+- **The art**:
+  - The user made one still in ChatGPT from the card Tiyanak, Lord of Faces: a tall, pale blue-white shapeshifter whose
+    face is one round toothed maw, with white feather ruffs, a feathered arm, a red hand, gold bands and a gold spear.
+  - The generator's new `pixelate/key_still.py` put the still on the exact key: ChatGPT's green was 3,250,3, and the
+    outline's fringe leaned green. It also widened the canvas by 55 px a side, art untouched, because the spear tip came
+    39 px from the top. Then four Kling clips and Pixelate sheets.
+- **Trims**:
+  - The first attack take twirled the spear across the whole frame and burst into a pink flash. The second, from a
+    tighter prompt, is a wind-up and a lunging stab; it ends on the full thrust, before Kling's yellow burst. A flash
+    disc beside the rising spear tip is painted out (`pixelate/tiyanak/deflash.py`).
+  - The death melts like wax into a pool and ends on the last small blob, before the splash spreads to the frame's
+    edges. The dropped spear sliding out of the frame is cleared (`pixelate/clean_strays.py`).
+- **Files**:
+  - 1 new atlas under `sprites/enemy/remake/`.
+  - enemies.json: the sprite path and scale (0.1757).
+  - No credits change: the art is the user's.
+
+## Round 649: the Homarid Spawning Bed gets the user's hand-made egg clutch (2026-10-16)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/homarid_spawning_bed/convert.sh`. This is
+E84 of the low-quality list: the Svyelunite Temple's FEM Homarid Spawning Bed was a flat clutch of stone eggs 80 px
+wide (round 463), so its whole-body portrait came out halved and tiny.
+
+- **The art**:
+  - The user made one still in ChatGPT from the Fallen Empires card: a compact mound of speckled tan eggs on sand, about
+    as tall as it is wide, with a young homarid hatching from the top egg, claw raised. Its portrait is a full square.
+  - `pixelate/key_still.py` put it on the exact key. Three Kling clips: it is stationary, so the walk is the idle.
+  - The attack: the homarid climbs out of the egg, lunges and snaps its claw, and sinks back. The death: the eggs
+    crack, the mound slumps into sand that shrinks away.
+- **Trims**: Kling's watermark and a loose antenna tip are cleared. The claw's fast snap had smeared key green on it,
+  and the creature has no color near the key, so `--despill-all` turns the smear into a grey motion blur.
+- **Files**:
+  - 1 new atlas under `sprites/enemy/remake/` (the round-463 atlas stays in the plane, unused).
+  - enemies.json: the sprite path and scale (0.1831).
+  - No credits change: the art is the user's.
+- **Checks (both rounds)**:
+  - enemies.json against HEAD: exactly these two, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags nothing on Tiyanak. Its 3 "review" flags on the Spawning Bed are the death's last frames: the converter's shadow fading out (alpha 29 down to 1) under the mound as it shrinks away.
+  - Both Avatars are whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+- **Source files**: moved to the Art Library repository, `Units/Custom/Tiyanak` and `Units/Custom/Homarid Spawning Bed`.
+
 ## Round 647: a dungeon's own creatures roll their rank by the week too (2026-10-15)
 
 The user, after round 643: "let hand-placed ordinary dungeon enemies roll their rank by the week, like roaming ones."
