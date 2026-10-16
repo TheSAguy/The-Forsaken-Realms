@@ -95,6 +95,12 @@ public class HistoryScene extends UIScene {
         return object;
     }
 
+    /** Round 658: is there a replay to open (a world with a recorded history)? */
+    public static boolean canShow() {
+        World world = Current.world();
+        return world != null && world.getHistory() != null;
+    }
+
     /** The map screen's History button (and the console's "history"). */
     public static void show() {
         World world = Current.world();

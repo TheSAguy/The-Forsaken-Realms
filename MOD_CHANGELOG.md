@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 658: the Victory and Defeat screens open the History replay (2026-10-16)
+
+The user, with the defeat dialog ("Will, You Died!!!"): "On the Victory and Defeat screens, can we add a link to the
+'History' / Replay, so they can view that before they exit."
+
+- **Where**: a **History** button under the dialog's own buttons on all four result screens - the run won ("Keep
+  Playing" / "Return to Main Menu"), the run lost ("Return to Main Menu"), the death ("You Died!!!", OK sends you home)
+  and the boss defeat (an item cracks, OK). Only when the world has a recorded history (`HistoryScene.canShow()`).
+- **How**: `GameStage.historyFromDialog(reshow)` hides the dialog, remembers how to show it again and opens the replay
+  (`HistoryScene.show()`); closing the replay returns to the stage, whose `enter()` runs the re-show - the same dialog,
+  same text, same buttons (the won / lost splash is put back too; the death dialog keeps its badge, which only OK
+  disposes). So the player chooses Keep Playing / Return / OK after the replay exactly as before it. Works in a POI map
+  as well as on the world (both stages share GameStage.enter()). `showImageDialog(..., withHistory)`;
+  `GameStage.addHistoryButton()`; `[TFR-History] opened from a result dialog`.
+- **Console** (cheats): `endscreen won | lost | died | boss` opens each screen - a run's end is otherwise hours away.
+  "died" is the real death: it cracks an item and sends you home.
+- **Seen in the agent game** (a copy of the user's slot 2): death - History, Close, the dialog back, OK sent home;
+  victory - History, Close, dialog and splash back, Keep Playing; run lost - History, Close, dialog back, Return to Main
+  Menu reached the start screen. The boss-defeat dialog shares the death dialog's code; not opened.
+
 ## Round 657: every world-map entrance carries a 1px black outline - and that is the rule now (2026-10-16)
 
 The user, after round 655's Elf Town and Lake of the Hydra: "I like the 1px outline more. can we please apply that to

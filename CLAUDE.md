@@ -115,6 +115,8 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 658): **LOCAL + UNRELEASED (code)** - a History button on the four result dialogs (run won, run lost, death, boss defeat): GameStage.historyFromDialog opens the replay and GameStage.enter() re-shows the same dialog on return. Console `endscreen won|lost|died|boss`. Seen in the agent game (won, lost, died).
+
 ## STATE 2026-10-16 (round 657): **LOCAL + UNRELEASED (art + data)** - all 68 world-map entrance sprites without an outline got round 655's 1px black outline (`dev-tools/poi_outline.py --apply`, list + reviewed set in dev-tools/entrance_outlines.json); Kiora's Island + the Svyelunite Temple (upstream common sprites) copied onto the plane page maps/tileset/entrances_outlined and repointed. Standing rule + `--audit` check (0 reported). Seen in the agent game.
 
 ## STATE 2026-10-16 (round 653): **LOCAL + UNRELEASED (art + data)** - Tekuthal gets the user's hand-made floating

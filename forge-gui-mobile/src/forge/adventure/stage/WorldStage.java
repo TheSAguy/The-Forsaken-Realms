@@ -1566,6 +1566,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
             WorldSave.getCurrentSave().header.createPreview();
             Forge.switchScene(StartScene.instance());
         })).width(240f).row();
+        // Round 658: the History replay before leaving - this dialog (and its splash) comes back when it is closed.
+        addHistoryButton(dialog, () -> {
+            hideEndSplash();
+            showGameLostDialog(message);
+        });
         dialog.setKeepWithinStage(true);
         showDialog();
         // Round 209: do not rely on add-order for this. showEndSplash() adds a full-screen image to
@@ -1610,6 +1615,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
             WorldSave.getCurrentSave().header.createPreview();
             Forge.switchScene(StartScene.instance());
         })).width(240f).row();
+        addHistoryButton(dialog, () -> { // round 658: the replay of the run just won, then this dialog again
+            hideEndSplash();
+            showGameWonDialog(message);
+        });
         dialog.setKeepWithinStage(true);
         showDialog();
         dialog.toFront(); // round 209, same reason as the defeat dialog

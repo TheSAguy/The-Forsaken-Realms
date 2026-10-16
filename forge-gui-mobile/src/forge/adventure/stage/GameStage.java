@@ -218,6 +218,37 @@ public abstract class GameStage extends Stage {
     }
 
     public void showImageDialog(String message, FBufferedImage fb, Runnable runnable) {
+        showImageDialog(message, fb, runnable, false);
+    }
+
+    // Round 658 (the user, of the defeat dialog: "On the Victory and Defeat screens, can we add a link to the 'History'
+    // / Replay, so they can view that before they exit"): a dialog that sends the player to the History replay is shown
+    // again, exactly as it was, when they come back - this stage's enter() re-shows it.
+    private Runnable pendingDialogReshow;
+
+    /** Round 658: leave a dialog for the History replay; {@code reshow} puts the dialog back on return (at once when
+     *  there is no replay to open). */
+    public void historyFromDialog(Runnable reshow) {
+        hideDialog();
+        if (!forge.adventure.scene.HistoryScene.canShow()) {
+            reshow.run();
+            return;
+        }
+        pendingDialogReshow = reshow;
+        System.out.println("[TFR-History] opened from a result dialog - it returns when the replay is closed");
+        forge.adventure.scene.HistoryScene.show();
+    }
+
+    /** Round 658: the History button under a result dialog's own buttons, when there is a replay to open. */
+    protected void addHistoryButton(Dialog dialog, Runnable reshow) {
+        if (!forge.adventure.scene.HistoryScene.canShow())
+            return;
+        dialog.getButtonTable().row();
+        dialog.getButtonTable().add(Controls.newTextButton("History", () -> historyFromDialog(reshow))).width(240f).row();
+    }
+
+    /** {@code withHistory} (round 658): a History button under OK - the death and boss-defeat dialogs. */
+    public void showImageDialog(String message, FBufferedImage fb, Runnable runnable, boolean withHistory) {
         dialog.getContentTable().clear();
         dialog.getButtonTable().clear();
         dialog.clearListeners();
@@ -247,6 +278,8 @@ public abstract class GameStage extends Stage {
                 runnable.run();
             }
         })).width(240f);
+        if (withHistory)
+            addHistoryButton(dialog, () -> showImageDialog(message, fb, runnable, true)); // fb kept: only OK disposes it
         dialog.setKeepWithinStage(true);
         setDialogStage(GameHUD.getInstance());
         showDialog();
@@ -787,6 +820,11 @@ public abstract class GameStage extends Stage {
 
     public void enter() {
         stop();
+        if (pendingDialogReshow != null) { // round 658: back from the History replay - the dialog it was opened from
+            Runnable reshow = pendingDialogReshow;
+            pendingDialogReshow = null;
+            reshow.run();
+        }
         if (!extraAnnouncement.isEmpty()) {
             showImageDialog(extraAnnouncement, null, this::clearExtraAnnouncement);
         }
@@ -881,7 +919,7 @@ public abstract class GameStage extends Stage {
                         WorldStage.getInstance().loadPOI(poi);
                         WorldSave.getCurrentSave().autoSave();
                         Forge.clearTransitionScreen();
-                    }, ScreenUtil.getInstance().takeScreenshot()))));
+                    }, ScreenUtil.getInstance().takeScreenshot()))), true); // round 658: History under OK
                 }
             }, deathDuration);
         }//Spawn shouldn't be null
@@ -898,7 +936,7 @@ public abstract class GameStage extends Stage {
         scheduleResultTask(new Timer.Task() {
             @Override
             public void run() {
-                showImageDialog(Current.generateDefeatMessage(false), getDefeatBadge(), () -> Forge.advFreezePlayerControls = false);
+                showImageDialog(Current.generateDefeatMessage(false), getDefeatBadge(), () -> Forge.advFreezePlayerControls = false, true); // round 658: History
             }
         }, hitDuration);
     }

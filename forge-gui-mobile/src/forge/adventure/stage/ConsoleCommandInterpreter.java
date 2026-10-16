@@ -1105,6 +1105,27 @@ public class ConsoleCommandInterpreter {
             forge.adventure.scene.HistoryScene.show();
             return "History replay opened";
         });
+        // Round 658: the result dialogs that carry the History button, on demand - a run's win or loss and a death are
+        // otherwise hours of play away. "died" is the real death (it cracks an item and sends you home, as dying does).
+        registerCommand(new String[]{"endscreen"}, s -> {
+            String which = s.length > 0 ? s[0].toLowerCase() : "";
+            switch (which) {
+                case "won":
+                    WorldStage.getInstance().triggerGameWon("(test) The realm is yours.");
+                    return "victory dialog";
+                case "lost":
+                    WorldStage.getInstance().triggerGameLost("(test) The realm has fallen.");
+                    return "defeat dialog";
+                case "died":
+                    WorldStage.getInstance().resetPlayerLocation();
+                    return "death dialog";
+                case "boss":
+                    WorldStage.getInstance().defeatedFromBoss();
+                    return "boss defeat dialog (needs an equipped item)";
+                default:
+                    return "endscreen won | lost | died | boss";
+            }
+        });
         registerCommand(new String[]{"asc", "pick"}, s -> {
             if (s.length < 1)
                 return "Command needs 1 parameter: a reward id from ascendance.json";
