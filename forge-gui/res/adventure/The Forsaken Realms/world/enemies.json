@@ -15962,7 +15962,7 @@
     },
     {
         "name": "Griselbrand",
-        "sprite": "sprites/enemy/fiend/griselbrand.atlas",
+        "sprite": "sprites/enemy/remake/griselbrand.atlas",
         "deck": [
             "decks/boss/griselbrand.dck"
         ],
@@ -15970,7 +15970,7 @@
         "boss": true,
         "flying": true,
         "speed": 10,
-        "scale": 1.2,
+        "scale": 0.52,
         "life": 40,
         "rewards": [
             {

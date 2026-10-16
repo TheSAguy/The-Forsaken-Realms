@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 670: Griselbrand gets the user's hand-made art (2026-10-16)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/griselbrand/convert.sh`. This is F126 of
+list 3: the boss was drawn by a small stock `fiend/griselbrand` sprite.
+
+- **The art**: a ChatGPT still from the card, then four Kling clips and Pixelate sheets. He is a pale, black-horned demon
+  lord with tattered bat wings, red eyes and a spiked tail, facing the viewer.
+- **Two takes**:
+  - Take 1's prompts named the wings, so Kling spread them past the canvas: 12 of 24 idle frames, 17 of 24 walk frames
+    and most of the death were cut at the frame's edge. Its attack also turned into a purple magic burst.
+  - Take 2 widened the still (`key_still.py --margin 250`) and kept the wings raised behind the shoulders in every
+    prompt.
+- **Trims and fixes**:
+  - The idle is whole.
+  - **The walk** still spread the wings to the edge in six frames. `pick_frames.py` keeps eight frames inside the
+    canvas.
+  - **The attack** is a claw swipe. Kling drew it with a flat grey slash streak joined to the tail. It keeps the stance,
+    the raise, the claw held high, the strike and the follow-through. The new `pixelate/griselbrand/desmear.py` clears
+    the streak where it joins the tail.
+  - **The attack's colors**: Pixelate had reduced the attack's colors apart from the idle's, a cooler grey. The
+    converter's new `--match-palette` moves it to the idle's own colors.
+  - **The death** staggers, falls to its knees, collapses flat and turns into a heap of grey stone. The frames where
+    the flat wings reach the frame's edge are left out.
+  - `pick_frames.py` now writes Pixelate's rows of eight. The converter reads a sheet's frame size from its width, and
+    one row of five 256 px frames had been read as 128 px frames.
+- **Files**:
+  - `sprites/enemy/remake/griselbrand.atlas` and `.png` (new).
+  - enemies.json: Griselbrand's sprite path and scale (0.52: a boss keeps his drawn size).
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly Griselbrand, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - `sprite_artifact_audit.py`: no flags on the new atlas.
+  - The Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+- **Source files**: moved to the Art Library repository, `Units/Custom/Griselbrand` (take 1's clips in a subfolder).
+
 ## Round 669: nine lairs and stalls from Realm of Legends 1.077 - they come with the player's level (2026-10-16)
 
 The user, after round 668's end-game dungeons: "You can do round 2 also" - the second batch of the 1.077 audit (the

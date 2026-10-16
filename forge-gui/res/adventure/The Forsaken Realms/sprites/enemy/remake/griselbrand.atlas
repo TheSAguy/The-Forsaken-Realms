@@ -1,0 +1,126 @@
+griselbrand.png
+size: 2112,734
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 176, 134
+  footprint: 38, 39, 100, 90
+Idle
+  xy: 176, 64
+  size: 176, 134
+Idle
+  xy: 352, 64
+  size: 176, 134
+Idle
+  xy: 528, 64
+  size: 176, 134
+Idle
+  xy: 704, 64
+  size: 176, 134
+Idle
+  xy: 880, 64
+  size: 176, 134
+Idle
+  xy: 1056, 64
+  size: 176, 134
+Idle
+  xy: 1232, 64
+  size: 176, 134
+Idle
+  xy: 1408, 64
+  size: 176, 134
+Idle
+  xy: 1584, 64
+  size: 176, 134
+Idle
+  xy: 1760, 64
+  size: 176, 134
+Idle
+  xy: 1936, 64
+  size: 176, 134
+Walk
+  xy: 0, 198
+  size: 176, 134
+Walk
+  xy: 176, 198
+  size: 176, 134
+Walk
+  xy: 352, 198
+  size: 176, 134
+Walk
+  xy: 528, 198
+  size: 176, 134
+Walk
+  xy: 704, 198
+  size: 176, 134
+Walk
+  xy: 880, 198
+  size: 176, 134
+Walk
+  xy: 1056, 198
+  size: 176, 134
+Walk
+  xy: 1232, 198
+  size: 176, 134
+Attack
+  xy: 0, 332
+  size: 176, 134
+Attack
+  xy: 176, 332
+  size: 176, 134
+Attack
+  xy: 352, 332
+  size: 176, 134
+Attack
+  xy: 528, 332
+  size: 176, 134
+Attack
+  xy: 704, 332
+  size: 176, 134
+Hit
+  xy: 0, 466
+  size: 176, 134
+Hit
+  xy: 176, 466
+  size: 176, 134
+Hit
+  xy: 352, 466
+  size: 176, 134
+Hit
+  xy: 528, 466
+  size: 176, 134
+Death
+  xy: 0, 600
+  size: 176, 134
+Death
+  xy: 176, 600
+  size: 176, 134
+Death
+  xy: 352, 600
+  size: 176, 134
+Death
+  xy: 528, 600
+  size: 176, 134
+Death
+  xy: 704, 600
+  size: 176, 134
+Death
+  xy: 880, 600
+  size: 176, 134
+Death
+  xy: 1056, 600
+  size: 176, 134
+Death
+  xy: 1232, 600
+  size: 176, 134
+Death
+  xy: 1408, 600
+  size: 176, 134
+Death
+  xy: 1584, 600
+  size: 176, 134
