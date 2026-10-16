@@ -1,0 +1,180 @@
+molfar_of_the_high_peaks.png
+size: 702,622
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 78, 62
+  footprint: 21, 5, 36, 56
+Idle
+  xy: 78, 64
+  size: 78, 62
+Idle
+  xy: 156, 64
+  size: 78, 62
+Idle
+  xy: 234, 64
+  size: 78, 62
+Walk
+  xy: 0, 126
+  size: 78, 62
+Walk
+  xy: 78, 126
+  size: 78, 62
+Walk
+  xy: 156, 126
+  size: 78, 62
+Walk
+  xy: 234, 126
+  size: 78, 62
+Walk
+  xy: 312, 126
+  size: 78, 62
+Walk
+  xy: 390, 126
+  size: 78, 62
+Walk
+  xy: 468, 126
+  size: 78, 62
+Walk
+  xy: 546, 126
+  size: 78, 62
+Attack
+  xy: 0, 188
+  size: 78, 62
+Attack
+  xy: 78, 188
+  size: 78, 62
+Attack
+  xy: 156, 188
+  size: 78, 62
+Attack
+  xy: 234, 188
+  size: 78, 62
+Attack
+  xy: 312, 188
+  size: 78, 62
+Attack
+  xy: 390, 188
+  size: 78, 62
+Attack
+  xy: 468, 188
+  size: 78, 62
+Attack
+  xy: 546, 188
+  size: 78, 62
+Hit
+  xy: 0, 250
+  size: 78, 62
+Hit
+  xy: 78, 250
+  size: 78, 62
+Hit
+  xy: 156, 250
+  size: 78, 62
+Hit
+  xy: 234, 250
+  size: 78, 62
+Death
+  xy: 0, 312
+  size: 78, 62
+Death
+  xy: 78, 312
+  size: 78, 62
+Death
+  xy: 156, 312
+  size: 78, 62
+Death
+  xy: 234, 312
+  size: 78, 62
+Death
+  xy: 312, 312
+  size: 78, 62
+Death
+  xy: 390, 312
+  size: 78, 62
+Death
+  xy: 468, 312
+  size: 78, 62
+Death
+  xy: 546, 312
+  size: 78, 62
+Death
+  xy: 624, 312
+  size: 78, 62
+IdleUp
+  xy: 0, 374
+  size: 78, 62
+IdleUp
+  xy: 78, 374
+  size: 78, 62
+IdleUp
+  xy: 156, 374
+  size: 78, 62
+IdleUp
+  xy: 234, 374
+  size: 78, 62
+IdleDown
+  xy: 0, 436
+  size: 78, 62
+IdleDown
+  xy: 78, 436
+  size: 78, 62
+IdleDown
+  xy: 156, 436
+  size: 78, 62
+IdleDown
+  xy: 234, 436
+  size: 78, 62
+WalkUp
+  xy: 0, 498
+  size: 78, 62
+WalkUp
+  xy: 78, 498
+  size: 78, 62
+WalkUp
+  xy: 156, 498
+  size: 78, 62
+WalkUp
+  xy: 234, 498
+  size: 78, 62
+WalkUp
+  xy: 312, 498
+  size: 78, 62
+WalkUp
+  xy: 390, 498
+  size: 78, 62
+WalkUp
+  xy: 468, 498
+  size: 78, 62
+WalkUp
+  xy: 546, 498
+  size: 78, 62
+WalkDown
+  xy: 0, 560
+  size: 78, 62
+WalkDown
+  xy: 78, 560
+  size: 78, 62
+WalkDown
+  xy: 156, 560
+  size: 78, 62
+WalkDown
+  xy: 234, 560
+  size: 78, 62
+WalkDown
+  xy: 312, 560
+  size: 78, 62
+WalkDown
+  xy: 390, 560
+  size: 78, 62
+WalkDown
+  xy: 468, 560
+  size: 78, 62
+WalkDown
+  xy: 546, 560
+  size: 78, 62

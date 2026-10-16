@@ -573,7 +573,7 @@
     {
         "name": "Aerie Guard",
         "nameOverride": "",
-        "sprite": "sprites/enemy/fiend/aerie_guard.atlas",
+        "sprite": "sprites/enemy/remake/aerie_guard.atlas",
         "deck": [
             "decks/standard/aerie_guard.dck"
         ],
@@ -633,7 +633,7 @@
             "IdentityAzorius"
         ],
         "tier": "Rare",
-        "scale": 0.7222
+        "scale": 0.3095
     },
     {
         "name": "Aether Channeler",
@@ -715,7 +715,7 @@
     },
     {
         "name": "Akroma",
-        "sprite": "sprites/enemy/celestial/akroma.atlas",
+        "sprite": "sprites/enemy/remake/akroma.atlas",
         "deck": [
             "decks/boss/akroma.dck"
         ],
@@ -723,7 +723,7 @@
         "boss": true,
         "flying": true,
         "speed": 10,
-        "scale": 1.0,
+        "scale": 0.6047,
         "life": 40,
         "rewards": [
             {
@@ -879,7 +879,7 @@
     },
     {
         "name": "Amphin Warrior",
-        "sprite": "sprites/enemy/humanoid/amphin/amphin_warrior.atlas",
+        "sprite": "sprites/enemy/remake/amphin_warrior.atlas",
         "deck": [
             "decks/standard/amphin_warrior.dck"
         ],
@@ -887,7 +887,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "speed": 21,
-        "scale": 0.8125,
+        "scale": 0.3095,
         "life": 20,
         "rewards": [
             {
@@ -2279,7 +2279,7 @@
     },
     {
         "name": "Archmage",
-        "sprite": "sprites/enemy/humanoid/human/wizard/archmage.atlas",
+        "sprite": "sprites/enemy/remake/archmage.atlas",
         "deck": [
             "decks/standard/archmage.dck"
         ],
@@ -2287,7 +2287,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.5652,
+        "scale": 0.3023,
         "life": 20,
         "rewards": [
             {
@@ -3257,7 +3257,7 @@
     {
         "name": "Barbarian",
         "nameOverride": "Human Barbarian",
-        "sprite": "sprites/enemy/humanoid/human/barbarian/barbarian.atlas",
+        "sprite": "sprites/enemy/remake/barbarian.atlas",
         "deck": [
             "decks/standard/barbarian.dck"
         ],
@@ -3265,7 +3265,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "speed": 26,
-        "scale": 0.619,
+        "scale": 0.3095,
         "life": 17,
         "rewards": [
             {
@@ -6594,7 +6594,7 @@
     },
     {
         "name": "Cloud Giant",
-        "sprite": "sprites/enemy/giant/godlytitan.atlas",
+        "sprite": "sprites/enemy/remake/cloud_giant.atlas",
         "deck": [
             "decks/standard/cloudgiant.dck"
         ],
@@ -6603,7 +6603,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.5417,
+        "scale": 0.3171,
         "life": 25,
         "rewards": [
             {
@@ -6655,7 +6655,7 @@
     },
     {
         "name": "Cloud Guardian",
-        "sprite": "sprites/enemy/celestial/peerlesssolar.atlas",
+        "sprite": "sprites/enemy/remake/cloud_guardian.atlas",
         "deck": [
             "decks/standard/cloudguard.dck"
         ],
@@ -6665,7 +6665,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 24,
-        "scale": 0.5652,
+        "scale": 0.3095,
         "life": 25,
         "rewards": [
             {
@@ -6718,7 +6718,7 @@
     {
         "name": "Conjurer",
         "nameOverride": "",
-        "sprite": "sprites/enemy/humanoid/conjurer.atlas",
+        "sprite": "sprites/enemy/remake/conjurer.atlas",
         "deck": [
             "decks/miniboss/conjure.dck"
         ],
@@ -6727,7 +6727,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8125,
+        "scale": 0.4432,
         "life": 35,
         "rewards": [
             {
@@ -11545,7 +11545,7 @@
     },
     {
         "name": "Fallen Angel",
-        "sprite": "sprites/enemy/celestial/fallen_angel.atlas",
+        "sprite": "sprites/enemy/remake/fallen_angel.atlas",
         "deck": [
             "decks/standard/fallen_angel.dck"
         ],
@@ -11625,7 +11625,7 @@
             "BiomeBlack"
         ],
         "tier": "Uncommon",
-        "scale": 0.6594
+        "scale": 0.3095
     },
     {
         "name": "False Knight",
@@ -13756,7 +13756,7 @@
     },
     {
         "name": "Ghoul Gravecaller",
-        "sprite": "sprites/enemy/undead/ghoullarge.atlas",
+        "sprite": "sprites/enemy/remake/ghoul_gravecaller.atlas",
         "deck": [
             "decks/standard/ghoulgravecrawler.dck"
         ],
@@ -13764,7 +13764,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.7222,
+        "scale": 0.325,
         "life": 20,
         "rewards": [
             {
@@ -17248,7 +17248,7 @@
     },
     {
         "name": "Holy Paladin",
-        "sprite": "sprites/enemy/humanoid/human/knight/paladin_large.atlas",
+        "sprite": "sprites/enemy/remake/holy_paladin.atlas",
         "deck": [
             "decks/standard/holypaladin.dck"
         ],
@@ -17256,7 +17256,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 0.573,
+        "scale": 0.2955,
         "life": 27,
         "rewards": [
             {
@@ -20834,7 +20834,7 @@
     },
     {
         "name": "Lord Pestilence",
-        "sprite": "sprites/enemy/undead/pestilencelord.atlas",
+        "sprite": "sprites/enemy/remake/lord_pestilence.atlas",
         "deck": [
             "decks/standard/trap.dck"
         ],
@@ -20911,7 +20911,7 @@
             "IdentityDimir"
         ],
         "tier": "Uncommon",
-        "scale": 0.5652
+        "scale": 0.3095
     },
     {
         "name": "Lorthos",
@@ -20986,7 +20986,7 @@
     },
     {
         "name": "Maelstrom Angel",
-        "sprite": "sprites/enemy/celestial/maelstrom_angel.atlas",
+        "sprite": "sprites/enemy/remake/maelstrom_angel.atlas",
         "deck": [
             "decks/standard/maelstromangel.dck"
         ],
@@ -20995,7 +20995,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 0.6583,
+        "scale": 0.3095,
         "life": 33,
         "rewards": [
             {
@@ -27117,7 +27117,7 @@
     },
     {
         "name": "Scourgemaster",
-        "sprite": "sprites/enemy/fiend/scourgemaster.atlas",
+        "sprite": "sprites/enemy/remake/scourgemaster.atlas",
         "deck": [
             "decks/standard/demon_hellbent.dck",
             "decks/standard/demon_humansac.dck"
@@ -27128,7 +27128,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 0.619,
+        "scale": 0.3171,
         "life": 33,
         "rewards": [
             {
@@ -34706,7 +34706,7 @@
     },
     {
         "name": "Hulking Skaab",
-        "sprite": "sprites/enemy/undead/ghoullarge.atlas",
+        "sprite": "sprites/enemy/remake/hulking_skaab.atlas",
         "deck": [
             "decks/standard/INN/inn_skaab_medium.dck"
         ],
@@ -34757,7 +34757,7 @@
             "BiomeBlue"
         ],
         "tier": "Common",
-        "scale": 0.7222
+        "scale": 0.3023
     },
     {
         "name": "Immerwolf",
@@ -35457,13 +35457,13 @@
     },
     {
         "name": "Jodah",
-        "sprite": "sprites/enemy/humanoid/conjurer.atlas",
+        "sprite": "sprites/enemy/remake/jodah.atlas",
         "deck": [
             "decks/legends/jodah.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.5417,
+        "scale": 0.3171,
         "life": 100,
         "rewards": [
             {
@@ -35546,13 +35546,13 @@
     },
     {
         "name": "Arzakon",
-        "sprite": "sprites/enemy/fiend/scourgemaster.atlas",
+        "sprite": "sprites/enemy/remake/arzakon.atlas",
         "deck": [
             "decks/legends/arzakon.dck"
         ],
         "ai": "",
         "speed": 30,
-        "scale": 0.619,
+        "scale": 0.3171,
         "life": 200,
         "rewards": [
             {
@@ -37449,13 +37449,13 @@
     },
     {
         "name": "Jared",
-        "sprite": "sprites/enemy/humanoid/human/barbarian/barbarian.atlas",
+        "sprite": "sprites/enemy/remake/jared.atlas",
         "deck": [
             "decks/legends/jared.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.619,
+        "scale": 0.3023,
         "life": 50,
         "rewards": [
             {
@@ -39743,13 +39743,13 @@
     },
     {
         "name": "Firja",
-        "sprite": "sprites/enemy/celestial/fallen_angel.atlas",
+        "sprite": "sprites/enemy/remake/firja.atlas",
         "deck": [
             "decks/legends/firja.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.6594,
+        "scale": 0.3023,
         "life": 40,
         "rewards": [
             {
@@ -44434,13 +44434,13 @@
     },
     {
         "name": "Keranos",
-        "sprite": "sprites/enemy/giant/stormtitan.atlas",
+        "sprite": "sprites/enemy/remake/keranos.atlas",
         "deck": [
             "decks/legends/keranos.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.619,
+        "scale": 0.3023,
         "life": 40,
         "rewards": [
             {
@@ -46684,13 +46684,13 @@
     },
     {
         "name": "Grand Arbiter",
-        "sprite": "sprites/enemy/humanoid/human/wizard/archmage.atlas",
+        "sprite": "sprites/enemy/remake/grand_arbiter.atlas",
         "deck": [
             "decks/legends/grand_arbiter.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.5652,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -46774,14 +46774,14 @@
     },
     {
         "name": "Aurelia",
-        "sprite": "sprites/enemy/celestial/akroma.atlas",
+        "sprite": "sprites/enemy/remake/aurelia.atlas",
         "deck": [
             "decks/legends/aurelia.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 60,
-        "scale": 0.5423,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -49615,13 +49615,13 @@
     },
     {
         "name": "Sheldon",
-        "sprite": "sprites/enemy/giant/godlytitan.atlas",
+        "sprite": "sprites/enemy/remake/sheldon.atlas",
         "deck": [
             "decks/legends/sheldon.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.5417,
+        "scale": 0.3095,
         "life": 40,
         "rewards": [
             {
@@ -55696,14 +55696,14 @@
     },
     {
         "name": "Rodolf",
-        "sprite": "sprites/enemy/celestial/peerlesssolar.atlas",
+        "sprite": "sprites/enemy/remake/rodolf.atlas",
         "deck": [
             "decks/legends/rodolf.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.5652,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -55833,14 +55833,14 @@
     },
     {
         "name": "Verrak",
-        "sprite": "sprites/enemy/celestial/fallen_angel.atlas",
+        "sprite": "sprites/enemy/remake/verrak.atlas",
         "deck": [
             "decks/legends/verrak.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.6594,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -56808,14 +56808,14 @@
     },
     {
         "name": "Gisela",
-        "sprite": "sprites/enemy/celestial/akroma.atlas",
+        "sprite": "sprites/enemy/remake/gisela.atlas",
         "deck": [
             "decks/legends/gisela.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.5423,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -56882,14 +56882,14 @@
     },
     {
         "name": "Liesa",
-        "sprite": "sprites/enemy/celestial/fallen_angel.atlas",
+        "sprite": "sprites/enemy/remake/liesa.atlas",
         "deck": [
             "decks/legends/liesa.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.6594,
+        "scale": 0.3095,
         "life": 30,
         "rewards": [
             {
@@ -60841,14 +60841,14 @@
     },
     {
         "name": "Akroma and Keleth",
-        "sprite": "sprites/enemy/celestial/akroma.atlas",
+        "sprite": "sprites/enemy/remake/akroma_and_keleth.atlas",
         "deck": [
             "decks/legends/akroma_and_keleth.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.5423,
+        "scale": 0.3095,
         "life": 53,
         "rewards": [
             {
@@ -61078,14 +61078,14 @@
     },
     {
         "name": "Radiant",
-        "sprite": "sprites/enemy/celestial/peerlesssolar.atlas",
+        "sprite": "sprites/enemy/remake/radiant.atlas",
         "deck": [
             "decks/legends/radiant.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 35,
-        "scale": 0.5652,
+        "scale": 0.3023,
         "life": 26,
         "rewards": [
             {
@@ -62076,14 +62076,14 @@
     },
     {
         "name": "Razaketh",
-        "sprite": "sprites/enemy/fiend/scourgemaster.atlas",
+        "sprite": "sprites/enemy/remake/razaketh.atlas",
         "deck": [
             "decks/legends/razaketh.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.619,
+        "scale": 0.325,
         "life": 47,
         "rewards": [
             {
@@ -64538,13 +64538,13 @@
     },
     {
         "name": "Purphoros",
-        "sprite": "sprites/enemy/giant/godlytitan.atlas",
+        "sprite": "sprites/enemy/remake/purphoros.atlas",
         "deck": [
             "decks/legends/purphoros.dck"
         ],
         "ai": "",
         "speed": 30,
-        "scale": 0.5417,
+        "scale": 0.3095,
         "life": 20,
         "rewards": [
             {
@@ -65407,14 +65407,14 @@
     },
     {
         "name": "Jenara",
-        "sprite": "sprites/enemy/celestial/maelstrom_angel.atlas",
+        "sprite": "sprites/enemy/remake/jenara.atlas",
         "deck": [
             "decks/legends/jenara.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.6583,
+        "scale": 0.3023,
         "life": 30,
         "rewards": [
             {
@@ -65476,13 +65476,13 @@
     },
     {
         "name": "Kresh",
-        "sprite": "sprites/enemy/humanoid/human/barbarian/barbarian.atlas",
+        "sprite": "sprites/enemy/remake/kresh.atlas",
         "deck": [
             "decks/legends/kresh.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.619,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -65680,13 +65680,13 @@
     },
     {
         "name": "Thraximundar",
-        "sprite": "sprites/enemy/undead/pestilencelord.atlas",
+        "sprite": "sprites/enemy/remake/thraximundar.atlas",
         "deck": [
             "decks/legends/thraximundar.dck"
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.5652,
+        "scale": 0.3171,
         "life": 30,
         "rewards": [
             {
@@ -77830,12 +77830,12 @@
     },
     {
         "name": "Ranar",
-        "sprite": "sprites/enemy/undead/pestilencelord.atlas",
+        "sprite": "sprites/enemy/remake/ranar.atlas",
         "deck": [
             "decks/legends/ranar.dck"
         ],
         "ai": "",
-        "scale": 0.5652,
+        "scale": 0.3023,
         "flying": true,
         "speed": 34,
         "life": 20,
@@ -84785,7 +84785,7 @@
     },
     {
         "name": "Kalemne",
-        "sprite": "sprites/enemy/giant/stormtitan.atlas",
+        "sprite": "sprites/enemy/remake/kalemne.atlas",
         "deck": [
             "decks/legends/kalemne.dck"
         ],
@@ -84849,7 +84849,7 @@
         "spawnRate": 1,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 0.619
+        "scale": 0.2955
     },
     {
         "name": "Orthion",
@@ -88636,7 +88636,7 @@
     },
     {
         "name": "Karona",
-        "sprite": "sprites/enemy/celestial/maelstrom_angel.atlas",
+        "sprite": "sprites/enemy/remake/karona.atlas",
         "deck": [
             "decks/legends/karona.dck"
         ],
@@ -88713,7 +88713,7 @@
         "tier": "Rare",
         "difficulty": 2,
         "flying": true,
-        "scale": 0.6583
+        "scale": 0.3171
     },
     {
         "name": "Aminatou",
@@ -90199,7 +90199,7 @@
     },
     {
         "name": "Kamiz",
-        "sprite": "sprites/enemy/fiend/aerie_guard.atlas",
+        "sprite": "sprites/enemy/remake/kamiz.atlas",
         "deck": [
             "decks/legends/kamiz.dck"
         ],
@@ -90263,7 +90263,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.7222
+        "scale": 0.3171
     },
     {
         "name": "Queza",
@@ -102412,7 +102412,7 @@
     },
     {
         "name": "Ben Rubin '98",
-        "sprite": "sprites/enemy/humanoid/human/barbarian/barbarian.atlas",
+        "sprite": "sprites/enemy/remake/ben_rubin_98.atlas",
         "deck": [
             "decks/standard/wc98_ben_rubin.dck"
         ],
@@ -102615,7 +102615,7 @@
         ],
         "colors": "R",
         "tier": "Common",
-        "scale": 0.619
+        "scale": 0.3023
     },
     {
         "name": "Brian Hacker '98",
@@ -102724,7 +102724,7 @@
     },
     {
         "name": "Randy Buehler '98",
-        "sprite": "sprites/enemy/humanoid/human/wizard/archmage.atlas",
+        "sprite": "sprites/enemy/remake/randy_buehler_98.atlas",
         "deck": [
             "decks/standard/wc98_randy_buehler.dck"
         ],
@@ -102927,7 +102927,7 @@
         ],
         "colors": "U",
         "tier": "Common",
-        "scale": 0.5652
+        "scale": 0.3171
     },
     {
         "name": "Kai Budde '99",
@@ -116646,7 +116646,7 @@
     },
     {
         "name": "Arzakon, Shandalar's Doom",
-        "sprite": "sprites/enemy/fiend/scourgemaster.atlas",
+        "sprite": "sprites/enemy/remake/arzakon_shandalar_s_doom.atlas",
         "deck": [
             "decks/miniboss/shandalar97_colorless_arzakon.dck"
         ],
@@ -116656,7 +116656,7 @@
         "spawnRate": 0.1,
         "difficulty": 1,
         "speed": 24,
-        "scale": 1.238,
+        "scale": 0.6341,
         "life": 200,
         "rewards": [
             {
@@ -119081,7 +119081,7 @@
     },
     {
         "name": "Nightstalker",
-        "sprite": "sprites/enemy/undead/pestilencelord.atlas",
+        "sprite": "sprites/enemy/remake/nightstalker.atlas",
         "deck": [
             "decks/standard/shandalar97_nightstalker.dck"
         ],
@@ -119188,7 +119188,7 @@
             "BiomeBlack"
         ],
         "tier": "Common",
-        "scale": 0.5652
+        "scale": 0.3095
     },
     {
         "name": "Chainer Dementia Master",
@@ -119660,7 +119660,7 @@
     },
     {
         "name": "Urza Planeswalker",
-        "sprite": "sprites/enemy/humanoid/human/wizard/archmage.atlas",
+        "sprite": "sprites/enemy/remake/urza_planeswalker.atlas",
         "deck": [
             "decks/boss/urza.dck"
         ],
@@ -119865,7 +119865,7 @@
         ],
         "colors": "U",
         "tier": "Rare",
-        "scale": 0.8478
+        "scale": 0.4756
     },
     {
         "name": "Gaea, the Worldsoul",
@@ -120289,7 +120289,7 @@
     },
     {
         "name": "Recaller of Ancestry",
-        "sprite": "sprites/enemy/humanoid/human/wizard/archmage.atlas",
+        "sprite": "sprites/enemy/remake/recaller_of_ancestry.atlas",
         "deck": [
             "decks/miniboss/recaller_of_ancestry.dck"
         ],
@@ -120503,7 +120503,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.8478
+        "scale": 0.4875
     },
     {
         "name": "Twister of Time",
@@ -121419,7 +121419,7 @@
     },
     {
         "name": "Bazaar Keeper",
-        "sprite": "sprites/enemy/humanoid/conjurer.atlas",
+        "sprite": "sprites/enemy/remake/bazaar_keeper.atlas",
         "deck": [
             "decks/boss/bazaarkeeper.dck"
         ],
@@ -121733,7 +121733,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.84
+        "scale": 0.48
     },
     {
         "name": "Arcades Sabboth",
@@ -122993,7 +122993,7 @@
     },
     {
         "name": "Sidar Kondo",
-        "sprite": "sprites/enemy/humanoid/human/knight/paladin_large.atlas",
+        "sprite": "sprites/enemy/remake/sidar_kondo.atlas",
         "deck": [
             "decks/arena/sidar_kondo.dck"
         ],
@@ -123027,7 +123027,7 @@
         "questTags": [],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 0.573
+        "scale": 0.3023
     },
     {
         "name": "Meren of Clan Nel Toth",
@@ -123107,14 +123107,14 @@
     },
     {
         "name": "Mysterious Mage",
-        "sprite": "sprites/enemy/humanoid/conjurer.atlas",
+        "sprite": "sprites/enemy/remake/mysterious_mage.atlas",
         "deck": [
             "decks/legends/mystery_list.dck"
         ],
         "ai": "",
         "spawnRate": 0,
         "difficulty": 0.1,
-        "scale": 0.5417,
+        "scale": 0.3171,
         "speed": 0,
         "life": 1,
         "rewards": [],
@@ -125213,13 +125213,13 @@
     },
     {
         "name": "Feroz",
-        "sprite": "sprites/enemy/humanoid/human/wizard/archmage.atlas",
+        "sprite": "sprites/enemy/remake/feroz.atlas",
         "deck": [
             "decks/legends/feroz.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.5652,
+        "scale": 0.3171,
         "life": 40,
         "rewards": [
             {
@@ -136817,7 +136817,7 @@
     },
     {
         "name": "Molfar of the High Peaks",
-        "sprite": "sprites/enemy/mythic/molfar.atlas",
+        "sprite": "sprites/enemy/remake/molfar_of_the_high_peaks.atlas",
         "deck": [
             "decks/standard/molfar.dck"
         ],
@@ -136876,7 +136876,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.4815
+        "scale": 0.2889
     },
     {
         "name": "Wildwood Minotaur",
@@ -137889,7 +137889,7 @@
     },
     {
         "name": "Sirena, Tide-Singer",
-        "sprite": "sprites/enemy/mythic/sirena_tidesinger.atlas",
+        "sprite": "sprites/enemy/remake/sirena_tide_singer.atlas",
         "deck": [
             "decks/standard/sirena_tidesinger.dck"
         ],
@@ -137949,7 +137949,7 @@
             "Leader"
         ],
         "tier": "Mythic",
-        "scale": 0.5417
+        "scale": 0.3095
     },
     {
         "name": "Elven Archmage of the Mists",
@@ -142555,7 +142555,7 @@
     },
     {
         "name": "Village Volunteer",
-        "sprite": "sprites/enemy/basic/humanoid/village_volunteer.atlas",
+        "sprite": "sprites/enemy/remake/village_volunteer.atlas",
         "deck": [
             "decks/standard/village_volunteer.dck"
         ],
@@ -142614,11 +142614,11 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.5417
+        "scale": 0.3095
     },
     {
         "name": "Village Defender",
-        "sprite": "sprites/enemy/basic/humanoid/village_defender.atlas",
+        "sprite": "sprites/enemy/remake/village_defender.atlas",
         "deck": [
             "decks/standard/village_defender.dck"
         ],
@@ -142677,7 +142677,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.5652
+        "scale": 0.3023
     },
     {
         "name": "Mulawin Warrior",

@@ -1,0 +1,174 @@
+lord_pestilence.png
+size: 864,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 96, 54
+  footprint: 30, 1, 37, 52
+Idle
+  xy: 96, 64
+  size: 96, 54
+Idle
+  xy: 192, 64
+  size: 96, 54
+Idle
+  xy: 288, 64
+  size: 96, 54
+Walk
+  xy: 0, 118
+  size: 96, 54
+Walk
+  xy: 96, 118
+  size: 96, 54
+Walk
+  xy: 192, 118
+  size: 96, 54
+Walk
+  xy: 288, 118
+  size: 96, 54
+Walk
+  xy: 384, 118
+  size: 96, 54
+Walk
+  xy: 480, 118
+  size: 96, 54
+Walk
+  xy: 576, 118
+  size: 96, 54
+Walk
+  xy: 672, 118
+  size: 96, 54
+Attack
+  xy: 0, 172
+  size: 96, 54
+Attack
+  xy: 96, 172
+  size: 96, 54
+Attack
+  xy: 192, 172
+  size: 96, 54
+Attack
+  xy: 288, 172
+  size: 96, 54
+Attack
+  xy: 384, 172
+  size: 96, 54
+Attack
+  xy: 480, 172
+  size: 96, 54
+Hit
+  xy: 0, 226
+  size: 96, 54
+Hit
+  xy: 96, 226
+  size: 96, 54
+Hit
+  xy: 192, 226
+  size: 96, 54
+Hit
+  xy: 288, 226
+  size: 96, 54
+Death
+  xy: 0, 280
+  size: 96, 54
+Death
+  xy: 96, 280
+  size: 96, 54
+Death
+  xy: 192, 280
+  size: 96, 54
+Death
+  xy: 288, 280
+  size: 96, 54
+Death
+  xy: 384, 280
+  size: 96, 54
+Death
+  xy: 480, 280
+  size: 96, 54
+Death
+  xy: 576, 280
+  size: 96, 54
+Death
+  xy: 672, 280
+  size: 96, 54
+Death
+  xy: 768, 280
+  size: 96, 54
+IdleUp
+  xy: 0, 334
+  size: 96, 54
+IdleUp
+  xy: 96, 334
+  size: 96, 54
+IdleUp
+  xy: 192, 334
+  size: 96, 54
+IdleUp
+  xy: 288, 334
+  size: 96, 54
+IdleDown
+  xy: 0, 388
+  size: 96, 54
+IdleDown
+  xy: 96, 388
+  size: 96, 54
+IdleDown
+  xy: 192, 388
+  size: 96, 54
+IdleDown
+  xy: 288, 388
+  size: 96, 54
+WalkUp
+  xy: 0, 442
+  size: 96, 54
+WalkUp
+  xy: 96, 442
+  size: 96, 54
+WalkUp
+  xy: 192, 442
+  size: 96, 54
+WalkUp
+  xy: 288, 442
+  size: 96, 54
+WalkUp
+  xy: 384, 442
+  size: 96, 54
+WalkUp
+  xy: 480, 442
+  size: 96, 54
+WalkUp
+  xy: 576, 442
+  size: 96, 54
+WalkUp
+  xy: 672, 442
+  size: 96, 54
+WalkDown
+  xy: 0, 496
+  size: 96, 54
+WalkDown
+  xy: 96, 496
+  size: 96, 54
+WalkDown
+  xy: 192, 496
+  size: 96, 54
+WalkDown
+  xy: 288, 496
+  size: 96, 54
+WalkDown
+  xy: 384, 496
+  size: 96, 54
+WalkDown
+  xy: 480, 496
+  size: 96, 54
+WalkDown
+  xy: 576, 496
+  size: 96, 54
+WalkDown
+  xy: 672, 496
+  size: 96, 54

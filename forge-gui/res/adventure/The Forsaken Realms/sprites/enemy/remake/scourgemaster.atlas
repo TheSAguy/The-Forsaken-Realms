@@ -1,0 +1,174 @@
+scourgemaster.png
+size: 1062,631
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 118, 63
+  footprint: 34, 1, 51, 54
+Idle
+  xy: 118, 64
+  size: 118, 63
+Idle
+  xy: 236, 64
+  size: 118, 63
+Idle
+  xy: 354, 64
+  size: 118, 63
+Walk
+  xy: 0, 127
+  size: 118, 63
+Walk
+  xy: 118, 127
+  size: 118, 63
+Walk
+  xy: 236, 127
+  size: 118, 63
+Walk
+  xy: 354, 127
+  size: 118, 63
+Walk
+  xy: 472, 127
+  size: 118, 63
+Walk
+  xy: 590, 127
+  size: 118, 63
+Walk
+  xy: 708, 127
+  size: 118, 63
+Walk
+  xy: 826, 127
+  size: 118, 63
+Attack
+  xy: 0, 190
+  size: 118, 63
+Attack
+  xy: 118, 190
+  size: 118, 63
+Attack
+  xy: 236, 190
+  size: 118, 63
+Attack
+  xy: 354, 190
+  size: 118, 63
+Attack
+  xy: 472, 190
+  size: 118, 63
+Attack
+  xy: 590, 190
+  size: 118, 63
+Hit
+  xy: 0, 253
+  size: 118, 63
+Hit
+  xy: 118, 253
+  size: 118, 63
+Hit
+  xy: 236, 253
+  size: 118, 63
+Hit
+  xy: 354, 253
+  size: 118, 63
+Death
+  xy: 0, 316
+  size: 118, 63
+Death
+  xy: 118, 316
+  size: 118, 63
+Death
+  xy: 236, 316
+  size: 118, 63
+Death
+  xy: 354, 316
+  size: 118, 63
+Death
+  xy: 472, 316
+  size: 118, 63
+Death
+  xy: 590, 316
+  size: 118, 63
+Death
+  xy: 708, 316
+  size: 118, 63
+Death
+  xy: 826, 316
+  size: 118, 63
+Death
+  xy: 944, 316
+  size: 118, 63
+IdleUp
+  xy: 0, 379
+  size: 118, 63
+IdleUp
+  xy: 118, 379
+  size: 118, 63
+IdleUp
+  xy: 236, 379
+  size: 118, 63
+IdleUp
+  xy: 354, 379
+  size: 118, 63
+IdleDown
+  xy: 0, 442
+  size: 118, 63
+IdleDown
+  xy: 118, 442
+  size: 118, 63
+IdleDown
+  xy: 236, 442
+  size: 118, 63
+IdleDown
+  xy: 354, 442
+  size: 118, 63
+WalkUp
+  xy: 0, 505
+  size: 118, 63
+WalkUp
+  xy: 118, 505
+  size: 118, 63
+WalkUp
+  xy: 236, 505
+  size: 118, 63
+WalkUp
+  xy: 354, 505
+  size: 118, 63
+WalkUp
+  xy: 472, 505
+  size: 118, 63
+WalkUp
+  xy: 590, 505
+  size: 118, 63
+WalkUp
+  xy: 708, 505
+  size: 118, 63
+WalkUp
+  xy: 826, 505
+  size: 118, 63
+WalkDown
+  xy: 0, 568
+  size: 118, 63
+WalkDown
+  xy: 118, 568
+  size: 118, 63
+WalkDown
+  xy: 236, 568
+  size: 118, 63
+WalkDown
+  xy: 354, 568
+  size: 118, 63
+WalkDown
+  xy: 472, 568
+  size: 118, 63
+WalkDown
+  xy: 590, 568
+  size: 118, 63
+WalkDown
+  xy: 708, 568
+  size: 118, 63
+WalkDown
+  xy: 826, 568
+  size: 118, 63

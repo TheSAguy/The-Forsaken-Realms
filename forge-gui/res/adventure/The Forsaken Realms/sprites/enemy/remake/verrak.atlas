@@ -1,0 +1,174 @@
+verrak.png
+size: 1566,604
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 174, 60
+  footprint: 60, 3, 55, 56
+Idle
+  xy: 174, 64
+  size: 174, 60
+Idle
+  xy: 348, 64
+  size: 174, 60
+Idle
+  xy: 522, 64
+  size: 174, 60
+Walk
+  xy: 0, 124
+  size: 174, 60
+Walk
+  xy: 174, 124
+  size: 174, 60
+Walk
+  xy: 348, 124
+  size: 174, 60
+Walk
+  xy: 522, 124
+  size: 174, 60
+Walk
+  xy: 696, 124
+  size: 174, 60
+Walk
+  xy: 870, 124
+  size: 174, 60
+Walk
+  xy: 1044, 124
+  size: 174, 60
+Walk
+  xy: 1218, 124
+  size: 174, 60
+Attack
+  xy: 0, 184
+  size: 174, 60
+Attack
+  xy: 174, 184
+  size: 174, 60
+Attack
+  xy: 348, 184
+  size: 174, 60
+Attack
+  xy: 522, 184
+  size: 174, 60
+Attack
+  xy: 696, 184
+  size: 174, 60
+Attack
+  xy: 870, 184
+  size: 174, 60
+Hit
+  xy: 0, 244
+  size: 174, 60
+Hit
+  xy: 174, 244
+  size: 174, 60
+Hit
+  xy: 348, 244
+  size: 174, 60
+Hit
+  xy: 522, 244
+  size: 174, 60
+Death
+  xy: 0, 304
+  size: 174, 60
+Death
+  xy: 174, 304
+  size: 174, 60
+Death
+  xy: 348, 304
+  size: 174, 60
+Death
+  xy: 522, 304
+  size: 174, 60
+Death
+  xy: 696, 304
+  size: 174, 60
+Death
+  xy: 870, 304
+  size: 174, 60
+Death
+  xy: 1044, 304
+  size: 174, 60
+Death
+  xy: 1218, 304
+  size: 174, 60
+Death
+  xy: 1392, 304
+  size: 174, 60
+IdleUp
+  xy: 0, 364
+  size: 174, 60
+IdleUp
+  xy: 174, 364
+  size: 174, 60
+IdleUp
+  xy: 348, 364
+  size: 174, 60
+IdleUp
+  xy: 522, 364
+  size: 174, 60
+IdleDown
+  xy: 0, 424
+  size: 174, 60
+IdleDown
+  xy: 174, 424
+  size: 174, 60
+IdleDown
+  xy: 348, 424
+  size: 174, 60
+IdleDown
+  xy: 522, 424
+  size: 174, 60
+WalkUp
+  xy: 0, 484
+  size: 174, 60
+WalkUp
+  xy: 174, 484
+  size: 174, 60
+WalkUp
+  xy: 348, 484
+  size: 174, 60
+WalkUp
+  xy: 522, 484
+  size: 174, 60
+WalkUp
+  xy: 696, 484
+  size: 174, 60
+WalkUp
+  xy: 870, 484
+  size: 174, 60
+WalkUp
+  xy: 1044, 484
+  size: 174, 60
+WalkUp
+  xy: 1218, 484
+  size: 174, 60
+WalkDown
+  xy: 0, 544
+  size: 174, 60
+WalkDown
+  xy: 174, 544
+  size: 174, 60
+WalkDown
+  xy: 348, 544
+  size: 174, 60
+WalkDown
+  xy: 522, 544
+  size: 174, 60
+WalkDown
+  xy: 696, 544
+  size: 174, 60
+WalkDown
+  xy: 870, 544
+  size: 174, 60
+WalkDown
+  xy: 1044, 544
+  size: 174, 60
+WalkDown
+  xy: 1218, 544
+  size: 174, 60

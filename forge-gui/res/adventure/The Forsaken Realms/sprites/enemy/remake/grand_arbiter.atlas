@@ -1,0 +1,180 @@
+grand_arbiter.png
+size: 702,541
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 78, 53
+  footprint: 25, 1, 29, 52
+Idle
+  xy: 78, 64
+  size: 78, 53
+Idle
+  xy: 156, 64
+  size: 78, 53
+Idle
+  xy: 234, 64
+  size: 78, 53
+Walk
+  xy: 0, 117
+  size: 78, 53
+Walk
+  xy: 78, 117
+  size: 78, 53
+Walk
+  xy: 156, 117
+  size: 78, 53
+Walk
+  xy: 234, 117
+  size: 78, 53
+Walk
+  xy: 312, 117
+  size: 78, 53
+Walk
+  xy: 390, 117
+  size: 78, 53
+Walk
+  xy: 468, 117
+  size: 78, 53
+Walk
+  xy: 546, 117
+  size: 78, 53
+Attack
+  xy: 0, 170
+  size: 78, 53
+Attack
+  xy: 78, 170
+  size: 78, 53
+Attack
+  xy: 156, 170
+  size: 78, 53
+Attack
+  xy: 234, 170
+  size: 78, 53
+Attack
+  xy: 312, 170
+  size: 78, 53
+Attack
+  xy: 390, 170
+  size: 78, 53
+Attack
+  xy: 468, 170
+  size: 78, 53
+Attack
+  xy: 546, 170
+  size: 78, 53
+Hit
+  xy: 0, 223
+  size: 78, 53
+Hit
+  xy: 78, 223
+  size: 78, 53
+Hit
+  xy: 156, 223
+  size: 78, 53
+Hit
+  xy: 234, 223
+  size: 78, 53
+Death
+  xy: 0, 276
+  size: 78, 53
+Death
+  xy: 78, 276
+  size: 78, 53
+Death
+  xy: 156, 276
+  size: 78, 53
+Death
+  xy: 234, 276
+  size: 78, 53
+Death
+  xy: 312, 276
+  size: 78, 53
+Death
+  xy: 390, 276
+  size: 78, 53
+Death
+  xy: 468, 276
+  size: 78, 53
+Death
+  xy: 546, 276
+  size: 78, 53
+Death
+  xy: 624, 276
+  size: 78, 53
+IdleUp
+  xy: 0, 329
+  size: 78, 53
+IdleUp
+  xy: 78, 329
+  size: 78, 53
+IdleUp
+  xy: 156, 329
+  size: 78, 53
+IdleUp
+  xy: 234, 329
+  size: 78, 53
+IdleDown
+  xy: 0, 382
+  size: 78, 53
+IdleDown
+  xy: 78, 382
+  size: 78, 53
+IdleDown
+  xy: 156, 382
+  size: 78, 53
+IdleDown
+  xy: 234, 382
+  size: 78, 53
+WalkUp
+  xy: 0, 435
+  size: 78, 53
+WalkUp
+  xy: 78, 435
+  size: 78, 53
+WalkUp
+  xy: 156, 435
+  size: 78, 53
+WalkUp
+  xy: 234, 435
+  size: 78, 53
+WalkUp
+  xy: 312, 435
+  size: 78, 53
+WalkUp
+  xy: 390, 435
+  size: 78, 53
+WalkUp
+  xy: 468, 435
+  size: 78, 53
+WalkUp
+  xy: 546, 435
+  size: 78, 53
+WalkDown
+  xy: 0, 488
+  size: 78, 53
+WalkDown
+  xy: 78, 488
+  size: 78, 53
+WalkDown
+  xy: 156, 488
+  size: 78, 53
+WalkDown
+  xy: 234, 488
+  size: 78, 53
+WalkDown
+  xy: 312, 488
+  size: 78, 53
+WalkDown
+  xy: 390, 488
+  size: 78, 53
+WalkDown
+  xy: 468, 488
+  size: 78, 53
+WalkDown
+  xy: 546, 488
+  size: 78, 53

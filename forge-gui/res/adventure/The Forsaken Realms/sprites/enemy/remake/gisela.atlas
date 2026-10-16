@@ -1,0 +1,174 @@
+gisela.png
+size: 1512,595
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 168, 59
+  footprint: 58, 1, 52, 57
+Idle
+  xy: 168, 64
+  size: 168, 59
+Idle
+  xy: 336, 64
+  size: 168, 59
+Idle
+  xy: 504, 64
+  size: 168, 59
+Walk
+  xy: 0, 123
+  size: 168, 59
+Walk
+  xy: 168, 123
+  size: 168, 59
+Walk
+  xy: 336, 123
+  size: 168, 59
+Walk
+  xy: 504, 123
+  size: 168, 59
+Walk
+  xy: 672, 123
+  size: 168, 59
+Walk
+  xy: 840, 123
+  size: 168, 59
+Walk
+  xy: 1008, 123
+  size: 168, 59
+Walk
+  xy: 1176, 123
+  size: 168, 59
+Attack
+  xy: 0, 182
+  size: 168, 59
+Attack
+  xy: 168, 182
+  size: 168, 59
+Attack
+  xy: 336, 182
+  size: 168, 59
+Attack
+  xy: 504, 182
+  size: 168, 59
+Attack
+  xy: 672, 182
+  size: 168, 59
+Attack
+  xy: 840, 182
+  size: 168, 59
+Hit
+  xy: 0, 241
+  size: 168, 59
+Hit
+  xy: 168, 241
+  size: 168, 59
+Hit
+  xy: 336, 241
+  size: 168, 59
+Hit
+  xy: 504, 241
+  size: 168, 59
+Death
+  xy: 0, 300
+  size: 168, 59
+Death
+  xy: 168, 300
+  size: 168, 59
+Death
+  xy: 336, 300
+  size: 168, 59
+Death
+  xy: 504, 300
+  size: 168, 59
+Death
+  xy: 672, 300
+  size: 168, 59
+Death
+  xy: 840, 300
+  size: 168, 59
+Death
+  xy: 1008, 300
+  size: 168, 59
+Death
+  xy: 1176, 300
+  size: 168, 59
+Death
+  xy: 1344, 300
+  size: 168, 59
+IdleUp
+  xy: 0, 359
+  size: 168, 59
+IdleUp
+  xy: 168, 359
+  size: 168, 59
+IdleUp
+  xy: 336, 359
+  size: 168, 59
+IdleUp
+  xy: 504, 359
+  size: 168, 59
+IdleDown
+  xy: 0, 418
+  size: 168, 59
+IdleDown
+  xy: 168, 418
+  size: 168, 59
+IdleDown
+  xy: 336, 418
+  size: 168, 59
+IdleDown
+  xy: 504, 418
+  size: 168, 59
+WalkUp
+  xy: 0, 477
+  size: 168, 59
+WalkUp
+  xy: 168, 477
+  size: 168, 59
+WalkUp
+  xy: 336, 477
+  size: 168, 59
+WalkUp
+  xy: 504, 477
+  size: 168, 59
+WalkUp
+  xy: 672, 477
+  size: 168, 59
+WalkUp
+  xy: 840, 477
+  size: 168, 59
+WalkUp
+  xy: 1008, 477
+  size: 168, 59
+WalkUp
+  xy: 1176, 477
+  size: 168, 59
+WalkDown
+  xy: 0, 536
+  size: 168, 59
+WalkDown
+  xy: 168, 536
+  size: 168, 59
+WalkDown
+  xy: 336, 536
+  size: 168, 59
+WalkDown
+  xy: 504, 536
+  size: 168, 59
+WalkDown
+  xy: 672, 536
+  size: 168, 59
+WalkDown
+  xy: 840, 536
+  size: 168, 59
+WalkDown
+  xy: 1008, 536
+  size: 168, 59
+WalkDown
+  xy: 1176, 536
+  size: 168, 59

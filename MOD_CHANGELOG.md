@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 664: 52 LPC enemies - list 3's people, angels, demons and giants, and list 2's last three (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_664.py`. List 3
+(`Bannerloard/leftover_low_quality_3.md`) is the next tier of the sweep: the stock sprites drawn 27-32 px. The user
+picked 17 of its sprites for LPC: 102, 103, 105-107, 109, 110, 112, 115, 116, 121, 123-125 and 127-129. Every enemy on
+them (49) is dressed as its own card, from the art Forge had cached. List 2's last three join them.
+
+- **People**:
+  - The Barbarian, Kresh and Jared on the barbarian's sprite; Ben Rubin '98 in a red shirt.
+  - The village's Defender and Volunteer.
+  - The Holy Paladin and Sidar Kondo.
+  - The archmages: the Archmage, Feroz, the Grand Arbiter, Randy Buehler '98, the Recaller of Ancestry and Urza
+    Planeswalker.
+  - The conjurers: the Conjurer, Jodah, the Bazaar Keeper and the Mysterious Mage.
+  - The Molfar of the High Peaks.
+- **The undead**:
+  - The Ghoul Gravecaller and the Hulking Skaab (a stitched giant).
+  - Lord Pestilence, the Nightstalker, Ranar (a pale spirit knight) and Thraximundar.
+  - Verrak, a bat-winged vampire.
+- **Angels**, on feathered wings: the Maelstrom Angel, Jenara, Karona, the Fallen Angel (black wings), Firja, Liesa,
+  the Cloud Guardian, Radiant, Akroma, Akroma and Keleth, Aurelia and Gisela.
+- **Demons**, on round 641's devil recipe (horns, bat wings, a tail): the Scourgemaster with a flail, Arzakon and
+  Arzakon, Shandalar's Doom with scythes (the boss in gold pauldrons), and Razaketh.
+- **Giants** on the muscular body: the Cloud Giant (ice-blue), Sheldon, Purphoros (bronze, with a fire-red beard),
+  Keranos (storm-blue) and Kalemne (a one-eyed giantess).
+- **Rodolf** and **Sirena, Tide-Singer** (aegean skin and white hair, unlike round 627's Sirena).
+- **List 2's last three**:
+  - The Amphin Warrior wears Sygg's head part recolored green and red. `recolor_head_variant.py` learned hue shifts
+    for this.
+  - The Aerie Guard is an aven on round 624's ibis head.
+  - Kamiz is a hooded rogue.
+  - Sala, the last enemy on the Aerie Guard's sprite, gets his own drawn octopus head in a later round.
+- **Files**:
+  - 52 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 52 sprite paths and scales (0.29-0.63; the bosses keep their drawn size).
+  - `CREDITS_LPC.md` regenerated: 992 characters, additions only. No new author.
+  - `CREDITS.md`: the LPC bullet (964 enemies).
+  - No deck or tier change.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 52, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - The sprite audit flags nothing; `sprite_footprints.py --write` gave 50 of the 52 a footprint.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 663: Krampus, Varragoth and the Demoncaller get the user's hand-made art (2026-10-16)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/krampus/convert.sh` and

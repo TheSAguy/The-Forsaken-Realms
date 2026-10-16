@@ -1,0 +1,180 @@
+amphin_warrior.png
+size: 648,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 72, 57
+  footprint: 11, 3, 51, 53
+Idle
+  xy: 72, 64
+  size: 72, 57
+Idle
+  xy: 144, 64
+  size: 72, 57
+Idle
+  xy: 216, 64
+  size: 72, 57
+Walk
+  xy: 0, 121
+  size: 72, 57
+Walk
+  xy: 72, 121
+  size: 72, 57
+Walk
+  xy: 144, 121
+  size: 72, 57
+Walk
+  xy: 216, 121
+  size: 72, 57
+Walk
+  xy: 288, 121
+  size: 72, 57
+Walk
+  xy: 360, 121
+  size: 72, 57
+Walk
+  xy: 432, 121
+  size: 72, 57
+Walk
+  xy: 504, 121
+  size: 72, 57
+Attack
+  xy: 0, 178
+  size: 72, 57
+Attack
+  xy: 72, 178
+  size: 72, 57
+Attack
+  xy: 144, 178
+  size: 72, 57
+Attack
+  xy: 216, 178
+  size: 72, 57
+Attack
+  xy: 288, 178
+  size: 72, 57
+Attack
+  xy: 360, 178
+  size: 72, 57
+Attack
+  xy: 432, 178
+  size: 72, 57
+Attack
+  xy: 504, 178
+  size: 72, 57
+Hit
+  xy: 0, 235
+  size: 72, 57
+Hit
+  xy: 72, 235
+  size: 72, 57
+Hit
+  xy: 144, 235
+  size: 72, 57
+Hit
+  xy: 216, 235
+  size: 72, 57
+Death
+  xy: 0, 292
+  size: 72, 57
+Death
+  xy: 72, 292
+  size: 72, 57
+Death
+  xy: 144, 292
+  size: 72, 57
+Death
+  xy: 216, 292
+  size: 72, 57
+Death
+  xy: 288, 292
+  size: 72, 57
+Death
+  xy: 360, 292
+  size: 72, 57
+Death
+  xy: 432, 292
+  size: 72, 57
+Death
+  xy: 504, 292
+  size: 72, 57
+Death
+  xy: 576, 292
+  size: 72, 57
+IdleUp
+  xy: 0, 349
+  size: 72, 57
+IdleUp
+  xy: 72, 349
+  size: 72, 57
+IdleUp
+  xy: 144, 349
+  size: 72, 57
+IdleUp
+  xy: 216, 349
+  size: 72, 57
+IdleDown
+  xy: 0, 406
+  size: 72, 57
+IdleDown
+  xy: 72, 406
+  size: 72, 57
+IdleDown
+  xy: 144, 406
+  size: 72, 57
+IdleDown
+  xy: 216, 406
+  size: 72, 57
+WalkUp
+  xy: 0, 463
+  size: 72, 57
+WalkUp
+  xy: 72, 463
+  size: 72, 57
+WalkUp
+  xy: 144, 463
+  size: 72, 57
+WalkUp
+  xy: 216, 463
+  size: 72, 57
+WalkUp
+  xy: 288, 463
+  size: 72, 57
+WalkUp
+  xy: 360, 463
+  size: 72, 57
+WalkUp
+  xy: 432, 463
+  size: 72, 57
+WalkUp
+  xy: 504, 463
+  size: 72, 57
+WalkDown
+  xy: 0, 520
+  size: 72, 57
+WalkDown
+  xy: 72, 520
+  size: 72, 57
+WalkDown
+  xy: 144, 520
+  size: 72, 57
+WalkDown
+  xy: 216, 520
+  size: 72, 57
+WalkDown
+  xy: 288, 520
+  size: 72, 57
+WalkDown
+  xy: 360, 520
+  size: 72, 57
+WalkDown
+  xy: 432, 520
+  size: 72, 57
+WalkDown
+  xy: 504, 520
+  size: 72, 57

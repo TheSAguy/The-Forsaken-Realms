@@ -117,6 +117,11 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 664): **LOCAL + UNRELEASED (art + data)** - 52 LPC enemies: list 3's 17 sprites drawn 27-32 px
+(people, undead, angels, demons, giants; the legends dressed from their cards) + list 2's Amphin Warrior (heads_sygg
+"green"), Aerie Guard (aven) and Kamiz. Generator `lpc_selections/make_664.py`. enemies.json 52 paths + scales,
+CREDITS_LPC.md + CREDITS.md (964 LPC enemies). Not seen in play.
+
 ## STATE 2026-10-16 (round 663): **LOCAL + UNRELEASED (art + data)** - Krampus, Varragoth and the Demoncaller (an
 ember-cloaked Varragoth) get the user's hand-made Pixelate art (generator `pixelate/krampus/` + `pixelate/varragoth/`;
 the new `krampus/deswirl.py` clears Kling's swirl rings, `pixelate/pick_frames.py` picks a clip's frames). enemies.json 3

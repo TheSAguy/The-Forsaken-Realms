@@ -99,7 +99,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **idlerunner00** (MIT License).
 - **Arcanum: Of Steamworks and Magick Obscura creature sprites** (10 enemies, renamed) - © Troika Games, 2001;
   sheets from The Spriters Resource, supplied by the user.
-- **Universal LPC Spritesheet characters** (912 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600, 601, 602, 608, 616, 617, 623, 624, 625, 627, 628, 641, 651, 659, 660 and 662 - the goblins, halflings,
+- **Universal LPC Spritesheet characters** (964 enemies from rounds 498, 500, 501, 514, 515, 519, 520, 521, 523, 534, 590, 598, 599, 600, 601, 602, 608, 616, 617, 623, 624, 625, 627, 628, 641, 651, 659, 660, 662 and 664 - the goblins, halflings,
   lizardfolk, the Alley Knife, Grey Pilgrim, Red-Cloak Duelist, Crossbow Marksman, Traveling Conjurer and Woodland
   Rover; the hero sprites' humans, elves, dwarves, devils, dragonkin, all the Kor, the leonin, the metathran, the
   Phyrexians, the undead, the viashino and the werewolves; the viashino sprites' cast - the Viashino, Glarb, Ognis,
@@ -209,7 +209,13 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   Bandit Leader, Kotis, Coram, Bandit Slingshot, Wolfkin Outcast, The Jolly Balloon Man, Joven and Chandler; round
   659's shark-headed Tiburones (a head drawn for the game) - Tiburones; round 660's three on drawn heads and Kenrith's
   undead self - Royal King, Kenrith, Kenrith, Immortal King, Sygg; round 662's goblin-king-headed warlord - Goblin
-  Warlord; and round 597's 28 player heroes, a
+  Warlord; round 664's fifty-two from list 3 - Barbarian, Ben Rubin '98, Jared, Kresh, Ghoul Gravecaller, Hulking
+  Skaab, Maelstrom Angel, Jenara, Karona, Scourgemaster, Arzakon, Arzakon, Shandalar's Doom, Razaketh, Holy Paladin,
+  Sidar Kondo, Village Defender, Village Volunteer, Fallen Angel, Firja, Liesa, Verrak, Sirena, Tide-Singer, Cloud
+  Guardian, Radiant, Rodolf, Archmage, Feroz, Grand Arbiter, Randy Buehler '98, Recaller of Ancestry, Urza
+  Planeswalker, Molfar of the High Peaks, Lord Pestilence, Nightstalker, Ranar, Thraximundar, Akroma, Akroma and
+  Keleth, Aurelia, Gisela, Cloud Giant, Sheldon, Purphoros, Keranos, Kalemne, Conjurer, Jodah, Bazaar Keeper,
+  Mysterious Mage, Amphin Warrior, Aerie Guard, Kamiz; and round 597's 28 player heroes, a
   woman
   and a man of every race
   the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,

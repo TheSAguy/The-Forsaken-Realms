@@ -1,0 +1,180 @@
+jodah.png
+size: 702,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 78, 54
+  footprint: 25, 1, 29, 53
+Idle
+  xy: 78, 64
+  size: 78, 54
+Idle
+  xy: 156, 64
+  size: 78, 54
+Idle
+  xy: 234, 64
+  size: 78, 54
+Walk
+  xy: 0, 118
+  size: 78, 54
+Walk
+  xy: 78, 118
+  size: 78, 54
+Walk
+  xy: 156, 118
+  size: 78, 54
+Walk
+  xy: 234, 118
+  size: 78, 54
+Walk
+  xy: 312, 118
+  size: 78, 54
+Walk
+  xy: 390, 118
+  size: 78, 54
+Walk
+  xy: 468, 118
+  size: 78, 54
+Walk
+  xy: 546, 118
+  size: 78, 54
+Attack
+  xy: 0, 172
+  size: 78, 54
+Attack
+  xy: 78, 172
+  size: 78, 54
+Attack
+  xy: 156, 172
+  size: 78, 54
+Attack
+  xy: 234, 172
+  size: 78, 54
+Attack
+  xy: 312, 172
+  size: 78, 54
+Attack
+  xy: 390, 172
+  size: 78, 54
+Attack
+  xy: 468, 172
+  size: 78, 54
+Attack
+  xy: 546, 172
+  size: 78, 54
+Hit
+  xy: 0, 226
+  size: 78, 54
+Hit
+  xy: 78, 226
+  size: 78, 54
+Hit
+  xy: 156, 226
+  size: 78, 54
+Hit
+  xy: 234, 226
+  size: 78, 54
+Death
+  xy: 0, 280
+  size: 78, 54
+Death
+  xy: 78, 280
+  size: 78, 54
+Death
+  xy: 156, 280
+  size: 78, 54
+Death
+  xy: 234, 280
+  size: 78, 54
+Death
+  xy: 312, 280
+  size: 78, 54
+Death
+  xy: 390, 280
+  size: 78, 54
+Death
+  xy: 468, 280
+  size: 78, 54
+Death
+  xy: 546, 280
+  size: 78, 54
+Death
+  xy: 624, 280
+  size: 78, 54
+IdleUp
+  xy: 0, 334
+  size: 78, 54
+IdleUp
+  xy: 78, 334
+  size: 78, 54
+IdleUp
+  xy: 156, 334
+  size: 78, 54
+IdleUp
+  xy: 234, 334
+  size: 78, 54
+IdleDown
+  xy: 0, 388
+  size: 78, 54
+IdleDown
+  xy: 78, 388
+  size: 78, 54
+IdleDown
+  xy: 156, 388
+  size: 78, 54
+IdleDown
+  xy: 234, 388
+  size: 78, 54
+WalkUp
+  xy: 0, 442
+  size: 78, 54
+WalkUp
+  xy: 78, 442
+  size: 78, 54
+WalkUp
+  xy: 156, 442
+  size: 78, 54
+WalkUp
+  xy: 234, 442
+  size: 78, 54
+WalkUp
+  xy: 312, 442
+  size: 78, 54
+WalkUp
+  xy: 390, 442
+  size: 78, 54
+WalkUp
+  xy: 468, 442
+  size: 78, 54
+WalkUp
+  xy: 546, 442
+  size: 78, 54
+WalkDown
+  xy: 0, 496
+  size: 78, 54
+WalkDown
+  xy: 78, 496
+  size: 78, 54
+WalkDown
+  xy: 156, 496
+  size: 78, 54
+WalkDown
+  xy: 234, 496
+  size: 78, 54
+WalkDown
+  xy: 312, 496
+  size: 78, 54
+WalkDown
+  xy: 390, 496
+  size: 78, 54
+WalkDown
+  xy: 468, 496
+  size: 78, 54
+WalkDown
+  xy: 546, 496
+  size: 78, 54

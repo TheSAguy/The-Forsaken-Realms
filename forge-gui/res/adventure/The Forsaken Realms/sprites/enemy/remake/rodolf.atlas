@@ -1,0 +1,174 @@
+rodolf.png
+size: 738,559
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 55
+  footprint: 22, 1, 39, 53
+Idle
+  xy: 82, 64
+  size: 82, 55
+Idle
+  xy: 164, 64
+  size: 82, 55
+Idle
+  xy: 246, 64
+  size: 82, 55
+Walk
+  xy: 0, 119
+  size: 82, 55
+Walk
+  xy: 82, 119
+  size: 82, 55
+Walk
+  xy: 164, 119
+  size: 82, 55
+Walk
+  xy: 246, 119
+  size: 82, 55
+Walk
+  xy: 328, 119
+  size: 82, 55
+Walk
+  xy: 410, 119
+  size: 82, 55
+Walk
+  xy: 492, 119
+  size: 82, 55
+Walk
+  xy: 574, 119
+  size: 82, 55
+Attack
+  xy: 0, 174
+  size: 82, 55
+Attack
+  xy: 82, 174
+  size: 82, 55
+Attack
+  xy: 164, 174
+  size: 82, 55
+Attack
+  xy: 246, 174
+  size: 82, 55
+Attack
+  xy: 328, 174
+  size: 82, 55
+Attack
+  xy: 410, 174
+  size: 82, 55
+Hit
+  xy: 0, 229
+  size: 82, 55
+Hit
+  xy: 82, 229
+  size: 82, 55
+Hit
+  xy: 164, 229
+  size: 82, 55
+Hit
+  xy: 246, 229
+  size: 82, 55
+Death
+  xy: 0, 284
+  size: 82, 55
+Death
+  xy: 82, 284
+  size: 82, 55
+Death
+  xy: 164, 284
+  size: 82, 55
+Death
+  xy: 246, 284
+  size: 82, 55
+Death
+  xy: 328, 284
+  size: 82, 55
+Death
+  xy: 410, 284
+  size: 82, 55
+Death
+  xy: 492, 284
+  size: 82, 55
+Death
+  xy: 574, 284
+  size: 82, 55
+Death
+  xy: 656, 284
+  size: 82, 55
+IdleUp
+  xy: 0, 339
+  size: 82, 55
+IdleUp
+  xy: 82, 339
+  size: 82, 55
+IdleUp
+  xy: 164, 339
+  size: 82, 55
+IdleUp
+  xy: 246, 339
+  size: 82, 55
+IdleDown
+  xy: 0, 394
+  size: 82, 55
+IdleDown
+  xy: 82, 394
+  size: 82, 55
+IdleDown
+  xy: 164, 394
+  size: 82, 55
+IdleDown
+  xy: 246, 394
+  size: 82, 55
+WalkUp
+  xy: 0, 449
+  size: 82, 55
+WalkUp
+  xy: 82, 449
+  size: 82, 55
+WalkUp
+  xy: 164, 449
+  size: 82, 55
+WalkUp
+  xy: 246, 449
+  size: 82, 55
+WalkUp
+  xy: 328, 449
+  size: 82, 55
+WalkUp
+  xy: 410, 449
+  size: 82, 55
+WalkUp
+  xy: 492, 449
+  size: 82, 55
+WalkUp
+  xy: 574, 449
+  size: 82, 55
+WalkDown
+  xy: 0, 504
+  size: 82, 55
+WalkDown
+  xy: 82, 504
+  size: 82, 55
+WalkDown
+  xy: 164, 504
+  size: 82, 55
+WalkDown
+  xy: 246, 504
+  size: 82, 55
+WalkDown
+  xy: 328, 504
+  size: 82, 55
+WalkDown
+  xy: 410, 504
+  size: 82, 55
+WalkDown
+  xy: 492, 504
+  size: 82, 55
+WalkDown
+  xy: 574, 504
+  size: 82, 55
