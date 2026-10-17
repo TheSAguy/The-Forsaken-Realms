@@ -118,7 +118,7 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
 ## STATE 2026-10-17 (round 686): **LOCAL + UNRELEASED (code + docs)** - gear sets reveal on OWNING a piece (Sets page, Sets key,
-descriptions "you wear W and own O of 7"); guards' pages unchanged. Agent check pending (the user was in the agent game).
+descriptions "you wear W and own O of 7", now the 2nd line); guards' pages unchanged. Seen in the agent game.
 
 ## STATE 2026-10-17 (round 685): **LOCAL + UNRELEASED (docs)** - the Game Guide caught up: level places, the Power card,
 the hero's growth, History from the end screens, engine 10.16; GUIDE.html regenerated. What's New for 1.22 waits for the release.

@@ -14286,7 +14286,14 @@ counted). A set the player owns nothing of still stays hidden, in shops and rewa
   "Gear set: Dawnward Regalia (Regalia - white) - you wear 2 and own 5 of 7". A guard's pieces are added when the
   player wears none ("; your Master guard wears 3").
 - GUIDE: the Sets page bullet says "own"; `GUIDE.html` regenerated (`--check` OK).
-- Built (Maven) and committed while the user was still using the agent game. The in-game check comes once it is free.
+- **The set line moves up** (`ItemData.getDescription`): it now sits right under the item's own text, before "Slot:".
+  At the end, after "Battlefield:" and "Starting hand:", it fell below a long item's visible lines in the scrolling
+  description box - the user's Ramosian Greatsword showed "Main items 6 / 7" and no set at all.
+- **Seen in the agent game** (agent slot 32, with the Tidal Amulet - Tidewise's only worn piece - taken off):
+  - The Sets page read "Gear Sets - pieces of 7 sets owned, 0 active". Tidewise Regalia stayed listed at 0/7 worn and
+    5/7 owned, with its five pieces in full color; Dawnward Regalia read 1/7 and 5/7.
+  - Unworn pieces name their set on the second line: Cephalid Armor "Gear set: Tidewise Regalia (Regalia - blue) - you
+    wear 0 and own 5 of 7", and Nomad Armor "... Dawnward Regalia ... you wear 1 and own 5 of 7".
 
 ## Round 685: the Game Guide catches up with rounds 648-684 (2026-10-17)
 

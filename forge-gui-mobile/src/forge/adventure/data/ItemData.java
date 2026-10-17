@@ -115,6 +115,11 @@ public class ItemData implements Serializable, Cloneable {
         String baseDescription = !translatedDescription.isEmpty() ? translatedDescription : this.description;
         if(baseDescription != null && !baseDescription.isEmpty())
             result += baseDescription + "\n";
+        // Round 631: a gear set's piece says so. Round 686: right under the item's own text - at the end it fell below a
+        // long item's last visible line (the user: "if not equipped, it does not say it's a set piece").
+        String setLine = forge.adventure.util.ItemSets.descriptionLine(this);
+        if (!setLine.isEmpty())
+            result += setLine + "\n";
         if(this.equipmentSlot != null && !this.equipmentSlot.isEmpty()) {
             // Round 502: a companion (an item that starts a creature in play - Ascendance's companion limit) says so
             // wherever it is shown, shops and rewards too.
@@ -124,9 +129,6 @@ public class ItemData implements Serializable, Cloneable {
         }
         if(effect != null)
             result += effect.getDescription();
-        String setLine = forge.adventure.util.ItemSets.descriptionLine(this); // round 631: a gear set's piece says so
-        if (!setLine.isEmpty())
-            result += (result.isEmpty() || result.endsWith("\n") ? "" : "\n") + setLine + "\n";
         if(shardsNeeded != 0)
             result +=  shardsNeeded+" [+Shards]";
         if (uses > 0) { // round 336: the kit's fires left, from the player
