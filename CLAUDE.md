@@ -117,9 +117,6 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
-## STATE 2026-10-16 (round 682): **LOCAL + UNRELEASED (code)** - level places (668/669/674) arrive silently under the fog:
-no notice, no fog cleared (`LevelPlaces.place`); the log and `levelplaces info` still tell where.
-
 ## STATE 2026-10-16 (round 681): **LOCAL + UNRELEASED (art)** - 13 left-facing sprites mirrored (11 Ragnarok, the Drowned
 Deckhand's walk, Gev via a plane copy of the stock gecko), the 55 tfr2 duel portraits re-pixelated crisp at x2, and
 Frostcloak's two Santa-hat Death frames dropped (`dev-tools/art-import/facing681.py`, ledger facing681_done.json - do not
