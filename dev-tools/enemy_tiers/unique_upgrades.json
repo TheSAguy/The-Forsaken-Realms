@@ -10483,6 +10483,13 @@
    0.88
   ]
  },
+ "decks/standard/tfr2/kraul_broodmother.dck": {
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "kept",
+  "note": "round 679: a new Archmage deck built at strength; the pass's pick (The Last Ronin, destroy all creatures) works against her insect swarm"
+ },
  "decks/standard/tfr2/nightscale_dragon.dck": {
   "old": "Greed's Gambit",
   "new": "The Eldest Reborn",

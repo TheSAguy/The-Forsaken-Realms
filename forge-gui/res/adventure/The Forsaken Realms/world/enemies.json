@@ -164852,6 +164852,89 @@
         "scale": 0.2889
     },
     {
+        "name": "Kraul Broodmother",
+        "sprite": "sprites/enemy/remake/kraul_broodmother.atlas",
+        "deck": [
+            "decks/standard/tfr2/kraul_broodmother.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 3,
+        "speed": 40,
+        "life": 47,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 3,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 60,
+                "addMaxCount": 140
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.75,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ],
+                "subTypes": [
+                    "Insect"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4
+            }
+        ],
+        "colors": "BG",
+        "questTags": [
+            "Insect",
+            "Spider",
+            "Swarm",
+            "Leader",
+            "Large",
+            "IdentityBlack",
+            "IdentityGreen",
+            "IdentityGolgari",
+            "BiomeBlack",
+            "BiomeGreen"
+        ],
+        "tier": "Mythic",
+        "scale": 0.2653
+    },
+    {
         "name": "Fleshrender Hulk",
         "sprite": "sprites/enemy/tfr2/fleshrender_hulk.atlas",
         "deck": [

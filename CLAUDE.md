@@ -117,6 +117,9 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 679): **LOCAL + UNRELEASED (data)** - the Kraul Broodmother (round 678's sprite) as a BG Archmage:
+47 life, tfr2 insect/death-trigger deck, black + green rosters, scale 0.2653; round 644's swap skipped ("kept" in the ledger).
+
 ## STATE 2026-10-16 (round 678): **LOCAL + UNRELEASED (art + data)** - three driders on the user's drawn spider body
 (naga_tails/spider12, walk poses): the Broodweaver Drider as a drow, Mazirek female with her card's human face, and the
 new Kraul Broodmother's atlas (her data = #32's 679). Generator `lpc_selections/make_678.py`. Not seen in play.

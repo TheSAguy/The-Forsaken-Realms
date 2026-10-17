@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 679: the Kraul Broodmother, an Archmage of black and green lands (2026-10-16)
+
+The data for round 678's third drider look (the user asked for "all 3" as enemies; the Procedural Pixel Creatures
+session drew her and asked this session for the rest, as in round 510). She is a female kraul on the spider body: a
+mantis head, black insect wings, black robes, a maroon cape and a gnarled staff. Her name is a working name.
+
+- **The entry** (`world/enemies.json`, after the Broodweaver Drider):
+  - **Mythic (Archmage)**, BG. Black-green's roaming enemies stood at 11 / 11 / 11 / 2 by rank, so she fills the thin
+    one. Archmages are unique art with one deck (round 642), which she is.
+  - 47 life, difficulty 3, speed 40: the Archmage medians, a little slow on the spider body. Not flying.
+  - Rewards on Queen of the Gilded Brood's pattern (the other insect queen): deck commons, 60-200 gold, commons and
+    uncommons, a 75% rare or mythic Insect card, deck rares and shards.
+  - Tags: Insect, Spider, Swarm, Leader, Large, the Golgari identity tags, BiomeBlack, BiomeGreen.
+  - Scale 0.2653 (`enemy_scale.py`, the only change it made), and the footprint written onto her atlas
+    (`sprite_footprints.py`, the only atlas it wrote).
+- **Her deck** (`decks/standard/tfr2/kraul_broodmother.dck`, 60):
+  - A kraul death priestess's brood: Insects, death triggers and Insect tokens.
+  - Creatures: 4 Infestation Sage, 4 Kraul Harpooner, 3 Kraul Stinger, 3 Kraul Whipcracker, 2 Kraul Swarm, 2 Kraul
+    Foragers, 2 Infestation Expert, 2 Hornet Queen, 4 Blood Artist and 2 Morbid Opportunist.
+  - Spells: Grist, the Hunger Tide, 2 Moldervine Reclamation, 2 Assassin's Trophy, 2 Infernal Grasp and 1 Find //
+    Finality.
+  - 24 lands: Woodland Cemetery, Llanowar Wastes, Underground Mortuary and a Swarmyard to regenerate her Insects.
+  - No restricted card. She is not Mazirek (a legend) and has no quest line.
+- **Round 644's one-card upgrade, skipped on purpose**:
+  - Its pick was Moldervine Reclamation out for The Last Ronin, whose chapter I destroys all creatures, against her own
+    swarm.
+  - `unique_upgrades.json` records her deck as `"kind": "kept"` with the reason, so a later run leaves it. The tool reads
+    the row as handled.
+- **Where**: the "enemies" roster of black and green lands, beside the Broodweaver Drider; `enemies.csv` has her row.
+- **Checks**:
+  - `validate_plane_data.py` flagged only her footprint before `--write`. `deck_legality_audit.py` says nothing about
+    her deck.
+- **Seen in the agent game** (spawned on a copy of the user's save):
+  - She walked the world map at Archmage size in her colors, well over the hero at Ascendance 4.
+  - The duel: 47 life, scaled to 59 for the first week. She won on turn 6 against the 13-life test hero, with
+    Infestation Sage, Insect tokens, Kraul Whipcracker and Grist on her board, ending at 56 life.
+  - No exception in the log. Not seen: a win against her, and her rewards screen.
+
 ## Round 678: three driders on a drawn spider body (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_678.py`. Round 676's drawn
