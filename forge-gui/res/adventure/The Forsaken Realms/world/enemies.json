@@ -17180,7 +17180,7 @@
     },
     {
         "name": "Holy Apparition",
-        "sprite": "sprites/enemy/celestial/seraphim.atlas",
+        "sprite": "sprites/enemy/remake/holy_apparition.atlas",
         "deck": [
             "decks/standard/seraphim.dck"
         ],
@@ -17188,7 +17188,7 @@
         "spawnRate": 0.2,
         "difficulty": 3,
         "speed": 49,
-        "scale": 0.619,
+        "scale": 0.2955,
         "life": 45,
         "rewards": [
             {
@@ -37664,13 +37664,13 @@
     },
     {
         "name": "Child of Alara",
-        "sprite": "sprites/enemy/celestial/seraphim.atlas",
+        "sprite": "sprites/enemy/remake/child_of_alara.atlas",
         "deck": [
             "decks/legends/child_of_alara.dck"
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.619,
+        "scale": 0.2955,
         "life": 50,
         "rewards": [
             {
@@ -120507,7 +120507,7 @@
     },
     {
         "name": "Twister of Time",
-        "sprite": "sprites/enemy/celestial/seraphim.atlas",
+        "sprite": "sprites/enemy/remake/twister_of_time.atlas",
         "deck": [
             "decks/miniboss/twister_of_time.dck"
         ],
@@ -120722,7 +120722,7 @@
         "tier": "Rare",
         "difficulty": 2,
         "flying": true,
-        "scale": 0.9285
+        "scale": 0.4431
     },
     {
         "name": "Time Walker",

@@ -117,6 +117,10 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 680): **LOCAL + UNRELEASED (art + data)** - Holy Apparition, Child of Alara and Twister of Time
+get the user's Pixelate ring angel (generator `pixelate/holy_apparition/`). enemies.json 3 paths + scales. Not seen in
+play.
+
 ## STATE 2026-10-16 (round 679): **LOCAL + UNRELEASED (data)** - the Kraul Broodmother (round 678's sprite) as a BG Archmage:
 47 life, tfr2 insect/death-trigger deck, black + green rosters, scale 0.2653; round 644's swap skipped ("kept" in the ledger).
 

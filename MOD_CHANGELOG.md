@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 680: Holy Apparition gets the user's hand-made art (2026-10-16)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/holy_apparition/convert.sh`. This is list 3's
+F113: the stock `celestial/seraphim` sprite, a ball of gold rings round one eye. Round 673 moved Kaalia and Lyra off it
+to LPC.
+
+- **The art**: a ChatGPT still in the stock sprite's design (three gem-studded gold rings crossed like a gyroscope round
+  one blue eye), then four Kling clips and Pixelate sheets.
+  - The idle and walk turn the rings and blink the eye.
+  - The death whitens the eye; the rings then break and fall into a pile of gem-studded pieces.
+  - The attack is a body ram rather than an eye beam, which Kling turns into a magic burst. Kling held still for 16
+    frames, so the attack keeps the stance, the rise, the ram's landing and the hold.
+  - Kling's white impact puff stuck to the rings. The new `pixelate/holy_apparition/depuff.py` clears only
+    blue-leaning pixels in two boxes at the rings' edge; the eye stays outside them.
+- **The three on it**: Holy Apparition (0.2955), Child of Alara (0.2955) and the miniboss
+  Twister of Time (0.4431: a boss keeps his drawn size).
+- **Files**:
+  - 3 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 3 sprite paths and scales.
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 3, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - `sprite_artifact_audit.py`: the ground shadow left behind while the ring rams up and away (Attack; the flyers' expected case) and the death's pile of ring pieces (review).
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 679: the Kraul Broodmother, an Archmage of black and green lands (2026-10-16)
 
 The data for round 678's third drider look (the user asked for "all 3" as enemies; the Procedural Pixel Creatures

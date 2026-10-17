@@ -1,0 +1,132 @@
+twister_of_time.png
+size: 2184,709
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 168, 129
+  footprint: 52, 51, 62, 71
+Idle
+  xy: 168, 64
+  size: 168, 129
+Idle
+  xy: 336, 64
+  size: 168, 129
+Idle
+  xy: 504, 64
+  size: 168, 129
+Idle
+  xy: 672, 64
+  size: 168, 129
+Idle
+  xy: 840, 64
+  size: 168, 129
+Idle
+  xy: 1008, 64
+  size: 168, 129
+Idle
+  xy: 1176, 64
+  size: 168, 129
+Idle
+  xy: 1344, 64
+  size: 168, 129
+Idle
+  xy: 1512, 64
+  size: 168, 129
+Idle
+  xy: 1680, 64
+  size: 168, 129
+Idle
+  xy: 1848, 64
+  size: 168, 129
+Walk
+  xy: 0, 193
+  size: 168, 129
+Walk
+  xy: 168, 193
+  size: 168, 129
+Walk
+  xy: 336, 193
+  size: 168, 129
+Walk
+  xy: 504, 193
+  size: 168, 129
+Walk
+  xy: 672, 193
+  size: 168, 129
+Walk
+  xy: 840, 193
+  size: 168, 129
+Walk
+  xy: 1008, 193
+  size: 168, 129
+Walk
+  xy: 1176, 193
+  size: 168, 129
+Attack
+  xy: 0, 322
+  size: 168, 129
+Attack
+  xy: 168, 322
+  size: 168, 129
+Attack
+  xy: 336, 322
+  size: 168, 129
+Attack
+  xy: 504, 322
+  size: 168, 129
+Hit
+  xy: 0, 451
+  size: 168, 129
+Hit
+  xy: 168, 451
+  size: 168, 129
+Hit
+  xy: 336, 451
+  size: 168, 129
+Hit
+  xy: 504, 451
+  size: 168, 129
+Death
+  xy: 0, 580
+  size: 168, 129
+Death
+  xy: 168, 580
+  size: 168, 129
+Death
+  xy: 336, 580
+  size: 168, 129
+Death
+  xy: 504, 580
+  size: 168, 129
+Death
+  xy: 672, 580
+  size: 168, 129
+Death
+  xy: 840, 580
+  size: 168, 129
+Death
+  xy: 1008, 580
+  size: 168, 129
+Death
+  xy: 1176, 580
+  size: 168, 129
+Death
+  xy: 1344, 580
+  size: 168, 129
+Death
+  xy: 1512, 580
+  size: 168, 129
+Death
+  xy: 1680, 580
+  size: 168, 129
+Death
+  xy: 1848, 580
+  size: 168, 129
+Death
+  xy: 2016, 580
+  size: 168, 129
