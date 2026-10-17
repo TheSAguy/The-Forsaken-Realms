@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 683: Baneful Cavern opened up, and the imported maps checked for sealed-off space (2026-10-16)
+
+The user, in round 674's Baneful Cavern: "I think this is one of the new caves. Is seems most of the cave is not
+reachable?", then "Open Baneful Cavern up: connect the rooms, move Axelrod and the gold to the far hall, and check the
+other imported Realm of Legends maps for the same sealed-off scenery."
+
+- **What was wrong**:
+  - As Realm of Legends shipped it (our file was byte-identical), the entrance room held the entry, Axelrod Gunnarson
+    and two gold piles. A band of rock 1 to 2 tiles wide walled it off from the rest of the cave.
+  - The rest was scenery with nothing in it: from the entrance, 16.1% of the walkable space was reachable.
+- **The fix** (`dev-tools/rol_import/open_baneful_r683.py`, rerunnable - a second run changes nothing):
+  - A passage two tiles wide is carved from the entrance room's top wall up to the long corridor.
+  - It is carved on the Walls layer at the corners of main.tsx's "Walls" corner terrain, the set `gen_caves.py` paints
+    caves with. The terrain's own rules re-pick the edge tiles around the opening, using the variant the map already
+    uses most: 12 cells repainted, no missing combination.
+  - Axelrod (object 53) moves to the far top-right chamber, the longest walk from the entrance, with the gold (49, 68)
+    either side of him.
+  - From the entrance, 100% of the walkable space is now reachable (`pixel_collision_qa.py`'s grid, the player's 10x6
+    box). The entry dialog ("A giant crouches and huddles ahead") still fits.
+- **The other 27 imported maps** (rounds 668, 669, 674), measured from their entrances at pixel precision:
+  - Every enemy placement (70) and every pickup is reachable, except one: Skeleton Ship's Hard-only cache of three
+    rare Sphinx cards. Realm of Legends parked it off the edge of the map (x 1079, y -229), so no player ever saw it,
+    and a Sphinx cache does not fit a skeleton ship. It is left as it is.
+  - The space cut off elsewhere is surroundings, not cave:
+    - the void or lava around the building in Jester's Tent, Nekoru Nest, Rathi Shadow Rift, Tresserhorn Keep and
+      the four Hexhaven floors;
+    - cliff plateaus in Assembly Ground and the Argivian Military Camp;
+    - the woods and mountains outside the walls of Koskun Keep and the Cursed Graveyard;
+    - the dark between the Theorist's Sanctum's side rooms and the Echoverse Overlay's platforms, whose enemies and
+      pickups the flood reaches.
+  - Only Baneful Cavern had cave floor of the kind the player walks on cut off.
+- **Seen in the agent game** (a copy of the user's save):
+  - From the entrance, the hero walked up the new passage, along the corridor and into the far chamber.
+  - It picked up a gold pile (Axelrod, guarding it, came for the player as round 280's robbed guards do), and the duel
+    with Axelrod began.
+  - No exception in the log.
+- Review sheet: Art Library `Review Sheets/Baneful Cavern (2026-10-16)`.
+
 ## Round 681: thirteen sprites stop walking backwards; crisp tfr2 portraits; Frostcloak's Santa hat (2026-10-16)
 
 The Procedural Pixel Creatures session, by `dev-tools/art-import/facing681.py` (its ledger:

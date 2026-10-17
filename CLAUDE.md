@@ -117,6 +117,9 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 683): **LOCAL + UNRELEASED (data)** - Baneful Cavern opened: a passage from the entrance room
+to the corridor (`open_baneful_r683.py`, Walls corner terrain), Axelrod + gold in the far chamber; the other 27 RoL maps checked: no other sealed cave.
+
 ## STATE 2026-10-16 (round 681): **LOCAL + UNRELEASED (art)** - 13 left-facing sprites mirrored (11 Ragnarok, the Drowned
 Deckhand's walk, Gev via a plane copy of the stock gecko), the 55 tfr2 duel portraits re-pixelated crisp at x2, and
 Frostcloak's two Santa-hat Death frames dropped (`dev-tools/art-import/facing681.py`, ledger facing681_done.json - do not
