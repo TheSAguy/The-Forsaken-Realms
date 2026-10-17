@@ -117,6 +117,20 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-17 (15:01 UTC): **v1.22 "Legends & Lairs" RELEASED** - tag `tfr-v1.22` @ `bd70a26ecb1`, published
+15:01:03 UTC, Latest. Rounds 621-688 on top of v1.21 (682 reverted). Engine = the 10.17 daily (upstream `ea5fe47050d`,
+round 687), packaged on the 10.16 BASE_INSTALL with round 688's base-gap overlay (Forge had not published the 10.17
+daily yet; `--allow-base-mismatch`). The user play-tested targeting (#12259) before publishing. Assets in
+`C:\TFR\release\v1.22`:
+- `The-Forsaken-Realms-v1.22.zip` 474.8 MB;
+- `forsaken-realms-1.22-signed-aligned.apk` 13.8 MB (com.thesaguy.forsakenrealms, versionCode 12200, signer EE:60:39:25);
+- `assets.zip` 426.0 MB (Android from `C:\TFR-build` via R:).
+
+Notes = `RELEASE_NOTES_v1.22.md` (the user's own wording; numbers, lists and the Android section filled in). Promo
+artifact v11 updated (stats 2,150+ / 360+ / 34,000+ / 730+, three new system cards). Live + agent = the release.
+NOTHING is unreleased. Next version: 1.23 / 12300. Next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL
+once Forge publishes a daily at or past it (then the base gap is empty again).
+
 ## STATE 2026-10-17 (round 688): **LOCAL + UNRELEASED (tools)** - the packager overlays upstream res changes newer than BASE_INSTALL
 (base_gap_files; Agonizing Remorse ships); agent duels at 50x (tfr_agent.py duel_at_50x). Live packaged for the user's targeting test.
 

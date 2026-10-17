@@ -1942,7 +1942,7 @@ session (grab it before restarting, or pick the matching dated file). Screenshot
 
 ---
 
-*This guide covers The Forsaken Realms v1.21, as of 2026-10-15. See `MOD_CHANGELOG.md` in the
+*This guide covers The Forsaken Realms v1.22, as of 2026-10-17. See `MOD_CHANGELOG.md` in the
 repository for the full history of how the game got here, if you're curious.*
 
 ## Support & Community
