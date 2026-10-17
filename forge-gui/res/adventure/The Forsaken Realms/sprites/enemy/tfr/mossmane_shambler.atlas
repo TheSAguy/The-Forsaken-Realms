@@ -1,5 +1,5 @@
 mossmane_shambler.png
-size: 630,585
+size: 864,600
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,85 +8,95 @@ Avatar
   size: 65, 65
 Idle
   xy: 0, 65
-  size: 70, 104
+  size: 96, 107
+  footprint: 16, 2, 70, 102
 Idle
-  xy: 70, 65
-  size: 70, 104
+  xy: 96, 65
+  size: 96, 107
 Idle
-  xy: 140, 65
-  size: 70, 104
+  xy: 192, 65
+  size: 96, 107
 Idle
-  xy: 210, 65
-  size: 70, 104
+  xy: 288, 65
+  size: 96, 107
 Idle
-  xy: 280, 65
-  size: 70, 104
+  xy: 384, 65
+  size: 96, 107
 Idle
-  xy: 350, 65
-  size: 70, 104
+  xy: 480, 65
+  size: 96, 107
 Idle
-  xy: 420, 65
-  size: 70, 104
+  xy: 576, 65
+  size: 96, 107
 Walk
-  xy: 0, 169
-  size: 70, 104
+  xy: 0, 172
+  size: 96, 107
 Walk
-  xy: 70, 169
-  size: 70, 104
+  xy: 96, 172
+  size: 96, 107
 Walk
-  xy: 140, 169
-  size: 70, 104
+  xy: 192, 172
+  size: 96, 107
 Walk
-  xy: 210, 169
-  size: 70, 104
+  xy: 288, 172
+  size: 96, 107
 Walk
-  xy: 280, 169
-  size: 70, 104
+  xy: 384, 172
+  size: 96, 107
 Walk
-  xy: 350, 169
-  size: 70, 104
+  xy: 480, 172
+  size: 96, 107
 Walk
-  xy: 420, 169
-  size: 70, 104
+  xy: 576, 172
+  size: 96, 107
 Attack
-  xy: 0, 273
-  size: 70, 104
+  xy: 0, 279
+  size: 96, 107
 Attack
-  xy: 70, 273
-  size: 70, 104
+  xy: 96, 279
+  size: 96, 107
 Attack
-  xy: 140, 273
-  size: 70, 104
+  xy: 192, 279
+  size: 96, 107
 Attack
-  xy: 210, 273
-  size: 70, 104
+  xy: 288, 279
+  size: 96, 107
 Attack
-  xy: 280, 273
-  size: 70, 104
+  xy: 384, 279
+  size: 96, 107
 Attack
-  xy: 350, 273
-  size: 70, 104
+  xy: 480, 279
+  size: 96, 107
 Attack
-  xy: 420, 273
-  size: 70, 104
+  xy: 576, 279
+  size: 96, 107
 Attack
-  xy: 490, 273
-  size: 70, 104
+  xy: 672, 279
+  size: 96, 107
 Attack
-  xy: 560, 273
-  size: 70, 104
+  xy: 768, 279
+  size: 96, 107
 Hit
-  xy: 0, 377
-  size: 70, 104
+  xy: 0, 386
+  size: 96, 107
 Death
-  xy: 0, 481
-  size: 70, 104
+  xy: 0, 493
+  size: 96, 107
 Death
-  xy: 70, 481
-  size: 70, 104
+  xy: 96, 493
+  size: 96, 107
 Death
-  xy: 140, 481
-  size: 70, 104
+  xy: 192, 493
+  size: 96, 107
 Death
-  xy: 210, 481
-  size: 70, 104
+  xy: 288, 493
+  size: 96, 107
+Death
+  xy: 384, 493
+  size: 96, 107
+Death
+  xy: 480, 493
+  size: 96, 107
+Death
+  xy: 576, 493
+  size: 96, 107

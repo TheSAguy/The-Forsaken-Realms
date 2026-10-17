@@ -1,5 +1,5 @@
 anvilhorn_minotaur.png
-size: 1040,770
+size: 1296,965
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,76 +8,80 @@ Avatar
   size: 120, 120
 Idle
   xy: 0, 120
-  size: 130, 130
+  size: 162, 169
+  footprint: 25, 17, 128, 128
 Idle
-  xy: 130, 120
-  size: 130, 130
+  xy: 162, 120
+  size: 162, 169
 Idle
-  xy: 260, 120
-  size: 130, 130
+  xy: 324, 120
+  size: 162, 169
 Idle
-  xy: 390, 120
-  size: 130, 130
+  xy: 486, 120
+  size: 162, 169
 Idle
-  xy: 520, 120
-  size: 130, 130
+  xy: 648, 120
+  size: 162, 169
 Idle
-  xy: 650, 120
-  size: 130, 130
+  xy: 810, 120
+  size: 162, 169
 Idle
-  xy: 780, 120
-  size: 130, 130
+  xy: 972, 120
+  size: 162, 169
 Idle
-  xy: 910, 120
-  size: 130, 130
+  xy: 1134, 120
+  size: 162, 169
 Walk
-  xy: 0, 250
-  size: 130, 130
+  xy: 0, 289
+  size: 162, 169
 Walk
-  xy: 130, 250
-  size: 130, 130
+  xy: 162, 289
+  size: 162, 169
 Walk
-  xy: 260, 250
-  size: 130, 130
+  xy: 324, 289
+  size: 162, 169
 Walk
-  xy: 390, 250
-  size: 130, 130
+  xy: 486, 289
+  size: 162, 169
 Walk
-  xy: 520, 250
-  size: 130, 130
+  xy: 648, 289
+  size: 162, 169
 Walk
-  xy: 650, 250
-  size: 130, 130
+  xy: 810, 289
+  size: 162, 169
 Walk
-  xy: 780, 250
-  size: 130, 130
+  xy: 972, 289
+  size: 162, 169
 Walk
-  xy: 910, 250
-  size: 130, 130
+  xy: 1134, 289
+  size: 162, 169
 Attack
-  xy: 0, 380
-  size: 130, 130
+  xy: 0, 458
+  size: 162, 169
 Attack
-  xy: 130, 380
-  size: 130, 130
+  xy: 162, 458
+  size: 162, 169
 Attack
-  xy: 260, 380
-  size: 130, 130
+  xy: 324, 458
+  size: 162, 169
 Attack
-  xy: 390, 380
-  size: 130, 130
+  xy: 486, 458
+  size: 162, 169
 Attack
-  xy: 520, 380
-  size: 130, 130
+  xy: 648, 458
+  size: 162, 169
 Attack
-  xy: 650, 380
-  size: 130, 130
+  xy: 810, 458
+  size: 162, 169
 Attack
-  xy: 780, 380
-  size: 130, 130
+  xy: 972, 458
+  size: 162, 169
 Hit
-  xy: 0, 510
-  size: 130, 130
+  xy: 0, 627
+  size: 162, 169
 Death
-  xy: 0, 640
-  size: 130, 130
+  xy: 0, 796
+  size: 162, 169
+Death
+  xy: 162, 796
+  size: 162, 169

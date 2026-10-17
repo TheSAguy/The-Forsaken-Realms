@@ -144592,7 +144592,7 @@
             "BiomeRed"
         ],
         "tier": "Common",
-        "scale": 0.3421
+        "scale": 0.3514
     },
     {
         "name": "Grimtusk Matron",
@@ -149000,7 +149000,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.2063
+        "scale": 0.2321
     },
     {
         "name": "Cracked Shieldbone",
@@ -149077,7 +149077,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.2097
+        "scale": 0.2321
     },
     {
         "name": "Deepvein Bonedigger",

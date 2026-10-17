@@ -14264,6 +14264,55 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 689: six Ragnarok walks stop jumping mid-step (2026-10-17)
+
+The Procedural Pixel Creatures session. This is the separate pass that round 681's "Not fixed here" line names: six
+round-179 Ragnarok Online enemies whose walk switched to a different, larger drawing partway through the cycle.
+
+- **The cause**: round 179's `art_convert.py` had two faults.
+  - **It misread these six sheets' rows.**
+    - Rattling Bones and Cracked Shieldbone walked with their attack row, slash smear included, and attacked with
+      their hurt frames.
+    - Barrow Bonebow's walk ran on into the back view, and his attack was the back view.
+    - Orcling Rascal's idle turned its back halfway through; his walk was the attack, and his attack was the hurt and
+      death frames.
+  - **It centered every frame on its own bounding box.** The body slid sideways whenever a weapon swung out, and
+    dropped whenever a foot lifted. Anvilhorn Minotaur and Mossmane Shambler had the right rows but slid, and the
+    minotaur's hammer frames that were too big for the cell were shrunk.
+- **The fix**: `dev-tools/art-import/round689/ro_recut.py` cuts each sprite again from its source sheet, which is in
+  the user's Art Library.
+  - **The frames**: named by hand, front view only.
+  - **The anchor**: the body. Idle and Walk frames line up on the head and shoulders, Attack, Hit and Death on the whole
+    figure, and the vertical offsets stay as drawn on the sheet.
+  - **The cell**: big enough for every pose, so nothing is shrunk.
+  - **Facing**: each sprite keeps the facing of its current atlas, so the minotaur keeps round 681's mirror.
+  - **Avatars**: unchanged.
+- **Per enemy**:
+  - **Rattling Bones** (0.2321) and **Cracked Shieldbone** (0.2321): their sheets
+    have one "Standing & Walking" animation, so Walk is the 8-frame shuffle. The attack is the 8-frame swing; Hit and a
+    4-frame Death come from "Hurt & Dying".
+  - **Barrow Bonebow** (0.2): a 4-frame walk, the front half of the walking row. The attack is the
+    8-frame draw and shot.
+  - **Orcling Rascal** (0.3514): the front halves only; a 4-frame idle, a 4-frame walk, and a 6-frame
+    wind-up and chop.
+  - **Anvilhorn Minotaur** (0.1667): the same frames, now steady; the attack is no longer shrunk.
+  - **Mossmane Shambler** (0.2364): it walks with its winged idle, the user's pick. The sheet's
+    walking row has no wings, so they popped on and off at every stop.
+- **Files**:
+  - 6 atlases + PNGs under `sprites/enemy/tfr/`.
+  - enemies.json: 3 scales moved by `enemy_scale.py`, because the walks the size is measured on are now the right
+    frames.
+  - Footprints rewritten.
+- **Checks**:
+  - enemies.json against HEAD: only these 3 `scale` lines.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - `sprite_artifact_audit.py` on all six: clean.
+  - Tier families untouched: they carry only life and decks.
+  - Every Walk previewed as a before/after GIF.
+- **Source files**: in the Art Library repository, the six source sheets in `Units/`, with the before and after atlases
+  in `Units/Custom/<Creature>`.
+
 ## Round 688: the packager ships upstream's newer stock files; agent duels at 50x (2026-10-17)
 
 - **The base gap** (`standalone-packaging/build_standalone.py`, `base_gap_files`). Forge had not yet published the

@@ -131,6 +131,11 @@ artifact v11 updated (stats 2,150+ / 360+ / 34,000+ / 730+, three new system car
 NOTHING is unreleased. Next version: 1.23 / 12300. Next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL
 once Forge publishes a daily at or past it (then the base gap is empty again).
 
+## STATE 2026-10-17 (round 689): **LOCAL + UNRELEASED (art)** - six round-179 Ragnarok enemies cut again from their source
+sheets (Barrow Bonebow, Rattling Bones, Cracked Shieldbone, Anvilhorn Minotaur, Orcling Rascal, Mossmane Shambler):
+the right rows, frames anchored on the body, so the walks no longer jump (dev-tools/art-import/round689/ro_recut.py).
+3 scales moved.
+
 ## STATE 2026-10-17 (round 688): **LOCAL + UNRELEASED (tools)** - the packager overlays upstream res changes newer than BASE_INSTALL
 (base_gap_files; Agonizing Remorse ships); agent duels at 50x (tfr_agent.py duel_at_50x). Live packaged for the user's targeting test.
 

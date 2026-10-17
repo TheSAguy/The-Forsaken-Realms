@@ -1,5 +1,5 @@
 orcling_rascal.png
-size: 400,207
+size: 390,395
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,55 +8,52 @@ Avatar
   size: 45, 45
 Idle
   xy: 0, 45
-  size: 50, 54
+  size: 65, 70
 Idle
-  xy: 50, 45
-  size: 50, 54
+  xy: 65, 45
+  size: 65, 70
 Idle
-  xy: 100, 45
-  size: 50, 54
+  xy: 130, 45
+  size: 65, 70
 Idle
-  xy: 150, 45
-  size: 50, 54
-Idle
-  xy: 200, 45
-  size: 50, 54
-Idle
-  xy: 250, 45
-  size: 50, 54
-Idle
-  xy: 300, 45
-  size: 50, 54
-Idle
-  xy: 350, 45
-  size: 50, 54
+  xy: 195, 45
+  size: 65, 70
 Walk
-  xy: 0, 99
-  size: 50, 54
+  xy: 0, 115
+  size: 65, 70
 Walk
-  xy: 50, 99
-  size: 50, 54
+  xy: 65, 115
+  size: 65, 70
 Walk
-  xy: 100, 99
-  size: 50, 54
+  xy: 130, 115
+  size: 65, 70
 Walk
-  xy: 150, 99
-  size: 50, 54
-Walk
-  xy: 200, 99
-  size: 50, 54
-Walk
-  xy: 250, 99
-  size: 50, 54
+  xy: 195, 115
+  size: 65, 70
 Attack
-  xy: 0, 153
-  size: 50, 54
+  xy: 0, 185
+  size: 65, 70
 Attack
-  xy: 50, 153
-  size: 50, 54
+  xy: 65, 185
+  size: 65, 70
 Attack
-  xy: 100, 153
-  size: 50, 54
+  xy: 130, 185
+  size: 65, 70
 Attack
-  xy: 150, 153
-  size: 50, 54
+  xy: 195, 185
+  size: 65, 70
+Attack
+  xy: 260, 185
+  size: 65, 70
+Attack
+  xy: 325, 185
+  size: 65, 70
+Hit
+  xy: 0, 255
+  size: 65, 70
+Death
+  xy: 0, 325
+  size: 65, 70
+Death
+  xy: 65, 325
+  size: 65, 70
