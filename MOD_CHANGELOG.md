@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 687: the engine to the 10.17 daily (upstream `ea5fe47050d`), before v1.22 (2026-10-17)
+
+The standing rule - merge the latest upstream before a release. Three commits had landed since round 665; the user,
+offered shipping on 10.16 with only the content fixes: "Merge all three upstream commits first; I'll play-test
+targeting before we publish."
+
+- **The three commits**:
+  - **#12259, "Send each prompt's marks to the GUI as one selection"** (26 files). The human player's targeting and
+    selection inputs - targets, attackers, blockers, the London mulligan, convoke, the stack - hand the GUI one
+    `Selection` instead of separate marks; `IGuiGame`, `AbstractGuiGame`, MatchController and the network protocol
+    follow. This is the part that needs the user's play-test: Forge's AI plays both seats in the agent game, so the
+    human prompts are never shown there.
+  - **#12282**: Agonizing Remorse no longer misses lands in the graveyard. A card script in the stock asset tree:
+    packaging takes those from `BASE_INSTALL` (still the 10.16 install), so it reaches players when the user next
+    installs a newer stock Forge.
+  - **#12281, Realm of Legends 1.079**: the Ur-Sphinx's deck named two cards wrong ("Cosmic Riddler", "Excogiator
+    Sphinx"), and Alhammarret's Archive named its legend "Alhammaret" - the bug round 674 fixed in our copy.
+- **No conflicts.** MatchController and IGuiGame auto-merged with our ante reveal (`revealAnteCards`) intact; nothing
+  of ours used the replaced methods. Compiles. `config.json` engineBuildVersion `2.0.16-SNAPSHOT-10.17`.
+- **The Ur-Sphinx** (round 668's deck): rebuilt from the fixed source with `rebuild_commander_deck.py`. **3 Quantum
+  Riddler** come in - the converter had dropped the misspelled card - for Dream Eater, Guardian of Tazeem and Yennett,
+  with an Island for a Swamp. Excogitator Sphinx ranks below the cut. Still 60; the ledger keeps it as built-r668.
+
 ## Round 686: gear sets show themselves once you own a piece, not only while you wear one (2026-10-17)
 
 The user, on the Sets page in the agent game: "It looks like the Own column does not show how many you own, unless you

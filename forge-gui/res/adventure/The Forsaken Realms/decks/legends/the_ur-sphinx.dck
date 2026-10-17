@@ -2,12 +2,10 @@
 Name=The Ur-Sphinx
 [Main]
 2 The Ur-Sphinx|FRC
+3 Quantum Riddler|EOE
 3 Consecrated Sphinx|NPH
 3 Sphinx of Clear Skies|DMU
-1 Dream Eater|GRN
 2 Raffine, Scheming Seer|SNC
-1 Guardian of Tazeem|BFZ
-1 Yennett, Cryptic Sovereign|C18
 1 Stoic Sphinx|OTJ
 1 Sphinx of False Conclusions|FRA
 1 Sphinx of Forgotten Lore|FDN
@@ -39,5 +37,5 @@ Name=The Ur-Sphinx
 1 Concealed Courtyard|NEO
 1 Unclaimed Territory|MIC
 3 Plains
-11 Island
-3 Swamp
+12 Island
+2 Swamp

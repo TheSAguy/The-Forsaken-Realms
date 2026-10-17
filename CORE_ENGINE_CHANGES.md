@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 687 - the engine to the 10.17 daily (upstream `ea5fe47050d`)
+
+- No conflicts. #12259 replaces the human inputs' separate GUI marks with one `Selection` (`IGuiGame`,
+  `AbstractGuiGame`, MatchController, `ProtocolMethod`); our `revealAnteCards` (#73) merged around it untouched.
+  Watch: any future TFR code that marks cards for the human (a custom input) should hand the GUI a `Selection` too.
+
 ### Round 668 - places that come with the player's level (LevelPlaces)
 
 - **`PointOfInterestData`** - `appearsAtLevel`, `appearsInBiome` (+ the copy constructor). World generation never
