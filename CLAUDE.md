@@ -131,6 +131,10 @@ artifact v11 updated (stats 2,150+ / 360+ / 34,000+ / 730+, three new system car
 NOTHING is unreleased. Next version: 1.23 / 12300. Next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL
 once Forge publishes a daily at or past it (then the base gap is empty again).
 
+## STATE 2026-10-17 (round 691): **LOCAL + UNRELEASED (code + data)** - the stock "Cheat" test pendant (our copy was Mythic,
+so it dropped from every Mythic pool; Nova on Discord) is excludeFromGeneralSale, and owned copies are removed on load
+(ItemListData.WITHDRAWN, AdventurePlayer.removeWithdrawnItems: pack, storage, guards; one notice, no refund).
+
 ## STATE 2026-10-17 (round 690): **LOCAL + UNRELEASED (code)** - the sea is solid again: World.sealSea() on every load and
 after world generation (the user's slot 3: 410 walkable sea tiles, slot 1: 297), and the writers that zeroed sea tiles
 (world-gen's place-to-town paths, the obstacle sweep, clearTerrain, plazas, corner joins, addPointOfInterestNear) leave

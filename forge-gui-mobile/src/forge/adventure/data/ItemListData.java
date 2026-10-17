@@ -83,6 +83,17 @@ public class ItemListData {
             java.util.Map.entry("lookout's harness", "Lookout's Leggings"),
             java.util.Map.entry("cryptologist's fins", "Cryptologist's Breeches"));
 
+    /** Round 691: items taken out of the game - AdventurePlayer removes a saved copy on load. "Cheat" is stock Forge's
+     *  test pendant (Blightsteel Colossus, Urabrask and Avatar of Slaughter on the battlefield); our copy carried a
+     *  Mythic rarity, so it dropped from every random Mythic pool (Nova on Discord, v1.22: "Seems like a dev test
+     *  item"). The user: remove owned copies with a notice and no refund. Its entry stays in items.json,
+     *  excludeFromGeneralSale, so nothing draws it. Lower case. */
+    private static final java.util.Set<String> WITHDRAWN = java.util.Set.of("cheat");
+
+    public static boolean isWithdrawn(String name) {
+        return name != null && WITHDRAWN.contains(name.toLowerCase(java.util.Locale.ROOT));
+    }
+
     public static ItemData getItem(String name) {
         if (itemList == null || name == null)
             return null;

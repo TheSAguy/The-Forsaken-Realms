@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 691: the "Cheat" test pendant leaves the game (2026-10-17)
+
+Nova on Discord (v1.22), with a screenshot of it: "Is this item supposed to be available? Seems like a dev test item".
+The user: "stop Cheat dropping (excludeFromGeneralSale) and remove copies players already own on load, with a one-line
+notice and no refund."
+
+- **What it was**: stock Forge's `Cheat` (`common/world/items.json`), a Neck item that starts every duel with
+  Blightsteel Colossus, Urabrask the Hidden and Avatar of Slaughter on the battlefield, at a cost of 50,000. Upstream's
+  entry has no rarity, so nothing draws it. Our plane's copy carries `"rarity": "Mythic"`, which put it in every
+  `itemRarity` Mythic pool (`ItemListData.getItemNamesByRarity`): armories, chests, Ascendance item picks, arena prizes.
+  No map, shop or reward list names it. It was the only test item in a scan of the catalog (every other item over
+  10,000 is a real reward).
+- **The fix**:
+  - `items.json`: `"excludeFromGeneralSale": true` on Cheat, so no pool draws it. The entry stays, so an old map or save
+    still resolves the name.
+  - `ItemListData.WITHDRAWN` / `isWithdrawn(name)`: items taken out of the game ("cheat").
+  - `AdventurePlayer.removeWithdrawnItems()`: on load, right after the catalog refresh and before the worn slots load,
+    every copy leaves the pack, the Armory's storage and every guard's gear. No refund. One `[TFR-ItemRefresh]` line
+    and one HUD load notice: "Cheat was a test item and has been removed from the game." A worn copy finds no item and
+    stays off; a deck loadout naming it skips it, which that code already did for a missing item.
+- **Not changed**: a shop that already rolled Cheat into its stock keeps showing it until its weekly reroll. A copy
+  bought there goes on the next load.
+- **Seen in the agent game** (round-691 classes ahead of the agent jar): two copies given by console, one worn at the
+  Neck and saved. On reload the log read `[TFR-ItemRefresh] withdrawn item(s) removed: 2 x [Cheat]`, the pack held no
+  Cheat, the Neck slot was empty, and the notice showed on the map.
+
 ## Round 690: the sea is solid again (2026-10-17)
 
 The user: "Fix TFR 1 walkable-ocean leak". The TFR 2 world-gen research (`docs/research/procedural-worldgen.md`,

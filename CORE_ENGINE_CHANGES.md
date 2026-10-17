@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 691 - withdrawn items (the stock "Cheat" pendant)
+
+- **`forge-gui-mobile/src/forge/adventure/data/ItemListData.java`** - `WITHDRAWN` set + `isWithdrawn(name)`, next to
+  round 512's `RENAMED`.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `removeWithdrawnItems()`, called in `load()`
+  right after `refreshItemDefinitionsFromCatalog()`. No save-format change.
+
 ### Round 690 - the sea collides again
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - new private `seaBiomeMask()`, `isWaterRaw(x, rawY)` and

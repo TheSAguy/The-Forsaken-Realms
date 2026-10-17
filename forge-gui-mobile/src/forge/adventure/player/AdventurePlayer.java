@@ -1387,6 +1387,34 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     /** Round 506: a guard wears one item per slot - one that a re-slotted item now shares a slot with keeps it, the
      *  re-slotted one goes back to the Armory storage. */
+    /** Round 691: a withdrawn item (ItemListData.isWithdrawn - the stock "Cheat" pendant) leaves the pack, the Armory's
+     *  storage and every guard's gear, with one load notice and no refund (the user's call). Runs before the worn slots
+     *  load, so a worn copy finds no item and stays off; a deck loadout naming it skips it the same way. */
+    private void removeWithdrawnItems() {
+        java.util.Set<String> removed = new java.util.TreeSet<>();
+        int count = removeWithdrawn(inventoryItems, removed) + removeWithdrawn(armoryStorage, removed);
+        for (forge.adventure.data.RoamingGuardData guard : roamingGuards)
+            count += removeWithdrawn(guard.equipment, removed);
+        if (count == 0)
+            return;
+        System.out.println("[TFR-ItemRefresh] withdrawn item(s) removed: " + count + " x " + removed);
+        loadNotices.add(String.join(", ", removed) + (removed.size() == 1 ? " was a test item and has"
+                : " were test items and have") + " been removed from the game.");
+    }
+
+    private static int removeWithdrawn(java.util.List<ItemData> items, java.util.Set<String> removed) {
+        int count = 0;
+        for (java.util.Iterator<ItemData> it = items.iterator(); it.hasNext(); ) {
+            ItemData item = it.next();
+            if (item != null && ItemListData.isWithdrawn(item.name)) {
+                removed.add(item.name);
+                it.remove();
+                count++;
+            }
+        }
+        return count;
+    }
+
     private void sendDuplicateGuardSlotsToStorage(java.util.Set<String> reslotted) {
         for (forge.adventure.data.RoamingGuardData guard : roamingGuards) {
             java.util.Set<String> taken = new java.util.HashSet<>();
@@ -1707,6 +1735,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (data.containsKey("guardSpoils"))
             guardSpoils.addAll(CardPool.fromCardList(Lists.newArrayList((String[]) data.readObject("guardSpoils"))));
         refreshItemDefinitionsFromCatalog(); // round 124: saved items take the catalog's current definition
+        removeWithdrawnItems(); // round 691: before the worn slots load, so a worn copy is simply gone
         if (data.containsKey("equippedSlots") && data.containsKey("equippedItems")) {
             try {
                 String[] slots = (String[]) data.readObject("equippedSlots");
