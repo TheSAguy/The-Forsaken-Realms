@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 686: gear sets show themselves once you own a piece, not only while you wear one (2026-10-17)
+
+The user, on the Sets page in the agent game: "It looks like the Own column does not show how many you own, unless you
+are wearing it. Also, if not equipped, it does not say it's a set piece, so you won't know it belongs to a set. ... if I
+remove one of those pieces the whole column disappears.. That does not seem right."
+
+Round 637 revealed a set only while a piece of it was worn: a set with five pieces in the bag and none on did not show,
+its pieces did not name it, and taking off the last worn piece made its row vanish. The trigger is now **owning** a
+piece - carried, worn, in the Armory storage or on a roaming guard (`ItemSets.owns`, as the owned column already
+counted). A set the player owns nothing of still stays hidden, in shops and rewards too.
+
+- **The Sets page** (`SetsScene.listedSets`):
+  - The player's list holds every set they own a piece of, worn or not, with the most worn first and then the most
+    owned. A set with none worn reads "0/7" worn, its owned count, and no bonus.
+  - Title: "Gear Sets - pieces of N sets owned, M active"; with none, "You own no gear set piece yet".
+  - A guard's page is unchanged: the sets that guard wears.
+- **The Sets key** on the inventory doll shows once the player owns a set piece (`ItemSets.ownsAnySet`). A guard's Armory
+  Sets button still needs that guard to wear one.
+- **Descriptions** (`ItemSets.descriptionLine`): every piece of a set the player owns part of names it -
+  "Gear set: Dawnward Regalia (Regalia - white) - you wear 2 and own 5 of 7". A guard's pieces are added when the
+  player wears none ("; your Master guard wears 3").
+- GUIDE: the Sets page bullet says "own"; `GUIDE.html` regenerated (`--check` OK).
+- Built (Maven) and committed while the user was still using the agent game. The in-game check comes once it is free.
+
 ## Round 685: the Game Guide catches up with rounds 648-684 (2026-10-17)
 
 The user: "Is all game guides/documentation updated?" The guide was current through round 647. They chose the five

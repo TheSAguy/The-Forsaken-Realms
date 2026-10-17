@@ -238,9 +238,32 @@ public final class ItemSets {
         return n;
     }
 
+    /** Round 686: the sets the player owns a piece of (carried, worn, stored or on a guard) - the ones the Sets page and
+     *  the item descriptions reveal. */
+    public static List<ItemSetData> ownedSets(AdventurePlayer player) {
+        List<ItemSetData> sets = new java.util.ArrayList<>();
+        if (player == null)
+            return sets;
+        for (ItemSetData set : all())
+            if (ownedCount(player, set) > 0)
+                sets.add(set);
+        return sets;
+    }
+
+    /** Round 686: whether the player owns a piece of any set (the inventory's Sets key shows only then). */
+    public static boolean ownsAnySet(AdventurePlayer player) {
+        if (player == null)
+            return false;
+        for (ItemSetData set : all())
+            for (String item : set.items)
+                if (owns(player, item))
+                    return true;
+        return false;
+    }
+
     /**
      * The line an item's description gains when it belongs to a set (shops, rewards and the inventory alike): the set,
-     * its family, and how many of its pieces the player wears now.
+     * its family, and how many of its pieces the player wears and owns - once they own a piece of it (round 686).
      */
     public static String descriptionLine(ItemData item) {
         ItemSetData set = item == null ? null : setOf(item.name);
@@ -249,18 +272,23 @@ public final class ItemSets {
         AdventurePlayer player = Current.player();
         if (player == null)
             return "";
+        // Round 637 kept a set unnamed unless the player wore a piece of it; round 686 (the user: "if not equipped, it
+        // does not say it's a set piece, so you won't know it belongs to a set") names it once they OWN a piece -
+        // carried, worn, stored or on a guard. A set they own nothing of stays unnamed, in shops and rewards too.
+        int owned = ownedCount(player, set);
+        if (owned == 0)
+            return "";
         Integer worn = worn(wornBy(player)).get(set);
-        if (worn != null)
-            return "Gear set: " + set.name + " (" + familyLine(set) + ") - you wear " + worn + " of " + set.items.length;
-        // Round 637 (the user: "other set info will be hidden unless you wear a piece of a set"): a set nobody of the
-        // player's wears stays unnamed - in shops and rewards too.
-        for (RoamingGuardData guard : RoamingGuards.roster()) {
-            Integer guardWorn = worn(guard.equipment).get(set);
-            if (guardWorn != null)
-                return "Gear set: " + set.name + " (" + familyLine(set) + ") - your " + RoamingGuards.displayName(guard.tier)
-                        + " guard wears " + guardWorn + " of " + set.items.length;
+        String line = "Gear set: " + set.name + " (" + familyLine(set) + ") - you wear " + (worn == null ? 0 : worn)
+                + " and own " + owned + " of " + set.items.length;
+        if (worn == null) {
+            for (RoamingGuardData guard : RoamingGuards.roster()) {
+                Integer guardWorn = worn(guard.equipment).get(set);
+                if (guardWorn != null)
+                    return line + "; your " + RoamingGuards.displayName(guard.tier) + " guard wears " + guardWorn;
+            }
         }
-        return "";
+        return line;
     }
 
     /**

@@ -775,11 +775,10 @@ public class InventoryScene extends UIScene {
         refreshSetsButton(); // round 637: an equip or unequip can show or hide it
     }
 
-    /** Rounds 631 + 637: the Sets key shows only while the player wears a piece of some set. */
+    /** Rounds 631 + 637 + 686: the Sets key shows once the player owns a piece of some set, worn or not. */
     private void refreshSetsButton() {
         if (setsButton != null)
-            setsButton.setVisible(SetsScene.available() && forge.adventure.util.ItemSets.wearsAnySet(
-                    forge.adventure.util.ItemSets.wornBy(Current.player())));
+            setsButton.setVisible(SetsScene.available() && forge.adventure.util.ItemSets.ownsAnySet(Current.player()));
     }
 
     @Override
