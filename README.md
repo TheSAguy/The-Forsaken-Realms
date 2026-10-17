@@ -21,7 +21,10 @@ so every fight is a real card duel with real decks.
 - **Build a Capitol** — own five towns and one becomes *Orazca*, a true seat of power with
   buildings no ordinary town offers: Bank, Exchange, Archaeologist, Research Lab, Temple and an Arena.
 - **Grow your hero** — *Ascendance*: earn Power from duels, quests and exploration, climb 40 levels,
-  and pick from 35 lasting perks; wear more gear as you rise, across seven main equipment slots.
+  and pick from 35 lasting perks; wear more gear as you rise, across seven main equipment slots, and
+  collect 15 gear sets for bonuses at 3, 5 and 7 pieces.
+- **Enemies that rank up** — ordinary enemies come as Apprentice, Adept or Master, each with its own
+  deck, and two dozen legends' lairs from the Realm of Legends open only as your level climbs.
 - **Day, night & the march of time** — enemies fight harder on white plains at noon and in black
   swamps at midnight; shops restock weekly, mines pay on payday, quests burn down in real days.
 - **Dungeons that live and die** — every dungeon has a lifespan; cleared or failed ones fade from
@@ -31,7 +34,7 @@ so every fight is a real card duel with real decks.
 - **Sets unlock as you go** — editions unlock as you find their cards in the world and research
   what you've found; different lands hold different expansions.
 
-**By the numbers:** 2,100+ enemies · 350+ dungeons, caves and lairs · 33,000+ cards to find · 670+ items ·
+**By the numbers:** 2,150+ enemies · 360+ dungeons, caves and lairs · 34,000+ cards to find · 730+ items ·
 20 playable races.
 
 A full player guide ships with the game (`GAME_GUIDE.html` / `GAME_GUIDE.md`).

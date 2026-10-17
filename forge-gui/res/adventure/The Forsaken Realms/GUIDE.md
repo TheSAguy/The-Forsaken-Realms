@@ -11,7 +11,7 @@ are in the [FAQ](#faq) at the end.
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [What's New in 1.21](#whats-new-in-121)
+2. [What's New in 1.22](#whats-new-in-122)
 3. [Starting Out](#starting-out)
 4. [Changes from the Base Game](#changes-from-the-base-game)
 5. [Early Game Advice](#early-game-advice)
@@ -41,32 +41,28 @@ the early game is meant to be a fight.
 *Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android
 version - playable, but it gets far less testing than the desktop builds.*
 
-## What's New in 1.21
+## What's New in 1.22
 
-The short version for returning players. Each item links to where the guide covers it in full. (Coming from 1.17?
-1.18 to 1.20 added notoriety, [Ascendance](#ascendance---your-level) - your character's level - the
-[lost-treasure hunts](#lost-treasure-hunts) and castle keys, and [town raids](#town-raids); all are covered below.)
+The short version for returning players. Each item links to where the guide covers it in full. (Coming from 1.20?
+1.21 added leveling to 40, the Head and Legs slots, the Capitol Temple and spawns that adapt to your record; all are
+covered below.)
 
-- **New looks:** new artwork across the world, and card-art player portraits for every race. See [Races](#races).
-- **Leveling to 40:** levels 31-40 give perk choices; level 35 is "Weavebinder" and level 40 is "Eternal". See
-  [Ascendance](#ascendance---your-level).
-- **About 20 new perks**, among them Opening Gambit, Gambler, Aura of Fear, Warmonger, Insight (4 choices), Pact of
-  Embers, Challenger's Mark, Hunter's Ledger, Law of Stakes and Home Ground.
-- **The Level sheet** now has descriptions and icons. Level-up rewards are richer, and leveling is slower on the
-  harder difficulties.
-- **Head and Legs slots:** wear 6 main items at level 35 and 7 at level 40, and every item's art now matches its
-  slot. See [Equipment Slots](#equipment-slots).
-- **The Capitol Temple:** offerings, honor by color, and spoils you collect. See [The Temple](#the-temple).
-- **Spawns adapt to your last 50 duels:** a strong record brings tougher enemies, a weak one eases off - and from
-  50 duels on, a Clue or Treasure for the enemy when you win 75% or more, or for you at 50% or less. See
-  [Enemies That Adapt to You](#enemies-that-adapt-to-you).
-- **Days pass 20% faster.** See [Time, Day & Night](#time-day--night).
-- **Arena:** a fresh bracket after a loss. **Inn tournaments:** one win per town per week. See
-  [Ante, Tournaments & Hostile Lands](#ante-tournaments--hostile-lands) and [Inn Tournaments](#inn-tournaments).
-- **A notices log**, faster notices, and many playtest fixes. See
-  [Smaller Things Worth Knowing](#smaller-things-worth-knowing).
-- **Engine:** Forge 2.0.16 (the 10.14 build), which brings duel **Undo** - Single step by default; change it under
-  Settings, "Undo in Duels".
+- **Places that come with your level:** 25 places from the Realm of Legends - legend lairs, two merchant stalls, the
+  Argivian Military Camp and, at level 20, three end-game dungeons - open up as you level. About 60 new items come
+  with them. See [Places That Come With Your Level](#places-that-come-with-your-level).
+- **Enemies in three ranks:** most creatures now come as an Apprentice, an Adept or a Master, each rank with its own
+  deck, and every boss, legend and Archmage deck has one stronger card. See
+  [Where the Monsters Come From](#where-the-monsters-come-from).
+- **New enemies** - Kenrith, Immortal King, the Kraul Broodmother, driders and serpent-folk - and nearly 200 enemies
+  redrawn.
+- **Gear sets:** 15 sets of seven pieces, with bonuses at 3, 5 and 7 pieces worn, and a Sets page once you own a
+  piece. The Warden keeps his promise with Liliana's and Chandra's Pledges. See [Gear Sets](#gear-sets) and
+  [The Walkers' Pledges](#the-walkers-pledges).
+- **Your hero grows** with your level, from Apprentice size to Archmage size. Power from a chest or a diamond comes
+  as a card to turn over. See [Ascendance](#ascendance---your-level).
+- **The History replay:** the whole realm from day one, from the map or the Victory and Defeat screens. See
+  [Territory Control & Color Defeat](#territory-control--color-defeat).
+- **Engine:** Forge 2.0.16 (the 10.17 build). Baneful Cavern is fully walkable, and many art fixes.
 
 ## Starting Out
 
@@ -1920,7 +1916,7 @@ game built on the Forge rules engine.
 ### How do I update the game to the latest version of Forge?
 
 You can't, and you don't need to. Each release is pinned to one tested Forge build, named in its release
-notes - this version runs on Forge 2.0.16 (the 10.16 build). Forge's own updater is switched off on purpose,
+notes - this version runs on Forge 2.0.16 (the 10.17 build). Forge's own updater is switched off on purpose,
 because a different engine underneath can break your world. Engine updates come to you with new Forsaken
 Realms releases.
 
