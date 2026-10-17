@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 690 - the sea collides again
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - new private `seaBiomeMask()`, `isWaterRaw(x, rawY)` and
+  `sealSea(when)`, which runs at the end of `generateNew()` and of `load()`. Water guards added to `clearObstacles`,
+  `clearTerrain`, world-gen's place-to-town path pass, `canJoinRoadRaw`, `stampPlayerRoadPatch` and
+  `addPointOfInterestNear`. All of it is mod code (upstream's World.java has none of these passes); nothing is saved.
+
 ### Round 687 - the engine to the 10.17 daily (upstream `ea5fe47050d`)
 
 - No conflicts. #12259 replaces the human inputs' separate GUI marks with one `Selection` (`IGuiGame`,

@@ -131,6 +131,12 @@ artifact v11 updated (stats 2,150+ / 360+ / 34,000+ / 730+, three new system car
 NOTHING is unreleased. Next version: 1.23 / 12300. Next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL
 once Forge publishes a daily at or past it (then the base gap is empty again).
 
+## STATE 2026-10-17 (round 690): **LOCAL + UNRELEASED (code)** - the sea is solid again: World.sealSea() on every load and
+after world generation (the user's slot 3: 410 walkable sea tiles, slot 1: 297), and the writers that zeroed sea tiles
+(world-gen's place-to-town paths, the obstacle sweep, clearTerrain, plazas, corner joins, addPointOfInterestNear) leave
+water alone. Roads drawn over water stay walkable, as causeways. Census: dev-tools/save-editing/WaterCensus.java. Seen in
+the agent game.
+
 ## STATE 2026-10-17 (round 689): **LOCAL + UNRELEASED (art)** - six round-179 Ragnarok enemies cut again from their source
 sheets (Barrow Bonebow, Rattling Bones, Cracked Shieldbone, Anvilhorn Minotaur, Orcling Rascal, Mossmane Shambler):
 the right rows, frames anchored on the body, so the walks no longer jump (dev-tools/art-import/round689/ro_recut.py).

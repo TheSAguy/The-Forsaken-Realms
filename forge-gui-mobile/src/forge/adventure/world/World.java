@@ -1476,6 +1476,7 @@ public class World implements Disposable, SaveFileContent {
             obstacleSweep = OBSTACLE_SWEEP;
             clearObstaclesAroundPlaces(null, null, true);
         }
+        sealSea("on load"); // round 690: worlds made before it walked on the sea in places
     }
 
     @Override
@@ -2434,6 +2435,59 @@ public class World implements Disposable, SaveFileContent {
         return barrierMap != null && x >= 0 && rawY >= 0 && x < width && rawY < height && barrierMap[x][rawY];
     }
 
+    /** Round 690: the land layers whose whole ground collides - the ocean (base.json "collision": true) - as a bit mask
+     *  over world.json's biome order. Ocean's bit is set on every tile, so "has an owner besides the road bits" is no
+     *  test for water; the owner is the highest bit. */
+    private long seaBiomeMask() {
+        long mask = 0L;
+        List<BiomeData> biomes = data.GetBiomes();
+        for (int i = 0; i < biomes.size() && i < 62; i++)
+            if (biomes.get(i).collision)
+                mask |= 1L << i;
+        return mask;
+    }
+
+    /** Round 690: is this raw tile sea - its owner, road bits aside, a biome that collides as a whole? */
+    private boolean isWaterRaw(int x, int rawY) {
+        if (biomeMap == null || data == null || x < 0 || rawY < 0 || x >= width || rawY >= height)
+            return false;
+        long own = biomeMap[x][rawY] & ~roadMask();
+        return own != 0L && (Long.highestOneBit(own) & seaBiomeMask()) != 0L;
+    }
+
+    /**
+     * Round 690 (the TFR 2 world-gen research: "today's save has 301 walkable ocean tiles"). Every tile whose owner is
+     * the sea collides again, unless a road is drawn on it - a road over an inlet is a causeway the player can see, and
+     * RoadNetwork's rules read those tiles as road. The leak came from writers that zero a tile's terrain without asking
+     * what it is: world generation's path from each place to its nearest town, the obstacle sweep round coastal towns
+     * and the ground cleared under new places. They now leave the sea alone; this repairs the worlds made before, and
+     * runs on every load (one pass over the map, a few ms) so a writer missed here shows up as a [TFR-Water] line.
+     * Returns the tiles sealed.
+     */
+    private int sealSea(String when) {
+        if (biomeMap == null || terrainMap == null || data == null)
+            return 0;
+        long seaMask = seaBiomeMask(), roads = roadMask();
+        if (seaMask == 0L)
+            return 0;
+        int sealed = 0;
+        for (int x = 0; x < width; x++) {
+            for (int rawY = 0; rawY < height; rawY++) {
+                long bits = biomeMap[x][rawY];
+                long own = bits & ~roads;
+                if (own == 0L || (Long.highestOneBit(own) & seaMask) == 0L || (bits & roads) != 0L)
+                    continue;
+                if ((terrainMap[x][rawY] & collisionBit) != 0 || isBarrierRaw(x, rawY))
+                    continue;
+                terrainMap[x][rawY] |= collisionBit;
+                sealed++;
+            }
+        }
+        if (sealed > 0)
+            System.out.println("[TFR-Water] " + when + ": " + sealed + " walkable sea tile(s) made solid again");
+        return sealed;
+    }
+
     /** Does a world-pixel rectangle touch the barrier? Its four corners - the same test collidingTile() makes. */
     public boolean rectOnBarrier(Rectangle rect) {
         if (barrierMap == null)
@@ -2719,7 +2773,8 @@ public class World implements Disposable, SaveFileContent {
                 try {
                     int rawY = height - 1 - (y + dy);
                     if ((terrainMap[x + dx][rawY] & (collisionBit | isStructureBit)) != 0
-                            && !isBarrierRaw(x + dx, rawY)) { // round 294: the barrier is not an obstacle to sweep
+                            && !isBarrierRaw(x + dx, rawY) // round 294: the barrier is not an obstacle to sweep
+                            && !isWaterRaw(x + dx, rawY)) { // round 690: nor is the sea round a coastal town
                         terrainMap[x + dx][rawY] = 0;
                         removed++;
                         if (cleared != null)
@@ -2742,8 +2797,9 @@ public class World implements Disposable, SaveFileContent {
         for (int xclear = -size; xclear < size; xclear++)
             for (int yclear = -size; yclear < size; yclear++) {
                 try {
-                    if (!isBarrierRaw(x + xclear, height - 1 - (y + yclear))) // round 294
-                        terrainMap[x + xclear][height - 1 - (y + yclear)] = 0;
+                    int rawY = height - 1 - (y + yclear);
+                    if (!isBarrierRaw(x + xclear, rawY) && !isWaterRaw(x + xclear, rawY)) // rounds 294, 690
+                        terrainMap[x + xclear][rawY] = 0;
                 } catch (ArrayIndexOutOfBoundsException ignored) {}
             }
     }
@@ -3632,7 +3688,8 @@ public class World implements Disposable, SaveFileContent {
                     for (int i = 0; i < 1000; i++) {
                         if (startX < 0 || startY <= 0 || startX >= width || startY > height) continue;
                         if ((terrainMap[startX][height - startY] & collisionBit) != 0//clear terrain if it has collision
-                                && !isBarrierRaw(startX, height - startY)) // round 294: never through the barrier
+                                && !isBarrierRaw(startX, height - startY) // round 294: never through the barrier
+                                && !isWaterRaw(startX, height - startY)) // round 690: nor across the sea (no road shows it)
                             terrainMap[startX][height - startY] = 0;
 
                         if (startX == x1 && startY == y1)
@@ -3821,6 +3878,7 @@ public class World implements Disposable, SaveFileContent {
             // boulder sat against Orazca's gate. Nothing writes terrainMap after this point.
             clearObstaclesAroundPlaces(null, null, true);
             obstacleSweep = OBSTACLE_SWEEP; // round 256: generation did it, load need not repeat it
+            sealSea("new world"); // round 690: the writers above leave the sea alone; 0 here, or a [TFR-Water] line
             System.out.println("Generating world took :\t\t" + ((System.currentTimeMillis() - startTime) / 1000f) + " s");
             WorldStage.getInstance().clearCache();
 
@@ -4131,6 +4189,8 @@ public class World implements Disposable, SaveFileContent {
                 continue;
             if (barrierNearPlace(wx, wy))
                 continue; // round 294
+            if (isWaterRaw(wx, height - 1 - wy))
+                continue; // round 690: never out at sea
             boolean tooClose = false;
             for (PointOfInterest other : getAllPointOfInterest()) {
                 int px = (int) (other.getPosition().x / data.tileSize);
@@ -5365,7 +5425,7 @@ public class World implements Disposable, SaveFileContent {
     public boolean canJoinRoadRaw(int x, int rawY) {
         if (roadKindRaw(x, rawY) < 0)
             return false;
-        return (biomeMap[x][rawY] & ~roadMask()) != 0 && !isBarrierRaw(x, rawY);
+        return (biomeMap[x][rawY] & ~roadMask()) != 0 && !isWaterRaw(x, rawY) && !isBarrierRaw(x, rawY); // 690: the sea
     }
 
     private int lastRoadPavedOver;
@@ -5420,8 +5480,8 @@ public class World implements Disposable, SaveFileContent {
                 // line meeting a road end, so it takes the renderer's row.
                 int rawY = height - ty - 1;
                 long bits = biomeMap[tx][rawY];
-                if ((bits & ~roadMask) == 0L || isBarrierRaw(tx, rawY))
-                    continue; // water and the barrier stay
+                if ((bits & ~roadMask) == 0L || isWaterRaw(tx, rawY) || isBarrierRaw(tx, rawY))
+                    continue; // water and the barrier stay (round 690: ocean's bit is on every tile - ask the owner)
                 if ((bits & playerRoadBit) != 0 && terrainMap[tx][rawY] == 0)
                     continue;
                 if ((bits & roadBit) != 0)

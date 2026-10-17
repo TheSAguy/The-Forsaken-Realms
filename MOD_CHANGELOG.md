@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 690: the sea is solid again (2026-10-17)
+
+The user: "Fix TFR 1 walkable-ocean leak". The TFR 2 world-gen research (`docs/research/procedural-worldgen.md`,
+section 1.5) found 301 walkable ocean tiles in the user's slot-1 save.
+
+- **The cause**: ocean's bit is set on every tile, and a tile is sea when ocean is its highest bit (road bits aside).
+  Its collision comes from Pass B (`base.json` `"collision": true`). Several writers zero a tile's terrain without asking
+  what the tile is, and that wipes the collision bit:
+  - **World generation's path from every place to its nearest town**: an invisible cleared line, with no road drawn,
+    that ran straight out over the sea.
+  - **The obstacle sweep** (`clearObstacles`, round 256/336): it removes anything with a collision bit round a
+    settlement, and the sea round a coastal town has one.
+  - **`clearTerrain`**: the ground under new places, including round 668's level places at runtime.
+  - **Two guards that never fired**: `canJoinRoadRaw` (corner joins, pocket paving) and `stampPlayerRoadPatch`
+    (plazas) tested `(bits & ~roadMask) == 0` for "water", which is never true because ocean's bit is on every tile.
+- **Measured** (new `dev-tools/save-editing/WaterCensus.java`, read-only):
+  - Slots 1 and 2 (the same world): 301 walkable sea tiles in 25 clusters, 4 of them under a road.
+  - Slot 3: 438 tiles in 37 clusters, 28 under a road.
+  - Every one had terrain index 0 and no structure bit, the mark of a zeroed tile.
+  - Sealing the road-less ones cuts no land off (walkable components identical before and after), and no active place
+    loses its last reachable tile (760 places in slot 1, 758 in slot 3).
+- **The fix** (`World.java`):
+  - `isWaterRaw(x, rawY)`: the owner's biome (the highest bit, road bits aside) collides as a whole (`seaBiomeMask()`).
+  - The writers above now skip water.
+  - `addPointOfInterestNear` never picks a sea tile.
+  - `sealSea(when)` sets the collision bit on every road-less sea tile that lacks it. It runs at the end of
+    `generateNew()` and on every load: one pass over the map, a few ms, and a `[TFR-Water]` line only when it seals
+    something. So a writer this round missed shows up in a log.
+- **Judgment call - roads over water stay walkable.** A road drawn across an inlet reads as a causeway, and RoadNetwork's
+  rules (EDGE_COVERAGE 0.95) count those tiles as road. Lifting them could make a joined pair look unjoined and start
+  the rules re-laying roads. World generation still lays its town-to-town roads straight across water. A road you can
+  see is a road you can walk, and sea you can see is solid.
+- **Not changed**: AI mages and roaming enemies still walk straight over the sea (research doc trap 9). Their movement
+  does not read tile collision.
+- **Seen in the agent game** (the compiled classes ahead of the agent jar, a copy of the user's slot 3 as agent slot 33):
+  - The first load logged `[TFR-Water] on load: 410 walkable sea tile(s) made solid again`, the census's own figure.
+  - A walk east from the shore at (281,102) stopped at 283, the last land tile, where it used to go 6 tiles out.
+  - `goto tile=290,102` answered "no path".
+  - Saved and reloaded: no `[TFR-Water]` line (nothing left to seal).
+  - A brand-new world: no line either, so generation no longer leaks.
+
 ## Round 689: six Ragnarok walks stop jumping mid-step (2026-10-17)
 
 The Procedural Pixel Creatures session. This is the separate pass that round 681's "Not fixed here" line names: six
