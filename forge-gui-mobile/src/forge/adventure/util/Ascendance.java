@@ -629,6 +629,28 @@ public final class Ascendance {
         awardExact(amount, source == null || source.isEmpty() ? "loot" : source);
     }
 
+    /**
+     * Round 675 (the user: "I got a diamond on the overworld and it game me XP/Power. That should pop up as a card you
+     * flit with the power symbol/value on it."): an overworld pickup's Power - a diamond's light, a chest's cache - is
+     * the duel's Power card on a reward screen of its own, paid when collected (round 517's card, same icon and figure).
+     * A reveal already up (two pickups in one step) keeps its screen and this Power is paid at once instead.
+     */
+    public static void revealPower(int base, String source) {
+        if (base <= 0 || !isActive())
+            return;
+        int amount = scaled(base);
+        if (forge.Forge.getCurrentScene() instanceof forge.adventure.scene.RewardScene) {
+            System.out.println("[TFR-Ascend] " + amount + " Power from " + source + " - a reward screen is already up, paid now");
+            awardExact(amount, source);
+            return;
+        }
+        System.out.println("[TFR-Ascend] " + amount + " Power on a reveal card - " + source);
+        com.badlogic.gdx.utils.Array<Reward> reveal = new com.badlogic.gdx.utils.Array<>();
+        reveal.add(Reward.power(amount, source));
+        forge.adventure.scene.RewardScene.instance().loadRewards(reveal, forge.adventure.scene.RewardScene.Type.Loot, null);
+        forge.Forge.switchScene(forge.adventure.scene.RewardScene.instance());
+    }
+
     /** A duel's Power that never reached a loot screen (a fight with no loot path) is paid rather than lost. */
     private static void payUncollectedDuelPower(String why) {
         if (pendingDuelPower <= 0)

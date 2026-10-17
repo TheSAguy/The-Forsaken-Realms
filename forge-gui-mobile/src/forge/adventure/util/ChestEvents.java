@@ -62,8 +62,8 @@ public class ChestEvents {
         boolean power = Ascendance.isActive() && Ascendance.data().chestPower > 0;
         int roll = world.getRandom().nextInt(power ? 7 : 6);
         System.out.println("[ChestEvents] Chest opened, event=" + roll);
-        if (roll == EVENT_POWER) {
-            Ascendance.award(Ascendance.data().chestPower, "a chest");
+        if (roll == EVENT_POWER) { // round 675: a Power card to turn over, like the diamond's
+            Ascendance.revealPower(Ascendance.data().chestPower, "a chest");
             return;
         }
         switch (roll) {

@@ -117,6 +117,9 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 675): **LOCAL + UNRELEASED (code)** - a diamond's or chest's Power is a Power card on a
+reward screen, paid when collected (`Ascendance.revealPower`). Seen in the agent game.
+
 ## STATE 2026-10-16 (round 674): **LOCAL + UNRELEASED (data + art)** - the thirteen smaller Realm of Legends lairs by
 level (8 / 12 / 15), 13 enemies, 14 items; RoL's broken references fixed (Alhammarret, Tocasia's Welcome, Soltari Skirt,
 Great Hellion), rebuild_gimmick takes decks of basics, Sandwurm tuned. `import_r674.py`. Seen in the agent game.

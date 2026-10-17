@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 675: a diamond's Power comes as a card to turn over (2026-10-16)
+
+The user: "I got a diamond on the overworld and it game me XP/Power. That should pop up as a card you flit with the
+power symbol/value on it."
+
+- **`Ascendance.revealPower(base, source)`** puts round 517's Power card (the sun of items.atlas and "N Power") on a
+  reward screen of its own. Collecting it pays the Power, as with a won duel's card. The figure is already scaled by
+  the leveling speed, so the card shows what it pays.
+  - If a reward screen is already up (two pickups in one step), it keeps that screen and pays this Power at once
+    rather than replacing the screen.
+- **The diamond** (`ResourceSpawns`, the 15% Power outcome) and **the chest's Power cache** (`ChestEvents`, the same
+  quiet notice before) both use it. The other Power sources (first visits, clears, restored towns and so on) stay
+  notices, per round 549.
+- **Seen in the agent game**, on a copy of a save with Ascendance on and the agent copy's `diamondPowerChance` raised
+  to 1.0 for the test (restored after):
+  - A spawned diamond opened the screen with a face-down card. It turned over to the sun and "21 Power" (25 at this
+    leveling speed).
+  - Done paid it: Power 426 to 447, with "+21 - a diamond's light" in the notices log.
+  - No exception in the log.
+  - Not seen: the chest's Power outcome (one roll in seven), which goes through the same method.
+
 ## Round 674: the thirteen smaller lairs from Realm of Legends 1.077 (2026-10-16)
 
 The user, of round 665's audit: "Let's add these from RoL : 4. The small leftover lairs can come later if you want
