@@ -14292,8 +14292,8 @@ notice and no refund."
 
 ## Round 690: the sea is solid again (2026-10-17)
 
-The user: "Fix TFR 1 walkable-ocean leak". The TFR 2 world-gen research (`docs/research/procedural-worldgen.md`,
-section 1.5) found 301 walkable ocean tiles in the user's slot-1 save.
+The user: "Fix TFR 1 walkable-ocean leak". A read-only census of the user's slot-1 save found 301 walkable ocean
+tiles.
 
 - **The cause**: ocean's bit is set on every tile, and a tile is sea when ocean is its highest bit (road bits aside).
   Its collision comes from Pass B (`base.json` `"collision": true`). Several writers zero a tile's terrain without asking

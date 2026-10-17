@@ -2456,7 +2456,7 @@ public class World implements Disposable, SaveFileContent {
     }
 
     /**
-     * Round 690 (the TFR 2 world-gen research: "today's save has 301 walkable ocean tiles"). Every tile whose owner is
+     * Round 690 (a read-only save census: 301 walkable ocean tiles in the user's slot-1 save). Every tile whose owner is
      * the sea collides again, unless a road is drawn on it - a road over an inlet is a causeway the player can see, and
      * RoadNetwork's rules read those tiles as road. The leak came from writers that zero a tile's terrain without asking
      * what it is: world generation's path from each place to its nearest town, the obstacle sweep round coastal towns
