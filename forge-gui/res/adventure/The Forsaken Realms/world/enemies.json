@@ -51191,14 +51191,14 @@
     },
     {
         "name": "Infinite Guideline Station",
-        "sprite": "sprites/enemy/construct/juggernaut.atlas",
+        "sprite": "sprites/enemy/remake/infinite_guideline_station.atlas",
         "deck": [
             "decks/legends/infinite_guideline_station.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.65,
+        "scale": 0.1953,
         "life": 30,
         "rewards": [
             {
@@ -68478,13 +68478,13 @@
     },
     {
         "name": "Kethek",
-        "sprite": "sprites/enemy/construct/juggernaut.atlas",
+        "sprite": "sprites/enemy/remake/kethek.atlas",
         "deck": [
             "decks/legends/kethek.dck"
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.65,
+        "scale": 0.2167,
         "life": 30,
         "rewards": [
             {
@@ -77967,7 +77967,7 @@
     },
     {
         "name": "Liberator",
-        "sprite": "sprites/enemy/construct/juggernaut.atlas",
+        "sprite": "sprites/enemy/remake/liberator.atlas",
         "deck": [
             "decks/legends/liberator.dck"
         ],
@@ -78032,7 +78032,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.65
+        "scale": 0.2167
     },
     {
         "name": "The Peregrine Dynamo",
@@ -78104,12 +78104,12 @@
     },
     {
         "name": "Traxos",
-        "sprite": "sprites/enemy/construct/juggernaut.atlas",
+        "sprite": "sprites/enemy/remake/traxos.atlas",
         "deck": [
             "decks/legends/traxos.dck"
         ],
         "ai": "",
-        "scale": 0.65,
+        "scale": 0.2167,
         "speed": 30,
         "life": 20,
         "rewards": [

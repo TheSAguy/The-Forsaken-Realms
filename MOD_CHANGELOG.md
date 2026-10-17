@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 684: the war construct and the flying saucer replace the stock tank (2026-10-16)
+
+The Procedural Pixel Creatures session, from the generator repo's `pixelate/war_construct/convert.sh` and
+`pixelate/infinite_guideline_station/convert.sh`. This is list 3's F114, its last open item: four enemies wore Forge's
+stock `construct/juggernaut` tank.
+
+- **The war construct**: the user asked to "combine these 3" cards. ChatGPT drew one four-legged artifact beast:
+  Kethek's black iron and molten orange seams, Traxos's wolf-dragon head, and Liberator's folded brass thopter wings and
+  gold trim. Four Kling clips and Pixelate sheets followed. It wears three tints:
+  - **Kethek** (0.2167): as drawn.
+  - **Traxos** (0.2167): every chromatic pixel turned icy blue-steel, like his card.
+  - **Liberator** (0.2167): the gold kept, the seams turned the magenta of his card's beams.
+  - The still was widened and the wings kept folded in every prompt, so every clip stays inside its frame.
+  - **The attack**: Kling drew a cyan energy ring twice. The attack keeps the rear with the wings raised, the lunge and
+    the recovery.
+  - **The death**: it stumbles and collapses into a dark heap of iron.
+- **Infinite Guideline Station** (0.1953): the user: "This should probably be something like
+  a UFO." A silver flying saucer with a violet glass dome, a spire and two ring arms.
+  - The user made the walk from the padded copy at 256, since the ring arms ran out of the frame at 128.
+  - The watermark letters are cleared before the converter measures the clips; otherwise they counted as part of the
+    saucer and the walk was shrunk by half.
+  - **The attack**: it tilts back, its ring arms spin into discs, and it rams down to the lower right.
+  - **The death**: a white burst that ran off the frame is left out. It keeps the dome going dark, the tilt and the
+    landing.
+- **Files**:
+  - 4 new atlases under `sprites/enemy/remake/`.
+  - enemies.json: 4 sprite paths and scales.
+  - No credits change: the art is the user's.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 4, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - `sprite_artifact_audit.py`: four ground-shadow flags, all expected: the saucer hovers off its shadow in one Walk frame, and the shadow under the construct's death heap (review).
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+- **Source files**: in the Art Library repository, `Units/Custom/War Construct` and
+  `Units/Custom/Infinite Guideline Station`.
+
 ## Round 683: Baneful Cavern opened up, and the imported maps checked for sealed-off space (2026-10-16)
 
 The user, in round 674's Baneful Cavern: "I think this is one of the new caves. Is seems most of the cave is not

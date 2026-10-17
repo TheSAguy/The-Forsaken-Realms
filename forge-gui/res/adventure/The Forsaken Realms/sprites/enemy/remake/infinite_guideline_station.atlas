@@ -1,0 +1,132 @@
+infinite_guideline_station.png
+size: 2880,849
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 240, 157
+  footprint: 71, 33, 97, 76
+Idle
+  xy: 240, 64
+  size: 240, 157
+Idle
+  xy: 480, 64
+  size: 240, 157
+Idle
+  xy: 720, 64
+  size: 240, 157
+Idle
+  xy: 960, 64
+  size: 240, 157
+Idle
+  xy: 1200, 64
+  size: 240, 157
+Idle
+  xy: 1440, 64
+  size: 240, 157
+Idle
+  xy: 1680, 64
+  size: 240, 157
+Idle
+  xy: 1920, 64
+  size: 240, 157
+Idle
+  xy: 2160, 64
+  size: 240, 157
+Idle
+  xy: 2400, 64
+  size: 240, 157
+Idle
+  xy: 2640, 64
+  size: 240, 157
+Walk
+  xy: 0, 221
+  size: 240, 157
+Walk
+  xy: 240, 221
+  size: 240, 157
+Walk
+  xy: 480, 221
+  size: 240, 157
+Walk
+  xy: 720, 221
+  size: 240, 157
+Walk
+  xy: 960, 221
+  size: 240, 157
+Walk
+  xy: 1200, 221
+  size: 240, 157
+Walk
+  xy: 1440, 221
+  size: 240, 157
+Walk
+  xy: 1680, 221
+  size: 240, 157
+Attack
+  xy: 0, 378
+  size: 240, 157
+Attack
+  xy: 240, 378
+  size: 240, 157
+Attack
+  xy: 480, 378
+  size: 240, 157
+Attack
+  xy: 720, 378
+  size: 240, 157
+Attack
+  xy: 960, 378
+  size: 240, 157
+Attack
+  xy: 1200, 378
+  size: 240, 157
+Hit
+  xy: 0, 535
+  size: 240, 157
+Hit
+  xy: 240, 535
+  size: 240, 157
+Hit
+  xy: 480, 535
+  size: 240, 157
+Hit
+  xy: 720, 535
+  size: 240, 157
+Death
+  xy: 0, 692
+  size: 240, 157
+Death
+  xy: 240, 692
+  size: 240, 157
+Death
+  xy: 480, 692
+  size: 240, 157
+Death
+  xy: 720, 692
+  size: 240, 157
+Death
+  xy: 960, 692
+  size: 240, 157
+Death
+  xy: 1200, 692
+  size: 240, 157
+Death
+  xy: 1440, 692
+  size: 240, 157
+Death
+  xy: 1680, 692
+  size: 240, 157
+Death
+  xy: 1920, 692
+  size: 240, 157
+Death
+  xy: 2160, 692
+  size: 240, 157
+Death
+  xy: 2400, 692
+  size: 240, 157
