@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 681: thirteen sprites stop walking backwards; crisp tfr2 portraits; Frostcloak's Santa hat (2026-10-16)
+
+The Procedural Pixel Creatures session, by `dev-tools/art-import/facing681.py` (its ledger:
+`facing681_done.json`). The user: "This guy is walking backwards. Make sure he is the only one." (Frostcloak Marauder),
+then "The guys portrait is all blurry." (Tempest Djinn).
+
+- **Facing**: the engine draws an un-suffixed animation facing right and mirrors it for left, so a sheet drawn facing
+  left walks backwards.
+  - Rounds 245, 247 and 272 settled facing for round 179's generic render sheets only. Its Ragnarok Online sheets were
+    never checked, and RO shows a monster whichever way its sheet happened to.
+  - Every sprite an enemy wears that is not a remake (358) was laid out by its Walk frames and judged by eye.
+    `facing_detect.py` scores Frostcloak himself as facing right, so its guesses were not used.
+  - **Mirrored**: Sunplume Phoenix, Gazestalk Ooze, Anvilhorn Minotaur, Grimtusk Bowman, Frostcloak Marauder,
+    Bonetusk Legionnaire, Grimtusk Shieldbearer, Sackbeak Peddler, Mossback Tortoise, Cinderscale Salamander and
+    Ragged Hermit (RO); the Drowned Deckhand's Walk only (his idle faces right); and Gev.
+    - Gev wears Forge's stock gecko. It is copied into the plane at the same path (the game looks there first) and
+      mirrored there; the upstream file is untouched.
+  - Every frame is flipped inside its own atlas rectangle (the frames are bottom-centred), so no .atlas changes.
+  - Left as they were, since they read as facing right or the viewer, or too unclear to call: the other 110 RO
+    sheets; Spinecoil Isopod; and the stock Cerodon, Urabrask and Jin-Gitaxias sprites.
+- **Portraits**: round 382's tfr2 sprites had their 64 px duel portrait stretched up smoothly from a small crop.
+  - Each is now shrunk back to 32 px and drawn at x2 with no smoothing: the same framing, crisp pixels.
+  - Two other approaches were tried and dropped:
+    - The whole creature from its small frames sat tiny in the box.
+    - A head-and-shoulders square missed bodies (Mackenzie's wing, the Twinskull Ogre's side).
+  - Mackenzie keeps hers (already a sharp full figure). 55 tfr2 atlases changed, a few of them no longer worn.
+- **Santa hat**: Frostcloak Marauder is RO's "Orc Santa". His first two Death frames wore a Santa hat the rest of the
+  sprite does not; those two regions leave the .atlas, and Death keeps the fall.
+- **Not fixed here**: some RO walk cycles switch to a much larger drawing mid-step, for example the Barrow Bonebow,
+  Rattling Bones, Cracked Shieldbone, Anvilhorn Minotaur, Orcling Rascal and Mossmane Shambler. That is a separate
+  pass.
+- **Checks**:
+  - enemies.json unchanged.
+  - `sprite_footprints.py --check` exit 0; no footprint moved.
+  - `validate_plane_data.py`: its three usual sections.
+  - Sprite audit on the changed sheets: Sunplume Phoenix's one 18 px blob below its art predates this round
+    (mirroring moves no piece).
+  - Not seen in play.
+
 ## Round 680: Holy Apparition gets the user's hand-made art (2026-10-16)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/holy_apparition/convert.sh`. This is list 3's
