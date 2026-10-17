@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 678: three driders on a drawn spider body (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_678.py`. Round 676's drawn
+lower body, now with legs.
+
+- **The spider body**: the user's ChatGPT sheet has three views plus four side-view walk poses: black-brown chitin with
+  blood-red marks, cut flat at the waist. `naga_tail_image.py` reads both rows and scales each walk pose so its waist
+  matches the side view's (ChatGPT drew the walk row smaller). `naga_to_forge.py` walks the body through the drawn
+  poses, two frames each; from the front and the back it bobs a pixel.
+- **The three** (the user: "Let's create all 3 enemies. They look terrifying!"):
+  - **Broodweaver Drider** (0.2889): a drow on the spider body, with dark slate skin, long white
+    hair, red eyes, black leather and a spear. It was a tfr2 3D render before.
+  - **Mazirek** (0.2766): round 667 put her on a male body with a mantis head, but her card is a woman. She is
+    now female on the spider body, with her card's ashen face, long black hair, black curled horns for her insect crown
+    and yellow eyes. She keeps 667's dress: black insect wings, black robes, a maroon tattered cape and a gnarled
+    staff.
+  - **Kraul Broodmother** (new): the kraul take, Mazirek's dress on a chocolate body with the kraul mantis head. This
+    round adds only her atlas. Her enemy entry, deck, spawns and tier are peer #32's round 679.
+- **Files**:
+  - New atlases: `sprites/enemy/remake/broodweaver_drider` and `kraul_broodmother`.
+  - Rebuilt: `remake/mazirek`.
+  - enemies.json: the Broodweaver's sprite path and scale, and Mazirek's scale.
+  - `CREDITS_LPC.md` regenerated: 1011 characters. Mazirek is "redone in round 678"; the spider body is credited to
+    The Forsaken Realms (CC0). No author changes.
+  - `CREDITS.md`: the LPC bullet (983 enemies, the Kraul Broodmother included ahead of her data).
+- **Checks**:
+  - enemies.json against HEAD: exactly the Broodweaver and Mazirek, only `sprite` and `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - `sprite_artifact_audit.py`: no flags on the three atlases (the Broodmother's audited on its own).
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 677: the hero grows with the Ascendance level, from 13 px at level 0 to 25 px at level 40 (2026-10-16)
 
 The user, shown their Merfolk hero beside the Merfolk Soldier at each enemy rank (the hero drew 19.9 px, between an

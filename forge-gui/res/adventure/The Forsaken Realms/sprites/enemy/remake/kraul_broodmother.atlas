@@ -1,0 +1,170 @@
+kraul_broodmother.png
+size: 608,703
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 76, 71
+Idle
+  xy: 76, 64
+  size: 76, 71
+Idle
+  xy: 152, 64
+  size: 76, 71
+Idle
+  xy: 228, 64
+  size: 76, 71
+Walk
+  xy: 0, 135
+  size: 76, 71
+Walk
+  xy: 76, 135
+  size: 76, 71
+Walk
+  xy: 152, 135
+  size: 76, 71
+Walk
+  xy: 228, 135
+  size: 76, 71
+Walk
+  xy: 304, 135
+  size: 76, 71
+Walk
+  xy: 380, 135
+  size: 76, 71
+Walk
+  xy: 456, 135
+  size: 76, 71
+Walk
+  xy: 532, 135
+  size: 76, 71
+Attack
+  xy: 0, 206
+  size: 76, 71
+Attack
+  xy: 76, 206
+  size: 76, 71
+Attack
+  xy: 152, 206
+  size: 76, 71
+Attack
+  xy: 228, 206
+  size: 76, 71
+Attack
+  xy: 304, 206
+  size: 76, 71
+Attack
+  xy: 380, 206
+  size: 76, 71
+Attack
+  xy: 456, 206
+  size: 76, 71
+Attack
+  xy: 532, 206
+  size: 76, 71
+Hit
+  xy: 0, 277
+  size: 76, 71
+Hit
+  xy: 76, 277
+  size: 76, 71
+Hit
+  xy: 152, 277
+  size: 76, 71
+Hit
+  xy: 228, 277
+  size: 76, 71
+Death
+  xy: 0, 348
+  size: 76, 71
+Death
+  xy: 76, 348
+  size: 76, 71
+Death
+  xy: 152, 348
+  size: 76, 71
+Death
+  xy: 228, 348
+  size: 76, 71
+Death
+  xy: 304, 348
+  size: 76, 71
+Death
+  xy: 380, 348
+  size: 76, 71
+IdleUp
+  xy: 0, 419
+  size: 76, 71
+IdleUp
+  xy: 76, 419
+  size: 76, 71
+IdleUp
+  xy: 152, 419
+  size: 76, 71
+IdleUp
+  xy: 228, 419
+  size: 76, 71
+IdleDown
+  xy: 0, 490
+  size: 76, 71
+IdleDown
+  xy: 76, 490
+  size: 76, 71
+IdleDown
+  xy: 152, 490
+  size: 76, 71
+IdleDown
+  xy: 228, 490
+  size: 76, 71
+WalkUp
+  xy: 0, 561
+  size: 76, 71
+WalkUp
+  xy: 76, 561
+  size: 76, 71
+WalkUp
+  xy: 152, 561
+  size: 76, 71
+WalkUp
+  xy: 228, 561
+  size: 76, 71
+WalkUp
+  xy: 304, 561
+  size: 76, 71
+WalkUp
+  xy: 380, 561
+  size: 76, 71
+WalkUp
+  xy: 456, 561
+  size: 76, 71
+WalkUp
+  xy: 532, 561
+  size: 76, 71
+WalkDown
+  xy: 0, 632
+  size: 76, 71
+WalkDown
+  xy: 76, 632
+  size: 76, 71
+WalkDown
+  xy: 152, 632
+  size: 76, 71
+WalkDown
+  xy: 228, 632
+  size: 76, 71
+WalkDown
+  xy: 304, 632
+  size: 76, 71
+WalkDown
+  xy: 380, 632
+  size: 76, 71
+WalkDown
+  xy: 456, 632
+  size: 76, 71
+WalkDown
+  xy: 532, 632
+  size: 76, 71

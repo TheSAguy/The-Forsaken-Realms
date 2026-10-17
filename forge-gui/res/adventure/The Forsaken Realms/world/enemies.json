@@ -74185,7 +74185,7 @@
         ],
         "ai": "",
         "flying": true,
-        "scale": 0.2955,
+        "scale": 0.2766,
         "speed": 44,
         "life": 20,
         "rewards": [
@@ -164773,7 +164773,7 @@
     },
     {
         "name": "Broodweaver Drider",
-        "sprite": "sprites/enemy/tfr2/broodweaver_drider.atlas",
+        "sprite": "sprites/enemy/remake/broodweaver_drider.atlas",
         "deck": [
             "decks/standard/tfr2/broodweaver_drider.dck"
         ],
@@ -164849,7 +164849,7 @@
             "BiomeGreen"
         ],
         "tier": "Rare",
-        "scale": 0.3422
+        "scale": 0.2889
     },
     {
         "name": "Fleshrender Hulk",

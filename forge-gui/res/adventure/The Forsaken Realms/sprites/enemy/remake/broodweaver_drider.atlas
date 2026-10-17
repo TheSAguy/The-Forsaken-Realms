@@ -1,0 +1,171 @@
+broodweaver_drider.png
+size: 544,631
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 68, 63
+  footprint: 7, 1, 55, 59
+Idle
+  xy: 68, 64
+  size: 68, 63
+Idle
+  xy: 136, 64
+  size: 68, 63
+Idle
+  xy: 204, 64
+  size: 68, 63
+Walk
+  xy: 0, 127
+  size: 68, 63
+Walk
+  xy: 68, 127
+  size: 68, 63
+Walk
+  xy: 136, 127
+  size: 68, 63
+Walk
+  xy: 204, 127
+  size: 68, 63
+Walk
+  xy: 272, 127
+  size: 68, 63
+Walk
+  xy: 340, 127
+  size: 68, 63
+Walk
+  xy: 408, 127
+  size: 68, 63
+Walk
+  xy: 476, 127
+  size: 68, 63
+Attack
+  xy: 0, 190
+  size: 68, 63
+Attack
+  xy: 68, 190
+  size: 68, 63
+Attack
+  xy: 136, 190
+  size: 68, 63
+Attack
+  xy: 204, 190
+  size: 68, 63
+Attack
+  xy: 272, 190
+  size: 68, 63
+Attack
+  xy: 340, 190
+  size: 68, 63
+Attack
+  xy: 408, 190
+  size: 68, 63
+Attack
+  xy: 476, 190
+  size: 68, 63
+Hit
+  xy: 0, 253
+  size: 68, 63
+Hit
+  xy: 68, 253
+  size: 68, 63
+Hit
+  xy: 136, 253
+  size: 68, 63
+Hit
+  xy: 204, 253
+  size: 68, 63
+Death
+  xy: 0, 316
+  size: 68, 63
+Death
+  xy: 68, 316
+  size: 68, 63
+Death
+  xy: 136, 316
+  size: 68, 63
+Death
+  xy: 204, 316
+  size: 68, 63
+Death
+  xy: 272, 316
+  size: 68, 63
+Death
+  xy: 340, 316
+  size: 68, 63
+IdleUp
+  xy: 0, 379
+  size: 68, 63
+IdleUp
+  xy: 68, 379
+  size: 68, 63
+IdleUp
+  xy: 136, 379
+  size: 68, 63
+IdleUp
+  xy: 204, 379
+  size: 68, 63
+IdleDown
+  xy: 0, 442
+  size: 68, 63
+IdleDown
+  xy: 68, 442
+  size: 68, 63
+IdleDown
+  xy: 136, 442
+  size: 68, 63
+IdleDown
+  xy: 204, 442
+  size: 68, 63
+WalkUp
+  xy: 0, 505
+  size: 68, 63
+WalkUp
+  xy: 68, 505
+  size: 68, 63
+WalkUp
+  xy: 136, 505
+  size: 68, 63
+WalkUp
+  xy: 204, 505
+  size: 68, 63
+WalkUp
+  xy: 272, 505
+  size: 68, 63
+WalkUp
+  xy: 340, 505
+  size: 68, 63
+WalkUp
+  xy: 408, 505
+  size: 68, 63
+WalkUp
+  xy: 476, 505
+  size: 68, 63
+WalkDown
+  xy: 0, 568
+  size: 68, 63
+WalkDown
+  xy: 68, 568
+  size: 68, 63
+WalkDown
+  xy: 136, 568
+  size: 68, 63
+WalkDown
+  xy: 204, 568
+  size: 68, 63
+WalkDown
+  xy: 272, 568
+  size: 68, 63
+WalkDown
+  xy: 340, 568
+  size: 68, 63
+WalkDown
+  xy: 408, 568
+  size: 68, 63
+WalkDown
+  xy: 476, 568
+  size: 68, 63
