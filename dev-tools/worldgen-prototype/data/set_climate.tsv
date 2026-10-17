@@ -1,0 +1,14 @@
+#code	T	M	note (per-set climate inside a plane; prototype B's overrides)
+ICE	0.12	0.45	Dominaria: Terisiare ice age
+ALL	0.12	0.45	Dominaria: Terisiare ice age
+CSP	0.12	0.45	Dominaria: Coldsnap
+MIR	0.85	0.65	Dominaria: Jamuraa
+VIS	0.85	0.65	Dominaria: Jamuraa
+WTH	0.85	0.65	Dominaria: Jamuraa
+ODY	0.75	0.20	Dominaria: Otaria
+TOR	0.75	0.20	Dominaria: Otaria
+JUD	0.75	0.20	Dominaria: Otaria
+SHM	0.35	0.70	Shadowmoor
+EVE	0.35	0.70	Shadowmoor
+HOU	0.97	0.03	Amonkhet: Hour of Devastation
+KHM	0.06	0.50	Kaldheim
