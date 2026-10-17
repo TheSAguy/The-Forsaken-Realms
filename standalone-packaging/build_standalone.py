@@ -241,11 +241,38 @@ def git_overlay_list():
         return f.startswith("forge-gui/res/adventure/common/")
 
     files = []
-    for f in out.splitlines() + untracked.splitlines():
+    for f in out.splitlines() + untracked.splitlines() + base_gap_files(mb):
         f = f.strip()
         if wanted(f) and f not in files:
             files.append(f)
     return sorted(files)
+
+
+def base_gap_files(merge_base):
+    """Round 688 (the user, on v1.22 waiting for Forge to publish the daily that matched the repo's merge: "Can you grab
+    the change from Github now?"): stock res files upstream changed AFTER the snapshot BASE_INSTALL was built from, up to
+    the commit the repo is merged to. Unchanged by the mod, they fell outside the overlay above and shipped at the
+    installed snapshot's version. BASE_INSTALL/build.txt is the installer's build time in UTC; the upstream commit just
+    before it is the snapshot's source. A loose card file overrides cardsfolder.zip's (CardStorageReader reads the files
+    first and keeps the first copy of a name - the default, non-lazy load). Empty when the install matches the merge."""
+    stamp = read_base_build_stamp()
+    if not stamp:
+        return []
+    try:
+        base = subprocess.check_output(
+            ["git", "rev-list", "-1", "--before=" + stamp + " +0000", merge_base],
+            cwd=REPO, text=True).strip()
+    except subprocess.CalledProcessError:
+        return []
+    if not base or base == merge_base:
+        return []
+    gap = subprocess.check_output(
+        ["git", "-c", "core.quotepath=off", "diff", "--name-only", base, merge_base, "--", "forge-gui/res"],
+        cwd=REPO, text=True, encoding="utf-8").split("\n")
+    gap = [f for f in gap if f.strip()]
+    print(f"BASE_INSTALL ({stamp}) was built from upstream {base[:11]}; the repo is merged to {merge_base[:11]} - "
+          f"{len(gap)} upstream res file(s) in between ship in the overlay")
+    return gap
 
 
 def read_base_build_stamp():

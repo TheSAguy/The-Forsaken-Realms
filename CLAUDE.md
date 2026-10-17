@@ -117,6 +117,9 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-17 (round 688): **LOCAL + UNRELEASED (tools)** - the packager overlays upstream res changes newer than BASE_INSTALL
+(base_gap_files; Agonizing Remorse ships); agent duels at 50x (tfr_agent.py duel_at_50x). Live packaged for the user's targeting test.
+
 ## STATE 2026-10-17 (round 687): **LOCAL + UNRELEASED (engine)** - upstream ea5fe47050d merged (10.17: one-Selection targeting
 inputs #12259, Agonizing Remorse #12282 - ships with the next BASE_INSTALL, RoL 1.079); no conflicts; the Ur-Sphinx rebuilt (+3 Quantum Riddler).
 Waiting on the user's targeting play-test before v1.22. Next merge after ea5fe47050d.

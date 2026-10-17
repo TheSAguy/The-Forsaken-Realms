@@ -169,12 +169,28 @@ def boot(timeout=180):
 SETTLE_BUTTONS = ("back to adventure", "quit match", "quit", "ok", "continue", "done", "close")
 
 
+def duel_at_50x(s):
+    """Round 688 (the user: "Let's add a rule, when the agent plays duels, let him do it at 50x."): the duel's speed
+    button (forge's PlaybackSpeed) cycles 1x -> 10x -> 50x -> 1/3x and is labelled with the NEXT speed, so the duel runs at
+    50x once it reads "1/3x speed". Tap it until then - at most three taps, re-reading the state after each."""
+    for _ in range(3):
+        btn = next((b for b in (s.get("forgeUi") or []) if (b.get("text") or "").lower().endswith("x speed")), None)
+        if btn is None or (btn.get("text") or "").lower() == "1/3x speed":
+            return
+        call("POST", "/cmd", {"cmd": "click", "id": btn["id"]})
+        time.sleep(0.4)
+        s = call("GET", "/state")
+    say("duel speed button never reached 50x")
+
+
 def settle(rounds=40, wait_each=60, ask_ante=False):
     """Back to an idle GameScene/TileMapScene: sit through a duel (the AI pilots the seat), tap the win/lose
     view's button and the ante prompts' OK, press Done on a reward screen, walk single-option dialogs. Returns
     at a real choice and at a prompt it does not know - and at a lost ante's Buy Back / Bronze Coin choice when
     ask_ante is set."""
-    s = {}
+    s = call("GET", "/state")
+    if s.get("scene") == "DuelScene":
+        duel_at_50x(s)  # round 688: before the first wait, which can sit out a whole minute of the duel
     for i in range(rounds):
         s = call("GET", "/wait?timeout=%d" % wait_each, timeout=wait_each + 15)
         scene = s.get("scene")
@@ -211,6 +227,7 @@ def settle(rounds=40, wait_each=60, ask_ante=False):
             time.sleep(2.5)
             continue
         if scene == "DuelScene":
+            duel_at_50x(s) # round 688: every duel the agent sits out runs at 50x
             say("duel in progress, life", (s.get("player") or {}).get("life"))
             continue
         if scene == "RewardScene":

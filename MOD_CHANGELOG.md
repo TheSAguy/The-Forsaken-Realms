@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 688: the packager ships upstream's newer stock files; agent duels at 50x (2026-10-17)
+
+- **The base gap** (`standalone-packaging/build_standalone.py`, `base_gap_files`). Forge had not yet published the
+  10.17 daily the repo was merged to in round 687, so `E:\GAMES\Forge_2` stayed the 10.16 install. The user: "Can you
+  grab the change from Github now?"
+  - The overlay now also carries every stock res file upstream changed between the snapshot BASE_INSTALL was built from
+    (the upstream commit just before its `build.txt` time, in UTC) and the commit the repo is merged to.
+  - This time that resolved to `64569999b8b` - round 665's merge point - and three files: the Agonizing Remorse script
+    ships; the two Realm of Legends plane files are outside the overlay, as that plane is not part of TFR.
+  - A loose card file overrides `cardsfolder.zip`'s copy: `CardStorageReader` reads the folder's files first and keeps
+    the first copy of a name in the default, non-lazy load. The live log shows "Read cards: 1 files" ahead of the
+    34,118 archived ones.
+  - Packaged with `--allow-base-mismatch`; the abort still guards an install that does not match.
+- **Agent duels at 50x** (`dev-tools/agent/tfr_agent.py`, `duel_at_50x`). The user: "Let's add a rule, when the agent
+  plays duels, let him do it at 50x."
+  - `settle` taps the duel's speed button (Forge's PlaybackSpeed: 1x -> 10x -> 50x -> 1/3x, labelled with the next
+    speed) until it reads "1/3x speed". It does this before its first wait as well.
+  - Seen: the button went from "10x speed" to "1/3x speed", and the duel against a Wild Rat ended about 6 seconds
+    later.
+  - The tfr-play skill and the memory carry the rule.
+- **Smoke test of round 687's engine**: two duels in the agent game played out and returned to the map, with no
+  exception in the log.
+
 ## Round 687: the engine to the 10.17 daily (upstream `ea5fe47050d`), before v1.22 (2026-10-17)
 
 The standing rule - merge the latest upstream before a release. Three commits had landed since round 665; the user,
