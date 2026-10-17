@@ -9539,12 +9539,13 @@ sources.
 - Dreadlocks long [hair_dreadlocks_long] - hair/dreadlocks_long: bluecarrot16; CC0; https://opengameart.org/content/lpc-hair
 - Scimitar [weapon_sword_scimitar] - weapon/sword/scimitar: Pierre Vigier and DCSS artists (see https://github.com/crawl/tiles/blob/master/ARTISTS.md); OGA-BY 3.0; https://opengameart.org/content/lpc-dcss-swords
 
-## Damia (round 627) - composed sprite CC-BY
+## Damia (round 627, redone in round 676) - composed sprite CC-BY
 
 - Body Color [body] - body/bodies/female: Benjamin K. Smith (BenCreating), bluecarrot16, TheraHedwig, Evert, MuffinElZangano, Durrani, Pierre Vigier (pvigier), ElizaWy, Matthew Krohn (makrohn), Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-ladies, https://opengameart.org/content/lpc-7-womens-shirts, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-revised-character-basics, https://gitlab.com/vagabondgame/lpc-characters, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani, https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle
 - Slit dress [dress_slit] - dress/slit: Nila122, ElizaWy, bluecarrot16; OGA-BY 3.0; https://opengameart.org/content/lpc-clothes-and-hair, http://opengameart.org/content/lpc-clothing-updates
 - Human Female [heads_human_female] - head/heads/human/female: bluecarrot16, Benjamin K. Smith (BenCreating), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/, https://opengameart.org/content/lpc-character-bases
 - Dreadlocks long [hair_dreadlocks_long] - hair/dreadlocks_long: bluecarrot16; CC0; https://opengameart.org/content/lpc-hair
+- Serpent tail [naga_tail] - naga_tails/short_coffee12: The Forsaken Realms; CC0
 
 ## Pharika (round 627) - composed sprite CC-BY
 
@@ -9588,12 +9589,13 @@ sources.
 - Human Female [heads_human_female] - head/heads/human/female: bluecarrot16, Benjamin K. Smith (BenCreating), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/, https://opengameart.org/content/lpc-character-bases
 - Dreadlocks long [hair_dreadlocks_long] - hair/dreadlocks_long: bluecarrot16; CC0; https://opengameart.org/content/lpc-hair
 
-## Hythonia (round 627) - composed sprite CC-BY
+## Hythonia (round 627, redone in round 676) - composed sprite CC-BY
 
 - Body Color [body] - body/bodies/female: Benjamin K. Smith (BenCreating), bluecarrot16, TheraHedwig, Evert, MuffinElZangano, Durrani, Pierre Vigier (pvigier), ElizaWy, Matthew Krohn (makrohn), Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-ladies, https://opengameart.org/content/lpc-7-womens-shirts, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-revised-character-basics, https://gitlab.com/vagabondgame/lpc-characters, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani, https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle
 - Slit dress [dress_slit] - dress/slit: Nila122, ElizaWy, bluecarrot16; OGA-BY 3.0; https://opengameart.org/content/lpc-clothes-and-hair, http://opengameart.org/content/lpc-clothing-updates
 - Human Female [heads_human_female] - head/heads/human/female: bluecarrot16, Benjamin K. Smith (BenCreating), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/, https://opengameart.org/content/lpc-character-bases
 - Dreadlocks long [hair_dreadlocks_long] - hair/dreadlocks_long: bluecarrot16; CC0; https://opengameart.org/content/lpc-hair
+- Serpent tail [naga_tail] - naga_tails/short_emerald12: The Forsaken Realms; CC0
 
 ## Omo (round 627) - composed sprite CC-BY
 
@@ -9604,24 +9606,24 @@ sources.
 - Human Female [heads_human_female] - head/heads/human/female: bluecarrot16, Benjamin K. Smith (BenCreating), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/, https://opengameart.org/content/lpc-character-bases
 - Dreadlocks long [hair_dreadlocks_long] - hair/dreadlocks_long: bluecarrot16; CC0; https://opengameart.org/content/lpc-hair
 
-## Naga Warrior (round 628) - composed sprite CC-BY-SA
+## Naga Warrior (round 628, redone in round 676) - composed sprite CC-BY-SA
 
 - Spear [weapon_polearm_spear] - weapon/polearm/spear: Pierre Vigier (pvigier), Johannes Sjölund (wulax), Inboxninja; CC-BY-SA 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-spear-and-shovel-reworked
 - Body Color [body] - body/bodies/male: bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani, https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle, https://opengameart.org/content/lpc-revised-character-basics, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-runcycle-for-male-muscular-and-pregnant-character-bases-with-modular-heads, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-character-bases
 - Leather [torso_armour_leather] - torso/armour/leather: Johannes Sjölund (wulax), bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-clothing-updates, https://opengameart.org/content/lpc-expanded-armor
 - Sash [belt_sash] - torso/waist/sash: bluecarrot16, Nila122; OGA-BY 3.0; https://opengameart.org/content/more-lpc-clothes-and-hair, https://opengameart.org/content/lpc-pirates
 - Lizard male [heads_lizard_male] - head/heads/lizard/male: bluecarrot16, Benjamin K. Smith (BenCreating), Nila122; OGA-BY 3.0; https://opengameart.org/content/drakes-and-lizardfolk, https://opengameart.org/content/lpc-character-bases
-- Serpent tail [naga_tail] - naga_to_forge.py/teal: The Forsaken Realms; CC0
+- Serpent tail [naga_tail] - naga_tails/short_teal14: The Forsaken Realms; CC0
 
-## Omarthis (round 628) - composed sprite CC-BY
+## Omarthis (round 628, redone in round 676) - composed sprite CC-BY
 
 - Body Color [body] - body/bodies/male: bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani, https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle, https://opengameart.org/content/lpc-revised-character-basics, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-runcycle-for-male-muscular-and-pregnant-character-bases-with-modular-heads, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-character-bases
 - Longsleeve [torso_clothes_longsleeve] - torso/clothes/longsleeve/longsleeve/male: JaidynReiman, Johannes Sjölund (wulax); OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, http://opengameart.org/content/lpc-clothing-updates, https://opengameart.org/content/lpc-revised-character-basics, https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing, https://opengameart.org/content/lpc-expanded-sit-run-jump-more, https://opengameart.org/content/lpc-expanded-simple-shirts
 - Sash [belt_sash] - torso/waist/sash: bluecarrot16, Nila122; OGA-BY 3.0; https://opengameart.org/content/more-lpc-clothes-and-hair, https://opengameart.org/content/lpc-pirates
 - Lizard male [heads_lizard_male] - head/heads/lizard/male: bluecarrot16, Benjamin K. Smith (BenCreating), Nila122; OGA-BY 3.0; https://opengameart.org/content/drakes-and-lizardfolk, https://opengameart.org/content/lpc-character-bases
-- Serpent tail [naga_tail] - naga_to_forge.py/spectral: The Forsaken Realms; CC0
+- Serpent tail [naga_tail] - naga_tails/short_ice14: The Forsaken Realms; CC0
 
-## Lonis (round 628) - composed sprite CC-BY-SA
+## Lonis (round 628, redone in round 676) - composed sprite CC-BY-SA
 
 - Dagger [weapon_sword_dagger] - weapon/sword/dagger: bluecarrot16, Johannes Sjölund (wulax), Matthew Krohn (makrohn); OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-extended-weapon-animations
 - Body Color [body] - body/bodies/male: bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani, https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle, https://opengameart.org/content/lpc-revised-character-basics, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-runcycle-for-male-muscular-and-pregnant-character-bases-with-modular-heads, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-character-bases
@@ -9629,16 +9631,16 @@ sources.
 - Human Male [heads_human_male] - head/heads/human/male: bluecarrot16, Benjamin K. Smith (BenCreating), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-character-bases
 - Plain [hair_plain] - hair/plain: JaidynReiman, Manuel Riecke (MrBeast), Joe White; OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/ponytail-and-plain-hairstyles, https://opengameart.org/content/lpc-expanded-hair
 - Elven ears [head_ears_elven] - head/ears/elven: JaidynReiman, bluecarrot16, Thane Brimhall (pennomi), laetissima, Matthew Krohn (makrohn), JaidynReiman; CC-BY-SA 3.0; https://opengameart.org/content/lpc-base-character-expressions, http://opengameart.org/content/lpc-clothing-updates
-- Serpent tail [naga_tail] - naga_to_forge.py/jade: The Forsaken Realms; CC0
+- Serpent tail [naga_tail] - naga_tails/short_mint14: The Forsaken Realms; CC0
 
-## Kadena (round 628) - composed sprite CC-BY
+## Kadena (round 628, redone in round 676) - composed sprite CC-BY
 
 - Loop staff [weapon_magic_loop] - weapon/magic/loop: bluecarrot16; CC-BY 4.0; https://opengameart.org/content/lpc-more-weapons
 - Body Color [body] - body/bodies/male: bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sjölund (wulax), Stephen Challener (Redshrike); OGA-BY 3.0; https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles, https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, https://opengameart.org/content/lpc-male-jumping-animation-by-durrani, https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle, https://opengameart.org/content/lpc-revised-character-basics, https://opengameart.org/content/lpc-be-seated, https://opengameart.org/content/lpc-runcycle-for-male-muscular-and-pregnant-character-bases-with-modular-heads, https://opengameart.org/content/lpc-jump-expanded, https://opengameart.org/content/lpc-character-bases
 - Longsleeve [torso_clothes_longsleeve] - torso/clothes/longsleeve/longsleeve/male: JaidynReiman, Johannes Sjölund (wulax); OGA-BY 3.0; https://opengameart.org/content/lpc-medieval-fantasy-character-sprites, http://opengameart.org/content/lpc-clothing-updates, https://opengameart.org/content/lpc-revised-character-basics, https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing, https://opengameart.org/content/lpc-expanded-sit-run-jump-more, https://opengameart.org/content/lpc-expanded-simple-shirts
 - Mantal [shoulders_mantal] - shoulders/mantal: bluecarrot16, JaidynReiman; OGA-BY 3.0; https://opengameart.org/content/lpc-pirates
 - Lizard male [heads_lizard_male] - head/heads/lizard/male: bluecarrot16, Benjamin K. Smith (BenCreating), Nila122; OGA-BY 3.0; https://opengameart.org/content/drakes-and-lizardfolk, https://opengameart.org/content/lpc-character-bases
-- Serpent tail [naga_tail] - naga_to_forge.py/jade: The Forsaken Realms; CC0
+- Serpent tail [naga_tail] - naga_tails/short_emerald14: The Forsaken Realms; CC0
 
 ## Taong Tuod (round 641) - composed sprite CC-BY-SA
 

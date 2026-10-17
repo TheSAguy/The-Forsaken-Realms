@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 676: six serpent-folk on a drawn snake tail (2026-10-16)
+
+The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_676.py`. These are the first
+enemies on a drawn LPC body part: a serpent lower body from the user's ChatGPT sheet, the same idea as the drawn heads.
+
+- **The tail**: three views, cut flat at the waist (the short take, with bold bands). `naga_tail_image.py` shrinks it to
+  the game's scale and recolors it to each character's skin, so the scales carry on from the shoulders onto the tail.
+  The character's median scale tone lands on the skin's middle tone, and the cream belly becomes a pale tone of the
+  skin's lightest. Women's waists are 12 px wide, men's 14.
+- **The body**: `naga_to_forge.py --tail-image` sets the tail under the LPC upper body, so the torso, arms, hands and
+  weapons animate as before. The walk sends a hump down the tail by lifting columns of the drawing, and the idle sways
+  the tip.
+- **The six**:
+  - **Damia** (coffee) and **Hythonia** (emerald) are gorgons with snake bodies in their cards. Round 627 gave them
+    legs.
+  - Round 628's four naga, whose tails were drawn by code: the **Naga Warrior** (teal), **Omarthis** (ice-white),
+    **Lonis** (mint) and **Kadena** (emerald).
+- **Scale**: the drawn tails are taller than the code-drawn ones, so `enemy_scale.py --write` shrank all six (0.31-0.34
+  to 0.2407-0.26). They now stand about as tall as an LPC human overall, with a smaller upper
+  body. No other enemy changed.
+- **Files**:
+  - 6 remake atlases rebuilt (`damia`, `hythonia`, `naga_warrior`, `omarthis`, `lonis`, `kadena`).
+  - enemies.json: their 6 scales.
+  - `CREDITS_LPC.md` regenerated: the six keep their places, headed "redone in round 676", each with its drawn tail
+    credited to The Forsaken Realms (CC0). 1009 characters; no author changes.
+  - `CREDITS.md` is unchanged.
+- **Checks**:
+  - enemies.json against HEAD: exactly these 6, only `scale`.
+  - `sprite_footprints.py --check` exit 0.
+  - `validate_plane_data.py`: its three usual sections.
+  - `sprite_artifact_audit.py`: no flags on the rebuilt atlases.
+  - Every Avatar is whole; `avatar_crop_qa.py` flags none.
+  - Not seen in play.
+
 ## Round 675: a diamond's Power comes as a card to turn over (2026-10-16)
 
 The user: "I got a diamond on the overworld and it game me XP/Power. That should pop up as a card you flit with the

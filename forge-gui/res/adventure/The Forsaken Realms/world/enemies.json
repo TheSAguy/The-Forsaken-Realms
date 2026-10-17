@@ -23091,7 +23091,7 @@
             "IdentitySimic"
         ],
         "tier": "Common",
-        "scale": 0.3333
+        "scale": 0.26
     },
     {
         "name": "Nahiri",
@@ -41963,7 +41963,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.3171,
+        "scale": 0.26,
         "life": 40,
         "rewards": [
             {
@@ -42605,7 +42605,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.3421,
+        "scale": 0.2549,
         "life": 40,
         "rewards": [
             {
@@ -45736,7 +45736,7 @@
         ],
         "ai": "",
         "speed": 27,
-        "scale": 0.3171,
+        "scale": 0.26,
         "life": 19,
         "rewards": [
             {
@@ -92512,7 +92512,7 @@
         "spawnRate": 0,
         "tier": "Uncommon",
         "difficulty": 2,
-        "scale": 0.3095
+        "scale": 0.2407
     },
     {
         "name": "Momir Vig",
@@ -93789,7 +93789,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.325
+        "scale": 0.2549
     },
     {
         "name": "Sidisi",

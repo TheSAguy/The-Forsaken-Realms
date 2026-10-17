@@ -1,5 +1,5 @@
 kadena.png
-size: 848,505
+size: 880,631
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,164 +8,164 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 106, 49
-  footprint: 24, 1, 58, 48
+  size: 110, 63
+  footprint: 24, 1, 62, 62
 Idle
-  xy: 106, 64
-  size: 106, 49
+  xy: 110, 64
+  size: 110, 63
 Idle
-  xy: 212, 64
-  size: 106, 49
+  xy: 220, 64
+  size: 110, 63
 Idle
-  xy: 318, 64
-  size: 106, 49
+  xy: 330, 64
+  size: 110, 63
 Walk
-  xy: 0, 113
-  size: 106, 49
+  xy: 0, 127
+  size: 110, 63
 Walk
-  xy: 106, 113
-  size: 106, 49
+  xy: 110, 127
+  size: 110, 63
 Walk
-  xy: 212, 113
-  size: 106, 49
+  xy: 220, 127
+  size: 110, 63
 Walk
-  xy: 318, 113
-  size: 106, 49
+  xy: 330, 127
+  size: 110, 63
 Walk
-  xy: 424, 113
-  size: 106, 49
+  xy: 440, 127
+  size: 110, 63
 Walk
-  xy: 530, 113
-  size: 106, 49
+  xy: 550, 127
+  size: 110, 63
 Walk
-  xy: 636, 113
-  size: 106, 49
+  xy: 660, 127
+  size: 110, 63
 Walk
-  xy: 742, 113
-  size: 106, 49
+  xy: 770, 127
+  size: 110, 63
 Attack
-  xy: 0, 162
-  size: 106, 49
+  xy: 0, 190
+  size: 110, 63
 Attack
-  xy: 106, 162
-  size: 106, 49
+  xy: 110, 190
+  size: 110, 63
 Attack
-  xy: 212, 162
-  size: 106, 49
+  xy: 220, 190
+  size: 110, 63
 Attack
-  xy: 318, 162
-  size: 106, 49
+  xy: 330, 190
+  size: 110, 63
 Attack
-  xy: 424, 162
-  size: 106, 49
+  xy: 440, 190
+  size: 110, 63
 Attack
-  xy: 530, 162
-  size: 106, 49
+  xy: 550, 190
+  size: 110, 63
 Attack
-  xy: 636, 162
-  size: 106, 49
+  xy: 660, 190
+  size: 110, 63
 Attack
-  xy: 742, 162
-  size: 106, 49
+  xy: 770, 190
+  size: 110, 63
 Hit
-  xy: 0, 211
-  size: 106, 49
+  xy: 0, 253
+  size: 110, 63
 Hit
-  xy: 106, 211
-  size: 106, 49
+  xy: 110, 253
+  size: 110, 63
 Hit
-  xy: 212, 211
-  size: 106, 49
+  xy: 220, 253
+  size: 110, 63
 Hit
-  xy: 318, 211
-  size: 106, 49
+  xy: 330, 253
+  size: 110, 63
 Death
-  xy: 0, 260
-  size: 106, 49
+  xy: 0, 316
+  size: 110, 63
 Death
-  xy: 106, 260
-  size: 106, 49
+  xy: 110, 316
+  size: 110, 63
 Death
-  xy: 212, 260
-  size: 106, 49
+  xy: 220, 316
+  size: 110, 63
 Death
-  xy: 318, 260
-  size: 106, 49
+  xy: 330, 316
+  size: 110, 63
 Death
-  xy: 424, 260
-  size: 106, 49
+  xy: 440, 316
+  size: 110, 63
 Death
-  xy: 530, 260
-  size: 106, 49
+  xy: 550, 316
+  size: 110, 63
 IdleUp
-  xy: 0, 309
-  size: 106, 49
+  xy: 0, 379
+  size: 110, 63
 IdleUp
-  xy: 106, 309
-  size: 106, 49
+  xy: 110, 379
+  size: 110, 63
 IdleUp
-  xy: 212, 309
-  size: 106, 49
+  xy: 220, 379
+  size: 110, 63
 IdleUp
-  xy: 318, 309
-  size: 106, 49
+  xy: 330, 379
+  size: 110, 63
 IdleDown
-  xy: 0, 358
-  size: 106, 49
+  xy: 0, 442
+  size: 110, 63
 IdleDown
-  xy: 106, 358
-  size: 106, 49
+  xy: 110, 442
+  size: 110, 63
 IdleDown
-  xy: 212, 358
-  size: 106, 49
+  xy: 220, 442
+  size: 110, 63
 IdleDown
-  xy: 318, 358
-  size: 106, 49
+  xy: 330, 442
+  size: 110, 63
 WalkUp
-  xy: 0, 407
-  size: 106, 49
+  xy: 0, 505
+  size: 110, 63
 WalkUp
-  xy: 106, 407
-  size: 106, 49
+  xy: 110, 505
+  size: 110, 63
 WalkUp
-  xy: 212, 407
-  size: 106, 49
+  xy: 220, 505
+  size: 110, 63
 WalkUp
-  xy: 318, 407
-  size: 106, 49
+  xy: 330, 505
+  size: 110, 63
 WalkUp
-  xy: 424, 407
-  size: 106, 49
+  xy: 440, 505
+  size: 110, 63
 WalkUp
-  xy: 530, 407
-  size: 106, 49
+  xy: 550, 505
+  size: 110, 63
 WalkUp
-  xy: 636, 407
-  size: 106, 49
+  xy: 660, 505
+  size: 110, 63
 WalkUp
-  xy: 742, 407
-  size: 106, 49
+  xy: 770, 505
+  size: 110, 63
 WalkDown
-  xy: 0, 456
-  size: 106, 49
+  xy: 0, 568
+  size: 110, 63
 WalkDown
-  xy: 106, 456
-  size: 106, 49
+  xy: 110, 568
+  size: 110, 63
 WalkDown
-  xy: 212, 456
-  size: 106, 49
+  xy: 220, 568
+  size: 110, 63
 WalkDown
-  xy: 318, 456
-  size: 106, 49
+  xy: 330, 568
+  size: 110, 63
 WalkDown
-  xy: 424, 456
-  size: 106, 49
+  xy: 440, 568
+  size: 110, 63
 WalkDown
-  xy: 530, 456
-  size: 106, 49
+  xy: 550, 568
+  size: 110, 63
 WalkDown
-  xy: 636, 456
-  size: 106, 49
+  xy: 660, 568
+  size: 110, 63
 WalkDown
-  xy: 742, 456
-  size: 106, 49
+  xy: 770, 568
+  size: 110, 63

@@ -1,5 +1,5 @@
 naga_warrior.png
-size: 656,505
+size: 688,631
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,163 +8,163 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 82, 49
+  size: 86, 63
 Idle
-  xy: 82, 64
-  size: 82, 49
+  xy: 86, 64
+  size: 86, 63
 Idle
-  xy: 164, 64
-  size: 82, 49
+  xy: 172, 64
+  size: 86, 63
 Idle
-  xy: 246, 64
-  size: 82, 49
+  xy: 258, 64
+  size: 86, 63
 Walk
-  xy: 0, 113
-  size: 82, 49
+  xy: 0, 127
+  size: 86, 63
 Walk
-  xy: 82, 113
-  size: 82, 49
+  xy: 86, 127
+  size: 86, 63
 Walk
-  xy: 164, 113
-  size: 82, 49
+  xy: 172, 127
+  size: 86, 63
 Walk
-  xy: 246, 113
-  size: 82, 49
+  xy: 258, 127
+  size: 86, 63
 Walk
-  xy: 328, 113
-  size: 82, 49
+  xy: 344, 127
+  size: 86, 63
 Walk
-  xy: 410, 113
-  size: 82, 49
+  xy: 430, 127
+  size: 86, 63
 Walk
-  xy: 492, 113
-  size: 82, 49
+  xy: 516, 127
+  size: 86, 63
 Walk
-  xy: 574, 113
-  size: 82, 49
+  xy: 602, 127
+  size: 86, 63
 Attack
-  xy: 0, 162
-  size: 82, 49
+  xy: 0, 190
+  size: 86, 63
 Attack
-  xy: 82, 162
-  size: 82, 49
+  xy: 86, 190
+  size: 86, 63
 Attack
-  xy: 164, 162
-  size: 82, 49
+  xy: 172, 190
+  size: 86, 63
 Attack
-  xy: 246, 162
-  size: 82, 49
+  xy: 258, 190
+  size: 86, 63
 Attack
-  xy: 328, 162
-  size: 82, 49
+  xy: 344, 190
+  size: 86, 63
 Attack
-  xy: 410, 162
-  size: 82, 49
+  xy: 430, 190
+  size: 86, 63
 Attack
-  xy: 492, 162
-  size: 82, 49
+  xy: 516, 190
+  size: 86, 63
 Attack
-  xy: 574, 162
-  size: 82, 49
+  xy: 602, 190
+  size: 86, 63
 Hit
-  xy: 0, 211
-  size: 82, 49
+  xy: 0, 253
+  size: 86, 63
 Hit
-  xy: 82, 211
-  size: 82, 49
+  xy: 86, 253
+  size: 86, 63
 Hit
-  xy: 164, 211
-  size: 82, 49
+  xy: 172, 253
+  size: 86, 63
 Hit
-  xy: 246, 211
-  size: 82, 49
+  xy: 258, 253
+  size: 86, 63
 Death
-  xy: 0, 260
-  size: 82, 49
+  xy: 0, 316
+  size: 86, 63
 Death
-  xy: 82, 260
-  size: 82, 49
+  xy: 86, 316
+  size: 86, 63
 Death
-  xy: 164, 260
-  size: 82, 49
+  xy: 172, 316
+  size: 86, 63
 Death
-  xy: 246, 260
-  size: 82, 49
+  xy: 258, 316
+  size: 86, 63
 Death
-  xy: 328, 260
-  size: 82, 49
+  xy: 344, 316
+  size: 86, 63
 Death
-  xy: 410, 260
-  size: 82, 49
+  xy: 430, 316
+  size: 86, 63
 IdleUp
-  xy: 0, 309
-  size: 82, 49
+  xy: 0, 379
+  size: 86, 63
 IdleUp
-  xy: 82, 309
-  size: 82, 49
+  xy: 86, 379
+  size: 86, 63
 IdleUp
-  xy: 164, 309
-  size: 82, 49
+  xy: 172, 379
+  size: 86, 63
 IdleUp
-  xy: 246, 309
-  size: 82, 49
+  xy: 258, 379
+  size: 86, 63
 IdleDown
-  xy: 0, 358
-  size: 82, 49
+  xy: 0, 442
+  size: 86, 63
 IdleDown
-  xy: 82, 358
-  size: 82, 49
+  xy: 86, 442
+  size: 86, 63
 IdleDown
-  xy: 164, 358
-  size: 82, 49
+  xy: 172, 442
+  size: 86, 63
 IdleDown
-  xy: 246, 358
-  size: 82, 49
+  xy: 258, 442
+  size: 86, 63
 WalkUp
-  xy: 0, 407
-  size: 82, 49
+  xy: 0, 505
+  size: 86, 63
 WalkUp
-  xy: 82, 407
-  size: 82, 49
+  xy: 86, 505
+  size: 86, 63
 WalkUp
-  xy: 164, 407
-  size: 82, 49
+  xy: 172, 505
+  size: 86, 63
 WalkUp
-  xy: 246, 407
-  size: 82, 49
+  xy: 258, 505
+  size: 86, 63
 WalkUp
-  xy: 328, 407
-  size: 82, 49
+  xy: 344, 505
+  size: 86, 63
 WalkUp
-  xy: 410, 407
-  size: 82, 49
+  xy: 430, 505
+  size: 86, 63
 WalkUp
-  xy: 492, 407
-  size: 82, 49
+  xy: 516, 505
+  size: 86, 63
 WalkUp
-  xy: 574, 407
-  size: 82, 49
+  xy: 602, 505
+  size: 86, 63
 WalkDown
-  xy: 0, 456
-  size: 82, 49
+  xy: 0, 568
+  size: 86, 63
 WalkDown
-  xy: 82, 456
-  size: 82, 49
+  xy: 86, 568
+  size: 86, 63
 WalkDown
-  xy: 164, 456
-  size: 82, 49
+  xy: 172, 568
+  size: 86, 63
 WalkDown
-  xy: 246, 456
-  size: 82, 49
+  xy: 258, 568
+  size: 86, 63
 WalkDown
-  xy: 328, 456
-  size: 82, 49
+  xy: 344, 568
+  size: 86, 63
 WalkDown
-  xy: 410, 456
-  size: 82, 49
+  xy: 430, 568
+  size: 86, 63
 WalkDown
-  xy: 492, 456
-  size: 82, 49
+  xy: 516, 568
+  size: 86, 63
 WalkDown
-  xy: 574, 456
-  size: 82, 49
+  xy: 602, 568
+  size: 86, 63

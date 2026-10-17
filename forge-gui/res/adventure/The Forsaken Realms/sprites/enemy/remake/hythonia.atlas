@@ -1,5 +1,5 @@
 hythonia.png
-size: 486,559
+size: 640,631
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,167 +8,158 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 54, 55
-  footprint: 16, 1, 23, 53
+  size: 80, 63
+  footprint: 15, 1, 50, 62
 Idle
-  xy: 54, 64
-  size: 54, 55
+  xy: 80, 64
+  size: 80, 63
 Idle
-  xy: 108, 64
-  size: 54, 55
+  xy: 160, 64
+  size: 80, 63
 Idle
-  xy: 162, 64
-  size: 54, 55
+  xy: 240, 64
+  size: 80, 63
 Walk
-  xy: 0, 119
-  size: 54, 55
+  xy: 0, 127
+  size: 80, 63
 Walk
-  xy: 54, 119
-  size: 54, 55
+  xy: 80, 127
+  size: 80, 63
 Walk
-  xy: 108, 119
-  size: 54, 55
+  xy: 160, 127
+  size: 80, 63
 Walk
-  xy: 162, 119
-  size: 54, 55
+  xy: 240, 127
+  size: 80, 63
 Walk
-  xy: 216, 119
-  size: 54, 55
+  xy: 320, 127
+  size: 80, 63
 Walk
-  xy: 270, 119
-  size: 54, 55
+  xy: 400, 127
+  size: 80, 63
 Walk
-  xy: 324, 119
-  size: 54, 55
+  xy: 480, 127
+  size: 80, 63
 Walk
-  xy: 378, 119
-  size: 54, 55
+  xy: 560, 127
+  size: 80, 63
 Attack
-  xy: 0, 174
-  size: 54, 55
+  xy: 0, 190
+  size: 80, 63
 Attack
-  xy: 54, 174
-  size: 54, 55
+  xy: 80, 190
+  size: 80, 63
 Attack
-  xy: 108, 174
-  size: 54, 55
+  xy: 160, 190
+  size: 80, 63
 Attack
-  xy: 162, 174
-  size: 54, 55
+  xy: 240, 190
+  size: 80, 63
 Attack
-  xy: 216, 174
-  size: 54, 55
+  xy: 320, 190
+  size: 80, 63
 Attack
-  xy: 270, 174
-  size: 54, 55
+  xy: 400, 190
+  size: 80, 63
 Hit
-  xy: 0, 229
-  size: 54, 55
+  xy: 0, 253
+  size: 80, 63
 Hit
-  xy: 54, 229
-  size: 54, 55
+  xy: 80, 253
+  size: 80, 63
 Hit
-  xy: 108, 229
-  size: 54, 55
+  xy: 160, 253
+  size: 80, 63
 Hit
-  xy: 162, 229
-  size: 54, 55
+  xy: 240, 253
+  size: 80, 63
 Death
-  xy: 0, 284
-  size: 54, 55
+  xy: 0, 316
+  size: 80, 63
 Death
-  xy: 54, 284
-  size: 54, 55
+  xy: 80, 316
+  size: 80, 63
 Death
-  xy: 108, 284
-  size: 54, 55
+  xy: 160, 316
+  size: 80, 63
 Death
-  xy: 162, 284
-  size: 54, 55
+  xy: 240, 316
+  size: 80, 63
 Death
-  xy: 216, 284
-  size: 54, 55
+  xy: 320, 316
+  size: 80, 63
 Death
-  xy: 270, 284
-  size: 54, 55
-Death
-  xy: 324, 284
-  size: 54, 55
-Death
-  xy: 378, 284
-  size: 54, 55
-Death
-  xy: 432, 284
-  size: 54, 55
+  xy: 400, 316
+  size: 80, 63
 IdleUp
-  xy: 0, 339
-  size: 54, 55
+  xy: 0, 379
+  size: 80, 63
 IdleUp
-  xy: 54, 339
-  size: 54, 55
+  xy: 80, 379
+  size: 80, 63
 IdleUp
-  xy: 108, 339
-  size: 54, 55
+  xy: 160, 379
+  size: 80, 63
 IdleUp
-  xy: 162, 339
-  size: 54, 55
+  xy: 240, 379
+  size: 80, 63
 IdleDown
-  xy: 0, 394
-  size: 54, 55
+  xy: 0, 442
+  size: 80, 63
 IdleDown
-  xy: 54, 394
-  size: 54, 55
+  xy: 80, 442
+  size: 80, 63
 IdleDown
-  xy: 108, 394
-  size: 54, 55
+  xy: 160, 442
+  size: 80, 63
 IdleDown
-  xy: 162, 394
-  size: 54, 55
+  xy: 240, 442
+  size: 80, 63
 WalkUp
-  xy: 0, 449
-  size: 54, 55
+  xy: 0, 505
+  size: 80, 63
 WalkUp
-  xy: 54, 449
-  size: 54, 55
+  xy: 80, 505
+  size: 80, 63
 WalkUp
-  xy: 108, 449
-  size: 54, 55
+  xy: 160, 505
+  size: 80, 63
 WalkUp
-  xy: 162, 449
-  size: 54, 55
+  xy: 240, 505
+  size: 80, 63
 WalkUp
-  xy: 216, 449
-  size: 54, 55
+  xy: 320, 505
+  size: 80, 63
 WalkUp
-  xy: 270, 449
-  size: 54, 55
+  xy: 400, 505
+  size: 80, 63
 WalkUp
-  xy: 324, 449
-  size: 54, 55
+  xy: 480, 505
+  size: 80, 63
 WalkUp
-  xy: 378, 449
-  size: 54, 55
+  xy: 560, 505
+  size: 80, 63
 WalkDown
-  xy: 0, 504
-  size: 54, 55
+  xy: 0, 568
+  size: 80, 63
 WalkDown
-  xy: 54, 504
-  size: 54, 55
+  xy: 80, 568
+  size: 80, 63
 WalkDown
-  xy: 108, 504
-  size: 54, 55
+  xy: 160, 568
+  size: 80, 63
 WalkDown
-  xy: 162, 504
-  size: 54, 55
+  xy: 240, 568
+  size: 80, 63
 WalkDown
-  xy: 216, 504
-  size: 54, 55
+  xy: 320, 568
+  size: 80, 63
 WalkDown
-  xy: 270, 504
-  size: 54, 55
+  xy: 400, 568
+  size: 80, 63
 WalkDown
-  xy: 324, 504
-  size: 54, 55
+  xy: 480, 568
+  size: 80, 63
 WalkDown
-  xy: 378, 504
-  size: 54, 55
+  xy: 560, 568
+  size: 80, 63

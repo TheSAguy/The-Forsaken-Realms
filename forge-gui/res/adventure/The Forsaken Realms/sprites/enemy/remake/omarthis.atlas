@@ -1,5 +1,5 @@
 omarthis.png
-size: 704,505
+size: 640,631
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -8,161 +8,161 @@ Avatar
   size: 64, 64
 Idle
   xy: 0, 64
-  size: 88, 49
-  footprint: 17, 1, 55, 48
+  size: 80, 63
+  footprint: 11, 1, 59, 62
 Idle
-  xy: 88, 64
-  size: 88, 49
+  xy: 80, 64
+  size: 80, 63
 Idle
-  xy: 176, 64
-  size: 88, 49
+  xy: 160, 64
+  size: 80, 63
 Idle
-  xy: 264, 64
-  size: 88, 49
+  xy: 240, 64
+  size: 80, 63
 Walk
-  xy: 0, 113
-  size: 88, 49
+  xy: 0, 127
+  size: 80, 63
 Walk
-  xy: 88, 113
-  size: 88, 49
+  xy: 80, 127
+  size: 80, 63
 Walk
-  xy: 176, 113
-  size: 88, 49
+  xy: 160, 127
+  size: 80, 63
 Walk
-  xy: 264, 113
-  size: 88, 49
+  xy: 240, 127
+  size: 80, 63
 Walk
-  xy: 352, 113
-  size: 88, 49
+  xy: 320, 127
+  size: 80, 63
 Walk
-  xy: 440, 113
-  size: 88, 49
+  xy: 400, 127
+  size: 80, 63
 Walk
-  xy: 528, 113
-  size: 88, 49
+  xy: 480, 127
+  size: 80, 63
 Walk
-  xy: 616, 113
-  size: 88, 49
+  xy: 560, 127
+  size: 80, 63
 Attack
-  xy: 0, 162
-  size: 88, 49
+  xy: 0, 190
+  size: 80, 63
 Attack
-  xy: 88, 162
-  size: 88, 49
+  xy: 80, 190
+  size: 80, 63
 Attack
-  xy: 176, 162
-  size: 88, 49
+  xy: 160, 190
+  size: 80, 63
 Attack
-  xy: 264, 162
-  size: 88, 49
+  xy: 240, 190
+  size: 80, 63
 Attack
-  xy: 352, 162
-  size: 88, 49
+  xy: 320, 190
+  size: 80, 63
 Attack
-  xy: 440, 162
-  size: 88, 49
+  xy: 400, 190
+  size: 80, 63
 Attack
-  xy: 528, 162
-  size: 88, 49
+  xy: 480, 190
+  size: 80, 63
 Hit
-  xy: 0, 211
-  size: 88, 49
+  xy: 0, 253
+  size: 80, 63
 Hit
-  xy: 88, 211
-  size: 88, 49
+  xy: 80, 253
+  size: 80, 63
 Hit
-  xy: 176, 211
-  size: 88, 49
+  xy: 160, 253
+  size: 80, 63
 Hit
-  xy: 264, 211
-  size: 88, 49
+  xy: 240, 253
+  size: 80, 63
 Death
-  xy: 0, 260
-  size: 88, 49
+  xy: 0, 316
+  size: 80, 63
 Death
-  xy: 88, 260
-  size: 88, 49
+  xy: 80, 316
+  size: 80, 63
 Death
-  xy: 176, 260
-  size: 88, 49
+  xy: 160, 316
+  size: 80, 63
 Death
-  xy: 264, 260
-  size: 88, 49
+  xy: 240, 316
+  size: 80, 63
 Death
-  xy: 352, 260
-  size: 88, 49
+  xy: 320, 316
+  size: 80, 63
 Death
-  xy: 440, 260
-  size: 88, 49
+  xy: 400, 316
+  size: 80, 63
 IdleUp
-  xy: 0, 309
-  size: 88, 49
+  xy: 0, 379
+  size: 80, 63
 IdleUp
-  xy: 88, 309
-  size: 88, 49
+  xy: 80, 379
+  size: 80, 63
 IdleUp
-  xy: 176, 309
-  size: 88, 49
+  xy: 160, 379
+  size: 80, 63
 IdleUp
-  xy: 264, 309
-  size: 88, 49
+  xy: 240, 379
+  size: 80, 63
 IdleDown
-  xy: 0, 358
-  size: 88, 49
+  xy: 0, 442
+  size: 80, 63
 IdleDown
-  xy: 88, 358
-  size: 88, 49
+  xy: 80, 442
+  size: 80, 63
 IdleDown
-  xy: 176, 358
-  size: 88, 49
+  xy: 160, 442
+  size: 80, 63
 IdleDown
-  xy: 264, 358
-  size: 88, 49
+  xy: 240, 442
+  size: 80, 63
 WalkUp
-  xy: 0, 407
-  size: 88, 49
+  xy: 0, 505
+  size: 80, 63
 WalkUp
-  xy: 88, 407
-  size: 88, 49
+  xy: 80, 505
+  size: 80, 63
 WalkUp
-  xy: 176, 407
-  size: 88, 49
+  xy: 160, 505
+  size: 80, 63
 WalkUp
-  xy: 264, 407
-  size: 88, 49
+  xy: 240, 505
+  size: 80, 63
 WalkUp
-  xy: 352, 407
-  size: 88, 49
+  xy: 320, 505
+  size: 80, 63
 WalkUp
-  xy: 440, 407
-  size: 88, 49
+  xy: 400, 505
+  size: 80, 63
 WalkUp
-  xy: 528, 407
-  size: 88, 49
+  xy: 480, 505
+  size: 80, 63
 WalkUp
-  xy: 616, 407
-  size: 88, 49
+  xy: 560, 505
+  size: 80, 63
 WalkDown
-  xy: 0, 456
-  size: 88, 49
+  xy: 0, 568
+  size: 80, 63
 WalkDown
-  xy: 88, 456
-  size: 88, 49
+  xy: 80, 568
+  size: 80, 63
 WalkDown
-  xy: 176, 456
-  size: 88, 49
+  xy: 160, 568
+  size: 80, 63
 WalkDown
-  xy: 264, 456
-  size: 88, 49
+  xy: 240, 568
+  size: 80, 63
 WalkDown
-  xy: 352, 456
-  size: 88, 49
+  xy: 320, 568
+  size: 80, 63
 WalkDown
-  xy: 440, 456
-  size: 88, 49
+  xy: 400, 568
+  size: 80, 63
 WalkDown
-  xy: 528, 456
-  size: 88, 49
+  xy: 480, 568
+  size: 80, 63
 WalkDown
-  xy: 616, 456
-  size: 88, 49
+  xy: 560, 568
+  size: 80, 63
