@@ -117,6 +117,9 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-16 (round 677): **LOCAL + UNRELEASED (code + config)** - the hero is drawn 13 px at Ascendance 0
+growing to 25 px at 40 (`Ascendance.heroSizeFactor`, `PlayerSprite.applyHeroSize`, ascendance.json heroSize*); box unchanged.
+
 ## STATE 2026-10-16 (round 676): **LOCAL + UNRELEASED (art + data)** - Damia, Hythonia and the four round-628 naga on the
 user's drawn snake tail, recolored to each skin (generator naga_tail_image.py + naga_to_forge.py --tail-image,
 `lpc_selections/make_676.py`). 6 atlases + scales, CREDITS_LPC.md. Not seen in play.

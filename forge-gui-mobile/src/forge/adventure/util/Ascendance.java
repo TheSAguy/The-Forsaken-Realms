@@ -105,6 +105,16 @@ public final class Ascendance {
         return s == null ? 0 : s.power;
     }
 
+    /** Round 677: how many times its heroes.json scale the player's hero is drawn at the current level - 1 without
+     *  Ascendance, or with heroSizeReference 0 (see AscendanceData.heroSizeStart). PlayerSprite applies it. */
+    public static float heroSizeFactor() {
+        AscendanceData d = data();
+        if (!isActive() || d.heroSizeReference <= 0f || d.heroSizeStart <= 0f || d.heroSizeEnd <= 0f)
+            return 1f;
+        float t = d.heroSizeEndLevel <= 0 ? 1f : Math.min(level(), d.heroSizeEndLevel) / (float) d.heroSizeEndLevel;
+        return (d.heroSizeStart + (d.heroSizeEnd - d.heroSizeStart) * t) / d.heroSizeReference;
+    }
+
     public static int pendingChoices() {
         AscendanceState s = state();
         return s == null ? 0 : s.pendingLevels.size();

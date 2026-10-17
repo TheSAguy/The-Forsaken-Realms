@@ -22,7 +22,7 @@ public class PlayerSprite extends CharacterSprite {
 
     public PlayerSprite(GameStage gameStage) {
         super(AdventurePlayer.current().spriteName());
-        setHeroScale(AdventurePlayer.current().spriteScale()); // round 591
+        applyHeroSize(); // round 591; round 677: at the level's size
         this.gameStage = gameStage;
         setOriginX(getWidth() / 2);
         Current.player().onPlayerChanged(PlayerSprite.this::updatePlayer);
@@ -36,7 +36,34 @@ public class PlayerSprite extends CharacterSprite {
 
     private void updatePlayer() {
         load(AdventurePlayer.current().spriteName());
-        setHeroScale(AdventurePlayer.current().spriteScale()); // round 591: a loaded save may be another race
+        applyHeroSize(); // round 591: a loaded save may be another race
+    }
+
+    // Round 677: the Power and Ascendance state the hero was last sized at - a change (a level, a load, the console's
+    // asc set, Ascendance switched off) resizes it in act().
+    private int sizedAtPower = -1;
+    private boolean sizedActive;
+    private float sizedScale = -1f;
+
+    /** Round 677: the race's heroes.json scale times the level's growth (Ascendance.heroSizeFactor). The roaming guards
+     *  drawn on the player's sheet keep the plain scale - only the player grows. */
+    private void applyHeroSize() {
+        applyHeroSize(true);
+    }
+
+    private void applyHeroSize(boolean always) {
+        float factor = forge.adventure.util.Ascendance.heroSizeFactor();
+        sizedAtPower = forge.adventure.util.Ascendance.power();
+        sizedActive = forge.adventure.util.Ascendance.isActive();
+        float scale = AdventurePlayer.current().spriteScale() * factor;
+        if (!always && scale == sizedScale)
+            return; // Power gained inside the same level
+        sizedScale = scale;
+        setHeroScale(scale);
+        forge.adventure.data.AscendanceData d = forge.adventure.util.Ascendance.data();
+        System.out.println("[TFR-HeroSize] " + (sizedActive ? "level " + forge.adventure.util.Ascendance.level()
+                + ": body ~" + Math.round(d.heroSizeReference * factor * 10f) / 10f + " px" : "Ascendance off: today's size")
+                + " (x" + factor + " on scale " + AdventurePlayer.current().spriteScale() + ")");
     }
 
     public void LoadPos() {
@@ -67,6 +94,9 @@ public class PlayerSprite extends CharacterSprite {
     @Override
     public void act(float delta) {
         super.act(delta);
+        if (forge.adventure.util.Ascendance.power() != sizedAtPower
+                || forge.adventure.util.Ascendance.isActive() != sizedActive)
+            applyHeroSize(false); // round 677
         if (Forge.advFreezePlayerControls)
             return;
 

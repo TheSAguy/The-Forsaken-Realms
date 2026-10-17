@@ -67,6 +67,15 @@ public class AscendanceData {
     public int chestPower = 15;
     public int diamondPower = 25;
     public float diamondPowerChance = 0.15f;
+    /** Round 677 (the user: "Is it possible to dynamically scale the player. Can we start at 13px at level 0 and end up at
+     *  25px level 40?"): the hero is drawn heroSizeStart px tall at level 0, growing in even steps to heroSizeEnd at
+     *  heroSizeEndLevel and staying there. A multiple of the race's heroes.json scale, which draws heroSizeReference px
+     *  (the round 597 people heroes at 0.383, shadow to crest) - so dwarves and goblins keep their shorter build. Only
+     *  the drawing grows: the hero's 16 px box (collisions, doorways, the camera) does not. Reference 0 turns it off. */
+    public float heroSizeStart = 13f;
+    public float heroSizeEnd = 25f;
+    public int heroSizeEndLevel = 40;
+    public float heroSizeReference = 19.9f;
     /** Round 496: quests that pay no Power (empty since round 497 - the intro's 50 is the step to level 1). */
     public int[] noPowerQuestIds = {};
     /** Round 505b: the tutorial quests. Power a quest's dialog was holding (the intro's 50, round 505) is dropped when

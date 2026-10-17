@@ -68,6 +68,13 @@
   "chestPower": 15,
   "diamondPower": 25,
   "diamondPowerChance": 0.15,
+  // Round 677: the hero grows with the level - drawn heroSizeStart px tall at level 0, heroSizeEnd at heroSizeEndLevel
+  // and after, in even steps (the ranks: Apprentice 13, Adept 16.5, Master 20.6, Archmage 24.6). heroSizeReference is
+  // what heroes.json's scale draws today (19.9 px for the people heroes); 0 keeps the hero at that size.
+  "heroSizeStart": 13,
+  "heroSizeEnd": 25,
+  "heroSizeEndLevel": 40,
+  "heroSizeReference": 19.9,
   // Quests that pay no Power (round 496 listed the intro, 28; round 497 pays it again - it is the step to level 1).
   "noPowerQuestIds": [],
   // Round 505b: the intro's 50 waits for the tutorial-or-skip choice; on the tutorial path it is dropped and the tutorial

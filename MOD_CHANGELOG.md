@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 677: the hero grows with the Ascendance level, from 13 px at level 0 to 25 px at level 40 (2026-10-16)
+
+The user, shown their Merfolk hero beside the Merfolk Soldier at each enemy rank (the hero drew 19.9 px, between an
+Adept's 16.5 and a Master's 20.6): "Is it possible to dynamically scale the player. Can we start at 13px at level 0 and
+end up at 25px level 40?"
+
+- **The size**:
+  - The hero is drawn `heroSizeStart` (13) px tall at level 0 and grows in even steps, 0.3 px a level, to `heroSizeEnd`
+    (25) at `heroSizeEndLevel` (40). It stays there past 40.
+  - It passes the ranks on the way: an Apprentice is 13.4, an Adept 16.5 (level 10 is 16), a Master 20.6 and an
+    Archmage 24.6.
+  - The heights are measured shadow to crest, as on the review sheet (Art Library, `Review Sheets/Enemy rank sizes
+    (2026-10-16)`).
+- **How**:
+  - `Ascendance.heroSizeFactor()` is the target height over `heroSizeReference` (19.9, what heroes.json's 0.383 draws
+    today). It is 1 without Ascendance, so such a game keeps today's size.
+  - `PlayerSprite` draws at the race's heroes.json scale times that factor (`applyHeroSize`). Every race grows by the
+    same proportion, so dwarves and goblins (0.3404) stay shorter than humans at every level.
+  - `act()` resizes when the Power or Ascendance's on/off state changes. That covers a level gained, a save loaded and
+    the console's `asc set`. A Power gain inside the same level changes nothing.
+  - Only the drawing grows, through round 591's `setHeroScale`. The hero's 16 px box stays as it was, and with it
+    collisions, doorways, map entries and the camera.
+  - The roaming guards drawn on the player's sheet keep the plain scale.
+- **Settings**: `ascendance.json` gains `heroSizeStart`, `heroSizeEnd`, `heroSizeEndLevel` and `heroSizeReference`.
+  Setting `heroSizeReference` to 0 keeps today's size.
+- **Log**: `[TFR-HeroSize] level 40: body ~25.0 px (x1.2562814 on scale 0.383)`.
+- **Seen in the agent game** (a copy of the user's save):
+  - On the overworld, Ascendance 4 drew a 14.2 px hero, 20 drew 19.0 and 40 drew 25.0. At 40 the hero stood well over
+    the Pitchfork Farmer (an Apprentice) beside it.
+  - In Orazca, the town's player sprite also drew at level 40's size.
+  - No exception in the log.
+  - The console's `asc set` does not lower a level, so level 0 itself was not shown; the formula gives 13.
+
 ## Round 676: six serpent-folk on a drawn snake tail (2026-10-16)
 
 The Procedural Pixel Creatures session, built by the generator repo's `lpc_selections/make_676.py`. These are the first
