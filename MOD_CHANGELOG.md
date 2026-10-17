@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 682: places that come with the level arrive silently, under the fog (2026-10-16)
+
+The user, of the notice "Word reaches you of places you have never seen. New on your map: Brushwagg Underbrush (west),
+Isolated Dunes (west), Baneful Cavern (south-east), Hellion Cave (south-west) and Hermit's Hideout (east).": "I don't
+think we need to announce the new places. This and the other level place unlocks can be hidden".
+
+- **`LevelPlaces.place`** still puts each place on the map at its level, as rounds 668, 669 and 674 set up.
+  - It no longer clears the fog around a new place (`REVEAL_RADIUS` is gone). The place waits under the fog like any
+    place not yet found; its ground is still cleared and its chunk redrawn, so it looks right when the player gets there.
+  - Both notices are gone: the mid-game "Word reaches you of places you have never seen..." and the level-20 "Your spark
+    has grown too strong for the realm to hide its deepest places from you...".
+- **What stays for checking**:
+  - The log line names the place, its tile, which way it lies from the player and "under the fog":
+    `[TFR-LevelPlaces] <place> placed at tile x,y in <land> (west of the player), under the fog - Ascendance 20 of 20`.
+  - The console's `levelplaces now` answers with the list and the directions, and `levelplaces info` lists every
+    place's tile.
+- **Saves** that already have these places keep them, and the ground they uncovered stays uncovered. Only places still
+  to come arrive hidden.
+- **Seen in the agent game**, on a copy of the user's save with no level places yet, raised to Ascendance 8:
+  - All seven places due came in: the level-5 Jandor's Caravan and Thieves' Hideout, and the five level-8 lairs. Each
+    logged "under the fog".
+  - None of them was in the list of places the player has uncovered, and no notice was shown.
+  - No exception in the log.
+
 ## Round 681: thirteen sprites stop walking backwards; crisp tfr2 portraits; Frostcloak's Santa hat (2026-10-16)
 
 The Procedural Pixel Creatures session, by `dev-tools/art-import/facing681.py` (its ledger:

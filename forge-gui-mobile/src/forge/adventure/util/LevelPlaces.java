@@ -3,7 +3,6 @@ package forge.adventure.util;
 import com.badlogic.gdx.math.Vector2;
 import forge.adventure.data.PointOfInterestData;
 import forge.adventure.pointofintrest.PointOfInterest;
-import forge.adventure.stage.GameHUD;
 import forge.adventure.stage.WorldStage;
 import forge.adventure.world.World;
 import forge.adventure.world.WorldSave;
@@ -20,9 +19,11 @@ import java.util.List;
  * <li>Once the character's Ascendance level reaches it - or, for a character without Ascendance (an older save, or
  * leveling switched off in Settings), once the day reaches TuningData.levelPlacesFallbackDay for a level-20 place and
  * that share of it for a lower one (round 669: level 10, day 30) - it is put on the map in its appearsInBiome land, at
- * least KEEP_APART_TILES from the others, its ground uncovered, and the player is told where each one lies: the
- * end-game ones (level 20 and up) as the realm's deepest places, the others as places word reaches you of.</li>
+ * least KEEP_APART_TILES from the others.</li>
  * <li>Round 669 adds nine mid-game Realm of Legends lairs and stalls at levels 5, 10 and 15.</li>
+ * <li>Round 682 (the user, of the "Word reaches you of places you have never seen" notice: "I don't think we need to
+ * announce the new places. This and the other level place unlocks can be hidden"): a place arrives silently and under
+ * the fog, like any place not yet found - no notice, no ground uncovered around it. It is found by exploring.</li>
  * <li>The check runs on the day tick and whenever the overworld is entered (after a duel, a level-up, a load), so a save
  * from before this round gets them too. A world that already has a place is left alone - each comes once.</li>
  * </ul>
@@ -34,8 +35,6 @@ public final class LevelPlaces {
 
     /** How far the places that appear together keep from each other. */
     private static final int KEEP_APART_TILES = 20;
-    /** Tiles of fog cleared around a new place, so the map shows it. */
-    private static final int REVEAL_RADIUS = 3;
 
     private static List<PointOfInterestData> levelPlaces;
 
@@ -60,8 +59,6 @@ public final class LevelPlaces {
 
     /** The level the fallback day stands for - a lower level comes that much sooner. */
     private static final int FALLBACK_LEVEL = 20;
-    /** From this level on a place is end-game: the notice speaks of the realm's deepest places. */
-    private static final int ENDGAME_LEVEL = 20;
 
     /** Without Ascendance: the day this place appears (0 = never). */
     private static int fallbackDay(PointOfInterestData d) {
@@ -118,8 +115,7 @@ public final class LevelPlaces {
         }
         if (due.isEmpty())
             return "nothing due";
-        List<String> told = new ArrayList<>(), ways = new ArrayList<>(); // end-game places
-        List<String> toldMid = new ArrayList<>(), waysMid = new ArrayList<>(); // round 669: the mid-game ones
+        List<String> placedNames = new ArrayList<>(), ways = new ArrayList<>(); // for the console's answer
         for (PointOfInterestData d : due) {
             String land = d.appearsInBiome == null || d.appearsInBiome.isEmpty() ? "waste" : d.appearsInBiome;
             PointOfInterest placed = world.addPointOfInterestInBiome(d, land, 0.2f, 0.6f, taken, KEEP_APART_TILES);
@@ -133,7 +129,7 @@ public final class LevelPlaces {
             int tx = (int) (placed.getPosition().x / world.getTileSize());
             int ty = (int) (placed.getPosition().y / world.getTileSize());
             WorldStage stage = WorldStage.getInstance();
-            world.revealArea(tx, ty, REVEAL_RADIUS, stage::refreshBackgroundTile);
+            // Round 682: no fog cleared around it - the place waits under the fog to be found.
             int chunk = world.getChunkSize();
             for (int cx = (tx - 4) / chunk; cx <= (tx + 4) / chunk; cx++) {
                 for (int cy = (ty - 4) / chunk; cy <= (ty + 4) / chunk; cy++) {
@@ -145,30 +141,18 @@ public final class LevelPlaces {
             if (stage.getPlayerSprite() != null)
                 where = WorldStage.compassDirection(placed.getPosition().x - stage.getPlayerSprite().getX(),
                         placed.getPosition().y - stage.getPlayerSprite().getY());
-            boolean endgame = d.appearsAtLevel >= ENDGAME_LEVEL;
-            (endgame ? told : toldMid).add(d.getDisplayName());
-            (endgame ? ways : waysMid).add(where);
+            placedNames.add(d.getDisplayName());
+            ways.add(where);
             System.out.println("[TFR-LevelPlaces] " + d.name + " placed at tile " + tx + "," + ty + " in " + land
-                    + " - " + (force ? "forced" : Ascendance.isActive() ? "Ascendance " + Ascendance.level() + " of "
+                    + (where.isEmpty() ? "" : " (" + where + " of the player)") + ", under the fog - "
+                    + (force ? "forced" : Ascendance.isActive() ? "Ascendance " + Ascendance.level() + " of "
                     + d.appearsAtLevel : "no Ascendance, day " + world.getCurrentDay() + " of " + fallbackDay(d))
                     + " (" + why + ")");
         }
-        if (told.isEmpty() && toldMid.isEmpty())
+        if (placedNames.isEmpty())
             return "no spot found";
-        StringBuilder result = new StringBuilder("placed");
-        if (!toldMid.isEmpty()) {
-            String list = listWithWays(toldMid, waysMid);
-            GameHUD.getInstance().addNotification("[BLACK]Word reaches you of places you have never seen. New on your "
-                    + "map: " + list + ".", true);
-            result.append(' ').append(list);
-        }
-        if (!told.isEmpty()) {
-            String list = listWithWays(told, ways);
-            GameHUD.getInstance().addNotification("[BLACK]Your spark has grown too strong for the realm to hide its "
-                    + "deepest places from you. New on your map: " + list + " - the hardest duels in the realm.", true);
-            result.append(' ').append(list);
-        }
-        return result.toString();
+        // Round 682: no notice - the console's answer is the only place the list is told.
+        return "placed " + listWithWays(placedNames, ways);
     }
 
     /** "A, B and C (all to the west)" when they share one direction; otherwise "A (west), B (north) and C (east)". */
