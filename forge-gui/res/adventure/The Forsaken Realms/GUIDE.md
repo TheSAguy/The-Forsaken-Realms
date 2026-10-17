@@ -156,7 +156,9 @@ Capitol). The five AI castles are drawn as small keeps in their color - grey and
 a caption for the fall - and the mountain ranges show as rock, which no territory crosses (their ground is left
 out of the land shares). Play, pause, change the speed or drag the slider to any day. The history is recorded as
 you play, so a game started before version 1.22 replays from the first day it was loaded on 1.22 - until a second
-day is recorded there is nothing to play yet.
+day is recorded there is nothing to play yet. The end screens - a run won or lost, a death, a boss's defeat - have a
+**History** button too, so you can watch the whole game before you choose; closing the replay brings the same screen
+back.
 
 ### Winning and Losing
 
@@ -447,6 +449,11 @@ Log, and a level-up gets a banner.
 Ascendance comes with a **New Game** or a **New Game+**. A character started before 1.20 has none and plays as it
 always did. A New Game+ starts it over at level 0.
 
+**You grow with it.** Your hero is drawn a little bigger with every level: about **13 px** tall at level 0 - an
+Apprentice's size - to **25 px** at level 40, an Archmage's, so the map shows how far you have come. Only the look
+changes: walls, doorways and the camera treat you exactly as before. A character without Ascendance keeps its usual
+size.
+
 **Power from duels.** A won duel pays by the enemy's rank, times the **one** highest bonus that applies - bonuses
 never stack:
 
@@ -485,6 +492,9 @@ never stack:
 | Digging up a treasure (its guardian's duel pays as well) | 64 |
 | An overworld chest - one outcome in seven | 13 |
 | A Mystery pickup (the diamond) - now and then, in place of a resource | 21 |
+
+Power from a chest or a diamond comes as a **Power card** - the sun and the amount - that you turn over on a reward
+screen, like a won duel's; collecting it pays the Power.
 
 These are the plane's numbers in `config tables/ascendance.json` times its leveling speed, 0.85. The **Zealot** perk
 adds its share on top of all of them.
@@ -907,6 +917,27 @@ Prison. These are **true endgame content** - their bosses and decks were built t
 power level than the surrounding world, and they are deliberately not scaled down. You'll know
 them by the **red triple-skull marker** on the minimap and a warning at the door. Treat them as
 your character's final exams, not a mid-game detour.
+
+### Places That Come With Your Level
+
+Twenty-five more places from the **Realm of Legends** are not on the map when a world begins: they open up as your
+**Ascendance** level climbs. Each arrives at its level in its own color's land, and a notice tells you which way it
+lies; the level-20 ones are announced as the realm's deepest places. Most are a legend's lair - one duel with its own
+deck, effects and rewards, some with a story to read on the way in - and they stay on the map once they come; they
+do not rotate away.
+
+| Level | Places |
+|---|---|
+| 5 | Jandor's Caravan (green) - a traveling merchant's stall, and Jandor to duel; Thieves' Hideout (red) - a stall of stolen goods |
+| 8 | Baneful Cavern (black), Brushwagg Underbrush (green), Isolated Dunes (green), Hellion Cave (red), Hermit's Hideout (blue) |
+| 10 | Cursed Graveyard (black), Skeleton Ship (blue), Mtenda Mesa (white), Darksteel Citadel and Horrible Factory (the Wasteland) |
+| 12 | Alhammarret's Archive (blue), Assembly Ground and the Rathi Shadow Rift (white), Koskun Keep (red) |
+| 15 | Tresserhorn Keep (black), Nekoru Nest (red), Blor's Pond (green), Jester's Tent (blue), the Domain of Night (the Wasteland), and the Argivian Military Camp (white) - five shops and a duel with Myrel |
+| 20 | Hexhaven Tower, the Echoverse Overlay and the Theorist's Sanctum (the Wasteland) - end-game dungeons full of legends, the hardest duels in the realm |
+
+A character without Ascendance (an older save, or leveling switched off in Settings) gets them by the day instead:
+the level-20 places on **day 60**, the others that share sooner - a level-10 place on day 30, a level-5 one on day
+15. A save made before they existed gets them too, the first time it is loaded past their moment.
 
 ### The Caves
 
@@ -1888,7 +1919,7 @@ game built on the Forge rules engine.
 ### How do I update the game to the latest version of Forge?
 
 You can't, and you don't need to. Each release is pinned to one tested Forge build, named in its release
-notes - 1.21 runs on Forge 2.0.16 (the 10.14 build). Forge's own updater is switched off on purpose,
+notes - this version runs on Forge 2.0.16 (the 10.16 build). Forge's own updater is switched off on purpose,
 because a different engine underneath can break your world. Engine updates come to you with new Forsaken
 Realms releases.
 

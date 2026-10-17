@@ -117,6 +117,9 @@ Notes = `RELEASE_NOTES_v1.21.md` (the user trimmed "New looks" to two lines and 
 "New game recommended"); title and Discord blurb mine. Guide/README brought up to 1.21 in round 618. Live + agent = the
 release. NOTHING is unreleased. Next version: 1.22 / 12200. Next merge from upstream after `34a8662b796`.
 
+## STATE 2026-10-17 (round 685): **LOCAL + UNRELEASED (docs)** - the Game Guide caught up: level places, the Power card,
+the hero's growth, History from the end screens, engine 10.16; GUIDE.html regenerated. What's New for 1.22 waits for the release.
+
 ## STATE 2026-10-16 (round 684): **LOCAL + UNRELEASED (art + data)** - Kethek, Traxos and Liberator on the user's Pixelate
 war construct (one drawing, three tints) and Infinite Guideline Station on a flying saucer, off the stock juggernaut
 tank (generator `pixelate/war_construct/` + `pixelate/infinite_guideline_station/`). enemies.json 4 paths + scales. List 3

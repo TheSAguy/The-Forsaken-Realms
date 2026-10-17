@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 685: the Game Guide catches up with rounds 648-684 (2026-10-17)
+
+The user: "Is all game guides/documentation updated?" The guide was current through round 647. They chose the five
+gaps: "Yes, update the Game Guide for the five gaps (level places, the Power card, hero growth, History from
+Victory/Defeat, engine 10.16) and regenerate GUIDE.html."
+
+- **Places That Come With Your Level** (new, under Dungeon Guide after Legendary Dungeons):
+  - The 25 Realm of Legends places of rounds 668, 669 and 674, by level (5 / 8 / 10 / 12 / 15 / 20) and land, as the
+    data has them.
+  - Covers the notice, that they stay and do not rotate, and the day fallback without Ascendance (day 60 for level
+    20, a level-10 place on day 30, a level-5 one on day 15).
+- **The Power card** (round 675): under the Power table, a chest's or a diamond's Power comes as a card to turn over,
+  paid when collected.
+- **You grow with it** (round 677), in Ascendance's intro: about 13 px at level 0 to 25 px at level 40, the look only.
+- **History** (round 658): the end screens' History button, and the same screen back after the replay.
+- **Engine**: the FAQ's "How do I update" names the 10.16 build ("this version runs on..."). The "What's New in 1.21"
+  section stays as 1.21 shipped, on 10.14; the next version's What's New is written at its release.
+- `GUIDE.html` regenerated (`guide_html.py --check`: 91 headings, 173 links, OK).
+
 ## Round 684: the war construct and the flying saucer replace the stock tank (2026-10-16)
 
 The Procedural Pixel Creatures session, from the generator repo's `pixelate/war_construct/convert.sh` and
