@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 692 - New Game starter-deck text
+
+- **`forge-gui/res/languages/en-US.properties`** - 15 values rewritten: `advDifficultySummary{Easy,Normal,HardGenetic,
+  Hard,Insane}` (the starter-deck line dropped), `advModeStandardSummary`, `advDiff{Easy,Normal,Hard,Insane}Standard`,
+  `advModeConstructedSummary`, `advDiff{Easy,Normal,Hard,Insane}Constructed`. Keys unchanged. On a merge conflict keep
+  ours: TFR's starter decks are one color (round 149).
+
 ### Round 691 - withdrawn items (the stock "Cheat" pendant)
 
 - **`forge-gui-mobile/src/forge/adventure/data/ItemListData.java`** - `WITHDRAWN` set + `isWithdrawn(name)`, next to

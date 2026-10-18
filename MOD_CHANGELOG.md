@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 692: the New Game screen tells the truth about starter decks (2026-10-17)
+
+The One Demon on Discord (v1.22): "In Normal starting mode constructed, I only get a mono colour deck, not 2 colour like
+it says I should." Their log: Blue Dragon, Normal, Constructed -> `[TFR-StarterDeck] Constructed U from editions [DTK,
+TDM, M21, MH1] -> 50 cards`. That is the deck round 149 designed (every difficulty one color, built from the race's
+sets). The screen still showed stock Forge's text.
+
+- **`forge-gui/res/languages/en-US.properties`** (stock, shared with upstream), 15 lines:
+  - **Difficulty summaries** (Easy, Normal, Hard, Hard with genetic AI, Insane): the starter-deck line goes ("a second
+    color", "2-3 colors"). What you get depends on the mode, and the mode summary says it.
+  - **Standard**: stock text said "2-3 Jumpstart packs"; TFR's `standard_<color>.json` is a one-color pool of commons
+    and uncommons on every difficulty. Now it says so.
+  - **Constructed**: one color on every difficulty, 50 cards on Easy/Normal and 60 on Hard/Insane
+    (`constructed_<color>_50/60.json`), built from the race's sets.
+  - **Pile**: left alone. Its text (Easy: one allied color, otherwise two) matches the `pile_<color>_e/n/h/i.json`
+    decks.
+- The packager already overlays this file (it differs from BASE_INSTALL), so it ships with no packager change.
+
 ## Round 691: the "Cheat" test pendant leaves the game (2026-10-17)
 
 Nova on Discord (v1.22), with a screenshot of it: "Is this item supposed to be available? Seems like a dev test item".

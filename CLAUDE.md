@@ -131,6 +131,10 @@ artifact v11 updated (stats 2,150+ / 360+ / 34,000+ / 730+, three new system car
 NOTHING is unreleased. Next version: 1.23 / 12300. Next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL
 once Forge publishes a daily at or past it (then the base gap is empty again).
 
+## STATE 2026-10-17 (round 692): **LOCAL + UNRELEASED (text)** - the New Game screen's starter-deck text matches TFR
+(Standard and Constructed are one color on every difficulty; the difficulty summaries no longer promise colors); 15 lines
+of the stock en-US.properties. From The One Demon's Discord report.
+
 ## STATE 2026-10-17 (round 691): **LOCAL + UNRELEASED (code + data)** - the stock "Cheat" test pendant (our copy was Mythic,
 so it dropped from every Mythic pool; Nova on Discord) is excludeFromGeneralSale, and owned copies are removed on load
 (ItemListData.WITHDRAWN, AdventurePlayer.removeWithdrawnItems: pack, storage, guards; one notice, no refund).
