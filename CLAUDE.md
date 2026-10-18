@@ -65,6 +65,17 @@ passes ALL of these before it is committed, and the round's changelog says it di
 5. **Seen in the agent game** before packaging: walk the place, open every dialog, fight one of its enemies, use the
    item.
 
+**Check the code graph before changing a shared method (standing user rule, 2026-10-18: "Can we implement a rule in
+TFR's and TFR 2's CLAUDE.md").** Before renaming, deleting or changing the signature or behavior of a method or class
+that other code calls, list its callers from the local graphify code graph, and say in the round how many you found:
+`C:/Users/User/.claude/Tools/graphify/venv/Scripts/python.exe C:/Users/User/.claude/Tools/graphify/gfy.py --repo tfr
+affected Class.method --depth 2` (`explain Class` for a class). The `code-graph` skill has the details. The graph
+resolves calls by receiver, so it separates `AdventurePlayer.addCard` from `CardDb.addCard` where Grep cannot. It is
+not proof, though: calls through fields can be missed. Confirm with Grep before deleting anything. Use Grep, not the
+graph, for text, comments, config keys and data files; the graph covers code only (no `forge-gui/res`, no docs).
+`graphify-out/` is local (in `.git/info/exclude`) and rebuilds itself after each commit - never commit it, and never
+run `graphify install`, `graphify claude install` or `graphify hook install`.
+
 **Calibration**: a rename or one-line tweak just gets done. The full analysis is for behaviour
 changes, shared systems, core/upstream edits, and anything hard to undo.
 
