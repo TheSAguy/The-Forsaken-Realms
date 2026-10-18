@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 696 - Export Logs in Adventure Settings
+
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** - a row after World: `exportLogs()` calls the
+  engine's `forge.util.LogExporter.exportLogs(Downloads)` (unchanged) and renames the zip.
+- **`forge-gui/res/languages/en-US.properties`** - two new keys, `lblLogsForBugReports` and `lblExportLogsDone` (after
+  `lblAscendanceLeveling`).
+
 ### Round 695 - job-board offer cooldown
 
 - **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** - `getQuestNPCResponse()`: drops resting

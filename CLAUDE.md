@@ -131,6 +131,10 @@ artifact v11 updated (stats 2,150+ / 360+ / 34,000+ / 730+, three new system car
 NOTHING is unreleased. Next version: 1.23 / 12300. Next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL
 once Forge publishes a daily at or past it (then the base gap is empty again).
 
+## STATE 2026-10-18 (round 696): **LOCAL + UNRELEASED (code + docs)** - Adventure Settings' second row is Export Logs (the
+engine's LogExporter: every forge*.log zipped into Downloads as forsaken-realms-logs-<stamp>.zip); the Discord FAQ's
+message 21 leads with it and gives the Android log folders (artifact version 5). Seen in the agent game; not on Android.
+
 ## STATE 2026-10-18 (round 695): **LOCAL + UNRELEASED (code + data)** - job boards rest a side quest for 10 in-game days
 after offering it (settings questOfferCooldownDays; AdventurePlayer.questOfferDays, saved; full list when all rest), and
 the three boss-lair quests (Xira, Slobad, mother slime) have offerProbability 0.4. Console `questboard [pool] [n]`.

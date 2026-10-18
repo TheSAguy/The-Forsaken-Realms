@@ -386,8 +386,10 @@ To update the game itself, download the new release zip from GitHub and unzip it
 **A:** See the #how-can-i-help channel.
 
 **Q: Where are my saves and logs? How do I report a bug?**
-**A:** On Windows everything is in **%APPDATA%\ForsakenRealms** (paste that into File Explorer's address bar). Saves are in its adventure\The Forsaken Realms folder. The log is **forge.log**. Each time you start the game, the previous log is renamed forge.<date>-<time>.log (the last 10 are kept).
-To report a bug, post here: what happened, your difficulty, and the forge.log from that session (grab it before restarting, or pick the matching dated file). Screenshots and your save help too.
+**A:** Easiest, PC or Android: **Settings > Export Logs** (from v1.23; in v1.22 tap **Classic** on the title screen, then Settings > Files > Export Logs). It puts all your logs in one zip in Downloads.
+On Windows everything is in **%APPDATA%\ForsakenRealms** (paste that into File Explorer's address bar). Saves are in its adventure\The Forsaken Realms folder. The log is **forge.log**. Older sessions are kept as forge.<date>-<time>.log (the last 10).
+On Android the logs are in Android/obb/com.thesaguy.forsakenrealms/ForsakenRealms/data (Android 10 and older: ForsakenRealms/data). Newer phones hide it; use the export.
+To report a bug, post here what happened, your difficulty and your logs. Screenshots and your save help too.
 (macOS: ~/Library/Application Support/ForsakenRealms. Linux: ~/.forsakenrealms)"""))
 
 if __name__ == "__main__":

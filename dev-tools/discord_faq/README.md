@@ -9,3 +9,6 @@ published as the claude.ai artifact "Forsaken Realms FAQ" (https://claude.ai/art
 v1.22 (2026-10-17): 21 messages, rebuilt from GUIDE.md - Ascendance, gear sets, treasure maps and castle keys, enemy
 ranks and adapting enemies, legends and the level places, raids and war mages, the Capitol and Temple, the History
 replay, plus the v1.15 answers brought up to date. Keep it in step with GUIDE.md when a release changes a rule.
+
+2026-10-18 (round 696): message 21's saves-and-logs answer leads with Export Logs (Settings from v1.23, Classic >
+Settings > Files in v1.22) and gives the Android log folders - 1,991 characters, near the limit. Artifact version 5.

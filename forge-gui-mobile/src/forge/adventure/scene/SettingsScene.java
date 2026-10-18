@@ -158,6 +158,11 @@ public class SettingsScene extends UIScene {
         settingGroup.add(plane).align(Align.right).pad(2);
         //addLabel(localizer.getMessage("lblCreate") + localizer.getMessage("lblWorld"));
         settingGroup.add(newPlane).align(Align.right).pad(2);
+        // Round 696 (the user: "Does Android have a log they can share or is that PC only?", then "Let's implement this"):
+        // the engine's Export Logs (classic Forge's Settings > Files) one row from the top here, so a player can send a
+        // bug report without finding forge.log - on Android 13+ a file manager cannot even open Android/obb.
+        addLabel(localizer.getMessage("lblLogsForBugReports"));
+        settingGroup.add(Controls.newTextButton(localizer.getMessage("lblExportLogs"), this::exportLogs)).align(Align.right).pad(2);
 
         if (!GuiBase.isAndroid()) {
             SelectBox<String> videomode = Controls.newComboBox(ForgeConstants.VIDEO_MODES, Config.instance().getSettingData().videomode, o -> {
@@ -570,6 +575,36 @@ public class SettingsScene extends UIScene {
         text.addListener(change);
         addLabel(name);
         settingGroup.add(text).align(Align.right);
+    }
+
+    /** Round 696: every forge*.log (the running one through its own channel) as one zip in Downloads, named for the game;
+     *  where it went, or why not, in a dialog. Android first asks for file access, as classic Forge's Files page does. */
+    private void exportLogs() {
+        Localizer localizer = Forge.getLocalizer();
+        if (Forge.getDeviceAdapter().needFileAccess()) {
+            Forge.getDeviceAdapter().requestFileAcces();
+            return;
+        }
+        String message;
+        try {
+            java.io.File downloads = new com.badlogic.gdx.files.FileHandle(Forge.getDeviceAdapter().getDownloadsDir()).file();
+            downloads.mkdirs();
+            java.io.File zip = forge.util.LogExporter.exportLogs(downloads);
+            if (zip == null) {
+                message = localizer.getMessage("lblNoLogFilesFound");
+            } else {
+                java.io.File named = new java.io.File(downloads, zip.getName().replace("forge-logs-", "forsaken-realms-logs-"));
+                if (zip.renameTo(named))
+                    zip = named;
+                message = localizer.getMessage("lblExportLogsDone", zip.getAbsolutePath());
+                System.out.println("[TFR-Logs] exported to " + zip.getAbsolutePath() + " (" + zip.length() / 1024 + " KB)");
+            }
+        } catch (IOException e) {
+            message = localizer.getMessage("lblError") + ": " + e;
+            System.err.println("[TFR-Logs] export failed: " + e);
+        }
+        showDialog(createGenericDialog(localizer.getMessage("lblExportLogs"), message, localizer.getMessage("lblOK"), null,
+                this::removeDialog, null, false, "", true));
     }
 
     void addLabel(String name) {

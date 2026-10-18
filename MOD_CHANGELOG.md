@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 696: Export Logs in Adventure Settings; the FAQ says where Android keeps its logs (2026-10-18)
+
+The user: "Does Android have a log they can share or is that PC only?", then "Let's implement this please."
+
+- **What was there**: Android writes the same forge.log as PC (`ExceptionHandler`, from `Forge.create`) with the same
+  10 dated copies, in the game's user dir.
+  - Android 11+: `Android/obb/com.thesaguy.forsakenrealms/ForsakenRealms/data`; older Android: `ForsakenRealms/data`.
+  - Android 13+ file managers can't open Android/obb.
+  - The engine's **Export Logs** (`forge.util.LogExporter`: every forge*.log, the running one snapshotted through its
+    locked channel, zipped into Downloads) was reachable only through Classic > Settings > Files.
+- **The button** (`SettingsScene`, second row under World, so no scrolling): "Logs for a bug report (one zip in your
+  Downloads folder)" + **Export Logs**.
+  - Android asks for file access first (`needFileAccess`), as the Files page does.
+  - The zip is renamed `forsaken-realms-logs-<stamp>.zip`.
+  - A dialog shows its path: "Attach this zip to your bug report on Discord."
+  - One `[TFR-Logs]` line. New en-US.properties keys: `lblLogsForBugReports`, `lblExportLogsDone`.
+- **Discord FAQ** (`dev-tools/discord_faq/messages.py`, message 21, 1,991 characters):
+  - The saves-and-logs answer leads with the export: Settings > Export Logs from v1.23, Classic > Settings > Files >
+    Export Logs in v1.22.
+  - It adds the Android folders and asks for "your logs" in bug reports.
+  - The artifact is republished (version 5). Only message 21 changed, so the posted #faq needs that one message edited.
+- **Seen in the agent game** (agent package of the working tree):
+  - Settings showed the row second; Export Logs gave `forsaken-realms-logs-20261018-093531.zip` (83 KB) in Downloads
+    and the dialog with its path.
+  - The zip held forge.log (the live session, up to the Settings screen) and the dated logs.
+  - The test zip was deleted from the user's Downloads afterwards.
+  - Not tried on Android (no device bridge); the Android path is the engine's own Files-page export.
+
 ## Round 695: job boards rest a quest for 10 days after offering it; boss-lair quests rarer (2026-10-18)
 
 Vr01 on Discord: "I think the Xira quest comes back too often; it seems to appear one-fifth of the time, and I think boss
