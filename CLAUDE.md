@@ -142,6 +142,10 @@ artifact v11 updated (stats 2,150+ / 360+ / 34,000+ / 730+, three new system car
 NOTHING is unreleased. Next version: 1.23 / 12300. Next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL
 once Forge publishes a daily at or past it (then the base gap is empty again).
 
+## STATE 2026-10-18 (round 697): **LOCAL + UNRELEASED (code)** - the Ascendance "Rare cards" reward asks for a color
+(AscendanceUI.openColorChoice: five colors + Back) and draws mono-colored cards of it at every band, instead of the
+color identity (Jazz: a Sultai Devotee in a green deck gave blue and black rares). Seen in the agent game.
+
 ## STATE 2026-10-18 (round 696): **LOCAL + UNRELEASED (code + docs)** - Adventure Settings' second row is Export Logs (the
 engine's LogExporter: every forge*.log zipped into Downloads as forsaken-realms-logs-<stamp>.zip); the Discord FAQ's
 message 21 leads with it and gives the Android log folders (artifact version 5). Seen in the agent game; not on Android.

@@ -1159,7 +1159,11 @@ public class ConsoleCommandInterpreter {
         registerCommand(new String[]{"asc", "pick"}, s -> {
             if (s.length < 1)
                 return "Command needs 1 parameter: a reward id from ascendance.json";
-            String result = forge.adventure.util.Ascendance.cheatPick(s[0]);
+            String color = null; // round 697: "asc pick rareCards green"
+            for (String c : forge.adventure.util.Ascendance.pickColors())
+                if (s.length > 1 && c.equalsIgnoreCase(s[1]))
+                    color = c;
+            String result = forge.adventure.util.Ascendance.cheatPick(s[0], color);
             return result == null ? "Could not take " + s[0] : result;
         });
         // Round 490: test cheats for roaming guards on pillage duty. "guard add [tier] [help]" hires a guard carrying a COPY

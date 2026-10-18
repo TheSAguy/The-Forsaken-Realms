@@ -537,7 +537,7 @@ waiting costs nothing.
 *One-time rewards*, scaled to the level the choice was earned at:
 
 - **Gold**, 85 a level (1,020 at level 12), or **Shards**, **Wood** or **Stone**, 15 a level.
-- **Rare cards** in your deck's colors: two rares (levels 1-12), four rares (13-22), or two rares and two mythics (23 on).
+- **Rare cards** in a color you choose (you pick it right after the reward): two rares (levels 1-12), four rares (13-22), or two rares and two mythics (23 on), all of that one color.
 - **An item**: a random Common (levels 1-12), Uncommon (13-22) or Rare (23 on).
 - **A booster pack** of an edition you have unlocked.
 - **A map fragment**: a treasure-map piece you're still missing (offered only while there is one).

@@ -63,8 +63,9 @@ final class AscendanceRewards {
             case "stone": return "+" + amount(value, level) + " [+Stone]";
             // Round 564 (the user: "2 rare (levels 2-12), 4 rares (13-22), 2 rare and 2 mythic (23+)") - was 1 / 2 /
             // a rare and a mythic.
-            case "rareCards": return level >= 23 ? "Two rares and two mythics in your deck's colors"
-                    : level >= 13 ? "Four rares in your deck's colors" : "Two rares in your deck's colors";
+            // Round 697: in a color the player picks (was "in your deck's colors", the color identity - see give()).
+            case "rareCards": return level >= 23 ? "Two rares and two mythics in a color you choose"
+                    : level >= 13 ? "Four rares in a color you choose" : "Two rares in a color you choose";
             case "item": return "A random " + itemRarity(level).toLowerCase() + " item";
             case "booster": return "A pack of an edition you have unlocked";
             case "mapFragment": return "[+MapFragmentWaste] A piece of a treasure map you are still missing";
@@ -92,6 +93,20 @@ final class AscendanceRewards {
 
     /** Pay it; the text for the toast. */
     static String give(String id, float value, int level) {
+        return give(id, value, level, null);
+    }
+
+    /** Round 697: the five colors "rareCards" lets the player pick from, as the dialog shows them. */
+    static final String[] PICK_COLORS = {"White", "Blue", "Black", "Red", "Green"};
+
+    /**
+     * Pay it; the text for the toast. {@code color} (one of PICK_COLORS) is the one the player picked for "rareCards".
+     * Round 697 (Jazz on Discord: a green deck got "a blue and a black rare" - one Sultai Devotee, whose abilities cost
+     * U and B, made the deck's color identity Sultai, and the cards came in "colorID"): the cards are mono-colored rares
+     * of the picked color (CardUtil reads one color name as "nothing but this color"). Null - the console's "asc pick
+     * rareCards" without a color - keeps the old color identity.
+     */
+    static String give(String id, float value, int level, String color) {
         AdventurePlayer player = WorldSave.getCurrentSave().getPlayer();
         Array<Reward> loot = new Array<>();
         String result;
@@ -101,15 +116,18 @@ final class AscendanceRewards {
             case "shards": player.addShards(amount(value, level)); result = "+" + amount(value, level) + " [+Shards]"; break;
             case "wood": player.addWood(amount(value, level)); result = "+" + amount(value, level) + " [+Wood]"; break;
             case "stone": player.addStone(amount(value, level)); result = "+" + amount(value, level) + " [+Stone]"; break;
-            case "rareCards":
+            case "rareCards": {
+                String filter = color == null ? "colorID" : color.toLowerCase(java.util.Locale.ROOT);
                 if (level >= 23) { // round 564: doubled at every band
-                    loot.addAll(cards(2, "Rare"));
-                    loot.addAll(cards(2, "Mythic Rare"));
+                    loot.addAll(cards(2, "Rare", filter));
+                    loot.addAll(cards(2, "Mythic Rare", filter));
                 } else {
-                    loot.addAll(cards(level >= 13 ? 4 : 2, "Rare"));
+                    loot.addAll(cards(level >= 13 ? 4 : 2, "Rare", filter));
                 }
-                result = loot.size + " card" + (loot.size == 1 ? "" : "s");
+                result = loot.size + (color == null ? "" : " " + color.toLowerCase(java.util.Locale.ROOT)) + " card"
+                        + (loot.size == 1 ? "" : "s");
                 break;
+            }
             case "item": {
                 List<String> names = ItemListData.getItemNamesByRarity(itemRarity(level));
                 ItemData item = names.isEmpty() ? null : ItemListData.getItem(names.get(RAND.nextInt(names.size())));
@@ -230,14 +248,15 @@ final class AscendanceRewards {
         return new ArrayList<>();
     }
 
-    /** {@code count} cards of {@code rarity} in the player's colors (RewardData's "colorID"). */
-    private static Array<Reward> cards(int count, String rarity) {
+    /** {@code count} cards of {@code rarity} in {@code color}: a color name, or RewardData's "colorID" (the player's
+     *  color identity). */
+    private static Array<Reward> cards(int count, String rarity, String color) {
         RewardData data = new RewardData();
         data.type = "card";
         data.count = count;
         data.probability = 1;
         data.rarity = new String[]{rarity};
-        data.colors = new String[]{"colorID"};
+        data.colors = new String[]{color};
         return data.generate(false, true);
     }
 

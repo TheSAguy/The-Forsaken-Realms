@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 697 - the Rare cards level reward asks for a color
+
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `asc pick <id> [color]`.
+- Mod files: `util/Ascendance.java` (`choose(id, color)`, `asksForColor`, `pickColors`, `cheatPick(id, color)`),
+  `util/AscendanceRewards.java` (`give(..., color)`), `util/AscendanceUI.java` (`openColorChoice`).
+
 ### Round 696 - Export Logs in Adventure Settings
 
 - **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** - a row after World: `exportLogs()` calls the

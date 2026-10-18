@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 697: the "Rare cards" level reward asks which color (2026-10-18)
+
+Jazz on Discord: "As level up reward, I chose '2 rares from my deck color' ... a new game with a green deck and I got a
+blue and a black rare ... one of my starting card was sultai devotee ... getting rare from activated abilities colors
+don't feel like the intended reward." The user: "update that perk to ask you what color cards you want ... you then
+click what color (5 colors) ... update all."
+
+- **The cause**: `AscendanceRewards.cards()` drew with RewardData's `"colorID"`, the player's color identity. One
+  Sultai Devotee (abilities costing U and B) made a mono-green deck's identity Sultai, so Blue and Black rares were
+  legal.
+- **The fix**: picking "Rare cards" now opens a color dialog (`AscendanceUI.openColorChoice`: White, Blue, Black, Red,
+  Green, Back).
+  - Nothing is taken until a color is clicked; Back returns to the level's choices with the same offer.
+  - The cards are drawn with that one color name, which CardUtil reads as "nothing but this color": mono-colored,
+    never multicolor or colorless.
+  - All three bands are covered: two rares (levels 2-12), four rares (13-22), two rares + two mythics (23+). The text
+    reads "... in a color you choose", and the toast and Level sheet say e.g. "2 green cards".
+  - `Ascendance.choose(id, color)` / `asksForColor` / `pickColors`; `AscendanceRewards.give(..., color)`.
+  - The console's `asc pick rareCards <color>` takes the color too. Without one it keeps the old color identity.
+- **Seen in the agent game** (the reporter's save as agent slot 34, Asc 19, round-697 classes):
+  - The offer read "Rare cards / Two rares in a color you choose". The picker showed the five colors and Back, all on
+    screen.
+  - Back returned the same offer.
+  - Green gave 2 cards, then the console gave Green, Green and Blue, 2 each.
+  - Saved as slot 36 and diffed against slot 34 with dev-tools/save-editing/Inspect: 8 new cards. Six mono-green
+    (Deadbridge Goliath, Kosei Penitent Warlord, Nourishing Shoal, Path of the Animist, Seasons Past, Sequence Engine)
+    and two mono-blue (Amphibian Downpour, Psychic Allergy).
+
 ## Round 696: Export Logs in Adventure Settings; the FAQ says where Android keeps its logs (2026-10-18)
 
 The user: "Does Android have a log they can share or is that PC only?", then "Let's implement this please."

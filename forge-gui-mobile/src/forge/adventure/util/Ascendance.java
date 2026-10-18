@@ -1695,6 +1695,20 @@ public final class Ascendance {
     /** Take {@code id} from the current offer: a lasting pick counts, a one-time reward is paid at the level it was
      *  earned. Returns what happened, for the dialog's toast; null when {@code id} is not on offer. */
     public static String choose(String id) {
+        return choose(id, null);
+    }
+
+    /** Round 697: "rareCards" asks for a color first (AscendanceUI) - the five it offers. */
+    public static boolean asksForColor(String id) {
+        return "rareCards".equals(id);
+    }
+
+    public static String[] pickColors() {
+        return AscendanceRewards.PICK_COLORS.clone();
+    }
+
+    /** {@link #choose(String)} with the color the player picked for a reward that asks for one (null: none asked). */
+    public static String choose(String id, String color) {
         AscendanceState s = state();
         if (s == null || !isActive() || s.pendingLevels.isEmpty() || !currentOffer().contains(id))
             return null;
@@ -1710,7 +1724,7 @@ public final class Ascendance {
             if ("medic".equals(id)) // round 508: a guard already down heals in the shorter time too
                 shortenDowntimes();
         } else {
-            result = AscendanceRewards.give(id, c.value, level);
+            result = AscendanceRewards.give(id, c.value, level, color);
         }
         System.out.println("[TFR-Ascend] level " + level + " reward chosen: " + id + " -> " + result + " (still waiting: "
                 + s.pendingLevels.size() + ")");
@@ -1900,6 +1914,11 @@ public final class Ascendance {
 
     /** Console "asc pick <id>": take that reward now, as if it had been offered (for testing each effect). */
     public static String cheatPick(String id) {
+        return cheatPick(id, null);
+    }
+
+    /** Round 697: "asc pick rareCards green" - the color a reward that asks for one would have been given. */
+    public static String cheatPick(String id, String color) {
         AscendanceState s = state();
         if (s == null || !isActive())
             return "This character has no Ascendance (New Game or New Game+ only)";
@@ -1910,7 +1929,7 @@ public final class Ascendance {
             s.pendingLevels.add(level());
         s.offer.clear();
         s.offer.add(id);
-        return choose(id);
+        return choose(id, color);
     }
 
     public static String cheatGive(int amount) {

@@ -56,6 +56,10 @@ public final class AscendanceUI {
         for (String id : offer) {
             TextraButton button = Controls.newTextButton(Ascendance.describe(id, level), () -> {
                 stage.hideDialog();
+                if (Ascendance.asksForColor(id)) { // round 697: the color first, nothing taken yet
+                    Gdx.app.postRunnable(() -> openColorChoice(id, level));
+                    return;
+                }
                 Ascendance.choose(id);
                 if (Ascendance.pendingChoices() > 0) // the next waiting level, as soon as this dialog has gone
                     Gdx.app.postRunnable(AscendanceUI::openChoice);
@@ -77,6 +81,32 @@ public final class AscendanceUI {
         reroll.setDisabled(!open || WorldSave.getCurrentSave().getPlayer().getShards() < cost);
         dialog.getButtonTable().add(reroll).width(width() / 2f).padTop(4f).padRight(4f);
         dialog.getButtonTable().add(Controls.newTextButton("Not now", stage::hideDialog)).width(width() / 2f).padTop(4f).row();
+        dialog.setKeepWithinStage(true);
+        stage.showDialog();
+    }
+
+    /**
+     * Round 697 (the user, on Jazz's Discord report: "update that perk to ask you what color cards you want ... you then
+     * click what color (5 colors)"): the color for a reward that asks for one. Nothing is taken until a color is clicked;
+     * Back returns to the level's choices with the same offer.
+     */
+    private static void openColorChoice(String id, int level) {
+        GameStage stage = stage();
+        Dialog dialog = prepare(stage);
+        addRow(dialog, "[GOLD]Ascendance " + level + "[] - " + Ascendance.describe(id, level).replace("\n", " - "));
+        addRow(dialog, "Which color?");
+        for (String color : Ascendance.pickColors()) {
+            dialog.getButtonTable().add(Controls.newTextButton(color, () -> {
+                stage.hideDialog();
+                Ascendance.choose(id, color);
+                if (Ascendance.pendingChoices() > 0)
+                    Gdx.app.postRunnable(AscendanceUI::openChoice);
+            })).width(width()).colspan(2).padTop(2f).row();
+        }
+        dialog.getButtonTable().add(Controls.newTextButton("Back", () -> {
+            stage.hideDialog();
+            Gdx.app.postRunnable(AscendanceUI::openChoice);
+        })).width(width()).colspan(2).padTop(4f).row();
         dialog.setKeepWithinStage(true);
         stage.showDialog();
     }
