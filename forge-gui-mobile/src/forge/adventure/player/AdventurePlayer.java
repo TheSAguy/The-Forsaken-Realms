@@ -113,6 +113,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private final CardPool templeOffering = new CardPool();
     private int templeOfferingWeeks;
     private final CardPool guardSpoils = new CardPool();
+    /** Round 695: side-quest template id -> the in-game day a job board last offered it (the offer cooldown). */
+    private final HashMap<Integer, Integer> questOfferDays = new HashMap<>();
     private final Array<Deck> boostersOwned = new Array<>();
     private final HashMap<String, Long> equippedItems = new HashMap<>();
     private final ArrayList<HashMap<String, Long>> deckLoadouts = new ArrayList<>();
@@ -784,6 +786,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         templeOffering.clear(); // round 582
         templeOfferingWeeks = 0;
         guardSpoils.clear();
+        questOfferDays.clear(); // round 695
         boostersOwned.clear();
         equippedItems.clear();
         deckLoadouts.clear();
@@ -1734,6 +1737,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         templeOfferingWeeks = data.containsKey("templeOfferingWeeks") ? data.readInt("templeOfferingWeeks") : 0;
         if (data.containsKey("guardSpoils"))
             guardSpoils.addAll(CardPool.fromCardList(Lists.newArrayList((String[]) data.readObject("guardSpoils"))));
+        // Round 695: the job boards' offer cooldown, as id/day pairs. A save from before has none - nothing is resting.
+        if (data.containsKey("questOfferDays")) {
+            int[] pairs = (int[]) data.readObject("questOfferDays");
+            for (int i = 0; i + 1 < pairs.length; i += 2)
+                questOfferDays.put(pairs[i], pairs[i + 1]);
+        }
         refreshItemDefinitionsFromCatalog(); // round 124: saved items take the catalog's current definition
         removeWithdrawnItems(); // round 691: before the worn slots load, so a worn copy is simply gone
         if (data.containsKey("equippedSlots") && data.containsKey("equippedItems")) {
@@ -2249,6 +2258,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         data.store("templeOfferingWeeks", templeOfferingWeeks);
         if (!guardSpoils.isEmpty())
             data.storeObject("guardSpoils", guardSpoils.toCardList("\n").split("\n"));
+        if (!questOfferDays.isEmpty()) { // round 695
+            int[] pairs = new int[questOfferDays.size() * 2];
+            int i = 0;
+            for (Map.Entry<Integer, Integer> e : questOfferDays.entrySet()) {
+                pairs[i++] = e.getKey();
+                pairs[i++] = e.getValue();
+            }
+            data.storeObject("questOfferDays", pairs);
+        }
 
         ArrayList<String> slots = new ArrayList<>();
         ArrayList<Long> items = new ArrayList<>();
@@ -3424,6 +3442,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private transient String lastEquipRefusal;
     /** Round 506: what a load changed for the player to read (an item that moved slots came off) - shown by the HUD. */
     private final transient java.util.List<String> loadNotices = new java.util.ArrayList<>();
+
+    /** Round 695: side-quest template id -> the in-game day a job board last offered it. Saved; empty on a new game. */
+    public Map<Integer, Integer> questOfferDays() {
+        return questOfferDays;
+    }
 
     /** Round 506: the load's notices, once - AscendanceDisplayActor shows them when the save is on screen. */
     public java.util.List<String> takeLoadNotices() {

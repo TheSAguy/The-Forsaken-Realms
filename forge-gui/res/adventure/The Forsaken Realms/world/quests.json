@@ -6014,6 +6014,7 @@
 	{
 		"id": 24,
 		"isTemplate": true,
+		"offerProbability": 0.4,
 		"name": "Pest Control",
 		"description": "Defeat Xira and her hornets in her hive, and report back.",
 		"offerDialog": {
@@ -6221,6 +6222,7 @@
 	{
 		"id": 25,
 		"isTemplate": true,
+		"offerProbability": 0.4,
 		"name": "Mechanical Problems",
 		"description": "Defeat Slobad and his artificers in his factory and report back.",
 		"offerDialog": {
@@ -6628,6 +6630,7 @@
 	{
 		"id": 27,
 		"isTemplate": true,
+		"offerProbability": 0.4,
 		"name": "Slimy Business",
 		"description": "Defeat the mother slime and other creatures in the old sewers and report back.",
 		"offerDialog": {

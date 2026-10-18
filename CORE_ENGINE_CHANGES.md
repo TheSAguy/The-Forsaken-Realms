@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 695 - job-board offer cooldown
+
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** - `getQuestNPCResponse()`: drops resting
+  quests from the board's candidates (the full list when all rest) and records the offer.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `questOfferDays` (saved key
+  `questOfferDays`, int[] id/day pairs; cleared in `clear()`).
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** - `questOfferCooldownDays` (10).
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `questboard [pool] [n]`.
+
 ### Round 694 - Clear quest stages count a place already emptied
 
 - **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java`** - new `retroCompleteIfTargetAlreadyCleared()`.

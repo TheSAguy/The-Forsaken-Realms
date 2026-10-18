@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 695: job boards rest a quest for 10 days after offering it; boss-lair quests rarer (2026-10-18)
+
+Vr01 on Discord: "I think the Xira quest comes back too often; it seems to appear one-fifth of the time, and I think boss
+quests should be rarer." The user: "Can we somehow limit how often the same quest is given ... some sort of cooldown",
+then, after the numbers: "a 10 in-game-day cooldown per quest after it's offered, and the three boss-lair quests (Xira,
+Slobad, mother slime) at a 40% offer chance."
+
+- **The numbers before**:
+  - A wasteland board (`waste_town_*`) draws evenly (`Aggregates.random`) from 13 ordinary side quests, the 11
+    invasions (each passes a 45% `offerProbability` roll, so about 5) and Sweep the Wilds (8%). Pest Control comes up
+    about 1 offer in 18 (5.5%), not 1 in 5.
+  - What made it stand out: three of the 13 are fixed boss lairs (Pest Control = Xira's hive, Mechanical Problems =
+    Slobad's factory, Slimy Business = the mother slime). Each issue restocks the same lair.
+  - Nothing kept a quest from coming straight back. Boards remember only the real-world day (`nextQuestDate`, unsaved).
+- **The cooldown** (`AdventureQuestController.getQuestNPCResponse`):
+  - Once any board offers a side quest, every board leaves it out for `questOfferCooldownDays` (settings.json, 10; 0 =
+    off) in-game days.
+  - It counts offers, so a declined quest rests too.
+  - When every candidate on a board is resting, the full list stands, so a board never comes up empty.
+  - The record is `AdventurePlayer.questOfferDays` (template id -> day), saved as `questOfferDays` id/day pairs and
+    emptied on a new game; entries past the cooldown are dropped at each offer.
+  - One `[TFR-QuestBoard] day N: k of n quest(s) resting ...` line when anything rests.
+  - Story quests (never on a board) and the round-461 "not the same invasion twice" rule are unchanged.
+- **Boss lairs**: quests.json `"offerProbability": 0.4` on quests 24, 25 and 27 (the invasions' existing knob). Each
+  is now about 2% of a wasteland board's offers, and the cooldown keeps it from repeating within 10 days.
+- **Console** `questboard [pool] [n]` (pool default `waste_town_generic`, n 10): n offers from throwaway board ids,
+  exactly as a town board makes them, cooldown included; nothing is accepted.
+- **Seen in the agent game** (the reporter's save as agent slot 34, round-695 classes; agent package of the working
+  tree for the data):
+  - 16 offers on day 2: 16 different quests, each later offer listing the earlier ones as resting.
+  - The next 4: the only ones left.
+  - Past that, "all of them, so the full list stands" (repeats).
+  - Saved after 3 offers and reloaded: the offered quest still rested.
+  - 33 board draws, no exceptions.
+  - Not seen: a quest coming back after 10 days. The console's `days skip` stalled at day 5. The rule is `today -
+    offeredDay < 10`.
+
 ## Round 694: a "clear the place" quest stage counts a place the player already emptied (2026-10-18)
 
 The One Demon on Discord (v1.22, log + save 5): "I got a quest to find the caravan but unknowingly cleared the dungeon

@@ -131,6 +131,11 @@ artifact v11 updated (stats 2,150+ / 360+ / 34,000+ / 730+, three new system car
 NOTHING is unreleased. Next version: 1.23 / 12300. Next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL
 once Forge publishes a daily at or past it (then the base gap is empty again).
 
+## STATE 2026-10-18 (round 695): **LOCAL + UNRELEASED (code + data)** - job boards rest a side quest for 10 in-game days
+after offering it (settings questOfferCooldownDays; AdventurePlayer.questOfferDays, saved; full list when all rest), and
+the three boss-lair quests (Xira, Slobad, mother slime) have offerProbability 0.4. Console `questboard [pool] [n]`.
+From Vr01's Discord feedback. Seen in the agent game, except the 10-day expiry itself.
+
 ## STATE 2026-10-18 (round 694): **LOCAL + UNRELEASED (code)** - a Clear quest stage completes when the player is in its
 target and the place has no enemy left (on activation and on every entry: AdventureQuestStage.retroCompleteIfTargetAlreadyCleared);
 activateNextStages sets `completed` when every stage is done. The One Demon's stuck "Find the Caravan" (Bandit Cave

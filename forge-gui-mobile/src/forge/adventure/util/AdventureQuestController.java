@@ -1019,6 +1019,30 @@ public class AdventureQuestController implements Serializable {
                 if (validSideQuests.get(i).getID() == lastInvasionOffered && validSideQuests.size > 1)
                     validSideQuests.removeIndex(i);
         }
+        // Round 695 (Vr01: "the Xira quest comes back too often"; the user: "a 10 in-game-day cooldown per quest after it's
+        // offered"): a quest any board offered within the last questOfferCooldownDays rests - unless every candidate here
+        // is resting, then the full list stands (a board never comes up empty).
+        java.util.Map<Integer, Integer> offeredOn = Current.player().questOfferDays();
+        int today = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        int cooldown = tuning == null ? 10 : tuning.questOfferCooldownDays;
+        if (cooldown > 0 && validSideQuests.size > 1) {
+            Array<AdventureQuestData> fresh = new Array<>();
+            List<String> resting = new ArrayList<>();
+            for (AdventureQuestData option : validSideQuests) {
+                Integer day = offeredOn.get(option.getID());
+                if (day != null && today - day < cooldown)
+                    resting.add(option.name + " (day " + day + ")");
+                else
+                    fresh.add(option);
+            }
+            if (!resting.isEmpty())
+                System.out.println("[TFR-QuestBoard] day " + today + ": " + resting.size() + " of " + validSideQuests.size
+                        + " quest(s) resting for " + cooldown + " days" + (fresh.size > 0 ? "" : " - all of them, so the full list stands")
+                        + ": " + resting);
+            if (fresh.size > 0)
+                validSideQuests = fresh;
+        }
         if (validSideQuests.size > 0)
             ret = new AdventureQuestData(Aggregates.random(validSideQuests));
         else {
@@ -1037,6 +1061,10 @@ public class AdventureQuestController implements Serializable {
         ret.sourceID = pointID;
         if (isInvasionTemplate(ret.getID()))
             lastInvasionOffered = ret.getID(); // round 461
+        // Round 695: the offer starts its cooldown; entries older than the cooldown are dropped so the save stays small.
+        final int keepDays = Math.max(cooldown, 1);
+        offeredOn.values().removeIf(day -> today - day >= keepDays);
+        offeredOn.put(ret.getID(), today);
         ret.initialize();
         return ret;
     }

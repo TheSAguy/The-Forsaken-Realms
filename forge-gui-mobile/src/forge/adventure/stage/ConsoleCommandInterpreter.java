@@ -11,6 +11,7 @@ import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.scene.InnScene;
 import forge.adventure.scene.InventoryScene;
 import forge.adventure.util.AdventureEventController;
+import forge.adventure.util.AdventureQuestController;
 import forge.adventure.util.CardUtil;
 import forge.adventure.util.ColorReputation;
 import forge.adventure.util.Config;
@@ -458,6 +459,26 @@ public class ConsoleCommandInterpreter {
             forge.sound.SoundSystem.instance.play(forge.sound.SoundEffectType.CoinsDrop, false);
             System.out.println("[TFR-Give] stone +" + amount);
             return "Added " + amount + " stone";
+        });
+        // Round 695: "questboard [pool] [n]" - n job-board offers from one pool (default waste_town_generic, 10), each from
+        // its own throwaway board id, exactly as a town board makes them (the offer cooldown included) - nothing is
+        // accepted. For checking the offer mix and the cooldown; the [TFR-QuestBoard] lines say what was resting.
+        registerCommand(new String[]{"questboard"}, s -> {
+            String pool = s.length > 0 ? s[0] : "waste_town_generic";
+            int n;
+            try {
+                n = s.length > 1 ? Integer.parseInt(s[1]) : 10;
+            } catch (Exception e) {
+                return "Can not convert " + s[1] + " to number";
+            }
+            StringBuilder offered = new StringBuilder();
+            for (int i = 0; i < n; i++) {
+                AdventureQuestData q = AdventureQuestController.instance().getQuestNPCResponse(
+                        "console-board-" + System.nanoTime() + "-" + i, null, pool);
+                offered.append(i == 0 ? "" : ", ").append(q == null ? "-" : q.name);
+            }
+            System.out.println("[TFR-QuestBoard] console: " + n + " offer(s) from " + pool + ": " + offered);
+            return n + " offer(s): " + offered;
         });
         registerCommand(new String[]{"give", "quest"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: QuestID";

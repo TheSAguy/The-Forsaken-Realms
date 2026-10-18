@@ -196,6 +196,9 @@
     // Bank: the gold one Deposit or Withdraw press moves (Deposit All / Withdraw All move everything).
     // Round 457: 100 -> 500 (a player asked for 1,000).
     "bankStepGold": 500,
+    // Round 695: once a job board offers a side quest, no board offers it again for this many in-game days (0 = off).
+    // A board whose every quest is resting offers from its full list.
+    "questOfferCooldownDays": 10,
     // Invasion quests (round 461; the 11 quests.json templates marked "tfrInvasion"). The first stage asks for this
     // many wins against the invaders, Easy / Normal / Hard / Insane.
     "invasionMinionsByDifficulty": [2, 3, 3, 4],

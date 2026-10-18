@@ -381,6 +381,10 @@ public class TuningData {
     // Round 457 (the user: "Let's change the bank Deposit and Withdrawal amounts to 500", after a player asked for 1k
     // instead of 100): the gold one Bank Deposit / Withdraw press moves (EconomyBuildings.bankStep()).
     public int bankStepGold = 500;
+    // Round 695 (Vr01: "the Xira quest comes back too often"; the user: "some sort of cooldown"): once a job board offers
+    // a side quest, no board offers it again for this many in-game days (AdventureQuestController.getQuestNPCResponse).
+    // 0 turns it off. A board whose every quest is resting offers from its full list.
+    public int questOfferCooldownDays = 10;
     // Round 461 (the user: invasion quests with "some variety. Take into consideration the difficulty level, and the players
     // current reputation level") - read by util/InvasionQuests for every quests.json "tfrInvasion" template:
     // minion wins asked, Easy..Insane; the issuing town's reputation at which its leader comes one rank tougher (0 =
