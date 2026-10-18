@@ -131,6 +131,11 @@ artifact v11 updated (stats 2,150+ / 360+ / 34,000+ / 730+, three new system car
 NOTHING is unreleased. Next version: 1.23 / 12300. Next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL
 once Forge publishes a daily at or past it (then the base gap is empty again).
 
+## STATE 2026-10-18 (round 694): **LOCAL + UNRELEASED (code)** - a Clear quest stage completes when the player is in its
+target and the place has no enemy left (on activation and on every entry: AdventureQuestStage.retroCompleteIfTargetAlreadyCleared);
+activateNextStages sets `completed` when every stage is done. The One Demon's stuck "Find the Caravan" (Bandit Cave
+cleared early) completes on entering the cave - tested on their save.
+
 ## STATE 2026-10-18 (round 693): **LOCAL + UNRELEASED (code)** - towns that aren't the player's (neutral and AI) swap a
 shop their sets can't stock (shelves under half full: The One Demon's empty Assembled Alphas) for a stockable one from
 the same slot's candidates (EconomyBuildings.shopStock/cannotStock/stockableShopFor, seeded per town and slot;

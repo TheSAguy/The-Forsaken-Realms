@@ -768,6 +768,40 @@ public class AdventureQuestStage implements Serializable {
         return satisfied;
     }
 
+    /**
+     * Round 694 (The One Demon on Discord, v1.22: "I got a quest to find the caravan but unknowingly cleared the dungeon
+     * before the quest actually got to that part. Now I can't advance the quest."). A Clear stage completes only on the
+     * live kill that empties its place (handleEvent, event.clear). Quest 44 binds the Bandit Cave when it is accepted
+     * and restocks it then (AdventureQuestData.initializeStage empties the target's deleted objects); the player
+     * emptied it while "Find the caravan" was still the open stage, so "Search the bandit cave" opened on a cave with
+     * nobody left to beat - a Quest_ map, which never restocks. Same gap the retro-completions above close, same fix:
+     * read STATE. Here that state is the place itself, so this needs the player inside the stage's target: called when
+     * the stage activates (the player may be standing in it) and every time a place is entered
+     * (AdventureQuestController.updateEnteredPOI). The whole place counts, every level (PlaceLevels): no enemy left on
+     * the live level, none in any level's ledger, no level unvisited. A place emptied BEFORE the quest was issued was
+     * restocked when it was issued, so this cannot pay for a clear the quest never asked for.
+     */
+    public boolean retroCompleteIfTargetAlreadyCleared() {
+        if (status != ACTIVE || objective != Clear)
+            return false;
+        PointOfInterest here;
+        try {
+            here = TileMapScene.instance().rootPoint;
+            if (here == null || !MapStage.getInstance().isInMap() || !checkIfTargetLocation(here))
+                return false;
+            forge.adventure.util.PlaceLevels.Status place = MapStage.getInstance().placeStatus(null);
+            if (place.enemiesLeft())
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace(); // a safeguard must never break quest activation
+            return false;
+        }
+        status = COMPLETE;
+        System.out.println("[TFR-MainQuest] stage \"" + name + "\" retro-completed (" + here.getDisplayName()
+                + " has no enemy left - it was cleared before this stage was issued)");
+        return true;
+    }
+
     /** Retroactive EventFinish completion (2026-09-16 user request: "if someone does an Inn
      *  tournament before we give the quest, let's trigger the quest").
      *  <p>

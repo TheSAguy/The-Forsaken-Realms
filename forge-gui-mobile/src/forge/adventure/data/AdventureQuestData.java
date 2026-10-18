@@ -655,11 +655,23 @@ public class AdventureQuestData implements Serializable {
                         // so the stage would ask the player to repeat what they had just done.
                         if (s.retroCompleteIfEventAlreadyFinished())
                             continue;
+                        // Round 694: and for "clear the place" when the player stands in it already emptied.
+                        if (s.retroCompleteIfTargetAlreadyCleared())
+                            continue;
                         AdventureQuestController.instance().addQuestSprites(s);
                         showNotification = true;
                     }
                 }
             }
+        }
+        // Round 694: a stage completed outside updateStages() - a retro-completion here or on entering a place - can be
+        // the quest's last one. updateStages() is the only other writer of `completed`, which showQuestDialogs() reads to
+        // pay the quest, so a quest whose every stage is done is done now, not on the next unrelated event.
+        if (!completed && stages.length > 0) {
+            boolean allDone = true;
+            for (AdventureQuestStage s : stages)
+                allDone &= s.getStatus() == COMPLETE;
+            completed = allDone;
         }
         if (showNotification) {
             StringBuilder description = new StringBuilder();

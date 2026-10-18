@@ -618,6 +618,12 @@ public class AdventureQuestController implements Serializable {
         event.count3 = WorldSave.getCurrentSave().getPointOfInterestChanges(arrivedAt.getID()).getMapReputation();
         for(AdventureQuestData currentQuest : Current.player().getQuests()) {
             currentQuest.updateStages(event);
+            // Round 694: an open "clear this place" stage whose place the player already emptied completes on entry -
+            // the repair for a save stuck on it (AdventureQuestStage.retroCompleteIfTargetAlreadyCleared).
+            for (AdventureQuestStage stage : currentQuest.stages)
+                if (stage != null && stage.retroCompleteIfTargetAlreadyCleared())
+                    System.out.println("[TFR-QuestTarget] \"" + currentQuest.getName() + "\": stage \"" + stage.name
+                            + "\" completed on entering " + arrivedAt.getDisplayName());
         }
         activateNextStages();
     }

@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 694: a "clear the place" quest stage counts a place the player already emptied (2026-10-18)
+
+The One Demon on Discord (v1.22, log + save 5): "I got a quest to find the caravan but unknowingly cleared the dungeon
+before the quest actually got to that part. Now I can't advance the quest. It's stuck at find the caravans stuff and
+clear the bandit hideout/dungeon."
+
+- **The trace** (their forge_2.log):
+  - Quest 44 "Find the Caravan" was accepted on day 1. It bound its targets then, Tyrant's Hill for "Find the
+    caravan" and Bandit Cave for the cave stages, and restocked the cave (`initializeStage` empties the target's
+    deleted objects).
+  - The player cleared Bandit Cave on day ~2: `[DungeonRotation] cleared at Bandit Cave - it stays on the map:
+    'Quest_BanditCave' is a quest or debug map`.
+  - Reaching Tyrant's Hill completed "Find the caravan". "Find the bandit cave" then retro-completed (round 208,
+    already visited).
+  - "Search the bandit cave" (objective Clear) opened on a cave with nobody left. A Clear stage completes only on the
+    live kill that empties its place (`event.clear`), and a Quest_ map never restocks.
+- **The fix**:
+  - `AdventureQuestStage.retroCompleteIfTargetAlreadyCleared()`: an ACTIVE Clear stage completes when the player is
+    inside its target (`checkIfTargetLocation`) and the whole place has no enemy left (`MapStage.placeStatus`: the live
+    level, every other level's ledger, no level unvisited).
+  - It is called where a stage activates (`AdventureQuestData.activateNextStages`, beside rounds 208/213's checks) and
+    for every open stage on entering a place (`AdventureQuestController.updateEnteredPOI`), which repairs a save
+    already stuck: walk back into the place.
+  - It is a live check, not round 443's ledger: a single-level place keeps no ledger.
+  - A place emptied BEFORE the quest was issued was restocked when it was issued, so this can't pay for a clear the
+    quest never asked for.
+- **`activateNextStages` now sets `completed`** when every stage is done. `updateStages` was its only writer, so a
+    quest whose last stage completed outside it (this check, or a final Travel/flag/tournament retro-completion) went
+    unpaid until some unrelated event.
+- **Seen in the agent game** on the reporter's save (agent slot 34, round-694 classes): it loaded with "Find the
+  Caravan" open, beside Bandit Cave. Entering logged `stage "Search the bandit cave" retro-completed (Bandit Cave has
+  no enemy left ...)` and `completed on entering Bandit Cave`, then `+17 Power - quest: Find the Caravan`; the story's
+  next quest, "Explore the Crystal Mines", was issued. No exceptions.
+- **For the player**: walk back into Bandit Cave once the update is out.
+
 ## Round 693: towns that aren't the player's never show a shop their sets can't stock (2026-10-18)
 
 The One Demon on Discord (v1.22): "Assembled Alphas shop is empty. Refreshing with shards still empty." Their log:

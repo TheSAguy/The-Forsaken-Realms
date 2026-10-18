@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 694 - Clear quest stages count a place already emptied
+
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java`** - new `retroCompleteIfTargetAlreadyCleared()`.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** - `activateNextStages()`: calls it after the
+  other retro-checks, and sets `completed` when every stage is COMPLETE.
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** - `updateEnteredPOI()`: runs it for
+  every stage of every quest after the ENTERPOI event.
+
 ### Round 693 - shops a town's sets can't stock are swapped
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - shop build (the `"shop"` case): after the slot's
