@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 693 - shops a town's sets can't stock are swapped
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - shop build (the `"shop"` case): after the slot's
+  `ShopData` roll, a non-player town calls `EconomyBuildings.stockableShopFor(...)` (mod file) with its own Random. The
+  world RNG draw is unchanged.
+
 ### Round 692 - New Game starter-deck text
 
 - **`forge-gui/res/languages/en-US.properties`** - 15 values rewritten: `advDifficultySummary{Easy,Normal,HardGenetic,

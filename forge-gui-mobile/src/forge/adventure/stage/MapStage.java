@@ -1983,6 +1983,15 @@ public class MapStage extends GameStage {
                         if (shops.size == 0) continue;
 
                         ShopData data = shops.get(WorldSave.getCurrentSave().getWorld().getRandom().nextInt(shops.size));
+                        // Round 693: a town that is not the player's never shows a shop its sets cannot stock (a red
+                        // Wolf shop on 16 sets with no red wolves) - another from this slot's candidates instead. Own
+                        // Random per town and slot: the world RNG above and every other slot roll as before.
+                        PointOfInterest shopTown = TileMapScene.instance().rootPoint;
+                        if (!isRotatingShop && !shopList.isEmpty() && shopTown != null && changes.getPinnedShopName(id) == null
+                                && !TownRestoration.isCurrentTownCapitol() && !TownRestoration.isTownRestored(changes)) {
+                            data = EconomyBuildings.stockableShopFor(data, shops, shopsAlreadyPresent, changes,
+                                    new Random(((long) shopTown.getID().hashCode() << 32) ^ id), shopTown.getData().name, id);
+                        }
                         // A pinned slot ignores the roll above (still executed so the shared world
                         // RNG advances identically either way) and becomes exactly the recorded
                         // shop - how the Capitol migration keeps the source town's actual shops

@@ -1983,6 +1983,114 @@ public class EconomyBuildings {
         return total;
     }
 
+    // ---- Round 693: shops a town's sets cannot stock -------------------------------------------
+    // The One Demon on Discord (v1.22): "Assembled Alphas shop is empty. Refreshing with shards still empty." A red
+    // Wolf/Werewolf shop in a neutral town draws from the neutral shard plus the player's race sets - 16 sets with no
+    // red Werewolf and one red Wolf, which the real filter did not even take. The user: "neutral towns never place a
+    // shop type that can't stock under their set restriction; swap it for one that can."
+    private static final Map<String, int[]> shopStockCache = new java.util.HashMap<>();
+    private static String shopStockSignature = null;
+
+    /**
+     * {stockable, asked}: how many cards this shop's shelves could hold under the current town's edition restriction
+     * (each block min(count, distinct legal names), Union blocks included - buyableCardCount leaves them out) against
+     * how many they ask for. Null for a shop with no card shelf (Armory, booster, sketchbook shops), which always
+     * stocks. Cached per shop for the current town and unlocked editions.
+     */
+    public static int[] shopStock(ShopData shop, PointOfInterestChanges changes) {
+        if (shop == null || shop.rewards == null)
+            return null;
+        String signature = currentCardCountSignature();
+        if (!signature.equals(shopStockSignature)) {
+            shopStockCache.clear();
+            shopStockSignature = signature;
+        }
+        if (shopStockCache.containsKey(shop.name))
+            return shopStockCache.get(shop.name);
+        int stockable = 0, asked = 0;
+        boolean sawCardShelf = false;
+        for (RewardData reward : EditionProgression.restrictShopRewardsForCurrentTown(
+                new Array.ArrayIterator<>(shop.rewards), changes, shop.name, "shop-count")) {
+            if (reward == null)
+                continue;
+            String type = reward.type == null || reward.type.isEmpty() ? "card" : reward.type;
+            java.util.Set<String> distinct = new java.util.HashSet<>();
+            if ("Union".equalsIgnoreCase(type) && reward.cardUnion != null) {
+                for (RewardData entry : reward.cardUnion) {
+                    if (entry == null)
+                        continue;
+                    if ((entry.cardName != null && !entry.cardName.isEmpty()) || (entry.sourceDeck != null && !entry.sourceDeck.isEmpty())) {
+                        distinct.add("\u0000named"); // a named card or a deck list always stocks - count it as one
+                        continue;
+                    }
+                    for (PaperCard card : CardUtil.getPredicateResult(RewardData.getAllCards(), entry))
+                        distinct.add(card.getName());
+                }
+            } else if ("card".equalsIgnoreCase(type) || "randomCard".equalsIgnoreCase(type)) {
+                if ((reward.cardName != null && !reward.cardName.isEmpty()) || (reward.sourceDeck != null && !reward.sourceDeck.isEmpty())) {
+                    distinct.add("\u0000named");
+                } else {
+                    for (PaperCard card : CardUtil.getPredicateResult(RewardData.getAllCards(), reward))
+                        distinct.add(card.getName());
+                }
+            } else {
+                continue;
+            }
+            sawCardShelf = true;
+            int count = Math.max(0, reward.count);
+            asked += count;
+            stockable += Math.min(count, distinct.size());
+        }
+        int[] result = sawCardShelf && asked > 0 ? new int[]{stockable, asked} : null;
+        shopStockCache.put(shop.name, result);
+        return result;
+    }
+
+    /** Round 693: a card shop whose shelves the town's sets cannot fill even halfway (Assembled Alphas: 0 of 8). */
+    public static boolean cannotStock(ShopData shop, PointOfInterestChanges changes) {
+        int[] stock = shopStock(shop, changes);
+        return stock != null && stock[0] * 2 < stock[1];
+    }
+
+    /**
+     * Round 693: the shop a town that is not the player's shows in a slot - the rolled one, or, when its sets cannot
+     * stock it, another from the same slot's candidates that they can (a type not yet in the town first). The order
+     * comes from its own Random (seeded by the caller per town and slot), so the world RNG and every other slot roll
+     * exactly as before, and a town shows the same replacement on every visit. No stockable candidate: the roll stays.
+     */
+    public static ShopData stockableShopFor(ShopData rolled, Array<ShopData> candidates, Array<String> alreadyPresent,
+                                            PointOfInterestChanges changes, java.util.Random order, String townName, int objectId) {
+        if (rolled == null || !cannotStock(rolled, changes))
+            return rolled;
+        java.util.List<ShopData> shuffled = new java.util.ArrayList<>();
+        for (ShopData candidate : new Array.ArrayIterator<>(candidates))
+            if (candidate != null && !candidate.name.equals(rolled.name))
+                shuffled.add(candidate);
+        java.util.Collections.shuffle(shuffled, order);
+        ShopData pick = null;
+        for (int pass = 0; pass < 2 && pick == null; pass++) {
+            for (ShopData candidate : shuffled) {
+                if (pass == 0 && alreadyPresent.contains(candidate.name, false))
+                    continue;
+                if (!cannotStock(candidate, changes)) {
+                    pick = candidate;
+                    break;
+                }
+            }
+        }
+        int[] stock = shopStock(rolled, changes);
+        String counts = stock == null ? "" : " (" + stock[0] + " of " + stock[1] + " shelf cards in this town's sets)";
+        if (pick == null) {
+            System.out.println("[TFR-ShopSwap] town=\"" + townName + "\" slot " + objectId + ": " + rolled.name + counts
+                    + " - no stockable alternative among " + shuffled.size() + " candidate(s), kept");
+            return rolled;
+        }
+        int[] pickStock = shopStock(pick, changes);
+        System.out.println("[TFR-ShopSwap] town=\"" + townName + "\" slot " + objectId + ": " + rolled.name + counts
+                + " -> " + pick.name + (pickStock == null ? "" : " (" + pickStock[0] + " of " + pickStock[1] + ")"));
+        return pick;
+    }
+
     // Every shop name any town shop-slot could offer, cached for the process. Built from the LIVE
     // tier pools of the currently loaded map plus the plane's town templates, so it can never
     // include an Armory / fixed land / test shop that no chooser would show. Used by the blueprint

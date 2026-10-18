@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 693: towns that aren't the player's never show a shop their sets can't stock (2026-10-18)
+
+The One Demon on Discord (v1.22): "Assembled Alphas shop is empty. Refreshing with shards still empty." Their log:
+`Wolf4Red` ("Assembled Alphas", two 4-card shelves of red Wolf/Werewolf cards) in a neutral "Waste Town Identity",
+restricted to 16 sets (the neutral shard and the race's four: DFT, MKM, ORI, LGN, BNG, WWK, ROE, NEO, THS, UMA, 2X2,
+BLB, MH1, DTK, TDM, M21). Those sets print no red Werewolf and one red Wolf, Voja, and the real filter took nothing.
+The paid refresh rerolls from the same sets. A rough audit of all 311 shop types against those 16 sets found the
+same hole in Battles of the Ages (0 of 8), Take Your Pick (dwarves, 1 of 8) and Defenders of Chaos (red knights,
+2 of 8). Each save splits its shards randomly, so every save has its own dead shops. Offered: round 474's chest rule
+for shops (a shelf with no card draws from every set) or a swap. The user: "neutral towns never place a shop type that
+can't stock under their set restriction; swap it for one that can."
+
+- **`EconomyBuildings.shopStock(shop, changes)`**: {stockable, asked} for a shop under the current town's restriction,
+  each shelf min(count, distinct legal names). Union shelves are included, which `buyableCardCount` leaves out, so the
+  build menu's counts never saw this shop. Named cards and deck lists count as stockable. Null for a shop with no card
+  shelf (Armory, booster and sketchbook shops). Cached per shop for the current town and unlocked editions.
+- **`cannotStock`**: the shelves fill less than half (Assembled Alphas 0 of 8).
+- **`stockableShopFor`** (called from MapStage's shop build, right after the slot's roll): in a town that is not the
+  player's (not the Capitol, not restored), on a slot that is not pinned and not a Rotating shop, a shop that cannot
+  stock gives way to another from the same slot's own candidates. A type the town doesn't have yet is tried first.
+  The order comes from a Random seeded by town and slot, so the world RNG, and with it every other slot, rolls exactly
+  as before, and the town shows the same replacement on every visit. No stockable candidate: the roll stays. One
+  `[TFR-ShopSwap]` line either way.
+- **Judgment call - AI color towns too.** The user said "neutral towns". AI-owned towns restrict to their color's
+  shard the same way and can hold the same dead shops, so they swap as well. Player towns don't: the build menu
+  already shows each type's card count, and the player picks.
+- **Existing saves**: a dead shop in a town already visited shows its replacement on the next visit. Live shops are
+  untouched, because the roll is unchanged wherever the rolled shop can stock.
+- **Not changed**: player-built shops, Ring City shops (no restriction, so never dead) and the Re-roll Shop Type
+  button (player towns, blueprint-gated).
+- **Seen in the agent game** (round-693 classes, agent slot 33, a different shard split):
+  `[TFR-ShopSwap] town="Waste Town Identity" slot 57: Devil (1 of 8 shelf cards in this town's sets) -> Creature8Black
+  (8 of 8)`. A clean session, no exceptions. Map-load time was not measured.
+
 ## Round 692: the New Game screen tells the truth about starter decks (2026-10-17)
 
 The One Demon on Discord (v1.22): "In Normal starting mode constructed, I only get a mono colour deck, not 2 colour like
