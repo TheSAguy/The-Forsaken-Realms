@@ -9,7 +9,8 @@ every round built. If you find something missing, fix the docs rather than going
 **v1.22 "Legends & Lairs" is the latest release** (tag `tfr-v1.22` @ `bd70a26ecb1`, 2026-10-17). **Unreleased: rounds
 689-697**, committed locally (`git log --oneline tfr-v1.22..HEAD`; detail in `MOD_CHANGELOG.md`). Next version: 1.23 /
 12300. Engine = the 10.17 daily; next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL once Forge
-publishes a daily at or past it. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
+publishes a daily at or past it - until then every package needs `--allow-base-mismatch` (round 688's base-gap overlay
+ships the newer upstream res files). Next free round: 698. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.
 
 ## How the user wants me to work (supplied 2026-09-07)
@@ -159,6 +160,9 @@ cached locally) before considering a change done.
   engine merge also needs the user to reinstall it at the matching daily, or the packager refuses to build.
 - **Read `PACKAGE_OK.txt`** in the live folder before telling the user it is safe to play. Never substitute
   file-existence checks for reading this marker.
+- **After a live package, refresh the agent game** (`C:\TFR\agent`, a mirror of live with its own profile) with
+  `dev-tools\agent\agent_sync.cmd`, run from PowerShell; check the agent jar's timestamp, not the exit code. Test new
+  features there on copies of the user's saves (the `tfr-play` skill), never in the user's own profile.
 - **Packaging**, a packager refusal (jar freshness, game-running lock), `--full`, or the retired `E:\GAMES\FORGE`
   target: read `docs/tfr/build-and-deploy.md` first.
 - Release order: build + update the live folder, **user tests it**, and only after their explicit pass does anything
@@ -190,7 +194,10 @@ cached locally) before considering a change done.
   the tree at once; the tells were a `java.exe` running Maven that this session had not started, and
   doc edits appearing in `git status` unbidden. Before committing, merging or building, run
   `ListAgents`; if a peer session is listed, message it to stand down and wait for its build to
-  exit. Never kill a build you did not start.
+  exit. Never kill a build you did not start. With a peer on the checkout (the Procedural Pixel Creatures art
+  session usually is), claim a round number and the write window by message before writing, commit by explicit
+  pathspec only (never `git add -A`, never `git stash`), and run `git status` right before packaging - the packager
+  ships whatever uncommitted files are in the tree.
 - **`--zip` packaging always does the full stock-asset copy** and takes well over ten minutes. Do
   not give it a short timeout — killing it mid-run strips `PACKAGE_OK.txt` and leaves the live
   folder in the half-rebuilt state that marker exists to catch.
