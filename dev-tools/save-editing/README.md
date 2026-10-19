@@ -125,3 +125,4 @@ the collection count is identical, and life/gold/resources are intact.
   (the 2nd) for Chrome Prowler, +Experimental Augury (the 3rd) for Steady Progress. Dimir Contagion: +Thrummingbird for
   Steady Progress, +Gulping Scraptrap for Prologue to Phyresis, +Thriving Isle for an Island. Backup `.prededit28.bak`;
   verified with Inspect: both 40, stats and collection unchanged.
+- **2026-10-19 (round 699)** - the user: "add the Ethereal Investigator back to my save slot 1" (lost to a River Cave scroll that round 373's set rule emptied). New `AddCard.java`: 1 x `Ethereal Investigator|VOC|[12]` into slot 1; backup `.precard1.bak`; verified with Inspect: 987 -> 988 names, 1181 -> 1182 cards, life and gold unchanged.
