@@ -280,6 +280,61 @@ public class RewardData implements Serializable {
         return true;
     }
 
+    /**
+     * Round 699 (the user, after a River Cave scroll naming Ethereal Investigator vanished and paid nothing: "when a named
+     * card has no printing in the place's sets, give a card of the same rarity and color from those sets; gold if even that
+     * is empty"). Round 373's set rule stands: the named card in a printing of this reward's sets, else a SUBSTITUTE from
+     * those sets - the same rarity, exactly the same colors (colorless for colorless), the same card types (creature for
+     * creature), then the types dropped - else deckCardFallbackGold. One [TFR-PrintGate] line per swap.
+     */
+    private Reward namedCardOrSubstitute(PaperCard named, boolean isNoSell, Random random) {
+        PaperCard gated = CardUtil.remapToEditionListStrict(named, this.editions, random);
+        if (gated != null)
+            return new Reward(gated, isNoSell);
+        RewardData like = new RewardData();
+        like.type = "card";
+        like.count = 1;
+        like.probability = 1;
+        like.editions = this.editions;
+        like.rarity = new String[]{named.getRarity().getLongName()};
+        forge.card.ColorSet colors = named.getRules().getColor();
+        if (colors.isColorless()) {
+            like.colorType = "Colorless";
+        } else {
+            List<String> names = new ArrayList<>();
+            for (byte c : forge.card.MagicColor.WUBRG)
+                if (colors.hasAnyColor(c))
+                    names.add(forge.card.MagicColor.toLongString(c));
+            like.colors = names.toArray(new String[0]);
+            like.matchAllColors = true;
+        }
+        List<String> types = new ArrayList<>();
+        for (forge.card.CardType.CoreType t : named.getRules().getType().getCoreTypes())
+            types.add(t.name());
+        like.cardTypes = types.isEmpty() ? null : types.toArray(new String[0]);
+        for (int pass = 0; pass < 2; pass++) {
+            if (pass == 1) {
+                if (like.cardTypes == null)
+                    break;
+                like.cardTypes = null; // the types dropped: any card of that rarity and those colors
+            }
+            for (PaperCard sub : CardUtil.generateCards(getAllCards(), like, 1, random)) {
+                if (sub == null)
+                    continue;
+                System.out.println("[TFR-PrintGate] " + named.getName() + " has no printing in this place's sets ("
+                        + this.editions.length + ") - " + sub.getName() + " (" + sub.getEdition() + ", "
+                        + named.getRarity().getLongName() + ", same colors" + (pass == 0 ? ", same type" : "")
+                        + ") instead");
+                return new Reward(sub, isNoSell);
+            }
+        }
+        int gold = Math.max(1, Config.instance().getTuningData().deckCardFallbackGold);
+        System.out.println("[TFR-PrintGate] " + named.getName() + " has no printing in this place's sets ("
+                + this.editions.length + ") and nothing of its rarity and colors is printed there either - " + gold
+                + " gold instead");
+        return Reward.cardFallbackGold(gold);
+    }
+
     public Array<Reward> generate(boolean isForEnemy, boolean useSeedlessRandom) {
         return generate(isForEnemy, null, useSeedlessRandom);
     }
@@ -381,9 +436,7 @@ public class RewardData implements Serializable {
                         for (int i = 0; i < picks; i++) {
                             PaperCard card = StaticData.instance().getCommonCards().getCard(shuffledCards.get(i));
                             if (card != null) {
-                                card = CardUtil.remapToEditionListStrict(card, this.editions, rewardRandom); // round 373
-                                if (card != null)
-                                    ret.add(new Reward(card, isNoSell));
+                                ret.add(namedCardOrSubstitute(card, isNoSell, rewardRandom)); // rounds 373, 699
                             } else {
                                 System.err.println("Missing card: " + shuffledCards.get(i));
                             }
@@ -403,20 +456,15 @@ public class RewardData implements Serializable {
                             if (card != null) {
                                 for (int i = 0; i < count + addedCount; i++) {
                                     PaperCard finalCard = CardUtil.getCardByNameAndEdition(request.cardName, card.getEdition());
-                                    if (finalCard != null) {
-                                        finalCard = CardUtil.remapToEditionListStrict(finalCard, this.editions, rewardRandom); // round 373
-                                        if (finalCard != null)
-                                            ret.add(new Reward(finalCard, isNoSell));
-                                    }
+                                    if (finalCard != null)
+                                        ret.add(namedCardOrSubstitute(finalCard, isNoSell, rewardRandom)); // rounds 373, 699
                                 }
                             }
                         } else {
                             for (int i = 0; i < count + addedCount; i++) {
                                 PaperCard card = StaticData.instance().getCommonCards().getCard(cardName);
                                 if (card != null) {
-                                    card = CardUtil.remapToEditionListStrict(card, this.editions, rewardRandom); // round 373
-                                    if (card != null)
-                                        ret.add(new Reward(card, isNoSell));
+                                    ret.add(namedCardOrSubstitute(card, isNoSell, rewardRandom)); // rounds 373, 699
                                 } else
                                     System.err.println("Missing card: " + cardName);
                             }

@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 699 - named-card pickups substitute instead of vanishing
+
+- **`forge-gui-mobile/src/forge/adventure/data/RewardData.java`** - `namedCardOrSubstitute()` replaces the three
+  `remapToEditionListStrict` call sites in the named-card branches.
+- **`forge-gui-mobile/src/forge/adventure/util/CardUtil.java`** - the `[TFR-PrintGate]` line's wording.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - an empty pickup shows "Nothing left in it."
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** - `showInFolder()` after Export Logs.
+
 ### Round 698 - log sharing to Discord
 
 - **`forge-gui-mobile/src/forge/adventure/scene/StartScene.java`** - `enter()` ends with `askOrShareLogs()` (the one-time

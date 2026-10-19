@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 699: a named-card pickup outside the place's sets pays a substitute, never nothing (2026-10-19)
+
+The user: "I just entered a dungeon, grabbed a scroll loot, but got nothing. I just disappeared." Their log (River Cave,
+`inn_cave_river_entrance.tmx`): `[TFR-PrintGate] Ethereal Investigator has no printing in this place's sets (15) - not
+offered`, then `[TFR-PlaceRewards] pickup 19 is empty after the place's reward rules`.
+
+- **The cause**: pickup 19 (a scroll) holds exactly one named card, `{"type":"card","cardName":"Ethereal
+  Investigator"}`. Round 373's set rule drops a named card that has no printing in the place's sets (`CardUtil.
+  remapToEditionListStrict` -> null), and the cave's 15 neutral sets print none. The pickup was left empty and was
+  taken anyway (round 299's branch in `MapStage`, written for withheld +Life and lost coin flips).
+  - It can happen at 93 pickups in 35 plane maps that hold only named cards (Murder, Infernal Grasp, Village Rites,
+    Deadly Dispute, Crippling Fear x16-17 each, Wastes x7 ...), depending on each world's shard split.
+- **The fix** (the user: "Substitute: ... a card of the same rarity and color from those sets; gold if even that is
+  empty. Never consume a pickup silently empty."):
+  - `RewardData.namedCardOrSubstitute` - every named-card branch (`cardName` in both variant modes, `cardNames`) takes
+    the named card in a printing of the reward's sets as before.
+  - Else it draws a substitute from those sets with `CardUtil.generateCards`: the same rarity (`getLongName`), exactly
+    the same colors (`matchAllColors`; colorless -> `colorType` Colorless) and the same core types, then the types
+    dropped.
+  - Else `deckCardFallbackGold` (50) as `Reward.cardFallbackGold`.
+  - `[TFR-PrintGate] <card> has no printing in this place's sets (n) - <substitute> (<set>, <rarity>, same colors[,
+    same type]) instead`, or "... - 50 gold instead". The round-373 line now says "the reward looks for a substitute".
+  - A pickup still empty for other reasons (round 299's withheld rewards) now shows "Nothing left in it." on the HUD.
+- **Export Logs opens Downloads** (the user, same day: "can we open the Downloads folder also, so it's easy for them to
+  grab"). After a PC export, Explorer opens with the zip selected (`explorer.exe /select,`; other desktops open the
+  folder), off the render thread; `[TFR-Logs] opened <folder>`. Android has no folder view to open from here, so the
+  dialog's path stands.
+- **Seen in the agent game** on a copy of the user's slot 1 (agent slot 37, round-699 classes; River Cave reset with
+  the console's `reset map`, enemies removed):
+  - The scroll opened a reward screen. `[TFR-PrintGate] Ethereal Investigator has no printing in this place's sets
+    (15) - Palinchron (VMA, Rare, same colors, same type) instead` - a blue rare creature for a blue rare creature.
+  - Export Logs: `[TFR-Logs] opened C:\Users\User\Downloads`, Explorer showed the zip selected. The test zip was
+    deleted; the user's own two exports in Downloads were left alone.
+  - The agent profile's log sharing was switched off first, so test launches post nothing to #tfr1-logs.
+- **The user's lost card**: one Ethereal Investigator. Offered to add it to their save with the save tool while the game
+  is closed.
+
 ## Round 698: game logs shared to Discord, with the player's consent (2026-10-19)
 
 The user: "have the game log just automatically zipped and posted each time you exit a game", then (after the

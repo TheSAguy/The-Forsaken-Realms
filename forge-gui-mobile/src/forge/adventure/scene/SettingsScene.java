@@ -607,6 +607,7 @@ public class SettingsScene extends UIScene {
                     zip = named;
                 message = localizer.getMessage("lblExportLogsDone", zip.getAbsolutePath());
                 System.out.println("[TFR-Logs] exported to " + zip.getAbsolutePath() + " (" + zip.length() / 1024 + " KB)");
+                showInFolder(zip);
             }
         } catch (IOException e) {
             message = localizer.getMessage("lblError") + ": " + e;
@@ -614,6 +615,25 @@ public class SettingsScene extends UIScene {
         }
         showDialog(createGenericDialog(localizer.getMessage("lblExportLogs"), message, localizer.getMessage("lblOK"), null,
                 this::removeDialog, null, false, "", true));
+    }
+
+    /** Round 699 (the user: "can we open the Downloads folder also, so it's easy for them to grab"): on a PC the folder
+     *  opens with the zip selected (Windows Explorer's /select; elsewhere the folder itself), off the render thread.
+     *  Android has no folder view to open from here - the dialog's path stands. */
+    private static void showInFolder(java.io.File zip) {
+        if (GuiBase.isAndroid())
+            return;
+        new Thread(() -> {
+            try {
+                if (System.getProperty("os.name", "").toLowerCase(java.util.Locale.ROOT).contains("windows"))
+                    new ProcessBuilder("explorer.exe", "/select," + zip.getAbsolutePath()).start();
+                else
+                    java.awt.Desktop.getDesktop().open(zip.getParentFile());
+                System.out.println("[TFR-Logs] opened " + zip.getParent());
+            } catch (Exception e) {
+                System.out.println("[TFR-Logs] could not open " + zip.getParent() + " (" + e + ")");
+            }
+        }, "TFR-ShowLogs").start();
     }
 
     void addLabel(String name) {

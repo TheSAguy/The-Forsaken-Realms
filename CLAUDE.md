@@ -7,10 +7,10 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.22 "Legends & Lairs" is the latest release** (tag `tfr-v1.22` @ `bd70a26ecb1`, 2026-10-17). **Unreleased: rounds
-689-698**, committed locally (`git log --oneline tfr-v1.22..HEAD`; detail in `MOD_CHANGELOG.md`). Next version: 1.23 /
+689-699**, committed locally (`git log --oneline tfr-v1.22..HEAD`; detail in `MOD_CHANGELOG.md`). Next version: 1.23 /
 12300. Engine = the 10.17 daily; next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL once Forge
 publishes a daily at or past it - until then every package needs `--allow-base-mismatch` (round 688's base-gap overlay
-ships the newer upstream res files). Next free round: 699. Log sharing (round 698) posts to Discord through a webhook
+ships the newer upstream res files). Next free round: 700. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

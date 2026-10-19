@@ -2817,6 +2817,8 @@ public class MapStage extends GameStage {
                         // Round 299: everything in it was withheld (a once-per-place +Life, a lost return-visit coin
                         // flip) - nothing to show; the pickup is still taken below.
                         System.out.println("[TFR-PlaceRewards] pickup " + RS.getId() + " is empty after the place's reward rules");
+                        // Round 699 (the user: "Never consume a pickup silently empty"): the player is told.
+                        GameHUD.getInstance().addNotification("Nothing left in it.");
                     } else if (rewards.size == 1) {
                         Reward reward = rewards.get(0);
                         final String rewardTypeName = reward.getType().name();

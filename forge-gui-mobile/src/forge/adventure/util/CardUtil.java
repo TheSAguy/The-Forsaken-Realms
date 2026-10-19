@@ -811,7 +811,7 @@ public class CardUtil {
                 return candidate;
             if (loggedRemaps.add(candidate.getCardName() + "|gate"))
                 System.out.println("[TFR-PrintGate] " + candidate.getCardName() + " has no printing in this place's sets ("
-                        + allowedEditions.length + ") - not offered");
+                        + allowedEditions.length + ") - the reward looks for a substitute (round 699)");
             return null;
         }
         if (allowedRarities != null && allowedRarities.length > 0) {
