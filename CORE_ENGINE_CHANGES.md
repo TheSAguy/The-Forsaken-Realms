@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 698 - log sharing to Discord
+
+- **`forge-gui-mobile/src/forge/adventure/scene/StartScene.java`** - `enter()` ends with `askOrShareLogs()` (the one-time
+  question, else `LogShare.uploadPreviousSession()`).
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** - the Share-logs switch under Export Logs.
+- **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** - `logShareAsked`, `logShareEnabled`,
+  `logShareInstallId`, `logShareLastSent`.
+- **`forge-gui/res/languages/en-US.properties`** - `lblShareLogs`.
+- Mod file `util/LogShare.java`; `standalone-packaging/build_standalone.py` writes the plane's gitignored
+  `log_share.txt`; `.gitignore`; `ANDROID_RELEASE.md` steps 2b and 4.
+
 ### Round 697 - the Rare cards level reward asks for a color
 
 - **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `asc pick <id> [color]`.

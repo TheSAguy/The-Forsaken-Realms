@@ -163,6 +163,15 @@ public class SettingsScene extends UIScene {
         // bug report without finding forge.log - on Android 13+ a file manager cannot even open Android/obb.
         addLabel(localizer.getMessage("lblLogsForBugReports"));
         settingGroup.add(Controls.newTextButton(localizer.getMessage("lblExportLogs"), this::exportLogs)).align(Align.right).pad(2);
+        // Round 698: the log-sharing switch beside it (only in a build that ships a webhook - see util/LogShare).
+        if (forge.adventure.util.LogShare.available()) {
+            addSettingField(localizer.getMessage("lblShareLogs"), forge.adventure.util.LogShare.isEnabled(), new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    forge.adventure.util.LogShare.setEnabled(((CheckBox) actor).isChecked());
+                }
+            });
+        }
 
         if (!GuiBase.isAndroid()) {
             SelectBox<String> videomode = Controls.newComboBox(ForgeConstants.VIDEO_MODES, Config.instance().getSettingData().videomode, o -> {

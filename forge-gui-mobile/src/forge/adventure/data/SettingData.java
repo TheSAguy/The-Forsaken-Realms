@@ -62,4 +62,12 @@ public class SettingData {
     // Undo mode was moved to Single step - every save of Forge's preferences since the 10.14 merge wrote upstream's
     // "Free" into the file. After that the player's own choice in Settings stands.
     public boolean undoDefaultApplied;
+    // Round 698 (the user: the game log "automatically zipped and posted" to Discord; "Default should be 'Yes'"): log
+    // sharing (util/LogShare). logShareAsked - the one-time question was answered; logShareEnabled - the player's answer
+    // and the Settings switch; logShareInstallId - an anonymous random id, so posts from one install can be told apart;
+    // logShareLastSent - the archived log last posted, never sent twice.
+    public boolean logShareAsked;
+    public boolean logShareEnabled;
+    public String logShareInstallId;
+    public String logShareLastSent;
 }

@@ -126,3 +126,5 @@ dev-tools/**/*.class
 # The packager skips the same patterns, so a stray backup can neither be committed nor shipped.
 *.bak
 *.orig
+# Round 698: the log-sharing Discord webhook - written by the packager / Android release steps, never committed.
+forge-gui/res/adventure/The Forsaken Realms/log_share.txt

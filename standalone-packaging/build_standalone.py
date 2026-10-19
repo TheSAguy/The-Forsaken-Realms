@@ -59,6 +59,8 @@ BASE_INSTALL = r"E:\GAMES\Forge_2"
 OUT_DIR = r"C:\TFR\live"
 GAME_NAME = "The Forsaken Realms"
 PLANE = "The Forsaken Realms"
+# Round 698: the log-sharing Discord webhook, outside the repo (never committed - the repo is public).
+LOG_SHARE_SECRET = r"C:\TFR\secrets\discord_log_webhook.txt"
 
 # Root files copied verbatim from BASE_INSTALL (everything else is deliberately
 # dropped: stock-Forge client, editors, uninstaller, upstream txt files that
@@ -488,6 +490,21 @@ def main():
                   + os.path.relpath(os.path.join(root, name), plane_src))
     print("copying the plane folder from the repo...")
     shutil.copytree(plane_src, os.path.join(adv, PLANE), ignore=ignore_backups)
+
+    # 4b. Round 698: the Discord webhook for log sharing (util/LogShare) - kept out of git (the repo is public), read
+    # from LOG_SHARE_SECRET and written only into the packaged plane folder. No file: the game builds without sharing.
+    share_target = os.path.join(adv, PLANE, "log_share.txt")
+    if os.path.isfile(LOG_SHARE_SECRET):
+        with open(LOG_SHARE_SECRET, encoding="utf-8") as fh:
+            url = fh.read().strip()
+        if url.startswith("https://discord.com/api/webhooks/") or url.startswith("https://discordapp.com/api/webhooks/"):
+            with open(share_target, "w", encoding="utf-8", newline="\n") as fh:
+                fh.write(url + "\n")
+            print("log sharing: webhook written into the package (from " + LOG_SHARE_SECRET + ")")
+        else:
+            print("WARNING: " + LOG_SHARE_SECRET + " does not hold a Discord webhook URL - log sharing is OFF in this build")
+    else:
+        print("WARNING: " + LOG_SHARE_SECRET + " is missing - log sharing is OFF in this build")
 
     # 5. our jar
     print("copying the built jar...")

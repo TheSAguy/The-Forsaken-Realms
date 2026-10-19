@@ -66,6 +66,12 @@ Consequences:
    2.00 → 20000. It must strictly increase every release or devices refuse the update.
    (The profile sets `android.manifest.versionCodeUpdateFromVersion=false` so this explicit
    value is what ships — don't remove that override.)
+2b. **Log sharing (round 698): put the Discord webhook into the clone** before building - assets.zip is zipped from the
+   clone's `forge-gui/res`, and the webhook is gitignored, so the clone never has it on its own. Without it the APK
+   simply ships with log sharing off:
+   ```
+   cp C:/TFR/secrets/discord_log_webhook.txt "C:/TFR-build/forge-gui/res/adventure/The Forsaken Realms/log_share.txt"
+   ```
 3. Build. **On Windows this MUST run with shortened paths** — the plugin launches d8 through
    `cmd.exe /C "<whole command>"`, and the dex classpath is ~10,000 characters against
    cmd.exe's hard 8,191 limit. The failure is maddening: "ANDROID-040-001 ... Result = 1" with
@@ -126,8 +132,10 @@ Consequences:
    "$LOCALAPPDATA/Android/Sdk/build-tools/35.0.0/apksigner" verify --print-certs <apk>
    # assets.zip layout: MUST have top-level res/, res/adventure/ containing EXACTLY
    # common + "The Forsaken Realms" (no Shandalar etc.), res/build.txt present,
-   # res/cardsfolder/cardsfolder.zip present
+   # res/cardsfolder/cardsfolder.zip present, and (round 698) the log-sharing webhook:
+   # res/adventure/The Forsaken Realms/log_share.txt
    python -c "import zipfile;[print(n) for n in zipfile.ZipFile(r'<assets.zip>').namelist()[:20]]"
+   python -c "import zipfile;print('log_share.txt' in str(zipfile.ZipFile(r'<assets.zip>').namelist()))"
    ```
 5. Upload BOTH to the `tfr-vX.YZ` release, with the APK renamed to exactly
    **`forsaken-realms-<version>-signed-aligned.apk`** (AssetsDownloader constructs this exact

@@ -374,6 +374,26 @@ public class StartScene extends UIScene {
         }
 
         super.enter();
+        askOrShareLogs();
+    }
+
+    /** Round 698: the one-time log-sharing question (Yes first, the default the user asked for), else the previous
+     *  session's log goes out in the background if the player said yes before. */
+    private void askOrShareLogs() {
+        if (!forge.adventure.util.LogShare.shouldAsk()) {
+            forge.adventure.util.LogShare.uploadPreviousSession();
+            return;
+        }
+        showDialog(createGenericDialog("Help fix bugs",
+                "Share your game logs with the developer to help fix bugs?\n"
+                        + "(No personal files - your PC user name is removed.)\nYou can change this in Settings.",
+                "Yes, share", "No", () -> {
+                    forge.adventure.util.LogShare.setEnabled(true);
+                    removeDialog();
+                }, () -> {
+                    forge.adventure.util.LogShare.setEnabled(false);
+                    removeDialog();
+                }, false, "", true));
     }
 
     private void NewGamePlus() {

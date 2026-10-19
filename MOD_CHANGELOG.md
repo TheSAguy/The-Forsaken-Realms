@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 698: game logs shared to Discord, with the player's consent (2026-10-19)
+
+The user: "have the game log just automatically zipped and posted each time you exit a game", then (after the
+trade-offs: a GitHub token in the game would give anyone write access to the repo, logs carry the PC user name, the repo
+would bloat, and an exit hook misses crashes) "Let's go with Discord webhook ... I will probably use the same Discord for
+both TFR 1 and 2", and "Default should be 'Yes', so they can just click continue."
+
+- **Discord** (set up by the user): a private Logs category with `tfr1-logs` and `tfr2-logs`, one webhook each.
+  - The URLs live OUTSIDE the repos: `C:\TFR\secrets\discord_log_webhook.txt` and
+    `C:\TFR2\secrets\discord_log_webhook.txt`.
+  - A webhook in the public repo would be scraped, and GitHub's secret scanning would get Discord to revoke it.
+- **`util/LogShare`**: on the start screen, if sharing is on, the PREVIOUS session's log is sent.
+  - That is the newest `forge.<stamp>.log` the engine archived at this startup, so a crash or a force-close is covered,
+    which an exit hook would miss.
+  - Scrub: `C:\Users\<name>`, `/Users/<name>` and `/home/<name>` become `<user>`, and the JVM's user name goes too.
+  - The log is zipped in memory and POSTed (multipart: `payload_json` + `files[0]`) to the webhook on a daemon thread.
+  - The file name is `tfr1-<installId>-<stamp>.zip`. The message line reads "**TFR <modVersion>** | <OS or Android API>
+    | install `<id>` | <log name>".
+  - Size caps: 32 MB raw, 8 MB zipped. No retries. Never the same log twice (`logShareLastSent`, written only on an
+    HTTP 2xx).
+  - `[TFR-LogShare]` lines say what happened.
+- **Consent**: the start screen asks once ("Help fix bugs ... Share your game logs with the developer to help fix bugs?
+  (No personal files - your PC user name is removed.) You can change this in Settings.").
+  - "Yes, share" comes first, then "No". Yes sends the previous session at once.
+  - Settings has a switch under Export Logs (`lblShareLogs`).
+  - New SettingData fields (settings.json, per profile): `logShareAsked`, `logShareEnabled`, `logShareInstallId`
+    (8 random hex), `logShareLastSent`.
+  - A build without a webhook neither asks nor shows the switch.
+- **The webhook in builds**: the plane's `log_share.txt`, gitignored.
+  - Desktop: `build_standalone.py` writes it into the packaged plane folder from `LOG_SHARE_SECRET` and warns (still
+    builds, sharing off) when the file is missing or not a webhook.
+  - Android: ANDROID_RELEASE.md step 2b copies it into the C:\TFR-build clone before Maven (assets.zip is zipped from
+    the clone's res), and step 4 checks the zip for it.
+- **Seen in the agent game** (agent package of the working tree; the packager logged "log sharing: webhook written into
+  the package"):
+  - The start screen asked. "Yes, share" logged `[TFR-LogShare] sent forge.20261018-154641.log as
+    tfr1-2b577fb9-20261018-154641.zip (4 KB zipped, HTTP 200)` - a real post in #tfr1-logs.
+  - Settings showed the switch.
+  - The scrub pattern, run over a player's real log (The One Demon's forge_2.log) and the user's: 121 and 4 user paths
+    found, none left after.
+- **Not done here**: TFR 2's side (its own session, `C:\TFR2\secrets`, `tfr2-` names). Not tried on Android (no device
+  bridge). The upload uses only HttpURLConnection on a background thread, and the APK already has INTERNET.
+
 ## Round 697: the "Rare cards" level reward asks which color (2026-10-18)
 
 Jazz on Discord: "As level up reward, I chose '2 rares from my deck color' ... a new game with a green deck and I got a
