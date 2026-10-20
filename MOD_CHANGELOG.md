@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 700: "Gray Warren" and the guide's "gray", in American spelling (2026-10-19)
+
+The user's standing rule is American spelling in game text. A scan of the plane's player-facing data (the TFR 2 design
+session's content check) found two British "grey"s; the user: "You can also do this: the TFR 1 'Grey Warren' spelling
+fix".
+
+- `world/points_of_interest.json`: the cave `CaveCGen07`'s `displayName` "Grey Warren" -> "Gray Warren". Only the shown
+  name changes; the place's `name` (its ID in saves and the dungeon rotation) is untouched, and no quest, dialog or
+  map refers to the old name (a round-443 comment in `DungeonSources.java` quotes the user's log and stays).
+- `GUIDE.html`: the fallen AI castles are drawn "gray and cracked".
+- Left as they are, deliberately: the enemies "Grey Scholar" and "Grey Pilgrim". Their `name` is also their ID in
+  `world/enemies.json`, the biome spawn lists and `enemy_tiers.json` (and so in saves); renaming them is a data
+  migration, not a spelling fix. Card names keep Wizards' spelling.
+- No code changed; nothing to package for this round alone.
+
 ## Round 699: a named-card pickup outside the place's sets pays a substitute, never nothing (2026-10-19)
 
 The user: "I just entered a dungeon, grabbed a scroll loot, but got nothing. I just disappeared." Their log (River Cave,

@@ -6264,7 +6264,7 @@
 	},
 	{
 		"name": "CaveCGen07",
-		"displayName": "Grey Warren",
+		"displayName": "Gray Warren",
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
