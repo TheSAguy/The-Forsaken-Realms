@@ -68,6 +68,8 @@ public class AdventureQuestStage implements Serializable {
     public String POIToken; //If defined, ignore tags input and use the target POI from a different stage's objective instead.
     private transient List<Integer> _parsedPrerequisiteNames;
     private transient List<PointOfInterest> validPOIs;
+    /** Round 702: this stage's place is where an Arena stage is fought - set by AdventureQuestData.initializeStage(). */
+    transient boolean needsPlayableArena;
     public boolean allowInactivePOI = false;
     // Navigation-only town filter for the world-map quest arrow ("ruinedTown"/"survivingTown",
     // 2026-08-27 user request) - see getNavPOIs() for why this exists separately from validPOIs.
@@ -150,6 +152,16 @@ public class AdventureQuestStage implements Serializable {
             // "confirm the dungeon actually exists... if not, we need to spawn that into
             // existence"). The old behavior silently left targetPOI null here - the stage could
             // never complete and the offer text showed a raw "$(poi_1)" token.
+        }
+        if (needsPlayableArena) {
+            // Round 702: an arena quest names only a place whose arena can be fought in today (TownRestoration.
+            // hasPlayableArena) - not Naktamun, which has none, nor a Capitol whose arena is still rubble.
+            List<PointOfInterest> withArena = new ArrayList<>(validPOIs);
+            withArena.removeIf(q -> !forge.adventure.util.TownRestoration.hasPlayableArena(q));
+            System.out.println("[TFR-QuestArena] " + questName + ": " + withArena.size() + " of " + validPOIs.size()
+                    + " places have a playable arena" + (withArena.isEmpty() ? " - keeping the unfiltered list" : ""));
+            if (!withArena.isEmpty())
+                validPOIs = withArena;
         }
         if (!anyPOI) {
             if (validPOIs.isEmpty()) {

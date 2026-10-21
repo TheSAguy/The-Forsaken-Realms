@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 702 - arena quests name a playable arena
+
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java`** - transient `needsPlayableArena`; in
+  `setTargetPOI(poiTokens, questName)` a filter by `TownRestoration.hasPlayableArena` after the active filter.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** - `initializeStage()` sets
+  `needsPlayableArena`; new private `feedsArenaStage(stage)`. No save-format change.
+
 ### Round 701 - the engine to the 10.21 daily (upstream `bc67f70ffbc`)
 
 - Six conflicts, all from `2f2ea0b8e72` (Localizer names): `EnemyData`, `EnemySprite`, `DuelScene`, `ArenaScene`,

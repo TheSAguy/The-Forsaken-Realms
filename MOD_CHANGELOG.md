@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 702: "Heart of a Champion" names only an arena you can fight in (2026-10-21)
+
+The user: "For this quest, let's choose only an arena that's currently available to play." Quest 23's first stage picks
+a place tagged Capital by distance and its second stage fights that place's arena (`$(poi_1)`); nothing checked the
+arena. Capital-tagged: the five color capitals, the Player Capitol (Orazca) once raised, and Naktamun.
+
+- **Unplayable arenas**: the Capitol's arena starts as rubble (a colorless capital is a wasteland town, MapStage's gated
+  "arena" case) until rebuilt for 250 gold; Naktamun's map has no arena at all (no biome places it today, so it is
+  never a candidate in practice). The color capitals' arenas are always open - their gates charge a toll at bad
+  reputation but never shut (the key-locked gates are the five Chapter-1 *castles*, type "castle").
+- **`TownRestoration.hasPlayableArena(poi)`** (new): the map has an `arena.tx` object (via the cached
+  `readMapObjects`), and in a wasteland town (not neutral-seeded) one of them has its `shopRebuilt_<id>` flag in the
+  place's saved changes - the same flag the rebuild dialog sets and the arena gate reads.
+- **`AdventureQuestData.initializeStage`** marks a stage `needsPlayableArena` when it is an Arena stage or an Arena
+  stage takes its place from it (`feedsArenaStage`); **`AdventureQuestStage.setTargetPOI`** then keeps only places with
+  a playable arena, after the active filter. If none qualifies the unfiltered list stays (never an empty pick).
+  `[TFR-QuestArena] <quest>: N of M places have a playable arena`. Only quest 23 has an Arena stage.
+- A quest already given keeps its place: a Heart of a Champion bound to the Capitol before this round still needs its
+  arena rebuilt, or it runs out.
+- **Checked** in the agent game (r294c save): 20 quests -> 5 of 5 (no Capitol yet); Capitol raised with its arena in
+  rubble -> 12 quests "5 of 6", all to color capitals; `set mapflag shopRebuilt_61 1` in the Capitol -> 12 quests
+  "6 of 6". No exceptions.
+
 ## Round 701: the engine to the 10.21 daily (upstream `bc67f70ffbc`) (2026-10-21)
 
 The user installed the 10.21 Forge daily as BASE_INSTALL and asked for the merge: "start the engine merge as round 701,

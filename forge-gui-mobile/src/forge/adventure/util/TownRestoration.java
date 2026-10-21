@@ -773,6 +773,32 @@ public class TownRestoration {
         return stage.checkQuestFlag(shopRebuiltFlag(objectId));
     }
 
+    /**
+     * Round 702 (the user, of "Heart of a Champion": "choose only an arena that's currently available to play"): can the
+     * player fight in this place's arena right now? Its map must have one (Naktamun, tagged Capital, has none), and in a
+     * wasteland town or the Capitol, where the arena starts as rubble (MapStage's gated "arena" case), one must be
+     * rebuilt. Read from the map file and the place's saved changes, so it answers without loading the map.
+     */
+    public static boolean hasPlayableArena(PointOfInterest poi) {
+        if (poi == null || poi.getData() == null || poi.getData().map == null)
+            return false;
+        java.util.List<Integer> arenaIds = new java.util.ArrayList<>();
+        for (com.badlogic.gdx.utils.XmlReader.Element object : readMapObjects(poi.getData().map))
+            if (object.getAttribute("template", "").endsWith("arena.tx"))
+                arenaIds.add(object.getIntAttribute("id"));
+        if (arenaIds.isEmpty())
+            return false;
+        if (isNeutralSeeded(poi.getID()) || !isWastelandTown(poi.getData()))
+            return true;
+        java.util.Map<String, Byte> flags = WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).getMapFlags();
+        for (int id : arenaIds) {
+            Byte built = flags.get(shopRebuiltFlag(id));
+            if (built != null && built > 0)
+                return true;
+        }
+        return false;
+    }
+
     private static String shopRebuiltFlag(int objectId) {
         return "shopRebuilt_" + objectId;
     }

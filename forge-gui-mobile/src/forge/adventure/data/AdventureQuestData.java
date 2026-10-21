@@ -258,10 +258,22 @@ public class AdventureQuestData implements Serializable {
         return key == null ? null : otherTokens.get(key);
     }
 
+    /** Round 702: does an Arena stage of this quest take its place from this stage ("Heart of a Champion" travels to a
+     *  Capital in stage 1 and fights its arena in stage 2 via $(poi_1))? */
+    private boolean feedsArenaStage(AdventureQuestStage stage) {
+        String token = "$(poi_" + stage.id + ")";
+        for (AdventureQuestStage other : stages)
+            if (other.objective == AdventureQuestController.ObjectiveTypes.Arena && token.equals(other.POIToken))
+                return true;
+        return false;
+    }
+
     public void initializeStage(AdventureQuestStage stage){
         if (stage == null || stage.objective == null) return;
 
         stage.initialize();
+        stage.needsPlayableArena = stage.objective == AdventureQuestController.ObjectiveTypes.Arena
+                || feedsArenaStage(stage); // round 702
 
         switch  (stage.objective){
             case Arena:
