@@ -51,3 +51,15 @@ Notes = `RELEASE_NOTES_v1.22.md` (the user's own wording; numbers, lists and the
 artifact v11 updated (stats 2,150+ / 360+ / 34,000+ / 730+, three new system cards). Live + agent = the release.
 NOTHING is unreleased. Next version: 1.23 / 12300. Next merge from upstream after `ea5fe47050d`; reinstall BASE_INSTALL
 once Forge publishes a daily at or past it (then the base gap is empty again).
+
+## STATE 2026-10-21 (20:00 UTC): **v1.23 "Fixes & Engine update" RELEASED** - tag `tfr-v1.23` @ `69797542f59`, published
+20:00:53 UTC, Latest. Rounds 689-701 on top of v1.22. Engine = the 10.21 daily (upstream `bc67f70ffbc`, round 701),
+packaged on the matching 10.21 BASE_INSTALL (no base gap). Assets in `C:\TFR\release\v1.23`:
+- `The-Forsaken-Realms-v1.23.zip` 474.9 MB;
+- `forsaken-realms-1.23-signed-aligned.apk` 13.8 MB (com.thesaguy.forsakenrealms, versionCode 12300, signer EE:60:39:25);
+- `assets.zip` 426.0 MB (build.txt 2026-10-21 19:56:04; Android from `C:\TFR-build` via R:; carries `log_share.txt`).
+
+Notes = `RELEASE_NOTES_v1.23.md`, kept high level at the user's request ("Just say a few bug fixes and engine update");
+title mine. GUIDE What's New 1.23 is one line above 1.22's list. The webhook token was checked absent from git before
+the push. Live + agent = the release. NOTHING is unreleased. Next version: 1.24 / 12400. Next merge from upstream after
+`bc67f70ffbc`.
