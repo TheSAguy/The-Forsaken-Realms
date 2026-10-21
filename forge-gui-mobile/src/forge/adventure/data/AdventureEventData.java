@@ -1185,7 +1185,7 @@ public class AdventureEventData implements Serializable {
         public String getName() {
             EnemyData enemyData = WorldData.getEnemy(enemyDataName);
             if (enemyData != null)
-                return enemyData.getName();
+                return enemyData.getDisplayName();
             return "";
         }
 

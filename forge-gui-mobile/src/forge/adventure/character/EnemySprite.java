@@ -689,12 +689,17 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
             return data.getName();
         return nameOverride;
     }
+    public String getDisplayName() {
+        if (nameOverride == null || nameOverride.isEmpty())
+            return data.getDisplayName();
+        return nameOverride;
+    }
 
     /** Display-only tiered name, e.g. "Red Wizard (Adept)" - see EnemyData.getTieredDisplayName()
-     *  for the convention/gating. Uses this sprite's own getName() so a map-authored nameOverride
-     *  still shows, with the tier suffix applied on top of it. */
+     *  for the convention/gating. Uses this sprite's own getDisplayName() so a map-authored nameOverride
+     *  still shows, with the tier suffix applied on top of it (round 701: upstream's translated name). */
     public String getTieredDisplayName() {
-        String base = getName();
+        String base = getDisplayName();
         ConfigData config = Config.instance().getConfigData();
         if (config == null || !config.showEnemyTierInName)
             return base;
@@ -704,10 +709,10 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         return base + " (" + tierLabel + ")";
     }
     public String getBossInsult(){
-        return data.bossInsult;
+        return data.getBossInsult();
     }
     public String getBossIntro(){
-        return data.bossIntro;
+        return data.getBossIntro();
     }
     public Array<Reward> getRewards() {
         rewardCollectionPool.clear();

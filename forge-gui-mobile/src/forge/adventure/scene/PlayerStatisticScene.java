@@ -311,7 +311,7 @@ public class PlayerStatisticScene extends UIScene {
             } else {
                 scrollContainer.add().width(16);
             }
-            scrollContainer.add(data.getName()).fillX().pad(5).width(120);
+            scrollContainer.add(data.getDisplayName()).fillX().pad(5).width(120);
             scrollContainer.add(entry.getValue().getLeft().toString() + "/" + entry.getValue().getRight().toString()).pad(5);
             scrollContainer.row();
         }

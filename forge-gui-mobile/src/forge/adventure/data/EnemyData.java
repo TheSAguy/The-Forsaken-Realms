@@ -164,6 +164,12 @@ public class EnemyData implements Serializable {
             return name;
         return "(Unnamed Enemy)";
     }
+    public static String getDisplayName(String enemyName){
+        return translate(enemyName, "displayName", enemyName);
+    }
+    public String getDisplayName(){
+        return getDisplayName(getName());
+    }
 
     // Enemy tier naming convention: Apprentice -> Adept -> Master -> Archmage, the display
     // mapping for EnemyData.tier's internal Common/Uncommon/Rare/Mythic values. Single source of
@@ -216,7 +222,9 @@ public class EnemyData implements Serializable {
      * raw name/getName(), which this method never alters.
      */
     public String getTieredDisplayName() {
-        String base = getName();
+        // Round 701: built on upstream's translated getDisplayName() (the raw name when no translation
+        // exists, as in every TFR plane); a translated name keeps any tier-word prefix, which is harmless.
+        String base = getDisplayName();
         ConfigData config = Config.instance().getConfigData();
         if (config == null || !config.showEnemyTierInName)
             return base;
@@ -244,10 +252,14 @@ public class EnemyData implements Serializable {
         return base + " (" + tierLabel + ")";
     }
     public String getBossInsult(){
-        return bossInsult;
+        return translate(getName(), "bossInsult", bossInsult);
     }
     public String getBossIntro(){
-        return bossIntro;
+        return translate(getName(), "bossIntro", bossIntro);
+    }
+    private static String translate(String enemyName, String field, String defaultValue){
+        return forge.Forge.getLocalizer().getMessageorUseDefault(
+            "adv.enemy." + enemyName.replaceAll("[^A-Za-z0-9]", "") + "." + field, defaultValue);
     }
 
     public boolean match(EnemyData other) {

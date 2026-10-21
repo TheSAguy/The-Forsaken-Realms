@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 701 - the engine to the 10.21 daily (upstream `bc67f70ffbc`)
+
+- Six conflicts, all from `2f2ea0b8e72` (Localizer names): `EnemyData`, `EnemySprite`, `DuelScene`, `ArenaScene`,
+  `PlayerStatisticScene`, `TransitionScreen`. Upstream's `getDisplayName()` kept beside ours; `getTieredDisplayName()`
+  now builds on it; the rest ours (detail in MOD_CHANGELOG round 701). Watch: name *display* should go through
+  `getDisplayName()` / `getTieredDisplayName()`, identity (stats, quests, saves, .tmx) through `getName()`. Upstream's
+  `getBossIntro()` / `getBossInsult()` now look up `adv.enemy.<Name>.*` in the plane's `languages/` bundle (TFR has
+  none). `PointOfInterest` saves the English name and translates on display.
+
 ### Round 699 - named-card pickups substitute instead of vanishing
 
 - **`forge-gui-mobile/src/forge/adventure/data/RewardData.java`** - `namedCardOrSubstitute()` replaces the three
@@ -3089,6 +3098,12 @@ from the plane's `config tables/settings.json`).
   0.25 -> 0.12.
 
 ## Upstream merge log
+
+- **2026-10-21 - merged upstream `master` @ `bc67f70ffbc` (Forge 2.0.16-SNAPSHOT, 10.21 daily; 53 non-merge commits
+  since `ea5fe47050d`; round 701).** Six conflicts, all from `2f2ea0b8e72` - see "Round 701" above. Base install
+  `E:\GAMES\Forge_2`: `build.txt` `2026-10-21 18:38:13`, jars 2.0.16-SNAPSHOT, `CHANGES.txt` headed by #12356
+  (`bc67f70ffbc`). Upstream's head at the fetch was `ddb4b95510a`, 4 commits past the install; the next merge starts
+  after `bc67f70ffbc`.
 
 - **2026-10-04 - merged upstream `master` @ `f9aafc5315e` (Forge 2.0.16-SNAPSHOT, 10.04 daily; 17 first-parent commits
   since `da9e24cb3a0`; round 440).** Two conflicts (`WorldBackground.java`, `World.java`), ours kept - see "Round 440"

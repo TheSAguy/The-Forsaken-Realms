@@ -20,6 +20,7 @@ import forge.gui.control.PlaybackSpeed;
 import forge.gui.interfaces.IGuiGame;
 import forge.gui.interfaces.IMayViewCards;
 import forge.interfaces.IGameController;
+import forge.interfaces.IMacroSystem;
 import forge.localinstance.properties.ForgePreferences.FPref;
 import forge.model.FModel;
 import forge.player.PlayerControllerHuman;
@@ -75,10 +76,6 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
         return gameControllers.containsKey(player);
     }
 
-    public final PlayerView getCurrentPlayer() {
-        return currentPlayer;
-    }
-
     @Override
     public String getDayTime() {
         return daytime;
@@ -86,6 +83,10 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
     @Override
     public void updateDayTime(String daytime) {
         this.daytime = daytime;
+    }
+
+    public final PlayerView getCurrentPlayer() {
+        return currentPlayer;
     }
 
     @Override
@@ -739,6 +740,12 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
         IGameController c = getGameController(pv);
         if (c != null) c.applyYieldUpdate(update);
         refreshYieldUi(pv);
+    }
+
+    @Override
+    public void applyMacroState(final IMacroSystem.State state) {
+        final IGameController c = getGameController();
+        if (c != null) c.macros().applyState(state);
     }
 
     /** Toggle the auto-pass marker for {@code phase} on {@code phaseOwner}'s turn. The

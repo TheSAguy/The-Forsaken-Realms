@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 701: the engine to the 10.21 daily (upstream `bc67f70ffbc`) (2026-10-21)
+
+The user installed the 10.21 Forge daily as BASE_INSTALL and asked for the merge: "start the engine merge as round 701,
+through bc67f70 to match the new install, and report each conflict before packaging." 53 commits since round 687's
+`ea5fe47050d` (upstream's head had 4 more, past the install, left for the next merge).
+
+- **What upstream brought**:
+  - **Card fixes**, about 30 scripts (Shaun Adams' audit series): wrong targets, zones, P/T, keywords and timing, and
+    "up to one target" abilities that now allow zero targets. Content under `res/cardsfolder`: it reaches players
+    through BASE_INSTALL, which is now this daily.
+  - **New cards**: Star Trek (TRK, TRC, SDS edition updates; Borg Cube, Captain Jean-Luc Picard, Borg Queen with the new
+    assimilate keyword: `AssimilateEffect` / `AssimilateAi`), Fluros of Myra's Marvels.
+  - **Rules engine**: targeting rework (`TargetSelection`, `InputSelectTargets`; fixes Chaoslace and similar cards),
+    an endless loop in `ChooseSourceEffect` fixed, `CantPutCounter` with simultaneous ETB, Karn Liberated keeps a
+    commander castable, player avatars marked when an effect asks you to pick a player.
+  - **AI**: commander tax on modal back faces; deck-generation data (LDA) for Reality Fracture.
+  - **Mobile UI**: a compact landscape match layout, a new splash screen, theme and Start button, a smoother loading bar.
+  - **Adventure**: enemy, point-of-interest and town names translated through the Localizer (Spanish for Shandalar),
+    plus `tr(...)` labels on the Items, Quests, Arena and Spellsmith screens. Realm of Legends 1.081 small fixes.
+  - **Not Adventure**: desktop sound mixing, network play (macros, yields), two draft cubes, puzzles, quest worlds.
+- **Six conflicts, all from one upstream commit**, `2f2ea0b8e72` "translate enemies, points of interest and town names
+  through Localizer". It added `EnemyData.getDisplayName()` / `EnemySprite.getDisplayName()` (the translated name, the
+  raw name when there is no translation) on the lines where TFR shows its tier name ("Red Wizard (Adept)", round 135):
+  - `EnemyData.java`, `EnemySprite.java`: both kept. `getTieredDisplayName()` now builds on `getDisplayName()`.
+  - `DuelScene.java` (4 hunks: the loss and intro dialogs, the seat names and per-seat portraits): ours kept - the
+    tiered name, raw for inn-event duels, the clamped and copied per-seat avatars.
+  - `ArenaScene.java`: our content-filtered, tier-weighted pick kept; its bracket label takes `getDisplayName()`.
+  - `PlayerStatisticScene.java`: our Bronze Coin marker kept; the row label takes `getDisplayName()`.
+  - `TransitionScreen.java`: both fields - our `enemyStatKey` and upstream's `enemyDisplayName` label.
+- **What players see: no change.** Translations load from the plane's own `languages/` folder and TFR has none, so
+  every name, boss intro and insult stays the raw English text. A future TFR translation would key on the raw name.
+- `config.json` `engineBuildVersion` `2.0.16-SNAPSHOT-10.21`.
+- **Checked** in the agent game on the merged jar (Maven build clean): the state and the duel nameplate read "Red
+  Wizard (Adept)" / "Ghalta (Master)", a duel won and one lost, the Status screen lists raw names with their records
+  as before, `forge.log` has no exceptions. Not seen: a boss intro dialog (the same `getTieredDisplayName()` the
+  nameplate uses) and the new splash screen and mobile layouts, which the user sees on the next package.
+
 ## Round 700: "Gray Warren" and the guide's "gray", in American spelling (2026-10-19)
 
 The user's standing rule is American spelling in game text. A scan of the plane's player-facing data (the TFR 2 design

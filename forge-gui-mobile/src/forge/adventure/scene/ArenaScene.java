@@ -1843,7 +1843,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 arenaEnemyData.gamesPerMatch = 1;
             EnemySprite enemy = new EnemySprite(arenaEnemyData);
             enemies.add(enemy);
-            ArenaRecord record = new ArenaRecord(new Image(enemy.getAvatar()), enemyData.getName());
+            ArenaRecord record = new ArenaRecord(new Image(enemy.getAvatar()), enemyData.getDisplayName()); // round 701
             record.tierBar = tierBar(enemyData.tier);
             fighters.add(record);
         }
