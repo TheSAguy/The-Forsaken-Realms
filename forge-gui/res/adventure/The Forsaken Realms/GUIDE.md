@@ -11,7 +11,7 @@ are in the [FAQ](#faq) at the end.
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [What's New in 1.22](#whats-new-in-122)
+2. [What's New in 1.23](#whats-new-in-123)
 3. [Starting Out](#starting-out)
 4. [Changes from the Base Game](#changes-from-the-base-game)
 5. [Early Game Advice](#early-game-advice)
@@ -41,9 +41,11 @@ the early game is meant to be a fight.
 *Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android
 version - playable, but it gets far less testing than the desktop builds.*
 
-## What's New in 1.22
+## What's New in 1.23
 
-The short version for returning players. Each item links to where the guide covers it in full. (Coming from 1.20?
+1.23 is a small update: a few bug fixes, and the engine moves to Forge 2.0.16 (the 10.21 build).
+
+Coming from 1.21? This is what 1.22 added - each item links to where the guide covers it in full. (Coming from 1.20?
 1.21 added leveling to 40, the Head and Legs slots, the Capitol Temple and spawns that adapt to your record; all are
 covered below.)
 
@@ -62,7 +64,7 @@ covered below.)
   as a card to turn over. See [Ascendance](#ascendance---your-level).
 - **The History replay:** the whole realm from day one, from the map or the Victory and Defeat screens. See
   [Territory Control & Color Defeat](#territory-control--color-defeat).
-- **Engine:** Forge 2.0.16 (the 10.17 build). Baneful Cavern is fully walkable, and many art fixes.
+- **Fixes:** Baneful Cavern is fully walkable, and many art fixes.
 
 ## Starting Out
 
@@ -1916,7 +1918,7 @@ game built on the Forge rules engine.
 ### How do I update the game to the latest version of Forge?
 
 You can't, and you don't need to. Each release is pinned to one tested Forge build, named in its release
-notes - this version runs on Forge 2.0.16 (the 10.17 build). Forge's own updater is switched off on purpose,
+notes - this version runs on Forge 2.0.16 (the 10.21 build). Forge's own updater is switched off on purpose,
 because a different engine underneath can break your world. Engine updates come to you with new Forsaken
 Realms releases.
 
@@ -1942,7 +1944,7 @@ session (grab it before restarting, or pick the matching dated file). Screenshot
 
 ---
 
-*This guide covers The Forsaken Realms v1.22, as of 2026-10-17. See `MOD_CHANGELOG.md` in the
+*This guide covers The Forsaken Realms v1.23, as of 2026-10-21. See `MOD_CHANGELOG.md` in the
 repository for the full history of how the game got here, if you're curious.*
 
 ## Support & Community

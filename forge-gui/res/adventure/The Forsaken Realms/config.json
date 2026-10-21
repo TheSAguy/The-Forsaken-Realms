@@ -302,7 +302,7 @@
     "showEnemyTierInName": true,
     "weightedSpawnTiersEnabled": true,
     "functioningNeutralTownsEnabled": true,
-    "modVersion": "1.22",
+    "modVersion": "1.23",
     "modVersionDate": "10.17",
     "engineBuildVersion": "2.0.16-SNAPSHOT-10.21",
     "disableGeneticDeckOverrides": true,
