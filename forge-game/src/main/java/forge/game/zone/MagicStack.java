@@ -220,6 +220,11 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             game.setGameOver(GameEndReason.Draw);
             return;
         }
+        // TFR round 708: the loop breaker - the AI's 25th use of one ability in a turn bars it, a trigger chain of 25
+        // with nobody acting is a draw (forge.game.LoopBreaker).
+        if (si == null && !sp.isManaAbility() && forge.game.LoopBreaker.onStackAdd(game, sp, stack)) {
+            return;
+        }
 
         recordUndoableActions(sp);
 

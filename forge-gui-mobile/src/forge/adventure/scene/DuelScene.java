@@ -174,6 +174,13 @@ public class DuelScene extends ForgeScene {
         if (eventData != null)
             eventData.nextOpponent = null;
         boolean winner = false;
+        // Round 708: a drawn duel (the loop breaker, Forge's own loop rules, the Game menu's accepted Offer Draw, or both
+        // players losing at once) costs and pays nothing - no ante, no defeat, no loot, streaks as they were.
+        drawn = isLastGameDrawn();
+        drawReason = drawn && hostedMatch.getGame() != null ? forge.game.LoopBreaker.drawReason(hostedMatch.getGame()) : null;
+        if (drawn)
+            System.out.println("[TFR-Draw] the duel ended in a draw" + (drawReason == null ? "" : " (" + drawReason + ")")
+                    + " - nothing won or lost");
         List<PaperCard> anteWonCards = Collections.emptyList();
         List<PaperCard> anteLostCards = Collections.emptyList();
         anteRemovals.clear();
@@ -252,7 +259,7 @@ public class DuelScene extends ForgeScene {
             System.out.println("[TFR-AnteResult] raw=" + (anteResult == null ? "null"
                     : "won=" + anteResult.wonCards.size() + " lost=" + anteResult.lostCards.size())
                     + " " + matchProbe);
-            if (anteResult != null) {
+            if (anteResult != null && !drawn) { // round 708: a draw moves no ante
                 if (eventData != null) {
                     //In an event. Apply the ante result to the current event deck.
                     eventData.registeredDeck.getOrCreate(DeckSection.Sideboard).add(anteResult.wonCards);
@@ -293,7 +300,7 @@ public class DuelScene extends ForgeScene {
         }
 
         boolean finalWinner = winner;
-        boolean isBossLoss = (chaosBattle || showMessages) && !finalWinner;
+        boolean isBossLoss = (chaosBattle || showMessages) && !finalWinner && !drawn;
         boolean hasAnteResults = !anteWonCards.isEmpty() || !anteLostCards.isEmpty();
         // Diagnostic (2026-08-21 user report: "lost in a dungeon and got kicked out without the
         // opportunity to buy back my ante" while the same flow worked on the overworld) - one
@@ -397,7 +404,7 @@ public class DuelScene extends ForgeScene {
         // counts: the enemy plays its own deck there.
         // Keyed on the enemy's own name (EnemyData.getName()), as the start-of-duel check reads it - not enemyName, which
         // carries a map-authored sprite override.
-        if (enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null) {
+        if (enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null && !drawn) { // r708
             Current.player().recordWinStreak(enemy.getData().getName(), winner);
             // Round 411: the same duels, against anyone. Round 432 (the user: "exclude any Tournament or Arena battles
             // for the Streak. So it should not add or reset"): an Arena duel leaves it as it is - its enemy still
@@ -460,17 +467,39 @@ public class DuelScene extends ForgeScene {
             // MapStage.getReward (dungeon/town) or ArenaScene.done (bracket payout) - each of
             // which clears the mark and adds the tile in the same statement, so the two cannot
             // drift apart. Nothing is done here beyond leaving the mark standing for them.
-            if ((enemy == null || enemy.getData().fixedDeck == null) && eventData == null) {
+            if ((enemy == null || enemy.getData().fixedDeck == null) && eventData == null && !drawn) { // r708: no record
                 // Deck Tester + tournaments excluded (the deck is not the player's own, and event
                 // matches are already counted through completedEvents). Round 166: the body moved to
                 // recordStatistics() so the simulated guard fight records the same thing.
                 recordStatistics(enemy, enemyName, winner);
             }
 
-            if (last instanceof IAfterMatch) {
+            if (drawn) {
+                GameHUD.getInstance().addNotification(drawReason != null
+                        ? "The duel was stuck in a loop and ended in a draw. Nothing was won or lost."
+                        : "The duel ended in a draw. Nothing was won or lost.");
+                if (last instanceof IAfterMatch)
+                    ((IAfterMatch) last).setDrawn(isArena);
+            } else if (last instanceof IAfterMatch) {
                 ((IAfterMatch) last).setWinner(winner, isArena);
             }
         });
+    }
+
+    /** Round 708: this duel's result - set by GameEnd() before anything reads it. */
+    private boolean drawn;
+    private String drawReason;
+
+    /**
+     * Round 708: did the last game end in a draw with the match still undecided? A drawn game never finishes a Forge match
+     * (Match.isMatchOver() counts wins only, so getWinner() stays null), which is why a draw used to read as a loss here
+     * and the end screen offered only "Next Game" or "Quit Match (will count as a loss)".
+     */
+    public boolean isLastGameDrawn() {
+        if (hostedMatch == null || hostedMatch.getMatch() == null)
+            return false;
+        forge.game.GameOutcome last = hostedMatch.getMatch().getLastOutcome();
+        return last != null && last.isDraw() && hostedMatch.getMatch().getWinner() == null;
     }
 
     public void exitDuelScene() {

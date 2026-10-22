@@ -402,8 +402,10 @@ public class PlayerControllerAi extends PlayerController {
     }
 
     // TODO: accept based on game state (infinite loop / unwinnable position); always declines for now
+    // TFR round 708: accepts once this turn has shown a loop (LoopBreaker: 10 repeats of one ability or trigger), so the
+    // Game menu's Offer Draw is the player's way out of one - and still declines an ordinary duel.
     public boolean acceptsDrawOffer() {
-        return false;
+        return forge.game.LoopBreaker.loopSeen(getGame());
     }
 
     @Override

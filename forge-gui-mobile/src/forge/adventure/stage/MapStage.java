@@ -2404,6 +2404,29 @@ public class MapStage extends GameStage {
         }
     }
 
+    /**
+     * Round 708: a drawn duel inside a town or dungeon. Nobody won: no defeat (life, gold, quests, the dungeon's defeat
+     * count, being thrown out) and no loot. The player steps back and the enemy holds still until they walk off, as after
+     * a loss - and the player stays in the place.
+     */
+    @Override
+    public void setDrawn(boolean isArena) {
+        isLoadingMatch = false;
+        freezeAllEnemyBehaviors = true; // released once the player moves (onActing), as after any duel
+        if (currentMob == null) {
+            System.out.println("[TFR-Draw] map: no enemy to hand the draw to - nothing to do");
+            return;
+        }
+        player.setAnimation(CharacterSprite.AnimationTypes.Idle);
+        currentMob.setAnimation(CharacterSprite.AnimationTypes.Idle);
+        currentMob.resetCollisionHeight();
+        if (positions.peek() != null)
+            player.setPosition(positions.peek());
+        currentMob.freezeMovement();
+        System.out.println("[TFR-Draw] map: " + currentMob.getName() + " holds its ground - the player steps back and stays");
+        currentMob = null;
+    }
+
     // Standalone welcome popup (MOD_SCOPE.md #89): plain OK-dialog with the plane's
     // config.json welcomePopupText; TileMapScene shows it once per save on first map entry.
     public void showWelcomePopup(String text) {

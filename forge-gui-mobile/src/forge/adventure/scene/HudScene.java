@@ -193,6 +193,11 @@ public abstract class HudScene extends Scene implements InputProcessor, IAfterMa
         stage.setWinner(winner, isArena);
     }
 
+    @Override
+    public void setDrawn(boolean isArena) { // round 708
+        stage.setDrawn(isArena);
+    }
+
     public boolean isInHudOnlyMode() {
         return false;
     }

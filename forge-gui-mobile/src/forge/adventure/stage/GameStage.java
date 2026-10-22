@@ -507,6 +507,11 @@ public abstract class GameStage extends Stage {
     public void setWinner(boolean b, boolean a) {
     }
 
+    /** Round 708: a drawn duel - see IAfterMatch.setDrawn(); WorldStage and MapStage override it. */
+    public void setDrawn(boolean isArena) {
+        setWinner(false, isArena);
+    }
+
     public void setBounds(float width, float height) {
         getViewport().setWorldSize(width, height);
     }

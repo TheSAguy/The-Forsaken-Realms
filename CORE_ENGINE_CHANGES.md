@@ -38,6 +38,23 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 708 - the loop breaker; draws are not losses
+
+- **`forge-game/src/main/java/forge/game/LoopBreaker.java`** - new (engine). See MOD_CHANGELOG round 708.
+- **`forge-game/src/main/java/forge/game/zone/MagicStack.java`** - `add(...)`: after Forge's own loop check, new
+  non-mana items go through `LoopBreaker.onStackAdd`, which may end the game as a draw (then nothing is added).
+- **`forge-ai/src/main/java/forge/ai/AiController.java`** - `getSpellAbilityToPlay()`: the `saList.removeIf` filter
+  also drops `LoopBreaker.isBarred` abilities.
+- **`forge-ai/src/main/java/forge/ai/PlayerControllerAi.java`** - `acceptsDrawOffer()` returns
+  `LoopBreaker.loopSeen(getGame())` (upstream: always false, with a TODO naming infinite loops).
+- **`forge-gui-mobile/src/forge/screens/match/winlose/AdventureWinLose.java`** - a drawn, unfinished match shows Back to
+  Adventure only.
+- **`forge-gui-mobile/src/forge/adventure/stage/IAfterMatch.java`** - default `setDrawn(isArena)` (scored as a loss);
+  **`GameStage`** / **`HudScene`** pass it on; **`WorldStage.setDrawn`** / **`MapStage.setDrawn`** new.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `drawn` / `drawReason`, `isLastGameDrawn()`; GameEnd
+  and afterGameEnd skip the ante, record, streaks and boss-loss on a draw and call `setDrawn`.
+- **`forge-gui-desktop/src/test/java/forge/game/LoopBreakerTest.java`** - new test.
+
 ### Round 707 - bosses labeled "(Adept Boss)"
 
 - **`forge-gui-mobile/src/forge/adventure/data/EnemyData.java`** - new static `withRankLabel(base, tierLabel, boss)`;

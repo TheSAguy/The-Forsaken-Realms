@@ -1113,6 +1113,39 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
     }
 
+    /**
+     * Round 708: a drawn duel on the world map (the loop breaker, Forge's loop rules, an accepted Offer Draw). Nobody won:
+     * no defeat (life, gold, quests, boss defeat, the Capitol's fall), no loot. The enemy leaves as it does after a
+     * loss; an attacking mage keeps traveling, not to be fought again today - the loss branch's handling of the foe,
+     * without anything that happens to the player. A spectated guard fight keeps its own result handling.
+     */
+    @Override
+    public void setDrawn(boolean isArena) {
+        if (currentMobIsGuardDuel || currentMob == null) {
+            setWinner(false, isArena);
+            return;
+        }
+        boolean capitolDefense = currentMobIsCapitolDefense;
+        currentMobIsCapitolDefense = false;
+        currentMobTreasureRegion = -1;
+        if (currentMobIsTownAssault) {
+            currentMobIsTownAssault = false;
+            townAssaultTownName = null;
+            townAssaultPoi = null;
+            townAssaultColor = null;
+        }
+        EnemySprite mob = currentMob;
+        mob.resetCollisionHeight();
+        if (mob.territoryColor != null)
+            mob.lastDuelDay = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        else
+            removeEnemy(mob);
+        currentMob = null;
+        player.setAnimation(CharacterSprite.AnimationTypes.Idle);
+        System.out.println("[TFR-Draw] world map: " + mob.getName() + (mob.territoryColor != null
+                ? " keeps traveling (no second duel today)" : " leaves the map") + (capitolDefense ? " - the Capitol stands" : ""));
+    }
+
     public boolean handlePointsOfInterestCollision() {
         for (Actor actor : foregroundSprites.getChildren()) {
             if (actor.getClass() == PointOfInterestMapSprite.class) {

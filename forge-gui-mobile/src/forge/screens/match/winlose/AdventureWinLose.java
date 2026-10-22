@@ -16,6 +16,12 @@ public class AdventureWinLose extends ControlWinLose {
             v.getBtnQuit().setText(Forge.getLocalizer().getMessage("lblBackToAdventure"));
             //v.getBtnContinue().setVisible(false);
         }
+        else if (DuelScene.instance().isLastGameDrawn()) {
+            // TFR round 708: a draw ends the duel with nothing won or lost - no Next Game, and quitting is not a loss.
+            v.getBtnContinue().setVisible(false);
+            v.getBtnContinue().setEnabled(false);
+            v.getBtnQuit().setText(Forge.getLocalizer().getMessage("lblBackToAdventure"));
+        }
         else{
             v.getBtnContinue().setVisible(true);
             v.getBtnContinue().setEnabled(true);

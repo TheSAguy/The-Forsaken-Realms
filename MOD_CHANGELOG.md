@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 708: a way out of an endless loop, and a draw is no longer a loss (2026-10-22)
+
+The user: "I just had an endless loop in my game. Anyway to create a failsafe for this? Maybe break out of loop after 25x
+or a menu option to skip a phase... I had to concede the match because of it." Their forge.log shows the conceded duel
+(Yorion, 14:30) but not the loop - duel actions are not logged. Offered and approved: "draws aren't losses, the 25-repeat
+breaker, and the menu option after 10 repeats."
+
+- **What Forge already had**: a draw at 999 stack items or when a mandatory, untargeted trigger repeats 50 times with
+  nobody acting (MagicStack.isRepeatingTrigger), and the AI forced to pass after 999 actions in one priority window.
+  And in TFR a draw read as a LOSS: a drawn game never finishes a Forge match (Match.isMatchOver counts wins only), so
+  getWinner() was null -> winner false -> ante lost, defeat gold, streak reset; the end screen offered only "Next
+  Game" or "Quit Match (will count as a loss)". Forge's own loop rescue cost the duel.
+- **`forge.game.LoopBreaker`** (new, engine), counted per turn and keyed by card + ability (a trigger by its trigger id):
+  - the AI putting the same ability on the stack 25 times in a turn -> barred for the AI until next turn
+    (`AiController` drops it from its choices); the game goes on;
+  - the same trigger coming back 25 times with no player casting or activating anything in between -> the game is a
+    draw. A trigger is counted only when no copy of it is already waiting, so a board wipe's 30 death triggers are one;
+  - the human's own repeats are never barred or drawn (a combo is the player's);
+  - `PlayerControllerAi.acceptsDrawOffer()` (a stub that always declined) accepts once 10 repeats were seen this turn -
+    so the duel's Game menu > **Offer Draw** is the player's way out of a loop, and still useless in an ordinary losing
+    duel. `[TFR-LoopBreak]` logs bars, draws and every draw offer with the card and ability; the game log says it too.
+  - Hooks: `MagicStack.add` (new items, not mana abilities), `AiController.getSpellAbilityToPlay`'s filter,
+    `PlayerControllerAi.acceptsDrawOffer`.
+- **A draw is nothing won or lost** (any draw: the loop breaker, Forge's loop rules, an accepted offer, both players
+  dying at once): `DuelScene.isLastGameDrawn()`; `GameEnd` skips the ante, the boss-loss dialog, the win/loss record,
+  streak, notoriety and win ratio; the end screen shows "Back to Adventure" (no Next Game, no "counts as a loss");
+  `IAfterMatch.setDrawn()` instead of `setWinner()`:
+  - world map (`WorldStage.setDrawn`): no defeat penalties, no quest-loss hooks, no Capitol fall; the enemy leaves as
+    after a loss, an attacking mage keeps traveling and is not fought again today; a spectated guard fight unchanged;
+  - town/dungeon (`MapStage.setDrawn`): the player steps back and stays in the place (not thrown out, no dungeon defeat
+    count); the enemy holds still until the player walks off;
+  - the Arena bracket and Inn tournaments still score a draw as a loss (they need a winner) - logged.
+  - Notice: "The duel was stuck in a loop and ended in a draw. Nothing was won or lost." `[TFR-Draw]` lines.
+- **Tested**: `forge-gui-desktop` `forge.game.LoopBreakerTest` (TestNG, 3/3): the AI's ability declined a draw at 9
+  repeats, accepted at 10, barred at 25; Soul Warden with creatures entering one at a time and nobody acting -> a draw
+  at exactly the 25th trigger (Forge's own rule waits for 50); 30 creatures entering together -> 30 triggers resolve,
+  no draw. (Run with `-Dcheckstyle.skip`: the desktop module's `HelpMenu.java` has an unused import, and the 10.21
+  merge's test dependencies need one online `mvn` run.) Agent game: two ordinary duels won and scored as before, no
+  exceptions. NOT run live: a drawn duel's TFR end - the end screen, the notice, the world/map handling - no looping
+  deck to force one in the agent game.
+
 ## Round 707: a boss says it is one - "Dark Enchanter (Adept Boss)" (2026-10-22)
 
 The user, with a shot of a Dark Enchanter twice the hero's height: "It says he's an Adept, but he's almost twice my
