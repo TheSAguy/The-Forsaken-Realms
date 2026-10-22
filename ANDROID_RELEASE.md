@@ -60,7 +60,8 @@ Consequences:
    SAME release.
 1. Bump **`<tfr.version>`** in `forge-gui-android/pom.xml` to match the new `modVersion`
    (config.json). These two must always be equal; `tfr.version` feeds versionName, which feeds
-   the assets URL.
+   the assets URL. Set config.json's **`modVersionDate`** to the release day (MM.DD) in the same edit - the title
+   screen shows "TFR v<modVersion> - <modVersionDate>", and v1.23 shipped still saying 10.17 (round 704).
 2. Bump **`<manifestVersionCode>`** in the same pom (android-release-build profile,
    update-manifest execution). Scheme: two digits per segment — 1.03 → 10300, 1.04 → 10400,
    2.00 → 20000. It must strictly increase every release or devices refuse the update.

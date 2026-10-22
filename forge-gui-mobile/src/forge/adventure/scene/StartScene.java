@@ -78,13 +78,32 @@ public class StartScene extends UIScene {
             // VeggieShark report: this title line is read from config.json - the DATA. The PROGRAM is the jar, and its
             // build time is in the jar's own build.txt. A log from an old program under new data (an update unzipped
             // over a running game, an old shortcut) read exactly like the new one; this line tells them apart.
-            java.util.Date built = forge.util.BuildInfo.getTimestamp();
+            java.util.Date built = programBuildTime();
             System.out.println("[TFR-Build] data TFR v" + modVersion + dateSuffix + " | program built "
                     + (built == null ? "(unknown)" : new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(built)));
         }
         version.setHeight(5);
         version.skipToTheEnd();
         ui.addActor(version);
+    }
+
+    /**
+     * Round 704 (auto-shared Android logs): the program's build time. On Android the APK carries build.txt as an asset,
+     * not on the classpath - AssetsDownloader reads it the same way - so BuildInfo.getTimestamp() found no stream and
+     * printed a NullPointerException trace on every launch, and the [TFR-Build] line said "(unknown)".
+     */
+    private static java.util.Date programBuildTime() {
+        if (!GuiBase.isAndroid())
+            return forge.util.BuildInfo.getTimestamp();
+        try {
+            FileHandle buildTxt = com.badlogic.gdx.Gdx.files.internal("build.txt");
+            if (!buildTxt.exists())
+                return null;
+            return new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(buildTxt.readString().trim());
+        } catch (Exception e) {
+            System.out.println("[TFR-Build] the APK's build.txt could not be read: " + e);
+            return null;
+        }
     }
 
     public static StartScene instance() {

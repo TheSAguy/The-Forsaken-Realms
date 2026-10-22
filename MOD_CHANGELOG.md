@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 704: the title screen's date and the Android build time (2026-10-22)
+
+The first auto-shared logs (round 698) came from three Android players on v1.23 (OnePlus 8T on Android 12, Samsung A56
+on Android 16, Pixel 8 Pro on an Android 37 beta). No game-breaking errors; two cosmetic leftovers, which the user
+asked to fix: "bump the stale 10.17 date on the title screen and stop the Android build-date crash trace".
+
+- **`modVersionDate` 10.17 -> 10.21**: the title screen read "TFR v1.23 - 10.17" because the release stamp was never set
+  at the 1.23 release. ANDROID_RELEASE.md step 1 now names it beside `tfr.version`.
+- **Android build time**: `StartScene` printed `[TFR-Build] ... program built (unknown)` after a NullPointerException
+  trace on every Android launch - `BuildInfo.getTimestamp()` reads `/build.txt` from the classpath, and the APK carries
+  it as an asset. New `StartScene.programBuildTime()` reads `Gdx.files.internal("build.txt")` on Android, the way
+  `AssetsDownloader` already does; the desktop path is unchanged. Forge's `BuildInfo` is untouched.
+- Also in those logs, left alone: an upstream Localizer race (`silent` is one flag for every thread, so a missing
+  `adv.enemy.*` key printed a trace while the inn tournament simulated two matches at once; the English name was still
+  used), AI think-time timeouts in the simulated matches on a busy phone, and one simulated game stopped by its 90 s cap.
+- **Checked**: the agent game's build line still reads the jar's build time on PC, no exceptions. The Android path is
+  not run here (no device); it is the same read AssetsDownloader makes.
+
 ## Round 703: Settings drops three rows that do nothing in TFR (2026-10-21)
 
 The user, of "Generate Archetype Decks instead of Genetic AI Decks": "If this has no effect, let's remove it from the

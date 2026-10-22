@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 704 - the Android build time
+
+- No stock-engine file. `StartScene.programBuildTime()` (mod code) replaces the direct `BuildInfo.getTimestamp()` call
+  on Android; `BuildInfo` itself is unchanged.
+
 ### Round 703 - Settings rows with no effect hidden
 
 - **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** - the `lblGenerateLDADecks` row only when
