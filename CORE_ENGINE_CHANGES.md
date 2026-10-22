@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 706 - Grolnok's Skin (upstream bug)
+
+- **`forge-gui/res/adventure/common/custom_cards/grolnoks_skin.txt`** - UPSTREAM BUG, fixed in our copy: the Draft
+  ability's second `SubAbility$ Eject` (an SVar the file never defines) overrode `SubAbility$ DBExileSelf`, so the
+  card never exiled itself and Forge logged "SubAbility 'Eject' not found" on every creation. The duplicate is removed.
+  Still wrong in Card-Forge master at `bc67f70ffbc`; if upstream fixes it, take theirs.
+
 ### Round 705 - world-map chase pathfinding
 
 - **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `onActing()`'s homing block (roamers, chasing

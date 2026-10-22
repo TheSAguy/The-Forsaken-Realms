@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 706: Grolnok's Skin exiles itself after one draft (2026-10-22)
+
+Found in the second batch of auto-shared logs (round 698): one Windows player's two v1.23 sessions logged
+"SubAbility 'Eject' not found for: Grolnok's Skin" 35 times. The user: "fix the Grolnok's Skin script so it exiles
+itself after one draft, as round 706, and note it as an upstream bug."
+
+- **The bug** (`common/custom_cards/grolnoks_skin.txt`, the command-zone card the Grolnok's Skin item puts into every
+  duel): its Draft ability named `SubAbility$` twice - `DBExileSelf` (defined) and `Eject` (never defined). The second
+  wins, so the exile never ran: the Skin stayed in the command zone and could draft again every turn for {G}{U} and 2
+  shards, not once as its text says. Same in Card-Forge master (upstream `ed3bc665e20` last touched the file).
+- **The fix**: the duplicate `SubAbility$ Eject` removed; `DBExileSelf` runs. Nothing else in the script changed.
+- **Checked** in the agent game (packaged): the item equipped, a duel played - no "Eject not found" line (every duel
+  creates the card, and every creation logged it before), no exceptions. The AI on the player's seat did not draft, so
+  the exile itself was not seen.
+- Also in that batch, nothing to fix: the round-704 Android build-date trace (fixed, not yet released), two Android
+  first downloads left after 30-90 s, the known "Token image key is malformed" lines for TFR's set-less tokens (they
+  draw their own pictures), and a v1.22 session holding the withdrawn Cheat pendant. On v1.23 that save carried none -
+  round 691's removal re-checked: `give item Cheat`, save, load -> "withdrawn item(s) removed: 1 x [Cheat]".
+
 ## Round 705: world-map enemies walk around what is in their way (2026-10-22)
 
 The user, with two shots of a dragon frozen behind a column of dead trees: "The smallest obstacle in a direct path to
