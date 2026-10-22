@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 707 - bosses labeled "(Adept Boss)"
+
+- **`forge-gui-mobile/src/forge/adventure/data/EnemyData.java`** - new static `withRankLabel(base, tierLabel, boss)`;
+  `getTieredDisplayName()` returns through it.
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - `getTieredDisplayName()` returns through it.
+
 ### Round 706 - Grolnok's Skin (upstream bug)
 
 - **`forge-gui/res/adventure/common/custom_cards/grolnoks_skin.txt`** - UPSTREAM BUG, fixed in our copy: the Draft

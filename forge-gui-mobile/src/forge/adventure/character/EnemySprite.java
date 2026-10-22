@@ -706,7 +706,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         String tierLabel = EnemyData.tierDisplayName(data.tier);
         if (base.startsWith(tierLabel + " ") && base.length() > tierLabel.length() + 1)
             base = base.substring(tierLabel.length() + 1);
-        return base + " (" + tierLabel + ")";
+        return EnemyData.withRankLabel(base, tierLabel, data.boss); // round 707: "(Adept Boss)" for a boss
     }
     public String getBossInsult(){
         return data.getBossInsult();

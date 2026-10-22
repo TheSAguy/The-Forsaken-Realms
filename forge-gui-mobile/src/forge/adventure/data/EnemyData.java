@@ -249,7 +249,23 @@ public class EnemyData implements Serializable {
                 break;
             }
         }
-        return base + " (" + tierLabel + ")";
+        return withRankLabel(base, tierLabel, boss);
+    }
+
+    /**
+     * Round 707 (the user, of a Dark Enchanter twice the hero's height: "It says he's an Adept, but he's almost twice my
+     * size. Why is that?"): a boss keeps its authored size - the rank size cap skips bosses (TuningData.
+     * tierSizeMultiplier) - so its label says so: "Dark Enchanter (Adept Boss)". The rank still names the deck's
+     * strength. A name that already carries the word ("Kogla (Boss)", "Ooze Boss") drops it, so it is not said twice.
+     */
+    public static String withRankLabel(String base, String tierLabel, boolean boss) {
+        if (!boss)
+            return base + " (" + tierLabel + ")";
+        if (base.endsWith(" (Boss)"))
+            base = base.substring(0, base.length() - " (Boss)".length());
+        else if (base.endsWith(" Boss") && base.length() > " Boss".length())
+            base = base.substring(0, base.length() - " Boss".length());
+        return base + " (" + tierLabel + " Boss)";
     }
     public String getBossInsult(){
         return translate(getName(), "bossInsult", bossInsult);

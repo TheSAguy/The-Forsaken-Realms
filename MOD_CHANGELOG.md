@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 707: a boss says it is one - "Dark Enchanter (Adept Boss)" (2026-10-22)
+
+The user, with a shot of a Dark Enchanter twice the hero's height: "It says he's an Adept, but he's almost twice my
+size. Why is that?" It is a boss (`boss: true`, tier Uncommon = Adept): the rank size cap (TuningData.
+tierSizeMultiplier, 1.4 x the rank's body) skips bosses and keepSize set pieces, so it draws at its authored 30 px
+against an Adept's 22 px cap. 109 of the plane's 117 boss/keepSize enemies draw past their rank's cap (26 Adepts, 8
+Apprentices). Offered: name them as bosses, or cap them; the user: "Label bosses as '(Adept Boss)' etc. so the size makes
+sense; keep their size."
+
+- **`EnemyData.withRankLabel(base, tierLabel, boss)`** (new): "(Adept)" for an ordinary enemy, "(Adept Boss)" for a boss.
+  A name that already carries the word drops it - "Kogla (Boss)" -> "Gargantuan Gorilla (Apprentice Boss)" (its name),
+  "Ooze Boss" -> "Ooze (Master Boss)". Both `getTieredDisplayName()`s (EnemyData, EnemySprite) use it, so the map's
+  enemy names, the VS screen, the duel nameplate and the boss intro all say it. Sizes, decks and identity (raw names in
+  quests, saves, maps) unchanged.
+- **Checked** in the agent game: spawned names "Dark Enchanter (Adept Boss)", "Gargantuan Gorilla (Apprentice Boss)",
+  "Ooze (Master Boss)", "Red Wizard (Adept)"; the gorilla's boss intro dialog titled "Gargantuan Gorilla (Apprentice
+  Boss)" (also the boss intro round 701 could not see); duel won, no exceptions.
+
 ## Round 706: Grolnok's Skin exiles itself after one draft (2026-10-22)
 
 Found in the second batch of auto-shared logs (round 698): one Windows player's two v1.23 sessions logged
