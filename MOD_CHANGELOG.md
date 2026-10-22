@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 703: Settings drops three rows that do nothing in TFR (2026-10-21)
+
+The user, of "Generate Archetype Decks instead of Genetic AI Decks": "If this has no effect, let's remove it from the
+settings page... We can do the same for any other items that has no effect for TFR." Every row of Adventure Settings
+was traced to where its value is read (a research agent's audit, the three no-effect verdicts re-checked by hand).
+
+- **Generate Archetype Decks** (`generateLDADecks`): shown only when the plane does not set
+  `disableGeneticDeckOverrides` - TFR does (round 130), so `EnemyData.generateDeck` never swaps a deck.
+- **Disable Not For Sale Overlay** (`disableNotForSale`): removed outright. Its only read is `ImageView`'s
+  `!(Forge.isMobileAdventureMode || disableNotForSale)` - the overlay never draws in Adventure mode, where this page lives
+  (upstream de89d557dd4), so it did nothing on any plane.
+- **Auto-sell variants (Commander)** (`ADV_COMMANDER_AUTOSELL_VARIANT`): shown only when the plane can start a Commander
+  run (`planeOffersCommander`: a difficulty with `commanderDecks`, Commander precons, or Chaos as Commander) - read only
+  in a Commander run (`RewardActor`), which TFR never offers.
+- Saved values are left as they are. Every other row is live in TFR (fog of war, ante, card-variant and printing rows,
+  cracked items, loadouts, Clear-quest chevrons...). Two live rows were left in: the inn-tournament simulation box
+  (the tournament screen has the same box) and the perpetual mana-cost overlay (rare, as digital-only sets are blocked).
+- **Checked** in the agent game: Settings lists 44 checkboxes (47 before); no exceptions.
+
 ## Round 702: "Heart of a Champion" names only an arena you can fight in (2026-10-21)
 
 The user: "For this quest, let's choose only an arena that's currently available to play." Quest 23's first stage picks

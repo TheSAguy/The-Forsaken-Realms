@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 703 - Settings rows with no effect hidden
+
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** - the `lblGenerateLDADecks` row only when
+  `!disableGeneticDeckOverrides`; the `lblDisableNotForSaleOverlay` row removed (a comment marks the spot); the
+  `lblAutoSellVariantsCommander` row only when new private `planeOffersCommander()`. On a conflict keep upstream's rows
+  and re-apply the two conditions.
+
 ### Round 702 - arena quests name a playable arena
 
 - **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java`** - transient `needsPlayableArena`; in

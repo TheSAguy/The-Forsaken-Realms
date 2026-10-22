@@ -282,14 +282,9 @@ public class SettingsScene extends UIScene {
                 Config.instance().saveSettings();
             }
         });
-        addSettingField(localizer.getMessage("lblDisableNotForSaleOverlay"),
-                Config.instance().getSettingData().disableNotForSale, new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Config.instance().getSettingData().disableNotForSale = ((CheckBox) actor).isChecked();
-                Config.instance().saveSettings();
-            }
-        });
+        // Round 703: "Disable Not For Sale Overlay" left off the page - the overlay never draws in Adventure mode whatever it
+        // says (ImageView: !(Forge.isMobileAdventureMode || disableNotForSale), upstream de89d557dd4), and this page only
+        // exists there. The saved value stays untouched.
         addSettingField(localizer.getMessage("lblShowShopOverlay"), Config.instance().getSettingData().showShopOverlay, new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -348,13 +343,16 @@ public class SettingsScene extends UIScene {
             localizer.getMessage("lblRestartRequired") + ")", ForgePreferences.FPref.UI_LOAD_UNKNOWN_CARDS, this::restartForge);
         addCheckBox(localizer.getMessage("lblEnableNonLegalCards") + " (" +
             localizer.getMessage("lblRestartRequired") + ")", ForgePreferences.FPref.UI_LOAD_NONLEGAL_CARDS, this::restartForge);
-        addSettingField(localizer.getMessage("lblGenerateLDADecks"), Config.instance().getSettingData().generateLDADecks, new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Config.instance().getSettingData().generateLDADecks = ((CheckBox) actor).isChecked();
-                Config.instance().saveSettings();
-            }
-        });
+        // Round 703 (the user: "if this has no effect, let's remove it from the settings page"): a plane with
+        // disableGeneticDeckOverrides never swaps an enemy's deck (EnemyData.generateDeck), so this choice does nothing there.
+        if (!Config.instance().getConfigData().disableGeneticDeckOverrides)
+            addSettingField(localizer.getMessage("lblGenerateLDADecks"), Config.instance().getSettingData().generateLDADecks, new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    Config.instance().getSettingData().generateLDADecks = ((CheckBox) actor).isChecked();
+                    Config.instance().saveSettings();
+                }
+            });
         addSettingField(localizer.getMessage("lbldisableCrackedItems"), Config.instance().getSettingData().disableCrackedItems, new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -401,7 +399,8 @@ public class SettingsScene extends UIScene {
             }
         });
         addCheckBox(localizer.getMessage("lblPromptAutoSell"), ForgePreferences.FPref.PROMPT_FOR_AUTOSELL);
-        addCheckBox(localizer.getMessage("lblAutoSellVariantsCommander"), ForgePreferences.FPref.ADV_COMMANDER_AUTOSELL_VARIANT);
+        if (planeOffersCommander()) // round 703: read only in a Commander run (RewardActor), which TFR never offers
+            addCheckBox(localizer.getMessage("lblAutoSellVariantsCommander"), ForgePreferences.FPref.ADV_COMMANDER_AUTOSELL_VARIANT);
         addCheckBox(localizer.getMessage("lblShowCardPriceRewardScreen"), ForgePreferences.FPref.ADV_DISPLAY_PRICE_IN_REWARD_SCREEN);
         addCheckBox(localizer.getMessage("lblCardName"), ForgePreferences.FPref.UI_OVERLAY_CARD_NAME);
         addSettingSlider(localizer.getMessage("cbAdjustMusicVolume"), ForgePreferences.FPref.UI_VOL_MUSIC, 0, 100);
@@ -532,6 +531,19 @@ public class SettingsScene extends UIScene {
     public boolean back() {
         Forge.switchToLast();
         return true;
+    }
+
+    /** Round 703: can a run on this plane be a Commander run (AdventureModes.isCommanderLike) - a difficulty with
+     *  commanderDecks, Commander precon decks, or Chaos with chaosDeckFormat "Commander" (as NewGameScene offers them)? */
+    private static boolean planeOffersCommander() {
+        forge.adventure.data.ConfigData config = Config.instance().getConfigData();
+        if ("Commander".equalsIgnoreCase(config.chaosDeckFormat) || Config.instance().hasCommanderPreconDecks())
+            return true;
+        if (config.difficulties != null)
+            for (forge.adventure.data.DifficultyData difficulty : config.difficulties)
+                if (difficulty.commanderDecks != null)
+                    return true;
+        return false;
     }
 
     private void addInputField(String name, ForgePreferences.FPref pref) {
