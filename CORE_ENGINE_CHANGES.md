@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 705 - world-map chase pathfinding
+
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `onActing()`'s homing block (roamers, chasing
+  legends, pillage raiders): the feet box (`getCollisionHeight()`) in the two side-slide tests too; when the straight
+  step is blocked or a detour is under way it asks the new mod class `util/ChasePath.step(...)` first, then slides as
+  before. New field `chaseStepVector`. On a conflict keep upstream's block and re-apply those two changes.
+
 ### Round 704 - the Android build time
 
 - No stock-engine file. `StartScene.programBuildTime()` (mod code) replaces the direct `BuildInfo.getTimestamp()` call

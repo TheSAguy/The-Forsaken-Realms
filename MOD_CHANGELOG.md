@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 705: world-map enemies walk around what is in their way (2026-10-22)
+
+The user, with two shots of a dragon frozen behind a column of dead trees: "The smallest obstacle in a direct path to
+the player blocks/stops the unit in its tracks. Can any pathing logic be looked at?"
+
+- **Why it froze**: `WorldStage` moved a world-map enemy (roamer, chasing legend, pillage raider) straight at its goal;
+  when that step hit a colliding tile it tried only the x part, then only the y part, else stood still. An enemy level
+  with the player and a wall between: x blocked, y ~0 - frozen. And the two side tries tested the WHOLE sprite height
+  while the first test (and the player) use the feet box (`getCollisionHeight()`), so a tall creature snagged on things
+  above its feet. Both are stock code.
+- **Feet box everywhere**: all three tests use the collision height now.
+- **`util/ChasePath`** (new): while the straight step is clear nothing changes. When it is blocked, an A* over the world's
+  collision tiles (8 directions, no corner cutting, every tile tested with the enemy's own feet box so a big creature
+  never threads a one-tile gap) plans a way around, bounded: the enemy-goal box plus 14 tiles, at most 6,000 tiles, no
+  planning past 48 tiles away, a plan per enemy every 0.6 s at most, three plans a frame. The enemy follows it, looks
+  for a straight line to its goal four times a second and drops the detour once it has one, replans when the goal moves
+  more than 2 tiles, and slides along one axis into line when the first steps clip a corner (the first test build
+  replanned 14 times on one tile without it). No route -> the old slide. Routes are kept by sprite in a weak map:
+  nothing saved. `[TFR-Chase]` logs each detour (once per tile), a failure, and an enemy still on one tile after 5 plans.
+- Flying enemies and territory mages (which walk straight at their town through anything) are unchanged.
+- **Checked** in the agent game (r294c save, terrain the agent walker snags on): 6 and then 8 Adept Red Wizards spawned
+  3-15 tiles around the player all reached it (15 duels); 5 detours of 3-8 tiles logged in the second run, no stall
+  line, no exceptions.
+
 ## Round 704: the title screen's date and the Android build time (2026-10-22)
 
 The first auto-shared logs (round 698) came from three Android players on v1.23 (OnePlus 8T on Android 12, Samsung A56

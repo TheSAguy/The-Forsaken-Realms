@@ -146,6 +146,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
     NavArrowActor navArrow;
     final Rectangle tempBoundingRect = new Rectangle();
     final Vector2 enemyMoveVector = new Vector2();
+    final Vector2 chaseStepVector = new Vector2(); // round 705: ChasePath's step this frame
     boolean collided = false;
     // "Wait" toggle (see GameHUD's wait checkbox): lets time advance while the player stands
     // still, same idea as resting. Cleared automatically the moment the player moves again.
@@ -882,20 +883,33 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 } else if (raiderGoal != null && raiderGoal.dst2(mob.pos()) < 36f) {
                     mob.setAnimation(CharacterSprite.AnimationTypes.Idle); // round 490: there (or holding its ground)
                 } else if (raiderGoal != null || !currentModifications.containsKey(PlayerModification.Hide)) {
-                    enemyMoveVector.set(raiderGoal != null ? raiderGoal.x : player.getX(),
-                            raiderGoal != null ? raiderGoal.y : player.getY()).sub(mob.pos()); // round 490: or its goal
+                    float goalX = raiderGoal != null ? raiderGoal.x : player.getX(); // round 490: or its goal
+                    float goalY = raiderGoal != null ? raiderGoal.y : player.getY();
+                    enemyMoveVector.set(goalX, goalY).sub(mob.pos());
                     enemyMoveVector.setLength(mob.speed() * delta);
-                    tempBoundingRect.set(mob.getX() + enemyMoveVector.x, mob.getY() + enemyMoveVector.y, mob.getWidth(), mob.getHeight() * mob.getCollisionHeight());
+                    // Round 705: every test uses the feet box (the collision height). The two side slides below tested
+                    // the whole sprite height, so a tall enemy snagged on whatever stood above its feet.
+                    float feet = mob.getHeight() * mob.getCollisionHeight();
+                    tempBoundingRect.set(mob.getX() + enemyMoveVector.x, mob.getY() + enemyMoveVector.y, mob.getWidth(), feet);
+                    World chaseWorld = WorldSave.getCurrentSave().getWorld();
 
-                    if (!mob.getData().flying && WorldSave.getCurrentSave().getWorld().collidingTile(tempBoundingRect)) {
-                        tempBoundingRect.set(mob.getX() + enemyMoveVector.x, mob.getY(), mob.getWidth(), mob.getHeight());
-                        if (WorldSave.getCurrentSave().getWorld().collidingTile(tempBoundingRect)) {
-                            tempBoundingRect.set(mob.getX(), mob.getY() + enemyMoveVector.y, mob.getWidth(), mob.getHeight());
-                            if (!WorldSave.getCurrentSave().getWorld().collidingTile(tempBoundingRect)) {
-                                mob.moveBy(0, enemyMoveVector.y);
-                            }
+                    if (!mob.getData().flying && (forge.adventure.util.ChasePath.detouring(mob) || chaseWorld.collidingTile(tempBoundingRect))) {
+                        // Round 705: blocked - walk a planned way around (util/ChasePath) instead of stopping dead.
+                        if (forge.adventure.util.ChasePath.step(chaseWorld, mob, goalX, goalY, delta,
+                                com.badlogic.gdx.Gdx.graphics.getFrameId(), chaseStepVector)) {
+                            mob.moveBy(chaseStepVector.x, chaseStepVector.y);
+                        } else if (!chaseWorld.collidingTile(tempBoundingRect)) {
+                            mob.moveBy(enemyMoveVector.x, enemyMoveVector.y); // the detour ended in sight of the goal
                         } else {
-                            mob.moveBy(enemyMoveVector.x, 0);
+                            tempBoundingRect.set(mob.getX() + enemyMoveVector.x, mob.getY(), mob.getWidth(), feet);
+                            if (chaseWorld.collidingTile(tempBoundingRect)) {
+                                tempBoundingRect.set(mob.getX(), mob.getY() + enemyMoveVector.y, mob.getWidth(), feet);
+                                if (!chaseWorld.collidingTile(tempBoundingRect)) {
+                                    mob.moveBy(0, enemyMoveVector.y);
+                                }
+                            } else {
+                                mob.moveBy(enemyMoveVector.x, 0);
+                            }
                         }
                     } else {
                         mob.moveBy(enemyMoveVector.x, enemyMoveVector.y);
