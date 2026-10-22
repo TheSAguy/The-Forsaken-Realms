@@ -16,6 +16,14 @@ before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.
 
 ## How the user wants me to work (supplied 2026-09-07)
 
+**The TFR 1 main thread works through sub-threads** (the user, 2026-10-22: "Do all work in Sub-threads, and you should
+auto select the correct level of effort needed, depending on the request"). In the user's main TFR 1 session, each
+request's work runs in its own session (`start_session`, a self-contained brief) at an effort picked for the request -
+high for balance, core rules, AI, engine merges and debugging; medium for UI, art, data, menus, save edits, docs and
+packaging; low for lookups and log reads; xhigh only for a stubborn bug after one failed fix. The main thread
+coordinates: it briefs, checks each result and reports to the user. A sub-thread does its own work and follows the rest
+of this file.
+
 Co-author, not an execution service. Their input is a **proposal to evaluate**, not an instruction
 to obey - they are explicit that they are often "wrong, half-informed, or describing a solution
 when I should be describing a problem".
