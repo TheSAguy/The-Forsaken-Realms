@@ -14264,6 +14264,55 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 720: the AI no longer recurses to death over a regenerate ability paid with sacrifice mana (2026-10-23)
+
+The user: "Start round 720: fix the AI stack overflow (canRegenerate recursion with Yavimaya Hollow + Utopia Mycon)."
+From the 2026-10-23 player-log review: `tfr1-e5cdb4a2-20261018-224555` (v1.22) died with `java.lang.StackOverflowError`
+in a duel against an Orange Mushroomling (Apprentice); the game thread died, the duel froze and the player quit. The
+code was unchanged in v1.23.
+
+- **The loop (stock Forge AI)**: `ComputerUtil.canRegenerate` asks `ComputerUtilCost.canPayCost` about a Regenerate
+  ability -> the only mana comes from a sacrifice (Utopia Mycon: "Sacrifice a Saproling: Add one mana of any color") ->
+  `checkForManaSacrificeCost` -> `chooseSacrificeType` -> `getCardPreference` -> `shouldSacrificeThreatenedCard` for
+  each Saproling -> `predictCreatureWillDieThisTurn` -> `combatantWouldBeDestroyed` -> `canDestroyBlocker` ->
+  `canRegenerate` for that Saproling -> the same Regenerate ability again, without end. Upstream's guard in
+  `shouldSacrificeThreatenedCard` covers only "the regenerating card is the one sacrificed"; here the ability being paid
+  for at that point is the mana ability, so it never fires. Not TFR content alone: **Phyrexian Altar + Drudge
+  Skeletons** loops the same way.
+- **The fix**: `canRegenerate`'s cost check goes through a new `canPayRegenerateCost`, which keeps a per-thread set of
+  the Regenerate abilities whose cost is being checked (try/finally, so it always unwinds). The same ability asked
+  about again from inside its own cost check answers "can't pay" - the AI does not count on a regeneration whose
+  payment is still being worked out. Only the nested, hypothetical answer changes; the outer question is answered as
+  before. One `[TFR-AIRecursion]` line per game the first time it trips (the regenerating card and the creature asked
+  about).
+- **Why here and not in `shouldSacrificeThreatenedCard`** (skip the threat check while a cost check is nested): that
+  would change the AI's sacrifice choices in every nested cost check, cyclic or not, while the cycle only closes
+  through a regenerate ability. The guard sits at the one call that re-enters, and a call that is not a re-entry is
+  untouched. The sacrifice-COST checks right after it already had upstream's own guard (`protectRecursion`); it was not
+  reused for the cost check because its flag (`SpellAbility.skip`) also means "the AI failed to play this, skip it" and
+  is not reset if an exception unwinds through it.
+- **Other ways in, checked**: any repeatable regenerate ability with a mana cost plus any "sacrifice: add mana" source
+  (Phyrexian or Ashnod's Altar, Utopia Mycon) closes the same loop through
+  `canRegenerate`, and the guard covers them all; Phyrexian Altar + Drudge Skeletons is a test. A pump paid with
+  sacrifice mana (Frozen Shade + Phyrexian Altar, blocking) does NOT loop - tested, it finished before the fix too.
+- **Tested**: `forge-gui-desktop` `forge.ai.RegenerateRecursionTest` (new, TestNG). Before the fix 3 of 4 died with
+  `StackOverflowError` (Hollow + Mycon + 3 Saprolings: `canRegenerate` on a blocking Saproling, and the AI declaring
+  blocks against a Craw Wurm; Phyrexian Altar + Drudge Skeletons), with the same frames as the player's log
+  (`canRegenerate` -> `canPayCost` -> `chooseSacrificeType` -> `getCardPreference` -> `shouldSacrificeThreatenedCard` ->
+  ... -> `canDestroyBlocker` -> `canRegenerate`); the pump case passed. After: 4/4, one `[TFR-AIRecursion]` line per
+  game. All `forge.ai` tests in forge-gui-desktop plus `LoopBreakerTest`: 409/409 (run with `-Dcheckstyle.skip`, the
+  `HelpMenu.java` unused import from round 708). Agent game: duels against Orange Mushroomlings at 50x after packaging - results in the next note of this round.
+- **Upstream report draft** (if the user wants to file it with Card-Forge): "AI StackOverflowError in
+  ComputerUtil.canRegenerate when a regenerate ability's mana can only come from a sacrifice outlet. Board: AI controls
+  Phyrexian Altar, Drudge Skeletons and another creature, and has no untapped land; Drudge Skeletons blocks. Combat
+  prediction calls canRegenerate(Skeletons) -> ComputerUtilCost.canPayCost -> checkForManaSacrificeCost ->
+  chooseSacrificeType -> getCardPreference -> shouldSacrificeThreatenedCard -> predictCreatureWillDieThisTurn ->
+  ComputerUtilCombat.combatantWouldBeDestroyed -> canDestroyBlocker -> canRegenerate(Skeletons) again, until the stack
+  overflows and the game thread dies (the match freezes). The guard in shouldSacrificeThreatenedCard does not fire
+  because the ability passed down is the Altar's mana ability, not the Regenerate one. Also with Yavimaya Hollow +
+  Utopia Mycon + Saprolings. Fix: a ThreadLocal re-entry set around the canPayCost call in canRegenerate; a nested
+  check of the same Regenerate ability returns false."
+
 ## Round 719: enemy info plates - hold Alt to see what you know of every enemy (2026-10-23)
 
 TFR 2's Alt plates brought to TFR 1, with knowledge-gated detail (the user: "If you press 'Alt' it shows the monsters

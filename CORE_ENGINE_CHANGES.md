@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 720 - AI regenerate recursion (upstream bug)
+
+- **`forge-ai/src/main/java/forge/ai/ComputerUtil.java`** - UPSTREAM BUG: `canRegenerate`'s `ComputerUtilCost.canPayCost`
+  call goes through the new `canPayRegenerateCost`, a per-thread re-entry guard (`REGEN_COST_IN_CHECK`, try/finally);
+  the same Regenerate ability asked about again inside its own cost check returns false and logs `[TFR-AIRecursion]`
+  once per game. Without it a regenerate ability paid with sacrifice mana (Yavimaya Hollow + Utopia Mycon, Phyrexian
+  Altar + Drudge Skeletons) recursed until StackOverflowError. Merge note: a one-line change in `canRegenerate` plus
+  the helper just above it; if upstream fixes the loop, take theirs and drop ours. See MOD_CHANGELOG round 720.
+- **`forge-gui-desktop/src/test/java/forge/ai/RegenerateRecursionTest.java`** - new test.
+
 ### Round 719 - enemy info plates (Alt)
 
 - **`forge-gui-mobile/src/forge/adventure/util/TfrPlates.java`** - NEW: the plates, their input state and log.

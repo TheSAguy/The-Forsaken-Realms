@@ -989,6 +989,33 @@ public class ComputerUtil {
         return c;
     }
 
+    // TFR round 720: a regenerate ability paid with sacrifice mana (Yavimaya Hollow + Utopia Mycon, Phyrexian Altar +
+    // Drudge Skeletons) looped canRegenerate -> canPayCost -> choose what to sacrifice -> shouldSacrificeThreatenedCard
+    // -> combat prediction -> canRegenerate until the stack overflowed. The regenerate abilities whose cost is being
+    // checked on this thread: one asked about again from inside its own cost check can't be counted on.
+    private static final ThreadLocal<Set<SpellAbility>> REGEN_COST_IN_CHECK = ThreadLocal.withInitial(HashSet::new);
+    private static final Set<Game> REGEN_RECURSION_LOGGED = Collections.synchronizedSet(Collections.newSetFromMap(new WeakHashMap<>()));
+
+    static boolean regenerateRecursionTripped(Game game) {
+        return REGEN_RECURSION_LOGGED.contains(game);
+    }
+
+    private static boolean canPayRegenerateCost(final SpellAbility sa, final Player controller, final Card card) {
+        final Set<SpellAbility> inCheck = REGEN_COST_IN_CHECK.get();
+        if (!inCheck.add(sa)) {
+            if (REGEN_RECURSION_LOGGED.add(controller.getGame())) {
+                System.out.println("[TFR-AIRecursion] canRegenerate: " + sa.getHostCard() + "'s regenerate ability was asked about "
+                        + card + " from inside its own cost check - counted as unable to regenerate (logged once per game)");
+            }
+            return false;
+        }
+        try {
+            return ComputerUtilCost.canPayCost(sa, controller, false);
+        } finally {
+            inCheck.remove(sa);
+        }
+    }
+
     public static boolean canRegenerate(Player ai, final Card card) {
         if (!card.canBeShielded()) {
             return false;
@@ -1015,7 +1042,7 @@ public class ComputerUtil {
                 }
 
                 sa.setActivatingPlayer(controller);
-                if (!(sa.canPlay() && ComputerUtilCost.canPayCost(sa, controller, false))) {
+                if (!(sa.canPlay() && canPayRegenerateCost(sa, controller, card))) {
                     continue;
                 }
 
