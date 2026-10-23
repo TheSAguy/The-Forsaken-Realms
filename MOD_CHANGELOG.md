@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 710: the land shops sell Snow-Covered basics again, not Skulkins (2026-10-22)
+
+The user: "My Land shops in my Capitol is selling these creatures...." The Capitol's Cartographer's Guild showed its 4
+Land Sketchbooks over four Eventide Skulkins (Hoof, Antler, Fang x2, Jawbone) at 36 gold. The user's archived logs:
+`[TFR-PrintGate] Snow-Covered Swamp has no printing in this place's sets (1) - Shell Skulkin (EVE, Common, same colors)
+instead`, the same for all five colors on every visit.
+
+- **The cause**: the five colored land shops (`shops.json` "Plains"... "Forest") pay 4 `landSketchbookShop` + 4 named
+  `cardName: "Snow-Covered <Basic>"`. Round 373's set gate (`CardUtil.remapToEditionListStrict`) finds no Snow-Covered
+  printing in the place's sets (the Capitol sells from the player's unlocked sets - one, EVE, in the user's game), and
+  round 699's `RewardData.namedCardOrSubstitute` draws a substitute: same rarity (Common), same colors (colorless),
+  same type (Land) - none in EVE - then any type: a colorless EVE common, i.e. a Skulkin.
+- **Not just the Capitol**: every gated town's land shop. The user's logs show towns with 31-32 sets selling random
+  colorless common nonbasic lands in their place (Polluted Mire, Seat of the Synod, Timberland Ruins, Lonely Arroyo).
+  From round 373 to 698 the same shops sold no snow lands at all. A named basic in loot (Wastes, x7 in plane maps)
+  went the same way.
+- **The fix**: round 372 already left basic lands out of the set system (research, the master list). The strict gate
+  now does too: `CardUtil.remapToEditionList` hands a basic land (`getType().isBasicLand()`, snow included) over in
+  the printing it had instead of returning null. `[TFR-PrintGate] <card> has no printing in this place's sets (n) - a
+  basic land, offered as <set> (round 710)`, once per card. Every other named card keeps round 699's substitute.
+- **Existing saves repair themselves**: shop stock is regenerated from the shop's stored seed on every map load
+  (`MapStage`), so the user's Capitol shops show Snow-Covered basics the first time the new build loads. Skulkins
+  already bought stay in the collection.
+- **Seen in the agent game** (fresh new game, cheats, round-710 `CardUtil` ahead of the v1.23 jar): raised the Capitol,
+  walked into the Forest Capital, repaired the Green Land Shop - 4 Land Sketchbooks + 4 Snow-Covered Forest (MB2) at
+  37 gold. Log: all five colors `... (3) - a basic land, offered as MB2 (round 710)`, no substitutes.
+
 ## Round 709: Urabrask and Jin-Gitaxias stop walking backwards, and Gev is fully turned (2026-10-22)
 
 An art sub-thread, by `dev-tools/art-import/facing709.py` (ledger `facing709_done.json`; `--apply` refuses once it

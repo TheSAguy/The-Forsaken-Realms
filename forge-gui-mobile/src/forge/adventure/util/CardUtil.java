@@ -767,6 +767,10 @@ public class CardUtil {
      * lenient form hands the card over in whatever printing it had. Named-card rewards (a shop or chest slot naming one
      * card) use it; the pool-driven paths never reach that case (their predicate only admits names printed in the list).
      * A list-less caller (quests, dialogs) is untouched either way.
+     * <p>
+     * Round 710: a basic land (the Basic supertype, snow included) is never gated - round 372 left basics out of the set
+     * system, and round 699's substitute turned the land shops' Snow-Covered basics into whatever colorless common the
+     * place printed (the user's Capitol, one set: Eventide Skulkins). It keeps the printing it had.
      */
     public static PaperCard remapToEditionListStrict(PaperCard candidate, String[] allowedEditions, Random r) {
         return remapToEditionList(candidate, allowedEditions, null, r, true);
@@ -809,6 +813,12 @@ public class CardUtil {
         if (inList.isEmpty()) {
             if (!strict)
                 return candidate;
+            if (candidate.getRules().getType().isBasicLand()) { // round 710: basics stay outside the set gate
+                if (loggedRemaps.add(candidate.getCardName() + "|basic"))
+                    System.out.println("[TFR-PrintGate] " + candidate.getCardName() + " has no printing in this place's sets ("
+                            + allowedEditions.length + ") - a basic land, offered as " + candidate.getEdition() + " (round 710)");
+                return candidate;
+            }
             if (loggedRemaps.add(candidate.getCardName() + "|gate"))
                 System.out.println("[TFR-PrintGate] " + candidate.getCardName() + " has no printing in this place's sets ("
                         + allowedEditions.length + ") - the reward looks for a substitute (round 699)");

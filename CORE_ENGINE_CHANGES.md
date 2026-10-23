@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 710 - basic lands stay outside the set gate
+
+- **`forge-gui-mobile/src/forge/adventure/util/CardUtil.java`** - `remapToEditionList()`'s strict branch hands a basic
+  land (Basic supertype, snow included) over in its own printing instead of returning null, with a `[TFR-PrintGate]`
+  line; the `remapToEditionListStrict()` doc says so.
+
 ### Round 708 - the loop breaker; draws are not losses
 
 - **`forge-game/src/main/java/forge/game/LoopBreaker.java`** - new (engine). See MOD_CHANGELOG round 708.
