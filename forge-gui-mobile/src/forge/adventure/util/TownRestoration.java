@@ -481,6 +481,9 @@ public class TownRestoration {
         }
         String shownName = target.getDisplayName();
         boolean wasCapital = "capital".equals(target.getData().type); // round 100: a taken capital cripples its color
+        // Round 717: Capital Gains counts the capital's own color, read before transformInto() renames its data - a
+        // capital another color took first still counts for the color that built it.
+        String capitalColor = wasCapital ? TerritoryControl.colorOfCapitalName(target.getData().name) : null;
         int repaintRadius = TerritoryControl.captureFlipRadius(); // round 296: every capture flips 10 tiles
         String preCaptureId = target.getID();
         target.transformInto(wasteData, world.getRandom(), true); // ownership changes, the town keeps its name
@@ -491,6 +494,7 @@ public class TownRestoration {
         settleAsPlayerTown(world, target, preCaptureId, shownName, "retaken by the player", repaintRadius);
         if (wasCapital) {
             world.markCapitolLost(fromColor);
+            TfrAchievements.onCapitalTaken(capitalColor != null ? capitalColor : fromColor); // round 717
             System.out.println("[TFR-MageCap] " + fromColor + " capital " + shownName + " taken by the player - this color's active-mage cap is halved from now on");
             forge.adventure.stage.GameHUD.getInstance().addNotification(Character.toUpperCase(fromColor.charAt(0)) + fromColor.substring(1)
                     + "'s capital has fallen! Their war mages are cut in half.", false);
@@ -508,6 +512,7 @@ public class TownRestoration {
                 + " -> player-owned restored town (radius " + repaintRadius + "), buildings start broken except the inn");
         forge.adventure.stage.GameHUD.getInstance().addNotification(shownName + " is yours! Its people welcome you - the buildings will need rebuilding."); // round 331: black tint (was white text)
         Ascendance.onTownCaptured(shownName); // round 493
+        TfrAchievements.onTownsChanged("captured " + shownName); // round 717: Ashes to Hearth
     }
 
     /**
@@ -629,6 +634,7 @@ public class TownRestoration {
         Current.player().setQuestFlag("townsRestored", restoredCount);
         System.out.println("[TFR-MainQuest] townsRestored -> " + restoredCount);
         Ascendance.onTownRestored(point.getDisplayName()); // round 493
+        TfrAchievements.onTownsChanged("restored " + point.getDisplayName()); // round 717: Ashes to Hearth
     }
 
     /**
@@ -1165,6 +1171,7 @@ public class TownRestoration {
         }
         forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
         Ascendance.onCapitolRaised(); // round 493
+        TfrAchievements.earn(TfrAchievements.SEAT_OF_YOUR_OWN, "the Capitol raised"); // round 717
 
         // Snapshot the old town's built state before the id changes.
         PointOfInterestChanges oldChanges = WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID());

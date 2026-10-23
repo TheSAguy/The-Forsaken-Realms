@@ -425,6 +425,9 @@ public class DuelScene extends ForgeScene {
         // against this enemy" reads the record without this win in it.
         if (winner && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
             forge.adventure.util.Ascendance.onDuelWon(enemy, enemyName, isArena);
+        // Round 717: Legend Hunter and Notorious - the same duels (the Arena counts).
+        if (winner && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
+            forge.adventure.util.TfrAchievements.onDuelWon(enemy.getData(), notoriousRank);
         // Round 559: the Capitol Temple's weekly tally - the same duels, without the Arena (its fighters do not die).
         if (winner && !isArena && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
             forge.adventure.util.TempleOfferings.recordKill(enemy.getData());
@@ -1285,6 +1288,13 @@ public class DuelScene extends ForgeScene {
                     else
                         help.add(token);
                 }
+                // Round 717: Notorious - this seat starts with every bonus Wall and both help tokens (a 50+ streak).
+                if (forge.adventure.util.TfrAchievements.fullyArmed(Current.player().notorietyWallsFor(currentEnemy),
+                        forge.adventure.util.SpawnTierWeighting.winRatioEnemyTokens())) {
+                    notoriousRank = Math.max(notoriousRank, EnemyData.tierRank(currentEnemy.tier));
+                    System.out.println("[TFR-Achievement] " + currentEnemy.getName() + " (" + EnemyData.tierDisplayName(currentEnemy.tier)
+                            + ") starts fully armed - a win counts for Notorious");
+                }
                 if (!help.isEmpty()) {
                     aiPlayer.addExtraCardsOnBattlefield(help);
                     System.out.println("[TFR-WinRatio] " + currentEnemy.getName() + " starts with "
@@ -1680,7 +1690,12 @@ public class DuelScene extends ForgeScene {
         this.chaosBattle = this.enemy.getData().copyPlayerDeck && Current.player().isFantasyMode();
         this.AIExtras.clear();
         this.playerExtras.clear();
+        this.notoriousRank = -1;
     }
+
+    /** Round 717: the highest rank (0 Apprentice .. 3 Archmage) of a seat that started this duel with every Wall and
+     *  token notoriety and the win ratio can give (TfrAchievements.fullyArmed), or -1 - for Notorious. */
+    private int notoriousRank = -1;
 
     /**
      * Round 145 (MOD_SCOPE #116): stage the next duel as a roaming guard's fight. Call immediately

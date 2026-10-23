@@ -153,6 +153,10 @@ public class PlayerStatisticScene extends UIScene {
             for (Achievement a : cardActivation)
                 ((FBufferedImage) a.getImage()).dispose();
         }
+        if (forge.adventure.util.TfrAchievements.isEnabled()) {
+            for (Achievement a : forge.adventure.util.TfrAchievements.get())
+                ((FBufferedImage) a.getImage()).dispose();
+        }
     }
 
     private void toggleScroller() {
@@ -198,6 +202,12 @@ public class PlayerStatisticScene extends UIScene {
         super.enter();
         GameHUD.getInstance().updateBGM();
         achievementContainer.clear();
+        // Round 717: TFR's own achievements first, under their own heading, then Forge's duel ones.
+        if (forge.adventure.util.TfrAchievements.isEnabled()) {
+            achievementHeading("The Forsaken Realms");
+            updateAchievements(forge.adventure.util.TfrAchievements.get(), false);
+            achievementHeading("Duels");
+        }
         updateAchievements(cardActivation, true);
         updateAchievements(planeswalkers, true);
         updateAchievements(achievements, false);
@@ -318,6 +328,12 @@ public class PlayerStatisticScene extends UIScene {
         performTouch(scrollPaneOfActor(scrollContainer)); //can use mouse wheel if available to scroll
     }
 
+    /** Round 717: a heading row over a group of trophies. */
+    private void achievementHeading(String text) {
+        achievementContainer.add(Controls.newTextraLabel("[%110]" + text)).colspan(2).left().pad(5);
+        achievementContainer.row();
+    }
+
     void updateAchievements(AchievementCollection achievementCollection, boolean isActive) {
         for (Achievement a : achievementCollection) {
             if (isActive) {
@@ -337,7 +353,8 @@ public class PlayerStatisticScene extends UIScene {
                 image.getColor().a = alpha;
                 achievementContainer.add(image).height(50).width(40).center().pad(5);
             }
-            String value = "[%105]" + a.getDisplayName() + "[%98]";
+            String value = "[%105]" + (a instanceof forge.adventure.util.TfrAchievement
+                    ? ((forge.adventure.util.TfrAchievement) a).shownName() : a.getDisplayName()) + "[%98]"; // round 717: hidden ones
             String subTitle = a.getSubTitle(true);
             if (subTitle != null)
                 value += "\n" + subTitle;

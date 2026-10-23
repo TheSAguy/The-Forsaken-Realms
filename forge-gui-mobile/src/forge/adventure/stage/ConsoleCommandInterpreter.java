@@ -117,7 +117,16 @@ public class ConsoleCommandInterpreter {
         // this removes apostrophe...
         /*for (int j = 0; j < parameters.length; j++)
             parameters[j] = parameters[j].replaceAll("[\"']", "");*/
-        return currentCommand.function.apply(parameters);
+        // Round 717: a typed or scripted command earns no TFR achievement; an item's own command (a rune) is play.
+        boolean typed = itemInUse == null;
+        if (typed)
+            forge.adventure.util.TfrAchievements.consoleBegin();
+        try {
+            return currentCommand.function.apply(parameters);
+        } finally {
+            if (typed)
+                forge.adventure.util.TfrAchievements.consoleEnd();
+        }
     }
 
     /** Round 331: the item whose commandOnUse is running - see useItem(). Null for a typed or scripted command. */
@@ -290,6 +299,18 @@ public class ConsoleCommandInterpreter {
             TerritoryControl.defeatColor(Current.world(), color);
             return "Defeated " + color;
         });
+        // Round 717: TFR's achievements - list them, check the save again, or forget them (the agent game's profile).
+        registerCommand(new String[]{"achievement"}, s -> forge.adventure.util.TfrAchievements.describe());
+        registerCommand(new String[]{"achievement", "check"}, s -> {
+            forge.adventure.util.TfrAchievements.consoleEnd(); // the check reads the save: not a console grant
+            try {
+                forge.adventure.util.TfrAchievements.backfill("console check");
+            } finally {
+                forge.adventure.util.TfrAchievements.consoleBegin();
+            }
+            return forge.adventure.util.TfrAchievements.describe();
+        });
+        registerCommand(new String[]{"achievement", "reset"}, s -> forge.adventure.util.TfrAchievements.reset(s.length > 0 ? s[0] : null));
         registerCommand(new String[]{"spawn", "enemy"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: enemy name.";
 

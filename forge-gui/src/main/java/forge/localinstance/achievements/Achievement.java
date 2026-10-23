@@ -159,7 +159,12 @@ public abstract class Achievement {
     }
 
     public int update(final Player player) {
-        final int value = evaluate(player, player.getGame());
+        return record(evaluate(player, player.getGame()), true);
+    }
+
+    // TFR (round 717): the recording half of update(), for achievements told of an event outside a duel. showDialog
+    // false records without the "Achievement Earned" dialog (the caller announces it its own way).
+    public int record(final int value, final boolean showDialog) {
         if (checkGreaterThan) {
             if (value <= best) { return value; }
         }
@@ -174,6 +179,9 @@ public abstract class Achievement {
         best = value;
         timestamp = new Date().getTime();
 
+        if (!showDialog) {
+            return value; // the trophy image is redrawn where it is shown (updateTrophyImage)
+        }
         if (earnedSpecial()) {
             if (!hadEarnedSpecial) {
                 updateTrophyImage();

@@ -684,6 +684,7 @@ public final class Ascendance {
     }
 
     private static void onLevelUp(int level) {
+        TfrAchievements.onLevel(level); // round 717: Ascendant
         AscendanceData d = data();
         AscendanceState s = state();
         AdventurePlayer player = WorldSave.getCurrentSave().getPlayer();

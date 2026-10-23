@@ -801,6 +801,28 @@ page showing every color's current reputation and territory at a glance (with a 
 graph), and a Mod Details page documenting the custom systems in-game, without needing this guide
 open in another window.
 
+### Achievements
+
+The Forsaken Realms keeps its own achievements, listed first on the trophy page (the Quest log's **Status**, then
+the trophy button). They are a record of what you have done, with no reward attached. Most climb Forge's four
+trophies, Common to Mythic; a few are a single trophy. They belong to your profile, not to one save, so a new game
+or New Game+ keeps them.
+
+When you load a save, the game checks what it has already done (castles fallen, capitals taken, legends beaten,
+your level, the towns you hold, the Capitol) and awards anything it finds, in one notice. Console commands never
+earn an achievement.
+
+| Achievement | What it asks | Trophies |
+|---|---|---|
+| **Lord Slayer** | Bring down a Lord in their own castle. | 1 / 3 / 4 / all 5 castles |
+| **Capital Gains** | Take a color's capital by assault, before its castle falls (a fallen color's capital falls with it). Counted by the color that built the capital. | 1 / 3 / 4 / all 5 |
+| **Legend Hunter** | Defeat the legends of the realm, each one once, across all your saves. The Arena counts. | 1 / 10 / 25 / 50 legends |
+| **Notorious** | Win at 50 or more wins in a row: the foe starts with both bonus Walls and the Clue and Treasure. The Arena counts. | an Apprentice / an Adept / a Master / an Archmage |
+| **Ascendant** | Rise through the Ascendance. | level 5 / 10 / 20 / 30 |
+| **Ashes to Hearth** | Hold towns under your banner, restored from ruin or taken back. | 1 / 5 / 10 / 20 towns |
+| **A Seat of Your Own** | Raise your Capitol. | one trophy |
+| **The Ring is Whole** | Win the realm: all five Ring Cities held, every castle fallen. | one trophy |
+
 ## Early Game Advice
 
 Your starting deck is a foundation, not a finished product - expect to add and cut cards

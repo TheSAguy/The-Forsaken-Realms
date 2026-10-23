@@ -81,6 +81,8 @@ public class ConfigData {
     public boolean resourceSpawnsEnabled = false;
     /** Round 478: the lost-treasure hunts (util/TreasureHunt) - obelisks, map fragments, the dig, the guardians. */
     public boolean treasureHuntEnabled = false;
+    /** Round 717: TFR's own achievements (util/TfrAchievements) - kept per player profile, trophy only. */
+    public boolean tfrAchievementsEnabled = false;
     /** Round 484: towns being pillaged by raiders from nearby dungeons (util/TownPillage). */
     public boolean pillageEnabled = false;
     /** Round 493: Ascendance, the player's level (util/Ascendance) - read when a run starts (New Game, New Game+). */

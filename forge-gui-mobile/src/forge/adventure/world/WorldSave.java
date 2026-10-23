@@ -294,6 +294,8 @@ public class WorldSave {
                     currentSave.world.ensureHistory();
                     forge.adventure.util.Ascendance.enforceGuardLimits(); // round 629: a guard over its rank's limit
                     WorldStage.getInstance().load(mainData.readSubData("worldStage"));
+                    // Round 717: what this save has already done earns its TFR achievements (kept per profile).
+                    forge.adventure.util.TfrAchievements.backfill("save loaded");
                     // Round 394: a save from before the per-kind balance gets its dungeon mix balanced once - after the
                     // stage load, so "farthest from the player first" knows where the player stands.
                     forge.adventure.util.DungeonRotation.balanceOnLoad(currentSave.world);

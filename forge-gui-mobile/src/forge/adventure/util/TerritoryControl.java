@@ -3192,9 +3192,23 @@ public class TerritoryControl {
      * taken all five AI capitals. Checked after every player capture. Logged [TFR-Victory].
      */
     public static void checkPlayerVictory(World world) {
+        if (!playerVictoryReached(world, true))
+            return;
+        TfrAchievements.earn(TfrAchievements.RING_IS_WHOLE, "the Ring is whole"); // round 717
+        WorldStage.getInstance().triggerGameWon("[GREEN]The Ring is whole![]\n"
+                + "All five Ring Cities stand under your banner and every Lord's castle has fallen. "
+                + "The Ring's councils reach for their seals - and find you are no longer someone who can be sealed. "
+                + "The Forsaken Realms are yours to keep.");
+    }
+    /** Round 717: the win's condition on its own (TfrAchievements' back-fill reads it without winning again). */
+    public static boolean playerVictoryReached(World world) {
+        return playerVictoryReached(world, false);
+    }
+
+    private static boolean playerVictoryReached(World world, boolean log) {
         java.util.List<int[]> tiles = world.getStarTownTiles();
         if (tiles == null || tiles.isEmpty())
-            return;
+            return false;
         int held = 0;
         for (int[] tile : tiles)
             if (ringTownPlayerHeld(world, tile))
@@ -3202,13 +3216,11 @@ public class TerritoryControl {
         // Round 102 (user spec 2026-09-04): the Lords die with their CASTLES (defeatColor, chapter 2), not their
         // capitals - a taken capital only halves that color's mages.
         int defeated = world.getDefeatedColorCount();
-        System.out.println("[TFR-Victory] Ring Cities held " + held + "/" + tiles.size() + ", AI colors defeated " + defeated + "/" + COLOR_TOWN_NOUN.size());
-        if (held >= tiles.size() && defeated >= COLOR_TOWN_NOUN.size())
-            WorldStage.getInstance().triggerGameWon("[GREEN]The Ring is whole![]\n"
-                    + "All five Ring Cities stand under your banner and every Lord's castle has fallen. "
-                    + "The Ring's councils reach for their seals - and find you are no longer someone who can be sealed. "
-                    + "The Forsaken Realms are yours to keep.");
+        if (log)
+            System.out.println("[TFR-Victory] Ring Cities held " + held + "/" + tiles.size() + ", AI colors defeated " + defeated + "/" + COLOR_TOWN_NOUN.size());
+        return held >= tiles.size() && defeated >= COLOR_TOWN_NOUN.size();
     }
+
     private static boolean ringTownPlayerHeld(World world, int[] tile) {
         for (PointOfInterest poi : world.getAllPointOfInterest()) {
             if ((int) (poi.getPosition().x / world.getTileSize()) != tile[0] || (int) (poi.getPosition().y / world.getTileSize()) != tile[1])
@@ -3518,6 +3530,7 @@ public class TerritoryControl {
         }
 
         world.setColorDefeated(color);
+        TfrAchievements.onColorDefeated(world, color); // round 717: Lord Slayer
         // Round 354 (the user's choice): the last Lord's fall opens every Ring City not yet the player's - no color is
         // left to take a neutral one from, so the win would otherwise stay out of reach (TownRestoration.openRingGatesToPlayer).
         if (world.getDefeatedColorCount() >= COLOR_TOWN_NOUN.size())

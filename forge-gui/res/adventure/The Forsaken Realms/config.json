@@ -286,6 +286,7 @@
     "colorReputationEnabled": true,
     "resourceSpawnsEnabled": true,
     "treasureHuntEnabled": true,
+    "tfrAchievementsEnabled": true,
     "pillageEnabled": true,
     "ascendanceEnabled": true,
     "dungeonRotationEnabled": true,

@@ -14264,6 +14264,85 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 717: TFR's own achievements - the framework and the first eight (2026-10-23)
+
+The user: "I'd like to add new achievements to TFR1", with nine ideas (a capital and a castle per color, a first
+legend, fully buffed kills per rank, all seven arenas in one week, a full gear set), then, on the proposal: "Build the
+16 achievements with your recommended answers: per profile with back-fill, trophy only, Notorious = 50+ streak (one
+tiered entry, Arena counts), Grand Circuit 3/5/6/7. Two rounds." This round is the framework and eight of them; round
+718 adds the other eight.
+
+**Why a framework.** TFR had no achievements of its own. Forge's stock ones read a finished duel
+(`AchievementCollection.updateAll` after each game) and live in one XML per mode in the profile. Nearly every TFR idea
+is a world event (a castle falls, a capital is taken), so TFR's are told by the hook where the event happens.
+
+- **`util/TfrAchievements`** (+ `TfrAchievement`): an `AchievementCollection` of its own, saved to
+  `<profile>/achievements/tfr.xml` - per player profile like Forge's, so a new game or New Game+ keeps them. Trophy
+  only, no reward. Tiered entries climb Forge's Common / Uncommon / Rare / Mythic trophies; single ones use the special
+  trophy. A collection that counts distinct names across every save (legends now; gear sets and card sets in 718)
+  keeps them in a `seen` attribute in the same file. Off unless `tfrAchievementsEnabled` (TFR's config.json only).
+- **Stock edit, `Achievement.java`**: `update(Player)` split into evaluate + public `record(value, showDialog)`, so a
+  TFR entry can record a value without a finished game (`update(null)` would throw on `player.getGame()`). Stock
+  achievements pass `true` and behave as before. Logged in CORE_ENGINE_CHANGES.
+- **Earned**: one HUD banner, which also goes to the Notices log - "Achievement earned: Lord Slayer (Common: 1
+  castle)". Not the stock modal "Achievement Earned" dialog, which would stop the overworld.
+- **Back-fill on load** (`WorldSave.load`, after the stage loads): everything a save already holds is checked again and
+  new trophies are announced in ONE notice: "Achievements earned from your deeds so far: ...". Event-only entries
+  (Notorious) count from this round on.
+- **Cheats**: a typed or scripted console command earns nothing (`ConsoleCommandInterpreter.command` runs inside
+  `consoleBegin/End`; `[TFR-Achievement] ... not recorded - a console command`). An item's own command (a rune) is
+  play and counts. The back-fill reads the save's state and cannot tell how it came about, so state a console command
+  made is awarded at the next load or `achievement check` - acceptable, since only the agent game uses the console.
+- **Statistics screen**: the TFR group first on the trophy page (Quest log -> Status -> the trophy button), under a
+  "The Forsaken Realms" heading, then "Duels" over Forge's own. Each line: the description, then the tier reached with
+  its date and the next goal ("Common: 1 castle (date) - next: 3 castles"). A hidden entry (two in 718) shows "???".
+- **Console**: `achievement` lists every entry (best, tier, seen count); `achievement check` runs the back-fill;
+  `achievement reset [key]` forgets one or all (the agent profile).
+- **Logging**: `[TFR-Achievement]` on every grant (`key: before -> after (why) - new trophy: Rare`), every refusal,
+  every back-fill, and each seat that starts "fully armed" for Notorious.
+
+**The eight:**
+
+| Entry | Hook | Counts | Tiers |
+|---|---|---|---|
+| Lord Slayer | `TerritoryControl.defeatColor` | `world.getDefeatedColorCount()` | 1 / 3 / 4 / 5 |
+| Capital Gains | `TownRestoration.captureTownForPlayer`, a capital | colors whose capital the player took, by the capital's OWN color (`colorOfCapitalName` read before `transformInto`; `fromColor` if the name gives none) - character flags `tfrCapitalTaken_<color>` plus `World.capitolLostColors` | 1 / 3 / 4 / 5 |
+| Legend Hunter | `DuelScene.afterGameEnd`, a win | distinct `LegendSpawns.isMember` enemies beaten, across the profile; back-fill from the save's win/loss record | 1 / 10 / 25 / 50 |
+| Notorious | seat setup + `afterGameEnd` | the highest rank beaten that started with both notoriety bonus Walls and the Clue + Treasure (`fullyArmed`) | Apprentice / Adept / Master / Archmage |
+| Ascendant | `Ascendance.onLevelUp` | the level | 5 / 10 / 20 / 30 |
+| Ashes to Hearth | the restore path and a captured town | `TownRestoration.countPlayerTowns()` (the count the main quest's `townsRestored` uses) | 1 / 5 / 10 / 20 |
+| A Seat of Your Own | `upgradeToCapitol` | the Capitol raised; back-fill `findCapitol()` | single |
+| The Ring is Whole | `checkPlayerVictory` | the win's condition, now `playerVictoryReached(world)` | single |
+
+**Design calls I made:**
+- **"Fully armed" leaves the regular Walls out.** They reach only some ranks on the lower difficulties (Easy: Archmages
+  only), so "4 Walls" would make three of the four tiers impossible below Insane. Both bonus Walls (45 and 50 wins in a
+  row) reach every rank, and a 50-win streak always means the Clue and Treasure too (the same duels feed both).
+- **The duels**: the player's own - not an Inn event, a guard's fight or Deck Tester (`fixedDeck`); the Arena counts,
+  as the user chose. A draw is not a win.
+- **Capital Gains counts within one save** (character flags, cleared by New Game+), as Lord Slayer does: five colors
+  in one world is the feat. Legend Hunter counts across the profile.
+- **Ashes to Hearth counts the towns you hold**, restored or retaken, not restorations ever made: a save keeps no
+  count of past restorations, and the held count is what the back-fill can read exactly.
+
+**Seen in the agent game** (the round's classes ahead of the agent jar; a copy of the user's slot 1, day 16, in
+agent slot 41; the agent profile only):
+- Load: `back-fill (save loaded): 4 new - Legend Hunter (Common: 1 legend), Ascendant (Uncommon: level 10), Ashes to
+  Hearth (Rare: 10 towns), A Seat of Your Own` and the one notice in the Notices log.
+- Notorious, real duel: `notoriety 50` + `winratio 50 0` as setup, then a Knight Bowman (Adept) fought on the map -
+  `Knight Bowman (Adept) starts fully armed`, then `tfr_notorious: 0 -> 2 (beat a fully armed Adept at 51 wins in a
+  row) - Uncommon`. Two earlier tries (a Master legend and an Apprentice) were lost: four 3/6 Walls and +50% life.
+- Lord Slayer: `defeat color black` (console) recorded nothing; `achievement check` then awarded it from the save.
+- Capital Gains: `set charflag tfrCapitalTaken_red 1`, then `achievement check` -> Common. The assault itself was not
+  played.
+- The trophy page: the heading, descriptions and tier lines fit after shortening three descriptions.
+- Legend Hunter through play: two tries against Infinite Guideline Station (a Master legend, best of three; 221 life
+  from `give life` the second time) were both lost by the AI on the player's seat, so it was seen only through the
+  back-fill (Tanazir, from the save's win record). Its grant is the same `onDuelWon` call Notorious fired through.
+- **Not seen**: a capital assault, a castle boss, a town restored, the Capitol raised, the win, and a level-up through
+  play (Ascendant was seen through the back-fill only). Each is a one-line call beside an existing Power hook
+  (`Ascendance.onTownRestored` / `onTownCaptured` / `onCapitolRaised` / `onLevelUp`), which the user's logs show firing.
+
 ## Round 716: a fallen color's level places appear in the wasteland round its fallen castle (2026-10-23)
 
 The user: "Fix P1: place a defeated color's level places in the wasteland near its fallen castle, and log the failure

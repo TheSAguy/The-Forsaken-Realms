@@ -38,6 +38,31 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 717 - TFR's own achievements (framework + the first eight)
+
+- **`forge-gui/src/main/java/forge/localinstance/achievements/Achievement.java`** (STOCK) - `update(Player)` now
+  evaluates and calls the new public `record(int value, boolean showDialog)`, which holds update's old body (best,
+  timestamp, the "Achievement Earned" dialog). `showDialog` false records without the dialog. Stock behavior is
+  unchanged: `update` passes `true`. On an upstream conflict, keep upstream's body and re-split it the same way.
+- **`forge-gui-mobile/src/forge/adventure/util/TfrAchievement.java`, `TfrAchievements.java`** - NEW: the TFR
+  collection (`achievements/tfr.xml` in the profile) and its entries.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** - `tfrAchievementsEnabled` (on in TFR's
+  config.json only).
+- **`forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java`** - the TFR group first on the trophy page,
+  under "The Forsaken Realms" and "Duels" headings; a hidden entry shows "???".
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `notoriousRank` noted at seat setup (beside the
+  win-ratio tokens); `afterGameEnd` calls `TfrAchievements.onDuelWon`.
+- **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** - `defeatColor` calls
+  `TfrAchievements.onColorDefeated`; `checkPlayerVictory`'s condition moved into public `playerVictoryReached(world)`
+  (same test, same log line when checking for the win).
+- **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** - hooks in `captureTownForPlayer` (the capital's
+  own color read before `transformInto`), the restore path and `upgradeToCapitol`.
+- **`forge-gui-mobile/src/forge/adventure/util/Ascendance.java`** - `onLevelUp` calls `TfrAchievements.onLevel`.
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** - `TfrAchievements.backfill` after a save loads.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - a typed or scripted `command()`
+  runs inside `TfrAchievements.consoleBegin/End` (an item's own command does not); commands `achievement`,
+  `achievement check`, `achievement reset [key]`.
+
 ### Round 716 - a fallen color's level places go into the wasteland round its castle
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `addPointOfInterestInBiomeNear` (round 668's
