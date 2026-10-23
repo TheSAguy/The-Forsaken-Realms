@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 716 - a fallen color's level places go into the wasteland round its castle
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `addPointOfInterestInBiomeNear` (round 668's
+  `addPointOfInterestInBiome`, but a ring of tiles round a point instead of the biome's ellipse); the shared tile test
+  and the placing step moved out of `addPointOfInterestInBiome` into private `biomeIndexForPlace`, `freeSpotInBiome`
+  and `placeNewPoint` (same checks, same spacing, same log line). Mod code only.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `clearCache()` calls
+  `LevelPlaces.resetSessionState()` (the once-per-load "no free spot" log).
+
 ### Round 715 - each arena tournament won this week brings an Archmage into every other bracket
 
 - **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `arenaWinsThisWeek()` (counts `World.arenaWinWeek`

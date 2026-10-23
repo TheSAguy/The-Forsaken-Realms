@@ -3333,6 +3333,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         forge.adventure.util.TreasureHunt.resetSessionState(); // round 478
         treasureActorsStamp = -1;
         forge.adventure.util.TownPillage.resetSessionState(); // round 484
+        forge.adventure.util.LevelPlaces.resetSessionState(); // round 716: a spot-less place is logged once per load
         // Round 711: the notice log travels in the save now, so a new game must not inherit (and then save) the last
         // game's - World generation reaches here before the player and the Ring's gifts exist. A load clears it too
         // and then restores its own (load()).

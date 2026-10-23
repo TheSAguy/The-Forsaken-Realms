@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 716: a fallen color's level places appear in the wasteland round its fallen castle (2026-10-23)
+
+The user: "Fix P1: place a defeated color's level places in the wasteland near its fallen castle, and log the failure
+once per load."
+
+- **The bug** (player-log review 2026-10-23, install 653214a3, level 35, black and red defeated): 7 of the 25 level
+  places (rounds 668/669) never came - Tresserhorn Keep, Cursed Graveyard, Baneful Cavern (black), Nekoru Nest,
+  Thieves' Hideout, Koskun Keep, Hellion Cave (red). Each logged `no free spot in <color> - tried again later` 86 times
+  in one session. `LevelPlaces.place` looked only in the place's `appearsInBiome` land, and
+  `World.addPointOfInterestInBiome` takes a tile only when that land is its highest biome; `TerritoryControl.defeatColor`
+  sweeps a fallen color's land to waste, so after a fall no tile ever qualified.
+- **The fix**: when `world.isColorDefeated(land)`, `LevelPlaces.placeInFallenLand` puts the place in the wasteland
+  round that color's castle (`TerritoryControl.findCastle`, which still finds it after the fall) with the new
+  `World.addPointOfInterestInBiomeNear`: 8-30 tiles out and 20 apart from the other level places, then 8-45 and 8-70
+  tiles at 10 apart when crowded; with no castle on the map, or no room near it, anywhere in the wasteland as before.
+  The usual spacing from every other place (4 tiles, 3 from a hidden one) applies throughout.
+- **Logging**: a new line per such place, `[TFR-LevelPlaces] <name>: <color> has fallen - put in the wasteland at tile
+  x,y, N tiles from <Color> Castle (tile cx,cy)`, and the usual `placed at ... in waste (<color> has fallen)` line. A
+  place that finds no spot is logged once per load (`reportedNoSpot`, reset in `WorldStage.clearCache()`); the retry
+  on each day tick and overworld entry is unchanged.
+- **Saves that already missed them** (the player's): nothing is stored for an unplaced place, so the next check (the
+  next overworld entry after the update) places them. No save edit.
+- **The notice still reads right**: it names the places and a compass direction from the player ("Word reaches you of
+  places you have never seen. New on your map: ..."), never their land, so no text changes.
+- **Agent game** (fresh world, `defeat color black`, `defeat color red`, `asc set 15`, then the overworld entry check):
+  all 22 places due were placed; the seven fallen ones landed 9-25 tiles from their castle (Cursed Graveyard 23,
+  Tresserhorn Keep 13 and Baneful Cavern 10 from Black Castle at 502,140; Nekoru Nest 9, Thieves' Hideout 18, Hellion
+  Cave 24 and Koskun Keep 25 from Red Castle at 197,140), each at least 20 tiles from the others. Not exercised: the
+  once-per-load "no free spot" line (every place found room).
+- **Not done**: a fallen color's places keep their own enemies and maps; nothing reskins them as wasteland.
+
 ## Round 715: each arena tournament won this week brings an Archmage into every other bracket (2026-10-22)
 
 The user: "in any given week, each time you win a Arena Tournament, (so you're the champion), then for any other Arena

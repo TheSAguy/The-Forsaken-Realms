@@ -9,7 +9,9 @@ import forge.adventure.world.World;
 import forge.adventure.world.WorldSave;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Round 668 - places that come with the player's level. The user, of the three end-game legend dungeons brought over
@@ -25,6 +27,10 @@ import java.util.List;
  * <li>Round 669 adds nine mid-game Realm of Legends lairs and stalls at levels 5, 10 and 15.</li>
  * <li>The check runs on the day tick and whenever the overworld is entered (after a duel, a level-up, a load), so a save
  * from before this round gets them too. A world that already has a place is left alone - each comes once.</li>
+ * <li>Round 716: a place whose color has fallen goes into the wasteland round that color's fallen castle - its land is
+ * waste now (TerritoryControl.defeatColor), so no tile of it qualified and the place never came (a player log: seven
+ * places of fallen black and red, retried 86 times in one session). A save that missed them gets them on its next check.
+ * A place that finds no spot is logged once per load, not on every retry.</li>
  * </ul>
  * [TFR-LevelPlaces] logs each placement. Console: "levelplaces info" / "levelplaces now".
  */
@@ -37,7 +43,18 @@ public final class LevelPlaces {
     /** Tiles of fog cleared around a new place, so the map shows it. */
     private static final int REVEAL_RADIUS = 3;
 
+    /** Round 716: how far from a fallen color's castle its places may go - tried in turn, the later ones when crowded. */
+    private static final int[][] FALLEN_BANDS = {{8, 30, KEEP_APART_TILES}, {8, 45, KEEP_APART_TILES / 2},
+            {8, 70, KEEP_APART_TILES / 2}};
+
     private static List<PointOfInterestData> levelPlaces;
+    /** Round 716: places already logged as finding no spot since the last load - the retry stays, the line does not. */
+    private static final Set<String> reportedNoSpot = new HashSet<>();
+
+    /** WorldStage.clearCache(): a load or a new game logs a place that finds no spot once again. */
+    public static void resetSessionState() {
+        reportedNoSpot.clear();
+    }
 
     private static List<PointOfInterestData> levelPlaces() {
         if (levelPlaces == null) {
@@ -122,13 +139,16 @@ public final class LevelPlaces {
         List<String> toldMid = new ArrayList<>(), waysMid = new ArrayList<>(); // round 669: the mid-game ones
         for (PointOfInterestData d : due) {
             String land = d.appearsInBiome == null || d.appearsInBiome.isEmpty() ? "waste" : d.appearsInBiome;
-            PointOfInterest placed = world.addPointOfInterestInBiome(d, land, 0.2f, 0.6f, taken, KEEP_APART_TILES);
-            if (placed == null) // a crowded land: anywhere in it, closer together
-                placed = world.addPointOfInterestInBiome(d, land, 0.05f, 0.9f, taken, KEEP_APART_TILES / 2);
+            boolean fallen = !"waste".equals(land) && world.isColorDefeated(land);
+            PointOfInterest placed = fallen ? placeInFallenLand(world, d, land, taken) : placeInLand(world, d, land, taken);
             if (placed == null) {
-                System.out.println("[TFR-LevelPlaces] " + d.name + ": no free spot in " + land + " - tried again later");
+                if (reportedNoSpot.add(d.name))
+                    System.out.println("[TFR-LevelPlaces] " + d.name + ": no free spot in " + (fallen ? "the wasteland of "
+                            + "fallen " + land : land) + " - tried again on each check, logged once per load");
                 continue;
             }
+            if (fallen)
+                land = "waste (" + land + " has fallen)";
             taken.add(placed.getPosition());
             int tx = (int) (placed.getPosition().x / world.getTileSize());
             int ty = (int) (placed.getPosition().y / world.getTileSize());
@@ -169,6 +189,47 @@ public final class LevelPlaces {
             result.append(' ').append(list);
         }
         return result.toString();
+    }
+
+    /** The place's own land, the way world generation would put it there; crowded, anywhere in it, closer together. */
+    private static PointOfInterest placeInLand(World world, PointOfInterestData d, String land, List<Vector2> taken) {
+        PointOfInterest placed = world.addPointOfInterestInBiome(d, land, 0.2f, 0.6f, taken, KEEP_APART_TILES);
+        if (placed == null)
+            placed = world.addPointOfInterestInBiome(d, land, 0.05f, 0.9f, taken, KEEP_APART_TILES / 2);
+        return placed;
+    }
+
+    /**
+     * Round 716: a fallen color's place - the wasteland round its castle (FALLEN_BANDS, nearest band first), so it still
+     * stands in that color's old country; with no castle on the map, or no room near it, anywhere in the wasteland.
+     */
+    private static PointOfInterest placeInFallenLand(World world, PointOfInterestData d, String color, List<Vector2> taken) {
+        PointOfInterest castle = TerritoryControl.findCastle(world, color);
+        PointOfInterest placed = null;
+        if (castle != null) {
+            for (int[] band : FALLEN_BANDS) {
+                placed = world.addPointOfInterestInBiomeNear(d, "waste", castle.getPosition(), band[0], band[1], taken,
+                        band[2]);
+                if (placed != null)
+                    break;
+            }
+        }
+        if (placed == null)
+            placed = placeInLand(world, d, "waste", taken);
+        if (placed != null) {
+            int tx = (int) (placed.getPosition().x / world.getTileSize());
+            int ty = (int) (placed.getPosition().y / world.getTileSize());
+            String near = "no castle near";
+            if (castle != null) {
+                int cx = (int) (castle.getPosition().x / world.getTileSize());
+                int cy = (int) (castle.getPosition().y / world.getTileSize());
+                near = Math.round(Math.hypot(tx - cx, ty - cy)) + " tiles from " + castle.getData().name + " (tile " + cx
+                        + "," + cy + ")";
+            }
+            System.out.println("[TFR-LevelPlaces] " + d.name + ": " + color + " has fallen - put in the wasteland at tile "
+                    + tx + "," + ty + ", " + near);
+        }
+        return placed;
     }
 
     /** "A, B and C (all to the west)" when they share one direction; otherwise "A (west), B (north) and C (east)". */

@@ -4223,66 +4223,97 @@ public class World implements Disposable, SaveFileContent {
      */
     public PointOfInterest addPointOfInterestInBiome(PointOfInterestData poiData, String biomeName, float minRadius,
                                                      float maxRadius, List<Vector2> keepAway, int keepAwayTiles) {
-        if (poiData == null || mapPoiIds == null || biomeName == null)
+        int biomeIndex = biomeIndexForPlace(poiData, biomeName);
+        if (biomeIndex < 0)
             return null;
-        List<BiomeData> biomes = data.GetBiomes();
-        int biomeIndex = -1;
-        for (int i = 0; i < biomes.size(); i++) {
-            if (biomeName.equals(biomes.get(i).name)) {
-                biomeIndex = i;
-                break;
-            }
-        }
-        if (biomeIndex < 0) {
-            System.out.println("[World] no land called " + biomeName + " for " + poiData.name);
-            return null;
-        }
-        BiomeData biome = biomes.get(biomeIndex);
+        BiomeData biome = data.GetBiomes().get(biomeIndex);
         for (int attempt = 0; attempt < 3000; attempt++) {
             double radius = minRadius + random.nextDouble() * (maxRadius - minRadius);
             double theta = random.nextDouble() * 2 * Math.PI;
             int wx = (int) (radius * Math.cos(theta) * biome.width * width / 2 + biome.startPointX * width);
             int wy = (int) (radius * Math.sin(theta) * biome.height * height / 2 + (height - biome.startPointY * height));
-            if (wx < 2 || wy < 2 || wx >= width - 2 || wy >= height - 2)
-                continue;
-            if (biomeIndex != highestBiome(getBiome(wx, wy)))
-                continue;
-            if (barrierNearPlace(wx, wy))
-                continue;
-            // About world generation's own spacing (a place's box), not addPointOfInterestNear's 5: the wasteland holds
-            // the rotation's hidden reserve dungeons too, and a 13x13 box round each left no room at all (the agent
-            // game, day 271: two of three places found no spot in 6,000 tries). A hidden one may come back - 3 tiles.
-            boolean tooClose = false;
-            for (PointOfInterest other : getAllPointOfInterest()) {
-                int px = (int) (other.getPosition().x / data.tileSize);
-                int py = (int) (other.getPosition().y / data.tileSize);
-                int clear = other.getActive() ? 4 : 3;
-                if (Math.abs(px - wx) <= clear && Math.abs(py - wy) <= clear) {
-                    tooClose = true;
-                    break;
-                }
-            }
-            if (!tooClose && keepAway != null) {
-                for (Vector2 p : keepAway) {
-                    float dx = p.x / data.tileSize - wx, dy = p.y / data.tileSize - wy;
-                    if (dx * dx + dy * dy < (float) keepAwayTiles * keepAwayTiles) {
-                        tooClose = true;
-                        break;
-                    }
-                }
-            }
-            if (tooClose)
-                continue;
-            PointOfInterest newPoint = new PointOfInterest(poiData, new Vector2(wx * data.tileSize, wy * data.tileSize), random);
-            clearTerrain(wx, wy, 3);
-            mapPoiIds.add(newPoint);
-            refreshWorldMapMarkers();
-            System.out.println("[World] placed " + poiData.name + " at tile " + wx + "," + wy + " in " + biomeName
-                    + " (attempt " + (attempt + 1) + ")");
-            return newPoint;
+            if (freeSpotInBiome(wx, wy, biomeIndex, keepAway, keepAwayTiles))
+                return placeNewPoint(poiData, wx, wy, " in " + biomeName + " (attempt " + (attempt + 1) + ")");
         }
         System.out.println("[World] no free spot for " + poiData.name + " in " + biomeName);
         return null;
+    }
+
+    /**
+     * Round 716: addPointOfInterestInBiome's spot, but within [minTiles, maxTiles] of centerPos (world/pixel coordinates)
+     * instead of inside the biome's ellipse. A fallen color's level places come this way, into the wasteland round its
+     * castle - its own land is waste now (TerritoryControl.defeatColor), so no tile of it is that color any more.
+     */
+    public PointOfInterest addPointOfInterestInBiomeNear(PointOfInterestData poiData, String biomeName, Vector2 centerPos,
+                                                         int minTiles, int maxTiles, List<Vector2> keepAway, int keepAwayTiles) {
+        int biomeIndex = biomeIndexForPlace(poiData, biomeName);
+        if (biomeIndex < 0 || centerPos == null)
+            return null;
+        int centerTileX = (int) (centerPos.x / data.tileSize);
+        int centerTileY = (int) (centerPos.y / data.tileSize);
+        for (int attempt = 0; attempt < 3000; attempt++) {
+            double radius = minTiles + random.nextDouble() * (maxTiles - minTiles);
+            double theta = random.nextDouble() * 2 * Math.PI;
+            int wx = centerTileX + (int) Math.round(radius * Math.cos(theta));
+            int wy = centerTileY + (int) Math.round(radius * Math.sin(theta));
+            if (freeSpotInBiome(wx, wy, biomeIndex, keepAway, keepAwayTiles))
+                return placeNewPoint(poiData, wx, wy, " in " + biomeName + ", "
+                        + Math.round(Math.hypot(wx - centerTileX, wy - centerTileY))
+                        + " tiles from tile " + centerTileX + "," + centerTileY + " (attempt " + (attempt + 1) + ")");
+        }
+        System.out.println("[World] no free spot for " + poiData.name + " in " + biomeName + " within " + maxTiles
+                + " tiles of tile " + centerTileX + "," + centerTileY);
+        return null;
+    }
+
+    /** The two addPointOfInterestInBiome* methods: the biome's index, or -1 (logged) when there is no such land. */
+    private int biomeIndexForPlace(PointOfInterestData poiData, String biomeName) {
+        if (poiData == null || mapPoiIds == null || biomeName == null)
+            return -1;
+        List<BiomeData> biomes = data.GetBiomes();
+        for (int i = 0; i < biomes.size(); i++) {
+            if (biomeName.equals(biomes.get(i).name))
+                return i;
+        }
+        System.out.println("[World] no land called " + biomeName + " for " + poiData.name);
+        return -1;
+    }
+
+    /** Can a new place stand on tile wx,wy: on the map, that land its highest biome, off the barrier, clear of places. */
+    private boolean freeSpotInBiome(int wx, int wy, int biomeIndex, List<Vector2> keepAway, int keepAwayTiles) {
+        if (wx < 2 || wy < 2 || wx >= width - 2 || wy >= height - 2)
+            return false;
+        if (biomeIndex != highestBiome(getBiome(wx, wy)))
+            return false;
+        if (barrierNearPlace(wx, wy))
+            return false;
+        // About world generation's own spacing (a place's box), not addPointOfInterestNear's 5: the wasteland holds
+        // the rotation's hidden reserve dungeons too, and a 13x13 box round each left no room at all (the agent
+        // game, day 271: two of three places found no spot in 6,000 tries). A hidden one may come back - 3 tiles.
+        for (PointOfInterest other : getAllPointOfInterest()) {
+            int px = (int) (other.getPosition().x / data.tileSize);
+            int py = (int) (other.getPosition().y / data.tileSize);
+            int clear = other.getActive() ? 4 : 3;
+            if (Math.abs(px - wx) <= clear && Math.abs(py - wy) <= clear)
+                return false;
+        }
+        if (keepAway != null) {
+            for (Vector2 p : keepAway) {
+                float dx = p.x / data.tileSize - wx, dy = p.y / data.tileSize - wy;
+                if (dx * dx + dy * dy < (float) keepAwayTiles * keepAwayTiles)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    private PointOfInterest placeNewPoint(PointOfInterestData poiData, int wx, int wy, String logDetail) {
+        PointOfInterest newPoint = new PointOfInterest(poiData, new Vector2(wx * data.tileSize, wy * data.tileSize), random);
+        clearTerrain(wx, wy, 3);
+        mapPoiIds.add(newPoint);
+        refreshWorldMapMarkers();
+        System.out.println("[World] placed " + poiData.name + " at tile " + wx + "," + wy + logDetail);
+        return newPoint;
     }
 
     /**
