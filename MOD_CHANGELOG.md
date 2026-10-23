@@ -14301,7 +14301,10 @@ code was unchanged in v1.23.
   (`canRegenerate` -> `canPayCost` -> `chooseSacrificeType` -> `getCardPreference` -> `shouldSacrificeThreatenedCard` ->
   ... -> `canDestroyBlocker` -> `canRegenerate`); the pump case passed. After: 4/4, one `[TFR-AIRecursion]` line per
   game. All `forge.ai` tests in forge-gui-desktop plus `LoopBreakerTest`: 409/409 (run with `-Dcheckstyle.skip`, the
-  `HelpMenu.java` unused import from round 708). Agent game: duels against Orange Mushroomlings at 50x after packaging - results in the next note of this round.
+  `HelpMenu.java` unused import from round 708). Agent game (after packaging, `settle` at 50x): three duels against an Orange Mushroomling (Adept,
+  `tiers/standard_orange_mushroomling_adept.dck`) - one won, two lost, all finished; no exception, and no
+  `[TFR-AIRecursion]` line, so those draws never put Hollow + Mycon + Saprolings into combat - a smoke test of the build,
+  not a repeat of the loop (the unit tests are that).
 - **Upstream report draft** (if the user wants to file it with Card-Forge): "AI StackOverflowError in
   ComputerUtil.canRegenerate when a regenerate ability's mana can only come from a sacrifice outlet. Board: AI controls
   Phyrexian Altar, Drudge Skeletons and another creature, and has no untapped land; Drudge Skeletons blocks. Combat
