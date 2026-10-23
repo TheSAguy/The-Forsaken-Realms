@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 714: Heart of a Champion pays the town that sent you, not only the arena's (2026-10-22)
+
+The user: "So my Capitol sent me on a quest to win a Arena championship to the Blue Capitol. I won, and got +3 Rep with
+the Blue Cap, nothing from my own capitol... Seems wrong."
+
+- **Cause**: quest 23 "Heart of a Champion" (`The Forsaken Realms/world/quests.json`, the quest epilogue) granted its
+  reputation only to `$(poi_1)`, the capital whose arena you win. It is the one quest on the Player Capitol's board
+  (`waste_town_generic` + `player_capital`, `[TFR-QuestBoard]`) with no "return to the giver" stage: the others end
+  with `Travel: here` and pay the giver there. So the giver got nothing, by data, not by a code fault. The user's log
+  bears it out: accepted day 10 at the Player Capitol, `[TFR-QuestTarget] Heart of a Champion -> Great Lighthouse`,
+  completed day 16 (`[TFR-Ascend] +20 Power - quest: Heart of a Champion`). The quest was not waiting for a hand-in.
+- **Fix**: the epilogue's "(Complete Quest)" option adds a second action, `addMapReputation 2` at `$(poi_source)`, round
+  186's token for the town that issued the quest (`AdventureQuestData.replaceSourcePOIToken`; a quest with no
+  `sourceID` skips the grant rather than misapplying it). The text reads "... and word of your win travels home. (+3
+  Reputation in $(poi_1), +2 in the town that sent you)". Why +2: it matches the "+2 Sender's Town" the delivery
+  quests pay; the arena town keeps its +3 for the win itself. The failure penalty (-2 at the arena town) is unchanged.
+- **Saves**: a quest is saved whole, its dialogs included (`AdventurePlayer` reads `quests` as `AdventureQuestData`), so a
+  Heart of a Champion accepted before this build keeps the old epilogue and pays the arena town only. Only quests taken
+  from this build on pay the giver. The user's day-16 completion is not repaid on its own: +2 at their Player Capitol
+  would need a save edit (game closed). Deliberately no load-time patch of in-flight copies: one quest, +2
+  reputation, and new offers carry the fix.
+- Data only, no Java; JSON parsed after the edit. Not seen in game (a full quest run is a capital trip plus a
+  three-round bracket); the two-action epilogue is the shape the delivery quests already use.
+
 ## Round 713: the Notices log hears arena wins, defeats and color standing - and Power stops crowding it (2026-10-22)
 
 The user: "Add all four Notices gaps: arena wins/champion, gold lost on defeat, color standing level changes, and stop

@@ -5877,7 +5877,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "The crowd goes wild as you finish your last opponent. You won't be paying for drinks in $(poi_1) for quite some time. (+3 Reputation in $(poi_1))",
+			"text": "The crowd goes wild as you finish your last opponent. You won't be paying for drinks in $(poi_1) for quite some time, and word of your win travels home. (+3 Reputation in $(poi_1), +2 in the town that sent you)",
 			"options": [
 				{
 					"action": [
@@ -5903,6 +5903,10 @@
 							],
 							"addMapReputation": 3,
 							"POIReference": "$(poi_1)"
+						},
+						{
+							"addMapReputation": 2,
+							"POIReference": "$(poi_source)"
 						}
 					],
 					"name": "(Complete Quest)"
