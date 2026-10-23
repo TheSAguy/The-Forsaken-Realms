@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 721: a new start-menu background - the golden-hour battle (2026-10-23)
+
+The user: "It turned out great. Please use that for TFR 1" (the start-menu image they made in ChatGPT from the Art
+main thread's prompt), then, after the mockups: "Install the 1920x1080 background and the phone crop in TFR 1 - Yes".
+
+- **The art**: a golden-hour battle seen from a cliff - knights with blue banners and a red dragon on the left, the
+  horde, a troll and a burning castle on the right, five-color magic bursts across the middle, and the hooded wanderer
+  on a ledge. Source 1619x971 (Art-Library, `Projects/The Forsaken Realms/Key Art/Menu Background/`).
+- **Landscape** `ui/title_bg.png`, 1920x1080: the full width cropped to 16:9 (1619x911, all 60 rows of trim off the
+  bottom cliff so the dragon's wing keeps the top edge), scaled up with Lanczos. 1920 rather than the stock 1024 because
+  the menu texture is drawn with Nearest filtering by default (texture filtering off): the stock size stretches 1.875x
+  on a 1080p screen into uneven blocks, 1920 is 1:1 at 1080p and exactly 2x at 4K.
+- **Portrait** `ui/title_bg_portrait.png`, 1080x1920: a 9:16 slice from the right edge (546x971 - the castle, the
+  troll, the horde and the wanderer), 1:1 across a 1080-wide phone. The phone menu's buttons cover most of the screen,
+  so a separate portrait painting was not worth it.
+- **How it takes over**: no code. `start_menu(_portrait).json`, `new_game(_portrait).json`, `save_load` and `settings`
+  ask for `ui/title_bg.png` / `ui/title_bg_portrait.png`; `Config.getFile` finds the plane's copy before common's, and
+  `Forge.afterDbLoaded` picks the portrait file when not in landscape. Common's stock images are untouched. The
+  day/night background setting still tints it as before.
+- **TFR 2** inherits it through its `inherit.json` (`ui/`) at the next TFR 1 merge, until its own menu image replaces it.
+
 ## Round 720: the AI no longer recurses to death over a regenerate ability paid with sacrifice mana (2026-10-23)
 
 The user: "Start round 720: fix the AI stack overflow (canRegenerate recursion with Yavimaya Hollow + Utopia Mycon)."

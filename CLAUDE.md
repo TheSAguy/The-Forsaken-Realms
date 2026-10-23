@@ -7,9 +7,9 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-720 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). Next version: 1.24 /
+689-701). Unreleased: rounds 702-721 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). Next version: 1.24 /
 12400. Engine = the 10.21 daily (round 701); next merge from upstream after `bc67f70ffbc`; BASE_INSTALL is that
-daily, so packages need no `--allow-base-mismatch`. Next free round: 721. Log sharing (round 698) posts to Discord through a webhook
+daily, so packages need no `--allow-base-mismatch`. Next free round: 722. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

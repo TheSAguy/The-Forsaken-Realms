@@ -273,6 +273,8 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 - **Cave and dungeon entrances** (the 2026-09-30 set - a picture of its own for every cave and most dungeons) -
   made by the game's author with PixelLab, plus six painted caves for the landmark places (source to be confirmed);
   the 2026-10-01 three-quarter-view caves likewise made with PixelLab.
+- **Start-menu background** (the golden-hour battle behind the title menu, 2026-10-23) - made by the game's author with
+  ChatGPT.
 - **Dungeon buildings and the animated whirlpool** (the 2026-10-01 set - crypt, pyramid, sanctuary, prison keep,
   witch hut, colosseum, skull rock, mines and the other adventure-map buildings on 32 dungeons and lairs, and the
   ocean's whirlpools) - **Heroes of Might and Magic III** adventure-map objects, © New World Computing / The 3DO
