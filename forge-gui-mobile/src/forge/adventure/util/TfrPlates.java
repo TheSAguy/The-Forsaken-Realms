@@ -147,6 +147,65 @@ public final class TfrPlates {
         float cx, foot;
     }
 
+    /** Opaque bounds of a measured frame, as fractions of it: left, right, top (from the frame's top edge). */
+    private static final java.util.Map<String, float[]> artBounds = new java.util.HashMap<>();
+
+    /**
+     * Where the plate goes: {center x, top} of the sprite's VISIBLE art in world px. The art is drawn from the frame
+     * CharacterSprite drew last (drawnFrame/X/Y/W/H), which can sit off the actor's box (a footprint, round 578), and a
+     * frame carries empty rows and columns round the creature. Measured once per atlas from the first frame seen: the
+     * png is read again into a Pixmap, its opaque pixels bounded, the Pixmap freed. Without it, the actor's box.
+     */
+    public static float[] artBox(EnemySprite sprite) {
+        TextureRegion f = sprite.drawnFrame;
+        float boxCx = sprite.getX() + sprite.getWidth() / 2f, boxTop = sprite.getY() + sprite.getHeight();
+        if (f == null || sprite.drawnW <= 0 || sprite.drawnH <= 0)
+            return new float[]{boxCx, boxTop};
+        String key = sprite.getAtlasPath() + "@" + f.getRegionWidth() + "x" + f.getRegionHeight();
+        float[] b = artBounds.get(key);
+        if (b == null) {
+            b = measure(f);
+            artBounds.put(key, b);
+            System.out.println("[TFR-Plates] art of " + sprite.getData().getName() + " (" + key + "): left " + b[0]
+                    + ", right " + b[1] + ", top " + b[2]);
+        }
+        float left = f.isFlipX() ? 1f - b[1] : b[0], right = f.isFlipX() ? 1f - b[0] : b[1];
+        return new float[]{sprite.drawnX + sprite.drawnW * (left + right) / 2f, sprite.drawnY + sprite.drawnH * (1f - b[2])};
+    }
+
+    private static float[] measure(TextureRegion f) {
+        com.badlogic.gdx.graphics.Pixmap pm = null;
+        boolean dispose = false;
+        try {
+            com.badlogic.gdx.graphics.TextureData data = f.getTexture().getTextureData();
+            if (!data.isPrepared())
+                data.prepare();
+            pm = data.consumePixmap();
+            dispose = data.disposePixmap();
+            // a mirrored region (CharacterSprite.FlipAnimation) has u > u2: read the texture from its left edge
+            int w = f.getRegionWidth(), h = f.getRegionHeight();
+            int x0 = Math.round(Math.min(f.getU(), f.getU2()) * pm.getWidth());
+            int y0 = Math.round(Math.min(f.getV(), f.getV2()) * pm.getHeight());
+            int minX = w, maxX = -1, minY = h;
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++)
+                    if ((pm.getPixel(x0 + x, y0 + y) & 0xff) > 24) {  // RGBA8888: the low byte is alpha
+                        if (x < minX) minX = x;
+                        if (x > maxX) maxX = x;
+                        if (y < minY) minY = y;
+                    }
+            if (maxX < 0)
+                return new float[]{0f, 1f, 0f};
+            return new float[]{minX / (float) w, (maxX + 1) / (float) w, minY / (float) h};
+        } catch (Exception e) {
+            System.out.println("[TFR-Plates] could not measure a frame (" + e + ") - the frame's own box");
+            return new float[]{0f, 1f, 0f};
+        } finally {
+            if (pm != null && dispose)
+                pm.dispose();
+        }
+    }
+
     /** A name without its rank word: "Adept Red Wizard" and "Master Red Wizard" are one family, as "Bear" is. */
     static String familyName(String name) {
         if (name == null)
@@ -244,7 +303,8 @@ public final class TfrPlates {
                 return;
             float rw = rank.getWidth(), th = rank.getHeight();
             float starW = legend ? ICON : 0f;
-            float colorsW = unknownColors ? PIP : colors.length() * PIP;
+            // the last pip's slot less its spacing, so the right padding matches the left
+            float colorsW = unknownColors ? PIP : colors.isEmpty() ? 0f : colors.length() * PIP - 0.6f;
             float lifeW = showLife ? GAP + life.getWidth() : 0f;
             float coinW = coin ? GAP + ICON : 0f;
             float w = rw + starW + (colorsW > 0 ? GAP + colorsW : 0f) + lifeW + coinW;

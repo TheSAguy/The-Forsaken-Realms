@@ -1068,10 +1068,12 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         // Round 719: its info plate while Alt is held (TfrPlates) - over the head, the crown and the talk icon. Not on a
         // Mimic (it would give the chest away) nor The Warden.
         if (forge.adventure.util.TfrPlates.shown() && !disguisedAsLoot() && !WARDEN_NAME.equals(nameOverride)) {
-            float top = getY() + getHeight();
+            // centered on the visible art and a pixel above its top (TfrPlates.artBox), not on the actor's box
+            float[] art = forge.adventure.util.TfrPlates.artBox(this);
+            float top = art[1];
             if (effect != null || (dialog != null && dialog.canShow()))
                 top = Math.max(top, getY() + 16 + 16 * getScaleY());
-            forge.adventure.util.TfrPlates.queue(this, infoPlate, getX() + getWidth() / 2f, top + 1f);
+            forge.adventure.util.TfrPlates.queue(this, infoPlate, art[0], top + 1f);
         }
     }
 

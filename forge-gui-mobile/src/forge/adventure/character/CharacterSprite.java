@@ -445,6 +445,11 @@ public class CharacterSprite extends MapActor {
         batchColor.set(originalBatchColor.r, originalBatchColor.g, originalBatchColor.b, originalBatchColor.a);
 
         batch.setColor(getColor());
+        drawnFrame = currentFrame; // round 719: where the art went, for the info plate (TfrPlates)
+        drawnX = drawX;
+        drawnY = drawY;
+        drawnW = frameWidth;
+        drawnH = frameHeight;
         batch.draw(currentFrame, drawX, drawY, frameWidth, frameHeight);
         batch.setColor(batchColor);
 
@@ -452,6 +457,10 @@ public class CharacterSprite extends MapActor {
     }
 
 
+
+    /** Round 719: the frame drawn last and where (world px) - the art can sit outside the actor's box (a footprint). */
+    public TextureRegion drawnFrame;
+    public float drawnX, drawnY, drawnW, drawnH;
 
     public Sprite getAvatar() {
         if (avatar == null || avatar.isEmpty())

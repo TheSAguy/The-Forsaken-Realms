@@ -14324,6 +14324,16 @@ the user's slot 1 - an older save with no rank record; every duel at 50x through
 - A cave (Mtenda Mesa): a plate over a map enemy, above its talk icon; the Units button stays where Log hides.
 - The Units button (simulated Android) turns gold while on; `the Units toggle: on`, `shown`, `hidden` logged.
 
+**Alignment pass** (the user, on the first test build: "The alignment seems a little of on the current test"). A plate
+was centered on the actor's box and sat on its top, but since round 578 the art is drawn off that box (a footprint),
+and a frame carries empty rows and columns round the creature - the Bear's art starts 31% down its frame. Now
+`CharacterSprite.draw` records the frame it drew and where (`drawnFrame`, `drawnX/Y/W/H`), and `TfrPlates.artBox`
+measures that frame's opaque pixels once per atlas (its png read again into a Pixmap, freed after; a mirrored frame
+mirrors the bounds; `[TFR-Plates] art of <Name> (<atlas>@WxH): left, right, top`). The plate centers on the visible
+art and sits 1 world px above its top. The plate's box is drawn round the letters' band of the [%55] label, not the
+whole label (whose lower ~40% is line gap), and the last pip no longer leaves its spacing as extra right padding.
+Seen on the Ancient Demon (156x128 frame), Goblin, Bear and Cavalier Captain: before/after crops in the round's notes.
+
 **Not seen in game:** Alt itself and R3 (the agent bridge cannot hold a key; Alt is the same check as TFR 2's), the
 legend star, the Bronze Coin icon, Manasight's pips on an unknown enemy, a Mimic without a plate, portrait layout, a
 real Android device.

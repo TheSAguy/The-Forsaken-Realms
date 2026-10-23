@@ -45,7 +45,9 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
   `TfrPlates.beginFrame()` before the sprites draw and `endFrame(batch, alpha)` after, so plates draw over every sprite.
   On a conflict, keep upstream's body and wrap its `super.drawChildren` the same way.
 - **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - `draw()` ends by queueing its plate
-  (`infoPlate`), not on a Mimic or The Warden.
+  (`infoPlate`, placed by `TfrPlates.artBox`), not on a Mimic or The Warden.
+- **`forge-gui-mobile/src/forge/adventure/character/CharacterSprite.java`** (STOCK) - `draw()` records the frame it
+  drew and where (public `drawnFrame`, `drawnX/Y/W/H`) just before `batch.draw`.
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the enemy's starting-life chain (difficulty,
   day/night terrain, early week, Notoriety, Aura of Fear) moved out of `enter()` into public static
   `enemyStartingLife(...)` with a `log` flag; `earlyWeekLife` became static with its scene fields as parameters (one
