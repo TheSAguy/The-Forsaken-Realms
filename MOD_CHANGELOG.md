@@ -14264,6 +14264,70 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 719: enemy info plates - hold Alt to see what you know of every enemy (2026-10-23)
+
+TFR 2's Alt plates brought to TFR 1, with knowledge-gated detail (the user: "If you press 'Alt' it shows the monsters
+level ... If you have battle them before, then it will also show his deck colors and life total. If you've battled a
+Apprentice, then for the same creatures' level ups ... it will show the level and deck colors. but not life"; the
+design was approved with every recommendation: "Units HUD toggle on touch, R3 on controller, hold Alt, any started
+duel counts, live starting life (orange when buffed), NG+ clears it, no plates on my guards, no names").
+
+**What a plate shows** (`util/TfrPlates`, on a dark plate over the head, after every sprite has drawn):
+
+| The player has battled | Plate |
+|---|---|
+| nothing of its family | rank ("Adept", "Adept Boss") in the rank's color, then a dim "?" |
+| another rank of its family | rank + color pips |
+| this exact rank | rank + color pips + [+Life] the life the duel would start with now, orange when above its difficulty life |
+
+- Rank colors: TFR 2's Apprentice `a8b49a`, Adept `7ab6d8`, Master `c07ad8`, plus gold `e8b84a` for an Archmage.
+- A gold star after the rank for a legend (`LegendSpawns.isMember`), a Bronze Coin icon at the end for an enemy that
+  holds the player's coin (`owesCoinRansom`).
+- Manasight (`hasColorView`) shows the pips even on an unknown enemy, as its dots beside the sprite already do.
+- No plate on a Mimic or Fog Trap (`disguisedAsLoot`) or The Warden. The player's roaming guards are CharacterSprites,
+  so they never get one.
+- Everywhere enemies draw: the overworld (inside the fog, as the sprite), caves, dungeons and towns.
+- A plate that would overlap one already placed this frame is lifted above it, at most twice.
+
+**Input:** either Alt held; the controller's right stick held in (R3 - `HudScene` passes `BUTTON_THUMBR` key events to
+`TfrPlates.stickKey`; `leave()` releases it); the HUD's **Units** toggle on Android (right of Log in landscape, gold
+while on; `-Dtfr.touchPlates=true` shows it on the desktop); console `plates [on|off]`.
+
+**Knowledge.** The win/loss record is by name only, so an Adept Bear and a Master Bear were one entry.
+`PlayerStatistic.ranksBattled` (new, saved as "ranksBattled", cleared with the record by New Game and New Game+) keeps
+"Name|Tier" for every duel of the player's own that STARTS (`DuelScene.enter`, each seat of a chain): a win, loss,
+concede or draw, the Arena included; not an Inn match, Deck Tester or a roaming guard's fight. Families: round 643's
+variants share the catalog name; the wizard families ("Apprentice/Adept/Master Red Wizard") match after the rank word.
+**Older saves:** a name in the win/loss record counts as its family battled, and as the exact rank for an enemy with
+only one rank (not an `EnemyTiers` family).
+
+**Shared starting life.** The duel's chain (life x `enemyLifeFactor`, the day/night terrain on the overworld,
+`earlyWeekLife`, Notoriety's extra life, Aura of Fear / Challenger's Mark) moved out of `DuelScene.enter` into public
+static `DuelScene.enemyStartingLife(data, sprite, arena, event, guardFight, aiSide, log)`, which the plate also calls
+(a few times a second, `log` false). `earlyWeekLife` became static with the scene fields as parameters. Callers checked
+before the refactor: graphify `affected DuelScene.earlyWeekLife` - 1 caller, `DuelScene.enter` (the graph also lists
+other scenes' `enter()` nodes by name; Grep confirms the single call). `World.applyDayNightTerrainLife` gained a `log`
+overload; its 2 callers (DuelScene, WorldStage's guard fight) keep the logging signature.
+
+**Logs:** `[TFR-Plates] shown: N plate(s) - a battled, b family only, c unknown, d lifted (Manasight)`, `hidden`, `the
+Units toggle: on|off`, `R3 held|released`, `learned <Name> (<Rank>) - N rank(s) battled`.
+
+**Seen in the agent game** (the round's classes ahead of the agent jar, `-Dtfr.touchPlates=true`; slot 42, a copy of
+the user's slot 1 - an older save with no rank record; every duel at 50x through `settle`):
+- Old save: the Adept Ancient Demon in the record by name showed "ADEPT" + blue/black pips, no life; never-fought
+  enemies "APPRENTICE ?" / "MASTER ?".
+- Lost a duel to that Adept Ancient Demon: `learned Ancient Demon (Adept)`. Spawned it at three ranks: the Adept showed
+  pips + 40 life, the Master pips only, and the next duel's `[TFR-EnemyLife] Ancient Demon ... difficultyScaled=45 ->
+  terrainAdjusted=40` (white terrain at night) matched the plate. An Abyssal Baron (Master) interception was learned
+  the same way.
+- The overlap lift: the Master Abyssal Baron's plate rose above the Adept demon's beside it.
+- A cave (Mtenda Mesa): a plate over a map enemy, above its talk icon; the Units button stays where Log hides.
+- The Units button (simulated Android) turns gold while on; `the Units toggle: on`, `shown`, `hidden` logged.
+
+**Not seen in game:** Alt itself and R3 (the agent bridge cannot hold a key; Alt is the same check as TFR 2's), the
+legend star, the Bronze Coin icon, Manasight's pips on an unknown enemy, a Mimic without a plate, portrait layout, a
+real Android device.
+
 ## Round 718: the other eight TFR achievements (2026-10-23)
 
 Round 717's framework, eight more entries (the user: "Build the 16 achievements ... Grand Circuit 3/5/6/7. Two

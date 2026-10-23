@@ -115,6 +115,9 @@ public class ConfigData {
     // (user spec 2026-08-13) - display-only, see EnemyData.getTieredDisplayName(). Same opt-in
     // rule as every flag above: false here, true only in "The Forsaken Realms"/config.json.
     public boolean showEnemyTierInName = false;
+    // Round 719: hold Alt (R3 on a controller, the HUD's Units toggle on touch) and every enemy in sight wears an info
+    // plate - its rank, and its colors and starting life as far as the player has battled it (util/TfrPlates).
+    public boolean enemyInfoPlatesEnabled = false;
     // Per-race starting expansions (user spec 2026-08-12) - see RaceEditionData. When a race has
     // an entry here, it replaces the flat starterEditions first-N seeding; races without an
     // entry (and planes without this array) fall back to starterEditions.

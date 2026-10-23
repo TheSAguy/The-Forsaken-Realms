@@ -7089,6 +7089,11 @@ public class World implements Disposable, SaveFileContent {
      * percentage ("rounded up" per spec, applied to both directions), floored at 1 life.
      */
     public int applyDayNightTerrainLife(int baseLife, int tileX, int tileY) {
+        return applyDayNightTerrainLife(baseLife, tileX, tileY, true);
+    }
+
+    /** Round 719: log false for the Alt info plates (TfrPlates), which ask every frame - only a duel writes the line. */
+    public int applyDayNightTerrainLife(int baseLife, int tileX, int tileY, boolean log) {
         if (!isDayNightCycleEnabled() || baseLife <= 0)
             return baseLife;
         int biomeIndex = highestBiome(getBiome(tileX, tileY));
@@ -7108,8 +7113,9 @@ public class World implements Disposable, SaveFileContent {
         int delta = (int) Math.ceil(baseLife * Math.abs(pct) / 100f);
         int result = pct > 0 ? baseLife + delta : Math.max(1, baseLife - delta);
         // Diagnostic-only logging - greppable in forge.log as "[TFR-DayNight]".
-        System.out.println("[TFR-DayNight] " + terrain + " terrain, " + (isNight() ? "night" : "day")
-                + ": enemy life " + baseLife + " -> " + result);
+        if (log)
+            System.out.println("[TFR-DayNight] " + terrain + " terrain, " + (isNight() ? "night" : "day")
+                    + ": enemy life " + baseLife + " -> " + result);
         return result;
     }
 

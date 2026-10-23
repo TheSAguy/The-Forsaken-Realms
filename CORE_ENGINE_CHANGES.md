@@ -38,6 +38,30 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 719 - enemy info plates (Alt)
+
+- **`forge-gui-mobile/src/forge/adventure/util/TfrPlates.java`** - NEW: the plates, their input state and log.
+- **`forge-gui-mobile/src/forge/adventure/stage/SpriteGroup.java`** (STOCK) - `drawChildren` calls
+  `TfrPlates.beginFrame()` before the sprites draw and `endFrame(batch, alpha)` after, so plates draw over every sprite.
+  On a conflict, keep upstream's body and wrap its `super.drawChildren` the same way.
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** - `draw()` ends by queueing its plate
+  (`infoPlate`), not on a Mimic or The Warden.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - the enemy's starting-life chain (difficulty,
+  day/night terrain, early week, Notoriety, Aura of Fear) moved out of `enter()` into public static
+  `enemyStartingLife(...)` with a `log` flag; `earlyWeekLife` became static with its scene fields as parameters (one
+  caller, `enter`). `enter()` also records each seat's rank (`recordRankBattled`).
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `applyDayNightTerrainLife` has an overload with
+  `log`; the old signature logs as before.
+- **`forge-gui-mobile/src/forge/adventure/player/PlayerStatistic.java`** (STOCK) - `ranksBattled` ("Name|Tier"),
+  saved as "ranksBattled", cleared by `clear()`; `recordRankBattled`, `hasBattledRank`, `getRanksBattled`, `rankKey`.
+- **`forge-gui-mobile/src/forge/adventure/scene/HudScene.java`** (STOCK) - `keyDown`/`keyUp` pass the key to
+  `TfrPlates.stickKey` (R3); `leave()` releases it.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - the Units toggle (`platesButton`) right of Log, on
+  Android or with `-Dtfr.touchPlates=true`.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `plates [on|off]`.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** - `enemyInfoPlatesEnabled` (on in TFR's config.json
+  only).
+
 ### Round 718 - the other eight TFR achievements
 
 All mod code (no stock file this round); each is a one-line call into `TfrAchievements`.

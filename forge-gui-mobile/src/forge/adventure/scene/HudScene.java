@@ -42,6 +42,7 @@ public abstract class HudScene extends Scene implements InputProcessor, IAfterMa
 
     @Override
     public boolean leave() {
+        forge.adventure.util.TfrPlates.releaseStick(); // round 719: a duel can swallow R3's release
         stage.leave();
         return super.leave();
     }
@@ -74,6 +75,7 @@ public abstract class HudScene extends Scene implements InputProcessor, IAfterMa
 
     @Override
     public boolean keyDown(int keycode) {
+        forge.adventure.util.TfrPlates.stickKey(keycode, true); // round 719: R3 held shows the info plates
         // Round 516 (code review): Esc / Back closes an open dialog first - MapStage.dialogInput below takes every key
         // while a town's or the HUD's dialog is up, and it knows only Up/Down/Use.
         if (forge.adventure.util.KeyBinding.Back.isPressed(keycode) && hud.closeDialogOnBack(keycode))
@@ -93,6 +95,7 @@ public abstract class HudScene extends Scene implements InputProcessor, IAfterMa
 
     @Override
     public boolean keyUp(int keycode) {
+        forge.adventure.util.TfrPlates.stickKey(keycode, false); // round 719
         if (MapStage.getInstance().isDialogOnlyInput()) {
             MapStage.getInstance().stop();
             hud.releaseBack(keycode); // round 516

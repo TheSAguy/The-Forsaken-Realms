@@ -300,6 +300,13 @@ public class ConsoleCommandInterpreter {
             return "Defeated " + color;
         });
         // Round 717: TFR's achievements - list them, check the save again, or forget them (the agent game's profile).
+        // Round 719: the info plates' toggle ("plates on" / "plates off"; no word flips it), as the HUD's Units button.
+        registerCommand(new String[]{"plates"}, s -> {
+            boolean want = s.length == 0 ? !forge.adventure.util.TfrPlates.toggledOn() : !s[0].equalsIgnoreCase("off");
+            if (want != forge.adventure.util.TfrPlates.toggledOn())
+                forge.adventure.util.TfrPlates.toggle();
+            return "Info plates " + (want ? "on" : "off");
+        });
         registerCommand(new String[]{"achievement"}, s -> forge.adventure.util.TfrAchievements.describe());
         registerCommand(new String[]{"achievement", "check"}, s -> {
             forge.adventure.util.TfrAchievements.consoleEnd(); // the check reads the save: not a console grant

@@ -127,6 +127,10 @@ public class GameHUD extends Stage {
     // Round 549 (Vr01 on Discord: "And a log of the announcement so you don't miss one"; the user: "add a log button in the
     // bottom left hand corner, then when you click on it, it would show the last 20 entries"): the notices' log.
     private final TextraButton noticeLogButton;
+    /** Round 719: the Units toggle on touch (TfrPlates: every enemy's info plate, as Alt held on a keyboard), right of
+     *  the Log button. -Dtfr.touchPlates=true shows it on the desktop. */
+    private final TextraButton platesButton;
+    private boolean platesShownOn;
     private final InputEvent eventTouchDown, eventTouchUp;
     private final TextraButton deckActor, openMapActor, menuActor, logbookActor, inventoryActor, exitToWorldMapActor, bookmarkActor;
     public final UIActor ui;
@@ -216,6 +220,7 @@ public class GameHUD extends Stage {
         // - chains off bookmarkActor's own hud.json-driven position the same way.
         worldStandingsActor = Controls.newTextButton("[%80]Info", this::openWorldStandings);
         noticeLogButton = Controls.newTextButton("[%80]Log", this::openNoticeLog); // round 549
+        platesButton = Controls.newTextButton("[%80]Units", forge.adventure.util.TfrPlates::toggle); // round 719
         //create touchpad
         touchpad = new Touchpad(10, Controls.getSkin());
         touchpad.setBounds(15, 15, TOUCHPAD_SCALE, TOUCHPAD_SCALE);
@@ -311,6 +316,16 @@ public class GameHUD extends Stage {
             noticeLogButton.setSize(menuActor.getWidth(), menuActor.getHeight());
             noticeLogButton.setPosition(Math.max(0, worldStandingsActor.getX() - menuActor.getWidth()), menuActor.getY());
         }
+        // Round 719: Units right of Log in landscape (it stays put in a dungeon, where Log hides), one slot left of it in
+        // portrait.
+        if (Forge.isLandscapeMode()) {
+            platesButton.setSize(PLATES_BUTTON_W, noticeLogButton.getHeight());
+            platesButton.setPosition(noticeLogButton.getX() + noticeLogButton.getWidth() + 2, noticeLogButton.getY());
+        } else {
+            platesButton.setSize(menuActor.getWidth(), menuActor.getHeight());
+            platesButton.setPosition(Math.max(0, noticeLogButton.getX() - menuActor.getWidth()), menuActor.getY());
+        }
+        platesButton.setVisible(false);
         lifePoints.setText("[%95][+Life]");
         enemyCounterText = Controls.newTypingLabel(Forge.getLocalizer().getMessage("lblRemainingEnemies", String.valueOf(0)));
         enemyCounterText.setColor(Color.BLACK);
@@ -438,6 +453,7 @@ public class GameHUD extends Stage {
         menuGroup.addActor(bookmarkActor);
         menuGroup.addActor(worldStandingsActor);
         ui.addActor(menuGroup);
+        ui.addActor(platesButton); // round 719
         ui.addActor(noticeLogButton); // round 549: not in menuGroup; round 561: shown on the world map only (draw())
         //AVATAR
         avatarGroup.addActor(avatar);
@@ -523,7 +539,7 @@ public class GameHUD extends Stage {
      */
     private boolean onHudControl(Vector2 stagePoint) {
         Actor[] built = {worldStandingsActor, speedCheckBox, waitCheckBox, timeOfDayActor, resourceDisplayActor,
-                ascendanceDisplayActor, treasureMapsButton, noticeLogButton};
+                ascendanceDisplayActor, treasureMapsButton, noticeLogButton, platesButton};
         for (Actor actor : built)
             if (containsStagePoint(actor, stagePoint))
                 return true;
@@ -610,6 +626,13 @@ public class GameHUD extends Stage {
                     && forge.adventure.util.TreasureHunt.anyPieces(WorldSave.getCurrentSave().getWorld()));
         // Round 561 (the user, of a dungeon: "log button does not need to show here. Should only show in Overworld").
         noticeLogButton.setVisible(!MapStage.getInstance().isInMap());
+        // Round 719: the Units toggle on touch, gold while the plates show.
+        boolean plates = forge.adventure.util.TfrPlates.enabled() && (GuiBase.isAndroid() || Boolean.getBoolean("tfr.touchPlates"));
+        platesButton.setVisible(plates);
+        if (plates && platesShownOn != forge.adventure.util.TfrPlates.toggledOn()) {
+            platesShownOn = forge.adventure.util.TfrPlates.toggledOn();
+            platesButton.setText(platesShownOn ? "[%80][#e8b84a]Units" : "[%80]Units");
+        }
         super.draw(); //draw the Hud
         // Round 329 (the user, right after this round's banner change: "I just loaded my game and the screen was black,
         // no terrain"). The HUD shares one SpriteBatch with the world (round 316, upstream #12011), and scene2d leaves
@@ -1553,6 +1576,8 @@ public class GameHUD extends Stage {
     private static final String POWER_KIND = "p";
     private static final int NOTICE_LOG_VISIBLE = 6; // round 567: entries shown before the log scrolls
     private static final float LOG_BUTTON_W = 26f;
+    /** Round 719: the Units button - "Units" is two letters longer than "Log". */
+    private static final float PLATES_BUTTON_W = 32f;
     private final java.util.ArrayDeque<String[]> noticeQueue = new java.util.ArrayDeque<>(); // {text, "w" | "b"}
     private final java.util.ArrayDeque<String[]> noticeLog = new java.util.ArrayDeque<>(); // {text, tint, day}, newest first
     private boolean noticeShowing;

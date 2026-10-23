@@ -1065,7 +1065,18 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
             batch.draw(TR, getX(), getY() + 16, 16*getScaleX(), 16*getScaleY());
         }
         drawDungeonEffectPip(batch);
+        // Round 719: its info plate while Alt is held (TfrPlates) - over the head, the crown and the talk icon. Not on a
+        // Mimic (it would give the chest away) nor The Warden.
+        if (forge.adventure.util.TfrPlates.shown() && !disguisedAsLoot() && !WARDEN_NAME.equals(nameOverride)) {
+            float top = getY() + getHeight();
+            if (effect != null || (dialog != null && dialog.canShow()))
+                top = Math.max(top, getY() + 16 + 16 * getScaleY());
+            forge.adventure.util.TfrPlates.queue(this, infoPlate, getX() + getWidth() / 2f, top + 1f);
+        }
     }
+
+    /** Round 719: this enemy's info plate (TfrPlates). */
+    private final forge.adventure.util.TfrPlates.Plate infoPlate = new forge.adventure.util.TfrPlates.Plate();
 
     /**
      * A small cyan pip on every enemy in a map that carries a DUNGEON effect.

@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,10 @@ public class PlayerStatistic implements SaveFileContent {
     HashMap<String, Pair<Integer,Integer>> winLossRecord=new HashMap<>();
     List<AdventureEventData> completedEvents = new ArrayList<>();
     int secondPlayed=0;
+    /** Round 719: every enemy rank the player has started a duel with, as "Name|Tier" ("Bear|Uncommon") - the record
+     *  above is by name only, so it cannot tell an Adept Bear from a Master. Read by the Alt info plates (TfrPlates);
+     *  saved as "ranksBattled", cleared with the record by New Game and New Game+. An older save loads it empty. */
+    HashSet<String> ranksBattled = new HashSet<>();
 
     public HashMap<String, Pair<Integer,Integer>> getWinLossRecord()
     {
@@ -146,6 +151,37 @@ public class PlayerStatistic implements SaveFileContent {
         }
         else
             completedEvents.clear();
+
+        ranksBattled = new HashSet<>();
+        if (data != null && data.containsKey("ranksBattled")) {
+            Object stored = data.readObject("ranksBattled");
+            if (stored instanceof java.util.Collection)
+                for (Object o : (java.util.Collection<?>) stored)
+                    if (o instanceof String)
+                        ranksBattled.add((String) o);
+        }
+    }
+
+    /** Round 719: the key a rank is kept under. */
+    public static String rankKey(String name, String tier) {
+        return name + "|" + tier;
+    }
+
+    /** Round 719: a duel with this enemy has started (DuelScene.enter: the player's own duels, the Arena's included). */
+    public void recordRankBattled(forge.adventure.data.EnemyData enemy) {
+        if (enemy == null || enemy.getName() == null)
+            return;
+        if (ranksBattled.add(rankKey(enemy.getName(), enemy.tier)))
+            System.out.println("[TFR-Plates] learned " + enemy.getName() + " (" + forge.adventure.data.EnemyData.tierDisplayName(enemy.tier)
+                    + ") - " + ranksBattled.size() + " rank(s) battled");
+    }
+
+    public boolean hasBattledRank(String name, String tier) {
+        return ranksBattled.contains(rankKey(name, tier));
+    }
+
+    public java.util.Set<String> getRanksBattled() {
+        return ranksBattled;
     }
 
     public void setResult(String enemy,boolean win)
@@ -174,12 +210,14 @@ public class PlayerStatistic implements SaveFileContent {
         SaveFileData data=new SaveFileData();
         data.storeObject("winLossRecord",winLossRecord);
         data.storeObject("completedEvents", completedEvents);
+        data.storeObject("ranksBattled", new ArrayList<>(ranksBattled)); // round 719
         return data;
     }
 
 
     public void clear() {
         winLossRecord.clear();
+        ranksBattled.clear(); // round 719: New Game and New Game+ start knowing no enemy
         // completedEvents was NOT cleared here (fixed 2026-08-29, user request that a New Game /
         // New Game+ reset these values). It is persisted by save() and restored by load() just
         // like winLossRecord, and it backs every event statistic on the Statistics screen

@@ -301,6 +301,7 @@
     "arenaUpgradesEnabled": true,
     "contentFilterTablesEnabled": true,
     "showEnemyTierInName": true,
+    "enemyInfoPlatesEnabled": true,
     "weightedSpawnTiersEnabled": true,
     "functioningNeutralTownsEnabled": true,
     "modVersion": "1.23",

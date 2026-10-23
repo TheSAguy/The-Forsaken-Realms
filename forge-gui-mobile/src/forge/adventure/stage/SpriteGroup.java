@@ -36,7 +36,9 @@ public class SpriteGroup extends Group {
         // bypasses .toArray(), lambda creations, and heavy .setZIndex() array copies
         children.sort(yDepthComparator);
 
+        forge.adventure.util.TfrPlates.beginFrame(); // round 719: the enemies queue their info plates as they draw
         super.drawChildren(batch, parentAlpha);
+        forge.adventure.util.TfrPlates.endFrame(batch, parentAlpha); // ...and they draw over every sprite
     }
 
     @Override

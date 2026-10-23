@@ -1157,45 +1157,14 @@ public class DuelScene extends ForgeScene {
             }
             aiPlayer.setPlayer(enemyPlayer);
             aiPlayer.setTeamNumber(currentEnemy.teamNumber);
-            int enemyStartingLife = Math.round((float) currentEnemy.life * advPlayer.getDifficulty().enemyLifeFactor);
-            int lifeBeforeTerrainModifier = enemyStartingLife;
-            // Day/night terrain life modifier (user spec 2026-08-12): OVERWORLD roaming fights
-            // only - events (Arena/Inn, eventData != null) use their own rules line below, and
-            // town/dungeon interiors are excluded via isInMap(). The enemy sprite's own tile
-            // decides the terrain; the whole nextEnemy chain fights on that same tile.
-            if (this.eventData == null && !MapStage.getInstance().isInMap()) {
-                int tileSize = Current.world().getTileSize();
-                enemyStartingLife = Current.world().applyDayNightTerrainLife(enemyStartingLife,
-                        (int) enemy.getX() / tileSize, (int) enemy.getY() / tileSize);
-            }
-            enemyStartingLife = earlyWeekLife(enemyStartingLife, currentEnemy); // round 383
-            // Round 446 (the user: "+25% health" at 45 wins in a row, "+25% another" at 50): the notoriety bonus walls'
-            // extra life - the same duels the walls go to (below: no event, no roaming guard), every rank.
-            int notorietyLifePercent = eventData == null && guardDeck == null
-                    ? Current.player().notorietyBonusLifePercent() : 0;
-            int lifeBeforeNotoriety = enemyStartingLife;
-            if (notorietyLifePercent > 0)
-                enemyStartingLife = Math.round(enemyStartingLife * (100 + notorietyLifePercent) / 100f);
-            // Diagnostic logging standard (user request 2026-08-13) - unconditional (unlike
-            // [TFR-DayNight] above, which only fires for the colored-terrain/day-night-enabled
-            // subset of overworld fights), so difficulty-scaled starting life is verifiable for
-            // EVERY fight, including neutral terrain, dungeons/towns, and Arena/Inn events.
-            System.out.println("[TFR-EnemyLife] " + currentEnemy.getName() + " rawLife=" + currentEnemy.life
-                    + " enemyLifeFactor=" + advPlayer.getDifficulty().enemyLifeFactor
-                    + " -> difficultyScaled=" + lifeBeforeTerrainModifier
-                    + (lifeBeforeNotoriety != lifeBeforeTerrainModifier ? " -> terrainAdjusted=" + lifeBeforeNotoriety : "")
-                    + (notorietyLifePercent > 0 ? " -> notoriety +" + notorietyLifePercent + "%=" + enemyStartingLife : "")
-                    + " (eventOverride=" + (eventData != null) + ")");
-            // Round 596 (the user: "Aura of fear: 10% fewer hit points for enemies (cumulative 3 times)"): the player's own
-            // duels - not an event (its rules set the life), not a roaming guard's fight - never under 1.
-            float fear = eventData == null && guardDeck == null ? forge.adventure.util.Ascendance.enemyLifeFactor() : 1f;
-            // Round 604: Challenger's Mark raises it (x1.2) - the factor is not only ever below 1 now.
-            if (fear != 1f) {
-                int lifeBeforeFear = enemyStartingLife;
-                enemyStartingLife = Math.max(1, Math.round(enemyStartingLife * fear));
-                System.out.println("[TFR-Ascend] " + (fear < 1f ? "Aura of Fear: " : "Challenger's Mark: ") + currentEnemy.getName()
-                        + " starts at " + enemyStartingLife + " life, not " + lifeBeforeFear + " (x" + fear + ")");
-            }
+            // Round 719: the whole chain moved into enemyStartingLife(), which the Alt info plates (TfrPlates) call too.
+            int enemyStartingLife = enemyStartingLife(currentEnemy, enemy, isArena, eventData != null, guardDeck != null,
+                    aiControlsPlayerSide, true);
+            // Round 719 (the user: "If you have battle them before, then it will also show his deck colors and life
+            // total"): every rank a duel of the player's own starts against - won, lost, conceded or drawn, the Arena's
+            // included - for the Alt info plates. Not an Inn match (the event's deck), Deck Tester or a guard's fight.
+            if (eventData == null && guardDeck == null && !aiControlsPlayerSide && currentEnemy.fixedDeck == null)
+                advPlayer.getStatistic().recordRankBattled(currentEnemy);
             aiPlayer.setStartingLife(eventData != null ? eventData.eventRules.startingLife : enemyStartingLife);
 
             Array<EffectData> equipmentEffects = new Array<>();
@@ -1608,6 +1577,59 @@ public class DuelScene extends ForgeScene {
     }
 
     /**
+     * Round 719: the life an enemy starts a duel with - its life x the difficulty's enemyLifeFactor, the day/night
+     * terrain (overworld roaming fights only), the early-week ramp (earlyWeekLife), Notoriety's extra life and Aura of
+     * Fear / Challenger's Mark - moved out of enter() so the Alt info plates (TfrPlates) show the very number the duel
+     * starts with. An Inn match still starts at its rules' life (enter() sets that). log: the [TFR-EnemyLife],
+     * [TFR-DayNight], [TFR-EarlyLife] and [TFR-Ascend] lines, which only the duel writes - a plate asks every frame.
+     */
+    public static int enemyStartingLife(EnemyData data, EnemySprite sprite, boolean arena, boolean event, boolean guardFight,
+                                        boolean aiSide, boolean log) {
+        AdventurePlayer advPlayer = Current.player();
+        int enemyStartingLife = Math.round((float) data.life * advPlayer.getDifficulty().enemyLifeFactor);
+        int lifeBeforeTerrainModifier = enemyStartingLife;
+        // Day/night terrain life modifier (user spec 2026-08-12): OVERWORLD roaming fights
+        // only - events (Arena/Inn, eventData != null) use their own rules line below, and
+        // town/dungeon interiors are excluded via isInMap(). The enemy sprite's own tile
+        // decides the terrain; the whole nextEnemy chain fights on that same tile.
+        if (!event && sprite != null && !MapStage.getInstance().isInMap() && Current.world() != null) {
+            int tileSize = Current.world().getTileSize();
+            enemyStartingLife = Current.world().applyDayNightTerrainLife(enemyStartingLife,
+                    (int) sprite.getX() / tileSize, (int) sprite.getY() / tileSize, log);
+        }
+        enemyStartingLife = earlyWeekLife(enemyStartingLife, data, sprite, arena || event, aiSide, log); // round 383
+        // Round 446 (the user: "+25% health" at 45 wins in a row, "+25% another" at 50): the notoriety bonus walls'
+        // extra life - the same duels the walls go to (no event, no roaming guard), every rank.
+        int notorietyLifePercent = !event && !guardFight ? advPlayer.notorietyBonusLifePercent() : 0;
+        int lifeBeforeNotoriety = enemyStartingLife;
+        if (notorietyLifePercent > 0)
+            enemyStartingLife = Math.round(enemyStartingLife * (100 + notorietyLifePercent) / 100f);
+        // Diagnostic logging standard (user request 2026-08-13) - unconditional (unlike
+        // [TFR-DayNight] above, which only fires for the colored-terrain/day-night-enabled
+        // subset of overworld fights), so difficulty-scaled starting life is verifiable for
+        // EVERY fight, including neutral terrain, dungeons/towns, and Arena/Inn events.
+        if (log)
+            System.out.println("[TFR-EnemyLife] " + data.getName() + " rawLife=" + data.life
+                    + " enemyLifeFactor=" + advPlayer.getDifficulty().enemyLifeFactor
+                    + " -> difficultyScaled=" + lifeBeforeTerrainModifier
+                    + (lifeBeforeNotoriety != lifeBeforeTerrainModifier ? " -> terrainAdjusted=" + lifeBeforeNotoriety : "")
+                    + (notorietyLifePercent > 0 ? " -> notoriety +" + notorietyLifePercent + "%=" + enemyStartingLife : "")
+                    + " (eventOverride=" + event + ")");
+        // Round 596 (the user: "Aura of fear: 10% fewer hit points for enemies (cumulative 3 times)"): the player's own
+        // duels - not an event (its rules set the life), not a roaming guard's fight - never under 1.
+        float fear = !event && !guardFight ? forge.adventure.util.Ascendance.enemyLifeFactor() : 1f;
+        // Round 604: Challenger's Mark raises it (x1.2) - the factor is not only ever below 1 now.
+        if (fear != 1f) {
+            int lifeBeforeFear = enemyStartingLife;
+            enemyStartingLife = Math.max(1, Math.round(enemyStartingLife * fear));
+            if (log)
+                System.out.println("[TFR-Ascend] " + (fear < 1f ? "Aura of Fear: " : "Challenger's Mark: ") + data.getName()
+                        + " starts at " + enemyStartingLife + " life, not " + lifeBeforeFear + " (x" + fear + ")");
+        }
+        return enemyStartingLife;
+    }
+
+    /**
      * Round 383b (the user: "I feel like the new spawn from dungeons is going to make it a little harder to control the
      * monster level at the start of the game... week 1, enemy health is 50% normal, but not lower than 20 health
      * (unless they already have less). Week 2, 75%, but not less than 25"). Applied to the life the fight would start
@@ -1617,7 +1639,8 @@ public class DuelScene extends ForgeScene {
      * the AI fights for the player's side (a guard's), nor anything in New Game+. Settings earlyLifeWeek1/2Factor and
      * Floor; grep forge.log for [TFR-EarlyLife].
      */
-    private int earlyWeekLife(int life, EnemyData data) {
+    private static int earlyWeekLife(int life, EnemyData data, EnemySprite enemy, boolean arenaOrEvent, boolean aiControlsPlayerSide,
+                                     boolean log) {
         forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
         if (tuning == null || data == null || Current.world() == null)
             return life;
@@ -1640,7 +1663,7 @@ public class DuelScene extends ForgeScene {
             exempt = "a boss";
         else if (forge.adventure.util.LegendSpawns.isMember(data))
             exempt = "a legend";
-        else if (isArena || eventData != null)
+        else if (arenaOrEvent)
             exempt = "an Arena or Inn fight";
         else if (enemy != null && enemy.territoryColor != null)
             exempt = "a territory mage";
@@ -1649,12 +1672,14 @@ public class DuelScene extends ForgeScene {
         else if (Current.player().getCharacterFlag("newGamePlus") > 0)
             exempt = "New Game+";
         if (exempt != null) {
-            System.out.println("[TFR-EarlyLife] " + data.getName() + " week " + week + ": " + life + " kept (" + exempt + ")");
+            if (log)
+                System.out.println("[TFR-EarlyLife] " + data.getName() + " week " + week + ": " + life + " kept (" + exempt + ")");
             return life;
         }
         int ramped = Math.min(life, Math.max(floor, Math.round(life * factor)));
-        System.out.println("[TFR-EarlyLife] " + data.getName() + " week " + week + ": " + life + " -> " + ramped
-                + " (x" + factor + ", floor " + floor + ")");
+        if (log)
+            System.out.println("[TFR-EarlyLife] " + data.getName() + " week " + week + ": " + life + " -> " + ramped
+                    + " (x" + factor + ", floor " + floor + ")");
         return ramped;
     }
 
