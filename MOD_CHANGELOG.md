@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 711: the notice log is kept in the save, and every reputation gain reaches it (2026-10-22)
+
+The user, with a screenshot of the Notices panel on day 12: "I noticed the log did not record my reputation gain,
+dungeon clean-out. I'm not sure if it recorded my Tournament win."
+
+- **Both had posted.** The user's archived log (`forge.20261022-183309.log`): line 615 `[TFR-DungeonSource] Forgotten
+  Hunting Lodge cleared ... Orazca reputation +1 (now 3)` posted "Forgotten Hunting Lodge cleared - Orazca is
+  grateful. Local reputation +1 (now 3)." (`DungeonSources.onCleared`). In the panel it sat two entries below the
+  screenshot's lowest line ("+26 - beat Carapace Stalker"), under the Power lines the same clear and duel logged, past
+  the six rows shown before the list scrolls (round 567). The tournament (line 1296, `[TFR-InnReputation] ... local
+  reputation now 4`) posted "Tournament champion! Local reputation +1 (now 4)." (`AdventureEventData`), after the log
+  was last opened (line 807, `[TFR-Notices] log opened - 19 entries`).
+- **The real gap: the log lived in memory only.** `WorldStage.load()` -> `GameHUD.clearNotifications()` empties it on
+  every load, and a restart starts it empty. The user reloaded once that session (line 1154) and restarted the game at
+  19:03, so neither line was there to find afterwards.
+- **The fix**: `WorldStage.save()` stores the log under a new `noticeLog` key (`GameHUD.exportNoticeLog()`: text, tint,
+  day per entry, newest first, at most `NOTICE_LOG_SIZE` 20); `load()` restores it right after clearing
+  (`GameHUD.restoreNoticeLog`, its own try, `[TFR-Notices] log restored from the save - N entries`). A save without the
+  key loads with an empty log, as before. No `serialVersionUID` changes - a new SaveFileData key, not a new field.
+- **A new game starts with an empty log.** With the log saved, a new game begun in the same session would have
+  inherited the last save's log and saved it as its own. `WorldStage.clearCache()` now calls `clearNotifications()`;
+  World generation reaches it before the player is created, so the Ring's gifts and the opening quest still post.
+- **Clearer lines**: the tournament now names its town - "Tournament won at Orazca - reputation +1 (now 4)." (town
+  looked up from the event's `sourceID`, the Inn's `rootPoint.getID()`; new `DungeonSources.displayNameOf`). The
+  clean-out reads "<place> cleared - <town> reputation +1 (now N)."
+- **Two reputation gains said nothing at all** and now write a log-only line (no banner, `GameHUD.logReputation`,
+  `[TFR-Notices] reputation: ...`): a quest's or dialog's `addMapReputation` (`MapDialog.setEffects`) - "<town>
+  reputation +N (now M)."; and the +1 for beating a mage that attacks a restored player town
+  (`DuelScene.recordReputation`, a watched or simulated guard win included) - "<town> reputation +1 (now N) - its
+  attacker is beaten." No double post: the win itself logs only its Power line, and TerritoryControl's "You repelled"
+  banner is the town's own capture roll, another path.
+- **Seen in the agent game** (cheats, round-711 classes ahead of the agent jar): new game -> 4 entries; cleared Dark
+  Forest (`remove enemy all`, walked out) -> "Dark Forest cleared - Llanowar reputation +1 (now 1)." in the panel;
+  saved to slot 7 and reloaded -> the same 8 entries; restarted the game and loaded slot 7 -> `log restored from the
+  save - 8 entries`, panel identical (colors and days kept); New Game from there -> 4 entries, none from the save.
+  **The tournament line was not seen in game**: the agent bridge cannot draft or play an Inn event. It is the string
+  plus the town lookup above.
+- **Not done, listed for the user**: arena tournament wins and arena champions beaten, gold lost on a defeat
+  (`[TFR-DefeatGold]` only), a change of color standing (ColorReputation posts no notices), and the Power lines taking
+  most of the 20 slots (keep them out of the count, or a bigger cap).
+
 ## Round 710: the land shops sell Snow-Covered basics again, not Skulkins (2026-10-22)
 
 The user: "My Land shops in my Capitol is selling these creatures...." The Capitol's Cartographer's Guild showed its 4

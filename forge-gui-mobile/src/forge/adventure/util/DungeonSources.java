@@ -430,13 +430,23 @@ public final class DungeonSources {
             changes.addMapReputation(rep);
             paid = " - " + town.getDisplayName() + " reputation " + (rep > 0 ? "+" : "") + rep + " (now "
                     + changes.getMapReputation() + ")";
+            // Round 711: the same shape as the tournament's line - what happened, then the town's reputation.
             GameHUD.getInstance().addNotification("[BLACK]" + poi.getDisplayName() + " cleared - " + town.getDisplayName()
-                    + " is grateful. Local reputation " + (rep > 0 ? "+" : "") + rep + " (now " + changes.getMapReputation()
-                    + ").", true);
+                    + " reputation " + (rep > 0 ? "+" : "") + rep + " (now " + changes.getMapReputation() + ").", true);
         }
         System.out.println("[TFR-DungeonSource] " + poi.getDisplayName() + " cleared on day " + today + " after " + age
                 + " day(s) (x" + escalation(age) + ") - it falls quiet" + paid);
         Ascendance.onPlaceCleared(poi); // round 493: once per incarnation, like the reputation above
+    }
+
+    /** Round 711: a place's display name from its POI id, for the notice log; null when no place on the map has it. */
+    public static String displayNameOf(String poiId) {
+        if (poiId == null || WorldSave.getCurrentSave() == null || WorldSave.getCurrentSave().getWorld() == null)
+            return null;
+        for (PointOfInterest poi : WorldSave.getCurrentSave().getWorld().getAllPointOfInterest())
+            if (poiId.equals(poi.getID()))
+                return poi.getDisplayName();
+        return null;
     }
 
     /** The nearest town or capital with people in it - not a ruin still waiting for its restoration, not the start camp. */

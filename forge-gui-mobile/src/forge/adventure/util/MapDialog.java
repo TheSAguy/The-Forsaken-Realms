@@ -612,6 +612,12 @@ public class MapDialog {
         return dialogShown;
     }
 
+    /** Round 711: a quest's or a dialog's reputation reward, for the notice log - it said nothing before. */
+    private static void logReputation(String poiId, int delta, forge.adventure.pointofintrest.PointOfInterestChanges changes) {
+        if (changes != null)
+            GameHUD.getInstance().logReputation(poiId, delta, changes.getMapReputation(), "");
+    }
+
     void setEffects(DialogData.ActionData[] data) {
         if (data == null) return;
         for (DialogData.ActionData E : data) {
@@ -675,12 +681,17 @@ public class MapDialog {
                             // In this case, we can follow the previous path to grant reputation to the last place
                             // visited, so the player gets *something* for reputation, however erroneously.
                             stage.getChanges().addMapReputation(E.addMapReputation);
+                            logReputation(TileMapScene.instance().rootPoint.getID(), E.addMapReputation, stage.getChanges());
                         }
                     } else {
-                        WorldSave.getCurrentSave().getPointOfInterestChanges(E.POIReference).addMapReputation(E.addMapReputation);
+                        forge.adventure.pointofintrest.PointOfInterestChanges referenced =WorldSave.getCurrentSave().getPointOfInterestChanges(E.POIReference);
+                        referenced.addMapReputation(E.addMapReputation);
+                        logReputation(E.POIReference, E.addMapReputation, referenced);
                     }
                 } else {
                     stage.getChanges().addMapReputation(E.addMapReputation);
+                    logReputation(TileMapScene.instance().rootPoint == null ? null : TileMapScene.instance().rootPoint.getID(),
+                            E.addMapReputation, stage.getChanges());
                 }
             }
             if (E.addColorReputationColor != null && !E.addColorReputationColor.isEmpty() && E.addColorReputationAmount != 0) {

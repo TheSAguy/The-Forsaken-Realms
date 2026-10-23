@@ -1561,6 +1561,41 @@ public class GameHUD extends Stage {
             noticeLog.removeLast();
     }
 
+    // Round 711 (the user: "the log did not record my reputation gain, dungeon clean-out. I'm not sure if it recorded my
+    // Tournament win"): both had posted, but the log lived in memory only - every load (WorldStage.load ->
+    // clearNotifications) and every restart emptied it. It travels in the save now, as WorldStage's "noticeLog" key:
+    // three strings per entry (text, tint, day), newest first. A save without the key loads with an empty log.
+
+    /** The log as WorldStage.save() stores it: text, tint, day for each entry, newest first. */
+    public java.util.ArrayList<String> exportNoticeLog() {
+        java.util.ArrayList<String> flat = new java.util.ArrayList<>();
+        for (String[] entry : noticeLog)
+            java.util.Collections.addAll(flat, entry[0], entry[1], entry[2]);
+        return flat;
+    }
+
+    /** WorldStage.load(): the saved log back, after clearNotifications(); null (an older save) leaves it empty. */
+    public void restoreNoticeLog(java.util.List<String> flat) {
+        noticeLog.clear();
+        if (flat != null)
+            for (int i = 0; i + 2 < flat.size() && noticeLog.size() < NOTICE_LOG_SIZE; i += 3)
+                noticeLog.addLast(new String[]{flat.get(i), flat.get(i + 1), flat.get(i + 2)});
+        System.out.println("[TFR-Notices] log restored from the save - " + noticeLog.size() + " entr"
+                + (noticeLog.size() == 1 ? "y" : "ies"));
+    }
+
+    /** Round 711: a town's reputation change for the log only, no banner - the gains that said nothing before (a quest's
+     *  or a dialog's reward, a beaten attacker of the player's town). {@code why} may be empty. */
+    public void logReputation(String poiId, int delta, int now, String why) {
+        if (delta == 0)
+            return;
+        String town = forge.adventure.util.DungeonSources.displayNameOf(poiId);
+        String line = (town == null ? "Local" : town) + " reputation " + (delta > 0 ? "+" : "") + delta + " (now " + now + ")"
+                + (why == null || why.isEmpty() ? "." : " - " + why + ".");
+        System.out.println("[TFR-Notices] reputation: " + line);
+        logNotification(line, false);
+    }
+
     /** The next banner: the oldest waiting notice and up to NOTICES_AT_ONCE - 1 more of the same tint behind it. */
     private void showNextNotices() {
         String[] first = noticeQueue.poll();

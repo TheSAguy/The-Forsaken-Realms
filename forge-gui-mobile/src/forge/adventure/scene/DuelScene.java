@@ -373,8 +373,13 @@ public class DuelScene extends ForgeScene {
         if (enemy.territoryColor != null && enemy.territoryTarget != null) {
             PointOfInterestChanges targetChanges = WorldSave.getCurrentSave()
                     .getPointOfInterestChanges(enemy.territoryTarget.getID());
-            if (TownRestoration.isTownRestored(targetChanges))
+            if (TownRestoration.isTownRestored(targetChanges)) {
                 targetChanges.addMapReputation(1);
+                // Round 711: said nothing before. Log only - the win's own Power line and loot already speak for the duel,
+                // and no other notice names this +1 (TerritoryControl's "You repelled" is the town's own roll, not a duel).
+                forge.adventure.stage.GameHUD.getInstance().logReputation(enemy.territoryTarget.getID(), 1,
+                        targetChanges.getMapReputation(), "its attacker is beaten");
+            }
         }
     }
 

@@ -3200,6 +3200,13 @@ public class WorldStage extends GameStage implements SaveFileContent {
             clearCache();
             MapStage.getInstance().clearIsInMap();
             GameHUD.getInstance().clearNotifications();
+            // Round 711: the notice log comes back with the save (see save()). Its own try - this method's catch below is
+            // silent, and a bad log must not cost the enemies, nor the other way round.
+            try {
+                GameHUD.getInstance().restoreNoticeLog(data.containsKey("noticeLog") ? (List<String>) data.readObject("noticeLog") : null);
+            } catch (Exception e) {
+                System.err.println("[TFR-Notices] restoring the notice log failed: " + e);
+            }
             List<Float> timeouts = (List<Float>) data.readObject("timeouts");
             List<String> names = (List<String>) data.readObject("names");
             List<Float> x = (List<Float>) data.readObject("x");
@@ -3326,6 +3333,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
         forge.adventure.util.TreasureHunt.resetSessionState(); // round 478
         treasureActorsStamp = -1;
         forge.adventure.util.TownPillage.resetSessionState(); // round 484
+        // Round 711: the notice log travels in the save now, so a new game must not inherit (and then save) the last
+        // game's - World generation reaches here before the player and the Ring's gifts exist. A load clears it too
+        // and then restores its own (load()).
+        GameHUD.getInstance().clearNotifications();
         // Round 188, user: "The Speed up and Wait seems to persist on load. I save, then check
         // them, when I load they are checked still, even though they were not checked before save."
         // Both are HUD toggles over session state on this singleton - neither is written to the
@@ -3433,6 +3444,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         data.storeObject("pillageTowns", pillageTowns);
         data.storeObject("territoryTargetIds", territoryTargetIds);
         data.store("globalTimer", globalTimer);
+        data.storeObject("noticeLog", GameHUD.getInstance().exportNoticeLog()); // round 711: the notice log (load() restores it)
         return data;
     }
 

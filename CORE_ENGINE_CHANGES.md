@@ -38,6 +38,18 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 711 - the notice log in the save; reputation lines
+
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - new `exportNoticeLog()`, `restoreNoticeLog(List)` and
+  `logReputation(poiId, delta, now, why)` beside `logNotice()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `save()` stores `noticeLog`; `load()` restores it
+  (own try) right after `clearNotifications()`; `clearCache()` calls `GameHUD.clearNotifications()` (a new game).
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java`** - the Inn tournament's reputation notice names
+  the town.
+- **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** - `setEffects()`: each `addMapReputation` branch logs a
+  line (new private `logReputation`).
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `recordReputation()`: the town-defense +1 logs a line.
+
 ### Round 710 - basic lands stay outside the set gate
 
 - **`forge-gui-mobile/src/forge/adventure/util/CardUtil.java`** - `remapToEditionList()`'s strict branch hands a basic
