@@ -968,25 +968,57 @@ public class EconomyBuildings {
         TypingLabel label = Controls.newTypingLabel("Teleporter\nWhere would you like to travel?");
         label.setWrap(true);
         label.skipToTheEnd();
-        dialog.getContentTable().add(label).width(250f).row();
-
         List<PointOfInterest> destinations = teleporterDestinations();
+        boolean wide = Forge.isLandscapeMode();
+        float labelWidth = !destinations.isEmpty() && wide ? TeleporterMiniMap.SIZE + 8f + 240f : 250f;
+        dialog.getContentTable().add(label).width(labelWidth).row();
+
+        if (teleporterMaps != null) {
+            teleporterMaps.dispose();
+            teleporterMaps = null;
+        }
+        Table list = dialog.getButtonTable();
         if (destinations.isEmpty()) {
             addContentRow(dialog, "No linked Teleporters yet - build one elsewhere first.");
-        }
-        for (PointOfInterest destination : destinations) {
-            addButtonRow(dialog, "Travel to " + destination.getDisplayName(), true,
-                    () -> travelTo(stage, destination));
+        } else {
+            // Round 712: the mini-maps of where each destination sends you (TeleporterMiniMap) - left of the buttons
+            // on a wide screen, above them on a tall one. The buttons sit in their own table inside the button table,
+            // where showDialog() still finds them for the keyboard and controller.
+            PointOfInterest here = TileMapScene.instance().rootPoint;
+            TeleporterMiniMap maps = teleporterMaps = new TeleporterMiniMap(here == null ? null : here.getPosition());
+            Table mapTable = new Table();
+            mapTable.add(maps.worldMap()).size(TeleporterMiniMap.SIZE);
+            if (wide)
+                mapTable.row().padTop(6f);
+            mapTable.add(maps.closeUp()).size(TeleporterMiniMap.SIZE).padLeft(wide ? 0f : 6f);
+            list = new Table();
+            if (wide) {
+                dialog.getButtonTable().add(mapTable).top().padRight(8f);
+                dialog.getButtonTable().add(list).top().row();
+            } else {
+                dialog.getButtonTable().add(mapTable).padBottom(4f).row();
+                dialog.getButtonTable().add(list).row();
+            }
+            for (PointOfInterest destination : destinations) {
+                Runnable[] action = new Runnable[1];
+                TextraButton button = Controls.newTextButton("Travel to " + destination.getDisplayName(), () -> action[0].run());
+                action[0] = maps.follow(button, destination, () -> travelTo(stage, destination));
+                list.add(button).width(240f).row();
+            }
+            maps.show(destinations.get(0));
         }
         // The Capitol's own Teleporter is the network hub - destroying it would strand every town
         // teleporter (their only destination), so only TOWN teleporters offer Destroy (user spec
         // 2026-08-09).
         if (!TownRestoration.isCurrentTownCapitol())
-            addButtonRow(dialog, "Destroy Building", true, () ->
-                    openDestroyConfirmDialog(stage, objectId, () -> refreshTeleporterDialog(stage, objectId)));
-        dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).width(240f).row();
+            list.add(Controls.newTextButton("Destroy Building", () ->
+                    openDestroyConfirmDialog(stage, objectId, () -> refreshTeleporterDialog(stage, objectId)))).width(240f).row();
+        list.add(Controls.newTextButton("Close", stage::hideDialog)).width(240f).row();
         dialog.setKeepWithinStage(true);
     }
+
+    /** Round 712: the open Teleporter dialog's mini-maps, freed when the dialog is built again. */
+    private static TeleporterMiniMap teleporterMaps;
 
     // From the Capitol: every OTHER town that has built a Teleporter. From a town: the Capitol
     // only (a town Teleporter can't even be built until the Capitol has one - see

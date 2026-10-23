@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 712: the Teleporter shows where each destination sends you (2026-10-22)
+
+The user: "Just like in TFR2, create a small mini-map to show where the teleport location will be sending you to."
+TFR 2's Travel dialog has no map; the pair the user meant is TFR 2's seat card (`Tfr2SeatScene.miniMaps`,
+`Tfr2MapPair`): the world with the place ringed red with a white center, and a close-up a tenth of the world across.
+The user approved a PIL mockup before the build, and chose the touch rule: "tap once to show the destination on the
+maps, tap again to travel."
+
+- **New `util/TeleporterMiniMap`**: two 80 x 80 maps in the HUD minimap's own border (`ui/minimap.png`), drawn from the
+  HUD minimap's picture (`World.getBiomeImage()`, so fog and the baked town icons show as on the HUD), 240 px each.
+  World map: the destination gets TFR 2's mark (red disc, white center, dark outline), and you get the HUD's player
+  dot (`ui/minimap_player.png`) at the town you stand in (`TileMapScene.rootPoint`). Close-up: a tenth of the biome
+  image across (280 of 2800 px), clamped at the world's edges, with an open red ring around the town so its icon
+  shows. Pictures are rebuilt only when the destination changes; the previous textures are freed when the dialog is
+  built again.
+- **What moves the maps**: mouse hover (`enter` with pointer -1), keyboard or controller focus (`FocusListener`;
+  `showDialog()` focuses the first destination), and on Android the first tap on a destination, which also gives the
+  button keyboard focus so its focused look marks the one a second tap sends you to. A click, Enter or a second tap
+  travels. The dialog opens on the first destination.
+- **`EconomyBuildings.refreshTeleporterDialog`**: the text stays in the content table (where the agent bridge reads
+  it). The destination, Destroy and Close buttons move into a table inside the button table, next to the maps: left
+  of them on a landscape screen, below them in portrait. `showDialog()` still finds every button there. No
+  destinations: no maps, as before.
+- **Log**: `[TFR-Teleport] mini-map on <town> (open|hover|focus|tap): tile x,y, close-up 280 px from sx,sy of 2800`,
+  and `[TFR-Teleport] travel to <town>`.
+- **Seen in the agent game** (cheats, the round-712 classes ahead of the agent jar, agent slot 4, the Capitol's
+  Teleporter, 3 destinations). The dialog opened on Windlass Clearing, ringed on both maps, with the player dot at the
+  Capitol. Two Down presses moved the focus and both maps to Bluebell Ridge, and Enter traveled there (tile 347,419).
+  The bridge still read the dialog's text and its 4 options, and the log held the lines above with no exception.
+  **Not tested**: mouse hover (the bridge cannot hover) and Android touch (no device run).
+- No stock Forge file changed; no save format change.
+
 ## Round 711: the notice log is kept in the save, and every reputation gain reaches it (2026-10-22)
 
 The user, with a screenshot of the Notices panel on day 12: "I noticed the log did not record my reputation gain,
