@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 709: Urabrask and Jin-Gitaxias stop walking backwards, and Gev is fully turned (2026-10-22)
+
+An art sub-thread, by `dev-tools/art-import/facing709.py` (ledger `facing709_done.json`; `--apply` refuses once it
+exists). Round 681 left four sprites unjudged; the user: "Start with the open facing check on Spinecoil Isopod and the
+stock Cerodon, Urabrask and Jin-Gitaxias."
+
+- **Judged by eye**, every frame of every animation at 8x (`facing_detect.py` not used):
+  - Spinecoil Isopod faces right (eyed head and feelers right, spiny tail trailing left): unchanged.
+  - Cerodon (stock) faces right (frilled head right, rump left): unchanged.
+  - Urabrask (stock) faces LEFT in Idle, Attack and Death: snout, claws and the fire sweep all point left.
+  - Jin-Gitaxias (stock) faces LEFT in Idle, Walk, Attack and Death: head and claws left, cloak trailing right.
+- **Fixed**: Urabrask and Jin-Gitaxias are copied from common into the plane at the same paths
+  (`sprites/enemy/aberration/phyrexian/`), where the game looks first, and every frame but the Avatar is flipped inside
+  its own cell (18 and 21 frames). The .atlas files are byte copies; the upstream files are untouched.
+- **Gev, round 681's gecko, was only half fixed.** `facing681.py`'s region pattern does not allow trailing spaces, and
+  the stock `gecko.atlas` has them, so only Walk 0-2 were flipped: he idled backwards and turned round on Walk 3.
+  Idle 0-3, Walk 3 and Death 0-2 are flipped now (8 frames). The other twelve 681 sheets parse fully and were not hit.
+  `facing709.py` has its own tolerant parser.
+- No CREDITS line: Forge's own art, as for Gev in round 681.
+- **Checks**: enemies.json unchanged; the written pages match the previews pixel for pixel. Before/after GIFs and 8x
+  strips were sent to the user. Not seen in play.
+
 ## Round 708: a way out of an endless loop, and a draw is no longer a loss (2026-10-22)
 
 The user: "I just had an endless loop in my game. Anyway to create a failsafe for this? Maybe break out of loop after 25x

@@ -1,0 +1,25 @@
+{
+ "plane_copy": [
+  "sprites/enemy/aberration/phyrexian/urabrask.atlas",
+  "sprites/enemy/aberration/phyrexian/jin-gitaxias.atlas"
+ ],
+ "gev": [
+  "sprites/enemy/beast/smallmammals/gecko.atlas",
+  {
+   "Idle": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "Walk": [
+    3
+   ],
+   "Death": [
+    0,
+    1,
+    2
+   ]
+  }
+ ]
+}
