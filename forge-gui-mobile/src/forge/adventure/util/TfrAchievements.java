@@ -38,9 +38,23 @@ public final class TfrAchievements extends AchievementCollection {
     public static final String ASHES_TO_HEARTH = "tfr_ashes_to_hearth";
     public static final String SEAT_OF_YOUR_OWN = "tfr_seat_of_your_own";
     public static final String RING_IS_WHOLE = "tfr_ring_is_whole";
+    // Round 718
+    public static final String GRAND_CIRCUIT = "tfr_grand_circuit";
+    public static final String FULLY_KITTED = "tfr_fully_kitted";
+    public static final String X_MARKS_THE_SPOT = "tfr_x_marks_the_spot";
+    public static final String SWORN_FRIEND = "tfr_sworn_friend";
+    public static final String SCHOLAR = "tfr_scholar";
+    public static final String INTO_THE_DEEP = "tfr_into_the_deep";
+    public static final String ONCE_MORE = "tfr_once_more";
+    public static final String HONORS_EVEN = "tfr_honors_even";
+
+    /** Round 718: the three end-game legend dungeons (round 668), by their place names. */
+    private static final String[] LEGEND_DUNGEONS = {"Hexhaven Tower", "Echoverse Overlay", "Theorist's Sanctum"};
 
     /** Per-save record of the colors whose capital the player took (character flags clear on New Game+). */
     private static final String CAPITAL_TAKEN_FLAG = "tfrCapitalTaken_";
+    /** Round 718: per save, the colors the player ever stood Partner with. */
+    private static final String PARTNER_FLAG = "tfrPartner_";
 
     private static TfrAchievements instance;
     private static int consoleDepth;
@@ -81,6 +95,21 @@ public final class TfrAchievements extends AchievementCollection {
         add(new TfrAchievement(SEAT_OF_YOUR_OWN, "A Seat of Your Own", "Raise your Capitol.", false));
         add(new TfrAchievement(RING_IS_WHOLE, "The Ring is Whole",
                 "Hold all five Ring Cities, every castle fallen.", false));
+        add(new TfrAchievement(GRAND_CIRCUIT, "Grand Circuit", "Win Arena tournaments in a single week.", false,
+                new int[]{3, 5, 6, 7}, new String[]{"3 in a week", "5 in a week", "6 in a week", "all 7 in a week"}));
+        add(new TfrAchievement(FULLY_KITTED, "Fully Kitted", "Enter a duel wearing all seven pieces of a set.", false,
+                new int[]{1, 3, 6, 10}, new String[]{"1 set", "3 sets", "6 sets", "10 sets"}));
+        add(new TfrAchievement(X_MARKS_THE_SPOT, "X Marks the Spot", "Dig up a lost treasure.", false,
+                new int[]{1, 3, 5, 6}, new String[]{"1 land", "3 lands", "5 lands", "all 6 lands"}));
+        add(new TfrAchievement(SWORN_FRIEND, "Sworn Friend", "Earn Partner standing with a color.", false,
+                new int[]{1, 2, 3, 5}, new String[]{"1 color", "2 colors", "3 colors", "all 5 colors"}));
+        add(new TfrAchievement(SCHOLAR, "Scholar of the Realm", "Complete the research of card sets.", false,
+                new int[]{1, 5, 10, 20}, new String[]{"1 set", "5 sets", "10 sets", "20 sets"}));
+        add(new TfrAchievement(INTO_THE_DEEP, "Into the Deep",
+                "Clear all three end-game legend dungeons.", false));
+        add(new TfrAchievement(ONCE_MORE, "Once More, With Feeling", "Begin the realm anew, and keep what you carried.",
+                true));
+        add(new TfrAchievement(HONORS_EVEN, "Honors Even", "Fight a duel to a standstill.", true));
     }
 
     public static boolean isEnabled() {
@@ -235,7 +264,112 @@ public final class TfrAchievements extends AchievementCollection {
         }
     }
 
+    /** ArenaScene, a tournament won: the week's wins, this one included. */
+    public static void onArenaWon(int weekWins) {
+        reach(GRAND_CIRCUIT, weekWins, weekWins + " arena tournament(s) won this week");
+    }
+
+    /** DuelScene, a duel the player enters with its own gear: each set worn whole counts once, across the profile. */
+    public static void onDuelGear(Iterable<forge.adventure.data.ItemData> worn) {
+        for (Map.Entry<forge.adventure.data.ItemSetData, Integer> e : ItemSets.worn(worn).entrySet()) {
+            int whole = 0;
+            for (forge.adventure.data.ItemSetData.Tier tier : e.getKey().tiers)
+                whole = Math.max(whole, tier.pieces);
+            if (whole > 0 && e.getValue() >= whole)
+                addSeen(FULLY_KITTED, e.getKey().name, "entered a duel in all " + whole + " pieces of " + e.getKey().name);
+        }
+    }
+
+    /** TreasureHunt.onGuardianBeaten. */
+    public static void onTreasureFound(String land) {
+        World world = WorldSave.getCurrentSave().getWorld();
+        if (world != null)
+            reach(X_MARKS_THE_SPOT, treasureLands(world), "the " + land + " treasure");
+    }
+
+    /** ColorReputation.onStandingChanged, a color reaching Partner. */
+    public static void onPartner(String color) {
+        AdventurePlayer player = WorldSave.getCurrentSave().getPlayer();
+        if (player == null || color == null)
+            return;
+        if (consoleDepth == 0)
+            player.setCharacterFlag(PARTNER_FLAG + color, 1);
+        reach(SWORN_FRIEND, partnerColors(player), "Partner with " + color);
+    }
+
+    /** AdventurePlayer.checkResearchCompletion, after the set is unlocked. */
+    public static void onResearchComplete(String code) {
+        AdventurePlayer player = WorldSave.getCurrentSave().getPlayer();
+        if (player != null)
+            reach(SCHOLAR, researchedSets(player), "research of " + code + " complete");
+    }
+
+    /** DungeonRotation.onLairExit, a place cleared and gone (its lairClearCount just rose). */
+    public static void onPlaceCleared(World world, String placeName) {
+        for (String name : LEGEND_DUNGEONS)
+            if (name.equals(placeName) && legendDungeonsCleared(world) >= LEGEND_DUNGEONS.length)
+                earn(INTO_THE_DEEP, "cleared " + placeName + ", the last of the three");
+    }
+
+    /** AdventurePlayer, a New Game+ begun. */
+    public static void onNewGamePlus() {
+        earn(ONCE_MORE, "New Game+");
+    }
+
+    /** DuelScene.afterGameEnd, a drawn duel the player fought. */
+    public static void onDraw(String reason) {
+        earn(HONORS_EVEN, "a draw" + (reason == null ? "" : " (" + reason + ")"));
+    }
+
     // ---- counting what the save holds -------------------------------------------------------------------------
+
+    /** Lands (of the six) whose lost treasure this world has given up. */
+    private static int treasureLands(World world) {
+        java.util.Set<Integer> lands = new java.util.HashSet<>();
+        for (int[] h : TreasureHunt.hunts(world))
+            if (h != null && h.length > TreasureHunt.H_FOUND && h[TreasureHunt.H_FOUND] == 1)
+                lands.add(h[TreasureHunt.H_REGION]);
+        return lands.size();
+    }
+
+    /** Colors the player has stood Partner with in this save: the flags, and Partner now (a save from before 718). */
+    private static int partnerColors(AdventurePlayer player) {
+        int count = 0;
+        for (String color : TerritoryControl.COLORS)
+            if (player.getCharacterFlag(PARTNER_FLAG + color) > 0
+                    || (ColorReputation.isEnabled() && ColorReputation.getStatus(color) == ColorReputation.Status.PARTNER))
+                count++;
+        return count;
+    }
+
+    /**
+     * Sets this save has researched: the sets unlocked, less the ones a new game starts with (4 / 3 / 2 / 1 by
+     * difficulty, AdventurePlayer.seedStartingEditions). Research is the only other way a set unlocks, so the save's
+     * own list gives the count - for a save from before 718 too.
+     */
+    private static int researchedSets(AdventurePlayer player) {
+        int[] startingByDifficulty = {4, 3, 2, 1};
+        int index = 1;
+        ConfigData config = Config.instance().getConfigData();
+        if (config != null && config.difficulties != null && player.getDifficulty() != null)
+            for (int i = 0; i < config.difficulties.length; i++)
+                if (config.difficulties[i].name.equals(player.getDifficulty().name))
+                    index = i;
+        int starting = startingByDifficulty[Math.min(index, startingByDifficulty.length - 1)];
+        return Math.max(0, player.getUnlockedEditions().size() - starting);
+    }
+
+    /** The three legend dungeons this world has seen cleared (World.lairClearCount, saved). */
+    private static int legendDungeonsCleared(World world) {
+        int count = 0;
+        for (String name : LEGEND_DUNGEONS)
+            for (forge.adventure.pointofintrest.PointOfInterest poi : world.getAllPointOfInterest())
+                if (name.equals(poi.getData().name) && world.getLairClearCount().getOrDefault(poi.getID(), 0) > 0) {
+                    count++;
+                    break;
+                }
+        return count;
+    }
 
     private static int capitalsTaken() {
         World world = WorldSave.getCurrentSave().getWorld();
@@ -276,6 +410,16 @@ public final class TfrAchievements extends AchievementCollection {
                 earn(SEAT_OF_YOUR_OWN, why);
             if (TerritoryControl.playerVictoryReached(world))
                 earn(RING_IS_WHOLE, why);
+            // Round 718. Fully Kitted and Honors Even have nothing in a save to read: they count from 718 on.
+            reach(GRAND_CIRCUIT, forge.adventure.scene.ArenaScene.arenaWinsThisWeek(world, null), why);
+            reach(X_MARKS_THE_SPOT, treasureLands(world), why);
+            reach(SWORN_FRIEND, partnerColors(player), why);
+            if (Config.instance().getConfigData().editionProgressionEnabled)
+                reach(SCHOLAR, researchedSets(player), why);
+            if (legendDungeonsCleared(world) >= LEGEND_DUNGEONS.length)
+                earn(INTO_THE_DEEP, why);
+            if (player.getCharacterFlag("newGamePlus") > 0)
+                earn(ONCE_MORE, why);
             System.out.println("[TFR-Achievement] back-fill (" + why + "): " + backfillEarned.size() + " new"
                     + (backfillEarned.isEmpty() ? "" : " - " + String.join(", ", backfillEarned)));
             if (!backfillEarned.isEmpty())

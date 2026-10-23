@@ -1317,6 +1317,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             forge.adventure.pointofintrest.PointOfInterest venue = TileMapScene.instance().rootPoint;
             // Round 715: and what the win costs every other arena's draw for the rest of the week.
             int weekWins = arenaWinsThisWeek(world, null);
+            forge.adventure.util.TfrAchievements.onArenaWon(weekWins); // round 718: Grand Circuit
             System.out.println("[TFR-ArenaChampion] " + weeklyKey + ": win " + weekWins + " of week " + week
                     + " - other arenas draw at least " + weekWins + " Archmage(s) until day " + (world.getCurrentDay() + daysUntilWeeklyReset(world)));
             GameHUD.getInstance().addNotification("Arena tournament won" + (venue == null ? "" : " at " + venue.getDisplayName())

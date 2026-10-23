@@ -1102,6 +1102,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         forge.adventure.util.ResourceLedger.reset(ledger);
         statistic.clear();
         setCharacterFlag("newGamePlus", 1);
+        forge.adventure.util.TfrAchievements.onNewGamePlus(); // round 718: Once More, With Feeling
         if (jumpstartPlayed > 0) { // round 253: one Jumpstart per player, across every New Game+
             setCharacterFlag("jumpstartPlayed", jumpstartPlayed);
             System.out.println("[TFR-Jumpstart] New Game+ keeps jumpstartPlayed=" + jumpstartPlayed
@@ -3281,6 +3282,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             setCharacterFlag("researchComplete", 1);
             System.out.println("[TFR-MainQuest] researchComplete -> 1");
             forge.adventure.util.Ascendance.onResearchComplete(done); // round 551: the Scientist perk
+            forge.adventure.util.TfrAchievements.onResearchComplete(done); // round 718: Scholar of the Realm
         }
     }
 

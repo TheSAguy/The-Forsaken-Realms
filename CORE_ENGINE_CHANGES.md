@@ -38,6 +38,20 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 718 - the other eight TFR achievements
+
+All mod code (no stock file this round); each is a one-line call into `TfrAchievements`.
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `done()`, after the week's win is recorded:
+  `onArenaWon(weekWins)`.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - after the gear-set bonuses: `onDuelGear` (not Deck
+  Tester); `afterGameEnd`: `onDraw` for a drawn duel.
+- **`forge-gui-mobile/src/forge/adventure/util/TreasureHunt.java`** - `onGuardianBeaten`: `onTreasureFound`.
+- **`forge-gui-mobile/src/forge/adventure/util/ColorReputation.java`** - `onStandingChanged`, a color reaching Partner:
+  `onPartner`.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `checkResearchCompletion`:
+  `onResearchComplete`; the New Game+ reset: `onNewGamePlus`.
+- **`forge-gui-mobile/src/forge/adventure/util/DungeonRotation.java`** - `onLairExit`, a clear counted: `onPlaceCleared`.
+
 ### Round 717 - TFR's own achievements (framework + the first eight)
 
 - **`forge-gui/src/main/java/forge/localinstance/achievements/Achievement.java`** (STOCK) - `update(Player)` now

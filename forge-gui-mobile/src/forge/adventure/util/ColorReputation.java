@@ -105,6 +105,8 @@ public class ColorReputation {
                 + displayValue(halfPointsBefore) + " -> " + displayValue(halfPointsAfter) + ")");
         forge.adventure.stage.GameHUD.getInstance().addNotification((up ? "[GREEN]" : "[RED]") + "Your standing with " + name
                 + (up ? " rose to " : " fell to ") + after.label + " (" + displayValue(halfPointsAfter) + ").", true);
+        if (after == Status.PARTNER)
+            TfrAchievements.onPartner(color); // round 718: Sworn Friend
     }
 
     /** Gold demanded to enter a barred color's CAPITAL at War (towns stay barred outright).

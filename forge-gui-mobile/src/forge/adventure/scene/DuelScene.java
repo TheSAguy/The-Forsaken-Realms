@@ -425,6 +425,9 @@ public class DuelScene extends ForgeScene {
         // against this enemy" reads the record without this win in it.
         if (winner && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
             forge.adventure.util.Ascendance.onDuelWon(enemy, enemyName, isArena);
+        // Round 718: Honors Even - a draw in the same duels.
+        if (drawn && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
+            forge.adventure.util.TfrAchievements.onDraw(drawReason);
         // Round 717: Legend Hunter and Notorious - the same duels (the Arena counts).
         if (winner && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
             forge.adventure.util.TfrAchievements.onDuelWon(enemy.getData(), notoriousRank);
@@ -974,6 +977,9 @@ public class DuelScene extends ForgeScene {
             // set's life counts against an enemy of its color (util/ItemSets).
             playerEffects.addAll(forge.adventure.util.ItemSets.bonusEffects(forge.adventure.util.ItemSets.wornBy(advPlayer),
                     enemy != null && enemy.getData() != null ? enemy.getData().colors : null, "player"));
+            // Round 718: Fully Kitted - a whole set worn into a duel (not Deck Tester's).
+            if (enemy == null || enemy.getData() == null || enemy.getData().fixedDeck == null)
+                forge.adventure.util.TfrAchievements.onDuelGear(forge.adventure.util.ItemSets.wornBy(advPlayer));
         }
         // Round 494: Ascendance's Morning Vigor (+life in the first duels each day) and Shardwell (+mana shards) - the
         // player's own duels only: not a spectated guard fight (aiControlsPlayerSide), not an Inn tournament. Round 516

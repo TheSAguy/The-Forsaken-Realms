@@ -743,6 +743,7 @@ public final class TreasureHunt {
         GameHUD.getInstance().addNotification("The " + REGION_NAMES[r] + " treasure is yours!");
         System.out.println("[TFR-Treasure] the " + REGION_NAMES[r] + " guardian beaten - treasure claimed");
         Ascendance.onTreasureFound(REGION_NAMES[r]); // round 493
+        TfrAchievements.onTreasureFound(REGION_NAMES[r]); // round 718: X Marks the Spot
         clearHoles(world, r);
     }
 

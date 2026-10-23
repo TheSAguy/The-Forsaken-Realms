@@ -809,8 +809,9 @@ trophies, Common to Mythic; a few are a single trophy. They belong to your profi
 or New Game+ keeps them.
 
 When you load a save, the game checks what it has already done (castles fallen, capitals taken, legends beaten,
-your level, the towns you hold, the Capitol) and awards anything it finds, in one notice. Console commands never
-earn an achievement.
+your level, the towns you hold, the Capitol, this week's Arena wins, treasures found, Partner standings, research,
+the legend dungeons) and awards anything it finds, in one notice. Notorious and Fully Kitted count from the update
+that added them. Console commands never earn an achievement.
 
 | Achievement | What it asks | Trophies |
 |---|---|---|
@@ -822,6 +823,14 @@ earn an achievement.
 | **Ashes to Hearth** | Hold towns under your banner, restored from ruin or taken back. | 1 / 5 / 10 / 20 towns |
 | **A Seat of Your Own** | Raise your Capitol. | one trophy |
 | **The Ring is Whole** | Win the realm: all five Ring Cities held, every castle fallen. | one trophy |
+| **Grand Circuit** | Win Arena tournaments in a single week (the five capitals' Arenas and your Capitol's two). Each win makes the other brackets that week harder. | 3 / 5 / 6 / all 7 |
+| **Fully Kitted** | Enter a duel wearing all seven pieces of one gear set. Each set counts once, across all your saves. | 1 / 3 / 6 / 10 sets |
+| **X Marks the Spot** | Dig up a lost treasure. | 1 / 3 / 5 / all 6 lands |
+| **Sworn Friend** | Earn Partner standing with a color. | 1 / 2 / 3 / all 5 colors |
+| **Scholar of the Realm** | Complete the research of card sets. | 1 / 5 / 10 / 20 sets |
+| **Into the Deep** | Clear Hexhaven Tower, the Echoverse Overlay and the Theorist's Sanctum. | one trophy |
+
+Two more are hidden until you earn them.
 
 ## Early Game Advice
 

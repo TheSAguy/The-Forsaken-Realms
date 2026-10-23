@@ -288,6 +288,7 @@ public class DungeonRotation {
         int currentDay = world.getCurrentDay();
         int clears = world.getLairClearCount().getOrDefault(id, 0) + 1;
         world.getLairClearCount().put(id, clears);
+        TfrAchievements.onPlaceCleared(world, poi.getData().name); // round 718: Into the Deep
         world.getLairBossDownDay().remove(id);
         poi.setActive(false);
         // A fresh roster when it returns, like a rotated dungeon (round 201) - round 443: on every level.

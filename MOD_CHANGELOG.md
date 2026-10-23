@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 718: the other eight TFR achievements (2026-10-23)
+
+Round 717's framework, eight more entries (the user: "Build the 16 achievements ... Grand Circuit 3/5/6/7. Two
+rounds."). Two are hidden ("???" on the trophy page until earned).
+
+| Entry | Hook | Counts | Tiers | Back-fill from a save |
+|---|---|---|---|---|
+| Grand Circuit | `ArenaScene.done`, after the week's win is recorded | `arenaWinsThisWeek` (round 715), this win included | 3 / 5 / 6 / 7 | this week's wins |
+| Fully Kitted | `DuelScene`, after the gear-set bonuses (not Deck Tester) | sets worn whole (every tier's pieces, 7) into a duel; distinct set names across the profile | 1 / 3 / 6 / 10 | none: nothing records past wear |
+| X Marks the Spot | `TreasureHunt.onGuardianBeaten` | lands (of six) whose hunt is found (`H_FOUND`) | 1 / 3 / 5 / 6 | yes, the hunts are saved |
+| Sworn Friend | `ColorReputation.onStandingChanged`, reaching Partner | colors ever Partner in this save (flags `tfrPartner_<color>`) plus Partner now | 1 / 2 / 3 / 5 | current Partners |
+| Scholar of the Realm | `AdventurePlayer.checkResearchCompletion` | sets unlocked less the new game's starting ones (4 / 3 / 2 / 1 by difficulty) | 1 / 5 / 10 / 20 | yes, the same count |
+| Into the Deep | `DungeonRotation.onLairExit`, a clear counted | Hexhaven Tower, Echoverse Overlay and Theorist's Sanctum each with a `lairClearCount` | single | yes (open question 6: the record exists) |
+| Once More, With Feeling (hidden) | the New Game+ reset | the `newGamePlus` flag | single | yes |
+| Honors Even (hidden) | `DuelScene.afterGameEnd`, a draw (round 708) in the player's own duels | - | single | none |
+
+**Design calls:**
+- **Scholar counts by subtraction.** A save keeps the unlocked sets but not which came from research. Research is the
+  only other way a set unlocks (no other caller of `unlockEdition` or `unlockedEditions.add`), so unlocked minus the
+  difficulty's starting count is exact, and an older save back-fills.
+- **Into the Deep** (the proposal's open question 6): the three legend dungeons are NoRotate + Hostile, so a full
+  clear goes through `onLairExit` and counts in `World.lairClearCount`, which is saved. Back-fill works for a save
+  that already cleared them. `DungeonRotation.onDungeonCleared` was not the hook: the walk-out returns before it for
+  a place already off the map.
+- **Grand Circuit's 7 needs all five colors standing and the Capitol's Level 2 arena.** After the first castle falls
+  only the lower tiers stay open, as agreed.
+- **Fully Kitted counts at duel start** (the 7-piece card goes into play), Inn events with items included.
+- **Sworn Friend and X Marks count within one save**, like Capital Gains; Fully Kitted counts across the profile,
+  like Legend Hunter.
+
+**Seen in the agent game** (the round's classes ahead of the agent jar; slot 41, the copy of the user's slot 1):
+- Load: Grand Circuit read 2 wins this week (no trophy, correctly); Scholar read 0 (the save has one set unlocked,
+  its starting one).
+- **Fully Kitted, real duel**: `asc set 40` for seven main slots, the seven Dawnward Regalia pieces given and equipped,
+  then a Wild Rat fought on the map: `tfr_fully_kitted: + Dawnward Regalia (entered a duel in all 7 pieces of
+  Dawnward Regalia)`, Common.
+- **Once More, With Feeling, real New Game+** (menu -> New Game + -> a save -> Start): `tfr_once_more: 0 -> 1 (New
+  Game+)`. Starting New Game+ loads the source save first, so its back-fill ran too (Sworn Friend 1 -> 2 from that
+  save's Partner standings).
+- Sworn Friend and Grand Circuit: `give rep green 200` and `arena wins 3` were refused as console (`tfr_sworn_friend:
+  1 not recorded - a console command (Partner with green)`); `achievement check` then awarded both from the state.
+- **Not seen**: a real Arena tournament win, a treasure guardian beaten, research finishing, the legend dungeons, a
+  draw, and the hidden "???" line (the bridge cannot scroll the trophy list to the bottom). Each is a one-line call
+  beside an existing hook (`[TFR-ArenaChampion]`, `Ascendance.onTreasureFound`, `Ascendance.onResearchComplete`,
+  `[TFR-Lair] ... cleared`, `[TFR-Draw]`) that earlier rounds saw firing.
+
 ## Round 717: TFR's own achievements - the framework and the first eight (2026-10-23)
 
 The user: "I'd like to add new achievements to TFR1", with nine ideas (a capital and a castle per color, a first
