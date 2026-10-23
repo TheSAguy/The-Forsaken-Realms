@@ -42,7 +42,7 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 
 - **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `logPowerNotification()`, `POWER_LOG_SIZE` /
   `POWER_KIND`, `trimNoticeLog()` (per-kind caps, used by `logNotice` and `restoreNoticeLog`); the log panel reads the
-  tint by its first letter; the "log opened" line counts Power and notices.
+  tint by its first letter and its header says "(the last 20, plus 10 Power)"; the "log opened" line counts Power and notices.
 - **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `done()`: a notice for a paid-out tournament win and
   one per champion beaten.
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `defeated()` logs the gold lost (or kept by a

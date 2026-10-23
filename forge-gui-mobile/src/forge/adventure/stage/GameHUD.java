@@ -1691,7 +1691,9 @@ public class GameHUD extends Stage {
         dialog.getButtonTable().clear();
         dialog.clearListeners();
         float width = Forge.isLandscapeMode() ? 250f : 230f;
-        TextraLabel title = Controls.newTextraLabel("[GOLD]Notices[] [%80](the last " + NOTICE_LOG_SIZE + ")");
+        // Round 713: Power gains are kept apart from the count (trimNoticeLog), and the header says so.
+        TextraLabel title = Controls.newTextraLabel("[GOLD]Notices[] [%80](the last " + NOTICE_LOG_SIZE + ", plus "
+                + POWER_LOG_SIZE + " Power)");
         dialog.getContentTable().add(title).padBottom(3f).row();
         com.badlogic.gdx.scenes.scene2d.ui.Table rows = new com.badlogic.gdx.scenes.scene2d.ui.Table();
         if (noticeLog.isEmpty())

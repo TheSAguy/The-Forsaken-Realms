@@ -14275,7 +14275,9 @@ Power lines crowding the 20 slots." (round 711's list of what never reached the 
   holds at most 30 entries. Round 711's saved format (text, tint, day) is unchanged, so its saves read as they were.
   Why not merge consecutive Power lines: they are rarely consecutive (a won duel's Power line and its "First victory -
   bonus loot!" notice interleave, as in the user's day-12 screenshot), so a merge would still crowd, and a merged line
-  loses what each gain was for. `[TFR-Notices] log opened - N entries (P Power, M notices)`.
+  loses what each gain was for. `[TFR-Notices] log opened - N entries (P Power, M notices)`. The panel's header reads
+  "Notices (the last 20, plus 10 Power)" (follow-up, the main thread's ask; seen on one line in the agent game); a
+  Power line looks exactly as before.
 - **Arena**: `ArenaScene.done()` posts "Arena tournament won at <town> (Challenging)!" when a full bracket pays out
   (not when the week's prize was already taken - that keeps its own "already taken" notice), and "Arena champion <name>
   beaten - <card> from its deck." for each champion beaten, bracket won or not. Nothing posted there before except the
