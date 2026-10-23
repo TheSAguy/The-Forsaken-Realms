@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 715 - each arena tournament won this week brings an Archmage into every other bracket
+
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `arenaWinsThisWeek()` (counts `World.arenaWinWeek`
+  entries in the current week); `ensureLevel2Archmages` became `ensureArchmages(..., minimum, label)` returning the
+  count; `loadArenaData` tops a building's field up to the week's wins (Level 2 keeps its floor of 2); `drawArena`
+  shows a line under the title; `done()`'s win notice names the new minimum.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - cheat `arena wins [N]` (stand-in
+  venue keys `cheat-arena-K:L1` in `arenaWinWeek`).
+
 ### Round 713 - arena, defeat and color-standing notices; Power apart from the 20
 
 - **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `logPowerNotification()`, `POWER_LOG_SIZE` /

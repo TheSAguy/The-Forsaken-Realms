@@ -726,6 +726,24 @@ public class ConsoleCommandInterpreter {
             }
             return s[0] + " win streak set to " + Current.player().winStreak(s[0]) + " of " + Current.player().winStreakNeeded();
         });
+        // Round 715: "arena wins N" records N tournament wins this week at stand-in venues (no real arena is locked), so
+        // the week's Archmage guarantee can be tested without winning N brackets. "arena wins" alone reports the count.
+        registerCommand(new String[]{"arena", "wins"}, s -> {
+            forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+            if (s.length >= 1) {
+                int wanted;
+                try {
+                    wanted = Integer.parseInt(s[0]);
+                } catch (Exception e) {
+                    return "Can not convert " + s[0] + " to number";
+                }
+                world.getArenaWinWeek().keySet().removeIf(key -> key.startsWith("cheat-arena-"));
+                for (int i = 0; i < wanted; i++)
+                    world.getArenaWinWeek().put("cheat-arena-" + (i + 1) + ":L1", world.getCurrentWeek());
+            }
+            return forge.adventure.scene.ArenaScene.arenaWinsThisWeek(world, null) + " tournament win(s) in week "
+                    + world.getCurrentWeek() + " (day " + world.getCurrentDay() + ")";
+        });
         registerCommand(new String[]{"listPOI"}, s -> {
             ArrayList<String> poiNames = new ArrayList<>();
             List<BiomeData> biomeData = WorldSave.getCurrentSave().getWorld().getData().GetBiomes();

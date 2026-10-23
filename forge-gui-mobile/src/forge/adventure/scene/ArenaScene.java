@@ -1315,8 +1315,13 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // Round 713 (the user: "Add all four Notices gaps: arena wins/champion ..."): the win said nothing before -
             // the loot screen paid it and the log never knew.
             forge.adventure.pointofintrest.PointOfInterest venue = TileMapScene.instance().rootPoint;
+            // Round 715: and what the win costs every other arena's draw for the rest of the week.
+            int weekWins = arenaWinsThisWeek(world, null);
+            System.out.println("[TFR-ArenaChampion] " + weeklyKey + ": win " + weekWins + " of week " + week
+                    + " - other arenas draw at least " + weekWins + " Archmage(s) until day " + (world.getCurrentDay() + daysUntilWeeklyReset(world)));
             GameHUD.getInstance().addNotification("Arena tournament won" + (venue == null ? "" : " at " + venue.getDisplayName())
-                    + (challengeMode ? " (Challenging)" : "") + "!");
+                    + (challengeMode ? " (Challenging)" : "") + "! Other arenas this week draw at least " + weekWins
+                    + (weekWins == 1 ? " Archmage." : " Archmages."));
         }
         if (roundsWon != 0) {
             Array<Reward> data = new Array<>();
@@ -1661,13 +1666,41 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     private static final int LEVEL2_MIN_ARCHMAGES = 2;
 
     /**
+     * Round 715 (the user: "in any given week, each time you win a Arena Tournament ... for any other Arena tournament you
+     * participate in, there is at least 1 guaranteed Arch-mage in the draw ... This re-sets at the start of the next
+     * week"): the tournaments won this week at venues other than {@code exceptKey}. Read from World.arenaWinWeek, which
+     * already records the week of each venue's last win (round 135) and is saved, so a save from before this round counts
+     * the wins it already holds and no new save field is needed. The player's arena counts its two modes apart, as the
+     * weekly lock does.
+     */
+    public static int arenaWinsThisWeek(forge.adventure.world.World world, String exceptKey) {
+        if (world == null)
+            return 0;
+        int week = world.getCurrentWeek();
+        int wins = 0;
+        for (java.util.Map.Entry<String, Integer> won : world.getArenaWinWeek().entrySet())
+            if (won.getValue() != null && won.getValue() == week && !won.getKey().equals(exceptKey))
+                wins++;
+        return wins;
+    }
+
+    /** Round 715: the Archmages this bracket was promised by the week's wins, for the line under the arena's title; 0 hides
+     *  it. Set with each bracket in loadArenaData. */
+    private int weeklyArchmageHint = 0;
+    private int weeklyArchmageWins = 0;
+
+    /**
      * Round 594: tops the player's Level-2 (Challenging) field up to LEVEL2_MIN_ARCHMAGES Archmages - the coin holder
      * counts when it is one - each extra one replacing a random non-Archmage seat (never the coin holder's), drawn from the
      * day's own random so the field stays fixed for the day. Archmages not already in the field go first. A pool without
      * an Archmage leaves the field as drawn.
+     * <p>
+     * Round 715: the minimum is a parameter (the week's tournament wins, and at least LEVEL2_MIN_ARCHMAGES at Level 2),
+     * and the field's Archmage count is returned. A seat is only ever turned into an Archmage, never re-drawn, so a higher
+     * minimum later in the day keeps every seat a lower one made.
      */
-    private void ensureLevel2Archmages(EnemyData[] field, java.util.List<String> poolNames, int coinSlot, EnemyData coinFoe,
-                                       Random draw) {
+    private int ensureArchmages(EnemyData[] field, java.util.List<String> poolNames, int coinSlot, EnemyData coinFoe,
+                                Random draw, int minimum, String label) {
         java.util.List<EnemyData> archmages = new java.util.ArrayList<>();
         for (String name : poolNames) {
             EnemyData pooled = WorldData.getEnemy(name);
@@ -1681,11 +1714,11 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 count++;
         }
         if (archmages.isEmpty()) {
-            System.out.println("[TFR-ArenaTier] Level-2: " + count + " Archmage(s) and none in the pool to add");
-            return;
+            System.out.println("[TFR-ArenaTier] " + label + ": " + count + " Archmage(s) and none in the pool to add");
+            return count;
         }
         int before = count;
-        while (count < LEVEL2_MIN_ARCHMAGES) {
+        while (count < minimum) {
             java.util.List<Integer> seats = new java.util.ArrayList<>();
             for (int i = 0; i < field.length; i++)
                 if (i != coinSlot && EnemyData.tierRank(field[i].tier) < 3)
@@ -1702,12 +1735,13 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             java.util.List<EnemyData> from = fresh.isEmpty() ? archmages : fresh;
             int seat = seats.get(draw.nextInt(seats.size()));
             EnemyData added = from.get(draw.nextInt(from.size()));
-            System.out.println("[TFR-ArenaTier] Level-2: seat " + (seat + 1) + " " + field[seat].getName() + " ("
+            System.out.println("[TFR-ArenaTier] " + label + ": seat " + (seat + 1) + " " + field[seat].getName() + " ("
                     + EnemyData.tierDisplayName(field[seat].tier) + ") -> " + added.getName() + " (Archmage)");
             field[seat] = added;
             count++;
         }
-        System.out.println("[TFR-ArenaTier] Level-2: Archmages " + before + " -> " + count + " (at least " + LEVEL2_MIN_ARCHMAGES + ")");
+        System.out.println("[TFR-ArenaTier] " + label + ": Archmages " + before + " -> " + count + " (at least " + minimum + ")");
+        return count;
     }
 
     /** isChallenge (2026-08-11, Arena Level 2 Challenge mode, MOD_SCOPE.md #20): forces every
@@ -1837,8 +1871,31 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 enemyData = WorldData.getEnemy(poolNames.get(draw.nextInt(poolNames.size())));
             field[i] = enemyData;
         }
-        if (challengePayoutBracket)
-            ensureLevel2Archmages(field, poolNames, coinFoeSlot, coinFoe, draw);
+        // Round 715: each tournament won this week at another venue promises one Archmage in this field, clamped to its
+        // seats. Applied at the draw, so the bracket shown before the fee already carries it, and a win elsewhere later
+        // the same day turns more of this venue's seats into Archmages on the next visit (the rest of the field stays).
+        // The wins live in no seed, so with none the field is exactly round 532's. A bracket with no building behind it
+        // (the Chest's Illegal Arena) is not a weekly venue and takes no part.
+        weeklyArchmageHint = 0;
+        weeklyArchmageWins = 0;
+        String venueKey = fromBuilding ? weeklyArenaKey() : null;
+        int weekWins = venueKey == null ? 0 : arenaWinsThisWeek(WorldSave.getCurrentSave().getWorld(), venueKey);
+        int floor = challengePayoutBracket ? LEVEL2_MIN_ARCHMAGES : 0;
+        int wanted = Math.min(Math.max(floor, weekWins), numberOfEnemies);
+        if (weekWins > 0) {
+            forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+            System.out.println("[TFR-ArenaChampion] " + venueKey + ": " + weekWins + " tournament win(s) elsewhere in week "
+                    + world.getCurrentWeek() + " (day " + world.getCurrentDay() + ") -> at least " + wanted + " Archmage(s) of "
+                    + numberOfEnemies + " seats" + (challengePayoutBracket ? " (Level 2 floor " + LEVEL2_MIN_ARCHMAGES + ")" : ""));
+        }
+        if (wanted > 0) {
+            int got = ensureArchmages(field, poolNames, coinFoeSlot, coinFoe, draw, wanted,
+                    challengePayoutBracket ? "Level-2" : "Champion");
+            if (weekWins > floor) {
+                weeklyArchmageWins = weekWins;
+                weeklyArchmageHint = Math.min(wanted, got);
+            }
+        }
         for (int i = 0; i < numberOfEnemies; i++) {
             EnemyData enemyData = i == coinFoeSlot ? coinFoe : field[i];
             bracketLog.append(i > 0 ? ", " : "").append(enemyData.getName()).append(" (").append(EnemyData.tierDisplayName(enemyData.tier)).append(')');
@@ -1959,6 +2016,13 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         refreshArenaBuildingButtons();
     }
 
+    /** Round 715: the line under the arena's title when the week's wins brought Archmages into this draw. */
+    private String weeklyArchmageHintText() {
+        return "[%80]" + weeklyArchmageWins + (weeklyArchmageWins == 1 ? " tournament" : " tournaments")
+                + " won this week: at least " + weeklyArchmageHint + (weeklyArchmageHint == 1 ? " Archmage" : " Archmages")
+                + " in this draw";
+    }
+
     void drawArena() {
         //center the arenaPlane
         ScrollPane pane = ui.findActor("arena");
@@ -1968,11 +2032,19 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             if (Forge.isLandscapeMode()) {
                 arenaTable.add(Controls.newTextraLabel("[;][%150]" + GameScene.instance().getAdventurePlayerLocation(true, true) + " Arena")).top();
                 arenaTable.row();
+                if (weeklyArchmageHint > 0) {
+                    arenaTable.add(Controls.newTextraLabel(weeklyArchmageHintText())).top();
+                    arenaTable.row();
+                }
                 arenaTable.add(arenaPlane).width(arenaPlane.getWidth()).height(arenaPlane.getHeight());
                 pane.setActor(arenaTable);
             } else {
                 arenaTable.add(Controls.newTextraLabel("[;][%150]" + GameScene.instance().getAdventurePlayerLocation(true, true) + " Arena")).colspan(3).top();
                 arenaTable.row();
+                if (weeklyArchmageHint > 0) {
+                    arenaTable.add(Controls.newTextraLabel(weeklyArchmageHintText())).colspan(3).top();
+                    arenaTable.row();
+                }
                 int size = fighters.size;
                 int pv = 0;
                 for (int x = 0; x < size; x++) {

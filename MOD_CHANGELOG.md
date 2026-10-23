@@ -14264,6 +14264,55 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 715: each arena tournament won this week brings an Archmage into every other bracket (2026-10-22)
+
+The user: "in any given week, each time you win a Arena Tournament, (so you're the champion), then for any other Arena
+tournament you participate in, there is at least 1 guaranteed Arch-mage in the draw. So if you win 3 Arena Tournaments,
+the 4th one you participate in will have at lest 3 Arch mages. This re-sets at the start of the next week. (so day 8,
+15, 22, etc."
+
+- **The count**: `ArenaScene.arenaWinsThisWeek(world, exceptKey)` counts the `World.arenaWinWeek` entries whose week
+  is the current week (`World.getCurrentWeek`, days 1-7, 8-14, ...; the reset falls on day 8, 15, 22), leaving out the
+  venue being drawn. `arenaWinWeek` has recorded each venue's last winning week since round 135 and is saved, so no
+  new save field is needed: an older save counts the wins it already holds, and one with none reads 0. The player's
+  arena counts its Normal and Challenging venues apart, as the weekly lock does. Inn tournaments are not arena
+  tournaments and do not count.
+- **The draw**: in `loadArenaData`, after round 532's daily field is drawn, `ensureArchmages` (round 594's
+  `ensureLevel2Archmages`, now with the minimum as a parameter) turns random non-Archmage seats into Archmages from the
+  venue's own pool until the field holds `min(wins, seats)`. The player's Level 2 keeps its floor of 2 (`max(2, wins)`).
+  The coin holder's seat is never replaced. A pool with no Archmage leaves the field as drawn. The wins are not part of
+  the seed: with none, the field is exactly round 532's, and the replacements come from the same day's random, so the
+  bracket stays deterministic. The Chest's Illegal Arena has no venue, so it neither counts nor takes part.
+- **Design calls**:
+  - **No cap below the seat count.** Clamping to the 7 seats is the only cap. An all-Archmage field needs 7 wins at
+    other venues in one week (the five AI capitals plus the player's two arena modes is 7), so it is the end of a
+    very strong week, and it is what the user's rule asks for.
+  - **The bracket shown before entry already carries it.** The guarantee is applied when the field is drawn, before
+    the fee is paid.
+  - **A bracket already seen today does change after a new win, but only by more Archmages.** Seats are only ever
+    turned into Archmages, never re-drawn, so the seats an earlier, smaller minimum changed stay as they were, and the
+    rest of the field stays the day's. Freezing the field instead would let a player look at an easy bracket, win
+    somewhere else, and come back to the easy one. A bracket in progress cannot change, because a win is only recorded
+    when a bracket ends.
+- **Seen**: a line under the arena's title, "3 tournaments won this week: at least 3 Archmages in this draw", shown only
+  when the week's wins raise the minimum. The round-713 win notice now ends "Other arenas this week draw at least N
+  Archmages."
+- **Logs**: `[TFR-ArenaChampion] <venue>: 3 tournament win(s) elsewhere in week 0 (day 1) -> at least 3 Archmage(s) of 7
+  seats`, then `[TFR-ArenaTier] Champion: seat 6 Pirate (Adept) -> Tidecaller Witch (Archmage)` per seat. On a win:
+  `[TFR-ArenaChampion] <venue>: win N of week W - other arenas draw at least N Archmage(s) until day D`. The log's week
+  number is World's, which starts at 0.
+- **Cheat**: `arena wins N` records N wins this week at stand-in venues (`cheat-arena-K:L1`, so no real arena locks);
+  `arena wins` reports the count.
+- **Seen in the agent game** (cheats, slot 20, day 1, the round-715 classes ahead of the jar, Great Lighthouse arena
+  reached by `teleport to poi "Island Capital"`, then `goto tile=13,14` and `13,15`):
+  - 0 wins: the round-532 field (no Archmage, one Master), no line.
+  - `arena wins 3`, out and back in: seats 1-4 the same, seats 5-7 Archmages, and the line under the title.
+  - `arena wins 9`: all 7 seats Archmages ("9 tournaments won this week: at least 7 Archmages"), with the same three
+    Archmages in seats 5-7 as at 3 wins. The pool's few Archmages repeat.
+  - `arena wins 0`: the original field again.
+- **Not seen**: the win notice's new sentence, because the agent's day-1 Blue Starter cannot win a bracket. It is a
+  string change beside round 713's notice.
+
 ## Round 714: Heart of a Champion pays the town that sent you, not only the arena's (2026-10-22)
 
 The user: "So my Capitol sent me on a quest to win a Arena championship to the Blue Capitol. I won, and got +3 Rep with
