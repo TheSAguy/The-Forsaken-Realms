@@ -86,6 +86,8 @@ that are not ours, no promised gifts our game does not deliver, every reference 
 is seen in the agent game before packaging; the round's changelog says it passed. Read the full checklist,
 `docs/tfr/cross-plane-imports.md`, before the first edit of any import.
 
+**Every duel runs at 50x, the fastest speed (standing user rule, 2026-10-17, restated 2026-10-23: "Remember to always duel on the fastest setting. Please make that a rule.")** Any duel a session plays - agent tests, console-started fights, arena brackets, quick checks - runs at 50x. Sit duels out with `dev-tools/agent/tfr_agent.py settle` (its `duel_at_50x` taps the speed button until it reads "1/3x speed"), never a bare `/wait` loop; a duel started any other way gets 50x set before the first wait.
+
 **Check the code graph before changing a shared method (standing user rule, 2026-10-18).** Before renaming, deleting or
 changing the signature or behavior of a method or class that other code calls, list its callers from the local
 graphify code graph and say in the round how many you found:
