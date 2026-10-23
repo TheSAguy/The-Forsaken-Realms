@@ -87,12 +87,37 @@ public class ColorReputation {
         Status(String label) { this.label = label; }
     }
 
+    /**
+     * Round 713 (the user: "Add all four Notices gaps: ... color standing level changes"): AdventurePlayer's
+     * addColorReputationHalfPoints - every change of a color's standing passes through it - calls this. A change of
+     * level (Partner, Happy, Neutral, Unhappy, War), up or down, gets a notice; green up, red down in the log (the
+     * banner reads in plain ink, round 635).
+     */
+    public static void onStandingChanged(String color, int halfPointsBefore, int halfPointsAfter) {
+        if (!isEnabled() || color == null || color.isEmpty())
+            return;
+        Status before = statusFor(halfPointsBefore), after = statusFor(halfPointsAfter);
+        if (before == after)
+            return;
+        boolean up = after.ordinal() < before.ordinal(); // PARTNER first, WAR last
+        String name = Character.toUpperCase(color.charAt(0)) + color.substring(1);
+        System.out.println("[TFR-ColorStanding] " + color + ": " + before.label + " -> " + after.label + " ("
+                + displayValue(halfPointsBefore) + " -> " + displayValue(halfPointsAfter) + ")");
+        forge.adventure.stage.GameHUD.getInstance().addNotification((up ? "[GREEN]" : "[RED]") + "Your standing with " + name
+                + (up ? " rose to " : " fell to ") + after.label + " (" + displayValue(halfPointsAfter) + ").", true);
+    }
+
     /** Gold demanded to enter a barred color's CAPITAL at War (towns stay barred outright).
      *  Raised 100 -> 500 per user tuning, 2026-08-07. */
     public static final int CAPITAL_ENTRY_TOLL = 500;
 
     public static Status getStatus(String color) {
-        int rep = displayValue(AdventurePlayer.current().getColorReputationHalfPoints(color));
+        return statusFor(AdventurePlayer.current().getColorReputationHalfPoints(color));
+    }
+
+    /** Round 713: the standing a stored half-point value falls in (getStatus without the player lookup). */
+    public static Status statusFor(int halfPoints) {
+        int rep = displayValue(halfPoints);
         if (rep >= 80) return Status.PARTNER;
         if (rep >= 30) return Status.HAPPY;
         if (rep >= -29) return Status.NEUTRAL;

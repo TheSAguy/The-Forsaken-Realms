@@ -1312,6 +1312,11 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             world.getArenaWinWeek().put(weeklyKey, week);
             System.out.println("[TFR-ArenaWeekly] " + weeklyKey + ": tournament win recorded for week "
                     + week + " (day " + world.getCurrentDay() + ") - next payout here from week " + (week + 1));
+            // Round 713 (the user: "Add all four Notices gaps: arena wins/champion ..."): the win said nothing before -
+            // the loot screen paid it and the log never knew.
+            forge.adventure.pointofintrest.PointOfInterest venue = TileMapScene.instance().rootPoint;
+            GameHUD.getInstance().addNotification("Arena tournament won" + (venue == null ? "" : " at " + venue.getDisplayName())
+                    + (challengeMode ? " (Challenging)" : "") + "!");
         }
         if (roundsWon != 0) {
             Array<Reward> data = new Array<>();
@@ -1338,6 +1343,9 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 System.out.println("[TFR-ArenaChampion] " + champion.name + " beaten: "
                         + (rare != null ? "one " + rare.getCard().getRarity() + " from its deck - " + rare.getCard().getName()
                                 : "its deck held nothing to give (" + champion.deck.size() + " card(s))"));
+                // Round 713: one line per champion beaten, bracket won or not (the payout above already is).
+                GameHUD.getInstance().addNotification("Arena champion " + champion.name + " beaten"
+                        + (rare != null ? " - " + rare.getCard().getName() + " from its deck." : "."));
             }
             // Last-defeated-foe drop (user spec 2026-08-12, Challenge only): "you get 1 card
             // (rare+) from the last duel you win... + regular rewards" - a Rare-or-Mythic card

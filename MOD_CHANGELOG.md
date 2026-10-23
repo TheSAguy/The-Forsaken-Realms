@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 713: the Notices log hears arena wins, defeats and color standing - and Power stops crowding it (2026-10-22)
+
+The user: "Add all four Notices gaps: arena wins/champion, gold lost on defeat, color standing level changes, and stop
+Power lines crowding the 20 slots." (round 711's list of what never reached the log).
+
+- **Power lines are kept out of the 20.** `Ascendance.awardExact` logs through the new `GameHUD.logPowerNotification`:
+  the entry's tint carries a `p` suffix ("wp"), and `trimNoticeLog()` keeps the newest `NOTICE_LOG_SIZE` 20 notices
+  and, apart from them, the newest `POWER_LOG_SIZE` 10 Power gains - the panel stays one list in time order, the save
+  holds at most 30 entries. Round 711's saved format (text, tint, day) is unchanged, so its saves read as they were.
+  Why not merge consecutive Power lines: they are rarely consecutive (a won duel's Power line and its "First victory -
+  bonus loot!" notice interleave, as in the user's day-12 screenshot), so a merge would still crowd, and a merged line
+  loses what each gain was for. `[TFR-Notices] log opened - N entries (P Power, M notices)`.
+- **Arena**: `ArenaScene.done()` posts "Arena tournament won at <town> (Challenging)!" when a full bracket pays out
+  (not when the week's prize was already taken - that keeps its own "already taken" notice), and "Arena champion <name>
+  beaten - <card> from its deck." for each champion beaten, bracket won or not. Nothing posted there before except the
+  Bronze Coin notices, so nothing doubles.
+- **Defeat**: `AdventurePlayer.defeated()` logs "Defeated - lost [+Gold] N." (log only - the defeat screen is the
+  moment; the icon-only markup draws the coin in its colors, round 367), or "Defeated - your Bronze Coin kept [+Gold] N."
+  when a coin waived the loss.
+- **Color standing**: every change of a color's standing passes through `AdventurePlayer.addColorReputationHalfPoints`,
+  which now calls `ColorReputation.onStandingChanged`. A change of level (Partner, Happy, Neutral, Unhappy, War), up or
+  down, posts "Your standing with Red rose to Partner (85)." in green or "... fell to Unhappy (-42)." in red (the log
+  keeps the color; the banner reads in plain ink, round 635). `[TFR-ColorStanding] red: Happy -> Partner (75 -> 85)`.
+  `ColorReputation.statusFor(halfPoints)` is `getStatus` without the player lookup. Off when `colorReputationEnabled`
+  is off. A new game's starting bonus (+10/+5/-10) crosses no level, so it says nothing.
+- **Seen in the agent game** (cheats, round-713 classes ahead of the agent jar, round 711's slot-7 save): 12 x `asc
+  give 5` plus the save's 3 Power lines -> `log opened - 22 entries (10 Power, 12 notices)`; `give rep red 80`, `red
+  10`, `blue -20` -> three standing lines, colored in the log; lost twice to a spawned Ancient Demon -> "Defeated - lost
+  [coin] 126." in the panel (`[TFR-DefeatGold] Normal: lost 126 of 2528`); after more notices `30 entries (10 Power, 20
+  notices)`, saved to slot 8, reloaded -> `log restored from the save - 30 entries`, still 10 Power, 20 notices.
+- **Not seen in game**: the two arena lines - the agent reached Blazing Peak's arena street but its walker kept
+  entering the Inn beside the road, so no bracket was run. They are two notices in `done()` beside existing log lines.
+  The Bronze Coin defeat line was not seen either (no coin paid).
+
 ## Round 712: the Teleporter shows where each destination sends you (2026-10-22)
 
 The user: "Just like in TFR2, create a small mini-map to show where the teleport location will be sending you to."

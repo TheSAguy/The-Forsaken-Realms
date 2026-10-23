@@ -1530,6 +1530,14 @@ public class GameHUD extends Stage {
         logNotice(notice);
     }
 
+    /** Round 713 (the user: "stop Power lines crowding the 20 slots"): a Power gain for the log only, kept apart from
+     *  the NOTICE_LOG_SIZE count - the newest POWER_LOG_SIZE of them stay, in time order among the rest. */
+    public void logPowerNotification(String text) {
+        String[] notice = normalizeNotice(text, true);
+        forge.adventure.agent.AgentBridge.noteNotification(notice[0]);
+        logNotice(new String[]{notice[0], notice[1] + POWER_KIND});
+    }
+
     // Round 549 (Dove: "They get backed up so far ... Would be nice if they cycled faster, showed more then one of a time";
     // the user: "I'd be 2 or 3 caves/POI down then get them from the ones I visited a while ago ... speed up when the
     // notices show up so they feel more timely"). Every notice was a 15-second action on the pane - 2 s in, 10 s held, 3 s
@@ -1539,6 +1547,10 @@ public class GameHUD extends Stage {
     private static final float NOTICE_IN = 0.4f, NOTICE_HOLD = 5f, NOTICE_HOLD_BUSY = 2.5f, NOTICE_OUT = 0.6f;
     private static final int NOTICES_AT_ONCE = 3;
     private static final int NOTICE_LOG_SIZE = 20;
+    // Round 713: Power gains are kept apart from the 20 (logPowerNotification) - their own newest 10, marked by this
+    // suffix on the entry's tint ("wp"), so round 711's saved entries (text, tint, day) read unchanged.
+    private static final int POWER_LOG_SIZE = 10;
+    private static final String POWER_KIND = "p";
     private static final int NOTICE_LOG_VISIBLE = 6; // round 567: entries shown before the log scrolls
     private static final float LOG_BUTTON_W = 26f;
     private final java.util.ArrayDeque<String[]> noticeQueue = new java.util.ArrayDeque<>(); // {text, "w" | "b"}
@@ -1557,8 +1569,21 @@ public class GameHUD extends Stage {
         int day = WorldSave.getCurrentSave() != null && WorldSave.getCurrentSave().getWorld() != null
                 ? WorldSave.getCurrentSave().getWorld().getCurrentDay() : 0;
         noticeLog.addFirst(new String[]{notice[0], notice[1], String.valueOf(day)});
-        while (noticeLog.size() > NOTICE_LOG_SIZE)
-            noticeLog.removeLast();
+        trimNoticeLog();
+    }
+
+    private static boolean isPowerEntry(String[] entry) {
+        return entry[1].endsWith(POWER_KIND);
+    }
+
+    /** Round 713: the oldest entries past each kind's own cap go - NOTICE_LOG_SIZE notices, POWER_LOG_SIZE Power gains. */
+    private void trimNoticeLog() {
+        int notices = 0, power = 0;
+        for (java.util.Iterator<String[]> it = noticeLog.iterator(); it.hasNext(); ) { // newest first
+            String[] entry = it.next();
+            if (isPowerEntry(entry) ? ++power > POWER_LOG_SIZE : ++notices > NOTICE_LOG_SIZE)
+                it.remove();
+        }
     }
 
     // Round 711 (the user: "the log did not record my reputation gain, dungeon clean-out. I'm not sure if it recorded my
@@ -1578,8 +1603,9 @@ public class GameHUD extends Stage {
     public void restoreNoticeLog(java.util.List<String> flat) {
         noticeLog.clear();
         if (flat != null)
-            for (int i = 0; i + 2 < flat.size() && noticeLog.size() < NOTICE_LOG_SIZE; i += 3)
+            for (int i = 0; i + 2 < flat.size(); i += 3)
                 noticeLog.addLast(new String[]{flat.get(i), flat.get(i + 1), flat.get(i + 2)});
+        trimNoticeLog();
         System.out.println("[TFR-Notices] log restored from the save - " + noticeLog.size() + " entr"
                 + (noticeLog.size() == 1 ? "y" : "ies"));
     }
@@ -1674,7 +1700,7 @@ public class GameHUD extends Stage {
             TextraLabel day = Controls.newTextraLabel("[%70]Day " + entry[2]);
             day.setColor(Color.BLACK);
             TextraLabel line = Controls.newTextraLabel("[%85]" + entry[0]);
-            line.setColor("w".equals(entry[1]) ? Color.WHITE : Color.BLACK);
+            line.setColor(entry[1].startsWith("w") ? Color.WHITE : Color.BLACK); // round 713: "wp" is a Power gain
             line.setWrap(true);
             rows.add(day).left().top().padRight(4f);
             rows.add(line).width(width - 52f).left().padBottom(4f).row();
@@ -1700,7 +1726,11 @@ public class GameHUD extends Stage {
         dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).width(width / 2f).row();
         dialog.setKeepWithinStage(true);
         stage.showDialog();
-        System.out.println("[TFR-Notices] log opened - " + noticeLog.size() + " entr" + (noticeLog.size() == 1 ? "y" : "ies"));
+        int power = 0;
+        for (String[] entry : noticeLog)
+            power += isPowerEntry(entry) ? 1 : 0;
+        System.out.println("[TFR-Notices] log opened - " + noticeLog.size() + " entr" + (noticeLog.size() == 1 ? "y" : "ies")
+                + " (" + power + " Power, " + (noticeLog.size() - power) + " notices)"); // round 713
     }
 
     /** A notice's text as shown, and its tint ("w" white with its own color tags, "b" black). */

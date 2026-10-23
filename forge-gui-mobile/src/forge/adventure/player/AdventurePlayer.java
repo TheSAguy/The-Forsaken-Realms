@@ -2747,6 +2747,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (suppressDefeatGoldLoss) {
             suppressDefeatGoldLoss = false;
             System.out.println("[TFR-CoinRansom] defeat gold loss waived by Bronze Coin (gold kept: " + gold + ")");
+            int kept = defeatGoldLossNow();
+            if (kept > 0) // round 713: the log says what the coin saved
+                forge.adventure.stage.GameHUD.getInstance().logNotification("Defeated - your Bronze Coin kept [+Gold] " + kept
+                        + ".", false);
         } else {
             int lostGold = gold;
             // Round 177 (user request): a FLAT loss per difficulty - all of it if you carry less. Round 359: a
@@ -2759,6 +2763,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                     + " gold (" + (loss >= 0 ? tuning.defeatGoldLossPercentFor(difficultyData.name) + "%, minimum "
                     + tuning.defeatGoldLossFor(difficultyData.name) : "goldLoss " + difficultyData.goldLoss) + ")");
             forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.GOLD, gold - lostGold);
+            // Round 713 (the user: "Add all four Notices gaps: ... gold lost on defeat"): log only - the defeat screen is
+            // the moment; the log is where it is found again. The icon-only markup draws the coin in its colors.
+            if (lostGold > gold)
+                forge.adventure.stage.GameHUD.getInstance().logNotification("Defeated - lost [+Gold] " + (lostGold - gold)
+                        + ".", false);
         }
         int lb = life, mb = maxLife;
         life = (int) (life - (maxLife * difficultyData.lifeLoss * forge.adventure.util.Ascendance.defeatLossFactor())); // round 494: Stubborn
@@ -3038,7 +3047,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void addColorReputationHalfPoints(String color, int halfPoints) {
+        int before = getColorReputationHalfPoints(color);
         colorReputationHalfPoints.merge(color, halfPoints, Integer::sum);
+        forge.adventure.util.ColorReputation.onStandingChanged(color, before, getColorReputationHalfPoints(color)); // round 713
     }
 
     public void addBlessing(EffectData bless) {

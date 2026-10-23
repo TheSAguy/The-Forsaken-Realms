@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 713 - arena, defeat and color-standing notices; Power apart from the 20
+
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `logPowerNotification()`, `POWER_LOG_SIZE` /
+  `POWER_KIND`, `trimNoticeLog()` (per-kind caps, used by `logNotice` and `restoreNoticeLog`); the log panel reads the
+  tint by its first letter; the "log opened" line counts Power and notices.
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `done()`: a notice for a paid-out tournament win and
+  one per champion beaten.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `defeated()` logs the gold lost (or kept by a
+  Bronze Coin); `addColorReputationHalfPoints()` calls `ColorReputation.onStandingChanged`.
+
 ### Round 711 - the notice log in the save; reputation lines
 
 - **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - new `exportNoticeLog()`, `restoreNoticeLog(List)` and

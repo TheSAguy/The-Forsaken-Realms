@@ -609,7 +609,8 @@ public final class Ascendance {
         // Round 517: authored on the paper, so the sun keeps its colors (the black tint drew it solid black). Round 549
         // (Dove on Discord: "They get backed up so far with all the EXP gain notifications ... didn't show the EXP"): to
         // the notices' log only - the HUD's Asc panel shows the bar move, and a level-up still gets its banner.
-        GameHUD.getInstance().logNotification(onPaper("[BLACK][%85]+" + amount + " " + ICON + " - " + source), true);
+        // Round 713: kept apart from the log's 20 notices (the user: "stop Power lines crowding the 20 slots").
+        GameHUD.getInstance().logPowerNotification(onPaper("[BLACK][%85]+" + amount + " " + ICON + " - " + source));
         for (int level = before + 1; level <= after; level++)
             onLevelUp(level);
     }
