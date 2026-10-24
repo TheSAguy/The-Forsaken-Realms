@@ -691,6 +691,22 @@ public class ConsoleCommandInterpreter {
 
             return "Added " + amount + " " + edition.getCode() + " booster(s)";
         });
+        // Round 722: roll color boosters the way a color-booster shop does (generateBoosterByColor, which cleans each pack)
+        // and throw them away - the [TFR-CommanderCards] lines show each restricted card's swap. Sets are comma-separated.
+        registerCommand(new String[]{"test", "colorboosters"}, s -> {
+            if (s.length < 3)
+                return "Command needs 3 parameters: Color (White..Green, Colorless), count and edition codes (LEA,USG).";
+            int amount;
+            try {
+                amount = Integer.parseInt(s[1]);
+            } catch (NumberFormatException e) {
+                return "Can not convert " + s[1] + " to number";
+            }
+            String[] sets = s[2].split(",");
+            for (int i = 0; i < amount; i++)
+                AdventureEventController.instance().generateBoosterByColor(s[0], sets);
+            return "Rolled " + amount + " " + s[0] + " booster(s) from " + s[2] + " - see [TFR-CommanderCards] in forge.log";
+        });
         registerCommand(new String[]{"clearnosell"}, s -> {
             CardPool cards = Current.player().getCards();
             for (PaperCard c : cards.getFilteredPool(c -> c.getMarkedFlags().noSellValue).toFlatList()) {

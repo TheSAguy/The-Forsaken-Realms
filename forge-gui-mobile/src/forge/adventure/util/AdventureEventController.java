@@ -256,7 +256,7 @@ public class AdventureEventController implements Serializable {
                 Pair.of(BoosterSlots.RARE_MYTHIC + ":color(\"" + color + "\"):!" + BoosterSlots.LAND + setClause, 1),
                 Pair.of(BoosterSlots.LAND + ":color(\"" + color + "\")" + setClause, 1))
         ));
-        List<PaperCard> cards = CommanderCards.cleanPack(pack.getCards(), color + " booster"); // round 387
+        List<PaperCard> cards = CommanderCards.cleanPack(pack.getCards(), color + " booster", color); // round 387; round 722: same color
         Deck output = new Deck();
         output.getMain().add(cards);
         String editionName = color + " Booster Pack";

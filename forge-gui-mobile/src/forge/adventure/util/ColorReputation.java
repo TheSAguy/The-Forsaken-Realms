@@ -94,6 +94,59 @@ public class ColorReputation {
      * banner reads in plain ink, round 635).
      */
     public static void onStandingChanged(String color, int halfPointsBefore, int halfPointsAfter) {
+        if (batchDepth > 0) { // round 722: endBatch() compares the whole event once
+            if (statusFor(halfPointsBefore) != statusFor(halfPointsAfter))
+                batchCrossed.add(color);
+            return;
+        }
+        notifyStanding(color, halfPointsBefore, halfPointsAfter);
+    }
+
+    // Round 722 (player-log review P1): one multicolor win applies the wheel once per enemy color, five adds each, so a
+    // color on a threshold could fall and rise again inside one duel and post both notices. A batch snapshots the five
+    // values; onStandingChanged stays quiet while one is open, and the outermost endBatch() posts one notice per color
+    // whose level differs from the snapshot. Nesting is fine (only the outermost pair counts). Always pair them in
+    // try/finally.
+    private static int batchDepth = 0;
+    private static Map<String, Integer> batchSnapshot = null;
+    private static final java.util.Set<String> batchCrossed = new java.util.HashSet<>();
+
+    public static void beginBatch() {
+        if (batchDepth++ > 0)
+            return;
+        AdventurePlayer player = AdventurePlayer.current();
+        batchSnapshot = null;
+        batchCrossed.clear();
+        if (player == null)
+            return;
+        batchSnapshot = new HashMap<>();
+        for (String color : COLORS)
+            batchSnapshot.put(color, player.getColorReputationHalfPoints(color));
+    }
+
+    public static void endBatch() {
+        if (batchDepth == 0 || --batchDepth > 0)
+            return;
+        Map<String, Integer> snapshot = batchSnapshot;
+        batchSnapshot = null;
+        AdventurePlayer player = AdventurePlayer.current();
+        if (snapshot == null || player == null)
+            return;
+        for (String color : COLORS) {
+            int before = snapshot.get(color), after = player.getColorReputationHalfPoints(color);
+            if (statusFor(before) == statusFor(after)) {
+                if (batchCrossed.contains(color) && isEnabled())
+                    System.out.println("[TFR-ColorStanding] " + color + ": crossed a level and came back within one event, "
+                            + statusFor(after).label + " kept (" + displayValue(before) + " -> " + displayValue(after)
+                            + ") - no notice");
+                continue;
+            }
+            notifyStanding(color, before, after);
+        }
+        batchCrossed.clear();
+    }
+
+    private static void notifyStanding(String color, int halfPointsBefore, int halfPointsAfter) {
         if (!isEnabled() || color == null || color.isEmpty())
             return;
         Status before = statusFor(halfPointsBefore), after = statusFor(halfPointsAfter);
@@ -275,19 +328,24 @@ public class ColorReputation {
     public static void debugShiftReputation(String targetColor, int displayAmount) {
         AdventurePlayer player = AdventurePlayer.current();
         int halfPoints = displayAmount * 2;
-        player.addColorReputationHalfPoints(targetColor, halfPoints);
-        int perOther = -halfPoints / 4;
-        int remainder = -halfPoints - perOther * 4;
-        for (String color : COLORS) {
-            if (color.equals(targetColor))
-                continue;
-            int delta = perOther;
-            if (remainder != 0) {
-                int step = remainder > 0 ? 1 : -1;
-                delta += step;
-                remainder -= step;
+        beginBatch(); // round 722
+        try {
+            player.addColorReputationHalfPoints(targetColor, halfPoints);
+            int perOther = -halfPoints / 4;
+            int remainder = -halfPoints - perOther * 4;
+            for (String color : COLORS) {
+                if (color.equals(targetColor))
+                    continue;
+                int delta = perOther;
+                if (remainder != 0) {
+                    int step = remainder > 0 ? 1 : -1;
+                    delta += step;
+                    remainder -= step;
+                }
+                player.addColorReputationHalfPoints(color, delta);
             }
-            player.addColorReputationHalfPoints(color, delta);
+        } finally {
+            endBatch();
         }
     }
 
@@ -340,15 +398,20 @@ public class ColorReputation {
             return;
         boolean mono = enemyColors.size() == 1;
         int multiplier = enemyData.boss ? BOSS_MULTIPLIER : (isTerritoryMage ? MAGE_KILL_MULTIPLIER : 1);
-        for (String color : enemyColors) {
-            // Multicolor applies the HALF pattern per color; internal values are stored doubled,
-            // so "half" is a clean integer division by 2 of already-even constants.
-            // Round 494: Ascendance's Envoy shrinks the losses (target and allies), never the enemies' gain.
-            int target = Math.round((mono ? FIGHT_TARGET : FIGHT_TARGET / 2) * multiplier * Ascendance.reputationLossFactor());
-            int ally = Math.round((mono ? FIGHT_ALLY : FIGHT_ALLY / 2) * multiplier * Ascendance.reputationLossFactor());
-            // Round 596: Warmonger, Envoy's opposite, grows the enemies' gain (and only that).
-            int enemy = Math.round((mono ? FIGHT_ENEMY : FIGHT_ENEMY / 2) * multiplier * Ascendance.reputationGainFactor());
-            applyPattern(color, target, ally, enemy);
+        beginBatch(); // round 722: one standing comparison for the whole win
+        try {
+            for (String color : enemyColors) {
+                // Multicolor applies the HALF pattern per color; internal values are stored doubled,
+                // so "half" is a clean integer division by 2 of already-even constants.
+                // Round 494: Ascendance's Envoy shrinks the losses (target and allies), never the enemies' gain.
+                int target = Math.round((mono ? FIGHT_TARGET : FIGHT_TARGET / 2) * multiplier * Ascendance.reputationLossFactor());
+                int ally = Math.round((mono ? FIGHT_ALLY : FIGHT_ALLY / 2) * multiplier * Ascendance.reputationLossFactor());
+                // Round 596: Warmonger, Envoy's opposite, grows the enemies' gain (and only that).
+                int enemy = Math.round((mono ? FIGHT_ENEMY : FIGHT_ENEMY / 2) * multiplier * Ascendance.reputationGainFactor());
+                applyPattern(color, target, ally, enemy);
+            }
+        } finally {
+            endBatch();
         }
     }
 
@@ -371,8 +434,13 @@ public class ColorReputation {
         java.util.List<String> colors = colorsFromColorSet(player.getColorIdentity());
         if (colors.isEmpty())
             return;
-        for (String color : colors)
-            player.addColorReputationHalfPoints(color, displayPoints * 2);
+        beginBatch(); // round 722
+        try {
+            for (String color : colors)
+                player.addColorReputationHalfPoints(color, displayPoints * 2);
+        } finally {
+            endBatch();
+        }
         System.out.println("[TFR-Reputation] " + why + ": +" + displayPoints
                 + " with the player's own colours " + colors);
     }
@@ -381,8 +449,13 @@ public class ColorReputation {
     public static void applyStartingDeckBonus(ColorSet identity) {
         if (!isEnabled() || identity == null)
             return;
-        for (String color : colorsFromColorSet(identity))
-            applyPattern(color, START_TARGET, START_ALLY, START_ENEMY);
+        beginBatch(); // round 722: one comparison for the whole bonus, not one per identity color
+        try {
+            for (String color : colorsFromColorSet(identity))
+                applyPattern(color, START_TARGET, START_ALLY, START_ENEMY);
+        } finally {
+            endBatch();
+        }
     }
 
     // One zero-sum wheel application: target gets targetDelta, its 2 allies allyDelta each, its 2
@@ -400,11 +473,16 @@ public class ColorReputation {
 
     private static void applyPattern(String targetColor, int targetDelta, int allyDelta, int enemyDelta) {
         AdventurePlayer player = AdventurePlayer.current();
-        player.addColorReputationHalfPoints(targetColor, targetDelta);
-        for (String ally : ALLIES.get(targetColor))
-            player.addColorReputationHalfPoints(ally, allyDelta);
-        for (String enemy : ENEMIES.get(targetColor))
-            player.addColorReputationHalfPoints(enemy, enemyDelta);
+        beginBatch(); // round 722: one wheel turn is one event (covers the town-assault penalty too)
+        try {
+            player.addColorReputationHalfPoints(targetColor, targetDelta);
+            for (String ally : ALLIES.get(targetColor))
+                player.addColorReputationHalfPoints(ally, allyDelta);
+            for (String enemy : ENEMIES.get(targetColor))
+                player.addColorReputationHalfPoints(enemy, enemyDelta);
+        } finally {
+            endBatch();
+        }
     }
 
     /** Progressive Set Unlocks (MOD_SCOPE.md #4) - the single canonical color to use for a roaming

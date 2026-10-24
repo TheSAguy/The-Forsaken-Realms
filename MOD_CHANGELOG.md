@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 722: one standing notice per event; color boosters swap restricted cards within their color (2026-10-23)
+
+The user: "Fix P1 (standing notices compared once per event) and P3 (color boosters replace restricted cards with
+same-color cards) together as round 722." Both from the 2026-10-23 evening player-log review.
+
+- **P1 (since round 713)**: beating a Cave Spider (RGB) with green at -29 posted "standing with Green fell to Unhappy"
+  and "rose to Neutral" for one fight whose net effect on green was zero. `onPlayerWonDuel` turns the wheel once per
+  enemy color, five `addColorReputationHalfPoints` each, and every add compared the standing on its own.
+  **Fix**: `ColorReputation.beginBatch()` snapshots the five values; while a batch is open `onStandingChanged` only
+  notes which colors crossed a level; the outermost `endBatch()` (nesting is fine, always in try/finally) posts one
+  notice per color whose level differs from the snapshot. A color that crossed and came back gets a log line only:
+  `[TFR-ColorStanding] green: crossed a level and came back within one event, Neutral kept (-29 -> -29) - no notice`.
+  Batched: `onPlayerWonDuel`, `applyPattern` (so the town-assault/capture penalty and every single wheel turn),
+  `applyStartingDeckBonus`, `addToPlayerColors` and the `give rep` console shift. Single adds outside a batch (the color
+  defeat penalty, dialog `addColorReputation`) notify as before. Sworn Friend (`TfrAchievements.onPartner`, round 718)
+  still fires from the same notice, so once on a real rise to Partner and never on a dip that came back.
+- **P3 (since round 387)**: a color booster swapped a restricted card for any same-set, same-rarity card - a Green pack
+  gave Shivan Dragon for Fastbond, a White one Kagha, Shadow Archdruid for Inspiring Leader. **Fix**:
+  `CommanderCards.cleanPack(cards, where, packColor)`; `generateBoosterByColor` passes its color. The swap must pass the
+  same predicate the pack's slots use (BoosterGenerator's `color(...)`: the card's color, or a land's color identity;
+  Colorless = colorless). Fallbacks, each logged: the same set at any rarity in that color, then the old same-set
+  same-rarity pick. Set boosters, Inn event packs and jumpstart keep the old behavior (no color).
+- **Test hook**: cheat console `test colorboosters <Color> <count> <SETS>` rolls color boosters the shop's way and throws
+  them away.
+
+**Agent game** (`notices r713` save, cheats, round-722 classes; duels through `settle` at 50x):
+- `give rep green 3` (-32 -> -29): one line, `green: Unhappy -> Neutral (-32 -> -29)`. An Orc Raider (R) win then took
+  green -29 -> -30: one line, `Neutral -> Unhappy (-29 -> -30)` - a real level change still posts.
+- Green back to -29, then beat a Cave Spider (Master, RGB): no notice, only the `crossed a level and came back` line
+  above; green ended at -29. Before this round that was the fall/rise pair.
+- 1,200 color boosters (Green LEA 300, Green USG 300, White CLB 300, Green LEA/USG/ULG/CLB 200, Colorless LEA 100): 599
+  swaps, every one `(same set and rarity, <color>)` - e.g. Fastbond -> Lifelace / Force of Nature, Gaea's Cradle ->
+  Citanul Centaurs, Inspiring Leader -> Minthara (W/B, white like the slot rules), Black Lotus -> Winter Orb. No
+  exceptions.
+- **Not seen**: the two fallbacks (every tested set had a same-color card at the rarity), a Partner crossing for Sworn
+  Friend, the town-assault penalty and the starting-deck bonus in a live event (same batch code path).
+
 ## Round 721: a new start-menu background - the golden-hour battle (2026-10-23)
 
 The user: "It turned out great. Please use that for TFR 1" (the start-menu image they made in ChatGPT from the Art

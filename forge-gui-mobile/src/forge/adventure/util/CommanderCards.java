@@ -29,7 +29,7 @@ import java.util.Set;
  * boss's Sol Ring or Black Lotus is part of its design.</li>
  * <li><b>Boosters:</b> a booster is built straight from a set's sheets and never saw the restricted list. Each
  * restricted card (both lists) in a pack is swapped for another card of the same rarity from the same set, or dropped
- * when the set has none.</li>
+ * when the set has none. Round 722: in a color booster the swap also shares the pack's color.</li>
  * </ul>
  * Grep forge.log for [TFR-CommanderCards].
  */
@@ -149,8 +149,20 @@ public final class CommanderCards {
 
     /** A booster's cards without restricted ones - each swapped for a same-rarity card of the same set, or dropped. */
     public static List<PaperCard> cleanPack(List<PaperCard> cards, String where) {
+        return cleanPack(cards, where, null);
+    }
+
+    /**
+     * Round 722 (player-log review P3: a Green booster gave Shivan Dragon for Fastbond): with {@code packColor} (a color
+     * booster's "White".."Green" or "Colorless"), the swap also shares the pack's color, matched with the same predicate
+     * the pack's slots use (BoosterGenerator's color(...)). Fallbacks, each logged: the same set at any rarity in that
+     * color, then the old same-set same-rarity pick. A null color is the old behavior (set boosters, event packs,
+     * jumpstart).
+     */
+    public static List<PaperCard> cleanPack(List<PaperCard> cards, String where, String packColor) {
         if (cards == null || restricted().isEmpty())
             return cards;
+        java.util.function.Predicate<PaperCard> inColor = colorPredicate(packColor);
         boolean any = false;
         List<PaperCard> out = new ArrayList<>(cards.size());
         for (PaperCard card : cards) {
@@ -159,17 +171,50 @@ public final class CommanderCards {
                 continue;
             }
             any = true;
-            PaperCard swap = replacement(card);
+            String how = "";
+            PaperCard swap = null;
+            if (inColor != null) {
+                String c = packColor.toLowerCase();
+                swap = replacement(card, true, inColor, c);
+                how = " (same set and rarity, " + c + ")";
+                if (swap == null) {
+                    swap = replacement(card, false, inColor, c);
+                    how = " (fallback: no " + c + " " + card.getRarity() + " left in " + card.getEdition()
+                            + " - same set, any rarity, " + c + ")";
+                }
+                if (swap == null)
+                    how = " (fallback: no " + c + " card left in " + card.getEdition() + " - same set and rarity, any color)";
+            }
+            if (swap == null)
+                swap = replacement(card, true, null, "");
             System.out.println("[TFR-CommanderCards] " + where + ": " + card.getName() + " (" + card.getEdition()
-                    + ", " + card.getRarity() + ") -> " + (swap == null ? "dropped (nothing else at that rarity)" : swap.getName()));
+                    + ", " + card.getRarity() + ") -> " + (swap == null ? "dropped (nothing else at that rarity)" : swap.getName() + how));
             if (swap != null)
                 out.add(swap);
         }
         return any ? out : cards;
     }
 
-    private static PaperCard replacement(PaperCard card) {
-        String key = card.getEdition() + "|" + card.getRarity();
+    /** Round 722: the color booster's slot predicate for a pack color name, or null for none/unknown. */
+    private static java.util.function.Predicate<PaperCard> colorPredicate(String packColor) {
+        if (packColor == null)
+            return null;
+        switch (packColor.toLowerCase()) {
+            case "white": return forge.item.PaperCardPredicates.IS_WHITE;
+            case "blue": return forge.item.PaperCardPredicates.IS_BLUE;
+            case "black": return forge.item.PaperCardPredicates.IS_BLACK;
+            case "red": return forge.item.PaperCardPredicates.IS_RED;
+            case "green": return forge.item.PaperCardPredicates.IS_GREEN;
+            case "colorless": return forge.item.PaperCardPredicates.IS_COLORLESS;
+            default: return null;
+        }
+    }
+
+    /** A random unrestricted, non-basic card of the card's set - at its rarity when {@code sameRarity}, and passing
+     *  {@code filter} (cached under {@code filterKey}) when one is given. */
+    private static PaperCard replacement(PaperCard card, boolean sameRarity, java.util.function.Predicate<PaperCard> filter,
+                                         String filterKey) {
+        String key = card.getEdition() + "|" + (sameRarity ? card.getRarity() : "*") + "|" + (filter == null ? "" : filterKey);
         List<PaperCard> pool;
         synchronized (REPLACEMENTS) {
             pool = REPLACEMENTS.get(key);
@@ -177,9 +222,11 @@ public final class CommanderCards {
                 pool = new ArrayList<>();
                 CardRarity rarity = card.getRarity();
                 for (PaperCard pc : FModel.getMagicDb().getCommonCards().getAllCards()) {
-                    if (!card.getEdition().equals(pc.getEdition()) || pc.getRarity() != rarity)
+                    if (!card.getEdition().equals(pc.getEdition()) || (sameRarity && pc.getRarity() != rarity))
                         continue;
                     if (restricted().contains(pc.getName()) || pc.getRules().getType().isBasicLand())
+                        continue;
+                    if (filter != null && !filter.test(pc))
                         continue;
                     pool.add(pc);
                 }

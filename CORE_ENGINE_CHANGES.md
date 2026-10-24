@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 722 - standing notices once per event; color boosters keep their color
+
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureEventController.java`** (STOCK) - `generateBoosterByColor(String,
+  String[])` passes the pack's color to `CommanderCards.cleanPack(cards, where, color)` (one argument added to the
+  round-387 call). On a conflict, keep upstream's body and re-add the clean call with the color.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - cheat `test colorboosters <Color>
+  <count> <SETS>`: rolls color boosters through `generateBoosterByColor` and discards them (testing only).
+- Mod files only otherwise: `util/ColorReputation.java` (`beginBatch`/`endBatch`), `util/CommanderCards.java`
+  (`cleanPack` color overload). `AdventurePlayer.addColorReputationHalfPoints` is unchanged.
+
 ### Round 720 - AI regenerate recursion (upstream bug)
 
 - **`forge-ai/src/main/java/forge/ai/ComputerUtil.java`** - UPSTREAM BUG: `canRegenerate`'s `ComputerUtilCost.canPayCost`
