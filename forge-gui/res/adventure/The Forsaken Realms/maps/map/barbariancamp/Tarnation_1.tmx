@@ -128,7 +128,7 @@
   <object id="108" template="../../../../common/maps/obj/entry_right.tx" x="60.5" y="74.1667" width="21" height="21">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value=""/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/barbariancamp/Tarnation_2.tmx"/>
     <property name="teleportObjectId" value="114"/>
    </properties>
   </object>

@@ -120,7 +120,7 @@
   <object id="118" template="../../../../common/maps/obj/entry_up.tx" x="307.084" y="196.833" width="58.6667" height="25.3333">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value=""/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/merfolkpool/Wizard_Palace_2.tmx"/>
     <property name="teleportObjectId" value="38"/>
    </properties>
   </object>

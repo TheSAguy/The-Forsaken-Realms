@@ -14264,6 +14264,51 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 731: Tarnation, the Wizard Palace and the Church of Valgavoth lead deeper again (2026-10-24)
+
+Two players on Discord (v1.23): Nova, "At the Tarnation dungeon which you can reach via the amulet when you try to
+enter the hideout you get teleported out of the dungeon", and gnomedoom, "I entered the dungeon that gives enemies tome
+of the infinite and wizard class ... I enter and it immediate boots to overworld" (with their logs).
+
+- **The cause**: the 2026-08-10 item-economy round imported only the first floor of three Realm of Legends dungeons and
+  cleared each one's stairs (`teleport` = "") so they would not load a map that was not there. `EntryActor.onPlayerCollide()`
+  treats an empty `teleport` as the dungeon's exit, so the door that leads deeper sent the player to the world map:
+  Tarnation_1 #108 (the "Hellspur Headquarters" door; Tarnation is the Tarnation Omenstone's place), Wizard_Palace_1
+  #118 and Church_of_Valgavoth_1 #89. gnomedoom's log shows the Wizard Palace's duels (`[TFR-DuelEffects] ...
+  battlefield=[Tome of the Infinite, Wizard Class]`) and then a plain `[TFR-TownLift] Wizard Palace (castle) leave`:
+  no load error, an ordinary exit.
+- **The fix** (`dev-tools/rol_import/import_r731.py`, on `rol_common.import_maps`): the five missing floors are imported
+  and the three doors get their targets back.
+  - `barbariancamp/Tarnation_2.tmx`: the Hellspur sanctum - Akul (Easy/Normal; Laughing Jasper Flint on Hard),
+    Calamity, OTJ boosters, BIG and OTP chests. Akul's effect named "Key to the Vault", which Forge does not have: now
+    "The Key to the Vault".
+  - `evilgrove/Church_of_Valgavoth_2.tmx`: the Master of Keys, the Mindskinner, Rendmaw, three captives whose freeing
+    breaks the blood barrier, Valgavoth; DSK boosters and a DSC chest. The captives' dialogs got the comma their JSON was
+    missing; "Found footage" and "nowhere to run" get Forge's capitals (its lookup ignores case; the import check does not).
+  - `merfolkpool/Wizard_Palace_2-4.tmx`: Azami, Jalira, Vadrik, the Archimandrite; Kess, Pol Jamaar, Inalla, Mairsil;
+    Zur in the void. The palace effect (Tome of the Infinite, Wizard Class) stays on every floor, as on floor 1 since
+    August. Floor 3's scroll gave Tome of the Infinite (J21, digital-only, blocked by default): it gives Wizard Class
+    (AFR) instead. `rol_common.import_maps` gained `battle_cards_ok` for the kept Tome.
+  - Import rules: every enemy was already in enemies.json; every reward is a card or a booster; no item, quest, NPC turn-in,
+    Commander card or promise. The text needed no refit (no manasight stone, no Realm of Legends story).
+- **The audit**: a script compared every entry/portal of the plane's maps with the same map in every other plane and
+  checked that every target map and target object exists. 187 door links resolve. Of the doors another plane leads
+  somewhere from, four were cleared here; three are fixed above. The fourth, Hall_of_the_Unifier #150 (Realm of Legends'
+  11-map Mirror Gallery), stays an exit on purpose: its dialog says the mirror "now shows only the way back out".
+- **Booster guards**: `booster_guards.py` lists the new floors' boosters as unguarded, and `add_booster_guards.py`
+  would clone the bosses (Valgavoth, Inalla, Akul) as guards. Not applied, as with round 668/669's legend lairs; the
+  boss is the room's guard. The Church's four sit behind the blood barrier.
+- **Saves**: nothing to do. A map is read from its file each time it is entered, so an existing save takes the stairs
+  as soon as it has this build. A place already counted as cleared stays cleared; one still open now also needs its
+  deeper floors (round 443's PlaceLevels follows the stairs).
+- **Agent game** (cheats, the maps copied into the agent folder; the live game was running, so no package yet):
+  before the fix, Tarnation #108 sent the player to the world map ("the player moved to WorldStage"). After it:
+  Tarnation 1 -> 2 and back to #108; a duel with Calamity at 50x (won, loot taken); Wizard Palace 1 -> 2 -> 3 -> 4 (Zur
+  there); Church 1 -> 2, the three captives freed, the barrier gone, and back to #89. No exception in the log.
+  - Seen on the way, in Realm of Legends' own layout: the arrival spots sit on the edge of a large stairs trigger
+    (Wizard Palace 3's up-stairs is 38x40 px), so a first step back toward it bounces the player up a floor. Once, the
+    agent's walker did that. Not changed.
+
 ## Round 730: picked-up resources go to the Notices log, with no banner (2026-10-24)
 
 The user: "We can disable the 'You received xxx resource' pop-ups. Those can go directly to log." (their screenshot: the

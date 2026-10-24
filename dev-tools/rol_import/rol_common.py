@@ -2,9 +2,12 @@ r"""rol_common.py - the writers the Realm of Legends imports share (round 669 on
 
 Every writer is idempotent: an entry already in the plane is left alone (items are brought up to date - their
 description, effect and csv row). Each takes the round's own data:
-  import_maps(c, maps, text, card_swaps)      maps: [(subfolder, file)]; text: {file: [(old, new, times)]} exact
+  import_maps(c, maps, text, card_swaps[, edit_hooks, battle_cards_ok])
+                                               maps: [(subfolder, file)]; text: {file: [(old, new, times)]} exact
                                                substrings of the raw line text; card_swaps: {file: [(raw old, raw new,
-                                               times)]} on the raw .tmx (card names in effects and rewards)
+                                               times)]} on the raw .tmx (card names in effects and rewards);
+                                               battle_cards_ok: names a startBattleWithCard may keep although
+                                               card_ok refuses them (round 731: a floor already shipped with it)
   import_pois(c, pois, new_regions)            pois: [dict(name, display, atlas, sprite, map, type, tags, level, land)]
   import_enemies(c, enemies, round, items)     enemies: [dict(name, source, life, tier, difficulty, games, rebuild, deck,
                                                drop_items, item_swaps, drop_unplayable, extra_rewards)]
@@ -66,7 +69,7 @@ class Ctx:
 
 
 # ------------------------------------------------------------------------------------------------------------ maps
-def import_maps(c, maps, text, card_swaps, edit_hooks=None):
+def import_maps(c, maps, text, card_swaps, edit_hooks=None, battle_cards_ok=()):
     for sub, f in maps:
         dst = os.path.join(c.plane, 'maps', 'map', sub, f)
         if os.path.exists(dst):
@@ -88,7 +91,8 @@ def import_maps(c, maps, text, card_swaps, edit_hooks=None):
             raw = edit_hooks[f](raw)
         for card in re.findall(r'startBattleWithCard\\?&quot;: ?\[([^\]]*)\]', raw):
             for name in re.findall(r'\\?&quot;([^&]+?)\\?&quot;', card):
-                assert c.card_ok(name), '%s: card %s is not in Forge, or not playable here' % (f, name)
+                assert c.card_ok(name) or name in battle_cards_ok, \
+                    '%s: card %s is not in Forge, or not playable here' % (f, name)
         for name in re.findall(r'&quot;cardName&quot;: ?&quot;([^&]+?)&quot;', raw):
             assert c.card_ok(name), '%s: reward card %s is not in Forge, or not playable here' % (f, name)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
