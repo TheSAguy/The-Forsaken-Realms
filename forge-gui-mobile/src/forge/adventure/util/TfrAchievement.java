@@ -52,6 +52,36 @@ public class TfrAchievement extends Achievement {
         return null;
     }
 
+    // Round 729 (the user: "like the current game cards, where you see what it is you got plus the little art"): the card
+    // drawn on each trophy, as Forge's card-ultimate trophies show their card. Swap any name here; an unknown name falls
+    // back to the card back. The list is also in MOD_CHANGELOG round 729.
+    private static final java.util.Map<String, String> TROPHY_CARDS = java.util.Map.ofEntries(
+            java.util.Map.entry(TfrAchievements.LORD_SLAYER, "Regicide"),
+            java.util.Map.entry(TfrAchievements.CAPITAL_GAINS, "Conquer"),
+            java.util.Map.entry(TfrAchievements.LEGEND_HUNTER, "Bounty Hunter"),
+            java.util.Map.entry(TfrAchievements.NOTORIOUS, "Notorious Assassin"),
+            java.util.Map.entry(TfrAchievements.ASCENDANT, "Ascendant Evincar"),
+            java.util.Map.entry(TfrAchievements.ASHES_TO_HEARTH, "Rebuild"),
+            java.util.Map.entry(TfrAchievements.SEAT_OF_YOUR_OWN, "Castle Ardenvale"),
+            java.util.Map.entry(TfrAchievements.RING_IS_WHOLE, "Coalition Victory"),
+            java.util.Map.entry(TfrAchievements.GRAND_CIRCUIT, "Arena"),
+            java.util.Map.entry(TfrAchievements.FULLY_KITTED, "Puresteel Paladin"),
+            java.util.Map.entry(TfrAchievements.X_MARKS_THE_SPOT, "Treasure Map"),
+            java.util.Map.entry(TfrAchievements.SWORN_FRIEND, "Sworn Companions"),
+            java.util.Map.entry(TfrAchievements.SCHOLAR, "Archivist"),
+            java.util.Map.entry(TfrAchievements.INTO_THE_DEEP, "Dungeon Descent"),
+            java.util.Map.entry(TfrAchievements.ONCE_MORE, "Second Chance"),
+            java.util.Map.entry(TfrAchievements.HONORS_EVEN, "Divine Intervention"));
+
+    /** The trophy's card - none for a hidden achievement not yet earned, so it does not give itself away. */
+    @Override
+    public forge.item.IPaperCard getPaperCard() {
+        String card = TROPHY_CARDS.get(getKey());
+        if (card == null || (hidden && !isActive()))
+            return null;
+        return forge.model.FModel.getMagicDb().getCommonCards().getCard(card);
+    }
+
     public boolean isHidden() {
         return hidden;
     }

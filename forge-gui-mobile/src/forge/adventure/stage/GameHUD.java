@@ -1029,6 +1029,7 @@ public class GameHUD extends Stage {
         boolean onOverworld = !MapStage.getInstance().isInMap();
         if (!onOverworld && escapeLocked() != escapeLockShown) // round 724: a chase started or ended
             refreshEscapeButtons();
+        forge.adventure.util.TfrAchievements.primeTrophyArt(); // round 729: once per load, the trophies' card images
         // Round 727: a TFR achievement's "Achievement Earned" dialog waits for a free moment on the map or the world - no
         // dialog open (it would replace that dialog's content), the player in control, no console.
         if (forge.adventure.util.TfrAchievements.hasPendingPopup() && !dialogOnlyInput && !console.isVisible()

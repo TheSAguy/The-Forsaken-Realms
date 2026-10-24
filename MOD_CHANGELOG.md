@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 729: TFR's trophies show a card, and the trophy art is loaded before it is shown (2026-10-24)
+
+The user (round 727's request): "I'd like it to be like the current game cards. where you see what it is you got plus
+the little art." Round 727's dialog showed TFR trophies with a plain card back, because they had no card.
+
+- **A card per trophy** (`TfrAchievement.getPaperCard()`, the `TROPHY_CARDS` map; swap any name there, and an unknown
+  name falls back to the card back):
+
+  | Achievement | Card |
+  |---|---|
+  | Lord Slayer | Regicide |
+  | Capital Gains | Conquer |
+  | Legend Hunter | Bounty Hunter |
+  | Notorious | Notorious Assassin |
+  | Ascendant | Ascendant Evincar |
+  | Ashes to Hearth | Rebuild |
+  | A Seat of Your Own | Castle Ardenvale |
+  | The Ring is Whole | Coalition Victory |
+  | Grand Circuit | Arena |
+  | Fully Kitted | Puresteel Paladin |
+  | X Marks the Spot | Treasure Map |
+  | Sworn Friend | Sworn Companions |
+  | Scholar of the Realm | Archivist |
+  | Into the Deep | Dungeon Descent |
+  | Once More, With Feeling | Second Chance |
+  | Honors Even | Divine Intervention |
+
+  A hidden achievement not yet earned shows no card, so it does not give itself away.
+- **The art loads first.** A trophy is drawn from whatever card image is loaded when it is made. Card images load in
+  the background (ImageCache -> AssetManager), so the first opening of the character sheet showed card backs, the
+  stock card ultimates included (The Perfect Ecosystem too). Now:
+  - Each load (`backfill`) flags the art. `GameHUD.act()`, on the render thread, then starts loading the card of every
+    earned trophy, from TFR, the card ultimates and the planeswalkers (`TfrAchievements.primeTrophyArt`).
+  - A waiting dialog holds up to 3 s (`ART_WAIT_MS`) for its card.
+  - Log: `[TFR-Achievement] trophy art: <n> card image(s) loading`.
+- **Agent game** (Maven classes ahead of the agent jar): slot 41 loaded, with 16 card images loading. The character
+  sheet's first opening showed Rebuild (Ashes to Hearth), The Perfect Ecosystem's Vorinclex and Second Chance (Once
+  More). `achievement reset tfr_ashes_to_hearth` + `check` showed the dialog with the Rebuild card, upright.
+
 ## Round 728: each arena tournament won last week thins this week's lowest tier (2026-10-24)
 
 The user: "For each arena tournament you've won the previous week, there is a 5% less chance to roll an apprentice

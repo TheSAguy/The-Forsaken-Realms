@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 729 - a card on each TFR trophy; trophy art loaded first
+
+- **`forge-gui-mobile/src/forge/adventure/util/TfrAchievement.java`** - `getPaperCard()` from the `TROPHY_CARDS` map.
+- **`forge-gui-mobile/src/forge/adventure/util/TfrAchievements.java`** - `primeTrophyArt()`, `cardArtReady()`; the dialog
+  waits up to `ART_WAIT_MS` for its card.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `act()`: one call, `TfrAchievements.primeTrophyArt()`.
+
 ### Round 728 - each arena tournament won last week thins this week's lowest tier
 
 - **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `pickTierWeighted` takes `oddsDraw`, `adeptCut`

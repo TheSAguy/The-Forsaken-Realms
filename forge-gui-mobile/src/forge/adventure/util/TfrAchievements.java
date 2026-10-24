@@ -424,6 +424,7 @@ public final class TfrAchievements extends AchievementCollection {
                 earn(INTO_THE_DEEP, why);
             if (player.getCharacterFlag("newGamePlus") > 0)
                 earn(ONCE_MORE, why);
+            primeArtPending = true; // round 729: GameHUD.act() starts the loads, on the render thread
             System.out.println("[TFR-Achievement] back-fill (" + why + "): " + backfillEarned.size() + " new"
                     + (backfillEarned.isEmpty() ? "" : " - " + String.join(", ", backfillEarned)));
             if (!backfillEarned.isEmpty())
@@ -449,7 +450,40 @@ public final class TfrAchievements extends AchievementCollection {
         synchronized (pendingPopups) {
             pendingPopups.remove(a); // a second tier before the first dialog showed: one dialog, the higher tier
             pendingPopups.add(a);
+            popupQueuedAt = com.badlogic.gdx.utils.TimeUtils.millis();
         }
+    }
+
+    // Round 729: a trophy's card image loads in the background (ImageCache -> AssetManager) and the trophy is drawn
+    // from whatever is there when it is made - a card back the first time. The dialog waits up to ART_WAIT_MS for it.
+    private static final long ART_WAIT_MS = 3000L;
+    private static long popupQueuedAt;
+
+    /** True when the achievement has no card or its image is loaded; asking also starts the load. */
+    private static boolean cardArtReady(Achievement a) {
+        forge.item.IPaperCard card = a.getPaperCard();
+        if (!(card instanceof forge.item.PaperCard))
+            return true;
+        return forge.assets.ImageCache.getInstance().getImage(((forge.item.PaperCard) card).getCardImageKey(), false) != null;
+    }
+
+    private static boolean primeArtPending;
+
+    /** Round 729: GameHUD.act(), every frame - once per load (backfill sets the flag), starts loading the card art of
+     *  every earned trophy (TFR, card ultimates, planeswalkers), so the character sheet's first opening shows the cards
+     *  rather than card backs. */
+    public static void primeTrophyArt() {
+        if (!primeArtPending)
+            return;
+        primeArtPending = false;
+        int asked = 0;
+        for (forge.localinstance.achievements.AchievementCollection group : new forge.localinstance.achievements.AchievementCollection[]{
+                get(), forge.localinstance.achievements.CardActivationAchievements.instance,
+                forge.localinstance.achievements.PlaneswalkerAchievements.instance})
+            for (Achievement a : group)
+                if (a.isActive() && !cardArtReady(a))
+                    asked++;
+        System.out.println("[TFR-Achievement] trophy art: " + asked + " card image(s) loading");
     }
 
     public static boolean hasPendingPopup() {
@@ -466,6 +500,11 @@ public final class TfrAchievements extends AchievementCollection {
     public static void showPendingPopup(forge.adventure.stage.GameStage stage) {
         if (com.badlogic.gdx.utils.TimeUtils.timeSinceMillis(popupClosedAt) < 600L)
             return; // the last dialog is still closing
+        synchronized (pendingPopups) {
+            if (!pendingPopups.isEmpty() && !cardArtReady(pendingPopups.get(0))
+                    && com.badlogic.gdx.utils.TimeUtils.timeSinceMillis(popupQueuedAt) < ART_WAIT_MS)
+                return; // its card is still loading
+        }
         List<TfrAchievement> shown = new ArrayList<>();
         synchronized (pendingPopups) {
             if (pendingPopups.isEmpty())
