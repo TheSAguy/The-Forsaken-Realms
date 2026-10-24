@@ -105,8 +105,13 @@ public final class ReloadJab {
 
     // Round 726 follow-up (the user: "each time you re-load, the counter goes up, you add +1 life to enemies on Hard and
     // Insane"): every enemy starts a duel with +count life on those two difficulties - DuelScene.enemyStartingLife(), so
-    // the Alt plates show it (orange, above the difficulty life). No cap: exactly +1 per counted reload. Cached, since a
-    // plate asks every frame; write() drops the cache.
+    // the Alt plates show it (orange, above the difficulty life). +1 per counted reload up to MAX_LIFE_BONUS. Cached,
+    // since a plate asks every frame; write() drops the cache.
+    /**
+     * Round 732 (the user: "Cap at 10 and don't retro-actively apply anything"): the enemy life bonus stops at +10. The
+     * count itself keeps going, so the lines still progress; only the bonus is capped.
+     */
+    static final int MAX_LIFE_BONUS = 10;
     private static long cachedSeed = Long.MIN_VALUE;
     private static int cachedCount;
 
@@ -121,7 +126,12 @@ public final class ReloadJab {
             cachedCount = count(read(), seed);
             cachedSeed = seed;
         }
-        return cachedCount;
+        return lifeBonusFor(cachedCount);
+    }
+
+    /** The bonus a count gives: the count, capped at MAX_LIFE_BONUS. */
+    static int lifeBonusFor(int count) {
+        return Math.max(0, Math.min(count, MAX_LIFE_BONUS));
     }
 
     /** The console's {@code reloadjab <n>}: sets this world's count and posts its line. */

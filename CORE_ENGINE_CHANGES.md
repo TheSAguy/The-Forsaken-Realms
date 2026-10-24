@@ -80,7 +80,8 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 ### Round 726 - the reload jab (util/ReloadJab)
 
 - **Follow-up**: `DuelScene.enemyStartingLife()` adds `ReloadJab.enemyLifeBonus()` last (Hard/Insane only; not an Inn
-  match or a guard's fight) and logs it.
+  match or a guard's fight) and logs it. Round 732: the bonus is capped at +10 (`ReloadJab.MAX_LIFE_BONUS`); the
+  DuelScene change is a comment only.
 - **`forge-gui-mobile/src/forge/adventure/util/ReloadJab.java`** - NEW: the count of reloads after a lost duel, kept per
   profile in `adventure/tfr_reload_jab.properties`, and its red Notices line.
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `afterGameEnd()`: `ReloadJab.onDuelLost()` on a loss

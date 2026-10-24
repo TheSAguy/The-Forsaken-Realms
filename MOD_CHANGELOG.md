@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 732: the reload penalty stops at +10 enemy life (2026-10-24)
+
+The user: "Cap at 10 and don't retro-actively apply anything." A log review (P2 of logs-1024b) found a new Hard player
+with 46 reloads after lost duels in five game days, who would have faced +46 life on every enemy.
+
+- **The cap**: `ReloadJab.enemyLifeBonus()` returns `lifeBonusFor(count)` = min(count, `MAX_LIFE_BONUS` = 10), still
+  Hard and Insane only. The count itself keeps counting, so the Notices lines still progress past 10; the
+  "(enemies +N life)" suffix reads the capped bonus, so it says +10 from the tenth reload on. The Alt plates and the
+  `[TFR-ReloadJab] +N enemy life` line show the capped number too (both go through `DuelScene.enemyStartingLife()`).
+  A constant, not a config value: ReloadJab reads only its on/off flag from config.
+- **Nothing retroactive** (checked, no change needed): a world with no `count.<seed>` entry reads 0, and the only
+  writers are a counted load (`onLoaded`, +1) and the `reloadjab <n>` console command - nothing back-fills from logs,
+  win/loss records or rollback snapshots. The bonus is computed at each duel's start from the current count, so no past
+  bonus is stored or re-applied. A world that already has a count keeps it; only its bonus is capped. The count lives
+  per profile in `adventure/tfr_reload_jab.properties`, not in the save.
+- **The user's own standing**: their `tfr_reload_jab.properties` holds no counts and no pending loss (read
+  2026-10-24), so save 1 is at 0.
+- **Tested**: a unit check against the built jar - `lifeBonusFor` gives 0, 1, 10, 10, 10, 10 for 0, 1, 10, 11, 15, 46
+  and 0 for a negative; `message(15)` still gives its line. The "(enemies +N life)" suffix and the Alt plates read the
+  same `enemyLifeBonus()`, so they show +10; not seen in the agent game (the live game was open).
+
 ## Round 731: Tarnation, the Wizard Palace and the Church of Valgavoth lead deeper again (2026-10-24)
 
 Two players on Discord (v1.23): Nova, "At the Tarnation dungeon which you can reach via the amulet when you try to

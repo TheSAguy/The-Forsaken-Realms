@@ -1632,7 +1632,7 @@ public class DuelScene extends ForgeScene {
         }
         // Round 726 follow-up (the user: "each time you re-load, the counter goes up, you add +1 life to enemies on Hard
         // and Insane"): +1 per reload after a lost duel (ReloadJab), flat, last - not an Inn match (its rules set the
-        // life), not a roaming guard's fight.
+        // life), not a roaming guard's fight. Round 732: capped at +10 (ReloadJab.MAX_LIFE_BONUS).
         int reloadLife = !event && !guardFight ? forge.adventure.util.ReloadJab.enemyLifeBonus() : 0;
         if (reloadLife > 0) {
             enemyStartingLife += reloadLife;
