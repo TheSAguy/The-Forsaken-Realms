@@ -14264,38 +14264,54 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
-## Round 724: the exit and bookmark buttons grey out where escape is blocked, and say why (2026-10-24)
+## Round 724: the exit and bookmark buttons lock where escape is blocked or an enemy gives chase, and say why (2026-10-24)
 
 The user: "Yes: grey out the F4/exit button where escape is blocked and show a short message if pressed, as round 724."
+Then, in the same round: "You can't use 'F4' if you're being persuade/chased by an enemy. So I want you to be able to
+use it if no one is chasing you, but not if an enemy is actively following/chasing you", and "They Grey-out would need
+to be dynamic".
+
 Seventeen story and quest maps set the map property `preventEscape` (`main_story/spawn`, the `main_story_explore`
 maps, `waste_town_abandoned`, `Hall_of_the_Unifier`, `inn_crescentus`, `tibalt_f4`). There F4, L2, the HUD's exit
 button and the bookmark button did nothing, without a word, while both buttons looked usable: the HUD set their look
 from "inside a map" only.
 
-- **The look** (`GameHUD.refreshEscapeButtons()`, `escapeTint()`): in such a map the exit and bookmark icons are drawn
-  through a `[#808080]` tag, so they read grey (on top of the HUD's usual in-map translucency). They are NOT set
-  disabled: a disabled button swallows the click in `UIActor.onButtonPress`, and the click is what shows the notice.
-  The world map keeps its stock disabled cross.
-- **When**: `MapStage.loadMap()` calls `refreshEscapeButtons()` right after it reads `preventEscape`, since
-  `showHideMap(false)` runs at the start of `loadMap()`, before the property is known. `updateBookmarkActor()` (also run
-  when the HUD re-enters, after a duel) keeps the tint. Nothing changes `preventEscape` mid-map: it is written only
-  in `loadMap()` and cleared in `clearIsInMap()` (grep of the whole source).
-- **The notice**: a press of F4, L2, the exit button or the bookmark button there shows the banner "There is no slipping
-  away from here - find the way out." - not added to the notice log, and at most once per 6 seconds
-  (`ESCAPE_NOTICE_GAP`), so repeated presses do not stack banners.
-- **Log**: `[TFR-Escape] blocked in <map file> (exit|bookmark)`, one line per press. `MapStage.getLoadedMapName()` is new
-  for it.
-- Not plane-gated: it is a fix to the stock HUD's look, and the message is plane-neutral. A stock plane's own
-  `preventEscape` maps get the same grey icons and banner.
+- **Locked** (`GameHUD.escapeLocked()`): in a map with `preventEscape`, or while an enemy of the map chases the player.
+  Both stop F4, L2, the exit button and the bookmark button.
+- **The chase** (`MapStage.getChasingEnemy()`): the enemy `onActing()` last steered at the player with `aggro` set,
+  within the last 500 ms (`CHASE_GRACE_MS`, so a chaser standing on a path node for a frame does not flicker the
+  button). Judgment calls: an enemy that lost the player (aggro drops past its `pursueRange`) or walks back to its
+  post has no aggro and does not count; a frozen one (after it beat the player) or one with no path to the player
+  never reaches `steer()` and does not count; only the current map's enemies (`enemies`) are read; a guard hunting
+  the player over stolen loot (round 280, aggro across the whole map) does count - it is chasing. Cleared on
+  `loadMap()` and `clearIsInMap()`.
+- **The look**: both icons show the HUD's disabled cross `\u2613`, the world map's look. A grey tint was built first
+  and dropped: in a map the HUD is translucent (40%) and the grey exit icon was all but invisible over bright ground
+  (its mean color moved by under 10 levels). The buttons are NOT set disabled: a disabled button swallows the click
+  in `UIActor.onButtonPress`, and the click is what shows the notice.
+- **Live**: `GameHUD.act()` compares `escapeLocked()` with what the buttons show (`escapeLockShown`) every frame and
+  repaints them the frame a chase starts or ends - no re-entry, menu or press needed. `MapStage.loadMap()` also calls
+  `refreshEscapeButtons()` right after it reads `preventEscape` (`showHideMap(false)` runs before the property is
+  known). Nothing changes `preventEscape` mid-map: it is written only in `loadMap()` and cleared in `clearIsInMap()`.
+- **The notices**, at most one per 6 seconds (`ESCAPE_NOTICE_GAP`, shared), not added to the notice log: a blocked map
+  says "There is no slipping away from here - find the way out."; a chase says "You can't slip away while <enemy> is
+  on your heels." (the enemy's display name).
+- **Log**, one line per press: `[TFR-Escape] blocked in <map file> (exit|bookmark)` and `[TFR-Escape] blocked: <enemy>
+  #<id> chasing in <map file> (exit|bookmark)`. `MapStage.getLoadedMapName()` is new for it.
+- Not plane-gated: a fix to the stock HUD's honesty plus a chase rule; a stock plane's maps get the same lock.
 - Unchanged, noted: `loadMap()` only sets `preventEscape` when the property is present, so moving from a blocked map to
   a sub-map without it keeps escape blocked until the world map. Stock behavior, left alone; the buttons now show it.
 
-**Agent game** (packaged build, cheats, 3840x2130; no duel was played): a new game's Secluded Encampment
-(`main_story/spawn.tmx`) before the change - exit and bookmark at full look, F4 silent - and after: both icons grey,
-F4 showed the banner, a second F4 and an exit-button click within 6 s logged two more `[TFR-Escape]` lines and showed
-no second banner. Aerie (a normal dungeon): normal icons, F4 opened "Exit to the World Map?", Yes left to the world map,
-where both buttons show the cross. No exceptions in the log. **Not tested**: L2 on a controller (same call as F4), the
-bookmark button's press (same guard as exit), and the other sixteen blocked maps.
+**Agent game** (packaged build, cheats, 3840x2130; every duel settled at 50x):
+- Secluded Encampment (`main_story/spawn.tmx`): before - exit and bookmark at full look, F4 silent; after - both show
+  the cross, F4 showed the banner, the bookmark button logged its own line, repeated presses within 6 s showed no second
+  banner.
+- Aerie, one visit: normal buttons; a Scarab closed to 17 px - both buttons turned to the cross on their own, F4 showed
+  "You can't slip away while Scarab is on your heels." and logged `blocked: Scarab #115 chasing in .../aerie_0.tmx`;
+  the player outran it (205 px) - both buttons came back by themselves and F4 opened "Exit to the World Map?". Three
+  other tries ended in duels (two lost, one won; the agent profile only). No exceptions in the log.
+- **Not tested**: L2 on a controller (same call as F4), a flying chaser, a loot-robbed hunting guard, and the other
+  sixteen blocked maps.
 
 ## Round 723: TFR 2's Clean font; the inn sim's Localizer traces; the plates' show/hide log (2026-10-24)
 

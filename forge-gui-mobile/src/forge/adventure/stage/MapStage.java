@@ -544,6 +544,27 @@ public class MapStage extends GameStage {
         return loadedMapName;
     }
 
+    // Round 724 (the user: "be able to use [F4] if no one is chasing you, but not if an enemy is actively
+    // following/chasing you"): the enemy onActing() last steered at the player. A chaser is an enemy with aggro that
+    // actually moved this way: one that lost the player (aggro drops past pursueRange) or walks back to its post has no
+    // aggro, and a frozen one, or one with no path to the player, never reaches steer(). CHASE_GRACE_MS bridges the
+    // odd frame where a chaser stands on a path node, so the HUD's grey does not flicker.
+    private EnemySprite chaser;
+    private long chaserSeenAt;
+    private static final long CHASE_GRACE_MS = 500L;
+
+    /** Round 724: the enemy of this map chasing the player now, or null. */
+    public EnemySprite getChasingEnemy() {
+        if (chaser == null || !isInMap)
+            return null;
+        if (com.badlogic.gdx.utils.TimeUtils.timeSinceMillis(chaserSeenAt) > CHASE_GRACE_MS || !chaser.aggro
+                || chaser.inactive || chaser.isFrozen() || !enemies.contains(chaser)) {
+            chaser = null;
+            return null;
+        }
+        return chaser;
+    }
+
     /** Round 126: see GameStage.cancelPendingActions() - a load must also forget the mob the
      *  pending result was about, or the stale reference outlives the map it belonged to. */
     @Override
@@ -558,6 +579,7 @@ public class MapStage extends GameStage {
         isInMap = false;
         effect = null; //Reset effect so battles outside the dungeon don't use the last visited dungeon's effects.
         preventEscape = false;
+        chaser = null; // round 724
         GameHUD.getInstance().showHideMap(true);
     }
 
@@ -809,6 +831,7 @@ public class MapStage extends GameStage {
         // Round 724: the HUD's exit and bookmark buttons grey out here and say why when pressed. Nothing else changes
         // preventEscape mid-map (it is set only here and cleared in clearIsInMap()), so this one refresh covers it.
         loadedMapName = targetMap;
+        chaser = null;
         GameHUD.getInstance().refreshEscapeButtons();
 
         if (MP.get("music") != null && !MP.get("music").toString().isEmpty()) {
@@ -2816,6 +2839,10 @@ public class MapStage extends GameStage {
 
                 mob.steer(AIVector);
                 mob.update(delta);
+                if (mob.aggro) { // round 724: see getChasingEnemy()
+                    chaser = mob;
+                    chaserSeenAt = com.badlogic.gdx.utils.TimeUtils.millis();
+                }
             }
         }
 

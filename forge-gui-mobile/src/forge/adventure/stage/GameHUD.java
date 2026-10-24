@@ -1027,6 +1027,8 @@ public class GameHUD extends Stage {
         updateAudioFades(delta);
 
         boolean onOverworld = !MapStage.getInstance().isInMap();
+        if (!onOverworld && escapeLocked() != escapeLockShown) // round 724: a chase started or ended
+            refreshEscapeButtons();
         boolean showWaitToggle = onOverworld && WorldSave.getCurrentSave().getWorld().isDayNightCycleEnabled();
         waitCheckBox.setVisible(showWaitToggle);
         speedCheckBox.setVisible(showWaitToggle);
@@ -1110,10 +1112,8 @@ public class GameHUD extends Stage {
             return;
         if (Forge.advFreezePlayerControls)
             return;
-        if (!MapStage.getInstance().canEscape()) {
-            escapeBlocked("exit"); // round 724
+        if (escapeBlocked("exit")) // round 724
             return;
-        }
         dialog.getButtonTable().clear();
         dialog.getContentTable().clear();
         dialog.clearListeners();
@@ -1136,10 +1136,8 @@ public class GameHUD extends Stage {
             return;
         if (Forge.advFreezePlayerControls)
             return;
-        if (!MapStage.getInstance().canEscape()) {
-            escapeBlocked("bookmark"); // round 724
+        if (escapeBlocked("bookmark")) // round 724
             return;
-        }
         if (MapStage.getInstance().isInMap()) {
             if (MapStage.getInstance().getChanges().isBookmarked()) {
                 MapStage.getInstance().getChanges().setIsBookmarked(false);
@@ -1164,37 +1162,59 @@ public class GameHUD extends Stage {
     private void updateBookmarkActor(boolean value) {
         if (bookmarkActor == null)
             return;
-        bookmarkActor.setText("[%120]" + escapeTint() + "[+" + (value ? "Bookmark" : "Unmark") + "]");
+        bookmarkActor.setText(escapeLocked() ? ESCAPE_LOCKED_TEXT : "[%120][+" + (value ? "Bookmark" : "Unmark") + "]");
     }
 
     // Round 724 (the user: "grey out the F4/exit button where escape is blocked and show a short message if pressed"):
     // a map with preventEscape (the story maps, Tibalt's floor) ignored F4, L2, the exit button and the bookmark button
-    // without a word while both buttons looked usable. Now the two icons are drawn grey there, and a press says why.
-    // The buttons stay enabled - a disabled one swallows the click (UIActor.onButtonPress), and the press is what
-    // shows the notice. The notice is held back for ESCAPE_NOTICE_GAP so repeated presses do not stack banners.
-    private static final String ESCAPE_BLOCKED_TINT = "[#808080]";
+    // without a word while both buttons looked usable. Now the two icons show the HUD's disabled cross there (the world
+    // map's look), and a press says why. A grey tint was tried first: in a map the HUD is translucent (40%) and the
+    // grey icon was all but invisible over bright ground. The buttons stay enabled - a disabled one swallows the click
+    // (UIActor.onButtonPress), and the press is what shows the notice. The notice is held back for ESCAPE_NOTICE_GAP
+    // so repeated presses do not stack banners.
+    private static final String ESCAPE_LOCKED_TEXT = "\u2613";
     private static final long ESCAPE_NOTICE_GAP = 6000L;
     private long escapeNoticeAt;
 
-    private static String escapeTint() {
-        return MapStage.getInstance().isInMap() && !MapStage.getInstance().canEscape() ? ESCAPE_BLOCKED_TINT : "";
+    // The same cross while an enemy of the map chases the player (MapStage.getChasingEnemy()); act() repaints the two
+    // icons the frame a chase starts or ends.
+    private boolean escapeLockShown;
+
+    private static boolean escapeLocked() {
+        MapStage map = MapStage.getInstance();
+        return map.isInMap() && (!map.canEscape() || map.getChasingEnemy() != null);
     }
 
-    /** Round 724: MapStage.loadMap() calls this once it has read the map's preventEscape. */
+    /** Round 724: MapStage.loadMap() calls this once it has read the map's preventEscape; act() when a chase starts or ends. */
     public void refreshEscapeButtons() {
         if (!MapStage.getInstance().isInMap())
             return;
-        setDisabled(exitToWorldMapActor, false, "[%120]" + escapeTint() + "[+ExitToWorldMap]", "\u2613");
+        escapeLockShown = escapeLocked();
+        setDisabled(exitToWorldMapActor, false, escapeLockShown ? ESCAPE_LOCKED_TEXT : "[%120][+ExitToWorldMap]", "\u2613");
         updateBookmarkActor(MapStage.getInstance().getChanges().isBookmarked());
     }
 
-    private void escapeBlocked(String button) {
-        System.out.println("[TFR-Escape] blocked in " + MapStage.getInstance().getLoadedMapName() + " (" + button + ")");
+    /** True, with the banner and a log line, when the map does not let the player leave or bookmark right now. */
+    private boolean escapeBlocked(String button) {
+        MapStage map = MapStage.getInstance();
+        String message;
+        if (!map.canEscape()) {
+            System.out.println("[TFR-Escape] blocked in " + map.getLoadedMapName() + " (" + button + ")");
+            message = "There is no slipping away from here - find the way out.";
+        } else {
+            EnemySprite chasing = map.getChasingEnemy();
+            if (chasing == null)
+                return false;
+            System.out.println("[TFR-Escape] blocked: " + chasing.getName() + " #" + chasing.getId() + " chasing in "
+                    + map.getLoadedMapName() + " (" + button + ")");
+            message = "You can't slip away while " + chasing.getDisplayName() + " is on your heels.";
+        }
         long now = com.badlogic.gdx.utils.TimeUtils.millis();
-        if (now - escapeNoticeAt < ESCAPE_NOTICE_GAP)
-            return;
-        escapeNoticeAt = now;
-        addNotification("There is no slipping away from here - find the way out.", false, false);
+        if (now - escapeNoticeAt >= ESCAPE_NOTICE_GAP) {
+            escapeNoticeAt = now;
+            addNotification(message, false, false);
+        }
+        return true;
     }
 
     private void exitDungeonCallback() {

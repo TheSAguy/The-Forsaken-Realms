@@ -38,14 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
-### Round 724 - exit and bookmark grey out where escape is blocked
+### Round 724 - exit and bookmark lock where escape is blocked or an enemy gives chase
 
 - **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `exitToWorldMap()` and `bookmark()`: the
-  `canEscape()` check moved after the `advFreezePlayerControls` check and calls `escapeBlocked(...)` (banner + log)
-  instead of a silent return. `updateBookmarkActor()` prefixes `escapeTint()`. New `refreshEscapeButtons()`,
-  `escapeTint()`, `escapeBlocked()`, `ESCAPE_BLOCKED_TINT`, `ESCAPE_NOTICE_GAP`, `escapeNoticeAt`.
+  `canEscape()` check moved after the `advFreezePlayerControls` check and became `if (escapeBlocked(...)) return;`
+  (banner + log; also true during a chase). `updateBookmarkActor()` shows the cross while `escapeLocked()`. `act()`
+  repaints the two buttons when `escapeLocked()` changes. New `refreshEscapeButtons()`, `escapeLocked()`,
+  `escapeBlocked()`, `ESCAPE_LOCKED_TEXT`, `ESCAPE_NOTICE_GAP`, `escapeNoticeAt`, `escapeLockShown`.
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - `loadMap()`: after the `preventEscape` read, stores
-  `loadedMapName` and calls `GameHUD.refreshEscapeButtons()`. New `getLoadedMapName()` beside `canEscape()`.
+  `loadedMapName`, clears `chaser` and calls `GameHUD.refreshEscapeButtons()`. `clearIsInMap()` clears `chaser`.
+  `onActing()`: after `mob.steer()`/`update()`, an aggro mob becomes `chaser` (with a timestamp). New
+  `getLoadedMapName()`, `getChasingEnemy()`, `chaser`, `chaserSeenAt`, `CHASE_GRACE_MS` beside `canEscape()`.
 
 ### Round 723 - the Clean font; the inn sim's Localizer traces; the plates' log
 
