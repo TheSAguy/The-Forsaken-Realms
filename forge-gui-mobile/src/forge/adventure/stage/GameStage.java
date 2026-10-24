@@ -249,13 +249,24 @@ public abstract class GameStage extends Stage {
 
     /** {@code withHistory} (round 658): a History button under OK - the death and boss-defeat dialogs. */
     public void showImageDialog(String message, FBufferedImage fb, Runnable runnable, boolean withHistory) {
+        showImageDialog(message, fb, runnable, withHistory, true);
+    }
+
+    /** Round 727: an "Achievement Earned" dialog - Forge's (GuiMobile.showImageDialog) and TFR's own (TfrAchievements).
+     *  The trophy is flipped upright only: the mirror flip of the other image dialogs drew the card's text backwards
+     *  (the user's screenshot of The Grand Evolution); the Statistics list already flips it this way. */
+    public void showAchievementDialog(String message, FBufferedImage fb, Runnable runnable) {
+        showImageDialog(message, fb, runnable, false, false);
+    }
+
+    private void showImageDialog(String message, FBufferedImage fb, Runnable runnable, boolean withHistory, boolean mirror) {
         dialog.getContentTable().clear();
         dialog.getButtonTable().clear();
         dialog.clearListeners();
 
         if (fb != null && fb.getTexture() != null) {
             TextureRegion tr = new TextureRegion(fb.getTexture());
-            tr.flip(true, true);
+            tr.flip(mirror, true);
             Image image = new Image(tr);
             image.setScaling(Scaling.fit);
             dialog.getContentTable().add(image).height(100);

@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 727: achievements announce with an "Achievement Earned" card, and the character sheet shows the newest first (2026-10-24)
+
+The user: "I got an achievement recently, I forgot what it was, but it was only a pop-up message. I'd like it to be like
+the current game cards. where you see what it is you got plus the little art. Also, the achievement I did get was not
+on the achievement board/list on the character sheet."
+
+- **What the user got**: The Grand Evolution, Forge's card-ultimate trophy for Vorinclex ("The Perfect Ecosystem"),
+  `achievements/card-activation.xml`, earned 2026-10-24 07:17. No `[TFR-Achievement]` line logged it (stock
+  achievements log nothing). The user's TFR trophies (Legend Hunter, Ascendant, Ashes to Hearth, A Seat of Your Own,
+  Grand Circuit) came from the 10-22/10-23 back-fills and level-ups, each with a banner and a Notices line only.
+- **Why it "wasn't on the list"**: it was. The character sheet's award page (Status -> the award toggle) listed TFR's
+  16 entries first, the unearned faded ones included, then the card ultimates, planeswalkers and duel trophies. A new
+  stock trophy sat below 16 TFR rows and the page read as TFR's alone. **Fix**: a "Recently earned" section heads the
+  page, with the newest 5 earned trophies of every group (TFR, card ultimates, planeswalkers, duels) by their time.
+  The groups below are unchanged. New stock `Achievement.getTimestamp()`. Log: `[TFR-Achievement] character sheet:
+  <n> earned, newest <key>`.
+- **The dialog** (`TfrAchievements.showPendingPopup`): a new TFR tier is queued and shown as Forge's "Achievement
+  Earned" dialog, with the trophy (tier color or special), the name and tier, and the description with the tier's goal
+  ("Ashes to Hearth (Rare) / Hold towns raised from ruin or taken back: 10 towns."). It waits until the player is on
+  the map or the world with no dialog open, the controls free and the console closed (`GameHUD.act()`), because the
+  stage has one dialog and a new one would replace what is on it. One by one, 0.6 s apart. With more than 3 waiting
+  (a back-fill), one dialog lists them ("4 Achievements Earned", one line each, at most 6 then "and N more - see the
+  character sheet."), with the first one's trophy. The notice stays, as a log line only: the dialog is the announcement
+  now, so the banner is gone. Log: `[TFR-Achievement] dialog: <n> - <key> [and N more]`.
+- **Stock fix, the mirrored card**: Forge's dialog (`GuiMobile.showImageDialog`, Adventure branch) used
+  `GameStage.showImageDialog`, which flips its image on both axes, so the card ultimate's art and text drew backwards
+  (the user's screenshot). Both achievement dialogs now go through the new `GameStage.showAchievementDialog`, which
+  flips it upright only (as the Statistics list does). Other image dialogs (the defeat badge) keep their flip.
+- **Agent game** (Maven classes ahead of the agent jar; the user's `card-activation.xml` and `planeswalkers.xml`
+  copied into the agent profile): slot 41, `achievement reset tfr_ashes_to_hearth` + `achievement check` showed the
+  single dialog. Five reset + check showed one "4 Achievements Earned" dialog (Lord Slayer is not in that save). With
+  the agent's TFR trophies restored, the award page opens on "Recently earned": The Perfect Ecosystem (Vorinclex art,
+  readable) first, then Once More With Feeling, Sworn Friend... Not seen: Forge's own dialog after a duel with the new
+  flip (no card ultimate was won in testing). It calls the same method the TFR dialog uses. Not done: card art for TFR's
+  trophies, which show a card back, since they have no card (a getPaperCard() per achievement would add one).
+
 ## Round 726 (follow-up): each counted reload gives enemies +1 life on Hard and Insane (2026-10-24)
 
 The user: "on the re-load tracking. Let's make it each time you re-load, the counter goes up, you add +1 life to

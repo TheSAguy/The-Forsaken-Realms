@@ -1029,6 +1029,16 @@ public class GameHUD extends Stage {
         boolean onOverworld = !MapStage.getInstance().isInMap();
         if (!onOverworld && escapeLocked() != escapeLockShown) // round 724: a chase started or ended
             refreshEscapeButtons();
+        // Round 727: a TFR achievement's "Achievement Earned" dialog waits for a free moment on the map or the world - no
+        // dialog open (it would replace that dialog's content), the player in control, no console.
+        if (forge.adventure.util.TfrAchievements.hasPendingPopup() && !dialogOnlyInput && !console.isVisible()
+                && !Forge.advFreezePlayerControls) {
+            Scene scene = Forge.getCurrentScene();
+            GameStage stage = onOverworld ? WorldStage.getInstance() : MapStage.getInstance();
+            if ((scene instanceof forge.adventure.scene.GameScene || scene instanceof forge.adventure.scene.TileMapScene)
+                    && !stage.isDialogOnlyInput() && !stage.isPaused())
+                forge.adventure.util.TfrAchievements.showPendingPopup(stage);
+        }
         boolean showWaitToggle = onOverworld && WorldSave.getCurrentSave().getWorld().isDayNightCycleEnabled();
         waitCheckBox.setVisible(showWaitToggle);
         speedCheckBox.setVisible(showWaitToggle);

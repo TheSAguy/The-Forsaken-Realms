@@ -164,10 +164,14 @@ public final class TfrAchievements extends AchievementCollection {
         if (!newTier)
             return;
         String shown = a.getDisplayName() + (a.isTiered() ? " (" + tier + ": " + a.tierGoal() + ")" : "");
+        // Round 727 (the user: "I'd like it to be like the current game cards, where you see what it is you got plus
+        // the little art"): an "Achievement Earned" dialog with the trophy, queued (showPendingPopup); the notice stays,
+        // in the log only - the dialog is the announcement now.
+        queuePopup(a);
         if (backfillEarned != null)
             backfillEarned.add(shown);
         else
-            GameHUD.getInstance().addNotification("Achievement earned: " + shown);
+            GameHUD.getInstance().logNotification("Achievement earned: " + shown, false);
     }
 
     public static void earn(String key, String why) {
@@ -423,14 +427,81 @@ public final class TfrAchievements extends AchievementCollection {
             System.out.println("[TFR-Achievement] back-fill (" + why + "): " + backfillEarned.size() + " new"
                     + (backfillEarned.isEmpty() ? "" : " - " + String.join(", ", backfillEarned)));
             if (!backfillEarned.isEmpty())
-                GameHUD.getInstance().addNotification("Achievements earned from your deeds so far: "
-                        + String.join(", ", backfillEarned) + ".");
+                GameHUD.getInstance().logNotification("Achievements earned from your deeds so far: "
+                        + String.join(", ", backfillEarned) + ".", false);
         } catch (RuntimeException ex) {
             System.err.println("[TFR-Achievement] back-fill failed: " + ex);
             ex.printStackTrace();
         } finally {
             backfillEarned = null;
         }
+    }
+
+    // ---- the dialog (round 727) --------------------------------------------------------------------------------
+
+    /** More than this many waiting at once (a back-fill) show as one dialog listing them, not one dialog each. */
+    private static final int POPUPS_ONE_BY_ONE = 3;
+    private static final int POPUP_LIST_MAX = 6;
+    private static final List<TfrAchievement> pendingPopups = new ArrayList<>();
+    private static long popupClosedAt;
+
+    private static void queuePopup(TfrAchievement a) {
+        synchronized (pendingPopups) {
+            pendingPopups.remove(a); // a second tier before the first dialog showed: one dialog, the higher tier
+            pendingPopups.add(a);
+        }
+    }
+
+    public static boolean hasPendingPopup() {
+        synchronized (pendingPopups) {
+            return !pendingPopups.isEmpty();
+        }
+    }
+
+    /**
+     * GameHUD.act(), once no dialog is open on the map or world and the player has control: shows the next
+     * "Achievement Earned" dialog - one achievement with its trophy, or, with more than POPUPS_ONE_BY_ONE waiting, one
+     * dialog listing them all (the first one's trophy). OK shows the next one after a short pause.
+     */
+    public static void showPendingPopup(forge.adventure.stage.GameStage stage) {
+        if (com.badlogic.gdx.utils.TimeUtils.timeSinceMillis(popupClosedAt) < 600L)
+            return; // the last dialog is still closing
+        List<TfrAchievement> shown = new ArrayList<>();
+        synchronized (pendingPopups) {
+            if (pendingPopups.isEmpty())
+                return;
+            if (pendingPopups.size() > POPUPS_ONE_BY_ONE) {
+                shown.addAll(pendingPopups);
+                pendingPopups.clear();
+            } else {
+                shown.add(pendingPopups.remove(0));
+            }
+        }
+        StringBuilder text = new StringBuilder(shown.size() == 1 ? "Achievement Earned" : shown.size() + " Achievements Earned");
+        int listed = shown.size() > POPUP_LIST_MAX + 1 ? POPUP_LIST_MAX : shown.size(); // the dialog stays on screen
+        for (TfrAchievement a : shown.subList(0, listed))
+            text.append('\n').append(popupLine(a, shown.size() == 1));
+        if (listed < shown.size())
+            text.append("\nand ").append(shown.size() - listed).append(" more - see the character sheet.");
+        TfrAchievement first = shown.get(0);
+        first.updateTrophyImage();
+        System.out.println("[TFR-Achievement] dialog: " + shown.size() + " - " + shown.get(0).getKey()
+                + (shown.size() > 1 ? " and " + (shown.size() - 1) + " more" : ""));
+        stage.showAchievementDialog(text.toString(), (forge.assets.FBufferedImage) first.getImage(),
+                () -> popupClosedAt = com.badlogic.gdx.utils.TimeUtils.millis());
+    }
+
+    /** "Ashes to Hearth (Mythic)" and, alone, "Hold towns raised from ruin or taken back: 20 towns." below it. */
+    private static String popupLine(TfrAchievement a, boolean alone) {
+        String tier = a.tierName();
+        String head = a.getDisplayName() + (a.isTiered() && tier != null ? " (" + tier + ")" : "");
+        if (!alone)
+            return head + (a.isTiered() ? ": " + a.tierGoal() : "");
+        if (!a.isTiered())
+            return head + "\n" + a.getDescription();
+        String desc = a.getDescription().endsWith(".") ? a.getDescription().substring(0, a.getDescription().length() - 1)
+                : a.getDescription();
+        return head + "\n" + desc + ": " + a.tierGoal() + ".";
     }
 
     // ---- the console's report ---------------------------------------------------------------------------------

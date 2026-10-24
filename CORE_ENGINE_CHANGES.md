@@ -38,6 +38,21 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 727 - achievement dialog, "Recently earned", the mirrored trophy
+
+- **`forge-gui/src/main/java/forge/localinstance/achievements/Achievement.java`** (STOCK) - new `getTimestamp()`, beside
+  `getImage()`. On a conflict, re-add the three lines.
+- **`forge-gui-mobile/src/forge/GuiMobile.java`** (STOCK) - `showImageDialog()`'s Adventure branch calls
+  `MapStage.showAchievementDialog(...)` instead of `showImageDialog(...)` (the old call mirrored the card). One line.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameStage.java`** - `showImageDialog(message, fb, runnable, withHistory)`
+  delegates to a private overload with `mirror` (true, unchanged); new `showAchievementDialog()` passes false.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `act()`: shows a waiting TFR achievement dialog
+  (`TfrAchievements.showPendingPopup`) when no dialog is open on the HUD or the stage and the player has control.
+- **`forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java`** - `enter()`: `recentlyEarned()` first (the
+  newest 5 earned of every group); `updateAchievements()`'s row body moved to `addAchievementRow()`.
+- **`forge-gui-mobile/src/forge/adventure/util/TfrAchievements.java`** - TFR's own: `reach()`/`backfill()` queue the dialog and
+  log the notice without a banner; the popup queue and `showPendingPopup()`.
+
 ### Round 726 - the reload jab (util/ReloadJab)
 
 - **Follow-up**: `DuelScene.enemyStartingLife()` adds `ReloadJab.enemyLifeBonus()` last (Hard/Insane only; not an Inn

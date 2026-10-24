@@ -73,6 +73,12 @@ public abstract class Achievement {
     public String getMythicDesc() {
         return mythicDesc;
     }
+
+    // TFR (round 727): when it was last raised, for the Adventure character sheet's "Recently earned" list.
+    public long getTimestamp() {
+        return timestamp;
+    }
+
     public ISkinImage getImage() {
         if (image == null) {
             updateTrophyImage();

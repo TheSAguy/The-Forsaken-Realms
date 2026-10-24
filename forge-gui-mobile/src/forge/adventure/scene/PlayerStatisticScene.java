@@ -202,6 +202,7 @@ public class PlayerStatisticScene extends UIScene {
         super.enter();
         GameHUD.getInstance().updateBGM();
         achievementContainer.clear();
+        recentlyEarned(); // round 727
         // Round 717: TFR's own achievements first, under their own heading, then Forge's duel ones.
         if (forge.adventure.util.TfrAchievements.isEnabled()) {
             achievementHeading("The Forsaken Realms");
@@ -334,6 +335,31 @@ public class PlayerStatisticScene extends UIScene {
         achievementContainer.row();
     }
 
+    // Round 727 (the user: "the achievement I did get was not on the achievement board/list on the character sheet"): it
+    // was - The Grand Evolution, a card ultimate - but below TFR's 16 entries, the unearned ones included, so the list
+    // read as TFR's only. The newest RECENT_COUNT earned trophies of every group now head the list.
+    private static final int RECENT_COUNT = 5;
+
+    private void recentlyEarned() {
+        java.util.List<Achievement> earned = new java.util.ArrayList<>();
+        if (forge.adventure.util.TfrAchievements.isEnabled())
+            for (Achievement a : forge.adventure.util.TfrAchievements.get())
+                if (a.isActive())
+                    earned.add(a);
+        for (AchievementCollection group : new AchievementCollection[]{cardActivation, planeswalkers, achievements})
+            if (group != null)
+                for (Achievement a : group)
+                    if (a.isActive() && (group != achievements || GameType.smartValueOf(a.getKey()) == null))
+                        earned.add(a);
+        if (earned.isEmpty())
+            return;
+        earned.sort((x, y) -> Long.compare(y.getTimestamp(), x.getTimestamp()));
+        achievementHeading("Recently earned");
+        for (Achievement a : earned.subList(0, Math.min(RECENT_COUNT, earned.size())))
+            addAchievementRow(a);
+        System.out.println("[TFR-Achievement] character sheet: " + earned.size() + " earned, newest " + earned.get(0).getKey());
+    }
+
     void updateAchievements(AchievementCollection achievementCollection, boolean isActive) {
         for (Achievement a : achievementCollection) {
             if (isActive) {
@@ -344,25 +370,29 @@ public class PlayerStatisticScene extends UIScene {
                 if (g != null) //skip variants
                     continue;
             }
-            a.updateTrophyImage();
-            float alpha = a.isActive() ? 1f : 0.25f;
-            if (((FBufferedImage) a.getImage()).getTexture() != null) {
-                TextureRegion textureRegion = new TextureRegion(((FBufferedImage) a.getImage()).getTexture());
-                textureRegion.flip(false, true);
-                Image image = new Image(textureRegion);
-                image.getColor().a = alpha;
-                achievementContainer.add(image).height(50).width(40).center().pad(5);
-            }
-            String value = "[%105]" + (a instanceof forge.adventure.util.TfrAchievement
-                    ? ((forge.adventure.util.TfrAchievement) a).shownName() : a.getDisplayName()) + "[%98]"; // round 717: hidden ones
-            String subTitle = a.getSubTitle(true);
-            if (subTitle != null)
-                value += "\n" + subTitle;
-            TextraLabel label = Controls.newTextraLabel(value);
-            label.getColor().a = alpha;
-            achievementContainer.add(label).left().pad(5);
-            achievementContainer.row();
+            addAchievementRow(a);
         }
+    }
+
+    private void addAchievementRow(Achievement a) {
+        a.updateTrophyImage();
+        float alpha = a.isActive() ? 1f : 0.25f;
+        if (((FBufferedImage) a.getImage()).getTexture() != null) {
+            TextureRegion textureRegion = new TextureRegion(((FBufferedImage) a.getImage()).getTexture());
+            textureRegion.flip(false, true);
+            Image image = new Image(textureRegion);
+            image.getColor().a = alpha;
+            achievementContainer.add(image).height(50).width(40).center().pad(5);
+        }
+        String value = "[%105]" + (a instanceof forge.adventure.util.TfrAchievement
+                ? ((forge.adventure.util.TfrAchievement) a).shownName() : a.getDisplayName()) + "[%98]"; // round 717: hidden ones
+        String subTitle = a.getSubTitle(true);
+        if (subTitle != null)
+            value += "\n" + subTitle;
+        TextraLabel label = Controls.newTextraLabel(value);
+        label.getColor().a = alpha;
+        achievementContainer.add(label).left().pad(5);
+        achievementContainer.row();
     }
 
     public boolean quests() {
