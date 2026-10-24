@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 726: the Notices log teases a player who keeps reloading after lost duels (2026-10-24)
+
+The user: "is it possible to keep track how many times a player loads/or quits the game right after losing a duel ...
+in the log, start showing a message ... after the 5th time ... 'Some might say that's C _ _ _ _ _ _ _' ... until ...
+'Some might say that's Cheating'. after that, just 'You've now loaded x times since losing a duel, maybe drop the
+difficulty'. This will just be a little jab in the Log messages. Maybe make it red or something."
+
+- **What counts** (`util/ReloadJab`). The player loses a duel, and the next load, before another duel starts, restores a
+  save written BEFORE the loss (the save header's `saveDate` is earlier than the loss), so the loss is undone. A quit
+  in between makes no difference, because the pending loss is kept on disk. Loading a save from after the loss (the
+  autosave that already holds it) does not count and clears the pending loss. Starting another duel (`initDuels`) is
+  "moving on" and also clears it. Loading another world leaves it pending. Counted duels: any of the player's, Arena
+  and Inn included. Not counted: draws, Deck Tester, guard fights.
+- **Not the brief's detection.** `[TFR-Load] rollback snapshot` (round 183) is the safety copy taken before EVERY
+  mid-session load, loss or not, so it could not be reused. The hook is in `WorldSave.load()`'s success branch, not
+  `readSave()`, so a rollback never counts.
+- **Kept per profile, not in the save**: `<user dir>/adventure/tfr_reload_jab.properties`, one count per world
+  (`count.<world seed>`), plus `pendingSeed` and `pendingLossAt`. A count kept in the save would go back down with the
+  very reload it counts. A new character starts at 0, and so does every game from before this round. The count never
+  resets.
+- **The lines**, logged only (no banner), in red (`[#C01818]`, the log's white-tint path): 1-4 nothing; 5 "You've now
+  loaded 5 times after losing a duel...."; 6-12 "... Some might say that's C _ _ _ _ _ _ _" up to "Cheatin _", one
+  letter more each time; 13 "... Some might say that's Cheating."; 14 and on "You've now loaded N times since losing a
+  duel, maybe drop the difficulty." Posted after `WorldStage.load()` restored the save's own log, so the line survives
+  the load. Older jab lines go with the older save's log, and only the newest one is shown.
+- **Flag**: `reloadJabEnabled` (ConfigData, false by default), on in TFR's `config.json`.
+- **Console**: `reloadjab` shows this world's count and any pending loss. `reloadjab <n>` sets the count and posts that
+  count's line.
+- **Log**: `[TFR-ReloadJab] lost to <enemy> ...`, `[TFR-ReloadJab] <n> (a save from before the loss, world <seed>)`,
+  `... loaded a save from after the loss - not counted`, `... a new duel started - the last loss stands`,
+  `<n> (console)`.
+- **Agent game** (Maven classes ahead of the agent jar): `reloadjab 4`, saved to slot 5. A loss to an Ancient Silver
+  Dragon at 2 life (50x) was followed by loading slot 5, and `[TFR-ReloadJab] 5 (a save from before the loss ...)`
+  posted the "5 times" line. An earlier win followed by a load of slot 5 did not count. Then `reloadjab 6` to `14`:
+  the Notices log showed every line in red, worded as above. Not tested: a quit-and-relaunch between the loss and the
+  load (the same file path), an Inn or Arena loss.
+
 ## Round 725: F4 works in the story maps too - only a chase locks it (2026-10-24)
 
 The user: "I want to confirm that the F4 is now implemented the same for all dungeons, so even the story dungeons you

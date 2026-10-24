@@ -318,6 +318,16 @@ public class ConsoleCommandInterpreter {
             return forge.adventure.util.TfrAchievements.describe();
         });
         registerCommand(new String[]{"achievement", "reset"}, s -> forge.adventure.util.TfrAchievements.reset(s.length > 0 ? s[0] : null));
+        // Round 726: the reload-after-a-loss count (ReloadJab) - show it, or set it and post that count's line.
+        registerCommand(new String[]{"reloadjab"}, s -> {
+            if (s.length == 0)
+                return forge.adventure.util.ReloadJab.describe();
+            try {
+                return forge.adventure.util.ReloadJab.setForTest(Integer.parseInt(s[0]));
+            } catch (NumberFormatException e) {
+                return "reloadjab [count]";
+            }
+        });
         registerCommand(new String[]{"spawn", "enemy"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: enemy name.";
 

@@ -165,6 +165,9 @@ public class WorldSave {
         if (loaded) {
             liveGame = true;
             saveBlocked = false;
+            // Round 726: a save from before the last lost duel undoes it - counted, with the Notices log's jab. Here, not
+            // in readSave(), so a rollback to the running game never counts; after WorldStage.load() restored the log.
+            forge.adventure.util.ReloadJab.onLoaded(currentSave.header == null ? null : currentSave.header.saveDate);
             return true;
         }
         if (loadTouchedLiveState)

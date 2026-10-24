@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 726 - the reload jab (util/ReloadJab)
+
+- **`forge-gui-mobile/src/forge/adventure/util/ReloadJab.java`** - NEW: the count of reloads after a lost duel, kept per
+  profile in `adventure/tfr_reload_jab.properties`, and its red Notices line.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `afterGameEnd()`: `ReloadJab.onDuelLost()` on a loss
+  (not a draw, Deck Tester or guard fight). `initDuels()`: `ReloadJab.onDuelStarted()`.
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** - `load()`'s success branch: `ReloadJab.onLoaded()` with
+  the header's `saveDate`.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** - `reloadJabEnabled`.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - the `reloadjab [n]` command.
+
 ### Round 725 - F4 in TFR's story maps (data; comments only in code)
 
 - **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`**, **`MapStage.java`** - comments only: TFR's maps no

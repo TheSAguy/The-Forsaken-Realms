@@ -434,6 +434,10 @@ public class DuelScene extends ForgeScene {
         // Round 559: the Capitol Temple's weekly tally - the same duels, without the Arena (its fighters do not die).
         if (winner && !isArena && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
             forge.adventure.util.TempleOfferings.recordKill(enemy.getData());
+        // Round 726: a loss the next load may undo (ReloadJab) - any duel of the player's, Arena and Inn included; not
+        // Deck Tester and not a guard's fight.
+        if (!winner && !drawn && guardDeck == null && (enemy == null || enemy.getData().fixedDeck == null))
+            forge.adventure.util.ReloadJab.onDuelLost(enemyName);
         Forge.advFreezePlayerControls = winner;
         endRunnable = () -> Gdx.app.postRunnable(() -> {
             GameHUD.getInstance().updateBGM();
@@ -1706,6 +1710,7 @@ public class DuelScene extends ForgeScene {
         this.isArena = isArena;
         this.eventData = eventData;
         this.aiControlsPlayerSide = aiControlsPlayerSide;
+        forge.adventure.util.ReloadJab.onDuelStarted(); // round 726: a new duel - the last loss stands
         this.guardDeck = null;       // round 145 - never carry a guard's loadout into another duel
         this.guardStartingLife = 0;
         this.guardEffects = null;    // round 163
