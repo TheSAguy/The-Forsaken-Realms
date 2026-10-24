@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 726 (follow-up): each counted reload gives enemies +1 life on Hard and Insane (2026-10-24)
+
+The user: "on the re-load tracking. Let's make it each time you re-load, the counter goes up, you add +1 life to
+enemies on Hard and Insane."
+
+- **The bonus** (`ReloadJab.enemyLifeBonus()`): on Hard and Insane (`AdventurePlayer.isHardorInsaneDifficulty()`), every
+  enemy starts a duel with +N life, where N is this world's reload-after-loss count. Easy and Normal get 0. No cap:
+  exactly +1 per counted reload, and the count never resets.
+- **Where**: added last, flat, in round 719's shared `DuelScene.enemyStartingLife()` (after the difficulty factor,
+  terrain, early-week ramp, Notoriety and Aura of Fear). The Alt info plates therefore show the same number, in orange,
+  because it is above the difficulty life. Not added: Inn matches (their rules set the life) and roaming guards' fights.
+  Arena duels do get it.
+- **Cached**: a plate asks every frame, so the count is read from the file once per world and the cache is dropped on
+  every write.
+- **Jab text**: on Hard and Insane the line ends "(enemies +N life)", so the player knows why the fights got harder.
+- **Log**: `[TFR-ReloadJab] +N enemy life (Hard/Insane): <enemy> starts at <life>`, at duel start only.
+- **Agent game**: slot 41 (Insane), `reloadjab 7`. The plates of three new Goblin Workers read 37 in orange. The duel
+  logged `[TFR-EnemyLife] Goblin Worker rawLife=12 enemyLifeFactor=2.5 -> difficultyScaled=30`, then
+  `[TFR-ReloadJab] +7 enemy life (Hard/Insane): Goblin Worker starts at 37`. Slot 5 (Normal, same profile, count 14): a
+  Goblin Worker started at 12, with no bonus line.
+
 ## Round 726: the Notices log teases a player who keeps reloading after lost duels (2026-10-24)
 
 The user: "is it possible to keep track how many times a player loads/or quits the game right after losing a duel ...

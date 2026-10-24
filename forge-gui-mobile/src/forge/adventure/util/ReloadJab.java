@@ -103,6 +103,27 @@ public final class ReloadJab {
         post(n);
     }
 
+    // Round 726 follow-up (the user: "each time you re-load, the counter goes up, you add +1 life to enemies on Hard and
+    // Insane"): every enemy starts a duel with +count life on those two difficulties - DuelScene.enemyStartingLife(), so
+    // the Alt plates show it (orange, above the difficulty life). No cap: exactly +1 per counted reload. Cached, since a
+    // plate asks every frame; write() drops the cache.
+    private static long cachedSeed = Long.MIN_VALUE;
+    private static int cachedCount;
+
+    /** The extra life every enemy starts with: this world's count on Hard and Insane, else 0. */
+    public static int enemyLifeBonus() {
+        if (!isEnabled() || Current.player() == null)
+            return 0;
+        if (!Current.player().isHardorInsaneDifficulty())
+            return 0;
+        long seed = currentSeed();
+        if (seed != cachedSeed) {
+            cachedCount = count(read(), seed);
+            cachedSeed = seed;
+        }
+        return cachedCount;
+    }
+
     /** The console's {@code reloadjab <n>}: sets this world's count and posts its line. */
     public static String setForTest(int n) {
         Properties p = read();
@@ -110,7 +131,7 @@ public final class ReloadJab {
         p.setProperty("count." + seed, String.valueOf(Math.max(0, n)));
         write(p);
         System.out.println("[TFR-ReloadJab] " + n + " (console)");
-        String line = message(n);
+        String line = withLife(message(n));
         if (line != null)
             GameHUD.getInstance().logNotification(INK + line, true);
         return "reload count " + n + (line == null ? " - no line below " + FIRST : ": " + line);
@@ -125,9 +146,15 @@ public final class ReloadJab {
     }
 
     private static void post(int n) {
-        String line = message(n);
+        String line = withLife(message(n));
         if (line != null)
             GameHUD.getInstance().logNotification(INK + line, true);
+    }
+
+    /** The follow-up's suffix on Hard and Insane, so the player knows why the fights got harder. */
+    private static String withLife(String line) {
+        int bonus = enemyLifeBonus();
+        return line == null || bonus <= 0 ? line : line + " (enemies +" + bonus + " life)";
     }
 
     /** The line for the n-th counted reload, or null below FIRST. */
@@ -171,6 +198,7 @@ public final class ReloadJab {
     }
 
     private static void write(Properties p) {
+        cachedSeed = Long.MIN_VALUE;
         File f = new File(FILE);
         f.getParentFile().mkdirs();
         try (OutputStream out = new FileOutputStream(f)) {

@@ -1630,6 +1630,16 @@ public class DuelScene extends ForgeScene {
                 System.out.println("[TFR-Ascend] " + (fear < 1f ? "Aura of Fear: " : "Challenger's Mark: ") + data.getName()
                         + " starts at " + enemyStartingLife + " life, not " + lifeBeforeFear + " (x" + fear + ")");
         }
+        // Round 726 follow-up (the user: "each time you re-load, the counter goes up, you add +1 life to enemies on Hard
+        // and Insane"): +1 per reload after a lost duel (ReloadJab), flat, last - not an Inn match (its rules set the
+        // life), not a roaming guard's fight.
+        int reloadLife = !event && !guardFight ? forge.adventure.util.ReloadJab.enemyLifeBonus() : 0;
+        if (reloadLife > 0) {
+            enemyStartingLife += reloadLife;
+            if (log)
+                System.out.println("[TFR-ReloadJab] +" + reloadLife + " enemy life (Hard/Insane): " + data.getName()
+                        + " starts at " + enemyStartingLife);
+        }
         return enemyStartingLife;
     }
 
