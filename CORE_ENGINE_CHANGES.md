@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 730 - resource pickups log without a banner
+
+- **`forge-gui-mobile/src/forge/adventure/util/ResourceSpawns.java`** - the pickup's notice: `logNotification` with the
+  resource glyph instead of `addNotification`; `resourceLogNoted` for the once-per-session log line.
+
 ### Round 729 - a card on each TFR trophy; trophy art loaded first
 
 - **`forge-gui-mobile/src/forge/adventure/util/TfrAchievement.java`** - `getPaperCard()` from the `TROPHY_CARDS` map.

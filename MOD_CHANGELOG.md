@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 730: picked-up resources go to the Notices log, with no banner (2026-10-24)
+
+The user: "We can disable the 'You received xxx resource' pop-ups. Those can go directly to log." (their screenshot: the
+parchment banner "You receive 17 Gold!").
+
+- **What changed**: a world resource pickup (`ResourceSpawns`: gold, shards, wood, stone, and a mystery pickup that
+  turns into one of them) posts "You receive [+Gold] 17." to the Notices log only, with the resource's glyph. There is
+  no banner. The floating pickup label over the player ("+17 Gold", round 227) stays, so the gain is still seen at the
+  moment it happens.
+- **Kept as banners**: the ambush ("Ambush! A ... was lurking under the treasure!"), the diamond's blessing and the
+  blueprint find (`ResourceSpawns`), a dialog's handed-over gold and shards ("Received [+Gold] ...", `MapDialog`,
+  round 332, a story reward the user asked to see), the Ring's gifts and the New Game+ refund. Each is a one-off event,
+  not a routine pickup.
+- **Log**: `[TFR-Notices] resource gain logged without banner` once per session; `[ResourceSpawns] You receive ...` per
+  pickup as before.
+- **Agent game** (slot 41, `spawn resource` and walked onto each, 13 pickups: shards, stone, wood and a mystery): no
+  banner appeared, the floating label showed (screenshot: "+29 Wood"), and the Notices log listed "You receive <glyph>
+  N." for each. The `[TFR-Notices]` line was logged once. No gold rolled in the 13: it uses the same line with
+  `[+Gold]`.
+
 ## Round 729: TFR's trophies show a card, and the trophy art is loaded before it is shown (2026-10-24)
 
 The user (round 727's request): "I'd like it to be like the current game cards. where you see what it is you got plus

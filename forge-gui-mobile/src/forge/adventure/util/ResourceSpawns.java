@@ -416,8 +416,16 @@ public class ResourceSpawns {
         showPickupLabel(what, value); // round 227
         String message = "You receive " + value + " " + what + "!";
         System.out.println("[ResourceSpawns] " + message);
-        GameHUD.getInstance().addNotification(message);
+        // Round 730 (the user: "We can disable the 'You received xxx resource' pop-ups. Those can go directly to log."):
+        // the Notices log only, with the resource's glyph - the floating pickup label above already shows the gain.
+        GameHUD.getInstance().logNotification("You receive [+" + what + "] " + value + ".", false);
+        if (!resourceLogNoted) {
+            resourceLogNoted = true;
+            System.out.println("[TFR-Notices] resource gain logged without banner");
+        }
     }
+
+    private static boolean resourceLogNoted; // round 730: the [TFR-Notices] line once per session
 
     /** Round 239: +3 starting life in the next duel - see MYSTERY_VIGOR_CHANCE. */
     private static void grantVigor() {
