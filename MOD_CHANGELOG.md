@@ -14264,6 +14264,62 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 728: each arena tournament won last week thins this week's lowest tier (2026-10-24)
+
+The user: "For each arena tournament you've won the previous week, there is a 5% less chance to roll an apprentice
+opponent in the current week. So if I won 3 Arena tournaments the week before, each opponent roll will be 15% less
+likely to be an Apprentice."
+
+- **The premise, corrected before building**: of the seven brackets round 715 counts, only one draws Apprentices.
+  - The 5 AI capitals and the player's Level-1 arena roll every seat Adept 50 / Master 35 / Archmage 15 (round 125;
+    the Apprentices in those pools are dropped).
+  - The player's Level-2 Challenging bracket is Master+ only (round 475).
+  - The player's Level-2 arena in Normal mode picks uniformly from its 64-name `arena` pool, 8 of them Apprentices:
+    12.5% a seat. That is where the user met them (their log, days 16-17: Goblin Worker, Juggernaut).
+  - Put to the user with the numbers; their answer: "Go with option a on the arenas" - the cut falls on the
+    **lowest tier each bracket draws**.
+- **The rule** (`ArenaScene.loadArenaData`, `LAST_WEEK_CUT_PER_WIN` = 5): each tournament won last week takes 5
+  percentage points off that tier, floored at 0, and the freed share goes up the tiers in proportion.
+  - Capitals and Level 1 (Adept / Master / Archmage): 0 wins 50/35/15; 1 win 45/38.5/16.5; 3 wins 35/45.5/19.5;
+    5 wins 25/52.5/22.5. The floor is reached at 10 wins, more than the 7 venues can give in a week.
+  - Level-2 Normal (Apprentices): 1 win 12.5% -> 7.5%; 3 or more wins 0%. A cut seat is drawn again from the
+    pool's 56 higher-tier names, which shares the freed odds among them in proportion.
+  - The relative reading (x0.95 a win) was shown to the user beside it: at Level-2 Normal it would have given 11.9%,
+    10.7%, 9.7% at 1, 3, 5 wins; at the capitals 42.9/40.0/17.1 at 3 wins. The user's 5 points were kept.
+  - Level-2 Challenging and a bracket with no building (the Chest's Illegal Arena) take no part
+    (`capitolPayoutBracket`). Every venue's win counts, the drawing venue's own included.
+  - The Bronze Coin holder's seat (round 525) is drawn on its own and is not touched: a holder who is an Apprentice
+    still joins.
+- **Deterministic**: the cut draws from its own random (`oddsDraw`, from the day's seed), so the day's draw is
+  untouched and with no wins last week the field is exactly round 532's. A weighted seat keeps its roll (plus a
+  fraction from `oddsDraw`, so half-point shares come out exact), so a cut only ever moves a seat up a tier.
+- **Order**: odds first, then round 715's this-week Archmage guarantee on the drawn field.
+- **The count** (`World.arenaWinsInWeek`, `ArenaScene.arenaWinsLastWeek`): `arenaWinWeek` keeps only each venue's
+  LAST winning week, so a venue won again this week would lose last week's win. The new saved map
+  `arenaWinWeekPrev` keeps the week a new win replaces (`World.recordArenaWin`). A venue pays one win a week, so
+  the two weeks hold every win of the last two. Purged and cleared with `arenaWinWeek`.
+  - Older saves read it empty. Their `arenaWinWeek` still holds last week's wins at venues not yet won again, so
+    those count; a venue already won again this week before this build undercounts once, for that one week.
+- **Seen**: a line under the arena's title, below round 715's: "3 tournaments won last week: Adepts 50% -> 35% a
+  seat". Before -> after rather than "15% less likely", because at a 12.5% base that wording would be wrong.
+- **Logs**: `[TFR-ArenaOdds] <venue> (week W): 3 tournament win(s) last week -> Adept 50% -> 35%, Master 35% ->
+  45.5%, Archmage 15% -> 19.5% (weighted)`, then per moved seat `[TFR-ArenaOdds] seat 5: roll 83.83 -> Archmage,
+  Master without last week's wins`; at Level-2 Normal `... -> Apprentice 12.5% -> 0% a seat (8 of 64 pool names; a
+  cut seat is drawn again from the 56 above)` and per redrawn seat `seat N: <name> (Apprentice) -> <name> (Tier)`.
+- **Cheat**: `arena lastweek N` records N wins last week at stand-in venues (`cheat-lastweek-K:L1`, week - 1);
+  `arena lastweek` reports the count.
+- **Seen in the agent game** (cheats, the round-725-727 tree's classes ahead of the jar, no duel played):
+  - Slot 20, day 1, Great Lighthouse arena: 0 wins gave round 715's field (6 Adepts, 1 Master), no line. `arena
+    lastweek 3`: seat 5 Master -> Archmage, seat 7 Adept -> Master, the other five seats identical, and the line.
+  - With `arena wins 3` as well: both lines, and round 715 turned seats 1 and 4 into Archmages on top (3 in all).
+  - Both back to 0: the original field, pixel for pixel.
+  - A copy of the user's save 1 (day 18, agent slot 43), the Player Capitol's Level-2 arena: Normal mode read "2
+    tournaments won last week: Apprentices 12.5% -> 2.5% a seat" (the save's own two wins, from `arenaWinWeek`);
+    `arena lastweek 3` made it 5 wins and 0%. The one Apprentice left in the field was the coin holder (Village
+    Defender, `[TFR-ArenaCoin] ... takes bracket slot 5`). Challenging mode showed only round 715's line.
+- Odds checked apart from the game: 400,000 rolls of the same thresholds came within 0.1 points of every share in the
+  table above, and no seat ever moved down a tier.
+
 ## Round 727: achievements announce with an "Achievement Earned" card, and the character sheet shows the newest first (2026-10-24)
 
 The user: "I got an achievement recently, I forgot what it was, but it was only a pop-up message. I'd like it to be like

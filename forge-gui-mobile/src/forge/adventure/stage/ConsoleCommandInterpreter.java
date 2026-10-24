@@ -798,6 +798,25 @@ public class ConsoleCommandInterpreter {
             return forge.adventure.scene.ArenaScene.arenaWinsThisWeek(world, null) + " tournament win(s) in week "
                     + world.getCurrentWeek() + " (day " + world.getCurrentDay() + ")";
         });
+        // Round 728: "arena lastweek N" records N tournament wins LAST week at stand-in venues (no real arena is touched),
+        // so the odds cut on this week's draws can be tested without winning N brackets the week before. "arena lastweek"
+        // alone reports the count.
+        registerCommand(new String[]{"arena", "lastweek"}, s -> {
+            forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+            if (s.length >= 1) {
+                int wanted;
+                try {
+                    wanted = Integer.parseInt(s[0]);
+                } catch (Exception e) {
+                    return "Can not convert " + s[0] + " to number";
+                }
+                world.getArenaWinWeek().keySet().removeIf(key -> key.startsWith("cheat-lastweek-"));
+                for (int i = 0; i < wanted; i++)
+                    world.getArenaWinWeek().put("cheat-lastweek-" + (i + 1) + ":L1", world.getCurrentWeek() - 1);
+            }
+            return forge.adventure.scene.ArenaScene.arenaWinsLastWeek(world) + " tournament win(s) last week (week "
+                    + (world.getCurrentWeek() - 1) + ", day " + world.getCurrentDay() + " now)";
+        });
         registerCommand(new String[]{"listPOI"}, s -> {
             ArrayList<String> poiNames = new ArrayList<>();
             List<BiomeData> biomeData = WorldSave.getCurrentSave().getWorld().getData().GetBiomes();

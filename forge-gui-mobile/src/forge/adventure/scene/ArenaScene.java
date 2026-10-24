@@ -284,14 +284,33 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         return arenaMapStage.getChanges().getBuildingLevel(arenaObjectId);
     }
 
+    /** Round 125: the tier-weighted Arena's shares of a seat, in percent. */
+    private static final int WEIGHTED_ADEPT = 50, WEIGHTED_MASTER = 35, WEIGHTED_ARCHMAGE = 15;
+
     /** Round 125: one bracket seat of the tier-weighted Arena (Adept 50% / Master 35% / Archmage
      *  15%). A target tier with no names in this pool falls through to the next-closest tier
-     *  that has some; null only if all three are empty (the caller then uses the plain pick). */
+     *  that has some; null only if all three are empty (the caller then uses the plain pick).
+     *  <p>
+     *  Round 728: {@code adeptCut} percentage points come off the Adept share (last week's tournament wins), the freed
+     *  share going to Master and Archmage in proportion (35:15). The seat's roll is the day's draw as before, plus a
+     *  fraction from {@code oddsDraw} so the half-point shares come out exact. With no cut the thresholds are whole
+     *  numbers, so the fraction is not drawn and the field is round 532's. A seat keeps its roll, so a cut only ever moves
+     *  it up a tier. */
     private EnemyData pickTierWeighted(java.util.List<EnemyData> adept, java.util.List<EnemyData> master, java.util.List<EnemyData> archmage,
-                                       Random draw) {
+                                       Random draw, Random oddsDraw, int adeptCut, int seat) {
         int roll = draw.nextInt(100);
-        java.util.List<java.util.List<EnemyData>> order = roll < 50 ? java.util.Arrays.asList(adept, master, archmage)
-                : roll < 85 ? java.util.Arrays.asList(master, adept, archmage)
+        double at = adeptCut > 0 ? roll + oddsDraw.nextDouble() : roll;
+        double adeptEnd = WEIGHTED_ADEPT - adeptCut;
+        double masterEnd = adeptEnd + WEIGHTED_MASTER + adeptCut * (double) WEIGHTED_MASTER / (WEIGHTED_MASTER + WEIGHTED_ARCHMAGE);
+        int target = at < adeptEnd ? 1 : at < masterEnd ? 2 : 3;
+        if (adeptCut > 0) {
+            int uncut = roll < WEIGHTED_ADEPT ? 1 : roll < WEIGHTED_ADEPT + WEIGHTED_MASTER ? 2 : 3;
+            if (target != uncut)
+                System.out.println("[TFR-ArenaOdds] seat " + (seat + 1) + ": roll " + String.format(java.util.Locale.ROOT, "%.2f", at)
+                        + " -> " + TIER_NAMES[target] + ", " + TIER_NAMES[uncut] + " without last week's wins");
+        }
+        java.util.List<java.util.List<EnemyData>> order = target == 1 ? java.util.Arrays.asList(adept, master, archmage)
+                : target == 2 ? java.util.Arrays.asList(master, adept, archmage)
                 : java.util.Arrays.asList(archmage, master, adept);
         for (java.util.List<EnemyData> bucket : order)
             if (!bucket.isEmpty())
@@ -1309,7 +1328,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 beatenChampions.clear(); // round 311
                 return true;
             }
-            world.getArenaWinWeek().put(weeklyKey, week);
+            world.recordArenaWin(weeklyKey, week); // round 728: the win it replaces counts toward next week's odds
             System.out.println("[TFR-ArenaWeekly] " + weeklyKey + ": tournament win recorded for week "
                     + week + " (day " + world.getCurrentDay() + ") - next payout here from week " + (week + 1));
             // Round 713 (the user: "Add all four Notices gaps: arena wins/champion ..."): the win said nothing before -
@@ -1685,6 +1704,31 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         return wins;
     }
 
+    /** Round 728: percentage points off the lowest tier a bracket draws, for each arena tournament won last week. */
+    private static final int LAST_WEEK_CUT_PER_WIN = 5;
+    private static final String[] TIER_NAMES = {"Apprentice", "Adept", "Master", "Archmage"};
+
+    /** Round 728: the arena tournaments won last week, at every venue - the 5 AI capitals and the player's two arena modes
+     *  (World.arenaWinsInWeek). Inn tournaments are not arena wins and are not recorded there. */
+    public static int arenaWinsLastWeek(forge.adventure.world.World world) {
+        return world == null ? 0 : world.arenaWinsInWeek(world.getCurrentWeek() - 1);
+    }
+
+    /** Round 728: the line under the arena's title when last week's wins cut this draw's lowest tier; null hides it. Set
+     *  with each bracket in loadArenaData. */
+    private String lastWeekOddsHint = null;
+
+    private static String lastWeekOddsHintText(int wins, String tierPlural, double from, double to) {
+        return "[%80]" + wins + (wins == 1 ? " tournament" : " tournaments") + " won last week: " + tierPlural + " "
+                + percent(from) + " -> " + percent(to) + " a seat";
+    }
+
+    /** Round 728: a share as "12.5%" or "35%". */
+    private static String percent(double share) {
+        double tenths = Math.round(share * 10) / 10.0;
+        return (tenths == Math.rint(tenths) ? String.valueOf((long) tenths) : String.valueOf(tenths)) + "%";
+    }
+
     /** Round 715: the Archmages this bracket was promised by the week's wins, for the line under the arena's title; 0 hides
      *  it. Set with each bracket in loadArenaData. */
     private int weeklyArchmageHint = 0;
@@ -1857,6 +1901,62 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         bracketVenue = fromBuilding && weeklyArenaKey() != null ? lossVenueKey() : null; // round 586
         Random draw = fromBuilding ? new Random(daySeed) : rand;
         Random coinDraw = fromBuilding ? new Random(daySeed * 31L + 17L) : rand;
+        // Round 728 (the user: "For each arena tournament you've won the previous week, there is a 5% less chance to roll an
+        // apprentice opponent in the current week", then "Go with option a on the arenas"): each tournament won last week
+        // takes LAST_WEEK_CUT_PER_WIN percentage points off the lowest tier this bracket draws, floored at 0, and the freed
+        // share goes up the tiers in proportion. The 5 AI capitals and the player's Level-1 arena draw no Apprentices
+        // (round 125), so there it is the Adept share; the player's Level-2 arena in Normal mode picks from its whole pool,
+        // so there it is the Apprentices'. The Level-2 Challenging bracket (Master+ only, round 475) and a bracket with no
+        // building take no part (capitolPayoutBracket). Every venue's win counts, this one's included. Applied at the
+        // draw, so the bracket shown before the fee carries it, and BEFORE round 715's Archmage guarantee: odds first, then
+        // the guarantee. The cut draws from its own random (oddsDraw), so the day's draw is untouched: with no wins last
+        // week the field is exactly round 532's.
+        lastWeekOddsHint = null;
+        int lastWeekWins = capitolPayoutBracket ? arenaWinsLastWeek(WorldSave.getCurrentSave().getWorld()) : 0;
+        Random oddsDraw = new Random(mix64(daySeed ^ 0x2545F4914F6CDD1DL));
+        int adeptCut = 0;
+        int lowRank = -1;
+        double lowKeep = 1;
+        java.util.List<EnemyData> aboveLow = new java.util.ArrayList<>();
+        if (lastWeekWins > 0) {
+            String oddsVenue = weeklyArenaKey() + " (week " + WorldSave.getCurrentSave().getWorld().getCurrentWeek() + ")";
+            if (tierWeighted) {
+                adeptCut = Math.min(WEIGHTED_ADEPT, lastWeekWins * LAST_WEEK_CUT_PER_WIN);
+                double toMaster = adeptCut * (double) WEIGHTED_MASTER / (WEIGHTED_MASTER + WEIGHTED_ARCHMAGE);
+                System.out.println("[TFR-ArenaOdds] " + oddsVenue + ": " + lastWeekWins + " tournament win(s) last week -> Adept "
+                        + percent(WEIGHTED_ADEPT) + " -> " + percent(WEIGHTED_ADEPT - adeptCut) + ", Master " + percent(WEIGHTED_MASTER)
+                        + " -> " + percent(WEIGHTED_MASTER + toMaster) + ", Archmage " + percent(WEIGHTED_ARCHMAGE) + " -> "
+                        + percent(WEIGHTED_ARCHMAGE + adeptCut - toMaster) + " (weighted)");
+                lastWeekOddsHint = lastWeekOddsHintText(lastWeekWins, "Adepts", WEIGHTED_ADEPT, WEIGHTED_ADEPT - adeptCut);
+            } else {
+                java.util.List<EnemyData> named = new java.util.ArrayList<>();
+                for (String name : poolNames) {
+                    EnemyData pooled = WorldData.getEnemy(name);
+                    if (pooled != null) {
+                        named.add(pooled);
+                        int rank = EnemyData.tierRank(pooled.tier);
+                        lowRank = lowRank < 0 ? rank : Math.min(lowRank, rank);
+                    }
+                }
+                for (EnemyData pooled : named)
+                    if (EnemyData.tierRank(pooled.tier) > lowRank)
+                        aboveLow.add(pooled);
+                if (aboveLow.isEmpty()) {
+                    System.out.println("[TFR-ArenaOdds] " + oddsVenue + ": " + lastWeekWins
+                            + " tournament win(s) last week - one tier in the pool, odds unchanged");
+                } else {
+                    double lowShare = 100.0 * (named.size() - aboveLow.size()) / named.size();
+                    double cutShare = Math.max(0, lowShare - lastWeekWins * LAST_WEEK_CUT_PER_WIN);
+                    lowKeep = cutShare / lowShare;
+                    String tier = TIER_NAMES[Math.max(0, Math.min(3, lowRank))];
+                    System.out.println("[TFR-ArenaOdds] " + oddsVenue + ": " + lastWeekWins + " tournament win(s) last week -> "
+                            + tier + " " + percent(lowShare) + " -> " + percent(cutShare) + " a seat ("
+                            + (named.size() - aboveLow.size()) + " of " + named.size() + " pool names; a cut seat is drawn again from the "
+                            + aboveLow.size() + " above)");
+                    lastWeekOddsHint = lastWeekOddsHintText(lastWeekWins, tier + "s", lowShare, cutShare);
+                }
+            }
+        }
         EnemyData coinFoe = playerOwnedArena ? pickCoinRansomFoe(challengePayoutBracket, coinDraw) : null;
         int coinFoeSlot = coinFoe == null ? -1 : coinDraw.nextInt(numberOfEnemies);
         if (coinFoe != null)
@@ -1867,9 +1967,18 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // the Level-2 bracket can be topped up with Archmages before the seats are built.
         EnemyData[] field = new EnemyData[numberOfEnemies];
         for (int i = 0; i < numberOfEnemies; i++) {
-            EnemyData enemyData = tierWeighted ? pickTierWeighted(adeptPool, masterPool, archmagePool, draw) : null;
+            EnemyData enemyData = tierWeighted ? pickTierWeighted(adeptPool, masterPool, archmagePool, draw, oddsDraw, adeptCut, i) : null;
             while (enemyData == null)
                 enemyData = WorldData.getEnemy(poolNames.get(draw.nextInt(poolNames.size())));
+            // Round 728: a plain pick's lowest-tier seat stays with the cut share's odds; otherwise it is drawn again from
+            // the higher tiers' names, which shares the freed odds among them in proportion.
+            if (lowKeep < 1 && EnemyData.tierRank(enemyData.tier) == lowRank && oddsDraw.nextDouble() >= lowKeep) {
+                EnemyData redrawn = aboveLow.get(oddsDraw.nextInt(aboveLow.size()));
+                System.out.println("[TFR-ArenaOdds] seat " + (i + 1) + ": " + enemyData.getName() + " ("
+                        + EnemyData.tierDisplayName(enemyData.tier) + ") -> " + redrawn.getName() + " ("
+                        + EnemyData.tierDisplayName(redrawn.tier) + ")");
+                enemyData = redrawn;
+            }
             field[i] = enemyData;
         }
         // Round 715: each tournament won this week at another venue promises one Archmage in this field, clamped to its
@@ -2037,6 +2146,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                     arenaTable.add(Controls.newTextraLabel(weeklyArchmageHintText())).top();
                     arenaTable.row();
                 }
+                if (lastWeekOddsHint != null) { // round 728
+                    arenaTable.add(Controls.newTextraLabel(lastWeekOddsHint)).top();
+                    arenaTable.row();
+                }
                 arenaTable.add(arenaPlane).width(arenaPlane.getWidth()).height(arenaPlane.getHeight());
                 pane.setActor(arenaTable);
             } else {
@@ -2044,6 +2157,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 arenaTable.row();
                 if (weeklyArchmageHint > 0) {
                     arenaTable.add(Controls.newTextraLabel(weeklyArchmageHintText())).colspan(3).top();
+                    arenaTable.row();
+                }
+                if (lastWeekOddsHint != null) { // round 728
+                    arenaTable.add(Controls.newTextraLabel(lastWeekOddsHint)).colspan(3).top();
                     arenaTable.row();
                 }
                 int size = fighters.size;

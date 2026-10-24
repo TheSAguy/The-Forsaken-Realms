@@ -38,6 +38,18 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 728 - each arena tournament won last week thins this week's lowest tier
+
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `pickTierWeighted` takes `oddsDraw`, `adeptCut`
+  and the seat (named `WEIGHTED_*` shares); `loadArenaData` works out the cut after the day's randoms and applies it in
+  the field draw (a plain pick's lowest-tier seat may be drawn again); `arenaWinsLastWeek()`, `lastWeekOddsHint` and
+  its text helpers; `drawArena` shows the line under round 715's; `done()` records the win through
+  `World.recordArenaWin`.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - saved map `arenaWinWeekPrev` (load, save, purge, new
+  world), `recordArenaWin()`, `arenaWinsInWeek()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - cheat `arena lastweek [N]`
+  (stand-in venue keys `cheat-lastweek-K:L1` in `arenaWinWeek`).
+
 ### Round 727 - achievement dialog, "Recently earned", the mirrored trophy
 
 - **`forge-gui/src/main/java/forge/localinstance/achievements/Achievement.java`** (STOCK) - new `getTimestamp()`, beside

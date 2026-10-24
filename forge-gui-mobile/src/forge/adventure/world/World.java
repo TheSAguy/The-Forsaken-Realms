@@ -428,6 +428,12 @@ public class World implements Disposable, SaveFileContent {
     // was paid. Persisted like the poi* maps above; absent on older saves, which reads as
     // "never won here".
     private final java.util.Map<String, Integer> arenaWinWeek = new java.util.HashMap<>();
+    // Round 728 (the user: "For each arena tournament you've won the previous week, there is a 5% less chance to roll an
+    // apprentice opponent in the current week"): the week of each venue's win BEFORE its last one, kept when a new win
+    // overwrites arenaWinWeek. A venue pays one win a week (round 135), so the two weeks together hold every win of the
+    // last two weeks, and arenaWinsInWeek(last week) counts a venue won again this week. Absent on older saves = empty;
+    // their arenaWinWeek still holds last week's wins at venues not yet won again.
+    private final java.util.Map<String, Integer> arenaWinWeekPrev = new java.util.HashMap<>();
     // Round 527 (the user: "you can only Win one Inn Tournament per town/Capitol per week. So after a win, no more would be
     // offered till the start of the next week, Day 8, 15, 22, etc."). Key = the Inn's town POI id (its tournament's
     // sourceID), value = the week (getCurrentWeek()) of its last won tournament. Absent on older saves = never won.
@@ -492,6 +498,24 @@ public class World implements Disposable, SaveFileContent {
         return arenaWinWeek;
     }
 
+    /** Round 728: a tournament won at this venue in this week - the week it replaces is kept as the venue's previous win. */
+    public void recordArenaWin(String venue, int week) {
+        Integer last = arenaWinWeek.put(venue, week);
+        if (last != null && last != week)
+            arenaWinWeekPrev.put(venue, last);
+    }
+
+    /** Round 728: the arena tournaments won in this week, at every venue - from each venue's last and previous win. */
+    public int arenaWinsInWeek(int week) {
+        int wins = 0;
+        for (java.util.Map.Entry<String, Integer> won : arenaWinWeek.entrySet()) {
+            Integer prev = arenaWinWeekPrev.get(won.getKey());
+            if ((won.getValue() != null && won.getValue() == week) || (prev != null && prev == week))
+                wins++;
+        }
+        return wins;
+    }
+
     /** Round 527: town POI id -> the week its Inn tournament was last won. */
     public java.util.Map<String, Integer> getInnWinWeek() {
         return innWinWeek;
@@ -554,6 +578,9 @@ public class World implements Disposable, SaveFileContent {
         arenaWinWeek.remove(poiId);
         arenaWinWeek.remove(poiId + ":L1");
         arenaWinWeek.remove(poiId + ":L2");
+        arenaWinWeekPrev.remove(poiId); // round 728
+        arenaWinWeekPrev.remove(poiId + ":L1");
+        arenaWinWeekPrev.remove(poiId + ":L2");
         innWinWeek.remove(poiId); // round 527
     }
 
@@ -1373,6 +1400,11 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             arenaWinWeek.putAll((java.util.Map<String, Integer>) saveFileData.readObject("arenaWinWeek"));
         }
+        arenaWinWeekPrev.clear(); // round 728
+        if (saveFileData.containsKey("arenaWinWeekPrev")) {
+            //noinspection unchecked
+            arenaWinWeekPrev.putAll((java.util.Map<String, Integer>) saveFileData.readObject("arenaWinWeekPrev"));
+        }
         innWinWeek.clear(); // round 527
         if (saveFileData.containsKey("innWinWeek")) {
             //noinspection unchecked
@@ -1539,6 +1571,7 @@ public class World implements Disposable, SaveFileContent {
         data.store("groundPatches", groundPatches); // round 307
         data.store("groundArt", groundArt);
         data.storeObject("arenaWinWeek", arenaWinWeek);
+        data.storeObject("arenaWinWeekPrev", new java.util.HashMap<>(arenaWinWeekPrev)); // round 728
         data.storeObject("innWinWeek", innWinWeek); // round 527
         data.storeObject("arenaLossesToday", new java.util.HashMap<>(arenaLossesToday)); // round 586
         data.store("arenaLossDay", arenaLossDay);
@@ -2898,6 +2931,7 @@ public class World implements Disposable, SaveFileContent {
             groundPatches = groundPatchSignature(); // round 307 - and its ground from the current bands and art
             groundArt = groundArtSignature();
             arenaWinWeek.clear(); // round 135
+            arenaWinWeekPrev.clear(); // round 728
             innWinWeek.clear(); // round 527
             arenaLossesToday.clear(); // round 586
             arenaLossDay = -1;
