@@ -302,6 +302,7 @@
     "contentFilterTablesEnabled": true,
     "showEnemyTierInName": true,
     "enemyInfoPlatesEnabled": true,
+    "cleanFontEnabled": true,
     "weightedSpawnTiersEnabled": true,
     "functioningNeutralTownsEnabled": true,
     "modVersion": "1.23",

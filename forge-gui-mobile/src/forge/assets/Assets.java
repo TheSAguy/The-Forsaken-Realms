@@ -588,6 +588,11 @@ public class Assets implements Disposable {
         if (textrafonts == null)
             textrafonts = new ObjectMap<>();
         if (!textrafonts.containsKey("textrafont")) {
+            Font clean = forge.adventure.util.TfrFonts.textraFont(bitmapFont, item_atlas);   // TFR round 723: the Font setting
+            if (clean != null) {
+                textrafonts.put("textrafont", clean);
+                return clean;
+            }
             Font font = new Font(bitmapFont, 0f, 2f, 0f, 1f);
             font.addAtlas(item_atlas, 0f, 6f, 0f);
             //problematic atlas since some buttons are small, and this is too big for some buttons, need a way to enable

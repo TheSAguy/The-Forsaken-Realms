@@ -328,6 +328,24 @@ public class SettingsScene extends UIScene {
                 restartForge();
             }
         });
+        // Round 723: the Font (TfrFonts), Clean or Pixel; the labels hold their font, so it takes a restart
+        if (forge.adventure.util.TfrFonts.offered()) {
+            String font = forge.adventure.util.TfrFonts.PIXEL.equalsIgnoreCase(Config.instance().getSettingData().tfrFont)
+                    ? forge.adventure.util.TfrFonts.PIXEL : forge.adventure.util.TfrFonts.CLEAN;
+            SelectBox<String> fontBox = Controls.newComboBox(new String[]{forge.adventure.util.TfrFonts.CLEAN,
+                    forge.adventure.util.TfrFonts.PIXEL}, font, o -> {
+                String picked = o == null ? forge.adventure.util.TfrFonts.CLEAN : o.toString();
+                if (picked.equals(Config.instance().getSettingData().tfrFont))
+                    return null;
+                Config.instance().getSettingData().tfrFont = picked;
+                Config.instance().saveSettings();
+                System.out.println("[TFR-Font] Settings: Font " + picked + " (after a restart)");
+                restartForge();
+                return null;
+            });
+            addLabel("Font (" + localizer.getMessage("lblRestartRequired") + ")");
+            settingGroup.add(fontBox).align(Align.right).pad(2);
+        }
         // Restricted-edition art (2026-08-30 user request) - purely cosmetic, so it gets a plain
         // toggle rather than a restart prompt. No invalidateCardPool() needed: this changes which
         // PRINTING a reward resolves to at generation time, not which cards are in the pool.

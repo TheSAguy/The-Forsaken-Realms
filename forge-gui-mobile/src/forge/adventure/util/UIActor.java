@@ -143,10 +143,38 @@ public class UIActor extends Group {
                         break;
                 }
             }
+            fitKeyButtonText(newActor, element);
             lastActor = newActor;
             addActor(newActor);
         }
 
+    }
+
+    /**
+     * TFR round 723: with the clean font (TfrFonts, wider than LanaPixel) a key-bound button's text could run into its key
+     * cap - the inventory's "Dispose" into its Q. Text and cap share the button's width, so the text is scaled down
+     * just enough to fit beside the cap.
+     */
+    private void fitKeyButtonText(Actor actor, OrderedMap<String, String> element) {
+        if (!TfrFonts.active() || !(actor instanceof TextraButton button) || button.getWidth() <= 0
+                || !((Object) element.get("text") instanceof String raw))
+            return;
+        KeyHintLabel key = null;
+        for (Actor child : button.getChildren())
+            if (child instanceof KeyHintLabel k)
+                key = k;
+        if (key == null)
+            return;
+        String text = localize(raw);
+        float room = button.getWidth() - button.getPadLeft() - button.getPadRight() - key.getPrefWidth() - 2f;
+        float need = button.getTextraLabel().getPrefWidth();
+        if (need <= room || room <= 0)
+            return;
+        int pct = Math.max(60, (int) Math.floor(100f * room / need));
+        button.setText("[%" + pct + "]" + text);
+        button.layout();
+        System.out.println("[TFR-Font] key button \"" + text + "\" (" + key.keyBinding + "): " + String.format(java.util.Locale.US,
+                "%.1f px of text in %.1f px beside its key - drawn at %d%%", need, room, pct));
     }
 
     public Button buttonPressed(int key) {

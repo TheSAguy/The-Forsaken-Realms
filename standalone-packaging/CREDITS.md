@@ -514,6 +514,13 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   **Grzegorz Rutkowski**; *Syr Elenora, the Discerning* by **Mila Pesic**; *Sylvia Brightspear* by **Carmen Sinek**;
   and *Teysa, Orzhov Scion* by **Sara Winters**.
 
+## Fonts
+
+- The text of the Adventure screens (the Font setting's Clean, the default): **Samsung Sharp Sans** Medium,
+  Samsung's customized version of Sharp Sans (© 2015 Lucas Sharp), as bundled with Forge for its duel screen.
+- The pixel font (the Font setting's Pixel, and the check boxes and gender signs in Clean): **LanaPixel** by
+  **eishiya**, as bundled with Forge's Adventure mode.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

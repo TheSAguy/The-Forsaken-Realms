@@ -41,6 +41,9 @@ public class SettingData {
     // changes. Default ON (that is the behaviour this was asked for), and inert on any plane
     // whose restrictedEditions list is empty, so stock planes are untouched either way.
     public boolean avoidRestrictedEditionArt = true;
+    // Round 723: the Font (util/TfrFonts), "Clean" (the duel screen's font, the default) or "Pixel" (LanaPixel). Read
+    // once when the font is made, so a change needs a restart. Only on a plane with cleanFontEnabled.
+    public String tfrFont = "Clean";
     // Inn tournament AI-vs-AI match simulation (2026-08-17 user spec: "I assume, currently it's
     // just a coin flip... have the two AI's actually simulate their match, behind the science...
     // By Default, have this unchecked"). Confirmed the assumption was correct - EventScene.

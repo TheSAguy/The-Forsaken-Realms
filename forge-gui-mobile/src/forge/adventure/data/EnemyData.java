@@ -273,9 +273,34 @@ public class EnemyData implements Serializable {
     public String getBossIntro(){
         return translate(getName(), "bossIntro", bossIntro);
     }
+    /**
+     * Round 723 (log review 2026-10-24, P1): the Localizer is asked only when the plane ships an adventure language
+     * bundle, the one place adv.enemy keys live (none in TFR), and a key it lacked is not asked again. Its "silent" miss
+     * is one field shared by every thread, so an inn tournament's AI sims on the game thread made the UI thread's misses
+     * print MissingResourceException traces for TFR enemy names ("adv.enemy.Disa.displayName").
+     */
+    private static final java.util.Set<String> MISSING_KEYS = java.util.concurrent.ConcurrentHashMap.newKeySet();
+    private static volatile String bundleDir;
+    private static volatile boolean planeHasBundle;
     private static String translate(String enemyName, String field, String defaultValue){
-        return forge.Forge.getLocalizer().getMessageorUseDefault(
-            "adv.enemy." + enemyName.replaceAll("[^A-Za-z0-9]", "") + "." + field, defaultValue);
+        String key = "adv.enemy." + enemyName.replaceAll("[^A-Za-z0-9]", "") + "." + field;
+        if (!planeHasAdventureBundle() || MISSING_KEYS.contains(key))
+            return defaultValue;
+        String value = forge.Forge.getLocalizer().getMessageorUseDefault(key, defaultValue);
+        if (value == defaultValue)
+            MISSING_KEYS.add(key);
+        return value;
+    }
+    private static boolean planeHasAdventureBundle() {
+        String dir = Config.instance().getPlanePath(Config.instance().getSettingData().plane) + "languages/";
+        if (!dir.equals(bundleDir)) {
+            String[] bundles = new java.io.File(dir).list((d, n) -> n.startsWith("adventure-") && n.endsWith(".properties"));
+            planeHasBundle = bundles != null && bundles.length > 0;
+            bundleDir = dir;
+            System.out.println("[TFR-EnemyNames] " + dir + ": " + (planeHasBundle ? bundles.length + " adventure language bundle(s)"
+                    : "no adventure language bundle - enemy names are not looked up"));
+        }
+        return planeHasBundle;
     }
 
     public boolean match(EnemyData other) {

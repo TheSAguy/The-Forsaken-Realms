@@ -96,6 +96,13 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
     boolean isRewardShop, showOverlay, canAutoSell;
     private String priceTag = "";
     TextraLabel overlayLabel;
+    /** Round 723, TFR 2's port: with the clean font (TfrFonts.active) the card's title ("22 Gold", a booster's name) is
+     *  laid out in the 192 x 256 face as before but drawn over the face at screen resolution in drawFrontSide, not into
+     *  the face's picture, where it came out small and stretched. faceImage is that picture: a booster's real art
+     *  replaces it, and the title goes with it. */
+    private TextraLabel faceText;
+    private Texture faceImage;
+    private final Matrix4 faceMatrix = new Matrix4(), faceWas = new Matrix4();
     int artIndex = 1;
     String imageKey = "";
     public int renderedCount = 0; //Counter for cards that require rendering a preview.
@@ -915,6 +922,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
         if (frameBuffer == null) {
             return;
         }
+        boolean faceTextOver = itemText != null && TfrFonts.active();
         Matrix4 matrix = new Matrix4();
         matrix.setToOrtho2D(0, ph, pw, -ph);
         frameBuffer.begin();
@@ -940,13 +948,16 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             itemText.setHeight(ph);
             itemText.setX(itemText.getX() + (modX * 4));
             itemText.setY(itemText.getY() + (modY * 8));
-            itemText.draw(Forge.getGraphics().getBatch(), 1);
+            if (!faceTextOver)
+                itemText.draw(Forge.getGraphics().getBatch(), 1);
         }
         Forge.getGraphics().endClip();
         Forge.getGraphics().end();
         frameBuffer.end();
         image = frameBuffer.getColorBufferTexture();
         image.bind();
+        faceText = faceTextOver ? itemText : null;
+        faceImage = image;
     }
 
     // No dedicated blueprint art exists yet (MOD_SCOPE wishlist). These are real region names in
@@ -1400,7 +1411,20 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             }
         } else if (image != null) {
             batch.draw(image, x, -getHeight() / 2, width, getHeight());
+            if (faceText != null && image == faceImage)
+                drawFaceText(batch, x, width);
         }
+    }
+
+    /** The face's title over the face just drawn at (x, -height / 2), width wide (negative while the card is mirrored for
+     *  its flip): the 192 x 256 face's own layout, scaled to the card, so it sits where it did and turns with the card. */
+    private void drawFaceText(Batch batch, float x, float width) {
+        faceWas.set(batch.getTransformMatrix());
+        faceMatrix.set(faceWas).translate(x, -getHeight() / 2, 0).scale(width / 192f, getHeight() / 256f, 1);
+        batch.setTransformMatrix(faceMatrix);
+        faceText.setColor(batch.getColor());  // darkened with the card under the pointer
+        faceText.draw(batch, 1);
+        batch.setTransformMatrix(faceWas);
     }
 
     private void drawCard(Batch batch, Texture image, float x, float width, boolean isFoil) {

@@ -118,6 +118,9 @@ public class ConfigData {
     // Round 719: hold Alt (R3 on a controller, the HUD's Units toggle on touch) and every enemy in sight wears an info
     // plate - its rank, and its colors and starting life as far as the player has battled it (util/TfrPlates).
     public boolean enemyInfoPlatesEnabled = false;
+    // Round 723: the Adventure screens' labels and buttons in the duel screen's clean font (util/TfrFonts), with a
+    // Font: Clean/Pixel choice in Settings. Off here, so a stock plane keeps LanaPixel.
+    public boolean cleanFontEnabled = false;
     // Per-race starting expansions (user spec 2026-08-12) - see RaceEditionData. When a race has
     // an entry here, it replaces the flat starterEditions first-N seeding; races without an
     // entry (and planes without this array) fall back to starterEditions.

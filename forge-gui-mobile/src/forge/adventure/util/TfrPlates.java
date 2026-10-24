@@ -52,7 +52,7 @@ public final class TfrPlates {
     private static boolean toggled;
     /** The controller's right stick held in (HudScene: buttons arrive as key codes). */
     private static boolean stickHeld;
-    private static boolean wasShown, countNext, frameShown, frameColorView;
+    private static boolean wasShown, countNext, loggedShown, frameShown, frameColorView;
     private static int exact, family, unknown, lifted;
     /** A mana pip's side and the gap between parts, in world px (the text is [%55]: about 5 px). */
     private static final float PIP = 4f, GAP = 1.2f, ICON = 5f;
@@ -114,17 +114,24 @@ public final class TfrPlates {
         placed.clear();
         for (Queued q : queue)
             q.plate.draw(batch, parentAlpha, q.cx, q.foot);
+        // Round 723 (log review 2026-10-24, P3): the edge first, and "hidden" only after a "shown". A view with no enemy
+        // in sight printed a lone "hidden" and left countNext set, so the next view printed "shown" on its first frame
+        // (the stale flag, checked before the edge) and again on its second.
+        if (frameShown != wasShown) {
+            if (frameShown) {
+                countNext = true;
+            } else {
+                if (loggedShown)
+                    System.out.println("[TFR-Plates] hidden");
+                countNext = loggedShown = false;
+            }
+            wasShown = frameShown;
+        }
         if (countNext && !queue.isEmpty()) {
             System.out.println("[TFR-Plates] shown: " + queue.size() + " plate(s) - " + exact + " battled, " + family
                     + " family only, " + unknown + " unknown, " + lifted + " lifted" + (frameColorView ? " (Manasight)" : ""));
             countNext = false;
-        }
-        if (frameShown != wasShown) {
-            if (frameShown)
-                countNext = true;
-            else
-                System.out.println("[TFR-Plates] hidden");
-            wasShown = frameShown;
+            loggedShown = true;
         }
         exact = family = unknown = lifted = 0;
         queue.clear();

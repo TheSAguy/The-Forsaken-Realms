@@ -14264,6 +14264,66 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 723: TFR 2's Clean font; the inn sim's Localizer traces; the plates' show/hide log (2026-10-24)
+
+The user: "I like the font we've implemented in TFR2, can we do the same for TFR1", then, on the preview and plan:
+"Let's build all as one, including the two oddities" (P1 and P3 of the 2026-10-24 player-log review), with every
+recommendation of the plan: Clean the default with a Pixel choice, pure Clean (no pixel titles), LanaPixel kept for
+non-Latin UI languages, no Art-Library copy.
+
+- **The font** (`util/TfrFonts`, a port of TFR 2's `Tfr2Fonts` without its trial-only mixed mode). TFR 2's "Clean" is
+  not LanaPixel: it is the duel screen's font, the default skin's `font1.ttf` (Samsung Sharp Sans Medium), which Forge
+  already ships, so the release gains no new file. `Assets.getTextraFont()` asks `TfrFonts.textraFont` first: FreeType
+  draws the font k times larger than the 480x270 stage (k = the window over the stage, 8 at 3840x2130, 4 on a
+  2400x1080 phone) and it is shown at 1/k with mipmaps, so it is sharp at any window. 9 stage px on LanaPixel's line of
+  14, so line spacing and the `[+Gold]`-style icons stay. Glyphs are packed 2k px apart (TFR 2's "2|2 Gold" bleed fix).
+  It covers the labels and buttons of the Adventure screens (`Controls.getTextraFont`); text fields, lists, check-box
+  rows and Forge's own screens keep their fonts.
+  - Characters: FreeType's ASCII + Latin-1, TFR's punctuation (TFR 2's set), `↑` and all of Latin Extended-A (card names
+    "Bespoke Bō", "Hamato Ninpō", Shandalar's "Š" names).
+  - The symbols the font lacks, `☐☑☓♂♀` (the quest log and auto-sell check boxes, the HUD's disabled cross, the gender
+    signs), are drawn in LanaPixel through a font family: `markup` wraps each in `[@Pixel]...[@]`. Their yAdjust is 4
+    (the stock 2 left them about 2 px above the text).
+  - **Settings**: "Font (Restart Required)": Clean (the default) or Pixel; a change offers the restart. Only on a plane
+    with config.json `cleanFontEnabled` (TFR's only), so stock planes keep LanaPixel. Russian, Chinese, Japanese and
+    Korean UIs keep LanaPixel (the font has no Cyrillic or CJK); English, German, Spanish, French, Italian and
+    Portuguese get Clean.
+  - **Reward cards** (TFR 2's round, ported): in Clean the card's title ("16 Gold", a booster's name) is drawn over the
+    face at screen resolution, not baked into the 192x256 picture where it came out small and stretched.
+  - **Key-bound buttons** (`UIActor.fitKeyButtonText`): text and key cap share the button's width, and the wider font ran
+    "Dispose" into its Q. In Clean such a button's text is scaled down just enough to fit (seen: Dispose 90%, the
+    reward screen's Detail 79% and Back 90%).
+  - Switches for scripted runs: `-Dtfr.font=pixel|clean`, `-Dtfr.fontSize`, `-Dtfr.fontY`, `-Dtfr.fontLine`,
+    `-Dtfr.pixelY`. Log: `[TFR-Font] clean (setting, en-US): font1.ttf at 72 px, drawn at 1/8 (9.0 stage px, line 14.0),
+    glyphs 16 px apart on 2 page(s), window 3840x2130`, `[TFR-Font] pixel (setting|plane|language xx-XX)`, `[TFR-Font]
+    key button "Dispose" (Status): 36.5 px of text in 33.0 px beside its key - drawn at 90%`.
+  - Width: over 6,012 TFR strings the font is 8% wider on median (15% p90, 25% at most); wrapped text wraps a little
+    sooner, numbers are narrower.
+- **P1, the inn sim's Localizer traces** (`EnemyData.translate`): an inn tournament's AI-vs-AI sims printed
+  `MissingResourceException ... adv.enemy.Disa.displayName` traces, because the Localizer's "silent" miss is one field
+  shared by every thread. Now the Localizer is asked only when the plane ships an adventure language bundle (the one
+  place `adv.enemy` keys live; TFR has none), and a key it lacked is cached and never asked again. No engine Localizer
+  change. Log once per plane: `[TFR-EnemyNames] .../The Forsaken Realms/languages/: no adventure language bundle - enemy
+  names are not looked up`.
+- **P3, the plates' log** (`TfrPlates.endFrame`): an Alt view with no enemy in sight printed a lone "hidden" and left the
+  count flag set, so the next view printed "shown" on its first frame (the stale flag, checked before the edge) and
+  again on its second - the double "shown" in the user's 21:34 log. The edge is now checked first, and "hidden" is
+  printed only after a "shown".
+
+**Agent game** (round-723 classes ahead of the agent jar, 3840x2130, cheats, `-Dtfr.touchPlates=true`; the auto save;
+every duel at 50x): a Pixel baseline (`tfrFont: Pixel`, `[TFR-Font] pixel (setting)`) and Clean, screen by screen -
+HUD, Notices, quest log and quest details, inventory, armory, the map and its Names view (the `[+Portal]` glyph beside
+"Orazca"), the Player Capitol, its Teleporter dialog, the armory shop, a loot screen with a "16 Gold" card (two Orc
+Raider duels at 50x), New Game, Settings and the Alt plates.
+- Overflow found and fixed: Dispose (and Detail, Back) into their key caps. Tight but clear: the shop's "Back" beside
+  ESC (1 px wider than LanaPixel), the gold readout beside its icon. Check boxes and gender signs re-seated.
+- Plates: `shown`/`hidden` pairs only, three views. No `MissingResourceException` or `INVALID PROPERTY` line in any of
+  the five logs.
+- **Not seen**: the Font row in Settings (below the fold; the bridge cannot scroll - the setting was switched in the
+  profile's settings.json), an inn tournament bracket (no inn in the towns reached; the names come back unchanged from
+  `translate`), a non-Latin UI language, and Android (no device: k is 4 for 2400x1080, one 1024 page; the packer keeps
+  its pixmaps, so the pages are managed textures, untested after a context loss).
+
 ## Round 722: one standing notice per event; color boosters swap restricted cards within their color (2026-10-23)
 
 The user: "Fix P1 (standing notices compared once per event) and P3 (color boosters replace restricted cards with
