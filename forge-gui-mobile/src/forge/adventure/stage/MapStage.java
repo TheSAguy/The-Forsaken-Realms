@@ -830,6 +830,7 @@ public class MapStage extends GameStage {
         if (MP.get("preventEscape") != null) preventEscape = (boolean) MP.get("preventEscape");
         // Round 724: the HUD's exit and bookmark buttons grey out here and say why when pressed. Nothing else changes
         // preventEscape mid-map (it is set only here and cleared in clearIsInMap()), so this one refresh covers it.
+        // Round 725: no TFR map sets preventEscape any more (stock planes' maps still do); see GameHUD.escapeLocked().
         loadedMapName = targetMap;
         chaser = null;
         GameHUD.getInstance().refreshEscapeButtons();

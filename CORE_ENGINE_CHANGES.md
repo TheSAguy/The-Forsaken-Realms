@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 725 - F4 in TFR's story maps (data; comments only in code)
+
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`**, **`MapStage.java`** - comments only: TFR's maps no
+  longer set `preventEscape` (taken out of the 17 TFR `.tmx` copies), so in TFR only a chase locks the exit. Round 724's
+  `preventEscape` branch stays for other planes.
+
 ### Round 724 - exit and bookmark lock where escape is blocked or an enemy gives chase
 
 - **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `exitToWorldMap()` and `bookmark()`: the

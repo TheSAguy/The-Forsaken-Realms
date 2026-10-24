@@ -1172,6 +1172,9 @@ public class GameHUD extends Stage {
     // grey icon was all but invisible over bright ground. The buttons stay enabled - a disabled one swallows the click
     // (UIActor.onButtonPress), and the press is what shows the notice. The notice is held back for ESCAPE_NOTICE_GAP
     // so repeated presses do not stack banners.
+    // Round 725 (the user: "even the story dungeons you can now use F4 if you're not being chased"): TFR's own maps no
+    // longer carry preventEscape - each had a walk-out route, and F4 leaves by the same exitDungeon() - so in TFR the
+    // chase below is the only lock. The preventEscape branch stays for other planes' maps that still set it.
     private static final String ESCAPE_LOCKED_TEXT = "\u2613";
     private static final long ESCAPE_NOTICE_GAP = 6000L;
     private long escapeNoticeAt;

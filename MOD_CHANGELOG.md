@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 725: F4 works in the story maps too - only a chase locks it (2026-10-24)
+
+The user: "I want to confirm that the F4 is now implemented the same for all dungeons, so even the story dungeons you
+can now use F4 if you're not being chased ... It's sometimes annoying to get out of a big dungeon."
+
+Round 724 locked F4, L2, the exit button and the bookmark button in maps with `preventEscape` as well as during a chase.
+TFR's 17 maps with the property no longer carry it, so in TFR the chase is the only lock.
+
+- **Audit, per map** (could leaving by F4 break something?). F4 runs `exitDungeon(false, false)`, the same path as
+  walking out of an exit with an empty `teleport`: `recordLevelLedger()`, `applyDungeonExitRules()`,
+  `updateQuestsLeave()`, then back to the world at the POI. So F4 can only break a map that has no walk-out route.
+  Every one has one:
+  - `main_story/spawn` (the starting camp): its entry is `noExit`, but the portal leads to the world. The Warden's
+    dialog and the hidden cache stay as they are on a later visit.
+  - `main_story_defend/waste_town_abandoned` (Quest_APortalToNowhere, the defend quest): a normal `entry_up` to the
+    world. Walking out mid-defense was always possible, and F4 changes nothing about it.
+  - The 13 `main_story_explore` maps: `bandit_cave`, `primal_jungle` and `shard_mines` have a world exit.
+    `frostbitten_cavern_0`/`_1`, `dig_site_0`-`2` and `library_of_varsil_0`-`4` reach one by their stairs. F4 from a
+    deep floor is the multi-floor walk-out that every other TFR dungeon already allows.
+  - `cave/Hall_of_the_Unifier` (Jodah): exits by its portal and door. Jodah's fight state is kept by the map's saved
+    changes, as on any walk-out.
+  - `tibalt/tibalt_f4` (`canFailDungeon`): a loss here already ends in `exitDungeon()` (`dungeonFailedDialog`), and the
+    doors walk back down. F4 is no new way out.
+- **How**: the property was taken out of the 17 TFR copies (`maps/map/...`), data only and plane-scoped.
+  `GameHUD`/`MapStage` keep round 724's `preventEscape` branch and its notice ("There is no slipping away from here")
+  for other planes' maps that still set it (common, Shandalar Old Border, Realm of Legends, Innistrad's
+  `inn_crescentus` - none of them TFR's). The two Java files get comments only.
+- **Agent game** (the 10.24 agent jar plus these maps): Secluded Encampment (spawn.tmx) and Bandit Cave
+  (bandit_cave.tmx), unchased: F4 opened "Exit to the World Map?". Bandit Cave with a bandit on the player: the exit
+  and bookmark icons showed the lock cross, and F4 opened nothing. Not seen: the `[TFR-Escape] blocked: ... chasing`
+  line. Each scripted press landed after contact, when the encounter freezes controls first. The press path reads the
+  same `getChasingEnemy()` as the cross (round 724 saw the line in an ordinary dungeon).
+
 ## Round 724: the exit and bookmark buttons lock where escape is blocked or an enemy gives chase, and say why (2026-10-24)
 
 The user: "Yes: grey out the F4/exit button where escape is blocked and show a short message if pressed, as round 724."

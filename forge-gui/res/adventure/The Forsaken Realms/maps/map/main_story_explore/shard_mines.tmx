@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="280">
  <properties>
-  <property name="preventEscape" type="bool" value="true"/>
  </properties>
  <tileset firstgid="1" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="1793" source="../../../../common/maps/tileset/main.tsx"/>
