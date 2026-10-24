@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 724 - exit and bookmark grey out where escape is blocked
+
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `exitToWorldMap()` and `bookmark()`: the
+  `canEscape()` check moved after the `advFreezePlayerControls` check and calls `escapeBlocked(...)` (banner + log)
+  instead of a silent return. `updateBookmarkActor()` prefixes `escapeTint()`. New `refreshEscapeButtons()`,
+  `escapeTint()`, `escapeBlocked()`, `ESCAPE_BLOCKED_TINT`, `ESCAPE_NOTICE_GAP`, `escapeNoticeAt`.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - `loadMap()`: after the `preventEscape` read, stores
+  `loadedMapName` and calls `GameHUD.refreshEscapeButtons()`. New `getLoadedMapName()` beside `canEscape()`.
+
 ### Round 723 - the Clean font; the inn sim's Localizer traces; the plates' log
 
 - **`forge-gui-mobile/src/forge/adventure/util/TfrFonts.java`** - NEW: the Clean font (TFR 2's Tfr2Fonts, ported).

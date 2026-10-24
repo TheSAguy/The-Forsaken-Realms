@@ -1108,10 +1108,12 @@ public class GameHUD extends Stage {
             return;
         if (!MapStage.getInstance().isInMap()) //prevent showing this dialog to WorldMap
             return;
-        if (!MapStage.getInstance().canEscape())
-            return;
         if (Forge.advFreezePlayerControls)
             return;
+        if (!MapStage.getInstance().canEscape()) {
+            escapeBlocked("exit"); // round 724
+            return;
+        }
         dialog.getButtonTable().clear();
         dialog.getContentTable().clear();
         dialog.clearListeners();
@@ -1132,10 +1134,12 @@ public class GameHUD extends Stage {
             return;
         if (!MapStage.getInstance().isInMap())
             return;
-        if (!MapStage.getInstance().canEscape())
-            return;
         if (Forge.advFreezePlayerControls)
             return;
+        if (!MapStage.getInstance().canEscape()) {
+            escapeBlocked("bookmark"); // round 724
+            return;
+        }
         if (MapStage.getInstance().isInMap()) {
             if (MapStage.getInstance().getChanges().isBookmarked()) {
                 MapStage.getInstance().getChanges().setIsBookmarked(false);
@@ -1160,7 +1164,37 @@ public class GameHUD extends Stage {
     private void updateBookmarkActor(boolean value) {
         if (bookmarkActor == null)
             return;
-        bookmarkActor.setText("[%120][+" + (value ? "Bookmark" : "Unmark") + "]");
+        bookmarkActor.setText("[%120]" + escapeTint() + "[+" + (value ? "Bookmark" : "Unmark") + "]");
+    }
+
+    // Round 724 (the user: "grey out the F4/exit button where escape is blocked and show a short message if pressed"):
+    // a map with preventEscape (the story maps, Tibalt's floor) ignored F4, L2, the exit button and the bookmark button
+    // without a word while both buttons looked usable. Now the two icons are drawn grey there, and a press says why.
+    // The buttons stay enabled - a disabled one swallows the click (UIActor.onButtonPress), and the press is what
+    // shows the notice. The notice is held back for ESCAPE_NOTICE_GAP so repeated presses do not stack banners.
+    private static final String ESCAPE_BLOCKED_TINT = "[#808080]";
+    private static final long ESCAPE_NOTICE_GAP = 6000L;
+    private long escapeNoticeAt;
+
+    private static String escapeTint() {
+        return MapStage.getInstance().isInMap() && !MapStage.getInstance().canEscape() ? ESCAPE_BLOCKED_TINT : "";
+    }
+
+    /** Round 724: MapStage.loadMap() calls this once it has read the map's preventEscape. */
+    public void refreshEscapeButtons() {
+        if (!MapStage.getInstance().isInMap())
+            return;
+        setDisabled(exitToWorldMapActor, false, "[%120]" + escapeTint() + "[+ExitToWorldMap]", "\u2613");
+        updateBookmarkActor(MapStage.getInstance().getChanges().isBookmarked());
+    }
+
+    private void escapeBlocked(String button) {
+        System.out.println("[TFR-Escape] blocked in " + MapStage.getInstance().getLoadedMapName() + " (" + button + ")");
+        long now = com.badlogic.gdx.utils.TimeUtils.millis();
+        if (now - escapeNoticeAt < ESCAPE_NOTICE_GAP)
+            return;
+        escapeNoticeAt = now;
+        addNotification("There is no slipping away from here - find the way out.", false, false);
     }
 
     private void exitDungeonCallback() {

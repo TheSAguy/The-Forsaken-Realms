@@ -537,6 +537,13 @@ public class MapStage extends GameStage {
         return !preventEscape;
     } //Check if escape is possible.
 
+    private String loadedMapName = "";
+
+    /** Round 724: the map file loadMap() last loaded, for the [TFR-Escape] log line. */
+    public String getLoadedMapName() {
+        return loadedMapName;
+    }
+
     /** Round 126: see GameStage.cancelPendingActions() - a load must also forget the mob the
      *  pending result was about, or the stale reference outlives the map it belonged to. */
     @Override
@@ -799,6 +806,10 @@ public class MapStage extends GameStage {
             canFailDungeon = false;
         }
         if (MP.get("preventEscape") != null) preventEscape = (boolean) MP.get("preventEscape");
+        // Round 724: the HUD's exit and bookmark buttons grey out here and say why when pressed. Nothing else changes
+        // preventEscape mid-map (it is set only here and cleared in clearIsInMap()), so this one refresh covers it.
+        loadedMapName = targetMap;
+        GameHUD.getInstance().refreshEscapeButtons();
 
         if (MP.get("music") != null && !MP.get("music").toString().isEmpty()) {
             //TODO: Add a way to play a music file directly without using a playlist.

@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 724: the exit and bookmark buttons grey out where escape is blocked, and say why (2026-10-24)
+
+The user: "Yes: grey out the F4/exit button where escape is blocked and show a short message if pressed, as round 724."
+Seventeen story and quest maps set the map property `preventEscape` (`main_story/spawn`, the `main_story_explore`
+maps, `waste_town_abandoned`, `Hall_of_the_Unifier`, `inn_crescentus`, `tibalt_f4`). There F4, L2, the HUD's exit
+button and the bookmark button did nothing, without a word, while both buttons looked usable: the HUD set their look
+from "inside a map" only.
+
+- **The look** (`GameHUD.refreshEscapeButtons()`, `escapeTint()`): in such a map the exit and bookmark icons are drawn
+  through a `[#808080]` tag, so they read grey (on top of the HUD's usual in-map translucency). They are NOT set
+  disabled: a disabled button swallows the click in `UIActor.onButtonPress`, and the click is what shows the notice.
+  The world map keeps its stock disabled cross.
+- **When**: `MapStage.loadMap()` calls `refreshEscapeButtons()` right after it reads `preventEscape`, since
+  `showHideMap(false)` runs at the start of `loadMap()`, before the property is known. `updateBookmarkActor()` (also run
+  when the HUD re-enters, after a duel) keeps the tint. Nothing changes `preventEscape` mid-map: it is written only
+  in `loadMap()` and cleared in `clearIsInMap()` (grep of the whole source).
+- **The notice**: a press of F4, L2, the exit button or the bookmark button there shows the banner "There is no slipping
+  away from here - find the way out." - not added to the notice log, and at most once per 6 seconds
+  (`ESCAPE_NOTICE_GAP`), so repeated presses do not stack banners.
+- **Log**: `[TFR-Escape] blocked in <map file> (exit|bookmark)`, one line per press. `MapStage.getLoadedMapName()` is new
+  for it.
+- Not plane-gated: it is a fix to the stock HUD's look, and the message is plane-neutral. A stock plane's own
+  `preventEscape` maps get the same grey icons and banner.
+- Unchanged, noted: `loadMap()` only sets `preventEscape` when the property is present, so moving from a blocked map to
+  a sub-map without it keeps escape blocked until the world map. Stock behavior, left alone; the buttons now show it.
+
+**Agent game** (packaged build, cheats, 3840x2130; no duel was played): a new game's Secluded Encampment
+(`main_story/spawn.tmx`) before the change - exit and bookmark at full look, F4 silent - and after: both icons grey,
+F4 showed the banner, a second F4 and an exit-button click within 6 s logged two more `[TFR-Escape]` lines and showed
+no second banner. Aerie (a normal dungeon): normal icons, F4 opened "Exit to the World Map?", Yes left to the world map,
+where both buttons show the cross. No exceptions in the log. **Not tested**: L2 on a controller (same call as F4), the
+bookmark button's press (same guard as exit), and the other sixteen blocked maps.
+
 ## Round 723: TFR 2's Clean font; the inn sim's Localizer traces; the plates' show/hide log (2026-10-24)
 
 The user: "I like the font we've implemented in TFR2, can we do the same for TFR1", then, on the preview and plan:
