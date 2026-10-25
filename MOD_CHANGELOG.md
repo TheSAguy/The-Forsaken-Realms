@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 734: more invasion troops count - goblins, undead, elves, giants, a demon, knights (2026-10-25)
+
+The user, on round 733's audit of every tag-matched quest stage: "Apply gaps A-G and J as round 734 (skip H, I and the
+devils)". The rule is the same as round 733's: a mixed Defeat stage counts a win only when the enemy carries every
+`enemyTags` entry (`AdventureQuestStage.matchesTargetEnemyData()`), so a family member without the tag is beaten but
+not counted. Data only, `The Forsaken Realms/world/enemies.json`, 70 entries.
+
+- **A, Goblin Invasion** - `Goblin` on Goblin Fighter, Goblin Archer, Goblin Zealot, Goblin Occultist, Goblin Wolf Rider,
+  Goblin Nightwolf Rider, Goblin Tiger Rider, Goblin Panther Rider, Furnace Goblin (round-117 `remake/` sprites tagged
+  only Humanoid and colors). Troops: 13 -> 22 spawnable.
+- **B, Undead Invasion** (needs Undead AND `Minion`) - `Minion` on 31 Common/Uncommon rank-and-file undead: Bound Cadaver,
+  Brittle Archer, Decrepit Bones, Dismembered Crawler, Unwinding Crawler, Unraveling Crawler, Mutilated Stumbler,
+  Hobbling Zombie, Skittering Hand, Busaw, Dune Ghoul, Skaab, Escaped Skaab, Hulking Skaab, Shrieking Skaab, Obsessed
+  Stitcher, Spirit, Wandering Geist, Grave Wight, Nightstalker, Undead Wanderer, Undead Goblin, Skeleton Champion,
+  Carcass Feeder, Ghastly Eye, Hollowlight Shade, Gloomshroud Wraith, Hollowplate Phantom, Bonestinger, Royal Scarab,
+  Vampire Bat. Troops: 38 -> 69. Left out: "Lord of the Undead" (reads as a leader despite its Common tier) and the Rare/
+  Mythic, lich, vampire, necromancer, giant and golem undead.
+- **C, the Undead Invasion's necromancer** - `Necromancer` on Adept Necromancer, Necromancer of Shandalar and Ghoul
+  Gravecaller (a ghoul that raises the dead; my call). Leader pool: 20 -> 23.
+- **D, Elven Invasion** - `Elf` on Elven Apprentice, Elven Spellweaver, Elven Magus, Elven Archmage of the Mists, and
+  `Leader` on the Archmage. Troops: 7 -> 10; the elite stage: 1 -> 2 (Golgari Elf, Elven Archmage of the Mists).
+- **E, Giants at the Gate** - `Giant` on Brawny Ogre, Stone Troll, Mire Troll, Crushing Cyclops, Humongous Ettin, Troll
+  Warlord, and `Leader` on Troll Warlord (my call: a Mythic named Warlord). The quest already treated trolls and ogres as
+  giants (its leaders included Swamp Troll and Ogre Matriarch). Troops: 20 -> 25; leaders: 3 -> 4.
+- **F, Demon Incursion** - `Demon` on Bloodgift Demon. The devils stay out (the user: skip). Troops: 33 -> 34.
+- **G, Knightly Siege** - `Knight` on Unholy Knight, Kor Skyknight, Knight Mercenary, Armored Knight, Holy Paladin (the
+  last two are Leader-tagged, so they join the siege's leader pool). Twinblade Crusader left as it is (my call: already
+  a Soldier, a crusader rather than a knight). Troops: 27 -> 30; leaders: 5 -> 7.
+- **J, duplicate tags removed** - the matcher subtracts list sizes after `removeAll`, so an enemy listing a REQUIRED tag
+  twice never matched while the spawn pools (`contains`) still picked it. No stage needed a duplicated tag, so nothing
+  was broken in play. Removed: Amonkhet Minotaur Warrior (BiomeRed - it can now be the target of Sacred Sands and
+  Shamanic Totems, 246 -> 247), Corrupted Blue/Green/Red Wizard, Runelord, Snow Wizard (Wizard), Gargoyle, Gargoyle 2
+  (Stone), Grave Titan, Greater Zombie (Zombie), Mageripper (Insect).
+- **Side effects, checked**: the invasions' own troop spawns and local spawn boosts read the same tags, so these units
+  now also come as invasion troops. "Where Am I?" (excludes Leader) loses the two new leaders, 1080 -> 1078. A dungeon
+  upgrade picks the enemy sharing the most descriptive tags (`DungeonUpgrades.kindTags`), so goblin and undead
+  dungeons now find goblin and undead upgrades a little more often. No Java reads these tags by name except
+  InvasionQuests' "Leader". Not fixed, seen in passing: Mageripper's tag "Identity Temur" has a space, so it never
+  matches the identity tags.
+- **Not done** (the user's call): H (other soldiers), I (bandits), the devils. Nothing is retroactive; counts move from the
+  next win.
+- **Tested**: `enemies.json` parses as JSON, no entry lists a tag twice, and round 733's stage audit, re-run, gives the
+  counts above.
+
 ## Round 733: the white knights and knight archers count as Soldiers (2026-10-25)
 
 The user: "I have a quest to battle soldiers, I feel like I've killed several, but it is only recording 2 kills." Their

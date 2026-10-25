@@ -871,8 +871,7 @@
             "IdentityRed",
             "BiomeRed",
             "IdentityBlack",
-            "IdentityRakdos",
-            "BiomeRed"
+            "IdentityRakdos"
         ],
         "tier": "Common",
         "scale": 0.3023
@@ -2454,6 +2453,7 @@
         ],
         "colors": "WR",
         "questTags": [
+            "Knight",
             "Human",
             "Soldier",
             "Leader",
@@ -3919,6 +3919,7 @@
         ],
         "colors": "BRW",
         "questTags": [
+            "Demon",
             "IdentityMardu",
             "Aberration",
             "Aggressive",
@@ -7116,7 +7117,6 @@
             "Wizard",
             "Human",
             "IdentityBlue",
-            "Wizard",
             "Corrupted"
         ],
         "tier": "Uncommon",
@@ -7227,7 +7227,6 @@
             "Wizard",
             "Human",
             "IdentityGreen",
-            "Wizard",
             "Corrupted"
         ],
         "tier": "Rare",
@@ -7282,7 +7281,6 @@
             "Wizard",
             "Human",
             "IdentityRed",
-            "Wizard",
             "Corrupted"
         ],
         "tier": "Uncommon",
@@ -12940,6 +12938,7 @@
         ],
         "colors": "R",
         "questTags": [
+            "Goblin",
             "Furnace",
             "Phyrexian",
             "Humanoid",
@@ -13115,7 +13114,6 @@
             "Gargoyle",
             "Passive",
             "Territorial",
-            "Stone",
             "IdentityRed",
             "IdentityWhite",
             "IdentityBlue",
@@ -13208,7 +13206,6 @@
             "Gargoyle",
             "Passive",
             "Territorial",
-            "Stone",
             "IdentityWhite",
             "BiomeColorless"
         ],
@@ -13802,6 +13799,7 @@
         ],
         "colors": "BU",
         "questTags": [
+            "Necromancer",
             "Undead",
             "Humanoid",
             "IdentityBlack",
@@ -15427,7 +15425,6 @@
             "Grave",
             "Zombie",
             "Undead",
-            "Zombie",
             "Humanoid",
             "IdentityBlack"
         ],
@@ -15624,7 +15621,6 @@
             "Grave",
             "Zombie",
             "Undead",
-            "Zombie",
             "Humanoid",
             "IdentityBlack"
         ],
@@ -17297,6 +17293,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Knight",
             "IdentityWhite",
             "Paladin",
             "Human",
@@ -19228,6 +19225,7 @@
         ],
         "colors": "UW",
         "questTags": [
+            "Knight",
             "Soldier",
             "Human",
             "Religious",
@@ -21091,8 +21089,7 @@
             "Mythical",
             "Insect",
             "Monster",
-            "Identity Temur",
-            "Insect"
+            "Identity Temur"
         ],
         "tier": "Rare"
     },
@@ -26555,7 +26552,6 @@
             "Human",
             "IdentityBant",
             "Enchanter",
-            "Wizard",
             "Auramaster",
             "Runelord"
         ],
@@ -27666,6 +27662,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "Skeleton",
             "Soldier",
@@ -28646,7 +28643,6 @@
             "Wizard",
             "Dungeon",
             "Snow",
-            "Wizard",
             "Human",
             "IdentityBlue",
             "IdentityGreen",
@@ -29121,6 +29117,7 @@
         ],
         "colors": "U",
         "questTags": [
+            "Minion",
             "Undead",
             "Spirit",
             "Flying",
@@ -31120,6 +31117,7 @@
         ],
         "colors": "RB",
         "questTags": [
+            "Minion",
             "Goblin",
             "Zombie",
             "Undead",
@@ -31324,6 +31322,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Knight",
             "BiomeBlack",
             "Aberration",
             "Aggressive",
@@ -31449,6 +31448,7 @@
         ],
         "colors": "GB",
         "questTags": [
+            "Minion",
             "Evil",
             "Aberration",
             "Aerie",
@@ -34338,6 +34338,7 @@
         ],
         "colors": "U",
         "questTags": [
+            "Minion",
             "Undead",
             "Skaab",
             "Humanoid",
@@ -34624,6 +34625,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "Zombie",
             "Humanoid",
@@ -34750,6 +34752,7 @@
         ],
         "colors": "UB",
         "questTags": [
+            "Minion",
             "Undead",
             "Skaab",
             "Humanoid",
@@ -35063,6 +35066,7 @@
         ],
         "colors": "UR",
         "questTags": [
+            "Minion",
             "Undead",
             "Laboratory",
             "Humanoid",
@@ -35193,6 +35197,7 @@
         ],
         "colors": "U",
         "questTags": [
+            "Minion",
             "Undead",
             "Skaab",
             "Humanoid",
@@ -35247,6 +35252,7 @@
         ],
         "colors": "U",
         "questTags": [
+            "Minion",
             "Undead",
             "Skaab",
             "Humanoid",
@@ -35318,6 +35324,7 @@
         ],
         "colors": "UW",
         "questTags": [
+            "Minion",
             "Undead",
             "Spirit",
             "Exile",
@@ -113904,6 +113911,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Necromancer",
             "Shandalar1997",
             "Zombie",
             "Human",
@@ -119183,6 +119191,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "Nightstalker",
             "IdentityBlack",
@@ -126880,6 +126889,7 @@
         ],
         "colors": "UB",
         "questTags": [
+            "Minion",
             "Undead",
             "Renegade",
             "IdentityBlue",
@@ -128825,6 +128835,7 @@
         ],
         "colors": "WU",
         "questTags": [
+            "Knight",
             "Kor",
             "Renegade",
             "IdentityWhite",
@@ -132173,6 +132184,7 @@
         ],
         "colors": "R",
         "questTags": [
+            "Goblin",
             "Humanoid",
             "IdentityRed",
             "BiomeRed",
@@ -132236,6 +132248,7 @@
         ],
         "colors": "R",
         "questTags": [
+            "Goblin",
             "Humanoid",
             "IdentityRed",
             "BiomeRed",
@@ -132299,6 +132312,7 @@
         ],
         "colors": "R",
         "questTags": [
+            "Goblin",
             "Humanoid",
             "IdentityRed",
             "BiomeRed",
@@ -132362,6 +132376,7 @@
         ],
         "colors": "BR",
         "questTags": [
+            "Goblin",
             "Humanoid",
             "IdentityBlack",
             "BiomeBlack",
@@ -132427,6 +132442,7 @@
         ],
         "colors": "RG",
         "questTags": [
+            "Goblin",
             "Humanoid",
             "IdentityRed",
             "BiomeRed",
@@ -132472,6 +132488,7 @@
         ],
         "colors": "BR",
         "questTags": [
+            "Goblin",
             "Humanoid",
             "IdentityBlack",
             "BiomeBlack",
@@ -132534,6 +132551,7 @@
         ],
         "colors": "RG",
         "questTags": [
+            "Goblin",
             "Humanoid",
             "IdentityRed",
             "BiomeRed",
@@ -132597,6 +132615,7 @@
         ],
         "colors": "BG",
         "questTags": [
+            "Goblin",
             "Humanoid",
             "IdentityBlack",
             "BiomeBlack",
@@ -133365,6 +133384,7 @@
         ],
         "colors": "BR",
         "questTags": [
+            "Giant",
             "Monster",
             "IdentityBlack",
             "BiomeBlack",
@@ -133493,6 +133513,7 @@
         ],
         "colors": "R",
         "questTags": [
+            "Giant",
             "Monster",
             "IdentityRed",
             "BiomeRed",
@@ -133686,6 +133707,7 @@
         ],
         "colors": "R",
         "questTags": [
+            "Giant",
             "Monster",
             "IdentityRed",
             "BiomeRed",
@@ -134074,6 +134096,7 @@
         ],
         "colors": "R",
         "questTags": [
+            "Giant",
             "Monster",
             "IdentityRed",
             "BiomeRed",
@@ -134137,6 +134160,7 @@
         ],
         "colors": "G",
         "questTags": [
+            "Giant",
             "Monster",
             "IdentityGreen",
             "BiomeGreen",
@@ -134200,6 +134224,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -134263,6 +134288,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -134326,6 +134352,7 @@
         ],
         "colors": "BG",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -134391,6 +134418,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -134454,6 +134482,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -134517,6 +134546,7 @@
         ],
         "colors": "UB",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlue",
             "BiomeBlue",
@@ -134712,6 +134742,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -134775,6 +134806,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -134838,6 +134870,7 @@
         ],
         "colors": "BR",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -134903,6 +134936,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -135029,6 +135063,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -135092,6 +135127,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -135156,6 +135192,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Necromancer",
             "magical",
             "IdentityBlack",
             "BiomeBlack",
@@ -138010,6 +138047,8 @@
         ],
         "colors": "U",
         "questTags": [
+            "Leader",
+            "Elf",
             "Wizard",
             "IdentityBlue",
             "BiomeBlue",
@@ -138199,6 +138238,8 @@
         ],
         "colors": "G",
         "questTags": [
+            "Giant",
+            "Leader",
             "Troll",
             "IdentityGreen",
             "BiomeGreen",
@@ -139777,6 +139818,7 @@
         ],
         "colors": "U",
         "questTags": [
+            "Elf",
             "Wizard",
             "IdentityBlue",
             "BiomeBlue",
@@ -139840,6 +139882,7 @@
         ],
         "colors": "U",
         "questTags": [
+            "Elf",
             "Wizard",
             "IdentityBlue",
             "BiomeBlue",
@@ -139903,6 +139946,7 @@
         ],
         "colors": "U",
         "questTags": [
+            "Elf",
             "Wizard",
             "IdentityBlue",
             "BiomeBlue",
@@ -141048,6 +141092,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
@@ -146892,6 +146937,7 @@
         ],
         "colors": "UB",
         "questTags": [
+            "Minion",
             "Spirit",
             "Undead",
             "Nocturnal",
@@ -152401,6 +152447,7 @@
         ],
         "colors": "WU",
         "questTags": [
+            "Minion",
             "Spirit",
             "Undead",
             "Nocturnal",
@@ -165106,6 +165153,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Knight",
             "Undead",
             "Unholy",
@@ -165263,6 +165311,7 @@
         ],
         "colors": "B",
         "questTags": [
+            "Minion",
             "Spirit",
             "Undead",
             "Ghost",
@@ -166910,6 +166959,7 @@
         ],
         "colors": "C",
         "questTags": [
+            "Minion",
             "Undead",
             "Monster",
             "Poison",
