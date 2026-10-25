@@ -19144,6 +19144,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Soldier",
             "Human",
             "Knight",
             "Warrior",
@@ -136113,6 +136114,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Soldier",
             "Knight",
             "IdentityWhite",
             "BiomeWhite",
@@ -137689,6 +137691,8 @@
         ],
         "colors": "W",
         "questTags": [
+            "Knight",
+            "Soldier",
             "Archer",
             "IdentityWhite",
             "BiomeWhite",
@@ -138825,6 +138829,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Soldier",
             "Human",
             "IdentityWhite",
             "BiomeWhite",
@@ -139961,6 +139966,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Soldier",
             "Knight",
             "IdentityWhite",
             "BiomeWhite",
@@ -140024,6 +140030,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Soldier",
             "Knight",
             "IdentityWhite",
             "BiomeWhite",
@@ -140087,6 +140094,8 @@
         ],
         "colors": "W",
         "questTags": [
+            "Knight",
+            "Soldier",
             "Archer",
             "IdentityWhite",
             "BiomeWhite",
@@ -140150,6 +140159,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Soldier",
             "Knight",
             "IdentityWhite",
             "BiomeWhite",
@@ -140213,6 +140223,8 @@
         ],
         "colors": "W",
         "questTags": [
+            "Knight",
+            "Soldier",
             "Archer",
             "IdentityWhite",
             "BiomeWhite",
@@ -140276,6 +140288,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Soldier",
             "Knight",
             "IdentityWhite",
             "BiomeWhite",
@@ -140339,6 +140352,8 @@
         ],
         "colors": "W",
         "questTags": [
+            "Knight",
+            "Soldier",
             "Archer",
             "IdentityWhite",
             "BiomeWhite",
@@ -142734,6 +142749,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Soldier",
             "Knight",
             "IdentityWhite",
             "BiomeWhite",
@@ -142923,6 +142939,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Soldier",
             "Knight",
             "IdentityWhite",
             "BiomeWhite",
@@ -162780,6 +162797,7 @@
         ],
         "colors": "W",
         "questTags": [
+            "Soldier",
             "Knight",
             "Humanoid",
             "Mounted",

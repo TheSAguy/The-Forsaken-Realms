@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 733: the white knights and knight archers count as Soldiers (2026-10-25)
+
+The user: "I have a quest to battle soldiers, I feel like I've killed several, but it is only recording 2 kills." Their
+two logs (2026-10-25) show six overworld wins after accepting Soldier Invasion (day 19). The two quest troops counted
+(Knight Mercenary, Fair Knight: `[TFR-Invasion] ... troop X beaten`). The other four were all Knight Bowman, a white-biome
+roamer. The user approved the fix with no save edit.
+
+- **The cause, data, not code**: a stage counts a win in `AdventureQuestStage.matchesTargetEnemyData()`, which wants every
+  `enemyTags` entry on the enemy's `questTags` (Soldier Invasion's troop stage: `Soldier` + `IdentityWhite`, excluding
+  Boss/Leader). Round 117's white knight pack was tagged only `Knight` or `Archer`, never `Soldier`. Tier variants
+  (round 643) were not involved: tiers change only the deck and life, and a Master and an Adept both counted.
+- **The fix** (`The Forsaken Realms/world/enemies.json`, tags only): `Soldier` on Knight Bowman, Knight Sharpshooter,
+  Knight Longbowman, Crossbow Marksman, Chainmail Knight, Plate Knight, Plumed Knight, Squire-at-Arms, Aegis Paladin,
+  Knight Commander, Mulawin Warrior, Farmhand Militia, Knight ("Human Knight") and Silverlance Cavalier; `Knight` on the
+  four knight archers (Bowman, Sharpshooter, Longbowman, Crossbow Marksman), so they also count for Knightly Siege's
+  "Unhorse the knights". Cavalier Captain and Shieldmaiden Captain (Leader) are left as they are, the user's call: they
+  stay out of the invasion's commander pool.
+- **What changes in play**: Soldier Invasion's troop pool grows from 19 to 33 spawnable enemies, and Knightly Siege's from
+  23 to 27. The quest's own troop spawns and local spawn boosts read the same tags, so these units now also come as
+  invasion troops. Nothing is retroactive: a stage's count is bumped per win and past wins are not stored, so the user's
+  quest stays at 2 of 4.
+- **Audit** of all 36 tag-matched quest stages, with further gaps (untagged goblins, undead without `Minion`, elven
+  wizards without `Elf`, ogres and trolls without `Giant`, Bloodgift Demon, a few knights, 11 duplicate tags), kept
+  outside the repo for the user to pick from. None applied here.
+- **Tested**: `enemies.json` parses as JSON. A Python mirror of `matchesTargetEnemyData` says all 14 edited units match
+  Soldier Invasion's troop stage and Knightly Siege's troop stage, and the two captains match neither troop stage (only
+  the siege's leader stage, as before). Not seen in the game: the live game was open, so this round is not packaged yet.
+
 ## Round 732: the reload penalty stops at +10 enemy life (2026-10-24)
 
 The user: "Cap at 10 and don't retro-actively apply anything." A log review (P2 of logs-1024b) found a new Hard player
