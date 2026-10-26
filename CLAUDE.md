@@ -13,7 +13,7 @@ a reload; Rare undead troops count for the Undead Invasion; `[TFR-Assets]` downl
 longer go to the downloader), 736 (upstream's identity tag typos on Mageripper, Disciple of Teferi and Chimera fixed in
 all three `enemies.json` copies, data only) and 737 (the LPC Vampire hero flies as a bat when it moves, art only: the
 Walk rows of `sprites/heroes/lpc_vampire_m/f.png`, from the generator's `lpc_to_player.py --bat`).
-All up to 736 are packaged to live and the agent game (2026-10-26 08:09 jar; 736's data packaged 10:28); 737 is not yet.
+All are packaged to live and the agent game (2026-10-26 08:09 jar; 737's art packaged 10:31).
 Next version: 1.24 / 12400. Engine = the 10.21 daily (round 701); next merge from upstream after `bc67f70ffbc`; BASE_INSTALL is that
 daily, so packages need no `--allow-base-mismatch`. Next free round: 739 (738 is assigned). Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
