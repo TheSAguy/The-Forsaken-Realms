@@ -95,6 +95,8 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     private boolean coinChallengeMatch = false;
     /** The enemy being Coin-Challenged, so a win knows whose coin to reclaim. */
     private String coinChallengeFoe = null;
+    /** Round 742: the Coin Challenge foe's name as DuelScene records the duel (the sprite's getName()). */
+    private String coinChallengeRecordName = null;
     // True only while a Deck Tester duel is in flight - setWinner() (the IAfterMatch callback
     // DuelScene invokes on this scene once ANY duel launched while ArenaScene was active ends,
     // bracket or not) checks this FIRST and skips all bracket-manipulation logic when set, since
@@ -372,6 +374,20 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         coinChallengeButton.setDisabled(Current.player().coinRansomHolders().isEmpty());
     }
 
+    /**
+     * Round 742 (the user: "facing an opponent in the Arena should not count as the first time you meet them"): an arena
+     * win, already in the win/loss record (DuelScene.recordStatistics ran just before this callback), is tallied apart
+     * so no "first win" rule counts it (PlayerStatistic.fieldWins) - the first overworld or dungeon win still pays.
+     */
+    private void noteArenaWin(String enemyName, String what) {
+        if (enemyName == null)
+            return;
+        Current.player().getStatistic().recordArenaWin(enemyName);
+        System.out.println("[TFR-Arena] " + what + ": beat " + enemyName + " - arena win " 
+                + Current.player().getStatistic().arenaWins(enemyName) + ", wins outside the arena "
+                + Current.player().getStatistic().fieldWins(enemyName) + " (first wins are kept for those)");
+    }
+
     /** The gate above: the player's own arena on a plane with arena upgrades - the only place the building's buttons
      *  ever show. Round 743: drawArena() reads it too, to keep the bracket clear of them. */
     private boolean hasArenaBuildingButtons() {
@@ -563,6 +579,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         Current.player().recordCoinChallenge(foe, week);
         coinChallengeMatch = true;
         coinChallengeFoe = foe;
+        coinChallengeRecordName = challenger.getName(); // round 742
         enable = false;
         System.out.println("[TFR-CoinChallenge] challenging " + foe + " for a Bronze Coin - fee "
                 + fee + " gold + " + shardFee + " shards (" + Current.player().getDifficultyData().name + "), week " + week
@@ -925,8 +942,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // (the gold penalty was waived before the duel, and the fight carries noAnte).
         if (coinChallengeMatch) {
             String foe = coinChallengeFoe;
+            String recordName = coinChallengeRecordName;
             coinChallengeMatch = false;
             coinChallengeFoe = null;
+            coinChallengeRecordName = null;
+            if (winner)
+                noteArenaWin(recordName, "Coin Challenge"); // round 742
             // Round 220 (post-v1.10 review): the waiver is one-shot and only defeated() consumes it -
             // and defeated() runs from MapStage/WorldStage.setWinner(), never from this scene. So on
             // THIS path nobody consumes it, win or lose, and round 216 cleared it on the loss branch
@@ -1010,6 +1031,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // reading it off the sprite means they cannot silently diverge later, and a
             // mismatched key here would fail by never returning the coin.
             String beatenName = enemies.get(enemies.size - 1).getName();
+            noteArenaWin(beatenName, "bracket round " + roundsWon); // round 742
             if (Current.player().owesCoinRansom(beatenName)
                     && !coinRansomFoesBeaten.contains(beatenName, false)) {
                 coinRansomFoesBeaten.add(beatenName);

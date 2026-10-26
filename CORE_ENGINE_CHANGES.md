@@ -53,6 +53,17 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
   `[TFR-ArenaLayout]`; `refreshArenaBuildingButtons`' gate moved into `hasArenaBuildingButtons()`; the weekly lock
   label drops a stray `[%]` scale reset. Mod code only.
 
+### Round 742 - arena duels pay half Power and are not a first meeting
+
+- **`forge-gui-mobile/src/forge/adventure/player/PlayerStatistic.java`** (STOCK) - saved map `arenaWins` (name ->
+  count; load, save, `clear()`), `recordArenaWin()`, `arenaWins()`, `fieldWins()` (record wins minus arena wins). An
+  older save loads it empty.
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `setWinner` notes each arena win (bracket round,
+  Coin Challenge) through the new `noteArenaWin` (`[TFR-Arena]`); field `coinChallengeRecordName`.
+- Mod code: `util/Ascendance.java` (`arenaShare`, `arenaLabel`, `onDuelWon` / `onArenaBracketWon`), `util/CardBudget.java`,
+  `util/ResourcePurse.java` (a `pay` overload with `firstWin`), `data/AscendanceData.java` + TFR's `ascendance.json`
+  (`arenaPowerFactor`).
+
 ### Round 741 - the 80% full-map reveal leaves out the mountain ranges
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `checkFogOfWarStage2` counts `countsTowardFullReveal()`

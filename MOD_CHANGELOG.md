@@ -14331,6 +14331,69 @@ Orazca Arena: the bottom row of portraits and their tier bars under "Switch to C
 - **Not seen**: a phone (portrait) stage, and the lock label itself (it needs a real weekly win at that venue).
 - **Files**: `forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java` only. `ui/arena.json` is unchanged.
 
+## Round 742: arena duels pay half Power and are not a first meeting (2026-10-26)
+
+The user: "I wanted to confirm that facing an opponent in the Arena should not count as the first time you meet them,
+that should only be in dungeons and over-world. Also, let's cut Arena XP you get to 50% of normal XP gain. I don't want
+people to farm Arenas."
+
+- **What an arena duel did before** (every arena runs through `DuelScene` with `isArena`: the capitals' brackets, the
+  player's Normal and Challenging arenas, the Coin Challenge; Deck Tester is excluded by `fixedDeck`):
+  - It wrote the win into the per-enemy win/loss record (`DuelScene.recordStatistics`), by the same name the overworld
+    and dungeons use. Three rules read "first win" from that record: Ascendance's x1.5 Power, round 237's card budget
+    (first-win budget, +1 bonus card, Spoilsman) and the resource purse's x1.5. The arena's own loot never runs the
+    last two, so an arena win took the x1.5 Power itself AND quietly used up the first-win cards and purse of the
+    next overworld or dungeon win over that enemy.
+  - Not first-meeting mechanics, left as they are: round 719's info plates learn the rank at duel start, arena
+    included (real knowledge - you saw the deck; the main thread's call, the user can overrule); Legend Hunter and
+    Notorious count arena wins (round 717's choice); quest Defeat stages never see an arena win (only MapStage /
+    WorldStage report wins to quests); the record still feeds `PlayerStatistic.rank()`, the sell price, Intimidating
+    and the spawn-tier kill decay.
+- **No first meeting in the arena**: `PlayerStatistic` keeps a saved `arenaWins` map (name -> count) beside the record;
+  `ArenaScene.setWinner` notes each arena win (`noteArenaWin`: a bracket round's opponent, a won Coin Challenge's foe,
+  by the sprite name `DuelScene` recorded). `fieldWins(name)` = record wins - arena wins, and the three first-win rules
+  read it: `Ascendance.onDuelWon` (and an arena duel never takes the factor itself), `CardBudget.apply` and
+  `ResourcePurse.generate` (a new `pay` overload takes the caller's `firstWin`). The record itself keeps every win, so
+  the Statistics screen still shows the arena's.
+- **Half Power**: `ascendance.json` `"arenaPowerFactor": 0.5` (`AscendanceData`, default 0.5). Every Power the arena
+  pays - a bracket duel, the bracket won (`arenaBracket` 40), a Coin Challenge - is that share of what the same win
+  pays elsewhere: the full figure after `levelingSpeed` and Zealot, times the factor, **rounded half up, at least 1**
+  (`Ascendance.arenaShare`). Apprentice 10 x 0.85 = 9 -> 5; Adept 15 -> 8; Master 24 -> 12; Archmage 34 -> 17; the
+  bracket 34 -> 17. Boss, legend and champion factors still apply before the halving.
+- **Seen by the player**: the Power notice reads "beat Master Blue Wizard (Master, arena: half)" - never "first win" in
+  the arena - and "Arena bracket won (arena: half)".
+- **Logs**: `[TFR-Arena] Power for Master Blue Wizard: 24 -> 12 (arena: half); first-win bonus skipped (no win outside
+  the arena yet)` (or "; N win(s) outside the arena"), `[TFR-Arena] Power for the bracket won: 34 -> 17 (arena: half)`,
+  and `[TFR-Arena] bracket round 1: beat Master Blue Wizard - arena win 1, wins outside the arena 0 (first wins are kept
+  for those)` from the tally.
+- **Second-order effects**:
+  - **Leveling pace for an arena player**: a capital or Level-1 bracket draws Adept 50 / Master 35 / Archmage 15, about
+    25 duelBase a seat. A bracket won (3 duels + the bonus) paid about 98 Power at repeat wins and about 130 when the
+    three foes were new to the player (nearly always - 58 of the user's 72 logged wins were first wins, round 583); it
+    now pays about 49. The weekly lock caps paid brackets at 7 a week (5 capitals + the player's two modes): roughly
+    700-900 Power a week from the arena before, about 340 now - under a level a week in the mid-teens (370-415 Power
+    a level) instead of about two. A lost bracket still pays its won rounds, at half.
+  - **With rounds 715 and 728**: both make arena seats harder the more tournaments the player wins - round 715 brings an
+    Archmage into every other bracket per win this week, round 728 thins last week's lowest tier. A harder seat also
+    paid MORE Power (Archmage 40 duelBase against Adept 18), so winning arenas made the next arenas pay better. Half
+    Power leaves that slope in place but at half its height: a week of 5 wins still makes the 6th bracket the
+    toughest and best-paying of the week, just not a faster leveling route than the overworld.
+  - **Overworld and dungeon wins pay better than before for an arena player**: a foe first met in the arena keeps its
+    first-win cards, purse and Power for the field.
+  - **Old saves**: the `arenaWins` map loads empty, so the arena wins a save already holds stay counted as ordinary
+    wins - those enemies keep their first wins used up. Left as is (the record cannot tell them apart); from this
+    round on, arena wins are tallied apart.
+  - **New Game / New Game+**: `PlayerStatistic.clear()` clears `arenaWins` with the record.
+- **Seen in the agent game** (the round-743 session: the player's Level-2 Normal arena, a round won at 50x):
+  `[TFR-Arena] Power for Master Blue Wizard: 24 -> 12 (arena: half); first-win bonus skipped (no win outside the arena
+  yet)`, `[TFR-Ascend] +12 Power - beat Master Blue Wizard (Master, arena: half)`, and the tally line. Before this round
+  the same win paid 36 (28 x 1.5 first win x 0.85).
+- **Not seen on screen**: the bracket-won halving (the bracket was conceded after round 1), a Coin Challenge win, a
+  later overworld first win over an arena-met foe paying in full, and round 743's one-size "(2 days)" lock label (it
+  needs a real weekly win at that venue). The code paths are the ones logged above.
+- **Files**: `util/Ascendance.java`, `data/AscendanceData.java`, `config tables/ascendance.json`,
+  `player/PlayerStatistic.java` (stock), `util/CardBudget.java`, `util/ResourcePurse.java`, `scene/ArenaScene.java`.
+
 ## Round 741: the 80% full-map reveal leaves out the mountain ranges (2026-10-26)
 
 The user: "We have a rule that if 80% of the terrain was revealed, the entire map would become visible - FoW state 2.

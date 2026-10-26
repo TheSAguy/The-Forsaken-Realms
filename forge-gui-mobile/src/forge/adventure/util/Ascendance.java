@@ -775,8 +775,9 @@ public final class Ascendance {
         int rank = Math.max(0, Math.min(d.duelBase.length - 1, EnemyData.tierRank(e.tier)));
         float factor = 1f;
         String why = "";
-        Pair<Integer, Integer> record = WorldSave.getCurrentSave().getPlayer().getStatistic().getWinLossRecord().get(enemyName);
-        boolean firstWin = record == null || record.getLeft() == 0;
+        // Round 742: wins outside the arena only - and an arena duel is never a first meeting itself.
+        int fieldWins = WorldSave.getCurrentSave().getPlayer().getStatistic().fieldWins(enemyName);
+        boolean firstWin = !arena && fieldWins == 0;
         if (e.boss && d.bossFactor > factor) { factor = d.bossFactor; why = "boss"; }
         if ((e.legend || LegendSpawns.isMember(e)) && d.legendFactor > factor) { factor = d.legendFactor; why = "legend"; }
         if (firstWin && d.firstWinFactor > factor) { factor = d.firstWinFactor; why = "first win"; }
@@ -790,9 +791,17 @@ public final class Ascendance {
         float outgrown = level > top ? Math.max(d.outgrownFloor, 1f - d.outgrownStep * (level - top)) : 1f;
         int amount = Math.max(1, Math.round(d.duelBase[rank] * factor * outgrown));
         String source = "beat " + e.getName() + " (" + EnemyData.tierDisplayName(e.tier) + (why.isEmpty() ? "" : ", " + why)
-                + (outgrown < 1f ? ", outgrown " + Math.round(outgrown * 100) + "%" : "") + ")";
+                + (outgrown < 1f ? ", outgrown " + Math.round(outgrown * 100) + "%" : "")
+                + (arena ? ", " + arenaLabel() : "") + ")";
         if (arena) { // an Arena match has no loot screen of its own - paid at once, as before
-            award(amount, source);
+            // Round 742 (the user: "let's cut Arena XP you get to 50% of normal XP gain. I don't want people to farm
+            // Arenas"): half of what the same win pays elsewhere, first-win factor left out.
+            int full = scaled(amount);
+            int share = arenaShare(full);
+            System.out.println("[TFR-Arena] Power for " + e.getName() + ": " + full + " -> " + share + " ("
+                    + arenaLabel() + ")" + (fieldWins == 0 ? "; first-win bonus skipped (no win outside the arena yet)"
+                    : "; " + fieldWins + " win(s) outside the arena"));
+            awardExact(share, source);
             return;
         }
         if (pendingDuelPower > 0 && enemy == pendingDuelEnemy) { // round 517: the same duel reported twice
@@ -945,8 +954,24 @@ public final class Ascendance {
     }
 
     public static void onArenaBracketWon() {
-        if (isActive())
-            award(data().arenaBracket, "Arena bracket won");
+        if (!isActive() || data().arenaBracket <= 0)
+            return;
+        int full = scaled(data().arenaBracket);
+        int share = arenaShare(full); // round 742: the bracket's own Power is arena Power too
+        System.out.println("[TFR-Arena] Power for the bracket won: " + full + " -> " + share + " (" + arenaLabel() + ")");
+        awardExact(share, "Arena bracket won (" + arenaLabel() + ")");
+    }
+
+    /** Round 742: an arena payment - {@code full} (already scaled) times arenaPowerFactor, rounded half up, at least 1. */
+    static int arenaShare(int full) {
+        float f = Math.max(0f, data().arenaPowerFactor);
+        return f >= 1f ? full : Math.max(1, Math.round(full * f));
+    }
+
+    /** Round 742: what the Power notice says of an arena payment - "arena: half" at the default 0.5. */
+    private static String arenaLabel() {
+        float f = data().arenaPowerFactor;
+        return f >= 1f ? "arena" : Math.abs(f - 0.5f) < 0.001f ? "arena: half" : "arena: " + Math.round(f * 100) + "%";
     }
 
     /** AdventureEventController.finalizeEvent: an Inn tournament over - per match won, and more for winning it. */

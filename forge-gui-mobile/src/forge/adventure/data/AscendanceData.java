@@ -59,6 +59,9 @@ public class AscendanceData {
     public int[] invasion = {50, 75, 100, 150};
     public int pillageStopped = 25;
     public int arenaBracket = 40;
+    /** Round 742: every Power the arena pays (a bracket duel, the bracket won, a Coin Challenge) times this - 0.5 pays half
+     *  of what the same win pays elsewhere, rounded half up, at least 1 (Ascendance.arenaShare). */
+    public float arenaPowerFactor = 0.5f;
     public int innMatchWin = 15;
     public int innChampion = 30;
     public int treasureFound = 75;

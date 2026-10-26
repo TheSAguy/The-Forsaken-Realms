@@ -21,6 +21,12 @@ public class PlayerStatistic implements SaveFileContent {
      *  above is by name only, so it cannot tell an Adept Bear from a Master. Read by the Alt info plates (TfrPlates);
      *  saved as "ranksBattled", cleared with the record by New Game and New Game+. An older save loads it empty. */
     HashSet<String> ranksBattled = new HashSet<>();
+    /** Round 742 (the user: "facing an opponent in the Arena should not count as the first time you meet them, that should
+     *  only be in dungeons and over-world"): of the wins in winLossRecord, how many were arena duels (brackets and the Coin
+     *  Challenge), by the same name. The record keeps them - the Statistics screen, rank() and the sell price read it
+     *  whole - and fieldWins() takes them out for every "first win" rule. Saved as "arenaWins"; an older save loads it
+     *  empty, so the arena wins it already holds stay counted as ordinary wins. */
+    HashMap<String, Integer> arenaWins = new HashMap<>();
 
     public HashMap<String, Pair<Integer,Integer>> getWinLossRecord()
     {
@@ -160,6 +166,34 @@ public class PlayerStatistic implements SaveFileContent {
                     if (o instanceof String)
                         ranksBattled.add((String) o);
         }
+
+        arenaWins = new HashMap<>(); // round 742
+        if (data != null && data.containsKey("arenaWins")) {
+            Object stored = data.readObject("arenaWins");
+            if (stored instanceof java.util.Map)
+                for (Map.Entry<?, ?> e : ((java.util.Map<?, ?>) stored).entrySet())
+                    if (e.getKey() instanceof String && e.getValue() instanceof Integer)
+                        arenaWins.put((String) e.getKey(), (Integer) e.getValue());
+        }
+    }
+
+    /** Round 742: an arena win over this enemy, already counted in the record by DuelScene.recordStatistics(). */
+    public void recordArenaWin(String enemy) {
+        if (enemy != null)
+            arenaWins.merge(enemy, 1, Integer::sum);
+    }
+
+    public int arenaWins(String enemy) {
+        Integer n = enemy == null ? null : arenaWins.get(enemy);
+        return n == null ? 0 : n;
+    }
+
+    /** Round 742: the wins over this enemy outside the arena - in the overworld, a dungeon or a town. What every "first
+     *  win" rule reads (Ascendance, CardBudget, ResourcePurse). */
+    public int fieldWins(String enemy) {
+        Pair<Integer, Integer> record = enemy == null ? null : winLossRecord.get(enemy);
+        int wins = record == null || record.getLeft() == null ? 0 : record.getLeft();
+        return Math.max(0, wins - arenaWins(enemy));
     }
 
     /** Round 719: the key a rank is kept under. */
@@ -211,6 +245,7 @@ public class PlayerStatistic implements SaveFileContent {
         data.storeObject("winLossRecord",winLossRecord);
         data.storeObject("completedEvents", completedEvents);
         data.storeObject("ranksBattled", new ArrayList<>(ranksBattled)); // round 719
+        data.storeObject("arenaWins", new HashMap<>(arenaWins)); // round 742
         return data;
     }
 
@@ -218,6 +253,7 @@ public class PlayerStatistic implements SaveFileContent {
     public void clear() {
         winLossRecord.clear();
         ranksBattled.clear(); // round 719: New Game and New Game+ start knowing no enemy
+        arenaWins.clear(); // round 742
         // completedEvents was NOT cleared here (fixed 2026-08-29, user request that a New Game /
         // New Game+ reset these values). It is persisted by save() and restored by load() just
         // like winLossRecord, and it backs every event statistic on the Statistics screen

@@ -124,7 +124,8 @@ public final class CardBudget {
 
         Pair<Integer, Integer> record = Current.player().getStatistic().getWinLossRecord().get(enemyName);
         int wins = record == null ? 0 : record.getLeft();
-        boolean firstWin = wins <= 1;
+        // Round 742: an arena win is no first meeting - only wins outside the arena count (PlayerStatistic.fieldWins).
+        boolean firstWin = Current.player().getStatistic().fieldWins(enemyName) <= 1;
         boolean easy = "Easy".equalsIgnoreCase(Current.player().getDifficulty().name);
 
         int gearApplied = Math.max(0, Current.player().bonusDeckCards()); // in full, first win or repeat - "as is"

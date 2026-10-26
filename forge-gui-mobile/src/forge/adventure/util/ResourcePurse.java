@@ -122,8 +122,10 @@ public final class ResourcePurse {
         int wins = record == null ? 0 : record.getLeft(); // DuelScene.recordStatistics() has already counted this win - see CardBudget
         int losses = record == null ? 0 : record.getRight();
         // Loot is deliberately unseeded, like RewardData.generate()'s drops.
+        // Round 742: the first-win factor counts wins outside the arena only (PlayerStatistic.fieldWins).
+        boolean firstWin = Current.player().getStatistic().fieldWins(enemyName) <= 1;
         Array<Reward> purse = pay(enemyName, data, wins, losses, Current.player().getDifficulty().name, tuning, new Random(),
-                replacedEntries, Math.max(1, factor), Ascendance.purseFactor()); // round 604: Challenger's Mark
+                replacedEntries, Math.max(1, factor), Ascendance.purseFactor(), firstWin); // round 604: Challenger's Mark
         if (hadBetterRecord(wins, losses) && tuning.resourcePurseLosingRecordFactor > 1f && purse.size > 0)
             forge.adventure.stage.GameHUD.getInstance().addNotification("Payback! " + enemyName + " had the better of you - a richer purse.");
         return purse;
@@ -148,11 +150,17 @@ public final class ResourcePurse {
     /** Round 604: {@code perkFactor} is the player's Challenger's Mark (Ascendance.purseFactor), 1 without it. */
     static Array<Reward> pay(String enemyName, EnemyData data, int wins, int losses, String difficulty, TuningData tuning,
                              Random random, int replacedEntries, int championFactor, float perkFactor) {
+        return pay(enemyName, data, wins, losses, difficulty, tuning, random, replacedEntries, championFactor, perkFactor,
+                wins <= 1);
+    }
+
+    /** Round 742: {@code firstWin} given by the caller - generate() leaves arena wins out of it. */
+    static Array<Reward> pay(String enemyName, EnemyData data, int wins, int losses, String difficulty, TuningData tuning,
+                             Random random, int replacedEntries, int championFactor, float perkFactor, boolean firstWin) {
         Array<Reward> result = new Array<>();
         int tier = tierIndex(data.tier);
         if (tier < 0)
             return result;
-        boolean firstWin = wins <= 1;
         boolean enemyWasAhead = hadBetterRecord(wins, losses);
 
         float[] weights = new float[4];

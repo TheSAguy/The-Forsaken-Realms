@@ -60,6 +60,9 @@
   "invasion": [50, 75, 100, 150],
   "pillageStopped": 25,
   "arenaBracket": 40,
+  // Round 742 (the user: "let's cut Arena XP you get to 50% of normal XP gain. I don't want people to farm Arenas"):
+  // every Power the arena pays - a bracket duel, the bracket won, a Coin Challenge - times this, rounded half up.
+  "arenaPowerFactor": 0.5,
   "innMatchWin": 15,
   "innChampion": 30,
   "treasureFound": 75,
