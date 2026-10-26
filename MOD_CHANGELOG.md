@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 762: Art Library paths after the library's move, and the FAQ page names v1.23 (2026-10-26)
+
+The user approved "a small doc round for the Art Library paths and the FAQ page's 'v1.22' header". On 2026-10-26 the
+Art thread moved the Art Library to `C:\CLAUDE\PROJECTS\ART\Art-Library` and re-sorted it (the old
+`Bannerloard\Art-Library` path is a junction to it; the library's `README.md` holds the filing rules).
+
+- **`dev-tools/art-import/round689/ro_recut.py`** - `LIB` and the docstring point at the new root and the rips' new
+  folder, `Units/Game Rips/Ragnarok Online/PC _ Computer - Ragnarok Online - ...`; all six source sheets resolve.
+- **`CLAUDE.md`'s Art Library rule** - the new root; creature work in `Projects/The Forsaken Realms/Creatures/<Creature>`
+  (was `Units/Custom/<Creature>`); third-party packs and rips per the library's README; finished art only - the asks
+  for review sheets and `Session Art` are gone (the user's 2026-10-21 rule).
+- **The Discord FAQ page** - `messages.py` holds `FAQ_VERSION = "v1.23"` and `build_page.py` shows it in the header,
+  so a release is a one-line change. The "New for v1.22" note is removed: v1.23 added no new FAQ topics. Rebuilt (22
+  messages) and republished in place as the "Forsaken Realms FAQ" artifact, version 7; `README.md` records it.
+- **Not changed**: message 1's "(as of v1.22)" header and message 21 (its "v1.22 runs on Forge 2.0.16" line and the
+  Classic workaround, on hold at the user's word). `dev-tools/rol_items/import_r648.py`'s `<Art-Library>/Icons/16x16
+  RPG Item Pack` path is still valid. Docs and dev tools only, not shipped in the game.
+
 ## Round 759: the agent game starts every duel at 50x by itself (2026-10-26)
 
 The user: "Yes: make the agent profile start every duel at 50x by default, so no session can forget." Their standing

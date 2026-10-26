@@ -3,7 +3,7 @@ import json
 import sys
 
 sys.path.insert(0, __file__.rsplit("\\", 1)[0] if "\\" in __file__ else __file__.rsplit("/", 1)[0])
-from messages import M  # noqa: E402
+from messages import FAQ_VERSION, M  # noqa: E402
 
 data = {"messages": [m[2] for m in M], "topics": [m[0] for m in M], "short": [m[1] for m in M]}
 for t in data["messages"]:
@@ -105,7 +105,7 @@ details.raw textarea { margin-top: 8px; width: 100%; resize: vertical; backgroun
 
 <div class="wrap">
   <header class="top">
-    <p class="eyebrow">Discord #faq &middot; v1.22</p>
+    <p class="eyebrow">Discord #faq &middot; __VERSION__</p>
     <h1>Forsaken Realms FAQ</h1>
     <p class="lede">__COUNT_WORD__ messages in posting order, each under Discord's 2,000-character limit. Copy one, paste it into the channel, send it, then copy the next.</p>
     <nav class="chips" id="chips" aria-label="Messages"></nav>
@@ -114,7 +114,6 @@ details.raw textarea { margin-top: 8px; width: 100%; resize: vertical; backgroun
       <button type="button" class="ghost" id="reset">Clear marks</button>
     </div>
     <ul class="notes">
-      <li><strong>New for v1.22.</strong> Ascendance, gear sets, treasure maps and castle keys, enemy ranks and how enemies adapt, legends and the level places, raids and war mages, the Capitol and Temple, and the History replay. The older answers are brought up to date.</li>
       <li><strong>Channel link.</strong> #how-can-i-help in message __HELP__ links only if Discord recognizes it when you send. If it stays plain text, retype it and pick the channel from the list.</li>
     </ul>
   </header>
@@ -221,6 +220,6 @@ details.raw textarea { margin-top: 8px; width: 100%; resize: vertical; backgroun
 
 WORDS = {21: "Twenty-one", 22: "Twenty-two", 20: "Twenty", 23: "Twenty-three", 24: "Twenty-four"}
 page = (PAGE.replace("__DATA__", blob).replace("__N__", str(n)).replace("__HELP__", str(help_msg))
-        .replace("__COUNT_WORD__", WORDS.get(n, str(n))))
+        .replace("__COUNT_WORD__", WORDS.get(n, str(n))).replace("__VERSION__", FAQ_VERSION))
 open(sys.argv[1], "w", encoding="utf-8", newline="\n").write(page)
 print("wrote", sys.argv[1], len(page), "bytes,", n, "messages; help in message", help_msg)

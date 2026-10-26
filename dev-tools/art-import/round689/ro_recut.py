@@ -13,7 +13,7 @@ Facing: each sprite keeps the orientation of its CURRENT atlas (Idle frame 0 com
 Anvilhorn Minotaur keeps round 681's mirror and the others round 179's flip. The Avatar region is copied as is.
 Mossmane Shambler walks with its winged idle (the user's pick: the RO walk row has no wings, so they popped on and off).
 
-Sources: Art-Library/Units/PC _ Computer - Ragnarok Online - <sheet>.png (the user's library, outside the repo).
+Sources: Art-Library/Units/Game Rips/Ragnarok Online/PC _ Computer - Ragnarok Online - <sheet>.png (the user's library, outside the repo).
 
 usage: python ro_recut.py [--write] [names...]     (dry run prints cells and anchoring notes)
 """
@@ -27,7 +27,7 @@ D = TFR + "/forge-gui/res/adventure/The Forsaken Realms/sprites/enemy/tfr/"
 SCORE_MIN = 0.3
 WALK_FROM = {"mossmane_shambler": "Idle"}
 
-LIB="C:/Users/User/Claude_Code/Bannerloard/Art-Library/Units/PC _ Computer - Ragnarok Online - "
+LIB="C:/CLAUDE/PROJECTS/ART/Art-Library/Units/Game Rips/Ragnarok Online/PC _ Computer - Ragnarok Online - "
 SHEETS={"rattling_bones":"Enemies - Skeleton (Weak).png","cracked_shieldbone":"Enemies - Skeleton (Weak, Soldier).png",
  "barrow_bonebow":"Enemies - Skeleton (Archer).png","orcling_rascal":"Enemies - Orc Baby.png",
  "anvilhorn_minotaur":"Enemies - Nightmare Minorous.png","mossmane_shambler":"Homunculus - Vanilmirth (Alternate, Evolved).png"}

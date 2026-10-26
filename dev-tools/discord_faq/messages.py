@@ -1,4 +1,7 @@
-"""The v1.22 Discord FAQ: (topic, short label, message). Each message must stay under Discord's 2,000 characters."""
+"""The Discord FAQ: (topic, short label, message). Each message must stay under Discord's 2,000 characters."""
+
+# The released version the FAQ describes; build_page.py shows it in the page header. One line to change per release.
+FAQ_VERSION = "v1.23"
 
 M = []
 

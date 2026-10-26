@@ -16,3 +16,8 @@ Settings > Files in v1.22) and gives the Android log folders - 1,991 characters,
 2026-10-26 (round 757): 22 messages. Message 22 is the support post - Ko-fi (https://ko-fi.com/thesaguy) plus the
 ways to help without tipping - 857 characters, short label "Support". Message 21 is unchanged (its v1.22 Classic
 workaround stays until the user says otherwise). Artifact version 6.
+
+2026-10-26 (round 762): the page header names v1.23, the released version the FAQ describes. It reads `FAQ_VERSION`
+at the top of `messages.py`, so the next release changes one line. The "New for v1.22" note is gone: v1.23 added no new
+FAQ topics. Message 21 is unchanged (its "v1.22 runs on Forge 2.0.16" line and the Classic workaround wait for the
+user), and so is message 1's "(as of v1.22)" header. Artifact version 7.
