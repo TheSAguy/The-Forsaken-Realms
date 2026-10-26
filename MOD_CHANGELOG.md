@@ -14330,7 +14330,11 @@ The user approved four changes after the 2026-10-26 log review (P1, P2, P4, P5, 
   -> "judged stalled - not counted"; with `loopBreak=true` -> not counted; a Hard new game at 103 reloads with 4 honest
   losses: a duel start forgave one (94 forgiven, +10 -> +9, the Bone Raider started at +9), a day tick another (+8), both
   green lines in the Notices log; a session with notoriety Walls and win-ratio tokens on the board logged 0
-  `malformed` lines, and the Wall token showed its art. The undead tags were checked after packaging (see below).
+  `malformed` lines, and the Wall token showed its art. After packaging (agent game on the 2026-10-26 08:09 jar): a
+  Bone Raider win moved the Undead Invasion's "Battle the Undead" to 1/3 (the old data left it at 0/3), and a live
+  kill 2 s into a Grave Revenant duel on the Hard save counted (103 -> 104, the line with "enemies +9 life").
+  The pulse's "waiting on" is a stack-sample guess for the log (it read "the player" in an all-AI duel's opening) and
+  decides nothing.
 
 The user, on round 733's audit of every tag-matched quest stage: "Apply gaps A-G and J as round 734 (skip H, I and the
 devils)". The rule is the same as round 733's: a mixed Defeat stage counts a win only when the enemy carries every

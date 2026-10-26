@@ -11,6 +11,7 @@ every round built. If you find something missing, fix the docs rather than going
 732 (the reload penalty capped at +10 enemy life), 733-734 (quest tags, data only), and 735 (a live mid-duel quit counts
 as a loss plus a reload, judged by `util/DuelHeartbeat`; every 5 honest losses forgive a reload; Rare undead troops
 count for the Undead Invasion; `[TFR-Assets]` download lines; TFR's token pictures no longer go to the downloader).
+All are packaged to live and the agent game (2026-10-26 08:09 jar).
 Next version: 1.24 / 12400. Engine = the 10.21 daily (round 701); next merge from upstream after `bc67f70ffbc`; BASE_INSTALL is that
 daily, so packages need no `--allow-base-mismatch`. Next free round: 736. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
