@@ -267,7 +267,8 @@ just another OR branch alongside live-vision and persistently-revealed inside `i
 - **Stage 2 added (2026-08-11)**: once 80% of the map has been explored, the rest reveals outright
   instead of requiring the player to walk every last tile. Checked once per in-game day, one-shot
   (won't re-notify once already triggered). Deliberately skips the discovery-flash cosmetic layer
-  above - a whole-map flash would read as noise.
+  above - a whole-map flash would read as noise. The 80% counts land only: ocean (2026-08-13) and
+  the mountain ranges (the barrier, round 741) are left out of both sides of the ratio.
 
 ### 4. Progressive Set Unlocks — `Done (playtest-confirmed 2026-08-18)` (built 2026-08-12; first playtest same day found a capitol-entry crash + several restriction bypasses — all fixed, see MOD_CHANGELOG's 2026-08-12 entry; Research Lab UI reworked per feedback)
 Original idea (~100+ MTG expansions exist; player starts with access to a small subset, collect N

@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 741 - the 80% full-map reveal leaves out the mountain ranges
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `checkFogOfWarStage2` counts `countsTowardFullReveal()`
+  (new private: `isLandTile()` and not `isBarrierRaw()`) on both sides of the ratio; new transient
+  `cachedMountainTileTotal` for its `[TFR-FoW]` line. Mod code only (the fog of war is TFR's); nothing is saved.
+
 ### Round 736 - identity tag typos (upstream bug)
 
 - **`forge-gui/res/adventure/common/world/enemies.json`** and **`forge-gui/res/adventure/Shandalar Old

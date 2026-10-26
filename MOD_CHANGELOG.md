@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 741: the 80% full-map reveal leaves out the mountain ranges (2026-10-26)
+
+The user: "We have a rule that if 80% of the terrain was revealed, the entire map would become visible - FoW state 2.
+This was before we added the mountains. So I think we need to adjust this a little so the mountain ranges are not
+counted in that 80%, just like water."
+
+- **The change** (`World.checkFogOfWarStage2`, one helper): the reveal now fires when explored(land and not mountain
+  range) / (land and not mountain range) reaches 80%. The mountain ranges are round 294's barrier layer (`barrierMap`,
+  the History replay's "Mountains"), impassable on foot; they leave both sides of the ratio exactly as ocean does
+  (`countsTowardFullReveal()` = `isLandTile()` and not `isBarrierRaw()`). The reveal itself still uncovers every tile,
+  mountains and ocean included. A world with no barrier (made before round 294, or a plane without Territory Control)
+  counts exactly as before.
+- **Log**: the daily `[TFR-FoW] stage2 check` line keeps its shape and adds the mountain-range tiles left out
+  (`...threshold 80%; N mountain-range tiles not counted)`). Both counts are cached per world and reset on every load
+  and new world, as the land total was.
+- **Saves**: nothing to convert. The measure is computed fresh each day, so a running save usually reads a higher percentage
+  from its next day tick (a smaller denominator; explored mountain edges no longer count). A save that now stands at
+  80% or more reveals at that tick, once, with its notice, and `fogOfWarStage2Revealed` is saved as before. A save
+  already revealed stays revealed (the check returns at once). The console `fog reset` repair only re-arms
+  the flag and is unaffected; nothing else reads this measure.
+- **Not excluded (reported, not changed)**: other ground that is hard to reveal on foot still counts - the wasteland's
+  own mountain structures inside its circle (colliding, so a blob wider than twice the vision radius keeps a dark
+  middle unless the player flies), and any land cut off by water. No measurement of how much there is in a typical
+  world; the barrier was the large block.
+- **Tested**: `mvn -pl forge-gui-mobile -am compile` exit 0. Read every user of the measure (only WorldStage's day
+  tick calls it; `fog reset` re-arms the flag). Not run in a game yet: the next check is a save near 80% - the
+  `[TFR-FoW] stage2 check` line should show the mountain count and a higher percentage than before.
+
 ## Round 740: the Demon's Bargain and the Sphinx's Sanctum open in week 3 (2026-10-26)
 
 The user: "Move Demon that asks about Ante and Sphinx Dungeons to week 3+. I believe we currently have these two dungeons

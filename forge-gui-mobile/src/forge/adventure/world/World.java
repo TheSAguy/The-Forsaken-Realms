@@ -6871,12 +6871,20 @@ public class World implements Disposable, SaveFileContent {
      */
     // Lazily-cached land-tile denominator for checkFogOfWarStage2 (2026-08-13 fix) - see below.
     private transient int cachedLandTileTotal = -1;
+    // Round 741: the mountain-range tiles left out of it, for the [TFR-FoW] line. Cached and reset with the total.
+    private transient int cachedMountainTileTotal = 0;
 
     /** True for tiles that are actual explorable land - anything beyond the pure base/ocean
      *  biome (index 0 by world.json convention: base, colorless, the 5 colors, then player -
      *  the same ordering claimWastelandRing()'s own untouchable-tile classification relies on). */
     private boolean isLandTile(int x, int rawY) {
         return biomeMap != null && highestBiome(biomeMap[x][rawY]) != 0;
+    }
+
+    /** Round 741 (the user: "the mountain ranges are not counted in that 80%, just like water"): land that is not
+     *  a barrier (mountain range, round 294) tile - the ground the full-reveal measure counts. */
+    private boolean countsTowardFullReveal(int x, int rawY) {
+        return isLandTile(x, rawY) && !isBarrierRaw(x, rawY);
     }
 
     public void checkFogOfWarStage2(BiConsumer<Integer, Integer> onTileRevealed) {
@@ -6889,20 +6897,26 @@ public class World implements Disposable, SaveFileContent {
         // visible landmass still looked mostly dark, AND would have made the message unreachable
         // once territory reveals stopped covering ocean. Measured over land tiles only now, which
         // matches the intuitive meaning of "80% of the map".
+        // Round 741: the mountain ranges (the barrier, round 294 - impassable on foot) are left out the same way, on
+        // both sides of the ratio. A world with no barrier counts exactly as before.
         if (cachedLandTileTotal < 0) {
             int landCount = 0;
+            int mountainCount = 0;
             for (int x = 0; x < width; x++)
                 for (int rawY = 0; rawY < height; rawY++)
-                    if (isLandTile(x, rawY))
+                    if (countsTowardFullReveal(x, rawY))
                         landCount++;
+                    else if (isLandTile(x, rawY))
+                        mountainCount++;
             cachedLandTileTotal = landCount;
+            cachedMountainTileTotal = mountainCount;
         }
         if (cachedLandTileTotal <= 0)
             return;
         int exploredLand = 0;
         for (int x = 0; x < width; x++)
             for (int rawY = 0; rawY < height; rawY++)
-                if (explored[x][rawY] && isLandTile(x, rawY))
+                if (explored[x][rawY] && countsTowardFullReveal(x, rawY))
                     exploredLand++;
         double pct = exploredLand / (double) cachedLandTileTotal;
         // Diagnostic logging standard - one line per daily evaluation so the threshold's actual
@@ -6910,7 +6924,8 @@ public class World implements Disposable, SaveFileContent {
         // itself; the 2026-08-13 early-fire bug had to be reconstructed from territory-radius
         // lines alone).
         System.out.println("[TFR-FoW] stage2 check: exploredLand=" + exploredLand + "/" + cachedLandTileTotal
-                + " (" + String.format(java.util.Locale.ROOT, "%.1f", pct * 100) + "%, threshold 80%)");
+                + " (" + String.format(java.util.Locale.ROOT, "%.1f", pct * 100) + "%, threshold 80%; "
+                + cachedMountainTileTotal + " mountain-range tiles not counted)");
         if (pct < 0.80)
             return;
         System.out.println("[TFR-FoW] stage2 FIRED - revealing the full map");
