@@ -85,7 +85,7 @@ public final class TfrAchievements extends AchievementCollection {
         add(new TfrAchievement(LEGEND_HUNTER, "Legend Hunter", "Defeat the legends of the realm, each one once.",
                 false, new int[]{1, 10, 25, 50}, new String[]{"1 legend", "10 legends", "25 legends", "50 legends"}));
         add(new TfrAchievement(NOTORIOUS, "Notorious",
-                "Beat a fully armed foe on a 50-win streak.", false,
+                "Beat a fully armed foe at Notoriety 50 or more.", false, // round 753: notoriety is a score
                 new int[]{1, 2, 3, 4}, new String[]{"an Apprentice", "an Adept", "a Master", "an Archmage"}));
         add(new TfrAchievement(ASCENDANT, "Ascendant", "Rise through the Ascendance.", false,
                 new int[]{5, 10, 20, 30}, new String[]{"level 5", "level 10", "level 20", "level 30"}));
@@ -235,7 +235,7 @@ public final class TfrAchievements extends AchievementCollection {
             addSeen(LEGEND_HUNTER, enemy.getName(), "beat " + enemy.getName());
         if (notoriousRank >= 0)
             reach(NOTORIOUS, notoriousRank + 1, "beat a fully armed " + EnemyData.tierDisplayName(rankTier(notoriousRank))
-                    + " at " + WorldSave.getCurrentSave().getPlayer().notorietyStreak() + " wins in a row");
+                    + " at Notoriety " + WorldSave.getCurrentSave().getPlayer().notorietyStreak()); // round 753: a score
     }
 
     /**

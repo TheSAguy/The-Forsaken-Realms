@@ -38,6 +38,21 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 753 - a lost duel takes 5 off Notoriety instead of resetting it
+
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - `recordNotoriety`: a loss takes the
+  new private `notorietyLossPenalty()` (TuningData) off, floor 0, instead of setting 0; its `[TFR-Notoriety]` line reads
+  "notoriety B -> A". `logNotorietyStage`: the level and bonus lines say "Notoriety N", the loss line says what was lost
+  (and the bonus Walls it took). The cheat's log line. Mod code only (round 411's notoriety); the saved
+  `notorietyStreak` is unchanged.
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** - new `notorietyLossPenalty` (5). Mod code only.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK) - log text only, in TFR's notoriety blocks:
+  the Arena "not counted" line in `afterGameEnd` and the Wall line in the seat setup say "notoriety N".
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK) - TFR's `notoriety` and
+  `spawnroll` commands: "notoriety N" text only.
+- **`forge-gui-mobile/src/forge/adventure/util/DungeonUpgrades.java`** and **`TfrAchievements.java`** (TFR files) - log
+  text; Notorious' description "at Notoriety 50 or more".
+
 ### Round 752 - a weekly shop's +Life sells once per game
 
 - **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** - two lines: `loadRewards()`'s Shop case also skips a

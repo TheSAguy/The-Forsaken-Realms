@@ -14264,6 +14264,46 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 753: a lost duel takes 5 off Notoriety instead of resetting it (2026-10-26)
+
+Discord feedback (2026-10-25): "When entering a challenging dungeon, it was often correct to throw a game to a
+low-level enemy before going in." The diagnosis (notes `throw-a-duel-diagnosis.md`): every Notoriety effect - the Walls
+(rounds 411/429/445), the bonus life (446), the spawn tilt, the 30-win gate step and the dungeon upgrades (447) - read
+one counter that any loss set to 0. One duel thrown to an Apprentice (no Wall on Normal) cleared them all, and a dungeon
+entered right after rolled no upgrades and kept that roster until it rotated. On Normal the throw cost 5% of the gold
+carried (minimum 100), 20% of max life and the ante - or one Bronze Coin, which comes back on the next win over that
+enemy. The user approved option C: "a loss costs one Notoriety level (5 wins) instead of a reset".
+
+- **The rule** (`AdventurePlayer.recordNotoriety`): a win adds 1, a loss takes `notorietyLossPenalty` (5) off, never
+  below 0. Notoriety is a score now, not wins in a row. Every reader follows unchanged: at 27 a loss leaves 22 - the
+  3/6 Wall stays, the second Wall goes, the tilt and the dungeon row drop one step. Throwing now buys one step per lost
+  duel, each with its gold, life and ante.
+- **Data**: settings.json + `TuningData.notorietyLossPenalty` 5 (0 = the old full reset).
+- **Notices**: on a loss once notoriety had a level, "Duel lost - Notoriety 27 -> 22 (-5), level 5 -> 4." (at 0: "...:
+  word of you dies down."; past 45/50: "Foes lose the 45+ Wall and their life."). The level line reads "Notoriety 10 -
+  level 2: ..." and the bonus line "Notoriety 45: ...". Was "Notoriety lost - your streak of N wins is over."
+- **Logs**: `[TFR-Notoriety] won|lost - notoriety B -> A, level L -> L'` on every counted duel; the Wall, Arena,
+  dungeon-upgrade, spawnroll and cheat lines say "notoriety N" for "N wins in a row".
+- **Notorious** (achievement): "Beat a fully armed foe at Notoriety 50 or more." (was "on a 50-win streak").
+- **The 26 Wall faces** (`adventure/common/custom_card_pics/tfr_wall*.fullborder.png`): "**Notoriety 5+:** word of your
+  wins has spread. Each loss takes 5 off." (was "you have won 5+ duels in a row"); the 45+/50+ faces keep their +life
+  sentence. The user's source art (F:\Art_to_Tweak\WALL) is gone, so `make_wall_cards.py --reuse-art` now takes every
+  face's art box from the shipped face (it did the two bonus walls only, round 470): art and frame pixel-identical,
+  only the rules text redrawn. The user approved the preview sheet. Same file names, overwritten in place.
+- **Saves**: no conversion - `notorietyStreak` keeps its name and type and is read as the score; an old save keeps its
+  number.
+- GUIDE.md/.html: "Enemies That Adapt to You" describes the score, the one-step loss and what throwing costs; the
+  Notorious row and the FAQ line too.
+- **Tested in the agent game** (slot 17, Hard, cheats, round 753's classes ahead of the jar, every duel at 50x; a
+  24-Plains deck for sure losses, restored before the win; nothing saved): `notoriety 47` - a Toxic Hound (Master)
+  started with reach 3/6 + reach 3/6 + the flying 3/6 45+ and +25% life (23 -> 29); lost: `notoriety 47 -> 42, level
+  8 -> 8`, "Duel lost - Notoriety 47 -> 42 (-5). Foes lose the 45+ Wall and their life."; a Glowing Wisp (Adept) at
+  42 had two plain 3/6 and no extra life; lost again: `42 -> 37, level 8 -> 7`, "... (-5), level 8 -> 7."; `notoriety
+  44`, a Vampire beaten: `44 -> 45`, "Notoriety 45: every foe also starts with a flying 3/6 Wall and +25% life." No
+  exceptions. The duel's Wall cards are too small to read at 1280x720; the faces were checked as files.
+- Not changed: the per-enemy Wastes streak (round 404/467 - still reset by a loss to that enemy), the win ratio (613/620),
+  the reload penalty (726/732/735). Notoriety still pays nothing back (Player 2's reward idea, option A, not built).
+
 ## Round 752: each capital sells its +1 max life once per game (2026-10-26)
 
 A Discord player (2026-10-25): "Refreshing equipment also made it so that every week the hearts in the capitol cities

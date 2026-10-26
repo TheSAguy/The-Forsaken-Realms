@@ -418,8 +418,8 @@ public class DuelScene extends ForgeScene {
             // for the Streak. So it should not add or reset"): an Arena duel leaves it as it is - its enemy still
             // starts with the Walls the streak has earned (the seat setup below never checked isArena).
             if (isArena)
-                System.out.println("[TFR-Notoriety] Arena duel " + (winner ? "won" : "lost") + " - not counted, still "
-                        + Current.player().notorietyStreak() + " wins in a row");
+                System.out.println("[TFR-Notoriety] Arena duel " + (winner ? "won" : "lost") + " - not counted, notoriety still "
+                        + Current.player().notorietyStreak()); // round 753: a score, not wins in a row
             else
                 Current.player().recordNotoriety(winner);
         }
@@ -1254,8 +1254,8 @@ public class DuelScene extends ForgeScene {
                     // Round 417 (the user: "remove the Notoriety notification on each duel. It gets annoying. The card text
                     // informs the player what's going on"): no notice - the Wall card's own Notoriety line explains it.
                     System.out.println("[TFR-Notoriety] " + currentEnemy.getName() + " (" + EnemyData.tierDisplayName(currentEnemy.tier)
-                            + ") starts with " + String.join(" + ", shown) + " - " + Current.player().notorietyStreak()
-                            + " wins in a row, level " + Current.player().notorietyLevel());
+                            + ") starts with " + String.join(" + ", shown) + " - notoriety " + Current.player().notorietyStreak()
+                            + ", level " + Current.player().notorietyLevel()); // round 753: a score
                 }
             }
 

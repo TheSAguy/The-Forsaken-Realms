@@ -422,7 +422,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return tuning == null || difficultyData == null ? 0 : tuning.winStreakWinsFor(difficultyData.name);
     }
 
-    /** Round 411: NOTORIETY - the player's wins in a row against anyone (saved; New Game+ and a new game clear it). */
+    /** Round 411: NOTORIETY - the player's wins in a row against anyone (saved; New Game+ and a new game clear it).
+     *  Round 753: a score - +1 a win, -notorietyLossPenalty a loss, floor 0; the saved field keeps its name. */
     public int notorietyStreak() {
         return notorietyStreak;
     }
@@ -457,17 +458,26 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     /**
      * Round 411: a duel the player fought ended (the duels round 404 counts) - a win adds one to notoriety, a loss
-     * (Bronze Coin or not) clears it.
+     * (Bronze Coin or not) clears it. Round 753 (the user approved "a loss costs one Notoriety level (5 wins) instead of
+     * a reset"; players threw a duel to a weak enemy to clear the Walls before a dungeon): a loss takes
+     * TuningData.notorietyLossPenalty off instead, never below 0, so notoriety is a score, not wins in a row.
      */
     public void recordNotoriety(boolean won) {
         recordRecentDuel(won); // round 613: the same duels feed the win-ratio tilt
         int before = notorietyStreak;
         int levelBefore = notorietyLevel();
-        notorietyStreak = won ? before + 1 : 0;
-        System.out.println("[TFR-Notoriety] " + (won ? "won" : "lost") + " - wins in a row " + before + " -> "
+        notorietyStreak = won ? before + 1 : Math.max(0, before - notorietyLossPenalty());
+        System.out.println("[TFR-Notoriety] " + (won ? "won" : "lost") + " - notoriety " + before + " -> "
                 + notorietyStreak + ", level " + levelBefore + " -> " + notorietyLevel()
                 + (difficultyData != null ? " (" + difficultyData.name + ")" : ""));
         logNotorietyStage(before, levelBefore);
+    }
+
+    /** Round 753: what a lost duel takes off notoriety (TuningData.notorietyLossPenalty; 0 or less = a full reset). */
+    private int notorietyLossPenalty() {
+        forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
+        int penalty = tuning == null ? 0 : tuning.notorietyLossPenalty;
+        return penalty > 0 ? penalty : Integer.MAX_VALUE;
     }
 
     /**
@@ -488,7 +498,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             int minRank = tuning.notorietyMinRankFor(difficultyData == null ? null : difficultyData.name);
             String who = minRank <= 0 ? "every foe starts" : minRank == 1 ? "Adepts and stronger start"
                     : minRank == 2 ? "Masters and Archmages start" : "Archmages start";
-            lines.add("Notoriety level " + level + " - " + notorietyStreak + " wins in a row: " + who + " with a "
+            lines.add("Notoriety " + notorietyStreak + " - level " + level + ": " + who + " with a " // round 753: a score
                     + String.join(" and a ", walls) + ".");
         }
         if (tuning.notorietyBonusWallWins != null)
@@ -499,13 +509,24 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                             ? tuning.notorietyBonusWallLifePercent[i] : 0;
                     String bonus = tuning.notorietyBonusWalls != null && i < tuning.notorietyBonusWalls.length
                             ? tuning.notorietyBonusWalls[i] : "";
-                    lines.add("Notoriety - " + wins + " wins in a row: every foe also starts with a "
+                    lines.add("Notoriety " + wins + ": every foe also starts with a "
                             + (bonus.contains("flying") ? "flying " : "") + wallSize(bonus) + " Wall"
                             + (percent > 0 ? " and +" + percent + "% life." : "."));
                 }
             }
-        if (notorietyStreak == 0 && levelBefore > 0)
-            lines.add("Notoriety lost - your streak of " + before + " wins is over.");
+        // Round 753: a loss takes notoriety down, not to 0 - the line says by how much (once it had a level).
+        if (notorietyStreak < before && levelBefore > 0) {
+            java.util.List<String> gone = new java.util.ArrayList<>(); // the bonus walls this loss took away (45+, 50+)
+            if (tuning.notorietyBonusWallWins != null)
+                for (int wins : tuning.notorietyBonusWallWins)
+                    if (before >= wins && notorietyStreak < wins)
+                        gone.add(wins + "+");
+            lines.add("Duel lost - Notoriety " + before + " -> " + notorietyStreak + " (-" + (before - notorietyStreak) + ")"
+                    + (notorietyStreak == 0 ? ": word of you dies down."
+                    : notorietyLevel() < levelBefore ? ", level " + levelBefore + " -> " + notorietyLevel() + "." : ".")
+                    + (gone.isEmpty() ? "" : " Foes lose the " + String.join(" and ", gone) + " Wall"
+                    + (gone.size() > 1 ? "s" : "") + " and their life."));
+        }
         for (String line : lines) {
             System.out.println("[TFR-Notoriety] log: " + line);
             forge.adventure.stage.GameHUD.getInstance().logNotification(line, false);
@@ -521,7 +542,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     /** Round 411: test cheat - set the streak outright. */
     public void setNotorietyStreak(int wins) {
         notorietyStreak = Math.max(0, wins);
-        System.out.println("[TFR-Notoriety] cheat: wins in a row set to " + notorietyStreak + ", level " + notorietyLevel());
+        System.out.println("[TFR-Notoriety] cheat: notoriety set to " + notorietyStreak + ", level " + notorietyLevel());
     }
 
     /**

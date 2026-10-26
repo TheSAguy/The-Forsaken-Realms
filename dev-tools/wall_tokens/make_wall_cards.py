@@ -186,6 +186,7 @@ def wrap(draw, text, fnt, width):
 WINS_PER_LEVEL = 5   # settings.json notorietyWinsPerLevel
 LEVELS_PER_WALL = 4  # settings.json notorietyLevelsPerWall
 BONUS_LIFE_PERCENT = (25, 25)   # settings.json notorietyBonusWallLifePercent - each bonus wall's +life, in BONUS_WALLS order
+LOSS_PENALTY = 5     # settings.json notorietyLossPenalty - round 753: what a lost duel takes off notoriety
 
 
 def life_line(index):
@@ -201,13 +202,15 @@ def life_line(index):
 def why_line(wall, level, wins=None):
     """Round 411b (the user: "Add to the Card a text line. Saying why it's on the field"): the card's own threshold.
     Round 429: by level, not toughness (2/4 and 3/6 broke "toughness x 5"), and the second wall counts on from 25.
-    Round 445: a bonus wall passes its own count (45, 50)."""
+    Round 445: a bonus wall passes its own count (45, 50).
+    Round 753: notoriety is a score now - a win adds one, a loss takes LOSS_PENALTY off - not wins in a row."""
     if wins is None:
         wins = (wall * LEVELS_PER_WALL + level) * WINS_PER_LEVEL
-    return f"Notoriety: you have won {wins}+ duels in a row, and word has spread."
+    return f"Notoriety {wins}+: word of your wins has spread. Each loss takes {LOSS_PENALTY} off."
 
 
-LEAD = "Notoriety:"   # round 417 (the user: "put the Notoriety text in bold") - the card is the only notice now
+LEAD = "Notoriety"   # round 417 (the user: "put the Notoriety text in bold") - the card is the only notice now
+# Round 753: the lead is two words, "Notoriety 25+:", both bold.
 
 
 PT_BOX = (W - 128, 590)   # the P/T box's left edge and top - text on a line reaching below its top stays left of it
@@ -221,7 +224,8 @@ def draw_why(d, text, x0, y, width):
     space = d.textlength(" ", font=italic)
     x = x0
     for i, word in enumerate(text.split()):
-        f = bold if (i == 0 and word == LEAD) or word.startswith("+") or word.startswith("(+") else italic
+        f = bold if (i == 0 and word == LEAD) or (i == 1 and text.startswith(LEAD + " ")) or word.startswith("+") \
+            or word.startswith("(+") else italic
         w = d.textlength(word, font=f)
         limit = x0 + width if y + 21 <= PT_BOX[1] else PT_BOX[0] - 8
         if x > x0 and x + w > limit:
@@ -322,10 +326,14 @@ def main():
                         if candidate.exists():
                             art, source = Image.open(candidate), candidate.name
                             break
-                if art is None:
-                    art = placeholder(kind, level)
                 script = script_name(wall, word, level)
-                face = card(art, kind, keywords, wall, level)
+                framed = None
+                if art is None and args.reuse_art and (out / f"{script}.fullborder.png").exists():   # round 753
+                    framed = Image.open(out / f"{script}.fullborder.png").convert("RGB").crop(ART_BOX)
+                    source = f"the art box of the existing {script}.fullborder.png"
+                if art is None and framed is None:
+                    art = placeholder(kind, level)
+                face = card(art, kind, keywords, wall, level, framed=framed)
                 face.save(dest / f"{script}.fullborder.png")
                 made.append(face)
                 print(f"{script}.fullborder.png  <- {source}")

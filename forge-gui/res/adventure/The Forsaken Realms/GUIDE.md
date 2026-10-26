@@ -818,7 +818,7 @@ that added them. Console commands never earn an achievement.
 | **Lord Slayer** | Bring down a Lord in their own castle. | 1 / 3 / 4 / all 5 castles |
 | **Capital Gains** | Take a color's capital by assault, before its castle falls (a fallen color's capital falls with it). Counted by the color that built the capital. | 1 / 3 / 4 / all 5 |
 | **Legend Hunter** | Defeat the legends of the realm, each one once, across all your saves. The Arena counts. | 1 / 10 / 25 / 50 legends |
-| **Notorious** | Win at 50 or more wins in a row: the foe starts with both bonus Walls and the Clue and Treasure. The Arena counts. | an Apprentice / an Adept / a Master / an Archmage |
+| **Notorious** | Win at notoriety 50 or more: the foe starts with both bonus Walls and the Clue and Treasure. The Arena counts. | an Apprentice / an Adept / a Master / an Archmage |
 | **Ascendant** | Rise through the Ascendance. | level 5 / 10 / 20 / 30 |
 | **Ashes to Hearth** | Hold towns under your banner, restored from ruin or taken back. | 1 / 5 / 10 / 20 towns |
 | **A Seat of Your Own** | Raise your Capitol. | one trophy |
@@ -1182,15 +1182,17 @@ with slightly fewer functioning Neutral towns and ruins to restore.
 
 ### Enemies That Adapt to You
 
-Two parts of your own record shape the enemies you meet, on top of the climb week by week: your **notoriety** - how
-many duels you've won in a row - and your **win ratio** over your last 50 duels. Both count the same duels: every duel
-you fight yourself except Arena duels (which neither add nor reset anything), Inn tournaments, the Deck Tester and your
-guards' fights. A Bronze Coin still counts as a loss. New Game+ starts both from zero.
+Two parts of your own record shape the enemies you meet, on top of the climb week by week: your **notoriety** - a score
+that goes up by 1 for every duel you win and down by 5 for every duel you lose (never below 0) - and your **win ratio**
+over your last 50 duels. Both count the same duels: every duel you fight yourself except Arena duels (which change
+neither), Inn tournaments, the Deck Tester and your guards' fights. A Bronze Coin still counts as a loss. New Game+
+starts both from zero.
 
-**Notoriety: the Walls.** Win five duels in a row - against anyone - and from your sixth duel on, enemies start with a
-**Wall** token in play: a 0/1 Wall from the 6th duel, 1/2 from the 11th, 2/4 from the 16th and 3/6 from the 21st. Keep
-winning and a **second Wall** joins it: from the 26th duel the enemy has the 3/6 plus a 0/1, and the second one grows
-the same way - 1/2 from the 31st, 2/4 from the 36th and 3/6 from the 41st on. Every Wall has defender, so it blocks but
+**Notoriety: the Walls.** Reach notoriety 5 - against anyone - and enemies start with a **Wall** token in play: a 0/1
+Wall at notoriety 5, 1/2 at 10, 2/4 at 15 and 3/6 at 20. Keep winning and a **second Wall** joins it: at 25 the enemy has
+the 3/6 plus a 0/1, and the second one grows the same way - 1/2 at 30, 2/4 at 35 and 3/6 from 40 on. Every 5 points
+is one step, so a loss takes the Walls down one step: at 27 a loss leaves 22 - the 3/6 stays, the second Wall goes.
+Every Wall has defender, so it blocks but
 never attacks; from the 1/2 on it also deals damage when it blocks. Apprentices and Adepts bring plain Walls, Masters
 Walls with reach and Archmages Walls with flying. Which enemies do it depends on the difficulty:
 
@@ -1201,26 +1203,27 @@ Walls with reach and Archmages Walls with flying. Which enemies do it depends on
 | Hard | Adepts, Masters and Archmages |
 | Insane | Everyone |
 
-Past that, two more Walls come for **every** enemy on every difficulty: a flying 3/6 Wall from your 46th duel, and a
-second flying 3/6 from the 51st. Each also gives the enemy 25% more life - +25% from the 46th duel, +50% from the 51st.
-So on Insane an enemy facing a 50-win streak starts with four Walls and half again its life. Each Wall card says why
-it's there, under a bold **Notoriety** line with the wins it stands for; the 45+ and 50+ cards also print the life they
-add. Your notice log notes each step as you reach it ("Notoriety level 2 - 10 wins in a row: ...") and the end of a
-streak. Arena fighters still bring the Walls your streak has earned.
+Past that, two more Walls come for **every** enemy on every difficulty: a flying 3/6 Wall at notoriety 45, and a second
+flying 3/6 at 50. Each also gives the enemy 25% more life - +25% at 45, +50% at 50. So on Insane an enemy facing
+notoriety 50 starts with four Walls and half again its life. Each Wall card says why it's there, under a bold
+**Notoriety** line with the score it stands for; the 45+ and 50+ cards also print the life they add. Your notice log
+notes each step as you reach it ("Notoriety 10 - level 2: ...") and what a loss took off ("Duel lost - Notoriety
+27 -> 22 (-5), level 5 -> 4."). Arena fighters still bring the Walls your notoriety has earned.
 
-**Notoriety: stronger opponents.** Word of a streak also draws tougher foes:
+**Notoriety: stronger opponents.** Word of your wins also draws tougher foes:
 
-- **Roaming ranks.** Every 5 wins in a row, up to 50, tilts the roaming spawns toward higher ranks: each step weighs
-  Apprentices 6% lighter and Masters 12% and Archmages 20% heavier (Adepts stay as they are). On Insane, in weeks 7-10,
-  on the Wasteland, the Apprentice / Adept / Master / Archmage mix goes from 30 / 39 / 25 / 6 with no streak to
-  19 / 35 / 35 / 10 at 25 wins and 10 / 32 / 44 / 14 at 50 - where your total wins let them in (next point).
+- **Roaming ranks.** Every 5 points of notoriety, up to 50, tilts the roaming spawns toward higher ranks: each step
+  weighs Apprentices 6% lighter and Masters 12% and Archmages 20% heavier (Adepts stay as they are). On Insane, in weeks
+  7-10, on the Wasteland, the Apprentice / Adept / Master / Archmage mix goes from 30 / 39 / 25 / 6 at notoriety 0 to
+  19 / 35 / 35 / 10 at 25 and 10 / 32 / 44 / 14 at 50 - where your total wins let them in (next point).
 - **The total-wins gate.** Many of the realm's tougher creatures only roam once your total wins reach a step - 20, 60
-  and 151 wins. From 30 wins in a row, the next step opens early.
-- **Dungeons and caves** you enter for the first time: from 10 wins in a row, 20% of their creatures step up a rank;
-  from 20, 25% step up one rank and 5% two; from 30, 25% and 20%; from 40, 25% and 30%; from 50, 25% and 40%. A place
-  keeps what you found in it until it rotates away.
+  and 151 wins. From notoriety 30, the next step opens early.
+- **Dungeons and caves** you enter for the first time: from notoriety 10, 20% of their creatures step up a rank; from
+  20, 25% step up one rank and 5% two; from 30, 25% and 20%; from 40, 25% and 30%; from 50, 25% and 40%. A place keeps
+  what you found in it until it rotates away.
 
-Lose once and your streak, its Walls and its tilt all start over.
+A loss takes 5 off your notoriety, so its Walls, its tilt and its dungeon odds all drop one step - not back to nothing.
+Losing on purpose to clear the Walls before a dungeon costs a duel's gold, life and ante for every step.
 
 **Your win ratio.** The game remembers your last 50 counted duels. With fewer than 25 on record nothing happens. From
 25 duels the roaming rank mix shifts by up to 5 percentage points, and at 50 duels by up to 10. The full shift comes
@@ -1231,7 +1234,7 @@ record, back into Apprentices. It comes on top of the week, the land, the diffic
 them it can't open a rank the week hasn't: week 1 still has no Masters, and Archmages roam only from week 4. Example:
 Normal, weeks 4-6, the Wasteland - 65 / 24 / 10 / 1 becomes 55 / 31 / 13 / 1 at +10 and 75 / 17 / 7 / 1 at -10.
 
-Unlike a streak, one loss doesn't wipe it, and a bad run eases the world within weeks, since only the last 50 duels
+One loss barely moves it, and a bad run eases the world within weeks, since only the last 50 duels
 count. It covers every creature roaming the world map, raiders included. (A save from before 1.21 starts its record
 from its lifetime wins and losses, at the same ratio.)
 
@@ -1916,7 +1919,7 @@ it's -2 reputation. A roaming guard with "Help with pillaged towns" ticked rides
 
 ### Why are the enemies getting tougher (or easier)?
 
-The weeks, your standing with the land's color, the dark, a win streak and - from 25 duels on - your win ratio over
+The weeks, your standing with the land's color, the dark, your notoriety and - from 25 duels on - your win ratio over
 your last 50 duels all shift the ranks you meet. See [Enemies That Adapt to You](#enemies-that-adapt-to-you).
 
 ### Can I play this on Android?

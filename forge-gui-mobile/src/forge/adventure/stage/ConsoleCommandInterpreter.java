@@ -425,7 +425,7 @@ public class ConsoleCommandInterpreter {
             String mix = String.format("Apprentice %.1f%% Adept %.1f%% Master %.1f%% Archmage %.1f%%", 100f * ranks[0] / n,
                     100f * ranks[1] / n, 100f * ranks[2] / n, 100f * ranks[3] / n);
             String line = "[TFR-SpawnRoll] spawnroll " + biome.name + " x" + n + " at rank " + rank + ", "
-                    + Current.player().notorietyStreak() + " wins in a row: " + mix + " | champions " + roaming + " "
+                    + "notoriety " + Current.player().notorietyStreak() + ": " + mix + " | champions " + roaming + " "
                     + champions + ", frontier legends " + frontier + " (both 0 since round 375)";
             System.out.println(line);
             return line;
@@ -759,16 +759,16 @@ public class ConsoleCommandInterpreter {
         // the way to see player_capital.tmx in play after a layout change. Cheats only, like every command here.
         registerCommand(new String[]{"capitol", "raise"}, s ->
                 forge.adventure.util.TownRestoration.debugRaiseCapitol(MapStage.getInstance()));
-        // Round 411: test cheat - "notoriety 10" sets the wins in a row (level = wins / notorietyWinsPerLevel).
+        // Round 411: test cheat - "notoriety 10" sets notoriety (level = notoriety / notorietyWinsPerLevel; round 753: a score).
         registerCommand(new String[]{"notoriety"}, s -> {
-            if (s.length < 1) return "Notoriety: " + Current.player().notorietyStreak() + " wins in a row, level "
+            if (s.length < 1) return "Notoriety: " + Current.player().notorietyStreak() + ", level "
                     + Current.player().notorietyLevel() + ". Give a number to set it.";
             try {
                 Current.player().setNotorietyStreak(Integer.parseInt(s[0]));
             } catch (Exception e) {
                 return "Can not convert " + s[0] + " to number";
             }
-            return "Notoriety set to " + Current.player().notorietyStreak() + " wins in a row, level " + Current.player().notorietyLevel();
+            return "Notoriety set to " + Current.player().notorietyStreak() + ", level " + Current.player().notorietyLevel();
         });
         // Round 465: test cheat - 'winstreak "Wild Rat" 3' sets your wins in a row over one enemy (by name).
         registerCommand(new String[]{"winstreak"}, s -> {

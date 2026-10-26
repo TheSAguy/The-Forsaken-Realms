@@ -280,7 +280,8 @@ public class TuningData {
     }
 
     // Round 411 - NOTORIETY (the user: "Each 5 win streak will add/upgrade one of these. Starting at duel 6"): the
-    // player's wins in a row against anyone (the duels round 404 counts; any loss resets it, Bronze Coin or not).
+    // player's wins in a row against anyone (the duels round 404 counts; a loss, Bronze Coin or not, takes
+    // notorietyLossPenalty off since round 753 - it once reset it).
     // Every notorietyWinsPerLevel of them lifts the level by one, up to the walls lists' length: the enemy seat starts
     // with a Wall token, the level's entry - level 1 (5-9 wins) the first (a second wall from 25: round 429, below).
     // Which ranks get it, by difficulty name:
@@ -292,6 +293,9 @@ public class TuningData {
     public int notorietyMinRankNormal = 2;
     public int notorietyMinRankHard = 1;
     public int notorietyMinRankInsane = 0;
+    // Round 753 (the user approved "a loss costs one Notoriety level (5 wins) instead of a reset"): what a lost duel
+    // takes off notoriety, floor 0 - so notoriety is a score, not wins in a row. 0 = the old full reset.
+    public int notorietyLossPenalty = 5;
     // Round 429 (the user: "level 2, be 1/2, lvl 3: 2/4 and level 4: 3/6 ... at 25 consecutive wins, start over with a
     // second wall"): the lists run on past one wall. Every notorietyLevelsPerWall entries are one wall's levels; a level
     // past the first wall keeps each finished wall at its last entry and adds the level's own entry - level 5 (25-29

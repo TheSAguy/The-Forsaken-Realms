@@ -145,7 +145,8 @@
     "restoreFeeStepTowns": 5,
     "restoreFeeStepGold": 50,
     "restoreFeeStepWoodPercent": 50,
-    // Round 411 - NOTORIETY: your wins in a row against anyone (the duels above count; any loss resets it). Every
+    // Round 411 - NOTORIETY: your wins in a row against anyone (the duels above count; a loss takes notorietyLossPenalty
+    // off - round 753 - it once reset it). Every
     // notorietyWinsPerLevel wins add a level, and an enemy of a reached rank starts with a Wall token - the level's
     // entry of its rank's list (level 1 = 5-9 wins = the first). notorietyMinRank* = the lowest rank it reaches on that
     // difficulty: 0 Apprentice, 1 Adept, 2 Master, 3 Archmage. Apprentice/Adept get the plain walls, Masters the reach
@@ -158,6 +159,9 @@
     "notorietyMinRankNormal": 2,
     "notorietyMinRankHard": 1,
     "notorietyMinRankInsane": 0,
+    // Round 753: a lost duel takes this much off notoriety (floor 0) instead of resetting it - one level at 5. Since
+    // then notoriety is a score (+1 a win), not wins in a row; the Wall cards print "Each loss takes 5 off". 0 = reset.
+    "notorietyLossPenalty": 5,
     "notorietyLevelsPerWall": 4,
     "notorietyWallsPlain": ["tfr_wall_0_1", "tfr_wall_1_2", "tfr_wall_2_4", "tfr_wall_3_6",
         "tfr_wall2_0_1", "tfr_wall2_1_2", "tfr_wall2_2_4", "tfr_wall2_3_6"],

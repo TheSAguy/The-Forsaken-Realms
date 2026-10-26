@@ -80,7 +80,7 @@ public final class DungeonUpgrades {
                 System.out.println("[TFR-DungeonUpgrade] " + poi.getDisplayName() + " #" + objectId + ": " + placed.getName()
                         + " (" + EnemyData.tierDisplayName(placed.tier) + ") -> " + pick.getName() + " ("
                         + EnemyData.tierDisplayName(pick.tier) + "), +" + (to - from)
-                        + (to - from < shift ? " (rolled +" + shift + ")" : "") + " - " + streak + " wins in a row (+1 "
+                        + (to - from < shift ? " (rolled +" + shift + ")" : "") + " - notoriety " + streak + " (+1 "
                         + plusOne + "%, +2 " + plusTwo + "%), " + land.name + " roster, rank " + ceiling);
                 return pick;
             }
