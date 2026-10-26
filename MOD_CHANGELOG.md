@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 740: the Demon's Bargain and the Sphinx's Sanctum open in week 3 (2026-10-26)
+
+The user: "Move Demon that asks about Ante and Sphinx Dungeons to week 3+. I believe we currently have these two dungeons
+starting at week 1+, so they will just move to week 3+. Each can only appear once per game." Their premise was one week
+off: since round 513 both waited for day 8 (week 2), not week 1.
+
+- **The change** (data only, `The Forsaken Realms/world/points_of_interest.json`, 2 lines): `DemonsBargain` and
+  `RiddlesLair` (the Sphinx's Sanctum) `"notBeforeDay": 8` -> `15`. Weeks run days 1-7, 8-14, 15-21
+  (`World.weekOf`, `SpawnTierWeighting.currentWeek`, the arena's weekly reset), so day 15 is the first day of week 3.
+  Shandalar Old Border's copies have no `notBeforeDay` and stay as they are.
+- **How the rule acts** (round 513, unchanged): a new world starts both places in the reserve, the reserve skips them,
+  no quest picks them (`AdventureQuestStage` drops `isNotYet` places) until day 15; round 516 brings one in above the
+  map's target in the week its day opens.
+- **Running saves on days 8-14**: a place already showing goes back to the reserve at the next day tick
+  (`DungeonRotation.processDaysPassed`: no cooldown, its despawn day cleared) and returns from day 15 on. Safe because:
+  the day tick runs only on the world map (`WorldStage.act`), so the player is never inside it when it leaves; a quest
+  pointing at it keeps it on the map (the put-back skips any live quest target); a player who already settled the
+  Bargain or answered the Sphinx holds its retire flag and the place stays retired for good, as before. Both dialogs set
+  their flag only at the end (`DemonsBargainSettled`, `riddlesLairComplete`), so a half-done visit loses nothing, and
+  the place comes back restocked (`restock()`).
+- **"Once per game", as it stands (not changed in this round)**: each place retires for good the moment the player
+  holds its flag (`isRetired`, rounds 334/347): no rotation, no quest brings it back, in this game. Before that it
+  rotates like any cave: with dungeon rotation the world holds 5 copies of each (`count` 1 x `POOL_MULTIPLIER`), the
+  map shows its share of 1, and after its lifespan it leaves and can reappear later at another copy's spot. Two can show
+  at once only by the exceptions to the share: a quest force-spawn (`onQuestTargetBound`) or round 433's one-over fill
+  when every kind is at its share and the map is below its target.
+- **Tested**: read through `DungeonRotation` (`isNotYet`, `initializeNewWorld`, `processDaysPassed`,
+  `activateFromReserve`), `AdventureQuestStage`, `WorldStage`'s day tick and both maps' dialogs; the file parses as JSON.
+  Not run in the agent game (data change, packaged by the main thread).
+
 ## Round 739: agent_sync refuses while the agent game runs; agent filters match both folder names (2026-10-26)
 
 The user: "Yes: round 739 fixes agent_sync's running-game check, the stale F:\FORGE docstrings, and makes the agent
