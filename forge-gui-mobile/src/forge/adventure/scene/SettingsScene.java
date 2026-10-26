@@ -129,10 +129,11 @@ public class SettingsScene extends UIScene {
                 if (selected == null || selected.equals(Config.instance().getSettingData().plane))
                     return;
                 Localizer localizer = Forge.getLocalizer();
+                // Round 755: Restart / Cancel, not OK / Abort (the exit dialog's style, round 754).
                 showDialog(createGenericDialog("",
                         localizer.getMessage("lblAreYouSureYouWishRestartForge"),
-                        localizer.getMessage("lblOK"),
-                        localizer.getMessage("lblAbort"), () -> {
+                        localizer.getMessage("lblRestart"),
+                        localizer.getMessage("lblCancel"), () -> {
                             Config.instance().getSettingData().plane = selected;
                             Config.instance().saveSettings();
                             // Round 222 (upstream da6148f71eb, adventure localization): the plane's
@@ -696,8 +697,8 @@ public class SettingsScene extends UIScene {
         if (restartDialog == null) {
             restartDialog = createGenericDialog("",
                     localizer.getMessage("lblAreYouSureYouWishRestartForge"),
-                    localizer.getMessage("lblOK"),
-                    localizer.getMessage("lblAbort"), () -> {
+                    localizer.getMessage("lblRestart"), // round 755: Restart / Cancel
+                    localizer.getMessage("lblCancel"), () -> {
                         Forge.restart(true);
                         removeDialog();
                     }, this::removeDialog);

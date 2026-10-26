@@ -116,8 +116,9 @@ public class GameLauncher {
         }
         config.setHdpiMode(HdpiMode.Logical);
         // The Forsaken Realms standalone: this fork ships as its own game (Forge credited in
-        // CREDITS/README per GPL); keep the engine version visible for bug reports.
-        config.setTitle("The Forsaken Realms (Forge " + versionString + ")");
+        // CREDITS/README per GPL); keep the engine version visible for bug reports. Round 755: shown as
+        // "v.<version>", the splash's own format, without the word Forge.
+        config.setTitle("The Forsaken Realms (v." + versionString + ")");
         config.setWindowListener(new Lwjgl3WindowAdapter() {
             @Override
             public boolean closeRequested() {

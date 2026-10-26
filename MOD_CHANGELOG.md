@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 755: the restart dialog and the window title say The Forsaken Realms (2026-10-26)
+
+The user started the follow-up that round 754's sweep proposed ("Restart dialog and window title say TFR"), done in the
+TFR 1 main thread.
+
+- **The text** - three values in the stock `forge-gui/res/languages/en-US.properties`, keys unchanged:
+  `lblAreYouSureYouWishRestartForge` "Are you sure you wish restart Forge?" (also bad grammar) -> "Are you sure you want
+  to restart The Forsaken Realms?"; `lblRestartForge` "Restart Forge" -> "Restart The Forsaken Realms";
+  `lblRestartInFewSeconds` "Forge will restart after a few seconds..." -> "The Forsaken Realms will restart in a few
+  seconds...". The question stays general on purpose: the same key serves the plane change, the adventure Settings
+  restart and `Forge.restart(false)`.
+- **The buttons** - the adventure `SettingsScene`'s two restart dialogs (the plane change and `restartForge()`) pass
+  `lblRestart` / `lblCancel` instead of `lblOK` / `lblAbort`, the exit dialog's style (round 754). No shared key is
+  edited. `Forge.restart(false)` already used Restart / Cancel.
+- **The window title** - `GameLauncher` sets "The Forsaken Realms (v.<version>)" instead of "The Forsaken Realms (Forge
+  <version>)": the engine version stays visible for bug reports (that line's own rule), in the splash's "v.<version>"
+  format. Nothing reads the title (no script, skill or filter matches it; the agent filters match the command line).
+- **Not changed**: `FSkin.java:52`'s hard-coded fallback "Forge will restart after a few seconds.." (it only shows
+  when the key is missing, which it never is; a stock edit for nothing); the first-run card image index prompt; the
+  World Standings credit text (accurate); the `MapDialog` fallback; the stock classic-mode settings strings
+  (`lblRestartForgeDescription` and kin) - round 754's sweep recommended leaving those.
+- **Checked**: `javac` of `SettingsScene.java` and `GameLauncher.java` against the agent jar, exit 0 (round 751's
+  uncommitted edits were in the tree, so the two files were compiled alone). The text, buttons and window title are
+  seen after the next package.
+
 ## Round 754: the exit dialog says The Forsaken Realms, with Quit / Cancel (2026-10-26)
 
 The user, after the splash rebrand (round 747), with a shot of the title screen's exit dialog ("Exit Forge" / "Are you

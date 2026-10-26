@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 755 - the restart dialog and the window title say The Forsaken Realms
+
+- **`forge-gui/res/languages/en-US.properties`** (STOCK, shared) - three values rewritten, keys unchanged:
+  `lblAreYouSureYouWishRestartForge`, `lblRestartForge`, `lblRestartInFewSeconds`. An upstream edit to any of those
+  lines conflicts; keep ours.
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK) - the two restart dialogs' buttons read
+  `lblRestart` / `lblCancel` instead of `lblOK` / `lblAbort` (two places, commented).
+- **`forge-gui-mobile-dev/src/forge/app/GameLauncher.java`** (STOCK, TFR line) - the window title "The Forsaken Realms
+  (v.<version>)", was "(Forge <version>)".
+
 ### Round 754 - the exit dialog says The Forsaken Realms
 
 - **`forge-gui/res/languages/en-US.properties`** (STOCK, shared) - two values rewritten, keys unchanged:
