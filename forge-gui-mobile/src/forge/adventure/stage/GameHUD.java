@@ -1791,13 +1791,18 @@ public class GameHUD extends Stage {
         com.badlogic.gdx.scenes.scene2d.ui.Table rows = new com.badlogic.gdx.scenes.scene2d.ui.Table();
         if (noticeLog.isEmpty())
             rows.add(Controls.newTextraLabel("[%85]Nothing yet.")).width(width - 12f).left().row();
+        // Round 745 (the user: "The log needs a little alignment tweak"): the 70% day label sat at the top of its row, above
+        // the 85% message's line. It drops by the two scales' line-height difference, less the descent, onto the
+        // message's first baseline.
+        float dayDrop = Math.max(0f, (Controls.newTextraLabel("[%85]Day").getPrefHeight()
+                - Controls.newTextraLabel("[%70]Day").getPrefHeight()) * 0.75f);
         for (String[] entry : noticeLog) {
             TextraLabel day = Controls.newTextraLabel("[%70]Day " + entry[2]);
             day.setColor(Color.BLACK);
             TextraLabel line = Controls.newTextraLabel("[%85]" + entry[0]);
             line.setColor(entry[1].startsWith("w") ? Color.WHITE : Color.BLACK); // round 713: "wp" is a Power gain
             line.setWrap(true);
-            rows.add(day).left().top().padRight(4f);
+            rows.add(day).left().top().padTop(dayDrop).padRight(4f);
             rows.add(line).width(width - 52f).left().padBottom(4f).row();
         }
         ScrollPane pane = new ScrollPane(rows, Controls.getSkin().get("paper", ScrollPane.ScrollPaneStyle.class));

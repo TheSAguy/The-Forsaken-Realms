@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 745 - the Notices log's day labels on their message's baseline
+
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `openNoticeLog()`: `dayDrop` and the day label's
+  `padTop(dayDrop)`.
+
 ### Round 744 - the Gear Sets page sorts by pieces owned, then name
 
 - Mod-added only: `scene/SetsScene.java` - `listedSets()` sorts by `ItemSets.ownedCount`, then name; `buildAll`'s own

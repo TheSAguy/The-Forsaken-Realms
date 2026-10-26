@@ -14264,6 +14264,17 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 745: the Notices log's day labels sit on their message's line (2026-10-26)
+
+The user: "The log needs a little alignment tweak." (a screenshot with the small "Day 16" drawn higher than its message)
+
+- **The change** (`GameHUD.openNoticeLog`, the row layout only): the 70% "Day N" label was top-aligned beside the 85%
+  message, so its baseline sat above the message's. It now drops by three quarters of the two scales' line-height
+  difference (`dayDrop`, measured once per opening from two reference labels) - onto the message's first baseline.
+  A wrapped message keeps the label on its first line.
+- **Tested**: javac against the agent jar; agent game - plain, colored (Ascendance), icon (coin, Ascendance glyph) and
+  wrapped (quest) rows all line up (`notes/tweaks-1026/r745-notices.png`). Portrait not checked.
+
 ## Round 744: the Gear Sets page lists the sets you own the most pieces of first (2026-10-26)
 
 The user: "I'd like to sort the equipment set's by the number of items you have for each set. So the more you have, the
