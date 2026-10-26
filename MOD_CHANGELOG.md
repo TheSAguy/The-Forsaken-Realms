@@ -14335,6 +14335,27 @@ research v2 (round 751), it is new-game only: "existing saves keep the old syste
   cap (two eligible towns in the test world), and New Game+ switching it on (beside research v2's switch, logged
   `[TFR-Specialty] NG+: town specialties on`).
 
+## Round 763: the six town specialty badges (2026-10-26)
+
+Round 760 draws a 16-unit badge at each specialized town's World Map icon (top-right corner, `MapViewScene`) and loads
+it from `sprites/town_specialties.atlas` when that file exists, else from item-icon stand-ins. This round is that file
+drop: the Art thread drew the six badges and the user approved them ("Yes, install the six town specialty badges as
+shown").
+
+- **`forge-gui/res/adventure/The Forsaken Realms/sprites/town_specialties.atlas` + `.png`** - a 96x16 page, Nearest
+  filter, six 16x16 regions named exactly as `TownSpecialties.Specialty`'s labels: Mining (a steel pick and a rock),
+  Research (an open blue book), Outpost (a sandstone watchtower with a fire on top), Smithy (an anvil, a hammer and a
+  glowing bar), Garrison (a red shield with a gold cross), Market (a green purse and a stack of gold coins). Each has a
+  pure-black 1px outline so it reads over any biome; they differ in shape and main color.
+- **Drawn, not imported** - no pack had a pick, anvil, book or purse, so no CREDITS line. The source grids, the
+  game-scale previews (each badge beside a real 20 px town marker over all six biomes, built the way `World` bakes the
+  map) and the drawing script are in the Art project's `notes	own_badges`; the finished art is in the Art Library at
+  `Projects/The Forsaken Realms/Game Art/Town Specialty Badges (round 763)/`.
+- **Check after packaging**: forge.log prints `[TFR-Specialty] badges: sprites/town_specialties.atlas` (the stand-ins
+  print "stand-in item icons"). A misnamed region would silently fall back to its stand-in, so the six names were
+  checked against `TownSpecialties.java`. `poi_outline.py --audit` covers entrances only, not these badges. Art only;
+  no code, no stock file, no save change.
+
 ## Round 762: Art Library paths after the library's move, and the FAQ page names v1.23 (2026-10-26)
 
 The user approved "a small doc round for the Art Library paths and the FAQ page's 'v1.22' header". On 2026-10-26 the
