@@ -352,7 +352,8 @@ public class GameHUD extends Stage {
             } else {
                 lifepointsTextColor = "[WHITE]";
             }
-            lifePoints.restart("[%95]" + heartbeat + "[+Life]" + lifepointsTextColor + effect + " " + AdventurePlayer.current().getLife() + effectEnd + "/" + AdventurePlayer.current().getMaxLife());
+            // Round 758: a fatal loss leaves life below 0 until the home heal; the HUD shows 0, the saved value is untouched.
+            lifePoints.restart("[%95]" + heartbeat + "[+Life]" + lifepointsTextColor + effect + " " + Math.max(0, AdventurePlayer.current().getLife()) + effectEnd + "/" + AdventurePlayer.current().getMaxLife());
         });
         AdventurePlayer.current().onShardsChange(() -> shards.restart("[%95][+Shards]{EMERGE} " + AdventurePlayer.current().getShards() + "{ENDEMERGE}"));
         AdventurePlayer.current().onGoldChange(() -> money.restart("[%95][+Gold]{EMERGE} " + AdventurePlayer.current().getGold() + "{ENDEMERGE}"));

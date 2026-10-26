@@ -927,6 +927,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // next defeated() call a few frames later (the ante popup resolves before WorldStage/
     // MapStage.setWinner() runs). Nothing should carry it across a save/load.
     private transient boolean suppressDefeatGoldLoss = false;
+    // Round 758: the gold the last defeated() took when that defeat killed the player (0 otherwise), for the death
+    // dialog's "Lost [+Gold] N." line. Runtime-only, read once by GameStage.resetPlayerLocation().
+    private transient int lastDeathGoldLost = 0;
 
     public void create(String n, Deck startingDeck, boolean male, int race, int avatar, boolean isFantasy,
                        boolean isUsingCustomDeck, DifficultyData difficultyData, AdventureModes adventureMode,
@@ -2822,6 +2825,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // Bronze Coin ante ransom (2026-08-29): paying the coin buys off the GOLD penalty only -
         // the life loss still applies, so a loss is never consequence-free. One-shot: consumed
         // here so it can never leak into a later, unrelated defeat.
+        int goldBefore = gold;
         if (suppressDefeatGoldLoss) {
             suppressDefeatGoldLoss = false;
             System.out.println("[TFR-CoinRansom] defeat gold loss waived by Bronze Coin (gold kept: " + gold + ")");
@@ -2852,8 +2856,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         logLife("defeated(lifeLoss=" + difficultyData.lifeLoss + ")", lb, mb);
         onLifeTotalChangeList.emit();
         onGoldChangeList.emit();
+        lastDeathGoldLost = life < 1 ? Math.max(0, goldBefore - gold) : 0; // round 758
         return life < 1;
         // If true, the player would have had 0 or less, and thus is actually "defeated" if the caller cares about it
+    }
+
+    /** Round 758: the gold the defeat that just killed the player took, then 0 - the death dialog reads it once. */
+    public int takeLastDeathGoldLost() {
+        int lost = lastDeathGoldLost;
+        lastDeathGoldLost = 0;
+        return lost;
     }
 
     public void win() {

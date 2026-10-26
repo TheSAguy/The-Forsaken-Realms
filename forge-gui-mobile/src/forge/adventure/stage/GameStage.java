@@ -925,10 +925,16 @@ public abstract class GameStage extends Stage {
             playerSprite.setAnimation(CharacterSprite.AnimationTypes.Death);
             playerSprite.playEffect(Paths.EFFECT_BLOOD, 0.5f);
             float deathDuration = playerSprite.getActionAnimationDuration(CharacterSprite.AnimationTypes.Death, 1f);
+            // Round 758: the death dialog says where you wake, whether you are healed there and the gold the loss took.
+            final int goldLost = Current.player().takeLastDeathGoldLost();
+            final boolean healed = homeHeals(poi);
+            System.out.println("[TFR-Defeat] died at " + Current.player().getLife() + "/" + Current.player().getMaxLife()
+                    + " life: wakes in " + poi.getDisplayName() + (healed ? ", healed" : ", NOT healed (color reputation)")
+                    + ", lost " + goldLost + " gold");
             scheduleResultTask(new Timer.Task() {
                 @Override
                 public void run() {
-                showImageDialog(Current.generateDefeatMessage(true), getDefeatBadge(),
+                showImageDialog(Current.generateDeathMessage(poi.getDisplayName(), healed, goldLost), getDefeatBadge(),
                     () -> FThreads.invokeInEdtNowOrLater(() -> Forge.setTransitionScreen(new CoverScreen(() -> {
                         Forge.advFreezePlayerControls = false;
                         WorldStage.getInstance().setPosition(new Vector2(poi.getPosition().x - 16f, poi.getPosition().y + 16f));
@@ -941,9 +947,24 @@ public abstract class GameStage extends Stage {
         }//Spawn shouldn't be null
     }
 
+    /** Round 758: does walking into this home heal you? TileMapScene.enter()'s free heal - towns and capitals only -
+     *  unless the home's color blocks it (ColorReputation; a player-owned town is exempt). */
+    private static boolean homeHeals(PointOfInterest poi) {
+        String type = poi.getData() == null ? null : poi.getData().type;
+        if (!"town".equals(type) && !"capital".equals(type)) // TileMapScene.AUTO_HEAL_LOCATIONS
+            return false;
+        String color = forge.adventure.util.ColorReputation.colorOfTown(poi.getData());
+        if (color == null || !forge.adventure.util.ColorReputation.isFreeHealBlocked(color))
+            return true;
+        return forge.adventure.util.TownRestoration.isTownRestored(
+                WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID()));
+    }
+
     public void defeatedFromBoss() {
         if (!Current.player().hasEquippedItem())
             return;
+        System.out.println("[TFR-Defeat] boss defeat at " + Current.player().getLife() + "/" + Current.player().getMaxLife()
+                + " life"); // round 758
         Forge.advFreezePlayerControls = true;
         PlayerSprite playerSprite = getPlayerSprite();
         playerSprite.setAnimation(CharacterSprite.AnimationTypes.Hit);

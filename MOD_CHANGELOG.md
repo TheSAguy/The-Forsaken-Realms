@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 758: the death dialog says what dying did (2026-10-26)
+
+The user, with a screenshot of the agent game's death ("Will, You Died!!!" / "Torch Cracked!", life -5/22): "This
+looks like the wrong defeat screen. This looks like the duel loss screen when an equipment breaks vs. you losing the
+game."
+
+- **Diagnosis**: it was the right screen. A loss that leaves life below 1 is a death (`AdventurePlayer.defeated()`
+  returns true): `GameStage.resetPlayerLocation()` shows the death dialog, OK sends you home (the Capitol, else Orazca;
+  round 253) and the town's free heal restores you. TFR has no permadeath; only the run-lost screens (Capitol defense,
+  three Center Towns) end a run. The case: Insane, four world-map losses in a row (22 -> 15 -> 8 -> 1 -> -5), home to
+  Orazca, `fullHeal: -5/22 -> 22/22`. It read as the item-break screen because the death and boss-defeat dialogs were
+  one dialog: the same DEFEAT badge and layout, the same "<Item> Cracked!" line, only the first line different; the
+  death dialog never said what dying does; and the HUD showed -5/22 under it.
+- **The death dialog** (`Current.generateDeathMessage`): "<Name>, You Died!!!" / "You wake in <home>, healed." /
+  "Lost [+Gold] N." (when the fatal loss took gold) / a blank line / "Your <item> cracked." in the red-gray gradient.
+  "healed" is dropped when the home will not heal you (not a town or capital, or a town whose color reputation blocks
+  the free heal - `GameStage.homeHeals`, TileMapScene.enter()'s rule). The gold is what that `defeated()` took
+  (`AdventurePlayer.takeLastDeathGoldLost`, runtime-only, never saved; 0 for the console's `endscreen died`). TFR text
+  built in Java; `en-US.properties` untouched.
+- **The boss-defeat dialog** keeps its two lines ("you lost the last game." / "<Item> Cracked!").
+- **The HUD** shows life at 0, never below, while the player is dead (`GameHUD`'s life label); the saved value is
+  untouched, and the home heal restores it.
+- **Logging**: `[TFR-Defeat]` - "died at L/M life: wakes in <home>, healed|NOT healed, lost N gold", "boss defeat at
+  L/M life", and for both which item cracks (and its slot) or why none does (nothing equipped, cracking off in
+  Settings, Mender, the Easy/Normal save). A crack logged nothing before. The crack itself moved into
+  `Current.crackRandomEquippedItem`, unchanged.
+- **Not done**: a separate death badge (the user's call; it would be an art request through the Art thread).
+- **Seen in the agent game** (a copy of the Art session's world, Normal; javac classes ahead of the 13:07 jar): a real
+  death at 1/20 against a spawned Young Red Dragon (50x) - the new dialog with "Lost [+Gold] 100." and "Your Leather
+  Boots cracked.", the HUD 0/20 while life was -3; OK -> Orazca, 20/20. `endscreen boss`: unchanged. `endscreen died`
+  with nothing equipped: no gold or crack line. No exceptions.
+- **Not checked**: a home whose color reputation blocks the heal (the dialog then drops "healed"; read in code only),
+  and the History round trip on the new text (History re-shows the same message string, as before).
+
 ## Round 757: Discord FAQ message 22 - the support post (2026-10-26)
 
 The user approved a Ko-fi support post for the Discord #faq channel: "Yes: add the support post to the Discord FAQ

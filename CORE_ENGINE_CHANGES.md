@@ -38,6 +38,18 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 758 - the death dialog says what dying did
+
+- **`forge-gui-mobile/src/forge/adventure/util/Current.java`** (STOCK) - `generateDefeatMessage`'s crack moved into a
+  new private `crackRandomEquippedItem(screen)` (same checks, `[TFR-Defeat]` lines); a new `generateDeathMessage(home,
+  healed, goldLost)` for the death dialog. An upstream edit to `generateDefeatMessage` conflicts; keep the helper call.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameStage.java`** (STOCK) - `resetPlayerLocation()` shows
+  `generateDeathMessage` (home name, `homeHeals(poi)`, the gold the death took) and logs `[TFR-Defeat]`; new private
+  `homeHeals`; one log line at the top of `defeatedFromBoss()`.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - transient `lastDeathGoldLost`, set at
+  the end of `defeated()` (a `goldBefore` local at its top), read by `takeLastDeathGoldLost()`. Not saved.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** (STOCK) - the life label shows `Math.max(0, life)`.
+
 ### Round 756 - the play-time support asks
 
 - **`forge-gui-mobile/src/forge/Forge.java`** (STOCK) - three TFR lines: `render()` calls
