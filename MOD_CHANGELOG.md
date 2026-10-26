@@ -14264,6 +14264,77 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 760: town specialties, new games and New Game+ only (2026-10-26)
+
+The user's idea, from Discord feedback that restoring towns doesn't feel impactful: "each time you fix a town, you get
+the option to select the town specialty. (This will not be for your cap)." The measured design is
+`notes\research-towns-1026.md` Part C; approving its first batch, the user said: "Change research to 5%, to a max of
+50. So you'll need 10 towns to reach max. For outpost, add 5% defense against capture. Build with these changes." Like
+research v2 (round 751), it is new-game only: "existing saves keep the old systems", and New Game+ switches it on.
+
+- **The gate**: a saved `townSpecialties` flag on `AdventurePlayer`, set in `create()` and `resetForNewGamePlus()` when
+  the plane's `townSpecialtiesEnabled` (ConfigData, on in TFR's config.json) is on, and read in `load()`. A save without
+  the key never sees a choice, a badge or an effect. It is a sibling of research v2's `researchV2`, not a reuse:
+  `researchV2` is already true in every game started on rounds 751-759, and reusing it would have switched specialties
+  on mid-game in saves whose towns were already restored. `[TFR-Specialty] town specialties: on|off (new game|loaded)`.
+- **Who picks**: every town the player holds - restored, captured, a Ring City that opened its gates - except the
+  Capitol and Orazca (the Capitol's seat; a pick there would vanish at the upgrade). Right after the restore fee is
+  paid, the choice opens before the walk out to the world map (`QuestActor`'s restore listener ->
+  `TownSpecialties.offerAfterRestore`, then `showRebuiltLayout`). A town taken any other way asks once, on its first
+  entry (`MapStage.loadMap` -> `onMapLoaded`, the saved `specialtyAsked`). "Later (free at the Job Board)" leaves the
+  pick at the town's Job Board, whose menu now also opens in a town that can take a specialty.
+- **Changing**: the Job Board's "Change specialty: X (cost)" costs half the current restore fee's gold (difficulty and
+  Architect applied, as the fee is), then reads "X - change in N days" for 7 days. The first pick is free and not
+  locked. A restore clears what a sacked town's old entry still held; a town that falls loses its state with everything
+  else.
+- **The six** (numbers in settings.json `specialty*`; the choice list reads them):
+
+| Specialty | Effect | Where |
+|---|---|---|
+| Mining | this town's mines pay x1.5 (a Gold Mine 100 -> 150, a Shard Mine 20 -> 30) - the payday, the build menu, the mine's panel and the balance sheet | `EconomyBuildings.mineWeeklyAmount(changes, type)` |
+| Research | each Research town +5%, at most +50% (10 towns): points fed x(1+b) and research days /(1+b) - 28 days unfed -> 27 at one town, about 19 at the cap; `specialtyResearchTimeCut` true reads it as days x(1-b) instead (14 at the cap). Research v2 only, so never in a classic save | `ResearchMeter.pointsFor` / `lengthDays` |
+| Outpost | lit as if it had an Outlook (radius x2; with an Outlook x3), and +5% capture defense | `World.getTownVisionRadiusTiles`, the capture roll |
+| Smithy | this town's Armory rolls on the Capitol's rarity table | `ArmoryRarity.classifyVenue` |
+| Garrison | +20% capture defense, and no new pillage starts there (a running one goes on) | the capture roll, `TownPillage.notEligibleReason` |
+| Market | this town's card shops (not the Armory family) x0.9, and one free restock a week per town, which is no step on the week's restock surcharge | `ShopActor.getPriceModifier`, `RewardScene.restockPriceNow` / `restockShop` |
+
+- **Capture defense** comes off an attacking mage's chance after the guard fights, beside the Outlook's 5% and the
+  town's reputation, and `townMinCaptureChance` (5%) still floors it; `[TFR-CaptureOdds]` prints `specialtyDefense`.
+- **The capital hearts** (round 752) cannot come back through the Market's free restock: the only +1 max life shops are
+  the five color Items shops, which have no `restockPrice` (`canRestock()` is false), and they stand in AI capitals.
+- **Badges**: the World Map (MapViewScene) draws a 16-unit badge at each specialized town's icon's top-right corner, in
+  the zoom-following marker list; not the HUD minimap (its image is saved, and a change would leave stale pixels).
+  `TownSpecialties.badge` reads `sprites/town_specialties.atlas` (regions Mining, Research, Outpost, Smithy, Garrison,
+  Market - the Art thread is drawing them, 16x16 with a 1px black outline) once it exists, and until then stand-in item
+  icons (GoldveinPick, TomeoftheTrove, Torch, SwordoftheUr-Dragon, ShieldoftheRighteous, GoldCoin) - one line each in
+  `STAND_INS`, or nothing at all once the atlas lands.
+- **State**: `PointOfInterestChanges` saves `specialty`, `specialtyChangedDay`, `marketFreeRestockWeek` and
+  `specialtyAsked`, each stored only once set, so an older save's file is unchanged.
+- **Console** (cheats): `specialty` (this town and the realm's counts, the research bonus, the capture defense),
+  `specialty set <name>` (here, free, no lock), `specialty clear`, `specialty unlock`.
+- **Logs**: `[TFR-Specialty]` on every pick and change (with the gold paid and the lock day), the Mining payday per
+  mine, the Research count when it changes, the Outpost radius, each Smithy roll, the Market's free restock and the World
+  Map's badge count; the weekly `[TFR-Pillage]` roll counts the Garrison towns left out.
+- **GUIDE**: a "Town Specialties" section after Buildings & the Economy, with the line that older saves don't have them.
+- **Seen in the agent game** (only the changed classes ahead of the 14:12 jar, 1280x720, a new Normal game in slot 76;
+  the agent folder's config.json had the flag added for the run and is restored, as is auto_save.sav): restoring Baker's
+  Vale opened "Choose Baker's Vale's specialty" with the six lines and Later (shot r760-1). As Mining, the build menu
+  read Gold Mine 150 / Shard Mine 30, and the day-8 payday paid +150 gold and +30 shards (`Mining: ... pays 150 (100
+  without the specialty)`). The Job Board offered "Change specialty: Mining (100 gold)"; changing to Smithy cost 100 and
+  the board then read "Smithy - change in 7 days", disabled (r760-5, r760-6). The Smithy Armory rolled `venue=CAPITOL`.
+  As a Market town the common shop priced commons 33 (37 without) and uncommons 100 (112); the restock read 0, cost
+  nothing, and the next read 4, the shop's base (r760-8, r760-9). Coldsnap Tower, restored by `set mapflag townRestored
+  1`, asked on its next entry (the captured-town path, r760-4). As an Outpost it lit 20 tiles (10 without); as a Garrison
+  `pillage info` listed it as "a Garrison town"; as the one Research town it made every set at the Lab 27 days instead of
+  28 (r760-11). Restoring Orazca offered no choice. The World Map showed the Market badge on Baker's Vale (r760-10). A
+  copy of an older save loaded "off (an older save)": no badges, no prompt on entering a held town, and the console said
+  it has no town specialties. Two bugs were found and fixed in the run: the Research count's one-second memo started at
+  `Long.MIN_VALUE`, so `now - at` overflowed and the count was never taken (+0%); and `Config.getFile` returns null for
+  a missing file, so the badge-atlas check threw and no badge drew.
+- **Not seen live**: a real mage attack on a Garrison or Outpost town (the roll logs `specialtyDefense`), the Research
+  cap (two eligible towns in the test world), and New Game+ switching it on (beside research v2's switch, logged
+  `[TFR-Specialty] NG+: town specialties on`).
+
 ## Round 762: Art Library paths after the library's move, and the FAQ page names v1.23 (2026-10-26)
 
 The user approved "a small doc round for the Art Library paths and the FAQ page's 'v1.22' header". On 2026-10-26 the

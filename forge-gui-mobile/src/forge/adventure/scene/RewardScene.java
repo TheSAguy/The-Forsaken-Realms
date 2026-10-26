@@ -794,6 +794,8 @@ public class RewardScene extends UIScene {
      *  PointOfInterestChanges can't track a surcharge). */
     /** Round 106: Ring City shops restock at ringShopRestockMultiplier (3) x a normal shop's price, multiplied again by every restock this week. */
     private int restockPriceNow() {
+        if (forge.adventure.util.TownSpecialties.marketRestockFree(changes))
+            return 0; // round 760: a Market town's free restock of the week
         if (EconomyBuildings.isRingShop(shopActor.getShopData())) {
             float mult = Math.max(1f, forge.adventure.util.Config.instance().getTuningData().ringShopRestockMultiplier);
             double price = Math.max(2, shopActor.getRestockPrice()) * mult * Math.pow(mult, restockSurcharge());
@@ -832,9 +834,13 @@ public class RewardScene extends UIScene {
         }
         int price = restockPriceNow();
         int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        boolean marketFree = forge.adventure.util.TownSpecialties.marketRestockFree(changes); // round 760
         if (changes != null) {
             changes.generateNewShopSeed(shopActor.getObjectId());
-            changes.recordReroll(shopActor.getObjectId(), day);
+            if (marketFree)
+                forge.adventure.util.TownSpecialties.useMarketRestock(changes, shopActor.getShopData().name);
+            else
+                changes.recordReroll(shopActor.getObjectId(), day); // the free one is no step on the week's surcharge
         }
 
         Current.player().takeShards(price);

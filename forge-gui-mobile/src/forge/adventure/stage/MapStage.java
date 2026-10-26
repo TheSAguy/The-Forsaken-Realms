@@ -927,6 +927,7 @@ public class MapStage extends GameStage {
         // toggle now, so turning it back on in the next map is one keypress.
         debugCollision(false);
         getPlayerSprite().stop();
+        forge.adventure.util.TownSpecialties.onMapLoaded(this); // round 760: a held town with no specialty asks once
     }
 
     public void spawn(int targetId){

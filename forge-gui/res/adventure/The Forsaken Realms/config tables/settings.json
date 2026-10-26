@@ -213,6 +213,21 @@
     "researchCopyShare": 0.25,
     "researchSacrificeFactor": 2,
     "researchShardCutAtFull": 0.5,
+    // Round 760 - town specialties (new games and New Game+ only). Mining: that town's mines pay x specialtyMineFactor.
+    // Research: each Research town makes research specialtyResearchPerTown faster, at most specialtyResearchCap - points
+    // fed x(1 + b) and the days / (1 + b) (28 days -> 19 at the cap); specialtyResearchTimeCut true reads it as days
+    // x(1 - b) instead (28 -> 14 at the cap). Outpost and Garrison come off the capture roll (the 5% floor stays).
+    // Market: card shops x specialtyMarketPriceFactor. A change costs specialtyChangeFeeShare of the restore fee's gold,
+    // then the town is locked for specialtyChangeLockDays days.
+    "specialtyMineFactor": 1.5,
+    "specialtyResearchPerTown": 0.05,
+    "specialtyResearchCap": 0.5,
+    "specialtyResearchTimeCut": false,
+    "specialtyOutpostDefense": 0.05,
+    "specialtyGarrisonDefense": 0.20,
+    "specialtyMarketPriceFactor": 0.9,
+    "specialtyChangeFeeShare": 0.5,
+    "specialtyChangeLockDays": 7,
     // Bank: the gold one Deposit or Withdraw press moves (Deposit All / Withdraw All move everything).
     // Round 457: 100 -> 500 (a player asked for 1,000).
     "bankStepGold": 500,

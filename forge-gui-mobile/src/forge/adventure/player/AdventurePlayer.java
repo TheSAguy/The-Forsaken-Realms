@@ -840,6 +840,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         researchV2 = false; // round 751: create() and New Game+ turn it on; load() reads the save's own
         researchPoints.clear();
         researchFedNames.clear();
+        townSpecialties = false; // round 760: create() and New Game+ turn it on; load() reads the save's own
     }
 
     static public AdventurePlayer current() {
@@ -872,6 +873,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private boolean researchV2 = false;
     private final java.util.Map<String, Float> researchPoints = new java.util.HashMap<>();
     private final java.util.Map<String, java.util.Set<String>> researchFedNames = new java.util.HashMap<>();
+    // Round 760 - town specialties (util/TownSpecialties; the user: "New game or NG+ features"). True for a game created,
+    // or taken into New Game+, on round 760 or later; a save without the key never sees a specialty.
+    private boolean townSpecialties = false;
 
     // Bronze Coin ante ransom (user spec 2026-08-29). Enemy NAMES the player has bought their
     // ante back from with a Bronze Challenge Coin; beating an enemy of that name later reclaims
@@ -994,6 +998,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // Round 751: a new game runs research v2 (on a plane with set unlocks).
         researchV2 = forge.adventure.util.ResearchMeter.planeEnabled();
         System.out.println("[TFR-Research] research system: " + (researchV2 ? "v2" : "classic") + " (new game)");
+        // Round 760: a new game runs town specialties (on a plane that has them).
+        townSpecialties = forge.adventure.util.TownSpecialties.planeEnabled();
+        System.out.println("[TFR-Specialty] town specialties: " + (townSpecialties ? "on" : "off") + " (new game)");
 
         // Shop-type blueprints (2026-08-30): 3 color shops + 2 race tribal shops. Placed here,
         // after heroRace is set above, since the race grant is keyed off it.
@@ -1197,6 +1204,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (!researchV2 && forge.adventure.util.ResearchMeter.planeEnabled()) {
             researchV2 = true;
             System.out.println("[TFR-Research] NG+: classic -> v2");
+        }
+        // Round 760: New Game+ starts the new run with town specialties (the new world's towns start unrestored).
+        if (!townSpecialties && forge.adventure.util.TownSpecialties.planeEnabled()) {
+            townSpecialties = true;
+            System.out.println("[TFR-Specialty] NG+: town specialties on");
         }
         seedStartingShopTypes(heroRace);
 
@@ -2200,6 +2212,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // Round 751: research v2's flag and meters - "CODE|points" and "CODE|Card Name" lists (see save()). A save
         // without the flag is from before round 751 and keeps the classic research.
         researchV2 = data.containsKey("researchV2") && data.readBool("researchV2");
+        // Round 760: town specialties - a save without the key is from before round 760 and never has them.
+        townSpecialties = data.containsKey("townSpecialties") && data.readBool("townSpecialties");
+        System.out.println("[TFR-Specialty] town specialties: " + (townSpecialties ? "on" : "off (an older save)") + " (loaded)");
         researchPoints.clear();
         researchFedNames.clear();
         if (data.containsKey("researchPointsList")) {
@@ -2303,6 +2318,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             researchList.append(researchList.length() == 0 ? "" : ";").append(r.getKey()).append(':').append(r.getValue());
         data.store("researchInProgressList", researchList.toString());
         // Round 751: research v2 (see load()). Stored only by a v2 save, so a classic save's file is unchanged.
+        if (townSpecialties) // round 760: stored only by a save that has them
+            data.store("townSpecialties", true);
         if (researchV2) {
             data.store("researchV2", true);
             ArrayList<String> pointsList = new ArrayList<>();
@@ -3354,6 +3371,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     /** Round 751: this save runs research v2 (a game created, or taken into New Game+, on round 751 or later). */
     public boolean isResearchV2() {
         return researchV2;
+    }
+
+    /** Round 760: this save has town specialties (util/TownSpecialties). */
+    public boolean hasTownSpecialties() {
+        return townSpecialties;
     }
 
     /** Round 751: research v2's points per set (ResearchMeter). */

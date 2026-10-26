@@ -93,9 +93,10 @@ public final class ResearchMeter {
         return d > 0 ? d : 28;
     }
 
-    /** The research's whole length at today's fill, before rounding: researchDaysV2 x (1 - sqrt(fill)), with Researcher. */
+    /** The research's whole length at today's fill, before rounding: researchDaysV2 x (1 - sqrt(fill)), with Researcher
+     *  and (round 760) the Research towns' speed (TownSpecialties.researchDaysFactor). */
     public static double lengthDays(AdventurePlayer player, String code) {
-        return unfedDays() * (1 - reach(player, code)) * Ascendance.researchDaysFactor();
+        return unfedDays() * (1 - reach(player, code)) * Ascendance.researchDaysFactor() * TownSpecialties.researchDaysFactor();
     }
 
     /** Days a research would take if started now. */
@@ -141,6 +142,7 @@ public final class ResearchMeter {
         Set<String> fed = player.getResearchFedNames().get(card.getEdition());
         boolean isNew = fed == null || !fed.contains(card.getName());
         float pts = isNew ? first + (amount - 1) * copy : amount * copy;
+        pts *= TownSpecialties.researchPointsFactor(); // round 760: the Research towns' speed (1 without specialties)
         return sacrifice ? pts * tuning().researchSacrificeFactor : pts;
     }
 

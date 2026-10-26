@@ -7278,7 +7278,10 @@ public class World implements Disposable, SaveFileContent {
             Integer radius = townTerritoryRadius.get(poi.getID());
             r = radius != null ? radius : TerritoryControl.RECOLOR_RADIUS;
         }
-        if (changes != null && changes.hasEconomyBuildingOfType(EconomyBuildings.OUTLOOK))
+        boolean outlook = changes != null && changes.hasEconomyBuildingOfType(EconomyBuildings.OUTLOOK);
+        if (!isCapitol && forge.adventure.util.TownSpecialties.isOutpost(changes))
+            r *= outlook ? 3 : 2; // round 760: an Outpost town is lit as if it had an Outlook; with one, as the Capitol's
+        else if (outlook)
             r *= isCapitol ? 3 : 2;
         return r;
     }

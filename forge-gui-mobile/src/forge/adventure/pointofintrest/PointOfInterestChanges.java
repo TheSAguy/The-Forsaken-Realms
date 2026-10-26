@@ -90,6 +90,13 @@ public class PointOfInterestChanges implements SaveFileContent  {
     // use (see EnemyData.tierDisplayName(), 2026-08-13 rename from "Challenger").
     private final java.util.List<String> guardTiers = new ArrayList<>();
     private final java.util.List<Integer> guardLastPaidDay = new ArrayList<>();
+    // Round 760 - town specialties (util/TownSpecialties): the specialty's name (null = none chosen), the day of the last
+    // paid change (-1 = never), the calendar week a Market town's free restock was used (-1 = never), and whether the
+    // first-entry prompt has been shown. Saved only once set, so a classic save's file is unchanged.
+    private String specialty = null;
+    private int specialtyChangedDay = -1;
+    private int marketFreeRestockWeek = -1;
+    private boolean specialtyAsked = false;
 
     public static class Map extends HashMap<String,PointOfInterestChanges> implements SaveFileContent {
         @Override
@@ -220,6 +227,11 @@ public class PointOfInterestChanges implements SaveFileContent  {
             if (obj instanceof java.util.Map)
                 shopRerollCountThisWeek.putAll((java.util.Map<Integer, Integer>) obj);
         }
+        // Round 760: town specialties, absent on every save without one.
+        specialty = data.containsKey("specialty") ? data.readString("specialty") : null;
+        specialtyChangedDay = data.containsKey("specialtyChangedDay") ? data.readInt("specialtyChangedDay") : -1;
+        marketFreeRestockWeek = data.containsKey("marketFreeRestockWeek") ? data.readInt("marketFreeRestockWeek") : -1;
+        specialtyAsked = data.containsKey("specialtyAsked") && data.readBool("specialtyAsked");
     }
 
     @Override
@@ -248,8 +260,26 @@ public class PointOfInterestChanges implements SaveFileContent  {
         data.storeObject("guardLastPaidDay", new ArrayList<>(guardLastPaidDay));
         data.storeObject("shopManualRerollLastDay", new HashMap<>(shopManualRerollLastDay));
         data.storeObject("shopRerollCountThisWeek", new HashMap<>(shopRerollCountThisWeek));
+        if (specialty != null) // round 760
+            data.store("specialty", specialty);
+        if (specialtyChangedDay >= 0)
+            data.store("specialtyChangedDay", specialtyChangedDay);
+        if (marketFreeRestockWeek >= 0)
+            data.store("marketFreeRestockWeek", marketFreeRestockWeek);
+        if (specialtyAsked)
+            data.store("specialtyAsked", true);
         return data;
     }
+
+    // Round 760: town specialties - see util/TownSpecialties.
+    public String getSpecialty() { return specialty; }
+    public void setSpecialty(String value) { specialty = value; }
+    public int getSpecialtyChangedDay() { return specialtyChangedDay; }
+    public void setSpecialtyChangedDay(int day) { specialtyChangedDay = day; }
+    public int getMarketFreeRestockWeek() { return marketFreeRestockWeek; }
+    public void setMarketFreeRestockWeek(int week) { marketFreeRestockWeek = week; }
+    public boolean isSpecialtyAsked() { return specialtyAsked; }
+    public void setSpecialtyAsked(boolean value) { specialtyAsked = value; }
 
     public int getBuildingLevel(int objectId) {
         Integer level = buildingLevels.get(objectId);

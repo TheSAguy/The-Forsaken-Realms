@@ -57,7 +57,9 @@ public class QuestActor extends DialogActor {
                     // whether the flag actually got set rather than assuming success.
                     if (TownRestoration.isTownRestored(stage)) {
                         TownRestoration.recolorTerrainForTesting();
-                        TownRestoration.showRebuiltLayout(stage); // round 351
+                        // Round 760: the town's specialty is chosen first, then out to the world map (round 351).
+                        if (!forge.adventure.util.TownSpecialties.offerAfterRestore(stage, () -> TownRestoration.showRebuiltLayout(stage)))
+                            TownRestoration.showRebuiltLayout(stage); // round 351
                     }
                 }
             });
@@ -70,7 +72,7 @@ public class QuestActor extends DialogActor {
         // board goes straight to quests (user feedback 2026-08-08 late). Mod-gated; stock towns
         // keep the direct-to-quest behavior always.
         if (TownRestoration.isWastelandTown() && TownRestoration.isTownRestored(stage)
-                && TownRestoration.shouldShowJobBoardMenu()) {
+                && (TownRestoration.shouldShowJobBoardMenu() || forge.adventure.util.TownSpecialties.offeredAtJobBoard())) { // round 760
             TownRestoration.openJobBoardMenu(stage, this::showQuestBoard);
             return;
         }

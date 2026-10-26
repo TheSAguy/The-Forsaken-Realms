@@ -38,6 +38,34 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 760 - town specialties (new games and New Game+ only)
+
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - the saved `townSpecialties` flag:
+  set in `create()` and `resetForNewGamePlus()` (beside research v2's), read in `load()`, stored by `save()` only when
+  true, cleared in `clear()`; `hasTownSpecialties()`. TFR-owned blocks.
+- **`forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterestChanges.java`** (STOCK) - four saved fields
+  (`specialty`, `specialtyChangedDay`, `marketFreeRestockWeek`, `specialtyAsked`), containsKey-guarded in `load()`,
+  stored only once set; getters and setters.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** (STOCK) - `townSpecialtiesEnabled`, default false.
+- **`forge-gui-mobile/src/forge/adventure/character/QuestActor.java`** (STOCK) - the restore listener runs
+  `TownSpecialties.offerAfterRestore` before `showRebuiltLayout`; the Job Board menu also opens when
+  `TownSpecialties.offeredAtJobBoard()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK) - one call at the end of `loadMap`:
+  `TownSpecialties.onMapLoaded(this)`.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** (STOCK) - `getTownVisionRadiusTiles`: an Outpost town
+  (not the Capitol) x2, x3 with an Outlook.
+- **`forge-gui-mobile/src/forge/adventure/character/ShopActor.java`** (STOCK) - `getPriceModifier` times
+  `TownSpecialties.marketPriceFactor`.
+- **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** (STOCK) - `restockPriceNow` is 0 for a Market
+  town's free restock; `restockShop` records it (`useMarketRestock`) instead of the week's surcharge step.
+- **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** (STOCK) - `enter()`: a badge per specialized
+  town, in the zoom-following marker list.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK) - the `specialty` command.
+- Mod files: NEW `util/TownSpecialties.java`; `util/TownRestoration.java` (the Job Board row), `util/EconomyBuildings.java`
+  (`mineWeeklyAmount(changes, type)`), `util/TerritoryControl.java` (the capture roll's `specialtyDefense`),
+  `util/TownPillage.java` (Garrison), `util/ArmoryRarity.java` (Smithy), `util/ResearchMeter.java` (Research),
+  `data/TuningData.java` (`specialty*`); TFR's config.json, settings.json and GUIDE.
+
 ### Round 759 - the agent game starts every duel at 50x
 
 - **`forge-gui/src/main/java/forge/gui/control/FControlGamePlayback.java`** (STOCK) - a static `startSpeed` (null) and

@@ -1185,7 +1185,30 @@ public class MapViewScene extends UIScene {
             mageMarkers.add(marker);
             markerAnchors.add(new float[]{wx, wy});
         }
+        // Round 760: each specialized town's badge (TownSpecialties.badge), centered on its map icon's top-right corner -
+        // the icon is 20 map pixels, so +10 map px each way. Drawn at 16 units; in mageMarkers so zooming moves it.
+        int badges = 0;
+        {
+            forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+            int ts = world.getTileSize();
+            float off = 10f / Math.max(1, world.getData().miniMapTileSize) * ts;
+            for (Object[] row : forge.adventure.util.TownSpecialties.badgedTowns()) {
+                PointOfInterest town = (PointOfInterest) row[0];
+                com.badlogic.gdx.graphics.g2d.Sprite art = forge.adventure.util.TownSpecialties.badge(
+                        (forge.adventure.util.TownSpecialties.Specialty) row[1]);
+                if (art == null)
+                    continue;
+                Image marker = new Image(art);
+                marker.setSize(16f, 16f);
+                table.addActor(marker);
+                mageMarkers.add(marker);
+                markerAnchors.add(new float[]{town.getCenter().x + off, town.getCenter().y + off});
+                badges++;
+            }
+        }
         layoutMarkers(); // round 292: the same placement every zoom step uses
+        if (badges > 0)
+            System.out.println("[TFR-Specialty] World Map: " + badges + " town badge(s)");
         if (legendDots > 0)
             System.out.println("[TFR-MapView] " + legendDots + " sighted legend(s) marked in gold");
 

@@ -43,8 +43,14 @@ public final class ArmoryRarity {
             return null;
         if (TownRestoration.isCurrentTownCapitol())
             return CAPITOL;
-        if (TownRestoration.isTownRestored(changes))
+        if (TownRestoration.isTownRestored(changes)) {
+            // Round 760: a Smithy town's Armory rolls on the Capitol's table.
+            if (TownSpecialties.isSmithy(changes)) {
+                System.out.println("[TFR-Specialty] Smithy: " + TownSpecialties.currentTownName() + "'s Armory rolls on the Capitol's table");
+                return CAPITOL;
+            }
             return PLAYER_TOWN;
+        }
         if (TownRestoration.isNeutralSeededTown(changes))
             return NEUTRAL_TOWN;
         return null;

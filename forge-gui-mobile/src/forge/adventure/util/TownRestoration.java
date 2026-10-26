@@ -1065,6 +1065,7 @@ public class TownRestoration {
                 dialog.getButtonTable().add(upgrade).width(240f).row();
             }
         }
+        TownSpecialties.addJobBoardRow(stage, dialog); // round 760: choose or change the town's specialty
         dialog.getButtonTable().add(Controls.newTextButton("Leave", stage::hideDialog)).width(240f).row();
         dialog.setKeepWithinStage(true);
         stage.showDialog();

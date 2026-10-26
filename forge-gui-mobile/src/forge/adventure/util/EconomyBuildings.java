@@ -835,6 +835,11 @@ public class EconomyBuildings {
         return Math.round(mineWeeklyBase(type) * Ascendance.prospectorFactor());
     }
 
+    /** Round 760: a mine's weekly payout in this town - a Mining town's pay x specialtyMineFactor (TownSpecialties). */
+    private static int mineWeeklyAmount(PointOfInterestChanges changes, int type) {
+        return Math.round(mineWeeklyBase(type) * Ascendance.prospectorFactor() * TownSpecialties.mineFactor(changes));
+    }
+
     private static int mineWeeklyBase(int type) {
         TuningData tuning = Config.instance().getTuningData();
         switch (type) {
@@ -858,7 +863,7 @@ public class EconomyBuildings {
     public static int weeklyMineOutput(PointOfInterestChanges changes, int type) {
         if (changes == null || !changes.hasEconomyBuildingOfType(type))
             return 0;
-        return mineWeeklyAmount(type);
+        return mineWeeklyAmount(changes, type); // round 760: a Mining town's mines pay more
     }
 
     /** Round 147: interest this town's bank pays per period, at its current balance. */
@@ -887,7 +892,7 @@ public class EconomyBuildings {
         // resolves a picture for Gold/Shards; Wood/Stone's markup is recognized but silently
         // fails to render one (see ResourceDisplayActor's own class comment), so those two get
         // real Image actors instead, the same proven pattern refreshExchangeDialog() already uses.
-        int amount = mineWeeklyAmount(type);
+        int amount = mineWeeklyAmount(stage.getChanges(), type); // round 760: a Mining town's mines pay more
         Table productionRow = new Table();
         if (type == GOLD_MINE || type == SHARD_MINE) {
             String tag = type == GOLD_MINE ? "[+Gold]" : "[+Shards]";
@@ -2519,7 +2524,8 @@ public class EconomyBuildings {
             case GOLD_MINE:
             case LUMBER_MILL:
             case STONE_MINE:
-                return "Produces " + mineWeeklyAmount(type) + " " + resourceGlyph(type) + " every week";
+                return "Produces " + mineWeeklyAmount(MapStage.getInstance() == null ? null : MapStage.getInstance().getChanges(), type)
+                        + " " + resourceGlyph(type) + " every week"; // round 760: this town's pay
             case BANK: return "Deposit gold to earn " + Math.round(INTEREST_RATE * 100) + "% interest a week";
             case EXCHANGE: return "Trade gold for wood, stone and shards";
             case TRADER: return "Buy and sell wood and stone for gold";
@@ -3416,7 +3422,10 @@ public class EconomyBuildings {
                         int nextPayday = forge.adventure.world.World.nextWeekBoundary(lastPaid);
                         if (nextPayday > newDayCount)
                             break;
-                        int amount = mineWeeklyAmount(type);
+                        int amount = mineWeeklyAmount(changes, type);
+                        if (TownSpecialties.mineFactor(changes) != 1f) // round 760
+                            System.out.println("[TFR-Specialty] Mining: " + poi.getDisplayName() + "'s " + buildingName(type)
+                                    + " pays " + amount + " (" + mineWeeklyAmount(type) + " without the specialty) on day " + nextPayday);
                         // Round 148: everything paid inside this scope is mine income on the
                         // balance sheet. The bank-deposit branch below never reaches the player's
                         // purse, so it is recorded by hand - the scope cannot see it.

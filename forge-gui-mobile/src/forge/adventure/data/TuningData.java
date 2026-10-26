@@ -395,6 +395,22 @@ public class TuningData {
     public float researchCopyShare = 0.25f;
     public float researchSacrificeFactor = 2f;
     public float researchShardCutAtFull = 0.5f;
+    // Round 760 - town specialties (util/TownSpecialties; the user: "each time you fix a town, you get the option to select
+    // the town specialty", then "Change research to 5%, to a max of 50 ... For outpost, add 5% defense against capture").
+    // Mining: that town's mines pay x specialtyMineFactor. Research: every Research town makes research
+    // specialtyResearchPerTown faster, at most specialtyResearchCap - points fed x(1 + b) and the research's days / (1 + b),
+    // or, with specialtyResearchTimeCut, days x(1 - b). Outpost / Garrison: off the capture roll. Market: card shops cost
+    // x specialtyMarketPriceFactor. A change costs specialtyChangeFeeShare of the restore fee's gold, then the town is
+    // locked specialtyChangeLockDays days.
+    public float specialtyMineFactor = 1.5f;
+    public float specialtyResearchPerTown = 0.05f;
+    public float specialtyResearchCap = 0.5f;
+    public boolean specialtyResearchTimeCut = false;
+    public float specialtyOutpostDefense = 0.05f;
+    public float specialtyGarrisonDefense = 0.20f;
+    public float specialtyMarketPriceFactor = 0.9f;
+    public float specialtyChangeFeeShare = 0.5f;
+    public int specialtyChangeLockDays = 7;
     // Round 457 (the user: "Let's change the bank Deposit and Withdrawal amounts to 500", after a player asked for 1k
     // instead of 100): the gold one Bank Deposit / Withdraw press moves (EconomyBuildings.bankStep()).
     public int bankStepGold = 500;

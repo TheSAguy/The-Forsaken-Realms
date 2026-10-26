@@ -2839,6 +2839,10 @@ public class TerritoryControl {
                 float repDefense = reputationDefenseBonus(target);
                 if (repDefense > 0f)
                     captureChance = Math.max(0f, captureChance - repDefense);
+                // Round 760: a Garrison (or Outpost) town holds better - taken off the same way, before the floor below.
+                float specialtyDefense = TownSpecialties.captureDefense(target);
+                if (specialtyDefense > 0f)
+                    captureChance = Math.max(0f, captureChance - specialtyDefense);
                 // Round 207: a town is never fully safe. Round 206's breakdown showed a Common-tier
                 // mage's 10% reaching 0% at 10 reputation, and this class had already rejected that
                 // outcome once for Functioning Neutral Towns. Math.min against the unmodified tier
@@ -2850,6 +2854,7 @@ public class TerritoryControl {
                 boolean attackerWins = world.getRandom().nextFloat() < captureChance;
                 System.out.println("[TFR-CaptureOdds] " + mage.territoryColor + " mage (tier=" + mage.getData().tier
                         + ", chance=" + captureChance + ", reputationDefense=" + repDefense
+                        + (specialtyDefense > 0f ? ", specialtyDefense=" + specialtyDefense + " (" + TownSpecialties.of(target).label + ")" : "")
                         + ") attacking player-owned " + target.getDisplayName()
                         + " -> " + (attackerWins ? "CAPTURED" : "REPELLED"));
                 if (!attackerWins) {

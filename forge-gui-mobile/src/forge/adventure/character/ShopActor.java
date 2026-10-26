@@ -60,7 +60,8 @@ public class ShopActor extends MapActor {
         float townPricemodifier = changes == null ? 1f : changes.getTownPriceModifier();
         float shopPriceModifier = changes == null ? 1f : changes.getShopPriceModifier(objectId);
         float ringPrice = EconomyBuildings.isRingShop(shopData) ? Math.max(0.1f, Config.instance().getTuningData().ringShopPriceMultiplier) : 1f; // round 106
-        return shopPriceModifier * townPricemodifier * colorReputationModifier() * ownershipBaseModifier(changes) * ringPrice;
+        float market = forge.adventure.util.TownSpecialties.marketPriceFactor(changes, shopData.name); // round 760
+        return shopPriceModifier * townPricemodifier * colorReputationModifier() * ownershipBaseModifier(changes) * ringPrice * market;
     }
 
     // Ownership base price adjustment (2026-08-17 user spec: "cards bought at AI shops 25% more

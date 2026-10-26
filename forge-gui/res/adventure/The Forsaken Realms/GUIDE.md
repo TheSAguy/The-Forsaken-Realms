@@ -641,6 +641,34 @@ off it (and -2 if you don't - see [Town Raids](#town-raids)), and more from
 its Job Board quests. **Destroy Building** clears a slot, with no refund. A Capitol's colored Land Shop
 can be repaired (50 gold) once you've visited that color's AI capital.
 
+### Town Specialties
+
+Every town you restore picks a **specialty** right after you pay the restore fee: one thing it does better than the
+rest. A town you take any other way (captured from a color, or a Ring City that opens its gates) asks the first time
+you walk in. Choose "Later" and the pick waits, free, at the town's Job Board. Your Capitol, and Orazca before it, never
+take one.
+
+| Specialty | What it does |
+|---|---|
+| **Mining** | this town's own mines pay 50% more (a Gold Mine 100 -> 150, a Shard Mine 20 -> 30 a week) |
+| **Research** | all your research runs 5% faster for each Research town, up to 50% at ten towns: the cards you feed count 5% more and the days shrink to match (28 days unfed -> about 19 at the cap) |
+| **Outpost** | the town is lit as if it had an Outlook (twice its radius; with an Outlook, three times), and it is 5% harder to capture |
+| **Smithy** | this town's Armory rolls its items on your Capitol's rarity table |
+| **Garrison** | 20% harder to capture, and no raid starts here |
+| **Market** | this town's card shops are 10% cheaper, and one restock a week is free |
+
+The capture defense of a Garrison or an Outpost comes off an attacking mage's chance after your guards have fought,
+with the Outlook and your reputation there, and a mage always keeps at least a 5% chance. A Market's free restock is
+one per town per week, in whichever of its card shops you use it, and it doesn't count toward that week's restock
+surcharge.
+
+**Changing a specialty** costs half the town's current restore fee, in gold, at its Job Board; after that the town
+keeps its new specialty for 7 days. A town that falls loses its specialty with everything else; take it back and it
+chooses again. On the World Map each specialized town carries a small badge.
+
+Town specialties come with games started (or taken into New Game+) on version 1.24 or later; an older save doesn't have
+them.
+
 ### The Temple
 
 The **Temple** is a Capitol-only building (300 gold and 100 Stone on Normal; 25% less on Easy, 25% more on Hard, 50%

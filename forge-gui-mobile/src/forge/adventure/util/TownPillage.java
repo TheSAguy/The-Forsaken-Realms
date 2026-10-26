@@ -121,10 +121,14 @@ public final class TownPillage {
         }
         List<PointOfInterest> dungeons = hostileDungeons(world);
         List<PointOfInterest> hits = new ArrayList<>();
-        int qualifying = 0;
+        int qualifying = 0, garrisoned = 0;
         for (PointOfInterest poi : world.getAllPointOfInterest()) {
-            if (notEligibleReason(world, poi, dungeons) != null)
+            String why = notEligibleReason(world, poi, dungeons);
+            if (why != null) {
+                if (GARRISON_REASON.equals(why))
+                    garrisoned++; // round 760
                 continue;
+            }
             qualifying++;
             if (RAND.nextInt(100) < t.pillageChancePercent)
                 hits.add(poi);
@@ -139,8 +143,11 @@ public final class TownPillage {
         }
         System.out.println("[TFR-Pillage] week " + World.weekOf(day) + " (day " + day + "): " + qualifying
                 + " town(s) qualify within " + radiusTiles(day) + " tiles, " + hits.size() + " rolled under " + t.pillageChancePercent + "%, " + started
-                + " pillage(s) start (at most " + t.pillageMaxPerWeek + ")");
+                + " pillage(s) start (at most " + t.pillageMaxPerWeek + ")"
+                + (garrisoned > 0 ? "; " + garrisoned + " Garrison town(s) left out" : ""));
     }
+
+    private static final String GARRISON_REASON = "a Garrison town";
 
     /** Why this POI cannot be pillaged now, or null when it can. */
     static String notEligibleReason(World world, PointOfInterest poi, List<PointOfInterest> dungeons) {
@@ -154,6 +161,9 @@ public final class TownPillage {
         String standing = standingReason(poi);
         if (standing != null)
             return standing;
+        // Round 760: no pillage starts in a Garrison town. Only a start is checked here, so one already running goes on.
+        if (TownSpecialties.blocksRaids(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID())))
+            return GARRISON_REASON;
         if (underAttack(poi))
             return "an AI mage is on its way to it";
         int near = dungeonsNear(world, poi, dungeons).size();

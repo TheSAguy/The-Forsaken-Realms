@@ -87,6 +87,8 @@ public class ConfigData {
     public boolean reloadJabEnabled = false;
     /** Round 484: towns being pillaged by raiders from nearby dungeons (util/TownPillage). */
     public boolean pillageEnabled = false;
+    /** Round 760: town specialties (util/TownSpecialties) - games started, or taken into New Game+, on round 760 or later. */
+    public boolean townSpecialtiesEnabled = false;
     /** Round 493: Ascendance, the player's level (util/Ascendance) - read when a run starts (New Game, New Game+). */
     public boolean ascendanceEnabled = false;
     public boolean dungeonRotationEnabled = false;
