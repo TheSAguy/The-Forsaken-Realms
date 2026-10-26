@@ -38,7 +38,7 @@ tools/docs and 748 is Android-only, so it ships with the next APK). The agent pr
 at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots come back
 1x1).
 Next version: 1.24 / 12400. Engine = the 10.21 daily (round 701); next merge from upstream after `bc67f70ffbc`; BASE_INSTALL is that
-daily, so packages need no `--allow-base-mismatch`. Next free round: 764. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is committed, not yet packaged. Log sharing (round 698) posts to Discord through a webhook
+daily, so packages need no `--allow-base-mismatch`. Next free round: 764. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

@@ -14349,7 +14349,7 @@ shown").
   pure-black 1px outline so it reads over any biome; they differ in shape and main color.
 - **Drawn, not imported** - no pack had a pick, anvil, book or purse, so no CREDITS line. The source grids, the
   game-scale previews (each badge beside a real 20 px town marker over all six biomes, built the way `World` bakes the
-  map) and the drawing script are in the Art project's `notes	own_badges`; the finished art is in the Art Library at
+  map) and the drawing script are in the Art project's `notes\town_badges`; the finished art is in the Art Library at
   `Projects/The Forsaken Realms/Game Art/Town Specialty Badges (round 763)/`.
 - **Check after packaging**: forge.log prints `[TFR-Specialty] badges: sprites/town_specialties.atlas` (the stand-ins
   print "stand-in item icons"). A misnamed region would silently fall back to its stand-in, so the six names were
