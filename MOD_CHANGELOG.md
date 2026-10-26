@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 747: the TFR world disc replaces Forge's splash art (2026-10-26)
+
+The user: "Can we replace the default Forge Load/Splash screen with the TFR 1 icon." Art only: four PNGs, no Java, no
+build needed for desktop (the packager's res overlay ships them); Android picks them up at the next APK build.
+
+- **Where the art comes from**: TFR starts in Adventure mode (round-era `Forge.java` maps "Default" to "Adventure"), so
+  `FSkin.loadLight` hands the splash `adv_bg_splash.png` from the skin, not `bg_splash(_hd).png`.
+  `SplashScreen.drawAdventureBackground` draws its top square (the region is `h - 100` tall) at screen height, tiles
+  `adv_bg_texture.jpg` behind it, and draws the bar and the version line itself. `FSkin` reads the bar colors from the
+  bottom 100 rows at (25|75, h-75|h-25).
+- **`forge-gui/res/skins/default/adv_bg_splash.png`**: was upstream's 450x550 five-mana wheel (#11656). Now
+  1350x1450 (3x, so it stays sharp at 1080p and on phones): the TFR world disc from the user's 1024px icon
+  (painted, not on a pixel grid, so smooth Lanczos downscaling), at the wheel's size and center (186 of 450 wide,
+  center 225,141.5), on transparency. The crack in the disc is transparent too, so it reads as a dark chasm over the
+  splash texture. The swatch rows are copied over unchanged, so the bar and version line keep their colors.
+- **`forge-gui-android/res/drawable/logo.png`**: Android's pre-launch screen (`layout/main.xml`, max 250dp, white
+  fading to black in `Main.loadGame`) showed Forge's anvil. Now the disc, 802x802 on transparency.
+- **The fallback skins** (drawn when `res/skins` is missing, which on Android is the first launch while
+  `assets.zip` downloads): `forge-gui-android/assets/fallback_skin/adv_bg_splash.png` is the new splash on round 61's
+  black background (RGB, as round 61 made it); `forge-gui-mobile-dev/fallback_skin/adv_bg_splash.png` is a copy of
+  the skin file. `forge-gui-ios` is left alone (TFR does not ship iOS).
+- **The launcher icon is still Forge's anvil, and has been since round 61.** Round 61's "launcher-icon set + boot splash
+  from AppIcon.png" used the repo-root `AppIcon.png`, which is upstream's 80px anvil (`dc67f872e81`); nothing in the
+  build reads it. The shipped v1.23 APK (`release/v1.23/forsaken-realms-1.23-signed-aligned.apk`) has the anvil in
+  `res/drawable/logo.png` and every `res/mipmap-*/ic_launcher*` (checked by unzipping). Left for its own round:
+  adaptive icons need a safe-zone layout and a monochrome silhouette.
+- **Revert watch**: the four PNGs are binary, so an upstream merge takes Forge's silently; `ANDROID_RELEASE.md`'s
+  landmines list now names them.
+- **Tested**: a PIL preview on the user's own splash screenshot (approved by the user through the main thread); the
+  swatch pixels checked equal to stock. Not seen in the running game yet: the main thread packages, then a screenshot
+  from the agent game. Android not run.
+
 ## Round 741: the 80% full-map reveal leaves out the mountain ranges (2026-10-26)
 
 The user: "We have a rule that if 80% of the terrain was revealed, the entire map would become visible - FoW state 2.

@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 747 - the TFR world disc replaces Forge's splash art (art only)
+
+- **`forge-gui/res/skins/default/adv_bg_splash.png`**, **`forge-gui-mobile-dev/fallback_skin/adv_bg_splash.png`**,
+  **`forge-gui-android/assets/fallback_skin/adv_bg_splash.png`** and **`forge-gui-android/res/drawable/logo.png`** -
+  replaced: the five-mana wheel and the anvil become TFR's world disc. Binary, so a merge takes upstream's silently:
+  after every engine merge, check them against round 747 (ANDROID_RELEASE.md's landmines list). The bottom 100 rows of
+  each `adv_bg_splash.png` keep the bar color swatches `FSkin.loadLight` reads. No code changed.
+
 ### Round 741 - the 80% full-map reveal leaves out the mountain ranges
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `checkFogOfWarStage2` counts `countsTowardFullReveal()`

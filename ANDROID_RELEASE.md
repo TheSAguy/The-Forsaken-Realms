@@ -165,6 +165,15 @@ Consequences:
   provider/dsn entries in the manifest, `Card-Forge/forge` in ForgeConstants.GITHUB_FORGE_URL,
   `"forge"`/`"forge-"` tag markers in GitLogs.getLatestReleaseTag and AssetsDownloader, and
   `/Forge/` in Main.java's ASSETS_DIR. CORE_ENGINE_CHANGES.md has the full edit list.
+- **The splash art is TFR's world disc (round 747); upstream merges bring back Forge's.** After every engine merge,
+  look at these four PNGs (binary, so a merge takes upstream's silently): `forge-gui/res/skins/default/adv_bg_splash.png`
+  (1350x1450, disc on transparent; upstream's is the 450x550 mana wheel),
+  `forge-gui-android/assets/fallback_skin/adv_bg_splash.png` (the same disc on black, RGB),
+  `forge-gui-mobile-dev/fallback_skin/adv_bg_splash.png` (a copy of the skin file) and
+  `forge-gui-android/res/drawable/logo.png` (the disc, 802x802; upstream's is the 1600px anvil). If one is back to
+  Forge's, restore it from round 747's commit. The bottom 100 rows of each `adv_bg_splash.png` hold the loading bar's
+  color swatches, read at (25|75, h-75|h-25); keep them. The launcher icons (`mipmap-*`, `drawable-*/ic_launcher.png`)
+  are still Forge's anvil.
 - **The app's package identity trio must stay in sync** (all three say
   `com.thesaguy.forsakenrealms`): manifest `package`, `Main.RES_PKG_FALLBACK`,
   `Forge.java`'s `setUsingAppDirectory(assetDir0.contains(...))` sniff.
