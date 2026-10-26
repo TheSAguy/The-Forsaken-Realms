@@ -6381,7 +6381,7 @@
             "Wild",
             "Huge",
             "Wandering",
-            "IdentityTimur"
+            "IdentityTemur"
         ],
         "tier": "Rare",
         "scale": 0.1625
@@ -8794,7 +8794,7 @@
             "IdentityBlue",
             "IdentityRed",
             "IdentityWhite",
-            "Identity Jeskai"
+            "IdentityJeskai"
         ],
         "tier": "Rare",
         "scale": 0.3171
@@ -21089,7 +21089,7 @@
             "Mythical",
             "Insect",
             "Monster",
-            "Identity Temur"
+            "IdentityTemur"
         ],
         "tier": "Rare"
     },

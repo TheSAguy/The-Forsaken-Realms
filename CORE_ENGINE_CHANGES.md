@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 736 - identity tag typos (upstream bug)
+
+- **`forge-gui/res/adventure/common/world/enemies.json`** and **`forge-gui/res/adventure/Shandalar Old
+  Border/world/enemies.json`** - UPSTREAM BUG, fixed in our copies: three `questTags` strings, one line each - Mageripper
+  `"Identity Temur"` -> `"IdentityTemur"`, Disciple of Teferi `"Identity Jeskai"` -> `"IdentityJeskai"`, Chimera
+  `"IdentityTimur"` -> `"IdentityTemur"`. Still wrong in Card-Forge master at `bc67f70ffbc`; if upstream fixes them,
+  take theirs.
+
 ### Round 735 - mid-duel quits and honest losses (ReloadJab); asset and token-image logs
 
 - **`forge-gui-mobile/src/forge/adventure/util/DuelHeartbeat.java`** - NEW: the duel in progress's pulse (game events,

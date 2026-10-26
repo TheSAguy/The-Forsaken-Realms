@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 736: three enemies' identity tags spelled right (2026-10-26)
+
+The user: "fix Mageripper's "Identity Temur" tag typo in all three enemies.json copies." Found in the quest tag audit
+(`C:\TFR\notes\quest-tag-audit.md`). The main thread folded in the two other enemies with the same bug class; each is
+its own one-line hunk per file, so any of them can be dropped.
+
+- **The fix** (tags only, in `common/`, `Shandalar Old Border/` and `The Forsaken Realms/` `world/enemies.json`, 9 lines):
+  Mageripper `"Identity Temur"` -> `"IdentityTemur"`, Disciple of Teferi `"Identity Jeskai"` -> `"IdentityJeskai"`,
+  Chimera `"IdentityTimur"` -> `"IdentityTemur"`. Every other identity tag is one word (`IdentityTemur` x11,
+  `IdentityJeskai` x17). All three typos are upstream's (BASE_INSTALL has them), so the two stock copies are noted in
+  `CORE_ENGINE_CHANGES.md`.
+- **What changes in play**: nothing visible today. No quest, dialog or code in any plane asks for `IdentityTemur` or
+  `IdentityJeskai` by name, and the code that reads tags generically (`DungeonUpgrades.kindTags()` drops every
+  `Identity*` tag; `AdventureQuestStage.matchesTargetEnemyData()` / `AdventureQuestData.generateTargetEnemyData()` match
+  whole strings) treated the broken tags as unmatched noise. From now on a quest stage asking for either tag can pick
+  these three enemies, and a stage excluding it keeps them out.
+- **Saves**: enemy tags are read from data on load; nothing to convert. One rare edge: a Defeat stage that already fixed
+  its target on one of these three enemies keeps that enemy's old tag list in the save (`targetEnemyData`), and
+  `EnemyData.match()` compares tag lists, so a roamer of that enemy built from the new data would not count for it (the
+  quest's own spawned target still does). Not fixed: no known save has one, and a new quest picks it up correctly.
+- **Not done**: Mageripper's duplicated `Insect` tag (audit item J) is a separate item.
+- **Tested**: all three files parse as JSON (464, 574 and 2181 entries); no `"Identity ` (with a space) and no
+  `IdentityTimur` left in any `enemies.json` under `forge-gui/res/adventure`.
+
 ## Round 735: a mid-duel quit counts, honest losses give life back, Rare undead troops, asset and token logs (2026-10-26)
 
 The user approved four changes after the 2026-10-26 log review (P1, P2, P4, P5, P6): "Happy".
