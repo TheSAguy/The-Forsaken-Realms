@@ -184,14 +184,10 @@ public final class ImageKeys {
                 // TFR round 411: a token the game ships its own picture for (the notoriety Walls) - Forge only ever
                 // looked in the player's download cache, which a custom token can never be fetched into. The
                 // adventure custom-card picture folder ships with the game on desktop and Android alike.
-                if (ADVENTURE_CARD_PICS_DIR != null && !ADVENTURE_CARD_PICS_DIR.isEmpty()) {
-                    file = findFile(ADVENTURE_CARD_PICS_DIR, setlessFilename + ".fullborder");
-                    if (file == null)
-                        file = findFile(ADVENTURE_CARD_PICS_DIR, setlessFilename);
-                    if (file != null) {
-                        cachedCards.put(filename, file);
-                        return file;
-                    }
+                file = adventureTokenPic(setlessFilename);
+                if (file != null) {
+                    cachedCards.put(filename, file);
+                    return file;
                 }
             }
 
@@ -336,6 +332,18 @@ public final class ImageKeys {
         if (isLibGDXPort && !hasSetLookup(filename)) //missing cards with setlookup is handled differently
             missingCards.add(filename);
         return null;
+    }
+
+    /**
+     * TFR round 411: a token picture the game ships in the adventure custom-card folder (the notoriety Walls), by the
+     * token's setless name, or null. Round 735: also read by the mobile ImageCache.imageKeyFileExists(), which only
+     * looked in the download cache and so sent these tokens to the downloader ("Token image key is malformed").
+     */
+    public static File adventureTokenPic(String setlessFilename) {
+        if (ADVENTURE_CARD_PICS_DIR == null || ADVENTURE_CARD_PICS_DIR.isEmpty() || StringUtils.isEmpty(setlessFilename))
+            return null;
+        File file = findFile(ADVENTURE_CARD_PICS_DIR, setlessFilename + ".fullborder");
+        return file != null ? file : findFile(ADVENTURE_CARD_PICS_DIR, setlessFilename);
     }
 
     public static String getSetFolder(String edition) {

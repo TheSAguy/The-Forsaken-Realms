@@ -48,6 +48,7 @@ public final class LoopBreaker {
         int most;          // the highest count this turn
         String mostWhat;   // and what it was
         String endReason;  // why this game ended as a draw, when it did
+        int bars;          // round 735: every bar this game, never reset by a new turn
     }
 
     private static final Map<Game, State> states = new WeakHashMap<>();
@@ -104,6 +105,7 @@ public final class LoopBreaker {
             note(s, n, sa);
             if (n == AI_BAR_AT) {
                 s.barred.add(key);
+                s.bars++;
                 String msg = "Loop breaker: " + activator.getName() + " used " + label(sa) + " " + n
                         + " times this turn - the AI stops using it until next turn.";
                 System.out.println("[TFR-LoopBreak] " + msg);
@@ -153,6 +155,12 @@ public final class LoopBreaker {
     public static synchronized String drawReason(Game game) {
         State s = game == null ? null : states.get(game);
         return s == null ? null : s.endReason;
+    }
+
+    /** Round 735, ReloadJab's mid-duel quit: has the breaker barred an AI loop or drawn this game at any point? */
+    public static synchronized boolean firedIn(Game game) {
+        State s = game == null ? null : states.get(game);
+        return s != null && (s.bars > 0 || s.endReason != null);
     }
 
     private static int currentTurn(Game game) {

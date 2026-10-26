@@ -300,6 +300,8 @@ public class DuelScene extends ForgeScene {
         }
 
         boolean finalWinner = winner;
+        // Round 735: the match is decided - a quit in the dialogs below, before afterGameEnd records it, is judged by this.
+        forge.adventure.util.ReloadJab.onMatchDecided(finalWinner, drawn);
         boolean isBossLoss = (chaosBattle || showMessages) && !finalWinner && !drawn;
         boolean hasAnteResults = !anteWonCards.isEmpty() || !anteLostCards.isEmpty();
         // Diagnostic (2026-08-21 user report: "lost in a dungeon and got kicked out without the
@@ -395,6 +397,7 @@ public class DuelScene extends ForgeScene {
     }
 
     void afterGameEnd(String enemyName, boolean winner) {
+        forge.adventure.util.ReloadJab.onDuelEnded(); // round 735: ended normally - no mid-duel quit to judge
         // Color reputation (MOD_SCOPE.md #1): every ordinary duel WIN shifts the player's
         // standing across the 5-color wheel. This is the single funnel every duel's end passes
         // through, and the only place all three exclusions are cheaply knowable at once: losses
@@ -1338,6 +1341,12 @@ public class DuelScene extends ForgeScene {
             || winStreakNote != null; // round 612: our win-streak notice (round 404) holds the coin toss too
         MatchController.setIntroShowing(showIntro);
         hostedMatch.startMatch(rules, appliedVariants, players, guiMap, bossBattle ? MusicPlaylist.BOSS : MusicPlaylist.MATCH);
+        // Round 735: a quit before this match ends is judged on the next load (ReloadJab) - the player's own duels, as
+        // afterGameEnd's onDuelLost counts them: not a watched guard fight, not Deck Tester.
+        if (!aiControlsPlayerSide && guardDeck == null && enemy.getData().fixedDeck == null)
+            forge.adventure.util.DuelHeartbeat.start(hostedMatch, humanPlayer, enemy.getName());
+        else
+            forge.adventure.util.DuelHeartbeat.stop();
         MatchController.instance.setGameView(hostedMatch.getGameView());
         boolean showMessages = enemy.getData().boss || (enemy.getData().copyPlayerDeck && Current.player().isUsingCustomDeck());
         LoadingOverlay matchOverlay;

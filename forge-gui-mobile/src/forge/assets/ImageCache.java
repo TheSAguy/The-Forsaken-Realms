@@ -247,7 +247,9 @@ public class ImageCache {
         } else if (prefix.equals(ImageKeys.TOKEN_PREFIX)) {
             final String tokenfilename = imageKey.substring(2) + ".jpg";
             File tokenFile = new File(ForgeConstants.CACHE_TOKEN_PICS_DIR, tokenfilename);
-            return tokenFile.exists();
+            // TFR round 735: or a picture the game ships (the notoriety Walls, the win-ratio Clue and Treasure) - without
+            // this, every such token went to the downloader, which logged "Token image key is malformed" each time.
+            return tokenFile.exists() || ImageKeys.adventureTokenPic(imageKey.substring(2).split("\\|")[0]) != null;
         }
 
         return true;

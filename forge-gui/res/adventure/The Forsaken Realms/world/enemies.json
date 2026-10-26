@@ -31175,7 +31175,8 @@
             "BiomeBlack",
             "IdentityBlack",
             "Undead",
-            "Aberration"
+            "Aberration",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.3171
@@ -31249,7 +31250,8 @@
             "Aggressive",
             "Undead",
             "Unholy",
-            "IdentityBlack"
+            "IdentityBlack",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.3171
@@ -126829,7 +126831,8 @@
             "BiomeBlue",
             "IdentityBlack",
             "BiomeBlack",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.3095
@@ -134617,7 +134620,8 @@
             "BiomeBlack",
             "IdentityGreen",
             "BiomeGreen",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.1548
@@ -134682,7 +134686,8 @@
             "BiomeWhite",
             "IdentityBlack",
             "BiomeBlack",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.3095
@@ -135003,7 +135008,8 @@
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.4194
@@ -137101,7 +137107,8 @@
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.3095
@@ -140780,7 +140787,8 @@
             "Undead",
             "IdentityBlack",
             "BiomeBlack",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.3171
@@ -144257,7 +144265,8 @@
             "BiomeWhite",
             "BiomeBlue",
             "BiomeBlack",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.2031
@@ -147328,7 +147337,8 @@
             "IdentityAzorius",
             "BiomeWhite",
             "BiomeBlue",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.194
@@ -150866,7 +150876,8 @@
             "IdentityOrzhov",
             "BiomeWhite",
             "BiomeBlack",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.1912
@@ -152539,7 +152550,8 @@
             "IdentityOrzhov",
             "BiomeWhite",
             "BiomeBlack",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.1857
@@ -153185,7 +153197,8 @@
             "IdentityRakdos",
             "BiomeBlack",
             "BiomeRed",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.1806
@@ -162053,7 +162066,8 @@
             "IdentityDimir",
             "BiomeBlue",
             "BiomeBlack",
-            "BiomeColorless"
+            "BiomeColorless",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.1806
@@ -164666,7 +164680,8 @@
             "Unholy",
             "Mounted",
             "IdentityBlack",
-            "BiomeBlack"
+            "BiomeBlack",
+            "Minion"
         ],
         "tier": "Rare",
         "scale": 0.3171

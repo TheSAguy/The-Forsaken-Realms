@@ -323,9 +323,11 @@ public class ConsoleCommandInterpreter {
             if (s.length == 0)
                 return forge.adventure.util.ReloadJab.describe();
             try {
+                if (s.length >= 2) // round 735: reloadjab forgiven|honest <n>
+                    return forge.adventure.util.ReloadJab.setForTest(s[0], Integer.parseInt(s[1]));
                 return forge.adventure.util.ReloadJab.setForTest(Integer.parseInt(s[0]));
             } catch (NumberFormatException e) {
-                return "reloadjab [count]";
+                return "reloadjab [count] | reloadjab forgiven|honest <n>";
             }
         });
         registerCommand(new String[]{"spawn", "enemy"}, s -> {

@@ -757,6 +757,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 forge.adventure.util.LevelPlaces.check("day " + dayAfter); // round 668
                 long tDungeons = System.nanoTime();
                 QuestExpiry.processDaysPassed(dayAfter);
+                forge.adventure.util.ReloadJab.onDayPassed(dayAfter); // round 735: a loss with no reload since is honest
                 long tQuests = System.nanoTime();
                 world.checkFogOfWarStage2(this::refreshBackgroundTile);
                 tickBonfires(world, dayAfter); // round 336

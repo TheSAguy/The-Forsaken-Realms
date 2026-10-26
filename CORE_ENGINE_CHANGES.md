@@ -38,6 +38,30 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 735 - mid-duel quits and honest losses (ReloadJab); asset and token-image logs
+
+- **`forge-gui-mobile/src/forge/adventure/util/DuelHeartbeat.java`** - NEW: the duel in progress's pulse (game events,
+  the Game-N threads' stacks, LoopBreaker, the match result), written into ReloadJab's store.
+- **`forge-gui-mobile/src/forge/adventure/util/ReloadJab.java`** - the duel record and its judgment on load, the honest
+  losses and the forgiven count; the store's writes under one lock.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `enter()`: `DuelHeartbeat.start()` after
+  `hostedMatch.startMatch()` (the player's own duels), else `stop()`. `GameEnd()`: `ReloadJab.onMatchDecided()`.
+  `afterGameEnd()`: `ReloadJab.onDuelEnded()` first.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - the day tick: `ReloadJab.onDayPassed()` after
+  `QuestExpiry`.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - `reloadjab forgiven|honest <n>`.
+- **`forge-game/src/main/java/forge/game/LoopBreaker.java`** (TFR file) - `State.bars`, `firedIn(Game)`.
+- **`forge-gui-mobile/src/forge/assets/AssetsDownloader.java`** - `[TFR-Assets]` lines: the prompt's answer, the
+  no-internet branch, and `downloadAndUnzipLogged()` (download, then extract, with start, seconds, size, failure and the
+  files unzipped) in place of `assets.downloadAndUnzip()` at both call sites.
+- **`forge-gui/src/main/java/forge/gui/download/GuiDownloadZipService.java`** - `download()` logs a non-200 HTTP status
+  and an empty reply (`[TFR-Assets]`); new `getFilesExtracted()`. **Merge watch** - a forge-gui file.
+- **`forge-core/src/main/java/forge/ImageKeys.java`** - round 411's custom-pic lookup moved into the new public
+  `adventureTokenPic(setlessName)`; `getImageFile()` calls it. **Merge watch** - a forge-core file.
+- **`forge-gui-mobile/src/forge/assets/ImageCache.java`** - `imageKeyFileExists()`, the token branch: also true when
+  `ImageKeys.adventureTokenPic()` finds the shipped picture, so `CachedCardImage.fetch()` no longer sends TFR's tokens to
+  the downloader (`Token image key is malformed`, 4% of player log lines).
+
 ### Round 730 - resource pickups log without a banner
 
 - **`forge-gui-mobile/src/forge/adventure/util/ResourceSpawns.java`** - the pickup's notice: `logNotification` with the

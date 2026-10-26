@@ -356,6 +356,8 @@ public class AssetsDownloader {
             } else {
                 message += "You cannot start the app since you haven't previously downloaded these files.";
             }
+            System.out.println("[TFR-Assets] no internet connection - " + (canIgnoreDownload ? "continuing with the old assets"
+                    : "no assets yet, the app exits")); // round 735
             switch (SOptionPane.showOptionDialog(message, "No Internet Connection", null, ImmutableList.of("Ok"))) {
                 default: {
                     if (!canIgnoreDownload) {
@@ -391,7 +393,12 @@ public class AssetsDownloader {
         }
 
         if (localZip == null) {
-            switch (SOptionPane.showOptionDialog(message + build, "", null, options)) {
+            // Round 735 (a log review: two first-time Android installs never got past this screen, and the log could not
+            // say whether they chose Exit, the download failed, or the phone was put down): the answer, then the download.
+            int choice = SOptionPane.showOptionDialog(message + build, "", null, options);
+            System.out.println("[TFR-Assets] prompt (" + packageSize + "): " + (choice >= 0 && choice < options.size()
+                    ? options.get(choice) : "closed (" + choice + ")"));
+            switch (choice) {
                 case 1:
                     if (!canIgnoreDownload) {
                         Forge.isMobileAdventureMode = Forge.advStartup;
@@ -417,7 +424,7 @@ public class AssetsDownloader {
         GuiDownloadZipService assets = new GuiDownloadZipService("", "resource files", assetURL,
                 ASSETS_DIR, RES_DIR, Forge.getSplashScreen().getProgressBar(), allowDeletion);
         if (localZip == null) {
-            assets.downloadAndUnzip();
+            downloadAndUnzipLogged(assets, assetURL);
         } else {
             // extract() DELETES the zip it is handed (it is normally a temp download), so the tester's
             // own file is copied first - otherwise a 210MB file has to be re-copied after every run,
@@ -429,11 +436,13 @@ public class AssetsDownloader {
             } catch (IOException e) {
                 System.out.println("[TFR-Assets] could not stage " + localZip + " (" + e
                         + ") - falling back to the download");
-                assets.downloadAndUnzip();
+                downloadAndUnzipLogged(assets, assetURL);
                 scratch = null;
             }
-            if (scratch != null)
+            if (scratch != null) {
                 assets.extract(scratch);
+                System.out.println("[TFR-Assets] unzipped " + assets.getFilesExtracted() + " files from the local assets.zip");
+            }
         }
 
         if (allowDeletion)
@@ -481,6 +490,26 @@ public class AssetsDownloader {
         // auto restart after update
         Forge.isMobileAdventureMode = Forge.advStartup;
         Forge.exitAnimation(true);
+    }
+
+    /**
+     * Round 735: GuiDownloadZipService.downloadAndUnzip() - download, then extract - with a [TFR-Assets] line for the
+     * start, the end (size and seconds) or the failure, and the files unzipped. The service logs a failure's own cause
+     * (the HTTP status, or the exception through Logger.error) just before.
+     */
+    private static void downloadAndUnzipLogged(GuiDownloadZipService assets, String url) {
+        System.out.println("[TFR-Assets] download started: " + url);
+        long start = System.currentTimeMillis();
+        String zip = assets.download("temp.zip");
+        long seconds = (System.currentTimeMillis() - start) / 1000;
+        if (zip == null || zip.isEmpty()) {
+            System.out.println("[TFR-Assets] download FAILED after " + seconds + " s - nothing to unzip");
+            return;
+        }
+        System.out.println("[TFR-Assets] download finished in " + seconds + " s (" + new File(zip).length() / (1024 * 1024)
+                + " MB)");
+        assets.extract(zip);
+        System.out.println("[TFR-Assets] unzipped " + assets.getFilesExtracted() + " files");
     }
 
     private static void run(Runnable toRun) {

@@ -14264,7 +14264,73 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
-## Round 734: more invasion troops count - goblins, undead, elves, giants, a demon, knights (2026-10-25)
+## Round 735: a mid-duel quit counts, honest losses give life back, Rare undead troops, asset and token logs (2026-10-26)
+
+The user approved four changes after the 2026-10-26 log review (P1, P2, P4, P5, P6): "Happy".
+
+- **A quit mid-duel counts as a lost duel plus a reload, when the duel was live** (P1: four quits mid-rematch right after a
+  loss, on two PC installs). A duel of the player's own (not a watched guard fight, not Deck Tester; the Arena and Inn
+  count, as for `onDuelLost`) writes a record into ReloadJab's store when its match starts (`DuelScene.enter`), and
+  `afterGameEnd` clears it. While the match runs, the new `util/DuelHeartbeat` keeps the record's pulse: every game event
+  is "the game changed" (the game's own event bus, one subscriber per game of a best-of-three); once a second it reads
+  the Game-N threads' stacks (is the AI deciding, is the game parked waiting on the player), whether round 708's
+  LoopBreaker fired in this match (`LoopBreaker.firedIn`), and writes at most every 5 s. The next load of that world
+  judges a record left over:
+  - **Live**, counted: the last change under `DuelHeartbeat.STALL_MS` (20 s) before the game was last alive, the AI not
+    thinking that long, the LoopBreaker not fired. The count goes up by one (so +1 enemy life on Hard and Insane), and
+    the jab's line, from the 5th, starts "Left mid-duel." Log: `[TFR-ReloadJab] N (left mid-duel: <enemy>, last change
+    X s before the quit, waiting on ...)`.
+  - **Stalled**, not counted: `[TFR-ReloadJab] mid-duel quit judged stalled (...) - not counted`.
+  - **Decided** (my addition, found in the test): `DuelScene.GameEnd` only runs after the player taps the result
+    screen, so a quit AT the defeat screen also skipped the loss, and the stall clock would have called it stalled after
+    20 s. The pulse now reads the match result as soon as the game is over: a decided loss always counts, a win or a draw
+    never does; between the games of a best-of-three the pulse stays fresh (the game waits on the player there).
+    `GameEnd` writes the result too (`ReloadJab.onMatchDecided`), which covers a quit in the ante and boss dialogs.
+  - **What a counted quit costs**: only the reload count and its life bonus. No ante, gold, streak, notoriety or
+    statistics change (the save is the one from before the duel, so those never happened). It is not an honest loss.
+  - A record for another world waits for that world; a new duel replaces an unjudged one (logged).
+  - **Known limits**: the quit time is the last write, up to 5 s early. A player who sits 20 s or more at their own prompt
+    and then quits is judged stalled (the spec's clock, kept on purpose: a game stuck in its UI looks the same). A JVM
+    crash mid-duel is judged by the same clock.
+- **Honest losses give bonus life back** (P2: one Hard player at 103 counted reloads). A lost duel is honest when the
+  next duel starts, or the next day ticks (`WorldStage`, after `QuestExpiry`), with no reload in between; loading a save
+  from after the loss counts as honest too (my call: the loss was kept). Every `HONEST_PER_FORGIVE` (5) honest losses
+  forgive one reload: saved per world as `honest.<seed>` (0-4) and `forgiven.<seed>`; `count.<seed>` stays the full
+  history, so the jab's lines still progress. Enemy life bonus = clamp(reloads - forgiven, 0, 10). Nothing banks while
+  reloads - forgiven is 0. **My change to the spec**: forgiving starts at the cap - `forgiven = max(forgiven, reloads -
+  10) + 1` - so the 103-reload player sees +10 become +9 after five honest losses, not after 470. (The literal formula
+  would have kept them at +10 until 94 reloads were forgiven.) On Hard and Insane the green Notices line reads "5 losses
+  taken honestly - enemies lose 1 bonus life (now +9)."; on Easy and Normal it is logged only (the bonus is 0 there).
+  Log: `[TFR-ReloadJab] honest loss (...) - n/5`, `[TFR-ReloadJab] forgiven (...): ... the bonus +10 -> +9`. Old saves
+  start at 0 forgiven; nothing retroactive. A day-tick honest loss resolves the pending loss, so a reload after that day
+  is no longer counted (the spec's definition).
+- **Rare rank-and-file undead count for the Undead Invasion** (P5, data, `world/enemies.json`): `Minion` on 15 - Undead
+  Roamer, Undead Shuffler, Undead Renegade, Giant Royal Scarab, Grave Revenant, Toxic Hound, Bone Raider, Amaranhig,
+  Tombwrapped Ancient, Hollow Oathkeeper, Revenant Knight-Errant, Deathshroud Wraith, Butcher of the Dead, Soulreaver
+  Specter, Dreadmount Rider. Left out: Leader-tagged (Zombie Lord, Marshal of the Barrow Legion, Revenant Knight-Captain,
+  Bloodveil Countess), the boss Ossuary Dragon, the necromancers and the lich (Gilded Lich, Skullrobe Necromancer, Ghoul
+  Gravecaller), the vampire Crimson Reaper (Blood Hunt's family, as round 734), Pharaoh (a named ruler), and the giant and
+  golem (Grave Titan, Bone Golem, as round 734). Round 734's audit, re-run: the troop stage (Undead + Minion, not Leader
+  or Boss, spawnable) 69 -> 84 (Common 47, Uncommon 21, Rare 0 -> 15, Mythic 1). These now also come as invasion troops
+  and local boosts, within the rank and weekly tier caps.
+- **[TFR-Assets] log lines** (P4: two first-time Android installs never got past the asset screen, and the log could not
+  say why): the prompt's answer (`prompt (<size>): Download|Ignore|Exit`), the no-internet branch, `download started:
+  <url>`, `download finished in N s (M MB)` or `download FAILED after N s`, `unzipped N files`; in the stock
+  `GuiDownloadZipService`, the HTTP status of a non-200 reply and an empty reply. Checked by a code read only: the PC
+  build never shows the download prompt.
+- **`Token image key is malformed: t:tfr_*`** (P6, 6,195 lines on 8 installs): the art always showed - `ImageKeys`
+  finds TFR's token pictures in the adventure custom-card folder since round 411 - but the mobile
+  `ImageCache.imageKeyFileExists()` only looked in the download cache, so every `CachedCardImage` of a Wall, Clue or
+  Treasure token went to the downloader, which printed the line (again after each `missingCards` clear). It now also asks
+  `ImageKeys.adventureTokenPic()` (round 411's lookup, made public). The downloader is untouched.
+- **Console**: `reloadjab forgiven <n>`, `reloadjab honest <n>`; `reloadjab` shows forgiven, honest, the bonus and a duel
+  in progress.
+- **Tested in the agent game** (classes ahead of the jar, every duel at 50x): a duel killed 1 s in (live) -> counted,
+  15 -> 16, "Left mid-duel." line; a quit at the defeat screen -> counted, 14 -> 15; the same live record backdated 30 s
+  -> "judged stalled - not counted"; with `loopBreak=true` -> not counted; a Hard new game at 103 reloads with 4 honest
+  losses: a duel start forgave one (94 forgiven, +10 -> +9, the Bone Raider started at +9), a day tick another (+8), both
+  green lines in the Notices log; a session with notoriety Walls and win-ratio tokens on the board logged 0
+  `malformed` lines, and the Wall token showed its art. The undead tags were checked after packaging (see below).
 
 The user, on round 733's audit of every tag-matched quest stage: "Apply gaps A-G and J as round 734 (skip H, I and the
 devils)". The rule is the same as round 733's: a mixed Defeat stage counts a win only when the enemy carries every

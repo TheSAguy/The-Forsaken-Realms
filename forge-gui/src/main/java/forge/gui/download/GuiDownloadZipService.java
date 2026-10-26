@@ -67,6 +67,11 @@ public class GuiDownloadZipService extends GuiDownloadService {
         }
     }
 
+    /** TFR round 735: the entries the last extract() wrote, for AssetsDownloader's [TFR-Assets] line. */
+    public int getFilesExtracted() {
+        return filesExtracted;
+    }
+
     public void downloadAndUnzip() {
         filesExtracted = 0;
 
@@ -97,11 +102,13 @@ public class GuiDownloadZipService extends GuiDownloadService {
             conn.connect();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                System.out.println("[TFR-Assets] HTTP " + conn.getResponseCode() + " for " + sourceUrl); // TFR round 735
                 return null;
             }
 
             final long contentLength = conn.getContentLength();
             if (contentLength == 0) {
+                System.out.println("[TFR-Assets] an empty reply for " + sourceUrl); // TFR round 735
                 return null;
             }
 
