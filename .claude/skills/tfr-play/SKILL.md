@@ -26,8 +26,8 @@ equipment, ante, rewards, statistics). Design: `docs/design/2026-09-09-agent-pla
 - Card art is shared (`%LOCALAPPDATA%\Forge\Cache\pics`), which is intended.
 - **Packaging**: the standing rule is "never repackage while javaw.exe runs" - stop the agent game first. After a
   package, refresh the agent folder: `dev-tools\agent\agent_sync.cmd` (robocopy /MIR of the game folder only, a few
-  seconds; the profile is untouched). Stop the agent game before a sync: the script's own running-game check
-  still looks for the old `TFR-Agent` folder name, so it never sees the agent game.
+  seconds; the profile is untouched). It refuses (exit 1, nothing copied) while the agent game runs: stop it
+  first (round 739).
 
 ## 2. Start and stop
 
@@ -47,9 +47,10 @@ python dev-tools/agent/tfr_agent.py boot     # waits for the bridge; prints the 
   (`state --cheat`) - for testing; a real play session is fair (fog of war). A second argument is a folder of freshly
   compiled classes put AHEAD of the jar - the dev loop, no Maven (`agent_launch.cmd cheats C:\...\classes`; compile
   with javac against the agent jar, `C:/` style paths inside `-cp`).
-- Stop, from the PowerShell tool (it matches only the agent folder's jar, so the player's game from `C:\TFR\live` is
-  never touched):
-  `Get-CimInstance Win32_Process -Filter "Name='javaw.exe'" | Where-Object { $_.CommandLine -like '*C:\TFR\agent\The Forsaken Realms\*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Confirm:$false }`
+- Stop, from the PowerShell tool (it matches only the agent folder's jar, under either of its names - `C:\TFR` is a
+  junction to `C:\CLAUDE\PROJECTS\TFR1` - so the player's game from `...\live` and TFR 2's games are never touched;
+  `agent_stop.ps1` and `agent_sync.cmd` list the same two folders, change all three together):
+  `$d = 'C:\TFR\agent\The Forsaken Realms\', 'C:\CLAUDE\PROJECTS\TFR1\agent\The Forsaken Realms\'; Get-CimInstance Win32_Process -Filter "Name='javaw.exe'" | Where-Object { $cl = "$($_.CommandLine)" -replace '/', '\'; @($d | Where-Object { $cl -like "*$_*" }).Count -gt 0 } | ForEach-Object { Stop-Process -Id $_.ProcessId -Confirm:$false }`
   `dev-tools\agent\agent_stop.ps1` does the same, but this machine's execution policy refuses to run scripts
   ("running scripts is disabled on this system").
 - The agent's `forge.log` **cannot be read at all** while the game runs - Forge holds a byte-range lock over

@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 739: agent_sync refuses while the agent game runs; agent filters match both folder names (2026-10-26)
+
+The user: "Yes: round 739 fixes agent_sync's running-game check, the stale F:\FORGE docstrings, and makes the agent
+stop filters match either path." Round 738's follow-ups, in `dev-tools/agent/` and the `tfr-play` skill.
+
+- **`agent_sync.cmd`**: the guard matched `*TFR-Agent*` (the F:\FORGE folder name before round 267), so it never fired
+  and `robocopy /MIR` could mirror over a running agent game's open jar while saying "in sync". It now lists the agent
+  folder under both names and refuses with the running PID(s), "The agent game is running - stop it first ... Nothing
+  copied." and exit 1. PowerShell exits 3 for "running"; any other failure of the check also refuses ("Could not check
+  ..."). The robocopy line is unchanged.
+- **One pair of folders, three places**: `C:\TFR\agent\The Forsaken Realms\` and
+  `C:\CLAUDE\PROJECTS\TFR1\agent\The Forsaken Realms\` (`C:\TFR` is a junction since 2026-10-26; `agent_launch.cmd`
+  still uses `C:\TFR`, untouched). They are in `agent_stop.ps1` (`$AgentGameDirs`, which keeps its explicit
+  not-`\live\` clause), `agent_sync.cmd` and the skill's one-line stop command, each with a "change all three together"
+  note - a .cmd, a .ps1 the execution policy will not run, and a pasted line cannot share one file. Never a bare
+  `*\agent\The Forsaken Realms\*`. Matching relies on `-like` being case-insensitive, and folds `/` to `\` first.
+- **Docstrings**: `agent_setup.py` and `tfr_agent.py` name `C:\TFR\agent`, not `F:\FORGE\TFR-Agent`;
+  `agent_launch.cmd`'s comment no longer says the stop script matches "TFR-Agent".
+- **Skill**: the sync note says `agent_sync.cmd` refuses while the agent game runs (stop it first); the stop line is the
+  new two-folder filter.
+- **Tested for real**: no javaw/java was running (no user game, no TFR 2, no Maven). The filter, on sample command lines:
+  both agent paths, a lowercase `c:/.../tfr1/agent/...` one -> match; `C:\TFR\live`, `C:\CLAUDE\PROJECTS\TFR1\live`,
+  `C:\TFR2\agent` and `C:\CLAUDE\PROJECTS\TFR2\agent` -> no match. Launched the agent game (`Start-Process ...
+  agent_launch.cmd`, PID 14244); `agent_sync.cmd` printed the PID and the refusal, exit 1, and robocopy never ran.
+  The skill's stop line stopped PID 14244 only (0 javaw left). `agent_sync.cmd` again: exit 0, 0 copied, 29,489
+  files on both sides, the same 08:09 jar; `/MIR` purged one agent-only file,
+  `res/adventure/The Forsaken Realms/config tables/expansions.csv` (as it always would). `agent_stop.ps1` parses
+  clean and, run inline, reports "No agent game running." No duel played. Dev tools and docs only; not shipped.
+
 ## Round 738: the repo's tfr-play skill is the October version (2026-10-26)
 
 The user: "start round 737 to replace the repo's tfr-play skill with the October version" (737 had gone to art). The

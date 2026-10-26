@@ -2,10 +2,10 @@
 """
 tfr_agent.py - client for the in-game agent bridge (round 161, docs/design/2026-09-09-agent-play.md).
 
-Start the AGENT game (round 175 - isolated from the player's own game: its own folder F:\\FORGE\\TFR-Agent and
+Start the AGENT game (round 175 - isolated from the player's own game: its own folder C:\\TFR\\agent and
 its own APPDATA profile, so it never touches the player's saves, settings or log):
     dev-tools\\agent\\agent_launch.cmd [cheats]      (see the tfr-play skill for starting it from Claude Code)
-    powershell -File dev-tools\\agent\\agent_stop.ps1   stops it (only the TFR-Agent javaw, never the player's game)
+    powershell -File dev-tools\\agent\\agent_stop.ps1   stops it (only the agent folder's javaw, never the player's game)
 
 Then, from anywhere:
     python tfr_agent.py boot                      # wait for the bridge and a scene that takes commands

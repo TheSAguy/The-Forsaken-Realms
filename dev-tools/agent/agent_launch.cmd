@@ -7,7 +7,7 @@ rem Usage:  agent_launch.cmd                 fair play (fog of war, no console c
 rem         agent_launch.cmd cheats          console commands + the fog-free state, for testing
 rem         agent_launch.cmd cheats C:\dir   dev loop: classes compiled into C:\dir go AHEAD of the jar (no Maven)
 rem         agent_launch.cmd fair C:\dir     the same, without cheats
-rem The jar is named by its absolute path so the process is recognizable (agent_stop.ps1 matches "TFR-Agent").
+rem The jar is named by its absolute path so the process is recognizable (agent_stop.ps1 matches the agent folder).
 setlocal
 set "APPDATA=C:\TFR\agent\profile"
 set "TFR_AGENT_PORT=8765"

@@ -7,16 +7,17 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-738 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-739 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
 735 (a live mid-duel quit counts as a loss plus a reload, judged by `util/DuelHeartbeat`; every 5 honest losses forgive
 a reload; Rare undead troops count for the Undead Invasion; `[TFR-Assets]` download lines; TFR's token pictures no
 longer go to the downloader), 736 (upstream's identity tag typos on Mageripper, Disciple of Teferi and Chimera fixed in
 all three `enemies.json` copies, data only) and 737 (the LPC Vampire hero flies as a bat when it moves, art only: the
 Walk rows of `sprites/heroes/lpc_vampire_m/f.png`, from the generator's `lpc_to_player.py --bat`) and 738 (the repo's
-`tfr-play` skill is the October version, checked against today's agent scripts; docs only, not shipped).
-All are packaged to live and the agent game (2026-10-26 08:09 jar; 737's art packaged 10:31).
+`tfr-play` skill is the October version, checked against today's agent scripts; docs only, not shipped) and 739
+(`agent_sync.cmd` refuses while the agent game runs; the agent detect/stop filters list the agent folder under both
+`C:\TFR` and `C:\CLAUDE\PROJECTS\TFR1`; dev tools only, not shipped). 702-737 are packaged to live and the agent game (2026-10-26 08:09 jar; 737's art packaged 10:31).
 Next version: 1.24 / 12400. Engine = the 10.21 daily (round 701); next merge from upstream after `bc67f70ffbc`; BASE_INSTALL is that
-daily, so packages need no `--allow-base-mismatch`. Next free round: 739. Log sharing (round 698) posts to Discord through a webhook
+daily, so packages need no `--allow-base-mismatch`. Next free round: 740. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

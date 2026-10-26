@@ -2,8 +2,8 @@
 """
 agent_setup.py - seed the AGENT game's isolated profile (MOD_SCOPE #117).
 
-The agent game runs with APPDATA=F:\\FORGE\\TFR-Agent\\profile (see agent_launch.cmd), so Forge keeps its saves,
-preferences and forge.log in F:\\FORGE\\TFR-Agent\\profile\\ForsakenRealms and never touches the player's own
+The agent game runs with APPDATA=C:\\TFR\\agent\\profile (see agent_launch.cmd), so Forge keeps its saves,
+preferences and forge.log in C:\\TFR\\agent\\profile\\ForsakenRealms and never touches the player's own
 %APPDATA%\\ForsakenRealms. A fresh profile would start full-screen at the player's 4K mode with sound on, so this
 seeds two files once:
 
@@ -13,7 +13,7 @@ seeds two files once:
 Existing seeded files are left alone unless --force. Card art stays shared with the player's game (it lives under
 %LOCALAPPDATA%\\Forge\\Cache, which the launcher does not redirect).
 
-usage: python dev-tools/agent/agent_setup.py [--force] [--root F:\\FORGE\\TFR-Agent]
+usage: python dev-tools/agent/agent_setup.py [--force] [--root C:\\TFR\\agent]
 """
 import argparse, json, os, sys
 
