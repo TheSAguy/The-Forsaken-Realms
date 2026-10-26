@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 749 - a 'here' quest stage given away from any town; unfilled quest text logged
+
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** - `initializeStage()`: a `here` stage (not
+  anyPOI / worldMapOK) that bound nothing calls the new `bindHereFallback()` (the giving town, else the nearest town or
+  capital); a stage that bound is untouched. New `logUnfilledTokens()` (`[TFR-QuestText]`, a transient per-quest dedupe
+  set), called at the end of `replaceTokens()` and in `activateNextStages()`'s "Quest Updated" notice.
+- **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** - one line: the active stage's description goes
+  through `quest.logUnfilledTokens()` before its label is built.
+
 ### Round 746 - working neutral towns on the History replay
 
 - Mod-added only: `world/WorldHistory.java` (`KIND_WORKING`, save format 3 with `TOWN_SHIFT` 6, `backfillWorking` for

@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 749: a quest given away from any town names its town; unfilled quest text is logged (2026-10-26)
+
+Found by the main thread in round 745's Notices shot (`notes/tweaks-1026/r745-notices.png`): "Quest Updated: UNDEAD
+INVASION - Battle the Undead - Defeat at least 3 Undead in defense of $(poi_3)." `$(invasion_count)` was filled,
+`$(poi_3)` was not.
+
+- **Cause - a console-given quest, not real play.** Every invasion's stage 3 ("Return to $(poi_3) and collect your
+  rewards") is a `here` stage: `AdventureQuestStage.setTargetPOI()` binds it to `AdventureQuestController.mostRecentPOI`,
+  the place last entered. A town's quest-giver always has that set to its own town. The agent test gave the invasion
+  with the F9 console (`give quest 40`) on the world map right after a load, before any place was entered, so
+  `mostRecentPOI` was null: stage 3 bound nothing, `$(poi_3)` never entered the token table, and `replaceTokens()` (run
+  once, at issue) left it raw in stage 1's description, stage 3's and the Quest Log. Such a stage could not be finished
+  either (`checkIfTargetLocation()` with no target and no tags answers `anyPOI`, false). The data is right: 110 of the
+  111 `$(poi_3)` uses name a `here` stage, the other a tagged one.
+- **Fix** (`AdventureQuestData.initializeStage()`): ONLY when a `here` stage (not `anyPOI`, not `worldMapOK`) bound
+  nothing, `bindHereFallback()` binds the giving town (`sourceID`), else the town or capital nearest the player. A stage
+  that bound - every quest a town hands out - is untouched, so real play is byte-for-byte unchanged. Log:
+  `[TFR-QuestText] <quest>: stage N ("...") is a 'here' stage given away from any place - bound to the nearest town, X`.
+- **`[TFR-QuestText]` for unfilled text**: `AdventureQuestData.logUnfilledTokens()` names each `$(...)` key still in a
+  text the player is shown, once per quest and key: every quest text right after `replaceTokens()` at issue (names,
+  descriptions, offer/prologue/epilogue/failure/decline dialogs and the stages' own), the "Quest Updated" notice and the
+  Quest Log's active-stage description (`QuestLogScene`) - the last two also cover quests already in a save. Dialog
+  actions' `POIReference` is not text and is not checked (an `anyPOI` Leave stage's `$(poi_1)` there stays raw by
+  design: MapDialog grants at the place the player stands).
+- **Data** (TFR `quests.json`): quest 12 "A Freshly Plowed Field" - its failure text named `$(poi_2)`, the `anyPOI`
+  "Leave town" stage that never binds a place, so a player who gave it up read a raw token. Now `$(poi_1)`, the place to
+  clear. Found by scanning every `$(poi_N)` / `$(biome_N)` / `$(enemy_N)` in TFR's quests.json against the stage it
+  names; it was the only shown text naming a stage that cannot bind.
+- **The duplicate "Battle the Undead: 1 of 3"** in the same shot is not one event logged twice: the loaded agent save
+  already held an Undead Invasion and the console gave a second, so one win counted for each (two `[TFR-Invasion] troop
+  ... beaten` lines, two progress notices). Not round 722's path; no change.
+- **Old saves**: quest text is filled once at issue and saved filled, so a quest already open with a raw token keeps it
+  for its whole life, not just to its next stage, and its unbound `here` stage stays unfinishable. Only console-given
+  quests can carry that (the agent's test saves); the new log names them when shown. An open quest 12 keeps the old
+  failure text.
+- **Tested**: `mvn -pl forge-gui-mobile-dev -am package` exit 0 (jar 11:26 carries the `[TFR-QuestText]` code); the
+  data scan above re-run after the quest 12 edit (no shown text names an unbindable stage); quests.json parses. The
+  agent-game check (a console-given invasion on the world map after a load: the Notices and the Quest Log name a town,
+  and the fallback line in forge.log) comes after this commit - see the next entry or the main thread's note. Not seen:
+  quest 12's failure text in game (the agent game reads its own data copy until the next package and sync).
+
 ## Round 750: Witch-Maw Slippers cost two cards from the opening hand (2026-10-26)
 
 The user: "I've had several reports that the companion, Witch-Maw Nephlim, from the item Witch-Maw Nephlim Boots Item

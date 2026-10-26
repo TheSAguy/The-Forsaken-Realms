@@ -324,6 +324,13 @@ public class AdventureQuestData implements Serializable {
                 stage.setTargetPOI(poiTokens, this.name);
         }
 
+        // Round 749: a "here" stage binds AdventureQuestController.mostRecentPOI, the place last entered - always the
+        // giving town when a town hands the quest out. A quest given on the world map before any place was entered (the
+        // F9 console's "give quest" right after a load) bound nothing, so its "Return to $(poi_3)" stage could not be
+        // finished and every text naming it kept the raw token. Only then: the giving town, else the nearest town.
+        if (stage.here && !stage.anyPOI && !stage.worldMapOK && stage.getTargetPOI() == null)
+            bindHereFallback(stage);
+
         if (stage.getTargetPOI() != null
                 && ("cave".equalsIgnoreCase( stage.getTargetPOI().getData().type)
                 || "dungeon".equalsIgnoreCase( stage.getTargetPOI().getData().type))){
@@ -347,6 +354,82 @@ public class AdventureQuestData implements Serializable {
         otherTokens.put("$(playerrace)", Current.player().raceName());
     }
 
+    /** Round 749: see initializeStage() - the giving town (sourceID), else the town or capital nearest the player. */
+    private void bindHereFallback(AdventureQuestStage stage) {
+        if (Current.world() == null)
+            return;
+        PointOfInterest pick = null;
+        String how = null;
+        List<PointOfInterest> towns = new ArrayList<>();
+        for (PointOfInterest poi : Current.world().getAllPointOfInterest()) {
+            if (sourceID != null && !sourceID.isEmpty() && sourceID.equals(poi.getID())) {
+                pick = poi;
+                how = "the giving town";
+                break;
+            }
+            String type = poi.getData() == null ? null : poi.getData().type;
+            if ("town".equalsIgnoreCase(type) || "capital".equalsIgnoreCase(type))
+                towns.add(poi);
+        }
+        if (pick == null && !towns.isEmpty()) {
+            towns.sort(new AdventureQuestController.DistanceSort());
+            pick = towns.get(0);
+            how = "the nearest town";
+        }
+        System.out.println("[TFR-QuestText] " + name + ": stage " + stage.id + " (\"" + stage.name + "\") is a 'here' stage"
+                + " given away from any place - " + (pick == null ? "no town to bind, $(poi_" + stage.id + ") stays unfilled"
+                : "bound to " + how + ", " + pick.getDisplayName()));
+        if (pick != null)
+            stage.setTargetPOI(pick);
+    }
+
+    private static final java.util.regex.Pattern UNFILLED_TOKEN = java.util.regex.Pattern.compile("\\$\\([^)\\s]+\\)");
+    private transient Set<String> unfilledLogged;
+
+    /** Round 749: one [TFR-QuestText] line per quest and key for a $(...) token still in text the player is shown, so the
+     *  next unfilled placeholder is in forge.log. {@code where} names the screen or the text. */
+    public void logUnfilledTokens(String where, String text) {
+        if (text == null || !text.contains("$("))
+            return;
+        java.util.regex.Matcher m = UNFILLED_TOKEN.matcher(text);
+        while (m.find()) {
+            if (unfilledLogged == null)
+                unfilledLogged = new HashSet<>();
+            if (unfilledLogged.add(m.group()))
+                System.out.println("[TFR-QuestText] " + name + ": " + m.group() + " left unfilled in " + where + " - \""
+                        + (text.length() > 120 ? text.substring(0, 117) + "..." : text).replace('\n', ' ') + "\"");
+        }
+    }
+
+    private void logUnfilledTokens(String where, DialogData data) {
+        if (data == null)
+            return;
+        logUnfilledTokens(where, data.text);
+        logUnfilledTokens(where + " option", data.name);
+        if (data.options != null)
+            for (DialogData option : data.options)
+                logUnfilledTokens(where, option);
+    }
+
+    /** Round 749: every text the quest can show, after the tokens are filled at issue. */
+    private void logUnfilledTokens() {
+        logUnfilledTokens("the quest name", name);
+        logUnfilledTokens("the quest description", description);
+        logUnfilledTokens("the reward description", rewardDescription);
+        logUnfilledTokens("the offer", offerDialog);
+        logUnfilledTokens("the prologue", prologue);
+        logUnfilledTokens("the epilogue", epilogue);
+        logUnfilledTokens("the failure text", failureDialog);
+        logUnfilledTokens("the decline text", declinedDialog);
+        for (AdventureQuestStage stage : stages) {
+            logUnfilledTokens("stage " + stage.id + "'s name", stage.name);
+            logUnfilledTokens("stage " + stage.id + "'s description", stage.description);
+            logUnfilledTokens("stage " + stage.id + "'s prologue", stage.prologue);
+            logUnfilledTokens("stage " + stage.id + "'s epilogue", stage.epilogue);
+            logUnfilledTokens("stage " + stage.id + "'s failure text", stage.failureDialog);
+        }
+    }
+
     public void replaceTokens(){
         replaceTokens(offerDialog);
         replaceTokens(prologue);
@@ -362,6 +445,7 @@ public class AdventureQuestData implements Serializable {
         {
             replaceTokens(stage);
         }
+        logUnfilledTokens(); // round 749
     }
 
     private void replaceTokens(AdventureQuestStage stage){
@@ -693,6 +777,7 @@ public class AdventureQuestData implements Serializable {
             // (user report: "I received a few messages that I did not understand").
             description.append("Quest Updated: [!]").append(name).append("[]");
             for (AdventureQuestStage stage : getActiveStages()) {
+                logUnfilledTokens("the Quest Updated notice", stage.description); // round 749
                 description.append("\n")
                         .append(stage.name).append("\n[/]")
                         //.append(stage.description.length()<=50?stage.description:stage.description.substring(0,49) + "...")

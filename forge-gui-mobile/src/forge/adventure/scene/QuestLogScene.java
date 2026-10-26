@@ -222,6 +222,7 @@ public class QuestLogScene extends UIScene {
             detailScrollContainer.row();
             detailScrollContainer.add(activeLabel).align(Align.left).padLeft(25);
 
+            quest.logUnfilledTokens("the Quest Log", stage.description); // round 749
             TypingLabel activeDescriptionLabel = Controls.newTypingLabel(stage.description);
             activeDescriptionLabel.skipToTheEnd();
             activeDescriptionLabel.setColor(Color.DARK_GRAY);

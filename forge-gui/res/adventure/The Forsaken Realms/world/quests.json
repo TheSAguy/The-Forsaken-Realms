@@ -3236,7 +3236,7 @@
 					"POIReference": "$(poi_1)"
 				}
 			],
-			"text": "After some reflection, you decide that the rewards promised to you are not worth the effort of clearing out the current occupants of the $(poi_2). (-2 Local Reputation)",
+			"text": "After some reflection, you decide that the rewards promised to you are not worth the effort of clearing out the current occupants of the $(poi_1). (-2 Local Reputation)",
 			"options": [
 				{
 					"name": "(Quest Failed)"
