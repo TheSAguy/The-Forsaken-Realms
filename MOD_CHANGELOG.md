@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 737: the Vampire hero flies as a bat again (2026-10-26)
+
+The user (through the Art main thread): "I'd like to change the Vampire movement to how it was before we implemented
+the LPC model. I still want to use the LPC model, but update it so it's similar to what it was before, when the
+Vampire moves, it's a bat." Round 597's LPC hero sheets had turned the Vampire's round-317 bat walk into a humanoid walk.
+
+- **The art** (`sprites/heroes/lpc_vampire_m.png` and `lpc_vampire_f.png`, the four Walk rows only; atlases, cell,
+  footprint and every other clip unchanged, checked pixel by pixel): the LPC hero still stands, attacks, gets hit and
+  dies; when it moves it is a bat. Four frames at the walk's pace - wings high, level (about 42 art px, 16 world px at
+  the race's `"scale": 0.383`), down, arched on the way back up - with a 3 px body bob, hovering about 26 art px over
+  the usual ground shadow on the cell's center, so starting and stopping does not shift the hero. Right is a
+  three-quarter view, Left its mirror, Down the face and the wings' red underside, Up the back. Colored from each
+  hero's own sheet: the membrane in the cape's reds (the man's maroon, the woman's brighter red - the user's pick),
+  fur and bones in the coat's darks, red eyes.
+- **Source**: drawn by code in the generator (procedural-pixel-creatures `aba59dc`: `tools/forge_remake/lpc_bat_walk.py`,
+  `lpc_to_player.py --bat`, the Vampire marked `"bat": true` in the players manifest, so a rebuild keeps the bat). No
+  new third-party art, so no CREDITS change. LPC has only bat wings for a human body, and the Vampire Bat enemy sprite
+  is about twice the size; neither fit.
+- **Saves**: none affected (art only). The old `vampire_m/f` sheets stay unused, as before.
+- **Not done**: not checked in the running game; the previews (game scale 1x and 4x, the stand-to-fly switch, onion
+  skins, the old bat beside it) are in the Art project's `notes\vampire_bat_walk\`. Art Library copy:
+  `Projects/The Forsaken Realms/Game Art/Player Heroes (Vampire bat walk, round 737)/` (`2521028`).
+
 ## Round 736: three enemies' identity tags spelled right (2026-10-26)
 
 The user: "fix Mageripper's "Identity Temur" tag typo in all three enemies.json copies." Found in the quest tag audit
