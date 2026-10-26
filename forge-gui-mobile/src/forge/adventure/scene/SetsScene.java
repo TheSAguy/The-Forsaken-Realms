@@ -26,7 +26,7 @@ import forge.adventure.util.Paths;
 import forge.adventure.util.RoamingGuards;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +54,6 @@ public class SetsScene extends UIScene {
     private static final String GREEN = "[#2b7a2b]";
     private static final String DIM = "[#6e604a]";
     private static final String INK = "[BLACK]";
-    private static final String[] FAMILIES = {"Regalia", "Bane", "Legend"};
     private static final String[] SLOTS = {"Head", "Neck", "Body", "Right", "Left", "Legs", "Boots"};
 
     private final TextraLabel titleLabel;
@@ -106,12 +105,19 @@ public class SetsScene extends UIScene {
         back();
     }
 
-    /** The sets the page lists, the most pieces worn first: for the player every set they own a piece of (round 686), for
-     *  a guard the sets that guard wears a piece of (round 637). */
+    /** The sets the page lists: for the player every set they own a piece of (round 686), for a guard the sets that guard
+     *  wears a piece of (round 637). Round 744: the most pieces the player owns first, then by name A-Z. */
     private List<ItemSetData> listedSets() {
+        AdventurePlayer player = Current.player();
         Map<ItemSetData, Integer> worn = ItemSets.worn(wornItems());
-        List<ItemSetData> sets = guard == null ? ItemSets.ownedSets(Current.player()) : new ArrayList<>(worn.keySet());
-        sets.sort((a, b) -> Integer.compare(count(worn, b), count(worn, a)));
+        List<ItemSetData> sets = guard == null ? ItemSets.ownedSets(player) : new ArrayList<>(worn.keySet());
+        Map<ItemSetData, Integer> owned = new HashMap<>();
+        for (ItemSetData set : sets)
+            owned.put(set, ItemSets.ownedCount(player, set));
+        sets.sort((a, b) -> {
+            int c = Integer.compare(owned.get(b), owned.get(a));
+            return c != 0 ? c : String.CASE_INSENSITIVE_ORDER.compare(String.valueOf(a.name), String.valueOf(b.name));
+        });
         return sets;
     }
 
@@ -203,15 +209,7 @@ public class SetsScene extends UIScene {
     private void buildAll() {
         AdventurePlayer player = Current.player();
         Map<ItemSetData, Integer> worn = ItemSets.worn(wornItems());
-        List<ItemSetData> sets = listedSets(); // round 686: the player's owned sets; a guard's worn ones
-        sets.sort((a, b) -> {
-            int c = Integer.compare(count(worn, b), count(worn, a));
-            if (c == 0)
-                c = Integer.compare(ItemSets.ownedCount(player, b), ItemSets.ownedCount(player, a));
-            if (c == 0)
-                c = Integer.compare(Arrays.asList(FAMILIES).indexOf(a.family), Arrays.asList(FAMILIES).indexOf(b.family));
-            return c;
-        });
+        List<ItemSetData> sets = listedSets(); // round 686: the player's owned sets; a guard's worn ones (round 744: sorted)
         int active = 0;
         for (ItemSetData set : sets)
             if (count(worn, set) >= 3)

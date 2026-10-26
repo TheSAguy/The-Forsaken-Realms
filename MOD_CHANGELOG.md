@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 744: the Gear Sets page lists the sets you own the most pieces of first (2026-10-26)
+
+The user: "I'd like to sort the equipment set's by the number of items you have for each set. So the more you have, the
+first it would show, then alphabetical."
+
+- **The change** (`SetsScene.listedSets`, the one place the list is ordered): the sets go by the pieces the player owns
+  (carried, worn, stored or on a guard - `ItemSets.ownedCount`), most first, then by name A-Z. Before, the page sorted
+  by pieces worn, then owned, then family (Regalia, Bane, Legend), so a set with one piece worn sat above a set with
+  three owned. A guard's page (round 637: the sets that guard wears) uses the same order; its owned column was always
+  the player's. `buildAll`'s own second sort and the unused `FAMILIES` list are gone.
+- **Unchanged**: which sets are listed (round 686), the worn and owned columns, the active count, the one-set page.
+- **Tested**: javac against the agent jar; agent game (slot 44, cheats: three Wildgrove, three Tidewise, two Emberclad
+  pieces and one Gravebound worn) - Tidewise 3/7, Wildgrove 3/7, Emberclad 2/7, Gravebound 1/7 (worn) last
+  (`notes/tweaks-1026/r744-gear-sets.png`). A guard's page was not opened.
+
 ## Round 747: the TFR world disc replaces Forge's splash art (2026-10-26)
 
 The user: "Can we replace the default Forge Load/Splash screen with the TFR 1 icon." Art only: four PNGs, no Java, no

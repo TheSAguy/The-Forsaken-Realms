@@ -7,7 +7,7 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-743 and 747 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-744 and 747 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
 737 (the LPC Vampire hero flies as a bat when it moves, art only: the Walk rows of
 `sprites/heroes/lpc_vampire_m/f.png`, from the generator's `lpc_to_player.py --bat`), 738 (the repo's `tfr-play` skill
 is the October version; docs only, not shipped), 739 (`agent_sync.cmd` refuses while the agent game runs; the agent
@@ -21,9 +21,9 @@ Android launcher icon is still Forge's anvil) and 743 (the player's arena bracke
 the building's buttons: `ArenaScene.buttonRowReserve` pads the bracket in the player's arena only, `[TFR-ArenaLayout]`;
 the "Won this week (2 days)" label is one size) and 742 (arena duels pay half Power - `ascendance.json`
 `arenaPowerFactor` 0.5, the bracket bonus and the Coin Challenge too - and are no first meeting: `PlayerStatistic`'s
-saved `arenaWins` tally and `fieldWins()` feed every first-win rule; `[TFR-Arena]`). Rounds 744-746 are assigned to a
-parallel sub-thread and 748 to the Art thread, not committed yet. 702-737 are packaged to live and the agent game
-(2026-10-26 08:09 jar; 737's art packaged 10:31); 738-743 and 747 are not.
+saved `arenaWins` tally and `fieldWins()` feed every first-win rule; `[TFR-Arena]`) and 744 (the Gear Sets page lists the sets with the most pieces owned first, then A-Z: `SetsScene.listedSets`, a guard's page too). Rounds 745-746 (a parallel sub-thread) and
+748 (the Art thread) are assigned, not committed yet. 702-737 are packaged to live and the agent game
+(2026-10-26 08:09 jar; 737's art packaged 10:31); 738-744 and 747 are not.
 Next version: 1.24 / 12400. Engine = the 10.21 daily (round 701); next merge from upstream after `bc67f70ffbc`; BASE_INSTALL is that
 daily, so packages need no `--allow-base-mismatch`. Next free round: 749. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step

@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 744 - the Gear Sets page sorts by pieces owned, then name
+
+- Mod-added only: `scene/SetsScene.java` - `listedSets()` sorts by `ItemSets.ownedCount`, then name; `buildAll`'s own
+  sort and `FAMILIES` removed. No stock file touched.
+
 ### Round 747 - the TFR world disc replaces Forge's splash art (art only)
 
 - **`forge-gui/res/skins/default/adv_bg_splash.png`**, **`forge-gui-mobile-dev/fallback_skin/adv_bg_splash.png`**,
