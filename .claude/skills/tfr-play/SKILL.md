@@ -1,6 +1,6 @@
 ---
 name: tfr-play
-description: Play The Forsaken Realms (TFR) as the player through the in-game agent bridge - start the ISOLATED agent game (its own folder and APPDATA profile on F:, never the user's game or saves), then loop read state -> decide -> one command -> settle; Forge's AI plays the duels. Use when the user asks Claude to play TFR, run an agent session, soak-test, or check a feature in a running game.
+description: Play The Forsaken Realms (TFR) as the player through the in-game agent bridge - start the ISOLATED agent game (its own folder and APPDATA profile under C:\TFR\agent, never the user's game or saves), then loop read state -> decide -> one command -> settle; Forge's AI plays the duels. Use when the user asks Claude to play TFR, run an agent session, soak-test, or check a feature in a running game.
 ---
 
 # Playing The Forsaken Realms through the agent bridge
@@ -10,7 +10,8 @@ jar and OFF unless the game starts with `TFR_AGENT_PORT`. Claude drives the over
 and decks over loopback HTTP; **Forge's AI plays every duel on the player's seat** (the fight stays the player's:
 equipment, ante, rewards, statistics). Design: `docs/design/2026-09-09-agent-play.md`. Client:
 `dev-tools/agent/tfr_agent.py` (its docstring lists every verb and command). Repo root:
-`C:\TFR\repo` - run the commands below from there.
+`C:\TFR\repo` - run the commands below from there. `C:\TFR` is a junction to `C:\CLAUDE\PROJECTS\TFR1` (since
+2026-10-26); the scripts and the filters below use the `C:\TFR` path.
 
 ## 1. Isolation - the rule that makes this safe
 
@@ -25,28 +26,37 @@ equipment, ante, rewards, statistics). Design: `docs/design/2026-09-09-agent-pla
 - Card art is shared (`%LOCALAPPDATA%\Forge\Cache\pics`), which is intended.
 - **Packaging**: the standing rule is "never repackage while javaw.exe runs" - stop the agent game first. After a
   package, refresh the agent folder: `dev-tools\agent\agent_sync.cmd` (robocopy /MIR of the game folder only, a few
-  seconds; it refuses while the agent game runs; the profile is untouched).
+  seconds; the profile is untouched). Stop the agent game before a sync: the script's own running-game check
+  still looks for the old `TFR-Agent` folder name, so it never sees the agent game.
 
 ## 2. Start and stop
 
 ```
 python dev-tools/agent/agent_setup.py        # once: seeds the profile (1280x720 window, sound off); keeps existing files
-schtasks /create /tn TFR-Agent /tr "cmd /c C:\TFR\repo\dev-tools\agent\agent_launch.cmd" /sc once /st 00:00 /f
-schtasks /run /tn TFR-Agent
+Start-Process -FilePath cmd.exe -ArgumentList '/c "C:\TFR\repo\dev-tools\agent\agent_launch.cmd"' -WindowStyle Hidden
 python dev-tools/agent/tfr_agent.py boot     # waits for the bridge; prints the first usable scene
 ```
 
-- Launch through the **Task Scheduler** (as above, from PowerShell), not from the tool's own shell: a child of the
-  Bash/PowerShell tool can be killed when the call returns. Do not redirect the game's stdout.
-- Arguments to `agent_launch.cmd` (inside the `/tr` string): `cheats` enables console commands (`cmd console
-  text="give gold 100"`) and the fog-free state (`state --cheat`) - for testing; a real play session is fair (fog
-  of war). A second argument is a folder of freshly compiled classes put AHEAD of the jar - the dev loop, no Maven
-  (`agent_launch.cmd cheats C:\...\classes`; compile with javac against the agent jar, `C:/` style paths inside
-  `-cp`).
-- Stop: `powershell -File dev-tools\agent\agent_stop.ps1` (kills only the javaw whose command line names the
-  TFR-Agent jar - the player's game is never matched), then `schtasks /delete /tn TFR-Agent /f` when done.
-- The agent's `forge.log` is locked while the game runs - stop it to read the log, or read `/state`'s
-  `agent.log` (the bridge's own lines).
+- Launch with **`Start-Process`** from the PowerShell tool (as above). `agent_launch.cmd` starts javaw detached with
+  its own `start`, so the game survives the tool call returning (checked in round 301). Do NOT use the Task
+  Scheduler (`schtasks /create`): auto mode blocks it as persistence. Do not redirect the game's stdout. Confirm it
+  runs: `Get-CimInstance Win32_Process -Filter "Name='javaw.exe'"` lists a javaw whose command line contains
+  `C:\TFR\agent\The Forsaken Realms\`.
+- Arguments to `agent_launch.cmd` go after the script path, inside the single quotes (`'/c "C:\...\agent_launch.cmd"
+  cheats'`): `cheats` enables console commands (`cmd console text="give gold 100"`) and the fog-free state
+  (`state --cheat`) - for testing; a real play session is fair (fog of war). A second argument is a folder of freshly
+  compiled classes put AHEAD of the jar - the dev loop, no Maven (`agent_launch.cmd cheats C:\...\classes`; compile
+  with javac against the agent jar, `C:/` style paths inside `-cp`).
+- Stop, from the PowerShell tool (it matches only the agent folder's jar, so the player's game from `C:\TFR\live` is
+  never touched):
+  `Get-CimInstance Win32_Process -Filter "Name='javaw.exe'" | Where-Object { $_.CommandLine -like '*C:\TFR\agent\The Forsaken Realms\*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Confirm:$false }`
+  `dev-tools\agent\agent_stop.ps1` does the same, but this machine's execution policy refuses to run scripts
+  ("running scripts is disabled on this system").
+- The agent's `forge.log` **cannot be read at all** while the game runs - Forge holds a byte-range lock over
+  the whole file, so a `FileShare.ReadWrite` handle opens and then every read throws "another process has
+  locked a portion of the file", `Get-Content -Tail` included. There is no readable prefix to scrape (round
+  276 wrote a helper to try, and deleted it). Stop the game to read the log, or read `/state`'s `agent.log`
+  during the session - it carries the `[TFR-Agent]` walk lines, which is what diagnoses a failed walk.
 
 ## 3. The loop
 
@@ -56,10 +66,13 @@ python dev-tools/agent/tfr_agent.py boot     # waits for the bridge; prints the 
 2. Decide ONE action. Think like the player: the quest log, the town's needs, the deck, the risk of the fight.
 3. `python dev-tools/agent/tfr_agent.py cmd <name> key=value ...` - commands block until done (a walk arrives
    or stops, a wait passes days).
-4. `python dev-tools/agent/tfr_agent.py settle` - returns to an idle map scene: sits out a duel (the AI plays),
-   taps the win/lose view's "Back to Adventure", the ante prompt's "OK" (keeps a won card), Done on a reward
-   screen, and walks single-option dialogs. It stops at a real choice and prints it - answer with `cmd click
-   id=...` (or `dialogs choose=TEXT`).
+4. `python dev-tools/agent/tfr_agent.py settle` - returns to an idle map scene: sits out a duel (the AI plays, sped to 50x - the user's rule, round 688),
+   taps the win/lose view's "Back to Adventure", the ante prompt's "OK" (keeps a won card; on a "Card Lost" prompt
+   it accepts the loss - never Buy Back or a Bronze Coin, since TFR round 535), Done on a reward screen, and walks
+   single-option dialogs. It stops at a real choice, and at once at a Forge prompt whose buttons it does not know
+   (since round 592; it used to wait ~2 minutes first), and prints it - answer with `cmd click id=...` (the `forgeUi`
+   ids) or `dialogs choose=TEXT`, then `settle` again. `settle --ask-ante` also stops at the Card Lost choice, for a
+   session where the player decides.
 5. Repeat. Every few steps `shot` a screenshot (`tfr_agent.py shot C:/path/x.png`) and look at it - the state is
    objects, the screenshot is what the player sees.
 
@@ -77,7 +90,7 @@ python dev-tools/agent/tfr_agent.py boot     # waits for the bridge; prints the 
 
 On a fresh profile the scene is StartScene: `cmd click text="New Game"`, then `cmd newgame` (it uses the New Game
 screen's current settings - name, race, difficulty, mode; a fresh profile offers a random name, Normal, Constructed).
-An InfoTextScene follows (`cmd click text="Back"`), then `dialogs choose="Skip the introduction"` (or play the
+An InfoTextScene follows - it is the plane's WELCOME PAGE (once per save; to check it, screenshot it before pressing Back) - (`cmd click text="Back"`), then `dialogs choose="Skip the introduction"` (or play the
 intro) and `dialogs`. Walk out through the portal: `state --brief` lists it as a map actor -> `cmd goto
 actor=<portal id>`. The profile is the agent's own - save to any slot (`cmd save slot=1 name="agent start"`) before
 anything risky, and `cmd load slot=1` from the Load screen to get back.
@@ -108,6 +121,37 @@ anything risky, and `cmd load slot=1` from the Load screen to get back.
 - The stock AI pays any "PayShards" cost with 0 shards and a spectated seat's shards are never written back - in an
   auto-battle the AI can use the player's shard abilities for free. Report it rather than exploit it.
 - `wait days` steps off the POI first; a roaming enemy often finds a waiting player - that is a duel.
+
+- **Testing the Player Capitol map** (round 343): a fresh world's Orazca uses `orazca.tmx`; `player_capital.tmx` only
+  loads once the Capitol is raised. Cheats on, stand in Orazca: `console text="give gold 2000"`, `give wood 200`,
+  `give stone 200`, `give shards 100`, then `console text="capitol raise"`, `cmd leave`, and
+  `console text='teleport to poi "Player Capitol"'` (the walker's `goto poi` stops at the doorstep of a town you
+  stand beside; the teleport enters it). `player_town.tmx` is what OTHER restored towns render from.
+- **`cmd goto tile=x,y` inside a map is y-up**: Tiled row = map height - 1 - y. `state` gives `player.pos` in map
+  pixels (16 a cell), also y-up.
+- **Walking inside maps (round 448).** The walker plans on the map's own collision with the player's box and keeps off
+  every stairs/portal/exit except the one you `goto` - plain `goto actor=<stairs id>` works through multi-level places
+  (Cultists' Outpost's four floors needed hand waypoints before). Taking stairs ends the walk with "the level changed";
+  read the new floor's actors before the next goto. A snag logs `[TFR-Agent] snagged at (x,y): box ..., walls near:
+  ...` in `/state`'s agent log - the walls the player is up against. An enemy beside an arrival point still starts a
+  duel before any `remove enemy` lands.
+- **`leave` (console or bridge) refuses during a duel** since round 448 - leaving a map mid-duel closed the game.
+- **Tappable text lines are clickable** (round 452): a label with a click handler (the Research Lab's set lines) is
+  listed in `ui` after the buttons, by its text - take a fresh `state`, then `cmd click id=uN`. The Lab itself is a map
+  trigger, not an actor: in the Capitol (`teleport to poi "Player Capitol"`) walk to `goto tile=10,33`.
+- **Run the client with `PYTHONIOENCODING=utf-8`** (`export PYTHONIOENCODING=utf-8` in the Bash tool): a reward screen's
+  checkbox glyph (U+2610) otherwise crashes `settle`'s print on the Windows console.
+- **A fresh New Game is the clean test for one-time map things** (a hidden pickup, a first-visit dialog): a long-running
+  save has usually used them up. `console text="set charflag NAME 1"` / `... 0` (0 removes it) fakes a run state such
+  as `newGamePlus`.
+- **Killing the agent game loses the end of `forge.log`** (it is buffered). To read a startup line, quit through the
+  menu: `cmd click text="Exit"`, then a fresh `state` (dialog ids need one), then `cmd click id=d1`; the log is
+  complete a second or two later. Kill only when the log does not matter.
+- **The bridge cannot scroll a list** (Settings, long shops): `click id=` on a widget below the fold answers
+  `clicked null` and does nothing, and arrow keys do not scroll. For a setting, edit the AGENT profile's
+  `C:\TFR\agent\profile\ForsakenRealms\adventure\settings.json` (back it up first, restore after).
+- **Console commands with quoted arguments go through the Bash tool**: PowerShell 5.1 strips the embedded quotes
+  (`teleport to poi "White Castle"` arrives as `White`).
 
 ## 7. Reporting
 

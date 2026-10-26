@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 738: the repo's tfr-play skill is the October version (2026-10-26)
+
+The user: "start round 737 to replace the repo's tfr-play skill with the October version" (737 had gone to art). The
+repo copy (`.claude/skills/tfr-play/SKILL.md`, last changed in round 255) was stale; the October copy lived only in the
+old Bannerloard workspace, so sub-threads in the repo loaded the old one (Task Scheduler launch, which auto mode blocks;
+no 50x duel note, no Card Lost / `--ask-ante`, no locked-`forge.log` lesson, no round 343/448/452 notes, no
+`PYTHONIOENCODING=utf-8`).
+
+- **Replaced** with the October copy, then checked each claim against today's `dev-tools/agent/` scripts and the
+  bridge (`forge/adventure/agent/`): `settle`'s `duel_at_50x`, `--ask-ante`, the OK on a lost ante, the round-592 stop
+  at an unknown prompt, `leave`'s mid-duel guard, every listed bridge command, `agent_launch.cmd`'s arguments and the
+  stop filter all hold.
+- **Two corrections**: a line saying `C:\TFR` is a junction to `C:\CLAUDE\PROJECTS\TFR1` (the scripts and filters keep
+  the `C:\TFR` path); and the claim that `agent_sync.cmd` "refuses while the agent game runs" is gone - its guard still
+  matches `*TFR-Agent*` (the F:\ folder name before round 267), so it never sees the agent game. The skill now says to
+  stop the agent game before a sync.
+- **Not done (follow-ups, scripts out of scope)**: fix `agent_sync.cmd`'s guard the way round 267 fixed
+  `agent_stop.ps1`; the `tfr_agent.py` and `agent_setup.py` docstrings still name `F:\FORGE\TFR-Agent`; a launch from
+  the real path (`C:\CLAUDE\PROJECTS\TFR1\agent`) would be missed by both stop filters (`\TFR1\agent\` is not
+  `\TFR\agent\`) - today `agent_launch.cmd` hard-codes `C:\TFR`. Not played in the agent game. Docs only; not shipped.
+
 ## Round 737: the Vampire hero flies as a bat again (2026-10-26)
 
 The user (through the Art main thread): "I'd like to change the Vampire movement to how it was before we implemented
