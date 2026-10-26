@@ -14354,6 +14354,8 @@ TFR 1 main thread.
   uncommitted edits were in the tree, so the two files were compiled alone). The text, buttons and window title are
   seen after the next package.
 
+- **Follow-up (packaging, 2026-10-26 13:07)** - `build_standalone.py`'s verify step looked for the old title "The Forsaken Realms (Forge " in the shipped `GameLauncher.class`, so the first package after this round failed "shipped jar's GameLauncher lacks the standalone title" and left the live folder without `PACKAGE_OK.txt` for half a minute. It looks for "The Forsaken Realms (v." now; the next run packaged OK. Dev tool only.
+
 ## Round 754: the exit dialog says The Forsaken Realms, with Quit / Cancel (2026-10-26)
 
 The user, after the splash rebrand (round 747), with a shot of the title screen's exit dialog ("Exit Forge" / "Are you
