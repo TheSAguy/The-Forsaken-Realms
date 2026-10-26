@@ -14329,6 +14329,21 @@ funny but also try to convince them to donate." Design agreed in the TFR 1 main 
 - **Open item, not fixed here** - `PlayerStatistic.secondPlayed` (`getPlayTime()`) is never added to anywhere, so a
   save's play time is always 0. Nothing reads `getPlayTime()` today (no stats screen shows it), so nothing shows a 0.
 
+### Round 756 (follow-up): a Support TFR click stops the later asks
+
+The user: "Yes: once a player clicks Support TFR, don't show the later support asks."
+
+- **The rule** - Support TFR in an ask sets the new saved `SettingData.supportClicked` and no later ask comes. Join
+  the Discord and Maybe later are unchanged; Don't ask again still sets `supportNeverAsk`. Its own field rather than
+  reusing `supportNeverAsk`, so the log and the console say why the asks stopped.
+- **The Settings row's link does not count** - it opens the page and stops nothing: a player looking from Settings has
+  not answered an ask, and the row stays the quiet way in.
+- **Logging** - the answer line names the reason: "answer: support (asks shown 1/3, asks stopped: Support TFR
+  clicked)"; "asks stopped: don't ask again" and "asks stopped: all asked" likewise. `support info` shows the same,
+  and `support reset` clears `supportClicked` too.
+- **Checked** - javac of `SupportPrompt.java` and `SettingData.java` against the agent jar, exit 0. Not yet seen in
+  the agent game, and not packaged (the 13:06 jar predates it; the next package needs a Maven build).
+
 ## Round 755: the restart dialog and the window title say The Forsaken Realms (2026-10-26)
 
 The user started the follow-up that round 754's sweep proposed ("Restart dialog and window title say TFR"), done in the

@@ -75,8 +75,10 @@ public class SettingData {
     public String logShareLastSent;
     // Round 756 (the user: "a little prompt in the game after a certain number of game playing hours"): util/SupportPrompt.
     // supportPlaySeconds - real play time across every save, window in focus; supportAsksShown - how many of the 5/15/40
-    // hour asks were shown; supportNeverAsk - the player's "Don't ask again".
+    // hour asks were shown; supportNeverAsk - the player's "Don't ask again"; supportClicked - Support TFR was clicked
+    // in an ask (round 756 follow-up, the user: "once a player clicks Support TFR, don't show the later support asks").
     public double supportPlaySeconds;
     public int supportAsksShown;
     public boolean supportNeverAsk;
+    public boolean supportClicked;
 }

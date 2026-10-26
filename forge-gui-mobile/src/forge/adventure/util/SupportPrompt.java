@@ -18,7 +18,7 @@ import forge.sound.SoundSystem;
  * is counted in the profile's adventure settings.json (SettingData.supportPlaySeconds), so a new game does not restart
  * it. At 5, 15 and 40 hours the player is asked once each, on the world map just after a duel, a load or a town (the
  * scene came back and nothing else is open): Support TFR (Ko-fi), Join the Discord, Maybe later, Don't ask again. The
- * 40-hour ask is the last. A pure tip - it unlocks and changes nothing. Only on a plane whose config.json names a
+ * 40-hour ask is the last, and a Support TFR click in an ask stops the later ones (round 756 follow-up). A pure tip - it unlocks and changes nothing. Only on a plane whose config.json names a
  * supportLink. Grep forge.log for [TFR-Support].
  */
 public final class SupportPrompt {
@@ -110,7 +110,7 @@ public final class SupportPrompt {
     /** The ask due now (the last threshold passed that was not asked yet), or -1. */
     static int dueAsk() {
         SettingData s = Config.instance().getSettingData();
-        if (s.supportNeverAsk || s.supportAsksShown >= HOURS.length)
+        if (s.supportNeverAsk || s.supportClicked || s.supportAsksShown >= HOURS.length)
             return -1;
         float h = hours();
         int due = -1;
@@ -174,6 +174,9 @@ public final class SupportPrompt {
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();
         dialog.getButtonTable().add(Controls.newTextButton("Support TFR", () -> {
+            // Round 756 follow-up: a supporter is not asked again. Only here - the Settings row's link stops nothing,
+            // so a player who looks at the page from Settings still gets the asks they have not answered.
+            Config.instance().getSettingData().supportClicked = true;
             answer("support", stage);
             open(link);
         })).width(240f).row();
@@ -197,7 +200,16 @@ public final class SupportPrompt {
         flushNow();
         SettingData s = Config.instance().getSettingData();
         System.out.println("[TFR-Support] answer: " + what + " (asks shown " + s.supportAsksShown + "/" + HOURS.length
-                + (s.supportNeverAsk ? ", never ask again" : "") + ")");
+                + stoppedText(s) + ")");
+    }
+
+    /** Why no ask comes any more, for the log and the console ("" while asks can still come). */
+    private static String stoppedText(SettingData s) {
+        if (s.supportClicked)
+            return ", asks stopped: Support TFR clicked";
+        if (s.supportNeverAsk)
+            return ", asks stopped: don't ask again";
+        return s.supportAsksShown >= HOURS.length ? ", asks stopped: all asked" : "";
     }
 
     /** Opens a link in the browser (Gdx.net.openURI - desktop and Android). TFR_SUPPORT_NO_BROWSER=1 only logs it. */
@@ -252,6 +264,7 @@ public final class SupportPrompt {
                 set.supportPlaySeconds = 0d;
                 set.supportAsksShown = 0;
                 set.supportNeverAsk = false;
+                set.supportClicked = false;
                 flushNow();
                 System.out.println("[TFR-Support] console: reset");
                 return "reset; " + info();
@@ -264,7 +277,7 @@ public final class SupportPrompt {
         SettingData s = Config.instance().getSettingData();
         int due = dueAsk();
         return "played " + hoursText(hours()) + ", asks shown " + s.supportAsksShown + "/" + HOURS.length
-                + (s.supportNeverAsk ? ", never ask again" : "") + (due >= 0 ? ", ask " + (due + 1) + " due" : "")
+                + stoppedText(s) + (due >= 0 ? ", ask " + (due + 1) + " due" : "")
                 + " (support hours N | show [1-3] | reset)";
     }
 }
