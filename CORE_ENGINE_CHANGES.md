@@ -46,6 +46,13 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
   after every engine merge, check them against round 747 (ANDROID_RELEASE.md's landmines list). The bottom 100 rows of
   each `adv_bg_splash.png` keep the bar color swatches `FSkin.loadLight` reads. No code changed.
 
+### Round 743 - the player's arena bracket sits above its buttons
+
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `drawArena` pads the bracket table's bottom by the
+  new `buttonRowReserve` (the building's button row plus the tier bars' room; 0 outside the player's arena) and logs
+  `[TFR-ArenaLayout]`; `refreshArenaBuildingButtons`' gate moved into `hasArenaBuildingButtons()`; the weekly lock
+  label drops a stray `[%]` scale reset. Mod code only.
+
 ### Round 741 - the 80% full-map reveal leaves out the mountain ranges
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** - `checkFogOfWarStage2` counts `countsTowardFullReveal()`

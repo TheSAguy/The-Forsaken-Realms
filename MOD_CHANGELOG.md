@@ -14296,6 +14296,41 @@ build needed for desktop (the packager's res overlay ships them); Android picks 
   swatch pixels checked equal to stock. Not seen in the running game yet: the main thread packages, then a screenshot
   from the agent game. Android not run.
 
+## Round 743: the player's arena bracket sits above its buttons (2026-10-26)
+
+The user: "The Player's two arena's need a little alignment tweak. You can't see the bars at the bottom because of the
+buttons. This is true for both the regular and level 2 arenas." (screenshot `notes/tweaks-1026/1-arena-bracket.png`,
+Orazca Arena: the bottom row of portraits and their tier bars under "Switch to Challenging Arena", "Deck Tester" and
+"Coin Challenge").
+
+- **Why it happened**: the bracket is laid out by the scene inside `ui/arena.json`'s "arena" scroll pane (470x235 at
+  the top of the 480x270 canvas) and centered in it. The building's buttons (round 5's upgrade, round 216's three-across
+  row) are added by code on top of the pane's bottom 21 units, so a centered bracket of about 200 units - title, round
+  715's and 728's hint lines, the 160-unit tree - ran under them, and the tier bars (round 532, hung under each spot)
+  with it.
+- **The fix** (`ArenaScene.drawArena`, new `buttonRowReserve`): in the player's own arena the bracket table gets a bottom
+  pad that reaches from the pane's bottom to the top of the button row, plus 6 grid pixels (the tier bar hangs 3 under
+  its spot, and 3 keep it off the button's frame). Level 1 counts the upgrade button's row; Level 2 the toggle row,
+  which on a portrait stage wraps above the other two (round 263), so the reserve follows the real button positions.
+  The bracket stays centered in what is left.
+  - **Kept while a bracket runs**, when the buttons hide, so the bracket never jumps between rounds.
+  - **Capitals' arenas are untouched**: the reserve is 0 wherever the buttons never show. The gate is the one
+    `refreshArenaBuildingButtons` already used, moved into `hasArenaBuildingButtons()` so both read it.
+  - Chosen over moving the buttons (the row is already the only free strip between the pane and Back/Battle) and over
+    scaling the tree (its 20-px spots are pixel art; a fraction blurs them). The tallest case - both hint lines - fits
+    with a few units to spare.
+- **"Won this week (2 days)" in one size**: the lock label's text was `"[%80]Won this week ([%]" + days + ...` - the
+  `[%]` reset the scale after the "(", so "2 days)" came out at full size. Removed in both forms ("Won (2d)" too).
+- **Log**: `[TFR-ArenaLayout] bracket kept 27 units above the pane's bottom for the building's buttons (pane 235 tall,
+  landscape)` each time the player's arena is drawn; no line in a capital's arena.
+- **Seen in the agent game** (classes-folder dev loop, cheats: Capitol raised, arena rebuilt and upgraded, `arena wins 5`
+  and `arena lastweek 2` for both hint lines): `notes/tweaks-1026/r743-player-arena-L1.png`,
+  `r743-player-arena-L2-normal.png` (both hint lines, the tallest case), `r743-player-arena-L2-challenging.png`,
+  `r743-player-arena-L2-midbracket.png` (buttons hidden, bracket unmoved) and `r743-capital-arena-unchanged.png` (New
+  Avalon, centered as before). All eight portraits and their tier bars sit above the buttons.
+- **Not seen**: a phone (portrait) stage, and the lock label itself (it needs a real weekly win at that venue).
+- **Files**: `forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java` only. `ui/arena.json` is unchanged.
+
 ## Round 741: the 80% full-map reveal leaves out the mountain ranges (2026-10-26)
 
 The user: "We have a rule that if 80% of the terrain was revealed, the entire map would become visible - FoW state 2.

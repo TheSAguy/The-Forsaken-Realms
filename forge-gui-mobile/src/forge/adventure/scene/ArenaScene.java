@@ -338,9 +338,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // Armory buttons already got in the 2026-08-13 round for the identical exploit shape (see
         // TownRestoration.isCurrentTownPlayerOwned's own comment). Without it, arenaUpgradesEnabled
         // being plane-wide meant the player could pay to upgrade an AI capital's own Arena too.
-        boolean playerOwnedTown = arenaMapStage != null && arenaMapStage.getChanges() != null
-                && TownRestoration.isCurrentTownPlayerOwned(arenaMapStage.getChanges());
-        if (arenaMapStage == null || !Config.instance().getConfigData().arenaUpgradesEnabled || !playerOwnedTown) {
+        if (!hasArenaBuildingButtons()) {
             arenaUpgradeButton.setVisible(false);
             arenaModeToggleButton.setVisible(false);
             deckTesterButton.setVisible(false);
@@ -372,6 +370,35 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // that paying a coin can be undone.
         coinChallengeButton.setVisible(!midMatch && level >= 2);
         coinChallengeButton.setDisabled(Current.player().coinRansomHolders().isEmpty());
+    }
+
+    /** The gate above: the player's own arena on a plane with arena upgrades - the only place the building's buttons
+     *  ever show. Round 743: drawArena() reads it too, to keep the bracket clear of them. */
+    private boolean hasArenaBuildingButtons() {
+        return arenaMapStage != null && Config.instance().getConfigData().arenaUpgradesEnabled
+                && arenaMapStage.getChanges() != null
+                && TownRestoration.isCurrentTownPlayerOwned(arenaMapStage.getChanges());
+    }
+
+    /**
+     * Round 743 (the user: "You can't see the bars at the bottom because of the buttons. This is true for both the
+     * regular and level 2 arenas."): the room the bracket pane leaves at its bottom so the bottom row of portraits and
+     * their tier bars (round 532, hung under each spot) end above the building's button row. Kept while a bracket runs
+     * too, when the buttons hide, so the bracket never jumps. 0 where the buttons never show (the capitals' arenas stay
+     * centered as before). Level 1 shows only the upgrade button, on the lower row; Level 2 the toggle row as well,
+     * which wraps above the other two on a portrait stage.
+     */
+    private float buttonRowReserve(ScrollPane pane) {
+        if (!hasArenaBuildingButtons())
+            return 0f;
+        Actor[] row = arenaBuildingLevel() < 2 ? new Actor[]{arenaUpgradeButton}
+                : new Actor[]{arenaModeToggleButton, deckTesterButton, coinChallengeButton};
+        float top = 0f;
+        for (Actor button : row)
+            top = Math.max(top, button.getY() + button.getHeight());
+        // The tier bar hangs 3 grid pixels under the spot; 3 more keep it off the button's frame.
+        float clearance = gridSize * 6f / 20f;
+        return Math.max(0f, top + clearance - pane.getY());
     }
 
     private void promptUpgradeArena() {
@@ -2059,9 +2086,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             float rightEdge = startButton.getX() - 4f;
             float leftLimit = doneButton.getX() + doneButton.getWidth() + 4f;
             float lockWidth = Math.min(220f, rightEdge - leftLimit);
+            // Round 743: one size - a "[%]" after the "(" reset the scale, so "2 days)" came out larger.
             String lockText = lockWidth >= 150f
-                    ? "[%80]Won this week ([%]" + daysLeft + (daysLeft == 1 ? " day)" : " days)")
-                    : "[%80]Won ([%]" + daysLeft + "d)";
+                    ? "[%80]Won this week (" + daysLeft + (daysLeft == 1 ? " day)" : " days)")
+                    : "[%80]Won (" + daysLeft + "d)";
             goldLabel.setText(lockText);
             goldLabel.setWidth(lockWidth);
             goldLabel.setX(rightEdge - lockWidth);
@@ -2139,6 +2167,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         if (pane != null) {
             pane.clear();
             arenaTable.clear();
+            float reserve = buttonRowReserve(pane); // round 743
+            arenaTable.padBottom(reserve);
+            if (reserve > 0f)
+                System.out.println("[TFR-ArenaLayout] bracket kept " + Math.round(reserve) + " units above the pane's bottom"
+                        + " for the building's buttons (pane " + Math.round(pane.getHeight()) + " tall, "
+                        + (Forge.isLandscapeMode() ? "landscape" : "portrait") + ")");
             if (Forge.isLandscapeMode()) {
                 arenaTable.add(Controls.newTextraLabel("[;][%150]" + GameScene.instance().getAdventurePlayerLocation(true, true) + " Arena")).top();
                 arenaTable.row();
