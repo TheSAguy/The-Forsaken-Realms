@@ -392,6 +392,28 @@ On Android the logs are in Android/obb/com.thesaguy.forsakenrealms/ForsakenRealm
 To report a bug, post here what happened, your difficulty and your logs. Screenshots and your save help too.
 (macOS: ~/Library/Application Support/ForsakenRealms. Linux: ~/.forsakenrealms)"""))
 
+M.append(("Support The Forsaken Realms", "Support", r"""**☕ Support The Forsaken Realms**
+
+The Forsaken Realms is free, and it always will be. No ads, no paywalls, nothing locked behind a purchase.
+
+Building it isn't free, though. 😅 TFR is made with a lot of help from Claude, an AI assistant, and Claude is not free 😉 Add in the hours of testing and tuning, and every update has a real cost behind it.
+
+If you've enjoyed your time in the Realms and want to help keep the updates coming, you can buy me a coffee on Ko-fi:
+👉 **https://ko-fi.com/thesaguy**
+
+**What a tip helps with:**
+🛠️ new features, quests and fixes, sooner
+🎨 the tools behind the new art and sprites
+🤖 keeping Claude busy on the next update
+
+**Can't tip? You still help a lot:**
+🐞 report bugs here; shared logs make fixes fast
+💬 tell me what you love and what bugs you
+📣 tell a friend who likes Magic about TFR
+
+Thanks for playing. ❤️
+— TheSAguy"""))
+
 if __name__ == "__main__":
     for i, (topic, short, text) in enumerate(M, 1):
         print("%2d %5d %s %s" % (i, len(text), "OVER" if len(text) >= 2000 else "  ok", topic))

@@ -14264,6 +14264,19 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 757: Discord FAQ message 22 - the support post (2026-10-26)
+
+The user approved a Ko-fi support post for the Discord #faq channel: "Yes: add the support post to the Discord FAQ
+source as message 22."
+
+- **`dev-tools/discord_faq/messages.py`** - message 22, topic "Support The Forsaken Realms", short label "Support":
+  the game stays free, what a tip helps with, the Ko-fi link (https://ko-fi.com/thesaguy), and three ways to help
+  without tipping. The text is exactly as approved; 857 characters.
+- **The copy-helper page** - rebuilt with `build_page.py` (22 messages, emoji intact) and republished in place as the
+  claude.ai artifact "Forsaken Realms FAQ", version 6 (same link). `README.md` records it.
+- **Not changed**: message 21 (its v1.22 Classic workaround stays, on hold at the user's word); `build_page.py`'s
+  "v1.22" eyebrow and notes. Dev tools only, not shipped in the game.
+
 ## Round 755: the restart dialog and the window title say The Forsaken Realms (2026-10-26)
 
 The user started the follow-up that round 754's sweep proposed ("Restart dialog and window title say TFR"), done in the
