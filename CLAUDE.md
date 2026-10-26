@@ -12,7 +12,7 @@ every round built. If you find something missing, fix the docs rather than going
 `sprites/heroes/lpc_vampire_m/f.png`, from the generator's `lpc_to_player.py --bat`), 738 (the repo's `tfr-play` skill
 is the October version; docs only, not shipped), 739 (`agent_sync.cmd` refuses while the agent game runs; the agent
 detect/stop filters list the agent folder under both `C:\TFR` and `C:\CLAUDE\PROJECTS\TFR1`; dev tools only, not
-shipped), 740 (the Demon's Bargain and the Sphinx's Sanctum open in week 3: `notBeforeDay` 15 in TFR's
+shipped), 740 (the Demon's Bargain and the Sphinx's Sanctum open in HUD Week 3: `notBeforeDay` 22 in TFR's
 `points_of_interest.json`, data only) and 741 (the 80% full-map fog reveal counts land minus the mountain ranges -
 the round-294 barrier - on both sides, like ocean; `World.checkFogOfWarStage2`, its `[TFR-FoW]` line prints the
 mountain count) and 747 (TFR's world disc replaces Forge's splash art: the skin's and both fallback skins'

@@ -14478,8 +14478,8 @@ counted in that 80%, just like water."
 ## Round 740: the Demon's Bargain and the Sphinx's Sanctum open in week 3 (2026-10-26)
 
 The user: "Move Demon that asks about Ante and Sphinx Dungeons to week 3+. I believe we currently have these two dungeons
-starting at week 1+, so they will just move to week 3+. Each can only appear once per game." Their premise was one week
-off: since round 513 both waited for day 8 (week 2), not week 1.
+starting at week 1+, so they will just move to week 3+. Each can only appear once per game."
+Since round 513 both waited for day 8; the HUD counts weeks from 0, so that is HUD Week 1 (see the follow-up below).
 
 - **The change** (data only, `The Forsaken Realms/world/points_of_interest.json`, 2 lines): `DemonsBargain` and
   `RiddlesLair` (the Sphinx's Sanctum) `"notBeforeDay": 8` -> `15`. Weeks run days 1-7, 8-14, 15-21
@@ -14504,6 +14504,12 @@ off: since round 513 both waited for day 8 (week 2), not week 1.
 - **Tested**: read through `DungeonRotation` (`isNotYet`, `initializeNewWorld`, `processDaysPassed`,
   `activateFromReserve`), `AdventureQuestStage`, `WorldStage`'s day tick and both maps' dialogs; the file parses as JSON.
   Not run in the agent game (data change, packaged by the main thread).
+
+- **Follow-up: HUD weeks, day 22** (same day): the user counts weeks as the HUD shows them, and the HUD's week starts
+  at 0 (`TimeOfDayActor`: "Week " + (day-1)/7, the same number as `World.weekOf`; day 2 reads "Day 2 / Week 0"). So
+  day 8 reads "Week 1" - the user's "currently week 1+" was right - and "week 3+" is HUD Week 3, which starts on day
+  22. Both places' `notBeforeDay` 15 -> 22. A save on days 8-21 where one already shows puts it back at the next day
+  tick, as above.
 
 ## Round 739: agent_sync refuses while the agent game runs; agent filters match both folder names (2026-10-26)
 

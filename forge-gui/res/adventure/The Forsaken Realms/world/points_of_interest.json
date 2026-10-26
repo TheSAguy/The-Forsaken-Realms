@@ -4591,7 +4591,7 @@
 		]
 	},
 	{
-		"name": "DemonsBargain", "retireOnQuestFlag": "DemonsBargainSettled", "notBeforeDay": 15,
+		"name": "DemonsBargain", "retireOnQuestFlag": "DemonsBargainSettled", "notBeforeDay": 22,
 		"displayName": "Demon's Bargain",
 		"type": "cave",
 		"count": 1,
@@ -4618,7 +4618,7 @@
 		]
 	},
 	{
-		"name": "RiddlesLair", "retireOnQuestFlag": "riddlesLairComplete", "notBeforeDay": 15,
+		"name": "RiddlesLair", "retireOnQuestFlag": "riddlesLairComplete", "notBeforeDay": 22,
 		"displayName": "Sphinx's Sanctum",
 		"type": "cave",
 		"count": 1,
