@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 747 (follow-up): the Java startup splash is TFR's too (2026-10-26)
+
+The post-package check of rounds 740-747 caught a second stock splash: for about a second at launch, before the game's
+own splash, Java shows the jar manifest's `SplashScreen-Image` - `forge-gui-mobile-dev/splash/logo.gif`, Forge's
+animated "FORGE initializing...." anvil (450x160, 14 frames, 1-bit transparency). The user approved the replacement
+from a preview.
+
+- **`forge-gui-mobile-dev/splash/logo.gif`**: now the world disc (132px, from the user's 1024px icon, Lanczos) and "The
+  Forsaken / Realms" in the game's `font1.ttf` (cream), a small gray "starting...", on the splash navy (27,30,43) with a
+  thin slate border; 450x160 like stock. Static and opaque: 1-bit GIF transparency would leave a jagged halo round the
+  painted disc, and it shows for only a second. Quantized to 256 colors with octree (median-cut turned the blue mana
+  drop green). `pom.xml` is unchanged - it already points at this file.
+- **Ships with the next package** (the gif is inside the jar, so it needs the Maven build). Not seen in the running
+  game yet. On ANDROID_RELEASE.md's revert watch with round 747's splash files.
+
 ## Round 749: a quest given away from any town names its town; unfilled quest text is logged (2026-10-26)
 
 Found by the main thread in round 745's Notices shot (`notes/tweaks-1026/r745-notices.png`): "Quest Updated: UNDEAD

@@ -177,7 +177,9 @@ Consequences:
   monochrome, legacy square and round), `drawable-{mdpi,hdpi,xhdpi,xxhdpi}/ic_launcher.png`, and both
   `mipmap-anydpi-v26/ic_launcher(_round).xml`, whose background is `@mipmap/ic_launcher_background` (upstream's is
   `@color/ic_launcher_background`, white). If an anvil or the white background is back, restore them from round 748's
-  commit.
+  commit. Desktop too: `forge-gui-mobile-dev/splash/logo.gif` (the JVM splash the jar manifest's `SplashScreen-Image`
+  shows for a second at launch) is the disc and "The Forsaken Realms", static and opaque, 450x160 (round 747
+  follow-up; upstream's is the animated "FORGE initializing" anvil).
 - **The app's package identity trio must stay in sync** (all three say
   `com.thesaguy.forsakenrealms`): manifest `package`, `Main.RES_PKG_FALLBACK`,
   `Forge.java`'s `setUsingAppDirectory(assetDir0.contains(...))` sniff.

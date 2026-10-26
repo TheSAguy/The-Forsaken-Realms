@@ -70,6 +70,9 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
   replaced: the five-mana wheel and the anvil become TFR's world disc. Binary, so a merge takes upstream's silently:
   after every engine merge, check them against round 747 (ANDROID_RELEASE.md's landmines list). The bottom 100 rows of
   each `adv_bg_splash.png` keep the bar color swatches `FSkin.loadLight` reads. No code changed.
+- **`forge-gui-mobile-dev/splash/logo.gif`** (follow-up) - replaced: the JVM splash (`pom.xml`'s `SplashScreen-Image`,
+  unchanged) is the disc and "The Forsaken Realms" instead of the animated "FORGE initializing" anvil. Binary; same
+  revert check.
 
 ### Round 743 - the player's arena bracket sits above its buttons
 
