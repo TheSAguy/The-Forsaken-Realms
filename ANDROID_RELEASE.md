@@ -172,8 +172,12 @@ Consequences:
   `forge-gui-mobile-dev/fallback_skin/adv_bg_splash.png` (a copy of the skin file) and
   `forge-gui-android/res/drawable/logo.png` (the disc, 802x802; upstream's is the 1600px anvil). If one is back to
   Forge's, restore it from round 747's commit. The bottom 100 rows of each `adv_bg_splash.png` hold the loading bar's
-  color swatches, read at (25|75, h-75|h-25); keep them. The launcher icons (`mipmap-*`, `drawable-*/ic_launcher.png`)
-  are still Forge's anvil.
+  color swatches, read at (25|75, h-75|h-25); keep them. The launcher icons are the
+  disc too (round 748): every `mipmap-*/ic_launcher*.png` (foreground, the dark moss `ic_launcher_background`,
+  monochrome, legacy square and round), `drawable-{mdpi,hdpi,xhdpi,xxhdpi}/ic_launcher.png`, and both
+  `mipmap-anydpi-v26/ic_launcher(_round).xml`, whose background is `@mipmap/ic_launcher_background` (upstream's is
+  `@color/ic_launcher_background`, white). If an anvil or the white background is back, restore them from round 748's
+  commit.
 - **The app's package identity trio must stay in sync** (all three say
   `com.thesaguy.forsakenrealms`): manifest `package`, `Main.RES_PKG_FALLBACK`,
   `Forge.java`'s `setUsingAppDirectory(assetDir0.contains(...))` sniff.

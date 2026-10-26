@@ -14317,6 +14317,33 @@ first it would show, then alphabetical."
   pieces and one Gravebound worn) - Tidewise 3/7, Wildgrove 3/7, Emberclad 2/7, Gravebound 1/7 (worn) last
   (`notes/tweaks-1026/r744-gear-sets.png`). A guard's page was not opened.
 
+## Round 748: the TFR world disc replaces Forge's anvil as the Android launcher icon (2026-10-26)
+
+The user: "Yes: round 748 replaces the Android launcher icons (adaptive, round, monochrome) with the TFR disc, with a
+preview first." Art only, from the Art thread: Android picks it up at the next APK build; desktop is untouched.
+
+- **Source**: the user's own 1024px icon (`notes/tweaks-1026/6-tfr1-icon.png`, painted, not on a pixel grid), the
+  same disc as round 747's splash. Every size is a Lanczos downscale. The generator and preview scripts live outside
+  the repo, in the Art project's `notes/android_icon_748/` (`build_icons.py`, `preview.py`); nothing in the build reads
+  them or the repo-root `AppIcon.png`.
+- **Adaptive icon (Android 8+)**: `mipmap-*/ic_launcher_foreground.png` (108-432 px) is the disc, 66 dp across on the
+  108 dp canvas, so it fits the safe zone under every mask (circle, squircle, rounded square). The background layer is
+  new: `mipmap-*/ic_launcher_background.png`, a dark moss-slate radial gradient (#2C362F to #111613) taken from the
+  disc's stone, which also shows through the disc's transparent crack. Both `mipmap-anydpi-v26/ic_launcher(_round).xml`
+  now point their background at `@mipmap/ic_launcher_background` instead of the white `@color/ic_launcher_background`
+  (`res/values/ic_launcher_background.xml` is left in place, unused).
+- **Themed icon (Android 13+)**: `mipmap-*/ic_launcher_monochrome.png` is a one-color silhouette of the disc: solid,
+  with the rim groove, a ring around each of the five mana medallions, the five symbols and the crack knocked out.
+- **Legacy icons**: `mipmap-*/ic_launcher.png` (36-192 px) is the disc on a dark rounded-square plate,
+  `mipmap-*/ic_launcher_round.png` (48-192 px) the disc on a dark circle. The four unreferenced
+  `drawable-{mdpi,hdpi,xhdpi,xxhdpi}/ic_launcher.png` copies get the legacy square too, so no anvil is left in the APK.
+  Same file names and densities as round 61's set; no other file changes.
+- **Revert watch**: binary PNGs, so an upstream merge takes Forge's anvil silently; `ANDROID_RELEASE.md`'s landmines
+  list names them next to round 747's splash files.
+- **Tested**: preview sheets (mock home screens in circle, squircle and rounded-square masks, themed light and dark,
+  every density 1:1, a 48 px check), approved by the user through the Art main thread. Not seen on a phone: ships with
+  the next APK build.
+
 ## Round 747: the TFR world disc replaces Forge's splash art (2026-10-26)
 
 The user: "Can we replace the default Forge Load/Splash screen with the TFR 1 icon." Art only: four PNGs, no Java, no
