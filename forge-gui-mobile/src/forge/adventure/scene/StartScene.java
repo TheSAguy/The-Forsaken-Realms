@@ -342,8 +342,8 @@ public class StartScene extends UIScene {
     public boolean Exit() {
         if (exitDialog == null) {
             exitDialog = createGenericDialog(Forge.getLocalizer().getMessage("lblExitForge"),
-                    Forge.getLocalizer().getMessage("lblAreYouSureYouWishExitForge"), Forge.getLocalizer().getMessage("lblOK"),
-                    Forge.getLocalizer().getMessage("lblAbort"), () -> {
+                    Forge.getLocalizer().getMessage("lblAreYouSureYouWishExitForge"), Forge.getLocalizer().getMessage("lblQuit"),
+                    Forge.getLocalizer().getMessage("lblCancel"), () -> { // TFR round 754: Quit / Cancel, not OK / Abort
                         Forge.exit(true);
                         removeDialog();
                     }, this::removeDialog);

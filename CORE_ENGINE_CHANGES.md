@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 754 - the exit dialog says The Forsaken Realms
+
+- **`forge-gui/res/languages/en-US.properties`** (STOCK, shared) - two values rewritten, keys unchanged:
+  `lblExitForge` = "Quit The Forsaken Realms", `lblAreYouSureYouWishExitForge` = "Are you sure you want to quit The
+  Forsaken Realms?". An upstream edit to either line conflicts; keep ours.
+- **`forge-gui-mobile/src/forge/adventure/scene/StartScene.java`** (STOCK) - `Exit()`: the buttons read `lblQuit` /
+  `lblCancel` instead of `lblOK` / `lblAbort` (one line, commented).
+
 ### Round 753 - a lost duel takes 5 off Notoriety instead of resetting it
 
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - `recordNotoriety`: a loss takes the

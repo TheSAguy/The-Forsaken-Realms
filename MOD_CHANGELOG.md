@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 754: the exit dialog says The Forsaken Realms, with Quit / Cancel (2026-10-26)
+
+The user, after the splash rebrand (round 747), with a shot of the title screen's exit dialog ("Exit Forge" / "Are you
+sure you wish to exit Forge?" / OK, Abort): "Also update the Exit wording."
+
+- **The text** - two values in the stock `forge-gui/res/languages/en-US.properties`, keys unchanged:
+  `lblExitForge` "Exit Forge" -> "Quit The Forsaken Realms" and `lblAreYouSureYouWishExitForge` "Are you sure you wish
+  to exit Forge?" -> "Are you sure you want to quit The Forsaken Realms?". Changing the values, not adding keys, reaches
+  every route that shows the text without further Java edits.
+- **The buttons** - `StartScene.Exit()` passes the existing shared keys `lblQuit` ("Quit") and `lblCancel` ("Cancel")
+  instead of `lblOK` / `lblAbort`. No shared key is edited. Esc still closes it: "Cancel" is one of
+  `Controls.CLOSE_LABELS` (round 491).
+- **Routes**: the title screen's Exit button opens this dialog. The window's close button quits silently
+  (`GameLauncher.closeRequested` -> `Forge.exit(true)`, no dialog), so there is nothing to reword. Classic mode's
+  back-from-home and Android's back use `Forge.exit(false)`, an `FOptionPane` with the same text key, so they get the
+  new question with their own Exit / Cancel buttons (`Forge.java` left alone). The Swing desktop client's
+  `FNavigationBar` tooltip and `FControl` close option read `lblExitForge` too; TFR does not ship that client.
+- **Not changed**: the title sitting on the frame's top border. There is no per-dialog layout; every
+  `createGenericDialog` title is drawn by the skin's window style (`common/skin/ui_skin.json`), so it is the same on
+  every titled dialog and was left alone. No "your progress is saved" claim (Exit does not autosave). Other languages'
+  values still say Forge (TFR ships English).
+- **Other player-visible "Forge" text** (reported, not changed): the window title "The Forsaken Realms (Forge
+  <version>)" (`GameLauncher.java:120`), the restart confirm "Are you sure you wish restart Forge?" (adventure Settings
+  and `Forge.java`), "Forge will restart after a few seconds..." (`FSkin`), the first-run card image index prompt, and
+  stock classic-mode settings pages.
+- **Checked**: Maven `-pl forge-gui-mobile -am compile -o` exit 0. The agent game, with only the four `StartScene*.class`
+  files ahead of the jar: the title's Exit button opens the dialog with Quit / Cancel buttons, and Esc closes it.
+  The agent's `res` still held the old text (resources reach it only with a package), so the new title and text are
+  checked after the next package. Shot: `notes/tweaks-1026/r754-exit-dialog.png` (outside the repo).
+
 ## Round 753: a lost duel takes 5 off Notoriety instead of resetting it (2026-10-26)
 
 Discord feedback (2026-10-25): "When entering a challenging dungeon, it was often correct to throw a game to a
