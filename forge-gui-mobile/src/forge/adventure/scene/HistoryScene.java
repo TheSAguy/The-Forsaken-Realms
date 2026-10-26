@@ -44,6 +44,9 @@ public class HistoryScene extends UIScene {
     private static final int[] LEGEND = {WorldHistory.WHITE, WorldHistory.BLUE, WorldHistory.BLACK, WorldHistory.RED,
             WorldHistory.GREEN, WorldHistory.PLAYER, WorldHistory.WASTE};
     private static final float LAND_SHADE = 0.72f;
+    /** Round 746: the town circles of the Unclaimed - a ruin, and a working neutral town (pale teal, so the user can "at
+     *  a glance see where they are and when they fall"). */
+    private static final int[] RUIN_TOWN = {190, 180, 160}, NEUTRAL_TOWN = {150, 205, 196};
     private static final float BAR_WIDTH = 46f;
     /** Round 635 (the user: "add the Mountain ranges to this map, since that prevents the spread of territory, like
      *  water"): the barrier's tiles, three rock tones mixed tile by tile. They never change, so they are read from the
@@ -66,6 +69,7 @@ public class HistoryScene extends UIScene {
     private final TextraLabel[] countLabels = new TextraLabel[8];
     private final TextraLabel[] shareLabels = new TextraLabel[8];
     private final Image[] bars = new Image[8];
+    private TextraLabel neutralLabel, ruinLabel;
     private Slider slider;
     private TextraButton playButton;
     private final TextraButton[] speedButtons = new TextraButton[SPEEDS.length];
@@ -143,8 +147,12 @@ public class HistoryScene extends UIScene {
         playing = lastDay > h.startDay;
         refreshButtons();
         refreshLabels();
+        int working = 0;
+        for (int code : cursor.town)
+            working += (code & WorldHistory.KIND_WORKING) != 0 ? 1 : 0;
         System.out.println("[TFR-History] replay opened: days " + h.startDay + "-" + lastDay + ", "
-                + h.towns().size() + " towns, " + milestones.size() + " milestones");
+                + h.towns().size() + " towns, " + milestones.size() + " milestones, " + working
+                + " working neutral(s) on day " + cursor.day); // round 746
     }
 
     // ---- the map ----
@@ -192,9 +200,10 @@ public class HistoryScene extends UIScene {
             int r = capital ? 5 : 3;
             townPixmap.setColor(16 / 255f, 16 / 255f, 20 / 255f, 1f);
             townPixmap.fillCircle(t.x, t.row, r + 1);
-            if (owner == WorldHistory.WASTE)
-                townPixmap.setColor(190 / 255f, 180 / 255f, 160 / 255f, 1f);
-            else
+            if (owner == WorldHistory.WASTE) {
+                int[] c = (code & WorldHistory.KIND_WORKING) != 0 ? NEUTRAL_TOWN : RUIN_TOWN;
+                townPixmap.setColor(c[0] / 255f, c[1] / 255f, c[2] / 255f, 1f);
+            } else
                 townPixmap.setColor(Math.min(255, RGB[owner][0] * 1.08f + 12) / 255f,
                         Math.min(255, RGB[owner][1] * 1.08f + 12) / 255f, Math.min(255, RGB[owner][2] * 1.08f + 12) / 255f, 1f);
             townPixmap.fillCircle(t.x, t.row, r);
@@ -308,6 +317,12 @@ public class HistoryScene extends UIScene {
             panel.add(barCell).size(BAR_WIDTH, 8f).padRight(4f);
             shareLabels[code] = label("");
             panel.add(shareLabels[code]).left().width(28f).row();
+            if (code == WorldHistory.WASTE) { // round 746: the Unclaimed towns split into working neutrals and ruins
+                neutralLabel = label("");
+                ruinLabel = label("");
+                townRow(NEUTRAL_TOWN, "Neutral", neutralLabel, landscape);
+                townRow(RUIN_TOWN, "Ruins", ruinLabel, landscape);
+            }
         }
         if (!mountains.isEmpty()) { // round 635: the key to the rock and the castle symbol
             Image rockSwatch = new Image(white);
@@ -351,6 +366,16 @@ public class HistoryScene extends UIScene {
         refreshButtons();
     }
 
+    /** Round 746: a legend row under Unclaimed - a town circle's color, its name and its count; the land is Unclaimed's. */
+    private void townRow(int[] rgb, String name, TextraLabel count, boolean landscape) {
+        Image swatch = new Image(white);
+        swatch.setColor(rgb[0] / 255f, rgb[1] / 255f, rgb[2] / 255f, 1f);
+        panel.add(swatch).size(5f, 5f).right().padRight(4f);
+        panel.add(label("[%70]  " + name)).left().width(landscape ? 50f : 64f);
+        panel.add(count).right().width(22f).padRight(8f);
+        panel.add().colspan(2).row();
+    }
+
     private void togglePlay() {
         if (!playing && cursor.day >= lastDay)
             stepTo(history.startDay); // at the end, Play starts over
@@ -388,6 +413,12 @@ public class HistoryScene extends UIScene {
             bars[code].setWidth(Math.max(1f, BAR_WIDTH * share));
             shareLabels[code].setText("[%70][#AAAAAA]" + Math.round(share * 100) + "%");
         }
+        int working = 0;
+        for (int code : cursor.town)
+            if ((code & WorldHistory.KIND_CASTLE) == 0 && (code & WorldHistory.KIND_WORKING) != 0)
+                working++;
+        neutralLabel.setText("[%75][#F0DCA0]" + working);
+        ruinLabel.setText("[%75][#F0DCA0]" + (cursor.townCounts[WorldHistory.WASTE] - working));
         WorldHistory.Milestone latest = null;
         for (WorldHistory.Milestone m : milestones) {
             if (m.day > cursor.day)

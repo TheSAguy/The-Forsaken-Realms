@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 746 - working neutral towns on the History replay
+
+- Mod-added only: `world/WorldHistory.java` (`KIND_WORKING`, save format 3 with `TOWN_SHIFT` 6, `backfillWorking` for
+  format 1-2 saves, `townCode` reads `TownRestoration.isNeutralSeededTown`) and `scene/HistoryScene.java` (the teal
+  circle, the Neutral and Ruins legend rows). No stock file touched; `World.java`'s save hook is unchanged.
+
 ### Round 745 - the Notices log's day labels on their message's baseline
 
 - **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `openNoticeLog()`: `dayDrop` and the day label's

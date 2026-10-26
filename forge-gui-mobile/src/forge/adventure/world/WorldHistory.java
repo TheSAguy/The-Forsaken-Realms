@@ -45,10 +45,14 @@ public final class WorldHistory {
      *  major event"): a color's castle - its color while the color stands, WASTE once it has fallen. Not a town: the
      *  legend's town counts leave castles out. */
     public static final int KIND_CASTLE = 16;
-    /** A town record is townIndex << TOWN_SHIFT | kind | owner (format 1 packed townIndex << 4, before castles). */
-    private static final int TOWN_SHIFT = 5, CODE_MASK = 31;
+    /** Round 746 (the user: "Have the working neutral towns be a slightly different color on the replay map"): an
+     *  Unclaimed town that works (TownRestoration's neutralSeeded flag) rather than lying in ruin. Only with WASTE. */
+    public static final int KIND_WORKING = 32;
+    /** A town record is townIndex << TOWN_SHIFT | kind | owner (format 1 packed townIndex << 4, before castles; format 2
+     *  townIndex << 5, before working neutrals). */
+    private static final int TOWN_SHIFT = 6, CODE_MASK = 63;
     public static final String[] NAMES = {"Sea", "Unclaimed", "White", "Blue", "Black", "Red", "Green", "You"};
-    private static final int FORMAT = 2;
+    private static final int FORMAT = 3;
     private static final String[] BIOME_NAMES = {null, "waste", "white", "blue", "black", "red", "green", "player"};
     private static final String[][] TOWN_NOUNS = {{"Plains", "2"}, {"Island", "3"}, {"Swamp", "4"}, {"Mountain", "5"},
             {"Forest", "6"}};
@@ -109,6 +113,9 @@ public final class WorldHistory {
     // The state after the last record - what the next record() diffs against.
     private final byte[] current;
     private int[] currentTown = new int[64];
+    // Round 746: the format read from a save older than KIND_WORKING (0 once handled) - the next scan back-fills the bit
+    // (backfillWorking).
+    private int legacyFormat, backfilled;
 
     private WorldHistory(int width, int height, int startDay, byte[] base) {
         this.width = width;
@@ -178,10 +185,17 @@ public final class WorldHistory {
                 towns.get(idx).name = name;
             }
             seen.set(idx);
+            if (legacyFormat != 0 && code == (currentTown[idx] | KIND_WORKING) && backfillWorking(idx))
+                currentTown[idx] = code;
             if (currentTown[idx] != code) {
                 currentTown[idx] = code;
                 rec.addTown(idx << TOWN_SHIFT | code);
             }
+        }
+        if (legacyFormat != 0) {
+            System.out.println("[TFR-History] format " + legacyFormat + " -> " + FORMAT + ", " + backfilled + " town"
+                    + (backfilled == 1 ? "" : "s") + " back-filled as working neutrals");
+            legacyFormat = 0;
         }
         for (int idx = 0; idx < towns.size(); idx++) {
             if (seen.get(idx) || currentTown[idx] == NONE)
@@ -194,6 +208,25 @@ public final class WorldHistory {
                 rec.addTown(idx << TOWN_SHIFT | code);
             }
         }
+    }
+
+    /** Round 746: a save from before KIND_WORKING recorded a working neutral as a plain Unclaimed town. A town that works
+     *  today has worked since it last became Unclaimed (a ruin only works again by changing hands), so its last record
+     *  takes the bit - the replay shows it right back to that day. False when it has no such record. */
+    private boolean backfillWorking(int idx) {
+        for (int r = records.size() - 1; r >= 0; r--) {
+            Record rec = records.get(r);
+            for (int i = rec.townCount - 1; i >= 0; i--) {
+                if (rec.towns[i] >>> TOWN_SHIFT != idx)
+                    continue;
+                if ((rec.towns[i] & CODE_MASK) != currentTown[idx])
+                    return false;
+                rec.towns[i] |= KIND_WORKING;
+                backfilled++;
+                return true;
+            }
+        }
+        return false;
     }
 
     /** "white" for "White Castle" - the color word World.isColorDefeated() takes; null for anything else. */
@@ -231,8 +264,9 @@ public final class WorldHistory {
             return PLAYER | kind;
         if (name == null)
             return -1;
-        if (name.startsWith("Waste Town"))
-            return WASTE | kind;
+        if (name.startsWith("Waste Town")) // round 746: a working neutral apart from a ruin
+            return WASTE | kind | (TownRestoration.isNeutralSeededTown(save == null ? null
+                    : save.peekPointOfInterestChanges(poi.getID())) ? KIND_WORKING : 0);
         for (String[] noun : TOWN_NOUNS)
             if (name.startsWith(noun[0]))
                 return Integer.parseInt(noun[1]) | kind;
@@ -440,8 +474,8 @@ public final class WorldHistory {
     static WorldHistory fromBytes(byte[] blob) throws IOException {
         try (DataInputStream in = new DataInputStream(new InflaterInputStream(new ByteArrayInputStream(blob)))) {
             int format = in.readInt();
-            if (format != FORMAT && format != 1)
-                throw new IOException("history format " + format + ", this build reads 1 and " + FORMAT);
+            if (format < 1 || format > FORMAT)
+                throw new IOException("history format " + format + ", this build reads 1 to " + FORMAT);
             int w = in.readInt(), h = in.readInt(), start = in.readInt();
             byte[] base = new byte[w * h];
             in.readFully(base);
@@ -466,8 +500,10 @@ public final class WorldHistory {
                 rec.towns = new int[Math.max(1, n)];
                 for (int i = 0; i < n; i++) {
                     int packed = in.readInt();
-                    // Format 1 (round 626) packed townIndex << 4 with no castles; re-pack it as this build does.
-                    rec.towns[i] = format == 1 ? (packed >>> 4) << TOWN_SHIFT | (packed & 15) : packed;
+                    // Format 1 (round 626) packed townIndex << 4 with no castles, format 2 (round 635) townIndex << 5
+                    // with no working neutrals; re-pack them as this build does.
+                    rec.towns[i] = format == 1 ? (packed >>> 4) << TOWN_SHIFT | (packed & 15)
+                            : format == 2 ? (packed >>> 5) << TOWN_SHIFT | (packed & 31) : packed;
                 }
                 rec.townCount = n;
                 history.records.add(rec);
@@ -477,6 +513,7 @@ public final class WorldHistory {
                 for (int i = 0; i < rec.townCount; i++)
                     history.currentTown[rec.towns[i] >>> TOWN_SHIFT] = rec.towns[i] & CODE_MASK;
             }
+            history.legacyFormat = format < FORMAT ? format : 0;
             return history;
         }
     }

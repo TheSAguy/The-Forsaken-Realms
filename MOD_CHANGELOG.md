@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 746: working neutral towns have their own color on the History replay (2026-10-26)
+
+The user: "Have the working neutral towns be a slightly different color on the replay map. (So there should be a small
+difference between the ruined towns and working neutral towns. Just a different color icon/circle. This way you can at
+a glance see where they are and when they fall."
+
+- **The record** (`WorldHistory`): a town code gains `KIND_WORKING` (32) - an Unclaimed "Waste Town" with
+  TownRestoration's `neutralSeeded` flag (the 20 seeded at world-gen, Center Towns after a color's capture reverts,
+  Ring Cities freed by a color's fall). The daily diff records the day a working neutral falls into ruin or changes
+  hands, as for any town change. History save format 2 -> 3 (`TOWN_SHIFT` 5 -> 6); formats 1 and 2 are re-packed on
+  load.
+- **Old saves**: a format 1-2 history knows only "Unclaimed". On the first scan after loading, each town that works
+  today gets the bit on its last record - the replay shows it working back to the day it last became Unclaimed. That is
+  exact: nothing sets `neutralSeeded` on a ruin in place (world-gen runs before the history starts; the capture revert
+  and a fallen color's Ring Cities both change hands; restoration makes a town the player's; only the console's
+  `resetQuestFlags` clears it, a debug path). So an old save shows today's working neutrals in teal back to that day; a neutral that fell before this round shows as a ruin all along (the old record cannot tell), and so does any earlier working stretch of a town that works today. Log:
+  `[TFR-History] format 2 -> 3, N towns back-filled as working neutrals`, once per load. A format-3 save loaded by an
+  older build loses its replay (it refuses the format).
+- **The replay** (`HistoryScene`): a working neutral's circle is pale teal (150,205,196, picked from a
+  three-color mock the user may still veto, `notes/tweaks-1026/r746-neutral-color-mock.png`); a ruin keeps (190,180,160). The legend's
+  Unclaimed row keeps its land share and town total, with two indented rows under it, "Neutral" and "Ruins", and their
+  counts for the day shown. `[TFR-History] replay opened` adds the working-neutral count.
+- **Tested**: javac against the agent jar; agent game on slot 44, a copy of slot 17 (format 2, day 2): the migration
+  line read 23 towns, the replay showed them teal on days 1 and 2 (Neutral 23, Ruins 271), and after a save and reload
+  no migration line (format 3 read back), same counts (`notes/tweaks-1026/r746-history-*.png`). Not seen: a long save
+  where neutrals fall, the portrait layout.
+
 ## Round 745: the Notices log's day labels sit on their message's line (2026-10-26)
 
 The user: "The log needs a little alignment tweak." (a screenshot with the small "Day 16" drawn higher than its message)
