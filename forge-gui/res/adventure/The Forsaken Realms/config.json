@@ -314,6 +314,7 @@
     "welcomePopupText": "Thanks for playing The Forsaken Realms!\n\nFound a bug, or have thoughts on balance? Tell us on Discord - every report helps shape the next update.\n\nNew here? The Game Guide & FAQ explains everything this game adds to Forge's Adventure mode - how reputation, territory, dungeons and your Capitol work, and answers to the common questions. It is also in your game folder as GAME_GUIDE.html.\n\nMost of the game's numbers can be tuned in its settings files. The main one is settings.json, in The Forsaken Realms\\res\\adventure\\The Forsaken Realms\\config tables - make a copy before you edit it.\n\nRecommended settings (already on): Fog of War, Play for Ante and Match Ante Rarity - change them under Settings.\n\nHave fun out there, planeswalker!",
     "welcomePopupLink": "https://discord.gg/TTRPKc9HYJ",
     "welcomeGuideLink": "https://github.com/TheSAguy/The-Forsaken-Realms/blob/master/forge-gui/res/adventure/The%20Forsaken%20Realms/GUIDE.md",
+    "supportLink": "https://ko-fi.com/thesaguy",
     "raceEditions": [
         { "race": "Devil",        "editions": ["RNA", "TOR", "SOI", "VOW"] },
         { "race": "Kor",          "editions": ["ZEN", "BFZ", "ZNR", "ROE"] },

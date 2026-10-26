@@ -159,6 +159,9 @@ public class ConfigData {
     // Round 386: the welcome page's Game Guide & FAQ button opens the plane's GUIDE.html on a computer; this URL is where
     // it goes otherwise (Android) or when the file is missing. Null = no button there.
     public String welcomeGuideLink;
+    // Round 756: the developer's tip page (Ko-fi) - the play-time support asks and the Settings row (util/SupportPrompt).
+    // Null = neither, and no play time is counted.
+    public String supportLink;
     // Start-menu version label overhaul (2026-08-22, user spec): the label now shows the last
     // upstream Forge snapshot merged (engineBuildVersion, e.g. "2.0.15-SNAPSHOT-08.19" - stays
     // static across TFR-only rounds, only bumped when a new engine merge happens) alongside

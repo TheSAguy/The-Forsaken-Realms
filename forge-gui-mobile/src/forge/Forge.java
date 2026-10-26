@@ -992,6 +992,7 @@ public class Forge implements ApplicationListener {
         hueFragTime += delta;
         if (hueFragTime > 6.29f)
             hueFragTime = 0f;
+        forge.adventure.util.SupportPrompt.tick(delta); // round 756: play time and the support asks
 
         // get classic/splash/transition/closing screen in priority order
         FContainer screen = getHierachyScreen();
@@ -1060,6 +1061,7 @@ public class Forge implements ApplicationListener {
     @Override
     public void pause() {
         lifecycleClosing = true;
+        forge.adventure.util.SupportPrompt.flush("pause or exit"); // round 756: Android may never come back
         setWindowFocus(false);
         if (MatchController.getHostedMatch() != null) {
             MatchController.getHostedMatch().pause();
@@ -1087,6 +1089,7 @@ public class Forge implements ApplicationListener {
     @Override
     public void dispose() {
         lifecycleClosing = true;
+        forge.adventure.util.SupportPrompt.flush("exit"); // round 756
         isDisposed = true;
         if (currentScreen != null) {
             currentScreen.onClose(null);

@@ -14277,6 +14277,58 @@ source as message 22."
 - **Not changed**: message 21 (its v1.22 Classic workaround stays, on hold at the user's word); `build_page.py`'s
   "v1.22" eyebrow and notes. Dev tools only, not shipped in the game.
 
+## Round 756: a support ask after 5, 15 and 40 hours of play (2026-10-26)
+
+The user: "I want to add a little prompt in the game after a certain number of game playing hours. Something to the
+effect of: Prompt.... You've played 5 hours.. Must be enjoying the game. Would be nice to support the developer. Another
+10 hours playing, you must really like the game, consider supporting the developer...", then the Ko-fi link, then "On
+one of the prompts, maybe the 10 hour one, say something like 'a movie costs $15 and lasts 2 hours ...' Make the prompts
+funny but also try to convince them to donate." Design agreed in the TFR 1 main thread.
+
+- **Play time** - `util/SupportPrompt.tick` (from `Forge.render()`, every frame; no allocation) adds the frame's time,
+  capped at 0.25 s, while the window has focus (`SoundSystem.hasWindowFocus()`, fed by the desktop launcher's focus
+  events and by Android's pause/resume) and the scene is not the title or Load screen. Every save counts toward one
+  total, kept in the profile's adventure `settings.json` - `SettingData.supportPlaySeconds` - so a new game does not
+  restart it and an update keeps it. Written every five minutes played and at `Forge.pause()` / `dispose()` (Android
+  may never come back from a pause). First run after the update starts at 0: there is no total to back-fill from (see
+  the open item below).
+- **The asks** - at 5, 15 and 40 hours (`SupportPrompt.HOURS`), each once (`supportAsksShown`). When the world map comes
+  back (after a duel and its reward screen, a load, a town), the ask waits up to 20 s for 1.5 s of calm: no dialog on
+  the map or HUD (`isDialogOnlyInput`), no cutscene or end screen (`advFreezePlayerControls`), no transition, the
+  player standing still. Not calm in that window, it waits for the next return. So never mid-duel, in a shop or town,
+  or on top of another dialog; a dialog freezes the world, so no chase goes on behind it. A total that jumps past two
+  thresholds shows the later ask and counts both.
+- **Buttons** - Support TFR (opens `supportLink` with `Gdx.net.openURI`, desktop and Android), Join the Discord (the
+  welcome page's `welcomePopupLink`), Maybe later, Don't ask again (`supportNeverAsk`, saved; stops every later ask).
+  The 40 h ask is the last, so it has no Don't ask again. Four stacked 240-wide buttons, the game-won dialog's style;
+  the 15 h ask, the longest, fits at 1280x720 with a little room.
+- **Texts** (titles "Five hours in the Realms", "Fifteen hours!", "Forty hours, a true Realm-walker") - funny at the
+  user's word: the 5 h one ("a whole evening of 'just one more duel'", the developer runs on coffee), the 15 h one the
+  user's movie line ("A movie costs about $15 and lasts two hours ... seven and a half movies"), the 40 h one comes back
+  to it ("about $300 of entertainment, and the Realms never charged you a single coin"). Each says the game is free or
+  calls it a tip; none says "you must". Unlocks and changes nothing in play.
+- **Settings** - a "Support the developer" row with a Support TFR button under the log rows of the adventure Settings,
+  so the asks are not the only way.
+- **Per-plane** - all of it needs `supportLink` in the plane's config.json (`ConfigData.supportLink`, TFR's is
+  `https://ko-fi.com/thesaguy`); a stock plane counts nothing, asks nothing and has no Settings row.
+- **Console** (F9 / agent cheats) - `support` (info), `support hours 4.99`, `support show [1-3]` (shows an ask now,
+  for a shot), `support reset`.
+- **Logging** - `[TFR-Support]`: the total at each write ("play time 45.03 h saved (pause or exit)"), each ask shown
+  ("ask 2 of 3 (15 h) shown at 15.01 h played (world map)"), each answer, each link opened, and the console's changes.
+  `TFR_SUPPORT_NO_BROWSER=1` in the environment logs the link instead of opening it (agent tests).
+- **Checked** - javac of the six Java files against the agent jar, then the agent game with those classes ahead of the
+  jar (slot 42, duels at 50x): the 5 h ask after a load and again after a won duel's reward screen; the 15 h and 40 h
+  asks after a duel's ante prompt; Maybe later re-asking at the next threshold; nothing after 3/3; Don't ask again
+  stopping every ask (nothing at 45 h); Discord and Support logging their links; the Settings row; the total in
+  `settings.json` after exit. Shots: `C:\CLAUDE\PROJECTS\TFR1\notes\tweaks-1026\r756-ask1-5h.png`, `r756-ask2-15h.png`,
+  `r756-ask3-40h.png`, `r756-settings-row.png`. Then `mvn -pl forge-gui-mobile-dev -am package`.
+- **Not checked** - a real browser opening (the agent run logged the links; `Gdx.net.openURI` is the welcome page's
+  Discord button's path); Android (no APK this round); the stillness rule cutting short a walk (added after the run,
+  re-checked only after a duel); a desktop window that starts in the background counts until its first focus change
+  (`SoundSystem`'s focus starts true).
+- **Open item, not fixed here** - `PlayerStatistic.secondPlayed` (`getPlayTime()`) is never added to anywhere, so a
+  save's play time is always 0. Nothing reads `getPlayTime()` today (no stats screen shows it), so nothing shows a 0.
+
 ## Round 755: the restart dialog and the window title say The Forsaken Realms (2026-10-26)
 
 The user started the follow-up that round 754's sweep proposed ("Restart dialog and window title say TFR"), done in the

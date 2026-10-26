@@ -174,6 +174,12 @@ public class SettingsScene extends UIScene {
                 }
             });
         }
+        // Round 756: the tip page, always here - the play-time asks (util/SupportPrompt) are not the only way.
+        if (forge.adventure.util.SupportPrompt.supportLink() != null) {
+            addLabel("Support the developer");
+            settingGroup.add(Controls.newTextButton("Support TFR", () -> forge.adventure.util.SupportPrompt.open(
+                    forge.adventure.util.SupportPrompt.supportLink()))).align(Align.right).pad(2);
+        }
 
         if (!GuiBase.isAndroid()) {
             SelectBox<String> videomode = Controls.newComboBox(ForgeConstants.VIDEO_MODES, Config.instance().getSettingData().videomode, o -> {

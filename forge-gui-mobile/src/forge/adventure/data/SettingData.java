@@ -73,4 +73,10 @@ public class SettingData {
     public boolean logShareEnabled;
     public String logShareInstallId;
     public String logShareLastSent;
+    // Round 756 (the user: "a little prompt in the game after a certain number of game playing hours"): util/SupportPrompt.
+    // supportPlaySeconds - real play time across every save, window in focus; supportAsksShown - how many of the 5/15/40
+    // hour asks were shown; supportNeverAsk - the player's "Don't ask again".
+    public double supportPlaySeconds;
+    public int supportAsksShown;
+    public boolean supportNeverAsk;
 }

@@ -38,6 +38,21 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 756 - the play-time support asks
+
+- **`forge-gui-mobile/src/forge/Forge.java`** (STOCK) - three TFR lines: `render()` calls
+  `forge.adventure.util.SupportPrompt.tick(delta)` after the `hueFragTime` lines; `pause()` and `dispose()` call
+  `SupportPrompt.flush(...)` after `lifecycleClosing = true`. Each is commented "round 756"; an upstream rework of those
+  methods keeps them.
+- **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK) - `supportPlaySeconds`, `supportAsksShown`,
+  `supportNeverAsk` appended after the round-698 fields.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** (STOCK) - `supportLink` after `welcomeGuideLink`.
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK) - the "Support the developer" row after
+  the log-sharing switch (only with a `supportLink`).
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK) - the `support` command,
+  before `asc pick`.
+- New TFR file: `forge-gui-mobile/src/forge/adventure/util/SupportPrompt.java`.
+
 ### Round 755 - the restart dialog and the window title say The Forsaken Realms
 
 - **`forge-gui/res/languages/en-US.properties`** (STOCK, shared) - three values rewritten, keys unchanged:

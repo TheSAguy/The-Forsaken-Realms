@@ -1249,6 +1249,8 @@ public class ConsoleCommandInterpreter {
                 return forge.adventure.util.LevelPlaces.info();
             return "levelplaces info | now";
         });
+        // Round 756: the play-time support asks (SupportPrompt) - "support hours 4.99", "support show 2", "support reset".
+        registerCommand(new String[]{"support"}, forge.adventure.util.SupportPrompt::console);
         registerCommand(new String[]{"asc", "pick"}, s -> {
             if (s.length < 1)
                 return "Command needs 1 parameter: a reward id from ascendance.json";
