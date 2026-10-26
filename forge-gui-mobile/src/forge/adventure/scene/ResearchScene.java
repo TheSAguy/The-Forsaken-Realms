@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.github.tommyettinger.textra.TextraButton;
+import com.github.tommyettinger.textra.TextraLabel;
 import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
 import forge.adventure.player.AdventurePlayer;
@@ -20,6 +22,7 @@ import forge.adventure.util.Current;
 import forge.adventure.util.EconomyBuildings;
 import forge.adventure.util.EditionProgression;
 import forge.adventure.util.PrintingIndex;
+import forge.adventure.util.ResearchMeter;
 import forge.card.CardDb;
 import forge.card.CardEdition;
 import forge.deck.Deck;
@@ -38,18 +41,10 @@ import java.util.Map;
  * SpellSmithScene's fuller layout - the Lab genuinely only needs a scrollable list, not a shop-
  * style purchase flow, so the simpler existing pattern was the better fit once actually compared.
  * <p>
- * Design choices made here that go beyond the user's literal spec, flagged rather than silently
- * assumed:
- * <ul>
- *   <li>Only shows editions the player has found at LEAST ONE card from (owned count &gt; 0) -
- *   showing all ~80-120 real editions at 0/N from turn one would bury the handful actually worth
- *   acting on. The user asked for "a list of all editions"; this narrows that to "all editions
- *   worth listing right now" for readability. Fully researched editions still drop off entirely.</li>
- *   <li>Sorted by progress toward the threshold (closest first) - surfaces what's actually
- *   actionable without the player needing to scan/sort themselves.</li>
- *   <li>Research cost (300g base, difficulty-scaled via EconomyBuildings.scaledCost() same as
- *   every other cost this mod has - see COST_GOLD) is Claude's own proposal, not user-specified.</li>
- * </ul>
+ * Round 751 (research v2, util/ResearchMeter): every set can be researched from day 1. Each line shows the set's meter
+ * and what starting it costs now in shards and days; tapping the line opens the set's window - its meter, the spare
+ * cards that could be sacrificed (double points, no gold), and the round-452 card view. Only a game started on round 751
+ * or later (AdventurePlayer.isResearchV2); an older save keeps the classic list (buildListClassic), its 10% gate and all.
  */
 public class ResearchScene extends UIScene {
     private static ResearchScene object;
@@ -66,16 +61,16 @@ public class ResearchScene extends UIScene {
     // fraction itself moved to TuningData (2026-08-22 user request) - see
     // TuningData.researchThresholdFraction for the tunable default/rationale; THRESHOLD_MIN stays
     // a fixed constant here, not asked to be tunable.
+    // Round 751: only the stock path's threshold popup still reads these (AdventurePlayer.maybeNotifyResearchThreshold,
+    // skipped while research v2 is on).
     private static final int THRESHOLD_MIN = 5;
-    // 2026-08-12 user cost table: research costs shards now, not gold.
-    private static final int COST_SHARDS = 100;
 
     private final Table scrollContainer;
     private final Window scrollWindow;
     private final Table root;
     private final CheckBox hideUnfoundCheckBox;
     // Round 313 (user: "add a button to hide the second group. The sets you found cards for, but not enough to
-    // research"): "Hide partial", beside "Hide unfound". Starts unchecked - both keep their state for the session.
+    // research"): "Hide partial", beside "Hide unfound". Round 751: "Hide unfed" - the sets whose meter is empty.
     private final CheckBox hidePartialCheckBox;
     // Not final - its own click handler below needs to reference it (to update its label text)
     // from inside the same lambda passed to its own constructor call.
@@ -104,7 +99,7 @@ public class ResearchScene extends UIScene {
                 buildList();
             }
         });
-        hidePartialCheckBox = Controls.newCheckBox("Hide partial");
+        hidePartialCheckBox = Controls.newCheckBox("Hide partial"); // round 751: "Hide unfed" in a v2 game (enter())
         hidePartialCheckBox.setChecked(false);
         hidePartialCheckBox.getLabel().setColor(Color.BLACK);
         hidePartialCheckBox.addListener(new ChangeListener() {
@@ -149,10 +144,13 @@ public class ResearchScene extends UIScene {
     @Override
     public void enter() {
         super.enter();
+        AdventurePlayer player = AdventurePlayer.current();
+        // Round 751: one checkbox, the system's own filter - "Hide unfed" (an empty meter) in a v2 game.
+        hidePartialCheckBox.getLabel().setText(ResearchMeter.enabled(player) ? "Hide unfed" : "Hide partial");
         // Lazy completion check (also runs from the daily tick - see EconomyBuildings.
         // processDaysPassed() - but re-checking here too means a research that finished while the
         // player was elsewhere in-game still shows as complete the instant they open this screen).
-        AdventurePlayer.current().checkResearchCompletion(Current.world().getCurrentDay());
+        player.checkResearchCompletion(Current.world().getCurrentDay());
         if (returningFromSetView) { // round 452: back from a set's cards - the same view, at the same place in the list
             returningFromSetView = false;
             buildList();
@@ -241,7 +239,16 @@ public class ResearchScene extends UIScene {
         return total <= 0 ? Integer.MAX_VALUE : thresholdFor(total);
     }
 
+    /** Round 751: a game started on research v2 gets the meter list; an older save keeps the classic one unchanged. */
     private void buildList() {
+        if (ResearchMeter.enabled(AdventurePlayer.current()))
+            buildListV2();
+        else
+            buildListClassic();
+    }
+
+    /** The research list before round 751 - the 10% gate (kept for saves from before research v2). */
+    private void buildListClassic() {
         // Selectables must be rebuilt alongside the rows (2026-08-12 review finding): without
         // this, every rebuild - and buildList now runs from enter(), both filter toggles, and
         // each purchase - LEAKED the previous rows' buttons into the singleton's selectable
@@ -409,6 +416,255 @@ public class ResearchScene extends UIScene {
         }
     }
 
+    /** Round 313: an unresearched edition's group - 0 researching now, 1 ready to research, 2 some cards found but
+     *  not enough (partial), 3 none found (unfound). */
+    private static int groupOf(String code, Map<String, Integer> ownedByEdition, Map<String, Integer> totalByEdition,
+                               AdventurePlayer player) {
+        if (player.isResearching(code))
+            return 0;
+        int owned = ownedByEdition.getOrDefault(code, 0);
+        if (owned <= 0)
+            return 3;
+        return owned >= thresholdFor(totalByEdition.getOrDefault(code, 0)) ? 1 : 2;
+    }
+
+    /** Round 751: research v2's list - every set, its meter, and what starting it costs now in shards and days. */
+    private void buildListV2() {
+        // Selectables must be rebuilt alongside the rows (2026-08-12 review finding): without
+        // this, every rebuild - and buildList now runs from enter(), both filter toggles, and
+        // each purchase - LEAKED the previous rows' buttons into the singleton's selectable
+        // list. Detached actors still report isVisible()==true, so controller/keyboard
+        // navigation could focus an undrawn orphan and fire its stale purchase lambda
+        // (takeGold + startResearch with a stale captured day). research.json declares no
+        // selectable elements, so clearing here drops nothing but our own rows.
+        clearSelectable();
+        addToSelectable(hideUnfoundCheckBox);
+        addToSelectable(hidePartialCheckBox); // round 313
+        addToSelectable(showResearchedButton);
+        scrollContainer.clear();
+        AdventurePlayer player = AdventurePlayer.current();
+        int currentDay = Current.world().getCurrentDay();
+        java.util.Map<String, Integer> inProgressAll = player.getResearchInProgress();
+        boolean anyInProgress = !inProgressAll.isEmpty();
+
+        // Round 313: fewest days left first, ties alphabetical - the same order the list below opens with.
+        List<String> running = new ArrayList<>(inProgressAll.keySet());
+        running.sort((a, b) -> {
+            int byDays = Integer.compare(player.getResearchDaysLeft(a, currentDay), player.getResearchDaysLeft(b, currentDay));
+            return byDays != 0 ? byDays : editionDisplayName(a).compareToIgnoreCase(editionDisplayName(b));
+        });
+        for (String inProgress : running) {
+            int daysLeft = player.getResearchDaysLeft(inProgress, currentDay);
+            TypingLabel header = Controls.newTypingLabel("Researching: " + editionDisplayName(inProgress)
+                    + " - " + daysLeft + (daysLeft == 1 ? " day" : " days") + " remaining");
+            header.skipToTheEnd();
+            header.setWrap(true);
+            header.setColor(Color.BLACK);
+            scrollContainer.add(header).colspan(2).align(Align.left).expandX();
+            scrollContainer.row().padTop(8);
+        }
+
+        // Live-derived owned-card count per edition - no separate persisted counter, recomputed
+        // fresh every time this screen opens so it can never drift from the player's real
+        // collection. Round 751: "unfound" = no card of the set owned and nothing fed.
+        Map<String, Integer> ownedByEdition = discoveredByEdition(player.getCards());
+
+        boolean hideUnfound = hideUnfoundCheckBox.isChecked();
+        boolean hideUnfed = hidePartialCheckBox.isChecked(); // round 751: "Hide unfed" in a v2 game
+        List<CardEdition> candidates = new ArrayList<>();
+        if (showResearched) {
+            // Researched-only view (user spec 2026-08-12: the toggle "should ONLY show those").
+            // Sourced from unlockedEditions DIRECTLY, not by filtering the master list - the
+            // starter editions (JMP/J22/J25 family) have no booster template, so they are absent
+            // from getMasterEditionList() and a master-list filter would silently never show
+            // them, which is exactly why the first version of this toggle looked like it did
+            // nothing on a fresh save (the only unlocked editions were all starters).
+            for (String code : player.getUnlockedEditions()) {
+                CardEdition ed = FModel.getMagicDb().getEditions().get(code);
+                if (ed != null)
+                    candidates.add(ed);
+            }
+        } else {
+            for (CardEdition ed : EditionProgression.getMasterEditionList()) {
+                String code = ed.getCode();
+                if (player.hasUnlockedEdition(code))
+                    continue; // researched already - lives in the toggle's own view now
+                boolean fed = ResearchMeter.points(player, code) > 0f;
+                if (hideUnfound && !fed && !player.isResearching(code) && ownedByEdition.getOrDefault(code, 0) <= 0)
+                    continue; // nothing found or fed yet, and the hide-unfound checkbox is on
+                if (hideUnfed && !fed && !player.isResearching(code))
+                    continue; // round 751: an empty meter, and hide-unfed is on
+                candidates.add(ed);
+            }
+        }
+        // Round 751: researching first (fewest days left), then the fullest meters, then A-Z. The researched view is
+        // alphabetical.
+        final boolean researchedView = showResearched;
+        candidates.sort((a, b) -> {
+            if (!researchedView) {
+                boolean ra = player.isResearching(a.getCode()), rb = player.isResearching(b.getCode());
+                if (ra != rb)
+                    return ra ? -1 : 1;
+                if (ra) {
+                    int byDays = Integer.compare(player.getResearchDaysLeft(a.getCode(), currentDay),
+                            player.getResearchDaysLeft(b.getCode(), currentDay));
+                    if (byDays != 0)
+                        return byDays;
+                } else {
+                    int byFill = Float.compare(ResearchMeter.fill(player, b.getCode()), ResearchMeter.fill(player, a.getCode()));
+                    if (byFill != 0)
+                        return byFill;
+                }
+            }
+            return a.getName().compareToIgnoreCase(b.getName());
+        });
+
+        for (CardEdition ed : candidates) {
+            String code = ed.getCode();
+            int total = researchTotal(code);
+            boolean researched = player.hasUnlockedEdition(code);
+
+            // Round 751: "Name (CODE) - N cards - meter 14/25". Every line opens its set's window; a researched one still
+            // opens the card view (round 452's magnifier).
+            String line = ed.getName() + " (" + code + ") - " + String.format("%,d", total) + " cards";
+            if (!researched)
+                line += " - meter " + ResearchMeter.fmt(ResearchMeter.points(player, code)) + "/" + ResearchMeter.meterSize(code);
+            Color lineColor = researched ? Color.DARK_GRAY : Color.BLACK;
+            // The label's tint would darken the glyph too (a black silhouette), so the line is colored by markup and the
+            // magnifier drawn untinted (round 452).
+            TypingLabel nameLabel = Controls.newTypingLabel("[#" + lineColor + "]" + line + "[#ffffffff] [+Magnifier]");
+            nameLabel.skipToTheEnd();
+            nameLabel.setWrap(true);
+            nameLabel.setColor(Color.WHITE);
+            nameLabel.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (researched)
+                        openSetView(code);
+                    else
+                        openSetDialog(code);
+                }
+            });
+            boolean portrait = !Forge.isLandscapeMode(); // round 100: 258px pane in portrait - set line on its own row, button below
+            scrollContainer.add(nameLabel).align(Align.left).width(portrait ? 236f : 250f).colspan(portrait ? 2 : 1);
+            if (portrait)
+                scrollContainer.row();
+
+            if (researched) {
+                TypingLabel doneLabel = Controls.newTypingLabel("Researched");
+                doneLabel.skipToTheEnd();
+                doneLabel.setColor(Color.DARK_GRAY);
+                scrollContainer.add(doneLabel).align(Align.left).expandX().padLeft(6);
+            } else {
+                int cost = ResearchMeter.startCost(player, code);
+                int days = ResearchMeter.daysIfStarted(player, code);
+                // Resource glyph, not a letter suffix - standing standard for cost UI
+                // (user spec 2026-08-12; cost switched gold -> shards same day, user table).
+                TextraButton researchButton = Controls.newTextButton(player.isResearching(code)
+                        ? "Researching (" + player.getResearchDaysLeft(code, currentDay) + "d)"
+                        : "Research (" + cost + "[+Shards], " + days + "d)", () -> {
+                    ResearchMeter.start(player, code, Current.world().getCurrentDay());
+                    buildList();
+                });
+                // Several editions may be researched at once (user spec 2026-09-03); only the one
+                // already running is locked out.
+                researchButton.setDisabled(player.isResearching(code) || player.getShards() < cost);
+                scrollContainer.add(researchButton).align(Align.left).expandX().padLeft(6);
+                addToSelectable(researchButton);
+            }
+            scrollContainer.row().padTop(5);
+        }
+
+        if (candidates.isEmpty() && !anyInProgress) {
+            TypingLabel empty = Controls.newTypingLabel(
+                    "Every set can be researched here. Cards you sell anywhere, or sacrifice here, fill their own set's "
+                    + "meter - untick Hide unfound to see every set.");
+            empty.skipToTheEnd();
+            empty.setWrap(true);
+            empty.setColor(Color.DARK_GRAY);
+            scrollContainer.add(empty).colspan(2).align(Align.left).expandX().width(Forge.isLandscapeMode() ? 340 : 236);
+        }
+    }
+
+    /**
+     * Round 751: a set's window - its meter, what starting it costs now, and its spare cards. Sacrifice (double points, no
+     * gold) is the Lab's own: "Sacrifice extras" keeps one copy of each card, "Sacrifice all spare" keeps only what a deck
+     * uses. Both skip favorites. "View cards" is round 452's set view.
+     */
+    private void openSetDialog(String code) {
+        AdventurePlayer player = AdventurePlayer.current();
+        Map<PaperCard, Integer> extras = ResearchMeter.spareCards(player, code, true);
+        Map<PaperCard, Integer> allSpare = ResearchMeter.spareCards(player, code, false);
+        int nExtras = count(extras), nAll = count(allSpare);
+        float ptsExtras = preview(player, extras), ptsAll = preview(player, allSpare);
+        int size = ResearchMeter.meterSize(code);
+        float pts = ResearchMeter.points(player, code);
+        StringBuilder body = new StringBuilder();
+        body.append(String.format("%,d", researchTotal(code))).append(" cards. Meter ").append(ResearchMeter.fmt(pts))
+                .append("/").append(size).append(" (").append(Math.round(ResearchMeter.fill(player, code) * 100)).append("%).\n");
+        if (player.isResearching(code))
+            body.append("Researching: ").append(player.getResearchDaysLeft(code, Current.world().getCurrentDay())).append(" day(s) left.\n");
+        else
+            body.append("Research now: ").append(ResearchMeter.startCost(player, code)).append("[+Shards] (")
+                    .append(ResearchMeter.baseCost()).append(" unfed), ").append(ResearchMeter.daysIfStarted(player, code))
+                    .append(" day(s).\n");
+        body.append("A card sold anywhere feeds its set; a sacrifice here counts double, for no gold.\n");
+        body.append("Spare cards: ").append(nAll).append(" (+").append(ResearchMeter.fmt(ptsAll)).append(" sacrificed); keeping one of each: ")
+                .append(nExtras).append(" (+").append(ResearchMeter.fmt(ptsExtras)).append(").");
+
+        Dialog dialog = new Dialog(editionDisplayName(code), Controls.getSkin());
+        TextraLabel label = Controls.newTextraLabel(body.toString());
+        label.setWrap(true);
+        dialog.getContentTable().add(label).width(dialogBodyMaxWidth());
+        TextraButton extrasButton = Controls.newTextButton("Sacrifice extras", () -> confirmSacrifice(code, true, nExtras, ptsExtras));
+        extrasButton.setDisabled(nExtras <= 0);
+        TextraButton allButton = Controls.newTextButton("Sacrifice all spare", () -> confirmSacrifice(code, false, nAll, ptsAll));
+        allButton.setDisabled(nAll <= 0);
+        dialog.button(extrasButton);
+        dialog.button(allButton);
+        dialog.getButtonTable().row();
+        dialog.button(Controls.newTextButton("View cards", () -> {
+            removeDialog();
+            openSetView(code);
+        }));
+        dialog.button(Controls.newTextButton("Close", this::removeDialog));
+        showDialog(dialog);
+    }
+
+    private void confirmSacrifice(String code, boolean keepOne, int cards, float points) {
+        showDialog(createGenericDialog("Sacrifice", "Sacrifice " + cards + " card(s) of " + editionDisplayName(code)
+                + " for +" + ResearchMeter.fmt(points) + " points? They leave your collection, for no gold.",
+                "Sacrifice", "Cancel", () -> {
+                    removeDialog(); // the confirm
+                    removeDialog(); // the set window
+                    ResearchMeter.sacrifice(AdventurePlayer.current(), code, keepOne);
+                    buildList();
+                    openSetDialog(code);
+                }, this::removeDialog));
+    }
+
+    private static int count(Map<PaperCard, Integer> cards) {
+        int n = 0;
+        for (int v : cards.values())
+            n += v;
+        return n;
+    }
+
+    /** The points these copies would add as a sacrifice, names counted new only once. */
+    private static float preview(AdventurePlayer player, Map<PaperCard, Integer> cards) {
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        float pts = 0f;
+        for (Map.Entry<PaperCard, Integer> e : cards.entrySet()) {
+            PaperCard pc = e.getKey();
+            float p = ResearchMeter.pointsFor(player, pc, e.getValue(), true);
+            if (!seen.add(pc.getName())) // a second printing of a name already counted new in this batch
+                p = e.getValue() * ResearchMeter.firstCopyPoints(pc) * Config.instance().getTuningData().researchCopyShare
+                        * Config.instance().getTuningData().researchSacrificeFactor;
+            pts += p;
+        }
+        return pts;
+    }
+
     /**
      * Round 452 (the user: "add a view button/icon (maybe the magnifying glass) in the research lab, for sets you can
      * research or have researched. When you click on it, you can view all the cards in that set ... kinda like the deck
@@ -439,18 +695,6 @@ public class ResearchScene extends UIScene {
         scrollYBeforeSetView = scroller.getScrollY();
         returningFromSetView = true;
         Forge.switchScene(DeckPreviewScene.getInstance(deck, "Cards"));
-    }
-
-    /** Round 313: an unresearched edition's group - 0 researching now, 1 ready to research, 2 some cards found but
-     *  not enough (partial), 3 none found (unfound). */
-    private static int groupOf(String code, Map<String, Integer> ownedByEdition, Map<String, Integer> totalByEdition,
-                               AdventurePlayer player) {
-        if (player.isResearching(code))
-            return 0;
-        int owned = ownedByEdition.getOrDefault(code, 0);
-        if (owned <= 0)
-            return 3;
-        return owned >= thresholdFor(totalByEdition.getOrDefault(code, 0)) ? 1 : 2;
     }
 
     private static String editionDisplayName(String code) {

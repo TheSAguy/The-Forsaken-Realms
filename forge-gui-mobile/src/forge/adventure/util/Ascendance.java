@@ -1179,10 +1179,17 @@ public final class Ascendance {
         AscendanceData.Choice c = choice("researcher");
         return picks("researcher") > 0 && c != null ? Math.max(0f, 1f - c.value) : 1f;
     }
-    /** Round 551: days Researcher takes off every research. */
+    /** Round 551: days Researcher takes off every research. Round 751: only the stock research path and a research
+     *  already running when a save is converted read it; research v2 uses {@link #researchDaysFactor()}. */
     public static int researchDaysCut() {
         AscendanceData.Choice c = choice("researcher");
         return picks("researcher") > 0 && c != null ? Math.max(0, c.days) : 0;
+    }
+    /** Round 751 (research v2 runs 28 days, so "3 days less" became "25% less" in a v2 game): a research's length,
+     *  times this. A classic save keeps {@link #researchDaysCut()}. */
+    public static float researchDaysFactor() {
+        AscendanceData.Choice c = choice("researcher");
+        return picks("researcher") > 0 && c != null ? Math.max(0f, 1f - c.daysPercent / 100f) : 1f;
     }
     /**
      * Round 557 (the user: "Intimidating: 5%, 10% & 15% chance of an enemy fleeing a duel. Only on Overworld. Only on
@@ -1539,7 +1546,8 @@ public final class Ascendance {
             case "intimidating": effect = pct(then) + " chance a foe you usually beat flees, leaving half its loot"
                     + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // rounds 557, 558
             case "scientist": effect = "Each completed research: " + Math.round(c.value) + " rare of each color from its set"; break; // round 551
-            case "researcher": effect = "Research costs " + pct(c.value) + " less [+Shards] and takes " + c.days + " days less"; break; // round 551
+            case "researcher": effect = "Research costs " + pct(c.value) + " less [+Shards] and takes " // round 551
+                    + (ResearchMeter.enabled() ? c.daysPercent + "% less time" : c.days + " days less"); break; // round 751: the save's system
             case "templePriest": effect = "Your Temple's weekly offering pays " + Math.round(c.value) + " times the cards"; break; // round 566
             case "focused": effect = "Your first mulligan in each game is free - you keep a full hand"; break; // round 566
             case "guardFocus": effect = "Your roaming guards' first mulligan in each game is free"; break; // round 566

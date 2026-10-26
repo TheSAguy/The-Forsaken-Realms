@@ -79,6 +79,27 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 - Mod-added, touched: `util/PlaceRewards.java` (`isShopLifeSold`, `noteShopLifeBought`, `shopLifeKey`; the saved
   `World.getOncePaidRewards()` map, `[TFR-ShopLife]`).
 
+### Round 751 - research v2 (set meters, one sell price), new games and New Game+ only
+
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - research v2's saved state: the
+  `researchV2` flag (set in `create()` and `resetForNewGamePlus()`, read in `load()`; a save without the key is classic),
+  `researchPoints` / `researchFedNames` (saved as `researchPointsList` / `researchFedList`, only by a v2 save), cleared
+  in `clear()` and `clearResearch()`; getters, `removeCardsForResearch`, `sellAutoSellPile`. `getResearchDaysLeft` reads
+  `ResearchMeter.daysLeft` in a v2 game and `checkResearchCompletion` goes through it (classic unchanged), then calls
+  `ResearchMeter.onCompleted`. `cardBaseSellPrice`: no town-reputation factor in a v2 game. `performSale` calls
+  `ResearchMeter.onSold`; `doBulkSell` wraps its loop in `beginBatch`/`endBatch`. `maybeNotifyResearchThreshold` returns
+  at once in a v2 game. All in TFR-owned blocks except `cardBaseSellPrice`, `performSale` and `doBulkSell` (stock
+  selling, one line each).
+- **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** (STOCK) - one line at the end of
+  `clearGenerated()`: `AdventurePlayer.current().sellAutoSellPile("reward screen")` (does nothing in a classic save).
+- **`forge-gui-mobile/src/forge/adventure/scene/AdventureDeckEditor.java`** (STOCK) - `CollectionAutoSellPage`: new
+  `canSellHere()` (`isShop()` or a v2 game) gates the Sell menu item, whose label adds `ResearchMeter.sellNote`; a tap
+  (`onCardActivated`) still sells only in a shop.
+- Mod files: NEW `util/ResearchMeter.java`; `scene/ResearchScene.java` (the v2 list and set window beside the classic
+  list); `data/TuningData.java` (`researchDaysV2`, `researchMeter*`, `researchPointsByRarity`, `researchCopyShare`,
+  `researchSacrificeFactor`, `researchShardCutAtFull`); `data/AscendanceData.java` (`Choice.daysPercent`);
+  `util/Ascendance.java` (`researchDaysFactor`, the Researcher text).
+
 ### Round 749 - a 'here' quest stage given away from any town; unfilled quest text logged
 
 - **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** - `initializeStage()`: a `here` stage (not

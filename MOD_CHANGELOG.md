@@ -14479,6 +14479,73 @@ INVASION - Battle the Undead - Defeat at least 3 Undead in defense of $(poi_3)."
   and the fallback line in forge.log) comes after this commit - see the next entry or the main thread's note. Not seen:
   quest 12's failure text in game (the agent game reads its own data copy until the next package and sync).
 
+## Round 751: research v2 - set meters fed by selling and sacrificing, one sell price, new games only (2026-10-26)
+
+Discord feedback (2026-10-25): "The set research is too tedious ... It takes way too many cards to get started on a set's
+research ... I also don't really like that you can't auto-sell your cards because you might need them for the research
+requirements." The measurements and the design are in `notes\research-towns-1026.md` / `-v2.md`: a color's loot spreads
+over ~33 sets, so a median set meets about one new card a week, and the 10% gate (25 cards of a 249-card set) took ~23
+weeks of play. The user approved v2: "Each card should ONLY count towards that set ... The first unique card should count
+more ... all selling happens at the Research lab ... You also have one sell price", then "let's have the shard reduction
+by 50% of what you currently have", then "Make research v2 ... new-game only; existing saves keep the old systems" and
+"New game or NG+".
+
+- **Who gets it**: a game created on round 751 or later, and a New Game+ run started on it
+  (`AdventurePlayer.researchV2`, saved as `researchV2`; set in `create()` and `resetForNewGamePlus()` when the plane has
+  `editionProgressionEnabled`). A save without the key loads as **classic** and keeps everything below as it was: the
+  10% gate, 7 days, shop-only selling at the town's price, auto-sell at the next shop, the threshold popup, Researcher's
+  "3 days less". `[TFR-Research] research system: v2 / classic (new game | loaded)`; `NG+: classic -> v2`. New Game+
+  resets research in progress and researched sets as it always has (round 74's audit), so nothing carries over.
+- **The meter** (new `util/ResearchMeter`): every set can be researched from day 1. A card sold anywhere, or sacrificed at
+  the Lab, adds points to the meter of the set its printing belongs to (`PrintingIndex.counts`): the first copy of a name
+  ever fed counts Common 1 / Uncommon 2 / Rare 3 / Mythic 5 (Special = Rare), every later copy a quarter, a sacrifice x2.
+  Basic lands, no-sell-value cards and open sets feed nothing. A meter holds 10% of the set's card count in points, at
+  least 8 (DOM 25, CMR 34, ARN 8). The fed names are saved per set (`researchFedList` "CODE|Name", `researchPointsList`
+  "CODE|points"); both drop when the set opens.
+- **Price and time**: `researchShardCost` x difficulty x Researcher x (1 - 0.5 x sqrt(fill)) shards, and `researchDaysV2`
+  (28) x (1 - sqrt(fill)) x Researcher days. Normal, a 249-card set: empty 40 / 28 days; 34% 28 / 12; 58% 25 / 7; full 20
+  shards, done on pressing Research. A running research reads its days live, so feeding it after the start shortens it;
+  no refund of shards.
+- **Selling** (v2 only): one price everywhere - `cardBaseSellPrice` skips the town-reputation modifier (it moved a sale
+  +-0.5% a reputation point, +-10% at the +-20 cap, and fed the ante Buy Back's base). Every sale feeds its set
+  (`performSale` -> `ResearchMeter.onSold`; a bulk sale logs one line per set). The reward screen's auto-sell pile sells
+  as the screen closes (`RewardScene.clearGenerated` -> `AdventurePlayer.sellAutoSellPile`), not at the next shop. The
+  collection's Auto-Sell page offers Sell outside a shop, its label showing the points ("Sell for 75 (+2 9ED)"); a tap
+  outside a shop still never sells.
+- **The Lab** (`ResearchScene`): a v2 game lists every set with its meter ("Dominaria (DOM) - 249 cards - meter 14.50/25")
+  and "Research (25, 7d)", researching first, then the fullest meters, then A-Z; "Hide unfed" replaces "Hide partial".
+  A line opens the set's window: meter, price, the spare cards, **Sacrifice extras** (keeps one copy of each name),
+  **Sacrifice all spare** (keeps a deck's copies), View cards (round 452's view). Sacrifice skips favorites and asks
+  first. A classic save gets the old list unchanged (`buildListClassic`). A meter filling says so in a notice.
+- **Researcher** (`ascendance.json` `daysPercent` 25, new `AscendanceData.Choice.daysPercent`,
+  `Ascendance.researchDaysFactor`): -25% time in a v2 game, its text following the save's system.
+- **Data**: settings.json `researchDaysV2` 28, `researchMeterShare` 0.10, `researchMeterMin` 8, `researchPointsByRarity`
+  [1, 2, 3, 5], `researchCopyShare` 0.25, `researchSacrificeFactor` 2, `researchShardCutAtFull` 0.5 (TuningData).
+- **Logs**: `[TFR-Research] fed CODE (how): N new card(s), M copy(ies), +P pts -> X/Y (Z%); start now: C shards (base
+  B), D day(s)`; `start CODE on day N: meter ..., paid C of B shards, D day(s)`; `auto-sell (reward screen): N card(s)
+  sold for G gold`; `completed`.
+- GUIDE.md/.html: Progressive Set Unlocks, Card Sets ("How to unlock a set", a cost table, the classic line, "New Game+
+  starts research fresh under the new system"), the FAQ (and a new "Which cards fill a set's research meter?"), the
+  Researcher row, the Selling line.
+- **Tested in the agent game** (cheats, round 751's classes ahead of the agent jar; every duel at 50x):
+  - A COPY of slot 53 (slot 61, classic, Insane): `research system: classic (loaded)`; the Lab unchanged - "M15 (105/25)",
+    "Research (60)", "Hide partial", a running research 6 days; `asc pick researcher` -> 3 days and "Research (30)"; a
+    won duel's auto-sell pile was not sold at the reward screen.
+  - A new game (Normal): `research system: v2 (new game)`; "Research (40, 28d)"; Dominaria cards given and sacrificed -
+    `fed DOM (sacrificed 3 card(s)): 2 new, 1 copy, +8.50 -> 8.50/25 (34%); start now: 28 shards, 12 day(s)`, then
+    "Sacrifice extras" +6 (14.50, 25 / 7) and "Sacrifice all spare" +21.50 (36/25, 20 / 0) - the window's previews
+    matched; the full-meter notice; Research paid 20 and unlocked DOM at once (Scholar of the Realm).
+  - A won duel with the reward screen's ALL ticked: `fed 9ED (sold 3 card(s)): 2 new card(s), 0 copy(ies), +4 pts -> 4/34`, `fed TSR (...): +1 -> 1/29`, (the
+    "(sold 3 card(s))" label, a whole bulk sale's count on each set's line, now reads "(a sale of 3 card(s))")
+    `auto-sell (reward screen): 3 card(s) sold for 175 gold` - 25 / 75 / 75 at Normal's 50%, no town factor.
+  - Shots: `notes\tweaks-1026\r751-*.png`.
+  - Not seen live: New Game+ (its picker lists saves by name only and the copy shared slot 53's name - checked in code);
+    a classic town sale's reputation factor (no town-reputation cheat; that path is unchanged code); Sell from the
+    Auto-Sell page outside a shop (the bridge cannot open card menus). The console's `give card "Name|SET"` hands out a
+    reprint's other printing (The List, J22, J25) for some cards - those fed their own sets, correctly.
+- Not changed: what an unlocked set opens (rounds 237/372), multi-slot research (88), AI and neutral shops' prices.
+  Town specialties (the same notes) are not built.
+
 ## Round 750: Witch-Maw Slippers cost two cards from the opening hand (2026-10-26)
 
 The user: "I've had several reports that the companion, Witch-Maw Nephlim, from the item Witch-Maw Nephlim Boots Item

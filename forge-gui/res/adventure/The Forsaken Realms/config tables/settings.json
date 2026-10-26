@@ -191,12 +191,28 @@
     // value, so a tiny supplemental set can't become a 1-2 card unlock.
     "researchThresholdFraction": 0.10,
     // Research Lab: in-game days from clicking Research until an edition unlocks. Each edition
-    // runs on its own timer, so several can be in progress at once.
+    // runs on its own timer, so several can be in progress at once. Round 751: this and the threshold above are the
+    // classic research, kept by saves from before round 751; a newer game runs research v2 (below).
     "researchDays": 7,
     // Research Lab: base shard price per edition (difficulty scaling applies on top: Easy x0.75,
     // Normal x1, Hard x1.25, Insane x1.5). Round 449: 50 -> 40, the user's "On Insane it should be
     // 60" - 30 / 40 / 50 / 60 shards from Easy to Insane.
     "researchShardCost": 40,
+    // Round 751 - research v2, for games started on round 751 or later (older saves keep the three values above, the
+    // classic research). Every set can be researched from day 1. A set's meter holds researchMeterShare of its card
+    // count in points (at least researchMeterMin). A card sold anywhere, or sacrificed at the Lab, fills its own set's
+    // meter: the first copy of a card ever fed counts researchPointsByRarity (Common, Uncommon, Rare, Mythic), every
+    // later copy researchCopyShare of that, and a sacrifice researchSacrificeFactor times. Research costs
+    // researchShardCost (difficulty-scaled) and takes researchDaysV2 days with an empty meter; a fuller meter cuts both
+    // along the square root of its fill: a full one takes researchShardCutAtFull off the shards (0.5 = half price) and
+    // all of the days. Grep forge.log for [TFR-Research].
+    "researchDaysV2": 28,
+    "researchMeterShare": 0.10,
+    "researchMeterMin": 8,
+    "researchPointsByRarity": [1, 2, 3, 5],
+    "researchCopyShare": 0.25,
+    "researchSacrificeFactor": 2,
+    "researchShardCutAtFull": 0.5,
     // Bank: the gold one Deposit or Withdraw press moves (Deposit All / Withdraw All move everything).
     // Round 457: 100 -> 500 (a player asked for 1,000).
     "bankStepGold": 500,

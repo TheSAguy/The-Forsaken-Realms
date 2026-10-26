@@ -164,7 +164,9 @@
     { "id": "scientist",   "lasting": true, "maxPicks": 1, "value": 1 },
     // Round 551 (the user: "New Onetime perk: Researcher. Reduce research cost by 50% and 3 days faster"): Researcher -
     // research costs "value" less and takes "days" fewer days (never under one).
-    { "id": "researcher",  "lasting": true, "maxPicks": 1, "value": 0.50, "days": 3 },
+    // Round 751: in a game started on research v2 (28-day research), "daysPercent" off each research's length instead;
+    // a save from before round 751 keeps the classic research and "days".
+    { "id": "researcher",  "lasting": true, "maxPicks": 1, "value": 0.50, "days": 3, "daysPercent": 25 },
     // Round 557 (the user: "Intimidating: 5%, 10% & 15% chance of an enemy fleeing a duel. Only on Overworld. Only on
     // enemies you have a winning record on"): a "value" chance a pick (Ascendance.intimidates).
     { "id": "intimidating", "lasting": true, "maxPicks": 3, "value": 0.05 },

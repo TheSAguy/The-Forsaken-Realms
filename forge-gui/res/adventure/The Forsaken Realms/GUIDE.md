@@ -595,7 +595,7 @@ companion limit holds either way: 3 without Ascendance.
 | Opening Gambit | 1 | You win the opening coin toss 75% of the time. | 1 |
 | Pact of Embers | 1 | +1 card in your opening hand and -4 starting life, every duel. | 8 |
 | Prospector | 3 | Resource pickups on the map and your mines' weekly income +15% / +30% / +45%. | 1 |
-| Researcher | 1 | Research costs half the Shards and takes 3 days less - 4 instead of 7. | 1 |
+| Researcher | 1 | Research costs half the Shards and takes 25% less time (3 days less - 4 instead of 7 - in a game from before 1.24). | 1 |
 | Scientist | 1 | Each research that completes gives you a rare of each color from that set (up to five). | 1 |
 | Shardwell | 2 | +2 / +3 mana shards at the start of each duel. | 1 |
 | Splinter Cache | 2 | You start each duel with a Clue token; rank II adds a Treasure token. | 6 (rank II: 16) |
@@ -669,11 +669,11 @@ how many cards wait, and the Guards window's **Collect Spoils** opens them.
 
 ### Progressive Set Unlocks
 
-Not every card set is available from turn one. Editions unlock gradually as you play (scaled by
-your starting race and difficulty), and the **Research Lab** in your Capitol lets you formally
-unlock the ones you have collected enough of. Research takes a week per edition, and several can
-run at once. (Don't confuse this with the **Archaeologist**, who runs week-long expeditions for
-cards and items - a different building doing a different job.)
+Not every card set is available from turn one. You start with a few (scaled by your starting race and
+difficulty), and the **Research Lab** in your Capitol opens any other set. Each set has a **research
+meter**: the cards of that set you sell or sacrifice fill it, and the fuller it is, the cheaper and faster
+the research. Several can run at once. (Don't confuse this with the **Archaeologist**, who runs week-long
+expeditions for cards and items - a different building doing a different job.)
 
 **Your shops stock only what you have unlocked.** A card shop you build sells cards from the sets
 *you* have unlocked - nothing else, and in a printing from one of those sets. Unlock more sets to stock
@@ -1488,17 +1488,34 @@ unlocked, you buy them in whichever faction's towns hold that set — which is e
 with that color starts to matter. (Advanced: the content filter tables in the game folder let you switch
 sets, items or enemies off yourself; everything is on by default.)
 
-**How to unlock a set properly.** The **Research Lab** in your Capitol is the formal route:
+**How to unlock a set.** The **Research Lab** in your Capitol opens any set:
 
-1. **Collect the cards first.** A set becomes researchable once you own **10%** of it (minimum 5
-   cards). What counts is each *distinct* card you own *in that set's printing* - a second copy doesn't
-   count again, and a card you own as an Amonkhet printing counts for Amonkhet only. You'll get a popup
-   the moment you cross that line. The Lab lists every edition with your progress as `(owned/needed)` -
-   research under way first, then the sets ready to research - and two checkboxes hide the sets you have
-   found no cards for, or not yet enough. A set you can research, or have researched, ends its line with a
-   magnifier: tap the line to browse every card in it.
-2. **Pay 40 Shards** (on Normal - 30 on Easy, 50 on Hard, 60 on Insane) and start the research.
-3. **Wait a week.** Each edition runs on its own 7-day timer, and you can research several at once.
+1. **Fill its meter (optional, but it pays).** Every card you **sell** - anywhere: the reward screen's
+   auto-sell box sells as the screen closes, and your collection's Auto-Sell page has a Sell on each card -
+   adds points to the meter of *its own set*, the set its printing belongs to (a card you own as an
+   Amonkhet printing feeds Amonkhet only; basic lands and cards with no sale value don't count). The
+   **first copy** of a card you ever feed counts in full - **Common 1, Uncommon 2, Rare 3, Mythic 5** -
+   and every later copy of it a quarter. At the Lab you can also **sacrifice** a set's spare cards
+   (never a deck's copies or a favorite): double points, no gold. A set's meter holds **10% of its card
+   count** in points, at least 8 - 25 for a 249-card set.
+2. **Research it.** With an empty meter it costs **40 Shards** on Normal (30 Easy, 50 Hard, 60 Insane)
+   and takes **28 days**. A fuller meter cuts both, the first cards most: a quarter-full meter takes a
+   quarter off the Shards and half off the days; a full meter halves the Shards and finishes the moment
+   you press Research. Feeding a set while it is being researched shortens what's left.
+3. Several sets can be researched at once, each on its own clock. The Lab lists every set with its meter
+   and today's price; tap a line for the set's window (its spare cards, Sacrifice, and a view of every card
+   in it), and two checkboxes hide the sets you have found nothing of, or not fed.
+
+| A 249-card set, Insane | 0 cards fed | 5 | 10 | 20 |
+|---|---|---|---|---|
+| sold | 60 Shards, 28 days | 43, 13 days | 36, 6 days | 30, at once |
+| sacrificed | 60, 28 days | 36, 6 days | 30, at once | 30, at once |
+
+(different cards of that set, an average mix of rarities)
+
+**Games started before version 1.24 keep the classic research**: a set becomes researchable once you own
+10% of its distinct cards (at least 5), then costs 40 Shards on Normal and a week; cards sell only in
+shops, at a price the town's opinion of you adjusts. New Game+ starts research fresh under the new system.
 
 Once researched, that edition joins your unlocked pool permanently: your own shops start stocking
 it, and it becomes legal in your own towns' Inn tournaments. It does **not** change what AI or neutral
@@ -1722,8 +1739,9 @@ apply.
 
 - **Hold Z** to move at 1.5x on the overworld. Time moves faster too.
 - **Selling** cards pays a share of value set by your difficulty - 60% Easy, 50% Normal,
-  30% Hard, 20% Insane (shown as the sale price on the new-game screen); the town's opinion of
-  you adjusts it from there.
+  30% Hard, 20% Insane (shown as the sale price on the new-game screen), the same in every town. You can
+  sell from anywhere, and every sale feeds that card's set at the Research Lab. (In a game from before
+  version 1.24, cards sell only in shops and the town's opinion of you adjusts the price.)
 - **Max life grows with your realm:** +1 for every five towns you hold, +1 for the Capitol, and +1
   for each Ring City you have visited, for as long as no AI color holds it.
 - **Max life grows with your level:** +1 at every fifth [Ascendance](#ascendance---your-level) level, 5 to 40, and
@@ -1758,17 +1776,19 @@ https://discord.gg/TTRPKc9HYJ
 
 ### How does Research work? How do I unlock more card sets?
 
-You start with only a few sets open (4 on Easy down to 1 on Insane, from your race's four). Once you
-own 10% of a set's distinct cards in that set's printing (at least 5), the **Research Lab** in your
-Capitol unlocks it for 40 Shards on Normal and a week's wait. An unlocked set stocks your own shops and
-joins your own Inns' tournaments; it never limits your deck. Full detail:
+You start with only a few sets open (4 on Easy down to 1 on Insane, from your race's four). The
+**Research Lab** in your Capitol unlocks any other set for 40 Shards on Normal and 28 days - less of both
+the more of that set's cards you have sold or sacrificed. An unlocked set stocks your own shops and joins
+your own Inns' tournaments; it never limits your deck. (A game started before version 1.24 keeps the
+classic research: own 10% of a set, then 40 Shards and a week.) Full detail:
 [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).
 
-### Why does the Research Lab count fewer cards than I own?
+### Which cards fill a set's research meter?
 
-It counts each card once, and only in the printing you own it in: a second copy adds nothing, and a card
-you own as an Amonkhet printing counts toward Amonkhet, not toward the other sets it was printed in. A
-set's total is every card printed in it (basic lands aside), reprints included.
+Only that set's own cards, in that set's printing: a card you own as an Amonkhet printing feeds Amonkhet,
+not the other sets it was printed in. A card counts in full the first time you feed it and a quarter for
+every later copy. Selling it anywhere feeds the meter; sacrificing it at the Lab feeds it double. A set's
+total is every card printed in it (basic lands aside), reprints included.
 
 ### Why can't I find cards from set XYZ?
 

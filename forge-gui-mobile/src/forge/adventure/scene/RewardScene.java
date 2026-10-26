@@ -689,6 +689,8 @@ public class RewardScene extends UIScene {
             } catch (Exception e) {
             }
         }
+        // Round 751: a research v2 game sells the auto-sell pile as this screen closes (a classic save: at the next shop).
+        AdventurePlayer.current().sellAutoSellPile("reward screen");
     }
 
     public List<RewardActor> getGeneratedRewards() {

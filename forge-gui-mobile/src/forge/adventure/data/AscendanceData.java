@@ -134,6 +134,8 @@ public class AscendanceData {
         public float weight = 1f;
         /** Round 551, lasting only: days the pick takes off a timer (Researcher: 3 off each research). */
         public int days;
+        /** Round 751, lasting only: percent of a timer the pick takes off (Researcher: 25% off each research). */
+        public int daysPercent;
         /** Round 566: not offered for a level below this (Focused: "after level 15"). 0 = any level. */
         public int minLevel;
         /** Round 572, lasting only: the TOTAL after each pick, when the steps are uneven (Zealot 0.08, 0.15, 0.25 - the

@@ -382,6 +382,19 @@ public class TuningData {
     // difficulty scaling every other building cost gets (EconomyBuildings.scaledCost()).
     public int researchDays = 7;
     public int researchShardCost = 100;
+    // Round 751 - research v2 (util/ResearchMeter; the user: "Each card should ONLY count towards that set ... The first
+    // unique card should count more"), for games started on round 751 or later; an older save keeps the classic research
+    // above. A set's meter holds researchMeterShare of its card count in points, at least researchMeterMin. A card fed for
+    // the first time (per name, per set) counts researchPointsByRarity (Common, Uncommon, Rare, Mythic), a later copy
+    // researchCopyShare of that, a sacrifice researchSacrificeFactor times. A full meter cuts researchShardCutAtFull of
+    // the shard price and all of researchDaysV2, both along sqrt(fill).
+    public int researchDaysV2 = 28;
+    public float researchMeterShare = 0.10f;
+    public int researchMeterMin = 8;
+    public int[] researchPointsByRarity = {1, 2, 3, 5};
+    public float researchCopyShare = 0.25f;
+    public float researchSacrificeFactor = 2f;
+    public float researchShardCutAtFull = 0.5f;
     // Round 457 (the user: "Let's change the bank Deposit and Withdrawal amounts to 500", after a player asked for 1k
     // instead of 100): the gold one Bank Deposit / Withdraw press moves (EconomyBuildings.bankStep()).
     public int bankStepGold = 500;

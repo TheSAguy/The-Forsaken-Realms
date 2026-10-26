@@ -837,6 +837,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         researchEditionInProgress = null;
         researchInProgress.clear();
         researchStartDay = -1;
+        researchV2 = false; // round 751: create() and New Game+ turn it on; load() reads the save's own
+        researchPoints.clear();
+        researchFedNames.clear();
     }
 
     static public AdventurePlayer current() {
@@ -862,6 +865,13 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // researchEditionInProgress/researchStartDay above survive only to read pre-round-88 saves.
     private final java.util.LinkedHashMap<String, Integer> researchInProgress = new java.util.LinkedHashMap<>();
     private int researchStartDay = -1;
+    // Round 751 - research v2 (util/ResearchMeter; the user: "Make research v2 ... new-game only; existing saves keep the
+    // old systems", then "New game or NG+"). True for a game created, or taken into New Game+, on round 751 or later;
+    // a save without the key loads as classic. Per set: the points fed, and the card names fed (a name's first copy
+    // counts in full).
+    private boolean researchV2 = false;
+    private final java.util.Map<String, Float> researchPoints = new java.util.HashMap<>();
+    private final java.util.Map<String, java.util.Set<String>> researchFedNames = new java.util.HashMap<>();
 
     // Bronze Coin ante ransom (user spec 2026-08-29). Enemy NAMES the player has bought their
     // ante back from with a Bronze Challenge Coin; beating an enemy of that name later reclaims
@@ -978,6 +988,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // list, picked randomly too for consistency. Same difficulty-index-lookup pattern
         // EconomyBuildings.difficultyPriceMultiplier() already uses.
         seedStartingEditions(race);
+        // Round 751: a new game runs research v2 (on a plane with set unlocks).
+        researchV2 = forge.adventure.util.ResearchMeter.planeEnabled();
+        System.out.println("[TFR-Research] research system: " + (researchV2 ? "v2" : "classic") + " (new game)");
 
         // Shop-type blueprints (2026-08-30): 3 color shops + 2 race tribal shops. Placed here,
         // after heroRace is set above, since the race grant is keyed off it.
@@ -1176,6 +1189,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // leaving a negative "days remaining" and every research button disabled for months.
         clearResearch();
         seedStartingEditions(heroRace);
+        // Round 751 (the user: "New game or NG+"): New Game+ starts the new run on research v2. Nothing carries over -
+        // research in progress and researched sets were reset just above, as they always have been.
+        if (!researchV2 && forge.adventure.util.ResearchMeter.planeEnabled()) {
+            researchV2 = true;
+            System.out.println("[TFR-Research] NG+: classic -> v2");
+        }
         seedStartingShopTypes(heroRace);
 
         // ONE line that proves or disproves the whole reset (user request 2026-09-02: verifying
@@ -2175,6 +2194,30 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         } else if (researchEditionInProgress != null) {
             researchInProgress.put(researchEditionInProgress, researchStartDay); // pre-round-88 single slot
         }
+        // Round 751: research v2's flag and meters - "CODE|points" and "CODE|Card Name" lists (see save()). A save
+        // without the flag is from before round 751 and keeps the classic research.
+        researchV2 = data.containsKey("researchV2") && data.readBool("researchV2");
+        researchPoints.clear();
+        researchFedNames.clear();
+        if (data.containsKey("researchPointsList")) {
+            //noinspection unchecked
+            for (String entry : (java.util.List<String>) data.readObject("researchPointsList")) {
+                int sep = entry.indexOf('|');
+                if (sep > 0)
+                    try { researchPoints.put(entry.substring(0, sep), Float.parseFloat(entry.substring(sep + 1))); }
+                    catch (NumberFormatException ignored) { }
+            }
+        }
+        if (data.containsKey("researchFedList")) {
+            //noinspection unchecked
+            for (String entry : (java.util.List<String>) data.readObject("researchFedList")) {
+                int sep = entry.indexOf('|');
+                if (sep > 0)
+                    researchFedNames.computeIfAbsent(entry.substring(0, sep), k -> new HashSet<>()).add(entry.substring(sep + 1));
+            }
+        }
+        System.out.println("[TFR-Research] research system: " + (researchV2 ? "v2 (" + researchPoints.size()
+                + " set meter(s), " + researchInProgress.size() + " running)" : "classic") + " (loaded)");
         researchEditionInProgress = null;
         if (migration) {
             getCurrentGameStage().setExtraAnnouncement(Forge.getLocalizer().getMessage("lblDataMigrationMsg"));
@@ -2256,6 +2299,19 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         for (java.util.Map.Entry<String, Integer> r : researchInProgress.entrySet())
             researchList.append(researchList.length() == 0 ? "" : ";").append(r.getKey()).append(':').append(r.getValue());
         data.store("researchInProgressList", researchList.toString());
+        // Round 751: research v2 (see load()). Stored only by a v2 save, so a classic save's file is unchanged.
+        if (researchV2) {
+            data.store("researchV2", true);
+            ArrayList<String> pointsList = new ArrayList<>();
+            for (java.util.Map.Entry<String, Float> e : researchPoints.entrySet())
+                pointsList.add(e.getKey() + "|" + e.getValue());
+            data.storeObject("researchPointsList", pointsList);
+            ArrayList<String> fedList = new ArrayList<>();
+            for (java.util.Map.Entry<String, java.util.Set<String>> e : researchFedNames.entrySet())
+                for (String name : e.getValue())
+                    fedList.add(e.getKey() + "|" + name);
+            data.storeObject("researchFedList", fedList);
+        }
 
         data.store("worldPosX", worldPosX);
         data.store("worldPosY", worldPosY);
@@ -2539,8 +2595,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // Never allowed to break a card grant - hard try/catch around the whole convenience.
     private void maybeNotifyResearchThreshold(PaperCard card, int amountAdded) {
         try {
-            if (card == null)
-                return;
+            if (card == null || forge.adventure.util.ResearchMeter.enabled(this))
+                return; // round 751: research v2 has no threshold - its meters fill as cards are fed
             forge.adventure.world.World world = Current.world();
             if (world == null || !world.isEditionProgressionEnabled())
                 return;
@@ -3260,18 +3316,74 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public int getResearchDaysLeft(String editionCode, int currentDay) {
         Integer start = researchInProgress.get(editionCode);
-        return start == null ? -1 : Math.max(0, effectiveResearchDays() - (currentDay - start));
+        if (start == null)
+            return -1;
+        // Round 751: research v2's live clock - the meter's fill sets the length, so feeding shortens a running research.
+        if (forge.adventure.util.ResearchMeter.enabled(this))
+            return forge.adventure.util.ResearchMeter.daysLeft(this, editionCode, start, currentDay);
+        return Math.max(0, effectiveResearchDays() - (currentDay - start));
     }
 
     public void startResearch(String editionCode, int currentDay) {
         researchInProgress.put(editionCode, currentDay);
         // Diagnostic-only logging - greppable in forge.log as "[TFR-Research]".
         System.out.println("[TFR-Research] started " + editionCode + " on day " + currentDay
-                + " (completes day " + (currentDay + effectiveResearchDays()) + "; " + researchInProgress.size() + " in progress)");
+                + " (completes day " + (currentDay + getResearchDaysLeft(editionCode, currentDay)) + "; "
+                + researchInProgress.size() + " in progress)");
     }
 
+    /** New Game+: research in progress and, round 751, research v2's meters belong to the run that ended. */
     public void clearResearch() {
         researchInProgress.clear();
+        researchPoints.clear();
+        researchFedNames.clear();
+    }
+
+    /** Round 751: this save runs research v2 (a game created, or taken into New Game+, on round 751 or later). */
+    public boolean isResearchV2() {
+        return researchV2;
+    }
+
+    /** Round 751: research v2's points per set (ResearchMeter). */
+    public java.util.Map<String, Float> getResearchPoints() {
+        return researchPoints;
+    }
+
+    /** Round 751: research v2's card names fed per set - a name's first copy counts in full (ResearchMeter). */
+    public java.util.Map<String, java.util.Set<String>> getResearchFedNames() {
+        return researchFedNames;
+    }
+
+    /** Round 751: the Lab's Sacrifice - copies leave the collection (and the auto-sell pile, when it held them) for
+     *  research points, with no gold. Returns how many left. */
+    public int removeCardsForResearch(PaperCard card, int amount) {
+        int n = Math.min(amount, cards.count(card));
+        if (n <= 0 || !cards.remove(card, n))
+            return 0;
+        int extraInPile = autoSellCards.count(card) - cards.count(card);
+        if (extraInPile > 0)
+            autoSellCards.remove(card, extraInPile);
+        int extraNew = newCards.count(card) - cards.count(card);
+        if (extraNew > 0)
+            newCards.remove(card, extraNew);
+        return n;
+    }
+
+    /**
+     * Round 751 (the user: "Maybe all selling happens at the Research lab ... the auto sell will automatically sell at the
+     * lab"): in a research v2 game the auto-sell pile sells where it is collected - the reward screen as it closes - not at
+     * the next shop; each sale feeds its card's set (ResearchMeter). A classic save keeps selling the pile on shop entry.
+     */
+    public void sellAutoSellPile(String trigger) {
+        if (!forge.adventure.util.ResearchMeter.enabled(this) || autoSellCards.isEmpty())
+            return;
+        int count = autoSellCards.countAll();
+        int goldBefore = gold;
+        doBulkSell(autoSellCards);
+        autoSellCards.clear();
+        System.out.println("[TFR-Research] auto-sell (" + trigger + "): " + count + " card(s) sold for "
+                + (gold - goldBefore) + " gold");
+        refreshEditor();
     }
 
     /** Auto-completes a finished research (no separate "collect" step, unlike the Archaeologist's
@@ -3287,10 +3399,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         java.util.Iterator<java.util.Map.Entry<String, Integer>> it = researchInProgress.entrySet().iterator();
         while (it.hasNext()) {
             java.util.Map.Entry<String, Integer> r = it.next();
-            if (currentDay - r.getValue() < effectiveResearchDays())
+            if (getResearchDaysLeft(r.getKey(), currentDay) > 0) // round 751: the save's own clock, v2 or classic
                 continue;
             String done = r.getKey();
             it.remove();
+            forge.adventure.util.ResearchMeter.onCompleted(this, done); // round 751: an open set's meter is done
             // Diagnostic-only logging - greppable in forge.log as "[TFR-Research]".
             System.out.println("[TFR-Research] completed " + done + " on day " + currentDay
                     + " - now unlocked (" + (unlockedEditions.size() + 1) + " total)");
@@ -3332,7 +3445,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             basePrice += basePrice * 20 / 100;
         }
 
-        float townPriceModifier = currentLocationChanges == null ? 1f : currentLocationChanges.getTownPriceModifier();
+        // Round 751 (the user: "You also have one sell price"): a research v2 game sells at one price everywhere - no
+        // town-reputation adjustment. A classic save keeps it.
+        float townPriceModifier = currentLocationChanges == null || forge.adventure.util.ResearchMeter.enabled(this)
+                ? 1f : currentLocationChanges.getTownPriceModifier();
         return (int) (basePrice * (2.0f - townPriceModifier));
     }
 
@@ -3358,9 +3474,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      */
     public void doBulkSell(ItemPool<PaperCard> cards) {
         int profit = 0;
-        for (PaperCard cardToSell : cards.toFlatList()) {
-            profit += AdventurePlayer.current().performSale(cardToSell, 1);
-            cards.remove(cardToSell);
+        int sold = cards.countAll();
+        forge.adventure.util.ResearchMeter.beginBatch(); // round 751: one feed line per set for the whole sale
+        try {
+            for (PaperCard cardToSell : cards.toFlatList()) {
+                profit += AdventurePlayer.current().performSale(cardToSell, 1);
+                cards.remove(cardToSell);
+            }
+        } finally {
+            forge.adventure.util.ResearchMeter.endBatch(this, "a sale of " + sold + " card(s)");
         }
         giveGold(profit); //do this as one transaction so as not to get multiple copies of sound effect
     }
@@ -3373,6 +3495,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         int amountToSell = Math.min(amount, cards.count(card));
         if(!cards.remove(card, amountToSell))
             return 0; //Failed to sell?
+        forge.adventure.util.ResearchMeter.onSold(this, card, amountToSell); // round 751: a v2 sale feeds its set
         return cardSellPrice(card) * amountToSell;
     }
 

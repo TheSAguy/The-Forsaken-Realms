@@ -612,13 +612,19 @@ public class AdventureDeckEditor extends FDeckEditor {
             return parentScreen.getEditorConfig() instanceof ShopConfig;
         }
 
+        /** Round 751: a research v2 game sells from anywhere, not only in a shop. */
+        protected boolean canSellHere() {
+            return isShop() || forge.adventure.util.ResearchMeter.enabled();
+        }
+
         @Override
         protected void buildMenu(FDropDownMenu menu, PaperCard card) {
             super.buildMenu(menu, card);
             Localizer localizer = Forge.getLocalizer();
             AdventurePlayer player = Current.player();
-            if (isShop()) {
-                String label = localizer.getMessage("lblSellFor") + " " + player.cardSellPrice(card);
+            if (canSellHere()) {
+                String label = localizer.getMessage("lblSellFor") + " " + player.cardSellPrice(card)
+                        + forge.adventure.util.ResearchMeter.sellNote(player, card); // round 751: " (+2 DOM)"
                 int sellable = cardManager.getItemCount(card);
                 if (sellable <= 0)
                     return;
@@ -646,7 +652,7 @@ public class AdventureDeckEditor extends FDeckEditor {
 
         @Override
         protected void onCardActivated(PaperCard card) {
-            if (isShop()) {
+            if (isShop()) { // round 751: outside a shop a tap never sells - the menu's Sell does
                 Current.player().sellCard(card, 1);
                 removeCard(card, 1);
             }
