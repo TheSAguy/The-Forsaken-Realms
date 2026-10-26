@@ -38,7 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
-### Round 758 - the death dialog says what dying did
+### Round 759 - the agent game starts every duel at 50x
+
+- **`forge-gui/src/main/java/forge/gui/control/FControlGamePlayback.java`** (STOCK) - a static `startSpeed` (null) and
+  its label, with a `setStartSpeed(speed, label)` setter, set only by `forge.adventure.agent.AgentBridge` when the agent
+  bridge starts. `setGame()` applies it (playback speed, the GUI's `setGameSpeed`, one `[TFR-Agent]` line) before
+  building `InputPlaybackControl`. Null keeps stock behavior. An upstream edit to `setGame` conflicts; keep the block.
+
 
 - **`forge-gui-mobile/src/forge/adventure/util/Current.java`** (STOCK) - `generateDefeatMessage`'s crack moved into a
   new private `crackRandomEquippedItem(screen)` (same checks, `[TFR-Defeat]` lines); a new `generateDeathMessage(home,

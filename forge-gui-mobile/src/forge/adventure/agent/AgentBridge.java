@@ -80,6 +80,8 @@ public final class AgentBridge {
             // would otherwise sit waiting for a mouse click nobody is there to give. This process only;
             // the saved preference (FPref.UI_SELECTOR_MODE) is untouched.
             forge.Forge.selector = "Adventure";
+            // Round 759: every duel in this process starts at 50x (the user's rule), even one no client settles.
+            forge.gui.control.FControlGamePlayback.setStartSpeed(forge.gui.control.PlaybackSpeed.SUPERFAST, "50x");
         } catch (Exception e) {
             System.err.println("[TFR-Agent] bridge NOT started: " + e);
         }

@@ -74,6 +74,8 @@ python dev-tools/agent/tfr_agent.py boot     # waits for the bridge; prints the 
    (since round 592; it used to wait ~2 minutes first), and prints it - answer with `cmd click id=...` (the `forgeUi`
    ids) or `dialogs choose=TEXT`, then `settle` again. `settle --ask-ante` also stops at the Card Lost choice, for a
    session where the player decides.
+   Duels in the agent game start at 50x on their own (round 759: the bridge sets the duel's start speed, `[TFR-Agent]
+   duel speed set to 50x (agent default)` in forge.log), so a duel no client settled still runs fast (auto-battle, the default; with `autobattle on=false` the seat is yours and has no speed button); settle still applies it.
 5. Repeat. Every few steps `shot` a screenshot (`tfr_agent.py shot C:/path/x.png`) and look at it - the state is
    objects, the screenshot is what the player sees.
 
@@ -142,6 +144,10 @@ anything risky, and `cmd load slot=1` from the Load screen to get back.
   trigger, not an actor: in the Capitol (`teleport to poi "Player Capitol"`) walk to `goto tile=10,33`.
 - **Run the client with `PYTHONIOENCODING=utf-8`** (`export PYTHONIOENCODING=utf-8` in the Bash tool): a reward screen's
   checkbox glyph (U+2610) otherwise crashes `settle`'s print on the Windows console.
+- **Run `tfr_agent.py` with `python -X utf8`, not `python -I`**: `-I` drops `PYTHONIOENCODING`, and `settle` crashes on the
+  reward screen's checkbox glyph again.
+- **The agent profile's window must stay 1280x720.** At 3840x2160 it covers the screen, gets minimized, and a minimized
+  game stalls: the bridge times out and shots come back 1x1. `agent_setup.py` seeds 1280x720; put it back if it changed.
 - **A fresh New Game is the clean test for one-time map things** (a hidden pickup, a first-visit dialog): a long-running
   save has usually used them up. `console text="set charflag NAME 1"` / `... 0` (0 removes it) fakes a run state such
   as `newGamePlus`.

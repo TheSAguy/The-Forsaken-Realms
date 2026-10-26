@@ -14264,7 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
-## Round 758: the death dialog says what dying did (2026-10-26)
+## Round 759: the agent game starts every duel at 50x by itself (2026-10-26)
+
+The user: "Yes: make the agent profile start every duel at 50x by default, so no session can forget." Their standing
+rule is that every duel any session plays runs at 50x; until now only the client enforced it (`tfr_agent.py settle`'s
+`duel_at_50x`, round 688). Twice today a duel ran at 1x in the agent game because nothing had settled it yet: a duel
+shot frame by frame, and one a roaming enemy started mid-walk.
+
+- **How duel speed works**: a duel the AI pilots for the player's seat (agent auto-battle, the default) gets a new
+  `FControlGamePlayback` in `HostedMatch` (`humanCount == 0`), starting at `PlaybackSpeed.NORMAL`. Its button cycles
+  1x -> 10x -> 50x -> 1/3x and is labelled with the NEXT speed. Nothing persists between duels: the next duel builds a
+  new control, and `HostedMatch` resets the GUI's speed to NORMAL at the end. There is no speed preference or setting,
+  so option (b), a seeded profile setting, does not exist.
+- **The hook**: `FControlGamePlayback` (stock, forge-gui) has a static start speed, null by default.
+  `AgentBridge.startIfConfigured()` sets it to `SUPERFAST` ("50x") once the bridge is up. `setGame()` applies it before
+  building `InputPlaybackControl`, so the button reads "1/3x speed" (the real speed) from the first frame, and copies it
+  to the GUI's speed (`FCardPanel`'s animation skip). It logs `[TFR-Agent] duel speed set to 50x (agent default)` once
+  per duel. `settle` still works: it finds the button at "1/3x speed" and taps nothing.
+- **(1) The live game cannot pick it up.** The bridge starts only when `-Dtfr.agent.port` or `TFR_AGENT_PORT` is set,
+  and only `dev-tools/agent/agent_launch.cmd` sets it, for the agent's process. None of the live folder's launchers
+  (`.exe`, `.cmd`, `.sh`, `.command`) sets it, and neither do the user or machine environments (checked 2026-10-26).
+  Without the bridge the static stays null and `setGame` behaves as stock, so normal players and the user's game keep
+  1x.
+- **(2) A human-seat duel in the agent game is not covered, and there is nothing to cover.** With
+  `cmd autobattle on=false` the player's seat is human: `HostedMatch` builds no playback control and the duel has no
+  speed button (stock Forge only paces spectated duels). The pace is whoever answers the prompts. Every duel that
+  `settle` or an AI pilot sits out is covered.
+- **Seen in the agent game** (only the two classes ahead of the 13:39 jar, 1280x720, a copy of slot 1 in slot 80, since
+  removed; auto_save.sav restored): no settle. A walk toward a spawned Wild Rat met a roaming Kor Duelist, and the
+  duel's first state already showed the button at "1/3x speed": 13 turns in 9 s. A second duel was also 50x from its
+  first frame, and `settle` sat it out back to the map. forge.log: the `[TFR-Agent]` line twice, one per duel.
+- **The tfr-play skill**: duels start at 50x on their own; two trap notes: the profile's window stays 1280x720 (at
+  3840x2160 it covers the screen, gets minimized and stalls), and `tfr_agent.py` runs with `python -X utf8`, not
+  `python -I` (it drops `PYTHONIOENCODING`, and settle crashes on the checkbox glyph).
+
 
 The user, with a screenshot of the agent game's death ("Will, You Died!!!" / "Torch Cracked!", life -5/22): "This
 looks like the wrong defeat screen. This looks like the duel loss screen when an equipment breaks vs. you losing the

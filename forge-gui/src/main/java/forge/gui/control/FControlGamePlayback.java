@@ -38,7 +38,24 @@ public class FControlGamePlayback extends IGameEventVisitor.Base<Void> {
 
     public void setGame(final Game game0) {
         game = game0;
+        // TFR round 759: the agent game starts every duel at its start speed (50x), so no session forgets the
+        // user's rule; null (stock behavior, NORMAL) unless the agent bridge set it. Set before the input is
+        // built so the speed button reads the real speed, and the GUI's copy matches.
+        if (startSpeed != null) {
+            playbackSpeed = startSpeed;
+            humanController.getGui().setGameSpeed(startSpeed);
+            System.out.println("[TFR-Agent] duel speed set to " + startSpeedLabel + " (agent default)");
+        }
         inputPlayback = new InputPlaybackControl(game, this);
+    }
+
+    // TFR round 759: set only by forge.adventure.agent.AgentBridge when the bridge starts (TFR_AGENT_PORT /
+    // -Dtfr.agent.port); a normal game never sets it.
+    private static volatile PlaybackSpeed startSpeed = null;
+    private static volatile String startSpeedLabel = "";
+    public static void setStartSpeed(final PlaybackSpeed speed, final String label) {
+        startSpeed = speed;
+        startSpeedLabel = label;
     }
 
     @Subscribe
