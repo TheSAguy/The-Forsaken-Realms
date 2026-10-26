@@ -14264,6 +14264,57 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 752: each capital sells its +1 max life once per game (2026-10-26)
+
+A Discord player (2026-10-25): "Refreshing equipment also made it so that every week the hearts in the capitol cities
+refreshed, which essentially gave you 5 extra life every week." The user: "each capital sells its +1 max life once per
+game".
+
+- **The hearts**: each color capital's Items shop (`WhiteItems`, `RedItems`, `BlueItems`, `BlackItems`, `GreenItems` in
+  TFR's `world/shops.json`) sells its color's rune and one `{"type": "life", "count": 1}`, from stock Shandalar, where
+  each is a one-time purchase. A heart costs 500 gold before the gold, reputation and Haggler factors
+  (`CardUtil.getRewardPrice`). No other TFR shop sells life.
+- **Cause - a side effect of the item economy's weekly refresh (2026-08-10)**: the capital maps flag those shops
+  `noRestock`, and since then a noRestock shop reseeds at the start of each HUD week (`MapStage`'s shop load ->
+  `PointOfInterestChanges.getWeeklyShopSeed()`, round 459's calendar weeks). The reseed, `generateNewShopSeed()`, also
+  clears the shop's `cardsBought` - the only record that a slot was sold - so the heart was back on sale on day 8, 15,
+  22... Before that round a noRestock shop never reseeded and the heart sold once. Up to +5 max life a week for about
+  2,500 gold while all five colors stand (a fallen color's capital becomes a wasteland town, without the shop). Nothing
+  in the changelog asked for weekly hearts; round 299's rule is the opposite ("Any +Life should only be handed out
+  once. Can't farm.").
+- **Fix** (`PlaceRewards`, mod code): a +Life sold in a weekly-refreshing shop (`ShopActor.isWeeklyRefresh()`, the
+  map's `noRestock`) is recorded in the saved `World.getOncePaidRewards()` under `<levelKey>|life|shop#<objectId>`
+  (round 331's level key, as `filterPickup()` uses), value the day sold. `isShopLifeSold()` hides a recorded heart as a
+  sold slot; `noteShopLifeBought()` records one on purchase. Two hook lines in `RewardScene` (stock file): the Shop
+  case of `loadRewards()` asks before drawing a slot, and `BuyButton`'s click records. The check sits at display and
+  purchase, not at seeding, so every path that reseeds a shop - the weekly refresh, the Armory's Re-roll Inventory, a
+  paid restock, the Armory upgrade - is covered. Stock behavior is untouched: a shop that is not weekly-refreshing
+  never records. No save-format change (the map was already saved).
+- **Re-roll Inventory** (checked, as the main thread asked): it cannot sell a capital heart twice - its button needs a
+  player-owned town (`TownRestoration.isCurrentTownPlayerOwned`), the player cannot capture an AI capital, and a fallen
+  color's capital is transformed into a wasteland town (`TerritoryControl.defeatColor`). Covered by the same check
+  anyway.
+- **Log**: `[TFR-ShopLife] <levelKey>|life|shop#<id>: +1 max life sold on day N (once per game)`, `... withheld (sold
+  on day N - once per game)`, and `... bought before round 752 - recorded, never sold again`.
+- **Old saves**: life already bought stays. A heart bought this week is still in the shop's `cardsBought`; the first
+  time the shop is opened that week it is recorded (day -1) and stays sold after the week turns. A heart bought in an
+  earlier week left no record, so that capital sells one more, then closes.
+- **Tested** (Maven `-pl forge-gui-mobile -am compile` exit 0; the agent game with the round's classes ahead of the jar,
+  1280x720, copies of agent slot 43 in slots 52 and 53, White's Items shop in New Avalon, no duels):
+  - Baseline, the unpatched jar: bought the heart on day 18 (max life 23 -> 24), `days skip 4`: on day 22 it was on sale
+    again for 625 - the bug (`notes/tweaks-1026/r752_0_bug_unpatched_heart_back_day22.png`).
+  - Patched: bought on day 18 (24 max life, "sold on day 18"), `days skip 4`: on day 22 the stock had rerolled (Piper's
+    Charm, Farmer's Tools) and the heart slot was empty, "withheld" in the log (`r752_3_heart_sold_day22.png`). Saved on
+    day 18, loaded, skipped to day 22 again: still sold (`r752_4_after_load_day22.png`).
+  - Old save: a heart bought with the unpatched jar, loaded with the patch: "bought before round 752 - recorded" on
+    the shop's first opening, sold on day 22 (`r752_6_oldsave_heart_sold_day22.png`). No exceptions in the log.
+  - Not tested: a second capital as a control (the walker could not reach the Blue and Green shops' triggers; the key
+    names one place and one shop object).
+- **Open item (seen in passing, not changed)**: `TileMapScene.currentLevelKey()` (round 331) returns the place id plus the map path
+  for a place's first map too - a place id never ends with its map path - so its "the place's own id for its first map"
+  branch does not fire, and round 331's note that earlier `poiId|life|pickup#N` keys still match looks wrong (a +Life
+  pickup taken before round 331 could pay once more). Old and minor; reported to the main thread.
+
 ## Round 747 (follow-up): the Java startup splash is TFR's too (2026-10-26)
 
 The post-package check of rounds 740-747 caught a second stock splash: for about a second at launch, before the game's

@@ -1303,7 +1303,8 @@ public class RewardScene extends UIScene {
         for (Reward reward : new Array.ArrayIterator<>(newRewards)) {
             boolean skipCard = false;
             if (type == Type.Shop) {
-                if (changes.wasCardBought(shopActor.getObjectId(), i)) {
+                // Round 752: a weekly shop's +Life sells once per game (PlaceRewards.isShopLifeSold).
+                if (PlaceRewards.isShopLifeSold(shopActor, reward, i) || changes.wasCardBought(shopActor.getObjectId(), i)) {
                     skipCard = true;
                 }
             }
@@ -1445,6 +1446,7 @@ public class RewardScene extends UIScene {
                     if (Current.player().getGold() >= price) {
                         if (!shopActor.isUnlimited())
                             changes.buyCard(objectID, index);
+                        PlaceRewards.noteShopLifeBought(shopActor, rewardActor.getReward()); // round 752
 
                         Current.player().takeGold(price);
                         Current.player().addReward(rewardActor.getReward());

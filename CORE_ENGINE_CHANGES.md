@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 752 - a weekly shop's +Life sells once per game
+
+- **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** - two lines: `loadRewards()`'s Shop case also skips a
+  slot when `PlaceRewards.isShopLifeSold(shopActor, reward, i)` (called before `wasCardBought`, so an old save's heart
+  bought this week is recorded); `BuyButton`'s click calls `PlaceRewards.noteShopLifeBought()` after `buyCard`.
+- Mod-added, touched: `util/PlaceRewards.java` (`isShopLifeSold`, `noteShopLifeBought`, `shopLifeKey`; the saved
+  `World.getOncePaidRewards()` map, `[TFR-ShopLife]`).
+
 ### Round 749 - a 'here' quest stage given away from any town; unfilled quest text logged
 
 - **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** - `initializeStage()`: a `here` stage (not

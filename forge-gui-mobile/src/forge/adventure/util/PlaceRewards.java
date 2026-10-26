@@ -2,6 +2,7 @@ package forge.adventure.util;
 
 import com.badlogic.gdx.utils.Array;
 import forge.adventure.character.EnemySprite;
+import forge.adventure.character.ShopActor;
 import forge.adventure.data.EnemyData;
 import forge.adventure.data.ItemData;
 import forge.adventure.data.ItemListData;
@@ -212,6 +213,54 @@ public final class PlaceRewards {
         if (clears > 0)
             applyReturnVisit(rewards, null, notes);
         log(place, clears, "a pickup", notes);
+    }
+
+    /**
+     * Round 752 (Discord, 2026-10-25: "every week the hearts in the capitol cities refreshed, which essentially gave
+     * you 5 extra life every week"; the user: "each capital sells its +1 max life once per game"). The five color
+     * capitals' Equipment shops sell a +1 max life (shops.json, from stock Shandalar), and the weekly reseed of a
+     * noRestock shop (PointOfInterestChanges.getWeeklyShopSeed) clears the shop's bought slots - the only record of the
+     * sale - so the heart came back every week. A heart sold in a weekly-refreshing shop is recorded here, key
+     * "levelKey|life|shop#objectId" (round 331's level key, as filterPickup), and shows as sold from then on, whatever
+     * reseeds the shop. RewardScene.loadRewards() asks; a save from before this round whose heart is in this week's
+     * bought slots is recorded on the first look (day -1), so it does not come back next week.
+     */
+    public static boolean isShopLifeSold(ShopActor shop, Reward reward, int index) {
+        String key = shopLifeKey(shop, reward);
+        if (key == null)
+            return false;
+        World world = WorldSave.getCurrentSave().getWorld();
+        Integer soldOn = world.getOncePaidRewards().get(key);
+        if (soldOn == null && shop.getMapStage().getChanges().wasCardBought(shop.getObjectId(), index)) {
+            world.getOncePaidRewards().put(key, -1);
+            soldOn = -1;
+            System.out.println("[TFR-ShopLife] " + key + ": bought before round 752 - recorded, never sold again");
+        }
+        if (soldOn == null)
+            return false;
+        System.out.println("[TFR-ShopLife] " + key + ": +" + reward.getCount() + " max life withheld (sold "
+                + (soldOn >= 0 ? "on day " + soldOn : "before") + " - once per game)");
+        return true;
+    }
+
+    /** Round 752: RewardScene's BuyButton, a shop's +Life just bought - recorded so the weekly reseed cannot sell it again. */
+    public static void noteShopLifeBought(ShopActor shop, Reward reward) {
+        String key = shopLifeKey(shop, reward);
+        if (key == null)
+            return;
+        World world = WorldSave.getCurrentSave().getWorld();
+        world.getOncePaidRewards().putIfAbsent(key, world.getCurrentDay());
+        System.out.println("[TFR-ShopLife] " + key + ": +" + reward.getCount() + " max life sold on day "
+                + world.getCurrentDay() + " (once per game)");
+    }
+
+    /** Round 752: null unless a +Life in a weekly-refreshing shop of a place. */
+    private static String shopLifeKey(ShopActor shop, Reward reward) {
+        if (shop == null || !shop.isWeeklyRefresh() || reward == null || reward.getType() != Reward.Type.Life
+                || reward.getCount() <= 0 || TileMapScene.instance() == null)
+            return null;
+        String levelKey = TileMapScene.instance().currentLevelKey();
+        return levelKey == null ? null : levelKey + "|life|shop#" + shop.getObjectId();
     }
 
     /**
