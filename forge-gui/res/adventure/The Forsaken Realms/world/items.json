@@ -1170,7 +1170,7 @@
         "equipmentSlot":  "Boots",
         "iconName":  "WitchMawSlippers",
         "effect":  {
-                       "changeStartCards":  -1,
+                       "changeStartCards":  -2,
                        "lifeModifier":  -8,
                        "startBattleWithCard":  [
                                                    "Witch-Maw Nephilim|GPT"

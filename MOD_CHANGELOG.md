@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 750: Witch-Maw Slippers cost two cards from the opening hand (2026-10-26)
+
+The user: "I've had several reports that the companion, Witch-Maw Nephlim, from the item Witch-Maw Nephlim Boots Item
+was a little OP. Let's add to that item the -2 Starting hand, like "Caretaker's Cap" has. This will at least help the
+OP factor." (Discord: two players called the Nephilim overpowered.)
+
+- **The change** (TFR `world/items.json`, data only): Witch-Maw Slippers (Boots, Rare) `changeStartCards` -1 -> -2,
+  the same field Caretaker's Cap uses for its -2. `lifeModifier` stays -8 and the Nephilim still starts in play. The
+  repo's `config tables/items.csv` snapshot row reads "Starting hand: -2" to match (the game regenerates that file).
+- **Tooltip**: `EffectData.getDescription` builds "Starting hand: -2" from the effect; no description edit.
+- **Also lowers the max hand size to 5**: stock Forge's `Game.java:358` sets the max hand size to the starting hand
+  size, so every `changeStartCards` item moves both (the old -1 already meant a 6-card max).
+- **Stacks with no floor**: `DuelScene.applyEffects` adds every worn item's `changeStartCards` and the Ascendance pact
+  cards; nothing clamps the total. Slippers plus Caretaker's Cap is a 3-card opening hand (and a max hand of 3).
+  Left as is.
+- **Old saves**: the inventory is saved as serialized `ItemData` with its effect, but
+  `AdventurePlayer.refreshItemDefinitionsFromCatalog` (round 124) re-reads the effect from items.json on load for the
+  pack, the Armory storage and guards' gear, so owned copies take -2. `[TFR-DuelEffects]` prints `extraStartCards=-2`
+  for a seat wearing them.
+- **Other copies**: none to change. enemies.json (guard gear lists, a drop), `player_capital.tmx` and the
+  `EconomyBuildings` sale list name the item only; it is in no gear set. Guards wearing the Slippers get -2 as well.
+- **Not tested in game** (data only, no build): checked by reading the code; the JSON parses.
+
 ## Round 746: working neutral towns have their own color on the History replay (2026-10-26)
 
 The user: "Have the working neutral towns be a slightly different color on the replay map. (So there should be a small

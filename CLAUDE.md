@@ -7,7 +7,7 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-748 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-748 and 750 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
 737 (the LPC Vampire hero flies as a bat when it moves, art only: the Walk rows of
 `sprites/heroes/lpc_vampire_m/f.png`, from the generator's `lpc_to_player.py --bat`), 738 (the repo's `tfr-play` skill
 is the October version; docs only, not shipped), 739 (`agent_sync.cmd` refuses while the agent game runs; the agent
@@ -22,7 +22,7 @@ the "Won this week (2 days)" label is one size) and 742 (arena duels pay half Po
 `arenaPowerFactor` 0.5, the bracket bonus and the Coin Challenge too - and are no first meeting: `PlayerStatistic`'s
 saved `arenaWins` tally and `fieldWins()` feed every first-win rule; `[TFR-Arena]`) and 744 (the Gear Sets page lists the sets with the most pieces owned first, then A-Z: `SetsScene.listedSets`, a guard's page too) and 745 (the Notices log's small day label sits on its message's first baseline: `GameHUD.openNoticeLog`'s `dayDrop`) and 746 (working neutral towns are pale teal on the History replay, ruins keep their color, and the legend splits Unclaimed's towns into Neutral and Ruins: `WorldHistory.KIND_WORKING`, history save format 3; a format 1-2 history back-fills today's working towns on load, `[TFR-History] format 2 -> 3`) and 748 (the world disc replaces Forge's anvil as the Android launcher icon: adaptive foreground in the 66 dp safe
 zone, a dark moss `mipmap-*/ic_launcher_background.png` layer, a themed monochrome, legacy square and round, and the
-four `drawable-*/ic_launcher.png` copies; art only, ships with the next APK; on ANDROID_RELEASE.md's revert watch). 702-737 are packaged to live and the agent game
+four `drawable-*/ic_launcher.png` copies; art only, ships with the next APK; on ANDROID_RELEASE.md's revert watch). and 750 (Witch-Maw Slippers cost two opening-hand cards: `changeStartCards` -1 -> -2 in TFR's `items.json`, data only; with Caretaker's Cap a 3-card hand, no floor) 702-737 are packaged to live and the agent game
 (2026-10-26 08:09 jar; 737's art packaged 10:31); 738-747 are not.
 Next version: 1.24 / 12400. Engine = the 10.21 daily (round 701); next merge from upstream after `bc67f70ffbc`; BASE_INSTALL is that
 daily, so packages need no `--allow-base-mismatch`. Next free round: 751. Log sharing (round 698) posts to Discord through a webhook
