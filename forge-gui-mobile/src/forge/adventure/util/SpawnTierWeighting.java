@@ -323,7 +323,7 @@ public class SpawnTierWeighting {
             return 0;
         try {
             forge.adventure.player.AdventurePlayer player = forge.adventure.player.AdventurePlayer.current();
-            if (player == null)
+            if (player == null || forge.adventure.player.AdventurePlayer.notorietyDisabled()) // round 772: off in Settings
                 return 0;
             return Math.max(0, Math.min(data.notorietyMaxLevel, player.notorietyStreak() / data.notorietyWinsPerLevel));
         } catch (RuntimeException e) {
@@ -361,7 +361,8 @@ public class SpawnTierWeighting {
             return lifetimeRank;
         try {
             forge.adventure.player.AdventurePlayer player = forge.adventure.player.AdventurePlayer.current();
-            if (player == null || player.notorietyStreak() < tuning.notorietyRankStepWins)
+            if (player == null || player.notorietyStreak() < tuning.notorietyRankStepWins
+                    || forge.adventure.player.AdventurePlayer.notorietyDisabled()) // round 772: off in Settings
                 return lifetimeRank;
         } catch (RuntimeException e) {
             return lifetimeRank;

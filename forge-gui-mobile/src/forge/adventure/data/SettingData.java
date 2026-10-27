@@ -82,6 +82,9 @@ public class SettingData {
     public int supportAsksShown;
     public boolean supportNeverAsk;
     public boolean supportClicked;
+    // Round 772 (the user: "Disable Notoriety system option. By default unchecked"): true switches every Notoriety
+    // effect off (AdventurePlayer.notorietyDisabled) - the score still counts. Off by default, so an older file reads as on.
+    public boolean notorietyDisabled;
     // Preserve explicitly stored global choices from the original background settings.
     public Boolean enableExtraBattleBackgrounds;
     public HashMap<String, Boolean> extraBattleBackgroundsByPlane = new HashMap<>();

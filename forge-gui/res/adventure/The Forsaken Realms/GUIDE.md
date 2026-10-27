@@ -846,7 +846,7 @@ that added them. Console commands never earn an achievement.
 | **Lord Slayer** | Bring down a Lord in their own castle. | 1 / 3 / 4 / all 5 castles |
 | **Capital Gains** | Take a color's capital by assault, before its castle falls (a fallen color's capital falls with it). Counted by the color that built the capital. | 1 / 3 / 4 / all 5 |
 | **Legend Hunter** | Defeat the legends of the realm, each one once, across all your saves. The Arena counts. | 1 / 10 / 25 / 50 legends |
-| **Notorious** | Win at notoriety 50 or more: the foe starts with both bonus Walls and the Clue and Treasure. The Arena counts. | an Apprentice / an Adept / a Master / an Archmage |
+| **Notorious** | Win at notoriety 50 or more: the foe starts with both bonus Walls and the Clue and Treasure. The Arena counts. Not while Notoriety is off in Settings. | an Apprentice / an Adept / a Master / an Archmage |
 | **Ascendant** | Rise through the Ascendance. | level 5 / 10 / 20 / 30 |
 | **Ashes to Hearth** | Hold towns under your banner, restored from ruin or taken back. | 1 / 5 / 10 / 20 towns |
 | **A Seat of Your Own** | Raise your Capitol. | one trophy |
@@ -1252,6 +1252,11 @@ notes each step as you reach it ("Notoriety 10 - level 2: ...") and what a loss 
 
 A loss takes 5 off your notoriety, so its Walls, its tilt and its dungeon odds all drop one step - not back to nothing.
 Losing on purpose to clear the Walls before a dungeon costs a duel's gold, life and ante for every step.
+
+**Turning Notoriety off.** Check **Disable Notoriety** in the Settings and, from the next duel, your notoriety
+adds nothing: no Walls, no extra life, no tilt toward tougher spawns, no early rank step and no stronger dungeon
+creatures. The score still counts your wins and losses, so turning it back on brings back the level you have earned.
+While it is off your notice log marks each step "(off)", and Notorious can't be earned.
 
 **Your win ratio.** The game remembers your last 50 counted duels. With fewer than 25 on record nothing happens. From
 25 duels the roaming rank mix shifts by up to 5 percentage points, and at 50 duels by up to 10. The full shift comes

@@ -764,7 +764,9 @@ public class ConsoleCommandInterpreter {
         // Round 411: test cheat - "notoriety 10" sets notoriety (level = notoriety / notorietyWinsPerLevel; round 753: a score).
         registerCommand(new String[]{"notoriety"}, s -> {
             if (s.length < 1) return "Notoriety: " + Current.player().notorietyStreak() + ", level "
-                    + Current.player().notorietyLevel() + ". Give a number to set it.";
+                    + Current.player().notorietyLevel()
+                    + (forge.adventure.player.AdventurePlayer.notorietyDisabled() ? " (off in Settings)" : "") // round 772
+                    + ". Give a number to set it.";
             try {
                 Current.player().setNotorietyStreak(Integer.parseInt(s[0]));
             } catch (Exception e) {

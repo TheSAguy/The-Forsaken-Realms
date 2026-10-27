@@ -1241,6 +1241,11 @@ public class DuelScene extends ForgeScene {
             // kind by the seat's rank, for the ranks the difficulty reaches. The same duels as the win streak above.
             // Round 429: from 25 wins in a row a second Wall joins the first (AdventurePlayer.notorietyWallsFor).
             // Round 445: from 45 and 50 a third and a fourth, a flying 3/6 each, for every rank.
+            // Round 772: "Disable Notoriety" in Settings - notorietyWallsFor gives none; say so when a level would have.
+            if (eventData == null && guardDeck == null && forge.adventure.player.AdventurePlayer.notorietyDisabled()
+                    && Current.player().notorietyLevel() > 0)
+                System.out.println("[TFR-Notoriety] walls skipped: Notoriety is disabled in Settings (level "
+                        + Current.player().notorietyLevel() + ", notoriety " + Current.player().notorietyStreak() + ")");
             if (eventData == null && guardDeck == null) {
                 java.util.List<IPaperCard> walls = new java.util.ArrayList<>();
                 java.util.List<String> shown = new java.util.ArrayList<>();

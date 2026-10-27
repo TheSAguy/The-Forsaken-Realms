@@ -447,6 +447,17 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return forge.adventure.util.SpawnTierWeighting.describeWinRatio();
     }
 
+    /**
+     * Round 772 (the user: "Disable Notoriety system option. By default unchecked"; then "Let's turn off all effects"):
+     * the adventure Settings' "Disable Notoriety" (SettingData.notorietyDisabled). While it is on, Notoriety puts no Walls
+     * on the table, no bonus life, no spawn tilt, no rank-gate step and no dungeon upgrades - every reader of the score
+     * asks this first. The score itself keeps counting, so turning it back on brings the level already earned.
+     */
+    public static boolean notorietyDisabled() {
+        forge.adventure.data.SettingData settings = forge.adventure.util.Config.instance().getSettingData();
+        return settings != null && settings.notorietyDisabled;
+    }
+
     /** Round 411: the notoriety level the current streak buys - 0 none, 1 = 0/1 Wall, ... capped at the wall lists. */
     public int notorietyLevel() {
         forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
@@ -527,6 +538,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                     + (gone.isEmpty() ? "" : " Foes lose the " + String.join(" and ", gone) + " Wall"
                     + (gone.size() > 1 ? "s" : "") + " and their life."));
         }
+        // Round 772: Notoriety off in Settings - the level and bonus lines say nothing reaches the table; a loss says it is off.
+        if (notorietyDisabled() && !lines.isEmpty()) {
+            boolean lost = notorietyStreak < before;
+            lines.clear();
+            lines.add(lost ? "Duel lost - Notoriety " + before + " -> " + notorietyStreak + " (off in Settings)."
+                    : "Notoriety " + notorietyStreak + " - level " + level + " (off): no Walls or stronger foes while"
+                    + " Notoriety is off in Settings.");
+        }
         for (String line : lines) {
             System.out.println("[TFR-Notoriety] log: " + line);
             forge.adventure.stage.GameHUD.getInstance().logNotification(line, false);
@@ -556,7 +575,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         java.util.List<String> scripts = new java.util.ArrayList<>();
         forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
         int level = notorietyLevel();
-        if (tuning == null || enemy == null || level <= 0)
+        if (tuning == null || enemy == null || level <= 0 || notorietyDisabled()) // round 772: off in Settings
             return scripts;
         int rank = forge.adventure.data.EnemyData.tierRank(enemy.tier);
         String[] walls = tuning.notorietyWallsForRank(rank);
@@ -577,7 +596,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      */
     public int notorietyBonusLifePercent() {
         forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
-        if (tuning == null || notorietyLevel() <= 0 || tuning.notorietyBonusWallWins == null
+        if (tuning == null || notorietyLevel() <= 0 || notorietyDisabled() || tuning.notorietyBonusWallWins == null
                 || tuning.notorietyBonusWallLifePercent == null)
             return 0;
         int percent = 0;

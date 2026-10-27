@@ -38,6 +38,20 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 772 - Settings can turn off Notoriety
+
+- **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK) - `notorietyDisabled` after the round-756
+  support fields.
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK) - the "Disable Notoriety" checkbox after
+  the Ascendance switch (only on a plane whose TuningData has Notoriety Walls), one `[TFR-Notoriety]` line on a change.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - static `notorietyDisabled()`; it
+  gates `notorietyWallsFor` and `notorietyBonusLifePercent`, and `logNotorietyStage` writes "(off)" lines.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK) - one `[TFR-Notoriety] walls skipped` line
+  before the Wall block.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK) - the `notoriety` reply says
+  "(off in Settings)".
+- Mod files: `util/SpawnTierWeighting.java` (`notorietyTiltLevel`, `effectiveRank`), `util/DungeonUpgrades.java`; GUIDE.
+
 ### Round 770 - the load rollback snapshot after a new game
 
 - **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** - `snapshotForRollback()` (TFR's round 183 method):

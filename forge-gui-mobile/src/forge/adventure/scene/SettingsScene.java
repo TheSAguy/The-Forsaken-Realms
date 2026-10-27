@@ -279,6 +279,26 @@ public class SettingsScene extends UIScene {
                 Config.instance().saveSettings();
             }
         });
+        // Round 772: Notoriety off - no Walls, bonus life, spawn tilt, rank step or dungeon upgrades
+        // (AdventurePlayer.notorietyDisabled); the score still counts. Only on a plane with Notoriety Walls.
+        forge.adventure.data.TuningData notorietyTuning = Config.instance().getTuningData();
+        if (notorietyTuning != null && notorietyTuning.notorietyWinsPerLevel > 0 && notorietyTuning.notorietyWallsPlain != null
+                && notorietyTuning.notorietyWallsPlain.length > 0) {
+            addSettingField(localizer.getMessageorUseDefault("lblDisableNotoriety",
+                    "Disable Notoriety: no Walls or stronger foes from your wins"),
+                    Config.instance().getSettingData().notorietyDisabled, new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    boolean disabled = ((CheckBox) actor).isChecked();
+                    if (disabled == Config.instance().getSettingData().notorietyDisabled)
+                        return;
+                    Config.instance().getSettingData().notorietyDisabled = disabled;
+                    Config.instance().saveSettings();
+                    System.out.println("[TFR-Notoriety] Settings: Notoriety " + (disabled ? "disabled" : "enabled")
+                            + " - from the next duel" + (disabled ? "; the score still counts" : ""));
+                }
+            });
+        }
         addSettingField(localizer.getMessage("lblFogOfWar"), Config.instance().getSettingData().fogOfWarEnabled, new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

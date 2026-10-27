@@ -42,6 +42,8 @@ public final class DungeonUpgrades {
         TuningData tuning = Config.instance().getTuningData();
         if (tuning == null || tuning.dungeonUpgradeWins == null || Current.player() == null)
             return null;
+        if (forge.adventure.player.AdventurePlayer.notorietyDisabled()) // round 772: Notoriety off in Settings
+            return null;
         int streak = Current.player().notorietyStreak();
         int row = -1;
         for (int i = 0; i < tuning.dungeonUpgradeWins.length; i++)

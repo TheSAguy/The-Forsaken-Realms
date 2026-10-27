@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 772: Settings can turn off Notoriety's walls (2026-10-26)
+
+The user: "Let's add in the in game settings - Disable Notoriety system option. By default unchecked. If checked, we
+won't add the walls for Notoriety." Notoriety's score drives more than the Walls, so the six effects went to the user,
+who chose: "Let's turn off all effects."
+
+- **The setting**: `SettingData.notorietyDisabled` in the profile's adventure `settings.json` (every save, never in a
+  save), off by default, so an older settings file reads as on. A "Disable Notoriety: no Walls or stronger foes from
+  your wins" checkbox in the adventure Settings, after the Ascendance switch, shown only on a plane whose TuningData has
+  Notoriety Walls (`notorietyWinsPerLevel` > 0 and a `notorietyWallsPlain` list), so Shandalar is unchanged. The label
+  is in code (`getMessageorUseDefault("lblDisableNotoriety", ...)`); `en-US.properties` untouched.
+- **What it turns off**, all through `AdventurePlayer.notorietyDisabled()`:
+  1. the Walls (`notorietyWallsFor` gives none), 2. the 45 and 50 bonus Walls (the same list), 3. the bonus enemy life
+  at 45 and 50 (`notorietyBonusLifePercent` 0), 4. the spawn-tier tilt (`SpawnTierWeighting.notorietyTiltLevel` 0),
+  5. the rank-gate step at `notorietyRankStepWins` (`effectiveRank` keeps the lifetime rank), 6. the dungeon upgrades
+  (`DungeonUpgrades.upgrade` keeps the placed creature).
+- **What it keeps**: the score counts every win and loss as before (`recordNotoriety` unchanged), so turning the option
+  back on brings the level already earned. It applies from the next duel; a duel in progress keeps its Walls; a
+  dungeon roster already rolled keeps its creatures until it rotates. The win-ratio tilt and its Clue / Treasure
+  (rounds 613/620) keep their own record and stay on.
+- **Notorious** can't be earned while Notoriety is off: it needs the bonus Walls on the seat (`TfrAchievements.fullyArmed`),
+  and there are none. The achievement is unchanged.
+- **Shown off**: Notoriety is on no HUD or sheet - only the Wall cards and the Notices. With the option on, a level or
+  bonus step logs "Notoriety N - level L (off): no Walls or stronger foes while Notoriety is off in Settings." and a
+  loss "Duel lost - Notoriety B -> A (off in Settings)."; the console's `notoriety` reply adds "(off in Settings)".
+- **Logs**: `[TFR-Notoriety] walls skipped: Notoriety is disabled in Settings (level N, notoriety S)` at the start of a
+  duel that would have had Walls; `[TFR-Notoriety] Settings: Notoriety disabled|enabled - from the next duel` on a change.
+- **Saves**: none touched; `SettingData` is the profile's JSON, not a `.sav` class.
+- GUIDE.md/.html: a "Turning Notoriety off" paragraph in "Enemies That Adapt to You"; the Notorious row says it
+  can't be earned while off.
+- Stock files (CORE_ENGINE_CHANGES): SettingData, SettingsScene, AdventurePlayer, DuelScene, ConsoleCommandInterpreter.
+- **Not yet tested in the agent game**: javac against the agent jar and the Maven build pass, but the agent-game launch
+  was refused by the session's permission check. The test owed: notoriety at a Wall level, a duel with the option off
+  (Walls), on (no Walls, the skipped line, the Notices "(off)"), then off again (Walls back).
+
 ## Round 771: research takes about 3 sacrificed boosters, not 1 (2026-10-26)
 
 The user: "I got 1 booster and could unlock a set. Research for no time + shards. I think this should be adjusted to at
