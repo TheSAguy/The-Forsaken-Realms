@@ -7,7 +7,8 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-760 and 762-767 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-760 and 762-768 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+768 (the World Map's town specialty badges show only in the Names view, beside the names and the [+Portal] glyph: built hidden at round 765's corner, `MapViewScene.showBadges`, `[TFR-Specialty] Names view: N town badge(s) shown`) and
 766 (Found Cards in the Research Lab: a v2 row with a card of its set owned opens a list of those cards -
 copies, spares, the sell price, the days one copy takes off sold or sacrificed - with Sell and Sacrifice per card, one
 copy or every spare ("All spare copies"); deck copies and favorites kept; no Sacrifice on a Ready set; the days update
@@ -53,7 +54,7 @@ tools/docs and 748 is Android-only, so it ships with the next APK). The agent pr
 at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots come back
 1x1).
 Next version: 1.24 / 12400. Engine = the 10.21 daily (round 701); next merge from upstream after `bc67f70ffbc`; BASE_INSTALL is that
-daily, so packages need no `--allow-base-mismatch`. Next free round: 768. Rounds 764, 764's follow-up, 765, 766 and 767 are committed but not yet packaged; 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
+daily, so packages need no `--allow-base-mismatch`. Next free round: 770 (769 is the engine merge, in progress). Round 768 is committed but not yet packaged. Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

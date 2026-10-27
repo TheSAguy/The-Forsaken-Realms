@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 768: town badges show in the Names view only (2026-10-26)
+
+The user: "Let's move the town type to a view, vs always on, Probably the same view that shows the teleporter icon." The
+town specialty badges (rounds 760/763/765) leave the always-on map and join the Names view, beside the town names and
+round 223's [+Portal] glyph.
+
+- `MapViewScene.enter()` still builds every badge once, at the corner round 765's `badgeAnchors()` picks, but hidden; a
+  new `badgeMarkers` list (a subset of `mageMarkers`, cleared with it) holds them.
+- `showBadges(on)`: `names()` shows them, `details()`, `events()`, `reputation()` and `attacks()` hide them. Opening the
+  map with no view shows none; the map does not reopen in Names (its mode was never restored), so it opens without
+  badges.
+- Logs: `[TFR-Specialty] World Map: N town badge(s)` (built) as before, and new `[TFR-Specialty] Names view: N town
+  badge(s) shown`.
+- Names vs badges: a name label is centered on its town, a badge on the icon's corner, so at zoom 1 a top-corner badge
+  touches the name's top by 2-3 pixels (bottom corners the same, mirrored). Labels are added after the badges, so the
+  name draws over the badge and stays readable; the badge stays recognizable. Zoomed out, labels keep their size and
+  badges keep 16 units while the icons shrink, so the badges sink further under the names. Not changed: the smaller
+  fixes trade worse - names treating badges as occupied space would shift a name a full line off its town (onto the
+  next town zoomed out), and no corner of a town's icon is clear of its own centered name. The inline-glyph
+  alternative ([+Portal]-style) was not built, since the corner badges read fine at the default zoom.
+- No legend: the Names view has only its cycle button, so no text was added.
+
+Checked in the agent game (javac classes ahead of the agent jar, slot 76 read-only, two badges: Baker's Vale Market,
+Coldsnap Tower Research): no view - no badges (`notes/tweaks-1026/r768-1-no-view.png`); Names - names and both badges
+(`r768-2-names.png`); Details - no badges (`r768-3-details.png`); Attacks hid them too. Log: `World Map: 2 town
+badge(s)`, `Names view: 2 town badge(s) shown`. Maven `-pl forge-gui-mobile-dev -am package` exit 0.
+
 ## Round 766: Found Cards in the Research Lab (2026-10-26)
 
 The user (with a mockup button drawn on the Lab's row, `notes\tweaks-1026\user-lab-1026.png`): "We need to add a
