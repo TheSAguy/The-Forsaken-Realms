@@ -2440,8 +2440,10 @@ public class EconomyBuildings {
         // How many cards it could actually stock right now, given unlocked editions - shown on
         // both locked and unlocked entries so the player can judge what a blueprint is worth.
         int cards = buyableCardCount(shopName, changes);
+        // Round 773 (follow-up): " - N cards", not " [N cards]" - the font read "[52 cards]" as markup and dropped it,
+        // so the count never showed (since 2026-08-30).
         if (cards >= 0)
-            label += " [" + cards + " cards]";
+            label += " - " + cards + (cards == 1 ? " card" : " cards");
         if (!unlocked) {
             // Shown but unbuyable, so the player can see what exists to hunt blueprints for.
             option.name = "[%88]" + label + " (locked)";

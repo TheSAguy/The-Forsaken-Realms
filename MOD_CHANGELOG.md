@@ -14264,6 +14264,56 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 773 (follow-up): the build menu shows each shop's card count, and booster packs wait for the shop screen (2026-10-26)
+
+Two items round 773 turned up, both approved by the user through the main thread.
+
+**1. The count shows.** A Card Shop row in the build menu reads "Certain Death - 8 cards (100 + 5)". Since 2026-08-30
+the label was " [N cards]", and the font read "[8 cards]" as markup and dropped it - the count never showed, which is
+why round 773 found a 5.5 s stall computing numbers nobody saw (the double space before the price was the trace).
+`EconomyBuildings.shopChoiceOption`; "1 card" for one. Shot `notes/tweaks-1026/r773fu-build-menu-counts.png`.
+
+**2. Booster packs are built when the shop screen first shows them.** `Reward.deferredPack(Supplier<Deck>)`:
+`getDeck()` (now synchronized) builds the deck the first time anything asks, then it is an ordinary pack reward. Both
+`cardPackShop` branches in `RewardData.generate` use it:
+- colored packs (New Avalon's 4 White): color and a copy of the edition list captured at generation;
+- packs of a drawn set (its 4 others): the set is still drawn from the world RNG at load - the same draw, the same set -
+  and only the pack's contents wait.
+A pack's contents come from the unseeded `MyRandom` (`BoosterGenerator`, `BoosterPack`, `CommanderCards`), never the
+world RNG, so no seeded roll moves; they already re-rolled on every visit. The draws `generate()` makes before its
+switch (probability, added count) are unchanged.
+
+Measured in a test package (a worktree at 49196510784 plus these files, `build_standalone.py --out`, a copied agent
+profile, a per-shop timing probe), New Avalon, first town after a load:
+
+| | before | after |
+|---|---|---|
+| New Avalon entry (loadMap) | 1409 ms (shop stock 1142) | 734 ms (shop stock 384) |
+| its WhiteBoosterPackShop at entry | 772 ms (white packs already deferred) | 1 ms |
+| the same shop, second entry in the session | 2 ms | 1 ms |
+| the shop screen's first open | - | White 54/0/0/0 ms, ODY 12, EOE 778, CNS 22, CMR 9 |
+
+The cost was never the white packs (45 ms for all four once deferred): it is a set's FIRST pack in a session loading
+that set's print sheets. That load now happens on the shop's first open, once per session per set, and only if the
+player opens the shop.
+
+**Identity**: on the same save and day, before and after, the shop's four drawn sets were Odyssey, Edge of Eternities,
+Conspiracy and Commander Legends; the four White packs show (shots `r773fu-booster-shop.png`,
+`r773fu-booster-shop-after.png`).
+
+**Saves**: no Reward is ever saved or copied - `Reward` is not Serializable (a save holding one would throw), no
+save-bound class has a Reward field, shop stock is never saved (only seeds), quest and event rewards are kept as
+`RewardData` and generated when awarded, and collecting a pack stores `reward.getDeck()` in `boostersOwned`. Round trip
+seen: entered New Avalon (packs unbuilt), saved on the world map, quit, loaded - all 8 packs shown; bought a White pack,
+saved, quit, loaded - the inventory holds "White Booster Pack - White - 16 cards" (`r773fu-inventory-pack.png`). Quest
+99's epilogue packs (drawn sets) take the same path and build when shown or collected.
+
+Logs: `[TFR-Perf] N White booster pack(s) left unbuilt until first shown`, `[TFR-Perf] N booster pack(s) of drawn sets
+left unbuilt until first shown`, and `[TFR-Perf] <color or set> booster pack built when first shown: N ms`.
+
+Files: `util/EconomyBuildings.java`, `util/Reward.java` (stock), `data/RewardData.java` (stock). Every plane's booster
+shops take item 2 (behavior-neutral, so not behind a config flag). Maven package exit 0 in the worktree; not packaged.
+
 ## Round 774: realm milestones - a realm boon every 10 towns, new games and New Game+ only (2026-10-26)
 
 The user picked it from the night's list: "Already designed: every 10 towns you pick 1 of 3 realm-wide perks. It builds

@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 773 (follow-up) - booster packs built when first shown
+
+- **`forge-gui-mobile/src/forge/adventure/util/Reward.java`** (STOCK) - `getDeck()` is `synchronized` and builds the
+  deck from a new private `deckSource` Supplier the first time it is asked; new static `deferredPack(Supplier<Deck>)`.
+  Reward is not Serializable and has no copy/equals, so nothing else reads the field.
+- **`forge-gui-mobile/src/forge/adventure/data/RewardData.java`** (STOCK) - `generate()`'s `cardPackShop` case: both
+  loops add `Reward.deferredPack(...)` instead of `new Reward(generateBooster...)`; the drawn-set branch still draws
+  its set from `rewardRandom` first. Pack contents use MyRandom only. If upstream changes this case, keep the world-RNG
+  draws where they are and defer only the generateBooster/generateBoosterByColor call.
+
 ### Round 774 - realm milestones (new games and New Game+ only)
 
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - the saved `realmMilestones` string

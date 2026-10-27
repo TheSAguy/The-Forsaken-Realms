@@ -178,8 +178,24 @@ public class Reward {
         return item;
     }
 
-    public Deck getDeck() {
+    public synchronized Deck getDeck() { // synchronized (round 773 follow-up): the agent bridge reads off the GL thread
+        if (deck == null && deckSource != null) { // TFR round 773 (follow-up): a pack built when first looked at
+            java.util.function.Supplier<Deck> source = deckSource;
+            deckSource = null;
+            deck = source.get();
+        }
         return deck;
+    }
+
+    // TFR round 773 (follow-up): a colored booster's contents come from the unseeded MyRandom and draw nothing from the
+    // world RNG, so a shop can hold the pack unbuilt until the shop screen first shows it (New Avalon's booster shop: 1264 ms).
+    private java.util.function.Supplier<Deck> deckSource;
+
+    /** A card pack whose deck is built the first time getDeck() is called - the same as new Reward(deck) after that. */
+    public static Reward deferredPack(java.util.function.Supplier<Deck> source) {
+        Reward reward = new Reward(Type.CardPack, 0);
+        reward.deckSource = source;
+        return reward;
     }
 
     public Type getType() {

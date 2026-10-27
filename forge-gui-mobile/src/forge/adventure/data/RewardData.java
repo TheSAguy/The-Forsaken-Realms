@@ -584,10 +584,21 @@ public class RewardData implements Serializable {
                         // "Draft" booster template, so they never appear in allEditions above. If every
                         // allowed edition falls into that gap, skip rather than nextInt(0)-crash.
                         if (!allEditions.isEmpty()) {
+                            // TFR round 773 (follow-up): the set is still drawn here from the world RNG (same draw, same
+                            // set); only the pack's contents - unseeded MyRandom - wait for the shop screen. A set's
+                            // first pack in a session loads its print sheets: 772 ms in New Avalon's booster shop.
                             for (int i = 0; i < count + addedCount; i++) {
-                                ret.add(new Reward(AdventureEventController.instance().generateBooster(
-                                    allEditions.get(rewardRandom.nextInt(allEditions.size())).getCode())));
+                                final String packSet = allEditions.get(rewardRandom.nextInt(allEditions.size())).getCode();
+                                ret.add(Reward.deferredPack(() -> {
+                                    long started = System.nanoTime();
+                                    forge.deck.Deck pack = AdventureEventController.instance().generateBooster(packSet);
+                                    System.out.println("[TFR-Perf] " + packSet + " booster pack built when first shown: "
+                                            + (System.nanoTime() - started) / 1000000 + " ms");
+                                    return pack;
+                                }));
                             }
+                            System.out.println("[TFR-Perf] " + (count + addedCount)
+                                    + " booster pack(s) of drawn sets left unbuilt until first shown");
                         } else {
                             System.err.println("No booster-capable edition available for cardPackShop reward (editions=" + Arrays.toString(this.editions) + ")");
                         }
@@ -596,9 +607,22 @@ public class RewardData implements Serializable {
                         // this.editions entirely, unconditionally bypassing Progressive Set
                         // Unlocks for every colored-booster shop. See
                         // AdventureEventController.generateBoosterByColor(String, String[]).
+                        // TFR round 773 (follow-up): each pack is built when the shop screen first shows it, not at
+                        // town load - a colored pack's contents come from the unseeded MyRandom, so no seeded roll
+                        // moves. New Avalon's booster shop (4 white packs, 4 any-color) was 1264 ms of its 1886 ms entry.
+                        final String packColor = colors[0];
+                        final String[] packEditions = this.editions == null ? null : this.editions.clone();
                         for (int i = 0; i < count + addedCount; i++) {
-                            ret.add(new Reward(AdventureEventController.instance().generateBoosterByColor(colors[0], this.editions)));
+                            ret.add(Reward.deferredPack(() -> {
+                                long started = System.nanoTime();
+                                forge.deck.Deck pack = AdventureEventController.instance().generateBoosterByColor(packColor, packEditions);
+                                System.out.println("[TFR-Perf] " + packColor + " booster pack built when first shown: "
+                                        + (System.nanoTime() - started) / 1000000 + " ms");
+                                return pack;
+                            }));
                         }
+                        System.out.println("[TFR-Perf] " + (count + addedCount) + " " + packColor
+                                + " booster pack(s) left unbuilt until first shown");
                     }
                     break;
                 }

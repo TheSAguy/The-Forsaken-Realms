@@ -17,6 +17,12 @@ Iron Garrisons (35%), Merchant Guild (Market x0.8); Tithe (15 gold a held town a
 capture defense everywhere, 2), Lamplighters (+1 tile), Royal Grant (the next research free and at once, 2); a World
 Standings line, Tithe on the Balance Sheet; new `util/RealmMilestones`, settings.json `milestone*`, console `milestone`,
 `[TFR-Milestone]`; GUIDE; design `notes/realm-milestones-774.md`; seen in a test package, NG+ not seen) and
+773's follow-up (the build menu's Card Shop rows show their count - "Certain Death - 8 cards (100 + 5)"; the old
+" [N cards]" was eaten as font markup since 2026-08-30 - and booster packs are built when the shop screen first shows
+them: `Reward.deferredPack`, `RewardData`'s two `cardPackShop` loops; a drawn set is still drawn from the world RNG at
+load, only the MyRandom contents wait, so stock is the same; New Avalon's cold entry 1409 -> 734 ms, a set's
+print-sheet load moves to the shop's first open; no Reward is ever saved; seen in a test package with a save round
+trip) and
 773 (the build menu opens at once: a Card Shop category builds its shop rows - each with a full-pool card count - only
 when opened (`DialogData.onFirstShow`, run once by `MapDialog.loadDialog`), first open 5491 -> 3 ms; and
 `CardUtil.CardPredicate`'s printing walk is remembered per card rules and edition+rarity lists, so shop stock, the
