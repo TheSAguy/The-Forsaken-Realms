@@ -21,3 +21,6 @@ workaround stays until the user says otherwise). Artifact version 6.
 at the top of `messages.py`, so the next release changes one line. The "New for v1.22" note is gone: v1.23 added no new
 FAQ topics. Message 21 is unchanged (its "v1.22 runs on Forge 2.0.16" line and the Classic workaround wait for the
 user), and so is message 1's "(as of v1.22)" header. Artifact version 7.
+
+2026-10-26 (round 776): message 1's header reads `FAQ_VERSION` too ("(as of v1.23)"). Message 21 is still unchanged.
+Artifact version 8.
