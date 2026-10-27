@@ -23,6 +23,7 @@ import forge.adventure.util.EconomyBuildings;
 import forge.adventure.util.EditionProgression;
 import forge.adventure.util.PrintingIndex;
 import forge.adventure.util.ResearchMeter;
+import forge.adventure.util.RewardActor;
 import forge.card.CardDb;
 import forge.card.CardEdition;
 import forge.deck.Deck;
@@ -764,13 +765,20 @@ public class ResearchScene extends UIScene {
     }
 
     /**
-     * Round 766: the set's owned cards, one row each - "Benalish Marshal (R) - 3 owned, 2 spare" over "Sold: 25[+Gold], 1
-     * day off. Sacrificed: 2 days off." - with Sell and Sacrifice for one copy, or every spare copy with "All spare
-     * copies" ticked. Deck copies and favorites are never offered (spareCopies). A Ready set has no Sacrifice. Each act
-     * updates the days here and on the Lab's row at once. Built in the Lab rather than the deck editor's collection: the
-     * editor has no Sacrifice, no one-set filter and no way to refresh the Lab, and round 452's card view is read-only.
+     * Round 766: the set's owned cards with Sell and Sacrifice - one copy, or every spare copy with "All spare copies"
+     * ticked. Deck copies and favorites are never offered (spareCopies). A Ready set has no Sacrifice. Each act updates the
+     * days here and on the Lab's row at once. Built in the Lab rather than the deck editor's collection: the editor has no
+     * Sacrifice, no one-set filter and no way to refresh the Lab, and round 452's card view is read-only.
+     * <p>
+     * Round 766 follow-up (the user: "you have to be able to see the card picture. I don't know what each card does
+     * without seeing the image"): the cards are a grid of their pictures - the shop's own RewardActor, face up, so pointing
+     * at one shows it full size (a tap on Android opens the card view) - each with "2 owned, 2 spare" under it. A click
+     * chooses a card: the line under the grid gives its name, the days one copy takes off sacrificed and sold, and the
+     * gold, and Sell and Sacrifice act on it. The details sit under the grid, not under every picture, so a picture stays
+     * big enough to read its art and type line at 1280x720.
      */
     private void openFoundCards(String code, boolean keepScroll) {
+        disposeFoundActors();
         AdventurePlayer player = AdventurePlayer.current();
         int day = Current.world().getCurrentDay();
         boolean running = player.isResearching(code);
@@ -783,13 +791,79 @@ public class ResearchScene extends UIScene {
             boolean sa = ResearchMeter.spareCopies(player, a.getKey()) > 0, sb = ResearchMeter.spareCopies(player, b.getKey()) > 0;
             return sa != sb ? (sa ? -1 : 1) : a.getKey().getName().compareToIgnoreCase(b.getKey().getName());
         });
+        // The chosen card stays chosen across a Sell or Sacrifice while a copy is left; else the first with a spare.
+        if (foundSelected == null || owned.stream().noneMatch(e -> e.getKey().equals(foundSelected)))
+            foundSelected = owned.isEmpty() ? null : owned.get(0).getKey();
+        foundCaptions.clear();
 
         Dialog dialog = new Dialog("Found Cards - " + editionDisplayName(code), Controls.getSkin());
-        float width = dialogBodyMaxWidth();
+        float width = Math.min(440f, stage.getWidth() - 24f);
         TextraLabel head = Controls.newTextraLabel(statusLine(player, code, day) + (ready && !running
-                ? "\nIts cards only pay gold now." : "\nA sacrifice counts double, for no gold."));
+                ? "\nIts cards only pay gold now. Click a card to choose it." : "\nA sacrifice counts double, for no gold. Click a card to choose it."));
         head.setWrap(true);
         dialog.getContentTable().add(head).width(width).row();
+
+        Table grid = new Table(Controls.getSkin());
+        grid.top().left();
+        int columns = Math.max(1, (int) ((width - 8f) / (FOUND_CARD_W + 8f)));
+        int i = 0;
+        for (Map.Entry<PaperCard, Integer> e : owned) {
+            PaperCard pc = e.getKey();
+            RewardActor picture = new RewardActor(new forge.adventure.util.Reward(pc), false, null, false);
+            foundActors.add(picture);
+            picture.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    foundSelected = pc;
+                    refreshFoundSelection(code);
+                }
+            });
+            TextraLabel caption = Controls.newTextraLabel("");
+            foundCaptions.put(pc, caption);
+            Table cell = new Table();
+            cell.add(picture).size(FOUND_CARD_W, FOUND_CARD_H).row();
+            cell.add(caption).padTop(1f);
+            grid.add(cell).pad(4f).top();
+            if (++i % columns == 0)
+                grid.row();
+        }
+        if (owned.isEmpty()) {
+            TextraLabel none = Controls.newTextraLabel("No cards of this set left in your collection.");
+            none.setWrap(true);
+            grid.add(none).width(width - 8f).align(Align.left);
+        }
+        ScrollPane pane = new ScrollPane(grid);
+        pane.setScrollingDisabled(true, false);
+        pane.setFadeScrollBars(false);
+        dialog.getContentTable().add(pane).width(width).height(Math.max(FOUND_CARD_H + 16f, stage.getHeight() - 132f)).padTop(2).row();
+        foundDetail = Controls.newTextraLabel("");
+        foundDetail.setWrap(true);
+        dialog.getContentTable().add(foundDetail).width(width).padTop(2).row();
+
+        foundSell = Controls.newTextButton("Sell", () -> {
+            int spare = foundSelected == null ? 0 : ResearchMeter.spareCopies(AdventurePlayer.current(), foundSelected);
+            if (spare <= 0)
+                return;
+            ResearchMeter.sellFromLab(AdventurePlayer.current(), foundSelected, foundAllSpare ? spare : 1, Current.world().getCurrentDay());
+            afterFoundAct(code);
+        });
+        dialog.button(foundSell);
+        foundSacrifice = null;
+        if (!ready) { // round 766: a Ready set has nothing left to lower
+            foundSacrifice = Controls.newTextButton("Sacrifice", () -> {
+                int spare = foundSelected == null ? 0 : ResearchMeter.spareCopies(AdventurePlayer.current(), foundSelected);
+                if (spare <= 0)
+                    return;
+                ResearchMeter.sacrificeFromLab(AdventurePlayer.current(), foundSelected, foundAllSpare ? spare : 1, Current.world().getCurrentDay());
+                afterFoundAct(code);
+            });
+            dialog.button(foundSacrifice);
+        }
+        // Round 766 follow-up: the set-wide "Sell all over 4" (copies over 4 of every card, never a deck's or a
+        // favorite's), on a Ready set too - shown only when some card has more than 4.
+        ResearchMeter.Plan over = ResearchMeter.planOverFour(player, code, day);
+        if (over.cards > 0)
+            dialog.button(Controls.newTextButton("Sell all over " + ResearchMeter.KEEP_COPIES, () -> confirmOverFour(code)));
         CheckBox allBox = Controls.newCheckBox("All spare copies");
         allBox.setChecked(foundAllSpare);
         allBox.getLabel().setColor(Color.WHITE);
@@ -797,63 +871,16 @@ public class ResearchScene extends UIScene {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 foundAllSpare = allBox.isChecked();
-                reopenFoundCards(code);
+                refreshFoundSelection(code);
             }
         });
-        dialog.getContentTable().add(allBox).align(Align.left).padTop(2).row();
-
-        Table list = new Table(Controls.getSkin());
-        list.top().left();
-        for (Map.Entry<PaperCard, Integer> e : owned) {
-            PaperCard pc = e.getKey();
-            int spare = ResearchMeter.spareCopies(player, pc);
-            StringBuilder text = new StringBuilder();
-            text.append(pc.getName()).append(" (").append(rarityLetter(pc)).append(") - ").append(e.getValue())
-                    .append(" owned, ").append(spare).append(" spare");
-            if (pc.hasNoSellValue())
-                text.append("\nNo sale value.");
-            else if (spare <= 0)
-                text.append("\nIn a deck or a favorite - kept.");
-            else if (ready) // the gold glyph ends the line (its advance reads as a space before punctuation)
-                text.append("\nSold for ").append(player.cardSellPrice(pc)).append("[+Gold]");
-            else
-                text.append("\nSacrificed: ").append(daysOffText(ResearchMeter.daysOffForOne(player, pc, true, day)))
-                        .append(". Sold: ").append(daysOffText(ResearchMeter.daysOffForOne(player, pc, false, day)))
-                        .append(" and ").append(player.cardSellPrice(pc)).append("[+Gold]");
-            TextraLabel label = Controls.newTextraLabel(text.toString());
-            label.setWrap(true);
-            list.add(label).width(width - 128f).align(Align.left);
-            int n = foundAllSpare ? spare : 1;
-            TextraButton sell = Controls.newTextButton(foundAllSpare ? "Sell all" : "Sell", () -> {
-                ResearchMeter.sellFromLab(AdventurePlayer.current(), pc, n, Current.world().getCurrentDay());
-                afterFoundAct(code);
-            });
-            sell.setDisabled(spare <= 0);
-            list.add(sell).padLeft(4);
-            if (!ready) { // round 766: a Ready set has nothing left to lower
-                TextraButton sac = Controls.newTextButton("Sacrifice", () -> {
-                    ResearchMeter.sacrificeFromLab(AdventurePlayer.current(), pc, n, Current.world().getCurrentDay());
-                    afterFoundAct(code);
-                });
-                sac.setDisabled(spare <= 0);
-                list.add(sac).padLeft(4);
-            } else {
-                list.add();
-            }
-            list.row().padTop(4);
-        }
-        if (owned.isEmpty()) {
-            TextraLabel none = Controls.newTextraLabel("No cards of this set left in your collection.");
-            none.setWrap(true);
-            list.add(none).width(width - 8f).align(Align.left);
-        }
-        ScrollPane pane = new ScrollPane(list);
-        pane.setScrollingDisabled(true, false);
-        dialog.getContentTable().add(pane).width(width).height(Math.max(80f, stage.getHeight() - 130f)).padTop(2).row();
+        dialog.getButtonTable().add(allBox).padLeft(6f).padRight(6f);
         dialog.button(Controls.newTextButton("Close", () -> {
+            disposeFoundActors();
             removeDialog();
             stage.setScrollFocus(scroller);
         }));
+        refreshFoundSelection(code);
         showDialog(dialog);
         stage.setScrollFocus(pane);
         if (keepScroll) {
@@ -864,7 +891,78 @@ public class ResearchScene extends UIScene {
         foundPane = pane;
     }
 
+    // Round 766 follow-up: a picture's size in the grid - its art and type line read at 1280x720 - and the grid's state.
+    private static final float FOUND_CARD_W = 64f, FOUND_CARD_H = 89f;
+    private final List<RewardActor> foundActors = new ArrayList<>();
+    private final Map<PaperCard, TextraLabel> foundCaptions = new HashMap<>();
+    private PaperCard foundSelected;
+    private TextraLabel foundDetail;
+    private TextraButton foundSell, foundSacrifice;
     private ScrollPane foundPane;
+
+    /** Round 766 follow-up: the captions (the chosen card's in gold), the detail line and the buttons for the chosen card -
+     *  in place, without rebuilding the pictures. */
+    private void refreshFoundSelection(String code) {
+        AdventurePlayer player = AdventurePlayer.current();
+        int day = Current.world().getCurrentDay();
+        boolean ready = ResearchMeter.days(player, code, day) == 0;
+        for (Map.Entry<PaperCard, TextraLabel> e : foundCaptions.entrySet()) {
+            PaperCard pc = e.getKey();
+            boolean chosen = pc.equals(foundSelected);
+            e.getValue().setText("[%75]" + (chosen ? "[#ffd24aff]" : "") + player.getCards().count(pc) + " owned, "
+                    + ResearchMeter.spareCopies(player, pc) + " spare");
+        }
+        PaperCard pc = foundSelected;
+        int spare = pc == null ? 0 : ResearchMeter.spareCopies(player, pc);
+        String detail;
+        if (pc == null)
+            detail = "";
+        else {
+            detail = "[#ffd24aff]" + pc.getName() + "[#ffffffff] (" + rarityLetter(pc) + ") - " + player.getCards().count(pc)
+                    + " owned, " + spare + " spare. ";
+            if (pc.hasNoSellValue())
+                detail += "No sale value.";
+            else if (spare <= 0)
+                detail += "In a deck or a favorite - kept.";
+            else if (ready) // the gold glyph ends the line (its advance reads as a space before punctuation)
+                detail += "Sold for " + player.cardSellPrice(pc) + "[+Gold]";
+            else
+                detail += "Sacrificed: " + daysOffText(ResearchMeter.daysOffForOne(player, pc, true, day)) + ". Sold: "
+                        + daysOffText(ResearchMeter.daysOffForOne(player, pc, false, day)) + " and " + player.cardSellPrice(pc) + "[+Gold]";
+        }
+        if (foundDetail != null)
+            foundDetail.setText(detail);
+        if (foundSell != null) {
+            foundSell.setText(foundAllSpare ? "Sell all" : "Sell");
+            foundSell.setDisabled(spare <= 0);
+        }
+        if (foundSacrifice != null) {
+            foundSacrifice.setText(foundAllSpare ? "Sacrifice all" : "Sacrifice");
+            foundSacrifice.setDisabled(spare <= 0);
+        }
+    }
+
+    /** Round 766 follow-up: UIScene.act puts the top dialog in front every frame (round 120), which left a picture's
+     *  full-size tooltip - a Container on the stage, added on hover - behind the Found Cards window. While the window is
+     *  open, lift such containers back above it, after UIScene has ordered the dialog. */
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (foundActors.isEmpty())
+            return;
+        for (Actor a : new com.badlogic.gdx.utils.Array<>(stage.getActors()))
+            if (a instanceof com.badlogic.gdx.scenes.scene2d.ui.Container && a.isVisible())
+                a.toFront();
+    }
+
+    /** The pictures' tooltips and textures go with the window (WorldStage's Duplicate dialog does the same). */
+    private void disposeFoundActors() {
+        for (RewardActor a : foundActors) {
+            a.removeTooltip();
+            a.remove();
+        }
+        foundActors.clear();
+    }
 
     private void reopenFoundCards(String code) {
         foundScrollY = foundPane != null ? foundPane.getScrollY() : 0f;
@@ -872,11 +970,32 @@ public class ResearchScene extends UIScene {
         openFoundCards(code, true);
     }
 
+    /** Round 766 follow-up: "Sell all over 4" asks first - the cards, the gold and what it does to the days. */
+    private void confirmOverFour(String code) {
+        AdventurePlayer player = AdventurePlayer.current();
+        int day = Current.world().getCurrentDay();
+        boolean running = player.isResearching(code);
+        ResearchMeter.Plan plan = ResearchMeter.planOverFour(player, code, day);
+        String research = plan.daysBefore == 0 ? "Research: stays Ready - its cards only pay gold."
+                : "Research: " + ResearchMeter.daysText(plan.daysBefore) + (running ? " left" : "") + " -> "
+                + daysAfterText(plan, running) + ".";
+        // The gold glyph ends its line (its advance reads as a space before punctuation).
+        showDialog(createGenericDialog("Sell all over " + ResearchMeter.KEEP_COPIES, "Sell the copies over "
+                + ResearchMeter.KEEP_COPIES + " of each card - " + plan.cards + (plan.cards == 1 ? " card" : " cards")
+                + " - for " + plan.gold + "[+Gold]\n" + research + " Deck copies and favorites are kept.",
+                "Sell", "Cancel", () -> {
+                    removeDialog(); // the confirm
+                    ResearchMeter.sellOverFour(AdventurePlayer.current(), code, Current.world().getCurrentDay());
+                    afterFoundAct(code);
+                }, this::removeDialog));
+    }
+
     /** Round 766: after a Sell or Sacrifice - the Lab's row and the window show the new days; a research fed to 0 days
      *  left is done. */
     private void afterFoundAct(String code) {
         buildList();
         if (AdventurePlayer.current().hasUnlockedEdition(code)) {
+            disposeFoundActors();
             removeDialog();
             showDialog(createGenericDialog(editionDisplayName(code), editionDisplayName(code)
                     + " is researched - its cards now stock your shops.",

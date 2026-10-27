@@ -83,6 +83,8 @@ public class MapViewScene extends UIScene {
     // state - this whole scene is a static snapshot (the player marker is positioned once on
     // enter the same way), so no per-frame tracking is needed here.
     private final List<Image> mageMarkers = Lists.newArrayList();
+    /** Round 768: the town specialty badges among mageMarkers - shown only in the Names view, see showBadges(). */
+    private final List<Image> badgeMarkers = Lists.newArrayList();
     // Round 162 (user: "the attack lines do not refresh / remove when you click through the
     // different views"; review S5/S6). The Attacks view's lines used to be dropped into
     // mageMarkers at UNZOOMED map coordinates, and no other view knew they were there: they
@@ -212,6 +214,7 @@ public class MapViewScene extends UIScene {
             marker.remove();
         mageMarkers.clear();
         markerAnchors.clear(); // round 292
+        badgeMarkers.clear(); // round 768
         clearAttacks();
         miniMapPlayer.setScale(1);
         img.setScale(1);
@@ -267,6 +270,7 @@ public class MapViewScene extends UIScene {
     public void details() {
         lastOverlayMode = 1;
         setOverlayButtonStates(1);
+        showBadges(false);
         // Self-cleanup (2026-08-16 review finding) - the other 3 overlay builders (events()/
         // reputation()/names()) all clear their own previously-added labels before rebuilding;
         // this one never did, so a double enter()/details() call (without an intervening leave())
@@ -573,6 +577,7 @@ public class MapViewScene extends UIScene {
     public void events() {
         lastOverlayMode = 2;
         setOverlayButtonStates(2);
+        showBadges(false);
         clearDetails();
         clearAttacks();
         // Routed through placeDetailLabel()'s collision avoidance (2026-08-17) - previously
@@ -720,6 +725,7 @@ public class MapViewScene extends UIScene {
     public void reputation() {
         lastOverlayMode = 3;
         setOverlayButtonStates(3);
+        showBadges(false);
         clearDetails();
         clearAttacks();
         // Routed through placeDetailLabel()'s collision avoidance (2026-08-17) - same reasoning
@@ -753,6 +759,7 @@ public class MapViewScene extends UIScene {
         setOverlayButtonStates(hasAttacks ? 4 : 0);
         clearDetails();
         clearAttacks();
+        showBadges(true); // round 768: the town specialty badges belong to this view
 
         // Town/capital names (moved here from details() - user request 2026-08-17: "Town names
         // need to be moved to the Names view and details should show the set info"). Visited-only,
@@ -794,6 +801,18 @@ public class MapViewScene extends UIScene {
         if (portalTowns > 0)
             System.out.println("[TFR-MapView] names view: " + portalTowns
                     + " player town(s) carry the portal glyph");
+    }
+
+    /**
+     * Round 768 (the user: "Let's move the town type to a view, vs always on, Probably the same view that shows the
+     * teleporter icon"): the specialty badges are built hidden on every enter() - their corners still worked out once
+     * by badgeAnchors() - and only the Names view shows them; every other view, and none, hides them again.
+     */
+    private void showBadges(boolean on) {
+        for (Image badge : badgeMarkers)
+            badge.setVisible(on);
+        if (on && !badgeMarkers.isEmpty())
+            System.out.println("[TFR-Specialty] Names view: " + badgeMarkers.size() + " town badge(s) shown");
     }
 
     /** Round 223: the markup name of the inline portal glyph - see {@link #ensurePortalGlyph()}. */
@@ -850,6 +869,7 @@ public class MapViewScene extends UIScene {
     public void attacks() {
         lastOverlayMode = 0;
         setOverlayButtonStates(0);
+        showBadges(false);
         clearDetails();
         clearAttacks();
         // The mage and guard dots from enter() stay put: a line reads as travelling FROM its dot,
@@ -1099,6 +1119,7 @@ public class MapViewScene extends UIScene {
             marker.remove();
         mageMarkers.clear();
         markerAnchors.clear(); // round 292
+        badgeMarkers.clear(); // round 768
         for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages()) {
             // Same fog-of-war gate as the corner minimap's dots (GameHUD.updateMageMinimapMarkers):
             // only mages inside REVEALED territory - player vision or a player-owned town's own
@@ -1179,6 +1200,8 @@ public class MapViewScene extends UIScene {
         for (Object[] row : badgeAnchors()) {
             Image marker = new Image((com.badlogic.gdx.graphics.g2d.Sprite) row[0]);
             marker.setSize(16f, 16f);
+            marker.setVisible(false); // round 768: the Names view shows it - see showBadges()
+            badgeMarkers.add(marker);
             table.addActor(marker);
             mageMarkers.add(marker);
             markerAnchors.add((float[]) row[1]);

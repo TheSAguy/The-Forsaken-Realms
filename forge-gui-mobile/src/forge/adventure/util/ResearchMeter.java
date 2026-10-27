@@ -355,6 +355,7 @@ public final class ResearchMeter {
     public static final class Plan {
         public int cards;
         public int daysBefore, daysAfter;
+        public int gold; // round 766 follow-up: what a sale would pay (planOverFour)
     }
 
     /** Round 764: the Lab's Sacrifice, looked at before it runs - copy by copy, stopping once the set reaches 0 days,
@@ -457,6 +458,76 @@ public final class ResearchMeter {
         System.out.println("[TFR-Research] Found Cards: sacrificed " + done + "x " + card.getName() + " (" + code + "); "
                 + code + " " + before + " -> " + afterText(player, code, currentDay, running));
         return done;
+    }
+
+    /** Round 766 follow-up (the user: "Add an option to sell all copies over 4. (That's different from Spare, where Spare
+     *  is only copies not used in decks currently)"): the copies Found Cards' "Sell all over 4" keeps of each card. */
+    public static final int KEEP_COPIES = 4;
+
+    /** Round 766 follow-up: this card's copies over KEEP_COPIES that may be sold - owned less max(4, the copies its decks
+     *  use), so a deck never loses a copy; none for a favorite or a card with no sale value. (Stock Forge's "Sell all
+     *  extras" is Quest mode's spell shop, on Quest data and its playset preference - not reusable here.) */
+    public static int overFourCopies(AdventurePlayer player, PaperCard card) {
+        if (card == null || card.hasNoSellValue() || player.favoriteCards.contains(card))
+            return 0;
+        return Math.max(0, player.getCards().count(card) - Math.max(KEEP_COPIES, player.getCopiesUsedInDecks(card)));
+    }
+
+    /** Round 766 follow-up: this set's cards with copies over 4, and how many of each. */
+    public static Map<PaperCard, Integer> overFour(AdventurePlayer player, String code) {
+        Map<PaperCard, Integer> out = new LinkedHashMap<>();
+        for (Map.Entry<PaperCard, Integer> e : player.getCards()) {
+            PaperCard pc = e.getKey();
+            if (pc == null || !code.equals(pc.getEdition()))
+                continue;
+            int n = overFourCopies(player, pc);
+            if (n > 0)
+                out.put(pc, n);
+        }
+        return out;
+    }
+
+    /** Round 766 follow-up: what "Sell all over 4" would do - the cards, the gold and the days before and after - worked
+     *  out the way the sale feeds (per card, a new name's first copy in full, clamped at a full meter), changing nothing. */
+    public static Plan planOverFour(AdventurePlayer player, String code, int currentDay) {
+        Plan plan = new Plan();
+        float pts = points(player, code);
+        plan.daysBefore = daysAt(player, code, pts, currentDay);
+        Set<String> fedNow = player.getResearchFedNames().get(code);
+        Set<String> fedSim = fedNow == null ? new HashSet<>() : new HashSet<>(fedNow);
+        boolean feeds = enabled(player) && !player.hasUnlockedEdition(code);
+        for (Map.Entry<PaperCard, Integer> e : overFour(player, code).entrySet()) {
+            PaperCard pc = e.getKey();
+            int n = e.getValue();
+            plan.cards += n;
+            plan.gold += player.cardSellPrice(pc) * n;
+            if (!feeds || !PrintingIndex.counts(pc))
+                continue;
+            float first = firstCopyPoints(pc), copy = first * tuning().researchCopyShare;
+            float raw = fedSim.add(pc.getName()) ? first + (n - 1) * copy : n * copy;
+            pts += Math.min(scaled(raw, false), Math.max(0f, meterSize(code) - pts));
+        }
+        plan.daysAfter = daysAt(player, code, pts, currentDay);
+        return plan;
+    }
+
+    /** Round 766 follow-up: Found Cards' "Sell all over 4" - every card's copies over 4, through the player's own sale (so
+     *  gold, feeding and a finish at 0 days are a sale anywhere's). Returns the gold. */
+    public static int sellOverFour(AdventurePlayer player, String code, int currentDay) {
+        int before = days(player, code, currentDay);
+        boolean running = player.isResearching(code);
+        int gold = player.getGold(), sold = 0;
+        beginBatch();
+        try {
+            for (Map.Entry<PaperCard, Integer> e : overFour(player, code).entrySet())
+                sold += player.sellCard(e.getKey(), e.getValue());
+        } finally {
+            endBatch(player, "Found Cards over-4 sale");
+        }
+        int gained = player.getGold() - gold;
+        System.out.println("[TFR-Research] Found Cards: sold " + sold + " over-4 copies of " + code + " for " + gained
+                + " gold; " + code + " " + before + " -> " + afterText(player, code, currentDay, running));
+        return gained;
     }
 
     private static String afterText(AdventurePlayer player, String code, int currentDay, boolean running) {

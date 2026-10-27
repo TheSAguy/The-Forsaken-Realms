@@ -92,7 +92,8 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 - **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** (STOCK) - `restockPriceNow` is 0 for a Market
   town's free restock; `restockShop` records it (`useMarketRestock`) instead of the week's surcharge step.
 - **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** (STOCK) - `enter()`: a badge per specialized
-  town, in the zoom-following marker list.
+  town, in the zoom-following marker list; round 765 `badgeAnchors()` picks its corner, round 768 builds it hidden
+  and only `names()` shows it (`showBadges`, called by every overlay view).
 - **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK) - the `specialty` command.
 - Mod files: NEW `util/TownSpecialties.java`; `util/TownRestoration.java` (the Job Board row), `util/EconomyBuildings.java`
   (`mineWeeklyAmount(changes, type)`), `util/TerritoryControl.java` (the capture roll's `specialtyDefense`),
