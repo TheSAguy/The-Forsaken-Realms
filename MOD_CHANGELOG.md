@@ -14264,6 +14264,48 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 790: Far Sight is +1 tile of sight per pick - the +15% rounded away (2026-10-27)
+
+The user: "I started a new game and took Far-sight 15% as my level up. But my visible radius seems the same." Then:
+"Yes, round 790: Far Sight becomes +1 tile of sight per pick (2 picks max), added after the light item's multiplier,
+with a [TFR-Vision] log line and the wording fixed in the game, the Guide and the FAQ. Existing picks become +1 tile;
+package when my game is closed; ships with 1.25."
+
+- **The bug**: the pick was applied, then rounded away. `World.getVisionRadius()` was `Math.round((3 + difficulty
+  offset) x light x (1 + 0.15 per pick))`, and the offset is +1 on Easy, 0 on Normal and Hard, -1 on Insane. The
+  user's log: `difficulty=Insane`, `level 2 reward chosen: farSight -> Far Sight I`, no light item, so 2 x 1.15 = 2.3
+  -> 2. The first pick did nothing on Normal, Hard and Insane without a light, and the second pick of a Torch build
+  on Insane did nothing either (4.6 -> 5, 5.2 -> 5).
+- **The fix**: `radius = Math.round((3 + offset) x light) + Ascendance.visionTiles()`.
+  - `ascendance.json` farSight `value` 0.15 -> 1, 2 picks max as before.
+  - `Ascendance.visionFactor()` -> `visionTiles()` (whole tiles), read by `World.getVisionRadius()`.
+    `AdventurePlayer.visionRadiusMultiplier()` is the light item only now.
+  - After the light, so a pick is +1 tile with a Torch or a Grand Torch too (before it, a Grand Torch would make it +4).
+- **Callers**: the code graph lists 2 direct callers of `getVisionRadius()` in `World` (`setPlayerTilePosition`, which
+  caches it for the haze edge, and `isCurrentlyVisible`), 4 within depth 2. It misses the cross-class ones, which Grep found:
+  `WorldBackground.draw` (the reveal and POI discovery), `WorldBackground.pulseVision` (the torch pulse) and
+  `AgentObserver`. All of them read the one number, so all get the new radius. `visionRadiusMultiplier()` has 1
+  caller (`getVisionRadius`).
+- **Radius in tiles** (16 px a tile), no light / Torch x2:
+
+  | Difficulty | 0 picks | 1 pick | 2 picks | Torch: 0 / 1 / 2 picks |
+  |---|---|---|---|---|
+  | Easy | 4 | 5 | 6 | 8 / 9 / 10 |
+  | Normal, Hard | 3 | 4 | 5 | 6 / 7 / 8 |
+  | Insane | 2 | 3 | 4 | 4 / 5 / 6 |
+
+- **New line**: `[TFR-Vision] base 3, difficulty -1, light x1.0, Far Sight +1 -> 3 tile(s)`, when any input changes
+  and once per load or new game (`World.resetVisionLog()`, called from `WorldStage.clearCache()`).
+- **Wording**: the perk reads "Sight +1 tile" ("Sight +2 tiles (now +1)" for the second pick), was "Vision +15%".
+  GUIDE.md (and GUIDE.html) and Discord FAQ message 3 ("Perks & limits") say tiles.
+- **Saves**: no format change. Picks are saved as an id and a count and the effect is computed live, so a save holding
+  Far Sight I or II sees +1 or +2 tiles on its next load.
+- **Test** (copy `agent-790`, a copied agent profile, cheats on; no duels were played): a new Insane game read
+  `visionRadius` 2; `asc pick farSight` -> 3, again -> 4; a Torch -> 6; Torch off -> 4. The `[TFR-Vision]` lines
+  match: 2, 3, 4, 6, 4. The walked trail without the Torch shows a lit circle 9 tiles across. Shots:
+  `C:\TFR\notes\r790-*.png`. Not seen: the level-up dialog's new text (the cheat picks without the dialog).
+- Maven exit 0. Not packaged to live in this round: the user's game was open. Ships with 1.25.
+
 ## Round 789: blueprints from the first minute of a launch - the player-town template fills the blueprint list (2026-10-27)
 
 The user: "Yes, round 789: fill the blueprint list from the player-town template when nothing has loaded it yet, so

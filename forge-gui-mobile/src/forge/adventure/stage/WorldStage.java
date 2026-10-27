@@ -3340,6 +3340,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         DungeonRotation.resetSessionState();
         MapMarkerRefresh.resetSessionState(); // round 190: the shared marker-refresh batch baseline
         forge.adventure.util.TreasureHunt.resetSessionState(); // round 478
+        World.resetVisionLog(); // round 790: [TFR-Vision] prints once per load
         treasureActorsStamp = -1;
         forge.adventure.util.TownPillage.resetSessionState(); // round 484
         forge.adventure.util.LevelPlaces.resetSessionState(); // round 716: a spot-less place is logged once per load

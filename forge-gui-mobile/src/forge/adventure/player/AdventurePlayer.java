@@ -3853,7 +3853,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             if (data != null && data.effect != null && data.effect.visionRadiusMultiplier > 0.0)
                 factor = Math.max(factor, data.effect.visionRadiusMultiplier);
         }
-        return factor * forge.adventure.util.Ascendance.visionFactor(); // round 494: Far Sight
+        return factor; // round 790: Far Sight left this product - it adds whole tiles in World.getVisionRadius()
     }
 
     public float goldModifier(boolean sale) {

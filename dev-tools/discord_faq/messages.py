@@ -6,7 +6,7 @@ FAQ_VERSION = "v1.24"
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-EDITED = set()
+EDITED = {3}  # round 790: Far Sight is +1 tile of sight per pick
 ADDED = set()
 
 M = []
@@ -56,7 +56,7 @@ M.append(("Ascendance: gear limits, perks, your hero's size", "Perks & limits", 
 
 **Q: What are the lasting perks?**
 **A:** About 35 perks that last the whole run. Most have ranks: take one again to rank it up. A few examples:
-- **Haggler** (shop prices up to -15%), **Swift Feet** (up to +15% speed), **Far Sight**, **Prospector** (up to +45% resource pickups and mine income)
+- **Haggler** (shop prices up to -15%), **Swift Feet** (up to +15% speed), **Far Sight** (up to +2 tiles of sight), **Prospector** (up to +45% resource pickups and mine income)
 - **Aura of Fear** (enemies start with up to 30% less life), **Opening Gambit** (win the coin toss 75% of the time), **Morning Vigor**, **Shardwell**
 - **Zealot** (up to +25% Power), **Insight** (4 reward choices a level), **Gambler** (two cheaper re-rolls)
 - **Marshal**, **Medic** and **Spoils of War** for your roaming guards

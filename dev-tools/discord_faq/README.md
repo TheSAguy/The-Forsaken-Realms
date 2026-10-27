@@ -41,3 +41,7 @@ next release. The copied marks are kept per `FAQ_VERSION`. Artifact version 10. 
 2026-10-27 (round 788): the order now matches the channel. When posting v1.24 the user moved Support to the end, so
 22 is Specialties & milestones, 23 Achievements & duels and 24 Support. No text changed. `EDITED` and `ADDED` are
 reset (everything is posted). Artifact version 11.
+
+2026-10-27 (round 790): message 3 (Perks & limits) says **Far Sight** (up to +2 tiles of sight); it was a bare name.
+`EDITED = {3}` tags it on the page. Edit it in Discord when 1.25 ships, since v1.24 still has the old +15%. Artifact
+version 12.

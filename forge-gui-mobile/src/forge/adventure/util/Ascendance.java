@@ -1029,8 +1029,9 @@ public final class Ascendance {
     public static float speedFactor() { return 1f + total("swiftFeet"); }
     /** Prospector: resource pickups and mine yields, times this. */
     public static float prospectorFactor() { return 1f + total("prospector"); }
-    /** Far Sight: vision radius, times this. */
-    public static float visionFactor() { return 1f + total("farSight"); }
+    /** Far Sight: whole tiles added to the vision radius, after the light item's multiplier (round 790: was +15%,
+     *  which rounded away on Normal, Hard and Insane). */
+    public static int visionTiles() { return Math.round(total("farSight")); }
     /** Marshal: added to a roaming guard's duel life. */
     public static int guardLifeBonus() { return Math.round(total("marshal")); }
     /** Stubborn: the life and gold a defeat costs, times this. */
@@ -1526,7 +1527,8 @@ public final class Ascendance {
             case "haggler": effect = "Shop prices -" + pct(then) + " [+Gold]" + (now > 0 ? " (now -" + pct(now) + ")" : ""); break;
             case "swiftFeet": effect = "Overworld speed +" + pct(then) + (now > 0 ? " (now +" + pct(now) + ")" : ""); break;
             case "prospector": effect = "Resource pickups and mines +" + pct(then) + (now > 0 ? " (now +" + pct(now) + ")" : ""); break;
-            case "farSight": effect = "Vision +" + pct(then) + (now > 0 ? " (now +" + pct(now) + ")" : ""); break;
+            case "farSight": effect = "Sight +" + Math.round(then) + " tile" + (then >= 2 ? "s" : "")
+                    + (now > 0 ? " (now +" + Math.round(now) + ")" : ""); break; // round 790: tiles, not %
             case "marshal": effect = "Roaming guards +" + Math.round(then) + " [+Life]" + (now > 0 ? " (now +" + Math.round(now) + ")" : ""); break;
             case "stubborn": effect = "Defeats cost " + pct(then) + " less [+Life] and [+Gold]" + (now > 0 ? " (now " + pct(now) + ")" : ""); break;
             case "mender": effect = pct(Math.min(1f, then)) + " chance a worn item escapes cracking" + (now > 0 ? " (now " + pct(now) + ")" : ""); break;

@@ -8,12 +8,12 @@ every round built. If you find something missing, fix the docs rather than going
 
 **v1.24 "Towns & Trophies" is the latest release** (tag `tfr-v1.24` @ `6412d1a6cb6`, published 2026-10-27 16:13 UTC;
 rounds 702-783, 785 and 786 on top of v1.23, 761 and 784 not used; assets and notes in `docs/tfr/releases.md`).
-Unreleased, for 1.25: round 789 (the blueprint list takes the player-town template's names, so level-ups, chests, Mystery pickups and digs offer blueprints from the first minute of a launch; `logs-1027c` P1). Round 788 reordered the Discord FAQ's dev tools: Support is always the last message. Live = the release (2026-10-27 09:08 package) until round 789 is packaged. Round 787 stamped `modVersion` 1.24 / `modVersionDate`
+Unreleased, for 1.25: round 789 (the blueprint list takes the player-town template's names, so level-ups, chests, Mystery pickups and digs offer blueprints from the first minute of a launch; `logs-1027c` P1) and round 790 (Far Sight is +1 tile of sight per pick, added after the light item; its +15% rounded away on Normal, Hard and Insane; `[TFR-Vision]` line; FAQ message 3 edited, to post in Discord with 1.25). Round 788 reordered the Discord FAQ's dev tools: Support is always the last message. Live = round 789 (2026-10-27 12:05 package, HEAD `83275cf7e63`) until round 790 is packaged. Round 787 stamped `modVersion` 1.24 / `modVersionDate`
 10.27 (the PC update notice of round 782 compares `modVersion` with the newest `tfr-v` tag) and Android `tfr.version`
 1.24 / versionCode 12400, wrote `RELEASE_NOTES_v1.24.md` and GUIDE's What's New in 1.24. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous auto
 save, eager shops, Inn events and place entry - see MOD_CHANGELOG; upstream's async save and lazy town loading stay
 unused, possible later rounds); next merge from upstream after `0dc8c66996e`; BASE_INSTALL is that daily, so packages
-need no `--allow-base-mismatch`. Next version: 1.25 / 12500. Next free round: 790. The agent profile's window is
+need no `--allow-base-mismatch`. Next version: 1.25 / 12500. Next free round: 791. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Log sharing (round 698) posts to Discord through a webhook kept OUT of git in
 `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step 2b put it into

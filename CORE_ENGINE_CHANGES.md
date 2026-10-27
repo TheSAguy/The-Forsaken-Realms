@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 790 - Far Sight is +1 tile per pick
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** (STOCK): `getVisionRadius()` adds
+  `Ascendance.visionTiles()` after the light multiplier and prints `[TFR-Vision]` when its inputs change; new
+  static `resetVisionLog()`. Stock planes: no Ascendance, so +0 and the same radius as before.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): `visionRadiusMultiplier()` is the
+  light item only again (round 494's Far Sight factor removed).
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** (STOCK): `clearCache()` calls
+  `World.resetVisionLog()`.
+
 ### Round 785 - no defeat gold minimum in week 1
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): `defeatGoldLossNow()` and `defeated()`
   pass `defeatGoldMinWaived()` (new, private: `SpawnTierWeighting.currentWeek` <= TuningData's

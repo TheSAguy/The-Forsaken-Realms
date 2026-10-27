@@ -7179,7 +7179,26 @@ public class World implements Disposable, SaveFileContent {
         // Torch (2026-08-13): the item multiplier applies to the difficulty-adjusted radius, not
         // just the bare baseline - "3x current radius" per spec, and this is the exact extension
         // point the class comment above already anticipated ("items will raise this later").
-        return Math.round((visionRadius + visionRadiusDifficultyOffset()) * Current.player().visionRadiusMultiplier());
+        // Round 790: Far Sight adds whole tiles AFTER the light - it was +15% on the product, and on Insane 2 x 1.15
+        // rounded back to 2, so the pick did nothing (the user's report, 2026-10-27).
+        int base = visionRadius + visionRadiusDifficultyOffset();
+        float light = Current.player().visionRadiusMultiplier();
+        int farSight = forge.adventure.util.Ascendance.visionTiles();
+        int radius = Math.round(base * light) + farSight;
+        String key = base + "/" + light + "/" + farSight;
+        if (!key.equals(lastVisionLog)) {
+            lastVisionLog = key;
+            System.out.println("[TFR-Vision] base " + visionRadius + ", difficulty " + visionRadiusDifficultyOffset()
+                    + ", light x" + light + ", Far Sight +" + farSight + " -> " + radius + " tile(s)");
+        }
+        return radius;
+    }
+
+    /** Round 790: the last [TFR-Vision] inputs logged; cleared on every load and new game so each prints once. */
+    private static String lastVisionLog;
+
+    public static void resetVisionLog() {
+        lastVisionLog = null;
     }
 
     private int visionRadiusDifficultyOffset() {

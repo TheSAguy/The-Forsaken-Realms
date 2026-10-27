@@ -594,7 +594,7 @@ companion limit holds either way: 3 without Ascendance.
 | Aura of Fear | 3 | Enemies start your duels with 10% / 20% / 30% less life. Never with Challenger's Mark. | 1 |
 | Challenger's Mark | 1 | Enemies start your duels with 20% more life; your wins pay +1 card and a 25% larger resource purse. Never with Aura of Fear. | 11 |
 | Envoy | 2 | A win costs you 15% / 30% less reputation with the beaten color and its allies. Never with Warmonger. | 1 |
-| Far Sight | 2 | Your sight radius +15% / +30%. | 1 |
+| Far Sight | 2 | You see 1 / 2 tiles further on the world map, on top of any torch. | 1 |
 | Focused | 1 | Your first mulligan in each game is free - you keep a full hand. | 16 |
 | Gambler | 1 | Two re-rolls a level instead of one, each at half price. | 1 |
 | Guard Focus | 1 | Your roaming guards' first mulligan in each game is free. | 16 |

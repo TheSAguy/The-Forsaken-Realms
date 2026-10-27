@@ -136,7 +136,7 @@
     { "id": "haggler",     "lasting": true, "maxPicks": 3, "value": 0.05 }, // -5% shop prices a pick
     { "id": "swiftFeet",   "lasting": true, "maxPicks": 3, "value": 0.05 }, // +5% overworld speed
     { "id": "prospector",  "lasting": true, "maxPicks": 3, "value": 0.15 }, // +15% resource pickups and mines
-    { "id": "farSight",    "lasting": true, "maxPicks": 2, "value": 0.15 }, // +15% vision radius
+    { "id": "farSight",    "lasting": true, "maxPicks": 2, "value": 1 },    // +1 tile of sight per pick, after the light item (round 790: was +15%, which rounded away)
     { "id": "marshal",     "lasting": true, "maxPicks": 3, "value": 4 },    // roaming guards +4 life (round 508: 2 -> 4)
     { "id": "stubborn",    "lasting": true, "maxPicks": 2, "value": 0.25 }, // defeats cost 25% less life and gold
     { "id": "mender",      "lasting": true, "maxPicks": 2, "value": 0.30 }, // 30%, then 60%, an item doesn't crack (round 508)
