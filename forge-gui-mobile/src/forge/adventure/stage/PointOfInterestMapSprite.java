@@ -154,6 +154,9 @@ public class PointOfInterestMapSprite extends MapSprite {
         return pointOfInterest;
     }
 
+    /** Round 791: this entrance's days-left plate (TfrPlates.PlacePlate). */
+    private final forge.adventure.util.TfrPlates.PlacePlate fadePlate = new forge.adventure.util.TfrPlates.PlacePlate();
+
     public MapSprite getMapSprite() {
         return this;
     }
@@ -204,6 +207,15 @@ public class PointOfInterestMapSprite extends MapSprite {
             if (!isHiddenByFog()) {
                 drawGuardIndicator(batch, parentAlpha);
                 drawTeleporterIndicator(batch, parentAlpha); // round 231
+                // Round 791: a fading entrance's days left over its art while the plates show (TfrPlates.PlacePlate).
+                // Only an entrance in view: the world's SpriteGroup draws every place, culled by nothing.
+                if (forge.adventure.util.TfrPlates.shown() && getStage() != null) {
+                    float top = drawnBottom() + (texture == null ? getHeight() : texture.getRegionHeight() * getDrawScale()
+                            * (1f - forge.adventure.util.TfrPlates.artTopGap(texture)));
+                    float cx = (drawnLeft() + drawnRight()) / 2f;
+                    if (getStage().getCamera().frustum.pointInFrustum(cx, top, 0f))
+                        forge.adventure.util.TfrPlates.queuePlace(pointOfInterest, fadePlate, cx, top);
+                }
             }
         }
         //batch.draw(getDebugTexture(),getX(),getY());

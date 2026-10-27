@@ -2646,6 +2646,18 @@ public class MapStage extends GameStage {
                 liveEnemiesLeft(exclude), liveLootLeft(), levelStairs);
     }
 
+    /** Round 791: the walk-out would find nothing left - every level clear, no loot, no level unvisited; for the Arena,
+     *  no contender standing (round 466) - the Alt corner label's "Fades when you leave" (DungeonRotation.fadeDays). */
+    public boolean nothingLeftInPlace() {
+        PointOfInterest root = TileMapScene.instance().rootPoint;
+        if (root == null)
+            return false;
+        PlaceLevels.Status place = placeStatus(null);
+        if (DungeonRotation.isSetPiece(root.getData()))
+            return contendersLeft() == null && !place.lootLeft() && place.unvisited == 0;
+        return place.nothingLeft();
+    }
+
     public Actor getByID(int id) { //Search actor by ID.
         for (MapActor A : new Array.ArrayIterator<>(actors)) {
             if (A.getId() == id)

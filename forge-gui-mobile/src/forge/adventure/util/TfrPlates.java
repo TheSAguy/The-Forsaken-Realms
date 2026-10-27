@@ -10,6 +10,7 @@ import com.github.tommyettinger.textra.TextraLabel;
 import forge.Forge;
 import forge.adventure.character.EnemySprite;
 import forge.adventure.data.EnemyData;
+import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.player.PlayerStatistic;
 import forge.adventure.scene.DuelScene;
 
@@ -105,6 +106,7 @@ public final class TfrPlates {
     /** SpriteGroup, before its sprites draw. */
     public static void beginFrame() {
         queue.clear();
+        placeQueue.clear();
         frameShown = shown();
         frameColorView = frameShown && Current.player() != null && Current.player().hasColorView();
     }
@@ -112,6 +114,9 @@ public final class TfrPlates {
     /** SpriteGroup, after its sprites drew: every queued plate, and the show/hide log. */
     public static void endFrame(Batch batch, float parentAlpha) {
         placed.clear();
+        for (PlaceQueued q : placeQueue) // round 791: the entrances first, so an enemy beside one is lifted over it
+            q.plate.draw(batch, parentAlpha, q.cx, q.foot);
+        placeQueue.clear();
         for (Queued q : queue)
             q.plate.draw(batch, parentAlpha, q.cx, q.foot);
         // Round 723 (log review 2026-10-24, P3): the edge first, and "hidden" only after a "shown". A view with no enemy
@@ -178,6 +183,19 @@ public final class TfrPlates {
         }
         float left = f.isFlipX() ? 1f - b[1] : b[0], right = f.isFlipX() ? 1f - b[0] : b[1];
         return new float[]{sprite.drawnX + sprite.drawnW * (left + right) / 2f, sprite.drawnY + sprite.drawnH * (1f - b[2])};
+    }
+
+    /** Round 791: the share of a place's art above its first opaque row, measured once per region - its days plate
+     *  (PlacePlate) sits on the art, not on the transparent rows over it. */
+    public static float artTopGap(TextureRegion f) {
+        String key = "place@" + System.identityHashCode(f.getTexture()) + ":" + f.getRegionX() + "," + f.getRegionY() + ","
+                + f.getRegionWidth() + "x" + f.getRegionHeight();
+        float[] b = artBounds.get(key);
+        if (b == null) {
+            b = measure(f);
+            artBounds.put(key, b);
+        }
+        return b[2];
     }
 
     private static float[] measure(TextureRegion f) {
@@ -257,6 +275,114 @@ public final class TfrPlates {
     }
 
     /** One enemy's plate (a field on its EnemySprite): its labels, made again only when what they say changes. */
+    /** Where a plate of width w goes: y, lifted above any plate already placed this frame that it would overlap (at most
+     *  twice), and recorded. lo/hi: the band of letters above the labels' origin y. Round 791: shared with PlacePlate. */
+    private static float placeBox(float x, float y, float w, float lo, float hi) {
+        for (int tries = 0; tries < 2; tries++) {
+            float[] hit = null;
+            for (float[] p : placed)
+                if (x - 1.5f < p[2] && x + w + 1.5f > p[0] && y + lo - 1f < p[3] && y + hi + 0.8f > p[1]) {
+                    hit = p;
+                    break;
+                }
+            if (hit == null)
+                break;
+            y = hit[3] + 1.5f - lo;
+            lifted++;
+        }
+        placed.add(new float[]{x - 1.5f, y + lo - 1f, x + w + 1.5f, y + hi + 0.8f});
+        return y;
+    }
+
+    /** The plate's dark box round the band of letters; leaves the batch white. */
+    private static void drawBox(Batch batch, float parentAlpha, float x, float y, float w, float lo, float hi) {
+        batch.setColor(0.08f, 0.07f, 0.06f, 0.72f * parentAlpha);
+        batch.draw(Forge.getAssets().getWhiteTexture(), x - 1.5f, y + lo - 1f, w + 3f, hi - lo + 1.8f);
+        batch.setColor(1f, 1f, 1f, parentAlpha);
+    }
+
+    /** Round 791: the color of a fading place's number - gold, orange in its last FADE_SOON days. */
+    private static final int FADE_SOON = 3;
+
+    private static String fadeColor(int days) {
+        return days <= FADE_SOON ? "e67e22" : "e8b84a";
+    }
+
+    /**
+     * Round 791: the corner line GameHUD shows inside a place while the plates show - DungeonRotation.fadeDays() in the
+     * plates' words and colors ("Fades in 12 days", the number gold, orange at 3 or fewer). null for no line.
+     */
+    public static String fadeLine(int fade) {
+        String text = "[#e9e1cc]", dim = "[#a8a296]";
+        switch (fade) {
+            case DungeonRotation.FADE_NONE: return null;
+            case DungeonRotation.FADE_STAYS: return dim + "Stays";
+            case DungeonRotation.FADE_QUEST: return dim + "Quest target - stays";
+            case DungeonRotation.FADE_WHEN_CLEARED: return dim + "Leaves when cleared";
+            case DungeonRotation.FADE_ON_LEAVE: return "[#e67e22]Fades when you leave";
+            default: return text + "Fades in [#" + fadeColor(fade) + "]" + fade + text + (fade == 1 ? " day" : " days");
+        }
+    }
+
+    /** Round 791: PointOfInterestMapSprite.draw - a fading entrance's "12 DAYS" plate, centered on cx, its foot at foot. */
+    public static void queuePlace(PointOfInterest poi, PlacePlate plate, float cx, float foot) {
+        if (!frameShown || poi == null || !plate.update(poi))
+            return;
+        PlaceQueued q = new PlaceQueued();
+        q.plate = plate;
+        q.cx = cx;
+        q.foot = foot;
+        placeQueue.add(q);
+    }
+
+    private static final class PlaceQueued {
+        PlacePlate plate;
+        float cx, foot;
+    }
+
+    private static final List<PlaceQueued> placeQueue = new ArrayList<>();
+
+    /**
+     * Round 791: a world-map entrance's days left while the plates show - only a place on a timer (a rotating dungeon or
+     * cave with no quest on it; DungeonRotation.fadeDays() >= 1). Read twice a second, not every frame: the answer
+     * changes once a day, and fadeDays() walks the quest log.
+     */
+    public static final class PlacePlate {
+        private TextraLabel label;
+        private int days = Integer.MIN_VALUE;
+        private long readAt;
+
+        boolean update(PointOfInterest poi) {
+            long now = System.currentTimeMillis();
+            if (days == Integer.MIN_VALUE || now - readAt > 500) {
+                readAt = now;
+                int fade = DungeonRotation.isRotatableData(poi.getData()) ? DungeonRotation.fadeDays(poi, false)
+                        : DungeonRotation.FADE_NONE;
+                if (fade != days) {
+                    days = fade;
+                    if (days >= 1) {
+                        if (label == null)
+                            label = Controls.newTextraLabel("");
+                        label.setText("[%55][#" + fadeColor(days) + "]" + days + (days == 1 ? " DAY" : " DAYS"));
+                        label.pack();
+                    }
+                }
+            }
+            return days >= 1 && label != null;
+        }
+
+        void draw(Batch batch, float parentAlpha, float cx, float foot) {
+            float w = label.getWidth(), th = label.getHeight();
+            float lo = th * BAND_LO, hi = th * BAND_HI;
+            float x = cx - w / 2f, y = placeBox(x, foot + 1f - lo, w, lo, hi);
+            Color was = batch.getColor().cpy();
+            drawBox(batch, parentAlpha, x, y, w, lo, hi);
+            label.setPosition(x, y);
+            label.draw(batch, parentAlpha);
+            batch.setColor(was);
+        }
+    }
+
     public static final class Plate {
         private TextraLabel rank, life;
         private String key = "", colors = "";
@@ -317,24 +443,9 @@ public final class TfrPlates {
             float w = rw + starW + (colorsW > 0 ? GAP + colorsW : 0f) + lifeW + coinW;
             // y is the labels' origin; the band of letters [lo, hi] above it is what the plate frames
             float lo = th * BAND_LO, hi = th * BAND_HI, mid = (lo + hi) / 2f;
-            float x = cx - w / 2f, y = foot + 1f - lo;
-            for (int tries = 0; tries < 2; tries++) {
-                float[] hit = null;
-                for (float[] p : placed)
-                    if (x - 1.5f < p[2] && x + w + 1.5f > p[0] && y + lo - 1f < p[3] && y + hi + 0.8f > p[1]) {
-                        hit = p;
-                        break;
-                    }
-                if (hit == null)
-                    break;
-                y = hit[3] + 1.5f - lo;
-                lifted++;
-            }
-            placed.add(new float[]{x - 1.5f, y + lo - 1f, x + w + 1.5f, y + hi + 0.8f});
+            float x = cx - w / 2f, y = placeBox(x, foot + 1f - lo, w, lo, hi);
             Color was = batch.getColor().cpy();
-            batch.setColor(0.08f, 0.07f, 0.06f, 0.72f * parentAlpha);
-            batch.draw(Forge.getAssets().getWhiteTexture(), x - 1.5f, y + lo - 1f, w + 3f, hi - lo + 1.8f);
-            batch.setColor(1f, 1f, 1f, parentAlpha);
+            drawBox(batch, parentAlpha, x, y, w, lo, hi);
             rank.setPosition(x, y);
             rank.draw(batch, parentAlpha);
             float px = x + rw;

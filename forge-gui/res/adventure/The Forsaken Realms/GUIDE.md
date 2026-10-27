@@ -773,6 +773,13 @@ Chandra and Liliana, the Aerie, and six of the [Legendary Dungeons](#legendary-d
 Eclipsed Elven Court, Ashling's Domain, Planeswalker Dueling Club, Idyllic Beachfront and Peaceful Clearing: a full
 clear and the walk out take them off the map until they return.
 
+**How long it has left.** Hold **Alt** (the right stick pressed in on a controller, the **Units** toggle on touch) -
+the same key that shows the enemies' info plates. On the world map, each rotating dungeon or cave in view shows its days
+left over its entrance ("12 DAYS", orange in its last 3). Inside a cave, dungeon or lair, the top-left corner says it:
+"Fades in 12 days", "Fades when you leave" once you've cleared everything, "Leaves when cleared" for a boss lair,
+"Quest target - stays" while a quest points at it, or "Stays" for a place that never leaves. Days pass only on the world
+map, so a place can't fade while you're inside.
+
 While an ordinary dungeon stands, it sends creatures into the land around it, more the longer it
 stands - see [Where the Monsters Come From](#where-the-monsters-come-from).
 

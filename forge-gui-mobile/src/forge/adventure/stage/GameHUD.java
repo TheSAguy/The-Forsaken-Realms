@@ -131,6 +131,12 @@ public class GameHUD extends Stage {
      *  the Log button. -Dtfr.touchPlates=true shows it on the desktop. */
     private final TextraButton platesButton;
     private boolean platesShownOn;
+    /** Round 791: the top-left line inside a place while the plates show - how long it has on the map
+     *  (DungeonRotation.fadeDays, TfrPlates.fadeLine) - on the plates' dark box. */
+    private TextraLabel fadeText;
+    private Actor fadeBack;
+    private String fadeShown;
+    private long fadeReadAt;
     private final InputEvent eventTouchDown, eventTouchUp;
     private final TextraButton deckActor, openMapActor, menuActor, logbookActor, inventoryActor, exitToWorldMapActor, bookmarkActor;
     public final UIActor ui;
@@ -454,6 +460,22 @@ public class GameHUD extends Stage {
         menuGroup.addActor(worldStandingsActor);
         ui.addActor(menuGroup);
         ui.addActor(platesButton); // round 719
+        // Round 791: on the stage, not in ui's groups - inside a map those fade to 40% (showHideMap), and the line went
+        // with them. The box draws its own color: the batch is shared (round 329), so it leaves the batch as it was.
+        fadeBack = new Actor() {
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                Color was = batch.getColor().cpy();
+                batch.setColor(0.08f, 0.07f, 0.06f, 0.72f * parentAlpha);
+                batch.draw(Forge.getAssets().getWhiteTexture(), getX(), getY(), getWidth(), getHeight());
+                batch.setColor(was);
+            }
+        };
+        fadeBack.setVisible(false);
+        fadeText = Controls.newTextraLabel("");
+        fadeText.setVisible(false);
+        addActor(fadeBack);
+        addActor(fadeText);
         ui.addActor(noticeLogButton); // round 549: not in menuGroup; round 561: shown on the world map only (draw())
         //AVATAR
         avatarGroup.addActor(avatar);
@@ -633,6 +655,7 @@ public class GameHUD extends Stage {
             platesShownOn = forge.adventure.util.TfrPlates.toggledOn();
             platesButton.setText(platesShownOn ? "[%80][#e8b84a]Units" : "[%80]Units");
         }
+        updateFadeLabel(); // round 791
         super.draw(); //draw the Hud
         // Round 329 (the user, right after this round's banner change: "I just loaded my game and the screen was black,
         // no terrain"). The HUD shares one SpriteBatch with the world (round 316, upstream #12011), and scene2d leaves
@@ -798,6 +821,50 @@ public class GameHUD extends Stage {
         keys += AdventurePlayer.current().hasItem("White Key") ? "[+WhiteKey]\n" : "[+Dot]\n";
         keys += AdventurePlayer.current().hasItem("Strange Key") ? "[+StrangeKey]" : "[+Dot]";
         keyCollection.setText(keys);
+    }
+
+    /**
+     * Round 791: inside a cave, dungeon or lair, while the plates show (Alt, R3 or the Units toggle), the top-left corner
+     * says how long the place has on the map - "Fades in 12 days", "Leaves when cleared", "Fades when you leave". Read
+     * four times a second: nothingLeftInPlace() walks the level's actors. The corner is clear inside a place in both
+     * layouts - the minimap that holds it on the world map (hud_landscape/hud_portrait "map", 0-80) is hidden in maps,
+     * the landscape bar starts at x=108 and the portrait bar is at the bottom.
+     */
+    private void updateFadeLabel() {
+        boolean show = MapStage.getInstance().isInMap() && forge.adventure.util.TfrPlates.shown();
+        if (show) {
+            long now = System.currentTimeMillis();
+            if (fadeShown == null || now - fadeReadAt > 250) {
+                fadeReadAt = now;
+                forge.adventure.pointofintrest.PointOfInterest root = TileMapScene.instance().rootPoint;
+                String line = forge.adventure.util.TfrPlates.fadeLine(forge.adventure.util.DungeonRotation.fadeDays(root,
+                        root != null && MapStage.getInstance().nothingLeftInPlace()));
+                line = line == null ? "" : "[%100]" + line;
+                if (!line.equals(fadeShown)) {
+                    fadeShown = line;
+                    fadeText.setText(line);
+                    fadeText.pack();
+                }
+            }
+            show = !fadeShown.isEmpty();
+        } else {
+            fadeShown = null;
+        }
+        fadeText.setVisible(show);
+        fadeBack.setVisible(show);
+        if (!show)
+            return;
+        // the plates' box round the band of letters (TfrPlates.BAND_LO/HI), 3 units from the corner
+        float th = fadeText.getHeight(), lo = th * 0.42f, hi = th * 0.9f;
+        float x = 5f, y = getHeight() - 4.5f - hi;
+        // the landscape button bar starts at x=108 on the top row: a line long enough to reach it ("Fades when you
+        // leave") goes under the bar instead (portrait's bar is at the bottom)
+        if (Forge.isLandscapeMode() && menuActor.getY() > getHeight() / 2f && x + fadeText.getWidth() + 2f > menuActor.getX() - 1f)
+            y = menuActor.getY() - 3.5f - hi;
+        fadeText.setPosition(x, y);
+        fadeBack.setBounds(x - 2f, y + lo - 1.5f, fadeText.getWidth() + 4f, hi - lo + 3f);
+        fadeBack.toFront();
+        fadeText.toFront();
     }
 
     public void updateEnemyCounter() {

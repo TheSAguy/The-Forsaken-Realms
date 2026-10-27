@@ -14264,6 +14264,56 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 791: hold Alt to see how long a cave has left - a corner line inside, a plate over the entrance (2026-10-27)
+
+The user: "It would be nice to have, when you're in a cave/dungeon and you press "Alt", same key that shows unit level,
+a small number will appear in the top left or right, for how many days the cave will be around before fading out."
+Mock-ups approved: "Yes, build round 791 as mocked up: the top-left label inside caves and dungeons with Alt, the World
+Map entrance plate, 'Fades when you leave' once cleared. Package when my game is closed; ships with 1.25."
+
+- **The number is exact.** A rotating dungeon or cave carries a saved despawn day (`World.poiDespawnDay`); the day tick
+  hides it on the first day change at or past that day, so days left = despawn day - today. Days pass only on the
+  world map, so the number cannot run out while the player is inside.
+- **`DungeonRotation.fadeDays(poi, nothingLeft)`** (new) answers for any place:
+  - a timed place (rotatable, no quest on it): its days left, at least 1, read through today's lifespan ceiling as the
+    tick will pull it in (round 244);
+  - `FADE_ON_LEAVE` - the player is inside and every level is clear, no loot, no level unvisited (the walk-out takes it:
+    a rotating place via `onDungeonClear`, a lair, a NoRotate place or the Arena via `onLairExit`), or the last kill
+    already took it off the map;
+  - `FADE_QUEST` - an active story quest points at it (nothing takes it), or a side quest does (+30 days each time its
+    day comes) and it is not cleared;
+  - `FADE_WHEN_CLEARED` - a boss lair, a NoRotate Hostile place or Valor's Reach Arena: no timer, a full clear takes it;
+  - `FADE_STAYS` - any other dungeon, cave or lair (story, quest maps, not Hostile);
+  - `FADE_NONE` - towns, castles, capitals and everything else, and any plane without rotation.
+  - A place with no despawn day yet (it came onto the map today, before its first tick) gets one rolled here exactly as
+    the tick rolls it, so the number shown holds (`[TFR-Fade] X had no despawn day yet - rolled day N`).
+- **Inside** (`GameHUD.updateFadeLabel`): while the plates show (Alt, R3, the Units toggle) the top-left corner reads
+  "Fades in 12 days" (number gold, orange at 3 or fewer), "Fades when you leave" (orange), "Leaves when cleared",
+  "Quest target - stays" or "Stays" (dim), on the plates' dark box, read 4 times a second
+  (`MapStage.nothingLeftInPlace()`, new: `placeStatus()`'s whole-place test, the Arena's contenders for a set piece).
+  The line and its box are stage actors, not in `ui`'s groups: inside a map those fade to 40% (`showHideMap`) and the
+  first build's line went with them. In landscape a line long enough to reach the button bar (x=108) drops under the
+  bar ("Fades when you leave" at 100%); a smaller `[%N]` was not an option - this font renders anything under 100% at
+  the plates' small size. Portrait: the corner is the minimap's, hidden inside maps; the bar is at the bottom
+  (hud_portrait.json, layout math only - not run on Android).
+- **World map** (`TfrPlates.PlacePlate`, new, queued from `PointOfInterestMapSprite.draw`): each timed entrance in
+  view wears "12 DAYS" (gold, orange at 3 or fewer) on the art's top edge (`TfrPlates.artTopGap`, measured once per
+  region), drawn first so an enemy plate beside it is lifted over it. In view only - the world's SpriteGroup culls
+  nothing - and read twice a second per entrance. Lairs and quest targets get no plate (no number to give).
+- **`TfrPlates`**: the plate's lift-and-place and dark box moved into `placeBox()` / `drawBox()`, shared by the enemy
+  `Plate` and `PlacePlate` (private; callers of `beginFrame`/`endFrame`: `SpriteGroup` only - the code graph lists no
+  affected nodes for `TfrPlates.endFrame`, Grep finds the one call site).
+- **Log**: `[TFR-Fade] Verdant Hollow: fades in 20 days (day 1, despawn day 21)` when a place's answer changes, not
+  every frame; the map resets on a load (`DungeonRotation.resetSessionState`).
+- **GUIDE**: "How long it has left" in Dungeons That Actually Rotate (the guide has no info-plates section to put it in).
+- **Saves**: no format change. Rolling a missing despawn day writes the value the next tick would have written.
+- **Test** (`build_standalone.py --out agent-791`, a copied agent profile, cheats on; duels at 50x - two world-map
+  fights on the walk in, one won and one lost): world map - "37 DAYS" over Verdant Hollow; inside it "Fades in 20
+  days"; `remove enemy all` + `take loot all` -> "Fades when you leave" (under the bar); Garruk's Forest -> "Leaves when
+  cleared". The `[TFR-Fade]` lines match each shot. Shots: `C:\TFR\notes\r791-built-*.png` (mock-ups `r791-*.png`). Not
+  seen: a quest target's line, the orange last-3-days number, the Units toggle and portrait (Android).
+- Maven exit 0. Packaged by the main thread when the user's game is closed. Ships with 1.25.
+
 ## Round 790: Far Sight is +1 tile of sight per pick - the +15% rounded away (2026-10-27)
 
 The user: "I started a new game and took Far-sight 15% as my level up. But my visible radius seems the same." Then:

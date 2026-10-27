@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 791 - Alt shows how long a place has left
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** (STOCK): new `updateFadeLabel()`, called from `draw()`
+  before `super.draw()`; two new stage actors (`fadeText`, `fadeBack`) for the top-left line inside a map while the
+  info plates show. Stock planes: no rotation, so no line.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK): new public `nothingLeftInPlace()` (reads
+  `placeStatus()` and `contendersLeft()`).
+- **`forge-gui-mobile/src/forge/adventure/stage/PointOfInterestMapSprite.java`** (STOCK): `draw()` queues a
+  `TfrPlates.PlacePlate` for an entrance in view while the plates show; new field `fadePlate`.
+
 ### Round 790 - Far Sight is +1 tile per pick
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** (STOCK): `getVisionRadius()` adds
   `Ascendance.visionTiles()` after the light multiplier and prints `[TFR-Vision]` when its inputs change; new

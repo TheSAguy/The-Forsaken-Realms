@@ -639,6 +639,7 @@ public class DungeonRotation {
      */
     public static void resetSessionState() {
         MapMarkerRefresh.resetSessionState();
+        fadeLogged.clear(); // round 791: a load logs each place's fade line once again
     }
 
     // Pool-swap: bring RESERVE locations into play until the visible count is back at the
@@ -991,6 +992,95 @@ public class DungeonRotation {
 
     private static int rollDays(World world, int min, int max) {
         return min + world.getRandom().nextInt(max - min + 1);
+    }
+
+    // ------------------------------------------------------------------ round 791: how long a place has left
+
+    /** Round 791: fadeDays() for a place with no line (not a dungeon, cave or lair, or rotation is off). */
+    public static final int FADE_NONE = -1;
+    /** Round 791: fadeDays() for a dungeon, cave or lair that never leaves (story, quest map, not Hostile). */
+    public static final int FADE_STAYS = -2;
+    /** Round 791: fadeDays() for a place a live quest in the log points at - its timer keeps getting pushed out. */
+    public static final int FADE_QUEST = -3;
+    /** Round 791: fadeDays() for a boss lair (or a NoRotate place, or the Arena) - it has no timer, a full clear takes it. */
+    public static final int FADE_WHEN_CLEARED = -4;
+    /** Round 791: fadeDays() for a place the walk-out takes off the map - every level clear, nothing left. */
+    public static final int FADE_ON_LEAVE = 0;
+
+    /** Round 791: the last answer logged per place, so [TFR-Fade] prints on a change and not every frame. */
+    private static final java.util.Map<String, Integer> fadeLogged = new java.util.HashMap<>();
+
+    /**
+     * Round 791 (the user: "when you're in a cave/dungeon and you press "Alt" ... a small number will appear in the top
+     * left or right, for how many days the cave will be around before fading out"). What the Alt plates say of a place's
+     * time on the map: the days until the day tick takes it (processDaysPassed() hides it on the first day change at or
+     * past its despawn day, so it is despawn day - today, and the day only changes on the world map - inside, the number
+     * cannot run out), or one of the FADE_ answers above. nothingLeft: the player stands inside it and every level is
+     * clear, so the walk-out takes it (MapStage.applyDungeonExitRules) - false on the world map.
+     * <p>
+     * A place that has not had its first day tick yet (activated today) has no despawn day; it is rolled here exactly as
+     * the tick would roll it, so the number shown is the one that holds.
+     */
+    public static int fadeDays(PointOfInterest poi, boolean nothingLeft) {
+        if (!isEnabled() || poi == null || poi.getData() == null)
+            return FADE_NONE;
+        PointOfInterestData data = poi.getData();
+        boolean rotatable = isRotatableData(data), vanishing = isVanishingLair(data);
+        int answer;
+        if (!isDungeonOrCave(data) && !isLairType(data) && !isSetPiece(data)) {
+            answer = FADE_NONE;
+        } else if ((rotatable || vanishing) && !poi.getActive()) {
+            answer = FADE_ON_LEAVE; // the last kill already took it off the map (round 443)
+        } else if (!rotatable && !vanishing) {
+            answer = activeQuestStatus(poi) != QUEST_NONE ? FADE_QUEST : FADE_STAYS;
+        } else {
+            int quest = activeQuestStatus(poi);
+            World world = WorldSave.getCurrentSave().getWorld();
+            boolean noBoss = !rotatable && (isSetPiece(data) || isClearReturner(data));
+            if (quest == QUEST_STORY)
+                answer = FADE_QUEST; // a clear does not take it either (onDungeonClear, onLairExit)
+            else if (nothingLeft && (rotatable || noBoss || world.getLairBossDownDay().containsKey(poi.getID())))
+                answer = FADE_ON_LEAVE;
+            else if (!rotatable)
+                answer = FADE_WHEN_CLEARED;
+            else if (quest == QUEST_SIDE)
+                answer = FADE_QUEST; // +SIDEQUEST_EXTENSION_DAYS each time its day comes while the quest stands
+            else
+                answer = daysLeft(world, poi);
+        }
+        Integer was = fadeLogged.put(poi.getID(), answer);
+        if (was == null || was != answer) {
+            Integer despawnDay = WorldSave.getCurrentSave().getWorld().getPoiDespawnDay().get(poi.getID());
+            System.out.println("[TFR-Fade] " + poi.getDisplayName() + ": " + fadeWords(answer) + " (day "
+                    + WorldSave.getCurrentSave().getWorld().getCurrentDay()
+                    + (despawnDay == null ? "" : ", despawn day " + despawnDay) + ")");
+        }
+        return answer;
+    }
+
+    /** Round 791: a timed place's days left - its despawn day rolled now if the tick has not seeded it, and a timer over
+     *  today's lifespan ceiling read as the tick will pull it in (round 244). At least 1: the next day change takes it. */
+    private static int daysLeft(World world, PointOfInterest poi) {
+        int today = world.getCurrentDay();
+        Integer despawnDay = world.getPoiDespawnDay().get(poi.getID());
+        if (despawnDay == null) {
+            despawnDay = today + rollDays(world, despawnMinDays(), despawnMaxDays());
+            world.getPoiDespawnDay().put(poi.getID(), despawnDay);
+            System.out.println("[TFR-Fade] " + poi.getDisplayName() + " had no despawn day yet - rolled day " + despawnDay);
+        }
+        return Math.max(1, Math.min(despawnDay - today, despawnMaxDays()));
+    }
+
+    /** Round 791: fadeDays() in words, for the log. */
+    public static String fadeWords(int fade) {
+        switch (fade) {
+            case FADE_NONE: return "no line";
+            case FADE_STAYS: return "stays";
+            case FADE_QUEST: return "quest target - stays";
+            case FADE_WHEN_CLEARED: return "leaves when cleared";
+            case FADE_ON_LEAVE: return "fades when you leave";
+            default: return "fades in " + fade + " day" + (fade == 1 ? "" : "s");
+        }
     }
 
     // ------------------------------------------------------------------ round 394: each kind's share
