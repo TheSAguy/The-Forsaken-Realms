@@ -14533,6 +14533,29 @@ round 771.
     A per-save play-time line would be its own round (round 756 already counts play per profile).
 - Stock files (CORE_ENGINE_CHANGES): the two `enemies.json` copies. Saves: none touched.
 
+## Round 772 (follow-up): tested in the agent game (2026-10-27)
+
+Round 772's classes ahead of the agent jar (cheats, Normal, the agent auto save; every duel at 50x, `[TFR-Agent] duel
+speed set to 50x`); the option set in the agent profile's `settings.json` between launches, since the bridge cannot
+scroll the Settings list to the new row. The profile was restored byte for byte after (settings.json, auto_save.sav,
+preferences, achievements; every slot's md5 unchanged).
+
+1. **Option off**, `notoriety 50`: a Green Wizard (Adept) started with both flying 3/6 bonus Walls and
+   `notoriety +50%=24` life (an Adept is below Normal's Wall rank, so no level Wall - as before). Shot
+   `notes/tweaks-1026/r772-duel-walls-off.png`.
+2. **Option on**, `notoriety 49`: the console said "Notoriety: 49, level 8 (off in Settings)". Two duels (the Wizard,
+   then an Ape Behemoth, Master): each logged `[TFR-Notoriety] walls skipped: Notoriety is disabled in Settings (level 8,
+   notoriety 49)`, no Walls on the seat and no bonus life (`terrainAdjusted=17`, no notoriety step). The loss noticed
+   "Duel lost - Notoriety 49 -> 44 (off in Settings)."; the win to 50 noticed "Notoriety 50 - level 8 (off): no Walls
+   or stronger foes while Notoriety is off in Settings." The score still moved. Shots `r772-duel-no-walls-on.png`
+   (the Ape's seat, no Walls) and `r772-notices-off.png` (the Notices log).
+3. **Option off again**, `notoriety 50`: the Ape Behemoth started with all four Walls (two reach 3/6, two flying 3/6)
+   and `notoriety +50%=26`. Shot `r772-duel-walls-back.png`.
+
+Not seen: the Settings row itself (below the fold; the bridge cannot scroll) and its
+`[TFR-Notoriety] Settings: ...` change line; the spawn tilt, rank step and dungeon upgrades gates (read only through
+the same `notorietyDisabled()` check, no duel shows them).
+
 ## Round 772: Settings can turn off Notoriety's walls (2026-10-26)
 
 The user: "Let's add in the in game settings - Disable Notoriety system option. By default unchecked. If checked, we
@@ -14564,9 +14587,7 @@ who chose: "Let's turn off all effects."
 - GUIDE.md/.html: a "Turning Notoriety off" paragraph in "Enemies That Adapt to You"; the Notorious row says it
   can't be earned while off.
 - Stock files (CORE_ENGINE_CHANGES): SettingData, SettingsScene, AdventurePlayer, DuelScene, ConsoleCommandInterpreter.
-- **Not yet tested in the agent game**: javac against the agent jar and the Maven build pass, but the agent-game launch
-  was refused by the session's permission check. The test owed: notoriety at a Wall level, a duel with the option off
-  (Walls), on (no Walls, the skipped line, the Notices "(off)"), then off again (Walls back).
+- **Tested in the agent game in the follow-up** (the first launch was refused by the session's permission check).
 
 ## Round 771: research takes about 3 sacrificed boosters, not 1 (2026-10-26)
 

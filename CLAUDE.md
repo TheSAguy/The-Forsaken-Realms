@@ -44,8 +44,8 @@ and `PlayerStatistic.secondPlayed` is inert stock code, both left as they are) a
 (`SettingData.notorietyDisabled`, never a save): it turns off all six Notoriety effects - the Walls, the 45/50 bonus
 Walls and their life, the spawn tilt, the rank-gate step and the dungeon upgrades - through
 `AdventurePlayer.notorietyDisabled()`; the score still counts, so turning it back on brings the level earned; Notices
-say "(off)", Notorious can't be earned while off; `[TFR-Notoriety] walls skipped: ...`; GUIDE; not yet tested in the
-agent game - its launch was refused by a permission check) and
+say "(off)", Notorious can't be earned while off; `[TFR-Notoriety] walls skipped: ...`; GUIDE; tested in the agent game
+at 50x in the follow-up - Walls off/on/off, `notes/tweaks-1026/r772-*.png`) and
 771 (research v2 takes about 3 sacrificed boosters, not 1: the meter is `researchMeterBoosters` 3 x the set's own cards
 per booster - its booster template less land and Guest slots - x `researchMeterPointsPerCard` 2.5, at least 8 (DOM 25 ->
 105, ARN 8 -> 60); 40 days with nothing given (was 28); Research towns cut the days only, no longer the points or the
