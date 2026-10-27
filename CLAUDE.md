@@ -7,7 +7,15 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-760, 762-779, 781-783 and 785 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-760, 762-783 and 785 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+780 (six @xandghost creatures as new enemies, each a round-642 family - Apprentice / Adept / Master: Torchhead Stallion
+R, Ashbark Gaunt B, Thornspine Ravager G, Bogmaw Golem BG, Flamecrest Serpent R, Crocodile Hexmage UG; 6 `enemies.json`
+entries, 6 `enemy_tiers.json` rows (1064), 18 hand-built rank decks in `decks/tiers/standard_xandghost_*` + 6 catalog
+decks in `decks/standard/xandghost/`, atlases `sprites/enemy/remake/<key>.*` copied by hand (not `install_remakes.py`,
+whose placeholder "original" would be recorded - the six placeholder enemies keep their art), rosters red/black/green/
+blue/Wasteland, the two Masters in the forest/swamp/island capitals' and the Capitol's arena pools, enemies.csv, a
+CREDITS line; data only; trap: `make_tier_families.py --only` rewrites `enemy_tiers.json` with only the listed names;
+tested at 50x in a worktree package - all three ranks of each spawned, each fought, plates, save/load) and
 785 (no defeat gold minimum in week 1: in the world's first `defeatGoldLossMinWaivedWeeks` weeks (TFR 1,
 default 0) a lost duel takes only the percentage - Hard 10% of 125 gold is 12, not all of it - on every difficulty,
 the `[TFR-EarlyLife]` week; one formula for the defeat, the Bronze Coin preview and the death dialog
@@ -162,7 +170,7 @@ at 3840x2160 it covered the screen, got minimized, and a minimized game stops (t
 1x1).
 Next version: 1.24 / 12400. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous
 auto save, eager shops, Inn events and place entry - see MOD_CHANGELOG); next merge from upstream after `0dc8c66996e`;
-BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 786 (780 is handed out: xandghost enemies; 784 was not used - the user skipped the engine merge for 1.24). Rounds 768, 766's follow-up and 769-776 are packaged to live and the agent game (2026-10-27 06:30); rounds 777, 778, 779, 781-783 and 785 are committed but not yet packaged (777, 781, 782, 783 and 785 tested in worktree packages). Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
+BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 786 (784 was not used - the user skipped the engine merge for 1.24). Rounds 768, 766's follow-up and 769-776 are packaged to live and the agent game (2026-10-27 06:30); rounds 777-783 and 785 are committed but not yet packaged (777, 780, 781, 782, 783 and 785 tested in worktree packages). Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

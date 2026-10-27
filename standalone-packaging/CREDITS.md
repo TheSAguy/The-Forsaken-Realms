@@ -256,6 +256,8 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   pixel sprite" and "4 direction vampire pixel pack 2" (OGA-BY 3.0),
   https://opengameart.org/content/vampire-4-direction-pixel-sprite and
   https://opengameart.org/content/4-direction-vampire-pixel-pack-2; supplied by the user.
+- **@xandghost** (the Crocodile Hexmage, Torchhead Stallion, Ashbark Gaunt, Thornspine Ravager, Bogmaw Golem and
+  Flamecrest Serpent, round 780) - pixel art by **@xandghost**, animated for this game.
 
 ## World art
 

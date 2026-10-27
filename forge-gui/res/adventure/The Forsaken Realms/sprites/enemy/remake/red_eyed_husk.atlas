@@ -1,0 +1,135 @@
+red_eyed_husk.png
+size: 1608,629
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 134, 113
+  footprint: 47, 27, 45, 76
+Idle
+  xy: 134, 64
+  size: 134, 113
+Idle
+  xy: 268, 64
+  size: 134, 113
+Idle
+  xy: 402, 64
+  size: 134, 113
+Idle
+  xy: 536, 64
+  size: 134, 113
+Idle
+  xy: 670, 64
+  size: 134, 113
+Idle
+  xy: 804, 64
+  size: 134, 113
+Idle
+  xy: 938, 64
+  size: 134, 113
+Idle
+  xy: 1072, 64
+  size: 134, 113
+Idle
+  xy: 1206, 64
+  size: 134, 113
+Idle
+  xy: 1340, 64
+  size: 134, 113
+Idle
+  xy: 1474, 64
+  size: 134, 113
+Walk
+  xy: 0, 177
+  size: 134, 113
+Walk
+  xy: 134, 177
+  size: 134, 113
+Walk
+  xy: 268, 177
+  size: 134, 113
+Walk
+  xy: 402, 177
+  size: 134, 113
+Walk
+  xy: 536, 177
+  size: 134, 113
+Attack
+  xy: 0, 290
+  size: 134, 113
+Attack
+  xy: 134, 290
+  size: 134, 113
+Attack
+  xy: 268, 290
+  size: 134, 113
+Attack
+  xy: 402, 290
+  size: 134, 113
+Attack
+  xy: 536, 290
+  size: 134, 113
+Attack
+  xy: 670, 290
+  size: 134, 113
+Attack
+  xy: 804, 290
+  size: 134, 113
+Attack
+  xy: 938, 290
+  size: 134, 113
+Attack
+  xy: 1072, 290
+  size: 134, 113
+Attack
+  xy: 1206, 290
+  size: 134, 113
+Hit
+  xy: 0, 403
+  size: 134, 113
+Hit
+  xy: 134, 403
+  size: 134, 113
+Hit
+  xy: 268, 403
+  size: 134, 113
+Hit
+  xy: 402, 403
+  size: 134, 113
+Death
+  xy: 0, 516
+  size: 134, 113
+Death
+  xy: 134, 516
+  size: 134, 113
+Death
+  xy: 268, 516
+  size: 134, 113
+Death
+  xy: 402, 516
+  size: 134, 113
+Death
+  xy: 536, 516
+  size: 134, 113
+Death
+  xy: 670, 516
+  size: 134, 113
+Death
+  xy: 804, 516
+  size: 134, 113
+Death
+  xy: 938, 516
+  size: 134, 113
+Death
+  xy: 1072, 516
+  size: 134, 113
+Death
+  xy: 1206, 516
+  size: 134, 113
+Death
+  xy: 1340, 516
+  size: 134, 113

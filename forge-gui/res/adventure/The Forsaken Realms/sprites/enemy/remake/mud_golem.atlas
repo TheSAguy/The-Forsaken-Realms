@@ -1,0 +1,135 @@
+mud_golem.png
+size: 2002,724
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 154, 132
+  footprint: 34, 28, 82, 77
+Idle
+  xy: 154, 64
+  size: 154, 132
+Idle
+  xy: 308, 64
+  size: 154, 132
+Idle
+  xy: 462, 64
+  size: 154, 132
+Idle
+  xy: 616, 64
+  size: 154, 132
+Idle
+  xy: 770, 64
+  size: 154, 132
+Idle
+  xy: 924, 64
+  size: 154, 132
+Idle
+  xy: 1078, 64
+  size: 154, 132
+Walk
+  xy: 0, 196
+  size: 154, 132
+Walk
+  xy: 154, 196
+  size: 154, 132
+Walk
+  xy: 308, 196
+  size: 154, 132
+Walk
+  xy: 462, 196
+  size: 154, 132
+Walk
+  xy: 616, 196
+  size: 154, 132
+Attack
+  xy: 0, 328
+  size: 154, 132
+Attack
+  xy: 154, 328
+  size: 154, 132
+Attack
+  xy: 308, 328
+  size: 154, 132
+Attack
+  xy: 462, 328
+  size: 154, 132
+Attack
+  xy: 616, 328
+  size: 154, 132
+Attack
+  xy: 770, 328
+  size: 154, 132
+Attack
+  xy: 924, 328
+  size: 154, 132
+Attack
+  xy: 1078, 328
+  size: 154, 132
+Attack
+  xy: 1232, 328
+  size: 154, 132
+Attack
+  xy: 1386, 328
+  size: 154, 132
+Attack
+  xy: 1540, 328
+  size: 154, 132
+Attack
+  xy: 1694, 328
+  size: 154, 132
+Hit
+  xy: 0, 460
+  size: 154, 132
+Hit
+  xy: 154, 460
+  size: 154, 132
+Hit
+  xy: 308, 460
+  size: 154, 132
+Hit
+  xy: 462, 460
+  size: 154, 132
+Death
+  xy: 0, 592
+  size: 154, 132
+Death
+  xy: 154, 592
+  size: 154, 132
+Death
+  xy: 308, 592
+  size: 154, 132
+Death
+  xy: 462, 592
+  size: 154, 132
+Death
+  xy: 616, 592
+  size: 154, 132
+Death
+  xy: 770, 592
+  size: 154, 132
+Death
+  xy: 924, 592
+  size: 154, 132
+Death
+  xy: 1078, 592
+  size: 154, 132
+Death
+  xy: 1232, 592
+  size: 154, 132
+Death
+  xy: 1386, 592
+  size: 154, 132
+Death
+  xy: 1540, 592
+  size: 154, 132
+Death
+  xy: 1694, 592
+  size: 154, 132
+Death
+  xy: 1848, 592
+  size: 154, 132

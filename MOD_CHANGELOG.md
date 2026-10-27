@@ -14264,6 +14264,68 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 780: six xandghost creatures as new enemies, each an Apprentice, an Adept and a Master (2026-10-27)
+
+The user: "Let's add the new creatures coming from Art", then "Hand them to TFR1. I want each to be given 3 levels,
+Apprentice, Adept and Master", and on the proposal ("ship in 1.24 too; I approve the proposal as written"). The six are
+@xandghost's pixel creatures, animated by the Art thread (Pixelate + Kling, generator `procedural-pixel-creatures`
+`49a0ecb`): Idle, Walk, Attack, Hit, Death. Design note: `C:\TFR\notes\xandghost-enemies-proposal.md`; the 18 decks with
+their scores: `C:\TFR\notes\xandghost-tier-decks.md`.
+
+| Enemy (art) | Colors / deck | Catalog rank | Life A / D / M | Speed | Rosters |
+|---|---|---|---|---|---|
+| Torchhead Stallion (burning horse) | R - haste horses and elementals | Adept | 12 / 20 / 25 | 30 | red |
+| Ashbark Gaunt (red-eyed husk) | B - undying zombies | Apprentice | 12 / 20 / 25 | 17 | black, Wasteland |
+| Thornspine Ravager (spined lizard beast) | G - enrage lizards and dinosaurs | Adept | 13 / 21 / 26 | 28 | green |
+| Bogmaw Golem (mud golem) | BG - self-mill and recursion | Master | 15 / 26 / 32 | 30 | black, green |
+| Flamecrest Serpent (fire serpent) | R - salamanders and burn | Adept | 12 / 20 / 25 | 25 | red |
+| Crocodile Hexmage (crocodile wizard) | UG - crocodiles, bounce, counters | Master | 12 / 21 / 26 | 31 | blue, green |
+
+- **Three ranks each** = one round-642 family: one `world/enemies.json` entry (spawnRate 1, difficulty 0.1 / 1 / 2 by
+  catalog rank, the house rewards of that rank plus one themed card - Cinderwing Whelp / Flamemane Kirin / Ironhide Gorgon
+  as templates) and one `world/enemy_tiers.json` row (1058 -> 1064). The week row picks the rank, then the creature
+  (round 643), so all six meet the player as Apprentices from week 1. Lives from `tier_life` (the roaming medians).
+- **18 rank decks, hand-built** to `make_tier_families.py`'s own rules (60 / 50 / 40 cards; its `Builder` rarity score,
+  basics out: Apprentice 1.00-1.24, Adept 2.25-2.50, Master 3.29-3.50; no restricted, Alchemy or AI:RemoveDeck card, all
+  on color): `decks/tiers/standard_xandghost_<key>_{apprentice,adept,master}.dck`, and a catalog deck
+  `decks/standard/xandghost/<key>.dck` (a copy of the catalog rank's). The tool itself was run on the themes in a
+  scratchpad only: it washed the themes out by the Master and picked cards the AI can barely use (Dwarven Pony with no
+  Dwarves, Sylvan Tutor, Natural Selection, Extirpate). **Trap for the next new enemy:** `make_tier_families.py --only`
+  rewrites `enemy_tiers.json` with ONLY the listed names - append rows, never run it with `--only` on the real file.
+- **Sprites**: `sprites/enemy/remake/<key>.atlas/.png` (`burning_horse`, `red_eyed_husk`, `spined_lizard_beast`,
+  `mud_golem`, `fire_serpent`, `crocodile_wizard`), copied by hand from the generator's `reports/forge/remake/<key>/base/`.
+  **Not** through `install_remakes.py`: each `remake.json` names an existing sprite as its "original" (only a scale
+  placeholder - Crocodile, Nightmare, Zombie, Raptor, Arcane Golem, Snake), and the script would record the six in the
+  generator's `originals.json` against them. The six placeholder enemies keep their atlases: `enemies.json` diff 483/0
+  lines, and their atlases and pngs in the test package are byte-identical to HEAD. The husk's and the golem's attack
+  strays (`sprite_artifact_audit.py --only remake`) were cleaned by the Art thread (`clean_strays.py`, their cells shrank
+  to 134x113 and 154x132); the audit's remaining flags are Death clips and the horse's flame head. Scales from
+  `enemy_scale.py --check` (its dry run: 0 changes); footprints written for the five that want one (only those - the stale
+  stock `urabrask.atlas` is not this round's); portraits already whole-body (`portraits.py`: 0 changed).
+- **Spawns**: biome rosters red +2, black +2, green +3, blue +1, colorless +1 (the Gaunt, round 179's undead rule).
+  No `.tmx` placement, no `gen_caves.py` re-run. Arena pools: the two Masters in the forest capital, Bogmaw Golem in the
+  swamp capital, Crocodile Hexmage in the island capital, both in the player Capitol's main pool (64 -> 66; prize lists
+  untouched).
+- **Colors**: the Art thread suggested horse R/B, golem R/G, lizard G/B; kept R (Nightmare is the dark horse; red and black
+  are the fullest rosters), B/G (mud is swamp ground; R/G would play the Ravager's game) and G (two Golgari enemies
+  otherwise). New roster slots W 0 / U +1 / B +2 / R +2 / G +3.
+- **Also**: `config tables/enemies.csv` +6 rows; `standalone-packaging/CREDITS.md` "Enemy art packs" + the @xandghost line
+  (the user's settled licensing). No Java, no save change: rank variants save as `Name|Tier` like every family.
+- **Checks**: `validate_plane_data.py` (enemies 2187, tier-families 1064, only the usual informational sections),
+  `deck_legality_audit.py` (none of the 24 decks), `sprite_footprints.py --check` (only urabrask), the arena pools'
+  names resolve (Rare, Include=Y; 18-26 Masters per pool).
+- **Tested** in a worktree package (`wt-780` from `4af39468454` with only this round's 49 files, Maven exit 0,
+  PACKAGE_OK) with a copy of the agent profile, every duel at 50x: all six spawned at all three ranks with the lives
+  above; duels against each (`[TFR-Duel]`: Apprentice Serpent W, Gaunt W, Ravager L then W, Golem L, Hexmage W; Adept
+  Ravager L; Master Gaunt L, Stallion L, Hexmage L); plates (console `plates on`) "APPRENTICE ?" on unknown families,
+  rank + pips after a fight (the Golem's two), `[TFR-Plates] learned` and `art of` lines for each; the autosave's Masters
+  came back as Masters on Continue; Nightmare, Arcane Golem and Raptor seen with their old art. forge.log: no missing
+  sprite or uncaught exception; one caught upstream AI line, "Flat Monte Carlo rollout failed ... Brazen Borrower ...
+  Petty Theft" (the Hexmage Master's adventure card; the AI used its heuristic and the duel went on). Shots:
+  `C:\TFR\notes\r780-*.png`.
+- **Not tested**: Alt / R3 themselves (the bridge cannot hold a key), an arena bracket actually drawing the two Masters
+  (seeded per day), Android.
+
 ## Round 785: no defeat gold minimum in week 1 - a lost duel takes only the percentage (2026-10-27)
 
 The user, on the 2026-10-27 log review (`C:\TFR\notes\logs-1027b.md`, P2): "Yes: in week 1 a defeat on Hard takes only

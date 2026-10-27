@@ -1,0 +1,144 @@
+spined_lizard_beast.png
+size: 2496,719
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 192, 131
+  footprint: 51, 42, 93, 86
+Idle
+  xy: 192, 64
+  size: 192, 131
+Idle
+  xy: 384, 64
+  size: 192, 131
+Idle
+  xy: 576, 64
+  size: 192, 131
+Idle
+  xy: 768, 64
+  size: 192, 131
+Idle
+  xy: 960, 64
+  size: 192, 131
+Idle
+  xy: 1152, 64
+  size: 192, 131
+Idle
+  xy: 1344, 64
+  size: 192, 131
+Idle
+  xy: 1536, 64
+  size: 192, 131
+Idle
+  xy: 1728, 64
+  size: 192, 131
+Idle
+  xy: 1920, 64
+  size: 192, 131
+Idle
+  xy: 2112, 64
+  size: 192, 131
+Walk
+  xy: 0, 195
+  size: 192, 131
+Walk
+  xy: 192, 195
+  size: 192, 131
+Walk
+  xy: 384, 195
+  size: 192, 131
+Walk
+  xy: 576, 195
+  size: 192, 131
+Walk
+  xy: 768, 195
+  size: 192, 131
+Attack
+  xy: 0, 326
+  size: 192, 131
+Attack
+  xy: 192, 326
+  size: 192, 131
+Attack
+  xy: 384, 326
+  size: 192, 131
+Attack
+  xy: 576, 326
+  size: 192, 131
+Attack
+  xy: 768, 326
+  size: 192, 131
+Attack
+  xy: 960, 326
+  size: 192, 131
+Attack
+  xy: 1152, 326
+  size: 192, 131
+Attack
+  xy: 1344, 326
+  size: 192, 131
+Attack
+  xy: 1536, 326
+  size: 192, 131
+Attack
+  xy: 1728, 326
+  size: 192, 131
+Attack
+  xy: 1920, 326
+  size: 192, 131
+Hit
+  xy: 0, 457
+  size: 192, 131
+Hit
+  xy: 192, 457
+  size: 192, 131
+Hit
+  xy: 384, 457
+  size: 192, 131
+Hit
+  xy: 576, 457
+  size: 192, 131
+Death
+  xy: 0, 588
+  size: 192, 131
+Death
+  xy: 192, 588
+  size: 192, 131
+Death
+  xy: 384, 588
+  size: 192, 131
+Death
+  xy: 576, 588
+  size: 192, 131
+Death
+  xy: 768, 588
+  size: 192, 131
+Death
+  xy: 960, 588
+  size: 192, 131
+Death
+  xy: 1152, 588
+  size: 192, 131
+Death
+  xy: 1344, 588
+  size: 192, 131
+Death
+  xy: 1536, 588
+  size: 192, 131
+Death
+  xy: 1728, 588
+  size: 192, 131
+Death
+  xy: 1920, 588
+  size: 192, 131
+Death
+  xy: 2112, 588
+  size: 192, 131
+Death
+  xy: 2304, 588
+  size: 192, 131

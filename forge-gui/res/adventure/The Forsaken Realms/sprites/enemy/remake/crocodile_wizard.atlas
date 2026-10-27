@@ -1,0 +1,147 @@
+crocodile_wizard.png
+size: 2132,594
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 164, 106
+  footprint: 31, 18, 91, 81
+Idle
+  xy: 164, 64
+  size: 164, 106
+Idle
+  xy: 328, 64
+  size: 164, 106
+Idle
+  xy: 492, 64
+  size: 164, 106
+Idle
+  xy: 656, 64
+  size: 164, 106
+Idle
+  xy: 820, 64
+  size: 164, 106
+Idle
+  xy: 984, 64
+  size: 164, 106
+Idle
+  xy: 1148, 64
+  size: 164, 106
+Idle
+  xy: 1312, 64
+  size: 164, 106
+Idle
+  xy: 1476, 64
+  size: 164, 106
+Idle
+  xy: 1640, 64
+  size: 164, 106
+Idle
+  xy: 1804, 64
+  size: 164, 106
+Walk
+  xy: 0, 170
+  size: 164, 106
+Walk
+  xy: 164, 170
+  size: 164, 106
+Walk
+  xy: 328, 170
+  size: 164, 106
+Walk
+  xy: 492, 170
+  size: 164, 106
+Walk
+  xy: 656, 170
+  size: 164, 106
+Attack
+  xy: 0, 276
+  size: 164, 106
+Attack
+  xy: 164, 276
+  size: 164, 106
+Attack
+  xy: 328, 276
+  size: 164, 106
+Attack
+  xy: 492, 276
+  size: 164, 106
+Attack
+  xy: 656, 276
+  size: 164, 106
+Attack
+  xy: 820, 276
+  size: 164, 106
+Attack
+  xy: 984, 276
+  size: 164, 106
+Attack
+  xy: 1148, 276
+  size: 164, 106
+Attack
+  xy: 1312, 276
+  size: 164, 106
+Attack
+  xy: 1476, 276
+  size: 164, 106
+Attack
+  xy: 1640, 276
+  size: 164, 106
+Attack
+  xy: 1804, 276
+  size: 164, 106
+Hit
+  xy: 0, 382
+  size: 164, 106
+Hit
+  xy: 164, 382
+  size: 164, 106
+Hit
+  xy: 328, 382
+  size: 164, 106
+Hit
+  xy: 492, 382
+  size: 164, 106
+Death
+  xy: 0, 488
+  size: 164, 106
+Death
+  xy: 164, 488
+  size: 164, 106
+Death
+  xy: 328, 488
+  size: 164, 106
+Death
+  xy: 492, 488
+  size: 164, 106
+Death
+  xy: 656, 488
+  size: 164, 106
+Death
+  xy: 820, 488
+  size: 164, 106
+Death
+  xy: 984, 488
+  size: 164, 106
+Death
+  xy: 1148, 488
+  size: 164, 106
+Death
+  xy: 1312, 488
+  size: 164, 106
+Death
+  xy: 1476, 488
+  size: 164, 106
+Death
+  xy: 1640, 488
+  size: 164, 106
+Death
+  xy: 1804, 488
+  size: 164, 106
+Death
+  xy: 1968, 488
+  size: 164, 106

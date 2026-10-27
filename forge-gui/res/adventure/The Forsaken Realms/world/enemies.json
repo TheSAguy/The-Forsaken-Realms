@@ -172429,5 +172429,488 @@
         "tier": "Rare",
         "difficulty": 3,
         "scale": 1.0833
+    },
+    {
+        "name": "Torchhead Stallion",
+        "sprite": "sprites/enemy/remake/burning_horse.atlas",
+        "deck": [
+            "decks/standard/xandghost/burning_horse.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 30,
+        "life": 20,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Horse",
+                    "Elemental"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Animal",
+            "Beast",
+            "Elemental",
+            "Fire",
+            "Mythical",
+            "Aggressive",
+            "IdentityRed",
+            "BiomeRed"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.25
+    },
+    {
+        "name": "Ashbark Gaunt",
+        "sprite": "sprites/enemy/remake/red_eyed_husk.atlas",
+        "deck": [
+            "decks/standard/xandghost/red_eyed_husk.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 17,
+        "life": 12,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Zombie"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "B",
+        "questTags": [
+            "Undead",
+            "Zombie",
+            "Horror",
+            "Minion",
+            "IdentityBlack",
+            "BiomeBlack",
+            "BiomeColorless"
+        ],
+        "tier": "Common",
+        "scale": 0.2241
+    },
+    {
+        "name": "Thornspine Ravager",
+        "sprite": "sprites/enemy/remake/spined_lizard_beast.atlas",
+        "deck": [
+            "decks/standard/xandghost/spined_lizard_beast.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 21,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Lizard",
+                    "Dinosaur"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "G",
+        "questTags": [
+            "Lizard",
+            "Beast",
+            "Monster",
+            "Predator",
+            "Territorial",
+            "IdentityGreen",
+            "BiomeGreen"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.2131
+    },
+    {
+        "name": "Bogmaw Golem",
+        "sprite": "sprites/enemy/remake/mud_golem.atlas",
+        "deck": [
+            "decks/standard/xandghost/mud_golem.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 30,
+        "life": 32,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Golem",
+                    "Elemental"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "BG",
+        "questTags": [
+            "Golem",
+            "Construct",
+            "Large",
+            "Monster",
+            "IdentityBlack",
+            "IdentityGreen",
+            "IdentityGolgari",
+            "BiomeBlack",
+            "BiomeGreen"
+        ],
+        "tier": "Rare",
+        "scale": 0.2453
+    },
+    {
+        "name": "Flamecrest Serpent",
+        "sprite": "sprites/enemy/remake/fire_serpent.atlas",
+        "deck": [
+            "decks/standard/xandghost/fire_serpent.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 25,
+        "life": 20,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Serpent",
+                    "Snake",
+                    "Salamander"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Fire",
+            "Elemental",
+            "Monster",
+            "Mythical",
+            "IdentityRed",
+            "BiomeRed"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.2407
+    },
+    {
+        "name": "Crocodile Hexmage",
+        "sprite": "sprites/enemy/remake/crocodile_wizard.atlas",
+        "deck": [
+            "decks/standard/xandghost/crocodile_wizard.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 31,
+        "life": 26,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Crocodile",
+                    "Frog",
+                    "Wizard"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "UG",
+        "questTags": [
+            "Wizard",
+            "Crocodile",
+            "Lizard",
+            "Water",
+            "Mystic",
+            "IdentityBlue",
+            "IdentityGreen",
+            "IdentitySimic",
+            "BiomeBlue",
+            "BiomeGreen"
+        ],
+        "tier": "Rare",
+        "scale": 0.2549
     }
 ]

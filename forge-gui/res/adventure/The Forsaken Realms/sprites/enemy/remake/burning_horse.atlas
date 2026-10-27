@@ -1,0 +1,146 @@
+burning_horse.png
+size: 2002,999
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 154, 187
+Idle
+  xy: 154, 64
+  size: 154, 187
+Idle
+  xy: 308, 64
+  size: 154, 187
+Idle
+  xy: 462, 64
+  size: 154, 187
+Idle
+  xy: 616, 64
+  size: 154, 187
+Idle
+  xy: 770, 64
+  size: 154, 187
+Idle
+  xy: 924, 64
+  size: 154, 187
+Idle
+  xy: 1078, 64
+  size: 154, 187
+Idle
+  xy: 1232, 64
+  size: 154, 187
+Idle
+  xy: 1386, 64
+  size: 154, 187
+Idle
+  xy: 1540, 64
+  size: 154, 187
+Idle
+  xy: 1694, 64
+  size: 154, 187
+Walk
+  xy: 0, 251
+  size: 154, 187
+Walk
+  xy: 154, 251
+  size: 154, 187
+Walk
+  xy: 308, 251
+  size: 154, 187
+Walk
+  xy: 462, 251
+  size: 154, 187
+Walk
+  xy: 616, 251
+  size: 154, 187
+Attack
+  xy: 0, 438
+  size: 154, 187
+Attack
+  xy: 154, 438
+  size: 154, 187
+Attack
+  xy: 308, 438
+  size: 154, 187
+Attack
+  xy: 462, 438
+  size: 154, 187
+Attack
+  xy: 616, 438
+  size: 154, 187
+Attack
+  xy: 770, 438
+  size: 154, 187
+Attack
+  xy: 924, 438
+  size: 154, 187
+Attack
+  xy: 1078, 438
+  size: 154, 187
+Attack
+  xy: 1232, 438
+  size: 154, 187
+Attack
+  xy: 1386, 438
+  size: 154, 187
+Attack
+  xy: 1540, 438
+  size: 154, 187
+Attack
+  xy: 1694, 438
+  size: 154, 187
+Hit
+  xy: 0, 625
+  size: 154, 187
+Hit
+  xy: 154, 625
+  size: 154, 187
+Hit
+  xy: 308, 625
+  size: 154, 187
+Hit
+  xy: 462, 625
+  size: 154, 187
+Death
+  xy: 0, 812
+  size: 154, 187
+Death
+  xy: 154, 812
+  size: 154, 187
+Death
+  xy: 308, 812
+  size: 154, 187
+Death
+  xy: 462, 812
+  size: 154, 187
+Death
+  xy: 616, 812
+  size: 154, 187
+Death
+  xy: 770, 812
+  size: 154, 187
+Death
+  xy: 924, 812
+  size: 154, 187
+Death
+  xy: 1078, 812
+  size: 154, 187
+Death
+  xy: 1232, 812
+  size: 154, 187
+Death
+  xy: 1386, 812
+  size: 154, 187
+Death
+  xy: 1540, 812
+  size: 154, 187
+Death
+  xy: 1694, 812
+  size: 154, 187
+Death
+  xy: 1848, 812
+  size: 154, 187

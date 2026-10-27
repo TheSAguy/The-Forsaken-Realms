@@ -1,0 +1,147 @@
+fire_serpent.png
+size: 3042,869
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 234, 161
+  footprint: 79, 47, 94, 88
+Idle
+  xy: 234, 64
+  size: 234, 161
+Idle
+  xy: 468, 64
+  size: 234, 161
+Idle
+  xy: 702, 64
+  size: 234, 161
+Idle
+  xy: 936, 64
+  size: 234, 161
+Idle
+  xy: 1170, 64
+  size: 234, 161
+Idle
+  xy: 1404, 64
+  size: 234, 161
+Idle
+  xy: 1638, 64
+  size: 234, 161
+Idle
+  xy: 1872, 64
+  size: 234, 161
+Idle
+  xy: 2106, 64
+  size: 234, 161
+Idle
+  xy: 2340, 64
+  size: 234, 161
+Idle
+  xy: 2574, 64
+  size: 234, 161
+Walk
+  xy: 0, 225
+  size: 234, 161
+Walk
+  xy: 234, 225
+  size: 234, 161
+Walk
+  xy: 468, 225
+  size: 234, 161
+Walk
+  xy: 702, 225
+  size: 234, 161
+Walk
+  xy: 936, 225
+  size: 234, 161
+Attack
+  xy: 0, 386
+  size: 234, 161
+Attack
+  xy: 234, 386
+  size: 234, 161
+Attack
+  xy: 468, 386
+  size: 234, 161
+Attack
+  xy: 702, 386
+  size: 234, 161
+Attack
+  xy: 936, 386
+  size: 234, 161
+Attack
+  xy: 1170, 386
+  size: 234, 161
+Attack
+  xy: 1404, 386
+  size: 234, 161
+Attack
+  xy: 1638, 386
+  size: 234, 161
+Attack
+  xy: 1872, 386
+  size: 234, 161
+Attack
+  xy: 2106, 386
+  size: 234, 161
+Attack
+  xy: 2340, 386
+  size: 234, 161
+Attack
+  xy: 2574, 386
+  size: 234, 161
+Hit
+  xy: 0, 547
+  size: 234, 161
+Hit
+  xy: 234, 547
+  size: 234, 161
+Hit
+  xy: 468, 547
+  size: 234, 161
+Hit
+  xy: 702, 547
+  size: 234, 161
+Death
+  xy: 0, 708
+  size: 234, 161
+Death
+  xy: 234, 708
+  size: 234, 161
+Death
+  xy: 468, 708
+  size: 234, 161
+Death
+  xy: 702, 708
+  size: 234, 161
+Death
+  xy: 936, 708
+  size: 234, 161
+Death
+  xy: 1170, 708
+  size: 234, 161
+Death
+  xy: 1404, 708
+  size: 234, 161
+Death
+  xy: 1638, 708
+  size: 234, 161
+Death
+  xy: 1872, 708
+  size: 234, 161
+Death
+  xy: 2106, 708
+  size: 234, 161
+Death
+  xy: 2340, 708
+  size: 234, 161
+Death
+  xy: 2574, 708
+  size: 234, 161
+Death
+  xy: 2808, 708
+  size: 234, 161
