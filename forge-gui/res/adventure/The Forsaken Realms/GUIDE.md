@@ -1498,7 +1498,8 @@ next. **Your race's four sets never go to a color:** they're added to the neutra
 towns sell them and colorless enemies drop them. Never dealt at all: sets with no booster packs,
 Un-sets and other novelty or promo sets, and Alpha, Beta and Unlimited (their cards still turn up as
 later printings). A short ban list - the Power 9, Sol Ring, Signets, Commander-only cards and the like -
-is kept out of rewards and shops.
+is kept out of rewards and shops. Enemies may still play those cards, but you never win them: a banned
+card won in ante becomes another card from the same deck.
 
 Those shares decide **where each card can come from**:
 

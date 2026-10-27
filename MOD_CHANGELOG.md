@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 775: the Sol Ring leak - no banned card from an enemy's deck or ante (2026-10-26)
+
+The open item since 2026-10-19: on 2026-10-18 the player Vr01 wrote on Discord that the FAQ says Sol Ring is never a
+reward, "but I did", and wants to keep it; the next day the user's own save slot 1 held 2 Sol Ring cards. The user
+picked "Sol Ring leak hunt", then "Fix, keep owned".
+
+- **Root cause**: the ban list (`restrictedCards` - the Power 9, Sol Ring, Signets, Commander-only cards...) guarded
+  the main reward pool, the `sourceDeck` pools (round 41) and boosters (round 387), but not cards taken from the
+  beaten enemy's OWN deck. Round 387 strips only commander-only cards from enemy decks and keeps "a boss's Sol Ring
+  or Black Lotus" on purpose, so two paths handed them over:
+  1. **Deck loot**: `EnemySprite.getRewards()` built its deck pool with the blocked sets and basic lands taken out,
+     never the ban list. That pool feeds `deckCard` entries, CardBudget's top-up draws and champion loot; the
+     map-placed `this.rewards` loop passed the raw deck.
+  2. **Ante**: `DuelScene` added every ante-won card straight to the collection.
+  Scale (a scan of TFR's `world/enemies.json`): 824 of 2,181 enemies carry Sol Ring in their deck file, 809 of them
+  with a `deckCard` entry - 813 are the `decks/legends` legends (round 142's frontier spawns), which pay 6-17 deck
+  cards each; 865 carry some banned card. Card rewards are not logged by name, which is why no log review found it.
+- **Fix**: `EnemySprite.withoutBannedCards` takes every banned name (every printing) out of both deck pools before a
+  draw. A banned card won in ante becomes another random card from the same deck - not a basic land, not banned, not
+  from a blocked set - or `deckCardFallbackGold` (50) when there is none (`DuelScene.withoutBannedAnteWins`); the ante
+  popup shows the card paid. Event ante (drafts, sealed) is untouched: those decks come from boosters, already cleaned.
+  Enemies still play their Sol Rings; only what the player receives changes.
+- **Kept**: cards already owned stay - Vr01's copy and the user's 2 in slot 1 (no load-time removal like round 691's
+  Cheat). The `Sol Ring` neck item (round 506) is an item, not the card, and is unchanged.
+- **Logs**: `[TFR-RestrictedCards] <enemy>: kept N banned card(s) out of its deck loot (Sol Ring, ...) - the enemy
+  still plays them` (`map loot` for the map-placed rewards), once per payout that removes something;
+  `[TFR-RestrictedCards] ante: won <card> is banned - paid <card> from the same deck instead` or `... paid N gold`.
+- GUIDE.md/.html: the ban-list sentence in "Card Sets" adds that enemies may play those cards but the player never
+  wins them, and what a banned ante win becomes.
+- Stock files (CORE_ENGINE_CHANGES): EnemySprite, DuelScene.
+- **Checked**: Maven `-pl forge-gui-mobile-dev -am package -DskipTests -o` exit 0 in a clean worktree (HEAD 776 + these
+  two files, so no other round's uncommitted files), `build_standalone.py --out` into a test folder (Package OK) with a
+  copy of the agent profile. A new game, +300 max life, `spawn enemy Kaalia`: the duel at 50x, won; forge.log
+  `[TFR-RestrictedCards] Kaalia: kept 1 banned card(s) out of its deck loot (Sol Ring) - the enemy still plays them`,
+  then the payout (19 cards) as usual, no exception. Not seen in play: the ante swap (no banned card came up in ante)
+  and the map-placed rewards' line.
+
+**Files touched**: `character/EnemySprite.java`, `scene/DuelScene.java`; plane `GUIDE.md`, `GUIDE.html`.
+
 ## Round 776: small cleanups - duplicate quest tags, a tfr-play trap, FAQ message 1, the Lab's unfed days (2026-10-26)
 
 The user picked "Small cleanups": "The 11 duplicate quest tags (Mageripper's Insect), two dead-code side notes, the

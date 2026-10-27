@@ -277,6 +277,10 @@ public class DuelScene extends ForgeScene {
                     //Could also add the cards to the opponent's pool, but their games aren't simulated and they never edit their decks.
                 }
                 else {
+                    // Round 775: a banned card won in ante is swapped (event decks are built from cleaned boosters).
+                    List<PaperCard> allowedWins = withoutBannedAnteWins(anteResult.wonCards, Current.latestDeck());
+                    anteResult.wonCards.clear();
+                    anteResult.wonCards.addAll(allowedWins);
                     for (PaperCard card : anteResult.wonCards) {
                         Current.player().addCard(card);
                     }
@@ -594,6 +598,41 @@ public class DuelScene extends ForgeScene {
             }
         }
         System.out.println("[TFR-AnteRestore] " + card.getName() + " has no pending loss to recover");
+    }
+
+    // Round 775 (the Sol Ring leak): ante handed over the enemy's banned cards (restrictedCards - the Power 9, Sol Ring,
+    // Signets...), which round 387 leaves in enemy decks on purpose. A banned win becomes another random card from the
+    // same deck - not a basic land, not banned, not from a blocked set, as deck loot draws - or deckCardFallbackGold.
+    private static List<PaperCard> withoutBannedAnteWins(List<PaperCard> won, Deck enemyDeck) {
+        java.util.Set<String> banned = forge.adventure.util.CommanderCards.restricted();
+        List<PaperCard> out = new ArrayList<>(won.size());
+        List<PaperCard> pool = null;
+        for (PaperCard card : won) {
+            if (card == null || !banned.contains(card.getName())) {
+                out.add(card);
+                continue;
+            }
+            if (pool == null) {
+                pool = new ArrayList<>();
+                if (enemyDeck != null)
+                    for (PaperCard pc : enemyDeck.getMain().getFilteredPool(forge.item.PaperCardPredicates.onlyPrintedInEditions(
+                            Config.instance().getConfigData().restrictedEditions).negate()).toFlatList())
+                        if (!pc.getRules().getType().isBasicLand() && !banned.contains(pc.getName()))
+                            pool.add(pc);
+            }
+            if (!pool.isEmpty()) {
+                PaperCard swap = pool.get(forge.util.MyRandom.getRandom().nextInt(pool.size()));
+                out.add(swap);
+                System.out.println("[TFR-RestrictedCards] ante: won " + card.getName() + " is banned - paid "
+                        + swap.getName() + " from the same deck instead");
+            } else {
+                int gold = Math.max(1, Config.instance().getTuningData().deckCardFallbackGold);
+                Current.player().giveGold(gold);
+                System.out.println("[TFR-RestrictedCards] ante: won " + card.getName() + " is banned and the deck has no"
+                        + " other card to give - paid " + gold + " gold instead");
+            }
+        }
+        return out;
     }
 
     private void showAnteResults(List<PaperCard> wonCards, List<PaperCard> lostCards, Runnable onDone) {

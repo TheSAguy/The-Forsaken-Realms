@@ -715,6 +715,26 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     public String getBossIntro(){
         return data.getBossIntro();
     }
+    // Round 775 (the Sol Ring leak: Vr01 on Discord and the user's own 2 copies): the ban list (restrictedCards - the
+    // Power 9, Sol Ring, Signets...) guarded the reward pool, sourceDeck pools and boosters, but not loot drawn from the
+    // beaten enemy's own deck - deckCard entries, CardBudget's top-ups, champion loot and map-placed rewards. Round 387
+    // keeps a boss's Sol Ring in its deck on purpose, so the enemy still plays it; only the payout skips it. By name, so
+    // every printing is caught. One line when something is removed.
+    private static CardPool withoutBannedCards(CardPool pool, String enemyName, String what) {
+        java.util.Set<String> banned = forge.adventure.util.CommanderCards.restricted();
+        if (pool == null || banned.isEmpty())
+            return pool;
+        java.util.TreeSet<String> found = new java.util.TreeSet<>();
+        for (java.util.Map.Entry<PaperCard, Integer> e : pool)
+            if (banned.contains(e.getKey().getName()))
+                found.add(e.getKey().getName());
+        if (found.isEmpty())
+            return pool;
+        System.out.println("[TFR-RestrictedCards] " + enemyName + ": kept " + found.size() + " banned card(s) out of its "
+                + what + " (" + String.join(", ", found) + ") - the enemy still plays them");
+        return pool.getFilteredPool(pc -> !banned.contains(pc.getName()));
+    }
+
     public Array<Reward> getRewards() {
         rewardCollectionPool.clear();
         // Collect custom rewards for chaos battles
@@ -816,7 +836,8 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                 Deck enemyDeck = Current.latestDeck();
                 // By popular demand, remove basic lands from the reward pool.
                 CardPool deckNoRestrictedEditions = enemyDeck.getMain().getFilteredPool(PaperCardPredicates.onlyPrintedInEditions(Config.instance().getConfigData().restrictedEditions).negate());
-                CardPool deckNoBasicLands = deckNoRestrictedEditions.getFilteredPool(PaperCardPredicates.fromRules(CardRulesPredicates.NOT_BASIC_LAND));
+                CardPool deckNoBasicLands = withoutBannedCards(deckNoRestrictedEditions.getFilteredPool(PaperCardPredicates.fromRules(CardRulesPredicates.NOT_BASIC_LAND)),
+                        getName() != null ? getName() : data.getName(), "deck loot");
 
                 // Progressive Set Unlocks (MOD_SCOPE.md #4): ordinary roaming-monster loot is
                 // restricted to that monster's color's shard - this is the actual discovery
@@ -909,8 +930,9 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
             if(this.rewards != null) { //Collect additional rewards.
                 for(RewardData rdata : this.rewards) {
                     //Do not filter in case we want to FORCE basic lands. If it ever becomes a problem just repeat the same as above.
-
-                    rewards.addAll(rdata.generate(false,(Current.latestDeck() != null ? Current.latestDeck().getMain().toFlatList() : null), true));
+                    // Round 775: basic lands stay, but the ban list still applies.
+                    rewards.addAll(rdata.generate(false,(Current.latestDeck() != null ? withoutBannedCards(Current.latestDeck().getMain(),
+                            getName() != null ? getName() : data.getName(), "map loot").toFlatList() : null), true));
                 }
             }
         } finally {

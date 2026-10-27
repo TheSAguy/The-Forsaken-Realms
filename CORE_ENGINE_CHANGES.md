@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 775 - no banned card from an enemy's deck or ante
+
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** (STOCK) - new static `withoutBannedCards()`;
+  `getRewards()` runs `deckNoBasicLands` and the map-placed rewards' deck through it (the `restrictedCards` names out,
+  one `[TFR-RestrictedCards]` line). Upstream's own two lines there are wrapped, not changed.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK) - new static `withoutBannedAnteWins()`; the
+  non-event ante branch swaps a banned won card (in place in `anteResult.wonCards`, a final list) before `addCard`.
+
 ### Round 776 - duplicate quest tags (upstream data)
 
 - **`forge-gui/res/adventure/common/world/enemies.json`** and **`forge-gui/res/adventure/Shandalar Old
