@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 765: town badge moves to a free corner in tight clusters (2026-10-26)
+
+The user, after round 763's badges: "When a town's badge would cover another map icon at its top-right corner, move it
+to the first free corner (top-left, then bottom-right, then bottom-left)." In round 763's shot Mardrake Hold's Smithy
+anvil sat on the Blue Tower icon just above-right of the town.
+
+- `MapViewScene.badgeAnchors()` replaces round 760's fixed "+10 map px each way" anchor. Each badge is a 16 map-pixel
+  square centered on a corner of its town's real drawn icon, tried top-right, top-left, bottom-right, bottom-left. The
+  first corner that overlaps no other place's icon and no badge placed before it wins; with none free it stays top-right.
+  The view is built at zoom 1, where one unit is one map pixel, so the test runs in map-image pixels and the anchor goes
+  back to world units for `layoutMarkers()` as before (zooming moves it with the map).
+- The icon rectangles come from `World.mapIconPixelRect()` (round 250, the same branches and sizes as
+  `redrawPoiMarkers()`), made `public` for this - a one-word change to a TFR method, not a copy of its branches. A
+  town's own rectangle is used for its corners too, so a broken town's 23-pixel icon puts its badge on its real corner.
+- Worked out once per map-view build, from every active place whether fogged or not, so a badge does not move as the
+  fog lifts. Badged towns are taken in `getAllPointOfInterest()` order, so the placement is the same on every visit.
+- `[TFR-Specialty] badge corner: <town> -> <corner> (top-right covered <name>)` when a badge leaves top-right, and
+  `... -> top-right, no free corner (...)` when every corner is taken.
+- No art change; round 763's badges are as they were.
+
+Checked in the agent game (javac classes ahead of the agent jar, slot 76 loaded read-only, Mardrake Hold set to Smithy
+by console): `[TFR-Specialty] badge corner: Mardrake Hold -> top-left (top-right covered Blue Tower)`; the shot
+`notes/tweaks-1026/r765-badges.png` shows the anvil top-left with the tower clear, and the Market and Research badges
+in the same shot still top-right. Maven `-pl forge-gui-mobile-dev -am package` exit 0. Not done: the bottom corners can
+sit over a Details-mode label under a town; labels are not icons, so they are not tested against.
+
 ## Round 764: research shows days, not a meter (2026-10-26)
 
 The user, on round 751's research v2: "I'm not sure I like/understand the "meter" concept. I think there should be no cap

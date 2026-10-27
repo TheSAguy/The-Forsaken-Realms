@@ -4354,7 +4354,7 @@ public class World implements Disposable, SaveFileContent {
      * Round 250: the map-image rectangle {x, y, w, h} (image pixels, y down) that redrawPoiMarkers() draws this POI's
      * icon into, or null when it draws none. The same branches and sizes as that method - keep the two in step.
      */
-    int[] mapIconPixelRect(PointOfInterest poi) {
+    public int[] mapIconPixelRect(PointOfInterest poi) {
         if (poi == null || !poi.getActive() || data == null)
             return null;
         String name = poi.getData().name;

@@ -1185,26 +1185,17 @@ public class MapViewScene extends UIScene {
             mageMarkers.add(marker);
             markerAnchors.add(new float[]{wx, wy});
         }
-        // Round 760: each specialized town's badge (TownSpecialties.badge), centered on its map icon's top-right corner -
-        // the icon is 20 map pixels, so +10 map px each way. Drawn at 16 units; in mageMarkers so zooming moves it.
+        // Round 760: each specialized town's badge (TownSpecialties.badge), centered on a corner of its map icon. Drawn at
+        // 16 units; in mageMarkers so zooming moves it. Round 765: top-right unless another icon or badge is there - see
+        // badgeAnchors().
         int badges = 0;
-        {
-            forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
-            int ts = world.getTileSize();
-            float off = 10f / Math.max(1, world.getData().miniMapTileSize) * ts;
-            for (Object[] row : forge.adventure.util.TownSpecialties.badgedTowns()) {
-                PointOfInterest town = (PointOfInterest) row[0];
-                com.badlogic.gdx.graphics.g2d.Sprite art = forge.adventure.util.TownSpecialties.badge(
-                        (forge.adventure.util.TownSpecialties.Specialty) row[1]);
-                if (art == null)
-                    continue;
-                Image marker = new Image(art);
-                marker.setSize(16f, 16f);
-                table.addActor(marker);
-                mageMarkers.add(marker);
-                markerAnchors.add(new float[]{town.getCenter().x + off, town.getCenter().y + off});
-                badges++;
-            }
+        for (Object[] row : badgeAnchors()) {
+            Image marker = new Image((com.badlogic.gdx.graphics.g2d.Sprite) row[0]);
+            marker.setSize(16f, 16f);
+            table.addActor(marker);
+            mageMarkers.add(marker);
+            markerAnchors.add((float[]) row[1]);
+            badges++;
         }
         layoutMarkers(); // round 292: the same placement every zoom step uses
         if (badges > 0)
@@ -1235,6 +1226,82 @@ public class MapViewScene extends UIScene {
 
         super.enter();
     }
+    private static final String[] BADGE_CORNERS = {"top-right", "top-left", "bottom-right", "bottom-left"};
+
+    /**
+     * Round 765 (the user: "When a town's badge would cover another map icon at its top-right corner, move it to the
+     * first free corner"): {sprite, world anchor} for each specialized town's badge. Each badge is a 16 map-pixel square
+     * centered on a corner of its town's drawn icon (World.mapIconPixelRect, map-image pixels, y down - the view is
+     * built at zoom 1, where one unit is one map pixel), tried top-right, top-left, bottom-right, bottom-left; the first
+     * that overlaps no other place's icon and no badge placed before it wins, else top-right. Worked out once per build,
+     * from every active place whether fogged or not, so a badge does not move as the fog lifts.
+     */
+    private List<Object[]> badgeAnchors() {
+        List<Object[]> out = Lists.newArrayList();
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        List<Object[]> towns = forge.adventure.util.TownSpecialties.badgedTowns();
+        if (towns.isEmpty())
+            return out;
+        int ts = world.getTileSize();
+        int mm = Math.max(1, world.getData().miniMapTileSize);
+        int heightPx = world.getHeightInTiles() * mm;
+        List<int[]> icons = Lists.newArrayList();
+        List<String> iconNames = Lists.newArrayList();
+        List<PointOfInterest> iconPois = Lists.newArrayList();
+        for (PointOfInterest poi : world.getAllPointOfInterest()) {
+            int[] r = world.mapIconPixelRect(poi);
+            if (r == null)
+                continue;
+            icons.add(r);
+            iconNames.add(poi.getDisplayName());
+            iconPois.add(poi);
+        }
+        for (Object[] row : towns) {
+            PointOfInterest town = (PointOfInterest) row[0];
+            com.badlogic.gdx.graphics.g2d.Sprite art = forge.adventure.util.TownSpecialties.badge(
+                    (forge.adventure.util.TownSpecialties.Specialty) row[1]);
+            if (art == null)
+                continue;
+            int[] own = world.mapIconPixelRect(town);
+            if (own == null) { // no drawn icon: round 760's 20-pixel square on the town's center
+                float cx = town.getCenter().x / ts * mm, cy = heightPx - town.getCenter().y / ts * mm;
+                own = new int[]{Math.round(cx) - 10, Math.round(cy) - 10, 20, 20};
+            }
+            float[][] corners = {{own[0] + own[2], own[1]}, {own[0], own[1]},
+                    {own[0] + own[2], own[1] + own[3]}, {own[0], own[1] + own[3]}};
+            int pick = -1;
+            String covered = null;
+            for (int c = 0; c < corners.length && pick < 0; c++) {
+                String hit = null;
+                float bx = corners[c][0] - 8f, by = corners[c][1] - 8f;
+                for (int i = 0; i < icons.size() && hit == null; i++) {
+                    int[] r = icons.get(i);
+                    if (iconPois.get(i) != town && bx < r[0] + r[2] && r[0] < bx + 16f && by < r[1] + r[3] && r[1] < by + 16f)
+                        hit = iconNames.get(i);
+                }
+                if (c == 0)
+                    covered = hit;
+                if (hit == null)
+                    pick = c;
+            }
+            if (pick < 0) {
+                pick = 0; // every corner covered: keep top-right
+                System.out.println("[TFR-Specialty] badge corner: " + town.getDisplayName()
+                        + " -> top-right, no free corner (top-right covered " + covered + ")");
+            } else if (pick > 0) {
+                System.out.println("[TFR-Specialty] badge corner: " + town.getDisplayName() + " -> "
+                        + BADGE_CORNERS[pick] + " (top-right covered " + covered + ")");
+            }
+            float[] corner = corners[pick];
+            // later badges avoid this one: it joins the icons as a 16-pixel square with no place behind it
+            icons.add(new int[]{Math.round(corner[0]) - 8, Math.round(corner[1]) - 8, 16, 16});
+            iconNames.add(town.getDisplayName() + "'s badge");
+            iconPois.add(null);
+            out.add(new Object[]{art, new float[]{corner[0] / mm * ts, (heightPx - corner[1]) / mm * ts}});
+        }
+        return out;
+    }
+
     // Round 249: callers placing something ON a point of interest pass its getCenter() - World.redrawPoiMarkers()
     // centers each map icon there (stock centered it on the POI's bottom-left corner, getPosition()).
     float getMapX(float posX) {
