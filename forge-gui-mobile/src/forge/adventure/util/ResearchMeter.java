@@ -28,6 +28,14 @@ import java.util.Set;
  * Only a game started on round 751 or later runs it (AdventurePlayer.isResearchV2, set by create()); a save from before
  * keeps the classic research - the 10% gate, 7 days, shop-only selling at the town's price. Grep forge.log for
  * [TFR-Research].
+ * <p>
+ * Round 764 (the user: "I'm not sure I like/understand the "meter" concept ... it will just keep lowering the time
+ * needed", then option A, "even research in progress will lessen in time if you donate cards after research has
+ * started. The only thing you won't get back would be the shards you spent"): the player never sees the meter. The Lab
+ * shows days, shards and how many new commons take the next day off (nextDayLine, worked out through the same
+ * lengthDays/pointsFor math); a set at 0 days is Ready and takes no more points (pointsFor clamps at a full meter, so
+ * its cards only pay gold); a sacrifice stops at Ready; and feeding a running research to 0 days finishes it at once
+ * (flush). The numbers are unchanged; "meter" stays only as the internal name.
  */
 public final class ResearchMeter {
     private ResearchMeter() {}
@@ -96,7 +104,25 @@ public final class ResearchMeter {
     /** The research's whole length at today's fill, before rounding: researchDaysV2 x (1 - sqrt(fill)), with Researcher
      *  and (round 760) the Research towns' speed (TownSpecialties.researchDaysFactor). */
     public static double lengthDays(AdventurePlayer player, String code) {
-        return unfedDays() * (1 - reach(player, code)) * Ascendance.researchDaysFactor() * TownSpecialties.researchDaysFactor();
+        return lengthDaysAt(code, points(player, code));
+    }
+
+    /** Round 764: lengthDays at this many points - the Lab's look-ahead (nextDayOff, the sacrifice plan, sellNote). */
+    private static double lengthDaysAt(String code, float pts) {
+        double reach = Math.sqrt(Math.min(1f, Math.max(0f, pts) / meterSize(code)));
+        return unfedDays() * (1 - reach) * Ascendance.researchDaysFactor() * TownSpecialties.researchDaysFactor();
+    }
+
+    /** Round 764: the days the Lab shows at this many points - left on a running research, else a start now's. */
+    private static int daysAt(AdventurePlayer player, String code, float pts, int currentDay) {
+        Integer start = player.getResearchInProgress().get(code);
+        double left = lengthDaysAt(code, pts) - (start == null ? 0 : currentDay - start);
+        return Math.max(0, (int) Math.ceil(left - 1e-6));
+    }
+
+    /** Round 764: the set's days now - left on a running research, else a start now's. 0 = Ready. */
+    public static int days(AdventurePlayer player, String code, int currentDay) {
+        return daysAt(player, code, points(player, code), currentDay);
     }
 
     /** Days a research would take if started now. */
@@ -127,6 +153,23 @@ public final class ResearchMeter {
         return p != null && p.length > i ? p[i] : new int[]{1, 2, 3, 5}[i];
     }
 
+    /** Raw points times the Research towns' factor (round 760), doubled for a sacrifice. */
+    private static float scaled(float pts, boolean sacrifice) {
+        pts *= TownSpecialties.researchPointsFactor(); // round 760: the Research towns' speed (1 without specialties)
+        return sacrifice ? pts * tuning().researchSacrificeFactor : pts;
+    }
+
+    /** Round 764: what one new common adds when sold - the Lab's unit for "N more new commons take a day off". */
+    public static float newCommonPoints() {
+        int[] p = tuning().researchPointsByRarity;
+        return scaled(p != null && p.length > 0 ? p[0] : 1, false);
+    }
+
+    /** Round 764: points a set still takes before its meter is full (0 = Ready: more of its cards only pay gold). */
+    private static float room(AdventurePlayer player, String code) {
+        return Math.max(0f, meterSize(code) - points(player, code));
+    }
+
     /** Can this printing feed a meter: a v2 save, a card with sale value, counted by its own set, the set not open. */
     public static boolean feedable(AdventurePlayer player, PaperCard card) {
         return enabled(player) && card != null && !card.hasNoSellValue() && PrintingIndex.counts(card)
@@ -142,20 +185,60 @@ public final class ResearchMeter {
         Set<String> fed = player.getResearchFedNames().get(card.getEdition());
         boolean isNew = fed == null || !fed.contains(card.getName());
         float pts = isNew ? first + (amount - 1) * copy : amount * copy;
-        pts *= TownSpecialties.researchPointsFactor(); // round 760: the Research towns' speed (1 without specialties)
-        return sacrifice ? pts * tuning().researchSacrificeFactor : pts;
+        // Round 764: clamped at a full meter - a Ready set stores nothing more, so its cards only pay gold.
+        return Math.min(scaled(pts, sacrifice), room(player, card.getEdition()));
     }
 
-    /** The editor's Sell line: " (+2 DOM)" when one copy sold now would feed its set, else "". */
+    /** The editor's Sell line, round 764 in days: " (DOM research -1 day)", " (feeds DOM research)", " (DOM research:
+     *  Ready)" or " (finishes DOM research)" when one copy sold now would feed its set, else "". */
     public static String sellNote(AdventurePlayer player, PaperCard card) {
         float pts = pointsFor(player, card, 1, false);
-        return pts > 0f ? " (+" + fmt(pts) + " " + card.getEdition() + ")" : "";
+        if (pts <= 0f)
+            return "";
+        String code = card.getEdition();
+        int day = currentDay();
+        float now = points(player, code);
+        int before = daysAt(player, code, now, day), after = daysAt(player, code, now + pts, day);
+        if (after == 0)
+            return player.isResearching(code) ? " (finishes " + code + " research)" : " (" + code + " research: Ready)";
+        return after < before ? " (" + code + " research -" + daysText(before - after) + ")" : " (feeds " + code + " research)";
+    }
+
+    /** Round 764: "1 day", "3 days". */
+    public static String daysText(int days) {
+        return days + (days == 1 ? " day" : " days");
+    }
+
+    /** Round 764: {new commons sold, days they take off} for the next day off now; {0, 0} when Ready. */
+    public static int[] nextDayOff(AdventurePlayer player, String code, int currentDay) {
+        float pts = points(player, code);
+        int now = daysAt(player, code, pts, currentDay);
+        float c = newCommonPoints();
+        if (now <= 0 || c <= 0f)
+            return new int[]{0, 0};
+        int max = (int) Math.ceil(room(player, code) / c) + 1; // a full meter is 0 days, so this always finds one
+        for (int n = 1; n <= max; n++) {
+            int d = daysAt(player, code, pts + n * c, currentDay);
+            if (d < now)
+                return new int[]{n, now - d};
+        }
+        return new int[]{0, 0};
+    }
+
+    /** Round 764: "One more new common takes a day off", "3 more new commons take a day off", "One more new common takes
+     *  2 days off"; "" when Ready. */
+    public static String nextDayLine(AdventurePlayer player, String code, int currentDay) {
+        int[] r = nextDayOff(player, code, currentDay);
+        if (r[0] <= 0)
+            return "";
+        return (r[0] == 1 ? "One more new common takes " : r[0] + " more new commons take ")
+                + (r[1] == 1 ? "a day" : r[1] + " days") + " off";
     }
 
     private static final class Batch {
         int newCards, copies;
         float points;
-        float fillBefore;
+        int daysBefore; // round 764: the days the Lab showed before this feed (left, when running)
     }
 
     private static final Map<String, Batch> batch = new LinkedHashMap<>();
@@ -194,7 +277,7 @@ public final class ResearchMeter {
         Batch b = batch.get(code);
         if (b == null) {
             b = new Batch();
-            b.fillBefore = fill(player, code);
+            b.daysBefore = days(player, code, currentDay());
             batch.put(code, b);
         }
         Set<String> fed = player.getResearchFedNames().computeIfAbsent(code, k -> new HashSet<>());
@@ -212,20 +295,38 @@ public final class ResearchMeter {
         if (batch.isEmpty())
             return;
         int day = currentDay();
+        java.util.List<String> finished = new java.util.ArrayList<>();
         for (Map.Entry<String, Batch> e : batch.entrySet()) {
             String code = e.getKey();
             Batch b = e.getValue();
             float after = fill(player, code);
+            boolean running = player.isResearching(code);
+            int daysNow = days(player, code, day);
             System.out.println("[TFR-Research] fed " + code + " (" + how + "): " + b.newCards + " new card(s), "
                     + b.copies + " copy(ies), +" + fmt(b.points) + " pts -> " + fmt(points(player, code)) + "/"
                     + meterSize(code) + " (" + Math.round(after * 100) + "%); start now: " + startCost(player, code)
                     + " shards (base " + baseCost() + "), " + daysIfStarted(player, code) + " day(s)"
-                    + (player.isResearching(code) ? "; running, " + player.getResearchDaysLeft(code, day) + " day(s) left" : ""));
-            if (b.fillBefore < 1f && after >= 1f && !player.isResearching(code))
-                GameHUD.getInstance().addNotification("[+Shards] " + editionName(code) + "'s research meter is full -"
-                        + " research it at your Capitol's Research Lab for " + startCost(player, code) + " shards, with no wait.");
+                    + (running ? "; running, " + player.getResearchDaysLeft(code, day) + " day(s) left" : ""));
+            if (running) {
+                // Round 764: feeding a running research shortens it; at 0 days left it finishes now, not on the next tick.
+                if (daysNow < b.daysBefore)
+                    System.out.println("[TFR-Research] running " + code + " shortened by feeding: " + b.daysBefore
+                            + " -> " + daysNow + " day(s) left (start shards not refunded)");
+                if (daysNow == 0)
+                    finished.add(code);
+            } else if (b.daysBefore > 0 && daysNow == 0) {
+                GameHUD.getInstance().addNotification("[+Shards] " + editionName(code) + " is ready to research -"
+                        + " at your Capitol's Research Lab for " + startCost(player, code) + "[+Shards], with no wait.");
+            }
         }
         batch.clear();
+        for (String code : finished) {
+            System.out.println("[TFR-Research] " + code + " finished by feeding on day " + day);
+            player.checkResearchCompletion(day);
+            if (player.hasUnlockedEdition(code))
+                GameHUD.getInstance().addNotification("[+Shards] " + editionName(code) + " is researched - its cards"
+                        + " now stock your shops.");
+        }
     }
 
     /** The cards of this set the player could sacrifice: not in a deck, not a favorite, with sale value. keepOne leaves
@@ -250,20 +351,53 @@ public final class ResearchMeter {
         return out;
     }
 
-    /** The Lab's Sacrifice: these copies leave the collection for double points, no gold. Returns the points added. */
-    public static float sacrifice(AdventurePlayer player, String code, boolean keepOne) {
-        Map<PaperCard, Integer> spare = spareCards(player, code, keepOne);
-        float before = points(player, code);
-        int count = 0;
-        for (Map.Entry<PaperCard, Integer> e : spare.entrySet()) {
-            int removed = player.removeCardsForResearch(e.getKey(), e.getValue());
-            if (removed > 0) {
-                feed(player, e.getKey(), removed, true);
-                count += removed;
+    /** Round 764: what a sacrifice would do (or did) - the cards it takes and the Lab's days before and after. */
+    public static final class Plan {
+        public int cards;
+        public int daysBefore, daysAfter;
+    }
+
+    /** Round 764: the Lab's Sacrifice, looked at before it runs - copy by copy, stopping once the set reaches 0 days,
+     *  so a sacrifice never takes cards past Ready. */
+    public static Plan planSacrifice(AdventurePlayer player, String code, boolean keepOne, int currentDay) {
+        return runSacrifice(player, code, keepOne, currentDay, false);
+    }
+
+    /** The Lab's Sacrifice: these copies leave the collection for double points, no gold, until the set reaches 0 days
+     *  (round 764). A running research brought to 0 days finishes at once (flush). */
+    public static Plan sacrifice(AdventurePlayer player, String code, boolean keepOne, int currentDay) {
+        Plan plan = runSacrifice(player, code, keepOne, currentDay, true);
+        flush(player, "sacrificed " + plan.cards + " card(s)" + (keepOne ? ", one of each kept" : ""));
+        return plan;
+    }
+
+    private static Plan runSacrifice(AdventurePlayer player, String code, boolean keepOne, int currentDay, boolean apply) {
+        Plan plan = new Plan();
+        float pts = points(player, code);
+        plan.daysBefore = daysAt(player, code, pts, currentDay);
+        Set<String> fedNow = player.getResearchFedNames().get(code);
+        Set<String> fedSim = fedNow == null ? new HashSet<>() : new HashSet<>(fedNow);
+        float copyShare = tuning().researchCopyShare;
+        outer:
+        for (Map.Entry<PaperCard, Integer> e : spareCards(player, code, keepOne).entrySet()) {
+            PaperCard pc = e.getKey();
+            for (int i = 0; i < e.getValue(); i++) {
+                if (daysAt(player, code, apply ? points(player, code) : pts, currentDay) == 0)
+                    break outer;
+                if (apply) {
+                    if (player.removeCardsForResearch(pc, 1) <= 0)
+                        break;
+                    feed(player, pc, 1, true);
+                } else {
+                    float first = firstCopyPoints(pc);
+                    float raw = fedSim.add(pc.getName()) ? first : first * copyShare;
+                    pts += Math.min(scaled(raw, true), Math.max(0f, meterSize(code) - pts));
+                }
+                plan.cards++;
             }
         }
-        flush(player, "sacrificed " + count + " card(s)" + (keepOne ? ", one of each kept" : ""));
-        return points(player, code) - before;
+        plan.daysAfter = daysAt(player, code, apply ? points(player, code) : pts, currentDay);
+        return plan;
     }
 
     // ---- research start and finish -------------------------------------------------------------------------------

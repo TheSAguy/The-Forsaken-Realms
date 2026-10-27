@@ -624,7 +624,7 @@ public class AdventureDeckEditor extends FDeckEditor {
             AdventurePlayer player = Current.player();
             if (canSellHere()) {
                 String label = localizer.getMessage("lblSellFor") + " " + player.cardSellPrice(card)
-                        + forge.adventure.util.ResearchMeter.sellNote(player, card); // round 751: " (+2 DOM)"
+                        + forge.adventure.util.ResearchMeter.sellNote(player, card); // round 764: " (DOM research -1 day)"
                 int sellable = cardManager.getItemCount(card);
                 if (sellable <= 0)
                     return;

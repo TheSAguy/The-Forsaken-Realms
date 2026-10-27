@@ -3425,7 +3425,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      *  (ResearchScene.enter()) and from the daily-tick hook (EconomyBuildings.processDaysPassed())
      *  so the edition becomes shoppable the moment the timer elapses, not only when the player
      *  happens to revisit the Lab. Idempotent - safe to call every day even with no research
-     *  active. */
+     *  active. Round 764: research v2 also calls it from ResearchMeter.flush the moment feeding brings a
+     *  running research to 0 days left, so it finishes then rather than on the next day tick. */
     public void checkResearchCompletion(int currentDay) {
         if (researchInProgress.isEmpty())
             return;

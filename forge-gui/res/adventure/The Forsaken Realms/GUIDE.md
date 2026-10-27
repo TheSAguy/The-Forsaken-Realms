@@ -698,9 +698,9 @@ how many cards wait, and the Guards window's **Collect Spoils** opens them.
 ### Progressive Set Unlocks
 
 Not every card set is available from turn one. You start with a few (scaled by your starting race and
-difficulty), and the **Research Lab** in your Capitol opens any other set. Each set has a **research
-meter**: the cards of that set you sell or sacrifice fill it, and the fuller it is, the cheaper and faster
-the research. Several can run at once. (Don't confuse this with the **Archaeologist**, who runs week-long
+difficulty), and the **Research Lab** in your Capitol opens any other set. Every card of a set you sell
+or sacrifice takes days (and some Shards) off that set's research, until it needs no wait at all. Several
+can run at once. (Don't confuse this with the **Archaeologist**, who runs week-long
 expeditions for cards and items - a different building doing a different job.)
 
 **Your shops stock only what you have unlocked.** A card shop you build sells cards from the sets
@@ -1518,26 +1518,35 @@ sets, items or enemies off yourself; everything is on by default.)
 
 **How to unlock a set.** The **Research Lab** in your Capitol opens any set:
 
-1. **Fill its meter (optional, but it pays).** Every card you **sell** - anywhere: the reward screen's
+1. **Give it cards (optional, but it pays).** Every card you **sell** - anywhere: the reward screen's
    auto-sell box sells as the screen closes, and your collection's Auto-Sell page has a Sell on each card -
-   adds points to the meter of *its own set*, the set its printing belongs to (a card you own as an
-   Amonkhet printing feeds Amonkhet only; basic lands and cards with no sale value don't count). The
-   **first copy** of a card you ever feed counts in full - **Common 1, Uncommon 2, Rare 3, Mythic 5** -
-   and every later copy of it a quarter. At the Lab you can also **sacrifice** a set's spare cards
-   (never a deck's copies or a favorite): double points, no gold. A set's meter holds **10% of its card
-   count** in points, at least 8 - 25 for a 249-card set.
-2. **Research it.** With an empty meter it costs **40 Shards** on Normal (30 Easy, 50 Hard, 60 Insane)
-   and takes **28 days**. A fuller meter cuts both, the first cards most: a quarter-full meter takes a
-   quarter off the Shards and half off the days; a full meter halves the Shards and finishes the moment
-   you press Research. Feeding a set while it is being researched shortens what's left.
-3. Several sets can be researched at once, each on its own clock. The Lab lists every set with its meter
-   and today's price; tap a line for the set's window (its spare cards, Sacrifice, and a view of every card
-   in it), and two checkboxes hide the sets you have found nothing of, or not fed.
+   shortens the research of *its own set*, the set its printing belongs to (a card you own as an
+   Amonkhet printing counts for Amonkhet only; basic lands and cards with no sale value don't count). The
+   **first copy** of a card you ever give counts in full, by rarity - an uncommon counts as two commons,
+   a rare as three, a mythic as five - and every later copy of it a quarter of that. At the Lab you can
+   also **sacrifice** a set's spare cards (never a deck's copies or a favorite): they count double, for no
+   gold. A bigger set takes more cards: about one new common for every ten cards in the set (at least 8)
+   brings its research to no wait.
+2. **Research it.** With nothing given it costs **40 Shards** on Normal (30 Easy, 50 Hard, 60 Insane)
+   and takes **28 days**. Every card given cuts both, the first cards most. The Lab shows each set's days
+   and price, and how many more new commons take the next day off ("One more new common takes a day
+   off"). A set at 0 days is **Ready**: research it for half the Shards, with no wait. More of its cards
+   then only pay gold, and the Lab offers no Sacrifice for it.
+3. **A running research keeps getting shorter.** Cards of that set you sell or sacrifice after you press
+   Research take days off what's left, and when it reaches 0 days the set is researched there and then.
+   The Shards you paid to start it are not refunded.
+4. Several sets can be researched at once, each on its own clock. The Lab lists every set with its days
+   and today's price; tap a line for the set's window (its spare cards, what each Sacrifice would make the
+   days, and a view of every card in it), and two checkboxes hide the sets you have found nothing of, or
+   given nothing to.
 
-| A 249-card set, Insane | 0 cards fed | 5 | 10 | 20 |
-|---|---|---|---|---|
-| sold | 60 Shards, 28 days | 43, 13 days | 36, 6 days | 30, at once |
-| sacrificed | 60, 28 days | 36, 6 days | 30, at once | 30, at once |
+| A 249-card set, Normal | new commons sold: 0 | 1 | 3 | 5 | 10 | 15 | 20 | 25 |
+|---|---|---|---|---|---|---|---|---|
+| days | 28 | 23 | 19 | 16 | 11 | 7 | 3 | Ready |
+| Shards | 40 | 36 | 33 | 31 | 27 | 25 | 22 | 20 |
+
+A sacrificed card counts as two sold: 5 new commons sacrificed take it to 11 days. Research towns and the
+Researcher perk shorten every one of these.
 
 (different cards of that set, an average mix of rarities)
 
@@ -1811,12 +1820,14 @@ your own Inns' tournaments; it never limits your deck. (A game started before ve
 classic research: own 10% of a set, then 40 Shards and a week.) Full detail:
 [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).
 
-### Which cards fill a set's research meter?
+### Which cards shorten a set's research?
 
-Only that set's own cards, in that set's printing: a card you own as an Amonkhet printing feeds Amonkhet,
-not the other sets it was printed in. A card counts in full the first time you feed it and a quarter for
-every later copy. Selling it anywhere feeds the meter; sacrificing it at the Lab feeds it double. A set's
-total is every card printed in it (basic lands aside), reprints included.
+Only that set's own cards, in that set's printing: a card you own as an Amonkhet printing counts for
+Amonkhet, not the other sets it was printed in. A card counts in full the first time you give it and a
+quarter for every later copy. Selling it anywhere counts; sacrificing it at the Lab counts double. It
+works on a research that is already running too, down to 0 days, when the set is researched at once (the
+Shards paid to start it stay spent). Once a set reads Ready, its cards only pay gold. A set's total is
+every card printed in it (basic lands aside), reprints included.
 
 ### Why can't I find cards from set XYZ?
 

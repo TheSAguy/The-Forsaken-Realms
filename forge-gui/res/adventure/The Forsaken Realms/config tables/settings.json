@@ -205,7 +205,9 @@
     // later copy researchCopyShare of that, and a sacrifice researchSacrificeFactor times. Research costs
     // researchShardCost (difficulty-scaled) and takes researchDaysV2 days with an empty meter; a fuller meter cuts both
     // along the square root of its fill: a full one takes researchShardCutAtFull off the shards (0.5 = half price) and
-    // all of the days. Grep forge.log for [TFR-Research].
+    // all of the days. Round 764: the player never sees the meter - the Lab shows days, Shards and how many new commons
+    // take the next day off; a full meter is "Ready" (0 days), stores no more points and offers no Sacrifice; a running
+    // research fed to 0 days left finishes at once (its start Shards stay spent). Grep forge.log for [TFR-Research].
     "researchDaysV2": 28,
     "researchMeterShare": 0.10,
     "researchMeterMin": 8,

@@ -14264,6 +14264,74 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 764: research shows days, not a meter (2026-10-26)
+
+The user, on round 751's research v2: "I'm not sure I like/understand the "meter" concept. I think there should be no cap
+at how many cards you can give/sacrifice, it will just keep lowering the time needed." A full meter already meant 0
+days, so the "cap" was only where the time reaches zero; the user chose option A - keep the math, show days - and added:
+"even research in progress will lessen in time if you donate cards after research has started. The only thing you won't
+get back would be the shards you spent to start the research." Research v2 saves only; a classic save is unchanged.
+
+- **The numbers are unchanged** (`ResearchMeter`: `meterSize`, points by rarity, copies 1/4, sacrifice x2, `sqrt(fill)`
+  for days and shards, shards down to half at 0 days; round 760's Research-town factors and the Researcher perk still
+  apply). "Meter" stays only as the internal name (class, save keys, settings keys, log lines).
+- **The Lab (`ResearchScene`)** - a set's line reads "Dominaria (DOM) - 249 cards - One more new common takes 2 days off"
+  (or "3 more new commons take a day off"), and "- Ready, no wait" at 0 days; the button "Research (34[+Shards], 21d)",
+  "Research (20[+Shards], now)" when Ready. Sets sort by fewest days, then the most fed. The set's window: "Research
+  now: 34[+Shards], 21 days (40[+Shards], 28 days with none given)." (the bracket only once cards changed it), the
+  next-day line + "; a sacrifice here counts double, for no gold.", the rarity weights in commons ("an uncommon as 2
+  commons, a rare 3, a mythic 5 - and a later copy a quarter of that"), and what each Sacrifice would do: "Sacrifice all
+  spare: 12 cards, 21 days -> Ready." / "Keeping one of each: 1 card, 28 days -> 22 days." The confirm: "Sacrifice 1
+  card of Dominaria (DOM)? Research: 28 days -> 21 days. They leave your collection, for no gold."
+- **The next-day count is exact**: `ResearchMeter.nextDayOff` steps new commons (`newCommonPoints`, the same `scaled`
+  points `pointsFor` uses, town factor included) through `lengthDaysAt`, the same function `lengthDays` uses, until the
+  shown days drop; the days a step takes off are said when more than one.
+- **Ready (0 days)** - the window says "Ready: research it now for 20[+Shards], with no wait. More of its cards only pay
+  gold." and offers no Sacrifice. **Points are clamped at a full meter** (`pointsFor` returns at most the room left), so
+  a Ready set stores nothing more and a save never shows the old "36/25" overfeed; an older v2 save already overfed is
+  read as full (`fill` was always capped at 1) and is left as stored. A sacrifice runs copy by copy and **stops at
+  Ready** (or at 0 days left on a running research), so it never takes cards past that point; the window's preview is
+  the same loop run dry (`planSacrifice`).
+- **A running research gets shorter when fed** - sold anywhere or sacrificed at the Lab (the Lab offers Sacrifice on a
+  running set: "Researching: 22 days left. Cards given now shorten it; the [+Shards] paid to start stay spent."). Fed to
+  0 days left, it finishes at once - `ResearchMeter.flush` calls `AdventurePlayer.checkResearchCompletion` - instead of
+  on the next day tick; the Lab then says "Amonkhet (AKH) is researched - its cards now stock your shops." and a HUD
+  notice says the same when it happens elsewhere. The start's shards are never refunded.
+- **The editor's Sell line** (`sellNote`) - " (DOM research -2 days)", " (feeds DOM research)", " (DOM research: Ready)"
+  or " (finishes DOM research)" instead of " (+2 DOM)"; nothing on a Ready set's card. The HUD's "research meter is
+  full" notice is now "Dominaria (DOM) is ready to research - at your Capitol's Research Lab for 20[+Shards], with no
+  wait."
+- **Logs**: new `[TFR-Research] running CODE shortened by feeding: B -> A day(s) left (start shards not refunded)` and
+  `[TFR-Research] CODE finished by feeding on day N`; the `fed`/`start`/`completed` lines are unchanged.
+- GUIDE.md/.html: Progressive Set Unlocks, Card Sets' "How to unlock a set" (days, Ready, a running research shortens,
+  a new table in new commons sold for a 249-card set on Normal - 28/23/19/16/11/7/3 days, Ready at 25 - replacing the
+  meter table), and the FAQ "Which cards shorten a set's research?" (was "...fill a set's research meter?").
+  settings.json's research comment says what the player sees; no value changed.
+- **Tested in the agent game** (cheats, round 764's four classes ahead of the agent jar, new games on Normal; every duel
+  at 50x - the agent default since round 759; `auto_save.sav` and the adventure `settings.json` restored byte for byte,
+  no slot written):
+  - A fresh set: AKH "One more new common takes 5 days off", "Research now: 40[+Shards], 28 days" (28 -> 23 is the
+    sqrt step for 1 of 25 points).
+  - Partly fed: one DOM card sacrificed -> `fed DOM (...): +2 pts -> 2/25 (8%); start now: 34 shards (base 40), 21
+    day(s)`; the line "One more new common takes 2 days off".
+  - Ready: "Sacrifice all spare: 12 cards, 21 days -> Ready" with ~35 spare - `fed DOM (sacrificed 12 card(s)): ... -> 25/25
+    (100%)` (clamped), the list "Ready, no wait", "Research (20[+Shards], now)", no Sacrifice buttons; Research paid 20
+    and logged `done at once`.
+  - Running, fed by sacrifice: 2XM 28 days -> "Sacrifice extras" -> 22 days in the window and the list at once
+    (`running 2XM shortened by feeding: 28 -> 22`); AKH 28 days -> sacrifice -> `running AKH shortened by feeding: 28 ->
+    0`, `AKH finished by feeding on day 1`, `completed AKH on day 1`, the "is researched" dialog.
+  - Running, fed by a sale: AFR started (28 days), a won duel's ante card (Battle Cry Goblin, AFR) put on Auto-Sell and
+    sold as the next reward screen closed -> `fed AFR (a sale of 2 card(s)) ... running, 21 day(s) left`, `running AFR
+    shortened by feeding: 28 -> 21`, the Lab "Researching (21d)".
+  - Shots: `notes\tweaks-1026\r764-*.png`.
+  - Not seen live: the editor's Sell line (the bridge cannot open card menus; `sellNote` is the same `daysAt` math) and
+    the HUD notices (the bridge reads no HUD log); the "with none given" bracket's hide-when-unfed was built after the
+    run (one condition, Maven-built).
+- Callers checked (code graph + Grep): `ResearchMeter.sacrifice` (new signature, returns a Plan) has one caller,
+  `ResearchScene.confirmSacrifice`; `sellNote` (same signature) one, `AdventureDeckEditor`'s Sell menu (Grep; the graph
+  lists none).
+- Not changed: classic research, what an unlocked set opens, the points and day math, the Ascendance texts.
+
 ## Round 760: town specialties, new games and New Game+ only (2026-10-26)
 
 The user's idea, from Discord feedback that restoring towns doesn't feel impactful: "each time you fix a town, you get

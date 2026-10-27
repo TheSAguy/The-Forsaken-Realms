@@ -7,7 +7,13 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-760 and 762 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-760 and 762-764 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+764 (research v2 shows days, not a meter: the Lab's line "One more new common takes 2 days off" / "Ready, no wait", the
+set window's days, shards and what each Sacrifice would make the days; a Ready set offers no Sacrifice and stores no
+more points (clamped at full); a sacrifice stops at Ready; a running research fed - sold anywhere or sacrificed - gets
+shorter at once and finishes the moment it reaches 0 days, its start shards not refunded; the editor's Sell line in
+days; same math, `ResearchMeter.nextDayOff`/`planSacrifice`, `[TFR-Research] running CODE shortened by feeding` and
+`CODE finished by feeding`; GUIDE) and
 760 (town specialties, new games and New Game+ only - a saved `townSpecialties` flag beside research v2's, set at
 create()/NG+ when the plane's `townSpecialtiesEnabled` is on: every held town but the Capitol and Orazca picks one right
 after its restore fee, or on first entry when taken another way; Mining (its mines x1.5), Research (+5% per town, cap
@@ -38,7 +44,7 @@ tools/docs and 748 is Android-only, so it ships with the next APK). The agent pr
 at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots come back
 1x1).
 Next version: 1.24 / 12400. Engine = the 10.21 daily (round 701); next merge from upstream after `bc67f70ffbc`; BASE_INSTALL is that
-daily, so packages need no `--allow-base-mismatch`. Next free round: 764. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
+daily, so packages need no `--allow-base-mismatch`. Next free round: 765. Round 764 is committed but not yet packaged. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

@@ -45,6 +45,10 @@ import java.util.Map;
  * and what starting it costs now in shards and days; tapping the line opens the set's window - its meter, the spare
  * cards that could be sacrificed (double points, no gold), and the round-452 card view. Only a game started on round 751
  * or later (AdventurePlayer.isResearchV2); an older save keeps the classic list (buildListClassic), its 10% gate and all.
+ * <p>
+ * Round 764 (the user chose to "show days instead of a meter"): a v2 line and window show days, shards and how many new
+ * commons take the next day off (ResearchMeter.nextDayLine); a set at 0 days reads Ready and offers no Sacrifice; a
+ * running research can still be fed, and finishes the moment it reaches 0 days.
  */
 public class ResearchScene extends UIScene {
     private static ResearchScene object;
@@ -511,6 +515,11 @@ public class ResearchScene extends UIScene {
                     if (byDays != 0)
                         return byDays;
                 } else {
+                    // Round 764: fewest days first (Ready on top), then the most fed.
+                    int byDays = Integer.compare(ResearchMeter.daysIfStarted(player, a.getCode()),
+                            ResearchMeter.daysIfStarted(player, b.getCode()));
+                    if (byDays != 0)
+                        return byDays;
                     int byFill = Float.compare(ResearchMeter.fill(player, b.getCode()), ResearchMeter.fill(player, a.getCode()));
                     if (byFill != 0)
                         return byFill;
@@ -524,11 +533,17 @@ public class ResearchScene extends UIScene {
             int total = researchTotal(code);
             boolean researched = player.hasUnlockedEdition(code);
 
-            // Round 751: "Name (CODE) - N cards - meter 14/25". Every line opens its set's window; a researched one still
-            // opens the card view (round 452's magnifier).
+            // Round 764: "Name (CODE) - N cards - One more new common takes a day off", or "- Ready, no wait" at 0 days
+            // (round 751's "meter 14/25" is gone). Every line opens its set's window; a researched one still opens the card
+            // view (round 452's magnifier).
             String line = ed.getName() + " (" + code + ") - " + String.format("%,d", total) + " cards";
-            if (!researched)
-                line += " - meter " + ResearchMeter.fmt(ResearchMeter.points(player, code)) + "/" + ResearchMeter.meterSize(code);
+            if (!researched) {
+                String next = ResearchMeter.nextDayLine(player, code, currentDay);
+                if (ResearchMeter.days(player, code, currentDay) == 0)
+                    line += " - Ready, no wait";
+                else if (!next.isEmpty())
+                    line += " - " + next;
+            }
             Color lineColor = researched ? Color.DARK_GRAY : Color.BLACK;
             // The label's tint would darken the glyph too (a black silhouette), so the line is colored by markup and the
             // magnifier drawn untinted (round 452).
@@ -562,7 +577,7 @@ public class ResearchScene extends UIScene {
                 // (user spec 2026-08-12; cost switched gold -> shards same day, user table).
                 TextraButton researchButton = Controls.newTextButton(player.isResearching(code)
                         ? "Researching (" + player.getResearchDaysLeft(code, currentDay) + "d)"
-                        : "Research (" + cost + "[+Shards], " + days + "d)", () -> {
+                        : "Research (" + cost + "[+Shards], " + (days == 0 ? "now" : days + "d") + ")", () -> {
                     ResearchMeter.start(player, code, Current.world().getCurrentDay());
                     buildList();
                 });
@@ -577,8 +592,8 @@ public class ResearchScene extends UIScene {
 
         if (candidates.isEmpty() && !anyInProgress) {
             TypingLabel empty = Controls.newTypingLabel(
-                    "Every set can be researched here. Cards you sell anywhere, or sacrifice here, fill their own set's "
-                    + "meter - untick Hide unfound to see every set.");
+                    "Every set can be researched here. Cards you sell anywhere, or sacrifice here, shorten their own "
+                    + "set's research - untick Hide unfound to see every set.");
             empty.skipToTheEnd();
             empty.setWrap(true);
             empty.setColor(Color.DARK_GRAY);
@@ -587,42 +602,63 @@ public class ResearchScene extends UIScene {
     }
 
     /**
-     * Round 751: a set's window - its meter, what starting it costs now, and its spare cards. Sacrifice (double points, no
-     * gold) is the Lab's own: "Sacrifice extras" keeps one copy of each card, "Sacrifice all spare" keeps only what a deck
-     * uses. Both skip favorites. "View cards" is round 452's set view.
+     * Round 751: a set's window - what starting it costs now, and its spare cards. Sacrifice (double, no gold) is the
+     * Lab's own: "Sacrifice extras" keeps one copy of each card, "Sacrifice all spare" keeps only what a deck uses. Both
+     * skip favorites. "View cards" is round 452's set view.
+     * <p>
+     * Round 764: days, never the meter - "Research now: 45[+Shards], 14 days", the next-day line, and what each Sacrifice
+     * would make the days. A Ready set (0 days) offers no Sacrifice; a running research says the start's shards stay spent.
      */
     private void openSetDialog(String code) {
         AdventurePlayer player = AdventurePlayer.current();
-        Map<PaperCard, Integer> extras = ResearchMeter.spareCards(player, code, true);
-        Map<PaperCard, Integer> allSpare = ResearchMeter.spareCards(player, code, false);
-        int nExtras = count(extras), nAll = count(allSpare);
-        float ptsExtras = preview(player, extras), ptsAll = preview(player, allSpare);
-        int size = ResearchMeter.meterSize(code);
-        float pts = ResearchMeter.points(player, code);
+        int day = Current.world().getCurrentDay();
+        boolean running = player.isResearching(code);
+        int days = ResearchMeter.days(player, code, day);
         StringBuilder body = new StringBuilder();
-        body.append(String.format("%,d", researchTotal(code))).append(" cards. Meter ").append(ResearchMeter.fmt(pts))
-                .append("/").append(size).append(" (").append(Math.round(ResearchMeter.fill(player, code) * 100)).append("%).\n");
-        if (player.isResearching(code))
-            body.append("Researching: ").append(player.getResearchDaysLeft(code, Current.world().getCurrentDay())).append(" day(s) left.\n");
-        else
-            body.append("Research now: ").append(ResearchMeter.startCost(player, code)).append("[+Shards] (")
-                    .append(ResearchMeter.baseCost()).append(" unfed), ").append(ResearchMeter.daysIfStarted(player, code))
-                    .append(" day(s).\n");
-        body.append("A card sold anywhere feeds its set; a sacrifice here counts double, for no gold.\n");
-        body.append("Spare cards: ").append(nAll).append(" (+").append(ResearchMeter.fmt(ptsAll)).append(" sacrificed); keeping one of each: ")
-                .append(nExtras).append(" (+").append(ResearchMeter.fmt(ptsExtras)).append(").");
+        body.append(String.format("%,d", researchTotal(code))).append(" cards.\n");
+        if (running) {
+            body.append("Researching: ").append(ResearchMeter.daysText(days)).append(" left. Cards given now shorten it;")
+                    .append(" the [+Shards] paid to start stay spent.\n");
+        } else if (days == 0) {
+            body.append("Ready: research it now for ").append(ResearchMeter.startCost(player, code))
+                    .append("[+Shards], with no wait. More of its cards only pay gold.\n");
+        } else {
+            body.append("Research now: ").append(ResearchMeter.startCost(player, code)).append("[+Shards], ")
+                    .append(ResearchMeter.daysText(days));
+            if (ResearchMeter.points(player, code) > 0f) // the unfed price only once cards have changed it
+                body.append(" (").append(ResearchMeter.baseCost()).append("[+Shards], ")
+                        .append(ResearchMeter.daysText(ResearchMeter.unfedDays())).append(" with none given)");
+            body.append(".\n");
+        }
+        ResearchMeter.Plan extras = null, all = null;
+        if (days > 0) {
+            int[] r = Config.instance().getTuningData().researchPointsByRarity;
+            String next = ResearchMeter.nextDayLine(player, code, day);
+            if (!next.isEmpty())
+                body.append(next).append("; a sacrifice here counts double, for no gold.\n");
+            body.append("A card counts for its own set, sold anywhere. A new card counts by rarity - an uncommon as ")
+                    .append(ratio(r, 1)).append(" commons, a rare ").append(ratio(r, 2)).append(", a mythic ")
+                    .append(ratio(r, 3)).append(" - and a later copy a quarter of that.\n");
+            extras = ResearchMeter.planSacrifice(player, code, true, day);
+            all = ResearchMeter.planSacrifice(player, code, false, day);
+            body.append("Sacrifice all spare: ").append(planText(all, running)).append(".\nKeeping one of each: ")
+                    .append(planText(extras, running)).append(".");
+        }
 
         Dialog dialog = new Dialog(editionDisplayName(code), Controls.getSkin());
-        TextraLabel label = Controls.newTextraLabel(body.toString());
+        TextraLabel label = Controls.newTextraLabel(body.toString().trim());
         label.setWrap(true);
         dialog.getContentTable().add(label).width(dialogBodyMaxWidth());
-        TextraButton extrasButton = Controls.newTextButton("Sacrifice extras", () -> confirmSacrifice(code, true, nExtras, ptsExtras));
-        extrasButton.setDisabled(nExtras <= 0);
-        TextraButton allButton = Controls.newTextButton("Sacrifice all spare", () -> confirmSacrifice(code, false, nAll, ptsAll));
-        allButton.setDisabled(nAll <= 0);
-        dialog.button(extrasButton);
-        dialog.button(allButton);
-        dialog.getButtonTable().row();
+        if (days > 0) { // round 764: a Ready set has nothing left to lower
+            final ResearchMeter.Plan extrasPlan = extras, allPlan = all;
+            TextraButton extrasButton = Controls.newTextButton("Sacrifice extras", () -> confirmSacrifice(code, true, extrasPlan));
+            extrasButton.setDisabled(extras.cards <= 0);
+            TextraButton allButton = Controls.newTextButton("Sacrifice all spare", () -> confirmSacrifice(code, false, allPlan));
+            allButton.setDisabled(all.cards <= 0);
+            dialog.button(extrasButton);
+            dialog.button(allButton);
+            dialog.getButtonTable().row();
+        }
         dialog.button(Controls.newTextButton("View cards", () -> {
             removeDialog();
             openSetView(code);
@@ -631,38 +667,44 @@ public class ResearchScene extends UIScene {
         showDialog(dialog);
     }
 
-    private void confirmSacrifice(String code, boolean keepOne, int cards, float points) {
-        showDialog(createGenericDialog("Sacrifice", "Sacrifice " + cards + " card(s) of " + editionDisplayName(code)
-                + " for +" + ResearchMeter.fmt(points) + " points? They leave your collection, for no gold.",
+    private void confirmSacrifice(String code, boolean keepOne, ResearchMeter.Plan plan) {
+        boolean running = AdventurePlayer.current().isResearching(code);
+        showDialog(createGenericDialog("Sacrifice", "Sacrifice " + plan.cards + (plan.cards == 1 ? " card" : " cards")
+                + " of " + editionDisplayName(code) + "? Research: " + ResearchMeter.daysText(plan.daysBefore) + " -> "
+                + daysAfterText(plan, running) + ". They leave your collection, for no gold.",
                 "Sacrifice", "Cancel", () -> {
                     removeDialog(); // the confirm
                     removeDialog(); // the set window
-                    ResearchMeter.sacrifice(AdventurePlayer.current(), code, keepOne);
+                    AdventurePlayer player = AdventurePlayer.current();
+                    ResearchMeter.sacrifice(player, code, keepOne, Current.world().getCurrentDay());
                     buildList();
-                    openSetDialog(code);
+                    if (player.hasUnlockedEdition(code)) // round 764: fed to 0 days left - done at once
+                        showDialog(createGenericDialog(editionDisplayName(code), editionDisplayName(code)
+                                + " is researched - its cards now stock your shops.",
+                                Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, this::removeDialog));
+                    else
+                        openSetDialog(code);
                 }, this::removeDialog));
     }
 
-    private static int count(Map<PaperCard, Integer> cards) {
-        int n = 0;
-        for (int v : cards.values())
-            n += v;
-        return n;
+    /** Round 764: "12 cards, 14 days -> 3 days", "5 cards, 14 days -> Ready", "none". */
+    private static String planText(ResearchMeter.Plan plan, boolean running) {
+        if (plan.cards <= 0)
+            return "none";
+        return plan.cards + (plan.cards == 1 ? " card, " : " cards, ") + ResearchMeter.daysText(plan.daysBefore) + " -> "
+                + daysAfterText(plan, running);
     }
 
-    /** The points these copies would add as a sacrifice, names counted new only once. */
-    private static float preview(AdventurePlayer player, Map<PaperCard, Integer> cards) {
-        java.util.Set<String> seen = new java.util.HashSet<>();
-        float pts = 0f;
-        for (Map.Entry<PaperCard, Integer> e : cards.entrySet()) {
-            PaperCard pc = e.getKey();
-            float p = ResearchMeter.pointsFor(player, pc, e.getValue(), true);
-            if (!seen.add(pc.getName())) // a second printing of a name already counted new in this batch
-                p = e.getValue() * ResearchMeter.firstCopyPoints(pc) * Config.instance().getTuningData().researchCopyShare
-                        * Config.instance().getTuningData().researchSacrificeFactor;
-            pts += p;
-        }
-        return pts;
+    private static String daysAfterText(ResearchMeter.Plan plan, boolean running) {
+        if (plan.daysAfter > 0)
+            return ResearchMeter.daysText(plan.daysAfter);
+        return running ? "done at once" : "Ready";
+    }
+
+    /** Round 764: a rarity's first-copy weight in commons ("2", "1.5"). */
+    private static String ratio(int[] byRarity, int i) {
+        int[] r = byRarity != null && byRarity.length > 3 ? byRarity : new int[]{1, 2, 3, 5};
+        return ResearchMeter.fmt(r[0] > 0 ? (float) r[i] / r[0] : r[i]);
     }
 
     /**
