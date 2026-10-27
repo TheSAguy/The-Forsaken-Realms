@@ -7,7 +7,15 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-760, 762-779 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-760, 762-779 and 782 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+782 (a light update notice on the PC start screen: one background GET per launch of the plane's `updateCheckUrl`
+(GitHub's releases/latest, 5 s timeouts, nothing about the player); a newer `tfr-v` tag than `modVersion` shows a small
+dark panel top-left - "TFR v1.24 is available", a Download page button (`releasePageUrl`, a one-line swap to itch.io
+later) and X for this launch; no download or install; offline is silent; desktop only, Android keeps its updater;
+new `util/UpdateNotice`, hooks in the stock `StartScene.enter()` and `ConfigData`, `[TFR-Update]`, test override
+`TFR_PRETEND_VERSION`; GUIDE FAQ line; tested in a worktree package against the real GitHub - shown at a pretended
+1.20, the button opened the release page, none at 1.23, silent on a bad URL; the dark panel was seen with javac dev
+classes and compiles in Maven, and the live build will carry it) and
 777 (summary lines for shared logs, from the audit `notes/log-additions-proposal.md`: new `util/SessionLog` -
 `[TFR-Session] start` per launch (version, OS, Java, screen), `game load`/`game new` (slot, day, level, race, colors,
 mode, difficulty, NG+, Notoriety, specialties, milestones, research, towns, gold), `end (exit|pause)` (duels, won/lost,
@@ -136,7 +144,7 @@ at 3840x2160 it covered the screen, got minimized, and a minimized game stops (t
 1x1).
 Next version: 1.24 / 12400. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous
 auto save, eager shops, Inn events and place entry - see MOD_CHANGELOG); next merge from upstream after `0dc8c66996e`;
-BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 783 (780-782 are handed out: 780 xandghost enemies, 781 Witch-Maw Slippers drops, 782 PC update notice). Rounds 768, 766's follow-up and 769-776 are packaged to live and the agent game (2026-10-27 06:30); rounds 777, 778 and 779 are committed but not yet packaged (777 tested in a worktree package). Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
+BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 783 (780 and 781 are handed out: 780 xandghost enemies, 781 Witch-Maw Slippers drops). Rounds 768, 766's follow-up and 769-776 are packaged to live and the agent game (2026-10-27 06:30); rounds 777, 778, 779 and 782 are committed but not yet packaged (777 and 782 tested in worktree packages). Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

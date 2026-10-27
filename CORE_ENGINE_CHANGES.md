@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 782 - the PC update notice
+- **`forge-gui-mobile/src/forge/adventure/scene/StartScene.java`** (STOCK): `enter()` ends with
+  `UpdateNotice.attach(ui)`, after round 698's `askOrShareLogs()`. If upstream reworks `enter()`, keep one call after
+  `super.enter()`.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** (STOCK): `updateCheckUrl` and `releasePageUrl`, after
+  `supportLink`; null on stock planes.
+- `AssetsDownloader.java` is not touched: `UpdateNotice` mirrors its private `isRemoteNewer`. If upstream changes
+  that test, nothing here follows it.
+
 ### Round 777 - summary lines for shared logs, less log noise
 
 - **`forge-gui-mobile/src/forge/Forge.java`** (STOCK):

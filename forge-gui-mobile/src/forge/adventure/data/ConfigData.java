@@ -166,6 +166,11 @@ public class ConfigData {
     // Round 756: the developer's tip page (Ko-fi) - the play-time support asks and the Settings row (util/SupportPrompt).
     // Null = neither, and no play time is counted.
     public String supportLink;
+    // Round 782: the PC update notice (util/UpdateNotice) - updateCheckUrl is asked once per launch for the newest release
+    // (GitHub's releases/latest JSON, a "tfr-vX.YZ" tag_name), releasePageUrl is where its button goes. Both null on
+    // stock planes - no check, no notice. Desktop only; Android keeps its in-app updater.
+    public String updateCheckUrl;
+    public String releasePageUrl;
     // Start-menu version label overhaul (2026-08-22, user spec): the label now shows the last
     // upstream Forge snapshot merged (engineBuildVersion, e.g. "2.0.15-SNAPSHOT-08.19" - stays
     // static across TFR-only rounds, only bumped when a new engine merge happens) alongside

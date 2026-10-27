@@ -14264,6 +14264,57 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 782: a light update notice on the PC start screen - "TFR v1.24 is available" with a Download page button (2026-10-27)
+
+The user: "Do your recommendation: add a light notice for PC." PC players never heard of a new version in the game:
+the stock updater is off on desktop (`AssetsDownloader.checkForUpdates` returns at once - it would install plain Forge
+over the game), so only Discord told them. Android keeps its retargeted in-app updater, unchanged.
+
+- **New `util/UpdateNotice`.** The first `StartScene.enter()` of a launch starts one background check (thread
+  `TFR-Update`, daemon, 5 s connect and read timeouts): a plain GET of the plane's `updateCheckUrl` - GitHub's
+  `releases/latest` JSON - with a fixed User-Agent and nothing about the player (no install id, no name). It reads
+  `tag_name`, accepts only a `tfr-vX.YZ` tag, and compares it with the plane's `modVersion` part by part. The test
+  mirrors round 282's private `AssetsDownloader.isRemoteNewer` (1.9 < 1.10, equal is not newer), except that an
+  unparseable version never counts as newer, because a nagging notice is worse than none. Copying it meant no edit to
+  that stock file.
+- **The notice.** When a newer release is found, a small dark panel appears in the start screen's top-left corner: "TFR
+  v1.24 is available", a **Download page** button (`Gdx.net.openURI` on the plane's `releasePageUrl`), and an **X**
+  that hides it for this launch. It lives on the start screen's own layer, so it shows only there and any dialog draws
+  above it. Nothing is downloaded or installed: a PC install is a zip, and an auto-install is how a half-updated
+  folder breaks. The panel is the skin's `white-pixel` tinted like the buttons' face (85%), padded 4, set 8 px in. The
+  first test shot had a bare label clipped at the top edge and hard to read over the sky.
+- **Data, per plane.** `ConfigData.updateCheckUrl` and `releasePageUrl`, both null on stock planes (no check, no
+  notice). In TFR's `config.json` they are `https://api.github.com/repos/TheSAguy/The-Forsaken-Realms/releases/latest`
+  and `https://github.com/TheSAguy/The-Forsaken-Realms/releases/latest`; GitHub redirects the latter to the newest tag.
+  Pointing the button at the itch.io page later is a one-line data change.
+- **Desktop only:** `GuiBase.isAndroid()` skips the check.
+- **Not done:** no "Don't show again for this version". `SettingData` was held by other rounds, and "X" plus the next
+  update clearing it covers the need. It would add about four lines to `SettingData` later.
+- **Log:**
+  - `[TFR-Update] checked: newest tfr-v1.23, this version v1.23 - up to date, no notice` (or `- notice shown`);
+  - `[TFR-Update] check failed - <exception or HTTP code>, no notice`;
+  - `[TFR-Update] newest release tag '...' is not a tfr-v tag, no notice`;
+  - `[TFR-Update] opened <url>`, `[TFR-Update] notice dismissed for this launch`;
+  - `[TFR-Update] test override: comparing as v1.20 (this is v1.23)`.
+- **Test override:** `TFR_PRETEND_VERSION=1.20` (environment) or `-Dtfr.pretendVersion=1.20` makes the game compare
+  as that version.
+- **GUIDE** (FAQ "How do I update the game to the latest version of Forge?"): one sentence about the PC notice and
+  its Download page button, and that the game only asks GitHub for the version number.
+- **Hooks in stock files:** `StartScene.enter()` ends with `UpdateNotice.attach(ui)` after `askOrShareLogs()`; the
+  two `ConfigData` fields.
+
+**Tested** in a clean worktree package (`wt-782` from `34311f7c166`, Maven exit 0, packaged to `agent-782` with a copy
+of the agent profile), against the real GitHub (v1.23 published):
+- **Pretend 1.20:** `checked: newest tfr-v1.23, this version v1.20 - notice shown`. Download page opened Chrome on the
+  v1.23 release page and logged `opened`; X logged `dismissed` and removed the notice.
+- **The real 1.23:** `up to date, no notice`.
+- **A bad URL** (`no-such-host.invalid`, in the test copy's config only): `check failed -
+  java.net.UnknownHostException: no-such-host.invalid, no notice`, and the start screen is clean.
+
+Shots: `C:\CLAUDE\PROJECTS\TFR1\notes\r782-notice.png`, `r782-dismissed.png`, `r782-offline.png`. The dark panel was
+seen through javac-built dev classes ahead of the packaged jar; the shared tree's Maven compile exited 0, and the next
+live build carries it. The test copy (it carried the webhook), the worktree and its branch are removed.
+
 ## Round 777: summary lines for shared logs - session, duel, towns, the support ask, errors; less noise (2026-10-27)
 
 The user: "Is there anything we need to add to the logs we receive to help us improve the game. Two things I want to

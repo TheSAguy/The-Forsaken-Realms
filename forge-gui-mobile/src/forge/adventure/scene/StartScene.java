@@ -398,6 +398,7 @@ public class StartScene extends UIScene {
 
         super.enter();
         askOrShareLogs();
+        forge.adventure.util.UpdateNotice.attach(ui); // round 782: PC update notice
     }
 
     /** Round 698: the one-time log-sharing question (Yes first, the default the user asked for), else the previous

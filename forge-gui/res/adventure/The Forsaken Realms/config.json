@@ -319,6 +319,8 @@
     "welcomePopupLink": "https://discord.gg/TTRPKc9HYJ",
     "welcomeGuideLink": "https://github.com/TheSAguy/The-Forsaken-Realms/blob/master/forge-gui/res/adventure/The%20Forsaken%20Realms/GUIDE.md",
     "supportLink": "https://ko-fi.com/thesaguy",
+    "updateCheckUrl": "https://api.github.com/repos/TheSAguy/The-Forsaken-Realms/releases/latest",
+    "releasePageUrl": "https://github.com/TheSAguy/The-Forsaken-Realms/releases/latest",
     "raceEditions": [
         { "race": "Devil",        "editions": ["RNA", "TOR", "SOI", "VOW"] },
         { "race": "Kor",          "editions": ["ZEN", "BFZ", "ZNR", "ROE"] },

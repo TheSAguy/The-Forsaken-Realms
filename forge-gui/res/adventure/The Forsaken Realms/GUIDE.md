@@ -2070,8 +2070,10 @@ because a different engine underneath can break your world. Engine updates come 
 Realms releases.
 
 To update the game itself, download the new release zip from GitHub and unzip it (a fresh folder is
-cleanest). Your saves live outside the game folder and carry over. On Android, install the new APK over
-the old one; the app also tells you when a new version is out.
+cleanest). Your saves live outside the game folder and carry over. On PC, the start screen tells you when a newer
+version is out: a small notice in the top-left corner with a Download page button. The game only asks GitHub for the
+newest version number; it downloads nothing and sends nothing about you. On Android, install the new APK over the
+old one; the app also tells you when a new version is out.
 
 ### How can I help?
 
