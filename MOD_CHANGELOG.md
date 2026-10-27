@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 764 (follow-up): the Lab's rows fit, "Hide untouched", fresh filters per game (2026-10-26)
+
+The user's shot of the pre-764 Lab (`notes\tweaks-1026\user-lab-1026.png`): "For the research lab. I thought we said we
+will drop Meter." Their game had no 764 yet; the main thread passed on what else the shot shows, and two things round
+764's test found.
+
+- **Two-line rows** (`ResearchScene.buildListV2`): line 1 is "Innistrad: Crimson Vow (VOW) - 267 cards" and the
+  magnifier, in a fixed 214-unit column beside the buttons, so a long name wraps inside it and never runs under a
+  button; line 2, under the whole row, is `statusLine`: "28 days - one more new common takes 5 days off. Start:
+  40[+Shards]", "Ready, no wait. Start: 20[+Shards]" or "Researching: 22 days left - one more new common takes 2 days
+  off." A 74-unit cell between the text and the button holds round 766's Found Cards (the user's mockup, drawn there).
+  Portrait keeps the text on its own row.
+- **The shard glyph**: the old "Research (40[+Shards], 27d)" showed a gap before the comma - the glyph's own advance, not
+  a typed space. The button now reads just "Research" ("Researching" while running) and the price ends line 2, where
+  nothing follows the glyph. Line 2 is colored by markup, white around the glyph (a label tint turned it into a dark
+  silhouette). The user's 27 days unfed is one Research town (round 760): 28 / 1.05 = 26.7, shown as 27.
+- **"Hide unfed" is "Hide untouched"** (the sets no card was given to) - "unfed" was meter language.
+- **The filters start fresh in another game**: the scene is a singleton, so "Hide untouched" ticked in one game stayed
+  ticked into a new game and opened an empty list. `enter()` keys the filters to the save (world seed + player name);
+  another save resets Hide unfound on, Hide untouched off and Show Researched off; the same game keeps them.
+- **The "Researching: <set> - N days remaining" headers** get the row's width, so a long name wraps instead of running
+  off the pane (AFR's did in round 764's shots).
+- Not changed: the set window's title sitting on its top border is the stock Dialog style, left as is.
+- **Tested in the agent game** with round 766 (one build, Maven exit 0; cheats, the round's classes ahead of the agent
+  jar, new games on Normal; `auto_save.sav` and the adventure `settings.json` restored byte for byte, no slot written):
+  the rows with AFR's and VOW's long names (`r764fu-1-list.png`, a running VOW row and its wrapped header); "Hide
+  untouched" ticked in one game (`r764fu-3-filter-ticked.png`) and unticked in the next new game, with its two sets
+  listed (`r764fu-4-new-game-filters.png`).
+
 ## Round 767: Ko-fi button on the welcome scroll (2026-10-26)
 
 The user: "Can you add the Ko-fi link/button next to the discord button on the welcome scroll."

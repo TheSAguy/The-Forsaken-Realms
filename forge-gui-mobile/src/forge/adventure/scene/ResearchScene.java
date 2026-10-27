@@ -74,7 +74,7 @@ public class ResearchScene extends UIScene {
     private final Table root;
     private final CheckBox hideUnfoundCheckBox;
     // Round 313 (user: "add a button to hide the second group. The sets you found cards for, but not enough to
-    // research"): "Hide partial", beside "Hide unfound". Round 751: "Hide unfed" - the sets whose meter is empty.
+    // research"): "Hide partial", beside "Hide unfound". Round 751: the sets no card was given to ("Hide untouched" since round 764).
     private final CheckBox hidePartialCheckBox;
     // Not final - its own click handler below needs to reference it (to update its label text)
     // from inside the same lambda passed to its own constructor call.
@@ -82,6 +82,7 @@ public class ResearchScene extends UIScene {
     // Not persisted - deliberately resets to "hidden" each time the screen opens, same as the
     // hide-unfound checkbox always starting checked (see its own setChecked(true) below).
     private boolean showResearched = false;
+    private String lastSaveKey; // round 764 follow-up: the game the filters were set in
     private final ScrollPane scroller;
     // Round 452: set while a set's card view is open, so the way back keeps the view, the filters and the place in the
     // list (enter() otherwise starts a fresh visit).
@@ -103,7 +104,7 @@ public class ResearchScene extends UIScene {
                 buildList();
             }
         });
-        hidePartialCheckBox = Controls.newCheckBox("Hide partial"); // round 751: "Hide unfed" in a v2 game (enter())
+        hidePartialCheckBox = Controls.newCheckBox("Hide partial"); // round 764: "Hide untouched" in a v2 game (enter())
         hidePartialCheckBox.setChecked(false);
         hidePartialCheckBox.getLabel().setColor(Color.BLACK);
         hidePartialCheckBox.addListener(new ChangeListener() {
@@ -149,8 +150,24 @@ public class ResearchScene extends UIScene {
     public void enter() {
         super.enter();
         AdventurePlayer player = AdventurePlayer.current();
-        // Round 751: one checkbox, the system's own filter - "Hide unfed" (an empty meter) in a v2 game.
-        hidePartialCheckBox.getLabel().setText(ResearchMeter.enabled(player) ? "Hide unfed" : "Hide partial");
+        // Round 751: one checkbox, the system's own filter - in a v2 game the sets no card was given to (round 764
+        // follow-up: "Hide untouched", was "Hide unfed" - meter language).
+        hidePartialCheckBox.getLabel().setText(ResearchMeter.enabled(player) ? "Hide untouched" : "Hide partial");
+        // Round 764 follow-up: the scene is a singleton, so its filters outlived the game they were set in - a new game
+        // could open on an empty list with "Hide untouched" still ticked. Another save (a new game, a load) starts
+        // them fresh; the same game keeps them.
+        String saveKey = Current.world().getSeed() + "|" + player.getName();
+        if (!saveKey.equals(lastSaveKey)) {
+            lastSaveKey = saveKey;
+            showResearched = false;
+            showResearchedButton.setText("Show Researched");
+            hideUnfoundCheckBox.setProgrammaticChangeEvents(false);
+            hidePartialCheckBox.setProgrammaticChangeEvents(false);
+            hideUnfoundCheckBox.setChecked(true);
+            hidePartialCheckBox.setChecked(false);
+            hideUnfoundCheckBox.setProgrammaticChangeEvents(true);
+            hidePartialCheckBox.setProgrammaticChangeEvents(true);
+        }
         // Lazy completion check (also runs from the daily tick - see EconomyBuildings.
         // processDaysPassed() - but re-checking here too means a research that finished while the
         // player was elsewhere in-game still shows as complete the instant they open this screen).
@@ -464,7 +481,8 @@ public class ResearchScene extends UIScene {
             header.skipToTheEnd();
             header.setWrap(true);
             header.setColor(Color.BLACK);
-            scrollContainer.add(header).colspan(2).align(Align.left).expandX();
+            // Round 764 follow-up: a width, so a long set name wraps instead of running off the pane.
+            scrollContainer.add(header).colspan(3).align(Align.left).expandX().width(rowWidth());
             scrollContainer.row().padTop(8);
         }
 
@@ -474,7 +492,7 @@ public class ResearchScene extends UIScene {
         Map<String, Integer> ownedByEdition = discoveredByEdition(player.getCards());
 
         boolean hideUnfound = hideUnfoundCheckBox.isChecked();
-        boolean hideUnfed = hidePartialCheckBox.isChecked(); // round 751: "Hide unfed" in a v2 game
+        boolean hideUnfed = hidePartialCheckBox.isChecked(); // round 764: "Hide untouched" in a v2 game
         List<CardEdition> candidates = new ArrayList<>();
         if (showResearched) {
             // Researched-only view (user spec 2026-08-12: the toggle "should ONLY show those").
@@ -533,17 +551,11 @@ public class ResearchScene extends UIScene {
             int total = researchTotal(code);
             boolean researched = player.hasUnlockedEdition(code);
 
-            // Round 764: "Name (CODE) - N cards - One more new common takes a day off", or "- Ready, no wait" at 0 days
-            // (round 751's "meter 14/25" is gone). Every line opens its set's window; a researched one still opens the card
-            // view (round 452's magnifier).
+            // Round 764 follow-up (the user's shot: a long name ran into the buttons and "0/27" fell to a second line):
+            // line 1 is "Name (CODE) - N cards" and the magnifier in a fixed-width column beside the buttons; line 2,
+            // under the whole row, is statusLine - days and shards, the next-day hint, or Ready. Every line opens its
+            // set's window; a researched one still opens the card view (round 452's magnifier).
             String line = ed.getName() + " (" + code + ") - " + String.format("%,d", total) + " cards";
-            if (!researched) {
-                String next = ResearchMeter.nextDayLine(player, code, currentDay);
-                if (ResearchMeter.days(player, code, currentDay) == 0)
-                    line += " - Ready, no wait";
-                else if (!next.isEmpty())
-                    line += " - " + next;
-            }
             Color lineColor = researched ? Color.DARK_GRAY : Color.BLACK;
             // The label's tint would darken the glyph too (a black silhouette), so the line is colored by markup and the
             // magnifier drawn untinted (round 452).
@@ -561,33 +573,42 @@ public class ResearchScene extends UIScene {
                 }
             });
             boolean portrait = !Forge.isLandscapeMode(); // round 100: 258px pane in portrait - set line on its own row, button below
-            scrollContainer.add(nameLabel).align(Align.left).width(portrait ? 236f : 250f).colspan(portrait ? 2 : 1);
+            scrollContainer.add(nameLabel).align(Align.left).width(portrait ? rowWidth() : NAME_WIDTH).colspan(portrait ? 3 : 1);
             if (portrait)
                 scrollContainer.row();
 
+            // The Found Cards cell (round 766's button; empty until then) sits between the text and the Research button.
+            scrollContainer.add().width(FOUND_WIDTH).padLeft(4);
             if (researched) {
                 TypingLabel doneLabel = Controls.newTypingLabel("Researched");
                 doneLabel.skipToTheEnd();
                 doneLabel.setColor(Color.DARK_GRAY);
-                scrollContainer.add(doneLabel).align(Align.left).expandX().padLeft(6);
+                scrollContainer.add(doneLabel).align(Align.left).expandX().padLeft(4);
             } else {
                 int cost = ResearchMeter.startCost(player, code);
-                int days = ResearchMeter.daysIfStarted(player, code);
-                // Resource glyph, not a letter suffix - standing standard for cost UI
-                // (user spec 2026-08-12; cost switched gold -> shards same day, user table).
-                TextraButton researchButton = Controls.newTextButton(player.isResearching(code)
-                        ? "Researching (" + player.getResearchDaysLeft(code, currentDay) + "d)"
-                        : "Research (" + cost + "[+Shards], " + (days == 0 ? "now" : days + "d") + ")", () -> {
+                // Round 764 follow-up: the price and days moved to line 2, so the button is just "Research" - no shard
+                // glyph mid-label (its advance read as a stray space before the comma).
+                TextraButton researchButton = Controls.newTextButton(player.isResearching(code) ? "Researching" : "Research", () -> {
                     ResearchMeter.start(player, code, Current.world().getCurrentDay());
                     buildList();
                 });
                 // Several editions may be researched at once (user spec 2026-09-03); only the one
                 // already running is locked out.
                 researchButton.setDisabled(player.isResearching(code) || player.getShards() < cost);
-                scrollContainer.add(researchButton).align(Align.left).expandX().padLeft(6);
+                scrollContainer.add(researchButton).align(Align.left).expandX().padLeft(4);
                 addToSelectable(researchButton);
+                scrollContainer.row();
+                // Colored by markup, white around the shard glyph - a label tint would turn the glyph into a dark
+                // silhouette (round 452's magnifier note).
+                String gray = "[#" + Color.DARK_GRAY + "]";
+                TypingLabel status = Controls.newTypingLabel(gray + statusLine(player, code, currentDay)
+                        .replace("[+Shards]", "[#ffffffff][+Shards]" + gray));
+                status.skipToTheEnd();
+                status.setWrap(true);
+                status.setColor(Color.WHITE);
+                scrollContainer.add(status).colspan(3).align(Align.left).width(rowWidth()).padTop(1);
             }
-            scrollContainer.row().padTop(5);
+            scrollContainer.row().padTop(6);
         }
 
         if (candidates.isEmpty() && !anyInProgress) {
@@ -597,8 +618,31 @@ public class ResearchScene extends UIScene {
             empty.skipToTheEnd();
             empty.setWrap(true);
             empty.setColor(Color.DARK_GRAY);
-            scrollContainer.add(empty).colspan(2).align(Align.left).expandX().width(Forge.isLandscapeMode() ? 340 : 236);
+            scrollContainer.add(empty).colspan(3).align(Align.left).expandX().width(Forge.isLandscapeMode() ? 340 : 236);
         }
+    }
+
+    // Round 764 follow-up: the v2 row's columns, landscape (portrait gives the text the whole row).
+    private static final float NAME_WIDTH = 214f, FOUND_WIDTH = 74f;
+
+    /** The whole row's width: line 2 and the "Researching" headers. */
+    private static float rowWidth() {
+        return Forge.isLandscapeMode() ? 372f : 236f;
+    }
+
+    /** Round 764 follow-up: a v2 row's line 2 - "28 days - one more new common takes 5 days off. Start: 40[+Shards]",
+     *  "Ready, no wait. Start: 20[+Shards]" or "Researching: 22 days left - one more new common takes 2 days off." The
+     *  shard glyph ends the line: its own advance reads as a stray space before any comma or period after it. */
+    private static String statusLine(AdventurePlayer player, String code, int currentDay) {
+        int days = ResearchMeter.days(player, code, currentDay);
+        String next = ResearchMeter.nextDayLine(player, code, currentDay);
+        String hint = next.isEmpty() ? "" : " - " + Character.toLowerCase(next.charAt(0)) + next.substring(1);
+        if (player.isResearching(code))
+            return "Researching: " + ResearchMeter.daysText(days) + " left" + hint + ".";
+        String start = "Start: " + ResearchMeter.startCost(player, code) + "[+Shards]";
+        if (days == 0)
+            return "Ready, no wait. " + start;
+        return ResearchMeter.daysText(days) + hint + ". " + start;
     }
 
     /**
