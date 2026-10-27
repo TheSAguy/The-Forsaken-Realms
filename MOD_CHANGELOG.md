@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 789: blueprints from the first minute of a launch - the player-town template fills the blueprint list (2026-10-27)
+
+The user: "Yes, round 789: fill the blueprint list from the player-town template when nothing has loaded it yet, so
+level-ups, chests, Mystery pickups and digs can offer blueprints from the first minute." The finding is `logs-1027c`
+P1 (`C:\TFR\notes\logs-1027c.md`). Two players' logs showed `[TFR-Blueprint] chooser shop-name universe: 0 type(s)`
+before 3 of 4 Ascendance offers.
+
+- **The bug**: `EconomyBuildings.allChooserShopNames()` knew only maps loaded in this launch: the current map's tier
+  pools and `globalShopTiers`, which `MapStage` fills as maps load. Neither is saved. After a fresh start on the world
+  map, or in a cave or a dungeon, the list was empty. Then:
+  - `AscendanceRewards.canGive("blueprint")` was false, so "A blueprint" was never offered;
+  - `ResourceSpawns.grantRandomBlueprint()` (chests, Mystery pickups) and the Archaeologist's dig blueprint fell
+    through to an ordinary reward.
+- **The fix** (`util/EconomyBuildings.java`): the list also takes `player_town.tmx`'s chooser names. They are read once
+  per process with the existing `TownRestoration.readChooserTiers()` (round 352's reader, which parses the tmx without
+  loading it).
+  - The names are added on every rebuild, not only when the list is empty. A player who has only seen a small generic
+    town (about 40 names) gets the whole ladder too.
+  - The basic-land, Armory and nonexistent-type filters still run after the union.
+  - **Names only**: `globalShopTiers` is untouched (not `registerShopTiers()`, as first proposed), and
+    `shopTierOf()` already prices by the player's templates first. So prices and the standing gates do not change.
+  - `player_capital.tmx`'s Mythic types are left out: they still join only once the Capitol map has loaded, as before.
+- **New lines**:
+  - `[TFR-Blueprint] player-town template: N chooser type(s) for the blueprint universe (round 789)`, once per launch;
+  - the universe line adds `(N from the player-town template, not loaded from a map this launch - round 789)`, when
+    the template supplied names.
+- **The cache drop on a new map** (`MapStage.loadMap()` -> `invalidateChooserShopNames()`) is unchanged. The next call
+  rebuilds from the current map's pools, plus `globalShopTiers`, plus the template. The template only ever adds, so a
+  real town's pools are never hidden.
+- **Callers** (code graph): `allChooserShopNames()` has 3 direct callers (`AscendanceRewards.unknownBlueprints`,
+  `EconomyBuildings.generateExpeditionRewards`, `ResourceSpawns.grantRandomBlueprint`), 8 within depth 2.
+  `invalidateChooserShopNames()` has 1 (`MapStage.loadMap`).
+- **Test** (agent copy `agent-789`, a copied agent profile, cheats on, game closed at 11:56; no duels were played):
+  1. I loaded slot 76 on the world map, with no town this launch.
+  2. The new lines read `player-town template: 250` and `universe: 250 type(s) (250 from the player-town template ...)`.
+  3. `asc give 3000` forced the level-ups. The level-9 and level-11 offers listed "A blueprint", and taking it
+     learned `Land8Blue`.
+  4. Inside Orazca the list rebuilt to `255 type(s)`, the town's own pools added, and `asc pick blueprint` learned
+     `SmallCats`.
+  5. No exceptions.
+- Maven exit 0. Not packaged to live in this round: the main thread packages when the user's game is closed. Ships
+  with 1.25.
+
 ## Round 788: the Discord FAQ's order matches the channel - Support last (2026-10-27)
 
 The user: "On discord, the only change I made was to move 22, the support to the end, so 23 and 24 moved one up.

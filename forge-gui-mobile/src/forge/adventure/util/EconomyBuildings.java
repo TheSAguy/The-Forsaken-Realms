@@ -2153,6 +2153,14 @@ public class EconomyBuildings {
         // tier pools - so grantRandomBlueprint() found no candidates and silently fell through to
         // an ordinary reward. The player's own town always supplies the full ladder.
         names.addAll(globalShopTiers.keySet());
+        // Round 789: and the player's own town template, read from its tmx without loading it. The two sources above
+        // only know maps loaded in THIS launch, so after a fresh start on the overworld or in a cave the universe was
+        // empty: the Ascendance blueprint choice was never offered and chest / Mystery / dig blueprints fell through
+        // (logs-1027c: 3 of 4 level-up offers). Names only - globalShopTiers is untouched, and shopTierOf() prices
+        // by these same templates first, so prices and gates do not change.
+        int fromMaps = names.size();
+        names.addAll(playerTownChooserNames());
+        int fromTemplate = names.size() - fromMaps;
         // FILTER AFTER THE UNION, never before it (2026-09-01 release review). The removeIf below
         // used to sit ABOVE the addAll, so every name it stripped walked straight back in from
         // globalShopTiers on the next line - the filter was real code that did nothing. Measured
@@ -2170,7 +2178,9 @@ public class EconomyBuildings {
         names.removeIf(EconomyBuildings::isArmoryShopName);
         names.removeIf(n -> !shopTypeExists(n));
         chooserShopNames = new ArrayList<>(names);
-        System.out.println("[TFR-Blueprint] chooser shop-name universe: " + chooserShopNames.size() + " type(s)");
+        System.out.println("[TFR-Blueprint] chooser shop-name universe: " + chooserShopNames.size() + " type(s)"
+                + (fromTemplate > 0 ? " (" + fromTemplate + " from the player-town template, not loaded from a map"
+                + " this launch - round 789)" : ""));
         // Do NOT cache an empty universe (2026-09-01 release review). A Mystery diamond picked up
         // before any town has been entered this session sees no tier pools and no globalShopTiers,
         // and caching that zero froze blueprint drops off for the whole process.
@@ -2180,6 +2190,20 @@ public class EconomyBuildings {
             return empty;
         }
         return chooserShopNames;
+    }
+
+    // Round 789: player_town.tmx's chooser names, read once per process (TownRestoration caches the parse too).
+    private static volatile java.util.Set<String> playerTownChooserNames;
+
+    private static java.util.Set<String> playerTownChooserNames() {
+        java.util.Set<String> out = playerTownChooserNames;
+        if (out == null) {
+            out = new java.util.HashSet<>(TownRestoration.readChooserTiers(PLAYER_TEMPLATE_MAPS[0]).keySet());
+            playerTownChooserNames = out;
+            System.out.println("[TFR-Blueprint] player-town template: " + out.size()
+                    + " chooser type(s) for the blueprint universe (round 789)");
+        }
+        return out;
     }
 
     /** Dropped when a new map loads - a different town template can expose different pools. */
