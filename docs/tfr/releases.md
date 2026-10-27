@@ -63,3 +63,11 @@ Notes = `RELEASE_NOTES_v1.23.md`, kept high level at the user's request ("Just s
 title mine. GUIDE What's New 1.23 is one line above 1.22's list. The webhook token was checked absent from git before
 the push. Live + agent = the release. NOTHING is unreleased. Next version: 1.24 / 12400. Next merge from upstream after
 `bc67f70ffbc`.
+
+## STATE 2026-10-27: **v1.24 "Towns & Trophies" - releasing (round 787)**. Rounds 702-783, 785 and 786 on top of v1.23
+(761 and 784 not used). Engine = the 10.26 daily (upstream `0dc8c66996e`, round 769) on the matching 10.26
+BASE_INSTALL; the user skipped a further engine merge for 1.24. The user passed the live package of 2026-10-27 08:58.
+Notes = `RELEASE_NOTES_v1.24.md`, from `notes/release-notes-1.24-draft.md` with the user's trims (no death dialog,
+font, start-menu background or splash art, boss labels or Ko-fi ask) and rounds 777-785 added; title mine. GUIDE
+What's New 1.24 is a short linked list above a one-line 1.23 note and 1.22's list. Assets, tag and publish time: the
+follow-up.

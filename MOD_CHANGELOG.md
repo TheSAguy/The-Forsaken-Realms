@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 787: v1.24 "Towns & Trophies" - release stamps, notes and What's New (2026-10-27)
+
+The user, after testing the live package of 2026-10-27 08:58 (HEAD `f486ded5da7`): "1.24 passed my test. Go ahead with
+the release." Rounds 702-783, 785 and 786 (761 and 784 not used; no engine merge for 1.24, by the user's choice).
+
+- **Version stamps**: `config.json` `modVersion` 1.23 -> 1.24 and `modVersionDate` 10.21 -> 10.27 (the title screen's
+  "TFR v1.24 - 10.27"; round 782's update notice compares `modVersion` with GitHub's newest `tfr-v` tag, so a build
+  still saying 1.23 would tell every 1.24 player that 1.24 is out); `forge-gui-android/pom.xml` `tfr.version` 1.24 and
+  `manifestVersionCode` 12400.
+- **`RELEASE_NOTES_v1.24.md`**, from `C:\TFR\notes\release-notes-1.24-draft.md`: the user's trims kept (no death
+  dialog, font, start-menu background or splash art, boss labels or Ko-fi ask); added the six @xandghost enemies (780),
+  the land drops option and Always Yes for Valakut (778), difficulty hints (779), the Witch-Maw Slippers only from the
+  Akroma and Lathliss castle bosses, one pair a player (781), the PC update notice (782), the Android mid-duel quit
+  timing (783), no defeat gold minimum in week 1 (785) and one behind-the-scenes line for the log additions (777); the
+  engine line says "better AI mulligans", not "a smarter AI". The Android section as v1.23's.
+- **GUIDE**: "What's New in 1.24" - a short list linking Town Specialties, Realm Milestones, research, Achievements,
+  the new enemies and plates, and Notoriety - above a one-line 1.23 note and 1.22's list; the FAQ's engine line names
+  the 10.26 build; the footer says v1.24, 2026-10-27. `GUIDE.html` rebuilt with `dev-tools/guide_html.py --check`.
+- **Docs**: `docs/tfr/releases.md` gets the v1.24 STATE block; the NOW block is rewritten short (the round detail is in
+  this file).
+
 ## Round 786: the Discord FAQ for v1.24 - 10 messages edited in place, 2 new after Support (2026-10-27)
 
 The user: "give me the updated Discord FAQ. Let me know what sections to edit." The channel is kept by hand, message

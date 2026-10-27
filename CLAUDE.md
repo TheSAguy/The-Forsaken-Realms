@@ -6,177 +6,20 @@ every round built. If you find something missing, fix the docs rather than going
 
 ## NOW (rewrite this block each round; never append a new one)
 
-**v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-760, 762-783, 785 and 786 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
-786 (the Discord FAQ for v1.24: `dev-tools/discord_faq/messages.py` - messages 1, 2, 5, 6, 7, 9, 11, 12, 15
-and 21 edited in place, 23 and 24 new after Support; `EDITED`/`ADDED` tag them on the page; artifact version 10; paste
-list `C:\TFR\notes\faq-1.24-edits.md`; dev tools only, not shipped) and
-780 (six @xandghost creatures as new enemies, each a round-642 family - Apprentice / Adept / Master: Torchhead Stallion
-R, Ashbark Gaunt B, Thornspine Ravager G, Bogmaw Golem BG, Flamecrest Serpent R, Crocodile Hexmage UG; 6 `enemies.json`
-entries, 6 `enemy_tiers.json` rows (1064), 18 hand-built rank decks in `decks/tiers/standard_xandghost_*` + 6 catalog
-decks in `decks/standard/xandghost/`, atlases `sprites/enemy/remake/<key>.*` copied by hand (not `install_remakes.py`,
-whose placeholder "original" would be recorded - the six placeholder enemies keep their art), rosters red/black/green/
-blue/Wasteland, the two Masters in the forest/swamp/island capitals' and the Capitol's arena pools, enemies.csv, a
-CREDITS line; data only; trap: `make_tier_families.py --only` rewrites `enemy_tiers.json` with only the listed names;
-tested at 50x in a worktree package - all three ranks of each spawned, each fought, plates, save/load) and
-785 (no defeat gold minimum in week 1: in the world's first `defeatGoldLossMinWaivedWeeks` weeks (TFR 1,
-default 0) a lost duel takes only the percentage - Hard 10% of 125 gold is 12, not all of it - on every difficulty,
-the `[TFR-EarlyLife]` week; one formula for the defeat, the Bronze Coin preview and the death dialog
-(`AdventurePlayer.defeatGoldMinWaived`, `TuningData.defeatGoldLoss(name, carried, waiveMin)`); the New Game Duels tab
-says "- no minimum in week 1"; `[TFR-DefeatGold] ... minimum 150 waived in week 1`; GUIDE; validate_plane_data knows
-the key and 781's `uniqueDropItems`; tested at 50x in a worktree package - Hard day 1, day 8 and Normal day 1) and
-783 (a mid-duel quit is judged at the moment the app was left: `Forge.pause()`/`resume()` call
-`DuelHeartbeat.onPause()`/`onResume()` - one last pulse and `duel.pausedAt`, then no writes while paused - and
-`ReloadJab.judgeMidDuelQuit` measures up to `pausedAt`, so time in Android's background no longer turns a live duel
-"stalled"; `[TFR-ReloadJab] the app left mid-duel` / `came back mid-duel`; also restores rounds 734 and 758's lost
-changelog entries; tested in a worktree package with a minimized window standing in for Android's background, not yet
-in the live package) and
-781 (Witch-Maw Slippers are a Mythic-boss trophy: out of the 12 bosses' shared 86-name item list, the six Challenge
-Arena rolls, the Archaeologist pool and - `excludeFromGeneralSale` - every by-rarity pool (Armory, Chest, Ascendance);
-a 25% named drop on Akroma and Lathliss (the castles, once a game: 44% with both) and on Kozilek and Guardian Angel, who
-are not fought for loot, as Atraxa is not; one pair a player - settings.json `uniqueDropItems`, `util/UniqueDrops`, one
-call in the stock `EnemySprite.getRewards()`, `[TFR-UniqueDrop]`; GUIDE; tested in a worktree package with a copy of
-the agent profile: dropped, then "owns one already - not dropped") and
-782 (a light update notice on the PC start screen: one background GET per launch of the plane's `updateCheckUrl`
-(GitHub's releases/latest, 5 s timeouts, nothing about the player); a newer `tfr-v` tag than `modVersion` shows a small
-dark panel top-left - "TFR v1.24 is available", a Download page button (`releasePageUrl`, a one-line swap to itch.io
-later) and X for this launch; no download or install; offline is silent; desktop only, Android keeps its updater;
-new `util/UpdateNotice`, hooks in the stock `StartScene.enter()` and `ConfigData`, `[TFR-Update]`, test override
-`TFR_PRETEND_VERSION`; GUIDE FAQ line; tested in a worktree package against the real GitHub - shown at a pretended
-1.20, the button opened the release page, none at 1.23, silent on a bad URL; the dark panel was seen with javac dev
-classes and compiles in Maven, and the live build will carry it) and
-777 (summary lines for shared logs, from the audit `notes/log-additions-proposal.md`: new `util/SessionLog` -
-`[TFR-Session] start` per launch (version, OS, Java, screen), `game load`/`game new` (slot, day, level, race, colors,
-mode, difficulty, NG+, Notoriety, specialties, milestones, research, towns, gold), `end (exit|pause)` (duels, won/lost,
-reloads after a loss, days/level/towns from->to, gold, errors, last scene); `[TFR-Duel]` per duel (result, enemy,
-where, day, turns, both lives from the match screen's view, mulligans, seconds); `[TFR-Towns]` held towns and their
-specialties after each load, `taken: <town> by restore|capture|gates`; `[TFR-Perf] save/load`; `[TFR-Support] status`
-once per launch (asks, `last=` the new `SettingData.supportLastAnswer`, next, stopped); `[TFR-Error]` with a stack and
-the last 8 scenes from `Forge.setCurrentScreen`/`resize`, which reported only to Sentry (off by default) before;
-less noise: one `[TFR-Images]` line per 25 card images instead of 4 lines per image, "Looking for resource" only on
-a miss, `[TFR-Hero]`/`[TFR-HeroSize]` once per change; console `session` / `session error`; stock files Forge,
-WorldSave, DuelScene, StartScene, SettingData, ConsoleCommandInterpreter, Config, LibGDXImageFetcher,
-CharacterSprite, PlayerSprite; tested in a worktree package of round 777 alone, every duel at 50x, not yet packaged -
-`notes/r777-log-additions-test.md`) and
-779 (difficulty hints, once per world each: the 5th loss to the same foe suggests the next difficulty down, 50 wins in
-a row - the end of the saved `recentDuels` record - the next one up, "on your next game or New Game+" (a save's
-difficulty can only change there); a green Notices line plus a "Got it" dialog on a calm world map; the marks live in
-ReloadJab's seed-keyed store outside the save, so a reload cannot undo them, and a changed difficulty clears them; new
-`util/DifficultyHints`, three hooks in `util/ReloadJab`, `[TFR-Hint]`; tested in a worktree package with a copy of the
-agent profile, not yet in the live package) and
-778 (a land drops cell in duels - lands played / allowed this turn under each player's zone counts, gold on an
-extra-drop turn such as Summer Bloom's 1/4, dimmed when spent or off-turn, "1/+" for unlimited - behind a "Show land
-drops in duels" Settings row, off by default, from the next duel: `VPlayerPanel.InfoTabLand`, a fifth row in the
-compact grid, `SettingData.showLandDrops`, `[TFR-LandDrops]`; and Always Yes / Always No reach Valakut, the Molten
-Pinnacle and Spark Mage: `OptionalDecider$ You` moved to their trigger lines, Valakut with a `ResolvingCheck$ IsPresent2`
-(5+ Mountains) so it seldom asks for nothing; GUIDE (land drops, Always Yes, the existing fullscreen Keep Mouse in
-Window row, a Valakut FAQ); seen in the agent game - mock-ups and shots in `C:\TFR\notes\gnomedoom-ui`) and
-774 (realm milestones, new games and New Game+ only - a saved `realmMilestones` string (`RealmMilestones.State`) set
-at create()/NG+ when the plane's `realmMilestonesEnabled` is on, with town specialties: every 10 of the most towns ever
-held, 1 of 3 realm boons, rolled once and saved, the mastery of the most-held specialty first; after the restore's
-specialty choice, on entering a held town, or at any held town's Job Board; permanent. Masteries Deep Veins (Mining x2),
-Grand Library (Research 7.5% a town, cap 75%), Watchtowers (Outposts x3 light, 15%), Master Smiths (Smithy Armory x0.8),
-Iron Garrisons (35%), Merchant Guild (Market x0.8); Tithe (15 gold a held town a payday, 2 picks), Town Watch (+10%
-capture defense everywhere, 2), Lamplighters (+1 tile), Royal Grant (the next research free and at once, 2); a World
-Standings line, Tithe on the Balance Sheet; new `util/RealmMilestones`, settings.json `milestone*`, console `milestone`,
-`[TFR-Milestone]`; GUIDE; design `notes/realm-milestones-774.md`; seen in a test package, NG+ not seen) and
-773's follow-up (the build menu's Card Shop rows show their count - "Certain Death - 8 cards (100 + 5)"; the old
-" [N cards]" was eaten as font markup since 2026-08-30 - and booster packs are built when the shop screen first shows
-them: `Reward.deferredPack`, `RewardData`'s two `cardPackShop` loops; a drawn set is still drawn from the world RNG at
-load, only the MyRandom contents wait, so stock is the same; New Avalon's cold entry 1409 -> 734 ms, a set's
-print-sheet load moves to the shop's first open; no Reward is ever saved; seen in a test package with a save round
-trip) and
-773 (the build menu opens at once: a Card Shop category builds its shop rows - each with a full-pool card count - only
-when opened (`DialogData.onFirstShow`, run once by `MapDialog.loadDialog`), first open 5491 -> 3 ms; and
-`CardUtil.CardPredicate`'s printing walk is remembered per card rules and edition+rarity lists, so shop stock, the
-counts and the shop-swap check stop rescanning every printing - Capitol entry 898 -> 409 ms; identical stock checked
-on 44 shops in 3 towns; no lazy shop stock (the world RNG chains shop rolls) and no Inn change (0 ms);
-`[TFR-Perf] build menu` / `town entry` lines; stock files CardUtil, DialogData, MapDialog, MapStage) and
-775 (the Sol Ring leak: no banned card - `restrictedCards`, the Power 9, Sol Ring, Signets... - from the beaten enemy's
-own deck: `EnemySprite.withoutBannedCards` filters the deck-loot pool (deckCard, CardBudget top-ups, champion loot) and
-the map-placed rewards' deck; a banned ante win becomes another random non-basic, non-banned card of that deck, or
-`deckCardFallbackGold`, `DuelScene.withoutBannedAnteWins`; enemies still play them; owned copies kept (the user's 2 in
-slot 1, Vr01's); `[TFR-RestrictedCards] <enemy>: kept N banned card(s) out of its deck loot`; GUIDE; seen in a test
-package: a Kaalia win at 50x logged the line for Sol Ring) and
-776 (small cleanups: 11 duplicate quest tags out of the stock `common` and Shandalar `enemies.json` - TFR's copy had
-none; the tfr-play skill's minimized-window trap and its `ShowWindow(SW_RESTORE)` fix; FAQ message 1's header reads
-`FAQ_VERSION`; the Lab set window's "with none given" bracket shows the Researcher- and Research-town-adjusted days
-the Lab row shows, not a flat 40 - `ResearchScene`, javac only so far; round 752's `currentLevelKey()` note was wrong,
-and `PlayerStatistic.secondPlayed` is inert stock code, both left as they are) and
-772 (a "Disable Notoriety" checkbox in the adventure Settings, off by default, in the profile's `settings.json`
-(`SettingData.notorietyDisabled`, never a save): it turns off all six Notoriety effects - the Walls, the 45/50 bonus
-Walls and their life, the spawn tilt, the rank-gate step and the dungeon upgrades - through
-`AdventurePlayer.notorietyDisabled()`; the score still counts, so turning it back on brings the level earned; Notices
-say "(off)", Notorious can't be earned while off; `[TFR-Notoriety] walls skipped: ...`; GUIDE; tested in the agent game
-at 50x in the follow-up - Walls off/on/off, `notes/tweaks-1026/r772-*.png`) and
-771 (research v2 takes about 3 sacrificed boosters, not 1: the meter is `researchMeterBoosters` 3 x the set's own cards
-per booster - its booster template less land and Guest slots - x `researchMeterPointsPerCard` 2.5, at least 8 (DOM 25 ->
-105, ARN 8 -> 60); 40 days with nothing given (was 28); Research towns cut the days only, no longer the points or the
-shards (`researchPointsFactor` gone); every v2 game takes it, running research included, no save change;
-`ResearchMeter.setCardsPerBooster`, `[TFR-Research] CODE meter N`; GUIDE; tables in `notes/research-tuning-771.md`) and
-770 (a load straight after a new game, before its first save, takes round 183's rollback snapshot again: the null header
-name is written as "" for the snapshot only, `[TFR-Load] rollback snapshot taken (N bytes, a new game not saved yet)`;
-`WorldSaveHeader` and the save format untouched) and
-769 (the engine to the 10.26 daily, upstream `0dc8c66996e`, 78 commits: Star Trek cards and card fixes, Flat Monte Carlo
-AI, side-boss lairs as dungeons, a quest's dungeon reset over every floor, a Battle Backgrounds Settings row (Off for
-TFR); 17 conflicts - the user kept TFR's synchronous full auto save, eager shop stock, Inn events and place-entry loop
-(R1-R4) and took upstream's recursive quest reset on TFR's map path (R5); upstream's async save and lazy town loading
-stay unused, possible later rounds) and
-766's follow-up (Found Cards shows a grid of card pictures - the shop's `RewardActor`, 64x89, six to a row, full size on
-hover - each with "N owned, N spare"; a click chooses a card for the detail line and the Sell / Sacrifice row;
-"Sell all over 4" sells every card's copies beyond max(4, deck copies) after a confirm; `ResearchScene.act` lifts the
-zoom above the window; `ResearchMeter.overFourCopies`/`planOverFour`/`sellOverFour`; GUIDE) and
-768 (the World Map's town specialty badges show only in the Names view, beside the names and the [+Portal] glyph: built hidden at round 765's corner, `MapViewScene.showBadges`, `[TFR-Specialty] Names view: N town badge(s) shown`) and
-766 (Found Cards in the Research Lab: a v2 row with a card of its set owned opens a list of those cards -
-copies, spares, the sell price, the days one copy takes off sold or sacrificed - with Sell and Sacrifice per card, one
-copy or every spare ("All spare copies"); deck copies and favorites kept; no Sacrifice on a Ready set; the days update
-at once and a running research fed to 0 finishes; `ResearchMeter.spareCopies`/`sellFromLab`/`sacrificeFromLab`,
-`[TFR-Research] Found Cards:`; GUIDE) and
-764's follow-up (the Lab's v2 rows: the name in a fixed column beside the buttons, line 2 "28 days - one more new common
-takes 5 days off. Start: 40[+Shards]" with the glyph last; a plain "Research" button; "Hide untouched"; the filters reset
-for another save; the "Researching" headers wrap) and
-765 (a town's World Map badge moves off top-right when another icon or badge is there: top-left, then bottom-right, then bottom-left, else top-right; `MapViewScene.badgeAnchors()` on `World.mapIconPixelRect()`, now public; `[TFR-Specialty] badge corner`) and
-764 (research v2 shows days, not a meter: the Lab's line "One more new common takes 2 days off" / "Ready, no wait", the
-set window's days, shards and what each Sacrifice would make the days; a Ready set offers no Sacrifice and stores no
-more points (clamped at full); a sacrifice stops at Ready; a running research fed - sold anywhere or sacrificed - gets
-shorter at once and finishes the moment it reaches 0 days, its start shards not refunded; the editor's Sell line in
-days; same math, `ResearchMeter.nextDayOff`/`planSacrifice`, `[TFR-Research] running CODE shortened by feeding` and
-`CODE finished by feeding`; GUIDE) and
-760 (town specialties, new games and New Game+ only - a saved `townSpecialties` flag beside research v2's, set at
-create()/NG+ when the plane's `townSpecialtiesEnabled` is on: every held town but the Capitol and Orazca picks one right
-after its restore fee, or on first entry when taken another way; Mining (its mines x1.5), Research (+5% per town, cap
-50%: points x(1+b), days /(1+b)), Outpost (lit as with an Outlook, +5% capture defense), Smithy (its Armory on the
-Capitol's table), Garrison (+20% capture defense, no new pillage), Market (card shops x0.9, one free restock a week);
-change at the Job Board for half the restore fee's gold, then locked 7 days; badges on the World Map, stand-in item icons
-until `sprites/town_specialties.atlas` lands; new `util/TownSpecialties`, saved fields on `PointOfInterestChanges`,
-settings.json `specialty*`, console `specialty`, `[TFR-Specialty]`; GUIDE) and
-737 (the LPC Vampire hero flies as a bat when it moves, art only: the Walk rows of
-`sprites/heroes/lpc_vampire_m/f.png`, from the generator's `lpc_to_player.py --bat`), 738 (the repo's `tfr-play` skill
-is the October version; docs only, not shipped), 739 (`agent_sync.cmd` refuses while the agent game runs; the agent
-detect/stop filters list the agent folder under both `C:\TFR` and `C:\CLAUDE\PROJECTS\TFR1`; dev tools only, not
-shipped), 740 (the Demon's Bargain and the Sphinx's Sanctum open in HUD Week 3: `notBeforeDay` 22 in TFR's
-`points_of_interest.json`, data only) and 741 (the 80% full-map fog reveal counts land minus the mountain ranges -
-the round-294 barrier - on both sides, like ocean; `World.checkFogOfWarStage2`, its `[TFR-FoW]` line prints the
-mountain count) and 747 (TFR's world disc replaces Forge's splash art: the skin's and both fallback skins'
-`adv_bg_splash.png` and Android's pre-launch `drawable/logo.png`, art only; on ANDROID_RELEASE.md's revert watch) and 743 (the player's arena bracket - portraits and tier bars - sits above
-the building's buttons: `ArenaScene.buttonRowReserve` pads the bracket in the player's arena only, `[TFR-ArenaLayout]`;
-the "Won this week (2 days)" label is one size) and 742 (arena duels pay half Power - `ascendance.json`
-`arenaPowerFactor` 0.5, the bracket bonus and the Coin Challenge too - and are no first meeting: `PlayerStatistic`'s
-saved `arenaWins` tally and `fieldWins()` feed every first-win rule; `[TFR-Arena]`) and 744 (the Gear Sets page lists the sets with the most pieces owned first, then A-Z: `SetsScene.listedSets`, a guard's page too) and 745 (the Notices log's small day label sits on its message's first baseline: `GameHUD.openNoticeLog`'s `dayDrop`) and 746 (working neutral towns are pale teal on the History replay, ruins keep their color, and the legend splits Unclaimed's towns into Neutral and Ruins: `WorldHistory.KIND_WORKING`, history save format 3; a format 1-2 history back-fills today's working towns on load, `[TFR-History] format 2 -> 3`) and 748 (the world disc replaces Forge's anvil as the Android launcher icon: adaptive foreground in the 66 dp safe
-zone, a dark moss `mipmap-*/ic_launcher_background.png` layer, a themed monochrome, legacy square and round, and the
-four `drawable-*/ic_launcher.png` copies; art only, ships with the next APK; on ANDROID_RELEASE.md's revert watch). and 750 (Witch-Maw Slippers cost two opening-hand cards: `changeStartCards` -1 -> -2 in TFR's `items.json`, data only; with Caretaker's Cap a 3-card hand, no floor) and 749 (a quest's `here` stage - "Return to $(poi_3)" - given away from any place, as by the F9 console's `give quest` on the world map, binds the giving town or else the nearest town instead of nothing: `AdventureQuestData.bindHereFallback`; real play unchanged; `[TFR-QuestText]` names any `$(...)` left in shown quest text; quest 12's failure text names `$(poi_1)`) and 752 (each color capital's Items shop sells its +1 max life once per game: the weekly noRestock reseed cleared the shop's bought slots, so the heart came back every week; `PlaceRewards.isShopLifeSold`/`noteShopLifeBought` record it in the saved `oncePaidRewards`, two hooks in `RewardScene`, `[TFR-ShopLife]`; an old save's heart bought in an earlier week sells once more) and 753 (a lost duel takes `notorietyLossPenalty` 5 off notoriety, floor 0, instead of resetting it - players threw a duel to a weak enemy to clear the Walls, tilt and dungeon upgrades before a dungeon: `AdventurePlayer.recordNotoriety`, settings.json; notoriety is a score now, the saved `notorietyStreak` unchanged; the 26 Wall faces print "Notoriety N+: ... Each loss takes 5 off." via `make_wall_cards.py --reuse-art`; Notices and `[TFR-Notoriety]` say what a loss took; GUIDE) and 754 (the title screen's exit dialog reads "Quit The Forsaken Realms" / "Are you sure you want to quit The Forsaken Realms?" with Quit / Cancel: two values in the stock `en-US.properties` plus `StartScene.Exit()`'s button keys; the new text is seen only after a package) and 755 (the restart dialog and the window title say The Forsaken Realms:
-three values in `en-US.properties` - "Are you sure you want to restart The Forsaken Realms?", "Restart The Forsaken
-Realms", "The Forsaken Realms will restart in a few seconds..." - Restart / Cancel on the adventure Settings' two
-restart dialogs, and the window title "The Forsaken Realms (v.<version>)" in `GameLauncher`) and 762 (the Art Library paths after its move to `C:\CLAUDE\PROJECTS\ART\Art-Library` - `ro_recut.py` and the art rule below - and the Discord FAQ page names v1.23 from `messages.py`'s `FAQ_VERSION`, artifact version 7; docs and dev tools only, not shipped) and 757 (Discord FAQ message 22, the Ko-fi support post: `dev-tools/discord_faq/messages.py`, the FAQ artifact republished as version 6; dev tools only, not shipped) and 751 (research v2 for games started - or taken into New Game+ - on this version: every set has a meter that the set's own cards fill, sold anywhere at one price (no town-reputation factor) or sacrificed at the Lab for double; a name's first copy counts C1/U2/R3/M5, later copies a quarter; the meter is 10% of the set's cards (min 8) and cuts the shards by up to half and the 28 days to none, along sqrt(fill); the reward screen's auto-sell sells as it closes; Researcher -25%. New `util/ResearchMeter`, `ResearchScene`'s v2 list and set window, hooks in `AdventurePlayer` (saved `researchV2` flag and meters), `RewardScene`, `AdventureDeckEditor`; settings.json `research*`; `[TFR-Research]`. A save without the flag keeps the classic research unchanged; GUIDE) and 756 (a support ask after 5, 15 and 40 hours of real play - all saves, window in focus, counted in the profile's adventure `settings.json` (`SettingData.supportPlaySeconds`/`supportAsksShown`/`supportNeverAsk`), never in a save - on the world map when it comes back after a duel, a load or a town, with nothing open and the player still: Support TFR (Ko-fi), Join the Discord, Maybe later, Don't ask again; the 40 h ask is the last; a Support TFR click in an ask stops the later ones (`supportClicked`, the follow-up); a "Support TFR" row in the adventure Settings; only on a plane with `supportLink` in config.json; new `util/SupportPrompt`, a tick and flush in the stock `Forge.java`; console `support hours N | show [1-3] | reset`; `[TFR-Support]`) and 758 (the death dialog says what dying did - "You Died!!!" / "You wake in <home>, healed." / "Lost [+Gold] N." / the cracked item set apart - so it no longer reads as the boss-defeat item-break dialog, which keeps its two lines; the HUD shows life at 0, never below, while dead; `Current.generateDeathMessage`, `GameStage.resetPlayerLocation`, `[TFR-Defeat]`) and 759 (the agent game starts every duel at 50x by itself, no client call: a static start speed in the stock `FControlGamePlayback`, null unless `AgentBridge` set it - so only a bridge-launched process (`TFR_AGENT_PORT`, `agent_launch.cmd`) - applied in `setGame` so the button reads the real speed, `[TFR-Agent] duel speed set to 50x (agent default)`; a human-seat duel (`autobattle on=false`) has no speed control and is not covered; the tfr-play skill's trap notes: 1280x720 window, `python -X utf8`). 702-760 and 756's follow-up are packaged to live and the agent game (2026-10-26 15:24 package, 15:24 jar; 760 checked in the packaged agent game with no dev classes: a new game logged town specialties on and restoring a ruin opened the specialty choice; 759 checked earlier: a duel opened at 50x with no settle; 738-739 and 757 are dev
-tools/docs and 748 is Android-only, so it ships with the next APK). The agent profile's window is back to 1280x720 -
-at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots come back
-1x1).
-Next version: 1.24 / 12400. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous
-auto save, eager shops, Inn events and place entry - see MOD_CHANGELOG); next merge from upstream after `0dc8c66996e`;
-BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 788 (787 is handed out: the v1.24 release; 784 was not used - the user skipped the engine merge for 1.24). Rounds 768, 766's follow-up and 769-776 are packaged to live and the agent game (2026-10-27 06:30); rounds 777-783 and 785 are committed but not yet packaged (777, 780, 781, 782, 783 and 785 tested in worktree packages). Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
-kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
-2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
-before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.
+**v1.24 "Towns & Trophies" is being released (round 787)**: rounds 702-783, 785 and 786 on top of v1.23 (761 and 784
+not used; `git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The user passed the live package of
+2026-10-27 08:58 (HEAD `f486ded5da7`) and called the release. Round 787 stamps `modVersion` 1.24 / `modVersionDate`
+10.27 (the PC update notice of round 782 compares `modVersion` with the newest `tfr-v` tag) and Android `tfr.version`
+1.24 / versionCode 12400, writes `RELEASE_NOTES_v1.24.md` and GUIDE's What's New in 1.24; ledger in
+`docs/tfr/releases.md`. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous auto
+save, eager shops, Inn events and place entry - see MOD_CHANGELOG; upstream's async save and lazy town loading stay
+unused, possible later rounds); next merge from upstream after `0dc8c66996e`; BASE_INSTALL is that daily, so packages
+need no `--allow-base-mismatch`. Next version: 1.25 / 12500. Next free round: 788. The agent profile's window is
+1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
+come back 1x1). Log sharing (round 698) posts to Discord through a webhook kept OUT of git in
+`C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step 2b put it into
+builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history before 2026-10-18:
+`docs/tfr/history/claude-md-rounds.md`.
 
 ## How the user wants me to work (supplied 2026-09-07)
 
