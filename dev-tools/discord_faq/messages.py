@@ -3,10 +3,11 @@
 # The released version the FAQ describes; build_page.py shows it in the page header. One line to change per release.
 FAQ_VERSION = "v1.24"
 
-# What this version changed, by message number: EDITED are edited in place in Discord, ADDED are posted as new
-# messages at the end of the channel. build_page.py tags them. Reset both at the next release.
-EDITED = {1, 2, 5, 6, 7, 9, 11, 12, 15, 21}
-ADDED = {23, 24}
+# What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
+# is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
+# build_page.py tags them. Reset both at the next release.
+EDITED = set()
+ADDED = set()
 
 M = []
 
@@ -414,28 +415,6 @@ On Android the logs are in Android/obb/com.thesaguy.forsakenrealms/ForsakenRealm
 To report a bug, post here what happened, your difficulty and your logs. Screenshots and your save help too.
 (macOS: ~/Library/Application Support/ForsakenRealms. Linux: ~/.forsakenrealms)"""))
 
-M.append(("Support The Forsaken Realms", "Support", r"""**☕ Support The Forsaken Realms**
-
-The Forsaken Realms is free, and it always will be. No ads, no paywalls, nothing locked behind a purchase.
-
-Building it isn't free, though. 😅 TFR is made with a lot of help from Claude, an AI assistant, and Claude is not free 😉 Add in the hours of testing and tuning, and every update has a real cost behind it.
-
-If you've enjoyed your time in the Realms and want to help keep the updates coming, you can buy me a coffee on Ko-fi:
-👉 **https://ko-fi.com/thesaguy**
-
-**What a tip helps with:**
-🛠️ new features, quests and fixes, sooner
-🎨 the tools behind the new art and sprites
-🤖 keeping Claude busy on the next update
-
-**Can't tip? You still help a lot:**
-🐞 report bugs here; shared logs make fixes fast
-💬 tell me what you love and what bugs you
-📣 tell a friend who likes Magic about TFR
-
-Thanks for playing. ❤️
-— TheSAguy"""))
-
 M.append(("Town specialties and realm milestones", "Specialties & milestones", r"""**Town specialties and realm milestones**
 
 **Q: My town wants a specialty. What are they?**
@@ -470,6 +449,28 @@ M.append(("Achievements, enemy plates, loops and duel settings", "Achievements &
 - **Always Yes** for a "you may" trigger like Valakut: open the stack, click the trigger, click it again and tick Always Yes. It holds for the rest of the duel.
 - **Keep Mouse in Window** (PC, fullscreen): keeps the cursor inside the game, handy with two monitors.
 - **Disable Notoriety:** see Enemies that adapt to you."""))
+
+M.append(("Support The Forsaken Realms", "Support", r"""**☕ Support The Forsaken Realms**
+
+The Forsaken Realms is free, and it always will be. No ads, no paywalls, nothing locked behind a purchase.
+
+Building it isn't free, though. 😅 TFR is made with a lot of help from Claude, an AI assistant, and Claude is not free 😉 Add in the hours of testing and tuning, and every update has a real cost behind it.
+
+If you've enjoyed your time in the Realms and want to help keep the updates coming, you can buy me a coffee on Ko-fi:
+👉 **https://ko-fi.com/thesaguy**
+
+**What a tip helps with:**
+🛠️ new features, quests and fixes, sooner
+🎨 the tools behind the new art and sprites
+🤖 keeping Claude busy on the next update
+
+**Can't tip? You still help a lot:**
+🐞 report bugs here; shared logs make fixes fast
+💬 tell me what you love and what bugs you
+📣 tell a friend who likes Magic about TFR
+
+Thanks for playing. ❤️
+— TheSAguy"""))
 
 if __name__ == "__main__":
     for i, (topic, short, text) in enumerate(M, 1):

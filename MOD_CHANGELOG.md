@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 788: the Discord FAQ's order matches the channel - Support last (2026-10-27)
+
+The user: "On discord, the only change I made was to move 22, the support to the end, so 23 and 24 moved one up.
+Please note that for future releases." The #faq channel now reads 1-21 as before, 22 Specialties & milestones,
+23 Achievements & duels, 24 Support.
+
+- **`dev-tools/discord_faq/messages.py`**: the Support message moved to the end; no text changed (every length as in
+  round 786, the longest 1,981). `EDITED` and `ADDED` reset to empty, since everything is posted; their comment states
+  the rule.
+- **Standing rule** (`dev-tools/discord_faq/README.md`): Support is always the last message. A release's new topics go
+  before it in `messages.py`; in Discord the user posts them and then reposts Support at the end. Edits stay in place.
+  `build_page.py`'s header note now says "post N as new messages, then repost Support last".
+- **The page** republished to the same artifact as version 11 (https://claude.ai/artifact/XRwbV8Vit3XmHkjQ3aw62y):
+  no Edit/New tags; the #how-can-i-help note still points at message 21. Dev tools only, not shipped.
+
 ## Round 787: v1.24 "Towns & Trophies" - release stamps, notes and What's New (2026-10-27)
 
 The user, after testing the live package of 2026-10-27 08:58 (HEAD `f486ded5da7`): "1.24 passed my test. Go ahead with

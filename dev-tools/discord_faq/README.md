@@ -6,6 +6,10 @@ published as the claude.ai artifact "Forsaken Realms FAQ" (https://claude.ai/art
 - `messages.py` - the messages: `(topic, short label, text)` in posting order. Run it to see each length.
 - `build_page.py <out.html>` - builds the page from them (copy buttons, length meters, copied marks).
 
+**Standing rule: Support is always the last message.** When a release adds topics, they go before Support in
+`messages.py`; in Discord the user posts them and then reposts Support at the end. Edits to existing messages stay in
+place.
+
 v1.22 (2026-10-17): 21 messages, rebuilt from GUIDE.md - Ascendance, gear sets, treasure maps and castle keys, enemy
 ranks and adapting enemies, legends and the level places, raids and war mages, the Capitol and Temple, the History
 replay, plus the v1.15 answers brought up to date. Keep it in step with GUIDE.md when a release changes a rule.
@@ -33,3 +37,7 @@ specialties and realm milestones) and 24 (achievements, Alt enemy plates, the lo
 `messages.py`'s `EDITED` and `ADDED` sets tag them on the page ("Edit" / "New" and a header note); reset both at the
 next release. The copied marks are kept per `FAQ_VERSION`. Artifact version 10. Paste list:
 `C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.24-edits.md`.
+
+2026-10-27 (round 788): the order now matches the channel. When posting v1.24 the user moved Support to the end, so
+22 is Specialties & milestones, 23 Achievements & duels and 24 Support. No text changed. `EDITED` and `ADDED` are
+reset (everything is posted). Artifact version 11.

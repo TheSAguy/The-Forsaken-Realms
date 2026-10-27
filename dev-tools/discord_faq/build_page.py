@@ -240,7 +240,7 @@ if EDITED or ADDED:
     if EDITED:
         parts.append("edit message%s %s in place" % ("s" if len(EDITED) > 1 else "", nums(EDITED)))
     if ADDED:
-        parts.append("post %s as new message%s at the end" % (nums(ADDED), "s" if len(ADDED) > 1 else ""))
+        parts.append("post %s as new message%s, then repost Support last" % (nums(ADDED), "s" if len(ADDED) > 1 else ""))
     changes = ("<li><strong>Updating from the last version.</strong> For " + FAQ_VERSION + ": " + "; ".join(parts)
                + ". The rest are unchanged. Tagged Edit and New below.</li>")
 page = (PAGE.replace("__CHANGES__", changes).replace("__DATA__", blob).replace("__N__", str(n)).replace("__HELP__", str(help_msg))
