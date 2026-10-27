@@ -14264,6 +14264,46 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 766: Found Cards in the Research Lab (2026-10-26)
+
+The user (with a mockup button drawn on the Lab's row, `notes\tweaks-1026\user-lab-1026.png`): "We need to add a
+button, Found cards. This will open a list of all cards of that set you found. You should from there easily choose what
+you want to sacrifice or sell." Research v2 saves only.
+
+- **The button** - a v2 row whose set has a card in the collection (any copy of its printing) shows **Found Cards**
+  between the text and Research, in round 764's follow-up cell; the set's window has it too.
+- **The window** (`ResearchScene.openFoundCards`) - the row's status line on top ("28 days - one more new common takes
+  5 days off. Start: 40[+Shards]" / "A sacrifice counts double, for no gold."), an **All spare copies** tick, then one
+  row per owned card of the set: "Baird, Steward of Argive (U) - 2 owned, 2 spare" over "Sacrificed: 11 days off. Sold:
+  7 days off and 75[+Gold]" ("under a day off" when it is less), with **Sell** and **Sacrifice** for one copy - "Sell
+  all" and Sacrifice on every spare copy with the tick on. Cards with a spare come first, then A-Z. Copies in a deck and
+  favorites are kept ("In a deck or a favorite - kept.", `ResearchMeter.spareCopies`, `spareCards`' rule per card);
+  no-sale-value cards say so; an emptied list says "No cards of this set left in your collection."
+- **Ready (0 days)**: no Sacrifice, only Sell ("Sold for 25[+Gold]"; "Its cards only pay gold now."). A Sacrifice stops
+  at 0 days, like the set window's; a Sell does not (gold). Every act rebuilds the Lab's row and reopens the window at
+  the same scroll place, so the days and price update at once; a running research fed to 0 days is researched then
+  ("... is researched - its cards now stock your shops.").
+- **Why in the Lab, not the deck editor**: the editor's collection has Sell (with `sellNote`) but no Sacrifice, no
+  one-set filter and no way to refresh the Lab; round 452's magnifier view is read-only. One window with both actions
+  makes the choice quickest.
+- **`ResearchMeter`**: `spareCopies`, `daysOffForOne` (the `daysAt` look-ahead for one copy), `sellFromLab` (the
+  player's own `sellCard`, so a sale feeds exactly as anywhere) and `sacrificeFromLab` (copy by copy, stopping at 0 days).
+- **Logs**: `[TFR-Research] Found Cards: sold Nx NAME (CODE) for G gold; CODE B -> A day(s)[ left]` and `Found Cards:
+  sacrificed Nx NAME (CODE); CODE B -> A day(s)[ left]` ("-> researched" when it finished), beside the usual `fed`
+  lines.
+- GUIDE.md/.html: Card Sets' "How to unlock a set" step 4 names Found Cards.
+- **Tested in the agent game** (one build with the 764 follow-up, Maven exit 0; cheats, the round's classes ahead of the
+  agent jar, new games on Normal; every duel at 50x - none was fought; `auto_save.sav` and the adventure `settings.json`
+  restored byte for byte, no slot written):
+  - Dominaria's list (`r766-1-found-list.png`); one Sell - `Found Cards: sold 1x Adamant Will (DOM) for 25 gold; DOM
+    28 -> 23 day(s)` (`r766-2-after-sell.png`); one Sacrifice - `sacrificed 1x Adamant Will (DOM); DOM 23 -> 22 day(s)`
+    (`r766-3-after-sacrifice.png`); All spare copies + Sacrifice down the list to `sacrificed 1x D'Avenant Trapper (DOM);
+    DOM 1 -> 0 day(s)` - stopped at Ready with one copy left; the Ready list: Sell all only, the deck's two Benalish
+    Marshal kept (`r766-4-ready.png`); the Lab row behind updated (`r766-5-lab-after.png`).
+  - A running AFR fed from its Found Cards: `sacrificed 2x +2 Mace (AFR); AFR 28 -> 20 day(s) left` ... `1 day(s)
+    left`, then a Sell finished it - `AFR finished by feeding on day 1`, `completed AFR`, `Found Cards: sold 2x Cleric
+    Class (AFR) for 150 gold; AFR 1 -> researched`, and the "is researched" dialog (`r766-6-running-finished.png`).
+
 ## Round 764 (follow-up): the Lab's rows fit, "Hide untouched", fresh filters per game (2026-10-26)
 
 The user's shot of the pre-764 Lab (`notes\tweaks-1026\user-lab-1026.png`): "For the research lab. I thought we said we

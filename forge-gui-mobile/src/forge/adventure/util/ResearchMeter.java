@@ -400,6 +400,71 @@ public final class ResearchMeter {
         return plan;
     }
 
+    // ---- round 766: the Lab's Found Cards ---------------------------------------------------------------------------
+
+    /** Round 766: the copies of this printing Found Cards may sell or sacrifice - not in a deck, not a favorite, with sale
+     *  value (spareCards' rule, per card). */
+    public static int spareCopies(AdventurePlayer player, PaperCard card) {
+        if (card == null || card.hasNoSellValue() || player.favoriteCards.contains(card))
+            return 0;
+        return Math.max(0, player.getCards().count(card) - player.getCopiesUsedInDecks(card));
+    }
+
+    /** Round 766: the days one more copy would take off now - sold, or sacrificed (double). 0 when it takes less than a
+     *  day, or the set is Ready. */
+    public static int daysOffForOne(AdventurePlayer player, PaperCard card, boolean sacrifice, int currentDay) {
+        float pts = pointsFor(player, card, 1, sacrifice);
+        if (pts <= 0f)
+            return 0;
+        String code = card.getEdition();
+        float now = points(player, code);
+        return daysAt(player, code, now, currentDay) - daysAt(player, code, now + pts, currentDay);
+    }
+
+    /** Round 766: Found Cards' Sell - up to n spare copies at the one sell price; the sale feeds the set as a sale anywhere
+     *  does (a running research brought to 0 days finishes). Returns the gold. */
+    public static int sellFromLab(AdventurePlayer player, PaperCard card, int n, int currentDay) {
+        String code = card.getEdition();
+        int before = days(player, code, currentDay);
+        boolean running = player.isResearching(code);
+        int gold = player.getGold();
+        int sold = 0;
+        beginBatch();
+        try {
+            sold = player.sellCard(card, Math.min(n, spareCopies(player, card)));
+        } finally {
+            endBatch(player, "Found Cards sale");
+        }
+        int gained = player.getGold() - gold;
+        System.out.println("[TFR-Research] Found Cards: sold " + sold + "x " + card.getName() + " (" + code + ") for "
+                + gained + " gold; " + code + " " + before + " -> " + afterText(player, code, currentDay, running));
+        return gained;
+    }
+
+    /** Round 766: Found Cards' Sacrifice - up to n spare copies, no gold, double; stops at 0 days, like the window's. */
+    public static int sacrificeFromLab(AdventurePlayer player, PaperCard card, int n, int currentDay) {
+        String code = card.getEdition();
+        int before = days(player, code, currentDay);
+        boolean running = player.isResearching(code);
+        int max = Math.min(n, spareCopies(player, card)), done = 0;
+        while (done < max && days(player, code, currentDay) > 0) {
+            if (player.removeCardsForResearch(card, 1) <= 0)
+                break;
+            feed(player, card, 1, true);
+            done++;
+        }
+        flush(player, "sacrificed " + done + " card(s) from Found Cards");
+        System.out.println("[TFR-Research] Found Cards: sacrificed " + done + "x " + card.getName() + " (" + code + "); "
+                + code + " " + before + " -> " + afterText(player, code, currentDay, running));
+        return done;
+    }
+
+    private static String afterText(AdventurePlayer player, String code, int currentDay, boolean running) {
+        if (player.hasUnlockedEdition(code))
+            return "researched";
+        return days(player, code, currentDay) + " day(s)" + (running ? " left" : "");
+    }
+
     // ---- research start and finish -------------------------------------------------------------------------------
 
     /** The Lab's Research button: pays, starts, and finishes at once when the meter left no days. */

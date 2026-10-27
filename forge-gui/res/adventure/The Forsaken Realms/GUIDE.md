@@ -1538,7 +1538,9 @@ sets, items or enemies off yourself; everything is on by default.)
 4. Several sets can be researched at once, each on its own clock. The Lab lists every set with its days
    and today's price; tap a line for the set's window (its spare cards, what each Sacrifice would make the
    days, and a view of every card in it), and two checkboxes hide the sets you have found nothing of, or
-   given nothing to.
+   given nothing to. A set you own cards of has **Found Cards**: every card of it in your collection, with its
+   sell price and the days one copy takes off, and a Sell and a Sacrifice on each - one copy, or every spare
+   copy with "All spare copies" ticked. Copies in a deck and favorites are always kept.
 
 | A 249-card set, Normal | new commons sold: 0 | 1 | 3 | 5 | 10 | 15 | 20 | 25 |
 |---|---|---|---|---|---|---|---|---|

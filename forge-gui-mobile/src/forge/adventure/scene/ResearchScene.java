@@ -49,6 +49,11 @@ import java.util.Map;
  * Round 764 (the user chose to "show days instead of a meter"): a v2 line and window show days, shards and how many new
  * commons take the next day off (ResearchMeter.nextDayLine); a set at 0 days reads Ready and offers no Sacrifice; a
  * running research can still be fed, and finishes the moment it reaches 0 days.
+ * <p>
+ * Round 766 (the user: "We need to add a button, Found cards. This will open a list of all cards of that set you found.
+ * You should from there easily choose what you want to sacrifice or sell."): a v2 row with a card of its set owned has
+ * Found Cards (openFoundCards) - each owned card of the set with its copies, spares, sell price and the days one copy
+ * takes off, and its own Sell and Sacrifice.
  */
 public class ResearchScene extends UIScene {
     private static ResearchScene object;
@@ -490,6 +495,7 @@ public class ResearchScene extends UIScene {
         // fresh every time this screen opens so it can never drift from the player's real
         // collection. Round 751: "unfound" = no card of the set owned and nothing fed.
         Map<String, Integer> ownedByEdition = discoveredByEdition(player.getCards());
+        Map<String, Integer> copiesByEdition = ownedCopiesByEdition(player); // round 766: who gets Found Cards
 
         boolean hideUnfound = hideUnfoundCheckBox.isChecked();
         boolean hideUnfed = hidePartialCheckBox.isChecked(); // round 764: "Hide untouched" in a v2 game
@@ -577,8 +583,14 @@ public class ResearchScene extends UIScene {
             if (portrait)
                 scrollContainer.row();
 
-            // The Found Cards cell (round 766's button; empty until then) sits between the text and the Research button.
-            scrollContainer.add().width(FOUND_WIDTH).padLeft(4);
+            // Round 766: Found Cards between the text and the Research button, on a set with a card of it owned.
+            if (!researched && copiesByEdition.getOrDefault(code, 0) > 0) {
+                TextraButton foundButton = Controls.newTextButton("Found Cards", () -> openFoundCards(code, false));
+                scrollContainer.add(foundButton).minWidth(FOUND_WIDTH).align(Align.left).padLeft(4);
+                addToSelectable(foundButton);
+            } else {
+                scrollContainer.add().width(FOUND_WIDTH).padLeft(4);
+            }
             if (researched) {
                 TypingLabel doneLabel = Controls.newTypingLabel("Researched");
                 doneLabel.skipToTheEnd();
@@ -707,6 +719,11 @@ public class ResearchScene extends UIScene {
             removeDialog();
             openSetView(code);
         }));
+        if (ownedCopiesByEdition(player).getOrDefault(code, 0) > 0) // round 766
+            dialog.button(Controls.newTextButton("Found Cards", () -> {
+                removeDialog();
+                openFoundCards(code, false);
+            }));
         dialog.button(Controls.newTextButton("Close", this::removeDialog));
         showDialog(dialog);
     }
@@ -729,6 +746,157 @@ public class ResearchScene extends UIScene {
                     else
                         openSetDialog(code);
                 }, this::removeDialog));
+    }
+
+    // ---- round 766: Found Cards -----------------------------------------------------------------------------------
+
+    /** Round 766: Found Cards acts on every spare copy of a card instead of one (the window's checkbox; this visit). */
+    private boolean foundAllSpare = false;
+    private float foundScrollY = 0f;
+
+    /** Round 766: copies owned per set, counted by printing - a row with any gets Found Cards. */
+    private static Map<String, Integer> ownedCopiesByEdition(AdventurePlayer player) {
+        Map<String, Integer> out = new HashMap<>();
+        for (Map.Entry<PaperCard, Integer> e : player.getCards())
+            if (e.getKey() != null && e.getValue() != null && e.getValue() > 0)
+                out.merge(e.getKey().getEdition(), e.getValue(), Integer::sum);
+        return out;
+    }
+
+    /**
+     * Round 766: the set's owned cards, one row each - "Benalish Marshal (R) - 3 owned, 2 spare" over "Sold: 25[+Gold], 1
+     * day off. Sacrificed: 2 days off." - with Sell and Sacrifice for one copy, or every spare copy with "All spare
+     * copies" ticked. Deck copies and favorites are never offered (spareCopies). A Ready set has no Sacrifice. Each act
+     * updates the days here and on the Lab's row at once. Built in the Lab rather than the deck editor's collection: the
+     * editor has no Sacrifice, no one-set filter and no way to refresh the Lab, and round 452's card view is read-only.
+     */
+    private void openFoundCards(String code, boolean keepScroll) {
+        AdventurePlayer player = AdventurePlayer.current();
+        int day = Current.world().getCurrentDay();
+        boolean running = player.isResearching(code);
+        boolean ready = ResearchMeter.days(player, code, day) == 0;
+        List<Map.Entry<PaperCard, Integer>> owned = new ArrayList<>();
+        for (Map.Entry<PaperCard, Integer> e : player.getCards())
+            if (e.getKey() != null && code.equals(e.getKey().getEdition()) && e.getValue() != null && e.getValue() > 0)
+                owned.add(new java.util.AbstractMap.SimpleEntry<>(e.getKey(), e.getValue()));
+        owned.sort((a, b) -> {
+            boolean sa = ResearchMeter.spareCopies(player, a.getKey()) > 0, sb = ResearchMeter.spareCopies(player, b.getKey()) > 0;
+            return sa != sb ? (sa ? -1 : 1) : a.getKey().getName().compareToIgnoreCase(b.getKey().getName());
+        });
+
+        Dialog dialog = new Dialog("Found Cards - " + editionDisplayName(code), Controls.getSkin());
+        float width = dialogBodyMaxWidth();
+        TextraLabel head = Controls.newTextraLabel(statusLine(player, code, day) + (ready && !running
+                ? "\nIts cards only pay gold now." : "\nA sacrifice counts double, for no gold."));
+        head.setWrap(true);
+        dialog.getContentTable().add(head).width(width).row();
+        CheckBox allBox = Controls.newCheckBox("All spare copies");
+        allBox.setChecked(foundAllSpare);
+        allBox.getLabel().setColor(Color.WHITE);
+        allBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                foundAllSpare = allBox.isChecked();
+                reopenFoundCards(code);
+            }
+        });
+        dialog.getContentTable().add(allBox).align(Align.left).padTop(2).row();
+
+        Table list = new Table(Controls.getSkin());
+        list.top().left();
+        for (Map.Entry<PaperCard, Integer> e : owned) {
+            PaperCard pc = e.getKey();
+            int spare = ResearchMeter.spareCopies(player, pc);
+            StringBuilder text = new StringBuilder();
+            text.append(pc.getName()).append(" (").append(rarityLetter(pc)).append(") - ").append(e.getValue())
+                    .append(" owned, ").append(spare).append(" spare");
+            if (pc.hasNoSellValue())
+                text.append("\nNo sale value.");
+            else if (spare <= 0)
+                text.append("\nIn a deck or a favorite - kept.");
+            else if (ready) // the gold glyph ends the line (its advance reads as a space before punctuation)
+                text.append("\nSold for ").append(player.cardSellPrice(pc)).append("[+Gold]");
+            else
+                text.append("\nSacrificed: ").append(daysOffText(ResearchMeter.daysOffForOne(player, pc, true, day)))
+                        .append(". Sold: ").append(daysOffText(ResearchMeter.daysOffForOne(player, pc, false, day)))
+                        .append(" and ").append(player.cardSellPrice(pc)).append("[+Gold]");
+            TextraLabel label = Controls.newTextraLabel(text.toString());
+            label.setWrap(true);
+            list.add(label).width(width - 128f).align(Align.left);
+            int n = foundAllSpare ? spare : 1;
+            TextraButton sell = Controls.newTextButton(foundAllSpare ? "Sell all" : "Sell", () -> {
+                ResearchMeter.sellFromLab(AdventurePlayer.current(), pc, n, Current.world().getCurrentDay());
+                afterFoundAct(code);
+            });
+            sell.setDisabled(spare <= 0);
+            list.add(sell).padLeft(4);
+            if (!ready) { // round 766: a Ready set has nothing left to lower
+                TextraButton sac = Controls.newTextButton("Sacrifice", () -> {
+                    ResearchMeter.sacrificeFromLab(AdventurePlayer.current(), pc, n, Current.world().getCurrentDay());
+                    afterFoundAct(code);
+                });
+                sac.setDisabled(spare <= 0);
+                list.add(sac).padLeft(4);
+            } else {
+                list.add();
+            }
+            list.row().padTop(4);
+        }
+        if (owned.isEmpty()) {
+            TextraLabel none = Controls.newTextraLabel("No cards of this set left in your collection.");
+            none.setWrap(true);
+            list.add(none).width(width - 8f).align(Align.left);
+        }
+        ScrollPane pane = new ScrollPane(list);
+        pane.setScrollingDisabled(true, false);
+        dialog.getContentTable().add(pane).width(width).height(Math.max(80f, stage.getHeight() - 130f)).padTop(2).row();
+        dialog.button(Controls.newTextButton("Close", () -> {
+            removeDialog();
+            stage.setScrollFocus(scroller);
+        }));
+        showDialog(dialog);
+        stage.setScrollFocus(pane);
+        if (keepScroll) {
+            pane.layout();
+            pane.setScrollY(foundScrollY);
+            pane.updateVisualScroll();
+        }
+        foundPane = pane;
+    }
+
+    private ScrollPane foundPane;
+
+    private void reopenFoundCards(String code) {
+        foundScrollY = foundPane != null ? foundPane.getScrollY() : 0f;
+        removeDialog();
+        openFoundCards(code, true);
+    }
+
+    /** Round 766: after a Sell or Sacrifice - the Lab's row and the window show the new days; a research fed to 0 days
+     *  left is done. */
+    private void afterFoundAct(String code) {
+        buildList();
+        if (AdventurePlayer.current().hasUnlockedEdition(code)) {
+            removeDialog();
+            showDialog(createGenericDialog(editionDisplayName(code), editionDisplayName(code)
+                    + " is researched - its cards now stock your shops.",
+                    Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, this::removeDialog));
+            return;
+        }
+        reopenFoundCards(code);
+    }
+
+    private static String daysOffText(int days) {
+        return days <= 0 ? "under a day off" : ResearchMeter.daysText(days) + " off";
+    }
+
+    private static String rarityLetter(PaperCard pc) {
+        forge.card.CardRarity r = pc.getRarity();
+        if (r == forge.card.CardRarity.MythicRare)
+            return "M";
+        if (r == forge.card.CardRarity.Rare || r == forge.card.CardRarity.Special)
+            return "R";
+        return r == forge.card.CardRarity.Uncommon ? "U" : "C";
     }
 
     /** Round 764: "12 cards, 14 days -> 3 days", "5 cards, 14 days -> Ready", "none". */
