@@ -37,6 +37,9 @@ public class DialogData implements Serializable {
     private boolean displayed = false;
 
     public transient Consumer callback;
+    // TFR round 773: built-in-code menus can fill a node's options the first time MapDialog shows it (the build menu's
+    // Card Shop categories count every shop's cards - 5.5 s for the whole tree up front). Runs once, then cleared.
+    public transient Runnable onFirstShow;
 
     public DialogData(){}
     public DialogData(DialogData other){

@@ -747,7 +747,14 @@ public class MapStage extends GameStage {
         loadMap(map, sourceMap, targetMap, 0);
     }
 
+    // Round 773: time spent generating shop stock in the map being loaded, for the [TFR-Perf] town entry line.
+    private long perfShopStockNanos;
+    private int perfShopStockCount;
+
     public void loadMap(TiledMap map, String sourceMap, String targetMap, int spawnTargetId) {
+        long perfStarted = System.nanoTime();
+        perfShopStockNanos = 0;
+        perfShopStockCount = 0;
         disposeWorld();
         createNewWorld();
         isLoadingMatch = false;
@@ -934,6 +941,9 @@ public class MapStage extends GameStage {
         debugCollision(false);
         getPlayerSprite().stop();
         forge.adventure.util.TownSpecialties.onMapLoaded(this); // round 760: a held town with no specialty asks once
+        if (perfShopStockCount > 0)
+            System.out.println("[TFR-Perf] town entry: " + (System.nanoTime() - perfStarted) / 1000000 + " ms for " + targetMap
+                    + " (shop stock " + perfShopStockNanos / 1000000 + " ms over " + perfShopStockCount + " shop(s))");
     }
 
     public void spawn(int targetId){
@@ -2067,6 +2077,7 @@ public class MapStage extends GameStage {
                                 ? changes.getWeeklyShopSeed(id, WorldSave.getCurrentSave().getWorld().getCurrentDay())
                                 : changes.getShopSeed(id);
                         WorldSave.getCurrentSave().getWorld().getRandom().setSeed(shopSeed);
+                        long perfStockStarted = System.nanoTime();
                         // Progressive Set Unlocks (MOD_SCOPE.md #4): restrict this shop's card
                         // rolls to whichever edition list applies to whoever owns this town - the
                         // player's own unlockedEditions (grown by research) in the Capitol/an
@@ -2081,6 +2092,8 @@ public class MapStage extends GameStage {
                         }
                         EconomyBuildings.injectGuaranteedTorchIfOwed(ret, data, changes);
                         EconomyBuildings.excludeMythicItemsForNeutralArmory(ret, data, changes);
+                        perfShopStockNanos += System.nanoTime() - perfStockStarted;
+                        perfShopStockCount++;
                         ShopActor actor = new ShopActor(this, id, ret, data);
                         // Capitol land shops: fixed identity, simple repair, no overlay icon once
                         // rebuilt (hut art baked into the map) - see ShopActor.fixedShop.

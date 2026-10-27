@@ -2303,11 +2303,7 @@ public class EconomyBuildings {
 
             List<DialogData> categoryOptions = new ArrayList<>();
             for (String category : SHOP_CATEGORIES) {
-                List<DialogData> leaves = new ArrayList<>();
                 int lockedInCategory = 0;
-                // Known first, then locked (user request 2026-08-30) - so the things you can
-                // actually build are at the top and never buried under a wall of greyed entries.
-                // Alphabetical by DISPLAY name within each group, since that is what is on screen.
                 List<String> inCategory = new ArrayList<>();
                 for (String shopName : new Array.ArrayIterator<>(names)) {
                     if (!category.equals(shopCategory(shopName)))
@@ -2316,44 +2312,58 @@ public class EconomyBuildings {
                         continue; // already this type - nothing to buy
                     inCategory.add(shopName);
                 }
-                // Available -> Built -> Locked (user spec 2026-08-31), alphabetical by DISPLAY
-                // name inside each group since that is what is actually on screen.
-                inCategory.sort((a, b) -> {
-                    int ra = chooserRank(a, builtHere), rb = chooserRank(b, builtHere);
-                    if (ra != rb)
-                        return Integer.compare(ra, rb);
-                    return shopDisplayName(a).compareToIgnoreCase(shopDisplayName(b));
-                });
+                if (inCategory.isEmpty())
+                    continue;
                 int builtInCategory = 0;
                 for (String shopName : inCategory) {
-                    // Locked types are shown DISABLED, not hidden (user decision 2026-08-30): with
-                    // only 5 starting unlocks a filtered menu collapses to almost nothing and the
-                    // player can never see what progression is even available. Same
-                    // shown-but-disabled treatment unaffordable options already get below. A type
-                    // already standing in this town gets the same treatment for the same reason -
-                    // hiding it would read as "that type does not exist here".
-                    boolean unlocked = isShopTypeUnlocked(shopName);
-                    boolean built = builtHere.contains(shopName);
-                    if (!unlocked)
+                    if (!isShopTypeUnlocked(shopName))
                         lockedInCategory++;
-                    else if (built)
+                    else if (builtHere.contains(shopName))
                         builtInCategory++;
-                    leaves.add(shopChoiceOption(objectId, shopName, goldDue, cost, unlocked, built, changes));
                 }
-                if (leaves.isEmpty())
-                    continue;
                 DialogData categoryBack = new DialogData();
                 categoryBack.name = "Back";
                 categoryBacks.add(categoryBack);
-                leaves.add(categoryBack);
                 DialogData categoryNode = new DialogData();
-                int available = leaves.size() - 1 - lockedInCategory - builtInCategory;
+                int available = inCategory.size() - lockedInCategory - builtInCategory;
                 categoryNode.name = category + " (" + available
                         + (builtInCategory > 0 ? " + " + builtInCategory + " built" : "")
                         + (lockedInCategory > 0 ? " + " + lockedInCategory + " locked" : "") + ")";
                 categoryNode.text = tierNode.text;
-                categoryNode.options = leaves.toArray(new DialogData[0]);
+                categoryNode.options = new DialogData[]{categoryBack};
                 categoryNode.pinLastOption = true; // keep "Back" visible when the list scrolls
+                // Round 773 (the user: "Maybe load each sub menu only when that menu is selected"): a leaf's label
+                // carries its shop's card count, a scan of the card pool per shop - 250 shops took 5.5 s on a town's
+                // first open. The leaves are built the first time this category is shown; the button above needs
+                // only the three counts.
+                String perfLabel = category + " (" + tier + ")";
+                categoryNode.onFirstShow = () -> {
+                    long started = System.nanoTime();
+                    // Available -> Built -> Locked (user spec 2026-08-31), alphabetical by DISPLAY
+                    // name inside each group since that is what is actually on screen.
+                    inCategory.sort((a, b) -> {
+                        int ra = chooserRank(a, builtHere), rb = chooserRank(b, builtHere);
+                        if (ra != rb)
+                            return Integer.compare(ra, rb);
+                        return shopDisplayName(a).compareToIgnoreCase(shopDisplayName(b));
+                    });
+                    List<DialogData> leaves = new ArrayList<>();
+                    for (String shopName : inCategory) {
+                        // Locked types are shown DISABLED, not hidden (user decision 2026-08-30): with
+                        // only 5 starting unlocks a filtered menu collapses to almost nothing and the
+                        // player can never see what progression is even available. Same
+                        // shown-but-disabled treatment unaffordable options already get below. A type
+                        // already standing in this town gets the same treatment for the same reason -
+                        // hiding it would read as "that type does not exist here".
+                        boolean unlocked = isShopTypeUnlocked(shopName);
+                        boolean built = builtHere.contains(shopName);
+                        leaves.add(shopChoiceOption(objectId, shopName, goldDue, cost, unlocked, built, changes));
+                    }
+                    leaves.add(categoryBack);
+                    categoryNode.options = leaves.toArray(new DialogData[0]);
+                    System.out.println("[TFR-Perf] build menu " + perfLabel + ": " + inCategory.size()
+                            + " shop(s) listed in " + (System.nanoTime() - started) / 1000000 + " ms");
+                };
                 categoryOptions.add(categoryNode);
             }
             if (categoryOptions.isEmpty())
@@ -2576,7 +2586,11 @@ public class EconomyBuildings {
      * buildings, imperatively records this shop under that type (economyBuildingObjectId can't
      * fit through the byte-limited map-flag system - see PointOfInterestChanges).
      */
+    // Round 773: the town (and unlocked sets) whose build menu was last opened - "first open" in the [TFR-Perf] line.
+    private static String lastBuildMenuSignature = null;
+
     public static MapDialog buildChooseBuildingDialog(MapStage stage, int objectId) {
+        long perfStarted = System.nanoTime();
         // Reset the one-shot "which option did the player pick" flag BEFORE showing the menu.
         // It used to persist forever after a build, which was harmless while buildings were
         // permanent - but with Destroy in play a stale value could re-register the destroyed
@@ -2695,6 +2709,11 @@ public class EconomyBuildings {
             back.options = root.options;
         }
 
+        String signature = currentCardCountSignature();
+        boolean firstOpen = !signature.equals(lastBuildMenuSignature);
+        lastBuildMenuSignature = signature;
+        System.out.println("[TFR-Perf] build menu " + (firstOpen ? "first open" : "open") + ": "
+                + (System.nanoTime() - perfStarted) / 1000000 + " ms (was 5491 ms on a first open in the Capitol before round 773)");
         MapDialog dialog = new MapDialog(root, stage, objectId, null);
         dialog.addDialogCompleteListener(new ChangeListener() {
             @Override

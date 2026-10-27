@@ -14264,6 +14264,69 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 773: the build menu opens at once, and towns load their shops faster (2026-10-26)
+
+The user: "when you go into a town or cap and go into a ruined building to choose something to build. The first time
+that loads takes a long time. After it's loaded it goes fast the next time. I think it's the long list of shops ...
+Maybe load each sub menu only when that menu is selected." Also the follow-up from round 769's merge (R2/R3): faster
+town entry, rebuilt on our rules.
+
+**Measured first** (agent game, a cheats new game with the Capitol raised, day 1; scratch timing probes, no repo code):
+
+| | before | after |
+|---|---|---|
+| Build menu, first open in the Capitol | 5491 ms (5480 ms of it the shops' card counts: 250 shops x ~22 ms) | 3 ms |
+| A Card Shop category, first open (lazy only, no memo) | - | 0-1177 ms (By Card Type, Common: 53 shops) |
+| Build menu, second open | 2 ms | 2 ms |
+| Player Capitol entry, loadMap | 898-1016 ms (shop stock 771-885 ms, 24 shops) | 409-420 ms (stock 279-291 ms) |
+| New Avalon (Plains Capital) entry, loadMap | 2313 ms (stock 1676, shop swap 612) | 1886 ms (stock 1603, swap 261) |
+| Llanowar (neutral ruin) entry, loadMap | 35 ms | 62 ms (noise at this size) |
+| Inn `initLocalEvent` | 0 ms | unchanged - not slow, left alone |
+
+**Cause.** `CardUtil.CardPredicate.test`: under a set restriction, every card not taken on its own printing walks all
+of its printings for one in an allowed set with an allowed rarity (round 151's rule). A shop scans the whole pool,
+~30k cards, so every shop stock, every build-menu card count and every round-693 shop-swap check paid it again. The
+build menu built its whole Card Shop tree - every tier, every category, every shop's count - before showing the first
+page; the counts were cached per town and unlocked sets, hence fast the second time.
+
+**Fix 1 - the build menu builds a category's shops when it is opened** (the user's suggestion). The tier and category
+buttons still show their "(N + N built + N locked)" counts (cheap); the shop rows, each with its card count, are made
+the first time that category is shown. New `DialogData.onFirstShow` (transient Runnable), run once by
+`MapDialog.loadDialog`. `EconomyBuildings.buildCardShopChooser`. Same rows, same order, same greyed entries: all 268
+rows of the Capitol's menu (4 tiers, 18 categories) walked with the old and the new code - identical text and enabled
+state. Shots `notes/tweaks-1026/r773-category-before.png` / `-after.png`.
+
+**Fix 2 - the printing walk is remembered.** Its answer depends only on the card's rules (the printings CardDb lists
+for them) and the predicate's edition and rarity lists, so `CardPredicate.anyPrintingAllowed` keeps it per list pair:
+the same answers, so the same pools in the same order, the same world-RNG draws and the same stock. Dropped when the
+card database grows (a lazily loaded card can add printings); at most 12 list pairs kept, eldest dropped (a long session
+stays small on Android); concurrent maps and a synchronized index, in case a scan runs off the GL thread.
+
+**Identity evidence** (same save, same day, old code vs new code, every shop's card list logged in order): the Player
+Capitol's 24 shops, Llanowar's 4 and New Avalon's 16 - all identical, item for item; the Capitol also matches the first
+baseline run.
+
+**Not done, and why.**
+- No lazy or background shop stock (upstream's R2 idea). A shop's stock is drawn from the world RNG, and the NEXT slot's
+  shop-type roll (`nextInt(100)`, `shops.get(nextInt)`) continues from where that generation left it - deferring stock
+  would change which shops a town shows. The memo gets most of the win with no RNG risk.
+- The Inn (R3): 0 ms, nothing to win.
+- New Avalon's remaining cost is one shop: WhiteBoosterPackShop, 1264 ms for 8 packs - the colored packs go through
+  stock `BoosterPack` slot filters over the whole card database (`AdventureEventController.generateBoosterByColor`).
+  Their contents use the unseeded `MyRandom`, so they already re-roll on every visit and draw nothing from the world
+  RNG: a later round could defer them to the shop's first open without changing any seeded stock.
+- Found on the way, not changed: a shop row's "[N cards]" count has never shown - the font markup eats "[52 cards]" as
+  an unknown tag (the double space before the price is where it was). Showing it is a one-character escape, but it
+  changes what players see; the user's call.
+
+Logs: `[TFR-Perf] build menu first open: N ms (was 5491 ms ...)` / `build menu open: N ms`;
+`[TFR-Perf] build menu <Category> (<Tier>): N shop(s) listed in M ms` when a category is first opened; and
+`[TFR-Perf] town entry: N ms for <map> (shop stock M ms over K shop(s))` from `MapStage.loadMap` (maps with shops only).
+
+Files: `util/EconomyBuildings.java`, `util/CardUtil.java` (stock), `util/MapDialog.java` (stock), `data/DialogData.java`
+(stock; a transient field, no save change - its serialVersionUID is pinned), `stage/MapStage.java` (stock; timing only).
+Maven compile clean. Not packaged.
+
 ## Round 775: the Sol Ring leak - no banned card from an enemy's deck or ante (2026-10-26)
 
 The open item since 2026-10-19: on 2026-10-18 the player Vr01 wrote on Discord that the FAQ says Sol Ring is never a

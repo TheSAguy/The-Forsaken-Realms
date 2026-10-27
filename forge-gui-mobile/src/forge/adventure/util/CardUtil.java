@@ -80,6 +80,60 @@ public class CardUtil {
             }
         }
 
+        // TFR round 773: the printing walk below runs for every card a set-restricted pool scan does not take on its
+        // own printing - about 30k cards per shop, 20-120 ms a shop, 5.5 s for the build menu's card counts. Its answer
+        // depends only on the card's rules (the printings CardDb lists for them) and this predicate's edition and
+        // rarity lists, so it is remembered per list pair: same answers, same pools, same order, same RNG draws.
+        // Dropped whenever the card database grows (a lazily loaded card can add printings), and at most
+        // PRINTING_MEMO_LISTS list pairs are kept (a town's sets, a few rarity mixes) so a long session stays small.
+        private static final int PRINTING_MEMO_LISTS = 12;
+        private static final Map<String, Map<CardRules, Boolean>> printingMemo = new LinkedHashMap<>(16, 0.75f, true);
+        private static int printingMemoDbSize = -1;
+        private Map<CardRules, Boolean> memo;
+        private int memoDbSize = -1;
+
+        private Map<CardRules, Boolean> printingMemoFor(int dbSize) {
+            synchronized (printingMemo) {
+                if (dbSize != printingMemoDbSize) {
+                    printingMemo.clear();
+                    printingMemoDbSize = dbSize;
+                }
+                Map<CardRules, Boolean> lists = printingMemo.computeIfAbsent(this.editions + "|" + this.rarities,
+                        k -> new java.util.concurrent.ConcurrentHashMap<>());
+                if (printingMemo.size() > PRINTING_MEMO_LISTS) {
+                    Iterator<String> eldest = printingMemo.keySet().iterator();
+                    eldest.next();
+                    eldest.remove();
+                }
+                return lists;
+            }
+        }
+
+        /** Does any printing of this card sit in the edition list with a rarity the list allows? (round 151's rule) */
+        private boolean anyPrintingAllowed(final PaperCard card) {
+            int dbSize = FModel.getMagicDb().getCommonCards().getAllCards().size();
+            if (memo == null || dbSize != memoDbSize) {
+                memo = printingMemoFor(dbSize);
+                memoDbSize = dbSize;
+            }
+            CardRules rules = card.getRules();
+            Boolean known = rules == null ? null : memo.get(rules);
+            if (known != null)
+                return known;
+            boolean found = false;
+            for (PaperCard c : FModel.getMagicDb().getCommonCards().getAllCards(card)) {
+                if (!this.editions.contains(c.getEdition()))
+                    continue;
+                if (!this.rarities.isEmpty() && !this.rarities.contains(c.getRarity()))
+                    continue;
+                found = true;
+                break;
+            }
+            if (rules != null)
+                memo.put(rules, found);
+            return found;
+        }
+
         @Override
         public boolean test(final PaperCard card) {
             // ROUND 151 BUG FIX (user playtest: a no-rares Constructed starter deck contained four
@@ -97,16 +151,8 @@ public class CardUtil {
             } else {
                 boolean found = this.editions.contains(card.getEdition())
                         && (this.rarities.isEmpty() || this.rarities.contains(card.getRarity()));
-                if (!found) {
-                    for (PaperCard c : FModel.getMagicDb().getCommonCards().getAllCards(card)) {
-                        if (!this.editions.contains(c.getEdition()))
-                            continue;
-                        if (!this.rarities.isEmpty() && !this.rarities.contains(c.getRarity()))
-                            continue;
-                        found = true;
-                        break;
-                    }
-                }
+                if (!found)
+                    found = anyPrintingAllowed(card);
                 if (!found)
                     return !this.shouldBeEqual;
             }

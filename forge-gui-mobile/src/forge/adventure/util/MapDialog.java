@@ -208,6 +208,11 @@ public class MapDialog {
     }
 
     private boolean loadDialog(DialogData dialog) { //Displays a dialog with dialogue and possible choices.
+        if (dialog.onFirstShow != null) { // TFR round 773: options built on first show
+            Runnable fill = dialog.onFirstShow;
+            dialog.onFirstShow = null;
+            fill.run();
+        }
         setEffects(dialog.action);
         if (dialog.options.length == 0 && dialog.text.isEmpty() && dialog.action.length > 0){
             stage.hideDialog();

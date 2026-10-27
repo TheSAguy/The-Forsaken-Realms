@@ -38,6 +38,21 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 773 - the build menu opens at once, faster shop stock
+
+- **`forge-gui-mobile/src/forge/adventure/util/CardUtil.java`** (STOCK) - `CardPredicate.test()`'s edition branch: the
+  printing walk (round 151's "one printing satisfies both edition and rarity") moved into a new private
+  `anyPrintingAllowed()` that remembers its answer per `CardRules` and per edition+rarity list pair (static
+  `printingMemo`, at most 12 list pairs, dropped when `getCommonCards().getAllCards().size()` changes). Same answers,
+  same pools and order, same RNG draws. If upstream rewrites `test()`, keep the memo around whatever walk it has.
+- **`forge-gui-mobile/src/forge/adventure/data/DialogData.java`** (STOCK) - a `public transient Runnable onFirstShow`
+  after `callback`. Transient: no save effect (serialVersionUID pinned anyway).
+- **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** (STOCK) - `loadDialog()` runs and clears
+  `onFirstShow` first (5 lines at the top).
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK) - timing only: two fields before `loadMap()`,
+  a start time and reset at its top, a sum around `loadObjects()`'s shop stock generation, one `[TFR-Perf] town entry`
+  line at the end of `loadMap()`. No logic change.
+
 ### Round 775 - no banned card from an enemy's deck or ante
 
 - **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** (STOCK) - new static `withoutBannedCards()`;
