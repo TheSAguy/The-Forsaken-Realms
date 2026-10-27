@@ -14264,6 +14264,56 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 766 (follow-up): Found Cards shows the card pictures, and "Sell all over 4" (2026-10-26)
+
+The user, trying Found Cards live (round 766's text rows): "For this screen, you have to be able to see the card
+picture. I don't know what each card does without seeing the image."
+
+- **A grid of pictures** (`ResearchScene.openFoundCards`): each owned card of the set is the shop's own `RewardActor`,
+  face up (as WorldStage's Duplicate dialog shows its offers), 64x89 units - about 170x237 px at 1280x720, six to a row,
+  art and type line readable - with a small "2 owned, 2 spare" under it. Pointing at a picture shows the card full size
+  (the actor's own tooltip; on Android a tap opens the card view). The grid scrolls.
+- **Click to choose**: a click on a picture chooses it - its caption turns gold and the line under the grid reads
+  "Aven Sentry (C) - 2 owned, 2 spare. Sacrificed: 7 days off. Sold: 5 days off and 25[+Gold]" ("Sold for 25[+Gold]" on
+  a Ready set; "In a deck or a favorite - kept."). Sell, Sacrifice ("Sell all" / "Sacrifice all" with the tick), the
+  **All spare copies** tick and Close sit in the button row and act on the chosen card. The details live under the grid
+  rather than under every picture so the pictures stay big; choosing updates them in place without rebuilding the
+  pictures. The chosen card stays chosen across a Sell or Sacrifice while a copy is left, else the first card with a
+  spare is chosen.
+- Unchanged: Ready means Sell only (no Sacrifice button), deck copies and favorites are kept, a Sacrifice stops at 0 days,
+  every act refreshes the window (at the same scroll place) and the Lab's row, a running research fed to 0 finishes.
+  The pictures' tooltips and textures are disposed on close and on every rebuild (`disposeFoundActors`).
+- **The zoom drew behind the window**: `UIScene.act` puts the top dialog in front every frame (round 120's fix for
+  RewardScene's cards over a dialog), so the tooltip's stage Container, added on hover, ended up under the Found Cards
+  window. `ResearchScene.act` now lifts visible stage Containers back above it while the window is open - no change to
+  `UIScene` or `RewardActor`.
+- **"Sell all over 4"** (the user: "Add an option to sell all copies over 4. (That's different from Spare, where Spare
+  is only copies not used in decks currently)"): a set-wide button in the window's button row, shown only when some card
+  of the set has more than 4. Per card it sells `owned - max(4, copies its decks use)` (`ResearchMeter.overFourCopies`,
+  `KEEP_COPIES` 4), so a deck never loses a copy; favorites and no-sale-value cards are skipped. A confirm first: "Sell
+  the copies over 4 of each card - 14 cards - for 600[+Gold]" / "Research: 28 days -> 11 days. Deck copies and favorites
+  are kept." (`planOverFour`, worked out the way the sale feeds; "stays Ready" on a Ready set, which it also works on).
+  The sale is the player's own `sellCard` in one batch (`sellOverFour`), so gold, feeding, a finish at 0 days and the
+  Lab-row refresh match a single Sell. Stock Forge's "Sell all extras" is Quest mode's spell shop, on Quest data and its
+  playset preference - not reusable here. Log: `[TFR-Research] Found Cards: sold N over-4 copies of CODE for G gold;
+  CODE A -> B day(s)`.
+- GUIDE.md/.html: Card Sets' step 4 - the pictures, click to choose, Sell all over 4.
+- **Tested in the agent game** (cheats, the round's class ahead of the 18:25 agent jar, a new game on Normal; no duel
+  fought; `auto_save.sav` and the adventure `settings.json` restored byte for byte, no slot written). The bridge cannot
+  hover or click a picture, so the hover and the choosing click were posted to the game window as mouse messages
+  (the real cursor never moved): the grid (`r766fu-1-grid.png`), Aven Sentry full size over the window
+  (`r766fu-2-zoom.png`), Aven Sentry chosen (`r766fu-3-chosen.png`), after a Sell - `Found Cards: sold 1x Aven Sentry
+  (DOM) for 25 gold; DOM 28 -> 23 day(s)` (`r766fu-4-after-sell.png`) - and a Sacrifice - `sacrificed 1x Aven Sentry
+  (DOM); DOM 23 -> 22 day(s)` (`r766fu-5-after-sacrifice.png`), then Sacrifice all down to `sacrificed 1x D'Avenant
+  Trapper (DOM); DOM 1 -> 0 day(s)`: the Ready grid with Sell all only and the deck's Benalish Marshal at 0 spare
+  (`r766fu-6-ready.png`). Shots 4 and 5 show a card's zoom because the posted cursor still rested on a picture.
+  - Sell all over 4 (a new game: four Dominaria cards at 7 copies, Benalish Marshal at 6 with 2 in a deck): the button in
+    the row (`r766fu-over4-before.png`), the confirm - 14 cards, 600[+Gold], 28 -> 11 days (`r766fu-over4-confirm.png`)
+    - then `fed DOM (Found Cards over-4 sale): 5 new card(s), 9 copy(ies), +9.75 pts -> 9.75/25 (39%) ... 11 day(s)`,
+    `Found Cards: sold 14 over-4 copies of DOM for 600 gold; DOM 28 -> 11 day(s)`, gold +600, every card at 4, Benalish
+    Marshal 4 owned / 2 spare, and the button gone (`r766fu-over4-after.png`).
+- Built once after the last .java edit (Maven exit 0); the commit is that tree.
+
 ## Round 768: town badges show in the Names view only (2026-10-26)
 
 The user: "Let's move the town type to a view, vs always on, Probably the same view that shows the teleporter icon." The
