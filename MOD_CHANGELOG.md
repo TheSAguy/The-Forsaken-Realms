@@ -14264,6 +14264,60 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 778: a land drops cell in duels (a Settings option), and Always Yes works for Valakut (2026-10-27)
+
+gnomedoom (a v1.23 player, on Discord) asked for a land-drops-left indicator, a countdown on cards like Summer Bloom,
+"Always yes" for Valakut triggers, and a mouse lock. Mock-ups: `C:\TFR\notes\gnomedoom-ui\README.md`. The user: "Yes,
+A + Valakut. Make Land Drops an Settings option, by default off." Mouse lock: no change (see the guide note below).
+
+- **The land drops cell** (`VPlayerPanel.InfoTabLand`): lands played / allowed this turn under each player's zone
+  counts, with the skin's `LANDLOGO` icon. The count is white while a drop is left and gold on a turn with extra drops
+  (Summer Bloom, Explore, Azusa, Exploration - `PlayerView.getMaxLandPlay` already counts them, so the Summer Bloom
+  countdown is the same cell: 0/4, 1/4 ... 4/4). The whole cell is dimmed (alpha 0.45) once the drops are spent and on
+  the other player's turn. Unlimited drops (Fastbond) read "1/+": the skin fonts carry no infinity sign (FSkinFont's
+  charset is libGDX's default plus two marks), and "+" already means "more" on the extra zones tab. The counts are read
+  from the PlayerView as the cell draws (`NumLandThisTurn`, `MaxLandPlay`, `HasUnlimitedLandPlay`, all tracked).
+- **Layout**: in the compact two-column grid TFR's duels use, the cell is a fifth row (left cell) and the rows share the
+  column (51 -> 41 px at 720p); `getCompactDoubleRows()` replaces the constant in `fitCompactAvatar` and
+  `layoutDoubleColumns`. The single-column scroller lists it last; the classic landscape column and the portrait row
+  add it last. It is held outside `tabs`, so a tap does nothing and gamepad tab cycling never lands on it.
+- **The setting**: "Show land drops in duels" in the adventure Settings after Disable Notoriety
+  (`SettingData.showLandDrops`, the profile's `settings.json`, never a save), off by default. Off, the panel lays out
+  exactly as before (seen: 4 rows, no cell). The duel screen reads it as it lays out, and the adventure Settings can't
+  be opened mid-duel, so a change shows from the next duel. The row is not gated by plane: it changes nothing until a
+  player ticks it, and it is a duel display preference like the stock rows around it.
+- **Valakut, the Molten Pinnacle**: its "you may" was `OptionalDecider$ You` on the damage effect, so the engine saw a
+  mandatory trigger - no Always Yes / Always No in the stack menu, and a plain `confirmAction` ("Do you want to deal 3
+  damage to X?") on every Mountain that nothing remembered. `OptionalDecider$ You` now sits on the `T:` line, so the
+  trigger is optional and its question goes through `confirmTrigger`, which reads the Always Yes/No decision first. The
+  intervening "if": upstream's other optional intervening-if triggers (Emeria, Drumhunter) re-check `IsPresent` at
+  resolution, but Valakut counts *other* Mountains, which a trigger's `IsPresent` can't express (no TriggeredCard
+  there) - hence its `NoResolvingCheck` and the effect's `ConditionPresent$ Mountain.YouCtrl+!TriggeredCard GE5`, which
+  stay. Added `IsPresent2$ Mountain.YouCtrl | PresentCompare2$ GE5 | ResolvingCheck$ IsPresent2` (the Hidden Predators
+  pattern): checked at resolution before the question, so with fewer than 5 Mountains left the player isn't asked for
+  nothing. It never skips a legal trigger (5 other Mountains means at least 5); the one case still asked for nothing
+  is exactly 5 Mountains with the triggering one among them, after a Mountain left in response.
+- **The look-alikes**: Spark Mage fixed the same way (its "you may" is a trigger's; no intervening if). Not changed:
+  Master of the Wild Hunt (the optional damage is in an activated ability and the decision belongs to the target's
+  controller), Requiem Monolith (an activated ability; the target's controller decides), Channel Harm (a spell's
+  replacement effect, not a trigger). None of those three can carry a trigger decision.
+- **Seen in the agent game** (human seat, `cheats`, dev mode on for the test only, a Setup Game State with Valakut, 5
+  Mountains and Summer Bloom; the round's classes ahead of the jar and the two scripts as loose card files): the cell
+  read 0/1, 0/4 gold after Summer Bloom, 1/4 to 4/4 and dimmed at 4/4; the opponent's cell dimmed; the stack showed
+  "(OPTIONAL)" Valakut with Auto-Yield, Always Yes, Always No; the first two triggers asked "Use triggered ability of
+  Valakut, the Molten Pinnacle?"; with Always Yes ticked the next resolved with no question (21 -> 18). Off in Settings,
+  the next duel (auto-battle at 50x) showed the stock 4-row column. A trap met on the way: the stack item's menu opens
+  on the FIRST tap of a selected item - a double tap ticks the menu's first row, Auto-Yield, which then passes priority
+  on every Valakut trigger (removed in Auto Yields and Triggers).
+- **Logs**: `[TFR-LandDrops] <player>: N/M lands this turn` when the count changes on a turn with extra drops;
+  `[TFR-LandDrops] Settings: land drops cell on|off - from the next duel`.
+- GUIDE.md/.html: Smaller Things Worth Knowing gets the land drops row, Always Yes for "you may" triggers (open the
+  stack, select, tap again, Always Yes; undo in Auto Yields and Triggers) and the existing Keep Mouse in Window row
+  (fullscreen only, from upstream #12383 in round 769); a FAQ entry "Do I have to click Yes for every Valakut trigger?".
+  The Discord FAQ has no matching message; unchanged.
+- Stock files (CORE_ENGINE_CHANGES): VPlayerPanel, SettingData, SettingsScene, `cardsfolder/v/valakut_the_molten_pinnacle.txt`,
+  `cardsfolder/s/spark_mage.txt`. Maven compile exit 0.
+
 ## Round 773 (follow-up): the build menu shows each shop's card count, and booster packs wait for the shop screen (2026-10-26)
 
 Two items round 773 turned up, both approved by the user through the main thread.

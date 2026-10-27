@@ -85,6 +85,9 @@ public class SettingData {
     // Round 772 (the user: "Disable Notoriety system option. By default unchecked"): true switches every Notoriety
     // effect off (AdventurePlayer.notorietyDisabled) - the score still counts. Off by default, so an older file reads as on.
     public boolean notorietyDisabled;
+    // Round 778 (the user: "Make Land Drops an Settings option, by default off"): true adds a land drops cell - lands
+    // played / allowed this turn - to each player's stat column in duels (VPlayerPanel.InfoTabLand).
+    public boolean showLandDrops;
     // Preserve explicitly stored global choices from the original background settings.
     public Boolean enableExtraBattleBackgrounds;
     public HashMap<String, Boolean> extraBattleBackgroundsByPlane = new HashMap<>();

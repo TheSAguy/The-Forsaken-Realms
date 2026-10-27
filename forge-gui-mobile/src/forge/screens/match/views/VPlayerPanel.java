@@ -254,6 +254,7 @@ public class VPlayerPanel extends FContainer {
     private final InfoTab tabManaPool;
     private final Map<ZoneType, InfoTabZone> zoneTabs = new HashMap<>();
     private final InfoTabExtra extraTab;
+    private final InfoTabLand landTab; //TFR round 778: lands played / allowed this turn, behind a Settings row
     private final List<InfoTab> tabs = new ArrayList<>();
     private InfoTab selectedTab;
     private VField.FieldRow selectedRow;
@@ -332,6 +333,7 @@ public class VPlayerPanel extends FContainer {
         addZoneDisplay(ZoneType.Exile);
         extraTab = add(new InfoTabExtra());
         tabs.add(extraTab);
+        landTab = add(new InfoTabLand()); //TFR round 778: kept out of tabs, so nothing selects or cycles to it
 
         if (showHand) {
             setSelectedZone(ZoneType.Hand);
@@ -595,6 +597,10 @@ public class VPlayerPanel extends FContainer {
             remove(tab);
             add(tab);
         }
+        if (landTab != null) {
+            remove(landTab);
+            add(landTab);
+        }
         if (tabStrip != null) { //draws the scroll indicators over the tabs
             remove(tabStrip);
             add(tabStrip);
@@ -746,6 +752,8 @@ public class VPlayerPanel extends FContainer {
             tab.setVisible(show);
             if (show) { shown.add(tab); }
         }
+        landTab.setVisible(landTab.isTabShown());
+        if (landTab.isVisible()) { shown.add(landTab); }
         float infoTabWidth = (getWidth() - x) / shown.size();
         for (InfoTab tab : shown) {
             tab.setBounds(x, y, infoTabWidth, infoLabelHeight);
@@ -862,7 +870,7 @@ public class VPlayerPanel extends FContainer {
         final float lifeHeight = Forge.altPlayerLayout ? (adjustHeight > 2 ? INFO_FONT.getLineHeight() / 2 : 0) : LIFE_FONT.getLineHeight();
         final boolean doubleTabs = isDoubleTabs();
         final float minCell = doubleTabs ? COMPACT_MIN_CELL : Math.max(COMPACT_MIN_CELL, getCompactMinColumnWidth() * COMPACT_MIN_CELL_RATIO);
-        final float budget = height - COMPACT_PANEL_PAD_TOP - lifeHeight - getCompactPhaseSpace() - 2 * TAB_COLUMN_PAD - (doubleTabs ? COMPACT_DOUBLE_ROWS : COMPACT_MAX_VISIBLE_TABS) * minCell;
+        final float budget = height - COMPACT_PANEL_PAD_TOP - lifeHeight - getCompactPhaseSpace() - 2 * TAB_COLUMN_PAD - (doubleTabs ? getCompactDoubleRows() : COMPACT_MAX_VISIBLE_TABS) * minCell;
         final float limit = Math.min(compactAvatarNatural * 0.8f, Math.min(budget, height * COMPACT_MAX_AVATAR_RATIO));
         final float size = Math.round(Math.max(Math.min(COMPACT_MIN_AVATAR, compactAvatarNatural), limit));
         if (Math.abs(avatar.getWidth() - size) > 0.5f || avatar.getHeight() != avatar.getWidth()) {
@@ -887,6 +895,8 @@ public class VPlayerPanel extends FContainer {
             if (!show) { continue; }
             (tab.isCommonZone() ? right : left).add(tab);
         }
+        landTab.setVisible(landTab.isTabShown());
+        if (landTab.isVisible()) { left.add(landTab); } //TFR round 778: the last cell of the player's own column
         commonTabWidth = right.isEmpty() ? 0 : tabWidth;
 
         //one tab height for both columns so every tab and icon matches
@@ -916,6 +926,7 @@ public class VPlayerPanel extends FContainer {
             compactOrder.add(tabManaPool);
             compactOrder.add(commandTab);
             compactOrder.add(extraTab);
+            compactOrder.add(landTab); //TFR round 778, shown only while its Settings row is on
         }
         return compactOrder;
     }
@@ -950,7 +961,7 @@ public class VPlayerPanel extends FContainer {
         if (tabColWidth <= 0 || initH <= 0) { return; }
         final float cellW = tabColWidth / 2;
         final float top = Math.round(tabColTop + TAB_COLUMN_PAD);
-        final float cellH = Math.max(1f, (float) Math.floor(Math.min((tabColHeight - 2 * TAB_COLUMN_PAD) / COMPACT_DOUBLE_ROWS, cellW * 1.2f)));
+        final float cellH = Math.max(1f, (float) Math.floor(Math.min((tabColHeight - 2 * TAB_COLUMN_PAD) / getCompactDoubleRows(), cellW * 1.2f)));
         final float x = getColumnX();
         for (int i = 0; i < grid.size(); i++) {
             final InfoTab tab = grid.get(i);
@@ -962,6 +973,11 @@ public class VPlayerPanel extends FContainer {
         phaseButton.setBounds(x + TAB_COLUMN_PAD, compactPhaseTop, tabColWidth - 2 * TAB_COLUMN_PAD, compactPhaseHeight);
     }
 
+    //TFR round 778: the land drops cell takes a fifth row, so the four rows share the column with it
+    private int getCompactDoubleRows() {
+        return landTab != null && landTab.isTabShown() ? COMPACT_DOUBLE_ROWS + 1 : COMPACT_DOUBLE_ROWS;
+    }
+
     //the desktop's tab grid, row by row: the extra zones tab and the mana pool are always the last row
     private List<InfoTab> getCompactGridOrder() {
         if (compactGrid.isEmpty()) {
@@ -971,6 +987,7 @@ public class VPlayerPanel extends FContainer {
             compactGrid.add(commandTab);
             compactGrid.add(extraTab);
             compactGrid.add(tabManaPool);
+            compactGrid.add(landTab); //TFR round 778: a fifth row, left cell, only while its Settings row is on
         }
         return compactGrid;
     }
@@ -1782,6 +1799,10 @@ public class VPlayerPanel extends FContainer {
             return getDisplayAreaBackColor();
         }
 
+        protected FSkinColor getValueColor() { //TFR round 778: the land drops cell colors its count
+            return getInfoForeColor();
+        }
+
         //landscape: every icon is fitted into the same square box at the same x, so tabs line up
         private void drawLandscapeContent(Graphics g) {
             FSkinImageInterface icon = getIcon();
@@ -1811,7 +1832,7 @@ public class VPlayerPanel extends FContainer {
                 g.startRotateTransform(tx + tw / 2, cy, 180);
                 align = Align.right;
             }
-            g.drawText(value, isCompactLayout() ? COMPACT_VALUE_FONT : INFO_FONT, getInfoForeColor(), tx, 0, tw, getHeight(), false, align, true);
+            g.drawText(value, isCompactLayout() ? COMPACT_VALUE_FONT : INFO_FONT, getValueColor(), tx, 0, tw, getHeight(), false, align, true);
             if (rotated) { g.endTransform(); }
         }
 
@@ -1856,7 +1877,7 @@ public class VPlayerPanel extends FContainer {
 
             if (hasValue) {
                 final float tx = startX + iw + gap;
-                g.drawText(value, COMPACT_VALUE_FONT, getInfoForeColor(),
+                g.drawText(value, COMPACT_VALUE_FONT, getValueColor(),
                         tx, 0, Math.max(0f, w - tx - pad), h,
                         false, Align.left, true);
             }
@@ -1966,7 +1987,7 @@ public class VPlayerPanel extends FContainer {
                     g.startRotateTransform(x + (getWidth() - x + 1) / 2, getHeight() / 2, 180);
                     alignX = Align.right;
                 }
-                g.drawText(value, INFO_FONT, getInfoForeColor(), x, 0, getWidth() - x + 1, getHeight(), false, alignX, true);
+                g.drawText(value, INFO_FONT, getValueColor(), x, 0, getWidth() - x + 1, getHeight(), false, alignX, true);
                 if (lblLife.getRotate180()) {
                     g.endTransform();
                 }
@@ -1986,7 +2007,7 @@ public class VPlayerPanel extends FContainer {
                 g.drawImage(icon, x - mod / 2, y - mod / 2, w + mod, h + mod);
 
                 y += h + INFO_TAB_PADDING_Y;
-                g.drawText(value, INFO_FONT, getInfoForeColor(), 0, y, getWidth(), getHeight() - y + 1, false, Align.center, false);
+                g.drawText(value, INFO_FONT, getValueColor(), 0, y, getWidth(), getHeight() - y + 1, false, Align.center, false);
                 if (lblLife.getRotate180()) {
                     g.endTransform();
                 }
@@ -2173,6 +2194,88 @@ public class VPlayerPanel extends FContainer {
      * Player panel tab that can contain several extra rarely-used zones. Displays a dropdown when clicked, letting the
      * player pick which one to show.
      */
+    /**
+     * TFR round 778: lands played / allowed this turn ("1/4" on a Summer Bloom turn), shown while the adventure Settings'
+     * "Show land drops in duels" is on. Its count is white while a drop is left, gold on a turn with extra drops, and the
+     * whole cell is dimmed once the drops are spent or on the other player's turn. It has no zone, so a tap does nothing.
+     */
+    public class InfoTabLand extends InfoTab {
+        private static final float DIMMED = 0.45f;
+        private final FSkinColor extraColor = FSkinColor.getStandardColor(255, 206, 84);
+        private boolean spent;
+        private boolean extra;
+        private String lastLogged = "";
+
+        private InfoTabLand() {
+            super(FSkinImage.LANDLOGO);
+        }
+
+        @Override
+        protected boolean isTabShown() {
+            return showLandDrops();
+        }
+
+        @Override
+        public VDisplayArea getDisplayArea() {
+            return null;
+        }
+
+        @Override
+        public void setDisplayVisible(boolean visible) {
+        }
+
+        @Override
+        public void setDisplayBounds(float x, float y, float width, float height) {
+        }
+
+        @Override
+        public void setRotate180(boolean rotate180) {
+        }
+
+        @Override
+        public void update() {
+            final int played = player.getNumLandThisTurn();
+            final boolean unlimited = player.hasUnlimitedLandPlay();
+            final int allowed = player.getMaxLandPlay();
+            //the skin fonts carry no infinity sign, so unlimited drops (Fastbond) read "1/+" like the extra zones tab
+            value = played + "/" + (unlimited ? "+" : String.valueOf(allowed));
+            final PlayerView turn = MatchController.instance.getGameView() == null ? null : MatchController.instance.getGameView().getPlayerTurn();
+            final boolean ownTurn = turn != null && turn.equals(player);
+            spent = !ownTurn || (!unlimited && played >= allowed);
+            extra = unlimited || allowed > 1;
+            if (ownTurn && extra && !value.equals(lastLogged)) {
+                lastLogged = value;
+                System.out.println("[TFR-LandDrops] " + player.getName() + ": " + value + " lands this turn");
+            }
+        }
+
+        @Override
+        public void reset() {
+        }
+
+        @Override
+        protected FSkinColor getValueColor() {
+            return extra && !spent ? extraColor : super.getValueColor();
+        }
+
+        @Override
+        public void draw(Graphics g) {
+            update(); //the counts are tracked on the PlayerView, so read them as the cell draws
+            final float alpha = g.getfloatAlphaComposite();
+            if (spent) { g.setAlphaComposite(alpha * DIMMED); }
+            try {
+                super.draw(g);
+            } finally {
+                if (spent) { g.setAlphaComposite(alpha); }
+            }
+        }
+    }
+
+    //TFR round 778: the adventure Settings' "Show land drops in duels" (off by default), read as the panel lays out
+    private static boolean showLandDrops() {
+        return Forge.isMobileAdventureMode && forge.adventure.util.Config.instance().getSettingData().showLandDrops;
+    }
+
     public class InfoTabExtra extends InfoTab {
         private static final FSkinImageInterface DEFAULT_ICON = FSkinImage.HDSTAR_OUTLINE;
 

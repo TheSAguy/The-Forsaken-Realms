@@ -1836,6 +1836,16 @@ apply.
 - **Undo in Duels** (Settings, below Card Play Animation Style): **Off**, **Single step** (the default - take back
   your last action) or **Free** (keep stepping back, one action at a time, until something hidden is revealed - a
   card drawn, say - or your opponent acts). When a take-back is possible, the prompt's Cancel button reads **Undo**.
+- **Show land drops in duels** (Settings, off by default) adds a land cell under each player's zone counts: lands
+  played this turn out of lands allowed - **0/1**, then **1/1** once played. Extra drops count too, so a Summer Bloom
+  turn reads **1/4** in gold until all four are played. It is dimmed once the drops are spent and on the other
+  player's turn. Changed in Settings, it shows from the next duel.
+- **Always Yes for "you may" triggers:** when one of your optional triggers is on the stack (Valakut, the Molten
+  Pinnacle, say), open the stack (the stacked-cards icon at the top of the duel screen), click the trigger once to
+  select it, then click it again and tick **Always Yes** (or **Always No**). It holds for the rest of that duel. To undo
+  it: the duel menu (three lines, top left) > **Auto Yields and Triggers** > Remove.
+- **Keep Mouse in Window** (Settings, PC only, off by default) holds the cursor inside the game while it runs
+  fullscreen - handy with two monitors. It does nothing in a window.
 - A run is only lost in the three ways listed under [Winning and Losing](#winning-and-losing):
   your Capitol falls, one AI color holds three Ring Cities, or no free town is left while you hold
   nothing. A lost duel never ends it.
@@ -2017,6 +2027,13 @@ it's -2 reputation. A roaming guard with "Help with pillaged towns" ticked rides
 
 The weeks, your standing with the land's color, the dark, your notoriety and - from 25 duels on - your win ratio over
 your last 50 duels all shift the ranks you meet. See [Enemies That Adapt to You](#enemies-that-adapt-to-you).
+
+### Do I have to click Yes for every Valakut trigger?
+
+No. Open the stack (the stacked-cards icon at the top of the duel screen), click the Valakut trigger once to select
+it, then click it again and tick **Always Yes**. It stops asking for the rest of that duel. The same works for any
+"you may" trigger of yours. To undo it: the duel menu (three lines, top left) > **Auto Yields and Triggers** > Remove.
+More in [Smaller Things Worth Knowing](#smaller-things-worth-knowing).
 
 ### Can I play this on Android?
 

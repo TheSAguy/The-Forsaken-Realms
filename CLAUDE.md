@@ -7,7 +7,14 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-760 and 762-776 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-760, 762-776 and 778 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+778 (a land drops cell in duels - lands played / allowed this turn under each player's zone counts, gold on an
+extra-drop turn such as Summer Bloom's 1/4, dimmed when spent or off-turn, "1/+" for unlimited - behind a "Show land
+drops in duels" Settings row, off by default, from the next duel: `VPlayerPanel.InfoTabLand`, a fifth row in the
+compact grid, `SettingData.showLandDrops`, `[TFR-LandDrops]`; and Always Yes / Always No reach Valakut, the Molten
+Pinnacle and Spark Mage: `OptionalDecider$ You` moved to their trigger lines, Valakut with a `ResolvingCheck$ IsPresent2`
+(5+ Mountains) so it seldom asks for nothing; GUIDE (land drops, Always Yes, the existing fullscreen Keep Mouse in
+Window row, a Valakut FAQ); seen in the agent game - mock-ups and shots in `C:\TFR\notes\gnomedoom-ui`) and
 774 (realm milestones, new games and New Game+ only - a saved `realmMilestones` string (`RealmMilestones.State`) set
 at create()/NG+ when the plane's `realmMilestonesEnabled` is on, with town specialties: every 10 of the most towns ever
 held, 1 of 3 realm boons, rolled once and saved, the mastery of the most-held specialty first; after the restore's
@@ -110,7 +117,7 @@ at 3840x2160 it covered the screen, got minimized, and a minimized game stops (t
 1x1).
 Next version: 1.24 / 12400. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous
 auto save, eager shops, Inn events and place entry - see MOD_CHANGELOG); next merge from upstream after `0dc8c66996e`;
-BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 777. Rounds 768, 766's follow-up, 769-776 are committed but not yet packaged. Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
+BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 779 (777 is held for the log additions). Rounds 768, 766's follow-up and 769-776 are packaged to live and the agent game (2026-10-27 06:30); round 778 is committed but not yet packaged. Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

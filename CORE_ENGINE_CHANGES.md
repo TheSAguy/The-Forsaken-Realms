@@ -38,6 +38,25 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 778 - a land drops cell in duels; Always Yes for Valakut and Spark Mage
+
+- **`forge-gui-mobile/src/forge/screens/match/views/VPlayerPanel.java`** (STOCK) - a new inner `InfoTabLand` (the
+  skin's `LANDLOGO` and "played/allowed"; dimmed when spent or off-turn, gold on an extra-drop turn), held in its own
+  `landTab` field and NOT in `tabs` (so gamepad cycling, `reset` and `setDisplayBounds` never see it), added by hand to
+  the portrait row, the landscape left column, `getCompactOrder()` and `getCompactGridOrder()` (its last entry, a fifth
+  row); `getCompactDoubleRows()` replaces `COMPACT_DOUBLE_ROWS` in `fitCompactAvatar` and `layoutDoubleColumns`;
+  `bringTabsToFront` also lifts it; `InfoTab.getValueColor()` (default `getInfoForeColor()`) replaces the four
+  `g.drawText(value, ..., getInfoForeColor(), ...)` calls; the static `showLandDrops()` reads the adventure setting.
+  Off (the default) the panel lays out exactly as stock.
+- **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK) - `showLandDrops` after `notorietyDisabled`.
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK) - the "Show land drops in duels" checkbox
+  after the Disable Notoriety row (label in code, `getMessageorUseDefault("lblShowLandDrops", ...)`).
+- **`forge-gui/res/cardsfolder/v/valakut_the_molten_pinnacle.txt`** (STOCK card script) - `OptionalDecider$ You` moved
+  from `SVar:TrigDamage` to the `T:` line, plus `IsPresent2$ Mountain.YouCtrl | PresentCompare2$ GE5 | ResolvingCheck$
+  IsPresent2`. A good upstream PR; on a merge, take upstream's line if it made the same move.
+- **`forge-gui/res/cardsfolder/s/spark_mage.txt`** (STOCK card script) - `OptionalDecider$ You` moved from the SVar to
+  the `T:` line.
+
 ### Round 773 (follow-up) - booster packs built when first shown
 
 - **`forge-gui-mobile/src/forge/adventure/util/Reward.java`** (STOCK) - `getDeck()` is `synchronized` and builds the

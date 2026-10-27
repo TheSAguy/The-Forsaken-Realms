@@ -299,6 +299,20 @@ public class SettingsScene extends UIScene {
                 }
             });
         }
+        // Round 778: a land drops cell (lands played / allowed this turn) in each player's stat column in duels
+        // (VPlayerPanel.InfoTabLand); off by default. The duel screen is built per duel, so it shows from the next duel.
+        addSettingField(localizer.getMessageorUseDefault("lblShowLandDrops", "Show land drops in duels"),
+                Config.instance().getSettingData().showLandDrops, new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                boolean show = ((CheckBox) actor).isChecked();
+                if (show == Config.instance().getSettingData().showLandDrops)
+                    return;
+                Config.instance().getSettingData().showLandDrops = show;
+                Config.instance().saveSettings();
+                System.out.println("[TFR-LandDrops] Settings: land drops cell " + (show ? "on" : "off") + " - from the next duel");
+            }
+        });
         addSettingField(localizer.getMessage("lblFogOfWar"), Config.instance().getSettingData().fogOfWarEnabled, new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
