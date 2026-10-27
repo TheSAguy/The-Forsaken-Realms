@@ -773,6 +773,10 @@ public class TuningData {
     public float defeatGoldLossPercentNormal = 0f;
     public float defeatGoldLossPercentHard = 0f;
     public float defeatGoldLossPercentInsane = 0f;
+    // Round 785 (the user: "in week 1 a defeat on Hard takes only the 10%, no 150-gold minimum"): in the world's first
+    // this-many weeks (the [TFR-EarlyLife] week count) a lost duel takes only the percentage - the minimum is waived on
+    // every difficulty. 0 (the default) never waives it, so a stock plane is unchanged.
+    public int defeatGoldLossMinWaivedWeeks = 0;
 
     // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
     // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". Same
@@ -973,10 +977,18 @@ public class TuningData {
     /** Round 359: what a lost duel takes from {@code carried} gold on this difficulty - the percentage or the minimum,
      *  whichever is more, never more than is carried. -1 when the plane sets neither (the stock goldLoss applies). */
     public int defeatGoldLoss(String difficultyName, int carried) {
+        return defeatGoldLoss(difficultyName, carried, false);
+    }
+
+    /** Round 785: the same, with the minimum left out when {@code waiveMin} (week 1, defeatGoldLossMinWaivedWeeks). Still
+     *  -1 only when the plane sets neither value, so a waived minimum never falls back to the stock goldLoss. */
+    public int defeatGoldLoss(String difficultyName, int carried, boolean waiveMin) {
         int min = defeatGoldLossFor(difficultyName);
         float percent = defeatGoldLossPercentFor(difficultyName);
         if (min <= 0 && percent <= 0f)
             return -1;
+        if (waiveMin)
+            min = 0;
         int loss = Math.max(min, (int) (Math.max(0, carried) * percent / 100f));
         return Math.min(Math.max(0, carried), loss);
     }

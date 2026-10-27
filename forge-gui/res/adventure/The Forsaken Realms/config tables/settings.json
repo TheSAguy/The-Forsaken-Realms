@@ -567,6 +567,9 @@
     "defeatGoldLossMinNormal": 100,
     "defeatGoldLossMinHard": 150,
     "defeatGoldLossMinInsane": 200,
+    // Round 785 (the user: "in week 1 a defeat on Hard takes only the 10%, no 150-gold minimum"): in the world's first
+    // this-many weeks a lost duel takes only the percentage above, on every difficulty - no minimum. 0 = never.
+    "defeatGoldLossMinWaivedWeeks": 1,
 
     // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
     // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". The

@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 785 - no defeat gold minimum in week 1
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): `defeatGoldLossNow()` and `defeated()`
+  pass `defeatGoldMinWaived()` (new, private: `SpawnTierWeighting.currentWeek` <= TuningData's
+  `defeatGoldLossMinWaivedWeeks`) to the new `TuningData.defeatGoldLoss(name, carried, waiveMin)`; the
+  `[TFR-DefeatGold]` line says "minimum N waived in week W". Stock planes: the key is 0, nothing changes.
+- **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** (STOCK): the difficulty dialog's Duels tab adds
+  "- no minimum in week 1" to the gold-loss text when the plane waives it.
+
 ### Round 783 - a mid-duel quit is judged at the moment the app was left
 - **`forge-gui-mobile/src/forge/Forge.java`** (STOCK): `pause()` calls `DuelHeartbeat.onPause()` after round 777's
   `SessionLog.end("pause")`; `resume()` calls `DuelHeartbeat.onResume()` right after `lifecycleClosing = false`. Both

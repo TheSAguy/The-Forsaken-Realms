@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 785: no defeat gold minimum in week 1 - a lost duel takes only the percentage (2026-10-27)
+
+The user, on the 2026-10-27 log review (`C:\TFR\notes\logs-1027b.md`, P2): "Yes: in week 1 a defeat on Hard takes only
+the 10%, no 150-gold minimum. Add it to 1.24." The review's case: a new Hard game (install e5cdb4a2) lost to a Mimic and
+a Kobold Pyromancer on day 1 and both times lost ALL its gold (`lost 75 of 75 gold (10.0%, minimum 150)`, then 82 of 82),
+because nobody carries 150 gold in week 1 - round 359's minimum read as "lose everything" until about week 2. That
+player had walked away from their previous Hard game at a week-1 boss.
+
+- **The rule**: while the world is in its first `defeatGoldLossMinWaivedWeeks` weeks, a lost duel takes only
+  `defeatGoldLossPercent*` of the gold carried - no `defeatGoldLossMin*`. Every difficulty: all four have a minimum
+  (Easy 50 / 2%, Normal 100 / 5%, Hard 150 / 10%, Insane 200 / 15%), so Insane gets the same waiver. "Week" is
+  `SpawnTierWeighting.currentWeek` - the week `[TFR-EarlyLife]` uses (days 1-7). New Game+ is not exempted (EarlyLife
+  exempts it; the main thread agreed to no special case - an NG+ player usually carries enough that the share wins).
+- **Settings**: `TuningData.defeatGoldLossMinWaivedWeeks`, default 0 (never waived, so a stock plane is unchanged); TFR's
+  `config tables/settings.json` sets 1. `TuningData.defeatGoldLoss(name, carried, waiveMin)` is the new overload; the old
+  two-argument one passes false. A waived minimum never falls back to the stock `goldLoss`: -1 still means only "the
+  plane sets neither value".
+- **One formula** (round 396): `AdventurePlayer.defeatGoldLossNow()` feeds the lost-ante screen's "(Save: N gold)"
+  Bronze Coin line and the "would save N gold - you have none" text, the coin's "kept" Notice and `defeated()` itself,
+  so the preview, the defeat and the death dialog agree.
+- **New Game text**: the difficulty dialog's Duels tab reads "10%, at least 150 [+Gold] (all of it if you carry less) -
+  no minimum in week 1" (a plane with only a flat amount: "- none in week 1").
+- **Log**: `[TFR-DefeatGold] Hard: lost 12 of 125 gold (10.0%, minimum 150 waived in week 1 (round 785))`; after week 1
+  the old line.
+- **GUIDE**: "What a lost duel costs" and the FAQ "What does losing a duel cost?" say the minimum starts in week 2;
+  GUIDE.html regenerated (`guide_html.py --check` OK).
+- **Dev tools**: `dev-tools/validate_plane_data.py`'s TuningData key list gains `defeatGoldLossMinWaivedWeeks` and round
+  781's `uniqueDropItems` (missing since 781); the validator reports no unknown key for either.
+- **Stock files**: `AdventurePlayer.java`, `NewGameScene.java` (CORE_ENGINE_CHANGES.md).
+- **Tested** in a worktree package (`wt-785` from `74671019929` with only this round's four files, Maven exit 0,
+  PACKAGE_OK) with a copy of the agent profile, every duel at 50x, each loss forced at 1 life against a spawned Mimic:
+  Hard day 1 with 125 gold - preview "(Save: 12 gold)", lost 12, death dialog "Lost 12"; the same save on day 8 -
+  "(Save: 125 gold)", lost all 125 with the old line; Normal day 1 with 350 gold - "(Save: 17 gold)", lost 17 (was 100);
+  the Hard New Game Duels tab showed the new text. Shots in `C:\TFR\notes\r785\`.
+- **Not done**: the lost-ante screen's Bronze Coin corner button is clipped at the right edge at 1280x720 and its
+  "(Save: N gold)" line renders tiny (seen in `r785_hard_week1_preview.png`) - older than this round, noted by the main
+  thread as a small round after the release.
+
 ## Round 783: a mid-duel quit is judged at the moment the app was left; rounds 734 and 758's entries restored (2026-10-27)
 
 The 2026-10-27 log review (`C:\TFR\notes\logs-1027.md`, P1; `logs-1027b` saw it a third time, f7323119): Android logs

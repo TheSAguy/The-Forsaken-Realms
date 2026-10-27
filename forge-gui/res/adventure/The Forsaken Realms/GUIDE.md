@@ -1209,9 +1209,9 @@ better on Normal, 3 in 10 on Hard and 4 in 10 on Insane. Week 1 never has Master
 own land stays the quietest.
 
 **What a lost duel costs.** Gold: a share of what you carry - 2% on Easy, 5% on Normal, 10% on Hard
-and 15% on Insane - but at least 50 / 100 / 150 / 200 gold, or all of it if you carry less. (The
-share takes over above 2,500 gold on Easy, 2,000 on Normal, 1,500 on Hard and about 1,330 on Insane.
-Gold in the Bank is safe.) Life: 10% of your max life on Easy, 20% on Normal, 30% on Hard and Insane.
+and 15% on Insane - but at least 50 / 100 / 150 / 200 gold, or all of it if you carry less. In week 1
+there is no minimum: a loss takes only the share. (The share takes over above 2,500 gold on Easy, 2,000 on
+Normal, 1,500 on Hard and about 1,330 on Insane. Gold in the Bank is safe.) Life: 10% of your max life on Easy, 20% on Normal, 30% on Hard and Insane.
 And your ante. Handing over a Bronze Coin on the "Card Lost" screen saves your gold and your anted
 cards (the life loss still applies). If your life runs out you're carried home: to your Capitol, or to
 Orazca before it stands. Losing inside a rotating dungeon usually makes that dungeon vanish. Lose to a boss, or run
@@ -1901,8 +1901,8 @@ bringing down all five colors' castles. See [Winning and Losing](#winning-and-lo
 
 ### What does losing a duel cost?
 
-A share of the gold you carry (2% / 5% / 10% / 15% from Easy to Insane, at least 50 / 100 / 150 / 200,
-everything if you carry less - the Bank is safe), 10-30% of your max life, and your ante - and a loss to a boss,
+A share of the gold you carry (2% / 5% / 10% / 15% from Easy to Insane, at least 50 / 100 / 150 / 200 from
+week 2, everything if you carry less - the Bank is safe), 10-30% of your max life, and your ante - and a loss to a boss,
 or running out of life, cracks one item you wear. See
 [Notes on Difficulty](#notes-on-difficulty).
 

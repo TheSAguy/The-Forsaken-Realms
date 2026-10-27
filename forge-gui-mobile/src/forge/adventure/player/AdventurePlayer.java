@@ -2871,10 +2871,21 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      */
     public int defeatGoldLossNow() {
         forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
-        int loss = tuning == null ? -1 : tuning.defeatGoldLoss(difficultyData.name, gold);
+        int loss = tuning == null ? -1 : tuning.defeatGoldLoss(difficultyData.name, gold, defeatGoldMinWaived(tuning));
         if (loss < 0)
             loss = gold - (int) (gold - (gold * difficultyData.goldLoss));
         return Math.round(loss * forge.adventure.util.Ascendance.defeatLossFactor()); // round 494: Stubborn
+    }
+
+    /**
+     * Round 785 (the user: "in week 1 a defeat on Hard takes only the 10%, no 150-gold minimum"): true while the
+     * world is in its first defeatGoldLossMinWaivedWeeks weeks - the same week count as [TFR-EarlyLife] - so a lost duel
+     * takes only the percentage. Every difficulty, since each has a minimum. 0 (the default) never waives it.
+     */
+    private boolean defeatGoldMinWaived(forge.adventure.data.TuningData tuning) {
+        if (tuning == null || tuning.defeatGoldLossMinWaivedWeeks <= 0 || Current.world() == null)
+            return false;
+        return SpawnTierWeighting.currentWeek(Current.world()) <= tuning.defeatGoldLossMinWaivedWeeks;
     }
 
     public boolean defeated() {
@@ -2895,11 +2906,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             // percentage of the gold carried with that flat amount as the minimum (TuningData.defeatGoldLoss);
             // the stock goldLoss when the plane's settings.json sets neither. Round 396: one formula with the preview.
             forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
-            int loss = tuning == null ? -1 : tuning.defeatGoldLoss(difficultyData.name, gold);
+            boolean minWaived = defeatGoldMinWaived(tuning);
+            int loss = tuning == null ? -1 : tuning.defeatGoldLoss(difficultyData.name, gold, minWaived);
             gold = gold - defeatGoldLossNow();
             System.out.println("[TFR-DefeatGold] " + difficultyData.name + ": lost " + (lostGold - gold) + " of " + lostGold
                     + " gold (" + (loss >= 0 ? tuning.defeatGoldLossPercentFor(difficultyData.name) + "%, minimum "
-                    + tuning.defeatGoldLossFor(difficultyData.name) : "goldLoss " + difficultyData.goldLoss) + ")");
+                    + tuning.defeatGoldLossFor(difficultyData.name) + (minWaived ? " waived in week "
+                    + SpawnTierWeighting.currentWeek(Current.world()) + " (round 785)" : "")
+                    : "goldLoss " + difficultyData.goldLoss) + ")");
             forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.GOLD, gold - lostGold);
             // Round 713 (the user: "Add all four Notices gaps: ... gold lost on defeat"): log only - the defeat screen is
             // the moment; the log is where it is found again. The icon-only markup draws the coin in its colors.
