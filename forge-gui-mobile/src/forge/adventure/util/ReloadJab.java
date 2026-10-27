@@ -73,6 +73,7 @@ public final class ReloadJab {
             System.out.println("[TFR-ReloadJab] lost to " + enemyName + " - a load of a save older than now counts (world "
                     + seed + ", " + count(p, seed) + " so far)");
         }
+        DifficultyHints.onDuelLost(enemyName); // round 779: the 5th loss to one foe suggests an easier difficulty
     }
 
     /** DuelScene.initDuels: another duel starts - the player moved on from the last loss, an honest one (round 735). */
@@ -150,6 +151,7 @@ public final class ReloadJab {
         if (line != null)
             GameHUD.getInstance().logNotification(INK + line, true);
         postKind(kind);
+        DifficultyHints.watch("a load"); // round 779: a hint due in this world shows on the world map
     }
 
     // ---- Round 735: the duel in progress (DuelHeartbeat writes it), judged on the next load ----
@@ -220,6 +222,7 @@ public final class ReloadJab {
         DuelHeartbeat.stop();
         if (!isEnabled())
             return;
+        DifficultyHints.watch("a duel ended"); // round 779: the win streak is read once back on the world map
         synchronized (LOCK) {
             Properties p = read();
             if (p.getProperty("duel.seed") == null)
@@ -387,7 +390,28 @@ public final class ReloadJab {
                     + " reload(s) after a loss, " + intProp(p, "forgiven." + seed) + " forgiven, " + intProp(p, "honest." + seed)
                     + "/" + HONEST_PER_FORGIVE + " honest losses toward the next, enemy bonus +" + enemyLifeBonus()
                     + (p.getProperty("pendingLossAt") != null ? ", a loss pending (world " + p.getProperty("pendingSeed") + ")" : "")
-                    + (p.getProperty("duel.seed") != null ? ", a duel in progress (" + p.getProperty("duel.enemy") + ")" : "");
+                    + (p.getProperty("duel.seed") != null ? ", a duel in progress (" + p.getProperty("duel.enemy") + ")" : "")
+                    + ". " + DifficultyHints.info(); // round 779
+        }
+    }
+
+    // ---- Round 779: DifficultyHints keeps its marks in this store, under the same lock, so a reload cannot undo them ----
+
+    static long seed() {
+        return currentSeed();
+    }
+
+    static Properties readStore() {
+        synchronized (LOCK) {
+            return read();
+        }
+    }
+
+    static void updateStore(java.util.function.Consumer<Properties> change) {
+        synchronized (LOCK) {
+            Properties p = read();
+            change.accept(p);
+            write(p, false);
         }
     }
 

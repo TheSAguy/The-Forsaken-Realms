@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 779: difficulty hints - a 5th loss to one foe suggests easier, 50 wins in a row suggests harder (2026-10-27)
+
+The 2026-10-27 log review (`C:\TFR\notes\logs-1027.md`, P2 and P4): one Hard player lost 11 times in a row to one foe
+and reloaded every time; two Normal players were at 138 wins in a row and 48-2. The user: "When someone has a
+win-streak of 50+, let's give them a hint to go to the next difficulty level. Add the hint for loss also that you
+recommended."
+
+- **Can a save change difficulty?** No. Difficulty is picked in NewGameScene or in SaveLoadScene's New Game+ picker
+  (`updateDifficulty`); Settings has none. So both hints say "on your next game or New Game+". No switch was built.
+- **Loss hint**: the 5th loss to the same foe (DuelScene's `enemyName`, the Arena and Inn included, as round 726's
+  `onDuelLost`) shows "A Word of Advice - <foe> has beaten you 5 times. <next easier> is always an option: pick it on
+  your next game or New Game+." Not on the easiest difficulty. Reloaded losses count: that is the player it is for.
+- **Win hint**: 50 wins in a row shows "Ready for More? - 50 wins in a row! If the duels feel easy, try <next harder> on
+  your next game or New Game+." Not on the hardest. The streak is the end of the saved win-ratio record
+  (`AdventurePlayer.recentDuels`: the duels notoriety counts, not the Arena or an Inn event; window 50), not the
+  per-enemy `[TFR-WinStreak]` counter (5 wins over one foe; 50 would never come) and not notoriety (a score since round
+  753). A player already past 50 sees it on their first load.
+- **Once per world**, each: the advice is about the difficulty, and a player who reloads every loss would otherwise
+  hear the loss hint for every boss. The marks live in ReloadJab's store (`adventure/tfr_reload_jab.properties`, keyed
+  by the world's seed: `hint.losses.*`, `hint.lossDue.*`, `hint.lossShown.*`, `hint.winShown.*`), outside the save, so
+  a reload cannot undo them; no save format change, old saves start with no marks. The main thread's addition: the
+  store also keeps `hint.difficulty.<seed>`, and a different difficulty (New Game+ can keep the seed) clears that
+  world's marks, so a player who moved up hears the win hint again at the new level.
+- **Shown** as a green Notices line plus a one-button dialog ("Got it", round 756's style) once the player is back on
+  the world map with nothing open and standing still (SupportPrompt's calm test). The watcher is a libGDX `Timer` task
+  armed on a duel's end, a load and the 5th loss, and stopped when nothing is due - no `Forge.java` edit.
+- Only on a plane with `reloadJabEnabled` (TFR), the same gate as the jab. The `reloadjab` console line now ends with
+  the hint state ("Hints (world N, Normal): loss counting [Kor Castigator 4]; win not shown, 49 in a row of 50").
+- New `util/DifficultyHints`; `util/ReloadJab` gets three one-line calls (`onDuelLost`, `onDuelEnded`, `onLoaded`) and
+  three store accessors. No other file. `[TFR-Hint]` lines: each loss toward the hint, "the loss/win hint (Normal ->
+  Easy) is due on the world map", "shown: ...", "difficulty Hard -> Normal - both hints start over", and "no easier /
+  no harder difficulty".
+- **Tested** in a clean worktree build (Maven exit 0) packaged to a separate test folder, with a copy of the agent
+  profile, every duel at 50x, on a Normal save: `winratio 49 0` and one win -> the win hint (Normal -> Hard); four
+  seeded losses to a Kor Castigator, max life cut to 3, a 5th loss -> the loss hint (Normal -> Easy); the stored
+  difficulty set to Hard and the Normal save loaded -> both hints start over, and the win hint showed again. Shots:
+  `C:\TFR\notes\r779-win-hint.png`, `r779-loss-hint.png`, `r779-notices.png`. Once, a "Got it" tap during the dialog's
+  opening did not close it (a second did); not reproduced in two more tries. Not yet in the live package.
+
 ## Round 778: a land drops cell in duels (a Settings option), and Always Yes works for Valakut (2026-10-27)
 
 gnomedoom (a v1.23 player, on Discord) asked for a land-drops-left indicator, a countdown on cards like Summer Bloom,
