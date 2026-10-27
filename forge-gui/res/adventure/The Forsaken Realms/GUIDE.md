@@ -1041,7 +1041,9 @@ dungeon rewards, and boss drops, expect to be actively hunting for upgrades thro
 Several items exist only as drops from specific bosses and can't be bought anywhere, including a
 wave of equipment tied to the plane's newest dungeons (boots, crowns, armor, and more, each
 built around the specific card it grants you at the start of a fight). Check what a boss drops
-before you commit to fighting them if a specific item is your goal.
+before you commit to fighting them if a specific item is your goal. The **Witch-Maw Slippers** are one: a 1-in-4
+drop from Akroma and Lathliss, the Mythic bosses of the White and Red Castles, and one pair per player - once you own
+them, no boss drops a second.
 
 ### Equipment Slots
 

@@ -1166,6 +1166,7 @@
     },
     {
         "name":  "Witch-Maw Slippers",
+        "excludeFromGeneralSale":  true,
         "description":  "1/1 that gets two +1/+1 counters for each of your spells. Trample at 10+ power",
         "equipmentSlot":  "Boots",
         "iconName":  "WitchMawSlippers",

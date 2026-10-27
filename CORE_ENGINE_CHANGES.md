@@ -79,6 +79,14 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 - Mod files: NEW `util/SessionLog.java`; `util/SupportPrompt.java` (`logStatus`, `supportLastAnswer` written in
   `answer`); `util/TownRestoration.java` (the two `taken:` calls).
 
+### Round 781 - Witch-Maw Slippers: one pair a player
+
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** (STOCK) - `getRewards()` calls
+  `forge.adventure.util.UniqueDrops.apply(...)` once, after the payout scope closes and before the gold variance: an
+  item in the plane's settings.json `uniqueDropItems` that the player owns already is taken back out, one
+  `[TFR-UniqueDrop]` line per such entry. Nothing else in the method changes. New `util/UniqueDrops.java`;
+  `data/TuningData.java` (TFR's) gains `uniqueDropItems`, empty by default, so stock planes are untouched.
+
 ### Round 778 - a land drops cell in duels; Always Yes for Valakut and Spark Mage
 
 - **`forge-gui-mobile/src/forge/screens/match/views/VPlayerPanel.java`** (STOCK) - a new inner `InfoTabLand` (the

@@ -727,6 +727,12 @@
         "life": 40,
         "rewards": [
             {
+                "type": "item",
+                "probability": 0.25,
+                "count": 1,
+                "itemName": "Witch-Maw Slippers"
+            },
+            {
                 "type": "card",
                 "probability": 0.5,
                 "count": 1,
@@ -1072,7 +1078,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -7723,7 +7728,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -10870,7 +10874,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -16147,6 +16150,12 @@
         "life": 50,
         "rewards": [
             {
+                "type": "item",
+                "probability": 0.25,
+                "count": 1,
+                "itemName": "Witch-Maw Slippers"
+            },
+            {
                 "type": "deckCard",
                 "probability": 1,
                 "count": 2,
@@ -16171,7 +16180,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -19784,6 +19792,12 @@
         "life": 80,
         "rewards": [
             {
+                "type": "item",
+                "probability": 0.25,
+                "count": 1,
+                "itemName": "Witch-Maw Slippers"
+            },
+            {
                 "type": "deckCard",
                 "probability": 1,
                 "count": 2,
@@ -19851,7 +19865,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -20051,6 +20064,12 @@
         "scale": 0.2525,
         "life": 40,
         "rewards": [
+            {
+                "type": "item",
+                "probability": 0.25,
+                "count": 1,
+                "itemName": "Witch-Maw Slippers"
+            },
             {
                 "type": "card",
                 "probability": 0.5,
@@ -22880,7 +22899,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -27951,7 +27969,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -28732,7 +28749,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -30057,7 +30073,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -30490,7 +30505,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -31611,7 +31625,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",
@@ -33327,7 +33340,6 @@
                     "Cutthroat Skirt",
                     "Utopia Necklace",
                     "Amulet of Agony",
-                    "Witch-Maw Slippers",
                     "Sheldon's Shoes",
                     "Gixian Graftboots",
                     "Yore-Tiller Clogs",

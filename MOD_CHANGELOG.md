@@ -14264,6 +14264,54 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 781: Witch-Maw Slippers - a Mythic-boss trophy at 25%, and one pair a player (2026-10-27)
+
+The user, of the Witch-Maw Slippers (every duel starts with Witch-Maw Nephilim in play, for two opening-hand cards and 8
+life): "I want to cut down on that." They took the main thread's plan: out of the arena prizes, the Archaeologist and the
+shared boss list; a named drop from the Mythic-tier bosses; no second pair.
+
+- **Where they came from** (checked in the files, not the morning's map): the 86-name item roll (0.9) of 12 boss
+  enemies - Ancient Silver Dragon, Dark Enchanter, Emrakul, Guardian Angel, Kozilek, Myr Superion, Sliver Queen, Sorin,
+  The Hydra of Shandalaar, Torturer, Valyx Feaster of Torment, Wounded Sliver - about 1% a kill; the Challenge Arena's
+  0.4 roll from 156 names and 0.15 roll from 86, each round, so about 1.3% a full bracket, weekly (the map's 5% read
+  every roll as certain; round 136's two-item cap usually kept them, at 1000); the Archaeologist's 535-name pool; and,
+  missed by the map, every "random item of a rarity" pool - the Armory's weighted stock (8% Rare slots), a Chest's
+  Rare item, the Ascendance item rewards - since all of them draw from `ItemListData.getItemNamesByRarity("Rare")`.
+  Atraxa's fixed drop is never paid: she is no legend (`FrontierSpawns.isCandidate` leaves Mythics out, and she is not
+  in `roaming_champions.json`), every overworld and Chest pick skips spawnRate 0 (`SpawnTierWeighting.isExempt`), no map
+  places her, and the arenas that can draw her pay no enemy items. Only TFR's plane names them.
+- **Taken out**: the 12 lists (85 names now), the six Challenge Arena rolls in `player_capital.tmx` (155 and 85; the
+  arena data lives in that one file), the Archaeologist's `NON_MYTHIC_ITEM_POOL` (534), and `excludeFromGeneralSale`
+  on the item (`items.json`), the trophy flag Chandra's Stone already uses, which closes every by-rarity pool. Each
+  other item in those lists moves from 1/86 to 1/85 - no list held a duplicate.
+- **A Mythic-boss trophy**: a `"type": "item", "probability": 0.25, "count": 1, "itemName": "Witch-Maw Slippers"` entry
+  (Lathliss's Red Key is the same shape) on Akroma and Lathliss - the Mythic-tier castle bosses, fought once a game,
+  castles do not rotate - and on Kozilek and Guardian Angel, the 12's two Mythics. Those two are not fought for loot:
+  Guardian Angel stands on the Temple of Liliana maps, which no place links to, and Kozilek is in the capital arena
+  pool only. Atraxa's line stays.
+- **Why 25%**: the main thread's bar was a 30% chance of ever seeing a pair in a normal game. At 10% a player who beats
+  both castle bosses had 1 - 0.9^2 = 19%; at 25% it is 1 - 0.75^2 = 44% (25% with one castle). Before, the arena alone
+  paid about 1.3% a week, the 12 bosses about 1% a kill, and the Armory a slot every week.
+- **One pair a player**: settings.json `uniqueDropItems` (["Witch-Maw Slippers"]; `TuningData`, empty by default, so
+  stock planes have none) lists items an enemy pays only to a player who owns none - inventory, worn, Armory storage or a
+  guard (`ItemSets.owns`). New `util/UniqueDrops`, called once at the end of `EnemySprite.getRewards()`: overworld wins,
+  wins inside places and Intimidating flee loot. An owned pair rolled is taken back and nothing replaces it. Not on
+  `ItemData`: that class is saved with every inventory (round 88), so the list is tuning data.
+- **Log**: one `[TFR-UniqueDrop] <enemy>: Witch-Maw Slippers (25%) dropped | missed | rolled, but the player owns one
+  already - not dropped` line per kill of an enemy carrying the entry.
+- Owned pairs are kept. GUIDE: one sentence in the Item Guide's boss-drop paragraph (1 in 4 from Akroma and Lathliss,
+  one pair per player).
+- **Tested** in a test package (a worktree at e91b8d9ce04 plus these files, `build_standalone.py --out agent-781`, a
+  copied agent profile; in that copy only, Akroma's and Lathliss's chance 1.0 and Lathliss's and Kozilek's life 1, as
+  the profile holds only starter decks). Every duel at 50x. Lathliss, first kill: `[TFR-UniqueDrop] Lathliss: Witch-Maw
+  Slippers (100%) dropped`, the Slippers and the Red Key on the loot page and in the inventory; second kill: `(100%)
+  rolled, but the player owns one already - not dropped`, a second Red Key and still one pair; Kozilek twice: `(25%)
+  missed`. The packaged arena TMX names no Slippers. forge.log: no exception from this round (26 stock AI
+  `TimeoutException`s in a later, abandoned duel).
+- Files: TFR's `world/enemies.json`, `maps/map/towns/player_capital.tmx`, `world/items.json`, `config tables/settings.json`,
+  GUIDE.md/.html; `util/EconomyBuildings.java`, `data/TuningData.java`, the stock `character/EnemySprite.java` (one
+  call), new `util/UniqueDrops.java`. No save format change.
+
 ## Round 782: a light update notice on the PC start screen - "TFR v1.24 is available" with a Download page button (2026-10-27)
 
 The user: "Do your recommendation: add a light notice for PC." PC players never heard of a new version in the game:

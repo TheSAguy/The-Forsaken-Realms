@@ -938,6 +938,8 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         } finally {
             CardUtil.endRewardPayout();
         }
+        // Round 781: a uniqueDropItems item (Witch-Maw Slippers) the player owns already is not paid again; logs each roll.
+        forge.adventure.util.UniqueDrops.apply(rewards, getName() != null ? getName() : data.getName(), data, this.rewards);
         // Round 241: while the resource purse is on, wood and stone come from it - the 25% gold swap below
         // (15 wood for 30 gold is about 240 gold at the Exchange) no longer runs for ANY payout, a boss's or a
         // map's own extras included. A plane that leaves the purse off keeps the swap exactly as it was.
