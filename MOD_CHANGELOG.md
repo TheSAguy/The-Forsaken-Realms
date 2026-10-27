@@ -14325,6 +14325,9 @@ their scores: `C:\TFR\notes\xandghost-tier-decks.md`.
   `C:\TFR\notes\r780-*.png`.
 - **Not tested**: Alt / R3 themselves (the bridge cannot hold a key), an arena bracket actually drawing the two Masters
   (seeded per day), Android.
+- **Known, pre-existing, for later**: `sprite_footprints.py --check` flags the stock `aberration/phyrexian/urabrask.atlas`
+  as stale (it was before this round; left alone). The Flat Monte Carlo rollout line above is upstream's AI with any
+  adventure card, not a TFR bug.
 
 ## Round 785: no defeat gold minimum in week 1 - a lost duel takes only the percentage (2026-10-27)
 
