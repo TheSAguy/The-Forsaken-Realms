@@ -24,3 +24,12 @@ user), and so is message 1's "(as of v1.22)" header. Artifact version 7.
 
 2026-10-26 (round 776): message 1's header reads `FAQ_VERSION` too ("(as of v1.23)"). Message 21 is still unchanged.
 Artifact version 8.
+
+2026-10-27 (round 786): v1.24. 24 messages. Edited in place: 1 (the header's version), 2 (Arena Power), 5 (Witch-Maw
+Slippers), 6 (round 780's six new enemies), 7 (Notoriety as a score, Disable Notoriety), 9 (no week-1 gold minimum; reloads, mid-duel quits, the
+difficulty hints), 11 (the Arena's Archmage brackets), 12 (research v2), 15 (capital hearts once per game) and 21 (the
+v1.22 Classic workaround and Forge version line gone; the PC update notice). New, posted after Support: 23 (town
+specialties and realm milestones) and 24 (achievements, Alt enemy plates, the loop breaker, duel settings).
+`messages.py`'s `EDITED` and `ADDED` sets tag them on the page ("Edit" / "New" and a header note); reset both at the
+next release. The copied marks are kept per `FAQ_VERSION`. Artifact version 10. Paste list:
+`C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.24-edits.md`.

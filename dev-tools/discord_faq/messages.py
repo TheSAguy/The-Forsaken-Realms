@@ -1,7 +1,12 @@
 """The Discord FAQ: (topic, short label, message). Each message must stay under Discord's 2,000 characters."""
 
 # The released version the FAQ describes; build_page.py shows it in the page header. One line to change per release.
-FAQ_VERSION = "v1.23"
+FAQ_VERSION = "v1.24"
+
+# What this version changed, by message number: EDITED are edited in place in Discord, ADDED are posted as new
+# messages at the end of the channel. build_page.py tags them. Reset both at the next release.
+EDITED = {1, 2, 5, 6, 7, 9, 11, 12, 15, 21}
+ADDED = {23, 24}
 
 M = []
 
@@ -26,7 +31,7 @@ M.append(("Ascendance: Power and levels", "Ascendance", r"""**Ascendance (your l
 
 **Q: What is Power? How do I level up?**
 **A:** Ascendance is your character's level (New Game and New Game+ characters; Settings can switch it off). You earn **Power** (the sun icon) from almost everything:
-- **Duels**, by the enemy's rank: 9 / 15 / 24 / 34 for a repeat win over an Apprentice / Adept / Master / Archmage. A first win, a champion or a war mage pays x1.5, a storm or a treasure guardian x2, a legend x2.5, a boss x3. The Power comes as a card in the loot: collect it to get it.
+- **Duels**, by the enemy's rank: 9 / 15 / 24 / 34 for a repeat win over an Apprentice / Adept / Master / Archmage. A first win, a champion or a war mage pays x1.5, a storm or a treasure guardian x2, a legend x2.5, a boss x3. Arena duels pay half and are never a first win. The Power comes as a card in the loot: collect it to get it.
 - **Everything else:** first visits, clearing caves and dungeons, restoring and taking towns, raising the Capitol, quests, stopping invasions and raids, Arena brackets, Inn tournaments, treasures, and now and then a chest or a diamond on the map.
 - Enemies you've outgrown pay less (never under 20%); Archmages never do. A lost duel pays nothing.
 
@@ -90,12 +95,16 @@ M.append(("Treasure maps and locked castles", "Treasure & castles", r"""**Treasu
 
 **Q: Why can't I get into a color's castle?**
 **A:** The five colors' castles are sealed. There are two ways in: carry that color's **Secret Entrance Key** (it's in that color's buried treasure), or be at **War** with the color and fight through the front gate. Reaching the sealed gate still counts for the main quest's "Find the ... Castle" stage.
-The Wastes treasure holds the **Cartographer's Compass**: while you carry it, your world map shows every obelisk standing. The keys, the Spade and the Compass can't be sold or thrown away."""))
+The Wastes treasure holds the **Cartographer's Compass**: while you carry it, your world map shows every obelisk standing. The keys, the Spade and the Compass can't be sold or thrown away.
+
+**Q: Where do I get the Witch-Maw Slippers?**
+**A:** Only from Akroma and Lathliss, the Mythic bosses of the White and Red Castles: a 1-in-4 drop, one pair per player."""))
 
 M.append(("Enemies: ranks, where they come from, the early weeks", "Enemy ranks", r"""**Enemies**
 
 **Q: What are Apprentice, Adept and Master?**
 **A:** Most creatures come in three ranks: the same creature, drawn bigger at each rank, with more life and a better deck. An Apprentice plays 60+ cards of mostly commons, an Adept 50 with better ones, a Master 40 with rares. The week, the land and your record pick the rank. Bosses, champions, legends and the Archmages are one of a kind, with their own decks. No Masters roam in week 1, and Archmages only from week 4.
+New in v1.24, in all three ranks: the Torchhead Stallion, Flamecrest Serpent, Ashbark Gaunt, Thornspine Ravager, Bogmaw Golem and Crocodile Hexmage.
 
 **Q: Why are there so many monsters around this cave?**
 **A:** Most roaming creatures come out of the ordinary dungeons and caves near you, found or not - more the longer each one stands (+25% a week, up to double). Clear one (beat every enemy inside) and it goes quiet, and the nearest town gives you +1 reputation. Story places, boss lairs and castles don't send creatures, and quest creatures come wherever you are.
@@ -111,11 +120,11 @@ M.append(("Enemies: ranks, where they come from, the early weeks", "Enemy ranks"
 
 M.append(("Enemies that adapt to you", "Adapting enemies", r"""**Q: Why are the enemies getting tougher (or easier)?**
 **A:** On top of the weeks, the land's color and the fog, your own record shapes what you meet:
-- **Notoriety:** win 5 duels in a row, and from your 6th duel on enemies start with a **Wall** in play (a 0/1 that grows to a 3/6, then a second one from the 26th). Which enemies bring one depends on the difficulty: Archmages on Easy, everyone on Insane. Past 45 wins in a row every enemy gets more Walls and +25% / +50% life. A streak also tilts roaming ranks toward Masters and Archmages, and steps up new dungeons' creatures. Lose once and it all resets.
+- **Notoriety:** a score, +1 for every duel you win and -5 for every loss (never below 0). From 5, enemies start with a **Wall** in play (a 0/1 that grows to a 3/6 by 20, then a second one from 25). Which enemies bring one depends on the difficulty: Archmages on Easy, everyone on Insane. At 45 and 50 every enemy gets another flying Wall and +25% / +50% life. Notoriety also tilts roaming ranks toward Masters and Archmages, and steps up new dungeons' creatures. A loss takes it all down one step, not back to nothing. **Settings > Disable Notoriety** switches it off (the score still counts, so switching it back on brings your level back).
 - **Win ratio:** your last 50 duels. Once 25 are on record, a strong ratio (80%+ won) shifts the roaming ranks tougher and a weak one (20% or less) easier - up to 5 points, or 10 once 50 are on record. One loss doesn't wipe it.
 - **Help tokens:** once 50 duels are on record, the enemy starts with a Clue if you've won 75-89%, a Treasure at 90-94%, and both at 95%+. Win 50% or fewer and **you** get a Treasure (plus a Clue at 25% or less). Each card says why it's there.
 - **Enemies learn your tricks:** beat the same enemy 5 times in a row (4 on Hard, 3 on Insane) and it starts with a Wastes in play - up to three - until it beats you once. Easy is spared.
-Arena duels, Inn tournaments, the Deck Tester and your guards' fights don't count toward your streak or your ratio."""))
+Arena duels, Inn tournaments, the Deck Tester and your guards' fights don't count toward your notoriety or your ratio."""))
 
 M.append(("Legends and places that come with your level", "Legends & places", r"""**Legends, and places that come with your level**
 
@@ -152,11 +161,14 @@ M.append(("Losing (and winning)", "Losing & winning", r"""**Losing (and winning)
 
 **Q: What does losing a duel cost?**
 **A:**
-- **Gold:** a share of what you carry (2% / 5% / 10% / 15% from Easy to Insane), but at least 50 / 100 / 150 / 200 - or all of it if you carry less. Gold in the Bank is safe.
+- **Gold:** a share of what you carry (2% / 5% / 10% / 15% from Easy to Insane). From week 2 that's at least 50 / 100 / 150 / 200, or all of it if you carry less; week 1 has no minimum. Gold in the Bank is safe.
 - **Life:** 10% / 20% / 30% / 30% of your max life.
 - **Your ante** (a Bronze Coin gets it back - see Challenge Coins).
 - **An item:** losing to a boss, or running out of life, cracks one item you wear. Repair it to wear it again (the Mender perk can save it, Mechanic makes repairs cheap).
-If your life hits 0 you're carried home: to your Capitol, or to Orazca before it stands. Losing inside a rotating dungeon usually makes it vanish. The Stubborn perk cuts the gold and life a loss costs."""))
+If your life hits 0 you're carried home: to your Capitol, or to Orazca before it stands. Losing inside a rotating dungeon usually makes it vanish. The Stubborn perk cuts the gold and life a loss costs.
+
+**Q: Can I just reload after a loss?**
+**A:** You can, but the realm notices: the Notices log teases you, and on Hard and Insane each reload after a lost duel gives that world's enemies +1 life (up to +10). Quitting the game mid-duel counts as a loss and a reload. Lose to the same foe 5 times and the game suggests an easier difficulty; win 50 in a row and it suggests a harder one (for your next game or New Game+)."""))
 
 M.append(("Your towns under attack: raids and war mages", "Raids & mages", r"""**Your towns under attack**
 
@@ -186,16 +198,22 @@ M.append(("The Capitol, the Temple and your roads", "Capitol & Temple", r"""**Th
 **A:** Your own roads. Raising the Capitol joins it to every town you hold, and towns you restore or capture later join the network. You travel about 1.7x on them, against 1.5x on the old sand roads.
 
 **Q: What's the Archaeologist?**
-**A:** Send them on a week-long expedition for a chance at boosters, cards you don't own, rare items, blueprints and treasure-map fragments."""))
+**A:** Send them on a week-long expedition for a chance at boosters, cards you don't own, rare items, blueprints and treasure-map fragments.
+
+**Q: Why are there more Archmages in my Arena brackets?**
+**A:** Each Arena tournament you win puts an Archmage in every other bracket you enter that week (it resets on day 8, 15, 22...), and each one you won last week makes this week's lowest tier 5% rarer. Arena duels pay half Power."""))
 
 M.append(("Card sets and Research", "Research", r"""**Card sets and Research**
 
 **Q: How does Research work? How do I unlock more card sets?**
 **A:** You only start with a few sets open. Research opens the rest.
 - **Starting sets:** each race has 4 sets (see Races). You start with all 4 on Easy, 3 on Normal, 2 on Hard and 1 on Insane, picked at random from your race's 4.
-- **Collect first:** a set becomes researchable once you own 10% of its cards (at least 5). Each distinct card counts once, in the printing you own it in. The game tells you when you cross that line.
-- **Where:** the **Research Lab** in your Capitol. It lists each set with your progress (owned/needed); tap a set you can research to browse its cards.
-- **Cost:** 40 Shards on Normal (30 Easy, 50 Hard, 60 Insane), and 7 in-game days. You can research several sets at once, each on its own timer. The Researcher perk halves the cost and cuts the wait to 4 days.
+- **Where:** the **Research Lab** in your Capitol. It lists every set with its days and today's price.
+- **Cost:** with nothing given, 40 Shards on Normal (30 Easy, 50 Hard, 60 Insane) and **40 days**. Several sets can run at once.
+- **Feed it:** every card you **sell** (anywhere) takes days and some Shards off its own set's research; **sacrifice** spares at the Lab and they count double. A card's first copy counts in full, later copies a quarter. About **3 boosters** of a set sacrificed (or 6 sold) make it **Ready**: half the Shards, no wait. A running research keeps shrinking as you feed it and finishes at 0 days.
+- **Found Cards** in the Lab sells or sacrifices a set's cards on the spot (or **Sell all over 4**). Deck copies and favorites are kept.
+- Research towns and the Researcher perk cut the days, never the Shards.
+- **Games started before v1.24** keep the classic research: own 10% of a set (at least 5 cards), then 40 Shards and a week.
 
 **What unlocking a set does:**
 - Your own shops (card shops, plus the Capitol's Booster Shop and Spellsmith) can stock it. Your shops sell ONLY your unlocked sets, but 25% cheaper than neutral towns and 40% cheaper than AI towns (before reputation).
@@ -203,8 +221,8 @@ M.append(("Card sets and Research", "Research", r"""**Card sets and Research**
 - It does NOT change what AI or neutral towns sell, what enemies drop or what chests hold. Those follow the world's set split (see "Why can't I find cards from set XYZ?").
 - It never limits your deck: every card you own is always playable.
 
-**Q: Why does the Research Lab count fewer cards than I own?**
-**A:** It counts each card once, and only in the printing you own: a second copy adds nothing, and a card you own as an Amonkhet printing counts for Amonkhet only."""))
+**Q: Which cards shorten a set's research?**
+**A:** Only that set's own cards, in that set's printing: a card you own as an Amonkhet printing counts for Amonkhet only."""))
 
 M.append(("Card set distribution", "Sets", r"""**Card set distribution**
 
@@ -280,7 +298,8 @@ M.append(("Shops", "Shops", r"""**Shops and Blueprints**
 - **Stock:** your shops sell only cards from your unlocked sets. Every shop restocks weekly, and Refresh re-rolls it now for a few Shards.
 - **Re-assign Shop Type** (inside your own card shops) switches to another type you know, crediting half the old shop's gold cost. **Destroy Building** clears a slot, with no refund.
 - **Town reputation caps building:** each point of a town's own reputation allows 3 buildings there. You get +1 for restoring the town, +2 when it becomes your Capitol, +1 for each attacking mage you beat there, +1 for winning its Inn tournament, +1 for clearing a dungeon near it, +1 for driving raiders off it, and more from its Job Board quests.
-- **Capitol Land Shops:** a colored Land Shop can be repaired (50 gold) once you've visited that color's AI capital."""))
+- **Capitol Land Shops:** a colored Land Shop can be repaired (50 gold) once you've visited that color's AI capital.
+- **Capital hearts:** each AI capital's Items shop sells its +1 max life once per game, not every week."""))
 
 M.append(("Blueprints", "Blueprints", r"""**Q: How do Blueprints work?**
 **A:** A blueprint teaches you a card shop type (there are about 250) so you can build it in your own towns.
@@ -382,15 +401,15 @@ M.append(("Quests, updates, saves and bug reports", "Quests, updates & logs", r"
 **A:** Up to 10 side quests at once, each lasting 15 days. Story quests never expire.
 
 **Q: How do I update the game to the latest version of Forge?**
-**A:** You can't, and you don't need to. Each release is pinned to one tested Forge build: v1.22 runs on Forge 2.0.16 (the 10.17 build). Forge's own updater is switched off on purpose, because a different engine underneath can break your world. Engine updates come to you with new Forsaken Realms releases.
-To update the game itself, download the new release zip from GitHub and unzip it (a fresh folder is cleanest). Your saves live outside the game folder and carry over. On Android, install the new APK over the old one; the app also tells you when a new version is out.
+**A:** You can't, and you don't need to. Each release is pinned to one tested Forge build, named in its release notes. Forge's own updater is switched off on purpose, because a different engine underneath can break your world. Engine updates come with new Forsaken Realms releases.
+To update the game itself, download the new release zip from GitHub and unzip it (a fresh folder is cleanest). Your saves live outside the game folder and carry over. On PC the start screen tells you when a new version is out: a small notice with a Download page button (it downloads nothing and sends nothing about you). On Android, install the new APK over the old one.
 
 **Q: How can I help?**
 **A:** See the #how-can-i-help channel.
 
 **Q: Where are my saves and logs? How do I report a bug?**
-**A:** Easiest, PC or Android: **Settings > Export Logs** (from v1.23; in v1.22 tap **Classic** on the title screen, then Settings > Files > Export Logs). It puts all your logs in one zip in Downloads.
-On Windows everything is in **%APPDATA%\ForsakenRealms** (paste that into File Explorer's address bar). Saves are in its adventure\The Forsaken Realms folder. The log is **forge.log**. Older sessions are kept as forge.<date>-<time>.log (the last 10).
+**A:** Easiest, PC or Android: **Settings > Export Logs**. It puts all your logs in one zip in Downloads.
+On Windows everything is in **%APPDATA%\ForsakenRealms** (paste that into File Explorer's address bar). Saves are in its adventure\The Forsaken Realms folder. The log is **forge.log**. Older ones are forge.<date>-<time>.log (the last 10).
 On Android the logs are in Android/obb/com.thesaguy.forsakenrealms/ForsakenRealms/data (Android 10 and older: ForsakenRealms/data). Newer phones hide it; use the export.
 To report a bug, post here what happened, your difficulty and your logs. Screenshots and your save help too.
 (macOS: ~/Library/Application Support/ForsakenRealms. Linux: ~/.forsakenrealms)"""))
@@ -416,6 +435,41 @@ If you've enjoyed your time in the Realms and want to help keep the updates comi
 
 Thanks for playing. ❤️
 — TheSAguy"""))
+
+M.append(("Town specialties and realm milestones", "Specialties & milestones", r"""**Town specialties and realm milestones**
+
+**Q: My town wants a specialty. What are they?**
+**A:** Every town you restore picks one trade, right after the restore fee (a town you take another way asks the first time you walk in; "Later" leaves the pick at its Job Board). Your Capitol and Orazca never take one.
+- **Mining:** this town's mines pay 50% more
+- **Research:** all your research 5% faster for each Research town (up to 50%)
+- **Outpost:** lit as if it had an Outlook, and 5% harder to capture
+- **Smithy:** its Armory rolls on your Capitol's table
+- **Garrison:** 20% harder to capture, and never raided
+- **Market:** its card shops 10% cheaper, and one free restock a week
+Change it at the Job Board for half the town's restore fee in gold; then it's locked for 7 days. The World Map's Names view shows each town's badge.
+
+**Q: What are realm milestones?**
+**A:** Every **10 towns** your realm reaches (the most you've ever held at once, Capitol included), you pick 1 of 3 **realm boons**, yours for the rest of the game. The first offer upgrades the specialty you hold most (Deep Veins, Grand Library, Watchtowers, Master Smiths, Iron Garrisons, Merchant Guild). Others: **Tithe** (15 gold a town each payday), **Town Watch** (every town 10% harder to capture), **Lamplighters** (+1 tile of light) and **Royal Grant** (your next research free and done at once). World Standings shows your boons and the next milestone.
+
+**Q: Why don't I have them?**
+**A:** They come only with games started (or taken into New Game+) on v1.24 or later."""))
+
+M.append(("Achievements, enemy plates, loops and duel settings", "Achievements & duels", r"""**Achievements, enemy plates and duels**
+
+**Q: Does the game have achievements?**
+**A:** Yes, 16 of its own (two hidden), listed first on the trophy page (Quest log > **Status** > the trophy button): castles, capitals, legends, Arena weeks, treasures, Partner standings, research and more. They belong to your profile, so a new game or New Game+ keeps them, and loading an older save awards what it has already done.
+
+**Q: How can I see an enemy's rank before I fight?**
+**A:** Hold **Alt** (touch: the Units button; controller: R3). A plate over every enemy on screen shows its rank. Fought another rank of its kind? You see its deck colors too. Fought this exact rank? Also the life it would start with now, in orange when it's above normal.
+
+**Q: My duel is stuck in an endless loop. What now?**
+**A:** The AI can't repeat the same ability more than 25 times in a turn, and a trigger that comes back 25 times with nobody acting ends the game in a draw. After 10 repeats the AI accepts the duel menu's **Offer Draw**. A draw is nothing won or lost: no ante, no gold, no notoriety.
+
+**Q: Which duel settings are worth knowing?**
+- **Show land drops in duels** (off by default): lands played this turn out of lands allowed, under each player's counts.
+- **Always Yes** for a "you may" trigger like Valakut: open the stack, click the trigger, click it again and tick Always Yes. It holds for the rest of the duel.
+- **Keep Mouse in Window** (PC, fullscreen): keeps the cursor inside the game, handy with two monitors.
+- **Disable Notoriety:** see Enemies that adapt to you."""))
 
 if __name__ == "__main__":
     for i, (topic, short, text) in enumerate(M, 1):

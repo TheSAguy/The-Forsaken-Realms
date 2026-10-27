@@ -3,9 +3,10 @@ import json
 import sys
 
 sys.path.insert(0, __file__.rsplit("\\", 1)[0] if "\\" in __file__ else __file__.rsplit("/", 1)[0])
-from messages import FAQ_VERSION, M  # noqa: E402
+from messages import ADDED, EDITED, FAQ_VERSION, M  # noqa: E402
 
-data = {"messages": [m[2] for m in M], "topics": [m[0] for m in M], "short": [m[1] for m in M]}
+data = {"messages": [m[2] for m in M], "topics": [m[0] for m in M], "short": [m[1] for m in M],
+        "edited": sorted(EDITED), "added": sorted(ADDED)}
 for t in data["messages"]:
     assert len(t) < 2000, len(t)
 n = len(M)
@@ -64,6 +65,10 @@ h1 { margin: 0; font: 600 clamp(28px, 6vw, 40px)/1.1 var(--display); letter-spac
 .notes { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .notes li { padding: 10px 14px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); font-size: 15px; }
 .notes strong { color: var(--ink); }
+.tag { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px;
+  border-radius: 999px; background: var(--warn-soft); color: var(--warn); }
+.tag.added { background: var(--accent-soft); color: var(--accent); }
+.chip .tag { font-size: 10px; padding: 1px 6px; }
 button { font: 600 14px/1 var(--body); border-radius: 6px; cursor: pointer; padding: 9px 14px; }
 button:focus-visible, .chip:focus-visible, summary:focus-visible, textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); }
@@ -114,6 +119,7 @@ details.raw textarea { margin-top: 8px; width: 100%; resize: vertical; backgroun
       <button type="button" class="ghost" id="reset">Clear marks</button>
     </div>
     <ul class="notes">
+      __CHANGES__
       <li><strong>Channel link.</strong> #how-can-i-help in message __HELP__ links only if Discord recognizes it when you send. If it stays plain text, retype it and pick the channel from the list.</li>
     </ul>
   </header>
@@ -125,7 +131,11 @@ details.raw textarea { margin-top: 8px; width: 100%; resize: vertical; backgroun
 (function () {
   var data = JSON.parse(document.getElementById("faq-data").textContent);
   var msgs = data.messages, topics = data.topics, shortTopics = data.short;
-  var LIMIT = 2000, KEY = "tfr-faq-copied-v122";
+  var LIMIT = 2000, KEY = "tfr-faq-copied-__VERSION__";
+  var edited = {}, added = {};
+  (data.edited || []).forEach(function (n) { edited[n] = true; });
+  (data.added || []).forEach(function (n) { added[n] = true; });
+  function tag(n) { return added[n] ? ' <span class="tag added">New</span>' : edited[n] ? ' <span class="tag">Edit</span>' : ""; }
   var copied = {};
   try { (JSON.parse(localStorage.getItem(KEY) || "[]") || []).forEach(function (n) { copied[n] = true; }); } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(Object.keys(copied).map(Number))); } catch (e) {} }
@@ -178,7 +188,7 @@ details.raw textarea { margin-top: 8px; width: 100%; resize: vertical; backgroun
     var n = idx + 1;
     var a = document.createElement("a");
     a.className = "chip"; a.href = "#m" + n; a.id = "chip" + n;
-    a.innerHTML = '<span class="n">' + n + "</span>" + esc(shortTopics[idx]);
+    a.innerHTML = '<span class="n">' + n + "</span>" + esc(shortTopics[idx]) + tag(n);
     chips.appendChild(a);
     var art = document.createElement("article");
     art.className = "msg"; art.id = "m" + n;
@@ -187,7 +197,7 @@ details.raw textarea { margin-top: 8px; width: 100%; resize: vertical; backgroun
     art.innerHTML =
       '<div class="msg-head">' +
         '<span class="n">' + n + "</span>" +
-        "<h2>" + esc(topics[idx]) + "</h2>" +
+        "<h2>" + esc(topics[idx]) + "</h2>" + tag(n) +
         '<button type="button" class="copy" id="copy' + n + '" aria-label="Copy message ' + n + '">Copy</button>' +
       "</div>" +
       '<div class="meter"><div class="track"><div class="fill" style="width:' + pct.toFixed(1) + '%"></div></div>' +
@@ -219,7 +229,21 @@ details.raw textarea { margin-top: 8px; width: 100%; resize: vertical; backgroun
 """
 
 WORDS = {21: "Twenty-one", 22: "Twenty-two", 20: "Twenty", 23: "Twenty-three", 24: "Twenty-four"}
-page = (PAGE.replace("__DATA__", blob).replace("__N__", str(n)).replace("__HELP__", str(help_msg))
+def nums(xs):
+    xs = sorted(xs)
+    return ", ".join(map(str, xs[:-1])) + (" and " if len(xs) > 1 else "") + str(xs[-1]) if xs else ""
+
+
+changes = ""
+if EDITED or ADDED:
+    parts = []
+    if EDITED:
+        parts.append("edit message%s %s in place" % ("s" if len(EDITED) > 1 else "", nums(EDITED)))
+    if ADDED:
+        parts.append("post %s as new message%s at the end" % (nums(ADDED), "s" if len(ADDED) > 1 else ""))
+    changes = ("<li><strong>Updating from the last version.</strong> For " + FAQ_VERSION + ": " + "; ".join(parts)
+               + ". The rest are unchanged. Tagged Edit and New below.</li>")
+page = (PAGE.replace("__CHANGES__", changes).replace("__DATA__", blob).replace("__N__", str(n)).replace("__HELP__", str(help_msg))
         .replace("__COUNT_WORD__", WORDS.get(n, str(n))).replace("__VERSION__", FAQ_VERSION))
 open(sys.argv[1], "w", encoding="utf-8", newline="\n").write(page)
 print("wrote", sys.argv[1], len(page), "bytes,", n, "messages; help in message", help_msg)

@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 786: the Discord FAQ for v1.24 - 10 messages edited in place, 2 new after Support (2026-10-27)
+
+The user: "give me the updated Discord FAQ. Let me know what sections to edit." The channel is kept by hand, message
+by message, so the FAQ changes in place and new topics go at the end (nothing can be inserted mid-channel).
+
+- **`dev-tools/discord_faq/messages.py`**: `FAQ_VERSION` "v1.24". Checked all 22 messages against GUIDE.md and rounds
+  702-785. Edited: 1 (the header's version), 2 (Arena duels pay half Power and are never a first win, round 742),
+  5 (the Witch-Maw Slippers only from Akroma and Lathliss, one pair a player, 781), 6 (780's six enemies in all three
+  ranks), 7 (Notoriety is a score, +1 a win and -5 a loss, 753; Disable Notoriety, 772), 9 (no gold minimum in week 1,
+  785; a new Q on reloads after a loss, mid-duel quits and the difficulty hints, 726/732/735/779), 11 (a new Q on the
+  Arena's Archmage brackets, 715/728), 12 (research v2 - 40 days unfed, about 3 boosters, feeding a running research,
+  Found Cards; classic research for older games, 751/764/766/771), 15 (a capital's heart once per game, 752) and 21
+  (the v1.22 Classic workaround and the "v1.22 runs on Forge 2.0.16" line gone - the answer no longer names a Forge
+  build, so it cannot go stale; the PC update notice, 782; Export Logs kept). Unchanged: 3, 4, 8, 10, 13, 14, 16-20, 22.
+- **New, posted after 22 (Support)**: 23 "Town specialties and realm milestones" (760, 774; new games and New Game+
+  only) and 24 "Achievements, enemy plates, loops and duel settings" (717/718, 719, 708's loop breaker and draws, 778's
+  land drops cell and Always Yes, Keep Mouse in Window). The longest message is 12 at 1,981 characters.
+- **The page** (`build_page.py`): new `EDITED` / `ADDED` sets in `messages.py` tag cards and chips "Edit" / "New",
+  and a header note lists them; the copied marks are kept per `FAQ_VERSION` (the key was fixed at v122). Republished
+  to the same artifact as version 10 (https://claude.ai/artifact/XRwbV8Vit3XmHkjQ3aw62y).
+- **Paste list** for the user: `C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.24-edits.md` - each message's action and the
+  full text of every edited and new one.
+- Not done: GUIDE.md's own "How do I update" answer still names "Forge 2.0.16 (the 10.21 build)" while the engine is
+  the 10.26 daily (round 769) - read-only in this round. Dev tools only, not shipped.
+
 ## Round 780: six xandghost creatures as new enemies, each an Apprentice, an Adept and a Master (2026-10-27)
 
 The user: "Let's add the new creatures coming from Art", then "Hand them to TFR1. I want each to be given 3 levels,
