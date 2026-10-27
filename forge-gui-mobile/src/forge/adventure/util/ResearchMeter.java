@@ -6,7 +6,9 @@ import forge.adventure.stage.GameHUD;
 import forge.card.CardEdition;
 import forge.card.CardRarity;
 import forge.item.PaperCard;
+import forge.item.SealedTemplate;
 import forge.model.FModel;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -20,8 +22,8 @@ import java.util.Set;
  * <p>
  * Every set has a meter. A card sold anywhere, or sacrificed at the Lab, adds points to the meter of the set its printing
  * belongs to (PrintingIndex): the first copy of a name ever fed counts in full by rarity, a later copy a share of that,
- * and a sacrifice counts double. The meter's size is a share of the set's card count. Its fill cuts the research's shard
- * cost (by researchShardCutAtFull at a full meter, never to nothing) and its days (to none at a full meter), both along
+ * and a sacrifice counts double. The meter's size is set by the set's own booster (round 771). Its fill cuts the
+ * research's shard cost (by researchShardCutAtFull at a full meter, never to nothing) and its days (to none at a full meter), both along
  * the square root of the fill so the first cards count most. A full meter finishes on pressing Research, once the shards
  * are paid. The numbers live in settings.json (TuningData.research*); the state lives on AdventurePlayer (saved).
  * <p>
@@ -36,6 +38,12 @@ import java.util.Set;
  * lengthDays/pointsFor math); a set at 0 days is Ready and takes no more points (pointsFor clamps at a full meter, so
  * its cards only pay gold); a sacrifice stops at Ready; and feeding a running research to 0 days finishes it at once
  * (flush). The numbers are unchanged; "meter" stays only as the internal name.
+ * <p>
+ * Round 771 (the user: "I got 1 booster and could unlock a set ... I think this should be adjusted to at lest 3
+ * boosters", then "Let's also make the default also 40 days" and Research towns "speed up the days only"): the meter is
+ * researchMeterBoosters boosters of the set's own cards at researchMeterPointsPerCard each (meterSize), not a share of
+ * the card count - a booster is 8-15 set cards whatever the set's size, so about 3 sacrificed boosters (6 sold) reach
+ * Ready in every set; researchDaysV2 is 40; the Research towns no longer multiply the points fed (only the days).
  */
 public final class ResearchMeter {
     private ResearchMeter() {}
@@ -63,10 +71,48 @@ public final class ResearchMeter {
 
     // ---- the meter ------------------------------------------------------------------------------------------------
 
-    /** Points a full meter holds: researchMeterShare of the set's card count (PrintingIndex), at least researchMeterMin. */
+    /** Round 771: set cards per booster, by code (the booster template does not change in a session). */
+    private static final Map<String, Integer> boosterCards = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** Points a full meter holds (round 771): researchMeterBoosters x the set's cards per booster x
+     *  researchMeterPointsPerCard, at least researchMeterMin. */
     public static int meterSize(String code) {
+        return meterSizeFor(setCardsPerBooster(code));
+    }
+
+    /** Round 771: the cards of its own set one booster holds - the slot counts of the template the game opens
+     *  (AdventureOverrides, as AdventureEventController.generateBooster), less land slots and Guest slots (another set's
+     *  cards). A set without a template counts researchMeterCardsNoBooster. */
+    public static int setCardsPerBooster(String code) {
+        int fallback = Math.max(1, tuning().researchMeterCardsNoBooster);
+        if (code == null)
+            return fallback;
+        Integer known = boosterCards.get(code);
+        if (known != null)
+            return known;
+        int n = 0;
+        SealedTemplate tpl = AdventureOverrides.instance().getBoosterTemplate(code);
+        if (tpl != null && tpl.getSlots() != null) {
+            for (Pair<String, Integer> slot : tpl.getSlots()) {
+                String main = slot.getLeft() == null ? "" : slot.getLeft().split(":", 2)[0].toLowerCase();
+                if (main.contains("land") || main.contains("guest") || slot.getRight() == null)
+                    continue;
+                n += slot.getRight();
+            }
+        }
+        String how = tpl == null ? "no booster template" : "of " + tpl.getNumberOfCardsExpected() + " in its booster";
+        if (n <= 0)
+            n = fallback;
+        boosterCards.put(code, n);
+        System.out.println("[TFR-Research] " + code + " meter " + meterSizeFor(n) + ": " + n + " set card(s) per booster ("
+                + how + ")");
+        return n;
+    }
+
+    private static int meterSizeFor(int cardsPerBooster) {
         TuningData t = tuning();
-        return Math.max(Math.max(1, t.researchMeterMin), Math.round(PrintingIndex.total(code) * t.researchMeterShare));
+        return Math.max(Math.max(1, t.researchMeterMin), Math.round(Math.max(0f, t.researchMeterBoosters)
+                * cardsPerBooster * Math.max(0f, t.researchMeterPointsPerCard)));
     }
 
     public static float points(AdventurePlayer player, String code) {
@@ -95,10 +141,10 @@ public final class ResearchMeter {
         return (int) Math.round(baseCost() * (1 - cut * reach(player, code)));
     }
 
-    /** researchDaysV2, or 28. */
+    /** researchDaysV2, or 40 (round 771; 28 before). */
     public static int unfedDays() {
         int d = tuning().researchDaysV2;
-        return d > 0 ? d : 28;
+        return d > 0 ? d : 40;
     }
 
     /** The research's whole length at today's fill, before rounding: researchDaysV2 x (1 - sqrt(fill)), with Researcher
@@ -153,9 +199,8 @@ public final class ResearchMeter {
         return p != null && p.length > i ? p[i] : new int[]{1, 2, 3, 5}[i];
     }
 
-    /** Raw points times the Research towns' factor (round 760), doubled for a sacrifice. */
+    /** Raw points, doubled for a sacrifice. Round 771: the Research towns cut the days only (lengthDaysAt), not these. */
     private static float scaled(float pts, boolean sacrifice) {
-        pts *= TownSpecialties.researchPointsFactor(); // round 760: the Research towns' speed (1 without specialties)
         return sacrifice ? pts * tuning().researchSacrificeFactor : pts;
     }
 

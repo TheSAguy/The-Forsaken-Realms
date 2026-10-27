@@ -14264,6 +14264,55 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 771: research takes about 3 sacrificed boosters, not 1 (2026-10-26)
+
+The user: "I got 1 booster and could unlock a set. Research for no time + shards. I think this should be adjusted to at
+lest 3 boosters." Then: "Let's also make the default also 40 days. Since you also do get the towns that can help you",
+and "Research towns speed up the days only (1.5x at 10 towns), not the points per card or the shard price".
+
+Why one booster was enough: round 751's meter was 10% of the set's card count (at least 8 points). One booster's new
+cards are worth about 19 points sold and 38 sacrificed (10 C x1, 3 U x2, 1 R/M ~3.2), and Dominaria's meter was 25.
+Arabian Nights and Antiquities, with 8-point meters, were filled by one 8-card booster sold.
+
+- **The meter is sized by the set's own booster** (`ResearchMeter.meterSize`, new `setCardsPerBooster`):
+  `researchMeterBoosters` (3) x the set's cards per booster x `researchMeterPointsPerCard` (2.5), at least
+  `researchMeterMin` (8). The cards per booster are the slot counts of the booster template the game opens
+  (`AdventureOverrides.getBoosterTemplate`, as `AdventureEventController.generateBooster`), minus land slots and Guest
+  slots (another set's cards); worked out once per set and session. Every set the Lab lists has a template; a set without
+  one counts `researchMeterCardsNoBooster` (14). 2.5 is a booster card's average when sacrificed, rarity and the odd
+  duplicate included: measured over Forge's 135 Expansion/Core sets by simulating their slot rules (median 2.50,
+  10th-90th percentile 2.34-2.62). Meters, old -> new: DOM 25 -> 105, M19 26 -> 105, Bloomburrow 26 -> 90, LEA 28 -> 112,
+  5ED 43 -> 112, ARN/ATQ 8 -> 60. Across all 135 sets, 3 sacrificed boosters now fill 0.85-1.15 of the meter, and 6
+  sold come to about 0.93 of 3 sacrificed. `researchMeterShare` is gone.
+- **40 days with nothing given** (`researchDaysV2` 28 -> 40; `unfedDays()`'s fallback and TuningData's default too).
+- **Research towns cut the days only**: `TownSpecialties.researchPointsFactor()` is gone and `ResearchMeter.scaled` no
+  longer multiplies the points fed, so the meter and the shard price are the same with or without towns; the days are
+  still / (1 + b) - 40 -> 27 at the 50% cap. The `[TFR-Specialty] Research:` line prints the days factor only.
+- Unchanged: the sqrt curve, C1/U2/R3/M5, copies 0.25, the sacrifice x2, the shard cut (half at Ready).
+- Dominaria on Normal, days / shards: nothing 40/40; 1 booster sold 23/31; 1 sacrificed 17/28; 2 sacrificed 7/23;
+  3 sacrificed Ready/20; 6 sold 1/20. With 10 Research towns: nothing 27; 1 sacrificed 11; 2 sacrificed 5; shards as
+  without. Full tables (DOM, M19, BLB, LEA, 5ED, ARN, ATQ, sold and sacrificed, 0 and 10 towns):
+  `C:\CLAUDE\PROJECTS\TFR1\notes\research-tuning-771.md`.
+- Saves: no protection (the user: "Don't worry about existing games. We're still testing"). Every research v2 game,
+  research already running included, takes the new meters and the 40-day base; its stored points stay, so its fill
+  drops. No save format change.
+- Known small miss: a set whose booster puts its own cards in a land-named sheet counts one card fewer (Dragon's Maze's
+  guildgate slot `fromSheet("DGM Lands")`: meter 105 for its 15 set cards, about 7% easier). Not worth a sheet lookup.
+- Log: `[TFR-Research] DOM meter 105: 14 set card(s) per booster (of 15 in its booster)` once per set and session.
+- GUIDE: 28 -> 40 days in three places, the meter's rule ("about three boosters of a set sacrificed, or six sold"), the
+  Dominaria table by boosters, and the Research town row (days only, 40 -> about 27); GUIDE.html regenerated.
+
+Checked in the agent game, a new game (v2), cheats on, round 771's `ResearchMeter`/`TownSpecialties`/`TuningData`
+compiled with javac ahead of the agent jar and the new settings.json in the agent's plane folder (profile, auto_save,
+preferences and that settings.json backed up and restored byte for byte; no save slot written): F9 `give boosters DOM
+3`. The Lab read "40 days - one more new common takes 3 days off. Start: 40". One booster opened and sacrificed: "40 days
+-> 16 days", then "28, 16 days" (`fed DOM (sacrificed 14 card(s)): 14 new card(s) ... +38 pts -> 38/105 (36%); start
+now: 28 shards (base 40), 16 day(s)`). The other two: "16 days -> Ready", "Ready: research it now for 20" (`+67 pts ->
+105/105`). One Research town (Llanowar, console `set mapflag townRestored 1` + `specialty set Research`): Dragon's Maze
+read "39 days ... Start: 40" (`Research: 1 Research town(s) -> research +5% faster (days x0.95)`), and its sacrificed
+booster fed `+42 pts` for 15 new cards - even, so no x1.05 - leaving 15 days, 27 shards. Shots:
+`notes\tweaks-1026\r771-*.png`. Maven `-pl forge-gui-mobile -am compile` exit 0.
+
 ## Round 770: the load rollback snapshot works right after a new game (2026-10-26)
 
 Round 769's smoke test logged `[TFR-Load] no rollback snapshot: java.lang.NullPointerException: Cannot invoke

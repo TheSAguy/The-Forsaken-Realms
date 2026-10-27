@@ -178,18 +178,13 @@ public final class TownSpecialties {
         if (towns != researchTownsLogged) {
             researchTownsLogged = towns;
             System.out.println("[TFR-Specialty] Research: " + towns + " Research town(s) -> research +"
-                    + pct(researchBonusMemo) + " faster (points x" + fmt(researchPointsFactor()) + ", days x"
-                    + fmt(researchDaysFactor()) + ")");
+                    + pct(researchBonusMemo) + " faster (days x" + fmt(researchDaysFactor()) + ")");
         }
         return researchBonusMemo;
     }
 
-    /** Research v2's points fed, times this (ResearchMeter.pointsFor). */
-    public static float researchPointsFactor() {
-        return 1f + researchBonusMemoOrNow();
-    }
-
-    /** Research v2's days, times this (ResearchMeter.lengthDays): / (1 + b), or (1 - b) with specialtyResearchTimeCut. */
+    /** Research v2's days, times this (ResearchMeter.lengthDays): / (1 + b), or (1 - b) with specialtyResearchTimeCut.
+     *  Round 771: the days only - the towns no longer multiply the points fed, so they leave the shard price alone. */
     public static float researchDaysFactor() {
         float b = researchBonusMemoOrNow();
         return tuning().specialtyResearchTimeCut ? 1f - b : 1f / (1f + b);

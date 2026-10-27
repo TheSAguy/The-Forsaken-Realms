@@ -651,7 +651,7 @@ take one.
 | Specialty | What it does |
 |---|---|
 | **Mining** | this town's own mines pay 50% more (a Gold Mine 100 -> 150, a Shard Mine 20 -> 30 a week) |
-| **Research** | all your research runs 5% faster for each Research town, up to 50% at ten towns: the cards you feed count 5% more and the days shrink to match (28 days unfed -> about 19 at the cap) |
+| **Research** | all your research runs 5% faster for each Research town, up to 50% at ten towns: the days shrink (40 days unfed -> about 27 at the cap); the cards you feed and the Shards are the same with or without towns |
 | **Outpost** | the town is lit as if it had an Outlook (twice its radius; with an Outlook, three times), and it is 5% harder to capture |
 | **Smithy** | this town's Armory rolls its items on your Capitol's rarity table |
 | **Garrison** | 20% harder to capture, and no raid starts here |
@@ -1525,10 +1525,10 @@ sets, items or enemies off yourself; everything is on by default.)
    **first copy** of a card you ever give counts in full, by rarity - an uncommon counts as two commons,
    a rare as three, a mythic as five - and every later copy of it a quarter of that. At the Lab you can
    also **sacrifice** a set's spare cards (never a deck's copies or a favorite): they count double, for no
-   gold. A bigger set takes more cards: about one new common for every ten cards in the set (at least 8)
-   brings its research to no wait.
+   gold. About **three boosters** of a set sacrificed, or six sold, bring its research to no wait - in a big
+   set or a small one, since the amount is set by how many of the set's cards its booster holds.
 2. **Research it.** With nothing given it costs **40 Shards** on Normal (30 Easy, 50 Hard, 60 Insane)
-   and takes **28 days**. Every card given cuts both, the first cards most. The Lab shows each set's days
+   and takes **40 days**. Every card given cuts both, the first cards most. The Lab shows each set's days
    and price, and how many more new commons take the next day off ("One more new common takes a day
    off"). A set at 0 days is **Ready**: research it for half the Shards, with no wait. More of its cards
    then only pay gold, and the Lab offers no Sacrifice for it.
@@ -1543,15 +1543,15 @@ sets, items or enemies off yourself; everything is on by default.)
    off, then Sell or Sacrifice it - one copy, or every spare copy with "All spare copies" ticked. **Sell all over
    4** sells every card's copies beyond four in one go. Copies in a deck and favorites are always kept.
 
-| A 249-card set, Normal | new commons sold: 0 | 1 | 3 | 5 | 10 | 15 | 20 | 25 |
-|---|---|---|---|---|---|---|---|---|
-| days | 28 | 23 | 19 | 16 | 11 | 7 | 3 | Ready |
-| Shards | 40 | 36 | 33 | 31 | 27 | 25 | 22 | 20 |
+| Dominaria, Normal | nothing given | 1 booster sold | 1 booster sacrificed | 3 sold | 2 sacrificed | 6 sold | 3 sacrificed |
+|---|---|---|---|---|---|---|---|
+| days | 40 | 23 | 17 | 12 | 7 | 1 | Ready |
+| Shards | 40 | 31 | 28 | 26 | 23 | 20 | 20 |
 
-A sacrificed card counts as two sold: 5 new commons sacrificed take it to 11 days. Research towns and the
-Researcher perk shorten every one of these.
+(every card of each booster given, an average booster; a copy of a card already given counts a quarter)
 
-(different cards of that set, an average mix of rarities)
+The first new common sold takes about 4 days off. Research towns and the Researcher perk shorten the days
+(ten Research towns: 40 days -> 27, 1 booster sacrificed 11, 2 sacrificed 5), never the Shards.
 
 **Games started before version 1.24 keep the classic research**: a set becomes researchable once you own
 10% of its distinct cards (at least 5), then costs 40 Shards on Normal and a week; cards sell only in
@@ -1817,7 +1817,7 @@ https://discord.gg/TTRPKc9HYJ
 ### How does Research work? How do I unlock more card sets?
 
 You start with only a few sets open (4 on Easy down to 1 on Insane, from your race's four). The
-**Research Lab** in your Capitol unlocks any other set for 40 Shards on Normal and 28 days - less of both
+**Research Lab** in your Capitol unlocks any other set for 40 Shards on Normal and 40 days - less of both
 the more of that set's cards you have sold or sacrificed. An unlocked set stocks your own shops and joins
 your own Inns' tournaments; it never limits your deck. (A game started before version 1.24 keeps the
 classic research: own 10% of a set, then 40 Shards and a week.) Full detail:

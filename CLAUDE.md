@@ -7,7 +7,12 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-760 and 762-770 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-760 and 762-771 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+771 (research v2 takes about 3 sacrificed boosters, not 1: the meter is `researchMeterBoosters` 3 x the set's own cards
+per booster - its booster template less land and Guest slots - x `researchMeterPointsPerCard` 2.5, at least 8 (DOM 25 ->
+105, ARN 8 -> 60); 40 days with nothing given (was 28); Research towns cut the days only, no longer the points or the
+shards (`researchPointsFactor` gone); every v2 game takes it, running research included, no save change;
+`ResearchMeter.setCardsPerBooster`, `[TFR-Research] CODE meter N`; GUIDE; tables in `notes/research-tuning-771.md`) and
 770 (a load straight after a new game, before its first save, takes round 183's rollback snapshot again: the null header
 name is written as "" for the snapshot only, `[TFR-Load] rollback snapshot taken (N bytes, a new game not saved yet)`;
 `WorldSaveHeader` and the save format untouched) and
@@ -67,7 +72,7 @@ at 3840x2160 it covered the screen, got minimized, and a minimized game stops (t
 1x1).
 Next version: 1.24 / 12400. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous
 auto save, eager shops, Inn events and place entry - see MOD_CHANGELOG); next merge from upstream after `0dc8c66996e`;
-BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 771. Rounds 768, 766's follow-up, 769 and 770 are committed but not yet packaged. Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
+BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 772. Rounds 768, 766's follow-up, 769, 770 and 771 are committed but not yet packaged. Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

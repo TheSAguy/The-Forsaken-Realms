@@ -199,26 +199,34 @@
     // 60" - 30 / 40 / 50 / 60 shards from Easy to Insane.
     "researchShardCost": 40,
     // Round 751 - research v2, for games started on round 751 or later (older saves keep the three values above, the
-    // classic research). Every set can be researched from day 1. A set's meter holds researchMeterShare of its card
-    // count in points (at least researchMeterMin). A card sold anywhere, or sacrificed at the Lab, fills its own set's
-    // meter: the first copy of a card ever fed counts researchPointsByRarity (Common, Uncommon, Rare, Mythic), every
-    // later copy researchCopyShare of that, and a sacrifice researchSacrificeFactor times. Research costs
+    // classic research). Every set can be researched from day 1. Round 771: a set's meter holds researchMeterBoosters
+    // boosters of its own cards at researchMeterPointsPerCard points each (a card's average when sacrificed, rarity and
+    // the odd duplicate included) - the cards per booster are its booster template's slots less the land and Guest
+    // slots (DOM 14, 5ED 15, Bloomburrow 12, Arabian Nights 8; researchMeterCardsNoBooster without a template), at least
+    // researchMeterMin points: about 3 boosters sacrificed, or 6 sold, reach Ready in any set (DOM 105 points, ARN 60).
+    // Before round 771 the meter was 10% of the set's card count, and one sacrificed booster made a set Ready. A card
+    // sold anywhere, or sacrificed at the Lab, fills its own set's meter: the first copy of a card ever fed counts
+    // researchPointsByRarity (Common, Uncommon, Rare, Mythic), every later copy researchCopyShare of that, and a sacrifice researchSacrificeFactor times. Research costs
     // researchShardCost (difficulty-scaled) and takes researchDaysV2 days with an empty meter; a fuller meter cuts both
     // along the square root of its fill: a full one takes researchShardCutAtFull off the shards (0.5 = half price) and
     // all of the days. Round 764: the player never sees the meter - the Lab shows days, Shards and how many new commons
     // take the next day off; a full meter is "Ready" (0 days), stores no more points and offers no Sacrifice; a running
     // research fed to 0 days left finishes at once (its start Shards stay spent). Grep forge.log for [TFR-Research].
-    "researchDaysV2": 28,
-    "researchMeterShare": 0.10,
+    // Round 771: 28 -> 40 days with nothing given (the user: "Since you also do get the towns that can help you").
+    "researchDaysV2": 40,
+    "researchMeterBoosters": 3,
+    "researchMeterPointsPerCard": 2.5,
+    "researchMeterCardsNoBooster": 14,
     "researchMeterMin": 8,
     "researchPointsByRarity": [1, 2, 3, 5],
     "researchCopyShare": 0.25,
     "researchSacrificeFactor": 2,
     "researchShardCutAtFull": 0.5,
     // Round 760 - town specialties (new games and New Game+ only). Mining: that town's mines pay x specialtyMineFactor.
-    // Research: each Research town makes research specialtyResearchPerTown faster, at most specialtyResearchCap - points
-    // fed x(1 + b) and the days / (1 + b) (28 days -> 19 at the cap); specialtyResearchTimeCut true reads it as days
-    // x(1 - b) instead (28 -> 14 at the cap). Outpost and Garrison come off the capture roll (the 5% floor stays).
+    // Research: each Research town makes research specialtyResearchPerTown faster, at most specialtyResearchCap - the
+    // days / (1 + b) (40 days -> 27 at the cap); round 771: the days only, the points fed and the shard price are the
+    // same with or without towns. specialtyResearchTimeCut true reads it as days x(1 - b) instead (40 -> 20 at the cap).
+    // Outpost and Garrison come off the capture roll (the 5% floor stays).
     // Market: card shops x specialtyMarketPriceFactor. A change costs specialtyChangeFeeShare of the restore fee's gold,
     // then the town is locked for specialtyChangeLockDays days.
     "specialtyMineFactor": 1.5,

@@ -384,12 +384,16 @@ public class TuningData {
     public int researchShardCost = 100;
     // Round 751 - research v2 (util/ResearchMeter; the user: "Each card should ONLY count towards that set ... The first
     // unique card should count more"), for games started on round 751 or later; an older save keeps the classic research
-    // above. A set's meter holds researchMeterShare of its card count in points, at least researchMeterMin. A card fed for
+    // above. A set's meter holds (round 771) researchMeterBoosters boosters of its own cards at researchMeterPointsPerCard
+    // points each - its booster template's set cards (lands and Guest slots out; researchMeterCardsNoBooster without a
+    // template) - at least researchMeterMin. A card fed for
     // the first time (per name, per set) counts researchPointsByRarity (Common, Uncommon, Rare, Mythic), a later copy
     // researchCopyShare of that, a sacrifice researchSacrificeFactor times. A full meter cuts researchShardCutAtFull of
     // the shard price and all of researchDaysV2, both along sqrt(fill).
-    public int researchDaysV2 = 28;
-    public float researchMeterShare = 0.10f;
+    public int researchDaysV2 = 40;
+    public float researchMeterBoosters = 3f;
+    public float researchMeterPointsPerCard = 2.5f;
+    public int researchMeterCardsNoBooster = 14;
     public int researchMeterMin = 8;
     public int[] researchPointsByRarity = {1, 2, 3, 5};
     public float researchCopyShare = 0.25f;
@@ -398,9 +402,9 @@ public class TuningData {
     // Round 760 - town specialties (util/TownSpecialties; the user: "each time you fix a town, you get the option to select
     // the town specialty", then "Change research to 5%, to a max of 50 ... For outpost, add 5% defense against capture").
     // Mining: that town's mines pay x specialtyMineFactor. Research: every Research town makes research
-    // specialtyResearchPerTown faster, at most specialtyResearchCap - points fed x(1 + b) and the research's days / (1 + b),
-    // or, with specialtyResearchTimeCut, days x(1 - b). Outpost / Garrison: off the capture roll. Market: card shops cost
-    // x specialtyMarketPriceFactor. A change costs specialtyChangeFeeShare of the restore fee's gold, then the town is
+    // specialtyResearchPerTown faster, at most specialtyResearchCap - the research's days / (1 + b) (round 771: the days
+    // only, no longer the points fed), or, with specialtyResearchTimeCut, days x(1 - b). Outpost / Garrison: off the
+    // capture roll. Market: card shops cost x specialtyMarketPriceFactor. A change costs specialtyChangeFeeShare of the restore fee's gold, then the town is
     // locked specialtyChangeLockDays days.
     public float specialtyMineFactor = 1.5f;
     public float specialtyResearchPerTown = 0.05f;
