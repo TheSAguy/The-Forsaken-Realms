@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 783 - a mid-duel quit is judged at the moment the app was left
+- **`forge-gui-mobile/src/forge/Forge.java`** (STOCK): `pause()` calls `DuelHeartbeat.onPause()` after round 777's
+  `SessionLog.end("pause")`; `resume()` calls `DuelHeartbeat.onResume()` right after `lifecycleClosing = false`. Both
+  commented "round 783". If upstream reworks these methods, keep one call in each.
+
 ### Round 782 - the PC update notice
 - **`forge-gui-mobile/src/forge/adventure/scene/StartScene.java`** (STOCK): `enter()` ends with
   `UpdateNotice.attach(ui)`, after round 698's `askOrShareLogs()`. If upstream reworks `enter()`, keep one call after

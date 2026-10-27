@@ -52,6 +52,8 @@ public final class DuelHeartbeat {
     private static boolean loopFired;
     private static String waitingOn = "nobody yet";
     private static long lastWriteAt;
+    /** Round 783: the app is paused (Forge.pause) - the pulse holds still until it resumes. */
+    private static boolean paused;
 
     private DuelHeartbeat() {
     }
@@ -82,6 +84,7 @@ public final class DuelHeartbeat {
         loopFired = false;
         waitingOn = "nobody yet";
         lastWriteAt = lastChangeAt;
+        paused = false;
         if (timer == null)
             timer = Executors.newSingleThreadScheduledExecutor(r -> {
                 Thread t = new Thread(r, "TFR-DuelHeartbeat");
@@ -101,10 +104,41 @@ public final class DuelHeartbeat {
         subscribed = null;
     }
 
+    /**
+     * Round 783 (the 2026-10-27 log review, P1: two Android logs ended paused mid-duel, then closed): Forge.pause() - the
+     * app went to Android's background, or the window was minimized or is closing. One last pulse, the pause time in the
+     * record, and no more writes: a quit is judged at the moment the player left, not by how long the app then sat in
+     * the background. Before this, 20 s in the background made any unfinished duel "stalled", and a quick kill after
+     * the AI's turn ran on in the background counted. The record's own pausedAt goes with the duel.
+     */
+    public static synchronized void onPause() {
+        if (match == null || paused)
+            return;
+        lastWriteAt = 0; // the last pulse is written now, whatever the clock
+        sample();
+        paused = true;
+        long now = System.currentTimeMillis();
+        ReloadJab.duelPaused(now);
+        System.out.println("[TFR-ReloadJab] the app left mid-duel - a quit from here is judged as of now (last change "
+                + (now - lastChangeAt) / 1000 + " s ago, waiting on " + waitingOn + ")");
+    }
+
+    /** Round 783, Forge.resume(): back from the pause - the time away counts as a change, and the pulse goes on. */
+    public static synchronized void onResume() {
+        if (match == null || !paused)
+            return;
+        paused = false;
+        lastChangeAt = System.currentTimeMillis();
+        aiSince = 0;
+        lastWriteAt = 0;
+        ReloadJab.duelPaused(0);
+        System.out.println("[TFR-ReloadJab] the app came back mid-duel - the pulse goes on");
+    }
+
     private static synchronized void sample() {
         try {
             HostedMatch m = match;
-            if (m == null)
+            if (m == null || paused)
                 return;
             long now = System.currentTimeMillis();
             Game game = m.getGame();

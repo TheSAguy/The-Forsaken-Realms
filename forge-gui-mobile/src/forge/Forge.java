@@ -1088,6 +1088,7 @@ public class Forge implements ApplicationListener {
         lifecycleClosing = true;
         forge.adventure.util.SupportPrompt.flush("pause or exit"); // round 756: Android may never come back
         forge.adventure.util.SessionLog.end("pause"); // round 777: the session footer, when something changed
+        forge.adventure.util.DuelHeartbeat.onPause(); // round 783: a mid-duel quit is judged as of leaving the app
         setWindowFocus(false);
         if (MatchController.getHostedMatch() != null) {
             MatchController.getHostedMatch().pause();
@@ -1097,6 +1098,7 @@ public class Forge implements ApplicationListener {
     @Override
     public void resume() {
         lifecycleClosing = false;
+        forge.adventure.util.DuelHeartbeat.onResume(); // round 783
         setWindowFocus(true);
         try {
             Texture.setAssetManager(getAssets().manager());

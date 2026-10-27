@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 783: a mid-duel quit is judged at the moment the app was left; rounds 734 and 758's entries restored (2026-10-27)
+
+The 2026-10-27 log review (`C:\TFR\notes\logs-1027.md`, P1; `logs-1027b` saw it a third time, f7323119): Android logs
+ended mid-duel with `onPause`, then the app closed. Round 735's pulse (`DuelHeartbeat`) kept writing while the app sat in
+the background, so `aliveAt` moved on and `lastChangeAt` did not: after 20 s in the background any unfinished duel was
+judged "stalled - not counted" (a free reroll on Android: every quit there passes through `onPause`), while an OS kill
+soon after leaving, with the AI's turn still running, counted. Part of the v1.24 release plan the user approved.
+
+- **`DuelHeartbeat.onPause()`** (`Forge.pause()`: Android's background, a minimized window, the exit): one last pulse,
+  `duel.pausedAt` in ReloadJab's record, then no more writes while paused. **`onResume()`** (`Forge.resume()`): the time
+  away counts as a change (and ends any AI-thinking span), `pausedAt` is removed, the pulse goes on.
+- **`ReloadJab.judgeMidDuelQuit`** judges at `pausedAt` when it is there: the last change and the AI's thinking are
+  measured up to the moment the player left, however long the app then sat before it closed. The line ends "judged when
+  the app was left". A decided match, the LoopBreaker and the 20 s stall rule are unchanged; a PC quit is the same as
+  before (the exit's own pause is the quit time).
+- An OS kill soon after leaving a live duel still counts - the same rule as a PC quit.
+- Log: `[TFR-ReloadJab] the app left mid-duel - a quit from here is judged as of now (last change N s ago, waiting on
+  ...)` and `the app came back mid-duel - the pulse goes on`.
+- Stock `Forge.java`: one call each in `pause()` and `resume()` (CORE_ENGINE_CHANGES). `util/DuelHeartbeat`,
+  `util/ReloadJab`.
+- **Tested** in a clean worktree build (Maven exit 0) packaged to a separate test folder with a copy of the agent
+  profile, every duel at 50x; a minimized window stands in for Android's background (both run `Forge.pause()`):
+  (A) minimized 1.3 s into a live duel, the record's `pausedAt` written and nothing else moving for 30 s, the process
+  killed, then the next load: "7 (left mid-duel: Kor Castigator, last change 0 s before the quit, ... judged when the app
+  was left - a lost duel plus a reload)", 6 -> 7 (before this round: judged stalled, not counted). (B) minimized 5 s, then
+  restored: "came back mid-duel", `pausedAt` removed, the duel finished normally, no record left, the count unchanged.
+  The Android lifecycle itself is not tested here.
+- **Changelog repair**: rounds 734 and 758's entries were lost when rounds 735 and 759 committed over them. Both are
+  back in their places, word for word from `b7760c3a5fb` and `1c7312be039`.
+
 ## Round 781: Witch-Maw Slippers - a Mythic-boss trophy at 25%, and one pair a player (2026-10-27)
 
 The user, of the Witch-Maw Slippers (every duel starts with Witch-Maw Nephilim in play, for two opening-hand cards and 8
@@ -15427,6 +15457,40 @@ game."
 - **Not checked**: a home whose color reputation blocks the heal (the dialog then drops "healed"; read in code only),
   and the History round trip on the new text (History re-shows the same message string, as before).
 
+## Round 758: the death dialog says what dying did (2026-10-26)
+
+The user, with a screenshot of the agent game's death ("Will, You Died!!!" / "Torch Cracked!", life -5/22): "This
+looks like the wrong defeat screen. This looks like the duel loss screen when an equipment breaks vs. you losing the
+game."
+
+- **Diagnosis**: it was the right screen. A loss that leaves life below 1 is a death (`AdventurePlayer.defeated()`
+  returns true): `GameStage.resetPlayerLocation()` shows the death dialog, OK sends you home (the Capitol, else Orazca;
+  round 253) and the town's free heal restores you. TFR has no permadeath; only the run-lost screens (Capitol defense,
+  three Center Towns) end a run. The case: Insane, four world-map losses in a row (22 -> 15 -> 8 -> 1 -> -5), home to
+  Orazca, `fullHeal: -5/22 -> 22/22`. It read as the item-break screen because the death and boss-defeat dialogs were
+  one dialog: the same DEFEAT badge and layout, the same "<Item> Cracked!" line, only the first line different; the
+  death dialog never said what dying does; and the HUD showed -5/22 under it.
+- **The death dialog** (`Current.generateDeathMessage`): "<Name>, You Died!!!" / "You wake in <home>, healed." /
+  "Lost [+Gold] N." (when the fatal loss took gold) / a blank line / "Your <item> cracked." in the red-gray gradient.
+  "healed" is dropped when the home will not heal you (not a town or capital, or a town whose color reputation blocks
+  the free heal - `GameStage.homeHeals`, TileMapScene.enter()'s rule). The gold is what that `defeated()` took
+  (`AdventurePlayer.takeLastDeathGoldLost`, runtime-only, never saved; 0 for the console's `endscreen died`). TFR text
+  built in Java; `en-US.properties` untouched.
+- **The boss-defeat dialog** keeps its two lines ("you lost the last game." / "<Item> Cracked!").
+- **The HUD** shows life at 0, never below, while the player is dead (`GameHUD`'s life label); the saved value is
+  untouched, and the home heal restores it.
+- **Logging**: `[TFR-Defeat]` - "died at L/M life: wakes in <home>, healed|NOT healed, lost N gold", "boss defeat at
+  L/M life", and for both which item cracks (and its slot) or why none does (nothing equipped, cracking off in
+  Settings, Mender, the Easy/Normal save). A crack logged nothing before. The crack itself moved into
+  `Current.crackRandomEquippedItem`, unchanged.
+- **Not done**: a separate death badge (the user's call; it would be an art request through the Art thread).
+- **Seen in the agent game** (a copy of the Art session's world, Normal; javac classes ahead of the 13:07 jar): a real
+  death at 1/20 against a spawned Young Red Dragon (50x) - the new dialog with "Lost [+Gold] 100." and "Your Leather
+  Boots cracked.", the HUD 0/20 while life was -3; OK -> Orazca, 20/20. `endscreen boss`: unchanged. `endscreen died`
+  with nothing equipped: no gold or crack line. No exceptions.
+- **Not checked**: a home whose color reputation blocks the heal (the dialog then drops "healed"; read in code only),
+  and the History round trip on the new text (History re-shows the same message string, as before).
+
 ## Round 757: Discord FAQ message 22 - the support post (2026-10-26)
 
 The user approved a Ko-fi support post for the Discord #faq channel: "Yes: add the support post to the Discord FAQ
@@ -16245,6 +16309,50 @@ The user approved four changes after the 2026-10-26 log review (P1, P2, P4, P5, 
   kill 2 s into a Grave Revenant duel on the Hard save counted (103 -> 104, the line with "enemies +9 life").
   The pulse's "waiting on" is a stack-sample guess for the log (it read "the player" in an all-AI duel's opening) and
   decides nothing.
+
+The user, on round 733's audit of every tag-matched quest stage: "Apply gaps A-G and J as round 734 (skip H, I and the
+devils)". The rule is the same as round 733's: a mixed Defeat stage counts a win only when the enemy carries every
+`enemyTags` entry (`AdventureQuestStage.matchesTargetEnemyData()`), so a family member without the tag is beaten but
+not counted. Data only, `The Forsaken Realms/world/enemies.json`, 70 entries.
+
+- **A, Goblin Invasion** - `Goblin` on Goblin Fighter, Goblin Archer, Goblin Zealot, Goblin Occultist, Goblin Wolf Rider,
+  Goblin Nightwolf Rider, Goblin Tiger Rider, Goblin Panther Rider, Furnace Goblin (round-117 `remake/` sprites tagged
+  only Humanoid and colors). Troops: 13 -> 22 spawnable.
+- **B, Undead Invasion** (needs Undead AND `Minion`) - `Minion` on 31 Common/Uncommon rank-and-file undead: Bound Cadaver,
+  Brittle Archer, Decrepit Bones, Dismembered Crawler, Unwinding Crawler, Unraveling Crawler, Mutilated Stumbler,
+  Hobbling Zombie, Skittering Hand, Busaw, Dune Ghoul, Skaab, Escaped Skaab, Hulking Skaab, Shrieking Skaab, Obsessed
+  Stitcher, Spirit, Wandering Geist, Grave Wight, Nightstalker, Undead Wanderer, Undead Goblin, Skeleton Champion,
+  Carcass Feeder, Ghastly Eye, Hollowlight Shade, Gloomshroud Wraith, Hollowplate Phantom, Bonestinger, Royal Scarab,
+  Vampire Bat. Troops: 38 -> 69. Left out: "Lord of the Undead" (reads as a leader despite its Common tier) and the Rare/
+  Mythic, lich, vampire, necromancer, giant and golem undead.
+- **C, the Undead Invasion's necromancer** - `Necromancer` on Adept Necromancer, Necromancer of Shandalar and Ghoul
+  Gravecaller (a ghoul that raises the dead; my call). Leader pool: 20 -> 23.
+- **D, Elven Invasion** - `Elf` on Elven Apprentice, Elven Spellweaver, Elven Magus, Elven Archmage of the Mists, and
+  `Leader` on the Archmage. Troops: 7 -> 10; the elite stage: 1 -> 2 (Golgari Elf, Elven Archmage of the Mists).
+- **E, Giants at the Gate** - `Giant` on Brawny Ogre, Stone Troll, Mire Troll, Crushing Cyclops, Humongous Ettin, Troll
+  Warlord, and `Leader` on Troll Warlord (my call: a Mythic named Warlord). The quest already treated trolls and ogres as
+  giants (its leaders included Swamp Troll and Ogre Matriarch). Troops: 20 -> 25; leaders: 3 -> 4.
+- **F, Demon Incursion** - `Demon` on Bloodgift Demon. The devils stay out (the user: skip). Troops: 33 -> 34.
+- **G, Knightly Siege** - `Knight` on Unholy Knight, Kor Skyknight, Knight Mercenary, Armored Knight, Holy Paladin (the
+  last two are Leader-tagged, so they join the siege's leader pool). Twinblade Crusader left as it is (my call: already
+  a Soldier, a crusader rather than a knight). Troops: 27 -> 30; leaders: 5 -> 7.
+- **J, duplicate tags removed** - the matcher subtracts list sizes after `removeAll`, so an enemy listing a REQUIRED tag
+  twice never matched while the spawn pools (`contains`) still picked it. No stage needed a duplicated tag, so nothing
+  was broken in play. Removed: Amonkhet Minotaur Warrior (BiomeRed - it can now be the target of Sacred Sands and
+  Shamanic Totems, 246 -> 247), Corrupted Blue/Green/Red Wizard, Runelord, Snow Wizard (Wizard), Gargoyle, Gargoyle 2
+  (Stone), Grave Titan, Greater Zombie (Zombie), Mageripper (Insect).
+- **Side effects, checked**: the invasions' own troop spawns and local spawn boosts read the same tags, so these units
+  now also come as invasion troops. "Where Am I?" (excludes Leader) loses the two new leaders, 1080 -> 1078. A dungeon
+  upgrade picks the enemy sharing the most descriptive tags (`DungeonUpgrades.kindTags`), so goblin and undead
+  dungeons now find goblin and undead upgrades a little more often. No Java reads these tags by name except
+  InvasionQuests' "Leader". Not fixed, seen in passing: Mageripper's tag "Identity Temur" has a space, so it never
+  matches the identity tags.
+- **Not done** (the user's call): H (other soldiers), I (bandits), the devils. Nothing is retroactive; counts move from the
+  next win.
+- **Tested**: `enemies.json` parses as JSON, no entry lists a tag twice, and round 733's stage audit, re-run, gives the
+  counts above.
+
+## Round 734: more invasion troops count - goblins, undead, elves, giants, a demon, knights (2026-10-25)
 
 The user, on round 733's audit of every tag-matched quest stage: "Apply gaps A-G and J as round 734 (skip H, I and the
 devils)". The rule is the same as round 733's: a mixed Defeat stage counts a win only when the enemy carries every

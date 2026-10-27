@@ -194,6 +194,20 @@ public final class ReloadJab {
         }
     }
 
+    /** Round 783, DuelHeartbeat.onPause/onResume: the app left (at = the pause time) or came back (at = 0). */
+    static void duelPaused(long at) {
+        synchronized (LOCK) {
+            Properties p = read();
+            if (p.getProperty("duel.seed") == null)
+                return;
+            if (at > 0)
+                p.setProperty("duel.pausedAt", String.valueOf(at));
+            else
+                p.remove("duel.pausedAt");
+            write(p, false);
+        }
+    }
+
     /**
      * DuelScene.GameEnd: the match is decided. A quit from here on (the loss or ante dialogs, before afterGameEnd records
      * it) is judged by this result, not by the pulse: a decided loss always counts.
@@ -234,7 +248,7 @@ public final class ReloadJab {
 
     private static void clearDuel(Properties p) {
         for (String key : new String[]{"seed", "enemy", "startedAt", "lastChangeAt", "aliveAt", "waitingOn", "aiSince",
-                "loopBreak", "decided"})
+                "loopBreak", "decided", "pausedAt"})
             p.remove("duel." + key);
     }
 
@@ -248,7 +262,10 @@ public final class ReloadJab {
             return null;
         }
         String enemy = p.getProperty("duel.enemy", "?");
-        long alive = longProp(p, "duel.aliveAt");
+        // Round 783: a duel the player left (the app paused - Android's background, a minimized window) is judged at
+        // that moment, however long the app then sat before it closed.
+        long pausedAt = longProp(p, "duel.pausedAt");
+        long alive = pausedAt > 0 ? pausedAt : longProp(p, "duel.aliveAt");
         long idle = Math.max(0, alive - longProp(p, "duel.lastChangeAt"));
         long aiSince = longProp(p, "duel.aiSince");
         long thinking = aiSince > 0 ? Math.max(0, alive - aiSince) : 0;
@@ -256,7 +273,8 @@ public final class ReloadJab {
         String decided = p.getProperty("duel.decided");
         String facts = enemy + ", last change " + idle / 1000 + " s before the quit, waiting on "
                 + p.getProperty("duel.waitingOn", "?") + (thinking > 0 ? ", the AI thinking " + thinking / 1000 + " s" : "")
-                + (loop ? ", the LoopBreaker fired" : "") + (decided != null ? ", the match already " + decided : "");
+                + (loop ? ", the LoopBreaker fired" : "") + (decided != null ? ", the match already " + decided : "")
+                + (pausedAt > 0 ? ", judged when the app was left" : "");
         clearDuel(p);
         boolean counted;
         if (decided != null)
