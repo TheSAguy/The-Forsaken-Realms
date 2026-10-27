@@ -38,6 +38,39 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 769 - the engine to the 10.26 daily (upstream `0dc8c66996e`)
+
+- 17 conflicts (detail in MOD_CHANGELOG round 769). Most from upstream `9748136a531` (lazy town loading + async save)
+  and `1b6123f6cf5` (faster WorldSave for AsyncSave). The user approved "keep ours" for R1-R4 and upstream's reset
+  for R5:
+  - **`WorldStage.java`** - both autosaves (entering a place, a world-map duel's start) stay `autoSaveHere()` ->
+    the synchronous `WorldSave.save()`; `handlePointsOfInterestCollision()` is ours whole (barred town, capital toll,
+    locked castle, Legendary warning, `visitPoi`); the `OverlayText` import kept. Upstream's load-time
+    `collidingPoint` reset (null, then the first POI stood on, `break`) taken. Watch: `autoSaveAsync()` saves only
+    the stock world fields (`World.snapshotForAsyncSave`) and skips `saveBlocked`/`saveFormatVersion` - never call it
+    from TFR code until it is ported onto the full `World.save()`.
+  - **`WorldSave.java`** - `finish()` keeps the `OverlayText` clear upstream removed (our AUTOSAVE overlay needs it).
+    Upstream's `autoSaveAsync()`/`writeSaveSnapshot()`/`validateSaveFile()` are in the file, unused.
+  - **`ShopActor.java`** - our constructor `(stage, id, rewardData, data)` (stock built at load, `loadChanges` null)
+    beside upstream's lazy `(stage, id, data, loadChanges)`; `getRewardData()` generates only when `loadChanges` is
+    set; our economy-building switch opens the shop with `getRewardData()`.
+  - **`MapStage.java`** - the shop build at map load is ours (weekly reseed, edition restriction, Torch, neutral Armory
+    mythics, `fixedShop`, weekly flag). `exitDungeon` calls upstream's static
+    `PointOfInterestChanges.resetDeletedObjectsRecursive(id, TileMapScene.resolveMapPath(poi))` (round 106's resolved
+    path); our private `resetMapRecursive`/`loadMapFile` removed as upstream did. Upstream's `battleBackground`
+    fields and property reads sit beside `hasDungeonEffect`, `applyReturnStartCards` and `winQuestFlag`.
+  - **`InnScene.java`** - ours whole (synchronous `initLocalEvent()` with its stale-event rules); upstream's
+    "Loading events..." deferral not taken.
+  - **`PointOfInterestChanges.java`** - upstream's `resetDeletedObjectsRecursive` disposes the tmx it loads
+    (try/finally, round 123 S4-2); our `getDeletedObjectCount` kept.
+  - **`AdventureQuestData.java`** - round 749's `bindHereFallback` before upstream's `isDungeon()` reset of every
+    floor.
+- Trivial: `Player.java` (our tapped-start block declares the `bf` local upstream dropped), `EnemySprite`,
+  `ConfigData`, `SettingData` (both sides' fields), `PointOfInterestData`/`WorldSaveHeader` (upstream pinned the same
+  serialVersionUIDs as round 90), `MapViewScene` (upstream's dead `test()` removed), `AdventureEventController` (our
+  `createEvent(id, playerTown)` on upstream's `isEventOnCooldown`), `MapSprite` (ours, already a superset), `GameHUD`
+  (whitespace), `SettingsScene` (both settings blocks; `addLabel` returns its Cell).
+
 ### Round 760 - town specialties (new games and New Game+ only)
 
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - the saved `townSpecialties` flag:
@@ -3590,6 +3623,11 @@ from the plane's `config tables/settings.json`).
   0.25 -> 0.12.
 
 ## Upstream merge log
+
+- **2026-10-26 - merged upstream `master` @ `0dc8c66996e` (Forge 2.0.16-SNAPSHOT, 10.26 daily; 78 commits since
+  `bc67f70ffbc`; round 769).** 17 conflicts, four of them choices (R1-R4 kept ours, R5 took upstream's) - see "Round
+  769" above. Base install `E:\GAMES\Forge_2`: `build.txt` `2026-10-26 18:31:26`, jars 2.0.16-SNAPSHOT (manifest
+  `-10.26`); `0dc8c66996e` was upstream's head at the fetch. The next merge starts after `0dc8c66996e`.
 
 - **2026-10-21 - merged upstream `master` @ `bc67f70ffbc` (Forge 2.0.16-SNAPSHOT, 10.21 daily; 53 non-merge commits
   since `ea5fe47050d`; round 701).** Six conflicts, all from `2f2ea0b8e72` - see "Round 701" above. Base install

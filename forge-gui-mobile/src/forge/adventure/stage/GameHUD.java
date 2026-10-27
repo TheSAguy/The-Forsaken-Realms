@@ -169,7 +169,6 @@ public class GameHUD extends Stage {
                 ? Forge.isLandscapeMode() ? "ui/hud_landscape.json" : "ui/hud_portrait.json"
                 : Forge.isLandscapeMode() ? "ui/hud.json" : "ui/hud_portrait.json"));
 
-
         blank = ui.findActor("blank");
         miniMap = ui.findActor("map");
         mapborder = ui.findActor("mapborder");
@@ -750,6 +749,9 @@ public class GameHUD extends Stage {
                 break;
             case "dungeon":
             case "cave":
+            case "sidebosseasy":
+            case "sidebossmoderate":
+            case "sidebosshard":
             case "castle":
                 if (fromWorldMap) {
                     addNotification(TileMapScene.instance().rootPoint.getDisplayName());
@@ -944,7 +946,6 @@ public class GameHUD extends Stage {
 
     public void updateBGM() {
         if (MapStage.getInstance().isInMap()) {
-
             switch (GameScene.instance().getAdventurePlayerLocation(false, false)) {
                 case "capital":
                 case "town":
@@ -952,6 +953,9 @@ public class GameHUD extends Stage {
                     break;
                 case "dungeon":
                 case "cave":
+                case "sidebosseasy":
+                case "sidebossmoderate":
+                case "sidebosshard":
                     changeBGM(MusicPlaylist.CAVE);
                     break;
                 case "castle":

@@ -3166,12 +3166,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
             }
         }
         else {
+            collidingPoint = null;
             for (Actor actor : foregroundSprites.getChildren()) {
-                if (actor.getClass() == PointOfInterestMapSprite.class) {
-                    PointOfInterestMapSprite point = (PointOfInterestMapSprite) actor;
-                    if (player.collideWith(point.getBoundingRect())) {
-                        collidingPoint = point;
-                    }
+                if (!(actor instanceof PointOfInterestMapSprite)) {
+                    continue;
+                }
+                PointOfInterestMapSprite point = (PointOfInterestMapSprite) actor;
+                if (player.collideWith(point.getBoundingRect())) {
+                    collidingPoint = point;
+                    break;
                 }
             }
         }

@@ -189,18 +189,6 @@ public class MapViewScene extends UIScene {
         batch.setPackedColor(packed);
     }
 
-    public void test() {
-        img.setPosition((scroll.getScrollPercentX()*2334 +233)*0.1f + 0.9f*img.getX(),(2544-scroll.getScrollPercentY()*2544 +128)*0.1f + 0.9f*img.getY());
-        img.setScale(img.getScaleX()*0.9f);
-        miniMapPlayer.setPosition((scroll.getScrollPercentX()*2334 +233)*0.1f + 0.9f*miniMapPlayer.getX(),(2544-scroll.getScrollPercentY()*2544 +128)*0.1f + 0.9f*miniMapPlayer.getY());
-        miniMapPlayer.setScale(miniMapPlayer.getScaleX()*0.9f);
-        for(Actor actor : table.getChildren()) {
-            if (actor instanceof TypingLabel) {
-                actor.setPosition((scroll.getScrollPercentX() * 2334 + 233) * 0.1f + 0.9f * actor.getX(), (2544 - scroll.getScrollPercentY() * 2544 + 128) * 0.1f + 0.9f * actor.getY());
-            }
-        }
-    }
-
     public boolean done() {
         GameHUD.getInstance().getTouchpad().setVisible(false);
         SnapshotArray<Actor> allActors = table.getChildren();
@@ -258,7 +246,6 @@ public class MapViewScene extends UIScene {
         }
         return true;
     }
-
 
     private void setOverlayButtonStates(int mode) {
         String[] buttons = {"details", "events", "reputation", "names", "attacks"};
@@ -745,7 +732,7 @@ public class MapViewScene extends UIScene {
         List<PointOfInterest> allPois = activePointsOfInterest();
         for (PointOfInterest poi : allPois) {
             if (WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).isVisited()) {
-                if ("cave".equalsIgnoreCase(poi.getData().type) || "dungeon".equalsIgnoreCase(poi.getData().type) || "castle".equalsIgnoreCase(poi.getData().type)) {
+                if (poi.getData().isDungeon() || "castle".equalsIgnoreCase(poi.getData().type)) {
                     TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] " + poi.getDisplayName());
                     placeDetailLabel(label, poi.getCenter().x, poi.getCenter().y, placedLabelRects);
                 }

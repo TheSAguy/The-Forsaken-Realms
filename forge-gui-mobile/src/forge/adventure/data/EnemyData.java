@@ -25,6 +25,7 @@ public class EnemyData implements Serializable {
     public String nameOverride;
     public String sprite;
     public String[] deck;
+    public String battleBackground;
     public boolean copyPlayerDeck = false;
     public String ai;
     public boolean boss = false;
@@ -81,6 +82,7 @@ public class EnemyData implements Serializable {
         name            = enemyData.name;
         sprite          = enemyData.sprite;
         deck            = enemyData.deck;
+        battleBackground = enemyData.battleBackground;
         ai              = enemyData.ai;
         boss            = enemyData.boss;
         flying          = enemyData.flying;

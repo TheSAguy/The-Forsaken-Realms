@@ -26,7 +26,7 @@ import java.util.Set;
  * <p>
  * A ledger also keeps the level's deleted-object count from when it was written. Objects are only deleted while the
  * player is on that level, so a different count means the level was restocked or reset since (DungeonRotation.restock,
- * MapStage.resetMapRecursive, a quest that resets its target) and the ledger is ignored. No new save fields: mapFlags
+ * PointOfInterestChanges.resetDeletedObjectsRecursive on a quest dungeon's exit or acceptance) and the ledger is ignored. No new save fields: mapFlags
  * already exists and is saved.
  */
 public final class PlaceLevels {

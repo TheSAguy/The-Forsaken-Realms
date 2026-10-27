@@ -189,5 +189,7 @@ public class ConfigData {
     // and TownRestoration.seedFunctioningNeutralTowns(). Same opt-in rule as every flag above: false here,
     // true only in "The Forsaken Realms"/config.json.
     public boolean functioningNeutralTownsEnabled = false;
+    // Desktop default only; saved player choices take precedence on every platform.
+    public boolean enableExtraBattleBackgroundsByDefault;
 
 }

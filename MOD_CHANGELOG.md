@@ -14264,6 +14264,92 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 769: the engine to the 10.26 daily (upstream `0dc8c66996e`) (2026-10-26)
+
+The user installed the 10.26 Forge daily as BASE_INSTALL: "I've updated the Base Forge game, can you merge:
+E:\GAMES\Forge_2". 78 commits since round 701's `bc67f70ffbc`; `0dc8c66996e` was upstream's head at the fetch.
+
+- **Matched**: BASE_INSTALL's `build.txt` says 2026-10-26 18:31:26 UTC, after `0dc8c66996e` (17:20 UTC); the jars'
+  manifest says `2.0.16-SNAPSHOT-10.26`; its `res/editions/Star Trek.txt` is byte-identical to that commit's copy and
+  differs from its parent's (the last commit changed only that file); its `CHANGES.txt` is headed by #12458, that
+  commit's pull request.
+- **What upstream brought**:
+  - **Card fixes and new cards**: Star Trek (TRK) batches and edition updates, Captain Benjamin Sisko, The Caretaker,
+    Scotty, All Good Things; fixes to targeting modeled differently from Oracle text, collection-mutation crashes
+    (Camouflage, CountersPut, ChooseColor), SwitchBlockEffect, a spell's target checks and redirects, Highest/Lowest
+    and mod-by-zero in AbilityUtils, `CostMill` with a library of exactly N cards. Content under `res/cardsfolder`
+    reaches players through BASE_INSTALL, now this daily.
+  - **AI**: Flat Monte Carlo (and its mulligan on by default, one blocking prediction for both danger checks), the
+    stack unfrozen when a cast fails to pay, Shadowmoor filter lands and the AI's mana estimate, The Borg Queen's target.
+  - **Mobile UI**: compact-layout controls (double stack, Zone box, menu bar), CME fixes in the card display and
+    payment highlights, an out-of-memory guard; desktop: the mouse kept in the window in full screen (a Settings row
+    on desktop).
+  - **Adventure**: side-boss lairs count as dungeons (`PointOfInterestData.isDungeon()`); a quest's dungeon reset
+    covers every floor; starting tokens enter the battlefield; `startBattleWithCard` ETB counters; rotating battle
+    backgrounds; faster town entry (lazy shops and Inn events) and an async auto save - the last two NOT taken, below.
+  - **Not Adventure**: netplay (a refused client stops reconnecting), desktop drafts can organize main deck and
+    sideboard, Planar Conquest region commanders, advanced-search parser, Un-card docs.
+- **17 conflicts.** Four from upstream `9748136a531` ("Lazy Load event/rewards on Towns for fast entry", with "Async
+  Save") and `1b6123f6cf5` ("faster WorldSave for AsyncSave") forced a choice; the user approved: "Approve: R1-R4 keep
+  ours (synchronous full auto save, eager shop stock, our Inn events, our place-entry loop); R5 take upstream's quest
+  dungeon reset with our path and dispose kept."
+  - **R1, the auto save** (`WorldStage`, `WorldSave`). Upstream's `autoSaveAsync()`, now called on entering a place
+    and when a world-map duel starts, writes the world through `World.snapshotForAsyncSave()` - the stock fields only -
+    and skips round 183's `saveBlocked` guard and `saveFormatVersion`. Taken, every auto save would have dropped all of
+    TFR's world state (day and time, fog, territories, treasure hunts, pillage, arena/inn weeks, dungeon rotation, the
+    History replay - about 80 fields) and loading it would break the game. Kept: `autoSaveHere()` -> the synchronous
+    `save()` at both places, and the "A U T O S A V E" overlay's clear in `WorldSave.finish()`, which upstream removed.
+    Upstream's async code is in the file, unused.
+  - **R2, shop stock** (`ShopActor`, `MapStage`). Upstream generates a shop's cards on first open. Kept: TFR builds
+    them at town load (weekly reseed of noRestock shops, the town owner's edition restriction, the guaranteed Torch, the
+    neutral Armory's no-mythic rule, `fixedShop`, the weekly-refresh note); `ShopActor` has both constructors and
+    generates lazily only when built the upstream way.
+  - **R3, the Inn** (`InnScene`). Upstream shows the Inn at once with "Loading events..." and deals the tournament a
+    frame later. Kept: `initLocalEvent()` as it was - the week turnover (round 368), the player-town pool re-roll, the
+    entry fee refresh (round 360) and "Won - next on day N" (round 527) run before a tournament is dealt.
+  - **R4, place entry** (`WorldStage.handlePointsOfInterestCollision`). Upstream rewrote the loop (no 1 s autosave
+    pause, the lock released only after walking off, the async save). Kept ours whole: the barred town, the capital
+    toll, the locked castle, the Legendary warning and `visitPoi` (round 493 Power). Upstream's load-time reset of the
+    POI the player stands on (null, then the first one hit) is taken.
+  - **R5, the quest dungeon reset** (`AdventureQuestData`, `MapStage.exitDungeon`, `PointOfInterestChanges`). Taken:
+    accepting a quest that targets a dungeon or a side-boss lair resets every floor (was the first floor only), through
+    upstream's static `PointOfInterestChanges.resetDeletedObjectsRecursive`. The exit reset calls it on TFR's resolved
+    map path (round 106), and it now disposes each tmx it loads (round 123 S4-2). Round 749's `bindHereFallback`
+    stays ahead of it. Players: a quest aimed at an already-cleared multi-floor dungeon or lair respawns every floor's
+    enemies and loot.
+  - Trivial: `Player.java` (our tapped-start block declares the `bf` local upstream dropped), `EnemySprite`,
+    `ConfigData`, `SettingData`, `SettingsScene` (both sides' fields and rows; `addLabel` returns its Cell),
+    `PointOfInterestData` and `WorldSaveHeader` (upstream pinned the same serialVersionUIDs as round 90 - no save
+    change), `MapViewScene` (upstream's dead `test()` gone), `PointOfInterestChanges` (both methods),
+    `AdventureEventController` (our `createEvent(id, playerTown)` on upstream's `isEventOnCooldown`), `MapSprite` (ours,
+    already covering side-boss lairs and castles), `GameHUD` (whitespace), `MapStage` (upstream's `battleBackground`
+    fields and reads beside `hasDungeonEffect`, `applyReturnStartCards`, `winQuestFlag`).
+- **Not taken, possible later rounds**: an async auto save built on TFR's full save (it needs `World.save()` split so
+  the snapshot carries every field, plus `saveBlocked` and `saveFormatVersion`); lazy shops and Inn events on TFR's
+  rules (a generator holding MapStage's exact shop build; the Inn's stale-event checks before a deferred deal).
+- **Upstream changes players may notice, no conflict**:
+  - Side-boss lairs show their name on entry, play the cave music, are named in the World Map's details view and get
+    the unvisited marker. World generation now places them with the caves and dungeons, after the towns, so a new
+    world lays out differently from the same seed. Saves are unaffected.
+  - A "Battle Backgrounds" row in the adventure Settings: Off / Plane default / Custom source (an https index URL).
+    Off for TFR unless a player picks it (TFR's `config.json` has no `enableExtraBattleBackgroundsByDefault`, and the
+    plane ships no index).
+  - The AI mulligans and plays with the Flat Monte Carlo changes.
+- `config.json` `engineBuildVersion` `2.0.16-SNAPSHOT-10.26`. `PlaceLevels`' comment names the new reset method.
+- **Checked**:
+  - Maven `-pl forge-gui-mobile-dev -am package -DskipTests -o`: exit 0. `forge-gui-desktop` tests (`LoopBreakerTest`
+    and every `forge.ai` test, `-Dcheckstyle.skip`): 527/527, LoopBreakerTest 3/3, RegenerateRecursionTest 4/4.
+  - `build_standalone.py --out` into a test folder: the base check passed against the 10.26 BASE_INSTALL, "Package
+    verified complete".
+  - That package with a copy of the agent profile: a new game (intro skipped, out to the World Map); entering Orazca
+    wrote the auto save synchronously with `[TFR-History] saved` and the AUTOSAVE overlay cleared; two world-map duels
+    at 50x (one won, one lost, the death flow); v2 slot 61 (day 18) loaded with its History (days 1-18); a white
+    town's shop opened with its TFR stock (`[TFR-ShopEditions] trigger=init`); its Inn opened at once with "Draft
+    available"; the quit dialog reads "Quit The Forsaken Realms". `forge.log`: no exceptions.
+  - Not seen: R5 in play (a quest for a cleared multi-floor dungeon), a side-boss lair's entry title, and the Battle
+    Backgrounds row (the bridge cannot scroll Settings; `Config.isExtraBattleBackgroundsEnabled()` is false with no
+    saved choice and no plane default).
+
 ## Round 766: Found Cards in the Research Lab (2026-10-26)
 
 The user (with a mockup button drawn on the Lab's row, `notes\tweaks-1026\user-lab-1026.png`): "We need to add a
@@ -14345,7 +14431,8 @@ The user: "Can you add the Ko-fi link/button next to the discord button on the w
 - TFR's `welcomePopupText` gains a paragraph before the sign-off: "Enjoying the Realms? TFR is free, and the Support
   TFR button above opens the developer's Ko-fi page." Seen after a package.
 - Checked in the agent game at 1280x720 (the 480x270 virtual layout phones use too): the three buttons sit on one row
-  with room to spare (`notes	weaks-1026767-welcome.png`); the click logged `[TFR-Support] would open
+  with room to spare (`notes	weaks-1026
+767-welcome.png`); the click logged `[TFR-Support] would open
   https://ko-fi.com/thesaguy (TFR_SUPPORT_NO_BROWSER)`.
 
 ## Round 765: town badge moves to a free corner in tight clusters (2026-10-26)

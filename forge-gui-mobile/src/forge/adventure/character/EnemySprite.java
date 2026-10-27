@@ -73,6 +73,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     public EffectData effect; //Battle effect for this enemy. Similar to a player's blessing.
     public String nameOverride = ""; //Override name of this enemy in battles.
     public String winQuestFlag; // round 345: a quest flag the placement sets when the player beats it (the Demon's Bargain retires on it)
+    public String battleBackground = ""; //Override the battle background folder for this encounter.
     public String bossInsult = ""; //Override the generated insult text when you are defeated.
     public RewardData[] rewards; //Additional rewards for this enemy.
     public DialogData.ConditionData spawnCondition; //Condition to spawn.
@@ -1211,4 +1212,3 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         return _freeze;
     }
 }
-

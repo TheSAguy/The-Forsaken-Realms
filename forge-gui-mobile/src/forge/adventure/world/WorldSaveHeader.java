@@ -20,12 +20,47 @@ public class WorldSaveHeader implements java.io.Serializable, Disposable {
     public String name;
     public Date saveDate;
 
+    // Used only by a detached save snapshot. Never serialized as a field.
+    private transient byte[] previewPng;
+
+    /**
+     * Must be called on the LibGDX render thread.
+     * The returned header can be serialized on a worker thread.
+     */
+    public WorldSaveHeader snapshotForAsyncSave() throws IOException {
+        WorldSaveHeader snapshot = new WorldSaveHeader();
+        snapshot.name = name;
+        snapshot.saveDate = saveDate == null
+                ? null : new Date(saveDate.getTime());
+
+        if (preview != null) {
+            snapshot.previewPng =
+                    Serializer.EncodePixmap(preview, false);
+        } else {
+            // Preserve the old behavior: a missing preview is saved as
+            // a valid 1x1 transparent Pixmap rather than a zero-length PNG.
+            Pixmap blank = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+            try {
+                snapshot.previewPng =
+                        Serializer.EncodePixmap(blank, false);
+            } finally {
+                blank.dispose();
+            }
+        }
+
+        return snapshot;
+    }
+
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
 
         out.writeUTF(name);
-        if (preview == null)
-            preview = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        Serializer.WritePixmap(out, preview, false);
+        if (previewPng != null) {
+            Serializer.WritePixmapData(out, previewPng);
+        } else {
+            if (preview == null)
+                preview = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+            Serializer.WritePixmap(out, preview, false);
+        }
         out.writeObject(saveDate);
     }
 

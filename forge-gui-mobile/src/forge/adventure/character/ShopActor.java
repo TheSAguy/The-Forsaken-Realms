@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import forge.Forge;
+import forge.adventure.data.RewardData;
 import forge.adventure.data.ShopData;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.pointofintrest.PointOfInterestChanges;
@@ -25,7 +26,12 @@ import forge.adventure.world.WorldSave;
 public class ShopActor extends MapActor {
     private final MapStage stage;
     private ShopData shopData;
-    Array<Reward> rewardData;
+    //Changes of the map this shop was loaded for. Used to look up the shop seed when the stock is generated.
+    //Null when MapStage hands the stock over at load (TFR, round 769: TFR's shops are still built eagerly there).
+    private final PointOfInterestChanges loadChanges;
+    //Generated lazily the first time the shop is opened (or restocked), so that loading a town doesn't have to
+    //generate the cards of every shop in it.
+    private Array<Reward> rewardData;
     // Capitol land shops (user spec 2026-08-09): the 6 bottom-right shops in player_capital.tmx
     // (the 5 basic-land colors + Land) are marked "fixedShop" in the tmx. They never randomize,
     // always repair as exactly what they are (no Bank/Mine conversion menu), and once repaired
@@ -36,11 +42,20 @@ public class ShopActor extends MapActor {
     // takes elapsed time, not a frame index, and nothing else on this actor already tracks time.
     private float teleporterAnimTime = 0f;
 
+    /** TFR (round 769): the stock built at map load, with TFR's shop rules (MapStage) - kept beside upstream's lazy one. */
     public ShopActor(MapStage stage, int id, Array<Reward> rewardData, ShopData data) {
         super(id);
         this.stage = stage;
         this.shopData = data;
+        this.loadChanges = null;
         this.rewardData = rewardData;
+    }
+
+    public ShopActor(MapStage stage, int id, ShopData data, PointOfInterestChanges loadChanges) {
+        super(id);
+        this.stage = stage;
+        this.shopData = data;
+        this.loadChanges = loadChanges;
     }
 
     @Override
@@ -170,7 +185,7 @@ public class ShopActor extends MapActor {
                 // Straight into the shop - a destroyable shop's Destroy Building button lives on
                 // the RewardScene page itself (user revision 2026-08-09; a first version's
                 // Enter/Destroy/Leave pre-dialog cost an extra click on every visit).
-                RewardScene.instance().loadRewards(rewardData, RewardScene.Type.Shop, this);
+                RewardScene.instance().loadRewards(getRewardData(), RewardScene.Type.Shop, this);
                 Forge.switchScene(RewardScene.instance());
         }
     }
@@ -330,7 +345,19 @@ public class ShopActor extends MapActor {
         rewardData = data;
     }
 
+    /**
+     * Returns the stock of this shop, generating it from the shop seed on first use.
+     * Same seed and same generation as before, only the moment it happens has moved from town load to shop entry.
+     */
     public Array<Reward> getRewardData() {
+        if (rewardData == null && loadChanges != null) {
+            Array<Reward> generated = new Array<>();
+            WorldSave.getCurrentSave().getWorld().getRandom().setSeed(loadChanges.getShopSeed(objectId));
+            for (RewardData rdata : new Array.ArrayIterator<>(shopData.rewards)) {
+                generated.addAll(rdata.generate(false, false));
+            }
+            rewardData = generated;
+        }
         return rewardData;
     }
 }

@@ -115,6 +115,14 @@ public class AdventureEventController implements Serializable {
         object = null;
     }
 
+    /**
+     * Cheap check (no generation) for whether {@link #createEvent(String)} would currently return nothing for this
+     * point because its next event isn't available yet.
+     */
+    public boolean isEventOnCooldown(String pointID) {
+        return nextEventDate.containsKey(pointID) && nextEventDate.get(pointID) >= LocalDate.now().toEpochDay();
+    }
+
     public AdventureEventData createEvent(String pointID) {
         return createEvent(pointID, false);
     }
@@ -122,7 +130,7 @@ public class AdventureEventController implements Serializable {
     /** @param playerTown true when this Inn is in a town the player owns - narrows the tournament
      *                    pool to their race + unlocked sets (user spec 2026-08-31). */
     public AdventureEventData createEvent(String pointID, boolean playerTown) {
-        if (nextEventDate.containsKey(pointID) && nextEventDate.get(pointID) >= LocalDate.now().toEpochDay()) {
+        if (isEventOnCooldown(pointID)) {
             // No event currently available here
             return null;
         }
