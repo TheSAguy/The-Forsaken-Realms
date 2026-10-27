@@ -14284,6 +14284,13 @@ the release." Rounds 702-783, 785 and 786 (761 and 784 not used; no engine merge
   the 10.26 build; the footer says v1.24, 2026-10-27. `GUIDE.html` rebuilt with `dev-tools/guide_html.py --check`.
 - **Docs**: `docs/tfr/releases.md` gets the v1.24 STATE block; the NOW block is rewritten short (the round detail is in
   this file).
+- **Released** (follow-up): Maven exit 0; `build_standalone.py --zip` packaged live (PACKAGE_OK) and the 483.6 MB zip;
+  the Android build in `C:\TFR-build` (exit 0) made the 15.6 MB APK (versionCode 12400, versionName 1.24, signer
+  EE:60:39:25) and the 433.9 MB `assets.zip` with `log_share.txt`; the APK's `assets/build.txt` and the zip's
+  `res/build.txt` both read 2026-10-27 16:08:41, which round 704's Android reader prints instead of "(unknown)". The main
+  tree's `forge-game/target/classes` kept 931 classes, so no clean compile was needed. No webhook URL in the tree or the
+  unpushed history. Pushed `main:master`, tag `tfr-v1.24` @ `6412d1a6cb6`, the GitHub release published 16:13:51 UTC with
+  the three assets, Latest.
 
 ## Round 786: the Discord FAQ for v1.24 - 10 messages edited in place, 2 new after Support (2026-10-27)
 

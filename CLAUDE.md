@@ -6,12 +6,11 @@ every round built. If you find something missing, fix the docs rather than going
 
 ## NOW (rewrite this block each round; never append a new one)
 
-**v1.24 "Towns & Trophies" is being released (round 787)**: rounds 702-783, 785 and 786 on top of v1.23 (761 and 784
-not used; `git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The user passed the live package of
-2026-10-27 08:58 (HEAD `f486ded5da7`) and called the release. Round 787 stamps `modVersion` 1.24 / `modVersionDate`
+**v1.24 "Towns & Trophies" is the latest release** (tag `tfr-v1.24` @ `6412d1a6cb6`, published 2026-10-27 16:13 UTC;
+rounds 702-783, 785 and 786 on top of v1.23, 761 and 784 not used; assets and notes in `docs/tfr/releases.md`).
+NOTHING is unreleased. Live = the release (2026-10-27 09:08 package). Round 787 stamped `modVersion` 1.24 / `modVersionDate`
 10.27 (the PC update notice of round 782 compares `modVersion` with the newest `tfr-v` tag) and Android `tfr.version`
-1.24 / versionCode 12400, writes `RELEASE_NOTES_v1.24.md` and GUIDE's What's New in 1.24; ledger in
-`docs/tfr/releases.md`. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous auto
+1.24 / versionCode 12400, wrote `RELEASE_NOTES_v1.24.md` and GUIDE's What's New in 1.24. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous auto
 save, eager shops, Inn events and place entry - see MOD_CHANGELOG; upstream's async save and lazy town loading stay
 unused, possible later rounds); next merge from upstream after `0dc8c66996e`; BASE_INSTALL is that daily, so packages
 need no `--allow-base-mismatch`. Next version: 1.25 / 12500. Next free round: 788. The agent profile's window is

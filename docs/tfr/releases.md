@@ -64,10 +64,19 @@ title mine. GUIDE What's New 1.23 is one line above 1.22's list. The webhook tok
 the push. Live + agent = the release. NOTHING is unreleased. Next version: 1.24 / 12400. Next merge from upstream after
 `bc67f70ffbc`.
 
-## STATE 2026-10-27: **v1.24 "Towns & Trophies" - releasing (round 787)**. Rounds 702-783, 785 and 786 on top of v1.23
-(761 and 784 not used). Engine = the 10.26 daily (upstream `0dc8c66996e`, round 769) on the matching 10.26
-BASE_INSTALL; the user skipped a further engine merge for 1.24. The user passed the live package of 2026-10-27 08:58.
+## STATE 2026-10-27 (16:13 UTC): **v1.24 "Towns & Trophies" RELEASED** - tag `tfr-v1.24` @ `6412d1a6cb6`, published
+16:13:51 UTC, Latest (round 787). Rounds 702-783, 785 and 786 on top of v1.23 (761 and 784 not used). Engine = the 10.26
+daily (upstream `0dc8c66996e`, round 769) on the matching 10.26 BASE_INSTALL; the user skipped a further engine merge
+for 1.24. The user passed the live package of 2026-10-27 08:58. Assets in `C:\TFR\release\v1.24`:
+- `The-Forsaken-Realms-v1.24.zip` 483.6 MB;
+- `forsaken-realms-1.24-signed-aligned.apk` 15.6 MB (com.thesaguy.forsakenrealms, versionCode 12400, signer EE:60:39:25);
+- `assets.zip` 433.9 MB (build.txt pair 2026-10-27 16:08:41, the APK's `assets/build.txt` - round 704's
+  `StartScene.programBuildTime()` reads it, so the Android log prints a real build time; Android from `C:\TFR-build`
+  via R:; carries `log_share.txt`).
+
 Notes = `RELEASE_NOTES_v1.24.md`, from `notes/release-notes-1.24-draft.md` with the user's trims (no death dialog,
 font, start-menu background or splash art, boss labels or Ko-fi ask) and rounds 777-785 added; title mine. GUIDE
-What's New 1.24 is a short linked list above a one-line 1.23 note and 1.22's list. Assets, tag and publish time: the
-follow-up.
+What's New 1.24 is a short linked list above a one-line 1.23 note and 1.22's list. `modVersion` 1.24 / 10.27, so round
+782's update notice stays quiet on this build (GitHub's latest is `tfr-v1.24`). The webhook token was checked absent
+from git (tree and the unpushed history) before the push. The same zip and APK go to itch.io (the user). Live = the
+release. NOTHING is unreleased. Next version: 1.25 / 12500. Next merge from upstream after `0dc8c66996e`.
