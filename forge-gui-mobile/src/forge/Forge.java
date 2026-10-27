@@ -971,6 +971,8 @@ public class Forge implements ApplicationListener {
         try {
             endKeyInput(); //end key input before switching screens
             ForgeAnimation.endAll(); //end all active animations before switching screens
+            forge.adventure.util.SessionLog.onScreen(screen0); // TFR round 777: the error trail
+            forge.adventure.util.SessionLog.testThrow(); // TFR round 777: the console's "session error"
             currentScreen = screen0;
             if (currentScreen != null) {
                 currentScreen.setSize(screenWidth, screenHeight);
@@ -981,6 +983,8 @@ public class Forge implements ApplicationListener {
             }
         } catch (Exception ex) {
             graphics.end();
+            // TFR round 777: Sentry is off by default, so this failure left no line at all - always log it, with the trail.
+            forge.adventure.util.SessionLog.onError("setCurrentScreen to " + toNewScreen + " (from " + previousScreen + ")", ex);
             //check if sentry is enabled, if not it will call the gui interface but here we end the graphics so we only send it via sentry..
             if (BugReporter.isSentryEnabled())
                 BugReporter.reportException(ex);
@@ -1072,6 +1076,7 @@ public class Forge implements ApplicationListener {
                 currentScene.resize(width, height);
         } catch (Exception ex) {
             //graphics.end();
+            forge.adventure.util.SessionLog.onError("resize to " + width + "x" + height, ex); // TFR round 777, as above
             //check if sentry is enabled, if not it will call the gui interface but here we end the graphics so we only send it via sentry..
             if (BugReporter.isSentryEnabled())
                 BugReporter.reportException(ex);
@@ -1082,6 +1087,7 @@ public class Forge implements ApplicationListener {
     public void pause() {
         lifecycleClosing = true;
         forge.adventure.util.SupportPrompt.flush("pause or exit"); // round 756: Android may never come back
+        forge.adventure.util.SessionLog.end("pause"); // round 777: the session footer, when something changed
         setWindowFocus(false);
         if (MatchController.getHostedMatch() != null) {
             MatchController.getHostedMatch().pause();
@@ -1110,6 +1116,7 @@ public class Forge implements ApplicationListener {
     public void dispose() {
         lifecycleClosing = true;
         forge.adventure.util.SupportPrompt.flush("exit"); // round 756
+        forge.adventure.util.SessionLog.end("exit"); // round 777
         isDisposed = true;
         if (currentScreen != null) {
             currentScreen.onClose(null);
@@ -1197,6 +1204,7 @@ public class Forge implements ApplicationListener {
             storeScreen();
         Adventure.getInstance().sceneWasSwapped = true;
         currentScene = newScene;
+        forge.adventure.util.SessionLog.onScene(newScene); // TFR round 777: the error trail, a duel's clock
 
         currentScene.enter();
         if (currentScene instanceof DuelScene)
@@ -1214,6 +1222,7 @@ public class Forge implements ApplicationListener {
         if (lastScene.size != 0) {
             storeScreen();
             currentScene = lastScene.get(lastScene.size - 1);
+            forge.adventure.util.SessionLog.onScene(currentScene); // TFR round 777
             currentScene.enter();
             Adventure.getInstance().sceneWasSwapped = true;
             lastScene.removeIndex(lastScene.size - 1);

@@ -83,6 +83,7 @@ public class StartScene extends UIScene {
             System.out.println("[TFR-Build] data TFR v" + modVersion + dateSuffix + " | program built "
                     + (built == null ? "(unknown)" : new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(built)));
         }
+        forge.adventure.util.SessionLog.onStart(); // round 777
         version.setHeight(5);
         version.skipToTheEnd();
         ui.addActor(version);

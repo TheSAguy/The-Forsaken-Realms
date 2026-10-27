@@ -308,6 +308,9 @@ public class DuelScene extends ForgeScene {
         }
 
         boolean finalWinner = winner;
+        // Round 777: one [TFR-Duel] summary line - before the ante popups, so a quit in them still leaves it.
+        forge.adventure.util.SessionLog.onDuelEnd(enemy, hostedMatch.getGame(), hostedMatch.getMatch(), humanPlayer,
+                finalWinner, drawn, isArena, eventData != null, aiControlsPlayerSide);
         // Round 735: the match is decided - a quit in the dialogs below, before afterGameEnd records it, is judged by this.
         forge.adventure.util.ReloadJab.onMatchDecided(finalWinner, drawn);
         boolean isBossLoss = (chaosBattle || showMessages) && !finalWinner && !drawn;

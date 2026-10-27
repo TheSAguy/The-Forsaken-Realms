@@ -616,18 +616,16 @@ public class Config {
         //if (Cache.containsKey(commonPath)) return Cache.get(commonPath);
 
         //not cached, look for resource
-        System.out.print("Looking for resource " + path + "... ");
+        // TFR round 777: only a miss is logged ("Looking for resource ... Found!" was 6% of a shared log).
         String fullPath = (prefix + path).replace("//", "/");
         String langFile = langFilePath(fullPath, prefix);
         boolean isUI = path.startsWith("ui/");
 
         for (int iter = 1; iter <= 2; iter++) {
             if (!isUI && Files.exists(Paths.get(langFile))) {
-                System.out.println("Found!");
                 Cache.put(path, new FileHandle(langFile));
                 break;
             } else if (Files.exists(Paths.get(fullPath))) {
-                System.out.println("Found!");
                 Cache.put(path, new FileHandle(fullPath));
                 break;
             }
@@ -635,6 +633,8 @@ public class Config {
             fullPath = (commonPrefix + path).replace("//", "/");
             langFile = langFilePath(fullPath, commonPrefix);
         }
+        if (!Cache.containsKey(path))
+            System.out.println("Looking for resource " + path + "... not found");
         return Cache.get(path);
     }
 

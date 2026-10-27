@@ -56,6 +56,8 @@ public class CharacterSprite extends MapActor {
     /** Round 591: a hero sheet drawn below its own size (heroes.json "scale", the Pixelate Phyrexian's 64 px art at
      *  0.375) - 1 = drawn as authored, as every stock 16 px hero is. */
     private float heroScale = 1f;
+    /** Round 777: the [TFR-Hero] lines already printed this launch. */
+    private static final java.util.Set<String> heroLinesLogged = java.util.Collections.synchronizedSet(new java.util.HashSet<>());
 
     /** Round 591: the player and the roaming guards on a hero sheet with a heroes.json "scale". The frame draws at that
      *  scale (times a guard's rank cue) with its body - the footprint - centred on the actor, but the actor itself
@@ -66,8 +68,10 @@ public class CharacterSprite extends MapActor {
         if (heroScale != 1f) {
             float side = heroBox();
             setSize(side, side);
-            System.out.println("[TFR-Hero] " + atlasPath + " drawn at scale " + heroScale + " on a " + side + " px box"
-                    + (hasFootprint() ? "" : " (no footprint: the frame is centred)"));
+            String line = "[TFR-Hero] " + atlasPath + " drawn at scale " + heroScale + " on a " + side + " px box"
+                    + (hasFootprint() ? "" : " (no footprint: the frame is centred)");
+            if (heroLinesLogged.add(line)) // round 777: once per launch, not four times per load
+                System.out.println(line);
         }
     }
 

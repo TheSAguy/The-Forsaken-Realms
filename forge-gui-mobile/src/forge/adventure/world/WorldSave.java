@@ -152,6 +152,7 @@ public class WorldSave {
         Forge.getLocalizer().loadAdventureBundle(Config.instance().getPlanePath(Config.instance().getSettingData().plane) + "languages/");
 
         Forge.invokeWorldSave = true; // This is for dispose method check
+        long loadStarted = System.currentTimeMillis(); // round 777: [TFR-Perf] load
         String fileName = WorldSave.getSaveFile(currentSlot);
         if (!new File(fileName).exists())
             return false;
@@ -179,6 +180,7 @@ public class WorldSave {
             // Round 726: a save from before the last lost duel undoes it - counted, with the Notices log's jab. Here, not
             // in readSave(), so a rollback to the running game never counts; after WorldStage.load() restored the log.
             forge.adventure.util.ReloadJab.onLoaded(currentSave.header == null ? null : currentSave.header.saveDate);
+            forge.adventure.util.SessionLog.onGameLoaded(currentSlot, System.currentTimeMillis() - loadStarted); // round 777
             return true;
         }
         if (loadTouchedLiveState)
@@ -482,6 +484,7 @@ public class WorldSave {
         currentSave.world.ensureHistory(); // round 626: the History replay's first page, where the new world starts
         liveGame = true;     // round 183 (E4): a real game now exists; a blocked save state is over
         saveBlocked = false;
+        forge.adventure.util.SessionLog.onNewGame(starterEdition == null ? "-" : starterEdition.getCode(), startingColorId); // round 777
         return currentSave;
     }
 
@@ -682,6 +685,7 @@ public class WorldSave {
             return false;
         }
         header.name = text;
+        long saveStarted = System.currentTimeMillis(); // round 777: [TFR-Perf] save
 
         String fileName = WorldSave.getSaveFile(currentSlot);
         String oldFileName = fileName.replace(".sav", ".old");
@@ -749,6 +753,7 @@ public class WorldSave {
         Config.instance().saveSettings();
         if (backupFile.exists())
             backupFile.delete();
+        forge.adventure.util.SessionLog.onSaved(currentSlot, System.currentTimeMillis() - saveStarted); // round 777
         finish(null);
         return true;
     }

@@ -67,7 +67,7 @@ public class LibGDXImageFetcher extends ImageFetcher {
                     !destPath.startsWith(ForgeConstants.CACHE_TOKEN_PICS_DIR) && !destPath.startsWith(ForgeConstants.CACHE_PLANECHASE_PICS_DIR))
                 newdespath = newdespath.replace(".jpg", ".fullborder.jpg"); // fix planes/phenomenon for round border options
             URL url = new URL(urlToDownload);
-            System.out.println("Attempting to fetch: " + url);
+            // TFR round 777: no line per image (four lines per card were 21% of a shared log) - [TFR-Images] counts them.
             ScryfallRateLimiter.acquire(urlToDownload);
             HttpURLConnection c = (HttpURLConnection) url.openConnection();
             c.setRequestProperty("Accept", "*/*");
@@ -78,8 +78,8 @@ public class LibGDXImageFetcher extends ImageFetcher {
 
             int responseCode = c.getResponseCode();
             String responseMessage = c.getResponseMessage();
-            System.out.println("HTTP Response: " + responseCode + " " + responseMessage + " for URL: " + urlToDownload);
             if (responseCode != HttpURLConnection.HTTP_OK) {
+                forge.adventure.util.SessionLog.imageFetched(false); // TFR round 777
                 System.err.println("Failed to fetch image. HTTP code: " + responseCode + " (" + responseMessage + ") for URL: " + urlToDownload);
 
                 if (responseCode == 429 && ScryfallRateLimiter.isApiUrl(urlToDownload)) {
@@ -93,7 +93,6 @@ public class LibGDXImageFetcher extends ImageFetcher {
 
             // First, save to a temporary file so that nothing tries to read a partial download.
             FileHandle destFile = new FileHandle(newdespath + ".tmp");
-            System.out.println(newdespath);
             destFile.parent().mkdirs();
 
             // Instead of calling the heavy Forge->DeviceAdapter->Converter which decodes uncompressed rasters into memory,
@@ -120,7 +119,7 @@ public class LibGDXImageFetcher extends ImageFetcher {
             destFile.moveTo(new FileHandle(newdespath));
             c.disconnect();
 
-            System.out.println("Saved image to " + newdespath);
+            forge.adventure.util.SessionLog.imageFetched(true); // TFR round 777: was "Saved image to <path>"
             GuiBase.getInterface().invokeInEdtLater(notifyObservers);
             return true;
         }

@@ -14264,6 +14264,62 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 777: summary lines for shared logs - session, duel, towns, the support ask, errors; less noise (2026-10-27)
+
+The user: "Is there anything we need to add to the logs we receive to help us improve the game. Two things I want to
+keep track of is if they received the donate prompt and what towns they select. Anything else we should add to help us
+improve / catch errors?" The audit (`notes/log-additions-proposal.md`) found both asks already logged (`[TFR-Support]`
+ask/answer since 756, `[TFR-Specialty] pick` since 760), but nothing a review could read at a glance; then "Do the log
+additions" (M1-M6, S1, S2).
+
+- **New `util/SessionLog`**, the summary lines:
+  - `[TFR-Session] start tfr=1.24 os="Windows 11" java=... screen=WxH fullscreen=... videomode=...` once per launch
+    (StartScene, after `[TFR-Build]`).
+  - `[TFR-Session] game load slot=N day= level= race= colors= mode= difficulty= ngplus= notoriety=on|off
+    specialties= milestones= research=v2|classic towns= gold= shards= deck=` after every load that worked
+    (`WorldSave.load`), and `game new color= starter= ...` at the end of `WorldSave.generateNewWorld`.
+  - `[TFR-Session] end (exit|pause) launched X h ago, played Y h in all, duels= won= lost= draws= reloadsAfterLoss=
+    days=a->b level=a->b towns=a->b gold=+N images= errors= lastScene=` from `Forge.dispose()` and `Forge.pause()`; a
+    pause or exit prints only when duels, day, towns or errors changed since the last footer (PC minimize, Android
+    background, and the exit right after dispose's own pause).
+    A force-close leaves no footer, which itself reads "killed or crashed". With no game this launch, `exit` prints the
+    menu time only.
+  - `[TFR-Duel] won|lost|draw enemy="<tiered name>" boss= arena= event= [watched=true] where=world|"<place>" day=
+    turns= life=a/b enemyLife=a/b mulligans= secs=` from `DuelScene.GameEnd`, before the ante popups (a quit in them
+    still leaves it). HostedMatch has nearly always let go of the game by then (the `[TFR-DuelEndRace]` line), so the
+    turns and mulligans come from the match's last outcome, and the lives from the match screen's game view
+    (`MatchController.instance.getGameView()`). `secs` runs from the switch to DuelScene. Watched guard fights are
+    logged, not counted.
+  - `[TFR-Towns] held=N Mining= Research= Outpost= Smithy= Garrison= Market= unchosen= | <town>=<specialty|seat|->, ...`
+    after every load; `[TFR-Towns] taken: <town> by restore|capture|gates on day N (towns held M)` from
+    `TownRestoration.recolorTerrainForTesting` (only the paid restore calls it) and `settleAsPlayerTown`.
+  - `[TFR-Perf] save slot=N|auto|quick took X ms (K KB)` / `load slot=... took X ms (K KB)`.
+  - `[TFR-Error] <where> failed: <exception>`, its stack trace, and `[TFR-Error] trail: A > B > ...` (the last 8 scenes
+    and classic screens) from `Forge.setCurrentScreen` and `Forge.resize`: both caught every exception and reported it
+    only to Sentry, which is off by default (`USE_SENTRY` "false"), so players' failures there left no line at all.
+- **`[TFR-Support] status played=12.40h asks=1/3 next=15h stopped=no|"<why>"`** once per launch at the first game
+  (`SupportPrompt.logStatus`), so every shared log says whether the player was asked, whatever session the ask was in.
+- **Noise cut** (the 10 shared logs of 2026-10-26: 26,064 lines):
+  - card images: `LibGDXImageFetcher` printed four lines per image (Attempting to fetch, HTTP Response, the path,
+    Saved image to - 21%); now one `[TFR-Images] N card image(s) downloaded this launch (M failed)` per 25, and the
+    failure lines stay;
+  - `Config.getFile` printed "Looking for resource X... Found!" for every first lookup (6%); now only a miss;
+  - `[TFR-Hero]` once per distinct line a launch, `[TFR-HeroSize]` only when it changes (4 pairs per load before).
+  - `[TFR-PrintRemap]` stays (the user). The malformed `tfr_*` token-key spam was already fixed in round 735.
+- **Console**: `session` writes the session, towns, support and footer lines now; `session error` makes the next
+  screen change throw once (`SessionLog.testThrow` in `Forge.setCurrentScreen`), to see `[TFR-Error]`.
+- **Privacy**: save slots, generated town names, enemy names and game numbers only - no character name, user name or
+  path (the share's scrub stays as it is).
+- **Seen in the agent game** (a test package built from a clean worktree with only round 777's files; every duel at
+  50x; `notes/r777-log-additions-test.md`): a new game, a load, three duels (a win and two losses, then a fourth won
+  in run 2), the Orazca restore (`taken: Orazca by restore`, `Orazca=seat`), `reloadsAfterLoss` counting a reload after
+  a loss, the `session` console, the save/load timings, and `session error` -> the menu's Classic button: a
+  `[TFR-Error] setCurrentScreen ...` line with its stack and the trail `GameScene > DuelScene > screen:MatchScreen >
+  ... > screen:HomeScreen`, the game still running. Run 1 found three things, fixed before run 2: the lives read `?`
+  (the game was already gone), autosaves read `slot=-1`, and an exit printed the footer twice. "Looking for resource"
+  went 102 -> 0; the image summary was not exercised (warm card cache); no real specialty pick (a fresh game's only
+  reachable ruin was Orazca, the seat).
+
 ## Round 779: difficulty hints - a 5th loss to one foe suggests easier, 50 wins in a row suggests harder (2026-10-27)
 
 The 2026-10-27 log review (`C:\TFR\notes\logs-1027.md`, P2 and P4): one Hard player lost 11 times in a row to one foe

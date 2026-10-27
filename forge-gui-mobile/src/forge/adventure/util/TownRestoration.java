@@ -541,6 +541,7 @@ public class TownRestoration {
         if (!PlayerRoads.connectTown(world, target, "a captured town")) // round 346: the Capitol's network, once it stands
             TerritoryControl.connectCapturedTownByRoad(world, target, "player");
         updateTownLifeBonus(true);
+        SessionLog.townTaken(shownName, reason.contains("gates") ? "gates" : "capture"); // round 777
     }
 
     /**
@@ -635,6 +636,7 @@ public class TownRestoration {
         System.out.println("[TFR-MainQuest] townsRestored -> " + restoredCount);
         Ascendance.onTownRestored(point.getDisplayName()); // round 493
         TfrAchievements.onTownsChanged("restored " + point.getDisplayName()); // round 717: Ashes to Hearth
+        SessionLog.townTaken(point.getDisplayName(), "restore"); // round 777 - this runs only on a paid restore (QuestActor)
     }
 
     /**

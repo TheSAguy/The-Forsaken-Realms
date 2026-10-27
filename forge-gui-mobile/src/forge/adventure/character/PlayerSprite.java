@@ -47,6 +47,9 @@ public class PlayerSprite extends CharacterSprite {
 
     /** Round 677: the race's heroes.json scale times the level's growth (Ascendance.heroSizeFactor). The roaming guards
      *  drawn on the player's sheet keep the plain scale - only the player grows. */
+    /** Round 777: the last [TFR-HeroSize] line printed. */
+    private static String lastHeroSizeLine;
+
     private void applyHeroSize() {
         applyHeroSize(true);
     }
@@ -61,9 +64,13 @@ public class PlayerSprite extends CharacterSprite {
         sizedScale = scale;
         setHeroScale(scale);
         forge.adventure.data.AscendanceData d = forge.adventure.util.Ascendance.data();
-        System.out.println("[TFR-HeroSize] " + (sizedActive ? "level " + forge.adventure.util.Ascendance.level()
+        String line = "[TFR-HeroSize] " + (sizedActive ? "level " + forge.adventure.util.Ascendance.level()
                 + ": body ~" + Math.round(d.heroSizeReference * factor * 10f) / 10f + " px" : "Ascendance off: today's size")
-                + " (x" + factor + " on scale " + AdventurePlayer.current().spriteScale() + ")");
+                + " (x" + factor + " on scale " + AdventurePlayer.current().spriteScale() + ")";
+        if (!line.equals(lastHeroSizeLine)) { // round 777: only when it changes, not four times per load
+            lastHeroSizeLine = line;
+            System.out.println(line);
+        }
     }
 
     public void LoadPos() {

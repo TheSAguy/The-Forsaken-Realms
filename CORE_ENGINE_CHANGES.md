@@ -38,6 +38,38 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 777 - summary lines for shared logs, less log noise
+
+- **`forge-gui-mobile/src/forge/Forge.java`** (STOCK):
+  - `setCurrentScreen`: inside its try, `SessionLog.onScreen(screen0)` (the error trail) and `SessionLog.testThrow()`
+    (the console's `session error`). Its catch logs `SessionLog.onError(...)` before the stock Sentry-only report.
+  - `resize`'s catch: the same `onError`.
+  - `switchScene` / `switchToLast`: `SessionLog.onScene(...)`.
+  - `pause()` / `dispose()`: `SessionLog.end("pause"/"exit")` beside round 756's `SupportPrompt.flush`.
+  - Both catches used to report only when Sentry was on (`USE_SENTRY` defaults to false), so a player's failure there
+    left no log line. If upstream changes these blocks, keep one always-on log call.
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** (STOCK): `load()` times the load and calls
+  `SessionLog.onGameLoaded` after round 726's ReloadJab line; `save()` times the save and calls `SessionLog.onSaved`
+  before `finish(null)`; `generateNewWorld()` calls `SessionLog.onNewGame(starter, colorId)` at its end.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): `GameEnd()` - one
+  `SessionLog.onDuelEnd(...)` right after `finalWinner`, before round 735's `ReloadJab.onMatchDecided`.
+- **`forge-gui-mobile/src/forge/adventure/scene/StartScene.java`** (STOCK): `SessionLog.onStart()` after the
+  `[TFR-Build]` block.
+- **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK): `supportLastAnswer` after round 778's
+  `showLandDrops`.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK): the `session` command.
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** (STOCK): `getFile` prints "Looking for resource X...
+  not found" only on a miss (no line per found file).
+- **`forge-gui-mobile/src/forge/util/LibGDXImageFetcher.java`** (STOCK): the per-image prints ("Attempting to fetch",
+  "HTTP Response", the path, "Saved image to") are replaced by `SessionLog.imageFetched(ok)`, which prints one
+  `[TFR-Images]` line per 25 images. The failure lines on System.err stay as they were.
+- **`forge-gui-mobile/src/forge/adventure/character/CharacterSprite.java`** (STOCK): `setHeroScale` prints each
+  `[TFR-Hero]` line once per launch.
+- **`forge-gui-mobile/src/forge/adventure/character/PlayerSprite.java`** (STOCK): `applyHeroSize` prints
+  `[TFR-HeroSize]` only when the line changes.
+- Mod files: NEW `util/SessionLog.java`; `util/SupportPrompt.java` (`logStatus`, `supportLastAnswer` written in
+  `answer`); `util/TownRestoration.java` (the two `taken:` calls).
+
 ### Round 778 - a land drops cell in duels; Always Yes for Valakut and Spark Mage
 
 - **`forge-gui-mobile/src/forge/screens/match/views/VPlayerPanel.java`** (STOCK) - a new inner `InfoTabLand` (the

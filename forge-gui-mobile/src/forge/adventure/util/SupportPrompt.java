@@ -197,10 +197,24 @@ public final class SupportPrompt {
 
     private static void answer(String what, WorldStage stage) {
         stage.hideDialog();
-        flushNow();
         SettingData s = Config.instance().getSettingData();
+        s.supportLastAnswer = what; // round 777: for the status line; flushNow saves it
+        flushNow();
         System.out.println("[TFR-Support] answer: " + what + " (asks shown " + s.supportAsksShown + "/" + HOURS.length
                 + stoppedText(s) + ")");
+    }
+
+    /** Round 777: one line per launch (SessionLog, the first game) - the asks so far and the next, whatever session the
+     *  ask itself was in. */
+    static void logStatus() {
+        if (supportLink() == null)
+            return;
+        SettingData s = Config.instance().getSettingData();
+        String next = s.supportNeverAsk || s.supportClicked || s.supportAsksShown >= HOURS.length ? "none"
+                : (int) HOURS[s.supportAsksShown] + "h";
+        String stopped = stoppedText(s);
+        System.out.println("[TFR-Support] status played=" + String.format(java.util.Locale.ROOT, "%.2fh", hours()) + " asks=" + s.supportAsksShown + "/"
+                + HOURS.length + " last=" + (s.supportLastAnswer == null ? "none" : "\"" + s.supportLastAnswer + "\"") + " next=" + next + " stopped=" + (stopped.isEmpty() ? "no" : "\"" + stopped.substring(stopped.indexOf(':') + 2) + "\""));
     }
 
     /** Why no ask comes any more, for the log and the console ("" while asks can still come). */

@@ -7,7 +7,20 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-760, 762-776, 778 and 779 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-760, 762-779 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+777 (summary lines for shared logs, from the audit `notes/log-additions-proposal.md`: new `util/SessionLog` -
+`[TFR-Session] start` per launch (version, OS, Java, screen), `game load`/`game new` (slot, day, level, race, colors,
+mode, difficulty, NG+, Notoriety, specialties, milestones, research, towns, gold), `end (exit|pause)` (duels, won/lost,
+reloads after a loss, days/level/towns from->to, gold, errors, last scene); `[TFR-Duel]` per duel (result, enemy,
+where, day, turns, both lives from the match screen's view, mulligans, seconds); `[TFR-Towns]` held towns and their
+specialties after each load, `taken: <town> by restore|capture|gates`; `[TFR-Perf] save/load`; `[TFR-Support] status`
+once per launch (asks, `last=` the new `SettingData.supportLastAnswer`, next, stopped); `[TFR-Error]` with a stack and
+the last 8 scenes from `Forge.setCurrentScreen`/`resize`, which reported only to Sentry (off by default) before;
+less noise: one `[TFR-Images]` line per 25 card images instead of 4 lines per image, "Looking for resource" only on
+a miss, `[TFR-Hero]`/`[TFR-HeroSize]` once per change; console `session` / `session error`; stock files Forge,
+WorldSave, DuelScene, StartScene, SettingData, ConsoleCommandInterpreter, Config, LibGDXImageFetcher,
+CharacterSprite, PlayerSprite; tested in a worktree package of round 777 alone, every duel at 50x, not yet packaged -
+`notes/r777-log-additions-test.md`) and
 779 (difficulty hints, once per world each: the 5th loss to the same foe suggests the next difficulty down, 50 wins in
 a row - the end of the saved `recentDuels` record - the next one up, "on your next game or New Game+" (a save's
 difficulty can only change there); a green Notices line plus a "Got it" dialog on a calm world map; the marks live in
@@ -123,7 +136,7 @@ at 3840x2160 it covered the screen, got minimized, and a minimized game stops (t
 1x1).
 Next version: 1.24 / 12400. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous
 auto save, eager shops, Inn events and place entry - see MOD_CHANGELOG); next merge from upstream after `0dc8c66996e`;
-BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 783 (777 and 780-782 are handed out: 777 log additions, 780 xandghost enemies, 781 Witch-Maw Slippers drops, 782 PC update notice). Rounds 768, 766's follow-up and 769-776 are packaged to live and the agent game (2026-10-27 06:30); rounds 778 and 779 are committed but not yet packaged. Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
+BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 783 (780-782 are handed out: 780 xandghost enemies, 781 Witch-Maw Slippers drops, 782 PC update notice). Rounds 768, 766's follow-up and 769-776 are packaged to live and the agent game (2026-10-27 06:30); rounds 777, 778 and 779 are committed but not yet packaged (777 tested in a worktree package). Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

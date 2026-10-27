@@ -88,6 +88,9 @@ public class SettingData {
     // Round 778 (the user: "Make Land Drops an Settings option, by default off"): true adds a land drops cell - lands
     // played / allowed this turn - to each player's stat column in duels (VPlayerPanel.InfoTabLand).
     public boolean showLandDrops;
+    // Round 777: the button picked in the last support ask (SupportPrompt.answer) - "support", "discord", "maybe later",
+    // "don't ask again" - for the once-a-launch [TFR-Support] status line; null before any answer.
+    public String supportLastAnswer;
     // Preserve explicitly stored global choices from the original background settings.
     public Boolean enableExtraBattleBackgrounds;
     public HashMap<String, Boolean> extraBattleBackgroundsByPlane = new HashMap<>();
