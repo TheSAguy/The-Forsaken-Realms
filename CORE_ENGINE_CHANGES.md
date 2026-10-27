@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 776 - duplicate quest tags (upstream data)
+
+- **`forge-gui/res/adventure/common/world/enemies.json`** and **`forge-gui/res/adventure/Shandalar Old
+  Border/world/enemies.json`** - UPSTREAM DATA, cleaned in our copies: 11 `questTags` lines removed in each, the second
+  copy of a tag the enemy already lists - Amonkhet Minotaur Warrior (BiomeRed), Corrupted Blue/Green/Red Wizard,
+  Runelord, Snow Wizard (Wizard), Gargoyle, Gargoyle 2 (Stone), Grave Titan, Greater Zombie (Zombie), Mageripper
+  (Insect). Pure deletions next to round 736's three typo lines; if upstream de-duplicates them, take theirs.
+
 ### Round 772 - Settings can turn off Notoriety
 
 - **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK) - `notorietyDisabled` after the round-756

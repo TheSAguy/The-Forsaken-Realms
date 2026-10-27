@@ -5,7 +5,7 @@ FAQ_VERSION = "v1.23"
 
 M = []
 
-M.append(("About the game: is this a mod? Android", "About / Android", r"""**THE FORSAKEN REALMS - FAQ** (as of v1.22)
+M.append(("About the game: is this a mod? Android", "About / Android", "**THE FORSAKEN REALMS - FAQ** (as of " + FAQ_VERSION + r""")
 **About the game**
 
 **Q: Is this a mod for Forge?**

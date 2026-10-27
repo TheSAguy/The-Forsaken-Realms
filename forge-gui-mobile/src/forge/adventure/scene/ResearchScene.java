@@ -682,9 +682,15 @@ public class ResearchScene extends UIScene {
         } else {
             body.append("Research now: ").append(ResearchMeter.startCost(player, code)).append("[+Shards], ")
                     .append(ResearchMeter.daysText(days));
-            if (ResearchMeter.points(player, code) > 0f) // the unfed price only once cards have changed it
+            if (ResearchMeter.points(player, code) > 0f) { // the unfed price only once cards have changed it
+                // Round 776: the unfed days as the Lab row shows them at no fill - Researcher and the Research towns
+                // included (ResearchMeter.lengthDaysAt at 0 points), not the bare researchDaysV2.
+                int unfed = Math.max(0, (int) Math.ceil((double) ResearchMeter.unfedDays()
+                        * forge.adventure.util.Ascendance.researchDaysFactor()
+                        * forge.adventure.util.TownSpecialties.researchDaysFactor() - 1e-6));
                 body.append(" (").append(ResearchMeter.baseCost()).append("[+Shards], ")
-                        .append(ResearchMeter.daysText(ResearchMeter.unfedDays())).append(" with none given)");
+                        .append(ResearchMeter.daysText(unfed)).append(" with none given)");
+            }
             body.append(".\n");
         }
         ResearchMeter.Plan extras = null, all = null;

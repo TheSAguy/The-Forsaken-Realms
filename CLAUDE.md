@@ -7,7 +7,12 @@ every round built. If you find something missing, fix the docs rather than going
 ## NOW (rewrite this block each round; never append a new one)
 
 **v1.23 "Fixes & Engine update" is the latest release** (tag `tfr-v1.23` @ `69797542f59`, 2026-10-21; rounds
-689-701). Unreleased: rounds 702-760 and 762-772 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+689-701). Unreleased: rounds 702-760, 762-772 and 776 (`git log --oneline tfr-v1.23..HEAD`; detail in `MOD_CHANGELOG.md`). The newest:
+776 (small cleanups: 11 duplicate quest tags out of the stock `common` and Shandalar `enemies.json` - TFR's copy had
+none; the tfr-play skill's minimized-window trap and its `ShowWindow(SW_RESTORE)` fix; FAQ message 1's header reads
+`FAQ_VERSION`; the Lab set window's "with none given" bracket shows the Researcher- and Research-town-adjusted days
+the Lab row shows, not a flat 40 - `ResearchScene`, javac only so far; round 752's `currentLevelKey()` note was wrong,
+and `PlayerStatistic.secondPlayed` is inert stock code, both left as they are) and
 772 (a "Disable Notoriety" checkbox in the adventure Settings, off by default, in the profile's `settings.json`
 (`SettingData.notorietyDisabled`, never a save): it turns off all six Notoriety effects - the Walls, the 45/50 bonus
 Walls and their life, the spawn tilt, the rank-gate step and the dungeon upgrades - through
@@ -78,7 +83,7 @@ at 3840x2160 it covered the screen, got minimized, and a minimized game stops (t
 1x1).
 Next version: 1.24 / 12400. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous
 auto save, eager shops, Inn events and place entry - see MOD_CHANGELOG); next merge from upstream after `0dc8c66996e`;
-BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 777 (773-776 are assigned to running rounds). Rounds 768, 766's follow-up, 769, 770, 771 and 772 are committed but not yet packaged. Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
+BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next free round: 777 (773-775 are assigned to running rounds). Rounds 768, 766's follow-up, 769, 770, 771, 772 and 776 are committed but not yet packaged. Rounds 764, 764's follow-up, 765, 766 and 767 are packaged to live (2026-10-26 18:25); 767 adds a Support TFR (Ko-fi) button between Discord and Game Guide & FAQ on the welcome scroll, opened like the Settings row (`SupportPrompt.open`, asks not stopped), and a welcome paragraph naming it. Round 763 (round 760's six World Map town specialty badges, drawn by the Art thread: `sprites/town_specialties.atlas`/`.png` in TFR's plane folder, regions Mining, Research, Outpost, Smithy, Garrison, Market; art only) is packaged 2026-10-26 16:55. Log sharing (round 698) posts to Discord through a webhook
 kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step
 2b put it into builds. Release ledger (assets, versionCode, signer): `docs/tfr/releases.md`. Round history
 before 2026-10-18: `docs/tfr/history/claude-md-rounds.md`.

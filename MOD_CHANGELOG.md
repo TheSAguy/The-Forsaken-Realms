@@ -14264,6 +14264,46 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 776: small cleanups - duplicate quest tags, a tfr-play trap, FAQ message 1, the Lab's unfed days (2026-10-26)
+
+The user picked "Small cleanups": "The 11 duplicate quest tags (Mageripper's Insect), two dead-code side notes, the
+tfr-play minimized-window trap line, FAQ message 1's 'v1.22' header." The main thread added one line left over from
+round 771.
+
+- **Duplicate quest tags** (`notes/quest-tag-audit.md` item J): 11 lines removed from each of the stock
+  `common/world/enemies.json` and `Shandalar Old Border/world/enemies.json` (the copies round 736 edited) - Amonkhet
+  Minotaur Warrior (BiomeRed), Corrupted Blue/Green/Red Wizard, Runelord, Snow Wizard (Wizard), Gargoyle, Gargoyle 2
+  (Stone), Grave Titan, Greater Zombie (Zombie), Mageripper (Insect). TFR's own `enemies.json` had none (scanned), so
+  TFR games are unchanged. Nothing counted a duplicate twice: the quest matchers (`AdventureQuestStage.checkIfTargetEnemy`,
+  `AdventureQuestData.generateTargetEnemyData`) subtract sizes after `removeAll`, which drops every copy, so a
+  duplicated required tag could never match - de-duplicating can only let a match happen. The `null` entries some
+  enemies list twice were left alone (round 194's null guard covers them; not part of item J). Stock-plane only side
+  effect: `EnemyData.match` compares tag counts, so a Shandalar quest saved with one of these 11 as its fixed target no
+  longer counts that enemy met in the field; its own spawned target still matches.
+- **tfr-play trap**: the agent window can get minimized at 1280x720 too, mid-duel or during world generation (rounds
+  764 and 769) - the bridge times out and shots come back 1x1. The skill's traps gain a PowerShell
+  `ShowWindow(SW_RESTORE)` one-liner for the agent's javaw window.
+- **FAQ message 1**: its header reads "(as of " + `FAQ_VERSION` + ")" - v1.23 now, and it follows each bump (round
+  762's constant). Message 21's v1.22 mentions are left for later (the user). The FAQ page artifact needs
+  `build_page.py` rerun and republishing to show it.
+- **The Lab's "with none given" bracket** (round 771's leftover): the set window's "Research now: 28[+Shards], 16 days
+  (40[+Shards], 40 days with none given)" always said `researchDaysV2`'s 40. It now shows the days the Lab row would at
+  no fill - researchDaysV2 x Researcher x the Research towns' factor, rounded up, in doubles like
+  `ResearchMeter.lengthDaysAt` - so 39 with one Research town, 27 with ten. `ResearchScene` only; `ResearchMeter`
+  untouched. Checked with javac against the agent jar (plus 771's `ResearchMeter`/`TuningData`); Maven not run here
+  (round 773's half-edited files share the tree) - the main thread builds before packaging. Not seen in the game.
+- **Two dead-code side notes, investigated, no code change** (main thread agreed):
+  - *Round 752's open item is wrong*: `TileMapScene.currentLevelKey()`'s first-map branch does run. A place id is
+    `seedOffset + name + "/" + data.map` and the first map's `oldMap` is `resolveMapPath()`, which is `data.map` for
+    every ordinary place, so the key is the plain place id and pre-round-331 `poiId|life|pickup#N` keys still match.
+    Only the towns whose layout `resolveMapPath()` swaps fall through - Ring Cities, wasteland towns the player doesn't
+    hold, Orazca restored - and none of those maps holds a +Life; round 752's shop hearts are in the color capitals,
+    which keep `data.map`. No +Life pays twice.
+  - *`PlayerStatistic.secondPlayed`* is stock upstream code (still in `0dc8c66996e`): never added to, never saved or
+    loaded, and `getPlayTime()` has no caller. Left alone - removing it would only add merge friction to a stock file.
+    A per-save play-time line would be its own round (round 756 already counts play per profile).
+- Stock files (CORE_ENGINE_CHANGES): the two `enemies.json` copies. Saves: none touched.
+
 ## Round 772: Settings can turn off Notoriety's walls (2026-10-26)
 
 The user: "Let's add in the in game settings - Disable Notoriety system option. By default unchecked. If checked, we
@@ -15115,7 +15155,9 @@ game".
 - **Open item (seen in passing, not changed)**: `TileMapScene.currentLevelKey()` (round 331) returns the place id plus the map path
   for a place's first map too - a place id never ends with its map path - so its "the place's own id for its first map"
   branch does not fire, and round 331's note that earlier `poiId|life|pickup#N` keys still match looks wrong (a +Life
-  pickup taken before round 331 could pay once more). Old and minor; reported to the main thread.
+  pickup taken before round 331 could pay once more). Old and minor; reported to the main thread. **Corrected in round
+  776**: the branch does run - an ordinary place's id ends with its `data.map` - and only remapped towns, which hold no
+  +Life, fall through.
 
 ## Round 747 (follow-up): the Java startup splash is TFR's too (2026-10-26)
 

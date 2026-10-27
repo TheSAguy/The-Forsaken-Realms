@@ -849,8 +849,7 @@
       "IdentityRed",
       "BiomeRed",
       "IdentityBlack",
-      "IdentityRakdos",
-      "BiomeRed"
+      "IdentityRakdos"
     ]
   },
   {
@@ -6844,7 +6843,6 @@
       "Wizard",
       "Human",
       "IdentityBlue",
-      "Wizard",
       "Corrupted"
     ]
   },
@@ -6951,7 +6949,6 @@
       "Wizard",
       "Human",
       "IdentityGreen",
-      "Wizard",
       "Corrupted"
     ]
   },
@@ -7004,7 +7001,6 @@
       "Wizard",
       "Human",
       "IdentityRed",
-      "Wizard",
       "Corrupted"
     ]
   },
@@ -12410,7 +12406,6 @@
       "Gargoyle",
       "Passive",
       "Territorial",
-      "Stone",
       "IdentityRed",
       "IdentityWhite",
       "IdentityBlue",
@@ -12501,7 +12496,6 @@
       "Gargoyle",
       "Passive",
       "Territorial",
-      "Stone",
       "IdentityWhite",
       "BiomeColorless"
     ]
@@ -14663,7 +14657,6 @@
       "Grave",
       "Zombie",
       "Undead",
-      "Zombie",
       "Humanoid",
       "IdentityBlack"
     ]
@@ -14854,7 +14847,6 @@
       "Grave",
       "Zombie",
       "Undead",
-      "Zombie",
       "Humanoid",
       "IdentityBlack"
     ]
@@ -19960,8 +19952,7 @@
       "Mythical",
       "Insect",
       "Monster",
-      "IdentityTemur",
-      "Insect"
+      "IdentityTemur"
     ]
   },
   {
@@ -25182,7 +25173,6 @@
       "Human",
       "IdentityBant",
       "Enchanter",
-      "Wizard",
       "Auramaster",
       "Runelord"
     ]
@@ -27100,7 +27090,6 @@
       "Wizard",
       "Dungeon",
       "Snow",
-      "Wizard",
       "Human",
       "IdentityBlue",
       "IdentityGreen",

@@ -148,6 +148,10 @@ anything risky, and `cmd load slot=1` from the Load screen to get back.
   reward screen's checkbox glyph again.
 - **The agent profile's window must stay 1280x720.** At 3840x2160 it covers the screen, gets minimized, and a minimized
   game stalls: the bridge times out and shots come back 1x1. `agent_setup.py` seeds 1280x720; put it back if it changed.
+- **The window can get minimized even at 1280x720**, mid-duel or during world generation (rounds 764 and 769): the same
+  bridge timeout and 1x1 shots. Restore it with `ShowWindow(SW_RESTORE)` on the agent's javaw window, from PowerShell:
+  `Add-Type -Name W -Namespace U -MemberDefinition '[DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int c);'`
+  then `Get-Process javaw | ? { $_.Path -like '*\agent\*' } | % { [U.W]::ShowWindow($_.MainWindowHandle, 9) }`.
 - **A fresh New Game is the clean test for one-time map things** (a hidden pickup, a first-visit dialog): a long-running
   save has usually used them up. `console text="set charflag NAME 1"` / `... 0` (0 removes it) fakes a run state such
   as `newGamePlus`.
