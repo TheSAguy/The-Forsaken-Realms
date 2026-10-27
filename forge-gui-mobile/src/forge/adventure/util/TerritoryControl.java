@@ -2854,7 +2854,9 @@ public class TerritoryControl {
                 boolean attackerWins = world.getRandom().nextFloat() < captureChance;
                 System.out.println("[TFR-CaptureOdds] " + mage.territoryColor + " mage (tier=" + mage.getData().tier
                         + ", chance=" + captureChance + ", reputationDefense=" + repDefense
-                        + (specialtyDefense > 0f ? ", specialtyDefense=" + specialtyDefense + " (" + TownSpecialties.of(target).label + ")" : "")
+                        + (specialtyDefense > 0f ? ", specialtyDefense=" + specialtyDefense + " (" // round 774: Town Watch needs no specialty
+                                + (TownSpecialties.of(target) == null ? "no specialty" : TownSpecialties.of(target).label)
+                                + (RealmMilestones.townWatchDefense() > 0f ? ", Town Watch " + RealmMilestones.townWatchDefense() : "") + ")" : "")
                         + ") attacking player-owned " + target.getDisplayName()
                         + " -> " + (attackerWins ? "CAPTURED" : "REPELLED"));
                 if (!attackerWins) {

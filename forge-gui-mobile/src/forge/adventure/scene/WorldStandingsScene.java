@@ -377,6 +377,15 @@ public class WorldStandingsScene extends UIScene {
             }
             standingsList.row();
         }
+        // Round 774: the realm boons taken and the next milestone (a save with realm milestones only).
+        String realm = forge.adventure.util.RealmMilestones.standingsLine();
+        if (!realm.isEmpty()) {
+            TypingLabel realmLabel = Controls.newTypingLabel("[%70]" + realm);
+            realmLabel.setColor(Color.BLACK);
+            realmLabel.setWrap(true);
+            realmLabel.skipToTheEnd();
+            standingsList.add(realmLabel).colspan(showReputation ? 4 : 3).growX().align(Align.left).padTop(2).row();
+        }
         refreshChart(world);
     }
 

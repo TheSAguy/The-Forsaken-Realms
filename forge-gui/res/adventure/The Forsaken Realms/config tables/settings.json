@@ -238,6 +238,26 @@
     "specialtyMarketPriceFactor": 0.9,
     "specialtyChangeFeeShare": 0.5,
     "specialtyChangeLockDays": 7,
+    // Round 774 - realm milestones (new games and New Game+ only): every milestoneEveryTowns of the most towns ever held
+    // at once, pick 1 of 3 realm boons. Masteries upgrade a specialty in every town that has it (offered from
+    // milestoneMasteryMinTowns towns of it): Deep Veins (Mining mines x2), Grand Library (Research +7.5% a town, cap
+    // 75%), Watchtowers (Outpost light x3 / x4 with an Outlook, defense 15%), Master Smiths (a Smithy town's Armory
+    // x0.8), Iron Garrisons (defense 35%), Merchant Guild (Market card shops x0.8). Realm boons: Tithe (gold a held town
+    // each payday, a pick, 2 picks), Town Watch (capture defense in every held town, a pick, 2 picks), Lamplighters
+    // (every held town lights more tiles), Royal Grant (the next research is free and done at once, 2 picks).
+    "milestoneEveryTowns": 10,
+    "milestoneMasteryMinTowns": 2,
+    "milestoneDeepVeinsMineFactor": 2.0,
+    "milestoneLibraryPerTown": 0.075,
+    "milestoneLibraryCap": 0.75,
+    "milestoneWatchtowerLight": 1,
+    "milestoneWatchtowerDefense": 0.15,
+    "milestoneSmithsArmoryFactor": 0.8,
+    "milestoneIronGarrisonDefense": 0.35,
+    "milestoneMerchantPriceFactor": 0.8,
+    "milestoneTitheGold": 15,
+    "milestoneTownWatchDefense": 0.10,
+    "milestoneLamplighterTiles": 1,
     // Bank: the gold one Deposit or Withdraw press moves (Deposit All / Withdraw All move everything).
     // Round 457: 100 -> 500 (a player asked for 1,000).
     "bankStepGold": 500,

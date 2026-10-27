@@ -669,6 +669,34 @@ chooses again. On the World Map each specialized town carries a small badge.
 Town specialties come with games started (or taken into New Game+) on version 1.24 or later; an older save doesn't have
 them.
 
+### Realm Milestones
+
+Every **10 towns** your realm reaches - the most you have ever held at once, your Capitol included - you choose one
+**realm boon** from three. The restore that reaches 10, 20, 30, ... asks right after its specialty; a town taken any
+other way asks the next time you walk into one of your towns. "Later" leaves the boon waiting at the Job Board of any
+town you hold. Boons are yours for the rest of the game: a town that falls takes none away, and winning it back earns
+no second boon.
+
+| Boon | What it does |
+|---|---|
+| **Deep Veins** | your Mining towns' mines pay double instead of 50% more |
+| **Grand Library** | each Research town speeds research 7.5% instead of 5%, up to 75% |
+| **Watchtowers** | Outposts are lit three times their radius (four with an Outlook) and are 15% harder to capture |
+| **Master Smiths** | a Smithy town's Armory sells for 20% less |
+| **Iron Garrisons** | Garrison towns are 35% harder to capture |
+| **Merchant Guild** | a Market town's card shops are 20% cheaper |
+| **Tithe** | every town you hold pays 15 gold each payday (take it twice for 30) |
+| **Town Watch** | every town you hold is 10% harder to capture (take it twice for 20%) |
+| **Lamplighters** | every town you hold lights one more tile around it |
+| **Royal Grant** | your next research at the Lab is free and done at once (up to twice) |
+
+The first boon offered upgrades the specialty you hold the most towns of; a specialty's boon needs at least two towns
+of it. The three are chosen once per milestone, so closing the choice or reloading doesn't change them. World
+Standings shows your boons and the next milestone.
+
+Realm milestones come with games started (or taken into New Game+) on version 1.24 or later; an older save doesn't have
+them.
+
 ### The Temple
 
 The **Temple** is a Capitol-only building (300 gold and 100 Stone on Normal; 25% less on Easy, 25% more on Hard, 50%

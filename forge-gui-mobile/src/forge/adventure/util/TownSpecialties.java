@@ -53,15 +53,19 @@ public final class TownSpecialties {
 
         /** One line for the choice list, read from the tunables so the text cannot drift from the effect. */
         public String effect() {
-            TuningData t = tuning();
+            // Round 774: a realm milestone's mastery shows its own numbers, named at the end.
+            RealmMilestones.Boon mastery = masteryOf(this);
+            String tag = mastery != null && RealmMilestones.has(mastery) ? " (" + mastery.label + ")" : "";
             switch (this) {
-                case MINING: return "its mines pay +" + pct(t.specialtyMineFactor - 1f);
-                case RESEARCH: return "research " + pct(t.specialtyResearchPerTown) + " faster per Research town (max "
-                        + pct(t.specialtyResearchCap) + ")";
-                case OUTPOST: return "lit as with an Outlook, +" + pct(t.specialtyOutpostDefense) + " defense";
-                case SMITHY: return "its Armory rolls at the Capitol's odds";
-                case GARRISON: return "+" + pct(t.specialtyGarrisonDefense) + " defense, no raids start here";
-                case MARKET: return "card shops " + pct(1f - t.specialtyMarketPriceFactor) + " off, a free restock a week";
+                case MINING: return "its mines pay +" + pct(mineFactorValue() - 1f) + tag;
+                case RESEARCH: return "research " + pct(researchPerTown()) + " faster per Research town (max "
+                        + pct(researchCap()) + ")" + tag;
+                case OUTPOST: return (RealmMilestones.watchtowerLight() > 0 ? "lit x" + (2 + RealmMilestones.watchtowerLight())
+                        : "lit as with an Outlook") + ", +" + pct(outpostDefense()) + " defense" + tag;
+                case SMITHY: return "its Armory rolls at the Capitol's odds" + (armoryFactor() < 1f
+                        ? ", " + pct(1f - armoryFactor()) + " cheaper" : "") + tag;
+                case GARRISON: return "+" + pct(garrisonDefense()) + " defense, no raids start here" + tag;
+                case MARKET: return "card shops " + pct(1f - marketFactor()) + " off, a free restock a week" + tag;
                 default: return "";
             }
         }
@@ -86,7 +90,52 @@ public final class TownSpecialties {
     }
 
     private static String pct(float f) {
-        return Math.round(f * 100) + "%";
+        float p = f * 100f; // round 774: Grand Library's 7.5% keeps its half
+        return Math.abs(p - Math.round(p)) < 0.05f ? Math.round(p) + "%" : String.format(java.util.Locale.ROOT, "%.1f%%", p);
+    }
+
+    // ---- round 774: each specialty's numbers, a realm milestone's mastery included ----------------------------------
+
+    static RealmMilestones.Boon masteryOf(Specialty s) {
+        for (RealmMilestones.Boon b : RealmMilestones.Boon.values())
+            if (b.mastery == s)
+                return b;
+        return null;
+    }
+
+    private static float mineFactorValue() {
+        return Math.max(0f, RealmMilestones.has(RealmMilestones.Boon.DEEP_VEINS) ? tuning().milestoneDeepVeinsMineFactor
+                : tuning().specialtyMineFactor);
+    }
+
+    private static float researchPerTown() {
+        return RealmMilestones.has(RealmMilestones.Boon.GRAND_LIBRARY) ? tuning().milestoneLibraryPerTown
+                : tuning().specialtyResearchPerTown;
+    }
+
+    private static float researchCap() {
+        return RealmMilestones.has(RealmMilestones.Boon.GRAND_LIBRARY) ? tuning().milestoneLibraryCap
+                : tuning().specialtyResearchCap;
+    }
+
+    private static float outpostDefense() {
+        return Math.max(0f, RealmMilestones.has(RealmMilestones.Boon.WATCHTOWERS) ? tuning().milestoneWatchtowerDefense
+                : tuning().specialtyOutpostDefense);
+    }
+
+    private static float garrisonDefense() {
+        return Math.max(0f, RealmMilestones.has(RealmMilestones.Boon.IRON_GARRISONS) ? tuning().milestoneIronGarrisonDefense
+                : tuning().specialtyGarrisonDefense);
+    }
+
+    private static float marketFactor() {
+        return Math.max(0f, RealmMilestones.has(RealmMilestones.Boon.MERCHANT_GUILD) ? tuning().milestoneMerchantPriceFactor
+                : tuning().specialtyMarketPriceFactor);
+    }
+
+    /** Master Smiths: a Smithy town's Armory items, times this (1 without the mastery). */
+    private static float armoryFactor() {
+        return RealmMilestones.has(RealmMilestones.Boon.MASTER_SMITHS) ? Math.max(0f, tuning().milestoneSmithsArmoryFactor) : 1f;
     }
 
     // ---- the gate ---------------------------------------------------------------------------------------------------
@@ -124,7 +173,7 @@ public final class TownSpecialties {
 
     /** Mining: what this town's mines pay, times this. */
     public static float mineFactor(PointOfInterestChanges changes) {
-        return of(changes) == Specialty.MINING ? Math.max(0f, tuning().specialtyMineFactor) : 1f;
+        return of(changes) == Specialty.MINING ? mineFactorValue() : 1f; // round 774: Deep Veins
     }
 
     /** Outpost: this town is lit as if it had an Outlook (World.getTownVisionRadiusTiles). */
@@ -142,14 +191,16 @@ public final class TownSpecialties {
         return of(changes) == Specialty.GARRISON;
     }
 
-    /** Outpost / Garrison: taken off an attacking mage's capture chance (TerritoryControl, before the floor). */
+    /** Outpost / Garrison: taken off an attacking mage's capture chance (TerritoryControl, before the floor). Round 774:
+     *  their masteries' numbers, and a realm milestone's Town Watch on every held town. */
     public static float captureDefense(PointOfInterest town) {
         Specialty s = of(town);
+        float watch = RealmMilestones.townWatchDefense();
         if (s == Specialty.GARRISON)
-            return Math.max(0f, tuning().specialtyGarrisonDefense);
+            return garrisonDefense() + watch;
         if (s == Specialty.OUTPOST)
-            return Math.max(0f, tuning().specialtyOutpostDefense);
-        return 0f;
+            return outpostDefense() + watch;
+        return watch;
     }
 
     // Research towns are counted over every POI; the Lab's list asks for each set's row, so the count is kept a second.
@@ -173,8 +224,7 @@ public final class TownSpecialties {
                 if (of(poi) == Specialty.RESEARCH)
                     towns++;
         }
-        TuningData t = tuning();
-        researchBonusMemo = Math.max(0f, Math.min(t.specialtyResearchCap, towns * t.specialtyResearchPerTown));
+        researchBonusMemo =Math.max(0f, Math.min(researchCap(), towns * researchPerTown())); // round 774: Grand Library
         if (towns != researchTownsLogged) {
             researchTownsLogged = towns;
             System.out.println("[TFR-Specialty] Research: " + towns + " Research town(s) -> research +"
@@ -202,9 +252,13 @@ public final class TownSpecialties {
     /** Market: a card shop's price in this town, times this (ShopActor.getPriceModifier). The Armory family is not a
      *  card shop. */
     public static float marketPriceFactor(PointOfInterestChanges changes, String shopName) {
-        if (of(changes) != Specialty.MARKET || EconomyBuildings.isArmoryShopName(shopName))
+        boolean armory = EconomyBuildings.isArmoryShopName(shopName);
+        Specialty s = of(changes);
+        if (armory && s == Specialty.SMITHY) // round 774: Master Smiths
+            return armoryFactor();
+        if (s != Specialty.MARKET || armory)
             return 1f;
-        return Math.max(0f, tuning().specialtyMarketPriceFactor);
+        return marketFactor();
     }
 
     /** Market: this town's free restock of the week is still there (RewardScene). */
@@ -229,15 +283,20 @@ public final class TownSpecialties {
     public static boolean offerAfterRestore(MapStage stage, Runnable after) {
         PointOfInterest poi = TileMapScene.instance().rootPoint;
         PointOfInterestChanges changes = stage.getChanges();
+        // Round 774: a realm milestone this restore reached is offered after the specialty, or in its place.
+        Runnable next = () -> {
+            if (!RealmMilestones.offerWaiting(stage, after, "restore"))
+                after.run();
+        };
         if (!eligible(poi, changes))
-            return false;
+            return RealmMilestones.offerWaiting(stage, after, "restore");
         // A sacked town keeps its old changes entry; restoring it is a fresh start.
         changes.setSpecialty(null);
         changes.setSpecialtyChangedDay(-1);
         changes.setMarketFreeRestockWeek(-1);
         changes.setSpecialtyAsked(true);
         invalidate();
-        showChoice(stage, poi, changes, false, "restored", after);
+        showChoice(stage, poi, changes, false, "restored", next);
         return true;
     }
 
@@ -249,11 +308,13 @@ public final class TownSpecialties {
                 return;
             PointOfInterest poi = TileMapScene.instance().rootPoint;
             PointOfInterestChanges changes = stage.getChanges();
-            if (!eligible(poi, changes) || changes.getSpecialty() != null || changes.isSpecialtyAsked())
+            if (!eligible(poi, changes) || changes.getSpecialty() != null || changes.isSpecialtyAsked()) {
+                RealmMilestones.offerOnEntry(stage); // round 774: a waiting realm boon asks once
                 return;
+            }
             changes.setSpecialtyAsked(true);
             System.out.println("[TFR-Specialty] " + poi.getDisplayName() + " has no specialty - asking on entry");
-            showChoice(stage, poi, changes, false, "first entry", null);
+            showChoice(stage, poi, changes, false, "first entry", () -> RealmMilestones.offerOnEntry(stage));
         } catch (Exception e) {
             e.printStackTrace(); // never break a map load
         }
@@ -263,13 +324,15 @@ public final class TownSpecialties {
     public static boolean offeredAtJobBoard() {
         if (TileMapScene.instance() == null || MapStage.getInstance() == null)
             return false;
-        return eligible(TileMapScene.instance().rootPoint, MapStage.getInstance().getChanges());
+        return eligible(TileMapScene.instance().rootPoint, MapStage.getInstance().getChanges())
+                || RealmMilestones.waitingAtJobBoard(); // round 774: a realm boon waits (the Capitol too)
     }
 
     /** TownRestoration.openJobBoardMenu: the specialty row - a free pick, the paid change, or the lock. */
     public static void addJobBoardRow(MapStage stage, Dialog dialog) {
         PointOfInterest poi = TileMapScene.instance().rootPoint;
         PointOfInterestChanges changes = stage.getChanges();
+        RealmMilestones.addJobBoardRow(stage, dialog); // round 774: a waiting realm boon, or where the realm stands
         if (!eligible(poi, changes))
             return;
         Specialty current = of(changes);

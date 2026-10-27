@@ -14264,6 +14264,83 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 774: realm milestones - a realm boon every 10 towns, new games and New Game+ only (2026-10-26)
+
+The user picked it from the night's list: "Already designed: every 10 towns you pick 1 of 3 realm-wide perks. It builds
+on tonight's town specialties. A design check with you first, then build." The design check
+(`notes\realm-milestones-774.md`) found that the original draft's one-off rewards (gear, blueprints, an Armory restock)
+repeat what Ascendance's level-up choices already give, and proposed lasting realm boons that build on the specialties,
+none adding duel power. The user: "Approve, new games only" - the ten decisions as recommended, with a flag of its own.
+
+- **The gate**: a saved `realmMilestones` string on `AdventurePlayer` (`RealmMilestones.State`, written as
+  `peak=..;reached=..;asked=..;grants=..;tithe=..;boons=..;waiting=..;offer=..` - one key, no save-bound class), made
+  in `create()` and made fresh in `resetForNewGamePlus()` when the plane's `realmMilestonesEnabled` (ConfigData, on in
+  TFR's config.json) is on, read in `load()`, stored only when present. An older save - the user's current specialty
+  game included - never sees a boon. It also needs town specialties (the masteries upgrade them).
+  `[TFR-Milestone] realm milestones: on|off (new game|loaded)`, `NG+: realm milestones on|reset`.
+- **What counts**: the peak - the most towns held at once, counted as the restore fee and the life bonus count them
+  (`countPlayerTowns`: restored, captured, Ring Cities, the Capitol, Orazca). `TownRestoration.updateTownLifeBonus`,
+  which already runs on every change of hands and on load, calls `RealmMilestones.onTownCountChanged`. Every
+  `milestoneEveryTowns` (10) of the peak queues a milestone. A lost town takes no boon away; winning it back earns none.
+  `[TFR-Milestone] peak 9 -> 10 (milestone 1 reached, 1 waiting)`.
+- **The offer**: 3 boons, rolled once per milestone and saved (a reload, "Later" or closing never re-rolls): slot 1 is
+  the mastery of the specialty with the most towns, if offerable; the rest are drawn from what is left. A mastery is
+  offered from `milestoneMasteryMinTowns` (2) towns of its specialty; Royal Grant only on research v2. A milestone with
+  nothing left to offer is skipped (logged). `[TFR-Milestone] offer for 10 towns: ...`.
+- **Where it is chosen**: right after the restore's specialty choice (`TownSpecialties.offerAfterRestore` chains it; in
+  Orazca, which takes no specialty, in its place); a milestone reached another way asks on entering any held town, once
+  (`asked`); "Later (at any of your towns' Job Board)" leaves it at the Job Board of every held town, the Capitol too
+  (`offeredAtJobBoard` opens the menu, `addJobBoardRow` adds "Realm boon (N towns): choose", or the disabled "Realm: N
+  towns (most M) - next boon at X"). Several wait oldest first. Permanent - no respec, no re-roll.
+- **The boons** (settings.json `milestone*`):
+
+| Boon | Picks | Effect | Where |
+|---|---|---|---|
+| Deep Veins | 1 | Mining towns' mines x2 (was x1.5) | `TownSpecialties.mineFactor` |
+| Grand Library | 1 | Research towns +7.5% each, cap 75% (40 days -> 23 at 10 towns) | `TownSpecialties.researchBonus` |
+| Watchtowers | 1 | Outposts lit x3 (x4 with an Outlook), 15% capture defense | `World.getTownVisionRadiusTiles`, `captureDefense` |
+| Master Smiths | 1 | a Smithy town's Armory items x0.8 | `TownSpecialties.marketPriceFactor` (ShopActor) |
+| Iron Garrisons | 1 | Garrison towns 35% capture defense | `captureDefense` |
+| Merchant Guild | 1 | Market towns' card shops x0.8 | `marketPriceFactor` |
+| Tithe | 2 | every held town pays 15 gold each payday (30 at two picks) | `RealmMilestones.processPaydays` from `EconomyBuildings.processPaydays` |
+| Town Watch | 2 | every held town +10% capture defense (20%) | `captureDefense` |
+| Lamplighters | 1 | every held town lights +1 tile | `World.getTownVisionRadiusTiles` |
+| Royal Grant | 2 | the next research is free and done at once | `ResearchMeter.startCost` / `start` |
+
+- The specialty list shows a mastered number and names it ("its mines pay +100% (Deep Veins)"). Lamplighters and
+  Watchtowers rebuild the towns' light and reveal the new ring at once (`[TFR-Milestone] Lamplighters: N town(s)
+  relit - X now lights N tile(s)`). Royal Grant's start costs no shards and is backdated so the same call finishes it;
+  the Lab's row reads "Royal Grant: free, done at once." and the set window "Royal Grant: research it now for free, done
+  at once." `[TFR-Milestone] Royal Grant used on KHM`.
+- **Capture defense** stacks: Garrison/Outpost (or their mastery) plus Town Watch, after the guards, beside the Outlook
+  and reputation; `townMinCaptureChance` (5%) still floors it. `[TFR-CaptureOdds]`'s `specialtyDefense` now names "no
+  specialty" and Town Watch - it read `TownSpecialties.of(target).label`, which a Town Watch town with no specialty would
+  have thrown on.
+- **Shown**: a "Realm boons: ... Most towns held: N; next boon at M." line on World Standings; Tithe in the Balance
+  Sheet's payday line, a payday notice ("Tithe: your N towns pay G[+Gold].") and `[TFR-Milestone] Tithe: N town(s) pay
+  G gold (payday day D)`.
+- **Console** (cheats): `milestone` (state), `milestone peak N` (queue the milestones it passes), `milestone offer` (open
+  the choice in a held town), `milestone pick <id>` (a free extra when none waits), `milestone clear`.
+- **Seen in a test package** (a worktree at HEAD plus these files, `build_standalone.py --out agent-774`, a copied agent
+  profile, `milestoneEveryTowns` 2 in that copy only, 1280x720): a new game logged "on (new game)"; restoring Yellowseed
+  (Mining) left peak 1 and no boon; restoring Camp Hornwall (Market) opened "Your realm reaches 2 towns. Choose a realm
+  boon." after the specialty choice, offering Lamplighters, Royal Grant and Tithe - no mastery with one town of each
+  (r774-1). "Later" left it; re-entering did not ask again; the Job Board showed "Realm boon (2 towns): choose" (r774-2)
+  and, after Lamplighters, the disabled realm line (r774-3, "2 town(s) relit"). With Camp Hornwall set to Mining and
+  `milestone peak 4`, the next entry led with Deep Veins (`lead: Mining, 2 towns`, r774-4); the build menu then read Gold
+  Mine 200 and Shard Mine 40 (r774-5). Town Watch: the town info read "Mining, capture defense +10%". World Standings
+  (r774-6) and the Balance Sheet's "tithe +30" (r774-7). Slot 38 saved and loaded back intact. Royal Grant: Orazca
+  restored (no specialty, so the dialog-less restore path), the Capitol raised by cheat, the Lab's row said free (r774-8);
+  Research unlocked KHM at once, shards unchanged (r774-9). An older save (slot 61, only loaded) logged "off (an older
+  save)", no Standings line (r774-10). A second package with the EconomyBuildings line: slot 38 and `days skip 7` twice
+  logged `Tithe: 2 town(s) pay 30 gold (payday day 8)` and `day 15`, gold +60. forge.log: no exceptions. Every duel ran
+  at 50x.
+- **Not seen live**: New Game+ (the bridge stayed on the NG+ slot list; the code sits beside round 760's switch), a real
+  AI capture roll with Town Watch, and Watchtowers, Master Smiths, Iron Garrisons, Merchant Guild and Grand Library in
+  play (each is one tunable read in a round-760 effect method). Not done: map icons, a re-roll, a respec.
+- A pre-existing look, left as it is: the Balance Sheet's payday line drops its `[%90]` size after the first `[]`, so
+  "tithe" and "wages" print larger than "mines".
+
 ## Round 773: the build menu opens at once, and towns load their shops faster (2026-10-26)
 
 The user: "when you go into a town or cap and go into a ruined building to choose something to build. The first time

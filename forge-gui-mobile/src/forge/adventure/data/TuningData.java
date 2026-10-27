@@ -415,6 +415,28 @@ public class TuningData {
     public float specialtyMarketPriceFactor = 0.9f;
     public float specialtyChangeFeeShare = 0.5f;
     public int specialtyChangeLockDays = 7;
+
+    // Round 774 - realm milestones (util/RealmMilestones; notes/realm-milestones-774.md): every milestoneEveryTowns of
+    // the most towns ever held at once, the player picks 1 of 3 realm boons. A specialty's mastery is offered from
+    // milestoneMasteryMinTowns towns of it. Deep Veins: Mining towns' mines x milestoneDeepVeinsMineFactor. Grand
+    // Library: Research towns milestoneLibraryPerTown each, cap milestoneLibraryCap. Watchtowers: an Outpost's light
+    // multiplier + milestoneWatchtowerLight, its defense milestoneWatchtowerDefense. Master Smiths: a Smithy town's
+    // Armory x milestoneSmithsArmoryFactor. Iron Garrisons: milestoneIronGarrisonDefense. Merchant Guild: Market card
+    // shops x milestoneMerchantPriceFactor. Tithe: milestoneTitheGold a held town each payday, a pick. Town Watch:
+    // milestoneTownWatchDefense off the capture roll in every held town, a pick. Lamplighters: +milestoneLamplighterTiles.
+    public int milestoneEveryTowns = 10;
+    public int milestoneMasteryMinTowns = 2;
+    public float milestoneDeepVeinsMineFactor = 2.0f;
+    public float milestoneLibraryPerTown = 0.075f;
+    public float milestoneLibraryCap = 0.75f;
+    public int milestoneWatchtowerLight = 1;
+    public float milestoneWatchtowerDefense = 0.15f;
+    public float milestoneSmithsArmoryFactor = 0.8f;
+    public float milestoneIronGarrisonDefense = 0.35f;
+    public float milestoneMerchantPriceFactor = 0.8f;
+    public int milestoneTitheGold = 15;
+    public float milestoneTownWatchDefense = 0.10f;
+    public int milestoneLamplighterTiles = 1;
     // Round 457 (the user: "Let's change the bank Deposit and Withdrawal amounts to 500", after a player asked for 1k
     // instead of 100): the gold one Bank Deposit / Withdraw press moves (EconomyBuildings.bankStep()).
     public int bankStepGold = 500;

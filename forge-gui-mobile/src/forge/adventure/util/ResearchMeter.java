@@ -137,6 +137,8 @@ public final class ResearchMeter {
 
     /** What starting this set costs now: the base less researchShardCutAtFull x sqrt(fill) of it. */
     public static int startCost(AdventurePlayer player, String code) {
+        if (RealmMilestones.royalGrantReady()) // round 774: a realm boon's Royal Grant pays the next start
+            return 0;
         double cut = Math.max(0, Math.min(1, tuning().researchShardCutAtFull));
         return (int) Math.round(baseCost() * (1 - cut * reach(player, code)));
     }
@@ -585,10 +587,15 @@ public final class ResearchMeter {
 
     /** The Lab's Research button: pays, starts, and finishes at once when the meter left no days. */
     public static void start(AdventurePlayer player, String code, int currentDay) {
+        // Round 774: a Royal Grant starts it free and done at once - started far enough back that today's check finds it
+        // finished, whatever its length.
+        boolean grant = RealmMilestones.royalGrantReady();
         int cost = startCost(player, code);
-        int days = daysIfStarted(player, code);
+        int days = grant ? 0 : daysIfStarted(player, code);
         player.takeShards(cost);
-        player.startResearch(code, currentDay);
+        player.startResearch(code, grant ? currentDay - unfedDays() * 10 - 1 : currentDay);
+        if (grant)
+            RealmMilestones.useRoyalGrant(code);
         System.out.println("[TFR-Research] start " + code + " on day " + currentDay + ": meter " + fmt(points(player, code))
                 + "/" + meterSize(code) + " (" + Math.round(fill(player, code) * 100) + "%), paid " + cost + " of "
                 + baseCost() + " shards, " + days + " day(s)" + (days == 0 ? " - done at once" : " (done day "

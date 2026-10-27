@@ -7280,10 +7280,11 @@ public class World implements Disposable, SaveFileContent {
         }
         boolean outlook = changes != null && changes.hasEconomyBuildingOfType(EconomyBuildings.OUTLOOK);
         if (!isCapitol && forge.adventure.util.TownSpecialties.isOutpost(changes))
-            r *= outlook ? 3 : 2; // round 760: an Outpost town is lit as if it had an Outlook; with one, as the Capitol's
+            r *= (outlook ? 3 : 2) // round 760: an Outpost town is lit as if it had an Outlook; with one, as the Capitol's
+                    + forge.adventure.util.RealmMilestones.watchtowerLight(); // round 774: Watchtowers, one step more
         else if (outlook)
             r *= isCapitol ? 3 : 2;
-        return r;
+        return r + forge.adventure.util.RealmMilestones.lamplighterTiles(); // round 774: Lamplighters
     }
 
     // Lazily-resolved "player" biome bit for isPersistentlyRevealed()'s ownership check; -2 =

@@ -89,6 +89,8 @@ public class ConfigData {
     public boolean pillageEnabled = false;
     /** Round 760: town specialties (util/TownSpecialties) - games started, or taken into New Game+, on round 760 or later. */
     public boolean townSpecialtiesEnabled = false;
+    /** Round 774: realm milestones (util/RealmMilestones) - games started, or taken into New Game+, on round 774 or later. */
+    public boolean realmMilestonesEnabled = false;
     /** Round 493: Ascendance, the player's level (util/Ascendance) - read when a run starts (New Game, New Game+). */
     public boolean ascendanceEnabled = false;
     public boolean dungeonRotationEnabled = false;

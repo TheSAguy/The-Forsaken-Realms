@@ -1692,6 +1692,7 @@ public class TownRestoration {
     private static final int TOWNS_PER_LIFE = 5;
 
     public static void updateTownLifeBonus(boolean notify) {
+        RealmMilestones.onTownCountChanged(notify); // round 774: the realm's peak, and any milestone it reaches
         int target = countPlayerTowns() / TOWNS_PER_LIFE + (capitolExists() ? 1 : 0);
         int delta = Current.player().applyTownLifeBonus(target);
         if (delta == 0)

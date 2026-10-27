@@ -38,6 +38,19 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 774 - realm milestones (new games and New Game+ only)
+
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - the saved `realmMilestones` string
+  (`RealmMilestones.State`): made in `create()`, made fresh in `resetForNewGamePlus()`, read in `load()`, stored by
+  `save()` only when present, cleared in `clear()`; `getRealmMilestones()`. TFR-owned blocks beside round 760's.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** (STOCK) - `realmMilestonesEnabled`, default false.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** (STOCK) - `getTownVisionRadiusTiles`: an Outpost's
+  multiplier + `RealmMilestones.watchtowerLight()`, and + `lamplighterTiles()` for every held town.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK) - the `milestone` command.
+- Mod files: NEW `util/RealmMilestones.java`; `util/TownSpecialties.java`, `util/TownRestoration.java`,
+  `util/TerritoryControl.java`, `util/EconomyBuildings.java`, `util/BalanceSheet.java`, `util/ResearchMeter.java`,
+  `scene/ResearchScene.java`, `scene/WorldStandingsScene.java`, `data/TuningData.java`; settings.json, config.json, GUIDE.
+
 ### Round 773 - the build menu opens at once, faster shop stock
 
 - **`forge-gui-mobile/src/forge/adventure/util/CardUtil.java`** (STOCK) - `CardPredicate.test()`'s edition branch: the

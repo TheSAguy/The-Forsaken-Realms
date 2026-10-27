@@ -291,6 +291,8 @@
     "pillageEnabled": true,
     // Round 760: town specialties (new games and New Game+ only; an older save never sees them).
     "townSpecialtiesEnabled": true,
+    // Round 774: realm milestones - every 10 towns, a realm boon (new games and New Game+ only).
+    "realmMilestonesEnabled": true,
     "ascendanceEnabled": true,
     "dungeonRotationEnabled": true,
     "sideQuestTimerEnabled": true,

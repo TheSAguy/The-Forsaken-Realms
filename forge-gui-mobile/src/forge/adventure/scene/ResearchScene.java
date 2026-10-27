@@ -652,6 +652,8 @@ public class ResearchScene extends UIScene {
         String hint = next.isEmpty() ? "" : " - " + Character.toLowerCase(next.charAt(0)) + next.substring(1);
         if (player.isResearching(code))
             return "Researching: " + ResearchMeter.daysText(days) + " left" + hint + ".";
+        if (forge.adventure.util.RealmMilestones.royalGrantReady()) // round 774: a realm boon pays the next start
+            return "Royal Grant: free, done at once.";
         String start = "Start: " + ResearchMeter.startCost(player, code) + "[+Shards]";
         if (days == 0)
             return "Ready, no wait. " + start;
@@ -676,6 +678,8 @@ public class ResearchScene extends UIScene {
         if (running) {
             body.append("Researching: ").append(ResearchMeter.daysText(days)).append(" left. Cards given now shorten it;")
                     .append(" the [+Shards] paid to start stay spent.\n");
+        } else if (forge.adventure.util.RealmMilestones.royalGrantReady()) { // round 774: a realm boon pays this start
+            body.append("Royal Grant: research it now for free, done at once.\n");
         } else if (days == 0) {
             body.append("Ready: research it now for ").append(ResearchMeter.startCost(player, code))
                     .append("[+Shards], with no wait. More of its cards only pay gold.\n");

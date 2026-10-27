@@ -157,9 +157,11 @@ public class BalanceSheet {
         // Mines line said so every week - the varying figure was this projection, which folded BANK
         // INTEREST into one total without naming it. Interest moves with the bank balance, so the
         // number moved. Broken out, it explains itself.
+        int tithe = RealmMilestones.titheProjected(); // round 774: a realm boon's Tithe, at today's towns
         EconomyBuildings.addContentRow(dialog, "[%90]Day " + nextPayday + " payday: mines [GREEN]+"
                 + next.goldIn + "[+Gold][]"
                 + (next.interestIn > 0 ? ", interest [GREEN]+" + next.interestIn + "[+Gold][]" : "")
+                + (tithe > 0 ? ", tithe [GREEN]+" + tithe + "[+Gold][]" : "")
                 + ", wages [RED]-" + next.goldOut() + "[+Gold]"
                 + (next.shardsOut() > 0 ? " -" + next.shardsOut() + "[+Shards]" : "") + "[]");
 

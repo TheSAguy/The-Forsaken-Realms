@@ -860,6 +860,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         researchPoints.clear();
         researchFedNames.clear();
         townSpecialties = false; // round 760: create() and New Game+ turn it on; load() reads the save's own
+        realmMilestones = null; // round 774: the same
     }
 
     static public AdventurePlayer current() {
@@ -895,6 +896,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // Round 760 - town specialties (util/TownSpecialties; the user: "New game or NG+ features"). True for a game created,
     // or taken into New Game+, on round 760 or later; a save without the key never sees a specialty.
     private boolean townSpecialties = false;
+    // Round 774 - realm milestones (util/RealmMilestones; the user: "Approve, new games only"). Not null for a game
+    // created, or taken into New Game+, on round 774 or later; saved as one "realmMilestones" string, absent before.
+    private forge.adventure.util.RealmMilestones.State realmMilestones = null;
 
     // Bronze Coin ante ransom (user spec 2026-08-29). Enemy NAMES the player has bought their
     // ante back from with a Bronze Challenge Coin; beating an enemy of that name later reclaims
@@ -1020,6 +1024,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // Round 760: a new game runs town specialties (on a plane that has them).
         townSpecialties = forge.adventure.util.TownSpecialties.planeEnabled();
         System.out.println("[TFR-Specialty] town specialties: " + (townSpecialties ? "on" : "off") + " (new game)");
+        // Round 774: a new game has realm milestones (on a plane that has them).
+        realmMilestones = forge.adventure.util.RealmMilestones.planeEnabled() ? new forge.adventure.util.RealmMilestones.State() : null;
+        System.out.println("[TFR-Milestone] realm milestones: " + (realmMilestones != null ? "on" : "off") + " (new game)");
 
         // Shop-type blueprints (2026-08-30): 3 color shops + 2 race tribal shops. Placed here,
         // after heroRace is set above, since the race grant is keyed off it.
@@ -1228,6 +1235,13 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (!townSpecialties && forge.adventure.util.TownSpecialties.planeEnabled()) {
             townSpecialties = true;
             System.out.println("[TFR-Specialty] NG+: town specialties on");
+        }
+        // Round 774: New Game+ starts the new run with realm milestones, from nothing (the new world's towns start
+        // unrestored, so the peak and the boons start again).
+        if (forge.adventure.util.RealmMilestones.planeEnabled()) {
+            System.out.println("[TFR-Milestone] NG+: realm milestones " + (realmMilestones == null ? "on" : "reset (were "
+                    + realmMilestones.summary() + ")"));
+            realmMilestones = new forge.adventure.util.RealmMilestones.State();
         }
         seedStartingShopTypes(heroRace);
 
@@ -2234,6 +2248,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // Round 760: town specialties - a save without the key is from before round 760 and never has them.
         townSpecialties = data.containsKey("townSpecialties") && data.readBool("townSpecialties");
         System.out.println("[TFR-Specialty] town specialties: " + (townSpecialties ? "on" : "off (an older save)") + " (loaded)");
+        // Round 774: realm milestones - a save without the key is from before round 774 and never has them.
+        realmMilestones = data.containsKey("realmMilestones")
+                ? forge.adventure.util.RealmMilestones.State.decode(data.readString("realmMilestones")) : null;
+        forge.adventure.util.RealmMilestones.logLoaded(realmMilestones);
         researchPoints.clear();
         researchFedNames.clear();
         if (data.containsKey("researchPointsList")) {
@@ -2339,6 +2357,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // Round 751: research v2 (see load()). Stored only by a v2 save, so a classic save's file is unchanged.
         if (townSpecialties) // round 760: stored only by a save that has them
             data.store("townSpecialties", true);
+        if (realmMilestones != null) // round 774: the same
+            data.store("realmMilestones", realmMilestones.encode());
         if (researchV2) {
             data.store("researchV2", true);
             ArrayList<String> pointsList = new ArrayList<>();
@@ -3395,6 +3415,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     /** Round 760: this save has town specialties (util/TownSpecialties). */
     public boolean hasTownSpecialties() {
         return townSpecialties;
+    }
+
+    /** Round 774: this save's realm milestones (util/RealmMilestones), or null - a save from before round 774. */
+    public forge.adventure.util.RealmMilestones.State getRealmMilestones() {
+        return realmMilestones;
     }
 
     /** Round 751: research v2's points per set (ResearchMeter). */

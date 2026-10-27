@@ -3409,6 +3409,7 @@ public class EconomyBuildings {
         // elapses, not only when the player happens to revisit the Lab.
         AdventurePlayer.current().checkResearchCompletion(newDayCount);
         TempleOfferings.onDaysPassed(newDayCount); // round 559: a new week - the Temple's offering, and a fresh tally
+        RealmMilestones.processPaydays(newDayCount); // round 774: a realm boon's Tithe, every payday since it last paid
         // Bounded scan over the world's own fixed POI registry (2026-08-25 perf fix - user
         // report: day-end stutter "not as bad [as the claimWastelandRing fix], but there...
         // getting worse"). getAllPointOfInterestChanges() returns every PointOfInterestChanges
