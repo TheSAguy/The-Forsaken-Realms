@@ -1796,6 +1796,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
         String discord = Config.instance().getConfigData().welcomePopupLink;
         if (discord != null && !discord.isEmpty())
             links.add(new String[]{"Discord", discord});
+        // Round 767 (the user: "add the Ko-fi link/button next to the discord button on the welcome scroll"): the
+        // Settings row's label and link; InfoTextScene.openLink sends it through SupportPrompt.open, like Settings.
+        String support = forge.adventure.util.SupportPrompt.supportLink();
+        if (support != null)
+            links.add(new String[]{"Support TFR", support});
         String guide = guideLink();
         if (guide != null)
             links.add(new String[]{"Game Guide & FAQ", guide});

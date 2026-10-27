@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 767: Ko-fi button on the welcome scroll (2026-10-26)
+
+The user: "Can you add the Ko-fi link/button next to the discord button on the welcome scroll."
+
+- `WorldStage.showWelcomeDialog()` adds a "Support TFR" button (the Settings row's label, round 756) between Discord
+  and Game Guide & FAQ, only when the plane names a `supportLink` (`SupportPrompt.supportLink()`).
+- `InfoTextScene.openLink()` sends that link through `SupportPrompt.open()`, as the Settings row does: it logs
+  `[TFR-Support] open <url>` and does not set `supportClicked`, so the play-time asks still come (round 756's
+  follow-up: only a Support TFR click in an ask stops them).
+- TFR's `welcomePopupText` gains a paragraph before the sign-off: "Enjoying the Realms? TFR is free, and the Support
+  TFR button above opens the developer's Ko-fi page." Seen after a package.
+- Checked in the agent game at 1280x720 (the 480x270 virtual layout phones use too): the three buttons sit on one row
+  with room to spare (`notes	weaks-1026767-welcome.png`); the click logged `[TFR-Support] would open
+  https://ko-fi.com/thesaguy (TFR_SUPPORT_NO_BROWSER)`.
+
 ## Round 765: town badge moves to a free corner in tight clusters (2026-10-26)
 
 The user, after round 763's badges: "When a town's badge would cover another map icon at its top-right corner, move it

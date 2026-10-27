@@ -118,6 +118,12 @@ public class InfoTextScene extends UIScene {
      * anything else, or a failure, still goes through openURI. Grep forge.log for [TFR-Welcome].
      */
     static void openLink(String url) {
+        // Round 767: the welcome scroll's Support TFR button opens like the Settings row - SupportPrompt.open logs
+        // [TFR-Support] and, as in Settings, does not set supportClicked, so the play-time asks still come.
+        if (url.equals(forge.adventure.util.SupportPrompt.supportLink())) {
+            forge.adventure.util.SupportPrompt.open(url);
+            return;
+        }
         if (url.startsWith("file:")) {
             try {
                 java.io.File file = new java.io.File(new java.net.URI(url)).getCanonicalFile();
