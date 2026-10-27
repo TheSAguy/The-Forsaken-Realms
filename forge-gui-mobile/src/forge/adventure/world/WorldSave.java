@@ -226,12 +226,22 @@ public class WorldSave {
             mainData.store("worldStage", worldStageData);
             mainData.store("pointOfInterestChanges", poiData);
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            // Round 770: a new game has no header name until its first save, and the header's writeUTF(null)
+            // threw - the load then ran without a rollback. "" stands in for the snapshot only (the next save
+            // names it anyway); the live header gets its null back even if the write throws.
+            String liveName = header.name;
+            boolean unsaved = liveName == null;
+            if (unsaved)
+                header.name = "";
             try (DeflaterOutputStream def = new DeflaterOutputStream(bytes);
                  ObjectOutputStream oos = new ObjectOutputStream(def)) {
                 oos.writeObject(header);
                 oos.writeObject(mainData);
+            } finally {
+                header.name = liveName;
             }
-            System.out.println("[TFR-Load] rollback snapshot taken (" + bytes.size() + " bytes)");
+            System.out.println("[TFR-Load] rollback snapshot taken (" + bytes.size() + " bytes"
+                    + (unsaved ? ", a new game not saved yet" : "") + ")");
             return bytes.toByteArray();
         } catch (Exception e) {
             System.err.println("[TFR-Load] no rollback snapshot: " + e);

@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 770 - the load rollback snapshot after a new game
+
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** - `snapshotForRollback()` (TFR's round 183 method):
+  a null `header.name` (a new game not saved yet) is written as "" for the snapshot only and restored in a `finally`;
+  the stock `WorldSaveHeader.writeObject`'s `writeUTF(null)` threw. `WorldSaveHeader` and the save format untouched.
+
 ### Round 769 - the engine to the 10.26 daily (upstream `0dc8c66996e`)
 
 - 17 conflicts (detail in MOD_CHANGELOG round 769). Most from upstream `9748136a531` (lazy town loading + async save)

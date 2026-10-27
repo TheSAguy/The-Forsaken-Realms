@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 770: the load rollback snapshot works right after a new game (2026-10-26)
+
+Round 769's smoke test logged `[TFR-Load] no rollback snapshot: java.lang.NullPointerException: Cannot invoke
+"String.length()" because "s" is null` when a save was loaded straight after a brand-new game that had not saved yet.
+Round 183's load snapshots the running game first, so a failed load can put it back. A new game counts as running
+(`liveGame`), but its `header.name` stays null until the first save, and the stock `WorldSaveHeader.writeObject` calls
+`writeUTF(name)`. The snapshot threw, and that load ran with no rollback copy: had it failed after touching the game,
+saving would have been switched off instead of the new game coming back. The code predates round 769.
+
+- `WorldSave.snapshotForRollback()`: when `header.name` is null, the snapshot writes "" in its place and gives the live
+  header its null back in a `finally`, so an exception cannot leave the header changed. A rolled-back new game carries
+  the name "" until its next save names it; nothing reads `currentSave.header.name` in between.
+- Not taken: skipping the snapshot when nothing has been saved yet. A new game is a real game worth restoring, and a skip
+  would turn a failed load into "saving is OFF" instead. `WorldSaveHeader` and the save format are unchanged.
+- Log: `[TFR-Load] rollback snapshot taken (N bytes, a new game not saved yet)`; a saved game's line is unchanged.
+
+Checked in the agent game (javac `WorldSave` classes ahead of the agent jar; profile backed up and restored byte for
+byte): before the fix, New Game then `load slot=1` logged the NPE line; with it, the same steps logged `[TFR-Load]
+rollback snapshot taken (2059026 bytes, a new game not saved yet)` and the load succeeded. Not exercised: a failed load
+actually rolling back to a never-saved game (no corrupt save was built); it reads the same bytes as round 183's tested
+path. Maven `-pl forge-gui-mobile-dev -am package` exit 0.
+
 ## Round 769: the engine to the 10.26 daily (upstream `0dc8c66996e`) (2026-10-26)
 
 The user installed the 10.26 Forge daily as BASE_INSTALL: "I've updated the Base Forge game, can you merge:
