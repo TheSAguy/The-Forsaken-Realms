@@ -448,6 +448,9 @@ public class WorldSave {
         // every string falls back to the main properties (Localizer.lookup), so this is a no-op here.
         Forge.getLocalizer().loadAdventureBundle(Config.instance().getPlanePath(Config.instance().getSettingData().plane) + "languages/");
         currentSave.pointOfInterestChanges.clear();
+        // Round 822: a custom difficulty's values are in place before world generation reads them, and diff becomes a
+        // copy of the preset with its difficulty overrides on (the preset itself when there are none).
+        diff = forge.adventure.util.CustomDifficulty.beginNewGame(diff);
         // Round 241: world-gen thins the wasteland towns by difficulty, and the player (who carries the
         // difficulty) is only created below - so the World is told first.
         currentSave.world.setGenerationDifficulty(diff == null ? null : diff.name);
@@ -462,6 +465,7 @@ public class WorldSave {
         // editions are pulled back OUT of the AI color shards here, right after create()
         // establishes who the player is.
         forge.adventure.util.EditionProgression.reservePlayerEditions(currentSave.world, currentSave.player);
+        forge.adventure.util.CustomDifficulty.onCreated(currentSave.player); // round 822: the overrides go on the save
 
         currentSave.player.setWorldPosY((int) (currentSave.world.getData().playerStartPosY * currentSave.world.getData().height * currentSave.world.getTileSize()));
         currentSave.player.setWorldPosX((int) (currentSave.world.getData().playerStartPosX * currentSave.world.getData().width * currentSave.world.getTileSize()));

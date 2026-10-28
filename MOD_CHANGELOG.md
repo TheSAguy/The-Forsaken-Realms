@@ -14264,6 +14264,107 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 822: custom difficulty, part 1 - a save can carry its own difficulty on top of its preset (the override layer) (2026-10-28)
+
+The user, on a Discord player's suggestion (gnomedoom: "programmable difficulty settings that players can adjust on
+the fly"): "the current Difficulty levels are pre-sets, then you can fine tune it with the advanced menu. Basically
+Everything that in the "config tables" and TFR specific things in the In-game settings menu would go in here", then
+"We have time and bandwidth so let's do a very comprehensive custom difficulty ... Let's try and do all the phases."
+Study: `C:\TFR\notes\custom-difficulty-feasibility.md`; round plan for 823-833: `C:\TFR\notes\custom-difficulty-round-plan.md`.
+This round is the layer only. There is no UI yet beyond the `custom` console command.
+
+- **What a custom save is**: its preset (Easy/Normal/Hard/Insane, kept as `difficultyData.name`, so every
+  difficulty-by-name rule - `isHardorInsaneDifficulty`, TuningData's `...For(name)` switches,
+  `TerritoryControl.difficultyIndex()`, Ascendance's `difficultyNames` - is unchanged), plus a map of knob id ->
+  value (`AdventurePlayer.customDifficulty`), saved as one `customDifficulty` string (`id=value;id=value`). The key is
+  absent when the map is empty, so an older save loads as its preset with nothing new written.
+- **The gate**: `config tables/custom_difficulty.json` defines every knob:
+  - id, label, category, group, tooltip, scope (`anytime` / `newGame`), level (`basic` / `expert`), mode (`set` /
+    `scale`), min/max/step and the targets.
+  - A save value with no knob is dropped, and one outside min..max is clamped, with a `[TFR-Custom]` line for each. A
+    hand-edited save or a later share code can only reach what the file lists.
+  - The file is the plane's opt-in: a plane without it (every stock plane) has no knobs, so nothing applies.
+  - The header documents the never-list and why: `speedUpMultiplier` (the agent's 50x), `enemySpriteFrameCap`, the
+    five Wrath pathfinding timings, `spawnClockFollowsSpeedUp`.
+  - Each knob is validated at read time: every target must name a number or true/false field, and all of a knob's
+    targets must be of one kind. A bad knob is skipped with a line.
+- **Targets**:
+  - `tuning.field`: a TuningData field. `Config` now keeps the plane's own settings.json (`getBaseTuningData()`), and
+    `getTuningData()` returns the running save's copy (`setEffectiveTuningData`): a reflective copy of every public
+    field, arrays cloned, with the overrides written on. None of the ~190 `getTuningData()` reads in 53 files changed
+    (the code graph lists no callers for the getter; grep finds 82 direct reads and 106 local fetches).
+  - `tuning.field{D}` (the Easy..Insane set, such as `attackingMages{D}`) and `tuning.field[*]` (every entry of a
+    per-difficulty array): the value goes into every column. A knob then means the same on any preset, a New Game+
+    onto another preset keeps it, and the New Game+ world generation (which runs before the new preset is applied)
+    reads it.
+  - `difficulty.field`: the save's own DifficultyData copy. It is also put over the config preset where a run reads
+    that preset (`withOverrides`): the Ring Cities' gifts (`grantRingGift`), New Game+'s "cards only" purse
+    (`applyNewGamePlusCarry`) and `updateDifficulty` (New Game+ with a picked preset).
+  - A `scale` knob multiplies each target's own base value (the plane's settings.json, or the config preset).
+- **When it applies**:
+  - New game: `WorldSave.generateNewWorld` takes the pending map (`CustomDifficulty.beginNewGame`) before
+    `setGenerationDifficulty`/`generateNew`, so world generation reads the custom values. The player is created from
+    a copy of the preset with the difficulty overrides on (never the config's own object), and `onCreated` puts the
+    map on the save.
+  - Load: first in `AdventurePlayer.load()` (after the roaming-guard and ledger reads). A save without overrides puts
+    the plane's own values back, since the last game may have been custom. After the load's SPECIAL CASES block, the
+    difficulty overrides are written again, so round 548's sell-factor refresh and the shard-ratio refresh no longer
+    overwrite a custom value.
+  - The rollback snapshot (round 183) goes through `player.save()`/`load()`, so it carries the map too.
+  - New Game+ keeps the map (`resetForNewGamePlus` does not touch it).
+- **Logs**:
+  - `[TFR-Custom] N knob(s) from config tables/custom_difficulty.json` once per launch.
+  - `[TFR-Custom] load: / new game: / New Game+: Custom (Hard), N override(s): id preset -> value, ...` with the
+    preset's own values.
+  - `dropped` / `clamped` lines.
+  - `[TFR-Custom] changed id a -> b (clamped from x) on day N (console), now Custom (Hard) with N override(s)` for
+    every change mid-run.
+  - `[TFR-Session] game load/new ... difficulty=Custom(Hard) custom=N`, and the footer's
+    `custom=N customChanges=K`.
+- **Console** `custom` (cheats):
+  - `custom`: the overrides, with the preset's value and the live value read back from the objects;
+  - `custom knobs`: every knob with type, range, scope, preset value and live value;
+  - `custom set ID VALUE` and `custom reset ID|all`: anytime knobs only (a newGame knob refuses);
+  - `custom next ID VALUE` and `custom next clear`: the next new game's map, which later rounds' Advanced panel fills
+    through `setPending`.
+- **The first 11 knobs**, one per path:
+  - Difficulty fields: `startingLife` (newGame), `enemyHealth`, `startingGold` (newGame, through the Ring's gift),
+    `sellFactor` (round 548's refresh), `shardSellRatio`.
+  - Scale: `mineOutput` (the four weekly Mine payouts).
+  - Tuning: `notorietyWinsPerLevel`; `notorietyDeckCard` (an array, `[*]`); `attackingMages` (a `{D}` set);
+    `neutralTownCut` (a `{D}` set, newGame, expert, world generation); `dayLength`.
+
+**Agent-tested** on a test copy (`agent-822`, a copy of the agent folder and profile, the new classes ahead of its
+jar, the json in its res; removed afterward):
+- an old save (slot 76) loads as "Normal: no overrides";
+- seven live sets, each read back from the live objects (`enemyLifeFactor=1.2`, `attackingMagesNormal=5`,
+  `mineWeeklyGoldPayout=200`, `notorietyDeckCardWinsByDifficulty[1]=30`, ...), with `dayLength 5` and `3` clamped to
+  60, `startingLife` refused mid-run, an unknown id and a non-number refused;
+- save to slot 90, then load slot 76: every live value back to Normal's; load slot 90: all seven back, `sellFactor`
+  0.9 surviving round 548's refresh;
+- `custom next` x5 then a new game: `[TFR-NeutralTowns] ... 20 configured - 5 for difficulty Normal`, life 33,
+  `[TFR-Custom] new game` line, the Ring's skip-intro gift paying 900 gold;
+- one duel at 50x: `[TFR-EnemyLife] Croaking Toad rawLife=9 enemyLifeFactor=0.7 -> difficultyScaled=6`;
+- New Game+ ("cards only", Normal) from the custom save: the `New Game+:` line with all five, life 33;
+- `custom reset sellFactor` and `reset all` restore the preset values;
+- the `session` footer shows `custom=0 customChanges=8`, then `custom=1 customChanges=9`.
+
+**Not tested**: a New Game+ onto a *different* preset (the agent bridge cannot drive the New Game+ difficulty select
+box). By design the `{D}` / `[*]` knobs fill every column and the difficulty knobs go through `updateDifficulty`'s
+`withOverrides`, so it should hold. Round 823's panel brings the screens to test it through.
+
+**Not done here** (the round plan has each):
+- the new-game panel; NewGameScene does not reset the tuning to the plane's own on enter, so its "?" dialog can show a
+  previous custom game's defeat gold loss until 823 adds that;
+- Settings > Difficulty;
+- the per-save rule toggles and plane flags (`rule.*` / `config.*` sources);
+- the other config tables' sources;
+- share codes.
+
+Files: `util/CustomDifficulty.java` (new), `util/Config.java`, `world/WorldSave.java`, `player/AdventurePlayer.java`,
+`util/SessionLog.java`, `stage/ConsoleCommandInterpreter.java`, `config tables/custom_difficulty.json` (new);
+`CORE_ENGINE_CHANGES.md` round 822.
+
 ## Round 820: the era booster shops are gone - the Capitol's booster lot opens up, and its era shop becomes the Booster Shop (2026-10-28)
 
 Round 819 found that the four era booster shops (Alpha "Ancient Archives" 1994-2004, Beta "The Planar Cache"

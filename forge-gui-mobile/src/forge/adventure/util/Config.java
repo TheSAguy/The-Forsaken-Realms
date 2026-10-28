@@ -45,6 +45,8 @@ public class Config {
     private final Map<String, FileHandle> Cache = new java.util.concurrent.ConcurrentHashMap<>();
     private ConfigData configData;
     private TuningData tuningData;
+    // Round 822: the plane's settings.json as loaded; tuningData is a save's custom-difficulty copy of it while one runs.
+    private TuningData baseTuningData;
     private SpawnTierWeightData spawnTierWeightData;
     private forge.adventure.data.ArmoryRarityData armoryRarityData;
     private forge.adventure.data.WarChampionData warChampionData;
@@ -199,6 +201,7 @@ public class Config {
         } else {
             tuningData = new TuningData();
         }
+        baseTuningData = tuningData;
 
         // Restricted Cards file (2026-08-22 user request: "create a Restricted card list in the
         // settings folder that we can add more cards to if needed" - part of the RoL/Commander
@@ -385,6 +388,16 @@ public class Config {
 
     public TuningData getTuningData() {
         return tuningData;
+    }
+
+    /** Round 822: the plane's own settings.json values, whatever custom difficulty the running save has. */
+    public TuningData getBaseTuningData() {
+        return baseTuningData != null ? baseTuningData : tuningData;
+    }
+
+    /** Round 822: CustomDifficulty puts a save's copy in place (null = the plane's own values again). */
+    public void setEffectiveTuningData(TuningData effective) {
+        tuningData = effective != null ? effective : getBaseTuningData();
     }
 
     public forge.adventure.data.ArmoryRarityData getArmoryRarityData() {

@@ -38,6 +38,29 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 822 - custom difficulty, the override layer
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** (STOCK): a `baseTuningData` field beside `tuningData`, set
+  to the loaded settings.json right after the tuning load; `getBaseTuningData()` and `setEffectiveTuningData(t)` (null =
+  the base again) after `getTuningData()`. `getTuningData()` itself is unchanged - it returns the running save's copy.
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** (STOCK) - `generateNewWorld`: after
+  `pointOfInterestChanges.clear()`, `diff = CustomDifficulty.beginNewGame(diff)` (before `setGenerationDifficulty` and
+  `generateNew`); after `reservePlayerEditions`, `CustomDifficulty.onCreated(currentSave.player)`. On a merge, the first
+  must stay ahead of world generation.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK):
+  - a `customDifficulty` map field (after `realmMilestones`) and `getCustomDifficulty()` (after `isResearchV2()`);
+  - `load()`: after `ResourceLedger.load`, the map is read from the optional `customDifficulty` key, sanitized and
+    applied to the tuning (`CustomDifficulty.applyTuning`); after `// END SPECIAL CASES`,
+    `CustomDifficulty.applyDifficulty(...)` and `logActive("load")` - so round 548's sell refresh and the shard-ratio
+    refresh no longer overwrite a custom value;
+  - `save()`: stores `customDifficulty` when the map is not empty (before `townSpecialties`);
+  - `updateDifficulty(diff)`: `diff = CustomDifficulty.withOverrides(customDifficulty, diff)` first;
+  - `applyNewGamePlusCarry` and `grantRingGift`: the config preset `cfg` goes through `withOverrides` after its lookup;
+  - `resetForNewGamePlus`: `CustomDifficulty.logActive("New Game+", this)` after the reset line.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK): the `custom` command, after
+  `session` (1 registration).
+- TFR files: `util/CustomDifficulty.java` (new), `util/SessionLog.java` (`difficulty=Custom(Hard) custom=N` in the
+  game lines, `custom=` / `customChanges=` in the footer), plane data `config tables/custom_difficulty.json` (new).
+
 ### Round 820 - the era booster shops are gone; the Capitol's booster lot opens up
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK):
   - A `boosterLotId` field after `noShopTileHiding`, reset in `loadMap()` beside `shopTierPools.clear()`.

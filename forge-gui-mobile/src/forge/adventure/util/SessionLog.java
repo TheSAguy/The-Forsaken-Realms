@@ -137,7 +137,8 @@ public final class SessionLog {
         sb.append("race=").append(p.raceName())
                 .append(" colors=").append(p.getColorIdentityLong())
                 .append(" mode=").append(p.getAdventureMode())
-                .append(" difficulty=").append(p.getDifficulty() == null ? "?" : p.getDifficulty().name)
+                .append(" difficulty=").append(p.getDifficulty() == null ? "?" : CustomDifficulty.logName(p)) // round 822: Custom(Hard)
+                .append(" custom=").append(CustomDifficulty.count(p))
                 .append(" ngplus=").append(p.getCharacterFlag("newGamePlus") > 0 ? 1 : 0)
                 .append(" notoriety=").append(AdventurePlayer.notorietyDisabled() ? "off" : "on")
                 .append(" specialties=").append(p.hasTownSpecialties() ? "on" : "off")
@@ -174,7 +175,10 @@ public final class SessionLog {
                     + " days=" + firstDay + "->" + day() + " level=" + firstLevel + "->" + Ascendance.level()
                     + " towns=" + firstTowns + "->" + TownRestoration.countPlayerTowns()
                     + " gold=" + signed(AdventurePlayer.current().getGold() - firstGold)
-                    + " images=" + imagesFetched + " errors=" + errors + " lastScene=" + lastScene());
+                    + " images=" + imagesFetched + " errors=" + errors
+                    + " custom=" + CustomDifficulty.count(AdventurePlayer.current()) // round 822: overrides, and changes this launch
+                    + (CustomDifficulty.changesThisLaunch() > 0 ? " customChanges=" + CustomDifficulty.changesThisLaunch() : "")
+                    + " lastScene=" + lastScene());
         } catch (Exception e) {
             System.out.println("[TFR-Session] end line failed: " + e);
         }

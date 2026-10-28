@@ -1,0 +1,87 @@
+{
+    // ============================================================================
+    // The Forsaken Realms - custom difficulty knobs (round 822, util/CustomDifficulty.java).
+    // A save can change ONLY what is listed here: a value with no knob is dropped on load, and one outside
+    // min..max is clamped. Deleting this file turns custom difficulty off (every save plays its preset).
+    //
+    // Each knob:
+    //   id        the save's key for it (letters, digits, '_' and '.'); never rename one a release has shipped
+    //   label     the name in the panel           tooltip   the full explanation
+    //   category  the panel's tab                 group     a sub-heading inside the tab
+    //   scope     "anytime" (Settings can change it mid-run) or "newGame" (new game and New Game+ only)
+    //   level     "basic" or "expert"
+    //   mode      "set" (the value replaces) or "scale" (the value multiplies each target's own value)
+    //   min, max, step   the range; a percent knob is still stored as its factor (1.2, not 120)
+    //   target / targets what it changes:
+    //     tuning.field         a field of settings.json (data/TuningData.java)
+    //     tuning.field{D}      the field's Easy/Normal/Hard/Insane set - the value goes into every column
+    //     tuning.field[*]      every entry of a per-difficulty array, the same way
+    //     difficulty.field     a field of the save's difficulty (config.json "difficulties", data/DifficultyData.java)
+    //
+    // Never listed here, on purpose (they are not difficulty, and a bad value reads as a bug):
+    //   speedUpMultiplier         the speed-up key's factor - the agent's 50x duels depend on it
+    //   enemySpriteFrameCap       a rendering cap
+    //   wrathDirectTiles, wrathReplanTiles, wrathReplanSeconds, wrathStuckSeconds, wrathWaitTiles
+    //                             the Wrath hunter's pathfinding timings (a bad value strands or teleports it)
+    //   spawnClockFollowsSpeedUp  the spawn clock's link to the speed-up key (a debugging switch)
+    // ============================================================================
+    "knobs": [
+        {
+            "id": "startingLife", "label": "Starting life", "category": "Enemies & Duels", "group": "You",
+            "target": "difficulty.startingLife", "min": 1, "max": 60, "step": 1, "scope": "newGame",
+            "tooltip": "Your life at the start of the run. Towns and the Ring Cities add to it as you go."
+        },
+        {
+            "id": "enemyHealth", "label": "Enemy health", "category": "Enemies & Duels", "group": "Enemies",
+            "target": "difficulty.enemyLifeFactor", "min": 0.3, "max": 4, "step": 0.05,
+            "tooltip": "Every enemy's starting life is multiplied by this (1 = its own life)."
+        },
+        {
+            "id": "startingGold", "label": "Starting gold", "category": "Economy", "group": "Starting kit",
+            "target": "difficulty.startingMoney", "min": 0, "max": 5000, "step": 25, "scope": "newGame",
+            "tooltip": "The gold the Ring Cities hand over at the start."
+        },
+        {
+            "id": "sellFactor", "label": "Card sell price", "category": "Economy", "group": "Selling",
+            "target": "difficulty.sellFactor", "min": 0.05, "max": 1, "step": 0.05,
+            "tooltip": "A card sells for this share of its price."
+        },
+        {
+            "id": "shardSellRatio", "label": "Shard sell ratio", "category": "Economy", "group": "Selling",
+            "target": "difficulty.shardSellRatio", "min": 0.05, "max": 1, "step": 0.05,
+            "tooltip": "The Shard Trader pays this share of 100 gold for each shard you sell."
+        },
+        {
+            "id": "mineOutput", "label": "Mine output", "category": "Economy", "group": "Income",
+            "mode": "scale", "min": 0, "max": 5, "step": 0.1,
+            "targets": ["tuning.mineWeeklyGoldPayout", "tuning.mineWeeklyWoodPayout", "tuning.mineWeeklyStonePayout",
+                        "tuning.mineWeeklyShardPayout"],
+            "tooltip": "Each Mine's weekly gold, wood, stone and shards, multiplied by this."
+        },
+        {
+            "id": "notorietyWinsPerLevel", "label": "Wins per Notoriety level", "category": "Notoriety", "group": "Levels",
+            "target": "tuning.notorietyWinsPerLevel", "min": 0, "max": 50, "step": 1,
+            "tooltip": "How many wins raise your Notoriety one level (the enemies' Walls grow with it). 0 turns Notoriety off."
+        },
+        {
+            "id": "notorietyDeckCard", "label": "Enemy deck card from Notoriety", "category": "Notoriety", "group": "Deck card",
+            "target": "tuning.notorietyDeckCardWinsByDifficulty[*]", "min": 0, "max": 200, "step": 5,
+            "tooltip": "From this Notoriety on, enemies start with one permanent from their own deck in play. 0 = never."
+        },
+        {
+            "id": "attackingMages", "label": "Attacking mages", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.attackingMages{D}", "min": 0, "max": 12, "step": 1,
+            "tooltip": "How many attacking mages each AI color can field at once at the start. Towns, Color Defeat and the Capitol add to it."
+        },
+        {
+            "id": "neutralTownCut", "label": "Fewer neutral towns", "category": "Towns & Territory", "group": "World",
+            "target": "tuning.worldGenNeutralTownCut{D}", "min": 0, "max": 15, "step": 1, "scope": "newGame", "level": "expert",
+            "tooltip": "How many of the 20 working neutral towns a new world leaves out (the five star towns always stay)."
+        },
+        {
+            "id": "dayLength", "label": "Day length (seconds)", "category": "Time & Pacing", "group": "Clock",
+            "target": "tuning.dayLengthSeconds", "min": 60, "max": 900, "step": 10,
+            "tooltip": "Real seconds per in-game day at normal speed. Shorter days bring every weekly event sooner."
+        }
+    ]
+}

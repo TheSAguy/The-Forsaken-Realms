@@ -1,0 +1,744 @@
+package forge.adventure.util;
+
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import forge.adventure.data.DifficultyData;
+import forge.adventure.data.TuningData;
+import forge.adventure.player.AdventurePlayer;
+import forge.adventure.world.WorldSave;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+/**
+ * Round 822 (the user: "a very comprehensive custom difficulty. All those settings we added in config tables";
+ * study notes/custom-difficulty-feasibility.md): a save's own difficulty, on top of its preset.
+ * <p>
+ * The preset (Easy/Normal/Hard/Insane) stays the save's difficulty and its name stays the key every difficulty rule
+ * reads ({@code isHardorInsaneDifficulty}, the {@code ...For(name)} switches, {@code difficultyIndex()}). A custom save
+ * also keeps a map of knob id -> value ({@code AdventurePlayer.customDifficulty}, saved as one "customDifficulty"
+ * string; absent = the preset, so an older save plays exactly as before). The knobs are defined in
+ * {@code config tables/custom_difficulty.json}: each names its targets, its range and its scope. A value with no knob
+ * there is dropped and one outside its range is clamped, so a hand-edited save or a shared code can only reach what the
+ * file exposes. A plane without the file (every stock plane) has no knobs, so nothing applies.
+ * <p>
+ * Targets:
+ * <ul>
+ * <li>{@code tuning.field}: a TuningData field. The save's values go into a per-save copy of the plane's settings.json
+ * ({@link Config#setEffectiveTuningData}); every existing {@code getTuningData()} read sees it unchanged.</li>
+ * <li>{@code tuning.field{D}}: the field's per-difficulty set (attackingMagesEasy ... Insane) and
+ * {@code tuning.field[*]}: every entry of a per-difficulty array. The value goes into EVERY column, so the knob means
+ * the same whatever preset the run uses - a New Game+ onto another preset keeps it, and world generation (which runs
+ * before New Game+ applies its new preset) reads it too.</li>
+ * <li>{@code difficulty.field}: a DifficultyData field on the player's own copy (life, enemy health, sell factor, the
+ * starting kit). Also applied over the config preset wherever a run reads that (the Ring's gifts, New Game+).</li>
+ * </ul>
+ * A knob's mode is "set" (the value replaces) or "scale" (the value multiplies each target's own base value).
+ * <p>
+ * Applied on every load (before anything else in the player's load), every new game (before world generation) and
+ * every New Game+ difficulty change; a save without overrides resets to the plane's own settings. {@code [TFR-Custom]}
+ * logs the overrides on each load and new game, every drop or clamp, and every change mid-run. Console: {@code custom}.
+ */
+public final class CustomDifficulty {
+    private CustomDifficulty() {
+    }
+
+    public static final String SAVE_KEY = "customDifficulty";
+    static final String FILE = "config tables/custom_difficulty.json";
+    public static final String SCOPE_NEW_GAME = "newGame";
+    public static final String SCOPE_ANYTIME = "anytime";
+
+    /** One exposed setting, from custom_difficulty.json. */
+    public static final class Knob {
+        public String id, label, category, group, tooltip, scope = SCOPE_ANYTIME, level = "basic", mode = "set";
+        public float min = Float.NaN, max = Float.NaN, step = Float.NaN;
+        /** "int", "float" or "bool" - from the first target's field ("float" for a scale knob). */
+        public String type;
+        final List<String> targets = new ArrayList<>();
+
+        public boolean isNewGameOnly() {
+            return SCOPE_NEW_GAME.equals(scope);
+        }
+
+        boolean isScale() {
+            return "scale".equals(mode);
+        }
+    }
+
+    /** A resolved target: a field, and an array index (-1 = the field itself, ALL = every entry). */
+    private static final class Target {
+        final boolean tuning;
+        final Field field;
+        final int index;
+
+        Target(boolean tuning, Field field, int index) {
+            this.tuning = tuning;
+            this.field = field;
+            this.index = index;
+        }
+    }
+
+    private static final int ALL = -2;
+
+    private static LinkedHashMap<String, Knob> knobs;
+    private static Config knobsFor;
+    /** What the next new game starts with (the console's "custom next"; the Advanced panel later). */
+    private static final LinkedHashMap<String, String> pending = new LinkedHashMap<>();
+    private static int changesThisLaunch;
+
+    // ---- metadata -----------------------------------------------------------------------------------------------
+
+    /** The plane's knobs, in file order (read once per Config). Empty when the plane has no custom_difficulty.json. */
+    public static synchronized Map<String, Knob> knobs() {
+        Config config = Config.instance();
+        if (knobs != null && knobsFor == config)
+            return knobs;
+        knobsFor = config;
+        knobs = new LinkedHashMap<>();
+        FileHandle file = config.getFile(FILE);
+        if (file == null || !file.exists())
+            return knobs;
+        int skipped = 0;
+        try {
+            JsonValue root = new JsonReader().parse(file);
+            JsonValue list = root.get("knobs");
+            for (JsonValue v = list == null ? null : list.child; v != null; v = v.next) {
+                Knob k = new Knob();
+                k.id = v.getString("id", null);
+                k.label = v.getString("label", k.id);
+                k.category = v.getString("category", "Other");
+                k.group = v.getString("group", "");
+                k.tooltip = v.getString("tooltip", "");
+                k.scope = v.getString("scope", SCOPE_ANYTIME);
+                k.level = v.getString("level", "basic");
+                k.mode = v.getString("mode", "set");
+                k.min = v.getFloat("min", Float.NaN);
+                k.max = v.getFloat("max", Float.NaN);
+                k.step = v.getFloat("step", Float.NaN);
+                JsonValue t = v.get("targets");
+                if (t != null && t.isArray())
+                    for (JsonValue e = t.child; e != null; e = e.next)
+                        k.targets.add(e.asString());
+                else if (v.has("target"))
+                    k.targets.add(v.getString("target"));
+                String problem = validate(k);
+                if (problem != null) {
+                    skipped++;
+                    System.err.println("[TFR-Custom] " + FILE + ": knob " + k.id + " skipped - " + problem);
+                    continue;
+                }
+                knobs.put(k.id, k);
+            }
+        } catch (Exception e) {
+            System.err.println("[TFR-Custom] " + FILE + " could not be read - no custom difficulty knobs: " + e);
+            knobs.clear();
+            return knobs;
+        }
+        System.out.println("[TFR-Custom] " + knobs.size() + " knob(s) from " + FILE + (skipped > 0 ? ", " + skipped + " skipped" : ""));
+        return knobs;
+    }
+
+    /** Null when the knob is usable; else why not. Also sets its type. */
+    private static String validate(Knob k) {
+        if (k.id == null || k.id.isEmpty() || !k.id.matches("[A-Za-z0-9_.]+"))
+            return "no id, or an id with characters other than letters, digits, '_' and '.'";
+        if (knobs.containsKey(k.id))
+            return "a second knob with this id";
+        if (k.targets.isEmpty())
+            return "no target";
+        String type = null;
+        for (String spec : k.targets) {
+            List<Target> resolved = resolve(spec, null);
+            if (resolved.isEmpty())
+                return "target " + spec + " names no field";
+            for (Target t : resolved) {
+                String tt = typeOf(t);
+                if (tt == null)
+                    return "target " + spec + " is not a number or a true/false field";
+                if (type == null)
+                    type = tt;
+                else if (!type.equals(tt) && !(isNumber(type) && isNumber(tt)))
+                    return "targets of different kinds (" + type + ", " + tt + ")";
+            }
+        }
+        if (k.isScale() && "bool".equals(type))
+            return "a scale knob on a true/false field";
+        k.type = k.isScale() ? "float" : type;
+        return null;
+    }
+
+    private static boolean isNumber(String type) {
+        return "int".equals(type) || "float".equals(type);
+    }
+
+    private static String typeOf(Target t) {
+        Class<?> c = t.field.getType();
+        if (t.index != -1) {
+            if (!c.isArray())
+                return null;
+            c = c.getComponentType();
+        }
+        if (c == int.class || c == long.class)
+            return "int";
+        if (c == float.class || c == double.class)
+            return "float";
+        if (c == boolean.class)
+            return "bool";
+        return null;
+    }
+
+    /**
+     * The fields a target spec names. presetName null = every difficulty's column ({D} and [*] in full, the rest as
+     * named); a preset name = only that preset's column (for the preset's own value).
+     */
+    private static List<Target> resolve(String spec, String presetName) {
+        List<Target> out = new ArrayList<>();
+        int dot = spec.indexOf('.');
+        if (dot < 0)
+            return out;
+        String source = spec.substring(0, dot);
+        String name = spec.substring(dot + 1);
+        boolean tuning = "tuning".equals(source);
+        Class<?> cls = tuning ? TuningData.class : "difficulty".equals(source) ? DifficultyData.class : null;
+        if (cls == null)
+            return out;
+        DifficultyData[] all = Config.instance().getConfigData().difficulties;
+        if (name.endsWith("{D}")) {
+            String stem = name.substring(0, name.length() - 3);
+            if (all != null)
+                for (DifficultyData d : all)
+                    if (d != null && d.name != null && (presetName == null || d.name.equals(presetName))) {
+                        Field f = field(cls, stem + d.name);
+                        if (f != null)
+                            out.add(new Target(tuning, f, -1));
+                    }
+            return out;
+        }
+        int index = -1;
+        int bracket = name.indexOf('[');
+        if (bracket > 0 && name.endsWith("]")) {
+            String inside = name.substring(bracket + 1, name.length() - 1);
+            name = name.substring(0, bracket);
+            if ("*".equals(inside)) {
+                index = ALL;
+                if (presetName != null)
+                    index = Math.max(0, presetIndex(presetName));
+            } else {
+                try {
+                    index = Integer.parseInt(inside);
+                } catch (NumberFormatException e) {
+                    return out;
+                }
+            }
+        }
+        Field f = field(cls, name);
+        if (f != null)
+            out.add(new Target(tuning, f, index));
+        return out;
+    }
+
+    private static Field field(Class<?> cls, String name) {
+        try {
+            Field f = cls.getField(name);
+            int m = f.getModifiers();
+            return Modifier.isStatic(m) || Modifier.isFinal(m) ? null : f;
+        } catch (NoSuchFieldException e) {
+            return null;
+        }
+    }
+
+    private static int presetIndex(String presetName) {
+        DifficultyData[] all = Config.instance().getConfigData().difficulties;
+        if (all != null && presetName != null)
+            for (int i = 0; i < all.length; i++)
+                if (all[i] != null && presetName.equals(all[i].name))
+                    return i;
+        return -1;
+    }
+
+    /** The plane's own preset of this name (config.json), or null. */
+    public static DifficultyData configPreset(String presetName) {
+        int i = presetIndex(presetName);
+        return i < 0 ? null : Config.instance().getConfigData().difficulties[i];
+    }
+
+    // ---- values -------------------------------------------------------------------------------------------------
+
+    /** The value in its canonical text, clamped to the knob's range; null when it does not read as the knob's type. */
+    static String clean(Knob k, String raw) {
+        if (raw == null)
+            return null;
+        String s = raw.trim();
+        if ("bool".equals(k.type)) {
+            if (s.equalsIgnoreCase("true") || s.equalsIgnoreCase("on") || s.equals("1"))
+                return "true";
+            if (s.equalsIgnoreCase("false") || s.equalsIgnoreCase("off") || s.equals("0"))
+                return "false";
+            return null;
+        }
+        float f;
+        try {
+            f = Float.parseFloat(s.endsWith("%") ? s.substring(0, s.length() - 1) : s) / (s.endsWith("%") ? 100f : 1f);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        if (Float.isNaN(f) || Float.isInfinite(f))
+            return null;
+        if (!Float.isNaN(k.min))
+            f = Math.max(k.min, f);
+        if (!Float.isNaN(k.max))
+            f = Math.min(k.max, f);
+        return "int".equals(k.type) ? String.valueOf(Math.round(f)) : trim(f);
+    }
+
+    private static String trim(float f) {
+        String s = String.format(Locale.ROOT, "%.4f", f);
+        s = s.replaceAll("0+$", "");
+        return s.endsWith(".") ? s.substring(0, s.length() - 1) : s;
+    }
+
+    /** Known knobs only, each clamped; logs every drop and clamp. */
+    public static LinkedHashMap<String, String> sanitize(Map<String, String> in, String why) {
+        LinkedHashMap<String, String> out = new LinkedHashMap<>();
+        if (in == null)
+            return out;
+        Map<String, Knob> all = knobs();
+        for (Map.Entry<String, String> e : in.entrySet()) {
+            Knob k = all.get(e.getKey());
+            if (k == null) {
+                System.out.println("[TFR-Custom] " + why + ": dropped " + e.getKey() + "=" + e.getValue() + " (no such knob in " + FILE + ")");
+                continue;
+            }
+            String v = clean(k, e.getValue());
+            if (v == null) {
+                System.out.println("[TFR-Custom] " + why + ": dropped " + k.id + "=" + e.getValue() + " (not " + kind(k) + ")");
+                continue;
+            }
+            if (!sameValue(k, v, e.getValue()))
+                System.out.println("[TFR-Custom] " + why + ": clamped " + k.id + " " + e.getValue() + " -> " + v
+                        + " (range " + range(k) + ")");
+            out.put(k.id, v);
+        }
+        return out;
+    }
+
+    private static boolean sameValue(Knob k, String clean, String raw) {
+        if ("bool".equals(k.type))
+            return true;
+        try {
+            return Math.abs(Float.parseFloat(clean) - Float.parseFloat(raw.trim())) < 1e-4f;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /** The knob's type in words, for a refusal. */
+    private static String kind(Knob k) {
+        return "int".equals(k.type) ? "a whole number" : "bool".equals(k.type) ? "on or off" : "a number";
+    }
+
+    private static String range(Knob k) {
+        return (Float.isNaN(k.min) ? "-" : trim(k.min)) + ".." + (Float.isNaN(k.max) ? "-" : trim(k.max));
+    }
+
+    public static String encode(Map<String, String> overrides) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> e : overrides.entrySet())
+            sb.append(sb.length() == 0 ? "" : ";").append(e.getKey()).append('=').append(e.getValue());
+        return sb.toString();
+    }
+
+    public static LinkedHashMap<String, String> decode(String text) {
+        LinkedHashMap<String, String> out = new LinkedHashMap<>();
+        if (text == null)
+            return out;
+        for (String part : text.split(";")) {
+            int eq = part.indexOf('=');
+            if (eq > 0)
+                out.put(part.substring(0, eq).trim(), part.substring(eq + 1).trim());
+        }
+        return out;
+    }
+
+    // ---- applying -----------------------------------------------------------------------------------------------
+
+    /** The run's TuningData: the plane's own when there are no tuning overrides, else a copy with them on top. */
+    public static void applyTuning(Map<String, String> overrides) {
+        Config config = Config.instance();
+        TuningData base = config.getBaseTuningData();
+        TuningData effective = null;
+        if (overrides != null && !overrides.isEmpty() && base != null) {
+            Map<String, Knob> all = knobs();
+            for (Map.Entry<String, String> e : overrides.entrySet()) {
+                Knob k = all.get(e.getKey());
+                if (k == null)
+                    continue;
+                for (String spec : k.targets)
+                    for (Target t : resolve(spec, null))
+                        if (t.tuning) {
+                            if (effective == null)
+                                effective = copy(base);
+                            write(effective, base, t, k, e.getValue());
+                        }
+            }
+        }
+        config.setEffectiveTuningData(effective);
+    }
+
+    /** Writes the difficulty.* overrides onto d (scale knobs scale the plane's preset of d's name). */
+    public static void applyDifficulty(Map<String, String> overrides, DifficultyData d) {
+        if (overrides == null || overrides.isEmpty() || d == null)
+            return;
+        DifficultyData preset = configPreset(d.name);
+        Map<String, Knob> all = knobs();
+        for (Map.Entry<String, String> e : overrides.entrySet()) {
+            Knob k = all.get(e.getKey());
+            if (k == null)
+                continue;
+            for (String spec : k.targets)
+                for (Target t : resolve(spec, null))
+                    if (!t.tuning)
+                        write(d, preset != null ? preset : d, t, k, e.getValue());
+        }
+    }
+
+    /** d itself without difficulty overrides; else a copy of d with them on (d is often config.json's own preset). */
+    public static DifficultyData withOverrides(Map<String, String> overrides, DifficultyData d) {
+        if (overrides == null || overrides.isEmpty() || d == null || !touchesDifficulty(overrides))
+            return d;
+        DifficultyData copy = (DifficultyData) copyFields(d, new DifficultyData(), DifficultyData.class);
+        applyDifficulty(overrides, copy);
+        return copy;
+    }
+
+    private static boolean touchesDifficulty(Map<String, String> overrides) {
+        Map<String, Knob> all = knobs();
+        for (String id : overrides.keySet()) {
+            Knob k = all.get(id);
+            if (k != null)
+                for (String spec : k.targets)
+                    if (spec.startsWith("difficulty."))
+                        return true;
+        }
+        return false;
+    }
+
+    private static void write(Object obj, Object baseObj, Target t, Knob k, String value) {
+        try {
+            if (t.index == -1) {
+                t.field.set(obj, convert(t.field.getType(), compute(k, value, t.field.get(baseObj))));
+                return;
+            }
+            Object arr = t.field.get(obj);
+            Object baseArr = t.field.get(baseObj);
+            if (arr == null)
+                return;
+            int n = Array.getLength(arr);
+            for (int i = 0; i < n; i++)
+                if (t.index == ALL || t.index == i) {
+                    Object baseValue = baseArr != null && i < Array.getLength(baseArr) ? Array.get(baseArr, i) : Array.get(arr, i);
+                    Array.set(arr, i, convert(arr.getClass().getComponentType(), compute(k, value, baseValue)));
+                }
+        } catch (Exception e) {
+            System.err.println("[TFR-Custom] could not apply " + k.id + "=" + value + " to " + t.field.getName() + ": " + e);
+        }
+    }
+
+    private static Object compute(Knob k, String value, Object baseValue) {
+        if ("bool".equals(k.type))
+            return Boolean.parseBoolean(value);
+        double v = Double.parseDouble(value);
+        if (k.isScale() && baseValue instanceof Number)
+            v = ((Number) baseValue).doubleValue() * v;
+        return v;
+    }
+
+    private static Object convert(Class<?> c, Object v) {
+        if (c == boolean.class)
+            return v;
+        double d = ((Number) v).doubleValue();
+        if (c == int.class)
+            return (int) Math.round(d);
+        if (c == long.class)
+            return Math.round(d);
+        if (c == float.class)
+            return (float) d;
+        return d;
+    }
+
+    static TuningData copy(TuningData src) {
+        return (TuningData) copyFields(src, new TuningData(), TuningData.class);
+    }
+
+    /** Every public instance field, arrays copied (so writing one never reaches the plane's own object). */
+    private static Object copyFields(Object src, Object dst, Class<?> cls) {
+        for (Field f : cls.getFields()) {
+            int m = f.getModifiers();
+            if (Modifier.isStatic(m) || Modifier.isFinal(m))
+                continue;
+            try {
+                Object v = f.get(src);
+                if (v != null && v.getClass().isArray()) {
+                    int n = Array.getLength(v);
+                    Object a = Array.newInstance(v.getClass().getComponentType(), n);
+                    System.arraycopy(v, 0, a, 0, n);
+                    v = a;
+                }
+                f.set(dst, v);
+            } catch (IllegalAccessException e) {
+                System.err.println("[TFR-Custom] could not copy " + f.getName() + ": " + e);
+            }
+        }
+        return dst;
+    }
+
+    // ---- what a knob is now -------------------------------------------------------------------------------------
+
+    /** The preset's own value of a knob, as text ("x1" for a scale knob). */
+    public static String presetValue(Knob k, String presetName) {
+        if (k.isScale())
+            return "x1";
+        for (String spec : k.targets)
+            for (Target t : resolve(spec, presetName)) {
+                Object owner = t.tuning ? Config.instance().getBaseTuningData() : configPreset(presetName);
+                if (owner == null)
+                    continue;
+                try {
+                    Object v = t.index == -1 ? t.field.get(owner) : Array.get(t.field.get(owner), Math.max(0, t.index));
+                    return format(k, v);
+                } catch (Exception e) {
+                    return "?";
+                }
+            }
+        return "?";
+    }
+
+    /** What the running game holds now (the first target, the preset's column) - the console's read-back. */
+    static String currentValue(Knob k, AdventurePlayer p) {
+        String preset = p == null || p.getDifficulty() == null ? null : p.getDifficulty().name;
+        for (String spec : k.targets)
+            for (Target t : resolve(spec, preset)) {
+                Object owner = t.tuning ? Config.instance().getTuningData() : p == null ? null : p.getDifficulty();
+                if (owner == null)
+                    continue;
+                try {
+                    Object v = t.index == -1 ? t.field.get(owner) : Array.get(t.field.get(owner), Math.max(0, t.index));
+                    return t.field.getName() + (t.index == -1 ? "" : "[" + Math.max(0, t.index) + "]") + "=" + format(k, v);
+                } catch (Exception e) {
+                    return "?";
+                }
+            }
+        return "?";
+    }
+
+    private static String format(Knob k, Object v) {
+        if (v instanceof Number && !"int".equals(k.type))
+            return trim(((Number) v).floatValue());
+        return String.valueOf(v);
+    }
+
+    private static String shown(Knob k, String value) {
+        return k.isScale() ? "x" + value : value;
+    }
+
+    public static boolean isCustom(AdventurePlayer p) {
+        return p != null && !p.getCustomDifficulty().isEmpty();
+    }
+
+    /** "Custom (Hard)" for a custom save, else the preset's name. */
+    public static String displayName(AdventurePlayer p) {
+        String name = p == null || p.getDifficulty() == null ? "?" : p.getDifficulty().name;
+        return isCustom(p) ? "Custom (" + name + ")" : name;
+    }
+
+    /** The difficulty for a log token: "Custom(Hard)" or "Hard". */
+    public static String logName(AdventurePlayer p) {
+        return displayName(p).replace(" ", "");
+    }
+
+    public static int count(AdventurePlayer p) {
+        return p == null ? 0 : p.getCustomDifficulty().size();
+    }
+
+    public static int changesThisLaunch() {
+        return changesThisLaunch;
+    }
+
+    /** One line with every override and the preset's own value - what a log review reads first. */
+    public static void logActive(String why, AdventurePlayer p) {
+        if (!isCustom(p))
+            return;
+        String preset = p.getDifficulty() == null ? null : p.getDifficulty().name;
+        StringBuilder sb = new StringBuilder();
+        Map<String, Knob> all = knobs();
+        for (Map.Entry<String, String> e : p.getCustomDifficulty().entrySet()) {
+            Knob k = all.get(e.getKey());
+            sb.append(sb.length() == 0 ? "" : ", ").append(e.getKey()).append(' ')
+                    .append(k == null ? "?" : presetValue(k, preset)).append(" -> ").append(k == null ? e.getValue() : shown(k, e.getValue()));
+        }
+        System.out.println("[TFR-Custom] " + why + ": " + displayName(p) + ", " + p.getCustomDifficulty().size()
+                + " override(s): " + sb);
+    }
+
+    // ---- new game -----------------------------------------------------------------------------------------------
+
+    /** What the next new game will start with (a copy). */
+    public static LinkedHashMap<String, String> pending() {
+        return new LinkedHashMap<>(pending);
+    }
+
+    /** The Advanced panel (later rounds) hands its choice here; null or empty = the preset. */
+    public static void setPending(Map<String, String> overrides) {
+        pending.clear();
+        if (overrides != null)
+            pending.putAll(sanitize(overrides, "next new game"));
+    }
+
+    /**
+     * WorldSave.generateNewWorld, before world generation: takes the pending overrides (and clears them), applies their
+     * tuning (or the plane's own), and returns the difficulty the player is created with - a copy of the preset with
+     * the difficulty overrides on, or the preset itself. The map goes on the player with {@link #onCreated}.
+     */
+    public static DifficultyData beginNewGame(DifficultyData preset) {
+        newGame = sanitize(pending, "new game");
+        pending.clear();
+        applyTuning(newGame);
+        return withOverrides(newGame, preset);
+    }
+
+    private static LinkedHashMap<String, String> newGame = new LinkedHashMap<>();
+
+    /** WorldSave.generateNewWorld, right after AdventurePlayer.create(). */
+    public static void onCreated(AdventurePlayer p) {
+        p.getCustomDifficulty().clear();
+        p.getCustomDifficulty().putAll(newGame);
+        newGame = new LinkedHashMap<>();
+        logActive("new game", p);
+    }
+
+    // ---- mid-run ------------------------------------------------------------------------------------------------
+
+    /** Sets (value) or clears (null) one knob in the running game, and applies it now. Null = done, else why not. */
+    public static String change(AdventurePlayer p, String id, String value, String source) {
+        Knob k = knobs().get(id);
+        if (k == null)
+            return "No knob " + id + " (custom knobs lists them)";
+        if (k.isNewGameOnly())
+            return k.id + " is set at a new game only (custom next " + k.id + " <value>)";
+        String preset = p.getDifficulty() == null ? null : p.getDifficulty().name;
+        String before = p.getCustomDifficulty().containsKey(id) ? shown(k, p.getCustomDifficulty().get(id)) : presetValue(k, preset);
+        String clean = null;
+        if (value != null) {
+            clean = clean(k, value);
+            if (clean == null)
+                return value + " is not " + kind(k);
+            p.getCustomDifficulty().put(id, clean);
+        } else {
+            p.getCustomDifficulty().remove(id);
+        }
+        applyTuning(p.getCustomDifficulty());
+        if (value == null)
+            restoreDifficulty(k, p.getDifficulty());
+        else
+            applyDifficulty(p.getCustomDifficulty(), p.getDifficulty());
+        changesThisLaunch++;
+        int day = WorldSave.getCurrentSave() == null || WorldSave.getCurrentSave().getWorld() == null ? 0
+                : WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        String clamped = clean != null && !sameValue(k, clean, value) ? " (clamped from " + value + ")" : "";
+        System.out.println("[TFR-Custom] changed " + id + " " + before + " -> " + (clean == null ? presetValue(k, preset) + " (preset)" : shown(k, clean) + clamped)
+                + " on day " + day + " (" + source + "), now " + displayName(p) + " with " + count(p) + " override(s)");
+        return null;
+    }
+
+    /** A cleared difficulty knob goes back to the plane's preset value. */
+    private static void restoreDifficulty(Knob k, DifficultyData d) {
+        DifficultyData preset = d == null ? null : configPreset(d.name);
+        if (preset == null)
+            return;
+        for (String spec : k.targets)
+            for (Target t : resolve(spec, null))
+                if (!t.tuning)
+                    try {
+                        t.field.set(d, t.field.get(preset));
+                    } catch (IllegalAccessException e) {
+                        System.err.println("[TFR-Custom] could not restore " + t.field.getName() + ": " + e);
+                    }
+    }
+
+    // ---- console ------------------------------------------------------------------------------------------------
+
+    /**
+     * custom                     the running game's overrides, and the next new game's
+     * custom knobs               every knob: id, type, range, scope, the preset's value
+     * custom set ID VALUE        change an anytime knob now
+     * custom reset ID|all        back to the preset (anytime knobs)
+     * custom next ID VALUE       the next new game starts with it (any knob); custom next clear
+     */
+    public static String console(String[] s) {
+        AdventurePlayer p = AdventurePlayer.current();
+        String preset = p == null || p.getDifficulty() == null ? null : p.getDifficulty().name;
+        if (s.length == 0 || "list".equals(s[0])) {
+            StringBuilder sb = new StringBuilder(displayName(p) + ": ");
+            if (!isCustom(p))
+                sb.append("no overrides");
+            for (Map.Entry<String, String> e : p.getCustomDifficulty().entrySet()) {
+                Knob k = knobs().get(e.getKey());
+                sb.append("\n ").append(e.getKey()).append(' ').append(k == null ? "?" : presetValue(k, preset)).append(" -> ")
+                        .append(k == null ? e.getValue() : shown(k, e.getValue()))
+                        .append(k == null ? "" : " (now " + currentValue(k, p) + ")");
+            }
+            sb.append("\nNext new game: ").append(pending.isEmpty() ? "the preset" : encode(pending));
+            return sb.toString();
+        }
+        if ("knobs".equals(s[0])) {
+            StringBuilder sb = new StringBuilder(knobs().size() + " knob(s):");
+            for (Knob k : knobs().values())
+                sb.append("\n ").append(k.id).append(" (").append(k.type).append(' ').append(range(k)).append(", ")
+                        .append(k.scope).append(", ").append(preset == null ? "" : preset + " " + presetValue(k, preset))
+                        .append(", now ").append(currentValue(k, p)).append(')');
+            return sb.toString();
+        }
+        if ("set".equals(s[0]) && s.length >= 3) {
+            String problem = change(p, s[1], s[2], "console");
+            return problem != null ? problem : s[1] + " set - " + displayName(p);
+        }
+        if ("reset".equals(s[0]) && s.length >= 2) {
+            if ("all".equals(s[1])) {
+                List<String> ids = new ArrayList<>(p.getCustomDifficulty().keySet());
+                StringBuilder kept = new StringBuilder();
+                for (String id : ids) {
+                    String problem = change(p, id, null, "console");
+                    if (problem != null)
+                        kept.append(kept.length() == 0 ? "" : ", ").append(id);
+                }
+                return "Reset - " + displayName(p) + (kept.length() > 0 ? " (new-game knobs kept: " + kept + ")" : "");
+            }
+            String problem = change(p, s[1], null, "console");
+            return problem != null ? problem : s[1] + " reset - " + displayName(p);
+        }
+        if ("next".equals(s[0]) && s.length >= 2) {
+            if ("clear".equals(s[1])) {
+                pending.clear();
+                return "The next new game uses its preset";
+            }
+            if (s.length < 3)
+                return "custom next ID VALUE";
+            Knob k = knobs().get(s[1]);
+            if (k == null)
+                return "No knob " + s[1];
+            String v = clean(k, s[2]);
+            if (v == null)
+                return s[2] + " is not " + kind(k);
+            pending.put(k.id, v);
+            return "Next new game: " + encode(pending);
+        }
+        return "custom | custom knobs | custom set ID VALUE | custom reset ID|all | custom next ID VALUE | custom next clear";
+    }
+}

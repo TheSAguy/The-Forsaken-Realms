@@ -1277,6 +1277,7 @@ public class ConsoleCommandInterpreter {
         // Round 756: the play-time support asks (SupportPrompt) - "support hours 4.99", "support show 2", "support reset".
         registerCommand(new String[]{"support"}, forge.adventure.util.SupportPrompt::console);
         registerCommand(new String[]{"session"}, forge.adventure.util.SessionLog::console); // round 777
+        registerCommand(new String[]{"custom"}, forge.adventure.util.CustomDifficulty::console); // round 822: custom difficulty
         registerCommand(new String[]{"asc", "pick"}, s -> {
             if (s.length < 1)
                 return "Command needs 1 parameter: a reward id from ascendance.json";
