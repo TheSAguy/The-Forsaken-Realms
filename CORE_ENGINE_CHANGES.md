@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 803 - Notoriety on the info page; win and loss on one line
+- **`forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java`** (STOCK): `enter()` writes
+  "Win: 9  Loss: 8  (53%)" into the `wins` label and "Notoriety: 12 (level 2)" (or "(off)"; blank on a plane without
+  Notoriety Walls) into the `loss` label, and blanks `totalWins`, `totalLoss`, `winloss` and `lossWinRatio`; the unused
+  `TextUtil` import dropped. On a merge, keep the label reuse: upstream's three rows would come back on top of ours.
+- **`forge-gui/res/adventure/common/ui/statistic.json`** (STOCK): `wins` and `loss` width 80 -> 130.
+- **`forge-gui/res/adventure/common/ui/statistic_portrait.json`** (STOCK): `wins` and `loss` width 60 -> 72.
+
 ### Round 801 - a counted reload after a loss costs Notoriety
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): `payNotorietyQuits(worldQuits, head)`
   (round 795's method) takes the event's name for its log and stage lines.

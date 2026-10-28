@@ -38,7 +38,6 @@ import forge.localinstance.achievements.CardActivationAchievements;
 import forge.localinstance.achievements.PlaneswalkerAchievements;
 import forge.model.FModel;
 import forge.player.GamePlayerUtil;
-import forge.util.TextUtil;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Map;
@@ -231,14 +230,37 @@ public class PlayerStatisticScene extends UIScene {
         if (shards != null) {
             WorldSave.getCurrentSave().getPlayer().onShardsChange(() -> shards.setText("[+Shards] [BLACK]" + AdventurePlayer.current().getShards()));
         }
+        // Round 803 (the user: "add the player's Notoriety level on his info page. Maybe condense win/loss and ration
+        // into one line"): the Win row carries "Win: 9  Loss: 8  (53%)", the Loss row the Notoriety line, and the old
+        // Win/Loss ratio row stays blank - the shared layouts' labels are reused, so nothing else on the page moves.
+        String size = Forge.isLandscapeMode() ? "" : "[%80]"; // portrait has 72px before the blessing box
+        if (wins != null) {
+            int w = Current.player().getStatistic().totalWins();
+            int l = Current.player().getStatistic().totalLoss();
+            String percent = w + l == 0 ? "-" : Math.round(100f * w / (w + l)) + "%";
+            wins.setText(size + Forge.getLocalizer().getMessage("lblWinProper") + ": " + w + "  "
+                    + Forge.getLocalizer().getMessage("lblLossProper") + ": " + l + "  (" + percent + ")");
+        }
+        if (loss != null) {
+            // Only on a plane with Notoriety Walls (the gate Settings' "Disable Notoriety" uses); blank elsewhere.
+            forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+            boolean notoriety = tuning != null && tuning.notorietyWinsPerLevel > 0 && tuning.notorietyWallsPlain != null
+                    && tuning.notorietyWallsPlain.length > 0;
+            AdventurePlayer player = AdventurePlayer.current();
+            loss.setText(!notoriety ? "" : size + "Notoriety: " + player.notorietyStreak()
+                    + (AdventurePlayer.notorietyDisabled() ? " (off)" : " (level " + player.notorietyLevel() + ")"));
+        }
         if (totalWins != null) {
-            totalWins.setText(String.valueOf(Current.player().getStatistic().totalWins()));
+            totalWins.setText("");
         }
         if (totalLoss != null) {
-            totalLoss.setText(String.valueOf(Current.player().getStatistic().totalLoss()));
+            totalLoss.setText("");
+        }
+        if (winloss != null) {
+            winloss.setText("");
         }
         if (lossWinRatio != null) {
-            lossWinRatio.setText(TextUtil.decimalFormat(Current.player().getStatistic().winLossRatio()));
+            lossWinRatio.setText("");
         }
         if (eventMatchWins != null) {
             eventMatchWins.setText(String.valueOf(Current.player().getStatistic().eventWins()));

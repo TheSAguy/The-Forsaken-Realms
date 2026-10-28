@@ -14264,6 +14264,31 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 803: the info page shows Notoriety, and win and loss share one line (2026-10-28)
+
+The user: "Can we add the player's Notoriety level on his info page. Maybe condense win/loss and ration into one line:
+Win: 9 Loss: 8  (53%) / Notoriety: 12". Two mock-ups went to the user (`notes/r803-mock-A.png`, plain score; `-B.png`,
+score and level); the user picked B.
+
+- **One line for win and loss**: `Win: 9  Loss: 8  (53%)`. The percentage is wins / (wins + losses), rounded; `(-)`
+  before the first duel. The old "Win/Loss: 1.12" ratio row is gone (left blank).
+- **Notoriety under it**: `Notoriety: 12 (level 2)` - the score (`notorietyStreak()`, which sets the deck card's
+  50 / 45 / 40 gates) and the level (`notorietyLevel()`, score / 5 capped at the Wall lists, which sets the Walls).
+  With Settings' Disable Notoriety on (round 772) it reads `Notoriety: 12 (off)`.
+- **Only on a plane with Notoriety Walls**: the same gate as Settings' Disable Notoriety (`notorietyWinsPerLevel > 0`
+  and a `notorietyWallsPlain` list). Elsewhere the row is blank; the combined win/loss line shows on every plane.
+- **Nothing else moves**: the shared layouts' own labels are reused - the Win row carries the combined line, the Loss row
+  the Notoriety line, the ratio row and the three value labels are blanked. `statistic.json` widens the Win and Loss
+  labels 80 -> 130, `statistic_portrait.json` 60 -> 72 (the room before the blessing box). Portrait draws both lines at
+  80% to fit.
+- Read-only use of AdventurePlayer (existing public methods); no new text key (`lblWinProper` / `lblLossProper` reused,
+  "Notoriety" is English like the rest of TFR's Notoriety text).
+
+Found, not changed: in the stock portrait layout the shards icon and count (x=170) sit on the blessing box's Power line.
+
+Files: `scene/PlayerStatisticScene.java` (STOCK), `common/ui/statistic.json` and `statistic_portrait.json` (STOCK).
+Tested: agent game (no duels), the info page in landscape with Notoriety 12 (`notes/r803-landscape.png`) and in portrait with Disable Notoriety on (`notes/r803-portrait-off.png`); no exceptions. Not tested: a save with no duels ("(-)") and a plane without Notoriety Walls.
+
 ## Round 801: a counted reload after a loss costs the loss's Notoriety again - not only a mid-duel quit (2026-10-28)
 
 The user: "801 a counted reload after a loss also costs Notoriety -5 ... Package when my game is closed; ships with
