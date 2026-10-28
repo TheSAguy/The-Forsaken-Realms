@@ -630,6 +630,73 @@ public class MapDialog {
         return false;
     }
 
+    /**
+     * Round 818 (a player trapped in the Svyelunite Temple by allied merfolk who "won't let [me] move without them
+     * talking to me"): true when an enemy's dialog can end the encounter - a battleWithActorID, or a deleteMapObject -1,
+     * anywhere in it. Any other enemy dialog is talk: MapStage shows it only once per contact (see its talk sets).
+     */
+    public boolean canFightOrLeave() {
+        if (data == null) return false;
+        for (DialogData d : data)
+            if (canFightOrLeave(d)) return true;
+        return false;
+    }
+
+    private static boolean canFightOrLeave(DialogData d) {
+        if (d == null) return false;
+        if (d.action != null)
+            for (DialogData.ActionData a : d.action)
+                if (a != null && (a.battleWithActorID != 0 || a.deleteMapObject == -1)) return true;
+        if (d.options != null)
+            for (DialogData o : d.options)
+                if (canFightOrLeave(o)) return true;
+        return false;
+    }
+
+    /**
+     * Round 818: true when no action anywhere in this dialog does anything - the temple allies' "(Continue)" greetings,
+     * whose only action is an empty {}. An action is empty when every field matches a fresh ActionData's.
+     */
+    public boolean isChatter() {
+        if (data == null) return true;
+        for (DialogData d : data)
+            if (!isChatter(d)) return false;
+        return true;
+    }
+
+    private static final DialogData.ActionData EMPTY_ACTION = new DialogData.ActionData();
+
+    private static boolean isChatter(DialogData d) {
+        if (d == null) return true;
+        if (d.action != null)
+            for (DialogData.ActionData a : d.action)
+                if (a != null && !isEmptyAction(a)) return false;
+        if (d.options != null)
+            for (DialogData o : d.options)
+                if (!isChatter(o)) return false;
+        return true;
+    }
+
+    private static boolean isEmptyAction(DialogData.ActionData a) {
+        for (java.lang.reflect.Field f : DialogData.ActionData.class.getFields()) {
+            if (java.lang.reflect.Modifier.isStatic(f.getModifiers()))
+                continue;
+            try {
+                Object mine = f.get(a), blank = f.get(EMPTY_ACTION);
+                if (mine == blank)
+                    continue;
+                if (mine == null || blank == null)
+                    return false;
+                if (mine.getClass().isArray() ? !java.util.Arrays.deepEquals(new Object[]{mine}, new Object[]{blank})
+                        : !mine.equals(blank))
+                    return false;
+            } catch (IllegalAccessException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean activate() { //Method for actors to show their dialogues.
         boolean dialogShown = false;
         for (DialogData dialog : data) {

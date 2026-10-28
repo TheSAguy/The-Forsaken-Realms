@@ -14264,6 +14264,48 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 818: talk-only enemies speak once per contact - allied merfolk no longer trap the player in the Svyelunite Temple (2026-10-28)
+
+A player on Discord (DO_THE_MIND_TWIST, v1.24): "I'm stuck! In the Syvelunite temple, allied with the Merfok, the
+chatty bastards won't let move without them talking to me!" The user relayed it ("Got this bug report"). Diagnosis in
+`C:\TFR\notes\r818-diagnosis.md`.
+
+- **Cause**:
+  - The faction allies are enemy placements (objects 500xx in `maps/map/fallen_empires/svyelunite_temple.tmx`, round
+    462, so v1.21 and later). Each has threatRange 0 and a "(Continue)" dialog.
+  - Stock `MapStage.onActing` opens an enemy's dialog on every contact, `resetPosition()` backs the player up only 4
+    frames (still against the NPC), and the enemies unfreeze on the player's first step.
+  - 26 of the 34 allies patrol and walk back into the player. Three of them round a beach corner left no way out.
+  - It is the temple's quest flag `FE_Svyelunite_Faction`, not ColorReputation.
+  - Other maps have 0-1 such NPCs, standing still (`skep_outer` has 11, 2 patrolling): the trap was this temple's.
+- **The rule** (`MapDialog.canFightOrLeave()`, `isChatter()`; `MapStage` talk sets):
+  - An enemy dialog that can end the encounter (a `battleWithActorID`, or a `deleteMapObject -1`, anywhere in it)
+    keeps stock behavior: it shows on every touch.
+  - Any other enemy dialog is talk:
+    - pure chatter (no action does anything; an action is empty when every field matches a fresh `ActionData`)
+      speaks once per NPC per visit;
+    - talk with actions (the River Merfolk's dam task) speaks again once the player is a tile clear
+      (`steppedAway`).
+  - Mere separation was not enough: the reset can leave the player a pixel out of contact, and the agent test's River
+    Merfolk, standing on a path, reopened on every try.
+  - A skipped touch neither resets the player nor starts a duel. The sets clear in `loadMap()`.
+- **F4**: no change. The allies never aggro, so they never count as chasing, and round 725 already lets F4 leave.
+  Checked in the agent game on the old jar; it is the workaround on v1.24.
+- **Log**: `[TFR-Talk] <name> #<id> in <map>: greets once this visit` / `: speaks again once the player is a tile
+  clear`.
+- **Agent test** (agent-818, the allied temple via `set questflag FE_Svyelunite_Faction 1` and `teleport to poi
+  SvyeluniteTemple`, slot 90):
+  - Red, on the round 808 jar: walking into the patrolling Vodalian Soldier #50039 opened its box 8 times in 25 s.
+  - Green: once in 20 s, and the player walks on.
+  - Dam quest: decline gives one box while in contact; after stepping away it speaks again, and accepting works (two
+    River Merfolk lines, one per approach).
+  - Hostile homarids still duel on touch, three times, all at 50x.
+  - A Fight/Withdraw enemy was not reached (deep in the temple, behind chasing homarids). That branch is the stock
+    code, unchanged.
+- **Not done**:
+  - DialogActor NPCs (not enemies) are untouched; they never trapped.
+  - Unrelated, seen in the log: `MissingResourceException` for `adv.poi.SvyeluniteTemple.displayName`.
+
 ## Round 814: the Wrath hunter - a walking mage of the hunted color sets out from its castle each week, at the player's speed +5%, and pays a prize when beaten (2026-10-28)
 
 The user, on the Temple's Wrath (design `notes/temple-wrath-design-813.md`): "It should not fly, but walk. It starting

@@ -555,6 +555,29 @@ public class MapStage extends GameStage {
     private long chaserSeenAt;
     private static final long CHASE_GRACE_MS = 500L;
 
+    // Round 818 (a player trapped in the Svyelunite Temple: allied merfolk "won't let [me] move without them talking to
+    // me"): an enemy whose dialog cannot fight or remove it (MapDialog.canFightOrLeave) only talks. Stock Forge showed
+    // that talk on every contact, and resetPosition() backs the player up only 4 frames, so a patrolling ally walking
+    // back into them reopened it at once - three allies round a beach corner left no way out. Pure chatter
+    // (MapDialog.isChatter) now speaks once per visit; talk with actions (a quest giver) again once the player has
+    // stepped a tile clear (steppedAway). Cleared in loadMap().
+    private final Set<EnemySprite> talkedThisVisit = new HashSet<>();
+    private final Set<EnemySprite> talkTouching = new HashSet<>();
+    private final Rectangle talkReach = new Rectangle();
+    private static final float TALK_REARM_MARGIN = 16f; // one tile
+
+    /** Round 818: the player is a tile clear of the talker. Mere separation is not enough: resetPosition() itself can
+     *  leave the player a pixel out of contact, and the next step re-opened the talk (agent test: a River Merfolk on
+     *  the path re-opened on every try). */
+    private boolean steppedAway(EnemySprite talker) {
+        talkReach.set(talker.boundingRect());
+        talkReach.x -= TALK_REARM_MARGIN;
+        talkReach.y -= TALK_REARM_MARGIN;
+        talkReach.width += 2 * TALK_REARM_MARGIN;
+        talkReach.height += 2 * TALK_REARM_MARGIN;
+        return !talkReach.overlaps(player.boundingRect());
+    }
+
     /** Round 724: the enemy of this map chasing the player now, or null. */
     public EnemySprite getChasingEnemy() {
         if (chaser == null || !isInMap)
@@ -770,6 +793,8 @@ public class MapStage extends GameStage {
             foregroundSprites.removeActor(actor);
         }
         positions.clear();
+        talkedThisVisit.clear();
+        talkTouching.clear();
         actors.clear();
         // Round 129: floating "+N Shards" pickup labels live on the STAGE, not in `actors`, so the
         // loop above never removed them - a label left mid-animation by a player who walked out
@@ -2886,6 +2911,8 @@ public class MapStage extends GameStage {
         if (positions.size() > 4)
             positions.remove();
 
+        talkTouching.removeIf(m -> m.getStage() == null || steppedAway(m)); // round 818
+
         for (int i = actors.size - 1; i >= 0; i--) {
             MapActor actor = actors.get(i);
             if (actor == null) continue;
@@ -2893,8 +2920,17 @@ public class MapStage extends GameStage {
             if (actor.collideWithPlayer(player)) {
                 if (actor instanceof EnemySprite) {
                     EnemySprite mob = (EnemySprite) actor;
+                    boolean talk = mob.dialog != null && mob.dialog.canShow() && !mob.dialog.canFightOrLeave();
+                    if (talk && (talkedThisVisit.contains(mob) || talkTouching.contains(mob)))
+                        continue; // round 818: already spoke - the player walks on, no reset, no duel
                     currentMob = mob;
                     resetPosition();
+                    if (talk) {
+                        boolean chatter = mob.dialog.isChatter();
+                        (chatter ? talkedThisVisit : talkTouching).add(mob);
+                        System.out.println("[TFR-Talk] " + mob.getName() + " #" + mob.getId() + " in " + loadedMapName
+                                + (chatter ? ": greets once this visit" : ": speaks again once the player is a tile clear"));
+                    }
                     if (mob.dialog != null && mob.dialog.canShow()) {
                         mob.dialog.activate();
                     } else { // Duel the enemy

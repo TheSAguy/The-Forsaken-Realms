@@ -38,6 +38,19 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 818 - talk-only enemies speak once per contact
+- **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** (STOCK) - new public `canFightOrLeave()` (a
+  `battleWithActorID`, or a `deleteMapObject -1`, anywhere in the tree) and `isChatter()` (no action differs from a
+  fresh `ActionData`, compared by reflection), with private helpers, before `activate()`. Nothing existing changed.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK):
+  - Two talk sets, a `Rectangle` and `steppedAway()`, after the round 724 chaser fields.
+  - `loadMap()` clears both sets after `positions.clear()`.
+  - `onActing()` drops talkers the player is a tile clear of (before the collision loop). In the collision loop's
+    enemy branch, a talk-only dialog that already spoke is skipped (`continue`: no reset, no duel), and a first talk
+    is recorded with a `[TFR-Talk]` line.
+  - The stock dialog-or-duel lines are unchanged. If upstream reworks that branch, keep the skip ahead of
+    `resetPosition()`.
+
 ### Round 814 - the Wrath hunter
 - **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** (STOCK):
   - `onActing` calls `WrathHunt.keep(this)` after the pause gate.
