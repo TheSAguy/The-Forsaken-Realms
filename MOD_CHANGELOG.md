@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 811: no two dungeons share an entrance - 18 gauntlets at 48x48 and 17 look-alikes get their own (2026-10-28)
+
+The user, with a new batch of ChatGPT entrance sheets: "Since we have extra, let's make sure none of our dungeons use
+duplicates. This includes our existing dungeons." Approved in the Art main thread: "gauntlets at 48x48, recolors count
+as duplicates, ... same-sheet siblings are fine."
+
+- **The audit** (370 entrance places: every `cave`, `dungeon` and `sidebosseasy/moderate/hard` in
+  `points_of_interest.json`; Legendary places by `appearsInBiome`): 4 pairs used the very same pixels (BarbarianCamp /
+  Assembly Ground, MageTowerU / Theorist's Sanctum, NestU / Nekoru Nest, Hellion Cave / Hermit's Hideout), and more
+  shared one drawing with small edits, a recolor or a mirror: one temple on 9 places (Monastery, Monastery2-4,
+  Maze, Maze1-3, Fort8 the Satyr Grove), the colored mage towers, three more tower pairs, Merfolk Pool 1/2 and several
+  cave families. One entry with `count > 1` is one dungeon placed several times and was not counted. The full table,
+  the tools and the previews are in the Art project's `notes/entrance_dedup` (not in this repo).
+- **The art**: 30 ChatGPT sheets, 2x2 each, 120 building designs on magenta. Each design was box-downscaled to its
+  footprint, snapped to its own 24-color palette and given the 1px black outline (`poi_outline.outlined`).
+- **The 18 gauntlets** get a design from their own themed sheet at 48x48 (was 20x32 to 64x64 borrowed sprites), e.g.
+  the Dawn Cathedral a gold-domed cathedral with angels, the Thornwing Hive a thorn-wrapped honeycomb, the Hollow Rift
+  a starlit crystal rift. `buildingsbosses.atlas` is no longer used by any place.
+- **17 existing places** get their own (keeping their footprints: 32x32, MageTowerU3 24x48): Monastery2/3/4 (domed
+  temple, round colonnade, spired cathedral), Maze/Maze1/2/3 (red arenas, fort, foundry), Fort8 (overgrown ruin),
+  MageTowerUD (gothic spires), MageTowerC5 and U4 (green temples), MageTowerC8 (crystal tower), MageTowerU3 (brass
+  observatory), MerfolkPool1 (flooded hall), Assembly Ground (marble hall), Theorist's Sanctum (domed observatory),
+  Nekoru Nest (cracked lava ring). The place that kept each shared sprite: Monastery, MageTowerC, Quandrix Classroom,
+  MageTower7Church, MageTowerC4, MerfolkPool, BarbarianCamp, MageTowerU, NestU. Five of the 17 moved off pages shared
+  with upstream (Assembly Ground, Theorist's Sanctum, Nekoru Nest, MageTowerUD, MageTowerC5); no `adventure/common`
+  file was written.
+- **Files**: `maps/tileset/dungeon_entrances_2.png` grows from 512x1136 to 512x1270, the 35 sprites below the old art
+  (every existing pixel and region line unchanged; the page's `size:` line changes); `.atlas` gains 35 regions
+  (`E_Gauntlet<Name>`, `E_<Place>_<Design>`), with `footprint:` where the art sits 4+ px in (4 of them, computed by
+  `poi_footprints.footprint` for the new regions only); `points_of_interest.json` changes only the 35 places'
+  `spriteAtlas` / `sprite`. Not done: `poi_footprints.py --write` would also rewrite 21 existing regions whose footprint
+  has drifted since it last ran (e.g. E_Monastery2, E_Prismari_Classroom) - left for a later round.
+- **Still sharing**: Hellion Cave and Hermit's Hideout (the same `Cave` sprite), plus 11 caves that look like another
+  cave and 8 cave recolors. The new designs are buildings; a ChatGPT cave batch comes next from the Art project.
+- **Checks**: `poi_outline.py --audit` 0; `validate_plane_data.py` exit 0 with the baseline's issues (atlases-parsed
+  2489 -> 2488: `buildingsbosses.atlas` lost its last reference); every new region in bounds on page 1, the 18 gauntlet
+  regions 48x48; no exact-pixel duplicate left but the Hellion/Hermit pair.
+- **Seen in the agent** (test copy `agent-811` of the agent game with these three files and a copied profile, log
+  sharing off, cheats; removed afterwards): world-map shots next to the Sunken Bathhouse (48) beside a kept 32x32 Blue
+  Tower, the Marble Gallery, Brass Palace, Starglass Observatory and Kiln Foundry, three Mazes, three Monasteries, the
+  Black Tower, a Green Tower and the Satyr Grove: each draws at its footprint with its marker at the art's edge. One
+  unplanned duel (an enemy caught the agent while it walked; 50x, lost) - no effect on the round. Shots: the Art
+  project's `notes/entrance_dedup/ingame/r811_*`.
+- **Art Library**: `Projects/The Forsaken Realms/Game Art/Entrances ChatGPT (round 811)/` - `Sources/` (the 30 sheets)
+  and `Sprites/` (the 35 installed sprites).
+
 ## Round 805: six more gauntlet dungeons - the black and blue rounds (2026-10-28)
 
 The black and blue gauntlets, the same order as round 804's Dawn Cathedral (three Apprentices, Gate I, two Adepts, Gate

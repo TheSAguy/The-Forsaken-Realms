@@ -1,5 +1,5 @@
 dungeon_entrances_2.png
-size: 512,1136
+size: 512,1270
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -2526,6 +2526,255 @@ E_Ancient_Opal_Cavern
 E_inn_Cave_river
   rotate: false
   xy: 204, 1104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_GauntletAnvilLabyrinth
+  rotate: false
+  xy: 0, 1138
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletBoneOrchard
+  rotate: false
+  xy: 50, 1138
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletBrassPalace
+  rotate: false
+  xy: 100, 1138
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletBuriedNecropolis
+  rotate: false
+  xy: 150, 1138
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletClockworkOrrery
+  rotate: false
+  xy: 200, 1138
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+  footprint: 4, 0, 39, 48
+E_GauntletDawnCathedral
+  rotate: false
+  xy: 250, 1138
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletDrownedLibrary
+  rotate: false
+  xy: 300, 1138
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletGildedMausoleum
+  rotate: false
+  xy: 350, 1138
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletHollowRift
+  rotate: false
+  xy: 400, 1138
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+  footprint: 3, 0, 41, 48
+E_GauntletHollowTiltyard
+  rotate: false
+  xy: 450, 1138
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletJadeZiggurat
+  rotate: false
+  xy: 0, 1188
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletKilnFoundry
+  rotate: false
+  xy: 50, 1188
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletMarbleGallery
+  rotate: false
+  xy: 100, 1188
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletSkyBridgeMonastery
+  rotate: false
+  xy: 150, 1188
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletSporeCathedral
+  rotate: false
+  xy: 200, 1188
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletStarglassObservatory
+  rotate: false
+  xy: 250, 1188
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+  footprint: 6, 0, 35, 48
+E_GauntletSunkenBathhouse
+  rotate: false
+  xy: 300, 1188
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_GauntletThornwingHive
+  rotate: false
+  xy: 350, 1188
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_MageTowerU3_Clockwork2
+  rotate: false
+  xy: 400, 1188
+  size: 24, 48
+  orig: 24, 48
+  offset: 0, 0
+  index: -1
+E_AssemblyGround_Marble4
+  rotate: false
+  xy: 426, 1188
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Fort8_Jungle4
+  rotate: false
+  xy: 460, 1188
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MageTowerC5_Jungle3
+  rotate: false
+  xy: 0, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MageTowerC8_Startower1
+  rotate: false
+  xy: 34, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+  footprint: 4, 0, 23, 32
+E_MageTowerU4_Jade3
+  rotate: false
+  xy: 68, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MageTowerUD_Haunted3
+  rotate: false
+  xy: 102, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Maze1_Redfort2
+  rotate: false
+  xy: 136, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Maze2_Factory1
+  rotate: false
+  xy: 170, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Maze3_Arena4
+  rotate: false
+  xy: 204, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Maze_Arena2
+  rotate: false
+  xy: 238, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MerfolkPool1_Sunkenhall1
+  rotate: false
+  xy: 272, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Monastery2_Whitetemple2
+  rotate: false
+  xy: 306, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Monastery3_Statuetemple4
+  rotate: false
+  xy: 340, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Monastery4_Cathedral2
+  rotate: false
+  xy: 374, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_NekoruNest_Lavafort3
+  rotate: false
+  xy: 408, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_TheoristsSanctum_Steamdome2
+  rotate: false
+  xy: 442, 1238
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
