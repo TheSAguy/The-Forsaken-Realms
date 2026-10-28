@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="42" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="26497" source="../../../../common/maps/tileset/phyrexia/FurnaceTiles.tsx"/>
+ <layer id="1" name="Background" width="50" height="42">
+  <data encoding="base64" compression="zlib">
+   eJztljsKgEAMRNN6Qa/gOdzSU9suiKhJMC8kxRYDg77JR3dsIvt0RmJNYqmehcRSuQ+dhalJLJX70Fl89LrYz/y8qLp55CDMlFc/orN4zpUmy5u6kPfj67zS9sNaJ8p+WOtE2Q+POv2ho/bDW3t8Z6LYrVnImsSi0SSWyn3oLExNYrHop3/bkdBD5+sMeTx0Po2HztcZ8njofFoPne/OQ7hT9P2K8e7OIhd9Aj7kF/8=
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="50" height="42">
+  <data encoding="base64" compression="zlib">
+   eJzt1wkKgCAQBdC5QkdooTN436JbBhEViOCk0fKd/gMhVGI+LYMiVJLaiTROpHXp14gGlz+IiAjP2mc6r+/0e+8J+0/qvq+sfWb0es4U6T+p+3LM1TbO5lAdtWo50POEdZ7lQMySUx9ylty6rORAZfF5lPx9WPlfabXGxh33Tll7Kg8R0Vu0cxfavEY7d6HN/9HVM+ATa8xBqKy8X1ZyEJEUbwGtSgk1
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="50" height="42">
+  <properties>
+   <property name="noCollision" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztmWEOgjAMhfffcQLkYnoW5FqLyt3MEkmWuo52m90gbfL+4AL9pLL30FljnOowug/GPC1dt6F9zzFN1rBq7KBn5VAOKa3WmMflV0vkmNe7g55juiKaEp+17pk7b+4E+8mrcL/A9iV4Puo67jV9/7Byzo09P8bMdRSGWO9YUVkkObgMHBYpjlwGKosERykDhUWCg7uHY5W6lnL0w7E3t+E+kVq39xv0nsr7p5KaE15L4n67r0cqZcmZqdocJSwz8L/QT/hjL0GOHJZtljAfHHplSY6QJcwdsPcwe1B8ewuOjWUTzFXw+y/JZlQtFTJbjdy0N3eUuTxiZovNZese/s3BfW/YUqksWusZIlmx55VytCvl6KuUo686Mwf05zBH9KiYT4S5YKzg5ySE+ZbUPTuKzsKxBvmm1/+VMH0AO/GSWw==
+  </data>
+ </layer>
+ <layer id="4" name="Walls" width="50" height="42">
+  <data encoding="base64" compression="zlib">
+   eJztl9sJgDAMRbuETiQO5qSOIkU/SmniK62pnAMiGgz3NibVEAAAAAD6ZR328zKGLrWnh3TPM7leyYdnLyWtmg+PXiSd06F1Hvx7yfWk+nNSP6Vnv+SuLq81KdVD0hbnr1cfEendT/cP7/1xxcuZzzO0daixRtb6n+S1qrWW42l+aW7HuajFrPDcBwAAPaJ9L7WOvUHbR1vHLHyUrlvH3jDf/AesGbOAPqFPavQJAIRfsAHEG0CX
+  </data>
+ </layer>
+ <layer id="5" name="Ring" width="50" height="42">
+  <data encoding="base64" compression="zlib">
+   eJztl2sOgjAQhOcKLfE0ehZ8HAsfl/B6Rk2ljcsGG0gR1jhfsn9YIDvd7jQFCCGEEELIUpw9sHPdZ7UDtjF+of5XnR64q3pvDnjEsKyljvXvXRsn3803Hjh64BC16H5Z6UPSsKna+MS6emu5KK1LE/bMGEJvArpnVnTomchxXcEcsh9hvwz1A2sz0qj5zfmR9ANr+0rPb/JWqUd6cvIDq2hv7egRnhzeGUtaBxlDcqV6+gj1l/QhfJ9iTK6Ub/6bEELIbyPvq7m77By5qc7uvjvgnLlScmf23DnSwjmZPkcIwV/zBIMvXis=
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="50" height="42">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1sEJgDAMheGs4A4O4QDukknURRzUgxS0RA9JBY3/dymhr9CUHiICIKobfXtvlLmXr90fQD798Pz5Rfd11nPtzVnWYB/R84DXpG1zgPVfSl3Pnle5DJiz28r0nmXOsOpjn3c5AAAAAID82gYYPhSR
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="50" height="42" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJztlFEOxCAIRL1E79+j7u+GiDCAFFsmMU2UCg+BMd6v+7KvSmqOUUrWeJpjj5pjlJLUx6f0OdWKw3qPNU+oX81/6N3ZHJ5cV+GY2Xn26HnkV8uwygF3JtWh5B+xszBIHBqWLA4uRulOjgXxv5tDI5RDqjutXTSHxhf6thq7J97DkxPO5xP9YWFE7qDxRM4rJB+ovLM3KkY0DwjHjEXi0dplvseKxftPVn9wcUkzDpkHkYqqZfTNkF5b+dpVp1n655idnbRozCdz0Pd5G8epkjikHGSeNcc5+hpH9fr6Gkd1UQ7NzKq6OK7VXnU1xyihHyehy6I=
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="48" y="672" width="64" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="48" y="560">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kilnfired Golem|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="688" y="512">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kilnfired Golem|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="704" y="592">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kilnfired Golem|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="720" y="432">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A slag-iron door, still glowing. It will not cool while the three Apprentices still work the casting floor.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The casting floor falls silent. The slag door cools and swings open.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="528" y="256">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kilnfired Golem|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="688" y="256">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kilnfired Golem|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="416" y="352">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The tunnel to the crucible is shut with a sheet of red-hot iron. The Adepts of the two kilns still stoke it.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both kilns are cold. The iron sheet dims and lifts.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="224" y="288">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kilnfired Golem|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="224" y="144">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The ingot store is locked by the foundry master's seal. The Master on the crucible island still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The Master cracks and falls. The ingot store opens.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="224" y="80">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;red&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Golem&quot;,
+   &quot;Elemental&quot;,
+   &quot;Artificer&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;red&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Crucible Armor&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../obj/stone.tx" x="64" y="496">
+  </object>
+  <object id="13" template="../../../../common/maps/obj/manashards.tx" x="736" y="592">
+  </object>
+  <object id="14" template="../../../../common/maps/obj/gold.tx" x="736" y="368">
+  </object>
+ </objectgroup>
+</map>

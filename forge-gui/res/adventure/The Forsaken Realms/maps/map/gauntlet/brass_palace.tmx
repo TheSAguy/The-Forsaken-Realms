@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="48" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <layer id="1" name="Background" width="48" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0LENwDAAhMBvo0zoRT1fhkgDEtW1iPtu59muVELDHwkN/fdKaOi/V0JD/70SGvrvldDQf6+Ehv57JTT03yuhof9eCQ3990po6L9XQkP/vRIa+u+V0NB/r4SG/nslNPTfK6Gh/9P6AXdoVFw=
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="48" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmEEKwjAQRf8R4kK3WhXXWc5F9QKKt1BPJkgpARdqYzptJ8l/EBqGlPmLMJk/ACmBRoC9AFsBdgIcpIt9i1vjLMBFum+7rm/7T3FCCBmrPoZ4yz/nQ3zu+hji4d/Y82FvgbUDNg5oHMzwXPxeMfpj/6d+6qd+6i+pftak/+aAuwMemeon4/eYQ/vPlJyaPebQ/jMlp/Uaoplz6YGVn1a/Zs6jB04T69fMmfv9meMNqvndS50zaM8fUucSqXMG7fmD5blETljzJLVg3RvmoD/GZ/f5+Vi/b83TW9FRq35iA94bQggK5QVyLDme
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="48" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmkEOwjAMBH0nfUHpx+AtwLcqCH9D3FBJZDe1Y0daS3tpVWUO8WYddU1EKzS8rhPRM8l0mfx5t1oSiWsOwAv+WHonovvpX4/CsxyAd6tzRUvluTfvnn21DuaPv3o1fGPhr3v682hZ9Df4wQ9+8IMf/CPy1/Ilp1L+5JQ75ktOtfzJSZv/yL6LnjG182drNu3Zoxa9Df6x+G8K/vl978U/K/hny5paZ1RW8E/NNS3ODk3/l/BpnwGa/i+5l4jsQZJcB367Ar9vgd+3wO9b4Pct8Mfnb72n4mYqyaymMW+03lNxM5VkVotyr1Xj77E2+KnYQ1b/DHwAUP3JOw==
+  </data>
+ </layer>
+ <layer id="4" name="Walls" width="48" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2MENgCAMheEugRMZBnNSR/Fk4kX7AhQF/y/xYMS2EtRQMwAAgDjbYrYn/6iNEUWp3ctfe3+L+kuve2Oovzy3mp/6/1t/Fr4da6qL4d0PAAAAzOraaxhRj55ChKcezwje6O2U9Mm8MepzRfTk1F6bmvM8bxFLoeyzvTHKnChxeu/p7+Z/lPc3T9Ib4f/1jXU02roBYF0cn6PTnA==
+  </data>
+ </layer>
+ <layer id="5" name="Ring" width="48" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2FsKhTAMRdFMIR2gr2H5mKmI+CutVo5UvXcv6FfNsRREEjMAAAAcqdysTqzGtYzcesV88I7FtYzcegXn5/yKPqT3xqBl5NarhhBfagYAAACAb9vmCiivemC2U6rPL2UK6Vnb2TOdx2cLV3PU7yenz47tx+6/9Ws5T/b0+xlJqdnInd5wj/+O/xcA+1Er/S1CzQ==
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="48" height="50">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt2MEJgDAMBdCs4A4O0bO4mw7ioB68KqgEGuW9Y1rIv/XTCCDDMEcs0/X5Oh13qjvL+IXcAL2N7dm8mq09mwMA9HS3Y2V2scyddztWZhfrsROA+n8Fb7JUeisqZQH4O+9XnkpZgEizA70qDxg=
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="48" height="50" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJzt1ksShCAMBFAu4f09qls3ShM6H6C7alY64YEQbU25L9uvSuTPzdvy50Lvi47FIj8vvT2evf+t57Pnjzrf8uf7o+PlZ6wZ8v9M/9fYyH6q4EfqyS//iv6oyO9TK2NM6/sf6fezZ4lh9PKPzE3+fP8q+fOj82DOd3TMndffUmtm/1fw96593cP2r9x/PMeJsO/ir55oP7sm6q/0LFAX0zyyb0frWq6t6Ed6AKuXoP3mpPU/2e8V+Xnjsevp/eWfiO/PrPqM7P58q+cO9j8wSfBm
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="336" y="800" width="96" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="160" y="576">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Emberlord Efreet|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="592" y="672">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Emberlord Efreet|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="256" y="704">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Emberlord Efreet|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="384" y="464">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;Brass doors, too hot to touch. They will not cool while the three Apprentices still tend the court's fires.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The court's fires sink to embers. The brass doors cool and open.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="96" y="448">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Emberlord Efreet|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="656" y="448">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Emberlord Efreet|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="384" y="352">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The throne room's doors are sealed with a ward of smoke. The Adepts of the two audience chambers still hold it.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both audience chambers are empty. The smoke clears from the doors.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="384" y="256">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Emberlord Efreet|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="384" y="128">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The lamp room is sealed with the efreet's brand. The Master on the ember throne still burns.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The ember throne is cold. The brand fades from the lamp room door.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="384" y="80">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;red&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Elemental&quot;,
+   &quot;Efreet&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;red&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Aladdin's Lamp&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../../../common/maps/obj/gold.tx" x="672" y="720">
+  </object>
+  <object id="13" template="../../../../common/maps/obj/gold.tx" x="80" y="720">
+  </object>
+  <object id="14" template="../../obj/wood.tx" x="64" y="464">
+  </object>
+  <object id="15" template="../../../../common/maps/obj/manashards.tx" x="688" y="464">
+  </object>
+ </objectgroup>
+</map>

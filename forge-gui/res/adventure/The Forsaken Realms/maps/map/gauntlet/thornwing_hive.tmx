@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="52" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="26497" source="../../tileset/INN_dungen_crawler_tileset.tsx"/>
+ <layer id="1" name="Background" width="50" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztWcmOwzAIfZ39hy37mqVZ23zziAokarlp1CYdPMrJB7ADPAOPuPBA6YHKA7UHjh5oPNB6oPNAkYn8EIC3ALwH4CMAnwH4CsB3AH5CPnIr8bSMR++AyQFHBxQOaFx+eExs98kBNfvROuDs8sGjcsDg5tdc8Bj5PlH8S7a/ZnxywUPkZP/Id2pgv3LLj/9Ur/b+seOxZrxO3CtG7iGS4xPXLKph1vGgGnXiHnFmu3v2Y2C/yD/Ss4pHzzVWevjA9nbsx8j+aT1reEx8lx5ZreDRqZ59ufsc757j37C9s3pG8DiznZLjJdtfqBwne1N6VvAQueRwy3Z2Ktdj/i561vJD5IPi5zq3Yx4/GK5XIi/5Ds2t1vvHf+rnO7/a8Vjqb821R69bxDv1nbXwmLh26pm75dp5b7/okT334n01w7vr7z6LR8Xnlgke3ise/gq9Z/G4xF3xbeHl1K/v7Re9JXh0CZ4v310rP6YE794qPzTfX8qHrdSbvX/seFiUW4mnVTwuNdml11zw0LP5mJjNqbZax0Nm8iExk1fR7G4Vj3gGLxOzevzW9pd46Nlbeu6tN7RH9bbGY8mb2VrrVnjEvFrn8s03tCf1NssPxa+7iF/r/XN6+vw5va3zQ/g73W3h5fF+zfO1Htkbn5/Ss9A/SK55dxPx/Vz6+ZHvxtyaQz8nuf6fHs/cueAh8njWJr9y5bt6ps+R74pcv6HlPH/oN7Sc8Ti8SP4LVPTpGg==
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="50" height="52">
+  <data encoding="base64" compression="zlib">
+   eJzt2EsOgCAMRdFuiv0vyt/UODMGIhgifeWeDdjahlLMAKC/I5mMTSjWVpFzA2akdLa+WZPZLprPkuarl1pvYbzI/a94dinGDCDW/Py6m3rfaXPxlWKuvUPCF+89CCCmKHvtcy9U2xPvszs3x9XyUdH6X6/aeJnXuT5pjW1kX/1x9vz1PvHlO176qGdPlGrqNVevcfWqG3MDiIs3H6tyApCEMO4=
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="50" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztmWEKgzAMhfNfPYH2YttZtl2rzHm3ISMgXWvTmtZEDQQ2KJjP0b63V9sC2KsP3/cO4N3+963TxTC2ECwNLDEGLSyGwDBXL2DWtZ5agFezzvBoAD4CZl3rIcKCDIOAWaksz+bXMxN+1sKwZME2znertI2AGTj0b1Smh1TtkKwhqQwSWXIZJLFsZZDCQvUh0n0KxYfESoJPifkQKoMEfcxlkcSQyyKRwWVBT+jziVr84tIPhnyiVr9oDpJ9GAEZy5bsA+dCvxtbWypjoXoO3zvE+bes5WLh8hxc1RfOPtwzdXne5q7l9C4p2YevUUtQP2JrS2YsIW2jaJlPP0o8J4Ul1NR9VuM5Z9HBs3K4uuzmPnv/hz3LvcGVX+0zb64/ClXte0SurIpaJVhqM5Ri2cv7cudzKd6Xcx13PpfiSWO/Xb/zPSLFk6boYA2Pm+tJU+/PpXrc6/5cD4smhiWLu1fwnLLK2sdhFfbknKkl9/YXDKYEVQ==
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="50" height="52">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1UEOgyAQhWGuYNP0NO3G9FK9QL1H79TDNG5ckCbdSHVA5kH+L2GhIAMyoyEA8DDc09fqnmO6f/rTr2Tt3bd2JgD69T7HVmqcl61rU97D1+dq61PzuNn6vOXmukqt5K5BYQ/Qxv8DaNPrEtvW+6px1uYouYeacaCjdC14xfXKUWoDwBHmU2x7xivauy7VffSeP2rz/8Zpef5e1Drvo+Ol5rTGTD3nkV/WmNQCSuR97W9FLqXaBYLRAozLQoc=
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="50" height="52" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJztWNEOAiEMu5/w//1Uny65GNi6UVhBm5h4EbYW2Mp5XX/08H75H3UgPNW1RPgpa4nyUteBnCtkXBVO2o8T6uOUfnWj5RU7+Yflebv4YYaXmpbWuqNzVLR884j0q16M1WDmr9TSy2vxyf42E9GasOIo7Mdo/ur71in1wcpfreEk/7gR5aSoYYf71eh/H5F3xJE8SOzMGGs/mHkYtZtZP+TseXOiOlrfe2MYQPKM6FDCL+tA3xFY9eHxYNW6N6bHt/WMxHjmZfXenf2DAVSHGjxvUFlfCxF+qlqyXqukJXteqs6Y10uyXruyR1Wu26x4szUxPLwX13pmY1a+6p7C1rG6Rtj1HrmXRnzwOY8RE82L3q8rY0bysvq96h0364NqQPq+wnoj8DjuoOEGomMXWDp2wnuxjg9i7Qno
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="368" y="832" width="80" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="240" y="672">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Thornwing Mantis|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="560" y="672">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Thornwing Mantis|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="400" y="720">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Thornwing Mantis|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="400" y="496">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A wall of wax seals the comb. It will not soften while the three Apprentices still guard the brood.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The brood comb is silent. The wax seal softens and slumps away.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="192" y="464">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Thornwing Mantis|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="608" y="464">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Thornwing Mantis|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="400" y="368">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A second seal, thick with royal jelly. The Adepts of the two nurseries still tend it.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both nurseries are still. The seal melts.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="400" y="304">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Thornwing Mantis|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="400" y="160">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The honey store is sealed by the queen's own wax. The Master in her chamber still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The queen's guard has fallen. The honey store lies open.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="400" y="96">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;green&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Insect&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;green&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Hivestone&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../obj/wood.tx" x="320" y="624">
+  </object>
+  <object id="13" template="../../obj/stone.tx" x="528" y="656">
+  </object>
+  <object id="14" template="../../../../common/maps/obj/manashards.tx" x="208" y="448">
+  </object>
+ </objectgroup>
+</map>

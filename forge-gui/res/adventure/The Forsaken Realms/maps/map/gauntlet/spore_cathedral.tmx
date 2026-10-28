@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="48" height="52" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="26497" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
+ <layer id="1" name="Background" width="48" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztwzEJAAAMA7AetV/P0zFIIGsyVVVVVVVVVVVV7a8He8+GDA==
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="48" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztWUkOwyAM9DHhC13/2HPaKre+sutDKktFpQ5hCYZiiZFQpSgpg2N7BgLQ0FA3rh3ArQOx3PcK4Nh/h5R479SUe+1rsMVbEv/BwfnRATw/QyL/rQIxeHXT2EtEzbkSgpprNaYOpOUP5X8S9h5W6reG53oP3ldrjWhuODbKf28Dr/fB33uluRHqfTDvJazB5dskrMHle3Cce1n9kmqXr//U1i/1aHXMm8uxWPqMLQc5cjl2DxLLn2vvY8vlEB8wxyGkhs15zPhx1b/WVlqPeF3n98jUf2K805KaRL7YW8wzErw2Mrz7HB7Ep09mrFNjn2PvQ+PqQmy9+OZK3fvQ3MmNgfHcpTR32r+leI+GhiXadDmUn5/LU9o0JRdcesWtidzn1C69TZnL5nO5+6XPK6TORX0u/T/UH07u5jeUnLqiPZzWziWgXrykFtLaSH3Ha1VWx03+EqFruxTMPYe0M5O5s0MJ54Yh33wlIpeWlkIJjWiAv+MNM7fZPQ==
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="48" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztmFGOwjAMRP3fcoJNL7achXKtaoG7rSpR7co4qV3biSOw5M/iN63ITLyMAMunPx2szyeAn/Gvv099cd9GeKnoOlZ2ihtXVA0Tg32trwCsVD9GgOtQZr8MAPcArFSnp4Z5eNWxcs9P9hSAtaQB6/jPHZmd0jF1xo17CsCg8a5bBx6GvbbkAZE8ueS13Gqlg+u13KqpwZq9tgZuTpBWrVzROz8n50irZi5Kxho29hQkq0m4W2Y6nNW2zunZeOdgmW5joPRcM7ye3DgPSP0+ZfJnqjB/z5ukHiPNn5r5Vvfvo/lTO1/iS9T3leZPyXMcn/PyVevS8uNzEDf3/OQ+x+WX7D/wOXj0/MTPafYve7/B9fmj56fFfMpP8fvzPD8t5pe+8eLMbz3/HfcnPfHnsgrlv5pM5cVscY+vocWauaYWr33JXlloaMVuoaE1u1aDx56k5l7Fek9ylF3ju600WO6EqEzsxazJinsacvnemtk7q+W0lO5SubtXLWaOFnxvwXe+KJmY0xR/a6Z34n+g/4XXbv8Xj1Y+8w==
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="48" height="52">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztmDuKxDAQRN/B9PGRJGV7a9vZZhsNGCMNZvSdpV4qQzcyqq5qEEK04Ne0+WYWP7bNN0IIIb6Pd/Nppdm1WzgsnPb9fLr2fD8LHqKH5BlOcBAdJJc/f/X96jl397uHw8M5of/dweHgLPR/v+ucbwgbxA3SxhLIv40nGIgGkql/+zPYDRwGTtPu7Y8kWIgWkm339oVYTU9GzfqSNj2tX9KTUbO+pE1P65f0ZNSsL2nTal5D/H/uXnG0d6yt/8TD92R2fSFGZY9e/uTuh3plj6s/+CTTPfVDvbLH1R98kula5qtvrCnECjubbjo6aGfTK+fldLNWp3P/dGTOqtXp2Xu4Wp3WHk4IqvgDCRucPw==
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="48" height="52" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJztV0ESxCAI8xP9/z51Zw+97KACAQ22memhjpJgkdjWXpyGz9V/mDHTyZyHRRdjDlpN9xxG/Znzs3GC/sr1X73/jHRW0f2D5FfMHmb1WBZPjuLfkcfsjI7WeWJGwspjnZudg7an/I9L86QYq/SfGN9yf0NiIDghfhbHjh7k6d+9c7vDA9j8a/TvLfFE3x+s/NJaDb9WX28smt/yDWe+5dGP8lvrz/N9kXVSHOldU5eZ0PKj+78bT9fPWP+V+480jp7h3lnT6vLwI/6H6o/mR+HRvxLavWLb02je7FxW7lU0l9QTMvKQ4qI8LDXq4V6teYQIf96NJ+pnyaHyGYjuQav7f6QHVPSvWXyEh+0uNNPAcH/TYKS/Al79TY0vCqoXVw==
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="352" y="832" width="80" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="256" y="656">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Orange Mushroomling|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="496" y="672">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Orange Mushroomling|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="384" y="736">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Orange Mushroomling|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="384" y="512">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A curtain of hanging gills blocks the way. It will not part while the three Apprentices still roam the nave.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The nave is still. The gill curtain withers and parts.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="112" y="480">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Orange Mushroomling|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="656" y="480">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Orange Mushroomling|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="384" y="400">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A second curtain, thick with spores. The Adepts of the two gill chapels still feed it.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both chapels are quiet. The curtain falls to dust.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="384" y="336">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Orange Mushroomling|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="384" y="176">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The seed vault is sealed under a living cap. The Master beneath the Mother Cap still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The Master has fallen. The living cap lifts from the seed vault.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="384" y="112">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;green&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Fungus&quot;,
+   &quot;Druid&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;green&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Spore Skirt&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../obj/wood.tx" x="304" y="608">
+  </object>
+  <object id="13" template="../../../../common/maps/obj/manashards.tx" x="144" y="512">
+  </object>
+  <object id="14" template="../../../../common/maps/obj/gold.tx" x="592" y="656">
+  </object>
+ </objectgroup>
+</map>

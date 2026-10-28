@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="52" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <layer id="1" name="Background" width="52" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1DERwEAMBLFnFa5OwIaB2/N7VIjAFlvPOcVY3zK1zLtMuifcLP1Xv+6l/+rXMEf6r37dS//Vr2GO9F/9upf+q1/DHOm/+nUv/Ve/hjnSf/XrXvqvfg1zpP/q1730X/2autgPegJPZQ==
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="52" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmFsKgzAQRc8S8tundhvz5Tb7diPq1kqhgihY1LRGcw/MV8hwD4REB0RMbAy2BjuDvcHB4GiQGKTWXQ+ds8HF4GpwM7gbPAyeBrl110W89J39JWbrO/tzMyVb4chKR1Y5MgJjTLbEQerg5AiOMdnk8z/kI5+YfOr71df9P7dP3ct3P/nIp6+XfPxlk8/3XvIJ9j2l/FS1Ah/fyEc+S/QZOsdtz5Om7H+v+/YZOsdtz5Om7M9/4BMKY7IVHt8L34ScTQghhFg7zTltaDVmbtz8Tw6t9K0jhCBCXm2kv7k=
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="52" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztml0OwiAMx3l3nmB4MT3L9FqLH3czPDSpC7C2lMIiTf4PSkb52QFt4zo5tw79jW5n554TTddz+/Xu6TI5ss0drHfwtONJvfuc97wWj2RtqbVw/H4m5+6nXz02n0Fvhbjn1qbB4yO6JL73B+BJzVu6FwZPHZ6wj18K92dLHnwWBRZs0tygFQ/Eg2Ia90BNHg4Ll8maR8LCYbLm4eQFmvPX4CmJDTVGljwlsSn1UYMn5GwhR5PaQsjlLHkgR5PaTMjlrM8DaYwosWnB4wVMwOI7vU85TByWVjyYCddymAHXckepf3C9BvHCDNxarjXPlg3Xp9J5euGBeUueHzz5Z4JRe7gxQX1aOocmT682eI7LE+ttaijVH9VQLvfL9TB9wXiuP6rhQ9J7StWPe+OU81rDB/fcn4XjFB4NH3u/Vezc37sXpPeP1EdJX6hHq913srbB07cNnr7tH3k0c7hYn2cxyt1AXlGxWEMvVEuroVI8lmsYPI61Fzn/CZHoCwRhcl4=
+  </data>
+ </layer>
+ <layer id="5" name="Ring" width="52" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmEsSgyAMhl1b79DpUbVH7fQe3TRTJhXIixiUf4YVSPhMIIFpGrqSthuvRRdnjYPn2jwWcd5yLHdtuT6t3ffc7j+15sFav+t+KmMrCo/F95F4XvMv5nrnARaYQ8N1FA8w7O33+/J/TkTmSf1RE7BRmbx5OCwSJm8e6R4Dpkg8Et/g+Ws+8uTR5heKj3ri0dhoxaPJl5R49eSh7umS3cdSH+N9vkl8RD1LvHm4+TFlqfnmqPqAw8RhObJ+K9VouLajskSpr9ed+6n0XheBJ/XXuJ+25ZHmS4v7aelMl/DgPc5tMLd2DiueyBo8ffO0aKX3UYvmKav3USvV/oP2DLKyIXkPxDmk1k/JPxY2SsrFZi4H1fop+Udjg8LTiwZPbA2e2Bo85+CxrNuw8JtIL7Ub1G1YkWo5rnI8veqMPJtzzH8AoLcAOQ==
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="52" height="50">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1TsSgkAQRdG7Bav8ux330AEsS/xu1sDQhKJgnB7vSQgI5jVMvQZJtXp08Ozg1ZHa6vx5Hno49nDqv99lMSZvtpkk5bcO2ATN5LwEDAnmWTrnlP9a812Y8r2y3AXpX9XcOSX3T+m+Xrob7WupPfb1b2TJKUm19Pwc+6rEGWN7fo49UOKM1mwDdgH7aCPPNeAWcK9kntrySJIk0ngDBbkzQg==
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="52" height="50" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJztllEShSAIRdtE+2+p79dpQoGLCA/uTB9loEcEua4WpefWPVHVPPF5PGy4ftF9/PpnZc/1K13bLh4Lm+ZZ+0XmXa2J41c6bsEzs0PyPgoPFR+Nn1M80jzl+pSOW+YPVx75g9QL9EzO/pnZWcdHy8K19z5v2lxf7fEJHjQ2HD/ePFZqHnq8eXLkj+b+seKJdv9o63W0+2dcm1d/ULV/0/r8x/76y+ZdZ7R+IvCMdmi/uqNeax/Ufle9jsTDjU8Vnshqntiyrl8e+YPkF8UtfR+/UXNazEEJ2ePZ+MoWnWPGk01VeaS5tlvUeqrGJ4uaJ7aaJzePR091ondDVe0cZNNziOcH7gmO1A==
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="368" y="800" width="96" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="192" y="688">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Marblehewn Golem|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="608" y="688">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Marblehewn Golem|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="480" y="688">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Marblehewn Golem|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="400" y="560">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A velvet rope, and behind it a door of veined marble. It will not open while the three Apprentices still stand among the statues.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The entrance gallery is still. The marble door swings open.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="96" y="160">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Marblehewn Golem|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="720" y="160">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Marblehewn Golem|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="400" y="432">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The rotunda's doors are carved shut. The Adepts at the ends of the two wings still keep their plinths.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both wings are empty. The carved doors part.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="400" y="320">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Marblehewn Golem|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="400" y="144">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The curator's vault is locked. The Master of the rotunda still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The Master crumbles. The curator's vault unlocks.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="416" y="112">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;white&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Golem&quot;,
+   &quot;Wall&quot;,
+   &quot;Equipment&quot;,
+   &quot;Artificer&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;white&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Marble Mace&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../obj/stone.tx" x="112" y="512">
+  </object>
+  <object id="13" template="../../obj/stone.tx" x="704" y="512">
+  </object>
+  <object id="14" template="../../../../common/maps/obj/gold.tx" x="736" y="720">
+  </object>
+  <object id="15" template="../../../../common/maps/obj/manashards.tx" x="80" y="720">
+  </object>
+ </objectgroup>
+</map>

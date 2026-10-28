@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="46" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="26497" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
+ <tileset firstgid="42881" source="../../../../common/maps/tileset/phyrexia/FurnaceTiles.tsx"/>
+ <layer id="1" name="Background" width="46" height="48">
+  <data encoding="base64" compression="zlib">
+   eJztmUEOxSAIRN128S/Tw5h4/4v8bdMowjCobV2wKsVXGSTS85fSuW2bwcqRUu6Yx6e31vV5LU6LO4q3xeV53vNl5mAEd4RmvGtJ3K11ZpiWR5uXkdz5xdz3d6QYUXXA5pZ0x/ymGnchcrN5a9xo37Fyo3rQahPhHlGzhcCNxvCYtFdo35Fyi5g2x96+M4s7v5i7pz3Nugg3so+zuXv1dtW4h7sM3G9G32nFWEHfSAwmdyFoWBuDwe29qyAxInXiPTNmcT9F30/k9tx3kBhebsZ9h31n8tZUZN+J5I7Qt9VPM2er+Vi/XbtOj9s6Z0O5kXmeVAeSn8aHoTV0ri3lIFrfM+wr3GUxbmvfQbXHmmOy/u9ouS01Ke0vqu97DMZZ78mThtt6/lrioHkaUVOr1LbVVjlLN3f6tP0BHWyYtQ==
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="46" height="48">
+  <data encoding="base64" compression="zlib">
+   eJzt2MEJACAIQFFXaMrmaPCgYwMEkvIeePPwrxoB0N8edyrRDX9a887LTjbdAAAAeareKbrrqvqT0w0A0cYB/psrdQ==
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="46" height="48">
+  <data encoding="base64" compression="zlib">
+   eJztmc1twzAMhXmvM0HcDewpmizRzpJ0raB2TkX3KgRYBaFI5JNExQ4aAjyZkj4rz08/uXREl2fePT92RF9d23zfyWOhz3m+dtQ89spY6PMnNxYalwunh2lj3BqXFij36YXoXJifFW19+1JuV9cvmeNN/dJfbjvf1rev4S71yKnSK1Hua3f7GyHfkXVIY+6B35jXxd5pK9xcC/57D+tSumvJ/TYQHQai45DWN6/hfcTeqTZCr0pp83th+RG4eU2sD2nc3JyZ38S0+TffI9FhJDqOwnyzGo271CO510natPBB/+wUzFepRyJeZ8nt57h2f4CwWXK7COeMeyS6zs+G3OH4btzaNUDTvqS/3DH5uAh3St9Thr5R/Wnrjh+3VIdaIPqz1ncr7pxnW+cO17Y5kzvmGfMduGO6z+HObWfF7aLkHkLyDOn7seR+RH0/uW+frb3OW/ShrfPhvncNbhe55/nw3nJaidvHCTwzS2fHVE1sz2XF7dcHpI73F54LYzXa2lPLjXoL10d4Lkz1VbruWHJrYanvlNe1yNxzQ+n+pDa9N5aeG0q8ruV/PlMlN+p3qBemWJDxS7klv0O9cC1u633Wo3K7QO9LkfsTyaO0Wq7x2vtP7XzZg4nU8jnn958W2dKTQ+7Wa8B/574y/cc0aZG/e9UFyw==
+  </data>
+ </layer>
+ <layer id="4" name="Walls" width="46" height="48">
+  <data encoding="base64" compression="zlib">
+   eJzt2LEJgEAQRNFt4qxIrjArtRQxEM6LDFQYeA82/8FGUwXwzLZU7e1+CebmlO7T1ar7H+OPrEHdAAAAAHyzgaZI3j/HLTFFanef/sQGCkC97AD80iLI
+  </data>
+ </layer>
+ <layer id="5" name="Ring" width="46" height="48">
+  <data encoding="base64" compression="zlib">
+   eJzt2KENgFAQRMFt4SgQqAsolRAE3+FJjsyYtU9vAvB/cyVLJWullXP0Xs26t+nZY2wne8NmAAAAAPCBfssHCgB5uQECWArn
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="46" height="48">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt2dENgCAMRdGu4A4O4QCuppOYuKa/SAxoQXiae/6MKA1K0wYz4Jlx0p0n9czWKG7PPK1iA1Ste+8IcBffCtDYL0vw7mE+34uvw7EK4vi8Y5Tr2NqoFaGQr0pyGnsPX0b9q5VPasaBa6wdWuJ/A/B3qV6opE+qkT+952lv90m5dVHt01TjAqyDA9Y6HME=
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="46" height="48" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJztlksOAyEMQ+cSvX+POttqFMjPMUlbS7MpNDwZYriuuXq/Zn2f3EyPUOPTuRn8z73ecUm/d/Xb838mt0daL34jdyarslnn5T69F9a+jfR3F25pT7Qa3jURNaLnm6GVp9KYNOc5j6Xu3JazWcGdybnoGUbkieSBJst/KnIQ1adsbusYk1uaHz3f2jiKe1WT5TeiZ6edk6oaJ9bs4vfu3kHUt4rRe5FMQHHvxjr4HeHpwP3reZJ9/3T3u/Ke194dVZ5G61X7HdEqm09xR+ZZubNvPvS+TPI7W2vFLWUCWyjuE1+WmyHPWt47ejp3RdZ35dbqZ7mjb4bI+l5J66P8zih731ZkGCsjM1pxd9ef+9rqBtuJVvk=
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="336" y="768" width="64" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="64" y="400">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Anvilhorn Minotaur|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="656" y="336">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Anvilhorn Minotaur|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="480" y="656">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Anvilhorn Minotaur|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="352" y="144">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A gate of hammered iron, hot to the touch. It will not open while the three Apprentices still prowl the outer maze.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The outer maze is quiet. The iron gate swings open.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="176" y="384">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Anvilhorn Minotaur|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="176" y="432">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Anvilhorn Minotaur|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="352" y="496">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The arena gate. It answers only when the two Adepts in the inner maze have fallen.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The inner maze is silent. The arena gate grinds open.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="352" y="416">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Anvilhorn Minotaur|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="352" y="320">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The trophy room is barred. The Master in the arena still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The Master falls on his own anvil. The trophy room opens.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="352" y="288">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;red&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Minotaur&quot;,
+   &quot;Berserker&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;red&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Brute Shield&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../../../common/maps/obj/gold.tx" x="96" y="112">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="13" template="../../obj/stone.tx" x="640" y="688">
+  </object>
+  <object id="14" template="../../obj/stone.tx" x="560" y="208">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="15" template="../../../../common/maps/obj/manashards.tx" x="400" y="288">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

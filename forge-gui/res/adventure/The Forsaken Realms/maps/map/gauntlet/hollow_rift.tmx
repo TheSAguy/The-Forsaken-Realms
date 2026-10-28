@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="56" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="26497" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
+ <layer id="1" name="Background" width="50" height="56">
+  <data encoding="base64" compression="zlib">
+   eJzVWG2yqyAMjVq123hvG7iAbqvfbxvvrvTOyRzuOF5UhFDbHx0qCQeSQAinciIPJ9I4kX9OpHUi9SDSO5HDIHJ2It0gcnUix0HkDrkTeULuRKpBpMP4QeSI8YPIxYn0g8gN8hfhH4lz43jM1XGOC7EfxMT876r/pF7LsQ3lZ475FHlH+6z//z+JfJ3CbYl521FcjtxvNffrgX6AXk/7K8a3YazvxMN+xR6An/6eRP6cltsc/Jrn5TZa/416wKgNvpfiMG0t5vPfDf1xpn96yu+MT0N7K47p6Y+W/rkSp6L/1uIwblPwsW8ujANs8euviVPz+8Jxqf1b4mE5r+Zv+gX2tdSF3fBPijwmHjn4ITli92Cf5mefr2krxsLeA8fH6q/lq1z8qX7P/payhvKKOk/q3Yl9Jb7mb+5nze+cS/M79zPmBD78XxIf69ccXPiHOJSe405/wC/wT0V/NfRfS3tht+Z3n799/vf5nf47059X+hf4/jyUwtc6hTiajzlW8zP1b9TDGjB/jH5MvsrBD+lr/qad0HlSDj8dN8pj741xazU/bNR7hHbVif1b7o3gPZK5Hq3vaRdip/U/9+uBftD3A+1vOVbfB9zPKXH4FZcF/I7nQd8vtAHnRd8fo30IPa33E79T4zBuc+b3eUDrXvofdmt+Z3y0vqeftP6nP870T24cxm0IX+8H7hO9fxgvxEHvD65f63jqpvzPjcP0nk9dj+Zv+h32aX1Pu7W+X5FbxiNlfi8/+Hc63y+aj31+pq6eI5+vJ/qW8Qjhx65H63vaiTFa//M8YGzj8xoxsF+1/icW9rNFPJbw9f3BNev9wfMCW/36NR+7vNYiHrnrsOKXcuLxbvxVShzemb+KicOn8Ffj/z/vj4JzleCvpvySf3+Uwi/BX4W+/TkohV+CvwrxS/48lMKf469CeSWHX/L3QypPFbOeKT+0Vv9s4ZdCOFv5qbX6OMRfxeT7V/JXW9Yz5q+s6tZXtiH+Ksb+GC5pD5wpf7V2PmL5pSWcLfzV2vlY4q/m9uFWfimEk8KPxazHkr+ak/v7oxS+JX+11P/zviiEb8VfrfFLnjcshW/FX619W/BTpfmr3ug9uIZfir+y5ElCfG9J/mqP+9qavyrp/xie0YK/eoc6yoK/2isOW/itWP5qz3hY81d7xKE0f1XS/3vyV7n3xTvzV3O8+qfxVyH/fyJ/NfeefhV/1Rn1W/NgS/3flpwumw==
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="50" height="56">
+  <data encoding="base64" compression="zlib">
+   eJzt0kEKwjAQhtH/MOrtMqcyPWcRXAi20IWIY9+DbDJZ5INJAACAs7uPZI5kGWn791kbp0nTo+FayVI783rOR9+GLi2XSm71+bff9i8dR/fl6P79ckuHhteWufHXvXsAAAAAAADyZgVp1y2o
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="50" height="56">
+  <data encoding="base64" compression="zlib">
+   eJztmd0KgzAMhfMq4v3At5j3+prdzxMOESGUqlnS2iT2wC4G2uVbaHOSAjQ12dFnAnjtfCwxWJcHhkWPmfZc/wTVCjPAdzrP2ZvIW1PDAYsVBszSjev5tDCFaf1uiYG7Z7RL+56+Wy1fZKmmb/FTpJXHQx33wODlXG250FVjvHBQ/O2ZtHhHD/tcmhMtuaD0HFYYMMvWb5zFH5QypHqoVB9luZfycg7Urg251Djyz2ZrihNPTv+K+0Pu/8GJJzdDrTUo52M4uA+g5p3yPiV3e/vuyCf94yEGBeuk3uX4IA3rYF8h8RHYb0n8VK54pGq+RJe8cHi6Z5bUiSvjluhqLhx7SZVk8jD/9MCQa2bIVe7ZEGc+JVWp+VZ8J15C22zrKh+VmlFJ49Yw24o9aYotjllD3HfyuTGHVb/oiaNDe6Efy/3YD9Sazdk=
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="50" height="56">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt2MENwkAMBMAN5VwHeUBvSS25IuiOGg5FlhEzT0sr++HXJgDf2cfavKv3WJsD8H+OKzmv+uzdtpk8Zn32bsdMzlmfBQAAft9zJK9GvV+3e6Dzf3a7B4Ae/XjFjop+vGJHRT+ugweALPkAVwEdXQ==
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="50" height="56" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJzt1MsNwzAMA9As0f09aq9F4ab6UKFkUIBujsznOFmv61pq9ZC+qxMMUyyemuD4Zfpe07VPeR9WCzsjwsLOljGxM8gx3zH9O4/UFIN3TYf25Opo8Jy/5bnuhs6WXQ5LyaF7hbR0NezyRoxsg+Ue/St2doSFnTnrYWeMutgZ5JADuS/yu0Q8783zuSZrQZxHJI+lMgbkjLtZE6vyfXSYE92z4l5l81RamHOyzdpXDjm6dKam5ma7GHWCAW3ZzXwiN9rSoXSvelgm/7uqs1e5mLmjNnYmOeRYjr3er8HhkQ==
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="368" y="896" width="80" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="240" y="752">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Cryptstalker Fiend|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="560" y="768">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Cryptstalker Fiend|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="400" y="800">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Cryptstalker Fiend|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="400" y="640">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The bridge ends in a shimmer of torn space. It will not close while the three Apprentices still stalk the rim.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The rim is empty. The torn space knits shut, and the bridge holds.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="96" y="560">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Cryptstalker Fiend|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="704" y="560">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Cryptstalker Fiend|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="400" y="464">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The long bridge is barred by a second tear. The Adepts on the two floating shards still hold it open.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both shards are still. The tear closes over the long bridge.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="400" y="320">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Cryptstalker Fiend|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="400" y="176">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The lodestone hangs behind a wall of nothing. The Master at the eye of the rift still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The eye closes. The wall of nothing is gone.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="400" y="112">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;colorless&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Eldrazi&quot;,
+   &quot;Horror&quot;,
+   &quot;Construct&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;colorless&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Interplanar Armor&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../../../common/maps/obj/manashards.tx" x="160" y="768">
+  </object>
+  <object id="13" template="../../../../common/maps/obj/manashards.tx" x="640" y="752">
+  </object>
+  <object id="14" template="../../../../common/maps/obj/gold.tx" x="400" y="592">
+  </object>
+ </objectgroup>
+</map>

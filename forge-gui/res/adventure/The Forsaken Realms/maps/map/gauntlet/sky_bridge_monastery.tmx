@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="58" height="46" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <layer id="1" name="Background" width="58" height="46">
+  <data encoding="base64" compression="zlib">
+   eJzNWUtuWzEMzF0MLXyCdOWDtl3lpEUXAlhihjOkZDSLBye2SPEz/L71+fHxMJ4n+X6lT/a7w4udexb84z1RFnVHJbdzn+KLeCKZoqzLvDvzqc6voc1d/hNZGH3+O593dVD6oTsZZpQ9tpynsin6SrYOVjfNr9e9h/npBBsxnhk/x04/X/eeLKNDk2Vj8ej4P9ok093UM/Pv0lTxhHwedYr2QfTfwZ/MB5M8gHD/Tn+6vJFPGCZRjKo6trH8+3XvybZ3aBhmJ/m4OvO//alw5+CT1aB45mZdyXdNaKZ6Z32fb/TnpGYhPVT+6fRT26/fAbeTvKrmlXz2XXqyHi3Kx3Jt1jvHWsRkJ56dWcqxr5r9HJwp+s7c4uQndJ7d4c6dzu9/P79+/Pt08Nx9sm7rsB/PWKvqgqNnFdNrgDU1u3XiI/cwDr7ZXZWO7NyNudfp35RMyi+M5rQHznziZ/RJJ0+pHOPycu5y9WN+6tRwR97uLgthcTX5Tutl3IE5MwSSw8krk3hDNJ35RNk96oP2HxnP8ffTfoXtWybzqKPnlM+NeSLXnun84uSW6cxyOk8oTE/8iXrPrX+Hz605SsVRNy6cfNiJp1v+fLwx3zJ9XZzdxG1l9wl/p65P7XWyp0L5Put8svea7tlQDN30J/JFhx/Kae4spfbtN/dU0zqA3qfsv5GebHcc9bv5PsSRadrXIlrV+6H3eLfzEJtlO7uBahZzetVov6r3Zu+C1J6v0jPaYTLvuLNdZYusM9Ozot30012V2nm48yiSKf+m3mNU+xEmm9LPtUOFbWc+rs4o3D6bM53qSx2snsziEa/RXqx+sFhQeiOeqJ509wEMVxX+ql6Z2WjjAu0sFUZyf9DJdZV/O/HM9OzswTr1K9os4yF+bj1Z3Dn6xTNV/KDZ0Ikl1b8jHpUuqr6uQ3+iHQnbf+f7HTywHKT6Hff71awr7P/cK3R6tRMMPgDWUA6PMYL8iWyJsJJzdyUz6tMUJrO8Crd/AMVIJBE=
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="58" height="46">
+  <data encoding="base64" compression="zlib">
+   eJztmEduwzAQRd8VUjbpOYIc2+DOwhwxZZPujfdxrAMGhiFAIVQoiiqkOcDfcECKj5Sg+TNLYRYVFXVUuhC4FLgSuBa4EbgVuBO4l0N+H3X5fP7YLHV6FXgTeBf4EPgU+BL4FljLIb+Punw+3+YMh+J0GTZnGAKnzZzI2S/niYJTZbbnzfK/fOJ8VPCkwr/PNhE5I2cInL5ps2Q91LMWKfymsC1oHiBnVvKO7QLkfCjhTALkzFaw1bRbhcc5piKnvzqW/+VUOE16EVX5MTht1zHpRVTl2+zrTMG55sf0sT45u0SbfT0reNE49bEQOG36B2Uy6Uu45myzL9fnVteXGPM+4/dZvV7RU8094bRZr+ipunopV5xlZ9+Vs+ipkglw5ox5/DR4dtP6NnPopVxwNnn2hXbPU6njq3hsPXueTzznbPLsmTbmK2dbhcxp8p1Hzur/1pQ59RrcZL7LmmEoTr0GN5nvsmZwwWlTFxndZw/9V1tOvS4aqr8/NKdeLySBcmYj9ffrWP4Ad166Sg==
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="58" height="46">
+  <data encoding="base64" compression="zlib">
+   eJztmEEOAiEMRbuXOYHxYnoWnXuJc7eJCxMWEKC2QOG/hNWEhlcIU0oEAFiNx0b0dv+P+0ZDc3Myca6uPoctc6PpmYsdm6MFPOtYxTOGn9Bzlf2EZ90ci56HI3pd0uPT0DO3lu/YM99brxkAAAAYjdjb2BvsH0jVR9o1G7efU5p/aU9u74Rbj5auS9qTW8vDkxdPKr50T0Gzz1GyrtX2E54yb21rnly0PWP53zv0D7Q9RyGV7x/Pifs34R5b27ca4DkXGp7hO8MP8u7U8Ezd6z3PCzxlYs7smapLe/6Hcd/OxRGcMev13Qk8dW1h
+  </data>
+ </layer>
+ <layer id="5" name="Ring" width="58" height="46">
+  <data encoding="base64" compression="zlib">
+   eJztmFEOwyAIhvvc9Q4767qjNrvHwtOMaScKWMT/S3yoNchvKyjLAgCYjf2h1zyj5d+ZHU9rY62zx9wcoLPezmf9PR9rTJ3P7b65e85Fdt6JrRcjzoyqs9Y2dOozU/4sNYqjnny2gOIJkcYYAAAA+tB5nEjP6BG4yovR8iXXf2ud1vUbi3EtfrWu4506W9570lmKTZKagkSnhl+S+kEPnVp+pX6UzvaSmoLke2r4NeP+5I6bId620kMnt54wsk4v9YSr9c5zQ7TzaB4jOXF1VHKdUbHU6en+aaHz3/0zms6a/h5Ap45NTn+E/eklDyOvxGJ38l9p8AVrs5UG
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="58" height="46">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt2bEJgDAQRuF/BUFHsDinsNHGHTKVjuCeklZEEw0a9X1d4AJXpHlEAgDgXUonVS79bG5GJ00u/Wwx7J+Bs+r23ntPmdt77wEAAOQqpLfe3GQxvRXTZPimrbeeU+v4XVLss/XWQ1rHTGrs+swRv8uT7dWZ1Nv1GQAAAGDdGDn1RUrrxuAvBYB+YAGq1hw1
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="58" height="46" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJzt1UsOgCAMRVE24f5dqnHghJAIldrfbfIGMig9QOJ5tHYSQkiXu6xnwDlv2FVVnZ7OZrTnynwRnRYV0VnlPiM4pea+h3fnjqrqjJYMBpw4swZnrmR0VvpfvnmtZ/N4n17fhRfnl7J0jvo/3x6cO/aVzLWyv/aMvFucs32iOaXBqTeXtqmyc8au0d/aiBOnpKfmOeL8x9n379ezOKvcZwWnx+Bs4XIBxLKV6g==
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="112" y="736" width="64" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="96" y="512">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kor Sky Climber|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="192" y="528">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kor Sky Climber|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="144" y="480">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kor Sky Climber|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="336" y="464">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A gate of white wind blocks the bridge. It will not still while the three Apprentices still train in the gate court.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The gate court is quiet. The wind falls still across the bridge.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="816" y="464">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kor Sky Climber|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="496" y="672">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kor Sky Climber|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="496" y="304">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The bridge to the high hall is held by a second wind. The Adepts of the two towers still call it.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both towers are silent. The wind dies on the high bridge.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="496" y="192">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Kor Sky Climber|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="672" y="160">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The bell loft is sealed. The Master of the high hall still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The Master has fallen. The way to the bell loft is clear.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="784" y="160">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;white&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Kor&quot;,
+   &quot;Monk&quot;,
+   &quot;Bird&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;white&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Shield of Air&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../obj/wood.tx" x="48" y="544">
+  </object>
+  <object id="13" template="../../obj/wood.tx" x="544" y="512">
+  </object>
+  <object id="14" template="../../../../common/maps/obj/gold.tx" x="848" y="480">
+  </object>
+  <object id="15" template="../../../../common/maps/obj/manashards.tx" x="528" y="688">
+  </object>
+ </objectgroup>
+</map>

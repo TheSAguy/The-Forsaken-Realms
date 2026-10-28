@@ -2039,6 +2039,171 @@
 		]
 	},
 	{
+		"name": "GauntletSporeCathedral",
+		"displayName": "Spore Cathedral",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/buildingsbosses.atlas",
+		"sprite": "Slimefoot",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/spore_cathedral.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletThornwingHive",
+		"displayName": "Thornwing Hive",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/buildingsbosses.atlas",
+		"sprite": "Xira",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/thornwing_hive.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletJadeZiggurat",
+		"displayName": "Jade Ziggurat",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "Spare_E_CaveLarge1",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/jade_ziggurat.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletKilnFoundry",
+		"displayName": "Kiln Foundry",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+		"sprite": "Factory_B",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/kiln_foundry.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletAnvilLabyrinth",
+		"displayName": "Anvil Labyrinth",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "Spare_E_Zedruu_City",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/anvil_labyrinth.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletBrassPalace",
+		"displayName": "Brass Palace",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+		"sprite": "SandPalace",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/brass_palace.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletClockworkOrrery",
+		"displayName": "Clockwork Orrery",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/buildingsbosses.atlas",
+		"sprite": "Aetherflux Resevoir",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/clockwork_orrery.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletBuriedNecropolis",
+		"displayName": "Buried Necropolis",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+		"sprite": "SandTemplePillared",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/buried_necropolis.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletHollowRift",
+		"displayName": "Hollow Rift",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/buildingsbosses.atlas",
+		"sprite": "Edge of Eternities",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/hollow_rift.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletSkyBridgeMonastery",
+		"displayName": "Sky-Bridge Monastery",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/buildingsbosses.atlas",
+		"sprite": "Tolarian Academy",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/sky_bridge_monastery.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletMarbleGallery",
+		"displayName": "Marble Gallery",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+		"sprite": "GreyHall",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/marble_gallery.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
 		"name": "GauntletBoneOrchard",
 		"displayName": "Bone Orchard",
 		"type": "dungeon",
