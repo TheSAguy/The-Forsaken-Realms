@@ -458,9 +458,10 @@ public class DuelScene extends ForgeScene {
         if (winner && !isArena && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
             forge.adventure.util.TempleOfferings.recordKill(enemy.getData());
         // Round 726: a loss the next load may undo (ReloadJab) - any duel of the player's, Arena and Inn included; not
-        // Deck Tester and not a guard's fight.
+        // Deck Tester and not a guard's fight. Round 796: an Arena loss is not counted (the user: "Arena losses do not
+        // count") - ReloadJab still passes it to DifficultyHints.
         if (!winner && !drawn && guardDeck == null && (enemy == null || enemy.getData().fixedDeck == null))
-            forge.adventure.util.ReloadJab.onDuelLost(enemyName);
+            forge.adventure.util.ReloadJab.onDuelLost(enemyName, !isArena);
         Forge.advFreezePlayerControls = winner;
         endRunnable = () -> Gdx.app.postRunnable(() -> {
             GameHUD.getInstance().updateBGM();
@@ -1414,10 +1415,10 @@ public class DuelScene extends ForgeScene {
         MatchController.setIntroShowing(showIntro);
         hostedMatch.startMatch(rules, appliedVariants, players, guiMap, bossBattle ? MusicPlaylist.BOSS : MusicPlaylist.MATCH);
         // Round 735: a quit before this match ends is judged on the next load (ReloadJab) - the player's own duels, as
-        // afterGameEnd's onDuelLost counts them: not a watched guard fight, not Deck Tester.
-        if (!aiControlsPlayerSide && guardDeck == null && enemy.getData().fixedDeck == null)
+        // afterGameEnd's onDuelLost counts them: not a watched guard fight, not Deck Tester. Round 796: not the Arena.
+        if (!aiControlsPlayerSide && guardDeck == null && enemy.getData().fixedDeck == null && !isArena)
             forge.adventure.util.DuelHeartbeat.start(hostedMatch, humanPlayer, enemy.getName(),
-                    notorietyGate() && !isArena); // round 795: a counted quit costs Notoriety where a loss would
+                    notorietyGate()); // round 795: a counted quit costs Notoriety where a loss would
         else
             forge.adventure.util.DuelHeartbeat.stop();
         MatchController.instance.setGameView(hostedMatch.getGameView());
@@ -1714,7 +1715,7 @@ public class DuelScene extends ForgeScene {
         }
         // Round 726 follow-up (the user: "each time you re-load, the counter goes up, you add +1 life to enemies on Hard
         // and Insane"): +1 per reload after a lost duel (ReloadJab), flat, last - not an Inn match (its rules set the
-        // life), not a roaming guard's fight. Round 732: capped at +10 (ReloadJab.MAX_LIFE_BONUS).
+        // life), not a roaming guard's fight. Round 732: capped at +10; round 796: +25 (ReloadJab.MAX_LIFE_BONUS).
         int reloadLife = !event && !guardFight ? forge.adventure.util.ReloadJab.enemyLifeBonus() : 0;
         if (reloadLife > 0) {
             enemyStartingLife += reloadLife;

@@ -299,6 +299,22 @@ public class SettingsScene extends UIScene {
                 }
             });
         }
+        // Round 796: "I won't cheat by loading after a loss" - checked by default; unchecked switches the reload feature
+        // off (ReloadJab.optedOut). Only on a plane that has it (reloadJabEnabled).
+        if (forge.adventure.util.ReloadJab.isEnabled()) {
+            addSettingField(localizer.getMessageorUseDefault("lblNoReloadCheating", "I won't cheat by loading after a loss"),
+                    !Config.instance().getSettingData().reloadJabOptOut, new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    boolean checked = ((CheckBox) actor).isChecked();
+                    if (checked == !Config.instance().getSettingData().reloadJabOptOut)
+                        return;
+                    Config.instance().getSettingData().reloadJabOptOut = !checked;
+                    Config.instance().saveSettings();
+                    forge.adventure.util.ReloadJab.onSettingChanged(checked);
+                }
+            });
+        }
         // Round 778: a land drops cell (lands played / allowed this turn) in each player's stat column in duels
         // (VPlayerPanel.InfoTabLand); off by default. The duel screen is built per duel, so it shows from the next duel.
         addSettingField(localizer.getMessageorUseDefault("lblShowLandDrops", "Show land drops in duels"),

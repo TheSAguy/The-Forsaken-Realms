@@ -14264,6 +14264,62 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 796: "I won't cheat by loading after a loss" - a Settings switch for the reload penalty; cap +25, forgiveness every 3, the Arena never counts (2026-10-28)
+
+The user: "Let's add a option in settings. 'I won't cheat by loading after a loss' Default checked. If they un-check
+this, we will remove this feature. (remove the log entry jab also) Let's bump up the +10 to +25 life cap. Let's have
+forgiveness be for every 3 losses taken, in between a re-load, reduce the penalty by 1. Life gain, still only Hard and
+Insane. Arena losses do not count." Then, of "in between a re-load": "a counted reload resets the progress, so
+forgiveness needs 3 losses in a row taken without a reload." Ships with 1.25. Rounds 726/732/735/783/795 built the
+feature (`util/ReloadJab`).
+
+- **The option** (global, Settings, under Disable Notoriety; only on a plane with `reloadJabEnabled`):
+  `SettingData.reloadJabOptOut`, stored inverted like round 772's, so an older settings file reads as checked; label
+  `lblNoReloadCheating` through `getMessageorUseDefault` (as `lblDisableNotoriety` - no en-US.properties line).
+  Unchecked (`ReloadJab.optedOut()`): no pending loss, no duel record (`onDuelInProgress` returns false, so no
+  heartbeat), loads not judged (no count, no round 795 Notoriety charge, no forgiveness), `enemyLifeBonus()` 0, and no
+  Notices lines (red or green). The counts in `tfr_reload_jab.properties` stay, so checking it again resumes from them.
+  The flip (`onSettingChanged`) drops any pending loss or duel record - never judged - and logs
+  `[TFR-ReloadJab] Settings: "I won't cheat by loading after a loss" checked|unchecked - ... (world <seed>: N reloads,
+  F forgiven kept)`; a skipped loss, load or duel start logs `[TFR-ReloadJab] off - the player's choice (Settings): ...`.
+  DifficultyHints (round 779) keeps working: `onDuelLost` now hands every loss to it whatever the option (it was
+  skipped only when the plane has no reload feature, as before), and an opted-out load still runs `DifficultyHints.watch`.
+- **Cap +25, not retroactive** (the user's round 732 rule): `MAX_LIFE_BONUS` 10 -> 25. `carryOverCap()` runs once per
+  world (marker `cap25.<seed>`) the first time the new build meets it - a load, the life bonus's first read, a duel
+  start or day tick that credits an honest loss, the console: unforgiven reloads above 10 are forgiven down to 10
+  (`forgiven = count - 10`), so the world carries over at +10 and each new counted reload adds +1 up to +25. A world at
+  or under 10 is marked too, so its later reloads are never cut back. `creditHonest`'s "forgive down to the cap first"
+  (`max(forgiven, reloads - MAX_LIFE_BONUS) + 1`) works unchanged against 25: only a count past 25 unforgiven jumps.
+- **Forgiveness every 3** (`HONEST_PER_FORGIVE` 5 -> 3), and a counted reload or counted mid-duel quit sets
+  `honest.<seed>` back to 0 (`resetHonest`, the suffix "- honest losses 2/3 -> 0 (a counted reload restarts them)" on
+  the count's `[TFR-ReloadJab]` line). An older world holding 3 or 4 of the old 5 forgives on its next honest loss.
+- **Life bonus**: still Hard and Insane only (`hardOrInsane()` unchanged). It applies in Arena duels today
+  (`DuelScene.enemyStartingLife` excludes only Inn events and guard fights) and still does - the user named Arena
+  losses, not the Arena's life.
+- **Arena** (`DuelScene`): an Arena loss calls `ReloadJab.onDuelLost(enemyName, false)` - no pending loss, so no reload
+  can count it and no forgiveness comes of it; it still reaches DifficultyHints. An Arena duel starts no
+  `DuelHeartbeat`, so a quit leaves no record to judge (the heartbeat only feeds ReloadJab). Inn tournaments still count.
+- **GUIDE**: a "Reloading after a loss" paragraph in Notes on Difficulty (the tease, +1 up to +25 on Hard/Insane, the
+  Notoriety cost of a quit, forgiveness every 3 with a reload starting it over, the Arena, the +10 carry-over, the
+  option). The Discord FAQ is unchanged (it describes 1.24); at the 1.25 FAQ refresh, `dev-tools/discord_faq/messages.py`
+  line 172 needs "(up to +10)" -> "(up to +25)", the forgiveness and Arena rules, the Notoriety cost of a mid-duel quit
+  (round 795), and the Settings option.
+- **Tested** (Maven exit 0; agent test copy with a copied agent profile and this jar ahead of the agent jar; Hard, a new
+  world; every duel at 50x; log lines in `C:\TFR\notes\r796-agent-log-lines.txt`, Notices shots
+  `notes\r796-notices-*.png`): the existing settings file (no key) read as checked; `reloadjab 30` -> "enemies +25
+  life", a Timber Wolf started at 42; three losses, each credited by the next duel's start -> "forgiven ... 6 of 30
+  reloads forgiven, the bonus +25 -> +24"; one more honest loss, then a load of a save from before the next loss ->
+  "31 ... - honest losses 1/3 -> 0"; with `reloadJabOptOut` true (settings.json, game closed): "(off in Settings)",
+  bonus +0 (no "+N enemy life" line in the duel), the loss "not watched", the duel "not watched for a mid-duel quit",
+  the reload "not judged" (31 kept, no Notices line), `[TFR-Hint] lost to Goblin Worker - 2 of 5` still counted; back
+  on, with the store set to a pre-796 state (count 16, forgiven 0, no marker): "carried over at +10 (forgiven 0 -> 6)",
+  a Goblin Worker at +10, the next counted reload 17 / +11; an Arena loss in the Swamp Capital ("lost to Bloodveil
+  Countess in the Arena - not counted", no duel record written, the hint counted) and a reload of a save from before
+  it: still 17. **Not tested**: the checkbox itself (the bridge cannot scroll Settings; the option was set in
+  settings.json, so `onSettingChanged` and its drop of a pending record did not run), a mid-duel quit after this
+  round's reset (round 795 covers the quit path; it shares `resetHonest`), a day tick's credit (the waits were
+  interrupted by roaming duels), Insane, Android.
+
 ## Round 798: a place back from the reserve forgets its map flags; a loss keeps a gauntlet on the map (2026-10-28)
 
 The first round of the gauntlet dungeons (the user, through the Art main thread: three Apprentices, two Adepts and a

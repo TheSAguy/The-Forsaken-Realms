@@ -85,6 +85,10 @@ public class SettingData {
     // Round 772 (the user: "Disable Notoriety system option. By default unchecked"): true switches every Notoriety
     // effect off (AdventurePlayer.notorietyDisabled) - the score still counts. Off by default, so an older file reads as on.
     public boolean notorietyDisabled;
+    // Round 796 (the user: "Let's add a option in settings. 'I won't cheat by loading after a loss' Default checked"):
+    // true = the player unchecked it - the reload feature (ReloadJab.optedOut) is off for them. Stored inverted, so an
+    // older file reads as checked.
+    public boolean reloadJabOptOut;
     // Round 778 (the user: "Make Land Drops an Settings option, by default off"): true adds a land drops cell - lands
     // played / allowed this turn - to each player's stat column in duels (VPlayerPanel.InfoTabLand).
     public boolean showLandDrops;

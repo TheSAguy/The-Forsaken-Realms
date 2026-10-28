@@ -38,6 +38,13 @@ import java.util.Properties;
  * Notoriety as a lost duel does, on the next load. The world's count of them ({@code notorietyQuits.<seed>}) is kept
  * here; the save keeps how many it has paid for (AdventurePlayer.notorietyQuitsPaid), and every load pays the
  * difference - so a close without saving and a reload of the same save pays again from the same score.
+ *
+ * <p>Round 796 (the user: "Let's add a option in settings. 'I won't cheat by loading after a loss' Default checked. If
+ * they un-check this, we will remove this feature ... bump up the +10 to +25 life cap ... forgiveness be for every 3
+ * losses taken, in between a re-load ... Arena losses do not count"): the Settings option ({@link #optedOut}), the cap
+ * at {@link #MAX_LIFE_BONUS} 25 (an older world's bonus carries over at the old +10, once - {@link #carryOverCap}),
+ * forgiveness every {@link #HONEST_PER_FORGIVE} 3 losses with no counted reload between them, and no Arena loss or
+ * Arena quit counted (DuelScene: no pending loss, no duel record).
  */
 public final class ReloadJab {
     private static final String FILE = ForgeConstants.USER_DIR + "adventure" + File.separator + "tfr_reload_jab.properties";
@@ -46,8 +53,8 @@ public final class ReloadJab {
     private static final int FIRST = 5;
     private static final String INK = "[#C01818]";
     private static final String KIND_INK = "[#2b7a2b]";
-    /** Round 735: honest losses per reload forgiven. */
-    static final int HONEST_PER_FORGIVE = 5;
+    /** Round 735: honest losses per reload forgiven. Round 796: 3 (was 5), with no counted reload between them. */
+    static final int HONEST_PER_FORGIVE = 3;
     /** The store is written by the render thread and DuelHeartbeat's thread: every read-change-write holds this. */
     private static final Object LOCK = new Object();
 
@@ -59,15 +66,71 @@ public final class ReloadJab {
         return configData != null && configData.reloadJabEnabled;
     }
 
+    /**
+     * Round 796: the player unchecked "I won't cheat by loading after a loss" (SettingData.reloadJabOptOut, stored
+     * inverted so an older settings file reads as checked). Then nothing here counts, judges, forgives, charges or posts;
+     * the counts already kept stay, so checking it again resumes from them. DifficultyHints keeps working.
+     */
+    public static boolean optedOut() {
+        forge.adventure.data.SettingData settings = Config.instance().getSettingData();
+        return settings != null && settings.reloadJabOptOut;
+    }
+
+    /** Round 796: the plane has the feature and the player kept it on. */
+    static boolean active() {
+        return isEnabled() && !optedOut();
+    }
+
+    /** Round 796: the forge.log line where an event is skipped because the player unchecked the option. */
+    private static void logOff(String what) {
+        System.out.println("[TFR-ReloadJab] off - the player's choice (Settings): " + what);
+    }
+
+    /** Round 796, SettingsScene: the option flipped. A pending loss or duel record from before is dropped, not judged. */
+    public static void onSettingChanged(boolean checked) {
+        boolean dropped;
+        long seed = currentSeed();
+        int reloads;
+        int forgiven;
+        synchronized (LOCK) {
+            Properties p = read();
+            dropped = p.getProperty("pendingLossAt") != null || p.getProperty("duel.seed") != null;
+            p.remove("pendingSeed");
+            p.remove("pendingLossAt");
+            clearDuel(p);
+            reloads = count(p, seed);
+            forgiven = intProp(p, "forgiven." + seed);
+            write(p);
+        }
+        System.out.println("[TFR-ReloadJab] Settings: \"I won't cheat by loading after a loss\" " + (checked
+                ? "checked - reloads after a loss count again, from the counts kept"
+                : "unchecked - no reload counting, enemy life bonus, Notoriety quit cost, forgiveness or Notices lines")
+                + " (world " + seed + ": " + reloads + " reloads, " + forgiven + " forgiven kept)"
+                + (dropped ? "; a pending loss or duel record was dropped, not judged" : ""));
+    }
+
     private static long currentSeed() {
         WorldSave save = WorldSave.getCurrentSave();
         return save == null || save.getWorld() == null ? 0L : save.getWorld().getSeed();
     }
 
-    /** DuelScene.afterGameEnd: the player lost a duel (not a draw, not Deck Tester). */
-    public static void onDuelLost(String enemyName) {
+    /**
+     * DuelScene.afterGameEnd: the player lost a duel (not a draw, not Deck Tester). Round 796: {@code counts} false for
+     * an Arena duel - no pending loss; the player's opt-out likewise. DifficultyHints hears every loss either way.
+     */
+    public static void onDuelLost(String enemyName, boolean counts) {
         if (!isEnabled())
             return;
+        if (!counts)
+            System.out.println("[TFR-ReloadJab] lost to " + enemyName + " in the Arena - not counted (round 796)");
+        else if (optedOut())
+            logOff("the loss to " + enemyName + " is not watched");
+        else
+            markPendingLoss(enemyName);
+        DifficultyHints.onDuelLost(enemyName); // round 779: the 5th loss to one foe suggests an easier difficulty
+    }
+
+    private static void markPendingLoss(String enemyName) {
         synchronized (LOCK) {
             Properties p = read();
             long seed = currentSeed();
@@ -78,12 +141,11 @@ public final class ReloadJab {
             System.out.println("[TFR-ReloadJab] lost to " + enemyName + " - a load of a save older than now counts (world "
                     + seed + ", " + count(p, seed) + " so far)");
         }
-        DifficultyHints.onDuelLost(enemyName); // round 779: the 5th loss to one foe suggests an easier difficulty
     }
 
     /** DuelScene.initDuels: another duel starts - the player moved on from the last loss, an honest one (round 735). */
     public static void onDuelStarted() {
-        if (!isEnabled())
+        if (!active()) // round 796: nothing is pending while the player has it off
             return;
         String line;
         synchronized (LOCK) {
@@ -91,6 +153,7 @@ public final class ReloadJab {
             if (p.getProperty("pendingLossAt") == null)
                 return;
             long seed = currentSeed();
+            carryOverCap(p, seed);
             boolean here = String.valueOf(seed).equals(p.getProperty("pendingSeed"));
             p.remove("pendingSeed");
             p.remove("pendingLossAt");
@@ -103,7 +166,7 @@ public final class ReloadJab {
 
     /** Round 735, WorldStage's day tick: a day passed since the last loss with no reload - an honest loss. */
     public static void onDayPassed(int day) {
-        if (!isEnabled())
+        if (!active())
             return;
         String line;
         synchronized (LOCK) {
@@ -111,6 +174,7 @@ public final class ReloadJab {
             long seed = currentSeed();
             if (p.getProperty("pendingLossAt") == null || !String.valueOf(seed).equals(p.getProperty("pendingSeed")))
                 return;
+            carryOverCap(p, seed);
             p.remove("pendingSeed");
             p.remove("pendingLossAt");
             line = creditHonest(p, seed, "day " + day + " came with no reload");
@@ -123,12 +187,27 @@ public final class ReloadJab {
     public static void onLoaded(Date saveDate) {
         if (!isEnabled())
             return;
+        if (optedOut()) { // round 796: a record from before the flip is dropped, not judged
+            synchronized (LOCK) {
+                Properties p = read();
+                if (p.getProperty("pendingLossAt") != null || p.getProperty("duel.seed") != null) {
+                    p.remove("pendingSeed");
+                    p.remove("pendingLossAt");
+                    clearDuel(p);
+                    write(p);
+                }
+            }
+            logOff("the load is not judged");
+            DifficultyHints.watch("a load");
+            return;
+        }
         String quitLine;
         String line = null;
         String kind = null;
         synchronized (LOCK) {
             Properties p = read();
             long seed = currentSeed();
+            carryOverCap(p, seed); // round 796: before anything adds to the count
             String jab = judgeMidDuelQuit(p, seed); // round 735: a duel left mid-fight, before the pending loss below
             String paid = payNotoriety(p, seed); // round 795: every load, so a reload without a save pays again
             quitLine = paid != null ? paid + (jab == null || jab.isEmpty() ? "" : " " + jab)
@@ -147,7 +226,8 @@ public final class ReloadJab {
                     } else {
                         int n = count(p, seed) + 1;
                         p.setProperty("count." + seed, String.valueOf(n));
-                        System.out.println("[TFR-ReloadJab] " + n + " (a save from before the loss, world " + seed + ")");
+                        System.out.println("[TFR-ReloadJab] " + n + " (a save from before the loss, world " + seed + ")"
+                                + resetHonest(p, seed));
                         line = withLife(message(n), p, seed);
                     }
                 }
@@ -171,6 +251,10 @@ public final class ReloadJab {
     static boolean onDuelInProgress(String enemyName, boolean notoriety) {
         if (!isEnabled())
             return false;
+        if (optedOut()) { // round 796
+            logOff("the duel with " + enemyName + " is not watched for a mid-duel quit");
+            return false;
+        }
         synchronized (LOCK) {
             Properties p = read();
             if (p.getProperty("duel.seed") != null)
@@ -306,7 +390,7 @@ public final class ReloadJab {
         int n = count(p, seed) + 1;
         p.setProperty("count." + seed, String.valueOf(n));
         System.out.println("[TFR-ReloadJab] " + n + " (left mid-duel: " + facts + " - a lost duel plus a reload, world "
-                + seed + ")");
+                + seed + ")" + resetHonest(p, seed));
         if (notoriety) {
             int quits = intProp(p, "notorietyQuits." + seed) + 1;
             p.setProperty("notorietyQuits." + seed, String.valueOf(quits));
@@ -372,6 +456,18 @@ public final class ReloadJab {
         return HONEST_PER_FORGIVE + " losses taken honestly - enemies lose 1 bonus life (now +" + after + ").";
     }
 
+    /**
+     * Round 796 (the user confirmed: "a counted reload resets the progress, so forgiveness needs 3 losses in a row taken
+     * without a reload"): a counted reload or counted mid-duel quit sets the honest losses back to 0. The log suffix.
+     */
+    private static String resetHonest(Properties p, long seed) {
+        int had = intProp(p, "honest." + seed);
+        if (had <= 0)
+            return "";
+        p.setProperty("honest." + seed, "0");
+        return " - honest losses " + had + "/" + HONEST_PER_FORGIVE + " -> 0 (a counted reload restarts them)";
+    }
+
     private static void postKind(String line) {
         if (line != null)
             GameHUD.getInstance().logNotification(KIND_INK + line, true);
@@ -384,20 +480,24 @@ public final class ReloadJab {
     /**
      * Round 732 (the user: "Cap at 10 and don't retro-actively apply anything"): the enemy life bonus stops at +10. The
      * count itself keeps going, so the lines still progress; only the bonus is capped. Round 735: less the reloads
-     * honest losses forgave.
+     * honest losses forgave. Round 796: +25, not retroactive - see carryOverCap.
      */
-    static final int MAX_LIFE_BONUS = 10;
+    static final int MAX_LIFE_BONUS = 25;
+    /** Round 796: the cap before it (round 732), where an older world's bonus carries over. */
+    static final int OLD_LIFE_CAP = 10;
     private static volatile long cachedSeed = Long.MIN_VALUE;
     private static volatile int cachedOwed;
 
     /** The extra life every enemy starts with: this world's reloads less those forgiven, on Hard and Insane, else 0. */
     public static int enemyLifeBonus() {
-        if (!isEnabled() || !hardOrInsane())
+        if (!active() || !hardOrInsane()) // round 796: and not while the player has it off
             return 0;
         long seed = currentSeed();
         if (seed != cachedSeed) {
             synchronized (LOCK) {
                 Properties p = read();
+                if (carryOverCap(p, seed))
+                    write(p, false);
                 cachedOwed = count(p, seed) - intProp(p, "forgiven." + seed);
                 cachedSeed = seed;
             }
@@ -407,6 +507,30 @@ public final class ReloadJab {
 
     private static boolean hardOrInsane() {
         return Current.player() != null && Current.player().isHardorInsaneDifficulty();
+    }
+
+    /**
+     * Round 796 (the user's round 732 rule: "don't retro-actively apply anything"): once per world, the first time the
+     * new cap meets it, unforgiven reloads above the old +10 are forgiven down to it, so the world carries over at +10 and
+     * each new counted reload adds +1 up to +25. Marked by {@code cap25.<seed>}, also on a world below +10 (so its later
+     * reloads are never cut back). True when the store changed.
+     */
+    static boolean carryOverCap(Properties p, long seed) {
+        if (seed == 0L || p.getProperty("cap25." + seed) != null)
+            return false;
+        p.setProperty("cap25." + seed, "1");
+        int reloads = count(p, seed);
+        int forgiven = intProp(p, "forgiven." + seed);
+        if (reloads - forgiven > OLD_LIFE_CAP) {
+            p.setProperty("forgiven." + seed, String.valueOf(reloads - OLD_LIFE_CAP));
+            System.out.println("[TFR-ReloadJab] cap +" + OLD_LIFE_CAP + " -> +" + MAX_LIFE_BONUS + " (round 796): world " + seed
+                    + " had " + (reloads - forgiven) + " unforgiven reloads - carried over at +" + OLD_LIFE_CAP + " (forgiven "
+                    + forgiven + " -> " + (reloads - OLD_LIFE_CAP) + "); new reloads add +1 up to +" + MAX_LIFE_BONUS);
+        } else if (reloads > 0) {
+            System.out.println("[TFR-ReloadJab] cap +" + MAX_LIFE_BONUS + " (round 796): world " + seed + " carries over at +"
+                    + Math.max(0, reloads - forgiven) + " (" + reloads + " reloads, " + forgiven + " forgiven)");
+        }
+        return true;
     }
 
     /** The bonus the unforgiven reloads give, capped at MAX_LIFE_BONUS. */
@@ -420,6 +544,7 @@ public final class ReloadJab {
         synchronized (LOCK) {
             Properties p = read();
             long seed = currentSeed();
+            carryOverCap(p, seed); // round 796: a count set here is a new-cap count
             p.setProperty("count." + seed, String.valueOf(Math.max(0, n)));
             write(p);
             line = withLife(message(n), p, seed);
@@ -436,6 +561,7 @@ public final class ReloadJab {
             return "reloadjab [count] | reloadjab forgiven|honest <n>";
         synchronized (LOCK) {
             Properties p = read();
+            carryOverCap(p, currentSeed());
             p.setProperty(what + "." + currentSeed(), String.valueOf(Math.max(0, n)));
             write(p);
         }
@@ -448,7 +574,7 @@ public final class ReloadJab {
         synchronized (LOCK) {
             Properties p = read();
             long seed = currentSeed();
-            return (isEnabled() ? "" : "(off on this plane) ") + "world " + seed + ": " + count(p, seed)
+            return (isEnabled() ? optedOut() ? "(off in Settings) " : "" : "(off on this plane) ") + "world " + seed + ": " + count(p, seed)
                     + " reload(s) after a loss, " + intProp(p, "forgiven." + seed) + " forgiven, " + intProp(p, "honest." + seed)
                     + "/" + HONEST_PER_FORGIVE + " honest losses toward the next, enemy bonus +" + enemyLifeBonus()
                     + ", " + intProp(p, "notorietyQuits." + seed) + " mid-duel quit(s) costing Notoriety, this save paid "

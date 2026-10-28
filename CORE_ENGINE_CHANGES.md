@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 796 - "I won't cheat by loading after a loss"
+- **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK): the `reloadJabOptOut` field.
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK): the option's checkbox, under Disable
+  Notoriety (round 772), shown only where `ReloadJab.isEnabled()`.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): `afterGameEnd` passes `!isArena` to
+  `ReloadJab.onDuelLost(name, counts)`; the match start starts no `DuelHeartbeat` in the Arena (TFR code since rounds
+  726/735); one comment names the +25 cap.
+- TFR's `util/ReloadJab.java` carries the rest.
+
 ### Round 795 - a counted mid-duel quit costs Notoriety
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): new private `notorietyGate()` (the
   `afterGameEnd` win-streak/Notoriety condition, moved out of the `if`), used there and for the new `notoriety` argument
