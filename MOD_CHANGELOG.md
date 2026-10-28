@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 806: a gauntlet's enemies hold its clear - one kill no longer counts as "every enemy is down" (2026-10-28)
+
+Found by round 804's agent test: right after the first Apprentice fell, the Dawn Cathedral logged `[TFR-PlaceClear]
+... every enemy is down ... 7 loot left` and `[TFR-DungeonLooted] ... despawn day 30 -> 8`. The clear tests
+(`AdventureQuestController.updateQuestsWin`, `MapStage.countsAsEnemyLeft` - which `placeStatus`, the HUD counter and
+the exit rules ask - and the walk-out "enemies still inside" list) skip every enemy that has a defeatDialog: upstream's
+rule for an enemy that defeat does not remove. A gauntlet's enemies all have one, and it does remove them
+(`deleteMapObject -1`, after advancing the gate's flag), so the rest of the place stopped counting after one win; had
+the player also taken the loot, it would have despawned on the walk-out with five enemies and the chest inside.
+
+- **Scoped to gauntlets** (the TFR 1 main thread's call on the audit below): new `MapStage.holdsTheClear(enemy)` - true
+  without a defeatDialog (unchanged), or with one that removes itself (`MapDialog.removesSelf()`: a deleteMapObject -1
+  anywhere in its actions, nested options included) in a place that counts such enemies. That switch is one helper,
+  `MapStage.countsSelfRemovingEnemies()` = the map's root POI is tagged Gauntlet (`DungeonRotation.isGauntlet`) or
+  carries the opt-in questTag **ClearNeedsAll**, so a place opts in by data, without touching the clear code (round
+  807 opts in the Mages' Fort). Used at all three sites. The helper lives in MapStage (DungeonRotation.java was not in
+  this round's window; it only calls isGauntlet).
+- **Audit** (`notes/gauntlet_dungeons/tools/audit_selfremoving.py` in the Art project): 43 TFR maps besides the gauntlets have
+  enemies with a self-removing defeatDialog. All keep today's behavior exactly:
+  story places: Valor's Reach Arena (6), Kenrith's Court (2), Omenport (14), Three Tree City (12), Squirrel Farm (2), Black Castle (5), Blue Castle (5), Green Castle (5), Red Castle (5), White Castle (5).
+  lairs and caves: Koskun Keep (1), Horrible Factory (7), Court of Paliano (5), Mtenda Mesa (1), Jandor's Caravan (1), Skeleton Ship (7).
+  dungeons: Planeswalker Dueling Club (12), Theorist's Sanctum (2).
+  rotating: Svyelunite Temple (35), Mages' Fort (5), Blue Tower (1), Maze (1).
+  other: Skep (3).
+  sub-levels and quest maps: Tarnation_2 (2), Hall_of_the_Unifier (2), Church_of_Valgavoth_2 (2), Gitrog_Bog_2 (2), black_castle_f1 (1), blue_castle_f1 (1), green_castle_f1 (1), red_castle_f1 (2), white_castle_f1 (1), graveyard (1), town (29), dig_site_1 (1), frostbitten_cavern_1 (1), library_of_varsil_3 (1), library_of_varsil_4 (3), Wizard_Palace_4 (2), sliverqueen (1), tibalt_f1 (1), tibalt_f2 (1), tibalt_f3 (1).
+- **The Mages' Fort** (fort_colorless_2_wizards) had the same early clear: its three ordinary enemies down and it
+  counted as clear with its four ward wizards still standing. The user opted it in; that is round 807's data change.
+- **Seen in a test package** (wt-806 on round 804's commit plus rounds 806 and 807, `agent-806`, a copied profile, log
+  sharing off, every duel at 50x): in the Dawn Cathedral the first Apprentice win logged no PlaceClear or DungeonLooted
+  line; with the other four removed by console, the last Apprentice win logged "every enemy is down". The Mages' Fort's
+  part is round 807's entry. No exceptions.
+
 ## Round 803: the info page shows Notoriety, and win and loss share one line (2026-10-28)
 
 The user: "Can we add the player's Notoriety level on his info page. Maybe condense win/loss and ration into one line:

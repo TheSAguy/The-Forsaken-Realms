@@ -682,8 +682,9 @@ public class AdventureQuestController implements Serializable {
             for (EnemySprite enemy : enemies) {
                 if (enemy.getStage() != null && !enemy.equals(defeated)) {
                     //actor is an enemy that is present on the map. Check to see if there's a valid reason.
-                    if (enemy.defeatDialog != null) {
+                    if (!MapStage.holdsTheClear(enemy)) {
                         //This enemy cannot be removed from the map by defeating it, ignore it for "cleared" purposes
+                        //(round 806: unless its defeatDialog removes it, in a place that counts those - a gauntlet)
                         continue;
                     }
                     // Round 301: nor an ambusher that never sprang - the player cannot see it. MapStage.

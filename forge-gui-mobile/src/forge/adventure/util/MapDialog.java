@@ -606,6 +606,30 @@ public class MapDialog {
         GameHUD.getInstance().fadeOut();
     }
 
+    /**
+     * Round 804: true when this dialog removes its own map object (a deleteMapObject -1 anywhere in its actions, nested
+     * options included). An enemy's defeatDialog normally replaces its removal ("Overrides standard death"), so the
+     * clear tests skip such an enemy; but a defeatDialog that deletes itself - the gauntlet dungeons' and the Mages'
+     * Fort's win counters - still removes the enemy, and it must hold the clear like any other.
+     */
+    public boolean removesSelf() {
+        if (data == null) return false;
+        for (DialogData d : data)
+            if (removesSelf(d)) return true;
+        return false;
+    }
+
+    private static boolean removesSelf(DialogData d) {
+        if (d == null) return false;
+        if (d.action != null)
+            for (DialogData.ActionData a : d.action)
+                if (a != null && a.deleteMapObject == -1) return true;
+        if (d.options != null)
+            for (DialogData o : d.options)
+                if (removesSelf(o)) return true;
+        return false;
+    }
+
     public boolean activate() { //Method for actors to show their dialogues.
         boolean dialogShown = false;
         for (DialogData dialog : data) {

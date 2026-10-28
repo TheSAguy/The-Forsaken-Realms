@@ -2227,7 +2227,7 @@ public class MapStage extends GameStage {
         StringBuilder remaining = new StringBuilder();
         int listed = 0, stillHidden = 0;
         for (EnemySprite enemy : enemies) {
-            if (enemy == null || enemy.getStage() == null || enemy.defeatDialog != null)
+            if (enemy == null || enemy.getStage() == null || !holdsTheClear(enemy))   // round 806
                 continue;
             if (enemy.hidden) {
                 stillHidden++;
@@ -2561,7 +2561,38 @@ public class MapStage extends GameStage {
      * call for boss lairs; it holds everywhere now.
      */
     public static boolean countsAsEnemyLeft(EnemySprite enemy) {
-        return enemy != null && enemy.getStage() != null && enemy.defeatDialog == null && !enemy.hidden;
+        return enemy != null && enemy.getStage() != null && holdsTheClear(enemy) && !enemy.hidden;
+    }
+
+    /**
+     * Round 806 (found by round 804's agent test: one Apprentice down, and the Dawn Cathedral counted as "every enemy
+     * is down", its despawn cut from day 30 to day 8). An enemy with a defeatDialog never held a clear - upstream's
+     * rule for an enemy that defeat does not remove. A gauntlet's enemies all have one, and it removes them
+     * (deleteMapObject -1) after counting the win toward their gate, so in a place that counts self-removing enemies
+     * such an enemy holds the clear like any other. Every other place keeps the old rule: 43 TFR maps have enemies
+     * like this (castles, lairs, the Dueling Club, the Mages' Fort...), audited in MOD_CHANGELOG round 806.
+     */
+    public static boolean holdsTheClear(EnemySprite enemy) {
+        if (enemy.defeatDialog == null)
+            return true;
+        return countsSelfRemovingEnemies() && enemy.defeatDialog.removesSelf();
+    }
+
+    /**
+     * Round 806: the one switch for {@link #holdsTheClear} - a POI tagged Gauntlet, or one that opts in with the
+     * questTag ClearNeedsAll (round 807: the Mages' Fort, whose ward wizards now hold its clear).
+     */
+    public static boolean countsSelfRemovingEnemies() {
+        PointOfInterest root = forge.adventure.scene.TileMapScene.instance().rootPoint;
+        if (root == null || root.getData() == null)
+            return false;
+        if (forge.adventure.util.DungeonRotation.isGauntlet(root.getData()))
+            return true;
+        if (root.getData().questTags != null)
+            for (String tag : root.getData().questTags)
+                if ("ClearNeedsAll".equals(tag))
+                    return true;
+        return false;
     }
 
     /**
