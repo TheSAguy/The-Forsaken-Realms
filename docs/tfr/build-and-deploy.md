@@ -24,6 +24,11 @@ So the release order is: **merge upstream -> reinstall BASE_INSTALL -> rebuild -
 then tag and publish.** v1.04 shipped WITHOUT the merge by explicit user decision, because the merge
 would have invalidated a full day of playtesting; it is the first work of v1.05.
 
+**Android download sizes (round 792):** after building the release `assets.zip` and APK, compare their sizes with
+`packageSize` and `apkSize` in `forge-gui-mobile/src/forge/assets/AssetsDownloader.java` (the first-launch and update
+prompts; decimal MB, v1.24: "430MB" / "16MB"). If either changed noticeably (10% or so), update the constant, its
+comment and the "about N MB" line in the release notes and `dev-tools/discord_faq/messages.py`, then rebuild.
+
 ## Build/toolchain
 
 Maven + JDK are installed portably on each machine (not tracked in git). Verify with

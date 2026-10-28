@@ -170,8 +170,13 @@ public class AssetsDownloader {
             }
         }
 
-        final String packageSize = GuiBase.isAndroid() ? "160MB" : "270MB";
-        final String apkSize = "12MB";
+        // TFR round 792: the real sizes, measured on v1.24 (assets.zip 433,854,852 bytes, APK
+        // 15,642,476 bytes) - upstream's 160MB/12MB undersold TFR's art by more than half. Decimal MB,
+        // as Android's own file sizes and the release notes / Discord FAQ ("about 430 MB") count them.
+        // Update both when either file's size changes noticeably (release checklist,
+        // docs/tfr/build-and-deploy.md). The desktop "270MB" is unreachable: non-Android returned above.
+        final String packageSize = GuiBase.isAndroid() ? "430MB" : "270MB";
+        final String apkSize = "16MB";
 
         final boolean isSnapshots = versionString.contains("SNAPSHOT");
         final String snapsURL = GITHUB_SNAPSHOT_URL;

@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 792: the Android download prompt tells the real sizes - 430MB of game data, a 16MB update (2026-10-27)
+
+The user: "Yes, round 792: the Android asset prompt shows the real download size (about 415 MB) and APK size (about
+16 MB) instead of 160MB/12MB." The first v1.24 Android logs (`notes/logs-1027d.md`) show the first-launch prompt
+saying 160MB for a 433,854,852-byte `assets.zip`. Ships with 1.25.
+
+- **`AssetsDownloader.java`**: `packageSize` (Android) "160MB" -> "430MB", `apkSize` "12MB" -> "16MB" - upstream
+  Forge's hard-coded strings. `packageSize` feeds the resource prompt ("There are updated resource files to download.
+  This download is around 430MB, ...") and the `[TFR-Assets] prompt (430MB)` log line; `apkSize` feeds the update
+  prompt's off-wifi line ("... The download is around 16MB.").
+- **Why 430, not 415:** 415 is the size in binary megabytes (MiB). Android's own file sizes, the release notes and the
+  Discord FAQ ("about 430 MB") count decimal megabytes, and so does the 16MB APK figure (15.6 MB; 14.9 MiB). One unit
+  everywhere, so the prompt agrees with the FAQ a player just read.
+- The desktop "270MB" branch is unreachable in TFR (every non-Android launch returns before it) and stays as upstream
+  wrote it.
+- **Release checklist** (`docs/tfr/build-and-deploy.md`): compare the release `assets.zip` and APK with the two
+  constants and update them, plus the notes' and FAQ's "about N MB", when either moves noticeably.
+
 ## Round 791: hold Alt to see how long a cave has left - a corner line inside, a plate over the entrance (2026-10-27)
 
 The user: "It would be nice to have, when you're in a cave/dungeon and you press "Alt", same key that shows unit level,

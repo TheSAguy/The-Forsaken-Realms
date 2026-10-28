@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 792 - the Android download prompt's real sizes
+
+- **`forge-gui-mobile/src/forge/assets/AssetsDownloader.java`** - `packageSize` on Android "160MB" -> "430MB" and
+  `apkSize` "12MB" -> "16MB" (v1.24: `assets.zip` 433,854,852 bytes, APK 15,642,476 bytes), with a comment. The desktop
+  "270MB" is untouched and unreachable (non-Android returns before it). **Merge watch** - if upstream edits these two
+  lines, keep TFR's numbers.
+
 ### Round 791 - Alt shows how long a place has left
 - **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** (STOCK): new `updateFadeLabel()`, called from `draw()`
   before `super.draw()`; two new stage actors (`fadeText`, `fadeBack`) for the top-left line inside a map while the
