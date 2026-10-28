@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 801: a counted reload after a loss costs the loss's Notoriety again - not only a mid-duel quit (2026-10-28)
+
+The user: "801 a counted reload after a loss also costs Notoriety -5 ... Package when my game is closed; ships with
+1.25." From the 2026-10-28 log review (`notes/logs-1028.md`, P2): player 343e2603 (Hard, Notoriety 49-50) lost twice
+and reloaded both times - Notoriety came back each time (49 -> 44 -> 49) and the only cost was +1/+2 enemy life. Since
+round 795 a counted mid-duel quit costs -5, but finishing the duel, losing and reloading cost nothing: backwards.
+
+- **What counts**: a load ReloadJab counts as "a save from before the loss" (`onLoaded`), of a loss that cost
+  Notoriety. The pending loss now carries `pendingNotoriety` (`DuelScene.afterGameEnd` passes `notorietyGate() &&
+  !isArena` - the same gate as `recordNotoriety` and round 795's duel record); an Inn tournament, fixed-deck or guard
+  loss costs no Notoriety and charges none (fixed-deck and guard losses set no pending loss at all; the Arena none since
+  round 796). A pending loss written by an older build has no flag: no charge. Off with round 796's Settings switch,
+  like the rest (nothing is judged).
+- **The counter**: the same `notorietyQuits.<seed>` round 795 counts quits in - one count of undone Notoriety losses,
+  charged through the save's existing `notorietyQuitsPaid` (no new save key). Each counted event adds exactly one, so a
+  quit and a reload can never pay twice, and a reload without saving charges again from the same score (not lost, not
+  doubled). `notorietyKind.<seed>` (quit|reload) remembers the last kind, so a re-charge after a reload without saving
+  reads like the event it repeats. `ReloadJab.onLoaded` now pays after both the quit judging and the pending-loss
+  check (it paid between them in 795), so a reload's charge lands on the load that counted it.
+- **Notoriety only**, as round 795: `AdventurePlayer.payNotorietyQuits(worldQuits, head)` - the head names the event in
+  the `[TFR-Notoriety]` and stage lines ("Reloaded after a loss" / "Left mid-duel"). The win-ratio record and
+  DifficultyHints are unchanged (a reload-scrubbed record only makes the game harder for that player).
+- **Lines**: `[TFR-ReloadJab] lost to X - ... (world <seed>, N so far, the loss's Notoriety with it)` (or "; no
+  Notoriety - an Inn, fixed-deck or guard duel"); `[TFR-ReloadJab] reloaded after a loss - Notoriety charge N (world
+  <seed>)` (or "... cost no Notoriety ... - no Notoriety cost"); `[TFR-Notoriety] reloaded after a loss xN - notoriety
+  a -> b, level ...`; `[TFR-ReloadJab] notoriety a -> b (reloaded after a loss, world <seed>: 1 unpaid of N ...)`. The
+  red Notices line: "Reloaded after a loss - Notoriety 30 -> 25 (-5)." followed by the reload jab when there is one.
+- **GUIDE**: the Notoriety loss paragraph and "Reloading after a loss" say a counted reload costs the 5 too. The
+  Discord FAQ is unchanged; at the 1.25 refresh `dev-tools/discord_faq/messages.py` line 172 should say a reload after
+  a loss (and a mid-duel quit) costs the loss's Notoriety, besides round 796's items (+25, forgiveness every 3 with no
+  reload, the Arena, the Settings option).
+- **Tested** (Maven exit 0, on top of round 799; agent test copy with a copied agent profile and this jar ahead of
+  the agent jar; Hard, a new world, `reloadjab 25` so duels are lost; every duel at 50x; log lines in
+  `C:\TFR\notes\r801-agent-log-lines.txt`, Notices shots `notes\r801-notices-reload.png` and
+  `notes\r801-notices-quit.png`): slot 60 at Notoriety 30 (gold 125, life 15/15); a loss (30 -> 25) and a reload of
+  slot 60 -> counted (26), "Reloaded after a loss - Notoriety 30 -> 25 (-5), level 6 -> 5." with the reload jab, gold
+  and life as saved; killed without saving, relaunched, slot 60 again -> 25, not 20 (reloads still 26); slot 61 (25,
+  paid 1), a loss, its `pendingNotoriety` set to false (stands in for an Inn loss) and a reload -> counted (27), "cost
+  no Notoriety", 25 kept; with `reloadJabOptOut` true (settings.json, game closed) a loss and a reload -> not judged,
+  25, 27 kept; back on, a Goblin Worker duel killed 1 s in -> the quit paid once: 25 -> 20, "Left mid-duel - ...",
+  the count 2 and paid 2. **Not tested**: a real Inn tournament loss (the bridge cannot drive a draft), a quit and a
+  reload counted on the same load, Insane, Android.
+
 ## Round 804: the first gauntlet dungeon - the Dawn Cathedral (2026-10-28)
 
 The first of the 18 gauntlet dungeons (the user, through the Art main thread: "3 Apprentices, 2 Adepts, and 1 master

@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 801 - a counted reload after a loss costs Notoriety
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): `payNotorietyQuits(worldQuits, head)`
+  (round 795's method) takes the event's name for its log and stage lines.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): `afterGameEnd` passes `notorietyGate() &&
+  !isArena` as `ReloadJab.onDuelLost`'s new third argument.
+- TFR's `util/ReloadJab.java` carries the rest.
+
 ### Round 800 - the AI reads "Double" / "Triple" pumps (upstream bug)
 - **`forge-ai/src/main/java/forge/ai/ComputerUtilCombat.java`**: new `isDoubleOrTriple` / `predictPumpAmount` (the pumped
   card's net power or toughness, x2 for Triple; anything else goes to `calculateAmount`), used at the 9 Pump `NumAtt` /

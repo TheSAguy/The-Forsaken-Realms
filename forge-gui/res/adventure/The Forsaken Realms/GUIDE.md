@@ -1246,12 +1246,13 @@ gold and life a defeat costs.
 **Reloading after a loss.** The realm notices when you load a save from before a duel you lost, or close the
 game in the middle of a live duel: your notice log teases you from the fifth time on, and on Hard and Insane every
 such reload gives that world's enemies +1 life, up to +25 (Inn tournaments and your guards' fights excepted). A
-mid-duel quit also costs the Notoriety a loss would (see [Enemies That Adapt to You](#enemies-that-adapt-to-you)).
+counted reload or mid-duel quit also costs the Notoriety the loss did (see
+[Enemies That Adapt to You](#enemies-that-adapt-to-you)).
 Take three losses in a row without reloading - moving on to another duel, or letting a day pass - and enemies lose
 1 of that bonus life; a counted reload starts those three over. Arena duels never count, lost or left. A world that
 was past +10 before version 1.25 keeps +10 and grows from there. The setting **I won't cheat by loading after a
 loss** (checked by default) is the switch: uncheck it and none of this happens - no counting, no extra life, no
-Notoriety cost for a quit and no notices - and checking it again picks up where your counts left off.
+Notoriety cost and no notices - and checking it again picks up where your counts left off.
 
 **Enemies learn your tricks.** Beat the same enemy five times in a row on Normal, four on Hard or three on
 Insane, and every duel after that it starts with a **Wastes** in play - a notice tells you the first time, as that
@@ -1328,7 +1329,8 @@ Arena.
 A loss takes 5 off your notoriety, so its Walls, its tilt and its dungeon odds all drop one step - not back to nothing.
 Losing on purpose to clear the Walls before a dungeon costs a duel's gold, life and ante for every step.
 Closing the game in the middle of a live duel counts as that loss: the next load takes the 5 off (no gold or life),
-and loading an older save doesn't undo it. A duel that had stalled - nothing happening for 20 seconds - costs nothing,
+and loading an older save doesn't undo it. Neither does loading a save from before a lost duel: that load takes the 5
+off again. A duel that had stalled - nothing happening for 20 seconds - costs nothing,
 and neither does leaving an Arena or Inn tournament duel, as losing one wouldn't.
 
 **Turning Notoriety off.** Check **Disable Notoriety** in the Settings and, from the next duel, your notoriety

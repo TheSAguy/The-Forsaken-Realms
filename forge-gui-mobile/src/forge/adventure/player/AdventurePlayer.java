@@ -494,9 +494,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      * or life)"): ReloadJab's load passes this world's count of counted quits; each one this save has not paid for yet
      * takes notorietyLossPenalty off, floor 0, as a lost duel does. Notoriety only - not the win-ratio tilt, gold, life
      * or rewards. The paid count is saved, so a close without saving and a reload of the same save pays again from the
-     * same score (not lost, not doubled). Returns the Notices text, or null when nothing changed on screen.
+     * same score (not lost, not doubled). Returns the Notices text, or null when nothing changed on screen. Round 801:
+     * the count also holds counted reloads after a loss that cost Notoriety; {@code head} names which ("Left mid-duel",
+     * "Reloaded after a loss").
      */
-    public String payNotorietyQuits(int worldQuits) {
+    public String payNotorietyQuits(int worldQuits, String head) {
         int owed = worldQuits - notorietyQuitsPaid;
         if (owed < 0) // the profile's count went down (its file was removed): this save follows it from here
             System.out.println("[TFR-Notoriety] mid-duel quits: this save paid " + notorietyQuitsPaid + ", the world counts "
@@ -507,10 +509,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         int before = notorietyStreak;
         int levelBefore = notorietyLevel();
         notorietyStreak = (int) Math.max(0L, before - (long) notorietyLossPenalty() * owed);
-        System.out.println("[TFR-Notoriety] left mid-duel x" + owed + " - notoriety " + before + " -> " + notorietyStreak
+        System.out.println("[TFR-Notoriety] " + head.toLowerCase() + " x" + owed + " - notoriety " + before + " -> " + notorietyStreak
                 + ", level " + levelBefore + " -> " + notorietyLevel()
                 + (difficultyData != null ? " (" + difficultyData.name + ")" : ""));
-        java.util.List<String> lines = notorietyStageLines(before, levelBefore, "Left mid-duel", true);
+        java.util.List<String> lines = notorietyStageLines(before, levelBefore, head, true);
         for (String line : lines)
             System.out.println("[TFR-Notoriety] log: " + line);
         return lines.isEmpty() ? null : String.join(" ", lines);

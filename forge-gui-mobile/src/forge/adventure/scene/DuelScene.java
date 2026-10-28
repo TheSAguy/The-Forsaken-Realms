@@ -459,9 +459,10 @@ public class DuelScene extends ForgeScene {
             forge.adventure.util.TempleOfferings.recordKill(enemy.getData());
         // Round 726: a loss the next load may undo (ReloadJab) - any duel of the player's, Arena and Inn included; not
         // Deck Tester and not a guard's fight. Round 796: an Arena loss is not counted (the user: "Arena losses do not
-        // count") - ReloadJab still passes it to DifficultyHints.
+        // count") - ReloadJab still passes it to DifficultyHints. Round 801: whether this loss cost Notoriety (the branch
+        // above), so a reload that undoes it charges it again.
         if (!winner && !drawn && guardDeck == null && (enemy == null || enemy.getData().fixedDeck == null))
-            forge.adventure.util.ReloadJab.onDuelLost(enemyName, !isArena);
+            forge.adventure.util.ReloadJab.onDuelLost(enemyName, !isArena, notorietyGate() && !isArena);
         Forge.advFreezePlayerControls = winner;
         endRunnable = () -> Gdx.app.postRunnable(() -> {
             GameHUD.getInstance().updateBGM();

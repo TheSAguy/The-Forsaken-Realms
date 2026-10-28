@@ -45,6 +45,10 @@ import java.util.Properties;
  * at {@link #MAX_LIFE_BONUS} 25 (an older world's bonus carries over at the old +10, once - {@link #carryOverCap}),
  * forgiveness every {@link #HONEST_PER_FORGIVE} 3 losses with no counted reload between them, and no Arena loss or
  * Arena quit counted (DuelScene: no pending loss, no duel record).
+ *
+ * <p>Round 801 (the user: "a counted reload after a loss also costs Notoriety -5"): a reload counted as "a save from
+ * before the loss" of a duel whose loss cost Notoriety (the pending loss carries {@code pendingNotoriety}) adds one to the
+ * same {@code notorietyQuits.<seed>} count a mid-duel quit does, so the same paid count charges it once.
  */
 public final class ReloadJab {
     private static final String FILE = ForgeConstants.USER_DIR + "adventure" + File.separator + "tfr_reload_jab.properties";
@@ -81,6 +85,13 @@ public final class ReloadJab {
         return isEnabled() && !optedOut();
     }
 
+    /** The pending loss's keys. Round 801: with its Notoriety flag. */
+    private static void clearPending(Properties p) {
+        p.remove("pendingSeed");
+        p.remove("pendingLossAt");
+        p.remove("pendingNotoriety");
+    }
+
     /** Round 796: the forge.log line where an event is skipped because the player unchecked the option. */
     private static void logOff(String what) {
         System.out.println("[TFR-ReloadJab] off - the player's choice (Settings): " + what);
@@ -95,8 +106,7 @@ public final class ReloadJab {
         synchronized (LOCK) {
             Properties p = read();
             dropped = p.getProperty("pendingLossAt") != null || p.getProperty("duel.seed") != null;
-            p.remove("pendingSeed");
-            p.remove("pendingLossAt");
+            clearPending(p);
             clearDuel(p);
             reloads = count(p, seed);
             forgiven = intProp(p, "forgiven." + seed);
@@ -116,9 +126,11 @@ public final class ReloadJab {
 
     /**
      * DuelScene.afterGameEnd: the player lost a duel (not a draw, not Deck Tester). Round 796: {@code counts} false for
-     * an Arena duel - no pending loss; the player's opt-out likewise. DifficultyHints hears every loss either way.
+     * an Arena duel - no pending loss; the player's opt-out likewise. DifficultyHints hears every loss either way. Round
+     * 801: {@code notoriety} - this loss cost Notoriety (DuelScene.notorietyGate, not the Arena), so a reload that undoes
+     * it charges it again.
      */
-    public static void onDuelLost(String enemyName, boolean counts) {
+    public static void onDuelLost(String enemyName, boolean counts, boolean notoriety) {
         if (!isEnabled())
             return;
         if (!counts)
@@ -126,20 +138,22 @@ public final class ReloadJab {
         else if (optedOut())
             logOff("the loss to " + enemyName + " is not watched");
         else
-            markPendingLoss(enemyName);
+            markPendingLoss(enemyName, notoriety);
         DifficultyHints.onDuelLost(enemyName); // round 779: the 5th loss to one foe suggests an easier difficulty
     }
 
-    private static void markPendingLoss(String enemyName) {
+    private static void markPendingLoss(String enemyName, boolean notoriety) {
         synchronized (LOCK) {
             Properties p = read();
             long seed = currentSeed();
             long now = System.currentTimeMillis();
             p.setProperty("pendingSeed", String.valueOf(seed));
             p.setProperty("pendingLossAt", String.valueOf(now));
+            p.setProperty("pendingNotoriety", String.valueOf(notoriety));
             write(p);
             System.out.println("[TFR-ReloadJab] lost to " + enemyName + " - a load of a save older than now counts (world "
-                    + seed + ", " + count(p, seed) + " so far)");
+                    + seed + ", " + count(p, seed) + " so far" + (notoriety ? ", the loss's Notoriety with it)"
+                    : "; no Notoriety - an Inn, fixed-deck or guard duel)"));
         }
     }
 
@@ -155,8 +169,7 @@ public final class ReloadJab {
             long seed = currentSeed();
             carryOverCap(p, seed);
             boolean here = String.valueOf(seed).equals(p.getProperty("pendingSeed"));
-            p.remove("pendingSeed");
-            p.remove("pendingLossAt");
+            clearPending(p);
             line = here ? creditHonest(p, seed, "a new duel started") : null;
             write(p);
             System.out.println("[TFR-ReloadJab] a new duel started - the last loss stands");
@@ -175,8 +188,7 @@ public final class ReloadJab {
             if (p.getProperty("pendingLossAt") == null || !String.valueOf(seed).equals(p.getProperty("pendingSeed")))
                 return;
             carryOverCap(p, seed);
-            p.remove("pendingSeed");
-            p.remove("pendingLossAt");
+            clearPending(p);
             line = creditHonest(p, seed, "day " + day + " came with no reload");
             write(p);
         }
@@ -191,8 +203,7 @@ public final class ReloadJab {
             synchronized (LOCK) {
                 Properties p = read();
                 if (p.getProperty("pendingLossAt") != null || p.getProperty("duel.seed") != null) {
-                    p.remove("pendingSeed");
-                    p.remove("pendingLossAt");
+                    clearPending(p);
                     clearDuel(p);
                     write(p);
                 }
@@ -208,17 +219,19 @@ public final class ReloadJab {
             Properties p = read();
             long seed = currentSeed();
             carryOverCap(p, seed); // round 796: before anything adds to the count
+            int quitsBefore = intProp(p, "notorietyQuits." + seed);
             String jab = judgeMidDuelQuit(p, seed); // round 735: a duel left mid-fight, before the pending loss below
-            String paid = payNotoriety(p, seed); // round 795: every load, so a reload without a save pays again
-            quitLine = paid != null ? paid + (jab == null || jab.isEmpty() ? "" : " " + jab)
-                    : jab == null || jab.isEmpty() ? null : "Left mid-duel. " + jab;
+            if (intProp(p, "notorietyQuits." + seed) > quitsBefore)
+                p.setProperty("notorietyKind." + seed, "quit");
+            quitLine = jab == null || jab.isEmpty() ? null : "Left mid-duel. " + jab;
+            boolean reloadCharged = false;
             String lossAt = p.getProperty("pendingLossAt");
+            boolean pendingNotoriety = "true".equals(p.getProperty("pendingNotoriety")); // round 801: absent (older) = none
             if (lossAt != null) {
                 if (!String.valueOf(seed).equals(p.getProperty("pendingSeed"))) {
                     System.out.println("[TFR-ReloadJab] loaded another world (" + seed + ") - the loss stays pending");
                 } else {
-                    p.remove("pendingSeed");
-                    p.remove("pendingLossAt");
+                    clearPending(p);
                     long saved = saveDate == null ? 0L : saveDate.getTime();
                     if (saved >= Long.parseLong(lossAt)) {
                         System.out.println("[TFR-ReloadJab] loaded a save from after the loss - not counted");
@@ -229,9 +242,22 @@ public final class ReloadJab {
                         System.out.println("[TFR-ReloadJab] " + n + " (a save from before the loss, world " + seed + ")"
                                 + resetHonest(p, seed));
                         line = withLife(message(n), p, seed);
+                        reloadCharged = chargeReload(p, seed, pendingNotoriety);
                     }
                 }
             }
+            // Round 795, every load, so a reload without a save pays again; round 801: after both judgings above, so a
+            // reload's charge lands on this load. The head says what it was for.
+            boolean reload = "reload".equals(p.getProperty("notorietyKind." + seed));
+            String paid = payNotoriety(p, seed, reload ? "Reloaded after a loss" : "Left mid-duel");
+            if (paid != null) {
+                if (reload)
+                    line = paid + (line == null ? "" : " " + line);
+                else
+                    quitLine = paid + (jab == null || jab.isEmpty() ? "" : " " + jab);
+            }
+            if (reloadCharged && paid == null)
+                System.out.println("[TFR-ReloadJab] reloaded after a loss - nothing to take (notoriety already 0)");
             write(p);
         }
         if (quitLine != null)
@@ -403,10 +429,27 @@ public final class ReloadJab {
     }
 
     /**
+     * Round 801: a counted reload that undid a loss which cost Notoriety adds one to the world's notorietyQuits - the
+     * count a mid-duel quit adds to, so payNotoriety charges it once whichever came first. True when it counted.
+     */
+    private static boolean chargeReload(Properties p, long seed, boolean notoriety) {
+        if (!notoriety) {
+            System.out.println("[TFR-ReloadJab] reloaded after a loss that cost no Notoriety (an Inn, fixed-deck or guard"
+                    + " duel, or one from before round 801) - no Notoriety cost");
+            return false;
+        }
+        int quits = intProp(p, "notorietyQuits." + seed) + 1;
+        p.setProperty("notorietyQuits." + seed, String.valueOf(quits));
+        p.setProperty("notorietyKind." + seed, "reload");
+        System.out.println("[TFR-ReloadJab] reloaded after a loss - Notoriety charge " + quits + " (world " + seed + ")");
+        return true;
+    }
+
+    /**
      * Round 795, every load: the counted mid-duel quits of this world the loaded save has not paid for cost Notoriety
      * (AdventurePlayer.payNotorietyQuits - Notoriety only). Returns the Notices text, or null.
      */
-    private static String payNotoriety(Properties p, long seed) {
+    private static String payNotoriety(Properties p, long seed, String head) {
         forge.adventure.player.AdventurePlayer player = Current.player();
         if (player == null)
             return null;
@@ -415,10 +458,11 @@ public final class ReloadJab {
         if (quits == paidBefore)
             return null;
         int before = player.notorietyStreak();
-        String line = player.payNotorietyQuits(quits);
+        String line = player.payNotorietyQuits(quits, head);
         if (quits > paidBefore)
-            System.out.println("[TFR-ReloadJab] notoriety " + before + " -> " + player.notorietyStreak() + " (left mid-duel, world "
-                    + seed + ": " + (quits - paidBefore) + " unpaid of " + quits + " counted quit(s))");
+            System.out.println("[TFR-ReloadJab] notoriety " + before + " -> " + player.notorietyStreak() + " ("
+                    + head.toLowerCase() + ", world " + seed + ": " + (quits - paidBefore) + " unpaid of " + quits
+                    + " counted quit(s) and reload(s))");
         return line;
     }
 
@@ -577,7 +621,7 @@ public final class ReloadJab {
             return (isEnabled() ? optedOut() ? "(off in Settings) " : "" : "(off on this plane) ") + "world " + seed + ": " + count(p, seed)
                     + " reload(s) after a loss, " + intProp(p, "forgiven." + seed) + " forgiven, " + intProp(p, "honest." + seed)
                     + "/" + HONEST_PER_FORGIVE + " honest losses toward the next, enemy bonus +" + enemyLifeBonus()
-                    + ", " + intProp(p, "notorietyQuits." + seed) + " mid-duel quit(s) costing Notoriety, this save paid "
+                    + ", " + intProp(p, "notorietyQuits." + seed) + " mid-duel quit(s)/reload(s) costing Notoriety, this save paid "
                     + (Current.player() == null ? "?" : String.valueOf(Current.player().notorietyQuitsPaid())) // round 795
                     + (p.getProperty("pendingLossAt") != null ? ", a loss pending (world " + p.getProperty("pendingSeed") + ")" : "")
                     + (p.getProperty("duel.seed") != null ? ", a duel in progress (" + p.getProperty("duel.enemy") + ")" : "")
