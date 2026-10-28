@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 805: six more gauntlet dungeons - the black and blue rounds (2026-10-28)
+
+The black and blue gauntlets, the same order as round 804's Dawn Cathedral (three Apprentices, Gate I, two Adepts, Gate
+II, the Master, Gate III, the chest), each map in its color's own look and its own shape (the user's tweak, approved
+with fixes 2026-10-28 through the Art main thread: dead and ashen ground in the black outdoor maps, crypt pieces instead
+of the Egyptian kit in the Mausoleum, blue floors and a teal stone frieze in the blue maps - white owns the pale marble,
+colorless the Egyptian kit). Generator, previews and checks: the Art project's `notes/gauntlet_dungeons`.
+
+| Place (POI) | Enemy | Shape | Entrance |
+|---|---|---|---|
+| Bone Orchard (GauntletBoneOrchard) | Barrow Skeleton | a walled orchard of dead trees, press sheds, the Grafting Hall, a root cellar | Graveyard_A |
+| Gilded Mausoleum (GauntletGildedMausoleum) | Gilded Lich | forecourt, processional way with side crypts, sarcophagus hall, treasury; gothic brick with gold banners | Graveyard_D |
+| Hollow Tiltyard (GauntletHollowTiltyard) | Hollowplate Phantom | dead-soil lists round a stone tilt rail, two pavilions, the royal box, the armory | Spare_E_Kenriths_Court |
+| Drowned Library (GauntletDrownedLibrary) | Scrollwraith | a half-flooded reading room of water channels, map rooms, the Rotunda, the archive | BlueTempleOvergrown |
+| Starglass Observatory (GauntletStarglassObservatory) | Starweave Enchanter | lens hall, a long stair, two round orrery galleries, a starfield dome (the Great Lens) | MageTowerBlue (buildingsbosses) |
+| Sunken Bathhouse (GauntletSunkenBathhouse) | Brinecoil Nereid | changing hall, warm and cold pools, the great bath's causeway, the pearl vault | Spare_E_Wizard_Palace |
+
+- **Data**: six maps in `maps/map/gauntlet/`; six POIs (dungeon, count 1, Hostile/Dungeon/Gauntlet) after Fort2 in
+  `points_of_interest.json`; three each in `biomes/black.json` and `biomes/blue.json`. Ranks pinned with `Name|Tier` +
+  keepAuthored; gates on `gauntletApprentice` / `gauntletAdept` / `gauntletMaster` (round 804's pattern; round 806 makes
+  their enemies hold the clear). Chests: 4 cards of the color and the creature's types, 2 rares of the color, 60-100
+  gold, 3-6 shards, 15% the themed item (Ghoulcaller Greaves, Crown of the False God, Ghostfire Blade, Librarian's Robes,
+  Celestial Prism, Coral Helm).
+- **Checks before install** (the Art project's builder): an order check (a flood fill from the entry with the gates
+  shut, then opened one by one, must reach exactly each stage's enemies, and every enemy and pickup stands on open
+  floor) and a contrast check (each enemy's idle frame against the floor under its post: under half its body pixels
+  reading, or a small sprite on a busy floor, is flagged). All six pass both.
+- **Entrances** (round 657 rule): BlueTempleOvergrown (dungeon_entrances.png) and Spare_E_Kenriths_Court
+  (dungeon_entrances_2.png) outlined in place, each its own 32x32 region only. Spare_E_Wizard_Palace sits on a page in
+  common/ (buildings.png, upstream), so `poi_outline --apply` copied and outlined it onto the plane's
+  `entrances_outlined.atlas/.png` and the Sunken Bathhouse points there; nothing under common/ changed. MageTowerBlue
+  already had an outline. Graveyard_A (0.65) and Graveyard_D (0.52) go on `dev-tools/entrance_outlines.json`'s
+  reviewed_ok: their dark iron fence is the outline, and an auto-outline would line the open plots inside with black
+  (preview: the Art project's `notes/gauntlet_dungeons/r805_entrance_outlines_preview.png`). Before/after copies in the
+  Art Library.
+- **Seen in a test package** (wt-805 on round 807's commit plus these files, `agent-805`, a copied profile, log sharing
+  off, every duel at 50x): each of the six loaded with three Apprentices, two Adepts, a Master and three gates, every
+  placement logging `kept as authored (Name, Rank)`. In the Bone Orchard an Apprentice win logged no PlaceClear (round
+  806); Gate I refused ("A gate of lashed bones blocks the path...", only Leave) and, with its count set, offered "Pass
+  through", which removed it. No exceptions. Shots in the Art project's `notes/gauntlet_dungeons/ingame` (r805_*).
+
 ## Round 808: the portrait player page - shards on their own row, clear of the Ascendance block (2026-10-28)
 
 The user: "fix the portrait player page so the shards icon and count no longer sit on the Ascendance Power line"

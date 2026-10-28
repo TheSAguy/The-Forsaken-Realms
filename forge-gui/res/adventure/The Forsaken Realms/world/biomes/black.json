@@ -672,6 +672,9 @@
                     "Bogmaw Golem"
                 ],
     "pointsOfInterest":  [
+                             "GauntletBoneOrchard",
+                             "GauntletGildedMausoleum",
+                             "GauntletHollowTiltyard",
                              "Gitrog Bog",
                              "Church of Valgavoth",
                              "Court of Paliano",

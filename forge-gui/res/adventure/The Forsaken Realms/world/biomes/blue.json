@@ -656,6 +656,9 @@
                     "Crocodile Hexmage"
                 ],
     "pointsOfInterest":  [
+                             "GauntletDrownedLibrary",
+                             "GauntletStarglassObservatory",
+                             "GauntletSunkenBathhouse",
                              "SvyeluniteTemple",
                              "Wizard Palace",
                              "Quandrix Classroom",

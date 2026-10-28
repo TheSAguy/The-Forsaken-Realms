@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="46" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="26497" source="../../tileset/INN_dungen_crawler_tileset.tsx"/>
+ <layer id="1" name="Background" width="46" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztll2OwjAMhOcqwCnae+UApT/0/w6Fi67KjhdTZR/6UGki9SFy7HxBmNh4lgx4ZcCSAdf81y458GTswtjNzkT4NWZcSvub97N0/Osmbvmoxy/0rX6ii++y3lXhVybF9aS9MN93X7ve3i4l3up8e64ef0X+P9X9P5untffff3F52Vx693X+Pb9U+K/fPUF76pPj9yp6Y6+vojf2xlX0xqlP4kuJV9Ebe+MKeuPUJ596O/XJMfbUJ8fvVfTGXl9Fb+yNq+iNvfwcgCEAZQC6ABQBeASgCkAfgHsA2qDHTQFoErQj7cz81jxrnj+YXyfIDYwX9Ge+1URu5OeocT3jA7mRtTTxfCavxnWuXnxPTO49FLmWb5Ca9T1QMk/fAz3zVOOs5nv6neuNkvfuglzNeEPOar/leed6RImrNjPIesJmVSPKlXyD1KzvAZtNvgdshqlxVvM1/cr1xsh7gyA3M16Qs9oveV65HlHipohubP7RjUrcyDdIzfoesNnke8BmmBrXR3RkGdGRalwX0Yv3iK5U49qIblzfIqYblbgfePTGxg==
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="46" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt10EKgCAQheF3lWpre0+QXjO6S3WsaNEmtDKIJvo/GBhkhIERVAlfVXmp9lLj07lVgz8OAIDdu2XLV2c1+/on9Zk7Zb++Sq0f1aNM56SQiehk1uikKROz4b67VgqZiO3b3eHPrPxVSvuw8lex0sfbrr4ztvzOnifeKWfzS82zdM+fzgEAAAAAAACUtACJpWNC
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="46" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmWEKgzAMhfN/9QTqxbazbLuWbO5uY2xCKRrTWGN078FDhFY+sE3ztAtEHbxLXyqiRxj3udqeb8ptoEnVDvjA7cPgtvUrEN1OX99/18G9A74pN5Hb5L5xwCddM91OzpbYT8EYyzOJ23taWexZcIMb3OA+Krc0q8Q9COe0P+HcL8hM0l6uEXqsP+Gcy6EdL1lPpddhLvdH0l5D05+k80pye9C/cF8zaoOmnqTzcri5+tZn1gZNPRk8x5Fyl85SpfMOxyfNMmvWE00m8rw3uTME3OUFbluB21bgthW4bQVuWx2RW/ptJCezaLKSNDOkvflSx++tLvjckjlkbr15/v8HbtrU8f5e63/rGz0Jx4o=
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="46" height="50">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt2TEOwjAMBdB/CJA4SJITcB2mUjgSB2wLKztDiZ24NuW/LapjZfiKrBQgIqJeTmfdNyKiXzMlYE7Aknx7SA0ZuGZgzL49/smtAPfit1/rWYBX8dtPpHE5IIQo56D9ehwRQpRzEHn6nOml6616fpvppeuteq69MY3CWbOmfqioaX3fWkr/+slo7ma+bXu20OZ5Lb81+W9lkWdt/plv256aPPf8fxAlz1JW9zkREXbsDbCDqFU=
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="46" height="50" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJzt11EKgCAQhGEv0f07aq8SpLuVMqP/Bz0kFuO6GJUCV+fRvlS5546OA4Cj3hldn3nRuTPOSNfcK1Kv6VOWTG7V9SjW29nXGu6+Byq9mc3hmrt+5j422585Mt/sN9/5UfvqmtuJyvpVcgDIa53DkftZ71xRdr2R+bvVsIf+1jWin3erMf2tY9S/FACgpFy39rwT
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="336" y="800" width="64" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="176" y="560">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Barrow Skeleton|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="512" y="624">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Barrow Skeleton|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="256" y="688">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Barrow Skeleton|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="352" y="448">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A gate of lashed bones blocks the path. It will not open while the three Apprentices still tend the orchard.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The last tender falls. The bones of the gate come unlaced and clatter to the ground.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="80" y="416">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Barrow Skeleton|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="640" y="416">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Barrow Skeleton|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="352" y="352">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;Rusted iron bound with sinew. The two Adepts in the press sheds still hold its key.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both sheds have gone quiet. The iron gate swings open.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="352" y="304">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Barrow Skeleton|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="352" y="160">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The cellar door is grafted shut with living bone. Its keeper, the Master of the Grafting Hall, still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The keeper is dust. The grafted door withers away.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="352" y="96">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;black&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Skeleton&quot;,
+   &quot;Zombie&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;black&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Ghoulcaller Greaves&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../../../common/maps/obj/gold.tx" x="96" y="672">
+  </object>
+  <object id="13" template="../../../../common/maps/obj/gold.tx" x="640" y="496">
+  </object>
+  <object id="14" template="../../obj/wood.tx" x="640" y="704">
+  </object>
+  <object id="15" template="../../../../common/maps/obj/manashards.tx" x="64" y="432">
+  </object>
+ </objectgroup>
+</map>

@@ -1,5 +1,5 @@
 entrances_outlined.png
-size: 224,46
+size: 258,46
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -18,3 +18,10 @@ FlamingoPond
 ruinedcity
   xy: 179, 0
   size: 45, 32
+Spare_E_Wizard_Palace
+  xy: 226, 0
+  rotate: false
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

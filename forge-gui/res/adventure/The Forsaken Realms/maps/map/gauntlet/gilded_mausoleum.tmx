@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="40" height="52" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="26497" source="../../../../common/maps/tileset/dungeon/DarkAbbeyTiles.tsx"/>
+ <layer id="1" name="Background" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztlWEKwzAIhb1K21Mkt0296NiWl0lpIaE0Ong/xPecg1DUryQRTSIliaz5m0sW2WttqbUNv83uzz8fUW/Wp3h+PXi8O0p9qR7zcBr1O7//O7tfg8de81Lf/9kjs0vHmN2Pb4hdtr1R6npyf6J5+9ZIunlzf7DXmAf02nmY1W999Ez+jmtvvpK/z/Zr8CB/79d7+OftvTl7pZs39wd7jXkgf/sy+TuuvflK/j7br8GD/L1f7+Gft/fm7JVu3twf7DXmgfzty+TvuPbmK/n7bL8GD/L3fr2Hf97em7NXunlzf7DXmAfyty+Tv+Pam6/bn/P3BaBOUpk=
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJzt2DEOgzAMheF3BN+g9CYsLb40MCGuhaKmUxcSU0Dwf5IlD1Hypki2hD29XHq71Hld/2+Tf2r2uh4Avkr+uNLzqY8q+eNKz6ceAIAz603tkGs0tVvfH51vHiY1uZ62/TvR+WZtvqPmqLX5jkK+GPLFkO/a+XqThlzjCfPhV80uYM+das0ugJ0qAADQzS3WqpX8
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztmUsOgzAMRL1vOEHgYu1ZWq4VFbhb1UWlqMqHJLYToYk0GwjyE2CPMc4QOUhNj4nobep0n+T5FkPVyyrcP/Bdm+8wRK9bWGvk+E+7At+c0JI5Pyvw5Z79yPVu61APW/JBI1/ABz7wgU+KL+W3pf4r4cc5Py31355+3MN/S/x5E/zeONMHhOKl8scqxUnFK+WTiAM+nuu+K9STcu5v4XtGajLX/lY+G6nJXPuv/v715DvTB+wMfLVxav3cj7cKxqlVrn9xA2kZfFZaOj9o7XEke/tUDoEPfOADH/h4ZxupvllixlE62/DvyWgzjn8+jZjgIzX5ucT5n+0DdTK4vw==
+  </data>
+ </layer>
+ <layer id="4" name="Walls" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJzt2LERwDAIA0DNhzdPlsoGKbCPFPkvaegkjoQvXJXc1ZtNqJWs1ZsBnMq7iQzcyTsZCADvpvq9u2eq390RAHC+yyf/CJ0u1/8AQH7qAWx0Me0=
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="40" height="52">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt170OgjAQB/D/K/gQzp4DNzD7LjyBn5ua8CbO6qBvpgKTMZHB2Da0aUsh91sgXu+ukHAgIMSwTBbqc90605qQuvSNvbfSse9nfZsrhIiny3NXZUCdAU3mr6atGQFEwJz+YxsGtgzs2D7XlzMBFwKuih4VAzUDDdvnhqSb032907rsJaW9pWZfqM99rRdiTKa5WyyWU+4WG6N2Ph2+x2MRZm7F6iN+6e53+/vQ+sSeL6XhG6n0OF9c+gghxsf0vGcEMNnHutS2sWJgrfjffSPgrtmDKaar5+rJwCvhekOy5Lh5th4cN6+va/dZM8S1h7yfQggk4Q15XkWV
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="40" height="52" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJzt11EOgCAIgGEv0f07ak9utjkTQYbxf1vrJQeFYpYCT/elu7LnBx1NjagvpKS9w7vfRM+vxrSWcS2P6vJVM/Y4WGjnz8xckj4PRBRtP7ccN8rFKs4J2n+k3v20OHijvjrSXuE5Bohm5awtHaNZD9Hzq/F22d1LZs7jHqxjnfyP93erdclczx3vnvl7AiWJByfjnaw=
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="288" y="832" width="64" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="176" y="688">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Gilded Lich|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="432" y="672">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Gilded Lich|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="304" y="720">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Gilded Lich|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="304" y="560">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;Sealed bronze doors, stamped with a dead king's face. They will not open while the three Apprentices hold the forecourt.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The forecourt is silent. The bronze doors grind open.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="96" y="464">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Gilded Lich|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="528" y="464">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Gilded Lich|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="304" y="336">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A second seal of gold leaf. The Adepts of the two side crypts still keep the dynasty's rest.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both crypts are still. The gold seal flakes away.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="304" y="272">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Gilded Lich|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="304" y="144">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The treasury is sealed with the founder's own sigil. The Master of the hall still stands before it.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The Master falls, and the sigil with it. The treasury opens.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="304" y="80">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;black&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Zombie&quot;,
+   &quot;Wizard&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;black&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Crown of the False God&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../../../common/maps/obj/gold.tx" x="160" y="624">
+  </object>
+  <object id="13" template="../../../../common/maps/obj/gold.tx" x="480" y="512">
+  </object>
+  <object id="14" template="../../../../common/maps/obj/manashards.tx" x="64" y="512">
+  </object>
+  <object id="15" template="../../obj/stone.tx" x="448" y="624">
+  </object>
+ </objectgroup>
+</map>

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="44" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="28289" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
+ <layer id="1" name="Background" width="44" height="48">
+  <data encoding="base64" compression="zlib">
+   eJztwzEJAAAMA7C+1V/D0zFIIGsyVVVVVVVVVdX+fUHeB0w=
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="44" height="48">
+  <data encoding="base64" compression="zlib">
+   eJzt18kNgzAQheG/D+MOslyggiQNZGkjPaSBLDUl6SdLA7lyAWwMxoT3SUg+jKxBBs8MSMruOTxyeOZu66GtClgXsCnc1iIi0l5TXXCJiVk7muqCS4xqx//bGtgZ2Bs4GJL3MvA28DHwHUG+5wwuGVwzuGUkb2ZhbmFhYWmHzkampK5+pphDXf2Mpasc2szAPvHlPqnv967qY3ziy32SyJT43gUh81AXM5PvXRAyD2lmGofTsd3T5V5V+ynf+PlKv3zOKeSMY32/ylf/m4gQ7AeKsD3o
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="44" height="48">
+  <data encoding="base64" compression="zlib">
+   eJztmVEOgjAMhvvuOAFwCriBcAk9i3otovBkvJfhYQku62xHNyZuSR8wafdl7G/+yqAAhhzJxrkAuCtanIrteWsF5FUmcL6ZN/MuY1IA18Nn3IxnHWMCvJUlauT3KgFe7I4MP9R3H4n14Zl1ZlqzYjFLsMZilmSNwczptSn05MybeTNv5uV4MVtg/kzSs2F+YNnPMc/F8Wcuz0Zh+Pauy4j+jMPgupvU+Zfqz1x5Erxbrz3zXhha9+kPZh6VF+tVI1PrPv1Bh4vB5JWcCaXmNwoT5/8w6f7gM+elpDtK78+84XmPDUDHjL6x7+lTS9ej8j6RvV3rheT41NL1yOfbAnTM6Fv7vj61dL293t896c3UFUdPnFwpvZm64uiJkyulN1NXHD1xcveqN+oMTPGvPt6ZOzv7+Nal7zXPZ0290N87bLwh9/s33sm4+yG+t70BmsfLgw==
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="44" height="48">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt10EKgCAQBVCPUQdo0c51qy4bdIaWHSxaROiiNEcdZ+g/EATF/sYfGgPSreM1QnNJtOWFuiZbZg+XzZbZA8DlS89K6mJteX3DnLfOwe/TJZLHX2/Vw9Q+RQ+DBNR7g/umh4T/UUoGbXkp55SaU+2dG63yvmV4cvRutELNwN2Vud/j7sq/dHOpe8PVF9ry+m+YlG5JETqX8n663zC1+i10bux9BQAAAABGjBOXYYXJ
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="44" height="48" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJztlkEOgDAIBPsJ/+9TvRuNBSrumpnEK47A1o4Byuxb7PkaN1+AMzN7ye6CCjNnrNJZ7ObrzlOvFHqZdVBwB3CDvMVQ+A9FHNx8s3Uq94e3+qLsq3B/UnDooPv7/t7PbE5W5S2TQTdfV676tLr+Xd3ou1bOrmMX8CVrzkTmVJlx1/7iS94AYJQ5AOQYG5U=
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="304" y="768" width="80" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="160" y="608">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Scrollwraith|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="512" y="624">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Scrollwraith|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="336" y="688">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Scrollwraith|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="336" y="464">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The sealed stacks. A ward of wet ink runs across the door; it will not dry while the three Apprentices still haunt the reading room.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The reading room is quiet. The ink ward runs off the door and is gone.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="64" y="448">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Scrollwraith|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="624" y="448">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Scrollwraith|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="336" y="368">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A second ward, written in a tighter hand. The Adepts in the two map rooms still keep it wet.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both map rooms are silent. The ward fades from the page.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="336" y="336">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Scrollwraith|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="336" y="144">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The restricted archive is locked by the Rotunda's keeper, the Master, who still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The keeper is unwritten. The archive door swings open.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="336" y="96">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;blue&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Spirit&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;blue&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Librarian's Robes&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../../../common/maps/obj/manashards.tx" x="224" y="608">
+  </object>
+  <object id="13" template="../../../../common/maps/obj/manashards.tx" x="640" y="464">
+  </object>
+  <object id="14" template="../../../../common/maps/obj/gold.tx" x="80" y="544">
+  </object>
+  <object id="15" template="../../obj/wood.tx" x="288" y="112">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="40" height="52" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <layer id="1" name="Background" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztlkGKwzAMRX/ixJlLtJObFJSTpWmnc+xB5hm6GCjFDfHCCxNXCZL8rffp6SKdL9L3RZov0ulp1RCfn2K17mt+zvR6qnT/fO8z936uKF77qoXTxm/j9z+OHib9mHQ36WbSZtLVpNWkL5Mmk6JJo0mDScGk3qTO3y/StEhxkcZFGhYpLFK/SN0i/Vo5v157z1XK78j5XQfXo0OfgF4jdSb0XNF3Q+87+vs9uF4d+gX0LOX3Rn7P3ZMz0mtPj5HevK93vy/lN5BvpfaDuiM1S9+X8ttz/p46V/T5VLyU35U8gfOO5HYdBuYxMm9+pyM9TOjV0VfgTu/06vM8fIBf7ylSy/N++ncpv65T8i9yJv9inlyv5G/okvwNfV235H/on/wPnZP/oWcpv5H83uMe+1J+k/8xb66H65b8Cz1L35fy6zmSf2U/4+xey+8x+Vv2O3v/+1J+A/k7ak/USf7FPEbmbcj+xjx6Txv9rvQ2Zf+jx1J+k2/Zfs9SflfOv6FH8q/sf9nfsj+i6xWdk/9l/8z+mP0PPdv/532fr/g9ev+K36Pjta9X/B4dP5rNxm/jt+ZVC6eN38Zv47fx2/ht/DZ+64kfzWbjV7vu/wDZGAx8
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJzt2MtVAkEQheE/j+rOQHnoTARIAgKKSSkoRgTkgzy3RDAzp4fpsYH7rfqcXtza1bkF0rZlBqsM1lnYuy2DHF5yGOZhbxEREbkvbwbvBlODDyM5e4ODwdHglOB83w5+HCwc/DqS0/PQ9/Dk4dn/9zQi96moI6aSU9QRmxYrp6yDV/230dHLOnjVf1Md/dVgZDA2mETcpXVzNgZ/BluDXcT56uZ8OvhyMHMwj7jr6+Y8eHj00PHQjbjr28qR6xV6Hw29rV4q9D4aelsVERER4cacASQ/ecU=
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztmUsOgzAMRL1vOAHpxdqzQK+F+rlblQUSoknskIlB1JG8gUh+Ank8cSZHNFmoxr0jerqyuHV6fFdHxatX/H7Gd26+jyMaL7/xiDyb463I5xNxzbzziny5/35k7XvtrIGBLTDUrFaMCLZWjEg2NGMLNiTjFi3W1GzjM749+YIXCH0fvQaQZ/ANGGc2lGdAMqLZkIyt2NaMKQ+a86cjiC3mn5Z9yFf4U1+Qp7TXSnql1J9uySPxAdwZnPOny325FWNsqcMI3T4D38DUJ1e/855WfD2gfqV51nyc9kr6paR+t+bJ9Qep7kv4avKk+oNU96X6V5OnZi5ROj9AzEBKZqVSfUbOE47un43P+IzP+P6VL3deS/k6zici7xw4PxfzdZxP3OPOYc2nldf4SCWWdYS8a/sCrgrONQ==
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="40" height="52">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1jEOgzAMheF3GQa2MAIduCwSVyjlcAxVl3TBpjFB/T+JKVYcRY4eEq6ytO/Pu/7v56tZ35Wp/ZVnV6YWAOBnzYPo/LDmAflxD2fnqPQcnp2jyDk8ehdX/PtZ7oK3C8QYkm8tqs/qXLOK6oNvY5Ieqd4+ryRtAeeL6gNAaqY69/qYJ38e57X5XiVYcpJMvd/81bIXAMhpB+GmI6U=
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="40" height="52" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJzt2EEKQCEIRVE30f5baqOmhSZPg3vgD0srP1JmUJsj9pEfsnjOi7MFAET6Af0DGV7riDr07wV71ovq7hWN0z2/6Lx77uo7cGV+p/GZa1fFwX/U/xlqed8f1W+W3fNDDlV/q4hBnfX3W/0BgF0siUBqDw==
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="288" y="832" width="64" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="192" y="672">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Starweave Enchanter|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="432" y="656">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Starweave Enchanter|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="320" y="720">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Starweave Enchanter|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="304" y="512">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The stair is barred by a lattice of starlight. It holds while the three Apprentices still tend the lenses.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The lens hall is dark. The lattice of starlight comes apart.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="96" y="544">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Starweave Enchanter|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="528" y="544">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Starweave Enchanter|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="304" y="416">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The dome's door is drawn in constellations. The Adepts of the two orreries still turn them.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both orreries have stopped. The constellations fade from the door.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="304" y="352">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Starweave Enchanter|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="304" y="144">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The star-chart vault answers only to the Master beneath the Great Lens, who still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The Master has fallen under the Lens. The vault opens.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="304" y="96">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;blue&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Wizard&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;blue&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Celestial Prism&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../../../common/maps/obj/manashards.tx" x="144" y="736">
+  </object>
+  <object id="13" template="../../../../common/maps/obj/manashards.tx" x="576" y="496">
+  </object>
+  <object id="14" template="../../../../common/maps/obj/gold.tx" x="480" y="736">
+  </object>
+  <object id="15" template="../../obj/stone.tx" x="272" y="112">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

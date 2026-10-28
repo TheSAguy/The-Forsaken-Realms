@@ -2039,6 +2039,96 @@
 		]
 	},
 	{
+		"name": "GauntletBoneOrchard",
+		"displayName": "Bone Orchard",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+		"sprite": "Graveyard_A",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/bone_orchard.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletGildedMausoleum",
+		"displayName": "Gilded Mausoleum",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+		"sprite": "Graveyard_D",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/gilded_mausoleum.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletHollowTiltyard",
+		"displayName": "Hollow Tiltyard",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "Spare_E_Kenriths_Court",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/hollow_tiltyard.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletDrownedLibrary",
+		"displayName": "Drowned Library",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+		"sprite": "BlueTempleOvergrown",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/drowned_library.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletStarglassObservatory",
+		"displayName": "Starglass Observatory",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/buildingsbosses.atlas",
+		"sprite": "MageTowerBlue",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/starglass_observatory.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
+		"name": "GauntletSunkenBathhouse",
+		"displayName": "Sunken Bathhouse",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/entrances_outlined.atlas",
+		"sprite": "Spare_E_Wizard_Palace",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/sunken_bathhouse.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
 		"name": "GauntletDawnCathedral",
 		"displayName": "Dawn Cathedral",
 		"type": "dungeon",

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="48" height="46" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="26497" source="../../tileset/INN_dungen_crawler_tileset.tsx"/>
+ <layer id="1" name="Background" width="48" height="46">
+  <data encoding="base64" compression="zlib">
+   eJztVtttw0AM4ypxpoj3ugH8iF+JvYPTRQsnFKoYF6B/pVB/CLIkHmDhxBPXC/B1AdYLUJQvv5bAg7kTc2erqeHLH3zE77PPB4yLXWz9RcmfmLf5ylr56rsQxG/YyPagP7GfJ6/dW7A3Nby9V0UGFym/f3+jxdZT2G+a9WV77vkOlO/7UBUf3UvomUP/hIrV9Myhf2KZmp459E/MWELDHPontJfQM/9M/zQJuCXgmoA5AX0CpgS0CbgnoEvAknRxNesd8xtuZH3meWVcxXpN/HZuYH0kfhLGLaw3jCveUcvzNfGquJl3E9V7rmz92humqnPqHZeNGxXzn/SFSrw47g6coY59bP3I6JkP38bh2XHY5miLlfRMDm/cnjkvA2fH/F/ql9/4/f/29KPbdcbl2u06VZxxd2J+dNxoeF4Zd2W9I74nFwbibMep4lo3R8aJm9t9ntuKuIZ3E9V7rtgu9lyxXaeKqzK6dMjoV1XcktGp/QedqoibM3q1y+hVVdyddxPVfwMgR1lH
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="48" height="46">
+  <data encoding="base64" compression="zlib">
+   eJzt1cEJgDAQRNEpYTvQaBPbrliH2prXIEEJGJLofzAQlhz2NCvhK4JLk0uz379btbi0JnKdA8Bf5fT8058adyGn51Pz1u/CYNIYJZi6wv51sX++NztuM2mPclj5PVL9lkpprewBAAAAAAAAQN07AQrARjY=
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="48" height="46">
+  <data encoding="base64" compression="zlib">
+   eJztmVEOgjAQRPffcgLKxfQs6rUahbsZPoyk6eJOoXSrO8kkhFB4Ce3sFoIjCuaf8KUjerh1n7v6nJwHR1/VK+A0fp1unX9yRLfTx/fF8dujAk7OPvKQOOcVcCLzKTSa87Ofgmtq1AXJOkV15Lo2fuM3fl38SO8b11nOqfrLedzYgyO9ixeaq7+cUY5cfmSelZibufyzpPUUrb/LMSX5Nehf+a9AnqD5sxyTwy/JxBHMEzR/PMAR85fYX+zd/0sYpb19qfzZukfQvI4l9cf4y8n468r468r468r468r49fNLv42gexB07yPt+9d67Fyn3mG/073DAeb4j3i28bfPPyUyoNR/xxcXE6hO
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="48" height="46">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1skNwjAQheG/Gc4eFgWIZCnFsJ6piTOrxFIP0AAN0EGwQpwY5X0na+Sx3mnGICJ16uVhtVRt87CaiEgXDQyGBiNr942qjgYng7O1+0bXXRxcHdwc3F3992MbG0wMpga51X9f/sfMw9zDwpfXUs3x8PD08PLltdhSydGWVGZc1RypzLhUcki3OAMz6Nt/ZtkZ7A0OX3o2WfVcob2hWap4Z+30ijRpWcCqgHXR7FlE4u3sJvZvzP9DE/s35v9BRIQffAAxFF5J
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="48" height="46" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJzt2MkNgDAMRFE3Qf+USgM52CbL2PlPyokchkjjIMzQxfv4lqou+bPPVYwyVsgN3CAyJ717d/a7ev4OZpwbZ49oB1d1VmVGZHNUz9/B6P1O348ncyBHpSsqOYBKlDqzMsvfb3+ggsg/hJkLwH28M2DH/cs8AmCiPg+shO0=
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="336" y="736" width="96" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="192" y="496">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Hollowplate Phantom|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="544" y="608">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Hollowplate Phantom|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="336" y="624">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Hollowplate Phantom|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="368" y="400">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A portcullis of black iron. The herald's horn will not sound while the three Apprentices still ride the lists.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The lists are empty. A ghostly horn sounds, and the portcullis rises.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="48" y="368">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Hollowplate Phantom|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="704" y="368">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Hollowplate Phantom|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="368" y="304">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A second portcullis, hung with torn pennants. The Adepts in the two pavilions still wait their turn.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both pavilions are empty. The portcullis rises.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="368" y="240">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Hollowplate Phantom|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="368" y="144">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The armory is barred, and the Master in the royal box holds the key.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The Master has fallen from the royal box. The bar lifts from the armory door.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="368" y="96">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;black&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Spirit&quot;,
+   &quot;Knight&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;black&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Ghostfire Blade&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../../../common/maps/obj/gold.tx" x="608" y="656">
+  </object>
+  <object id="13" template="../../obj/stone.tx" x="80" y="496">
+  </object>
+  <object id="14" template="../../obj/stone.tx" x="704" y="384">
+  </object>
+  <object id="15" template="../../../../common/maps/obj/manashards.tx" x="400" y="112">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
