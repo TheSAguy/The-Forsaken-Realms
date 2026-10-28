@@ -44275,3 +44275,27 @@ colorless the Egyptian kit. Generator, previews and checks: the Art project's `n
   Kiln, Necropolis and Marble Gallery chests paid in full (no `[TFR-RewardDup]` line). The Dawn Cathedral's bypass
   route now stops at the nave's corner. No exceptions. Shots in the Art project's `notes/gauntlet_dungeons/ingame`
   (r809_*).
+
+## Round 810: the seven earlier gauntlets get sealed walls - no way round a shut gate (2026-10-28)
+
+Round 809's test found that a player could walk round a shut gauntlet gate (details in round 809). The game takes
+walls only from each tile's own collision boxes (`MapStage.loadCollision`), so an empty cell is open floor, and the
+generator's walls left gaps. In the live Dawn Cathedral the player walked, with Gate I shut, from the gate's neck into
+a row inside the nave's north wall (main 3255 has no box), out into the black void and into the west Adept chapel
+(shot: the Art project's `notes/gauntlet_dungeons/ingame/r809_bypass_dawn_cathedral.png`). Rounds 804 and 805's seven
+maps, live since the round 808 package, all had such a way round.
+
+- **The fix**: the seven maps rebuilt by the Art project's generator, which now gives every void cell touching the
+  floor a full Collision tile (main 5536 on the opacity-0 `Collision` layer). Each file changes in one line, the
+  Collision layer's data: `dawn_cathedral`, `bone_orchard`, `gilded_mausoleum`, `hollow_tiltyard`, `drowned_library`,
+  `starglass_observatory`, `sunken_bathhouse`. Nothing visible changes, and the chests stay as they were (their
+  themes hold 19-81 names in a typical 16-set shard).
+- **The check**: `notes/gauntlet_dungeons/tools/ingame_check.py` in the Art project (not in this repo) models the
+  game's collision: the player's 10 x 6 movement box (CharacterSprite: sprite width - 6 by 0.4 x height) against
+  every tile box on every layer except `noCollision` ones. It flood fills from the entry with the gates shut and then
+  opens them in flag order (`gauntletApprentice` / `Adept` / `Master`); each stage must meet exactly its own enemies,
+  then the chest. Before the fix, every one of the 18 gauntlet maps failed it; now all 18 pass. Every gauntlet
+  install (`--install`) is now gated on it.
+- **Seen in the test package** (agent-809, every duel at 50x): on the sealed Dawn Cathedral the old route stops at
+  the nave's north-east corner; the chapels and the void can no longer be reached past a shut gate. Shot:
+  `r810_bypass_blocked_dawn_cathedral.png`.
