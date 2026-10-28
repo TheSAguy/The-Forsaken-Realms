@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 798: a place back from the reserve forgets its map flags; a loss keeps a gauntlet on the map (2026-10-28)
+
+The first round of the gauntlet dungeons (the user, through the Art main thread: three Apprentices, two Adepts and a
+Master of one creature, in that order, before a chest; 18 of them, 3 per biome; user-approved 2026-10-28). The design and
+the 18 concepts are in the Art project (`C:\CLAUDE\PROJECTS\ART\notes\gauntlet_dungeons\concepts.md`). This round is
+engine only; the maps, POIs and biome entries come in later rounds. Ships with 1.25.
+
+- **Map flags reset on a reserve return** (found while designing them): `DungeonRotation.restock()` brought a returning
+  place's enemies and rewards back (round 299) but not its map flags, the counters a ward or gate opens on. The Mages'
+  Fort (Fort2, rotating, listed in colorless.json) opened its ward at once when it came back, and a gauntlet would let
+  the player past its Apprentices. New `resetMapFlags(poi)` clears them for the place and every level below it, called
+  from `bringIn()` (a reserve place onto the map) and the quest force-spawn. Round 466's set-piece reset in
+  `returnLair()` is unchanged; a cleared boss lair still keeps its flags. Line: `[DungeonRotation] <place> map flags
+  reset: N from an earlier visit (its gates start closed)`.
+- **A loss keeps a gauntlet on the map**: a POI tagged `Gauntlet` (new `DungeonRotation.isGauntlet()`) is not despawned
+  by `onDungeonDefeat()` (the user: losing at the Master must not throw away five wins and the chest). Its beaten enemies
+  stay beaten (the save's deleted objects and its flags are untouched), its timer still runs, and a clear plus the loot
+  taken still despawns it on the walk-out. The check comes before the quest logic, so a gauntlet that is a side-quest
+  target does not count attempts either. Line: `[DungeonRotation] defeat at <place> - it stays on the map: a gauntlet
+  keeps its place and its beaten enemies on a loss; its timer still runs (round 798)`. No POI carries the tag yet.
+- **The rank in the keepAuthored line**: `[TFR-Placement] <poi>: #id kept as authored (Name, Rank)` now names the rank
+  (`EnemyData.tierDisplayName`), since a gauntlet pins its ranks with `enemy="Name|Rare"` plus `keepAuthored`.
+- **Seen in a test package** (a worktree at HEAD `9308f22db38` plus these two files, `build_standalone.py --out
+  agent-798`, a copied agent profile with log sharing off; test-copy-only data: lifespan 1-2 days, spot rest 1 day, the
+  `Gauntlet` tag on the 290 rotatable POIs). A new game: in the Autonomous Factory, `set mapflag gtest 3`, then a duel
+  lost at 50x to a Clay Golem (Archmage) logged the "it stays on the map: a gauntlet..." line. After `days skip 40`, that
+  Factory came back with "map flags reset: 1 from an earlier visit". No exceptions. The keepAuthored line waits for the
+  first gauntlet map.
+
 ## Round 795: a counted mid-duel quit costs Notoriety -5 on the next load, as a lost duel does (2026-10-28)
 
 The user: "a mid-duel quit that is judged as counted also takes Notoriety -5 on the next load (no gold or life), with a

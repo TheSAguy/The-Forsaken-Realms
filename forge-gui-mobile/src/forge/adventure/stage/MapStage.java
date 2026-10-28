@@ -1531,7 +1531,8 @@ public class MapStage extends GameStage {
                             if (keptByMap && EN != null)
                                 System.out.println("[TFR-Placement] " + (AdventureQuestController.instance().mostRecentPOI == null ? "?"
                                         : AdventureQuestController.instance().mostRecentPOI.getDisplayName())
-                                        + ": #" + id + " kept as authored (" + EN.getName() + ")");
+                                        + ": #" + id + " kept as authored (" + EN.getName() + ", "
+                                        + EnemyData.tierDisplayName(EN.tier) + ")"); // round 798: the rank too
                             // Round 407: a castle champion is one of its color's Archmages, picked on the first visit and
                             // kept by the roster record below - not the content filter's or the re-theme's business.
                             String championColor = asAuthored ? null : CastleChampions.colorOf(prop);

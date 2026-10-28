@@ -406,6 +406,36 @@ public class DungeonRotation {
         return objects;
     }
 
+    /**
+     * Round 798 (found while designing the gauntlet dungeons): restock() brings the enemies back but not the map flags,
+     * so a place back from the reserve kept the win counts its gates open on. The Mages' Fort's ward opened at once on
+     * its second appearance, and a gauntlet would let the player walk past its Apprentices. Round 466 already reset a
+     * returning set piece; a reserve return now does the same for any place. Returns how many flags were reset.
+     */
+    static int resetMapFlags(PointOfInterest poi) {
+        int flags = 0;
+        for (forge.adventure.pointofintrest.PointOfInterestChanges changes
+                : WorldSave.getCurrentSave().getPointOfInterestChangesTree(poi.getID())) {
+            flags += changes.getMapFlags().size();
+            changes.getMapFlags().clear();
+        }
+        return flags;
+    }
+
+    /**
+     * Round 798 (user-approved 2026-10-28): a gauntlet dungeon (tagged Gauntlet) is three Apprentices, two Adepts and a
+     * Master in a row before its chest, so a loss at the Master would otherwise throw away five wins. A loss keeps it on
+     * the map with its beaten enemies still beaten; its timer still runs.
+     */
+    public static boolean isGauntlet(PointOfInterestData data) {
+        if (data == null || data.questTags == null)
+            return false;
+        for (String tag : data.questTags)
+            if ("Gauntlet".equals(tag))
+                return true;
+        return false;
+    }
+
     static boolean isRotatable(PointOfInterest poi) {
         return poi != null && isRotatableData(poi.getData());
     }
@@ -512,6 +542,7 @@ public class DungeonRotation {
         if (!poi.getActive()) {
             poi.setActive(true);
             restock(poi); // round 299: a spot the player emptied before comes back full
+            resetMapFlags(poi); // round 798: and its gates closed
             world.getPoiRespawnDay().remove(id);
             world.getPoiFailedAttempts().remove(id);
             world.getPoiLootedDay().remove(id); // round 128
@@ -743,6 +774,10 @@ public class DungeonRotation {
         if (restocked > 0)
             System.out.println("[DungeonRotation] " + pick.getDisplayName() + " restocked: " + restocked
                     + " enemies/rewards from an earlier visit are back");
+        int flags = resetMapFlags(pick); // round 798
+        if (flags > 0)
+            System.out.println("[DungeonRotation] " + pick.getDisplayName() + " map flags reset: " + flags
+                    + " from an earlier visit (its gates start closed)");
         world.getPoiRespawnDay().remove(pick.getID());
         world.getPoiFailedAttempts().remove(pick.getID());
         world.getPoiLootedDay().remove(pick.getID()); // round 128
@@ -768,6 +803,10 @@ public class DungeonRotation {
                     : isSetPiece(poi.getData()) ? "it leaves the map only when its contenders are beaten (round 466)"
                     : isClearReturner(poi.getData()) ? "a NoRotate place leaves the map only on a full clear (round 468)"
                     : notRotatableReason(poi.getData()));
+            return;
+        }
+        if (isGauntlet(poi.getData())) {
+            logStays("defeat", poi, "a gauntlet keeps its place and its beaten enemies on a loss; its timer still runs (round 798)");
             return;
         }
         World world = WorldSave.getCurrentSave().getWorld();
