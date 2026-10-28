@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 802: the `[TFR-Duel]` line logs the loser's life (2026-10-28)
+
+The user: "802 the duel line logs the loser's life." Round 777's summary line printed `enemyLife=?` on wins and `life=?
+mulligans=-1` on losses in v1.24 player logs (`notes/logs-1028.md` P3). `SessionLog.onDuelEnd` read lives from
+`game.getPlayers()`, which holds only the players still in the game (`Game.java:412`); `GameAction` moves a loser to
+`getLostPlayers()` (`Game.onPlayerLost`) as the game ends.
+
+- **Fix** (`util/SessionLog.java`, TFR file): the loop reads `game.getRegisteredPlayers()` - every player who started,
+  the same list the game's outcome is built from - instead of looping two lists. The line format is unchanged.
+- **Which path it affects:** only the case where `HostedMatch` still holds the game when the duel ends. The usual path
+  (the game already let go) reads the match screen's view, which lists every player and was always right.
+- **Seen in the agent** (the round 800 test copy, every duel at 50x): 12 `[TFR-Duel]` lines from this build, wins and
+  losses, every one with both lives (`life=-8 enemyLife=16`, `life=20 enemyLife=-4`). But the pre-800 jar's 7 lines had
+  both lives too: in the
+  agent the duel always ended on the view path, so the fixed branch was not reached in the test. It is a one-line change
+  read against `Game.getRegisteredPlayers()`; the next player log with a loss will show it.
+
 ## Round 800: the AI reads "Double" and "Triple" pumps (Reckless Amplimancer) instead of +0 (2026-10-28)
 
 The user: "800 the AI reads Double/Triple pumps". A v1.24 Hard player's session died mid-duel against the Corrupted

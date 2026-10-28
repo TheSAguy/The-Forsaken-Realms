@@ -208,7 +208,8 @@ public final class SessionLog {
             String life = "?", enemyLife = "?";
             if (game != null) {
                 turns = game.getPhaseHandler().getTurn();
-                for (Player p : game.getPlayers()) {
+                // registered players, not getPlayers(): the loser has already left getPlayers() (round 802)
+                for (Player p : game.getRegisteredPlayers()) {
                     String l = p.getLife() + "/" + p.getStartingLife();
                     if (p.getRegisteredPlayer() == human) {
                         life = l;
