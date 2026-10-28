@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 808 - the portrait player page: shards clear of the Ascendance block
+- **`forge-gui/res/adventure/common/ui/statistic_portrait.json`** (STOCK): `shards` x 170 -> 98, y 42 -> 56 (it sat inside
+  the blessing box); `wins` / `totalWins` y 56 -> 68 and `loss` / `totalLoss` y 68 -> 80; `blessingInfo` x 170 -> 176,
+  width 86 -> 80. On a merge, keep these if upstream rearranges the page.
+
 ### Round 803 - Notoriety on the info page; win and loss on one line
 - **`forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java`** (STOCK): `enter()` writes
   "Win: 9  Loss: 8  (53%)" into the `wins` label and "Notoriety: 12 (level 2)" (or "(off)"; blank on a plane without

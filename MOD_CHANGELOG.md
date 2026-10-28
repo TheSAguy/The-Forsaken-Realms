@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 808: the portrait player page - shards on their own row, clear of the Ascendance block (2026-10-28)
+
+The user: "fix the portrait player page so the shards icon and count no longer sit on the Ascendance Power line"
+(found in round 803's portrait shot). Mock-up `notes/r808-mock-zoom.png`; the user: "yes, build it as in the mock-up."
+
+- **The cause is upstream's layout**, not TFR's code: `statistic_portrait.json` put `shards` at x=170, y=42, inside the
+  blessing box (x=170, y=14, 86x80). Since round 496 the Ascendance block fills the top of that box, so the two always
+  met (stock Forge shows the overlap with a long enough blessing too).
+- **Shards get their own row** under gold (x=98, y=56, the column round 803 freed); the Win line and the Notoriety line
+  move down 12 (y 56/68 -> 68/80).
+- **The blessing box moves 6 right** (x 170 -> 176, width 86 -> 80; its right edge stays at 256). Not in the mock-up: on
+  the new row the Notoriety line meets the box's text ("No blessing.", or a blessing's description), and "Notoriety: 12
+  (level 2)" ran into it (round 803's portrait shot had the short "(off)"). A smaller font does not help - 75% renders
+  the same size as 80% and 70% is unreadable - so the box gives way; "Notoriety: 100 (level 8)" clears it.
+- Life, gold, the avatar and landscape do not move; the Ascendance text and the Level sheet button shift 6 right with
+  the box.
+
+Tested in the agent game (no duels): portrait at Notoriety 100 (`notes/r808-portrait.png`, `-zoom.png`), landscape
+(`notes/r808-landscape.png`, the same pixels as round 803's shot but the gender symbol's animated gradient). Not tested:
+a long blessing description in the narrower box (it wraps, as before).
+
+Files: `common/ui/statistic_portrait.json` (STOCK). No Java change.
+
 ## Round 807: the Mages' Fort counts as cleared only once its ward wizards are down too (2026-10-28)
 
 The user, on round 806's audit: "Yes: opt the Mages' Fort into the 806 rule, so it only counts as cleared once its ward
