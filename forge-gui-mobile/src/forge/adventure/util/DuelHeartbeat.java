@@ -69,10 +69,14 @@ public final class DuelHeartbeat {
         }
     }
 
-    /** DuelScene.enter, a duel of the player's own just started: the record begins (ReloadJab.onDuelInProgress). */
-    public static synchronized void start(HostedMatch hostedMatch, RegisteredPlayer humanPlayer, String enemyName) {
+    /**
+     * DuelScene.enter, a duel of the player's own just started: the record begins (ReloadJab.onDuelInProgress). Round 795:
+     * {@code notoriety} - a loss of it would cost Notoriety (not the Arena, not an Inn tournament).
+     */
+    public static synchronized void start(HostedMatch hostedMatch, RegisteredPlayer humanPlayer, String enemyName,
+                                          boolean notoriety) {
         stop();
-        if (hostedMatch == null || !ReloadJab.onDuelInProgress(enemyName))
+        if (hostedMatch == null || !ReloadJab.onDuelInProgress(enemyName, notoriety))
             return;
         match = hostedMatch;
         human = humanPlayer;

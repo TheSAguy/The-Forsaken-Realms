@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 795 - a counted mid-duel quit costs Notoriety
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): new private `notorietyGate()` (the
+  `afterGameEnd` win-streak/Notoriety condition, moved out of the `if`), used there and for the new `notoriety` argument
+  of `DuelHeartbeat.start(...)` in the match start.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): the `notorietyQuitsPaid` field and save
+  key (load, store, `clear()`, `resetForNewGamePlus()`), `payNotorietyQuits()`, and `logNotorietyStage()` split into
+  `notorietyStageLines()` (the loss line's head is a parameter).
+- TFR's `util/ReloadJab.java` and `util/DuelHeartbeat.java` carry the rest.
+
 ### Round 793 - at Notoriety 50 an enemy's own card replaces the last bonus Wall
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): in the seat loop, just before
   `RegisteredPlayer.forVariants`, `NotorietyDeckCard.choose()` may swap `deck` for a copy one card short; in the Walls

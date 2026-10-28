@@ -14264,6 +14264,56 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 795: a counted mid-duel quit costs Notoriety -5 on the next load, as a lost duel does (2026-10-28)
+
+The user: "a mid-duel quit that is judged as counted also takes Notoriety -5 on the next load (no gold or life), with a
+[TFR-ReloadJab] line." A real loss costs 5 Notoriety (round 753), and from notoriety 45/50 that loss strips the bonus
+Wall and the deck card (round 793). A mid-duel quit that ReloadJab counted (rounds 735/783) only added +1 to the
+world's reload count, so closing the game during a duel dodged the -5 a loss costs. Ships with 1.25.
+
+- **What counts**: the quits ReloadJab already judges as counted - the match already lost, or the last change under
+  `DuelHeartbeat.STALL_MS` (20 s) with the AI not stuck and the LoopBreaker silent; judging unchanged. On the TFR plane
+  only (`reloadJabEnabled`), on every difficulty (Easy, Normal, Hard and Insane; only the enemy life bonus is
+  Hard/Insane). Of those, only duels where a loss would cost Notoriety: new `DuelScene.notorietyGate()` (the player's
+  own duel - not an Inn tournament, a fixed-deck enemy or a guard's fight) is now the one predicate behind both
+  `afterGameEnd`'s `recordWinStreak`/`recordNotoriety` branch and the flag passed to `DuelHeartbeat.start(..., notoriety)`
+  (`notorietyGate() && !isArena`), so the two cannot drift. ReloadJab keeps it in the duel record as `duel.notoriety`;
+  a record without it (left by an older build) costs nothing. An Arena or Inn quit still counts as a reload.
+- **How it sticks**: the reload store keeps a per-world count of counted Notoriety quits (`notorietyQuits.<seed>` in
+  `tfr_reload_jab.properties`, outside the save); the save keeps how many it has paid for (new key
+  `notorietyQuitsPaid`, absent = 0 - an older save loads unchanged, no other format change). Every load
+  (`ReloadJab.onLoaded` -> `payNotoriety`) charges `(world count - paid) x notorietyLossPenalty`, floor 0, and sets paid
+  to the world count. A close without saving and a reload of the same save charges it again from the same score - the
+  penalty is neither lost nor doubled; any older save of the world pays for the quits made after it. A save that paid
+  more than the world counts (the profile's store removed) follows the world's count from then on. A new game and New
+  Game+ reset paid to 0 (both generate a new world seed).
+- **Notoriety only**: new `AdventurePlayer.payNotorietyQuits(worldQuits)` changes `notorietyStreak` and nothing else -
+  not the win-ratio record (round 613), the honest-loss counter, gold, life or rewards; `recordNotoriety` is not called.
+  Disable Notoriety (round 772) behaves as for a lost duel: the score still drops and the line says "(off in Settings)".
+- **Lines**: `[TFR-ReloadJab] mid-duel quit N to cost Notoriety (world <seed>)` (or "of an Arena or Inn duel - no
+  Notoriety cost") at judging; `[TFR-Notoriety] left mid-duel xN - notoriety 60 -> 55, level ...` and the stage lines
+  (`logNotorietyStage` split into `notorietyStageLines(before, levelBefore, lostHead, lossAlways)` - the loss line opens
+  with "Left mid-duel" and shows below level 1 too); `[TFR-ReloadJab] notoriety 60 -> 55 (left mid-duel, world <seed>:
+  1 unpaid of 1 counted quit(s))`. The red Notices line: "Left mid-duel - Notoriety 52 -> 47 (-5). Foes lose the 50+
+  Wall and their life." followed by the reload jab when there is one (before: "Left mid-duel. " + the jab, only from the
+  5th reload). The console's `reloadjab` shows the world's quits and the save's paid count.
+- **GUIDE**: the "A loss takes 5 off" paragraph says a live mid-duel quit costs the 5 on the next load (no gold or
+  life), an older save doesn't undo it, and a stalled duel or an Arena/Inn duel costs nothing. One earlier GUIDE.md line
+  that began "50. So on Insane" was rewrapped: `guide_html.py` read it as a numbered list (the shipped GUIDE.html had
+  been generated before round 793's text); the regenerated HTML differs from the committed one in that one paragraph
+  only. The Discord FAQ (`dev-tools/discord_faq/messages.py`: "Quitting the game mid-duel counts as a loss and a
+  reload") is unchanged; it still reads true.
+- **Tested** (Maven exit 0; agent test copy with a copied agent profile and this jar ahead of the agent jar; Normal, a
+  new world; every duel at 50x; each quit = the javaw process killed about 1 s into a Goblin Worker duel; the New Game+ reset line was added after the test, then rebuilt; log lines in
+  `C:\TFR\notes\r795-agent-log-lines.txt`, Notices shots `notes\r795-notices-*.png`): (1) slot 40 at Notoriety 60,
+  gold 250, life 20/20 -> quit -> load slot 40: 60 -> 55, gold 250, life 20/20, the red Notices line. (2) killed
+  without saving, relaunched, slot 40 again: 55 again (reloads still 1, "1 unpaid of 1"). (3) saved as slot 41 (paid 1),
+  a quit with the record backdated 30 s -> "judged stalled - not counted", 55 kept, no charge. (4) a counted quit with
+  the record's `duel.notoriety` set to false -> counted (reloads 2), "an Arena or Inn duel - no Notoriety cost", 55.
+  (5) Notoriety 52 saved as slot 42, quit, load: 52 -> 47, "Foes lose the 50+ Wall and their life.", gold and life
+  unchanged. **Not tested**: a real Arena or Inn quit (the DuelScene flag was read as `true` for a roaming duel; the
+  false path was driven by editing the record), Disable Notoriety on, a quit already decided as lost, and Android.
+
 ## Round 793: at Notoriety 50 the last bonus Wall becomes one of the enemy's own cards (2026-10-27)
 
 The user, of a Discord idea of Vr01's (enemies start with random permanents from their own deck as the player keeps

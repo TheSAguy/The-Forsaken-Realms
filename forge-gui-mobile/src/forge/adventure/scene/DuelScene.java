@@ -407,6 +407,15 @@ public class DuelScene extends ForgeScene {
             SpawnTierWeighting.registerKill(enemy != null ? enemy.getData() : WorldData.getEnemy(enemyName));
     }
 
+    /**
+     * Round 795: the player's own duels that feed the win streaks and, outside the Arena, Notoriety (round 404/411) -
+     * not an Inn tournament, a fixed-deck enemy or a guard's fight. Read at the start (a quit mid-duel costs Notoriety
+     * only where a loss would) and at the end; guardDeck is still the duel's own at both.
+     */
+    private boolean notorietyGate() {
+        return enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null;
+    }
+
     void afterGameEnd(String enemyName, boolean winner) {
         forge.adventure.util.ReloadJab.onDuelEnded(); // round 735: ended normally - no mid-duel quit to judge
         // Color reputation (MOD_SCOPE.md #1): every ordinary duel WIN shifts the player's
@@ -423,7 +432,7 @@ public class DuelScene extends ForgeScene {
         // counts: the enemy plays its own deck there.
         // Keyed on the enemy's own name (EnemyData.getName()), as the start-of-duel check reads it - not enemyName, which
         // carries a map-authored sprite override.
-        if (enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null && !drawn) { // r708
+        if (notorietyGate() && !drawn) { // r708
             Current.player().recordWinStreak(enemy.getData().getName(), winner);
             // Round 411: the same duels, against anyone. Round 432 (the user: "exclude any Tournament or Arena battles
             // for the Streak. So it should not add or reset"): an Arena duel leaves it as it is - its enemy still
@@ -1407,7 +1416,8 @@ public class DuelScene extends ForgeScene {
         // Round 735: a quit before this match ends is judged on the next load (ReloadJab) - the player's own duels, as
         // afterGameEnd's onDuelLost counts them: not a watched guard fight, not Deck Tester.
         if (!aiControlsPlayerSide && guardDeck == null && enemy.getData().fixedDeck == null)
-            forge.adventure.util.DuelHeartbeat.start(hostedMatch, humanPlayer, enemy.getName());
+            forge.adventure.util.DuelHeartbeat.start(hostedMatch, humanPlayer, enemy.getName(),
+                    notorietyGate() && !isArena); // round 795: a counted quit costs Notoriety where a loss would
         else
             forge.adventure.util.DuelHeartbeat.stop();
         MatchController.instance.setGameView(hostedMatch.getGameView());

@@ -1290,8 +1290,8 @@ Past that, two more things come for **every** enemy on every difficulty: a flyin
 **one of the enemy's own cards** already in play - a random creature, artifact or enchantment from its deck, costing 1
 to 3, taken out of the deck. An Apprentice's is a common, an Adept's up to uncommon, a Master's up to rare, and an
 Archmage's any rarity (a boss goes by its rank). Planeswalkers, lands and Auras are never chosen. If its deck has no
-such card, it gets a second flying 3/6 Wall instead. Each step also gives the enemy 25% more life - +25% at 45, +50% at
-50. So on Insane an enemy facing notoriety 50 starts with three Walls, one card of its own and half again its life.
+such card, it gets a second flying 3/6 Wall instead. Each step also gives the enemy 25% more life - +25% at 45,
++50% at 50. So on Insane an enemy facing notoriety 50 starts with three Walls, one card of its own and half again its life.
 Each Wall card says why it's there, under a bold **Notoriety** line with the score it stands for; the 45+ card also
 prints the life it adds. Your notice log
 notes each step as you reach it ("Notoriety 10 - level 2: ...") and what a loss took off ("Duel lost - Notoriety
@@ -1311,6 +1311,9 @@ notes each step as you reach it ("Notoriety 10 - level 2: ...") and what a loss 
 
 A loss takes 5 off your notoriety, so its Walls, its tilt and its dungeon odds all drop one step - not back to nothing.
 Losing on purpose to clear the Walls before a dungeon costs a duel's gold, life and ante for every step.
+Closing the game in the middle of a live duel counts as that loss: the next load takes the 5 off (no gold or life),
+and loading an older save doesn't undo it. A duel that had stalled - nothing happening for 20 seconds - costs nothing,
+and neither does leaving an Arena or Inn tournament duel, as losing one wouldn't.
 
 **Turning Notoriety off.** Check **Disable Notoriety** in the Settings and, from the next duel, your notoriety
 adds nothing: no Walls, no extra life, no tilt toward tougher spawns, no early rank step and no stronger dungeon

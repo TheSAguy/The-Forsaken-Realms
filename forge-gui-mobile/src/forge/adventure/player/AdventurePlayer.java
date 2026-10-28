@@ -484,6 +484,38 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         logNotorietyStage(before, levelBefore);
     }
 
+    /** Round 795: the counted mid-duel quits (ReloadJab) this save has paid for; the world's count is kept outside it. */
+    public int notorietyQuitsPaid() {
+        return notorietyQuitsPaid;
+    }
+
+    /**
+     * Round 795 (the user: "a mid-duel quit that is judged as counted also takes Notoriety -5 on the next load (no gold
+     * or life)"): ReloadJab's load passes this world's count of counted quits; each one this save has not paid for yet
+     * takes notorietyLossPenalty off, floor 0, as a lost duel does. Notoriety only - not the win-ratio tilt, gold, life
+     * or rewards. The paid count is saved, so a close without saving and a reload of the same save pays again from the
+     * same score (not lost, not doubled). Returns the Notices text, or null when nothing changed on screen.
+     */
+    public String payNotorietyQuits(int worldQuits) {
+        int owed = worldQuits - notorietyQuitsPaid;
+        if (owed < 0) // the profile's count went down (its file was removed): this save follows it from here
+            System.out.println("[TFR-Notoriety] mid-duel quits: this save paid " + notorietyQuitsPaid + ", the world counts "
+                    + worldQuits + " - follows the world from here");
+        notorietyQuitsPaid = worldQuits;
+        if (owed <= 0)
+            return null;
+        int before = notorietyStreak;
+        int levelBefore = notorietyLevel();
+        notorietyStreak = (int) Math.max(0L, before - (long) notorietyLossPenalty() * owed);
+        System.out.println("[TFR-Notoriety] left mid-duel x" + owed + " - notoriety " + before + " -> " + notorietyStreak
+                + ", level " + levelBefore + " -> " + notorietyLevel()
+                + (difficultyData != null ? " (" + difficultyData.name + ")" : ""));
+        java.util.List<String> lines = notorietyStageLines(before, levelBefore, "Left mid-duel", true);
+        for (String line : lines)
+            System.out.println("[TFR-Notoriety] log: " + line);
+        return lines.isEmpty() ? null : String.join(" ", lines);
+    }
+
     /** Round 753: what a lost duel takes off notoriety (TuningData.notorietyLossPenalty; 0 or less = a full reset). */
     private int notorietyLossPenalty() {
         forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
@@ -497,10 +529,18 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      * once it had a level.
      */
     private void logNotorietyStage(int before, int levelBefore) {
+        for (String line : notorietyStageLines(before, levelBefore, "Duel lost", false)) {
+            System.out.println("[TFR-Notoriety] log: " + line);
+            forge.adventure.stage.GameHUD.getInstance().logNotification(line, false);
+        }
+    }
+
+    /** Round 795: the stage lines; {@code lostHead} opens the loss line, {@code lossAlways} shows it below level 1 too. */
+    private java.util.List<String> notorietyStageLines(int before, int levelBefore, String lostHead, boolean lossAlways) {
+        java.util.List<String> lines = new java.util.ArrayList<>();
         forge.adventure.data.TuningData tuning = forge.adventure.util.Config.instance().getTuningData();
         if (tuning == null)
-            return;
-        java.util.List<String> lines = new java.util.ArrayList<>();
+            return lines;
         int level = notorietyLevel();
         if (level > levelBefore && tuning.notorietyWallsPlain != null) {
             java.util.List<String> walls = new java.util.ArrayList<>();
@@ -536,13 +576,13 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 }
             }
         // Round 753: a loss takes notoriety down, not to 0 - the line says by how much (once it had a level).
-        if (notorietyStreak < before && levelBefore > 0) {
+        if (notorietyStreak < before && (levelBefore > 0 || lossAlways)) {
             java.util.List<String> gone = new java.util.ArrayList<>(); // the bonus walls this loss took away (45+, 50+)
             if (tuning.notorietyBonusWallWins != null)
                 for (int wins : tuning.notorietyBonusWallWins)
                     if (before >= wins && notorietyStreak < wins)
                         gone.add(wins + "+");
-            lines.add("Duel lost - Notoriety " + before + " -> " + notorietyStreak + " (-" + (before - notorietyStreak) + ")"
+            lines.add(lostHead + " - Notoriety " + before + " -> " + notorietyStreak + " (-" + (before - notorietyStreak) + ")"
                     + (notorietyStreak == 0 ? ": word of you dies down."
                     : notorietyLevel() < levelBefore ? ", level " + levelBefore + " -> " + notorietyLevel() + "." : ".")
                     + (gone.isEmpty() ? "" : " Foes lose the " + String.join(" and ", gone) + " Wall"
@@ -552,14 +592,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (notorietyDisabled() && !lines.isEmpty()) {
             boolean lost = notorietyStreak < before;
             lines.clear();
-            lines.add(lost ? "Duel lost - Notoriety " + before + " -> " + notorietyStreak + " (off in Settings)."
+            lines.add(lost ? lostHead + " - Notoriety " + before + " -> " + notorietyStreak + " (off in Settings)."
                     : "Notoriety " + notorietyStreak + " - level " + level + " (off): no Walls or stronger foes while"
                     + " Notoriety is off in Settings.");
         }
-        for (String line : lines) {
-            System.out.println("[TFR-Notoriety] log: " + line);
-            forge.adventure.stage.GameHUD.getInstance().logNotification(line, false);
-        }
+        return lines;
     }
 
     /** Round 594: "1/2" from a Wall token script name such as tfr_wall2_reach_1_2. */
@@ -858,6 +895,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404
         notorietyStreak = 0; // round 411
+        notorietyQuitsPaid = 0; // round 795
         recentDuels = ""; // round 613
         ascendance.reset(); // round 493
         unlockedShopTypes.clear();
@@ -930,6 +968,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private final java.util.Map<String, Integer> enemyWinStreaks = new java.util.HashMap<>();
     // Round 411: notoriety - the player's wins in a row against anyone, saved as "notorietyStreak".
     private int notorietyStreak = 0;
+    // Round 795: the counted mid-duel quits this save has paid Notoriety for (ReloadJab), saved as "notorietyQuitsPaid".
+    private int notorietyQuitsPaid = 0;
     // Round 613: the win-ratio tilt's record - the player's last duels (notoriety's duels), oldest first, 'W' or 'L', at
     // most SpawnTierWeightData.winRatioWindow; saved as "recentDuels".
     private String recentDuels = "";
@@ -1205,6 +1245,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404: a new run's enemies have not learned your tricks yet
         notorietyStreak = 0; // round 411: nor heard of you
+        notorietyQuitsPaid = 0; // round 795: a new world (a new seed) has no mid-duel quits yet
         recentDuels = ""; // round 613: a new run's record starts clean
         // Round 493 (the user: "Not 100% sure how NG+ will work, I think you start over"): back to Ascendance 0 - and a
         // New Game+ is how an older save gets Ascendance at all.
@@ -2218,6 +2259,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
         // Round 411: notoriety. Absent before this round - every older save starts at 0 wins in a row.
         notorietyStreak = data.containsKey("notorietyStreak") ? Math.max(0, data.readInt("notorietyStreak")) : 0;
+        // Round 795: absent before it - an older save has paid for no mid-duel quit.
+        notorietyQuitsPaid = data.containsKey("notorietyQuitsPaid") ? Math.max(0, data.readInt("notorietyQuitsPaid")) : 0;
         // Round 613: the win-ratio record. A save from before it starts from its lifetime wins and losses, spread over the
         // window at the same ratio - its record already shows how the player fares.
         if (data.containsKey("recentDuels"))
@@ -2355,6 +2398,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         data.storeObject("winStreakNames", winStreakNameList);
         data.storeObject("winStreakCounts", winStreakCountList);
         data.store("notorietyStreak", notorietyStreak); // round 411
+        data.store("notorietyQuitsPaid", notorietyQuitsPaid); // round 795
         data.store("recentDuels", recentDuels == null ? "" : recentDuels); // round 613
         forge.adventure.util.Ascendance.save(data, ascendance); // round 493
         data.storeObject("unlockedShopTypes", new ArrayList<>(unlockedShopTypes));
