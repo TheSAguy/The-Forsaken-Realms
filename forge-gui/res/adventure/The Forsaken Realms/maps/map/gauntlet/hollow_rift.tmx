@@ -5,7 +5,7 @@
  <tileset firstgid="26497" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
  <layer id="1" name="Background" width="50" height="56">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <layer id="2" name="Floor" width="50" height="56">
@@ -53,6 +53,7 @@
 ]</property>
     <property name="enemy" value="Cryptstalker Fiend|Common"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="A1"/>
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
@@ -72,6 +73,7 @@
 ]</property>
     <property name="enemy" value="Cryptstalker Fiend|Common"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="A2"/>
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
@@ -91,6 +93,7 @@
 ]</property>
     <property name="enemy" value="Cryptstalker Fiend|Common"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="A3"/>
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
@@ -146,6 +149,7 @@
 ]</property>
     <property name="enemy" value="Cryptstalker Fiend|Uncommon"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="D1"/>
     <property name="threatRange" type="int" value="-1"/>
    </properties>
   </object>
@@ -165,6 +169,7 @@
 ]</property>
     <property name="enemy" value="Cryptstalker Fiend|Uncommon"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="D2"/>
     <property name="threatRange" type="int" value="-1"/>
    </properties>
   </object>
@@ -220,6 +225,7 @@
 ]</property>
     <property name="enemy" value="Cryptstalker Fiend|Rare"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="M"/>
     <property name="threatRange" type="int" value="-1"/>
    </properties>
   </object>

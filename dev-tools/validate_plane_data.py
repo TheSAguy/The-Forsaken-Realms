@@ -839,6 +839,48 @@ for key, (path, tree) in parsed.items():
                             issue("tmx-json", "%s#%s: arena does not parse: %s" % (rel(path), o.get("id"), e))
 counts["tmx-parsed"] = tmx_count
 
+# ------------------------------------------ gauntlet groups (round 812)
+# world/gauntlet_groups.json: per Gauntlet POI, themed groups of three Apprentices, two Adepts and a Master
+# (GauntletGroups.java). Every member must resolve at its slot's rank ("Name|Common" ...), and every gauntlet map must
+# carry the six slots (gauntletSlot A1-A3 on Common placements, D1-D2 on Uncommon, M on the Rare one).
+SLOT_TIER = {"A": "Common", "D": "Uncommon", "M": "Rare"}
+groups_path = os.path.join(PLANE, "world", "gauntlet_groups.json")
+gauntlet_groups = load_json(groups_path)[0] if os.path.exists(groups_path) else None
+gauntlet_pois = {p.get("name"): p for p in pois or [] if "Gauntlet" in (p.get("questTags") or [])}
+for poi_name, groups in (gauntlet_groups or {}).items():
+    w = "gauntlet_groups.json(%s)" % poi_name
+    if poi_name not in gauntlet_pois:
+        issue("ref-poi", "%s: not a POI tagged Gauntlet" % w)
+    for g in groups or []:
+        gw = "%s group '%s'" % (w, g.get("name"))
+        if len(g.get("apprentice") or []) != 3 or len(g.get("adept") or []) != 2 or not g.get("master"):
+            issue("gauntlet-group", "%s: needs 3 apprentice, 2 adept and a master" % gw)
+        for names, tier in ((g.get("apprentice") or [], "Common"), (g.get("adept") or [], "Uncommon"),
+                            ([g.get("master")] if g.get("master") else [], "Rare")):
+            for n in names:
+                problem = enemy_ref_problem("%s%s%s" % (n, TIER_SEP or "|", tier))
+                if problem:
+                    issue("ref-enemy", "%s: %s" % (gw, problem))
+for poi_name, p in gauntlet_pois.items():
+    if gauntlet_groups is not None and poi_name not in gauntlet_groups:
+        issue("gauntlet-group", "points_of_interest.json(%s): a gauntlet with no themed groups" % poi_name)
+    f = resolve_file(p["map"]) if p.get("map") else None
+    if f is None:
+        continue
+    slots = Counter()
+    for o in ET.parse(f).getroot().iter("object"):
+        props = {pp.get("name"): pp.get("value") for pp in o.iter("property")}
+        slot = props.get("gauntletSlot")
+        if not slot:
+            continue
+        slots[slot] += 1
+        tier = (props.get("enemy") or "").rsplit(TIER_SEP or "|", 1)[-1]
+        if SLOT_TIER.get(slot[:1]) != tier:
+            issue("gauntlet-group", "%s#%s: slot %s on a %s placement" % (rel(f), o.get("id"), slot, tier))
+    want = Counter({"A1": 1, "A2": 1, "A3": 1, "D1": 1, "D2": 1, "M": 1})
+    if slots != want:
+        issue("gauntlet-group", "%s: slots %s, want A1-A3, D1-D2 and M once each" % (rel(f), dict(slots)))
+
 # ------------------------------------------ patrol routes (round 248)
 # An enemy's `waypoints` names waypoint OBJECTS of its own map: "<id>", "rA-B-C" (a random one of them), "wN" (wait N
 # seconds) - MovementBehavior.getNextTargetVector(). Anything else is skipped at runtime with a "Navigation error"

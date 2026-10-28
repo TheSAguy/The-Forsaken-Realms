@@ -14264,6 +14264,63 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 812: themed enemy groups in the gauntlets - one of 4-5 groups per appearance, never the same twice running (2026-10-28)
+
+The user, in the TFR 1 main thread: "For the Gauntlet dungeons, let's keep the layouts. but can we increase the enemy
+diversity. Maybe have each be 1 of 5 different groups. Where possible, try to keep it thematic ... Up pref :)", and
+"they should not be able to increase the level of enemies inside. Since they are thematic 3, 2, 1 Creature levels
+already". Approved: "build it as recommended - the 84 groups as drafted, lighten the Hollow Rift's Apprentice hall
+floor for the Eldrazi, chests stay as they are, and no group twice in a row". Design note:
+`notes/gauntlet-groups-812.md`. Preview sheets and the readability pass are in the Art project's
+`notes/gauntlet_dungeons/groups`.
+
+- **The groups** (`world/gauntlet_groups.json`): 84 groups, 5 for most gauntlets and 4 where the roster is thin
+  (Marble Gallery, Sunken Bathhouse, Hollow Tiltyard, Thornwing Hive, Clockwork Orrery, Buried Necropolis). Each is
+  three Apprentices, two Adepts and a Master of one theme: mixed creatures, a leader as Master where there is one.
+  Group 1 always holds the place's old creature. All 376 members are full tier families. Each was scored at its own
+  post on its map with round 805's contrast rules, and members that vanished on their floor were swapped (for
+  example, the grey constructs on the Orrery's grey floor). The Starglass Observatory's dragon Master is Stormcrest
+  Dragon (mono-blue).
+- **The maps**: each gauntlet enemy object keeps its `enemy="Name|Tier"` and `keepAuthored`, and gains `gauntletSlot`
+  (A1-A3, D1-D2, M). The 18 maps were rebuilt by the Art project's generator (order check and round 810's in-game
+  check pass). The Hollow Rift's rim, where the Apprentices walk, is now paved with the pale hedron brick (bis 13332,
+  a plain lavender 13462 and a purple flagstone here and there), so the dark Eldrazi read on it. The rest of the Rift
+  is unchanged.
+- **`util/GauntletGroups.java`** (new) and one call in `MapStage`'s `case "enemy"`: a gauntlet slot resolves to the
+  drawn group's member at the SLOT's rank (`"<member>|Common/Uncommon/Rare"`), before MapStage reads `keepAuthored`.
+  - **The draw** happens at the first entry of an appearance and is kept in the map flag `gauntletGroup`, so re-entry,
+    a reload and a loss keep it. A new appearance (another reserve copy, or this one after round 798's map-flag reset)
+    draws again.
+  - **The place's last group** is kept in the save-bound character flag `gauntletLast.<POI name>`, shared by the place's
+    five copies, and the draw leaves it out (no group twice in a row). A per-copy map flag could not do this, since a
+    reserve return usually brings another copy, so `DungeonRotation` is unchanged.
+  - **The seed** is the world seed, the copy and the appearance's despawn day (unset on a fresh world's first day, then
+    the world seed and the copy), so a reload before the first entry draws the same group.
+  - **An older save** that already has progress in a place (a count or a deleted object) keeps the map's own enemies
+    there until the place rotates (`gauntletGroup` = 100).
+  - **The log**: `[TFR-Gauntlet] <place>: group N of M "<name>" (drawn, not group K again, ...)`, then `(kept)` on later
+    entries, and `authored enemies (an older save with progress here)`.
+- **Ranks never change** (the user's rule): the slot stays keepAuthored, and in MapStage the territory re-theme, the
+  content filter, the week's tier roll (`EnemyTiers.rollPlacement`), the Notoriety rank-ups (`DungeonUpgrades`) and the
+  roster override are all behind `!asAuthored`. Those are their only call sites.
+- **Unchanged**: the gates and their counts, the chests (themed by dungeon, round 809's pools), round 806's clear
+  rule, round 810's collision, round 811's entrances.
+- **`validate_plane_data.py`**: every group is 3/2/1, every member resolves at its slot's rank, every key is a
+  Gauntlet POI, and every gauntlet map carries A1-A3, D1-D2 and M once each with the slot matching the authored tier
+  (a bad name and a doubled slot were both caught in a test).
+- **Seen in a test package** (wt-812 on f0218ae1874, `agent-812`, a copied profile, log sharing off, every duel at
+  50x):
+  1. All 18 loaded with a drawn group at 3 Apprentices, 2 Adepts and a Master, matching the table, with the draws
+     spread over groups 1-5.
+  2. Re-entry and a save and reload kept the group.
+  3. In the Dawn Cathedral two Apprentice wins and a loss kept the place and the group, with the beaten ones gone.
+  4. Clearing the group flag three times in the Marble Gallery drew 3, 4, 3 after 4 ("not group N again").
+  5. At Notoriety 50 (level 8) three fresh draws held 3/2/1. Over the session there were 96 Apprentice, 70 Adept and
+     35 Master kept-as-authored placements, and no DungeonUpgrade or tier-roll line for a gauntlet.
+  6. A place with progress and no stored group loaded its authored Halo Wardens.
+
+  No exceptions. Shots in the Art project's `notes/gauntlet_dungeons/ingame` (r812_*).
+
 ## Round 811: no two dungeons share an entrance - 18 gauntlets at 48x48 and 17 look-alikes get their own (2026-10-28)
 
 The user, with a new batch of ChatGPT entrance sheets: "Since we have extra, let's make sure none of our dungeons use

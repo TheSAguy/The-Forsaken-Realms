@@ -54,6 +54,7 @@
 ]</property>
     <property name="enemy" value="Scrollwraith|Common"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="A1"/>
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
@@ -73,6 +74,7 @@
 ]</property>
     <property name="enemy" value="Scrollwraith|Common"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="A2"/>
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
@@ -92,6 +94,7 @@
 ]</property>
     <property name="enemy" value="Scrollwraith|Common"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="A3"/>
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
@@ -147,6 +150,7 @@
 ]</property>
     <property name="enemy" value="Scrollwraith|Uncommon"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="D1"/>
     <property name="threatRange" type="int" value="-1"/>
    </properties>
   </object>
@@ -166,6 +170,7 @@
 ]</property>
     <property name="enemy" value="Scrollwraith|Uncommon"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="D2"/>
     <property name="threatRange" type="int" value="-1"/>
    </properties>
   </object>
@@ -221,6 +226,7 @@
 ]</property>
     <property name="enemy" value="Scrollwraith|Rare"/>
     <property name="keepAuthored" type="bool" value="true"/>
+    <property name="gauntletSlot" value="M"/>
     <property name="threatRange" type="int" value="-1"/>
    </properties>
   </object>

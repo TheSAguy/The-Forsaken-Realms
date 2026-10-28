@@ -1515,6 +1515,15 @@ public class MapStage extends GameStage {
                         Object enemy = prop.get("enemy");
                         if (enemy != null && !enemy.toString().isEmpty()) {
                             EnemyData EN = WorldData.getEnemy(enemy.toString());
+                            // Round 812: a gauntlet slot takes this appearance's themed group member at the slot's own
+                            // rank; the placement stays keepAuthored, so nothing below re-ranks or swaps it.
+                            Object gauntletSlot = prop.get("gauntletSlot");
+                            if (gauntletSlot != null) {
+                                EnemyData drawn = forge.adventure.util.GauntletGroups.resolve(
+                                        TileMapScene.instance().rootPoint, changes, gauntletSlot.toString());
+                                if (drawn != null)
+                                    EN = drawn;
+                            }
                             boolean rolledByLand = false; // round 647: a biome roll picked it - its rank is rolled already
                             // Round 345 (the user, of the Demon's Bargain: its demon "was a random guy" - the
                             // territory re-theme had swapped him): a placement the map marks keepAuthored loads as

@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 812 - themed enemy groups in the gauntlets
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK): `case "enemy"` - right after
+  `WorldData.getEnemy(...)`, an object with a `gauntletSlot` property takes `GauntletGroups.resolve(rootPoint, changes,
+  slot)` when that returns an enemy (9 lines). On a merge, keep the call before `keepAuthored` is read.
+- **`forge-gui-mobile/src/forge/adventure/util/GauntletGroups.java`** (TFR file, new): reads `world/gauntlet_groups.json`,
+  draws and keeps a gauntlet's group (map flag `gauntletGroup`, character flag `gauntletLast.<POI>`), resolves a slot.
+
 ### Round 808 - the portrait player page: shards clear of the Ascendance block
 - **`forge-gui/res/adventure/common/ui/statistic_portrait.json`** (STOCK): `shards` x 170 -> 98, y 42 -> 56 (it sat inside
   the blessing box); `wins` / `totalWins` y 56 -> 68 and `loss` / `totalLoss` y 68 -> 80; `blessingInfo` x 170 -> 176,

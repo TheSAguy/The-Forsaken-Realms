@@ -1,0 +1,1130 @@
+{
+ "GauntletDawnCathedral": [
+  {
+   "name": "Host of the Dawn",
+   "apprentice": [
+    "Angelic Page",
+    "Halo Warden",
+    "Angelic Page"
+   ],
+   "adept": [
+    "Halo Warden",
+    "Valkyrie of the Last Field"
+   ],
+   "master": "Dawnblade Angel"
+  },
+  {
+   "name": "Cathedral Clergy",
+   "apprentice": [
+    "Lampbearer Zealot",
+    "Temple Doorwarden",
+    "Lampbearer Zealot"
+   ],
+   "adept": [
+    "Avacynian Preacher",
+    "Sunlit Hierophant"
+   ],
+   "master": "High Priest of Shandalar"
+  },
+  {
+   "name": "Holy Order",
+   "apprentice": [
+    "Cathar",
+    "Twinblade Crusader",
+    "Cathar"
+   ],
+   "adept": [
+    "Armored Knight",
+    "Knight Mercenary"
+   ],
+   "master": "Holy Paladin"
+  },
+  {
+   "name": "Celestial Wardens",
+   "apprentice": [
+    "Moonhorn Unicorn",
+    "Angelic Page",
+    "Moonhorn Unicorn"
+   ],
+   "adept": [
+    "Cloud Guardian",
+    "Angel Overseer"
+   ],
+   "master": "Arch Angel of Shandalar"
+  },
+  {
+   "name": "Penitent Choir",
+   "apprentice": [
+    "Orzhov Cleric",
+    "Missionary of Saint Traft",
+    "Orzhov Cleric"
+   ],
+   "adept": [
+    "Orthodoxy Angel",
+    "Fallen Angel"
+   ],
+   "master": "Maelstrom Angel"
+  }
+ ],
+ "GauntletSkyBridgeMonastery": [
+  {
+   "name": "Kor Climbers",
+   "apprentice": [
+    "Kor Sky Climber",
+    "Kor Line-Slinger",
+    "Kor Sky Climber"
+   ],
+   "adept": [
+    "Kor Hookmaster",
+    "Kor Skyfisher"
+   ],
+   "master": "Kor Chant-Leader"
+  },
+  {
+   "name": "Kor Blades",
+   "apprentice": [
+    "Kor Duelist",
+    "Kor Bladewhirl",
+    "Kor Renegade"
+   ],
+   "adept": [
+    "Kor Castigator",
+    "Kor Firewalker"
+   ],
+   "master": "Kor Blademaster"
+  },
+  {
+   "name": "Monastery Monks",
+   "apprentice": [
+    "Monk",
+    "Kor Celebrant",
+    "Monk"
+   ],
+   "adept": [
+    "Snowmane Brawler",
+    "Shrine Scythe-Dancer"
+   ],
+   "master": "Kor Spiritdancer"
+  },
+  {
+   "name": "Griffin Roost",
+   "apprentice": [
+    "Falcon",
+    "Duskfeather Owlet",
+    "Falcon"
+   ],
+   "adept": [
+    "Crownfeather Griffin",
+    "Stormcrag Griffin"
+   ],
+   "master": "Silvervale Skyrider"
+  },
+  {
+   "name": "Sky Wardens",
+   "apprentice": [
+    "Falcon-headed Aven Warrior",
+    "Galewhisper Sylph",
+    "Falcon-headed Aven Warrior"
+   ],
+   "adept": [
+    "Kor Skyknight",
+    "Galewrapped Specter"
+   ],
+   "master": "Sunplume Phoenix"
+  }
+ ],
+ "GauntletMarbleGallery": [
+  {
+   "name": "Living Statues",
+   "apprentice": [
+    "Gargoyle 2",
+    "Gargoyle",
+    "Gargoyle 2"
+   ],
+   "adept": [
+    "Marblehewn Golem",
+    "Marblehewn Golem"
+   ],
+   "master": "Sandstone Colossus"
+  },
+  {
+   "name": "Gallery Golems",
+   "apprentice": [
+    "Golem",
+    "Iron Golem",
+    "Golem"
+   ],
+   "adept": [
+    "Ice Golem",
+    "Sand Golem"
+   ],
+   "master": "Marblehewn Golem"
+  },
+  {
+   "name": "The Curators",
+   "apprentice": [
+    "Archaeologist",
+    "Auramancer",
+    "Archaeologist"
+   ],
+   "adept": [
+    "Human Captain",
+    "Aether Channeler"
+   ],
+   "master": "Criosphinx"
+  },
+  {
+   "name": "Sand and Stone",
+   "apprentice": [
+    "Sand Golem",
+    "Geode Slug",
+    "Sand Golem"
+   ],
+   "adept": [
+    "Evil Wall",
+    "Sand Golem"
+   ],
+   "master": "Juggernaut"
+  }
+ ],
+ "GauntletDrownedLibrary": [
+  {
+   "name": "Library Wraiths",
+   "apprentice": [
+    "Scrollwraith",
+    "Pale Foundling",
+    "Scrollwraith"
+   ],
+   "adept": [
+    "Keening Banshee",
+    "Wandering Geist"
+   ],
+   "master": "Geistmage"
+  },
+  {
+   "name": "Scholars",
+   "apprentice": [
+    "Grey Scholar",
+    "Court Mage",
+    "Elven Apprentice"
+   ],
+   "adept": [
+    "Archivist",
+    "Elven Spellweaver"
+   ],
+   "master": "Thought Invoker of Shandalar"
+  },
+  {
+   "name": "Drowned Crew",
+   "apprentice": [
+    "Drowned Deckhand",
+    "Brinebone Buccaneer",
+    "Drowned Deckhand"
+   ],
+   "adept": [
+    "Undead Wanderer",
+    "Hollowlight Shade"
+   ],
+   "master": "Frostrobe Lich"
+  },
+  {
+   "name": "Forbidden Shelves",
+   "apprentice": [
+    "Walking Brain",
+    "Unholy Skull",
+    "Walking Brain"
+   ],
+   "adept": [
+    "Grimoire Devourer",
+    "Serpleg Stalker"
+   ],
+   "master": "Curselord"
+  },
+  {
+   "name": "Spirits of the Flood",
+   "apprentice": [
+    "Blue Dwende",
+    "Driftbell Medusoid",
+    "Blue Dwende"
+   ],
+   "adept": [
+    "Tide Elemental",
+    "Geist"
+   ],
+   "master": "Tidewrought Colossus"
+  }
+ ],
+ "GauntletStarglassObservatory": [
+  {
+   "name": "Star-Weavers",
+   "apprentice": [
+    "Starweave Enchanter",
+    "Aether Channeler",
+    "Starweave Enchanter"
+   ],
+   "adept": [
+    "Traveling Conjurer",
+    "Disciple of Teferi"
+   ],
+   "master": "Legend of the Tundra"
+  },
+  {
+   "name": "Owls and Sphinxes",
+   "apprentice": [
+    "Owl",
+    "Duskfeather Owlet",
+    "Owl"
+   ],
+   "adept": [
+    "Sphinx",
+    "Aerie Guard"
+   ],
+   "master": "Cloudmane Kirin"
+  },
+  {
+   "name": "Faerie Court",
+   "apprentice": [
+    "Faerie",
+    "Eldraine Faerie",
+    "Faerie"
+   ],
+   "adept": [
+    "Dimir Faerie",
+    "Galewhisper Sylph"
+   ],
+   "master": "Faerie Dragon"
+  },
+  {
+   "name": "Drakes of the Dome",
+   "apprentice": [
+    "Pixiewing Whelp",
+    "Skyreef Shark",
+    "Pixiewing Whelp"
+   ],
+   "adept": [
+    "Aqua Drake",
+    "Tidecrest Dragon"
+   ],
+   "master": "Stormcrest Dragon"
+  },
+  {
+   "name": "Illusionists",
+   "apprentice": [
+    "Illusionist",
+    "Elven Apprentice",
+    "Illusionist"
+   ],
+   "adept": [
+    "Geistmage",
+    "Court Mage"
+   ],
+   "master": "Legend of the Underground Sea"
+  }
+ ],
+ "GauntletSunkenBathhouse": [
+  {
+   "name": "Bath Sirens",
+   "apprentice": [
+    "Brinecoil Nereid",
+    "Coraltress Siren",
+    "Brinecoil Nereid"
+   ],
+   "adept": [
+    "Sirena",
+    "Merfolk warrior"
+   ],
+   "master": "Merfolk King"
+  },
+  {
+   "name": "Tide Legion",
+   "apprentice": [
+    "Merfolk Soldier",
+    "Merfolk",
+    "Merfolk Soldier"
+   ],
+   "adept": [
+    "Merfolk Fighter",
+    "Merfolk Elite"
+   ],
+   "master": "Merfolk Lord"
+  },
+  {
+   "name": "Reef Beasts",
+   "apprentice": [
+    "Coral Crab",
+    "Pearlmaw Clam",
+    "Hermit Crab"
+   ],
+   "adept": [
+    "Tanglekelp",
+    "Hermit Crab"
+   ],
+   "master": "Octopus"
+  },
+  {
+   "name": "Deep Folk",
+   "apprentice": [
+    "Syokoy",
+    "Tiburones",
+    "Syokoy"
+   ],
+   "adept": [
+    "Sirena",
+    "Tiburones"
+   ],
+   "master": "Merfolk Avatar"
+  }
+ ],
+ "GauntletBoneOrchard": [
+  {
+   "name": "Barrow Dead",
+   "apprentice": [
+    "Barrow Skeleton",
+    "Barrow Bonebow",
+    "Barrow Skeleton"
+   ],
+   "adept": [
+    "Cracked Shieldbone",
+    "Barrow Legionnaire"
+   ],
+   "master": "Marshal of the Barrow Legion"
+  },
+  {
+   "name": "Rotting Harvest",
+   "apprentice": [
+    "Rotwalker",
+    "Shambling Corpse",
+    "Tatterclad Zombie"
+   ],
+   "adept": [
+    "Plague Ghoul",
+    "Big Zombie"
+   ],
+   "master": "Zombie Lord"
+  },
+  {
+   "name": "Carrion Pack",
+   "apprentice": [
+    "Rotfang Hound",
+    "Bone Raider",
+    "Rotfang Hound"
+   ],
+   "adept": [
+    "Carrion Steed",
+    "Butcher of the Dead"
+   ],
+   "master": "Dreadmount Rider"
+  },
+  {
+   "name": "Rattling Bones",
+   "apprentice": [
+    "Rattling Bones",
+    "Chainbound Skeleton",
+    "Decrepit Bones"
+   ],
+   "adept": [
+    "Deepvein Bonedigger",
+    "Bone Raider"
+   ],
+   "master": "Grave Titan"
+  },
+  {
+   "name": "Blighted Orchard",
+   "apprentice": [
+    "Ashbark Gaunt",
+    "Carcass Feeder",
+    "Ashbark Gaunt"
+   ],
+   "adept": [
+    "Hollow Willow",
+    "Amaranhig"
+   ],
+   "master": "Corrupted Treant"
+  }
+ ],
+ "GauntletGildedMausoleum": [
+  {
+   "name": "Gilded Court",
+   "apprentice": [
+    "Cryptguard Zombie",
+    "Shackled Dead",
+    "Cryptguard Zombie"
+   ],
+   "adept": [
+    "Gilded Lich",
+    "Gilded Lich"
+   ],
+   "master": "Gilded Lich"
+  },
+  {
+   "name": "Vampire Lineage",
+   "apprentice": [
+    "Vampire Bat",
+    "Shackled Dead",
+    "Vampire Bat"
+   ],
+   "adept": [
+    "Vampire",
+    "Crimson Reaper"
+   ],
+   "master": "Bloodveil Countess"
+  },
+  {
+   "name": "Necromancers",
+   "apprentice": [
+    "Cloaked Old Man",
+    "Graven Revenant",
+    "Cloaked Old Man"
+   ],
+   "adept": [
+    "Ghoul Gravecaller",
+    "Rakdos Wizard"
+   ],
+   "master": "Lord Pestilence"
+  },
+  {
+   "name": "Tomb Lords",
+   "apprentice": [
+    "Royal Sentinel",
+    "Unholy Skull",
+    "Royal Sentinel"
+   ],
+   "adept": [
+    "Plaguelord",
+    "Tomb Guardian"
+   ],
+   "master": "Lich"
+  },
+  {
+   "name": "Specters",
+   "apprentice": [
+    "Hollowlight Shade",
+    "Soulreaver Specter",
+    "Hollowlight Shade"
+   ],
+   "adept": [
+    "Wraith",
+    "Soulreaver Specter"
+   ],
+   "master": "Shade"
+  }
+ ],
+ "GauntletHollowTiltyard": [
+  {
+   "name": "Phantom Lists",
+   "apprentice": [
+    "Hollowplate Phantom",
+    "Revenant Knight-Errant",
+    "Hollowplate Phantom"
+   ],
+   "adept": [
+    "Dreadmount Rider",
+    "Hollowplate Phantom"
+   ],
+   "master": "Revenant Knight-Captain"
+  },
+  {
+   "name": "Death Knights",
+   "apprentice": [
+    "False Knight",
+    "Skeleton Soldier",
+    "False Knight"
+   ],
+   "adept": [
+    "Revenant Knight-Errant",
+    "False Knight"
+   ],
+   "master": "Death Knight"
+  },
+  {
+   "name": "Bone Legion",
+   "apprentice": [
+    "Skeleton Soldier",
+    "Bonetusk Legionnaire",
+    "Skeleton Soldier"
+   ],
+   "adept": [
+    "Cracked Shieldbone",
+    "Barrow Legionnaire"
+   ],
+   "master": "Skeleton Champion"
+  },
+  {
+   "name": "Restless Squires",
+   "apprentice": [
+    "Dark Spirit",
+    "Hollowlight Shade",
+    "Dark Spirit"
+   ],
+   "adept": [
+    "Hollow Oathkeeper",
+    "Soulreaver Specter"
+   ],
+   "master": "Wraith"
+  }
+ ],
+ "GauntletKilnFoundry": [
+  {
+   "name": "Kiln Golems",
+   "apprentice": [
+    "Kilnfired Golem",
+    "Ember Elemental",
+    "Kilnfired Golem"
+   ],
+   "adept": [
+    "Kilnfired Golem",
+    "Obsidian Warden"
+   ],
+   "master": "Kilnfired Golem"
+  },
+  {
+   "name": "Furnace Goblins",
+   "apprentice": [
+    "Furnace Goblin",
+    "Goblin Artificer",
+    "Furnace Goblin"
+   ],
+   "adept": [
+    "Dwarf Pilot",
+    "Dwarf Demolisher"
+   ],
+   "master": "Furnace Tormentor"
+  },
+  {
+   "name": "Forge Dwarves",
+   "apprentice": [
+    "Dwarf Wanderer",
+    "Axgard Dwarf",
+    "Dwarf Renegade"
+   ],
+   "adept": [
+    "Dwarf",
+    "Dwarf Mercenary"
+   ],
+   "master": "Ironhammer Brute"
+  },
+  {
+   "name": "Pyromancers",
+   "apprentice": [
+    "Chandra's Acolyte",
+    "Chandra's Firestarter",
+    "Chandra's Acolyte"
+   ],
+   "adept": [
+    "Chandra's Lavamancer",
+    "Chandra's Immolator"
+   ],
+   "master": "Chandra's Pyromancer"
+  },
+  {
+   "name": "Living Flame",
+   "apprentice": [
+    "Santelmo",
+    "Ember Elemental",
+    "Santelmo"
+   ],
+   "adept": [
+    "Fire Elemental",
+    "Lightning Elemental"
+   ],
+   "master": "Earthcore Colossus"
+  }
+ ],
+ "GauntletAnvilLabyrinth": [
+  {
+   "name": "Minotaur Herd",
+   "apprentice": [
+    "Minotaur",
+    "Anvilhorn Minotaur",
+    "Minotaur"
+   ],
+   "adept": [
+    "Minotaur Flayer",
+    "Amonkhet Minotaur Warrior"
+   ],
+   "master": "Minotaur Warcaller"
+  },
+  {
+   "name": "Maze Giants",
+   "apprentice": [
+    "Bungisngis",
+    "Twinskull Ogre",
+    "Bungisngis"
+   ],
+   "adept": [
+    "Crushing Cyclops",
+    "Cyclops of the Scorched Hills"
+   ],
+   "master": "Giant Cyclops"
+  },
+  {
+   "name": "Orc Warband",
+   "apprentice": [
+    "Orcling Rascal",
+    "Grimtusk Bowman",
+    "Grimtusk Shieldbearer"
+   ],
+   "adept": [
+    "Orc Raider",
+    "Blazeplate Orc"
+   ],
+   "master": "Orc Warchief"
+  },
+  {
+   "name": "Goblin Maze-Runners",
+   "apprentice": [
+    "Goblin Skulker",
+    "Goblin Cutthroat",
+    "Goblin Shieldbearer"
+   ],
+   "adept": [
+    "Goblin Reaver",
+    "Goblin Fighter"
+   ],
+   "master": "Goblin King"
+  },
+  {
+   "name": "Maze Beasts",
+   "apprentice": [
+    "Hellion",
+    "Slashmaw Monger",
+    "Hellion"
+   ],
+   "adept": [
+    "Hellhound",
+    "Cinderpelt Werewolf"
+   ],
+   "master": "Three-Maw Hellhound"
+  }
+ ],
+ "GauntletBrassPalace": [
+  {
+   "name": "Efreet Court",
+   "apprentice": [
+    "Efreet",
+    "Tarkir Djinn",
+    "Efreet"
+   ],
+   "adept": [
+    "Djinn",
+    "Fire Elemental"
+   ],
+   "master": "Emberlord Efreet"
+  },
+  {
+   "name": "Brass Dragons",
+   "apprentice": [
+    "Baby Brass Dragon",
+    "Emberscale Dragonet",
+    "Cinderwing Whelp"
+   ],
+   "adept": [
+    "Young Brass Dragon",
+    "Inferno Drake"
+   ],
+   "master": "Cinderwing Dragon"
+  },
+  {
+   "name": "Palace Devils",
+   "apprentice": [
+    "Imp",
+    "Hellspark Fiend",
+    "Imp"
+   ],
+   "adept": [
+    "Scarlet Temptress",
+    "Rakdos Devil"
+   ],
+   "master": "Immersturm Demon"
+  },
+  {
+   "name": "Palace Guard",
+   "apprentice": [
+    "Katipunero Firebrand",
+    "Ronin of the Ashen Road",
+    "Katipunero Firebrand"
+   ],
+   "adept": [
+    "Grim Executioner",
+    "Sandveil Blademaster"
+   ],
+   "master": "Golden Glaive Warlord"
+  },
+  {
+   "name": "Fire Beasts",
+   "apprentice": [
+    "Cinderscale Salamander",
+    "Magmaback Crawler",
+    "Pyrefang Bat"
+   ],
+   "adept": [
+    "Torchhead Stallion",
+    "Magmaback Crawler"
+   ],
+   "master": "Flamemane Kirin"
+  }
+ ],
+ "GauntletSporeCathedral": [
+  {
+   "name": "Mushroomlings",
+   "apprentice": [
+    "Orange Mushroomling",
+    "Redcap Nibbler",
+    "Orange Mushroomling"
+   ],
+   "adept": [
+    "Sporecap Shambler",
+    "Sporeshell Crawler"
+   ],
+   "master": "Geonid Death-Cap"
+  },
+  {
+   "name": "Golgari Rot",
+   "apprentice": [
+    "Golgari Fungus",
+    "Fungal Myconid",
+    "Golgari Fungus"
+   ],
+   "adept": [
+    "Shrieker Mushroom",
+    "Fungus"
+   ],
+   "master": "Mossmane Shambler"
+  },
+  {
+   "name": "Oozes",
+   "apprentice": [
+    "Dewdrop Ooze",
+    "Hedge Slime",
+    "Dewdrop Ooze"
+   ],
+   "adept": [
+    "Gazestalk Ooze",
+    "Hedge Slime"
+   ],
+   "master": "Ooze"
+  },
+  {
+   "name": "Spore Tenders",
+   "apprentice": [
+    "Liliana's Herbalist",
+    "Elf",
+    "Liliana's Herbalist"
+   ],
+   "adept": [
+    "Liliana's Alchemist",
+    "Loamspeaker"
+   ],
+   "master": "Beast Master of Shandalar"
+  },
+  {
+   "name": "Treefolk",
+   "apprentice": [
+    "Blossom Sapling",
+    "Wandering Treefolk",
+    "Taong Tuod"
+   ],
+   "adept": [
+    "Barkhide Dendroid",
+    "Rockthrower Oak"
+   ],
+   "master": "Grizzled Treant"
+  }
+ ],
+ "GauntletThornwingHive": [
+  {
+   "name": "Thornwing Swarm",
+   "apprentice": [
+    "Thornwing Mantis",
+    "Ladybug",
+    "Thornwing Mantis"
+   ],
+   "adept": [
+    "Thornwing Mantis",
+    "Mageripper"
+   ],
+   "master": "Nantuko Guard"
+  },
+  {
+   "name": "Beetles",
+   "apprentice": [
+    "Spinecoil Isopod",
+    "Hoarder Beetle",
+    "Spinecoil Isopod"
+   ],
+   "adept": [
+    "Triplate Crawler",
+    "Hoarder Beetle"
+   ],
+   "master": "Jadeshell Beetle"
+  },
+  {
+   "name": "Spiders",
+   "apprentice": [
+    "Pomhair Spider",
+    "Cave Spider",
+    "Pomhair Spider"
+   ],
+   "adept": [
+    "Carapace Stalker",
+    "Giant Spider"
+   ],
+   "master": "Broodweaver Drider"
+  },
+  {
+   "name": "Stingers",
+   "apprentice": [
+    "Wasp",
+    "Giant Fly",
+    "Wasp"
+   ],
+   "adept": [
+    "Dragonfly",
+    "Homarid"
+   ],
+   "master": "Watcher in the Web"
+  }
+ ],
+ "GauntletJadeZiggurat": [
+  {
+   "name": "Lizardfolk Guard",
+   "apprentice": [
+    "Lizardfolk Guard",
+    "Lizardfolk Scout",
+    "Lizardfolk Guard"
+   ],
+   "adept": [
+    "Lizardfolk Spearman",
+    "Lizardfolk Archer"
+   ],
+   "master": "Lizardfolk Champion"
+  },
+  {
+   "name": "Arena Lizards",
+   "apprentice": [
+    "Bestial Lizardfolk",
+    "Marshscale Lizardman",
+    "Bestial Lizardfolk"
+   ],
+   "adept": [
+    "Lizardfolk Gladiator",
+    "Frillback Basilisk"
+   ],
+   "master": "Thornspine Ravager"
+  },
+  {
+   "name": "Dinosaurs",
+   "apprentice": [
+    "Raptor",
+    "Triceratops",
+    "Raptor"
+   ],
+   "adept": [
+    "Stegosaurus",
+    "Dinosaur Elite"
+   ],
+   "master": "Shellback Ankylosaur"
+  },
+  {
+   "name": "Serpent Cult",
+   "apprentice": [
+    "Viper",
+    "Sidewind Adder",
+    "Viper"
+   ],
+   "adept": [
+    "Naga Warrior",
+    "Stonegaze Medusa"
+   ],
+   "master": "Vinewing Lizardlord"
+  },
+  {
+   "name": "Temple Cats",
+   "apprentice": [
+    "Caracal",
+    "Leonin Warrior",
+    "Caracal"
+   ],
+   "adept": [
+    "Tiger",
+    "Sunmane Lion"
+   ],
+   "master": "Leonin Weaponmaster"
+  }
+ ],
+ "GauntletClockworkOrrery": [
+  {
+   "name": "Bronzecrest Works",
+   "apprentice": [
+    "Bronzecrest Automaton",
+    "Tinkerwork Mender",
+    "Bronzecrest Automaton"
+   ],
+   "adept": [
+    "Tinkerwork Mender",
+    "Clockwork Legionary"
+   ],
+   "master": "Clockwork Siegewalker"
+  },
+  {
+   "name": "Prototypes",
+   "apprentice": [
+    "Blue Prototype",
+    "Scarecrow",
+    "Blue Prototype"
+   ],
+   "adept": [
+    "Blue Prototype",
+    "Rimeglass Golem"
+   ],
+   "master": "Juggernaut"
+  },
+  {
+   "name": "Phyrexian Works",
+   "apprentice": [
+    "Copper Host Infector",
+    "Gitaxian Underling",
+    "Copper Host Infector"
+   ],
+   "adept": [
+    "Copper Host Brutalizer",
+    "Dross Grimnarch"
+   ],
+   "master": "Gitaxian Scientist"
+  },
+  {
+   "name": "Old Golems",
+   "apprentice": [
+    "Scarecrow",
+    "Tinkerwork Mender",
+    "Scarecrow"
+   ],
+   "adept": [
+    "Rimeglass Golem",
+    "Jadestone Golem"
+   ],
+   "master": "Bogmaw Golem"
+  }
+ ],
+ "GauntletBuriedNecropolis": [
+  {
+   "name": "Royal Dead",
+   "apprentice": [
+    "Mummy",
+    "Tombwrapped Ancient",
+    "Mummy"
+   ],
+   "adept": [
+    "Tombwrapped Ancient",
+    "Tombwrapped Ancient"
+   ],
+   "master": "Pharaoh"
+  },
+  {
+   "name": "Scarabs",
+   "apprentice": [
+    "Scarab",
+    "Royal Scarab",
+    "Scarab"
+   ],
+   "adept": [
+    "Dunestinger Scorpion",
+    "Scorpion"
+   ],
+   "master": "Giant Royal Scarab"
+  },
+  {
+   "name": "Jackal Guard",
+   "apprentice": [
+    "Khenra Warrior",
+    "Naga Warrior",
+    "Khenra Warrior"
+   ],
+   "adept": [
+    "Sandveil Blademaster",
+    "Khenra Warrior"
+   ],
+   "master": "Sphinx"
+  },
+  {
+   "name": "Desert Ghouls",
+   "apprentice": [
+    "Dune Ghoul",
+    "Skittering Hand",
+    "Dune Ghoul"
+   ],
+   "adept": [
+    "Sand Ghoul",
+    "Bound Cadaver"
+   ],
+   "master": "Tomb Guardian"
+  }
+ ],
+ "GauntletHollowRift": [
+  {
+   "name": "Cryptstalkers",
+   "apprentice": [
+    "Cryptstalker Fiend",
+    "Violet Wretch",
+    "Cryptstalker Fiend"
+   ],
+   "adept": [
+    "Fleshrender Hulk",
+    "Horror of Tibalt"
+   ],
+   "master": "Flesh Abomination"
+  },
+  {
+   "name": "Eldrazi Brood",
+   "apprentice": [
+    "Eldrazi Scion",
+    "Eldrazi",
+    "Eldrazi Scion"
+   ],
+   "adept": [
+    "Eldrazi",
+    "Eldrazi"
+   ],
+   "master": "Eldrazi Floater"
+  },
+  {
+   "name": "Eyes of the Void",
+   "apprentice": [
+    "Dreadgaze Horror",
+    "Ghastly Eye",
+    "Dreadgaze Horror"
+   ],
+   "adept": [
+    "Bloodgaze Horror",
+    "Veilgaze Horror"
+   ],
+   "master": "Beholder"
+  },
+  {
+   "name": "Rift Horrors",
+   "apprentice": [
+    "Horror",
+    "Ekek",
+    "Horror"
+   ],
+   "adept": [
+    "Dementia Beast",
+    "Four-Maw Horror"
+   ],
+   "master": "Bloodwatch Seeker"
+  },
+  {
+   "name": "Riftspawn",
+   "apprentice": [
+    "Warp Skull",
+    "Tiyanak",
+    "Warp Skull"
+   ],
+   "adept": [
+    "Cloaker",
+    "Manananggal"
+   ],
+   "master": "Ancient Demon"
+  }
+ ]
+}
