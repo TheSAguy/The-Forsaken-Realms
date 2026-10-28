@@ -14310,6 +14310,96 @@ as duplicates, ... same-sheet siblings are fine."
 - **Art Library**: `Projects/The Forsaken Realms/Game Art/Entrances ChatGPT (round 811)/` - `Sources/` (the 30 sheets)
   and `Sprites/` (the 35 installed sprites).
 
+## Round 810: the seven earlier gauntlets get sealed walls - no way round a shut gate (2026-10-28)
+
+Round 809's test found that a player could walk round a shut gauntlet gate (details in round 809). The game takes
+walls only from each tile's own collision boxes (`MapStage.loadCollision`), so an empty cell is open floor, and the
+generator's walls left gaps. In the live Dawn Cathedral the player walked, with Gate I shut, from the gate's neck into
+a row inside the nave's north wall (main 3255 has no box), out into the black void and into the west Adept chapel
+(shot: the Art project's `notes/gauntlet_dungeons/ingame/r809_bypass_dawn_cathedral.png`). Rounds 804 and 805's seven
+maps, live since the round 808 package, all had such a way round.
+
+- **The fix**: the seven maps rebuilt by the Art project's generator, which now gives every void cell touching the
+  floor a full Collision tile (main 5536 on the opacity-0 `Collision` layer). Each file changes in one line, the
+  Collision layer's data: `dawn_cathedral`, `bone_orchard`, `gilded_mausoleum`, `hollow_tiltyard`, `drowned_library`,
+  `starglass_observatory`, `sunken_bathhouse`. Nothing visible changes, and the chests stay as they were (their
+  themes hold 19-81 names in a typical 16-set shard).
+- **The check**: `notes/gauntlet_dungeons/tools/ingame_check.py` in the Art project (not in this repo) models the
+  game's collision: the player's 10 x 6 movement box (CharacterSprite: sprite width - 6 by 0.4 x height) against
+  every tile box on every layer except `noCollision` ones. It flood fills from the entry with the gates shut and then
+  opens them in flag order (`gauntletApprentice` / `Adept` / `Master`); each stage must meet exactly its own enemies,
+  then the chest. Before the fix, every one of the 18 gauntlet maps failed it; now all 18 pass. Every gauntlet
+  install (`--install`) is now gated on it.
+- **Seen in the test package** (agent-809, every duel at 50x): on the sealed Dawn Cathedral the old route stops at
+  the nave's north-east corner; the chapels and the void can no longer be reached past a shut gate. Shot:
+  `r810_bypass_blocked_dawn_cathedral.png`.
+
+## Round 809: eleven more gauntlet dungeons - the green, red, colorless and white rounds (2026-10-28)
+
+The last eleven of the 18 gauntlets (round 804's order: three Apprentices, Gate I, two Adepts, Gate II, the Master,
+Gate III, the chest), approved by the user through the Art main thread on 2026-10-28 ("Yes, install the green, red,
+colorless and white gauntlet rounds as shown"), with the fixes shown there: dark wax in the Hive, orange cobble in the
+Kiln, a warmer and mazier Labyrinth, the dark way and slabs in the Necropolis, the machine wall in the Orrery, the
+cloud sea in the Monastery. Each color keeps its own look: white the pale marble and the white-and-blue frieze,
+colorless the Egyptian kit. Generator, previews and checks: the Art project's `notes/gauntlet_dungeons`.
+
+| Place (POI) | Enemy | Shape | Entrance |
+|---|---|---|---|
+| Spore Cathedral (GauntletSporeCathedral) | Orange Mushroomling | spore nave, two gill chapels, the Mother Cap, the seed vault | Slimefoot (buildingsbosses) |
+| Thornwing Hive (GauntletThornwingHive) | Thornwing Mantis | brood comb in dark wax, two nursery cells, the queen's chamber, the honey store | Xira (buildingsbosses) |
+| Jade Ziggurat (GauntletJadeZiggurat) | Lizardfolk Guard | lower terrace, twin stairs, the summit shrine, the idol chamber | Spare_E_CaveLarge1 (dungeon_entrances_2) |
+| Kiln Foundry (GauntletKilnFoundry) | Kilnfired Golem | casting floor of lava pools on orange cobble, two kiln rooms, the great crucible, the ingot store | Factory_B |
+| Anvil Labyrinth (GauntletAnvilLabyrinth) | Anvilhorn Minotaur | outer maze ring, middle ring, the anvil arena, the trophy room | Spare_E_Zedruu_City (dungeon_entrances_2) |
+| Brass Palace (GauntletBrassPalace) | Emberlord Efreet | court of fire fountains, two audience chambers, the ember throne, the lamp room | SandPalace |
+| Clockwork Orrery (GauntletClockworkOrrery) | Bronzecrest Automaton | gear hall, two escapement rooms, the armillary, the winding room | Aetherflux Resevoir (buildingsbosses) |
+| Buried Necropolis (GauntletBuriedNecropolis) | Tombwrapped Ancient | sand-choked antechamber, two embalming halls, the burial chamber, the treasury | SandTemplePillared |
+| Hollow Rift (GauntletHollowRift) | Cryptstalker Fiend | the rim, two floating shards, the eye, the lodestone | Edge of Eternities (buildingsbosses) |
+| Sky-Bridge Monastery (GauntletSkyBridgeMonastery) | Kor Sky Climber | gate court, two bridge towers over a cloud sea, the high hall, the bell loft | Tolarian Academy (buildingsbosses) |
+| Marble Gallery (GauntletMarbleGallery) | Marblehewn Golem | entrance gallery, two wings, the rotunda, the curator's vault | GreyHall |
+
+- **Data**: eleven maps in `maps/map/gauntlet/`; eleven POIs (dungeon, count 1, Hostile/Dungeon/Gauntlet) after Fort2
+  in `points_of_interest.json`; three each in `biomes/green.json`, `red.json` and `colorless.json`, two in `white.json`
+  (with round 804's Dawn Cathedral, three). Ranks pinned with `Name|Tier` + keepAuthored, gates on `gauntletApprentice`
+  / `gauntletAdept` / `gauntletMaster`, as in rounds 804 and 805.
+- **Chests**: 4 cards of the color and themed creature types, 2 rares of the color, 60-100 gold, 3-6 shards, 15% the
+  themed item (Spore Skirt, Hivestone, Crown of the Vale, Crucible Armor, Brute Shield, Aladdin's Lamp, Fulcrum
+  Gauntlet, Dune-Brood Sandals, Interplanar Armor, Shield of Air, Marble Mace). Found by the test: a `randomCard` entry
+  draws inside the POI's edition shard (16 sets for neutral, about 32 for a color), and round 474's fallback covers
+  only `card` entries, so a narrow theme pays little or nothing. The Marble Gallery chest (white Golem) paid one Essence
+  of Antiquity twice and dropped its other picks; white Golem, red Golem and colorless Zombie/Mummy hold 3-6 cards in
+  all of Magic. Eight themes were widened, each checked against 400 random shards so that at most 1 in 100 leaves
+  fewer than 6 names (the Hive's Insect, kept, 3 in 100): Kiln Golem/Elemental/Artificer, Necropolis Zombie/Mummy/Equipment, Marble Gallery Golem/Wall/Equipment/
+  Artificer, Ziggurat Lizard/Dinosaur/Shaman, Spore Cathedral Fungus/Druid, Rift Eldrazi/Horror/Construct, Labyrinth
+  Minotaur/Berserker, Monastery Kor/Monk/Bird. Rounds 804 and 805's chests were already wide enough.
+- **Entrances** (round 657 rule): eight outlined in place, each its own region only (diff boxed): Aetherflux Resevoir,
+  Edge of Eternities and Tolarian Academy (buildingsbosses.png), Factory_B, GreyHall, SandPalace and SandTemplePillared
+  (dungeon_entrances.png), Spare_E_Zedruu_City (dungeon_entrances_2.png). All plane pages, none used by another POI
+  in TFR's or common's POI file; nothing under common/ changed. Slimefoot, Xira and Spare_E_CaveLarge1 already had an
+  outline. `poi_outline.py --audit`: 0. Before/after in the Art Library.
+- **The walls as the game sees them** (found by this round's test, fixed in the generator; round 810 fixes the seven
+  committed maps): `MapStage.loadCollision` takes walls only from the collision boxes each tile's tileset gives it, so
+  an empty cell is open floor and a wall holds only where its tiles' boxes meet. The generator's walls left gaps: in
+  the live Dawn Cathedral the player walked, with Gate I shut, from the gate's neck into a row inside the nave wall
+  (main 3255 has no box), out into the black void and into the west Adept chapel. Every gauntlet map had such a way
+  round a gate. Now every void cell touching the floor carries a full Collision tile (main 5536, the opacity-0
+  `Collision` layer, so nothing visible changes). The Kiln's floor autotile carries its own edge boxes (main 3099 full,
+  3100/3257/2941 strips), which sealed Gate II's passage; its `Ground` layer is marked `noCollision` (round 349) and
+  the Collision layer holds its walls.
+- **Checks before install**: round 805's order check and contrast check, plus a new pixel-level check
+  (`notes/gauntlet_dungeons/tools/ingame_check.py`): the player's 10 x 6 movement box (CharacterSprite) against every
+  collision box on every layer except `noCollision` ones, flood filled from the entry with the gates shut and then
+  opened in flag order. Each stage must meet exactly its own enemies, then the chest. Every install is now gated on
+  it, and all eleven pass.
+- **Seen in a test package** (wt-809 on round 805's commit plus these files, `agent-809`, a copied profile, log
+  sharing off, every duel at 50x): all eleven loaded with three Apprentices, two Adepts, a Master and three gates,
+  every placement logging `kept as authored (Name, Rank)` (88 lines, no other tier). In the Marble Gallery an
+  Apprentice win counted. Gate I refused ("A velvet rope, and behind it a door of veined marble...", only Leave), then
+  offered "Pass through" once the count was set. Two losses each kept the place, and the beaten Apprentices stayed
+  gone on re-entry. On the fixed maps the Kiln's three gates opened on their counts, walked tile by tile, and the
+  Kiln, Necropolis and Marble Gallery chests paid in full (no `[TFR-RewardDup]` line). The Dawn Cathedral's bypass
+  route now stops at the nave's corner. No exceptions. Shots in the Art project's `notes/gauntlet_dungeons/ingame`
+  (r809_*).
+
 ## Round 805: six more gauntlet dungeons - the black and blue rounds (2026-10-28)
 
 The black and blue gauntlets, the same order as round 804's Dawn Cathedral (three Apprentices, Gate I, two Adepts, Gate
@@ -44255,93 +44345,3 @@ Three user asks in one round, built and packaged into the live folder.
 `util/TerritoryControl.java`, `stage/ConsoleCommandInterpreter.java`; plane `maps/tileset/caves.png` +
 `caves.atlas` (new), `world/points_of_interest.json`, `world/items.json`, `world/shops.json`,
 `sprites/items_rally.png` (new), `sprites/items.atlas`, `GUIDE.md`.
-
-## Round 809: eleven more gauntlet dungeons - the green, red, colorless and white rounds (2026-10-28)
-
-The last eleven of the 18 gauntlets (round 804's order: three Apprentices, Gate I, two Adepts, Gate II, the Master,
-Gate III, the chest), approved by the user through the Art main thread on 2026-10-28 ("Yes, install the green, red,
-colorless and white gauntlet rounds as shown"), with the fixes shown there: dark wax in the Hive, orange cobble in the
-Kiln, a warmer and mazier Labyrinth, the dark way and slabs in the Necropolis, the machine wall in the Orrery, the
-cloud sea in the Monastery. Each color keeps its own look: white the pale marble and the white-and-blue frieze,
-colorless the Egyptian kit. Generator, previews and checks: the Art project's `notes/gauntlet_dungeons`.
-
-| Place (POI) | Enemy | Shape | Entrance |
-|---|---|---|---|
-| Spore Cathedral (GauntletSporeCathedral) | Orange Mushroomling | spore nave, two gill chapels, the Mother Cap, the seed vault | Slimefoot (buildingsbosses) |
-| Thornwing Hive (GauntletThornwingHive) | Thornwing Mantis | brood comb in dark wax, two nursery cells, the queen's chamber, the honey store | Xira (buildingsbosses) |
-| Jade Ziggurat (GauntletJadeZiggurat) | Lizardfolk Guard | lower terrace, twin stairs, the summit shrine, the idol chamber | Spare_E_CaveLarge1 (dungeon_entrances_2) |
-| Kiln Foundry (GauntletKilnFoundry) | Kilnfired Golem | casting floor of lava pools on orange cobble, two kiln rooms, the great crucible, the ingot store | Factory_B |
-| Anvil Labyrinth (GauntletAnvilLabyrinth) | Anvilhorn Minotaur | outer maze ring, middle ring, the anvil arena, the trophy room | Spare_E_Zedruu_City (dungeon_entrances_2) |
-| Brass Palace (GauntletBrassPalace) | Emberlord Efreet | court of fire fountains, two audience chambers, the ember throne, the lamp room | SandPalace |
-| Clockwork Orrery (GauntletClockworkOrrery) | Bronzecrest Automaton | gear hall, two escapement rooms, the armillary, the winding room | Aetherflux Resevoir (buildingsbosses) |
-| Buried Necropolis (GauntletBuriedNecropolis) | Tombwrapped Ancient | sand-choked antechamber, two embalming halls, the burial chamber, the treasury | SandTemplePillared |
-| Hollow Rift (GauntletHollowRift) | Cryptstalker Fiend | the rim, two floating shards, the eye, the lodestone | Edge of Eternities (buildingsbosses) |
-| Sky-Bridge Monastery (GauntletSkyBridgeMonastery) | Kor Sky Climber | gate court, two bridge towers over a cloud sea, the high hall, the bell loft | Tolarian Academy (buildingsbosses) |
-| Marble Gallery (GauntletMarbleGallery) | Marblehewn Golem | entrance gallery, two wings, the rotunda, the curator's vault | GreyHall |
-
-- **Data**: eleven maps in `maps/map/gauntlet/`; eleven POIs (dungeon, count 1, Hostile/Dungeon/Gauntlet) after Fort2
-  in `points_of_interest.json`; three each in `biomes/green.json`, `red.json` and `colorless.json`, two in `white.json`
-  (with round 804's Dawn Cathedral, three). Ranks pinned with `Name|Tier` + keepAuthored, gates on `gauntletApprentice`
-  / `gauntletAdept` / `gauntletMaster`, as in rounds 804 and 805.
-- **Chests**: 4 cards of the color and themed creature types, 2 rares of the color, 60-100 gold, 3-6 shards, 15% the
-  themed item (Spore Skirt, Hivestone, Crown of the Vale, Crucible Armor, Brute Shield, Aladdin's Lamp, Fulcrum
-  Gauntlet, Dune-Brood Sandals, Interplanar Armor, Shield of Air, Marble Mace). Found by the test: a `randomCard` entry
-  draws inside the POI's edition shard (16 sets for neutral, about 32 for a color), and round 474's fallback covers
-  only `card` entries, so a narrow theme pays little or nothing. The Marble Gallery chest (white Golem) paid one Essence
-  of Antiquity twice and dropped its other picks; white Golem, red Golem and colorless Zombie/Mummy hold 3-6 cards in
-  all of Magic. Eight themes were widened, each checked against 400 random shards so that at most 1 in 100 leaves
-  fewer than 6 names (the Hive's Insect, kept, 3 in 100): Kiln Golem/Elemental/Artificer, Necropolis Zombie/Mummy/Equipment, Marble Gallery Golem/Wall/Equipment/
-  Artificer, Ziggurat Lizard/Dinosaur/Shaman, Spore Cathedral Fungus/Druid, Rift Eldrazi/Horror/Construct, Labyrinth
-  Minotaur/Berserker, Monastery Kor/Monk/Bird. Rounds 804 and 805's chests were already wide enough.
-- **Entrances** (round 657 rule): eight outlined in place, each its own region only (diff boxed): Aetherflux Resevoir,
-  Edge of Eternities and Tolarian Academy (buildingsbosses.png), Factory_B, GreyHall, SandPalace and SandTemplePillared
-  (dungeon_entrances.png), Spare_E_Zedruu_City (dungeon_entrances_2.png). All plane pages, none used by another POI
-  in TFR's or common's POI file; nothing under common/ changed. Slimefoot, Xira and Spare_E_CaveLarge1 already had an
-  outline. `poi_outline.py --audit`: 0. Before/after in the Art Library.
-- **The walls as the game sees them** (found by this round's test, fixed in the generator; round 810 fixes the seven
-  committed maps): `MapStage.loadCollision` takes walls only from the collision boxes each tile's tileset gives it, so
-  an empty cell is open floor and a wall holds only where its tiles' boxes meet. The generator's walls left gaps: in
-  the live Dawn Cathedral the player walked, with Gate I shut, from the gate's neck into a row inside the nave wall
-  (main 3255 has no box), out into the black void and into the west Adept chapel. Every gauntlet map had such a way
-  round a gate. Now every void cell touching the floor carries a full Collision tile (main 5536, the opacity-0
-  `Collision` layer, so nothing visible changes). The Kiln's floor autotile carries its own edge boxes (main 3099 full,
-  3100/3257/2941 strips), which sealed Gate II's passage; its `Ground` layer is marked `noCollision` (round 349) and
-  the Collision layer holds its walls.
-- **Checks before install**: round 805's order check and contrast check, plus a new pixel-level check
-  (`notes/gauntlet_dungeons/tools/ingame_check.py`): the player's 10 x 6 movement box (CharacterSprite) against every
-  collision box on every layer except `noCollision` ones, flood filled from the entry with the gates shut and then
-  opened in flag order. Each stage must meet exactly its own enemies, then the chest. Every install is now gated on
-  it, and all eleven pass.
-- **Seen in a test package** (wt-809 on round 805's commit plus these files, `agent-809`, a copied profile, log
-  sharing off, every duel at 50x): all eleven loaded with three Apprentices, two Adepts, a Master and three gates,
-  every placement logging `kept as authored (Name, Rank)` (88 lines, no other tier). In the Marble Gallery an
-  Apprentice win counted. Gate I refused ("A velvet rope, and behind it a door of veined marble...", only Leave), then
-  offered "Pass through" once the count was set. Two losses each kept the place, and the beaten Apprentices stayed
-  gone on re-entry. On the fixed maps the Kiln's three gates opened on their counts, walked tile by tile, and the
-  Kiln, Necropolis and Marble Gallery chests paid in full (no `[TFR-RewardDup]` line). The Dawn Cathedral's bypass
-  route now stops at the nave's corner. No exceptions. Shots in the Art project's `notes/gauntlet_dungeons/ingame`
-  (r809_*).
-
-## Round 810: the seven earlier gauntlets get sealed walls - no way round a shut gate (2026-10-28)
-
-Round 809's test found that a player could walk round a shut gauntlet gate (details in round 809). The game takes
-walls only from each tile's own collision boxes (`MapStage.loadCollision`), so an empty cell is open floor, and the
-generator's walls left gaps. In the live Dawn Cathedral the player walked, with Gate I shut, from the gate's neck into
-a row inside the nave's north wall (main 3255 has no box), out into the black void and into the west Adept chapel
-(shot: the Art project's `notes/gauntlet_dungeons/ingame/r809_bypass_dawn_cathedral.png`). Rounds 804 and 805's seven
-maps, live since the round 808 package, all had such a way round.
-
-- **The fix**: the seven maps rebuilt by the Art project's generator, which now gives every void cell touching the
-  floor a full Collision tile (main 5536 on the opacity-0 `Collision` layer). Each file changes in one line, the
-  Collision layer's data: `dawn_cathedral`, `bone_orchard`, `gilded_mausoleum`, `hollow_tiltyard`, `drowned_library`,
-  `starglass_observatory`, `sunken_bathhouse`. Nothing visible changes, and the chests stay as they were (their
-  themes hold 19-81 names in a typical 16-set shard).
-- **The check**: `notes/gauntlet_dungeons/tools/ingame_check.py` in the Art project (not in this repo) models the
-  game's collision: the player's 10 x 6 movement box (CharacterSprite: sprite width - 6 by 0.4 x height) against
-  every tile box on every layer except `noCollision` ones. It flood fills from the entry with the gates shut and then
-  opens them in flag order (`gauntletApprentice` / `Adept` / `Master`); each stage must meet exactly its own enemies,
-  then the chest. Before the fix, every one of the 18 gauntlet maps failed it; now all 18 pass. Every gauntlet
-  install (`--install`) is now gated on it.
-- **Seen in the test package** (agent-809, every duel at 50x): on the sealed Dawn Cathedral the old route stops at
-  the nave's north-east corner; the chapels and the void can no longer be reached past a shut gate. Shot:
-  `r810_bypass_blocked_dawn_cathedral.png`.
