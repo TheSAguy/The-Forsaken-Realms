@@ -1747,7 +1747,7 @@ public class ComputerUtil {
             ApiType curApi = saviorWithSubs.getApi();
             if (curApi == ApiType.Pump || curApi == ApiType.PumpAll) {
                 toughness = saviorWithSubs.hasParam("NumDef") ?
-                        AbilityUtils.calculateAmount(saviorWithSubs.getHostCard(), saviorWithSubs.getParam("NumDef"), saviour) : 0;
+                        ComputerUtilCombat.predictPumpAmount(saviorWithSubs.getHostCard(), saviorWithSubs.getParam("NumDef"), saviour, null, false) : 0; // TFR round 800
                 final List<String> keywords = saviorWithSubs.hasParam("KW") ?
                         Arrays.asList(saviorWithSubs.getParam("KW").split(" & ")) : new ArrayList<>();
                 if (keywords.contains("Indestructible")) {
@@ -1862,7 +1862,7 @@ public class ComputerUtil {
                 && (saviourApi == ApiType.ChangeZone || saviourApi == ApiType.Pump || saviourApi == ApiType.PumpAll
                 || saviourApi == ApiType.Protection || saviourApi == ApiType.PutCounter || saviourApi == ApiType.PutCounterAll
                 || saviourApi == null)) {
-            final int dmg = -AbilityUtils.calculateAmount(source, topStack.getParam("NumDef"), topStack);
+            final int dmg = -ComputerUtilCombat.predictPumpAmount(source, topStack.getParam("NumDef"), topStack, null, false); // TFR round 800
             for (final Object o : objects) {
                 if (o instanceof Card c) {
                     final boolean canRemove = (c.getNetToughness() <= dmg)

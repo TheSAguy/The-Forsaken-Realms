@@ -274,7 +274,8 @@ public class PumpAi extends PumpAiBase {
                 defense = -defense;
             }
         } else {
-            defense = AbilityUtils.calculateAmount(sa.getHostCard(), numDefense, sa);
+            // TFR round 800: Double/Triple via the pumped card; targets resolve per card in shouldPumpCard
+            defense = ComputerUtilCombat.predictPumpAmount(sa.getHostCard(), numDefense, sa, sa.usesTargeting() ? null : source, false);
             if (numDefense.contains("X") && sa.getSVar("X").equals("Count$CardsInYourHand") && source.isInZone(ZoneType.Hand)) {
                 defense--; // the card will be spent casting the spell, so actual toughness is 1 less
             }
@@ -288,8 +289,7 @@ public class PumpAi extends PumpAiBase {
                 attack = root.getXManaCostPaid();
             }
         } else {
-            // TODO add Double
-            attack = AbilityUtils.calculateAmount(sa.getHostCard(), numAttack, sa);
+            attack = ComputerUtilCombat.predictPumpAmount(sa.getHostCard(), numAttack, sa, sa.usesTargeting() ? null : source, true);
             if (numAttack.contains("X") && sa.getSVar("X").equals("Count$CardsInYourHand") && source.isInZone(ZoneType.Hand)) {
                 attack--; // the card will be spent casting the spell, so actual power is 1 less
             }
@@ -624,7 +624,7 @@ public class PumpAi extends PumpAiBase {
                 defense = root.getXManaCostPaid();
             }
         } else {
-            defense = AbilityUtils.calculateAmount(sa.getHostCard(), numDefense, sa);
+            defense = ComputerUtilCombat.predictPumpAmount(sa.getHostCard(), numDefense, sa, sa.usesTargeting() ? null : sa.getHostCard(), false);
         }
 
         int attack;
@@ -636,7 +636,7 @@ public class PumpAi extends PumpAiBase {
                 attack = root.getXManaCostPaid();
             }
         } else {
-            attack = AbilityUtils.calculateAmount(sa.getHostCard(), numAttack, sa);
+            attack = ComputerUtilCombat.predictPumpAmount(sa.getHostCard(), numAttack, sa, sa.usesTargeting() ? null : sa.getHostCard(), true);
         }
 
         if (!sa.usesTargeting()) {
@@ -692,7 +692,7 @@ public class PumpAi extends PumpAiBase {
                 attack = root.getXManaCostPaid();
             }
         } else {
-            attack = AbilityUtils.calculateAmount(sa.getHostCard(), numAttack, sa);
+            attack = ComputerUtilCombat.predictPumpAmount(sa.getHostCard(), numAttack, sa, sa.usesTargeting() ? null : sa.getHostCard(), true);
         }
 
         int defense;
@@ -703,7 +703,7 @@ public class PumpAi extends PumpAiBase {
                 defense = root.getXManaCostPaid();
             }
         } else {
-            defense = AbilityUtils.calculateAmount(sa.getHostCard(), numDefense, sa);
+            defense = ComputerUtilCombat.predictPumpAmount(sa.getHostCard(), numDefense, sa, sa.usesTargeting() ? null : sa.getHostCard(), false);
         }
 
         if (sa.usesTargeting()) {

@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 800: the AI reads "Double" and "Triple" pumps (Reckless Amplimancer) instead of +0 (2026-10-28)
+
+The user: "800 the AI reads Double/Triple pumps". A v1.24 Hard player's session died mid-duel against the Corrupted
+Green Wizard, whose Apprentice and Adept decks carry 2 Reckless Amplimancer (`A:AB$ Pump | Cost$ 4 G | NumAtt$ Double |
+NumDef$ Double`). The rules side was right (`PumpEffect` turns `Double` into the target's net power/toughness and
+`Triple` into twice it), but the AI handed the word to `AbilityUtils.calculateAmount`, which looks it up as an SVar,
+logs `SVar 'Double' not found ...` and returns 0: every combat prediction read the pump as +0 and logged it, 13,870
+lines in 7 minutes beside repeated AI `TimeoutException`s (`notes/logs-1028.md`). Upstream bug since the "Pump double P
+or T rework" (`acb5151a828`, 2024-01-09; `PumpAi` still says `// TODO add Double`); upstream master `73fd0a56496`
+(2026-10-28) has not fixed it. 38 card scripts use `NumAtt$ Double|Triple` or `NumDef$ Double|Triple`.
+
+- **Helper** (`ComputerUtilCombat`): `isDoubleOrTriple(amount)` and `predictPumpAmount(host, amount, sa, pumped, power[,
+  maxto])` - Double = the pumped card's net power (toughness), Triple = 2x, as `PumpEffect` does; anything else goes to
+  `calculateAmount` unchanged. Keyed on the PUMPED card, not the host (the brief said host; `PumpEffect` uses the
+  target - the same card for Amplimancer, not for Unleash Fury). `pumped == null` (target not known yet) reads 0 with
+  no SVar lookup.
+- **Sites changed** (every AI read of a Pump's `NumAtt`/`NumDef` that a Double/Triple can reach):
+  - `ComputerUtilCombat`: power/toughness bonus of the blocker (triggers and activated abilities, 4), of the attacker
+    (activated abilities, 2), and the attacker's trigger string parses (`NumAtt` 1, `NumDef` 2 - the PumpAll one too);
+    the pumped card is the blocker or attacker being predicted.
+  - `ComputerUtilCard.shouldPumpCard`: a Double/Triple pump's numbers are worked out from the candidate card itself, so
+    `PumpAi`'s targeted path (and the untargeted "Defined" others, God-Eternal Rhonas) judge each creature right.
+  - `ability/PumpAi`: `checkApiLogic`, `doTriggerNoCost`, `chkDrawback` (6 reads) - the host when untargeted, else 0
+    until `shouldPumpCard` sees the target. This is what decides whether the AI activates Amplimancer at all.
+  - `ComputerUtil`: a savior pump's `NumDef`, and a Pump on the stack read as a -toughness threat (2) - read as 0.
+  - `ability/AttachAi`: a pump on the stack (2) - read as 0 (a Double is never a shrink).
+- **Not changed, and why** (the boundary for the next engine merge): `PumpAllAi`, `AiBlockController`
+  (`changesPTWhenBlocked`) - PumpAll; `PumpAllEffect` has no Double/Triple, no script uses it; `SpecialAiLogic`
+  (Aristocrat sacrifice logic, `+X` only); `ChooseTypeAi` (a curse's `-X`); `DamageDealAi` (a damage-or-shrink
+  `NumDef`); `CreatureEvaluator`, `FlatMonteCarloPicker`, `PumpAiBase` (string compares / `hasParam` only, no number);
+  `AbilityUtils` (forge-game) untouched.
+- **Merge note:** if upstream fixes Double in the AI, take theirs and drop ours; the helper is the only new method.
+- **Tested** in the agent (test copy `agent-800` from a clean worktree at `d7a9ee3b8aa` + this round's files, Maven exit
+  0, a copied agent profile, cheats on, every duel at 50x; the same day-1 save each time). Test-copy-only data: the
+  console spawns the Master tier, whose deck has no Amplimancer, so the copy's Master slot played the Adept deck, rewritten
+  to 12 Amplimancer + 23 Forest so the card lands and its {4}{G} can be paid. A test-only instrumented `PumpEffect` class
+  (not committed) logged each Double/Triple pump that resolved. Pre-800 jar (the live round-794 build), 5 wizard duels:
+  210,440 / 41,510 / 1,161,394 `SVar 'Double'` lines per run (one 56-turn duel took 161 s), Amplimancer activated
+  **0** times in 4 instrumented duels; the player won 4 of 5. Round 800 jar, 7 wizard duels: **0** `SVar` lines,
+  Amplimancer activated **11** times in the 4 instrumented duels, every time in combat (Begin Combat before attacking, or
+  Declare Blockers as a trick, each +2/+2 on a 2/2); the wizard won 4 of 7. No `TimeoutException` in either build's runs.
+  Log lines: `notes/r800-agent-log-lines.txt` (outside the repo).
+- **Not tested:** the Triple path (no deck plays one), the targeted path (Unleash Fury-style instants, God-Eternal
+  Rhonas), and a Hard player's real session; whether the v1.24 crash was the flood itself is not proven (no
+  `TimeoutException` came back in these runs).
+
 ## Round 799: the Notoriety deck card is extra, from 50 / 45 / 40 by difficulty, sooner at a 95% win ratio (2026-10-28)
 
 The user, of round 793's deck card: "The additional spawn will not replace a wall, it will just be additional. On

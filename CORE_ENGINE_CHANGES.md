@@ -38,6 +38,20 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 800 - the AI reads "Double" / "Triple" pumps (upstream bug)
+- **`forge-ai/src/main/java/forge/ai/ComputerUtilCombat.java`**: new `isDoubleOrTriple` / `predictPumpAmount` (the pumped
+  card's net power or toughness, x2 for Triple; anything else goes to `calculateAmount`), used at the 9 Pump `NumAtt` /
+  `NumDef` reads in the attacker/blocker power and toughness bonus predictions.
+- **`forge-ai/src/main/java/forge/ai/ComputerUtilCard.java`**: `shouldPumpCard` (7-arg) takes `toughness`/`power` as
+  non-final and works a Double/Triple pump out from the candidate card.
+- **`forge-ai/src/main/java/forge/ai/ability/PumpAi.java`**: the 6 `NumAtt`/`NumDef` reads (`checkApiLogic`,
+  `doTriggerNoCost`, `chkDrawback`) go through `predictPumpAmount`; upstream's `// TODO add Double` removed.
+- **`forge-ai/src/main/java/forge/ai/ComputerUtil.java`**: the savior pump's `NumDef` and the stack Pump threat's
+  `NumDef` (2 lines) go through `predictPumpAmount`.
+- **`forge-ai/src/main/java/forge/ai/ability/AttachAi.java`**: the stack pump's `NumAtt`/`NumDef` (2 lines) the same.
+- Merge note: upstream bug since `acb5151a828` (2024-01), still open at upstream `73fd0a56496` (2026-10-28); if upstream
+  fixes Double in the AI, take theirs and drop ours. Files deliberately not changed are listed in MOD_CHANGELOG round 800.
+
 ### Round 799 - the Notoriety deck card is extra, by difficulty, sooner at a 95% win ratio
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): `NotorietyDeckCard.choose()` now takes
   `isArena`; the Walls block adds the deck card after the Walls (round 793's swap of `tfr_wall4_flying_3_6` removed).

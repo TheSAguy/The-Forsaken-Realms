@@ -1471,8 +1471,17 @@ public class ComputerUtilCard {
                                          final int power, final List<String> keywords) {
         return shouldPumpCard(ai, sa, c, toughness, power, keywords, false);
     }
-    public static boolean shouldPumpCard(final Player ai, final SpellAbility sa, final Card c, final int toughness,
-                                         final int power, final List<String> keywords, boolean immediately) {
+    public static boolean shouldPumpCard(final Player ai, final SpellAbility sa, final Card c, int toughness,
+                                         int power, final List<String> keywords, boolean immediately) {
+        // TFR round 800: a Double/Triple pump adds this target's own power/toughness (PumpEffect)
+        if (sa.getApi() == ApiType.Pump) {
+            if (ComputerUtilCombat.isDoubleOrTriple(sa.getParam("NumAtt"))) {
+                power = ComputerUtilCombat.predictPumpAmount(sa.getHostCard(), sa.getParam("NumAtt"), sa, c, true);
+            }
+            if (ComputerUtilCombat.isDoubleOrTriple(sa.getParam("NumDef"))) {
+                toughness = ComputerUtilCombat.predictPumpAmount(sa.getHostCard(), sa.getParam("NumDef"), sa, c, false);
+            }
+        }
         final Game game = ai.getGame();
         final PhaseHandler phase = game.getPhaseHandler();
         final Combat combat = phase.getCombat();

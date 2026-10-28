@@ -138,8 +138,9 @@ public class AttachAi extends SpellAbilityAi {
                         canRespondToStack = true;
                     }
                 } else if (peekSa.getApi() == ApiType.Pump || peekSa.getApi() == ApiType.PumpAll) {
-                    int p = AbilityUtils.calculateAmount(peekSa.getHostCard(), peekSa.getParam("NumAtt"), peekSa);
-                    int t = AbilityUtils.calculateAmount(peekSa.getHostCard(), peekSa.getParam("NumDef"), peekSa);
+                    // TFR round 800: Double/Triple read as 0 here (never a shrink), no SVar lookup
+                    int p = ComputerUtilCombat.predictPumpAmount(peekSa.getHostCard(), peekSa.getParam("NumAtt"), peekSa, null, true);
+                    int t = ComputerUtilCombat.predictPumpAmount(peekSa.getHostCard(), peekSa.getParam("NumDef"), peekSa, null, false);
                     if (t < 0 && toughness > 0 && attachTarget.getNetToughness() + t + toughness > 0) {
                         canRespondToStack = true;
                     } else if (p < 0 && power > 0 && attachTarget.getNetPower() + p + power > 0

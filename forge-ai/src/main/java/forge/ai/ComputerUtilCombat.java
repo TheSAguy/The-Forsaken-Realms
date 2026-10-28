@@ -873,6 +873,32 @@ public class ComputerUtilCombat {
         return willTrigger;
     }
 
+    /**
+     * TFR round 800: "Double" and "Triple" in a Pump's NumAtt/NumDef are PumpEffect keywords (the pumped creature
+     * gets its own power or toughness once or twice more), not SVars. calculateAmount read them as 0 and logged
+     * "SVar 'Double' not found" on every prediction. pumped == null (target not known yet) reads them as 0.
+     */
+    public static boolean isDoubleOrTriple(final String amount) {
+        return "Double".equals(amount) || "Triple".equals(amount);
+    }
+
+    public static int predictPumpAmount(final Card host, final String amount, final SpellAbility sa,
+                                        final Card pumped, final boolean power) {
+        return predictPumpAmount(host, amount, sa, pumped, power, false);
+    }
+
+    public static int predictPumpAmount(final Card host, final String amount, final SpellAbility sa,
+                                        final Card pumped, final boolean power, final boolean maxto) {
+        if (isDoubleOrTriple(amount)) {
+            if (pumped == null) {
+                return 0;
+            }
+            final int base = power ? pumped.getNetPower() : pumped.getNetToughness();
+            return "Triple".equals(amount) ? base * 2 : base;
+        }
+        return AbilityUtils.calculateAmount(host, amount, sa, maxto);
+    }
+
     // Predict the Power bonus of the blocker if blocking the attacker
     // (Flanking, Bushido and other triggered abilities)
     /**
@@ -967,7 +993,7 @@ public class ComputerUtilCombat {
                 continue;
             }
 
-            power += AbilityUtils.calculateAmount(source, sa.getParam("NumAtt"), sa, true);
+            power += predictPumpAmount(source, sa.getParam("NumAtt"), sa, blocker, true, true);
         }
         if (withoutAbilities) {
             return power;
@@ -989,7 +1015,7 @@ public class ComputerUtilCombat {
                     continue;
                 }
 
-                pBonus = AbilityUtils.calculateAmount(ability.getHostCard(), ability.getParam("NumAtt"), ability);
+                pBonus = predictPumpAmount(ability.getHostCard(), ability.getParam("NumAtt"), ability, blocker, true);
             } else if (ability.getApi() == ApiType.PutCounter) {
                 if (!ability.hasParam("CounterType") || !ability.getParam("CounterType").equals("P1P1")) {
                     continue;
@@ -1093,7 +1119,7 @@ public class ComputerUtilCombat {
                     continue;
                 }
 
-                toughness += AbilityUtils.calculateAmount(source, sa.getParam("NumDef"), sa, true);
+                toughness += predictPumpAmount(source, sa.getParam("NumDef"), sa, blocker, false, true);
             }
         }
         if (withoutAbilities) {
@@ -1117,7 +1143,7 @@ public class ComputerUtilCombat {
                     continue;
                 }
 
-                tBonus = AbilityUtils.calculateAmount(ability.getHostCard(), ability.getParam("NumDef"), ability);
+                tBonus = predictPumpAmount(ability.getHostCard(), ability.getParam("NumDef"), ability, blocker, false);
             } else if (ability.getApi() == ApiType.PutCounter) {
                 if (!ability.hasParam("CounterType") || !ability.getParam("CounterType").equals("P1P1")) {
                     continue;
@@ -1273,7 +1299,9 @@ public class ComputerUtilCombat {
             if (att.startsWith("+")) {
                 att = att.substring(1);
             }
-            if (att.matches("[0-9][0-9]?") || att.matches("-" + "[0-9][0-9]?")) {
+            if (isDoubleOrTriple(att)) {
+                power += predictPumpAmount(source, att, sa, attacker, true);
+            } else if (att.matches("[0-9][0-9]?") || att.matches("-" + "[0-9][0-9]?")) {
                 power += Integer.parseInt(att);
             } else {
                 String bonus = AbilityUtils.getSVar(sa, att);
@@ -1315,7 +1343,7 @@ public class ComputerUtilCombat {
                 }
 
                 if (!ability.getPayCosts().hasTapCost()) {
-                    pBonus = AbilityUtils.calculateAmount(ability.getHostCard(), ability.getParam("NumAtt"), ability);
+                    pBonus = predictPumpAmount(ability.getHostCard(), ability.getParam("NumAtt"), ability, attacker, true);
                 }
             } else if (ability.getApi() == ApiType.PutCounter) {
                 if (!ability.hasParam("CounterType") || !ability.getParam("CounterType").equals("P1P1")) {
@@ -1470,7 +1498,9 @@ public class ComputerUtilCombat {
                 if (def.startsWith("+")) {
                     def = def.substring(1);
                 }
-                if (def.matches("[0-9][0-9]?") || def.matches("-" + "[0-9][0-9]?")) {
+                if (isDoubleOrTriple(def)) {
+                    toughness += predictPumpAmount(source, def, sa, attacker, false);
+                } else if (def.matches("[0-9][0-9]?") || def.matches("-" + "[0-9][0-9]?")) {
                     toughness += Integer.parseInt(def);
                 } else {
                     String bonus = AbilityUtils.getSVar(sa, def);
@@ -1502,7 +1532,9 @@ public class ComputerUtilCombat {
                 if (def.startsWith("+")) {
                     def = def.substring(1);
                 }
-                if (def.matches("[0-9][0-9]?") || def.matches("-" + "[0-9][0-9]?")) {
+                if (isDoubleOrTriple(def)) {
+                    toughness += predictPumpAmount(source, def, sa, attacker, false);
+                } else if (def.matches("[0-9][0-9]?") || def.matches("-" + "[0-9][0-9]?")) {
                     toughness += Integer.parseInt(def);
                 } else {
                     String bonus = AbilityUtils.getSVar(sa, def);
@@ -1539,7 +1571,7 @@ public class ComputerUtilCombat {
                     continue;
                 }
 
-                tBonus = AbilityUtils.calculateAmount(ability.getHostCard(), ability.getParam("NumDef"), ability, true);
+                tBonus = predictPumpAmount(ability.getHostCard(), ability.getParam("NumDef"), ability, attacker, false, true);
             } else if (ability.getApi() == ApiType.PutCounter) {
                 if (!ability.hasParam("CounterType") || !ability.getParam("CounterType").equals("P1P1")) {
                     continue;
