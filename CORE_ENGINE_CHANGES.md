@@ -38,6 +38,20 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 815 - the log survives an interrupt; crash reports count in the session footer
+- **`forge-gui/src/main/java/forge/error/ExceptionHandler.java`** (STOCK, upstream's log slots): the slot loop now
+  claims a slot with `Files.createFile` (atomic, as `CREATE_NEW` was), opens it as a `RandomAccessFile`, and locks it
+  with `tryLock()` on that file's channel. `logChannel` keeps that channel for the re-entry guard only. The log is
+  written through the new nested `LogFileStream` (`RandomAccessFile.write`, not interruptible), which reports a failed
+  write once (`[TFR-Log]`). `snapshotActiveLog` copies through `LogFileStream.copyTo` instead of reading the channel.
+  The `java.nio.channels.Channels` and `ByteBuffer` imports are gone, and `java.nio.file.Files` is added. Why: a
+  `FileChannel` write from an interrupted thread (the AI think-time `cancel(true)`) closed the log for the rest of the
+  session. A candidate to offer upstream (the user's call).
+- **`forge-gui-mobile/src/forge/error/BugReportDialog.java`** (STOCK): `show()`, after `isOpen = true`, when
+  `showExitAppBtn` (a crash report): `SessionLog.onCrashReport(text)`.
+- **`forge-gui-mobile/src/forge/Classic.java`** (STOCK): `render()`'s catch, after the stock print/Sentry report:
+  `SessionLog.onRenderError(e)`.
+
 ### Round 813 - the Temple's hunted color (spawns a bracket ahead, a bounty)
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** (STOCK): three fields `wrathColor` / `wrathWeek` /
   `wrathStatus` with getters and `setWrath`, saved and loaded as optional keys next to `templeKills`, and cleared in the

@@ -14264,6 +14264,64 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 815: the log keeps writing after an AI timeout, and the session footer counts crash reports (2026-10-28)
+
+The user: "Yes: 815 the log keeps writing after an AI timeout (and the footer counts render crashes) ... Package when
+my game is closed; ships with 1.25." From the 2026-10-28 log review (`notes/logs-1028b.md`, P1 and P3): player
+343e2603's log stopped at 00:08:21 while the game played on for about 50 minutes, and a render crash ended a session
+whose footer still read `errors=0`.
+
+- **The cause** (stock `ExceptionHandler`, upstream code): the log was written through
+  `Channels.newOutputStream(FileChannel)`. A `FileChannel` is interruptible: a write from a thread whose interrupt flag
+  is set closes the channel for good (`ClosedByInterruptException`), and `PrintStream` swallows every later write. The
+  AI's think-time limit (`AiController`, `future.cancel(true)`) interrupts the "Game AI Eval" thread, and when that
+  thread printed next (the Amplimancer `SVar 'Double'` flood, fixed in round 800; any AI-thread print still could), the
+  log died. Logcat and the console kept the lines; the file did not.
+- **The fix** (`ExceptionHandler.registerErrorHandling`): the slot file is created with `Files.createFile` (atomic,
+  as `CREATE_NEW` was), opened as a `RandomAccessFile`, and locked with `tryLock()` on that file's own channel - the
+  same handle, so Windows' mandatory lock still lets it write. The log is written through the new nested
+  `LogFileStream`, which writes with `RandomAccessFile.write` (not interruptible). The channel is now only the slot
+  lock and is never written or read, so an interrupt cannot close it. The slot naming, the probe lock that archives
+  dead slots, the re-entry guard and `getActiveLogFile` are unchanged.
+- **The log-share snapshot** (`snapshotActiveLog`, used by Settings' log export and round 698's sharing) read through
+  the same channel, so an interrupted exporting thread could have closed the log too. It now copies through
+  `LogFileStream.copyTo` (a seek-and-read on the same handle, under the stream's lock, the write position put back).
+- **`[TFR-Log]`**: a write that fails is reported once to the console - `[TFR-Log] a write to the log file failed
+  (<exception>) - lines may be missing from here on` - and later writes keep trying; the first full line that gets
+  through after failures is followed by `[TFR-Log] N write(s) to this log failed before this line (reported once)`.
+- **Anything else that closes the stream on an interrupt?** Checked: `PrintStream` re-sets the flag on an
+  `InterruptedIOException` and otherwise only sets its error flag; `MultiplexOutputStream` passes writes through; no
+  other `System.setOut`/`setErr` outside iOS. The `FileChannel` was the only interruptible link.
+- **The footer** (round 777's `[TFR-Session] end ... errors=`): `SessionLog.onError` was wired only to Forge.java's
+  `setCurrentScreen` and `resize` catches. Now also:
+  - `BugReportDialog.show` (stock), when a crash report opens (not "Report a Bug"): `SessionLog.onCrashReport(text)`
+    counts it and logs `[TFR-Error] crash report shown (the bug-report dialog): <first line>` and the trail. This is
+    where the player's NPE went (`FContainer.draw`'s catch -> `BugReporter.reportException` -> the dialog).
+  - `Classic.render`'s catch (stock; no dialog there, and it can fail every frame): `SessionLog.onRenderError(e)`
+    counts every one and logs the `[TFR-Error] render failed: ...` line and the trail once a launch.
+  With Sentry on, `BugReporter` sends instead of showing the dialog, so that path is still not counted (Sentry is off
+  by default).
+- **Tested** (Maven exit 0; evidence in `C:\TFR\notes\r815-ab-unit.txt`, `r815-agent-old.txt`, `r815-agent-new.txt`):
+  - **A/B test of the stream** (a plain-Java test against the built `ExceptionHandler.LogFileStream`): one healthy
+    line, two lines from a thread with its interrupt flag set, two healthy lines. The old stream
+    (`Channels.newOutputStream` over a locked `FileChannel`) kept **1 of 5** lines, with `checkError=true` and the lock
+    gone with its channel. The new one kept **5 of 5**. A snapshot taken by an interrupted thread copied the file, and
+    the next line still landed.
+  - **In the game** (a test build, never committed: a worktree at `d87d0c58cc7` plus rounds 815/816 plus test-only
+    hooks; packaged into a test copy `agent-815` with a copied agent profile; Goblin Worker duels at 50x). The hook
+    `tfrtest aistall` makes the next AI evaluation spin until the think-time limit's `cancel(true)` interrupts it, then
+    print. Both runs used the same jar.
+    - With HEAD's `ExceptionHandler` compiled ahead of the jar, forge.log stopped at the `AI eval thread at timeout:`
+      dump. The AI thread's print, the `[TFR-Duel]` line, the Notoriety line and five later marker lines from a healthy
+      thread were all missing, though the game showed "Duel lost - Notoriety 30 -> 25". This is the player's symptom.
+    - With the build's own `ExceptionHandler`: `[TFR-Test] AI eval thread printing after its timeout, interrupted=true`
+      landed, then the `[TFR-Duel]` line, the markers and a second interrupted thread's two prints.
+  - **The footer**: a forced render crash mid-duel (`FContainer.draw` -> the crash dialog) logged `[TFR-Error] crash
+    report shown (the bug-report dialog): java.lang.IllegalStateException: ...` and the trail, and the console's
+    `session` footer read `errors=1 lastScene=screen:BugReportDialog`.
+  - **Not tested**: Android (same `RandomAccessFile`/`FileLock` APIs, API 26+ as before); a real disk-full write
+    failure (the `[TFR-Log]` lines); `Classic.render`'s catch, which is hard to reach (`FContainer` catches first).
+
 ## Round 813: the Temple's hunted color - the week's most-killed color is hunted the next week: its land spawns a rank bracket ahead and its foes pay a +25% bounty (2026-10-28)
 
 The user, in the TFR 1 main thread: "I want to implement something, when you built a temple. Where the current color

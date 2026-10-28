@@ -60,6 +60,7 @@ public final class SessionLog {
     private static String lastFooterKey;
     private static boolean supportStatusLogged;
     private static boolean throwOnNextScreen;
+    private static boolean renderErrorLogged;
 
     // ---- the launch and the game ------------------------------------------------------------------------------------
 
@@ -342,6 +343,27 @@ public final class SessionLog {
         errors++;
         System.out.println("[TFR-Error] " + where + " failed: " + ex);
         ex.printStackTrace(System.out);
+        System.out.println("[TFR-Error] trail: " + trailText());
+    }
+
+    /**
+     * Round 815 (the 2026-10-28 log review, P3: {@code errors=0} right after a render crash), BugReportDialog.show: a
+     * crash report is on screen. BugReporter printed the trace already; this counts it for the footer, with the trail.
+     */
+    public static void onCrashReport(String report) {
+        errors++;
+        String first = report == null ? "?" : report.trim().split("\\R", 2)[0];
+        System.out.println("[TFR-Error] crash report shown (the bug-report dialog): " + first);
+        System.out.println("[TFR-Error] trail: " + trailText());
+    }
+
+    /** Round 815, Classic.render's catch (no dialog there, and it can fail every frame): counted, the trail once a launch. */
+    public static void onRenderError(Throwable ex) {
+        errors++;
+        if (renderErrorLogged)
+            return;
+        renderErrorLogged = true;
+        System.out.println("[TFR-Error] render failed: " + ex + " (logged once a launch; the footer counts every one)");
         System.out.println("[TFR-Error] trail: " + trailText());
     }
 

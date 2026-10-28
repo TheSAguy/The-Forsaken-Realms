@@ -54,6 +54,7 @@ public class Classic {
                 BugReporter.reportException(e);
             else
                 e.printStackTrace();
+            forge.adventure.util.SessionLog.onRenderError(e); // TFR round 815: counts in the session footer's errors=
             Forge.getGraphics().end();
         }
     }
