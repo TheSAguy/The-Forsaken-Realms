@@ -14264,6 +14264,96 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 817: the Research Lab gets set filters and a found-card count, and Found Cards the deck builder's color/type icons, rarity buttons and group-by (2026-10-28)
+
+The user: "I want to update the Research windows a little. On the main page, let's add a Set filter. On the sell page.
+I also want to add a set filter, Including one that reads "All Sets". Next, like the deck building interface, I want to
+add color / type filters. And also the Group by filter from the deck builder." Their mock-ups:
+`notes/r817-user-research-main.webp` and `notes/r817-user-found-cards.webp`. The planned layout drawn on them,
+approved before the build: `notes/r817-mock-*.png`. A later ask, with the mock-up `notes/r817-user-found-count.png`: "In
+the "Found Cards" put how many you have found".
+
+- **Why the widgets were not reused as-is**: the deck builder's filters (ItemManager's `CardColorFilter` and
+  `CardTypeFilter`, `ImageView`'s "Groups:" `FComboBox`) are Forge-toolkit `FContainer`s drawn by an `FScreen`.
+  They cannot sit in the Lab's scene2d `Dialog`, and moving Found Cards into an `FScreen` would have meant rebuilding
+  its grid, Sell, Sacrifice and the Lab refresh. The new `scene/ResearchCardFilters.java` reuses everything under those
+  widgets instead:
+  - the same 15 skin icons (`FSkin.getImages().get(StatTypes.x.skinProp)`), in `CardColorFilter`'s and
+    `CardTypeFilter`'s order;
+  - the deck builder's color rule itself (`SFilterUtil.buildColorFilter`, the lands-by-color-identity preference
+    included), through a small `IButton` adapter;
+  - `CardTypeFilter`'s type rule (with every type on, every card shows);
+  - the deck builder's long-press "only this one" (`SFilterUtil.showOnlyStat`);
+  - the deck builder's card group-by options (`GroupDef` DEFAULT, CARD_TYPE, COLOR, COLOR_IDENTITY, SET, CARD_RARITY;
+    PW Deck Sort left out as a deck-building order), with "Other" for a card outside the groups, as in the deck
+    builder.
+
+  The rarity buttons (Common / Uncommon / Rare / Mythic, several at once; none on = all) and the set boxes are
+  SpellSmith's scene2d widgets, which is what the user pasted into the mock-up. Special counts as Rare and Basic Land
+  as Common.
+- **Main page** (`ResearchScene`): a set box after Hide unfound / Hide untouched (beside them in landscape, 118 wide;
+  under them in portrait). It lists "All Sets", then the sets the list would show with the other filters, by name
+  (`applySetFilter`), not all ~400 sets. A picked set narrows the list, and only its own "Researching:" header stays.
+  If the check boxes later hide the picked set, the list says "<set> is hidden by the boxes above." Show/Hide Researched
+  clears the pick. It is kept for the same game, like the check boxes (round 764's per-save reset).
+- **"Found Cards (N)"**: each row's button carries N, the set's distinct cards (printings) in the collection
+  (`foundCardsByEdition`). It is the same number Found Cards lists with no filter on ("M" in "N of M cards shown").
+  Copies are not counted, so a playset reads as one card; the spare copies already show per card on the page. It is
+  recounted with the list after every Sell or Sacrifice. A set with none has no button, as before. The column is 88
+  wide (was a 74 minimum, and the TextraButton did not grow with "(13)"), and the name 204 (was 214).
+- **Found Cards**: `openFoundCards(code)` with code null is All Sets: every owned card of the sets the Lab lists that
+  are still under research (`foundCardSets`, the rows carrying Found Cards). Opening it from a row or a set's window
+  preselects that set.
+  - Landscape: the header (narrowed by 126) sits beside the set box. Row one has the 15 icons and "Groups: X"; row two
+    has the rarity buttons and "N of M cards shown". The two boxes are 16 high (`BOX_H`; at the skin's ~22 the window
+    overran 270). The grid gives up 40 (`bandHeight`), with a floor of one picture's height plus 6, so one row of
+    pictures shows; a group header pushes the captions under the scroll.
+  - Portrait: the set box, icons, rarity, Groups and the count each get a row. The grid gives up 172, since the header
+    wraps to four lines (at 72 the title ran off the top in the agent test). The button row wraps before "All spare
+    copies", since five controls overran the 246-px window.
+  - With **All Sets**, the title reads "Found Cards - All Sets" and the header "N sets under research, M found cards.
+    Each card feeds its own set. Click a card to choose it." The chosen card's line names its set and that set's days
+    ("Inspiring Roar (C, AER) - ... AER: 37 days. ...").
+  - Sell and Sacrifice act exactly as before: the card feeds its own set (`sellFromLab` / `sacrificeFromLab`,
+    unchanged).
+  - The grid shows group headers ("Commons (2)") when a group-by is picked.
+  - **Fills in place**: a filter, the set box, Sell, Sacrifice or "Sell all over 4" now refill the open window
+    (`fillFound`, keeping the scroll) instead of closing and reopening it. It no longer fades on each act. This took
+    three fixes, all found in the agent test:
+    - The window is a `Dialog` whose `result()` calls `cancel()`: a scene2d Dialog hides itself on any of its
+      `button()`s, which the old reopen had masked. Close closes it explicitly.
+    - `refreshFoundSelection` packs the window again and re-centers it once it is on the stage. It is sized when it
+      opens, so a refill that added a line squeezed the content up over the title.
+    - `act()` lifts an open set or Groups list (`SelectBox.SelectBoxScrollPane`) above the window, the way round 766
+      lifted the picture tooltips. Without it the list opened behind the window.
+  - **Sacrifice** is always there now, disabled while the chosen card's set is Ready (it used to be left off a Ready
+    set's window). With All Sets, sets can differ in being Ready.
+  - **Sell all over 4** takes the cards shown, across the window's sets (`ResearchMeter.overFour` / `planOverFour` /
+    `sellOverFour` gained a `Predicate<PaperCard>` overload; null = all, so the old calls are unchanged). The
+    confirmation says "of each card shown" while a filter is on, the number of sets, and each set's days change (up to
+    4, then "and N more"). The button stays, disabled when no shown card has more than 4. "All spare copies" still acts
+    on the chosen card only; deck copies and favorites are still kept.
+  - A sale or sacrifice that finishes one or more sets closes the window with one message naming them, as before.
+- **Remembered**: the icons, rarity and group-by stay for the same game (`foundFilters.reset()` with the Lab's other
+  filters on another save). They are not saved to disk.
+- **Log**: `[TFR-Research] Found Cards: <set or All Sets (N sets)>, X of Y shown (filtered), groups: Rarity` on each
+  fill. The over-4 sale line says "(filtered)".
+- **Tested** in an agent test copy (`agent-817`, a copied profile, removed afterward). The setup: a day-1 game, test
+  cards from AER/DOM/DFT given at the console, and the Capitol raised with `capitol raise`. Shots
+  `notes/r817-main-{landscape,portrait}.png` and `notes/r817-found-{landscape,portrait}-{set,filter-rarity,all-sets}.png`
+  cover: the counts; one set; red hidden plus Groups: Rarity ("11 of 13 cards shown"); blue alone by a long press
+  ("2 of 13", Sell all over 4 disabled); All Sets ("20 sets under research, 49 found cards"; the detail line "(C, AER)
+  ... AER: 40 days.", the gold glyph kept with its number on a wrapped line); and a Sell under All Sets
+  (`notes/r817-found-landscape-after-sell.png`: the window stays, "1 owned", AER 40 -> 37 days). The icons and boxes
+  were pressed through a throwaway bridge command (`tapxy`) compiled outside the repo. The bridge's text clicks reach
+  only buttons, and real mouse clicks did not reach the agent window. Not tested: Sacrifice and "Sell all over 4" in
+  the game (the same paths as Sell, through `afterFoundAct`), a sale that finishes a set, the classic (pre-751) list,
+  and Android itself (portrait was run on the desktop at 540x960 with `portrait`).
+- Files: `scene/ResearchScene.java`, `scene/ResearchCardFilters.java` (new, mod code), `util/ResearchMeter.java`, and
+  GUIDE (Research Lab, item 4). No stock engine file was touched (`SFilterUtil`, `StatTypes` and `GroupDef` are used
+  as they are), and no save data changed. The labels are plain strings, like the rest of the Lab, so en-US.properties
+  is untouched.
+
 ## Round 816: a quit after an error never counts, and a counter-tab text crash no longer stops the duel (2026-10-28)
 
 The user: "Yes: ... 816 a quit after an error dialog never counts (no Notoriety) plus a guard for the counter-tab

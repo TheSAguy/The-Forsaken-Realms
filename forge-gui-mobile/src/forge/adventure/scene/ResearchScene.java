@@ -55,6 +55,9 @@ import java.util.Map;
  * You should from there easily choose what you want to sacrifice or sell."): a v2 row with a card of its set owned has
  * Found Cards (openFoundCards) - each owned card of the set with its copies, spares, sell price and the days one copy
  * takes off, and its own Sell and Sacrifice.
+ * <p>
+ * Round 817: a set box on the list ("All Sets" or one set, applySetFilter), and Found Cards gets a set box with All Sets
+ * plus the deck builder's color/type icons, rarity buttons and group-by (ResearchCardFilters).
  */
 public class ResearchScene extends UIScene {
     private static ResearchScene object;
@@ -90,6 +93,13 @@ public class ResearchScene extends UIScene {
     private boolean showResearched = false;
     private String lastSaveKey; // round 764 follow-up: the game the filters were set in
     private final ScrollPane scroller;
+    // Round 817 (the user: "On the main page, let's add a Set filter"): "All Sets" or one set; the box offers the sets the
+    // list would show with the other filters, and a picked set narrows the list to it. Kept for the same game, like the
+    // check boxes; cleared by Show/Hide Researched (the other view has other sets).
+    private final com.badlogic.gdx.scenes.scene2d.ui.SelectBox<String> listSetBox;
+    private final List<String> listSetCodes = new ArrayList<>();
+    private String listSet;
+    private boolean fillingSetBox;
     // Round 452: set while a set's card view is open, so the way back keeps the view, the filters and the place in the
     // list (enter() otherwise starts a fresh visit).
     private boolean returningFromSetView = false;
@@ -121,15 +131,36 @@ public class ResearchScene extends UIScene {
         });
         showResearchedButton = Controls.newTextButton("Show Researched", () -> {
             showResearched = !showResearched;
+            listSet = null; // round 817
             showResearchedButton.setText(showResearched ? "Hide Researched" : "Show Researched");
             buildList();
         });
         // Round 313: the two filters share the left cell - side by side, or stacked in the narrow portrait pane.
+        @SuppressWarnings("unchecked")
+        com.badlogic.gdx.scenes.scene2d.ui.SelectBox<String> setBox = Controls.newComboBox();
+        listSetBox = setBox;
+        listSetBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (fillingSetBox)
+                    return;
+                int i = listSetBox.getSelectedIndex();
+                listSet = i <= 0 || i > listSetCodes.size() ? null : listSetCodes.get(i - 1);
+                buildList();
+            }
+        });
         Table filters = new Table();
-        filters.add(hideUnfoundCheckBox).align(Align.left).padRight(12);
+        filters.add(hideUnfoundCheckBox).align(Align.left).padRight(Forge.isLandscapeMode() ? 8 : 12);
         if (!Forge.isLandscapeMode())
             filters.row();
         filters.add(hidePartialCheckBox).align(Align.left);
+        // Round 817: the set box after the check boxes - beside them in landscape, under them in portrait.
+        if (Forge.isLandscapeMode()) {
+            filters.add(listSetBox).width(118f).padLeft(8);
+        } else {
+            filters.row();
+            filters.add(listSetBox).width(150f).align(Align.left).padTop(2);
+        }
         root.add(filters).align(Align.left);
         root.add(showResearchedButton).align(Align.right);
         root.row().padTop(4);
@@ -166,6 +197,8 @@ public class ResearchScene extends UIScene {
         if (!saveKey.equals(lastSaveKey)) {
             lastSaveKey = saveKey;
             showResearched = false;
+            listSet = null; // round 817
+            foundFilters.reset();
             showResearchedButton.setText("Show Researched");
             hideUnfoundCheckBox.setProgrammaticChangeEvents(false);
             hidePartialCheckBox.setProgrammaticChangeEvents(false);
@@ -287,6 +320,7 @@ public class ResearchScene extends UIScene {
         addToSelectable(hideUnfoundCheckBox);
         addToSelectable(hidePartialCheckBox); // round 313
         addToSelectable(showResearchedButton);
+        addToSelectable(listSetBox); // round 817
         scrollContainer.clear();
         AdventurePlayer player = AdventurePlayer.current();
         int currentDay = Current.world().getCurrentDay();
@@ -299,6 +333,8 @@ public class ResearchScene extends UIScene {
             int byDays = Integer.compare(player.getResearchDaysLeft(a, currentDay), player.getResearchDaysLeft(b, currentDay));
             return byDays != 0 ? byDays : editionDisplayName(a).compareToIgnoreCase(editionDisplayName(b));
         });
+        if (listSet != null) // round 817: a picked set - its own header only
+            running.removeIf(c -> !c.equals(listSet));
         for (String inProgress : running) {
             int daysLeft = player.getResearchDaysLeft(inProgress, currentDay);
             TypingLabel header = Controls.newTypingLabel("Researching: " + editionDisplayName(inProgress)
@@ -346,6 +382,7 @@ public class ResearchScene extends UIScene {
                 candidates.add(ed);
             }
         }
+        candidates = applySetFilter(candidates); // round 817
         // Round 313 (user: "Sort as, Currently Researching (Lest days remaining on top, if tied, alphabetically.) Then
         // Sets you can research, alphabetically. Then sets you have found cards for, alphabetically. Then the sets you
         // have not found cards for, alphabetically."), replacing round 2026-08-12's cards-owned order. The researched
@@ -455,6 +492,36 @@ public class ResearchScene extends UIScene {
         return owned >= thresholdFor(totalByEdition.getOrDefault(code, 0)) ? 1 : 2;
     }
 
+    /** Round 817: fills the set box with the sets the list would show (by name; a picked set stays in it) and narrows
+     *  the list to the picked set. */
+    private List<CardEdition> applySetFilter(List<CardEdition> candidates) {
+        List<CardEdition> byName = new ArrayList<>(candidates);
+        byName.sort((a, b) -> a.getName().compareToIgnoreCase(b.getName()));
+        listSetCodes.clear();
+        for (CardEdition ed : byName)
+            listSetCodes.add(ed.getCode());
+        if (listSet != null && !listSetCodes.contains(listSet))
+            listSetCodes.add(0, listSet);
+        String[] items = new String[listSetCodes.size() + 1];
+        items[0] = "All Sets";
+        for (int i = 0; i < listSetCodes.size(); i++)
+            items[i + 1] = editionDisplayName(listSetCodes.get(i));
+        fillingSetBox = true; // this SelectBox fires on setItems/setSelectedIndex
+        try {
+            listSetBox.setItems(items);
+            listSetBox.setSelectedIndex(listSet == null ? 0 : listSetCodes.indexOf(listSet) + 1);
+        } finally {
+            fillingSetBox = false;
+        }
+        if (listSet == null)
+            return candidates;
+        List<CardEdition> out = new ArrayList<>();
+        for (CardEdition ed : candidates)
+            if (ed.getCode().equals(listSet))
+                out.add(ed);
+        return out;
+    }
+
     /** Round 751: research v2's list - every set, its meter, and what starting it costs now in shards and days. */
     private void buildListV2() {
         // Selectables must be rebuilt alongside the rows (2026-08-12 review finding): without
@@ -468,6 +535,7 @@ public class ResearchScene extends UIScene {
         addToSelectable(hideUnfoundCheckBox);
         addToSelectable(hidePartialCheckBox); // round 313
         addToSelectable(showResearchedButton);
+        addToSelectable(listSetBox); // round 817
         scrollContainer.clear();
         AdventurePlayer player = AdventurePlayer.current();
         int currentDay = Current.world().getCurrentDay();
@@ -480,6 +548,8 @@ public class ResearchScene extends UIScene {
             int byDays = Integer.compare(player.getResearchDaysLeft(a, currentDay), player.getResearchDaysLeft(b, currentDay));
             return byDays != 0 ? byDays : editionDisplayName(a).compareToIgnoreCase(editionDisplayName(b));
         });
+        if (listSet != null) // round 817: a picked set - its own header only
+            running.removeIf(c -> !c.equals(listSet));
         for (String inProgress : running) {
             int daysLeft = player.getResearchDaysLeft(inProgress, currentDay);
             TypingLabel header = Controls.newTypingLabel("Researching: " + editionDisplayName(inProgress)
@@ -497,6 +567,7 @@ public class ResearchScene extends UIScene {
         // collection. Round 751: "unfound" = no card of the set owned and nothing fed.
         Map<String, Integer> ownedByEdition = discoveredByEdition(player.getCards());
         Map<String, Integer> copiesByEdition = ownedCopiesByEdition(player); // round 766: who gets Found Cards
+        Map<String, Integer> foundByEdition = foundCardsByEdition(player); // round 817: the button's (N)
 
         boolean hideUnfound = hideUnfoundCheckBox.isChecked();
         boolean hideUnfed = hidePartialCheckBox.isChecked(); // round 764: "Hide untouched" in a v2 game
@@ -526,6 +597,7 @@ public class ResearchScene extends UIScene {
                 candidates.add(ed);
             }
         }
+        candidates = applySetFilter(candidates); // round 817
         // Round 751: researching first (fewest days left), then the fullest meters, then A-Z. The researched view is
         // alphabetical.
         final boolean researchedView = showResearched;
@@ -586,8 +658,10 @@ public class ResearchScene extends UIScene {
 
             // Round 766: Found Cards between the text and the Research button, on a set with a card of it owned.
             if (!researched && copiesByEdition.getOrDefault(code, 0) > 0) {
-                TextraButton foundButton = Controls.newTextButton("Found Cards", () -> openFoundCards(code, false));
-                scrollContainer.add(foundButton).minWidth(FOUND_WIDTH).align(Align.left).padLeft(4);
+                // Round 817 (the user: "In the "Found Cards" put how many you have found"): the cards its page lists.
+                TextraButton foundButton = Controls.newTextButton("Found Cards (" + foundByEdition.getOrDefault(code, 0) + ")",
+                        () -> openFoundCards(code, false));
+                scrollContainer.add(foundButton).width(FOUND_WIDTH).align(Align.left).padLeft(4);
                 addToSelectable(foundButton);
             } else {
                 scrollContainer.add().width(FOUND_WIDTH).padLeft(4);
@@ -624,7 +698,13 @@ public class ResearchScene extends UIScene {
             scrollContainer.row().padTop(6);
         }
 
-        if (candidates.isEmpty() && !anyInProgress) {
+        if (candidates.isEmpty() && listSet != null) { // round 817
+            TypingLabel empty = Controls.newTypingLabel(editionDisplayName(listSet) + " is hidden by the boxes above.");
+            empty.skipToTheEnd();
+            empty.setWrap(true);
+            empty.setColor(Color.DARK_GRAY);
+            scrollContainer.add(empty).colspan(3).align(Align.left).expandX().width(Forge.isLandscapeMode() ? 340 : 236);
+        } else if (candidates.isEmpty() && !anyInProgress) {
             TypingLabel empty = Controls.newTypingLabel(
                     "Every set can be researched here. Cards you sell anywhere, or sacrifice here, shorten their own "
                     + "set's research - untick Hide unfound to see every set.");
@@ -636,7 +716,8 @@ public class ResearchScene extends UIScene {
     }
 
     // Round 764 follow-up: the v2 row's columns, landscape (portrait gives the text the whole row).
-    private static final float NAME_WIDTH = 214f, FOUND_WIDTH = 74f;
+    // Round 817: Found Cards wider for its "(N)" (a TextraButton's own width did not grow with it), the name narrower.
+    private static final float NAME_WIDTH = 204f, FOUND_WIDTH = 88f;
 
     /** The whole row's width: line 2 and the "Researching" headers. */
     private static float rowWidth() {
@@ -764,6 +845,10 @@ public class ResearchScene extends UIScene {
     /** Round 766: Found Cards acts on every spare copy of a card instead of one (the window's checkbox; this visit). */
     private boolean foundAllSpare = false;
     private float foundScrollY = 0f;
+    // Round 817: the window's set (null = All Sets) and the deck builder's color/type/rarity filters and group-by. The
+    // filters stay while the same game runs (cleared on another save in enter()); the set is the row's on every open.
+    private String foundSet;
+    private final ResearchCardFilters foundFilters = new ResearchCardFilters();
 
     /** Round 766: copies owned per set, counted by printing - a row with any gets Found Cards. */
     private static Map<String, Integer> ownedCopiesByEdition(AdventurePlayer player) {
@@ -771,6 +856,28 @@ public class ResearchScene extends UIScene {
         for (Map.Entry<PaperCard, Integer> e : player.getCards())
             if (e.getKey() != null && e.getValue() != null && e.getValue() > 0)
                 out.merge(e.getKey().getEdition(), e.getValue(), Integer::sum);
+        return out;
+    }
+
+    /** Round 817: the distinct cards (printings) owned per set - what that set's Found Cards page lists with no filter
+     *  on ("M" in "N of M cards shown"), and the "(N)" on its button. Copies of one card count once. */
+    private static Map<String, Integer> foundCardsByEdition(AdventurePlayer player) {
+        Map<String, Integer> out = new HashMap<>();
+        for (Map.Entry<PaperCard, Integer> e : player.getCards())
+            if (e.getKey() != null && e.getValue() != null && e.getValue() > 0)
+                out.merge(e.getKey().getEdition(), 1, Integer::sum);
+        return out;
+    }
+
+    /** Round 817: the sets "All Sets" covers - every set the Lab lists that is still under research (not researched) with
+     *  a card of it owned: the rows that carry Found Cards. By name. */
+    private static List<String> foundCardSets(AdventurePlayer player) {
+        Map<String, Integer> copies = ownedCopiesByEdition(player);
+        List<String> out = new ArrayList<>();
+        for (CardEdition ed : EditionProgression.getMasterEditionList())
+            if (copies.getOrDefault(ed.getCode(), 0) > 0 && !player.hasUnlockedEdition(ed.getCode()))
+                out.add(ed.getCode());
+        out.sort((a, b) -> editionDisplayName(a).compareToIgnoreCase(editionDisplayName(b)));
         return out;
     }
 
@@ -786,94 +893,113 @@ public class ResearchScene extends UIScene {
      * chooses a card: the line under the grid gives its name, the days one copy takes off sacrificed and sold, and the
      * gold, and Sell and Sacrifice act on it. The details sit under the grid, not under every picture, so a picture stays
      * big enough to read its art and type line at 1280x720.
+     * <p>
+     * Round 817 (the user: "On the sell page, I also want to add a set filter, Including one that reads "All Sets" ...
+     * color / type filters ... And also the Group by filter from the deck builder"): a set box beside the header (code null
+     * = All Sets: every card of the sets still under research), the deck builder's color and type icons, SpellSmith's
+     * rarity buttons and the deck builder's "Groups:" box (ResearchCardFilters), and "N of M cards shown". A filter, the set
+     * or a Sell/Sacrifice refills the window in place (fillFound) - no fade. A card always feeds its own set; with All Sets
+     * the header counts the sets and the chosen card's line names its set and days. "Sell all over 4" takes the cards shown.
      */
     private void openFoundCards(String code, boolean keepScroll) {
         disposeFoundActors();
         AdventurePlayer player = AdventurePlayer.current();
-        int day = Current.world().getCurrentDay();
-        boolean running = player.isResearching(code);
-        boolean ready = ResearchMeter.days(player, code, day) == 0;
-        List<Map.Entry<PaperCard, Integer>> owned = new ArrayList<>();
-        for (Map.Entry<PaperCard, Integer> e : player.getCards())
-            if (e.getKey() != null && code.equals(e.getKey().getEdition()) && e.getValue() != null && e.getValue() > 0)
-                owned.add(new java.util.AbstractMap.SimpleEntry<>(e.getKey(), e.getValue()));
-        owned.sort((a, b) -> {
-            boolean sa = ResearchMeter.spareCopies(player, a.getKey()) > 0, sb = ResearchMeter.spareCopies(player, b.getKey()) > 0;
-            return sa != sb ? (sa ? -1 : 1) : a.getKey().getName().compareToIgnoreCase(b.getKey().getName());
-        });
-        // The chosen card stays chosen across a Sell or Sacrifice while a copy is left; else the first with a spare.
-        if (foundSelected == null || owned.stream().noneMatch(e -> e.getKey().equals(foundSelected)))
-            foundSelected = owned.isEmpty() ? null : owned.get(0).getKey();
-        foundCaptions.clear();
-
-        Dialog dialog = new Dialog("Found Cards - " + editionDisplayName(code), Controls.getSkin());
+        foundSet = code;
+        boolean landscape = Forge.isLandscapeMode();
+        // Round 817: a Dialog hides itself on any of its buttons - the window now stays open and refills in place (Close
+        // closes it), so that hide is cancelled. Before, every act reopened the window, which hid it.
+        Dialog dialog = new Dialog("", Controls.getSkin()) {
+            @Override
+            protected void result(Object object) {
+                cancel();
+            }
+        };
+        foundDialog = dialog;
         float width = Math.min(440f, stage.getWidth() - 24f);
-        TextraLabel head = Controls.newTextraLabel(statusLine(player, code, day) + (ready && !running
-                ? "\nIts cards only pay gold now. Click a card to choose it." : "\nA sacrifice counts double, for no gold. Click a card to choose it."));
-        head.setWrap(true);
-        dialog.getContentTable().add(head).width(width).row();
+        float setWidth = landscape ? 120f : width;
 
-        Table grid = new Table(Controls.getSkin());
-        grid.top().left();
-        int columns = Math.max(1, (int) ((width - 8f) / (FOUND_CARD_W + 8f)));
-        int i = 0;
-        for (Map.Entry<PaperCard, Integer> e : owned) {
-            PaperCard pc = e.getKey();
-            RewardActor picture = new RewardActor(new forge.adventure.util.Reward(pc), false, null, false);
-            foundActors.add(picture);
-            picture.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    foundSelected = pc;
-                    refreshFoundSelection(code);
-                }
-            });
-            TextraLabel caption = Controls.newTextraLabel("");
-            foundCaptions.put(pc, caption);
-            Table cell = new Table();
-            cell.add(picture).size(FOUND_CARD_W, FOUND_CARD_H).row();
-            cell.add(caption).padTop(1f);
-            grid.add(cell).pad(4f).top();
-            if (++i % columns == 0)
-                grid.row();
+        List<String> sets = foundCardSets(player);
+        if (code != null && !sets.contains(code)) // opened from a set's own window
+            sets.add(0, code);
+        foundHead = Controls.newTextraLabel("");
+        foundHead.setWrap(true);
+        com.badlogic.gdx.scenes.scene2d.ui.SelectBox<String> setBox = ResearchCardFilters.setBox(sets, code, picked -> {
+            foundSet = picked;
+            foundScrollY = 0f;
+            fillFound();
+        });
+        Table top = new Table();
+        if (landscape) {
+            top.add(foundHead).width(width - setWidth - 6f).top().left();
+            top.add(setBox).width(setWidth).height(BOX_H).padLeft(6f).top().right();
+        } else {
+            top.add(foundHead).width(width).left().row();
+            top.add(setBox).width(setWidth).padTop(2f).left();
         }
-        if (owned.isEmpty()) {
-            TextraLabel none = Controls.newTextraLabel("No cards of this set left in your collection.");
-            none.setWrap(true);
-            grid.add(none).width(width - 8f).align(Align.left);
+        dialog.getContentTable().add(top).width(width).row();
+
+        Runnable onFilter = () -> {
+            foundScrollY = 0f;
+            fillFound();
+        };
+        Table band = new Table();
+        com.badlogic.gdx.scenes.scene2d.ui.SelectBox<String> groupBox = foundFilters.groupBox(onFilter);
+        foundCount = Controls.newTextraLabel("");
+        if (landscape) {
+            band.add(foundFilters.iconRow(onFilter)).left().expandX();
+            band.add(groupBox).width(setWidth).height(BOX_H).right().row();
+            band.add(foundFilters.rarityRow(onFilter, 50f)).left().padTop(2f);
+            band.add(foundCount).width(setWidth).padTop(2f).right();
+        } else {
+            band.add(foundFilters.iconRow(onFilter)).left().row();
+            band.add(foundFilters.rarityRow(onFilter, 54f)).left().padTop(2f).row();
+            band.add(groupBox).width(setWidth).left().padTop(2f).row();
+            band.add(foundCount).left().padTop(1f);
         }
-        ScrollPane pane = new ScrollPane(grid);
+        dialog.getContentTable().add(band).width(width).padTop(2f).row();
+
+        foundGrid = new Table(Controls.getSkin());
+        foundGrid.top().left();
+        foundColumns = Math.max(1, (int) ((width - 8f) / (FOUND_CARD_W + 8f)));
+        foundGridWidth = width;
+        ScrollPane pane = new ScrollPane(foundGrid);
         pane.setScrollingDisabled(true, false);
         pane.setFadeScrollBars(false);
-        dialog.getContentTable().add(pane).width(width).height(Math.max(FOUND_CARD_H + 16f, stage.getHeight() - 132f)).padTop(2).row();
+        // Round 817: the filter band's rows come out of the grid (two in landscape, four in portrait), and 10 more in
+        // landscape for a two-line detail (All Sets names the set) - one row of pictures still shows at 270.
+        float bandHeight = landscape ? 40f : 172f; // portrait: also its 4-line header, set box and two button rows
+        dialog.getContentTable().add(pane).width(width)
+                .height(Math.max(FOUND_CARD_H + 6f, stage.getHeight() - 132f - bandHeight)).padTop(2).row();
+        foundPane = pane;
         foundDetail = Controls.newTextraLabel("");
         foundDetail.setWrap(true);
         dialog.getContentTable().add(foundDetail).width(width).padTop(2).row();
 
         foundSell = Controls.newTextButton("Sell", () -> {
-            int spare = foundSelected == null ? 0 : ResearchMeter.spareCopies(AdventurePlayer.current(), foundSelected);
+            PaperCard pc = foundSelected;
+            int spare = pc == null ? 0 : ResearchMeter.spareCopies(AdventurePlayer.current(), pc);
             if (spare <= 0)
                 return;
-            ResearchMeter.sellFromLab(AdventurePlayer.current(), foundSelected, foundAllSpare ? spare : 1, Current.world().getCurrentDay());
-            afterFoundAct(code);
+            ResearchMeter.sellFromLab(AdventurePlayer.current(), pc, foundAllSpare ? spare : 1, Current.world().getCurrentDay());
+            afterFoundAct(Collections.singletonList(pc.getEdition()));
         });
         dialog.button(foundSell);
-        foundSacrifice = null;
-        if (!ready) { // round 766: a Ready set has nothing left to lower
-            foundSacrifice = Controls.newTextButton("Sacrifice", () -> {
-                int spare = foundSelected == null ? 0 : ResearchMeter.spareCopies(AdventurePlayer.current(), foundSelected);
-                if (spare <= 0)
-                    return;
-                ResearchMeter.sacrificeFromLab(AdventurePlayer.current(), foundSelected, foundAllSpare ? spare : 1, Current.world().getCurrentDay());
-                afterFoundAct(code);
-            });
-            dialog.button(foundSacrifice);
-        }
-        // Round 766 follow-up: the set-wide "Sell all over 4" (copies over 4 of every card, never a deck's or a
-        // favorite's), on a Ready set too - shown only when some card has more than 4.
-        ResearchMeter.Plan over = ResearchMeter.planOverFour(player, code, day);
-        if (over.cards > 0)
-            dialog.button(Controls.newTextButton("Sell all over " + ResearchMeter.KEEP_COPIES, () -> confirmOverFour(code)));
+        // Round 817: always there - disabled while the chosen card's set is Ready (was left out on a Ready set's window).
+        foundSacrifice = Controls.newTextButton("Sacrifice", () -> {
+            PaperCard pc = foundSelected;
+            int spare = pc == null ? 0 : ResearchMeter.spareCopies(AdventurePlayer.current(), pc);
+            if (spare <= 0)
+                return;
+            ResearchMeter.sacrificeFromLab(AdventurePlayer.current(), pc, foundAllSpare ? spare : 1, Current.world().getCurrentDay());
+            afterFoundAct(Collections.singletonList(pc.getEdition()));
+        });
+        dialog.button(foundSacrifice);
+        // Round 766 follow-up: "Sell all over 4" (copies over 4 of every card, never a deck's or a favorite's), on a Ready
+        // set too. Round 817: of the cards shown; disabled when none of them has more than 4.
+        foundOverFour = Controls.newTextButton("Sell all over " + ResearchMeter.KEEP_COPIES, this::confirmOverFour);
+        dialog.button(foundOverFour);
+        if (!landscape) // round 817: five controls overran the 246-px portrait window
+            dialog.getButtonTable().row();
         CheckBox allBox = Controls.newCheckBox("All spare copies");
         allBox.setChecked(foundAllSpare);
         allBox.getLabel().setColor(Color.WHITE);
@@ -881,41 +1007,134 @@ public class ResearchScene extends UIScene {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 foundAllSpare = allBox.isChecked();
-                refreshFoundSelection(code);
+                refreshFoundSelection();
             }
         });
         dialog.getButtonTable().add(allBox).padLeft(6f).padRight(6f);
         dialog.button(Controls.newTextButton("Close", () -> {
             disposeFoundActors();
+            foundDialog = null;
             removeDialog();
             stage.setScrollFocus(scroller);
         }));
-        refreshFoundSelection(code);
+        if (!keepScroll)
+            foundScrollY = 0f;
+        fillFound();
         showDialog(dialog);
         stage.setScrollFocus(pane);
-        if (keepScroll) {
-            pane.layout();
-            pane.setScrollY(foundScrollY);
-            pane.updateVisualScroll();
+        pane.layout();
+        pane.setScrollY(foundScrollY);
+        pane.updateVisualScroll();
+    }
+
+    /** Round 817: the window's title, header, card grid (in groups), count and chosen card for the set and filters now -
+     *  in place. */
+    private void fillFound() {
+        if (foundDialog == null)
+            return;
+        disposeFoundActors();
+        AdventurePlayer player = AdventurePlayer.current();
+        int day = Current.world().getCurrentDay();
+        String set = foundSet;
+        List<String> scope = set == null ? foundCardSets(player) : Collections.singletonList(set);
+        java.util.Set<String> inScope = new java.util.HashSet<>(scope);
+        List<PaperCard> owned = new ArrayList<>();
+        for (Map.Entry<PaperCard, Integer> e : player.getCards())
+            if (e.getKey() != null && inScope.contains(e.getKey().getEdition()) && e.getValue() != null && e.getValue() > 0)
+                owned.add(e.getKey());
+        java.util.function.Predicate<PaperCard> shownRule = foundFilters.predicate();
+        List<PaperCard> shown = new ArrayList<>();
+        for (PaperCard pc : owned)
+            if (shownRule.test(pc))
+                shown.add(pc);
+        shown.sort((a, b) -> {
+            boolean sa = ResearchMeter.spareCopies(player, a) > 0, sb = ResearchMeter.spareCopies(player, b) > 0;
+            return sa != sb ? (sa ? -1 : 1) : a.getName().compareToIgnoreCase(b.getName());
+        });
+        // The chosen card stays chosen across a Sell or Sacrifice while a copy is shown; else the first with a spare.
+        if (foundSelected == null || !shown.contains(foundSelected))
+            foundSelected = shown.isEmpty() ? null : shown.get(0);
+
+        foundDialog.getTitleLabel().setText("Found Cards - " + (set == null ? "All Sets" : editionDisplayName(set)));
+        String head;
+        if (set == null) {
+            head = scope.size() + (scope.size() == 1 ? " set" : " sets") + " under research, " + owned.size()
+                    + (owned.size() == 1 ? " found card" : " found cards") + ".\nEach card feeds its own set. Click a card to choose it.";
+        } else {
+            boolean ready = ResearchMeter.days(player, set, day) == 0;
+            head = statusLine(player, set, day) + (ready && !player.isResearching(set)
+                    ? "\nIts cards only pay gold now. Click a card to choose it." : "\nA sacrifice counts double, for no gold. Click a card to choose it.");
         }
-        foundPane = pane;
+        foundHead.setText(head);
+        foundCount.setText("[%80][#c8c8c8ff]" + shown.size() + " of " + owned.size() + " cards shown");
+
+        foundCaptions.clear();
+        foundGrid.clear();
+        Map<String, List<PaperCard>> groups = foundFilters.group(shown);
+        for (Map.Entry<String, List<PaperCard>> g : groups.entrySet()) {
+            if (!g.getKey().isEmpty()) {
+                TextraLabel header = Controls.newTextraLabel("[#ffd24aff]" + g.getKey() + " (" + g.getValue().size() + ")");
+                foundGrid.add(header).colspan(foundColumns).left().padTop(2f).padLeft(4f).row();
+            }
+            int i = 0;
+            for (PaperCard pc : g.getValue()) {
+                RewardActor picture = new RewardActor(new forge.adventure.util.Reward(pc), false, null, false);
+                foundActors.add(picture);
+                picture.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        foundSelected = pc;
+                        refreshFoundSelection();
+                    }
+                });
+                TextraLabel caption = Controls.newTextraLabel("");
+                foundCaptions.put(pc, caption);
+                Table cell = new Table();
+                cell.add(picture).size(FOUND_CARD_W, FOUND_CARD_H).row();
+                cell.add(caption).padTop(1f);
+                foundGrid.add(cell).pad(4f).top();
+                if (++i % foundColumns == 0)
+                    foundGrid.row();
+            }
+            foundGrid.row();
+        }
+        if (shown.isEmpty()) {
+            TextraLabel none = Controls.newTextraLabel(owned.isEmpty()
+                    ? (set == null ? "No found cards left in the sets under research." : "No cards of this set left in your collection.")
+                    : "No card matches the filters.");
+            none.setWrap(true);
+            foundGrid.add(none).width(foundGridWidth - 8f).align(Align.left);
+        }
+        int over = 0;
+        for (String s : scope)
+            over += ResearchMeter.planOverFour(player, s, day, shownRule).cards;
+        foundOverFour.setDisabled(over <= 0);
+        System.out.println("[TFR-Research] Found Cards: " + (set == null ? "All Sets (" + scope.size() + " sets)" : set) + ", "
+                + shown.size() + " of " + owned.size() + " shown" + (foundFilters.active() ? " (filtered)" : "")
+                + (foundFilters.groupBy() != null ? ", groups: " + foundFilters.groupBy().getName() : ""));
+        refreshFoundSelection();
     }
 
     // Round 766 follow-up: a picture's size in the grid - its art and type line read at 1280x720 - and the grid's state.
     private static final float FOUND_CARD_W = 64f, FOUND_CARD_H = 89f;
+    // Round 817: the set and Groups boxes in landscape - at the skin's own ~22 the window overran 270 with a two-line detail.
+    private static final float BOX_H = 16f;
     private final List<RewardActor> foundActors = new ArrayList<>();
     private final Map<PaperCard, TextraLabel> foundCaptions = new HashMap<>();
     private PaperCard foundSelected;
-    private TextraLabel foundDetail;
-    private TextraButton foundSell, foundSacrifice;
+    private TextraLabel foundDetail, foundHead, foundCount;
+    private TextraButton foundSell, foundSacrifice, foundOverFour;
     private ScrollPane foundPane;
+    private Dialog foundDialog;
+    private Table foundGrid;
+    private int foundColumns = 1;
+    private float foundGridWidth;
 
     /** Round 766 follow-up: the captions (the chosen card's in gold), the detail line and the buttons for the chosen card -
-     *  in place, without rebuilding the pictures. */
-    private void refreshFoundSelection(String code) {
+     *  in place, without rebuilding the pictures. Round 817: Ready is the chosen card's own set's. */
+    private void refreshFoundSelection() {
         AdventurePlayer player = AdventurePlayer.current();
         int day = Current.world().getCurrentDay();
-        boolean ready = ResearchMeter.days(player, code, day) == 0;
         for (Map.Entry<PaperCard, TextraLabel> e : foundCaptions.entrySet()) {
             PaperCard pc = e.getKey();
             boolean chosen = pc.equals(foundSelected);
@@ -924,12 +1143,16 @@ public class ResearchScene extends UIScene {
         }
         PaperCard pc = foundSelected;
         int spare = pc == null ? 0 : ResearchMeter.spareCopies(player, pc);
+        boolean ready = pc != null && ResearchMeter.days(player, pc.getEdition(), day) == 0;
         String detail;
         if (pc == null)
             detail = "";
         else {
-            detail = "[#ffd24aff]" + pc.getName() + "[#ffffffff] (" + rarityLetter(pc) + ") - " + player.getCards().count(pc)
-                    + " owned, " + spare + " spare. ";
+            boolean all = foundSet == null; // round 817: the card's set, named, with its days
+            detail = "[#ffd24aff]" + pc.getName() + "[#ffffffff] (" + rarityLetter(pc) + (all ? ", " + pc.getEdition() : "")
+                    + ") - " + player.getCards().count(pc) + " owned, " + spare + " spare. ";
+            if (all)
+                detail += pc.getEdition() + ": " + setDaysText(player, pc.getEdition(), day) + ". ";
             if (pc.hasNoSellValue())
                 detail += "No sale value.";
             else if (spare <= 0)
@@ -948,8 +1171,23 @@ public class ResearchScene extends UIScene {
         }
         if (foundSacrifice != null) {
             foundSacrifice.setText(foundAllSpare ? "Sacrifice all" : "Sacrifice");
-            foundSacrifice.setDisabled(spare <= 0);
+            foundSacrifice.setDisabled(spare <= 0 || ready);
         }
+        // Round 817: the window is sized when it opens; a refill or a choice that adds a line (All Sets' detail, a long
+        // name) squeezed the content up over the title. Size and center it again once it is on the stage.
+        if (foundDialog != null && foundDialog.getStage() != null) {
+            foundDialog.pack();
+            foundDialog.setPosition(Math.round((stage.getWidth() - foundDialog.getWidth()) / 2f),
+                    Math.round((stage.getHeight() - foundDialog.getHeight()) / 2f));
+        }
+    }
+
+    /** Round 817: "37 days", "22 days left", "Ready". */
+    private static String setDaysText(AdventurePlayer player, String code, int day) {
+        int days = ResearchMeter.days(player, code, day);
+        if (player.isResearching(code))
+            return ResearchMeter.daysText(days) + " left";
+        return days == 0 ? "Ready" : ResearchMeter.daysText(days);
     }
 
     /** Round 766 follow-up: UIScene.act puts the top dialog in front every frame (round 120), which left a picture's
@@ -958,10 +1196,12 @@ public class ResearchScene extends UIScene {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (foundActors.isEmpty())
+        if (foundActors.isEmpty() && foundDialog == null)
             return;
+        // Round 817: a set or Groups box's open list is a stage actor too - it went behind the window the same way.
         for (Actor a : new com.badlogic.gdx.utils.Array<>(stage.getActors()))
-            if (a instanceof com.badlogic.gdx.scenes.scene2d.ui.Container && a.isVisible())
+            if ((a instanceof com.badlogic.gdx.scenes.scene2d.ui.Container
+                    || a instanceof com.badlogic.gdx.scenes.scene2d.ui.SelectBox.SelectBoxScrollPane) && a.isVisible())
                 a.toFront();
     }
 
@@ -974,45 +1214,80 @@ public class ResearchScene extends UIScene {
         foundActors.clear();
     }
 
-    private void reopenFoundCards(String code) {
-        foundScrollY = foundPane != null ? foundPane.getScrollY() : 0f;
-        removeDialog();
-        openFoundCards(code, true);
-    }
-
-    /** Round 766 follow-up: "Sell all over 4" asks first - the cards, the gold and what it does to the days. */
-    private void confirmOverFour(String code) {
+    /** Round 766 follow-up: "Sell all over 4" asks first - the cards, the gold and what it does to the days. Round 817: the
+     *  cards shown only, across the window's sets. */
+    private void confirmOverFour() {
         AdventurePlayer player = AdventurePlayer.current();
         int day = Current.world().getCurrentDay();
-        boolean running = player.isResearching(code);
-        ResearchMeter.Plan plan = ResearchMeter.planOverFour(player, code, day);
-        String research = plan.daysBefore == 0 ? "Research: stays Ready - its cards only pay gold."
-                : "Research: " + ResearchMeter.daysText(plan.daysBefore) + (running ? " left" : "") + " -> "
-                + daysAfterText(plan, running) + ".";
+        List<String> scope = foundSet == null ? foundCardSets(player) : Collections.singletonList(foundSet);
+        java.util.function.Predicate<PaperCard> shown = foundFilters.predicate();
+        int cards = 0, gold = 0;
+        List<String> research = new ArrayList<>();
+        List<String> touched = new ArrayList<>();
+        for (String s : scope) {
+            ResearchMeter.Plan plan = ResearchMeter.planOverFour(player, s, day, shown);
+            if (plan.cards <= 0)
+                continue;
+            touched.add(s);
+            cards += plan.cards;
+            gold += plan.gold;
+            boolean running = player.isResearching(s);
+            String change = plan.daysBefore == 0 ? "stays Ready"
+                    : ResearchMeter.daysText(plan.daysBefore) + (running ? " left" : "") + " -> " + daysAfterText(plan, running);
+            research.add(foundSet == null ? s + " " + change : change);
+        }
+        if (cards <= 0)
+            return;
+        String researchText;
+        if (foundSet != null)
+            researchText = research.get(0).equals("stays Ready") ? "Research: stays Ready - its cards only pay gold."
+                    : "Research: " + research.get(0) + ".";
+        else
+            researchText = "Research: " + String.join(", ", research.subList(0, Math.min(4, research.size())))
+                    + (research.size() > 4 ? " and " + (research.size() - 4) + " more" : "") + ".";
+        String which = foundFilters.active() ? " shown" : "";
         // The gold glyph ends its line (its advance reads as a space before punctuation).
         showDialog(createGenericDialog("Sell all over " + ResearchMeter.KEEP_COPIES, "Sell the copies over "
-                + ResearchMeter.KEEP_COPIES + " of each card - " + plan.cards + (plan.cards == 1 ? " card" : " cards")
-                + " - for " + plan.gold + "[+Gold]\n" + research + " Deck copies and favorites are kept.",
+                + ResearchMeter.KEEP_COPIES + " of each card" + which + " - " + cards + (cards == 1 ? " card" : " cards")
+                + (touched.size() > 1 ? " of " + touched.size() + " sets" : "") + " - for " + gold + "[+Gold]\n" + researchText
+                + " Deck copies and favorites are kept.",
                 "Sell", "Cancel", () -> {
                     removeDialog(); // the confirm
-                    ResearchMeter.sellOverFour(AdventurePlayer.current(), code, Current.world().getCurrentDay());
-                    afterFoundAct(code);
+                    for (String s : touched)
+                        ResearchMeter.sellOverFour(AdventurePlayer.current(), s, Current.world().getCurrentDay(), shown);
+                    afterFoundAct(touched);
                 }, this::removeDialog));
     }
 
     /** Round 766: after a Sell or Sacrifice - the Lab's row and the window show the new days; a research fed to 0 days
-     *  left is done. */
-    private void afterFoundAct(String code) {
+     *  left is done. Round 817: the window refills in place, keeping its scroll; the sets acted on are checked. */
+    private void afterFoundAct(java.util.Collection<String> sets) {
         buildList();
-        if (AdventurePlayer.current().hasUnlockedEdition(code)) {
+        AdventurePlayer player = AdventurePlayer.current();
+        List<String> done = new ArrayList<>();
+        for (String s : sets)
+            if (player.hasUnlockedEdition(s))
+                done.add(s);
+        if (!done.isEmpty()) {
             disposeFoundActors();
+            foundDialog = null;
             removeDialog();
-            showDialog(createGenericDialog(editionDisplayName(code), editionDisplayName(code)
-                    + " is researched - its cards now stock your shops.",
+            List<String> names = new ArrayList<>();
+            for (String s : done)
+                names.add(editionDisplayName(s));
+            String list = String.join(", ", names);
+            showDialog(createGenericDialog(list, list + (done.size() == 1 ? " is" : " are")
+                    + " researched - " + (done.size() == 1 ? "its" : "their") + " cards now stock your shops.",
                     Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, this::removeDialog));
             return;
         }
-        reopenFoundCards(code);
+        foundScrollY = foundPane != null ? foundPane.getScrollY() : 0f;
+        fillFound();
+        if (foundPane != null) {
+            foundPane.layout();
+            foundPane.setScrollY(foundScrollY);
+            foundPane.updateVisualScroll();
+        }
     }
 
     private static String daysOffText(int days) {

@@ -522,10 +522,15 @@ public final class ResearchMeter {
 
     /** Round 766 follow-up: this set's cards with copies over 4, and how many of each. */
     public static Map<PaperCard, Integer> overFour(AdventurePlayer player, String code) {
+        return overFour(player, code, null);
+    }
+
+    /** Round 817: overFour limited to the cards Found Cards' filters show (null = all of them). */
+    public static Map<PaperCard, Integer> overFour(AdventurePlayer player, String code, java.util.function.Predicate<PaperCard> shown) {
         Map<PaperCard, Integer> out = new LinkedHashMap<>();
         for (Map.Entry<PaperCard, Integer> e : player.getCards()) {
             PaperCard pc = e.getKey();
-            if (pc == null || !code.equals(pc.getEdition()))
+            if (pc == null || !code.equals(pc.getEdition()) || (shown != null && !shown.test(pc)))
                 continue;
             int n = overFourCopies(player, pc);
             if (n > 0)
@@ -537,13 +542,18 @@ public final class ResearchMeter {
     /** Round 766 follow-up: what "Sell all over 4" would do - the cards, the gold and the days before and after - worked
      *  out the way the sale feeds (per card, a new name's first copy in full, clamped at a full meter), changing nothing. */
     public static Plan planOverFour(AdventurePlayer player, String code, int currentDay) {
+        return planOverFour(player, code, currentDay, null);
+    }
+
+    /** Round 817: planOverFour over the cards the filters show (null = all). */
+    public static Plan planOverFour(AdventurePlayer player, String code, int currentDay, java.util.function.Predicate<PaperCard> shown) {
         Plan plan = new Plan();
         float pts = points(player, code);
         plan.daysBefore = daysAt(player, code, pts, currentDay);
         Set<String> fedNow = player.getResearchFedNames().get(code);
         Set<String> fedSim = fedNow == null ? new HashSet<>() : new HashSet<>(fedNow);
         boolean feeds = enabled(player) && !player.hasUnlockedEdition(code);
-        for (Map.Entry<PaperCard, Integer> e : overFour(player, code).entrySet()) {
+        for (Map.Entry<PaperCard, Integer> e : overFour(player, code, shown).entrySet()) {
             PaperCard pc = e.getKey();
             int n = e.getValue();
             plan.cards += n;
@@ -561,18 +571,23 @@ public final class ResearchMeter {
     /** Round 766 follow-up: Found Cards' "Sell all over 4" - every card's copies over 4, through the player's own sale (so
      *  gold, feeding and a finish at 0 days are a sale anywhere's). Returns the gold. */
     public static int sellOverFour(AdventurePlayer player, String code, int currentDay) {
+        return sellOverFour(player, code, currentDay, null);
+    }
+
+    /** Round 817: sellOverFour over the cards the filters show (null = all). */
+    public static int sellOverFour(AdventurePlayer player, String code, int currentDay, java.util.function.Predicate<PaperCard> shown) {
         int before = days(player, code, currentDay);
         boolean running = player.isResearching(code);
         int gold = player.getGold(), sold = 0;
         beginBatch();
         try {
-            for (Map.Entry<PaperCard, Integer> e : overFour(player, code).entrySet())
+            for (Map.Entry<PaperCard, Integer> e : overFour(player, code, shown).entrySet())
                 sold += player.sellCard(e.getKey(), e.getValue());
         } finally {
             endBatch(player, "Found Cards over-4 sale");
         }
         int gained = player.getGold() - gold;
-        System.out.println("[TFR-Research] Found Cards: sold " + sold + " over-4 copies of " + code + " for " + gained
+        System.out.println("[TFR-Research] Found Cards: sold " + sold + " over-4 copies of " + code + (shown != null ? " (filtered)" : "") + " for " + gained
                 + " gold; " + code + " " + before + " -> " + afterText(player, code, currentDay, running));
         return gained;
     }
