@@ -792,6 +792,9 @@ public class ConsoleCommandInterpreter {
         // enemy's deck has it and the gate is open, "notorietycard none" forces no card, "notorietycard off" draws
         // normally again; no argument reports the gate (round 799).
         registerCommand(new String[]{"notorietycard"}, forge.adventure.util.NotorietyDeckCard::console);
+        // Round 813 (testing aid): the Temple's hunted color - "wrath" reports, "wrath start red" hunts red this week (the
+        // Capitol needs a Temple; "wrath start red force" skips that), "wrath stop" ends it.
+        registerCommand(new String[]{"wrath"}, forge.adventure.util.WrathHunt::console);
         // Round 465: test cheat - 'winstreak "Wild Rat" 3' sets your wins in a row over one enemy (by name).
         registerCommand(new String[]{"winstreak"}, s -> {
             if (s.length < 1) return "Give an enemy name, and a number to set its streak.";

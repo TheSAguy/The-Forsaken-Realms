@@ -737,6 +737,9 @@ more on Insane) that turns your victories into cards.
   waiting cards for you - rebuild it and they're there - and New Game+ adds anything still waiting to your collection.
 - **Temple Priest.** This perk ([Ascendance](#ascendance---your-level)) doubles every offering: 2 Rares, 4 Uncommons
   and 8 Commons. It's offered only once your Capitol has a Temple.
+- **Wrath.** When a week ends with a Temple in your Capitol, the color you defeated most is hunted the next week: its
+  land sends foes a rank bracket stronger (not on Easy), and its foes - any enemy with that color - pay +25% gold and
+  shards. A notice names the hunted color. Destroying the Temple ends the hunt.
 
 Your roaming guards' **Spoils of War** (another perk) wait the same way at your Capitol's Armory: Manage Guards shows
 how many cards wait, and the Guards window's **Collect Spoils** opens them.

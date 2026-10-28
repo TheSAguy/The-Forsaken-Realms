@@ -457,6 +457,9 @@ public class DuelScene extends ForgeScene {
         // Round 559: the Capitol Temple's weekly tally - the same duels, without the Arena (its fighters do not die).
         if (winner && !isArena && enemy != null && enemy.getData().fixedDeck == null && eventData == null && guardDeck == null)
             forge.adventure.util.TempleOfferings.recordKill(enemy.getData());
+        // Round 813: the hunted color's bounty - the same duels; the loot site raises the gold and shards (applyBounty).
+        forge.adventure.util.WrathHunt.onDuelEnded(winner && !isArena && enemy != null && enemy.getData().fixedDeck == null
+                && eventData == null && guardDeck == null ? enemy : null);
         // Round 726: a loss the next load may undo (ReloadJab) - any duel of the player's, Arena and Inn included; not
         // Deck Tester and not a guard's fight. Round 796: an Arena loss is not counted (the user: "Arena losses do not
         // count") - ReloadJab still passes it to DifficultyHints. Round 801: whether this loss cost Notoriety (the branch

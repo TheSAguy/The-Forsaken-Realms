@@ -203,6 +203,12 @@ public class BiomeData implements Serializable {
         if (SpawnTierWeighting.isEnabled()) {
             World world = WorldSave.getCurrentSave().getWorld();
             int week = SpawnTierWeighting.currentWeek(world);
+            // Round 813: the Temple's hunted color - a ROAMING roll on its land rolls a bracket ahead (WrathHunt). Roaming =
+            // the world map's own roll (withInjectedSpawns) or a dungeon's roamer (DungeonSources); never a re-themed or
+            // fallback placement inside a place.
+            if ((withInjectedSpawns || forge.adventure.util.WrathHunt.inDungeonSourceRoll())
+                    && !forge.adventure.stage.MapStage.getInstance().isInMap())
+                week = forge.adventure.util.WrathHunt.spawnWeek(name, week, !withInjectedSpawns);
             // Non-exempt candidate count per tier - the uniform baseline's denominator (1/N).
             Map<String, Integer> countByTier = new HashMap<>();
             for (EnemyData data : filteredEnemies) {

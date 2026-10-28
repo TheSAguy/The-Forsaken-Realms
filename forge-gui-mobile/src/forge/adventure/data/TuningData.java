@@ -802,6 +802,17 @@ public class TuningData {
     // first this-many weeks (the same week count) an overworld chest never rolls Dangerous Enemy and a diamond never
     // rolls its ambush - the roll falls through to the other outcomes. 0 (the default) never, so a stock plane is unchanged.
     public int chestDuelFreeWeeks = 0;
+    // Round 813 (the Temple's Wrath, util/WrathHunt; ConfigData.wrathHuntEnabled): the hunted color's week. Per-difficulty
+    // switches are Easy, Normal, Hard, Insane (1 on, 0 off). wrathAheadBrackets: the hunted color's land rolls this many
+    // rank brackets of spawn_tier_weighting.json above the week's (0 off); wrathAheadDungeonSources: its dungeons' roamers
+    // too. The bounty: duels the Temple counts, won against a foe with the hunted color, pay this share more gold and
+    // shards, rounded up. All off by default, so a stock plane is unchanged.
+    public int[] wrathAheadOnDifficulty = {0, 0, 0, 0};
+    public int wrathAheadBrackets = 0;
+    public boolean wrathAheadDungeonSources = false;
+    public int[] wrathBountyOnDifficulty = {0, 0, 0, 0};
+    public float wrathBountyGold = 0f;
+    public float wrathBountyShards = 0f;
 
     // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
     // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". Same

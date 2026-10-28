@@ -124,6 +124,9 @@ public class ConfigData {
     // Round 719: hold Alt (R3 on a controller, the HUD's Units toggle on touch) and every enemy in sight wears an info
     // plate - its rank, and its colors and starting life as far as the player has battled it (util/TfrPlates).
     public boolean enemyInfoPlatesEnabled = false;
+    // Round 813: the Temple's Wrath - with a Temple in the Capitol, the week's most-killed color is hunted the next week:
+    // its land's spawns roll a bracket ahead and its foes pay a bounty (util/WrathHunt; numbers in TuningData wrath*).
+    public boolean wrathHuntEnabled = false;
     // Round 723: the Adventure screens' labels and buttons in the duel screen's clean font (util/TfrFonts), with a
     // Font: Clean/Pixel choice in Settings. Off here, so a stock plane keeps LanaPixel.
     public boolean cleanFontEnabled = false;

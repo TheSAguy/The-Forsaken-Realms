@@ -257,7 +257,7 @@ public final class DungeonSources {
         if (biome == null)
             return null;
         for (int attempt = 0; attempt < 6; attempt++) {
-            EnemyData e = biome.getEnemy(rank, false, null); // the ordinary roll - no war champions, tiers as usual
+            EnemyData e = WrathHunt.dungeonSourceRoll(() -> biome.getEnemy(rank, false, null)); // the ordinary roll - no war champions, tiers as usual (a hunted land's a bracket ahead, round 813)
             if (e != null && !isSpecial(e))
                 return new Pick(e, color + (!living.isEmpty() ? " (its " + living.size() + " living not due this week)"
                         : " (not visited" + (hasRoster(poi) ? ", only special ones left" : "") + ")"));
@@ -276,7 +276,7 @@ public final class DungeonSources {
     static EnemyData byWeekTier(World world, List<EnemyData> living, String color, Random rand) {
         if (!SpawnTierWeighting.isEnabled())
             return living.get(rand.nextInt(living.size()));
-        int week = SpawnTierWeighting.currentWeek(world);
+        int week = WrathHunt.spawnWeek(color, SpawnTierWeighting.currentWeek(world), true); // round 813: hunted land
         Map<String, Integer> perTier = new java.util.HashMap<>();
         for (EnemyData e : living)
             perTier.merge(e.tier, 1, Integer::sum);

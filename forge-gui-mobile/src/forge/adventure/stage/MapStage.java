@@ -2714,6 +2714,7 @@ public class MapStage extends GameStage {
         // half on a lair's return visits - and a boss down in a lair is what lets the walk-out count as a clear
         // (DungeonRotation.onLairExit()).
         PlaceRewards.filterDuelPayout(loot, currentMob);
+        forge.adventure.util.WrathHunt.applyBounty(loot, currentMob); // round 813: the hunted color's bounty
         if (currentMob.getData() != null && currentMob.getData().boss)
             DungeonRotation.onLairBossDefeated(TileMapScene.instance().rootPoint, currentMob.getData().getName(), false);
         // Bronze Coin ransom reclaim as a visible loot tile (user request 2026-09-01) - the

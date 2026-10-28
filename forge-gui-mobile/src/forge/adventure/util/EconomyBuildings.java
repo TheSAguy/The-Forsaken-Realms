@@ -1107,6 +1107,8 @@ public class EconomyBuildings {
         changes.getMapFlags().remove("shopRebuilt_" + objectId);
         if (type == OUTLOOK)
             onOutlookChanged(outlookRadiusBefore);
+        if (type == TEMPLE && !TempleOfferings.capitolHasTemple())
+            WrathHunt.onTempleGone(); // round 813: no Temple, no hunt
     }
 
     private static int currentTownVisionRadius() {

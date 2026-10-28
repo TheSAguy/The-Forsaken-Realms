@@ -590,6 +590,19 @@
     // chest rolls Dangerous Enemy and no diamond rolls its ambush; the other outcomes keep their odds. 0 = never.
     "chestDuelFreeWeeks": 1,
 
+    // Round 813 (the Temple's Wrath): with a Temple in the Capitol, the week's most-killed color is hunted the next week.
+    // Per-difficulty switches are Easy, Normal, Hard, Insane (1 on, 0 off) - Easy gets the bounty only.
+    // wrathAheadBrackets: the hunted color's land rolls this many rank brackets above the week's (spawn_tier_weighting.json
+    // weekBrackets; 0 = off); wrathAheadDungeonSources: the roamers its dungeons send too.
+    "wrathAheadOnDifficulty": [0, 1, 1, 1],
+    "wrathAheadBrackets": 1,
+    "wrathAheadDungeonSources": true,
+    // The bounty: duels the Temple counts (no Arena or Inn), won against a foe with the hunted color, pay this share more
+    // gold and shards, rounded up (0.25 = +25%).
+    "wrathBountyOnDifficulty": [1, 1, 1, 1],
+    "wrathBountyGold": 0.25,
+    "wrathBountyShards": 0.25,
+
     // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
     // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". The
     // duel carries no ante and waives the defeat gold penalty, so this fee is the entire cost of a

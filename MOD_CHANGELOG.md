@@ -14264,6 +14264,68 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 813: the Temple's hunted color - the week's most-killed color is hunted the next week: its land spawns a rank bracket ahead and its foes pay a +25% bounty (2026-10-28)
+
+The user, in the TFR 1 main thread: "I want to implement something, when you built a temple. Where the current color
+that has been 'killed' the most does something", then, on the design (`notes/temple-wrath-design-813.md`): "approve
+with all five recommendations - one bracket ahead; Archmage hunter from week 7 on Normal, week 4 on Hard/Insane; Easy
+gets the bounty only; a destroyed Temple ends the hunt; build as 813 then 814. Speed is player +5%." This round is the
+first half: the hunted color, the spawns ahead and the bounty. Round 814 adds the Wrath hunter itself.
+
+- **The hunted color** (`util/WrathHunt.java`, new; `ConfigData.wrathHuntEnabled`, on in TFR's `config.json`). When a
+  week turns (`TempleOfferings.onDaysPassed`, right after the offering is paid) and the Capitol has a Temple, the closed
+  week's first color in the tally is hunted for the new week. The tally splits multicolor kills and breaks ties in WUBRG
+  order, as the offering does.
+  - A week with no kills hunts nobody.
+  - The state lives on the World (`wrathColor`, `wrathWeek`, `wrathStatus`; new save keys, absent on older saves). It
+    holds only for the week it was set in, so a missed turn lets it lapse.
+  - An older save whose Temple already stands gets its first hunt at the next week turn. New Game+ starts clean.
+  - Notices: "Red is hunted. Its land sends stronger foes this week." and "Red's bounty this week: red foes pay +25%
+    [gold] and [shards]."
+- **Spawns ahead.** Spawn ranks come from week brackets (1, 2-3, 4-6, 7-10, 11-15, 16-20, 21+). The design found that
+  literal next week changes the row only in a bracket's last week, so the hunted color's land rolls the NEXT BRACKET's
+  row (`wrathAheadBrackets: 1`). Week 2-3 on red land reads 65/24/10/1 instead of 78/18/4/0. Week 21+ has no row above.
+  - Hooks: `BiomeData.getEnemy` (the world map's roaming roll, `withInjectedSpawns`, never inside a place) and
+    `DungeonSources` (a dungeon's roamers: the inhabitants' roll and the ordinary-roll fallback, marked with
+    `WrathHunt.dungeonSourceRoll`).
+  - Not ahead: re-themed or fallback placements inside places, and the castles' attack mages.
+  - The territory row, the difficulty factors, Notoriety's tilt and the win-ratio shift apply on top as before. The
+    lifetime-win rank gate is untouched.
+  - Off on Easy (`wrathAheadOnDifficulty: [0, 1, 1, 1]`).
+- **The bounty.** The Temple tally's duels (the player's own wins: no Arena, Inn, fixed-deck or guard fight), won
+  against an enemy whose colors include the hunted one (a multicolor foe counts in full), pay +25% gold and shards,
+  rounded up (`wrathBountyGold` / `wrathBountyShards: 0.25`, `wrathBountyOnDifficulty: [1, 1, 1, 1]`).
+  - `DuelScene` marks the win (`WrathHunt.onDuelEnded`, beside `TempleOfferings.recordKill`).
+  - The loot sites raise it: `WorldStage.setWinner` after `PlaceRewards.filterWorldPayout`, and `MapStage.getReward`
+    after `filterDuelPayout`. This is Ascendance's pending-Power pattern.
+  - A mark that reaches no loot screen is dropped and logged.
+- **Easy** gets the bounty only (no spawns ahead; no hunter in 814).
+- **A destroyed Temple ends the hunt at once** (`EconomyBuildings.destroyBuilding` -> `WrathHunt.onTempleGone`). Notice:
+  "Without the Temple, Red is no longer hunted."
+- **Logs** `[TFR-Wrath]`:
+  - `week 4: red is hunted (R 6 of 12.5 kills, 1st) - spawns ahead yes (+1 bracket), bounty +25% gold / +25% shards (Normal)`;
+  - `no kills in week 3 - nobody hunted`, `no Temple - no hunt`, `red's hunt (week 3) is over`;
+  - `spawn ahead: red land rolls week 4's row (bracket 4-6) in week 2` (once per land and week; also `... is already at the last bracket`);
+  - `bounty: Ember Witch (RG) gold 64 -> 80, shards 3 -> 4`, `bounty for X dropped`;
+  - `the Temple was destroyed - red's hunt ends`.
+- **Console** `wrath` (report), `wrath start <color> [force]` (hunts that color this week; `force` skips the Temple
+  check), `wrath stop`.
+- **Settings** (`config tables/settings.json`): `wrathAheadOnDifficulty`, `wrathAheadBrackets`, `wrathAheadDungeonSources`,
+  `wrathBountyOnDifficulty`, `wrathBountyGold`, `wrathBountyShards`. Stock defaults are all off.
+- **GUIDE**: a "Wrath" bullet in The Temple section (GUIDE.md and GUIDE.html).
+- **Tested** in a test copy of the agent game (`agent-813`, removed afterward), with every duel at 50x:
+  - A Temple built through the Capitol's Utility lot. Week 1: three red Goblin Worker wins, no bounty yet.
+  - Day 8's week turn: `[TFR-Wrath] week 2: red is hunted (R 3 of 3 kills, 1st) - spawns ahead yes (+1 bracket), bounty
+    +25% gold / +25% shards (Normal)`. Both Notices lines show, glyphs included.
+  - Spawns ahead: `spawn ahead: red land rolls week 4's row (bracket 4-6) in week 2`. `spawnroll` 2x4000 at rank 1 gave
+    Apprentice/Adept/Master/Archmage 41/33/26/0% on red land against 57/30/12/0% on green land. Archmage stays 0: the
+    rank gate is unchanged.
+  - Bounty: `Goblin Worker (R) gold 23 -> 29`, `Boggart (GR) gold 33 -> 42`. Those Apprentices drop no shards, so the
+    shard half was not seen in play.
+  - Destroying the Temple ended the hunt with its notice. Loading a save from before the destroy brought the hunt back,
+    so the save keys round-trip.
+  - Easy was not run in game; it is a per-difficulty array check.
+
 ## Round 812: themed enemy groups in the gauntlets - one of 4-5 groups per appearance, never the same twice running (2026-10-28)
 
 The user, in the TFR 1 main thread: "For the Gauntlet dungeons, let's keep the layouts. but can we increase the enemy

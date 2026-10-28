@@ -1046,6 +1046,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         Array<Reward> loot = currentMob.getRewards();
                         // Round 302: an enemy's +Life is paid once per game, out here as well (PlaceRewards).
                         forge.adventure.util.PlaceRewards.filterWorldPayout(loot, currentMob);
+                        forge.adventure.util.WrathHunt.applyBounty(loot, currentMob); // round 813: the hunted color's bounty
                         if (treasureRegion >= 0) // round 478: the treasure rides in the guardian's own rewards
                             forge.adventure.util.TreasureHunt.onGuardianBeaten(treasureRegion);
                         forge.adventure.util.TownPillage.onRaiderBeaten(currentMob); // round 484: a pillaged town's raider

@@ -38,6 +38,27 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 813 - the Temple's hunted color (spawns a bracket ahead, a bounty)
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** (STOCK): three fields `wrathColor` / `wrathWeek` /
+  `wrathStatus` with getters and `setWrath`, saved and loaded as optional keys next to `templeKills`, and cleared in the
+  new-world reset (New Game+). On a merge, keep them beside round 559's Temple keys.
+- **`forge-gui-mobile/src/forge/adventure/data/BiomeData.java`** (STOCK): `getEnemy(float, boolean, Boolean)` - after
+  `int week = SpawnTierWeighting.currentWeek(world);`, a roaming roll (`withInjectedSpawns`, or a
+  `WrathHunt.dungeonSourceRoll`) outside a place takes `week = WrathHunt.spawnWeek(name, week, ...)` (5 lines). On a merge,
+  keep it before the tier targets are read.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): `afterGameEnd` calls
+  `WrathHunt.onDuelEnded(...)` right after round 559's `TempleOfferings.recordKill`, with the same duel test (3 lines).
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** (STOCK): `setWinner`'s win branch calls
+  `WrathHunt.applyBounty(loot, currentMob)` after `PlaceRewards.filterWorldPayout` (1 line).
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK): `getReward()` calls
+  `WrathHunt.applyBounty(loot, currentMob)` after `PlaceRewards.filterDuelPayout` (1 line).
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK): the `wrath` command, beside
+  `notorietycard` (1 registration).
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** (STOCK): `wrathHuntEnabled` (default false).
+- TFR files: `util/WrathHunt.java` (new), `util/TempleOfferings.java` (`onDaysPassed` calls `WrathHunt.onWeekTurn`),
+  `util/EconomyBuildings.java` (`destroyBuilding` -> `WrathHunt.onTempleGone` for the Temple), `util/DungeonSources.java`
+  (both rolls a bracket ahead on the hunted land), `data/TuningData.java` (the `wrath*` keys).
+
 ### Round 812 - themed enemy groups in the gauntlets
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK): `case "enemy"` - right after
   `WorldData.getEnemy(...)`, an object with a `gauntletSlot` property takes `GauntletGroups.resolve(rootPoint, changes,

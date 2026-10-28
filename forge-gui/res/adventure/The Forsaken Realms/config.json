@@ -307,6 +307,7 @@
     "contentFilterTablesEnabled": true,
     "showEnemyTierInName": true,
     "enemyInfoPlatesEnabled": true,
+    "wrathHuntEnabled": true,
     "cleanFontEnabled": true,
     "weightedSpawnTiersEnabled": true,
     "functioningNeutralTownsEnabled": true,

@@ -110,8 +110,11 @@ public final class TempleOfferings {
         int tallied = world.getTempleWeek();
         if (tallied == week)
             return;
-        if (tallied >= 0 && tallied < week)
+        boolean closed = tallied >= 0 && tallied < week;
+        float[] kills = closed ? world.getTempleKills().clone() : new float[LETTERS.length];
+        if (closed)
             pay(world.getTempleKills(), tallied);
+        WrathHunt.onWeekTurn(kills, closed ? tallied : -1, week); // round 813: the closed week's top color is hunted
         java.util.Arrays.fill(world.getTempleKills(), 0f);
         world.setTempleWeek(week);
     }
