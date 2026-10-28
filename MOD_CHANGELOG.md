@@ -14264,6 +14264,107 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 794: every enemy deck carries at least one Notoriety-eligible permanent - 72 decks get one card (2026-10-27)
+
+The user: "can we tweak decks with 'Decks with no eligible card' so they have a card. Just add 1 card to each to make
+it eligible." Round 793 gives an enemy at Notoriety 50+ one random permanent from its own deck; a deck with no eligible
+card fell back to the 3/6 flying Wall (`notes/notoriety-deck-permanents-proposal.md`). Ships with 1.25 alongside
+round 793. Data only: no Java, no `enemies.json`.
+
+- **Eligible** = a creature, artifact or enchantment of mana value 1-3; no land, planeswalker, battle, Aura, Saga or
+  Room; no X, not 0 toughness; not on the ban or commander-only list; a non-creature must do something on the
+  battlefield; rarity (the card's lowest normal printing) at or under the rank's cap - Apprentice common, Adept
+  uncommon, Master rare, Archmage mythic. A deck shared by several enemies or ranks was checked at its strictest rank.
+- **Each pick** also has no enter-the-battlefield trigger (stays eligible if round 793 drops ETB cards), sits in the
+  deck's colors and theme, and is a modest card - none of the proposal's "strongest picks". One copy, added at the end
+  of `[Main]`, plain card name, each file's encoding and line endings kept.
+- **Counts** (per the proposal's deck instances): family decks 21 Apprentice / 23 Adept / 8 Master -> 0 / 0 / 0;
+  unique decks 4 Apprentice / 6 Adept / 8 Master / 2 Archmage -> 0 / 0 / 0 / 0. 72 `.dck` files in all.
+- **`mystery_list.dck`** (the Mysterious Mage's 99-Wastes joke deck with a commander) went to 98 Wastes + 1 Alloy Myr,
+  so it stays 100 cards; every other deck grew by one card.
+- **Generated (`.json` template) decks** were not changed. An estimate from the template buckets (colors, tribe,
+  rarity share, mana-value bands) says three can roll a zero pool often enough to matter: `standard_djinn_apprentice`
+  (about 60%: Djinn subtype only, almost no common Djinn at 1-3), `standard/hydra.json` (Archmage, about 6%) and
+  `standard/golem_good.json` (Archmage, about 3%); four more are under 1% (angel, golem, wurm, troll Apprentice). Those
+  keep the Wall fallback.
+- `validate_plane_data.py`: no deck issues (its 4 categories are the existing enum, footprint, starter-bucket and
+  `commanderOnlyCards` notes).
+
+| Deck | Rank | Added |
+|---|---|---|
+| `elite/king_rohgahh.dck` | Apprentice | Boggart Brute |
+| `legends/alhammarret.dck` | Master | Jace's Erasure |
+| `legends/axelrod_gunnarson.dck` | Master | Hypnotic Specter |
+| `legends/balefang.dck` | Master | Dragon Hatchling |
+| `legends/gwendlyn_di_corci.dck` | Master | Royal Assassin |
+| `legends/johan.dck` | Master | Sidewinder Naga |
+| `legends/memnarch.dck` | Master | Myr Galvanizer |
+| `legends/mystery_list.dck` | Apprentice | Alloy Myr |
+| `legends/rosnakht.dck` | Apprentice | Satyr Hoplite |
+| `legends/torsten.dck` | Master | White Knight |
+| `legends/umori.dck` | Adept | Sludge Crawler |
+| `miniboss/Vaevictis Asmadi.dck` | Adept | Pit Scorpion |
+| `miniboss/recaller_of_ancestry.dck` | Master | Fyndhorn Elves |
+| `miniboss/shandalar97_dark_ages_preacher.dck` | Adept | Order of the White Shield |
+| `standard/blackwizard_medium_demonicpact.dck` | Adept | Daggerclaw Imp |
+| `standard/bluewizard_medium_donate.dck` | Adept | Talisman of Progress |
+| `standard/nightmare.dck` | Archmage | Nightveil Sprite |
+| `standard/the_reaper.dck` | Archmage | Reassembling Skeleton |
+| `standard/wc97_janosch_kuhn.dck` | Adept | Prodigal Sorcerer |
+| `standard/wc98_randy_buehler.dck` | Apprentice | Prodigal Sorcerer |
+| `tiers/elite_sun_titan_adept.dck` | Adept | Suntail Hawk |
+| `tiers/elite_sun_titan_apprentice.dck` | Apprentice | Suntail Hawk |
+| `tiers/elite_sun_titan_master.dck` | Master | Suntail Hawk |
+| `tiers/legends_codie_adept.dck` | Adept | Manalith |
+| `tiers/legends_codie_apprentice.dck` | Apprentice | Manalith |
+| `tiers/legends_codie_master.dck` | Master | Manalith |
+| `tiers/standard_banditarcher_damage_adept.dck` | Adept | Firebrand Archer |
+| `tiers/standard_banditarcher_damage_apprentice.dck` | Apprentice | Firebrand Archer |
+| `tiers/standard_banditarcher_damage_master.dck` | Master | Firebrand Archer |
+| `tiers/standard_cerodon_apprentice.dck` | Apprentice | Solitary Camel |
+| `tiers/standard_challenger_20_allied_fires_master.dck` | Master | Talisman of Creativity |
+| `tiers/standard_challenger_22_dimir_control_adept.dck` | Adept | Brineborn Cutthroat |
+| `tiers/standard_chimera_apprentice.dck` | Apprentice | Elvish Mystic |
+| `tiers/standard_cloaked_old_man_2_r111_adept.dck` | Adept | Reassembling Skeleton |
+| `tiers/standard_cloaked_old_man_2_r111_apprentice.dck` | Apprentice | Dregscape Zombie |
+| `tiers/standard_cloaked_old_man_2_r111_master.dck` | Master | Gravecrawler |
+| `tiers/standard_corrupted_treant_adept.dck` | Adept | Treefolk Seedlings |
+| `tiers/standard_devil_m_apprentice.dck` | Apprentice | Footlight Fiend |
+| `tiers/standard_djinn_tarkir_apprentice.dck` | Apprentice | Jeskai Windscout |
+| `tiers/standard_dragonkin_g_apprentice.dck` | Apprentice | Dragon Hatchling |
+| `tiers/standard_drake_ur_beginner_apprentice.dck` | Apprentice | Wind Drake |
+| `tiers/standard_drake_ur_mid_apprentice.dck` | Apprentice | Thermo-Alchemist |
+| `tiers/standard_foul_gouger_adept.dck` | Adept | Dragon Engine |
+| `tiers/standard_geistmage_adept.dck` | Adept | Spectral Sailor |
+| `tiers/standard_geistmage_master.dck` | Master | Spectral Sailor |
+| `tiers/standard_hellion_adept.dck` | Adept | Hellspark Elemental |
+| `tiers/standard_hex_witch_apprentice.dck` | Apprentice | Cuombajj Witches |
+| `tiers/standard_inn_inn_falkenrath_easy_adept.dck` | Adept | Bloodcrazed Neonate |
+| `tiers/standard_lightning_elemental_adept.dck` | Adept | Spark Elemental |
+| `tiers/standard_manticore_adept.dck` | Adept | Ember Hauler |
+| `tiers/standard_manticore_apprentice.dck` | Apprentice | Vithian Stinger |
+| `tiers/standard_ooze_monogreen_adept.dck` | Adept | Corrosive Ooze |
+| `tiers/standard_penguin_adept.dck` | Adept | Aven Wind Mage |
+| `tiers/standard_phyrexian_f_apprentice.dck` | Apprentice | Vault Skirge |
+| `tiers/standard_prototype_blue_apprentice.dck` | Apprentice | Augmenting Automaton |
+| `tiers/standard_prototype_blue_master.dck` | Master | Ashnod's Harvester |
+| `tiers/standard_rhino_adept.dck` | Adept | Garruk's Companion |
+| `tiers/standard_rhino_apprentice.dck` | Apprentice | Garruk's Companion |
+| `tiers/standard_roshnakhtheroic_adept.dck` | Adept | Kobold Taskmaster |
+| `tiers/standard_sandgolem_apprentice.dck` | Apprentice | Wall of Forgotten Pharaohs |
+| `tiers/standard_sandwurm_adept.dck` | Adept | Sidewinder Naga |
+| `tiers/standard_sandwurm_apprentice.dck` | Apprentice | Frilled Sandwalla |
+| `tiers/standard_shandalar97_blue_thoughtinvoker_adept.dck` | Adept | Apprentice Wizard |
+| `tiers/standard_shandalar97_dementia_beast_adept.dck` | Adept | Carrion Feeder |
+| `tiers/standard_slow_turtle_adept.dck` | Adept | Horned Turtle |
+| `tiers/standard_slow_turtle_apprentice.dck` | Apprentice | Giant Tortoise |
+| `tiers/standard_sun_titan_adept.dck` | Adept | Sunspire Griffin |
+| `tiers/standard_sun_titan_apprentice.dck` | Apprentice | Sunspire Griffin |
+| `tiers/standard_sun_titan_master.dck` | Master | Sunspire Griffin |
+| `tiers/standard_wanderingtreefolk_apprentice.dck` | Apprentice | Bosk Banneret |
+| `tiers/standard_wraithswampwalk_adept.dck` | Adept | Lost Soul |
+| `tiers/standard_yeti_adept.dck` | Adept | Barbary Apes |
+
 ## Round 792: the Android download prompt tells the real sizes - 430MB of game data, a 16MB update (2026-10-27)
 
 The user: "Yes, round 792: the Android asset prompt shows the real download size (about 415 MB) and APK size (about
