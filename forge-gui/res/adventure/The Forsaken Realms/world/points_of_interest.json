@@ -2034,7 +2034,8 @@
 			"Hostile",
 			"Dungeon",
 			"Fort",
-			"Sidequest"
+			"Sidequest",
+			"ClearNeedsAll"
 		]
 	},
 	{

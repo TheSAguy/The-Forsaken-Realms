@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 807: the Mages' Fort counts as cleared only once its ward wizards are down too (2026-10-28)
+
+The user, on round 806's audit: "Yes: opt the Mages' Fort into the 806 rule, so it only counts as cleared once its ward
+wizards are down too. Its own small round." The Fort's five ward wizards (Adept Black, Green, White, Red and Blue Wizard) each have
+a defeatDialog that advances `enemiesDefeated` and removes them; the clear tests skipped them, so the Fort counted as
+clear - its timer cut, a despawn on the walk-out once looted - once its three ordinary enemies were down.
+
+- `points_of_interest.json`: Fort2 gets the questTag **ClearNeedsAll** (round 806's opt-in), so its ward wizards hold
+  its clear like any enemy. Its ward still opens on `enemiesDefeated >= 5` as before.
+- **Seen in the same test package as round 806**: with the Arcane Golem, the Apprentice Black Wizard and four ward
+  wizards removed by console, beating the Human Raider (the Cathar's re-theme) logged no PlaceClear - the Blue Wizard
+  held the clear, where before this round that win cleared the Fort; beating the Blue Wizard (Adept) then logged
+  "every enemy is down". The ward offered only Leave before its count and "Place your hand on the barrier" at
+  `enemiesDefeated >= 5`, which removed it.
+
 ## Round 806: a gauntlet's enemies hold its clear - one kill no longer counts as "every enemy is down" (2026-10-28)
 
 Found by round 804's agent test: right after the first Apprentice fell, the Dawn Cathedral logged `[TFR-PlaceClear]
