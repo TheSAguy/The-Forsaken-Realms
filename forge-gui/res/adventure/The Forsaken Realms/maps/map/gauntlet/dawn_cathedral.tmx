@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="40" height="52" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="1000">
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <layer id="1" name="Background" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJzt1DERwDAQA0EjC1DbYMMhjX6ULZbAFbeftTaf3eH2cGe4dB/+Lf0Pf/EXeqX/4S/+Qq/0P/zFX+iV/oe/+Au90v/wF3+hV/of/uIv9LrDvV7e3vM=
+  </data>
+ </layer>
+ <layer id="2" name="Floor" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJzt10sKAjEMxvH/EQIKvh09RbeTMyr4flxEvZorcRbiVKO2g/ltU8i3aBMKzj3WU+grDBSGCiOFsUKhMNF7PZWVwlpho7BV2CnsFQ4KR73XXZxWgHYgW7MA84zzOffvnu2MmJ2ScmfE7BTXTCehPAvlRSjJUCEwEZgKWfJ8+earm7kxTgJngYt8vnfdzP2mlL1z+qNV71/M+Vv9V3+0ar6Y87f6KzoBuiHN+43pvQiwTJTP0jvGP8/nT3h3PrtmyP3+eT4bz2fj+Ww8n43ns/F8Np7PxvNh8q3/xxXSnmnV
+  </data>
+ </layer>
+ <layer id="3" name="Ground" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztmV0OgjAQhPfdcgLgYnoW9VpE4W6GxCbadOkudFl/ZpN50ND0k5bZoQ6BaIB216khugWZjs3+fH0gcbUO9w984AMfrykQXQ7vuiafo0YHvi6jnvm+c+Dj1vyT+8bduY/MbDPDlrJirMFmxViTzYJR43Uengg+8P0zH9cTogfkskBOXD5YygyluZfuT/yNXM/X5AMuM5Tmll4j3Qe19o6Eby7pO6QkH3BjtvB5Ffi2Ffjs+c4Kv9X68+uYtXyt0m+1/hzHfLs/c/11VJ75Sfw5zfWSuUs9suZzlK6JdO69cpblWQz4wAc+8IEPfGu09J4ec1wpM1qe5UtynCQzWvFJ1t7jv5hf4Juee7P2/noA6dK3ag==
+  </data>
+ </layer>
+ <layer id="5" name="Ring" width="40" height="52">
+  <data encoding="base64" compression="zlib">
+   eJztl0EOgzAQAzlT/tC3lj614h+9NCpCaONk12xa2VJuYCaEOGaapAytt7aRwce4Nkri80l8/893HNs8Tr4c9fhwPAdgOdNr/r7DbAZrDWvnCIu/sHl0XziMEWxMxuj9VxijxMgH8Y3jKb5xvHo8vWcC0g96vGtzaZljbz9Anm1dg+Z8Tz+wziWEr+R81Hq19EKEL1Pi80l8fL5an/fms5VHaP6heduTz+UeDx/7/w3lQ/IzKp9Rz1ZF7CPmXhRfvrf48j2Y3uLL92B6iy/fw/Ku9TikM16tfY9r7YBXac83otYf4GN8X29zZqsg
+  </data>
+ </layer>
+ <layer id="6" name="Clutter" width="40" height="52">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1c0RgjAQhuG3CD1pA8kFyEUb0C7YcqxAy4NavHhgRvEnJEHxe07MLOzuhJ0siEgOK4O1xcdzOxtcLD4uIiLpbTxs/Xi8a6BvwDnwrkxPw32187B/0l8bwAIcHBxdmX33yb7qAvQh/nsRWZaSd2lM7eFdWtqctVM4vYin2E3v5njVyyMpdpP223xi/vk/9CLfw6rpOdoEOcb0FbQ1WH2rNXi+62PkvS5jf79g6vnlpPlbPs1fPM2fiLAgV+jqPbY=
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="40" height="52" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJzt12EKwCAIgFEv0f076i7gKqu11O9BsB9CzsRIBNDVMrbIz6defagfAIveHP57Vt+eX7S742TdLHtpsZwxPLp5nnrIz4vWzBp9B1nitTOczfnr/KLb8b/ZagYgjre7ohWrfWe2Wr/M6L919N88+g+ABPIAQv2JKw==
+  </data>
+ </layer>
+ <objectgroup id="20" name="Objects">
+  <object id="1" template="../../../../common/maps/obj/entry_up.tx" x="288" y="832" width="48" height="32">
+   <properties>
+    <property name="teleport" value=""/>
+   </properties>
+  </object>
+  <object id="2" template="../../../../common/maps/obj/enemy.tx" x="224" y="633.6">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Halo Warden|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" template="../../../../common/maps/obj/enemy.tx" x="384" y="665.6">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Halo Warden|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" template="../../../../common/maps/obj/enemy.tx" x="272" y="697.6">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletApprentice&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Halo Warden|Common"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" template="../../../../common/maps/obj/gate.tx" x="304" y="528">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A veil of white light bars the way. It will not part while the three Apprentices of the nave still stand.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;With the nave silent, the veil of light thins to nothing.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletApprentice&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 3
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="56" y="486.4">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Halo Warden|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="552" y="486.4">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletAdept&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Halo Warden|Uncommon"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="8" template="../../../../common/maps/obj/gate.tx" x="304" y="384">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;A second veil, brighter than the first. Beyond it, the Adepts of the two chapels keep their vigil.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;Both chapels are still. The veil fades.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletAdept&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 2
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="312" y="329.6">
+   <properties>
+    <property name="defeatDialog">[
+ {
+  &quot;action&quot;: [
+   {
+    &quot;advanceMapFlag&quot;: &quot;gauntletMaster&quot;
+   },
+   {
+    &quot;deleteMapObject&quot;: -1
+   }
+  ]
+ }
+]</property>
+    <property name="enemy" value="Halo Warden|Rare"/>
+    <property name="keepAuthored" type="bool" value="true"/>
+    <property name="threatRange" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="10" template="../../../../common/maps/obj/gate.tx" x="304" y="176">
+   <properties>
+    <property name="dialog">[
+ {
+  &quot;text&quot;: &quot;The reliquary is sealed in light. Its keeper, the Master of the apse, still stands.&quot;,
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Leave&quot;
+   }
+  ]
+ },
+ {
+  &quot;text&quot;: &quot;The keeper has fallen. The seal of the reliquary opens.&quot;,
+  &quot;condition&quot;: [
+   {
+    &quot;getMapFlag&quot;: {
+     &quot;key&quot;: &quot;gauntletMaster&quot;,
+     &quot;op&quot;: &quot;&gt;=&quot;,
+     &quot;val&quot;: 1
+    }
+   }
+  ],
+  &quot;options&quot;: [
+   {
+    &quot;name&quot;: &quot;Pass through&quot;,
+    &quot;action&quot;: [
+     {
+      &quot;deleteMapObject&quot;: -1
+     }
+    ]
+   }
+  ]
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="11" template="../../../../common/maps/obj/treasure.tx" x="312" y="121.6">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+    <property name="reward">[
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 4,
+  &quot;colors&quot;: [
+   &quot;white&quot;
+  ],
+  &quot;subTypes&quot;: [
+   &quot;Angel&quot;,
+   &quot;Cleric&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;randomCard&quot;,
+  &quot;count&quot;: 2,
+  &quot;rarity&quot;: [
+   &quot;rare&quot;
+  ],
+  &quot;colors&quot;: [
+   &quot;white&quot;
+  ]
+ },
+ {
+  &quot;type&quot;: &quot;gold&quot;,
+  &quot;count&quot;: 60,
+  &quot;addMaxCount&quot;: 40
+ },
+ {
+  &quot;type&quot;: &quot;shards&quot;,
+  &quot;count&quot;: 3,
+  &quot;addMaxCount&quot;: 3
+ },
+ {
+  &quot;type&quot;: &quot;item&quot;,
+  &quot;count&quot;: 1,
+  &quot;probability&quot;: 0.15,
+  &quot;itemName&quot;: &quot;Celestial Sword&quot;
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="12" template="../../../../common/maps/obj/gold.tx" x="208" y="576">
+  </object>
+  <object id="13" template="../../../../common/maps/obj/manashards.tx" x="416" y="752">
+  </object>
+  <object id="14" template="../../obj/stone.tx" x="32" y="544">
+  </object>
+  <object id="15" template="../../../../common/maps/obj/manashards.tx" x="592" y="544">
+  </object>
+  <object id="16" template="../../../../common/maps/obj/gold.tx" x="256" y="144">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="17" template="../../obj/wood.tx" x="368" y="144">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

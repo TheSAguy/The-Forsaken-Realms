@@ -2038,6 +2038,21 @@
 		]
 	},
 	{
+		"name": "GauntletDawnCathedral",
+		"displayName": "Dawn Cathedral",
+		"type": "dungeon",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+		"sprite": "GreyTemplePillared",
+		"map": "../The Forsaken Realms/maps/map/gauntlet/dawn_cathedral.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Dungeon",
+			"Gauntlet"
+		]
+	},
+	{
 		"name": "FortMultilevel",
 		"displayName": "Cultists' Outpost",
 		"type": "dungeon",

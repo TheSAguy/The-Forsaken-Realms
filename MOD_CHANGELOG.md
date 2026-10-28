@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 804: the first gauntlet dungeon - the Dawn Cathedral (2026-10-28)
+
+The first of the 18 gauntlet dungeons (the user, through the Art main thread: "3 Apprentices, 2 Adepts, and 1 master
+per dungeon, but they are all of the same enemy, just at the 3 levels. You need to go through the 3 Apprentices, then
+the 2 adepts then the master to get to a treasure chest"; approved 2026-10-28 with the tweak "make the dungeons feel a
+little more like each color/biome", and for this one: "make the nave and transept floor the same pale marble as the
+apse"). Round 798 laid the engine part. Design, concepts and the generator: the Art project's
+`notes/gauntlet_dungeons` (`concepts.md`, `tools/cathedral.py`). Ships with 1.25.
+
+- **The place**: `GauntletDawnCathedral` ("Dawn Cathedral", type dungeon, count 1, tags Hostile/Dungeon/Gauntlet),
+  listed in `biomes/white.json`, so it joins the rotation like any Hostile dungeon (20-40 days, five in the pool, one
+  visible). Entrance: `GreyTemplePillared` on `dungeon_entrances.atlas`, unused until now; it got the 1px outline
+  (round 657 rule, `poi_outline.py`; only its 32x32 region of the PNG changed; before/after in the Art Library).
+- **The map** `maps/map/gauntlet/dawn_cathedral.tmx` (40x52), a cruciform church: porch -> nave with pews and a red
+  carpet (3 Halo Warden Apprentices) -> Gate I -> transept with two chapels (an Adept in each) -> Gate II -> apse with
+  the organ, shrine and statues (the Master) -> Gate III -> reliquary (the chest). Pale marble floor throughout, the
+  church's grey stone walls, a white-and-blue marble frieze on the north walls. Every tile is from main, buildings and
+  dungeon_bis; wall faces and props block through an opacity-0 `Collision` layer of main 5536 (grove_7_snake's way).
+- **The ranks are pinned**: `enemy="Halo Warden|Common"` (and `|Uncommon`, `|Rare`) with `keepAuthored` - no tier roll, no
+  win-streak lift, no re-theme (rounds 345/643/647). The Adepts and the Master hold their posts (`threatRange -1`).
+- **The order**: each enemy's `defeatDialog` advances `gauntletApprentice` / `gauntletAdept` / `gauntletMaster` and
+  deletes it; each gate is a `gate.tx` dialog with two entries - the "still sealed" text, and a conditional one
+  (`getMapFlag >= 3 / 2 / 1`, the last passing entry wins in `MapDialog.activate`) whose option deletes the gate. Gates
+  sit in one-tile passages (a gate is one 16x16 tile).
+- **The chest** (`noGuard`): 4 White Angel/Cleric cards, 2 White rares, 60-100 gold, 3-6 shards, 15% Celestial Sword.
+  Pickups: gold x2, shards x2, stone, wood (the reliquary's two without a loot guard).
+- **validate_plane_data.py** knows "Name|Tier": the separator and the tier names are read from `EnemyTiers.java`
+  (`SEP`, `TIERS`), so it cannot drift; an unknown tier, an unknown name, or a name that is not a tier family (which
+  would load the catalog enemy silently) is reported as ref-enemy.
+- **Seen in a test package** (wt-804 at HEAD plus these files, `agent-804`, a copied profile, log sharing off, every
+  duel at 50x): the six placements logged `kept as authored (Halo Warden, Apprentice / Adept / Master)` with 13 / 22 /
+  28 life. Gate I refused ("A veil of white light bars the way...", only Leave) until three real Apprentice wins, then
+  offered "Pass through"; an Adept win counted; two Adept losses and a Master loss each logged "defeat at Dawn
+  Cathedral - it stays on the map: a gauntlet keeps its place..." (round 798), and on re-entry the beaten enemies and
+  the opened gate stayed gone. Gates II and III opened on their counts (the last two set by `set mapflag`); the chest
+  paid white cards (Noble Templar, Suture Priest, Katilda, Séance among them), gold and shards. Shots in the Art
+  project's `notes/gauntlet_dungeons/ingame`.
+- **Found by that test, fixed in round 806**: the clear tests skip every enemy with a defeatDialog, so after the first
+  Apprentice the cathedral counted as "every enemy is down" and its despawn was cut from day 30 to day 8; 804 is not
+  packaged without 806.
+
 ## Round 802: the `[TFR-Duel]` line logs the loser's life (2026-10-28)
 
 The user: "802 the duel line logs the loser's life." Round 777's summary line printed `enemyLife=?` on wins and `life=?

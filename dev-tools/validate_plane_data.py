@@ -368,6 +368,38 @@ quests, _ = load_json(os.path.join(PLANE, "world", "quests.json"))
 QUEST_IDS = set(str(q.get("id")) for q in (quests or []))
 enemies, _ = load_json(os.path.join(PLANE, "world", "enemies.json"))
 ENEMY_NAMES = set(e.get("name") for e in (enemies or []))
+# Round 804: a map may place a tier family at a fixed rank, "Name|Tier" (round 643's saved form, resolved by
+# WorldData.getEnemy -> EnemyTiers.resolveSaved; the gauntlet dungeons pin their ranks this way). The separator and
+# the tier names are read from EnemyTiers.java itself, so this check cannot drift from the game. An unknown tier, or a
+# name that is not a tier family, would silently load the catalog enemy (EnemyTiers.variant), so both are reported.
+_tiers_java = os.path.join(PLANE, "..", "..", "..", "..", "forge-gui-mobile", "src", "forge", "adventure", "util",
+                           "EnemyTiers.java")
+TIER_SEP, TIER_NAMES = None, []
+if os.path.exists(_tiers_java):
+    _src = open(_tiers_java, encoding="utf-8").read()
+    _m = re.search(r"char SEP\s*=\s*'(.)'", _src)
+    _t = re.search(r"String\[\] TIERS\s*=\s*\{([^}]*)\}", _src)
+    if _m and _t:
+        TIER_SEP, TIER_NAMES = _m.group(1), re.findall(r'"([^"]+)"', _t.group(1))
+_tier_families = (load_json(os.path.join(PLANE, "world", "enemy_tiers.json"))[0] or {}) \
+    if os.path.exists(os.path.join(PLANE, "world", "enemy_tiers.json")) else {}
+_enemy_by_name = {e.get("name"): e for e in (enemies or [])}
+
+def enemy_ref_problem(en):
+    """None when a map's enemy property names a real enemy (or a valid "Name|Tier"), else what is wrong."""
+    if en in ENEMY_NAMES:
+        return None
+    if TIER_SEP and TIER_SEP in en:
+        name, tier = en.rsplit(TIER_SEP, 1)
+        if name not in ENEMY_NAMES:
+            return "enemy '%s' not in enemies.json" % name
+        if tier.lower() not in [t.lower() for t in TIER_NAMES]:
+            return "tier '%s' of '%s' is not one of %s (EnemyTiers.TIERS)" % (tier, en, "/".join(TIER_NAMES))
+        fam = _tier_families.get(name)
+        if fam is None or len(fam.get("decks") or []) != len(_enemy_by_name[name].get("deck") or []):
+            return "'%s' is not a tier family in enemy_tiers.json, so '%s' would load the catalog enemy" % (name, en)
+        return None
+    return "enemy '%s' not in enemies.json" % en
 ENEMY_TAGS = set()
 for e in enemies or []:
     for t in e.get("questTags") or []:
@@ -763,8 +795,9 @@ for key, (path, tree) in parsed.items():
                     if otype:
                         TMX_OBJ_TYPES[otype] += 1
                     en = props.get("enemy")
-                    if en and en not in ENEMY_NAMES:
-                        issue("ref-enemy", "%s#%s: enemy '%s' not in enemies.json" % (rel(path), o.get("id"), en))
+                    problem = enemy_ref_problem(en) if en else None
+                    if problem:
+                        issue("ref-enemy", "%s#%s: %s" % (rel(path), o.get("id"), problem))
                     for k in ("commonShopList", "uncommonShopList", "rareShopList", "mythicShopList", "shopList", "rotation"):
                         v = props.get(k)
                         if v:
