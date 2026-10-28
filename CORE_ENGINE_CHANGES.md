@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 816 - a quit after an error never counts; the counter-tab text guard
+- **`forge-gui-mobile/src/forge/error/BugReportDialog.java`** (STOCK): `show()`'s round 815 block (now in braces) also
+  calls `DuelHeartbeat.onError("a crash report: " + text)`.
+- **`forge-gui-mobile/src/forge/Classic.java`** (STOCK): `render()`'s catch also calls
+  `DuelHeartbeat.onError("a render error: " + e)`.
+- **`forge-gui-mobile/src/forge/card/CardRenderer.java`** (STOCK): `drawText` (the counter and marker tab text) wraps
+  `glyphLayout.setText` .. `font.draw` in a try/catch(RuntimeException) - skip the text for the frame, log
+  `[TFR-Render]` once a launch (new static `textErrorLogged`) - with the blend disable moved into `finally`. Why: a null
+  glyph in libGDX's layout (NPE at `BitmapFont$Glyph.fixedWidth`) opened the crash dialog mid-duel; the cause is unproven.
+
 ### Round 815 - the log survives an interrupt; crash reports count in the session footer
 - **`forge-gui/src/main/java/forge/error/ExceptionHandler.java`** (STOCK, upstream's log slots): the slot loop now
   claims a slot with `Files.createFile` (atomic, as `CREATE_NEW` was), opens it as a `RandomAccessFile`, and locks it

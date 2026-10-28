@@ -55,6 +55,7 @@ public class Classic {
             else
                 e.printStackTrace();
             forge.adventure.util.SessionLog.onRenderError(e); // TFR round 815: counts in the session footer's errors=
+            forge.adventure.util.DuelHeartbeat.onError("a render error: " + e); // TFR round 816: a quit after never counts
             Forge.getGraphics().end();
         }
     }

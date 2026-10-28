@@ -331,6 +331,27 @@ public final class ReloadJab {
     }
 
     /**
+     * Round 816 (the 2026-10-28 log review, P2: a render crash mid-duel put up the bug-report dialog, the player closed
+     * the game, and the next load would have counted the quit - from 1.25 at -5 Notoriety), DuelHeartbeat.onError: an
+     * error during the player's duel. A quit after it is never counted (judgeMidDuelQuit). Kept as {@code duel.error} (what
+     * failed) and {@code duel.errorAt}; an older record has neither.
+     */
+    static void duelError(String what0) {
+        String what = what0 == null ? "?" : what0.trim().split("\\R", 2)[0];
+        if (what.length() > 200)
+            what = what.substring(0, 200) + "...";
+        synchronized (LOCK) {
+            Properties p = read();
+            if (p.getProperty("duel.seed") == null || p.getProperty("duel.error") != null)
+                return;
+            p.setProperty("duel.error", what);
+            p.setProperty("duel.errorAt", String.valueOf(System.currentTimeMillis()));
+            write(p, false);
+        }
+        System.out.println("[TFR-ReloadJab] an error during the duel (" + what + ") - a quit from here is not counted");
+    }
+
+    /**
      * DuelScene.GameEnd: the match is decided. A quit from here on (the loss or ante dialogs, before afterGameEnd records
      * it) is judged by this result, not by the pulse: a decided loss always counts.
      */
@@ -370,7 +391,7 @@ public final class ReloadJab {
 
     private static void clearDuel(Properties p) {
         for (String key : new String[]{"seed", "enemy", "startedAt", "lastChangeAt", "aliveAt", "waitingOn", "aiSince",
-                "loopBreak", "decided", "pausedAt", "notoriety"})
+                "loopBreak", "decided", "pausedAt", "notoriety", "error", "errorAt"})
             p.remove("duel." + key);
     }
 
@@ -398,11 +419,19 @@ public final class ReloadJab {
         boolean loop = "true".equals(p.getProperty("duel.loopBreak"));
         boolean notoriety = "true".equals(p.getProperty("duel.notoriety")); // round 795: absent (an older build's) = none
         String decided = p.getProperty("duel.decided");
+        String error = p.getProperty("duel.error"); // round 816: absent (an older build's, or no error) = none
+        long errorAt = longProp(p, "duel.errorAt");
         String facts = enemy + ", last change " + idle / 1000 + " s before the quit, waiting on "
                 + p.getProperty("duel.waitingOn", "?") + (thinking > 0 ? ", the AI thinking " + thinking / 1000 + " s" : "")
                 + (loop ? ", the LoopBreaker fired" : "") + (decided != null ? ", the match already " + decided : "")
                 + (pausedAt > 0 ? ", judged when the app was left" : "");
         clearDuel(p);
+        if (error != null) { // round 816: our crash, not the player's dodge - no count, no Notoriety, no honest reset
+            System.out.println("[TFR-ReloadJab] mid-duel quit judged after an error (" + facts + "; " + error
+                    + (errorAt > 0 && alive >= errorAt ? ", " + (alive - errorAt) / 1000 + " s before the quit" : "")
+                    + ") - not counted");
+            return null;
+        }
         boolean counted;
         if (decided != null)
             counted = decided.equals("lost");

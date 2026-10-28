@@ -1252,7 +1252,7 @@ such reload gives that world's enemies +1 life, up to +25 (Inn tournaments and y
 counted reload or mid-duel quit also costs the Notoriety the loss did (see
 [Enemies That Adapt to You](#enemies-that-adapt-to-you)).
 Take three losses in a row without reloading - moving on to another duel, or letting a day pass - and enemies lose
-1 of that bonus life; a counted reload starts those three over. Arena duels never count, lost or left. A world that
+1 of that bonus life; a counted reload starts those three over. Arena duels never count, lost or left. Closing the game after an error message in a duel never counts either. A world that
 was past +10 before version 1.25 keeps +10 and grows from there. The setting **I won't cheat by loading after a
 loss** (checked by default) is the switch: uncheck it and none of this happens - no counting, no extra life, no
 Notoriety cost and no notices - and checking it again picks up where your counts left off.

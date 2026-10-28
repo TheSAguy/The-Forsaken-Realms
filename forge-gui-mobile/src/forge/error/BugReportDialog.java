@@ -27,8 +27,10 @@ public class BugReportDialog extends FScreen { //use screen rather than dialog s
         if (isOpen || Forge.getCurrentScreen() == null) { return; } //don't allow showing if Forge not finished initializing yet
 
         isOpen = true;
-        if (showExitAppBtn) // TFR round 815: a crash report counts in the session footer's errors=
+        if (showExitAppBtn) { // TFR round 815: a crash report counts in the session footer's errors=
             forge.adventure.util.SessionLog.onCrashReport(text);
+            forge.adventure.util.DuelHeartbeat.onError("a crash report: " + text); // TFR round 816: a quit from here never counts
+        }
         Forge.openScreen(new BugReportDialog(title, text, showExitAppBtn));
     }
 

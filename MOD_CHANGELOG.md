@@ -14264,6 +14264,56 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 816: a quit after an error never counts, and a counter-tab text crash no longer stops the duel (2026-10-28)
+
+The user: "Yes: ... 816 a quit after an error dialog never counts (no Notoriety) plus a guard for the counter-tab
+crash. Package when my game is closed; ships with 1.25." From the 2026-10-28 log review (`notes/logs-1028b.md`, P2):
+player 343e2603's 11th duel with Red Dragonkin Renegade hit `NullPointerException ... BitmapFont$Glyph.fixedWidth` in
+`GlyphLayout.getGlyphWidth` <- `CardRenderer.drawText:1046` <- `drawCounterTabs:1020`. The crash dialog came up, the
+player closed the game, and round 783 logged "the app left mid-duel ... (last change 6 s ago)". The next load would
+have counted it as a quit, and from 1.25 (round 795) charged -5 Notoriety.
+
+- **The mark**: `DuelHeartbeat.onError(what)` (new) -> `ReloadJab.duelError(what)` (new) writes `duel.error` (the
+  first line of what failed, at most 200 characters) and `duel.errorAt` into the duel record, once a duel, with the
+  line `[TFR-ReloadJab] an error during the duel (<what>) - a quit from here is not counted`. It is called from:
+  - `BugReportDialog.show` (stock), when a crash report opens - next to round 815's `SessionLog.onCrashReport`;
+  - `Classic.render`'s catch (stock) - next to round 815's `SessionLog.onRenderError`.
+  The mark is armed only while a duel of this launch's own is on record (`DuelHeartbeat.start` arms it once
+  `ReloadJab.onDuelInProgress` wrote the record; it starts disarmed), so a crash before any duel never marks a record
+  left by the last session's quit. After the first mark it is a field read, as a render error can repeat every frame.
+- **The judge** (`ReloadJab.judgeMidDuelQuit`): a record with `duel.error` is "judged after an error - not counted",
+  whatever the pulse or the result says: no reload count, no Notoriety (rounds 795/801: `notorietyQuits` is not
+  touched), no honest-progress reset (796), no Notices line. Line: `[TFR-ReloadJab] mid-duel quit judged after an error
+  (<facts>; <what>, N s before the quit) - not counted`. This includes a quit at the result screen after a decided
+  loss, when the error came before the quit - the user's "never counts"; a crash cannot be called up at will.
+  `clearDuel` drops both keys. An older record has neither key, so it is judged as before; round 796's Settings switch
+  is untouched (opted out, no record is written, so nothing is marked).
+- **The guard** (`CardRenderer.drawText`, stock): the layout and the draw sit in a try; a `RuntimeException` skips that
+  counter or marker tab's text for the frame (the tab's box is already drawn), restores the blend state, and logs
+  `[TFR-Render] counter/marker text "<text>" skipped for a frame: <exception> (logged once a launch; the duel goes on)`
+  with its stack once a launch. The root cause is **not proven**: libGDX's `getGlyphs` never adds a null glyph, so a
+  null in a run points at the static `glyphLayout` or libGDX's shared run pool used from two threads at once - not
+  chased in this round.
+- **GUIDE**: "Reloading after a loss" - one sentence: closing the game after an error message in a duel never counts.
+  GUIDE.html regenerated.
+- **Tested** (the same test build and copy as round 815; every duel at 50x; evidence in `C:\TFR\notes\r816-agent.txt`, shots
+  `notes\r816-crash-dialog.png` and `notes\r816-guard-duel.png`). Base: slot 30 at Notoriety 30, reload count 17, one
+  Notoriety charge, paid. The test-only hooks were `tfrtest rendercrash <s>` (throws in `drawCardWithOverlays`, outside
+  the guard) and `tfrtest counternpe <n>` (the next n `drawText` calls throw an NPE inside the guard).
+  - **A crash report, then a kill**: a Goblin Worker duel, the crash 1 s in, and javaw killed as soon as the dialog
+    showed. The record was undecided, with the last change 0.3 s before the last pulse, so it would have counted. It
+    carried `duel.error`, with the line `[TFR-ReloadJab] an error during the duel (a crash report:
+    java.lang.IllegalStateException: ...)`. On loading slot 30: `mid-duel quit judged after an error (Goblin Worker,
+    last change 0 s before the quit, waiting on the AI; a crash report: ...) - not counted`. Notoriety stayed 30, the
+    count 17, and the charges 1.
+  - **An earlier run** where the AI finished the duel behind the dialog (`decided=won`) also judged "after an error".
+  - **The control**: a duel killed 2 s in with no crash counted as before - `18 (left mid-duel: ...)`, `notoriety 30
+    -> 25`, charges 2 and paid 2.
+  - **The guard**: with 400 forced NPEs, a real "+1/+1" tab logged `[TFR-Render] counter/marker text "+1/+1" skipped
+    for a frame: java.lang.NullPointerException: ...` once, and the duel ran to its end (`[TFR-Duel] won ... turns=19`)
+    with no crash dialog.
+  - **Not tested**: Android; the real libGDX NPE (it cannot be reproduced); `Classic.render`'s path; Sentry on.
+
 ## Round 815: the log keeps writing after an AI timeout, and the session footer counts crash reports (2026-10-28)
 
 The user: "Yes: 815 the log keeps writing after an AI timeout (and the footer counts render crashes) ... Package when

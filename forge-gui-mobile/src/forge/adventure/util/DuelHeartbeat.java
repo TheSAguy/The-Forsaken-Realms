@@ -54,6 +54,11 @@ public final class DuelHeartbeat {
     private static long lastWriteAt;
     /** Round 783: the app is paused (Forge.pause) - the pulse holds still until it resumes. */
     private static boolean paused;
+    /**
+     * Round 816: nothing to mark - no duel of this launch's own is on record, or its record carries its error already.
+     * True at launch, so a crash before any duel never marks a record left by the last session's quit.
+     */
+    private static volatile boolean errorMarked = true;
 
     private DuelHeartbeat() {
     }
@@ -76,8 +81,10 @@ public final class DuelHeartbeat {
     public static synchronized void start(HostedMatch hostedMatch, RegisteredPlayer humanPlayer, String enemyName,
                                           boolean notoriety) {
         stop();
+        errorMarked = true;
         if (hostedMatch == null || !ReloadJab.onDuelInProgress(enemyName, notoriety))
             return;
+        errorMarked = false;
         match = hostedMatch;
         human = humanPlayer;
         decided = null;
@@ -137,6 +144,22 @@ public final class DuelHeartbeat {
         lastWriteAt = 0;
         ReloadJab.duelPaused(0);
         System.out.println("[TFR-ReloadJab] the app came back mid-duel - the pulse goes on");
+    }
+
+    /**
+     * Round 816, BugReportDialog.show (a crash report) and Classic.render's catch: an error while the player's duel is
+     * on. The record says so once a duel, and the next load never counts a quit from here (ReloadJab.duelError). Not
+     * synchronized: a render error repeats every frame, so after the first one this is a field read.
+     */
+    public static void onError(String what) {
+        if (errorMarked)
+            return;
+        errorMarked = true;
+        try {
+            ReloadJab.duelError(what);
+        } catch (Throwable t) {
+            System.err.println("[TFR-ReloadJab] marking the duel's error failed: " + t);
+        }
     }
 
     private static synchronized void sample() {

@@ -1032,24 +1032,39 @@ public class CardRenderer {
             Gdx.gl.glEnable(GL_BLEND);
         }
         if (font != null && text != null && !text.isEmpty()) {
-            glyphLayout.setText(font, text);
+            try {
+                glyphLayout.setText(font, text);
 
-            float textHeight = glyphLayout.height;
+                float textHeight = glyphLayout.height;
 
-            if (h > textHeight) {
-                y += (h - textHeight) / 2;
-            }
+                if (h > textHeight) {
+                    y += (h - textHeight) / 2;
+                }
 
-            font.setColor(color);
-            // no wrapping: counter names and values are short and already sized to their box, and
-            // GlyphLayout.wrap throws IndexOutOfBoundsException on runs it cannot break
-            font.draw(g.getBatch(), text, g.adjustX(x), g.adjustY(y, 0), w, horizontalAlignment, false);
-
-            if (color.a < 1) {
-                Gdx.gl.glDisable(GL_BLEND);
+                font.setColor(color);
+                // no wrapping: counter names and values are short and already sized to their box, and
+                // GlyphLayout.wrap throws IndexOutOfBoundsException on runs it cannot break
+                font.draw(g.getBatch(), text, g.adjustX(x), g.adjustY(y, 0), w, horizontalAlignment, false);
+            } catch (RuntimeException e) {
+                // TFR round 816: a null glyph inside libGDX's layout (an NPE at BitmapFont$Glyph.fixedWidth, a player's
+                // log) put up the crash dialog mid-duel. This tab's text is skipped for the frame and the duel goes on;
+                // the cause (maybe GlyphLayout used off the render thread) is not proven
+                if (!textErrorLogged) {
+                    textErrorLogged = true;
+                    System.err.println("[TFR-Render] counter/marker text \"" + text + "\" skipped for a frame: " + e
+                            + " (logged once a launch; the duel goes on)");
+                    e.printStackTrace();
+                }
+            } finally {
+                if (color.a < 1) {
+                    Gdx.gl.glDisable(GL_BLEND);
+                }
             }
         }
     }
+
+    /** TFR round 816: drawText's guard logged its first failure. */
+    private static boolean textErrorLogged;
 
     private static void drawCounterImage(final CardView card, final Graphics g, final float x, final float y, final float w, final float h) {
         int number = 0;
