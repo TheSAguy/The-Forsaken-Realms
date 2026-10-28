@@ -14264,6 +14264,61 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 820: the era booster shops are gone - the Capitol's booster lot opens up, and its era shop becomes the Booster Shop (2026-10-28)
+
+Round 819 found that the four era booster shops (Alpha "Ancient Archives" 1994-2004, Beta "The Planar Cache"
+2005-2013, Gamma "Ravnica Restocked" 2014-2020, Delta "The Modern Vault" 2021+) never kept their years where a town
+limits its shops to a set list: `RewardData`'s `cardPackShop` filters by date only when no edition list is set, and
+the player's own towns (unlocked sets) and the AI towns (a color or neutral shard) always set one. So every one of
+them sold the same packs as the plain shop. The user: "This should not exist, correct. Only the shop we just added.
+And that will sell sets you've unlocked. So these should be removed if I'm not mistaken", then, of the AI towns,
+"Yes, AI towns too".
+
+- **The Capitol's booster lot** (object 85 in `player_capital.tmx`, next to the Armory): its four lists were the five
+  booster shops (+ the six Rare and Gods shops); they are now the other 16 open lots' lists, so it is a 17th open lot
+  (the Rare/Mythic shops it held are in those lists already). It also lost `noMigrate`: `TownRestoration`'s Capitol
+  repair strips every pin from a reserved (noMigrate) lot on each load, so a Booster pin there would not have
+  survived a reload. A new Capitol's migration may now place a shop on it. The tmx property `boosterLot` marks it.
+- **Once per Capitol** (`EconomyBuildings.settleCapitolBoosterLot`, called at the end of `MapStage.loadMap`; map flag
+  `boosterLot820`): the lot is pinned to `BoosterPackShop` (`applyShopType`, fresh seed), standing or in rubble as it
+  was - so an old save's era shop there turns into the Booster Shop on the same lot, and a new Capitol starts with one
+  as before. Left alone when a card shop is pinned there (the player or the migration), or when a Booster Shop already
+  stands on another lot (one per town; it then rolls from the open lists). Any other Capitol slot pinned to an era
+  name loses the pin (none can exist; guarded anyway).
+- **Never two**: a destroyed booster shop on a lot with card-shop lists opens the full build menu instead of "Repair
+  Booster Shop" (`ShopActor.onPlayerCollide`), where round 819's "Booster Shop (built)" holds a second back. The lot
+  can also become anything else. This also frees a color booster shop built from the chooser in a player town, which
+  was stuck as a booster lot once destroyed.
+- **AI towns**: the 19 TFR town maps (`forest/island/mountain/plains/swamp_town`, `_generic`, `_identity`, `_tribal`)
+  and `Valors_Reach_Arena` list `BoosterPackShop` in place of the four (once; dropped where it was already listed) -
+  20 lists. The common, Realm of Legends and Shandalar Old Border copies are other planes' and untouched (TFR's
+  points of interest name only its own maps). Old saves: AI-town shops are not pinned; each slot rolls from its list
+  at every entry, so an era shop simply cannot come up. In a town that had one, that slot (and, through the
+  one-of-each-type rule, a later slot) may show a different type than before.
+- **Blueprints**: the era names leave the blueprint universe (`allChooserShopNames`) and `FLAT_TOWN_SHOP_TIERS`;
+  `isShopTypeUnlocked` answers true for them, so a rival town never sells an era blueprint. `shops.json` keeps the
+  four entries, so a stray reference still resolves.
+- **Code graph**: `isShopTypeUnlocked` (behavior widened for 5 names) - 9 callers by grep (RewardScene 3, MapStage 1,
+  AscendanceRewards 1, EconomyBuildings 4), all "offer a blueprint / allow a type"; none needs a change.
+- **Log**: `[TFR-BoosterShop] Capitol booster lot 85: unpinned (rolled X) -> BoosterPackShop[, in rubble]`, `...: keeps X
+  - a Booster Shop already stands on slot N (one per town)`, `...: keeps X (pinned by the player or the Capitol
+  migration)`, `[TFR-BoosterShop] Capitol slot N: era pin X removed`.
+- **Agent test** (agent-819, a copy of the agent profile, cheats; saves made on the round 819 jar):
+  - (a) slot 90 (Delta standing on lot 85, a destroyed Booster on 87): lot 85 loaded as Pack To Basics, standing,
+    selling MOR and ELD packs (the unlocked sets) - shot `notes/r819/r820-a-lot85-booster.png`.
+  - (b) slot 91 (a Booster standing on 87, Delta rubble on 85): lot 85 kept a rolled card shop (Instant4Red, rubble).
+  - (c) a fresh Capitol (`capitol raise` from slot 4): lot 85 started as the Booster Shop in rubble; its full build
+    menu offered "Booster Shop" on top, and it built.
+  - (d) the destroyed Booster on 87 (slot 90) opened the full build menu with "Booster Shop (built)" greyed
+    (`notes/r819/r820-d-rubble-booster-menu.png`); Common -> Special lists only the five color booster shops.
+  - (e) Celestine Keep (`mountain_town_tribal.tmx`, four era shops in its list before): 9 shops, none an era shop;
+    no TFR map names an era shop.
+  - 0 exceptions, no "tier fallback is STALE" line. `validate_plane_data.py`: the same four categories as round 806's
+    run (enum 18, sprite-footprint 1, starter-bucket-type-mix 30, unknown-key 1), nothing about shops.
+- GUIDE: the Capitol's 24 slots are 17 open (one starts as the Booster Shop) + the 7 reserved; the Booster Shop line
+  says the Capitol starts with one and the lot can be rebuilt as anything. Stock files: `MapStage.java`,
+  `ShopActor.java` (CORE_ENGINE_CHANGES). No save format change (one map flag).
+
 ## Round 821: 15 look-alike caves get their own entrances - no two entrance places share a sprite now (2026-10-28)
 
 Round 811 left 20 caves that shared a drawing with another cave; its building designs did not fit caves. The user then

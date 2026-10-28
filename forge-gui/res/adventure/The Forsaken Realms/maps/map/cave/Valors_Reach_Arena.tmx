@@ -192,7 +192,7 @@
   </object>
   <object id="87" template="../../../../common/maps/obj/shop.tx" x="256" y="1154.67">
    <properties>
-    <property name="commonShopList" value="BoosterPackShop,AlphaBoosterPackShop,BetaBoosterPackShop,GammaBoosterPackShop,DeltaBoosterPackShop"/>
+    <property name="commonShopList" value="BoosterPackShop"/>
     <property name="mythicShopList" value=""/>
     <property name="rareShopList" value=""/>
     <property name="signYOffset" type="float" value="-2"/>

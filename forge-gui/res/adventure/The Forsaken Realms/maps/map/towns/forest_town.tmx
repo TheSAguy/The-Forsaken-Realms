@@ -57,7 +57,7 @@
   </object>
   <object id="46" template="../../../../common/maps/obj/shop.tx" x="368" y="226">
    <properties>
-    <property name="shopList" value="BoosterPackShop,AlphaBoosterPackShop,BetaBoosterPackShop,GammaBoosterPackShop,DeltaBoosterPackShop,GreenBoosterPackShop,Instant,Creature,Green,Gruul,Selesnya,Golgari,Simic,Elf"/>
+    <property name="shopList" value="BoosterPackShop,GreenBoosterPackShop,Instant,Creature,Green,Gruul,Selesnya,Golgari,Simic,Elf"/>
    </properties>
   </object>
   <object id="47" template="../../../../common/maps/obj/inn.tx" x="137" y="162"/>

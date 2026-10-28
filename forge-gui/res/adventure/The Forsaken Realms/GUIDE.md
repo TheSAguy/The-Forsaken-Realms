@@ -390,8 +390,8 @@ Raiders from the nearby dungeons can fall on a town - one of yours, or a neutral
 Your Capitol can rise in one place only: **Orazca**, the ruined town at the very center of the
 map. Restore it at its Job Board like any other ruin, hold five towns in all (Orazca counts), and
 the same Job Board offers the upgrade. The Capitol is a walled, castle-sized town with a layout of
-its own, two guards instead of one, and **24 building slots** - 16 open ones plus five colored Land
-Shops, a Utility Land Shop, a Booster Shop and an Armory, against an ordinary town's 9 (8 open
+its own, two guards instead of one, and **24 building slots** - 17 open ones (one of them starts as the
+Booster Shop) plus five colored Land Shops, a Utility Land Shop and an Armory, against an ordinary town's 9 (8 open
 slots and an Armory). It also offers buildings no ordinary town does: the Bank, the Exchange, the
 Archaeologist, the Temple, the Research Lab, Rare and Mythic card shops, and an Arena you can upgrade.
 Upgrading carries Orazca's reputation, buildings and guards forward, and adds +2 town reputation
@@ -1488,7 +1488,8 @@ you can see exactly what you're missing and decide what's worth hunting.
   the type. An open slot can also become a Mine, a Trader, an Outlook and so on.
 - **A Booster Shop in your Capitol:** on an open Capitol slot, Card Shop lists **Booster Shop** first,
   above the tiers. It sells 8 booster packs, each from a random set you have unlocked, costs the same as
-  a Common shop and needs no blueprint. One per town: it shows as built while one stands.
+  a Common shop and needs no blueprint. One per town: it shows as built while one stands. A new Capitol
+  starts with one on the lot next to the Armory; destroyed, that lot can be rebuilt as anything.
 - **The build menu shows everything**, tier first, then By Color / By Card Type / Tribal /
   Special, sorted **Available → Built → Locked**. Locked types are grayed rather than hidden, so
   you can see what exists to hunt for. Each entry shows how many cards it could actually stock for

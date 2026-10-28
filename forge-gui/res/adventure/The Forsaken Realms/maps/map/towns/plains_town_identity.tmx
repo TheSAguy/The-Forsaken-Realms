@@ -82,7 +82,7 @@
   </object>
   <object id="51" template="../../../../common/maps/obj/shop.tx" x="192" y="306">
    <properties>
-    <property name="commonShopList" value="BoosterPackShop,AlphaBoosterPackShop,BetaBoosterPackShop,GammaBoosterPackShop,DeltaBoosterPackShop,WhiteBoosterPackShop,White,White,Enchantment4White,Creature2White,Instant4White"/>
+    <property name="commonShopList" value="BoosterPackShop,WhiteBoosterPackShop,White,White,Enchantment4White,Creature2White,Instant4White"/>
     <property name="mythicShopList" value="Planeswalker,WUBRG,Vehicle,Artifact,Equip,Wand,Legend4White"/>
     <property name="rareShopList" value="RWG,RWU,RWB,UWG,UWB,GWB,Land4White,Creature6White,Nobles"/>
     <property name="uncommonShopList" value="Azorius,Boros,Selesnya,Orzhov,Azorius,Boros,Selesnya,Orzhov,Land"/>

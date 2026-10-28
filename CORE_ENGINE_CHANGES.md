@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 820 - the era booster shops are gone; the Capitol's booster lot opens up
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK):
+  - A `boosterLotId` field after `noShopTileHiding`, reset in `loadMap()` beside `shopTierPools.clear()`.
+  - The shop case records the object whose `boosterLot` property is true, just before `possibleShops` is built.
+  - `loadMap()` calls `EconomyBuildings.settleCapitolBoosterLot(this, boosterLotId)` right after
+    `auditFlatTownTierFallback`, when a lot was recorded.
+- **`forge-gui-mobile/src/forge/adventure/character/ShopActor.java`** (STOCK) - `onPlayerCollide()`: the simple-repair
+  branch skips a booster shop whose slot has tier pools (`stage.getShopTierPools(objectId) != null`), which then
+  takes the full build menu. Mod file: `util/EconomyBuildings.java`.
+
 ### Round 818 - talk-only enemies speak once per contact
 - **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** (STOCK) - new public `canFightOrLeave()` (a
   `battleWithActorID`, or a `deleteMapObject -1`, anywhere in the tree) and `isChatter()` (no action differs from a

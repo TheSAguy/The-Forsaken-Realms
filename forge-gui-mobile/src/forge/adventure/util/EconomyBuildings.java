@@ -1582,8 +1582,8 @@ public class EconomyBuildings {
         ConfigData config = Config.instance().getConfigData();
         if (config == null || !config.shopBlueprintsEnabled)
             return true; // feature off for this plane - everything available, exactly as before
-        if (CAPITOL_BOOSTER_SHOP.equals(shopName))
-            return true; // round 819: the Capitol's Booster Shop needs no blueprint
+        if (CAPITOL_BOOSTER_SHOP.equals(shopName) || isEraBoosterShopName(shopName))
+            return true; // round 819: the Capitol's Booster Shop needs no blueprint; round 820: no era blueprint is sold
         java.util.Set<String> known = AdventurePlayer.current().getUnlockedShopTypes();
         // EMPTY = legacy save (user decision 2026-08-30: this is a New Game only feature). A save
         // predating blueprints has no set at all; reading that as "nothing unlocked" would strip
@@ -1708,8 +1708,7 @@ public class EconomyBuildings {
         for (String name : new String[]{
                 "Creature", "Instant",
                 "Elf", "Goblin", "Human", "Merfolk", "Zombie",
-                "BoosterPackShop", "AlphaBoosterPackShop", "BetaBoosterPackShop",
-                "GammaBoosterPackShop", "DeltaBoosterPackShop",
+                "BoosterPackShop", // round 820: the four era booster shops are gone from the player templates
                 // Not listed by the player templates; Common in every map that does list them.
                 "WhiteBoosterPackShop", "BlueBoosterPackShop", "BlackBoosterPackShop",
                 "RedBoosterPackShop", "GreenBoosterPackShop"})
@@ -2181,6 +2180,7 @@ public class EconomyBuildings {
         names.removeIf(EconomyBuildings::isBasicLandShopName);
         names.removeIf(EconomyBuildings::isArmoryShopName);
         names.removeIf(n -> !shopTypeExists(n));
+        names.removeIf(EconomyBuildings::isEraBoosterShopName); // round 820: never buildable, so never a blueprint
         chooserShopNames = new ArrayList<>(names);
         System.out.println("[TFR-Blueprint] chooser shop-name universe: " + chooserShopNames.size() + " type(s)"
                 + (fromTemplate > 0 ? " (" + fromTemplate + " from the player-town template, not loaded from a map"
@@ -2437,6 +2437,68 @@ public class EconomyBuildings {
 
     /** Round 819: shops.json's plain booster shop ("Pack To Basics": 8 packs, each from a random unlocked set). */
     static final String CAPITOL_BOOSTER_SHOP = "BoosterPackShop";
+
+    /** Round 820 (the user: "This should not exist ... Only the shop we just added"): the era booster shops. Their year
+     *  windows never held in a player's town (RewardData skips the window once an edition list is set), so all five
+     *  Capitol booster shops sold the same packs. shops.json keeps them so old references resolve; no player template
+     *  lists them. */
+    private static final java.util.Set<String> ERA_BOOSTER_SHOPS = new java.util.HashSet<>(Arrays.asList(
+            "AlphaBoosterPackShop", "BetaBoosterPackShop", "GammaBoosterPackShop", "DeltaBoosterPackShop"));
+
+    public static boolean isEraBoosterShopName(String shopName) {
+        return shopName != null && ERA_BOOSTER_SHOPS.contains(shopName);
+    }
+
+    // Round 820: a map flag, so the Capitol's old booster lot is settled once and a later choice there stands.
+    private static final String BOOSTER_LOT_SETTLED_FLAG = "boosterLot820";
+
+    /**
+     * Round 820: the Capitol's old booster lot (object 85, tmx property boosterLot) is an open lot now, with the other
+     * lots' lists. On the Capitol's first load from this version on - an old save or a new Capitol - it becomes the
+     * Booster Shop, so an old save's era shop there turns into the plain one on the same lot, and a new Capitol starts
+     * with one as before. Left alone when the player or the Capitol migration pinned a card shop there, or when another
+     * Booster Shop already stands (one per town). Any other slot pinned to an era shop goes back to its own roll.
+     */
+    public static void settleCapitolBoosterLot(MapStage stage, int lotId) {
+        PointOfInterestChanges changes = stage.getChanges();
+        if (changes == null || !TownRestoration.isCurrentTownCapitol()
+                || changes.getMapFlags().containsKey(BOOSTER_LOT_SETTLED_FLAG))
+            return;
+        changes.getMapFlags().put(BOOSTER_LOT_SETTLED_FLAG, (byte) 1);
+        for (forge.adventure.character.ShopActor actor : stage.getShopActors()) {
+            String pin = changes.getPinnedShopName(actor.getObjectId());
+            if (actor.getObjectId() != lotId && isEraBoosterShopName(pin)) {
+                changes.removePinnedShopName(actor.getObjectId());
+                System.out.println("[TFR-BoosterShop] Capitol slot " + actor.getObjectId() + ": era pin " + pin
+                        + " removed - the slot rolls from its own lists on the next entry");
+            }
+        }
+        forge.adventure.character.ShopActor lot = stage.getShopActor(lotId);
+        String pinned = changes.getPinnedShopName(lotId);
+        String was = lot == null || lot.getShopData() == null ? "-" : lot.getShopData().name;
+        if (pinned != null && !pinned.contains("Booster")) {
+            System.out.println("[TFR-BoosterShop] Capitol booster lot " + lotId + ": keeps " + pinned
+                    + " (pinned by the player or the Capitol migration)");
+            return;
+        }
+        for (forge.adventure.character.ShopActor actor : stage.getShopActors()) {
+            if (actor.getObjectId() != lotId && !actor.isDestroyed() && actor.getShopData() != null
+                    && CAPITOL_BOOSTER_SHOP.equals(actor.getShopData().name)) {
+                System.out.println("[TFR-BoosterShop] Capitol booster lot " + lotId + ": keeps " + was
+                        + " - a Booster Shop already stands on slot " + actor.getObjectId() + " (one per town)");
+                return;
+            }
+        }
+        ShopData booster = null;
+        for (ShopData data : new Array.ArrayIterator<>(WorldData.getShopList()))
+            if (CAPITOL_BOOSTER_SHOP.equals(data.name))
+                booster = data;
+        if (booster == null)
+            return;
+        stage.applyShopType(lotId, booster, true, "booster-lot");
+        System.out.println("[TFR-BoosterShop] Capitol booster lot " + lotId + ": " + (pinned != null ? pinned : "unpinned")
+                + " (rolled " + was + ") -> " + CAPITOL_BOOSTER_SHOP + (lot != null && lot.isDestroyed() ? ", in rubble" : ""));
+    }
 
     /** Round 819: the Capitol chooser's Booster Shop line - shopChoiceOption()'s pin and bookkeeping at the Common
      *  price, under a plain name. */

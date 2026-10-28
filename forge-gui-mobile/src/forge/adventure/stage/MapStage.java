@@ -117,6 +117,8 @@ public class MapStage extends GameStage {
     // sprites and huts, so the search below found no building of theirs - it found the outer wall (a land shop's "gap"
     // in it), courtyard roads and a neighbor's roof, and hid those whenever a shop was rubble or an economy building.
     private boolean noShopTileHiding;
+    // Round 820: the Capitol's old booster lot (its object's boosterLot property), -1 on any other map.
+    private int boosterLotId = -1;
 
     // Card Shop Type Re-Roll (2026-08-11, round 8, user spec: "add a re-roll card shop type for
     // 50 shards... randomly pick a new card shop type... change the little bulletin board").
@@ -826,6 +828,7 @@ public class MapStage extends GameStage {
         shopSignAnchors.clear();
         shopCandidatePools.clear();
         shopTierPools.clear();
+        boosterLotId = -1;
         // The blueprint drop universe is DERIVED from those pools, so its cache has to go too
         // (2026-09-01 release review). invalidateChooserShopNames() existed and documented itself
         // as "dropped when a new map loads" - but nothing had ever called it, so the universe
@@ -916,6 +919,9 @@ public class MapStage extends GameStage {
         // slot in the same file contradicts. No-ops unless this map is player_town.tmx or
         // player_capital.tmx, the two templates the table is derived from.
         EconomyBuildings.auditFlatTownTierFallback(shopTierPools.values(), targetMap);
+        // Round 820: after the layer loop, so every shop actor stands - the conversion looks for another Booster Shop.
+        if (boosterLotId >= 0)
+            EconomyBuildings.settleCapitolBoosterLot(this, boosterLotId);
         assignLootGuards(targetMap); // round 279, after the layer loop so every booster, chest and enemy is in
         spawn(spawnTargetId);
 
@@ -2015,6 +2021,8 @@ public class MapStage extends GameStage {
                             restockPrice = 0;
                         }
 
+                        if (isTrueProperty(prop.get("boosterLot")))
+                            boosterLotId = id; // round 820
                         possibleShops = new Array<String>(shopList.split(","));
                         // Card Shop Type Re-Roll (round 8): record the raw, unfiltered candidate
                         // list for this object id, but only when there's genuinely a choice to

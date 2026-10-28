@@ -134,7 +134,10 @@ public class ShopActor extends MapActor {
                 dialog = TownRestoration.buildShopLockedDialog(stage, objectId);
             } else if (!TownRestoration.hasReputationForAnotherBuilding(stage.getChanges())) {
                 dialog = TownRestoration.buildReputationLockedDialog(stage, objectId);
-            } else if (fixedShop || EconomyBuildings.isSpecialShop(shopData)) {
+            } else if (fixedShop || (EconomyBuildings.isSpecialShop(shopData)
+                    // Round 820: a booster shop on a lot with card-shop lists (one built from the chooser) rebuilds
+                    // through the full menu, where "Booster Shop (built)" keeps a second from rising.
+                    && !(EconomyBuildings.isBoosterShop(shopData) && stage.getShopTierPools(objectId) != null))) {
                 // Booster/Armory shops skip the Bank/Exchange/Industry conversion choice
                 // entirely - see EconomyBuildings.buildSimpleRepairDialog().
                 dialog = EconomyBuildings.buildSimpleRepairDialog(stage, objectId, shopData);

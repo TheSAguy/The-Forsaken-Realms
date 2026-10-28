@@ -114,8 +114,7 @@
   </object>
   <object id="53" template="../../../../common/maps/obj/shop.tx" x="240" y="97">
    <properties>
-    <property name="commonShopList" value="BoosterPackShop,AlphaBoosterPackShop,BetaBoosterPackShop,
-    GammaBoosterPackShop,DeltaBoosterPackShop,RedBoosterPackShop,Wolf4Red,Goblin,Devil,Dwarf,Dragon,
+    <property name="commonShopList" value="BoosterPackShop,RedBoosterPackShop,Wolf4Red,Goblin,Devil,Dwarf,Dragon,
     Sliver2Red,Knight4Red,Soldier4Red,Minotaur,Shaman,Dinosaur4Red,Ogre4Red,Giant"/>
     <property name="mythicShopList" value="Planeswalker,WUBRG,Vehicle,Artifact,Equip,Wand,Legend4Red"/>
     <property name="rareShopList" value="Gruul,Izzet,Rakdos,Boros,Creature6Red,Multicolor,Land4Red,PhyrexianRed"/>
