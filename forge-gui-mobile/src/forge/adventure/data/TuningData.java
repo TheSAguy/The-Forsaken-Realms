@@ -317,14 +317,22 @@ public class TuningData {
     // Round 446 (the user: "+25% health" at 45 wins, "+25% another health" at 50): each bonus wall reached also raises
     // the enemy's starting life by its entry here, summed (45+ = +25%, 50+ = +50%). Parallel to the lists above.
     public int[] notorietyBonusWallLifePercent = {25, 25};
-    // Round 793 (the user: "Swap as proposed"; a Discord idea of Vr01's): from notorietyDeckCardWins, the
-    // notorietyDeckCardReplaces Wall becomes one random permanent from the enemy's own deck, moved from the deck onto
-    // the battlefield - mana value MinCost-MaxCost, rarity at most the rank's entry of notorietyDeckCardRarityByRank
-    // (Apprentice, Adept, Master, Archmage), never a name in notorietyDeckCardExclude. notorietyDeckCardEtb: "keep"
-    // every enter trigger, "noHostile" drops a card whose own enter trigger targets, sacrifices or reaches an opponent,
-    // "none" drops every card with one. No eligible card: the Wall stays. See util/NotorietyDeckCard. Wins 0 = off.
-    public int notorietyDeckCardWins = 50;
-    public String notorietyDeckCardReplaces = "tfr_wall4_flying_3_6";
+    // Round 793 (a Discord idea of Vr01's), reworked in round 799 (the user: "The additional spawn will not replace a
+    // wall, it will just be additional. On Insane, this should move up to Win 40+, Hard Win 45+ and Normal 50+. A win
+    // Ratio of 95%+ (After 50 duels) will drop the needed notoriety by 1 level ... Not in Arenas."): from the
+    // difficulty's entry of notorietyDeckCardWinsByDifficulty (Easy, Normal, Hard, Insane; 0 = never) an enemy also
+    // starts with one random permanent from its own deck, moved from the deck onto the battlefield, on top of its Walls -
+    // notorietyDeckCardRatioLevels levels (x notorietyWinsPerLevel) sooner while the player's last duels hold at least
+    // notorietyDeckCardRatioMinDuels of them, notorietyDeckCardRatioAtLeast won (its own keys, though round 620's
+    // win-ratio help uses the same 50 / 0.95). Never in an Arena duel. Mana value MinCost-MaxCost, rarity at most the
+    // rank's entry of notorietyDeckCardRarityByRank (Apprentice, Adept, Master, Archmage), never a name in
+    // notorietyDeckCardExclude. notorietyDeckCardEtb: "keep" every enter trigger, "noHostile" drops a card whose own enter
+    // trigger targets, sacrifices or reaches an opponent, "none" drops every card with one. No eligible card: no extra
+    // card. See util/NotorietyDeckCard.
+    public int[] notorietyDeckCardWinsByDifficulty = {0, 50, 45, 40};
+    public float notorietyDeckCardRatioAtLeast = 0.95f;
+    public int notorietyDeckCardRatioMinDuels = 50;
+    public int notorietyDeckCardRatioLevels = 1;
     public int notorietyDeckCardMinCost = 1;
     public int notorietyDeckCardMaxCost = 3;
     public String[] notorietyDeckCardRarityByRank = {"Common", "Uncommon", "Rare", "Mythic"};

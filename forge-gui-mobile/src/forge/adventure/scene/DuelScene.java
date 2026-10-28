@@ -1179,10 +1179,11 @@ public class DuelScene extends ForgeScene {
                 System.err.println(isDeckMissingMsg);
                 deck = this.eventData == null && canUseGeneticAI ? Aggregates.random(DeckProxy.getAllGeneticAIDecks()).getDeck() : this.playerDeck;
             }
-            // Round 793: from notoriety 50 the 50-win Wall becomes a permanent from this seat's own deck - picked now, so
-            // the seat registers with the deck that card left (a copy; the Walls block below puts the card in play).
+            // Round 793: a permanent from this seat's own deck - picked now, so the seat registers with the deck that card
+            // left (a copy; the Walls block below puts the card in play). Round 799: on top of the Walls, from the
+            // difficulty's notoriety (NotorietyDeckCard.gate), never in the Arena.
             forge.adventure.util.NotorietyDeckCard.Pick deckCard = eventData == null && guardDeck == null && !chaosBattle
-                    ? forge.adventure.util.NotorietyDeckCard.choose(currentEnemy, deck, i) : null;
+                    ? forge.adventure.util.NotorietyDeckCard.choose(currentEnemy, deck, i, isArena) : null;
             if (deckCard != null && deckCard.card != null)
                 deck = deckCard.deck;
             RegisteredPlayer aiPlayer = RegisteredPlayer.forVariants(playerCount, appliedVariants, deck, null, false, null, null);
@@ -1308,12 +1309,6 @@ public class DuelScene extends ForgeScene {
                 java.util.List<IPaperCard> walls = new java.util.ArrayList<>();
                 java.util.List<String> shown = new java.util.ArrayList<>();
                 for (String wallScript : Current.player().notorietyWallsFor(currentEnemy)) {
-                    // Round 793: the deck card takes the place of its Wall (choose() above; no card = the Wall stays).
-                    if (deckCard != null && deckCard.card != null && wallScript.equals(deckCard.replaces)) {
-                        walls.add(deckCard.card);
-                        shown.add(deckCard.card.getName() + " (deck card)");
-                        continue;
-                    }
                     forge.item.PaperToken wall = forge.model.FModel.getMagicDb().getAllTokens().getToken(wallScript);
                     if (wall == null) {
                         System.err.println("[TFR-Notoriety] token script " + wallScript + " not found - no wall");
@@ -1321,6 +1316,11 @@ public class DuelScene extends ForgeScene {
                     }
                     walls.add(wall);
                     shown.add(wallScript + " (" + wall.getRules().getPower() + "/" + wall.getRules().getToughness() + ")");
+                }
+                // Round 799: the deck card joins the Walls (choose() above; null = none for this seat).
+                if (deckCard != null && deckCard.card != null) {
+                    walls.add(deckCard.card);
+                    shown.add(deckCard.card.getName() + " (deck card)");
                 }
                 if (!walls.isEmpty()) {
                     aiPlayer.addExtraCardsOnBattlefield(walls);

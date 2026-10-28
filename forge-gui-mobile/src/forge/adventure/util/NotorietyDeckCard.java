@@ -22,46 +22,69 @@ import java.util.Random;
 
 /**
  * Round 793 (the user: "Swap as proposed"; design: C:\TFR\notes\notoriety-deck-permanents-proposal.md, a Discord idea
- * of Vr01's): at notoriety 50 and up, the 50-win bonus Wall (TuningData.notorietyDeckCardReplaces) becomes one random
- * permanent from the enemy's OWN deck, moved out of the deck onto the battlefield.
+ * of Vr01's), reworked in round 799 (the user: "The additional spawn will not replace a wall, it will just be
+ * additional. On Insane, this should move up to Win 40+, Hard Win 45+ and Normal 50+. A win Ratio of 95%+ (After 50
+ * duels) will drop the needed notoriety by 1 level ... Not in Arenas."): from the difficulty's notoriety
+ * (TuningData.notorietyDeckCardWinsByDifficulty - Easy never), an enemy also starts with one random permanent from its
+ * OWN deck, moved out of the deck onto the battlefield, on top of every Wall.
  * <ul>
+ *   <li>The gate: Normal 50, Hard 45, Insane 40; notorietyDeckCardRatioLevels levels (x notorietyWinsPerLevel) less
+ *   while the player's last duels (AdventurePlayer.recentDuels, round 613's record - the duels notoriety counts) hold
+ *   at least notorietyDeckCardRatioMinDuels of them and notorietyDeckCardRatioAtLeast of them won (50 duels, 95%).
+ *   Never in an Arena duel, nor with Notoriety off in Settings (round 772).</li>
  *   <li>Eligible: a creature, artifact or enchantment of mana value notorietyDeckCardMinCost-MaxCost (1-3, the front
  *   face), no X; not a land, planeswalker, battle, Aura, Saga or Room; not 0 toughness; not banned
  *   (CommanderCards.restricted - commander-only cards are already stripped from enemy decks); not in
  *   notorietyDeckCardExclude. A non-creature needs something that works from the battlefield - a static, activated or
  *   other-than-its-own-zone-change trigger, or a keyword (so no Oblivion Ring). notorietyDeckCardEtb "noHostile" also
  *   drops a card whose own enter trigger targets, sacrifices or reaches an opponent (Reclamation Sage, Accursed
- *   Centaur): such a trigger, if it fired at the start, would hit the player's start items on turn 0.</li>
+ *   Centaur): round 793 found that start-in-play cards do not fire those triggers; the rule guards against an engine
+ *   change that would make them hit the player's start items on turn 0.</li>
  *   <li>Rarity by rank (notorietyDeckCardRarityByRank): Apprentice commons, Adept up to uncommon, Master up to rare,
  *   Archmage up to mythic; a boss by its tier. A card's rarity is its lowest over its normal printings (core,
  *   expansion, starter, reprint, boxed set, duel deck, draft, commander, multiplayer), Special read as mythic.</li>
  *   <li>The pick: every eligible COPY is one ticket (a 4-of is four times as likely), sorted by name, drawn with a seed
  *   of the world seed, the enemy's save name ("Name|Tier"), the player's duels fought and the seat - so a reload
- *   brings the same card, and the next duel may bring another. No eligible card: the Wall stays.</li>
+ *   brings the same card, and the next duel may bring another. No eligible card: no extra card.</li>
  *   <li>The deck is copied first (a precon, the player's deck for a mirror match or Deck Tester's deck is never
  *   touched), then the copy loses that one card.</li>
  * </ul>
- * Logs [TFR-Notoriety] "deck card:" per seat it applies to.
+ * Logs [TFR-Notoriety] "deck card:" per seat it applies to, and "deck card: not ..." for a seat within reach of it.
  */
 public final class NotorietyDeckCard {
     private NotorietyDeckCard() {
     }
 
-    /** What choose() decided for one seat: the deck to play (one card fewer) and the card, or card null = the Wall. */
+    /** What choose() decided for one seat: the deck to play (one card fewer) and the card to put in play. */
     public static final class Pick {
         public final Deck deck;
         public final PaperCard card;
-        public final String replaces;
 
-        Pick(Deck deck, PaperCard card, String replaces) {
+        Pick(Deck deck, PaperCard card) {
             this.deck = deck;
             this.card = card;
-            this.replaces = replaces;
+        }
+    }
+
+    /** The notoriety a deck card needs right now, and why. wins 0 = never (Easy, no table). */
+    static final class Gate {
+        String difficulty = "";
+        int base, wins, drop, duels, won;
+        float ratio;
+        boolean dropped;
+
+        String describe() {
+            String record = duels == 0 ? "no duels on record" : "win ratio " + Math.round(ratio * 100) + "% over " + duels
+                    + " duels";
+            if (wins <= 0)
+                return "off on " + difficulty;
+            return difficulty + " " + wins + (dropped ? " (" + base + " - " + drop + " for " + record + ")" : " (" + record
+                    + ", no drop)");
         }
     }
 
     /** Console "notorietycard": a card name forced as the pick (if the deck has it, eligible or not), "none" forces
-     *  the Wall, null = the normal draw. Session only, for testing. */
+     *  no card, null = the normal draw. Session only, for testing. */
     private static String forced;
 
     private static final EnumSet<CardEdition.Type> NORMAL_SETS = EnumSet.of(CardEdition.Type.CORE,
@@ -69,21 +92,66 @@ public final class NotorietyDeckCard {
             CardEdition.Type.DUEL_DECK, CardEdition.Type.DRAFT, CardEdition.Type.COMMANDER, CardEdition.Type.MULTIPLAYER);
     private static final Map<String, Integer> rarityCache = new HashMap<>();
 
+    static Gate gate(TuningData tuning, AdventurePlayer player) {
+        Gate g = new Gate();
+        String name = player.getDifficultyData() == null ? "" : player.getDifficultyData().name;
+        g.difficulty = name == null || name.trim().isEmpty() ? "Easy" : name.trim();
+        int index;
+        switch (g.difficulty.toLowerCase()) {
+            case "normal": index = 1; break;
+            case "hard":   index = 2; break;
+            case "insane": index = 3; break;
+            default:       index = 0; // Easy and anything unknown: the fewest, as TuningData.notorietyMinRankFor does
+        }
+        int[] table = tuning.notorietyDeckCardWinsByDifficulty;
+        g.base = table == null || index >= table.length ? 0 : Math.max(0, table[index]);
+        String record = player.recentDuels() == null ? "" : player.recentDuels();
+        g.duels = record.length();
+        for (int i = 0; i < record.length(); i++)
+            if (record.charAt(i) == 'W')
+                g.won++;
+        g.ratio = g.duels == 0 ? 0f : g.won / (float) g.duels;
+        g.drop = Math.max(0, tuning.notorietyDeckCardRatioLevels) * Math.max(0, tuning.notorietyWinsPerLevel);
+        g.dropped = g.base > 0 && g.drop > 0 && g.duels >= Math.max(1, tuning.notorietyDeckCardRatioMinDuels)
+                && g.ratio >= tuning.notorietyDeckCardRatioAtLeast - 1e-6f;
+        g.wins = g.base <= 0 ? 0 : Math.max(1, g.base - (g.dropped ? g.drop : 0));
+        return g;
+    }
+
+    /** The lowest notoriety at which any difficulty's gate can open (with the drop) - "not ..." lines start there. */
+    private static int logFloor(TuningData tuning) {
+        int floor = Integer.MAX_VALUE;
+        if (tuning.notorietyDeckCardWinsByDifficulty != null)
+            for (int w : tuning.notorietyDeckCardWinsByDifficulty)
+                if (w > 0)
+                    floor = Math.min(floor, w);
+        return floor == Integer.MAX_VALUE ? Integer.MAX_VALUE
+                : floor - Math.max(0, tuning.notorietyDeckCardRatioLevels) * Math.max(0, tuning.notorietyWinsPerLevel);
+    }
+
     /**
-     * Before the seat registers (DuelScene): null when the swap does not apply to this seat (below
-     * notorietyDeckCardWins, Notoriety off, the replaced Wall not on it); otherwise a Pick - card null for the Wall.
-     * Call only for the duels that get Walls (not Inn events, not a guard's fight).
+     * Before the seat registers (DuelScene): null when no deck card goes to this seat (the gate shut, an Arena duel,
+     * Notoriety off, or nothing eligible); otherwise the Pick. Call only for the duels that get Walls (not Inn events,
+     * not a guard's fight).
      */
-    public static Pick choose(EnemyData enemy, Deck deck, int seat) {
+    public static Pick choose(EnemyData enemy, Deck deck, int seat, boolean arena) {
         TuningData tuning = Config.instance().getTuningData();
         AdventurePlayer player = Current.player();
-        if (tuning == null || player == null || enemy == null || deck == null || tuning.notorietyDeckCardWins <= 0
-                || tuning.notorietyDeckCardReplaces == null || player.notorietyStreak() < tuning.notorietyDeckCardWins
-                || !player.notorietyWallsFor(enemy).contains(tuning.notorietyDeckCardReplaces))
+        if (tuning == null || player == null || enemy == null || deck == null || AdventurePlayer.notorietyDisabled())
             return null;
+        int notoriety = player.notorietyStreak();
+        String who = enemy.getName() + " (" + EnemyData.tierDisplayName(enemy.tier) + ")";
+        Gate g = gate(tuning, player);
+        boolean near = notoriety >= logFloor(tuning);
+        if (g.wins <= 0 || notoriety < g.wins || arena) {
+            if (near)
+                System.out.println("[TFR-Notoriety] " + who + " deck card: not "
+                        + (g.wins <= 0 ? "on " + g.difficulty : arena && notoriety >= g.wins ? "in the Arena" : "yet")
+                        + " - notoriety " + notoriety + (g.wins <= 0 ? "" : ", needs " + g.describe()));
+            return null;
+        }
         int rank = EnemyData.tierRank(enemy.tier);
         int cap = rarityCap(tuning, rank);
-        String who = enemy.getName() + " (" + EnemyData.tierDisplayName(enemy.tier) + ")";
         String capName = rarityName(cap);
         int size = deck.getMain().countAll();
 
@@ -121,30 +189,53 @@ public final class NotorietyDeckCard {
         if (card == null) {
             System.out.println("[TFR-Notoriety] " + who + " deck card: none eligible (" + deck.getName() + ", " + size
                     + " cards, cap " + capName + ", MV " + tuning.notorietyDeckCardMinCost + "-" + tuning.notorietyDeckCardMaxCost
-                    + ")" + how + " - " + tuning.notorietyDeckCardReplaces + " stays");
-            return new Pick(deck, null, tuning.notorietyDeckCardReplaces);
+                    + ")" + how + " - no extra card; notoriety " + notoriety + ", needs " + g.describe());
+            return null;
         }
         Deck played = new Deck(deck);
         played.getMain().remove(card, 1);
         ICardFace face = card.getRules().getMainPart();
         System.out.println("[TFR-Notoriety] " + who + " deck card: " + card.getName() + " (" + rarityName(rarity(card))
-                + ", MV " + face.getManaCost().getCMC() + ", " + kind(face.getType()) + ") in place of "
-                + tuning.notorietyDeckCardReplaces + " - " + distinct + " eligible (" + tickets.size() + " copies) of "
-                + size + ", cap " + capName + ", deck " + size + " -> " + played.getMain().countAll() + ", notoriety "
-                + player.notorietyStreak() + how);
-        return new Pick(played, card, tuning.notorietyDeckCardReplaces);
+                + ", MV " + face.getManaCost().getCMC() + ", " + kind(face.getType()) + ") added - "
+                + distinct + " eligible (" + tickets.size() + " copies) of " + size + ", cap " + capName + ", deck " + size
+                + " -> " + played.getMain().countAll() + ", notoriety " + notoriety + ", needs " + g.describe() + how);
+        return new Pick(played, card);
     }
 
-    /** The console "notorietycard": no argument reports, "off" clears, "none" forces the Wall, a name forces a card. */
+    /**
+     * The notice-log line (AdventurePlayer.logNotorietyStage) when notoriety crosses the deck card's gate, or null. The
+     * gate is the current one - the win ratio may move it later.
+     */
+    public static String noticeLine(int before, int after) {
+        TuningData tuning = Config.instance().getTuningData();
+        AdventurePlayer player = Current.player();
+        if (tuning == null || player == null || after <= before)
+            return null;
+        Gate g = gate(tuning, player);
+        if (g.wins <= 0 || before >= g.wins || after < g.wins)
+            return null;
+        return "Notoriety " + g.wins + ": every foe also starts with one of its own cards in play (cost "
+                + tuning.notorietyDeckCardMinCost + "-" + tuning.notorietyDeckCardMaxCost + "; an Apprentice's is a common,"
+                + " an Adept's up to uncommon, a Master's up to rare, an Archmage's any), on top of its Walls"
+                + (g.dropped ? " - one level early for your " + Math.round(g.ratio * 100) + "% win ratio." : ".")
+                + " Not in the Arena.";
+    }
+
+    /** The console "notorietycard": no argument reports, "off" clears, "none" forces no card, a name forces a card. */
     public static String console(String[] args) {
-        if (args.length < 1)
+        if (args.length < 1) {
+            TuningData tuning = Config.instance().getTuningData();
+            AdventurePlayer player = Current.player();
+            Gate g = tuning == null || player == null ? null : gate(tuning, player);
+            String needs = g == null ? "" : g.wins <= 0 ? " Off on " + g.difficulty + "." : " Needs " + g.describe() + ".";
             return "Notoriety deck card: " + (forced == null ? "drawn normally" : "none".equalsIgnoreCase(forced)
-                    ? "forced to the Wall" : "forced to " + forced) + ". Give a card name, none, or off.";
+                    ? "forced to none" : "forced to " + forced) + "." + needs + " Give a card name, none, or off.";
+        }
         String arg = String.join(" ", args).trim();
         forced = "off".equalsIgnoreCase(arg) ? null : arg;
         System.out.println("[TFR-Notoriety] console: deck card " + (forced == null ? "drawn normally" : "forced to " + forced));
         return forced == null ? "Notoriety deck card drawn normally again."
-                : "none".equalsIgnoreCase(forced) ? "Notoriety deck card forced to the Wall (no card)."
+                : "none".equalsIgnoreCase(forced) ? "Notoriety deck card forced to none (no extra card)."
                 : "Notoriety deck card forced to " + forced + " when the enemy's deck has it.";
     }
 

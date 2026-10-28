@@ -175,13 +175,17 @@
     "notorietyBonusWalls": ["tfr_wall3_flying_3_6", "tfr_wall4_flying_3_6"],
     // Round 446: each bonus wall reached also adds this much to the enemy's starting life, summed (45+ = +25%, 50+ = +50%).
     "notorietyBonusWallLifePercent": [25, 25],
-    // Round 793: from notorietyDeckCardWins the notorietyDeckCardReplaces Wall becomes one random permanent from the
-    // enemy's own deck (moved out of the deck): mana value MinCost-MaxCost, rarity at most the rank's entry (Apprentice,
-    // Adept, Master, Archmage), never a name in notorietyDeckCardExclude. notorietyDeckCardEtb: "keep", "noHostile" (no
-    // card whose own enter trigger targets, sacrifices or reaches an opponent) or "none" (no enter triggers at all).
-    // No eligible card: the Wall stays. 0 wins = off.
-    "notorietyDeckCardWins": 50,
-    "notorietyDeckCardReplaces": "tfr_wall4_flying_3_6",
+    // Round 793, reworked in round 799: an enemy also starts with one random permanent from its own deck (moved out of
+    // the deck), on top of its Walls, from the difficulty's notoriety in notorietyDeckCardWinsByDifficulty (Easy,
+    // Normal, Hard, Insane; 0 = never) - notorietyDeckCardRatioLevels levels (x notorietyWinsPerLevel) sooner while at
+    // least notorietyDeckCardRatioMinDuels duels are on record and notorietyDeckCardRatioAtLeast of them won. Never in the
+    // Arena. Mana value MinCost-MaxCost, rarity at most the rank's entry (Apprentice, Adept, Master, Archmage), never a
+    // name in notorietyDeckCardExclude. notorietyDeckCardEtb: "keep", "noHostile" (no card whose own enter trigger
+    // targets, sacrifices or reaches an opponent) or "none" (no enter triggers at all). No eligible card: none.
+    "notorietyDeckCardWinsByDifficulty": [0, 50, 45, 40],
+    "notorietyDeckCardRatioAtLeast": 0.95,
+    "notorietyDeckCardRatioMinDuels": 50,
+    "notorietyDeckCardRatioLevels": 1,
     "notorietyDeckCardMinCost": 1,
     "notorietyDeckCardMaxCost": 3,
     "notorietyDeckCardRarityByRank": ["Common", "Uncommon", "Rare", "Mythic"],

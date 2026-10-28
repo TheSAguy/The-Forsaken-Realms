@@ -899,7 +899,7 @@ that added them. Console commands never earn an achievement.
 | **Lord Slayer** | Bring down a Lord in their own castle. | 1 / 3 / 4 / all 5 castles |
 | **Capital Gains** | Take a color's capital by assault, before its castle falls (a fallen color's capital falls with it). Counted by the color that built the capital. | 1 / 3 / 4 / all 5 |
 | **Legend Hunter** | Defeat the legends of the realm, each one once, across all your saves. The Arena counts. | 1 / 10 / 25 / 50 legends |
-| **Notorious** | Win at notoriety 50 or more: the foe starts with both notoriety bonuses (the 45 Wall and the 50 card) and the Clue and Treasure. The Arena counts. Not while Notoriety is off in Settings. | an Apprentice / an Adept / a Master / an Archmage |
+| **Notorious** | Win at notoriety 50 or more: the foe starts with both bonus Walls and the Clue and Treasure. The Arena counts. Not while Notoriety is off in Settings. | an Apprentice / an Adept / a Master / an Archmage |
 | **Ascendant** | Rise through the Ascendance. | level 5 / 10 / 20 / 30 |
 | **Ashes to Hearth** | Hold towns under your banner, restored from ruin or taken back. | 1 / 5 / 10 / 20 towns |
 | **A Seat of Your Own** | Raise your Capitol. | one trophy |
@@ -1296,16 +1296,22 @@ Walls with reach and Archmages Walls with flying. Which enemies do it depends on
 | Hard | Adepts, Masters and Archmages |
 | Insane | Everyone |
 
-Past that, two more things come for **every** enemy on every difficulty: a flying 3/6 Wall at notoriety 45, and at 50
-**one of the enemy's own cards** already in play - a random creature, artifact or enchantment from its deck, costing 1
-to 3, taken out of the deck. An Apprentice's is a common, an Adept's up to uncommon, a Master's up to rare, and an
-Archmage's any rarity (a boss goes by its rank). Planeswalkers, lands and Auras are never chosen. If its deck has no
-such card, it gets a second flying 3/6 Wall instead. Each step also gives the enemy 25% more life - +25% at 45,
-+50% at 50. So on Insane an enemy facing notoriety 50 starts with three Walls, one card of its own and half again its life.
-Each Wall card says why it's there, under a bold **Notoriety** line with the score it stands for; the 45+ card also
-prints the life it adds. Your notice log
+Past that, two more Walls come for **every** enemy on every difficulty: a flying 3/6 Wall at notoriety 45, and a second
+flying 3/6 at 50. Each also gives the enemy 25% more life - +25% at 45, +50% at 50. So on Insane an enemy facing
+notoriety 50 starts with four Walls, one card of its own (below) and half again its life. Each Wall card says why it's
+there, under a bold **Notoriety** line with the score it stands for; the 45+ and 50+ cards also print the life they
+add. Your notice log
 notes each step as you reach it ("Notoriety 10 - level 2: ...") and what a loss took off ("Duel lost - Notoriety
 27 -> 22 (-5), level 5 -> 4."). Arena fighters still bring the Walls your notoriety has earned.
+
+**Notoriety: a card of its own.** On Normal, Hard and Insane, a well-known winner also finds every enemy starting with
+**one of its own cards** already in play, on top of its Walls: a random creature, artifact or enchantment from its deck,
+costing 1 to 3, taken out of the deck. An Apprentice's is a common, an Adept's up to uncommon, a Master's up to rare,
+and an Archmage's any rarity (a boss goes by its rank). Planeswalkers, lands and Auras are never chosen, and a deck with
+no such card brings none. It starts at notoriety 50 on Normal, 45 on Hard and 40 on Insane - and five sooner (45, 40,
+35) while you have won 95% or more of your last 50 duels. Like the bonus Walls it comes to every rank, so on Hard with
+that win ratio an Apprentice at notoriety 40-44 can start with its card and no Wall at all. Never on Easy, never in the
+Arena.
 
 **Notoriety: stronger opponents.** Word of your wins also draws tougher foes:
 

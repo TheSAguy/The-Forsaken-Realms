@@ -14264,6 +14264,85 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 799: the Notoriety deck card is extra, from 50 / 45 / 40 by difficulty, sooner at a 95% win ratio (2026-10-28)
+
+The user, of round 793's deck card: "The additional spawn will not replace a wall, it will just be additional. On
+Insane, this should move up to Win 40+, Hard Win 45+ and Normal 50+. A win Ratio of 95%+ (After 50 duels) will drop the
+needed notoriety by 1 level, so: On Insane, this should move up to Win 35+, Hard Win 40+ and Normal 45+. Not in
+Arenas."
+
+- **Extra, not a swap**:
+  - The 50-win Wall (`tfr_wall4_flying_3_6`) is back for every rank, as before 793.
+  - The deck card comes on top of every Wall.
+  - With no eligible card the enemy gets no extra card (the 793 "Wall stays" fallback is gone).
+  - The bonus life (+25% at 45, +25% more at 50) is unchanged.
+  - `notorietyWallsFor` and `TfrAchievements.fullyArmed` (Notorious) read the Walls exactly as before 793.
+- **The gate** (`NotorietyDeckCard.gate`):
+  - `notorietyDeckCardWinsByDifficulty` [Easy 0 = never, Normal 50, Hard 45, Insane 40]; an unknown difficulty reads as
+    Easy, as `notorietyMinRankFor` does.
+  - It opens `notorietyDeckCardRatioLevels` (1) x `notorietyWinsPerLevel` (5) sooner while the player's record
+    (`AdventurePlayer.recentDuels`, round 613: the duels notoriety counts - not the Arena, an Inn event or Deck Tester)
+    holds at least `notorietyDeckCardRatioMinDuels` (50) duels with `notorietyDeckCardRatioAtLeast` (0.95) of them won.
+    That makes it Normal 45, Hard 40 and Insane 35.
+  - These are new keys with round 620's values (`winRatioHelpMinDuels` 50, `winRatioEnemyAtLeast` 0.95), not those
+    keys themselves, so retuning the Clue/Treasure help never moves this gate.
+- **Never** in an Arena duel (`choose(..., isArena)`; the Arena's Walls are unchanged, round 432), never on Easy,
+  never with Disable Notoriety on (round 772). Inn events, guard fights and chaos battles stay out as in 793.
+- **Every rank**, like the bonus Walls. So on Hard with the ratio drop an Apprentice at notoriety 40-44 starts with
+  its deck card and no Wall at all (Hard's level Walls start at Adept, and the bonus Walls at 45). That is by design;
+  the GUIDE says so.
+- Unchanged from 793: mana value 1-3, rarity by rank (Apprentice common, Adept up to uncommon, Master up to rare,
+  Archmage any; a boss by its tier), the eligibility rules, `notorietyDeckCardEtb` "noHostile", and the seeded pick
+  (same card on a retry: the seed comes from the save). The card is moved out of a copy of the deck.
+- **Notice log**: the 50 step reads "Notoriety 50: every foe also starts with a flying 3/6 Wall and +25% life." again.
+  A new line marks the gate as it is crossed: "Notoriety 45: every foe also starts with one of its own cards in play
+  (cost 1-3; an Apprentice's is a common, ...), on top of its Walls - one level early for your 96% win ratio. Not in the
+  Arena." (`NotorietyDeckCard.noticeLine`, called from `AdventurePlayer.logNotorietyStage`).
+- **Logs** (`[TFR-Notoriety]`):
+  - a pick: `<enemy> (<rank>) deck card: <card> (<rarity>, MV n, <kind>) added - N eligible (C copies) of S, cap X, deck S -> S-1, notoriety 52, needs Normal 45 (50 - 5 for win ratio 96% over 50 duels)` (or `needs Hard 45 (win ratio 94% over 50 duels, no drop)`);
+  - no card, from notoriety 35 (the lowest gate with the drop) up: `deck card: not yet - notoriety 40, needs Hard 45 (...)`, `deck card: not in the Arena - ...`, `deck card: not on Easy - notoriety 60`;
+  - `deck card: none eligible (...) - no extra card; ...`.
+- **Console**: `notorietycard` with no argument reports the gate ("Needs Hard 40 (45 - 5 for ...)"); `none` forces no
+  card (was: the Wall).
+- GUIDE.md/.html: the bonus-Walls paragraph is back to two Walls, plus a new "Notoriety: a card of its own" paragraph;
+  the Notorious row reads "both bonus Walls" again.
+- **Discord FAQ** (1.24's, not edited): at the 1.25 refresh, the Notoriety answer should say the 50 card comes on top
+  of the Walls from 50 / 45 / 40 (Normal / Hard / Insane), 5 sooner at a 95% win ratio over 50 duels, never on Easy or
+  in the Arena.
+- `C:\TFR\notes\notoriety-spawn-table.md` (the table shown to the user) has the 799 rows and a deck-card table.
+
+- **Tested** in a test package (`build_standalone.py --out agent-799` from the main tree, Maven exit 0, a copied
+  agent profile, cheats on, every duel at 50x; TFR 2's heavy.lock and GUI games checked before each launch; the copy
+  removed afterward). Each result is a forge.log line (`C:\TFR\notes\r799-agent-log-lines.txt`):
+  - Normal, notoriety 50, record 30-20: Ironcrest Sentinel (Master) - reach 3/6 + reach 3/6 + flying 3/6 + flying
+    3/6 + Myr Welder, "needs Normal 50 (win ratio 60% over 50 duels, no drop)".
+  - Normal 45, 48-2 (96%): Urza's Miter beside three Walls, "needs Normal 45 (50 - 5 for win ratio 96% over 50
+    duels)". 47-3 (94%): "not yet - notoriety 45, needs Normal 50". 40-0 (40 duels): "not yet ... over 40 duels, no
+    drop".
+  - Arena (Unbroken Bough), notoriety 50: Loamspeaker (Master) "deck card: not in the Arena", four Walls as before.
+  - A new Insane game, notoriety 40, 60%: Gravehound (Apprentice) - 3/6 + 3/6 + Hobbling Zombie, "needs Insane 40".
+  - A new Hard game, notoriety 40: 60% "not yet - needs Hard 45"; 96% Blazing Torch and no Wall ("starts with
+    Blazing Torch (deck card)" - the Apprentice case above; shot `C:\TFR\notes\r799-hard40-apprentice-card-only.png`:
+    the Torch, the win-ratio Clue and Treasure, no Wall); 94% and 40 duels "not yet".
+  - Hard, 44 -> 45 on a win: the notice log took both "Notoriety 45: every foe also starts with a flying 3/6 Wall and
+    +25% life." and the deck-card line.
+  - A new Easy game, notoriety 60, 98%: "deck card: not on Easy", both bonus Walls.
+  - 0 exceptions in the run logs (the bridge's own timeouts aside). After the tests two wordings changed (the pick
+    line's "on top of the Walls" -> "added", and Easy's "needs off on Easy" -> nothing / "Off on Easy." in the
+    console), then rebuilt in a clean worktree (wt-799, HEAD + these files, Maven exit 0) - not re-run in a game.
+  - **Untested**: Disable Notoriety with the 799 gate (round 793's test of the same early return still holds), a
+    generated-deck enemy, the Notorious award, Android.
+
+- Stock files (CORE_ENGINE_CHANGES): DuelScene, AdventurePlayer, ConsoleCommandInterpreter. `util/NotorietyDeckCard`
+  and `data/TuningData` are TFR's. The two 793 keys (`notorietyDeckCardWins`, `notorietyDeckCardReplaces`) left
+  TuningData and settings.json together: libgdx's Json rejects an unknown field, so a stale key in either would reset
+  every tuning value.
+- Saves: none touched.
+
+**Files touched**: `util/NotorietyDeckCard.java`, `scene/DuelScene.java`, `player/AdventurePlayer.java`,
+`data/TuningData.java`, `stage/ConsoleCommandInterpreter.java`; plane `config tables/settings.json`, `GUIDE.md`,
+`GUIDE.html`.
+
 ## Round 797: no chest or diamond on the world map starts a duel in week 1 (2026-10-28)
 
 The user: "There is a duel probability you get form a chest or possibly diamond resource we added on the overworld.

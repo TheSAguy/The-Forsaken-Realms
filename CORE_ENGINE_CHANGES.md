@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 799 - the Notoriety deck card is extra, by difficulty, sooner at a 95% win ratio
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): `NotorietyDeckCard.choose()` now takes
+  `isArena`; the Walls block adds the deck card after the Walls (round 793's swap of `tfr_wall4_flying_3_6` removed).
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): `logNotorietyStage()` - the 50 step is
+  the plain bonus-Wall line again; a `NotorietyDeckCard.noticeLine()` line is added when the deck card's gate is crossed.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK): the `notorietycard` comment.
+- TFR's `util/NotorietyDeckCard.java` (the gate) and `data/TuningData.java` (`notorietyDeckCardWinsByDifficulty`,
+  `notorietyDeckCardRatioAtLeast`, `notorietyDeckCardRatioMinDuels`, `notorietyDeckCardRatioLevels`; round 793's
+  `notorietyDeckCardWins` and `notorietyDeckCardReplaces` removed).
+
 ### Round 797 - no chest or diamond duel in week 1
 - **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK): the `chest <0-6>` and
   `diamond ambush` test commands, after `spawn resource`.
