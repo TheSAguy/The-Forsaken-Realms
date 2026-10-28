@@ -361,16 +361,28 @@ public class ResourceSpawns {
             return;
         }
         if (type == TYPE_MYSTERY) {
-            if (world.getRandom().nextFloat() < MYSTERY_AMBUSH_CHANCE && spawnAmbush())
-                return;
+            // Round 797 (the user: "no Duel can roll the first week"): in the chest's duel-free weeks an ambush roll falls
+            // through to the outcomes below, which keep their own odds. The same draws either way.
+            boolean ambushSkipped = false;
+            boolean ambush = world.getRandom().nextFloat() < MYSTERY_AMBUSH_CHANCE || forceAmbush;
+            forceAmbush = false;
+            if (ambush) {
+                if (ChestEvents.duelFreeWeek(world))
+                    ambushSkipped = true;
+                else if (spawnAmbush())
+                    return;
+            }
             // Shop blueprint (user spec 2026-08-30). Same short-circuit idiom as the ambush above:
             // grantRandomBlueprint() returns false when the feature is off or every type is
             // already known, and the pickup then falls through to an ordinary resource - so
             // "drop the outcome once they are all known" needs no extra bookkeeping and can never
             // produce a dud pickup.
-            if (world.getRandom().nextFloat() < MYSTERY_BLUEPRINT_CHANCE && grantRandomBlueprint("Mystery drop"))
+            if (world.getRandom().nextFloat() < MYSTERY_BLUEPRINT_CHANCE && grantRandomBlueprint("Mystery drop")) {
+                noteAmbushSkipped(ambushSkipped, world, "a blueprint");
                 return;
+            }
             if (world.getRandom().nextFloat() < MYSTERY_VIGOR_CHANCE) {
+                noteAmbushSkipped(ambushSkipped, world, "Diamond's Vigor");
                 grantVigor();
                 return;
             }
@@ -379,6 +391,7 @@ public class ResourceSpawns {
             // diamondPowerChance). Prospector does not touch it - it is not a resource. Round 675: a card to turn over.
             if (Ascendance.isActive() && Ascendance.data().diamondPower > 0
                     && world.getRandom().nextFloat() < Ascendance.data().diamondPowerChance) {
+                noteAmbushSkipped(ambushSkipped, world, "Power");
                 Ascendance.revealPower(Ascendance.data().diamondPower, "a diamond's light");
                 System.out.println("[ResourceSpawns] Mystery pickup: " + Ascendance.data().diamondPower + " Power");
                 return;
@@ -388,6 +401,7 @@ public class ResourceSpawns {
             value = type == TYPE_GOLD
                     ? GOLD_MIN + world.getRandom().nextInt(GOLD_MAX - GOLD_MIN + 1)
                     : OTHER_MIN + world.getRandom().nextInt(OTHER_MAX - OTHER_MIN + 1);
+            noteAmbushSkipped(ambushSkipped, world, typeName(type));
         }
         if (type == TYPE_SHARDS || type == TYPE_WOOD || type == TYPE_STONE)
             value += OTHER_PICKUP_BONUS; // round 656
@@ -426,6 +440,26 @@ public class ResourceSpawns {
     }
 
     private static boolean resourceLogNoted; // round 730: the [TFR-Notices] line once per session
+
+    // Round 797: the console's "diamond ambush" - picks up a diamond where the player stands with its ambush roll won.
+    private static boolean forceAmbush;
+
+    public static String debugAmbush() {
+        World world = Current.world();
+        if (world == null || WorldStage.getInstance().getPlayerSprite() == null)
+            return "Pick up a diamond on the world map";
+        forceAmbush = true;
+        award(world, TYPE_MYSTERY, 0);
+        return "Picked up a diamond with its ambush roll won in week " + SpawnTierWeighting.currentWeek(world)
+                + " - see forge.log [ResourceSpawns]";
+    }
+
+    /** Round 797: the log line for an ambush the duel-free weeks skipped, naming what the diamond gave instead. */
+    private static void noteAmbushSkipped(boolean skipped, World world, String instead) {
+        if (skipped)
+            System.out.println("[TFR-ResourceSpawns] week " + SpawnTierWeighting.currentWeek(world)
+                    + ": the diamond's ambush roll was skipped - " + instead + " instead");
+    }
 
     /** Round 239: +3 starting life in the next duel - see MYSTERY_VIGOR_CHANCE. */
     private static void grantVigor() {

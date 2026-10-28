@@ -790,6 +790,10 @@ public class TuningData {
     // this-many weeks (the [TFR-EarlyLife] week count) a lost duel takes only the percentage - the minimum is waived on
     // every difficulty. 0 (the default) never waives it, so a stock plane is unchanged.
     public int defeatGoldLossMinWaivedWeeks = 0;
+    // Round 797 (the user: "Let's say no Duel can roll the first week. I had to fight a Archmage week 1"): in the world's
+    // first this-many weeks (the same week count) an overworld chest never rolls Dangerous Enemy and a diamond never
+    // rolls its ambush - the roll falls through to the other outcomes. 0 (the default) never, so a stock plane is unchanged.
+    public int chestDuelFreeWeeks = 0;
 
     // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
     // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". Same

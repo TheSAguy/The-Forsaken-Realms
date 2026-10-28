@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 797 - no chest or diamond duel in week 1
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK): the `chest <0-6>` and
+  `diamond ambush` test commands, after `spawn resource`.
+- TFR's `util/ChestEvents.java`, `util/ResourceSpawns.java` and `data/TuningData.java` (`chestDuelFreeWeeks`) carry the
+  rest.
+
 ### Round 796 - "I won't cheat by loading after a loss"
 - **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK): the `reloadJabOptOut` field.
 - **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK): the option's checkbox, under Disable

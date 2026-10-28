@@ -582,6 +582,9 @@
     // Round 785 (the user: "in week 1 a defeat on Hard takes only the 10%, no 150-gold minimum"): in the world's first
     // this-many weeks a lost duel takes only the percentage above, on every difficulty - no minimum. 0 = never.
     "defeatGoldLossMinWaivedWeeks": 1,
+    // Round 797 (the user: "Let's say no Duel can roll the first week"): in the world's first this-many weeks no overworld
+    // chest rolls Dangerous Enemy and no diamond rolls its ambush; the other outcomes keep their odds. 0 = never.
+    "chestDuelFreeWeeks": 1,
 
     // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
     // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". The

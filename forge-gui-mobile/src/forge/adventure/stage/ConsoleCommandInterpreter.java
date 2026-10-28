@@ -487,6 +487,17 @@ public class ConsoleCommandInterpreter {
         // Drops one random resource pickup next to the player - for testing the spawn mechanic
         // (icon, twinkle, walk-over pickup) without hunting one of the ~20 across the whole map.
         registerCommand(new String[]{"spawn", "resource"}, s -> ResourceSpawns.debugSpawnNearPlayer());
+        // Round 797: open a chest where the player stands with its roll forced (0 Gold, 1 Lost Card, 2 Dangerous Enemy,
+        // 3 Thief Merchant, 4 Duplicate, 5 Illegal Arena, 6 Power), and pick up a diamond whose ambush roll is won - to
+        // see the duel-free first week ([TFR-ChestEvents] / [TFR-ResourceSpawns] lines) without hunting the odds.
+        registerCommand(new String[]{"chest"}, s -> {
+            try {
+                return forge.adventure.util.ChestEvents.debugOpen(Integer.parseInt(s[0]));
+            } catch (Exception e) {
+                return "Command needs an outcome 0-6";
+            }
+        });
+        registerCommand(new String[]{"diamond", "ambush"}, s -> ResourceSpawns.debugAmbush());
         registerCommand(new String[]{"give", "stone"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: Amount.";
             int amount;

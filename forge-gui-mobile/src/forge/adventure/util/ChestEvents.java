@@ -44,6 +44,10 @@ public class ChestEvents {
     private static final int EVENT_DUPLICATE = 4;
     private static final int EVENT_ILLEGAL_ARENA = 5;
     private static final int EVENT_POWER = 6; // round 517: only rolled with Ascendance on
+    // Round 797: the outcomes a chest can roll in its duel-free weeks - no Dangerous Enemy, no Illegal Arena Match.
+    private static final int[] DUEL_FREE_EVENTS = {EVENT_GOLD, EVENT_LOST_CARD, EVENT_THIEF_MERCHANT, EVENT_DUPLICATE};
+    private static final int[] DUEL_FREE_EVENTS_POWER = {EVENT_GOLD, EVENT_LOST_CARD, EVENT_THIEF_MERCHANT,
+            EVENT_DUPLICATE, EVENT_POWER};
 
     // Shop blueprint from a chest (user spec 2026-08-30: "add it to diamond AND the Chest Drop").
     private static final float CHEST_BLUEPRINT_CHANCE = 0.25f;
@@ -52,7 +56,7 @@ public class ChestEvents {
         // Rolled BEFORE the ordinary 1-of-6 so it does not have to displace an existing event, and
         // it self-disables: grantRandomBlueprint() returns false when blueprints are off for this
         // plane or every type is already known, and the chest then resolves completely normally.
-        if (world.getRandom().nextFloat() < CHEST_BLUEPRINT_CHANCE
+        if (world.getRandom().nextFloat() < CHEST_BLUEPRINT_CHANCE && forcedRoll < 0
                 && ResourceSpawns.grantRandomBlueprint("Chest")) {
             System.out.println("[ChestEvents] Chest opened, event=blueprint");
             return;
@@ -60,7 +64,24 @@ public class ChestEvents {
         // Round 517 (the user: "add a 'Power' reward to the overworld chest ... Maybe 15"): with Ascendance on, a
         // seventh, equal outcome - a cache of Power (ascendance.json chestPower).
         boolean power = Ascendance.isActive() && Ascendance.data().chestPower > 0;
-        int roll = world.getRandom().nextInt(power ? 7 : 6);
+        int outcomes = power ? 7 : 6;
+        int roll = world.getRandom().nextInt(outcomes);
+        if (forcedRoll >= 0) { // round 797: the console's "chest open <n>"
+            roll = Math.min(forcedRoll, outcomes - 1);
+            forcedRoll = -1;
+        }
+        // Round 797 (the user: "Let's say no Duel can roll the first week. I had to fight a Archmage week 1"): in the
+        // world's first chestDuelFreeWeeks weeks a Dangerous Enemy or an Illegal Arena Match roll (an all-Archmage
+        // bracket no week-1 hero wins) is drawn again among the other outcomes, so each keeps its equal share. Every
+        // other roll draws exactly what it did before; a skip costs one extra draw.
+        if ((roll == EVENT_DANGEROUS_ENEMY || roll == EVENT_ILLEGAL_ARENA) && duelFreeWeek(world)) {
+            int skipped = roll;
+            int[] safe = power ? DUEL_FREE_EVENTS_POWER : DUEL_FREE_EVENTS;
+            roll = safe[world.getRandom().nextInt(safe.length)];
+            System.out.println("[TFR-ChestEvents] week " + SpawnTierWeighting.currentWeek(world) + ": the "
+                    + (skipped == EVENT_DANGEROUS_ENEMY ? "duel" : "arena") + " roll was skipped - " + eventName(roll)
+                    + " instead");
+        }
         System.out.println("[ChestEvents] Chest opened, event=" + roll);
         if (roll == EVENT_POWER) { // round 675: a Power card to turn over, like the diamond's
             Ascendance.revealPower(Ascendance.data().chestPower, "a chest");
@@ -85,6 +106,43 @@ public class ChestEvents {
             default:
                 triggerIllegalArena(world);
                 break;
+        }
+    }
+
+    /** Round 797: true in the world's first chestDuelFreeWeeks weeks (the [TFR-EarlyLife] week count round 785 uses),
+     *  when no chest or diamond rolls a duel. 0 (the default) never, so a stock plane is unchanged. */
+    public static boolean duelFreeWeek(World world) {
+        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        return tuning != null && tuning.chestDuelFreeWeeks > 0 && world != null
+                && SpawnTierWeighting.currentWeek(world) <= tuning.chestDuelFreeWeeks;
+    }
+
+    // Round 797: the console's "chest open <n>" - opens a chest where the player stands with its 1-of-6 roll set to n
+    // (0 Gold, 1 Lost Card, 2 Dangerous Enemy, 3 Thief Merchant, 4 Duplicate, 5 Illegal Arena, 6 Power). The draws
+    // still happen; the blueprint roll is passed over. -1: no forced roll.
+    private static int forcedRoll = -1;
+
+    public static String debugOpen(int roll) {
+        if (roll < 0 || roll > EVENT_POWER)
+            return "Command needs an outcome 0-6";
+        World world = Current.world();
+        if (world == null || WorldStage.getInstance().getPlayerSprite() == null)
+            return "Open a chest on the world map";
+        forcedRoll = roll;
+        trigger(world);
+        return "Opened a chest with roll " + roll + " (" + eventName(roll) + ") in week "
+                + SpawnTierWeighting.currentWeek(world) + " - see forge.log [ChestEvents]";
+    }
+
+    private static String eventName(int event) {
+        switch (event) {
+            case EVENT_GOLD: return "Gold Chest";
+            case EVENT_LOST_CARD: return "Lost Card";
+            case EVENT_DANGEROUS_ENEMY: return "Dangerous Enemy";
+            case EVENT_THIEF_MERCHANT: return "Thief Merchant";
+            case EVENT_DUPLICATE: return "Duplicate";
+            case EVENT_POWER: return "Power";
+            default: return "Illegal Arena Match";
         }
     }
 

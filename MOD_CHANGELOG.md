@@ -14264,6 +14264,46 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 797: no chest or diamond on the world map starts a duel in week 1 (2026-10-28)
+
+The user: "There is a duel probability you get form a chest or possibly diamond resource we added on the overworld.
+Let's say no Duel can roll the first week. I had to fight a Archmage week 1." In the world's first week (days 1-7, the
+HUD's "Week 0"; round 785's `SpawnTierWeighting.currentWeek` count) an overworld chest no longer rolls Dangerous Enemy
+(an Archmage or a heavyweight at 1.5x life, an immediate duel) or the Illegal Arena Match (an opt-in all-Archmage
+bracket, a dud for a week-1 hero - the main thread's call), and a diamond (Mystery pickup) no longer rolls its ambush
+(the Adept wizard of your worst color, on top of you). Ships with 1.25.
+
+- **Chest** (`ChestEvents.trigger`): the 1-of-6 roll (1-of-7 with Ascendance's Power) is drawn as before; a Dangerous
+  Enemy or Illegal Arena result is drawn again among the outcomes left (Gold, Lost Card, Thief Merchant, Duplicate,
+  and Power with Ascendance), so each keeps an equal share. Week 1, of all chests (the 25% blueprint roll comes first
+  and is unchanged): each of the four was 12.5%, now 18.75%; Dangerous Enemy and Illegal Arena were 12.5% each, now 0.
+  With Ascendance: seven at 10.7% -> five at 15%. Every other roll draws exactly what it did; a skip costs one extra
+  draw from the world's random.
+- **Diamond** (`ResourceSpawns.award`): the 5% ambush roll is still drawn; in week 1 it falls through to the blueprint,
+  Vigor, Power and resource rolls, which keep their own odds. Week 1: ambush 5% -> 0, blueprint 23.75% -> 25%, Vigor
+  10.7% -> 11.25%, a resource 60.6% -> 63.75% (Ascendance off, blueprints still to find). The same draws either way.
+- **Tunable:** `TuningData.chestDuelFreeWeeks` (default 0 = never, so a stock plane is unchanged); TFR `settings.json`
+  sets 1. `ChestEvents.duelFreeWeek(world)` is the one test both use.
+- **Log:** `[TFR-ChestEvents] week 1: the duel roll was skipped - Gold Chest instead` (or "the arena roll"), and
+  `[TFR-ResourceSpawns] week 1: the diamond's ambush roll was skipped - Stone instead`.
+- **Console** (test cheats): `chest <0-6>` opens a chest where you stand with its roll forced (0 Gold, 1 Lost Card,
+  2 Dangerous Enemy, 3 Thief Merchant, 4 Duplicate, 5 Illegal Arena, 6 Power; the blueprint roll is passed over);
+  `diamond ambush` picks up a diamond whose ambush roll is won.
+- **GUIDE:** a "first week" bullet in Smaller Things Worth Knowing; the Ascendance table's chest row says "(one in five
+  in week 1)". GUIDE.html regenerated (`guide_html.py --check` OK). No Discord FAQ line describes chest or diamond
+  duels, so the 1.25 FAQ refresh needs no change for this round.
+- **Tested** (agent test copy from a clean worktree at `9308f22db38` + these files, new Normal game, every duel at
+  50x): day 1, `chest 2` four times -> Lost Card, Power, Duplicate, Gold; `chest 5` three times -> Power, Gold, Thief
+  Merchant; `diamond ambush` three times -> Shards, Stone, Shards; each with its skip line. Day 8 (week 2): `chest 2`
+  started the Aurelian Dragon (Archmage) duel at 54 life, `diamond ambush` spawned the Adept Black Wizard and duelled
+  (once the post-defeat grace ended), `chest 5` opened the arena bracket (left with Done, no fee). Not tested: a
+  natural (unforced) skip, and a week-1 chest with blueprints all known.
+- **Not changed** (reported; the main thread decides): the Capitol's forced defense duel can still come in week 1, but
+  only once the Player Capitol is raised and a mage (capped at Adept in week 1) gets past its guards; treasure
+  guardians (dug for, needs fragments), inn events and quest fights are opt-in; town pillages never start in week 1
+  (round 541); roaming legends are gated by rank, not week. From week 2 a chest's Dangerous Enemy is still an
+  Archmage at 1.5x life.
+
 ## Round 796: "I won't cheat by loading after a loss" - a Settings switch for the reload penalty; cap +25, forgiveness every 3, the Arena never counts (2026-10-28)
 
 The user: "Let's add a option in settings. 'I won't cheat by loading after a loss' Default checked. If they un-check

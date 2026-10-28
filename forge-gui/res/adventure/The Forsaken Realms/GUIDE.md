@@ -506,7 +506,7 @@ never stack:
 | Winning an Arena bracket (each match also pays its duel) | 34 |
 | An Inn tournament: each match won, and more for winning it without a loss | about 13 each, +26 |
 | Digging up a treasure (its guardian's duel pays as well) | 64 |
-| An overworld chest - one outcome in seven | 13 |
+| An overworld chest - one outcome in seven (one in five in week 1) | 13 |
 | A Mystery pickup (the diamond) - now and then, in place of a resource | 21 |
 
 Power from a chest or a diamond comes as a **Power card** - the sun and the amount - that you turn over on a reward
@@ -1870,6 +1870,8 @@ apply.
   life in your next duel**, added to whatever blessing you already carry.
 - Enemy names carry their tier — "Clay Golem (Master)" — so you can judge a fight before taking
   it. Dispatched mages are capped at Adept in week 1 and Master in weeks 2–3.
+- In your **first week** (days 1-7) no chest or diamond on the world map starts a fight or an arena bracket - it
+  gives one of its other finds instead.
 - Settings has an **"avoid restricted edition art"** toggle (on by default) that steers card art
   away from the black-and-white printings.
 - **Notices** come and go quickly: a banner stays 5 seconds, or 2.5 while more are waiting, and carries up to three
