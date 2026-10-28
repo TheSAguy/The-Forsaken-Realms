@@ -13,7 +13,7 @@ Unreleased, for 1.25: round 789 (the blueprint list takes the player-town templa
 1.24 / versionCode 12400, wrote `RELEASE_NOTES_v1.24.md` and GUIDE's What's New in 1.24. Engine = the 10.26 daily (round 769, upstream `0dc8c66996e`; R1-R4 kept TFR's synchronous auto
 save, eager shops, Inn events and place entry - see MOD_CHANGELOG; upstream's async save and lazy town loading stay
 unused, possible later rounds); next merge from upstream after `0dc8c66996e`; BASE_INSTALL is that daily, so packages
-need no `--allow-base-mismatch`. Next version: 1.25 / 12500. Next free round: 821 (819 and 820 assigned). The agent profile's window is
+need no `--allow-base-mismatch`. Next version: 1.25 / 12500. Round 821: 15 look-alike caves get their own 32x32 entrances from the user's "favorite older entrances" ChatGPT sheets (five recolored to their biome: Kelp Hollow's sea maw, colorless dry crag, bleached den, ash fire, dried heart); no two entrance places share exact pixels now; 5 caves (CaveR1, Foghorn Cleft, CaveC6, CaveCB, Gray Warren) wait for a cave batch. Next free round: 822 (820 assigned). The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Log sharing (round 698) posts to Discord through a webhook kept OUT of git in
 `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and ANDROID_RELEASE.md step 2b put it into

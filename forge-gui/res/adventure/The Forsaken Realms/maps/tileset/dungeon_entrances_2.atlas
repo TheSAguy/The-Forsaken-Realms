@@ -1,5 +1,5 @@
 dungeon_entrances_2.png
-size: 512,1270
+size: 512,1304
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -2775,6 +2775,113 @@ E_NekoruNest_Lavafort3
 E_TheoristsSanctum_Steamdome2
   rotate: false
   xy: 442, 1238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen02_Eggs1
+  rotate: false
+  xy: 0, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC2_Falls24Dry
+  rotate: false
+  xy: 34, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC3_Tribalden4Bleached
+  rotate: false
+  xy: 68, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen01_Firetotem4Ash
+  rotate: false
+  xy: 102, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+  footprint: 5, 0, 22, 32
+E_CaveCGen04_Heartfort4Dried
+  rotate: false
+  xy: 136, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen10_Jungleden3
+  rotate: false
+  xy: 170, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen12_Tribalden1
+  rotate: false
+  xy: 204, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR7_Maw22
+  rotate: false
+  xy: 238, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRB_Eggs23
+  rotate: false
+  xy: 272, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen01_Volcanic2
+  rotate: false
+  xy: 306, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+  footprint: 4, 0, 23, 32
+E_CaveRGen13_Tribalden2
+  rotate: false
+  xy: 340, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen04_Maw1Sea
+  rotate: false
+  xy: 374, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_EvilGrove4_Maw3
+  rotate: false
+  xy: 408, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_EvilGrove6_Jungleden4
+  rotate: false
+  xy: 442, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_HermitsHideout_Falls1
+  rotate: false
+  xy: 476, 1272
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

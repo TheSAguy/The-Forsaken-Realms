@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 821: 15 look-alike caves get their own entrances - no two entrance places share a sprite now (2026-10-28)
+
+Round 811 left 20 caves that shared a drawing with another cave; its building designs did not fit caves. The user then
+had ChatGPT draw alternatives to six favorite older entrances (Gitrog Bog's maw, the Vampire Dungeon's heart, Mistfall
+Cave, Lion's Den, Ashling's Domain's fire, Xira's Hive): 13 sheets, 52 designs. Approved in the Art main thread
+(proposal A, "Yes, with recolors"): 15 swaps at 32x32, five of them recolored to their biome; the other 5 wait for a
+cave batch.
+
+- **The 15** (the place that keeps the old shared sprite in brackets): red - CaveRGen01 Cinder Hollow a tall flame
+  [CaveR], CaveRGen13 Kiln Hollow a tusked hide den [CaveR], CaveR7 a spiked maw and CaveRB an egg mound [CaveR6];
+  black - EvilGrove4 a moss-hung maw [CaveGGen06], EvilGrove6 Shade's Lair a skull-topped hide den [CaveG4],
+  CaveBGen02 Rotroot Cellar an egg mound [CaveC1]; blue - Hermit's Hideout a mossy cave over a stream [Hellion Cave],
+  CaveUGen04 Kelp Hollow a teal sea-beast maw [CaveC9]; colorless - CaveC2 a dry scrub crag with a broken pillar,
+  CaveC3 a bleached bone den, CaveCGen01 Wasteland Cleft an ash-gray ghost fire [all three: CaveC1], CaveCGen04 Dust
+  Cistern a dried, petrified heart [CaveCA]; green - CaveGGen10 Wildvine Cleft a vine-hung den [CaveG4], CaveGGen12
+  Mulch Sink a lion-head den [CaveCGen08].
+- **Choices**: at 32 px the 52 designs collapse into about five looks (fire, red flesh mound, egg mound, mossy cave,
+  hide den), so each biome gets one of a look where possible; nothing echoes an original favorite in its own biome
+  (no hearts in black beside the Vampire Dungeon, no eggs in colorless beside Xira's Hive, no orb-fire in red beside
+  Ashling's Domain) or a round 811 gauntlet. The five recolors (sea maw, dry crag, bleached den, ash fire, dried heart)
+  were remapped by hue role at full size, keeping each drawing's shading, then downscaled like the rest.
+- **Still waiting** for a ChatGPT cave batch, each still sharing: CaveR1 [CaveR], CaveUGen10 Foghorn Cleft
+  [MerfolkPool5], CaveC6 and CaveCB [CaveC1], CaveCGen07 Gray Warren [CaveCGen03]. No two entrance places share the
+  exact same pixels any more (Hellion Cave / Hermit's Hideout was the last pair).
+- **Files**: `maps/tileset/dungeon_entrances_2.png` 512x1270 -> 512x1304, the 15 below round 811's (existing pixels and
+  region lines unchanged; the page's `size:` line changes); `.atlas` gains 15 regions `E_<Place>_<Design>` (2 with a
+  `footprint:` from `poi_footprints.footprint`, new regions only - the 21-region drift noted in round 811 stays);
+  `points_of_interest.json` changes only the 15 places' `spriteAtlas` / `sprite`.
+- **Checks**: `poi_outline.py --audit` 0; `validate_plane_data.py` exit 0, output identical to the pre-round baseline;
+  all 15 regions on page 1, in bounds, 32x32, outline score 1.00.
+- **Seen in the agent**: test copy `agent-821` of the agent game with these three files and a copied profile, log sharing off, cheats, no duels; removed afterwards. World-map shots of Kelp Hollow, Dust Cistern, Wasteland Cleft, Cinder Hollow, Mulch Sink and Shade's Lair: each draws at 32x32 with its marker at its edge; the sea maw stands out on the blue biome's sand and the ash fire stays legible on gray. Shots: the Art project's `notes/entrance_dedup/caves2/ingame/r821_*`.
+- **Art Library**: `Projects/The Forsaken Realms/Game Art/Entrances ChatGPT (round 821)/` (the 13 sheets, the 15
+  sprites); the 42 designs not installed as drawn (37 unused, the 5 held-back picks among them, and the original colors of the five recolors) in `Entrance Spares/ChatGPT favorites (round 821)/` at 32
+  and 48. Previews and tools: the Art project's `notes/entrance_dedup/caves2`.
+
 ## Round 819: a Booster Shop under the Capitol's Card Shop - packs from all your unlocked sets, no blueprint (2026-10-28)
 
 A player asked on Discord for a shop that sells one kind of booster. The user: "Can we add a "Booster" shop option in

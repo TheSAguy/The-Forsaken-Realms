@@ -694,7 +694,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveC2",
+		"sprite": "E_CaveC2_Falls24Dry",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_devil.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -710,7 +710,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveC3",
+		"sprite": "E_CaveC3_Tribalden4Bleached",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_bear.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -1340,7 +1340,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveR7",
+		"sprite": "E_CaveR7_Maw22",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_bigzombie.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -1404,7 +1404,7 @@
 		"type": "cave",
 		"count": 2,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveRB",
+		"sprite": "E_CaveRB_Eggs23",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_goblin.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -1811,7 +1811,7 @@
 		"type": "cave",
 		"count": 2,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_EvilGrove4",
+		"sprite": "E_EvilGrove4_Maw3",
 		"map": "../The Forsaken Realms/maps/map/evilgrove/evilgrove_5_swamp.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -1843,7 +1843,7 @@
 		"type": "cave",
 		"count": 2,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_EvilGrove6",
+		"sprite": "E_EvilGrove6_Jungleden4",
 		"map": "../The Forsaken Realms/maps/map/evilgrove/evilgrove_6_shade.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -5659,7 +5659,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveUGen04",
+		"sprite": "E_CaveUGen04_Maw1Sea",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_04.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -5835,7 +5835,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveBGen02",
+		"sprite": "E_CaveBGen02_Eggs1",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_black_02.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -6027,7 +6027,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveRGen01",
+		"sprite": "E_CaveRGen01_Volcanic2",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_red_01.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -6219,7 +6219,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveRGen13",
+		"sprite": "E_CaveRGen13_Tribalden2",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_red_13.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -6379,7 +6379,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveGGen10",
+		"sprite": "E_CaveGGen10_Jungleden3",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_green_10.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -6411,7 +6411,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveGGen12",
+		"sprite": "E_CaveGGen12_Tribalden1",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_green_12.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -6443,7 +6443,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveCGen01",
+		"sprite": "E_CaveCGen01_Firetotem4Ash",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_01.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -6491,7 +6491,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveCGen04",
+		"sprite": "E_CaveCGen04_Heartfort4Dried",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_04.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -6934,8 +6934,8 @@
 		"displayName": "Hermit's Hideout",
 		"type": "cave",
 		"count": 1,
-		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
-		"sprite": "Cave",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_HermitsHideout_Falls1",
 		"map": "../The Forsaken Realms/maps/map/merfolkpool/Hermits_Hideout.tmx",
 		"radiusFactor": 0.8,
 		"appearsAtLevel": 8,
