@@ -777,6 +777,9 @@ public class ConsoleCommandInterpreter {
             }
             return "Notoriety set to " + Current.player().notorietyStreak() + ", level " + Current.player().notorietyLevel();
         });
+        // Round 793 (testing aid): the notoriety-50 deck card - "notorietycard Steel Overseer" forces that card when the
+        // enemy's deck has it, "notorietycard none" forces the Wall, "notorietycard off" draws normally again.
+        registerCommand(new String[]{"notorietycard"}, forge.adventure.util.NotorietyDeckCard::console);
         // Round 465: test cheat - 'winstreak "Wild Rat" 3' sets your wins in a row over one enemy (by name).
         registerCommand(new String[]{"winstreak"}, s -> {
             if (s.length < 1) return "Give an enemy name, and a number to set its streak.";

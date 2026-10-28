@@ -175,6 +175,18 @@
     "notorietyBonusWalls": ["tfr_wall3_flying_3_6", "tfr_wall4_flying_3_6"],
     // Round 446: each bonus wall reached also adds this much to the enemy's starting life, summed (45+ = +25%, 50+ = +50%).
     "notorietyBonusWallLifePercent": [25, 25],
+    // Round 793: from notorietyDeckCardWins the notorietyDeckCardReplaces Wall becomes one random permanent from the
+    // enemy's own deck (moved out of the deck): mana value MinCost-MaxCost, rarity at most the rank's entry (Apprentice,
+    // Adept, Master, Archmage), never a name in notorietyDeckCardExclude. notorietyDeckCardEtb: "keep", "noHostile" (no
+    // card whose own enter trigger targets, sacrifices or reaches an opponent) or "none" (no enter triggers at all).
+    // No eligible card: the Wall stays. 0 wins = off.
+    "notorietyDeckCardWins": 50,
+    "notorietyDeckCardReplaces": "tfr_wall4_flying_3_6",
+    "notorietyDeckCardMinCost": 1,
+    "notorietyDeckCardMaxCost": 3,
+    "notorietyDeckCardRarityByRank": ["Common", "Uncommon", "Rare", "Mythic"],
+    "notorietyDeckCardExclude": [],
+    "notorietyDeckCardEtb": "noHostile",
     // Round 447: from this many wins in a row a spawn rolls against the NEXT lifetime-win rank (0.5 -> 1 -> 2 -> 10), so a
     // player under 150 lifetime wins can meet roaming Archmages. 0 = off. (The rank odds' own streak tilt is in
     // spawn_tier_weighting.json.)

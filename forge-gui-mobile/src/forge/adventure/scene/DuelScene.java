@@ -1169,6 +1169,12 @@ public class DuelScene extends ForgeScene {
                 System.err.println(isDeckMissingMsg);
                 deck = this.eventData == null && canUseGeneticAI ? Aggregates.random(DeckProxy.getAllGeneticAIDecks()).getDeck() : this.playerDeck;
             }
+            // Round 793: from notoriety 50 the 50-win Wall becomes a permanent from this seat's own deck - picked now, so
+            // the seat registers with the deck that card left (a copy; the Walls block below puts the card in play).
+            forge.adventure.util.NotorietyDeckCard.Pick deckCard = eventData == null && guardDeck == null && !chaosBattle
+                    ? forge.adventure.util.NotorietyDeckCard.choose(currentEnemy, deck, i) : null;
+            if (deckCard != null && deckCard.card != null)
+                deck = deckCard.deck;
             RegisteredPlayer aiPlayer = RegisteredPlayer.forVariants(playerCount, appliedVariants, deck, null, false, null, null);
 
             // Tiered display name (user spec 2026-08-13, e.g. "Red Wizard (Adept)") - display-only,
@@ -1292,6 +1298,12 @@ public class DuelScene extends ForgeScene {
                 java.util.List<IPaperCard> walls = new java.util.ArrayList<>();
                 java.util.List<String> shown = new java.util.ArrayList<>();
                 for (String wallScript : Current.player().notorietyWallsFor(currentEnemy)) {
+                    // Round 793: the deck card takes the place of its Wall (choose() above; no card = the Wall stays).
+                    if (deckCard != null && deckCard.card != null && wallScript.equals(deckCard.replaces)) {
+                        walls.add(deckCard.card);
+                        shown.add(deckCard.card.getName() + " (deck card)");
+                        continue;
+                    }
                     forge.item.PaperToken wall = forge.model.FModel.getMagicDb().getAllTokens().getToken(wallScript);
                     if (wall == null) {
                         System.err.println("[TFR-Notoriety] token script " + wallScript + " not found - no wall");

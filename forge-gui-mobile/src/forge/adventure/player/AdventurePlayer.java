@@ -520,9 +520,19 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                             ? tuning.notorietyBonusWallLifePercent[i] : 0;
                     String bonus = tuning.notorietyBonusWalls != null && i < tuning.notorietyBonusWalls.length
                             ? tuning.notorietyBonusWalls[i] : "";
-                    lines.add("Notoriety " + wins + ": every foe also starts with a "
-                            + (bonus.contains("flying") ? "flying " : "") + wallSize(bonus) + " Wall"
-                            + (percent > 0 ? " and +" + percent + "% life." : "."));
+                    // Round 793: the Wall a deck card replaces (NotorietyDeckCard) gets that card's line instead.
+                    boolean deckCard = tuning.notorietyDeckCardWins > 0 && bonus.equals(tuning.notorietyDeckCardReplaces)
+                            && wins >= tuning.notorietyDeckCardWins;
+                    if (deckCard)
+                        lines.add("Notoriety " + wins + ": every foe also starts with one of its own cards in play (cost "
+                                + tuning.notorietyDeckCardMinCost + "-" + tuning.notorietyDeckCardMaxCost + "; an Apprentice's"
+                                + " is a common, an Adept's up to uncommon, a Master's up to rare, an Archmage's any)"
+                                + " in place of the second flying Wall"
+                                + (percent > 0 ? " and +" + percent + "% life." : "."));
+                    else
+                        lines.add("Notoriety " + wins + ": every foe also starts with a "
+                                + (bonus.contains("flying") ? "flying " : "") + wallSize(bonus) + " Wall"
+                                + (percent > 0 ? " and +" + percent + "% life." : "."));
                 }
             }
         // Round 753: a loss takes notoriety down, not to 0 - the line says by how much (once it had a level).

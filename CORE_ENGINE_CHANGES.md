@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 793 - at Notoriety 50 an enemy's own card replaces the last bonus Wall
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): in the seat loop, just before
+  `RegisteredPlayer.forVariants`, `NotorietyDeckCard.choose()` may swap `deck` for a copy one card short; in the Walls
+  block the card takes the replaced Wall's place in `walls` (TFR code since round 411). Stock planes follow the Walls'
+  reach.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): `logNotorietyStage()` - the bonus step
+  a deck card replaces gets its own notice line.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK): the `notorietycard` command.
+- New: `util/NotorietyDeckCard.java`. TFR's `data/TuningData.java` gains the seven `notorietyDeckCard*` fields.
+
 ### Round 792 - the Android download prompt's real sizes
 
 - **`forge-gui-mobile/src/forge/assets/AssetsDownloader.java`** - `packageSize` on Android "160MB" -> "430MB" and

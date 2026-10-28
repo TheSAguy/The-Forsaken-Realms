@@ -317,6 +317,19 @@ public class TuningData {
     // Round 446 (the user: "+25% health" at 45 wins, "+25% another health" at 50): each bonus wall reached also raises
     // the enemy's starting life by its entry here, summed (45+ = +25%, 50+ = +50%). Parallel to the lists above.
     public int[] notorietyBonusWallLifePercent = {25, 25};
+    // Round 793 (the user: "Swap as proposed"; a Discord idea of Vr01's): from notorietyDeckCardWins, the
+    // notorietyDeckCardReplaces Wall becomes one random permanent from the enemy's own deck, moved from the deck onto
+    // the battlefield - mana value MinCost-MaxCost, rarity at most the rank's entry of notorietyDeckCardRarityByRank
+    // (Apprentice, Adept, Master, Archmage), never a name in notorietyDeckCardExclude. notorietyDeckCardEtb: "keep"
+    // every enter trigger, "noHostile" drops a card whose own enter trigger targets, sacrifices or reaches an opponent,
+    // "none" drops every card with one. No eligible card: the Wall stays. See util/NotorietyDeckCard. Wins 0 = off.
+    public int notorietyDeckCardWins = 50;
+    public String notorietyDeckCardReplaces = "tfr_wall4_flying_3_6";
+    public int notorietyDeckCardMinCost = 1;
+    public int notorietyDeckCardMaxCost = 3;
+    public String[] notorietyDeckCardRarityByRank = {"Common", "Uncommon", "Rare", "Mythic"};
+    public String[] notorietyDeckCardExclude = {};
+    public String notorietyDeckCardEtb = "noHostile";
     // Round 447 (the user agreed: "let the streak open the lifetime-win gate one step"): from this many wins in a row
     // a spawn rolls against the NEXT lifetime-win rank (SpawnTierWeighting.effectiveRank: 0.5 -> 1 -> 2 -> 10), so a
     // player under 150 lifetime wins can meet roaming Archmages. 0 = off.

@@ -14264,6 +14264,85 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 793: at Notoriety 50 the last bonus Wall becomes one of the enemy's own cards (2026-10-27)
+
+The user, of a Discord idea of Vr01's (enemies start with random permanents from their own deck as the player keeps
+winning), after the design notes `C:\TFR\notes\notoriety-deck-permanents-proposal.md`: "Swap as proposed." The 50-win
+bonus Wall (`tfr_wall4_flying_3_6`) is replaced, for every rank on every difficulty, by one random permanent from the
+enemy's own deck, taken out of the deck and put on the battlefield. The 45-win Wall and both +25% life steps stay.
+Round 794 gave every `.dck` with no eligible card one fitting card, so the Wall fallback is now rare.
+
+- **Eligible** (`util/NotorietyDeckCard.eligible`, the front face):
+  - a creature, artifact or enchantment of mana value 1-3 with no X;
+  - not a land, planeswalker, battle, Aura, Saga or Room, and not 0 toughness;
+  - not banned (`CommanderCards.restricted`; commander-only cards are already stripped from enemy decks) and not in
+    `notorietyDeckCardExclude`;
+  - a non-creature needs a static, activated, non-zone-change triggered ability or a keyword (no Oblivion Ring);
+  - `notorietyDeckCardEtb: "noHostile"` also drops a card whose own enter trigger targets, sacrifices or reaches an
+    opponent (Reclamation Sage, Accursed Centaur).
+- **Rarity by rank** (`notorietyDeckCardRarityByRank`): Apprentice common, Adept up to uncommon, Master up to rare,
+  Archmage any; a boss by its tier. A card's rarity is its lowest over its normal printings (core, expansion, starter,
+  reprint, boxed set, duel deck, draft, commander, multiplayer), and Special reads as mythic.
+- **The pick**:
+  - each eligible copy is one ticket, sorted by name;
+  - the seed is the world seed, the enemy's save name ("Name|Tier"), the player's duels fought and the seat. The same
+    card on a retry: the seed comes from the save. A later duel may bring another card.
+  - The deck is copied before the card leaves it, so a precon, the player's own deck in a mirror match, or Deck
+    Tester's deck is never changed.
+- **Where**:
+  - `DuelScene` picks before the seat registers (the duels that get Walls: not Inn events, guard fights or chaos
+    battles) and puts the card in place of its Wall in the Walls block.
+  - `notorietyWallsFor` is unchanged, so `TfrAchievements.fullyArmed` and Notorious read the same list as before.
+  - No eligible card: the Wall stays.
+  - "Disable Notoriety" (round 772) covers it: no Wall list, nothing to swap.
+- **Shown**:
+  - the card is an ordinary card in play (non-collectible, so it can't be won in ante);
+  - no plate change, no per-duel notice (round 417);
+  - the notice log's 50 step reads "Notoriety 50: every foe also starts with one of its own cards in play (cost 1-3;
+    an Apprentice's is a common, an Adept's up to uncommon, a Master's up to rare, an Archmage's any) in place of the
+    second flying Wall and +25% life."
+  - GUIDE.md/.html: the bonus-Walls paragraph and the Notorious row.
+- **Data** (`config tables/settings.json`, `TuningData`): `notorietyDeckCardWins` 50 (0 = off),
+  `notorietyDeckCardReplaces`, `notorietyDeckCardMinCost` / `MaxCost` 1 / 3, `notorietyDeckCardRarityByRank`,
+  `notorietyDeckCardExclude` (empty), `notorietyDeckCardEtb` "noHostile".
+- **Logs**:
+  - `[TFR-Notoriety] <enemy> (<rank>) deck card: Brass Man (Uncommon, MV 1, creature) in place of tfr_wall4_flying_3_6 - 6 eligible (16 copies) of 50, cap Uncommon, deck 50 -> 49, notoriety 60`;
+  - `... deck card: none eligible (<deck>, N cards, cap X, MV 1-3) - tfr_wall4_flying_3_6 stays`;
+  - the "starts with" line names it as "(deck card)";
+  - `console: deck card forced to ...`.
+- **Console** (testing): `notorietycard <name>` forces that card when the deck has it (eligible or not),
+  `notorietycard none` forces the Wall, `notorietycard off` draws normally.
+- **ETB answer** (tested): cards that start in play do NOT fire their own enter triggers. A forced Accursed Centaur
+  ("When it enters, sacrifice a creature") sat beside the Wall at turn 1, Main 1, stack empty, graveyard 0. ETB
+  counters still apply (round 769, `setEnableETBCountersEffect`). "noHostile" stays on as a guard in case an engine
+  merge starts firing them; it costs about 5% of the picks, and "keep" turns it off.
+- **Tested** in a test package (`build_standalone.py --out agent-793`, Maven exit 0 on the main tree, a copied agent
+  profile, cheats on, every duel at 50x; the copy removed afterward). Lines from forge.log:
+  - Apprentices: Oreskos Swiftclaw, Hobbling Zombie, Minotaur Warrior, Blazing Torch (all Common, cap Common), each
+    beside the 45 Wall, 60 -> 59 cards.
+  - Adept Bronzecrest Automaton: Brass Man (Uncommon, cap Uncommon), 50 -> 49. Its upkeep trigger went on the stack on
+    the enemy's first upkeep.
+  - Master Ironcrest Sentinel: reach 3/6 + reach 3/6 + flying 3/6 + Brass Man, then Elaborate Firecannon (cap Rare),
+    40 -> 39.
+  - Archmage Molfar of the High Peaks: three flying 3/6 + Elvish Mystic (cap Mythic).
+  - Reload: save, duel (Elaborate Firecannon), load, duel again: Elaborate Firecannon.
+  - `notorietycard none`: four Walls and the "stays" line.
+  - Disable Notoriety on: `walls skipped`, no deck card.
+  - 0 exceptions in the four run logs.
+  - Shots: `C:\TFR\notes\r793-adept-deck-card-turn2.png`, `r793-etb-centaur-turn1.png`,
+    `r793-master-three-walls-and-card.png`; log lines in `r793-agent-log-lines.txt`.
+  - **Untested in the field**: a generated (`.json` template) deck's pick (round 794: Djinn Apprentice, Hydra and Golem
+    Good Archmage can still roll an empty pool and keep the Wall), an Arena seat, and the Notorious award (no 50+ win:
+    the agent lost every autobattled duel). `TfrAchievements.fullyArmed` still reads the unswapped
+    `notorietyWallsFor` list (the swap happens after it, in DuelScene), so a deck card counts as the 50 bonus.
+- Stock files (CORE_ENGINE_CHANGES): DuelScene, AdventurePlayer, ConsoleCommandInterpreter. `util/NotorietyDeckCard`
+  is new; `data/TuningData` is TFR's.
+- Saves: none touched (the seed reads saved fields; nothing new is stored).
+
+**Files touched**: `util/NotorietyDeckCard.java` (new), `scene/DuelScene.java`, `data/TuningData.java`,
+`player/AdventurePlayer.java`, `stage/ConsoleCommandInterpreter.java`; plane `config tables/settings.json`, `GUIDE.md`,
+`GUIDE.html`.
+
 ## Round 794: every enemy deck carries at least one Notoriety-eligible permanent - 72 decks get one card (2026-10-27)
 
 The user: "can we tweak decks with 'Decks with no eligible card' so they have a card. Just add 1 card to each to make
