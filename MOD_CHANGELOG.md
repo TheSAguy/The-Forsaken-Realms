@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 819: a Booster Shop under the Capitol's Card Shop - packs from all your unlocked sets, no blueprint (2026-10-28)
+
+A player asked on Discord for a shop that sells one kind of booster. The user: "Can we add a "Booster" shop option in
+the Capitol. It will just sell boosters from all unlocked sets", then, after the mock-up of a top-level entry, "Add the
+Booster, as a sub option under Card Shop".
+
+- **Before**: the plain booster shop (`BoosterPackShop`, "Pack To Basics", 8 packs of random unlocked sets) existed
+  only on the Capitol's booster lot (object 85), which rolls one of five booster shops (and on a rare or mythic roll a
+  card shop). It could be chosen only through that lot's Re-assign, under Special, and only with its blueprint: no new
+  game starts with a booster blueprint. No other Capitol lot could build it.
+- **Now** (`EconomyBuildings.buildCardShopChooser`): on a rubble lot in the Capitol, Card Shop opens with
+  "Booster Shop (100 [+Gold] + 5 [+Wood]) / Packs from all your unlocked sets" above the Common/Uncommon/Rare/Mythic
+  tiers. It pins `BoosterPackShop` through the chooser's own `shopChoiceOption` (charge, rebuilt flag, pin, edition
+  refresh, `shopBuilt` flag) at the Common price (difficulty-scaled like every build). One per town: while one stands
+  the line reads "Booster Shop (built)", greyed. Not in player towns, and not in a Re-assign (the booster lot lists it
+  under Special there).
+- **No blueprint**: `isShopTypeUnlocked` answers true for `BoosterPackShop` (`CAPITOL_BOOSTER_SHOP`), so blueprint drops
+  never offer it, the booster lot's Re-assign shows it unlocked, and an AI town's Pack To Basics shows "Blueprint
+  Owned".
+- **Old saves**: any rubble lot in an existing Capitol offers it; nothing to migrate.
+- **Log**: `[TFR-BoosterShop] Capitol chooser offers the Booster Shop on object <id>[ - already built here]`; the shop's
+  stock keeps its `[TFR-ShopEditions] ... owner=player-unlocked` line.
+- **Agent test** (agent-819, a copy of the agent profile, cheats; slot 4 with `capitol raise` in Orazca; 3 unlocked
+  sets MOR, KHM, ELD): rubble lot 87 -> Card Shop showed the line on top (shot `notes/r819/r819-chooser.png`); built for
+  100 gold and 5 wood; the shop held 8 packs - 5 Kaldheim, 2 Throne of Eldraine, 1 Morningtide - with
+  `restriction(3)=[MOR, KHM, ELD]`, nothing from a locked set (`notes/r819/r819-booster-shop.png`); lot 88's chooser
+  then read "Booster Shop (built)", greyed (`notes/r819/r819-chooser-built.png`). 0 exceptions in the log.
+- **Found, not changed here**: in a player-owned town (and an AI town with a shard) the era booster shops
+  (Alpha/Beta/Gamma/Delta) skip their year window, because `RewardData`'s `cardPackShop` applies the window only when no
+  edition list is set - all five Capitol booster shops sold the same packs. The user's call: remove the era shops
+  (round 820).
+- GUIDE: the Building-one paragraph says where the Booster Shop is. No stock Forge file changed; no save format change.
+
 ## Round 818: talk-only enemies speak once per contact - allied merfolk no longer trap the player in the Svyelunite Temple (2026-10-28)
 
 A player on Discord (DO_THE_MIND_TWIST, v1.24): "I'm stuck! In the Syvelunite temple, allied with the Merfok, the

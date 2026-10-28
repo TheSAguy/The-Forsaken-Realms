@@ -1486,6 +1486,9 @@ you can see exactly what you're missing and decide what's worth hunting.
 
 - **Building one:** walk into a rubble slot and pick Card Shop, then the tier, then the category, then
   the type. An open slot can also become a Mine, a Trader, an Outlook and so on.
+- **A Booster Shop in your Capitol:** on an open Capitol slot, Card Shop lists **Booster Shop** first,
+  above the tiers. It sells 8 booster packs, each from a random set you have unlocked, costs the same as
+  a Common shop and needs no blueprint. One per town: it shows as built while one stands.
 - **The build menu shows everything**, tier first, then By Color / By Card Type / Tribal /
   Special, sorted **Available → Built → Locked**. Locked types are grayed rather than hidden, so
   you can see what exists to hunt for. Each entry shows how many cards it could actually stock for

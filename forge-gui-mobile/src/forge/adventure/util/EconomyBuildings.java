@@ -1582,6 +1582,8 @@ public class EconomyBuildings {
         ConfigData config = Config.instance().getConfigData();
         if (config == null || !config.shopBlueprintsEnabled)
             return true; // feature off for this plane - everything available, exactly as before
+        if (CAPITOL_BOOSTER_SHOP.equals(shopName))
+            return true; // round 819: the Capitol's Booster Shop needs no blueprint
         java.util.Set<String> known = AdventurePlayer.current().getUnlockedShopTypes();
         // EMPTY = legacy save (user decision 2026-08-30: this is a New Game only feature). A save
         // predating blueprints has no set at all; reading that as "nothing unlocked" would strip
@@ -2411,6 +2413,11 @@ public class EconomyBuildings {
             }
             categoryBacks.clear();
         }
+        // Round 819 (the user: "Add the Booster, as a sub option under Card Shop"): the Capitol's rebuild chooser opens
+        // with a Booster Shop line above the tiers - Pack To Basics, packs from every unlocked set, at the Common price,
+        // no blueprint, one per town. Not on a re-assign: the booster lot's own chooser lists it under Special.
+        if (isCapitol && currentShopName == null && shopTypeExists(CAPITOL_BOOSTER_SHOP))
+            tierOptions.add(0, capitolBoosterShopOption(objectId, builtHere.contains(CAPITOL_BOOSTER_SHOP), changes));
         if (tierOptions.isEmpty())
             return null;
         DialogData rootBack = new DialogData();
@@ -2426,6 +2433,22 @@ public class EconomyBuildings {
             back.options = root.options;
         }
         return root;
+    }
+
+    /** Round 819: shops.json's plain booster shop ("Pack To Basics": 8 packs, each from a random unlocked set). */
+    static final String CAPITOL_BOOSTER_SHOP = "BoosterPackShop";
+
+    /** Round 819: the Capitol chooser's Booster Shop line - shopChoiceOption()'s pin and bookkeeping at the Common
+     *  price, under a plain name. */
+    private static DialogData capitolBoosterShopOption(int objectId, boolean built, PointOfInterestChanges changes) {
+        int[] cost = shopTierCost(MapStage.TIER_COMMON);
+        DialogData option = shopChoiceOption(objectId, CAPITOL_BOOSTER_SHOP, cost[0], cost, true, built, changes);
+        option.name = built
+                ? "[%88]Booster Shop (built)"
+                : "Booster Shop (" + costLabel(cost[0], cost[1], cost[2], cost[3]) + ")\n[%70]Packs from all your unlocked sets[%]";
+        System.out.println("[TFR-BoosterShop] Capitol chooser offers the Booster Shop on object " + objectId
+                + (built ? " - already built here" : ""));
+        return option;
     }
 
     /** Standalone "Re-assign Shop Type" dialog for an already-built card shop (the shop screen's
