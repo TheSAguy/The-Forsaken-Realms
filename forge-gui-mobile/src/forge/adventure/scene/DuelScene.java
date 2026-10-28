@@ -1187,7 +1187,8 @@ public class DuelScene extends ForgeScene {
             // left (a copy; the Walls block below puts the card in play). Round 799: on top of the Walls, from the
             // difficulty's notoriety (NotorietyDeckCard.gate), never in the Arena.
             forge.adventure.util.NotorietyDeckCard.Pick deckCard = eventData == null && guardDeck == null && !chaosBattle
-                    ? forge.adventure.util.NotorietyDeckCard.choose(currentEnemy, deck, i, isArena) : null;
+                    ? forge.adventure.util.NotorietyDeckCard.choose(currentEnemy, deck, i, isArena,
+                    i == 0 && enemy != null && enemy.wrathHunter) : null; // round 814: the Wrath always gets one
             if (deckCard != null && deckCard.card != null)
                 deck = deckCard.deck;
             RegisteredPlayer aiPlayer = RegisteredPlayer.forVariants(playerCount, appliedVariants, deck, null, false, null, null);

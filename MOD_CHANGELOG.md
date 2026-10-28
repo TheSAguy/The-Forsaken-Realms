@@ -14264,6 +14264,117 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 814: the Wrath hunter - a walking mage of the hunted color sets out from its castle each week, at the player's speed +5%, and pays a prize when beaten (2026-10-28)
+
+The user, on the Temple's Wrath (design `notes/temple-wrath-design-813.md`): "It should not fly, but walk. It starting
+speed should match the players starting speed at the time it was created. It should fade out at the end of the week as
+the new one is spawned. It should only trigger once a castle is built" (the Temple), then "Speed is player +5%" and
+"approve with all five recommendations". The second half of the Wrath; round 813 built the hunted color, spawns ahead
+and the bounty.
+
+- **Who** (`util/WrathHunt.java`): at the week turn that hunts a color, one mono-color mage of that color sets out from
+  its castle (`TerritoryControl.findCastle`).
+  - It is a Master (`Master <Color> Wizard`), an Archmage from the 1-based week in `wrathArchmageWeekByDifficulty`
+    (Normal 7, Hard 4, Insane 4), drawn from the color's Archmage roster (`grandmasterRoster`), mono-color first and
+    seeded.
+  - The rank is held under the week's spawn-tier bracket, as a castle's attack mage is, so week 1 (a console hunt)
+    sends an Adept.
+  - None on Easy (`wrathHunterOnDifficulty: [0, 1, 1, 1]`); none for a color with no castle (its notice says so; the
+    bounty and spawns ahead still run).
+- **Walking** (`util/WrathPath.java`, new): no world-map walker could cross 100+ tiles (castle mages walk straight
+  through water and mountains, round 705's `ChasePath` plans only inside a 48-tile box).
+  - A* over the full 700x700 tile grid (`World.isColliding` plus the barrier, copied once into a byte[], rebuilt on a
+    new world or barrier), 8 directions with no corner cutting, on one daemon worker thread. The route is string-pulled
+    into waypoints and handed back with `Gdx.app.postRunnable`, so no frame waits on a search.
+  - Within `wrathDirectTiles` (20) and in a clear line, it walks straight at the player.
+  - It re-plans when the player is `wrathReplanTiles` (8) from the route's goal, or every `wrathReplanSeconds` (4) of
+    moving time.
+  - Under a tile of progress in `wrathStuckSeconds` (5) means stuck: it re-plans, and after three stuck re-plans it
+    snaps to the next waypoint.
+  - No route (an island, the barrier): the route ends at the reached tile nearest the player, and it holds there.
+  - It has no per-frame collision test, as castle mages don't; the route is clear at tile resolution.
+- **Speed**: `playerBaseSpeed` x `AdventurePlayer.equipmentSpeed()` (gear, blessing, Swift Feet) when it sets out, kept
+  on the World.
+  - Then x `wrathSpeedFactor` (1.05, the user's +5%) and x the player's road and land rule at its feet:
+    `WorldStage.terrainSpeedAt`, split out of the player's speed code with no log (road x1.5, player road x1.5 x1.15,
+    player land, the owner's standing).
+  - Not Sprint, the Run key or the fog-dark x1.1.
+  - It moves only while the world clock runs, like every world enemy.
+- **Around it**:
+  - It waits `wrathWaitTiles` (5) outside a place the player enters (`WorldStage.loadPOI` -> `WrathHunt.onEnterPlace`),
+    so leaving a place never starts an instant duel.
+  - Hide holds it.
+  - The roaming guards ignore it (they engage only town attackers and raiders), Intimidating never makes it flee, and
+    the despawn clock and the spawn-crowd count leave it out.
+- **Plate and markers**:
+  - "WRATH OF RED - MASTER" over it, shown without Alt (`TfrPlates.WrathPlate`, its own queue; the color word in the
+    Temple bar's color, the rank in its plate color). With the plates shown (Alt, R3, the Units toggle) "- 4 DAYS" is
+    added, gold, orange at 3 or fewer.
+  - The corner minimap and the zoomed map show it as a larger dot in its color, through fog.
+- **Fight**: an ordinary roaming duel. Notoriety's Walls follow Notoriety as for any roaming foe (none with Disable
+  Notoriety).
+  - **The Wrath always starts with round 799's deck card** (the user: "Let's have the Wrath Mage, start with the new
+    Deck spawns we added, regardless of Notoriety level", and "Disable Notoriety should not affect the Wrath mage"). It
+    is one random permanent of mana value 1-3 from its own deck, rarity capped by rank (Rare for a Master, any for an
+    Archmage), whatever the Notoriety and with Disable Notoriety on.
+  - `NotorietyDeckCard.choose(..., wrath)` skips the gate and the Notoriety-off check; the eligibility, cap, seed (a
+    reload brings the same card) and the "none eligible" fallback are unchanged.
+  - It is one card at most, even when Notoriety would grant it anyway. `DuelScene` passes the flag for seat 0.
+  - The log line ends "(the Wrath's card)", or "(the Wrath's card, Notoriety off)".
+  - **Win** (`WorldStage.setWinner` -> `WrathHunt.onHunterBeaten`), the hunt over for the week:
+    - a rare of its color from the Temple's pool (unlocked sets, non-land, mono-color first; `TempleOfferings.pool`,
+      now package-visible), a mythic at `wrathPrizeMythicChance` (10%), seeded by world, week and color so a reload
+      brings the same card;
+    - `wrathPrizeShardsByDifficulty` shards (15 / 20 / 25);
+    - Ascendance's new `wrathFactor` (2) on the duel's Power;
+    - the new trophy **Wrath Breaker** (`TfrAchievements`);
+    - the notice "You broke the Wrath of Red! Its prize is on the loot screen. Red's bounty holds to the week's end."
+  - **Loss** (and a draw): it goes home and there is no prize this week. Notice "The Wrath of Red has beaten you and
+    returns to its castle. No prize this week."
+  - The bounty and spawns ahead hold to the week's end either way.
+- **The week turn**: the old hunter fades (a 1-second fade) as the new one sets out, a fresh one even for the same
+  color ("Red is still hunted: a new Wrath of Red has left its castle..."). A destroyed Temple makes it turn back.
+- **Saving**: the World keeps the hunter's enemy, speed and position (`wrathEnemy`, `wrathSpeed`, `wrathX`, `wrathY`;
+  optional keys). WorldStage's saved roamers skip it, and `WrathHunt.keep` rebuilds the sprite whenever it is missing
+  (a load, a return).
+- **Logs** `[TFR-Wrath]`:
+  - `path grid: 700x700 tiles, N blocked, built in 5 ms`;
+  - `hunter set out: ... speed 40.0 x 1.15 ... x1.05 = 48.3; player at (x,y), 260 tiles`;
+  - `on the map: ...`;
+  - `path: (a) -> (b): 217 tiles, 31 waypoints, 4076 nodes, 4 ms (worker)`;
+  - `speed check: ...` (the hunter's and the player's factors at each terrain change);
+  - `no walk to the player ... holds`, `stuck at ... re-plan n/3`, `snapped to waypoint`;
+  - `waits outside <place>: set back 3.03 -> 5.49 tiles`;
+  - `beaten: ... prize <card> (<rarity>, roll, pool), 15 shards, Power x2.0, seed ...`;
+  - `duel won by ... no prize`;
+  - `fades: ... - the week turned`.
+- **Console**: `wrath near` (the hunter 12 tiles east of the player) and `wrath at x,y`, for the path tests.
+- **Settings**: `wrathHunterOnDifficulty`, `wrathArchmageWeekByDifficulty`, `wrathMonoColorOnly`, `wrathSpeedFactor`,
+  `wrathDirectTiles`, `wrathReplanTiles`, `wrathReplanSeconds`, `wrathStuckSeconds`, `wrathWaitTiles`,
+  `wrathPrizeShardsByDifficulty`, `wrathPrizeMythicChance`; `ascendance.json` `wrathFactor`. Stock defaults are off.
+- **Not as designed**: the plate separates its parts with " - ", not the mock-up's middle dot (the pixel font may not
+  have it). A draw counts as a loss (the design did not cover draws).
+- **Tested** in a test copy of the agent game (`agent-814`, removed afterward), with every duel at 50x:
+  - One bug was found and fixed: the sprite was rebuilt only from a "Name|Tier" save name, so a plain
+    "Adept Red Wizard" never appeared. It now falls back to the catalog name, as `WorldStage.load` does.
+  - Hunters set out from Red Castle 260, 106 and 102 tiles away and walked in to contact. 46 plans: the longest was
+    219 tiles at 4,337 nodes in 3-4 ms on the worker. The grid builds in 4-5 ms (58% of tiles blocked). No stuck line,
+    no exception.
+  - Speed 48.3 px/s off-road and 72.45 on a road. The 37 speed-check lines match the player's factors.
+  - The plate and minimap dot: `notes/r814-agent-plate*.png`.
+  - Waiting outside Flowstone Hold: set back 3.03 -> 5.49 tiles, 6 tiles off on the way out, no duel.
+  - Save and load mid-hunt: the hunter came back at the same spot.
+  - A win: Meteor Swarm (Rare, pool 22), 15 shards, +31 Power "(Adept, the Wrath)", Wrath Breaker earned.
+  - Two losses: it went home, no prize.
+  - The week turn: the old one faded and a week-2 Master set out, which then walked about 100 tiles in.
+  - The bounty kept working on BR and RG foes.
+  - Not exercised: the island hold (no unreachable spot came up).
+  - The deck card, re-tested with two Wrath duels at 50x, both won:
+    - Notoriety 0: `deck card: Battle-Mad Ronin (Common, MV 2, creature) added ... notoriety 0, needs Normal 50 ...
+      (the Wrath's card)`, and it starts in play.
+    - Disable Notoriety on, at Notoriety 60: `deck card: Battered Golem ... (the Wrath's card, Notoriety off)`, `walls
+      skipped: Notoriety is disabled in Settings`, and it starts with the Golem only.
+
 ## Round 817: the Research Lab gets set filters and a found-card count, and Found Cards the deck builder's color/type icons, rarity buttons and group-by (2026-10-28)
 
 The user: "I want to update the Research windows a little. On the main page, let's add a Set filter. On the sell page.

@@ -455,6 +455,10 @@ public class World implements Disposable, SaveFileContent {
     private String wrathColor;
     private int wrathWeek = -1;
     private int wrathStatus;
+    // Round 814: the Wrath hunter out this week - its enemy ("Name|Tier", EnemyTiers.saveName), the speed snapshot taken
+    // when it set out (playerBaseSpeed x the gear, blessing and Swift Feet), and where it stands (world px). "" = none.
+    private String wrathEnemy = "";
+    private float wrathSpeed, wrathX, wrathY;
     // Round 139 (user spec 2026-09-07: caves host one arena-exclusive champion "maybe not 100%
     // spawn chance, but let's say 25%"). Key = cave POI id, value = the champion's enemy name, or
     // "" for a cave that rolled and came up empty. BOTH outcomes are recorded, which is the whole
@@ -574,6 +578,37 @@ public class World implements Disposable, SaveFileContent {
         wrathColor = color;
         wrathWeek = week;
         wrathStatus = status;
+    }
+
+    public void setWrathStatus(int status) {
+        wrathStatus = status;
+    }
+
+    /** Round 814: the hunter's saved enemy name ("" for none). */
+    public String getWrathEnemy() {
+        return wrathEnemy;
+    }
+
+    public float getWrathSpeed() {
+        return wrathSpeed;
+    }
+
+    public float getWrathX() {
+        return wrathX;
+    }
+
+    public float getWrathY() {
+        return wrathY;
+    }
+
+    public void setWrathHunter(String enemy, float speed) {
+        wrathEnemy = enemy == null ? "" : enemy;
+        wrathSpeed = speed;
+    }
+
+    public void setWrathPosition(float x, float y) {
+        wrathX = x;
+        wrathY = y;
     }
 
     /** Round 139: cave POI id -> its rolled champion's name, or "" for "rolled, none". */
@@ -1451,6 +1486,11 @@ public class World implements Disposable, SaveFileContent {
         wrathColor = wrath == null || wrath.isEmpty() ? null : wrath;
         wrathWeek = saveFileData.containsKey("wrathWeek") ? saveFileData.readInt("wrathWeek") : -1;
         wrathStatus = saveFileData.containsKey("wrathStatus") ? saveFileData.readInt("wrathStatus") : 0;
+        String hunter = saveFileData.containsKey("wrathEnemy") ? saveFileData.readString("wrathEnemy") : null; // round 814
+        wrathEnemy = hunter == null ? "" : hunter;
+        wrathSpeed = saveFileData.containsKey("wrathSpeed") ? saveFileData.readFloat("wrathSpeed") : 0f;
+        wrathX = saveFileData.containsKey("wrathX") ? saveFileData.readFloat("wrathX") : 0f;
+        wrathY = saveFileData.containsKey("wrathY") ? saveFileData.readFloat("wrathY") : 0f;
         caveChampion.clear();
         if (saveFileData.containsKey("caveChampion")) {
             //noinspection unchecked
@@ -1609,6 +1649,10 @@ public class World implements Disposable, SaveFileContent {
         data.store("wrathColor", wrathColor == null ? "" : wrathColor); // round 813
         data.store("wrathWeek", wrathWeek);
         data.store("wrathStatus", wrathStatus);
+        data.store("wrathEnemy", wrathEnemy); // round 814
+        data.store("wrathSpeed", wrathSpeed);
+        data.store("wrathX", wrathX);
+        data.store("wrathY", wrathY);
         data.storeObject("caveChampion", caveChampion);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
         data.storeObject("legendSightingCount", legendSightingCount); // round 375
@@ -2970,6 +3014,7 @@ public class World implements Disposable, SaveFileContent {
             java.util.Arrays.fill(templeKills, 0f); // round 559
             templeWeek = -1;
             setWrath(null, -1, 0); // round 813: a new world (New Game+ included) hunts nobody
+            setWrathHunter("", 0f); // round 814
             caveChampion.clear(); // round 139 - a new world's caves must roll their own champions
             // Weighted spawn tier system, Layer 3 (2026-08-23, redesigned 2026-08-25) - must be
             // cleared here same as the poi* maps above: New Game+ reuses this exact World instance

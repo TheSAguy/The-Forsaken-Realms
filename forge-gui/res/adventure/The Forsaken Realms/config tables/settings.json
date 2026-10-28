@@ -602,6 +602,23 @@
     "wrathBountyOnDifficulty": [1, 1, 1, 1],
     "wrathBountyGold": 0.25,
     "wrathBountyShards": 0.25,
+    // Round 814: the Wrath hunter - one walking mage of the hunted color sets out from its castle and hunts you all week.
+    // A Master until the week below (Easy, Normal, Hard, Insane; 0 = never an Archmage). Its speed is yours when it sets out
+    // x wrathSpeedFactor (1.05 = +5%), then roads and lands as for you. Path: a straight chase within wrathDirectTiles,
+    // a re-plan when you move wrathReplanTiles from its goal or every wrathReplanSeconds, stuck = under a tile in
+    // wrathStuckSeconds; it waits wrathWaitTiles from a place you enter. The prize: a rare of its color (a mythic at
+    // wrathPrizeMythicChance) and these shards.
+    "wrathHunterOnDifficulty": [0, 1, 1, 1],
+    "wrathArchmageWeekByDifficulty": [0, 7, 4, 4],
+    "wrathMonoColorOnly": true,
+    "wrathSpeedFactor": 1.05,
+    "wrathDirectTiles": 20,
+    "wrathReplanTiles": 8,
+    "wrathReplanSeconds": 4,
+    "wrathStuckSeconds": 5,
+    "wrathWaitTiles": 5,
+    "wrathPrizeShardsByDifficulty": [0, 15, 20, 25],
+    "wrathPrizeMythicChance": 0.10,
 
     // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
     // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". The

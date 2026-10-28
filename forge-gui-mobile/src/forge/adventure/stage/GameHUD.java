@@ -690,13 +690,17 @@ public class GameHUD extends Stage {
             // Round 239: a sighted legend gets a dot too - gold, and with no fog gate (see below): the
             // sighting was announced, so where it is is exactly what the player has been told.
             boolean legend = mob.territoryTarget == null && forge.adventure.util.RoamingChampions.isLegend(mob.getData());
-            if (mob.territoryTarget == null && !legend)
+            boolean wrath = mob.wrathHunter; // round 814: the Temple's Wrath - its color, larger, shown through fog
+            if (mob.territoryTarget == null && !legend && !wrath)
                 continue;
             stillActive.add(mob);
             Image marker = mageMinimapMarkers.get(mob);
             if (marker == null) {
                 marker = new Image(Forge.getAssets().getTexture(Config.instance().getFile("ui/minimap_player.png")));
-                marker.setColor(legend ? Color.GOLD : MAGE_MARKER_COLORS.getOrDefault(mob.territoryColor, Color.ORANGE));
+                marker.setColor(legend ? Color.GOLD : MAGE_MARKER_COLORS.getOrDefault(wrath
+                        ? forge.adventure.util.WrathHunt.huntedColor() : mob.territoryColor, Color.ORANGE));
+                if (wrath)
+                    marker.setSize(marker.getWidth() * 1.75f, marker.getHeight() * 1.75f);
                 mapGroup.addActor(marker);
                 mageMinimapMarkers.put(mob, marker);
             }
@@ -710,7 +714,7 @@ public class GameHUD extends Stage {
             int mageTileX = (int) (mob.getX() / WorldSave.getCurrentSave().getWorld().getTileSize());
             int mageTileY = (int) (mob.getY() / WorldSave.getCurrentSave().getWorld().getTileSize());
             marker.setVisible(miniMap.isVisible()
-                    && (legend || WorldSave.getCurrentSave().getWorld().isCurrentlyVisible(mageTileX, mageTileY)));
+                    && (legend || wrath || WorldSave.getCurrentSave().getWorld().isCurrentlyVisible(mageTileX, mageTileY)));
         }
         mageMinimapMarkers.entrySet().removeIf(entry -> {
             if (stillActive.contains(entry.getKey()))

@@ -61,6 +61,11 @@ public final class Ascendance {
 
     // ------------------------------------------------------------------------------------------------ config and state
 
+    /** Round 814: the Wrath hunter's Power factor (for WrathHunt's log); 0 while Ascendance is off. */
+    public static float wrathFactor() {
+        return isActive() ? data().wrathFactor : 0f;
+    }
+
     public static AscendanceData data() {
         if (data == null) {
             FileHandle file = Config.instance().getFile("config tables/ascendance.json");
@@ -785,6 +790,7 @@ public final class Ascendance {
         if (!arena && WorldStage.getInstance().isTreasureGuardianFight() && d.treasureGuardianFactor > factor) { factor = d.treasureGuardianFactor; why = "treasure guardian"; }
         if ((enemy.championLoot || WarChampions.isWarChampion(e.getName())) && d.championFactor > factor) { factor = d.championFactor; why = "champion"; }
         if (enemy.territoryColor != null && d.mageFactor > factor) { factor = d.mageFactor; why = "attacking mage"; }
+        if (enemy.wrathHunter && d.wrathFactor > factor) { factor = d.wrathFactor; why = "the Wrath"; } // round 814
         // Outgrown: above the rank's band top, 10% less per level, never under the floor.
         int level = level();
         int top = rank < d.outgrownBandTop.length ? d.outgrownBandTop[rank] : 999;
@@ -1204,7 +1210,7 @@ public final class Ascendance {
         if (chance <= 0f || mob == null || mob.getData() == null)
             return false;
         if (mob.getData().boss || mob.territoryColor != null || mob.pillageTown != null || mob.legendExpiryDay >= 0
-                || mob.questStageID != null)
+                || mob.questStageID != null || mob.wrathHunter) // round 814: the Wrath never flees
             return false;
         Pair<Integer, Integer> record = WorldSave.getCurrentSave().getPlayer().getStatistic().getWinLossRecord().get(mob.getName());
         if (record == null || record.getKey() <= record.getValue())

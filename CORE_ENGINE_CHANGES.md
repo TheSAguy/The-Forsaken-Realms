@@ -38,6 +38,35 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 814 - the Wrath hunter
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** (STOCK):
+  - `onActing` calls `WrathHunt.keep(this)` after the pause gate.
+  - The enemy loop's expiry test skips `wrathHunter`, and a `wrathHunter` branch (`WrathHunt.move`) comes before the
+    territory-mage branch.
+  - `spawnCrowded` skips it; `save()` skips it (the World keeps it).
+  - `setWinner` calls `WrathHunt.onHunterBeaten(loot, currentMob)` after the bounty, and `WrathHunt.onHunterWon` in the
+    loss branch; `setDrawn` calls `WrathHunt.onHunterDrawn`; `loadPOI` calls `WrathHunt.onEnterPlace` first;
+    `clearCache` calls `WrathHunt.resetSessionState()`.
+  - `territorySpeedModifier` is split into `territorySpeedValue` (no log) plus the old log, with the new public
+    `terrainSpeedAt(x, y)`.
+  - New `hasEnemy` and `removeWrathHunter`.
+  - On a merge, keep the hunter branch first in the enemy loop.
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** (STOCK): a `wrathHunter` field; `draw` queues the
+  Wrath plate (`WrathHunt.queuePlate`) instead of the info plate for it; a `wrathPlate` field.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** (STOCK): `updateMageMinimapMarkers` gives the hunter a
+  larger dot in its color, with no fog gate.
+- **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** (STOCK): the zoomed map's marker loop adds the
+  hunter's dot (`WrathHunt.hunter()`).
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): the round-793 `NotorietyDeckCard.choose(...)`
+  call passes `i == 0 && enemy.wrathHunter` (the Wrath always gets its deck card).
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** (STOCK): `wrathEnemy`, `wrathSpeed`, `wrathX`, `wrathY` with
+  accessors, saved and loaded as optional keys beside round 813's, and cleared in the new-world reset.
+- TFR files: `util/WrathPath.java` (new); `util/WrathHunt.java`; `util/TfrPlates.java` (`WrathPlate`, `queueWrath`);
+  `util/Ascendance.java` (`wrathFactor` in `onDuelWon`, `wrathFactor()`, the Intimidating exemption);
+  `data/AscendanceData.java`; `util/TfrAchievements.java` (Wrath Breaker); `util/NotorietyDeckCard.java` (`choose(...,
+  wrath)`); `util/TempleOfferings.java` (`pool` and
+  `BITS` package-visible); `data/TuningData.java`.
+
 ### Round 816 - a quit after an error never counts; the counter-tab text guard
 - **`forge-gui-mobile/src/forge/error/BugReportDialog.java`** (STOCK): `show()`'s round 815 block (now in braces) also
   calls `DuelHeartbeat.onError("a crash report: " + text)`.

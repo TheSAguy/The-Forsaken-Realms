@@ -721,6 +721,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // waits for dialogs to close) never came, overwritten on day 304 by an Apprentice's.
         if (isPaused() || isDialogOnlyInput() || MapStage.getInstance().isDialogOnlyInput() || Forge.advFreezePlayerControls)
             return;
+        forge.adventure.util.WrathHunt.keep(this); // round 814: the Wrath's sprite follows the World's state
         // Round 422: a new world's AI opening wave, the first time the world map runs (one saved flag read per frame).
         World openingWorld = WorldSave.getCurrentSave().getWorld();
         if (openingWorld != null && !openingWorld.isOpeningWaveSent())
@@ -827,7 +828,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         ? Current.world().getCurrentDay() >= roamer.legendExpiryDay
                         : globalTimer >= pair.getKey() + roamer.getLifetime();
                 // Round 484: a pillaged town's raiders have no clock - TownPillage removes them when the pillage ends.
-                if (roamer.territoryTarget == null && roamer.pillageTown == null && expired) {
+                if (roamer.territoryTarget == null && roamer.pillageTown == null && !roamer.wrathHunter && expired) { // round 814
                     if (roamer.legendExpiryDay >= 0)
                         System.out.println("[TFR-Legend] " + roamer.getData().getTieredDisplayName()
                                 + " moves on - its days are over (day " + Current.world().getCurrentDay() + ")");
@@ -850,7 +851,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 // the ordinary player-collision check afterward, so the player can fight and stop
                 // a mage before it arrives - only reaching the town skips that (mage is gone by
                 // then, removed here, `continue`s past collision since there's nothing left to hit).
-                if (mob.territoryTarget != null) {
+                if (mob.wrathHunter) {
+                    // Round 814: the Temple's Wrath walks its own planned path at the player's speed (util/WrathHunt).
+                    forge.adventure.util.WrathHunt.move(this, mob, player, delta,
+                            currentModifications.containsKey(PlayerModification.Hide));
+                } else if (mob.territoryTarget != null) {
                     if (mob.pos().dst(mob.territoryTarget.getPosition()) < TERRITORY_ARRIVAL_EPSILON) {
                         // Roaming guards (MOD_SCOPE #116, round 145): a guard standing at the gate
                         // fights BEFORE the town does. The duel decides whether this mage ever
@@ -1047,6 +1052,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         // Round 302: an enemy's +Life is paid once per game, out here as well (PlaceRewards).
                         forge.adventure.util.PlaceRewards.filterWorldPayout(loot, currentMob);
                         forge.adventure.util.WrathHunt.applyBounty(loot, currentMob); // round 813: the hunted color's bounty
+                        forge.adventure.util.WrathHunt.onHunterBeaten(loot, currentMob); // round 814: the Wrath's prize
                         if (treasureRegion >= 0) // round 478: the treasure rides in the guardian's own rewards
                             forge.adventure.util.TreasureHunt.onGuardianBeaten(treasureRegion);
                         forge.adventure.util.TownPillage.onRaiderBeaten(currentMob); // round 484: a pillaged town's raider
@@ -1101,6 +1107,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 // it - it survives and keeps traveling toward its target, just can't be
                 // re-engaged again until the next in-game day (see the collision check below and
                 // EnemySprite.lastDuelDay). Killing one (the WIN branch above) still removes it.
+                forge.adventure.util.WrathHunt.onHunterWon(currentMob); // round 814: the Wrath goes home, no prize
                 if (currentMob.territoryColor != null)
                     currentMob.lastDuelDay = WorldSave.getCurrentSave().getWorld().getCurrentDay();
                 else
@@ -1138,6 +1145,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         EnemySprite mob = currentMob;
         mob.resetCollisionHeight();
+        forge.adventure.util.WrathHunt.onHunterDrawn(mob); // round 814: the Wrath withdraws, no prize
         if (mob.territoryColor != null)
             mob.lastDuelDay = WorldSave.getCurrentSave().getWorld().getCurrentDay();
         else
@@ -1224,6 +1232,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
     }
 
     public void loadPOI(PointOfInterest poi) {
+        forge.adventure.util.WrathHunt.onEnterPlace(this, poi); // round 814: the Wrath waits outside
         if (TerritoryControl.isRingTown(poi)) { // round 100: a visited Ring City lends +1 max life while neutral/player-held
             int tx = (int) (poi.getPosition().x / Current.world().getTileSize()), ty = (int) (poi.getPosition().y / Current.world().getTileSize());
             if (Current.world().markRingVisited(tx, ty)) {
@@ -2144,6 +2153,33 @@ public class WorldStage extends GameStage implements SaveFileContent {
     private static final float MIN_TERRITORY_SPEED_MODIFIER = 0.1f;
 
     private float territorySpeedModifier(BiomeData data) {
+        float modifier = territorySpeedValue(data);
+        if (data != null && data.name != null
+                && (!data.name.equals(lastLoggedSpeedBiome) || modifier != lastLoggedSpeedModifier)) {
+            lastLoggedSpeedBiome = data.name;
+            lastLoggedSpeedModifier = modifier;
+            System.out.println("[TFR-TerritorySpeed] entered '" + data.name + "' terrain, move modifier now " + modifier + "x");
+        }
+        return modifier;
+    }
+
+    /**
+     * Round 814: the player's move multiplier for a world point's ground, without Sprint, the Run key or any log - a road
+     * x1.5 (a player road x1.5 x playerRoadSpeedBonus), otherwise the land's (territorySpeedValue). The rule
+     * handleMonsterSpawn applies to the player; WrathHunt reads it at the Wrath's feet, so roads and lands move the hunter
+     * as they move the player.
+     */
+    public float terrainSpeedAt(float x, float y) {
+        World world = WorldSave.getCurrentSave().getWorld();
+        int biome = World.highestBiome(world.getBiome((int) (x / world.getTileSize()), (int) (y / world.getTileSize())));
+        List<BiomeData> biomeData = world.getData().GetBiomes();
+        if (biomeData.size() <= biome)
+            return 1.5f * (biome == world.playerRoadIndex() ? Config.instance().getTuningData().playerRoadSpeedBonus : 1f);
+        return territorySpeedValue(biomeData.get(biome));
+    }
+
+    /** The land's part of the player's speed (player land, the owner's standing), floored - no log (round 814 split it off). */
+    private float territorySpeedValue(BiomeData data) {
         if (data == null || data.name == null)
             return 1f;
         TuningData tuning = Config.instance().getTuningData();
@@ -2168,13 +2204,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 }
             }
         }
-        modifier = Math.max(MIN_TERRITORY_SPEED_MODIFIER, modifier);
-        if (!data.name.equals(lastLoggedSpeedBiome) || modifier != lastLoggedSpeedModifier) {
-            lastLoggedSpeedBiome = data.name;
-            lastLoggedSpeedModifier = modifier;
-            System.out.println("[TFR-TerritorySpeed] entered '" + data.name + "' terrain, move modifier now " + modifier + "x");
-        }
-        return modifier;
+        return Math.max(MIN_TERRITORY_SPEED_MODIFIER, modifier);
     }
 
     private void handleMonsterSpawn(float delta) {
@@ -2520,6 +2550,26 @@ public class WorldStage extends GameStage implements SaveFileContent {
         return false;
     }
 
+    /** Round 814: is this sprite on the map (WrathHunt.keep)? */
+    public boolean hasEnemy(EnemySprite sprite) {
+        for (Pair<Float, EnemySprite> pair : enemies)
+            if (pair.getValue() == sprite)
+                return true;
+        return false;
+    }
+
+    /** Round 814: the Wrath leaves the map - off the enemy list at once (nothing can touch it), the sprite faded out. */
+    public void removeWrathHunter(EnemySprite sprite, boolean fade) {
+        removeEnemy(sprite);
+        if (!fade || sprite.getStage() == null) {
+            foregroundSprites.removeActor(sprite);
+            return;
+        }
+        sprite.addAction(com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence(
+                com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut(1f),
+                com.badlogic.gdx.scenes.scene2d.actions.Actions.run(() -> foregroundSprites.removeActor(sprite))));
+    }
+
     // Territory Control (MOD_SCOPE.md #7): places a mage directly at a given world position
     // (a castle) rather than scattered near the player like every other spawn(...) overload here -
     // for TerritoryControl (a different package) to call. No collision retry loop since castles
@@ -2601,7 +2651,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         int count = 0;
         for (Pair<Float, EnemySprite> pair : enemies) {
             EnemySprite e = pair.getValue();
-            if (e.territoryTarget != null || e.legendExpiryDay >= 0)
+            if (e.territoryTarget != null || e.legendExpiryDay >= 0 || e.wrathHunter) // round 814: nor the Wrath
                 continue;
             if (e.pos().dst2(player.pos()) <= radiusSq)
                 count++;
@@ -3341,6 +3391,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         DungeonRotation.resetSessionState();
         MapMarkerRefresh.resetSessionState(); // round 190: the shared marker-refresh batch baseline
         forge.adventure.util.TreasureHunt.resetSessionState(); // round 478
+        forge.adventure.util.WrathHunt.resetSessionState(); // round 814
         World.resetVisionLog(); // round 790: [TFR-Vision] prints once per load
         treasureActorsStamp = -1;
         forge.adventure.util.TownPillage.resetSessionState(); // round 484
@@ -3396,6 +3447,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         List<Boolean> openingMages = new ArrayList<>(); // round 422
         List<String> pillageTowns = new ArrayList<>(); // round 484
         for (Pair<Float, EnemySprite> enemy : enemies) {
+            if (enemy.getValue().wrathHunter)
+                continue; // round 814: the Wrath lives on the World (WrathHunt rebuilds it), not in this list
             timeouts.add(enemy.getKey());
             // Raw name field, NOT getName() (2026-08-13 holistic review, pre-existing bug): the 3
             // Arena champions share nameOverride "Challenger", and getName() prefers the override -

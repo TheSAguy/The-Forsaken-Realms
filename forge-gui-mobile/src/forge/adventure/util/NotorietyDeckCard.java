@@ -135,15 +135,26 @@ public final class NotorietyDeckCard {
      * not a guard's fight).
      */
     public static Pick choose(EnemyData enemy, Deck deck, int seat, boolean arena) {
+        return choose(enemy, deck, seat, arena, false);
+    }
+
+    /**
+     * Round 814 (the user: "Let's have the Wrath Mage, start with the new Deck spawns we added, regardless of Notoriety
+     * level", and "Disable Notoriety should not affect the Wrath mage"): {@code wrath} - the Temple's Wrath hunter
+     * (util/WrathHunt) - skips the gate and the Notoriety-off check; the eligibility, rarity cap, seed and "none
+     * eligible" fallback are the same. One pick per seat, so never two cards.
+     */
+    public static Pick choose(EnemyData enemy, Deck deck, int seat, boolean arena, boolean wrath) {
         TuningData tuning = Config.instance().getTuningData();
         AdventurePlayer player = Current.player();
-        if (tuning == null || player == null || enemy == null || deck == null || AdventurePlayer.notorietyDisabled())
+        if (tuning == null || player == null || enemy == null || deck == null
+                || (!wrath && AdventurePlayer.notorietyDisabled()))
             return null;
         int notoriety = player.notorietyStreak();
         String who = enemy.getName() + " (" + EnemyData.tierDisplayName(enemy.tier) + ")";
         Gate g = gate(tuning, player);
         boolean near = notoriety >= logFloor(tuning);
-        if (g.wins <= 0 || notoriety < g.wins || arena) {
+        if (!wrath && (g.wins <= 0 || notoriety < g.wins || arena)) {
             if (near)
                 System.out.println("[TFR-Notoriety] " + who + " deck card: not "
                         + (g.wins <= 0 ? "on " + g.difficulty : arena && notoriety >= g.wins ? "in the Arena" : "yet")
@@ -173,6 +184,7 @@ public final class NotorietyDeckCard {
 
         PaperCard card;
         String how;
+        String whose = wrath ? " (the Wrath's card" + (AdventurePlayer.notorietyDisabled() ? ", Notoriety off" : "") + ")" : "";
         if ("none".equalsIgnoreCase(forced)) {
             card = null;
             how = " (forced by the console)";
@@ -189,7 +201,7 @@ public final class NotorietyDeckCard {
         if (card == null) {
             System.out.println("[TFR-Notoriety] " + who + " deck card: none eligible (" + deck.getName() + ", " + size
                     + " cards, cap " + capName + ", MV " + tuning.notorietyDeckCardMinCost + "-" + tuning.notorietyDeckCardMaxCost
-                    + ")" + how + " - no extra card; notoriety " + notoriety + ", needs " + g.describe());
+                    + ")" + how + " - no extra card; notoriety " + notoriety + ", needs " + g.describe() + whose);
             return null;
         }
         Deck played = new Deck(deck);
@@ -198,7 +210,7 @@ public final class NotorietyDeckCard {
         System.out.println("[TFR-Notoriety] " + who + " deck card: " + card.getName() + " (" + rarityName(rarity(card))
                 + ", MV " + face.getManaCost().getCMC() + ", " + kind(face.getType()) + ") added - "
                 + distinct + " eligible (" + tickets.size() + " copies) of " + size + ", cap " + capName + ", deck " + size
-                + " -> " + played.getMain().countAll() + ", notoriety " + notoriety + ", needs " + g.describe() + how);
+                + " -> " + played.getMain().countAll() + ", notoriety " + notoriety + ", needs " + g.describe() + how + whose);
         return new Pick(played, card);
     }
 

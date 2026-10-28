@@ -41,7 +41,7 @@ import java.util.Set;
 public final class TempleOfferings {
     static final String[] LETTERS = {"W", "U", "B", "R", "G"};
     static final String[] NAMES = {"white", "blue", "black", "red", "green"};
-    private static final byte[] BITS = {MagicColor.WHITE, MagicColor.BLUE, MagicColor.BLACK, MagicColor.RED, MagicColor.GREEN};
+    static final byte[] BITS = {MagicColor.WHITE, MagicColor.BLUE, MagicColor.BLACK, MagicColor.RED, MagicColor.GREEN};
     /** The bars' colors, W U B R G. */
     private static final Color[] BAR_COLORS = {new Color(0.93f, 0.89f, 0.72f, 1f), new Color(0.24f, 0.49f, 0.84f, 1f),
             new Color(0.36f, 0.30f, 0.38f, 1f), new Color(0.84f, 0.26f, 0.17f, 1f), new Color(0.22f, 0.60f, 0.29f, 1f)};
@@ -174,7 +174,7 @@ public final class TempleOfferings {
     }
 
     /** One color's cards of a rarity in the unlocked sets, one printing a name - mono-colored first, else any with it. */
-    private static List<PaperCard> pool(List<PaperCard> inSets, byte color, CardRarity rarity) {
+    static List<PaperCard> pool(List<PaperCard> inSets, byte color, CardRarity rarity) { // round 814: WrathHunt's prize
         for (boolean monoOnly : new boolean[]{true, false}) {
             List<PaperCard> pool = new ArrayList<>();
             Set<String> names = new HashSet<>();

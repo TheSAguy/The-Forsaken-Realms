@@ -107,6 +107,7 @@ public final class TfrPlates {
     public static void beginFrame() {
         queue.clear();
         placeQueue.clear();
+        wrathQueue.clear();
         frameShown = shown();
         frameColorView = frameShown && Current.player() != null && Current.player().hasColorView();
     }
@@ -117,6 +118,9 @@ public final class TfrPlates {
         for (PlaceQueued q : placeQueue) // round 791: the entrances first, so an enemy beside one is lifted over it
             q.plate.draw(batch, parentAlpha, q.cx, q.foot);
         placeQueue.clear();
+        for (WrathQueued q : wrathQueue) // round 814: the Wrath's plate, shown with or without Alt
+            q.plate.draw(batch, parentAlpha, q.cx, q.foot);
+        wrathQueue.clear();
         for (Queued q : queue)
             q.plate.draw(batch, parentAlpha, q.cx, q.foot);
         // Round 723 (log review 2026-10-24, P3): the edge first, and "hidden" only after a "shown". A view with no enemy
@@ -333,6 +337,73 @@ public final class TfrPlates {
         q.cx = cx;
         q.foot = foot;
         placeQueue.add(q);
+    }
+
+    private static final List<WrathQueued> wrathQueue = new ArrayList<>();
+
+    private static final class WrathQueued {
+        WrathPlate plate;
+        float cx, foot;
+    }
+
+    /** Round 814: EnemySprite.draw - the Wrath hunter's plate, every frame; the days left join it while the plates show. */
+    public static void queueWrath(WrathPlate plate, String color, String tier, int daysLeft, float cx, float foot) {
+        plate.update(color, tier, frameShown ? daysLeft : -1);
+        WrathQueued q = new WrathQueued();
+        q.plate = plate;
+        q.cx = cx;
+        q.foot = foot;
+        wrathQueue.add(q);
+    }
+
+    /**
+     * Round 814: "WRATH OF RED - MASTER" over the Temple's Wrath hunter (util/WrathHunt), always shown - it was announced.
+     * The color's word in the Temple chart's bar color, the rank in its plate color; with the plates shown (Alt, R3, the
+     * Units toggle) the days left to the week's turn follow, gold, orange in the last FADE_SOON days (round 791's colors).
+     */
+    public static final class WrathPlate {
+        private TextraLabel label;
+        private String key = "";
+
+        void update(String color, String tier, int daysLeft) {
+            String k = color + "/" + tier + "/" + daysLeft;
+            if (k.equals(key) && label != null)
+                return;
+            key = k;
+            if (label == null)
+                label = Controls.newTextraLabel("");
+            int r = Math.max(0, Math.min(3, EnemyData.tierRank(tier)));
+            String dim = "[#a8a296]";
+            label.setText("[%55][#" + WRATH_COLOR.getOrDefault(color, "e05a3a") + "]WRATH OF " + color.toUpperCase(Locale.ROOT)
+                    + dim + " - [#" + RANK_COLOR[r] + "]" + RANK_WORDS[r].trim().toUpperCase(Locale.ROOT)
+                    + (daysLeft >= 1 ? dim + " - [#" + fadeColor(daysLeft) + "]" + daysLeft + (daysLeft == 1 ? " DAY" : " DAYS")
+                    : ""));
+            label.pack();
+        }
+
+        void draw(Batch batch, float parentAlpha, float cx, float foot) {
+            if (label == null)
+                return;
+            float w = label.getWidth(), th = label.getHeight();
+            float lo = th * BAND_LO, hi = th * BAND_HI;
+            float x = cx - w / 2f, y = placeBox(x, foot + 1f - lo, w, lo, hi);
+            Color was = batch.getColor().cpy();
+            drawBox(batch, parentAlpha, x, y, w, lo, hi);
+            label.setPosition(x, y);
+            label.draw(batch, parentAlpha);
+            batch.setColor(was);
+        }
+    }
+
+    /** Round 814: the hunted color's word on its plate - the Temple chart's bar colors, red and white lightened to read. */
+    private static final Map<String, String> WRATH_COLOR = new java.util.HashMap<>();
+
+    static {
+        WRATH_COLOR.put("white", "eee3b8");
+        WRATH_COLOR.put("blue", "5c8fe0");
+        WRATH_COLOR.put("black", "9a86a6");
+        WRATH_COLOR.put("red", "e8543c");
+        WRATH_COLOR.put("green", "4fb35f");
     }
 
     private static final class PlaceQueued {

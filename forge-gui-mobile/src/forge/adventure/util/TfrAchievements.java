@@ -47,6 +47,7 @@ public final class TfrAchievements extends AchievementCollection {
     public static final String INTO_THE_DEEP = "tfr_into_the_deep";
     public static final String ONCE_MORE = "tfr_once_more";
     public static final String HONORS_EVEN = "tfr_honors_even";
+    public static final String WRATH_BREAKER = "tfr_wrath_breaker"; // round 814
 
     /** Round 718: the three end-game legend dungeons (round 668), by their place names. */
     private static final String[] LEGEND_DUNGEONS = {"Hexhaven Tower", "Echoverse Overlay", "Theorist's Sanctum"};
@@ -110,6 +111,7 @@ public final class TfrAchievements extends AchievementCollection {
         add(new TfrAchievement(ONCE_MORE, "Once More, With Feeling", "Begin the realm anew, and keep what you carried.",
                 true));
         add(new TfrAchievement(HONORS_EVEN, "Honors Even", "Fight a duel to a standstill.", true));
+        add(new TfrAchievement(WRATH_BREAKER, "Wrath Breaker", "Beat the Wrath your Temple's hunt sends after you.", false));
     }
 
     public static boolean isEnabled() {
@@ -318,6 +320,11 @@ public final class TfrAchievements extends AchievementCollection {
     /** AdventurePlayer, a New Game+ begun. */
     public static void onNewGamePlus() {
         earn(ONCE_MORE, "New Game+");
+    }
+
+    /** Round 814: WrathHunt, the week's Wrath hunter beaten. */
+    public static void onWrathBroken(String color) {
+        earn(WRATH_BREAKER, "beat the Wrath of " + color);
     }
 
     /** DuelScene.afterGameEnd, a drawn duel the player fought. */

@@ -813,6 +813,24 @@ public class TuningData {
     public int[] wrathBountyOnDifficulty = {0, 0, 0, 0};
     public float wrathBountyGold = 0f;
     public float wrathBountyShards = 0f;
+    // Round 814: the Wrath hunter. wrathHunterOnDifficulty switches it per difficulty; it is a Master until the 1-based
+    // week in wrathArchmageWeekByDifficulty (0 = never an Archmage), held under the week's spawn-tier bracket like a
+    // castle's attack mage. Its speed is the player's when it sets out x wrathSpeedFactor, then the roads and lands as
+    // for the player. The path: a straight chase within wrathDirectTiles when the line is clear; a re-plan when the player
+    // is wrathReplanTiles from the route's goal or every wrathReplanSeconds of moving time; stuck = under a tile of
+    // progress in wrathStuckSeconds. It waits wrathWaitTiles from a place the player enters. The prize: a rare of its
+    // color (a mythic at wrathPrizeMythicChance) and wrathPrizeShardsByDifficulty shards.
+    public int[] wrathHunterOnDifficulty = {0, 0, 0, 0};
+    public int[] wrathArchmageWeekByDifficulty = {0, 0, 0, 0};
+    public boolean wrathMonoColorOnly = true;
+    public float wrathSpeedFactor = 1f;
+    public int wrathDirectTiles = 20;
+    public int wrathReplanTiles = 8;
+    public float wrathReplanSeconds = 4f;
+    public float wrathStuckSeconds = 5f;
+    public int wrathWaitTiles = 5;
+    public int[] wrathPrizeShardsByDifficulty = {0, 0, 0, 0};
+    public float wrathPrizeMythicChance = 0f;
 
     // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
     // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". Same

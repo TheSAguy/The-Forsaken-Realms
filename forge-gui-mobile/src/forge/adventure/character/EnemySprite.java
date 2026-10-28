@@ -154,6 +154,8 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     // records which color dispatched this mage - tracked explicitly rather than parsed back out
     // of the enemy's display name, so it can't break if that name ever changes.
     public PointOfInterest territoryTarget;
+    /** Round 814: the Temple's Wrath hunter (util/WrathHunt) - not saved with the roamers; WrathHunt rebuilds it from the World. */
+    public boolean wrathHunter;
     // Round 413: this sprite is a cave's champion (set by MapStage on the promoted placement) - its arena loot list pays
     // through CardBudget.applyChampion. War champions are told apart by name (WarChampions.isWarChampion).
     public boolean championLoot;
@@ -1092,7 +1094,10 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         drawDungeonEffectPip(batch);
         // Round 719: its info plate while Alt is held (TfrPlates) - over the head, the crown and the talk icon. Not on a
         // Mimic (it would give the chest away) nor The Warden.
-        if (forge.adventure.util.TfrPlates.shown() && !disguisedAsLoot() && !WARDEN_NAME.equals(nameOverride)) {
+        if (wrathHunter) { // round 814: the Wrath's own plate, Alt or not (WrathHunt), instead of the info plate
+            float[] art = forge.adventure.util.TfrPlates.artBox(this);
+            forge.adventure.util.WrathHunt.queuePlate(this, wrathPlate, art[0], art[1] + 1f);
+        } else if (forge.adventure.util.TfrPlates.shown() && !disguisedAsLoot() && !WARDEN_NAME.equals(nameOverride)) {
             // centered on the visible art and a pixel above its top (TfrPlates.artBox), not on the actor's box
             float[] art = forge.adventure.util.TfrPlates.artBox(this);
             float top = art[1];
@@ -1104,6 +1109,8 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
 
     /** Round 719: this enemy's info plate (TfrPlates). */
     private final forge.adventure.util.TfrPlates.Plate infoPlate = new forge.adventure.util.TfrPlates.Plate();
+    /** Round 814: the Wrath hunter's plate. */
+    private final forge.adventure.util.TfrPlates.WrathPlate wrathPlate = new forge.adventure.util.TfrPlates.WrathPlate();
 
     /**
      * A small cyan pip on every enemy in a map that carries a DUNGEON effect.

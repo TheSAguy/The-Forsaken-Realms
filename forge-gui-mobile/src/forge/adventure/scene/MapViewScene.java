@@ -1165,6 +1165,18 @@ public class MapViewScene extends UIScene {
             markerAnchors.add(new float[]{legend.getX(), legend.getY()}); // round 292
             legendDots++;
         }
+        // Round 814: the Temple's Wrath hunter, in its color and larger - announced, so no fog gate. In mageMarkers so
+        // zooming moves it.
+        EnemySprite wrath = forge.adventure.util.WrathHunt.hunter();
+        if (wrath != null) {
+            Image marker = new Image(Forge.getAssets().getTexture(Config.instance().getFile("ui/minimap_player.png")));
+            marker.setColor(GameHUD.getMageMarkerColor(forge.adventure.util.WrathHunt.huntedColor()));
+            marker.setSize(marker.getWidth() * 1.75f, marker.getHeight() * 1.75f);
+            table.addActor(marker);
+            marker.setPosition(getMapX(wrath.getX()) - marker.getWidth() / 2, getMapY(wrath.getY()) - marker.getHeight() / 2);
+            mageMarkers.add(marker);
+            markerAnchors.add(new float[]{wrath.getX(), wrath.getY()});
+        }
         // Round 478: a whole treasure map's X (util/TreasureHunt) - a map mark, no fog gate. In mageMarkers so zooming moves it.
         com.badlogic.gdx.graphics.g2d.Sprite xMark = Config.instance().getItemSprite("Exit");
         if (xMark != null) {

@@ -42,6 +42,8 @@ public class AscendanceData {
     public float treasureGuardianFactor = 2f;
     public float championFactor = 1.5f;
     public float mageFactor = 1.5f;
+    // Round 814: the Temple's Wrath hunter (util/WrathHunt) - its duel's Power factor, beside the mage's. 1 = none.
+    public float wrathFactor = 1f;
     /** Round 596: a guard's won duel pays duelBase times this (see Ascendance.onGuardWon). */
     public float guardWinFactor = 1.0f;
 

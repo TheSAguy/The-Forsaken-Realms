@@ -38,6 +38,8 @@
   "treasureGuardianFactor": 2,
   "championFactor": 1.5,
   "mageFactor": 1.5,
+  // Round 814: the Temple's Wrath hunter - its duel pays the rank's duelBase x this (the largest factor wins).
+  "wrathFactor": 2,
   // Round 596 (the user: "The player should receive XP (Power) from Guards that win duels (both Roaming and Local). This
   // only needs to be noted in the message Log"): a guard's win pays the enemy rank's duelBase times this - times
   // mageFactor when it beat an attacking mage, less the outgrown share, none of the first-win or boss bonuses.

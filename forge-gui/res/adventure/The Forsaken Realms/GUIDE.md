@@ -740,6 +740,13 @@ more on Insane) that turns your victories into cards.
 - **Wrath.** When a week ends with a Temple in your Capitol, the color you defeated most is hunted the next week: its
   land sends foes a rank bracket stronger (not on Easy), and its foes - any enemy with that color - pay +25% gold and
   shards. A notice names the hunted color. Destroying the Temple ends the hunt.
+- **The Wrath of a color.** On Normal and up, the hunted color also sends one mage after you from its castle: a Master,
+  an Archmage from week 7 (week 4 on Hard and Insane). It walks around water and mountains at your speed plus 5% (set
+  when it leaves; roads and lands speed it up or slow it down as they do you), moves only while your time runs, and
+  waits a few steps outside any town or dungeon you enter. "WRATH OF RED" floats over it, the days left with Alt, and it
+  shows on the minimap through the fog. It always starts its duel with one card from its own deck already in play,
+  whatever your Notoriety. Beat it for a rare of its color (sometimes a mythic), 15 / 20 / 25 Shards and double Power;
+  lose, and it goes home - no prize that week. When the week turns it fades as the next one sets out.
 
 Your roaming guards' **Spoils of War** (another perk) wait the same way at your Capitol's Armory: Manage Guards shows
 how many cards wait, and the Guards window's **Collect Spoils** opens them.
