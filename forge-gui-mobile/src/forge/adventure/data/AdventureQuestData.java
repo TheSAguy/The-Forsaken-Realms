@@ -336,6 +336,9 @@ public class AdventureQuestData implements Serializable {
             // Reset root and all connected floors so previously cleared dungeons respawn for the quest
             PointOfInterest target = stage.getTargetPOI();
             PointOfInterestChanges.resetDeletedObjectsRecursive(target.getID(), target.getData().map);
+            // Round 844: and its gates closed, or the map flags they open on (gauntlet ranks, the Fort's ward) let the
+            // player walk past the enemies that just came back.
+            forge.adventure.util.DungeonRotation.resetMapFlagsForQuest(target, this.name);
         }
 
         PointOfInterest temp = stage.getTargetPOI();

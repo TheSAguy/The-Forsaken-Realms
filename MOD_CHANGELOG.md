@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 844: a quest that brings a dungeon's enemies back closes its gates too (2026-10-29)
+
+Fable review P2-3 (verified as P3: no shipped quest can bind a gauntlet, but "Eviction Notice" can bind the Mages'
+Fort); the user: "Yes, all as recommended". Built in a worktree, tested in an `agent-845` copy.
+
+- **The bug:** accepting a quest whose stage binds a dungeon runs `PointOfInterestChanges.resetDeletedObjectsRecursive`
+  (`AdventureQuestData`), so its enemies and gates come back - but the map flags the gates open on stayed. Round 798
+  closed this for a reserve return only (`DungeonRotation.resetMapFlags`). The Mages' Fort (Fort2) after "Eviction
+  Notice": the five ward wizards were back, `enemiesDefeated` still read 5 and the ward let the player through at once
+  (round 798's bug by another door). A gauntlet bound the same way would keep `gauntletApprentice/Adept/Master`.
+- **The fix:** right after that reset, `DungeonRotation.resetMapFlagsForQuest(target, questName)` (new, public): clears
+  the map flags of the place's whole tree, as a reserve return does, but keeps `GauntletGroups.GROUP` so a gauntlet's
+  restored enemies keep their drawn theme. `[DungeonRotation] quest "Eviction Notice" bound Mages' Fort: its enemies are
+  back, map flags reset: 1 (gates closed)` when any flag was cleared.
+- No new caller of `resetMapFlags`; one caller of the new method (graph not needed: new code).
+
+**Agent-tested** in `agent-845` (round 844's jar; the test copy's `quests.json` narrowed Eviction Notice's Clear stage
+to `[Hostile, Sidequest, ClearNeedsAll]`, so only Fort2 matched - the copy only, removed afterward): the Fort entered,
+the Blue ward wizard beaten in a real duel at 50x, the other four removed and `enemiesDefeated` set to 5 by console ->
+the ward offered "Place your hand on the barrier" (passed). Walked out, `give quest 11` -> the five wizards and the ward
+were back, the log line above showed, and with the wizards removed again (no flag) the ward offered only "Leave".
+Shots: `C:\TFR\notes\r844\`.
+
+**Not tested:** a gauntlet bound by a quest (no shipped quest can); the drawn group kept (read from the code).
+Files: `data/AdventureQuestData.java` (stock, CORE_ENGINE_CHANGES), `util/DungeonRotation.java`.
+
 ## Round 854: Urabrask's footprint refreshed; sprite_footprints.py replaces a stale field in one pass (2026-10-29)
 
 A v1.24 leftover: `dev-tools/sprite_footprints.py --check` reported `sprites/enemy/aberration/phyrexian/urabrask.atlas`

@@ -423,6 +423,30 @@ public class DungeonRotation {
     }
 
     /**
+     * Round 844 (Fable review P2-3): a quest that binds a dungeon brings its enemies and gates back
+     * (PointOfInterestChanges.resetDeletedObjectsRecursive), so its gates must close again too - the Mages' Fort's
+     * ward opened at once after "Eviction Notice" restored its wizards. Clears the tree's map flags like a reserve
+     * return, but keeps the gauntlet's drawn group (GauntletGroups.GROUP): the restored enemies keep their theme.
+     * Returns how many flags were reset.
+     */
+    public static int resetMapFlagsForQuest(PointOfInterest poi, String quest) {
+        int flags = 0;
+        for (forge.adventure.pointofintrest.PointOfInterestChanges changes
+                : WorldSave.getCurrentSave().getPointOfInterestChangesTree(poi.getID())) {
+            java.util.Map<String, Byte> map = changes.getMapFlags();
+            Byte group = map.get(GauntletGroups.GROUP);
+            flags += map.size() - (group == null ? 0 : 1);
+            map.clear();
+            if (group != null)
+                map.put(GauntletGroups.GROUP, group);
+        }
+        if (flags > 0)
+            System.out.println("[DungeonRotation] quest \"" + quest + "\" bound " + poi.getDisplayName()
+                    + ": its enemies are back, map flags reset: " + flags + " (gates closed)");
+        return flags;
+    }
+
+    /**
      * Round 798 (user-approved 2026-10-28): a gauntlet dungeon (tagged Gauntlet) is three Apprentices, two Adepts and a
      * Master in a row before its chest, so a loss at the Master would otherwise throw away five wins. A loss keeps it on
      * the map with its beaten enemies still beaten; its timer still runs.

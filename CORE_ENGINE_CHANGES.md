@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 844 - a quest that brings a dungeon's enemies back closes its gates too
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** (STOCK): after the dungeon target's
+  `PointOfInterestChanges.resetDeletedObjectsRecursive`, one call to `DungeonRotation.resetMapFlagsForQuest(target,
+  name)` (TFR file: clears the tree's map flags except `GauntletGroups.GROUP`, `[DungeonRotation] quest ...` line).
+
 ### Round 847 - the Wrath's hunter is never eased
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): `earlyWeekLife` gains one exemption,
   `enemy.wrathHunter` ("the Wrath's hunter"), after the territory mages; its comment names it.
