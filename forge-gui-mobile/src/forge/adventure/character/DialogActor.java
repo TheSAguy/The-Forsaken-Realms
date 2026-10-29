@@ -64,6 +64,12 @@ public class DialogActor extends CharacterSprite {
         if (dialog != null) {
             if (dialog.activate()) {
                 stage.resetPosition();
+                // Round 864: the step back must clear the object - one still touching it after the reset sees no new
+                // contact and walks through (the Emrakul barrier). Logged, not forced: re-opening the dialog while
+                // the player stands in it would trap them (round 818's lesson).
+                if (collideWith(stage.getPlayerSprite()))
+                    System.out.println("[TFR-Gate] dialog object " + objectId + " in " + stage.getLoadedMapName()
+                            + ": the step back still touches it - the player can walk through");
                 stage.showDialog();
             }
         }

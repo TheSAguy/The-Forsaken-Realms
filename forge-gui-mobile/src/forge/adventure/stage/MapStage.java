@@ -3078,8 +3078,17 @@ public class MapStage extends GameStage {
     }
 
     public void resetPosition() {
-        if (positions.peek() != null){
-            player.setPosition(positions.peek());
+        // Round 864 (Discord: the Emrakul barrier "can be walked past by bumping into it 3 times"): the player goes back
+        // to the oldest of the last 4 positions, but stock Forge left the queue as it was - it still held the inside
+        // spot of this bump, so a quick second bump put the player INSIDE the gate, where the edge-triggered
+        // collideWithPlayer never fired again and the third step walked through (every dialog gate: keys, the
+        // gauntlets, the Mages' Fort ward). Starting the queue again from the spot we step back to means a later reset
+        // never returns a spot recorded before this one.
+        Vector2 back = positions.peek();
+        if (back != null) {
+            player.setPosition(back);
+            positions.clear();
+            positions.add(player.pos());
         }
         stop();
     }

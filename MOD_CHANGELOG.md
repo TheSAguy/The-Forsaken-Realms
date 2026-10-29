@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 864: a dialog gate can no longer be walked through by bumping it (2026-10-29)
+
+The user: "Yes, round 864" - to "Fix the gate bump-through for 1.25 as round 864?". The report (gnomedoom on Discord,
+v1.24): "the 'massive red barrier' in the emrakul dungeon can be walked past by bumping into it 3 times". Diagnosis
+`C:\TFR\notes\emrakul-barrier-1029.md`. Files: `stage/MapStage.java` (stock), `character/DialogActor.java` (stock).
+
+- **The cause (stock Forge, every TFR version):** a gate is a `type="dialog"` object (the Emrakul ward, `gate.tx`
+  doors, all 54 gauntlet gates, the Mages' Fort ward, the Eldrazi Prison seals). It is no wall: on first contact
+  `DialogActor.onPlayerCollide` shows its dialog and `MapStage.resetPosition()` steps the player back to the oldest of
+  the last 4 frame positions (`positions`). The queue was left as it was, so it still held this bump's inside spot; a
+  quick second bump (3 frames back in) was stepped back to THAT spot, inside the gate. `MapActor.collideWithPlayer` is
+  edge-triggered (`onPlayerCollide` only when contact starts), so a player already inside got no new dialog and the
+  next steps walked out the far side. Enemies were safe (their branch acts on every frame of contact).
+- **The fix:** `resetPosition()` puts the player on the stepped-back spot, then clears `positions` and seeds it with
+  that spot, so a later reset can never return a position recorded before this one. The freeze check after a dialog
+  (`positions.contains(player.pos())`) still holds the enemies until the player moves. Callers (code graph and Grep, 4):
+  the enemy-contact reset in `onActing`, `DialogActor`, `QuestActor`, `DummySprite` - all want "back outside". The loss
+  and draw step-backs read `positions.peek()` themselves and now get the pre-contact spot.
+- **The second guard, taken in its log-only form:** `DialogActor` logs `[TFR-Gate] dialog object N in <map>: the step
+  back still touches it - the player can walk through` when the reset leaves the player touching the object. Not taken:
+  re-arming the contact so the dialog re-fires while the player stands in it - one inside spot (a load, an arrival)
+  would then reopen the box on every step, the trap round 818 removed. The queue fix alone closes the reported path.
+- **Upstream has the same bug** (`upstream/master`'s `resetPosition` is identical) - worth an issue or PR to
+  Card-Forge later.
+- **Agent-tested** (`agent-864`, wt-864's two classes ahead of the agent jar, cheats; the copy removed afterward). With
+  the fix, every bump opened the dialog and stepped the player back outside, 0 passes:
+  - the Emrakul ward without the Strange Key: 12 walking, 12 sprinting, 3 sprinting from a run-up;
+  - the Spore Cathedral's Gate I (a new game; Apprentices removed by console, so the count stayed 0): 12 walking,
+    12 sprinting from a run-up; with `set mapflag gauntletApprentice 3` it offered "Pass through" and opened as before;
+  - the Mages' Fort ward: 12 walking, 12 sprinting from a run-up.
+  - The control, the same copy relaunched without the two classes (the round 862 jar): through Gate I on bump 5 and
+    through the Emrakul ward on bump 3 - the report exactly - each with the gate still standing.
+  - As before: walking into the Mages' Fort's Human Raider started a duel (lost; stepped back and put out of the fort),
+    a Homarid in the Svyelunite Temple dueled on touch (won), both at 50x (`duel speed set to 50x`); the allied
+    Vodalian Soldier #50039 greeted once (`[TFR-Talk] ... greets once this visit`) and the player then walked onto it
+    five times with no box or push-back; no `[TFR-Gate]` line, no exceptions.
+- **Not tested:** a drawn duel's step-back (same `peek()` line as the loss, unchanged), a QuestActor board and a
+  DummySprite (same call), Android (no device).
+
 ## Round 862: a rescued cut-off save never counts as a reload after a loss (2026-10-29)
 
 The user: "Yes, exempt it" - to "Exempt a rescued (cut-off) save from the reload penalty, as round 862?" (a forced

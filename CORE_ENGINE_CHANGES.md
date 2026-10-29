@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 864 - a dialog gate can no longer be walked through by bumping it
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK) - `resetPosition()` clears `positions` after
+  stepping the player back and seeds it with that spot (stock left the queue holding the bump's inside spot, so a
+  second bump stepped the player into the gate). Upstream has the same bug; if upstream fixes it, take theirs.
+- **`forge-gui-mobile/src/forge/adventure/character/DialogActor.java`** (STOCK) - `onPlayerCollide()` logs a
+  `[TFR-Gate]` line after `resetPosition()` when the player still touches the object. Log only.
+
 ### Round 862 - a rescued cut-off save is never counted as a reload
 - **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** (STOCK) - `load()` keeps whether round 858's `loadOld`
   supplied the game (`rescued`) and passes it to `ReloadJab.onLoaded(saveDate, rescued)`, which then judges nothing.
