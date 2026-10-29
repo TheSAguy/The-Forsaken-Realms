@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 846: render and save guards - the counter tabs' measuring, a missing win/loss record (2026-10-29)
+
+Fable review P3-9 and P3-16; the user: "Yes, all as recommended". Built in a worktree, tested in an `agent-845` copy.
+
+- **Counter and marker tabs (P3-9):** round 816 guarded `CardRenderer.drawText`, but the tabs measure the same strings
+  with the same static `GlyphLayout` before it - `drawCounterTabs` twice (the OLD_WHEN_SMALL width check, the counter
+  box width) and `drawMarkersTabs` once - so the null-glyph NPE (`BitmapFont$Glyph.fixedWidth`) could surface there and
+  open the crash dialog as before. The three now go through `measure(font, text)`: round 816's catch, the width or 0
+  for that frame, `[TFR-Render] counter/marker text "..." not measured for a frame: ...` once a launch (its own flag, so
+  a drawText failure does not hide it). The cause is still unproven.
+- **Win/loss record (P3-16):** `PlayerStatistic.load` - `readObject("winLossRecord")` returns null on a blob it cannot
+  read, and every later read (rank, totals, sell price) would throw. A null now becomes an empty record,
+  `[TFR-Save] winLossRecord could not be read - the win/loss record starts empty`. `completedEvents` already had this.
+
+**Tested:** Maven `-pl forge-gui-mobile-dev -am package` exit 0. Agent (`agent-845`, the same jar as 844 and 843): six
+duels at 50x in two games (one with 4 Luminarch Aspirant and 4 Hopeful Initiate added to the deck, one with poison
+counters on the player), no exception, no `[TFR-Render]` or `[TFR-Save]` line. **Not proven:** that a card counter or
+marker tab was on screen in those duels (the log does not show it), and neither guard's failure path (the NPE has no
+known trigger; a corrupt blob was not made).
+
+Files: `forge-gui-mobile/src/forge/card/CardRenderer.java`, `adventure/player/PlayerStatistic.java` (both stock,
+CORE_ENGINE_CHANGES).
+
 ## Round 844: a quest that brings a dungeon's enemies back closes its gates too (2026-10-29)
 
 Fable review P2-3 (verified as P3: no shipped quest can bind a gauntlet, but "Eviction Notice" can bind the Mages'

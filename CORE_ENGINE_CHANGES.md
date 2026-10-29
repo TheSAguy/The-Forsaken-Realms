@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 846 - render and save guards
+- **`forge-gui-mobile/src/forge/card/CardRenderer.java`** (STOCK): the three `glyphLayout.setText` + `.width` reads in
+  `drawCounterTabs` (the OLD_WHEN_SMALL check and the counter box width) and `drawMarkersTabs` (the marker box width)
+  go through a new private `measure(font, text)` - round 816's try/catch, 0 for the frame on a layout exception,
+  `[TFR-Render] ... not measured` once a launch (new static `measureErrorLogged`).
+- **`forge-gui-mobile/src/forge/adventure/player/PlayerStatistic.java`** (STOCK): `load` - a null `winLossRecord` from
+  `readObject` (a blob it cannot read) becomes an empty map, `[TFR-Save]` line.
+
 ### Round 844 - a quest that brings a dungeon's enemies back closes its gates too
 - **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** (STOCK): after the dungeon target's
   `PointOfInterestChanges.resetDeletedObjectsRecursive`, one call to `DungeonRotation.resetMapFlagsForQuest(target,

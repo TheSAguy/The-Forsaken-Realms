@@ -145,7 +145,14 @@ public class PlayerStatistic implements SaveFileContent {
     public void load(SaveFileData data) {
 
         if(data!=null&&data.containsKey("winLossRecord"))
+        {
             winLossRecord = (HashMap<String, Pair<Integer, Integer>>) data.readObject("winLossRecord");
+            // TFR round 846: readObject returns null on a blob it cannot read; every later get would throw
+            if (winLossRecord == null) {
+                winLossRecord = new HashMap<>();
+                System.err.println("[TFR-Save] winLossRecord could not be read - the win/loss record starts empty");
+            }
+        }
         else
             winLossRecord.clear();
 

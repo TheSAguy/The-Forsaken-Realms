@@ -968,8 +968,7 @@ public class CardRenderer {
             }
 
             if (font != null && !String.valueOf(maxCounters).isEmpty()) {
-                glyphLayout.setText(font, String.valueOf(maxCounters));
-                if (counterBoxBaseWidth + glyphLayout.width > w) {
+                if (counterBoxBaseWidth + measure(font, String.valueOf(maxCounters)) > w) {
                     drawCounterImage(card, g, x, y, w, h);
                     return;
                 }
@@ -1002,9 +1001,7 @@ public class CardRenderer {
 
                 String finalDisplayName = stringBuilder.toString();
 
-                glyphLayout.setText(font, counterValueStr);
-
-                final float counterBoxRealWidth = counterBoxBaseWidth + glyphLayout.width + 4f;
+                final float counterBoxRealWidth = counterBoxBaseWidth + measure(font, counterValueStr) + 4f;
                 final float counterYOffset = spaceFromTopOfCard - (currentCounter * (counterBoxHeight + counterBoxSpacing));
                 currentCounter++;
 
@@ -1066,6 +1063,29 @@ public class CardRenderer {
     /** TFR round 816: drawText's guard logged its first failure. */
     private static boolean textErrorLogged;
 
+    /**
+     * TFR round 846 (Fable review P3-9): the counter and marker tabs measure their text with the same static layout
+     * before drawText, so round 816's null-glyph NPE could surface here first and open the crash dialog as before. The
+     * width of the text, or 0 for a frame when libGDX's layout throws (logged once a launch).
+     */
+    private static float measure(BitmapFont font, String text) {
+        try {
+            glyphLayout.setText(font, text);
+            return glyphLayout.width;
+        } catch (RuntimeException e) {
+            if (!measureErrorLogged) {
+                measureErrorLogged = true;
+                System.err.println("[TFR-Render] counter/marker text \"" + text + "\" not measured for a frame: " + e
+                        + " (logged once a launch; the duel goes on)");
+                e.printStackTrace();
+            }
+            return 0f;
+        }
+    }
+
+    /** TFR round 846: measure's guard logged its first failure. */
+    private static boolean measureErrorLogged;
+
     private static void drawCounterImage(final CardView card, final Graphics g, final float x, final float y, final float w, final float h) {
         int number = 0;
         if (card.getCounters() != null) {
@@ -1116,8 +1136,7 @@ public class CardRenderer {
         for (int i = 0; i < markersCount; i++) {
             final String marker = markers.get(i);
             if (font != null && marker != null && !marker.isEmpty()) {
-                glyphLayout.setText(font, marker);
-                final float markerBoxRealWidth = markerBoxBaseWidth + glyphLayout.width + 4;
+                final float markerBoxRealWidth = markerBoxBaseWidth + measure(font, marker) + 4;
 
                 final float markerYOffset = spaceFromTopOfCard - (markerCounter-- * (markerBoxHeight + markerBoxSpacing));
 
