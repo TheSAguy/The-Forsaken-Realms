@@ -158,7 +158,10 @@ public class BalanceSheet {
         // INTEREST into one total without naming it. Interest moves with the bank balance, so the
         // number moved. Broken out, it explains itself.
         int tithe = RealmMilestones.titheProjected(); // round 774: a realm boon's Tithe, at today's towns
-        EconomyBuildings.addContentRow(dialog, "[%90]Day " + nextPayday + " payday: mines [GREEN]+"
+        // Round 868: the days to payday, not its absolute day number (the player sees weeks and days left).
+        int toPayday = nextPayday - WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        EconomyBuildings.addContentRow(dialog, "[%90]Payday " + (toPayday == 1 ? "tomorrow" : "in " + toPayday + " days")
+                + ": mines [GREEN]+"
                 + next.goldIn + "[+Gold][]"
                 + (next.interestIn > 0 ? ", interest [GREEN]+" + next.interestIn + "[+Gold][]" : "")
                 + (tithe > 0 ? ", tithe [GREEN]+" + tithe + "[+Gold][]" : "")

@@ -184,7 +184,7 @@ public class InnScene extends UIScene {
 
         initLocalEvent();
         if (localEvent == null && wonUntilDay > 0) { // round 527: this week's tournament here is already won
-            eventDescription.setText("[GREY]Won - next on day " + wonUntilDay); // short: the label is one line wide
+            eventDescription.setText("[GREY]Won - back next week"); // short: one line wide; round 868: the week, not the absolute day
             event.setDisabled(true);
             reroll.setDisabled(true);
         } else if (localEvent == null){

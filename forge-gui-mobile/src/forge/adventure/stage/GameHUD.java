@@ -1847,6 +1847,16 @@ public class GameHUD extends Stage {
                 Actions.alpha(0f, NOTICE_OUT), Actions.sizeTo(0, 0), Actions.run(this::showNextNotices)));
     }
 
+    /** Round 868: a notice's day as the HUD clock shows it - "W1 D3" for day 10 - not the absolute day number. */
+    private static String logDayLabel(String day) {
+        try {
+            int d = Integer.parseInt(day);
+            return "W" + forge.adventure.world.World.weekOf(d) + " D" + (Math.floorMod(d - 1, 7) + 1);
+        } catch (NumberFormatException e) {
+            return "Day " + day;
+        }
+    }
+
     /** Round 549: the Log button - the last NOTICE_LOG_SIZE notices, newest first, each with its day, on the banners'
      *  own paper so they read as they did. */
     private void openNoticeLog() {
@@ -1873,7 +1883,7 @@ public class GameHUD extends Stage {
         float dayDrop = Math.max(0f, (Controls.newTextraLabel("[%85]Day").getPrefHeight()
                 - Controls.newTextraLabel("[%70]Day").getPrefHeight()) * 0.75f);
         for (String[] entry : noticeLog) {
-            TextraLabel day = Controls.newTextraLabel("[%70]Day " + entry[2]);
+            TextraLabel day = Controls.newTextraLabel("[%70]" + logDayLabel(entry[2]));
             day.setColor(Color.BLACK);
             TextraLabel line = Controls.newTextraLabel("[%85]" + entry[0]);
             line.setColor(entry[1].startsWith("w") ? Color.WHITE : Color.BLACK); // round 713: "wp" is a Power gain

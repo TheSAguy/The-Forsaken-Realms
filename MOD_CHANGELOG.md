@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 868: deadlines say how many days are left, never the absolute day (2026-10-29)
+
+The user, on round 865's raid page ("Time: 7 days left (until day 8)"): "Let's remove that "Till day x " comment. The
+player does not see that since he works in weeks. We should check all deadlines and remove comments like that." The
+HUD clock shows the day of the week (1-7) and the week (from 0), never the absolute day count, so an absolute "day N"
+in player-facing text means nothing to the player. Text only; no logic changed.
+
+The rule: a deadline stays relative ("N days left", "next week"); a label stating a current or past absolute day shows
+the week (as the HUD clock numbers it) or the HUD's own week + day.
+
+| Place | Old text | New text |
+|---|---|---|
+| `scene/QuestLogScene.java:295` (raid Details page) | `Time: 7 days left (until day 8)` | `Time: 7 days left` |
+| `scene/CustomDifficultyScene.java:274` (mid-game panel header) | `Hard - in play, day 12` | `Hard - in play, week 1` |
+| `scene/InnScene.java:187` (tournament already won) | `Won - next on day 15` | `Won - back next week` (the date was always the next week's first day) |
+| `util/BalanceSheet.java:161` (payday row) | `Day 15 payday: mines +...` | `Payday in 3 days: mines +...` (`Payday tomorrow` at 1) |
+| `scene/WorldStandingsScene.java:328` (defeated color's town count) | `0 (Defeated Day 23)` | `0 (Defeated in week 3)` |
+| `stage/GameHUD.java:1886` (notice log's day column; new `logDayLabel`) | `Day 10` | `W1 D3` (the HUD clock's week and day; anything not a number keeps `Day x`) |
+| `GUIDE.md:1828` (+ GUIDE.html) | its line reads "Won - next on day N" | its line reads "Won - back next week" |
+
+**Left alone, and why:**
+- `scene/HistoryScene.java` - the History replay's "Day N of M" slider label, its "Day N" caption and "History is
+  recorded from day N": a day timeline is that screen's purpose.
+- `util/TimeOfDayActor.java` - the HUD clock itself ("Day 1-7", "Week N").
+- Every `[TFR-*]` log line and the agent/console output (`ConsoleCommandInterpreter`, `agent/WalkController`):
+  for us, not players. The audit found ~60 of these (TownPillage, DungeonRotation, RoamingGuards, TerritoryControl,
+  ArenaScene, Ascendance, TownSpecialties, LegendSpawns, PlaceRewards, ...).
+- GUIDE rule text describing the calendar ("days 8, 15, 22", "day 8 shows as Day 1, Week 1", "the level-20 places on
+  day 60", "on day 8 each one sends extra attackers") and `settings.json` comments: they explain the rules, not a
+  deadline.
+- `en-US.properties`, `world/quests.json` and the plane's dialogs: no absolute day numbers found.
+- Ambiguous, decided by the rule: the notice log could have said "3 days ago" instead; "W1 D3" was kept because it
+  fits the narrow 70% column and matches the HUD clock. The custom difficulty header reads "week 0" in the first
+  week, as the HUD clock does.
+
+**Agent-tested** in `agent-868` (this jar, cheats; the copy was removed afterward): `pillage start` raided Orazca; the
+raid Details page reads "Time: 7 days left"; Settings > Difficulty > Edit... shows "Normal - in play, week 0" on day 1;
+the notice log shows "W0 D1" on each row; World Standings > Balance reads "Payday in 7 days" on day 1. One raider duel
+ran at 50x through `settle` (lost, no matter). No exceptions in forge.log. The Inn's won line and a defeated color's
+row were not reachable quickly and are untested on screen. Shots `C:\TFR\notes\r868\`.
+
+**Files touched**: `scene/QuestLogScene.java`, `scene/CustomDifficultyScene.java`, `scene/InnScene.java`,
+`scene/WorldStandingsScene.java`, `stage/GameHUD.java`, `util/BalanceSheet.java`; plane `GUIDE.md`, `GUIDE.html`.
+
 ## Round 865 (follow-up): the raid page fits the portrait paper (2026-10-29)
 
 The main thread, checking round 865's portrait shot: the Reward line sat on the paper's bottom edge, the red "If time

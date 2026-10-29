@@ -1825,7 +1825,7 @@ unless you've entered it or have prizes waiting. The entry fee scales with the t
   Coin). After you have played one Jumpstart tournament - on any run, New Game+ included - Inns
   only offer Draft and Sealed.
 - **Winning a tournament** raises that town's reputation with you by 1 - once a week per town: after a win, that
-  Inn deals no new tournament until the week turns (days 8, 15, 22...), and its line reads "Won - next on day N".
+  Inn deals no new tournament until the week turns (days 8, 15, 22...), and its line reads "Won - back next week".
 - **Simulated AI rounds** belong to their own tournament and round: walk out of the Inn while they run and the next
   press of the button carries on, and loading an earlier save mid-tournament can no longer end it a round early.
 - The world map's **Reputation view** shows, at each town you've visited, what its Inn is running this week -

@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 868 - deadlines say the days left, never the absolute day
+- **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - the raid page's Time line drops
+  "(until day N)". Text only, in TFR's own `loadRaidDetails`.
+- **`forge-gui-mobile/src/forge/adventure/scene/InnScene.java`** (STOCK) - the won-tournament line reads "Won - back
+  next week" instead of "Won - next on day N". Text only.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** (STOCK) - `openNoticeLog()`'s day label goes through new
+  `logDayLabel(String)` ("W1 D3", the HUD clock's week and day).
+- TFR files: `scene/CustomDifficultyScene.java`, `scene/WorldStandingsScene.java`, `util/BalanceSheet.java`.
+
 ### Round 865 - a raid's Details page in the quest log
 - **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - each pillage row gets a Details button;
   new `loadRaidDetails(String)` fills the quest details pane (the Track button reads "Show on Map" there) with a

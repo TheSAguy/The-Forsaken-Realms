@@ -325,7 +325,7 @@ public class WorldStandingsScene extends UIScene {
             // so a WHITE tint only "preserves" a segment that's ALREADY inline-tagged - a plain,
             // untagged segment would render white too, not black, if left unbracketed).
             String countText = defeatDay != null
-                    ? "[BLACK]" + counts.get(row) + "[] [RED](Defeated Day " + defeatDay + ")[]"
+                    ? "[BLACK]" + counts.get(row) + "[] [RED](Defeated in week " + forge.adventure.world.World.weekOf(defeatDay) + ")[]"
                     : String.valueOf(counts.get(row));
             TypingLabel countLabel = Controls.newTypingLabel(countText);
             countLabel.setColor(defeatDay != null ? Color.WHITE : Color.BLACK);

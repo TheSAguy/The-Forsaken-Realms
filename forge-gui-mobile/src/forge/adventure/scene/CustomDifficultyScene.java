@@ -271,7 +271,7 @@ public class CustomDifficultyScene extends UIScene {
         }
         int day = WorldSave.getCurrentSave() == null || WorldSave.getCurrentSave().getWorld() == null ? 0
                 : WorldSave.getCurrentSave().getWorld().getCurrentDay();
-        inPlay.setText("[%85][LIGHT_GRAY]" + p.getDifficulty().name + " - in play, day " + day);
+        inPlay.setText("[%85][LIGHT_GRAY]" + p.getDifficulty().name + " - in play, week " + forge.adventure.world.World.weekOf(day)); // round 868: the week, as the HUD clock shows it
         showPresetBox(false);
         help.setText(WARNING + "Mid-game: new-game-only settings are locked.");
         System.out.println("[TFR-Custom] panel opened mid-game on day " + day + ": " + CustomDifficulty.displayName(p)

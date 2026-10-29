@@ -292,7 +292,7 @@ public class QuestLogScene extends UIScene {
         String[] lines = {
                 rest,
                 "[BLACK]☐  Beat the raiders: " + raid.beaten + " of " + raid.kills,
-                "[BLACK]Time: " + raid.daysLeft + daysWord + " left (until day " + raid.endDay + ")",
+                "[BLACK]Time: " + raid.daysLeft + daysWord + " left",
                 "[BLACK]Where: " + (raid.distanceTiles <= 1 ? "here" : raid.direction + ", " + raid.distanceTiles
                         + " tiles from you"),
                 raid.near ? "[BLACK]Raiders out now: " + raid.raidersOut
