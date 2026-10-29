@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 853: the Bronze Coin corner button fits - a corner widens for a two-line label (2026-10-29)
+
+A v1.24 leftover (round 785's "Not done", seen in `r785_hard_week1_preview.png`): at 1280x720 the lost-ante prompt's
+coin button, "(Save: N gold)" over "Bronze Coin", was a 90 px corner (VPrompt.BTN_WIDTH) whose text box is 3/4 of the
+width less PADDING by 3/4 of the height - about 58 x 45 px - so Forge shrank the label to its smallest font and still
+clipped it (the "(" was cut). The won-duel "Auto-Sell (N gold)" corner had the same squeeze. Rounds 366, 383 and 396
+only moved text inside the 90 px.
+
+- **`FButton.getCornerFitWidth(minWidth)`**: for a label the corner shows on two lines (it has a space or its own line
+  break), the font is shrunk only until the lines fit 80% of the text box's height, and the button is as wide as the
+  widest line needs; `draw()` then uses that font (`cornerFitFont`), since in the wider box Forge's own fit would grow
+  it back to the full height and the second line sat on the screen's bottom edge. A one-word label ("OK", "Cancel")
+  keeps BTN_WIDTH and Forge's shrink-to-fit, so plain dialogs are unchanged.
+- **`FDialog.fitButtons`** (every layout): sizes both corners that way and the middle button as before (its label x1.25);
+  when the row is too narrow (portrait), every button's width above BTN_WIDTH gives way in proportion; the middle stays
+  centered on the screen while it clears both corners, else it is centered between them.
+- **`VPrompt.doLayout`** places each corner by its own width (the label and the Undo/menu buttons too); the match prompt
+  never widens a corner, so the match UI is unchanged.
+- **Tested** in `agent-853` (a worktree build, Maven exit 0; every duel at 50x; shots `C:\TFR\notes\r853\`):
+  1280x720 - "Card Lost" with OK / Buy Back (50 gold) / "(Save: 119 gold)" over "Bronze Coin" (three buttons, Buy Back
+  still centered), both coin lines whole; tapping the coin kept the gold, spent one coin (4 -> 3) and said "Defeated -
+  your Bronze Coin kept 119."; "Card Gained" with OK / "Auto-Sell (75 gold)" on two lines, and Auto-Sell tapped works.
+  540x960 portrait - the same two prompts, no overlap, every label readable; the coin tapped kept 2,432 gold, 4 -> 3.
+  The left "OK" corner is 90 px in every shot. **Not seen**: a plain OK/Cancel FOptionPane - the bridge lists no
+  widgets in the deck editor, and the nearby towns had no Inn (its Sell Cards opens the Sell/Cancel autosell prompt);
+  a one-word label takes the unchanged path by construction (`getCornerFitWidth` returns BTN_WIDTH, no fit font).
+- The first build showed the second line flush on the bottom edge; the 80% height and the fit font fixed it. A one-word
+  "Cancel" would have widened 90 -> about 126 px, so one-word labels were kept out.
+
 ## Round 855: Sanar's life 30 -> 15 (2026-10-29)
 
 The user: "Let's lower Sanar's life to 15". Round 851's open question: Sanar is a difficulty-0.1 (Common) cave champion,

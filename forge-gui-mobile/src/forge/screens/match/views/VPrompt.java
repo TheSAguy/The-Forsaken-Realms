@@ -351,31 +351,35 @@ public class VPrompt extends FContainer {
         btnUndo.setVisible(showUndo);
         float undoSpace = showUndo ? UNDO_SIZE + 2 * UNDO_GAP : 0;
 
-        float labelLeft = BTN_WIDTH;
+        // TFR round 853: each corner by its own width - a dialog widens a corner to fit its label (FDialog); the
+        // match prompt keeps BTN_WIDTH for both
+        final float leftW = Forge.reversedPrompt ? btnCancel.getWidth() : btnOk.getWidth();
+        final float rightW = Forge.reversedPrompt ? btnOk.getWidth() : btnCancel.getWidth();
+        float labelLeft = leftW;
         float undoX;
         if (Forge.reversedPrompt) { //End Turn on the left
             btnOk.setCorner(Corner.BottomRight);
             btnCancel.setCorner(Corner.BottomLeft);
             btnCancel.setLeft(0);
-            btnOk.setLeft(width - BTN_WIDTH);
-            undoX = BTN_WIDTH + UNDO_GAP;
-            labelLeft = BTN_WIDTH + undoSpace;
+            btnOk.setLeft(width - rightW);
+            undoX = leftW + UNDO_GAP;
+            labelLeft = leftW + undoSpace;
         } else { //End Turn on the right
             btnOk.setCorner(Corner.BottomLeft);
             btnCancel.setCorner(Corner.BottomRight);
             btnOk.setLeft(0);
-            btnCancel.setLeft(width - BTN_WIDTH);
-            undoX = width - BTN_WIDTH - UNDO_GAP - UNDO_SIZE;
+            btnCancel.setLeft(width - rightW);
+            undoX = width - rightW - UNDO_GAP - UNDO_SIZE;
         }
         final boolean showMenu = menuShown;
         btnMenu.setVisible(showMenu);
         final float menuSpace = showMenu ? UNDO_SIZE + 2 * UNDO_GAP : 0;
         float menuX;
-        if (Forge.reversedPrompt) { menuX = width - BTN_WIDTH - UNDO_GAP - UNDO_SIZE; }
-        else { menuX = BTN_WIDTH + UNDO_GAP; labelLeft += menuSpace; }
+        if (Forge.reversedPrompt) { menuX = width - rightW - UNDO_GAP - UNDO_SIZE; }
+        else { menuX = leftW + UNDO_GAP; labelLeft += menuSpace; }
         btnMenu.setBounds(menuX, (height - UNDO_SIZE) / 2, UNDO_SIZE, UNDO_SIZE);
         lblMessage.setLeft(labelLeft);
-        lblMessage.setWidth(width - 2 * BTN_WIDTH - undoSpace - menuSpace);
+        lblMessage.setWidth(width - leftW - rightW - undoSpace - menuSpace);
         btnUndo.setBounds(undoX, (height - UNDO_SIZE) / 2, UNDO_SIZE, UNDO_SIZE);
     }
 

@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 853 - corner buttons widen for a two-line label (the Bronze Coin button)
+- **`forge-gui-mobile/src/forge/toolbox/FButton.java`** (STOCK): new `getCornerFitWidth(minWidth)` and field
+  `cornerFitFont`; `draw()`'s last `drawText` uses `cornerFitFont` when set. A one-word label returns minWidth.
+- **`forge-gui-mobile/src/forge/toolbox/FDialog.java`** (STOCK): `doLayout` calls the new private `fitButtons(width)`
+  (replaces the middle button's `setLeft` there): corner widths from `getCornerFitWidth`, the middle's from its label,
+  shared out in proportion when the row is too narrow, the middle centered on the screen or between the corners.
+- **`forge-gui-mobile/src/forge/screens/match/views/VPrompt.java`** (STOCK): `doLayout` places the corners, the label,
+  Undo and the menu button by each corner's own width instead of BTN_WIDTH (equal for the match prompt).
+
 ### Round 843 - a shop card never costs less than it sells for + 1
 - **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** (STOCK): `BuyButton`'s constructor, after the
   Haggler factor - a card reward's price is at least `cardSellPrice(card) + 1` (when it sells for anything); the

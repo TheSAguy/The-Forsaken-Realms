@@ -31,6 +31,7 @@ public class FButton extends FDisplayObject implements IButton {
     private FSkinImage imgL, imgM, imgR;
     private String text;
     private FSkinFont font;
+    private FSkinFont cornerFitFont; // TFR round 853: the font getCornerFitWidth sized a widened corner for
     private FSkinColor foreColor = getDefaultForeColor();
     private boolean toggled = false;
     private boolean pressed = false;
@@ -187,6 +188,30 @@ public class FButton extends FDisplayObject implements IButton {
     }
     public void setCorner(Corner corner0) {
         corner = corner0;
+    }
+
+    /** TFR round 853: the width a BottomLeft/BottomRight corner button needs for its label - the font shrunk only until
+     *  its lines fit the corner's text box height (3/4 of the button), the box (3/4 of the width less PADDING, see
+     *  draw()) as wide as the widest line. Never under minWidth. A "(Save: 12 gold)" over "Bronze Coin" in a 90 px
+     *  corner shrank to the smallest font and still clipped at 1280x720. The lines get 80% of the box's height: at the
+     *  full height the second line's foot sat on the screen's bottom edge. A one-word label ("OK", "Cancel") keeps
+     *  minWidth and Forge's own shrink-to-fit, so plain dialogs look as they always did. draw() then uses the font
+     *  sized here (in a wider box Forge's fit would grow it back to the full height). */
+    public float getCornerFitWidth(float minWidth) {
+        cornerFitFont = null;
+        if (StringUtils.isEmpty(text) || (!text.contains(" ") && !text.contains("\n"))) { return minWidth; }
+        String label = text.contains("\n") ? text : text.replaceFirst(" ", "\n");
+        float boxHeight = getHeight() * 0.75f * 0.8f;
+        FSkinFont fitFont = font;
+        TextBounds bounds = fitFont.getMultiLineBounds(label);
+        while (bounds.height > boxHeight && fitFont.canShrink()) {
+            fitFont = fitFont.shrink();
+            bounds = fitFont.getMultiLineBounds(label);
+        }
+        float fitWidth = (bounds.width + PADDING) / 0.75f + 2;
+        if (fitWidth <= minWidth) { return minWidth; }
+        cornerFitFont = fitFont;
+        return fitWidth;
     }
 
     public void setCommand(FEventHandler command0) {
@@ -374,7 +399,7 @@ public class FButton extends FDisplayObject implements IButton {
                 if (!displayText.contains("\n")) // TFR round 396: a label with its own line break keeps it
                     displayText = displayText.replaceFirst(" ", "\n"); //allow second word to wrap if corner button
             }
-            g.drawText(displayText, font, foreColor, x, y, w, h, false, Align.center, true);
+            g.drawText(displayText, cornerFitFont != null ? cornerFitFont : font, foreColor, x, y, w, h, false, Align.center, true);
         }
     }
 

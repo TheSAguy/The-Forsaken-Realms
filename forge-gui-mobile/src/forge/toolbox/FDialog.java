@@ -83,8 +83,8 @@ public abstract class FDialog extends FOverlay {
         totalHeight = contentHeight + VPrompt.HEIGHT;
         lastDy = 0; //reset whenever main layout occurs
 
+        fitButtons(width); // TFR round 853
         if (btnMiddle != null) {
-            btnMiddle.setLeft((width - btnMiddle.getWidth()) / 2);
             if (!title.isEmpty()) {
                 totalHeight += MSG_HEIGHT; //leave room for title above middle button
             }
@@ -95,6 +95,43 @@ public abstract class FDialog extends FOverlay {
 
         if (firstReveal) { //start reveal animation after dialog first laid out
             updateRevealAnimation(3 * Forge.getScreenHeight());
+        }
+    }
+
+    /** TFR round 853: the corner buttons grow to fit their labels (FButton.getCornerFitWidth - the lost-ante
+     *  "(Save: N gold)" / "Bronze Coin" corner clipped at 1280x720). When the row is too narrow, every button's width
+     *  above BTN_WIDTH gives way in proportion (portrait). The middle button stays centered on the screen while it
+     *  clears both corners, else it is centered between them. Short labels keep BTN_WIDTH: nothing else moves. */
+    private void fitButtons(float width) {
+        FButton btnOk = prompt.getBtnOk(), btnCancel = prompt.getBtnCancel();
+        float okW = btnOk.getCornerFitWidth(VPrompt.BTN_WIDTH);
+        float cancelW = buttonCount > 1 ? btnCancel.getCornerFitWidth(VPrompt.BTN_WIDTH) : VPrompt.BTN_WIDTH;
+        float midW = 0, gap = 0;
+        if (btnMiddle != null) {
+            midW = btnMiddle.getText() == null || btnMiddle.getText().isEmpty() ? VPrompt.BTN_WIDTH
+                    : Math.max(VPrompt.BTN_WIDTH, btnMiddle.getAutoSizeBounds().width * 1.25f);
+            gap = Utils.scale(4);
+        }
+        float base = VPrompt.BTN_WIDTH;
+        float over = okW + cancelW + midW + 2 * gap - width;
+        float extra = (okW - base) + (cancelW - base) + (btnMiddle != null ? midW - base : 0);
+        if (over > 0 && extra > 0) {
+            float keep = Math.max(0, 1 - over / extra);
+            okW = base + (okW - base) * keep;
+            cancelW = base + (cancelW - base) * keep;
+            if (btnMiddle != null) { midW = base + (midW - base) * keep; }
+        }
+        btnOk.setWidth(okW);
+        btnCancel.setWidth(cancelW);
+        if (btnMiddle != null) {
+            float leftW = Forge.reversedPrompt ? cancelW : okW;
+            float rightW = Forge.reversedPrompt ? okW : cancelW;
+            float midX = (width - midW) / 2;
+            if (midX < leftW + gap || midX + midW > width - rightW - gap) {
+                midX = leftW + (width - leftW - rightW - midW) / 2;
+            }
+            btnMiddle.setWidth(midW);
+            btnMiddle.setLeft(midX);
         }
     }
 
