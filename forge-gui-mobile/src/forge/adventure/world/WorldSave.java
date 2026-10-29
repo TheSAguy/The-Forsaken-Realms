@@ -646,8 +646,11 @@ public class WorldSave {
             // save is ever offered as this slot's fallback.
             broken = brokenSaves.remove(currentFile.getPath());
             if (currentFile.isFile() && currentFile.length() > 0 && !broken) {
-                Files.copy(currentFile.toPath(), backupFile.toPath(),
-                        StandardCopyOption.REPLACE_EXISTING);
+                if (readsWhole(currentFile)) // round 863
+                    Files.copy(currentFile.toPath(), backupFile.toPath(),
+                            StandardCopyOption.REPLACE_EXISTING);
+                else
+                    keptBackup(currentSlot, currentFile, backupFile);
             } else if (!currentFile.exists() && backupFile.exists()) {
                 backupFile.delete();
             }
@@ -675,6 +678,35 @@ public class WorldSave {
             if (!replaced && broken)
                 brokenSaves.add(currentFile.getPath()); // round 858: still the broken file
         }
+    }
+
+    /**
+     * Round 863: the slot's current .sav reads whole before it becomes the .old. A .sav cut off after its header (1.24
+     * wrote the header first) lists as a normal slot (round 861 reads headers only), and a save over it without loading
+     * it first copied the cut file over the good .old. About 25 ms for a 2 MB save on PC, once a save.
+     */
+    private boolean readsWhole(File file) {
+        try {
+            validateSaveFile(file);
+            return true;
+        } catch (Exception e) { // IOException for a cut stream; a GdxRuntimeException from a damaged preview
+            System.err.println("[TFR-Save] " + file.getName() + " does not read whole: " + e);
+            return false;
+        }
+    }
+
+    /** Round 863: the damaged .sav is replaced by the new save, and the existing .old (if any) stays the backup. */
+    private static void keptBackup(int slot, File damaged, File backup) {
+        WorldSaveHeader old = readHeader(backup);
+        if (old == null) {
+            System.out.println("[TFR-Save] slot " + slot + ": the old save was damaged (" + damaged.length()
+                    + " bytes) - not kept as the backup" + (backup.exists() ? " (the backup does not read either)" : " (no backup)"));
+            return;
+        }
+        String when = old.saveDate == null ? "?" : new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(old.saveDate);
+        old.dispose();
+        System.out.println("[TFR-Save] slot " + slot + ": the old save was damaged (" + damaged.length()
+                + " bytes) - kept the backup from " + when);
     }
 
     private void validateSaveFile(File file) throws IOException {

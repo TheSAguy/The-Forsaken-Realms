@@ -14303,6 +14303,34 @@ v1.24): "the 'massive red barrier' in the emrakul dungeon can be walked past by 
 - **Not tested:** a drawn duel's step-back (same `peek()` line as the loss, unchanged), a QuestActor board and a
   DummySprite (same call), Android (no device).
 
+## Round 863: saving over a damaged slot keeps the good backup (2026-10-29)
+
+The user: "Yes, round 863" - to "Also protect the backup when saving over a damaged slot, as round 863?" (before a save
+moves the existing `.sav` to `.old`, check that the `.sav` reads whole; if it does not, keep the existing `.old`). Round
+861's open point: a `.sav` cut off after its header (1.24 wrote the header first) lists as a normal slot, and a save over
+it without loading it first copied the cut file over the good `.old`. File: `world/WorldSave.java` (stock).
+
+- **The check:** in `writeSaveSnapshot`'s rotation, after round 858's tests (not empty, not in `brokenSaves`), the slot's
+  current `.sav` is read whole through upstream's own `validateSaveFile` (`readsWhole`) before it is copied to `.old`. One
+  that does not read whole is not copied: the new save moves in over it and the existing `.old` stays. Lines:
+  `[TFR-Save] 7_save_slot.sav does not read whole: java.io.EOFException: ...` and
+  `[TFR-Save] slot 7: the old save was damaged (1000000 bytes) - kept the backup from 2026-10-22 19:19` (the date from the
+  `.old`'s header; "not kept as the backup (no backup)" when there is none, so a damaged file never becomes the `.old`).
+- **The list stays fast:** round 861's listing still reads headers only; the full read happens once a save, on the slot
+  being saved.
+- **Save time (PC, agent, the same 1,986 KB save):** with the check 521, 466, 439, 472 ms; without it (the round 860
+  jar, same profile and slot) 580, 494, 458, 496, 492 ms. The extra read is lost in the run-to-run noise here; round 858
+  measured the same read of a 2 MB save at 22-31 ms, so about +25 ms a save on PC, ~6% (about 50-70 ms on Android by
+  858's ratio, not measured on a device).
+- **Agent-tested** in `agent-863` (wt-863's classes for rounds 861-863 ahead of the agent jar, cheats; no duels; log
+  lines in `C:\TFR\notes\r863\r863-log-lines.txt`):
+  - a healthy slot (6) saved three times: each time the `.old` is byte for byte the `.sav` before the save (md5);
+  - slot 7's `.sav` cut at 1,000,000 of 2,024,415 bytes (its header still reads, so it listed as normal) beside a whole
+    `.old`: a save over it from another game left the `.old` unchanged (md5 `59c466df...` before and after) and wrote a
+    whole `.sav`, with both lines above; the next save rotated normally (the `.old` = the first save's `.sav`, md5);
+  - no `.tmp` left, no exceptions.
+- **Unchanged:** healthy rotation, the 0-byte and `brokenSaves` rules of rounds 858/861, the load path.
+
 ## Round 862: a rescued cut-off save never counts as a reload after a loss (2026-10-29)
 
 The user: "Yes, exempt it" - to "Exempt a rescued (cut-off) save from the reload penalty, as round 862?" (a forced

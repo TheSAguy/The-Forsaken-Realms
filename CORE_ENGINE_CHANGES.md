@@ -45,6 +45,13 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 - **`forge-gui-mobile/src/forge/adventure/character/DialogActor.java`** (STOCK) - `onPlayerCollide()` logs a
   `[TFR-Gate]` line after `resetPosition()` when the player still touches the object. Log only.
 
+### Round 863 - saving over a damaged slot keeps the good backup
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** (STOCK) - in `writeSaveSnapshot`'s rotation, the slot's
+  current `.sav` is read whole (`readsWhole`, upstream's own `validateSaveFile`) before it is copied to `.old`; a `.sav`
+  that does not read whole is not copied, so the existing `.old` stays (`keptBackup` logs `[TFR-Save] slot N: the old
+  save was damaged ... - kept the backup from <date>`). Merge note: one extra full read of the old `.sav` per save, inside
+  upstream's rotation block.
+
 ### Round 862 - a rescued cut-off save is never counted as a reload
 - **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** (STOCK) - `load()` keeps whether round 858's `loadOld`
   supplied the game (`rescued`) and passes it to `ReloadJab.onLoaded(saveDate, rescued)`, which then judges nothing.
