@@ -109,6 +109,11 @@ public class EconomyBuildings {
     // guardian-temple sprite, not archaeology-themed at all, so it was NOT used - see
     // getArchaeologistSprite() below, which uses the generic SpecialShop icon as a placeholder.
     private static final String NEW_BUILDINGS_ATLAS = "maps/tileset/new_buildings.atlas";
+    // Round 867: the golden Capitol's own art (the Art thread's set for 1.26). Only the Trader needs a switch: it is a
+    // shared economy building, so its new_buildings region stays for every other town and the Capitol's Trader reads
+    // this atlas instead. Last variant logged, so the log shows each change between the Capitol and a town.
+    private static final String CAPITOL_GOLD_ATLAS = "maps/tileset/capitol_gold.atlas";
+    private static String lastTraderArt;
     // Guard tier map-indicator icons (2026-08-11, MOD_SCOPE.md #22) - 8x8, cropped from
     // common/maps/tileset/dungeon.png (user-supplied IDs 83/84/86/88) and shrunk per the user's
     // own mockup estimate. See PointOfInterestMapSprite for where these actually get drawn.
@@ -195,7 +200,7 @@ public class EconomyBuildings {
         if (type == ARCHAEOLOGIST)
             return getArchaeologistSprite();
         if (type == TRADER)
-            return Config.instance().getAtlasSprite(NEW_BUILDINGS_ATLAS, "Trader");
+            return getTraderSprite();
         if (type == TEMPLE) // round 559: dungeon_entrances' BlueTemple, gilded - the user's pick
             return Config.instance().getAtlasSprite(NEW_BUILDINGS_ATLAS, "Temple");
         String region = atlasRegion(type);
@@ -204,9 +209,22 @@ public class EconomyBuildings {
         return Config.instance().getAtlasSprite(ATLAS, region);
     }
 
+    /** Round 867: the Capitol's Trader is the golden Capitol's own sprite (capitol_gold.atlas); every other town keeps
+     *  new_buildings' Trader. */
+    private static TextureRegion getTraderSprite() {
+        boolean capitol = TownRestoration.isCurrentTownCapitol();
+        String art = capitol ? "capitol_gold" : "new_buildings";
+        if (!art.equals(lastTraderArt)) {
+            lastTraderArt = art;
+            System.out.println("[TFR-CapitolArt] Trader drawn from " + art + ".atlas ("
+                    + (capitol ? "the Capitol" : "an ordinary town") + ")");
+        }
+        return Config.instance().getAtlasSprite(capitol ? CAPITOL_GOLD_ATLAS : NEW_BUILDINGS_ATLAS, "Trader");
+    }
+
     /** Rebuilt-Arena icon for the Capitol's gated Arena building (see OnCollide.draw()) - level 2
-     *  (paid upgrade, Task #8) keeps the original art, level 1 (default/base) uses the smaller
-     *  landscape (32x16) art alongside it. */
+     *  (paid upgrade, Task #8) and level 1 (default/base). Round 867: the golden Capitol's arenas, 48x48 and 48x24 -
+     *  OnCollide.drawOverFootprint() draws a region at its own size, centered on the footprint. */
     public static TextureRegion getArenaSprite(int level) {
         return Config.instance().getAtlasSprite(NEW_BUILDINGS_ATLAS, level >= 2 ? "Arena" : "ArenaLevel1");
     }

@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 867: the golden Capitol's new art - Research Lab, Trader and both Arenas (2026-10-29)
+
+The user: "Let's implement the new Cap art" (1.26 work, after v1.25 shipped). The Art thread's locked set (its README,
+"Decided set"; working files in `C:\CLAUDE\PROJECTS\ART\notes\capitol_gold`): the user picked new art for four Capitol
+buildings and kept today's art for every other one. All plane-level; nothing in `adventure/common`.
+
+- **Research Lab** (tile-baked in `maps/map/towns/player_capital.tmx`, cells 9-11 x 4-6): the orrery dome (the round
+  811 `clockwork-1` design, 48x48, also the Clockwork Orrery gauntlet entrance - the user's informed pick) on a new
+  plane tileset page, `maps/tileset/capitol_gold_lab.tsx`/`.png` (3x3 tiles of 16, firstgid 37617). The nine cells
+  that held `walls_16` 723-725 (Overlay, row 4) and 771-773 / 819-821 (Ground2, rows 5-6) point at the new tiles.
+  Each new tile carries the collision box of the old tile in its cell (16x14 at y 2 on the top row, full 16x16
+  below; the Overlay layer is `noCollision`, as before), so `map_collision_render.py` gives 272 boxes before and
+  after, identical. The orrery's edges are transparent where the old hall filled its cells, so the plaza paving
+  (`main` 2945, gid 2946, the tile around it) is laid on the Ground layer under rows 5-6. Door object 103 unchanged.
+- **Arena Level 1 / Level 2** (`maps/tileset/new_buildings.atlas`/`.png`): "ArenaLevel1" grows to 48x24 (a gold ring
+  with four flags) and "Arena" to 48x48 (the round 811 `arena-1` design: a dark bronze ring with fire pillars and a
+  fire pit). The page grows from 272x32 to 368x48; the two regions are appended at x 272 and 320, every other region
+  keeps its xy. No code change: `OnCollide.drawOverFootprint()` draws a region at its own size, centered on the 16x16
+  footprint and standing on its bottom. The art only draws through OnCollide's rebuilt icon, gated on
+  `TownRestoration.isWastelandTownTemplate()`; among towns `arena.tx` is placed only in `player_capital.tmx` (the five
+  story capitals keep their baked arenas), so the bigger regions are Capitol-only in practice.
+- **The ARENA sign** (`buildings-nocollide` 1286-1287 on Ground2) moves one cell right, from 28-29 x 6 to 29-30 x 6:
+  both arenas reach 8 px into its old left cell. Cell 30,6 held only grass (no object, no collision); the 48 now ends
+  at x 455 and the sign starts at x 464.
+- **Trader, Capitol only** (`util/EconomyBuildings.java`): the Trader is a shared economy building any rebuilt town
+  can build, so its `new_buildings` region stays for every other town. The Capitol's Trader reads a new plane atlas,
+  `maps/tileset/capitol_gold.atlas`/`.png` (one region, "Trader", 32x32: a sandstone shop with a faded-orange dome and
+  a wood lean-to, a hue-shifted conversion of the user's ChatGPT pick). `getBuildingSprite(TRADER)` calls the new
+  `getTraderSprite()`, which picks `capitol_gold` when `TownRestoration.isCurrentTownCapitol()`, else `new_buildings`,
+  and logs `[TFR-CapitolArt] Trader drawn from <atlas> (the Capitol | an ordinary town)` whenever the choice changes.
+  `getArenaSprite()`'s comment now gives the new sizes.
+- **Checks:** `validate_plane_data.py` on the worktree plane = the main baseline plus one parsed atlas (no new
+  findings); collision render identical (`C:\TFR\notes\r867-collision-before.png`/`-after.png`); a game-scale render
+  of the edited map (`C:\TFR\notes\r867-capitol-render-1x.png`/`-2x.png`); Maven package exit 0.
+- **SEEN in the agent** (a fresh cheats world, `capitol raise`; shots `C:\TFR\notes\r867-*.png`, log
+  `r867-agent-forge.log`): the orrery Lab on its plaza, its door opening the Research screen; the Trader built on lot 88
+  in the sandstone art, its door opening the Trader dialog, the log printing `[TFR-CapitolArt] Trader drawn from
+  capitol_gold.atlas (the Capitol)`; the Arena rebuilt (48x24 ring) and upgraded (48x48), both clear of the moved
+  sign; no exception. NOT seen: an ordinary town's Trader - a fresh restored town has 0 reputation and builds nothing,
+  and no console path raises a town's reputation; that path is the unchanged `new_buildings` region.
+- **Art Library:** the four sprites and their sources under `Projects/The Forsaken Realms/Game Art/Capitol Buildings
+  (round 867)`.
+
 ## Release v1.25 "Gauntlets & Wrath" - stamps, notes and What's New (2026-10-29)
 
 The user: "Yes, release 1.25" (the name "Gauntlets & Wrath" is theirs). Rounds 788-864 on top of v1.24, every one

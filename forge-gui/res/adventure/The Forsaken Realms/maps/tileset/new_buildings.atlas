@@ -1,5 +1,5 @@
 new_buildings.png
-size: 272,32
+size: 368,48
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -7,14 +7,14 @@ Outlook
   xy: 0, 0
   size: 16, 32
 Arena
-  xy: 16, 0
-  size: 32, 32
+  xy: 272, 0
+  size: 48, 48
 Spellsmith
   xy: 48, 0
   size: 32, 32
 ArenaLevel1
-  xy: 80, 0
-  size: 32, 16
+  xy: 320, 0
+  size: 48, 24
 ArmoryLevel1
   xy: 112, 0
   size: 32, 32

@@ -1,0 +1,8 @@
+capitol_gold.png
+size: 32,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Trader
+  xy: 0, 0
+  size: 32, 32
