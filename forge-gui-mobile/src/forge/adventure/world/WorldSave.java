@@ -179,14 +179,16 @@ public class WorldSave {
         }
         // Round 858 (logs-1029 P1): a .sav that would not even read (cut off by an app killed mid-save - every 1.24
         // save could be) loads the slot's .old instead, the save before it. Only when nothing live was touched.
+        boolean rescued = false;
         if (readFailed && !loadTouchedLiveState)
-            loaded = loadOld(currentSlot, fileName);
+            loaded = rescued = loadOld(currentSlot, fileName);
         if (loaded) {
             liveGame = true;
             saveBlocked = false;
             // Round 726: a save from before the last lost duel undoes it - counted, with the Notices log's jab. Here, not
             // in readSave(), so a rollback to the running game never counts; after WorldStage.load() restored the log.
-            forge.adventure.util.ReloadJab.onLoaded(currentSave.header == null ? null : currentSave.header.saveDate);
+            // Round 862: a rescued cut-off save (the .old) was forced on the player - never counted.
+            forge.adventure.util.ReloadJab.onLoaded(currentSave.header == null ? null : currentSave.header.saveDate, rescued);
             forge.adventure.util.SessionLog.onGameLoaded(currentSlot, System.currentTimeMillis() - loadStarted); // round 777
             return true;
         }

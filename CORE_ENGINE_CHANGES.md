@@ -38,6 +38,10 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 862 - a rescued cut-off save is never counted as a reload
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** (STOCK) - `load()` keeps whether round 858's `loadOld`
+  supplied the game (`rescued`) and passes it to `ReloadJab.onLoaded(saveDate, rescued)`, which then judges nothing.
+
 ### Round 861 - the Save/Load list shows a cut-off slot from its .old
 - **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** (STOCK) - two helpers next to round 858's `loadOld`:
   `readHeader(File)` (a save file's header, or null) and `readCutOffHeader(slot)` (the `.old`'s header when the `.sav`'s

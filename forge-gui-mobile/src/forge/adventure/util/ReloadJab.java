@@ -207,8 +207,9 @@ public final class ReloadJab {
         postKind(line);
     }
 
-    /** WorldSave.load, after a load succeeded: the save's own date says whether it undid the pending loss. */
-    public static void onLoaded(Date saveDate) {
+    /** WorldSave.load, after a load succeeded: the save's own date says whether it undid the pending loss. Round 862:
+     *  {@code rescued} - the slot's .sav was cut off and WorldSave loaded its .old (round 858); never counted. */
+    public static void onLoaded(Date saveDate, boolean rescued) {
         if (!isEnabled())
             return;
         if (optedOut()) { // round 796: a record from before the flip is dropped, not judged
@@ -221,6 +222,11 @@ public final class ReloadJab {
                 }
             }
             logOff("the load is not judged");
+            DifficultyHints.watch("a load");
+            return;
+        }
+        if (rescued) {
+            onRescued();
             DifficultyHints.watch("a load");
             return;
         }
@@ -280,6 +286,32 @@ public final class ReloadJab {
             GameHUD.getInstance().logNotification(INK + line, true);
         postKind(kind);
         DifficultyHints.watch("a load"); // round 779: a hint due in this world shows on the world map
+    }
+
+    /**
+     * Round 862 (the user: "Yes, exempt it"): the load was a cut-off save's .old (round 858), which the player did not
+     * choose - judged like round 816's quit after an error. This world's pending loss and mid-duel record are dropped
+     * unjudged: no reload count or enemy life step, no Notoriety charge (rounds 795/801), no honest-loss reset or credit,
+     * no reload credit spent (834). Notoriety the .old has not paid for stays owed to the next ordinary load (795).
+     */
+    private static void onRescued() {
+        synchronized (LOCK) {
+            Properties p = read();
+            long seed = currentSeed();
+            carryOverCap(p, seed); // round 796, as onLoaded does first
+            String world = String.valueOf(seed);
+            boolean loss = p.getProperty("pendingLossAt") != null && world.equals(p.getProperty("pendingSeed"));
+            boolean quit = world.equals(p.getProperty("duel.seed"));
+            if (loss)
+                clearPending(p);
+            if (quit)
+                clearDuel(p);
+            write(p);
+            System.out.println("[TFR-ReloadJab] cut-off save rescued - not counted (world " + seed + ": "
+                    + (loss ? "the pending loss dropped" : "no pending loss") + (quit ? ", the mid-duel record dropped" : "")
+                    + "; reloads " + count(p, seed) + ", honest losses " + intProp(p, "honest." + seed) + "/"
+                    + HONEST_PER_FORGIVE + ", reload credits " + intProp(p, "credits." + seed) + " - all kept)");
+        }
     }
 
     // ---- Round 735: the duel in progress (DuelHeartbeat writes it), judged on the next load ----

@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 862: a rescued cut-off save never counts as a reload after a loss (2026-10-29)
+
+The user: "Yes, exempt it" - to "Exempt a rescued (cut-off) save from the reload penalty, as round 862?" (a forced
+`.old` fallback never counts as a reload after a loss: no enemy life bonus, no Notoriety, no forgiveness reset, like a
+quit after an error dialog, round 816). Found by the main thread's smoke test on the 11:09 package: an emptied
+`auto_save.sav` and Continue loaded the `.old` from before a lost duel, and ReloadJab counted it - the red "You've now
+loaded 5 times after losing a duel..." notice, the honest-loss progress 2/3 -> 0, and a Notoriety charge (nothing taken
+at Notoriety 0). Files: `world/WorldSave.java` (stock), `util/ReloadJab.java` (TFR).
+
+- **The mark:** `WorldSave.load` notes when round 858's `loadOld` supplied the game (`rescued`) and passes it to
+  `ReloadJab.onLoaded(saveDate, rescued)` (its one caller). The Save/Load list path of round 861 and Continue both load
+  through it.
+- **The exemption (`ReloadJab.onRescued`):** after round 796's opt-out check (an opted-out player's records are dropped
+  as before), a rescued load judges nothing: this world's pending loss and its mid-duel record are dropped unjudged, so
+  there is no reload count (and no enemy life step), no Notoriety charge (rounds 795/801), no honest-loss reset and no
+  honest credit, and no reload credit spent (round 834). One line: `[TFR-ReloadJab] cut-off save rescued - not counted
+  (world N: the pending loss dropped; reloads 4, honest losses 2/3, reload credits 0 - all kept)`.
+  - Judgment calls: the mid-duel record is dropped too, like the pending loss (a cut-off save means the app died, the
+    same "not the player's choice" as round 816's error); and round 795's every-load Notoriety payment is skipped on the
+    rescued load, so charges the `.old` has not paid for (counted before it was written) stay owed to the next ordinary
+    load rather than being forgiven. A pending loss of another world is left pending, as `onLoaded` does.
+  - Since round 858 a save is never cut off in play; a rescue now comes from a 1.24 leftover or a damaged file. A player
+    who empties a `.sav` by hand to dodge a loss gets the `.old` uncounted - judged not worth guarding (copying save
+    files by hand already dodges it).
+- **Agent-tested** in `agent-862` (wt-862's classes for rounds 861-862 ahead of the agent jar, cheats; Normal world with
+  4 reloads and 2/3 honest losses; max life cut to 2 so the duels were lost; both duels at 50x through `settle`; log
+  lines in `C:\TFR\notes\r862\r862-log-lines.txt`):
+  - Notoriety 30, slot 9 saved, a duel lost (Notoriety 30 -> 25, gold 528 -> 502, a loss pending), slot 9 saved again
+    (its `.old` the pre-loss save), its `.sav` emptied, slot 9 loaded: the `.old` came back (gold 528, Notoriety 30)
+    with 858's banner and no reload notice; reloads 4, honest 2/3, credits 0, nothing pending; the rescue line above;
+  - the control: slot 8 saved, a second duel lost, slot 8 loaded (a normal reload): counted as before - reloads 4 -> 5,
+    honest 2/3 -> 0, Notoriety charge 1, Notoriety 30 -> 25 on the load;
+  - no exceptions beyond 858's logged `EOFException` for the emptied `.sav`.
+- **Not tested:** a rescue with a mid-duel record pending, an opted-out player's rescue (the opt-out branch is
+  unchanged), Hard/Insane (the life bonus is not stepped because the count does not move). Android not on a device.
+
 ## Round 861: the Save/Load list shows a cut-off slot from its .old, marked "(recovered)" (2026-10-29)
 
 The user: "Yes, round 861" - to "Also show cut-off manual saves in the Save/Load list, with the same rescue (round
