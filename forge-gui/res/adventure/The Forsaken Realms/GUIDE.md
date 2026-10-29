@@ -1687,7 +1687,10 @@ sets, items or enemies off yourself; everything is on by default.)
    collection (point at one to see it full size). Click a card to see its sell price and the days one copy takes
    off, then Sell or Sacrifice it - one copy, or every spare copy with "All spare copies" ticked. **Sell all over
    4** sells every card's copies beyond four in one go. Copies in a deck and favorites are always kept.
-   A set box at the top of the Lab narrows the list to one set. Found Cards has its own set box (**All Sets**
+   A set box at the top of the Lab narrows the list to one set, and the **Sort:** box orders it: **Found**
+   (the default) puts the sets you have found the most cards of first, **A-Z** goes by name, and **Days**
+   puts the fewest research days first. Sets you are researching stay on top in every order, and the Lab
+   remembers your choice, across games. Found Cards has its own set box (**All Sets**
    shows the found cards of every set still under research - each card still feeds its own set), the deck
    builder's color and type icons (tap one to hide those cards, hold one to show only those), the Common /
    Uncommon / Rare / Mythic buttons and a **Groups:** box. Sell all over 4 sells only the cards shown.

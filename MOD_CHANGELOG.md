@@ -14264,6 +14264,16 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 857: the GUIDE explains the Research Lab's Sort box (2026-10-29)
+
+The user: "One missing guide line for the Research Lab sort (849). It was written after the guide round finished."
+Docs only: `GUIDE.md` and `GUIDE.html` (rebuilt by `dev-tools/guide_html.py`, `--check` OK).
+
+- **The line**, in Card Sets > How to unlock a set, step 4, after the set box: the **Sort:** box orders the list -
+  **Found** (the default, the most found cards first), **A-Z**, **Days** (the fewest research days first); sets being
+  researched stay on top in every order, and the choice is remembered across games (round 849's
+  `SettingData.researchSort`). "Beside it" left out: in portrait the box sits under Show Researched.
+
 ## Round 856: the engine to the 10.28 daily (upstream `875333b7b78`) (2026-10-29)
 
 The user installed the 10.28 Forge daily as BASE_INSTALL: "Updated E:\GAMES\Forge_2". 31 commits since round 769's
