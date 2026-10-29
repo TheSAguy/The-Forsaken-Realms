@@ -31,6 +31,7 @@ public class ItemData implements Serializable, Cloneable {
     // neither of which applies here) that still shouldn't be pulled from the general weighted
     // sell pool. See ItemListData.getItemNamesByRarity().
     public boolean excludeFromGeneralSale=false;
+    public boolean unique=false; // If true, cannot be obtained while already in inventory
     public int cost=1000;
     // Item economy (2026-08-10): Common/Uncommon/Rare/Mythic, matching MTG's own rarity naming.
     // For items with effect.startBattleWithCard(InCommandZone), set from that card's real printed
@@ -70,6 +71,7 @@ public class ItemData implements Serializable, Cloneable {
         iconName          = cpy.iconName;
         questItem         = cpy.questItem;
         excludeFromGeneralSale = cpy.excludeFromGeneralSale;
+        unique            = cpy.unique;
         cost              = cpy.cost;
         rarity            = cpy.rarity;
         usableInPoi       = cpy.usableInPoi;

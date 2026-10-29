@@ -9,7 +9,6 @@ import forge.deck.DeckFormat;
 import forge.item.BoosterPack;
 import forge.item.PaperCard;
 import forge.item.SealedTemplate;
-import forge.item.generation.BoosterGenerator;
 import forge.item.generation.BoosterSlots;
 import forge.item.generation.UnOpenedProduct;
 import forge.model.CardBlock;
@@ -225,7 +224,7 @@ public class AdventureEventController implements Serializable {
 
     public Deck generateBooster(String setCode) {
         SealedTemplate template = AdventureOverrides.instance().getBoosterTemplate(setCode);
-        List<PaperCard> cards = CommanderCards.cleanPack(BoosterGenerator.getBoosterPack(template), setCode + " booster"); // round 387
+        List<PaperCard> cards = CommanderCards.cleanPack(CardUtil.generateRestrictedAwareBoosterPack(template), setCode + " booster"); // round 387
         Deck output = new Deck();
         output.getMain().add(cards);
         String editionName = FModel.getMagicDb().getEditions().get(setCode).getName();
@@ -264,7 +263,9 @@ public class AdventureEventController implements Serializable {
                 Pair.of(BoosterSlots.RARE_MYTHIC + ":color(\"" + color + "\"):!" + BoosterSlots.LAND + setClause, 1),
                 Pair.of(BoosterSlots.LAND + ":color(\"" + color + "\")" + setClause, 1))
         ));
-        List<PaperCard> cards = CommanderCards.cleanPack(pack.getCards(), color + " booster", color); // round 387; round 722: same color
+        // 10.28 merge (round 856): upstream's restricted-aware roll, so the restrictedCards list never fills a slot
+        List<PaperCard> cards = CommanderCards.cleanPack(CardUtil.generateRestrictedAwareBoosterPack(pack.getSealedTemplate()),
+                color + " booster", color); // round 387; round 722: same color
         Deck output = new Deck();
         output.getMain().add(cards);
         String editionName = color + " Booster Pack";
@@ -280,7 +281,7 @@ public class AdventureEventController implements Serializable {
         for (SealedTemplate template : StaticData.instance().getSpecialBoosters()) {
             if (!template.getEdition().contains(block.getLandSet().getCode()))
                 continue;
-            UnOpenedProduct toOpen = new UnOpenedProduct(template);
+            UnOpenedProduct toOpen = CardUtil.createRestrictedAwareBooster(template);
 
             Deck contents = new Deck();
             contents.getMain().add(CommanderCards.cleanPack(toOpen.get(), template.getEdition() + " jumpstart")); // round 387

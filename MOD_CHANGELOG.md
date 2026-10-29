@@ -14264,6 +14264,79 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 856: the engine to the 10.28 daily (upstream `875333b7b78`) (2026-10-29)
+
+The user installed the 10.28 Forge daily as BASE_INSTALL: "Updated E:\GAMES\Forge_2". 31 commits since round 769's
+`0dc8c66996e`; upstream's head was 11 commits further (10.29) and is not taken - it is not what BASE_INSTALL holds.
+
+- **Matched**: BASE_INSTALL's `build.txt` says 2026-10-28 18:20:35, after `875333b7b78` (18:04:50 UTC); the jars'
+  manifest says `2.0.16-SNAPSHOT-10.28`; its `CHANGES.txt` is headed by #12492, that commit's pull request; its
+  `res/editions/Star Trek Commander.txt` and `Stardates.txt` are byte-identical to that commit's copies and differ from
+  its parent's.
+- **What upstream brought**:
+  - **Card fixes and new cards**: SDS/TRC/TRK edition updates, Sulu-era TRK cards, script fixes (Teyo, Turtle Tracks,
+    Library of Leng, Nephalia Academy, Elektra, Tezzeret's Reckoning, Volcano Hellion, Supper for Spiders, 44
+    "choose" effects made mandatory), same-named searches in one ChangeZone (`SameNameAsEach$`), `attackingBattle`,
+    a chosen target's zone read from the host card, an NPE in `Player.assignCompanion`. Card content reaches players
+    through BASE_INSTALL, now this daily.
+  - **AI**: DeckPlan expanded - a ComboPlan (combo pieces stay playable under `AI:RemoveDeck:All`, the win card is
+    never paid as a cost), ComboGuard, a Sideboard Advisor; Phyrexian Tower out of the AI decks.
+  - **Mobile UI**: the compact layout's zone box no longer clips (VPlayerPanel), the targeting overlay fixed.
+  - **Adventure**: unique items (`ItemData.unique`: the landscape sketchbooks in the stock planes), restricted-aware
+    boosters, the quest-disappear save fix, Mantle of Denial reward names (TFR's own maps already had it), some stock
+    bosses start with planeswalkers, Realm of Legends map and deck fixes.
+- **Conflicts** (9 files; the table went to the user before packaging):
+  - **C1, bosses and the Hardest AI** (`DuelScene.selectAI`; upstream `0602707ecda`, #12467). Upstream gives every
+    boss with no `ai` of its own - and the minions in its fight - the Hardest AI profile (Flat Monte Carlo with 1.5 s
+    a decision and 6 s a turn, 3x Default's), whatever the player's AI setting; Inn events excluded. 81 of TFR's 93
+    bosses have no `ai`. Taken behind a new plane flag, `ConfigData.bossAiFollowsSetting` (false = upstream, the stock
+    planes); TFR's `config.json` sets it true, so TFR's bosses keep the player's AI setting. The user's call:
+    "Keep ours" - bosses keep the player's AI setting. Taking Hardest later is one config line
+    (`bossAiFollowsSetting` false), for a separate balance round with play tests. C2-C4 approved as resolved.
+  - **C2, restricted-aware boosters** (`AdventureEventData`, `AdventureEventController`, `CardUtil`; `RewardData`
+    merged on its own; upstream `d2eb9ed8c37`, #12459). Upstream rolls every pack with the plane's `restrictedCards`
+    removed from each print sheet (the pack keeps its size) and in exchange stops skipping Inn blocks that hold Power
+    Nine and `cardPackShop` editions that hold a restricted card. Combined: upstream's roll on every booster path
+    (event sealed and draft, set boosters, Jumpstart, color boosters) with round 387's `CommanderCards.cleanPack`
+    after it, TFR's edition-locked color boosters (fromSets, round 722's color) and our `pickWeightedCardBlock(format,
+    playerTown)`; the unused `POWER_NINE` set gone as upstream removed it. Players: nothing on TFR's restricted list
+    (Power Nine, Sol Ring, the commander-only cards) can roll in any booster now - the color booster shops were the
+    leak `restricted_cards.json`'s header named; an Inn draft or sealed can roll a block with a Power Nine set (Vintage
+    Masters) when the player's sets allow it, the Nine taken out; `restrictedEvents` still bars LEA, LEB, 2ED, 30A,
+    CNS, CN2, CMR, CLB, CMM.
+  - **C3, unique items** (`ItemData`, `AdventurePlayer`, `RewardScene`; upstream `395a7f1e230`, #12460). Both sides'
+    fields (`excludeFromGeneralSale` and `rarity`, and `unique`); `canObtainItem` beside round 842's rune code; the
+    reward button keeps TFR's gold price and takes upstream's `isSold` / owned-unique checks (a chosen reward can no
+    longer be clicked twice). No change in TFR: its `items.json` marks nothing unique. `ItemData` keeps its pinned
+    serialVersionUID - no save change.
+  - **C4, `PointOfInterestData`'s serialVersionUID** (upstream `6a2dcdc9183`, #12463 "quests disappear"). Upstream
+    moved it to the JVM-derived -4412972164663781996 (stock saves) and made `SaveFileData` accept a mismatch only when
+    the fields match. Kept ours (-986253670258331930, round 90), which every TFR save holds; the `SaveFileData` check is
+    taken. No mismatch line in the live log, its six dated logs or the 12 shared player logs, so no TFR save takes
+    either path.
+  - Trivial: `AiController` (upstream's ComboPlan key cards in the AI-removed filter, round 708's LoopBreaker bar).
+- **Not changed upstream**: the "Did not have activator set in SpellAbility_Condition.checkConditions()" line (the
+  review's log flood) - the same through upstream's 10.29 head.
+- **Possible later rounds**: Hardest bosses as a balance round, if the user wants them; `"unique": true` on TFR's
+  landscape sketchbooks (data).
+- `config.json`: `engineBuildVersion` `2.0.16-SNAPSHOT-10.28`, `bossAiFollowsSetting` true.
+- **Checked**:
+  - Maven `-pl forge-gui-mobile-dev -am package -DskipTests -o`: exit 0. `forge-gui-desktop` tests (every `forge.ai`
+    test and `LoopBreakerTest`, `-Dcheckstyle.skip`): 555/555 - LoopBreakerTest 6/6, RegenerateRecursionTest 4/4,
+    upstream's new FlatMonteCarloComboTest 25/25.
+  - `build_standalone.py --out` into a test folder: the base check passed against the 10.28 BASE_INSTALL, "Package
+    verified complete".
+  - That package with a copy of the agent profile, every duel at 50x: a new game (intro skipped, out to the World Map,
+    week 1), 8 world-map duels (1 won, 7 lost, the death flow and the loot screen; one boss, the Fungus of Slimefoot,
+    184 s with 4 AI think-time timeouts in combat prediction - `getKillingBlockers` - the AI kept what it had approved);
+    a Ring City shop buy (Benalia); the Capitol raised and the Research Lab opened (Sort: Found); slot 61 (day 18,
+    Insane) loaded with its 31 items; Shannon's Bazaar's Inn opened at once with "Draft available", its Shadowmoor
+    draft joined and the first pack dealt 15/15 through upstream's restricted-aware resolver; New Game+ from slot 2
+    with Advanced... (Starting life +1): the run started with it, the Homeward rune worn. `forge.log`: no exception
+    outside the handled AI timeouts and upstream's Flat Monte Carlo "Couldn't map ... Token" rollouts (also in the
+    players' 10.26 logs), the session footer `errors=0`, no serialVersionUID mismatch line.
+  - Not seen: a Hardest-AI boss (the flag is on), an Inn sealed event, a color booster shop.
+
 ## Round 849: the Research Lab sorts its sets - Sort: Found / A-Z / Days, kept in Settings (2026-10-29)
 
 The user: "For the research lab, lets sort the sets by the number of cards found, then alphabetically. (Or if there is

@@ -45779,7 +45779,7 @@
   },
   {
     "name": "Merfolk warrior",
-    "nameOverride": "Merfok Warrior",
+    "nameOverride": "Merfolk Warrior",
     "sprite": "sprites/enemy/elemental/airelemental.atlas",
     "deck": [
       "decks/standard/merfolk_mid.dck"

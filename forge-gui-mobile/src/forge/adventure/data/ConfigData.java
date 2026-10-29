@@ -201,5 +201,8 @@ public class ConfigData {
     public boolean functioningNeutralTownsEnabled = false;
     // Desktop default only; saved player choices take precedence on every platform.
     public boolean enableExtraBattleBackgroundsByDefault;
+    // Round 856 (the 10.28 merge): upstream's #12467 gives every boss with no "ai" of its own the Hardest AI profile.
+    // True keeps such a boss on the player's AI setting, as before the merge (DuelScene.selectAI). False = upstream.
+    public boolean bossAiFollowsSetting = false;
 
 }

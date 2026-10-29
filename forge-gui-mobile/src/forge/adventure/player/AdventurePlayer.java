@@ -4076,6 +4076,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         ItemData item = ItemListData.getItem(name);
         if (item == null)
             return false;
+        if (item.unique && hasItem(name))
+            return false;
         inventoryItems.add(item);
         if (HOMEWARD_RUNE_ITEM.equalsIgnoreCase(item.name))
             wearNewGamePlusRune(item); // round 842
@@ -4104,6 +4106,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             System.out.println("[TFR-Equip] New Game+: " + rune.name + " worn");
         else
             System.out.println("[TFR-Equip] New Game+: " + rune.name + " stays in the bag - " + lastEquipRefusal);
+    }
+
+    public boolean canObtainItem(ItemData item) {
+        return item != null && !(item.unique && hasItem(item.name));
     }
 
     /**

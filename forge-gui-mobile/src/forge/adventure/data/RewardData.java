@@ -538,18 +538,18 @@ public class RewardData implements Serializable {
                         for (int i = 0; i < uniqueCount; i++) {
                             String itemName = shuffledNames.get(i);
                             ItemData itemData = ItemListData.getItem(itemName);
-                            if (itemData != null)
-                                ret.add(new Reward(itemData));
-                            else
+                            if (itemData == null)
                                 System.err.println("Missing item: " + itemName);
+                            else if (Current.player().canObtainItem(itemData))
+                                ret.add(new Reward(itemData));
                         }
                     } else if (itemName != null && !itemName.isEmpty()) {
                         for (int i = 0; i < count + addedCount; i++) {
                             ItemData itemData = ItemListData.getItem(itemName);
-                            if (itemData != null)
-                                ret.add(new Reward(itemData));
-                            else
+                            if (itemData == null)
                                 System.err.println("Missing item: " + itemName);
+                            else if (Current.player().canObtainItem(itemData))
+                                ret.add(new Reward(itemData));
                         }
                     }
                     break;
@@ -570,10 +570,6 @@ public class RewardData implements Serializable {
                         } else {
                             for (String restricted : configData.restrictedEditions) {
                                 allEditions.removeIf(q -> q.getCode().equals(restricted));
-                            }
-                            for (String restrictedCard : configData.restrictedCards) {
-                                allEditions.removeIf(cardEdition -> cardEdition.getObtainableCards().stream().anyMatch(
-                                    o -> o.name().equals(restrictedCard)));
                             }
                             endDate = endDate == 0 ? 9999 : endDate;
                             allEditions.removeIf(q -> q.getDate().getYear()+1900 < startDate || q.getDate().getYear()+1900 > endDate);
@@ -628,10 +624,19 @@ public class RewardData implements Serializable {
                 }
                 case "landSketchbookShop":
                     Array<ItemData> sketchbookItems = ItemListData.getSketchBooks();
-                    for (int i = 0; i < count + addedCount; i++) {
-                        ItemData item = sketchbookItems.get(rewardRandom.nextInt(sketchbookItems.size));
-                        if (item != null)
+                    for (int i = sketchbookItems.size - 1; i >= 0; i--) {
+                        if (!Current.player().canObtainItem(sketchbookItems.get(i)))
+                            sketchbookItems.removeIndex(i);
+                    }
+                    for (int i = 0; i < count + addedCount && sketchbookItems.size > 0; i++) {
+                        int index = rewardRandom.nextInt(sketchbookItems.size);
+                        ItemData item = sketchbookItems.get(index);
+                        if (item != null) {
                             ret.add(new Reward(item));
+                            // Avoid offering the same unique sketchbook twice in one shop stock
+                            if (item.unique)
+                                sketchbookItems.removeIndex(index);
+                        }
                     }
                     break;
                 case "cardPack":

@@ -38,6 +38,36 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 856 - the engine to the 10.28 daily (upstream `875333b7b78`)
+- 9 conflicts, resolved as below; the user saw them before packaging (MOD_CHANGELOG round 856).
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK) - upstream's `selectAI(ai, boss)` (#12467:
+  a boss with no `ai` gets Hardest) is taken; the Hardest default is skipped when `ConfigData.bossAiFollowsSetting`.
+  Our seat code (tiered names, the per-seat avatar copy, round 793's deck card) calls it with
+  `bossBattle && eventData == null`.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** (STOCK) - `bossAiFollowsSetting`, default false
+  (upstream's behavior); true in TFR's `config.json`.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java`** (STOCK) - upstream's `openSealedBooster`
+  (restricted-aware, #12459) with round 387's `CommanderCards.cleanPack` after it; our `pickWeightedCardBlock(format,
+  playerTown)` overloads kept; the unused `POWER_NINE` set removed as upstream did.
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureEventController.java`** (STOCK) - `generateBooster` rolls
+  through `CardUtil.generateRestrictedAwareBoosterPack` then `cleanPack`; our edition-locked
+  `generateBoosterByColor(color, restrictEditions)` rolls its template the same way; Jumpstart packs through
+  upstream's `createRestrictedAwareBooster` then `cleanPack`.
+- **`forge-gui-mobile/src/forge/adventure/util/CardUtil.java`** (STOCK) - our `generateCards` / `finishCandidate`
+  kept; upstream's "keep the candidate when the variant lookup returns another card" check moved into
+  `finishCandidate`.
+- **`forge-gui-mobile/src/forge/adventure/data/ItemData.java`** (STOCK) - upstream's `unique` beside our
+  `excludeFromGeneralSale` and `rarity` (fields and copy constructor).
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - upstream's `canObtainItem` beside
+  round 842's `wearNewGamePlusRune` and `removeAllQuestItems`.
+- **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** (STOCK) - `ChooseRewardButton`: upstream's
+  `isSold` / owned-unique checks plus our gold price (`price`, `takeGold`).
+- **`forge-gui-mobile/src/forge/adventure/data/PointOfInterestData.java`** (STOCK) - our serialVersionUID
+  (-986253670258331930, round 90) kept over upstream's new -4412972164663781996; upstream's `SaveFileData` field check
+  taken as is.
+- **`forge-ai/src/main/java/forge/ai/AiController.java`** (STOCK) - round 708's `LoopBreaker.isBarred` as its own
+  check in upstream's rewritten AI-removed filter (ComboPlan key cards).
+
 ### Round 849 - the Research Lab's Sort box, kept in Settings
 - **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK): the `researchSort` field after
   `supportLastAnswer`.

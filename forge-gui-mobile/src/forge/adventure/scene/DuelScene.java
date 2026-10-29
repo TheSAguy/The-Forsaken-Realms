@@ -1202,7 +1202,7 @@ public class DuelScene extends ForgeScene {
             // opponent two different names within one event (2026-08-13 holistic review).
             boolean tierNames = eventData == null;
             LobbyPlayer enemyPlayer = GamePlayerUtil.createAiPlayer(
-                    tierNames ? currentEnemy.getTieredDisplayName() : currentEnemy.getName(), selectAI(currentEnemy.ai));
+                    tierNames ? currentEnemy.getTieredDisplayName() : currentEnemy.getName(), selectAI(currentEnemy.ai, bossBattle && eventData == null));
             // The head sprite's display-name override (a .tmx displayNameOverride - how "The
             // Warden" is an Adept Black Wizard underneath) applies to seat 0 ONLY (2026-09-01
             // fix). It used to overwrite EVERY seat's name with the head's, so a 1-vs-2 against
@@ -1850,7 +1850,12 @@ public class DuelScene extends ForgeScene {
         this.playerExtras.clear();
     }
 
-    private String selectAI(String ai) { //Decide opponent AI.
+    /**
+     * Decide the opponent's AI profile. An enemy that names a profile in its data gets that one. Otherwise bosses
+     * (and the minions that fight next to them) always use the hardest profile, whatever the player has chosen for
+     * regular games, and everybody else follows the user's AI setting.
+     */
+    private String selectAI(String ai, boolean boss) {
         String AI = ""; //Use user settings if it's null.
         if (ai != null) {
             AI = switch (ai.toLowerCase()) { //We use this way to ensure capitalization is exact.
@@ -1859,8 +1864,13 @@ public class DuelScene extends ForgeScene {
                 case "reckless" -> "Reckless";
                 case "cautious" -> "Cautious";
                 case "experimental" -> "Experimental";
+                case "hard" -> "Hard";
+                case "hardest" -> "Hardest";
                 default -> ""; //User settings.
             };
+        }
+        if (AI.isEmpty() && boss && !Config.instance().getConfigData().bossAiFollowsSetting) {
+            AI = "Hardest";
         }
         return AI;
     }
