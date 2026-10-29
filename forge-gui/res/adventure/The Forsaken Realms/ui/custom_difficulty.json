@@ -1,0 +1,57 @@
+{
+  "width": 480,
+  "height": 270,
+  "yDown": true,
+  "elements": [
+    {
+      "type": "Image",
+      "image": "ui/title_bg.png",
+      "width": 480,
+      "height": 270
+    },
+    {
+      "type": "Scroll",
+      "name": "frame",
+      "x": 10,
+      "y": 10,
+      "width": 398,
+      "height": 250
+    },
+    {
+      "type": "Table",
+      "name": "content",
+      "x": 16,
+      "y": 15,
+      "width": 386,
+      "height": 240
+    },
+    {
+      "type": "TextButton",
+      "name": "done",
+      "text": "tr(lblDone)",
+      "binding": "Back",
+      "width": 60,
+      "height": 30,
+      "x": 414,
+      "y": 40
+    },
+    {
+      "type": "TextButton",
+      "name": "resetAll",
+      "text": "Reset all",
+      "width": 60,
+      "height": 30,
+      "x": 414,
+      "y": 80
+    },
+    {
+      "type": "TextButton",
+      "name": "share",
+      "text": "[%80]Share code",
+      "width": 60,
+      "height": 30,
+      "x": 414,
+      "y": 120
+    }
+  ]
+}

@@ -38,6 +38,21 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 823 - custom difficulty, the new-game Advanced panel
+- **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** (STOCK):
+  - constructor: `difficultyNames = diffList` after the difficulty box is filled; the `advanced` button's
+    `onButtonPress` after `start`'s (null-guarded: the portrait layout has none yet);
+  - new members after `previewActor`: `difficultyNames`, `openAdvanced()` (opens `CustomDifficultyScene`) and
+    `refreshDifficultyLabels()` ("Custom (name)" over every preset while changes are pending), called first in
+    `enter()` after `updateAvatar()`;
+  - `showDifficultyHelp()`: `selectedDifficulty` is `CustomDifficulty.withOverrides(pending, preset)`, `shownName` is
+    "Custom (Hard)" for the Duels/Economy/Territory text, the summary gets a custom line, `tuning` is
+    `CustomDifficulty.previewTuning(pending)` (was `getTuningData()`), and the Territory tab's base cap reads
+    `tuning.attackingMagesFor(name)` (was `2 + index`).
+  On a merge, keep these beside the stock difficulty selector code.
+- TFR files: `scene/CustomDifficultyScene.java` (new), `util/CustomDifficulty.java`; plane data `ui/custom_difficulty.json`
+  (new), `ui/new_game.json` (the `advanced` button), `config tables/custom_difficulty.json` (`categories`, `format`).
+
 ### Round 822 - custom difficulty, the override layer
 - **`forge-gui-mobile/src/forge/adventure/util/Config.java`** (STOCK): a `baseTuningData` field beside `tuningData`, set
   to the loaded settings.json right after the tuning load; `getBaseTuningData()` and `setEffectiveTuningData(t)` (null =

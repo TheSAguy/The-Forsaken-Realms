@@ -14264,6 +14264,92 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 823: custom difficulty, part 2 - the new-game "Advanced..." panel (landscape) (2026-10-28)
+
+Part 2 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`; rounds 823-833 are reserved for
+it). The user approved the mock-up (`C:\TFR\notes\r823-mock.png`): "Yes, build it". Built in a worktree, tested in an
+`agent-823` copy, and committed on main.
+
+- **The new-game screen** (`NewGameScene`, `ui/new_game.json`):
+  - An "Advanced..." button under Start (landscape; portrait is round 824, and its layout has no button yet, so the
+    hook is null-guarded).
+  - While changes are pending, every preset in the difficulty box reads "Custom (Easy)" ... "Custom (Insane)". The
+    changes go with whichever preset is picked, because a `{D}` knob fills every column.
+  - The box is refreshed on every `enter()`, since a started game takes the pending changes.
+  - The "?" dialog reads the preset with the pending changes on (`CustomDifficulty.withOverrides`), plus a preview of
+    the settings they give (`previewTuning`, never put in place, so a running game behind the menu keeps its own).
+    Its Summary tab adds "Custom difficulty: N setting(s) changed in Advanced...", and the Duels, Economy and
+    Territory tabs show "Custom (Hard)" and the custom values.
+  - The Territory tab's "Base Mage Cap" printed `2 + index` (round 125's formula). It now reads
+    `attackingMagesFor(name)`, the base `TerritoryControl.maxActiveMagesPerColor` uses since round 407 (Easy 2 /
+    Normal 3 / Hard 4 / Insane 6). This was stale text, now fixed.
+- **The panel** (`scene/CustomDifficultyScene`, `ui/custom_difficulty.json`), as mocked up:
+  - Header: "Custom Difficulty", a "Based on" preset box (the new-game box follows it on Done), and "N changed -
+    "Custom (Hard)"" or "No changes - plays as Hard".
+  - Filter bar: a search box (every word must be found in the label, tooltip, group, category or id), Basic/Expert
+    (Expert shows the expert knobs too) and "Changed only".
+  - Tabs: All plus the file's new `categories` list, in order, each with its change count in gold. A search runs
+    across every tab, headed "Category - Group".
+  - Rows:
+    - the label (with "(Expert)" on an expert knob), and the preset's value in grey, plus "new game only" where it
+      applies;
+    - a - value + stepper (one step per touch, repeating every 0.08 s after 0.45 s held), or a check box for an
+      on/off knob;
+    - once changed: a gold value, a tinted row and a `<` reset.
+    - A value stepped back to the preset's own is no change.
+    - Steps snap to the knob's step grid (194.4 -> 190 -> 180).
+  - Help line: tapping a row's name shows its tooltip, with "(New game only.)" or "(Can be changed later in
+    Settings.)".
+  - Right column: Done (Esc), Reset all, and Share code greyed until round 827.
+  - The panel edits a copy. Done hands it to `CustomDifficulty.setPending` and the preset index back to the new-game
+    screen.
+  - While a stepper is held, the row updates in place, and the list is rebuilt when the touch ends. A rebuild
+    mid-press would remove the button under the finger, and the stage's touch cancel would stop the repeat.
+- **Metadata** (`custom_difficulty.json`):
+  - `"categories"`: the tab order.
+  - A knob's `"format": "percent"`: shows the factor as a percent. Enemy health, card sell price and shard sell ratio
+    use it; enemy health's tooltip now says "100% = its own life".
+- **CustomDifficulty additions**: `categories()`, `presetRaw`, `display`, `step`, `same`, `matches`, `previewTuning`.
+  `applyTuning` now goes through `buildTuning`.
+- **Logs**: `[TFR-Custom] panel opened on Hard with N change(s), K knob(s)`, one
+  `panel: id a -> b ((the preset's))` line per step, `panel: reset all (N change(s))`, and
+  `panel done: Custom (Hard), N change(s): id=value;...` or `Hard (no changes)`.
+- **Console**: `custom panel` lists the rows the panel shows now (preset, tab, search, level, filter and the copy);
+  `custom panel search TEXT` types into its search box, which the agent bridge cannot type into.
+
+**Agent-tested** on a copy (`agent-823`: the agent folder and profile, wt-823's classes ahead of its jar, the three
+json files in its res; removed afterward). Shots are in `C:\TFR\notes\r823\`.
+- Advanced... opens the panel on the box's preset (Normal; then Hard after a step of the box's arrow: "Based on Hard",
+  life 10 -> 14, enemy health 150% -> 160%).
+- Steppers (startingLife x3, enemyHealth -4 to 80%, startingGold +2, mineOutput to x1.5, sellFactor -1) and the tabs'
+  counts (All 5, Enemies & Duels 2, Economy 3).
+- `<` on sellFactor removes it ("45% -> 50% (the preset's)").
+- Changed only lists 4; search "gold" with Changed only lists 2 (startingGold, mineOutput), and without it 3
+  (shardSellRatio's tooltip names gold).
+- Expert shows neutralTownCut.
+- Done puts "Custom (Normal)" in the box.
+- The "?" dialog's tabs: "Difficulty: Custom (Normal) Starting Life: 18 Enemy Health: 80%", "Starting Gold: 300", and
+  "Base Mage Cap (vs you): 3".
+- Reset all then Done puts the box back to "Normal" with nothing pending.
+- A new game from the panel on Hard: `[TFR-Custom] new game: Custom (Hard), 4 override(s): startingLife 10 -> 14,
+  enemyHealth 1.5 -> 1.6, attackingMages 4 -> 5, neutralTownCut 2 -> 3`, `[TFR-Session] game new ...
+  difficulty=Custom(Hard) custom=4`, life 14.
+- The test found one bug, fixed before the commit: `TextureRegionDrawable.tint` returns a `SpriteDrawable`, and the
+  cast threw on the rebuild after a step.
+
+**Not tested:** the "Based on" select box itself (the bridge cannot drive a SelectBox; the preset came through the
+new-game box's arrow), and the long-press repeat (the bridge's click is a touch down and up at once).
+
+**Not done here:**
+- portrait (round 824);
+- Settings > Difficulty mid-game and the per-save rule toggles (825-826);
+- share codes and New Game+'s Advanced... (827);
+- the remaining knobs (828-832).
+
+Files: `scene/CustomDifficultyScene.java` (new), `scene/NewGameScene.java`, `util/CustomDifficulty.java`;
+`ui/custom_difficulty.json` (new), `ui/new_game.json`, `config tables/custom_difficulty.json`; `CORE_ENGINE_CHANGES.md`
+round 823.
+
 ## Round 822: custom difficulty, part 1 - a save can carry its own difficulty on top of its preset (the override layer) (2026-10-28)
 
 The user, on a Discord player's suggestion (gnomedoom: "programmable difficulty settings that players can adjust on

@@ -58,6 +58,8 @@ public final class CustomDifficulty {
     /** One exposed setting, from custom_difficulty.json. */
     public static final class Knob {
         public String id, label, category, group, tooltip, scope = SCOPE_ANYTIME, level = "basic", mode = "set";
+        /** Round 823: how the panel shows the value - "percent" (1.2 shows as 120%) or "" as it is. */
+        public String format = "";
         public float min = Float.NaN, max = Float.NaN, step = Float.NaN;
         /** "int", "float" or "bool" - from the first target's field ("float" for a scale knob). */
         public String type;
@@ -88,6 +90,8 @@ public final class CustomDifficulty {
     private static final int ALL = -2;
 
     private static LinkedHashMap<String, Knob> knobs;
+    /** Round 823: the panel's tab order (the file's "categories"; a knob's category missing there goes after them). */
+    private static final List<String> categories = new ArrayList<>();
     private static Config knobsFor;
     /** What the next new game starts with (the console's "custom next"; the Advanced panel later). */
     private static final LinkedHashMap<String, String> pending = new LinkedHashMap<>();
@@ -108,6 +112,10 @@ public final class CustomDifficulty {
         int skipped = 0;
         try {
             JsonValue root = new JsonReader().parse(file);
+            JsonValue cats = root.get("categories");
+            categories.clear();
+            for (JsonValue c = cats == null ? null : cats.child; c != null; c = c.next)
+                categories.add(c.asString());
             JsonValue list = root.get("knobs");
             for (JsonValue v = list == null ? null : list.child; v != null; v = v.next) {
                 Knob k = new Knob();
@@ -122,6 +130,7 @@ public final class CustomDifficulty {
                 k.min = v.getFloat("min", Float.NaN);
                 k.max = v.getFloat("max", Float.NaN);
                 k.step = v.getFloat("step", Float.NaN);
+                k.format = v.getString("format", "");
                 JsonValue t = v.get("targets");
                 if (t != null && t.isArray())
                     for (JsonValue e = t.child; e != null; e = e.next)
@@ -371,6 +380,17 @@ public final class CustomDifficulty {
 
     /** The run's TuningData: the plane's own when there are no tuning overrides, else a copy with them on top. */
     public static void applyTuning(Map<String, String> overrides) {
+        Config.instance().setEffectiveTuningData(buildTuning(overrides));
+    }
+
+    /** Round 823: the TuningData these overrides would give, without putting it in place (the new-game "?" dialog). */
+    public static TuningData previewTuning(Map<String, String> overrides) {
+        TuningData t = buildTuning(overrides);
+        return t != null ? t : Config.instance().getBaseTuningData();
+    }
+
+    /** The plane's settings with the tuning overrides on, or null when they change none. */
+    private static TuningData buildTuning(Map<String, String> overrides) {
         Config config = Config.instance();
         TuningData base = config.getBaseTuningData();
         TuningData effective = null;
@@ -389,7 +409,7 @@ public final class CustomDifficulty {
                         }
             }
         }
-        config.setEffectiveTuningData(effective);
+        return effective;
     }
 
     /** Writes the difficulty.* overrides onto d (scale knobs scale the plane's preset of d's name). */
@@ -518,6 +538,78 @@ public final class CustomDifficulty {
                 }
             }
         return "?";
+    }
+
+    // ---- the panel (round 823) ----------------------------------------------------------------------------------
+
+    /** The tab order: the file's "categories", then any category a knob names that the list leaves out. */
+    public static List<String> categories() {
+        Map<String, Knob> all = knobs();
+        List<String> out = new ArrayList<>(categories);
+        for (Knob k : all.values())
+            if (!out.contains(k.category))
+                out.add(k.category);
+        return out;
+    }
+
+    /** The preset's own value in the knob's canonical text ("1" for a scale knob) - what "no change" means. */
+    public static String presetRaw(Knob k, String presetName) {
+        if (k.isScale())
+            return "1";
+        String v = presetValue(k, presetName);
+        String c = clean(k, v);
+        return c != null ? c : v;
+    }
+
+    /** The value as the panel shows it: 120% for a percent knob, x1.5 for a scale knob, On/Off, or the number. */
+    public static String display(Knob k, String value) {
+        if (value == null)
+            return "?";
+        if ("bool".equals(k.type))
+            return Boolean.parseBoolean(value) ? "On" : "Off";
+        if (k.isScale())
+            return "x" + value;
+        if ("percent".equals(k.format))
+            try {
+                return trim(Float.parseFloat(value) * 100f) + "%";
+            } catch (NumberFormatException e) {
+                return value;
+            }
+        return value;
+    }
+
+    /** One step up (dir 1) or down (dir -1) from value, clamped; the step is the knob's, else 1 or 0.05. */
+    public static String step(Knob k, String value, int dir) {
+        float step = !Float.isNaN(k.step) && k.step > 0 ? k.step : "int".equals(k.type) ? 1f : 0.05f;
+        float v;
+        try {
+            v = Float.parseFloat(value);
+        } catch (NumberFormatException e) {
+            return value;
+        }
+        // to the step's grid first, so 1.23 steps to 1.25 / 1.20 rather than 1.28 / 1.18
+        float snapped = Math.round(v / step) * step;
+        float next = Math.abs(snapped - v) > 1e-4f && Math.signum(snapped - v) == dir ? snapped : snapped + dir * step;
+        String out = clean(k, trim(next));
+        return out != null ? out : value;
+    }
+
+    /** True when the two values are the same setting (so a value stepped back to the preset is no change). */
+    public static boolean same(Knob k, String a, String b) {
+        if (a == null || b == null)
+            return a == b;
+        return "bool".equals(k.type) ? a.equals(b) : sameValue(k, a, b);
+    }
+
+    /** Search: the words of q, each found in the label, tooltip, group, category or id (case ignored). */
+    public static boolean matches(Knob k, String q) {
+        if (q == null || q.trim().isEmpty())
+            return true;
+        String hay = (k.label + " " + k.tooltip + " " + k.group + " " + k.category + " " + k.id).toLowerCase(Locale.ROOT);
+        for (String word : q.toLowerCase(Locale.ROOT).trim().split("\\s+"))
+            if (!hay.contains(word))
+                return false;
+        return true;
     }
 
     /** What the running game holds now (the first target, the preset's column) - the console's read-back. */
@@ -739,6 +831,9 @@ public final class CustomDifficulty {
             pending.put(k.id, v);
             return "Next new game: " + encode(pending);
         }
-        return "custom | custom knobs | custom set ID VALUE | custom reset ID|all | custom next ID VALUE | custom next clear";
+        if ("panel".equals(s[0])) // round 823: the new-game Advanced panel, for tests
+            return forge.adventure.scene.CustomDifficultyScene.console(s);
+        return "custom | custom knobs | custom set ID VALUE | custom reset ID|all | custom next ID VALUE | custom next clear"
+                + " | custom panel [search TEXT]";
     }
 }

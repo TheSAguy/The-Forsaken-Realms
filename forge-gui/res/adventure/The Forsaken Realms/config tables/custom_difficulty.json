@@ -12,6 +12,7 @@
     //   level     "basic" or "expert"
     //   mode      "set" (the value replaces) or "scale" (the value multiplies each target's own value)
     //   min, max, step   the range; a percent knob is still stored as its factor (1.2, not 120)
+    //   format    round 823: "percent" shows the factor as a percent in the panel (1.2 as 120%); a scale knob shows x1.5
     //   target / targets what it changes:
     //     tuning.field         a field of settings.json (data/TuningData.java)
     //     tuning.field{D}      the field's Easy/Normal/Hard/Insane set - the value goes into every column
@@ -25,6 +26,9 @@
     //                             the Wrath hunter's pathfinding timings (a bad value strands or teleports it)
     //   spawnClockFollowsSpeedUp  the spawn clock's link to the speed-up key (a debugging switch)
     // ============================================================================
+    // Round 823: the panel's tabs, in this order (a knob's category not listed here comes after them).
+    "categories": ["Enemies & Duels", "Notoriety", "Economy", "Loot & Rewards", "Research & Sets", "Towns & Territory",
+                   "Time & Pacing", "Rules"],
     "knobs": [
         {
             "id": "startingLife", "label": "Starting life", "category": "Enemies & Duels", "group": "You",
@@ -33,8 +37,8 @@
         },
         {
             "id": "enemyHealth", "label": "Enemy health", "category": "Enemies & Duels", "group": "Enemies",
-            "target": "difficulty.enemyLifeFactor", "min": 0.3, "max": 4, "step": 0.05,
-            "tooltip": "Every enemy's starting life is multiplied by this (1 = its own life)."
+            "target": "difficulty.enemyLifeFactor", "min": 0.3, "max": 4, "step": 0.05, "format": "percent",
+            "tooltip": "Every enemy's starting life, as a share of its own (100% = its own life)."
         },
         {
             "id": "startingGold", "label": "Starting gold", "category": "Economy", "group": "Starting kit",
@@ -43,12 +47,12 @@
         },
         {
             "id": "sellFactor", "label": "Card sell price", "category": "Economy", "group": "Selling",
-            "target": "difficulty.sellFactor", "min": 0.05, "max": 1, "step": 0.05,
+            "target": "difficulty.sellFactor", "min": 0.05, "max": 1, "step": 0.05, "format": "percent",
             "tooltip": "A card sells for this share of its price."
         },
         {
             "id": "shardSellRatio", "label": "Shard sell ratio", "category": "Economy", "group": "Selling",
-            "target": "difficulty.shardSellRatio", "min": 0.05, "max": 1, "step": 0.05,
+            "target": "difficulty.shardSellRatio", "min": 0.05, "max": 1, "step": 0.05, "format": "percent",
             "tooltip": "The Shard Trader pays this share of 100 gold for each shard you sell."
         },
         {

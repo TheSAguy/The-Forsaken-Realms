@@ -250,6 +250,7 @@ public class NewGameScene extends MenuScene {
         }
         difficulty.setTextList(diffList);
         difficulty.setCurrentIndex(startingDifficulty);
+        difficultyNames = diffList; // round 823: the presets' own names, "Custom (Hard)" goes over them
 
         generateAvatar();
         gender.setCurrentIndex(rand.nextInt());
@@ -257,6 +258,8 @@ public class NewGameScene extends MenuScene {
         race.setCurrentIndex(rand.nextInt());
         ui.onButtonPress("back", NewGameScene.this::back);
         ui.onButtonPress("start", NewGameScene.this::start);
+        if (ui.findActor("advanced") != null) // round 823: the custom difficulty panel (landscape; portrait is round 824)
+            ui.onButtonPress("advanced", NewGameScene.this::openAdvanced);
         ui.onButtonPress("leftAvatar", NewGameScene.this::leftAvatar);
         ui.onButtonPress("rightAvatar", NewGameScene.this::rightAvatar);
         difficultyHelp.addListener(new ClickListener() {
@@ -278,6 +281,29 @@ public class NewGameScene extends MenuScene {
 
     // class field
     private RewardActor previewActor;
+
+    /** Round 823: the presets' names as the difficulty box lists them without a custom difficulty. */
+    private Array<String> difficultyNames;
+
+    /** Round 823: the Advanced panel on the box's preset and the pending changes; Done brings the preset back. */
+    private boolean openAdvanced() {
+        CustomDifficultyScene.instance().open(difficulty.getCurrentIndex(), CustomDifficulty.pending(), index -> {
+            difficulty.setCurrentIndex(index);
+            refreshDifficultyLabels();
+        });
+        return true;
+    }
+
+    /** Round 823: with changes pending, every preset in the box reads "Custom (name)" - the changes go with any of them. */
+    private void refreshDifficultyLabels() {
+        if (difficultyNames == null)
+            return;
+        boolean custom = !CustomDifficulty.pending().isEmpty();
+        Array<String> list = new Array<>(difficultyNames.size);
+        for (String n : difficultyNames)
+            list.add(custom ? "Custom (" + n + ")" : n);
+        difficulty.setTextList(list);
+    }
 
     private static NewGameScene object;
 
@@ -496,6 +522,7 @@ public class NewGameScene extends MenuScene {
     @Override
     public void enter() {
         updateAvatar();
+        refreshDifficultyLabels(); // round 823: a started game took the pending changes
         if (Forge.createNewAdventureMap) {
             FModel.getPreferences().setPref(ForgePreferences.FPref.UI_ENABLE_MUSIC, false);
             WorldSave.generateNewWorld(selectedName.getText(),
@@ -567,7 +594,12 @@ public class NewGameScene extends MenuScene {
 
     private void showDifficultyHelp() {
         Localizer localizer = Forge.getLocalizer();
-        DifficultyData selectedDifficulty = Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()];
+        // Round 823: a custom difficulty's own values - the preset with the pending changes on, and a preview of the
+        // settings they give (never put in place: a running game behind this screen keeps its own).
+        java.util.Map<String, String> pendingCustom = CustomDifficulty.pending();
+        DifficultyData selectedDifficulty = CustomDifficulty.withOverrides(pendingCustom,
+                Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()]);
+        String shownName = pendingCustom.isEmpty() ? selectedDifficulty.name : "Custom (" + selectedDifficulty.name + ")";
         boolean enableGeneticAI = Config.instance().getConfigData().enableGeneticAI;
         String startingEquipment = selectedDifficulty.startItems == null || selectedDifficulty.startItems.length == 0
                 ? localizer.getMessage("lblNone")
@@ -596,6 +628,9 @@ public class NewGameScene extends MenuScene {
                 difficultySummary.text = localizer.getMessage("advDifficultySummaryCustom");
                 break;
         }
+        if (!pendingCustom.isEmpty()) // round 823
+            difficultySummary.text += "\n\n[GOLD]Custom difficulty: " + pendingCustom.size()
+                    + " setting(s) changed in Advanced... - the tabs here show the values this game will start with.";
 
 
         DialogData dismiss = new DialogData();
@@ -604,7 +639,7 @@ public class NewGameScene extends MenuScene {
         DialogData matchImpacts = new DialogData();
         // Round 177: a plane with a flat defeat gold loss (settings.json) shows the flat amount instead of the percentage
         // (the resource glyph, as every other amount in the mod's UI; TypingLabel renders it).
-        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        forge.adventure.data.TuningData tuning = CustomDifficulty.previewTuning(pendingCustom); // round 823 (was getTuningData())
         // Round 359: the percentage with the flat amount as its minimum. Round 785: the minimum is waived in the first
         // defeatGoldLossMinWaivedWeeks weeks (TFR: week 1), and the text says so.
         int flatGoldLoss = tuning == null ? 0 : tuning.defeatGoldLossFor(selectedDifficulty.name);
@@ -621,11 +656,11 @@ public class NewGameScene extends MenuScene {
                     + (flatGoldLoss > 0 ? ", at least " + flatGoldLoss + " [+Gold] (all of it if you carry less)"
                     + (tuning.defeatGoldLossMinWaivedWeeks > 0 ? " - no minimum in week "
                     + (tuning.defeatGoldLossMinWaivedWeeks == 1 ? "1" : "1-" + tuning.defeatGoldLossMinWaivedWeeks) : "") : "");
-        matchImpacts.text = String.format("Difficulty: %s\nStarting Life: %d\nEnemy Health: %d%%\nGold loss on defeat: %s\nLife loss on defeat: %d%%", selectedDifficulty.name, selectedDifficulty.startingLife, (int) (selectedDifficulty.enemyLifeFactor * 100), goldLossText, (int) (selectedDifficulty.lifeLoss * 100));
+        matchImpacts.text = String.format("Difficulty: %s\nStarting Life: %d\nEnemy Health: %d%%\nGold loss on defeat: %s\nLife loss on defeat: %d%%", shownName, selectedDifficulty.startingLife, (int) (selectedDifficulty.enemyLifeFactor * 100), goldLossText, (int) (selectedDifficulty.lifeLoss * 100));
         matchImpacts.name = "Duels";
 
         DialogData economyImpacts = new DialogData();
-        economyImpacts.text = localizer.getMessage("advDifficultyEconomyImpacts", selectedDifficulty.name, selectedDifficulty.startingMoney, selectedDifficulty.startingShards, (int) (selectedDifficulty.sellFactor * 100), (int) (selectedDifficulty.shardSellRatio * 100), (int) (selectedDifficulty.rewardMaxFactor * 100));
+        economyImpacts.text = localizer.getMessage("advDifficultyEconomyImpacts", shownName, selectedDifficulty.startingMoney, selectedDifficulty.startingShards, (int) (selectedDifficulty.sellFactor * 100), (int) (selectedDifficulty.shardSellRatio * 100), (int) (selectedDifficulty.rewardMaxFactor * 100));
         economyImpacts.name = localizer.getMessage("lblEconomy");
 
         // Territory tab (2026-08-15, onboarding review finding: Mod Details' own "Difficulty"
@@ -638,7 +673,8 @@ public class NewGameScene extends MenuScene {
         // towns held) rather than a separate hardcoded table, so the two can't drift apart.
         DialogData territoryImpacts = new DialogData();
         territoryImpacts.text = String.format("Difficulty: %s\nBase Mage Cap (vs you): %d\nTowns per Bonus Mage: %d\n(Full Territory Control details in World Standings > Mod Details, once your game has started.)",
-                selectedDifficulty.name, 2 + difficulty.getCurrentIndex(), 11 - difficulty.getCurrentIndex());
+                shownName, tuning == null ? 2 + difficulty.getCurrentIndex() : tuning.attackingMagesFor(selectedDifficulty.name),
+                11 - difficulty.getCurrentIndex());
         territoryImpacts.name = "Territory";
 
         difficultySummary.options = new DialogData[4];
