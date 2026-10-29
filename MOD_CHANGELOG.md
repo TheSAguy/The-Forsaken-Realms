@@ -14264,6 +14264,61 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 832: custom difficulty, part 11 - Ascendance, legends, roaming guards and war champions per save (2026-10-28)
+
+Part 11 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). A read-only reader audit came
+first, kept as `C:\TFR\notes\r832-reader-audit.md`. Built in a worktree and tested in an `agent-832` copy. No stock file.
+
+- **Four more table sources** (`util/CustomDifficulty.java`, after round 831's): `ascendance.` (ascendance.json,
+  `AscendanceData`), `legends.` (legends.json), `guards.` (roaming_guards.json) and `war.` (war_champions.json). Their
+  per-save copy is round 822's field copy (`fieldCopy`; their numbers are fields or number arrays, and the knobs never
+  write Ascendance's perk objects); `applyTuning` puts each in place, null the plane's own.
+- **The owners** (TFR files): `Ascendance.data()` (public) and the private `LegendSpawns.data()`,
+  `RoamingGuards.config()`, `WarChampions.data()` now return the save's copy when one is set, else `base()` - the old
+  body (Ascendance keeps its lazy load). `setEffective(copy)` on each; `current()` on the three private ones for the
+  console. No call site changed: every reader already went through the one accessor (60 reads for Ascendance).
+- **Level cost is new game only**: the save stamps the cost factor (`ascendanceCostFactor`) and stores raw Power, so a
+  mid-run change would move the level at once - skipped levels pay nothing, a lost level pays twice. A load re-prices
+  on its own, so a new game's value holds. The knob scales `difficultyLevelCost[*]`, never `xpToNext` (its first step,
+  the intro's 50, would scale too - round 619's problem).
+- **The knobs** (Basic unless marked Expert):
+  - **Ascendance - Power:** Power gained (`levelingSpeed`, scale x0.25-x3); Expert: Power for a win (`duelBase[*]`
+    scale), Power bonuses (the eight win factors as one scale x1-x2: below 1 a factor does nothing), Power for a guard's
+    win, Power for deeds (15 award fields as one scale x0-x3), Arena Power share, Chest Power (from 1: 0 removes the
+    chest's Power outcome), Diamond Power (from 1) and its chance.
+  - **Ascendance - Levels:** Level cost (new game, scale x0.5-x2); Expert: Life every fifth level, Life per level past
+    40, Rewards offered (2-4), Reward re-roll cost (scale).
+  - **Enemies & Duels - Legends:** Legend sightings (the two chances as one scale, 0 = none); Expert: Days between
+    legends, Legends at once (from 1: 0 means no cap), Legend chase reach (chase and leash as one scale).
+  - **Enemies & Duels - Spawns (Expert):** War champions (`share`, 0-50%).
+  - **Towns & Territory - Roaming guards (Expert):** Roaming guards, most (from 1: 0 turns the feature off and strands
+    hired guards' decks), Roaming guard life (the four ranks as one scale; from the next hire or promotion - it is
+    stamped on each guard), Guard recovery days (from the next defeat), Guard heal cost.
+  - A new tab, "Ascendance", after Research & Sets.
+- Left out (the audit): `xpToNext` and the past-40 cost fields, the perk numbers (`choices`, objects), every structural
+  Ascendance array (life, slot, title and companion levels, guard main slots), the hero sizes, the quest id lists,
+  `repeatWeight` and the legend spawn-distance pair, the legend's starting card, `speedStepBelowPlayer`, the champion
+  rosters, and all of frontier_spawns.json (its `maxLife` decides who is a legend - content).
+- Known text gaps for round 833: GUIDE prints the shipped Ascendance numbers (level 1's 50 Power stays true; level 41's
+  2,000, the treasure's 64 and the raid's 21 Power, the perk table) - Notes on Difficulty should say they are the
+  presets'. Outside the task: GUIDE.md says a guard wears 2/3/4/5 main items by rank; the json and GUIDE.html say
+  2/3/5/7.
+- The check script reads the four tables' own json for their shipped values: 183 knobs, 0 problems.
+
+**Agent-tested** in `agent-832` (the agent folder and profile, wt-832's classes ahead of its jar, this json in its res;
+removed afterward). No exceptions. `[TFR-Custom] 183 knob(s)`.
+- Slot 76 (level 4): all 23 at their minimum - `levelingSpeed=0.2125`, `duelBase[1]=9`, legends and war champions
+  off, one guard at half life; a duel at 50x: `[TFR-Ascend] +2 Power - beat Goblin Worker (Apprentice, first win)`;
+  slot 94.
+- All at their maximum, a duel: `+77 Power - beat Goblin Worker (Apprentice)`; slot 95; both reload with 22 overrides.
+- A new game with Level cost x2: `[TFR-Custom] new game: Custom (Normal), 1 override(s): levelCost x1 -> x2`; level 1
+  still reads 0/50.
+
+**Not tested:** a legend sighting at x4, a guard hire at x0.5 life, a level-up offer of 2 or 4, a deed's Power.
+
+Files: `util/CustomDifficulty.java`, `util/Ascendance.java`, `util/LegendSpawns.java`, `util/RoamingGuards.java`,
+`util/WarChampions.java`, `The Forsaken Realms/config tables/custom_difficulty.json`.
+
 ## Round 831: custom difficulty, part 10 - the enemy ranks and the Armory odds: spawn_tier_weighting.json and armory_rarity.json per save (2026-10-28)
 
 Part 10 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). The plan's grid widget became

@@ -42,7 +42,25 @@ import java.util.Set;
 public class WarChampions {
     private WarChampions() {}
 
+    // Round 832 (custom difficulty): the running save's copy of this table, when it overrides one of its numbers
+    // (CustomDifficulty.applyTuning puts it in place, null puts the plane's own back); every reader goes through data().
+    private static WarChampionData effective;
+
+    public static void setEffective(WarChampionData copy) {
+        effective = copy;
+    }
+
+    /** Round 832: what the running save plays with (the console's custom knobs). */
+    public static WarChampionData current() {
+        return data();
+    }
+
     private static WarChampionData data() {
+        return effective != null ? effective : base();
+    }
+
+    /** Round 832: the plane's own war_champions.json. */
+    public static WarChampionData base() {
         return Config.instance().getWarChampionData();
     }
 

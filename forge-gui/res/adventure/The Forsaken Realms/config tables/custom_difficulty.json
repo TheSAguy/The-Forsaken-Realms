@@ -25,6 +25,8 @@
     //     spawn.field / armory.field   round 831: spawn_tier_weighting.json / armory_rarity.json, per save;
     //                          spawn.weekBrackets.rare = that column of every row (a scale keeps a 0 at 0), and
     //                          "rebalance": "common" gives each row its own total back through that column
+    //     ascendance.field / legends.field / guards.field / war.field   round 832: ascendance.json, legends.json,
+    //                          roaming_guards.json, war_champions.json, per save
     //
     // Plane flags kept hidden (round 825): ringGiftStart (off would hand the kit over at the start AND keep the Ring
     // Cities' gift talks), and the flags the game is built on - territoryControl, townReconstruction, colorReputation,
@@ -80,7 +82,7 @@
     // 1 (0 divides by zero in the daily tick); starTownsLossCount is new game only (lowering it mid-run can end it).
     // ============================================================================
     // Round 823: the panel's tabs, in this order (a knob's category not listed here comes after them).
-    "categories": ["Enemies & Duels", "Notoriety", "Economy", "Loot & Rewards", "Research & Sets", "Towns & Territory",
+    "categories": ["Enemies & Duels", "Notoriety", "Economy", "Loot & Rewards", "Research & Sets", "Ascendance", "Towns & Territory",
                    "Time & Pacing", "Rules"],
     "knobs": [
         {
@@ -229,9 +231,39 @@
             "tooltip": "Chance a spawn on your own land is a colorless foe."
         },
         {
+            "id": "warChampionShare", "label": "War champions", "category": "Enemies & Duels", "group": "Spawns",
+            "target": "war.share",
+            "min": 0, "max": 0.5, "step": 0.05, "level": "expert", "format": "percent",
+            "tooltip": "Share of the spawns on a war-torn land that are its war champions. 0 = none."
+        },
+        {
             "id": "legendDays", "label": "Legend stays (days)", "category": "Enemies & Duels", "group": "Legends",
             "target": "tuning.legendLifetimeDays", "min": 1, "max": 10, "step": 1,
             "tooltip": "Days a sighted legend stays on the map (from the next sighting)."
+        },
+        {
+            "id": "legendOdds", "label": "Legend sightings", "category": "Enemies & Duels", "group": "Legends",
+            "targets": ["legends.unhappyChance", "legends.warChance"],
+            "min": 0, "max": 4, "step": 0.05, "mode": "scale",
+            "tooltip": "How often a legend is sighted on an unfriendly or warring color's land, multiplied by this. 0 = no legends."
+        },
+        {
+            "id": "legendCooldown", "label": "Days between legends", "category": "Enemies & Duels", "group": "Legends",
+            "target": "legends.cooldownDays",
+            "min": 0, "max": 7, "step": 1, "level": "expert",
+            "tooltip": "Days after a sighting before the next can come."
+        },
+        {
+            "id": "legendMaxAlive", "label": "Legends at once", "category": "Enemies & Duels", "group": "Legends",
+            "target": "legends.maxAlive",
+            "min": 1, "max": 3, "step": 1, "level": "expert",
+            "tooltip": "The most legends on the map at once."
+        },
+        {
+            "id": "legendChase", "label": "Legend chase reach", "category": "Enemies & Duels", "group": "Legends",
+            "targets": ["legends.chaseTiles", "legends.leashTiles"],
+            "min": 0.5, "max": 2, "step": 0.05, "level": "expert", "mode": "scale",
+            "tooltip": "How close a legend notices you and how far it follows, multiplied by this."
         },
         {
             "id": "invasionMinions", "label": "Invasion: minions to beat", "category": "Enemies & Duels", "group": "Invasions",
@@ -602,6 +634,90 @@
             "tooltip": "A full meter takes this share off the research cost."
         },
         {
+            "id": "powerGain", "label": "Power gained", "category": "Ascendance", "group": "Power",
+            "target": "ascendance.levelingSpeed",
+            "min": 0.25, "max": 3, "step": 0.05, "mode": "scale",
+            "tooltip": "Power from every source, multiplied by this (the intro and the tutorial pay in full)."
+        },
+        {
+            "id": "duelPower", "label": "Power for a win", "category": "Ascendance", "group": "Power",
+            "target": "ascendance.duelBase[*]",
+            "min": 0.5, "max": 3, "step": 0.05, "level": "expert", "mode": "scale",
+            "tooltip": "Power a win pays at every enemy rank, multiplied by this."
+        },
+        {
+            "id": "powerBonuses", "label": "Power bonuses", "category": "Ascendance", "group": "Power",
+            "targets": ["ascendance.bossFactor", "ascendance.legendFactor", "ascendance.firstWinFactor", "ascendance.townFightFactor", "ascendance.treasureGuardianFactor", "ascendance.championFactor", "ascendance.mageFactor", "ascendance.wrathFactor"],
+            "min": 1, "max": 2, "step": 0.05, "level": "expert", "mode": "scale",
+            "tooltip": "The bonus a boss, a legend, a first win, a town fight, a treasure guardian, a champion, a mage or the Wrath hunter pays, multiplied by this."
+        },
+        {
+            "id": "guardWinPower", "label": "Power for a guard's win", "category": "Ascendance", "group": "Power",
+            "target": "ascendance.guardWinFactor",
+            "min": 0, "max": 3, "step": 0.05, "level": "expert",
+            "tooltip": "A roaming guard's win pays you this share of a win's Power. 0 = none."
+        },
+        {
+            "id": "deedPower", "label": "Power for deeds", "category": "Ascendance", "group": "Power",
+            "targets": ["ascendance.firstVisitTown", "ascendance.firstVisitPlace", "ascendance.clearCave", "ascendance.clearDungeon", "ascendance.restoreTown", "ascendance.captureTown", "ascendance.raiseCapitol", "ascendance.sideQuest", "ascendance.storyQuest", "ascendance.invasion[*]", "ascendance.pillageStopped", "ascendance.arenaBracket", "ascendance.innMatchWin", "ascendance.innChampion", "ascendance.treasureFound"],
+            "min": 0, "max": 3, "step": 0.05, "level": "expert", "mode": "scale",
+            "tooltip": "Power for first visits, clears, towns, the Capitol, quests, invasions, stopped raids, the Arena, the Inn and treasure, multiplied by this."
+        },
+        {
+            "id": "arenaPower", "label": "Arena Power share", "category": "Ascendance", "group": "Power",
+            "target": "ascendance.arenaPowerFactor",
+            "min": 0, "max": 1, "step": 0.05, "level": "expert", "format": "percent",
+            "tooltip": "An Arena win pays this share of a win's Power."
+        },
+        {
+            "id": "chestPower", "label": "Chest Power", "category": "Ascendance", "group": "Power",
+            "target": "ascendance.chestPower",
+            "min": 1, "max": 50, "step": 1, "level": "expert",
+            "tooltip": "Power an overworld chest's Power outcome pays."
+        },
+        {
+            "id": "diamondPower", "label": "Diamond Power", "category": "Ascendance", "group": "Power",
+            "target": "ascendance.diamondPower",
+            "min": 1, "max": 75, "step": 1, "level": "expert",
+            "tooltip": "Power a diamond pays when it pays Power."
+        },
+        {
+            "id": "diamondPowerChance", "label": "Diamond Power chance", "category": "Ascendance", "group": "Power",
+            "target": "ascendance.diamondPowerChance",
+            "min": 0, "max": 0.5, "step": 0.01, "level": "expert", "format": "percent",
+            "tooltip": "Chance a diamond pays Power. 0 = never."
+        },
+        {
+            "id": "levelCost", "label": "Level cost", "category": "Ascendance", "group": "Levels",
+            "target": "ascendance.difficultyLevelCost[*]",
+            "min": 0.5, "max": 2, "step": 0.05, "scope": "newGame", "mode": "scale",
+            "tooltip": "Power each level costs, multiplied by this (level 1 always costs 50). New game only: the level would jump mid-run."
+        },
+        {
+            "id": "milestoneLife", "label": "Life every fifth level", "category": "Ascendance", "group": "Levels",
+            "target": "ascendance.milestoneLife",
+            "min": 0, "max": 3, "step": 1, "level": "expert",
+            "tooltip": "Max life each fifth level gives (from the next one)."
+        },
+        {
+            "id": "postCapLife", "label": "Life per level past 40", "category": "Ascendance", "group": "Levels",
+            "target": "ascendance.postCapLife",
+            "min": 0, "max": 2, "step": 1, "level": "expert",
+            "tooltip": "Max life each level past 40 gives."
+        },
+        {
+            "id": "offerSize", "label": "Rewards offered", "category": "Ascendance", "group": "Levels",
+            "target": "ascendance.offerSize",
+            "min": 2, "max": 4, "step": 1, "level": "expert",
+            "tooltip": "Rewards to choose from at a level-up."
+        },
+        {
+            "id": "rerollCost", "label": "Reward re-roll cost", "category": "Ascendance", "group": "Levels",
+            "target": "ascendance.difficultyRerollCost[*]",
+            "min": 0, "max": 2, "step": 0.05, "level": "expert", "mode": "scale",
+            "tooltip": "Shards to re-roll a level-up's rewards, multiplied by this. 0 = free."
+        },
+        {
             "id": "attackingMages", "label": "Attacking mages", "category": "Towns & Territory", "group": "AI colors",
             "target": "tuning.attackingMages{D}", "min": 0, "max": 12, "step": 1,
             "tooltip": "How many attacking mages each AI color can field at once at the start. Towns, Color Defeat and the Capitol add to it."
@@ -918,6 +1034,30 @@
             "target": "tuning.milestoneSmithsArmoryFactor",
             "min": 0.5, "max": 1, "step": 0.05, "level": "expert", "format": "percent",
             "tooltip": "The Master Smiths boon sells Armory gear at this share of its price."
+        },
+        {
+            "id": "guardsMax", "label": "Roaming guards, most", "category": "Towns & Territory", "group": "Roaming guards",
+            "target": "guards.maxGuards",
+            "min": 1, "max": 6, "step": 1, "level": "expert",
+            "tooltip": "The most roaming guards you can hire at once (a lower cap keeps those you have)."
+        },
+        {
+            "id": "guardLife", "label": "Roaming guard life", "category": "Towns & Territory", "group": "Roaming guards",
+            "targets": ["guards.lifeApprentice", "guards.lifeAdept", "guards.lifeMaster", "guards.lifeArchmage"],
+            "min": 0.5, "max": 2, "step": 0.05, "level": "expert", "mode": "scale",
+            "tooltip": "A roaming guard's life at every rank, multiplied by this (from the next hire or promotion)."
+        },
+        {
+            "id": "guardRecovery", "label": "Guard recovery days", "category": "Towns & Territory", "group": "Roaming guards",
+            "target": "guards.recoveryDays",
+            "min": 5, "max": 60, "step": 1, "level": "expert",
+            "tooltip": "Days a beaten guard is out (from the next defeat)."
+        },
+        {
+            "id": "guardHealCost", "label": "Guard heal cost", "category": "Towns & Territory", "group": "Roaming guards",
+            "target": "guards.healShardCost",
+            "min": 10, "max": 300, "step": 5, "level": "expert",
+            "tooltip": "Shards to heal a beaten guard at once."
         },
         {
             "id": "dayLength", "label": "Day length (seconds)", "category": "Time & Pacing", "group": "Clock",

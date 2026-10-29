@@ -48,7 +48,25 @@ public final class LegendSpawns {
     private static LegendSpawnData cachedFor;
     private static EffectData cachedEffect;
 
+    // Round 832 (custom difficulty): the running save's copy of this table, when it overrides one of its numbers
+    // (CustomDifficulty.applyTuning puts it in place, null puts the plane's own back); every reader goes through data().
+    private static LegendSpawnData effective;
+
+    public static void setEffective(LegendSpawnData copy) {
+        effective = copy;
+    }
+
+    /** Round 832: what the running save plays with (the console's custom knobs). */
+    public static LegendSpawnData current() {
+        return data();
+    }
+
     private static LegendSpawnData data() {
+        return effective != null ? effective : base();
+    }
+
+    /** Round 832: the plane's own legends.json. */
+    public static LegendSpawnData base() {
         return Config.instance().getLegendSpawnData();
     }
 

@@ -36,7 +36,25 @@ public class RoamingGuards {
     /** Same ladder as hired local guards, so the two share a cost table and display names. */
     public static final String[] TIERS_ASCENDING = EconomyBuildings.GUARD_TIERS_ASCENDING;
 
+    // Round 832 (custom difficulty): the running save's copy of this table, when it overrides one of its numbers
+    // (CustomDifficulty.applyTuning puts it in place, null puts the plane's own back); every reader goes through data().
+    private static RoamingGuardConfig effective;
+
+    public static void setEffective(RoamingGuardConfig copy) {
+        effective = copy;
+    }
+
+    /** Round 832: what the running save plays with (the console's custom knobs). */
+    public static RoamingGuardConfig current() {
+        return config();
+    }
+
     private static RoamingGuardConfig config() {
+        return effective != null ? effective : base();
+    }
+
+    /** Round 832: the plane's own roaming_guards.json. */
+    public static RoamingGuardConfig base() {
         return Config.instance().getRoamingGuardConfig();
     }
 

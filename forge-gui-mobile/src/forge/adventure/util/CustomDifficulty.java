@@ -99,9 +99,9 @@ public final class CustomDifficulty {
             this.rows = rows;
         }
 
-        /** Round 831: a TFR table of its own (spawn_tier_weighting.json, armory_rarity.json), per save. */
+        /** Round 831: a TFR table of its own (spawn_tier_weighting.json, armory_rarity.json; round 832 the four below), per save. */
         boolean table() {
-            return "spawn".equals(source) || "armory".equals(source);
+            return tableClass(source) != null;
         }
 
         boolean difficulty() {
@@ -300,7 +300,12 @@ public final class CustomDifficulty {
     /** Round 831: the root class of a table source, or null. */
     private static Class<?> tableClass(String source) {
         return "spawn".equals(source) ? forge.adventure.data.SpawnTierWeightData.class
-                : "armory".equals(source) ? forge.adventure.data.ArmoryRarityData.class : null;
+                : "armory".equals(source) ? forge.adventure.data.ArmoryRarityData.class
+                // round 832: ascendance.json, legends.json, roaming_guards.json, war_champions.json
+                : "ascendance".equals(source) ? forge.adventure.data.AscendanceData.class
+                : "legends".equals(source) ? forge.adventure.data.LegendSpawnData.class
+                : "guards".equals(source) ? forge.adventure.data.RoamingGuardConfig.class
+                : "war".equals(source) ? forge.adventure.data.WarChampionData.class : null;
     }
 
     /** Round 831: the class of one row a table field holds (an array's element, a map's array element, an object). */
@@ -605,6 +610,15 @@ public final class CustomDifficulty {
                 Config.instance().getBaseSpawnTierWeightData(), forge.adventure.data.SpawnTierWeightData.class));
         Config.instance().setEffectiveArmoryRarityData((forge.adventure.data.ArmoryRarityData) buildTable(overrides, "armory",
                 Config.instance().getBaseArmoryRarityData(), forge.adventure.data.ArmoryRarityData.class));
+        // round 832: the leveling, legends, roaming guards and war champions tables
+        Ascendance.setEffective((forge.adventure.data.AscendanceData) buildTable(overrides, "ascendance",
+                Ascendance.base(), forge.adventure.data.AscendanceData.class));
+        LegendSpawns.setEffective((forge.adventure.data.LegendSpawnData) buildTable(overrides, "legends",
+                LegendSpawns.base(), forge.adventure.data.LegendSpawnData.class));
+        RoamingGuards.setEffective((forge.adventure.data.RoamingGuardConfig) buildTable(overrides, "guards",
+                RoamingGuards.base(), forge.adventure.data.RoamingGuardConfig.class));
+        WarChampions.setEffective((forge.adventure.data.WarChampionData) buildTable(overrides, "war",
+                WarChampions.base(), forge.adventure.data.WarChampionData.class));
     }
 
     /**
@@ -627,8 +641,8 @@ public final class CustomDifficulty {
             for (String spec : k.targets)
                 for (Target t : resolve(spec, null))
                     if (source.equals(t.source)) {
-                        if (effective == null)
-                            effective = deepCopy(base, cls);
+                        if (effective == null) // round 832: the plain tables take round 822's field copy
+                            effective = "spawn".equals(source) || "armory".equals(source) ? deepCopy(base, cls) : fieldCopy(base, cls);
                         if (effective == null)
                             return null;
                         if (t.rows == null) {
@@ -709,6 +723,16 @@ public final class CustomDifficulty {
                 System.err.println("[TFR-Custom] could not rebalance a row: " + e);
                 return;
             }
+        }
+    }
+
+    /** Round 832: a field copy (arrays copied) of a table whose numbers are its own fields or number arrays. */
+    private static Object fieldCopy(Object base, Class<?> cls) {
+        try {
+            return copyFields(base, cls.getDeclaredConstructor().newInstance(), cls);
+        } catch (Exception e) {
+            System.err.println("[TFR-Custom] could not copy " + cls.getSimpleName() + " - its knobs are off for this save: " + e);
+            return null;
         }
     }
 
@@ -1114,11 +1138,25 @@ public final class CustomDifficulty {
 
     /** Round 831: a table source's plane object and its running one. */
     private static Object tableBase(Target t) {
-        return "spawn".equals(t.source) ? Config.instance().getBaseSpawnTierWeightData() : Config.instance().getBaseArmoryRarityData();
+        switch (t.source) {
+            case "spawn": return Config.instance().getBaseSpawnTierWeightData();
+            case "armory": return Config.instance().getBaseArmoryRarityData();
+            case "ascendance": return Ascendance.base(); // round 832
+            case "legends": return LegendSpawns.base();
+            case "guards": return RoamingGuards.base();
+            default: return WarChampions.base();
+        }
     }
 
     private static Object tableNow(Target t) {
-        return "spawn".equals(t.source) ? Config.instance().getSpawnTierWeightData() : Config.instance().getArmoryRarityData();
+        switch (t.source) {
+            case "spawn": return Config.instance().getSpawnTierWeightData();
+            case "armory": return Config.instance().getArmoryRarityData();
+            case "ascendance": return Ascendance.data(); // round 832
+            case "legends": return LegendSpawns.current();
+            case "guards": return RoamingGuards.current();
+            default: return WarChampions.current();
+        }
     }
 
     private static String format(Knob k, Object v) {

@@ -66,7 +66,20 @@ public final class Ascendance {
         return isActive() ? data().wrathFactor : 0f;
     }
 
+    // Round 832 (custom difficulty): the running save's copy of this table, when it overrides one of its numbers
+    // (CustomDifficulty.applyTuning puts it in place, null puts the plane's own back); every reader goes through data().
+    private static AscendanceData effective;
+
+    public static void setEffective(AscendanceData copy) {
+        effective = copy;
+    }
+
     public static AscendanceData data() {
+        return effective != null ? effective : base();
+    }
+
+    /** Round 832: the plane's own ascendance.json, whatever the running save overrides. */
+    public static AscendanceData base() {
         if (data == null) {
             FileHandle file = Config.instance().getFile("config tables/ascendance.json");
             try {
