@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 850: the research quest says how selling and sacrificing speed research (2026-10-29)
+
+The user: "Let's update the quest that you get to do research, so it tells you about selling/sacrificing cards and how
+that will speed up the process." Data only. File: `world/quests.json` (quest 43 "Raise the Banner", stage 5 "Research
+a lost Volume", its prologue - where the player first hears how research works; the card shop stage's line and the
+Warden's intro only name the Lab and stay as they were).
+
+- **Old:** "Collect enough cards from an expansion, then start researching it at your Capitol's Research Lab. Research
+  takes seven days; return when the work is done and the Volume is yours." - the classic research (10% gate, 7 days).
+- **New:** any expansion can be researched for shards and "a good many days - unless you feed the scholars first";
+  selling a set's card anywhere (shop, inn, deck, the Lab) feeds it, a Lab sacrifice twice as much but no gold; more fed
+  means fewer days and cheaper shards; a card never seen counts far more than another copy; feeding a running research
+  still shortens it. No day count, since Researcher, the Research towns and the custom-difficulty knob move it.
+- **Checked in code** (`ResearchMeter`): `onSold` from every sale (`performSale`), `researchSacrificeFactor` 2 and no
+  gold (`sacrifice`), `pointsFor` (new name in full by rarity, copies `researchCopyShare` 0.25), `lengthDaysAt` and the
+  shard cut along sqrt(fill), `flush` finishing a running research early; spent shards are not refunded, so the text
+  says only that the work gets shorter once started.
+- **Classic saves** (before round 751) still run 7-day research; one that reaches this stage now reads the v2 wording.
+  Accepted: every new game is v2.
+
+**Tested:** `validate_plane_data.py` report identical to the base. **Agent-tested** in `agent-850` (cheats, new
+game): quest 43 walked to stage 5 with `set charflag` and three one-flag quests (87-91, 76) for the "three quests"
+stage; entering Orazca showed the stage 5 prologue with the new text through the bridge's dialog read.
+
+**GUIDE line suggested for round 848** (research section): "Selling a set's cards anywhere, or sacrificing them at the
+Lab (double, no gold), shortens that set's research and cuts its shard cost; a card name new to the set counts most,
+and cards fed after the research starts still shorten it."
+
 ## Round 847: the Wrath's hunter is never eased (2026-10-29)
 
 Part of the Fable review fix batch (rounds 840-848; P3-1, the user's call: exempt it). Built in `wt-842`, tested in

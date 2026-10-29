@@ -9422,7 +9422,7 @@
 					4
 				],
 				"prologue": {
-					"text": "The Weave's lost Volumes - whole expansions of magic - can be recovered. Collect enough cards from an expansion, then start researching it at your Capitol's Research Lab. Research takes seven days; return when the work is done and the Volume is yours.",
+					"text": "The Weave's lost Volumes - whole expansions of magic - can be recovered. Any expansion can be researched at your Capitol's Research Lab, for shards and a good many days - unless you feed the scholars first. Every card from an expansion you sell, anywhere (a shop, an inn, your deck, the Lab itself), teaches them about it; a card you sacrifice at the Lab teaches them twice as much, though it pays no gold. The more they learn, the fewer the days and the cheaper the shards, and a card they have never seen counts far more than another copy of one they have. Cards fed after the work begins still shorten it. Return when the work is done and the Volume is yours.",
 					"options": [
 						{
 							"name": "(Continue)"
