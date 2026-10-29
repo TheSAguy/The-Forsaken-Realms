@@ -1886,6 +1886,8 @@ A New Game+ is a **new game plus your collection**. Press Start and it asks what
 - **Keep items and equipment** (on by default) - your bag, what you wear and your Armory's storage come along
   (the storage into your bag). Off, you start with the new game's kit. With Ascendance back at level 0 you may
   wear one main item and one companion, so the rest of what you wore goes into your bag.
+- **Difficulty** - set to the save's own difficulty; pick another to change it. A save too old to record its
+  difficulty offers "Same as this save" instead. A custom difficulty keeps its custom settings on the preset you pick.
 
 Everything else resets to a fresh run: your Ascendance level, Power and perks, shop blueprints, researched
 editions, research in progress, quests and

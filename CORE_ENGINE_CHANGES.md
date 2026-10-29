@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 837 - New Game+ keeps the chosen save's difficulty
+- **`forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`** (STOCK): the New Game+ difficulty moves from the
+  top-right `difficulty` box (still built, now hidden in every mode; `enter()`'s pre-select block removed) into
+  `askNewGamePlusCarry`'s dialog, pre-selected by `slotDifficulty(header)`; `startNewGamePlus(carry, keepItems,
+  chosen)` takes the preset (null = the save's own, `configPreset`). New helpers `slotDifficulty`, `presetOf`,
+  `configPreset`. On a merge, keep the picker in the dialog: upstream's box reads the loaded game, not the slot.
+
 ### Round 836 - the purse clamp
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): a private static `purse(what, before,
   change)` before `addGold`; `addGold`, `takeGold` (its non-overspend branch), `takeShards`, `setShards`, `takeWood` and

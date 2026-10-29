@@ -45,3 +45,7 @@ reset (everything is posted). Artifact version 11.
 2026-10-27 (round 790): message 3 (Perks & limits) says **Far Sight** (up to +2 tiles of sight); it was a bare name.
 `EDITED = {3}` tags it on the page. Edit it in Discord when 1.25 ships, since v1.24 still has the old +15%. Artifact
 version 12.
+
+2026-10-28 (round 837): message 6 (Enemy ranks) says the early-weeks floor never raises a weaker monster (a 9-life
+Geist stays at 9) and gives the difficulty multipliers; a v1.24 player read "never under 20" as a minimum for every
+monster. `EDITED = {3, 6}`. True of v1.24 too, so it can be edited in Discord now. The artifact page is not republished.

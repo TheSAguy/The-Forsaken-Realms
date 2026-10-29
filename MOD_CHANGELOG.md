@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 837: New Game+ keeps the chosen save's difficulty - one picker, in the New Game+ dialog (2026-10-28)
+
+The user: "Can we ensure that the NG+ always defaults to the player's game they are coming from. If they come from a
+NG+, it should remain on Insane, unless they change it." The log review `notes/logs-1028d-vr01.md` P1: a v1.24 player
+(Vr01, Discord) started New Game+ from a fresh launch on his Insane save and the new run silently played on Normal
+(`[TFR-NewGamePlus] reset begin ... difficulty=Normal`, starting life 15). The top-right box on the New Game+ screen
+pre-selected the LOADED game's difficulty (the 2026-08-25 fix), and with no game loaded `DifficultyData.name` is "",
+so it fell back to index 1, Normal; it never followed the slot the player clicked either. Reproduced in the agent game
+before the fix (shot `notes/r837-838-mock.png`).
+
+- **One picker, in the dialog**: "What comes with you into the new run?" gets a last row, "Difficulty: [Insane]
+  (this save's)", above Start / Cancel. The top-right box is never shown (still built, hidden in every mode).
+- **Pre-selected from the chosen slot** (`SaveLoadScene.slotDifficulty`): the save header's own record - round 838's
+  third name segment (`CustomDifficulty.displayName`'s words), else the colored dot `getSaveFileSuffix` has always
+  written before the location (CYAN Easy, GREEN Normal, GOLD Hard, RED Insane). No load needed, so it holds from a
+  fresh launch, mid-game, and after picking another slot. The player can still change it; the note then reads
+  "(this save: Insane)".
+- **A save with no record** (from before the dot) offers "Same as this save" first: the load resolves it to the save's
+  own preset (`configPreset`), never Normal.
+- **Custom saves**: "Custom (Hard)" selects Hard, with "- its custom settings come along"; the chosen config preset
+  goes to `AdventurePlayer.updateDifficulty`, which lays the save's overrides over it (round 822, unchanged).
+- **Log**: `[TFR-NewGamePlus] difficulty Insane (the save was Insane)` (`, kept as "Same as this save"` when that entry
+  was used), after `updateDifficulty`.
+- **Portrait**: the note goes on its own line under the picker (the dialog is 270 wide).
+- **FAQ**: message 6 (Enemy ranks) - the early-weeks floor never raises a weaker monster (a 9-life Geist stays at 9),
+  plus the difficulty multipliers; Vr01 read "never under 20" as a minimum for every monster. 1951 characters;
+  `EDITED = {3, 6}`; README line. True of v1.24 too. The code was right (`DuelScene.earlyWeekLife`).
+- **GUIDE**: New Game+ gets the Difficulty bullet.
+- **Tested** (agent-837, the 20:11 agent jar with the compiled classes ahead of it; shots `notes/r837-838/`): a fresh
+  launch, New Game+ on the Insane "Vic 2" -> Insane pre-selected, Start -> life 5/5 day 1 and `difficulty Insane (the
+  save was Insane)`; mid-game (Custom (Insane) loaded) the Normal auto save -> Normal; a Custom (Insane) quicksave ->
+  Insane + "its custom settings come along", Start -> `difficulty Custom (Insane) (the save was Custom (Insane))` and
+  round 822's `[TFR-Custom] New Game+: ... enemyHealth 2.5 -> 2`; an old save (slot 1) -> "Same as this save"; the
+  dialog in portrait at 540x960.
+
+Files: `scene/SaveLoadScene.java`, `dev-tools/discord_faq/messages.py`, `dev-tools/discord_faq/README.md`,
+`The Forsaken Realms/GUIDE.md`.
+
 ## Round 827: custom difficulty, part 6 - share codes, the hints point to Settings > Difficulty, a GUIDE section (2026-10-28)
 
 Part 6 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). The user's "Yes, all three" on

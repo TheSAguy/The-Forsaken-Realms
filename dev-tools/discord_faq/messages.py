@@ -6,7 +6,7 @@ FAQ_VERSION = "v1.24"
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-EDITED = {3}  # round 790: Far Sight is +1 tile of sight per pick
+EDITED = {3, 6}  # round 790: Far Sight is +1 tile of sight per pick; round 837: the early-life floor
 ADDED = set()
 
 M = []
@@ -111,7 +111,7 @@ New in v1.24, in all three ranks: the Torchhead Stallion, Flamecrest Serpent, As
 **A:** Most roaming creatures come out of the ordinary dungeons and caves near you, found or not - more the longer each one stands (+25% a week, up to double). Clear one (beat every enemy inside) and it goes quiet, and the nearest town gives you +1 reputation. Story places, boss lairs and castles don't send creatures, and quest creatures come wherever you are.
 
 **Q: Why do monsters have less life early on?**
-**A:** The realm eases you in. In days 1-7 a monster starts its duel with half its life (never under 20), and in days 8-14 with three quarters (never under 25). Bosses, legends, Arena and Inn fights, war mages and New Game+ are never eased.
+**A:** The realm eases you in. In days 1-7 a monster starts with half its life, but never below 20, and in days 8-14 with three quarters, never below 25. One with less than that keeps its own (a 9-life Geist stays at 9). Bosses, legends, Arena and Inn fights, war mages and New Game+ are never eased. Difficulty multiplies all monster life: Easy x0.8, Normal x1, Hard x1.5, Insane x2.5.
 
 **Q: Does Speed-Up change how many monsters I meet?**
 **A:** No. A game day brings the same number at any speed, and new ones stop coming while about 14 are already roaming near you.

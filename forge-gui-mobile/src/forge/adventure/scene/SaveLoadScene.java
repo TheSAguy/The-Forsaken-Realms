@@ -341,12 +341,47 @@ public class SaveLoadScene extends UIScene {
         current.setChecked(true);
         com.badlogic.gdx.scenes.scene2d.ui.CheckBox keepItems = Controls.newCheckBox("Keep items and equipment");
         keepItems.setChecked(true);
+        // Round 837 (the user: "Can we ensure that the NG+ always defaults to the player's game they are coming from";
+        // logs-1028d P1: from a fresh launch the old top-right box fell back to Normal, and an Insane player's New
+        // Game+ silently ran on Normal). The one picker, here on the last screen before Start, pre-selected from the
+        // CHOSEN slot's own difficulty as its header records it (slotDifficulty) - from a fresh launch, mid-game, or
+        // after picking another slot. A save too old to record it offers "Same as this save", resolved on the load.
+        DifficultyData[] presets = Config.instance().getConfigData().difficulties;
+        String saveWords = slotDifficulty(previews.get(currentSlot));
+        String savePreset = saveWords == null ? null : presetOf(saveWords);
+        int offset = saveWords == null ? 1 : 0;
+        String[] names = new String[presets.length + offset];
+        if (offset == 1)
+            names[0] = SAME_AS_SAVE;
+        int selected = 0;
+        for (int i = 0; i < presets.length; i++) {
+            names[i + offset] = Forge.getLocalizer().getMessageorUseDefault("lbl" + presets[i].name, presets[i].name);
+            if (presets[i].name.equalsIgnoreCase(savePreset))
+                selected = i + offset;
+        }
+        TextraLabel diffNote = Controls.newTextraLabel("");
+        SelectBox<String> pick = Controls.newComboBox(names, names[selected], o -> null);
+        Runnable describe = () -> {
+            int i = pick.getSelectedIndex() - offset;
+            boolean same = i < 0 || presets[i].name.equalsIgnoreCase(savePreset);
+            boolean custom = saveWords != null && !saveWords.equalsIgnoreCase(savePreset);
+            diffNote.setText("[%80]" + (i < 0 ? "" : same ? "(this save's)" : "(this save: " + saveWords + ")")
+                    + (custom ? (same ? " - its custom settings come along" : " - custom settings come along") : ""));
+        };
+        pick.addListener(new com.badlogic.gdx.scenes.scene2d.utils.ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, com.badlogic.gdx.scenes.scene2d.Actor actor) {
+                describe.run();
+            }
+        });
+        describe.run();
         Dialog dialog = createGenericDialog("New Game+", "What comes with you into the new run?", Forge.getLocalizer().getMessage("lblStart"),
                 Forge.getLocalizer().getMessage("lblCancel"), () -> {
                     int choice = cardsOnly.isChecked() ? CARRY_CARDS_ONLY : invested.isChecked() ? CARRY_INVESTED : CARRY_CURRENT;
                     boolean items = keepItems.isChecked();
+                    int i = pick.getSelectedIndex() - offset;
                     removeDialog();
-                    startNewGamePlus(choice, items);
+                    startNewGamePlus(choice, items, i < 0 ? null : presets[i]);
                 }, () -> {
                     loaded = false;
                     removeDialog();
@@ -360,10 +395,60 @@ public class SaveLoadScene extends UIScene {
                 + "Research and blueprints start over.");
         content.add(note).left().padLeft(10).padBottom(4).row();
         content.add(keepItems).left().padLeft(10).row();
+        com.badlogic.gdx.scenes.scene2d.ui.Table difficultyRow = new com.badlogic.gdx.scenes.scene2d.ui.Table();
+        difficultyRow.add(Controls.newLabel("Difficulty:")).padRight(6);
+        difficultyRow.add(pick).padRight(6);
+        if (Forge.isLandscapeMode())
+            difficultyRow.add(diffNote);
+        content.add(difficultyRow).left().padLeft(10).padTop(4).row();
+        if (!Forge.isLandscapeMode()) // portrait is 270 wide: the note on its own line
+            content.add(diffNote).left().padLeft(10).row();
         showDialog(dialog);
     }
 
-    private void startNewGamePlus(int carry, boolean keepItems) {
+    /** Round 837: the picker's first entry for a save whose header does not record its difficulty. */
+    private static final String SAME_AS_SAVE = "Same as this save";
+
+    /**
+     * Round 837/838: a slot's difficulty as its header records it, in CustomDifficulty.displayName's words ("Insane",
+     * "Custom (Hard)"), or null. A save from round 838 on carries the words as the name's third segment
+     * (getSaveFileSuffix); an older one only the colored dot before its location, read back to the preset's name.
+     */
+    String slotDifficulty(WorldSaveHeader header) {
+        if (header == null || header.name == null || !header.name.contains(Character.toString(ASCII_179)))
+            return null;
+        String[] split = TextUtil.split(header.name, ASCII_179);
+        if (split.length > 2 && !split[2].trim().isEmpty())
+            return split[2].trim();
+        if (split.length < 2)
+            return null;
+        String location = split[1];
+        if (location.contains("[CYAN]"))
+            return "Easy";
+        if (location.contains("[GREEN]"))
+            return "Normal";
+        if (location.contains("[GOLD]"))
+            return "Hard";
+        if (location.contains("[RED]"))
+            return "Insane";
+        return null;
+    }
+
+    /** Round 837: the plane's own preset of that name, or null. */
+    private static DifficultyData configPreset(String name) {
+        for (DifficultyData d : Config.instance().getConfigData().difficulties)
+            if (d != null && d.name != null && d.name.equalsIgnoreCase(name))
+                return d;
+        return null;
+    }
+
+    /** "Custom (Hard)" -> "Hard"; a preset's name stays itself. */
+    static String presetOf(String words) {
+        int open = words.indexOf('('), close = words.lastIndexOf(')');
+        return open >= 0 && close > open ? words.substring(open + 1, close).trim() : words;
+    }
+
+    private void startNewGamePlus(int carry, boolean keepItems, DifficultyData chosen) {
         try {
             Forge.setTransitionScreen(new TransitionScreen(() -> {
                 loaded = false;
@@ -387,14 +472,20 @@ public class SaveLoadScene extends UIScene {
                             : carry == CARRY_INVESTED ? "cards + current + invested resources" : "cards + current resources")
                             + ", items " + (keepItems ? "kept" : "left behind"));
                     WorldSave.getCurrentSave().clearChanges();
+                    // Round 837: the picker's preset, or ("Same as this save") the loaded save's own - never a
+                    // fallback to Normal. The config preset goes to updateDifficulty, which lays a custom save's
+                    // overrides over it (round 822).
+                    String was = forge.adventure.util.CustomDifficulty.displayName(Current.player());
+                    DifficultyData target = chosen != null ? chosen : configPreset(Current.player().getDifficulty().name);
                     // Round 241: world-gen thins the wasteland towns by difficulty, and the new
                     // difficulty is only applied to the player below - so the World is told first.
-                    WorldSave.getCurrentSave().getWorld().setGenerationDifficulty(difficulty != null
-                            ? Config.instance().getConfigData().difficulties[difficulty.getSelectedIndex()].name
-                            : Current.player().getDifficulty().name);
+                    WorldSave.getCurrentSave().getWorld().setGenerationDifficulty(target != null
+                            ? target.name : Current.player().getDifficulty().name);
                     if (WorldSave.getCurrentSave().getWorld().generateNew(0)) {
-                        if (difficulty != null)
-                            Current.player().updateDifficulty(Config.instance().getConfigData().difficulties[difficulty.getSelectedIndex()]);
+                        if (target != null)
+                            Current.player().updateDifficulty(target);
+                        System.out.println("[TFR-NewGamePlus] difficulty " + forge.adventure.util.CustomDifficulty.displayName(Current.player())
+                                + " (the save was " + was + (chosen == null ? ", kept as \"" + SAME_AS_SAVE + "\"" : "") + ")");
                         Current.player().setWorldPosY((int) (WorldSave.getCurrentSave().getWorld().getData().playerStartPosY * WorldSave.getCurrentSave().getWorld().getData().height * WorldSave.getCurrentSave().getWorld().getTileSize()));
                         Current.player().setWorldPosX((int) (WorldSave.getCurrentSave().getWorld().getData().playerStartPosX * WorldSave.getCurrentSave().getWorld().getData().width * WorldSave.getCurrentSave().getWorld().getTileSize()));
                         // "A New Game+ should basically be a new game, + your Cards,
@@ -601,30 +692,11 @@ public class SaveLoadScene extends UIScene {
         scrollPane.updateVisualScroll();
         autoSave.actor.setText(Forge.getLocalizer().getMessage("lblAutoSave"));
         quickSave.actor.setText(Forge.getLocalizer().getMessage("lblQuickSave"));
-        if (mode == Modes.NewGamePlus) {
-            if (difficulty != null) {
-                difficulty.setVisible(true);
-                // Was hardcoded to index 1 ("Normal") every time this screen opened (2026-08-25
-                // user report, found alongside the NG+ starting-life bug on this same path) - a
-                // player who didn't notice and reselect their real difficulty would silently
-                // start NG+ on Normal instead. Pre-select whatever difficulty the player is
-                // actually on instead.
-                int currentIndex = 1; // fallback: Normal, if no match is found below
-                DifficultyData[] all = Config.instance().getConfigData().difficulties;
-                String currentName = Current.player().getDifficultyData().name;
-                for (int i = 0; i < all.length; i++) {
-                    if (all[i].name.equals(currentName)) {
-                        currentIndex = i;
-                        break;
-                    }
-                }
-                difficulty.setSelectedIndex(currentIndex);
-            }
-        } else {
-            if (difficulty != null) {
-                difficulty.setVisible(false);
-            }
-        }
+        // Round 837: the top-right difficulty box is never shown. It pre-selected the LOADED game's difficulty, and from a
+        // fresh launch (no game loaded) fell back to Normal; New Game+ now picks in askNewGamePlusCarry's dialog, from
+        // the chosen slot's own difficulty.
+        if (difficulty != null)
+            difficulty.setVisible(false);
         performTouch(scrollPane); //can use mouse wheel if available to scroll
         super.enter();
     }
