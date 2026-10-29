@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 842 - New Game+ leftovers (the job boards' rest days, a worn quest rune, False Life)
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): `resetForNewGamePlus` clears
+  `questOfferDays` beside `coinChallengeWeeks` and its done line gains `questOfferDays=0(was N)`; `potionOfFalseLife`
+  pays with `takeGold(falseLifeCost())` (was `gold -= ...` plus its own `onGoldChangeList.emit()`); the load's
+  equipped-slot loop logs a dead id (`[TFR-Equip] load: ...`); `addItem(name, updateEvent)` calls the new private
+  `wearNewGamePlusRune` for the Homeward rune; `removeAllQuestItems` (was a bare `removeIf`) goes through
+  `removeItem(ItemData)` and the new private `pruneDeadEquipped`, then emits `onEquipmentChange`.
+
 ### Round 840 - the loop breaker: life lost restarts a trigger chain; Offer Draw only in a real loop
 - **`forge-game/src/main/java/forge/game/LoopBreaker.java`** (TFR file) - `onStackAdd`: a trigger chain's count starts
   over when any registered player's life lost this turn has moved (`lifeLostMark`, upstream's #12127 rule, mirrored here;

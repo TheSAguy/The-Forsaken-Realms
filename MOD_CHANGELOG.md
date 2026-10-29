@@ -14264,6 +14264,56 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 842: New Game+ leftovers - the job boards' rest days, a worn quest rune, False Life's gold (2026-10-29)
+
+Rounds 840-848 are the Fable review fix batch (`C:\TFR\notes\fable-review-2026-10-28.md`, verified in
+`notes\fable-verify-2026-10-28.md`); the user: "Yes, all as recommended", which includes this round's open question
+(New Game+ puts the new Homeward rune on). Fixes P2-5, the verification's known extra (b) and P3-18. Built in a
+worktree (`wt-842`), tested in an `agent-842` copy. One file: `player/AdventurePlayer.java`.
+
+- **The job boards' rest days (P2-5).** Round 695's `questOfferDays` (quest id -> the day a board last offered it) was
+  cleared by a new game but not by `resetForNewGamePlus`, so a quest offered on old day 300 rested until day 310 of the
+  new run - after a long first run every board offered only quests the old run never offered. It is cleared beside
+  `coinChallengeWeeks`, and the reset's done line says so: `questOfferDays=0(was N)`.
+- **A worn quest item (known extra (b), the `Item ... not found.` lines after New Game+).** `removeAllQuestItems` was a
+  bare `removeIf` that never unequipped; the runes are quest items worn in Ability2 (Homeward, Rally, Eldrazi, the five
+  color runes) and every start kit hands out the Homeward rune, so a worn one left its id in `equippedItems` with no
+  item behind it for the session (DuelScene printed `Item <id> not found.` every duel). It now goes through
+  `removeItem(ItemData)` (unequips, drops slots a worn gauntlet granted), then prunes any worn id with no item in the
+  bag (`pruneDeadEquipped`): `[TFR-Equip] New Game+: N quest item(s) taken, M dead worn id(s) pruned, worn now [...]`.
+  A load already dropped such an id silently; it now says so: `[TFR-Equip] load: the id worn in <slot> (<id>) has no
+  item in the bag - dropped`.
+- **The new Homeward rune goes on (the user's call).** The first Homeward rune of a New Game+ run - the spawn cave's
+  reward card or the skip-intro kit's - is worn on arrival (`addItem` -> `wearNewGamePlusRune`), once a run (character
+  flag `ngPlusRuneWorn`, cleared with the run's flags), in a free Ability2/Ability3 slot only: nothing worn is taken off
+  for it. `[TFR-Equip] New Game+: Homeward rune worn` / `stays in the bag - its slots are taken`. A brand-new game's
+  rune still arrives unworn, as before (not asked for).
+- **False Life (P3-18).** `potionOfFalseLife` paid with a bare `gold -= falseLifeCost()`, past `purse()` and
+  `ResourceLedger.moved`, so the Balance sheet missed it. It is `takeGold(falseLifeCost())` now (which also plays the
+  coin sound, like every other purchase).
+
+**Agent-tested** in `agent-842` (a copy of the agent folder and profile with this build's jar; removed afterward; the
+log is kept as `C:\TFR\notes\r842\agent-842-forge.log`): a Normal game to day 9 that took one job-board offer
+(Tolaria, day 8: Undead Invasion) with the Homeward rune worn, saved, then New Game+ from that slot (cards + current
+resources, items kept):
+- the reset line reads `questOfferDays=0(was 1)`; `[TFR-Equip] New Game+: 1 quest item(s) taken, 0 dead worn id(s)
+  pruned, worn now [Boots]`;
+- the spawn cave's reward card: `[TFR-Equip] New Game+: Homeward rune worn`, and the bag shows `*Homeward rune`;
+- no `Item ... not found.` line in the whole session (a duel on day 1 of the new run included, at 50x);
+- day 1 of the new run, Benalia's board: an offer and no `[TFR-QuestBoard] ... resting` line. It offered Blood Hunt,
+  not the old run's Undead Invasion, so "the same quest again" was not seen literally; the cleared map is what the board
+  reads, and with the old code that day-8 entry would rest until day 18;
+- the Capitol Inn (raised by console): False Life with full life, gold 1285 -> 1035, life 19/17; the Balance sheet's
+  "Everything else" expense this week is 1250 = the Capitol raise (1000) + False Life (250). Shot:
+  `C:\TFR\notes\r842\ledger-false-life.png`.
+
+**Found, not changed (InnScene is outside this round):** the Inn's False Life button shows
+`falseLifeCost() x townPriceModifier` (248 in that Capitol) but `potionOfFalseLife` charges the bare `falseLifeCost()`
+(250). Older than this round.
+
+**GUIDE wording suggested for round 848** (New Game+ section): "Your quest items stay behind, the runes included, and the
+new run's Homeward rune goes straight on when you get it." Stock file: `AdventurePlayer.java` (CORE_ENGINE_CHANGES).
+
 ## Round 840: the loop breaker lets a combo that is going somewhere finish, and Offer Draw works only in a real loop (2026-10-29)
 
 The Fable review of `d6d68a2b442` (P2-1, P2-2; verified in `C:\TFR\notes\fable-verify-2026-10-28.md`). The user: "Yes, all

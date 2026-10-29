@@ -1249,6 +1249,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // allowance is keyed the same way and is dropped for the same reason.
         coinRansomedEnemies.clear();
         coinChallengeWeeks.clear();
+        // Round 842 (Fable review P2-5): the job boards' rest days (round 695) are old-run days - a quest offered on old
+        // day 300 rested until day 310 of the new run, so after a long first run the boards offered only new quests.
+        int questOfferDaysCleared = questOfferDays.size();
+        questOfferDays.clear();
         enemyWinStreaks.clear(); // round 404: a new run's enemies have not learned your tricks yet
         notorietyStreak = 0; // round 411: nor heard of you
         notorietyQuitsPaid = 0; // round 795: a new world (a new seed) has no mid-duel quits yet
@@ -1314,6 +1318,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 + " | CLEARED characterFlags=" + characterFlags.size() + "(expect 1, plus any kept once-per-player flags)"
                 + " events=" + events.size()
                 + " coinRansomMarks=" + coinRansomedEnemies.size()
+                + " questOfferDays=" + questOfferDays.size() + "(was " + questOfferDaysCleared + ")" // round 842
                 + " blessing=" + (blessing == null ? "null" : "SET(LEAK)")
                 + " partnerOverheal=" + partnerOverhealActive
                 + " roamingGuardsCalendarReset=" + roamingGuards.size()
@@ -1934,6 +1939,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                                 + " - it is a " + itemData.equipmentSlot + " item now, taken off");
                         continue;
                     }
+                    if (itemData == null && items[i] != null) // round 842: the dead id is dropped, as before - now said
+                        System.out.println("[TFR-Equip] load: the id worn in " + slots[i] + " (" + items[i]
+                                + ") has no item in the bag - dropped");
                     if (itemData != null) {
                         if (itemData.longID == null)
                             itemData = itemData.clone();
@@ -2888,9 +2896,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public boolean potionOfFalseLife() {
         if (gold >= falseLifeCost() && life == maxLife) {
             life = maxLife + 2;
-            gold -= falseLifeCost();
+            takeGold(falseLifeCost()); // round 842 (Fable review P3-18): through the purse and the ledger, not a bare gold -=
             onLifeTotalChangeList.emit();
-            onGoldChangeList.emit();
             return true;
         } else {
             System.out.println("Can't afford cost of false life " + falseLifeCost());
@@ -4058,13 +4065,67 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (item == null)
             return false;
         inventoryItems.add(item);
+        if (HOMEWARD_RUNE_ITEM.equalsIgnoreCase(item.name))
+            wearNewGamePlusRune(item); // round 842
         if (updateEvent)
             AdventureQuestController.instance().updateItemReceived(item);
         return true;
     }
 
+    /**
+     * Round 842 (the user: New Game+ puts the new Homeward rune on): the first Homeward rune of a New Game+ run - the
+     * skip-intro kit's or the spawn cave's reward card - goes on, once a run (character flag ngPlusRuneWorn, cleared
+     * by resetForNewGamePlus), in a free Ability2/Ability3 slot only; nothing worn is taken off for it.
+     */
+    private void wearNewGamePlusRune(ItemData rune) {
+        if (rune == null || getCharacterFlag("newGamePlus") <= 0 || getCharacterFlag("ngPlusRuneWorn") > 0)
+            return;
+        setCharacterFlag("ngPlusRuneWorn", 1);
+        boolean free = false;
+        for (String slot : slotCandidates(rune))
+            free |= !equippedItems.containsKey(slot);
+        if (!free) {
+            System.out.println("[TFR-Equip] New Game+: " + rune.name + " stays in the bag - its slots are taken");
+            return;
+        }
+        if (equip(rune))
+            System.out.println("[TFR-Equip] New Game+: " + rune.name + " worn");
+        else
+            System.out.println("[TFR-Equip] New Game+: " + rune.name + " stays in the bag - " + lastEquipRefusal);
+    }
+
+    /**
+     * New Game+ takes every quest item. Round 842 (Fable review, "Item ... not found" after New Game+): through
+     * removeItem, so a worn one (the Homeward and color runes sit in Ability2) comes off first - the bare removeIf left
+     * its id worn with no item behind it for the session - then any id still worn with no item is dropped.
+     */
     public void removeAllQuestItems(){
-        inventoryItems.removeIf(data -> data != null && data.questItem);
+        int removed = 0;
+        for (ItemData data : new java.util.ArrayList<>(inventoryItems)) {
+            if (data != null && data.questItem) {
+                removeItem(data);
+                removed++;
+            }
+        }
+        int pruned = pruneDeadEquipped();
+        System.out.println("[TFR-Equip] New Game+: " + removed + " quest item(s) taken, " + pruned
+                + " dead worn id(s) pruned, worn now " + new java.util.TreeMap<>(equippedItems).keySet());
+        onEquipmentChange.emit();
+    }
+
+    /** Round 842: drops every worn slot whose id has no item in the bag; returns how many. */
+    private int pruneDeadEquipped() {
+        int pruned = 0;
+        for (String slot : new java.util.ArrayList<>(equippedItems.keySet())) {
+            if (getItemFromInventory(equippedItems.get(slot)) == null) {
+                System.out.println("[TFR-Equip] " + slot + " held id " + equippedItems.remove(slot)
+                        + " with no item in the bag - pruned");
+                pruned++;
+            }
+        }
+        if (pruned > 0)
+            dropUngrantedSlots();
+        return pruned;
     }
 
     public boolean addBooster(Deck booster) {
