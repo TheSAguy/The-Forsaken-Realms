@@ -646,7 +646,9 @@ public class CustomDifficultyScene extends UIScene {
                 refill();
             });
             b.setName("tab:" + name);
-            tabs.add(b).width(84).height(17).padBottom(2).row();
+            // round 833: 15 + 1 a tab - ten tabs since round 832's Ascendance, and at 17 + 2 they pushed the help line out
+            // of the frame
+            tabs.add(b).width(84).height(15).padBottom(1).row();
         }
         if (tabBox != null) {
             Array<String> items = new Array<>();

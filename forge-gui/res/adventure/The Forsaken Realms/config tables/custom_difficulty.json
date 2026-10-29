@@ -114,7 +114,8 @@
         {
             "id": "wrathHunt", "label": "Wrath of the Temple", "category": "Enemies & Duels", "group": "World events",
             "target": "config.wrathHuntEnabled",
-            "tooltip": "With a Temple in your Capitol, each week the last week's most-killed color hunts you: its land spawns a tier higher, its foes pay more, and a Wrath mage walks after you. Off: no hunts from the next week turn."
+            "scope": "newGame",
+            "tooltip": "With a Temple in your Capitol, each week the last week's most-killed color hunts you: its land spawns a tier higher, its foes pay more, and a Wrath mage walks after you. New game only (a hunt under way would stop half-done)."
         },
         {
             "id": "enemyPlates", "label": "Enemy info plates", "category": "Enemies & Duels", "group": "World events",
@@ -168,7 +169,7 @@
         },
         {
             "id": "lifeLoss", "label": "Life lost on defeat", "category": "Enemies & Duels", "group": "Defeat",
-            "target": "difficulty.lifeLoss", "min": 0, "max": 0.9, "step": 0.05, "format": "percent",
+            "target": "difficulty.lifeLoss", "min": 0.05, "max": 0.9, "step": 0.05, "format": "percent",
             "tooltip": "A lost duel takes this share of your largest life from your life."
         },
         {
@@ -339,8 +340,8 @@
         },
         {
             "id": "notorietyWinsPerLevel", "label": "Wins per Notoriety level", "category": "Notoriety", "group": "Levels",
-            "targets": ["tuning.notorietyWinsPerLevel", "spawn.notorietyWinsPerLevel"], "min": 0, "max": 50, "step": 1,
-            "tooltip": "How many wins raise your Notoriety one level (the enemies' Walls grow with it). 0 turns Notoriety off."
+            "targets": ["tuning.notorietyWinsPerLevel", "spawn.notorietyWinsPerLevel"], "min": 1, "max": 10, "step": 1,
+            "tooltip": "How many wins raise your Notoriety one level (the enemies' Walls grow with it). To turn Notoriety off, use Rules > Notoriety off."
         },
         {
             "id": "notorietyDeckCard", "label": "Enemy deck card from Notoriety", "category": "Notoriety", "group": "Deck card",
@@ -417,13 +418,13 @@
         },
         {
             "id": "sellFactor", "label": "Card sell price", "category": "Economy", "group": "Selling",
-            "target": "difficulty.sellFactor", "min": 0.05, "max": 1, "step": 0.05, "format": "percent",
+            "target": "difficulty.sellFactor", "min": 0.05, "max": 0.6, "step": 0.05, "format": "percent",
             "tooltip": "A card sells for this share of its price."
         },
         {
             "id": "shardSellRatio", "label": "Shard sell ratio", "category": "Economy", "group": "Selling",
             "target": "difficulty.shardSellRatio", "min": 0.05, "max": 1, "step": 0.05, "format": "percent",
-            "tooltip": "The Shard Trader pays this share of 100 gold for each shard you sell."
+            "tooltip": "The Shard Trader pays this share of 100 gold for every 5 shards you sell (he sells 5 for 100)."
         },
         {
             "id": "mineOutput", "label": "Mine output", "category": "Economy", "group": "Income",
@@ -435,7 +436,7 @@
         {
             "id": "ringShopPrice", "label": "Ring City card price", "category": "Economy", "group": "Ring Cities",
             "target": "tuning.ringShopPriceMultiplier",
-            "min": 0.5, "max": 4, "step": 0.1,
+            "min": 1.5, "max": 4, "step": 0.1,
             "tooltip": "A Ring City shop sells cards at this many times their price."
         },
         {
@@ -447,7 +448,7 @@
         {
             "id": "shopPrices", "label": "Card shop prices", "category": "Economy", "group": "Shops",
             "targets": ["tuning.aiShopPriceMultiplier", "tuning.playerShopPriceMultiplier"],
-            "min": 1, "max": 3, "step": 0.05, "mode": "scale",
+            "min": 1, "max": 1.3, "step": 0.05, "mode": "scale",
             "tooltip": "Card shops in AI towns and in your own, multiplied by this (never cheaper than shipped)."
         },
         {
@@ -666,7 +667,7 @@
         {
             "id": "arenaPower", "label": "Arena Power share", "category": "Ascendance", "group": "Power",
             "target": "ascendance.arenaPowerFactor",
-            "min": 0, "max": 1, "step": 0.05, "level": "expert", "format": "percent",
+            "min": 0.05, "max": 1, "step": 0.05, "level": "expert", "format": "percent",
             "tooltip": "An Arena win pays this share of a win's Power."
         },
         {
@@ -708,7 +709,7 @@
         {
             "id": "offerSize", "label": "Rewards offered", "category": "Ascendance", "group": "Levels",
             "target": "ascendance.offerSize",
-            "min": 2, "max": 4, "step": 1, "level": "expert",
+            "min": 2, "max": 3, "step": 1, "level": "expert",
             "tooltip": "Rewards to choose from at a level-up."
         },
         {
@@ -779,24 +780,25 @@
         {
             "id": "neutralTownCut", "label": "Fewer neutral towns", "category": "Towns & Territory", "group": "World",
             "target": "tuning.worldGenNeutralTownCut{D}", "min": 0, "max": 15, "step": 1, "scope": "newGame", "level": "expert",
-            "tooltip": "How many of the 20 working neutral towns a new world leaves out (the five star towns always stay)."
+            "tooltip": "How many of the working neutral towns a new world leaves out (the five Center Towns always stay)."
         },
         {
             "id": "neutralTownCount", "label": "Working neutral towns", "category": "Towns & Territory", "group": "World",
             "target": "tuning.functioningNeutralTownCount",
-            "min": 5, "max": 40, "step": 1, "level": "expert", "scope": "newGame",
+            "min": 5, "max": 30, "step": 1, "level": "expert", "scope": "newGame",
             "tooltip": "Working neutral towns a new world starts with, before the cut above (the five Center Towns come on top)."
         },
         {
             "id": "ruinedTownCut", "label": "Fewer ruined towns", "category": "Towns & Territory", "group": "World",
             "target": "tuning.worldGenRuinedTownCut{D}",
-            "min": 0, "max": 30, "step": 1, "level": "expert", "scope": "newGame",
+            "min": 0, "max": 20, "step": 1, "level": "expert", "scope": "newGame",
             "tooltip": "How many of the 60 ordinary towns round the start a new world leaves out as ruins. A high cut leaves the start bare."
         },
         {
             "id": "pillage", "label": "Town pillage raids", "category": "Towns & Territory", "group": "World events",
             "target": "config.pillageEnabled",
-            "tooltip": "A town near several dungeons can be pillaged: raiders gather round it, and you have a week to beat five of them. Off: no new raids."
+            "scope": "newGame",
+            "tooltip": "A town near several dungeons can be pillaged: raiders gather round it, and you have a week to beat five of them. New game only (a raid under way would freeze)."
         },
         {
             "id": "pillageChance", "label": "Raid chance a week", "category": "Towns & Territory", "group": "World events",
@@ -984,7 +986,7 @@
         {
             "id": "mineSpecialty", "label": "Mining towns", "category": "Towns & Territory", "group": "Specialties",
             "targets": ["tuning.specialtyMineFactor", "tuning.milestoneDeepVeinsMineFactor"],
-            "min": 0.5, "max": 2, "step": 0.05, "level": "expert", "mode": "scale",
+            "min": 0.7, "max": 2, "step": 0.05, "level": "expert", "mode": "scale",
             "tooltip": "A Mining town's mine bonus (and Deep Veins'), multiplied by this."
         },
         {
@@ -1032,7 +1034,7 @@
         {
             "id": "smithsArmory", "label": "Master Smiths price", "category": "Towns & Territory", "group": "Milestones",
             "target": "tuning.milestoneSmithsArmoryFactor",
-            "min": 0.5, "max": 1, "step": 0.05, "level": "expert", "format": "percent",
+            "min": 0.6, "max": 1, "step": 0.05, "level": "expert", "format": "percent",
             "tooltip": "The Master Smiths boon sells Armory gear at this share of its price."
         },
         {
@@ -1067,7 +1069,8 @@
         {
             "id": "sideQuestTimer", "label": "Side-quest time limit", "category": "Time & Pacing", "group": "Quests",
             "target": "config.sideQuestTimerEnabled",
-            "tooltip": "Side quests fail when their days run out (story quests never do). Off: side quests never expire."
+            "scope": "newGame",
+            "tooltip": "Side quests fail when their days run out (story quests never do). Off: side quests never expire. New game only (turned back on, every quest whose days ran out would fail at once)."
         },
         {
             "id": "sideQuestDays", "label": "Side-quest days", "category": "Time & Pacing", "group": "Quests",
@@ -1081,7 +1084,7 @@
         },
         {
             "id": "roadSpeed", "label": "Speed on your roads", "category": "Time & Pacing", "group": "Travel",
-            "target": "tuning.playerRoadSpeedBonus", "min": 0.5, "max": 2, "step": 0.05, "format": "percent",
+            "target": "tuning.playerRoadSpeedBonus", "min": 0.7, "max": 2, "step": 0.05, "format": "percent",
             "tooltip": "Your own roads' speed, as a share of an old road's."
         },
         {

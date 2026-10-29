@@ -14264,6 +14264,64 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 833: custom difficulty, part 12 (close-out) - the clamp audit's 17 fixes, the panel's tabs, the GUIDE and a reference page (2026-10-28)
+
+The last part of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). A read-only audit checked
+all 183 knobs against their readers and the four batch audits, kept as `C:\TFR\notes\r833-clamp-audit.md`: 151 fine,
+14 harmless pairs that can cross (the unfriendly/war, happy/partner and week 1/2 pairs, town/castle land radius - left
+as they are), and 18 to fix. Built in a worktree and tested in an `agent-833` copy in both layouts.
+
+- **The card sell price stops at 60%** (`sellFactor`, was 100%): buying and selling both start from
+  `CardUtil.getCardPrice`; a card bought in your own town (x0.75) under a Merchant Guild (x0.8) costs 60% - Easy's
+  shipped sell price, so a custom game is never more generous than the most generous preset. The audit found the
+  buy-and-sell loop already reachable on shipped Easy and Normal with more discounts stacked (town reputation, Haggler
+  III, the Fortune Coin: as low as 39% to buy, up to 72% to sell with Appraiser III) - a shipped-balance question for the
+  user, not changed here.
+- **Ranges** (`custom_difficulty.json`):
+  - Ring City card price from x1.5 (was x0.5: a Partner Ring City sold below the sell price).
+  - Master Smiths price from 60% (was 50%: below the item's sell price).
+  - Wins per Notoriety level 1-10 (was 0-50: 0 never turned Notoriety off - the bonus Walls, the deck card, the rank
+    step and the dungeon upgrades read the raw score; past 10 those raw thresholds came first). The tooltip points to
+    Rules > Notoriety off.
+  - Working neutral towns at most 30 and Fewer ruined towns at most 20 (at 40 and 20+ only Orazca was left to
+    restore); Fewer neutral towns no longer says "of the 20".
+  - Life lost on defeat from 5% (0 meant you could never die), Arena Power share from 5% (0 still paid 1 Power).
+  - Rewards offered 2-3 (4 plus the Insight perk showed 5, untested).
+  - Card shop prices x1-x1.3 (above it your own shops cost more than a neutral town's, against the FAQ's "25%
+    cheaper").
+  - Mining towns from x0.7 and Speed on your roads from 70% (below them the specialty and your roads were worse than
+    none).
+- **Three switches are new game only** (were anytime): Town pillage raids (off mid-raid froze it, and back on every raid
+  whose days ran out failed at once), Wrath of the Temple (off stopped the bounty and the spawns ahead at once and left a
+  walking hunter frozen), Side-quest time limit (back on, every quest whose days ran out failed in one dialog). Their
+  tooltips say why. A save that changed one mid-game keeps its value (the panel only locks the row now).
+- **Shard sell ratio**'s tooltip: the Shard Trader pays for every 5 shards, not each one (1.0 only breaks even: he sells 5
+  for 100 gold).
+- **The panel's tabs** (`scene/CustomDifficultyScene`, landscape): 15 + 1 high a tab (was 17 + 2) - round 832's tenth tab
+  (Ascendance) pushed the help line out of the frame, so a two-line tooltip was cut off.
+- **GUIDE**: the Custom Difficulty section names the tabs and says the guide's other numbers are the presets'; the Ring
+  Cities loss line says a custom game can set two to five; the roaming guards' main items by rank are 2/3/5/7 (the json's
+  `guardMainSlots`; GUIDE.md said 2/3/4/5, GUIDE.html already 2/3/5/7). GUIDE.html regenerated.
+- **`docs/tfr/custom-difficulty.md`** (new): the system on one page - the knob file, the sources, the per-save copies and
+  where they are applied, the scopes, the UI and console, how to read the `[TFR-Custom]` lines, and the log-review
+  checklist line ("grep `[TFR-Custom]` first; `custom=` above 0 means the save's numbers are not the preset's"). A row in
+  CLAUDE.md's "Where to read".
+- The audit's list of GUIDE and FAQ lines that print a knob's shipped number (day length, spawn shares, raids, re-rolls,
+  Power, research, speeds, cooldowns, sell prices) stays as it is: the new GUIDE sentence covers a custom game.
+
+**Agent-tested** in `agent-833` (the 22:04 agent jar with round 832, this json in its res, wt-833's classes for the tab
+fix; removed afterward). No exceptions in four runs; `[TFR-Custom] 183 knob(s)` each time.
+- Landscape, Expert: the tabs list Enemies & Duels 46, Notoriety 10, Economy 18, Loot & Rewards 19, Research & Sets 4,
+  Ascendance 14, Towns & Territory 58, Time & Pacing 11, Rules 3, All 183; before the fix the one-line help sat on the
+  frame's edge, after it a two-line tooltip fits; the Wrath row reads "new game only". Shots `C:\TFR\notes\r833\`.
+- Portrait 540x960: the Ascendance tab through the tab box, a changed row, a two-line help line, the buttons below.
+
+**Not tested:** a save holding an old out-of-range value (for example a sell price of 100%) - `sanitize` clamps it on
+load with a `clamped` line, the path rounds 822-832 already use.
+
+Files: `The Forsaken Realms/config tables/custom_difficulty.json`, `scene/CustomDifficultyScene.java`,
+`The Forsaken Realms/GUIDE.md`, `GUIDE.html`, `docs/tfr/custom-difficulty.md`, `CLAUDE.md`.
+
 ## Round 832: custom difficulty, part 11 - Ascendance, legends, roaming guards and war champions per save (2026-10-28)
 
 Part 11 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). A read-only reader audit came

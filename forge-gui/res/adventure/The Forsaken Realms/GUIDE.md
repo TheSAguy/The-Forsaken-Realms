@@ -186,7 +186,7 @@ Losing a duel never ends a run - it costs gold, life and your ante (see
   your standing: two of its champions fight you at once.
 - **You lose if your Capitol falls.** A war mage that gets past your Capitol's guards forces you
   into a best-of-three defense duel, wherever you are. Lose it and the run is over.
-- **You lose if one AI color holds three of the five Ring Cities.** You get a warning the moment
+- **You lose if one AI color holds three of the five Ring Cities** (a custom game can set two to five). You get a warning the moment
   any color holds two.
 - **You lose if no free town is left:** you hold no town and no Capitol, and an AI capture leaves
   no wasteland town anywhere - no working or ruined one, and no unclaimed Ring City - for you to
@@ -1131,7 +1131,7 @@ Boots last.
 
 **Your roaming guards** are dressed from your Capitol's Armory storage, one item per slot - never in the Staff or
 Utility slots or a gauntlet's extra hand. With Ascendance a guard wears main items by its rank: **2** for an Apprentice,
-**3** for an Adept, **4** for a Master and **5** for an Archmage. A guard lowered in rank sends what no longer fits back
+**3** for an Adept, **5** for a Master and **7** for an Archmage. A guard lowered in rank sends what no longer fits back
 to the storage.
 
 **Cracked items.** Lose to a boss (anywhere but the Arena), or run out of life and get carried home, and one item you
@@ -1289,16 +1289,20 @@ with slightly fewer functioning Neutral towns and ruins to restore.
 
 ### Custom Difficulty
 
-Each difficulty is a starting point. **Advanced...** on the new-game screen opens a panel with the settings behind it:
-enemy health, starting life and gold, sell prices, mine output, Notoriety's pace, attacking mages, the Wrath of the
-Temple, pillage raids, town specialties, realm milestones, the day's length and more. Each row shows the preset's own
-value in grey; **-** and **+** change it (hold to keep going), and **<** puts it back. Tabs, a search box, Basic or
+Each difficulty is a starting point. **Advanced...** on the new-game screen opens a panel with the settings behind it -
+nearly two hundred, under tabs: Enemies & Duels (enemy health, the eased first weeks, defeat losses, spawns, enemy
+ranks, legends, the Wrath of the Temple), Notoriety, Economy (starting kit, prices, the Armory's odds), Loot & Rewards
+(cards and the purse a win pays), Research & Sets, Ascendance (Power and level costs), Towns & Territory (land, the AI
+colors, capture, raids, roaming guards, the world a new game makes) and Time & Pacing. Basic shows the main ones,
+Expert all of them. Each row shows the preset's own value in grey; **-** and **+** change it (hold to keep going), and **<** puts it back. Tabs, a search box, Basic or
 Expert, and "Changed only" help you find a setting; tap a setting's name to read what it does. A game with any change
 plays as **Custom (Hard)** (or whichever difficulty you based it on).
 
 **During a run**, Settings > Difficulty > **Edit...** opens the same panel on your game. Most settings change at once
 when you press Done; the few that shape a new world (starting life and gold, fewer neutral towns, town specialties,
 realm milestones) are locked until your next game.
+
+The numbers elsewhere in this guide are the presets' own; a custom game plays by its settings instead.
 
 **New Game+** keeps a run's custom settings. Its dialog shows how many there are; **Advanced...** opens
 the panel on them for the new run, every setting open. Changes apply to the new run only.
