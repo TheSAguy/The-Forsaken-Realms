@@ -14264,6 +14264,69 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 830: custom difficulty, part 9 - 46 more knobs: shops, ante and coins, rewards and the purse, research, specialties, Notoriety, the Wrath (2026-10-28)
+
+Part 9 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`), metadata batch 3: plane data
+only (`config tables/custom_difficulty.json`, 107 -> 153 knobs), no code. Every knob is absent from a save until a player
+changes it, so the shipped game is unchanged.
+
+The reader audit came first, kept as `C:\TFR\notes\r830-reader-audit.md`: no class keeps a TuningData reference, so
+every field below is read at use ("anytime"), except where noted. The ranges come from what breaks:
+- Shard costs start at 1: a negative Inn re-roll, ante re-roll or re-roll rise reaches `takeShards(-n)`, which GIVES
+  shards. The ante re-roll rise starts at x1 (below it each re-roll gets cheaper).
+- Card shop prices are one scale over the AI and the player multipliers, from x1 (never cheaper than shipped) to x3.
+  Round 833's audit checks the resale question against round 822's card sell price.
+- Ordered sets go through one scale knob: the ante buy-back least by rarity, the card budget (the 8 first/repeat counts,
+  which the code holds to 1-5 and logs when it clamps), the win purse by rank, the Mining specialty with Deep Veins, the
+  dungeon upgrade win steps (strictly ascending, a scale keeps them so) and its +1/+2 chances (x1.5 keeps the largest
+  row under 100).
+- Towns per milestone is new game only: the reached count is stored, so lowering it mid-run owes every boon at once.
+- The deck card's duels on record stop at 50 (the record keeps 50; above it the early drop never comes).
+- The Wrath's Archmage week is a set knob (0 = never), applied from the next hunt; the hunter's speed stays 70%-130%
+  (above about 1.3 it cannot be outrun).
+
+The knobs (Basic unless marked Expert):
+- **Economy - Shops:** Card shop prices (scale); Expert: Inn tournament re-roll. **Ante & coins (Expert):** Ante
+  re-roll, its rise, Ante buy-back price, Ante buy-back least (scale), Coin challenge fee in gold and in shards.
+- **Loot & Rewards - Rewards:** Cards per win (scale); Expert: First-win bonus cards, Copies of one card in a reward,
+  Champion loot. **Purse:** Win purse (scale; 0 = none); Expert: share paid as gold, First-win purse, Payback purse,
+  Purse luck. **Wrath (Expert):** prize shards, mythic prize chance.
+- **Enemies & Duels - Spawns (Expert):** Colorless foes on your land. **Wrath (Expert; round 825's wrathHunt is the
+  switch):** spawns ahead (1-7 brackets), bounty gold and shards, Archmage hunter from week, hunter speed.
+- **Research & Sets - Research:** Research cost (shards), Research days (`researchDaysV2`, round 751's meter; a classic
+  save keeps its own rules); Expert: Research meter size, Full-meter discount.
+- **Towns & Territory - Specialties (Expert):** Mining towns (scale with Deep Veins), Research towns, Specialty change
+  fee, Specialty lock. **Milestones (Expert):** Towns per milestone (new game), Tithe gold, Watchtower and Lamplighter
+  light, Master Smiths price.
+- **Notoriety - Walls (Expert):** Walls from rank (`notorietyMinRank{D}`), Bonus Wall life. **Deck card (Expert):** win
+  ratio, duels on record, levels sooner. **Spawns (Expert):** Spawn rank step. **Dungeons (Expert):** Dungeon upgrade
+  steps and chance (scales).
+- Left out and named in the json header: the Lab's sacrifice and copy shares (its text says "counts double" and "a
+  quarter"), the Notoriety loss penalty, levels per Wall and bonus Wall wins (printed on the Wall cards; a 0 penalty is
+  a full reset), the Market and Merchant price factors (toward a buy-and-sell profit), the deck card's mana-value pair,
+  the research points by rarity (an int list), the classic research fields, the session-cached booster size, the three
+  Wrath 0/1 lists, the internal weights and switches, and the Easy-only card bonus.
+- Known text gaps for round 833: raw Notoriety thresholds (the 45/50 bonus Walls, the rank step, the dungeon upgrade
+  steps, the deck card's wins) do not move with round 822's Wins per Notoriety level.
+
+A check script (every target field, every shipped value on all four difficulties inside its range, no duplicate ids)
+passed: 153 knobs, 0 problems.
+
+**Agent-tested** in `agent-830` (the 21:34 agent jar with round 829, this json in its res; removed afterward). No
+exceptions.
+- Slot 76: all 46 at their minimum, a duel at 50x: `[TFR-CardBudget] Meowing Cat (Apprentice, FIRST win): ... budget 1`
+  and `[TFR-ResourcePurse] ... the purse works out to nothing (base 0 ...)` - gold unchanged; two day turns; slot 94.
+- All at their maximum, a duel: `budget 5` (the code's "asks for 6 ... using 5"), the first-win bonus 3 cards,
+  `purse 576 = 270 base x1.25 difficulty x3.00 first win x0.57 luck`; two day turns; slot 95; both reload with 45
+  overrides.
+- A new game with Towns per milestone 30: `[TFR-Custom] new game: Custom (Normal), 1 override(s): milestoneEvery 10 ->
+  30`.
+
+**Not tested:** an ante re-roll or buy-back, a coin challenge, research start and feeding, a specialty change, a
+milestone boon, a Wrath week at the extremes.
+
+Files: `The Forsaken Realms/config tables/custom_difficulty.json`.
+
 ## Round 829: custom difficulty, part 8 - 48 more knobs: land, the AI colors, capture, ruins, invasions, raids, Ring Cities, world generation (2026-10-28)
 
 Part 8 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`), metadata batch 2: plane data
