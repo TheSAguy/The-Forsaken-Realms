@@ -14264,6 +14264,54 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 840: the loop breaker lets a combo that is going somewhere finish, and Offer Draw works only in a real loop (2026-10-29)
+
+The Fable review of `d6d68a2b442` (P2-1, P2-2; verified in `C:\TFR\notes\fable-verify-2026-10-28.md`). The user: "Yes, all
+as recommended" - a trigger chain counts toward a draw only while nobody loses life in it, with a 1000-repeat backstop;
+the AI takes an offered draw only after the breaker has barred an AI ability this turn, or while a no-progress trigger
+chain is at 10+ right now. Rounds 840-848 are the Fable review fix batch.
+
+- **The bug (P2-1)**: round 708's trigger draw counted any trigger coming back 25 times with nobody casting or
+  activating, whatever it did. A finite drain or burn chain the player built - Impact Tremors with 25+ creatures
+  entering one by one, Exquisite Blood + Sanguine Bond - ended as a draw at 25 instead of winning. Upstream already
+  solved this (`5c9511d1d1c`, #12127, in our history since round 769): `Player.loseLife` clears MagicStack's own
+  repeat count ("a chain of triggers that costs life ends by itself"). The review's own fix (snapshot life and zone
+  sizes, any change resets) was not taken: it would let every growing loop (tokens, counters, life gain) run forever
+  and break round 708's Soul Warden test.
+- **The fix (`LoopBreaker.onStackAdd`)**: the state keeps `lifeLostMark`, the sum of every registered player's
+  `getLifeLostThisTurn()`; when a trigger is added and the sum has moved since the last one, every trigger chain starts
+  over. Still drawn at 25: blink and bounce loops, token and counter loops, life-gain-only loops. Never drawn at 25:
+  drain and burn chains - they end when someone dies. A second count, `rawRepeats` (reset only by a player casting or
+  activating, or a new turn), draws at `TRIGGER_BACKSTOP_AT` = 1000 repeats of one trigger in a turn whatever happened:
+  a drain loop that cannot end (a "can't lose" effect). That is above any TFR enemy's life (Arzakon 200, x2.5 on
+  Insane, plus bonuses). The batch rule (a trigger already waiting on the stack is not counted) applies to both. The AI
+  activation bar (25) is unchanged.
+- **The bug (P2-2)**: the AI accepted Offer Draw once any count had reached 10 this turn (`State.most`, never lowered).
+  An AI pump used 10 times (Firebreathing, a Shade), or any trigger of either player reaching 10, let the player draw
+  a duel they were losing for the rest of that turn. (The review's Grapeshot example does not happen: every storm copy
+  is a new card id.)
+- **The fix (`LoopBreaker.loopSeen`)**: accepted only when the breaker has barred an AI ability this turn (25 uses), or
+  while a trigger chain is live at `DRAW_OFFER_AT` (10) or more right now - the highest current `triggerRepeats`, which
+  any cast or activation and any life lost resets. `most` stays for the log only. `[TFR-LoopBreak] draw offered -
+  accepted: Runeclaw Bear - Gain 1 life. used 25 times this turn` / `accepted: Soul Warden - ... triggered 10 times in a
+  row` / `declined: no loop (no AI ability barred, live trigger chain 0; most repeats this turn 10, ...)`; the draw
+  reason reads the same plus " - you offered a draw". New state: `rawRepeats`, `labels`, `barredWhat`,
+  `lifeLostMark`; nothing saved.
+- `PlayerControllerAi.acceptsDrawOffer`: comment only.
+- **Tested**: `forge-gui-desktop` `forge.game.LoopBreakerTest` (TestNG, -Dcheckstyle.skip): 6/6, and with every `forge.ai` test 530/530 (Maven exit 0). The three round 708
+  tests (the first rewritten: 10 AI uses decline, 24 decline, the 25th bars and then accepts; Soul Warden one at a time
+  still draws at exactly the 25th trigger; a batch of 30 is one), plus: a drain chain is not a draw (Impact Tremors,
+  opponent at 100, 30 creatures one at a time -> no draw, opponent at 70); a drain chain that cannot end draws at
+  exactly the 1000th trigger (opponent at 5000 -> 4001); a draw offer is accepted while a Soul Warden chain is at 10
+  (declined at 9) and declined after one activation resets it. Agent game (a copy with the new LoopBreaker classes ahead of the round-808 jar): a new game, one ordinary world duel at 50x (Wild Rat, lost, 11 turns, 10 s), no `[TFR-LoopBreak]` line, no exceptions. NOT run live: a real drain combo, or an Offer Draw, in a duel.
+- **Suggested player text** (for round 848's GUIDE and Discord FAQ; not edited here): "Stuck in a loop? If a trigger
+  keeps coming back 25 times with nobody acting and nobody losing life, the duel ends in a draw - nothing won or lost.
+  A combo that drains or burns runs to the end. Game menu > Offer Draw: the enemy accepts while a trigger loop is
+  running (10 or more repeats) or once it has had to stop repeating one of its own abilities this turn - never in an
+  ordinary duel."
+- Not done: Forge's own 50-repeat rule and 999-item stack limit unchanged; the AI still counts copied abilities
+  (optional per the verification; spells are new ids anyway).
+
 ## Round 845: portrait Save/Load - "Sort by Recent" no longer covers the list (2026-10-29)
 
 Rounds 840-848 are the Fable review fix batch (`C:\TFR\notes\fable-review-2026-10-28.md`, verified in

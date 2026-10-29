@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 840 - the loop breaker: life lost restarts a trigger chain; Offer Draw only in a real loop
+- **`forge-game/src/main/java/forge/game/LoopBreaker.java`** (TFR file) - `onStackAdd`: a trigger chain's count starts
+  over when any registered player's life lost this turn has moved (`lifeLostMark`, upstream's #12127 rule, mirrored here;
+  MagicStack's own count is untouched); `rawRepeats` + `TRIGGER_BACKSTOP_AT` (1000) draw whatever happened;
+  `loopSeen` accepts only after an AI bar this turn (`barredWhat`) or while a live chain is at 10+. No new hook.
+- **`forge-ai/src/main/java/forge/ai/PlayerControllerAi.java`** - the `acceptsDrawOffer()` comment only.
+- **`forge-gui-desktop/src/test/java/forge/game/LoopBreakerTest.java`** - first test rewritten, three tests added.
+
 ### Round 831 - custom difficulty, the spawn-tier and Armory tables per save
 - **`forge-gui-mobile/src/forge/adventure/util/Config.java`** (STOCK, after round 825): after
   `getSpawnTierWeightData()`, two base fields (`baseSpawnTierWeightData`, `baseArmoryRarityData`) with `*BaseKept`
