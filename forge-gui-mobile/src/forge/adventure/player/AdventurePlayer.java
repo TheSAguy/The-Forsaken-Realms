@@ -2808,8 +2808,23 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         SoundSystem.instance.play(type, false);
     }
 
+    /**
+     * Round 836: a purse after a change - gold, shards, wood or stone held in [0, Integer.MAX_VALUE] through a long sum, so
+     * an edited save near the top cannot wrap negative (which would break every {@code getGold() >= cost} gate) and an
+     * overspend floors at 0. Logs {@code [TFR-Purse]} only when the clamp actually fires.
+     */
+    private static int purse(String what, int before, long change) {
+        long wanted = before + change;
+        if (wanted >= 0 && wanted <= Integer.MAX_VALUE)
+            return (int) wanted;
+        int kept = (int) Math.max(0, Math.min(Integer.MAX_VALUE, wanted));
+        System.out.println("[TFR-Purse] " + what + " " + before + (change >= 0 ? " + " : " - ") + Math.abs(change) + " = "
+                + wanted + " - clamped to " + kept);
+        return kept;
+    }
+
     private void addGold(int goldCount) {
-        gold += goldCount;
+        gold = purse("gold", gold, goldCount); // round 836
         onGoldChangeList.emit();
         if (goldCount > 0) // round 115: reward-path gold (dungeon drops, quest grants) was silent; overworld pickups use giveGold which already plays
             playSfx(SoundEffectType.CoinsDrop);
@@ -3229,7 +3244,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                     + " - clamping to 0 (a caller skipped its affordability check)");
             gold = 0;
         } else {
-            gold -= price;
+            gold = purse("gold", gold, -(long) price); // round 836: a credit near the top caps at Integer.MAX_VALUE
         }
         forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.GOLD, gold - goldBefore);
         onGoldChangeList.emit();
@@ -3242,14 +3257,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void takeShards(int number) {
-        shards -= number;
-        forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.SHARDS, -number);
+        int before = shards;
+        shards = purse("shards", shards, -(long) number); // round 836
+        forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.SHARDS, shards - before);
         onShardsChangeList.emit();
         //play sfx
         playSfx(SoundEffectType.TakeShard); // round 230
     }
 
     public void setShards(int number) {
+        number = purse("shards", 0, number); // round 836: never below 0
         boolean changed = shards != number;
         if (changed) {
             forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.SHARDS, number - shards);
@@ -3265,8 +3282,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void takeWood(int number) {
-        wood -= number;
-        forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.WOOD, -number);
+        int before = wood;
+        wood = purse("wood", wood, -(long) number); // round 836
+        forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.WOOD, wood - before);
         onWoodChangeList.emit();
     }
 
@@ -3277,8 +3295,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void takeStone(int number) {
-        stone -= number;
-        forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.STONE, -number);
+        int before = stone;
+        stone = purse("stone", stone, -(long) number); // round 836
+        forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.STONE, stone - before);
         onStoneChangeList.emit();
     }
 

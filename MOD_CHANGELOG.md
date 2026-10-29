@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 836: gold, shards, wood and stone are held between 0 and the int limit - no overflow, no negative purse (2026-10-28)
+
+The user: "Yes, both" to the log review `notes/logs-1028c.md` P3: an edited save held 1,473,788,608 gold; the purse
+fields are `int`, and one more ~674 million would have wrapped it negative and broken every `getGold() >= cost` gate.
+
+- **The clamp**: `AdventurePlayer.purse(what, before, change)` sums as a `long` and holds the result in
+  `[0, Integer.MAX_VALUE]`; it logs `[TFR-Purse] gold 2147483000 + 2147483000 = 4294966000 - clamped to 2147483647`
+  only when it fires. Used by `addGold` (reward gold), `takeGold`'s credit/normal branch (`giveGold` routes through it;
+  its overspend floor and `[TFR-Gold]` line stay as they were), `takeShards` (so `addShards`), `setShards` (never below
+  0), `takeWood` / `takeStone` (so `addWood` / `addStone` - the same unguarded pattern; the edited save held 6 million
+  of each). `ResourceLedger.moved` now gets the real change for shards, wood and stone, not the asked one.
+- **Behavior change**: an overspend of shards, wood or stone now floors at 0 (it went negative before, as gold did
+  before its 2026-08-30 floor); none of the `take*` callers (listed with grep) relies on a negative balance.
+- **Audited, unchanged**: the load (`readInt` cannot hold more than the limit; an old save loads exactly as before),
+  new-game and New Game+ starts (config values), `potionOfFalseLife` (checks the gold first), the defeat loss (a share
+  of the gold carried, never more), the console's `give gold` / `give shards` (through the clamped methods).
+- **The footer's `gold=-29477241`** (`logs-1028c`): `SessionLog`'s footer prints the session's change
+  (`getGold() - firstGold`), here the 2% defeat loss of an edited purse plus spending - not a negative purse. No fix.
+- **Tested** (Maven exit 0): a reflection check of `purse` against the built jar (1,473,788,608 + 674M -> 2,147,483,647;
+  MAX + 1 -> MAX; 100 - 500 shards -> 0; a `-Integer.MIN_VALUE` change -> MAX; 100 + 50 -> 150 and 100 - 100 -> 0
+  with no line); in the agent test copy (round 835's run): `give gold 2147483000` twice -> 2,147,483,647 with the
+  `[TFR-Purse]` line, `give shards -500` at 10 -> 0 (`[TFR-Purse] shards 10 - 500 = -490 - clamped to 0`), `give gold
+  -100` -> 100 less, no line; a September agent save loaded with its gold, shards, wood, stone and items as saved.
+
 ## Round 835: a dungeon's upgrades are fixed per appearance - a reload from before the entry meets the same creatures (2026-10-28)
 
 The user: "Yes, both" to the log review `notes/logs-1028c.md` P2: a player at Notoriety 77 reloaded and re-entered the

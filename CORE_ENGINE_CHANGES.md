@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 836 - the purse clamp
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): a private static `purse(what, before,
+  change)` before `addGold`; `addGold`, `takeGold` (its non-overspend branch), `takeShards`, `setShards`, `takeWood` and
+  `takeStone` go through it; the three `take*` pass the real change to `ResourceLedger.moved`.
+
 ### Round 835 - dungeon upgrades seeded per appearance
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK): `loadObjects`' `case "enemy"` passes
   `currentMap` as a new last argument to `EnemyTiers.rollPlacement(...)` and `DungeonUpgrades.upgrade(...)`.
