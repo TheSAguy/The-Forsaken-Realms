@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 866: raiders say so on their Alt plates (2026-10-29)
+
+The user: "it would be nice to have some indicator of what enemies are part of the pillage on the map. Maybe when you
+press "Alt" it would tell you - Pillager or something like that." Mock-up `C:\TFR\notes\r865-866-mock.png`, approved
+with the RAIDER line as its own plate line. Files: `util/TfrPlates.java`, `util/TownPillage.java`.
+
+- **The plate:** while the info plates show (Alt, R3 or the Units toggle; round 719), a raider's plate gets a second
+  line above its rank line: "RAIDER - <TOWN>", the word and the town in the plates' warning orange (`e67e22`), the dash
+  dim. Every other enemy's plate is unchanged.
+- **Who is a raider:** `TownPillage.raiderTown(EnemySprite)` (new) gives the town's name when the sprite carries
+  `pillageTown` and that pillage is still running (null otherwise). A raider of an ended pillage is about to leave the
+  map, so it gets no line. It looks the town up through the existing POI cache, so every frame stays cheap.
+- **Placement:** the two lines are placed as one box (`placeBox` with the taller band), so a crowd's lifting moves
+  them together and never splits a RAIDER line from its rank. The label is rebuilt only when the plate's key changes
+  (the town is now part of the key).
+- **No always-on marker**, as the mock-up recommended: the user asked for the Alt version, and legends, the Wrath and
+  the coins already put marks over enemies.
+- **Log:** `[TFR-Plates] shown: ...` adds ", N raider(s)" when any raider wears a plate.
+- **Docs:** the GUIDE's Town Raids gets "Telling raiders apart"; Discord FAQ message 10 gets the Alt line (1,593
+  characters). `GUIDE.html` is regenerated once here (`guide_html.py --check` OK), so it carries round 865's GUIDE text
+  as well.
+- **Agent-tested** in `agent-865` (the round 865 test's launches; cheats, fog of war on), at Orazca with `pillage
+  start`, two raiders out and a plain Wandering Brawler spawned beside them (`spawn enemy`), the plates shown with
+  `plates on` (the Units toggle, Alt's state) after a torch pulse:
+  - both raiders wore "RAIDER - ORAZCA" over "APPRENTICE ?", and the spawned Brawler wore "APPRENTICE" only;
+  - `[TFR-Plates] shown: 3 plate(s) - 0 battled, 0 family only, 3 unknown, 0 lifted, 2 raider(s)`;
+  - no exceptions. Shots `C:\TFR\notes\r865\4-alt-plates.png` and `4-alt-plates-zoom.png` (2x).
+- **Not tested:** Alt itself (the bridge sends no held key; `plates on` sets the same `shown()`), a crowd tall enough
+  to lift a two-line plate, Android.
+
 ## Round 865: a raid's Details page in the quest log, with a mini-map and Show on Map (2026-10-29)
 
 The user: "I think it would be helpful it the "Pillaged" quest had a details section. Maybe inside that a mini-map of
@@ -14300,7 +14330,7 @@ line, Show on Map in this round). Files: `scene/QuestLogScene.java` (stock), `sc
   - `[TFR-Pillage] quest log Details: <town> - b of 5, N days left, <dir> T tiles, R raider(s) out, D on the mini-map,
     F in the fog` (or "too far for raiders").
   - `[TFR-Pillage] Show on Map: the world map opens centered on x,y`.
-- **Docs:** the GUIDE's Town Raids "Keeping track" paragraph; Discord FAQ message 10 (1,593 characters). The FAQ
+- **Docs:** the GUIDE's Town Raids "Keeping track" paragraph; Discord FAQ message 10 (1,513 characters). The FAQ
   artifact is not rebuilt; that waits for the release.
 - **Agent-tested** in `agent-865` (wt-865's jar, cheats, fog of war on; one launch in landscape 1280x720, one in
   portrait 540x960; the copy was removed afterward, and its own `localappdata` held its cache). On the autosave,

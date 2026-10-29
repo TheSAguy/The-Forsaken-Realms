@@ -510,6 +510,16 @@ public final class TownPillage {
         return r;
     }
 
+    /** Round 866: the town a raider is pillaging, by name, for its Alt plate - null when it is no raider or its pillage
+     *  has ended. */
+    public static String raiderTown(EnemySprite mob) {
+        World world = Current.world();
+        if (mob == null || mob.pillageTown == null || world == null || !world.getPillages().containsKey(mob.pillageTown))
+            return null;
+        PointOfInterest poi = cachedPoi(world, mob.pillageTown);
+        return poi == null ? null : poi.getDisplayName();
+    }
+
     /** The world map's Details: every pillaged town and its count so far. */
     public static List<Object[]> mapLabels() {
         List<Object[]> out = new ArrayList<>();

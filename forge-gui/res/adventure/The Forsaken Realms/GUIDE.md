@@ -398,6 +398,8 @@ Raiders from the nearby dungeons can fall on a town - one of yours, or a neutral
   "Pillaged! 2/5". The raid's **Details** button in the quest log opens its page: the count, the days left, how far
   away the town is, the reward and the penalty, and a mini-map of the town with the 20-tile raid range, you, and a red
   dot for each raider you can see. **Show on Map** opens the world map on the town.
+- **Telling raiders apart.** Hold Alt (the enemy info plates) and each raider's plate carries an orange
+  "RAIDER - <town>" line above its rank.
 - **Your roaming guards can help.** Tick **Help with pillaged towns** on a roaming guard's orders (your Capitol's
   Armory, Manage Guards). When a raid starts, a free guard with that order rides out - one guard per raided town - and
   raiders turn up around it just as they do around you. It hunts the ranks its orders allow, fighting each raider as

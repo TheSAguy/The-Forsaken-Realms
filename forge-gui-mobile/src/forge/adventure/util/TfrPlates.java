@@ -54,7 +54,7 @@ public final class TfrPlates {
     /** The controller's right stick held in (HudScene: buttons arrive as key codes). */
     private static boolean stickHeld;
     private static boolean wasShown, countNext, loggedShown, frameShown, frameColorView;
-    private static int exact, family, unknown, lifted;
+    private static int exact, family, unknown, lifted, raiders;
     /** A mana pip's side and the gap between parts, in world px (the text is [%55]: about 5 px). */
     private static final float PIP = 4f, GAP = 1.2f, ICON = 5f;
     /** Where a [%55] label's letters sit in its height (measured in the agent game: the lower ~40% is line gap): the
@@ -138,11 +138,12 @@ public final class TfrPlates {
         }
         if (countNext && !queue.isEmpty()) {
             System.out.println("[TFR-Plates] shown: " + queue.size() + " plate(s) - " + exact + " battled, " + family
-                    + " family only, " + unknown + " unknown, " + lifted + " lifted" + (frameColorView ? " (Manasight)" : ""));
+                    + " family only, " + unknown + " unknown, " + lifted + " lifted" + (raiders > 0 ? ", " + raiders
+                    + " raider(s)" : "") + (frameColorView ? " (Manasight)" : ""));
             countNext = false;
             loggedShown = true;
         }
-        exact = family = unknown = lifted = 0;
+        exact = family = unknown = lifted = raiders = 0;
         queue.clear();
     }
 
@@ -455,8 +456,10 @@ public final class TfrPlates {
     }
 
     public static final class Plate {
-        private TextraLabel rank, life;
+        private TextraLabel rank, life, raider;
         private String key = "", colors = "";
+        /** Round 866: the town this raider pillages (TownPillage.raiderTown), or null - its plate's RAIDER line. */
+        private String raiderTown;
         private boolean unknownColors, legend, coin, showLife;
         private int lifeNow = -1;
         private long lifeAt;
@@ -485,14 +488,22 @@ public final class TfrPlates {
                 }
                 buffed = lifeNow > Math.round(d.life * Current.player().getDifficulty().enemyLifeFactor);
             }
+            raiderTown = TownPillage.raiderTown(sprite);
+            if (raiderTown != null)
+                raiders++;
             int r = Math.max(0, Math.min(3, EnemyData.tierRank(d.tier)));
-            String k = r + "/" + d.boss + "/" + showLife + "/" + lifeNow + "/" + buffed;
+            String k = r + "/" + d.boss + "/" + showLife + "/" + lifeNow + "/" + buffed + "/" + raiderTown;
             if (k.equals(key))
                 return;
             key = k;
             if (rank == null) {
                 rank = Controls.newTextraLabel("");
                 life = Controls.newTextraLabel("");
+                raider = Controls.newTextraLabel("");
+            }
+            if (raiderTown != null) {
+                raider.setText("[%55][#e67e22]RAIDER[#a8a296] - [#e67e22]" + raiderTown.toUpperCase(Locale.ROOT));
+                raider.pack();
             }
             String word = EnemyData.tierDisplayName(d.tier) + (d.boss ? " Boss" : "");
             rank.setText("[%55][#" + RANK_COLOR[r] + "]" + word.toUpperCase(Locale.ROOT));
@@ -514,7 +525,10 @@ public final class TfrPlates {
             float w = rw + starW + (colorsW > 0 ? GAP + colorsW : 0f) + lifeW + coinW;
             // y is the labels' origin; the band of letters [lo, hi] above it is what the plate frames
             float lo = th * BAND_LO, hi = th * BAND_HI, mid = (lo + hi) / 2f;
-            float x = cx - w / 2f, y = placeBox(x, foot + 1f - lo, w, lo, hi);
+            // Round 866: a raider's RAIDER line sits right above, so the two are placed as one box
+            float extra = raiderTown != null ? hi - lo + 2f : 0f, raw = raiderTown != null ? raider.getWidth() : 0f;
+            float x = cx - w / 2f, bw = Math.max(w, raw);
+            float y = placeBox(cx - bw / 2f, foot + 1f - lo, bw, lo, hi + extra);
             Color was = batch.getColor().cpy();
             drawBox(batch, parentAlpha, x, y, w, lo, hi);
             rank.setPosition(x, y);
@@ -557,6 +571,12 @@ public final class TfrPlates {
                 TextureRegion c = items.findRegion("BronzeChallengeCoin");
                 if (c != null)
                     batch.draw(c, px + GAP, y + mid - (ICON - 1f) / 2f, ICON - 1f, ICON - 1f);
+            }
+            if (raiderTown != null) {
+                float rx = cx - raw / 2f, ry = y + extra;
+                drawBox(batch, parentAlpha, rx, ry, raw, lo, hi);
+                raider.setPosition(rx, ry);
+                raider.draw(batch, parentAlpha);
             }
             batch.setColor(was);  // the HUD shares the batch: no color left behind (GameHUD.draw, round 329)
         }
