@@ -14264,6 +14264,53 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 861: the Save/Load list shows a cut-off slot from its .old, marked "(recovered)" (2026-10-29)
+
+The user: "Yes, round 861" - to "Also show cut-off manual saves in the Save/Load list, with the same rescue (round
+861)?" (the list shows a cut-off manual slot and loads its `.old` with the same notice, like Continue does). Round 858's
+"Not covered" gap: `SaveLoadScene.updateFiles` skipped a `.sav` whose header would not read, so a manual slot that 1.24
+cut off (a 0-byte `.sav` beside a whole `.old`) could not be picked at all. Files: `world/WorldSave.java` and
+`scene/SaveLoadScene.java` (stock), `util/CustomDifficulty.java` (TFR).
+
+- **The list:** a slot whose `.sav` header does not read, but whose `.old` header does, is listed from the `.old` - its
+  name, date, preview and difficulty word (round 838) - with an orange "(recovered)" after the difficulty, and an orange
+  "Last save was cut off" under the date in the preview. A slot with no `.sav` at all is not listed (a deleted slot's
+  stale `.old` is not this slot's save, as round 858's `save()` already treats it). Auto and Quick Save get the same.
+  - `WorldSave.readHeader(File)` (the header or null; the list's own inline read moved there) and
+    `WorldSave.readCutOffHeader(slot)` (the `.old`'s header when the `.sav` will not read). The latter adds the `.sav` to
+    round 858's `brokenSaves`, so a save over the slot keeps the good `.old` even when the cut-off `.sav` is not empty
+    (858 already skipped the copy for a 0-byte one), and logs once a launch
+    `[TFR-Load] slot N: the save is cut off (0 bytes) - the Save/Load list shows the one before it (.old)`.
+- **Loading it** is round 858's fallback, unchanged: the `.sav` fails, `loadOld` loads the `.old`, with the banner
+  "That save was cut off, so the one before it was loaded (saved ...)" and `[TFR-Load] slot N: the save was cut off -
+  loaded the one before it`.
+- **Saving over it** is an ordinary save: the new `.sav` moves in, the `.old` stays the one the list showed, and the
+  slot is listed normally after.
+- **New Game+ on a recovered slot uses the `.old`'s game** (the safe choice: it is the game Start loads). Round 837's
+  difficulty picker reads `previews`, which now holds the `.old`'s header, so it pre-selects the `.old`'s difficulty;
+  round 839's `CustomDifficulty.peekSave` reads the `.old` when the `.sav` will not read (`peekFile`), so "Custom
+  settings: N changed" and Advanced... start from the `.old`'s settings
+  (`[TFR-Custom] New Game+: slot N's save is cut off - its settings come from the .old`); Start loads the slot through
+  858's fallback as before.
+- **Unchanged:** healthy slots look and load as before, and New Game+ on a healthy slot; the save format; round 858's
+  load and save paths.
+- **Agent-tested** in `agent-861` (wt-861's three classes ahead of the agent jar, cheats; no duels played):
+  - slot 4 cut to 0 bytes beside its `.old`: listed as "r731 wizard (recovered)" with the `.old`'s date, map preview and
+    the orange note; Load gave the `.old`'s game (Joshua, 1059 gold) with the banner and both `[TFR-Load]` lines;
+  - a save over slot 4 left a whole `.sav` (2,095,578 bytes) and the `.old` byte for byte (md5 unchanged), no `.tmp`;
+    the list then showed it as a normal slot;
+  - slot 3 cut to 0 bytes beside an `.old` recorded as Normal: listed "auto save - Normal (recovered)"; its New Game+
+    dialog pre-selected "Normal (this save's)", "Custom settings: none", with the peek's fallback line (cancelled there);
+  - portrait 540x960: the marker fits inside the button and the note sits above the preview; a healthy slot (slot 1)
+    shows its date only and loads with no notice; landscape 1280x720 as well (the note overlaps the top edge of the
+    map picture a little, like the stock date in portrait);
+  - no exceptions beyond 858's logged `EOFException` for the cut-off `.sav`. Shots `C:\TFR\notes\r861\`.
+- **Not covered:** a `.sav` cut off AFTER its header (1.24 wrote the header first) still lists as a normal slot with no
+  marker - its header reads, and checking every slot's whole stream would cost ~25 ms a slot on PC each time the list
+  opens. Seen here: slot 7's `.sav` cut at 1,000 bytes kept a readable header and listed normally (its load was not
+  tried; round 858's fallback covers a body that will not read). A save over such a slot WITHOUT loading it first copies the cut-off `.sav` over its `.old` (round
+  858's rule; loading it first marks it). Android not tested on a device.
+
 ## Round 860: agent games get their own LOCALAPPDATA cache (2026-10-29)
 
 The user: "Yes, round 860" - to "Give the agent games their own cache folder so this can't happen again?" (agent games

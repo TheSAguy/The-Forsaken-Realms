@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Scaling;
 import com.github.tommyettinger.textra.TextraButton;
@@ -25,11 +24,7 @@ import forge.sound.SoundSystem;
 import forge.util.TextUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.text.DateFormat;
-import java.util.zip.InflaterInputStream;
 
 /**
  * Scene to load and save the game.
@@ -44,6 +39,8 @@ public class SaveLoadScene extends UIScene {
     /** Round 838: each slot's own save name, without the difficulty tag its button shows - the Save dialog's default. */
     private final IntMap<String> slotNames = new IntMap<>();
     IntMap<WorldSaveHeader> previews = new IntMap<>();
+    /** Round 861: slots whose .sav is cut off, shown (and loaded) from their .old. */
+    private final com.badlogic.gdx.utils.IntSet recovered = new com.badlogic.gdx.utils.IntSet();
     Table layout;
     Modes mode;
     TextField textInput;
@@ -218,6 +215,8 @@ public class SaveLoadScene extends UIScene {
                 String words = slotDifficulty(header);
                 if (words != null)
                     tag = "   [%85]" + dotColor(presetOf(words)) + "• " + words;
+                if (recovered.contains(i))
+                    tag += "  [%85][ORANGE](recovered)"; // round 861: the .old's game; the preview says why
             }
         }
         slotNames.put(i, displayName);
@@ -252,10 +251,12 @@ public class SaveLoadScene extends UIScene {
                 previewImage.layout();
                 previewImage.setVisible(true);
                 previewDate.setVisible(true);
-                if (worldSaveHeader.saveDate != null)
-                    previewDate.setText("[%98]" + DateFormat.getDateInstance().format(worldSaveHeader.saveDate) + " " + DateFormat.getTimeInstance(DateFormat.SHORT).format(worldSaveHeader.saveDate));
-                else
-                    previewDate.setText("");
+                String date = worldSaveHeader.saveDate == null ? ""
+                        : "[%98]" + DateFormat.getDateInstance().format(worldSaveHeader.saveDate) + " " + DateFormat.getTimeInstance(DateFormat.SHORT).format(worldSaveHeader.saveDate);
+                // Round 861: a cut-off slot shows the save before it - say so under the date.
+                if (recovered.contains(slot))
+                    date += "\n[%80][ORANGE]Last save was cut off";
+                previewDate.setText(date);
                 //getLocation
                 playerLocation.setText(getSplitHeaderName(worldSaveHeader, true));
             }
@@ -679,19 +680,20 @@ public class SaveLoadScene extends UIScene {
         if (names == null)
             throw new RuntimeException("Can not find save directory");
         previews.clear();
+        recovered.clear();
         for (File name : names) {
             if (WorldSave.isSafeFile(name.getName())) {
-                try {
-                    try (FileInputStream fos = new FileInputStream(name.getAbsolutePath());
-                         InflaterInputStream inf = new InflaterInputStream(fos);
-                         ObjectInputStream oos = new ObjectInputStream(inf)) {
-                        int slot = WorldSave.filenameToSlot(name.getName());
-                        WorldSaveHeader worldSaveHeader = (WorldSaveHeader) oos.readObject();
-                        previews.put(slot, worldSaveHeader);
-                    }
-                } catch (ClassNotFoundException | IOException | GdxRuntimeException e) {
-                    //e.printStackTrace();
+                int slot = WorldSave.filenameToSlot(name.getName());
+                WorldSaveHeader worldSaveHeader = WorldSave.readHeader(name);
+                if (worldSaveHeader == null) {
+                    // Round 861: a .sav cut off by an app killed mid-save (1.24) used to hide its slot; it shows the
+                    // .old's game, marked, and loads it through round 858's fallback.
+                    worldSaveHeader = WorldSave.readCutOffHeader(slot);
+                    if (worldSaveHeader != null)
+                        recovered.add(slot);
                 }
+                if (worldSaveHeader != null)
+                    previews.put(slot, worldSaveHeader);
             }
         }
         refreshSaveSlots();

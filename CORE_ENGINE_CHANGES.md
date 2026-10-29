@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 861 - the Save/Load list shows a cut-off slot from its .old
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** (STOCK) - two helpers next to round 858's `loadOld`:
+  `readHeader(File)` (a save file's header, or null) and `readCutOffHeader(slot)` (the `.old`'s header when the `.sav`'s
+  will not read; adds the `.sav` to `brokenSaves` and logs `[TFR-Load] ... the Save/Load list shows the one before it`).
+- **`forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`** (STOCK) - `updateFiles` reads headers through
+  `readHeader` (its inline stream and the five imports it needed are gone) and lists a cut-off slot from
+  `readCutOffHeader` (`recovered` IntSet); `addSaveSlot` adds an orange "(recovered)", `updateSlot` an orange "Last save
+  was cut off" under the date. Merge note: upstream's own `updateFiles` loop is replaced, so a change upstream makes to
+  that loop has to be carried into the helper.
+
 ### Round 858 - saves are written whole; a cut-off save loads its .old
 - **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** (STOCK) - `save()` builds the save in memory, then
   writes it through upstream's `writeSaveSnapshot` (temp file, read-back, `.sav` copied to `.old`, atomic move) instead

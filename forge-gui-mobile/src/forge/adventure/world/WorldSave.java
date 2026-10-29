@@ -230,6 +230,37 @@ public class WorldSave {
         return true;
     }
 
+    /** Round 861: a save file's header (name, date, preview), or null when it will not read - a cut-off or empty file. */
+    public static WorldSaveHeader readHeader(File file) {
+        if (!file.isFile() || file.length() == 0)
+            return null;
+        try (FileInputStream in = new FileInputStream(file);
+             InflaterInputStream inf = new InflaterInputStream(in);
+             ObjectInputStream ois = new ObjectInputStream(inf)) {
+            Object header = ois.readObject();
+            return header instanceof WorldSaveHeader ? (WorldSaveHeader) header : null;
+        } catch (Exception e) { // GdxRuntimeException from the preview too
+            return null;
+        }
+    }
+
+    /**
+     * Round 861: the header of the slot's .old when its .sav's will not read (a save cut off by 1.24, a 0-byte .sav
+     * beside a whole .old), else null. The Save/Load list shows such a slot from the .old, and load() takes it through
+     * loadOld. A slot found this way is marked like one load() fell back from (brokenSaves), so a save over it keeps
+     * this .old instead of copying the broken .sav over it.
+     */
+    public static WorldSaveHeader readCutOffHeader(int slot) {
+        File sav = new File(getSaveFile(slot));
+        if (!sav.isFile())
+            return null; // no .sav: a deleted slot, whose stale .old is not this slot's save
+        WorldSaveHeader header = readHeader(new File(sav.getPath().replace(".sav", ".old")));
+        if (header != null && brokenSaves.add(sav.getPath()))
+            System.out.println("[TFR-Load] slot " + slot + ": the save is cut off (" + sav.length()
+                    + " bytes) - the Save/Load list shows the one before it (.old)");
+        return header;
+    }
+
     private static final String TEMP_PREFIX = "forge-save-";
     private static final String TEMP_SUFFIX = ".tmp";
     /** Round 858: .sav files load() could not read and replaced with their .old this launch - the next save of the

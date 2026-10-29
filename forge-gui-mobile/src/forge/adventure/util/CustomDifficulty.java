@@ -457,10 +457,24 @@ public final class CustomDifficulty {
      * the player's part only, nothing applied. A save from before round 822 has no settings: none.
      */
     public static SavePeek peekSave(int slot) {
-        SavePeek peek = new SavePeek();
         java.io.File file = new java.io.File(WorldSave.getSaveFile(slot));
         if (!file.exists())
-            return peek;
+            return new SavePeek();
+        SavePeek peek = peekFile(slot, file);
+        // Round 861: a cut-off .sav loads its .old at Start (round 858's fallback), so the settings come from the .old.
+        java.io.File old = new java.io.File(file.getPath().replace(".sav", ".old"));
+        if (!peek.ok && old.isFile() && old.length() > 0) {
+            SavePeek fromOld = peekFile(slot, old);
+            if (fromOld.ok) {
+                System.out.println("[TFR-Custom] New Game+: slot " + slot + "'s save is cut off - its settings come from the .old");
+                return fromOld;
+            }
+        }
+        return peek;
+    }
+
+    private static SavePeek peekFile(int slot, java.io.File file) {
+        SavePeek peek = new SavePeek();
         try (java.io.InputStream in = new java.io.FileInputStream(file);
              java.util.zip.InflaterInputStream inf = new java.util.zip.InflaterInputStream(in);
              java.io.ObjectInputStream ois = new java.io.ObjectInputStream(inf)) {
