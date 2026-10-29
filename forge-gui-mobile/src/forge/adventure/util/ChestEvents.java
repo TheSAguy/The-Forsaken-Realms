@@ -458,6 +458,8 @@ public class ChestEvents {
         Set<String> allowed = EditionProgression.eventAllowedEditionCodes();
         if (allowed != null && !allowed.isEmpty())
             rd = EditionProgression.restrictToEditions(Collections.singletonList(rd), new ArrayList<>(allowed)).get(0);
-        return rd.generate(false, true);
+        // Round 870: the world's Random, which ResourceSpawns.awardSeeded() seeds for this chest, not a seedless one -
+        // so a reload finds the same Lost Card and the same Thief Merchant cards.
+        return rd.generate(false, false);
     }
 }

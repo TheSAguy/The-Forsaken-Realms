@@ -1395,6 +1395,11 @@ public final class Ascendance {
     /** Round 518: {@code avoid} (the offer a Re-roll replaces) is drawn only when too few others are left to fill it. */
     private static void rollOffer(AscendanceState s, java.util.Set<String> avoid) {
         int level = s.pendingLevels.get(0);
+        // Round 870 (log reviews logs-1029 P3-4 / logs-1029b: a reload from a save written before the offer was rolled
+        // drew a fresh offer each time): the offer draws from a Random seeded by the world seed, the level and the
+        // re-rolls already paid at that level - a reload rolls the same three, a paid Re-roll still draws new ones.
+        int rerolls = s.rerolledLevel == level ? s.rerollCount : 0;
+        java.util.Random random = offerRandom(level, rerolls);
         List<AscendanceData.Choice> lasting = new ArrayList<>(), once = new ArrayList<>();
         List<AscendanceData.Choice> freshLasting = new ArrayList<>(), freshOnce = new ArrayList<>();
         for (AscendanceData.Choice c : data().choices)
@@ -1404,27 +1409,41 @@ public final class Ascendance {
                     (c.lasting ? freshLasting : freshOnce).add(c);
             }
         s.offer.clear();
-        addDraw(s, freshLasting.isEmpty() ? lasting : freshLasting);
-        addDraw(s, freshOnce.isEmpty() ? once : freshOnce);
+        addDraw(s, freshLasting.isEmpty() ? lasting : freshLasting, random);
+        addDraw(s, freshOnce.isEmpty() ? once : freshOnce, random);
         List<AscendanceData.Choice> rest = new ArrayList<>(freshLasting);
         rest.addAll(freshOnce);
         int size = offerSize();
-        while (s.offer.size() < size && addDraw(s, rest)) {
+        while (s.offer.size() < size && addDraw(s, rest, random)) {
             // draw until the offer is full or the fresh ones run out
         }
         List<AscendanceData.Choice> any = new ArrayList<>(lasting); // the avoided ones, only to fill the offer
         any.addAll(once);
-        while (s.offer.size() < size && addDraw(s, any)) {
+        while (s.offer.size() < size && addDraw(s, any, random)) {
             // likewise
         }
-        java.util.Collections.shuffle(s.offer, RAND);
+        java.util.Collections.shuffle(s.offer, random);
         System.out.println("[TFR-Ascend] offer for level " + level + ": " + s.offer
-                + (avoid.isEmpty() ? "" : " (re-rolled from " + avoid + ")"));
+                + (avoid.isEmpty() ? "" : " (re-rolled from " + avoid + ")") + " - seed " + offerSeed(level, rerolls)
+                + " (level " + level + ", re-roll " + rerolls + ")");
+    }
+
+    /** Round 870: the offer's Random - the world seed mixed with the level and the re-roll count. Saved state only. */
+    private static java.util.Random offerRandom(int level, int rerolls) {
+        return new java.util.Random(offerSeed(level, rerolls));
+    }
+
+    private static long offerSeed(int level, int rerolls) {
+        long worldSeed = WorldSave.getCurrentSave() == null || WorldSave.getCurrentSave().getWorld() == null ? 0L
+                : WorldSave.getCurrentSave().getWorld().getSeed();
+        long h = ResourceSpawns.mixSeed(worldSeed ^ 0x41534345L); // "ASCE": apart from the pickups' seeds
+        h = ResourceSpawns.mixSeed(h + level);
+        return ResourceSpawns.mixSeed(h + rerolls);
     }
 
     /** Round 518: one draw from {@code from} onto the offer; false when nothing is left to draw. */
-    private static boolean addDraw(AscendanceState s, List<AscendanceData.Choice> from) {
-        AscendanceData.Choice picked = draw(from);
+    private static boolean addDraw(AscendanceState s, List<AscendanceData.Choice> from, java.util.Random random) {
+        AscendanceData.Choice picked = draw(from, random);
         if (picked == null)
             return false;
         s.offer.add(picked.id);
@@ -1504,7 +1523,7 @@ public final class Ascendance {
     }
 
     /** One weighted draw, removed from the list - and the same id never twice in an offer. */
-    private static AscendanceData.Choice draw(List<AscendanceData.Choice> from) {
+    private static AscendanceData.Choice draw(List<AscendanceData.Choice> from, java.util.Random random) {
         AscendanceState s = state();
         from.removeIf(c -> s != null && s.offer.contains(c.id));
         if (from.isEmpty())
@@ -1512,7 +1531,7 @@ public final class Ascendance {
         float sum = 0f;
         for (AscendanceData.Choice c : from)
             sum += Math.max(0f, c.weight);
-        float roll = RAND.nextFloat() * sum;
+        float roll = random.nextFloat() * sum;
         AscendanceData.Choice picked = from.get(from.size() - 1);
         for (AscendanceData.Choice c : from) {
             roll -= Math.max(0f, c.weight);

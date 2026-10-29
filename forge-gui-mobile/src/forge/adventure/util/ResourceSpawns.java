@@ -345,11 +345,52 @@ public class ResourceSpawns {
             float dy = playerCenterY - spawnCenterY;
             if (dx * dx + dy * dy > pickupRadiusPx * pickupRadiusPx)
                 continue;
-            award(world, spawn[2], spawn[3]);
+            if (spawn[2] == TYPE_CHEST || spawn[2] == TYPE_MYSTERY)
+                awardSeeded(world, spawn);
+            else
+                award(world, spawn[2], spawn[3]);
             it.remove();
             changed = true;
         }
         return changed;
+    }
+
+    /** Round 870 (log review logs-1029b P2-1: a player reloaded one save 5 times to re-roll one chest): a chest's or a
+     *  diamond's draws come from the world's Random seeded by the world seed and the pickup itself - its tile, its type
+     *  and its expiry day, which tells two pickups on the same tile apart - so a reload opens the same pickup to the
+     *  same result. The world's own stream resumes afterwards from a value drawn before the seeding, as unpredictable
+     *  as it was. Everything the pickup rolls happens inside award(): the event, the gold, the card, the duplicate,
+     *  the Archmage, the blueprint. Saved state only - no new save field (the spawn list is already saved). */
+    private static void awardSeeded(World world, int[] spawn) {
+        java.util.Random random = world.getRandom();
+        long resume = random.nextLong();
+        long seed = pickupSeed(world.getSeed(), spawn);
+        System.out.println("[TFR-PickupSeed] " + typeName(spawn[2]) + " at (" + spawn[0] + "," + spawn[1]
+                + "), expires day " + spawn[4] + ": seed " + seed);
+        random.setSeed(seed);
+        try {
+            award(world, spawn[2], spawn[3]);
+        } finally {
+            random.setSeed(resume);
+        }
+    }
+
+    /** Round 870: the seed of one chest or diamond - the world seed mixed with the spawn's tile, type and expiry day. */
+    static long pickupSeed(long worldSeed, int[] spawn) {
+        long h = worldSeed;
+        for (int part : new int[]{spawn[0], spawn[1], spawn[2], spawn[4]})
+            h = mixSeed(h + part);
+        return h;
+    }
+
+    /** Round 870: the SplitMix64 finalizer. java.util.Random's first draws from two seeds that differ by a few are
+     *  nearly the same, so the parts of a seed (neighboring tiles, the next re-roll) are mixed through this before
+     *  they reach a Random. Ascendance's offer seed uses it too. */
+    static long mixSeed(long z) {
+        z += 0x9E3779B97F4A7C15L;
+        z = (z ^ (z >>> 30)) * 0xBF58476D1CE4E5B9L;
+        z = (z ^ (z >>> 27)) * 0x94D049BB133111EBL;
+        return z ^ (z >>> 31);
     }
 
     private static void award(World world, int type, int value) {

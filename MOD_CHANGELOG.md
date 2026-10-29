@@ -14264,6 +14264,60 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 870: a reload no longer re-rolls a chest, a diamond or a level-up offer (2026-10-29)
+
+The user: "Yes, round 870", to "Fix chests, diamonds and level-up offers re-rolling on reload". From the log review
+`notes/logs-1029b.md` P2-1: a v1.24 player (aeab35b5) saved beside an overworld chest and reloaded 5 times, and its 6
+openings rolled 6 outcomes (a Lost Card, 1,182 gold, a Duplicate offering Mox Emerald twice, Power, another Lost Card).
+And `logs-1029` P3-4: the Ascendance level-up offer rolled fresh after each reload of a save written before it was
+first shown. Files: `util/ResourceSpawns.java`, `util/ChestEvents.java`, `util/Ascendance.java` (all TFR files; no
+stock file touched, so no `CORE_ENGINE_CHANGES.md` entry).
+
+- **Why:** a chest or diamond resolves at pickup (`ResourceSpawns.award` -> `ChestEvents.trigger`) from
+  `World.getRandom()`, which is seeded once at world generation and never restored from a save: after a load its state
+  depends on whatever drew from it earlier in that session. Lost Card and Thief Merchant were worse: they generated
+  their cards with a seedless `new Random()` (`rd.generate(false, true)`). The level-up offer drew from Ascendance's
+  static unseeded `RAND`. The same class of bug round 835 fixed for dungeon upgrades.
+- **Chests and diamonds** (`ResourceSpawns.awardSeeded`): `checkPickup` sends a chest or a diamond through it. It draws
+  one long from the world's Random to resume with, seeds that Random with `pickupSeed(world seed, spawn)` - the spawn's
+  tile, type and expiry day (the expiry tells two pickups on the same tile apart: a spawn refilled on that tile later
+  has its own expiry) - runs `award()`, and reseeds from the resume value in a `finally`. Every draw a pickup makes
+  happens inside `award()`: the chest's blueprint chance and event, the gold, the duel-free-week redraw (round 797), the
+  Duplicate's two cards, the Dangerous Enemy's Archmage, the Illegal Arena's item rarity, the diamond's ambush,
+  blueprint, Vigor and Power chances and its resource and amount. `ChestEvents.generateCardRewards` now generates from
+  the world's Random (`rd.generate(false, false)`), so the Lost Card and the Thief Merchant's 8 cards follow the seed
+  too. Ordinary gold, shard, wood and stone pickups are unchanged (their amount is fixed at spawn already).
+- **Level-up offers** (`Ascendance.rollOffer`): the offer draws from `offerRandom(level, rerolls)`, seeded by the world
+  seed, the level and the re-rolls already paid at that level (`rerollCount` when `rerolledLevel` is that level, else
+  0). A reload shows the same three; a paid Re-roll (`reroll()` counts first, then rolls) draws a new seed and still
+  avoids the old three (round 518). `draw()`/`addDraw()` take the Random; `RAND` stays for Ascendance's other draws.
+  The stale re-roll in `currentOffer()` (an offered reward no longer offerable) uses the same seed over the changed
+  pool. New Game+ makes a new world, so a new seed.
+- **Seed mixing:** `ResourceSpawns.mixSeed` (the SplitMix64 finalizer) mixes every part of both seeds. The first build
+  combined them with a multiply-add only, and a level's offer seed and its re-roll's seed came out 5 apart;
+  `java.util.Random`'s first draws from nearby seeds are nearly the same, so neighboring tiles or the next re-roll
+  could repeat a roll.
+- **Logs:** `[TFR-PickupSeed] Chest at (348,357), expires day 12: seed <n>` before each chest or diamond; the
+  `[TFR-Ascend] offer for level N: [...]` line ends with `- seed <n> (level N, re-roll R)`.
+- **Kept:** every outcome's odds, the content tables, the duel-free weeks, the console's `chest open <n>` and
+  `diamond ambush` (they open a pickup that has no spawn, unseeded as before). No new save field: the spawn list and the
+  re-roll count are already saved, and an offer a save already holds is kept as it is.
+- **Not seeded (open):** what happens after the pickup returns - a Dangerous Enemy duel's own game, the Illegal Arena
+  bracket's opponents (`ArenaScene` builds them when it opens). Round 835's `DungeonUpgrades.visitSeed` combines its
+  parts the same multiply-add way and its salts 1 and 2 are adjacent seeds; it was not changed here.
+- **Agent-tested** in `agent-870` (wt-870's classes ahead of the agent jar, cheats, slot 17, a day-2 Normal save with
+  Ascendance levels 1 and 2 waiting). `spawn resource` until a chest landed beside the player, then a save to slot 88:
+  - **The chest**, opened 3 times from slot 88 (first build): `seed -1060012170523764700` each time, event 3, the same
+    Thief Merchant 8 (Cover of Winter, Blood Crypt, Myr Superion, Storm World, Vizier of Many Faces, Power Artifact, War
+    Elemental, Frost Titan). After the mixing change, twice: the same new seed, event 6 (13 Power) both times.
+  - **Another chest** (346,358, spawned later): a blueprint (Land4Black), a different roll.
+  - **A diamond** (346,357), 3 times, then twice after the change: the same seed each run, Diamond's Vigor (+3 life)
+    3 times, +20 Stone twice.
+  - **The level-up offer**, 3 runs, then 2 after the change: level 1 the same three, take Stone +15, level 2 the same
+    three each run, Re-roll (45 shards) the same new three each run (`[mechanic, legendSeeker, item]` ->
+    `[gold, stubborn, auraOfFear]`, re-roll seed different).
+  - No duel was played. The copy was removed afterwards.
+
 ## Round 869: the Balance Sheet's icons keep their own colors, and the payday line stays one size (2026-10-29)
 
 The user: "I see some green and red text that should not be that way. I think this was on the balance sheet." Files:
