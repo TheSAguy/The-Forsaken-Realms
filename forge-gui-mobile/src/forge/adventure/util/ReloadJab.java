@@ -49,6 +49,12 @@ import java.util.Properties;
  * <p>Round 801 (the user: "a counted reload after a loss also costs Notoriety -5"): a reload counted as "a save from
  * before the loss" of a duel whose loss cost Notoriety (the pending loss carries {@code pendingNotoriety}) adds one to the
  * same {@code notorietyQuits.<seed>} count a mid-duel quit does, so the same paid count charges it once.
+ *
+ * <p>Round 834 (the user: "For every 10 duels you lose, without loading ... you get a credit of a future load ... cap
+ * this credit at +5 saves. Keep it hidden, but a bonus for someone who plays by the rules"): every
+ * {@link #CREDIT_EVERY} honest losses earn a reload credit, up to {@link #CREDIT_CAP} ({@code credits.<seed>},
+ * {@code creditProgress.<seed>}); a load that would count - a reload after a loss, a counted mid-duel quit - spends one
+ * instead and counts as nothing. Hidden: forge.log lines only, and the console's {@code reloadjab}.
  */
 public final class ReloadJab {
     private static final String FILE = ForgeConstants.USER_DIR + "adventure" + File.separator + "tfr_reload_jab.properties";
@@ -59,6 +65,9 @@ public final class ReloadJab {
     private static final String KIND_INK = "[#2b7a2b]";
     /** Round 735: honest losses per reload forgiven. Round 796: 3 (was 5), with no counted reload between them. */
     static final int HONEST_PER_FORGIVE = 3;
+    /** Round 834: honest losses per reload credit, and the most credits a world holds. */
+    static final int CREDIT_EVERY = 10;
+    static final int CREDIT_CAP = 5;
     /** The store is written by the render thread and DuelHeartbeat's thread: every read-change-write holds this. */
     private static final Object LOCK = new Object();
 
@@ -236,6 +245,8 @@ public final class ReloadJab {
                     if (saved >= Long.parseLong(lossAt)) {
                         System.out.println("[TFR-ReloadJab] loaded a save from after the loss - not counted");
                         kind = creditHonest(p, seed, "a save from after the loss was loaded"); // round 735: kept, so honest
+                    } else if (spendCredit(p, seed, "a save from before the loss")) {
+                        // round 834: a reload credit covers it - not counted, no Notoriety, no honest reset, no line
                     } else {
                         int n = count(p, seed) + 1;
                         p.setProperty("count." + seed, String.valueOf(n));
@@ -442,6 +453,8 @@ public final class ReloadJab {
                     + " (" + facts + ") - not counted");
             return null;
         }
+        if (spendCredit(p, seed, "left mid-duel: " + facts)) // round 834: not counted, no Notoriety, no honest reset
+            return null;
         int n = count(p, seed) + 1;
         p.setProperty("count." + seed, String.valueOf(n));
         System.out.println("[TFR-ReloadJab] " + n + " (left mid-duel: " + facts + " - a lost duel plus a reload, world "
@@ -503,6 +516,7 @@ public final class ReloadJab {
      * the capped bonus: a count above the cap is forgiven down to it first, so the first forgiveness shows.
      */
     private static String creditHonest(Properties p, long seed, String why) {
+        earnCredit(p, seed, why); // round 834: every honest loss, whether or not a reload is left to forgive
         int reloads = count(p, seed);
         int forgiven = intProp(p, "forgiven." + seed);
         if (reloads - forgiven <= 0) {
@@ -527,6 +541,42 @@ public final class ReloadJab {
         if (!hardOrInsane())
             return null;
         return HONEST_PER_FORGIVE + " losses taken honestly - enemies lose 1 bonus life (now +" + after + ").";
+    }
+
+    /**
+     * Round 834: an honest loss is one more toward a reload credit; the {@link #CREDIT_EVERY}th earns one, up to
+     * {@link #CREDIT_CAP}. At the cap nothing banks. Independent of forgiveness (its own progress, never reset by a reload).
+     */
+    private static void earnCredit(Properties p, long seed, String why) {
+        int credits = intProp(p, "credits." + seed);
+        if (credits >= CREDIT_CAP) {
+            System.out.println("[TFR-ReloadJab] reload credit: capped at " + CREDIT_CAP + " (" + why + ") - nothing banks");
+            return;
+        }
+        int progress = intProp(p, "creditProgress." + seed) + 1;
+        if (progress < CREDIT_EVERY) {
+            p.setProperty("creditProgress." + seed, String.valueOf(progress));
+            System.out.println("[TFR-ReloadJab] reload credit: " + progress + "/" + CREDIT_EVERY + " honest losses (" + why
+                    + "), " + credits + "/" + CREDIT_CAP + " credits");
+            return;
+        }
+        credits++;
+        p.setProperty("creditProgress." + seed, "0");
+        p.setProperty("credits." + seed, String.valueOf(credits));
+        System.out.println("[TFR-ReloadJab] reload credit earned (" + why + "): " + CREDIT_EVERY + " honest losses - "
+                + credits + "/" + CREDIT_CAP + " credits" + (credits >= CREDIT_CAP ? " (capped)" : ""));
+    }
+
+    /** Round 834: a load that would count spends a credit instead, when the world has one. True when spent. */
+    private static boolean spendCredit(Properties p, long seed, String what) {
+        int credits = intProp(p, "credits." + seed);
+        if (credits <= 0)
+            return false;
+        p.setProperty("credits." + seed, String.valueOf(credits - 1));
+        System.out.println("[TFR-ReloadJab] reload credit spent (" + what + ", world " + seed + "): " + credits + " -> "
+                + (credits - 1) + " - not counted: no reload count, no Notoriety cost, honest losses kept at "
+                + intProp(p, "honest." + seed) + "/" + HONEST_PER_FORGIVE);
+        return true;
     }
 
     /**
@@ -630,8 +680,10 @@ public final class ReloadJab {
 
     /** Round 735, the console's {@code reloadjab forgiven|honest <n>}: sets this world's forgiven count or honest losses. */
     public static String setForTest(String what, int n) {
-        if (!what.equals("forgiven") && !what.equals("honest"))
-            return "reloadjab [count] | reloadjab forgiven|honest <n>";
+        if (what.equalsIgnoreCase("creditprogress")) // round 834
+            what = "creditProgress";
+        if (!what.equals("forgiven") && !what.equals("honest") && !what.equals("credits") && !what.equals("creditProgress"))
+            return "reloadjab [count] | reloadjab forgiven|honest|credits|creditprogress <n>";
         synchronized (LOCK) {
             Properties p = read();
             carryOverCap(p, currentSeed());
@@ -652,6 +704,8 @@ public final class ReloadJab {
                     + "/" + HONEST_PER_FORGIVE + " honest losses toward the next, enemy bonus +" + enemyLifeBonus()
                     + ", " + intProp(p, "notorietyQuits." + seed) + " mid-duel quit(s)/reload(s) costing Notoriety, this save paid "
                     + (Current.player() == null ? "?" : String.valueOf(Current.player().notorietyQuitsPaid())) // round 795
+                    + ", reload credits " + intProp(p, "credits." + seed) + "/" + CREDIT_CAP + " (" // round 834
+                    + intProp(p, "creditProgress." + seed) + "/" + CREDIT_EVERY + " toward the next)"
                     + (p.getProperty("pendingLossAt") != null ? ", a loss pending (world " + p.getProperty("pendingSeed") + ")" : "")
                     + (p.getProperty("duel.seed") != null ? ", a duel in progress (" + p.getProperty("duel.enemy") + ")" : "")
                     + ". " + DifficultyHints.info(); // round 779

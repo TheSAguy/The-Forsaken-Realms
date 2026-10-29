@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 834: a hidden reload credit - every 10 losses taken honestly bank one free reload, up to 5 (2026-10-28)
+
+The user: "For every 10 duels you lose, without loading, (Loading penalty), you get a credit of a future load. So,
+basically, you could have a free load. We can probably cap this credit at +5 saves. Keep it hidden, but a bonus for
+someone who plays by the rules." Builds on rounds 726/735/795/796/801 (`util/ReloadJab`).
+
+- **Earning**: every honest loss - a lost duel the player moved on from (another duel started, a day passed, or a save
+  from after the loss was loaded; `creditHonest`'s three callers) - adds 1 to `creditProgress.<seed>`; the 10th
+  (`CREDIT_EVERY`) turns into a credit in `credits.<seed>`, up to 5 (`CREDIT_CAP`); at the cap nothing banks. Kept in
+  `tfr_reload_jab.properties` beside the reload count, so a reload cannot undo it. `earnCredit` runs first in
+  `creditHonest`, before its "no reload to forgive" return - otherwise a player who never reloads (the one this
+  rewards) would never bank anything. Independent of forgiveness (3 in a row, round 796): a counted reload resets that
+  progress, never the credit's.
+- **Which losses**: the ones that set a pending loss today - every duel of the player's own except the Arena (round
+  796), a fixed-deck enemy and a guard's fight; an Inn tournament loss counts (it is an honest loss today).
+- **Spending**: a load that would count - a reload from a save before the loss, or a mid-duel quit judged counted -
+  spends a credit instead (`spendCredit`) and counts as nothing: no reload count (so no enemy life), no Notoriety
+  charge (rounds 795/801), no reset of the forgiveness progress, no Notices line. With no credit, the rules as before.
+  A quit after an error (round 816), a stalled quit or a save from after the loss never counts, so never spends.
+- **Off** with round 796's "I won't cheat by loading after a loss": nothing is judged, so nothing earns or spends.
+- **Hidden**: no Notices line, no GUIDE or FAQ text. Lines: `[TFR-ReloadJab] reload credit: N/10 honest losses (why),
+  C/5 credits`, `... reload credit earned (why): 10 honest losses - C/5 credits [(capped)]`, `... reload credit:
+  capped at 5 (why) - nothing banks`, `... reload credit spent (what, world <seed>): C -> C-1 - not counted: no reload
+  count, no Notoriety cost, honest losses kept at h/3`. The console's `reloadjab` shows "reload credits C/5 (p/10
+  toward the next)"; `reloadjab credits <n>` / `reloadjab creditprogress <n>` set them (ReloadJab's own setter - no
+  console edit).
+- **Older worlds** start at 0 and 0 (no keys).
+- **Tested** (Maven exit 0 in a worktree at `cd1f4c46860` plus this file; agent test copy with a copied agent profile;
+  Hard, a new world, Notoriety 30, `reloadjab 25` so duels are lost; every duel at 50x; log lines in
+  `C:\TFR\notes\r834-agent-log-lines.txt`): progress 9/10 and a loss, then the next duel's start -> "reload credit
+  earned (a new duel started): 10 honest losses - 1/5 credits"; slot 70 (Notoriety 20), a loss, a reload of slot 70 ->
+  "spent ... 1 -> 0", reloads still 25, Notoriety 20 (no charge), honest losses kept at 2/3; credits 4 and progress 9,
+  two honest losses -> "5/5 credits (capped)", then "capped at 5 ... nothing banks"; slot 71 (5 credits, Notoriety
+  11), a duel killed 1 s in, relaunch, slot 71 -> "spent (left mid-duel ...): 5 -> 4", reloads 25, Notoriety 11; with
+  `reloadJabOptOut` true a loss, a reload and another duel -> credits 4/5, progress 0/10, reloads 25. **Not tested**:
+  a real Inn tournament loss earning progress, a day tick's credit, Android.
+
 ## Round 824: custom difficulty, part 3 - the Advanced panel in portrait (Android) (2026-10-28)
 
 Part 3 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). The user approved the mock-up
