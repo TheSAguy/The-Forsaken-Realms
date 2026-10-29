@@ -1,7 +1,8 @@
 @echo off
 rem Refresh the agent game folder from the live folder after a package (robocopy copies only what changed).
 rem Refuses while the agent game runs (it holds its jar) - stop it first (the tfr-play skill's stop line).
-rem Mirrors ONLY the game folder; the profile next to it (saves, prefs, log) is never touched.
+rem Mirrors ONLY the game folder; the profile next to it (saves, prefs, log) and, since round 860, the agent's own
+rem cache (localappdata: fonts, card art) are never touched.
 rem Round 739: the guard matched '*TFR-Agent*' (the F:\FORGE folder before round 267), so it never fired. It now lists
 rem the agent folder under both names (C:\TFR is a junction to C:\CLAUDE\PROJECTS\TFR1) - the same two as
 rem agent_stop.ps1 and the skill's stop line; change all three together. -like is case-insensitive; '/' folds to '\'.

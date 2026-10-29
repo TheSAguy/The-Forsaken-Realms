@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 860: agent games get their own LOCALAPPDATA cache (2026-10-29)
+
+The user: "Yes, round 860" - to "Give the agent games their own cache folder so this can't happen again?" (agent games
+get their own LOCALAPPDATA cache folder, so they never share the font/card cache with the user's game). Dev tools
+only, no game code: `dev-tools/agent/agent_launch.cmd`, `agent_sync.cmd` (comment), `agent_setup.py` (docstring),
+the `tfr-play` skill, `CLAUDE.md` (a hard-won lesson).
+
+- **Why:** the user's game hung at startup twice today (07:34 and 10:55), both times in card loading ("Read cards: 888
+  files", log stopped at 3,331 bytes), both times with an agent game running. The launcher set `APPDATA` to the
+  agent's profile but left `LOCALAPPDATA`, and Forge takes its cache root from it (`ForgeProfileProperties
+  .getDefaultDirs`: `ForsakenRealms\Cache` - fonts, db, skins, pics - and `getStockForgeCacheDir`'s
+  `Forge\Cache\pics\cards`, the 15 GB of card art). So every agent game read and wrote the user's font cache (its files
+  carried 11:03:14 today, a minute before this round's test). Not proven to be the hang's cause (the log stops before any font line), but the one shared, written state.
+- **The launcher:** `LOCALAPPDATA=<root>\localappdata` (created on demand) beside `APPDATA=<root>\profile`. `<root>` =
+  `%TFR_AGENT_ROOT%` if set; else the script's own folder when a `The Forsaken Realms\PACKAGE_OK.txt` sits next to
+  it (a copy of the launcher dropped into an agent root); else `C:\TFR\agent` (unchanged default). It refuses a root
+  with no game folder, and any root under `\live\`. Arguments unchanged (`cheats`, classes dir).
+- **Agent copies** (`agent-858`, `agent-859` used hand-edited launchers that still share the user's cache): launch
+  through the repo launcher with `$env:TFR_AGENT_ROOT = '...\agent-NNN'` set in PowerShell before `Start-Process` (the
+  skill's line); stop them by PID after checking the command line names the copy (the stop line and
+  `agent_stop.ps1` still match only the main agent folder, unchanged).
+- **First-launch cost, measured:** an empty cache builds 131 font files (7.8 MB) by 11 s after launch; the start menu
+  answered at about 15 s and a Continue reached the world map at 36 s (my polling included) - not noticeable, so no
+  seeding. Card art starts empty and is fetched online on first show (`UI_ENABLE_ONLINE_IMAGE_FETCHER=true` in the
+  copied preferences), into the agent's own `localappdata\Forge\Cache\pics`. Copying `C:\TFR\agent` with its
+  `localappdata` seeds a copy (the agent's cache, never the user's).
+- **`agent_sync.cmd`** mirrors only `<root>\The Forsaken Realms`, so `localappdata` (a sibling) is never wiped.
+- **Tested** in `agent-860` (a copy of `C:\TFR\agent`, launched with `TFR_AGENT_ROOT`): the javaw command line names
+  `agent-860`; Continue -> world map (Day 1, fonts render); quit through the menu. Its cache:
+  `agent-860\localappdata\ForsakenRealms\Cache\fonts` 131 files, `Forge\Cache\pics` and the other dirs created empty.
+  The user's `%LOCALAPPDATA%\Forge` and `%LOCALAPPDATA%\ForsakenRealms` (137,124 files and folders, path + write time +
+  size) were identical before and after. No duels.
+
 ## Round 859: the Advanced panel warns that its settings can break the game (2026-10-29)
 
 The user: "For the 'Advanced' settings. Tell them there are a lot and they could probably break the game, so be

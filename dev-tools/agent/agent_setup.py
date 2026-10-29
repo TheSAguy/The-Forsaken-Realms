@@ -10,8 +10,10 @@ seeds two files once:
   adventure/settings.json          a 1280x720 WINDOW, the plane selected
   preferences/forge.preferences    the player's own preferences copied, with full screen, sounds and music OFF
 
-Existing seeded files are left alone unless --force. Card art stays shared with the player's game (it lives under
-%LOCALAPPDATA%\\Forge\\Cache, which the launcher does not redirect).
+Existing seeded files are left alone unless --force. The cache is the agent's own as well: since round 860 the
+launcher sets LOCALAPPDATA=<root>\\localappdata (fonts, card art, skins), so nothing is shared with the player's
+%LOCALAPPDATA%. For an agent copy pass --root C:\\CLAUDE\\PROJECTS\\TFR1\\agent-NNN and launch it with
+TFR_AGENT_ROOT set to the same folder.
 
 usage: python dev-tools/agent/agent_setup.py [--force] [--root C:\\TFR\\agent]
 """

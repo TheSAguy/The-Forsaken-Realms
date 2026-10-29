@@ -1,6 +1,6 @@
 ---
 name: tfr-play
-description: Play The Forsaken Realms (TFR) as the player through the in-game agent bridge - start the ISOLATED agent game (its own folder and APPDATA profile under C:\TFR\agent, never the user's game or saves), then loop read state -> decide -> one command -> settle; Forge's AI plays the duels. Use when the user asks Claude to play TFR, run an agent session, soak-test, or check a feature in a running game.
+description: Play The Forsaken Realms (TFR) as the player through the in-game agent bridge - start the ISOLATED agent game (its own folder, APPDATA profile and LOCALAPPDATA cache under C:\TFR\agent, never the user's game or saves), then loop read state -> decide -> one command -> settle; Forge's AI plays the duels. Use when the user asks Claude to play TFR, run an agent session, soak-test, or check a feature in a running game.
 ---
 
 # Playing The Forsaken Realms through the agent bridge
@@ -16,14 +16,27 @@ equipment, ante, rewards, statistics). Design: `docs/design/2026-09-09-agent-pla
 ## 1. Isolation - the rule that makes this safe
 
 - The agent game runs from **`C:\TFR\agent\The Forsaken Realms`** (a mirror of the live folder) with
-  **`APPDATA=C:\TFR\agent\profile`**, so Forge keeps its saves, preferences and `forge.log` in
+  **`APPDATA=C:\TFR\agent\profile`** and **`LOCALAPPDATA=C:\TFR\agent\localappdata`**, so Forge keeps its saves, preferences and `forge.log` in
   `C:\TFR\agent\profile\ForsakenRealms`. The user's `%APPDATA%\ForsakenRealms` is never opened, and it can
   run while the user plays their own game.
 - **Never** start the bridge from the live folder with the user's profile, and never touch the user's slots.
 - Check isolation after a launch: the agent's log is `C:\TFR\agent\profile\ForsakenRealms\forge.log`; the
   user's `%APPDATA%\ForsakenRealms\forge.log` must NOT rotate (a second game on the same profile renames it to
   `forge.<timestamp>.log` at launch). The Load screen lists only the agent's own saves.
-- Card art is shared (`%LOCALAPPDATA%\Forge\Cache\pics`), which is intended.
+- **The cache is the agent's own too** (round 860): the launcher sets `LOCALAPPDATA=<root>\localappdata`, so fonts,
+  card art (`localappdata\Forge\Cache\pics`), skins and db never touch the user's `%LOCALAPPDATA%`. Before it the
+  agent shared them, and the user's game hung in card loading twice on 2026-10-29 while an agent game ran. Card art
+  the agent has not seen yet is fetched online on first show (the copied preference `UI_ENABLE_ONLINE_IMAGE_FETCHER`).
+  Never seed the agent cache from, or link it to, the user's `%LOCALAPPDATA%`; `agent_sync.cmd` leaves it alone.
+- **An agent copy** (`agent-NNN`, a copy of `C:\TFR\agent` for a parallel round): launch it with
+  `TFR_AGENT_ROOT` set, so it gets its own game folder, profile AND cache. From the PowerShell tool:
+  `$env:TFR_AGENT_ROOT = 'C:\CLAUDE\PROJECTS\TFR1\agent-NNN'; Start-Process -FilePath cmd.exe -ArgumentList '/c "C:\TFR\repo\dev-tools\agent\agent_launch.cmd" cheats' -WindowStyle Hidden`
+  (the child inherits the variable; or copy `agent_launch.cmd` into the copy's root - next to a `The Forsaken Realms`
+  folder it uses its own folder). Never hand-edit a copy of the launcher (a pre-860 hand-edited copy shares the
+  user's cache). `python dev-tools/agent/agent_setup.py --root <copy>` seeds a copy's profile. Copying
+  `C:\TFR\agent` with its `localappdata` seeds the copy's cache (that is the agent's, not the user's). Stop a copy
+  by PID, after checking its command line names `agent-NNN` -
+  the stop line below and `agent_stop.ps1` match only the main agent folder.
 - **Packaging**: the standing rule is "never repackage while javaw.exe runs" - stop the agent game first. After a
   package, refresh the agent folder: `dev-tools\agent\agent_sync.cmd` (robocopy /MIR of the game folder only, a few
   seconds; the profile is untouched). It refuses (exit 1, nothing copied) while the agent game runs: stop it
