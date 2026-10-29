@@ -164,7 +164,9 @@ public class WorldSave {
         // fails after touching anything. A RuntimeException inside player.load() also escaped both catches.
         byte[] rollback = liveGame ? currentSave.snapshotForRollback() : null;
         loadTouchedLiveState = false;
+        sweepStaleTemps();
         boolean loaded;
+        boolean readFailed = false;
         try (FileInputStream in = new FileInputStream(fileName)) {
             loaded = readSave(in, currentSlot);
         } catch (Exception e) {
@@ -173,7 +175,12 @@ public class WorldSave {
             System.err.println("[TFR-Load] load of slot " + currentSlot + " failed: " + e);
             e.printStackTrace();
             loaded = false;
+            readFailed = true;
         }
+        // Round 858 (logs-1029 P1): a .sav that would not even read (cut off by an app killed mid-save - every 1.24
+        // save could be) loads the slot's .old instead, the save before it. Only when nothing live was touched.
+        if (readFailed && !loadTouchedLiveState)
+            loaded = loadOld(currentSlot, fileName);
         if (loaded) {
             liveGame = true;
             saveBlocked = false;
@@ -186,6 +193,67 @@ public class WorldSave {
         if (loadTouchedLiveState)
             rollBack(rollback);
         return false;
+    }
+
+    /** Round 858: the slot's .old in place of its unreadable .sav, with a notice. False when there is no .old or it
+     *  fails too; the .sav's error then stays the one the menu shows. Writes nothing: the next save of the slot
+     *  replaces the broken .sav and keeps this .old (brokenSaves). */
+    private static boolean loadOld(int currentSlot, String fileName) {
+        File old = new File(fileName.replace(".sav", ".old"));
+        if (!old.isFile() || old.length() == 0)
+            return false;
+        String savError = lastLoadError;
+        lastLoadError = null;
+        boolean loaded;
+        try (FileInputStream in = new FileInputStream(old)) {
+            loaded = readSave(in, currentSlot);
+        } catch (Exception e) {
+            System.err.println("[TFR-Load] slot " + currentSlot + ": the .old did not load either: " + e);
+            loaded = false;
+        }
+        if (!loaded) {
+            lastLoadError = savError;
+            return false;
+        }
+        brokenSaves.add(new File(fileName).getPath());
+        Date saved = currentSave.header == null || currentSave.header.saveDate == null
+                ? new Date(old.lastModified()) : currentSave.header.saveDate;
+        String when = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(saved);
+        System.out.println("[TFR-Load] slot " + currentSlot + ": the save was cut off - loaded the one before it (.old, saved "
+                + when + ")");
+        try {
+            forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]That save was cut off, so the one before it "
+                    + "was loaded (saved " + when + ").", true);
+        } catch (RuntimeException e) {
+            System.err.println("[TFR-Load] the cut-off notice could not be shown: " + e);
+        }
+        return true;
+    }
+
+    private static final String TEMP_PREFIX = "forge-save-";
+    private static final String TEMP_SUFFIX = ".tmp";
+    /** Round 858: .sav files load() could not read and replaced with their .old this launch - the next save of the
+     *  slot must not copy one over that good .old. */
+    private static final java.util.Set<String> brokenSaves = new java.util.HashSet<>();
+    /** Round 858: save folders already swept this launch. */
+    private static final java.util.Set<String> sweptDirs = new java.util.HashSet<>();
+
+    /** Round 858: a temp file over a minute old in the save folder is a save the app was killed in the middle of -
+     *  the .sav beside it is whole. Once per folder per launch, at the first load or save. */
+    private static void sweepStaleTemps() {
+        String dir = getSaveDir();
+        if (!sweptDirs.add(dir))
+            return;
+        File[] temps = new File(dir).listFiles((d, name) -> name.startsWith(TEMP_PREFIX) && name.endsWith(TEMP_SUFFIX));
+        if (temps == null)
+            return;
+        long cutoff = System.currentTimeMillis() - 60_000L;
+        int removed = 0;
+        for (File temp : temps)
+            if (temp.lastModified() < cutoff && temp.delete())
+                removed++;
+        if (removed > 0)
+            System.out.println("[TFR-Save] removed " + removed + " stale temp save file(s) in " + dir);
     }
 
     /** Round 183: puts the pre-load snapshot back, or - when there is none or it will not load - blocks saving. */
@@ -517,8 +585,9 @@ public class WorldSave {
 
         File currentFile = new File(WorldSave.getSaveFile(currentSlot));
         File backupFile = new File(currentFile.getPath().replace(".sav", ".old"));
-        File tempFile = File.createTempFile("forge-save-", ".tmp", saveDir);
+        File tempFile = File.createTempFile(TEMP_PREFIX, TEMP_SUFFIX, saveDir);
         boolean replaced = false;
+        boolean broken = false;
 
         try {
             // Write to a separate file. Never expose a partially written .sav to the UI.
@@ -527,16 +596,27 @@ public class WorldSave {
                  ObjectOutputStream oos = new ObjectOutputStream(def)) {
                 oos.writeObject(saveHeader);
                 oos.writeObject(mainData);
+                // TFR (round 858): on disk before the move, so a power loss cannot leave the moved .sav empty.
+                oos.flush();
+                def.finish();
+                fos.getFD().sync();
             }
 
             // Verify the completed compressed stream before replacing the current save.
+            // TFR (round 858): kept - 22-31 ms of a ~430 ms save on PC (a 2 MB save).
             validateSaveFile(tempFile);
 
             // Keep the last known-good save as a recovery copy. Copying does not make
             // the live .sav disappear while the new save is being prepared.
-            if (currentFile.isFile()) {
+            // TFR (round 858): not an empty .sav, or one load() fell back from - that would overwrite the good .old
+            // with the broken file. A slot with no .sav drops a stale .old (a deleted slot's) so no other game's
+            // save is ever offered as this slot's fallback.
+            broken = brokenSaves.remove(currentFile.getPath());
+            if (currentFile.isFile() && currentFile.length() > 0 && !broken) {
                 Files.copy(currentFile.toPath(), backupFile.toPath(),
                         StandardCopyOption.REPLACE_EXISTING);
+            } else if (!currentFile.exists() && backupFile.exists()) {
+                backupFile.delete();
             }
 
             try {
@@ -559,6 +639,8 @@ public class WorldSave {
             if (!replaced && backupFile.exists()) {
                 System.err.println("Save replacement failed; recovery copy retained: " + backupFile);
             }
+            if (!replaced && broken)
+                brokenSaves.add(currentFile.getPath()); // round 858: still the broken file
         }
     }
 
@@ -691,72 +773,57 @@ public class WorldSave {
         header.name = text;
         long saveStarted = System.currentTimeMillis(); // round 777: [TFR-Perf] save
 
-        String fileName = WorldSave.getSaveFile(currentSlot);
-        String oldFileName = fileName.replace(".sav", ".old");
+        // Round 858 (logs-1029 P1): the save is built in memory first and written through writeSaveSnapshot - a temp
+        // file in the save folder, then an atomic move over the .sav, the previous .sav kept as the .old. It used to
+        // rename the .sav to .old and open an EMPTY .sav before the ~0.9 s (Android) of serializing; an app killed in
+        // that window left a 0-byte .sav and Continue could not load it. Now the .sav on disk is always a whole save,
+        // the old one or the new one, and nothing has to be restored when something fails.
         new File(getSaveDir()).mkdirs();
-        File currentFile = new File(fileName);
-        File backupFile = new File(oldFileName);
-        if (currentFile.exists())
-            currentFile.renameTo(backupFile);
-
+        sweepStaleTemps();
         try {
-            try (FileOutputStream fos = new FileOutputStream(fileName);
-                 DeflaterOutputStream def = new DeflaterOutputStream(fos);
-                 ObjectOutputStream oos = new ObjectOutputStream(def)) {
-                SaveFileData player = currentSave.player.save();
-                SaveFileData world = currentSave.world.save();
-                SaveFileData worldStage = WorldStage.getInstance().save();
-                SaveFileData poiChanges = currentSave.pointOfInterestChanges.save();
+            SaveFileData player = currentSave.player.save();
+            SaveFileData world = currentSave.world.save();
+            SaveFileData worldStage = WorldStage.getInstance().save();
+            SaveFileData poiChanges = currentSave.pointOfInterestChanges.save();
 
-                String message = getExceptionMessage(player, world, worldStage, poiChanges);
-                if (!message.isEmpty()) {
-                    oos.close();
-                    fos.close();
-                    restoreBackup(oldFileName, fileName);
-                    finish(message);
-                    return true;
-                }
-
-                SaveFileData mainData = new SaveFileData();
-                mainData.store("saveFormatVersion", SAVE_FORMAT_VERSION);
-                mainData.store("player", player);
-                mainData.store("world", world);
-                mainData.store("worldStage", worldStage);
-                mainData.store("pointOfInterestChanges", poiChanges);
-
-                if (mainData.readString("IOException") != null) {
-                    oos.close();
-                    fos.close();
-                    restoreBackup(oldFileName, fileName);
-                    finish("Please check forge.log for errors.");
-                    return true;
-                }
-
-                header.saveDate = new Date();
-                oos.writeObject(header);
-                oos.writeObject(mainData);
+            String message = getExceptionMessage(player, world, worldStage, poiChanges);
+            if (!message.isEmpty()) {
+                finish(message);
+                return true;
             }
 
+            SaveFileData mainData = new SaveFileData();
+            mainData.store("saveFormatVersion", SAVE_FORMAT_VERSION);
+            mainData.store("player", player);
+            mainData.store("world", world);
+            mainData.store("worldStage", worldStage);
+            mainData.store("pointOfInterestChanges", poiChanges);
+
+            if (mainData.readString("IOException") != null) {
+                finish("Please check forge.log for errors.");
+                return true;
+            }
+
+            header.saveDate = new Date();
+            writeSaveSnapshot(text, currentSlot, header, mainData);
         } catch (IOException e) {
-            restoreBackup(oldFileName, fileName);
+            System.err.println("[TFR-Save] writing slot " + currentSlot + " failed: " + e + " - the save on disk is unchanged");
+            e.printStackTrace();
             finish("Please check forge.log for errors.");
             return true;
         } catch (RuntimeException e) {
             // Round 123 (2026-09-05 code review S1-2): a non-IO failure inside the serializers (an NPE in one of
             // the mod's save() hooks, an unserializable field) used to escape this method with the .sav already
             // renamed to .old and a truncated new file in its place - the next launch then failed to load it and
-            // silently regenerated the world. Restore the backup exactly as the IOException path does.
+            // silently regenerated the world. Since round 858 the .sav is untouched until the finished file moves in.
             System.err.println("[TFR-Save] save failed with " + e + " - restoring the previous save file");
             e.printStackTrace();
-            restoreBackup(oldFileName, fileName);
             announceError("Please check forge.log for errors.");
             return true;
         }
 
         Config.instance().getSettingData().lastActiveSave = WorldSave.filename(currentSlot);
         Config.instance().saveSettings();
-        if (backupFile.exists())
-            backupFile.delete();
         forge.adventure.util.SessionLog.onSaved(currentSlot, System.currentTimeMillis() - saveStarted); // round 777
         finish(null);
         return true;

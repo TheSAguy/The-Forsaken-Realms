@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 858 - saves are written whole; a cut-off save loads its .old
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** (STOCK) - `save()` builds the save in memory, then
+  writes it through upstream's `writeSaveSnapshot` (temp file, read-back, `.sav` copied to `.old`, atomic move) instead
+  of renaming the `.sav` and opening an empty one; the `.old` is kept. `writeSaveSnapshot` gains a `sync()` before the
+  move and skips the `.old` copy for an empty or known-broken `.sav` (`brokenSaves`). `load()` falls back to the slot's
+  `.old` (`loadOld`) when the `.sav` throws before live state is touched; `sweepStaleTemps()` deletes temp saves over a
+  minute old at the first load or save of a launch. Merge note: upstream's `autoSaveAsync` path (unused) also goes
+  through `writeSaveSnapshot`, so it gets the sync and the `.old` guard too.
+
 ### Round 856 - the engine to the 10.28 daily (upstream `875333b7b78`)
 - 9 conflicts, resolved as below; the user saw them before packaging (MOD_CHANGELOG round 856).
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK) - upstream's `selectAI(ai, boss)` (#12467:

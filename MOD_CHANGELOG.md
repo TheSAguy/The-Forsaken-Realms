@@ -14264,6 +14264,58 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 858: saves are written whole - a temp file and an atomic move; a cut-off save loads the one before it (2026-10-29)
+
+The user: "Yes, both" (to the main thread's "Build the save-safety fix (858) ...?": atomic saves keeping the `.old`, and
+a `.old` fallback with a notice when a `.sav` is cut off). Found in `notes/logs-1029.md` P1 (aeab35b5, Pixel 8 Pro, v1.24):
+the pre-duel auto save was cut off when the app went away, and Continue failed twice with `EOFException: Unexpected end
+of ZLIB input stream` while the previous save sat beside it as `auto_save.old`. Same code in v1.24 and at HEAD. File:
+`world/WorldSave.java` (stock).
+
+- **The cause:** `save()` renamed the `.sav` to `.old`, opened a NEW EMPTY `.sav`, then ran every serializer (~0.9 s on
+  Android) before writing a byte. A process kill (swiped from recents, a low-memory kill, power) in that window left a
+  0-byte `.sav`; the catch blocks restored the `.old` only when Java threw, and `load()` never looked at the `.old`.
+- **Saves are atomic:** `save()` builds the save in memory (the same serializers, checks and error paths), then writes it
+  through upstream's `writeSaveSnapshot` (in the file since round 769, used only by the unused `autoSaveAsync`): a
+  `forge-save-*.tmp` in the save folder, synced to disk (`FileDescriptor.sync`, TFR's addition), read back
+  (`validateSaveFile`), the current `.sav` copied to `.old`, then `Files.move(ATOMIC_MOVE)` over the `.sav`
+  (`REPLACE_EXISTING` where atomic is not supported). The `.sav` on disk is always a whole save, the old one or the new
+  one. The `.old` is now kept after every save (it was deleted at the end). Still synchronous (round 769).
+  - The copy to `.old` is skipped for an empty `.sav` and for a `.sav` this launch already fell back from (static
+    `brokenSaves`), so the good `.old` is never overwritten by a broken file; a slot with no `.sav` drops a stale `.old`
+    (a deleted slot's) before its first save.
+  - Nothing has to be restored on a failure any more (`restoreBackup` is left in place, unused). A failed write logs
+    `[TFR-Save] writing slot N failed: ... - the save on disk is unchanged` (new).
+- **The read-back check is kept:** `validateSaveFile` re-reads the temp file in 22-31 ms of a ~430 ms save on PC (a
+  2,070 KB save); by the PC/Android ratio of the whole save (~400 ms vs 905 ms) about 50-70 ms on Android, ~6%. The disk
+  sync took 1-2 ms and the `.old` copy 1-3 ms. **Save time (PC, agent, same save):** before 402-482 ms (steady 402-404),
+  after 432-682 ms (steady 432-443), about +30 ms. Android not measured on a device.
+- **A cut-off save loads the one before it:** when a slot's `.sav` throws while reading (before any live state is
+  touched) and the slot's `.old` is there, `load()` loads the `.old` (`loadOld`): `[TFR-Load] slot N: the save was cut
+  off - loaded the one before it (.old, saved 2026-10-29 10:52)`, and a banner "That save was cut off, so the one before
+  it was loaded (saved ...)." (GameHUD notice, also in the Notices log). If the `.old` fails too, the `.sav`'s error is
+  the one the menu shows, and a failure after touching live state rolls back as before (round 183). A save format
+  refused by version (round 144) does not fall back. It rescues saves already cut off by 1.24.
+- **Stale temp files:** at the first load or save of a launch, `forge-save-*.tmp` files over a minute old in the save
+  folder are deleted (`[TFR-Save] removed N stale temp save file(s) in ...`).
+- **Unchanged:** the save format, the slot names, the save/load flow and the existing log lines.
+- **Agent-tested** in `agent-858` (wt-858's `WorldSave` compiled ahead of the agent jar, cheats; no duels played):
+  - a normal auto save and a manual save (slot 50) each leave a complete `.sav` and `.old` and no `.tmp`;
+  - `give gold 777`, an auto save, `auto_save.sav` cut to 0 bytes, then the in-game load of the auto slot: the player's
+    exact error (`EOFException: Unexpected end of ZLIB input stream`), then the cut-off line, the banner, gold back at
+    528 (the `.old`); the next auto save left that `.old` byte for byte (md5) and wrote a whole `.sav`;
+  - the same cut-off after a restart: Continue loads the `.old` with the banner; a planted `.tmp` 5 minutes old was
+    deleted at that load and a fresh one kept;
+  - `javaw` killed (taskkill /F) 11 times during back-to-back auto saves - 5 of them timed on the temp file at 2 bytes,
+    332 KB, 1.29 MB, 1.95 MB and 2.12 MB: `auto_save.sav` was a complete zlib stream every time (the old save or the
+    new one), the `.old` too; the leftover temps went at the next load;
+  - older saves load unchanged (slots 1, 37, 44 and the auto slot, written by earlier builds); no exceptions in the
+    logs.
+- **Not covered:** the Save/Load list still lists only readable `.sav` files (`SaveLoadScene.updateFiles` skips one whose
+  header does not read), so a cut-off MANUAL slot is rescued only through Continue (when it was the last save) - a
+  later round could list a slot whose `.old` reads. After a fallback the `[TFR-Perf] load` line gives the broken
+  `.sav`'s size (`0 KB`; `SessionLog` reads the file). Android timing not measured on a device.
+
 ## Round 857: the GUIDE explains the Research Lab's Sort box (2026-10-29)
 
 The user: "One missing guide line for the Research Lab sort (849). It was written after the guide round finished."
