@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 845: portrait Save/Load - "Sort by Recent" no longer covers the list (2026-10-29)
+
+Rounds 840-848 are the Fable review fix batch (`C:\TFR\notes\fable-review-2026-10-28.md`, verified in
+`notes\fable-verify-2026-10-28.md`); the user: "Yes, all as recommended". This one is the verification's known extra
+(c). Built in a worktree, tested in an `agent-845` copy.
+
+- **The bug:** upstream's `common/ui/save_load_portrait.json` (Chris H, 2026-02-06) puts the slot list window at y
+  106-436 and the "Sort by Recent" button at y 400-432, inside it, so in portrait the button sat over the last visible
+  slots. TFR had no plane copy.
+- **The fix (data only):** a plane copy, `ui/save_load_portrait.json`, with the `saveSlots` window 36 shorter (height
+  330 -> 294, so it ends at y 400, where the button starts). Everything else is common's. Landscape
+  (`save_load.json`) is untouched.
+
+**Agent-tested** in `agent-845` (the agent folder and profile, the plane json in its res, launched with `width=540
+height=960 portrait`; removed afterward): the Load screen in both sort modes - the list window's bottom border ends
+just above "Sort by Recent" / "Sort by Slot", and the slots scroll inside it. Shots: `C:\TFR\notes\r845\`
+(`portrait-sort-slot.png`, `portrait-sort-recent.png`).
+
+**Not tested:** a real Android device. Files: `ui/save_load_portrait.json` (new, plane). No Java, no stock file.
+
 ## Round 833: custom difficulty, part 12 (close-out) - the clamp audit's 17 fixes, the panel's tabs, the GUIDE and a reference page (2026-10-28)
 
 The last part of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). A read-only audit checked
