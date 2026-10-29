@@ -14264,6 +14264,75 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 827: custom difficulty, part 6 - share codes, the hints point to Settings > Difficulty, a GUIDE section (2026-10-28)
+
+Part 6 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). The user's "Yes, all three" on
+`C:\TFR\notes\r827-mock.png`: share codes without the Rules, and the reworded hints for custom and preset saves. The
+plan's New Game+ "Advanced..." moves to a later round (SaveLoadScene is held by rounds 837/838). Built in a worktree and
+tested in an `agent-827` copy.
+
+- **Share codes** (`util/CustomDifficulty.shareCode` / `readCode`):
+  - `TFR1-<preset>-<raw deflate, URL-safe base64 without padding, of id=value;...>`: about 60 characters for 2 changes,
+    110 for 5.
+  - The difficulty changes only. The rule knobs (Notoriety off, leveling off, reloads allowed) are each player's own
+    switches, seeded from their profile, so a code never carries them; a hand-made code with one drops it ("a rule -
+    your own switch").
+  - Reading never throws. Spaces and line breaks are ignored. Refusals: not starting with `TFR1-`, cut short, or
+    damaged (a base64 or inflate failure; the inflate must finish, at most 8 KB).
+  - Each value goes through the knob's own `clean` (clamped to the json's range), reported as "Enemy health 900% ->
+    400% (the most)"; unknown ids and unreadable values are dropped and listed.
+- **The panel's Share code** (`CustomDifficultyScene`, the button greyed since round 823): a dialog with the setup, the
+  code (wrapped), Copy / Paste code / Close (Close is one of round 491's Esc labels).
+  - Copy puts the code on `Forge.getClipboard()` (PC and Android) and says "Copied."
+  - Paste code reads the clipboard and loads the code into the panel's copy: the difficulty changes give way to the
+    code's, the rules stay. At a new game the "Based on" box follows the code's preset, so the header and counts are
+    the code's ("7 changed - Custom (Insane)"); a preset this plane lacks keeps the current one, said in the report.
+    Mid-game (round 826) the fixed "Normal - in play, day N" stays, the values load over the save's preset ("the code
+    was made on Hard"), and new-game-only knobs are reported "locked" and skipped.
+  - Nothing is kept until Done, which applies as before (round 826's `changed ... (Advanced, mid-game)` lines
+    mid-game).
+  - `[TFR-Custom] share: copied CODE (N change(s) on P)`, `share: pasted CODE - made on P, loaded N on Q, clamped,
+    dropped, locked; panel now ...` and `share: paste refused - why` lines.
+  - Console: `custom panel code` prints the panel's code; `custom panel code paste TEXT` loads TEXT as Paste code does,
+    without the clipboard.
+- **DifficultyHints** (`util/DifficultyHints.java`, round 779's two once-per-world hints):
+  - A custom save: "Kurbis has beaten you 5 times. You can ease your custom settings now in Settings > Difficulty >
+    Edit..., or pick Normal on your next game or New Game+." The win hint likewise: "tighten your custom settings ...,
+    or try Insane ...".
+  - A preset save keeps its text and adds "Or ease (raise) the settings that can change mid-game now, in Settings >
+    Difficulty." on a plane with custom difficulty.
+  - The gates (not on the lowest/highest preset, once per world) are unchanged; `[TFR-Hint] shown:` lines get
+    `, custom`.
+- **GUIDE**: a "Custom Difficulty" section under Notes on Difficulty (the panel, mid-game, the Rules, share codes), the
+  first GUIDE text for rounds 822-827.
+
+**Agent-tested** in `agent-827` (the agent folder and profile, wt-827's classes ahead of its jar; removed afterward). No
+exceptions. Shots: `C:\TFR\notes\r827\`.
+- New game, enemy health +3 steps and Wrath off: Share code shows "Custom (Normal), 2 changed" and
+  `TFR1-Normal-S81Lza30SE3M...`; Copy says "Copied."; the code decodes to `enemyHealth=1.15;wrathHunt=false`.
+- Pasting an Insane code with enemy health 900%, an unknown `goldRush`, `notorietyOff` and six more: "Loaded 7
+  settings on Insane", "1 clamped: Enemy health 900% -> 400% (the most)", "2 dropped: "goldRush" is not a setting in
+  this version, Notoriety off (a rule - your own switch)"; the header reads "Based on Insane", "7 changed - Custom
+  (Insane)"; Done hands "Custom (Insane)" to the new-game box.
+- Through the Windows clipboard and the Paste code button: "hello there" -> "not a TFR1 code"; a code missing its
+  end -> "the code is damaged"; `TFR1-Hard` -> "the code is cut short"; a whole Hard code -> "Loaded 4 settings on
+  Hard".
+- Mid-game, slot 76 (Normal, day 8), Settings > Difficulty > Edit... > Share code, the Hard code: "Pasted mid-game
+  (Normal)", "Loaded 2 settings over Normal (the code was made on Hard)", "2 locked: Starting life, Starting gold (new
+  game only)"; Done: `changed enemyHealth 1 -> 1.2 on day 8 (Advanced, mid-game)` and `changed pillage true -> false`.
+- Found in the test: the console paste first set the clipboard and pressed Paste code; read straight back, the PC
+  clipboard came back empty twice ("the clipboard is empty"). The button with a code put on the clipboard outside the
+  game read fine every time. The console now loads its text directly (changed after the test, compiled in the jar
+  build).
+
+**Not tested:**
+- The hints' new text in game (five losses to one foe, or 50 wins in a row; a text and `isCustom` change only).
+- Android's clipboard (libGDX's AndroidClipboard; the deck importer uses the same call).
+- Portrait (the dialog's width is 240 there, the buttons 74x26).
+
+Files: `util/CustomDifficulty.java`, `scene/CustomDifficultyScene.java`, `util/DifficultyHints.java`,
+`The Forsaken Realms/GUIDE.md`.
+
 ## Round 836: gold, shards, wood and stone are held between 0 and the int limit - no overflow, no negative purse (2026-10-28)
 
 The user: "Yes, both" to the log review `notes/logs-1028c.md` P3: an edited save held 1,473,788,608 gold; the purse

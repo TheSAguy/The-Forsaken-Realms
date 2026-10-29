@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -49,7 +50,8 @@ import java.util.function.IntConsumer;
  * select box beside "Based on", the rows full width with touch-sized (24) steppers, a three-line help line, and the
  * buttons across the bottom. {@code [TFR-Custom] panel ...} lines; console
  * {@code custom panel} lists what the panel shows, {@code custom panel search TEXT} types into its search box.
- * Round 826: Settings' Difficulty row opens it on the running save ({@link #openMidGame}).
+ * Round 826: Settings' Difficulty row opens it on the running save ({@link #openMidGame}). Round 827: Share code -
+ * Copy / Paste code through the clipboard ({@link CustomDifficulty#shareCode} / {@link CustomDifficulty#readCode}).
  */
 public class CustomDifficultyScene extends UIScene {
     private static CustomDifficultyScene object;
@@ -205,9 +207,7 @@ public class CustomDifficultyScene extends UIScene {
 
         ui.onButtonPress("done", this::done);
         ui.onButtonPress("resetAll", this::resetAll);
-        TextraButton share = ui.findActor("share");
-        if (share != null)
-            share.setDisabled(true); // round 827
+        ui.onButtonPress("share", this::openShare);
     }
 
     /** NewGameScene's Advanced button: the panel on this preset and the pending overrides; onDone gets the preset back. */
@@ -356,6 +356,140 @@ public class CustomDifficultyScene extends UIScene {
     @Override
     public boolean back() {
         return done();
+    }
+
+    // ---- share codes (round 827) ------------------------------------------------------------------------------
+
+    private TextraLabel shareText;
+    /** What the dialog says now (its markup), for the console. */
+    private String shareShown = "";
+    /** The last paste's report, kept on the dialog until the next Copy or paste. */
+    private String shareReport;
+
+    private boolean openShare() {
+        cancelRepeat();
+        shareReport = null;
+        Dialog d = new Dialog("", Controls.getSkin());
+        shareText = Controls.newTextraLabel("");
+        shareText.setWrap(true);
+        d.getContentTable().add(shareText).width(Math.min(landscape ? 380f : 240f, stage.getWidth() - 40f)).pad(4).row();
+        TextraButton copy = Controls.newTextButton("Copy", this::copyCode);
+        copy.setName("share:copy");
+        TextraButton paste = Controls.newTextButton("Paste code", this::pasteCode);
+        paste.setName("share:paste");
+        TextraButton close = Controls.newTextButton("Close", this::removeDialog);
+        close.setName("share:close");
+        float w = landscape ? 70 : 74, h = landscape ? 18 : 26;
+        d.getButtonTable().add(copy).width(w).height(h).pad(3);
+        d.getButtonTable().add(paste).width(w).height(h).pad(3);
+        d.getButtonTable().add(close).width(w).height(h).pad(3);
+        updateShareText();
+        showDialog(d);
+        return true;
+    }
+
+    private String myCode() {
+        return CustomDifficulty.shareCode(presetName(), work);
+    }
+
+    private void updateShareText() {
+        if (shareText == null)
+            return;
+        int n = CustomDifficulty.countChanges(work);
+        StringBuilder sb = new StringBuilder("[%120][GOLD]Share code[%][WHITE]\n");
+        if (shareReport != null) {
+            sb.append(shareReport);
+        } else {
+            sb.append("Your setup: ").append(n == 0 ? presetName() + ", no changes" : "Custom (" + presetName() + "), " + n + " changed")
+                    .append("\n[GOLD]").append(myCode()).append("[WHITE]\n[%85][LIGHT_GRAY]Copy puts it on the clipboard - paste it on "
+                            + "Discord. Your Rules (Notoriety, leveling, reloads) are your own and stay out of the code.\n"
+                            + "Paste code reads a code from the clipboard into this panel.");
+        }
+        setShareText(sb.toString());
+    }
+
+    private void setShareText(String text) {
+        shareShown = text;
+        shareText.setText(text);
+        shareText.invalidateHierarchy();
+        if (!dialogs.isEmpty()) {
+            Dialog d = dialogs.peek();
+            d.pack();
+            d.setPosition(Math.round((stage.getWidth() - d.getWidth()) / 2), Math.round((stage.getHeight() - d.getHeight()) / 2));
+        }
+    }
+
+    private void copyCode() {
+        String code = myCode();
+        Forge.getClipboard().setContents(code);
+        shareReport = null;
+        System.out.println("[TFR-Custom] share: copied " + code + " (" + CustomDifficulty.countChanges(work) + " change(s) on "
+                + presetName() + (midGame ? ", mid-game" : "") + ")");
+        updateShareText();
+        setShareText(shareShown + "\n[%85][GREEN]Copied.");
+    }
+
+    private void pasteCode() {
+        String text = Forge.getClipboard().hasContents() ? Forge.getClipboard().getContents() : "";
+        shareReport = applyCode(text);
+        updateShareText();
+    }
+
+    /** Loads a code into the panel's copy; returns the dialog's report. Nothing is kept until Done. */
+    private String applyCode(String text) {
+        CustomDifficulty.Pasted p = CustomDifficulty.readCode(text);
+        String shortCode = text == null ? "" : text.trim();
+        if (shortCode.length() > 40)
+            shortCode = shortCode.substring(0, 40) + "...";
+        if (p.error != null) {
+            System.out.println("[TFR-Custom] share: paste refused - " + p.error);
+            return "[RED]Not loaded:[WHITE] " + p.error + ".\n[%85][LIGHT_GRAY]Copy a code starting with "
+                    + CustomDifficulty.CODE_PREFIX + " and press Paste code again.";
+        }
+        StringBuilder r = new StringBuilder();
+        String madeOn = p.preset;
+        boolean knownPreset = preset.getItems().indexOf(madeOn, false) >= 0;
+        List<String> locked = new ArrayList<>();
+        if (midGame) {
+            r.append("Pasted mid-game (").append(presetName()).append("): ").append(shortCode).append('\n');
+        } else {
+            r.append("Pasted: ").append(shortCode).append('\n');
+            if (knownPreset && !madeOn.equals(presetName()))
+                preset.setSelectedIndex(preset.getItems().indexOf(madeOn, false)); // the header follows the code
+        }
+        // the panel's difficulty changes give way to the code's; the rules (and mid-game the locked rows) stay
+        for (java.util.Iterator<String> it = work.keySet().iterator(); it.hasNext(); ) {
+            Knob k = CustomDifficulty.knobs().get(it.next());
+            if (k != null && !CustomDifficulty.isRule(k) && !locked(k))
+                it.remove();
+        }
+        int loaded = 0;
+        for (Map.Entry<String, String> e : p.values.entrySet()) {
+            Knob k = CustomDifficulty.knobs().get(e.getKey());
+            if (locked(k)) {
+                locked.add(k.label);
+                continue;
+            }
+            if (!CustomDifficulty.same(k, e.getValue(), CustomDifficulty.presetRaw(k, presetName())))
+                work.put(k.id, e.getValue());
+            loaded++;
+        }
+        r.append("[GREEN]Loaded ").append(loaded).append(loaded == 1 ? " setting" : " settings")
+                .append(midGame ? " over " + presetName() + (madeOn.equals(presetName()) ? "" : " (the code was made on " + madeOn + ")")
+                        : " on " + presetName() + (knownPreset ? "" : " (the code's " + madeOn + " is not a difficulty here)"))
+                .append("[WHITE]");
+        if (!p.clamped.isEmpty())
+            r.append("\n").append(p.clamped.size()).append(" clamped: ").append(String.join(", ", p.clamped));
+        if (!p.dropped.isEmpty())
+            r.append("\n").append(p.dropped.size()).append(" dropped: ").append(String.join(", ", p.dropped));
+        if (!locked.isEmpty())
+            r.append("\n").append(locked.size()).append(" locked: ").append(String.join(", ", locked)).append(" (new game only)");
+        r.append("\n[%85][LIGHT_GRAY]").append(midGame ? "Nothing changes until you press Done." : "Nothing is kept until you press Done.");
+        System.out.println("[TFR-Custom] share: pasted " + text.trim() + " - made on " + madeOn + ", loaded " + loaded
+                + " on " + presetName() + (midGame ? " (mid-game)" : "") + ", clamped " + p.clamped.size() + ", dropped "
+                + p.dropped.size() + ", locked " + locked.size() + "; panel now " + CustomDifficulty.encode(work));
+        refill();
+        return r.toString();
     }
 
     private boolean resetAll() {
@@ -638,6 +772,23 @@ public class CustomDifficultyScene extends UIScene {
     public static String console(String[] s) {
         if (object == null)
             return "The panel has not been opened this launch.";
+        if (s.length >= 2 && "code".equals(s[1])) {
+            // round 827: the agent bridge cannot read or fill the clipboard - "custom panel code" prints this panel's
+            // code; "custom panel code paste TEXT" loads TEXT as Paste code would (the dialog open). It does not go
+            // through the clipboard: read straight back after a set, the PC clipboard came back empty (agent-827 test;
+            // a code set outside the game and pasted with the button read fine)
+            if (s.length >= 4 && "paste".equals(s[2])) {
+                StringBuilder t = new StringBuilder();
+                for (int i = 3; i < s.length; i++)
+                    t.append(i > 3 ? " " : "").append(s[i]);
+                if (object.shareText == null || object.dialogs.isEmpty())
+                    object.openShare();
+                object.shareReport = object.applyCode(t.toString());
+                object.updateShareText();
+                return object.shareShown.replaceAll("\\[[^\\]]*\\]", "");
+            }
+            return object.myCode();
+        }
         if (s.length >= 3 && "search".equals(s[1])) {
             StringBuilder q = new StringBuilder();
             for (int i = 2; i < s.length; i++)

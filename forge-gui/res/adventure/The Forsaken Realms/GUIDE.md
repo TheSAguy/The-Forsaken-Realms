@@ -1284,6 +1284,27 @@ Difficulty also scales what a win pays in gold and resources (half again as much
 Normal, the base amount on Hard and a fifth less on Insane), and a new world on Normal, Hard or Insane starts
 with slightly fewer functioning Neutral towns and ruins to restore.
 
+### Custom Difficulty
+
+Each difficulty is a starting point. **Advanced...** on the new-game screen opens a panel with the settings behind it:
+enemy health, starting life and gold, sell prices, mine output, Notoriety's pace, attacking mages, the Wrath of the
+Temple, pillage raids, town specialties, realm milestones, the day's length and more. Each row shows the preset's own
+value in grey; **-** and **+** change it (hold to keep going), and **<** puts it back. Tabs, a search box, Basic or
+Expert, and "Changed only" help you find a setting; tap a setting's name to read what it does. A game with any change
+plays as **Custom (Hard)** (or whichever difficulty you based it on).
+
+**During a run**, Settings > Difficulty > **Edit...** opens the same panel on your game. Most settings change at once
+when you press Done; the few that shape a new world (starting life and gold, fewer neutral towns, town specialties,
+realm milestones) are locked until your next game.
+
+**Rules.** Disable Notoriety, Ascendance leveling and "I won't cheat by loading after a loss" are kept per game: a new
+game starts with your Settings, and changing one during a run changes that game only. They never make a game Custom.
+
+**Share codes.** **Share code** in the panel turns your setup into a code such as `TFR1-Hard-Ky5JLCrJ...`. **Copy** puts
+it on the clipboard for Discord; **Paste code** reads one from the clipboard. A pasted value past a setting's limits is
+held at the limit, a setting this version does not have is left out, and the window lists both. Your Rules stay out of
+codes. Nothing is kept until you press Done.
+
 ### Enemies That Adapt to You
 
 Two parts of your own record shape the enemies you meet, on top of the climb week by week: your **notoriety** - a score

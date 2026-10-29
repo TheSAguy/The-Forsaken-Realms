@@ -393,6 +393,106 @@ public final class CustomDifficulty {
         return out;
     }
 
+    // ---- share codes (round 827) --------------------------------------------------------------------------------
+
+    public static final String CODE_PREFIX = "TFR1-";
+
+    /**
+     * Round 827 (the user's "Yes, all three" on notes/r827-mock.png): a setup as text to trade -
+     * {@code TFR1-<preset>-<raw deflate + URL-safe base64 of id=value;...>}. The difficulty changes only: the rules
+     * (rule.* knobs) are each player's own switches and stay out of a code.
+     */
+    public static String shareCode(String presetName, Map<String, String> overrides) {
+        LinkedHashMap<String, String> body = new LinkedHashMap<>();
+        if (overrides != null)
+            for (Map.Entry<String, String> e : overrides.entrySet())
+                if (!isRule(e.getKey()))
+                    body.put(e.getKey(), e.getValue());
+        byte[] text = encode(body).getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        java.util.zip.Deflater deflater = new java.util.zip.Deflater(9, true);
+        deflater.setInput(text);
+        deflater.finish();
+        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+        byte[] buf = new byte[256];
+        while (!deflater.finished())
+            out.write(buf, 0, deflater.deflate(buf));
+        deflater.end();
+        return CODE_PREFIX + (presetName == null ? "?" : presetName) + "-"
+                + java.util.Base64.getUrlEncoder().withoutPadding().encodeToString(out.toByteArray());
+    }
+
+    /** A pasted code, read: its preset and values (clamped), and what was clamped or dropped, in the panel's words. */
+    public static final class Pasted {
+        public String preset;
+        public final LinkedHashMap<String, String> values = new LinkedHashMap<>();
+        public final List<String> clamped = new ArrayList<>();
+        public final List<String> dropped = new ArrayList<>();
+        /** Why the text is no code at all, or null. */
+        public String error;
+    }
+
+    /** Reads a share code (whitespace and line breaks around or inside it are ignored). Never throws. */
+    public static Pasted readCode(String text) {
+        Pasted p = new Pasted();
+        String s = text == null ? "" : text.replaceAll("\\s+", "");
+        if (!s.startsWith(CODE_PREFIX)) {
+            p.error = s.isEmpty() ? "the clipboard is empty" : "not a TFR1 code (it starts with " + CODE_PREFIX + ")";
+            return p;
+        }
+        int dash = s.indexOf('-', CODE_PREFIX.length());
+        if (dash < 0) {
+            p.error = "the code is cut short";
+            return p;
+        }
+        p.preset = s.substring(CODE_PREFIX.length(), dash);
+        String body;
+        try {
+            byte[] data = java.util.Base64.getUrlDecoder().decode(s.substring(dash + 1));
+            java.util.zip.Inflater inflater = new java.util.zip.Inflater(true);
+            inflater.setInput(data);
+            java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+            byte[] buf = new byte[256];
+            while (!inflater.finished()) {
+                int n = inflater.inflate(buf);
+                if (n == 0 && (inflater.needsInput() || inflater.needsDictionary()))
+                    break;
+                out.write(buf, 0, n);
+                if (out.size() > 8192)
+                    break;
+            }
+            boolean whole = inflater.finished();
+            inflater.end();
+            if (!whole)
+                throw new java.util.zip.DataFormatException("cut short");
+            body = new String(out.toByteArray(), java.nio.charset.StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            p.error = "the code is damaged (a character missing or changed?)";
+            return p;
+        }
+        Map<String, Knob> all = knobs();
+        for (Map.Entry<String, String> e : decode(body).entrySet()) {
+            Knob k = all.get(e.getKey());
+            if (k == null) {
+                p.dropped.add("\"" + e.getKey() + "\" is not a setting in this version");
+                continue;
+            }
+            if (isRule(k)) {
+                p.dropped.add(k.label + " (a rule - your own switch)");
+                continue;
+            }
+            String v = clean(k, e.getValue());
+            if (v == null) {
+                p.dropped.add(k.label + " \"" + e.getValue() + "\" is not " + kind(k));
+                continue;
+            }
+            if (!sameValue(k, v, e.getValue()))
+                p.clamped.add(k.label + " " + display(k, e.getValue()) + " -> " + display(k, v)
+                        + (v.equals(clean(k, String.valueOf(k.max))) ? " (the most)" : " (the least)"));
+            p.values.put(k.id, v);
+        }
+        return p;
+    }
+
     // ---- applying -----------------------------------------------------------------------------------------------
 
     /** The run's TuningData: the plane's own when there are no tuning overrides, else a copy with them on top. */

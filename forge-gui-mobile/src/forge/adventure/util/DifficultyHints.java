@@ -27,7 +27,8 @@ import java.util.Properties;
  * player already past 50 when they load this version sees it on that load.</li>
  * </ul>
  * A save's difficulty can only be picked for a new game or New Game+ (NewGameScene, SaveLoadScene's New Game+ picker;
- * Settings has none), so both say so. Each hint shows once per world - its marks live in ReloadJab's store, outside the
+ * Settings has none), so both say so. Round 827: Settings > Difficulty (round 826) changes a running save's anytime
+ * settings - a custom save's hint points there first, a preset save's adds it as a second option. Each hint shows once per world - its marks live in ReloadJab's store, outside the
  * save, keyed by the world's seed: a reload cannot undo them (the loss count in a save would go back down with the very
  * reload it counts), and no save changes. Once per world, not once per foe: the advice is about the difficulty, and a
  * player who reloads every loss would otherwise hear it for every boss. The store remembers the difficulty the marks
@@ -193,9 +194,16 @@ public final class DifficultyHints {
         dueLossFoe = null;
         String easier = neighbor(-1);
         System.out.println("[TFR-Hint] shown: loss hint - " + foe + " beat the player " + LOSSES + " times ("
-                + difficultyName() + " -> " + easier + ", world " + seed + ")");
-        show("A Word of Advice", foe + " has beaten you " + LOSSES + " times. " + easier
-                + " is always an option: pick it on your next game or New Game+.");
+                + difficultyName() + " -> " + easier + ", world " + seed + (custom() ? ", custom" : "") + ")");
+        // Round 827: a custom save is pointed at its own settings first; with round 826's mid-game panel, a preset save
+        // also hears it can ease things now
+        if (custom())
+            show("A Word of Advice", foe + " has beaten you " + LOSSES + " times. You can ease your custom settings now in "
+                    + "Settings > Difficulty > Edit..., or pick " + easier + " on your next game or New Game+.");
+        else
+            show("A Word of Advice", foe + " has beaten you " + LOSSES + " times. " + easier
+                    + " is always an option: pick it on your next game or New Game+."
+                    + (canEdit() ? " Or ease the settings that can change mid-game now, in Settings > Difficulty." : ""));
     }
 
     private static void showWin() {
@@ -204,9 +212,14 @@ public final class DifficultyHints {
         winShown = true;
         String harder = neighbor(1);
         System.out.println("[TFR-Hint] shown: win hint - " + winsInARow(Current.player().recentDuels())
-                + " wins in a row (" + difficultyName() + " -> " + harder + ", world " + seed + ")");
-        show("Ready for More?", WINS + " wins in a row! If the duels feel easy, try " + harder
-                + " on your next game or New Game+.");
+                + " wins in a row (" + difficultyName() + " -> " + harder + ", world " + seed + (custom() ? ", custom" : "") + ")");
+        if (custom())
+            show("Ready for More?", WINS + " wins in a row! If the duels feel easy, tighten your custom settings in "
+                    + "Settings > Difficulty > Edit..., or try " + harder + " on your next game or New Game+.");
+        else
+            show("Ready for More?", WINS + " wins in a row! If the duels feel easy, try " + harder
+                    + " on your next game or New Game+."
+                    + (canEdit() ? " Or raise the settings that can change mid-game now, in Settings > Difficulty." : ""));
     }
 
     /** The Notices line and the world map's dialog, in round 756's style, with one button. */
@@ -250,6 +263,16 @@ public final class DifficultyHints {
                 return j >= 0 && j < all.length ? all[j].name : null;
             }
         return null;
+    }
+
+    /** Round 827: the running save has custom difficulty changes (CustomDifficulty, rounds 822-826). */
+    private static boolean custom() {
+        return CustomDifficulty.isCustom(Current.player());
+    }
+
+    /** Round 827: the plane has custom difficulty knobs, so Settings has its Difficulty row (round 826). */
+    private static boolean canEdit() {
+        return !CustomDifficulty.knobs().isEmpty();
     }
 
     private static String difficultyName() {
