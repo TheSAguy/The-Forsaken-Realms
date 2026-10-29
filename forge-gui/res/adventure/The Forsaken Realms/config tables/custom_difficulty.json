@@ -34,6 +34,18 @@
     //   wrathDirectTiles, wrathReplanTiles, wrathReplanSeconds, wrathStuckSeconds, wrathWaitTiles
     //                             the Wrath hunter's pathfinding timings (a bad value strands or teleports it)
     //   spawnClockFollowsSpeedUp  the spawn clock's link to the speed-up key (a debugging switch)
+    // Round 828 (the reader audit): left out as well -
+    //   enemyTierScale*           each rank's size on the map (display; 0 draws an invisible enemy that still collides)
+    //   legendLifetimeFactor      only legends on the old travel-time clock read it since round 350
+    //   dungeonSourceShare        an on/off switch: 0 empties the world (the land's own roll stays held back)
+    //   dungeonSourceRadiusTiles, dungeonSourceReachTiles, dungeonSourceMaxPerRoll, sameEnemyNearbyRadius,
+    //   mapEnemyDefaultThreatRange, mapEnemyDefaultPursueRange   spawn and chase geometry
+    //   spawnMinTiles, spawnMaxTiles   a min/max pair the panel cannot keep in order
+    //   torchPulse*               the torch's light pulse (display)
+    //   winStreakStartCards, archmageStartCards   card lists (content, not a number)
+    //   goldLoss (difficulty)     read only when a difficulty sets neither defeatGoldLoss value - never in TFR
+    //   spawnRank (difficulty)    the hand-placed object filter in places; only 0-3 mean anything
+    //   startItems (difficulty)   an item list
     // ============================================================================
     // Round 823: the panel's tabs, in this order (a knob's category not listed here comes after them).
     "categories": ["Enemies & Duels", "Notoriety", "Economy", "Loot & Rewards", "Research & Sets", "Towns & Territory",
@@ -125,6 +137,205 @@
             "id": "sideQuestTimer", "label": "Side-quest time limit", "category": "Time & Pacing", "group": "Quests",
             "target": "config.sideQuestTimerEnabled",
             "tooltip": "Side quests fail when their days run out (story quests never do). Off: side quests never expire."
+        },
+        {
+            "id": "earlyLifeWeek1", "label": "Week 1 enemy life", "category": "Enemies & Duels", "group": "The first weeks",
+            "target": "tuning.earlyLifeWeek1Factor", "min": 0.1, "max": 1, "step": 0.05, "format": "percent",
+            "tooltip": "In days 1-7 a monster starts its duel with this share of its life (never below the floor). 100% = no easing. Bosses, legends, Arena and Inn fights are never eased."
+        },
+        {
+            "id": "earlyLifeWeek1Floor", "label": "Week 1 life floor", "category": "Enemies & Duels", "group": "The first weeks",
+            "target": "tuning.earlyLifeWeek1Floor", "min": 1, "max": 60, "step": 1, "level": "expert",
+            "tooltip": "The lowest life week 1's easing can leave a monster with."
+        },
+        {
+            "id": "earlyLifeWeek2", "label": "Week 2 enemy life", "category": "Enemies & Duels", "group": "The first weeks",
+            "target": "tuning.earlyLifeWeek2Factor", "min": 0.1, "max": 1, "step": 0.05, "format": "percent",
+            "tooltip": "In days 8-14 a monster starts its duel with this share of its life (never below the floor). 100% = no easing."
+        },
+        {
+            "id": "earlyLifeWeek2Floor", "label": "Week 2 life floor", "category": "Enemies & Duels", "group": "The first weeks",
+            "target": "tuning.earlyLifeWeek2Floor", "min": 1, "max": 60, "step": 1, "level": "expert",
+            "tooltip": "The lowest life week 2's easing can leave a monster with."
+        },
+        {
+            "id": "chestDuelFreeWeeks", "label": "Duel-free chest weeks", "category": "Enemies & Duels", "group": "The first weeks",
+            "target": "tuning.chestDuelFreeWeeks", "min": 0, "max": 4, "step": 1,
+            "tooltip": "For this many weeks no overworld chest rolls a Dangerous Enemy or the Illegal Arena Match, and no diamond an ambush. 0 = from day 1."
+        },
+        {
+            "id": "winStreakWins", "label": "Enemy win streak", "category": "Enemies & Duels", "group": "Enemies",
+            "target": "tuning.winStreakWins{D}", "min": 0, "max": 10, "step": 1,
+            "tooltip": "An enemy that has beaten you this many times in a row starts its duels with a Wastes in play, then more. 0 = never."
+        },
+        {
+            "id": "winStreakMaxSteps", "label": "Win streak steps", "category": "Enemies & Duels", "group": "Enemies",
+            "target": "tuning.winStreakMaxSteps", "min": 1, "max": 5, "step": 1, "level": "expert",
+            "tooltip": "How many times a winning enemy's head start can grow."
+        },
+        {
+            "id": "arenaHigherTierWin", "label": "Arena: higher rank wins", "category": "Enemies & Duels", "group": "Arena",
+            "target": "tuning.arenaHigherTierWinPercent", "min": 0, "max": 100, "step": 5, "level": "expert",
+            "tooltip": "In an Arena match you do not play, the higher-ranked fighter wins this often (percent)."
+        },
+        {
+            "id": "defeatGoldPercent", "label": "Gold lost on defeat", "category": "Enemies & Duels", "group": "Defeat",
+            "target": "tuning.defeatGoldLossPercent{D}", "min": 0, "max": 100, "step": 1,
+            "tooltip": "A lost duel takes this percent of the gold you carry, or the minimum below, whichever is more."
+        },
+        {
+            "id": "defeatGoldMin", "label": "Defeat gold minimum", "category": "Enemies & Duels", "group": "Defeat",
+            "target": "tuning.defeatGoldLossMin{D}", "min": 1, "max": 1000, "step": 25, "level": "expert",
+            "tooltip": "The least gold a lost duel takes (never more than you carry)."
+        },
+        {
+            "id": "defeatGoldMinWaived", "label": "Weeks without the minimum", "category": "Enemies & Duels", "group": "Defeat",
+            "target": "tuning.defeatGoldLossMinWaivedWeeks", "min": 0, "max": 4, "step": 1, "level": "expert",
+            "tooltip": "For this many weeks a lost duel takes only the percent, not the minimum. 0 = never waived."
+        },
+        {
+            "id": "lifeLoss", "label": "Life lost on defeat", "category": "Enemies & Duels", "group": "Defeat",
+            "target": "difficulty.lifeLoss", "min": 0, "max": 0.9, "step": 0.05, "format": "percent",
+            "tooltip": "A lost duel takes this share of your largest life from your life."
+        },
+        {
+            "id": "darkSpawnRate", "label": "Spawns in the dark", "category": "Enemies & Duels", "group": "Spawns",
+            "target": "tuning.fogDarkSpawnRate", "min": 0.5, "max": 3, "step": 0.05,
+            "tooltip": "In unlit land, enemies appear this many times as often as in the light (x1 = the same)."
+        },
+        {
+            "id": "darkEnemySpeed", "label": "Enemy speed in the dark", "category": "Enemies & Duels", "group": "Spawns",
+            "target": "tuning.fogDarkEnemySpeed", "min": 0.5, "max": 2, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "Roaming enemies move at this share of their speed in unlit land."
+        },
+        {
+            "id": "litSpawnChance", "label": "Spawns in the light", "category": "Enemies & Duels", "group": "Spawns",
+            "target": "tuning.fogLitSpawnChance", "min": 0.1, "max": 1, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "In lit land (your own land is always lit) this share of the spawn rolls goes ahead."
+        },
+        {
+            "id": "spawnCrowdLimit", "label": "Roamers near you (most)", "category": "Enemies & Duels", "group": "Spawns",
+            "target": "tuning.spawnCrowdLimit", "min": 4, "max": 40, "step": 1, "level": "expert",
+            "tooltip": "New enemies stop appearing while this many roam near you."
+        },
+        {
+            "id": "spawnCrowdRadius", "label": "Roamers near you (tiles)", "category": "Enemies & Duels", "group": "Spawns",
+            "target": "tuning.spawnCrowdRadiusTiles", "min": 8, "max": 60, "step": 2, "level": "expert",
+            "tooltip": "How far round you that count reaches."
+        },
+        {
+            "id": "landSpawnShare", "label": "Land spawns vs dungeons", "category": "Enemies & Duels", "group": "Spawns",
+            "mode": "scale", "min": 0.25, "max": 2.5, "step": 0.05, "level": "expert",
+            "targets": ["tuning.landSpawnSharePlayer", "tuning.landSpawnShareWaste", "tuning.landSpawnSharePartner",
+                        "tuning.landSpawnShareHappy", "tuning.landSpawnShareNeutral", "tuning.landSpawnShareUnhappy",
+                        "tuning.landSpawnShareWar"],
+            "tooltip": "The land's own share of the world's enemies, multiplied by this; the rest walk out of nearby dungeons. Higher = fewer from dungeons."
+        },
+        {
+            "id": "dungeonPull", "label": "Dungeon pull", "category": "Enemies & Duels", "group": "Spawns",
+            "target": "tuning.dungeonSourceRateFactor", "min": 0.25, "max": 2, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "How strongly uncleared dungeons send out enemies."
+        },
+        {
+            "id": "dungeonPullGrowth", "label": "Dungeon pull growth", "category": "Enemies & Duels", "group": "Spawns",
+            "target": "tuning.dungeonSourceEscalationPerWeek", "min": 0, "max": 1, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "An uncleared dungeon's pull grows by this much each week. 0 = never grows."
+        },
+        {
+            "id": "dungeonPullMax", "label": "Dungeon pull cap", "category": "Enemies & Duels", "group": "Spawns",
+            "target": "tuning.dungeonSourceEscalationMax", "min": 1, "max": 4, "step": 0.1, "level": "expert",
+            "tooltip": "The most that growth can multiply a dungeon's pull."
+        },
+        {
+            "id": "maxSameEnemyNearby", "label": "Same enemy close together", "category": "Enemies & Duels", "group": "Spawns",
+            "target": "tuning.maxSameEnemyNearby", "min": 1, "max": 6, "step": 1, "level": "expert",
+            "tooltip": "How many enemies of one kind may roam close together before a spawn rolls another kind."
+        },
+        {
+            "id": "legendDays", "label": "Legend stays (days)", "category": "Enemies & Duels", "group": "Legends",
+            "target": "tuning.legendLifetimeDays", "min": 1, "max": 10, "step": 1,
+            "tooltip": "Days a sighted legend stays on the map (from the next sighting)."
+        },
+        {
+            "id": "legendGold", "label": "Legend gold", "category": "Loot & Rewards", "group": "Legends",
+            "target": "tuning.legendRewardGoldFactor", "min": 0, "max": 1, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "A legend pays this share of the gold in its loot (rounded up)."
+        },
+        {
+            "id": "legendCards", "label": "Legend cards", "category": "Loot & Rewards", "group": "Legends",
+            "target": "tuning.legendRewardCardFactor", "min": 0, "max": 1, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "A legend pays this share of the cards in its loot (its own named card goes last)."
+        },
+        {
+            "id": "rewardMax", "label": "Extra reward cards", "category": "Loot & Rewards", "group": "Rewards",
+            "target": "difficulty.rewardMaxFactor", "min": 0, "max": 3, "step": 0.1,
+            "tooltip": "How many extra cards a random card reward can add, as a multiple of its usual spread. 0 = always the least."
+        },
+        {
+            "id": "startingShards", "label": "Starting shards", "category": "Economy", "group": "Starting kit",
+            "target": "difficulty.startingShards", "min": 0, "max": 999, "step": 1, "scope": "newGame",
+            "tooltip": "The shards the Ring Cities hand over at the start."
+        },
+        {
+            "id": "startingWood", "label": "Starting wood", "category": "Economy", "group": "Starting kit",
+            "target": "difficulty.startingWood", "min": 0, "max": 2000, "step": 25, "scope": "newGame",
+            "tooltip": "The wood the Ring Cities hand over at the start."
+        },
+        {
+            "id": "startingStone", "label": "Starting stone", "category": "Economy", "group": "Starting kit",
+            "target": "difficulty.startingStone", "min": 0, "max": 2000, "step": 25, "scope": "newGame",
+            "tooltip": "The stone the Ring Cities hand over at the start."
+        },
+        {
+            "id": "roadSpeed", "label": "Speed on your roads", "category": "Time & Pacing", "group": "Travel",
+            "target": "tuning.playerRoadSpeedBonus", "min": 0.5, "max": 2, "step": 0.05, "format": "percent",
+            "tooltip": "Your own roads' speed, as a share of an old road's."
+        },
+        {
+            "id": "territorySpeed", "label": "Speed bonus on your land", "category": "Time & Pacing", "group": "Travel",
+            "target": "tuning.playerTerritorySpeedBonus", "min": 0, "max": 1, "step": 0.05, "format": "percent",
+            "tooltip": "Extra speed on the land you hold."
+        },
+        {
+            "id": "partnerSpeed", "label": "Speed on a partner's land", "category": "Time & Pacing", "group": "Travel",
+            "target": "tuning.aiTerritoryPartnerSpeedBonus", "min": 0, "max": 0.5, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "Extra speed on the land of a color you are partnered with."
+        },
+        {
+            "id": "happySpeed", "label": "Speed on a friendly land", "category": "Time & Pacing", "group": "Travel",
+            "target": "tuning.aiTerritoryHappySpeedBonus", "min": 0, "max": 0.5, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "Extra speed on the land of a color that likes you."
+        },
+        {
+            "id": "unhappySpeed", "label": "Slowdown on an unfriendly land", "category": "Time & Pacing", "group": "Travel",
+            "target": "tuning.aiTerritoryUnhappySpeedPenalty", "min": 0, "max": 0.6, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "Lost speed on the land of a color that dislikes you."
+        },
+        {
+            "id": "warSpeed", "label": "Slowdown on a land at war", "category": "Time & Pacing", "group": "Travel",
+            "target": "tuning.aiTerritoryWarSpeedPenalty", "min": 0, "max": 0.6, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "Lost speed on the land of a color at war with you."
+        },
+        {
+            "id": "sideQuestDays", "label": "Side-quest days", "category": "Time & Pacing", "group": "Quests",
+            "target": "tuning.sideQuestDays", "min": 3, "max": 60, "step": 1,
+            "tooltip": "Days to finish a side quest you take from now on (with the time limit on)."
+        },
+        {
+            "id": "questCooldown", "label": "Quest rest days", "category": "Time & Pacing", "group": "Quests",
+            "target": "tuning.questOfferCooldownDays", "min": 0, "max": 30, "step": 1, "level": "expert",
+            "tooltip": "Days before a quest board offers the same quest again. 0 = no rest."
+        },
+        {
+            "id": "dungeonLifespan", "label": "Dungeon lifespan", "category": "Time & Pacing", "group": "Dungeons",
+            "mode": "scale", "min": 0.25, "max": 3, "step": 0.05, "level": "expert",
+            "targets": ["tuning.dungeonLifespanMinDays", "tuning.dungeonLifespanMaxDays"],
+            "tooltip": "How long a dungeon stays before it rotates away, multiplied by this (one already counting down keeps its day unless the new longest is sooner)."
+        },
+        {
+            "id": "robbedGuardSpeed", "label": "Guards chasing a thief", "category": "Towns & Territory", "group": "Theft",
+            "target": "tuning.robbedGuardSpeedFactor", "min": 1, "max": 2, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "A guard chasing you after a theft runs at this share of your speed (from the next theft)."
         },
         {
             "id": "notorietyOff", "label": "Notoriety off", "category": "Rules", "group": "Your rules",

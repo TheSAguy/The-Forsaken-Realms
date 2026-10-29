@@ -14264,6 +14264,68 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 828: custom difficulty, part 7 - 39 more knobs: the first weeks, defeat, spawns, legends, travel and the starting kit (2026-10-28)
+
+Part 7 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`), metadata batch 1: plane data
+only (`config tables/custom_difficulty.json`, 20 -> 59 knobs), no code. Every knob is absent from a save until a player
+changes it, so the shipped game (the duel-free first week, the eased weeks, the win-streak Walls) is unchanged.
+
+A read-only reader audit came first: every TuningData reader below reads `Config.getTuningData()` at use (none caches
+it), so all are "anytime"; four stamp the value when they fire (legend sightings, side quests taken, a theft, a
+dungeon's despawn day) and say "from now on" in their tooltips. The ranges come from what breaks:
+- `defeatGoldMin` starts at 1: a difficulty with both defeat values at 0 falls back to the stock `goldLoss` (10% on
+  Normal), not a free defeat (`TuningData.defeatGoldLoss` returns -1).
+- The week 1/2 life floors start at 1 (0 with a low factor starts an enemy at 0 life). The factors stop at 100%:
+  `DuelScene` treats 1 or more as "no easing", never more life.
+- Road speed starts at 50% (`playerRoadSpeedBonus` has no floor: 0 freezes you on your own roads).
+- The legend reward factors stop at 100% (`PlaceRewards.clamp01` puts the default back for anything outside 0..1).
+- `lifeLoss` stops at 90% (100% drops you to 0 life every defeat); spawns in the dark 50%-300%, the crowd cap 4-40,
+  side-quest days 3-60 (0 fails every new quest on the next day).
+- Two scale knobs keep ordered sets in order: the 7 land spawn shares (each independent, so a scale keeps their
+  relations; x2.5 takes War's 0.40 to 1.0) and the dungeon lifespan min/max days.
+
+The knobs (Basic unless marked Expert):
+- **Enemies & Duels - The first weeks:** Week 1 / Week 2 enemy life (`earlyLifeWeek1/2Factor`), their floors (Expert),
+  Duel-free chest weeks (`chestDuelFreeWeeks`, round 797's rule; 0 = from day 1).
+- **Enemies:** Enemy win streak (`winStreakWins{D}`; 0 = never), Win streak steps (Expert).
+- **Arena (Expert):** the simulated match's higher-rank win percent.
+- **Defeat:** Gold lost on defeat (`defeatGoldLossPercent{D}`), its minimum and the weeks without it (Expert), Life lost
+  on defeat (`difficulty.lifeLoss`).
+- **Spawns:** Spawns in the dark (`fogDarkSpawnRate`); Expert: enemy speed in the dark, spawns in the light, the
+  crowd count and radius, Land spawns vs dungeons (scale over the 7 `landSpawnShare*`), Dungeon pull, its growth per
+  week and its cap, Same enemy close together.
+- **Legends:** Legend stays (days); Loot & Rewards (Expert): Legend gold, Legend cards.
+- **Loot & Rewards - Rewards:** Extra reward cards (`difficulty.rewardMaxFactor`; 0 = always the least).
+- **Economy - Starting kit (new game):** starting shards, wood and stone (the Ring Cities' gift reads them through
+  `CustomDifficulty.withOverrides`, like round 822's gold).
+- **Time & Pacing - Travel:** Speed on your roads, Speed bonus on your land; Expert: a partner's, a friendly, an
+  unfriendly and a warring land. **Quests:** Side-quest days, Quest rest days (Expert). **Dungeons (Expert):**
+  Dungeon lifespan (scale).
+- **Towns & Territory - Theft (Expert):** Guards chasing a thief (100%-200%).
+- Left out and named in the json header: `enemyTierScale*` (each rank's size on the map; 0 is an invisible enemy that
+  still collides), `legendLifetimeFactor` (only legends on the pre-round-350 clock read it), `dungeonSourceShare` (an
+  on/off switch; 0 empties the world), the spawn and chase radii, `spawnMin/MaxTiles` (a pair the panel cannot keep
+  ordered), `torchPulse*`, the two start-card lists, `goldLoss` (never read in TFR), `spawnRank` (the place-object
+  filter; only 0-3 mean anything), `startItems`.
+
+A check script (every target field in TuningData / DifficultyData, every shipped value on all four difficulties inside
+its range, no duplicate ids) passed: 59 knobs, 0 problems.
+
+**Agent-tested** in `agent-828` (the agent game's 20:12 jar plus this json in its res; removed afterward). No exceptions.
+- Slot 76: all 39 at their minimum (`custom set`, the kit through `custom next`), a walk and a duel at 50x:
+  `[TFR-EarlyLife] Goblin Worker week 2: 12 -> 1 (x0.1, floor 1)`; saved to slot 94.
+- A new game with the kit at 0: `[TFR-Custom] new game: Custom (Normal), 3 override(s): startingShards 10 -> 0, ...`,
+  `[TFR-Session] game new ... difficulty=Custom(Normal) custom=3`.
+- Slot 94 reloaded with its 36 anytime overrides; all 39 at their maximum, saved to slot 95; slot 76 in between loads
+  plain Normal (`custom=0`); slot 95 reloads with the 36 at their maximum.
+- `custom knobs` on the new game reads `now startingShards=1`: the save's own DifficultyData copy, which the kit never
+  reads (the gift takes the preset with the overrides). Display only.
+
+**Not tested:** a defeat at the extremes, a legend's payout, a theft chase, quest expiry at 3 days, and the Ring Cities'
+gift at 0 (round 822's path, the same `withOverrides`).
+
+Files: `The Forsaken Realms/config tables/custom_difficulty.json`.
+
 ## Round 838: the difficulty in game - the info page names it, and every save slot shows it (2026-10-28)
 
 The user: "Could we somehow show what difficulty that are playing on? This might tie well in with the new difficulty
