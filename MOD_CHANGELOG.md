@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 852: the Inn's False Life charges the price it shows (2026-10-29)
+
+The user: "Yes, both" (to the main thread's "Start ... the False Life price fix (852)?"). Found in round 842's agent
+test. Files: `scene/InnScene.java`, `player/AdventurePlayer.java` (both stock).
+
+- **The bug:** the Inn's False Life button showed `round(falseLifeCost() x the town's price modifier)` (248 at a +2
+  reputation town), while `AdventurePlayer.potionOfFalseLife()` checked and charged the bare `falseLifeCost()` (250).
+  Older than round 842, which only moved the charge onto `takeGold`.
+- **Which price:** the shown one. The Inn's other gold service, the tournament entry fee, is `goldToEnter x the town
+  price modifier` (`AdventureEventData.getDescription`, `EventScene`), and the shops multiply by it too
+  (`ShopActor.getPriceModifier`), so reputation discounts False Life like everything else at that Inn.
+- **The fix:** one helper, `AdventurePlayer.falseLifePrice(changes)` (`falseLifeCost()` x `getTownPriceModifier()`,
+  rounded); `InnScene.refreshStatus` shows it and `potionOfFalseLife(changes)` checks and charges it (the no-argument
+  version is gone; the Inn was its only caller). `[TFR-Inn] False Life bought for N gold (base B, town price xM)`.
+
+**Agent-tested** in `agent-852` (wt-852's classes ahead of the agent jar, cheats, new game): Orazca raised as the
+Capitol (`capitol raise`; a restored town gets +2 reputation, x0.99), its Inn showed 198 (base 200); buying took gold
+2000 -> 1802 (198), life 16 -> 18/16; the Balance Sheet's "Everything else" expenses went 1000 -> 1198 (198), on hand
+1802; forge.log `[TFR-Inn] False Life bought for 198 gold (base 200, town price x0.99)`. Maven compile exit 0.
+
 ## Round 853: the Bronze Coin corner button fits - a corner widens for a two-line label (2026-10-29)
 
 A v1.24 leftover (round 785's "Not done", seen in `r785_hard_week1_preview.png`): at 1280x720 the lost-ante prompt's

@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 852 - the Inn's False Life charges the price it shows
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): new `falseLifePrice(changes)`
+  (`falseLifeCost()` x the town price modifier); `potionOfFalseLife()` became `potionOfFalseLife(changes)`, which
+  checks and charges that price and logs `[TFR-Inn]`.
+- **`forge-gui-mobile/src/forge/adventure/scene/InnScene.java`** (STOCK): `refreshStatus` shows
+  `falseLifePrice(changes)`; `potionOfFalseLife` passes `changes`.
+
 ### Round 853 - corner buttons widen for a two-line label (the Bronze Coin button)
 - **`forge-gui-mobile/src/forge/toolbox/FButton.java`** (STOCK): new `getCornerFitWidth(minWidth)` and field
   `cornerFitFont`; `draw()`'s last `drawText` uses `cornerFitFont` when set. A one-word label returns minWidth.

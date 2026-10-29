@@ -2893,17 +2893,29 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         onLifeTotalChangeList.emit();
     }
 
-    public boolean potionOfFalseLife() {
-        if (gold >= falseLifeCost() && life == maxLife) {
+    /** Round 852: buy False Life at this town's Inn for falseLifePrice(changes) - the price the button shows. */
+    public boolean potionOfFalseLife(PointOfInterestChanges changes) {
+        int price = falseLifePrice(changes);
+        if (gold >= price && life == maxLife) {
             life = maxLife + 2;
-            takeGold(falseLifeCost()); // round 842 (Fable review P3-18): through the purse and the ledger, not a bare gold -=
+            takeGold(price); // round 842 (Fable review P3-18): through the purse and the ledger, not a bare gold -=
             onLifeTotalChangeList.emit();
+            System.out.println("[TFR-Inn] False Life bought for " + price + " gold (base " + falseLifeCost()
+                    + ", town price x" + (changes == null ? 1f : changes.getTownPriceModifier()) + ")");
             return true;
         } else {
-            System.out.println("Can't afford cost of false life " + falseLifeCost());
+            System.out.println("Can't afford cost of false life " + price);
             System.out.println("Only has this much gold " + gold);
         }
         return false;
+    }
+
+    /** Round 852: False Life's price at an Inn - falseLifeCost() times the town's price modifier, the way the Inn's
+     *  tournament fees and the shops price. The Inn's button shows it and potionOfFalseLife charges it (the button
+     *  showed this but the charge took the bare cost: 248 shown, 250 taken). */
+    public int falseLifePrice(PointOfInterestChanges changes) {
+        float townPriceModifier = changes == null ? 1f : changes.getTownPriceModifier();
+        return Math.round(falseLifeCost() * townPriceModifier);
     }
 
     public int falseLifeCost() {

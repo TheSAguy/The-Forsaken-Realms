@@ -95,7 +95,7 @@ public class InnScene extends UIScene {
         String repColor = currentRepColor();
         if (repColor != null && ColorReputation.isHealBarred(repColor))
             return;
-        if (Current.player().potionOfFalseLife()){
+        if (Current.player().potionOfFalseLife(changes)){
             refreshStatus();
         }
     }
@@ -153,8 +153,7 @@ public class InnScene extends UIScene {
     }
 
     private void refreshStatus(){
-        float townPriceModifier = changes == null ? 1f : changes.getTownPriceModifier();
-        tempHealthCost = Math.round(Current.player().falseLifeCost() * townPriceModifier);
+        tempHealthCost = Current.player().falseLifePrice(changes); // round 852: the price potionOfFalseLife charges
         boolean purchaseable = Current.player().getMaxLife() == Current.player().getLife() &&
                 tempHealthCost <= Current.player().getGold();
 
