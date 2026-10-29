@@ -81,6 +81,12 @@ public class CustomDifficultyScene extends UIScene {
     private final TextraButton basicButton, expertButton;
     private final CheckBox changedBox;
     private final TextraLabel countLabel, help;
+    /**
+     * Round 859 (the user: "Tell them there are a lot and they could probably break the game, so be aware"): the help
+     * line opens with this warning in every mode, until a row is tapped.
+     */
+    private static final String WARNING = "[%85][ORANGE]There are a lot of settings, and some combinations can break the game"
+            + " - change a few at a time; Reset all goes back to the preset.[LIGHT_GRAY] ";
     private Timer.Task repeat;
     /** Round 824: portrait's tab box (null in landscape) and the tab each of its items is; a refill re-lists it. */
     private final SelectBox<String> tabBox;
@@ -209,7 +215,7 @@ public class CustomDifficultyScene extends UIScene {
 
         help = Controls.newTextraLabel("");
         help.setWrap(true);
-        content.add(help).growX().height(landscape ? 20 : 32).padTop(2).left();
+        content.add(help).growX().height(landscape ? 28 : 32).padTop(2).left(); // round 859: 20 -> 28, the warning's 3 lines
 
         ui.onButtonPress("done", this::done);
         ui.onButtonPress("resetAll", this::resetAll);
@@ -230,7 +236,7 @@ public class CustomDifficultyScene extends UIScene {
             work.putAll(current);
         work.putAll(CustomDifficulty.pendingRules()); // round 825: the rules ride along (seeded from the profile)
         preset.setSelectedIndex(Math.max(0, Math.min(presetIndex, preset.getItems().size - 1)));
-        help.setText("[%85][LIGHT_GRAY]Tap a setting's name to read what it does.");
+        help.setText(WARNING + "Tap a setting's name to read what it does.");
         System.out.println("[TFR-Custom] panel opened on " + presetName() + " with " + work.size() + " change(s), "
                 + CustomDifficulty.knobs().size() + " knob(s)");
         Forge.switchScene(this);
@@ -267,7 +273,7 @@ public class CustomDifficultyScene extends UIScene {
                 : WorldSave.getCurrentSave().getWorld().getCurrentDay();
         inPlay.setText("[%85][LIGHT_GRAY]" + p.getDifficulty().name + " - in play, day " + day);
         showPresetBox(false);
-        help.setText("[%85][LIGHT_GRAY]Mid-game: only settings that can change during a run. New-game-only ones are locked.");
+        help.setText(WARNING + "Mid-game: new-game-only settings are locked.");
         System.out.println("[TFR-Custom] panel opened mid-game on day " + day + ": " + CustomDifficulty.displayName(p)
                 + ", " + CustomDifficulty.count(p) + " change(s)"
                 + (CustomDifficulty.rules(p).isEmpty() ? "" : ", rules " + CustomDifficulty.rules(p))
@@ -303,7 +309,7 @@ public class CustomDifficultyScene extends UIScene {
                         work.put(k.id, String.valueOf(CustomDifficulty.profileRule(field)));
                 }
         }
-        help.setText("[%85][LIGHT_GRAY]New Game+: these settings start the new run. Done takes them back to the New Game+ dialog.");
+        help.setText(WARNING + "New Game+: these settings start the new run.");
         System.out.println("[TFR-Custom] panel opened for New Game+ on " + presetName() + " with "
                 + CustomDifficulty.countChanges(work) + " change(s)" + (edited != null ? " (edited before)" : "")
                 + ": " + CustomDifficulty.encode(work));

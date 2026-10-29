@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 859: the Advanced panel warns that its settings can break the game (2026-10-29)
+
+The user: "For the 'Advanced' settings. Tell them there are a lot and they could probably break the game, so be
+aware." - and "Yes, both" (the panel and the GUIDE). Files: `scene/CustomDifficultyScene.java` (TFR's own),
+`GUIDE.md`, `GUIDE.html` (rebuilt, `--check` OK).
+
+- **The panel:** `WARNING` opens the help line in all three modes, in orange: "There are a lot of settings, and some
+  combinations can break the game - change a few at a time; Reset all goes back to the preset." Each mode's own note
+  follows in grey, shortened to fit: "Tap a setting's name to read what it does." (new game), "Mid-game:
+  new-game-only settings are locked." (was "only settings that can change during a run. New-game-only ones are
+  locked."), "New Game+: these settings start the new run." (dropped "Done takes them back to the New Game+
+  dialog."). A tapped row, a stepper or a check box replaces it with that setting's tooltip, as before.
+- **Room:** the landscape help line 20 -> 28 high (the warning takes two lines; a two-line tooltip already sat tight),
+  so the rows' scroll area is 8 shorter; portrait unchanged (32, three lines fit).
+- **GUIDE:** Notes on Difficulty > Custom Difficulty, after the first paragraph: "**Be aware:** there are a lot of
+  settings, and some combinations can break the game. Change a few at a time, and use **Reset all** to get back to
+  your preset."
+- **Agent-tested** in `agent-859` (the agent jar with this round's classes ahead of it, cheats): new game > Advanced...
+  in landscape 1280x720 and portrait 540x960 - the warning shows whole, and pressing Enemy health's + replaces it with
+  the tooltip; no exceptions in forge.log. Shots `C:\TFR\notes\r859\` (landscape/portrait -open, -tapped). Not shot:
+  the mid-game and New Game+ openings (same line, shorter notes).
+
 ## Round 858: saves are written whole - a temp file and an atomic move; a cut-off save loads the one before it (2026-10-29)
 
 The user: "Yes, both" (to the main thread's "Build the save-safety fix (858) ...?": atomic saves keeping the `.old`, and

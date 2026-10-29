@@ -1308,6 +1308,9 @@ Expert all of them. Each row shows the preset's own value in grey; **-** and **+
 Expert, and "Changed only" help you find a setting; tap a setting's name to read what it does. A game with any change
 plays as **Custom (Hard)** (or whichever difficulty you based it on).
 
+**Be aware:** there are a lot of settings, and some combinations can break the game. Change a few at a time, and use
+**Reset all** to get back to your preset.
+
 **During a run**, Settings > Difficulty > **Edit...** opens the same panel on your game. Most settings change at once
 when you press Done; the ones that shape a new world are locked until your next game - the starting kit, the Wrath of
 the Temple, Level cost, the day-one mages, the Center Towns that end a run, the neutral and ruined towns, pillage raids,
