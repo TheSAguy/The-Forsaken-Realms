@@ -58,7 +58,9 @@ public final class DungeonUpgrades {
         seed = seed * 1000003L + (despawnDay == null ? 0 : despawnDay);
         seed = seed * 1000003L + (level == null ? 0 : level.hashCode());
         seed = seed * 1000003L + objectId;
-        return seed * 31L + salt;
+        // Round 871: through round 870's SplitMix64 mixer. Unmixed, neighboring placements (seeds 31 apart) drew nearly
+        // the same first nextFloat - their rank rolls correlated 0.93, their upgrade rolls 0.33; mixed, 0.00
+        return ResourceSpawns.mixSeed(seed * 31L + salt);
     }
 
     /** The appearance a seed belongs to, for the log lines: "despawn day 41" (or "no despawn day"). */

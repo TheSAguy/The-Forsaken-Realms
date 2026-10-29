@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 871: round 835's dungeon seeds go through round 870's mixer (2026-10-29)
+
+The user: "Yes, round 871", to "Also strengthen round 835's dungeon seeds the same way". File:
+`util/DungeonUpgrades.java` (a TFR file; no `CORE_ENGINE_CHANGES.md` entry). `EnemyTiers.rollPlacement` draws through
+`DungeonUpgrades.visitRandom`, so it needs no change.
+
+- **The change:** `DungeonUpgrades.visitSeed` returns `ResourceSpawns.mixSeed(seed * 31 + salt)` instead of the raw
+  sum. Its callers: `visitRandom` (EnemyTiers' rank roll, salt 2) and `upgrade` (salt 1). The inputs stay the same:
+  the POI, the appearance's despawn day, the level's map path and the object id.
+- **What the mixing fixes:** a quick count (200,000 random bases, the game's own draws) showed a weakness different
+  from the one round 870 suspected.
+  - A placement's two rolls were already unrelated: correlation 0.00, because the upgrade draws `nextInt(100)` and
+    the rank draws `nextFloat()`.
+  - Neighboring placements were not. Their object ids are one apart, so their seeds were 31 apart. Their rank rolls
+    correlated 0.93: a dungeon's ordinary creatures tended to take the same rank. Their upgrade rolls correlated 0.33.
+    The round 835 log shows it too: neighbors #53-#57 had seeds exactly 31 apart.
+  - After mixing, both correlations are 0.00.
+- **Kept:** the odds, tiers, week gate and Notoriety rows; gauntlets never reach either roll; no save field. Within
+  one appearance, a reload rolls the same; a new appearance rolls afresh.
+- **After updating:** for a place a save already holds an appearance of but has not entered yet, the first entry
+  rolls differently than the old build would have. Nothing is stored, so this is only a different roll, and it is
+  still fixed. Places already entered keep their recorded roster.
+- **Tested** (Maven exit 0; agent test copy `agent-871`, Notoriety 60 by console, every duel at 50x; lines in
+  `C:\TFR\notes\r871-agent-log-lines.txt`):
+  - **Monastery, new world:** saved outside, entered, reloaded and re-entered. Every `[TFR-DungeonUpgrade]` roll and
+    seed matched (rolls 15, 43, 52 and 59 on #55-#57 and #78). The seeds no longer step by 31 (3225695975900182168,
+    3176047323101094188, -6245769839997038117).
+  - **Aerie, old day-1 world:** saved outside, entered, reloaded and re-entered. The same rank roll on all 14
+    placements.
+  - **Gauntlet:** Thornwing Hive at Notoriety 60 kept its 3/2/1 as authored, with no upgrade line.
+  - **Duel:** a duel in the Aerie ran at 50x.
+- **Seen, not changed (open, 835's known item):** in the Monastery, which stood on re-colored land (home white, now
+  waste), the reload still brought different creatures. `[TFR-ReTheme]` (`TerritoryControl.reThemedEnemyFor`) still
+  draws from `MyRandom`. Their upgrade rolls matched, but the creatures differed, and so did whether a step-up had a
+  higher rank to reach: #55 Cutpurse was kept, while #55 Novice Pyromancer stepped up. Also, the old slot-24 world's
+  Aerie wrote no `[TFR-DungeonUpgrade]` line at all. `upgrade()` returns early with no log when the roll is 0 or the
+  place has no land; that was not looked into.
+
 ## Round 870: a reload no longer re-rolls a chest, a diamond or a level-up offer (2026-10-29)
 
 The user: "Yes, round 870", to "Fix chests, diamonds and level-up offers re-rolling on reload". From the log review
