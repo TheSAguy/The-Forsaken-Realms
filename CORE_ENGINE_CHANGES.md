@@ -38,6 +38,10 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 847 - the Wrath's hunter is never eased
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK): `earlyWeekLife` gains one exemption,
+  `enemy.wrathHunter` ("the Wrath's hunter"), after the territory mages; its comment names it.
+
 ### Round 841 - the rules follow Settings after the Advanced panel; Reset all keeps the Rules
 - **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK, after round 825): `setSaveRule` calls
   `CustomDifficulty.onProfileRule(field, value)` after both of its branches.

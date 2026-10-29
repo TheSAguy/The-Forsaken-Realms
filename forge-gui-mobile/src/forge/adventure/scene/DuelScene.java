@@ -1737,7 +1737,8 @@ public class DuelScene extends ForgeScene {
      * (unless they already have less). Week 2, 75%, but not less than 25"). Applied to the life the fight would start
      * with - after the difficulty factor and the day/night terrain - and never above it: life x factor, raised to the
      * floor, capped at the life it had. Every ordinary enemy, on the overworld and inside places. Not a boss, a legend
-     * or roaming champion, an Arena or Inn fight, a territory mage (an attacker or the Capitol's challenger), a duel
+     * or roaming champion, an Arena or Inn fight, a territory mage (an attacker or the Capitol's challenger), the Wrath's
+     * hunter (round 847), a duel
      * the AI fights for the player's side (a guard's), nor anything in New Game+. Settings earlyLifeWeek1/2Factor and
      * Floor; grep forge.log for [TFR-EarlyLife].
      */
@@ -1769,6 +1770,8 @@ public class DuelScene extends ForgeScene {
             exempt = "an Arena or Inn fight";
         else if (enemy != null && enemy.territoryColor != null)
             exempt = "a territory mage";
+        else if (enemy != null && enemy.wrathHunter) // round 847 (Fable review P3-1): a castle's mage, like the war mages
+            exempt = "the Wrath's hunter";
         else if (aiControlsPlayerSide)
             exempt = "the AI's fight";
         else if (Current.player().getCharacterFlag("newGamePlus") > 0)

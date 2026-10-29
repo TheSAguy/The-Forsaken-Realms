@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 847: the Wrath's hunter is never eased (2026-10-29)
+
+Part of the Fable review fix batch (rounds 840-848; P3-1, the user's call: exempt it). Built in `wt-842`, tested in
+`agent-842`. File: `scene/DuelScene.java`.
+
+- **The gap:** `earlyWeekLife` exempts bosses, legends, Arena and Inn fights, territory mages, the AI's fights and New
+  Game+, but the Wrath hunter (round 814) sets only `wrathHunter`, never `territoryColor`, so a Normal Wrath Master
+  setting out on day 8 started at 75% life (floor 25). The GUIDE calls it a mage from its castle, and war mages are
+  never eased.
+- **The fix:** `else if (enemy != null && enemy.wrathHunter) exempt = "the Wrath's hunter"`, after the territory mages.
+
+**Agent-tested** in `agent-842`: a Normal game, `days skip 7` (day 8, week 2), `wrath start red force`, `wrath near`,
+its duel at 50x -> `[TFR-EarlyLife] Master Red Wizard week 2: 20 kept (the Wrath's hunter)`, while ordinary week-2
+foes in the same session still logged `... -> ... (x0.75, floor 25)`.
+
+**GUIDE wording suggested for round 848** (the eased first weeks): add "the Wrath's hunter" to the list of foes that are
+never eased. Stock file: `DuelScene.java` (CORE_ENGINE_CHANGES).
+
 ## Round 841: the rules follow Settings after the Advanced panel; Reset all keeps the Rules (2026-10-29)
 
 Part of the Fable review fix batch (rounds 840-848; P2-4 and P3-3). Built in `wt-842`, tested in `agent-842`. Files:
