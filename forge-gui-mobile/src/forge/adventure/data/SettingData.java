@@ -95,6 +95,10 @@ public class SettingData {
     // Round 777: the button picked in the last support ask (SupportPrompt.answer) - "support", "discord", "maybe later",
     // "don't ask again" - for the once-a-launch [TFR-Support] status line; null before any answer.
     public String supportLastAnswer;
+    // Round 849 (the user: "sort the sets by the number of cards found, then alphabetically. (Or if there is space add a
+    // sort function. Cards found/Alphabetically/Research time"): the Research Lab's "Sort:" box - "found", "az" or
+    // "days" (ResearchScene.SORT_KEYS); null reads as "found".
+    public String researchSort;
     // Preserve explicitly stored global choices from the original background settings.
     public Boolean enableExtraBattleBackgrounds;
     public HashMap<String, Boolean> extraBattleBackgroundsByPlane = new HashMap<>();

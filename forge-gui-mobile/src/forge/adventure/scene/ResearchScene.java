@@ -100,6 +100,12 @@ public class ResearchScene extends UIScene {
     private final List<String> listSetCodes = new ArrayList<>();
     private String listSet;
     private boolean fillingSetBox;
+    // Round 849 (the user: "sort the sets by the number of cards found, then alphabetically. (Or if there is space add a
+    // sort function. Cards found/Alphabetically/Research time"): the v2 list's order, kept in Settings
+    // (SettingData.researchSort) across games and restarts - a sort, unlike the check boxes, cannot empty a new game's list.
+    private static final String[] SORT_KEYS = {"found", "az", "days"};
+    private static final String[] SORT_LABELS = {"Sort: Found", "Sort: A-Z", "Sort: Days"};
+    private final com.badlogic.gdx.scenes.scene2d.ui.SelectBox<String> sortBox;
     // Round 452: set while a set's card view is open, so the way back keeps the view, the filters and the place in the
     // list (enter() otherwise starts a fresh visit).
     private boolean returningFromSetView = false;
@@ -149,20 +155,46 @@ public class ResearchScene extends UIScene {
                 buildList();
             }
         });
+        @SuppressWarnings("unchecked")
+        com.badlogic.gdx.scenes.scene2d.ui.SelectBox<String> sorts = Controls.newComboBox();
+        sortBox = sorts;
+        sortBox.setItems(SORT_LABELS);
+        sortBox.setSelectedIndex(sortIndex());
+        sortBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                int i = sortBox.getSelectedIndex();
+                if (i < 0 || i == sortIndex())
+                    return;
+                Config.instance().getSettingData().researchSort = SORT_KEYS[i];
+                Config.instance().saveSettings();
+                System.out.println("[TFR-Research] Lab sort: " + SORT_KEYS[i]);
+                buildList();
+            }
+        });
         Table filters = new Table();
-        filters.add(hideUnfoundCheckBox).align(Align.left).padRight(Forge.isLandscapeMode() ? 8 : 12);
+        filters.add(hideUnfoundCheckBox).align(Align.left).padRight(Forge.isLandscapeMode() ? 4 : 12);
         if (!Forge.isLandscapeMode())
             filters.row();
         filters.add(hidePartialCheckBox).align(Align.left);
         // Round 817: the set box after the check boxes - beside them in landscape, under them in portrait.
+        // Round 849: landscape narrows it (118 -> 72; its list still opens at full width) for the Sort box beside it;
+        // portrait puts the Sort box under Show Researched, level with the set box.
         if (Forge.isLandscapeMode()) {
-            filters.add(listSetBox).width(118f).padLeft(8);
+            filters.add(listSetBox).width(72f).padLeft(4);
+            filters.add(sortBox).width(68f).padLeft(4);
+            root.add(filters).align(Align.left);
+            root.add(showResearchedButton).align(Align.right);
         } else {
             filters.row();
             filters.add(listSetBox).width(150f).align(Align.left).padTop(2);
+            root.add(filters).align(Align.left);
+            Table right = new Table();
+            right.add(showResearchedButton).align(Align.right);
+            right.row();
+            right.add(sortBox).width(71f).align(Align.right).padTop(4);
+            root.add(right).align(Align.right).top();
         }
-        root.add(filters).align(Align.left);
-        root.add(showResearchedButton).align(Align.right);
         root.row().padTop(4);
 
         scrollContainer = new Table(Controls.getSkin());
@@ -190,6 +222,7 @@ public class ResearchScene extends UIScene {
         // Round 751: one checkbox, the system's own filter - in a v2 game the sets no card was given to (round 764
         // follow-up: "Hide untouched", was "Hide unfed" - meter language).
         hidePartialCheckBox.getLabel().setText(ResearchMeter.enabled(player) ? "Hide untouched" : "Hide partial");
+        sortBox.setVisible(ResearchMeter.enabled(player)); // round 849: the classic list keeps its own groups
         // Round 764 follow-up: the scene is a singleton, so its filters outlived the game they were set in - a new game
         // could open on an empty list with "Hide untouched" still ticked. Another save (a new game, a load) starts
         // them fresh; the same game keeps them.
@@ -321,6 +354,8 @@ public class ResearchScene extends UIScene {
         addToSelectable(hidePartialCheckBox); // round 313
         addToSelectable(showResearchedButton);
         addToSelectable(listSetBox); // round 817
+        if (sortBox.isVisible())
+            addToSelectable(sortBox); // round 849
         scrollContainer.clear();
         AdventurePlayer player = AdventurePlayer.current();
         int currentDay = Current.world().getCurrentDay();
@@ -536,6 +571,8 @@ public class ResearchScene extends UIScene {
         addToSelectable(hidePartialCheckBox); // round 313
         addToSelectable(showResearchedButton);
         addToSelectable(listSetBox); // round 817
+        if (sortBox.isVisible())
+            addToSelectable(sortBox); // round 849
         scrollContainer.clear();
         AdventurePlayer player = AdventurePlayer.current();
         int currentDay = Current.world().getCurrentDay();
@@ -599,8 +636,10 @@ public class ResearchScene extends UIScene {
         }
         candidates = applySetFilter(candidates); // round 817
         // Round 751: researching first (fewest days left), then the fullest meters, then A-Z. The researched view is
-        // alphabetical.
+        // alphabetical. Round 849: the Sort box picks the order under the sets being researched - Found (the most cards
+        // found, the Found Cards (N) number), A-Z, or Days (round 764's order).
         final boolean researchedView = showResearched;
+        final String sort = SORT_KEYS[sortIndex()];
         candidates.sort((a, b) -> {
             if (!researchedView) {
                 boolean ra = player.isResearching(a.getCode()), rb = player.isResearching(b.getCode());
@@ -611,7 +650,12 @@ public class ResearchScene extends UIScene {
                             player.getResearchDaysLeft(b.getCode(), currentDay));
                     if (byDays != 0)
                         return byDays;
-                } else {
+                } else if ("found".equals(sort)) {
+                    int byFound = Integer.compare(foundByEdition.getOrDefault(b.getCode(), 0),
+                            foundByEdition.getOrDefault(a.getCode(), 0));
+                    if (byFound != 0)
+                        return byFound;
+                } else if ("days".equals(sort)) {
                     // Round 764: fewest days first (Ready on top), then the most fed.
                     int byDays = Integer.compare(ResearchMeter.daysIfStarted(player, a.getCode()),
                             ResearchMeter.daysIfStarted(player, b.getCode()));
@@ -713,6 +757,26 @@ public class ResearchScene extends UIScene {
             empty.setColor(Color.DARK_GRAY);
             scrollContainer.add(empty).colspan(3).align(Align.left).expandX().width(Forge.isLandscapeMode() ? 340 : 236);
         }
+    }
+
+    /** Round 849 (testing aid): "research sort found|az|days" - picks the Sort box item, as a tap on it would. */
+    public static String consoleSort(String[] args) {
+        String key = args.length > 0 ? args[0].toLowerCase() : "";
+        for (int i = 0; i < SORT_KEYS.length; i++)
+            if (SORT_KEYS[i].equals(key)) {
+                instance().sortBox.setSelectedIndex(i);
+                return "Research Lab sort: " + SORT_LABELS[i];
+            }
+        return "research sort found|az|days (now " + SORT_KEYS[sortIndex()] + ")";
+    }
+
+    /** Round 849: the saved Sort box choice; anything unknown (or none yet) is Found. */
+    private static int sortIndex() {
+        String key = Config.instance().getSettingData().researchSort;
+        for (int i = 0; i < SORT_KEYS.length; i++)
+            if (SORT_KEYS[i].equals(key))
+                return i;
+        return 0;
     }
 
     // Round 764 follow-up: the v2 row's columns, landscape (portrait gives the text the whole row).

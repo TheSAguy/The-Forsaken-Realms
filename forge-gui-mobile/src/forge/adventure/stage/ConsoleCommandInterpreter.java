@@ -1278,6 +1278,8 @@ public class ConsoleCommandInterpreter {
         registerCommand(new String[]{"support"}, forge.adventure.util.SupportPrompt::console);
         registerCommand(new String[]{"session"}, forge.adventure.util.SessionLog::console); // round 777
         registerCommand(new String[]{"custom"}, forge.adventure.util.CustomDifficulty::console); // round 822: custom difficulty
+        // Round 849 (testing aid): "research sort found|az|days" picks the Lab's Sort box (the bridge cannot open a SelectBox).
+        registerCommand(new String[]{"research", "sort"}, forge.adventure.scene.ResearchScene::consoleSort);
         registerCommand(new String[]{"asc", "pick"}, s -> {
             if (s.length < 1)
                 return "Command needs 1 parameter: a reward id from ascendance.json";

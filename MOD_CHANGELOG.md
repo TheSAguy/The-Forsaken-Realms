@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 849: the Research Lab sorts its sets - Sort: Found / A-Z / Days, kept in Settings (2026-10-29)
+
+The user: "For the research lab, lets sort the sets by the number of cards found, then alphabetically. (Or if there is
+space add a sort function. Cards found/Alphabetically/Research time" - and "Yes, build it" to the mock-up
+(`C:\TFR\notes\r849-mock.png`). Files: `scene/ResearchScene.java`, `data/SettingData.java` and
+`stage/ConsoleCommandInterpreter.java` (both stock).
+
+- **The box:** a "Sort:" select box in the v2 list's filter row - "Sort: Found" (the default: the most found cards
+  first, the Found Cards (N) number; ties A-Z), "Sort: A-Z", "Sort: Days" (round 764's order: the fewest days first,
+  then the fullest meter; ties A-Z). Sets being researched stay on top in every order (fewest days left first); the
+  Show Researched view stays alphabetical.
+- **Room:** landscape narrows round 817's All Sets box 118 -> 72 (its list still opens at full width) and puts the
+  Sort box (68) beside it, the check boxes' gap 8 -> 4; portrait puts it (71) under Show Researched, level with the
+  set box. The classic (pre-751) list hides the box: its groups are the user's own spec.
+- **Remembered:** `SettingData.researchSort` ("found", "az", "days"; none or unknown = Found), saved at once - across
+  games and restarts, unlike round 817's check boxes (a sort cannot empty a new game's list).
+- **Log:** `[TFR-Research] Lab sort: <key>` on each change. **Console** (testing aid, the bridge cannot open a select
+  box): `research sort found|az|days`.
+- **Agent-tested** in `agent-849` (wt-849's classes ahead of its jar, cheats, a new game; DOM, AKH, AKR, MSH found;
+  the Capitol raised): Found = DOM (2), AKH, AKR, MSH; A-Z = AKH, AKR, DOM, MSH; Days = all 40, so A-Z; settings.json
+  `"researchSort": "days"`; Days kept after leaving and reopening the Lab; A-Z kept after a restart; portrait 540x960
+  with the box under Show Researched; no exceptions in the last run's forge.log. Shots `C:\TFR\notes\r849\`. Not
+  tested: a set under research with a sort other than Days (the researching-first branch is unchanged), the box's
+  list opened by touch.
+- **Suggested GUIDE line** (for the docs round): "The Research Lab's Sort box orders the sets by cards found (the
+  default), A-Z or research days; sets you are researching stay on top, and the choice is kept between games."
+
 ## Round 852: the Inn's False Life charges the price it shows (2026-10-29)
 
 The user: "Yes, both" (to the main thread's "Start ... the False Life price fix (852)?"). Found in round 842's agent

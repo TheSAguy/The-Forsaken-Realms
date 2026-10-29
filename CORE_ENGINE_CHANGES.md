@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 849 - the Research Lab's Sort box, kept in Settings
+- **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK): the `researchSort` field after
+  `supportLastAnswer`.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** (STOCK): the `research sort` command,
+  after `custom` (1 registration).
+- TFR file: `scene/ResearchScene.java` (the box, its layout and the v2 comparator).
+
 ### Round 852 - the Inn's False Life charges the price it shows
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): new `falseLifePrice(changes)`
   (`falseLifeCost()` x the town price modifier); `potionOfFalseLife()` became `potionOfFalseLife(changes)`, which
