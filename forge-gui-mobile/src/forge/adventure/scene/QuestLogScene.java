@@ -205,6 +205,7 @@ public class QuestLogScene extends UIScene {
         detailScrollContainer.add(dNameLabel).align(Align.left).expandX().padLeft(10);
 
         abandonQuestButton.setVisible(!quest.storyQuest);
+        collapseAbandonRow(false); // round 865 (follow-up): a raid's page folds it away in portrait
         trackButton.setVisible(true);
         backToListButton.setVisible(true);
 
@@ -266,6 +267,7 @@ public class QuestLogScene extends UIScene {
         detailScrollContainer.clear();
         detailScrollContainer.row();
         abandonQuestButton.setVisible(false);
+        collapseAbandonRow(true);
         trackButton.setVisible(true);
         backToListButton.setVisible(true);
         trackButton.clearListeners();
@@ -278,7 +280,7 @@ public class QuestLogScene extends UIScene {
         });
 
         boolean landscape = Forge.isLandscapeMode();
-        float mapSize = landscape ? 130f : 180f;
+        float mapSize = landscape ? 130f : 150f; // round 865 (follow-up): 180 pushed the penalty line off the paper
         float textWidth = landscape ? detailRoot.getWidth() - mapSize - 30f : detailRoot.getWidth() - 30f;
         Table facts = new Table(Controls.getSkin());
         TypingLabel title = Controls.newTypingLabel("[BLACK]Pillaged: " + raid.town);
@@ -321,6 +323,25 @@ public class QuestLogScene extends UIScene {
     }
 
     private RaidMiniMap raidMap;
+
+    /**
+     * Round 865 (follow-up): portrait stacks Abandon, Track and Quest List in rows of their own, and a hidden Abandon
+     * still kept its row - an empty band over Show on Map that, with the mini-map, pushed the raid page's last lines
+     * off the paper at 540x960. The raid page folds that row to nothing; a quest's page gives it back (stock's
+     * padTop(5) and the cell's default heights). Landscape keeps its three buttons side by side, so nothing to fold.
+     */
+    private void collapseAbandonRow(boolean collapse) {
+        if (Forge.isLandscapeMode())
+            return;
+        Cell<?> cell = detailRoot.getCell(abandonQuestButton);
+        if (cell == null)
+            return;
+        if (collapse)
+            cell.height(0).padTop(0);
+        else
+            cell.minHeight(Value.minHeight).prefHeight(Value.prefHeight).maxHeight(Value.zero).padTop(5f);
+        detailRoot.invalidate();
+    }
 
     private void disposeRaidMap() {
         if (raidMap != null) {

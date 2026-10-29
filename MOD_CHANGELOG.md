@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 865 (follow-up): the raid page fits the portrait paper (2026-10-29)
+
+The main thread, checking round 865's portrait shot: the Reward line sat on the paper's bottom edge, the red "If time
+runs out" line was out of sight, and an empty band sat over Show on Map. The page is inside the details pane's
+ScrollPane, but the agent bridge cannot scroll, so it was not shown to scroll. Every line now fits at 540x960 instead.
+File: `scene/QuestLogScene.java` (stock).
+
+- **The empty band** was the hidden Abandon button: portrait stacks Abandon, Track and Quest List in rows of their own,
+  and a hidden actor keeps its cell. New `collapseAbandonRow(boolean)` folds that cell to height 0 (no padTop) on the
+  raid page. `loadDetailsPane` gives it back on a quest's page: the cell's default min and pref heights and stock's
+  `padTop(5f)`. Landscape has the three buttons side by side, so the method does nothing there.
+- **The mini-map** in portrait: 180 -> 150. Landscape stays 130.
+- **Agent-tested** in `agent-865b` (this jar, cheats, portrait 540x960; the copy was removed afterward). On a fresh copy
+  of the autosave, `pillage start` raided Orazca 254 tiles away. That is the longest page, since "Raiders come out when
+  you are within 20 tiles of Orazca." takes two lines. Show on Map sits at the top with no band; the title through
+  "If time runs out: -2 reputation with Orazca" all show above the paper's edge. "Raise the Banner"'s Details (a story
+  quest, so no Abandon) shows its band again, as before. No exceptions; no duels in this run. Shots
+  `C:\TFR\notes\r865fu\` (1-raid-far-portrait, 2-quest-details-portrait).
+
 ## Round 866: raiders say so on their Alt plates (2026-10-29)
 
 The user: "it would be nice to have some indicator of what enemies are part of the pillage on the map. Maybe when you

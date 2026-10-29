@@ -42,7 +42,8 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 - **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - each pillage row gets a Details button;
   new `loadRaidDetails(String)` fills the quest details pane (the Track button reads "Show on Map" there) with a
   `RaidMiniMap`, freed by new `disposeRaidMap()` in `backToList()` and `back()`. Stock's quest rows and `loadDetailsPane`
-  are unchanged.
+  are unchanged. Follow-up: new `collapseAbandonRow(boolean)` folds the hidden Abandon row in portrait on the
+  raid page; `loadDetailsPane` restores the cell (default heights, stock's `padTop(5f)`).
 - **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** (STOCK) - new `focusOn(Vector2)` and field `focus`;
   `enter()` scrolls to it once, after its scroll to the player. Additive.
 - TFR files: `util/RaidMiniMap.java` (new), `util/TownPillage.java` (`questLogRows` returns ids, `Raid`, `raid(id)`).
