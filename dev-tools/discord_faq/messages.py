@@ -1,7 +1,7 @@
 """The Discord FAQ: (topic, short label, message). Each message must stay under Discord's 2,000 characters."""
 
 # The released version the FAQ describes; build_page.py shows it in the page header. One line to change per release.
-FAQ_VERSION = "v1.24"
+FAQ_VERSION = "v1.25"
 
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.

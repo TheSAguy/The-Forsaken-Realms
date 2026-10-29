@@ -49,3 +49,8 @@ version 12.
 2026-10-28 (round 837): message 6 (Enemy ranks) says the early-weeks floor never raises a weaker monster (a 9-life
 Geist stays at 9) and gives the difficulty multipliers; a v1.24 player read "never under 20" as a minimum for every
 monster. `EDITED = {3, 6}`. True of v1.24 too, so it can be edited in Discord now. The artifact page is not republished.
+
+2026-10-29 (release v1.25): `FAQ_VERSION = "v1.25"`, so message 1's header says "(as of v1.25)". `EDITED` stays
+`{3, 6, 7, 9, 20, 23}` for this release (the messages the user reposts, plus message 1's header); reset it and `ADDED`
+at the next release. Artifact version 11 (the main thread republishes it). Paste list:
+`C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.25-edits.md`; page `C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.25.html`.
