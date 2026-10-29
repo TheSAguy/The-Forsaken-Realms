@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 865 - a raid's Details page in the quest log
+- **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - each pillage row gets a Details button;
+  new `loadRaidDetails(String)` fills the quest details pane (the Track button reads "Show on Map" there) with a
+  `RaidMiniMap`, freed by new `disposeRaidMap()` in `backToList()` and `back()`. Stock's quest rows and `loadDetailsPane`
+  are unchanged.
+- **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** (STOCK) - new `focusOn(Vector2)` and field `focus`;
+  `enter()` scrolls to it once, after its scroll to the player. Additive.
+- TFR files: `util/RaidMiniMap.java` (new), `util/TownPillage.java` (`questLogRows` returns ids, `Raid`, `raid(id)`).
+
 ### Round 864 - a dialog gate can no longer be walked through by bumping it
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK) - `resetPosition()` clears `positions` after
   stepping the player back and seeds it with that spot (stock left the queue holding the bump's inside spot, so a

@@ -395,7 +395,9 @@ Raiders from the nearby dungeons can fall on a town - one of yours, or a neutral
   color or is sacked to ruins in the meantime, the raid simply ends.
 - **Keeping track.** A notice tells you when a raid starts, at each raider beaten and with 2 days left. Your quest log
   lists every raided town with its count, direction and days left, and the world map's Details view marks it
-  "Pillaged! 2/5".
+  "Pillaged! 2/5". The raid's **Details** button in the quest log opens its page: the count, the days left, how far
+  away the town is, the reward and the penalty, and a mini-map of the town with the 20-tile raid range, you, and a red
+  dot for each raider you can see. **Show on Map** opens the world map on the town.
 - **Your roaming guards can help.** Tick **Help with pillaged towns** on a roaming guard's orders (your Capitol's
   Armory, Manage Guards). When a raid starts, a free guard with that order rides out - one guard per raided town - and
   raiders turn up around it just as they do around you. It hunts the ranks its orders allow, fighting each raider as

@@ -19,6 +19,8 @@ import forge.adventure.util.AdventureQuestController;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
 import forge.adventure.util.QuestExpiry;
+import forge.adventure.util.RaidMiniMap;
+import forge.adventure.util.TownPillage;
 
 public class QuestLogScene extends UIScene {
     private Table scrollContainer, detailScrollContainer;
@@ -141,18 +143,28 @@ public class QuestLogScene extends UIScene {
             scrollContainer.row().padTop(5);
         }
         // Round 484: every town being pillaged (TownPillage), a row like the legends' - no quest behind it either.
-        for (String row : forge.adventure.util.TownPillage.questLogRows()) {
-            TypingLabel pillageLabel = Controls.newTypingLabel("[BLACK]" + row);
+        // Round 865: with a Details button - the raid's own page (loadRaidDetails).
+        for (String[] row : TownPillage.questLogRows()) {
+            TypingLabel pillageLabel = Controls.newTypingLabel("[BLACK]" + row[1]);
             pillageLabel.skipToTheEnd();
             pillageLabel.setWrap(true);
             scrollContainer.add(pillageLabel).align(Align.left).expandX();
-            scrollContainer.add();
+            Button details = Controls.newTextButton(Forge.getLocalizer().getMessage("lblDetails"));
+            String townId = row[0];
+            details.addListener(new ClickListener() {
+                public void clicked(InputEvent event, float x, float y) {
+                    loadRaidDetails(townId);
+                }
+            });
+            scrollContainer.add(details).align(Align.center).padRight(10);
             scrollContainer.row().padTop(5);
+            addToSelectable(details);
         }
         performTouch(scrollPaneOfActor(scrollContainer)); //can use mouse wheel if available to scroll
     }
 
     private void backToList() {
+        disposeRaidMap();
         abandonQuestButton.setVisible(false);
         trackButton.setVisible(false);
         backToListButton.setVisible(false);
@@ -235,6 +247,89 @@ public class QuestLogScene extends UIScene {
         updateTrackButton(quest.isTracked);
     }
 
+    /**
+     * Round 865 (the user: "I think it would be helpful it the "Pillaged" quest had a details section. Maybe inside that
+     * a mini-map of the location"; mock-up notes/r865-866-mock.png approved): a pillaged town's page in the quest
+     * details pane - the raiders beaten, the days left, the way there, the raiders out, the reward and the penalty
+     * (TownPillage.raid), beside a RaidMiniMap of the town (above it in portrait). The Track button becomes Show on Map
+     * (MapViewScene centered on the town); there is nothing to abandon. Logs [TFR-Pillage] with what the page showed.
+     */
+    private void loadRaidDetails(String townId) {
+        TownPillage.Raid raid = TownPillage.raid(townId);
+        if (raid == null) { // it ended while the log was open
+            buildList();
+            return;
+        }
+        disposeRaidMap();
+        root.setVisible(false);
+        detailRoot.setVisible(true);
+        detailScrollContainer.clear();
+        detailScrollContainer.row();
+        abandonQuestButton.setVisible(false);
+        trackButton.setVisible(true);
+        backToListButton.setVisible(true);
+        trackButton.clearListeners();
+        trackButton.setText("Show on Map");
+        trackButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                MapViewScene.instance().focusOn(raid.poi.getCenter());
+                Forge.switchScene(MapViewScene.instance());
+            }
+        });
+
+        boolean landscape = Forge.isLandscapeMode();
+        float mapSize = landscape ? 130f : 180f;
+        float textWidth = landscape ? detailRoot.getWidth() - mapSize - 30f : detailRoot.getWidth() - 30f;
+        Table facts = new Table(Controls.getSkin());
+        TypingLabel title = Controls.newTypingLabel("[BLACK]Pillaged: " + raid.town);
+        title.skipToTheEnd();
+        facts.add(title).align(Align.left).padBottom(3);
+        String rest = "[#5a5048]Raiders from the dungeons nearby are pillaging " + raid.town + ", "
+                + (raid.playersTown ? "one of your towns." : "a neutral town you know.");
+        String daysWord = raid.daysLeft == 1 ? " day" : " days";
+        String[] lines = {
+                rest,
+                "[BLACK]☐  Beat the raiders: " + raid.beaten + " of " + raid.kills,
+                "[BLACK]Time: " + raid.daysLeft + daysWord + " left (until day " + raid.endDay + ")",
+                "[BLACK]Where: " + (raid.distanceTiles <= 1 ? "here" : raid.direction + ", " + raid.distanceTiles
+                        + " tiles from you"),
+                raid.near ? "[BLACK]Raiders out now: " + raid.raidersOut
+                        : "[#5a5048]Raiders come out when you are within " + raid.rangeTiles + " tiles of " + raid.town + ".",
+                "[BLACK]Reward: +" + raid.rewardReputation + " reputation, +" + raid.rewardWood + " [WHITE][+Wood][BLACK], +"
+                        + raid.rewardStone + " [WHITE][+Stone]",
+                "[#963228]If time runs out: -" + raid.failReputation + " reputation with " + raid.town};
+        for (String text : lines) {
+            TypingLabel label = Controls.newTypingLabel(text);
+            label.skipToTheEnd();
+            label.setWrap(true);
+            facts.row();
+            facts.add(label).align(Align.left).width(textWidth).padTop(2);
+        }
+        raidMap = new RaidMiniMap(raid, mapSize);
+        if (landscape) {
+            detailScrollContainer.add(facts).align(Align.topLeft).padLeft(10).expandX();
+            detailScrollContainer.add(raidMap).size(mapSize).align(Align.top).padRight(10).padTop(4);
+        } else {
+            detailScrollContainer.add(raidMap).size(mapSize).padTop(6).padBottom(6);
+            detailScrollContainer.row();
+            detailScrollContainer.add(facts).align(Align.left).padLeft(10);
+        }
+        System.out.println("[TFR-Pillage] quest log Details: " + raid.town + " - " + raid.beaten + " of " + raid.kills
+                + ", " + raid.daysLeft + daysWord + " left, " + raid.direction + " " + raid.distanceTiles + " tiles, "
+                + (raid.near ? raid.raidersOut + " raider(s) out, " + raidMap.dots() + " on the mini-map, "
+                + raidMap.hidden() + " in the fog" : "too far for raiders") + (landscape ? "" : " (portrait)"));
+    }
+
+    private RaidMiniMap raidMap;
+
+    private void disposeRaidMap() {
+        if (raidMap != null) {
+            raidMap.remove();
+            raidMap.dispose();
+            raidMap = null;
+        }
+    }
+
     private void toggleTracked(AdventureQuestData quest) {
         quest.isTracked = !quest.isTracked;
         if (quest.isTracked) {
@@ -257,6 +352,7 @@ public class QuestLogScene extends UIScene {
 
     @Override
     public boolean back(){
+        disposeRaidMap(); // round 865
         Adventure.getInstance().renderTransitionScreen = true;
         //Needed so long as quest log and stats are separate scenes that link to each other
         Forge.switchScene(lastGameScene==null ? GameScene.instance() : lastGameScene);

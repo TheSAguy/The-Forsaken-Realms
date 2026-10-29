@@ -224,6 +224,13 @@ public class MapViewScene extends UIScene {
         return true;
     }
 
+    /** Round 865: where the next enter() centers the map, once (world px) - null for the player, as always. */
+    private com.badlogic.gdx.math.Vector2 focus;
+
+    public void focusOn(com.badlogic.gdx.math.Vector2 worldPos) {
+        focus = worldPos == null ? null : worldPos.cpy();
+    }
+
     public void addBookmark(PointOfInterest point) {
         if (point == null)
             return;
@@ -1081,6 +1088,12 @@ public class MapViewScene extends UIScene {
         miniMapPlayer.setPosition(avatarX, avatarY);
         miniMapPlayer.layout();
         scroll.scrollTo(avatarX, avatarY, miniMapPlayer.getWidth(), miniMapPlayer.getHeight(), true, true);
+        if (focus != null) { // round 865: the quest log's Show on Map - this once, centered there instead
+            scroll.scrollTo(getMapX(focus.x) - miniMapPlayer.getWidth() / 2, getMapY(focus.y) - miniMapPlayer.getHeight() / 2,
+                    miniMapPlayer.getWidth(), miniMapPlayer.getHeight(), true, true);
+            System.out.println("[TFR-Pillage] Show on Map: the world map opens centered on " + (int) focus.x + "," + (int) focus.y);
+            focus = null;
+        }
         for (AdventureQuestData adq : Current.player().getQuests()) {
             PointOfInterest poi = adq.getTargetPOI();
             if (poi != null) {

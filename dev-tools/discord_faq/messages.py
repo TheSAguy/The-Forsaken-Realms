@@ -179,7 +179,7 @@ M.append(("Your towns under attack: raids and war mages", "Raids & mages", r"""*
 - While you're near, 3 or 4 raiders stand just outside its walls, and each one that falls is replaced.
 - **Beat 5 raiders within 7 days:** +1 town reputation, 50 Wood, 50 Stone and 21 Power.
 - **Let the days run out:** -2 town reputation.
-- Your quest log lists every raided town with its count and days left, and the world map's Details view marks it "Pillaged! 2/5".
+- Your quest log lists every raided town with its count and days left; its **Details** page has a mini-map of the town, and **Show on Map**. The world map's Details view marks it "Pillaged! 2/5".
 - A **roaming guard** with "Help with pillaged towns" ticked (your Capitol's Armory, Manage Guards) rides out and fights the raiders for you, and its wins count toward the five.
 
 **Q: What are the war mages?**

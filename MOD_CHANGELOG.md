@@ -14264,6 +14264,64 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 865: a raid's Details page in the quest log, with a mini-map and Show on Map (2026-10-29)
+
+The user: "I think it would be helpful it the "Pillaged" quest had a details section. Maybe inside that a mini-map of
+the location." Mock-up `C:\TFR\notes\r865-866-mock.png`, approved ("Yes, build both"; the RAIDER line as its own plate
+line, Show on Map in this round). Files: `scene/QuestLogScene.java` (stock), `scene/MapViewScene.java` (stock),
+`util/TownPillage.java`, `util/RaidMiniMap.java` (new), GUIDE, Discord FAQ message 10.
+
+- **The quest log:** each "Pillaged:" row (round 484) gets a Details button, like a quest's.
+  `TownPillage.questLogRows()` now returns `{town id, row}`. Its one caller is QuestLogScene (Grep; the code graph
+  listed none).
+- **The page** (`QuestLogScene.loadRaidDetails`, in the quest details pane):
+  - The title "Pillaged: <town>", and whether it is one of the player's towns or a neutral town they know.
+  - "Beat the raiders: 0 of 5" (the quest stages' U+2610 box, already in the game font), the days left and the end day,
+    the direction and distance in tiles ("here" when on it).
+  - The raiders out now; when the player is beyond `pillageSpawnRangeTiles`, "Raiders come out when you are within 20
+    tiles of <town>." in its place.
+  - The reward with the [+Wood]/[+Stone] glyphs, and the penalty in red.
+  - All of it read live from `TownPillage.raid(id)` (new), so a raid that ended while the log was open sends the page
+    back to the list.
+  - The Track button reads "Show on Map" on this page; Abandon is hidden.
+  - Landscape: the facts on the left, the mini-map (130) on the right. Portrait: the mini-map (180) above the facts.
+- **The mini-map** (`util/RaidMiniMap`, new):
+  - A square crop of `World.getBiomeImage()`, the image the world map shows. With fog of war on, that is the fog
+    overlay, so the crop shows only what the player's world map shows. The icons are already baked in. One small Pixmap
+    becomes a Texture, freed when the page closes (`disposeRaidMap`: back to the list, Back, another page).
+  - The crop covers the raid range plus 4 tiles on each side, with an orange ring at the raid range.
+  - A red dot for each raider out now on a tile the player can see (`isCurrentlyVisible`, the world map's mage-dot
+    gate); one in the fog gets no dot.
+  - The player's map portrait, pinned to the edge when off the crop. The dots draw after it, so a raider right beside
+    the player keeps its dot on top.
+- **Show on Map:** `MapViewScene.focusOn(Vector2)` (new) makes the next `enter()` center on that point once, after its
+  usual scroll to the player. Done goes back to the quest log (`switchToLast`).
+- **Logs:**
+  - `[TFR-Pillage] quest log Details: <town> - b of 5, N days left, <dir> T tiles, R raider(s) out, D on the mini-map,
+    F in the fog` (or "too far for raiders").
+  - `[TFR-Pillage] Show on Map: the world map opens centered on x,y`.
+- **Docs:** the GUIDE's Town Raids "Keeping track" paragraph; Discord FAQ message 10 (1,593 characters). The FAQ
+  artifact is not rebuilt; that waits for the release.
+- **Agent-tested** in `agent-865` (wt-865's jar, cheats, fog of war on; one launch in landscape 1280x720, one in
+  portrait 540x960; the copy was removed afterward, and its own `localappdata` held its cache). On the autosave,
+  `pillage start` raided Orazca:
+  - **Far** (254 tiles): the page read "Raiders come out when you are within 20 tiles of Orazca."; the mini-map showed
+    only explored ground; `... east 254 tiles, too far for raiders`.
+  - **Show on Map:** the world map opened with Orazca near the center (`centered on 5632,5632`); Back returned to the
+    quest log.
+  - **Near** (4 tiles): with both raiders in the fog, the page said "Raiders out now: 2" and drew no dots (`0 on the
+    mini-map, 2 in the fog`). After a torch pulse it drew them (`2 on the mini-map`), but one dot sat under the
+    player's portrait, which led to the draw-order fix above. In portrait, after the fix: `1 on the mini-map, 1 in
+    the fog`, and the dot showed on top of the portrait.
+  - **Fixed during the test:** the reward's [+Wood]/[+Stone] glyphs drew black, tinted by the line's `[BLACK]`. They
+    now get `[WHITE]` first, as `SaveLoadScene` and `AdventurePlayer` do, and show in color in the portrait shot.
+  - **Portrait:** Show on Map and Quest List stack over the 180 mini-map; the facts follow and scroll.
+  - **Duels:** two raider duels at 50x (`duel speed set to 50x`); a win counted as 1 of 5. No exceptions in either log.
+  - Shots: `C:\TFR\notes\r865\` (1-questlog-landscape, 2-details-far-landscape, 3-show-on-map,
+    5-details-near-landscape, 6-details-near-dots, 7-questlog-portrait, 8-details-portrait).
+- **Not tested:** Android (no device); a raid on a neutral town (same page, the other wording); the page left open
+  while the raid ends (it returns to the list on the next open, by code).
+
 ## Round 867: the golden Capitol's new art - Research Lab, Trader and both Arenas (2026-10-29)
 
 The user: "Let's implement the new Cap art" (1.26 work, after v1.25 shipped). The Art thread's locked set (its README,

@@ -447,9 +447,10 @@ public final class TownPillage {
 
     // ------------------------------------------------------------------------------------------------ what the player sees
 
-    /** The quest log's rows, one per pillaged town: where, how far along, how long is left. */
-    public static List<String> questLogRows() {
-        List<String> rows = new ArrayList<>();
+    /** The quest log's rows, one per pillaged town: where, how far along, how long is left. Round 865: {town id, row},
+     *  so the row's Details button can open that pillage (raid(id)). */
+    public static List<String[]> questLogRows() {
+        List<String[]> rows = new ArrayList<>();
         World world = Current.world();
         if (!isEnabled() || world == null)
             return rows;
@@ -460,11 +461,53 @@ public final class TownPillage {
                 continue;
             int[] p = entry.getValue();
             int left = Math.max(0, p[P_START] + t.pillageDays - world.getCurrentDay());
-            rows.add("Pillaged: " + poi.getDisplayName() + " - beat the raiders (" + p[P_BEATEN] + " of " + t.pillageKills
-                    + ") - " + WorldStage.getInstance().directionFromPlayer(poi.getCenter().x, poi.getCenter().y)
-                    + " [%75](" + left + " day" + (left == 1 ? "" : "s") + " left)");
+            rows.add(new String[]{entry.getKey(), "Pillaged: " + poi.getDisplayName() + " - beat the raiders (" + p[P_BEATEN]
+                    + " of " + t.pillageKills + ") - " + WorldStage.getInstance().directionFromPlayer(poi.getCenter().x,
+                    poi.getCenter().y) + " [%75](" + left + " day" + (left == 1 ? "" : "s") + " left)"});
         }
         return rows;
+    }
+
+    /** Round 865: one running pillage as the quest log's Details page shows it (QuestLogScene.loadRaidDetails). */
+    public static final class Raid {
+        public String id, town, direction;
+        public PointOfInterest poi;
+        public boolean playersTown, near;
+        public int beaten, kills, daysLeft, endDay, distanceTiles, raidersOut, rangeTiles;
+        public int rewardReputation, rewardWood, rewardStone, failReputation;
+    }
+
+    /** Round 865: the pillage of this town right now, or null when it has ended (or the town is gone from the map). */
+    public static Raid raid(String id) {
+        World world = Current.world();
+        int[] p = world == null || id == null ? null : world.getPillages().get(id);
+        PointOfInterest poi = p == null ? null : findPoi(world, id);
+        if (poi == null || WorldStage.getInstance().getPlayerSprite() == null)
+            return null;
+        TuningData t = tuning();
+        Raid r = new Raid();
+        r.id = id;
+        r.poi = poi;
+        r.town = poi.getDisplayName();
+        PointOfInterestData data = poi.getData();
+        r.playersTown = data != null && (TownRestoration.CAPITOL_POI_NAME.equals(data.name) || TownRestoration.isOrazca(data)
+                || TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(id)));
+        r.beaten = p[P_BEATEN];
+        r.kills = t.pillageKills;
+        r.endDay = p[P_START] + t.pillageDays;
+        r.daysLeft = Math.max(0, r.endDay - world.getCurrentDay());
+        Vector2 playerPos = WorldStage.getInstance().getPlayerSprite().pos();
+        r.direction = WorldStage.getInstance().directionFromPlayer(poi.getCenter().x, poi.getCenter().y);
+        r.distanceTiles = Math.round(poi.getCenter().dst(playerPos) / world.getTileSize());
+        float range = spawnRange(world);
+        r.near = poi.getCenter().dst2(playerPos) <= range * range;
+        r.rangeTiles = t.pillageSpawnRangeTiles;
+        r.raidersOut = WorldStage.getInstance().getPillageRaiders(id).size();
+        r.rewardReputation = t.pillageRewardReputation;
+        r.rewardWood = t.pillageRewardWood;
+        r.rewardStone = t.pillageRewardStone;
+        r.failReputation = t.pillageFailReputation;
+        return r;
     }
 
     /** The world map's Details: every pillaged town and its count so far. */
