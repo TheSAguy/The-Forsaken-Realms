@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 835 - dungeon upgrades seeded per appearance
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** (STOCK): `loadObjects`' `case "enemy"` passes
+  `currentMap` as a new last argument to `EnemyTiers.rollPlacement(...)` and `DungeonUpgrades.upgrade(...)`.
+- TFR files: `util/DungeonUpgrades.java` (`visitRandom`, `visitSeed`, `appearance`, the seeded roll),
+  `util/EnemyTiers.java` (`rollPlacement` takes the level and draws from `visitRandom`).
+
 ### Round 826 - custom difficulty, Settings > Difficulty mid-game
 - **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK): a Difficulty row (a label and an
   `Edit...` button named `difficultyEdit`) added before the Ascendance row, only when `CustomDifficulty.knobs()` is not

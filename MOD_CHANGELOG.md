@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 835: a dungeon's upgrades are fixed per appearance - a reload from before the entry meets the same creatures (2026-10-28)
+
+The user: "Yes, both" to the log review `notes/logs-1028c.md` P2: a player at Notoriety 77 reloaded and re-entered the
+Dragon's Lair, and each load turned different placements into different Archmages (#51/#62/#65), so a reload shopped
+for an easier dungeon.
+
+- **What already held**: within one appearance of a place the roster (round 201) keeps every placement - leaving and
+  re-entering, a save made inside, a loss. Only a reload from a save made BEFORE the first entry rolled again, because
+  the first-entry rolls drew from `MyRandom`.
+- **The fix**: both first-entry rank rolls draw from `DungeonUpgrades.visitRandom(poi, level, objectId, salt)`, a
+  `Random` seeded by saved state only - the POI (`getSeedOffset`, `getID`), the appearance's despawn day
+  (`World.poiDespawnDay`, round 812's GauntletGroups uses the same), the level's map path (each floor rolls on its own)
+  and the map object. `DungeonUpgrades.upgrade` (the win-streak step-up, round 447) uses salt 1 for its roll and its
+  pick; `EnemyTiers.rollPlacement` (round 647's week rank of a family creature, the base the step-up starts from) salt
+  2 - seeding the upgrade alone would still let a reload shop a family creature's base rank. `MapStage` passes
+  `currentMap` to both. No save field: the despawn day is already saved.
+- **A "visit"** is an appearance: a rotation (`DungeonRotation.hidePoi`) clears the roster, and the place's next
+  appearance has a new despawn day, so it rolls afresh. A place held on the map by loot left on its floor (round 257)
+  keeps its roster and its creatures.
+- **Kept**: the odds, tiers and Notoriety thresholds (`dungeonUpgradeWins` / `PlusOne` / `PlusTwo`), the week gate, the
+  family rule; gauntlets never reach either roll (keepAuthored, round 812). Old saves load as before (a place already
+  visited keeps its recorded roster).
+- **Not seeded** (open): the territory re-theme (`TerritoryControl.reThemedEnemyFor` -> `BiomeData.getEnemy`) in a
+  place whose land changed color still draws from `MyRandom`, and a despawn day first rolled by the Alt fade label
+  (round 791) on a just-appeared place is random. Both are left for a later call.
+- **Log**: `[TFR-DungeonUpgrade] ... rank 1.0, roll 38 (despawn day 33, seed -1133554139704546352)` and `... - kept
+  (roll N, despawn day D, seed S)`. GUIDE: one sentence in the notoriety list ("loading a save from before you went in
+  rolls the same step-ups again; only a new appearance of the place rolls afresh"); GUIDE.html regenerated (that
+  sentence only).
+- **Tested** (Maven exit 0; agent test copy `agent-835` with a copied profile, Normal, a new world, Notoriety 60 by
+  console, every duel at 50x; lines in `C:\TFR\notes\r835-agent-log-lines.txt`): Necromancer's Study entered from a save
+  at its door, then two reloads of that save and re-entries - the same nine enemies, the same rolls and seeds
+  (despawn day 33); after `days skip` the same POI despawned and came back on its tile (despawn day 110) - a different
+  roll (Court Mage and two Grey Scholars), and a reload of that appearance matched it; the Dawn Cathedral gauntlet at
+  Notoriety 60 kept its 3/2/1 as authored, no `[TFR-DungeonUpgrade]` line.
+
 ## Round 826: custom difficulty, part 5 - Settings > Difficulty, the Advanced panel mid-game (2026-10-28)
 
 Part 5 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). The user's "Yes, build it" on

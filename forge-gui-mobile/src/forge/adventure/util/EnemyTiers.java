@@ -159,7 +159,8 @@ public final class EnemyTiers {
      * out (a family has none). Null when it is not a family creature, the weighting is off or the row is empty; MapStage
      * then keeps the placement as written. The caller records the result in the place's roster.
      */
-    public static EnemyData rollPlacement(EnemyData placed, forge.adventure.pointofintrest.PointOfInterest poi, int objectId) {
+    public static EnemyData rollPlacement(EnemyData placed, forge.adventure.pointofintrest.PointOfInterest poi, int objectId,
+                                          String level) {
         if (!isFamily(placed) || !SpawnTierWeighting.isEnabled() || Current.world() == null)
             return null;
         EnemyData catalog = WorldData.getEnemy(placed.name);
@@ -175,7 +176,9 @@ public final class EnemyTiers {
         }
         if (total <= 0f)
             return null;
-        float r = forge.util.MyRandom.getRandom().nextFloat() * total;
+        // Round 835: seeded per appearance of the place (DungeonUpgrades.visitRandom), so a reload from before the entry
+        // rolls the same rank - and the upgrade after it steps up from the same base.
+        float r = DungeonUpgrades.visitRandom(poi, level, objectId, DungeonUpgrades.SALT_TIER).nextFloat() * total;
         int pick = TIERS.length - 1;
         for (int i = 0; i < TIERS.length; i++) {
             r -= weights[i];

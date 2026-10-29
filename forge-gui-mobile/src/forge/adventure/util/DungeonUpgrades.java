@@ -5,7 +5,6 @@ import forge.adventure.data.EnemyData;
 import forge.adventure.data.TuningData;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.world.World;
-import forge.util.MyRandom;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,13 +28,48 @@ import java.util.Set;
  * place's roster, so later visits meet the same creatures, and a rotation clears every level's roster
  * (DungeonRotation.hidePoi) - the next incarnation rolls afresh. MapStage does not ask for placements it keeps as
  * authored, castle or cave champions, or dialog carriers; special creatures (DungeonSources.isSpecial) are skipped here.
+ * <p>
+ * Round 835 (logs-1028c P2: a player at Notoriety 77 reloaded and re-entered the Dragon's Lair, and each load turned
+ * different placements into different Archmages): the rolls are seeded per appearance of the place ({@link #visitRandom}:
+ * the place, its appearance's despawn day like GauntletGroups, the level and the placement), so a reload from before the
+ * entry meets the same upgrades. Within an appearance the roster already keeps them (re-entry, a save inside, a loss); a
+ * new appearance after a rotation has a new despawn day and rolls afresh.
  */
 public final class DungeonUpgrades {
     private DungeonUpgrades() {
     }
 
+    /** Salts of the two first-entry rolls that draw from {@link #visitRandom}, so neither shifts the other's draws. */
+    public static final int SALT_UPGRADE = 1, SALT_TIER = 2;
+
+    /**
+     * Round 835: the Random for one placement's first-entry roll on this appearance of the place - the same on a reload
+     * from before the entry (all of it is saved state), different on a new appearance (a new despawn day). {@code level}
+     * is the map the placement stands on, so each floor of a deep place rolls on its own.
+     */
+    public static Random visitRandom(PointOfInterest poi, String level, int objectId, int salt) {
+        return new Random(visitSeed(poi, level, objectId, salt));
+    }
+
+    static long visitSeed(PointOfInterest poi, String level, int objectId, int salt) {
+        World world = Current.world();
+        Integer despawnDay = world == null || poi == null ? null : world.getPoiDespawnDay().get(poi.getID());
+        long seed = poi == null ? 0L : poi.getSeedOffset() * 31L + poi.getID().hashCode();
+        seed = seed * 1000003L + (despawnDay == null ? 0 : despawnDay);
+        seed = seed * 1000003L + (level == null ? 0 : level.hashCode());
+        seed = seed * 1000003L + objectId;
+        return seed * 31L + salt;
+    }
+
+    /** The appearance a seed belongs to, for the log lines: "despawn day 41" (or "no despawn day"). */
+    static String appearance(PointOfInterest poi) {
+        World world = Current.world();
+        Integer despawnDay = world == null || poi == null ? null : world.getPoiDespawnDay().get(poi.getID());
+        return despawnDay == null ? "no despawn day" : "despawn day " + despawnDay;
+    }
+
     /** The creature that takes this placement's place on this visit, or null to keep the one placed. */
-    public static EnemyData upgrade(World world, PointOfInterest poi, EnemyData placed, int objectId) {
+    public static EnemyData upgrade(World world, PointOfInterest poi, EnemyData placed, int objectId, String level) {
         if (world == null || poi == null || placed == null || !DungeonRotation.isRotatableData(poi.getData())
                 || DungeonSources.isSpecial(placed))
             return null;
@@ -56,7 +90,8 @@ public final class DungeonUpgrades {
         int from = EnemyData.tierRank(placed.tier);
         if (from >= 3)
             return null;
-        Random rand = MyRandom.getRandom();
+        long seed = visitSeed(poi, level, objectId, SALT_UPGRADE);
+        Random rand = new Random(seed); // round 835: seeded per appearance, so a reload rolls the same
         int roll = rand.nextInt(100);
         int shift = roll < plusTwo ? 2 : roll < plusTwo + plusOne ? 1 : 0;
         if (shift == 0)
@@ -83,13 +118,14 @@ public final class DungeonUpgrades {
                         + " (" + EnemyData.tierDisplayName(placed.tier) + ") -> " + pick.getName() + " ("
                         + EnemyData.tierDisplayName(pick.tier) + "), +" + (to - from)
                         + (to - from < shift ? " (rolled +" + shift + ")" : "") + " - notoriety " + streak + " (+1 "
-                        + plusOne + "%, +2 " + plusTwo + "%), " + land.name + " roster, rank " + ceiling);
+                        + plusOne + "%, +2 " + plusTwo + "%), " + land.name + " roster, rank " + ceiling + ", roll " + roll
+                        + " (" + appearance(poi) + ", seed " + seed + ")");
                 return pick;
             }
         }
         System.out.println("[TFR-DungeonUpgrade] " + poi.getDisplayName() + " #" + objectId + ": " + placed.getName()
                 + " rolled +" + shift + " but week " + week + " / " + land.name + " has no higher rank open within rank "
-                + ceiling + " - kept");
+                + ceiling + " - kept (roll " + roll + ", " + appearance(poi) + ", seed " + seed + ")");
         return null;
     }
 

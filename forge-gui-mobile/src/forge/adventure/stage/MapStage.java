@@ -1622,7 +1622,7 @@ public class MapStage extends GameStage {
                                     && (prop.get("defeatDialog") == null || prop.get("defeatDialog").toString().isEmpty())
                                     && !DungeonSources.isSpecial(EN)) {
                                 EnemyData rolled = forge.adventure.util.EnemyTiers.rollPlacement(EN,
-                                        AdventureQuestController.instance().mostRecentPOI, id);
+                                        AdventureQuestController.instance().mostRecentPOI, id, currentMap); // round 835: the level seeds it
                                 if (rolled != null)
                                     EN = rolled;
                             }
@@ -1636,7 +1636,7 @@ public class MapStage extends GameStage {
                                     && (prop.get("dialog") == null || prop.get("dialog").toString().isEmpty())
                                     && (prop.get("defeatDialog") == null || prop.get("defeatDialog").toString().isEmpty())) {
                                 EnemyData upgraded = DungeonUpgrades.upgrade(Current.world(),
-                                        AdventureQuestController.instance().mostRecentPOI, EN, id);
+                                        AdventureQuestController.instance().mostRecentPOI, EN, id, currentMap); // round 835
                                 if (upgraded != null)
                                     EN = upgraded;
                             }

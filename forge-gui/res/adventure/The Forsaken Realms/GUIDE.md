@@ -1334,7 +1334,8 @@ Arena.
   and 151 wins. From notoriety 30, the next step opens early.
 - **Dungeons and caves** you enter for the first time: from notoriety 10, 20% of their creatures step up a rank; from
   20, 25% step up one rank and 5% two; from 30, 25% and 20%; from 40, 25% and 30%; from 50, 25% and 40%. A place keeps
-  what you found in it until it rotates away.
+  what you found in it until it rotates away, and loading a save from before you went in rolls the same step-ups
+  again; only a new appearance of the place rolls afresh.
 
 A loss takes 5 off your notoriety, so its Walls, its tilt and its dungeon odds all drop one step - not back to nothing.
 Losing on purpose to clear the Walls before a dungeon costs a duel's gold, life and ante for every step.
