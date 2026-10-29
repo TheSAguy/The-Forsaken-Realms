@@ -22,6 +22,9 @@
     //                          a new game starts with the profile's, and Settings changes the running save's;
     //                          never counted as "Custom" (the label means difficulty values changed) - logged as rules
     //     config.field         round 825: a plane flag of config.json (data/ConfigData.java), per save
+    //     spawn.field / armory.field   round 831: spawn_tier_weighting.json / armory_rarity.json, per save;
+    //                          spawn.weekBrackets.rare = that column of every row (a scale keeps a 0 at 0), and
+    //                          "rebalance": "common" gives each row its own total back through that column
     //
     // Plane flags kept hidden (round 825): ringGiftStart (off would hand the kit over at the start AND keep the Ring
     // Cities' gift talks), and the flags the game is built on - territoryControl, townReconstruction, colorReputation,
@@ -267,8 +270,44 @@
             "tooltip": "The hunter walks at this share of your speed."
         },
         {
+            "id": "rankPace", "label": "Stronger ranks", "category": "Enemies & Duels", "group": "Enemy ranks",
+            "targets": ["spawn.weekBrackets.uncommon", "spawn.weekBrackets.rare", "spawn.weekBrackets.mythic"],
+            "min": 0.5, "max": 2, "step": 0.05, "mode": "scale", "rebalance": "common",
+            "tooltip": "How often roaming enemies come as Adepts, Masters and Archmages each week, multiplied by this; Apprentices make up the rest. A rank a week does not have yet stays out."
+        },
+        {
+            "id": "adeptShare", "label": "Adept share", "category": "Enemies & Duels", "group": "Enemy ranks",
+            "target": "spawn.weekBrackets.uncommon",
+            "min": 0.5, "max": 2, "step": 0.05, "mode": "scale", "level": "expert", "rebalance": "common",
+            "tooltip": "How often roaming enemies come as Adepts, multiplied by this (Apprentices make up the rest)."
+        },
+        {
+            "id": "masterShare", "label": "Master share", "category": "Enemies & Duels", "group": "Enemy ranks",
+            "target": "spawn.weekBrackets.rare",
+            "min": 0.5, "max": 2, "step": 0.05, "mode": "scale", "level": "expert", "rebalance": "common",
+            "tooltip": "How often roaming enemies come as Masters, multiplied by this (Apprentices make up the rest)."
+        },
+        {
+            "id": "archmageShare", "label": "Archmage share", "category": "Enemies & Duels", "group": "Enemy ranks",
+            "target": "spawn.weekBrackets.mythic",
+            "min": 0.5, "max": 2, "step": 0.05, "mode": "scale", "level": "expert", "rebalance": "common",
+            "tooltip": "How often roaming enemies come as Archmages, multiplied by this (Apprentices make up the rest)."
+        },
+        {
+            "id": "winRatioShift", "label": "Your record moves the ranks", "category": "Enemies & Duels", "group": "Enemy ranks",
+            "target": "spawn.winRatioMaxShift[*]",
+            "min": 0, "max": 2, "step": 0.05, "mode": "scale",
+            "tooltip": "How far a winning record lifts (and a losing one lowers) the enemy ranks, multiplied by this. 0 = your record never moves them."
+        },
+        {
+            "id": "notorietyTilt", "label": "Notoriety rank tilt", "category": "Enemies & Duels", "group": "Enemy ranks",
+            "targets": ["spawn.notorietyPerLevel.common", "spawn.notorietyPerLevel.uncommon", "spawn.notorietyPerLevel.rare", "spawn.notorietyPerLevel.mythic"],
+            "min": 0, "max": 1.5, "step": 0.05, "mode": "scale", "level": "expert",
+            "tooltip": "How much each Notoriety level tilts enemy ranks upward, multiplied by this. 0 = none."
+        },
+        {
             "id": "notorietyWinsPerLevel", "label": "Wins per Notoriety level", "category": "Notoriety", "group": "Levels",
-            "target": "tuning.notorietyWinsPerLevel", "min": 0, "max": 50, "step": 1,
+            "targets": ["tuning.notorietyWinsPerLevel", "spawn.notorietyWinsPerLevel"], "min": 0, "max": 50, "step": 1,
             "tooltip": "How many wins raise your Notoriety one level (the enemies' Walls grow with it). 0 turns Notoriety off."
         },
         {
@@ -420,6 +459,12 @@
             "target": "tuning.coinChallengeShardFee{D}",
             "min": 0, "max": 50, "step": 1, "level": "expert",
             "tooltip": "Shards on top of that fee."
+        },
+        {
+            "id": "armoryOdds", "label": "Armory rare and mythic odds", "category": "Economy", "group": "Armory",
+            "targets": ["armory.venueBrackets.rare", "armory.venueBrackets.mythic"],
+            "min": 0.5, "max": 3, "step": 0.05, "mode": "scale",
+            "tooltip": "How often Armory shelves stock rare and mythic gear, multiplied by this (a shop that sells none still sells none). From the next restock."
         },
         {
             "id": "legendGold", "label": "Legend gold", "category": "Loot & Rewards", "group": "Legends",

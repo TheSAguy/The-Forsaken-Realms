@@ -423,6 +423,37 @@ public class Config {
         return spawnTierWeightData;
     }
 
+    // Round 831 (custom difficulty): the two TFR tables above, per save - the getters return the running save's copy
+    // when it overrides them (CustomDifficulty.applyTuning), the base getters the plane's own; the first call keeps the
+    // plane's object as the base, as setEffectiveConfigData does.
+    private SpawnTierWeightData baseSpawnTierWeightData;
+    private forge.adventure.data.ArmoryRarityData baseArmoryRarityData;
+    private boolean spawnBaseKept, armoryBaseKept;
+
+    public SpawnTierWeightData getBaseSpawnTierWeightData() {
+        return spawnBaseKept ? baseSpawnTierWeightData : spawnTierWeightData;
+    }
+
+    public void setEffectiveSpawnTierWeightData(SpawnTierWeightData effective) {
+        if (!spawnBaseKept) {
+            baseSpawnTierWeightData = spawnTierWeightData;
+            spawnBaseKept = true;
+        }
+        spawnTierWeightData = effective != null ? effective : baseSpawnTierWeightData;
+    }
+
+    public forge.adventure.data.ArmoryRarityData getBaseArmoryRarityData() {
+        return armoryBaseKept ? baseArmoryRarityData : armoryRarityData;
+    }
+
+    public void setEffectiveArmoryRarityData(forge.adventure.data.ArmoryRarityData effective) {
+        if (!armoryBaseKept) {
+            baseArmoryRarityData = armoryRarityData;
+            armoryBaseKept = true;
+        }
+        armoryRarityData = effective != null ? effective : baseArmoryRarityData;
+    }
+
     public forge.adventure.data.WarChampionData getWarChampionData() {
         return warChampionData;
     }

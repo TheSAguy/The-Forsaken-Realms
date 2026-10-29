@@ -60,6 +60,8 @@ public final class CustomDifficulty {
         public String id, label, category, group, tooltip, scope = SCOPE_ANYTIME, level = "basic", mode = "set";
         /** Round 823: how the panel shows the value - "percent" (1.2 shows as 120%) or "" as it is. */
         public String format = "";
+        /** Round 831: a row column that gives way so each row of a spawn/armory table keeps its own total ("common"). */
+        public String rebalance = "";
         public float min = Float.NaN, max = Float.NaN, step = Float.NaN;
         /** "int", "float" or "bool" - from the first target's field ("float" for a scale knob). */
         public String type;
@@ -81,12 +83,25 @@ public final class CustomDifficulty {
         final boolean tuning;
         final Field field;
         final int index;
+        /** Round 831: the root field holding the rows (an array, a map of arrays, or one object) the leaf {@code field}
+         *  is read on - "spawn.weekBrackets.rare" - or null for a plain field of the root. */
+        final Field rows;
 
         Target(String source, Field field, int index) {
+            this(source, field, index, null);
+        }
+
+        Target(String source, Field field, int index, Field rows) {
             this.source = source;
             this.tuning = "tuning".equals(source);
             this.field = field;
             this.index = index;
+            this.rows = rows;
+        }
+
+        /** Round 831: a TFR table of its own (spawn_tier_weighting.json, armory_rarity.json), per save. */
+        boolean table() {
+            return "spawn".equals(source) || "armory".equals(source);
         }
 
         boolean difficulty() {
@@ -146,6 +161,7 @@ public final class CustomDifficulty {
                 k.max = v.getFloat("max", Float.NaN);
                 k.step = v.getFloat("step", Float.NaN);
                 k.format = v.getString("format", "");
+                k.rebalance = v.getString("rebalance", "");
                 JsonValue t = v.get("targets");
                 if (t != null && t.isArray())
                     for (JsonValue e = t.child; e != null; e = e.next)
@@ -204,7 +220,7 @@ public final class CustomDifficulty {
 
     private static String typeOf(Target t) {
         Class<?> c = t.field.getType();
-        if (t.index != -1) {
+        if (t.index != -1 && t.rows == null) { // round 831: a row field is the row's own number
             if (!c.isArray())
                 return null;
             c = c.getComponentType();
@@ -232,9 +248,20 @@ public final class CustomDifficulty {
         // round 825: "rule" - the player's own switches (SettingData), per save - see rule()
         Class<?> cls = "tuning".equals(source) ? TuningData.class : "difficulty".equals(source) ? DifficultyData.class
                 : "rule".equals(source) ? forge.adventure.data.SettingData.class
-                : "config".equals(source) ? forge.adventure.data.ConfigData.class : null; // round 825: plane flags
+                : "config".equals(source) ? forge.adventure.data.ConfigData.class // round 825: plane flags
+                : tableClass(source); // round 831
         if (cls == null)
             return out;
+        // round 831: "spawn.weekBrackets.rare" - a field of every row the root field holds
+        int dotInside = name.indexOf('.');
+        if (dotInside > 0 && tableClass(source) != null) {
+            Field rows = field(cls, name.substring(0, dotInside));
+            Class<?> rowClass = rows == null ? null : rowClass(rows);
+            Field leaf = rowClass == null ? null : field(rowClass, name.substring(dotInside + 1));
+            if (leaf != null)
+                out.add(new Target(source, leaf, ALL, rows));
+            return out;
+        }
         DifficultyData[] all = Config.instance().getConfigData().difficulties;
         if (name.endsWith("{D}")) {
             String stem = name.substring(0, name.length() - 3);
@@ -268,6 +295,22 @@ public final class CustomDifficulty {
         if (f != null)
             out.add(new Target(source, f, index));
         return out;
+    }
+
+    /** Round 831: the root class of a table source, or null. */
+    private static Class<?> tableClass(String source) {
+        return "spawn".equals(source) ? forge.adventure.data.SpawnTierWeightData.class
+                : "armory".equals(source) ? forge.adventure.data.ArmoryRarityData.class : null;
+    }
+
+    /** Round 831: the class of one row a table field holds (an array's element, a map's array element, an object). */
+    private static Class<?> rowClass(Field rows) {
+        Class<?> c = rows.getType();
+        if (c.isArray())
+            return c.getComponentType();
+        if (com.badlogic.gdx.utils.ObjectMap.class.isAssignableFrom(c)) // armory_rarity's venueBrackets
+            return forge.adventure.data.ArmoryRarityData.WeekBracket.class;
+        return c;
     }
 
     private static Field field(Class<?> cls, String name) {
@@ -557,6 +600,127 @@ public final class CustomDifficulty {
     public static void applyTuning(Map<String, String> overrides) {
         Config.instance().setEffectiveTuningData(buildTuning(overrides));
         Config.instance().setEffectiveConfigData(buildConfig(overrides)); // round 825: the config.* knobs
+        // round 831: spawn_tier_weighting.json and armory_rarity.json, per save
+        Config.instance().setEffectiveSpawnTierWeightData((forge.adventure.data.SpawnTierWeightData) buildTable(overrides, "spawn",
+                Config.instance().getBaseSpawnTierWeightData(), forge.adventure.data.SpawnTierWeightData.class));
+        Config.instance().setEffectiveArmoryRarityData((forge.adventure.data.ArmoryRarityData) buildTable(overrides, "armory",
+                Config.instance().getBaseArmoryRarityData(), forge.adventure.data.ArmoryRarityData.class));
+    }
+
+    /**
+     * Round 831: a TFR table with the overrides that reach it, or null when none does. A deep copy (a libGDX Json round
+     * trip - the rows are objects, and a field copy would share them with the plane's own). A plain field is written
+     * as tuning's are (from the plane's value); a row field ("spawn.weekBrackets.rare") on every row, compounding with
+     * other knobs on the same column (a scale multiplies the copy's value), and a zero stays zero, so a rank a week
+     * closes stays closed. A knob with "rebalance" then gives each row its plane total back through that column.
+     */
+    private static Object buildTable(Map<String, String> overrides, String source, Object base, Class<?> cls) {
+        if (overrides == null || overrides.isEmpty() || base == null)
+            return null;
+        Object effective = null;
+        Map<Field, String> rebalance = new LinkedHashMap<>();
+        Map<String, Knob> all = knobs();
+        for (Map.Entry<String, String> e : overrides.entrySet()) {
+            Knob k = all.get(e.getKey());
+            if (k == null)
+                continue;
+            for (String spec : k.targets)
+                for (Target t : resolve(spec, null))
+                    if (source.equals(t.source)) {
+                        if (effective == null)
+                            effective = deepCopy(base, cls);
+                        if (effective == null)
+                            return null;
+                        if (t.rows == null) {
+                            write(effective, base, t, k, e.getValue());
+                            continue;
+                        }
+                        for (Object row : rowsOf(effective, t.rows))
+                            try {
+                                double cur = ((Number) t.field.get(row)).doubleValue();
+                                double v = Double.parseDouble(e.getValue());
+                                t.field.set(row, convert(t.field.getType(), k.isScale() ? cur * v : (cur == 0 ? 0 : v)));
+                            } catch (Exception ex) {
+                                System.err.println("[TFR-Custom] could not apply " + k.id + " to " + t.rows.getName() + "." + t.field.getName() + ": " + ex);
+                            }
+                        if (!k.rebalance.isEmpty())
+                            rebalance.put(t.rows, k.rebalance);
+                    }
+        }
+        if (effective != null)
+            for (Map.Entry<Field, String> r : rebalance.entrySet())
+                rebalanceRows(rowsOf(effective, r.getKey()), rowsOf(base, r.getKey()), r.getValue());
+        return effective;
+    }
+
+    /** Round 831: the rows a table field holds, in order (an array's, every array of a map's, or the one object). */
+    private static List<Object> rowsOf(Object owner, Field rows) {
+        List<Object> out = new ArrayList<>();
+        try {
+            Object v = rows.get(owner);
+            if (v == null)
+                return out;
+            if (v.getClass().isArray()) {
+                for (int i = 0; i < Array.getLength(v); i++)
+                    if (Array.get(v, i) != null)
+                        out.add(Array.get(v, i));
+            } else if (v instanceof com.badlogic.gdx.utils.ObjectMap) {
+                com.badlogic.gdx.utils.Array<String> keys = ((com.badlogic.gdx.utils.ObjectMap<String, ?>) v).keys().toArray();
+                keys.sort();
+                for (String key : keys) {
+                    Object a = ((com.badlogic.gdx.utils.ObjectMap<String, ?>) v).get(key);
+                    for (int i = 0; a != null && a.getClass().isArray() && i < Array.getLength(a); i++)
+                        if (Array.get(a, i) != null)
+                            out.add(Array.get(a, i));
+                }
+            } else {
+                out.add(v);
+            }
+        } catch (IllegalAccessException e) {
+            System.err.println("[TFR-Custom] could not read " + rows.getName() + ": " + e);
+        }
+        return out;
+    }
+
+    private static final String[] RANKS = {"common", "uncommon", "rare", "mythic"};
+
+    /** Round 831: each row back to its plane total through {@code column}; when the others outgrow the total, they are
+     *  scaled down to fit it and the column is 0. Rows match the plane's by position. */
+    private static void rebalanceRows(List<Object> rows, List<Object> baseRows, String column) {
+        for (int i = 0; i < rows.size() && i < baseRows.size(); i++) {
+            Object row = rows.get(i), baseRow = baseRows.get(i);
+            try {
+                Class<?> c = row.getClass();
+                double total = 0, others = 0;
+                for (String r : RANKS) {
+                    total += c.getField(r).getFloat(baseRow);
+                    if (!r.equals(column))
+                        others += c.getField(r).getFloat(row);
+                }
+                if (others <= total) {
+                    c.getField(column).setFloat(row, (float) (total - others));
+                } else {
+                    for (String r : RANKS)
+                        if (!r.equals(column))
+                            c.getField(r).setFloat(row, (float) (c.getField(r).getFloat(row) * total / others));
+                    c.getField(column).setFloat(row, 0f);
+                }
+            } catch (Exception e) {
+                System.err.println("[TFR-Custom] could not rebalance a row: " + e);
+                return;
+            }
+        }
+    }
+
+    /** Round 831: a full copy of a TFR table through libGDX Json (both table classes round-trip, the -1 kept). */
+    private static Object deepCopy(Object base, Class<?> cls) {
+        try {
+            com.badlogic.gdx.utils.Json json = new com.badlogic.gdx.utils.Json();
+            return json.fromJson(cls, json.toJson(base, cls));
+        } catch (Exception e) {
+            System.err.println("[TFR-Custom] could not copy " + cls.getSimpleName() + " - its knobs are off for this save: " + e);
+            return null;
+        }
     }
 
     /** Round 825: the plane's ConfigData with the config.* overrides on (a field copy, arrays copied), or null when they
@@ -727,7 +891,9 @@ public final class CustomDifficulty {
             return "x1";
         for (String spec : k.targets)
             for (Target t : resolve(spec, presetName)) {
-                Object owner = t.tuning ? Config.instance().getBaseTuningData() : t.rule() ? DEFAULT_SETTINGS
+                if (t.rows != null)
+                    continue; // round 831: row fields are scale knobs ("x1" above)
+                Object owner = t.table() ? tableBase(t) : t.tuning ? Config.instance().getBaseTuningData() : t.rule() ? DEFAULT_SETTINGS
                         : t.config() ? Config.instance().getBaseConfigData() : configPreset(presetName);
                 if (owner == null)
                     continue;
@@ -924,7 +1090,15 @@ public final class CustomDifficulty {
                     Boolean r = rule(t.field.getName());
                     return t.field.getName() + "=" + (r == null ? "profile " + profileRule(t.field.getName()) : r);
                 }
-                Object owner = t.tuning ? Config.instance().getTuningData() : t.config() ? Config.instance().getConfigData()
+                if (t.rows != null) { // round 831: the first row's value
+                    List<Object> rows = rowsOf(tableNow(t), t.rows);
+                    try {
+                        return t.rows.getName() + "[0]." + t.field.getName() + "=" + (rows.isEmpty() ? "-" : format(k, t.field.get(rows.get(0))));
+                    } catch (IllegalAccessException e) {
+                        return "?";
+                    }
+                }
+                Object owner = t.table() ? tableNow(t) : t.tuning ? Config.instance().getTuningData() : t.config() ? Config.instance().getConfigData()
                         : p == null ? null : p.getDifficulty();
                 if (owner == null)
                     continue;
@@ -936,6 +1110,15 @@ public final class CustomDifficulty {
                 }
             }
         return "?";
+    }
+
+    /** Round 831: a table source's plane object and its running one. */
+    private static Object tableBase(Target t) {
+        return "spawn".equals(t.source) ? Config.instance().getBaseSpawnTierWeightData() : Config.instance().getBaseArmoryRarityData();
+    }
+
+    private static Object tableNow(Target t) {
+        return "spawn".equals(t.source) ? Config.instance().getSpawnTierWeightData() : Config.instance().getArmoryRarityData();
     }
 
     private static String format(Knob k, Object v) {

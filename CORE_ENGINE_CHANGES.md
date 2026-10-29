@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 831 - custom difficulty, the spawn-tier and Armory tables per save
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** (STOCK, after round 825): after
+  `getSpawnTierWeightData()`, two base fields (`baseSpawnTierWeightData`, `baseArmoryRarityData`) with `*BaseKept`
+  flags, and `getBaseSpawnTierWeightData` / `setEffectiveSpawnTierWeightData` / `getBaseArmoryRarityData` /
+  `setEffectiveArmoryRarityData` (the first set keeps the plane's object as the base). The two getters themselves are
+  unchanged - they return the running save's copy once one is set.
+- TFR files: `util/CustomDifficulty.java` (the `spawn.`/`armory.` sources, `Target.rows`, `buildTable`, `rowsOf`,
+  `rebalanceRows`, `deepCopy`, the Knob's `rebalance`), plane data `config tables/custom_difficulty.json`.
+
 ### Round 839 - custom difficulty, New Game+ "Advanced..."
 - **`forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`** (STOCK, after round 837): `askNewGamePlusCarry`
   gains a holder `edited` beside round 837's picker, a "Custom settings: N changed" row with an `Advanced...` button

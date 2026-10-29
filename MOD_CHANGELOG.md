@@ -14264,6 +14264,65 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 831: custom difficulty, part 10 - the enemy ranks and the Armory odds: spawn_tier_weighting.json and armory_rarity.json per save (2026-10-28)
+
+Part 10 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). The plan's grid widget became
+ordinary Expert rows (the manager's call, on the user's behalf under tonight's OK): no new widget, no mock-up. A
+read-only reader audit came first, kept as `C:\TFR\notes\r831-reader-audit.md`. Built in a worktree and tested in an
+`agent-831` copy.
+
+- **Two new knob sources** (`util/CustomDifficulty.java`): `spawn.field` (spawn_tier_weighting.json,
+  `SpawnTierWeightData`) and `armory.field` (armory_rarity.json, `ArmoryRarityData`). A target can reach a field of
+  every row a root field holds - `spawn.weekBrackets.rare` (each week bracket), `armory.venueBrackets.mythic` (each
+  row of each venue, a map of arrays), `spawn.notorietyPerLevel.rare` (one object) - through a new `Target.rows`.
+- **The per-save copy is deep**: a libGDX Json round trip (`deepCopy`) - the rows are objects, and round 822's field
+  copy would share them with the plane's own. The audit's scratch test round-tripped both shipped files to identical
+  text, the -1 open week end kept.
+- **Row fields compound and keep zeros**: a scale multiplies the copy's value (two knobs on one column multiply), and a
+  0 stays 0 - a rank a week does not open yet stays closed (four readers treat a target of 0 as "closed this week").
+  Row fields are scale knobs only.
+- **Rebalance** (knob field `"rebalance": "common"`, `rebalanceRows`): after every knob, each week row gets its plane
+  total back through the Apprentice column, so the extra Adepts, Masters and Archmages come out of the Apprentices and
+  a row's total (which also sets how often bosses come) does not move; when the three outgrow the total, they are cut
+  to fit and Apprentices are 0. Rows match the plane's by position.
+- **Config** (`util/Config.java`, STOCK): `getBaseSpawnTierWeightData` / `setEffectiveSpawnTierWeightData` and the
+  same for the Armory, after the two getters; the first set keeps the plane's object as the base (round 825's
+  pattern). `applyTuning` sets both (null = the plane's own), so a load, a new game and a change put them in place.
+- **The Notoriety pace moves both copies**: round 822's Wins per Notoriety level now also targets
+  `spawn.notorietyWinsPerLevel`, the spawn table's own copy of the number (the spawn-rank tilt read it while the Walls
+  read settings.json's).
+- **The knobs** (Enemies & Duels - Enemy ranks, Economy - Armory; Basic unless marked):
+  - Stronger ranks: the Adept, Master and Archmage columns of every week bracket x0.5-x2, rebalanced.
+  - Expert: Adept share, Master share, Archmage share (one column each, x0.5-x2, rebalanced).
+  - Your record moves the ranks: `winRatioMaxShift[*]` x0-x2 (0 = your win ratio never moves them).
+  - Expert: Notoriety rank tilt (`notorietyPerLevel`, x0-x1.5).
+  - Armory rare and mythic odds: those two columns of every venue row x0.5-x3 (a shop that sells none still sells
+    none; from the next restock).
+- Left out (the audit): the week ranges and every 0 cell, the territory, fog and difficulty rows (the last keyed by
+  preset name), the Notoriety max level, the win-ratio window and its min-duels list, the help tokens, the Armory venue
+  keys and single cells, "full shift at" (a high/low pair).
+- Known text gaps for round 833: GUIDE prints the shipped week brackets, the win-ratio shifts and the whole Armory
+  table; the FAQ two lines of them.
+- The test's own check script learned to pass `spawn.`/`armory.` targets to the game's own resolve (a bad one is
+  skipped with a `[TFR-Custom] ... skipped -` line at load; none is).
+
+**Agent-tested** in `agent-831` (the agent folder and profile, wt-831's classes ahead of its jar, this json in its res;
+removed afterward). No exceptions. `[TFR-Custom] 160 knob(s)`, none skipped.
+- Found and fixed in the test: the first build skipped the six row knobs ("is not a number") - a row target carries
+  the "every entry" index, and the type check then wanted the field to be an array.
+- Slot 76: Stronger ranks x2, Master share x1.5, Armory odds x3, record shift x0, Notoriety tilt x1.5, Notoriety pace
+  10: week 1 Adepts `weekBrackets[0].uncommon` 10 -> 20, its Masters and Archmages still 0; after a day,
+  `[TFR-SpawnTier] week 2 on WASTELAND: Apprentice 52.0% Adept 36.0% Master 12.0% Archmage 0.0%` (78/18/4/0 shipped:
+  18 x2 = 36, 4 x2 x1.5 = 12, the rest back to Apprentices - the total stays 100).
+- Saved to slot 94; slot 76 then reads `weekBrackets[0].uncommon=10` (the plane's own table untouched); slot 94 reloads
+  with 20 and all six overrides.
+
+**Not tested:** an Armory restock at x3, a row where the three outgrow the total (week 21+ at x2), a long win streak's
+shift at 0.
+
+Files: `util/CustomDifficulty.java`, `util/Config.java`, `The Forsaken Realms/config tables/custom_difficulty.json`;
+`CORE_ENGINE_CHANGES.md` round 831.
+
 ## Round 830: custom difficulty, part 9 - 46 more knobs: shops, ante and coins, rewards and the purse, research, specialties, Notoriety, the Wrath (2026-10-28)
 
 Part 9 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`), metadata batch 3: plane data
