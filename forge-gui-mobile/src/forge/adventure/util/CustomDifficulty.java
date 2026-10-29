@@ -1293,6 +1293,26 @@ public final class CustomDifficulty {
         return out;
     }
 
+    /**
+     * Round 841 (Fable review P2-4): a Settings rule switch (the profile's) also moves the next new game's rule once the
+     * Advanced panel has handed its choice over - the panel froze the profile's rules into pending, so a switch made
+     * after it (Notoriety off, say) was lost and the new save played with the old rule. No panel choice yet = nothing
+     * to do: pendingRules() reads the profile then. Both Settings branches call it (no game, and a game loaded).
+     */
+    public static void onProfileRule(String field, boolean value) {
+        Knob k = ruleKnob(field);
+        if (!pendingFromPanel || k == null)
+            return;
+        String before = pending.get(k.id);
+        if (value == defaultRule(field))
+            pending.remove(k.id);
+        else
+            pending.put(k.id, String.valueOf(value));
+        System.out.println("[TFR-Custom] next new game: " + field + " = " + value + " (Settings, after the Advanced panel;"
+                + " pending " + k.id + " " + (before == null ? "default" : before) + " -> "
+                + (pending.containsKey(k.id) ? pending.get(k.id) : "default") + ")");
+    }
+
     /** The Advanced panel (later rounds) hands its choice here; null or empty = the preset. */
     public static void setPending(Map<String, String> overrides) {
         pendingFromPanel = true;

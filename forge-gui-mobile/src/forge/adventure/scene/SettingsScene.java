@@ -713,6 +713,7 @@ public class SettingsScene extends UIScene {
         else
             System.out.println("[TFR-Custom] Settings (no game running): profile " + field + " = " + value
                     + " - the next new game starts with it");
+        forge.adventure.util.CustomDifficulty.onProfileRule(field, value); // round 841: after the Advanced panel too
     }
 
     /** Round 825: the rows show what the running save plays with (its own rules, else the profile's). */

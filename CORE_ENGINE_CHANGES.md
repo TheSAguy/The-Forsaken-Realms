@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 841 - the rules follow Settings after the Advanced panel; Reset all keeps the Rules
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK, after round 825): `setSaveRule` calls
+  `CustomDifficulty.onProfileRule(field, value)` after both of its branches.
+- TFR files: `util/CustomDifficulty.java` (`onProfileRule`), `scene/CustomDifficultyScene.java` (`resetAll` skips
+  `isRule` knobs in both branches).
+
 ### Round 842 - New Game+ leftovers (the job boards' rest days, a worn quest rune, False Life)
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): `resetForNewGamePlus` clears
   `questOfferDays` beside `coinChallengeWeeks` and its done line gains `questOfferDays=0(was N)`; `potionOfFalseLife`

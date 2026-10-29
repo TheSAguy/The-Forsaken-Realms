@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 841: the rules follow Settings after the Advanced panel; Reset all keeps the Rules (2026-10-29)
+
+Part of the Fable review fix batch (rounds 840-848; P2-4 and P3-3). Built in `wt-842`, tested in `agent-842`. Files:
+`util/CustomDifficulty.java`, `scene/SettingsScene.java`, `scene/CustomDifficultyScene.java`.
+
+- **The bug (P2-4):** the first Done or Back on the new-game Advanced panel hands its whole copy, the rules seeded from
+  the profile included, to `CustomDifficulty.setPending` and sets `pendingFromPanel`; from then on `pendingRules()` read
+  that frozen copy, not the profile. So New Game > Advanced > Back, then Settings > Disable Notoriety, then New Game >
+  Start played with Notoriety on (and the reverse left it off). Nothing on the new-game screen showed it.
+- **The fix:** `CustomDifficulty.onProfileRule(field, value)` - when the panel has handed a choice over, a Settings
+  rule switch puts the rule knob into `pending` (or removes it at the default). `SettingsScene.setSaveRule` calls it
+  in both branches (no game, and a game loaded: a mid-game switch sets the save and the profile, and now the pending
+  new game too). `[TFR-Custom] next new game: notorietyDisabled = true (Settings, after the Advanced panel; pending
+  notorietyOff default -> true)`.
+- **Reset all keeps the Rules (P3-3):** the panel's Reset all cleared every entry, rules included (new game), or every
+  anytime one, rules included (mid-game: it flipped the save's three rules). It skips `isRule` knobs in both
+  branches now - the Rules are the player's switches, not the preset's. `[TFR-Custom] panel: reset all (N change(s);
+  rules kept: notorietyOff=true)`. The New Game+ panel takes the new-game branch.
+
+**Agent-tested** in `agent-842` (the Settings list was scrolled with the mouse wheel on the agent window, and the
+panel's Done / Reset all pressed with real clicks - the bridge can neither scroll nor see those two buttons):
+- fresh launch: New Game > Advanced > Back, Settings > Disable Notoriety (no game), New Game > Start -> `[TFR-Custom]
+  new game: Normal, 0 override(s) | rules: notorietyOff`, and the console `custom` shows `notorietyOff false -> true`;
+- with a game loaded, both ways: Advanced > Back, Settings unchecks Disable Notoriety (`pending notorietyOff true ->
+  default`), New Game > Start -> no rule override; then Advanced > Back, Settings checks it again (`default -> true`);
+- Reset all at a new game with Notoriety off: Starting life 15 -> 16, Reset all -> `rules kept: notorietyOff=true`,
+  Done, Start -> `rules: notorietyOff`;
+- Reset all mid-game (Settings > Difficulty > Edit...): Enemy win streak 5 -> 6, Reset all, Done -> `0 change(s)
+  applied, ... rules notorietyOff`; the save keeps Notoriety off.
+
+**GUIDE wording suggested for round 848** (Custom Difficulty): "Reset all puts the difficulty back on its preset; your
+Rules (Disable Notoriety, leveling, the reload switch) stay as they are." Stock file: `SettingsScene.java`
+(CORE_ENGINE_CHANGES); the other two are TFR files.
+
 ## Round 842: New Game+ leftovers - the job boards' rest days, a worn quest rune, False Life's gold (2026-10-29)
 
 Rounds 840-848 are the Fable review fix batch (`C:\TFR\notes\fable-review-2026-10-28.md`, verified in

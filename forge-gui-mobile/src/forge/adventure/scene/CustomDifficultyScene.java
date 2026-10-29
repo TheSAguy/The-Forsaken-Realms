@@ -553,11 +553,15 @@ public class CustomDifficultyScene extends UIScene {
         return r.toString();
     }
 
+    /** Round 841 (Fable review P3-3): Reset all puts the difficulty back on its preset; the Rules (Disable Notoriety,
+     *  Ascendance leveling, the reload switch) are the player's own, not the preset's, and stay as they are. */
     private boolean resetAll() {
         if (midGame) { // round 826: the new-game-only rows are locked, so they keep the save's values
             int n = 0;
             for (java.util.Iterator<String> it = work.keySet().iterator(); it.hasNext(); ) {
                 Knob k = CustomDifficulty.knobs().get(it.next());
+                if (CustomDifficulty.isRule(k))
+                    continue; // round 841
                 if (k == null || !k.isNewGameOnly()) {
                     it.remove();
                     n++;
@@ -568,9 +572,16 @@ public class CustomDifficultyScene extends UIScene {
             refill();
             return true;
         }
-        if (!work.isEmpty())
-            System.out.println("[TFR-Custom] panel: reset all (" + work.size() + " change(s))");
-        work.clear();
+        int n = 0;
+        for (java.util.Iterator<String> it = work.keySet().iterator(); it.hasNext(); ) {
+            if (CustomDifficulty.isRule(CustomDifficulty.knobs().get(it.next())))
+                continue; // round 841: the Rules stay
+            it.remove();
+            n++;
+        }
+        if (n > 0 || !work.isEmpty())
+            System.out.println("[TFR-Custom] panel: reset all (" + n + " change(s); rules kept: "
+                    + (work.isEmpty() ? "none" : CustomDifficulty.encode(work)) + ")");
         refill();
         return true;
     }
