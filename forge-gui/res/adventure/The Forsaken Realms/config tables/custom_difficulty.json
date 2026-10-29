@@ -46,6 +46,19 @@
     //   goldLoss (difficulty)     read only when a difficulty sets neither defeatGoldLoss value - never in TFR
     //   spawnRank (difficulty)    the hand-placed object filter in places; only 0-3 mean anything
     //   startItems (difficulty)   an item list
+    // Round 829 (notes/r829-reader-audit.md): left out as well -
+    //   capitolBuiltSendsMages, aiTownGuardDefenseEnabled   on/off switches (the second is AI against AI only)
+    //   invasionTrustReputation, invasionLeaderStartMinDifficulty   on/off switches in disguise (0 / 4+ = off)
+    //   invasionLeaderStartCards  a card list
+    //   pillageRadiusTiles        read only when pillageRadiusByWeek is empty
+    //   pillageRaidersAtOnce      a low/high pair; pillageSpawnRangeTiles   spawn geometry
+    //   ringCityPullFactor, ringTownTargetWeightBonus, aiGuardTwoLandPowerFactor   internal weights (the second breaks
+    //                             below -1)
+    //   townMinSpacingTiles, ringCityTownExclusionTiles, starTownExclusionRadiusTiles, worldBarrierMarginTiles,
+    //   townMaxRoadLinks, initialTownRoadSkipFraction   world geometry (generation only; extremes can make no map)
+    // Mid-raid traps kept out of reach: pillageKills, pillageDays and pillageRadiusByWeek are read every day by a raid
+    // already running (lowering them can fail it), so their knobs are new game only; townExpansionDaysPerTile starts at
+    // 1 (0 divides by zero in the daily tick); starTownsLossCount is new game only (lowering it mid-run can end it).
     // ============================================================================
     // Round 823: the panel's tabs, in this order (a knob's category not listed here comes after them).
     "categories": ["Enemies & Duels", "Notoriety", "Economy", "Loot & Rewards", "Research & Sets", "Towns & Territory",
@@ -62,51 +75,20 @@
             "tooltip": "Every enemy's starting life, as a share of its own (100% = its own life)."
         },
         {
-            "id": "startingGold", "label": "Starting gold", "category": "Economy", "group": "Starting kit",
-            "target": "difficulty.startingMoney", "min": 0, "max": 5000, "step": 25, "scope": "newGame",
-            "tooltip": "The gold the Ring Cities hand over at the start."
+            "id": "winStreakWins", "label": "Enemy win streak", "category": "Enemies & Duels", "group": "Enemies",
+            "target": "tuning.winStreakWins{D}", "min": 0, "max": 10, "step": 1,
+            "tooltip": "An enemy that has beaten you this many times in a row starts its duels with a Wastes in play, then more. 0 = never."
         },
         {
-            "id": "sellFactor", "label": "Card sell price", "category": "Economy", "group": "Selling",
-            "target": "difficulty.sellFactor", "min": 0.05, "max": 1, "step": 0.05, "format": "percent",
-            "tooltip": "A card sells for this share of its price."
+            "id": "winStreakMaxSteps", "label": "Win streak steps", "category": "Enemies & Duels", "group": "Enemies",
+            "target": "tuning.winStreakMaxSteps", "min": 1, "max": 5, "step": 1, "level": "expert",
+            "tooltip": "How many times a winning enemy's head start can grow."
         },
         {
-            "id": "shardSellRatio", "label": "Shard sell ratio", "category": "Economy", "group": "Selling",
-            "target": "difficulty.shardSellRatio", "min": 0.05, "max": 1, "step": 0.05, "format": "percent",
-            "tooltip": "The Shard Trader pays this share of 100 gold for each shard you sell."
-        },
-        {
-            "id": "mineOutput", "label": "Mine output", "category": "Economy", "group": "Income",
-            "mode": "scale", "min": 0, "max": 5, "step": 0.1,
-            "targets": ["tuning.mineWeeklyGoldPayout", "tuning.mineWeeklyWoodPayout", "tuning.mineWeeklyStonePayout",
-                        "tuning.mineWeeklyShardPayout"],
-            "tooltip": "Each Mine's weekly gold, wood, stone and shards, multiplied by this."
-        },
-        {
-            "id": "notorietyWinsPerLevel", "label": "Wins per Notoriety level", "category": "Notoriety", "group": "Levels",
-            "target": "tuning.notorietyWinsPerLevel", "min": 0, "max": 50, "step": 1,
-            "tooltip": "How many wins raise your Notoriety one level (the enemies' Walls grow with it). 0 turns Notoriety off."
-        },
-        {
-            "id": "notorietyDeckCard", "label": "Enemy deck card from Notoriety", "category": "Notoriety", "group": "Deck card",
-            "target": "tuning.notorietyDeckCardWinsByDifficulty[*]", "min": 0, "max": 200, "step": 5,
-            "tooltip": "From this Notoriety on, enemies start with one permanent from their own deck in play. 0 = never."
-        },
-        {
-            "id": "attackingMages", "label": "Attacking mages", "category": "Towns & Territory", "group": "AI colors",
-            "target": "tuning.attackingMages{D}", "min": 0, "max": 12, "step": 1,
-            "tooltip": "How many attacking mages each AI color can field at once at the start. Towns, Color Defeat and the Capitol add to it."
-        },
-        {
-            "id": "neutralTownCut", "label": "Fewer neutral towns", "category": "Towns & Territory", "group": "World",
-            "target": "tuning.worldGenNeutralTownCut{D}", "min": 0, "max": 15, "step": 1, "scope": "newGame", "level": "expert",
-            "tooltip": "How many of the 20 working neutral towns a new world leaves out (the five star towns always stay)."
-        },
-        {
-            "id": "dayLength", "label": "Day length (seconds)", "category": "Time & Pacing", "group": "Clock",
-            "target": "tuning.dayLengthSeconds", "min": 60, "max": 900, "step": 10,
-            "tooltip": "Real seconds per in-game day at normal speed. Shorter days bring every weekly event sooner."
+            "id": "castleChampionSpeed", "label": "Castle champion speed", "category": "Enemies & Duels", "group": "Enemies",
+            "target": "tuning.castleChampionSpeedFactor",
+            "min": 0.5, "max": 1.5, "step": 0.05, "level": "expert", "format": "percent",
+            "tooltip": "A castle champion chases you at this share of your speed (from its next appearance)."
         },
         {
             "id": "wrathHunt", "label": "Wrath of the Temple", "category": "Enemies & Duels", "group": "World events",
@@ -117,26 +99,6 @@
             "id": "enemyPlates", "label": "Enemy info plates", "category": "Enemies & Duels", "group": "World events",
             "target": "config.enemyInfoPlatesEnabled",
             "tooltip": "Hold Alt to see each enemy's rank above it on the map - and, once you have fought its kind, its deck colors and life."
-        },
-        {
-            "id": "pillage", "label": "Town pillage raids", "category": "Towns & Territory", "group": "World events",
-            "target": "config.pillageEnabled",
-            "tooltip": "A town near several dungeons can be pillaged: raiders gather round it, and you have a week to beat five of them. Off: no new raids."
-        },
-        {
-            "id": "townSpecialties", "label": "Town specialties", "category": "Towns & Territory", "group": "Systems",
-            "target": "config.townSpecialtiesEnabled", "scope": "newGame",
-            "tooltip": "Each town you restore or win takes a specialty of your choice (the Capitol and Orazca excepted)."
-        },
-        {
-            "id": "realmMilestones", "label": "Realm milestones", "category": "Towns & Territory", "group": "Systems",
-            "target": "config.realmMilestonesEnabled", "scope": "newGame",
-            "tooltip": "Every 10 towns you have held, pick 1 of 3 realm-wide boons. Needs town specialties."
-        },
-        {
-            "id": "sideQuestTimer", "label": "Side-quest time limit", "category": "Time & Pacing", "group": "Quests",
-            "target": "config.sideQuestTimerEnabled",
-            "tooltip": "Side quests fail when their days run out (story quests never do). Off: side quests never expire."
         },
         {
             "id": "earlyLifeWeek1", "label": "Week 1 enemy life", "category": "Enemies & Duels", "group": "The first weeks",
@@ -162,16 +124,6 @@
             "id": "chestDuelFreeWeeks", "label": "Duel-free chest weeks", "category": "Enemies & Duels", "group": "The first weeks",
             "target": "tuning.chestDuelFreeWeeks", "min": 0, "max": 4, "step": 1,
             "tooltip": "For this many weeks no overworld chest rolls a Dangerous Enemy or the Illegal Arena Match, and no diamond an ambush. 0 = from day 1."
-        },
-        {
-            "id": "winStreakWins", "label": "Enemy win streak", "category": "Enemies & Duels", "group": "Enemies",
-            "target": "tuning.winStreakWins{D}", "min": 0, "max": 10, "step": 1,
-            "tooltip": "An enemy that has beaten you this many times in a row starts its duels with a Wastes in play, then more. 0 = never."
-        },
-        {
-            "id": "winStreakMaxSteps", "label": "Win streak steps", "category": "Enemies & Duels", "group": "Enemies",
-            "target": "tuning.winStreakMaxSteps", "min": 1, "max": 5, "step": 1, "level": "expert",
-            "tooltip": "How many times a winning enemy's head start can grow."
         },
         {
             "id": "arenaHigherTierWin", "label": "Arena: higher rank wins", "category": "Enemies & Duels", "group": "Arena",
@@ -257,19 +209,25 @@
             "tooltip": "Days a sighted legend stays on the map (from the next sighting)."
         },
         {
-            "id": "legendGold", "label": "Legend gold", "category": "Loot & Rewards", "group": "Legends",
-            "target": "tuning.legendRewardGoldFactor", "min": 0, "max": 1, "step": 0.05, "format": "percent", "level": "expert",
-            "tooltip": "A legend pays this share of the gold in its loot (rounded up)."
+            "id": "invasionMinions", "label": "Invasion: minions to beat", "category": "Enemies & Duels", "group": "Invasions",
+            "target": "tuning.invasionMinionsByDifficulty[*]",
+            "min": 1, "max": 8, "step": 1, "level": "expert",
+            "tooltip": "Minion wins an invasion quest asks for (from the next quest)."
         },
         {
-            "id": "legendCards", "label": "Legend cards", "category": "Loot & Rewards", "group": "Legends",
-            "target": "tuning.legendRewardCardFactor", "min": 0, "max": 1, "step": 0.05, "format": "percent", "level": "expert",
-            "tooltip": "A legend pays this share of the cards in its loot (its own named card goes last)."
+            "id": "notorietyWinsPerLevel", "label": "Wins per Notoriety level", "category": "Notoriety", "group": "Levels",
+            "target": "tuning.notorietyWinsPerLevel", "min": 0, "max": 50, "step": 1,
+            "tooltip": "How many wins raise your Notoriety one level (the enemies' Walls grow with it). 0 turns Notoriety off."
         },
         {
-            "id": "rewardMax", "label": "Extra reward cards", "category": "Loot & Rewards", "group": "Rewards",
-            "target": "difficulty.rewardMaxFactor", "min": 0, "max": 3, "step": 0.1,
-            "tooltip": "How many extra cards a random card reward can add, as a multiple of its usual spread. 0 = always the least."
+            "id": "notorietyDeckCard", "label": "Enemy deck card from Notoriety", "category": "Notoriety", "group": "Deck card",
+            "target": "tuning.notorietyDeckCardWinsByDifficulty[*]", "min": 0, "max": 200, "step": 5,
+            "tooltip": "From this Notoriety on, enemies start with one permanent from their own deck in play. 0 = never."
+        },
+        {
+            "id": "startingGold", "label": "Starting gold", "category": "Economy", "group": "Starting kit",
+            "target": "difficulty.startingMoney", "min": 0, "max": 5000, "step": 25, "scope": "newGame",
+            "tooltip": "The gold the Ring Cities hand over at the start."
         },
         {
             "id": "startingShards", "label": "Starting shards", "category": "Economy", "group": "Starting kit",
@@ -285,6 +243,364 @@
             "id": "startingStone", "label": "Starting stone", "category": "Economy", "group": "Starting kit",
             "target": "difficulty.startingStone", "min": 0, "max": 2000, "step": 25, "scope": "newGame",
             "tooltip": "The stone the Ring Cities hand over at the start."
+        },
+        {
+            "id": "sellFactor", "label": "Card sell price", "category": "Economy", "group": "Selling",
+            "target": "difficulty.sellFactor", "min": 0.05, "max": 1, "step": 0.05, "format": "percent",
+            "tooltip": "A card sells for this share of its price."
+        },
+        {
+            "id": "shardSellRatio", "label": "Shard sell ratio", "category": "Economy", "group": "Selling",
+            "target": "difficulty.shardSellRatio", "min": 0.05, "max": 1, "step": 0.05, "format": "percent",
+            "tooltip": "The Shard Trader pays this share of 100 gold for each shard you sell."
+        },
+        {
+            "id": "mineOutput", "label": "Mine output", "category": "Economy", "group": "Income",
+            "mode": "scale", "min": 0, "max": 5, "step": 0.1,
+            "targets": ["tuning.mineWeeklyGoldPayout", "tuning.mineWeeklyWoodPayout", "tuning.mineWeeklyStonePayout",
+                        "tuning.mineWeeklyShardPayout"],
+            "tooltip": "Each Mine's weekly gold, wood, stone and shards, multiplied by this."
+        },
+        {
+            "id": "ringShopPrice", "label": "Ring City card price", "category": "Economy", "group": "Ring Cities",
+            "target": "tuning.ringShopPriceMultiplier",
+            "min": 0.5, "max": 4, "step": 0.1,
+            "tooltip": "A Ring City shop sells cards at this many times their price."
+        },
+        {
+            "id": "ringShopRestock", "label": "Ring City restock price", "category": "Economy", "group": "Ring Cities",
+            "target": "tuning.ringShopRestockMultiplier",
+            "min": 1, "max": 5, "step": 0.1, "level": "expert",
+            "tooltip": "A Ring City restock costs this many times the last, through the week."
+        },
+        {
+            "id": "legendGold", "label": "Legend gold", "category": "Loot & Rewards", "group": "Legends",
+            "target": "tuning.legendRewardGoldFactor", "min": 0, "max": 1, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "A legend pays this share of the gold in its loot (rounded up)."
+        },
+        {
+            "id": "legendCards", "label": "Legend cards", "category": "Loot & Rewards", "group": "Legends",
+            "target": "tuning.legendRewardCardFactor", "min": 0, "max": 1, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "A legend pays this share of the cards in its loot (its own named card goes last)."
+        },
+        {
+            "id": "rewardMax", "label": "Extra reward cards", "category": "Loot & Rewards", "group": "Rewards",
+            "target": "difficulty.rewardMaxFactor", "min": 0, "max": 3, "step": 0.1,
+            "tooltip": "How many extra cards a random card reward can add, as a multiple of its usual spread. 0 = always the least."
+        },
+        {
+            "id": "invasionGold", "label": "Invasion gold", "category": "Loot & Rewards", "group": "Invasions",
+            "target": "tuning.invasionGoldByTier[*]",
+            "min": 0, "max": 3, "step": 0.05, "mode": "scale", "level": "expert",
+            "tooltip": "An invasion's gold reward at every leader rank, multiplied by this (from the next quest)."
+        },
+        {
+            "id": "invasionReputation", "label": "Invasion reputation", "category": "Loot & Rewards", "group": "Invasions",
+            "target": "tuning.invasionReputationByTier[*]",
+            "min": 0, "max": 3, "step": 0.25, "mode": "scale", "level": "expert",
+            "tooltip": "An invasion's reputation reward, multiplied by this (from the next quest)."
+        },
+        {
+            "id": "pillageReward", "label": "Raid reward", "category": "Loot & Rewards", "group": "Raids",
+            "targets": ["tuning.pillageRewardWood", "tuning.pillageRewardStone"],
+            "min": 0, "max": 4, "step": 0.25, "mode": "scale", "level": "expert",
+            "tooltip": "The wood and stone for driving a raid off, multiplied by this."
+        },
+        {
+            "id": "pillageReputationWin", "label": "Raid reputation (win)", "category": "Loot & Rewards", "group": "Raids",
+            "target": "tuning.pillageRewardReputation",
+            "min": 0, "max": 5, "step": 1, "level": "expert",
+            "tooltip": "Town reputation for driving a raid off."
+        },
+        {
+            "id": "pillageReputationLoss", "label": "Raid reputation (loss)", "category": "Loot & Rewards", "group": "Raids",
+            "target": "tuning.pillageFailReputation",
+            "min": 0, "max": 10, "step": 1, "level": "expert",
+            "tooltip": "Town reputation lost when a raid wins."
+        },
+        {
+            "id": "attackingMages", "label": "Attacking mages", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.attackingMages{D}", "min": 0, "max": 12, "step": 1,
+            "tooltip": "How many attacking mages each AI color can field at once at the start. Towns, Color Defeat and the Capitol add to it."
+        },
+        {
+            "id": "openingMages", "label": "Day-one mages", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.openingMages{D}",
+            "min": 0, "max": 8, "step": 1, "scope": "newGame",
+            "tooltip": "Mages each AI color sends out on day 1, on top of its cap."
+        },
+        {
+            "id": "capitolMageBonus", "label": "Mages once you hold the Capitol", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.capitolBuiltMageCapBonus",
+            "min": 0, "max": 3, "step": 1, "level": "expert",
+            "tooltip": "Extra mages each AI color may field while your Capitol stands."
+        },
+        {
+            "id": "capitolCooldown", "label": "Days between Capitol attacks", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.capitolTargetCooldownDays",
+            "min": 1, "max": 28, "step": 1, "level": "expert",
+            "tooltip": "Days before one color may aim at your Capitol again."
+        },
+        {
+            "id": "ringTownCooldown", "label": "Days between Ring Town attacks", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.ringTownTargetCooldownDays",
+            "min": 1, "max": 28, "step": 1, "level": "expert",
+            "tooltip": "Days before one color may aim at the same Ring Town again."
+        },
+        {
+            "id": "capitolPullUnhappy", "label": "Capitol pull (unfriendly)", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.capitolNearestTargetBonusUnhappy",
+            "min": 0, "max": 0.3, "step": 0.01, "level": "expert", "format": "percent",
+            "tooltip": "How much more often a color that dislikes you aims at your Capitol."
+        },
+        {
+            "id": "capitolPullWar", "label": "Capitol pull (at war)", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.capitolNearestTargetBonusWar",
+            "min": 0, "max": 0.3, "step": 0.01, "level": "expert", "format": "percent",
+            "tooltip": "How much more often a color at war with you aims at your Capitol."
+        },
+        {
+            "id": "capitolTierUpUnhappy", "label": "Stronger Capitol attacker (unfriendly)", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.capitolAttackerTierUpChanceUnhappy",
+            "min": 0, "max": 1, "step": 0.05, "level": "expert", "format": "percent",
+            "tooltip": "Chance a disliking color's Capitol attacker comes one rank stronger (never past the week's cap)."
+        },
+        {
+            "id": "capitolTierUpWar", "label": "Stronger Capitol attacker (at war)", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.capitolAttackerTierUpChanceWar",
+            "min": 0, "max": 1, "step": 0.05, "level": "expert", "format": "percent",
+            "tooltip": "Chance a warring color's Capitol attacker comes one rank stronger (never past the week's cap)."
+        },
+        {
+            "id": "starTownsLoss", "label": "Center Towns that end your run", "category": "Towns & Territory", "group": "AI colors",
+            "target": "tuning.starTownsLossCount",
+            "min": 2, "max": 5, "step": 1, "level": "expert", "scope": "newGame",
+            "tooltip": "One AI color holding this many of the five Center Towns ends your run."
+        },
+        {
+            "id": "neutralTownCut", "label": "Fewer neutral towns", "category": "Towns & Territory", "group": "World",
+            "target": "tuning.worldGenNeutralTownCut{D}", "min": 0, "max": 15, "step": 1, "scope": "newGame", "level": "expert",
+            "tooltip": "How many of the 20 working neutral towns a new world leaves out (the five star towns always stay)."
+        },
+        {
+            "id": "neutralTownCount", "label": "Working neutral towns", "category": "Towns & Territory", "group": "World",
+            "target": "tuning.functioningNeutralTownCount",
+            "min": 5, "max": 40, "step": 1, "level": "expert", "scope": "newGame",
+            "tooltip": "Working neutral towns a new world starts with, before the cut above (the five Center Towns come on top)."
+        },
+        {
+            "id": "ruinedTownCut", "label": "Fewer ruined towns", "category": "Towns & Territory", "group": "World",
+            "target": "tuning.worldGenRuinedTownCut{D}",
+            "min": 0, "max": 30, "step": 1, "level": "expert", "scope": "newGame",
+            "tooltip": "How many of the 60 ordinary towns round the start a new world leaves out as ruins. A high cut leaves the start bare."
+        },
+        {
+            "id": "pillage", "label": "Town pillage raids", "category": "Towns & Territory", "group": "World events",
+            "target": "config.pillageEnabled",
+            "tooltip": "A town near several dungeons can be pillaged: raiders gather round it, and you have a week to beat five of them. Off: no new raids."
+        },
+        {
+            "id": "pillageChance", "label": "Raid chance a week", "category": "Towns & Territory", "group": "World events",
+            "target": "tuning.pillageChancePercent",
+            "min": 0, "max": 50, "step": 1,
+            "tooltip": "Each week, a town near enough hostile dungeons is raided this often (percent). 0 = never."
+        },
+        {
+            "id": "pillageMaxWeek", "label": "Raids a week, most", "category": "Towns & Territory", "group": "World events",
+            "target": "tuning.pillageMaxPerWeek",
+            "min": 0, "max": 5, "step": 1, "level": "expert",
+            "tooltip": "The most raids that start in one week."
+        },
+        {
+            "id": "pillageFirstWeek", "label": "First week of raids", "category": "Towns & Territory", "group": "World events",
+            "target": "tuning.pillageFirstWeekByDifficulty[*]",
+            "min": 1, "max": 8, "step": 1, "level": "expert",
+            "tooltip": "No town is raided before this week."
+        },
+        {
+            "id": "pillageDungeons", "label": "Dungeons near a raided town", "category": "Towns & Territory", "group": "World events",
+            "target": "tuning.pillageDungeonsNeeded",
+            "min": 1, "max": 8, "step": 1, "level": "expert",
+            "tooltip": "Hostile dungeons a town needs nearby before it can be raided."
+        },
+        {
+            "id": "pillageKills", "label": "Raiders to beat", "category": "Towns & Territory", "group": "World events",
+            "target": "tuning.pillageKills",
+            "min": 1, "max": 10, "step": 1, "level": "expert", "scope": "newGame",
+            "tooltip": "Raiders you must beat to drive a raid off."
+        },
+        {
+            "id": "pillageDays", "label": "Days to drive raiders off", "category": "Towns & Territory", "group": "World events",
+            "target": "tuning.pillageDays",
+            "min": 3, "max": 14, "step": 1, "level": "expert", "scope": "newGame",
+            "tooltip": "Days a raid gives you before the town is lost to it."
+        },
+        {
+            "id": "pillageReach", "label": "Raid reach", "category": "Towns & Territory", "group": "World events",
+            "target": "tuning.pillageRadiusByWeek[*]",
+            "min": 0.5, "max": 1.5, "step": 0.05, "mode": "scale", "level": "expert", "scope": "newGame",
+            "tooltip": "How far out dungeons count toward a raid, each week, multiplied by this."
+        },
+        {
+            "id": "townSpecialties", "label": "Town specialties", "category": "Towns & Territory", "group": "Systems",
+            "target": "config.townSpecialtiesEnabled", "scope": "newGame",
+            "tooltip": "Each town you restore or win takes a specialty of your choice (the Capitol and Orazca excepted)."
+        },
+        {
+            "id": "realmMilestones", "label": "Realm milestones", "category": "Towns & Territory", "group": "Systems",
+            "target": "config.realmMilestonesEnabled", "scope": "newGame",
+            "tooltip": "Every 10 towns you have held, pick 1 of 3 realm-wide boons. Needs town specialties."
+        },
+        {
+            "id": "robbedGuardSpeed", "label": "Guards chasing a thief", "category": "Towns & Territory", "group": "Theft",
+            "target": "tuning.robbedGuardSpeedFactor", "min": 1, "max": 2, "step": 0.05, "format": "percent", "level": "expert",
+            "tooltip": "A guard chasing you after a theft runs at this share of your speed (from the next theft)."
+        },
+        {
+            "id": "capitolGrowth", "label": "Capitol land growth", "category": "Towns & Territory", "group": "Land",
+            "target": "tuning.capitolExpansionTilesPerDay",
+            "min": 0, "max": 5, "step": 1,
+            "tooltip": "Tiles a day your Capitol's land spreads. 0 = it stops growing (what it holds stays)."
+        },
+        {
+            "id": "townGrowthDays", "label": "Days per tile of town land", "category": "Towns & Territory", "group": "Land",
+            "target": "tuning.townExpansionDaysPerTile",
+            "min": 1, "max": 60, "step": 1,
+            "tooltip": "Every town (yours and the AI's) gains one tile of land every this many days."
+        },
+        {
+            "id": "aiCastleGrowth", "label": "AI castle land growth", "category": "Towns & Territory", "group": "Land",
+            "target": "tuning.aiCastleExpansionTilesPerDay",
+            "min": 0, "max": 5, "step": 1, "level": "expert",
+            "tooltip": "Tiles a day each AI castle's land spreads."
+        },
+        {
+            "id": "townMaxRadius", "label": "Town land, most", "category": "Towns & Territory", "group": "Land",
+            "target": "tuning.townMaxTerritoryRadius",
+            "min": 10, "max": 450, "step": 10, "level": "expert",
+            "tooltip": "How far a town's land can spread (tiles). Lowering it stops growth; nothing shrinks."
+        },
+        {
+            "id": "castleMaxRadius", "label": "Castle land, most", "category": "Towns & Territory", "group": "Land",
+            "target": "tuning.maxTerritoryRadius",
+            "min": 50, "max": 450, "step": 10, "level": "expert",
+            "tooltip": "How far a castle or the Capitol can spread (tiles). Lowering it stops growth; nothing shrinks."
+        },
+        {
+            "id": "aiCapitalReach", "label": "AI capital reach", "category": "Towns & Territory", "group": "Land",
+            "target": "tuning.aiCapitalTerritoryRadiusFactor",
+            "min": 1, "max": 4, "step": 0.25, "level": "expert",
+            "tooltip": "An AI capital's land spreads this many times as far as a town's."
+        },
+        {
+            "id": "townCore", "label": "Town core (tiles)", "category": "Towns & Territory", "group": "Land",
+            "target": "tuning.townProtectedRadiusCap",
+            "min": 2, "max": 40, "step": 1, "level": "expert",
+            "tooltip": "A town keeps a core no rival land can take; half of this, at most (from the next border check)."
+        },
+        {
+            "id": "townDefenderLife", "label": "Town defender life", "category": "Towns & Territory", "group": "Capture",
+            "target": "tuning.townDefenderLifeFactorByDifficulty[*]",
+            "min": 0.5, "max": 4, "step": 0.05, "format": "percent",
+            "tooltip": "A town's defender starts its duel with this share of its life when you assault the town."
+        },
+        {
+            "id": "aiGuardDays", "label": "Days per AI guard level", "category": "Towns & Territory", "group": "Capture",
+            "target": "tuning.aiTownGuardDaysPerLevel",
+            "min": 7, "max": 90, "step": 1, "level": "expert",
+            "tooltip": "An AI town's guard gains a level every this many days."
+        },
+        {
+            "id": "assaultCooldown", "label": "Days before re-assaulting a town", "category": "Towns & Territory", "group": "Capture",
+            "target": "tuning.aiTownAssaultCooldownDays",
+            "min": 1, "max": 28, "step": 1, "level": "expert",
+            "tooltip": "Days before you can assault the same AI town again."
+        },
+        {
+            "id": "minCaptureChance", "label": "Least capture chance", "category": "Towns & Territory", "group": "Capture",
+            "target": "tuning.townMinCaptureChance",
+            "min": 0.01, "max": 0.5, "step": 0.01, "level": "expert", "format": "percent",
+            "tooltip": "However well a town is defended, a mage takes it at least this often (never more than its own chance)."
+        },
+        {
+            "id": "reputationDefense", "label": "Defense per reputation point", "category": "Towns & Territory", "group": "Capture",
+            "target": "tuning.townReputationDefensePerPoint",
+            "min": 0, "max": 0.03, "step": 0.005, "level": "expert", "format": "percent",
+            "tooltip": "A town's reputation with you cuts a mage's capture chance by this much a point."
+        },
+        {
+            "id": "reputationDefenseMax", "label": "Reputation points that defend", "category": "Towns & Territory", "group": "Capture",
+            "target": "tuning.townReputationDefenseMaxPoints",
+            "min": 1, "max": 40, "step": 1, "level": "expert",
+            "tooltip": "At most this many reputation points count toward a town's defense."
+        },
+        {
+            "id": "buildingDefense", "label": "Defense from specialties and milestones", "category": "Towns & Territory", "group": "Capture",
+            "targets": ["tuning.specialtyOutpostDefense", "tuning.specialtyGarrisonDefense", "tuning.milestoneWatchtowerDefense", "tuning.milestoneIronGarrisonDefense", "tuning.milestoneTownWatchDefense"],
+            "min": 0, "max": 1.5, "step": 0.05, "mode": "scale", "level": "expert",
+            "tooltip": "The capture defense an Outpost, a Garrison and the defense milestones give, multiplied by this."
+        },
+        {
+            "id": "assaultReputation", "label": "Reputation lost for an assault", "category": "Towns & Territory", "group": "Capture",
+            "target": "tuning.townAssaultReputationPenalty",
+            "min": 0, "max": 20, "step": 1, "level": "expert",
+            "tooltip": "Reputation lost with a color when you assault its town."
+        },
+        {
+            "id": "captureReputation", "label": "Reputation lost for a capture", "category": "Towns & Territory", "group": "Capture",
+            "target": "tuning.townCaptureReputationPenalty",
+            "min": 0, "max": 25, "step": 1, "level": "expert",
+            "tooltip": "Further reputation lost with a color when you take its town."
+        },
+        {
+            "id": "restoreCost", "label": "Ruin restoring cost", "category": "Towns & Territory", "group": "Ruins",
+            "targets": ["tuning.restoreFeeGold", "tuning.restoreFeeWood", "tuning.restoreFeeStepGold"],
+            "min": 0, "max": 3, "step": 0.05, "mode": "scale",
+            "tooltip": "The gold and wood a ruin costs to restore, and each step's rise, multiplied by this."
+        },
+        {
+            "id": "restoreStepTowns", "label": "Towns per cost step", "category": "Towns & Territory", "group": "Ruins",
+            "target": "tuning.restoreFeeStepTowns",
+            "min": 0, "max": 20, "step": 1, "level": "expert",
+            "tooltip": "The restoring cost rises a step for every this many towns you hold. 0 = it never rises."
+        },
+        {
+            "id": "ngPlusWaveTowns", "label": "New Game+ wave: towns per mage", "category": "Towns & Territory", "group": "New Game+",
+            "target": "tuning.ngPlusWaveTownsPerMage{D}",
+            "min": 1, "max": 10, "step": 1, "level": "expert", "scope": "newGame",
+            "tooltip": "A New Game+ that carries its invested resources meets one extra mage per AI color for every this many towns it held."
+        },
+        {
+            "id": "ngPlusWaveMax", "label": "New Game+ wave: most mages", "category": "Towns & Territory", "group": "New Game+",
+            "target": "tuning.ngPlusWaveMaxMages",
+            "min": 0, "max": 10, "step": 1, "level": "expert", "scope": "newGame",
+            "tooltip": "The most mages that wave sends per color. 0 = no wave."
+        },
+        {
+            "id": "ngPlusWaveDay", "label": "New Game+ wave: day", "category": "Towns & Territory", "group": "New Game+",
+            "target": "tuning.ngPlusWaveDay",
+            "min": 2, "max": 28, "step": 1, "level": "expert", "scope": "newGame",
+            "tooltip": "The day the New Game+ wave comes."
+        },
+        {
+            "id": "dayLength", "label": "Day length (seconds)", "category": "Time & Pacing", "group": "Clock",
+            "target": "tuning.dayLengthSeconds", "min": 60, "max": 900, "step": 10,
+            "tooltip": "Real seconds per in-game day at normal speed. Shorter days bring every weekly event sooner."
+        },
+        {
+            "id": "sideQuestTimer", "label": "Side-quest time limit", "category": "Time & Pacing", "group": "Quests",
+            "target": "config.sideQuestTimerEnabled",
+            "tooltip": "Side quests fail when their days run out (story quests never do). Off: side quests never expire."
+        },
+        {
+            "id": "sideQuestDays", "label": "Side-quest days", "category": "Time & Pacing", "group": "Quests",
+            "target": "tuning.sideQuestDays", "min": 3, "max": 60, "step": 1,
+            "tooltip": "Days to finish a side quest you take from now on (with the time limit on)."
+        },
+        {
+            "id": "questCooldown", "label": "Quest rest days", "category": "Time & Pacing", "group": "Quests",
+            "target": "tuning.questOfferCooldownDays", "min": 0, "max": 30, "step": 1, "level": "expert",
+            "tooltip": "Days before a quest board offers the same quest again. 0 = no rest."
         },
         {
             "id": "roadSpeed", "label": "Speed on your roads", "category": "Time & Pacing", "group": "Travel",
@@ -317,25 +633,10 @@
             "tooltip": "Lost speed on the land of a color at war with you."
         },
         {
-            "id": "sideQuestDays", "label": "Side-quest days", "category": "Time & Pacing", "group": "Quests",
-            "target": "tuning.sideQuestDays", "min": 3, "max": 60, "step": 1,
-            "tooltip": "Days to finish a side quest you take from now on (with the time limit on)."
-        },
-        {
-            "id": "questCooldown", "label": "Quest rest days", "category": "Time & Pacing", "group": "Quests",
-            "target": "tuning.questOfferCooldownDays", "min": 0, "max": 30, "step": 1, "level": "expert",
-            "tooltip": "Days before a quest board offers the same quest again. 0 = no rest."
-        },
-        {
             "id": "dungeonLifespan", "label": "Dungeon lifespan", "category": "Time & Pacing", "group": "Dungeons",
             "mode": "scale", "min": 0.25, "max": 3, "step": 0.05, "level": "expert",
             "targets": ["tuning.dungeonLifespanMinDays", "tuning.dungeonLifespanMaxDays"],
             "tooltip": "How long a dungeon stays before it rotates away, multiplied by this (one already counting down keeps its day unless the new longest is sooner)."
-        },
-        {
-            "id": "robbedGuardSpeed", "label": "Guards chasing a thief", "category": "Towns & Territory", "group": "Theft",
-            "target": "tuning.robbedGuardSpeedFactor", "min": 1, "max": 2, "step": 0.05, "format": "percent", "level": "expert",
-            "tooltip": "A guard chasing you after a theft runs at this share of your speed (from the next theft)."
         },
         {
             "id": "notorietyOff", "label": "Notoriety off", "category": "Rules", "group": "Your rules",

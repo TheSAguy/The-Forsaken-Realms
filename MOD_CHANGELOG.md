@@ -14264,6 +14264,81 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 829: custom difficulty, part 8 - 48 more knobs: land, the AI colors, capture, ruins, invasions, raids, Ring Cities, world generation (2026-10-28)
+
+Part 8 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`), metadata batch 2: plane data
+only (`config tables/custom_difficulty.json`, 59 -> 107 knobs), no code. Every knob is absent from a save until a player
+changes it, so the shipped game is unchanged.
+
+A read-only reader audit came first, kept as `C:\TFR\notes\r829-reader-audit.md`: every reader reads
+`Config.getTuningData()` at use, so most are "anytime"; invasions and a castle champion's speed are stamped when they
+start ("from the next quest / appearance"). The ranges come from what breaks:
+- `townExpansionDaysPerTile` starts at 1: 0 divides by zero in TerritoryControl's daily tick.
+- A raid already running re-reads `pillageKills`, `pillageDays` and `pillageRadiusByWeek` every day - lowering them can
+  fail it (kills below the beaten count never complete) - so those three knobs are new game only, with minimums 1, 3
+  and x0.5. `pillageDungeonsNeeded` starts at 1 (0 lets a town with no dungeon near qualify, and its raiders can only
+  come from dungeons: an unwinnable raid); `pillageFirstWeekByDifficulty` at 1.
+- `starTownsLossCount` is 2-5 and new game only: 1 ends the run at the first Center Town lost, 6+ never ends it, and
+  lowering it mid-run to a count a color already holds ends the run on the next check.
+- The Capitol and Ring Town attack cooldowns start at 1 (0 lets a color aim there every dispatch).
+- `townMinCaptureChance` starts at 1% and `townReputationDefenseMaxPoints` at 1 (0 makes a long-held town immune).
+- `capitolNearestTargetBonus*` stop at 30% (above the Capitol's share the bonus silently does nothing).
+- `townMaxTerritoryRadius` starts at 10 (below the recolor radius towns never grow); it ships at 450 - the settings.json
+  comment's 25 is stale.
+- Ordered sets go through one scale knob: the five specialty and milestone capture defenses, the ruin restoring cost
+  (gold, wood, the step's gold), invasion gold and reputation by leader rank, the raid reward wood and stone, and the
+  raid reach by week. A scale knob over an array multiplies each entry (`CustomDifficulty.write`).
+- `worldGenRuinedTownCut{D}` stops at 30 of the 60 ordinary wasteland towns round the start (the generator keeps one of
+  each template, so 57 less the neutral cut is the hard limit).
+
+The knobs (Expert unless marked Basic; new game where marked):
+- **Towns & Territory - Land:** Capitol land growth (Basic), Days per tile of town land (Basic), AI castle growth, town and
+  castle land at most, AI capital reach, Town core.
+- **AI colors:** Day-one mages (Basic, new game), Mages once you hold the Capitol, the two attack cooldowns, Capitol
+  pull (unfriendly / at war), Stronger Capitol attacker (unfriendly / at war), Center Towns that end your run (new game).
+- **Capture:** Town defender life (Basic), Days per AI guard level, Days before re-assaulting a town, Least capture
+  chance, Defense per reputation point, Reputation points that defend, Defense from specialties and milestones (scale),
+  Reputation lost for an assault / a capture.
+- **Ruins:** Ruin restoring cost (Basic, scale), Towns per cost step.
+- **World events (raids; round 825's "pillage" is the switch):** Raid chance a week (Basic), Raids a week, First week
+  of raids, Dungeons near a raided town, Raiders to beat, Days to drive raiders off, Raid reach (the last three new
+  game).
+- **World (new game):** Working neutral towns (`functioningNeutralTownCount`, 5-40; the five Center Towns come on top),
+  Fewer ruined towns. **New Game+ (new game):** the day-8 wave's towns per mage, most mages, day.
+- **Enemies & Duels:** Invasion: minions to beat; Castle champion speed.
+- **Loot & Rewards:** Invasion gold, Invasion reputation (scales), Raid reward (scale), Raid reputation (win / loss).
+- **Economy - Ring Cities:** Ring City card price (Basic), Ring City restock price.
+- Left out and named in the json header: the on/off switches (`capitolBuiltSendsMages`, `aiTownGuardDefenseEnabled`,
+  and in disguise `invasionTrustReputation`, `invasionLeaderStartMinDifficulty`), `invasionLeaderStartCards` (a list),
+  `pillageRadiusTiles` (dead while the week list is set), `pillageRaidersAtOnce` and `pillageSpawnRangeTiles`, the
+  internal weights (`ringCityPullFactor`, `ringTownTargetWeightBonus`, `aiGuardTwoLandPowerFactor`) and the world
+  geometry (generation only).
+- **One heading per group:** the knobs are now ordered by tab, then by their group's first appearance (round 828 had
+  split "Enemies", "Starting kit" and "Quests" in two). Ids decide everything a save or a share code reads, so the
+  order is free to change.
+
+A check script (every target field in TuningData / DifficultyData, every shipped value on all four difficulties inside
+its range, no duplicate ids) passed: 107 knobs, 0 problems.
+
+**Agent-tested** in `agent-829` (the 21:17 agent jar with round 839, this json in its res; removed afterward). No
+exceptions.
+- Round 827's two share codes, pasted into the reordered panel: the same values as in 827 (`enemyHealth=1.15;
+  wrathHunt=false`; the Insane code's 7 loaded, 1 clamped, 2 dropped).
+- Slot 76: all 48 at their minimum (the 38 anytime ones through `custom set`, the 10 new-game ones through `custom
+  next`), two day turns (`days skip 2`), saved to slot 94; all at their maximum, two more day turns, slot 95; both reload
+  with their 38 overrides.
+- A new game at the new-game maximums: `[TFR-WorldGenTowns] ... 31 fewer wasteland town(s) (1 functioning Neutral + 30
+  ruined)`, `[TFR-NeutralTowns] seeded 44/44 ... (target = 40 configured - 1 for difficulty Normal + 5 star town(s))`,
+  `custom=10`. At the minimums: 0 ruined, `seeded 9/9 ... (target = 5 configured - 1 ... + 5 ...)`.
+- Center Towns: the end-of-run and the one-away warning texts are built from the live count
+  (`TerritoryControl.checkStarTownLoss`); the ownership could not be forced from the console, so the end itself is read
+  in code. GUIDE's "three of the five" is the shipped default.
+
+**Not tested:** a raid at the extremes, a capture roll at the least chance, an invasion quest's reward, the New Game+
+wave (round 839's path).
+
+Files: `The Forsaken Realms/config tables/custom_difficulty.json`.
+
 ## Round 839: custom difficulty, New Game+ "Advanced..." - edit the settings a New Game+ takes into its new run (2026-10-28)
 
 The piece moved out of round 827 (SaveLoadScene was rounds 837/838's until they committed). Approved by the manager on
