@@ -271,6 +271,17 @@ public class SettingsScene extends UIScene {
                 }
             }
         });
+        // Round 826: the running save's difficulty ("Custom (Hard) - 3 changed"); Edit... opens the Advanced panel on it,
+        // new-game-only knobs locked (CustomDifficultyScene.openMidGame). Only on a plane with custom_difficulty.json.
+        if (!forge.adventure.util.CustomDifficulty.knobs().isEmpty()) {
+            difficultyLabel = addLabel("").getActor();
+            difficultyEdit = Controls.newTextButton(localizer.getMessageorUseDefault("lblEditCustomDifficulty", "Edit..."), () -> {
+                if (forge.adventure.util.CustomDifficulty.gameRunning())
+                    CustomDifficultyScene.instance().openMidGame(forge.adventure.player.AdventurePlayer.current());
+            });
+            difficultyEdit.setName("difficultyEdit");
+            settingGroup.add(difficultyEdit).align(Align.right).pad(2);
+        }
         // Round 493: Ascendance (the player's level) on or off - see util/Ascendance.switchedOffInSettings().
         ascendanceBox = addSettingField(localizer.getMessage("lblAscendanceLeveling"), !Config.instance().getSettingData().ascendanceDisabled, new ChangeListener() {
             @Override
@@ -669,6 +680,30 @@ public class SettingsScene extends UIScene {
     /** Round 825: the three rule rows - Ascendance leveling, Disable Notoriety, the reload promise (null when hidden). */
     private CheckBox ascendanceBox, notorietyBox, reloadBox;
     private boolean refreshingRules;
+    /** Round 826: the Difficulty row (null on a plane without custom difficulty). */
+    private TextraLabel difficultyLabel;
+    private TextraButton difficultyEdit;
+
+    /** Round 826: the Difficulty row - the running save's ("Custom (Hard) - 3 changed"), else how a new game sets it. */
+    private void refreshDifficultyRow() {
+        if (difficultyLabel == null)
+            return;
+        Localizer localizer = Forge.getLocalizer();
+        String title = localizer.getMessageorUseDefault("lblDifficulty", "Difficulty");
+        forge.adventure.player.AdventurePlayer p = forge.adventure.util.CustomDifficulty.gameRunning()
+                ? forge.adventure.player.AdventurePlayer.current() : null;
+        if (p != null && p.getDifficulty() != null) {
+            int n = forge.adventure.util.CustomDifficulty.count(p);
+            difficultyLabel.setText(title + ": " + forge.adventure.util.CustomDifficulty.displayName(p)
+                    + (n > 0 ? " - " + n + " changed" : "") + "\n[%80][LIGHT_GRAY]"
+                    + localizer.getMessageorUseDefault("lblCustomDifficultyMidGame", "Change the settings that can change mid-game"));
+            difficultyEdit.setDisabled(false);
+        } else {
+            difficultyLabel.setText(title + "\n[%80][LIGHT_GRAY]"
+                    + localizer.getMessageorUseDefault("lblCustomDifficultyNoGame", "Set at a new game (Advanced...)"));
+            difficultyEdit.setDisabled(true);
+        }
+    }
 
     /** Round 825: with a game running, a rule row is that save's own (CustomDifficulty.setRule); the profile keeps the
      *  value too, as the next new game's seed. With no game, the profile alone. */
@@ -701,6 +736,7 @@ public class SettingsScene extends UIScene {
         } finally {
             refreshingRules = false;
         }
+        refreshDifficultyRow();
         super.enter();
     }
 

@@ -806,6 +806,15 @@ public final class CustomDifficulty {
         return false;
     }
 
+    /** Round 826: the SettingData field of a rule knob (rule.field), or null. */
+    public static String ruleField(Knob k) {
+        if (k != null)
+            for (String spec : k.targets)
+                if (spec.startsWith("rule."))
+                    return spec.substring(5);
+        return null;
+    }
+
     private static boolean isRule(String id) {
         return isRule(knobs().get(id));
     }

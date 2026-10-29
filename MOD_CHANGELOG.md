@@ -14264,6 +14264,59 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 826: custom difficulty, part 5 - Settings > Difficulty, the Advanced panel mid-game (2026-10-28)
+
+Part 5 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). The user's "Yes, build it" on
+`C:\TFR\notes\r826-mock.png`. Built in a worktree and tested in an `agent-826` copy.
+
+- **Settings, Difficulty row** (`SettingsScene`, above the three rule rows, only on a plane with
+  `custom_difficulty.json`):
+  - With a game running: "Difficulty: Custom (Normal) - 2 changed" (or "Difficulty: Normal"), "Change the settings that
+    can change mid-game", and **Edit...**, which opens the panel on the running save.
+  - With no game: "Difficulty - Set at a new game (Advanced...)", Edit... greyed out.
+  - `enter()` refreshes it, so it follows the panel's Done. The rule counts stay out of "N changed" (round 825).
+- **The panel mid-game** (`CustomDifficultyScene.openMidGame`):
+  - "Based on" becomes fixed text: "Normal - in play, day 8".
+  - New-game-only knobs (starting life, starting gold, fewer neutral towns, town specialties, realm milestones) show
+    their value and "locked": no stepper, check box or reset.
+  - Reset all resets the unlocked rows only.
+  - Done (or Esc) applies each difference through `CustomDifficulty.change`, one `[TFR-Custom] changed X a -> b on day N
+    (Advanced, mid-game)` line each; the rules through `CustomDifficulty.setRule` (an older save starts keeping its
+    own rules, seeded from the profile, as from Settings' rows). A reload-promise change also runs
+    `ReloadJab.onSettingChanged` (it drops a pending loss, as Settings does).
+  - An older save's Rules tab shows the profile's switches (what it plays by).
+  - The help line says "Mid-game: only settings that can change during a run. New-game-only ones are locked."
+  - `[TFR-Custom] panel opened mid-game on day N: ...` and `panel done mid-game: N change(s) applied, now ...` lines;
+    `custom panel` marks the mode and the locked rows.
+  - Portrait gets the same mode (no separate layout).
+- **Judgment call:** a rule changed in the panel changes the save only. Settings' own three rows still set the profile too,
+  as the next new game's seed.
+- `CustomDifficulty.ruleField(k)` (public): the SettingData field of a rule knob.
+
+**Agent-tested** in `agent-826` (the agent folder and profile, wt-826's classes ahead of its jar; removed afterward). No
+exceptions. Shots: `C:\TFR\notes\r826\`.
+- No game: the row reads "Set at a new game (Advanced...)", Edit... greyed.
+- Slot 76 (an older save, day 8): "Difficulty: Normal"; Edit... opens "Normal - in play, day 8", Starting life "15
+  locked", Starting gold "250 locked"; in Expert, Fewer neutral towns "1 locked", Town specialties and Realm milestones
+  "On locked".
+- Enemy health +2 steps, Wrath off, Notoriety off, Done: three `changed ... on day 8 (Advanced, mid-game)` lines, "rules:
+  this save keeps its own rules from now on", the row "Difficulty: Custom (Normal) - 2 changed", Settings' Disable
+  Notoriety box checked.
+- Saved to slot 93; slot 76 reloads plain Normal (the panel left the profile alone); slot 93 reloads with all three
+  (`load: Custom (Normal), 2 override(s) ... | rules: notorietyOff`).
+- Reset all, then the reload promise off, Done: four changes back, "now Normal with 0 override(s), rules reloadAllowed"
+  and round 796's `[TFR-ReloadJab] Settings: ... unchecked` line.
+- Found and fixed in the test: the help line's added note pushed a long tooltip past the frame; it is now "(On Done.)" /
+  "(New game only.)".
+
+**Not tested:**
+- Portrait mid-game (the same code path and rows as landscape; the fixed preset text is short).
+- A mid-game knob change during a running effect (Wrath turned back on mid-week starts from the next week turn, as
+  round 825 noted).
+
+Files: `scene/SettingsScene.java`, `scene/CustomDifficultyScene.java`, `util/CustomDifficulty.java`;
+`CORE_ENGINE_CHANGES.md` round 826.
+
 ## Round 825: custom difficulty, part 4 - your Settings rules kept per save, and six plane features as knobs (2026-10-28)
 
 Part 4 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). The manager's calls, standing for

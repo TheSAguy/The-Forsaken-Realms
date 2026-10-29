@@ -22,10 +22,12 @@ import com.github.tommyettinger.textra.TextraButton;
 import com.github.tommyettinger.textra.TextraLabel;
 import forge.Forge;
 import forge.adventure.data.DifficultyData;
+import forge.adventure.player.AdventurePlayer;
 import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
 import forge.adventure.util.CustomDifficulty;
 import forge.adventure.util.CustomDifficulty.Knob;
+import forge.adventure.world.WorldSave;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -47,6 +49,7 @@ import java.util.function.IntConsumer;
  * select box beside "Based on", the rows full width with touch-sized (24) steppers, a three-line help line, and the
  * buttons across the bottom. {@code [TFR-Custom] panel ...} lines; console
  * {@code custom panel} lists what the panel shows, {@code custom panel search TEXT} types into its search box.
+ * Round 826: Settings' Difficulty row opens it on the running save ({@link #openMidGame}).
  */
 public class CustomDifficultyScene extends UIScene {
     private static CustomDifficultyScene object;
@@ -84,6 +87,11 @@ public class CustomDifficultyScene extends UIScene {
     /** Steppers and reset: 14 in landscape, 24 (a finger) in portrait. */
     private final float button = Forge.isLandscapeMode() ? 14 : 24;
     private final Map<String, TextraLabel> valueLabels = new java.util.HashMap<>();
+    /** Round 826: opened from Settings on the running save - the preset fixed, new-game-only rows locked, Done applies. */
+    private boolean midGame;
+    private AdventurePlayer player;
+    private final Table presetSlot = new Table();
+    private final TextraLabel basedOn, inPlay;
 
     private CustomDifficultyScene() {
         super(Forge.isLandscapeMode() ? "ui/custom_difficulty.json" : "ui/custom_difficulty_portrait.json");
@@ -101,7 +109,9 @@ public class CustomDifficultyScene extends UIScene {
             pick = new Table();
             header.add(pick).left().row();
         }
-        pick.add(Controls.newTextraLabel("[%85][LIGHT_GRAY]Based on")).padRight(4);
+        basedOn = Controls.newTextraLabel("[%85][LIGHT_GRAY]Based on");
+        inPlay = Controls.newTextraLabel("");
+        pick.add(basedOn).padRight(4);
         @SuppressWarnings("unchecked")
         SelectBox<String> box = Controls.newComboBox();
         preset = box;
@@ -116,12 +126,13 @@ public class CustomDifficultyScene extends UIScene {
                 refill();
             }
         });
+        showPresetBox(true);
         if (landscape) {
-            header.add(preset).width(62).height(16).padRight(8);
+            header.add(presetSlot).height(16).padRight(8);
             header.add(countLabel).left().expandX();
             tabBox = null;
         } else {
-            pick.add(preset).width(62).height(20).padRight(6);
+            pick.add(presetSlot).height(20).padRight(6);
             @SuppressWarnings("unchecked")
             SelectBox<String> tb = Controls.newComboBox();
             tabBox = tb;
@@ -202,6 +213,9 @@ public class CustomDifficultyScene extends UIScene {
     /** NewGameScene's Advanced button: the panel on this preset and the pending overrides; onDone gets the preset back. */
     public void open(int presetIndex, Map<String, String> current, IntConsumer onDone) {
         this.onDone = onDone;
+        midGame = false;
+        player = null;
+        showPresetBox(true);
         work.clear();
         if (current != null)
             work.putAll(current);
@@ -211,6 +225,101 @@ public class CustomDifficultyScene extends UIScene {
         System.out.println("[TFR-Custom] panel opened on " + presetName() + " with " + work.size() + " change(s), "
                 + CustomDifficulty.knobs().size() + " knob(s)");
         Forge.switchScene(this);
+    }
+
+    /**
+     * Round 826 (the user's "Yes, build it" on notes/r826-mock.png): Settings' Difficulty row - the panel on the running
+     * save. "Based on" is the save's preset, fixed; new-game-only knobs show their value, locked; Done applies each
+     * difference through {@link CustomDifficulty#change} (a {@code [TFR-Custom] changed ... on day N} line each) and
+     * the rules through {@link CustomDifficulty#setRule}. An older save's rules show the profile's (what it plays by).
+     */
+    public void openMidGame(AdventurePlayer p) {
+        if (p == null || p.getDifficulty() == null)
+            return;
+        onDone = null;
+        midGame = true;
+        player = p;
+        int i = Math.max(0, preset.getItems().indexOf(p.getDifficulty().name, false));
+        preset.setSelectedIndex(i);
+        work.clear();
+        work.putAll(p.getCustomDifficulty());
+        for (Knob k : CustomDifficulty.knobs().values()) {
+            String field = ruleField(k);
+            if (field != null && !p.hasRulesPerSave()) {
+                work.remove(k.id);
+                if (CustomDifficulty.profileRule(field) != Boolean.parseBoolean(CustomDifficulty.presetRaw(k, presetName())))
+                    work.put(k.id, String.valueOf(CustomDifficulty.profileRule(field)));
+            }
+        }
+        int day = WorldSave.getCurrentSave() == null || WorldSave.getCurrentSave().getWorld() == null ? 0
+                : WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        inPlay.setText("[%85][LIGHT_GRAY]" + p.getDifficulty().name + " - in play, day " + day);
+        showPresetBox(false);
+        help.setText("[%85][LIGHT_GRAY]Mid-game: only settings that can change during a run. New-game-only ones are locked.");
+        System.out.println("[TFR-Custom] panel opened mid-game on day " + day + ": " + CustomDifficulty.displayName(p)
+                + ", " + CustomDifficulty.count(p) + " change(s)"
+                + (CustomDifficulty.rules(p).isEmpty() ? "" : ", rules " + CustomDifficulty.rules(p))
+                + (p.hasRulesPerSave() ? "" : " (rules from the profile - an older save)"));
+        Forge.switchScene(this);
+    }
+
+    /** The preset box (a new game) or the save's fixed preset (mid-game) beside "Based on". */
+    private void showPresetBox(boolean box) {
+        presetSlot.clearChildren();
+        if (box)
+            presetSlot.add(preset).width(62).height(landscape ? 16 : 20);
+        else
+            presetSlot.add(inPlay).left();
+        basedOn.setText(box ? "[%85][LIGHT_GRAY]Based on" : ""); // mid-game the fixed text says it all
+        basedOn.invalidateHierarchy();
+    }
+
+    private static String ruleField(Knob k) {
+        return CustomDifficulty.ruleField(k);
+    }
+
+    /** Mid-game, a new-game-only knob is shown but cannot change. */
+    private boolean locked(Knob k) {
+        return midGame && k.isNewGameOnly();
+    }
+
+    /** Mid-game Done: every difference from the running save, applied as it is now. */
+    private void applyMidGame() {
+        AdventurePlayer p = player;
+        if (p == null || p != AdventurePlayer.current()) {
+            System.out.println("[TFR-Custom] panel done mid-game: the save changed while the panel was open - nothing applied");
+            return;
+        }
+        String source = "Advanced, mid-game";
+        int applied = 0;
+        for (Knob k : CustomDifficulty.knobs().values()) {
+            if (k.isNewGameOnly())
+                continue;
+            String field = ruleField(k);
+            String want = work.get(k.id);
+            if (field != null) {
+                boolean now = want != null ? Boolean.parseBoolean(want) : Boolean.parseBoolean(CustomDifficulty.presetRaw(k, presetName()));
+                Boolean saved = CustomDifficulty.rule(field);
+                boolean was = saved != null ? saved : CustomDifficulty.profileRule(field);
+                if (now != was && CustomDifficulty.setRule(p, field, now, source)) {
+                    applied++;
+                    if ("reloadJabOptOut".equals(field))
+                        forge.adventure.util.ReloadJab.onSettingChanged(!now);
+                }
+                continue;
+            }
+            String have = p.getCustomDifficulty().get(k.id);
+            if (want == null ? have == null : have != null && CustomDifficulty.same(k, want, have))
+                continue;
+            String error = CustomDifficulty.change(p, k.id, want, source);
+            if (error != null)
+                System.out.println("[TFR-Custom] panel done mid-game: " + k.id + " not applied - " + error);
+            else
+                applied++;
+        }
+        System.out.println("[TFR-Custom] panel done mid-game: " + applied + " change(s) applied, now "
+                + CustomDifficulty.displayName(p) + " with " + CustomDifficulty.count(p) + " override(s)"
+                + (CustomDifficulty.rules(p).isEmpty() ? "" : ", rules " + CustomDifficulty.rules(p)));
     }
 
     @Override
@@ -226,6 +335,13 @@ public class CustomDifficultyScene extends UIScene {
 
     private boolean done() {
         cancelRepeat();
+        if (midGame) {
+            applyMidGame();
+            midGame = false;
+            player = null;
+            Forge.switchToLast();
+            return true;
+        }
         CustomDifficulty.setPending(work);
         int changes = CustomDifficulty.countChanges(work);
         System.out.println("[TFR-Custom] panel done: " + (changes == 0 ? presetName() + " (no changes)"
@@ -243,6 +359,20 @@ public class CustomDifficultyScene extends UIScene {
     }
 
     private boolean resetAll() {
+        if (midGame) { // round 826: the new-game-only rows are locked, so they keep the save's values
+            int n = 0;
+            for (java.util.Iterator<String> it = work.keySet().iterator(); it.hasNext(); ) {
+                Knob k = CustomDifficulty.knobs().get(it.next());
+                if (k == null || !k.isNewGameOnly()) {
+                    it.remove();
+                    n++;
+                }
+            }
+            if (n > 0)
+                System.out.println("[TFR-Custom] panel: reset all mid-game (" + n + " change(s); locked rows kept)");
+            refill();
+            return true;
+        }
         if (!work.isEmpty())
             System.out.println("[TFR-Custom] panel: reset all (" + work.size() + " change(s))");
         work.clear();
@@ -366,7 +496,7 @@ public class CustomDifficultyScene extends UIScene {
 
     private void updateCount() {
         int changed = CustomDifficulty.countChanges(work); // round 825: the rules are not difficulty changes
-        countLabel.setText(changed == 0 ? "[%85][LIGHT_GRAY]No changes - plays as " + presetName()
+        countLabel.setText(changed == 0 ? "[%85][LIGHT_GRAY]No changes - " + (midGame ? "playing as " : "plays as ") + presetName()
                 : "[%85][GOLD]" + changed + " changed - \"Custom (" + presetName() + ")\"");
     }
 
@@ -383,7 +513,7 @@ public class CustomDifficultyScene extends UIScene {
         label.setWrap(true);
         name.add(label).width(landscape ? 158 : 98).left().row();
         String sub = presetName() + ": " + CustomDifficulty.display(k, CustomDifficulty.presetRaw(k, presetName()))
-                + (k.isNewGameOnly() ? " - new game only" : "");
+                + (locked(k) ? "" : k.isNewGameOnly() ? " - new game only" : "");
         name.add(Controls.newTextraLabel("[%70][LIGHT_GRAY]" + sub)).left();
         name.setTouchable(com.badlogic.gdx.scenes.scene2d.Touchable.enabled);
         name.addListener(new ClickListener() {
@@ -394,7 +524,12 @@ public class CustomDifficultyScene extends UIScene {
         });
         r.add(name).left().width(landscape ? 160 : 100).padLeft(3).expandX();
 
-        if ("bool".equals(k.type)) {
+        if (locked(k)) {
+            TextraLabel shown = Controls.newTextraLabel("[%85][LIGHT_GRAY]" + CustomDifficulty.display(k, value) + "   locked");
+            shown.setAlignment(Align.center);
+            shown.setName("locked:" + k.id);
+            r.add(shown).width(landscape ? 82 : 90).center();
+        } else if ("bool".equals(k.type)) {
             CheckBox box = Controls.newCheckBox("");
             box.setName("check:" + k.id);
             box.setChecked(Boolean.parseBoolean(value));
@@ -415,7 +550,7 @@ public class CustomDifficultyScene extends UIScene {
             r.add(shown).width(landscape ? 50 : 38).center();
             r.add(stepper(k, 1)).width(button).height(button);
         }
-        if (changed) {
+        if (changed && !locked(k)) {
             TextraButton reset = Controls.newTextButton("[%80]<", () -> {
                 put(k, CustomDifficulty.presetRaw(k, presetName()));
                 refill();
@@ -481,7 +616,9 @@ public class CustomDifficultyScene extends UIScene {
 
     private void showHelp(Knob k) {
         help.setText("[%85][GOLD]" + k.label + ":[WHITE] " + k.tooltip
-                + (k.isNewGameOnly() ? " [LIGHT_GRAY](New game only.)" : " [LIGHT_GRAY](Can be changed later in Settings.)"));
+                + (locked(k) ? " [LIGHT_GRAY](New game only.)"
+                : midGame ? " [LIGHT_GRAY](On Done.)"
+                : k.isNewGameOnly() ? " [LIGHT_GRAY](New game only.)" : " [LIGHT_GRAY](Can be changed later in Settings.)"));
     }
 
     private static com.badlogic.gdx.scenes.scene2d.utils.Drawable tint() {
@@ -526,14 +663,15 @@ public class CustomDifficultyScene extends UIScene {
                 object.refill();
             }
         }
-        StringBuilder sb = new StringBuilder("Panel on " + object.presetName() + ", tab " + object.tab
+        StringBuilder sb = new StringBuilder("Panel on " + object.presetName() + (object.midGame ? " (mid-game)" : "") + ", tab " + object.tab
                 + (object.search.getText().isEmpty() ? "" : ", search \"" + object.search.getText() + "\"")
                 + (object.expert ? ", Expert" : ", Basic") + (object.changedOnly ? ", changed only" : "") + ": "
                 + CustomDifficulty.encode(object.work));
         for (Knob k : object.visible())
             sb.append("\n ").append(k.category).append(" / ").append(k.id).append(' ')
                     .append(CustomDifficulty.display(k, object.valueOf(k)))
-                    .append(object.work.containsKey(k.id) ? " (changed)" : "");
+                    .append(object.work.containsKey(k.id) ? " (changed)" : "")
+                    .append(object.locked(k) ? " (locked)" : "");
         return sb.toString();
     }
 }

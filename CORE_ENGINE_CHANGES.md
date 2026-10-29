@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 826 - custom difficulty, Settings > Difficulty mid-game
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK): a Difficulty row (a label and an
+  `Edit...` button named `difficultyEdit`) added before the Ascendance row, only when `CustomDifficulty.knobs()` is not
+  empty; fields `difficultyLabel` / `difficultyEdit` and `refreshDifficultyRow()` beside round 825's rule fields; the
+  `enter()` override calls `refreshDifficultyRow()` before `super.enter()`.
+- TFR files: `scene/CustomDifficultyScene.java` (`openMidGame`, locked rows, the mid-game Done and Reset all),
+  `util/CustomDifficulty.java` (`ruleField`).
+
 ### Round 825 - custom difficulty, the rules per save and the plane flags
 - **`forge-gui-mobile/src/forge/adventure/util/Config.java`** (STOCK): a `baseConfigData` field beside `configData`;
   `getBaseConfigData()` and `setEffectiveConfigData(c)` after `getConfigData()` (the first call keeps the plane's object
