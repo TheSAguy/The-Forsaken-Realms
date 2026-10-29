@@ -14264,6 +14264,48 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 851: six gimmick legend decks rebuilt as real 60-card decks (2026-10-29)
+
+The user won a cave duel against "Sanar (Apprentice)" in which the enemy played only lands, and asked why
+(diagnosis `C:\TFR\notes\duel-only-lands-1029.md`). Sanar's deck was 97 basics and 2 spells: a Realm of Legends
+Commander joke built for Sanar in the command zone. TFR duels never put the `[Commander]` section into play, so the
+pile of lands was all that was left. The user, asked to "start the legend-deck rebuild": "Yes, both". Data only, built
+by hand (not with `rebuild_commander_deck.py`, whose gimmick branch keeps a deck of basics as one).
+
+- **Who.** Every TFR deck under 30% nonland, checked against cardsfolder. Six enemies played "basics + 1-7 spells".
+  All six are in the cave-champion pool (`CaveChampions.poolFor`: spawnRate 0, rewards, not boss or legend):
+  Sanar from difficulty 0.1, the other five from 2. Four also stand on their own maps.
+
+  | Enemy | Deck | Was | Now |
+  |---|---|---|---|
+  | Sanar | `legends/sanar.dck` | 97 basics, Magmakin Artillerist, Winternight Stories (+ the unused commander) | **UR Izzet discard/spells**: 2 Sanar, Innovative First-Year, 3 Magmakin Artillerist, 2 Winternight Stories, gold UR permanents (Wee Dragonauts, Goblin Electromancer, Stormchaser Mage) for Sanar's Vivid count, Merfolk Looter, burn, loot spells, Essence Scatter; 23 lands |
+  | Memnarch | `legends/memnarch.dck` | 58 Darksteel Citadel, 2 Memnarch, Myr Galvanizer | **Colorless Myr**: 2 Memnarch, the Warden, 2 Myr Galvanizer, twelve mana Myr to reach the 10-drop, Myr Enforcer, Frogmite, Myr Sire, Chief of the Foundry, 2 Myr Battlesphere, Darksteel Juggernaut, Myr Turbine, Steel Overseer, Contagion Clasp; 4 Darksteel Citadel + 19 Wastes |
+  | Gwendlyn Di Corci | `legends/gwendlyn_di_corci.dck` | 58 basics, 2 Gwendlyn, Royal Assassin | **Grixis discard rogues**: 2 Gwendlyn, 2 Royal Assassin, Ravenous Rats, Mind Rot, Blightning, Raven's Crime, 1 Hypnotic Specter, Dimir Cutpurse, Okiba-Gang Shinobi, Doom Blade, Terminate, Recoil; 24 lands with gates |
+  | Torsten Von Ursus | `legends/torsten.dck` | 55 Plains, 2 Torsten, 3 soldier lands, White Knight | **GW Benalia soldiers**: 2 Torsten, 2 White Knight, Benalish Knight and Marshal, Elite Vanguard, Veteran Armorsmith, Kjeldoran Royal Guard, 1 Captain of the Watch, Raise the Alarm, Gather the Townsfolk, Pacifism, Selesnya Charm; the three soldier lands kept; 24 lands |
+  | Alhammarret | `legends/alhammarret.dck` | 54 Islands, 2 Alhammarret, 5 mill spells | **Mono-blue control with a mill edge**: 2 Alhammarret, the five original mill cards (1 each), 2 Jace's Erasure, Didn't Say Please, Sage's Row Denizen, counters, Wind Drake, Cloudkin Seer, Frost Lynx, Wall of Frost, Coral Barrier, Air Elemental, Sphinx of Magosi; 24 Islands. The first build (Ruin Crab, Mind Sculpt, Sphinx's Tutelage) milled the agent's 40-card deck out on turn 10 with its own life untouched - TFR player decks are 40 cards, so heavy mill was cut |
+  | Sandwurm | `legends/johan.dck` | 4 Greater Sandwurm, 2 Convergence, 1 Naga, 17 deserts, 36 basics (round 674) | **RG deserts**: 4 Greater Sandwurm, 1 Sandwurm Convergence, the Amonkhet desert payoffs (Sidewinder Naga, Sand Strangler, Ramunap Hydra, Desert Cerodon), Hooded Brawler, Naga Vitalist, Rampant Growth, Prey Upon, Magma Spray; 7 deserts + 18 basics. Plains out: one white card could not be cast on four sources |
+
+- **Rules kept.** Every card exists in this build's cardsfolder, has a non-digital printing, carries no
+  `AI:RemoveDeck`, and is off `restricted_cards.json` (commander-only list included); at most 4 copies of a nonbasic;
+  each set code is a real printing of its card (the old Sandwurm Convergence line said HOU, which never printed it).
+  Each deck has a common permanent of mana value 1-3 with no enter trigger, for the Notoriety deck card (rounds
+  793/794). Each legend goes in twice (round 668). The enemies' `colors`, life, rewards and sprites are unchanged.
+- **Strength.** Mostly commons and uncommons, 1-3 copies, a few rares, no staples - meant to sit with the 99-card
+  singleton decks the other champions play, not above them.
+- **Ledger.** The six entries in `dev-tools/enemy_tiers/unique_upgrades.json` are `built-r851` (old/new null, count 0),
+  so round 644's upgrader skips them. Sanar's was a round-644 swap (Treasure Hunt -> Winternight Stories); the others
+  were `built-r669` / `built-r674`.
+- **Not done.** Sanar's life stays 30 at difficulty 0.1 (Common), which Insane scales to 75 (56 in week 2). Most
+  difficulty-0.1 champions have 11-13. Left for the user to decide. The 8 life-1 NPCs on `legends/mystery_list.dck`
+  (98 Wastes) have no rewards and are not in the champion pool; left as they are.
+
+**Tested:** `validate_plane_data.py` report identical to the base. Each card checked by a script against cardsfolder, the editions and the restricted list (`AI:RemoveDeck`, digital-only, set codes, copies). **Agent-tested** in `agent-851` (cheats, a copy of the user's save 1: day 8, Insane, Gruul Landfall), every duel at 50x, 16 duels, no exception:
+
+- **Sanar casts spells.** The turn-8 end view (`notes/r851/sanar_turn8_spells.png`) shows 2 Cloudkin Seer, Stormchaser Mage and an Izzet Guildgate in play, Magmakin Artillerist, Tormenting Voice and Frantic Inventory in hand and 10 cards in the graveyard. Against Sanar the player won once (`[TFR-Duel] won ... turns=19`) and lost twice (once starting at 8 life).
+- **The other five play their decks:** Memnarch's Myr, Leaden/Gold/Copper Myr, a 12/12 Darksteel Juggernaut and Myr Turbine; Gwendlyn's Ravenous Rats, Dimir Infiltrator and Gwendlyn with the player's hand emptied; Torsten, Alhammarret (Air Elemental, Sphinx of Magosi, Jace's Erasure, Coral Barrier) and Sandwurm (Sand Strangler, Rhonas's Stalwart, Hashep Oasis, a 13/13). End views in `notes/r851/`.
+- **Strength next to a stock champion.** At full life (18) on Insane the save's day-8 deck lost every duel, the baseline included: Krenko (99-card Commander deck) killed on game turn 7 twice (`turns=13`). The new decks won at `turns=15` (Sanar), 20 (Gwendlyn), 23 (Torsten), 19-24 (Alhammarret, by damage after the mill cut) and 13 / 32 (Sandwurm) - none faster than the baseline. Console spawns rolled Master for the five rank-2 enemies (Insane enemy life 52-57), so this is a harsh test, not a balance measurement.
+- **Upstream noise:** "Did not have activator set" still prints for every deck's lands (5,072 lines over 11 duels); harmless, as in the diagnosis.
+
 ## Round 848: docs for 1.25 - the reload rule, the early-life clause, gauntlets, loops and the batch's own lines (2026-10-29)
 
 Fable review P2-6, P2-7 and P3-10, plus the text rounds 840, 841, 842 and 847 left for this round; the user: "Yes, all

@@ -439,7 +439,7 @@
   "old": null,
   "new": null,
   "count": 0,
-  "kind": "built-r674"
+  "kind": "built-r851"
  },
  "decks/legends/alibou.dck": {
   "old": "Secret Rendezvous",
@@ -2611,7 +2611,7 @@
   "old": null,
   "new": null,
   "count": 0,
-  "kind": "built-r669"
+  "kind": "built-r851"
  },
  "decks/legends/gyome.dck": {
   "old": "Crypt Incursion",
@@ -3225,7 +3225,7 @@
   "old": null,
   "new": null,
   "count": 0,
-  "kind": "built-r674"
+  "kind": "built-r851"
  },
  "decks/legends/jolene.dck": {
   "old": "Winds of Qal Sisma",
@@ -4335,7 +4335,7 @@
   "old": null,
   "new": null,
   "count": 0,
-  "kind": "built-r669"
+  "kind": "built-r851"
  },
  "decks/legends/miara_and_numa.dck": {
   "old": "Prowess of the Fair",
@@ -5956,14 +5956,10 @@
   ]
  },
  "decks/legends/sanar.dck": {
-  "old": "Treasure Hunt",
-  "new": "Winternight Stories",
-  "count": 1,
-  "kind": "dck",
-  "power": [
-   0.26,
-   0.93
-  ]
+  "old": null,
+  "new": null,
+  "count": 0,
+  "kind": "built-r851"
  },
  "decks/legends/sarulf.dck": {
   "old": "Chomping Changeling",
@@ -7265,7 +7261,7 @@
   "old": null,
   "new": null,
   "count": 0,
-  "kind": "built-r674"
+  "kind": "built-r851"
  },
  "decks/legends/toski.dck": {
   "old": "Harvest Season",
