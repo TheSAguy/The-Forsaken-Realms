@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Release v1.25 "Gauntlets & Wrath" - stamps, notes and What's New (2026-10-29)
+
+The user: "Yes, release 1.25" (the name "Gauntlets & Wrath" is theirs). Rounds 788-864 on top of v1.24, every one
+committed, packaged into the user's game (2026-10-29 12:00, HEAD `460301d3662`) and tested. Engine = the 10.28 daily
+(round 856, upstream `875333b7b78`) on the matching BASE_INSTALL. No round number: the next free round stays 865.
+
+- **Version stamps**: `config.json` `modVersion` 1.24 -> 1.25 and `modVersionDate` 10.27 -> 10.29 (round 782's update
+  notice compares `modVersion` with GitHub's newest `tfr-v` tag); `forge-gui-android/pom.xml` `tfr.version` 1.25 and
+  `manifestVersionCode` 12500.
+- **Revert-watch** (ANDROID_RELEASE.md) after round 856: nothing under `forge-gui-android/` changed since v1.24; the
+  manifest package, app_name, the publicfileprovider authority, no Sentry providers, `GITHUB_FORGE_URL`, the `tfr-v`
+  markers, `/ForsakenRealms/`, the splash PNGs (1350x1450 disc, 802x802 logo), `logo.gif` (450x160) and the launcher
+  XMLs' `@mipmap/ic_launcher_background` are all TFR's.
+- **`RELEASE_NOTES_v1.25.md`**: the user-approved notes, plus v1.24's Android install section.
+- **GUIDE**: "What's New in 1.25" (custom difficulty, gauntlets, the Temple's Wrath, Notoriety and reloading, legends,
+  the Booster Shop and research, safer saves, the rest in one line) above "Coming from 1.23?" and 1.24's list; the FAQ's
+  engine line names the 10.28 build; the footer says v1.25, 2026-10-29. `GUIDE.html` rebuilt with
+  `dev-tools/guide_html.py --check` (OK).
+- **Docs**: `docs/tfr/releases.md` gets the v1.25 block; the NOW block is rewritten short.
+
 ## Round 864: a dialog gate can no longer be walked through by bumping it (2026-10-29)
 
 The user: "Yes, round 864" - to "Fix the gate bump-through for 1.25 as round 864?". The report (gnomedoom on Discord,

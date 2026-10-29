@@ -80,3 +80,9 @@ What's New 1.24 is a short linked list above a one-line 1.23 note and 1.22's lis
 782's update notice stays quiet on this build (GitHub's latest is `tfr-v1.24`). The webhook token was checked absent
 from git (tree and the unpushed history) before the push. The same zip and APK go to itch.io (the user). Live = the
 release. NOTHING is unreleased. Next version: 1.25 / 12500. Next merge from upstream after `0dc8c66996e`.
+
+## STATE 2026-10-29: **v1.25 "Gauntlets & Wrath" - releasing**. Rounds 788-864 on top of v1.24, all packaged into the
+user's game (2026-10-29 12:00, HEAD `460301d3662`) and tested. Engine = the 10.28 daily (upstream `875333b7b78`, round
+856) on the matching 10.28 BASE_INSTALL. Notes = `RELEASE_NOTES_v1.25.md`, the user-approved content plus v1.24's
+Android section; the name is the user's. GUIDE What's New 1.25 is a short linked list above 1.24's. Assets, tag and
+publish time: the follow-up.
