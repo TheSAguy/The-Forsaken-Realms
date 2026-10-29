@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 874: the golden Capitol's 3D Armory, Bank and Exchange (2026-10-29)
+
+The user: "Yes, install them" - the second set of the Art thread's golden Capitol work (round 867 was the first), four
+buildings the user picked from their own "3D feel" ChatGPT sheets (a front-facing high top-down view), converted as
+drawn (working files in `C:\CLAUDE\PROJECTS\ART\notes\capitol_gold`, `tools/pick3d.py`). All plane-level; nothing in
+`adventure/common`.
+
+- **Bank and Exchange** (`maps/tileset/economy_buildings.atlas`/`.png`): both grow from 32x32 to 40x40 - a treasury
+  vault with a steel wheel door between coin towers, and a hall under a big sky-blue glass dome with the scales on top.
+  The page grows from 128x96 to 208x96; the two regions are appended at x 128 and 168, every other region keeps its xy.
+  They are Capitol-only buildings (`bankOffered` needs `isCapitol`; the Exchange is the Capitol's Trader upgrade, gated
+  "Capitol only"), so the regions grow in place. `ShopActor.drawOverFootprint()` draws a region at its own size.
+- **Armory Level 1 / Level 2, Capitol only** (`util/EconomyBuildings.java`, `maps/tileset/capitol_gold.atlas`/`.png`):
+  an Armory can stand in any rebuilt wasteland town (`ShopActor` draws `getArmoryShopSprite()` for an armory lot in any
+  `isWastelandTownTemplate()` town), so `new_buildings`' ArmoryLevel1/2 stay for every other town and the Capitol's
+  Armory reads two new regions on the plane atlas round 867 made: "ArmoryLevel1" 40x40 (a flat steel roof between two
+  flagged cone towers) and "ArmoryLevel2" 48x48 (a barrel vault with four cone towers) - one scale for both, so the
+  upgrade grows the way the sheet draws it. The page grows from 32x32 to 120x48; Trader stays at 0,0.
+  `getArmoryShopSprite(level)` picks `capitol_gold` when `TownRestoration.isCurrentTownCapitol()` and logs
+  `[TFR-CapitolArt] Armory L<n> drawn from <atlas> (the Capitol | an ordinary town)` whenever the choice changes.
+- **Unchanged:** the 55 `armory_broken` ruins. They draw only while the Armory is destroyed, at their own 32x32, centered
+  and bottom-aligned on the same footprint, so the bigger built Armory does not misplace them.
+- **Spacing** on the west plaza row (lots 85-88, 48 px apart): Armory L1's art spans x 68-105 and L2's x 63-109 on lot
+  86; the Booster Shop's art on lot 85 starts at x 121 (gaps 15 and 11 px). The east-plaza Bank and Exchange lots are
+  48 px apart.
+- **Checks:** `validate_plane_data.py` on the worktree plane = the main baseline; Maven package exit 0; a game-scale
+  render of the Capitol with the new set (`C:\TFR\notes\r874-capitol-render-armory-L1-1x.png`/`-2x.png`, `-L2-`).
+- **SEEN in the agent** (a fresh cheats world, `capitol raise`; shots `C:\TFR\notes\r874-*.png`, log
+  `r874-agent-forge.log`): a Trader built on lot 94 and upgraded to the Exchange (40x40, the Exchange dialog opens);
+  the Bank on lot 96 (40x40, its deposit dialog opens); lot 95's rubble between them, nothing overlapping; the Armory
+  restored on lot 86 (40x40, its shop opens) and upgraded to Level 2 (48x48), clear of lot 85; the log printing
+  `[TFR-CapitolArt] Armory L1` / `L2 drawn from capitol_gold.atlas (the Capitol)`; no exception. NOT seen: an ordinary
+  town's Armory (a fresh restored town has 0 reputation and builds nothing; no console raises it) - that path is the
+  unchanged `new_buildings` region. **Open (the user's call):** the Armory lot's own sword sign (object 86 `hasSign`,
+  drawn 16 px right of the door) sits over the new art's right towers - over the old 32 px Armory it overlapped ~8 px,
+  now ~12 px (L1) and ~16 px (L2); `hasSign=false` on object 86 would drop it.
+
 ## Round 871: round 835's dungeon seeds go through round 870's mixer (2026-10-29)
 
 The user: "Yes, round 871", to "Also strengthen round 835's dungeon seeds the same way". File:

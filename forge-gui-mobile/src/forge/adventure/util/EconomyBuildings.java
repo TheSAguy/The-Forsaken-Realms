@@ -109,11 +109,12 @@ public class EconomyBuildings {
     // guardian-temple sprite, not archaeology-themed at all, so it was NOT used - see
     // getArchaeologistSprite() below, which uses the generic SpecialShop icon as a placeholder.
     private static final String NEW_BUILDINGS_ATLAS = "maps/tileset/new_buildings.atlas";
-    // Round 867: the golden Capitol's own art (the Art thread's set for 1.26). Only the Trader needs a switch: it is a
-    // shared economy building, so its new_buildings region stays for every other town and the Capitol's Trader reads
-    // this atlas instead. Last variant logged, so the log shows each change between the Capitol and a town.
+    // Round 867: the golden Capitol's own art (the Art thread's set for 1.26). The Trader (and since round 874 the
+    // Armory) can stand in any rebuilt town, so their new_buildings regions stay for every other town and the Capitol's
+    // reads this atlas instead. Last variant logged, so the log shows each change between the Capitol and a town.
     private static final String CAPITOL_GOLD_ATLAS = "maps/tileset/capitol_gold.atlas";
     private static String lastTraderArt;
+    private static String lastArmoryArt; // round 874: the Capitol's Armory, the same switch
     // Guard tier map-indicator icons (2026-08-11, MOD_SCOPE.md #22) - 8x8, cropped from
     // common/maps/tileset/dungeon.png (user-supplied IDs 83/84/86/88) and shrunk per the user's
     // own mockup estimate. See PointOfInterestMapSprite for where these actually get drawn.
@@ -818,9 +819,19 @@ public class EconomyBuildings {
 
     /** Armory icon, level-aware (Task #8/#13, 2026-08-11) - real art for both levels now lives in
      *  NEW_BUILDINGS_ATLAS alongside Arena/Outlook/Spellsmith; the old economy_buildings.atlas
-     *  "Armory" region this replaced is no longer referenced. */
+     *  "Armory" region this replaced is no longer referenced. Round 874: the Capitol's Armory is the golden Capitol's
+     *  own (capitol_gold.atlas, 40x40 and 48x48); every other town keeps new_buildings' art. */
     public static TextureRegion getArmoryShopSprite(int level) {
-        return Config.instance().getAtlasSprite(NEW_BUILDINGS_ATLAS, level >= 2 ? "ArmoryLevel2" : "ArmoryLevel1");
+        String region = level >= 2 ? "ArmoryLevel2" : "ArmoryLevel1";
+        boolean capitol = TownRestoration.isCurrentTownCapitol();
+        String art = (capitol ? "capitol_gold" : "new_buildings") + " L" + (level >= 2 ? 2 : 1);
+        if (!art.equals(lastArmoryArt)) {
+            lastArmoryArt = art;
+            System.out.println("[TFR-CapitolArt] Armory L" + (level >= 2 ? 2 : 1) + " drawn from "
+                    + (capitol ? "capitol_gold" : "new_buildings") + ".atlas ("
+                    + (capitol ? "the Capitol" : "an ordinary town") + ")");
+        }
+        return Config.instance().getAtlasSprite(capitol ? CAPITOL_GOLD_ATLAS : NEW_BUILDINGS_ATLAS, region);
     }
 
     public static boolean isProducingType(int type) {

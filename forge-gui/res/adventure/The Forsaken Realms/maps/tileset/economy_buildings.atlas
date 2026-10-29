@@ -1,5 +1,5 @@
 economy_buildings.png
-size: 128,96
+size: 208,96
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -16,11 +16,11 @@ LumberMill
   xy: 0, 32
   size: 32, 32
 Bank
-  xy: 32, 32
-  size: 32, 32
+  xy: 128, 0
+  size: 40, 40
 Exchange
-  xy: 64, 32
-  size: 32, 32
+  xy: 168, 0
+  size: 40, 40
 PlainShop
   xy: 96, 0
   size: 32, 32
