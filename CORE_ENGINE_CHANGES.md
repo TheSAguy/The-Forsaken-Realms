@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 838 - the difficulty on the info page and the save slots
+- **`forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`** (STOCK): `getSaveFileSuffix` appends a third
+  `ASCII_179` (U+2502) segment (`CustomDifficulty.displayName`); `addSaveSlot` adds the colored tag (`dotColor`) to the button and keeps
+  the plain name in `slotNames` for the Save dialog.
+- **`forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java`** (STOCK): `enter()` writes "Difficulty: ..."
+  into the `winloss` label (blank since round 803).
+- **`forge-gui/res/adventure/common/ui/statistic.json`** (STOCK): `winloss` width 80 -> 130.
+- **`forge-gui/res/adventure/common/ui/statistic_portrait.json`** (STOCK): `winloss` y 80 -> 92, width 60 -> 72;
+  `stats` height 98 -> 110; `scrollWindow` y 106 -> 118, height 327 -> 315; `enemies` y 110 -> 122, height 318 -> 306.
+
 ### Round 837 - New Game+ keeps the chosen save's difficulty
 - **`forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`** (STOCK): the New Game+ difficulty moves from the
   top-right `difficulty` box (still built, now hidden in every mode; `enter()`'s pre-select block removed) into

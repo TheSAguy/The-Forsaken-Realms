@@ -257,7 +257,9 @@ public class PlayerStatisticScene extends UIScene {
             totalLoss.setText("");
         }
         if (winloss != null) {
-            winloss.setText("");
+            // Round 838 (the user: "Could we somehow show what difficulty that are playing on?"): the old Win/Loss
+            // ratio row names the save's difficulty in Settings' own words - "Difficulty: Insane", "Custom (Hard)".
+            winloss.setText(size + "Difficulty: " + forge.adventure.util.CustomDifficulty.displayName(AdventurePlayer.current()));
         }
         if (lossWinRatio != null) {
             lossWinRatio.setText("");

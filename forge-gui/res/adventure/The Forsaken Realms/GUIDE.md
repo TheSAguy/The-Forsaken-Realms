@@ -1232,6 +1232,9 @@ first: if he has something to tell you, hear him out, then speak to him again.
 
 ## Notes on Difficulty
 
+Your difficulty shows on the info page (Quest log > **Status**, under Notoriety), in **Settings > Difficulty**, and on
+each save slot's button, in its dot's color - "Custom (Hard)" for a custom difficulty.
+
 Insane difficulty roughly doubles the stakes of everything above: reputation swings matter more,
 War states are more likely to actually happen, and the newest boss fights (several of which run
 best-of-three) are tuned to be a real test even with a well-built deck. If you're finding a

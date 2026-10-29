@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 838: the difficulty in game - the info page names it, and every save slot shows it (2026-10-28)
+
+The user: "Could we somehow show what difficulty that are playing on? This might tie well in with the new difficulty
+setting's we're doing." Vr01 asked "How can I see that information?" - the only sign was the small colored dot by the
+selected slot's place name. Round 826's Settings > Difficulty row already names the running save's difficulty; 838
+uses the same words (`CustomDifficulty.displayName`, read only) in two more places and leaves Settings alone.
+
+- **The info page** (Quest log > Status): "Difficulty: Insane", or "Difficulty: Custom (Hard)", in the old Win/Loss
+  ratio row (`winloss`, blank since round 803) under Notoriety. `statistic.json`: `winloss` width 80 -> 130.
+  Portrait (`statistic_portrait.json`) had no free row: `winloss` y 80 -> 92, width 60 -> 72; the paper (`stats`)
+  98 -> 110 tall; the enemy window (`scrollWindow`) y 106 -> 118, height 327 -> 315, and its table (`enemies`)
+  y 110 -> 122, height 318 -> 306 - 12 shorter (the user's yes). 80% text in portrait, as round 803's lines.
+- **Every save slot's button** (Load, Save, New Game+): "Vic 2  - Insane" - a dot and the word at 85% in the dot's
+  color (`dotColor`), after the save's name. `getSaveFileSuffix` writes a third name segment with
+  `displayName`'s words; a save from before 838 is read from its dot; a save from before the dot shows no word until
+  it is saved once. A build before 838 reads only the first two segments, so a 1.25 save still shows in 1.24.
+- **The Save dialog** still offers the plain name (`slotNames`), never the tag.
+- **GUIDE**: Notes on Difficulty says where the difficulty shows (the info page, Settings > Difficulty, each slot).
+- **Not changed**: Settings (826 covers it); the slot preview's place line.
+- **Tested** (agent-837; shots `notes/r837-838/`): tags "Vic 2 - Insane" (red), "auto save - Normal" (green),
+  "quick save - Custom (Insane)" (red, after `custom set enemyHealth 2.0` and F5), none on old saves; portrait
+  buttons fit; the Save dialog on Vic 2 offers "Vic 2"; the info page "Difficulty: Insane" and "Difficulty: Custom
+  (Insane)" in landscape, "Custom (Insane)" in portrait at 540x960 inside the taller paper. The bridge's `cmd save`
+  writes the bare name (no location, no difficulty) - a test-tool limit, unchanged.
+
+Files: `scene/SaveLoadScene.java`, `scene/PlayerStatisticScene.java`, `common/ui/statistic.json`,
+`common/ui/statistic_portrait.json`, `The Forsaken Realms/GUIDE.md` (+ GUIDE.html).
+
 ## Round 837: New Game+ keeps the chosen save's difficulty - one picker, in the New Game+ dialog (2026-10-28)
 
 The user: "Can we ensure that the NG+ always defaults to the player's game they are coming from. If they come from a

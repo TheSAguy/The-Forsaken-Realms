@@ -41,6 +41,8 @@ public class SaveLoadScene extends UIScene {
 
     private static final int NUMBEROFSAVESLOTS = 11;
     private final IntMap<Selectable<TextraButton>> buttons = new IntMap<>();
+    /** Round 838: each slot's own save name, without the difficulty tag its button shows - the Save dialog's default. */
+    private final IntMap<String> slotNames = new IntMap<>();
     IntMap<WorldSaveHeader> previews = new IntMap<>();
     Table layout;
     Modes mode;
@@ -139,6 +141,7 @@ public class SaveLoadScene extends UIScene {
     private void refreshSaveSlots() {
         layout.clear();
         buttons.clear();
+        slotNames.clear();
         addSaveSlot(Forge.getLocalizer().getMessage("lblAutoSave"), WorldSave.AUTO_SAVE_SLOT);
         addSaveSlot(Forge.getLocalizer().getMessage("lblQuickSave"), WorldSave.QUICK_SAVE_SLOT);
         java.util.List<Integer> slotOrder = new java.util.ArrayList<>();
@@ -205,15 +208,22 @@ public class SaveLoadScene extends UIScene {
 
     private Selectable<TextraButton> addSaveSlot(String name, int i) {
         String displayName = name;
+        String tag = "";
         if (previews.containsKey(i)) {
             WorldSaveHeader header = previews.get(i);
             if (header != null) {
                 displayName = getSplitHeaderName(header, false);
+                // Round 838 (the user: "Could we somehow show what difficulty that are playing on?"): the save's
+                // difficulty on its own button, a dot and the word in the dot's color ("Vic 2", red "Insane").
+                String words = slotDifficulty(header);
+                if (words != null)
+                    tag = "   [%85]" + dotColor(presetOf(words)) + "• " + words;
             }
         }
+        slotNames.put(i, displayName);
         layout.add(Controls.newLabel(name)).align(Align.left).pad(2, 5, 2, 10);
         SaveSlot button = new SaveSlot(i);
-        button.actor.setText(displayName);
+        button.actor.setText(displayName + tag);
         layout.add(button.actor).fill(true, false).expand(true, false).align(Align.left).expandX();
         buttons.put(i, button);
         layout.row();
@@ -276,7 +286,8 @@ public class SaveLoadScene extends UIScene {
                 }
                 if (currentSlot > 0) {
                     //prevent NPE, allowed saveslot is 1 to 10..
-                    textInput.setText(buttons.get(currentSlot).actor.getText());
+                    textInput.setText(slotNames.containsKey(currentSlot) ? slotNames.get(currentSlot)
+                            : buttons.get(currentSlot).actor.getText()); // round 838: not the difficulty tag
                     if (saveDialog == null) {
                         saveDialog = createGenericDialog(Forge.getLocalizer().getMessage("lblSave"), null,
                                 Forge.getLocalizer().getMessage("lblOK"),
@@ -446,6 +457,22 @@ public class SaveLoadScene extends UIScene {
     static String presetOf(String words) {
         int open = words.indexOf('('), close = words.lastIndexOf(')');
         return open >= 0 && close > open ? words.substring(open + 1, close).trim() : words;
+    }
+
+    /** The save dot's color markup for a preset (getSaveFileSuffix's colors). */
+    static String dotColor(String preset) {
+        switch (preset == null ? "" : preset.toLowerCase()) {
+            case "easy":
+                return "[CYAN]";
+            case "normal":
+                return "[GREEN]";
+            case "hard":
+                return "[GOLD]";
+            case "insane":
+                return "[RED]";
+            default:
+                return "[WHITE]";
+        }
     }
 
     private void startNewGamePlus(int carry, boolean keepItems, DifficultyData chosen) {
@@ -734,6 +761,10 @@ public class SaveLoadScene extends UIScene {
                 difficulty = "[%99][WHITE]";
                 break;
         }
-        return ASCII_179 + difficulty + GameScene.instance().getAdventurePlayerLocation(true, true);
+        // Round 838: a third segment, the difficulty in CustomDifficulty.displayName's words ("Insane", "Custom (Hard)"),
+        // for the slot buttons and New Game+ (slotDifficulty). A build before 838 reads only the first two.
+        String words = forge.adventure.util.CustomDifficulty.displayName(AdventurePlayer.current());
+        return ASCII_179 + difficulty + GameScene.instance().getAdventurePlayerLocation(true, true)
+                + ("?".equals(words) || words.indexOf(ASCII_179) >= 0 ? "" : ASCII_179 + words);
     }
 }

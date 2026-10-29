@@ -16,23 +16,23 @@
       "x": 4,
       "y": 4,
       "width": 262,
-      "height": 98
+      "height": 110
     },
     {
       "type": "Window",
       "name": "scrollWindow",
       "x": 4,
-      "y": 106,
+      "y": 118,
       "width": 262,
-      "height": 327
+      "height": 315
     },
     {
       "type": "Table",
       "name": "enemies",
       "x": 4,
-      "y": 110,
+      "y": 122,
       "width": 262,
-      "height": 318
+      "height": 306
     },
     {
       "type": "Image",
@@ -103,8 +103,8 @@
       "name": "winloss",
       "text": "tr(lblWinProper)/tr(lblLossProper):",
       "x": 98,
-      "y": 80,
-      "width": 60,
+      "y": 92,
+      "width": 72,
       "height": 24,
       "fontColor":"black"
     },
