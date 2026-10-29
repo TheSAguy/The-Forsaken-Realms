@@ -14264,6 +14264,16 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 854: Urabrask's footprint refreshed; sprite_footprints.py replaces a stale field in one pass (2026-10-29)
+
+A v1.24 leftover: `dev-tools/sprite_footprints.py --check` reported `sprites/enemy/aberration/phyrexian/urabrask.atlas`
+stale - the Idle frame carried `footprint: 4, 6, 75, 57`, the art now measures `1, 6, 75, 57` (the body reaches 3 px
+further left). `--write` only REMOVED the old field: `rewrite()` skipped a dropped line with `continue` before checking
+whether the new field goes after it, so a field on the reference block's last line was never replaced (a second
+`--write` would have added it). The check now runs for a dropped line too; one `--write` gives the new field and
+`--check` is clean (exit 0, nothing else listed). The `poi_footprints.py` drift on 21 entrance regions (round 811) is
+not part of this round. Not seen in the agent game (data only, a 3 px shift of where Urabrask's body is centred).
+
 ## Round 850: the research quest says how selling and sacrificing speed research (2026-10-29)
 
 The user: "Let's update the quest that you get to do research, so it tells you about selling/sacrificing cards and how

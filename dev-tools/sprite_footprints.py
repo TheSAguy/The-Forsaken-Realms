@@ -279,9 +279,9 @@ def rewrite(atlas_path, body):
     ref = reference_block(blocks)
     out = []
     for i, line in enumerate(lines):
-        if i in drop:
-            continue
-        out.append(line)
+        if i not in drop:
+            out.append(line)
+        # round 854: checked for a dropped line too - a stale field on the block's last line was removed, not replaced
         if body is not None and ref is not None and i == ref.end - 1:
             out.append('%s%s: %d, %d, %d, %d' % (ref.indent, FIELD, body[0], body[1], body[2], body[3]))
     new = nl.join(out)
