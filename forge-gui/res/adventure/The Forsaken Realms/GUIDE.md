@@ -1300,6 +1300,9 @@ plays as **Custom (Hard)** (or whichever difficulty you based it on).
 when you press Done; the few that shape a new world (starting life and gold, fewer neutral towns, town specialties,
 realm milestones) are locked until your next game.
 
+**New Game+** keeps a run's custom settings. Its dialog shows how many there are; **Advanced...** opens
+the panel on them for the new run, every setting open. Changes apply to the new run only.
+
 **Rules.** Disable Notoriety, Ascendance leveling and "I won't cheat by loading after a loss" are kept per game: a new
 game starts with your Settings, and changing one during a run changes that game only. They never make a game Custom.
 

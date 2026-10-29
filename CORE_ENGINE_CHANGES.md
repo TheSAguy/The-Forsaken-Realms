@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 839 - custom difficulty, New Game+ "Advanced..."
+- **`forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`** (STOCK, after round 837): `askNewGamePlusCarry`
+  gains a holder `edited` beside round 837's picker, a "Custom settings: N changed" row with an `Advanced...` button
+  (named `ngPlusAdvanced`) and a grey line after the Difficulty row, only when `CustomDifficulty.knobs()` is not empty;
+  the Start lambda passes `edited[0]`; `startNewGamePlus` takes a fourth parameter `editedSettings` and calls
+  `CustomDifficulty.replaceForNewGamePlus` right after `was` is read, before `setGenerationDifficulty`. Round 837's
+  `describe` note no longer prints "(this save: null)" for a save with no recorded difficulty.
+- TFR files: `util/CustomDifficulty.java` (`SavePeek`, `peekSave`, `replaceForNewGamePlus`),
+  `scene/CustomDifficultyScene.java` (`openNewGamePlus`, the New Game+ Done).
+
 ### Round 838 - the difficulty on the info page and the save slots
 - **`forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`** (STOCK): `getSaveFileSuffix` appends a third
   `ASCII_179` (U+2502) segment (`CustomDifficulty.displayName`); `addSaveSlot` adds the colored tag (`dotColor`) to the button and keeps

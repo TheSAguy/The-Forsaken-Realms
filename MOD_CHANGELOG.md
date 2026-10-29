@@ -14264,6 +14264,57 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 839: custom difficulty, New Game+ "Advanced..." - edit the settings a New Game+ takes into its new run (2026-10-28)
+
+The piece moved out of round 827 (SaveLoadScene was rounds 837/838's until they committed). Approved by the manager on
+the user's behalf, under the user's OK for tonight, on `C:\TFR\notes\r839-mock.png`, with four fixes: the grey line
+"Changes apply to the new run only." (New Game+ runs in the same slot, so its first save replaces the old run - how
+Vr01 lost an Insane run), "Custom settings: 3 changed" with a space, the dialog's and the panel's counts agree (rules
+out, as in round 825), and the panel's "Based on" is the dialog's pick. Built in a worktree and tested in an
+`agent-839` copy.
+
+- **The New Game+ dialog** (`SaveLoadScene.askNewGamePlusCarry`, round 837's): under the Difficulty row, "Custom
+  settings: 3 changed" (gold) or "none", an **Advanced...** button, and "Changes apply to the new run only." Only on a
+  plane with custom difficulty. After the panel's Done it reads "4 changed (edited)". Cancel drops the edit.
+- **Reading the slot without loading it** (`CustomDifficulty.peekSave(slot)`): the same stream `WorldSave.readSave`
+  reads (header, then the main data), the player's part only - its `customDifficulty` (sanitized), `rulesPerSave` and
+  `difficultyName`; nothing applied, WorldSave untouched. A save from before round 822 has none. The slot itself is
+  loaded only at Start, as before.
+- **The panel's New Game+ mode** (`CustomDifficultyScene.openNewGamePlus`): titled "New Game+"; "Based on" opens on the
+  dialog's pick (for "Same as this save", the save's own preset); every row open - New Game+ makes a new world, so the
+  new-game-only knobs too; a save that does not keep its own rules shows the profile's (what `onNewGamePlus` would seed);
+  the help line "New Game+: these settings start the new run. Done takes them back to the New Game+ dialog."; Share
+  code works there. Done (or Esc) hands the copy back to the dialog and the preset to its box - only when the preset
+  was changed in the panel, so "Same as this save" stays.
+- **Start** (`startNewGamePlus`, new parameter `editedSettings`): after the load and before the World generation, the
+  edit replaces the save's settings (`CustomDifficulty.replaceForNewGamePlus`: sanitized, `rulesPerSave` on,
+  `applyTuning`), so the world-generation knobs and `updateDifficulty`'s overrides take it. Without Advanced... (or after
+  Cancel) round 837's path is unchanged: the save's settings come along as round 822 carries them.
+- Lines: `[TFR-Custom] panel opened for New Game+ on P with N change(s)`, `panel done for New Game+: ...`, and `New
+  Game+: the panel's settings replace the save's: A -> B`.
+- **Found and fixed in the test** (round 837's note, reached through this round): on a save whose header records no
+  difficulty ("Same as this save"), Done moved the box to Normal and the note read "(this save: null)". The box now
+  follows only a preset changed in the panel, and the note shows nothing rather than "null".
+
+**Agent-tested** in `agent-839` (the agent folder and profile, wt-839's classes ahead of its jar, round 828's json in
+its res; removed afterward). No exceptions (the bridge's own /state timeout during world generation aside). Shots:
+`C:\TFR\notes\r839\`.
+- A custom save in slot 5 (enemy health 150%, life lost 30%, card sell 30%, Notoriety off): the dialog says "Custom
+  settings: 3 changed"; Advanced... opens "New Game+", "3 changed", All 3, Rules 1.
+- Starting life +5 and enemy health +2 steps, Done: "4 changed (edited)"; Start: a new run on day 1 with 20 life, enemy
+  health 160%, the other changes kept; `New Game+: the panel's settings replace the save's: ... -> ...;startingLife=20`.
+- On the fixed build, from a fresh launch: slot 5 still reads "3 changed" (the earlier New Game+ left its file alone);
+  Advanced... and Done unchanged keep "Same as this save"; Cancel and the same slot again read "3 changed" (no
+  "(edited)"); a save with no settings ("r731 wizard") reads "none"; life +3 and the Wrath off: "5 changed (edited)",
+  the new run has 18 life and `wrathHuntEnabled=false`.
+- Portrait 540x960: the dialog's row fits under Difficulty, the panel opens in its portrait layout, Done returns.
+
+**Not tested:** a New Game+ that changes the preset in the panel (the box follows it - the same path as round 823's
+new-game screen), and Android.
+
+Files: `scene/SaveLoadScene.java`, `scene/CustomDifficultyScene.java`, `util/CustomDifficulty.java`;
+`CORE_ENGINE_CHANGES.md` round 839.
+
 ## Round 828: custom difficulty, part 7 - 39 more knobs: the first weeks, defeat, spawns, legends, travel and the starting kit (2026-10-28)
 
 Part 7 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`), metadata batch 1: plane data

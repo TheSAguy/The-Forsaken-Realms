@@ -376,7 +376,7 @@ public class SaveLoadScene extends UIScene {
             int i = pick.getSelectedIndex() - offset;
             boolean same = i < 0 || presets[i].name.equalsIgnoreCase(savePreset);
             boolean custom = saveWords != null && !saveWords.equalsIgnoreCase(savePreset);
-            diffNote.setText("[%80]" + (i < 0 ? "" : same ? "(this save's)" : "(this save: " + saveWords + ")")
+            diffNote.setText("[%80]" + (i < 0 ? "" : same ? "(this save's)" : saveWords == null ? "" : "(this save: " + saveWords + ")")
                     + (custom ? (same ? " - its custom settings come along" : " - custom settings come along") : ""));
         };
         pick.addListener(new com.badlogic.gdx.scenes.scene2d.utils.ChangeListener() {
@@ -386,13 +386,16 @@ public class SaveLoadScene extends UIScene {
             }
         });
         describe.run();
+        // Round 839: the settings Advanced... edits for the new run (null = the save's own, as round 837 carries them)
+        @SuppressWarnings("unchecked")
+        final java.util.Map<String, String>[] edited = new java.util.Map[]{null};
         Dialog dialog = createGenericDialog("New Game+", "What comes with you into the new run?", Forge.getLocalizer().getMessage("lblStart"),
                 Forge.getLocalizer().getMessage("lblCancel"), () -> {
                     int choice = cardsOnly.isChecked() ? CARRY_CARDS_ONLY : invested.isChecked() ? CARRY_INVESTED : CARRY_CURRENT;
                     boolean items = keepItems.isChecked();
                     int i = pick.getSelectedIndex() - offset;
                     removeDialog();
-                    startNewGamePlus(choice, items, i < 0 ? null : presets[i]);
+                    startNewGamePlus(choice, items, i < 0 ? null : presets[i], edited[0]);
                 }, () -> {
                     loaded = false;
                     removeDialog();
@@ -414,6 +417,50 @@ public class SaveLoadScene extends UIScene {
         content.add(difficultyRow).left().padLeft(10).padTop(4).row();
         if (!Forge.isLandscapeMode()) // portrait is 270 wide: the note on its own line
             content.add(diffNote).left().padLeft(10).row();
+        // Round 839 (the user's OK, through the manager, on notes/r839-mock.png): "Custom settings: N changed" and
+        // Advanced..., which opens the custom difficulty panel on the chosen slot's own settings - read from its file
+        // (CustomDifficulty.peekSave), the slot is only loaded at Start. Done keeps the edit here; Start lays it over the
+        // loaded save before the new world is generated. N leaves the rules out, as the panel's own count does.
+        if (!forge.adventure.util.CustomDifficulty.knobs().isEmpty()) {
+            forge.adventure.util.CustomDifficulty.SavePeek peek = forge.adventure.util.CustomDifficulty.peekSave(currentSlot);
+            TextraLabel customCount = Controls.newTextraLabel("");
+            Runnable countText = () -> {
+                java.util.Map<String, String> m = edited[0] != null ? edited[0] : peek.overrides;
+                int n = forge.adventure.util.CustomDifficulty.countChanges(m);
+                String tail = edited[0] != null ? " (edited)" : "";
+                customCount.setText(n == 0 ? "none" + tail : "[GOLD]" + n + " changed" + tail);
+                customCount.invalidateHierarchy();
+                dialog.pack();
+                dialog.setPosition(Math.round((stage.getWidth() - dialog.getWidth()) / 2),
+                        Math.round((stage.getHeight() - dialog.getHeight()) / 2));
+            };
+            TextraButton advanced = Controls.newTextButton("Advanced...", () -> {
+                int i = pick.getSelectedIndex() - offset;
+                String name = i >= 0 ? presets[i].name : peek.preset != null ? peek.preset : savePreset;
+                int at = 0;
+                for (int p = 0; p < presets.length; p++)
+                    if (presets[p].name.equalsIgnoreCase(name))
+                        at = p;
+                final int openedOn = at;
+                forge.adventure.scene.CustomDifficultyScene.instance().openNewGamePlus(at, peek, edited[0],
+                        index -> { // the dialog's box follows only a preset changed in the panel ("Same as this save" stays)
+                            if (index != openedOn)
+                                pick.setSelectedIndex(Math.min(names.length - 1, index + offset));
+                        },
+                        settings -> {
+                            edited[0] = settings;
+                            countText.run();
+                        });
+            });
+            advanced.setName("ngPlusAdvanced");
+            com.badlogic.gdx.scenes.scene2d.ui.Table customRow = new com.badlogic.gdx.scenes.scene2d.ui.Table();
+            customRow.add(Controls.newLabel("Custom settings:")).padRight(6);
+            customRow.add(customCount).padRight(10);
+            customRow.add(advanced).width(Forge.isLandscapeMode() ? 92 : 100).height(Forge.isLandscapeMode() ? 22 : 26);
+            content.add(customRow).left().padLeft(10).padTop(4).row();
+            content.add(Controls.newTextraLabel("[%80][LIGHT_GRAY]Changes apply to the new run only.")).left().padLeft(10).row();
+            countText.run();
+        }
         showDialog(dialog);
     }
 
@@ -475,7 +522,7 @@ public class SaveLoadScene extends UIScene {
         }
     }
 
-    private void startNewGamePlus(int carry, boolean keepItems, DifficultyData chosen) {
+    private void startNewGamePlus(int carry, boolean keepItems, DifficultyData chosen, java.util.Map<String, String> editedSettings) {
         try {
             Forge.setTransitionScreen(new TransitionScreen(() -> {
                 loaded = false;
@@ -503,6 +550,10 @@ public class SaveLoadScene extends UIScene {
                     // fallback to Normal. The config preset goes to updateDifficulty, which lays a custom save's
                     // overrides over it (round 822).
                     String was = forge.adventure.util.CustomDifficulty.displayName(Current.player());
+                    // Round 839: the dialog's Advanced... edit, if any, replaces the save's settings - before the World
+                    // generation below reads them, and before updateDifficulty lays them over the preset
+                    if (editedSettings != null)
+                        forge.adventure.util.CustomDifficulty.replaceForNewGamePlus(Current.player(), editedSettings);
                     DifficultyData target = chosen != null ? chosen : configPreset(Current.player().getDifficulty().name);
                     // Round 241: world-gen thins the wasteland towns by difficulty, and the new
                     // difficulty is only applied to the player below - so the World is told first.

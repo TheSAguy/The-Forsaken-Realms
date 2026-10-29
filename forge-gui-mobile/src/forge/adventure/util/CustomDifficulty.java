@@ -393,6 +393,64 @@ public final class CustomDifficulty {
         return out;
     }
 
+    // ---- New Game+ (round 839) ----------------------------------------------------------------------------------
+
+    /** A slot's custom difficulty, read from its file without loading it: its overrides (sanitized), whether it keeps
+     *  its own rules, and its preset's name. {@code ok} is false when the file could not be read. */
+    public static final class SavePeek {
+        public final LinkedHashMap<String, String> overrides = new LinkedHashMap<>();
+        public boolean rulesPerSave, ok;
+        public String preset;
+    }
+
+    /**
+     * Round 839 (the user's OK, through the manager, on notes/r839-mock.png): New Game+'s Advanced... needs the chosen
+     * slot's own settings before Start loads it. The same stream WorldSave.readSave reads (header, then the main data),
+     * the player's part only, nothing applied. A save from before round 822 has no settings: none.
+     */
+    public static SavePeek peekSave(int slot) {
+        SavePeek peek = new SavePeek();
+        java.io.File file = new java.io.File(WorldSave.getSaveFile(slot));
+        if (!file.exists())
+            return peek;
+        try (java.io.InputStream in = new java.io.FileInputStream(file);
+             java.util.zip.InflaterInputStream inf = new java.util.zip.InflaterInputStream(in);
+             java.io.ObjectInputStream ois = new java.io.ObjectInputStream(inf)) {
+            ois.readObject(); // the header
+            forge.adventure.util.SaveFileData main = (forge.adventure.util.SaveFileData) ois.readObject();
+            forge.adventure.util.SaveFileData player = main.readSubData("player");
+            if (player != null) {
+                peek.rulesPerSave = player.containsKey("rulesPerSave") && player.readBool("rulesPerSave");
+                if (player.containsKey("difficultyName"))
+                    peek.preset = player.readString("difficultyName");
+                if (player.containsKey(SAVE_KEY))
+                    peek.overrides.putAll(sanitize(decode(player.readString(SAVE_KEY)), "New Game+ (slot " + slot + ")"));
+            }
+            peek.ok = true;
+        } catch (Exception e) {
+            System.err.println("[TFR-Custom] New Game+: could not read slot " + slot + "'s settings: " + e);
+        }
+        return peek;
+    }
+
+    /**
+     * Round 839: Start of a New Game+ whose settings were edited in its dialog - the loaded save's settings give way to
+     * the edit before the new world is generated (so the world-generation knobs and updateDifficulty's overrides take
+     * it). The rules come with the edit, so the save keeps its own from now on.
+     */
+    public static void replaceForNewGamePlus(AdventurePlayer p, Map<String, String> edit) {
+        if (p == null || edit == null)
+            return;
+        String before = encode(p.getCustomDifficulty());
+        LinkedHashMap<String, String> clean = sanitize(edit, "New Game+");
+        p.getCustomDifficulty().clear();
+        p.getCustomDifficulty().putAll(clean);
+        p.setRulesPerSave(true);
+        applyTuning(p.getCustomDifficulty());
+        System.out.println("[TFR-Custom] New Game+: the panel's settings replace the save's: "
+                + (before.isEmpty() ? "(none)" : before) + " -> " + (clean.isEmpty() ? "(none)" : encode(clean)));
+    }
+
     // ---- share codes (round 827) --------------------------------------------------------------------------------
 
     public static final String CODE_PREFIX = "TFR1-";

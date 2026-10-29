@@ -52,6 +52,7 @@ import java.util.function.IntConsumer;
  * {@code custom panel} lists what the panel shows, {@code custom panel search TEXT} types into its search box.
  * Round 826: Settings' Difficulty row opens it on the running save ({@link #openMidGame}). Round 827: Share code -
  * Copy / Paste code through the clipboard ({@link CustomDifficulty#shareCode} / {@link CustomDifficulty#readCode}).
+ * Round 839: New Game+'s dialog opens it on the chosen slot's settings ({@link #openNewGamePlus}).
  */
 public class CustomDifficultyScene extends UIScene {
     private static CustomDifficultyScene object;
@@ -94,6 +95,10 @@ public class CustomDifficultyScene extends UIScene {
     private AdventurePlayer player;
     private final Table presetSlot = new Table();
     private final TextraLabel basedOn, inPlay;
+    /** Round 839: opened from New Game+'s dialog - every row open (a new world); Done hands the copy back to it. */
+    private boolean newGamePlus;
+    private java.util.function.Consumer<Map<String, String>> onDoneSettings;
+    private final TextraLabel title;
 
     private CustomDifficultyScene() {
         super(Forge.isLandscapeMode() ? "ui/custom_difficulty.json" : "ui/custom_difficulty_portrait.json");
@@ -103,7 +108,8 @@ public class CustomDifficultyScene extends UIScene {
         // header: the title, the preset, how many are changed
         Table header = new Table();
         countLabel = Controls.newTextraLabel("");
-        header.add(Controls.newTextraLabel("[%120]Custom Difficulty")).left().padRight(12);
+        title = Controls.newTextraLabel("[%120]Custom Difficulty");
+        header.add(title).left().padRight(12);
         Table pick = header;
         if (!landscape) {
             header.row();
@@ -214,7 +220,10 @@ public class CustomDifficultyScene extends UIScene {
     public void open(int presetIndex, Map<String, String> current, IntConsumer onDone) {
         this.onDone = onDone;
         midGame = false;
+        newGamePlus = false;
+        onDoneSettings = null;
         player = null;
+        title.setText("[%120]Custom Difficulty");
         showPresetBox(true);
         work.clear();
         if (current != null)
@@ -238,6 +247,9 @@ public class CustomDifficultyScene extends UIScene {
             return;
         onDone = null;
         midGame = true;
+        newGamePlus = false;
+        onDoneSettings = null;
+        title.setText("[%120]Custom Difficulty");
         player = p;
         int i = Math.max(0, preset.getItems().indexOf(p.getDifficulty().name, false));
         preset.setSelectedIndex(i);
@@ -260,6 +272,41 @@ public class CustomDifficultyScene extends UIScene {
                 + ", " + CustomDifficulty.count(p) + " change(s)"
                 + (CustomDifficulty.rules(p).isEmpty() ? "" : ", rules " + CustomDifficulty.rules(p))
                 + (p.hasRulesPerSave() ? "" : " (rules from the profile - an older save)"));
+        Forge.switchScene(this);
+    }
+
+    /**
+     * Round 839: New Game+'s Advanced... - the panel on the chosen slot's settings (read from its file, the slot not yet
+     * loaded) and the dialog's difficulty. Every row is open: New Game+ makes a new world. A save that does not keep its
+     * own rules shows the profile's, as New Game+ would seed them. Done hands the copy back (the dialog keeps it until
+     * Start) and the preset to the dialog's difficulty box; nothing changes on disk.
+     */
+    public void openNewGamePlus(int presetIndex, CustomDifficulty.SavePeek peek, Map<String, String> edited,
+                                IntConsumer onPreset, java.util.function.Consumer<Map<String, String>> onSettings) {
+        onDone = onPreset;
+        onDoneSettings = onSettings;
+        midGame = false;
+        newGamePlus = true;
+        player = null;
+        title.setText("[%120]New Game+");
+        showPresetBox(true);
+        preset.setSelectedIndex(Math.max(0, Math.min(presetIndex, preset.getItems().size - 1)));
+        work.clear();
+        if (edited != null) {
+            work.putAll(edited);
+        } else if (peek != null) {
+            work.putAll(peek.overrides);
+            if (!peek.rulesPerSave) // as resetForNewGamePlus would seed them (CustomDifficulty.onNewGamePlus)
+                for (Knob k : CustomDifficulty.knobs().values()) {
+                    String field = ruleField(k);
+                    if (field != null && CustomDifficulty.profileRule(field) != Boolean.parseBoolean(CustomDifficulty.presetRaw(k, presetName())))
+                        work.put(k.id, String.valueOf(CustomDifficulty.profileRule(field)));
+                }
+        }
+        help.setText("[%85][LIGHT_GRAY]New Game+: these settings start the new run. Done takes them back to the New Game+ dialog.");
+        System.out.println("[TFR-Custom] panel opened for New Game+ on " + presetName() + " with "
+                + CustomDifficulty.countChanges(work) + " change(s)" + (edited != null ? " (edited before)" : "")
+                + ": " + CustomDifficulty.encode(work));
         Forge.switchScene(this);
     }
 
@@ -339,6 +386,20 @@ public class CustomDifficultyScene extends UIScene {
             applyMidGame();
             midGame = false;
             player = null;
+            Forge.switchToLast();
+            return true;
+        }
+        if (newGamePlus) { // round 839: back to the dialog, which keeps the copy until Start
+            newGamePlus = false;
+            System.out.println("[TFR-Custom] panel done for New Game+: " + presetName() + ", "
+                    + CustomDifficulty.countChanges(work) + " change(s): " + CustomDifficulty.encode(work));
+            java.util.function.Consumer<Map<String, String>> settings = onDoneSettings;
+            IntConsumer pick = onDone;
+            onDoneSettings = null;
+            if (settings != null)
+                settings.accept(new LinkedHashMap<>(work));
+            if (pick != null)
+                pick.accept(preset.getSelectedIndex());
             Forge.switchToLast();
             return true;
         }
@@ -752,6 +813,7 @@ public class CustomDifficultyScene extends UIScene {
         help.setText("[%85][GOLD]" + k.label + ":[WHITE] " + k.tooltip
                 + (locked(k) ? " [LIGHT_GRAY](New game only.)"
                 : midGame ? " [LIGHT_GRAY](On Done.)"
+                : newGamePlus ? " [LIGHT_GRAY](For the new run.)"
                 : k.isNewGameOnly() ? " [LIGHT_GRAY](New game only.)" : " [LIGHT_GRAY](Can be changed later in Settings.)"));
     }
 
