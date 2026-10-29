@@ -1308,6 +1308,8 @@ public class RewardScene extends UIScene {
 
         float spacing = 2;
         int i = 0;
+        floorRaised = 0; // round 843
+        floorExample = null;
         for (Reward reward : new Array.ArrayIterator<>(newRewards)) {
             boolean skipCard = false;
             if (type == Type.Shop) {
@@ -1357,6 +1359,10 @@ public class RewardScene extends UIScene {
         }
         liftModButtonsAboveCards(); // round 253 (Android): see the method
         if (type == Type.Shop) {
+            if (floorRaised > 0)
+                System.out.println("[TFR-Shop] floor: " + floorRaised + " card(s) in "
+                        + (shopActor.getShopData() == null ? "a shop" : shopActor.getShopData().name)
+                        + " raised to their sell price + 1 (" + floorExample + ")");
             updateBuyButtons();
             updateRestockButton();
         } else if (type == Type.RewardChoice) {
@@ -1407,6 +1413,10 @@ public class RewardScene extends UIScene {
         }
     }
 
+    /** Round 843: the shop cards the sell-price floor raised in the last layout, and the first one, for the log. */
+    private int floorRaised;
+    private String floorExample;
+
     private class BuyButton extends TextraButton {
         private final int objectID;
         private final int index;
@@ -1446,6 +1456,17 @@ public class RewardScene extends UIScene {
             price *= Current.player().goldModifier();
             price *= shopModifier;
             price *= forge.adventure.util.Ascendance.shopPriceFactor(); // round 494: Haggler
+            // Round 843 (Fable review P3-2, the user: "Yes, all as recommended"): a shop card never costs less than it
+            // sells for + 1. Haggler, the Merchant Guild, reputation and a player town could take a card under its
+            // (Appraiser-raised) sell price, so buying and selling it back made gold.
+            if (Reward.Type.Card.equals(reward.getType()) && reward.getCard() != null) {
+                int sell = Current.player().cardSellPrice(reward.getCard());
+                if (sell > 0 && price < sell + 1) {
+                    if (floorRaised++ == 0)
+                        floorExample = reward.getCard().getName() + " " + price + " -> " + (sell + 1) + ", sells for " + sell;
+                    price = sell + 1;
+                }
+            }
             setText("[+GoldCoin] " + price);
             updateOwned();
             addListener(new ClickListener() {

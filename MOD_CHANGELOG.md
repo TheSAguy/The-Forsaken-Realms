@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 843: a shop card never costs less than it sells for + 1 (2026-10-29)
+
+Fable review P3-2 (the round 833 clamp audit's known exploit (a)); the user approved the floor: "Yes, all as
+recommended". Built in a worktree, tested in an `agent-845` copy.
+
+- **The loop:** the buy factors multiply down to 0.39 (player town 0.75 x Merchant Guild 0.8 x reputation 0.9 x
+  Haggler III 0.85 x Fortune Coin 0.85, floored at 0.25), while Easy's sell price is 0.6 x Appraiser 1.2 = 0.72 (and the
+  custom `sellFactor` reaches 0.6 on any preset), so a card bought in your own town sold back at a profit.
+- **The floor:** `RewardScene.BuyButton`, after every price factor - a card reward (that sells for anything) costs at
+  least `cardSellPrice(card) + 1`, the price this town would pay for it now (Appraiser included). Only prices that were
+  under the sell price move; items and packs are untouched. One line per shop layout:
+  `[TFR-Shop] floor: 8 card(s) in Angel raised to their sell price + 1 (Celestial Regulator 31 -> 37, sells for 36)`.
+- **Residual:** a classic-research save (before round 751) sells for more in a town with better reputation, so a card
+  bought at the floor can still sell up to about 10% higher in the player's best town. Not closed (the verification
+  named it).
+
+**Agent-tested** in `agent-845`: a new Easy game, Appraiser III and Haggler III (`asc pick`), the Capitol raised by
+console and a rubble lot rebuilt as a rare shop (Halos 'R' Us, `Angel`). All 8 cards were under their sell price + 1
+and were raised (the line above); the shop showed 37-721 gold. No Merchant Guild was built (the player-town 75% and
+Haggler alone reach the loop). Shot: `C:\TFR\notes\r843\capitol-angel-shop.png`.
+
+Files: `scene/RewardScene.java` (stock, CORE_ENGINE_CHANGES).
+
 ## Round 846: render and save guards - the counter tabs' measuring, a missing win/loss record (2026-10-29)
 
 Fable review P3-9 and P3-16; the user: "Yes, all as recommended". Built in a worktree, tested in an `agent-845` copy.

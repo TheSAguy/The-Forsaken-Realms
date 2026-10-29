@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 843 - a shop card never costs less than it sells for + 1
+- **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** (STOCK): `BuyButton`'s constructor, after the
+  Haggler factor - a card reward's price is at least `cardSellPrice(card) + 1` (when it sells for anything); the
+  fields `floorRaised` / `floorExample` and one `[TFR-Shop] floor:` line per shop layout in `loadRewards`' shop branch.
+
 ### Round 846 - render and save guards
 - **`forge-gui-mobile/src/forge/card/CardRenderer.java`** (STOCK): the three `glyphLayout.setText` + `.width` reads in
   `drawCounterTabs` (the OLD_WHEN_SMALL check and the counter box width) and `drawMarkersTabs` (the marker box width)
