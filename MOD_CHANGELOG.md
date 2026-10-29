@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 848: docs for 1.25 - the reload rule, the early-life clause, gauntlets, loops and the batch's own lines (2026-10-29)
+
+Fable review P2-6, P2-7 and P3-10, plus the text rounds 840, 841, 842 and 847 left for this round; the user: "Yes, all
+as recommended" (848 with the gauntlet text), and for the reload line the user's own words: "On Hard and Insane, each
+cheat (reloading after a loss, or quitting mid-duel) gives enemies +1 life, up to +25. Every 3 losses you take honestly
+removes one. Arena losses never count." Run after the main thread's "848 GO" (840 and 847 committed). Docs only.
+
+**GUIDE.md** (and GUIDE.html, rebuilt once by `dev-tools/guide_html.py --check`: 97 headings, 181 links, OK):
+- *Reloading after a loss*: rewritten around the user's three sentences; kept the fifth-time teasing, what "honestly"
+  means, the restart on a counted reload, the Inn/guard and error-dialog exceptions, the Notoriety cost, the pre-1.25
+  +10 carry-over and the Settings switch.
+- *The first two weeks are eased* and the FAQ "Why do monsters have less life early on?": the Wrath's hunter joins the
+  never-eased list (round 847); the FAQ gains "A monster that already has less keeps its own (a 9-life Geist stays at
+  9)" (P2-7; the main text already had it).
+- *Gauntlet dungeons* (new paragraph in Dungeons That Actually Rotate, P3-10): 18 gauntlets, three Apprentices then two
+  Adepts then one Master with a gate after each rank, the chest behind the Master's gate, ranks never upgraded, one of
+  four or five themed groups per appearance never repeated, a loss keeps it with the beaten enemies beaten, cleared when
+  every enemy is down. The three "a loss makes it vanish" lines (rotation, defeat costs, the FAQ) name the gauntlet
+  exception.
+- *The Wrath*: the +25% bounty only in the duels the Temple counts (not the Arena or an Inn); a color with no castle
+  standing sends no hunter (P3-10).
+- *Custom Difficulty*: the full list of what is locked mid-game (the 23 new-game knobs, in groups; P3-10); round
+  841's "Reset all puts the difficulty back on its preset; your Rules ... stay as they are"; "A game started before
+  version 1.25 follows your Settings until its next New Game+" (P3-10, `CustomDifficulty.rule` without `rulesPerSave`).
+- *New Game+*: round 842's "Your quest items stay behind, the runes included, and the new run's Homeward rune goes
+  straight on when you get it."
+- FAQ *A duel is stuck in a loop - what do I do?* (new, before the Valakut entry): round 840's suggested text.
+
+**Discord FAQ** (`dev-tools/discord_faq/messages.py`; `EDITED = {3, 6, 7, 9, 20, 23}`; `build_page.py` passes, the
+longest message 1,981):
+- 7 (1,573 -> 1,797): the Notoriety deck card - 50 / 45 / 40, 5 sooner at 95%+, never Easy or the Arena.
+- 9 (1,889 -> 1,965): the reload answer in the user's words, plus the Notoriety cost and the Settings switch (the old
+  "+10" text was v1.24's); "a gauntlet stays" after a dungeon loss.
+- 20 (1,676 -> 1,923): gauntlets never vanish on a loss, and a two-sentence Gauntlets line.
+- 23 (1,572 -> 1,770): round 840's draw rule and when the AI takes Offer Draw.
+
+**Left out:** a What's New in 1.25 section (release work). Files: `plane/GUIDE.md`, `plane/GUIDE.html`, `dev-tools/discord_faq/messages.py`. No code, no stock file.
+
 ## Round 843: a shop card never costs less than it sells for + 1 (2026-10-29)
 
 Fable review P3-2 (the round 833 clamp audit's known exploit (a)); the user approved the floor: "Yes, all as

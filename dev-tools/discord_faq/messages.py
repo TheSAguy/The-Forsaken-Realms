@@ -6,7 +6,8 @@ FAQ_VERSION = "v1.24"
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-EDITED = {3, 6}  # round 790: Far Sight is +1 tile of sight per pick; round 837: the early-life floor
+EDITED = {3, 6, 7, 9, 20, 23}  # round 790: Far Sight is +1 tile of sight per pick; round 837: the early-life floor;
+# round 848: the Notoriety deck card (7), the reload rule and a gauntlet loss (9), gauntlets (20), the loop draw (23)
 ADDED = set()
 
 M = []
@@ -121,7 +122,7 @@ New in v1.24, in all three ranks: the Torchhead Stallion, Flamecrest Serpent, As
 
 M.append(("Enemies that adapt to you", "Adapting enemies", r"""**Q: Why are the enemies getting tougher (or easier)?**
 **A:** On top of the weeks, the land's color and the fog, your own record shapes what you meet:
-- **Notoriety:** a score, +1 for every duel you win and -5 for every loss (never below 0). From 5, enemies start with a **Wall** in play (a 0/1 that grows to a 3/6 by 20, then a second one from 25). Which enemies bring one depends on the difficulty: Archmages on Easy, everyone on Insane. At 45 and 50 every enemy gets another flying Wall and +25% / +50% life. Notoriety also tilts roaming ranks toward Masters and Archmages, and steps up new dungeons' creatures. A loss takes it all down one step, not back to nothing. **Settings > Disable Notoriety** switches it off (the score still counts, so switching it back on brings your level back).
+- **Notoriety:** a score, +1 for every duel you win and -5 for every loss (never below 0). From 5, enemies start with a **Wall** in play (a 0/1 that grows to a 3/6 by 20, then a second one from 25). Which enemies bring one depends on the difficulty: Archmages on Easy, everyone on Insane. At 45 and 50 every enemy gets another flying Wall and +25% / +50% life. Notoriety also tilts roaming ranks toward Masters and Archmages, and steps up new dungeons' creatures. From notoriety 50 on Normal (45 on Hard, 40 on Insane, and 5 sooner while you've won 95%+ of your last 50 duels) every enemy also starts with one 1-3 cost permanent from its own deck in play - never on Easy or in the Arena. A loss takes it all down one step, not back to nothing. **Settings > Disable Notoriety** switches it off (the score still counts, so switching it back on brings your level back).
 - **Win ratio:** your last 50 duels. Once 25 are on record, a strong ratio (80%+ won) shifts the roaming ranks tougher and a weak one (20% or less) easier - up to 5 points, or 10 once 50 are on record. One loss doesn't wipe it.
 - **Help tokens:** once 50 duels are on record, the enemy starts with a Clue if you've won 75-89%, a Treasure at 90-94%, and both at 95%+. Win 50% or fewer and **you** get a Treasure (plus a Clue at 25% or less). Each card says why it's there.
 - **Enemies learn your tricks:** beat the same enemy 5 times in a row (4 on Hard, 3 on Insane) and it starts with a Wastes in play - up to three - until it beats you once. Easy is spared.
@@ -166,10 +167,10 @@ M.append(("Losing (and winning)", "Losing & winning", r"""**Losing (and winning)
 - **Life:** 10% / 20% / 30% / 30% of your max life.
 - **Your ante** (a Bronze Coin gets it back - see Challenge Coins).
 - **An item:** losing to a boss, or running out of life, cracks one item you wear. Repair it to wear it again (the Mender perk can save it, Mechanic makes repairs cheap).
-If your life hits 0 you're carried home: to your Capitol, or to Orazca before it stands. Losing inside a rotating dungeon usually makes it vanish. The Stubborn perk cuts the gold and life a loss costs.
+If your life hits 0 you're carried home: to your Capitol, or to Orazca before it stands. Losing inside a rotating dungeon usually makes it vanish (a gauntlet stays). The Stubborn perk cuts the gold and life a loss costs.
 
 **Q: Can I just reload after a loss?**
-**A:** You can, but the realm notices: the Notices log teases you, and on Hard and Insane each reload after a lost duel gives that world's enemies +1 life (up to +10). Quitting the game mid-duel counts as a loss and a reload. Lose to the same foe 5 times and the game suggests an easier difficulty; win 50 in a row and it suggests a harder one (for your next game or New Game+)."""))
+**A:** You can, but the realm notices. On Hard and Insane, each cheat (reloading after a loss, or quitting mid-duel) gives enemies +1 life, up to +25. Every 3 losses you take honestly removes one. Arena losses never count. Each cheat also costs the loss's Notoriety; **Settings** can switch it all off. Lose to one foe 5 times and the game suggests an easier difficulty; win 50 in a row, a harder one (for your next game or New Game+)."""))
 
 M.append(("Your towns under attack: raids and war mages", "Raids & mages", r"""**Your towns under attack**
 
@@ -382,9 +383,10 @@ M.append(("Dungeons, fog and the History replay", "Dungeons & map", r"""**Dungeo
 **Q: Why did a dungeon disappear from my map?**
 **A:** Dungeons and caves rotate. Each one lasts 20-40 in-game days, then vanishes, and a new one opens somewhere else. One also leaves early when:
 - you clear it out - every enemy and every pickup, on every floor,
-- you lose a duel inside it (a side-quest target gives you 3 tries and 30 extra days; story locations never vanish),
+- you lose a duel inside it (a side-quest target gives you 3 tries and 30 extra days; story locations and gauntlets never vanish),
 - you take its loot while its enemies still stand: then it keeps only a quarter of its remaining days.
 Boss lairs are different: they only leave once cleared, and come back 10-30 days later, restocked. Return visits pay half, and a +Life reward or a boss's own signature item only pays once.
+**Gauntlets** (18 of them) are three Apprentices, two Adepts and a Master in a row, with a gate after each rank. A loss keeps the gauntlet on the map with the enemies you beat still beaten, and it's cleared once every enemy is down.
 
 **Q: Why is most of the map black?**
 **A:** That's Fog of War (on by default; Settings can turn it off). Black = never explored, dimmed = explored but out of sight, bright = what you can see right now. Creatures and resource pickups only show in the bright. Your own land and towns stay lit, and an Outlook widens a town's view (x2, or x3 in your Capitol). A Torch in your utility slot widens your sight, and a Bonfire clears the fog around the spot where you build it.
@@ -442,7 +444,7 @@ M.append(("Achievements, enemy plates, loops and duel settings", "Achievements &
 **A:** Hold **Alt** (touch: the Units button; controller: R3). A plate over every enemy on screen shows its rank. Fought another rank of its kind? You see its deck colors too. Fought this exact rank? Also the life it would start with now, in orange when it's above normal.
 
 **Q: My duel is stuck in an endless loop. What now?**
-**A:** The AI can't repeat the same ability more than 25 times in a turn, and a trigger that comes back 25 times with nobody acting ends the game in a draw. After 10 repeats the AI accepts the duel menu's **Offer Draw**. A draw is nothing won or lost: no ante, no gold, no notoriety.
+**A:** The AI can't repeat the same ability more than 25 times in a turn, and a trigger that comes back 25 times with nobody acting and nobody losing life ends the game in a draw. A combo that drains or burns runs to the end. The AI accepts the duel menu's **Offer Draw** while a trigger loop is running (10+ repeats) or once it has had to stop repeating one of its own abilities that turn - never in an ordinary duel. A draw is nothing won or lost: no ante, no gold, no notoriety.
 
 **Q: Which duel settings are worth knowing?**
 - **Show land drops in duels** (off by default): lands played this turn out of lands allowed, under each player's counts.

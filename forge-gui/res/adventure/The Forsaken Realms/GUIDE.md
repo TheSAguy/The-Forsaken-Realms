@@ -739,8 +739,9 @@ more on Insane) that turns your victories into cards.
   and 8 Commons. It's offered only once your Capitol has a Temple.
 - **Wrath.** When a week ends with a Temple in your Capitol, the color you defeated most is hunted the next week: its
   land sends foes a rank bracket stronger (not on Easy), and its foes - any enemy with that color - pay +25% gold and
-  shards. A notice names the hunted color. Destroying the Temple ends the hunt.
-- **The Wrath of a color.** On Normal and up, the hunted color also sends one mage after you from its castle: a Master,
+  shards in the duels the Temple counts (not the Arena or an Inn). A notice names the hunted color. Destroying the Temple ends the hunt.
+- **The Wrath of a color.** On Normal and up, the hunted color also sends one mage after you from its castle (a color
+  with no castle standing sends none): a Master,
   an Archmage from week 7 (week 4 on Hard and Insane). It walks around water and mountains at your speed plus 5% (set
   when it leaves; roads and lands speed it up or slow it down as they do you), moves only while your time runs, and
   waits a few steps outside any town or dungeon you enter. "WRATH OF RED" floats over it, the days left with Alt, and it
@@ -770,7 +771,7 @@ in [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).*
 ### Dungeons That Actually Rotate
 
 Dungeons and caves aren't fixed forever. Every visible one has a lifespan - 20 to 40 days - after
-which it despawns on its own (at once if you lose a fight there and it isn't a story target), and a
+which it despawns on its own (at once if you lose a fight there, unless it's a story target or a gauntlet), and a
 fresh one appears elsewhere to take its place, drawn from a much larger reserve pool than what's
 ever visible at once. Clearing a dungeon out completely also retires it, making room for something
 new - completely means every enemy and every pickup, on every floor of a dungeon with stairs. Beat
@@ -808,6 +809,15 @@ coin flip - though a key you need to get deeper in always drops.
 inside it, so neither a lost duel nor the passing days remove one. Clear one completely - every enemy
 and every pickup, on every floor - and walk out, and it leaves like a boss lair, coming back 10 to 30
 days later restocked, on a lair's return-visit rewards.
+
+**Gauntlet dungeons.** Eighteen dungeons are gauntlets - the Dawn Cathedral, the Bone Orchard, the Drowned Library,
+the Kiln Foundry and fourteen more, in every color's land and the colorless. Inside, three Apprentices, then two Adepts,
+then one Master wait in a row, with a gate after each rank that opens only once the whole rank is beaten; the gate
+after the Master keeps the chest.
+Their ranks are as built: your win streak and the week never upgrade them. Each time a gauntlet appears it brings one
+of four or five themed groups, never the same one twice running. Losing inside one doesn't make it vanish: the enemies
+you beat stay beaten, and you can come back for the rest while its days last. It counts as cleared only once every
+enemy in it is down.
 
 **Valor's Reach Arena** runs in seasons. Beat all seven of its contenders - the six duos in the ring
 and the champion behind the WINNERS ONLY gate - and walk out with nothing left on the floor, and the
@@ -1252,17 +1262,17 @@ there is no minimum: a loss takes only the share. (The share takes over above 2,
 Normal, 1,500 on Hard and about 1,330 on Insane. Gold in the Bank is safe.) Life: 10% of your max life on Easy, 20% on Normal, 30% on Hard and Insane.
 And your ante. Handing over a Bronze Coin on the "Card Lost" screen saves your gold and your anted
 cards (the life loss still applies). If your life runs out you're carried home: to your Capitol, or to
-Orazca before it stands. Losing inside a rotating dungeon usually makes that dungeon vanish. Lose to a boss, or run
+Orazca before it stands. Losing inside a rotating dungeon usually makes that dungeon vanish (a gauntlet stays). Lose to a boss, or run
 out of life, and one item you wear cracks too (see [Equipment Slots](#equipment-slots)); the Stubborn perk cuts the
 gold and life a defeat costs.
 
 **Reloading after a loss.** The realm notices when you load a save from before a duel you lost, or close the
-game in the middle of a live duel: your notice log teases you from the fifth time on, and on Hard and Insane every
-such reload gives that world's enemies +1 life, up to +25 (Inn tournaments and your guards' fights excepted). A
-counted reload or mid-duel quit also costs the Notoriety the loss did (see
-[Enemies That Adapt to You](#enemies-that-adapt-to-you)).
-Take three losses in a row without reloading - moving on to another duel, or letting a day pass - and enemies lose
-1 of that bonus life; a counted reload starts those three over. Arena duels never count, lost or left. Closing the game after an error message in a duel never counts either. A world that
+game in the middle of a live duel, and your notice log teases you from the fifth time on. On Hard and Insane, each
+cheat (reloading after a loss, or quitting mid-duel) gives enemies +1 life, up to +25. Every 3 losses you take
+honestly removes one. Arena losses never count. Taking a loss honestly means moving on to another duel or letting a
+day pass instead of reloading; a counted reload starts those three over. Inn tournaments and your guards' fights never
+add life, and closing the game after an error message in a duel never counts. A counted reload or mid-duel quit also
+costs the Notoriety the loss did (see [Enemies That Adapt to You](#enemies-that-adapt-to-you)). A world that
 was past +10 before version 1.25 keeps +10 and grows from there. The setting **I won't cheat by loading after a
 loss** (checked by default) is the switch: uncheck it and none of this happens - no counting, no extra life, no
 Notoriety cost and no notices - and checking it again picks up where your counts left off.
@@ -1279,8 +1289,8 @@ and Inn tournaments - so an Archmage on a streak starts with two.
 
 **The first two weeks are eased.** In week 1 (days 1-7) a monster starts its duel with half its life,
 but never fewer than 20; in week 2 (days 8-14) with three quarters, never fewer than 25. A monster that
-already has less keeps what it has. Bosses, legends, Arena and Inn fights, war mages and your guards'
-fights are never eased, and neither is New Game+. A dungeon you've been inside also sends out its
+already has less keeps what it has. Bosses, legends, Arena and Inn fights, war mages, the Wrath's hunter and your
+guards' fights are never eased, and neither is New Game+. A dungeon you've been inside also sends out its
 stronger inhabitants only as the weeks go by.
 
 Difficulty also scales what a win pays in gold and resources (half again as much on Easy, a quarter more on
@@ -1299,8 +1309,10 @@ Expert, and "Changed only" help you find a setting; tap a setting's name to read
 plays as **Custom (Hard)** (or whichever difficulty you based it on).
 
 **During a run**, Settings > Difficulty > **Edit...** opens the same panel on your game. Most settings change at once
-when you press Done; the few that shape a new world (starting life and gold, fewer neutral towns, town specialties,
-realm milestones) are locked until your next game.
+when you press Done; the ones that shape a new world are locked until your next game - the starting kit, the Wrath of
+the Temple, Level cost, the day-one mages, the Center Towns that end a run, the neutral and ruined towns, pillage raids,
+town specialties, realm milestones, the side-quest time limit and the New Game+ wave. **Reset all** puts the
+difficulty back on its preset; your Rules (Disable Notoriety, leveling, the reload switch) stay as they are.
 
 The numbers elsewhere in this guide are the presets' own; a custom game plays by its settings instead.
 
@@ -1309,6 +1321,7 @@ the panel on them for the new run, every setting open. Changes apply to the new 
 
 **Rules.** Disable Notoriety, Ascendance leveling and "I won't cheat by loading after a loss" are kept per game: a new
 game starts with your Settings, and changing one during a run changes that game only. They never make a game Custom.
+A game started before version 1.25 follows your Settings until its next New Game+.
 
 **Share codes.** **Share code** in the panel turns your setup into a code such as `TFR1-Hard-Ky5JLCrJ...`. **Copy** puts
 it on the clipboard for Discord; **Paste code** reads one from the clipboard. A pasted value past a setting's limits is
@@ -1908,6 +1921,8 @@ Bronze - whatever you carried. Your **roaming guards are released**: each one's 
 slot and its gear into your Armory's storage. The one thing that doesn't come back is the Jumpstart
 tournament: that's once per player.
 
+Your quest items stay behind, the runes included, and the new run's Homeward rune goes straight on when you get it.
+
 Things worth knowing before you press it: your **max life returns to the difficulty's starting value**
 (accumulated bonuses, Ascendance's included, are not carried), an **in-progress tournament is discarded**, including cards
 you've drafted but not yet banked, and the first two weeks' [eased monsters](#notes-on-difficulty) don't
@@ -2053,14 +2068,14 @@ creatures come as usual wherever you are. See [Where the Monsters Come From](#wh
 ### Why did a dungeon disappear from my map?
 
 Dungeons and caves rotate: each lasts 20-40 days, and one leaves early when you clear it (every
-floor, enemies and loot), lose a duel inside it, or strip its loot while its enemies still stand. Boss lairs leave only once cleared and come
+floor, enemies and loot), lose a duel inside it (not a gauntlet), or strip its loot while its enemies still stand. Boss lairs leave only once cleared and come
 back restocked 10-30 days later. See [Dungeons That Actually Rotate](#dungeons-that-actually-rotate).
 
 ### Why do monsters have less life early on?
 
 The realm eases you in: in days 1-7 a monster starts its duel with half its life (never under 20), in days
-8-14 with three quarters (never under 25). Bosses, legends, Arena and Inn fights, war mages and New Game+
-are never eased. See [Notes on Difficulty](#notes-on-difficulty).
+8-14 with three quarters (never under 25). A monster that already has less keeps its own (a 9-life Geist stays at 9).
+Bosses, legends, Arena and Inn fights, war mages, the Wrath's hunter and New Game+ are never eased. See [Notes on Difficulty](#notes-on-difficulty).
 
 ### Does Speed-Up change how many monsters I meet?
 
@@ -2133,6 +2148,13 @@ it's -2 reputation. A roaming guard with "Help with pillaged towns" ticked rides
 
 The weeks, your standing with the land's color, the dark, your notoriety and - from 25 duels on - your win ratio over
 your last 50 duels all shift the ranks you meet. See [Enemies That Adapt to You](#enemies-that-adapt-to-you).
+
+### A duel is stuck in a loop - what do I do?
+
+If a trigger keeps coming back 25 times with nobody acting and nobody losing life, the duel ends in a draw - nothing
+won or lost. A combo that drains or burns runs to the end. You can also open the duel menu > **Offer Draw**: the enemy
+accepts while a trigger loop is running (10 or more repeats) or once it has had to stop repeating one of its own
+abilities this turn - never in an ordinary duel.
 
 ### Do I have to click Yes for every Valakut trigger?
 
