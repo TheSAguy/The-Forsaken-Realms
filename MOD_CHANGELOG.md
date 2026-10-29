@@ -14283,6 +14283,10 @@ committed, packaged into the user's game (2026-10-29 12:00, HEAD `460301d3662`) 
   engine line names the 10.28 build; the footer says v1.25, 2026-10-29. `GUIDE.html` rebuilt with
   `dev-tools/guide_html.py --check` (OK).
 - **Docs**: `docs/tfr/releases.md` gets the v1.25 block; the NOW block is rewritten short.
+- **Published** 2026-10-29 19:12:40 UTC: tag `tfr-v1.25` @ `8eeb5b7f5b8`, Latest, with the Windows zip (484.0 MB), the
+  APK (15.7 MB, versionCode 12500, signer EE:60:39:25) and `assets.zip` (434.1 MB, build.txt pair 19:07:41); round
+  792's download prompts still fit. Live packaged from the release commit at 12:07, agent synced. The Discord FAQ says
+  v1.25 (`c861d34054b`). Ledger: `docs/tfr/releases.md`.
 
 ## Round 864: a dialog gate can no longer be walked through by bumping it (2026-10-29)
 

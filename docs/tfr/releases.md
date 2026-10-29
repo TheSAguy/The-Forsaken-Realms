@@ -81,8 +81,19 @@ What's New 1.24 is a short linked list above a one-line 1.23 note and 1.22's lis
 from git (tree and the unpushed history) before the push. The same zip and APK go to itch.io (the user). Live = the
 release. NOTHING is unreleased. Next version: 1.25 / 12500. Next merge from upstream after `0dc8c66996e`.
 
-## STATE 2026-10-29: **v1.25 "Gauntlets & Wrath" - releasing**. Rounds 788-864 on top of v1.24, all packaged into the
-user's game (2026-10-29 12:00, HEAD `460301d3662`) and tested. Engine = the 10.28 daily (upstream `875333b7b78`, round
-856) on the matching 10.28 BASE_INSTALL. Notes = `RELEASE_NOTES_v1.25.md`, the user-approved content plus v1.24's
-Android section; the name is the user's. GUIDE What's New 1.25 is a short linked list above 1.24's. Assets, tag and
-publish time: the follow-up.
+## STATE 2026-10-29 (19:12 UTC): **v1.25 "Gauntlets & Wrath" RELEASED** - tag `tfr-v1.25` @ `8eeb5b7f5b8`, published
+19:12:40 UTC, Latest. Rounds 788-864 on top of v1.24, all packaged into the user's game (2026-10-29 12:00, HEAD
+`460301d3662`) and tested; the release commit takes no round number (next free stays 865). Engine = the 10.28 daily
+(upstream `875333b7b78`, round 856) on the matching 10.28 BASE_INSTALL. Revert-watch after the merge clean (nothing
+under `forge-gui-android/` changed since v1.24). Assets in `C:\CLAUDE\PROJECTS\TFR1\release\v1.25`:
+- `The-Forsaken-Realms-v1.25.zip` 484.0 MB;
+- `forsaken-realms-1.25-signed-aligned.apk` 15.7 MB (com.thesaguy.forsakenrealms, versionCode 12500, signer EE:60:39:25);
+- `assets.zip` 434.1 MB (build.txt pair 2026-10-29 19:07:41; Android from `C:\TFR-build` via R:, fast-forwarded to the
+  release commit; carries `log_share.txt`). Round 792's prompts ("430MB" / "16MB") still fit, so unchanged.
+
+Notes = `RELEASE_NOTES_v1.25.md`, the user-approved content plus v1.24's Android section; the name is the user's. GUIDE
+What's New 1.25 is a short linked list above 1.24's. The Discord FAQ says v1.25 (`c861d34054b`; paste list
+`notes/faq-1.25-edits.md`). The webhook token was checked absent from git (tree and the unpushed history) before the
+push. Live = the release (package 2026-10-29 12:07, from the release commit), agent synced 12:10. The same zip and APK
+go to itch.io (the Art thread). NOTHING is unreleased. Next version: 1.26 / 12600. Next merge from upstream after
+`875333b7b78`.

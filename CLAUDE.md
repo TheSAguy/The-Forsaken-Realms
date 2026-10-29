@@ -6,10 +6,10 @@ every round built. If you find something missing, fix the docs rather than going
 
 ## NOW (rewrite this block each round; never append a new one)
 
-**v1.25 "Gauntlets & Wrath" is the latest release** (tag `tfr-v1.25`, published 2026-10-29; rounds 788-864 on top of
-v1.24; assets, notes and the tag commit in `docs/tfr/releases.md`; the round detail in `MOD_CHANGELOG.md`). `modVersion`
-1.25 / `modVersionDate` 10.29, Android `tfr.version` 1.25 / versionCode 12500, `RELEASE_NOTES_v1.25.md`, GUIDE's What's
-New in 1.25. NOTHING is unreleased. Engine = the 10.28 daily (round 856, upstream `875333b7b78`; round 769's R1-R4 still
+**v1.25 "Gauntlets & Wrath" is the latest release** (tag `tfr-v1.25` @ `8eeb5b7f5b8`, published 2026-10-29 19:12
+UTC; rounds 788-864 on top of v1.24; assets, notes and the tag commit in `docs/tfr/releases.md`; the round detail in
+`MOD_CHANGELOG.md`). `modVersion` 1.25 / `modVersionDate` 10.29, Android `tfr.version` 1.25 / versionCode 12500,
+`RELEASE_NOTES_v1.25.md`, GUIDE's What's New in 1.25. NOTHING is unreleased. Engine = the 10.28 daily (round 856, upstream `875333b7b78`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `875333b7b78`; BASE_INSTALL is that daily, so packages need no
 `--allow-base-mismatch`. Next version: 1.26 / 12600. Next free round: 865. The agent profile's window is
