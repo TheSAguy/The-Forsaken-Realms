@@ -344,7 +344,7 @@ public class RoamingGuardUI {
         Dialog dialog = new Dialog(RoamingGuards.displayName(guard.tier), Controls.getSkin());
         EconomyBuildings.addContentRow(dialog, describe(guard, day));
         if (guard.isOutOfCommission(day))
-            EconomyBuildings.addContentRow(dialog, "[%90][RED]Dismissing now forfeits the deck.[] Wait "
+            EconomyBuildings.addContentRow(dialog, "[%90][RED]Dismissing now forfeits the deck.[WHITE] Wait " // round 869: [] dropped the [%90]
                     + (guard.downUntilDay - day) + " day(s) free, or heal below.");
         // Round 148 (user spec + mock-up: "I think we need to re-work the Mage Attack orders, I
         // want to add Color as an option... let's make it check-boxes"). Checkboxes rather than the

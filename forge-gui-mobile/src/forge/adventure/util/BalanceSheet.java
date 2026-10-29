@@ -132,7 +132,7 @@ public class BalanceSheet {
         EconomyBuildings.addContentRow(dialog, "[%90]Mines: " + amounts(income(lastWeek, Bucket.MINES)));
         EconomyBuildings.addContentRow(dialog, "[%90]Bank interest: " + amounts(income(lastWeek, Bucket.INTEREST)));
         EconomyBuildings.addContentRow(dialog, "[%90]Everything else: " + amounts(income(lastWeek, Bucket.OTHER)));
-        EconomyBuildings.addContentRow(dialog, "[%90][GREEN]Total in:[] " + amounts(total(lastWeek, true)));
+        EconomyBuildings.addContentRow(dialog, "[%90][GREEN]Total in:[WHITE] " + amounts(total(lastWeek, true)));
 
         EconomyBuildings.addContentRow(dialog, "[%100]Expenses[%]");
         EconomyBuildings.addContentRow(dialog, "[%90]Local guards: " + amounts(expense(lastWeek, Bucket.GUARD_LOCAL)));
@@ -140,7 +140,7 @@ public class BalanceSheet {
             EconomyBuildings.addContentRow(dialog, "[%90]Roaming guards: "
                     + amounts(expense(lastWeek, Bucket.GUARD_ROAMING)));
         EconomyBuildings.addContentRow(dialog, "[%90]Everything else: " + amounts(expense(lastWeek, Bucket.OTHER)));
-        EconomyBuildings.addContentRow(dialog, "[%90][RED]Total out:[] " + amounts(total(lastWeek, false)));
+        EconomyBuildings.addContentRow(dialog, "[%90][RED]Total out:[WHITE] " + amounts(total(lastWeek, false)));
 
         EconomyBuildings.addContentRow(dialog, "[%100]Net: " + signed(net(lastWeek)) + "[%]");
 
@@ -161,12 +161,11 @@ public class BalanceSheet {
         // Round 868: the days to payday, not its absolute day number (the player sees weeks and days left).
         int toPayday = nextPayday - WorldSave.getCurrentSave().getWorld().getCurrentDay();
         EconomyBuildings.addContentRow(dialog, "[%90]Payday " + (toPayday == 1 ? "tomorrow" : "in " + toPayday + " days")
-                + ": mines [GREEN]+"
-                + next.goldIn + "[+Gold][]"
-                + (next.interestIn > 0 ? ", interest [GREEN]+" + next.interestIn + "[+Gold][]" : "")
-                + (tithe > 0 ? ", tithe [GREEN]+" + tithe + "[+Gold][]" : "")
-                + ", wages [RED]-" + next.goldOut() + "[+Gold]"
-                + (next.shardsOut() > 0 ? " -" + next.shardsOut() + "[+Shards]" : "") + "[]");
+                + ": mines " + figure(next.goldIn, "[+Gold]")
+                + (next.interestIn > 0 ? ", interest " + figure(next.interestIn, "[+Gold]") : "")
+                + (tithe > 0 ? ", tithe " + figure(tithe, "[+Gold]") : "")
+                + ", wages " + figure(-next.goldOut(), "[+Gold]")
+                + (next.shardsOut() > 0 ? " " + figure(-next.shardsOut(), "[+Shards]") : ""));
 
         EconomyBuildings.addContentRow(dialog, "[%90]On hand: " + player.getGold() + "[+Gold]  "
                 + player.getShards() + "[+Shards]  " + player.getWood() + "[+Wood]  "
@@ -226,9 +225,18 @@ public class BalanceSheet {
                 continue;
             if (sb.length() > 0)
                 sb.append("  ");
-            sb.append(values[r] > 0 ? "[GREEN]+" : "[RED]").append(values[r])
-                    .append(ResourceLedger.GLYPH[r]).append("[]");
+            sb.append(figure(values[r], ResourceLedger.GLYPH[r]));
         }
         return sb.length() == 0 ? "-" : sb.toString();
+    }
+
+    /** Round 869 (the user: "I see some green and red text that should not be that way"): only the number takes the
+     *  green or red; [WHITE] before the glyph keeps the icon in its own colors (a color tag tints inline glyphs) and
+     *  leaves the rest of the row white. No [] reset: here a [] also drops the row's [%90], so the text after it drew
+     *  full size. A zero reads plain "0", no sign. */
+    private static String figure(int value, String glyph) {
+        if (value == 0)
+            return "0" + glyph;
+        return (value > 0 ? "[GREEN]+" : "[RED]") + value + "[WHITE]" + glyph;
     }
 }

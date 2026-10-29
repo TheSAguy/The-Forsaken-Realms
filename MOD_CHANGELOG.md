@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 869: the Balance Sheet's icons keep their own colors, and the payday line stays one size (2026-10-29)
+
+The user: "I see some green and red text that should not be that way. I think this was on the balance sheet." Files:
+`util/BalanceSheet.java`, `util/RoamingGuardUI.java` (both TFR files; no stock file touched).
+
+- **Why:** two markup gotchas. A color tag tints the inline resource glyphs after it, so `[GREEN]+124[+Gold][]` drew a
+  solid green coin (round 865 met the same thing on the raid page). And in this TextraTypist a `[]` does not just close
+  the color: it drops the row's `[%90]` too, so whatever followed it drew full size (round 774 noted ", tithe" and
+  ", wages" printing larger than "mines" and left it).
+- **The fix:** one helper, `BalanceSheet.figure(value, glyph)`: only the number takes the color (`[GREEN]+N` /
+  `[RED]-N`), then `[WHITE]` before the glyph, so the icon keeps its own colors and the rest of the row reads white. No
+  `[]` anywhere on the sheet any more. A zero reads plain `0` with no sign ("mines 0 [gold], wages 0 [gold]" instead of
+  a green "+0" and a red "-0").
+- **Places fixed:**
+  - Balance Sheet, Net row: `signed()` now goes through `figure()` (icons were tinted green or red).
+  - Balance Sheet, payday line: mines, interest, tithe, wages and the shard wages through `figure()` (tinted icons;
+    ", wages" and on drew at 100%; "+0"/"-0").
+  - Balance Sheet, "Total in:" / "Total out:": the label's `[GREEN]`/`[RED]` is closed with `[WHITE]` instead of `[]`,
+    so the figures after it stay at 90% (they drew at 100%, larger than every other row). The green and red labels
+    themselves are as designed and stay.
+  - Roaming guard info, "[RED]Dismissing now forfeits the deck.[] Wait N day(s) free...": `[]` -> `[WHITE]`, so the
+    rest of the sentence keeps the row's `[%90]`.
+- **Audited and left alone** (every `[+Gold]`/`[+Shards]`/`[+Wood]`/`[+Stone]`/`[+Life]` use in `forge-gui-mobile`,
+  and every `[]` inside a string): the notices (`AdventurePlayer`, `SaveLoadScene`, `TownRestoration`, `WorldStage`,
+  `TreasureHunt`, `MapDialog`, `WrathHunt`, `TreasureMapScene`, `QuestLogScene`'s raid page) already frame each glyph
+  with `[WHITE]...[BLACK]`, and GameHUD wraps glyph-only notices itself (round 367); `ResearchScene` uses
+  `[#ffffffff]`; `EventScene`, `PlayerStatisticScene`, `GameHUD`'s shard button and `TfrPlates` put the glyph before
+  any color; the stock `AdventureEventData` entry fee uses `[][+Gold]` with no scale on the line;
+  `WorldStandingsScene`, `ResourceLedger`, `ResourcePurse` and the `EconomyBuildings` cost labels color nothing next to
+  a glyph. The other mid-line `[]` resets (`AscendanceUI`, `Ascendance`'s reward buttons, `GameHUD`'s Notices title,
+  `RoamingGuardUI`'s deck warnings, `WorldStage`, `TerritoryControl`) sit on rows with no `[%NN]` before them, or set
+  the scale again right after.
+- **Agent-tested** in `agent-869` (wt-869's classes ahead of the agent jar, cheats, a new game, then `give gold 300`,
+  `give shards 19`, `give wood 112`, `give stone 105`, `give gold -126`; Info > Balance at 1280x720): before, the Net
+  icons were solid green, "mines +0" green with a green coin, ", wages -0" larger and red with a red coin, Total in/out
+  figures at full size; after, every icon in its own colors, the Net numbers green, the payday line one size reading
+  "mines 0 [gold], wages 0 [gold]", and with `guard add` (a Master guard) "wages -100 [gold] -5 [shard]" with red
+  numbers and untinted icons. Shots: `C:\CLAUDE\PROJECTS\TFR1\notes\r869\` (`before_balance_sheet.png`,
+  `after_balance_sheet.png`, `after_balance_sheet_wages.png`). The roaming guard line was not reached live (it needs a
+  guard out of commission); it is the same one-tag change. Maven package exit 0.
+
 ## Round 868: deadlines say how many days are left, never the absolute day (2026-10-29)
 
 The user, on round 865's raid page ("Time: 7 days left (until day 8)"): "Let's remove that "Till day x " comment. The

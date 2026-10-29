@@ -9,10 +9,10 @@ every round built. If you find something missing, fix the docs rather than going
 **v1.25 "Gauntlets & Wrath" is the latest release** (tag `tfr-v1.25` @ `8eeb5b7f5b8`, published 2026-10-29 19:12
 UTC; rounds 788-864 on top of v1.24; assets, notes and the tag commit in `docs/tfr/releases.md`; the round detail in
 `MOD_CHANGELOG.md`). `modVersion` 1.25 / `modVersionDate` 10.29, Android `tfr.version` 1.25 / versionCode 12500,
-`RELEASE_NOTES_v1.25.md`, GUIDE's What's New in 1.25. Unreleased toward 1.26: round 865 (a raid's Details page in the quest log: a mini-map of the town and Show on Map), round 866 (raiders' Alt plates say "RAIDER - <town>"), round 867 (the golden Capitol's Research Lab, Trader and Arenas) and round 868 (deadlines and day labels never show the absolute day: "N days left", "next week", the week). Engine = the 10.28 daily (round 856, upstream `875333b7b78`; round 769's R1-R4 still
+`RELEASE_NOTES_v1.25.md`, GUIDE's What's New in 1.25. Unreleased toward 1.26: round 865 (a raid's Details page in the quest log: a mini-map of the town and Show on Map), round 866 (raiders' Alt plates say "RAIDER - <town>"), round 867 (the golden Capitol's Research Lab, Trader and Arenas), round 868 (deadlines and day labels never show the absolute day: "N days left", "next week", the week) and round 869 (the Balance Sheet's icons keep their own colors and its rows one size; zeros read "0"). Engine = the 10.28 daily (round 856, upstream `875333b7b78`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `875333b7b78`; BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.26 / 12600. Next free round: 869. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.26 / 12600. Next free round: 870. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and
