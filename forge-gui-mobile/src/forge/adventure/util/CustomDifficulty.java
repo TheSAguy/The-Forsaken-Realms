@@ -74,16 +74,31 @@ public final class CustomDifficulty {
         }
     }
 
-    /** A resolved target: a field, and an array index (-1 = the field itself, ALL = every entry). */
+    /** A resolved target: its source ("tuning", "difficulty", "rule"), a field, and an array index (-1 = the field
+     *  itself, ALL = every entry). */
     private static final class Target {
+        final String source;
         final boolean tuning;
         final Field field;
         final int index;
 
-        Target(boolean tuning, Field field, int index) {
-            this.tuning = tuning;
+        Target(String source, Field field, int index) {
+            this.source = source;
+            this.tuning = "tuning".equals(source);
             this.field = field;
             this.index = index;
+        }
+
+        boolean difficulty() {
+            return "difficulty".equals(source);
+        }
+
+        boolean rule() {
+            return "rule".equals(source);
+        }
+
+        boolean config() {
+            return "config".equals(source);
         }
     }
 
@@ -214,8 +229,10 @@ public final class CustomDifficulty {
             return out;
         String source = spec.substring(0, dot);
         String name = spec.substring(dot + 1);
-        boolean tuning = "tuning".equals(source);
-        Class<?> cls = tuning ? TuningData.class : "difficulty".equals(source) ? DifficultyData.class : null;
+        // round 825: "rule" - the player's own switches (SettingData), per save - see rule()
+        Class<?> cls = "tuning".equals(source) ? TuningData.class : "difficulty".equals(source) ? DifficultyData.class
+                : "rule".equals(source) ? forge.adventure.data.SettingData.class
+                : "config".equals(source) ? forge.adventure.data.ConfigData.class : null; // round 825: plane flags
         if (cls == null)
             return out;
         DifficultyData[] all = Config.instance().getConfigData().difficulties;
@@ -226,7 +243,7 @@ public final class CustomDifficulty {
                     if (d != null && d.name != null && (presetName == null || d.name.equals(presetName))) {
                         Field f = field(cls, stem + d.name);
                         if (f != null)
-                            out.add(new Target(tuning, f, -1));
+                            out.add(new Target(source, f, -1));
                     }
             return out;
         }
@@ -249,7 +266,7 @@ public final class CustomDifficulty {
         }
         Field f = field(cls, name);
         if (f != null)
-            out.add(new Target(tuning, f, index));
+            out.add(new Target(source, f, index));
         return out;
     }
 
@@ -381,6 +398,31 @@ public final class CustomDifficulty {
     /** The run's TuningData: the plane's own when there are no tuning overrides, else a copy with them on top. */
     public static void applyTuning(Map<String, String> overrides) {
         Config.instance().setEffectiveTuningData(buildTuning(overrides));
+        Config.instance().setEffectiveConfigData(buildConfig(overrides)); // round 825: the config.* knobs
+    }
+
+    /** Round 825: the plane's ConfigData with the config.* overrides on (a field copy, arrays copied), or null when they
+     *  change none. */
+    private static forge.adventure.data.ConfigData buildConfig(Map<String, String> overrides) {
+        forge.adventure.data.ConfigData base = Config.instance().getBaseConfigData();
+        forge.adventure.data.ConfigData effective = null;
+        if (overrides == null || overrides.isEmpty() || base == null)
+            return null;
+        Map<String, Knob> all = knobs();
+        for (Map.Entry<String, String> e : overrides.entrySet()) {
+            Knob k = all.get(e.getKey());
+            if (k == null)
+                continue;
+            for (String spec : k.targets)
+                for (Target t : resolve(spec, null))
+                    if (t.config()) {
+                        if (effective == null)
+                            effective = (forge.adventure.data.ConfigData) copyFields(base, new forge.adventure.data.ConfigData(),
+                                    forge.adventure.data.ConfigData.class);
+                        write(effective, base, t, k, e.getValue());
+                    }
+        }
+        return effective;
     }
 
     /** Round 823: the TuningData these overrides would give, without putting it in place (the new-game "?" dialog). */
@@ -424,7 +466,7 @@ public final class CustomDifficulty {
                 continue;
             for (String spec : k.targets)
                 for (Target t : resolve(spec, null))
-                    if (!t.tuning)
+                    if (t.difficulty())
                         write(d, preset != null ? preset : d, t, k, e.getValue());
         }
     }
@@ -527,7 +569,8 @@ public final class CustomDifficulty {
             return "x1";
         for (String spec : k.targets)
             for (Target t : resolve(spec, presetName)) {
-                Object owner = t.tuning ? Config.instance().getBaseTuningData() : configPreset(presetName);
+                Object owner = t.tuning ? Config.instance().getBaseTuningData() : t.rule() ? DEFAULT_SETTINGS
+                        : t.config() ? Config.instance().getBaseConfigData() : configPreset(presetName);
                 if (owner == null)
                     continue;
                 try {
@@ -538,6 +581,108 @@ public final class CustomDifficulty {
                 }
             }
         return "?";
+    }
+
+    // ---- rules (round 825) --------------------------------------------------------------------------------------
+
+    /** A fresh SettingData's values: what a rule is when nobody switched it (Notoriety on, leveling on, reloads judged). */
+    private static final forge.adventure.data.SettingData DEFAULT_SETTINGS = new forge.adventure.data.SettingData();
+
+    /** The knob whose target is rule.field, or null. */
+    private static Knob ruleKnob(String field) {
+        for (Knob k : knobs().values())
+            for (String spec : k.targets)
+                if (spec.equals("rule." + field))
+                    return k;
+        return null;
+    }
+
+    /** The profile's own switch (Settings, kept in the player profile) - the seed of a new game's rule. */
+    public static boolean profileRule(String field) {
+        forge.adventure.data.SettingData settings = Config.instance().getSettingData();
+        try {
+            return settings != null && settings.getClass().getField(field).getBoolean(settings);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private static boolean defaultRule(String field) {
+        try {
+            return DEFAULT_SETTINGS.getClass().getField(field).getBoolean(DEFAULT_SETTINGS);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Round 825: the running save's own switch for a SettingData rule (notorietyDisabled, ascendanceDisabled,
+     * reloadJabOptOut) - its custom value, else the default - when the save keeps its rules (created or taken into New
+     * Game+ on round 825 or later, {@link AdventurePlayer#hasRulesPerSave}); null for an older save or a plane with no
+     * knob for it, whose reader then uses the profile as before.
+     */
+    public static Boolean rule(String field) {
+        AdventurePlayer p = AdventurePlayer.current();
+        if (p == null || !p.hasRulesPerSave())
+            return null;
+        Knob k = ruleKnob(field);
+        if (k == null)
+            return null;
+        String v = p.getCustomDifficulty().get(k.id);
+        return v != null ? Boolean.parseBoolean(v) : defaultRule(field);
+    }
+
+    /** Round 825: a game is loaded or started (the start menu's own test for its Resume button). */
+    public static boolean gameRunning() {
+        try {
+            return WorldSave.getCurrentSave() != null && WorldSave.getCurrentSave().getWorld() != null
+                    && WorldSave.getCurrentSave().getWorld().getData() != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /** The profile's rules a new save starts with: every rule knob the profile has switched from its default. */
+    private static LinkedHashMap<String, String> ruleSeeds() {
+        LinkedHashMap<String, String> out = new LinkedHashMap<>();
+        for (Knob k : knobs().values())
+            for (String spec : k.targets)
+                if (spec.startsWith("rule.")) {
+                    String field = spec.substring(5);
+                    if (profileRule(field) != defaultRule(field))
+                        out.put(k.id, String.valueOf(profileRule(field)));
+                }
+        return out;
+    }
+
+    /**
+     * Round 825: Settings' switch for a rule while a game runs - the save's own value (an older save starts keeping its
+     * rules here, seeded from the profile first), with round 822's change line. The profile keeps its own copy (the
+     * caller writes it) as the next new game's seed. False when the plane has no knob for it.
+     */
+    public static boolean setRule(AdventurePlayer p, String field, boolean value, String source) {
+        Knob k = ruleKnob(field);
+        if (p == null || k == null)
+            return false;
+        if (!p.hasRulesPerSave()) {
+            for (Map.Entry<String, String> e : ruleSeeds().entrySet())
+                p.getCustomDifficulty().putIfAbsent(e.getKey(), e.getValue());
+            p.setRulesPerSave(true);
+            System.out.println("[TFR-Custom] rules: this save keeps its own rules from now on (seeded from the profile: "
+                    + encode(ruleSeeds()) + ")");
+        }
+        change(p, k.id, value == defaultRule(field) ? null : String.valueOf(value), source);
+        return true;
+    }
+
+    /** Round 825: New Game+ of a save from before per-save rules - it starts keeping them, seeded from the profile. */
+    public static void onNewGamePlus(AdventurePlayer p) {
+        if (p == null || p.hasRulesPerSave())
+            return;
+        for (Map.Entry<String, String> e : ruleSeeds().entrySet())
+            p.getCustomDifficulty().putIfAbsent(e.getKey(), e.getValue());
+        p.setRulesPerSave(true);
+        System.out.println("[TFR-Custom] New Game+: the save keeps its own rules from now on (seeded from the profile)");
     }
 
     // ---- the panel (round 823) ----------------------------------------------------------------------------------
@@ -617,7 +762,12 @@ public final class CustomDifficulty {
         String preset = p == null || p.getDifficulty() == null ? null : p.getDifficulty().name;
         for (String spec : k.targets)
             for (Target t : resolve(spec, preset)) {
-                Object owner = t.tuning ? Config.instance().getTuningData() : p == null ? null : p.getDifficulty();
+                if (t.rule()) {
+                    Boolean r = rule(t.field.getName());
+                    return t.field.getName() + "=" + (r == null ? "profile " + profileRule(t.field.getName()) : r);
+                }
+                Object owner = t.tuning ? Config.instance().getTuningData() : t.config() ? Config.instance().getConfigData()
+                        : p == null ? null : p.getDifficulty();
                 if (owner == null)
                     continue;
                 try {
@@ -641,7 +791,43 @@ public final class CustomDifficulty {
     }
 
     public static boolean isCustom(AdventurePlayer p) {
-        return p != null && !p.getCustomDifficulty().isEmpty();
+        return p != null && count(p) > 0;
+    }
+
+    /** Round 825: a rule knob (rule.*) - the player's own switches, kept per save but never "Custom": the label means
+     *  "difficulty values changed" (the manager's call - a profile with Notoriety off since round 772 must not make every
+     *  new game Custom). Logged as "rules: ...". */
+    public static boolean isRule(Knob k) {
+        if (k == null)
+            return false;
+        for (String spec : k.targets)
+            if (spec.startsWith("rule."))
+                return true;
+        return false;
+    }
+
+    private static boolean isRule(String id) {
+        return isRule(knobs().get(id));
+    }
+
+    /** The difficulty changes of a map (its rules left out). */
+    public static int countChanges(Map<String, String> overrides) {
+        int n = 0;
+        if (overrides != null)
+            for (String id : overrides.keySet())
+                if (!isRule(id))
+                    n++;
+        return n;
+    }
+
+    /** "notorietyOff, reloadAllowed" - the save's rules that are switched from their default, or "" for none. */
+    public static String rules(AdventurePlayer p) {
+        StringBuilder sb = new StringBuilder();
+        if (p != null)
+            for (Map.Entry<String, String> e : p.getCustomDifficulty().entrySet())
+                if (isRule(e.getKey()))
+                    sb.append(sb.length() == 0 ? "" : ",").append(e.getKey());
+        return sb.toString();
     }
 
     /** "Custom (Hard)" for a custom save, else the preset's name. */
@@ -656,7 +842,7 @@ public final class CustomDifficulty {
     }
 
     public static int count(AdventurePlayer p) {
-        return p == null ? 0 : p.getCustomDifficulty().size();
+        return p == null ? 0 : countChanges(p.getCustomDifficulty());
     }
 
     public static int changesThisLaunch() {
@@ -665,29 +851,63 @@ public final class CustomDifficulty {
 
     /** One line with every override and the preset's own value - what a log review reads first. */
     public static void logActive(String why, AdventurePlayer p) {
-        if (!isCustom(p))
+        if (p == null || p.getCustomDifficulty().isEmpty())
             return;
         String preset = p.getDifficulty() == null ? null : p.getDifficulty().name;
         StringBuilder sb = new StringBuilder();
         Map<String, Knob> all = knobs();
         for (Map.Entry<String, String> e : p.getCustomDifficulty().entrySet()) {
             Knob k = all.get(e.getKey());
+            if (isRule(k))
+                continue;
             sb.append(sb.length() == 0 ? "" : ", ").append(e.getKey()).append(' ')
                     .append(k == null ? "?" : presetValue(k, preset)).append(" -> ").append(k == null ? e.getValue() : shown(k, e.getValue()));
         }
-        System.out.println("[TFR-Custom] " + why + ": " + displayName(p) + ", " + p.getCustomDifficulty().size()
-                + " override(s): " + sb);
+        String rules = rules(p);
+        System.out.println("[TFR-Custom] " + why + ": " + displayName(p) + ", " + count(p) + " override(s)"
+                + (sb.length() > 0 ? ": " + sb : "") + (rules.isEmpty() ? "" : " | rules: " + rules)
+                + (p.hasRulesPerSave() ? "" : " | rules from the profile (an older save)"));
     }
 
     // ---- new game -----------------------------------------------------------------------------------------------
 
-    /** What the next new game will start with (a copy). */
+    /** True once the Advanced panel handed its choice over (its rules then stand as chosen, seeds included). */
+    private static boolean pendingFromPanel;
+
+    /** What the next new game will start with (a copy) - round 825: with the profile's rules seeded in until the panel
+     *  has handed over its own choice (the panel opens on this, so a rule switched back stays switched back). */
     public static LinkedHashMap<String, String> pending() {
-        return new LinkedHashMap<>(pending);
+        LinkedHashMap<String, String> out = new LinkedHashMap<>();
+        for (Map.Entry<String, String> e : pending.entrySet())
+            if (!isRule(e.getKey()))
+                out.put(e.getKey(), e.getValue());
+        return out;
+    }
+
+    /** Round 825: the next new game's rules - the panel's choice once it has handed one over, else the profile's. The
+     *  new-game screen sees pending() (difficulty only: its "Custom (Hard)" label); the panel opens on both. */
+    public static LinkedHashMap<String, String> pendingRules() {
+        LinkedHashMap<String, String> out = new LinkedHashMap<>();
+        if (pendingFromPanel) {
+            for (Map.Entry<String, String> e : pending.entrySet())
+                if (isRule(e.getKey()))
+                    out.put(e.getKey(), e.getValue());
+        } else {
+            out.putAll(ruleSeeds());
+        }
+        return out;
+    }
+
+    /** Everything the next new game starts with: the difficulty changes and the rules. */
+    private static LinkedHashMap<String, String> pendingAll() {
+        LinkedHashMap<String, String> out = pending();
+        out.putAll(pendingRules());
+        return out;
     }
 
     /** The Advanced panel (later rounds) hands its choice here; null or empty = the preset. */
     public static void setPending(Map<String, String> overrides) {
+        pendingFromPanel = true;
         pending.clear();
         if (overrides != null)
             pending.putAll(sanitize(overrides, "next new game"));
@@ -699,8 +919,9 @@ public final class CustomDifficulty {
      * the difficulty overrides on, or the preset itself. The map goes on the player with {@link #onCreated}.
      */
     public static DifficultyData beginNewGame(DifficultyData preset) {
-        newGame = sanitize(pending, "new game");
+        newGame = sanitize(pendingAll(), "new game");
         pending.clear();
+        pendingFromPanel = false;
         applyTuning(newGame);
         return withOverrides(newGame, preset);
     }
@@ -711,6 +932,7 @@ public final class CustomDifficulty {
     public static void onCreated(AdventurePlayer p) {
         p.getCustomDifficulty().clear();
         p.getCustomDifficulty().putAll(newGame);
+        p.setRulesPerSave(true); // round 825: a new game keeps its own rules
         newGame = new LinkedHashMap<>();
         logActive("new game", p);
     }
@@ -756,7 +978,7 @@ public final class CustomDifficulty {
             return;
         for (String spec : k.targets)
             for (Target t : resolve(spec, null))
-                if (!t.tuning)
+                if (t.difficulty())
                     try {
                         t.field.set(d, t.field.get(preset));
                     } catch (IllegalAccessException e) {
@@ -786,7 +1008,7 @@ public final class CustomDifficulty {
                         .append(k == null ? e.getValue() : shown(k, e.getValue()))
                         .append(k == null ? "" : " (now " + currentValue(k, p) + ")");
             }
-            sb.append("\nNext new game: ").append(pending.isEmpty() ? "the preset" : encode(pending));
+            sb.append("\nNext new game: ").append(pendingAll().isEmpty() ? "the preset" : encode(pendingAll()));
             return sb.toString();
         }
         if ("knobs".equals(s[0])) {
@@ -818,6 +1040,7 @@ public final class CustomDifficulty {
         if ("next".equals(s[0]) && s.length >= 2) {
             if ("clear".equals(s[1])) {
                 pending.clear();
+                pendingFromPanel = false;
                 return "The next new game uses its preset";
             }
             if (s.length < 3)
@@ -829,7 +1052,7 @@ public final class CustomDifficulty {
             if (v == null)
                 return s[2] + " is not " + kind(k);
             pending.put(k.id, v);
-            return "Next new game: " + encode(pending);
+            return "Next new game: " + encode(pendingAll());
         }
         if ("panel".equals(s[0])) // round 823: the new-game Advanced panel, for tests
             return forge.adventure.scene.CustomDifficultyScene.console(s);

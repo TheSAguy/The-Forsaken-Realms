@@ -454,6 +454,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      * asks this first. The score itself keeps counting, so turning it back on brings the level already earned.
      */
     public static boolean notorietyDisabled() {
+        Boolean own = forge.adventure.util.CustomDifficulty.rule("notorietyDisabled"); // round 825: the save's own
+        if (own != null)
+            return own;
         forge.adventure.data.SettingData settings = forge.adventure.util.Config.instance().getSettingData();
         return settings != null && settings.notorietyDisabled;
     }
@@ -946,6 +949,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // Round 822 - custom difficulty (util/CustomDifficulty): knob id -> value on top of the preset; empty = the preset.
     // Saved as one "customDifficulty" string, absent when empty. New Game+ keeps it.
     private final java.util.LinkedHashMap<String, String> customDifficulty = new java.util.LinkedHashMap<>();
+    // Round 825: true for a save that keeps its own rules (Notoriety off, Ascendance leveling, the reload opt-out) -
+    // created or taken into New Game+ on round 825 or later, or switched in Settings since; saved as "rulesPerSave".
+    // Without it the rules are the profile's, as before (CustomDifficulty.rule).
+    private boolean rulesPerSave = false;
 
     // Bronze Coin ante ransom (user spec 2026-08-29). Enemy NAMES the player has bought their
     // ante back from with a Bronze Challenge Coin; beating an enemy of that name later reclaims
@@ -1313,6 +1320,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 + " | difficulty=" + difficultyData.name
                 + " rewardMaxFactor=" + difficultyData.rewardMaxFactor
                 + " startingLife=" + difficultyData.startingLife);
+        forge.adventure.util.CustomDifficulty.onNewGamePlus(this); // round 825: an older save starts keeping its rules
         forge.adventure.util.CustomDifficulty.logActive("New Game+", this); // round 822: the overrides carry on
     }
 
@@ -1725,6 +1733,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // Round 822: the save's custom difficulty goes on top of the plane's settings before anything below reads them
         // (a save without one puts the plane's own values back - the last game may have been custom).
         customDifficulty.clear();
+        rulesPerSave = data.containsKey("rulesPerSave") && data.readBool("rulesPerSave"); // round 825
         if (data.containsKey(forge.adventure.util.CustomDifficulty.SAVE_KEY))
             customDifficulty.putAll(forge.adventure.util.CustomDifficulty.sanitize(forge.adventure.util.CustomDifficulty.decode(
                     data.readString(forge.adventure.util.CustomDifficulty.SAVE_KEY)), "load"));
@@ -2423,6 +2432,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             researchList.append(researchList.length() == 0 ? "" : ";").append(r.getKey()).append(':').append(r.getValue());
         data.store("researchInProgressList", researchList.toString());
         // Round 751: research v2 (see load()). Stored only by a v2 save, so a classic save's file is unchanged.
+        if (rulesPerSave) // round 825: stored only by a save that keeps its own rules
+            data.store("rulesPerSave", true);
         if (!customDifficulty.isEmpty()) // round 822: stored only by a custom save
             data.store(forge.adventure.util.CustomDifficulty.SAVE_KEY, forge.adventure.util.CustomDifficulty.encode(customDifficulty));
         if (townSpecialties) // round 760: stored only by a save that has them
@@ -3500,6 +3511,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     /** Round 822: this save's custom difficulty overrides (knob id -> value), live - CustomDifficulty edits it. */
     public java.util.LinkedHashMap<String, String> getCustomDifficulty() {
         return customDifficulty;
+    }
+
+    /** Round 825: does this save keep its own rules (else the profile's)? */
+    public boolean hasRulesPerSave() {
+        return rulesPerSave;
+    }
+
+    public void setRulesPerSave(boolean on) {
+        rulesPerSave = on;
     }
 
     /** Round 760: this save has town specialties (util/TownSpecialties). */

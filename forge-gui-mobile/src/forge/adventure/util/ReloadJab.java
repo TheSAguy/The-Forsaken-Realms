@@ -85,6 +85,9 @@ public final class ReloadJab {
      * the counts already kept stay, so checking it again resumes from them. DifficultyHints keeps working.
      */
     public static boolean optedOut() {
+        Boolean own = CustomDifficulty.rule("reloadJabOptOut"); // round 825: the save's own switch, else the profile's
+        if (own != null)
+            return own;
         forge.adventure.data.SettingData settings = Config.instance().getSettingData();
         return settings != null && settings.reloadJabOptOut;
     }

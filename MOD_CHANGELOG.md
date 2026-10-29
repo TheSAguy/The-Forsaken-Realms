@@ -14264,6 +14264,96 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 825: custom difficulty, part 4 - your Settings rules kept per save, and six plane features as knobs (2026-10-28)
+
+Part 4 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). The manager's calls, standing for
+the user's "do all the phases":
+- Disable Notoriety, Ascendance leveling and the reload opt-out become per save, seeded from the profile.
+- The plane flags judged safe become knobs, through a per-save ConfigData copy (Config.java granted for it).
+- The rules stay out of "Custom (X)": the label means "difficulty values changed". A player with Notoriety off in
+  their profile since round 772 must not see every new game turn Custom.
+
+Built in a worktree and tested in an `agent-825` copy. Round 834's ReloadJab.java went in first; the 3-line read
+below sits on top of it.
+
+- **Rules per save** (`rule.*` knobs, `util/CustomDifficulty.rule`):
+  - `notorietyOff` (`rule.notorietyDisabled`), `ascendanceOff` (`rule.ascendanceDisabled`) and `reloadAllowed`
+    (`rule.reloadJabOptOut`), in the panel's Rules tab.
+  - Each is read by its one helper: `AdventurePlayer.notorietyDisabled()` (its 19 uses go through it),
+    `Ascendance.switchedOffInSettings()` and `ReloadJab.optedOut()`. Each takes the save's own value first, else the
+    profile's as before.
+  - A save keeps its own rules when it carries the new `rulesPerSave` marker: set by every new game
+    (`CustomDifficulty.onCreated`), by a New Game+ of an older save (`onNewGamePlus`, which seeds from the profile),
+    and by a change in Settings while an older save runs (`setRule`, which seeds from the profile, then changes the
+    one rule).
+  - A save without the marker reads the profile, so nothing changes for it until then.
+  - A rule at its default is absent from the map. The defaults come from a fresh SettingData: Notoriety on, leveling
+    on, reloads judged.
+- **New game**:
+  - The panel opens on the profile's switched rules (`pendingRules()`) beside the difficulty changes, and the new
+    game takes both.
+  - The new-game screen reads `pending()`, which is now the difficulty changes only. Its "Custom (Hard)" label and
+    "?" dialog ignore the rules, so NewGameScene needed no change.
+  - Without the panel, the profile's rules are the new game's.
+- **Settings while a game runs** (`SettingsScene`):
+  - The three rows show the running save's own values; `enter()` refreshes them, guarded so the refresh does not
+    count as a change.
+  - A change writes the save's rule first (an older save seeds from the profile as it was), with round 822's
+    `[TFR-Custom] changed ... (Settings)` line, and then the profile as the next new game's seed.
+  - With no game running, the profile alone changes (`[TFR-Custom] Settings (no game running): ...`).
+  - The rows carry names (`rule:notorietyDisabled` ...) for the agent bridge.
+- **Plane features per save** (`config.*` knobs):
+  - `Config.getConfigData()` returns the save's copy when it overrides a flag; `getBaseConfigData()` is the plane's
+    own, taken at the first apply, after the startup's digital-only edition edit. It is built with the tuning copy in
+    `applyTuning`, so a load, a new game and a change apply it.
+  - The copy is a field copy with arrays copied, and ConfigData has public fields only.
+  - No flag helper changed.
+  - Knobs, anytime: `wrathHunt` (`wrathHuntEnabled`), `enemyPlates` (`enemyInfoPlatesEnabled`), `pillage`
+    (`pillageEnabled`), `sideQuestTimer` (`sideQuestTimerEnabled`).
+  - Knobs, new game only: `townSpecialties` and `realmMilestones`. Read at `create()` through their `planeEnabled()`,
+    after `beginNewGame` put the copy in place.
+  - These count toward "Custom".
+- **Kept hidden** (the json header says why):
+  - `ringGiftStart`: off, it hands the kit over at the start AND keeps the Ring Cities' gift talks.
+  - The flags the game is built on (territory control, reconstruction, color reputation, edition progression,
+    content filters, weighted spawn tiers, functioning neutral towns, dungeon rotation, achievements, the clean font).
+  - `showEnemyTierInName`, a display preference read in three stock files.
+- **Not Custom**:
+  - `isCustom` / `displayName` / `count` and the panel's "N changed" and All count leave rule knobs out; the Rules
+    tab keeps its own count.
+  - `[TFR-Custom] load/new game/New Game+: Custom (Hard), N override(s): ... | rules: notorietyOff,reloadAllowed`
+    (plus `| rules from the profile (an older save)`), and `rules=` beside `custom=` in the `[TFR-Session]` game lines
+    and the footer.
+- **Console**: `custom knobs` shows a rule's live value, or `profile false` for an older save.
+
+**Agent-tested** in `agent-825` (the agent folder and profile, wt-825's classes ahead of its jar, the json in its res;
+removed afterward). No exceptions. Shot: `C:\TFR\notes\r825\`.
+- Slot 76 (an older save): `notorietyDisabled=profile false`.
+- Disable Notoriety in Settings with slot 76 running: `rules: this save keeps its own rules from now on (seeded from
+  the profile ...)`, the change line, `rules=notorietyOff`, still "Normal".
+- `custom set wrathHunt off`: live `wrathHuntEnabled=false`, "Custom (Normal)", saved to slot 92.
+- Loading slot 76: `wrathHuntEnabled=true` again, and Notoriety from the profile (now on).
+- Reloading slot 92: both held, `difficulty=Custom(Normal) custom=1 rules=notorietyOff`.
+- The new-game box reads "Normal" with only the profile's rule pending.
+- The panel's Rules tab shows `notorietyOff On (changed)`; unchecking town specialties gives "1 changed" (All 1,
+  Rules 1).
+- The new game: `[TFR-Custom] new game: Custom (Normal), 1 override(s): townSpecialties true -> false | rules:
+  notorietyOff` and `[TFR-Session] game new ... specialties=off ... rules=notorietyOff`.
+- `custom set reloadAllowed on`, save and reload: `[TFR-ReloadJab] off - the player's choice (Settings): the load is
+  not judged`, and the footer reads `custom=1 rules=notorietyOff,reloadAllowed`.
+- Found and fixed in the test: Settings wrote the profile before converting an older save, so the save seeded the new
+  value and logged "true -> true". It now writes the save first; re-tested: "seeded ... notorietyOff=true", then
+  "changed notorietyOff true -> false".
+
+**Not tested:**
+- Ascendance off from the panel (the same `rule()` read as Notoriety).
+- A pillage raid or a side quest expiring with their flags off (their own helpers read `getConfigData()`, now the copy).
+- Mid-run, turning Wrath off stops new hunts from the next week turn; a hunter already out is not tested.
+
+Files: `util/CustomDifficulty.java`, `util/Config.java`, `player/AdventurePlayer.java`, `scene/SettingsScene.java`,
+`util/Ascendance.java`, `util/ReloadJab.java`, `util/SessionLog.java`, `scene/CustomDifficultyScene.java`,
+`config tables/custom_difficulty.json`; `CORE_ENGINE_CHANGES.md` round 825.
+
 ## Round 834: a hidden reload credit - every 10 losses taken honestly bank one free reload, up to 5 (2026-10-28)
 
 The user: "For every 10 duels you lose, without loading, (Loading penalty), you get a credit of a future load. So,

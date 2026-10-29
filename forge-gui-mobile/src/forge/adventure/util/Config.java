@@ -44,6 +44,8 @@ public class Config {
     // and every one of them looks files up through getFile(). A plain HashMap could be corrupted by those puts.
     private final Map<String, FileHandle> Cache = new java.util.concurrent.ConcurrentHashMap<>();
     private ConfigData configData;
+    // Round 825: the plane's config.json as loaded; configData is a save's custom-difficulty copy of it while one runs.
+    private ConfigData baseConfigData;
     private TuningData tuningData;
     // Round 822: the plane's settings.json as loaded; tuningData is a save's custom-difficulty copy of it while one runs.
     private TuningData baseTuningData;
@@ -384,6 +386,19 @@ public class Config {
 
     public ConfigData getConfigData() {
         return configData;
+    }
+
+    /** Round 825: the plane's own config.json values, whatever custom difficulty the running save has. */
+    public ConfigData getBaseConfigData() {
+        return baseConfigData != null ? baseConfigData : configData;
+    }
+
+    /** Round 825: CustomDifficulty puts a save's copy in place (null = the plane's own again). The first call keeps the
+     *  plane's object as the base - after the startup edits (digital-only editions), before any save is applied. */
+    public void setEffectiveConfigData(ConfigData effective) {
+        if (baseConfigData == null)
+            baseConfigData = configData;
+        configData = effective != null ? effective : baseConfigData;
     }
 
     public TuningData getTuningData() {

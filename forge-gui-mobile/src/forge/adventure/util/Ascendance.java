@@ -93,6 +93,9 @@ public final class Ascendance {
     /** The player's own switch (Settings, "Leveling (Ascendance)") - the user: "I do think the XP/Leveling system is
      *  going to be controversial, so maybe add an option is settings to turn it all off". */
     public static boolean switchedOffInSettings() {
+        Boolean own = CustomDifficulty.rule("ascendanceDisabled"); // round 825: the save's own switch
+        if (own != null)
+            return own;
         forge.adventure.data.SettingData settings = Config.instance().getSettingData();
         return settings != null && settings.ascendanceDisabled;
     }

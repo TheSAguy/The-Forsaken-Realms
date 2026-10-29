@@ -272,10 +272,14 @@ public class SettingsScene extends UIScene {
             }
         });
         // Round 493: Ascendance (the player's level) on or off - see util/Ascendance.switchedOffInSettings().
-        addSettingField(localizer.getMessage("lblAscendanceLeveling"), !Config.instance().getSettingData().ascendanceDisabled, new ChangeListener() {
+        ascendanceBox = addSettingField(localizer.getMessage("lblAscendanceLeveling"), !Config.instance().getSettingData().ascendanceDisabled, new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Config.instance().getSettingData().ascendanceDisabled = !((CheckBox) actor).isChecked();
+                boolean off = !((CheckBox) actor).isChecked();
+                if (refreshingRules || off == forge.adventure.util.Ascendance.switchedOffInSettings())
+                    return;
+                setSaveRule("ascendanceDisabled", off); // round 825: first, so an older save seeds from the profile as it was
+                Config.instance().getSettingData().ascendanceDisabled = off; // the next new game's seed
                 Config.instance().saveSettings();
             }
         });
@@ -284,15 +288,16 @@ public class SettingsScene extends UIScene {
         forge.adventure.data.TuningData notorietyTuning = Config.instance().getTuningData();
         if (notorietyTuning != null && notorietyTuning.notorietyWinsPerLevel > 0 && notorietyTuning.notorietyWallsPlain != null
                 && notorietyTuning.notorietyWallsPlain.length > 0) {
-            addSettingField(localizer.getMessageorUseDefault("lblDisableNotoriety",
+            notorietyBox = addSettingField(localizer.getMessageorUseDefault("lblDisableNotoriety",
                     "Disable Notoriety: no Walls or stronger foes from your wins"),
                     Config.instance().getSettingData().notorietyDisabled, new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     boolean disabled = ((CheckBox) actor).isChecked();
-                    if (disabled == Config.instance().getSettingData().notorietyDisabled)
+                    if (refreshingRules || disabled == forge.adventure.player.AdventurePlayer.notorietyDisabled())
                         return;
-                    Config.instance().getSettingData().notorietyDisabled = disabled;
+                    setSaveRule("notorietyDisabled", disabled); // round 825: first, so an older save seeds from the profile as it was
+                    Config.instance().getSettingData().notorietyDisabled = disabled; // the next new game's seed
                     Config.instance().saveSettings();
                     System.out.println("[TFR-Notoriety] Settings: Notoriety " + (disabled ? "disabled" : "enabled")
                             + " - from the next duel" + (disabled ? "; the score still counts" : ""));
@@ -302,14 +307,15 @@ public class SettingsScene extends UIScene {
         // Round 796: "I won't cheat by loading after a loss" - checked by default; unchecked switches the reload feature
         // off (ReloadJab.optedOut). Only on a plane that has it (reloadJabEnabled).
         if (forge.adventure.util.ReloadJab.isEnabled()) {
-            addSettingField(localizer.getMessageorUseDefault("lblNoReloadCheating", "I won't cheat by loading after a loss"),
+            reloadBox = addSettingField(localizer.getMessageorUseDefault("lblNoReloadCheating", "I won't cheat by loading after a loss"),
                     !Config.instance().getSettingData().reloadJabOptOut, new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     boolean checked = ((CheckBox) actor).isChecked();
-                    if (checked == !Config.instance().getSettingData().reloadJabOptOut)
+                    if (refreshingRules || checked == !forge.adventure.util.ReloadJab.optedOut())
                         return;
-                    Config.instance().getSettingData().reloadJabOptOut = !checked;
+                    setSaveRule("reloadJabOptOut", !checked); // round 825: first, so an older save seeds from the profile as it was
+                    Config.instance().getSettingData().reloadJabOptOut = !checked; // the next new game's seed
                     Config.instance().saveSettings();
                     forge.adventure.util.ReloadJab.onSettingChanged(checked);
                 }
@@ -659,6 +665,44 @@ public class SettingsScene extends UIScene {
         addToSelectable(settingGroup);
     }
 
+
+    /** Round 825: the three rule rows - Ascendance leveling, Disable Notoriety, the reload promise (null when hidden). */
+    private CheckBox ascendanceBox, notorietyBox, reloadBox;
+    private boolean refreshingRules;
+
+    /** Round 825: with a game running, a rule row is that save's own (CustomDifficulty.setRule); the profile keeps the
+     *  value too, as the next new game's seed. With no game, the profile alone. */
+    private static void setSaveRule(String field, boolean value) {
+        if (forge.adventure.util.CustomDifficulty.gameRunning())
+            forge.adventure.util.CustomDifficulty.setRule(forge.adventure.player.AdventurePlayer.current(), field, value, "Settings");
+        else
+            System.out.println("[TFR-Custom] Settings (no game running): profile " + field + " = " + value
+                    + " - the next new game starts with it");
+    }
+
+    /** Round 825: the rows show what the running save plays with (its own rules, else the profile's). */
+    @Override
+    public void enter() {
+        refreshingRules = true;
+        // named for the agent bridge (its click finds an unlabeled check box by name)
+        if (ascendanceBox != null)
+            ascendanceBox.setName("rule:ascendanceDisabled");
+        if (notorietyBox != null)
+            notorietyBox.setName("rule:notorietyDisabled");
+        if (reloadBox != null)
+            reloadBox.setName("rule:reloadJabOptOut");
+        try {
+            if (ascendanceBox != null)
+                ascendanceBox.setChecked(!forge.adventure.util.Ascendance.switchedOffInSettings());
+            if (notorietyBox != null)
+                notorietyBox.setChecked(forge.adventure.player.AdventurePlayer.notorietyDisabled());
+            if (reloadBox != null)
+                reloadBox.setChecked(!forge.adventure.util.ReloadJab.optedOut());
+        } finally {
+            refreshingRules = false;
+        }
+        super.enter();
+    }
 
     public boolean back() {
         GuiBase.setAdventureCacheDirectory(Config.instance().getCachePrefix());

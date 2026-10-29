@@ -139,6 +139,7 @@ public final class SessionLog {
                 .append(" mode=").append(p.getAdventureMode())
                 .append(" difficulty=").append(p.getDifficulty() == null ? "?" : CustomDifficulty.logName(p)) // round 822: Custom(Hard)
                 .append(" custom=").append(CustomDifficulty.count(p))
+                .append(" rules=").append(CustomDifficulty.rules(p).isEmpty() ? "-" : CustomDifficulty.rules(p)) // round 825
                 .append(" ngplus=").append(p.getCharacterFlag("newGamePlus") > 0 ? 1 : 0)
                 .append(" notoriety=").append(AdventurePlayer.notorietyDisabled() ? "off" : "on")
                 .append(" specialties=").append(p.hasTownSpecialties() ? "on" : "off")
@@ -177,6 +178,8 @@ public final class SessionLog {
                     + " gold=" + signed(AdventurePlayer.current().getGold() - firstGold)
                     + " images=" + imagesFetched + " errors=" + errors
                     + " custom=" + CustomDifficulty.count(AdventurePlayer.current()) // round 822: overrides, and changes this launch
+                    + " rules=" + (CustomDifficulty.rules(AdventurePlayer.current()).isEmpty() ? "-"
+                    : CustomDifficulty.rules(AdventurePlayer.current())) // round 825
                     + (CustomDifficulty.changesThisLaunch() > 0 ? " customChanges=" + CustomDifficulty.changesThisLaunch() : "")
                     + " lastScene=" + lastScene());
         } catch (Exception e) {

@@ -18,6 +18,15 @@
     //     tuning.field{D}      the field's Easy/Normal/Hard/Insane set - the value goes into every column
     //     tuning.field[*]      every entry of a per-difficulty array, the same way
     //     difficulty.field     a field of the save's difficulty (config.json "difficulties", data/DifficultyData.java)
+    //     rule.field           round 825: one of the player's Settings switches (data/SettingData.java), kept per save;
+    //                          a new game starts with the profile's, and Settings changes the running save's;
+    //                          never counted as "Custom" (the label means difficulty values changed) - logged as rules
+    //     config.field         round 825: a plane flag of config.json (data/ConfigData.java), per save
+    //
+    // Plane flags kept hidden (round 825): ringGiftStart (off would hand the kit over at the start AND keep the Ring
+    // Cities' gift talks), and the flags the game is built on - territoryControl, townReconstruction, colorReputation,
+    // editionProgression, contentFilterTables, weightedSpawnTiers, functioningNeutralTowns, dungeonRotation,
+    // tfrAchievements, cleanFont. showEnemyTierInName is a display preference, left to the plane.
     //
     // Never listed here, on purpose (they are not difficulty, and a bad value reads as a bug):
     //   speedUpMultiplier         the speed-up key's factor - the agent's 50x duels depend on it
@@ -86,6 +95,51 @@
             "id": "dayLength", "label": "Day length (seconds)", "category": "Time & Pacing", "group": "Clock",
             "target": "tuning.dayLengthSeconds", "min": 60, "max": 900, "step": 10,
             "tooltip": "Real seconds per in-game day at normal speed. Shorter days bring every weekly event sooner."
+        },
+        {
+            "id": "wrathHunt", "label": "Wrath of the Temple", "category": "Enemies & Duels", "group": "World events",
+            "target": "config.wrathHuntEnabled",
+            "tooltip": "With a Temple in your Capitol, each week the last week's most-killed color hunts you: its land spawns a tier higher, its foes pay more, and a Wrath mage walks after you. Off: no hunts from the next week turn."
+        },
+        {
+            "id": "enemyPlates", "label": "Enemy info plates", "category": "Enemies & Duels", "group": "World events",
+            "target": "config.enemyInfoPlatesEnabled",
+            "tooltip": "Hold Alt to see each enemy's rank above it on the map - and, once you have fought its kind, its deck colors and life."
+        },
+        {
+            "id": "pillage", "label": "Town pillage raids", "category": "Towns & Territory", "group": "World events",
+            "target": "config.pillageEnabled",
+            "tooltip": "A town near several dungeons can be pillaged: raiders gather round it, and you have a week to beat five of them. Off: no new raids."
+        },
+        {
+            "id": "townSpecialties", "label": "Town specialties", "category": "Towns & Territory", "group": "Systems",
+            "target": "config.townSpecialtiesEnabled", "scope": "newGame",
+            "tooltip": "Each town you restore or win takes a specialty of your choice (the Capitol and Orazca excepted)."
+        },
+        {
+            "id": "realmMilestones", "label": "Realm milestones", "category": "Towns & Territory", "group": "Systems",
+            "target": "config.realmMilestonesEnabled", "scope": "newGame",
+            "tooltip": "Every 10 towns you have held, pick 1 of 3 realm-wide boons. Needs town specialties."
+        },
+        {
+            "id": "sideQuestTimer", "label": "Side-quest time limit", "category": "Time & Pacing", "group": "Quests",
+            "target": "config.sideQuestTimerEnabled",
+            "tooltip": "Side quests fail when their days run out (story quests never do). Off: side quests never expire."
+        },
+        {
+            "id": "notorietyOff", "label": "Notoriety off", "category": "Rules", "group": "Your rules",
+            "target": "rule.notorietyDisabled",
+            "tooltip": "No Walls, bonus life, stronger foes, rank steps or dungeon upgrades from your wins. The score still counts, so switching it back on carries on from there."
+        },
+        {
+            "id": "ascendanceOff", "label": "Ascendance leveling off", "category": "Rules", "group": "Your rules",
+            "target": "rule.ascendanceDisabled",
+            "tooltip": "No levels, Power, main-item or guard limits and no level HUD. What was gained stays, and switching it back on carries on from there."
+        },
+        {
+            "id": "reloadAllowed", "label": "Loading after a loss allowed", "category": "Rules", "group": "Your rules",
+            "target": "rule.reloadJabOptOut",
+            "tooltip": "The reload rules are off: loading after a loss or leaving a duel is not counted - no enemy life bonus, no Notoriety cost, no Notices lines. (Settings: \"I won't cheat by loading after a loss\" unchecked.)"
         }
     ]
 }

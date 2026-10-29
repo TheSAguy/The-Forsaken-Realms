@@ -205,6 +205,7 @@ public class CustomDifficultyScene extends UIScene {
         work.clear();
         if (current != null)
             work.putAll(current);
+        work.putAll(CustomDifficulty.pendingRules()); // round 825: the rules ride along (seeded from the profile)
         preset.setSelectedIndex(Math.max(0, Math.min(presetIndex, preset.getItems().size - 1)));
         help.setText("[%85][LIGHT_GRAY]Tap a setting's name to read what it does.");
         System.out.println("[TFR-Custom] panel opened on " + presetName() + " with " + work.size() + " change(s), "
@@ -226,8 +227,10 @@ public class CustomDifficultyScene extends UIScene {
     private boolean done() {
         cancelRepeat();
         CustomDifficulty.setPending(work);
-        System.out.println("[TFR-Custom] panel done: " + (work.isEmpty() ? presetName() + " (no changes)"
-                : "Custom (" + presetName() + "), " + work.size() + " change(s): " + CustomDifficulty.encode(work)));
+        int changes = CustomDifficulty.countChanges(work);
+        System.out.println("[TFR-Custom] panel done: " + (changes == 0 ? presetName() + " (no changes)"
+                : "Custom (" + presetName() + "), " + changes + " change(s)")
+                + (work.isEmpty() ? "" : ": " + CustomDifficulty.encode(work)));
         if (onDone != null)
             onDone.accept(preset.getSelectedIndex());
         Forge.switchToLast();
@@ -308,7 +311,7 @@ public class CustomDifficultyScene extends UIScene {
             int n = 0;
             for (String id : work.keySet()) {
                 Knob k = all.get(id);
-                if (k != null && (ALL.equals(name) || name.equals(k.category)))
+                if (k != null && (ALL.equals(name) ? !CustomDifficulty.isRule(k) : name.equals(k.category)))
                     n++;
             }
             boolean on = !searching && name.equals(tab);
@@ -327,7 +330,7 @@ public class CustomDifficultyScene extends UIScene {
                 int n = 0;
                 for (String id : work.keySet()) {
                     Knob k = all.get(id);
-                    if (k != null && (ALL.equals(name) || name.equals(k.category)))
+                    if (k != null && (ALL.equals(name) ? !CustomDifficulty.isRule(k) : name.equals(k.category)))
                         n++;
                 }
                 items.add(name + (n > 0 ? "  (" + n + ")" : ""));
@@ -362,7 +365,7 @@ public class CustomDifficultyScene extends UIScene {
     }
 
     private void updateCount() {
-        int changed = work.size();
+        int changed = CustomDifficulty.countChanges(work); // round 825: the rules are not difficulty changes
         countLabel.setText(changed == 0 ? "[%85][LIGHT_GRAY]No changes - plays as " + presetName()
                 : "[%85][GOLD]" + changed + " changed - \"Custom (" + presetName() + ")\"");
     }

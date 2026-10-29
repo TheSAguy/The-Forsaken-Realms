@@ -38,6 +38,23 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 825 - custom difficulty, the rules per save and the plane flags
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** (STOCK): a `baseConfigData` field beside `configData`;
+  `getBaseConfigData()` and `setEffectiveConfigData(c)` after `getConfigData()` (the first call keeps the plane's object
+  as the base). `getConfigData()` itself is unchanged - it returns the running save's copy when one is in place.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK): a `rulesPerSave` field (after
+  `customDifficulty`) with `hasRulesPerSave()` / `setRulesPerSave()`; `load()` reads the optional `rulesPerSave` key
+  beside `customDifficulty`, `save()` stores it when true; `notorietyDisabled()` takes `CustomDifficulty.rule(...)`
+  first; `resetForNewGamePlus` calls `CustomDifficulty.onNewGamePlus(this)` before its `logActive` line.
+- **`forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java`** (STOCK): the Ascendance, Disable Notoriety and
+  reload rows keep their check boxes (`ascendanceBox` / `notorietyBox` / `reloadBox`); each listener compares with the
+  effective value, writes the running save's rule (`setSaveRule` -> `CustomDifficulty.setRule`) before the profile; a
+  new `enter()` override refreshes the three from the running save (guarded by `refreshingRules`) and names them.
+- TFR files: `util/CustomDifficulty.java` (`rule.*` / `config.*` sources, rules out of the Custom count, `pending()` /
+  `pendingRules()`), `util/Ascendance.java` and `util/ReloadJab.java` (the save's rule first in `switchedOffInSettings()`
+  / `optedOut()`), `util/SessionLog.java` (`rules=`), `scene/CustomDifficultyScene.java` (the panel opens on the rules,
+  the counts leave them out); plane data `config tables/custom_difficulty.json` (9 knobs).
+
 ### Round 823 - custom difficulty, the new-game Advanced panel
 - **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** (STOCK):
   - constructor: `difficultyNames = diffList` after the difficulty box is filled; the `advanced` button's
