@@ -43,7 +43,9 @@ import java.util.function.IntConsumer;
  * <p>
  * The panel edits a copy; Done hands it to {@link CustomDifficulty#setPending} (the next new game takes it) and the preset
  * back to the new-game screen. A value stepped back to the preset's own is no change. Landscape layout
- * {@code ui/custom_difficulty.json}; portrait is round 824. {@code [TFR-Custom] panel ...} lines; console
+ * {@code ui/custom_difficulty.json}. Round 824: portrait ({@code ui/custom_difficulty_portrait.json}) puts the tabs in a
+ * select box beside "Based on", the rows full width with touch-sized (24) steppers, a three-line help line, and the
+ * buttons across the bottom. {@code [TFR-Custom] panel ...} lines; console
  * {@code custom panel} lists what the panel shows, {@code custom panel search TEXT} types into its search box.
  */
 public class CustomDifficultyScene extends UIScene {
@@ -74,17 +76,32 @@ public class CustomDifficultyScene extends UIScene {
     private final CheckBox changedBox;
     private final TextraLabel countLabel, help;
     private Timer.Task repeat;
+    /** Round 824: portrait's tab box (null in landscape) and the tab each of its items is; a refill re-lists it. */
+    private final SelectBox<String> tabBox;
+    private final List<String> tabBoxTabs = new ArrayList<>();
+    private boolean fillingTabBox;
+    private final boolean landscape = Forge.isLandscapeMode();
+    /** Steppers and reset: 14 in landscape, 24 (a finger) in portrait. */
+    private final float button = Forge.isLandscapeMode() ? 14 : 24;
     private final Map<String, TextraLabel> valueLabels = new java.util.HashMap<>();
 
     private CustomDifficultyScene() {
-        super("ui/custom_difficulty.json");
+        super(Forge.isLandscapeMode() ? "ui/custom_difficulty.json" : "ui/custom_difficulty_portrait.json");
         content = ui.findActor("content");
         content.top().left();
 
         // header: the title, the preset, how many are changed
         Table header = new Table();
+        countLabel = Controls.newTextraLabel("");
         header.add(Controls.newTextraLabel("[%120]Custom Difficulty")).left().padRight(12);
-        header.add(Controls.newTextraLabel("[%85][LIGHT_GRAY]Based on")).padRight(4);
+        Table pick = header;
+        if (!landscape) {
+            header.row();
+            header.add(countLabel).left().padBottom(4).row();
+            pick = new Table();
+            header.add(pick).left().row();
+        }
+        pick.add(Controls.newTextraLabel("[%85][LIGHT_GRAY]Based on")).padRight(4);
         @SuppressWarnings("unchecked")
         SelectBox<String> box = Controls.newComboBox();
         preset = box;
@@ -99,9 +116,29 @@ public class CustomDifficultyScene extends UIScene {
                 refill();
             }
         });
-        header.add(preset).width(62).height(16).padRight(8);
-        countLabel = Controls.newTextraLabel("");
-        header.add(countLabel).left().expandX();
+        if (landscape) {
+            header.add(preset).width(62).height(16).padRight(8);
+            header.add(countLabel).left().expandX();
+            tabBox = null;
+        } else {
+            pick.add(preset).width(62).height(20).padRight(6);
+            @SuppressWarnings("unchecked")
+            SelectBox<String> tb = Controls.newComboBox();
+            tabBox = tb;
+            tabBox.setName("tabBox");
+            tabBox.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    int i = tabBox.getSelectedIndex();
+                    if (fillingTabBox || i < 0 || i >= tabBoxTabs.size())
+                        return;
+                    tab = tabBoxTabs.get(i);
+                    search.setText("");
+                    refill();
+                }
+            });
+            pick.add(tabBox).width(124).height(20).left();
+        }
         content.add(header).left().growX().padBottom(3).row();
 
         // filter bar: search, Basic / Expert, Changed only
@@ -115,13 +152,17 @@ public class CustomDifficultyScene extends UIScene {
                 refill();
             }
         });
-        bar.add(search).width(120).height(15).padRight(8);
+        if (landscape) {
+            bar.add(search).width(120).height(15).padRight(8);
+        } else {
+            bar.add(search).width(246).height(20).colspan(4).left().padBottom(4).row();
+        }
         basicButton = Controls.newTextButton("[%80]Basic", () -> setLevel(false));
         basicButton.setName("level:basic");
         expertButton = Controls.newTextButton("[%80]Expert", () -> setLevel(true));
         expertButton.setName("level:expert");
-        bar.add(basicButton).width(34).height(15);
-        bar.add(expertButton).width(38).height(15).padRight(10);
+        bar.add(basicButton).width(landscape ? 34 : 44).height(landscape ? 15 : 20);
+        bar.add(expertButton).width(landscape ? 38 : 48).height(landscape ? 15 : 20).padRight(10);
         changedBox = Controls.newCheckBox("");
         changedBox.setName("changedOnly");
         changedBox.addListener(new ChangeListener() {
@@ -138,7 +179,8 @@ public class CustomDifficultyScene extends UIScene {
         // body: tabs on the left, the rows on the right
         Table body = new Table();
         tabs.top();
-        body.add(tabs).top().width(84).padRight(4);
+        if (landscape)
+            body.add(tabs).top().width(84).padRight(4);
         rows.top().left();
         rowScroll = new ScrollPane(rows, Controls.getSkin());
         rowScroll.setFadeScrollBars(false);
@@ -148,7 +190,7 @@ public class CustomDifficultyScene extends UIScene {
 
         help = Controls.newTextraLabel("");
         help.setWrap(true);
-        content.add(help).growX().height(20).padTop(2).left();
+        content.add(help).growX().height(landscape ? 20 : 32).padTop(2).left();
 
         ui.onButtonPress("done", this::done);
         ui.onButtonPress("resetAll", this::resetAll);
@@ -278,6 +320,24 @@ public class CustomDifficultyScene extends UIScene {
             b.setName("tab:" + name);
             tabs.add(b).width(84).height(17).padBottom(2).row();
         }
+        if (tabBox != null) {
+            Array<String> items = new Array<>();
+            tabBoxTabs.clear();
+            for (String name : names) {
+                int n = 0;
+                for (String id : work.keySet()) {
+                    Knob k = all.get(id);
+                    if (k != null && (ALL.equals(name) || name.equals(k.category)))
+                        n++;
+                }
+                items.add(name + (n > 0 ? "  (" + n + ")" : ""));
+                tabBoxTabs.add(name);
+            }
+            fillingTabBox = true;
+            tabBox.setItems(items);
+            tabBox.setSelectedIndex(Math.max(0, tabBoxTabs.indexOf(tab)));
+            fillingTabBox = false;
+        }
 
         rows.clearChildren();
         valueLabels.clear();
@@ -290,7 +350,7 @@ public class CustomDifficultyScene extends UIScene {
                 rows.add(Controls.newTextraLabel("[%80][GOLD]" + heading)).left().padTop(last == null ? 0 : 4).row();
                 last = heading;
             }
-            rows.add(row(k)).growX().padBottom(1).row();
+            rows.add(row(k)).growX().padBottom(landscape ? 1 : 3).row();
         }
         if (shown.isEmpty())
             rows.add(Controls.newTextraLabel("[%85][LIGHT_GRAY]" + (changedOnly ? "No changed settings here." : "Nothing matches."))).left().row();
@@ -318,7 +378,7 @@ public class CustomDifficultyScene extends UIScene {
         Table name = new Table();
         TextraLabel label = Controls.newTextraLabel("[%90]" + k.label + ("expert".equals(k.level) ? " [%70][LIGHT_GRAY](Expert)" : ""));
         label.setWrap(true);
-        name.add(label).width(158).left().row();
+        name.add(label).width(landscape ? 158 : 98).left().row();
         String sub = presetName() + ": " + CustomDifficulty.display(k, CustomDifficulty.presetRaw(k, presetName()))
                 + (k.isNewGameOnly() ? " - new game only" : "");
         name.add(Controls.newTextraLabel("[%70][LIGHT_GRAY]" + sub)).left();
@@ -329,7 +389,7 @@ public class CustomDifficultyScene extends UIScene {
                 showHelp(k);
             }
         });
-        r.add(name).left().width(160).padLeft(3).expandX();
+        r.add(name).left().width(landscape ? 160 : 100).padLeft(3).expandX();
 
         if ("bool".equals(k.type)) {
             CheckBox box = Controls.newCheckBox("");
@@ -343,14 +403,14 @@ public class CustomDifficultyScene extends UIScene {
                     refill();
                 }
             });
-            r.add(box).width(82).center();
+            r.add(box).width(landscape ? 82 : 90).height(button).center();
         } else {
-            r.add(stepper(k, -1)).width(14).height(14);
+            r.add(stepper(k, -1)).width(button).height(button);
             TextraLabel shown = Controls.newTextraLabel("[%90]" + (changed ? "[GOLD]" : "") + CustomDifficulty.display(k, value));
             shown.setAlignment(Align.center);
             valueLabels.put(k.id, shown);
-            r.add(shown).width(50).center();
-            r.add(stepper(k, 1)).width(14).height(14);
+            r.add(shown).width(landscape ? 50 : 38).center();
+            r.add(stepper(k, 1)).width(button).height(button);
         }
         if (changed) {
             TextraButton reset = Controls.newTextButton("[%80]<", () -> {
@@ -358,9 +418,9 @@ public class CustomDifficultyScene extends UIScene {
                 refill();
             });
             reset.setName("reset:" + k.id);
-            r.add(reset).width(14).height(14).padLeft(6).padRight(3);
+            r.add(reset).width(button).height(button).padLeft(landscape ? 6 : 4).padRight(3);
         } else {
-            r.add().width(23);
+            r.add().width(button + (landscape ? 9 : 7));
         }
         return r;
     }
@@ -447,6 +507,21 @@ public class CustomDifficultyScene extends UIScene {
         } else if (s.length == 2 && "search".equals(s[1])) {
             object.search.setText("");
             object.refill();
+        } else if (s.length >= 3 && "tab".equals(s[1])) {
+            // round 824: portrait's tab box is a SelectBox, which the agent bridge cannot open - picked here, so its own
+            // change listener runs; landscape takes the tab directly
+            StringBuilder name = new StringBuilder();
+            for (int i = 2; i < s.length; i++)
+                name.append(i > 2 ? " " : "").append(s[i]);
+            if (object.tabBox != null) {
+                int i = object.tabBoxTabs.indexOf(name.toString());
+                if (i < 0)
+                    return "No tab " + name + " (" + object.tabBoxTabs + ")";
+                object.tabBox.setSelectedIndex(i);
+            } else {
+                object.tab = name.toString();
+                object.refill();
+            }
         }
         StringBuilder sb = new StringBuilder("Panel on " + object.presetName() + ", tab " + object.tab
                 + (object.search.getText().isEmpty() ? "" : ", search \"" + object.search.getText() + "\"")

@@ -14264,6 +14264,51 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 824: custom difficulty, part 3 - the Advanced panel in portrait (Android) (2026-10-28)
+
+Part 3 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`). The user approved the mock-up
+(`C:\TFR\notes\r824-mock.png`): "Yes, build it". Built in a worktree, tested in an `agent-824` copy at 540x960
+portrait, and committed on main.
+
+- **The portrait new-game screen** (`ui/new_game_portrait.json`): "Advanced..." sits under the parchment panel (x 85,
+  y 424, 100x28), below Back and Start. Round 823's null-guarded hook in `NewGameScene` picks it up, so no Java change
+  was needed there.
+- **The portrait panel** (`ui/custom_difficulty_portrait.json`, `CustomDifficultyScene` branching on
+  `Forge.isLandscapeMode()`):
+  - The frame is 258x420, and Done / Reset all / Share code sit across the bottom (84x32 each).
+  - Header: the title, then the count line, then "Based on [preset] [tab box]" in a row table of their own (in the
+    title's column it was indented and pushed the tab box off the right edge).
+  - The tab box is a select box listing "All (5)", "Enemies & Duels (2)" ... with the change counts. It is re-listed
+    on every refill, with a guard so the re-list does not count as a pick. A pick clears the search, as a landscape
+    tab does.
+  - The search is full width (20 high); Basic / Expert are 20 high.
+  - Rows are full width (name 98, value 38) with 24x24 steppers and reset, 48 px at 540x960, finger-sized. Check
+    boxes are 24 high, and rows have 3 apart.
+  - The help line is 32 high (three lines).
+  - Landscape is unchanged.
+- **Console**: `custom panel tab NAME` picks a tab - through the tab box's own listener in portrait (the agent bridge
+  cannot open a SelectBox), directly in landscape.
+
+**Agent-tested** in `agent-824` (the agent folder and profile, wt-824's classes ahead of its jar, the plane jsons in
+its res, launched with `width=540 height=960 portrait`; removed afterward). Shots are in `C:\TFR\notes\r824\`.
+- The portrait new-game screen shows "Advanced...", which opens the portrait panel.
+- startingLife +3 and enemyHealth -2 tint their rows, with the reset; the tab box reads "All (2)".
+- `<` on enemyHealth removes it; Changed only lists startingLife alone.
+- Done puts "Custom (Normal)" in the box; a new game from it gives life 18 and `[TFR-Custom] new game: Custom
+  (Normal), 1 override(s)`.
+- `custom panel tab Economy` puts the box on "Economy", and mineOutput +3 there reads "Economy (1)". Search
+  "notoriety" lists the two Notoriety knobs.
+- A landscape run after the change renders as round 823 did.
+- No exceptions in any of the four logs.
+- The first portrait run found the header indent and rows about 10 too wide for the scroll bar; both were fixed and
+  re-shot.
+
+**Not tested:** a real Android device (the portrait layout was run on the desktop), the tab box opened by a finger,
+and the soft keyboard over the search box.
+
+Files: `scene/CustomDifficultyScene.java`, `ui/custom_difficulty_portrait.json` (new), `ui/new_game_portrait.json`. No
+stock engine file was touched.
+
 ## Round 823: custom difficulty, part 2 - the new-game "Advanced..." panel (landscape) (2026-10-28)
 
 Part 2 of the custom difficulty plan (`C:\TFR\notes\custom-difficulty-round-plan.md`; rounds 823-833 are reserved for
