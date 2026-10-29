@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 855: Sanar's life 30 -> 15 (2026-10-29)
+
+The user: "Let's lower Sanar's life to 15". Round 851's open question: Sanar is a difficulty-0.1 (Common) cave champion,
+eligible from day 1, but carried 30 life. Most difficulty-0.1 champions have 11-13, Uurg 30, Firesong and Sunspeaker 20.
+Data only, one number: `world/enemies.json` Sanar `"life": 30` -> `15`. Its new 60-card UR deck (round 851) is unchanged.
+
+- **What the player meets.** Insane's `enemyLifeFactor` 2.5 makes 38 (was 75). In weeks 1-2 the early-life ease (x0.75,
+  floor 25) makes 28 (was 56, the user's duel). Normal and Hard scale the same 15 by their own factors.
+- **Not changed:** `config tables/enemies.csv` still says 30 for Sanar. It is the content-filter snapshot that
+  `ContentFilterTables.registerEnemies()` rewrites from enemies.json at runtime (keeping the Include column), so the
+  game corrects it on its next start.
+
+**Tested:** enemies.json parses (2,187 entries, Sanar life 15). `validate_plane_data.py` is clean apart from a
+sprite-footprint line that round 854 has since fixed. No agent test (one number).
+
 ## Round 851: six gimmick legend decks rebuilt as real 60-card decks (2026-10-29)
 
 The user won a cave duel against "Sanar (Apprentice)" in which the enemy played only lands, and asked why

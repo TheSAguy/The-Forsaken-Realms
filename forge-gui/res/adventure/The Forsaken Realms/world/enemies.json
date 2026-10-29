@@ -98032,7 +98032,7 @@
         "ai": "",
         "speed": 26,
         "scale": 0.325,
-        "life": 30,
+        "life": 15,
         "rewards": [
             {
                 "type": "card",
