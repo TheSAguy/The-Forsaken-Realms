@@ -18,6 +18,9 @@ public class DifficultyData {
     // follows.
     public int startingWood=0;
     public int startingStone=0;
+    // TFR round 872: how many of the race's sets a new game starts with unlocked (Easy 4 ... Insane 1 in TFR's
+    // config.json; the "Starting sets" custom difficulty knob). 0 = unset: the old by-index table (4/3/2/1).
+    public int startingSets=0;
     public float enemyLifeFactor=1;
     public boolean startingDifficulty;
     public int spawnRank = 1; //0 for "easy", 1 for "normal", 2 for "hard". To filter map spawns based on this.

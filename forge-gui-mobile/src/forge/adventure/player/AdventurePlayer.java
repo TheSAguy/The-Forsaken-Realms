@@ -197,50 +197,81 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      * previously carried the whole of the previous run's researched set into a fresh world, which
      * started Progressive Set Unlocks already finished.
      * <p>
-     * Reads {@code this.difficultyData.name}, so the caller must have applied the chosen difficulty
-     * first. Clears the set itself, making it a no-op for create() (which arrives from clear()).
+     * Reads {@code this.difficultyData} (startingSets, name), so the caller must have applied the chosen difficulty
+     * first. Clears the set itself, making it a no-op for create() (which arrives from clear()). {@code chosen} is the
+     * new-game screen's picks (round 873; empty = all random); New Game+ passes null and draws at random.
      */
-    private void seedStartingEditions(int race) {
+    private void seedStartingEditions(int race, java.util.List<String> chosen) {
         unlockedEditions.clear();
         if (Config.instance().getConfigData().editionProgressionEnabled) {
-            String[] pool = null;
+            String[] pool = startingSetPool(race);
             String raceName = HeroListData.getRawRaceName(race);
-            RaceEditionData[] raceEditions = Config.instance().getConfigData().raceEditions;
-            if (raceName != null && raceEditions != null) {
-                for (RaceEditionData entry : raceEditions) {
-                    if (entry != null && raceName.equalsIgnoreCase(entry.race)
-                            && entry.editions != null && entry.editions.length > 0) {
-                        pool = entry.editions;
-                        break;
-                    }
-                }
-            }
-            if (pool == null)
-                pool = Config.instance().getConfigData().starterEditions;
             if (pool != null && pool.length > 0) {
-                int[] startingUnlockCountByDifficultyIndex = {4, 3, 2, 1};
-                DifficultyData[] allDifficulties = Config.instance().getConfigData().difficulties;
-                int difficultyIndex = 1; // default to Normal-equivalent if not found
-                if (allDifficulties != null) {
-                    for (int i = 0; i < allDifficulties.length; i++) {
-                        if (this.difficultyData.name.equals(allDifficulties[i].name)) {
-                            difficultyIndex = i;
-                            break;
-                        }
-                    }
-                }
-                int cappedIndex = Math.min(difficultyIndex, startingUnlockCountByDifficultyIndex.length - 1);
                 java.util.List<String> shuffled = new java.util.ArrayList<>(java.util.Arrays.asList(pool));
                 shuffled.remove("(All)"); // starterEditions carries this UI sentinel - not a set code
+                int startingUnlockCount = Math.min(shuffled.size(), startingSetCount(this.difficultyData));
+                // Round 873: the new-game screen's picks come first (only the race's own sets, no repeats, at most the
+                // count); the random fill below tops them up, so no picks at all is exactly the old random draw.
+                java.util.List<String> picked = new java.util.ArrayList<>();
+                if (chosen != null)
+                    for (String code : chosen)
+                        if (code != null && shuffled.contains(code) && !picked.contains(code) && picked.size() < startingUnlockCount)
+                            picked.add(code);
+                unlockedEditions.addAll(picked);
+                shuffled.removeAll(picked);
                 java.util.Collections.shuffle(shuffled, MyRandom.getRandom());
-                int startingUnlockCount = Math.min(shuffled.size(), startingUnlockCountByDifficultyIndex[cappedIndex]);
-                for (int i = 0; i < startingUnlockCount; i++)
+                for (int i = 0; unlockedEditions.size() < startingUnlockCount && i < shuffled.size(); i++)
                     unlockedEditions.add(shuffled.get(i));
                 // Diagnostic-only logging - greppable in forge.log as "[TFR-Research]".
-                System.out.println("[TFR-Research] new game, race=" + raceName + ", difficulty="
-                        + difficultyData.name + " -> starting unlocked editions: " + unlockedEditions);
+                System.out.println("[TFR-Research] " + (chosen == null ? "New Game+" : "new game") + ", race=" + raceName
+                        + ", difficulty=" + difficultyData.name + ", starting sets " + startingUnlockCount + " - chosen "
+                        + picked + ", random " + (startingUnlockCount - picked.size()) + " -> starting unlocked editions: "
+                        + unlockedEditions);
             }
         }
+    }
+
+    /** Round 873: the sets the new-game screen picked (codes; null or "" = any), taken by the next create() only. */
+    private static java.util.List<String> chosenStartingSets;
+
+    public static void setChosenStartingSets(java.util.List<String> codes) {
+        chosenStartingSets = codes == null ? null : new java.util.ArrayList<>(codes);
+    }
+
+    /** The race's 4 sets (config.json raceEditions), or the plane's starterEditions for a race with no entry. */
+    public static String[] startingSetPool(int race) {
+        String raceName = HeroListData.getRawRaceName(race);
+        RaceEditionData[] raceEditions = Config.instance().getConfigData().raceEditions;
+        if (raceName != null && raceEditions != null) {
+            for (RaceEditionData entry : raceEditions) {
+                if (entry != null && raceName.equalsIgnoreCase(entry.race)
+                        && entry.editions != null && entry.editions.length > 0)
+                    return entry.editions;
+            }
+        }
+        return Config.instance().getConfigData().starterEditions;
+    }
+
+    /**
+     * Round 872: how many starting sets a difficulty gives - its startingSets (config.json, or the "Starting sets"
+     * custom difficulty knob), else the old table by the preset's place in config.json (Easy 4, Normal 3, Hard 2,
+     * Insane 1), which is what a plane without the field still gets.
+     */
+    public static int startingSetCount(DifficultyData d) {
+        if (d != null && d.startingSets > 0)
+            return d.startingSets;
+        int[] startingUnlockCountByDifficultyIndex = {4, 3, 2, 1};
+        DifficultyData[] allDifficulties = Config.instance().getConfigData().difficulties;
+        int difficultyIndex = 1; // default to Normal-equivalent if not found
+        if (d != null && allDifficulties != null) {
+            for (int i = 0; i < allDifficulties.length; i++) {
+                if (d.name.equals(allDifficulties[i].name)) {
+                    difficultyIndex = i;
+                    break;
+                }
+            }
+        }
+        return startingUnlockCountByDifficultyIndex[Math.min(difficultyIndex, startingUnlockCountByDifficultyIndex.length - 1)];
     }
 
     private void seedStartingShopTypes(int raceIndex) {
@@ -1044,6 +1075,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         this.difficultyData.shardSellRatio = difficultyData.shardSellRatio;
         this.difficultyData.goldLoss = difficultyData.goldLoss;
         this.difficultyData.lifeLoss = difficultyData.lifeLoss;
+        this.difficultyData.startingSets = difficultyData.startingSets; // round 872: read by seedStartingEditions below
 
         gold = ringGiftStart() ? 0 : difficultyData.startingMoney; // round 101: the Ring Cities hand the kit over
         name = n;
@@ -1073,7 +1105,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // without an entry (or planes without the array) fall back to the flat starterEditions
         // list, picked randomly too for consistency. Same difficulty-index-lookup pattern
         // EconomyBuildings.difficultyPriceMultiplier() already uses.
-        seedStartingEditions(race);
+        java.util.List<String> chosen = chosenStartingSets != null ? chosenStartingSets : new java.util.ArrayList<>();
+        chosenStartingSets = null; // round 873: one new game's picks, never a later one's
+        seedStartingEditions(race, chosen);
         // Round 751: a new game runs research v2 (on a plane with set unlocks).
         researchV2 = forge.adventure.util.ResearchMeter.planeEnabled();
         System.out.println("[TFR-Research] research system: " + (researchV2 ? "v2" : "classic") + " (new game)");
@@ -1285,7 +1319,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // A research timer in flight would survive into a world whose day counter is back to 1,
         // leaving a negative "days remaining" and every research button disabled for months.
         clearResearch();
-        seedStartingEditions(heroRace);
+        seedStartingEditions(heroRace, null); // round 872: the count follows the difficulty, the sets stay random
         // Round 751 (the user: "New game or NG+"): New Game+ starts the new run on research v2. Nothing carries over -
         // research in progress and researched sets were reset just above, as they always have been.
         if (!researchV2 && forge.adventure.util.ResearchMeter.planeEnabled()) {
@@ -1424,6 +1458,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // "Random loot rate", so a player who picked Insane for a New Game+ off an Easy save kept
         // Easy's loot rate for the whole run.
         this.difficultyData.rewardMaxFactor = diff.rewardMaxFactor;
+        this.difficultyData.startingSets = diff.startingSets; // round 872: New Game+ seeds this many, at random
         resetToMaxLife();
     }
 

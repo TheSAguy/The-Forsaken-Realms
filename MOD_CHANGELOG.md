@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 872: a "Starting sets" custom difficulty knob (2026-10-29)
+
+A player, Brotman, on Discord: "one thing I am missing is starten Research. I like the single set from Insane, but it
+seems changing diffuculty is the only way to change that." The user: "I think we can make a drop-down, depending in
+your race and difficulty to select your starting set(s)." Round 872 is the count; round 873 the drop-downs.
+
+- **The knob:** `startingSets`, "Starting sets", Research & Sets > Research, Basic, scope newGame, 1 to 4, target
+  `difficulty.startingSets` - a new `DifficultyData` field (int, 0 = unset). TFR's config.json gives the presets 4 / 3 /
+  2 / 1 (Easy / Normal / Hard / Insane), so the panel shows "Normal: 3" and share codes carry it like any difficulty
+  knob. A plane without the field keeps the old table by the preset's place (4/3/2/1), so Shandalar is unchanged.
+- **Where it is read:** `AdventurePlayer.seedStartingEditions` takes its count from new
+  `AdventurePlayer.startingSetCount(DifficultyData)` (the old `{4,3,2,1}` table is its fallback). `create()` and
+  `updateDifficulty()` (New Game+) now copy `startingSets` onto the player's difficulty like the other fields, so a
+  New Game+ follows the count too, drawn at random (the user's call: NG+ stays random).
+- **Plumbing for round 873:** `seedStartingEditions(race, chosen)` takes the new-game screen's picks first (only the
+  race's own sets, no repeats, at most the count) and fills the rest at random; no picks is exactly the old draw.
+  `create()` takes them from new static `setChosenStartingSets` (one new game only, cleared on use); New Game+ passes
+  null. New `startingSetPool(race)` is the race's 4 sets (or `starterEditions`), shared with the new-game screen.
+- **Log:** `[TFR-Research] new game|New Game+, race=..., difficulty=..., starting sets N - chosen [...], random M ->
+  starting unlocked editions: [...]`.
+- **Agent-tested** (agent-872, cheats, 1280x720, round 873's build): New Game+ from a Normal save with the knob set to 2
+  in the NG+ Advanced panel - `[TFR-Custom] New Game+: Custom (Normal), 1 override(s): startingSets 3 -> 2`, 2 sets
+  unlocked at random (M20, DTK); Easy 4 (all), Normal 3, Insane 1. Shot `C:\TFR\notes\r872-knob-ngplus.png`.
+- Files: `data/DifficultyData.java` (STOCK, one field), `player/AdventurePlayer.java` (STOCK, TFR's own seed method),
+  `config.json`, `config tables/custom_difficulty.json`. No save format change: the player's difficulty is saved field by
+  field and `startingSets` matters only at creation.
+
 ## Round 877: 3D mines in every town (2026-10-29)
 
 The user: "Yes, install them" - the third set of the Art thread's golden Capitol work (rounds 867 and 874 before it):

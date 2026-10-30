@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 872 - a "Starting sets" custom difficulty knob
+- **`forge-gui-mobile/src/forge/adventure/data/DifficultyData.java`** (STOCK) - new field `startingSets` (int, 0 = unset).
+  Additive.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - `create()` and `updateDifficulty()`
+  copy `startingSets`; TFR's `seedStartingEditions(race, chosen)` reads it through new static `startingSetCount`, takes
+  the new-game picks (new `setChosenStartingSets`) and `startingSetPool(race)`.
+
 ### Round 868 - deadlines say the days left, never the absolute day
 - **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - the raid page's Time line drops
   "(until day N)". Text only, in TFR's own `loadRaidDetails`.
