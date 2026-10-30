@@ -38,6 +38,10 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 890 - the raid reward reads icon first
+- **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - the raid page's reward line puts each
+  icon before its number.
+
 ### Round 886 - the laurel and the open padlock
 - **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** (STOCK) - `setLockIcon` draws `ui/padlock_open.png`
   for an open box; the Doppelganger's race help says "the open padlocks".

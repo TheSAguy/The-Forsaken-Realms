@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 890: the raid reward reads icon first (2026-10-30)
+
+The user: "Yes, icon first", to "Should the raid reward text put the icon before the number?" Art measured a 4-5 px gap
+the font layout leaves after an inline image, plus the Stone glyph's own padding, so a comma right after an icon sits
+away from it. With the icon first the comma follows a digit, and the line matches the HUD's "[wood] 555".
+
+- **The text**: `[laurel] +1, [wood] +50, [stone] +50.` in `TownPillage.onRaiderBeaten`'s notice (the banner and the Log
+  panel) and on the quest log's raid page, which keeps its explicit `[WHITE]...[BLACK]` wrapping. The raid strings stay
+  literal, as round 886 left them.
+- **Left as they are**: the failure text ("-2 [laurel] with Orazca", "think less of you"), which is not a comma list;
+  every other amount ("375 [gold]"); forge.log.
+- Standing rule in `CLAUDE.md`: in a comma list of amounts the icon goes first.
+- **Tested** in the agent game on these two classes ahead of the jar, cheats, every duel at 50x. A raid started at
+  Orazca and won: the quest log's raid page, then the Log panel, with the banner beside it behind the panel, all three
+  showing the new order in color. Wood and stone paid. Shots: `notes/r890-questlog-raid.png`, `r890-log-panel.png`.
+- **Seen, not changed**: the laurel sits tight against what comes before it ("Reward:[laurel]", "you:[laurel]",
+  "-2[laurel]"), and the gap after an icon is now the space plus the font's own gap, so "[laurel]  +1" reads a little wide.
+- Files: `util/TownPillage.java`, `scene/QuestLogScene.java` (STOCK).
+
 ## Round 886: the laurel for reputation, the swung padlock for an open set (2026-10-30)
 
 The user, of Art's two proposals: "Yes, both" (the laurel wreath for reputation, the swung gold padlock for the open

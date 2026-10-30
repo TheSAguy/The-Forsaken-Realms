@@ -435,9 +435,9 @@ public final class TownPillage {
             WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).addMapReputation(t.pillageRewardReputation);
         Current.player().addWood(t.pillageRewardWood);
         Current.player().addStone(t.pillageRewardStone);
-        GameHUD.getInstance().addNotification("The raiders are driven from " + town + "! Its people thank you: +"
-                + t.pillageRewardReputation + " [+Reputation], +" + t.pillageRewardWood + " [+Wood], +" + t.pillageRewardStone
-                + " [+Stone]."); // round 881: the icons; black text, each [WHITE] in normalizeNotice
+        GameHUD.getInstance().addNotification("The raiders are driven from " + town + "! Its people thank you: [+Reputation] +"
+                + t.pillageRewardReputation + ", [+Wood] +" + t.pillageRewardWood + ", [+Stone] +" + t.pillageRewardStone
+                + "."); // round 881: the icons; black text, each [WHITE] in normalizeNotice; round 890: icon first in a comma list
         System.out.println("[TFR-Pillage] " + town + ": pillage stopped on day " + world.getCurrentDay() + " - +"
                 + t.pillageRewardReputation + " reputation, +" + t.pillageRewardWood + " wood, +" + t.pillageRewardStone
                 + " stone");
