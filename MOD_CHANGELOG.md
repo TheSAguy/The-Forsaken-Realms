@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 875: the Capitol Armory drops its sword sign (2026-10-29)
+
+The user: "Yes, remove it", to round 874's open question - the Armory lot's own shop sign (a small board with a sword,
+drawn 16 px right of the door) sat over the right towers of the new golden Armory (~12 px of Level 1, Level 2's right
+front tower). The crossed swords on the building already say "Armory".
+
+- **`maps/map/towns/player_capital.tmx`**, object 86 (the Armory lot, `commonShopList` ArmoryCommon): its own
+  `hasSign` = false. It used to inherit `hasSign` = true from the template `common/maps/obj/shop.tx` (unchanged).
+  `MapStage` creates a shop sign only when `hasSign` is true; `refreshShopSignArt()` already returns "no-sign" for
+  such a lot. Every other lot keeps its sign, and every other town's Armory lot keeps its sign (Capitol map only).
+- **Checks:** the tmx parses; `validate_plane_data.py` gives the same sections and line count as round 874's run.
+  No Java change, no build.
+- **SEEN in the agent** (an agent copy of the round 874 package with this tmx, a fresh cheats world, `capitol raise`;
+  shots `C:\CLAUDE\PROJECTS\TFR1\notes\r875-*.png`, log `r875-agent-forge.log`): the Armory restored on lot 86 at
+  Level 1 with no sign (`r875-armory-level1-nosign.png`, against round 874's `r874-armory-level1.png` with the sign);
+  walking into its door opens the Armory shop (`r875-armory-door-shop.png`); upgraded to Level 2 with the right front
+  tower fully visible (`r875-armory-level2-nosign.png`); lot 85 next to it rebuilt as a Booster Shop shows its own
+  sign as before, and the top-row shop sign is unchanged (`r875-plaza-signs-booster-shop.png`); the log prints
+  `[TFR-CapitolArt] Armory L1` / `L2 drawn from capitol_gold.atlas (the Capitol)`; no exception.
+
 ## Round 874: the golden Capitol's 3D Armory, Bank and Exchange (2026-10-29)
 
 The user: "Yes, install them" - the second set of the Art thread's golden Capitol work (round 867 was the first), four

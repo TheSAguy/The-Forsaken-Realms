@@ -19521,6 +19521,7 @@
   <object id="86" template="../../../../common/maps/obj/shop.tx" x="79.4545" y="332.545">
    <properties>
     <property name="commonShopList" value="ArmoryCommon"/>
+    <property name="hasSign" type="bool" value="false"/>
     <property name="noMigrate" type="bool" value="true"/>
     <property name="noRestock" type="bool" value="true"/>
     <property name="signYOffset" type="float" value="0"/>
