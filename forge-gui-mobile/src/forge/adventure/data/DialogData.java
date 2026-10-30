@@ -46,7 +46,12 @@ public class DialogData implements Serializable {
         if (other == null)
             return;
 
-        this.action = other.action.clone();
+        // Round 889: every copy its own actions. AdventureQuestData.replaceTokens() and InvasionQuests write into them (a
+        // POIReference's town, an invasion's reward); an array clone shared them with the quest template, so the first
+        // offer's town stuck to every later offer of that quest until the next load.
+        this.action = new ActionData[other.action.length];
+        for (int i = 0; i < this.action.length; i++)
+            this.action[i] = other.action[i] == null ? null : new ActionData(other.action[i]);
         this.condition = other.condition.clone();
         this.name = other.name;
         this.locname = other.locname.isEmpty()?"":("Copy of " + other.locname);
@@ -184,25 +189,20 @@ public class DialogData implements Serializable {
             addGold = other.addGold;
             addShards = other.addShards;
             addWood = other.addWood;
+            grantRingGift = other.grantRingGift;
             addStone = other.addStone;
             deleteMapObject = other.deleteMapObject;
             activateMapObject = other.activateMapObject;
             battleWithActorID = other.battleWithActorID;
             giveBlessing = other.giveBlessing;
             setColorIdentity = other.setColorIdentity;
+            advanceCharacterFlag = other.advanceCharacterFlag;
             advanceQuestFlag = other.advanceQuestFlag;
             advanceMapFlag = other.advanceMapFlag;
             setEffect = other.setEffect;
-            setQuestFlag = new QuestFlag();
-            if (other.setQuestFlag != null) {
-                setQuestFlag.key = other.setQuestFlag.key;
-                setQuestFlag.val = other.setQuestFlag.val;
-            }
-            setMapFlag = new QuestFlag();
-            if (other.setMapFlag != null) {
-                setMapFlag.key = other.setMapFlag.key;
-                setMapFlag.val = other.setMapFlag.val;
-            }
+            setCharacterFlag = copyFlag(other.setCharacterFlag);
+            setQuestFlag = copyFlag(other.setQuestFlag);
+            setMapFlag = copyFlag(other.setMapFlag);
             grantRewards = other.grantRewards.clone();
             grantRewardsChoice = other.grantRewardsChoice.clone();
             issueQuest = other.issueQuest;
@@ -215,6 +215,16 @@ public class DialogData implements Serializable {
             refreshShopRewardsTrigger = other.refreshShopRewardsTrigger;
             pinShopType = other.pinShopType;
             triggerDungeonClear = other.triggerDungeonClear;
+        }
+
+        /** Round 889: an unset flag stays null - MapDialog reads a flag's key whenever the flag is there. */
+        private static QuestFlag copyFlag(QuestFlag other) {
+            if (other == null)
+                return null;
+            QuestFlag flag = new QuestFlag();
+            flag.key = other.key;
+            flag.val = other.val;
+            return flag;
         }
     }
 

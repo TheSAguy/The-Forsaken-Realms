@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 889 - each quest offer owns its dialog actions and tokens
+- **`forge-gui-mobile/src/forge/adventure/data/DialogData.java`** (STOCK) - the copy constructor copies each `ActionData`
+  (stock: `other.action.clone()`, which shared them with the quest template). `ActionData`'s copy constructor keeps a
+  null flag null (`copyFlag`) and carries `grantRingGift`, `advanceCharacterFlag`, `setCharacterFlag`; its one other
+  caller is `adventure-editor`'s `ActionEditor.copy()`. If upstream adds an `ActionData` field, add it there too: a
+  quest dialog now loses any field that constructor misses.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java`** (STOCK) - the copy constructor gives the quest
+  its own `enemyTokens` and `otherTokens` (`copyTokens`); `replaceTokens(DialogData)` logs `[TFR-QuestRep]` per
+  reputation action (`logReputationTown`).
+
 ### Round 890 - the raid reward reads icon first
 - **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - the raid page's reward line puts each
   icon before its number.

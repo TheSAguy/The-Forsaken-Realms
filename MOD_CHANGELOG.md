@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 889: a quest's reputation lands on its own town (2026-10-30)
+
+A post-package look at round 881's icons saw an invasion declined in Benalia take its -1 from Tolaria, where the same
+quest had been declined earlier. The guess was right: the first offer's town stuck to the shared template.
+
+**The cause.** `DialogData`'s copy constructor cloned the `action` array, not the actions (stock, since the quest
+system's first commit, `467795712ce`). Every offer of a quest held the template's own `ActionData` objects, so
+`AdventureQuestData.replaceTokens()` wrote the first offer's town id over `$(poi_3)` in the template, and every later
+offer found no token left to fill. It lasted until the next load or new game (`AdventureQuestController.clear()`
+reloads the templates), and round 695's 10-day offer rest only spaced the repeats out.
+
+**How far it reached, wider than invasions.** 43 of the 99 templates, 87 reputation actions with a town token: 41 on
+quest failure, 29 on the reward, 15 on the offer, 2 on a stage. `$(poi_1)`, `$(poi_2)`, `$(poi_3)` and `$(poi_source)`
+alike, so a reward or a failure went to the wrong town as well as a decline. The same sharing did two more things:
+`InvasionQuests.setRewardActions` wrote a new offer's gold and reputation into an open invasion of the same template,
+and `replaceSourcePOIToken`'s no-source path zeroed the template's grant for the rest of the sitting. `enemyTokens` and
+`otherTokens` were shared with the template the same way, and they hold an invasion's reward and its toughest troop, so
+a later invasion of a template read the earlier one's `$(invasion_troop_rank)`.
+
+**The fix.** `DialogData` copies each action; `AdventureQuestData` copies the two token tables. `ActionData`'s copy
+constructor had no game caller and could not be used as it stood: it turned a null `setQuestFlag` or `setMapFlag` into a
+flag with a null key, which `MapDialog` throws on, and dropped `grantRingGift`, `advanceCharacterFlag` and
+`setCharacterFlag`. It keeps nulls and copies all 32 fields now. No field was added, so the save format is unchanged.
+
+**New log line.** `[TFR-QuestRep] <quest> from <town>: <amount> reputation, $(poi_3) = <town>`, one per reputation action
+at each offer. The grant itself already logged `[TFR-Notices] reputation`. "from null" is a quest with no giving town
+(the console's `questboard` boards, `give quest`); "unbound, the place the player stands in" is a stage with no fixed
+place, which `MapDialog` has always charged to wherever the player stands.
+
+**Saves.** An offer is never saved, only an accepted quest, with its town id already written in. A quest accepted after
+an earlier offer of its template in the same sitting keeps the wrong town for its reward and failure until it ends; it
+fixes itself when the quest finishes, and reputation already charged to the wrong town stays there. Not repaired: the
+damage is small and ends by itself, and a repair would walk every saved dialog against its template at load.
+
+**Tested** in the agent game on save slot 4, no data patch; `questboard` issued real offers first, so every invasion had
+already been offered in Tolaria, and all quests resting let a board offer any of them. The old jar: Orc Warband declined
+in Benalia and Knightly Siege in Shiv both charged Tolaria (-1, then -2). The fix: Tolaria 0 to -1 on its own board's
+decline, Knightly Siege declined in Shiv 0 to -1, and the same template (Goblin Invasion, `give quest 38`) abandoned in
+Benalia 0 to -2 and in Shiv -1 to -3. Issued in Benalia, saved, reloaded and abandoned in Shiv, it still charged Benalia.
+A reflection check over `ActionData` found 3 of 32 fields lost before and none after; the template stayed `$(poi_3) -1`
+after a write to a copy. The oldest agent save loaded with its inventory and no migration dialog. Not played: an
+invasion won to its reward (the epilogue action takes the same path), and two invasions of one template open at once.
+
 ## Round 890: the raid reward reads icon first (2026-10-30)
 
 The user: "Yes, icon first", to "Should the raid reward text put the icon before the number?" Art measured a 4-5 px gap

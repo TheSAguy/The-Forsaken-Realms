@@ -139,9 +139,20 @@ public class AdventureQuestData implements Serializable {
         storyQuest = data.storyQuest;
         sourceID = data.sourceID;
         poiTokens = data.poiTokens;
-        enemyTokens = data.enemyTokens;
-        otherTokens = data.otherTokens;
+        // Round 889: each quest its own tokens, as its own actions (DialogData) - an invasion keeps its reward and its
+        // toughest troop in them, and two open invasions of one template wrote over each other.
+        enemyTokens = copyTokens(data.enemyTokens);
+        otherTokens = copyTokens(data.otherTokens);
         isTracked = data.isTracked;
+    }
+
+    private static <V> Dictionary<String, V> copyTokens(Dictionary<String, V> tokens) {
+        Dictionary<String, V> copy = new Hashtable<>();
+        for (Enumeration<String> e = tokens.keys(); e.hasMoreElements(); ) {
+            String key = e.nextElement();
+            copy.put(key, tokens.get(key));
+        }
+        return copy;
     }
 
     public AdventureQuestData()
@@ -510,13 +521,25 @@ public class AdventureQuestData implements Serializable {
         for (DialogData.ActionData ad: data.action) {
             if ( ad != null && ad.POIReference != null)
             {
+                String reference = ad.POIReference;
                 for (Enumeration<String> e = poiTokens.keys(); e.hasMoreElements(); ) {
                     String key = e.nextElement();
                     ad.POIReference = ad.POIReference.replace(key, poiTokens.get(key).getID());
                 }
                 replaceSourcePOIToken(ad);
+                logReputationTown(reference, ad);
             }
         }
+    }
+
+    /** Round 889: which town this quest's reputation action landed on, one [TFR-QuestRep] line per action. The grant
+     *  itself logs [TFR-Notices] reputation when it fires. */
+    private void logReputationTown(String reference, DialogData.ActionData ad) {
+        if (ad.addMapReputation == 0 || !reference.contains("$("))
+            return;
+        System.out.println("[TFR-QuestRep] " + name + " from " + forge.adventure.util.DungeonSources.displayNameOf(sourceID)
+                + ": " + ad.addMapReputation + " reputation, " + reference + " = " + (ad.POIReference.contains("$(")
+                ? "unbound, the place the player stands in" : forge.adventure.util.DungeonSources.displayNameOf(ad.POIReference)));
     }
 
     /**
