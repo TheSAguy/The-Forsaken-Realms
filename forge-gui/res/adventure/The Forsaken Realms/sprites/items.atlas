@@ -1887,6 +1887,9 @@ Wood
 Stone
   xy: 16, 1008
   size: 16, 16
+Reputation
+  xy: 16, 1040
+  size: 16, 16
 Torch
   xy: 0, 1024
   size: 16, 16

@@ -432,7 +432,8 @@ public final class DungeonSources {
                     + changes.getMapReputation() + ")";
             // Round 711: the same shape as the tournament's line - what happened, then the town's reputation.
             GameHUD.getInstance().addNotification("[BLACK]" + poi.getDisplayName() + " cleared - " + town.getDisplayName()
-                    + " reputation " + (rep > 0 ? "+" : "") + rep + " (now " + changes.getMapReputation() + ").", true);
+                    + " " + (rep > 0 ? "+" : "") + rep + " [WHITE]" + ResourceGlyphs.reputation() + "[BLACK] (now "
+                    + changes.getMapReputation() + ").", true);
         }
         System.out.println("[TFR-DungeonSource] " + poi.getDisplayName() + " cleared on day " + today + " after " + age
                 + " day(s) (x" + escalation(age) + ") - it falls quiet" + paid);

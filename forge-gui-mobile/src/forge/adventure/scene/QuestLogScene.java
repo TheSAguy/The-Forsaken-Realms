@@ -297,9 +297,9 @@ public class QuestLogScene extends UIScene {
                         + " tiles from you"),
                 raid.near ? "[BLACK]Raiders out now: " + raid.raidersOut
                         : "[#5a5048]Raiders come out when you are within " + raid.rangeTiles + " tiles of " + raid.town + ".",
-                "[BLACK]Reward: +" + raid.rewardReputation + " reputation, +" + raid.rewardWood + " [WHITE][+Wood][BLACK], +"
+                "[BLACK]Reward: +" + raid.rewardReputation + " [WHITE][+Reputation][BLACK], +" + raid.rewardWood + " [WHITE][+Wood][BLACK], +"
                         + raid.rewardStone + " [WHITE][+Stone]",
-                "[#963228]If time runs out: -" + raid.failReputation + " reputation with " + raid.town};
+                "[#963228]If time runs out: -" + raid.failReputation + " [WHITE][+Reputation][#963228] with " + raid.town};
         for (String text : lines) {
             TypingLabel label = Controls.newTypingLabel(text);
             label.skipToTheEnd();

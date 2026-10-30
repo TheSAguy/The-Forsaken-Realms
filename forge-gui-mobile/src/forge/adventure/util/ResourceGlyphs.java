@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import forge.Forge;
 import forge.Graphics;
+import forge.adventure.player.AdventurePlayer;
 import forge.assets.FSkinImageInterface;
 
 /**
@@ -26,6 +27,11 @@ public final class ResourceGlyphs {
             if (sprite != null)
                 Forge.getAssets().symbolLookup().put(name, new Symbol(sprite));
         }
+    }
+
+    /** Round 886: "[+Reputation]" for a label, the word in a plane whose atlas has no laurel (an unknown tag draws a "+"). */
+    public static String reputation() {
+        return AdventurePlayer.resolveStatusGlyph("Reputation") != null ? "[+Reputation]" : "reputation";
     }
 
     /** "300 {Gold}" for a popup or its buttons, safe off the render thread; the plain word if no symbol is registered. */

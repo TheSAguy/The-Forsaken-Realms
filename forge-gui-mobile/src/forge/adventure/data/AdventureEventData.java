@@ -1064,7 +1064,8 @@ public class AdventureEventData implements Serializable {
                 // Round 711: the line names the town - in the notice log it otherwise reads as a reputation of nowhere.
                 String town = forge.adventure.util.DungeonSources.displayNameOf(sourceID);
                 forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]Tournament won" + (town == null ? "" : " at " + town)
-                        + " - " + (town == null ? "local " : "") + "reputation +1 (now " + changes.getMapReputation() + ").", true);
+                        + ": " + (town == null ? "local " : "") + "+1 [WHITE]" + forge.adventure.util.ResourceGlyphs.reputation()
+                        + "[BLACK] (now " + changes.getMapReputation() + ").", true);
             }
         }
         eventStatus = AdventureEventController.EventStatus.Awarded;

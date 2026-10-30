@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 886 - the laurel and the open padlock
+- **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** (STOCK) - `setLockIcon` draws `ui/padlock_open.png`
+  for an open box; the Doppelganger's race help says "the open padlocks".
+- **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - the raid page's reward and failure lines
+  use `[+Reputation]`.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java`** (STOCK) - the Inn tournament's notice uses
+  `ResourceGlyphs.reputation()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** (STOCK) - `logReputation`'s line uses it too; forge.log
+  keeps the word.
+
 ### Round 884 - New Game+ pays the kit's resources only on "Cards only"
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - new character flag `ngPlusKeptPurse`,
   set in `applyNewGamePlusCarry`; `grantRingGift` holds back the four resources on it, in the reward list, the skip-intro

@@ -272,7 +272,7 @@ public final class TownPillage {
         int loss = tuning().pillageFailReputation;
         WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).addMapReputation(-loss);
         GameHUD.getInstance().addNotification("The raiders were never driven from " + poi.getDisplayName()
-                + " - its people think less of you (-" + loss + " reputation).");
+                + " - its people think less of you (-" + loss + " [+Reputation]).");
         System.out.println("[TFR-Pillage] " + poi.getDisplayName() + ": time ran out at "
                 + world.getPillages().get(poi.getID())[P_BEATEN] + " beaten - -" + loss + " reputation");
         end(world, poi.getID());
@@ -436,7 +436,7 @@ public final class TownPillage {
         Current.player().addWood(t.pillageRewardWood);
         Current.player().addStone(t.pillageRewardStone);
         GameHUD.getInstance().addNotification("The raiders are driven from " + town + "! Its people thank you: +"
-                + t.pillageRewardReputation + " reputation, +" + t.pillageRewardWood + " [+Wood], +" + t.pillageRewardStone
+                + t.pillageRewardReputation + " [+Reputation], +" + t.pillageRewardWood + " [+Wood], +" + t.pillageRewardStone
                 + " [+Stone]."); // round 881: the icons; black text, each [WHITE] in normalizeNotice
         System.out.println("[TFR-Pillage] " + town + ": pillage stopped on day " + world.getCurrentDay() + " - +"
                 + t.pillageRewardReputation + " reputation, +" + t.pillageRewardWood + " wood, +" + t.pillageRewardStone

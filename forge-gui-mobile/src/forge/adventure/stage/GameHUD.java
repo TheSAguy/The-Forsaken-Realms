@@ -1785,9 +1785,10 @@ public class GameHUD extends Stage {
         if (delta == 0)
             return;
         String town = forge.adventure.util.DungeonSources.displayNameOf(poiId);
-        String line = (town == null ? "Local" : town) + " reputation " + (delta > 0 ? "+" : "") + delta + " (now " + now + ")"
+        String line = (town == null ? "Local" : town) + " " + (delta > 0 ? "+" : "") + delta + " "
+                + forge.adventure.util.ResourceGlyphs.reputation() + " (now " + now + ")"
                 + (why == null || why.isEmpty() ? "." : " - " + why + ".");
-        System.out.println("[TFR-Notices] reputation: " + line);
+        System.out.println("[TFR-Notices] reputation: " + line.replace("[+Reputation]", "reputation"));
         logNotification(line, false);
     }
 

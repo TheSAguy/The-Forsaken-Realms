@@ -440,12 +440,13 @@ public class NewGameScene extends MenuScene {
 
     /**
      * Round 882: the two icons. The closed one is the stock padlock, cropped: that sprite is a wide gray plate in the top
-     * half of its cell, and whole it draws too small to read here. The game has no open padlock, so the open one is the
-     * skin's checkbox tick until Art makes one (swap it here).
+     * half of its cell, and whole it draws too small to read here. Round 886: the open one is Art's swung gold padlock, the
+     * same 70x87 as that crop; a file of its own, since items.atlas is Nearest-filtered and would alias it.
      */
     private static Drawable setLockIcon(boolean open) {
         if (open)
-            return Controls.getSkin().getDrawable("check");
+            return new TextureRegionDrawable(new com.badlogic.gdx.graphics.g2d.TextureRegion(
+                    Forge.getAssets().getTexture(Config.instance().getFile("ui/padlock_open.png"))));
         com.badlogic.gdx.graphics.g2d.TextureRegion r = forge.assets.FSkinImage.PADLOCK.getTextureRegion();
         int w = r.getRegionWidth(), h = r.getRegionHeight();
         return new TextureRegionDrawable(new com.badlogic.gdx.graphics.g2d.TextureRegion(r,
@@ -859,7 +860,7 @@ public class NewGameScene extends MenuScene {
 
             if (forge.adventure.util.EditionProgression.isAnySetRace(selectedRaceIndex()))
                 raceSummary.text = String.format(
-                        "Race: %s\nNo sets of its own: pick any four of the %d sets the other races start with under Starting sets, or leave Any for a random one. They are its four sets this game, and your starter deck is built from them.\n\nAt %s difficulty, %s unlocked (the check marks). The padlocked ones stay yours and unlock later at the Research Lab.",
+                        "Race: %s\nNo sets of its own: pick any four of the %d sets the other races start with under Starting sets, or leave Any for a random one. They are its four sets this game, and your starter deck is built from them.\n\nAt %s difficulty, %s unlocked (the open padlocks). The padlocked ones stay yours and unlock later at the Research Lab.",
                         race.getText(), poolSize, selectedDifficulty.name,
                         startingUnlockCount >= AdventurePlayer.RACE_SET_COUNT ? "all four start" : startingUnlockCount == 1 ? "only the first box starts"
                                 : "the first " + startingUnlockCount + " boxes start");

@@ -948,7 +948,7 @@ public class TownRestoration {
         DialogData root = new DialogData();
         root.text = String.format(
                 "This town doesn't have enough reputation to support another building yet "
-                + "(%d/%d built, %d reputation with this town). Help it prosper - completing "
+                + "(%d/%d built, %d " + ResourceGlyphs.reputation() + " with this town). Help it prosper - completing "
                 + "its quests raises your standing here.",
                 countBuiltBuildings(changes), maxBuildableBuildings(changes), changes.getMapReputation());
 

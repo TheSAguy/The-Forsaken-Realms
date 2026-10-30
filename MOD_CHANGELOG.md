@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 886: the laurel for reputation, the swung padlock for an open set (2026-10-30)
+
+The user, of Art's two proposals: "Yes, both" (the laurel wreath for reputation, the swung gold padlock for the open
+set). Round 881's raid popup still said "+1 reputation" for want of an icon, and round 882's row used a green tick as
+a stand-in for the open lock.
+
+- **Art**: Art's `reputation_laurel.png` is painted into the free cell 16,1040 of `sprites/items.png` (only that cell
+  changed, confirmed by a pixel diff), with a `Reputation` region after `Stone` in `sprites/items.atlas`.
+  `padlock_swung.png` is `ui/padlock_open.png`, a file of its own: the atlas is Nearest-filtered and would alias a soft
+  70x87 image. CREDITS needs nothing (Art's own drawing).
+- **The new-game row**: `NewGameScene.setLockIcon` draws the padlock for an open box, under the same `Scaling.fit`. The
+  Doppelganger's race help said "the check marks" and now says "the open padlocks".
+- **Reputation amounts**: `[+Reputation]` in the raid reward and failure notices, the raid page of the quest log, the
+  Inn tournament and dungeon-clear notices, the Log's town lines (`GameHUD.logReputation`), the Goodwill reward, the
+  "not enough reputation" dialog, and all 128 amounts in `world/quests.json`, which keep "Local" and "Town" since those
+  say whose ("+3 Local [+Reputation]"). The brief named the first few; the audit found the rest.
+- **Shared code**: `ResourceGlyphs.reputation()` gives the tag, or the word in a plane with no laurel, since an unknown
+  tag draws a stray "+". The raid strings stay literal: raids exist only here. Notices carrying their own `[BLACK]` wrap
+  the icon in `[WHITE]`, as the raid page does.
+- **Old saves**: a saved Log keeps its words. `Ascendance`'s history-icon guess takes both the tag and the old
+  " reputation in " text. `InvasionQuests.moveRewardLine` reads whichever label an issued quest carries, so an invasion
+  quest from before this round, or from another plane, still has its reward moved.
+- **Left as they are**: words that are not amounts ("think less of you", "Build your Reputation to at least +5"), the
+  stat and column labels (the town greeting's "Reputation: 6", World Standings, the map's Reputation view numbers), the
+  percent perks Envoy and Warmonger, forge.log lines, and the GUIDE. The other planes' `quests.json` keep the word.
+- Standing rule in `CLAUDE.md` now names `[+Reputation]`.
+- **Tested** in a throwaway agent copy with this jar and the plane's data, cheats, every duel at 50x. New-game row in
+  landscape 1280x720 and portrait 540x960: Doppelganger open on 4 boxes on Easy, 3 on Normal (landscape), 1 on Insane,
+  the padlock crisp beside the closed lock at 4x in both orientations. A won raid: the banner and the Log panel show
+  the laurel in color. The quest log's raid page: the reward line and the red failure line. A raid left to run out: the
+  failure fired, seen in the state and forge.log, not on screen (the world's notices pushed it out of the banner and
+  the Log's visible rows); it takes the same path as the reward notice. Shots: `notes/r886-*.png`.
+- **Not tested on screen**: the tournament, dungeon-clear, Goodwill and locked-building lines, and a quest dialog with
+  the laurel. All go through the same TypingLabel font as `[+Gold]`.
+- Files: `sprites/items.png`, `sprites/items.atlas`, `ui/padlock_open.png` (new), `world/quests.json`,
+  `scene/NewGameScene.java` (STOCK), `scene/QuestLogScene.java` (STOCK), `data/AdventureEventData.java` (STOCK),
+  `stage/GameHUD.java` (STOCK), `util/ResourceGlyphs.java`, `util/TownPillage.java`, `util/DungeonSources.java`,
+  `util/Ascendance.java`, `util/AscendanceRewards.java`, `util/InvasionQuests.java`, `util/TownRestoration.java`.
+
 ## Round 884: New Game+ pays the starting kit's resources only on "Cards only" (2026-10-30)
 
 The user: "Yes, all five", to the main thread's recommendation: "New Game+ pays the starting kit only on 'cards only'.

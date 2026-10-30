@@ -187,16 +187,18 @@ public final class InvasionQuests {
         System.out.println("[TFR-Invasion] " + quest.name + ": the quest text now names " + now + " (was " + was + ")");
     }
 
-    /** The epilogue's reward line was filled at issue ("(+2 Local Reputation, +500 [+Gold])"): rewrite it and the paid
+    /** The epilogue's reward line was filled at issue ("(+2 Local [+Reputation], +500 [+Gold])"): rewrite it and the paid
      *  amounts together, or neither when the line is not there (a hand-written epilogue keeps what it promised). */
     private static boolean moveRewardLine(AdventureQuestData quest, int gold, int rep) {
         String oldGold = quest.getOtherToken("$(invasion_gold)"), oldRep = quest.getOtherToken("$(invasion_rep)");
         if (quest.epilogue == null || quest.epilogue.text == null || oldGold == null || oldRep == null)
             return false;
-        String was = "+" + oldRep + " Local Reputation, +" + oldGold + " [+Gold]";
+        // Round 886: a quest issued before the laurel, or in another plane, keeps the word.
+        String label = quest.epilogue.text.contains(" Local [+Reputation], +") ? "Local [+Reputation]" : "Local Reputation";
+        String was = "+" + oldRep + " " + label + ", +" + oldGold + " [+Gold]";
         if (!quest.epilogue.text.contains(was))
             return false;
-        quest.epilogue.text = quest.epilogue.text.replace(was, "+" + rep + " Local Reputation, +" + gold + " [+Gold]");
+        quest.epilogue.text = quest.epilogue.text.replace(was, "+" + rep + " " + label + ", +" + gold + " [+Gold]");
         setRewardActions(quest, gold, rep);
         quest.putOtherToken("$(invasion_gold)", String.valueOf(gold));
         quest.putOtherToken("$(invasion_rep)", String.valueOf(rep));

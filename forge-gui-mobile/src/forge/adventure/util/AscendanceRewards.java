@@ -72,7 +72,7 @@ final class AscendanceRewards {
             case "blueprint": return "A shop blueprint you don't have yet";
             case "coins": return "+" + Math.round(value) + " [+BronzeChallengeCoin] Bronze Challenge Coin" + (Math.round(value) == 1 ? "" : "s");
             case "goodwill": PointOfInterest town = goodwillTown();
-                return "+" + Math.round(value) + " reputation in " + (town == null ? "your Capitol" : town.getDisplayName());
+                return "+" + Math.round(value) + " " + ResourceGlyphs.reputation() + " in " + (town == null ? "your Capitol" : town.getDisplayName());
             default: return id;
         }
     }
@@ -174,7 +174,7 @@ final class AscendanceRewards {
                 }
                 PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(town.getID());
                 changes.addMapReputation(Math.round(value));
-                result = "+" + Math.round(value) + " reputation in " + town.getDisplayName() + " (now " + changes.getMapReputation() + ")";
+                result = "+" + Math.round(value) + " " + ResourceGlyphs.reputation() + " in " + town.getDisplayName() + " (now " + changes.getMapReputation() + ")";
                 break;
             }
             default: result = id;

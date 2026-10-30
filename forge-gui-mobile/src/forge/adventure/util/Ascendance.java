@@ -1666,7 +1666,7 @@ public final class Ascendance {
         if (text.contains("[+Wood]")) return "wood";
         if (text.contains("[+Stone]")) return "stone";
         if (text.contains("[+MapFragment")) return "mapFragment";
-        if (text.contains(" reputation in ")) return "goodwill";
+        if (text.contains("[+Reputation]") || text.contains(" reputation in ")) return "goodwill"; // round 886: older saves keep the word
         if (text.matches("a \\S+ pack")) return "booster";
         if (text.contains("blueprint")) return "blueprint";
         if (text.matches("\\d+ cards?")) return "rareCards";
