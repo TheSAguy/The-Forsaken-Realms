@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 896: five LPC enemies get the parts their picks never drew (2026-10-30)
+
+The validator audit (generator `validate_sel.py`) flagged 9 enemy picks. All 9 sheets rebuilt pixel-identical to what
+shipped, so the flags described the game as it stood. Six parts had never drawn: the composer drops a color the item
+lacks, without a warning. The user's call, relayed by Art: "Yes, as recommended". Art only, no code.
+
+- **Goblin Warrior (round 521):** `shield_heater_wood` "medium" is no wood color; now oak.
+- **Shanna (round 590):** the same pick; now mahogany, since oak and walnut merge with her brown outfit at game size.
+- **Greensleeves (round 590):** `legs_skirts_plain` has no muscular body, so he had bare legs; now `legs_skirts_legion`
+  forest, as on the plane's other muscular enemies.
+- **Expert Druid (round 534):** `belt_robe` comes only in teal and white; now `belt_leather` brown.
+- **Adept Necromancer (round 534):** the same; now `belt_leather` charcoal.
+- **Left alone:** Crossbow Marksman's quiver also never drew, but drawing it would narrow his frame from 68 to 62 px, so
+  the pick is deleted and his sheet is unchanged. The brown corsets on Sydri, Lynde and Admiral Brass do draw: the file
+  exists, the definition only omits it; `validate_sel.py` now goes by the file.
+- **Checks:** page sizes, frame counts and atlases are unchanged, footprints included. Every clip and direction was
+  compared against the shipped sheet: nothing flickers, and no new pixel touches a cell edge. The Necromancer's belt
+  hides behind his arm in one spellcast frame, which reads as the pose. The shields overhang the Idle footprint by 1 px.
+  Passed in an agent game (a temporary copy): all five spawned on the world map and read at map size. Not played: a duel
+  or a death in the game; those clips were checked on the sheet only.
+- **Credits:** `CREDITS_LPC.md` gains one line each (shield, legion skirt, belt); every author was already in `CREDITS.md`.
+
 ## Round 895: Channel no longer costs 200,000 (2026-10-30)
 
 The user, of a player's Discord shot of Primal Commands selling Channel at 201875 gold: "There must be an issue with the
