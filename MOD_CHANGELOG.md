@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 891: the Temple page warns of the Wrath mage (2026-10-30)
+
+The user, with a shot of the Temple page: "I think we need to add to the temple text that at the end of the week, the
+color that won will send a mage to avenge them." The page explained only the offering, so players met round 814's
+hunter with no warning there.
+
+- **The line** (`util/TempleOfferings.java`): "The winner also sends a mage to avenge its fallen." follows the offering
+  text. `wrathMageComes()` reads `wrathHunterOnDifficulty` for the player's difficulty, the switch `WrathHunt.start`
+  uses, so Easy doesn't show it and a custom difficulty's override is followed.
+- **Left to the GUIDE**, whose Wrath bullets already say this: a color with no castle sends none, the stronger foes and
+  the bounty. No GUIDE change.
+- **Tested** in the agent game on this build's classes ahead of the jar, cheats, one duel at 50x. Slot 9's Capitol, a
+  Temple built on lot 88, one win and a week skipped, so Collect Offering shows. All six checks stay on screen with the
+  buttons in reach: Normal at landscape 1280x720 (4 lines of text) and portrait 540x960 (4), Temple Priest in both (4
+  and 5), Easy in portrait, on a copy of the save with `difficultyName` set to Easy (no line, 4 lines as before). The
+  log shows the mage on the map in week 2 on Normal. Easy landscape was not shot: its text is the old text. Shots
+  `notes/r891-{normal,priest}-{landscape,portrait}.png`, `r891-easy-portrait.png`.
+- Files: `util/TempleOfferings.java`.
+
 ## Round 888: a dungeon quest no longer blacks out the town it is taken in (2026-10-30)
 
 A post-package look at round 881's icons saw the Capitol's grass and paths go black, seen after restoring its Armory. The

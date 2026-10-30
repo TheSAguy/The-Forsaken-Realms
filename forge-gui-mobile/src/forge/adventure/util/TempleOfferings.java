@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import forge.Forge;
 import forge.adventure.data.EnemyData;
+import forge.adventure.data.TuningData;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.pointofintrest.PointOfInterestChanges;
 import forge.adventure.stage.GameHUD;
@@ -213,7 +214,8 @@ public final class TempleOfferings {
         EconomyBuildings.addContentRow(dialog, "[%80]Defeat enemies to honor their colors. When the week ends, the most "
                 + "honored color gives " + cardsText(PLACE_COUNT[0] * times, "rare card") + ", the second "
                 + cardsText(PLACE_COUNT[1] * times, "uncommon") + " and the third " + cardsText(PLACE_COUNT[2] * times, "common")
-                + ", from the sets you have unlocked" + (times > 1 ? " (Temple Priest)" : "") + ".[%]");
+                + ", from the sets you have unlocked" + (times > 1 ? " (Temple Priest)" : "") + "."
+                + (wrathMageComes() ? " The winner also sends a mage to avenge its fallen." : "") + "[%]");
         List<Integer> ranked = ranking(kills);
         float most = 0f;
         for (float k : kills)
@@ -261,6 +263,14 @@ public final class TempleOfferings {
             dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).width(240f).row();
         }
         dialog.setKeepWithinStage(true);
+    }
+
+    /** Round 891: does this difficulty send the Wrath's mage (WrathHunt.start's switch)? Off on Easy. */
+    private static boolean wrathMageComes() {
+        TuningData t = Config.instance().getTuningData();
+        int d = TerritoryControl.difficultyIndex();
+        return WrathHunt.isEnabled() && t != null && t.wrathHunterOnDifficulty != null && d >= 0
+                && d < t.wrathHunterOnDifficulty.length && t.wrathHunterOnDifficulty[d] > 0;
     }
 
     private static Texture whitePixel() {
