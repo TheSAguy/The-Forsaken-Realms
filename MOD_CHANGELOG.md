@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 881: resource icons in every display (2026-10-30)
+
+The user, of the raid reward popup (rounds 865/866): "For the raid reward, the popup did not have the resource icons.
+That should be a rule for all display of resources." The 2026-08-12 rule covered costs; it now covers every in-game
+display of a resource amount. A new standing rule in `CLAUDE.md`.
+
+- **The raid popup**: `TownPillage.onRaiderBeaten` says `+50 [+Wood], +50 [+Stone]`. The banner and the Log panel are
+  TextraLabels and already drew the markup, and `GameHUD.normalizeNotice` keeps an icon's own colors, so neither needed
+  a fix. Entries already in a saved Log keep their old words.
+- **Popups outside the Textra labels**: FOptionPane and FButton go through the engine's TextRenderer, which prints
+  `[+Gold]` literally and knows `{W}`-style symbols. New `util/ResourceGlyphs` registers `{Gold}`, `{Shards}`, `{Wood}`
+  and `{Stone}` from the items atlas (`register()`, from `DuelScene.enter`) and writes the text (`amount(n, "Gold")`,
+  the plain word if no symbol is registered; `goldInText` for the stock sell-all string). `FButton` draws a label
+  holding `{` through TextRenderer. This covers the ante popup and its Buy Back, Bronze Coin and Auto-Sell buttons, the
+  ante Re-roll prompts and the sell-all confirms.
+- **The rest of the audit**: guard info (`150 [+Gold]/wk`, was `150g/wk`), mine info (one label with the glyph; the
+  word and `resourceProducedName` go), reward cards and their tooltip (`22 [+Gold]`; the Power sun is too big for a line
+  of text and keeps its word), the floating pickup label (`[icon] +50`, new `AdventurePlayer.addResourceMessage`), New
+  Game's Economy tab, draft prizes, 16 quest reward descriptions (no code shows that field today), two item
+  descriptions, one custom difficulty tooltip, the Demon's Bargain dialog.
+- **Left alone**: forge.log, the debug console and agent replies, GUIDE and Discord text, `common/maps` (TFR has its
+  own copies), words with no amount, the deck editor's `Sell for N` (no word to replace, and FMenuItem draws no symbols).
+- **Not icons yet**: reputation has no glyph, so it stays a word. Life has one, but the 51 `+2 life` item descriptions
+  read as rules text, so they stay.
+
+Full list with before and after: `C:\TFR\notes\r881-resource-icons.md`. Agent game, on classes ahead of the jar: the raid
+popup, the Log panel and the Card Lost popup seen (`notes/r881-raid-popup.png`, `r881-log-panel.png`,
+`r881-ante-popup.png`). Not seen in a game: the flipped reward card, the floating pickup label, the guard and mine pages
+and the data text (the agent folder's data predates this round; `quests.json` and `items.json` parse).
+
 ## Round 880: the Doppelganger's final map sprite and portrait (2026-10-30)
 
 The user picked Art's look for round 879's new race, "split_bare" (three looks offered, previews in

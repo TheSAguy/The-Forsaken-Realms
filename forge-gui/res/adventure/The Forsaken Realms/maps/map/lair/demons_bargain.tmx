@@ -74,7 +74,7 @@
       },
       {
         &quot;name&quot;: &quot;No, I don't use ante&quot;,
-        &quot;text&quot;: &quot;Well, I still have something quite magnificent to offer you – fabulous wealth in exchange for just a tiny sliver of your soul. How does 20,000 gold sound? A fortune fit for a king, I would say! And well-deserved by a mighty and noble adventurer such as yourself. So, do we have a deal?&quot;,
+        &quot;text&quot;: &quot;Well, I still have something quite magnificent to offer you – fabulous wealth in exchange for just a tiny sliver of your soul. How does 20,000 [+Gold] sound? A fortune fit for a king, I would say! And well-deserved by a mighty and noble adventurer such as yourself. So, do we have a deal?&quot;,
         &quot;options&quot;: [
           {
             &quot;name&quot;: &quot;Accept the deal&quot;,

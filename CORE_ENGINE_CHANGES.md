@@ -38,6 +38,22 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 881 - resource icons in popups and buttons
+- **`forge-gui-mobile/src/forge/toolbox/FButton.java`** (STOCK) - `symbolText()`, and both draw sites send a label
+  holding `{` through TextRenderer, so `{Gold}` draws as a symbol. Any other label draws as before.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK) - `enter()` calls `ResourceGlyphs.register()`; the
+  ante popup's text and buttons use `ResourceGlyphs.amount`.
+- **`forge-gui-mobile/src/forge/screens/match/MatchController.java`** (STOCK) - the ante Re-roll prompts, the same.
+- **`forge-gui-mobile/src/forge/adventure/scene/ShopScene.java`, `AdventureDeckEditor.java`** (STOCK) -
+  `ResourceGlyphs.goldInText` around `lblSellAllConfirm`.
+- **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`, `data/AdventureEventData.java`** (STOCK) - the glyph
+  in the arguments of `advDifficultyEconomyImpacts`, and a `.replace` on `advDraftPrizesDesc`. `en-US.properties` is
+  untouched.
+- **`forge-gui-mobile/src/forge/adventure/util/RewardActor.java`** (STOCK) - `rewardAmount()` for the card title and tooltip.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`, `player/AdventurePlayer.java`** (STOCK) - the single-reward
+  pickup calls the new `addResourceMessage`.
+- TFR files: `util/ResourceGlyphs.java` (new), `util/TownPillage.java`, `util/EconomyBuildings.java`, `util/ResourceSpawns.java`.
+
 ### Round 879 (follow-up) - the Doppelganger borrows a look after a win
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - a saved `doppelLook` int (save key
   `doppelLook`, written only when >= 0; `clear()`, `load()` and `resetForNewGamePlus()` reset it); `spriteName()`,

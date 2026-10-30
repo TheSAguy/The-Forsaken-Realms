@@ -2979,7 +2979,7 @@ public class MapStage extends GameStage {
                                 // reward type itself (Reward.Type.getLabelKey(), our Stone and Wood included). The icon
                                 // passed, rewardTypeName, is exactly what round 227's own `icon` local was.
                                 String message = Forge.getLocalizer().getMessageorUseDefault(reward.getType().getLabelKey(), rewardTypeName);
-                                AdventurePlayer.current().addStatusMessage(rewardTypeName, message, reward.getCount(), actor.getX(), actor.getY() + player.getHeight());
+                                AdventurePlayer.current().addResourceMessage(rewardTypeName, message, reward.getCount(), actor.getX(), actor.getY() + player.getHeight());
                                 AdventurePlayer.current().addReward(reward);
                                 break;
                             default:

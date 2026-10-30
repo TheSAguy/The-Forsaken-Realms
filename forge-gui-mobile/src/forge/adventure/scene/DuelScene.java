@@ -26,6 +26,7 @@ import forge.adventure.util.AdventureEventController;
 import forge.adventure.util.ColorReputation;
 import forge.adventure.util.Config;
 import forge.adventure.util.Current;
+import forge.adventure.util.ResourceGlyphs;
 import forge.adventure.util.SpawnTierWeighting;
 import forge.adventure.util.TownRestoration;
 import forge.adventure.world.WorldSave;
@@ -769,7 +770,7 @@ public class DuelScene extends ForgeScene {
         // MOD_CHANGELOG.md. Surface the price/shortfall in the message text itself so "broke" reads
         // differently from "broken."
         if (buyBackPrice > 0 && !offerBuyBack) {
-            message += "\nBuy Back available for " + buyBackPrice + " gold - you only have "
+            message += "\nBuy Back available for " + ResourceGlyphs.amount(buyBackPrice, "Gold") + " - you only have "
                     + Current.player().getGold() + ".";
         }
         // Bronze Coin ante ransom (user spec 2026-08-29), offered alongside Buy Back on a loss.
@@ -793,7 +794,7 @@ public class DuelScene extends ForgeScene {
             } else {
                 int wouldSave = Current.player().defeatGoldLossNow(); // round 396
                 message += "\nA Bronze Challenge Coin would buy back your whole ante"
-                        + (wouldSave > 0 ? " and save " + wouldSave + " gold" : "") + " - you have none.";
+                        + (wouldSave > 0 ? " and save " + ResourceGlyphs.amount(wouldSave, "Gold") : "") + " - you have none.";
             }
         }
         if (!won)
@@ -814,17 +815,17 @@ public class DuelScene extends ForgeScene {
         // earlier in this loss is counted - on a line of its own over "Bronze Coin". FButton keeps a label's own line
         // break (it only splits a corner label at its first space when the label has none).
         int coinSaves = offerCoinRansom ? Current.player().defeatGoldLossNow() : 0;
-        final String COIN_BUTTON = coinSaves > 0 ? "(Save: " + coinSaves + " gold)\nBronze Coin" : "Bronze Coin";
+        final String COIN_BUTTON = coinSaves > 0 ? "(Save: " + ResourceGlyphs.amount(coinSaves, "Gold") + ")\nBronze Coin" : "Bronze Coin";
         if (won && eventData == null) {
             int sellPrice = Current.player().cardSellPrice(card);
             buttons = sellPrice > 0
-                    ? ImmutableList.of(localizer.getMessage("lblOK"), "Auto-Sell (" + sellPrice + " gold)")
+                    ? ImmutableList.of(localizer.getMessage("lblOK"), "Auto-Sell (" + ResourceGlyphs.amount(sellPrice, "Gold") + ")")
                     : ImmutableList.of(localizer.getMessage("lblOK"));
         } else if (offerBuyBack && offerCoinRansom) {
             buttons = ImmutableList.of(localizer.getMessage("lblOK"),
-                    "Buy Back (" + buyBackPrice + " gold)", COIN_BUTTON);
+                    "Buy Back (" + ResourceGlyphs.amount(buyBackPrice, "Gold") + ")", COIN_BUTTON);
         } else if (offerBuyBack) {
-            buttons = ImmutableList.of(localizer.getMessage("lblOK"), "Buy Back (" + buyBackPrice + " gold)");
+            buttons = ImmutableList.of(localizer.getMessage("lblOK"), "Buy Back (" + ResourceGlyphs.amount(buyBackPrice, "Gold") + ")");
         } else if (offerCoinRansom) {
             buttons = ImmutableList.of(localizer.getMessage("lblOK"), COIN_BUTTON);
         } else {
@@ -948,6 +949,7 @@ public class DuelScene extends ForgeScene {
 
     @Override
     public void enter() {
+        ResourceGlyphs.register(); // round 881: the {Gold} of the ante popups
         winStreakNote = null; // round 404: set again below for each enemy seat on a win streak
         Adventure.getInstance().renderTransitionScreen = false;
         Localizer localizer = Forge.getLocalizer();

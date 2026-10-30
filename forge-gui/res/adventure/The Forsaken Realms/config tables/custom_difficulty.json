@@ -424,7 +424,7 @@
         {
             "id": "shardSellRatio", "label": "Shard sell ratio", "category": "Economy", "group": "Selling",
             "target": "difficulty.shardSellRatio", "min": 0.05, "max": 1, "step": 0.05, "format": "percent",
-            "tooltip": "The Shard Trader pays this share of 100 gold for every 5 shards you sell (he sells 5 for 100)."
+            "tooltip": "The Shard Trader pays this share of 100 [+Gold] for every 5 [+Shards] you sell (he sells 5 for 100)."
         },
         {
             "id": "mineOutput", "label": "Mine output", "category": "Economy", "group": "Income",

@@ -436,8 +436,8 @@ public final class TownPillage {
         Current.player().addWood(t.pillageRewardWood);
         Current.player().addStone(t.pillageRewardStone);
         GameHUD.getInstance().addNotification("The raiders are driven from " + town + "! Its people thank you: +"
-                + t.pillageRewardReputation + " reputation, +" + t.pillageRewardWood + " wood, +" + t.pillageRewardStone
-                + " stone.");
+                + t.pillageRewardReputation + " reputation, +" + t.pillageRewardWood + " [+Wood], +" + t.pillageRewardStone
+                + " [+Stone]."); // round 881: the icons; black text, each [WHITE] in normalizeNotice
         System.out.println("[TFR-Pillage] " + town + ": pillage stopped on day " + world.getCurrentDay() + " - +"
                 + t.pillageRewardReputation + " reputation, +" + t.pillageRewardWood + " wood, +" + t.pillageRewardStone
                 + " stone");

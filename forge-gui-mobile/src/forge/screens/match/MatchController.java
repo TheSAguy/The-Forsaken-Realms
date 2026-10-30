@@ -839,15 +839,15 @@ public class MatchController extends NetworkGuiGame {
             // 2026-08-20 ("put the Re-roll button on the right and Keep on the left");
             // default selection stays on Keep, same as the old defaultYes=false.
             boolean wantsReroll = SOptionPane.showOptionDialog(
-                    free ? "Re-roll this ante for free? (Law of Stakes, once a day)" : "Re-roll this ante for " + cost + " Shards?",
+                    free ? "Re-roll this ante for free? (Law of Stakes, once a day)" : "Re-roll this ante for " + forge.adventure.util.ResourceGlyphs.amount(cost, "Shards") + "?",
                     "Re-roll Ante", null,
                     java.util.Arrays.asList("Keep", "Re-roll")) == 1;
             if (!wantsReroll)
                 break;
             if (player.getShards() < cost) {
                 System.out.println("[TFR-AnteReroll] declined - insufficient shards");
-                message("You don't have enough Shards for this Re-roll (need " + cost + ", have "
-                        + player.getShards() + ").", "Not Enough Shards");
+                message("You don't have enough Shards for this Re-roll (need " + forge.adventure.util.ResourceGlyphs.amount(cost, "Shards")
+                        + ", have " + forge.adventure.util.ResourceGlyphs.amount(player.getShards(), "Shards") + ").", "Not Enough Shards");
                 break;
             }
             if (free) {

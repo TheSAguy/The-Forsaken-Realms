@@ -875,7 +875,7 @@ public class NewGameScene extends MenuScene {
         matchImpacts.name = "Duels";
 
         DialogData economyImpacts = new DialogData();
-        economyImpacts.text = localizer.getMessage("advDifficultyEconomyImpacts", shownName, selectedDifficulty.startingMoney, selectedDifficulty.startingShards, (int) (selectedDifficulty.sellFactor * 100), (int) (selectedDifficulty.shardSellRatio * 100), (int) (selectedDifficulty.rewardMaxFactor * 100));
+        economyImpacts.text = localizer.getMessage("advDifficultyEconomyImpacts", shownName, selectedDifficulty.startingMoney + " [+Gold]", selectedDifficulty.startingShards + " [+Shards]", (int) (selectedDifficulty.sellFactor * 100), (int) (selectedDifficulty.shardSellRatio * 100), (int) (selectedDifficulty.rewardMaxFactor * 100));
         economyImpacts.name = localizer.getMessage("lblEconomy");
 
         // Territory tab (2026-08-15, onboarding review finding: Mod Details' own "Difficulty"

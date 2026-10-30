@@ -101,6 +101,13 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
      *  the face's picture, where it came out small and stretched. faceImage is that picture: a booster's real art
      *  replaces it, and the title goes with it. */
     private TextraLabel faceText;
+
+    /** Round 881: "22 [+Gold]", or the type's word when it has no icon that fits a line of text (the Power sun). */
+    private String rewardAmount() {
+        String glyph = AdventurePlayer.resolveStatusGlyph(reward.type.toString());
+        return reward.getCount() + " " + (glyph != null && Config.instance().isTextGlyph(glyph) ? "[+" + glyph + "]" : reward.type.toString());
+    }
+
     private Texture faceImage;
     private final Matrix4 faceMatrix = new Matrix4(), faceWas = new Matrix4();
     int artIndex = 1;
@@ -538,7 +545,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                 Sprite item = Config.instance().getItemSprite(reward.type.toString());
                 setItemTooltips(item, backSprite, false);
                 processSprite(backSprite, item, isRewardShop ? null :
-                        Controls.newTextraLabel("[%200]" + reward.getCount() + " " + reward.type), 0, isRewardShop ? 0 : -10, false);
+                        Controls.newTextraLabel("[%200]" + rewardAmount()), 0, isRewardShop ? 0 : -10, false);
                 needsToBeDisposed = true;
                 break;
             }
@@ -1084,7 +1091,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                 } else if (Reward.Type.MapPiece.equals(reward.getType())) { // round 530
                     description = TreasureHunt.pieceCardDescription(reward.getMapRegion(), reward.getCount());
                 } else {
-                    description = "Adds " + getReward().getCount() + " " + getReward().type;
+                    description = "Adds " + rewardAmount();
                 }
                 if (itemExists && description.isEmpty() && item.questItem)
                     description = "Quest Item";

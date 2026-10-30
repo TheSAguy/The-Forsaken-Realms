@@ -2763,6 +2763,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return iconName;
     }
 
+    /** Round 881: a resource's floating gain - "[+Gold] +50" where the icon exists, the word only where it does not. */
+    public void addResourceMessage(String iconName, String word, int count, float x, float y) {
+        addStatusMessage(iconName, resolveStatusGlyph(iconName) != null ? "" : word, count, x, y);
+    }
+
     public void addStatusMessage(String iconName, String message, Integer itemCount, float x, float y) {
         String symbol = itemCount == null || itemCount < 0 ? "" : " +";
         String glyph = resolveStatusGlyph(iconName); // round 227: only a glyph the font really has

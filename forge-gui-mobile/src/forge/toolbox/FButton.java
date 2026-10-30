@@ -294,6 +294,14 @@ public class FButton extends FDisplayObject implements IButton {
         return false;
     }
 
+    private static forge.assets.TextRenderer symbolTextRenderer; // TFR round 881
+
+    private static forge.assets.TextRenderer symbolText() {
+        if (symbolTextRenderer == null)
+            symbolTextRenderer = new forge.assets.TextRenderer();
+        return symbolTextRenderer;
+    }
+
     //frosted button: a rounded slate pill with a faint edge, washed with the accent colour when toggled or pressed
     private void drawFrosted(Graphics g) {
         final float w = getWidth(), h = getHeight();
@@ -302,6 +310,9 @@ public class FButton extends FDisplayObject implements IButton {
             String displayText = text;
             if (corner == Corner.BottomLeft || corner == Corner.BottomRight)
                 displayText = displayText.replaceFirst(" ", "\n");
+            if (displayText.contains("{")) // TFR round 881: a label with a {Gold} symbol
+                symbolText().drawText(g, displayText, font, isEnabled() ? Frost.TEXT : Frost.TEXT_DIM, PADDING, 0, w - 2 * PADDING, h, 0, h, false, Align.center, true);
+            else
             g.drawText(displayText, font, isEnabled() ? Frost.TEXT : Frost.TEXT_DIM, PADDING, 0, w - 2 * PADDING, h, false, Align.center, true);
         }
     }
@@ -399,6 +410,9 @@ public class FButton extends FDisplayObject implements IButton {
                 if (!displayText.contains("\n")) // TFR round 396: a label with its own line break keeps it
                     displayText = displayText.replaceFirst(" ", "\n"); //allow second word to wrap if corner button
             }
+            if (displayText.contains("{")) // TFR round 881: a label with a {Gold} symbol
+                symbolText().drawText(g, displayText, cornerFitFont != null ? cornerFitFont : font, foreColor, x, y, w, h, y, h, false, Align.center, true);
+            else
             g.drawText(displayText, cornerFitFont != null ? cornerFitFont : font, foreColor, x, y, w, h, false, Align.center, true);
         }
     }

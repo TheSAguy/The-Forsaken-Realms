@@ -549,7 +549,7 @@ public class ResourceSpawns {
         float y = sprite.getY() + sprite.getHeight() + pickupLabelsThisPass * 10f;
         pickupLabelsThisPass++;
         String word = Forge.getLocalizer().getMessageorUseDefault("lbl" + what, what);
-        Current.player().addStatusMessage(what, word, value, x, y);
+        Current.player().addResourceMessage(what, word, value, x, y);
         System.out.println("[TFR-PickupLabel] +" + value + " " + what + " at (" + (int) x + ", " + (int) y
                 + ") on " + Current.player().getCurrentGameStage().getClass().getSimpleName()
                 + ", glyph=" + AdventurePlayer.resolveStatusGlyph(what));

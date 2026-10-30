@@ -13622,7 +13622,7 @@
 		"giverColor": "white",
 		"requiredColorStatus": "Partner",
 		"offerProbability": 0.25,
-		"rewardDescription": "3 rare White cards, 1500 gold, 100 shards",
+		"rewardDescription": "3 rare White cards, 1500 [+Gold], 100 [+Shards]",
 		"offerDialog": {
 			"text": "The war-chancellor of the Plains Capital draws you aside. \"Partners share enemies, Guardian. The Lord of the Mire holds towns that should burn. Take one of Black's towns - any of them - and the Sovereign of the Plains will open the vaults for you.\"",
 			"options": [
@@ -13715,7 +13715,7 @@
 		"giverColor": "white",
 		"requiredColorStatus": "Partner",
 		"offerProbability": 0.25,
-		"rewardDescription": "3 rare White cards, 1500 gold, 100 shards",
+		"rewardDescription": "3 rare White cards, 1500 [+Gold], 100 [+Shards]",
 		"offerDialog": {
 			"text": "The war-chancellor of the Plains Capital draws you aside. \"Partners share enemies, Guardian. The Ember Lord holds towns that should burn. Take one of Red's towns - any of them - and the Sovereign of the Plains will open the vaults for you.\"",
 			"options": [
@@ -13808,7 +13808,7 @@
 		"giverColor": "blue",
 		"requiredColorStatus": "Partner",
 		"offerProbability": 0.25,
-		"rewardDescription": "3 rare Blue cards, 1500 gold, 100 shards",
+		"rewardDescription": "3 rare Blue cards, 1500 [+Gold], 100 [+Shards]",
 		"offerDialog": {
 			"text": "The war-chancellor of the Island Capital draws you aside. \"Partners share enemies, Guardian. The Ember Lord holds towns that should burn. Take one of Red's towns - any of them - and the Tide-Lord of the Isles will open the vaults for you.\"",
 			"options": [
@@ -13901,7 +13901,7 @@
 		"giverColor": "blue",
 		"requiredColorStatus": "Partner",
 		"offerProbability": 0.25,
-		"rewardDescription": "3 rare Blue cards, 1500 gold, 100 shards",
+		"rewardDescription": "3 rare Blue cards, 1500 [+Gold], 100 [+Shards]",
 		"offerDialog": {
 			"text": "The war-chancellor of the Island Capital draws you aside. \"Partners share enemies, Guardian. The Verdant Lord holds towns that should burn. Take one of Green's towns - any of them - and the Tide-Lord of the Isles will open the vaults for you.\"",
 			"options": [
@@ -13994,7 +13994,7 @@
 		"giverColor": "black",
 		"requiredColorStatus": "Partner",
 		"offerProbability": 0.25,
-		"rewardDescription": "3 rare Black cards, 1500 gold, 100 shards",
+		"rewardDescription": "3 rare Black cards, 1500 [+Gold], 100 [+Shards]",
 		"offerDialog": {
 			"text": "The war-chancellor of the Swamp Capital draws you aside. \"Partners share enemies, Guardian. The Verdant Lord holds towns that should burn. Take one of Green's towns - any of them - and the Lord of the Mire will open the vaults for you.\"",
 			"options": [
@@ -14087,7 +14087,7 @@
 		"giverColor": "black",
 		"requiredColorStatus": "Partner",
 		"offerProbability": 0.25,
-		"rewardDescription": "3 rare Black cards, 1500 gold, 100 shards",
+		"rewardDescription": "3 rare Black cards, 1500 [+Gold], 100 [+Shards]",
 		"offerDialog": {
 			"text": "The war-chancellor of the Swamp Capital draws you aside. \"Partners share enemies, Guardian. The Sovereign of the Plains holds towns that should burn. Take one of White's towns - any of them - and the Lord of the Mire will open the vaults for you.\"",
 			"options": [
@@ -14180,7 +14180,7 @@
 		"giverColor": "red",
 		"requiredColorStatus": "Partner",
 		"offerProbability": 0.25,
-		"rewardDescription": "3 rare Red cards, 1500 gold, 100 shards",
+		"rewardDescription": "3 rare Red cards, 1500 [+Gold], 100 [+Shards]",
 		"offerDialog": {
 			"text": "The war-chancellor of the Mountain Capital draws you aside. \"Partners share enemies, Guardian. The Sovereign of the Plains holds towns that should burn. Take one of White's towns - any of them - and the Ember Lord will open the vaults for you.\"",
 			"options": [
@@ -14273,7 +14273,7 @@
 		"giverColor": "red",
 		"requiredColorStatus": "Partner",
 		"offerProbability": 0.25,
-		"rewardDescription": "3 rare Red cards, 1500 gold, 100 shards",
+		"rewardDescription": "3 rare Red cards, 1500 [+Gold], 100 [+Shards]",
 		"offerDialog": {
 			"text": "The war-chancellor of the Mountain Capital draws you aside. \"Partners share enemies, Guardian. The Tide-Lord of the Isles holds towns that should burn. Take one of Blue's towns - any of them - and the Ember Lord will open the vaults for you.\"",
 			"options": [
@@ -14366,7 +14366,7 @@
 		"giverColor": "green",
 		"requiredColorStatus": "Partner",
 		"offerProbability": 0.25,
-		"rewardDescription": "3 rare Green cards, 1500 gold, 100 shards",
+		"rewardDescription": "3 rare Green cards, 1500 [+Gold], 100 [+Shards]",
 		"offerDialog": {
 			"text": "The war-chancellor of the Forest Capital draws you aside. \"Partners share enemies, Guardian. The Tide-Lord of the Isles holds towns that should burn. Take one of Blue's towns - any of them - and the Verdant Lord will open the vaults for you.\"",
 			"options": [
@@ -14459,7 +14459,7 @@
 		"giverColor": "green",
 		"requiredColorStatus": "Partner",
 		"offerProbability": 0.25,
-		"rewardDescription": "3 rare Green cards, 1500 gold, 100 shards",
+		"rewardDescription": "3 rare Green cards, 1500 [+Gold], 100 [+Shards]",
 		"offerDialog": {
 			"text": "The war-chancellor of the Forest Capital draws you aside. \"Partners share enemies, Guardian. The Lord of the Mire holds towns that should burn. Take one of Black's towns - any of them - and the Verdant Lord will open the vaults for you.\"",
 			"options": [
@@ -14666,7 +14666,7 @@
 			"player_capital"
 		],
 		"requiresCharacterFlagUnset": "visitedCapital_white",
-		"rewardDescription": "2 rare White cards, 250 gold, 5 shards, +2 reputation with your own colors",
+		"rewardDescription": "2 rare White cards, 250 [+Gold], 5 [+Shards], +2 reputation with your own colors",
 		"offerDialog": {
 			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The sovereign of the plains keeps a seat somewhere out there - the Plains Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
 			"options": [
@@ -14754,7 +14754,7 @@
 			"player_capital"
 		],
 		"requiresCharacterFlagUnset": "visitedCapital_blue",
-		"rewardDescription": "2 rare Blue cards, 250 gold, 5 shards, +2 reputation with your own colors",
+		"rewardDescription": "2 rare Blue cards, 250 [+Gold], 5 [+Shards], +2 reputation with your own colors",
 		"offerDialog": {
 			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The tidecaller of the isles keeps a seat somewhere out there - the Island Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
 			"options": [
@@ -14842,7 +14842,7 @@
 			"player_capital"
 		],
 		"requiresCharacterFlagUnset": "visitedCapital_black",
-		"rewardDescription": "2 rare Black cards, 250 gold, 5 shards, +2 reputation with your own colors",
+		"rewardDescription": "2 rare Black cards, 250 [+Gold], 5 [+Shards], +2 reputation with your own colors",
 		"offerDialog": {
 			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The lord of the mire keeps a seat somewhere out there - the Swamp Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
 			"options": [
@@ -14930,7 +14930,7 @@
 			"player_capital"
 		],
 		"requiresCharacterFlagUnset": "visitedCapital_red",
-		"rewardDescription": "2 rare Red cards, 250 gold, 5 shards, +2 reputation with your own colors",
+		"rewardDescription": "2 rare Red cards, 250 [+Gold], 5 [+Shards], +2 reputation with your own colors",
 		"offerDialog": {
 			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The emberlord of the peaks keeps a seat somewhere out there - the Mountain Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
 			"options": [
@@ -15018,7 +15018,7 @@
 			"player_capital"
 		],
 		"requiresCharacterFlagUnset": "visitedCapital_green",
-		"rewardDescription": "2 rare Green cards, 250 gold, 5 shards, +2 reputation with your own colors",
+		"rewardDescription": "2 rare Green cards, 250 [+Gold], 5 [+Shards], +2 reputation with your own colors",
 		"offerDialog": {
 			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The warden of the wilds keeps a seat somewhere out there - the Forest Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
 			"options": [
@@ -17139,7 +17139,7 @@
 			]
 		},
 		"reward": {},
-		"rewardDescription": "1000 gold, 25 shards, 3 faction cards, and 6 Fallen Empires boosters",
+		"rewardDescription": "1000 [+Gold], 25 [+Shards], 3 faction cards, and 6 Fallen Empires boosters",
 		"stages": [
 			{
 				"id": 1,

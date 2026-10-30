@@ -73,7 +73,7 @@ public class ShopScene extends ForgeScene {
             }
             if (profit == 0 || cards == 0)
                 return;
-            FOptionPane.showConfirmDialog(Forge.getLocalizer().getMessage("lblSellAllConfirm", cards, profit),
+            FOptionPane.showConfirmDialog(forge.adventure.util.ResourceGlyphs.goldInText(Forge.getLocalizer().getMessage("lblSellAllConfirm", cards, profit), profit),
                 Forge.getLocalizer().getMessage("lblAutoSellable"), Forge.getLocalizer().getMessage("lblSell"),
                 Forge.getLocalizer().getMessage("lblCancel"), false, result -> {
                     if (result) {

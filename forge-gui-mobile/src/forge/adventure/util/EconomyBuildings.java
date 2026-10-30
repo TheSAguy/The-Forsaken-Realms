@@ -635,10 +635,10 @@ public class EconomyBuildings {
             String tier = GUARD_TIERS_ASCENDING[i];
             if (i > 0)
                 tiers.append(", ");
-            tiers.append(guardTierDisplayName(tier)).append(" (").append(guardWeeklyGoldCost(tier)).append("g/wk");
+            tiers.append(guardTierDisplayName(tier)).append(" (").append(guardWeeklyGoldCost(tier)).append(" [+Gold]/wk");
             int shardCost = guardWeeklyShardCost(tier);
             if (shardCost > 0)
-                tiers.append(" + ").append(shardCost).append(" shards/wk");
+                tiers.append(" + ").append(shardCost).append(" [+Shards]/wk");
             tiers.append(")");
         }
         java.util.List<String> paragraphs = java.util.Arrays.asList(
@@ -846,16 +846,6 @@ public class EconomyBuildings {
         return type < 0 ? NONE : type;
     }
 
-    private static String resourceProducedName(int type) {
-        switch (type) {
-            case SHARD_MINE: return "Shards";
-            case GOLD_MINE: return "Gold";
-            case LUMBER_MILL: return "Wood"; // canonical resource word per user decision 2026-08-08 (building name stays "Lumber Mill")
-            case STONE_MINE: return "Stone";
-            default: return "";
-        }
-    }
-
     /** Weekly payout amount for a mine type, sourced from TuningData (2026-08-16, user spec:
      *  "Gold: 50g/week. Wood: 25/w Stone 25/w Shards 20/w") - not difficulty-scaled, same as the
      *  flat RESOURCE_PRODUCTION_PER_DAY it replaces never was either. */
@@ -923,23 +913,10 @@ public class EconomyBuildings {
         // real Image actors instead, the same proven pattern refreshExchangeDialog() already uses.
         int amount = mineWeeklyAmount(stage.getChanges(), type); // round 760: a Mining town's mines pay more
         Table productionRow = new Table();
-        if (type == GOLD_MINE || type == SHARD_MINE) {
-            String tag = type == GOLD_MINE ? "[+Gold]" : "[+Shards]";
-            TypingLabel amountLabel = Controls.newTypingLabel("Produces " + amount + " " + tag + " per week.");
-            amountLabel.setWrap(true);
-            amountLabel.skipToTheEnd();
-            productionRow.add(amountLabel).width(250f);
-        } else {
-            TypingLabel prefix = Controls.newTypingLabel("Produces " + amount + " ");
-            prefix.skipToTheEnd();
-            productionRow.add(prefix);
-            Sprite icon = Config.instance().getAtlasSprite(RESOURCE_ICON_ATLAS, type == LUMBER_MILL ? "Lumber" : "Stone");
-            if (icon != null)
-                productionRow.add(new Image(new TextureRegionDrawable(icon))).size(14f).padRight(2f);
-            TypingLabel suffix = Controls.newTypingLabel(resourceProducedName(type) + " per week.");
-            suffix.skipToTheEnd();
-            productionRow.add(suffix);
-        }
+        TypingLabel amountLabel = Controls.newTypingLabel("Produces " + amount + " " + resourceGlyph(type) + " per week.");
+        amountLabel.setWrap(true);
+        amountLabel.skipToTheEnd();
+        productionRow.add(amountLabel).width(250f);
         dialog.getContentTable().add(productionRow).width(250f).row();
         addButtonRow(dialog, "Destroy Building", true, () ->
                 openDestroyConfirmDialog(stage, objectId, () -> refreshProductionInfoDialog(stage, type, objectId)));

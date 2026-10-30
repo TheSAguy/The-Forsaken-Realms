@@ -1106,7 +1106,7 @@ public class AdventureEventData implements Serializable {
             } else {
                 description += "\n";
             }
-            description += localizer.getMessage("advDraftPrizesDesc");
+            description += localizer.getMessage("advDraftPrizesDesc").replace(" gold", " [][+Gold][BLACK]"); // round 881
             description += localizer.getMessage("advJumpstartParticipationPrize");
         } else if (format == AdventureEventController.EventFormat.Sealed) {
             description = "Event Type: Sealed Deck\n";
