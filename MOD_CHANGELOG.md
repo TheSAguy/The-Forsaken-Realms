@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 892: the last five look-alike caves get their own entrances (2026-10-30)
+
+Round 821 left five caves sharing a drawing, waiting for cave art. The user had ChatGPT draw variations on five older
+entrances (Basalt Crag, Sea Arch, Stone Dolmen, Carved Tomb, Hollow Boulder): 11 sheets, 44 designs. The user, of the
+picks: "Yes, install them." That finishes the 20 caves round 811's audit listed.
+
+- **The five** (the place that keeps the old sprite in brackets), all 32x32: CaveR1 a lava-cracked mound with bone
+  ribs and a skull [CaveR]; CaveUGen10 Foghorn Cleft a tall mossy sea stack in deep blue water [MerfolkPool5]; CaveC6
+  a collapsed dolmen and CaveCB a sand tomb with a carved frieze [CaveC1]; CaveCGen07 Gray Warren a slate boulder bored
+  with burrow holes [CaveCGen03].
+- **Choices**: at 32 px about 39 of the 44 designs hold. CaveR1 takes the bone-ribbed design rather than a basalt crag
+  because red already has a dozen dark lava caves (CaveRG, CaveRA, CaveRC, CaveRH). The reference sprites stay in the
+  game, so each pick was also checked against them; no pick shares a drawing with anything in its biome.
+- **Files**: `maps/tileset/dungeon_entrances_2.png` 512x1304 -> 512x1338, the 5 below round 821's (existing pixels and
+  region lines unchanged; the page's `size:` line changes); `.atlas` gains 5 regions `E_<Place>_<Design>` (none needs a
+  `footprint:`; the 21-region drift noted in round 811 stays); `points_of_interest.json` changes only the 5 places'
+  `spriteAtlas` / `sprite`. The old `E_` regions stay on the page.
+- **Checks**: `poi_outline.py --audit` 0; `validate_plane_data.py` exit 0, output identical to the pre-round baseline;
+  all 5 regions on page 1, in bounds, 32x32, outline score 1.00.
+- **Seen in the agent** (test copy `agent-892` of the agent game with these three files and a copied profile, log
+  sharing off, cheats, no duels; removed afterwards). Test-copy-only POI edits, not in this round: a unique display name
+  and `NoRotate` on the five, so each could be found on the map. All five draw at 32x32 with their marker at the art's
+  edge, on day 1 and after `days skip 240`. On day 1 all five stand on Wasteland, as about 93% of colored places do; by
+  day 241 CaveR1 stands on red ground and Foghorn Cleft on blue, and the three colorless caves on the land of whichever
+  color reached them. Shots: the Art project's `notes/entrance_dedup/caves3/ingame/r892_*`.
+- **Art Library**: `Projects/The Forsaken Realms/Game Art/Entrances ChatGPT (round 892)/` (the 11 sheets, the 5 sprites);
+  the other 39 designs in `Entrance Spares/ChatGPT caves (round 892)/` at 32 and 48. Previews and tools: the Art
+  project's `notes/entrance_dedup/caves3`.
+
 ## Round 891: the Temple page warns of the Wrath mage (2026-10-30)
 
 The user, with a shot of the Temple page: "I think we need to add to the temple text that at the end of the week, the

@@ -1,5 +1,5 @@
 dungeon_entrances_2.png
-size: 512,1304
+size: 512,1338
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -2882,6 +2882,41 @@ E_EvilGrove6_Jungleden4
 E_HermitsHideout_Falls1
   rotate: false
   xy: 476, 1272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC6_Dolmen3
+  rotate: false
+  xy: 0, 1306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCB_Eltomb1
+  rotate: false
+  xy: 34, 1306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen07_Boulder21
+  rotate: false
+  xy: 68, 1306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR1_Fantasy4
+  rotate: false
+  xy: 102, 1306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen10_Arch1
+  rotate: false
+  xy: 136, 1306
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

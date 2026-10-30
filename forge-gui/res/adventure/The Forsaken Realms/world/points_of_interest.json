@@ -758,7 +758,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveC6",
+		"sprite": "E_CaveC6_Dolmen3",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_spider.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -838,7 +838,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveCB",
+		"sprite": "E_CaveCB_Eltomb1",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_mimic.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -1031,7 +1031,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveR1",
+		"sprite": "E_CaveR1_Fantasy4",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_treasure.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -5755,7 +5755,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveUGen10",
+		"sprite": "E_CaveUGen10_Arch1",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_10.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -6539,7 +6539,7 @@
 		"type": "cave",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
-		"sprite": "E_CaveCGen07",
+		"sprite": "E_CaveCGen07_Boulder21",
 		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_07.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
