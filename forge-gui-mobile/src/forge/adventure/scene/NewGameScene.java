@@ -4,6 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -68,6 +71,12 @@ public class NewGameScene extends MenuScene {
     private CardEdition[] raceEditionIds;
 
     private final Array<AdventureModes> modes = new Array<>();
+    /** Round 873: the "Starting sets" row (a Table in the layout) and its drop-downs, one per starting set. */
+    private final Table startingSets;
+    private final java.util.List<SelectBox<SetChoice>> setBoxes = new java.util.ArrayList<>();
+    private String[] setPool = new String[0];
+    private int setCount = -1;
+    private boolean fillingSetBoxes;
 
     private NewGameScene() {
         super(Forge.isLandscapeMode() ? "ui/new_game.json" : "ui/new_game_portrait.json");
@@ -256,6 +265,21 @@ public class NewGameScene extends MenuScene {
         gender.setCurrentIndex(rand.nextInt());
         colorId.setCurrentIndex(rand.nextInt());
         race.setCurrentIndex(rand.nextInt());
+        // Round 873: a new race or a new count puts every starting-set drop-down back to Random.
+        startingSets = ui.findActor("startingSets");
+        race.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                refreshStartingSets();
+            }
+        });
+        difficulty.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                refreshStartingSets();
+            }
+        });
+        refreshStartingSets();
         ui.onButtonPress("back", NewGameScene.this::back);
         ui.onButtonPress("start", NewGameScene.this::start);
         if (ui.findActor("advanced") != null) // round 823: the custom difficulty panel (landscape; portrait is round 824)
@@ -303,6 +327,166 @@ public class NewGameScene extends MenuScene {
         for (String n : difficultyNames)
             list.add(custom ? "Custom (" + n + ")" : n);
         difficulty.setTextList(list);
+        refreshStartingSets(); // round 873: the Starting sets knob may have changed the count
+    }
+
+    // ---- round 873: the starting sets --------------------------------------------------------------------------
+
+    /** One drop-down entry: a set code, or null for Random. The open list shows "DTK  Dragons of Tarkir". */
+    private static final class SetChoice {
+        final String code;
+        final String name;
+
+        SetChoice(String code) {
+            this.code = code;
+            CardEdition e = code == null ? null : FModel.getMagicDb().getEditions().get(code);
+            this.name = code == null ? "Random" : e != null ? e.getName() : code;
+        }
+
+        @Override
+        public String toString() {
+            return code == null ? name : code + "  " + name;
+        }
+    }
+
+    /** The difficulty the box shows, with the pending custom changes on - what a Start would create. */
+    private DifficultyData shownDifficulty() {
+        return CustomDifficulty.withOverrides(CustomDifficulty.pending(),
+                Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()]);
+    }
+
+    /** Rebuilds the row when the race's sets or the count changed (all on Random); otherwise leaves the picks alone. */
+    private void refreshStartingSets() {
+        if (startingSets == null || race == null || difficulty == null)
+            return;
+        java.util.List<String> pool = new java.util.ArrayList<>();
+        if (Config.instance().getConfigData().editionProgressionEnabled) {
+            String[] raw = AdventurePlayer.startingSetPool(selectedRaceIndex());
+            if (raw != null)
+                for (String code : raw)
+                    if (!"(All)".equals(code) && !pool.contains(code))
+                        pool.add(code);
+        }
+        int count = Math.min(pool.size(), AdventurePlayer.startingSetCount(shownDifficulty()));
+        String[] newPool = pool.toArray(new String[0]);
+        if (count == setCount && java.util.Arrays.equals(newPool, setPool))
+            return;
+        setPool = newPool;
+        setCount = count;
+        startingSets.clearChildren();
+        setBoxes.clear();
+        if (pool.isEmpty())
+            return;
+        if (count >= pool.size()) { // Easy: every set of the race, nothing to choose
+            startingSets.add(Controls.newTextraLabel("[BLACK]All " + pool.size() + " sets")).expand().center();
+            return;
+        }
+        float gap = Forge.isLandscapeMode() ? 4f : 3f;
+        float w = (startingSets.getWidth() - gap * (count - 1)) / count;
+        for (int i = 0; i < count; i++) {
+            SelectBox<SetChoice> box = newSetBox(count > 1);
+            box.setName("startingSet" + (i + 1)); // the agent clicks it by name
+            box.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    if (!fillingSetBoxes)
+                        fillSetBoxes();
+                }
+            });
+            setBoxes.add(box);
+            startingSets.add(box).width(w).height(startingSets.getHeight()).padRight(i < count - 1 ? gap : 0);
+        }
+        fillSetBoxes();
+    }
+
+    /** Each drop-down lists Random and the race's sets that no other drop-down holds. */
+    private void fillSetBoxes() {
+        fillingSetBoxes = true;
+        try {
+            for (SelectBox<SetChoice> box : setBoxes) {
+                String own = box.getSelected() == null ? null : box.getSelected().code;
+                Array<SetChoice> items = new Array<>();
+                SetChoice keep = new SetChoice(null);
+                items.add(keep);
+                for (String code : setPool) {
+                    boolean held = false;
+                    for (SelectBox<SetChoice> other : setBoxes)
+                        if (other != box && other.getSelected() != null && code.equals(other.getSelected().code))
+                            held = true;
+                    if (held)
+                        continue;
+                    SetChoice c = new SetChoice(code);
+                    items.add(c);
+                    if (code.equals(own))
+                        keep = c;
+                }
+                box.setItems(items);
+                box.setSelected(keep);
+            }
+        } finally {
+            fillingSetBoxes = false;
+        }
+    }
+
+    /** The codes the drop-downs picked (Random left out). */
+    private java.util.List<String> chosenStartingSets() {
+        java.util.List<String> codes = new java.util.ArrayList<>();
+        for (SelectBox<SetChoice> box : setBoxes)
+            if (box.getSelected() != null && box.getSelected().code != null)
+                codes.add(box.getSelected().code);
+        return codes;
+    }
+
+    /** Round 873: the agent bridge's {@code startingsets sets=DTK,AFR} - sets the drop-downs in order ("" or "any" = Random). */
+    String selectStartingSetsForAgent(String csv) {
+        String[] want = csv == null || csv.isEmpty() ? new String[0] : csv.split(",");
+        for (int i = 0; i < setBoxes.size(); i++) {
+            String code = i < want.length ? want[i].trim().toUpperCase() : "";
+            SelectBox<SetChoice> box = setBoxes.get(i);
+            SetChoice pick = box.getItems().first(); // Random
+            for (SetChoice c : box.getItems())
+                if (c.code != null && c.code.equals(code))
+                    pick = c;
+            box.setSelected(pick); // fires the box's ChangeListener, which refills the others
+        }
+        return "starting sets " + chosenStartingSets() + " of " + setCount + " (" + java.util.Arrays.toString(setPool) + ")";
+    }
+
+    /** Hands the picks to AdventurePlayer.create() and logs them. */
+    private void takeStartingSets() {
+        java.util.List<String> codes = chosenStartingSets();
+        AdventurePlayer.setChosenStartingSets(codes);
+        System.out.println("[TFR-Research] new-game screen: " + setCount + " starting set(s) of " + java.util.Arrays.toString(setPool)
+                + " - chosen " + codes + ", random " + Math.max(0, setCount - codes.size()));
+    }
+
+    /**
+     * A drop-down in Controls.newComboBox's look. A narrow one (2-3 in the row) shows the code or "Any" in the box; the
+     * open list always shows "DTK  Dragons of Tarkir".
+     */
+    private static SelectBox<SetChoice> newSetBox(boolean narrow) {
+        SelectBox<SetChoice> box = new SelectBox<SetChoice>(Controls.getSkin()) {
+            @Override
+            protected Drawable getBackgroundDrawable() {
+                if (isDisabled() && getStyle().backgroundDisabled != null)
+                    return getStyle().backgroundDisabled;
+                if (getScrollPane().hasParent() && getStyle().backgroundOpen != null)
+                    return getStyle().backgroundOpen;
+                return (isOver() || hasKeyboardFocus()) && getStyle().backgroundOver != null ? getStyle().backgroundOver : getStyle().background;
+            }
+
+            @Override
+            protected String toString(SetChoice c) {
+                if (c == null)
+                    return "";
+                if (narrow)
+                    return c.code == null ? "Any" : c.code;
+                return c.code == null ? "Random" : c.name + " (" + c.code + ")";
+            }
+        };
+        box.setAlignment(com.badlogic.gdx.utils.Align.center);
+        box.getList().setAlignment(com.badlogic.gdx.utils.Align.left);
+        return box;
     }
 
     private static NewGameScene object;
@@ -473,6 +657,7 @@ public class NewGameScene extends MenuScene {
         if (selectedName.getText().isEmpty()) {
             generateName();
         }
+        takeStartingSets(); // round 873
         Runnable runnable = () -> {
             started = false;
             //FModel.getPreferences().setPref(ForgePreferences.FPref.UI_ENABLE_MUSIC, false);
@@ -524,6 +709,7 @@ public class NewGameScene extends MenuScene {
         updateAvatar();
         refreshDifficultyLabels(); // round 823: a started game took the pending changes
         if (Forge.createNewAdventureMap) {
+            takeStartingSets(); // round 873
             FModel.getPreferences().setPref(ForgePreferences.FPref.UI_ENABLE_MUSIC, false);
             WorldSave.generateNewWorld(selectedName.getText(),
                     gender.getCurrentIndex() == 0,
@@ -544,11 +730,8 @@ public class NewGameScene extends MenuScene {
     // Race Help (2026-08-15 user request, mirroring the existing difficultyHelp/modeHelp "?"
     // pattern): reads race/difficulty selection live at click time, same as showDifficultyHelp()
     // does below - no separate change-listener needed. Race->set lookup and the difficulty->count
-    // formula are copied straight from AdventurePlayer.create()'s actual starting-unlock logic
-    // (Config.getConfigData().raceEditions, the {4,3,2,1} array keyed by difficulty index) rather
-    // than reimplemented, so this help text can't drift from what a new game will actually do -
-    // it just can't show WHICH of the 4 sets you'll get, since that pick is genuinely randomized
-    // at creation time.
+    // count come from AdventurePlayer's own startingSetPool/startingSetCount (round 872), so this help
+    // text can't drift from what a new game will actually do.
     private void showRaceHelp() {
         DialogData dismiss = new DialogData();
         dismiss.name = "OK";
@@ -578,12 +761,11 @@ public class NewGameScene extends MenuScene {
             String setList = pool == null || pool.length == 0 ? "None" : String.join(", ", pool);
             int poolSize = pool == null ? 0 : pool.length;
             DifficultyData selectedDifficulty = Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()];
-            int[] startingUnlockCountByDifficultyIndex = {4, 3, 2, 1};
-            int cappedIndex = Math.min(difficulty.getCurrentIndex(), startingUnlockCountByDifficultyIndex.length - 1);
-            int startingUnlockCount = Math.min(poolSize, startingUnlockCountByDifficultyIndex[cappedIndex]);
+            // Round 872: the count is the difficulty's startingSets (or the Starting sets custom knob)
+            int startingUnlockCount = Math.min(poolSize, AdventurePlayer.startingSetCount(shownDifficulty()));
 
             raceSummary.text = String.format(
-                    "Race: %s\nAssociated Sets: %s\n\nAt %s difficulty, you'll start with %d of these %d sets unlocked (chosen at random) - the rest unlock later at the Research Lab.",
+                    "Race: %s\nAssociated Sets: %s\n\nAt %s difficulty, you'll start with %d of these %d sets unlocked - pick them under Starting sets, or leave Random - the rest unlock later at the Research Lab.",
                     race.getText(), setList, selectedDifficulty.name, startingUnlockCount, poolSize);
         }
 

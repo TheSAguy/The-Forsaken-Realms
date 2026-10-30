@@ -100,6 +100,7 @@ python dev-tools/agent/tfr_agent.py boot     # waits for the bridge; prints the 
 - Any scene: `click id=<id>` | `click text="Done"` | `advance` (finish typing text) | `back` | `key key=ESCAPE`
 - Model: `equip item=...` | `use item=...` | `sell item=...` | `deck op=list|select index=1|add card=... count=2`
   | `buy index=0` | `save slot=1 name="agent"` | `load slot=1` | `newgame`
+  | `startingsets sets=DTK,any` (round 873: sets the New Game screen's Starting sets drop-downs in order; `any` = Random)
 - Duels: none - auto-battle is on while the bridge runs.
 
 ## 5. A new game

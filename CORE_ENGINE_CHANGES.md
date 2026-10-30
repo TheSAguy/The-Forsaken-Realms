@@ -45,6 +45,14 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
   copy `startingSets`; TFR's `seedStartingEditions(race, chosen)` reads it through new static `startingSetCount`, takes
   the new-game picks (new `setChosenStartingSets`) and `startingSetPool(race)`.
 
+### Round 873 - choose your starting sets on the new-game screen
+- **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** (STOCK) - a `startingSets` Table filled with
+  drop-downs (`refreshStartingSets`, `fillSetBoxes`, `newSetBox`, `SetChoice`), refreshed on race/difficulty change and in
+  `refreshDifficultyLabels`; `start()` and the createNewAdventureMap path call `takeStartingSets()`; the race "?" count
+  from `AdventurePlayer.startingSetCount`; agent hook `selectStartingSetsForAgent`.
+- TFR files: `scene/AgentSceneAccess.java`, `agent/AgentActions.java` (`startingsets` command), the plane's
+  `ui/new_game.json` and `ui/new_game_portrait.json`.
+
 ### Round 868 - deadlines say the days left, never the absolute day
 - **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - the raid page's Time line drops
   "(until day N)". Text only, in TFR's own `loadRaidDetails`.

@@ -210,7 +210,7 @@ M.append(("Card sets and Research", "Research", r"""**Card sets and Research**
 
 **Q: How does Research work? How do I unlock more card sets?**
 **A:** You only start with a few sets open. Research opens the rest.
-- **Starting sets:** each race has 4 sets (see Races). You start with all 4 on Easy, 3 on Normal, 2 on Hard and 1 on Insane, picked at random from your race's 4.
+- **Starting sets:** each race has 4 sets (see Races). You start with all 4 on Easy, 3 on Normal, 2 on Hard and 1 on Insane: pick them on the new-game screen, or Random.
 - **Where:** the **Research Lab** in your Capitol. It lists every set with its days and today's price.
 - **Cost:** with nothing given, 40 Shards on Normal (30 Easy, 50 Hard, 60 Insane) and **40 days**. Several sets can run at once.
 - **Feed it:** every card you **sell** (anywhere) takes days and some Shards off its own set's research; **sacrifice** spares at the Lab and they count double. A card's first copy counts in full, later copies a quarter. About **3 boosters** of a set sacrificed (or 6 sold) make it **Ready**: half the Shards, no wait. A running research keeps shrinking as you feed it and finishes at 0 days.
@@ -257,7 +257,7 @@ M.append(("Races", "Races", r"""**Races**
 **Q: What does my race change?**
 **A:** Your race decides your look, your 4 card sets and 2 of your 5 starting shop blueprints. It doesn't change any stats.
 - **Look:** your portrait is a Magic card's art, and you can step through the pool on the Create a Character screen.
-- **Sets:** you start with some of your race's 4 sets unlocked (4 on Easy, 3 Normal, 2 Hard, 1 Insane, picked at random). Standard, Constructed and Pile starting decks are built from your race's sets, no AI color ever holds them (they sit in the neutral pool), and your own towns' Inn tournaments use them.
+- **Sets:** you start with some of your race's 4 sets unlocked (4 on Easy, 3 Normal, 2 Hard, 1 Insane; you pick which, or leave them Random). Standard, Constructed and Pile starting decks are built from your race's sets, no AI color ever holds them (they sit in the neutral pool), and your own towns' Inn tournaments use them.
 - **Blueprints:** your race's 2 tribal shops, plus your color's 3 Common shops.
 - The **?** button on the race screen lists the sets before you commit.
 

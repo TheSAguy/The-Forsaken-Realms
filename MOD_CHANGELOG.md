@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 873: choose your starting sets on the new-game screen (2026-10-29)
+
+Round 872's request, the second half: a drop-down per starting set, driven by race and difficulty. The user approved
+the mock-up (`C:\TFR\notes\r872-873-mock.png`) with "Any" in the narrow boxes and New Game+ staying random.
+
+- **The row:** "Starting sets:" under Race, one drop-down per starting set (the count is the difficulty's, or round
+  872's knob when the pending custom difficulty sets it). One drop-down (Insane) is wide and shows "Random" or "Core Set
+  2021 (M21)"; two or three are narrow and show "Any" or the code. The open list always reads "Random" and
+  "DTK  Dragons of Tarkir". A set another drop-down holds isn't listed. Easy (count = all 4) shows "All 4 sets" with no
+  drop-downs. A new race or count rebuilds the row on Random; returning from the Advanced panel rebuilds it only when
+  the count changed. All on Random = the old random draw.
+- **How:** the layouts get a `startingSets` Table (landscape 142x15 at x 159, portrait 160x22 at x 96) and a label;
+  `NewGameScene` fills it with `SelectBox<SetChoice>` drop-downs in `Controls.newComboBox`'s look (a subclass so the
+  box and the list can show different text). Start hands the picks to `AdventurePlayer.setChosenStartingSets`.
+- **Fit:** the rows step tighter so Standard's Starter Edition still fits: landscape name row 96 -> 84, avatar up 12,
+  selectors 13 high stepping 21 (was 14 / ~23); portrait name 148 -> 136, selectors 22 high stepping 28 (was 24 / 32).
+- **Race "?":** the count comes from `startingSetCount` and the text says to pick them under Starting sets.
+- **Agent bridge:** new `startingsets sets=DTK,any` command (`AgentActions` + `AgentSceneAccess.chooseStartingSets` ->
+  `NewGameScene.selectStartingSetsForAgent`), which sets the drop-downs as a player would; the agent can't open a
+  SelectBox. In the tfr-play skill's command list.
+- **Log:** `[TFR-Research] new-game screen: N starting set(s) of [pool] - chosen [...], random M`, then round 872's line.
+- **Docs:** GUIDE Card Sets ("What you start with") and the Research FAQ entry; Discord FAQ messages 12 (Research, 1989
+  characters) and 14 (Races).
+- **Agent-tested** (agent-872, cheats): landscape 1280x720 - Normal all "Any": DTK, M20, AFR at random; Normal with DMU in
+  the middle box: DOM, M20, DMU (a second DMU request stays "Any"); Insane Kor with BFZ: BFZ only; Easy "All 4 sets":
+  DTK, M20, TDM, AFR; a race change put BFZ back to Random. Portrait 540x960 - Normal ALA / Any / DGM, Insane Viashino
+  ARB: ARB only; Standard's Starter Edition fits in both. No exceptions in forge.log. Shots
+  `C:\TFR\notes\r873-{land-normal,land-normal-pick,land-insane,land-insane-pick,land-easy,land-race-reset,port-normal,port-normal-pick,port-insane-pick}.png`.
+  Not tested: Android itself, a plane without raceEditions (falls back to starterEditions).
+- Files: `scene/NewGameScene.java` (STOCK), `ui/new_game.json`, `ui/new_game_portrait.json`, `scene/AgentSceneAccess.java`,
+  `agent/AgentActions.java`, GUIDE.md/.html, `dev-tools/discord_faq/messages.py`, `.claude/skills/tfr-play/SKILL.md`.
+
 ## Round 872: a "Starting sets" custom difficulty knob (2026-10-29)
 
 A player, Brotman, on Discord: "one thing I am missing is starten Research. I like the single set from Insane, but it

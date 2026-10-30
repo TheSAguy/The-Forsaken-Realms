@@ -75,6 +75,7 @@ final class AgentActions {
                 case "load": return load(a.getInt("slot", 1));
                 case "newgame": return now(AgentSceneAccess.startNewGame(a.getString("race", ""), a.getString("gender", "")),
                         "new game requested from the New Game screen's settings (race/gender set first when given)");
+                case "startingsets": return now(true, AgentSceneAccess.chooseStartingSets(a.getString("sets", ""))); // round 873
                 case "autobattle": bridge.autoBattle = a.getBoolean("on", true); return now(true, "autoBattle=" + bridge.autoBattle);
                 case "console": return now(true, ConsoleCommandInterpreter.getInstance().command(a.getString("text", "")));
                 case "": return now(false, "no cmd given");

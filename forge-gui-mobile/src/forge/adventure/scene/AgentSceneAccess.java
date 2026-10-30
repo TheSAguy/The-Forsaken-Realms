@@ -36,4 +36,13 @@ public final class AgentSceneAccess {
             scene.selectGenderForAgent(gender.toLowerCase().startsWith("f"));
         return scene.start();
     }
+
+    /** Round 873: sets the New Game screen's Starting sets drop-downs in order (codes, "any" = Random), as a player
+     *  picking them would; the agent can't open a drop-down by clicking. Opens the screen when it isn't showing. */
+    public static String chooseStartingSets(String sets) {
+        NewGameScene scene = NewGameScene.instance();
+        if (forge.Forge.getCurrentScene() != scene)
+            forge.Forge.switchScene(scene);
+        return scene.selectStartingSetsForAgent(sets);
+    }
 }

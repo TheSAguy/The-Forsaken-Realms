@@ -35,7 +35,7 @@
       "width": 128,
       "height": 16,
       "x": 75,
-      "y": 96
+      "y": 84
     },
     {
       "type": "Label",
@@ -58,12 +58,21 @@
     },
     {
       "type": "Label",
+      "name" : "startingSetsL",
+      "text": "[BLACK]Starting sets:",
+      "width": 128,
+      "height": 16,
+      "x": 75,
+      "yOffset": 7
+    },
+    {
+      "type": "Label",
       "name" : "genderL",
       "text": "[BLACK]tr(lblGender):",
       "width": 128,
       "height": 16,
       "x": 75,
-      "yOffset": 8
+      "yOffset": 5
     },
     {
       "type": "Label",
@@ -72,7 +81,7 @@
       "width": 128,
       "height": 16,
       "x": 75,
-      "yOffset": 8
+      "yOffset": 5
     },
 	{
       "type": "ImageButton",
@@ -91,7 +100,7 @@
       "width": 128,
       "height": 16,
       "x": 75,
-      "yOffset": 8
+      "yOffset": 7
     },
     {
       "type": "Label",
@@ -100,7 +109,7 @@
       "width": 128,
       "height": 16,
       "x": 75,
-      "yOffset": 8
+      "yOffset": 5
     },
 	{
       "type": "ImageButton",
@@ -119,7 +128,7 @@
       "width": 128,
       "height": 16,
       "x": 75,
-      "yOffset": 8
+      "yOffset": 7
     },
     {
       "type": "ImageButton",
@@ -129,7 +138,7 @@
       "width": 16,
       "height": 16,
       "x": 174,
-      "y": 64
+      "y": 52
     },
     {
       "type": "Image",
@@ -137,7 +146,7 @@
       "width": 48,
       "height": 48,
       "x": 206,
-      "y": 48
+      "y": 36
     },
     {
       "type": "ImageButton",
@@ -147,7 +156,7 @@
       "width": 16,
       "height": 16,
       "x": 270,
-      "y": 64
+      "y": 52
     },
     {
       "type": "TextField",
@@ -157,61 +166,69 @@
       "width": 112,
       "height": 16,
       "x": 174,
-      "y": 96
+      "y": 84
     },
     {
       "type": "Selector",
       "name": "race",
       "selectable": true,
       "width": 142,
-      "height": 14,
+      "height": 13,
       "x": 159,
       "yOffset": 9
+    },
+    {
+      "type": "Table",
+      "name": "startingSets",
+      "width": 142,
+      "height": 15,
+      "x": 159,
+      "yOffset": 7
     },
     {
       "type": "Selector",
       "name": "gender",
       "selectable": true,
       "width": 142,
-      "height": 14,
+      "height": 13,
       "x": 159,
-      "yOffset": 9
+      "yOffset": 7
     },
     {
       "type": "Selector",
       "name": "difficulty",
       "selectable": true,
       "width": 142,
-      "height": 14,
+      "height": 13,
       "x": 159,
-      "yOffset": 9
+      "yOffset": 8
     },
     {
       "type": "Selector",
       "name": "colorId",
       "selectable": true,
       "width": 142,
-      "height": 14,
+      "height": 13,
       "x": 159,
-      "yOffset": 9
+      "yOffset": 8
     },
     {
       "type": "Selector",
       "name": "mode",
       "selectable": true,
       "width": 142,
-      "height": 14,
+      "height": 13,
       "x": 159,
-      "yOffset": 9
+      "yOffset": 8
     },
 	{
       "type": "Selector",
       "name": "starterEdition",
       "selectable": true,
       "width": 142,
-      "height": 14,
+      "height": 13,
       "x": 159,
-      "yOffset": 9
+      "yOffset": 8
     },
     {
       "type": "TextButton",

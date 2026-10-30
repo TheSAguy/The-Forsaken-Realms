@@ -1644,7 +1644,7 @@ card belongs to every set it was printed in, and any source that holds one of th
 to you - as that set's printing, the little set symbol on the card matching.
 
 **What you start with.** Each race is tied to four thematic editions (see [Races](#races)). You begin
-with a random subset of *those four*, sized by difficulty:
+with some of *those four*, sized by difficulty:
 
 | Difficulty | Starting editions |
 |---|---|
@@ -1653,8 +1653,13 @@ with a random subset of *those four*, sized by difficulty:
 | Hard | 2 |
 | Insane | 1 |
 
-Two runs as the same race on Hard can start with different sets. This is why race choice matters
-beyond flavor, and why the race-select `?` button is worth reading before you commit.
+**Starting sets** on the Create a Character screen has one drop-down per starting set: leave it on
+Random (narrow drop-downs say "Any"), or pick one of your race's sets - a set another drop-down holds
+isn't offered. Any left on Random are drawn at random from the rest, so two runs as the same race on
+Hard can start with different sets. A new race or difficulty puts them all back to Random. The
+count itself is the **Starting sets** setting in Advanced (custom difficulty, 1 to 4). A New Game+
+starts with that many, drawn at random. This is why race choice matters beyond flavor, and why the
+race-select `?` button is worth reading before you commit.
 
 **Where the other sets went.** Every new world deals the sets out among six owners — the five
 colors and a neutral pool. Twelve go to the neutral pool and the rest are split evenly among the
@@ -2010,7 +2015,8 @@ https://discord.gg/TTRPKc9HYJ
 
 ### How does Research work? How do I unlock more card sets?
 
-You start with only a few sets open (4 on Easy down to 1 on Insane, from your race's four). The
+You start with only a few sets open (4 on Easy down to 1 on Insane, from your race's four - pick them
+under Starting sets on the Create a Character screen, or leave them Random). The
 **Research Lab** in your Capitol unlocks any other set for 40 Shards on Normal and 40 days - less of both
 the more of that set's cards you have sold or sacrificed. An unlocked set stocks your own shops and joins
 your own Inns' tournaments; it never limits your deck. (A game started before version 1.24 keeps the
