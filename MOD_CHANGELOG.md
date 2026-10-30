@@ -14264,6 +14264,48 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 878: the menus-only footer shows the trail, and the activator flood is counted (2026-10-29)
+
+Two small log fixes from the player-log reviews (`C:\TFR\notes\logs-1029c.md` P3-1 and P3-4, `logs-1029b.md` P3-1).
+The user: "Yes, round 878" to folding them into one round.
+
+- **The scene trail in the menus-only footer.** `[TFR-Session] end (exit) no game this launch ...` now ends with
+  `trail=` (round 777's `trailText()`, the last eight scenes and screens, so far printed only with `[TFR-Error]`). A
+  "launched, looked around, quit" log shows where the player gave up, e.g. `trail=StartScene > screen:HomeScreen`.
+  Nothing else changes.
+- **The "Did not have activator set" flood.** Stock `SpellAbilityCondition.areMet` prints
+  `<card> Did not have activator set in SpellAbility_Condition.checkConditions()` whenever a mana ability is asked
+  about before anyone activated it: 2,033 of the 4,483 lines in the user's live log (10.29 18:17), 52-66% of the
+  players' shared ones, nearly all basic lands. It buried the `[TFR-*]` lines and grew the shared zips.
+  - **Is it a real problem? No.** A new `[TFR-LogQuiet]` line prints the call chain the first time each caller
+    produces it. In five agent duels (2,980 occurrences) there was ONE caller: the AI's mulligan test
+    (`PlayerControllerAi.mulliganKeepHand` > `OpeningHand.producedColors` > `SpellAbility.canProduce`) asking a land in
+    hand or library which colors it makes. Nobody has activated a land there, and the engine's fallback, the card's
+    controller, is the right answer.
+  - **The fix lives in TFR's own code; no stock file is touched.** `SessionLog.QuietStream` wraps `System.out` (already
+    `ExceptionHandler`'s tee to forge.log) when StartScene starts the session lines. It passes every line except the
+    activator line: the first time a caller prints it (a caller = the first frame outside `forge.game.spellability`, up
+    to six a launch), the line goes out with a `[TFR-LogQuiet] the activator line above, caller N/6 this launch: <chain>`
+    line; after that it is counted, and each duel's `[TFR-Duel]` line is followed by `[TFR-LogQuiet] "Did not have
+    activator set" xN this duel: Swamp=105 Island=105 ...` (the top eight cards, then `others=`). Anything counted
+    outside a duel is flushed at the session footer. Because it filters before the file, both the live forge.log and
+    LogShare's shared copy are clean; LogShare is unchanged. A new caller still shows up (with its chain), so a real
+    problem would not be hidden.
+  - Not done: the stock line itself (an upstream edit would be a merge conflict every release), and any other engine
+    noise (none of it comes close).
+- **Agent-checked at 50x** (the shared agent game with this round's classes ahead of its jar, cheats):
+  1. Launched, straight to Exit > Quit: `[TFR-Session] end (exit) no game this launch, 0.00 h in the menus, errors=0
+     lastScene=StartScene trail=StartScene`.
+  2. Continue, three world-map duels (two won, one lost): 2,125 activator occurrences, 4 raw lines in the log (the
+     first build keyed callers by the whole chain, and the mulligan test's four paths used up its four slots; hence the
+     first-frame key above), and one count line per duel: 211 lines in all.
+  3. The final build, slot 4, two duels: 855 occurrences, 1 raw line plus its caller line and two count lines; 193
+     lines in all. Before: 2,033 of 4,483 lines (45%) in the user's live log; after: one raw line a caller per launch.
+  Excerpts: `C:\TFR\notes\r878-exit-trail.txt`, `C:\TFR\notes\r878-activator-duels.txt`. Not tested: Android
+  (`StartScene` and `System.out` are shared, so it should behave the same), and a launch where the game is quit while a
+  duel is still running (its count then goes out with the footer).
+- Files: `util/SessionLog.java` (mod code). No stock engine file, no save data.
+
 ## Round 873: choose your starting sets on the new-game screen (2026-10-29)
 
 Round 872's request, the second half: a drop-down per starting set, driven by race and difficulty. The user approved
