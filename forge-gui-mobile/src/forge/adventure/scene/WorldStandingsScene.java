@@ -152,7 +152,7 @@ public class WorldStandingsScene extends UIScene {
                 }
                 // Round 879: the Doppelganger takes any four of the other races' sets, rolled each game
                 sb.append('\n').append(r.race).append(": any 4 of the ")
-                        .append(forge.adventure.util.EditionProgression.anySetPool().length).append(" sets above, new each game");
+                        .append(forge.adventure.util.EditionProgression.anySetPool().length).append(" sets above, picked each game");
                 forge.adventure.player.AdventurePlayer player = forge.adventure.player.AdventurePlayer.current();
                 if (player != null && player.getRaceSets() != null
                         && r.race.equalsIgnoreCase(forge.adventure.data.HeroListData.getRawRaceName(player.getHeroRace())))

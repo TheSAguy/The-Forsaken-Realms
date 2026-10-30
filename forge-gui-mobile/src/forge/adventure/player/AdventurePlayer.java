@@ -252,30 +252,64 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private static java.util.List<String> pendingRaceSets;
 
     /** Round 879: how many sets a race has - every raceEditions row lists four, and an anySet race rolls four. */
-    private static final int RACE_SET_COUNT = 4;
+    public static final int RACE_SET_COUNT = 4;
 
     /**
-     * Round 879: a Doppelganger's four sets for one game - the picks first (in its pool, no repeats), then random ones
-     * from the pool. They stand for the other races' fixed four everywhere: the starting unlocks, the starter deck, the
-     * sets kept out of the AI colors, race rewards and the player's own Inns.
+     * Round 882: does a Doppelganger's box (0-based) start open, when {@code open} of its four do? The LEFTMOST ones open,
+     * so box 4 locks first and box 1 is the last one left (the user's mockup). This is the one place that order lives:
+     * {@code box >= RACE_SET_COUNT - open} flips it to the rightmost, and the new-game row's locks and the starting
+     * unlocks both follow.
+     */
+    public static boolean raceSetStartsOpen(int box, int open) {
+        return box < open;
+    }
+
+    /**
+     * Round 879: a Doppelganger's four sets for one game. They stand for the other races' fixed four everywhere: the
+     * starting unlocks, the starter deck, the sets kept out of the AI colors, race rewards and the player's own Inns.
+     * Round 882: {@code chosen} is the four boxes in order, null for "Any" (New Game+ passes null: all random). A pick
+     * keeps its box and an "Any" is rolled in its own, so the order of the result says which sets start open.
      */
     private static java.util.List<String> rollRaceSets(int race, java.util.List<String> chosen) {
         java.util.List<String> pool = new java.util.ArrayList<>(java.util.Arrays.asList(startingSetPool(race)));
         int poolSize = pool.size();
-        java.util.List<String> sets = new java.util.ArrayList<>();
+        String[] boxes = new String[RACE_SET_COUNT];
+        java.util.List<String> picked = new java.util.ArrayList<>();
         if (chosen != null)
-            for (String code : chosen)
-                if (code != null && pool.contains(code) && !sets.contains(code) && sets.size() < RACE_SET_COUNT)
-                    sets.add(code);
-        int picked = sets.size();
-        pool.removeAll(sets);
+            for (int i = 0; i < RACE_SET_COUNT && i < chosen.size(); i++)
+                if (chosen.get(i) != null && pool.contains(chosen.get(i)) && !picked.contains(chosen.get(i))) {
+                    boxes[i] = chosen.get(i);
+                    picked.add(chosen.get(i));
+                }
+        pool.removeAll(picked);
         java.util.Collections.shuffle(pool, MyRandom.getRandom());
-        for (int i = 0; sets.size() < RACE_SET_COUNT && i < pool.size(); i++)
-            sets.add(pool.get(i));
+        java.util.List<String> sets = new java.util.ArrayList<>();
+        java.util.List<String> rolled = new java.util.ArrayList<>();
+        java.util.Iterator<String> next = pool.iterator();
+        for (String box : boxes) {
+            if (box != null) {
+                sets.add(box);
+            } else if (next.hasNext()) {
+                rolled.add(next.next());
+                sets.add(rolled.get(rolled.size() - 1));
+            }
+        }
         System.out.println("[TFR-Research] " + HeroListData.getRawRaceName(race) + "'s four sets ("
-                + (chosen == null ? "New Game+" : "new game") + "): chosen " + sets.subList(0, picked) + ", random "
-                + sets.subList(picked, sets.size()) + " from a pool of " + poolSize + " -> " + sets);
+                + (chosen == null ? "New Game+" : "new game") + "): chosen " + picked + ", random " + rolled
+                + " from a pool of " + poolSize + " -> " + sets);
         return sets;
+    }
+
+    /** Round 882: the Doppelganger's sets that start open this game, in box order; the rest stay locked in its four. */
+    private java.util.List<String> openRaceSets() {
+        java.util.List<String> open = new java.util.ArrayList<>();
+        int openCount = startingSetCount(this.difficultyData);
+        for (int i = 0; i < raceSets.size(); i++)
+            if (raceSetStartsOpen(i, openCount))
+                open.add(raceSets.get(i));
+        System.out.println("[TFR-Research] " + HeroListData.getRawRaceName(heroRace) + "'s four sets in box order " + raceSets
+                + ": " + openCount + " open " + open);
+        return open;
     }
 
     /** Round 879: a Doppelganger's four - the ones a new game just rolled, else the current player's, else null. */
@@ -1174,7 +1208,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (forge.adventure.util.EditionProgression.isAnySetRace(race))
             raceSets = pendingRaceSets != null ? pendingRaceSets : rollRaceSets(race, chosen);
         pendingRaceSets = null;
-        seedStartingEditions(race, chosen);
+        // Round 882: its boxes decide which of the four open, so they go in as the picks; the others stay locked.
+        seedStartingEditions(race, raceSets != null ? openRaceSets() : chosen);
         // Round 751: a new game runs research v2 (on a plane with set unlocks).
         researchV2 = forge.adventure.util.ResearchMeter.planeEnabled();
         System.out.println("[TFR-Research] research system: " + (researchV2 ? "v2" : "classic") + " (new game)");

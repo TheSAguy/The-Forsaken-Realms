@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 882 - a Doppelganger's four boxes and their locks
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - `RACE_SET_COUNT` public; new
+  `raceSetStartsOpen`, `openRaceSets`; `rollRaceSets` keeps box order; `create()` passes a Doppelganger's open sets to
+  `seedStartingEditions`.
+- **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** (STOCK) - `refreshStartingSets` builds four boxes
+  plus lock images for an anySet race (`showSetLocks`, `setLockIcon`, `boxStartingSets`); `drawItem` never cuts a code in a
+  narrow box; the race "?" text; agent hook `open<N>`.
+- **`forge-gui-mobile/src/forge/adventure/scene/WorldStandingsScene.java`** (STOCK) - one word in the Doppelganger's Mod
+  Details line.
+
 ### Round 881 - resource icons in popups and buttons
 - **`forge-gui-mobile/src/forge/toolbox/FButton.java`** (STOCK) - `symbolText()`, and both draw sites send a label
   holding `{` through TextRenderer, so `{Gold}` draws as a symbol. Any other label draws as before.

@@ -14264,6 +14264,53 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 882: the Doppelganger picks all four sets; the difficulty locks them (2026-10-30)
+
+The user: "For the Doppelganger, I think it needs 4 Set selections for each difficulty. You should be able to select your
+4 starting sets, just like the other races, but they will become locked as you change the difficulty. So, on easy you
+can choose all 4 and all 4 will be unlocked, but Insane, you can still choose all 4, but only the last one will be
+available from the start. this way you still have all 4 in your pool." With a mockup: padlocks after the boxes, box 1 the
+open one. Round 879 showed 4, 3, 2 or 1 boxes and rolled the rest unseen.
+
+- **Four boxes on every difficulty and with the custom knob.** Each still offers Any or one of the 58 sets, and no set
+  sits in two boxes. A new difficulty moves the locks and keeps the picks (`refreshStartingSets`: the count is now
+  `RACE_SET_COUNT` for an anySet race; the difficulty's number is the open count). Other races are unchanged.
+- **The leftmost boxes start open**: box 4 locks first and box 1 is "the last one", as the mockup shows. The order lives
+  in one place, `AdventurePlayer.raceSetStartsOpen(box, open)`; `box >= RACE_SET_COUNT - open` flips it to the rightmost,
+  and the row's locks and the starting unlocks both follow.
+- **Each box has a lock icon** that follows the difficulty. A locked box can still be changed. Closed: the stock
+  `FSkinImage.PADLOCK` cropped to the lock (the sprite is a wide plate in the top half of its 143x200 cell, and whole it
+  read as a smudge). Open: the game has no open padlock, so the skin's green checkbox tick stands in; one line in
+  `NewGameScene.setLockIcon` swaps it.
+- **The four are the boxes in box order** (`rollRaceSets`): a pick keeps its box and an Any is rolled in its own, so a
+  locked Any stays a surprise. `chosenStartingSets()` dropped the Any boxes, so `boxStartingSets()` keeps their places for
+  this race. `create()` hands the open ones to `seedStartingEditions` as the picks (`openRaceSets`). New log line:
+  `[TFR-Research] Doppelganger's four sets in box order [AFR, DTK, ELD, KLD]: 1 open [AFR]`.
+- **The row** runs from x 143 to 313 in landscape and 88 to 256 in portrait, past the layout's Table, set in code: the
+  JSON Table also lays out the other races' row, and they keep it. No `new_game*.json` change. A code in a narrow box is
+  never cut (`drawItem`): "D..." was the first build's result.
+- **Text:** the race "?", GUIDE (Starting sets, Races and its table), Discord FAQ message 14 (1,988 characters, with "the
+  new-game screen" for "the Create a Character screen" to make room), Mod Details ("picked each game"), and
+  `notes/r879-decisions.md` rows 2, 3, 6 and 14.
+- **Checked, no change needed.** A locked set is reachable: the Lab lists `getMasterEditionList()` minus the unlocked
+  sets, and all 58 have a Booster line, none is in `restrictedEditions`, and the one edition the pool hides is MB1. The
+  starter deck uses all four on any difficulty for every race: `raceEditionCodes` ignores unlocks (Human on Insane,
+  `[DMU]` open: `Constructed R from editions [DOM, DMU, M20, M21]`; Doppelganger on Insane, `[AFR]` open: `from editions
+  [AFR, DTK, ELD, KLD]`). AI reservation, race rewards and player Inns all read `raceEditionCodes(player)`, which is the
+  whole list. New Game+ is unchanged: a random four, the count follows the difficulty.
+- **Agent bridge:** `startingsets` takes four values on every difficulty and now says how many are open, keeping the
+  Any boxes in its reply; a last `open4` opens box 4's list (`open` is box 1).
+- **Agent-tested** (`agent-882`: this round's jar and the repo's plane data, cheats; no duels played). Insane with
+  `any,DTK,ELD,any`: four `[AFR, DTK, ELD, KLD]`, unlocked `[AFR]`, reserved all four; the Lab's list shows KLD, DTK and
+  ELD with Found Cards from the starter deck, Show Researched shows AFR, and after a save and reload the Lab shows the
+  same three. Easy with `AFR,any,ELD,any`: `[AFR, MOR, ELD, M21]`, all four open. Hard with `any,any,DTK,any`: `[SNC, RNA,
+  DTK, AKH]`, open `[SNC, RNA]`, DTK locked. New Game+ from the Insane game: random `[APC, ELD, TOR, VOW]`, one open.
+  Landscape 1280x720 and portrait 540x960: the row fits, the locks move on Easy, Normal, Hard and Insane with the picks
+  kept, box 4's list stays on screen in portrait, the "?" fits. Kor on Easy ("All 4 sets") and Elf and Human are as
+  before after leaving a Doppelganger. Shots `notes/r882-*.png`, log `notes/r882-research-log.txt`.
+- **Not tested:** the custom Starting sets knob in play (`shownDifficulty()` feeds the same count), a tap on a real
+  drop-down (the bridge sets the box), Android.
+
 ## Round 881: resource icons in every display (2026-10-30)
 
 The user, of the raid reward popup (rounds 865/866): "For the raid reward, the popup did not have the resource icons.

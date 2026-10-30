@@ -1657,9 +1657,12 @@ with some of *those four*, sized by difficulty:
 **Starting sets** on the Create a Character screen has one drop-down per starting set: leave it on
 Random (narrow drop-downs say "Any"), or pick one of your race's sets - a set another drop-down holds
 isn't offered. Any left on Random are drawn at random from the rest, so two runs as the same race on
-Hard can start with different sets. A **Doppelganger** has no sets of its own: its drop-downs list every
-other race's sets (58 in all, a scrolling list), and on Easy it gets four drop-downs on Any instead of
-"All 4 sets". A new race or difficulty puts them all back to Random. The
+Hard can start with different sets. A **Doppelganger** has no sets of its own: it always has four
+drop-downs, each listing every other race's sets (58 in all, a scrolling list), and the difficulty decides
+how many of them start open, from the left. A check mark shows an open box and a padlock a locked one. You
+can still change a locked box, and its set stays one of your four: you research it later. An Any is rolled
+in its own box, so an Any behind a padlock stays a surprise. A new race or difficulty puts the drop-downs
+back to Random, though a Doppelganger keeps its picks when the difficulty changes. The
 count itself is the **Starting sets** setting in Advanced (custom difficulty, 1 to 4). A New Game+
 starts with that many, drawn at random. This is why race choice matters beyond flavor, and why the
 race-select `?` button is worth reading before you commit.
@@ -1758,10 +1761,12 @@ Your race decides your look, your four card sets and two of your five starting s
 doesn't change any stats.
 
 **The Doppelganger** is the exception to "your race's four sets": a shapeshifter that copies whoever it
-meets, it has no sets of its own. Its Starting sets drop-downs offer every set any other race starts
-with (58), and each game it takes four of them as its own - your picks first, then random ones. Those
-four then work exactly like another race's: your starter deck is built from them, no AI color holds
-them and your towns' Inns use them. A New Game+ draws a new four. Male and female look the same.
+meets, it has no sets of its own. Its four Starting sets drop-downs offer every set any other race
+starts with (58), and what they hold are its four sets for that game: your picks, plus a random set for
+each Any. The difficulty decides how many start unlocked, from the left: all four on Easy, only the first
+on Insane. The padlocked ones are still yours and unlock later at the Research Lab. Those four then work
+exactly like another race's: your starter deck is built from all of them, no AI color holds them and your
+towns' Inns use them. A New Game+ draws a new four. Male and female look the same.
 
 **Your look.** Your portrait is a Magic card's art, cropped to show the whole figure - 405 of them in all. Eleven races
 have a male and a female pool (Angel, Devil, Dwarf, Elf, Goblin, Human, Kor, Leonin, Merfolk, Metathran and Vampire);
@@ -1777,7 +1782,7 @@ no AI color ever holds them, and your own towns' Inn tournaments use them.
 | Black Dragon | DTK, TDM, AFR, VOW | Dragon, Vampire |
 | Blue Dragon | DTK, TDM, M21, MH1 | Dragon, Sphinx |
 | Devil | RNA, TOR, SOI, VOW | Devil, Demon |
-| Doppelganger | any 4 of the sets above, new each game | Shapeshifter, Rogue |
+| Doppelganger | any 4 of the sets above, picked each game | Shapeshifter, Rogue |
 | Dwarf | KLD, AER, KHM, BRO | Dwarf, Giant |
 | Elf | LRW, MOR, KHM, ELD | Elf, Druid |
 | Goblin | ONS, LGN, SCG, 10E | Goblin, Shaman |

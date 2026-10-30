@@ -256,11 +256,11 @@ M.append(("Races", "Races", r"""**Races**
 
 **Q: What does my race change?**
 **A:** Your race decides your look, your 4 card sets and 2 of your 5 starting shop blueprints. It doesn't change any stats.
-- **Look:** your portrait is a Magic card's art, and you can step through the pool on the Create a Character screen.
+- **Look:** your portrait is a Magic card's art, and you can step through the pool on the new-game screen.
 - **Sets:** you start with some of your race's 4 sets unlocked (4 on Easy, 3 Normal, 2 Hard, 1 Insane; you pick which, or leave them Random). Standard, Constructed and Pile starting decks are built from your race's sets, no AI color ever holds them (they sit in the neutral pool), and your own towns' Inn tournaments use them.
 - **Blueprints:** your race's 2 tribal shops, plus your color's 3 Common shops.
 - The **?** button on the race screen lists the sets before you commit.
-- **Doppelganger:** any 4 of the 58 sets below, new each game.
+- **Doppelganger:** pick any 4 of the 58 sets below; difficulty locks some.
 
 ```
 Race          Sets              Tribal shops

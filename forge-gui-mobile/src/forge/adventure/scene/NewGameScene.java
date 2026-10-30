@@ -76,6 +76,9 @@ public class NewGameScene extends MenuScene {
     private String[] setPool = new String[0];
     private int setCount = -1;
     private boolean fillingSetBoxes;
+    /** Round 882: a Doppelganger's lock icons, one per box; empty for every other race. */
+    private final java.util.List<Image> setLocks = new java.util.ArrayList<>();
+    private int openSets = -1; // round 882: how many of a Doppelganger's boxes start open now (the agent reads it)
 
     private NewGameScene() {
         super(Forge.isLandscapeMode() ? "ui/new_game.json" : "ui/new_game_portrait.json");
@@ -355,7 +358,10 @@ public class NewGameScene extends MenuScene {
                 Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()]);
     }
 
-    /** Rebuilds the row when the race's sets or the count changed (all on Random); otherwise leaves the picks alone. */
+    /**
+     * Rebuilds the row when the race's sets or the count changed (all on Random); otherwise leaves the picks alone.
+     * Round 882: a Doppelganger always has four boxes, so a new difficulty only moves its locks and keeps its picks.
+     */
     private void refreshStartingSets() {
         if (startingSets == null || race == null || difficulty == null)
             return;
@@ -367,22 +373,36 @@ public class NewGameScene extends MenuScene {
                     if (!"(All)".equals(code) && !pool.contains(code))
                         pool.add(code);
         }
-        int count = Math.min(pool.size(), AdventurePlayer.startingSetCount(shownDifficulty()));
+        boolean anySet = forge.adventure.util.EditionProgression.isAnySetRace(selectedRaceIndex());
+        int open = Math.min(pool.size(), AdventurePlayer.startingSetCount(shownDifficulty()));
+        int count = anySet ? Math.min(pool.size(), AdventurePlayer.RACE_SET_COUNT) : open;
         String[] newPool = pool.toArray(new String[0]);
-        if (count == setCount && java.util.Arrays.equals(newPool, setPool))
+        if (count == setCount && java.util.Arrays.equals(newPool, setPool)) {
+            showSetLocks(open);
             return;
+        }
         setPool = newPool;
         setCount = count;
         startingSets.clearChildren();
         setBoxes.clear();
+        setLocks.clear();
+        startingSets.align(anySet ? com.badlogic.gdx.utils.Align.left : com.badlogic.gdx.utils.Align.center);
+        startingSets.padLeft(!anySet ? 0f : Forge.isLandscapeMode() ? -16f : -8f);
         if (pool.isEmpty())
             return;
-        if (count >= pool.size()) { // Easy: every set of the race, nothing to choose (a Doppelganger's 58 never are)
+        if (!anySet && count >= pool.size()) { // Easy: every set of the race, nothing to choose
             startingSets.add(Controls.newTextraLabel("[BLACK]All " + pool.size() + " sets")).expand().center();
             return;
         }
         float gap = Forge.isLandscapeMode() ? 4f : 3f;
         float w = (startingSets.getWidth() - gap * (count - 1)) / count;
+        // Round 882: a Doppelganger's row starts left of the layout's Table (the padLeft above) and is wider, so the other
+        // races' row stays as it was: landscape x 143-313, portrait x 88-256, four boxes and their locks.
+        float lockW = Forge.isLandscapeMode() ? 8f : 9f;
+        if (anySet) {
+            gap = 2f;
+            w = ((Forge.isLandscapeMode() ? 170f : 168f) - gap * (count - 1)) / count - lockW - 1f;
+        }
         for (int i = 0; i < count; i++) {
             SelectBox<SetChoice> box = newSetBox(count > 1);
             box.setName("startingSet" + (i + 1)); // the agent clicks it by name
@@ -395,9 +415,41 @@ public class NewGameScene extends MenuScene {
                 }
             });
             setBoxes.add(box);
-            startingSets.add(box).width(w).height(startingSets.getHeight()).padRight(i < count - 1 ? gap : 0);
+            if (!anySet) {
+                startingSets.add(box).width(w).height(startingSets.getHeight()).padRight(i < count - 1 ? gap : 0);
+                continue;
+            }
+            startingSets.add(box).width(w).height(startingSets.getHeight()).padRight(1f);
+            Image lock = new Image();
+            lock.setName("startingSetLock" + (i + 1));
+            lock.setScaling(com.badlogic.gdx.utils.Scaling.fit);
+            lock.setTouchable(com.badlogic.gdx.scenes.scene2d.Touchable.disabled);
+            setLocks.add(lock);
+            startingSets.add(lock).width(lockW).height(startingSets.getHeight()).padRight(i < count - 1 ? gap : 0);
         }
         fillSetBoxes();
+        showSetLocks(open);
+    }
+
+    /** Round 882: each lock icon shows whether its box starts open; a locked box can still be changed. */
+    private void showSetLocks(int open) {
+        openSets = open;
+        for (int i = 0; i < setLocks.size(); i++)
+            setLocks.get(i).setDrawable(setLockIcon(AdventurePlayer.raceSetStartsOpen(i, open)));
+    }
+
+    /**
+     * Round 882: the two icons. The closed one is the stock padlock, cropped: that sprite is a wide gray plate in the top
+     * half of its cell, and whole it draws too small to read here. The game has no open padlock, so the open one is the
+     * skin's checkbox tick until Art makes one (swap it here).
+     */
+    private static Drawable setLockIcon(boolean open) {
+        if (open)
+            return Controls.getSkin().getDrawable("check");
+        com.badlogic.gdx.graphics.g2d.TextureRegion r = forge.assets.FSkinImage.PADLOCK.getTextureRegion();
+        int w = r.getRegionWidth(), h = r.getRegionHeight();
+        return new TextureRegionDrawable(new com.badlogic.gdx.graphics.g2d.TextureRegion(r,
+                w * 36 / 143, h * 6 / 200, w * 70 / 143, h * 87 / 200));
     }
 
     /** Round 879: the open list's height in rows; a longer pool (the Doppelganger's) scrolls. */
@@ -434,19 +486,29 @@ public class NewGameScene extends MenuScene {
 
     /** The codes the drop-downs picked (Random left out). */
     private java.util.List<String> chosenStartingSets() {
+        java.util.List<String> codes = new java.util.ArrayList<>(boxStartingSets());
+        codes.removeIf(java.util.Objects::isNull);
+        return codes;
+    }
+
+    /** Round 882: the drop-downs in box order, null for an "Any" - a Doppelganger's boxes keep their places. */
+    private java.util.List<String> boxStartingSets() {
         java.util.List<String> codes = new java.util.ArrayList<>();
         for (SelectBox<SetChoice> box : setBoxes)
-            if (box.getSelected() != null && box.getSelected().code != null)
-                codes.add(box.getSelected().code);
+            codes.add(box.getSelected() == null ? null : box.getSelected().code);
         return codes;
     }
 
     /** Round 873: the agent bridge's {@code startingsets sets=DTK,AFR} - sets the drop-downs in order ("" or "any" = Random).
-     *  Round 879: a last "open" opens the first drop-down's list, for a screenshot of it. */
+     *  Round 879: a last "open" opens the first drop-down's list, for a screenshot of it. Round 882: "open4" the fourth's. */
     String selectStartingSetsForAgent(String csv) {
-        boolean open = csv != null && csv.toLowerCase().endsWith("open");
-        if (open)
-            csv = csv.substring(0, csv.length() - 4).replaceAll(",$", "");
+        int openBox = -1;
+        int openAt = csv == null ? -1 : csv.toLowerCase().lastIndexOf("open");
+        if (openAt >= 0) {
+            String which = csv.substring(openAt + 4);
+            openBox = which.isEmpty() ? 0 : Integer.parseInt(which) - 1;
+            csv = csv.substring(0, openAt).replaceAll(",$", "");
+        }
         String[] want = csv == null || csv.isEmpty() ? new String[0] : csv.split(",");
         for (int i = 0; i < setBoxes.size(); i++) {
             String code = i < want.length ? want[i].trim().toUpperCase() : "";
@@ -457,15 +519,17 @@ public class NewGameScene extends MenuScene {
                     pick = c;
             box.setSelected(pick); // fires the box's ChangeListener, which refills the others
         }
-        if (open && !setBoxes.isEmpty())
-            setBoxes.get(0).showScrollPane();
-        return "starting sets " + chosenStartingSets() + " of " + setCount + " (" + java.util.Arrays.toString(setPool) + ")";
+        if (openBox >= 0 && openBox < setBoxes.size())
+            setBoxes.get(openBox).showScrollPane();
+        return "starting sets " + boxStartingSets() + " of " + setCount + (setLocks.isEmpty() ? "" : ", " + openSets + " open")
+                + " (" + java.util.Arrays.toString(setPool) + ")";
     }
 
     /** Hands the picks to AdventurePlayer.create() and logs them. */
     private void takeStartingSets() {
         java.util.List<String> codes = chosenStartingSets();
-        AdventurePlayer.setChosenStartingSets(codes, selectedRaceIndex()); // round 879: a Doppelganger rolls its four here
+        // Round 879: a Doppelganger rolls its four here. Round 882: from its boxes, so an "Any" keeps its place.
+        AdventurePlayer.setChosenStartingSets(setLocks.isEmpty() ? codes : boxStartingSets(), selectedRaceIndex());
         System.out.println("[TFR-Research] new-game screen: " + setCount + " starting set(s) of " + java.util.Arrays.toString(setPool)
                 + " - chosen " + codes + ", random " + Math.max(0, setCount - codes.size()));
     }
@@ -506,7 +570,8 @@ public class NewGameScene extends MenuScene {
             protected com.badlogic.gdx.graphics.g2d.GlyphLayout drawItem(com.badlogic.gdx.graphics.g2d.Batch batch,
                     com.badlogic.gdx.graphics.g2d.BitmapFont font, SetChoice item, float x, float y, float width) {
                 String s = boxText(item);
-                return font.draw(batch, s, x, y, 0, s.length(), width, com.badlogic.gdx.utils.Align.center, false, "...");
+                // Round 882: a code is never cut - a Doppelganger's four boxes leave barely its own width
+                return font.draw(batch, s, x, y, 0, s.length(), width, com.badlogic.gdx.utils.Align.center, false, narrow ? null : "...");
             }
 
             // Round 879: the list is as wide as its longest name; one opened from the right-hand box stays on screen
@@ -794,8 +859,10 @@ public class NewGameScene extends MenuScene {
 
             if (forge.adventure.util.EditionProgression.isAnySetRace(selectedRaceIndex()))
                 raceSummary.text = String.format(
-                        "Race: %s\nNo sets of its own: it can start with any of the %d sets the other races start with.\n\nAt %s difficulty, you'll start with %d unlocked - pick them under Starting sets, or leave Any. Each game it takes four as its own (your picks, then random ones) and your starter deck is built from them.",
-                        race.getText(), poolSize, selectedDifficulty.name, startingUnlockCount);
+                        "Race: %s\nNo sets of its own: pick any four of the %d sets the other races start with under Starting sets, or leave Any for a random one. They are its four sets this game, and your starter deck is built from them.\n\nAt %s difficulty, %s unlocked (the check marks). The padlocked ones stay yours and unlock later at the Research Lab.",
+                        race.getText(), poolSize, selectedDifficulty.name,
+                        startingUnlockCount >= AdventurePlayer.RACE_SET_COUNT ? "all four start" : startingUnlockCount == 1 ? "only the first box starts"
+                                : "the first " + startingUnlockCount + " boxes start");
             else
                 raceSummary.text = String.format(
                         "Race: %s\nAssociated Sets: %s\n\nAt %s difficulty, you'll start with %d of these %d sets unlocked - pick them under Starting sets, or leave Random - the rest unlock later at the Research Lab.",
