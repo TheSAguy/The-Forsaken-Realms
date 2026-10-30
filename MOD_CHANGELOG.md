@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 876: Found Cards gets an "In Deck" button (2026-10-29)
+
+The user: "We need to add one more button on the Research sell area. A "In Deck" toggle." Their mock-up put a box
+labeled "In Deck" right after Mythic in the Found Cards window's rarity row, the same size as the rarity buttons.
+
+- **The button** works like the rarity buttons beside it (round 817's SpellSmith buttons, show-only filters): off by
+  default; pressed, it turns red and the grid shows only the found cards with at least one copy in one of the player's
+  decks; pressed again, it clears. It combines with the rarity, color and type filters and the Groups box the same way
+  they combine with each other, and "N of M cards shown" follows it. "Sell all over 4" takes the cards shown, as before.
+- **"In a deck"** is `AdventurePlayer.getCopiesUsedInDecks(pc) > 0`, the deck half of the test behind the "In a deck or
+  a favorite - kept." line. A favorite alone does not count; the button says "In Deck".
+- **Remembered** like the rarities: for the Lab's lifetime, cleared with the Lab's other filters on another save
+  (`ResearchCardFilters.reset()`), not saved to disk. `active()` counts it.
+- **Layout:** landscape, after Mythic (five 50-px buttons fit beside the count). Portrait: five 54-px buttons overrun
+  the 246-px window, so "In Deck" sits beside the Groups box there (the box 56 px narrower). `rarityRow` takes a
+  `withInDeck` flag; `inDeckButton` builds the button for either place.
+- **Log**: round 817's `[TFR-Research] Found Cards: ...` line adds `, in deck only` while the button is on.
+- **Agent-tested** (the shared agent game with this round's classes ahead of its jar, cheats, a new game, `capitol
+  raise`, 10 ONE cards given at the console, 4 of them added to the Blue Starter deck): landscape 1280x720 off "10 of
+  10 cards shown"; on, red, "4 of 10" (the four deck cards); on with Uncommon, "1 of 10" (Necrosquito); still on after
+  Close and reopen; off again after a reload (the per-save reset). Portrait 540x960: beside the Groups box, off "10 of
+  10", on "4 of 10". forge.log: `[TFR-Research] Found Cards: ONE, 4 of 10 shown (filtered), in deck only`, no
+  exceptions. Shots `C:\TFR\notes\r876-{landscape-off,landscape-on,landscape-on-uncommon,portrait-off,portrait-on}.png`.
+  Not tested: All Sets with the button on, Android itself.
+- Files: `scene/ResearchCardFilters.java`, `scene/ResearchScene.java` (both mod code). No stock engine file, no save
+  data, no en-US.properties change (the Lab's labels are plain strings).
+
 ## Round 875: the Capitol Armory drops its sword sign (2026-10-29)
 
 The user: "Yes, remove it", to round 874's open question - the Armory lot's own shop sign (a small board with a sword,

@@ -38,6 +38,10 @@ import java.util.function.Predicate;
  * adapter, long-press "only this one" included - SFilterUtil.showOnlyStat) and its grouping (GroupDef, the card group-by
  * options less PW Deck Sort, a deck-building order). The rarity buttons are SpellSmith's, as many at once as wanted.
  * <p>
+ * Round 876 (the user: "one more button on the Research sell area. A "In Deck" toggle"): "In Deck" after the rarities,
+ * the same kind of button - on, only the cards with a copy in one of the player's decks show (getCopiesUsedInDecks, the
+ * test the "kept" line uses; a favorite alone does not count).
+ * <p>
  * The state lives as long as the Lab's singleton and is cleared with the Lab's other filters on another save.
  */
 public final class ResearchCardFilters {
@@ -54,6 +58,7 @@ public final class ResearchCardFilters {
     private final Map<StatTypes, Toggle> toggles = new EnumMap<>(StatTypes.class);
     private final Set<String> rarities = new java.util.HashSet<>();
     private GroupDef groupBy = null;
+    private boolean inDeck = false;
 
     public ResearchCardFilters() {
         for (StatTypes st : COLORS)
@@ -67,12 +72,13 @@ public final class ResearchCardFilters {
         for (Toggle t : toggles.values())
             t.setSelected(true);
         rarities.clear();
+        inDeck = false;
         groupBy = null;
     }
 
     /** True while any filter hides something. */
     public boolean active() {
-        return !rarities.isEmpty() || toggles.values().stream().anyMatch(t -> !t.isSelected());
+        return !rarities.isEmpty() || inDeck || toggles.values().stream().anyMatch(t -> !t.isSelected());
     }
 
     public Predicate<PaperCard> predicate() {
@@ -91,10 +97,13 @@ public final class ResearchCardFilters {
         }
         final boolean everyType = allTypes;
         Set<String> rar = new java.util.HashSet<>(rarities);
+        forge.adventure.player.AdventurePlayer player = inDeck ? forge.adventure.player.AdventurePlayer.current() : null;
         return pc -> {
             if (!color.test(pc))
                 return false;
             if (!everyType && on.stream().noneMatch(st -> st.predicate.test(pc.getRules())))
+                return false;
+            if (player != null && player.getCopiesUsedInDecks(pc) <= 0)
                 return false;
             return rar.isEmpty() || rar.contains(rarityName(pc));
         };
@@ -186,8 +195,12 @@ public final class ResearchCardFilters {
         return new Image(new TextureRegionDrawable(region));
     }
 
-    /** SpellSmith's four rarity buttons; none on = every rarity. */
-    public Table rarityRow(Runnable onChange, float buttonWidth) {
+    public boolean inDeck() {
+        return inDeck;
+    }
+
+    /** SpellSmith's four rarity buttons; none on = every rarity. Round 876: withInDeck adds "In Deck" after them. */
+    public Table rarityRow(Runnable onChange, float buttonWidth, boolean withInDeck) {
         Table row = new Table();
         for (String r : RARITIES) {
             TextraButton[] holder = new TextraButton[1];
@@ -200,7 +213,21 @@ public final class ResearchCardFilters {
             holder[0].setColor(rarities.contains(r) ? Color.RED : Color.WHITE);
             row.add(holder[0]).width(buttonWidth).height(13f).padRight(2f);
         }
+        if (withInDeck)
+            row.add(inDeckButton(onChange)).width(buttonWidth).height(13f).padRight(2f);
         return row;
+    }
+
+    /** Round 876: "In Deck", red while on like a rarity button; on = only the cards with a copy in a deck. */
+    public TextraButton inDeckButton(Runnable onChange) {
+        TextraButton[] holder = new TextraButton[1];
+        holder[0] = Controls.newTextButton("[%80]In Deck", () -> {
+            inDeck = !inDeck;
+            holder[0].setColor(inDeck ? Color.RED : Color.WHITE);
+            onChange.run();
+        });
+        holder[0].setColor(inDeck ? Color.RED : Color.WHITE);
+        return holder[0];
     }
 
     /** The deck builder's "Groups:" box. */

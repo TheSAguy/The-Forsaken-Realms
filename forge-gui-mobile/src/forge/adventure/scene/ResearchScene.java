@@ -1012,12 +1012,16 @@ public class ResearchScene extends UIScene {
         if (landscape) {
             band.add(foundFilters.iconRow(onFilter)).left().expandX();
             band.add(groupBox).width(setWidth).height(BOX_H).right().row();
-            band.add(foundFilters.rarityRow(onFilter, 50f)).left().padTop(2f);
+            band.add(foundFilters.rarityRow(onFilter, 50f, true)).left().padTop(2f);
             band.add(foundCount).width(setWidth).padTop(2f).right();
         } else {
             band.add(foundFilters.iconRow(onFilter)).left().row();
-            band.add(foundFilters.rarityRow(onFilter, 54f)).left().padTop(2f).row();
-            band.add(groupBox).width(setWidth).left().padTop(2f).row();
+            band.add(foundFilters.rarityRow(onFilter, 54f, false)).left().padTop(2f).row();
+            // Round 876: five buttons overrun the 246-px portrait window - "In Deck" sits beside the Groups box there.
+            Table groupLine = new Table();
+            groupLine.add(groupBox).width(setWidth - 56f).height(BOX_H).left();
+            groupLine.add(foundFilters.inDeckButton(onFilter)).width(54f).height(13f).padLeft(2f);
+            band.add(groupLine).width(setWidth).left().padTop(2f).row();
             band.add(foundCount).left().padTop(1f);
         }
         dialog.getContentTable().add(band).width(width).padTop(2f).row();
@@ -1175,6 +1179,7 @@ public class ResearchScene extends UIScene {
         foundOverFour.setDisabled(over <= 0);
         System.out.println("[TFR-Research] Found Cards: " + (set == null ? "All Sets (" + scope.size() + " sets)" : set) + ", "
                 + shown.size() + " of " + owned.size() + " shown" + (foundFilters.active() ? " (filtered)" : "")
+                + (foundFilters.inDeck() ? ", in deck only" : "")
                 + (foundFilters.groupBy() != null ? ", groups: " + foundFilters.groupBy().getName() : ""));
         refreshFoundSelection();
     }
