@@ -1,20 +1,8 @@
 economy_buildings.png
-size: 208,96
+size: 208,136
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-GoldMine
-  xy: 0, 0
-  size: 32, 32
-ShardMine
-  xy: 32, 0
-  size: 32, 32
-StoneMine
-  xy: 64, 0
-  size: 32, 32
-LumberMill
-  xy: 0, 32
-  size: 32, 32
 Bank
   xy: 128, 0
   size: 40, 40
@@ -30,3 +18,15 @@ SpecialShop
 Armory
   xy: 0, 64
   size: 32, 32
+GoldMine
+  xy: 0, 96
+  size: 40, 40
+ShardMine
+  xy: 40, 96
+  size: 40, 40
+StoneMine
+  xy: 80, 96
+  size: 40, 40
+LumberMill
+  xy: 120, 96
+  size: 40, 40

@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 877: 3D mines in every town (2026-10-29)
+
+The user: "Yes, install them" - the third set of the Art thread's golden Capitol work (rounds 867 and 874 before it):
+the Gold Mine, Shard Mine, Stone Mine and Lumber Mill from the user's "3D feel" ChatGPT sheets (a front-facing high
+top-down view), and per the user, "We can use the new mine art for both player capitol and towns" - no Capitol switch.
+Converted as drawn (working files in `C:\CLAUDE\PROJECTS\ART\notes\capitol_gold`, `tools/mines3d.py`,
+`tools/shard_pink.py`). All plane-level; no Java; nothing in `adventure/common`.
+
+- **The art** (the user's picks, all 40x40): Gold Mine option 1 (a gold headframe on a dark rock hill with the ore
+  cart), Shard Mine option 1 with its crystals recolored to today's Shard Mine pinks (#9f3486 / #f947a3 / #ff6a75; only
+  the crystals change, the lantern, gold frame, rock and cart stay), Stone Mine option 3 (a pale cut-stone hill with a
+  crane and block piles) and Lumber Mill option 1 (a timber hall with the log pile and plank stack).
+- **The atlas** (`maps/tileset/economy_buildings.atlas`/`.png`): the page grows from 208x96 to 208x136 and the four
+  regions move to a new bottom row at y 96 (x 0, 40, 80, 120) under the same names, `GoldMine`, `ShardMine`,
+  `StoneMine`, `LumberMill`; the old 32x32 entries are gone and their cells cleared, so each name appears once. Bank,
+  Exchange, PlainShop, SpecialShop and Armory keep their xy (pixel-identical).
+- **No code change:** `EconomyBuildings.getBuildingSprite()` reads these regions by name for every town and
+  `ShopActor.drawOverFootprint()` draws a region at its own size, centered and bottom-aligned on the lot - the path
+  round 874's 40x40 Bank and Exchange already use. Mines have no levels and no ruin art of their own.
+- **Spacing:** lots are 47-48 px apart and rows 64 px apart in both `player_capital.tmx` and `player_town.tmx`; three
+  40x40 mines side by side leave 7-8 px between them.
+- **Checks:** `validate_plane_data.py` on the plane: the same result as round 875's run. **SEEN in the agent** (a fresh cheats
+  world; shots `C:\CLAUDE\PROJECTS\TFR1\notes\r877-*.png`, log `r877-agent-forge.log`): in the Capitol (`capitol
+  raise`) the Gold, Shard and Stone Mines on lots 94-96 and the Lumber Mill on lot 99 beside the Exchange, each door
+  opening its own mine dialog, nothing overlapping; the Bank and Exchange unchanged. In an ordinary rebuilt town
+  (Windlass Bough, a functioning neutral Waste Town turned back into a ruin with the `resetMapQuests` cheat, then
+  restored at its Job Board) the Gold, Shard and Stone Mines on lots 41, 50 and 51, then
+  the Stone Mine destroyed and the Lumber Mill built on lot 51 (a fresh town's reputation allows three buildings), each
+  door opening its dialog, nothing overlapping. No exception.
+
 ## Round 876: Found Cards gets an "In Deck" button (2026-10-29)
 
 The user: "We need to add one more button on the Research sell area. A "In Deck" toggle." Their mock-up put a box
