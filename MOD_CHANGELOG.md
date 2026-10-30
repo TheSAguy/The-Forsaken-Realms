@@ -14264,6 +14264,58 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 884: New Game+ pays the starting kit's resources only on "Cards only" (2026-10-30)
+
+The user: "Yes, all five", to the main thread's recommendation: "New Game+ pays the starting kit only on 'cards only'.
+Keeping your resources currently pays the kit on top. Even stock Normal gives 250 gold, 10 shards, 100 wood and 100 stone
+per loop, in 30-60 seconds with no fights." Finding: `C:\TFR\notes\logs-1030.md` P3-1, a player looping New Game+ 25
+times on a Custom kit (`[TFR-RingGift] all (difficulty Normal): granted directly - gold 5000, shards 999, wood 2000, stone
+2000`). It is the same double grant rounds 113 and 247 removed for coins and starting items.
+
+- **The rule.** `applyNewGamePlusCarry` sets a new character flag, `ngPlusKeptPurse`, when the resources are kept. That
+  covers "Cards + current resources" and "Cards + current + invested resources", so the three options map to: Cards only
+  pays, the other two don't. `resetForNewGamePlus` clears the flag with the rest, so each New Game+ decides afresh.
+- **Every grant path goes through `grantRingGift`, and both are gated.** Skip the introduction (`all`) pays nothing, and
+  each of the four Ring City gifts (`gold`, `shards`, `wood`, `stone`) pays nothing. The second path is why the rule is a
+  saved flag and not a check at the grant: the Ring Cities pay across a whole tutorial, so it has to survive a reload.
+  Nothing else pays the kit in a New Game+: `updateDifficulty` only copies the amounts; a new character's `create()` isn't
+  called; quest 28 and quest 75 have no other resource payout; the bank and the invested refund aren't the kit and are
+  unchanged.
+- **What stays.** The kit's items and coins: rounds 113, 247 and 400 as before (a kept bag gets only what it lacks, items
+  off gets the new game's equipment, always exactly five coins). The Ring Cities' max life, the trophy, the cards, the
+  difficulty and the Doppelganger's new four.
+- **Custom.** The kit's custom amounts are held back like the preset's: the player simply keeps their purse.
+- **What the player sees.** The skip-intro notice drops the four amounts ("The Ring's gifts: 1 item(s). Max life +5."). A
+  Ring City whose gift was a resource says "You brought your own resources: the Ring pays no [+Gold] this run.", so the
+  gift dialog isn't a silent nothing. The New Game+ dialog gets one line, "Only Cards only gets the Ring's starting
+  resources again.", because the default option keeps the purse: a player short of the kit should pick Cards only. GUIDE's
+  New Game+ section says it too. `dev-tools/discord_faq/messages.py` says nothing about the kit in a New Game+, so it
+  stays.
+- **Logs.** Every New Game+ now says which way it went, with the amounts: `[TFR-NewGamePlus] resources kept: purse 1000
+  gold, 33 shards, 400 wood, 500 stone - the Ring's starting kit pays none of its 250 gold, 10 shards, 100 wood, 100 stone`,
+  or `cards only: ... left behind - the Ring's starting kit refills the purse with 250 gold, ...`. `[TFR-RingGift] all`
+  now ends with the purse, and a held-back city gift logs `[TFR-RingGift] gold: New Game+ kept its purse, not paid - purse
+  now gold 1000, ...`.
+
+Tested in a copy of the agent game (this build, repo data) from one Normal save holding 1000 gold, 33 shards, 400 wood and
+500 stone. No duel was played. Purses from `forge.log`:
+
+| New Game+ | Path | Kit | Purse after |
+|---|---|---|---|
+| Cards + current, stock | Skip intro | 250 / 10 / 100 / 100 held back | 1000 / 33 / 400 / 500 |
+| Cards only, stock | Skip intro | paid | 250 / 10 / 100 / 100 |
+| Cards + current, Custom (325 / 11 / 125 / 125) | Skip intro | held back | 1000 / 33 / 400 / 500 |
+| Cards + current, stock | Save, reload, Benalia | held back, notice shown | 1000 gold |
+| Cards only, stock | Benalia | paid through its reward screen | 0 -> 250 gold |
+| Cards only, from a save that had kept its purse | Skip intro | paid, the flag doesn't carry | 250 / 10 / 100 / 100 |
+| Invested, items off | Skip intro | held back, 2 kit items handed over | 1000 / 33 / 400 / 500 |
+
+**Not tested.** Portrait (the new line is shorter than the note's line below it, and portrait has the height), an Android
+device, the other four Ring Cities (same branch as Benalia), Custom on Cards only. **Known leftovers.** A run taken into
+New Game+ before this round and still walking the Ring has no flag, so it still pays. A Ring City's dialog text still says
+it hands the gift over; the notice corrects it (`quests.json` was outside this round). The default keeps the purse even
+when it is smaller than the kit, as the user's rule says.
+
 ## Round 885: log sharing sends every unsent log, oldest first, up to 3 a launch (2026-10-30)
 
 The log review `notes/logs-1030.md` P3-2: a retained Android process left a 14-line stub, which took the upload turn of

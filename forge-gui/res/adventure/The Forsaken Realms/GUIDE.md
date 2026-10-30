@@ -1947,7 +1947,8 @@ A New Game+ is a **new game plus your collection**. Press Start and it asks what
 - **Cards only** - your cards, decks and boosters; gold, Shards, Wood and Stone start from zero and the
   starting kit fills your purse as in a new game.
 - **Cards + current resources** (the default) - also the gold (your bank's balance is paid into your
-  purse), Shards, Wood and Stone you have now.
+  purse), Shards, Wood and Stone you have now. That purse replaces the starting kit's resources: the Ring pays no
+  gold, Shards, Wood or Stone on top, whatever the difficulty or its custom starting amounts. Its items still come.
 - **Cards + current + invested resources** - also a refund of what you put into the world you are leaving:
   the restore fee of every town you still hold (not one you took by force), your Capitol, and each building
   standing in them at its price. A town you lost counts for nothing; research, blueprints, guards and

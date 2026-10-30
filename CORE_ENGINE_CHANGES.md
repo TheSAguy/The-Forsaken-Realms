@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 884 - New Game+ pays the kit's resources only on "Cards only"
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - new character flag `ngPlusKeptPurse`,
+  set in `applyNewGamePlusCarry`; `grantRingGift` holds back the four resources on it, in the reward list, the skip-intro
+  grant, its log and its notice, and adds a notice for an empty city gift.
+- **`forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`** (STOCK) - one line in the New Game+ dialog's note.
+
 ### Round 885 - log sharing sends every unsent log
 
 - **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK): `logShareOptInAt` and `logShareSent` after

@@ -1472,21 +1472,32 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      * Round 400 (the user's New Game+ choices: "1 - Cards Only, 2 - Cards and Current Resources on hand, 3 - Cards and
      * Current Resources and Invested resources", and "a 4th check, items yes/no. Default Yes"). Runs after
      * resetForNewGamePlus(). Without the resources, the purse is a new game's - empty when the Ring hands the starting kit
-     * over (ringGiftStart: the kit's gold, shards, wood and stone arrive with it, as in every New Game+), else the
-     * difficulty's starting amounts. Without the items, the bag and every worn slot empty, and the kit hands the new
-     * game's equipment over again (its New Game+ rule skips only what is still carried). Cards, decks and boosters stay.
+     * over (ringGiftStart: the kit's gold, shards, wood and stone arrive with it), else the difficulty's starting amounts.
+     * With the resources, the purse IS the new run's: round 884's flag stops the kit paying its own on top (grantRingGift).
+     * Without the items, the bag and every worn slot empty, and the kit hands the new game's equipment over again (its
+     * New Game+ rule skips only what is still carried). Cards, decks and boosters stay.
      */
     public void applyNewGamePlusCarry(boolean keepResources, boolean keepItems) {
-        if (!keepResources) {
-            DifficultyData cfg = difficultyData;
-            DifficultyData[] all = forge.adventure.util.Config.instance().getConfigData().difficulties;
-            if (all != null)
-                for (DifficultyData d : all)
-                    if (d != null && d.name != null && d.name.equals(difficultyData.name)) { cfg = d; break; }
-            cfg = forge.adventure.util.CustomDifficulty.withOverrides(customDifficulty, cfg); // round 822
+        DifficultyData cfg = difficultyData;
+        DifficultyData[] all = forge.adventure.util.Config.instance().getConfigData().difficulties;
+        if (all != null)
+            for (DifficultyData d : all)
+                if (d != null && d.name != null && d.name.equals(difficultyData.name)) { cfg = d; break; }
+        cfg = forge.adventure.util.CustomDifficulty.withOverrides(customDifficulty, cfg); // round 822
+        String kitAmounts = cfg.startingMoney + " gold, " + cfg.startingShards + " shards, " + cfg.startingWood + " wood, "
+                + cfg.startingStone + " stone";
+        if (keepResources) {
+            // Round 884 (logs-1030 P3-1; the user: "New Game+ pays the starting kit only on 'cards only'"): 25 loops of
+            // a carried purse stacked the kit in one sitting, with no fight needed. A flag, not a check at the grant: the
+            // Ring Cities pay across a whole tutorial, so the rule has to live in the save.
+            setCharacterFlag(NG_PLUS_KEPT_PURSE_FLAG, 1);
+            System.out.println("[TFR-NewGamePlus] resources kept: purse " + gold + " gold, " + shards + " shards, " + wood
+                    + " wood, " + stone + " stone - the Ring's starting kit pays none of its " + kitAmounts);
+        } else {
             boolean kit = ringGiftStart();
             System.out.println("[TFR-NewGamePlus] cards only: " + gold + " gold, " + shards + " shards, " + wood + " wood, "
-                    + stone + " stone left behind - " + (kit ? "the Ring's starting kit refills the purse" : "a new game's purse"));
+                    + stone + " stone left behind - " + (kit ? "the Ring's starting kit refills the purse" : "a new game's purse")
+                    + " with " + kitAmounts);
             gold = kit ? 0 : cfg.startingMoney;
             shards = kit ? 0 : cfg.startingShards;
             wood = kit ? 0 : cfg.startingWood;
@@ -3271,15 +3282,20 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         cfg = forge.adventure.util.CustomDifficulty.withOverrides(customDifficulty, cfg); // round 822: a custom starting kit
         String k = kind.trim().toLowerCase();
         boolean everything = "all".equals(k);
+        // Round 884: a New Game+ that kept its resources gets none of the kit's (applyNewGamePlusCarry) - neither the Ring
+        // Cities' four below nor the skip-intro grant. A custom kit's amounts are held back the same way.
+        boolean purseKept = getCharacterFlag(NG_PLUS_KEPT_PURSE_FLAG) > 0;
         java.util.List<forge.adventure.data.RewardData> gifts = new java.util.ArrayList<>();
-        if (everything || "gold".equals(k))
-            gifts.add(rewardOf("gold", cfg.startingMoney, null));
-        if (everything || "shards".equals(k))
-            gifts.add(rewardOf("shards", cfg.startingShards, null));
-        if (everything || "wood".equals(k))
-            gifts.add(rewardOf("wood", cfg.startingWood, null));
-        if (everything || "stone".equals(k))
-            gifts.add(rewardOf("stone", cfg.startingStone, null));
+        if (!purseKept) {
+            if (everything || "gold".equals(k))
+                gifts.add(rewardOf("gold", cfg.startingMoney, null));
+            if (everything || "shards".equals(k))
+                gifts.add(rewardOf("shards", cfg.startingShards, null));
+            if (everything || "wood".equals(k))
+                gifts.add(rewardOf("wood", cfg.startingWood, null));
+            if (everything || "stone".equals(k))
+                gifts.add(rewardOf("stone", cfg.startingStone, null));
+        }
         // Round 113 (user report 2026-09-04): a New Game+ run keeps its inventory and resetForNewGamePlus() already
         // tops the coin purse up to 1 gold / 1 silver / 3 bronze - Llanowar handing out five more was a double grant.
         // In NG+ the item gift skips the coins and only offers starting equipment the player does not already carry.
@@ -3310,7 +3326,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             // difficulty's gold, shards, wood, stone and items). This path grants unconditionally, so any repeat
             // call - an impatient second click on the skip-intro option, a re-entered dialog - simply pays again.
             // The starting kit is a once-per-character event by definition, so it is now flagged as one.
-            // resetForNewGamePlus() clears characterFlags, so a legitimate NG+ run still receives it.
+            // resetForNewGamePlus() clears characterFlags, so a legitimate NG+ run still receives it (the resources
+            // only on "Cards only": round 884).
             if (getCharacterFlag("ringGiftGranted") > 0) {
                 System.out.println("[TFR-RingGift] the starting kit was already granted to this character - repeat ignored");
                 return;
@@ -3319,10 +3336,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             // Round 103: the skip-intro path runs inside the new-game intro dialog, where a RewardScene is switched
             // away before it can be collected (round-102 playtest: "no resources, items or life") - grant directly,
             // and count every Ring City as visited so the +1-life-per-city bonus applies as if the Ring was walked.
-            giveGold(cfg.startingMoney);
-            addShards(cfg.startingShards);
-            addWood(cfg.startingWood);
-            addStone(cfg.startingStone);
+            if (!purseKept) { // round 884
+                giveGold(cfg.startingMoney);
+                addShards(cfg.startingShards);
+                addWood(cfg.startingWood);
+                addStone(cfg.startingStone);
+            }
             int items = 0;
             for (String s : cfg.startItems) {
                 // Round 247: the New Game+ rule of the "items" branch above holds here too - this loop used to
@@ -3355,11 +3374,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 ringCities = world.getStarTownTiles().size();
             }
             forge.adventure.util.TownRestoration.updateRingLifeBonus(false);
-            System.out.println("[TFR-RingGift] all (difficulty " + cfg.name + "): granted directly - gold " + cfg.startingMoney + ", shards "
-                    + cfg.startingShards + ", wood " + cfg.startingWood + ", stone " + cfg.startingStone + ", items " + items
-                    + ", Ring Cities counted as visited: " + ringCities);
-            forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]The Ring's gifts: [WHITE][+Gold][BLACK] " + cfg.startingMoney + "  [WHITE][+Shards][BLACK] "
-                    + cfg.startingShards + "  [WHITE][+Wood][BLACK] " + cfg.startingWood + "  [WHITE][+Stone][BLACK] " + cfg.startingStone + "  and " + items
+            System.out.println("[TFR-RingGift] all (difficulty " + cfg.name + "): granted directly - "
+                    + (purseKept ? "New Game+ kept its purse, resources not paid (gold " : "gold ") + cfg.startingMoney + ", shards "
+                    + cfg.startingShards + ", wood " + cfg.startingWood + ", stone " + cfg.startingStone + (purseKept ? ")" : "") + ", items " + items
+                    + ", Ring Cities counted as visited: " + ringCities + ", purse now gold " + gold + ", shards " + shards
+                    + ", wood " + wood + ", stone " + stone);
+            String resources = purseKept ? "" : "[WHITE][+Gold][BLACK] " + cfg.startingMoney + "  [WHITE][+Shards][BLACK] " + cfg.startingShards
+                    + "  [WHITE][+Wood][BLACK] " + cfg.startingWood + "  [WHITE][+Stone][BLACK] " + cfg.startingStone + "  and ";
+            forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]The Ring's gifts: " + resources + items
                     + " item(s). [WHITE][+Life][BLACK] Max life +" + ringCities + ".", true); // round 107: authored markup - glyphs keep their colors, text black
             return;
         }
@@ -3373,6 +3395,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (rewards.size == 0) {
             if ("items".equals(k)) // round 113: NG+ with nothing new to hand over - say so instead of a silent nothing
                 forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]Llanowar's gift: you already carry everything the Ring gives a newcomer.", true);
+            else if (purseKept) { // round 884: this city's gift is a resource, and the kept purse replaces it
+                System.out.println("[TFR-RingGift] " + k + ": New Game+ kept its purse, not paid - purse now gold " + gold
+                        + ", shards " + shards + ", wood " + wood + ", stone " + stone);
+                forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]You brought your own resources: the Ring pays no [WHITE][+"
+                        + k.substring(0, 1).toUpperCase() + k.substring(1) + "][BLACK] this run.", true);
+            }
             return;
         }
         forge.adventure.scene.RewardScene.instance().loadRewards(rewards, forge.adventure.scene.RewardScene.Type.QuestReward, null);
@@ -4360,6 +4388,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     /** Round 259: "Participate in an Inn Tournament" is a one-per-PLAYER nudge, like the Jumpstart tournament -
      *  this is what remembers it through a New Game+. See addQuest() and resetForNewGamePlus(). */
     public static final String INN_TOURNAMENT_QUEST_FLAG = "innTournamentQuestGiven";
+    /** Round 884: this New Game+ kept its resources, so the Ring's starting kit pays none of its own. */
+    private static final String NG_PLUS_KEPT_PURSE_FLAG = "ngPlusKeptPurse";
 
     public void setQuestFlag(String key, int value) {
         if (value != 0)

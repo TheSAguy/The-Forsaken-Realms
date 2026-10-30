@@ -406,7 +406,9 @@ public class SaveLoadScene extends UIScene {
         content.add(cardsOnly).left().padLeft(10).row();
         content.add(current).left().padLeft(10).row();
         content.add(invested).left().padLeft(10).row();
-        TextraLabel note = Controls.newTextraLabel("[%80]Invested: what your towns, buildings and the Capitol cost to build.\n"
+        // Round 884: the default keeps the purse and pays no kit, so a player short of it needs to know Cards only pays it
+        TextraLabel note = Controls.newTextraLabel("[%80]Only Cards only gets the Ring's starting resources again.\n"
+                + "Invested: what your towns, buildings and the Capitol cost to build.\n"
                 + "Research and blueprints start over.");
         content.add(note).left().padLeft(10).padBottom(4).row();
         content.add(keepItems).left().padLeft(10).row();
