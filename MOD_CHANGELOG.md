@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 883: leaving Android during world generation: the proof, and a warning (2026-10-30)
+
+The user, on `notes/logs-1030.md` P2-1: "Yes, all five", to "Add a log line and 'keep the app open' to the loading text.
+Proves the cause before anyone attempts a big fix." Three of 25 New Game+ starts on one phone ended when the player left
+during "Generating World", with the log stopping after `onPause`. The cause was an inference; this round makes it
+readable from a shared log. No fix yet, by design: world generation stays on the GL thread and `AndroidGraphics` is not
+forked.
+
+- **What the jar does (read with `javap`, `gdx-backend-android.jar`):** `AndroidGraphics.pause()` waits 4000 ms, then
+  calls `Gdx.app.error("AndroidGraphics", "waiting for pause synchronization took too long; assuming deadlock and
+  killing")`, then `Process.killProcess`. So the review's 4 s from memory is confirmed, and the kill announces itself
+  first, through a logger we can replace.
+- **`TransitionScreen.generatingWorld`:** true only while a "Generating World..." runnable runs, set and cleared around
+  it in `onEnd` (`try/finally`), so it covers New Game and New Game+ with no edit to either scene. The fade before it
+  doesn't count: the GL thread still answers then.
+- **`Main.java` `[TFR-WorldGenPause]`:** `onPause` writes a line before `super.onPause()` and another after it. A logger
+  set after `initializeForView` copies libGDX's "assuming deadlock" message into `forge.log`; logcat never reaches a
+  shared log. After the first line a log ends one of three ways: `the GL thread answered after N ms, the app lived`;
+  `killed by libGDX's pause wait (generating=true)`; or nothing more, meaning swiped away or killed by Android. That
+  separates the watchdog from a swipe directly, so the next-launch marker the brief offered isn't needed. The watchdog
+  line prints for a stalled pause outside generation too (`generating=false`).
+- **The warning, Android only:** the bar reads "Generating World... Keep the app open" (`lblKeepAppOpen`, en-US; other
+  languages fall back to English). It's set from the fade's first frame, not at 97% like the old text: the screen
+  freezes on the last frame drawn before generation, and a frame at 97% or later isn't certain on a slow phone (the fade
+  is 0.6 s).
+- **Tested:** the agent game ran a New Game with a throwaway `TransitionScreen` ahead of the jar (Android branch forced
+  on, longer fade): the text fits the bar on one line (`notes/r883-keep-open.png`, 1280x720) and the flag went on and off
+  around generation. `Main.java` compiled with `javac` against `android-35` and the module's jars. PC build `MVN EXIT 0`.
+  **Not run on a device:** the three log lines, the logger and the bar on a phone. No Android device here, and the APK
+  wasn't built.
+
 ## Round 887: Angel F's sandals (2026-10-30)
 
 The user, on the Art thread's "Fix Angel F's sandals with the ochre option?": "Yes, fix them". An audit of the 16 flags

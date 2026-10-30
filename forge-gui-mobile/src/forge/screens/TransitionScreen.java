@@ -26,6 +26,9 @@ import forge.util.ScreenUtil;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class TransitionScreen extends FContainer {
+    /** Round 883: true while world generation blocks the render thread, for Android's onPause log line. */
+    public static volatile boolean generatingWorld = false;
+
     private BGAnimation bgAnimation;
     private FProgressBar progressBar;
     Runnable runnable;
@@ -140,6 +143,11 @@ public class TransitionScreen extends FContainer {
         matchTransition = false;
     }
 
+    private boolean isWorldGen() {
+        return Forge.isMobileAdventureMode && message != null
+                && message.equals(Forge.getLocalizer().getMessage("lblGeneratingWorld"));
+    }
+
     private class BGAnimation extends ForgeAnimation {
         float DURATION = isArenaScene || isAlternate ? 1.2f : 0.6f;
         private float progress = 0;
@@ -173,8 +181,7 @@ public class TransitionScreen extends FContainer {
                 // scoped to exactly the two call sites that pass the "Generating World..."
                 // message (NewGameScene's initial world-gen, SaveLoadScene's New Game Plus),
                 // NOT "Loading World..." (Continue/Load) or the captionless mode-switch fade.
-                boolean isWorldGen = Forge.isMobileAdventureMode && message != null
-                        && message.equals(Forge.getLocalizer().getMessage("lblGeneratingWorld"));
+                boolean isWorldGen = isWorldGen();
                 g.fillRect(Color.BLACK, 0, 0, Forge.getScreenWidth(), Forge.getScreenHeight());
                 // Round 385 (09.30 merge): upstream now declares bgTexture once above for every branch; the world-gen
                 // screen still swaps in its own full-bleed picture here.
@@ -212,7 +219,11 @@ public class TransitionScreen extends FContainer {
                     int multi = ((int) (percentage * 100)) < 97 ? (int) (percentage * 100) : 100;
                     progressBar.setBounds(x, Forge.getScreenHeight() - h * 2f, w, h);
                     progressBar.setValue(multi);
-                    if (multi == 100 && !message.isEmpty()) {
+                    // Round 883: on Android, leaving the app while the world generates can kill it, so the warning
+                    // shows from the fade's first frame: the bar freezes on the last frame drawn before generation.
+                    if (isWorldGen && GuiBase.isAndroid()) {
+                        progressBar.setDescription(message + " " + Forge.getLocalizer().getMessage("lblKeepAppOpen"));
+                    } else if (multi == 100 && !message.isEmpty()) {
                         progressBar.setDescription(message);
                     }
                     g.draw(progressBar);
@@ -365,8 +376,17 @@ public class TransitionScreen extends FContainer {
                     if (run[0])
                         return;
                     run[0] = true;
-                    FThreads.invokeInEdtNowOrLater(runnable);
+                    FThreads.invokeInEdtNowOrLater(isWorldGen() ? this::generateWorld : runnable);
                 }
+            }
+        }
+
+        private void generateWorld() {
+            generatingWorld = true;
+            try {
+                runnable.run();
+            } finally {
+                generatingWorld = false;
             }
         }
     }

@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 883 - leaving Android during world generation: proof and a warning
+- **`forge-gui-android/src/forge/app/Main.java`** (STOCK) - `onPause` logs `[TFR-WorldGenPause]` around `super.onPause()`
+  while `TransitionScreen.generatingWorld`; `loadGame` sets an `AndroidApplicationLogger` subclass after
+  `initializeForView`, copying libGDX's "assuming deadlock" message to the log. If an upstream libGDX update rewords that
+  message, the `contains` check stops matching, silently.
+- **`forge-gui-mobile/src/forge/screens/TransitionScreen.java`** (STOCK) - `generatingWorld` flag, `isWorldGen()` (the old
+  inline check), `generateWorld` wrapper in `onEnd`, the Android bar text from the fade's first frame.
+- **`forge-gui/res/languages/en-US.properties`** (STOCK, shared) - new key `lblKeepAppOpen`, after `lblGeneratingWorld`.
+
 ### Round 882 - a Doppelganger's four boxes and their locks
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - `RACE_SET_COUNT` public; new
   `raceSetStartsOpen`, `openRaceSets`; `rollRaceSets` keeps box order; `create()` passes a Doppelganger's open sets to

@@ -57,6 +57,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Version;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.backends.android.AndroidApplicationLogger;
 import com.badlogic.gdx.backends.android.AndroidAudio;
 import com.badlogic.gdx.backends.android.AsynchronousAndroidAudio;
 import com.getkeepsafe.relinker.ReLinker;
@@ -64,6 +65,7 @@ import de.cketti.fileprovider.PublicFileProvider;
 import forge.util.HWInfo;
 import forge.Forge;
 import forge.interfaces.IDeviceAdapter;
+import forge.screens.TransitionScreen;
 import forge.util.FileUtil;
 import forge.util.ThreadUtil;
 import io.sentry.protocol.Device;
@@ -389,6 +391,17 @@ public class Main extends AndroidApplication {
             activeView.setBackgroundColor(Color.WHITE);
             forgeApp = Forge.getApp(hwInfo, getAndroidClipboard(), adapter, ASSETS_DIR, !isLandscape, isTabletDevice, Build.VERSION.SDK_INT);
             forgeView = initializeForView(forgeApp, config);
+            // Round 883: AndroidGraphics.pause() reports its 4 s timeout through this logger, then kills the process.
+            // Logcat never reaches a shared log, so copy that one message into forge.log.
+            setApplicationLogger(new AndroidApplicationLogger() {
+                @Override
+                public void error(String tag, String message) {
+                    if (message != null && message.contains("assuming deadlock")) {
+                        netLog.info("[TFR-WorldGenPause] killed by libGDX's pause wait (generating={}): {}", TransitionScreen.generatingWorld, message);
+                    }
+                    super.error(tag, message);
+                }
+            });
 
             getAnimator(ObjectAnimator.ofFloat(forgeLogo, "alpha", 1f, 1f).setDuration(800), ObjectAnimator.ofObject(activeView, "backgroundColor", new ArgbEvaluator(), Color.WHITE, Color.BLACK).setDuration(1600), new AnimatorListenerAdapter() {
                 @Override
@@ -610,7 +623,17 @@ public class Main extends AndroidApplication {
     @Override
     protected void onPause() {
         netLog.info("[lifecycle] onPause");
+        // Round 883: after this first line the log ends one of three ways: "answered" (the app lived), "killed by
+        // libGDX's pause wait" (AndroidGraphics' 4 s timeout) or nothing more (swiped away, or killed by Android).
+        boolean generating = TransitionScreen.generatingWorld;
+        long pauseStart = System.currentTimeMillis();
+        if (generating) {
+            netLog.info("[TFR-WorldGenPause] onPause during world generation: waiting for the GL thread, 4 s limit");
+        }
         super.onPause();
+        if (generating) {
+            netLog.info("[TFR-WorldGenPause] the GL thread answered after {} ms, the app lived", System.currentTimeMillis() - pauseStart);
+        }
 
         /*ForgePreferences prefs = FModel.getPreferences();
         boolean minimizeonScreenLock = prefs != null && prefs.getPrefBoolean(ForgePreferences.FPref.UI_ANDROID_MINIMIZE_ON_SCRLOCK);
