@@ -30,14 +30,18 @@ public class TemplateTmxMapLoader extends TmxMapLoader {
         parameter.textureMinFilter = Texture.TextureFilter.Nearest;
         parameter.textureMagFilter = Texture.TextureFilter.Nearest;
         final Array<FileHandle> textureFiles = getDependencyFileHandles(tmxFile);
+        // TFR (round 888): a map owns only what it loaded. It owned all of tmxMap, so disposing a map loaded just to read
+        // its objects (PointOfInterestChanges.resetDeletedObjectsRecursive) freed the tilesets of the map on screen.
+        Array<Texture> ownTextures = new Array<>();
         for (FileHandle textureFile : textureFiles) {
             Texture texture = new Texture(textureFile, parameter.generateMipMaps);
             texture.setFilter(parameter.textureMinFilter, parameter.textureMagFilter);
             Forge.getAssets().tmxMap().put(textureFile.path(), texture);
+            ownTextures.add(texture);
         }
 
         TiledMap map = loadTiledMap(tmxFile, parameter, new ImageResolver.DirectImageResolver(Forge.getAssets().tmxMap()));
-        map.setOwnedResources(Forge.getAssets().tmxMap().values().toArray());
+        map.setOwnedResources(ownTextures);
         return map;
     }
 

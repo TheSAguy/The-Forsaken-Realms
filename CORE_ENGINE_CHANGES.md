@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 888 - a map owns only the textures it loaded
+- **`forge-gui-mobile/src/forge/adventure/util/TemplateTmxMapLoader.java`** (STOCK) - `load()` collects the textures it
+  creates in `ownTextures` and passes those to `setOwnedResources` (stock: all of `Assets.tmxMap()`, so disposing a map
+  loaded to read its objects freed the tilesets of the map on screen). If upstream changes how `tmxMap` is filled, keep
+  one owner per texture.
+
 ### Round 889 - each quest offer owns its dialog actions and tokens
 - **`forge-gui-mobile/src/forge/adventure/data/DialogData.java`** (STOCK) - the copy constructor copies each `ActionData`
   (stock: `other.action.clone()`, which shared them with the quest template). `ActionData`'s copy constructor keeps a

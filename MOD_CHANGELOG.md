@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 888: a dungeon quest no longer blacks out the town it is taken in (2026-10-30)
+
+A post-package look at round 881's icons saw the Capitol's grass and paths go black, seen after restoring its Armory. The
+restore was not the cause. It came just after accepting "Pest Control", and the ground stays black until the map is
+reloaded, so the restore only happened to be the next thing looked at.
+
+**The cause.** Accepting a dungeon quest runs `PointOfInterestChanges.resetDeletedObjectsRecursive`, which loads the
+dungeon's tmx to read its entries and disposes it (upstream's function; the dispose is ours, round 769).
+`TemplateTmxMapLoader` handed every map ownership of the whole shared `Assets.tmxMap()`, so that dispose also freed each
+texture of the map on screen whose path the dungeon does not use. In the Capitol that is `player_land.png` and
+`road.png`; stone and buildings survive, because the dungeon's load had replaced those entries in `tmxMap`.
+
+**The fix.** A map owns only the textures its own load created (`ownTextures`). The map's image lookup still goes through
+`tmxMap`, and its stale entries stay harmless: `Texture.dispose` returns on a freed handle.
+
+**A leak gone with it.** `player_capital.tmx` lists 12 images for 7 distinct paths. The old loader lost track of the 5
+repeats, so every Capitol entry kept 5 textures for the rest of the session.
+
+**Measured in the agent game (slot 9).**
+
+| Check | Old loader | New loader |
+|---|---|---|
+| Capitol, dungeon quest, black share | 2.1% to 96.1%, and 4.3% to 35.9% on a second framing | 2.1% to 2.1% |
+| Capitol, dungeon quest, grass share | 63.8% to 0.6% | 63.8% to 67.2% |
+| Managed textures over 6 Capitol entries | 193, 204, 209, 214, 219, 224 | 193, 199, 199, 199, 199, 199 |
+
+**Reach.** Shipped in v1.24 and v1.25, not v1.23. Only three of the 37 town maps use a tileset beyond `main` and
+`buildings`: `player_capital.tmx`, `player_town.tmx` and `orazca_restored.tmx`. Benalia and Tinkers' Thicket stayed clean
+on the old loader. The Capitol is the only exposed map actually run.
+
+**Not checked.** The test quest came from the console's `give quest 24`; a board accept was not reached on the new loader
+(the boards offered no dungeon quest). Both go through `AdventurePlayer.addQuest(AdventureQuestData)`, and the original
+report was a board accept. `player_town.tmx` and `orazca_restored.tmx` were not run. The loader was compiled against the
+agent jar and run ahead of it; no Maven build or package.
+
+**One small leak added.** If `loadTiledMap` throws, that load's textures have no owner. It takes a map that fails to
+load, once per failure, so it stays as it is.
+
+**Seen and left alone.** The shot's missing player stood behind the Armory's art, at (99,320) inside its box, from the
+coordinates only. The black rectangles in the Ring Cities are `main.png` tile 3640 in their Ground layer, there since
+round 106. Both go to the user. No JUnit seam: the failure needs a GL context, so the agent run is the check. Diagnosis:
+`C:\TFR\notes\r888-black-ground-diagnosis.md`.
+
 ## Round 889: a quest's reputation lands on its own town (2026-10-30)
 
 A post-package look at round 881's icons saw an invasion declined in Benalia take its -1 from Tolaria, where the same
