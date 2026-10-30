@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 893: the quest card keeps the where-to-look hint (2026-10-30)
+
+The user: "I got a notice when I get the quest telling me where to go look, but that info is not on this card." Then, on
+keeping it there: "Yes, add it". The hint is Go Forth and Slay stage 1's prologue, shown once when the stage starts.
+
+- **The card.** `QuestLogScene` shows the stage's prologue under an active stage's description, in the same gray, when
+  the stage is marked. A finished stage isn't in the active list, so the hint leaves with it.
+- **The mark.** `"hintOnCard": true` on the stage in `world/quests.json` (`AdventureQuestStage.hintOnCard`). Guessing from
+  the text doesn't hold up: "look", "find" and compass words run through story and tutorial text too.
+- **Saves.** The text comes from the issued stage's own prologue, saved with its tokens filled, so it reads "Poison
+  Drakes", not `$(enemy_1)s`. The mark comes from the template (`AdventureQuestController.stageHintOnCard`), since a quest
+  issued before this round has no flag in its save. That covers the user's own open quest. A quest whose template is
+  gone, or whose stage id doesn't match, shows no hint.
+- **One stage on purpose.** Of the 35 stage prologues, only this one is a where-to-look hint missing from its card.
+  Quests 17-22 already carry "usually found in the X biome" in their descriptions; the direction lines of 45, 47, 48 and
+  75 are in theirs; the rest (30, 43 and the story chains) are story or how-to text, which stays out. The wording is kept
+  as it was, though `WorldStage.spawnQuestExtraOnly` sends quest creatures without looking at the land, so the hint
+  undersells it. No hints were written.
+- **Quests with no hint at all:** the Hunt stages of 4-9, the invasions and warbands (38-42, 93-98), the color hunts
+  (54-63) and the attack mages (64-73). Most say where in their own text ("anywhere", "around <town>"). The Hunts say
+  only "find and defeat", and those are the ones a hint might help.
+- **Tested** in the agent game on a build with this round (no package), duels at 50x: a save made on the old build with
+  the quest open shows the hint on reload (`notes/r893-before.png`, `notes/r893-landscape-oldsave.png`); a new offer
+  right after accepting (`r893-landscape-accepted.png`); after a save and reload (`r893-landscape-reloaded.png`); stage
+  complete, hint gone (`r893-landscape-complete.png`); portrait at 540x960 (`r893-portrait.png`). Not tested: the
+  missing-template path (read only) and Android.
+- Files: `scene/QuestLogScene.java`, `data/AdventureQuestStage.java`, `util/AdventureQuestController.java`,
+  `world/quests.json`.
+
 ## Round 892: the last five look-alike caves get their own entrances (2026-10-30)
 
 Round 821 left five caves sharing a drawing, waiting for cave art. The user had ChatGPT draw variations on five older

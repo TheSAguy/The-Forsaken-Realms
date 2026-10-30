@@ -129,6 +129,7 @@
 				"enemyTags": [
 					"BiomeColorless"
 				],
+				"hintOnCard": true,
 				"prologue": {
 					"text": "The wasteland biome is usually a good place to look for $(enemy_1)s.",
 					"options": [

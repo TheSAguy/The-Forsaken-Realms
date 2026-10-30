@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 893 - the quest card keeps the where-to-look hint
+- **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - `loadDetailsPane()`: after an active
+  stage's description, a gray label with its prologue text when `stageHintOnCard` says so.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java`** (STOCK) - new `hintOnCard` field, copied in the
+  copy constructor.
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** (STOCK) - new read-only
+  `stageHintOnCard(questId, stageId)`, reading the template so saved quests have the hint; false when either is gone.
+
 ### Round 888 - a map owns only the textures it loaded
 - **`forge-gui-mobile/src/forge/adventure/util/TemplateTmxMapLoader.java`** (STOCK) - `load()` collects the textures it
   creates in `ownTextures` and passes those to `setOwnedResources` (stock: all of `Assets.tmxMap()`, so disposing a map

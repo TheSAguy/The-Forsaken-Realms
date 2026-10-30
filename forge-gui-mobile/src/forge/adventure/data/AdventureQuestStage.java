@@ -64,6 +64,9 @@ public class AdventureQuestStage implements Serializable {
     public DialogData prologue;
     public DialogData epilogue;
     public DialogData failureDialog;
+    // Round 893: this stage's prologue is a where-to-look hint, kept on the quest log's card while the stage is active
+    // (QuestLogScene). Read from the template (AdventureQuestController.stageHintOnCard), so a saved quest has it too.
+    public boolean hintOnCard = false;
     public String deliveryItem = ""; //Imaginary item to get/fetch/deliver. Could be a general purpose field.
     public String POIToken; //If defined, ignore tags input and use the target POI from a different stage's objective instead.
     private transient List<Integer> _parsedPrerequisiteNames;
@@ -335,6 +338,7 @@ public class AdventureQuestStage implements Serializable {
         this.epilogueDisplayed = other.epilogueDisplayed;
         this.epilogue = new DialogData(other.epilogue);
         this.failureDialog = new DialogData(other.failureDialog);
+        this.hintOnCard = other.hintOnCard;
         this.name = other.name;
         this.description = other.description;
         this.progress1 = other.progress1;

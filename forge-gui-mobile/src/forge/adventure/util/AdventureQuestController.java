@@ -883,6 +883,21 @@ public class AdventureQuestController implements Serializable {
         return generated;
     }
 
+    /** Round 893: does this quest's template mark the stage's prologue as a hint for the card (quests.json "hintOnCard")?
+     *  The template, not the saved stage, so a quest issued before the flag has it too. False when either is gone. */
+    public boolean stageHintOnCard(int questId, int stageId) {
+        for (AdventureQuestData template : allQuests) {
+            if (!template.isTemplate || template.getID() != questId)
+                continue;
+            for (AdventureQuestStage stage : template.stages) {
+                if (stage != null && stage.id == stageId)
+                    return stage.hintOnCard;
+            }
+            return false;
+        }
+        return false;
+    }
+
     public void addQuestSprites(AdventureQuestStage stage){
         if (stage.getTargetSprite() != null){
             enemySpriteList.add(stage.getTargetSprite());

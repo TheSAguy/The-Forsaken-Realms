@@ -244,6 +244,20 @@ public class QuestLogScene extends UIScene {
             detailScrollContainer.row();
             detailScrollContainer.add(activeDescriptionLabel).padLeft(35).width(detailRoot.getWidth() - 50);
             detailScrollContainer.row();
+
+            // Round 893 (the user: "that info is not on this card"): the where-to-look hint, shown once as the stage's
+            // prologue, stays here while the stage is active. The saved prologue already has its tokens filled.
+            if (stage.prologue != null && stage.prologue.text != null && !stage.prologue.text.isEmpty()
+                    && AdventureQuestController.instance().stageHintOnCard(quest.getID(), stage.id)) {
+                quest.logUnfilledTokens("the Quest Log", stage.prologue.text);
+                TypingLabel hintLabel = Controls.newTypingLabel(stage.prologue.text);
+                hintLabel.skipToTheEnd();
+                hintLabel.setColor(Color.DARK_GRAY);
+                hintLabel.setWrap(true);
+
+                detailScrollContainer.add(hintLabel).padLeft(35).padTop(3).width(detailRoot.getWidth() - 50);
+                detailScrollContainer.row();
+            }
         }
         updateTrackButton(quest.isTracked);
     }
