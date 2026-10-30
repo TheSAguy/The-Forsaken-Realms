@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 894: quest targets say so on their Alt plates (2026-10-30)
+
+The user, of "Go Forth and Slay" / "Defeat Woodland Rover (0/2)": "Also, for the hunt quest, mark those creatures when
+you press "Alt"". Files: `util/TfrPlates.java`, GUIDE.
+
+- **The plate:** while the info plates show (Alt, R3 or the Units toggle), an enemy whose kill would count gets round
+  866's second line, "QUEST - <QUEST NAME>", in the plates' gold (`e8b84a`) with the dash dim, placed with its rank line
+  as one box. Every other enemy's plate is unchanged.
+- **Who counts:** the kill's own test. `readHunts` keeps the quest log's ACTIVE Defeat stages that
+  `checkIfTargetLocation` passes here, so a world-map stage marks nothing in a dungeon and a color hunt (`anyPOI`) does;
+  `huntOf` asks `checkIfTargetEnemy`. An ACTIVE Hunt stage marks its one `getTargetSprite()`, beyond the request: the
+  same need, one extra test.
+- **Wide stages:** "Win a duel" (no target, tags, color or mage: every enemy) is skipped. The ten color hunts stay
+  marked, though "Defeat five Red enemies" fits about a third of the catalog and most of its home biome: the plate
+  hides an unknown enemy's colors behind "?", so the mark is what tells the hunter which to chase. That leaks one color
+  of an unknown enemy, only while its hunt is on. With several matches a named target's quest goes first.
+- **Priority:** a raider keeps its RAIDER line; the Wrath's own plate never reaches this code. A Mimic and The Warden
+  wear no plate, so no mark.
+- **Cost:** the stage list is read at most twice a second and only while the plates show; a plate asks again only when
+  the list was read (`huntsRead`), and the label is rebuilt only when the plate's key changes. So a finished stage's line
+  goes within half a second.
+- **Android:** no build needed. The HUD's Units button (round 719) is `TfrPlates.toggle`, the same `shown()`.
+- **Log:** `[TFR-Plates] shown: ...` adds ", N quest target(s)".
+- **Docs:** the GUIDE's Quests gets "Telling them apart"; `GUIDE.html` regenerated (`guide_html.py --check` OK).
+- **Agent-tested** on the agent's autosave with this round's classes ahead of its jar (cheats; duels at 50x):
+  - `r894-1-quest-plate.png`: four Poison Drakes (`Go Forth and Slay`, 0/2) wore "QUEST - GO FORTH AND SLAY"; a Wild Rat,
+    a Dune Ghoul and a Grey Scholar (that quest's own stage already COMPLETE) wore their rank only;
+  - `r894-2-after.png`: two Drakes beaten in play, and the Drake left on the map wore no QUEST line;
+  - `r894-3-raider.png`: with all five color hunts active (quests 54, 55, 57, 59, 61) and `pillage start` at Orazca, both
+    raiders kept "RAIDER - ORAZCA" and the plain enemies around them wore "QUEST - BLOT OUT THE DARK" or "BOIL THE TIDES";
+  - no exceptions in forge.log. Shots in `C:\CLAUDE\PROJECTS\TFR1\notes\`.
+- **Not tested:** Alt itself (the bridge sends no held key; `plates on` sets the same `shown()`), the log's new count
+  (that line prints once per show, and the test's only one came before any target was in sight), a Hunt stage, a kill
+  inside a dungeon, a mage-hunt stage, Android.
+
 ## Round 893: the quest card keeps the where-to-look hint (2026-10-30)
 
 The user: "I got a notice when I get the quest telling me where to go look, but that info is not on this card." Then, on

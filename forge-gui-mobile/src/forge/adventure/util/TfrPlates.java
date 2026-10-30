@@ -9,10 +9,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.tommyettinger.textra.TextraLabel;
 import forge.Forge;
 import forge.adventure.character.EnemySprite;
+import forge.adventure.data.AdventureQuestData;
+import forge.adventure.data.AdventureQuestStage;
 import forge.adventure.data.EnemyData;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.player.PlayerStatistic;
 import forge.adventure.scene.DuelScene;
+import forge.adventure.scene.TileMapScene;
+import forge.adventure.stage.MapStage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,6 +41,8 @@ import java.util.Set;
  *   rank for an enemy that has only one rank.</li>
  *   <li>Manasight (hasColorView) shows the colors even on an unknown enemy, as its dots beside the sprite do.</li>
  *   <li>A Bronze Coin icon on an enemy that holds the player's coin (owesCoinRansom).</li>
+ *   <li>Round 866: "RAIDER - TOWN" above a raider's plate. Round 894: "QUEST - NAME" above an enemy whose kill would count
+ *   toward an active Defeat or Hunt stage (readHunts); a raider keeps its RAIDER line, and the Wrath has its own plate.</li>
  *   <li>No plate on a Mimic or Fog Trap (EnemySprite.disguisedAsLoot) or The Warden. The player's own roaming guards
  *   are CharacterSprites, never EnemySprites, so they wear none.</li>
  *   <li>The plates are queued while the sprites draw and drawn after them all (SpriteGroup), so no sprite covers one;
@@ -54,7 +60,7 @@ public final class TfrPlates {
     /** The controller's right stick held in (HudScene: buttons arrive as key codes). */
     private static boolean stickHeld;
     private static boolean wasShown, countNext, loggedShown, frameShown, frameColorView;
-    private static int exact, family, unknown, lifted, raiders;
+    private static int exact, family, unknown, lifted, raiders, questTargets;
     /** A mana pip's side and the gap between parts, in world px (the text is [%55]: about 5 px). */
     private static final float PIP = 4f, GAP = 1.2f, ICON = 5f;
     /** Where a [%55] label's letters sit in its height (measured in the agent game: the lower ~40% is line gap): the
@@ -110,6 +116,71 @@ public final class TfrPlates {
         wrathQueue.clear();
         frameShown = shown();
         frameColorView = frameShown && Current.player() != null && Current.player().hasColorView();
+        if (frameShown)
+            readHunts();
+    }
+
+    /** Round 894: the active stages an enemy can count toward, each with its quest's name. */
+    private static final List<Hunt> hunts = new ArrayList<>();
+    /** Round 894: moves each time hunts is read, so a Plate asks again - twice a second, as PlacePlate does. */
+    private static int huntsRead;
+    private static long huntsAt;
+
+    private static final class Hunt {
+        AdventureQuestStage stage;
+        String quest;
+    }
+
+    /**
+     * Round 894: the quest log's stages this place can count, read here so an enemy never walks the log. A kill's own
+     * test (checkIfTargetLocation) says where the stage counts: a world-map stage has no mark in a dungeon. A stage with
+     * a named target comes first, so it names the plate over a wide color hunt; a stage with no filter at all ("Win a
+     * duel") is never a hunt - every enemy would wear it.
+     */
+    private static void readHunts() {
+        long now = System.currentTimeMillis();
+        if (now - huntsAt <= 500)
+            return;
+        huntsAt = now;
+        huntsRead++;
+        hunts.clear();
+        if (Current.player() == null)
+            return;
+        boolean inMap = MapStage.getInstance().isInMap();
+        PointOfInterest here = inMap ? TileMapScene.instance().rootPoint : null;
+        if (inMap && here == null)
+            return;
+        int named = 0;
+        for (AdventureQuestData quest : Current.player().getQuests()) {
+            for (AdventureQuestStage stage : quest.stages) {
+                if (stage == null || stage.getStatus() != AdventureQuestController.QuestStatus.ACTIVE
+                        || (stage.objective != AdventureQuestController.ObjectiveTypes.Defeat
+                        && stage.objective != AdventureQuestController.ObjectiveTypes.Hunt)
+                        || !stage.checkIfTargetLocation(here))
+                    continue;
+                boolean target = stage.getTargetEnemyData() != null;
+                boolean color = stage.enemyColorLetter != null && !stage.enemyColorLetter.isEmpty();
+                boolean mage = stage.territoryMageColor != null && !stage.territoryMageColor.isEmpty();
+                if (!target && !color && !mage && (stage.enemyTags == null || stage.enemyTags.isEmpty()))
+                    continue;
+                Hunt h = new Hunt();
+                h.stage = stage;
+                h.quest = quest.getName();
+                if (target)
+                    hunts.add(named++, h);
+                else
+                    hunts.add(h);
+            }
+        }
+    }
+
+    /** Round 894: the quest this enemy's kill would count toward, or null. A Hunt stage wants its one sprite. */
+    private static String huntOf(EnemySprite sprite) {
+        for (Hunt h : hunts)
+            if (h.stage.objective == AdventureQuestController.ObjectiveTypes.Hunt ? h.stage.getTargetSprite() == sprite
+                    : h.stage.checkIfTargetEnemy(sprite))
+                return h.quest;
+        return null;
     }
 
     /** SpriteGroup, after its sprites drew: every queued plate, and the show/hide log. */
@@ -139,11 +210,12 @@ public final class TfrPlates {
         if (countNext && !queue.isEmpty()) {
             System.out.println("[TFR-Plates] shown: " + queue.size() + " plate(s) - " + exact + " battled, " + family
                     + " family only, " + unknown + " unknown, " + lifted + " lifted" + (raiders > 0 ? ", " + raiders
-                    + " raider(s)" : "") + (frameColorView ? " (Manasight)" : ""));
+                    + " raider(s)" : "") + (questTargets > 0 ? ", " + questTargets + " quest target(s)" : "")
+                    + (frameColorView ? " (Manasight)" : ""));
             countNext = false;
             loggedShown = true;
         }
-        exact = family = unknown = lifted = raiders = 0;
+        exact = family = unknown = lifted = raiders = questTargets = 0;
         queue.clear();
     }
 
@@ -460,7 +532,10 @@ public final class TfrPlates {
         private String key = "", colors = "";
         /** Round 866: the town this raider pillages (TownPillage.raiderTown), or null - its plate's RAIDER line. */
         private String raiderTown;
-        private boolean unknownColors, legend, coin, showLife;
+        /** Round 894: the quest this kill counts toward (huntOf), or null - its QUEST line; a raider keeps its own. */
+        private String questName;
+        private int huntsSeen;
+        private boolean unknownColors, legend, coin, showLife, line;
         private int lifeNow = -1;
         private long lifeAt;
 
@@ -491,8 +566,15 @@ public final class TfrPlates {
             raiderTown = TownPillage.raiderTown(sprite);
             if (raiderTown != null)
                 raiders++;
+            if (huntsSeen != huntsRead) {
+                huntsSeen = huntsRead;
+                questName = huntOf(sprite);
+            }
+            String quest = raiderTown == null ? questName : null;
+            if (quest != null)
+                questTargets++;
             int r = Math.max(0, Math.min(3, EnemyData.tierRank(d.tier)));
-            String k = r + "/" + d.boss + "/" + showLife + "/" + lifeNow + "/" + buffed + "/" + raiderTown;
+            String k = r + "/" + d.boss + "/" + showLife + "/" + lifeNow + "/" + buffed + "/" + raiderTown + "/" + quest;
             if (k.equals(key))
                 return;
             key = k;
@@ -504,7 +586,11 @@ public final class TfrPlates {
             if (raiderTown != null) {
                 raider.setText("[%55][#e67e22]RAIDER[#a8a296] - [#e67e22]" + raiderTown.toUpperCase(Locale.ROOT));
                 raider.pack();
+            } else if (quest != null) {
+                raider.setText("[%55][#e8b84a]QUEST[#a8a296] - [#e8b84a]" + quest.toUpperCase(Locale.ROOT));
+                raider.pack();
             }
+            line = raiderTown != null || quest != null;
             String word = EnemyData.tierDisplayName(d.tier) + (d.boss ? " Boss" : "");
             rank.setText("[%55][#" + RANK_COLOR[r] + "]" + word.toUpperCase(Locale.ROOT));
             rank.pack();
@@ -525,8 +611,9 @@ public final class TfrPlates {
             float w = rw + starW + (colorsW > 0 ? GAP + colorsW : 0f) + lifeW + coinW;
             // y is the labels' origin; the band of letters [lo, hi] above it is what the plate frames
             float lo = th * BAND_LO, hi = th * BAND_HI, mid = (lo + hi) / 2f;
-            // Round 866: a raider's RAIDER line sits right above, so the two are placed as one box
-            float extra = raiderTown != null ? hi - lo + 2f : 0f, raw = raiderTown != null ? raider.getWidth() : 0f;
+            // Round 866: a raider's RAIDER line (round 894: a hunted enemy's QUEST line) sits right above, so the two are
+            // placed as one box
+            float extra = line ? hi - lo + 2f : 0f, raw = line ? raider.getWidth() : 0f;
             float x = cx - w / 2f, bw = Math.max(w, raw);
             float y = placeBox(cx - bw / 2f, foot + 1f - lo, bw, lo, hi + extra);
             Color was = batch.getColor().cpy();
@@ -572,7 +659,7 @@ public final class TfrPlates {
                 if (c != null)
                     batch.draw(c, px + GAP, y + mid - (ICON - 1f) / 2f, ICON - 1f, ICON - 1f);
             }
-            if (raiderTown != null) {
+            if (line) {
                 float rx = cx - raw / 2f, ry = y + extra;
                 drawBox(batch, parentAlpha, rx, ry, raw, lo, hi);
                 raider.setPosition(rx, ry);

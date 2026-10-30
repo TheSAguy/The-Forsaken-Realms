@@ -861,6 +861,9 @@ its fourth).
 - **The creatures a quest asks for come to you.** While a "defeat" quest is active, its creatures get their
   own roll every time new creatures appear - on roads and on your own land as much as anywhere. With
   several such quests, each gets an equal turn.
+- **Telling them apart.** Hold Alt (the right stick pressed in on a controller, the **Units** toggle on touch) and an
+  enemy that would count for an active quest carries a gold "QUEST - <quest>" line above its rank. The line goes when
+  the stage is done. It shows only where that kill counts, and a raider keeps its RAIDER line.
 - **Invasions** (goblins, merfolk, the undead, elves, soldiers, orcs, giants, demons, knights, bandits and
   vampires) ask for a few wins against the invaders - 2 on Easy, 3 on Normal and Hard, 4 on Insane - then
   for their leader. The leader is one rank above the toughest invader you beat (an Archmage at most), and on Hard
