@@ -24,17 +24,33 @@ public final class Doppelganger {
     /** Mixed into the pick so it never lines up with another seed drawn from the same world seed and count. */
     private static final long LOOK_SALT = 0x446F7070656CL; // "Doppel"
 
+    /** Whether a duel moves the look: those the win/loss record counts (overworld, dungeon, Arena), less a guard's fight -
+     *  not a draw, an Inn tournament or Deck Tester (a fixed-deck enemy). DuelScene reads it before its end runnable,
+     *  because guardDeck is cleared for the next duel before that runs. */
+    public static boolean counts(boolean drawn, boolean guardFight, boolean innEvent, boolean deckTester) {
+        return !drawn && !guardFight && !innEvent && !deckTester;
+    }
+
+    /** The Status page: heads the blessing box with "Doppelganger (as Kor)" or "(true form)" for a Doppelganger - the
+     *  page's stat rows sit at fixed places with no room for another line. Rewrites what the page just set. */
+    public static void headBlessing(com.github.tommyettinger.textra.TextraLabel label, AdventurePlayer p) {
+        String head = describe(p);
+        if (head == null || label == null)
+            return;
+        label.setText("[BLACK]" + head + "\n[BLACK]" + (p.getBlessing() != null ? p.getBlessing().getDescription() : "No blessing."));
+    }
+
     /**
-     * The player's own duel ended with a result (DuelScene.afterGameEnd - the duels the win/loss record counts:
-     * overworld, dungeon and Arena; not a draw, an Inn tournament, Deck Tester or a guard's fight).
+     * The player's own duel ended with a result (DuelScene.afterGameEnd, right after recordStatistics, on the GL thread);
+     * {@code counts} is {@link #counts}.
      * <p>
      * The one place the rule lives. The alternatives the user weighed swap only this method's body: "every duel" is
      * {@code winLook(p)} whatever the result; "every 2-4 days" reads the day instead of the duel (stretch k lasts
      * 2 + mix(seed, k) % 3 days, its look mix(seed, k, salt)) and needs no saved field.
      */
-    public static void onDuelEnded(boolean won) {
+    public static void onDuelEnded(boolean counts, boolean won) {
         AdventurePlayer p = AdventurePlayer.current();
-        if (p == null || !EditionProgression.isAnySetRace(p.getHeroRace()))
+        if (!counts || p == null || !EditionProgression.isAnySetRace(p.getHeroRace()))
             return;
         int before = p.getDoppelLook();
         int after = won ? winLook(p) : -1;

@@ -14297,6 +14297,11 @@ many messages."* Every design call (with the reason and how hard it is to change
 
   Shots `C:\TFR\notes\r879-shift-{1-true-form,2-after-win,3-after-reload,4-status,5-second-win,6-after-loss}.png`. No
   exception in the log.
+- **The stock hooks are one-line calls** marked `// TFR round 879` (the main thread's rule for this window):
+  `DuelScene` calls `Doppelganger.counts(...)` before its end runnable and `Doppelganger.onDuelEnded(doppelDuel,
+  winner)` in it, and `PlayerStatisticScene` calls `Doppelganger.headBlessing(...)`. Re-tested in agent-879b at 50x: a
+  new male Doppelganger's first win, `[TFR-Doppel] win, duel 1, ...: true form -> Elf`, drew the male Elf sheet, and the
+  Status page read "Doppelganger (as Elf)" (`r879-shift-7-male-win.png`, `r879-shift-4-status.png`).
 - Files: `util/Doppelganger.java` (new, mod code), `player/AdventurePlayer.java` (STOCK), `scene/DuelScene.java`
   (STOCK), `scene/PlayerStatisticScene.java` (STOCK).
 

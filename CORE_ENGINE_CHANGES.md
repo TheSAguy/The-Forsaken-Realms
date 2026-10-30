@@ -43,10 +43,11 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
   `doppelLook`, written only when >= 0; `clear()`, `load()` and `resetForNewGamePlus()` reset it); `spriteName()`,
   `spriteScale()` and `sprite()` read new private `lookRace()`; new `getDoppelLook`/`setDoppelLook` (the latter emits
   `onPlayerChangeList`, never emitted before).
-- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK) - `afterGameEnd()` reads a `doppelDuel` flag
-  before `endRunnable` and calls `Doppelganger.onDuelEnded(winner)` right after `recordStatistics`.
-- **`forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java`** (STOCK) - the blessing text is headed by
-  `Doppelganger.describe()` for a Doppelganger.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK) - two one-line calls marked `// TFR round 879`
+  in `afterGameEnd()`: `final boolean doppelDuel = Doppelganger.counts(...)` before `endRunnable`, and
+  `Doppelganger.onDuelEnded(doppelDuel, winner)` right after the `recordStatistics` block.
+- **`forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java`** (STOCK) - one line marked `// TFR round 879`
+  after the blessing text is set: `Doppelganger.headBlessing(blessingScroll, player)`.
 - TFR file: `util/Doppelganger.java` (new).
 
 ### Round 879 - the Doppelganger player race
