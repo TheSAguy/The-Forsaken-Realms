@@ -74,6 +74,11 @@ public class SettingData {
     public boolean logShareEnabled;
     public String logShareInstallId;
     public String logShareLastSent;
+    // Round 885 (the user: "Send unsent logs, oldest first, up to 3 per launch"): logShareOptInAt - when sharing was last
+    // turned on (ms), nothing older goes; 0 on an install from before this round, set at its first launch of this build.
+    // logShareSent - the archived logs dealt with (sent, or too big to ever send), so none goes twice.
+    public long logShareOptInAt;
+    public String[] logShareSent;
     // Round 756 (the user: "a little prompt in the game after a certain number of game playing hours"): util/SupportPrompt.
     // supportPlaySeconds - real play time across every save, window in focus; supportAsksShown - how many of the 5/15/40
     // hour asks were shown; supportNeverAsk - the player's "Don't ask again"; supportClicked - Support TFR was clicked

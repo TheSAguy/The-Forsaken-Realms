@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 885 - log sharing sends every unsent log
+
+- **`forge-gui-mobile/src/forge/adventure/data/SettingData.java`** (STOCK): `logShareOptInAt` and `logShareSent` after
+  round 698's `logShareLastSent`. Fields only.
+
 ### Round 883 - leaving Android during world generation: proof and a warning
 - **`forge-gui-android/src/forge/app/Main.java`** (STOCK) - `onPause` logs `[TFR-WorldGenPause]` around `super.onPause()`
   while `TransitionScreen.generatingWorld`; `loadGame` sets an `AndroidApplicationLogger` subclass after

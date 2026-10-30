@@ -14264,6 +14264,51 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 885: log sharing sends every unsent log, oldest first, up to 3 a launch (2026-10-30)
+
+The log review `notes/logs-1030.md` P3-2: a retained Android process left a 14-line stub, which took the upload turn of
+aeab35b5's real v1.25 session, and the older file was then skipped for good, since `LogShare` sent only the newest
+archive. The user: "Yes, all five", to "Send unsent logs, oldest first, up to 3 per launch."
+
+- **`util/LogShare`**: each launch reads the archives, drops those already sent or from before the opt-in, sorts the
+  rest oldest first and hands them to the background thread, which sends at most 3 (`MAX_PER_LAUNCH`).
+  - Each try counts toward the 3, sent or not. A too-big log doesn't count, and is marked done so it's never read again.
+  - A failed upload stays unsent. An HTTP error moves on to the next log, so one bad file can't block the queue; no
+    network, or a read failure, ends this launch's turn. Both retry next launch, oldest first.
+  - Turning sharing off mid-way stops the thread before its next log.
+  - `markDone` writes on the game thread, as before, and forgets names whose file is gone. The engine keeps 10 archives
+    (`MAX_LOG_FILES`), so the list stays short.
+- **Consent is now enforced, which it wasn't.** The old code had no opt-in check: it sent the newest archive, and "Yes"
+  sent the session before the question. Now:
+  - `SettingData.logShareOptInAt` is set each time sharing goes from off to on, and nothing older ever goes.
+  - **Yes sends nothing at once** (round 698's "Yes sends the previous session at once" is gone, approved by the main
+    thread). The first log shared is the session the player said Yes in, at the next launch.
+  - The dialog and the Settings row never promised an immediate send, so no text changed.
+  - An archive's time is the earlier of its name and its file time, so a restored copy with a new file time still reads
+    as old. The opt-in is cut to whole seconds, as archive names are: found in the test below, where "sharing on" was
+    the session's last line and its archive read as 0.4 s older than the opt-in.
+- **An install opted in before this round** has no opt-in time. Its first launch of this build takes the newest
+  archive's time, so it sends that one file, unless `logShareLastSent` says it already went: exactly what the old build
+  would have sent. Older unsent files stay unsent, because nothing records whether they predate the opt-in, so a stub
+  can still take that one first turn. From the next launch the queue works normally.
+- **`[TFR-LogShare]` lines**: one per launch with the counts ("10 earlier session logs: 1 to send, 0 skipped as already
+  sent, 9 skipped as from before sharing was on"), one per send or failure with the reason, the cap line, and the
+  old-install line.
+- **Tested with nothing posted**: a throwaway copy of the agent game, its `log_share.txt` overwritten with a fake
+  webhook unread, on JVM options (`jdk.net.hosts.file`, a test trust store) that sent `discord.com` to a local TLS stub
+  and left every other host unresolvable. No test flag in the code. The real classes ran in the real game:
+  - Old install, 4 archives with a stub newest: only the stub went, the others held back, `logShareSent` and
+    `logShareOptInAt` round-tripped through settings.json.
+  - 7 queued: the too-big one (36 MB) marked done, then 3 tries in order, oldest first. A stub answered with HTTP 500
+    stayed unsent while the next log went; the cap line named the next; a copy with an old name and a new file time
+    stayed back.
+  - Next launch: the failed stub went first, then the next two, no repeats.
+  - Sharing off: nothing sent, settings unchanged.
+  - The real dialog, "Yes, share" clicked through the agent bridge: nothing sent; next launch sent exactly that session.
+  - Stub down: `Connection refused`, the log stayed unsent.
+- **Not tested**: Android (no device bridge), and a real post to Discord. The HTTP code itself is unchanged. If the game
+  dies between a send and the game-thread settings write, that log can go a second time, as it could before.
+
 ## Round 883: leaving Android during world generation: the proof, and a warning (2026-10-30)
 
 The user, on `notes/logs-1030.md` P2-1: "Yes, all five", to "Add a log line and 'keep the app open' to the loading text.
