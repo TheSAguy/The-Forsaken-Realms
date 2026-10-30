@@ -78,6 +78,10 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 - **`forge-gui-mobile/src/forge/adventure/scene/WorldStandingsScene.java`** (STOCK) - one word in the Doppelganger's Mod
   Details line.
 
+### Round 881 (follow-up) - InfoTextScene's text color
+- **`forge-gui-mobile/src/forge/adventure/scene/InfoTextScene.java`** (TFR's own file) - black through `[BLACK]` markup, not
+  `label.setColor`, with `[WHITE]` around each `[+Name]`.
+
 ### Round 881 - resource icons in popups and buttons
 - **`forge-gui-mobile/src/forge/toolbox/FButton.java`** (STOCK) - `symbolText()`, and both draw sites send a label
   holding `{` through TextRenderer, so `{Gold}` draws as a symbol. Any other label draws as before.

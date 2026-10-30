@@ -1,6 +1,5 @@
 package forge.adventure.scene;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
@@ -95,9 +94,10 @@ public class InfoTextScene extends UIScene {
             content.add(row).align(Align.left).padBottom(10).row();
         }
         for (String paragraph : paragraphs) {
-            TypingLabel label = Controls.newTypingLabel(paragraph);
+            // Round 881 (follow-up): black as markup, not label.setColor - an actor color tints the glyphs too, and the
+            // [+Gold] in "How Guards Work" drew as a black blob. Each glyph steps out to white, like GameHUD.normalizeNotice.
+            TypingLabel label = Controls.newTypingLabel("[BLACK]" + paragraph.replaceAll("\\[\\+[^\\]]+\\]", "[WHITE]$0[BLACK]"));
             label.setWrap(true);
-            label.setColor(Color.BLACK);
             label.skipToTheEnd();
             content.add(label).align(Align.left).expandX().fillX().padBottom(10).row();
         }

@@ -14495,6 +14495,15 @@ open one. Round 879 showed 4, 3, 2 or 1 boxes and rolled the rest unseen.
 - **Not tested:** the custom Starting sets knob in play (`shownDifficulty()` feeds the same count), a tap on a real
   drop-down (the bridge sets the box), Android.
 
+## Round 881 (follow-up): the icons on the info pages (2026-10-30)
+
+The look at round 881's displays found "How Guards Work" drawing `[+Gold]` and `[+Shards]` as black blobs.
+`InfoTextScene` blackened its text with `label.setColor`, and an actor color tints the glyphs too. Black is markup now:
+each paragraph starts `[BLACK]` and every `[+Name]` steps out to `[WHITE]`, the shape of `GameHUD.normalizeNotice`. Fixed
+once in the scene, so `EconomyBuildings.showGuardInfo` is unchanged. Its four callers (guard info, Roaming Guards, Mod
+Details, Welcome) have no color tags of their own, so their text stays black, and only guard info has glyphs today.
+Agent game: `notes/r881-post-guard-info-fixed.png`, full-color icons and black text.
+
 ## Round 881: resource icons in every display (2026-10-30)
 
 The user, of the raid reward popup (rounds 865/866): "For the raid reward, the popup did not have the resource icons.
