@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 880: the Doppelganger's final map sprite and portrait (2026-10-30)
+
+The user picked Art's look for round 879's new race, "split_bare" (three looks offered, previews in
+`C:\CLAUDE\PROJECTS\ART\notes\doppelganger`). This round swaps round 879's stand-ins for the final art; no code, and
+`world/heroes.json` is unchanged (index 20, scale 0.383, same file names).
+
+- **The sheet** (`sprites/heroes/lpc_doppelganger.atlas`/`.png`, one sheet for both genders): LPC parts in the round-597
+  hero format, a bare split head (a pale left half and a dark blue-black scaled right half, glowing ice-blue eyes), a
+  silver mantle over midnight clothes, a sky sash, a tattered midnight cape and a blue glowsword. The head is LPC's human
+  male head recolored (`tools/lpc/make_doppelganger_head.py` in the generator repo), so it follows every bob and lean.
+  Facing the viewer the pale half is on the viewer's left, as on the card; the back view mirrors it; the side views show
+  the half turned to the viewer.
+- **The format:** the atlas differs from `lpc_human_m.atlas` only in the page name and the footprint height (59 vs 57),
+  which is safe because the hero's collision is a fixed 16 px box. 108 regions at 164x87 on a 1476x1740 page, so the
+  shapeshift's swap between sheets (round 879) keeps every clip.
+- **The portrait** (`sprites/heroes/portraits/doppelganger.png`): cropped to the art only (366x366, without the frame
+  bevel the stand-in included) and centered between the two eyes, then downscaled to 256x256. Its atlas is unchanged:
+  one region `Doppelganger` on a 272x272 page with 8 px padding.
+- **Names:** the enemy Doppelganger stays on the map: the sheet keeps its `lpc_` name, so round 156's hero-art filter
+  matches nothing.
+- **Credits:** `CREDITS_LPC.md` gets the hero (composed sprite CC-BY; the head marked modified); `CREDITS.md` gets the
+  hero in its LPC paragraph and a Player portraits line. No new LPC author.
+- **Checks:** `race_checks.py`: OK, 21 races. Previews: `C:\TFR\notes\r880-map-sprite-1x.png`,
+  `r880-map-sprite-1x-blown-up-4x.png`, `r880-map-sprite-zoom4.png`, `r880-portrait.png`.
+- **SEEN in the agent** (agent-880, a copy of the agent folder with the four art files laid over it, cheats, Normal): the
+  New Game screen, a new male Doppelganger in the start camp (the same spot as round 879's stand-in), on the world map
+  standing and walking north, the HUD, World Standings and the Status page, "Doppelganger (true form)"; `[TFR-Hero]
+  sprites/heroes/lpc_doppelganger.atlas` loads and the log has no exception. Shots
+  `C:\TFR\notes\r880-agent-{newgame,camp,orazca,world,world-2,world-walk-1,world-walk-2,standings,status}.png`,
+  crops beside the stand-in in `r880-agent-hero-crops-4x.png`. No duel played, so the attack, hit and death clips were
+  not seen in game. Not tested: Android.
+- Files: `lpc_doppelganger.atlas`/`.png`, `portraits/doppelganger.png` (its atlas is byte-identical to the stand-in's),
+  `CREDITS.md`, `CREDITS_LPC.md`. The finished art is also in the Art Library.
+
 ## Round 879 (follow-up): the Doppelganger borrows a race's look after a win (2026-10-29)
 
 The user, overnight through the main thread: *"Might be cool if the character randomly chooses a new look from all the

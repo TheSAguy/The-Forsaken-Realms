@@ -6,7 +6,7 @@ repeat: none
 IdleRight
   xy: 0, 0
   size: 164, 87
-  footprint: 57, 14, 50, 57
+  footprint: 57, 14, 50, 59
 IdleRight
   xy: 164, 0
   size: 164, 87

@@ -227,11 +227,13 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   woman
   and a man of every race
   the player can be except the Phyrexian and the dragons - Human, Elf, Dwarf, Devil, Kor, Leonin, Metathran, Undead,
-  Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire) -
+  Viashino, Werewolf, Goblin, Angel, Merfolk and Vampire; and round 880's Doppelganger player hero, one sheet for both
+  genders) -
   composed
   from the parts of the Universal LPC Spritesheet Character Generator (Liberated Pixel Cup contributors), each part
   under its own license (OGA-BY 3.0/4.0, CC-BY 3.0/4.0, CC-BY-SA 3.0, CC0), the composed sprites CC-BY or CC-BY-SA; the
-  merfolk's trident is LPC's spear (CC-BY-SA 3.0) with tines and a crossbar added for this game; the
+  merfolk's trident is LPC's spear (CC-BY-SA 3.0) with tines and a crossbar added for this game; the Doppelganger's
+  split head is LPC's human male head (OGA-BY 3.0) recolored into a pale and a dark scaled half for this game; the
   parts, authors, licenses and sources per enemy are in `CREDITS_LPC.md`. Authors: Johannes Sjölund (wulax), Stephen
   Challener (Redshrike), bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy),
   TheraHedwig, MuffinElZangano, Durrani, Matthew Krohn (makrohn), Pierre Vigier (pvigier), Nila122, William.Thomsponj,
@@ -515,6 +517,9 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   *Thalia, the Survivor* by **Ryan Pancoast**; *Lovisa Coldeyes* by **Brian Snoddy**; *Nikara, Lair Scavenger* by
   **Grzegorz Rutkowski**; *Syr Elenora, the Discerning* by **Mila Pesic**; *Sylvia Brightspear* by **Carmen Sinek**;
   and *Teysa, Orzhov Scion* by **Sara Winters**.
+
+- **Doppelganger portrait** (round 880, both genders) - the art of the card *Alternate Reality Doppelganger*, cropped
+  from a screenshot supplied by the user, with our thanks to its creator.
 
 ## Fonts
 
