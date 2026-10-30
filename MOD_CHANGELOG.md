@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 887: Angel F's sandals (2026-10-30)
+
+The user, on the Art thread's "Fix Angel F's sandals with the ochre option?": "Yes, fix them". An audit of the 16 flags
+`validate_sel.py` raised on the 28 LPC player heroes of round 597 found 15 false alarms: the composer takes a recolor on
+a variant item as the variant, and finds "gold" as `metal.gold`, and all 12 flagged heroes rebuild pixel-identical to
+the shipped sheets. One flag was real: `feet_sandals` has no "gold", so `make_players.py`'s pick drew nothing and the
+Angel woman walked barefoot, with no error.
+
+- `sprites/heroes/lpc_angel_f.png`: sandals in `all.lpcr.ochre` (generator 69fbe01). 3,237 px changed, all on her feet;
+  same 900x1140 page, same frame counts, atlas and footprint unchanged, so no `heroes.json` change.
+- `CREDITS_LPC.md`: Angel F now lists `feet_sandals`, which the dropped part had kept out. Its four authors are already
+  in `CREDITS.md`'s list, so that file needs nothing.
+- The validator now reads picks by the composer's own rules (generator 7591379). Nine flags remain on enemies (rounds
+  498, 521, 534, 590, 600), neither rendered nor changed.
+
+Preview: `notes887-angel-f-sandals-walk.png`, `notes887-angel-f-sandals-options.png`.
+
 ## Round 882: the Doppelganger picks all four sets; the difficulty locks them (2026-10-30)
 
 The user: "For the Doppelganger, I think it needs 4 Set selections for each difficulty. You should be able to select your
