@@ -978,6 +978,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         unsupportedCards.clear();
         unlockedEditions.clear();
         raceSets = null; // round 879
+        doppelLook = -1; // round 879 (follow-up): a new game starts in the true form
         coinRansomedEnemies.clear();
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404
@@ -1017,6 +1018,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private final Set<String> unlockedEditions = new HashSet<>();
     // Round 879: a Doppelganger's four sets, rolled at its start from every race's sets (saved; null for other races)
     private java.util.List<String> raceSets;
+    // Round 879 (follow-up): the race whose look a Doppelganger wears after a win, -1 = its true form (util.Doppelganger)
+    private int doppelLook = -1;
     private String researchEditionInProgress = null;
     // 2026-09-03 (user spec): several editions can be researched at once, each on its own timer
     // counted from its own start day. Insertion-ordered so the Lab lists them in start order.
@@ -1385,6 +1388,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         clearResearch();
         if (forge.adventure.util.EditionProgression.isAnySetRace(heroRace))
             raceSets = rollRaceSets(heroRace, null); // round 879: a new run, a new four for a Doppelganger
+        doppelLook = -1; // round 879 (follow-up): and the true form again
         seedStartingEditions(heroRace, null); // round 872: the count follows the difficulty, the sets stay random
         // Round 751 (the user: "New game or NG+"): New Game+ starts the new run on research v2. Nothing carries over -
         // research in progress and researched sets were reset just above, as they always have been.
@@ -2353,6 +2357,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             unlockedEditions.addAll((java.util.List<String>) data.readObject("unlockedEditions"));
         }
         raceSets = null; // round 879: only a Doppelganger's save has them
+        doppelLook = data.containsKey("doppelLook") ? data.readInt("doppelLook") : -1; // round 879 (follow-up)
         if (data.containsKey("raceSets")) {
             //noinspection unchecked
             raceSets = new ArrayList<>((java.util.List<String>) data.readObject("raceSets"));
@@ -2517,6 +2522,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         data.storeObject("unlockedEditions", new ArrayList<>(unlockedEditions));
         if (raceSets != null)
             data.storeObject("raceSets", new ArrayList<>(raceSets)); // round 879
+        if (doppelLook >= 0)
+            data.store("doppelLook", doppelLook); // round 879 (follow-up)
         data.storeObject("coinRansomedEnemies", new ArrayList<>(coinRansomedEnemies));
         // Round 216: parallel lists, same index = same entry. Built from one entrySet pass so the
         // two can never fall out of step.
@@ -2694,16 +2701,35 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public String spriteName() {
-        return HeroListData.instance().getHero(heroRace, isFemale);
+        return HeroListData.instance().getHero(lookRace(), isFemale);
     }
 
     /** Round 591: the draw scale of spriteName()'s sheet - see HeroListData.getScale. */
     public float spriteScale() {
-        return HeroListData.instance().getScale(heroRace);
+        return HeroListData.instance().getScale(lookRace());
     }
 
     public FileHandle sprite() {
-        return Config.instance().getFile(HeroListData.instance().getHero(heroRace, isFemale));
+        return Config.instance().getFile(HeroListData.instance().getHero(lookRace(), isFemale));
+    }
+
+    /** Round 879 (follow-up): the race whose map sprite the player wears - a Doppelganger's borrowed look, else its own.
+     *  Only the sprite: the portrait, the race name and everything keyed on the race read heroRace. */
+    private int lookRace() {
+        return doppelLook >= 0 && HeroListData.getRawRaceName(doppelLook) != null ? doppelLook : heroRace;
+    }
+
+    /** Round 879 (follow-up): the borrowed look's race index, -1 = the true form. */
+    public int getDoppelLook() {
+        return doppelLook;
+    }
+
+    /** Round 879 (follow-up): puts on a look (-1 = the true form) and redraws the map sprite. */
+    public void setDoppelLook(int look) {
+        if (look == doppelLook)
+            return;
+        doppelLook = look;
+        onPlayerChangeList.emit(); // PlayerSprite reloads spriteName() and its size
     }
 
     public TextureRegion avatar() {

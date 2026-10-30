@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 879 (follow-up) - the Doppelganger borrows a look after a win
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - a saved `doppelLook` int (save key
+  `doppelLook`, written only when >= 0; `clear()`, `load()` and `resetForNewGamePlus()` reset it); `spriteName()`,
+  `spriteScale()` and `sprite()` read new private `lookRace()`; new `getDoppelLook`/`setDoppelLook` (the latter emits
+  `onPlayerChangeList`, never emitted before).
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK) - `afterGameEnd()` reads a `doppelDuel` flag
+  before `endRunnable` and calls `Doppelganger.onDuelEnded(winner)` right after `recordStatistics`.
+- **`forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java`** (STOCK) - the blessing text is headed by
+  `Doppelganger.describe()` for a Doppelganger.
+- TFR file: `util/Doppelganger.java` (new).
+
 ### Round 879 - the Doppelganger player race
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - a saved `raceSets` list (new save key
   `raceSets`, written only for a Doppelganger; `clear()` and `load()` reset it), set in `create()` and re-rolled in

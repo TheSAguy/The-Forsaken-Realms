@@ -467,6 +467,10 @@ public class DuelScene extends ForgeScene {
         if (!winner && !drawn && guardDeck == null && (enemy == null || enemy.getData().fixedDeck == null))
             forge.adventure.util.ReloadJab.onDuelLost(enemyName, !isArena, notorietyGate() && !isArena);
         Forge.advFreezePlayerControls = winner;
+        // Round 879 (follow-up): the duels the win/loss record counts, less a guard's fight - a Doppelganger's look
+        // follows them (read now: guardDeck is cleared for the next duel before the runnable below may run)
+        final boolean doppelDuel = !drawn && guardDeck == null && eventData == null
+                && (enemy == null || enemy.getData().fixedDeck == null);
         endRunnable = () -> Gdx.app.postRunnable(() -> {
             GameHUD.getInstance().updateBGM();
             dungeonEffect = null;
@@ -516,6 +520,8 @@ public class DuelScene extends ForgeScene {
                 // recordStatistics() so the simulated guard fight records the same thing.
                 recordStatistics(enemy, enemyName, winner);
             }
+            if (doppelDuel) // round 879 (follow-up): after the record, whose count seeds the look
+                forge.adventure.util.Doppelganger.onDuelEnded(winner);
 
             if (drawn) {
                 GameHUD.getInstance().addNotification(drawReason != null

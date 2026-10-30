@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 879 (follow-up): the Doppelganger borrows a race's look after a win (2026-10-29)
+
+The user, overnight through the main thread: *"Might be cool if the character randomly chooses a new look from all the
+existing races"*, then *"maybe after a win they change after a loss, they starting form"* and *"No message, will be too
+many messages."* Every design call (with the reason and how hard it is to change) is in `C:\TFR\notes\r879-decisions.md`
+(rows 18-26), for the user to review in the morning.
+
+- **The rule** (`util/Doppelganger.java`, new): after a won duel the map sprite becomes another race's look. That look
+  is never the true form and never the look worn now; the pick comes from the world seed and the duel count (round 870's
+  `ResourceSpawns.mixSeed`), so replaying a duel after a reload gives the same look. After a loss it is the true form
+  again. A new game and a New Game+ start in the true form.
+- **Which duels count:** those the win/loss record counts (overworld, dungeon, Arena), but not a guard's fight, an Inn
+  tournament, Deck Tester or a draw (`DuelScene.afterGameEnd`, right after `recordStatistics`, on the GL thread).
+- **Saved:** `doppelLook` (race index; absent or -1 = true form), so old saves and other races are untouched.
+- **Cosmetic only:** `AdventurePlayer.spriteName/spriteScale/sprite()` read the look; the race, sets, shops, portrait,
+  quest text and logs keep "Doppelganger". `setDoppelLook` fires `onPlayerChanged` (its first caller), so both stages'
+  PlayerSprites reload.
+- **No message.** The Status page heads its blessing box with "Doppelganger (as Angel)" / "Doppelganger (true form)";
+  a second line under the name overlapped the fixed stat rows. forge.log: `[TFR-Doppel] win, duel 2, seed ...: Angel
+  -> Black Dragon`.
+- **Side effects kept:** round 156's filter hides the enemy drawn with the player's sheet, so it now follows the look;
+  guards drawn on the player's sheet keep the look they were hired in.
+- **Alternatives** (only `Doppelganger.onDuelEnded`'s body changes): every duel; every 2-4 days (stretch k lasts
+  2 + mix(seed, k) % 3 days, no saved field).
+- **Agent-tested at 50x** (agent-879, cheats, Easy):
+  - a win over a Goblin Worker: true form -> Angel;
+  - save, load a Metathran save, reload slot 8: still Angel;
+  - a win over a Fox: Angel -> Black Dragon;
+  - a loss to a Lich: Black Dragon -> true form;
+  - the Status page line.
+
+  Shots `C:\TFR\notes\r879-shift-{1-true-form,2-after-win,3-after-reload,4-status,5-second-win,6-after-loss}.png`. No
+  exception in the log.
+- Files: `util/Doppelganger.java` (new, mod code), `player/AdventurePlayer.java` (STOCK), `scene/DuelScene.java`
+  (STOCK), `scene/PlayerStatisticScene.java` (STOCK).
+
 ## Round 879: the Doppelganger, a player race that can start with any set (2026-10-29)
 
 The user: *"What if we add one more race, the Doppelganger. They can start with any starting sets. Male/Female will be

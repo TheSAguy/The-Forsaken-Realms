@@ -287,10 +287,14 @@ public class PlayerStatisticScene extends UIScene {
             colorFrame.setDrawable(new TextureRegionDrawable(getColorFrame(Current.player().getColorIdentity())));
         }
         if (blessingScroll != null) {
+            // Round 879 (follow-up): a Doppelganger's look heads the box - "Doppelganger (as Kor)" or "(true form)"; the
+            // page's stat rows sit at fixed places with no room for another line
+            String doppel = forge.adventure.util.Doppelganger.describe(Current.player());
+            String head = doppel == null ? "" : "[BLACK]" + doppel + "\n";
             if (Current.player().getBlessing() != null) {
-                blessingScroll.setText("[BLACK]" + Current.player().getBlessing().getDescription());
+                blessingScroll.setText(head + "[BLACK]" + Current.player().getBlessing().getDescription());
             } else {
-                blessingScroll.setText("[BLACK]No blessing.");
+                blessingScroll.setText(head + "[BLACK]No blessing.");
             }
         }
         // Round 496 (the user: "On the character sheet is should show current level and progress, how much is needed for
