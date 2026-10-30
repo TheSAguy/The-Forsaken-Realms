@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 895: Channel no longer costs 200,000 (2026-10-30)
+
+The user, of a player's Discord shot of Primal Commands selling Channel at 201875 gold: "There must be an issue with the
+card price list. No way this card is 200K". Approved rows: "Yes, all three". File: `common/world/cardprices.txt` (stock).
+
+- **Cause:** not a parse or multiplier fault. The upstream row `Channel =200000` times the shop's modifiers gives the
+  shot's price: 200000 x 1.25 (AI town) x 0.85 x 0.95 = 201875. Of the five rows at 100,000 or more, TFR's ban list covers
+  four; Channel is the fifth, so it reached shelves. The list is keyed by name, so all 11 printings cost the same.
+- **The rows:** Channel 200000 to 5000, Demonic Consultation 20000 to 5000, The Tabernacle at Pendrell Vale 35000 to 8000.
+  The dearest card a shop can offer is now Chrome Mox at 10,000. The screenshot's Channel would read 5,046.
+- **Resale:** the same number sets the sell price. Channel sold for 120,000 / 100,000 / 60,000 / 40,000 (Easy / Normal /
+  Hard / Insane) and the Spell Smith could make one for about 5,375, so that repeatable loop was the bigger fault. It now
+  sells for 3,000 / 2,500 / 1,500 / 1,000, under that cost on every difficulty.
+- **Left alone:** two small Spell Smith loops, Emrakul, the Aeons Torn (about +2,700 on Easy) and Mox Diamond (about +400
+  on Easy); a Fortune Coin or the Appraiser can reopen Tabernacle by a few hundred. No code cap, no rarity floor, no ban:
+  a ban would not stop owned copies selling.
+- **Saves:** no price is stored, so nothing migrates. Holders of these cards sell for less; gold already made stays and
+  nobody is refunded.
+- **Agent-tested** on a throwaway `agent-895` copy (cheats) with this round's list in its `res` and a one-off console
+  probe ahead of the jar, on a Normal save: Channel price 5000 sell 2500, Demonic Consultation 5000 / 2500, The Tabernacle
+  8000 / 4000, with controls unchanged (Chrome Mox 10000 / 5000, Black Lotus 100000 / 50000, Grizzly Bears 50 / 25).
+- **Not tested:** a real shop shelf or sale. The shelf price starts from the same `CardUtil.getCardPrice`. The Spell Smith
+  loop figures come from reading the code. Audit: `C:\CLAUDE\PROJECTS\TFR1\notes\r895-card-prices.md`.
+
 ## Round 894: quest targets say so on their Alt plates (2026-10-30)
 
 The user, of "Go Forth and Slay" / "Defeat Woodland Rover (0/2)": "Also, for the hunt quest, mark those creatures when

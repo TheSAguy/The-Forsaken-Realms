@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 895 - three card prices come down
+- **`forge-gui/res/adventure/common/world/cardprices.txt`** (STOCK) - `Channel` 200000 to 5000, `Demonic Consultation`
+  20000 to 5000, `The Tabernacle at Pendrell Vale` 35000 to 8000. On an upstream merge keep these three values; every
+  other row follows upstream.
+
 ### Round 893 - the quest card keeps the where-to-look hint
 - **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** (STOCK) - `loadDetailsPane()`: after an active
   stage's description, a gray label with its prologue text when `stageHintOnCard` says so.
