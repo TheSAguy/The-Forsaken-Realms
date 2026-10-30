@@ -10,4 +10,7 @@ package forge.adventure.data;
 public class RaceEditionData {
     public String race;
     public String[] editions;
+    /** Round 879 (the Doppelganger): no sets of its own - its pool is every other row's sets, and each game rolls its
+     *  own four from it (AdventurePlayer.raceSets). {@code editions} is left out. */
+    public boolean anySet;
 }

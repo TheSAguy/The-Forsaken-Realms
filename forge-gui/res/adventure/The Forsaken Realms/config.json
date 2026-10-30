@@ -348,7 +348,9 @@
         { "race": "Goblin",       "editions": ["ONS", "LGN", "SCG", "10E"] },
         { "race": "Angel",        "editions": ["AVR", "SNC", "FDN", "KHM"] },
         { "race": "Merfolk",      "editions": ["LRW", "SHM", "EVE", "ECL"] },
-        { "race": "Vampire",      "editions": ["VOW", "XLN", "RIX", "LCI"] }
+        { "race": "Vampire",      "editions": ["VOW", "XLN", "RIX", "LCI"] },
+        // Round 879: no sets of its own - its pool is every set in the rows above, and each game rolls its own four
+        { "race": "Doppelganger", "anySet": true }
     ],
 
     "shopBlueprintsEnabled": true,
@@ -380,7 +382,8 @@
         { "race": "Goblin",       "shops": ["Goblin", "Shaman"] },
         { "race": "Angel",        "shops": ["Angel", "Spirit"] },
         { "race": "Merfolk",      "shops": ["Merfolk", "Wizard"] },
-        { "race": "Vampire",      "shops": ["Vampire", "Nobles"] }
+        { "race": "Vampire",      "shops": ["Vampire", "Nobles"] },
+        { "race": "Doppelganger", "shops": ["Shapeshifter", "Rogue"] }
     ]
 }
 

@@ -14264,6 +14264,64 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 879: the Doppelganger, a player race that can start with any set (2026-10-29)
+
+The user: *"What if we add one more race, the Doppelganger. They can start with any starting sets. Male/Female will be
+the same. I portrait, attached. On easy, all 4 sets will be Random, unless you choose."* The Art main thread makes its
+LPC sprite (round 880); this round is everything else, with stand-ins.
+
+- **The race.** heroes.json gets `Doppelganger` at the END (index 20; a save stores the race's index, so every old
+  save keeps its race), with ONE hero sheet and ONE portrait region for both genders, like the dragons:
+  `sprites/heroes/lpc_doppelganger.atlas` (stand-in: a copy of `lpc_human_m`, scale 0.383) and
+  `sprites/heroes/portraits/doppelganger.atlas`, region `Doppelganger` (stand-in: a 256x256 crop of the user's card
+  art, art box only - `art-staging/doppelganger/portrait_standin_256.png`). The `lpc_` name keeps the enemy
+  Doppelganger (`sprites/enemy/remake/doppelganger.atlas`) on the map: round 156's hero-art filter hides an enemy whose
+  atlas has the player's name. Shops: `Shapeshifter` and `Rogue` (raceShops). No perk - races have none.
+- **"Any starting sets" - its pool.** `raceEditions` gets `{ "race": "Doppelganger", "anySet": true }`; the pool is
+  every set in the other rows, once each, sorted: **58 sets** (`EditionProgression.anySetPool()`).
+- **Its own four, rolled each game.** Putting the 58 in its row would have reserved all 58 out of the AI colors'
+  shards and built its starter deck from 58 sets. Instead each new game rolls four of the pool as the race's own - the
+  screen's picks first, then random ones (`AdventurePlayer.rollRaceSets`, at Start, before the starter deck is built)
+  - and those four do what another race's fixed four do: the starting unlocks (Easy all 4 .. Insane 1, picks first),
+  the Standard/Constructed/Pile starter deck, the sets kept out of the AI colors, `raceEditions` rewards and the
+  player's own Inns. They are saved (new key `raceSets`, written only for a Doppelganger; no serialVersionUID change).
+  New Game+ rolls a new four at random. Every race lookup goes through `EditionProgression.raceEntry` /
+  `isAnySetRace` / `raceEditionCodes` (callers by Grep: `raceEditionCodes(int)` 4, `(player)` 3, `startingSetPool` 3;
+  the code graph saw 1, 0 and 2 - it misses fully qualified calls).
+- **The new-game row.** The Doppelganger's drop-downs list the 58. Easy gets four drop-downs on "Any" (other races keep
+  "All 4 sets": the label shows only when the count covers the whole pool); Normal 3, Hard 2, Insane 1 or the custom
+  knob. The open list is at most 10 rows and scrolls, and now reads "DTK  Dragons of Tarkir" while the narrow box
+  shows "DTK" (`drawItem` draws the box, `toString` the list - round 873's changelog said the list read that way, but
+  the narrow boxes' lists showed only codes); a list wider than its box is pulled back on screen. Standard's set list
+  shows the 58, and "(All my sets)" is the four. The race "?" explains it in five lines (the full list of 58 overflowed
+  the dialog).
+- **Genders.** The gender selector stays (it still picks the name), and both point at the same sheet and portrait.
+- **Mod Details** lists "Doppelganger: any 4 of the 58 sets above, new each game (yours: ...)".
+- **Docs:** GUIDE (Starting Out, What you start with, Races with a Doppelganger row, the Research FAQ) and GUIDE.html;
+  Discord FAQ message 14 (Races, 1985 characters; message 12 is at 1989 and unchanged). `EDITED` untouched.
+- **`dev-tools/races/race_checks.py`** failed on HEAD's config (trailing `//` comments); it reads them now, knows
+  `anySet` rows, and checks portraits in `portraits/<race>.atlas` too. It passes: 21 races.
+- **Agent-tested** (agent-879, a copy with this round's jar, cheats; no duels played):
+  1. New-game screen, landscape 1280x720 and portrait 540x960: Doppelganger on Easy shows four "Any" drop-downs, on
+     Normal three; Kor on Easy still "All 4 sets" and Elf on Normal unchanged; the open list scrolls in both
+     orientations with names cut to fit; the race "?" fits; the stand-in portrait shows for both genders.
+  2. Easy with DTK and ELD picked: `[TFR-Research] Doppelganger's four sets (new game): chosen [DTK, ELD], random [BRO,
+     RNA] from a pool of 58`, `starting sets 4 - chosen [DTK, ELD], random 2 -> [RNA, DTK, ELD, BRO]`; `[TFR-StarterDeck]
+     Constructed R from editions [DTK, ELD, BRO, RNA] -> 50 cards`; `[TFR-Blueprint] ... [Red1, Red3, Red5, Rogue,
+     Shapeshifter]`; `[TFR-EditionShard] reserved for player (race=Doppelganger): [RNA, DTK, ELD, BRO]`. The save holds
+     `raceSets [DTK, ELD, BRO, RNA]` and reloads as a Doppelganger.
+  3. New Game+ from that save: `chosen [], random [HOU, TOR, DGM, ZEN] from a pool of 58`, all four unlocked on Easy,
+     reserved out of the AI shards.
+  4. Old saves of other races load with their race: slot 1 (round 295, Metathran) and slot 4 (Green Dragon); neither
+     has a `raceSets` key. No exception in any of the six logs.
+  Shots `C:\TFR\notes\r879-{land-normal,land-easy,land-easy-picks,land-easy-open-list,land-normal-open-list,
+  land-other-race-easy,land-race-help,port-normal,port-easy,port-normal-pick,port-normal-open-list,port-other-race-normal,
+  port-race-help,map-hero,ngplus,old-save}.png`, log excerpt `r879-research-log.txt`. Not tested: a list opened from the
+  right-hand drop-down (the pull-back on screen), Android, and the Standard mode's 58-set list.
+- Files: `world/heroes.json`, `config.json`, the four stand-in art files, `data/RaceEditionData.java`,
+  `util/EditionProgression.java`, `player/AdventurePlayer.java` (STOCK), `scene/NewGameScene.java` (STOCK),
+  `scene/WorldStandingsScene.java`, GUIDE.md/.html, `dev-tools/discord_faq/messages.py`, `dev-tools/races/race_checks.py`.
+
 ## Round 878: the menus-only footer shows the trail, and the activator flood is counted (2026-10-29)
 
 Two small log fixes from the player-log reviews (`C:\TFR\notes\logs-1029c.md` P3-1 and P3-4, `logs-1029b.md` P3-1).

@@ -42,7 +42,8 @@ def resolve(p):
 
 def load(path):
     t = open(path, encoding="utf-8-sig").read()
-    return json.loads(re.sub(r"^\s*//.*$", "", t, flags=re.M))
+    t = re.sub(r"^\s*//.*$", "", t, flags=re.M)
+    return json.loads(re.sub(r"(?<=[,\[{])[ \t]+//[^\n]*$", "", t, flags=re.M))  # round 879: trailing comments too
 
 
 def regions(atlas_rel):
@@ -82,9 +83,12 @@ for i, h in enumerate(hj.get("heroes") or []):
             bad("%s: %s atlas %s not found" % (w, k, h.get(k)))
         elif not any(n.startswith("Idle") for n in r) or not any(n.startswith("Walk") for n in r):
             bad("%s: %s atlas has no Idle*/Walk* regions" % (w, k))
+    # round 879: HeroListData reads sprites/heroes/portraits/<race>.atlas first, then the pixel avatar atlas
+    pr = regions("sprites/heroes/portraits/%s.atlas" % (h.get("name") or "").lower().replace(" ", "_"))
     for k in ("femaleAvatar", "maleAvatar"):
-        if av is not None and not av.get(h.get(k)):
-            bad("%s: portrait region %s not in %s (crashes the New Game screen)" % (w, h.get(k), hj.get("avatar")))
+        if not (pr and pr.get(h.get(k))) and not (av and av.get(h.get(k))):
+            bad("%s: portrait region %s in neither its portrait atlas nor %s (crashes the New Game screen)"
+                % (w, h.get(k), hj.get("avatar")))
 for n, c in Counter(race_names).items():
     if c > 1:
         bad("heroes.json: race %s listed %d times" % (n, c))
@@ -111,6 +115,10 @@ blocked = (set(cfg.get("restrictedEditions") or []) | set(cfg.get("digitalOnlyEd
            | set(cfg.get("restrictedEvents") or []))
 for r in cfg.get("raceEditions") or []:
     eds = r.get("editions") or []
+    if r.get("anySet"):  # round 879: the Doppelganger - every other row's sets, no list of its own
+        if eds:
+            bad("raceEditions %s: anySet with its own editions (they would be ignored)" % r.get("race"))
+        continue
     if len(eds) != 4:
         bad("raceEditions %s: %d editions (the convention and the Easy=4 seed expect 4)" % (r.get("race"), len(eds)))
     for code in eds:

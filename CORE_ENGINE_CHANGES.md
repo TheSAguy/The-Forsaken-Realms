@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 879 - the Doppelganger player race
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - a saved `raceSets` list (new save key
+  `raceSets`, written only for a Doppelganger; `clear()` and `load()` reset it), set in `create()` and re-rolled in
+  `resetForNewGamePlus()`; new statics `setChosenStartingSets(codes, race)`, `rollRaceSets`, `raceSetsFor`, getter
+  `getRaceSets()`; TFR's `startingSetPool` and `seedStartingEditions` read them. No serialVersionUID change.
+- **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** (STOCK) - the set drop-downs get
+  `setMaxListCount(10)`; `takeStartingSets()` passes the race; the Standard set list and the race "?" read the pool;
+  agent hook `selectStartingSetsForAgent` takes a last `open`. One unused import dropped.
+- TFR files: `data/RaceEditionData.java` (`anySet`), `util/EditionProgression.java` (`raceEntry`, `isAnySetRace`,
+  `anySetPool`; `reservePlayerEditions` and both `raceEditionCodes` go through them), `scene/WorldStandingsScene.java`.
+
 ### Round 872 - a "Starting sets" custom difficulty knob
 - **`forge-gui-mobile/src/forge/adventure/data/DifficultyData.java`** (STOCK) - new field `startingSets` (int, 0 = unset).
   Additive.

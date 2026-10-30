@@ -18,7 +18,6 @@ import forge.Forge;
 import forge.adventure.data.DialogData;
 import forge.adventure.data.DifficultyData;
 import forge.adventure.data.HeroListData;
-import forge.adventure.data.RaceEditionData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.stage.WorldStage;
 import forge.adventure.util.*;
@@ -345,7 +344,8 @@ public class NewGameScene extends MenuScene {
 
         @Override
         public String toString() {
-            return code == null ? name : code + "  " + name;
+            // Round 879: a long name is cut, so the open list fits a portrait screen ("Dungeons & Dragons: Adventu...")
+            return code == null ? name : code + "  " + (name.length() > 24 ? name.substring(0, 21).trim() + "..." : name);
         }
     }
 
@@ -377,7 +377,7 @@ public class NewGameScene extends MenuScene {
         setBoxes.clear();
         if (pool.isEmpty())
             return;
-        if (count >= pool.size()) { // Easy: every set of the race, nothing to choose
+        if (count >= pool.size()) { // Easy: every set of the race, nothing to choose (a Doppelganger's 58 never are)
             startingSets.add(Controls.newTextraLabel("[BLACK]All " + pool.size() + " sets")).expand().center();
             return;
         }
@@ -386,6 +386,7 @@ public class NewGameScene extends MenuScene {
         for (int i = 0; i < count; i++) {
             SelectBox<SetChoice> box = newSetBox(count > 1);
             box.setName("startingSet" + (i + 1)); // the agent clicks it by name
+            box.setMaxListCount(MAX_SET_LIST_ROWS); // round 879: a Doppelganger's long list scrolls
             box.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -398,6 +399,9 @@ public class NewGameScene extends MenuScene {
         }
         fillSetBoxes();
     }
+
+    /** Round 879: the open list's height in rows; a longer pool (the Doppelganger's) scrolls. */
+    private static final int MAX_SET_LIST_ROWS = 10;
 
     /** Each drop-down lists Random and the race's sets that no other drop-down holds. */
     private void fillSetBoxes() {
@@ -437,8 +441,12 @@ public class NewGameScene extends MenuScene {
         return codes;
     }
 
-    /** Round 873: the agent bridge's {@code startingsets sets=DTK,AFR} - sets the drop-downs in order ("" or "any" = Random). */
+    /** Round 873: the agent bridge's {@code startingsets sets=DTK,AFR} - sets the drop-downs in order ("" or "any" = Random).
+     *  Round 879: a last "open" opens the first drop-down's list, for a screenshot of it. */
     String selectStartingSetsForAgent(String csv) {
+        boolean open = csv != null && csv.toLowerCase().endsWith("open");
+        if (open)
+            csv = csv.substring(0, csv.length() - 4).replaceAll(",$", "");
         String[] want = csv == null || csv.isEmpty() ? new String[0] : csv.split(",");
         for (int i = 0; i < setBoxes.size(); i++) {
             String code = i < want.length ? want[i].trim().toUpperCase() : "";
@@ -449,13 +457,15 @@ public class NewGameScene extends MenuScene {
                     pick = c;
             box.setSelected(pick); // fires the box's ChangeListener, which refills the others
         }
+        if (open && !setBoxes.isEmpty())
+            setBoxes.get(0).showScrollPane();
         return "starting sets " + chosenStartingSets() + " of " + setCount + " (" + java.util.Arrays.toString(setPool) + ")";
     }
 
     /** Hands the picks to AdventurePlayer.create() and logs them. */
     private void takeStartingSets() {
         java.util.List<String> codes = chosenStartingSets();
-        AdventurePlayer.setChosenStartingSets(codes);
+        AdventurePlayer.setChosenStartingSets(codes, selectedRaceIndex()); // round 879: a Doppelganger rolls its four here
         System.out.println("[TFR-Research] new-game screen: " + setCount + " starting set(s) of " + java.util.Arrays.toString(setPool)
                 + " - chosen " + codes + ", random " + Math.max(0, setCount - codes.size()));
     }
@@ -475,13 +485,41 @@ public class NewGameScene extends MenuScene {
                 return (isOver() || hasKeyboardFocus()) && getStyle().backgroundOver != null ? getStyle().backgroundOver : getStyle().background;
             }
 
+            // Round 879: the open list's text - "DTK  Dragons of Tarkir", so a long pool (the Doppelganger's 58) reads
+            // without knowing the codes. The box itself draws boxText below.
             @Override
             protected String toString(SetChoice c) {
+                if (c == null)
+                    return "";
+                return c.code == null ? (narrow ? "Any" : "Random") : c.toString();
+            }
+
+            private String boxText(SetChoice c) {
                 if (c == null)
                     return "";
                 if (narrow)
                     return c.code == null ? "Any" : c.code;
                 return c.code == null ? "Random" : c.name + " (" + c.code + ")";
+            }
+
+            @Override
+            protected com.badlogic.gdx.graphics.g2d.GlyphLayout drawItem(com.badlogic.gdx.graphics.g2d.Batch batch,
+                    com.badlogic.gdx.graphics.g2d.BitmapFont font, SetChoice item, float x, float y, float width) {
+                String s = boxText(item);
+                return font.draw(batch, s, x, y, 0, s.length(), width, com.badlogic.gdx.utils.Align.center, false, "...");
+            }
+
+            // Round 879: the list is as wide as its longest name; one opened from the right-hand box stays on screen
+            @Override
+            protected SelectBoxScrollPane<SetChoice> newScrollPane() {
+                return new SelectBoxScrollPane<SetChoice>(this) {
+                    @Override
+                    public void show(com.badlogic.gdx.scenes.scene2d.Stage stage) {
+                        super.show(stage);
+                        if (getX() + getWidth() > stage.getWidth())
+                            setX(Math.max(0, stage.getWidth() - getWidth()));
+                    }
+                };
             }
         };
         box.setAlignment(com.badlogic.gdx.utils.Align.center);
@@ -590,8 +628,10 @@ public class NewGameScene extends MenuScene {
     private void updateStarterEditionListForRace() {
         if (race == null || starterEdition == null)
             return;
-        java.util.List<String> codes =
-                forge.adventure.util.EditionProgression.raceEditionCodes(selectedRaceIndex());
+        // Round 879: a Doppelganger lists its whole pool; "(All my sets)" is the four its Start rolls.
+        java.util.List<String> codes = forge.adventure.util.EditionProgression.isAnySetRace(selectedRaceIndex())
+                ? java.util.Arrays.asList(AdventurePlayer.startingSetPool(selectedRaceIndex()))
+                : forge.adventure.util.EditionProgression.raceEditionCodes(selectedRaceIndex());
         if (codes == null || codes.isEmpty()) {
             raceEditionIds = null;
             starterEdition.setTextList(originalEditionNames);
@@ -743,20 +783,8 @@ public class NewGameScene extends MenuScene {
             raceSummary.text = "Progressive Set Unlocks aren't enabled for this world - every "
                     + "card set is available from the start, regardless of race.";
         } else {
-            String rawRaceName = HeroListData.getRawRaceName(selectedRaceIndex());
-            String[] pool = null;
-            RaceEditionData[] raceEditions = Config.instance().getConfigData().raceEditions;
-            if (rawRaceName != null && raceEditions != null) {
-                for (RaceEditionData entry : raceEditions) {
-                    if (entry != null && rawRaceName.equalsIgnoreCase(entry.race)
-                            && entry.editions != null && entry.editions.length > 0) {
-                        pool = entry.editions;
-                        break;
-                    }
-                }
-            }
-            if (pool == null)
-                pool = Config.instance().getConfigData().starterEditions;
+            // Round 879: the same pool the Starting sets row lists (the Doppelganger's is every race's sets)
+            String[] pool = AdventurePlayer.startingSetPool(selectedRaceIndex());
 
             String setList = pool == null || pool.length == 0 ? "None" : String.join(", ", pool);
             int poolSize = pool == null ? 0 : pool.length;
@@ -764,9 +792,14 @@ public class NewGameScene extends MenuScene {
             // Round 872: the count is the difficulty's startingSets (or the Starting sets custom knob)
             int startingUnlockCount = Math.min(poolSize, AdventurePlayer.startingSetCount(shownDifficulty()));
 
-            raceSummary.text = String.format(
-                    "Race: %s\nAssociated Sets: %s\n\nAt %s difficulty, you'll start with %d of these %d sets unlocked - pick them under Starting sets, or leave Random - the rest unlock later at the Research Lab.",
-                    race.getText(), setList, selectedDifficulty.name, startingUnlockCount, poolSize);
+            if (forge.adventure.util.EditionProgression.isAnySetRace(selectedRaceIndex()))
+                raceSummary.text = String.format(
+                        "Race: %s\nNo sets of its own: it can start with any of the %d sets the other races start with.\n\nAt %s difficulty, you'll start with %d unlocked - pick them under Starting sets, or leave Any. Each game it takes four as its own (your picks, then random ones) and your starter deck is built from them.",
+                        race.getText(), poolSize, selectedDifficulty.name, startingUnlockCount);
+            else
+                raceSummary.text = String.format(
+                        "Race: %s\nAssociated Sets: %s\n\nAt %s difficulty, you'll start with %d of these %d sets unlocked - pick them under Starting sets, or leave Random - the rest unlock later at the Research Lab.",
+                        race.getText(), setList, selectedDifficulty.name, startingUnlockCount, poolSize);
         }
 
         raceSummary.options = new DialogData[1];

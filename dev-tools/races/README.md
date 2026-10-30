@@ -17,3 +17,6 @@ A race is one entry in the plane's `world/heroes.json` (APPEND ONLY - a save sto
   `--eyes "angel_m=blue+gold+green,angel_f=blue+gold+green"` - one selectable portrait per color, blue first.
 - `race_checks.py <plane> [--common DIR --editions DIR --maps DIR]` - heroes.json vs raceEditions/raceShops, hero
   atlases and portraits, booster-capable unrestricted sets, shop names the chooser can offer. Exits 1 on a problem.
+- Round 879: a `raceEditions` row may be `{ "race": "Doppelganger", "anySet": true }` - no sets of its own, a pool of
+  every other row's sets, four rolled per game (saved as `raceSets`). `race_checks.py` accepts it and reads trailing
+  `//` comments.

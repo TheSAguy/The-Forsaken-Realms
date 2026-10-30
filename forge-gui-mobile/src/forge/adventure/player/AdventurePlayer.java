@@ -204,7 +204,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private void seedStartingEditions(int race, java.util.List<String> chosen) {
         unlockedEditions.clear();
         if (Config.instance().getConfigData().editionProgressionEnabled) {
-            String[] pool = startingSetPool(race);
+            // Round 879: a Doppelganger's unlocks come from its own four (raceSets), never straight from the whole pool
+            String[] pool = raceSets != null ? raceSets.toArray(new String[0]) : startingSetPool(race);
             String raceName = HeroListData.getRawRaceName(race);
             if (pool != null && pool.length > 0) {
                 java.util.List<String> shuffled = new java.util.ArrayList<>(java.util.Arrays.asList(pool));
@@ -238,8 +239,63 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         chosenStartingSets = codes == null ? null : new java.util.ArrayList<>(codes);
     }
 
-    /** The race's 4 sets (config.json raceEditions), or the plane's starterEditions for a race with no entry. */
+    /**
+     * Round 879: the picks, and for a Doppelganger its four sets rolled now - the starter deck is built from them before
+     * create() runs, and create() keeps them.
+     */
+    public static void setChosenStartingSets(java.util.List<String> codes, int race) {
+        setChosenStartingSets(codes);
+        pendingRaceSets = forge.adventure.util.EditionProgression.isAnySetRace(race) ? rollRaceSets(race, codes) : null;
+    }
+
+    /** Round 879: a Doppelganger's four sets between the new-game screen's Start and create(). */
+    private static java.util.List<String> pendingRaceSets;
+
+    /** Round 879: how many sets a race has - every raceEditions row lists four, and an anySet race rolls four. */
+    private static final int RACE_SET_COUNT = 4;
+
+    /**
+     * Round 879: a Doppelganger's four sets for one game - the picks first (in its pool, no repeats), then random ones
+     * from the pool. They stand for the other races' fixed four everywhere: the starting unlocks, the starter deck, the
+     * sets kept out of the AI colors, race rewards and the player's own Inns.
+     */
+    private static java.util.List<String> rollRaceSets(int race, java.util.List<String> chosen) {
+        java.util.List<String> pool = new java.util.ArrayList<>(java.util.Arrays.asList(startingSetPool(race)));
+        int poolSize = pool.size();
+        java.util.List<String> sets = new java.util.ArrayList<>();
+        if (chosen != null)
+            for (String code : chosen)
+                if (code != null && pool.contains(code) && !sets.contains(code) && sets.size() < RACE_SET_COUNT)
+                    sets.add(code);
+        int picked = sets.size();
+        pool.removeAll(sets);
+        java.util.Collections.shuffle(pool, MyRandom.getRandom());
+        for (int i = 0; sets.size() < RACE_SET_COUNT && i < pool.size(); i++)
+            sets.add(pool.get(i));
+        System.out.println("[TFR-Research] " + HeroListData.getRawRaceName(race) + "'s four sets ("
+                + (chosen == null ? "New Game+" : "new game") + "): chosen " + sets.subList(0, picked) + ", random "
+                + sets.subList(picked, sets.size()) + " from a pool of " + poolSize + " -> " + sets);
+        return sets;
+    }
+
+    /** Round 879: a Doppelganger's four - the ones a new game just rolled, else the current player's, else null. */
+    public static java.util.List<String> raceSetsFor(int race) {
+        if (pendingRaceSets != null)
+            return pendingRaceSets;
+        AdventurePlayer player = current();
+        return player != null && player.heroRace == race ? player.raceSets : null;
+    }
+
+    /** Round 879: a Doppelganger's four sets (null for every other race, and before a game exists). */
+    public java.util.List<String> getRaceSets() {
+        return raceSets;
+    }
+
+    /** The race's 4 sets (config.json raceEditions), every race's sets for the Doppelganger (round 879), or the
+     *  plane's starterEditions for a race with no entry. */
     public static String[] startingSetPool(int race) {
+        if (forge.adventure.util.EditionProgression.isAnySetRace(race))
+            return forge.adventure.util.EditionProgression.anySetPool();
         String raceName = HeroListData.getRawRaceName(race);
         RaceEditionData[] raceEditions = Config.instance().getConfigData().raceEditions;
         if (raceName != null && raceEditions != null) {
@@ -921,6 +977,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         AdventureQuestController.clear();
         unsupportedCards.clear();
         unlockedEditions.clear();
+        raceSets = null; // round 879
         coinRansomedEnemies.clear();
         coinChallengeWeeks.clear();
         enemyWinStreaks.clear(); // round 404
@@ -958,6 +1015,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // the Lab. researchEditionInProgress/researchStartDay mirror the Archaeologist's single-timer
     // pattern - one edition being researched at a time, null/-1 = none active.
     private final Set<String> unlockedEditions = new HashSet<>();
+    // Round 879: a Doppelganger's four sets, rolled at its start from every race's sets (saved; null for other races)
+    private java.util.List<String> raceSets;
     private String researchEditionInProgress = null;
     // 2026-09-03 (user spec): several editions can be researched at once, each on its own timer
     // counted from its own start day. Insertion-ordered so the Lab lists them in start order.
@@ -1107,6 +1166,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // EconomyBuildings.difficultyPriceMultiplier() already uses.
         java.util.List<String> chosen = chosenStartingSets != null ? chosenStartingSets : new java.util.ArrayList<>();
         chosenStartingSets = null; // round 873: one new game's picks, never a later one's
+        // Round 879: a Doppelganger keeps the four the Start rolled (its starter deck is built from them); a create()
+        // without a Start rolls them here.
+        if (forge.adventure.util.EditionProgression.isAnySetRace(race))
+            raceSets = pendingRaceSets != null ? pendingRaceSets : rollRaceSets(race, chosen);
+        pendingRaceSets = null;
         seedStartingEditions(race, chosen);
         // Round 751: a new game runs research v2 (on a plane with set unlocks).
         researchV2 = forge.adventure.util.ResearchMeter.planeEnabled();
@@ -1319,6 +1383,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // A research timer in flight would survive into a world whose day counter is back to 1,
         // leaving a negative "days remaining" and every research button disabled for months.
         clearResearch();
+        if (forge.adventure.util.EditionProgression.isAnySetRace(heroRace))
+            raceSets = rollRaceSets(heroRace, null); // round 879: a new run, a new four for a Doppelganger
         seedStartingEditions(heroRace, null); // round 872: the count follows the difficulty, the sets stay random
         // Round 751 (the user: "New game or NG+"): New Game+ starts the new run on research v2. Nothing carries over -
         // research in progress and researched sets were reset just above, as they always have been.
@@ -2286,6 +2352,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             //noinspection unchecked
             unlockedEditions.addAll((java.util.List<String>) data.readObject("unlockedEditions"));
         }
+        raceSets = null; // round 879: only a Doppelganger's save has them
+        if (data.containsKey("raceSets")) {
+            //noinspection unchecked
+            raceSets = new ArrayList<>((java.util.List<String>) data.readObject("raceSets"));
+        }
         // Bronze Coin ante ransom (2026-08-29). Absent on every pre-round-67 save - the
         // containsKey guard keeps those loading cleanly with an empty set (no marked enemies),
         // same forward-compatible shape unlockedEditions above uses.
@@ -2444,6 +2515,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         data.store("announceCustom", announceCustom);
 
         data.storeObject("unlockedEditions", new ArrayList<>(unlockedEditions));
+        if (raceSets != null)
+            data.storeObject("raceSets", new ArrayList<>(raceSets)); // round 879
         data.storeObject("coinRansomedEnemies", new ArrayList<>(coinRansomedEnemies));
         // Round 216: parallel lists, same index = same entry. Built from one entrySet pass so the
         // two can never fall out of step.

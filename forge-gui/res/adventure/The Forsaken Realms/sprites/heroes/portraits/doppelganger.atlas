@@ -1,0 +1,9 @@
+doppelganger.png
+size: 272,272
+format: RGBA8888
+filter: MipMapLinearLinear,Linear
+repeat: none
+Doppelganger
+  xy: 8, 8
+  size: 256, 256
+  index: 0

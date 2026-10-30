@@ -260,6 +260,7 @@ M.append(("Races", "Races", r"""**Races**
 - **Sets:** you start with some of your race's 4 sets unlocked (4 on Easy, 3 Normal, 2 Hard, 1 Insane; you pick which, or leave them Random). Standard, Constructed and Pile starting decks are built from your race's sets, no AI color ever holds them (they sit in the neutral pool), and your own towns' Inn tournaments use them.
 - **Blueprints:** your race's 2 tribal shops, plus your color's 3 Common shops.
 - The **?** button on the race screen lists the sets before you commit.
+- **Doppelganger:** any 4 of the 58 sets below, new each game.
 
 ```
 Race          Sets              Tribal shops
@@ -267,6 +268,7 @@ Angel         AVR SNC FDN KHM   Angel, Spirit
 Black Dragon  DTK TDM AFR VOW   Dragon, Vampire
 Blue Dragon   DTK TDM M21 MH1   Dragon, Sphinx
 Devil         RNA TOR SOI VOW   Devil, Demon
+Doppelganger  any 4 (see above) Shapeshifter, Rogue
 Dwarf         KLD AER KHM BRO   Dwarf, Giant
 Elf           LRW MOR KHM ELD   Elf, Druid
 Goblin        ONS LGN SCG 10E   Goblin, Shaman

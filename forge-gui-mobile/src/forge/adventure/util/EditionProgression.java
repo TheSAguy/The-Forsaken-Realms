@@ -186,18 +186,8 @@ public class EditionProgression {
         Map<String, List<String>> shards = world.getColorEditionShards();
         if (shards == null || shards.isEmpty())
             return;
-        Set<String> reserved = new HashSet<>();
         String raceName = forge.adventure.data.HeroListData.getRawRaceName(player.getHeroRace());
-        forge.adventure.data.RaceEditionData[] raceEditions = Config.instance().getConfigData().raceEditions;
-        if (raceName != null && raceEditions != null) {
-            for (forge.adventure.data.RaceEditionData entry : raceEditions) {
-                if (entry != null && raceName.equalsIgnoreCase(entry.race)
-                        && entry.editions != null && entry.editions.length > 0) {
-                    reserved.addAll(Arrays.asList(entry.editions));
-                    break;
-                }
-            }
-        }
+        Set<String> reserved = raceEditionCodes(player); // round 879: a Doppelganger's own four
         if (reserved.isEmpty())
             reserved.addAll(player.getUnlockedEditions());
         if (reserved.isEmpty())
@@ -270,17 +260,41 @@ public class EditionProgression {
      * race sets rather than from a fixed card list that had nothing to do with them.
      */
     public static List<String> raceEditionCodes(int race) {
+        if (isAnySetRace(race)) // round 879: the four a new game rolled (or the player's own), else no restriction
+            return AdventurePlayer.raceSetsFor(race);
+        forge.adventure.data.RaceEditionData entry = raceEntry(race);
+        return entry == null ? null : java.util.Arrays.asList(entry.editions);
+    }
+
+    /** Round 879: a race's raceEditions row - one with sets, or an anySet row - or null when it has none. */
+    public static forge.adventure.data.RaceEditionData raceEntry(int race) {
         String raceName = forge.adventure.data.HeroListData.getRawRaceName(race);
         forge.adventure.data.RaceEditionData[] table = Config.instance().getConfigData().raceEditions;
         if (raceName == null || table == null)
             return null;
         for (forge.adventure.data.RaceEditionData entry : table) {
             if (entry != null && raceName.equalsIgnoreCase(entry.race)
-                    && entry.editions != null && entry.editions.length > 0) {
-                return java.util.Arrays.asList(entry.editions);
-            }
+                    && (entry.anySet || entry.editions != null && entry.editions.length > 0))
+                return entry;
         }
         return null;
+    }
+
+    /** Round 879: the Doppelganger - a race whose raceEditions row is anySet. */
+    public static boolean isAnySetRace(int race) {
+        forge.adventure.data.RaceEditionData entry = raceEntry(race);
+        return entry != null && entry.anySet;
+    }
+
+    /** Round 879: an anySet race's pool - every set in the other raceEditions rows, once each, sorted by code. */
+    public static String[] anySetPool() {
+        java.util.TreeSet<String> pool = new java.util.TreeSet<>();
+        forge.adventure.data.RaceEditionData[] table = Config.instance().getConfigData().raceEditions;
+        if (table != null)
+            for (forge.adventure.data.RaceEditionData entry : table)
+                if (entry != null && !entry.anySet && entry.editions != null)
+                    pool.addAll(Arrays.asList(entry.editions));
+        return pool.toArray(new String[0]);
     }
 
     public static List<RewardData> restrictToEditions(Iterable<RewardData> original, List<String> editionCodes) {
@@ -349,17 +363,14 @@ public class EditionProgression {
         Set<String> raceCodes = new HashSet<>();
         if (player == null)
             return raceCodes;
-        String raceName = forge.adventure.data.HeroListData.getRawRaceName(player.getHeroRace());
-        forge.adventure.data.RaceEditionData[] raceEditions = Config.instance().getConfigData().raceEditions;
-        if (raceName == null || raceEditions == null)
+        if (isAnySetRace(player.getHeroRace())) { // round 879: the Doppelganger's own four, rolled at its start
+            if (player.getRaceSets() != null)
+                raceCodes.addAll(player.getRaceSets());
             return raceCodes;
-        for (forge.adventure.data.RaceEditionData entry : raceEditions) {
-            if (entry != null && raceName.equalsIgnoreCase(entry.race)
-                    && entry.editions != null && entry.editions.length > 0) {
-                raceCodes.addAll(Arrays.asList(entry.editions));
-                break;
-            }
         }
+        forge.adventure.data.RaceEditionData entry = raceEntry(player.getHeroRace());
+        if (entry != null)
+            raceCodes.addAll(Arrays.asList(entry.editions));
         return raceCodes;
     }
 

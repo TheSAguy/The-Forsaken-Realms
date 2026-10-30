@@ -142,11 +142,22 @@ public class WorldStandingsScene extends UIScene {
             // Round 322: alphabetical, like the New Game screen's race selector.
             java.util.List<forge.adventure.data.RaceEditionData> rows = new java.util.ArrayList<>();
             for (forge.adventure.data.RaceEditionData r : table)
-                if (r != null && r.race != null && r.editions != null)
+                if (r != null && r.race != null && (r.editions != null || r.anySet))
                     rows.add(r);
             rows.sort((a, b) -> a.race.compareToIgnoreCase(b.race));
-            for (forge.adventure.data.RaceEditionData r : rows)
-                sb.append('\n').append(r.race).append(": ").append(String.join(", ", r.editions));
+            for (forge.adventure.data.RaceEditionData r : rows) {
+                if (!r.anySet) {
+                    sb.append('\n').append(r.race).append(": ").append(String.join(", ", r.editions));
+                    continue;
+                }
+                // Round 879: the Doppelganger takes any four of the other races' sets, rolled each game
+                sb.append('\n').append(r.race).append(": any 4 of the ")
+                        .append(forge.adventure.util.EditionProgression.anySetPool().length).append(" sets above, new each game");
+                forge.adventure.player.AdventurePlayer player = forge.adventure.player.AdventurePlayer.current();
+                if (player != null && player.getRaceSets() != null
+                        && r.race.equalsIgnoreCase(forge.adventure.data.HeroListData.getRawRaceName(player.getHeroRace())))
+                    sb.append(" (yours: ").append(String.join(", ", player.getRaceSets())).append(')');
+            }
         }
         return sb.toString();
     }

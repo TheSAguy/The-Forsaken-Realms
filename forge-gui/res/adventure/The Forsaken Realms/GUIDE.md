@@ -108,8 +108,9 @@ covered below.)
 - **Race selection** decides your hero's look, your starting expansions (four per race - how many
   you start with depends on difficulty - and the cards your starting deck is built from) and two
   starting shops. Your color comes from the Color picker. A `?` help button on the race-selection
-  screen explains what each race actually grants before you commit. Twenty races, including the
-  Goblin, Angel, Merfolk and Vampire - the full list is in [Races](#races).
+  screen explains what each race actually grants before you commit. Twenty-one races, including the
+  Goblin, Angel, Merfolk, Vampire and the shapeshifting Doppelganger, which can start with any of the
+  other races' sets - the full list is in [Races](#races).
 - **Difficulty** affects more than combat: enemy roaming-encounter tiers, what buildings and
   research cost, what your cards sell for, how much Power each [Ascendance](#ascendance---your-level)
   level costs, and how many editions you start with unlocked are all difficulty-scaled.
@@ -1656,7 +1657,9 @@ with some of *those four*, sized by difficulty:
 **Starting sets** on the Create a Character screen has one drop-down per starting set: leave it on
 Random (narrow drop-downs say "Any"), or pick one of your race's sets - a set another drop-down holds
 isn't offered. Any left on Random are drawn at random from the rest, so two runs as the same race on
-Hard can start with different sets. A new race or difficulty puts them all back to Random. The
+Hard can start with different sets. A **Doppelganger** has no sets of its own: its drop-downs list every
+other race's sets (58 in all, a scrolling list), and on Easy it gets four drop-downs on Any instead of
+"All 4 sets". A new race or difficulty puts them all back to Random. The
 count itself is the **Starting sets** setting in Advanced (custom difficulty, 1 to 4). A New Game+
 starts with that many, drawn at random. This is why race choice matters beyond flavor, and why the
 race-select `?` button is worth reading before you commit.
@@ -1754,9 +1757,15 @@ exploring its ground are real ways to pick up cards you couldn't buy.
 Your race decides your look, your four card sets and two of your five starting shop blueprints. It
 doesn't change any stats.
 
+**The Doppelganger** is the exception to "your race's four sets": a shapeshifter that copies whoever it
+meets, it has no sets of its own. Its Starting sets drop-downs offer every set any other race starts
+with (58), and each game it takes four of them as its own - your picks first, then random ones. Those
+four then work exactly like another race's: your starter deck is built from them, no AI color holds
+them and your towns' Inns use them. A New Game+ draws a new four. Male and female look the same.
+
 **Your look.** Your portrait is a Magic card's art, cropped to show the whole figure - 405 of them in all. Eleven races
 have a male and a female pool (Angel, Devil, Dwarf, Elf, Goblin, Human, Kor, Leonin, Merfolk, Metathran and Vampire);
-the Phyrexian, Undead, Viashino, Werewolf and the five dragons share one pool between both. Step through them on the
+the Phyrexian, Undead, Viashino, Werewolf, Doppelganger and the five dragons share one pool between both. Step through them on the
 Create a Character screen. On the map, fourteen races walk as hand-dressed characters, each pair carrying two
 different weapons; the Phyrexian is a biomechanoid (red for the female, blue-steel for the male), and the five dragon
 races are a young dragon in their own color. Standard, Constructed and Pile starting decks are built from your race's sets,
@@ -1768,6 +1777,7 @@ no AI color ever holds them, and your own towns' Inn tournaments use them.
 | Black Dragon | DTK, TDM, AFR, VOW | Dragon, Vampire |
 | Blue Dragon | DTK, TDM, M21, MH1 | Dragon, Sphinx |
 | Devil | RNA, TOR, SOI, VOW | Devil, Demon |
+| Doppelganger | any 4 of the sets above, new each game | Shapeshifter, Rogue |
 | Dwarf | KLD, AER, KHM, BRO | Dwarf, Giant |
 | Elf | LRW, MOR, KHM, ELD | Elf, Druid |
 | Goblin | ONS, LGN, SCG, 10E | Goblin, Shaman |
@@ -2016,7 +2026,8 @@ https://discord.gg/TTRPKc9HYJ
 ### How does Research work? How do I unlock more card sets?
 
 You start with only a few sets open (4 on Easy down to 1 on Insane, from your race's four - pick them
-under Starting sets on the Create a Character screen, or leave them Random). The
+under Starting sets on the Create a Character screen, or leave them Random; a Doppelganger picks from
+every race's sets). The
 **Research Lab** in your Capitol unlocks any other set for 40 Shards on Normal and 40 days - less of both
 the more of that set's cards you have sold or sacrificed. An unlocked set stocks your own shops and joins
 your own Inns' tournaments; it never limits your deck. (A game started before version 1.24 keeps the
