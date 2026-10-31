@@ -126,6 +126,21 @@ public class PlayerStatisticScene extends UIScene {
         ScrollPane blessing = ui.findActor("blessingInfo");
         blessing.setActor(blessingScroll);
         window.add(root);
+        // Round 899 (the user: "remove the old win/loss ratio, the Journal replaces that now. So you will only see the
+        // Achievements."): the left panel stays on them and the toggle's slot closes up; the row's width is kept.
+        if (forge.adventure.util.RealmJournal.enabled()) {
+            toggleScroller();
+            toggleAward.setVisible(false);
+            TextraButton questsButton = ui.findActor("quests");
+            float left = toggleAward.getX();
+            if (Forge.isLandscapeMode()) {
+                float half = (back.getRight() - left) / 2f;
+                questsButton.setBounds(left, questsButton.getY(), half, questsButton.getHeight());
+                back.setBounds(left + half, back.getY(), half, back.getHeight());
+            } else {
+                questsButton.setBounds(left, questsButton.getY(), questsButton.getRight() - left, questsButton.getHeight());
+            }
+        }
         // Round 897: the Journal's button. Portrait's blessing box is too small for a second button: it takes half of Quests.
         if (forge.adventure.util.RealmJournal.enabled() && !Forge.isLandscapeMode()) {
             TextraButton questsButton = ui.findActor("quests");
@@ -342,6 +357,10 @@ public class PlayerStatisticScene extends UIScene {
             }
         }
 
+        if (forge.adventure.util.RealmJournal.enabled()) { // round 899: no list to build
+            performTouch(scroller);
+            return;
+        }
         for (Map.Entry<String, Pair<Integer, Integer>> entry : Current.player().getStatistic().getWinLossRecord().entrySet()) {
             EnemyData data = WorldData.getEnemy(entry.getKey());
             if (data == null) continue;

@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 899: the Journal is this run only, and the character sheet shows only Achievements (2026-10-31)
+
+The user: "For the Journal, Let's have it only track current run progress, not prior games. Let's remove the old win/loss
+ratio, the Journal replaces that now. So you will only see the Achievements."
+
+- **The Journal lists what this save met.** `RealmJournal.entries(player)` drops the profile lists, `Entry.earlierRun` and
+  every branch on it. `recorded` is replaced by `creaturesBeaten` and `legendsBeaten`, which count names with a win in this
+  save's record, still against the runtime roster and the 166 legends. The bar reads "110 of 893 creatures beaten", "25 of
+  274 beaten on white land", "1 of 166 legends beaten". Code graph: one caller each for `entries` and `recorded`, both
+  `JournalScene`; Grep agrees.
+- **A record counts more than the trophy does.** The save's record holds guard fights too, and `onDuelWon` does not, so
+  this run's bar can pass what the trophy adds. No fix needed: the bar says what this save has beaten.
+- **The trophies do not change.** Field Guide and Legend Hunter stay profile-wide, like every other trophy, and their GUIDE
+  row is still true. Decided by the main thread.
+- **The sheet's left panel is always Achievements** when `RealmJournal.enabled()`: the constructor runs the existing toggle
+  once and hides the button, and `enter()` returns before the Win/Loss rows are built, which saves their load time. Hidden
+  covers keyboard and controller too: `UIScene` skips an invisible actor. In code, so the stock `statistic` layouts are not
+  forked.
+- **The bottom row closes up.** Landscape: Quests and Back share the row, 95 wide each. Portrait: Quests takes the toggle's
+  slot, then shares it with the Journal as before.
+- **Kept on purpose:** the sheet's "Win: 183 Loss: 39 (82%)" total. The user meant the per-enemy list, and the Journal has no
+  total. The Bronze Coin mark moves to the Journal's row, which already drew it by `owesCoinRansom`.
+- **Flag off is unchanged:** list, toggle and the three-part row, as before.
+- **Text:** GUIDE's Journal section says this run only; Achievements no longer sends players to "the trophy button"; html
+  regenerated. `dev-tools/discord_faq/messages.py` line 444 has the same stale path and needs a change from the FAQ's owner.
+
+**Seen in the agent game, 2026-10-31**, with the build's jar ahead of the mirror, at 1280x720 and 720x1280; shots in
+`C:\TFR
+otes899-shots`. A save with 110 names beaten while the profile holds 196 and 7: bars read 110 of 893 and 1 of 166,
+and no profile-only row shows. A won duel at 50x (Ashen Spinewyrm): the row appears, 110 becomes 111. White land: 25 of 274.
+New Game+ from a real save: both tabs read 0, with "Nothing here yet. Battle a creature and it is recorded." and "No legend
+or boss fought yet."; the profile's counts stay 196 and 7. A coin mark added with a throwaway Java edit on a copied slot, now
+deleted: the Bronze Coin shows on that row. Deck opens and Back returns to the Journal, the sheet, the quest log and the map.
+Flag off in a mirror config, restored after: list and toggle work in both layouts.
+Not seen: a brand-new game (only New Game+; both empty the same record), and keyboard or controller input on the sheet.
+
 ## Round 898: a save that runs out of memory says so, and needs half the memory (2026-10-31)
 
 The user, shown `notes/logs-1031.md` P1-1, P2-2 and P3-2: "Yes, build it". A phone lost a win when `OutOfMemoryError`

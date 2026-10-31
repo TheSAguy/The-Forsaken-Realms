@@ -28,7 +28,6 @@ import forge.adventure.util.Current;
 import forge.adventure.util.EnemyAvatars;
 import forge.adventure.util.Paths;
 import forge.adventure.util.RealmJournal;
-import forge.adventure.util.TfrAchievements;
 import forge.deck.Deck;
 
 import java.util.ArrayList;
@@ -38,10 +37,10 @@ import java.util.Set;
 
 /**
  * Round 897 - the Realm Journal, opened from the character sheet. Two tabs, Creatures and Legends, of the enemies this
- * save has met (and, dimmed with no facts, what the profile recalls of other runs); a creature's page says what the Alt
- * plates know of each rank, and a battled rank opens its deck in the read-only DeckPreviewScene. The Sets page's own
- * layouts, so no new ui json: list and page side by side in landscape; in portrait the list, then a tap opens the page,
- * and Back returns. What it knows is util/RealmJournal.
+ * save has met (round 899: this run only, the bars too); a creature's page says what the Alt plates know of each rank,
+ * and a battled rank opens its deck in the read-only DeckPreviewScene. The Sets page's own layouts, so no new ui json:
+ * list and page side by side in landscape; in portrait the list, then a tap opens the page, and Back returns. What it
+ * knows is util/RealmJournal.
  * <p>
  * The tab, filters, list page, chosen entry and scroll are fields, so Back from a deck rebuilds the same view: enter()
  * builds every time, because leaving frees the avatar pages. A list page is {@link #PAGE_ROWS} rows at most.
@@ -151,7 +150,7 @@ public class JournalScene extends UIScene {
 
     private static boolean battledAt(RealmJournal.Entry e, int wanted) {
         for (EnemyData r : e.ranks)
-            if (EnemyData.tierRank(r.tier) == wanted && !e.earlierRun && RealmJournal.knowledge(r) == 2)
+            if (EnemyData.tierRank(r.tier) == wanted && RealmJournal.knowledge(r) == 2)
                 return true;
         return false;
     }
@@ -163,9 +162,7 @@ public class JournalScene extends UIScene {
         area.clear();
         listPane = null;
         AdventurePlayer player = Current.player();
-        Set<String> guide = TfrAchievements.seenNames(TfrAchievements.FIELD_GUIDE);
-        Set<String> hunted = TfrAchievements.seenNames(TfrAchievements.LEGEND_HUNTER);
-        List<RealmJournal.Entry> all = RealmJournal.entries(player, guide, hunted);
+        List<RealmJournal.Entry> all = RealmJournal.entries(player);
         List<RealmJournal.Entry> shown = shownEntries(all);
         int pages = Math.max(1, (shown.size() + PAGE_ROWS - 1) / PAGE_ROWS);
         page = Math.max(0, Math.min(page, pages - 1));
@@ -180,7 +177,7 @@ public class JournalScene extends UIScene {
         titleLabel.setText("Realm Journal");
         area.top().left();
         if (!legends || !landscape || !detailOpen)
-            area.add(guideBar(guide, hunted)).left().fillX().row();
+            area.add(guideBar(player)).left().fillX().row();
         if (!landscape && detailOpen) {
             area.add(detail(current, 244f)).expand().fill().top().left();
         } else {
@@ -229,18 +226,18 @@ public class JournalScene extends UIScene {
         return l;
     }
 
-    /** "Field Guide: 214 of 848 creatures" and its bar; on a land, that land's count; on Legends, the legends beaten. */
-    private Table guideBar(Set<String> guide, Set<String> hunted) {
+    /** "12 of 893 creatures beaten" in this save and its bar; on a land, that land's count; on Legends, the legends. */
+    private Table guideBar(AdventurePlayer player) {
         int have, of;
         String text;
         if (legends) {
-            have = hunted.size();
+            have = RealmJournal.legendsBeaten(player.getStatistic());
             of = RealmJournal.legendCount();
             text = have + " of " + of + " legends beaten";
         } else {
-            have = RealmJournal.recorded(guide, land);
+            have = RealmJournal.creaturesBeaten(player.getStatistic(), land);
             of = land == null ? RealmJournal.rosterSize() : RealmJournal.rosterSize(land);
-            text = "Field Guide: " + have + " of " + of + (land == null ? " creatures" : " on " + land + " land");
+            text = have + " of " + of + (land == null ? " creatures beaten" : " beaten on " + land + " land");
         }
         Table bar = new Table();
         bar.left();
@@ -380,21 +377,16 @@ public class JournalScene extends UIScene {
         row.setName(e.name);
         row.left();
         boolean landscape = Forge.isLandscapeMode();
-        Actor face = avatar(e.catalog);
-        if (e.earlierRun)
-            face.setColor(0.55f, 0.5f, 0.45f, 0.45f);
-        row.add(face).size(18f).padRight(3f);
+        row.add(avatar(e.catalog)).size(18f).padRight(3f);
         Table text = new Table();
         text.left();
-        text.add(label("[%80]" + (e.earlierRun ? DIM : "") + e.catalog.getDisplayName())).left().row();
-        text.add(e.earlierRun ? label("[%60]" + DIM + "Met in an earlier run") : facts(e)).left();
+        text.add(label("[%80]" + e.catalog.getDisplayName())).left().row();
+        text.add(facts(e)).left();
         row.add(text).left().expandX().fillX();
-        if (!e.earlierRun) {
-            Actor coin = coin(e);
-            if (coin != null)
-                row.add(coin).size(10f).padRight(2f);
-            row.add(label("[%70]" + e.wins + " - " + e.losses)).right().padRight(landscape ? 6f : 8f);
-        }
+        Actor coin = coin(e);
+        if (coin != null)
+            row.add(coin).size(10f).padRight(2f);
+        row.add(label("[%70]" + e.wins + " - " + e.losses)).right().padRight(landscape ? 6f : 8f);
         row.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -461,27 +453,16 @@ public class JournalScene extends UIScene {
         page.top().left();
         Table head = new Table();
         head.left();
-        Actor face = avatar(e.catalog);
-        if (e.earlierRun)
-            face.setColor(0.55f, 0.5f, 0.45f, 0.45f);
-        head.add(face).size(44f).padRight(5f);
+        head.add(avatar(e.catalog)).size(44f).padRight(5f);
         Table who = new Table();
         who.left();
         who.add(wrapped("[%95]" + e.catalog.getDisplayName())).left().width(width - 52f).row();
-        if (e.earlierRun) {
-            who.add(label("[%70]" + DIM + "Met in an earlier run")).left().row();
-        } else {
-            who.add(label("[%75]Won " + e.wins + ", lost " + e.losses)).left().row();
-            Set<String> lands = RealmJournal.lands(e.name);
-            if (!lands.isEmpty())
-                who.add(wrapped("[%65]" + DIM + "Roams " + String.join(", ", lands) + " land")).left().width(width - 52f).row();
-        }
+        who.add(label("[%75]Won " + e.wins + ", lost " + e.losses)).left().row();
+        Set<String> lands = RealmJournal.lands(e.name);
+        if (!lands.isEmpty())
+            who.add(wrapped("[%65]" + DIM + "Roams " + String.join(", ", lands) + " land")).left().width(width - 52f).row();
         head.add(who).left().expandX().fillX();
         page.add(head).left().width(width).row();
-        if (e.earlierRun) {
-            page.add(wrapped("[%70]" + DIM + "A new run forgets it. Meet it again to learn what it plays.")).left().width(width).padTop(8f).row();
-            return page;
-        }
         page.add(label("[%80]What you know")).left().padTop(6f).padBottom(2f).row();
         for (EnemyData r : e.ranks)
             rankLines(page, e, r, width);

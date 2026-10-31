@@ -85,13 +85,33 @@ public final class RealmJournal {
         return lands == null ? new TreeSet<>() : lands;
     }
 
-    /** The Field Guide's names on this land that the profile has recorded; every land's with land null. */
-    public static int recorded(Set<String> seen, String land) {
+    /** Round 899: the Field Guide's names on this land that this save has beaten; every land's with land null. */
+    public static int creaturesBeaten(PlayerStatistic stats, String land) {
         int n = 0;
-        for (String name : seen)
+        for (String name : beaten(stats))
             if (counts(name) && (land == null || lands(name).contains(land)))
                 n++;
         return n;
+    }
+
+    /** Round 899: the legends this save has beaten. */
+    public static int legendsBeaten(PlayerStatistic stats) {
+        int n = 0;
+        for (String name : beaten(stats)) {
+            EnemyData d = WorldData.getEnemy(name);
+            if (d != null && LegendSpawns.isMember(d))
+                n++;
+        }
+        return n;
+    }
+
+    /** The names with a win in this save's record. */
+    private static Set<String> beaten(PlayerStatistic stats) {
+        Set<String> names = new TreeSet<>();
+        for (Map.Entry<String, Pair<Integer, Integer>> e : stats.getWinLossRecord().entrySet())
+            if (e.getValue() != null && e.getValue().getLeft() != null && e.getValue().getLeft() > 0)
+                names.add(e.getKey());
+        return names;
     }
 
     public static int legendCount() {
@@ -107,8 +127,6 @@ public final class RealmJournal {
         public EnemyData catalog;
         public String name;
         public int wins, losses;
-        /** In the profile's list only: beaten in another save or run. The plates forget it, and the Journal shows no fact. */
-        public boolean earlierRun;
         public final List<EnemyData> ranks = new ArrayList<>();
 
         public boolean bossTab() {
@@ -120,12 +138,12 @@ public final class RealmJournal {
         }
     }
 
-    /** Everything this save met, and what the profile's two lists recall of other runs. */
-    public static List<Entry> entries(AdventurePlayer player, Set<String> fieldGuide, Set<String> legends) {
+    /** Everything this save met. Round 899 (the user: "only track current run progress, not prior games"). */
+    public static List<Entry> entries(AdventurePlayer player) {
         PlayerStatistic stats = player.getStatistic();
         Map<String, Entry> out = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         for (Map.Entry<String, Pair<Integer, Integer>> e : stats.getWinLossRecord().entrySet()) {
-            Entry entry = entry(out, e.getKey(), false);
+            Entry entry = entry(out, e.getKey());
             if (entry != null && e.getValue() != null) {
                 entry.wins = e.getValue().getLeft() == null ? 0 : e.getValue().getLeft();
                 entry.losses = e.getValue().getRight() == null ? 0 : e.getValue().getRight();
@@ -133,16 +151,12 @@ public final class RealmJournal {
         }
         for (String key : stats.getRanksBattled()) {
             int bar = key.lastIndexOf('|');
-            entry(out, bar < 0 ? key : key.substring(0, bar), false);
+            entry(out, bar < 0 ? key : key.substring(0, bar));
         }
-        for (String name : fieldGuide)
-            entry(out, name, true);
-        for (String name : legends)
-            entry(out, name, true);
         return new ArrayList<>(out.values());
     }
 
-    private static Entry entry(Map<String, Entry> out, String name, boolean earlierRun) {
+    private static Entry entry(Map<String, Entry> out, String name) {
         Entry have = out.get(name);
         if (have != null)
             return have;
@@ -152,7 +166,6 @@ public final class RealmJournal {
         Entry e = new Entry();
         e.catalog = catalog;
         e.name = catalog.getName();
-        e.earlierRun = earlierRun;
         e.ranks.addAll(EnemyTiers.expand(catalog));
         out.put(name, e);
         return e;

@@ -931,7 +931,7 @@ open in another window.
 
 ### The Realm Journal
 
-The Journal button on your character sheet opens a record of everything you have met. **Creatures** and **Legends** are its
+The Journal button on your character sheet opens a record of everything you have met this run. **Creatures** and **Legends** are its
 two tabs; filter by land or rank, and sort by name or by most fought. Only what you have met is listed.
 
 A creature's page says what the Alt plates know of each rank: battle a rank to learn its colors, life and **deck**; a
@@ -939,14 +939,13 @@ relative of that rank tells you its colors. Winning isn't needed: a lost duel op
 
 - **Deck** shows the deck that rank plays. A rank that builds a new deck each fight has no fixed list, so you see the
   **last deck fought** instead; on a save from before this feature, fight it once more to record it.
-- A creature met in another save or before a New Game+ stays listed, dimmed, as "Met in an earlier run". Its facts and deck
-  come back when you meet it again.
+- The Journal covers this run only. A new game or a New Game+ starts it empty, and its bars count what this run has beaten.
 - Each creature you beat counts toward the **Field Guide** trophy, once whatever its rank.
 
 ### Achievements
 
-The Forsaken Realms keeps its own achievements, listed first on the trophy page (the Quest log's **Status**, then
-the trophy button). They are a record of what you have done, with no reward attached. Most climb Forge's four
+The Forsaken Realms keeps its own achievements, listed first on your character sheet (the Quest log's
+**Status**). They are a record of what you have done, with no reward attached. Most climb Forge's four
 trophies, Common to Mythic; a few are a single trophy. They belong to your profile, not to one save, so a new game
 or New Game+ keeps them.
 

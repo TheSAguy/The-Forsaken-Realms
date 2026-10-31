@@ -35,6 +35,11 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 899 - the Journal is this run only; the sheet shows only Achievements
+- `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): behind `RealmJournal.enabled()`, a block in
+  the constructor after `window.add(root)` runs `toggleScroller()`, hides `toggleAward` and resizes Quests (and Back in
+  landscape); `enter()` returns before the record loop. Off, the stock path runs unchanged. The stock ui jsons are untouched.
+
 ### Round 898 - a save out of memory, the lower save peak, the exit reason
 - `forge-gui-mobile/src/forge/adventure/world/WorldSave.java`: `save` is a new wrapper that catches `OutOfMemoryError`
   and retries once; the old body is `writeSave`. New `retryAfterOutOfMemory`, `outOfMemory`, `saveFailure()`,
