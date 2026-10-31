@@ -47,6 +47,7 @@ import java.util.Set;
  * <li>{@code [TFR-Images]} one line per 25 card images downloaded, in place of four lines per image.</li>
  * <li>{@code [TFR-LogQuiet]} round 878: the engine's "Did not have activator set" line, once per caller a launch and
  * then a count per duel, in place of up to half the log.</li>
+ * <li>{@code [TFR-Memory]} round 898: {@link MemoryWatch}, what the heap holds when it runs high.</li>
  * </ul>
  * No character name, user name or path: save slots, world town names and game numbers only. Console: {@code session},
  * {@code session error}.
@@ -75,6 +76,7 @@ public final class SessionLog {
     /** StartScene, once per launch, after the [TFR-Build] line. */
     public static void onStart() {
         QuietStream.install(); // round 878
+        MemoryWatch.start(); // round 898
         try {
             String os = GuiBase.isAndroid() ? "Android " + GuiBase.getAndroidAPILevel() : System.getProperty("os.name", "?");
             String version = Config.instance().getConfigData().modVersion;
@@ -323,8 +325,10 @@ public final class SessionLog {
 
     /** Forge.switchScene / switchToLast: one step of the trail; a duel's clock starts here. */
     public static void onScene(Object scene) {
-        if (scene instanceof DuelScene)
+        if (scene instanceof DuelScene) {
             duelStartedAt = System.currentTimeMillis();
+            MemoryWatch.onDuel(); // round 898
+        }
         String label = scene == null ? "none" : scene.getClass().getSimpleName();
         if (scene instanceof TileMapScene && ((TileMapScene) scene).rootPoint != null)
             label += ":" + ((TileMapScene) scene).rootPoint.getDisplayName();

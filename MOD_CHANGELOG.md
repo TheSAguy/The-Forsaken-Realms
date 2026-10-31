@@ -14264,6 +14264,73 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 898: a save that runs out of memory says so, and needs half the memory (2026-10-31)
+
+The user, shown `notes/logs-1031.md` P1-1, P2-2 and P3-2: "Yes, build it". A phone lost a win when `OutOfMemoryError`
+hit a manual save: the error passed `WorldSave.save`'s two catches and killed the GL thread, every save caller's thread,
+so the screen froze with no message. Two more deaths on another phone left no reason at all.
+
+- **`WorldSave.save` catches it.** `save` wraps the old body, now `writeSave`. The first OOM logs `[TFR-Save] ... trying
+  once more` and a `[TFR-Memory] save` line, then runs `Runtime.gc()` (`System.gc()` can be a no-op on Android) and
+  saves again. A second OOM logs `ran out of memory twice - NOT saved`, returns false and tells the player. The .sav is
+  untouched until round 858's finished file moves in, so nothing has to be restored.
+- **A plain retry would have failed.** It repeats the same allocations, and the phone's failed buffer was 19.5 MB with
+  12.7 MB free. So the save itself needs less. `storeAndRelease` (WorldSave) writes the same stream as
+  `SaveFileData.store`, but counts the size first, so the stream never doubles and its array is the result with no
+  `toByteArray` copy. It empties each sub-record once stored. `writeSaveSnapshot` empties `mainData` after the write,
+  before the check. Validation still reads the whole temp file from disk and never used `mainData`, and round 858's
+  order (write, sync, validate, back up, move) is unchanged. The four `save()` methods build a new record per call, and
+  nothing reads one after it is stored: the preview and the header are separate.
+- **What can be freed: only the failed attempt's buffers.** Every caller is on the GL thread, so textures could go, but
+  they are native memory and the Java heap is what ran out. Undo, the image cache and `onLowMemory` are untouched by
+  design until `[TFR-Memory]` reports.
+- **What the player sees.** Manual save: the name dialog closes and "Error Saving File!" shows on the Save screen. It is
+  posted, because the dialog's OK removes the top dialog right after `save()` returns. Auto and quick saves don't look at
+  the return value, so the stage's announcement shows it when the map next opens, never over a duel; OK dismisses it. A
+  later save that works clears it. No quit-and-save path exists: Android's pause does not save.
+- **`[TFR-Memory]` (`util/MemoryWatch`):** a daemon thread reads the heap every 2 s. At 78% of the maximum (400 MB of
+  512, 3.2 GB of a PC's 4 GB) it writes one line: `game=live|over|none cards= battlefield= logEntries= undo= undoObjects=
+  images= assets=`. It re-arms under 60%, at most one line a minute. All size reads, nothing walks a list, one guard per
+  part, and `MatchController` and `ImageCache` are only touched after a duel loaded them. `UndoManager.snapshotObjects()`
+  is new for it and holds that lock for a few size reads, so it can't hold up a thread for long. Used memory counts
+  garbage, so a `high` line alone doesn't prove memory is held; the `save` line comes right after a full collection.
+- **`[TFR-ExitReason]` (`Main.java`, API 30+):** `getHistoricalProcessExitReasons`, oldest first: reason, status,
+  importance, PSS, RSS, time, description. An entry is told from the logged ones by its timestamp; the newest logged is
+  kept in the preferences, and a launch with none writes "nothing new". Posted through `Gdx.app.postRunnable`, because
+  forge.log doesn't exist before `create()` (which is why `[lifecycle] onCreate` never reaches a shared log). A launch
+  that dies first marks nothing, so the next one reports it. It has its own nested class, so API 26-29 never resolve
+  `ApplicationExitInfo`.
+- **Measured** (the largest agent save, 15.8 MB uncompressed, `-XX:+UseSerialGC -Xmn16m`, free memory read after a full
+  collection, old = the agent jar at 6765e982cbb):
+
+  | | Old | New |
+  |---|---|---|
+  | Lowest free memory that saved | 58 MB (55 failed) | 28 MB (25 failed) |
+  | Median of 12 saves | 564 ms | 528 ms |
+  | Same state, same file size | 2,353,556 bytes | 2,353,556 bytes |
+
+  Old against new on one loaded game: all 5 top-level fields byte-identical. The header's save date differs; the header
+  preview wasn't compared. `storeAndRelease`'s text against stock `store` on four real saves: identical bytes. The peak
+  was measured on PC, not on a phone's collector. The phone's free memory before its save (about 38 MB) is an estimate
+  from the OOM message.
+- **Tested in the agent game**, the new jar with a throwaway class ahead of it, and duels at 50x (`[TFR-Agent] duel speed
+  set to 50x`):
+  - A forced OOM in the sub-records, in `mainData`, at validation and before the move, once and twice, on one slot: once
+    saved, twice returned false with the .sav hash unchanged and no temp file left. Those saves reloaded clean.
+  - Manual through the real Save screen: twice showed the message, OK dismissed it, once saved and returned to the game
+    with no repeat. A real full heap (19 MB free, nothing forced) showed the same message, the game stayed responsive and
+    the slot's hash held; with the memory freed the same save worked and loaded.
+  - Auto: a town entrance and the auto save before a duel, twice: `auto_save.sav` unchanged, nothing over the duel; the
+    town's message showed back on the map (`notes/r898-shots/`). Once saved before the duel, and the log says so. The
+    duel's own message wasn't seen on screen: `settle` taps single-option dialogs.
+  - `[TFR-Memory]`: one `high` line a crossing, none while held above the mark for 70 s, none for a recrossing inside
+    the minute. The line in a duel read `game=live cards=89 battlefield=33 logEntries=468`.
+- **A finding for the next round:** the `save` line after a duel read `game=over cards=90`: the finished game stays held,
+  through `MatchController`'s view, until the next duel. Its share of a phone's heap is what `[TFR-Memory]` will tell.
+  `undoObjects` read 0 throughout, because the AI plays the player's seat and undo only records human prompts.
+- **Not tested:** nothing ran on a phone. `Main.java` compiled with `javac` against `android-35` (minSdk 26, compileSdk
+  35, API 30 call guarded) and the module's jars; the APK wasn't built, so `[TFR-ExitReason]` has never run.
+
 ## Round 897 (follow-up): the Journal's deck view says what it is in a short caption (2026-10-31)
 
 The user, asked whether to shorten the deck view's long caption: "Yes, shorten it". It read "Search Last deck fought: Clay

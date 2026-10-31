@@ -145,6 +145,9 @@ public class WorldSave {
     /** Round 183: a load failed after touching the live game and the rollback failed too - the in-memory
      *  game is a hybrid of two saves, so nothing may be written until a load or a new game succeeds. */
     private static boolean saveBlocked = false;
+    /** Round 898. */
+    private static final String SAVE_OUT_OF_MEMORY = "The game ran out of memory.\nYour last save is safe, but nothing since it is saved.\nRestart the game soon.";
+    private String saveFailure;
 
     static public boolean load(int currentSlot) {
         JSONStringLoader.clearCache();
@@ -634,6 +637,7 @@ public class WorldSave {
                 def.finish();
                 fos.getFD().sync();
             }
+            mainData.clear(); // round 898: written; the check below reads the file, so this memory can go first
 
             // Verify the completed compressed stream before replacing the current save.
             // TFR (round 858): kept - 22-31 ms of a ~430 ms save on PC (a 2 MB save).
@@ -829,7 +833,109 @@ public class WorldSave {
         return true;
     }
 
+    /**
+     * Round 898 (notes/logs-1031.md P1-1, the user: "Yes, build it"): an OutOfMemoryError in a save used to pass the two
+     * catches of {@link #writeSave} and kill the GL thread, every save caller's thread: a frozen screen, no message, and
+     * on a phone a lost win. It is caught here. The failed attempt's buffers are gone with its frames, so a collection
+     * can get them back, and the save runs once more. If that fails too the player is told, and the game goes on: false
+     * for the callers that look, the stage's announcement for the ones that don't (the world map and a town show it
+     * when they next open, never over a duel; the Save screen shows it at once, {@link #saveFailure()}). The .sav is
+     * not touched until the finished file moves in, so it stays the last whole save on all of these paths.
+     */
     public boolean save(String text, int currentSlot) {
+        try {
+            return writeSave(text, currentSlot);
+        } catch (OutOfMemoryError first) {
+            return retryAfterOutOfMemory(text, currentSlot);
+        }
+    }
+
+    private boolean retryAfterOutOfMemory(String text, int slot) {
+        try {
+            System.err.println("[TFR-Save] slot " + slot + " ran out of memory - the save on disk is unchanged, trying once more");
+            forge.adventure.util.MemoryWatch.report("save");
+        } catch (Throwable ignored) { // the heap is full: a lost log line must not cost the save
+        }
+        boolean saved;
+        try {
+            Runtime.getRuntime().gc(); // not System.gc(): on Android that one can be a no-op
+            saved = writeSave(text, slot);
+        } catch (OutOfMemoryError again) {
+            outOfMemory(slot);
+            return false;
+        }
+        try {
+            System.out.println("[TFR-Save] slot " + slot + ": the second try saved");
+        } catch (Throwable ignored) { // saved; only the line is lost
+        }
+        return saved;
+    }
+
+    private void outOfMemory(int slot) {
+        try {
+            System.err.println("[TFR-Save] slot " + slot + " ran out of memory twice - NOT saved, the save on disk is unchanged");
+        } catch (Throwable ignored) { // the player's message below still matters
+        }
+        try {
+            saveFailure = SAVE_OUT_OF_MEMORY;
+            finish(SAVE_OUT_OF_MEMORY);
+        } catch (Throwable t) { // finish() also clears the autosave overlay, which only a failure here leaves up
+            saveFailure = null;
+        }
+    }
+
+    /** Round 898: what the failed save has to tell the player, until {@link #clearSaveFailure()}; else null. */
+    public String saveFailure() {
+        return saveFailure;
+    }
+
+    /** Round 898: the Save screen said it - the stage's announcement need not say it again. */
+    public void clearSaveFailure() {
+        saveFailure = null;
+        currentSave.player.getCurrentGameStage().clearExtraAnnouncement();
+    }
+
+    /**
+     * Round 898: mainData.store(key, sub), the same bytes (SaveFileData.store writes this stream) at half the peak. The
+     * failed allocation of logs-1031 P1-1 was this stream doubling to 19.5 MB with 12.7 MB free, on top of the sub-record
+     * and before toByteArray's copy. The size is counted first, so the stream grows no more and its array is the
+     * result, and the sub-record is emptied the moment it is stored: the caller's four are never read again.
+     */
+    private static void storeAndRelease(SaveFileData mainData, String key, SaveFileData sub) throws IOException {
+        int[] size = {0};
+        try (ObjectOutputStream counter = new ObjectOutputStream(new OutputStream() {
+            @Override
+            public void write(int b) {
+                size[0]++;
+            }
+
+            @Override
+            public void write(byte[] b, int off, int len) {
+                size[0] += len;
+            }
+        })) {
+            counter.writeObject(sub);
+        }
+        ExactBytes bytes = new ExactBytes(size[0]);
+        try (ObjectOutputStream stream = new ObjectOutputStream(bytes)) {
+            stream.writeObject(sub);
+        }
+        sub.clear();
+        mainData.put(key, bytes.array());
+    }
+
+    /** Round 898: a stream sized to its content hands over its array instead of copying it. */
+    private static final class ExactBytes extends ByteArrayOutputStream {
+        ExactBytes(int size) {
+            super(size);
+        }
+
+        byte[] array() {
+            return count == buf.length ? buf : toByteArray();
+        }
+    }
+
+    private boolean writeSave(String text, int currentSlot) {
         if (saveBlocked) { // round 183 (E4): the in-memory game is two saves mixed - never write it over a real file
             System.err.println("[TFR-Save] refused \"" + text + "\": a failed load could not be rolled back -"
                     + " load a save or start a new game first");
@@ -859,10 +965,10 @@ public class WorldSave {
 
             SaveFileData mainData = new SaveFileData();
             mainData.store("saveFormatVersion", SAVE_FORMAT_VERSION);
-            mainData.store("player", player);
-            mainData.store("world", world);
-            mainData.store("worldStage", worldStage);
-            mainData.store("pointOfInterestChanges", poiChanges);
+            storeAndRelease(mainData, "player", player); // round 898
+            storeAndRelease(mainData, "world", world);
+            storeAndRelease(mainData, "worldStage", worldStage);
+            storeAndRelease(mainData, "pointOfInterestChanges", poiChanges);
 
             if (mainData.readString("IOException") != null) {
                 finish("Please check forge.log for errors.");
@@ -890,6 +996,8 @@ public class WorldSave {
         Config.instance().getSettingData().lastActiveSave = WorldSave.filename(currentSlot);
         Config.instance().saveSettings();
         forge.adventure.util.SessionLog.onSaved(currentSlot, System.currentTimeMillis() - saveStarted); // round 777
+        if (saveFailure != null) // round 898: an earlier failure's "restart soon" no longer holds
+            clearSaveFailure();
         finish(null);
         return true;
     }

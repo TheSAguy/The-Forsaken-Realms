@@ -1,5 +1,6 @@
 package forge.adventure.scene;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -670,7 +671,24 @@ public class SaveLoadScene extends UIScene {
                 }
 
                 Forge.switchScene(restoreScene);
+            } else if (WorldSave.getCurrentSave().saveFailure() != null) {
+                // Round 898: out of memory twice. The player stays here and is told now; posted, because the Save
+                // dialog's OK removes the top dialog right after this returns. The stage's announcement is the fallback.
+                Gdx.app.postRunnable(this::showSaveFailure);
             }
+        }
+    }
+
+    private void showSaveFailure() {
+        try {
+            String failure = WorldSave.getCurrentSave().saveFailure();
+            if (failure == null)
+                return;
+            showDialog(createGenericDialog(Forge.getLocalizer().getMessage("lblSave"), "Error Saving File!\n" + failure,
+                    Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
+            WorldSave.getCurrentSave().clearSaveFailure();
+        } catch (OutOfMemoryError e) {
+            System.err.println("[TFR-Save] no memory for the message here - the game stage still has it");
         }
     }
 

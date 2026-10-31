@@ -35,6 +35,17 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 898 - a save out of memory, the lower save peak, the exit reason
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java`: `save` is a new wrapper that catches `OutOfMemoryError`
+  and retries once; the old body is `writeSave`. New `retryAfterOutOfMemory`, `outOfMemory`, `saveFailure()`,
+  `clearSaveFailure()`, `storeAndRelease`, `ExactBytes`; the four `mainData.store` calls became `storeAndRelease`;
+  `writeSaveSnapshot` adds one `mainData.clear()` after the write, before `validateSaveFile`. On an upstream change to
+  `SaveFileData.store(String, SaveFileData)`, keep `storeAndRelease` writing the same stream: the save format depends on it.
+- `forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`: `save()` gets an `else if` and `showSaveFailure()`.
+- `forge-game/src/main/java/forge/game/undo/UndoManager.java`: one read-only method, `snapshotObjects()`, for the
+  `[TFR-Memory]` line. No behavior change.
+- `forge-gui-android/src/forge/app/Main.java`: nested `ExitReasons` and its post in `loadGame`, `[TFR-ExitReason]`.
+
 ### Round 897 - the Realm Journal
 - **`forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java`** (STOCK) - `enter()` takes a face from
   `EnemyAvatars.region` before falling back on `new EnemySprite(data).getAvatar()`; a Journal button (the blessing box in

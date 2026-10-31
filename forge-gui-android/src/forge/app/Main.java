@@ -7,6 +7,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.ApplicationExitInfo;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ComponentName;
@@ -79,8 +80,11 @@ import org.tinylog.TaggedLogger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class Main extends AndroidApplication {
@@ -402,6 +406,11 @@ public class Main extends AndroidApplication {
                     super.error(tag, message);
                 }
             });
+            // Round 898: posted, because forge.log only exists once create() has run. A launch that never gets there
+            // logs nothing and marks nothing, so the next one reports the exit.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                Gdx.app.postRunnable(() -> ExitReasons.log(this, sharedPreferences));
+            }
 
             getAnimator(ObjectAnimator.ofFloat(forgeLogo, "alpha", 1f, 1f).setDuration(800), ObjectAnimator.ofObject(activeView, "backgroundColor", new ArgbEvaluator(), Color.WHITE, Color.BLACK).setDuration(1600), new AnimatorListenerAdapter() {
                 @Override
@@ -650,6 +659,48 @@ public class Main extends AndroidApplication {
     }
 
     //special clipboard that words on Android
+    /**
+     * Round 898 (notes/logs-1031.md P2-2: deaths with no pause, no error and no footer): {@code [TFR-ExitReason]}, Android's
+     * own record of what ended this app's earlier processes (API 30+). Android keeps a list of them per app, so an entry
+     * is told from the ones already logged by its timestamp: the newest logged is kept in the preferences, and only later
+     * ones are written. "nothing new" means the last process has not ended, or Android kept no record of it. In its own
+     * class so that API 26-29, which never load it, never have to resolve ApplicationExitInfo.
+     */
+    private static final class ExitReasons {
+        private static final String LOGGED_UP_TO = "tfrExitReasonLoggedUpTo";
+        private static final int MAX_ENTRIES = 8;
+        private static final String[] REASONS = {"UNKNOWN", "EXIT_SELF", "SIGNALED", "LOW_MEMORY", "CRASH", "CRASH_NATIVE",
+                "ANR", "INITIALIZATION_FAILURE", "PERMISSION_CHANGE", "EXCESSIVE_RESOURCE_USAGE", "USER_REQUESTED",
+                "USER_STOPPED", "DEPENDENCY_DIED", "OTHER", "FREEZER", "PACKAGE_STATE_CHANGE", "PACKAGE_UPDATED"};
+
+        static void log(Context context, SharedPreferences preferences) {
+            try {
+                ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+                long loggedUpTo = preferences.getLong(LOGGED_UP_TO, 0);
+                long newest = loggedUpTo;
+                List<ApplicationExitInfo> exits = manager.getHistoricalProcessExitReasons(context.getPackageName(), 0, MAX_ENTRIES);
+                for (int i = exits.size() - 1; i >= 0; i--) { // Android lists the newest first
+                    ApplicationExitInfo exit = exits.get(i);
+                    if (exit.getTimestamp() <= loggedUpTo)
+                        continue;
+                    newest = Math.max(newest, exit.getTimestamp());
+                    int reason = exit.getReason();
+                    netLog.info("[TFR-ExitReason] reason={} status={} importance={} pss={}MB rss={}MB at={} description={}",
+                            reason >= 0 && reason < REASONS.length ? REASONS[reason] : String.valueOf(reason),
+                            exit.getStatus(), exit.getImportance(), exit.getPss() >> 10, exit.getRss() >> 10,
+                            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date(exit.getTimestamp())),
+                            exit.getDescription());
+                }
+                if (newest == loggedUpTo)
+                    netLog.info("[TFR-ExitReason] nothing new");
+                else
+                    preferences.edit().putLong(LOGGED_UP_TO, newest).apply();
+            } catch (Throwable t) {
+                netLog.warn("[TFR-ExitReason] not read: {}", t.toString());
+            }
+        }
+    }
+
     private class AndroidClipboard implements com.badlogic.gdx.utils.Clipboard {
         private final ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
