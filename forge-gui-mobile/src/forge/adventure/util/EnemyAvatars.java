@@ -31,7 +31,7 @@ public final class EnemyAvatars {
         try {
             FileHandle handle = Config.instance().getFile(DIR + "avatars.index");
             if (handle != null && handle.exists()) {
-                for (String line : handle.readString("UTF-8").split("\n")) {
+                for (String line : handle.readString("UTF-8").split("\\r?\\n")) { // git may hand it over with either
                     String[] p = line.split("\t");
                     if (p.length == 6)
                         read.put(p[0], new int[]{Integer.parseInt(p[1]), Integer.parseInt(p[2]), Integer.parseInt(p[3]),
