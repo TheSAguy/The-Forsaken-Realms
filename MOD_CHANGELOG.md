@@ -14291,8 +14291,7 @@ ratio, the Journal replaces that now. So you will only see the Achievements."
   regenerated. `dev-tools/discord_faq/messages.py` line 444 has the same stale path and needs a change from the FAQ's owner.
 
 **Seen in the agent game, 2026-10-31**, with the build's jar ahead of the mirror, at 1280x720 and 720x1280; shots in
-`C:\TFR
-otes899-shots`. A save with 110 names beaten while the profile holds 196 and 7: bars read 110 of 893 and 1 of 166,
+`notes/r899-shots`. A save with 110 names beaten while the profile holds 196 and 7: bars read 110 of 893 and 1 of 166,
 and no profile-only row shows. A won duel at 50x (Ashen Spinewyrm): the row appears, 110 becomes 111. White land: 25 of 274.
 New Game+ from a real save: both tabs read 0, with "Nothing here yet. Battle a creature and it is recorded." and "No legend
 or boss fought yet."; the profile's counts stay 196 and 7. A coin mark added with a throwaway Java edit on a copied slot, now
