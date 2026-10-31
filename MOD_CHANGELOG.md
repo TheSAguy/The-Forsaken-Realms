@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 897 (follow-up): the Journal's deck view says what it is in a short caption (2026-10-31)
+
+The user, asked whether to shorten the deck view's long caption: "Yes, shorten it". It read "Search Last deck fought: Clay
+Golem - Archmage" in the search box and was cut off on the side tab, while the title bar said only "Clay Golem".
+
+- **`RealmJournal`:** the shown deck's name is now the title, "Clay Golem - Archmage", and `caption` the page's short label,
+  "Deck" for a fixed list, "Last Deck" for a kept one, so the box reads "Search Last Deck" and the tab shows it whole. The name
+  is display only: `deckToShow` builds a new `Deck` each press and a preview never saves it.
+- **The longest title fits:** `FLabel` shrinks to its width. "The Gitrog Monster (Innistrad) - Archmage" was forced in
+  through a throwaway class at 720x1280: whole, in small type, clear of the gold. No widening needed.
+- **`GUIDE.md`** keeps its "last deck fought" sentence: it describes the deck, not the caption, and stays true.
+- **Tested** in the agent game on slots 91 and 93, classes ahead of the jar, no duels: a fixed rank (Adrix and Nev) and a kept
+  one (Clay Golem) in both layouts, title, box and tab; Back to the same entry; "Fight it again to record its deck" in both.
+  **Not tested:** Android, a long real name reached through a real rank.
+
 ## Round 897: the Realm Journal, with the decks of enemies you have fought (2026-10-30)
 
 The user, on Fable's suggestion: "I like the Realm Journal. Let's also add that you can see the decks of enemies you've

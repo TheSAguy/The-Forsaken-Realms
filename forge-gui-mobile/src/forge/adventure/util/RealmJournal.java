@@ -193,17 +193,16 @@ public final class RealmJournal {
         }
         if (built == null)
             return null;
-        Deck shown = new Deck(rank.getDisplayName());
+        Deck shown = new Deck(rank.getDisplayName() + " - " + EnemyData.tierDisplayName(rank.tier)); // the view's title
         shown.getMain().addAll(built.getMain());
         System.out.println("[TFR-Journal] deck view: " + rank.getName() + " (" + EnemyData.tierDisplayName(rank.tier) + "), "
                 + (fixed ? "fixed list" : "last deck fought") + ", " + shown.getMain().countAll() + " cards");
         return shown;
     }
 
-    /** The view's caption: what the page is, the creature and its rank. */
+    /** The view's caption, in its search box and on its tab: what the page is. The title names the creature and rank. */
     public static String caption(EnemyData rank) {
-        String who = rank.getDisplayName() + " - " + EnemyData.tierDisplayName(rank.tier);
-        return fixedDeck(rank) ? who : "Last deck fought: " + who;
+        return fixedDeck(rank) ? "Deck" : "Last Deck";
     }
 
     /** The filter row's lands, as the biomes name them; {@link #LAND_PIPS} holds each one's mana letter. */
