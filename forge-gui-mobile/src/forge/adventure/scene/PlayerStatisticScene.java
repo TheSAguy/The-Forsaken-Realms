@@ -126,6 +126,20 @@ public class PlayerStatisticScene extends UIScene {
         ScrollPane blessing = ui.findActor("blessingInfo");
         blessing.setActor(blessingScroll);
         window.add(root);
+        // Round 897: the Journal's button. Portrait's blessing box is too small for a second button: it takes half of Quests.
+        if (forge.adventure.util.RealmJournal.enabled() && !Forge.isLandscapeMode()) {
+            TextraButton questsButton = ui.findActor("quests");
+            float half = questsButton.getWidth() / 2f;
+            questsButton.setWidth(half - 1f);
+            TextraButton journal = Controls.newTextButton("Journal", JournalScene::show);
+            journal.setBounds(questsButton.getX() + half + 1f, questsButton.getY(), half - 1f, questsButton.getHeight());
+            ui.addActor(journal);
+        }
+    }
+
+    /** Round 897: landscape's blessing box holds the Journal's button. */
+    private static boolean journalInBox() {
+        return forge.adventure.util.RealmJournal.enabled() && Forge.isLandscapeMode();
     }
 
     private static PlayerStatisticScene object;
@@ -311,8 +325,17 @@ public class PlayerStatisticScene extends UIScene {
                 ascendance.setWrap(true);
                 Table box = new Table();
                 box.add(ascendance).width(width).left().row();
-                box.add(Controls.newTextButton("[%80]Level sheet", this::levelSheet)).left().padTop(2f).padBottom(6f).row();
+                Table buttons = new Table(); // round 897: the Journal beside it
+                buttons.add(Controls.newTextButton("[%80]Level sheet", this::levelSheet));
+                if (journalInBox())
+                    buttons.add(Controls.newTextButton("[%80]Journal", JournalScene::show)).padLeft(3f);
+                box.add(buttons).left().padTop(2f).padBottom(6f).row();
                 box.add(blessingScroll).width(width).left().row();
+                blessingBox.setActor(box);
+            } else if (journalInBox()) { // round 897
+                Table box = new Table();
+                box.add(Controls.newTextButton("[%80]Journal", JournalScene::show)).left().padBottom(6f).row();
+                box.add(blessingScroll).width(Math.max(60f, blessingBox.getWidth() - 6f)).left().row();
                 blessingBox.setActor(box);
             } else {
                 blessingBox.setActor(blessingScroll);
@@ -322,7 +345,10 @@ public class PlayerStatisticScene extends UIScene {
         for (Map.Entry<String, Pair<Integer, Integer>> entry : Current.player().getStatistic().getWinLossRecord().entrySet()) {
             EnemyData data = WorldData.getEnemy(entry.getKey());
             if (data == null) continue;
-            Image enemyImage = new Image(new EnemySprite(data).getAvatar());
+            // Round 897: the baked sheet's face. A new EnemySprite loads the enemy's whole atlas, and nothing frees it: 800 MB
+            // at 195 names. A plane with no sheet goes on as before.
+            TextureRegion face = forge.adventure.util.EnemyAvatars.region(data);
+            Image enemyImage = face != null ? new Image(face) : new Image(new EnemySprite(data).getAvatar());
             enemyImage.setScaling(Scaling.stretch);
             scrollContainer.add(enemyImage).pad(5).size(16).fillY();
             // Bronze Coin marker (user spec 2026-08-31: "put a little star/coin next to the enemy
@@ -437,6 +463,12 @@ public class PlayerStatisticScene extends UIScene {
                 + " reward(s) waiting - back to the map for the choice");
         back();
         com.badlogic.gdx.Gdx.app.postRunnable(forge.adventure.util.AscendanceUI::openFromHud);
+    }
+
+    @Override
+    public boolean leave() {
+        forge.adventure.util.EnemyAvatars.release(); // round 897: enter builds the rows again
+        return super.leave();
     }
 
     @Override

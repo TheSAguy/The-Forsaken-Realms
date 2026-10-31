@@ -71,6 +71,7 @@ public class TfrAchievement extends Achievement {
             java.util.Map.entry(TfrAchievements.SCHOLAR, "Archivist"),
             java.util.Map.entry(TfrAchievements.INTO_THE_DEEP, "Dungeon Descent"),
             java.util.Map.entry(TfrAchievements.ONCE_MORE, "Second Chance"),
+            java.util.Map.entry(TfrAchievements.FIELD_GUIDE, "Beast Whisperer"),
             java.util.Map.entry(TfrAchievements.HONORS_EVEN, "Divine Intervention"));
 
     /** The trophy's card - none for a hidden achievement not yet earned, so it does not give itself away. */

@@ -27,6 +27,10 @@ public class PlayerStatistic implements SaveFileContent {
      *  whole - and fieldWins() takes them out for every "first win" rule. Saved as "arenaWins"; an older save loads it
      *  empty, so the arena wins it already holds stay counted as ordinary wins. */
     HashMap<String, Integer> arenaWins = new HashMap<>();
+    /** Round 897: the latest deck fought at each rank that has no fixed list (RealmJournal.recordFought), keyed as
+     *  ranksBattled, as a card list. Saved as "foughtDecks", cleared with the ranks by New Game and New Game+; an older
+     *  save loads it empty, and the Journal asks for one more fight. */
+    HashMap<String, String> foughtDecks = new HashMap<>();
 
     public HashMap<String, Pair<Integer,Integer>> getWinLossRecord()
     {
@@ -182,6 +186,15 @@ public class PlayerStatistic implements SaveFileContent {
                     if (e.getKey() instanceof String && e.getValue() instanceof Integer)
                         arenaWins.put((String) e.getKey(), (Integer) e.getValue());
         }
+
+        foughtDecks = new HashMap<>(); // round 897
+        if (data != null && data.containsKey("foughtDecks")) {
+            Object stored = data.readObject("foughtDecks");
+            if (stored instanceof java.util.Map)
+                for (Map.Entry<?, ?> e : ((java.util.Map<?, ?>) stored).entrySet())
+                    if (e.getKey() instanceof String && e.getValue() instanceof String)
+                        foughtDecks.put((String) e.getKey(), (String) e.getValue());
+        }
     }
 
     /** Round 742: an arena win over this enemy, already counted in the record by DuelScene.recordStatistics(). */
@@ -225,6 +238,27 @@ public class PlayerStatistic implements SaveFileContent {
         return ranksBattled;
     }
 
+    /** Round 897: keeps this deck as the latest fought at this rank. */
+    public void recordFoughtDeck(forge.adventure.data.EnemyData enemy, forge.deck.Deck deck) {
+        if (enemy == null || enemy.getName() == null || deck == null)
+            return;
+        String list = deck.getMain().toCardList("\n");
+        foughtDecks.put(rankKey(enemy.getName(), enemy.tier), list);
+        System.out.println("[TFR-Journal] deck kept: " + enemy.getName() + " ("
+                + forge.adventure.data.EnemyData.tierDisplayName(enemy.tier) + "), " + deck.getMain().countAll() + " cards, "
+                + list.length() + " chars - " + foughtDecks.size() + " kept");
+    }
+
+    /** Round 897: the latest deck fought at this rank, built anew, or null. */
+    public forge.deck.Deck foughtDeck(String name, String tier) {
+        String list = foughtDecks.get(rankKey(name, tier));
+        if (list == null)
+            return null;
+        forge.deck.Deck deck = new forge.deck.Deck(name);
+        deck.getMain().addAll(forge.deck.CardPool.fromCardList(java.util.Arrays.asList(list.split("\n"))));
+        return deck;
+    }
+
     public void setResult(String enemy,boolean win)
     {
         if(!winLossRecord.containsKey(enemy))
@@ -253,6 +287,7 @@ public class PlayerStatistic implements SaveFileContent {
         data.storeObject("completedEvents", completedEvents);
         data.storeObject("ranksBattled", new ArrayList<>(ranksBattled)); // round 719
         data.storeObject("arenaWins", new HashMap<>(arenaWins)); // round 742
+        data.storeObject("foughtDecks", new HashMap<>(foughtDecks)); // round 897
         return data;
     }
 
@@ -261,6 +296,7 @@ public class PlayerStatistic implements SaveFileContent {
         winLossRecord.clear();
         ranksBattled.clear(); // round 719: New Game and New Game+ start knowing no enemy
         arenaWins.clear(); // round 742
+        foughtDecks.clear(); // round 897: with the ranks that open them
         // completedEvents was NOT cleared here (fixed 2026-08-29, user request that a New Game /
         // New Game+ reset these values). It is persisted by save() and restored by load() just
         // like winLossRecord, and it backs every event statistic on the Statistics screen

@@ -124,6 +124,9 @@ public class ConfigData {
     // Round 719: hold Alt (R3 on a controller, the HUD's Units toggle on touch) and every enemy in sight wears an info
     // plate - its rank, and its colors and starting life as far as the player has battled it (util/TfrPlates).
     public boolean enemyInfoPlatesEnabled = false;
+    // Round 897: the Realm Journal - the character sheet's page of the creatures and legends met, their decks, and the
+    // Field Guide trophy (util/RealmJournal, scene/JournalScene).
+    public boolean realmJournalEnabled = false;
     // Round 813: the Temple's Wrath - with a Temple in the Capitol, the week's most-killed color is hunted the next week:
     // its land's spawns roll a bracket ahead and its foes pay a bounty (util/WrathHunt; numbers in TuningData wrath*).
     public boolean wrathHuntEnabled = false;

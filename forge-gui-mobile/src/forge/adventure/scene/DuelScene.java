@@ -1187,6 +1187,7 @@ public class DuelScene extends ForgeScene {
                 System.err.println(isDeckMissingMsg);
                 deck = this.eventData == null && canUseGeneticAI ? Aggregates.random(DeckProxy.getAllGeneticAIDecks()).getDeck() : this.playerDeck;
             }
+            Deck deckBuilt = deck; // round 897: the whole deck, for the Journal - the card below may leave it
             // Round 793: a permanent from this seat's own deck - picked now, so the seat registers with the deck that card
             // left (a copy; the Walls block below puts the card in play). Round 799: on top of the Walls, from the
             // difficulty's notoriety (NotorietyDeckCard.gate), never in the Arena.
@@ -1244,6 +1245,10 @@ public class DuelScene extends ForgeScene {
             // included - for the Alt info plates. Not an Inn match (the event's deck), Deck Tester or a guard's fight.
             if (eventData == null && guardDeck == null && !aiControlsPlayerSide && currentEnemy.fixedDeck == null)
                 advPlayer.getStatistic().recordRankBattled(currentEnemy);
+            // Round 897: and the deck it played, for the Realm Journal, when that deck is not a fixed list.
+            if (eventData == null && guardDeck == null && !aiControlsPlayerSide && currentEnemy.fixedDeck == null
+                    && !chaosBattle && !isDeckMissing)
+                forge.adventure.util.RealmJournal.recordFought(advPlayer.getStatistic(), currentEnemy, deckBuilt);
             aiPlayer.setStartingLife(eventData != null ? eventData.eventRules.startingLife : enemyStartingLife);
 
             Array<EffectData> equipmentEffects = new Array<>();

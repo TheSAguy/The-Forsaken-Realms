@@ -14264,6 +14264,57 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 897: the Realm Journal, with the decks of enemies you have fought (2026-10-30)
+
+The user, on Fable's suggestion: "I like the Realm Journal. Let's also add that you can see the decks of enemies you've
+fought." Design and picks: `notes/realm-journal-proposal.md` in the project root (Creatures and Legends first, Places
+later; a creature counts once beaten; Field Guide 50 / 200 / 500 / 800; Statistics moves off the atlases first). Flag:
+`realmJournalEnabled`, on in the plane.
+
+- **Statistics first (`util/EnemyAvatars`, `dev-tools/enemy_avatars/bake_avatars.py`).** `PlayerStatisticScene.enter` built
+  `new EnemySprite` per record, which loads that enemy's whole atlas, and nothing frees it. All 2,120 faces now sit on
+  three 2048 pages (4 MB of png, `sprites/enemy_avatars/`), read on demand and freed when the scene leaves. Measured on the
+  desktop, 195 names: opening Statistics added 800 MB of private memory that stayed after leaving (2,983 to 3,784) in 0.9 s;
+  now it adds under 20 MB. A plane with no sheet keeps the old path. After new enemy art run the bake; `--audit` lists
+  stale, missing and extra faces. It is a built file, not art, so it has no Art Library copy.
+- **The Journal (`scene/JournalScene`, `util/RealmJournal`).** Opened by a Journal button on the character sheet: in the
+  blessing box in landscape, and sharing the Quests slot in portrait, where the box clips a second button. It uses the
+  Sets page's layouts, so there is no new ui json. Tabs Creatures and Legends; land pips, a rank button and a sort button; 40
+  rows a list page. Landscape shows list and page together; portrait lists, a tap opens the page, Back returns. Only what
+  was met is listed. Facts come from `TfrPlates.knowledge`, split so it needs no sprite, so a rank battled shows colors, life
+  and deck, a family member colors, and nothing else. A name known only from the profile's lists (another save, or before
+  New Game+) is dimmed, "Met in an earlier run", with no facts and no deck.
+- **The proposal's "Newest" sort is gone:** nothing stores when a creature was met. Sorts are Name and Most fought.
+- **Decks.** A Deck button on each battled rank, gated by that same knowledge answer, so a loss opens it, and an older save
+  through the plates' fallback. It opens `DeckPreviewScene` with a new `Deck` each press, main deck only (the preview would
+  add the sideboard), on the press and never per row. Back returns to the same entry, filters and scroll; the scene keeps
+  those in fields and rebuilds on enter, because leaving frees the avatar pages. `fixedDeck` asks whether the rank in hand
+  plays one .dck that exists, and such a rank is rebuilt through `EnemyData.generateDeck` with the duel's arguments.
+  `enemies.json` holds 2,092 fixed enemies, but what counts is the rank after `EnemyTiers`: of about 4,300 ranks, 232 have no
+  fixed list (207 family ranks, 25 others).
+- **Last deck fought.** For those ranks `DuelScene` passes the deck to `RealmJournal.recordFought`, next to
+  `recordRankBattled`: the whole deck, taken before `NotorietyDeckCard` moves a card out. `PlayerStatistic` keeps the latest
+  per "Name|Tier" as a card list in a new optional key, `foughtDecks`, and clears it with the ranks. An older save has none:
+  "Fight it again to record its deck". Never kept: Deck Tester, an event, a guard's fight, Chaos, a missing deck. The copier
+  reads "Copies your deck", no button.
+- **Field Guide**, the 18th TFR trophy: 50 / 200 / 500 / 800, no reward, trophy card Beast Whisperer. `addSeen` on a win
+  and in `backfill`, profile-wide. **The list is 893 names, not the proposal's 848:** the land rosters' non-boss,
+  non-legend, non-Archmage names with a spawn rate, computed at runtime with the content filter. I could not reproduce 848;
+  the top tier stays 800, and the bar runs to the runtime count.
+- **Scouting and farming.** Nothing in the game sells or rewards a look at an enemy's deck (items, quests, ascendance,
+  settings, code); Manasight shows colors only. Rewards draw from the enemy's deck (`EnemySprite`), so a deck list is also a
+  map of who to farm for a card. Accepted: fought ranks only, and spawn weights halve per kill.
+- **Not covered:** a map's `overrideDeck` (`MapStage`, one dialog path) gives one placed enemy another deck, and the Journal
+  shows that rank's own. Portrait's rank line is fixed-width and was only seen at 720x1280. A controller has no focus pass.
+- **Logs:** `[TFR-Journal]` page, avatar page read and freed, deck view, deck kept, roster size. Callers (graphify):
+  `TfrPlates.knowledge` 1, `recordRankBattled` 1.
+- **Save:** no class change, no `serialVersionUID` change. A pre-897 save (slot copy, 31 items, 1,837 cards) loaded, played
+  and saved with its 31 items; `foughtDecks` absent before, present after.
+- **Tested** in the agent game on copies of late saves, duels at 50x, classes ahead of the jar: Journal in both layouts, fixed
+  and kept decks, the old-save line, the copier, Back with a seeded scroll, all four tiers from seeded lists, `backfill`
+  on a 195-name save. **Not tested:** Android (memory or touch), a real mouse wheel, a New Game+ in play (the dimmed
+  state was seen; the clear is by reading), a controller.
+
 ## Round 896: five LPC enemies get the parts their picks never drew (2026-10-30)
 
 The validator audit (generator `validate_sel.py`) flagged 9 enemy picks. All 9 sheets rebuilt pixel-identical to what

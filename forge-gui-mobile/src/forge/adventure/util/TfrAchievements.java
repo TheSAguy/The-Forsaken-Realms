@@ -48,6 +48,7 @@ public final class TfrAchievements extends AchievementCollection {
     public static final String ONCE_MORE = "tfr_once_more";
     public static final String HONORS_EVEN = "tfr_honors_even";
     public static final String WRATH_BREAKER = "tfr_wrath_breaker"; // round 814
+    public static final String FIELD_GUIDE = "tfr_field_guide"; // round 897
 
     /** Round 718: the three end-game legend dungeons (round 668), by their place names. */
     private static final String[] LEGEND_DUNGEONS = {"Hexhaven Tower", "Echoverse Overlay", "Theorist's Sanctum"};
@@ -106,6 +107,8 @@ public final class TfrAchievements extends AchievementCollection {
                 new int[]{1, 2, 3, 5}, new String[]{"1 color", "2 colors", "3 colors", "all 5 colors"}));
         add(new TfrAchievement(SCHOLAR, "Scholar of the Realm", "Complete the research of card sets.", false,
                 new int[]{1, 5, 10, 20}, new String[]{"1 set", "5 sets", "10 sets", "20 sets"}));
+        add(new TfrAchievement(FIELD_GUIDE, "Field Guide", "Record the creatures of the realm.", false,
+                new int[]{50, 200, 500, 800}, new String[]{"50 creatures", "200 creatures", "500 creatures", "800 creatures"}));
         add(new TfrAchievement(INTO_THE_DEEP, "Into the Deep",
                 "Clear all three end-game legend dungeons.", false));
         add(new TfrAchievement(ONCE_MORE, "Once More, With Feeling", "Begin the realm anew, and keep what you carried.",
@@ -199,6 +202,12 @@ public final class TfrAchievements extends AchievementCollection {
             get().save();
     }
 
+    /** Round 897: a collection's profile-wide names, for the Realm Journal to read. */
+    public static java.util.Set<String> seenNames(String key) {
+        TfrAchievement a = find(key);
+        return a == null ? new java.util.TreeSet<>() : new java.util.TreeSet<>(a.seen());
+    }
+
     // ---- the hooks --------------------------------------------------------------------------------------------
 
     /** TerritoryControl.defeatColor, after the fall is marked. */
@@ -235,6 +244,8 @@ public final class TfrAchievements extends AchievementCollection {
     public static void onDuelWon(EnemyData enemy, int notoriousRank) {
         if (enemy != null && LegendSpawns.isMember(enemy))
             addSeen(LEGEND_HUNTER, enemy.getName(), "beat " + enemy.getName());
+        if (enemy != null && RealmJournal.enabled() && RealmJournal.counts(enemy.getName()))
+            addSeen(FIELD_GUIDE, enemy.getName(), "beat " + enemy.getName());
         if (notoriousRank >= 0)
             reach(NOTORIOUS, notoriousRank + 1, "beat a fully armed " + EnemyData.tierDisplayName(rankTier(notoriousRank))
                     + " at Notoriety " + WorldSave.getCurrentSave().getPlayer().notorietyStreak()); // round 753: a score
@@ -413,6 +424,8 @@ public final class TfrAchievements extends AchievementCollection {
                 EnemyData enemy = WorldData.getEnemy(e.getKey());
                 if (enemy != null && LegendSpawns.isMember(enemy))
                     addSeen(LEGEND_HUNTER, enemy.getName(), why);
+                if (enemy != null && RealmJournal.enabled() && RealmJournal.counts(enemy.getName()))
+                    addSeen(FIELD_GUIDE, enemy.getName(), why);
             }
             if (Ascendance.isActive())
                 reach(ASCENDANT, Ascendance.level(), why);

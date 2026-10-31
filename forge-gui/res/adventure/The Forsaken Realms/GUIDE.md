@@ -929,6 +929,20 @@ page showing every color's current reputation and territory at a glance (with a 
 graph), and a Mod Details page documenting the custom systems in-game, without needing this guide
 open in another window.
 
+### The Realm Journal
+
+The Journal button on your character sheet opens a record of everything you have met. **Creatures** and **Legends** are its
+two tabs; filter by land or rank, and sort by name or by most fought. Only what you have met is listed.
+
+A creature's page says what the Alt plates know of each rank: battle a rank to learn its colors, life and **deck**; a
+relative of that rank tells you its colors. Winning isn't needed: a lost duel opens the rank too.
+
+- **Deck** shows the deck that rank plays. A rank that builds a new deck each fight has no fixed list, so you see the
+  **last deck fought** instead; on a save from before this feature, fight it once more to record it.
+- A creature met in another save or before a New Game+ stays listed, dimmed, as "Met in an earlier run". Its facts and deck
+  come back when you meet it again.
+- Each creature you beat counts toward the **Field Guide** trophy, once whatever its rank.
+
 ### Achievements
 
 The Forsaken Realms keeps its own achievements, listed first on the trophy page (the Quest log's **Status**, then
@@ -945,6 +959,7 @@ that added them. Console commands never earn an achievement.
 |---|---|---|
 | **Lord Slayer** | Bring down a Lord in their own castle. | 1 / 3 / 4 / all 5 castles |
 | **Capital Gains** | Take a color's capital by assault, before its castle falls (a fallen color's capital falls with it). Counted by the color that built the capital. | 1 / 3 / 4 / all 5 |
+| **Field Guide** | Beat the creatures of the realm, each one once, at any rank, across all your saves. | 50 / 200 / 500 / 800 creatures |
 | **Legend Hunter** | Defeat the legends of the realm, each one once, across all your saves. The Arena counts. | 1 / 10 / 25 / 50 legends |
 | **Notorious** | Win at notoriety 50 or more: the foe starts with both bonus Walls and the Clue and Treasure. The Arena counts. Not while Notoriety is off in Settings. | an Apprentice / an Adept / a Master / an Archmage |
 | **Ascendant** | Rise through the Ascendance. | level 5 / 10 / 20 / 30 |

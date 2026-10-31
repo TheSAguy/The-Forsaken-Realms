@@ -320,16 +320,20 @@ public final class TfrPlates {
 
     /** 2 this exact rank battled, 1 its family, 0 nothing. */
     static int knowledge(EnemySprite sprite) {
-        EnemyData d = sprite.getData();
+        return knowledge(sprite.getData(), sprite.getName());
+    }
+
+    /** Round 897: the same answer with no sprite (RealmJournal). shownName: a sprite's override, else the enemy's name. */
+    static int knowledge(EnemyData d, String shownName) {
         PlayerStatistic stats = Current.player().getStatistic();
         if (stats.hasBattledRank(d.getName(), d.tier))
             return 2;
         Map<String, ?> record = stats.getWinLossRecord();
         // An older save knows names only: one with a single rank was this rank.
-        if (!EnemyTiers.isFamily(d) && (record.containsKey(d.getName()) || record.containsKey(sprite.getName())))
+        if (!EnemyTiers.isFamily(d) && (record.containsKey(d.getName()) || record.containsKey(shownName)))
             return 2;
         Set<String> families = knownFamilies(stats);
-        return families.contains(familyName(d.getName())) || families.contains(familyName(sprite.getName())) ? 1 : 0;
+        return families.contains(familyName(d.getName())) || families.contains(familyName(shownName)) ? 1 : 0;
     }
 
     private static Set<String> knownFamilies(PlayerStatistic stats) {

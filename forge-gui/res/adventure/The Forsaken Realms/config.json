@@ -311,6 +311,7 @@
     "contentFilterTablesEnabled": true,
     "showEnemyTierInName": true,
     "enemyInfoPlatesEnabled": true,
+    "realmJournalEnabled": true,
     "wrathHuntEnabled": true,
     "cleanFontEnabled": true,
     "weightedSpawnTiersEnabled": true,

@@ -35,6 +35,16 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 897 - the Realm Journal
+- **`forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java`** (STOCK) - `enter()` takes a face from
+  `EnemyAvatars.region` before falling back on `new EnemySprite(data).getAvatar()`; a Journal button (the blessing box in
+  landscape, half of the Quests slot in portrait); a `leave()` that frees the avatar pages.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** (STOCK) - `enter()`: a local `deckBuilt`, and after
+  `recordRankBattled` a call to `RealmJournal.recordFought`.
+- **`forge-gui-mobile/src/forge/adventure/player/PlayerStatistic.java`** (STOCK) - `foughtDecks`, an optional save key beside
+  `arenaWins`, with `recordFoughtDeck` and `foughtDeck`, loaded, saved and cleared with the ranks.
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** (STOCK) - `realmJournalEnabled`, default false.
+
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
