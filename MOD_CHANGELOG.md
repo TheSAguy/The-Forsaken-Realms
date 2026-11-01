@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 906 (follow-up): a second save in one run gets its own noise and patterns (2026-10-31)
+
+P3-13: `World` is a process-lifetime singleton. `territoryNoise` and `overlayNoise` were built once from the seed and never
+reset, and the two pattern caches were reset in `generateNew` but not in `load`. So save B, loaded after save A without a
+restart, drew its ground overlay patches and territory growth from A's seed until a restart. Claimed tiles stay as rolled, so
+nothing was corrupted. File: `world/World.java`.
+
+- **`resetSeedCaches()`** clears all four, from `generateNew` always and from `load` only when the seed changed. A reload of the
+  same world keeps its patterns: rebuilding them is seconds of background work per color.
+- **The race:** a background pattern build could finish after a load and hand the old world's pattern to the new one.
+  `seedCacheGeneration` goes up on each reset; a build that started under an older value drops its result with a
+  `[TFR-WorldCache]` line, and the background task builds again for the new world, so the new world's first day isn't left bare
+  (round 293's "still building").
+
+**Tested** in the agent. Slots 93 and 92 (the same world) loaded in a row: one reset. Slot 3 then slot 93 at once (different
+worlds): a reset each, and all six patterns (white, blue, black, red, green, player) `dropped` from the last world. **Not
+seen:** the rebuild after the drop (the game was stopped first), and the overlay patches compared by eye between two saves.
+
 ## Round 906 (follow-up): a bad console command answers, the Wrath fades, a tiered mage keeps its tier (2026-10-31)
 
 Three small fixes that share `WorldStage`: P3-14, P3-8 and P3-15.

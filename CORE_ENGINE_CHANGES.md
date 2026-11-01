@@ -35,6 +35,11 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 906 (follow-up) - seed caches reset per world
+- `forge-gui-mobile/src/forge/adventure/world/World.java`: new `resetSeedCaches()` and `seedCacheGeneration`; `generateNew`'s two
+  cache clears now call it, `load` calls it when the seed changed; `buildColorlessRedirectStructuresBlocking` checks the
+  generation before caching; `getColorlessRedirectStructuresIfReady` builds again if the generation moved.
+
 ### Round 906 (follow-up) - console catch, the Wrath's fade, a mage's tier mid guard fight
 - `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`: `command()` gets a `catch (RuntimeException)`
   between the round 717 `try` and `finally`; it rethrows for an item's command.

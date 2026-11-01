@@ -1265,7 +1265,10 @@ public class World implements Disposable, SaveFileContent {
         mapObjectIds.load(saveFileData.readSubData("mapObjectIds"));
         mapPoiIds = new PointOfInterestMap(getChunkSize(), this.data.tileSize, this.data.width / getChunkSize(), this.data.height / getChunkSize());
         mapPoiIds.load(saveFileData.readSubData("mapPoiIds"));
+        long seedBefore = seed;
         seed = saveFileData.readLong("seed");
+        if (seed != seedBefore) // round 906: a reload of the same world keeps its patterns (seconds of background work)
+            resetSeedCaches();
         loadBarrier(saveFileData); // round 294
 
         Object exploredObj = saveFileData.readObject("explored");
@@ -2947,8 +2950,7 @@ public class World implements Disposable, SaveFileContent {
             explored = new boolean[width][height]; // brand new world: nothing explored yet
             cachedLandTileTotal = -1; // new seed -> different land/ocean split, see load()'s own comment
             structureSwapCache = null; // don't inherit a previous game's random structure picks
-            nativeStructurePatternCache.clear(); // same reasoning - a new seed needs fresh patterns
-            colorlessRedirectStructureCache.clear(); // same reasoning
+            resetSeedCaches(); // same reasoning - a new seed needs fresh patterns and noise
             castleKeepTiles = null;   // round 272: a new world puts the castles somewhere else
             cachedWasteBiomeIndex = -2; // ... and a different plane may not have a wasteland at all
             drawableTerrainIndexCache.clear(); // keyed by (layer, index), both plane-specific
@@ -5322,6 +5324,23 @@ public class World implements Disposable, SaveFileContent {
     // the generation-time terrain[] patches.
     private OpenSimplexNoise overlayNoise;
 
+    // Round 906 (Fable P3-13): which seed's caches are current. A background build that started under an older value
+    // throws its result away (buildColorlessRedirectStructuresBlocking), so a load cannot be handed the last world's.
+    private volatile int seedCacheGeneration;
+
+    /** Round 906: everything built from the seed. generateNew() cleared the patterns and nothing cleared the noise, so a
+     *  second save loaded in one app run drew its overlay patches and territory growth from the first save's seed. */
+    private void resetSeedCaches() {
+        territoryNoise = null;
+        overlayNoise = null;
+        nativeStructurePatternCache.clear();
+        synchronized (colorlessRedirectStructureCache) {
+            seedCacheGeneration++;
+            colorlessRedirectStructureCache.clear();
+        }
+        System.out.println("[TFR-WorldCache] seed caches reset for seed " + seed + " (generation " + seedCacheGeneration + ")");
+    }
+
     private OpenSimplexNoise getOverlayNoise() {
         if (overlayNoise == null)
             overlayNoise = new OpenSimplexNoise(seed ^ 0x0e71a4c3L);
@@ -5392,6 +5411,7 @@ public class World implements Disposable, SaveFileContent {
         BiomeStructureData[] cached = colorlessRedirectStructureCache.get(color);
         if (cached != null)
             return cached;
+        int generation = seedCacheGeneration; // round 906
 
         BiomeData colorlessBiomeRef = null;
         for (BiomeData b : data.GetBiomes())
@@ -5416,7 +5436,13 @@ public class World implements Disposable, SaveFileContent {
         BiomeStructureData[] clone = cloneStructures(colorlessBiomeRef.structures);
         for (BiomeStructureData structureData : clone)
             getOrBuildNativePattern(structureData, scaleWidth, scaleHeight);
-        colorlessRedirectStructureCache.putIfAbsent(color, clone);
+        synchronized (colorlessRedirectStructureCache) {
+            if (generation != seedCacheGeneration) {
+                System.out.println("[TFR-WorldCache] " + color + " pattern from the last world dropped");
+                return null;
+            }
+            colorlessRedirectStructureCache.putIfAbsent(color, clone);
+        }
         return colorlessRedirectStructureCache.get(color);
     }
 
@@ -5436,7 +5462,11 @@ public class World implements Disposable, SaveFileContent {
         if (colorlessRedirectStructureBuildInFlight.add(color)) {
             CompletableFuture.runAsync(() -> {
                 try {
-                    buildColorlessRedirectStructuresBlocking(color);
+                    int generation;
+                    do { // round 906: a load during the build threw its result away - build for the new world
+                        generation = seedCacheGeneration;
+                        buildColorlessRedirectStructuresBlocking(color);
+                    } while (generation != seedCacheGeneration);
                 } finally {
                     colorlessRedirectStructureBuildInFlight.remove(color);
                 }
