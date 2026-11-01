@@ -321,7 +321,7 @@ public class PlayerStatisticScene extends UIScene {
             } else {
                 blessingScroll.setText(size + "[BLACK]No blessing.");
             }
-            forge.adventure.util.Doppelganger.headBlessing(blessingScroll, Current.player()); // TFR round 879
+            forge.adventure.util.Doppelganger.headBlessing(blessingScroll, Current.player(), size); // TFR round 879
         }
         // Round 496 (the user: "On the character sheet is should show current level and progress, how much is needed for
         // next" and "We should add a Level sheet that shows what you picked on each level"): Ascendance heads the
@@ -347,7 +347,7 @@ public class PlayerStatisticScene extends UIScene {
                 buttons.add(Controls.newTextButton("[%80]Level sheet", this::levelSheet));
                 if (journalInBox())
                     buttons.add(Controls.newTextButton("[%80]Journal", JournalScene::show)).padLeft(3f);
-                box.add(buttons).left().padTop(2f).padBottom(6f).row();
+                box.add(buttons).left().padTop(2f).padBottom(landscape ? 6f : 1f).row();
                 box.add(blessingScroll).width(width).left().row();
                 blessingBox.setActor(box);
             } else if (journalInBox()) { // round 897

@@ -14434,6 +14434,20 @@ full strength.
   seed: `generateNew(0)`). The Hard/Insane balance effect of the shift itself is unchanged, so it wasn't re-measured. Nothing
   ran on a phone.
 
+## Round 903 (follow-up 2): a Doppelganger's blessing box takes the same size (2026-10-31)
+
+- Named as open by the first follow-up: `Doppelganger.headBlessing` rewrites the box's text at full size, so a Doppelganger in
+  portrait kept the clip. It now takes the page's own `size` as a parameter (one caller, `PlayerStatisticScene`; found with
+  Grep), so the portrait check lives in one place. Landscape passes "" and reads as before.
+- With the heading on two lines the second lost a few pixels at the box's bottom, so the gap under the Level sheet button is 1px
+  in portrait, 6 in landscape as before.
+- **Tested** on the real scene class and a throwaway `Doppelganger` forcing a long heading (not committed, no Doppelganger save
+  on the agent profile), portrait 540x960, Eternal 44, 2444 / 4830: "Doppelganger (as Dragon Knight)" whole on two lines
+  (`notes/r903-shots/followup2-portrait-doppelganger-l44.png`). That form is made up to force the wrap. The blessing line sits
+  under the fold in that case, one scroll down; a short form such as "(as Kor)" should take one line and leave it showing, not
+  shot. A real Doppelganger wasn't played and landscape wasn't reshot (its values are unchanged in code). javac only.
+- Files: `scene/PlayerStatisticScene.java` (stock), `util/Doppelganger.java`.
+
 ## Round 903 (follow-up): Power stays on one line in portrait, and the blessing text takes the sheet's small size (2026-10-31)
 
 - The main thread's check of `notes/r903-shots/after-portrait-eternal-l44.png`: the button was whole, but when Power wrapped

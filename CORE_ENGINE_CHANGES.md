@@ -63,7 +63,7 @@ md` already gets updated after every change.
 
 ### Round 903 - the Level sheet button in portrait
 - `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): in the Ascendance label, portrait only, the
-  heading is `[%90]`, the title takes its own line, and Power is its icon and the amount, and the blessing text takes the sheet's `size`. Inside TFR's existing Ascendance block.
+  heading is `[%90]`, the title takes its own line, Power is its icon and the amount, the blessing text and `Doppelganger.headBlessing` take the sheet's `size`, and the gap under the button is 1. Inside TFR's existing Ascendance block.
 
 ### Round 906 (follow-up) - a Bank balance stops at the top
 - `forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterestChanges.java`: `addBankBalance` (TFR's own method in a
