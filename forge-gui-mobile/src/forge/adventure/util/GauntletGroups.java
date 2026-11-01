@@ -158,7 +158,7 @@ public final class GauntletGroups {
             if (groups.size() < 2 || i != last - 1)
                 pool.add(i);
         World world = Current.world();
-        Integer despawnDay = world == null ? null : world.getPoiDespawnDay().get(root.getID());
+        Integer despawnDay = world == null ? null : DungeonRotation.appearanceDay(world, root); // round 906
         long seed = (world == null ? 0L : world.getSeed()) ^ ((long) root.getID().hashCode() << 20)
                 ^ ((despawnDay == null ? 0L : despawnDay) * 1000003L);
         int pick = pool.get(new Random(seed).nextInt(pool.size()));

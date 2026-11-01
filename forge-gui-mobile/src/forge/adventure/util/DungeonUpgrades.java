@@ -53,7 +53,7 @@ public final class DungeonUpgrades {
 
     static long visitSeed(PointOfInterest poi, String level, int objectId, int salt) {
         World world = Current.world();
-        Integer despawnDay = world == null || poi == null ? null : world.getPoiDespawnDay().get(poi.getID());
+        Integer despawnDay = world == null || poi == null ? null : DungeonRotation.appearanceDay(world, poi); // round 906
         long seed = poi == null ? 0L : poi.getSeedOffset() * 31L + poi.getID().hashCode();
         seed = seed * 1000003L + (despawnDay == null ? 0 : despawnDay);
         seed = seed * 1000003L + (level == null ? 0 : level.hashCode());
@@ -66,7 +66,7 @@ public final class DungeonUpgrades {
     /** The appearance a seed belongs to, for the log lines: "despawn day 41" (or "no despawn day"). */
     static String appearance(PointOfInterest poi) {
         World world = Current.world();
-        Integer despawnDay = world == null || poi == null ? null : world.getPoiDespawnDay().get(poi.getID());
+        Integer despawnDay = world == null || poi == null ? null : DungeonRotation.appearanceDay(world, poi);
         return despawnDay == null ? "no despawn day" : "despawn day " + despawnDay;
     }
 

@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 906 (follow-up): a place's first timer comes from its seed, so its first entry rolls the same (2026-10-31)
+
+P3-7, round 835's first-day window. `DungeonUpgrades.visitSeed` uses the place's despawn day, and a place from world generation
+has none until its first day tick. So entering on day 1 seeded with 0, and entering after the tick seeded with a day rolled from
+the world's Random: the same save gave different ranks depending on when you went in. `DungeonRotation.daysLeft` also rolled and
+STORED a day from the HUD's draw call (Alt), spending the world's Random from a render read. Files: `util/DungeonRotation.java`,
+`util/DungeonUpgrades.java`, `util/GauntletGroups.java` (all TFR files).
+
+- **`firstDespawnDay(world, poi, day)`:** a place's first timer draws from the world seed and the place, through round 870's
+  `mixSeed`, with the same min-max odds. Every "no despawn day yet" site uses it: the tick, a quest extension, a loot halving.
+- **`appearanceDay(world, poi)`:** the stored day, or for an active rotating place with none, the day tomorrow's tick will store.
+  It only reads. `visitSeed`, `appearance()` and the gauntlet group draw use it, so a first entry seeds the same before and
+  after the tick. A place with no timer stays null, so its seeds don't start moving with the day.
+- **`daysLeft`** reads through it and stores nothing. `GameHUD` needed no edit. The `[TFR-Fade] had no despawn day yet` line is
+  gone: it would now print every frame until the tick.
+- **Kept:** a reappearance rolls from the world's Random as before, and is stored at once, so it has no window. Lifespans keep
+  their odds. A first entry's result is stored in the roster, so existing saves keep what they rolled.
+- **Open:** a tick that passes several days at once stores a later day than `appearanceDay` showed. `days skip` runs one a frame;
+  no ordinary play path was traced that does this before a place's first tick.
+
+**Tested** in the agent on the day-1 slot 3, cheats, entering the same Barbarian Camp at (209,133) by a teleport beside it, no
+duel: once on day 1, once after `days skip 1`. `[TFR-EnemyTiers]` lines, 16 placements: **this round 16 of 16 the same; the old
+jar differs on 4 of 16** (#57, #80, #81, #82), the same script. Not exercised: the Alt plate's read, a gauntlet's group draw.
+
 ## Round 906 (follow-up): a second save in one run gets its own noise and patterns (2026-10-31)
 
 P3-13: `World` is a process-lifetime singleton. `territoryNoise` and `overlayNoise` were built once from the seed and never

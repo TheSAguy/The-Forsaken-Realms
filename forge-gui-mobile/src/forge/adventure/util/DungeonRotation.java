@@ -579,8 +579,7 @@ public class DungeonRotation {
                     + " force-spawned from reserve as a new quest target, despawns day " + world.getPoiDespawnDay().get(id));
         } else {
             Integer despawnDay = world.getPoiDespawnDay().get(id);
-            int base = despawnDay != null ? despawnDay
-                    : currentDay + rollDays(world, despawnMinDays(), despawnMaxDays());
+            int base = despawnDay != null ? despawnDay : firstDespawnDay(world, poi, currentDay + 1);
             world.getPoiDespawnDay().put(id, base + SIDEQUEST_EXTENSION_DAYS);
             System.out.println("[DungeonRotation] quest target " + poi.getDisplayName()
                     + " timer extended " + SIDEQUEST_EXTENSION_DAYS + " days, despawns day " + world.getPoiDespawnDay().get(id));
@@ -626,7 +625,7 @@ public class DungeonRotation {
             if (despawnDay == null) {
                 // First sight of this POI (fresh world, newly activated, or a save predating the
                 // feature) - seed a lifetime rather than despawning anything on day one.
-                world.getPoiDespawnDay().put(id, newDayCount + rollDays(world, despawnMinDays(), despawnMaxDays()));
+                world.getPoiDespawnDay().put(id, firstDespawnDay(world, poi, newDayCount));
                 continue;
             }
             // Round 244: a timer rolled under a LONGER ceiling (the 60 days before this round, or a
@@ -953,7 +952,7 @@ public class DungeonRotation {
             // Not seeded yet (a world whose first day tick has not run, or a POI activated this
             // same day): seed the lifetime processDaysPassed() would have given it, then halve
             // that, so the rule is not silently skipped just because of tick ordering.
-            despawnDay = currentDay + rollDays(world, despawnMinDays(), despawnMaxDays());
+            despawnDay = firstDespawnDay(world, poi, currentDay + 1);
         }
         int remaining = despawnDay - currentDay;
         if (remaining <= 1) {
@@ -1057,6 +1056,25 @@ public class DungeonRotation {
         return min + world.getRandom().nextInt(max - min + 1);
     }
 
+    /** Round 906 (Fable P3-7): the despawn day a place's first timer gives it when rolled on {@code day}. It draws from the
+     *  world seed and the place, where rollDays' shared Random gave a save reloaded on the same day another timer, so
+     *  round 835's per-appearance seed could change between two tries. Same odds as rollDays. */
+    private static int firstDespawnDay(World world, PointOfInterest poi, int day) {
+        long h = ResourceSpawns.mixSeed(world.getSeed() ^ 0x44455350L); // "DESP": apart from the other seeds
+        h = ResourceSpawns.mixSeed(h + poi.getID().hashCode());
+        int min = despawnMinDays();
+        return day + min + new java.util.Random(h).nextInt(despawnMaxDays() - min + 1);
+    }
+
+    /** Round 906: a place's despawn day - the stored one, or for a rotating place the tick has not reached yet, the one
+     *  tomorrow's tick will store. Null for a place with no timer. A read: nothing is stored, nothing drawn from the world. */
+    public static Integer appearanceDay(World world, PointOfInterest poi) {
+        Integer stored = world.getPoiDespawnDay().get(poi.getID());
+        if (stored != null || !isEnabled() || !isRotatable(poi) || !poi.getActive())
+            return stored;
+        return firstDespawnDay(world, poi, world.getCurrentDay() + 1);
+    }
+
     // ------------------------------------------------------------------ round 791: how long a place has left
 
     /** Round 791: fadeDays() for a place with no line (not a dungeon, cave or lair, or rotation is off). */
@@ -1113,7 +1131,7 @@ public class DungeonRotation {
         }
         Integer was = fadeLogged.put(poi.getID(), answer);
         if (was == null || was != answer) {
-            Integer despawnDay = WorldSave.getCurrentSave().getWorld().getPoiDespawnDay().get(poi.getID());
+            Integer despawnDay = appearanceDay(WorldSave.getCurrentSave().getWorld(), poi);
             System.out.println("[TFR-Fade] " + poi.getDisplayName() + ": " + fadeWords(answer) + " (day "
                     + WorldSave.getCurrentSave().getWorld().getCurrentDay()
                     + (despawnDay == null ? "" : ", despawn day " + despawnDay) + ")");
@@ -1121,16 +1139,14 @@ public class DungeonRotation {
         return answer;
     }
 
-    /** Round 791: a timed place's days left - its despawn day rolled now if the tick has not seeded it, and a timer over
-     *  today's lifespan ceiling read as the tick will pull it in (round 244). At least 1: the next day change takes it. */
+    /** Round 791: a timed place's days left - the day the tick will seed if it has not yet (round 906: read, never stored;
+     *  this runs from the HUD's draw), and a timer over today's lifespan ceiling read as the tick will pull it in (round
+     *  244). At least 1: the next day change takes it. */
     private static int daysLeft(World world, PointOfInterest poi) {
         int today = world.getCurrentDay();
-        Integer despawnDay = world.getPoiDespawnDay().get(poi.getID());
-        if (despawnDay == null) {
-            despawnDay = today + rollDays(world, despawnMinDays(), despawnMaxDays());
-            world.getPoiDespawnDay().put(poi.getID(), despawnDay);
-            System.out.println("[TFR-Fade] " + poi.getDisplayName() + " had no despawn day yet - rolled day " + despawnDay);
-        }
+        Integer despawnDay = appearanceDay(world, poi);
+        if (despawnDay == null) // an inactive place: fadeDays never asks, but it must not fall over if it does
+            return 1;
         return Math.max(1, Math.min(despawnDay - today, despawnMaxDays()));
     }
 
