@@ -72,7 +72,7 @@ current save.
 - **Research Lab v2:** each set has its own research, shortened by selling or sacrificing that set's cards, shown in
   days, with a Found Cards grid in the Lab. See
   [How does Research work?](#how-does-research-work-how-do-i-unlock-more-card-sets)
-- **Achievements:** 16 of TFR's own, each with a trophy card. See [Achievements](#achievements).
+- **Achievements:** 18 of TFR's own, each with a trophy card. See [Achievements](#achievements).
 - **Six new enemies**, each an Apprentice, an Adept and a Master, and enemy info plates (hold Alt). See
   [Where the Monsters Come From](#where-the-monsters-come-from).
 - **Notoriety** is a score now: a loss takes 5 off, and Settings can turn it off. See
@@ -971,6 +971,7 @@ that added them. Console commands never earn an achievement.
 | **Sworn Friend** | Earn Partner standing with a color. | 1 / 2 / 3 / all 5 colors |
 | **Scholar of the Realm** | Complete the research of card sets. | 1 / 5 / 10 / 20 sets |
 | **Into the Deep** | Clear Hexhaven Tower, the Echoverse Overlay and the Theorist's Sanctum. | one trophy |
+| **Wrath Breaker** | Beat the Wrath your Temple's hunt sends after you. | one trophy |
 
 Two more are hidden until you earn them.
 

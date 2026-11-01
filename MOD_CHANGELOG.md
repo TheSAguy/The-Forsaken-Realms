@@ -14274,8 +14274,12 @@ Achievements is now the sheet's only panel, so the Field Guide's clipped "next: 
   Guide (897) and Wrath Breaker (814) had taken the count from 16 to 18. No other "16" of this claim in `messages.py`.
   `EDITED` already holds 23.
 
-Seen in the agent game, shots `notes/r899-shots/wrap-*.png`. Landscape, every TFR trophy scrolled through with wheel messages:
-nothing clips, the two-line wraps stay level with their trophy cards, the hidden "???" row reads "A hidden achievement.", and
+- **GUIDE:** line 75 says 18, and the Achievements table gains Wrath Breaker, the one row it lacked: 16 rows plus the two
+  hidden, so "Two more are hidden" stays true. Html regenerated.
+
+Seen in the agent game, shots `notes/r899-shots/wrap-*.png`. Landscape, the list scrolled to its end with wheel messages:
+nothing clips on the rows seen whole (Capital Gains, Into the Deep and the two-line Duels rows were cut by the shots' edges or
+not read), the wraps stay level with their trophy cards, the hidden "???" row reads "A hidden achievement.", and
 the list scrolls to the end. Portrait: the top of the list only, four rows. Flag off, both layouts: the toggled page wraps
 the same way and the toggle's slot is back. Not seen: scrolling in portrait.
 
