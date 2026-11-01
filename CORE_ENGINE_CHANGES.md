@@ -35,6 +35,10 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 903 - the Level sheet button in portrait
+- `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): in the Ascendance label, portrait only, the
+  heading is `[%90]`, the title takes its own line and Power drops " to level N". Inside TFR's existing Ascendance block.
+
 ### Round 906 (follow-up) - a Bank balance stops at the top
 - `forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterestChanges.java`: `addBankBalance` (TFR's own method in a
   stock file) sums in long and clamps to `Integer.MAX_VALUE`. No stock line changed.

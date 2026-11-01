@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 904: Landscape Sketchbooks are unique - one of each (2026-10-31)
+
+- The ask: use the `unique` flag the v1.25 merge brought in (upstream #12460, conflict C3) on TFR's sketchbooks, as stock
+  does. A sketchbook only unlocks land art, so a second copy is gold thrown away, and the Cartographer's Guild is unlimited.
+- `"unique": true` on all 65 `Landscape Sketchbook - <set>` items in the plane's `items.json`. Data only, no save change.
+- **Left off: the plain "Landscape Sketchbook"**, the Dig Site quest's item. It unlocks no art, comes from one chest
+  (`dig_site_2`), and stock leaves it off too. The Fetch stage's own check (`hasRequiredFetchItems`) would probably survive
+  the flag, but the flag has nothing to gain there and a quest item is the one place a refused pickup could matter.
+- What the flag does: `addItem` refuses a second copy, `canObtainItem` (bag and Armory storage both count, through
+  `hasItem`) keeps an owned book out of `item` rewards and `landSketchbookShop` rolls, and the shop's button reads Owned.
+- Nothing can get stuck: no quest asks for a named sketchbook (`quests.json` names only the plain one; no dialog gives one).
+  The named books in chests (Urza's Saga, Coldsnap, Mirage, Ixalan) sit beside cards or shards, and a chest emptied by the
+  filter says "Nothing left in it." (round 699). The two legends' drops (Secrets of Strixhaven, Reality Fracture) just pay
+  the rest of their list. A save already holding two copies keeps them; Owned shows until both are sold.
+- Effect a player can see: a boss or chest whose book you own pays less than before, by that book; a player who owns all 65
+  sees no books in the Guild.
+- Other planes (read only): common, Innistrad, Shandalar Old Border and Realm of Legends mark their sketchbooks the same way.
+- **Tested** in the agent game with this data, slot 93, portrait 540x960: `give item` twice on Zendikar, the second refused;
+  twice on the plain book, both land; Ixalan owned, then `take loot all` in Cidryl Shard Mines paid the rest and no second
+  book, no hang; Guild at Dead Man's Rest: bought Unfinity for 1250, the button went SOLD, a second buy refused, gold
+  unchanged; Battle Royale given by console, shop reopened: its button reads Owned and refuses
+  (`notes/r903-shots/904-shop-*.png`). Not tested: a real boss drop, a chest that ends up empty, Armory storage (read only).
+- Files: `world/items.json`.
+
+## Round 903: the Level sheet button stays whole in portrait, with any title (2026-10-31)
+
+- The ask (open from round 899's shots, `notes/r899-shots/wrap-portrait.png`): the Level sheet button was clipped at the
+  bottom of the blessing box in portrait when the title was long.
+- Cause: the portrait box is 80px tall and scrolls. "Ascendance 16 - Warden of Ash" wrapped to three lines, Power to two,
+  so the button sat under the fold. Two cases the title alone doesn't show: "Ascendance 45" wraps even with a short title,
+  and Power runs to four digits on Insane (1,626 at level 39, 5,235 past 40).
+- The fix, portrait only, in the code that builds the box (`statistic_portrait.json` is stock, so the layout isn't forked):
+  the heading is 90%, the title takes its own line with no dash, and Power stops at the amount ("Power 646 / 690", no "to
+  level 17": the next level reads off the heading). Landscape's text is untouched.
+- Longest real title in `ascendance.json`: Warden of Ash (levels 15-19). No save change; no flag, the box is already behind
+  `Ascendance.isActive`.
+- **Tested** in the agent game on this round's class over the agent jar, slot 93 (Insane, the save of the old shot), portrait
+  540x960: Warden of Ash at 16, Weavebinder at 36, 39 with 1466 / 1625, Eternal at 44 with 2444 / 4830 (Power wraps there,
+  the worst case found; the button is still whole, with room to spare). Landscape 1280x720 reads as before. Shots:
+  `notes/r903-shots/after-*.png`. Not tested: Warden of Ash with a wrapped Power (it can't happen, 3-digit Power at 15-19) or
+  Android. Checked with javac only, no Maven build.
+- Files: `scene/PlayerStatisticScene.java` (stock, `CORE_ENGINE_CHANGES.md`).
+
 ## Round 906 (follow-up): a Bank balance stops at the top instead of wrapping (2026-10-31)
 
 P3-5: `PointOfInterestChanges.addBankBalance` added in int, so a sum past `Integer.MAX_VALUE` wrapped negative, the
