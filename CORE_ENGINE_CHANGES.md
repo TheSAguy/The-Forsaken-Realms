@@ -35,6 +35,13 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 906 (follow-up) - console catch, the Wrath's fade, a mage's tier mid guard fight
+- `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`: `command()` gets a `catch (RuntimeException)`
+  between the round 717 `try` and `finally`; it rethrows for an item's command.
+- `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`: `clearCache()` zeroes `debugSkipDays`; `removeWrathHunter`
+  (TFR's) drops the pair itself in the fade branch; the `save()` block for `RoamingGuardRuntime.duellingMage()` uses
+  `EnemyTiers.saveName`.
+
 ### Round 902 - the win-ratio record is kept past a reload
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`: `recordRecentDuel` and `cheatSetRecentDuels` call
   `ReloadJab.keepRecentDuels`; new `restoreRecentDuels(String)`.

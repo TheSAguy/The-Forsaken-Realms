@@ -2560,14 +2560,21 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
     /** Round 814: the Wrath leaves the map - off the enemy list at once (nothing can touch it), the sprite faded out. */
     public void removeWrathHunter(EnemySprite sprite, boolean fade) {
-        removeEnemy(sprite);
         if (!fade || sprite.getStage() == null) {
+            removeEnemy(sprite);
             foregroundSprites.removeActor(sprite);
             return;
         }
+        // Round 906: off the list without removeEnemy's removeAfterEffects, which took the actor on the next frame
+        // (MapActor.act) and the fade never played.
+        enemies.removeIf(pair -> pair.getValue() == sprite);
+        long started = System.currentTimeMillis();
         sprite.addAction(com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence(
                 com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut(1f),
-                com.badlogic.gdx.scenes.scene2d.actions.Actions.run(() -> foregroundSprites.removeActor(sprite))));
+                com.badlogic.gdx.scenes.scene2d.actions.Actions.run(() -> {
+                    foregroundSprites.removeActor(sprite);
+                    System.out.println("[TFR-Wrath] the hunter faded out in " + (System.currentTimeMillis() - started) + " ms");
+                })));
     }
 
     // Territory Control (MOD_SCOPE.md #7): places a mage directly at a given world position
@@ -3408,6 +3415,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // They belong with the rest of the not-persisted state cleared here.
         waitingForTime = false;
         fastTimeEnabled = false;
+        debugSkipDays = 0; // round 906: the console's "days skip" must not run on in the next save
         TerritoryControl.clearPendingCapitolDefense();
         TerritoryControl.resetSessionState(); // round 123 review S2-5: per-session territory caches must not outlive the save
         background.clear();
@@ -3485,7 +3493,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
             if (!listed) {
                 timeouts.add(globalTimer);
                 String rawName = duelling.getData().name;
-                names.add(rawName != null && !rawName.isEmpty() ? rawName : duelling.getData().getName());
+                // Round 906: "Name|Tier" as the main loop writes it, so a tiered mage keeps its tier through a reload.
+                names.add(forge.adventure.util.EnemyTiers.saveName(duelling.getData(),
+                        rawName != null && !rawName.isEmpty() ? rawName : duelling.getData().getName()));
                 x.add(duelling.getX());
                 y.add(duelling.getY());
                 questStageIDs.add(duelling.questStageID);

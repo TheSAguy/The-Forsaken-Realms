@@ -123,6 +123,12 @@ public class ConsoleCommandInterpreter {
             forge.adventure.util.TfrAchievements.consoleBegin();
         try {
             return currentCommand.function.apply(parameters);
+        } catch (RuntimeException e) {
+            // Round 906: "days skip abc" opened the crash dialog. A rune's command is play, so the dialog still reports it.
+            if (!typed)
+                throw e;
+            System.out.println("[TFR-Console] \"" + text + "\" failed: " + e);
+            return "Command failed: " + e;
         } finally {
             if (typed)
                 forge.adventure.util.TfrAchievements.consoleEnd();

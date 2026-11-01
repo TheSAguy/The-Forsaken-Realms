@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 906 (follow-up): a bad console command answers, the Wrath fades, a tiered mage keeps its tier (2026-10-31)
+
+Three small fixes that share `WorldStage`: P3-14, P3-8 and P3-15.
+
+- **P3-14, the console:** `ConsoleCommandInterpreter.command` had no catch, so `days skip abc` reached the input processor and
+  opened the crash dialog. A typed or scripted command that throws now answers "Command failed: ..." with a `[TFR-Console]`
+  line. A rune's own command (`itemInUse`) is play, so it still throws and the crash dialog still reports it.
+- **P3-14, days skip:** `WorldStage.debugSkipDays` is cleared in `clearCache()`, so `days skip 500` then a load no longer runs
+  on in the loaded save.
+- **P3-8, the Wrath's fade:** `removeWrathHunter` called `removeEnemy`, whose `removeAfterEffects()` took the actor on the next
+  frame (`MapActor.act`), so the 1-second fade never played. The fade branch now drops the pair from `enemies` directly and the
+  action removes the sprite. A `[TFR-Wrath]` line says how long it took. The no-fade branch is unchanged.
+- **P3-15, a mage saved mid guard fight:** `WorldStage.save` wrote the dueling mage with its raw name, so a tiered mage came back
+  at its catalog tier. It goes through `EnemyTiers.saveName` as the main loop does. Only the plate and the log differed: the
+  fight was scored right either way.
+
+**Tested** in the agent (slots 93 and 92, cheats, this round's classes ahead of the jar; no duel):
+- `days skip abc`: "Command failed: java.lang.NumberFormatException..." and the `[TFR-Console]` line, no dialog.
+- `days skip 500` then a load: still day 18 three seconds later.
+- `wrath start red force`, `wrath near`, `wrath stop`: `[TFR-Wrath] the hunter faded out in 1000 ms`.
+
+**Not seen:** P3-15 needs a save during a mage's fight with a guard; compiled and read only. A rune's throw was not forced.
+
 ## Round 902: a reload no longer rewinds the win ratio (2026-10-31)
 
 `notes/logs-1031.md` P3-3, the review's recommendation, taken by the main thread on the user's "If there is anything else
