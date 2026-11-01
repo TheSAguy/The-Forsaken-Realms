@@ -5,14 +5,19 @@ import forge.adventure.data.SettingData;
 import forge.gui.GuiBase;
 import forge.localinstance.properties.ForgeProfileProperties;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -222,15 +227,21 @@ public final class LogShare {
                 System.out.println("[TFR-LogShare] " + log.getName() + " is " + log.length() / 1024 + " KB - too big, not sent");
                 return Outcome.TOO_BIG;
             }
-            String text = new String(Files.readAllBytes(log.toPath()), StandardCharsets.UTF_8);
-            text = USER_PATH.matcher(text).replaceAll("$1<user>");
             String user = System.getProperty("user.name", "");
-            if (user.length() >= 3 && !"root".equals(user))
-                text = text.replace(user, "<user>");
+            boolean scrubUser = user.length() >= 3 && !"root".equals(user);
             ByteArrayOutputStream zipped = new ByteArrayOutputStream();
-            try (ZipOutputStream zip = new ZipOutputStream(zipped)) {
+            // Round 906: a line at a time, where the whole log as a String peaked near 130 MB of heap at the 32 MB limit
+            // (P3-20). The limit stays: a log that size zips well under Discord's. Neither scrub spans a line break.
+            try (ZipOutputStream zip = new ZipOutputStream(zipped);
+                 BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(log), StandardCharsets.UTF_8))) {
                 zip.putNextEntry(new ZipEntry(log.getName()));
-                zip.write(text.getBytes(StandardCharsets.UTF_8));
+                Writer out = new BufferedWriter(new OutputStreamWriter(zip, StandardCharsets.UTF_8));
+                for (String line = in.readLine(); line != null; line = in.readLine()) {
+                    line = USER_PATH.matcher(line).replaceAll("$1<user>");
+                    out.write(scrubUser ? line.replace(user, "<user>") : line);
+                    out.write('\n');
+                }
+                out.flush();
                 zip.closeEntry();
             }
             if (zipped.size() > MAX_BYTES) {

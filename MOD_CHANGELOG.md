@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 906: log sharing reads a log a line at a time (2026-10-31)
+
+Round 906 works through the Fable review's "fix later" list (`notes/fable-verify-2026-10-28.md`), one commit per fix. Round
+905 was not needed: round 870 already seeds `Ascendance.rollOffer` by the world seed, the level and the re-roll count
+through the SplitMix64 mixer, and its agent test showed the same offer across reloads and a new one after a paid re-roll.
+
+P3-20: `LogShare.post` read the whole log into a String and made two more copies to scrub it, about 130 MB of heap for a log
+at its 32 MB limit. The review's concern, an `OutOfMemoryError` killing the share thread, is already gone: round 885 catches
+it, and the log stays unsent for the next launch. The peak was not. File: `util/LogShare.java` (a TFR file).
+
+- **The change:** the log is scrubbed and zipped a line at a time. Neither scrub can span a line break: `USER_PATH` stops at
+  whitespace, and a user name holds no line break.
+- **Not done:** the review's one-line fix, capping at `MAX_BYTES` (8 MB). It would refuse logs of 8-32 MB that zip far below
+  Discord's limit, and those long sessions are the logs most worth reading.
+- **Changed:** a `\r\n` line ending in the log becomes `\n` in the zip.
+- **Tested** with an offline harness, reflection on `post` against a local HTTP server; nothing went to Discord. A real
+  `forge.log` came out identical to the old pipeline's text, line endings aside. A 31 MB log at a 64 MB heap: the old
+  pipeline dies with `OutOfMemoryError`, the new one sends it (222 KB zipped). Not run on a device.
+
 ## Round 901 (follow-up): the kept-process fix also ends the stale duel prompt (2026-10-31)
 
 No code. `notes/logs-1029.md` P3-1: four seconds into a relaunch, an old match's game thread, still waiting on the player,
