@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 913: the entrance footprints catch up with the art (2026-11-01)
+
+- The user: "Yes, run it", on clearing the drift. Since round 811 the rounds that installed entrances wrote only their new regions,
+  so 21 `footprint:` fields in `dungeon_entrances_2.atlas` no longer matched what `dev-tools/poi_footprints.py` computes from the
+  art, mostly by 1-2 px. `--write` refreshed them; `--check` exits 0.
+- **The data:** 14 regions change their field and 7 lose it, because their solid art now starts or ends less than `MIN_INSET` (4 px)
+  from the region's sides, and their markers go back to the region's own edges. No other field moved (compared field by field
+  against HEAD), line endings stay LF, and no Java changes. Plane data, so no `CORE_ENGINE_CHANGES.md` entry.
+- **Two of the 21 no player sees:** `E_Monastery2` and `Spare_E_Zedruu_City` are on the page, but no place uses them. The Monastery
+  place draws `E_Monastery2_Whitetemple2`, a different region.
+- **Seen in the agent game**, with the new atlas copied in and then the old one, on the same save: the unvisited magnifier moves
+  left with the footprint on Demon's Bargain (solid art now 12-48 of 48, `[TFR-MapIcon]`) and Witherbloom Classroom (6-39 of 40),
+  and goes to the region's edge on Von Gant's Fortress (it lost its box). Eclipsed Elven Court, which also lost its box, shows its
+  magnifier at the edge too. Prismari Classroom and Slobad's Factory show none on either atlas: the save has them as visited.
+- **Not tested:** the bookmark star, which reads the same field through `markerRight()`; Android, which reads the same atlas.
+  The agent folder and its saves are back as they were. Shots: `notes/r913-footprints/` in the project root, not in the repo.
+
 ## Round 912: the ROUTED badge (2026-11-01)
 
 - The user, of the stock DEFEAT badge: "I don't like this defeat picture, looks very low quality", then "I think the Defeat might
