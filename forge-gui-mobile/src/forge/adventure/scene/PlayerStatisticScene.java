@@ -461,7 +461,10 @@ public class PlayerStatisticScene extends UIScene {
             value += "\n" + subTitle;
         TextraLabel label = Controls.newTextraLabel(value);
         label.getColor().a = alpha;
-        achievementContainer.add(label).left().pad(5);
+        // Round 899 (follow-up): the text wraps at the panel's edge, whichever layout's panel: 76 is the trophy's 50 and the
+        // pads, the frame and the scroll bar.
+        label.setWrap(true);
+        achievementContainer.add(label).left().pad(5).width(ui.findActor("scrollWindow").getWidth() - 76f);
         achievementContainer.row();
     }
 

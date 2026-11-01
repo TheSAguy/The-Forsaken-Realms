@@ -35,6 +35,10 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 899 (follow-up) - trophy lines wrap
+- `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): `addAchievementRow` wraps its label at
+  `scrollWindow`'s width less 76. No flag: stock planes get the wrap too.
+
 ### Round 899 - the Journal is this run only; the sheet shows only Achievements
 - `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): behind `RealmJournal.enabled()`, a block in
   the constructor after `window.add(root)` runs `toggleScroller()`, hides `toggleAward` and resizes Quests (and Back in

@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 899 (follow-up): trophy lines wrap inside the panel, and the FAQ's achievements line (2026-10-31)
+
+Achievements is now the sheet's only panel, so the Field Guide's clipped "next: 200 cr" counted as part of the round.
+
+- **`PlayerStatisticScene.addAchievementRow`:** a trophy's label wraps at the panel's width less 76, read from `scrollWindow`,
+  so it holds in both layouts with no width per layout. Shared with the flag-off path.
+- **FAQ message 23:** "18 of its own (two hidden), listed first on your character sheet (Quest log > **Status**)". Field
+  Guide (897) and Wrath Breaker (814) had taken the count from 16 to 18. No other "16" of this claim in `messages.py`.
+  `EDITED` already holds 23.
+
+Seen in the agent game, shots `notes/r899-shots/wrap-*.png`. Landscape, every TFR trophy scrolled through with wheel messages:
+nothing clips, the two-line wraps stay level with their trophy cards, the hidden "???" row reads "A hidden achievement.", and
+the list scrolls to the end. Portrait: the top of the list only, four rows. Flag off, both layouts: the toggled page wraps
+the same way and the toggle's slot is back. Not seen: scrolling in portrait.
+
 ## Round 899: the Journal is this run only, and the character sheet shows only Achievements (2026-10-31)
 
 The user: "For the Journal, Let's have it only track current run progress, not prior games. Let's remove the old win/loss

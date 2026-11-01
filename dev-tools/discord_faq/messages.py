@@ -441,7 +441,7 @@ Change it at the Job Board for half the town's restore fee in gold; then it's lo
 M.append(("Achievements, enemy plates, loops and duel settings", "Achievements & duels", r"""**Achievements, enemy plates and duels**
 
 **Q: Does the game have achievements?**
-**A:** Yes, 16 of its own (two hidden), listed first on the trophy page (Quest log > **Status** > the trophy button): castles, capitals, legends, Arena weeks, treasures, Partner standings, research and more. They belong to your profile, so a new game or New Game+ keeps them, and loading an older save awards what it has already done.
+**A:** Yes, 18 of its own (two hidden), listed first on your character sheet (Quest log > **Status**): castles, capitals, legends, Arena weeks, treasures, Partner standings, research and more. They belong to your profile, so a new game or New Game+ keeps them, and loading an older save awards what it has already done.
 
 **Q: How can I see an enemy's rank before I fight?**
 **A:** Hold **Alt** (touch: the Units button; controller: R3). A plate over every enemy on screen shows its rank. Fought another rank of its kind? You see its deck colors too. Fought this exact rank? Also the life it would start with now, in orange when it's above normal.
