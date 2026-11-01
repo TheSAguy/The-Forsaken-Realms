@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 900: the golden Capitol's Temple, Archaeologist and Spellsmith, the Orazca icon, and no SMITH sign (2026-10-31)
+
+The user: "Yes, as recommended" - the third set of the Art thread's golden Capitol work (rounds 867 and 874 were the first
+two), picked from the user's ChatGPT sheets and converted as drawn at 24 colors, no hand repair (working files in
+`C:\CLAUDE\PROJECTS\ART\notes\capitol_gold`, `tools/sheets4.py`, `tools/stage_install3.py`). All plane-level; nothing in
+`adventure/common`; no code.
+
+- **Temple, Archaeologist, Spellsmith** (`maps/tileset/new_buildings.atlas`/`.png`): all three grow from 32x32 to 40x40,
+  `Golden Temple Sprite Sheet` cell 1, `Pixel Art Temple Archaeology Sprite Sheet` cell 4 and `Pixel Arcane Forge Sprite
+  Sheet` cell 1. The page grows from 368x48 to 488x48; the three regions move to x 368, 408 and 448 and every other
+  region keeps its xy and pixels (verified), the old 32x32 art stays on the page, unused. They grow in place because
+  only the Capitol reads them: the Temple and Archaeologist are Capitol-only buildings, and the Spellsmith's region is
+  drawn only under `isWastelandTownTemplate()`, where only the Capitol has a Spellsmith object. `drawOverFootprint()`
+  draws a region at its own size.
+- **Orazca's icon** (`maps/tileset/player_capitol_icon.png`): the same 64x64 file, `Golden Fantasy Castle Sprite Sheet`
+  cell 3, the stone walls and gold towers the user liked.
+- **SMITH sign** (`maps/map/towns/player_capital.tmx`): Ground2 cells 26-27 x 12 cleared (gids 11427, 11428), since every
+  option covered the end of the H; removed, not moved. Those two cells are the only change, and everything outside the
+  layer's data is identical. The sign is only tiles: the `spellsmith` map case makes no sign actor.
+- **Spacing:** on lot 96, the tight one, the Archaeologist's crown clears the Spellsmith's base by about 3 px in the
+  game. Lot 95 shares only 4 columns with the Spellsmith. Known and accepted: the Archaeologist's dig pit, ladder and crate
+  become a dirt band at 40 px.
+- **Checks:** `validate_plane_data.py` matches the main baseline in every count, except `ref-enemy=612` on the baseline
+  only, from its `git archive` extraction (gauntlet maps' enemies; cause not traced, the working tree reports 0); Maven
+  package exit 0, with no code change to carry, so the agent copy used its existing jar plus these four files.
+- **SEEN in the agent** (a temporary copy, a fresh cheats world, `capitol raise`; shots
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r900-shots`, logs `notes/r900-agent-forge.log`, `-2.log`): the Temple on lot 99 (its
+  dialog opens); the Archaeologist on lot 96 under the Spellsmith (its dialog opens), nothing overlapping; the Spellsmith
+  ruined, then rebuilt at 40x40, its scene opening both from the warp spot and on a walk over the grass; no SMITH sign;
+  the castle on the world map and in the map view (M); Llanowar, an ordinary town, unchanged. No exception but the
+  agent's own `/wait` timeouts. One duel came up by teleporting onto an enemy, and `settle` ran it at 50x.
+- **The HUD minimap:** a fresh world's fog leaves it black, as rounds 894 and 896 shots show. With fog off in the
+  temporary profile, Orazca's marker is a faint gold outline at the center: 32x32 on the world image, scaled to about 15 px.
+  The old icon, shot the same way in a second fresh world, reads as faintly, so that is no change from this round.
+  NOT seen: the Temple or Archaeologist on lot 95 or the plaza pair 89/90, and the Spellsmith with a building on lot 95
+  (it stayed rubble).
+
 ## Round 899 (follow-up): trophy lines wrap inside the panel, and the FAQ's achievements line (2026-10-31)
 
 Achievements is now the sheet's only panel, so the Field Guide's clipped "next: 200 cr" counted as part of the round.

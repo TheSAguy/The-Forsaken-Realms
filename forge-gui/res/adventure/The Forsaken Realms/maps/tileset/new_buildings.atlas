@@ -1,5 +1,5 @@
 new_buildings.png
-size: 368,48
+size: 488,48
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -10,8 +10,8 @@ Arena
   xy: 272, 0
   size: 48, 48
 Spellsmith
-  xy: 48, 0
-  size: 32, 32
+  xy: 448, 0
+  size: 40, 40
 ArenaLevel1
   xy: 320, 0
   size: 48, 24
@@ -22,11 +22,11 @@ ArmoryLevel2
   xy: 144, 0
   size: 32, 32
 Archaeologist
-  xy: 176, 0
-  size: 32, 32
+  xy: 408, 0
+  size: 40, 40
 Trader
   xy: 208, 0
   size: 32, 32
 Temple
-  xy: 240, 0
-  size: 32, 32
+  xy: 368, 0
+  size: 40, 40

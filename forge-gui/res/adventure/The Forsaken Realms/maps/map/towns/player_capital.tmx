@@ -17753,7 +17753,7 @@
  </layer>
  <layer id="6" name="Ground2" width="40" height="40">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF1AJN3NTDw8F9PkYD7z5S3UCO+75MYmD4OomB4dsk0txXYIDbLi+ou/1IcD8uu75PYmD4MYmB4SeJ7sMF2o0ZGDqMiXcXIfeNxPzRgSXu19nR132w9JcQT05o0d59+ICn0dBKf+lEhDGt4hcEFuswMCzRId3dtHQfKcDbaHC7jxgw6r5R9426b9R9o+6jjvvwtZ+JqS9o7T5qA3keBgYFHgYGLk4IDcMyuRBaLhchB6LR2chihEAildqEDon4+dQCsP7SQAJy0hw6cJ5EXXWkAGr2lSkFHoPILUMdjIblKBgFo2AUMGAAALBSDB4=
+   eNpjYBgF1AJN3NTDw8F9PkYD7z5S3UCO+75MYmD4CsTfJpHmvgID3HZ5Qd3tZ0S5+74D3fUDiH9Ook78thszMHQYj+YPStzXgSXu19nR132w9JcQP/TCz9NoaKW/9Hj6uw9f+TLU6jdvo9HyZdR9o+4bdd+o+0bdR7h+8zYafuEnz8PAoADEXJwQGoZlciG0XC5CDkSjs5HFCIFEKrUJHRLx86kFvIwYBhx4U8ENzpOoq44U4DMIwhAGPAaRW4Y6GA3LUTAKRsEowAQA/F4Kfw==
   </data>
  </layer>
  <layer id="3" name="Walls" width="40" height="40">
