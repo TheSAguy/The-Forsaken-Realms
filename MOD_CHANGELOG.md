@@ -14264,6 +14264,14 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 901 (follow-up): the kept-process fix also ends the stale duel prompt (2026-10-31)
+
+No code. `notes/logs-1029.md` P3-1: four seconds into a relaunch, an old match's game thread, still waiting on the player,
+built a dialog and hit the disposed `AssetManager`. It's the same kept process: round 901 ends it in `Main.onCreate`, before
+anything loads, so that thread never reaches a new launch and "end a leftover hosted match in `create()`" isn't needed. A
+prompt that fires while the closed process sits idle has no screen to show on and is caught at `FSkinFont`, as before. Next
+free round moves to 910: rounds 902-909 are handed out tonight.
+
 ## Round 901: an Android relaunch into a kept process starts a new one, not a dead screen (2026-10-31)
 
 The user, asked whether to build the fix for `notes/logs-1031.md` P3-2: "Yes, build it". Android can keep the process after
