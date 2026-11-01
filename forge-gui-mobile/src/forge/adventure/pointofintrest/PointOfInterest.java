@@ -21,6 +21,18 @@ public class PointOfInterest implements Serializable, SaveFileContent {
     private static final long serialVersionUID = 3886002045724608218L;
 
 
+    /** Round 906 (Fable P3-17): whether this saved place still has a template and a sprite. Without one, load() threw and
+     *  the whole save refused to open; PointOfInterestMap leaves such a place out. No shipped place is one today. */
+    static boolean loadable(SaveFileData saveFileData) {
+        String name = saveFileData.readString("name");
+        PointOfInterestData template = PointOfInterestData.getPointOfInterest(name);
+        if (template != null && Config.instance().getPOISprites(template).size > 0)
+            return true;
+        System.out.println("[TFR-POI] " + name + " left out of the world - " + (template == null ? "no such place" : "no sprite")
+                + " in this version");
+        return false;
+    }
+
     @Override
     public void load(SaveFileData saveFileData) {
         position.set(saveFileData.readVector2("position"));

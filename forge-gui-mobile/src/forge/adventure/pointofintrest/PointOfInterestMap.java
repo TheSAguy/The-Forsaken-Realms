@@ -87,8 +87,11 @@ public class PointOfInterestMap implements SaveFileContent {
                 int arraySize=data.readInt("mapObjects["+x +"]["+y+"]");
                 for(int i=0;i<arraySize;i++)
                 {
+                    SaveFileData saved=data.readSubData("mapObjects["+x +"]["+y+"]["+i+"]");
+                    if(!PointOfInterest.loadable(saved)) // round 906
+                        continue;
                     PointOfInterest pointsOfInterest=new PointOfInterest();
-                    pointsOfInterest.load(data.readSubData("mapObjects["+x +"]["+y+"]["+i+"]"));
+                    pointsOfInterest.load(saved);
                     mapObjects[x][y].add(pointsOfInterest);
                 }
             }

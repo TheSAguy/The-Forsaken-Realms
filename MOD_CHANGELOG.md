@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 906 (follow-up): a save holding a place the plane no longer has still opens (2026-10-31)
+
+P3-17: `PointOfInterest.load` threw on a place whose template is gone or whose sprite has no atlas region, and every load of that
+save failed. Safe today: no place was ever removed from `points_of_interest.json`. It's a trap for a future rename.
+
+- **The guard:** `PointOfInterestMap.load` asks `PointOfInterest.loadable(saved)` and leaves such a place out, with a `[TFR-POI]`
+  line. Not the review's "keep it inactive with a fallback sprite": a place with null data fails later, in `save()` and every
+  `poi.getData()` reader. Left out, the next save simply no longer holds it.
+- **Validator:** nothing to add. `validate_plane_data.py` already fails a POI sprite that doesn't resolve (`check_region`,
+  not optional).
+- **Still true for a real rename:** quests or map marks pointing at the old place find nothing, so a rename still needs its own
+  check. This stops the save being lost, no more.
+
+**Tested** in the agent: a copy of slot 93 with one cave's saved name changed to "Zz Removed Place 906" (Java, against the game's
+classes). It opened with `[TFR-POI] Zz Removed Place 906 left out of the world - no such place in this version`, saved to
+another slot, and that reloaded to the map, no exception. The copies were removed. The no-sprite branch was not forced.
+
 ## Round 906 (follow-up): a place's first timer comes from its seed, so its first entry rolls the same (2026-10-31)
 
 P3-7, round 835's first-day window. `DungeonUpgrades.visitSeed` uses the place's despawn day, and a place from world generation

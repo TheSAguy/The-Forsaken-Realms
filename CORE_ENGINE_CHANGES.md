@@ -35,6 +35,10 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 906 (follow-up) - a place with no template is left out of a load
+- `forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterest.java`: new `static boolean loadable(SaveFileData)`.
+- `forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterestMap.java`: `load` skips what `loadable` refuses.
+
 ### Round 906 (follow-up) - seed caches reset per world
 - `forge-gui-mobile/src/forge/adventure/world/World.java`: new `resetSeedCaches()` and `seedCacheGeneration`; `generateNew`'s two
   cache clears now call it, `load` calls it when the seed changed; `buildColorlessRedirectStructuresBlocking` checks the
