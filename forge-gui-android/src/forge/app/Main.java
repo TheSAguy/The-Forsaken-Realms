@@ -90,6 +90,7 @@ import java.util.Set;
 public class Main extends AndroidApplication {
     private static final TaggedLogger netLog = Logger.tag("NETWORK");
     private static final long HEAP_HEARTBEAT_MS = 30_000L;
+    private static final String RELAUNCHED_AT = "tfrRelaunchedAt";
 
     private AndroidAdapter Gadapter;
     private ArrayList<String> gamepads;
@@ -202,6 +203,14 @@ public class Main extends AndroidApplication {
         heapHeartbeatHandler.postDelayed(heapHeartbeat, HEAP_HEARTBEAT_MS);
 
         super.onCreate(savedInstanceState);
+        // Round 901 (notes/logs-1031.md P3-2): Android can keep the process after the app closes, and a relaunch in it found
+        // Forge disposed for good: create() skipped all loading and render() returned every frame, a dead screen until the
+        // process was killed. Nothing in a disposed process is worth keeping, so start a new one here, before anything
+        // loads. No save can be running: saves run on the GL thread, and libGDX's pause and destroy wait for its frame to end.
+        if (Forge.isDisposed) {
+            startFreshProcess();
+            return;
+        }
         try {
             PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             versionString = pInfo.versionName;
@@ -411,6 +420,7 @@ public class Main extends AndroidApplication {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 Gdx.app.postRunnable(() -> ExitReasons.log(this, sharedPreferences));
             }
+            Gdx.app.postRunnable(this::logRelaunch);
 
             getAnimator(ObjectAnimator.ofFloat(forgeLogo, "alpha", 1f, 1f).setDuration(800), ObjectAnimator.ofObject(activeView, "backgroundColor", new ArgbEvaluator(), Color.WHITE, Color.BLACK).setDuration(1600), new AnimatorListenerAdapter() {
                 @Override
@@ -1010,6 +1020,30 @@ public class Main extends AndroidApplication {
                 finish();
                 forgeApp = null;
             }
+        }
+    }
+
+    /**
+     * Round 901: the log goes through the preferences, because this process ends here and forge.log is closed. commit, not
+     * apply, for the same reason. triggerRebirth only returns if it failed; ending the process anyway makes the next tap a
+     * clean launch, where staying would leave an empty screen.
+     */
+    private void startFreshProcess() {
+        getPreferences(Context.MODE_PRIVATE).edit().putLong(RELAUNCHED_AT, System.currentTimeMillis()).commit();
+        triggerRebirth();
+        Runtime.getRuntime().exit(0);
+    }
+
+    /** Round 901: the new process's half of {@link #startFreshProcess}. Seconds here mean the player had to tap again. */
+    private void logRelaunch() {
+        try {
+            long at = sharedPreferences.getLong(RELAUNCHED_AT, 0);
+            if (at != 0) {
+                sharedPreferences.edit().remove(RELAUNCHED_AT).apply();
+                netLog.info("[TFR-Relaunch] the closed game's process was still alive: started a new one, {} ms ago", System.currentTimeMillis() - at);
+            }
+        } catch (Throwable t) {
+            netLog.warn("[TFR-Relaunch] not read: {}", t.toString());
         }
     }
 

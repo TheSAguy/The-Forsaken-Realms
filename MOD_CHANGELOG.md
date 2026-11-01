@@ -14264,6 +14264,46 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 901: an Android relaunch into a kept process starts a new one, not a dead screen (2026-10-31)
+
+The user, asked whether to build the fix for `notes/logs-1031.md` P3-2: "Yes, build it". Android can keep the process after
+the app closes. `Forge.dispose()` sets `isDisposed` (`Forge.java:1122`) and nothing resets it, so a relaunch in that process
+got the old `Forge`, `create()` skipped all loading because `initialized` was true, and `render()` returned on its first
+line every frame. The player had a dead screen until the process was killed, and the log was a 12-19 line stub.
+
+- **The fix is one check in `Main.onCreate`, right after `super.onCreate`:** `Forge.isDisposed` means this process is
+  finished, so `startFreshProcess()` runs `triggerRebirth()`, the restart phones already use after the first download. The
+  check runs before anything loads, so the stub log stops too. It covers every way to dispose: back, Exit, Android
+  destroying the activity. It lives in `Main`, not `Launcher`, because the recents list can return to `Main` directly.
+  `Forge.java` isn't edited, so desktop is unchanged, and a normal launch only reads one boolean.
+- **Why not a clean re-init:** resetting the flag only moves the failure. `dispose` frees `Assets`, `Graphics`, the shaders,
+  `MapStage`, sound and the log, and the GL context is gone, so every texture in `FSkin`, `ImageCache` and the scenes is
+  stale. That's dozens of statics to reset by hand, and upstream's own TODO on `exit()` names the same restart trouble. A new
+  process resets all of them.
+- **Why at relaunch, not at close:** killing the process at close could cut off whatever is still finishing. At relaunch the
+  old game is already dead. Every save caller is on the GL thread (round 898's audit, rechecked), `AndroidGraphics.destroy()`
+  waits with no timeout for the GL thread to leave its frame, and `pause()` waits 4 s and then kills the process as it always
+  has. Either way that all finishes before `onPause` returns, so before a new `onCreate` can run on the same UI thread. The
+  save path isn't touched. If something unforeseen did end a write, round 858's .sav stays whole until the finished file
+  moves in.
+- **`[TFR-Relaunch]`:** the old process's log is closed and it ends a moment later, so `startFreshProcess` commits the time
+  to the preferences (`tfrRelaunchedAt`; `commit`, not `apply`) and the new process writes `[TFR-Relaunch] the closed game's
+  process was still alive: started a new one, N ms ago`, then clears the key. On API 30+ `[TFR-ExitReason]` should also show
+  `EXIT_SELF`. A large N means the restart failed and the player tapped the icon again.
+- **If Android refuses the restart:** `triggerRebirth` catches the exception and returns, and `startFreshProcess` ends the
+  process anyway. The app closes once and the next tap is a clean launch, where staying would leave an empty activity.
+- **Tested:**
+  - `Main.java` compiled with `javac` against `android-35` (exit 0).
+  - The compiled `forge.app.Main` ran on a throwaway JVM harness: fake `android.*` classes ahead of `android.jar`, the
+    real `Forge` and libGDX classes. Disposed: `commit`, then the restart task with the package set, then exit. Restart
+    refused: exit anyway. Not disposed: passes the check with no new call. `logRelaunch`: one line, key cleared, a second
+    call writes nothing. The harness tests the code's order, not Android.
+- **Not tested:** nothing ran on a phone or an emulator, and the APK wasn't built. Android's background-start rules
+  weren't exercised; the fallback above is what covers them. How long the restart looks to a player is unknown. The
+  dispose-then-create repro on desktop wasn't run: `locks\agent` was held, and it can't reach this fix, which is
+  Android-only. The SDK here has `adb` and the emulator but no system image or AVD. LDPlayer 14 is on `E:`, which could give
+  a real proof with a built APK and hand-placed assets (`ANDROID_RELEASE.md`); it wasn't touched.
+
 ## Round 900: the golden Capitol's Temple, Archaeologist and Spellsmith, the Orazca icon, and no SMITH sign (2026-10-31)
 
 The user: "Yes, as recommended" - the third set of the Art thread's golden Capitol work (rounds 867 and 874 were the first

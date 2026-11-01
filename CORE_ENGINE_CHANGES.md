@@ -35,6 +35,11 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 901 - a relaunch into a disposed process starts a new one
+- `forge-gui-android/src/forge/app/Main.java`: `onCreate` gets a `Forge.isDisposed` check right after `super.onCreate`; new
+  `startFreshProcess()`, `logRelaunch()`, `RELAUNCHED_AT`; one post in `loadGame`. On an upstream merge: if `Forge.dispose()`
+  stops setting `isDisposed`, or upstream makes a relaunch re-init properly, this check has to change with it. Android only.
+
 ### Round 899 (follow-up) - trophy lines wrap
 - `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): `addAchievementRow` wraps its label at
   `scrollWindow`'s width less 76. No flag: stock planes get the wrap too.
