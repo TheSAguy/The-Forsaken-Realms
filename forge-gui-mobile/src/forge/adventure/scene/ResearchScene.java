@@ -504,7 +504,13 @@ public class ResearchScene extends UIScene {
             scrollContainer.row().padTop(5);
         }
 
-        if (candidates.isEmpty() && !anyInProgress) {
+        if (candidates.isEmpty() && listSet != null) { // round 906: as buildListV2 says it
+            TypingLabel empty = Controls.newTypingLabel(editionDisplayName(listSet) + " is hidden by the boxes above.");
+            empty.skipToTheEnd();
+            empty.setWrap(true);
+            empty.setColor(Color.DARK_GRAY);
+            scrollContainer.add(empty).colspan(2).align(Align.left).expandX().width(Forge.isLandscapeMode() ? 340 : 236);
+        } else if (candidates.isEmpty() && !anyInProgress) {
             TypingLabel empty = Controls.newTypingLabel(
                     "Explore the world and defeat monsters to discover cards from new expansions - "
                     + "they'll show up here once you've found at least one.");

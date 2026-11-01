@@ -133,7 +133,12 @@ public final class ResearchCardFilters {
         for (String n : names)
             out.put(n, new java.util.ArrayList<>());
         out.put("Other", new java.util.ArrayList<>());
-        for (PaperCard pc : cards) {
+        List<PaperCard> ordered = new java.util.ArrayList<>(cards);
+        // Round 906: Set's keys are "Name (CODE)" and never match the plain names above, so its groups come in the order
+        // their first cards do - hand it the cards in the deck builder's set order.
+        if (groupBy == GroupDef.SET)
+            ordered.sort(java.util.Comparator.comparingInt(groupBy::getItemGroupIndex));
+        for (PaperCard pc : ordered) {
             int i = groupBy == GroupDef.SET ? -2 : groupBy.getItemGroupIndex(pc);
             String key = i == -2 ? forge.adventure.util.ResearchMeter.editionName(pc.getEdition())
                     : (i >= 0 && i < names.length ? names[i] : "Other");

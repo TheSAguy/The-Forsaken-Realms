@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 906 (follow-up): Found Cards groups by set in set order, and the classic list says a filter hid its set (2026-10-31)
+
+P3-11, round 817's cosmetics. Files: `scene/ResearchCardFilters.java`, `scene/ResearchScene.java` (TFR files).
+
+- **Groups: Set:** its keys are `ResearchMeter.editionName` ("Name (CODE)"), the seeded map holds plain names, so the seeded
+  entries were dropped and the groups came out in first-card order. The review's fix, seeding with `editionName`, needs a name to
+  code lookup; instead `group()` sorts a copy of the cards by the deck builder's own set index first. Newest set first.
+- **The classic list** (a save from before round 751) now says "<set> is hidden by the boxes above." when a filter hides the
+  picked set, as `buildListV2` does.
+
+**Tested** in the agent through a scratch console command, never committed (the bridge can't open a SelectBox): slot 93's 2,135
+cards shuffled through the real `group()` gave 221 groups in descending release date (Star Trek, then Mystery Booster Commander,
+Reality Fracture and on). **Not seen:** the Found Cards screen itself, and the classic message (it needs a pre-751 save and a
+SelectBox pick); compiled and read only.
+
 ## Round 906 (follow-up): a save holding a place the plane no longer has still opens (2026-10-31)
 
 P3-17: `PointOfInterest.load` threw on a place whose template is gone or whose sprite has no atlas region, and every load of that
