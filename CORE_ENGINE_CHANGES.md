@@ -35,6 +35,10 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 908 - fitted-text catches log what failed
+- `forge-gui-mobile/src/forge/Graphics.java`: `fitText` and `drawFittedText`'s catches call the new `reportTextFailure`, once a
+  launch per catch. The forced English is unchanged.
+
 ### Round 907 - a failed reward card closes its batch
 - `forge-gui-mobile/src/forge/adventure/util/RewardActor.java`: `setItemTooltips`, `processSprite` and
   `renderPlaceholderUnguarded` end the batch and frame buffer in a `finally`; the first two catch and log; one `title`

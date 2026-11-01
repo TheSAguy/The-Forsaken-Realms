@@ -2182,10 +2182,24 @@ public class Graphics implements Disposable {
             fitHeight = textBounds.height;
             return true;
         } catch (Exception e) {
+            if (!textFitFailureReported) {
+                textFitFailureReported = true;
+                reportTextFailure("measured", text, e);
+            }
             // shouldn't be here but force English on CJK Error
             Forge.setForcedEnglishonCJKMissing();
             return false;
         }
+    }
+
+    // Round 908: the two catches around fitted text dropped the exception, and the line they led to blames CJK fonts on an
+    // English game. Possibly libGDX's text pool going bad (logs-1031b, not proven). Once a launch per catch.
+    private static boolean textFitFailureReported, textDrawFailureReported;
+
+    private static void reportTextFailure(String step, String text, Exception e) {
+        System.err.println("[TFR-Render] text not " + step + ": " + e + ", text \"" + text + "\", thread "
+                + Thread.currentThread().getName() + " (logged once a launch)");
+        e.printStackTrace();
     }
 
     //draws text previously measured by fitText; blend/clip state is always restored, even on failure
@@ -2213,6 +2227,10 @@ public class Graphics implements Disposable {
 
             fitFont.draw(batch, text, color, adjustX(x), adjustY(drawY, 0), w, wrap, horzAlignment);
         } catch (Exception e) {
+            if (!textDrawFailureReported) {
+                textDrawFailureReported = true;
+                reportTextFailure("drawn", text, e);
+            }
             // shouldn't be here but force English on CJK Error
             Forge.setForcedEnglishonCJKMissing();
         } finally {

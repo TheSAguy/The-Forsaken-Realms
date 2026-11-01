@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 908: the "CJK fonts" line names what really failed (2026-10-31)
+
+`Forge switches to English due to an error generating CJK Fonts` isn't about font generation. It comes from the two
+`catch (Exception e)` around fitted text in `Graphics` (`fitText`, `drawFittedText`), which dropped the exception, and it shows
+in English games. `logs-1031b` saw it 3 times, once on eecefe12 about 320 lines before round 907's freeze, so it may be libGDX's
+text pool going bad with no name on it. That's not proven. Both catches now log
+`[TFR-Render] text not measured|drawn: <exception>, text "...", thread <name> (logged once a launch)` and the stack, once a
+launch per catch. No behavior changes: the forced English stays.
+
+**Tested:** compiled with javac; a throwaway class (not in the repo) forced a throw through each catch three times. Each printed
+once, with the text and thread, and the forced English followed. **Not tested:** seen firing in a game.
+
 ## Round 907: a failed reward card can no longer freeze the game (2026-10-31)
 
 **The bug** (`notes\logs-1031b.md` P1-1, eecefe12, PC, v1.25). Opening a shop in the Great Lighthouse, a libGDX layout error
