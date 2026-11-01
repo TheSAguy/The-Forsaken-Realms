@@ -1094,7 +1094,8 @@ public class EconomyBuildings {
     }
 
     /**
-     * Undoes a rebuilt/converted shop back to rubble - no gold refunded. Clears the economy-
+     * Undoes a rebuilt/converted shop back to rubble - its cost is not refunded (a Bank's deposits
+     * are the player's own gold, not its cost: refundBank). Clears the economy-
      * building type registration (map flag + type->objectId entry) if it had one, freeing that
      * type up to be built again (here or elsewhere in the same town). Outlook needs extra steps:
      * the vision cache keys off which towns currently have one, and the shrunken area's fog +
@@ -1106,6 +1107,8 @@ public class EconomyBuildings {
             return;
         int type = getBuildingType(changes, objectId);
         int outlookRadiusBefore = type == OUTLOOK ? currentTownVisionRadius() : 0;
+        if (type == BANK)
+            refundBank(changes);
         if (type != NONE) {
             changes.getEconomyBuildingObjectIds().values().removeIf(v -> v == objectId);
             changes.getMapFlags().remove(builtFlag(type));
@@ -1115,6 +1118,33 @@ public class EconomyBuildings {
             onOutlookChanged(outlookRadiusBefore);
         if (type == TEMPLE && !TempleOfferings.capitolHasTemple())
             WrathHunt.onTempleGone(); // round 813: no Temple, no hunt
+    }
+
+    /** What destroying this town's Bank pays: its balance, as far as the purse has room (round 836's cap). */
+    private static int bankRefund(PointOfInterestChanges changes) {
+        return Math.min(changes.getBankBalance(), Integer.MAX_VALUE - AdventurePlayer.current().getGold());
+    }
+
+    /**
+     * Round 911 (P3-4, the user: "Yes, refund them"): a destroyed Bank pays its deposits out and the balance drops to
+     * zero, so a rebuilt Bank or New Game+ (SaveLoadScene counts every balance) cannot pay them again. A transfer, not
+     * income, like a withdrawal. A purse too full to take it all leaves the rest on the books, where a rebuilt Bank
+     * finds it, and gold lost nowhere. A Bank destroyed before this round paid nothing and keeps its balance.
+     */
+    private static void refundBank(PointOfInterestChanges changes) {
+        int balance = changes.getBankBalance();
+        int paid = bankRefund(changes);
+        if (paid <= 0) {
+            if (balance > 0)
+                System.out.println("[TFR-Bank] destroyed with " + balance + " on deposit - the purse is full, none refunded");
+            return;
+        }
+        AdventurePlayer player = AdventurePlayer.current();
+        changes.addBankBalance(-paid);
+        ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.giveGold(paid));
+        forge.adventure.stage.GameHUD.getInstance().addNotification("The Bank returns your deposits: " + paid + " [+Gold]");
+        System.out.println("[TFR-Bank] destroyed - refunded " + paid + " of " + balance + ", balance now "
+                + changes.getBankBalance() + ", purse " + player.getGold());
     }
 
     private static int currentTownVisionRadius() {
@@ -1151,7 +1181,8 @@ public class EconomyBuildings {
 
     /**
      * Confirmation gate for destroyBuilding() - "You will not get any resources back" per user
-     * spec. onCancel re-renders whatever dialog was showing before (the calling building's own
+     * spec; a Bank holding deposits says what it pays out instead (round 911). onCancel re-renders
+     * whatever dialog was showing before (the calling building's own
      * info/interaction view); onDestroyed callers all just want the dialog closed outright, since
      * there's nothing left to show once the shop reverts to rubble.
      */
@@ -1160,7 +1191,11 @@ public class EconomyBuildings {
         dialog.getContentTable().clear();
         dialog.getButtonTable().clear();
         dialog.clearListeners();
-        addContentRow(dialog, "Destroy this building?\nYou will not get any resources back.");
+        PointOfInterestChanges changes = stage.getChanges();
+        int refund = changes != null && getBuildingType(changes, objectId) == BANK ? bankRefund(changes) : 0;
+        addContentRow(dialog, refund > 0
+                ? "Destroy this building?\nYour deposits come back to you: " + refund + " [+Gold]\nYou will not get its cost back."
+                : "Destroy this building?\nYou will not get any resources back.");
         addButtonRow(dialog, "Destroy", true, () -> {
             destroyBuilding(stage, objectId);
             stage.hideDialog();
@@ -3765,8 +3800,8 @@ public class EconomyBuildings {
         if (goldCost <= 0)
             return true;
         AdventurePlayer player = AdventurePlayer.current();
-        // Guard against a destroyed Bank's orphaned balance (destroyBuilding() never zeroes
-        // bankBalance) becoming an invisible-but-still-spendable slush fund - same
+        // Guard against a destroyed Bank's orphaned balance (an older save's, or what a full purse
+        // could not take - round 911) becoming an invisible-but-still-spendable slush fund - same
         // hasEconomyBuildingOfType(BANK) gate the Gold Mine deposit branch above already uses.
         int bankAvailable = changes.hasEconomyBuildingOfType(BANK) ? changes.getBankBalance() : 0;
         int inventoryAvailable = player.getGold();

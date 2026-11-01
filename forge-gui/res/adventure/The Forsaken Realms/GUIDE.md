@@ -680,7 +680,7 @@ starts out the same way.
 there. You get +1 for restoring the town, +2 when it becomes your Capitol, +1 for each attacking mage
 you beat there, +1 for winning its Inn tournament, +1 when you clear a dungeon near it, +1 for driving raiders
 off it (and -2 if you don't - see [Town Raids](#town-raids)), and more from
-its Job Board quests. **Destroy Building** clears a slot, with no refund. A Capitol's colored Land Shop
+its Job Board quests. **Destroy Building** clears a slot, with no refund (a Bank does hand back your deposits). A Capitol's colored Land Shop
 can be repaired (50 gold) once you've visited that color's AI capital.
 
 ### Town Specialties

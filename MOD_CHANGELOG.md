@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 911: a destroyed Bank hands back its deposits (2026-11-01)
+
+- P3-4 of the Fable list (`notes/fable-verify-2026-10-28.md`; the user: "Yes, refund them"). Destroying a Bank said "You will not
+  get any resources back" and left the balance on the Capitol's record, out of reach until the Bank was rebuilt or a New Game+
+  paid it out. It was the player's own gold, not the building's cost.
+- **The refund:** `EconomyBuildings.destroyBuilding` calls `refundBank` for a Bank: the balance goes to the purse in the ledger's
+  `IGNORED` bucket, like a withdrawal, and the balance drops by what was paid, so a rebuilt Bank or New Game+ (which sums every
+  balance) cannot pay it again. A notice says "The Bank returns your deposits: N [+Gold]", and `[TFR-Bank] destroyed - refunded N
+  of B, balance now X, purse P` logs it.
+- **The confirm:** a Bank holding deposits reads "Your deposits come back to you: N [+Gold]" and "You will not get its cost back."
+  Every other building, and an empty Bank, keeps the old text.
+- **A full purse:** the purse stops at the top (round 836), so a credit past it would burn the gold. `bankRefund` pays only what
+  fits, and the confirm shows that figure; the rest stays on the books for a rebuilt Bank or New Game+. A purse with no room at all
+  pays nothing, shows the old text and logs `[TFR-Bank] destroyed with B on deposit - the purse is full, none refunded`.
+- **Every way a Bank can go, checked:**
+  - The Bank dialog's Destroy Building is the only one, and it has the confirm.
+  - `destroyShopFromRewardScene` shares `destroyBuilding`, but `ShopActor.isDestroyable` only passes a building with no economy type.
+  - A lost raid costs reputation and touches no building (`TownPillage.fail`).
+  - A capture or sack wipes a town's record (`forgetTownState`), but a Bank only stands in the Capitol, and the Capitol never takes
+    that road: a mage there queues a forced duel, and losing it ends the run with the save untouched.
+  - A Trader upgrade changes only the Trader. No event or script removes a building.
+  So no path needed a notice of its own; the notice still fires on the confirmed path, as the receipt.
+- **Older saves:** a Bank destroyed before this round keeps its stranded balance, and a rebuilt Bank or New Game+ returns it. No
+  conversion. `payGuardGold` keeps its gate for that balance.
+- GUIDE's "Destroy Building clears a slot, with no refund" gains the Bank's exception.
+- Agent test, a save with 14,964 on deposit and 1,698 in the purse: the confirm shows 14,964 and the icon, Cancel
+  changes nothing, Destroy leaves 16,662 and the lot in rubble, and the notice shows. Saved and reloaded: 16,662, no Bank, no balance
+  on the record, and the ledger's dump identical to before. A rebuilt Bank reads "Deposited: 0". With 500 deposited and room for 100:
+  the confirm shows 100, the purse reaches the top, and the next rebuilt Bank reads 400. With no room: the old text, the 400 stays
+  on the record. New Game+ was not run: the balance it sums was read from the save.
+
 ## Round 910: the character sheet's buttons get keys, and Page Up/Down move a page (2026-10-31)
 
 - From the test pass (`notes/gaps-899-900/report.md`, findings 1 and 2): since round 899 the sheet's button is the only way
