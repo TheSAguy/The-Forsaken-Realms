@@ -17741,6 +17741,7 @@
  <tileset firstgid="35057" source="../../tileset/walls_16.tsx"/>
  <tileset firstgid="37361" source="../../tileset/walls_48-nocollide.tsx"/>
  <tileset firstgid="37617" source="../../tileset/capitol_gold_lab.tsx"/>
+ <tileset firstgid="37626" source="../../tileset/capitol_gold_civic.tsx"/>
  <layer id="1" name="Background" width="40" height="40">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMA6CFf6BFXI+jYC+pqqqqqqrqowPs4YVq
@@ -17748,12 +17749,12 @@
  </layer>
  <layer id="2" name="Ground" width="40" height="40">
   <data encoding="base64" compression="zlib">
-   eJzdmM1KAzEQx+fuRSh40XOr9rIqWj8fw4PgTRGfQ7Jb9OBT6AsoigieBBFLoX5URbHeveoDyNAMzoYkzX5kt/iHobvtNvvLJDOTpNoEqDUhpqkQYCaMf9cWAJ+i/yxaV8R/n9b852s+fk9tr4QAaxZD7S8AHCyAs1oC4EMy9gTAo8I3obDZhIxLiq1k5POtusJXawBMNgDGEvQ7jUYd2+fjzrUYAoyHfjgrljZPlPnBfYiqypggn85Z2tob+bMkbEHY77/a9zPJdiHMfCQ+5nny0XitauIahXH2JuKMxMfHc022kbfuIje7jeJ9WpbxTH0y9c+nMFe9yxzViQC+ZwF+ZvV5qmg2Vcg3zHLhU+vbMPHpamSR+g/jW6YPy/TfdTT42sRH9U2tMXmKv3vQNWfmUmtMnrpndeLFcP0qP58ifU7BOqiuhYdp/vnkSzL/TOPrky/J/OuUwJdl/vnmwzXog9xPkWEsXimGfuP3aqz64qP9qMno3ciHn+uBfs1aFh8Z8XHrFsBHa1Ay3Dtfbpn9l5Uva50k3g+D/4ilLD7OyRkH+Y/2AUXxoY5343ybgZnPVWn4KmyvuBHEYwflMr5pcq2LtRyfw7yMTEfMp0WsB9AvdcvZBJ+DKNv4+tgfEZ9pf22K5yL9pzvn1HFyxpsoPR/WVFutJG0f9vl2DpO1T3HD+ei81mWP1DbUex1nmnin9jkf7kPU+adjPcVcoPD15Bx6FgDnwg8fnvG6xodaU215PS8+PONNwuiqzgA+3fm3jo/OoTHP6yztua+Nj9jwvSiKO11++QVG7ffP
+   eNrtmM1KAzEQx3P3IhS81HNr7aUi1o/ax/AgeFOkzyHZFT30KfQFlEoRPBVELAv1oyqW1rtP4Q7NYDZOttmP7PbgwJ9uv7K/nWRmkimdMlb2JVvFYWzNCX7mcca++PS3oCEPfr9K/Od7g/0xGLvhqxkisLM6Y+d1Zmx9n2csGCe+XhS+Zcd8LGDcVtRIyGfbqgpfeZOxFV9Ljt37LjrmPm1IfGhb/vuiY4ezEDLmFdf7EKwkYgJ9uh4y1snCr6Kw1Zzp86vP3hFsXa7nQ2sSn6XBh/O1S8Q1GMTZJw8yIp88n00xRtr26JrpwQ0+046IZ3wm3fPZNMhVI5GjBm54nsqaTTWVb97MhE+tb/PER9XI//mNxpenD/P0X8+dfa3jw/rW5dn4ZtZ1T8Op1pg07UmqE++a6w/x+urSOQXq4JDP7/qzyRdl/enm1yZflPU3yIEvyfqzzQd70GdxnkJBLN4pAr/J79VYtcXnKWyq8N7AB697NXrPmhcfCvlkDTPgwz0oCs7Ot4d6/yXlS1on+xIn5T9kyYuP6kOY+G9E9Cps7zMuW0G+g5qez+Y+qCCdFfdrwdhR159ufuPkWhP1DX/3KvguWsn44vi7GtKbGBO5UMdn43yEfLrztS6es/RfxeDsr8bzvRufr8PDayXaUXvKd9yOXnPAZD7s15qckTxNvac448S7R8xvieg/U6zXkAsUvolYQ2++brgdPujxmsaHWlPD8npafNDjjcKYVj6n+t8UH/ahiw6tuH3fMD5kg/vKcUfllx+b8vWE
   </data>
  </layer>
  <layer id="6" name="Ground2" width="40" height="40">
   <data encoding="base64" compression="zlib">
-   eNpjYBgF1AJN3NTDw8F9PkYD7z5S3UCO+75MYmD4CsTfJpHmvgID3HZ5Qd3tZ0S5+74D3fUDiH9Ook78thszMHQYj+YPStzXgSXu19nR132w9JcQP/TCz9NoaKW/9Hj6uw9f+TLU6jdvo9HyZdR9o+4bdd+o+0bdR7h+8zYafuEnz8PAoADEXJwQGoZlciG0XC5CDkSjs5HFCIFEKrUJHRLx86kFvIwYBhx4U8ENzpOoq44U4DMIwhAGPAaRW4Y6GA3LUTAKRsEowAQA/F4Kfw==
+   eNpjYBgF1AJN3NTDw8F9PkYD7z5S3UCO+75MYmD4CsTfJpHmvgID3HZ5Qd3tZ0S5+74D3fUDiH9Ook78thszMHQYj+YPStzXgRT3bJMZGNiBmGMyfd0HS38J8UMv/DyNhlb6S4+nv/vwlS9DrX7zNhotX0bdN+q+UfeNum/UfYTrN2+j4Rd+8jwMDApAzMUJoWFYJhdCy+Ui5EA0OhtZjBBIpFKb0CERP59awMuIYcCBNxXc4DyJuupIAT6DIAxhwGMQuWWog9GwHAWjYBSMAkwAAC+JC2E=
   </data>
  </layer>
  <layer id="3" name="Walls" width="40" height="40">
@@ -17769,11 +17770,11 @@
    <property name="noCollision" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzz8OAVEUhfEv8ad9FS31jGYSNKwNjdItZgk2RWET2ICIHoXMe5Lvl5ziVPdckMp2beHWwr3NvUT/6FTDuc69QlJukwqmFcVaNbBu4DLLvUSStEmwTbBLFOfYe98l6VujgP4PMggYBuwPrzz7p4yjmx/nAYuAZUf3JFGkBxfWIbI=
+   eNrt1jEOgkAQRuFBXBOloJKTKMdTGku3gBtwQ7FTUf/EXi0EJvF9ySuodmGSCWaAb6farFPnmm/h0UVzuaqb1/k0ZomaNcwKGFKvHXBXD6e7INUOmKvgdBcsda+VythVADC5XW62V1Xu725t+v4ZAL61jvo//kFBLdTh+CrEzxVxnHfc6JytKiPzBv7ZE3wYK+g=
   </data>
  </layer>
  <objectgroup id="4" name="Objects">
-  <object id="47" template="../../../../common/maps/obj/inn.tx" x="536" y="144"/>
+  <object id="47" template="../../../../common/maps/obj/inn.tx" x="544" y="144"/>
   <object id="53" template="../../../../common/maps/obj/spellsmith.tx" x="452" y="212"/>
   <object id="55" template="../../../../common/maps/obj/shop.tx" x="544" y="496.727">
    <properties>
@@ -19462,7 +19463,7 @@
     <property name="uncommonShopList" value="Artifact,Land,Assembly,Golem,Sliver,Wall,Equip,Enchantment,Instant,Creature,Battle,Black2,Black4,Black6,Blue2,Blue4,Blue6,Green2,Green4,Green6,Red2,Red4,Red6,White2,White4,White6,Instant4Black,Instant4Blue,Instant4Green,Instant4Red,Instant4White,Land4Blue,Land4Black,Land4Red,Land4Green,Land4White,Human4White,Sliver4Black,Sliver4Blue,Sliver4Green,Sliver4Red,Sliver4White,Enchantment4Black,Enchantment4Blue,Enchantment4Green,Enchantment4Red,Enchantment4White,Artifact4Black,Artifact4Blue,Artifact4Green,Artifact4Red,Artifact4White,Multicolor8Black,Multicolor8Blue,Multicolor8Green,Multicolor8Red,Multicolor8White,Ogre4Red,Dinosaur4Green,Dinosaur4Red,Soldier4Red,Soldier4White,Wand4Black,Wand4Blue,Wand4Green,Wand4Red,Wand4White,Bird4Blue,Bird4White,Bird4Azorius,Spirit4Blue,Spirit4White,Wolf4Green,Wolf4Red,Knight4Black,Knight4Red,Knight4White,Pirate4Blue,Rogue4Black,Rogue4Blue"/>
    </properties>
   </object>
-  <object id="66" template="../../../../common/maps/obj/quest.tx" x="200" y="257">
+  <object id="66" template="../../../../common/maps/obj/quest.tx" x="208" y="257">
    <properties>
     <property name="questtype" value="waste_town_generic,player_capital"/>
    </properties>

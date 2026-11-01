@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 914: the golden Capitol's Inn and Job Board (2026-11-01)
+
+The user: "Yes, as recommended" - the fourth set of the Art thread's golden Capitol work, from the user's ChatGPT sheets,
+converted as drawn with no hand repair (working files in `C:\CLAUDE\PROJECTS\ART\notes\capitol_gold`, `sheets5/README.md`,
+`tools/sheets5.py`, `tools/stage_install4.py`). All plane-level; nothing in `adventure/common`; no code.
+
+- **New tile page** (`maps/tileset/capitol_gold_civic.png`/`.tsx`, firstgid 37626): 96x48, 18 tiles of 16 px, no collision
+  boxes. Columns 0-2 are the Inn, `Pixel Tavern Inn Sprite Sheet` cell 2 at 48x48 and 24 colors. Columns 3-5 are the Job
+  Board hall with its "?" board, `Pixel Quest Hall Sprite Sheet` cell 1 at 48x48 and 64 colors, since 24 and 32 turn its
+  jade doors olive.
+- **Inn** (`maps/map/towns/player_capital.tmx`): a 3x3 block on cells 33-35 x 6-8, rows 6-7 on Overlay and row 8 on Ground2.
+  Off: the old roof (Overlay 33-34 x 7), the old walls (Ground 33-34 x 8) and the wooden INN sign (Ground2 35 x 8; the art
+  has a hanging mug sign). Object 47 moves from x 536 to x 544, so the door is at x 552.
+- **Job Board**: a 3x3 block on cells 12-14 x 13-15, all on Overlay. Off: Overlay 12-13 x 14-15 and the board at 14 x 15.
+  Object 66 moves from x 200 to x 208, so the door tile is the path's own column. The art's door is at x 214, 2 px left of
+  the path's center. y stays 257.
+- **Why the objects moved:** both doors sat on a cell boundary, which would have needed 4-cell blocks with transparent
+  margins. Nothing reads their coordinates beyond the actor itself: saves and change tracking use ids, town entry uses
+  only `EntryActor` objects, no other object refers to them. `OnCollide.drawOnPictureCell` snaps the `InnBroken` ruin from the
+  object's center, so that art moves one cell right.
+- **Collision:** none, as before. Neither building had a box, Overlay is `noCollision`, and the player walks through both
+  as today, under the Inn's upper rows and under the whole hall. The east wall tile on column 35 (`walls_48` local 162) stays:
+  its art and box start at x 584, 8 px clear of the Inn.
+- **The ruin can't show in play.** A mage reaching the Capitol takes `TerritoryControl`'s Capitol branch, which always
+  returns before the sack code, and losing the forced duel ends the run. The only `townRestored` removal is in that sack
+  code. `resetMapQuests`, a cheat, does clear it. Forced that way, a 32x32 `InnBroken` stands over the Inn's right half under the
+  new roof (shot 15). Not fixed; no player reaches it.
+- **Checks:** a cell-by-cell diff against round 913 finds exactly the 20 approved cells, the two object lines and the
+  tileset line; both blocks rebuild pixel-identical to the sprites. `validate_plane_data.py` adds nothing against the round
+  913 agent folder (which alone reports `missing-ref` and `ref-enemy` from its packaged layout). No Maven build: no code, so
+  the agent copy used its existing jar plus these three files.
+- **SEEN in the agent** (a temporary copy, a fresh cheats world, `capitol raise`; shots
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r914-shots`, log `notes/r914-agent-forge.log`): both buildings on screen; the Inn opens on
+  a walk into its door from the south; the road past the Inn walked both ways with nothing blocking it; the player under
+  the Inn's roof and under the hall; the quest dialog opens on a walk straight up the Job Board's path; Llanowar matches
+  its round 900 shot. No exception. One duel came up on the walk to Llanowar and `settle` ran it at 50x.
+  NOT seen: the Inn's Rest, False Life or duels past its opening, accepting a quest from the board, an old save loaded
+  with the player inside the Capitol, Android.
+
 ## Round 913: the entrance footprints catch up with the art (2026-11-01)
 
 - The user: "Yes, run it", on clearing the drift. Since round 811 the rounds that installed entrances wrote only their new regions,
