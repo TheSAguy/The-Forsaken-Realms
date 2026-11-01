@@ -35,6 +35,12 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 910 - sheet keys and page-sized page keys
+- `forge-gui-mobile/src/forge/adventure/scene/UIScene.java` (STOCK): in `keyPressed`, `ScrollUp` and `ScrollDown` move
+  `Math.max(20f, pane height * 0.8f)`, not 20. Every plane gets it, a behavior change with no flag.
+- `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): a `keyPressed` override (J, L) and `keyHint`,
+  behind `RealmJournal.enabled` and `Ascendance.isActive`.
+
 ### Round 908 - fitted-text catches log what failed
 - `forge-gui-mobile/src/forge/Graphics.java`: `fitText` and `drawFittedText`'s catches call the new `reportTextFailure`, once a
   launch per catch. The forced English is unchanged.

@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 910: the character sheet's buttons get keys, and Page Up/Down move a page (2026-10-31)
+
+- From the test pass (`C:\TFR
+otes\gaps-899-900eport.md`, findings 1 and 2): since round 899 the sheet's button is the only way
+  into the Journal, and no key reached it; Page Up/Down moved 20px a press against a 160px trophy row.
+- **J opens the Journal and L the Level sheet** on the character sheet, with no dialog up. Plain key checks in the scene's own
+  `keyPressed`, not `KeyBinding` entries: that enum feeds the layouts' `binding` property and nothing else (no Settings row, nothing
+  saved), but it has no room for a key that means something on one scene only. J and L collide with nothing: `KeyBinding` uses
+  WASD, I, Q, E, M, B, F4, Enter, Esc and the page keys, and the scene has no keys of its own. Each is gated like its button
+  (`RealmJournal.enabled`, `Ascendance.isActive`). No controller button: that pass was left out on purpose.
+- Landscape's buttons read "Level sheet (L)" and "Journal (J)". Text, not the Q-style key cap: `KeyHintLabel` needs a `KeyBinding`,
+  and "[+J]" in the button font draws a bare "+". Off in portrait (Quests shows no key there either), on Android and with a
+  controller connected.
+- **Page keys** (`UIScene.keyPressed`, shared): each press moves 80% of the focused pane's height, at least the old 20. `setScrollY`
+  clamps at both ends, so a short pane just goes to its end. L1 and R1 share the code and gain it.
+- **Tested** on this round's classes over the 21:24 agent jar, slot 93, landscape 1280x720: Page Down on the sheet moved two trophy
+  rows at a press, reached Decked Out and stopped; Journal's list; Settings; J opened the Journal and Esc came back; L opened
+  the Level sheet, and L and J did nothing behind it. Shots: `C:\TFR
+otes910-shots\`. Not tested: Page Up's shot was dropped from
+  the set (pressed, no failure), portrait, a real controller's L1/R1, L with a level-up choice waiting (it takes the button's own path).
+- Files: `scene/PlayerStatisticScene.java`, `scene/UIScene.java` (both stock).
+
 ## Round 908: the "CJK fonts" line names what really failed (2026-10-31)
 
 `Forge switches to English due to an error generating CJK Fonts` isn't about font generation. It comes from the two

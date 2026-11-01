@@ -1,5 +1,6 @@
 package forge.adventure.scene;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -150,6 +151,28 @@ public class PlayerStatisticScene extends UIScene {
             journal.setBounds(questsButton.getX() + half + 1f, questsButton.getY(), half - 1f, questsButton.getHeight());
             ui.addActor(journal);
         }
+    }
+
+    // Round 910: the sheet's own buttons get keys. Plain checks, not KeyBinding entries: nothing new in the layouts' bindings.
+    @Override
+    public boolean keyPressed(int keycode) {
+        if (dialogs.isEmpty()) {
+            if (keycode == Input.Keys.J && forge.adventure.util.RealmJournal.enabled()) {
+                JournalScene.show();
+                return true;
+            }
+            if (keycode == Input.Keys.L && forge.adventure.util.Ascendance.isActive()) {
+                levelSheet();
+                return true;
+            }
+        }
+        return super.keyPressed(keycode);
+    }
+
+    /** Round 910: the key on a button, as text (KeyHintLabel needs a KeyBinding, this font has no key glyphs); landscape only, as Quests' Q. */
+    private static String keyHint(String key) {
+        return Forge.isLandscapeMode() && !forge.gui.GuiBase.isAndroid()
+                && com.badlogic.gdx.controllers.Controllers.getCurrent() == null ? " (" + key + ")" : "";
     }
 
     /** Round 897: landscape's blessing box holds the Journal's button. */
@@ -344,15 +367,15 @@ public class PlayerStatisticScene extends UIScene {
                 Table box = new Table();
                 box.add(ascendance).width(width).left().row();
                 Table buttons = new Table(); // round 897: the Journal beside it
-                buttons.add(Controls.newTextButton("[%80]Level sheet", this::levelSheet));
+                buttons.add(Controls.newTextButton("[%80]Level sheet" + keyHint("L"), this::levelSheet));
                 if (journalInBox())
-                    buttons.add(Controls.newTextButton("[%80]Journal", JournalScene::show)).padLeft(3f);
+                    buttons.add(Controls.newTextButton("[%80]Journal" + keyHint("J"), JournalScene::show)).padLeft(3f);
                 box.add(buttons).left().padTop(2f).padBottom(landscape ? 6f : 1f).row();
                 box.add(blessingScroll).width(width).left().row();
                 blessingBox.setActor(box);
             } else if (journalInBox()) { // round 897
                 Table box = new Table();
-                box.add(Controls.newTextButton("[%80]Journal", JournalScene::show)).left().padBottom(6f).row();
+                box.add(Controls.newTextButton("[%80]Journal" + keyHint("J"), JournalScene::show)).left().padBottom(6f).row();
                 box.add(blessingScroll).width(Math.max(60f, blessingBox.getWidth() - 6f)).left().row();
                 blessingBox.setActor(box);
             } else {

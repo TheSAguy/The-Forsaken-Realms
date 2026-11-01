@@ -438,18 +438,19 @@ public class UIScene extends Scene {
             selection.onDeSelect();
             stage.setKeyboardFocus(null);
         }
+        // Round 910: a page at a time, 80% of the pane (20px was an eighth of a trophy row); setScrollY clamps at the ends.
         if (KeyBinding.ScrollUp.isPressed(keycode)) {
             Actor focus = stage.getScrollFocus();
             if (focus != null && focus instanceof ScrollPane) {
                 ScrollPane scroll = ((ScrollPane) focus);
-                scroll.setScrollY(scroll.getScrollY() - 20);
+                scroll.setScrollY(scroll.getScrollY() - Math.max(20f, scroll.getHeight() * 0.8f));
             }
         }
         if (KeyBinding.ScrollDown.isPressed(keycode)) {
             Actor focus = stage.getScrollFocus();
             if (focus != null && focus instanceof ScrollPane) {
                 ScrollPane scroll = ((ScrollPane) focus);
-                scroll.setScrollY(scroll.getScrollY() + 20);
+                scroll.setScrollY(scroll.getScrollY() + Math.max(20f, scroll.getHeight() * 0.8f));
             }
         }
         if (!textboxOpen) {
