@@ -14264,6 +14264,16 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 906 (follow-up): a Bank balance stops at the top instead of wrapping (2026-10-31)
+
+P3-5: `PointOfInterestChanges.addBankBalance` added in int, so a sum past `Integer.MAX_VALUE` wrapped negative, the
+`Math.max(0, ...)` made it 0 and the Bank was empty. Weekly interest, Deposit All and the Gold Mine's deposit all feed it. It
+needs about 2.1 billion gold, so it's an edited-save case more than a real one. The sum is now long and stops at the top, as
+round 836's purse does, with a `[TFR-Bank]` line. Withdrawals and the floor at 0 are unchanged.
+
+**Tested** with a harness on the class: `MAX-10` + 100 stays at `MAX`, then -50 gives `MAX-50`, 30 - 100 gives 0, 30 + 12
+gives 42. Not played: no agent game holds that balance.
+
 ## Round 906: log sharing reads a log a line at a time (2026-10-31)
 
 Round 906 works through the Fable review's "fix later" list (`notes/fable-verify-2026-10-28.md`), one commit per fix. Round

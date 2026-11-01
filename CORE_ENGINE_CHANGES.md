@@ -35,6 +35,10 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 906 (follow-up) - a Bank balance stops at the top
+- `forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterestChanges.java`: `addBankBalance` (TFR's own method in a
+  stock file) sums in long and clamps to `Integer.MAX_VALUE`. No stock line changed.
+
 ### Round 901 - a relaunch into a disposed process starts a new one
 - `forge-gui-android/src/forge/app/Main.java`: `onCreate` gets a `Forge.isDisposed` check right after `super.onCreate`; new
   `startFreshProcess()`, `logRelaunch()`, `RELAUNCHED_AT`; one post in `loadGame`. On an upstream merge: if `Forge.dispose()`

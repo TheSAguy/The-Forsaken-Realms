@@ -675,6 +675,10 @@ public class PointOfInterestChanges implements SaveFileContent  {
         bankBalance = Math.max(0, val);
     }
     public void addBankBalance(int delta) {
-        bankBalance = Math.max(0, bankBalance + delta);
+        // Round 906: a sum past the int limit wrapped negative and cleared the Bank; it stops at the top, as a purse does.
+        long sum = (long) bankBalance + delta;
+        if (sum > Integer.MAX_VALUE)
+            System.out.println("[TFR-Bank] balance " + bankBalance + " + " + delta + " stops at " + Integer.MAX_VALUE);
+        bankBalance = (int) Math.max(0L, Math.min(Integer.MAX_VALUE, sum));
     }
 }
