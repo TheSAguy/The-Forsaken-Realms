@@ -14434,6 +14434,21 @@ full strength.
   seed: `generateNew(0)`). The Hard/Insane balance effect of the shift itself is unchanged, so it wasn't re-measured. Nothing
   ran on a phone.
 
+## Round 903 (follow-up): Power stays on one line in portrait, and the blessing text takes the sheet's small size (2026-10-31)
+
+- The main thread's check of `notes/r903-shots/after-portrait-eternal-l44.png`: the button was whole, but when Power wrapped
+  at 2444 / 4830 it pushed "No blessing." out of the box.
+- Portrait's Power line is now the icon and the amount, with no word, so it is one line at any value. The blessing text uses
+  the `[%80]` the sheet's other portrait lines already take, which fits two lines under the button at the worst case. Landscape
+  is untouched.
+- **Tested** on this class over the agent jar, portrait 540x960, slot 93: Weavebinder 39 with 1466 / 1625 and "No blessing."
+  (`notes/r903-shots/followup-portrait-weavebinder-l39-noblessing.png`); Eternal 44 with 2444 / 4830 and a long blessing, the
+  debug map's Debug Demon forced on by a throwaway test build, not in this commit (`followup-portrait-eternal-l44-long-blessing.png`).
+- **Not fixed, by design:** a blessing longer than two lines still runs under the box's fold; the box is a scroll pane. The
+  game's only live blessing is Diamond's Vigor, one line. A Doppelganger's heading line (`Doppelganger.headBlessing`) sets its
+  own text at full size; that file wasn't in this round's window. Dragging the box wasn't tried: the bridge can't scroll.
+- Files: `scene/PlayerStatisticScene.java` (stock).
+
 ## Round 904: Landscape Sketchbooks are unique - one of each (2026-10-31)
 
 - The ask: use the `unique` flag the v1.25 merge brought in (upstream #12460, conflict C3) on TFR's sketchbooks, as stock

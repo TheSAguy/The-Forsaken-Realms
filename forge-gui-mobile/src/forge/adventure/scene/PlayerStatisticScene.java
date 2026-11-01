@@ -317,9 +317,9 @@ public class PlayerStatisticScene extends UIScene {
         }
         if (blessingScroll != null) {
             if (Current.player().getBlessing() != null) {
-                blessingScroll.setText("[BLACK]" + Current.player().getBlessing().getDescription());
+                blessingScroll.setText(size + "[BLACK]" + Current.player().getBlessing().getDescription()); // round 903
             } else {
-                blessingScroll.setText("[BLACK]No blessing.");
+                blessingScroll.setText(size + "[BLACK]No blessing.");
             }
             forge.adventure.util.Doppelganger.headBlessing(blessingScroll, Current.player()); // TFR round 879
         }
@@ -334,11 +334,11 @@ public class PlayerStatisticScene extends UIScene {
                 int[] progress = forge.adventure.util.Ascendance.progress();
                 String title = forge.adventure.util.Ascendance.title();
                 // Round 903: portrait's box is 80px tall, and a long title or 4-digit Power pushed the Level sheet button
-                // out of it, so there the heading is 90%, the title takes its own line and Power stops at the amount.
+                // out of it, so there the heading is 90%, the title takes its own line and Power is its icon and the amount, one line at any value.
                 boolean landscape = Forge.isLandscapeMode();
                 TextraLabel ascendance = Controls.newTextraLabel((landscape ? "" : "[%90]") + "[BLACK]Ascendance " + forge.adventure.util.Ascendance.level()
                         + (title.isEmpty() ? "" : (landscape ? " - " : "\n[BLACK]") + title) + "\n[BLACK][%85][WHITE]" + forge.adventure.util.Ascendance.ICON
-                        + "[BLACK] Power " + progress[0] + " / " + progress[1] // round 517: the icon in its own colors
+                        + (landscape ? "[BLACK] Power " : "[BLACK] ") + progress[0] + " / " + progress[1] // round 517: the icon in its own colors
                         + (landscape ? " to level " + (forge.adventure.util.Ascendance.level() + 1) : ""));
                 ascendance.setWrap(true);
                 Table box = new Table();
