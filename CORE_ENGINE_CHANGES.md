@@ -35,6 +35,12 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 907 - a failed reward card closes its batch
+- `forge-gui-mobile/src/forge/adventure/util/RewardActor.java`: `setItemTooltips`, `processSprite` and
+  `renderPlaceholderUnguarded` end the batch and frame buffer in a `finally`; the first two catch and log; one `title`
+  variable and one `layout.setText` in `setItemTooltips`. Re-check the indented `processSprite` body at a merge.
+- `forge-gui-mobile/src/forge/Adventure.java`: the render catch calls the new `closeOpenFrame()`.
+
 ### Round 906 (follow-up) - a place with no template is left out of a load
 - `forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterest.java`: new `static boolean loadable(SaveFileData)`.
 - `forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterestMap.java`: `load` skips what `loadable` refuses.

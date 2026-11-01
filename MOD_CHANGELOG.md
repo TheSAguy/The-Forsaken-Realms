@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 907: a failed reward card can no longer freeze the game (2026-10-31)
+
+**The bug** (`notes\logs-1031b.md` P1-1, eecefe12, PC, v1.25). Opening a shop in the Great Lighthouse, a libGDX layout error
+in `RewardActor.setItemTooltips` was printed and passed over, but the shared batch stayed open: `endClip` and `end` were the
+last lines of the `try`. `processSprite` then threw at `Graphics.begin` and left its frame buffer bound. `Adventure.render`'s
+catch logged that, and every later frame threw in `render`, before `act`, so nothing could move on. `x29400` in the log, until
+the player closed the window. What they saw and what they lost are inferences from the log.
+
+**The fix.**
+- `RewardActor.setItemTooltips`, `processSprite` and `renderPlaceholderUnguarded` end the batch and the frame buffer in a
+  `finally`, only when that call began them. `Graphics.end()` also resets a clip the throw skipped.
+- `setItemTooltips` and `processSprite` catch and carry on: the card shows without its tooltip or face, and the screen opens.
+  `renderPlaceholderUnguarded` still throws to its caller, closed.
+- `Adventure.closeOpenFrame()`, called from the render catch: whatever threw, an open batch is ended, the frame buffer is
+  unbound and the viewport put back, so the next frame starts clean. `[TFR-Render] batch left open by a failed frame` once a
+  launch.
+- **Diagnostics:** `[TFR-Render] reward tooltip not drawn: <exception>, text "...", reward <type>, thread <name>`, and
+  `reward card face not drawn` likewise. The title now goes through one `layout.setText` so the catch can name it.
+
+**The layout error's cause is not fixed.** "8 Cards" can't reach index 26 in `GlyphLayout.setText:230`, so a run from libGDX's
+static pool was already bad. It's the third sighting (`logs-1028b`, `logs-1028c`). This round stops the freeze, not the error.
+
+**Tested** in the agent, with a temporary forced throw kept out of the repo (classes ahead of the jar, the two files compiled
+with javac against the agent jar):
+- **Control, the old `RewardActor` and `Adventure`, the same throw on a duel's loot:** reproduces it. `IllegalStateException`
+  at `WorldStage.draw`, `still swallowing` to `x1800`, player stuck.
+- **With the fix, the same throw:** `reward tooltip not drawn: ... text "Gold", reward Gold, thread main`, then `"Stone"`. The
+  loot screen opened, Done worked and the player walked on.
+- **Safety net, a batch left open on purpose at a shop door:** `batch left open by a failed frame`, the game kept running, and
+  once the leak stopped the shop opened with its card art right and the next shop too.
+- **Normal shop:** Benalia's two Ring shops look right, before and after.
+
+**Not tested:** Android; a booster shop (the logged path) rather than loot and card shops; a Maven build, a package or a real
+pool failure. Nothing here changes a save.
+
 ## Round 906 (follow-up): Found Cards groups by set in set order, and the classic list says a filter hid its set (2026-10-31)
 
 P3-11, round 817's cosmetics. Files: `scene/ResearchCardFilters.java`, `scene/ResearchScene.java` (TFR files).

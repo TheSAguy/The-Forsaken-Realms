@@ -2,6 +2,7 @@ package forge;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import forge.adventure.scene.HudScene;
 //import forge.util.ScreenUtil;
 
@@ -81,6 +82,25 @@ public class Adventure {
             // Round 316: upstream's 09.23 daily (#11888) added its own logOnce() here; ours is kept (it
             // counts repeats and keys on the first frame in Forge's own code), with its scene name added.
             reportSilencedRenderException(ie);
+            closeOpenFrame();
+        }
+    }
+
+    private static boolean openFrameReported;
+
+    /** Round 907: this catch keeps the loop alive, but a batch left drawing made every later frame throw at its own
+     *  begin(), before act(), so the game sat frozen until the window closed (a shop on PC, a player's log). Whatever
+     *  threw, the next frame starts clean; the frame buffer goes too, as it was left bound in that log. */
+    private static void closeOpenFrame() {
+        Graphics g = Forge.getGraphics();
+        if (g == null || !g.getBatch().isDrawing())
+            return;
+        g.end();
+        FrameBuffer.unbind();
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+        if (!openFrameReported) {
+            openFrameReported = true;
+            System.err.println("[TFR-Render] batch left open by a failed frame: closed it, the game goes on (logged once a launch)");
         }
     }
 

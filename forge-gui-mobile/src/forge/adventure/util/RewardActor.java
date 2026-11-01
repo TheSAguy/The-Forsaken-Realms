@@ -883,8 +883,11 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             renderedCount++;
             //The first time we find a card that has no art, render one out of view to fully initialize CardImageRenderer.
             Forge.getGraphics().begin(preview_w, preview_h);
-            CardImageRenderer.drawCardImage(Forge.getGraphics(), CardView.getCardForUi(reward.getCard()), false, -(preview_w + 20), 0, preview_w, preview_h, CardRenderer.CardStackPosition.Top, Forge.allowCardBG, false, false, true, displayArt, true);
-            Forge.getGraphics().end();
+            try {
+                CardImageRenderer.drawCardImage(Forge.getGraphics(), CardView.getCardForUi(reward.getCard()), false, -(preview_w + 20), 0, preview_w, preview_h, CardRenderer.CardStackPosition.Top, Forge.allowCardBG, false, false, true, displayArt, true);
+            } finally {
+                Forge.getGraphics().end(); // round 907, as in processSprite
+            }
         }
         FrameBuffer frameBuffer = Forge.getAssets().getItemFrameBuffer(preview_w, preview_h, true);
         // safety check: escape gracefully if the context is uninitialized
@@ -893,17 +896,23 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
         }
         Matrix4 m = new Matrix4();
         frameBuffer.begin();
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        m.setToOrtho2D(0, preview_h, preview_w, -preview_h); //So it renders flipped directly.
+        boolean drawing = false; // round 907, as in processSprite; a throw still goes to the caller
+        try {
+            Gdx.gl.glClearColor(0, 0, 0, 0);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            m.setToOrtho2D(0, preview_h, preview_w, -preview_h); //So it renders flipped directly.
 
-        Forge.getGraphics().begin(preview_w, preview_h);
-        Forge.getGraphics().setProjectionMatrix(m);
-        Forge.getGraphics().startClip();
-        CardImageRenderer.drawCardImage(Forge.getGraphics(), CardView.getCardForUi(card), alternate, 0, 0, preview_w, preview_h, CardRenderer.CardStackPosition.Top, Forge.allowCardBG, false, false, true, displayArt, true);
-        Forge.getGraphics().endClip();
-        Forge.getGraphics().end();
-        frameBuffer.end();
+            Forge.getGraphics().begin(preview_w, preview_h);
+            drawing = true;
+            Forge.getGraphics().setProjectionMatrix(m);
+            Forge.getGraphics().startClip();
+            CardImageRenderer.drawCardImage(Forge.getGraphics(), CardView.getCardForUi(card), alternate, 0, 0, preview_w, preview_h, CardRenderer.CardStackPosition.Top, Forge.allowCardBG, false, false, true, displayArt, true);
+            Forge.getGraphics().endClip();
+        } finally {
+            if (drawing)
+                Forge.getGraphics().end();
+            frameBuffer.end();
+        }
         // Rendering ends here. Grab the rendered framebuffer and bind to texture (faster method than initializing new texture)
         Texture result = frameBuffer.getColorBufferTexture();
         result.bind();
@@ -933,34 +942,47 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
         Matrix4 matrix = new Matrix4();
         matrix.setToOrtho2D(0, ph, pw, -ph);
         frameBuffer.begin();
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Forge.getGraphics().begin(pw, ph);
-        Forge.getGraphics().setProjectionMatrix(matrix);
-        Forge.getGraphics().startClip();
-        Forge.getGraphics().getBatch().setColor(Color.WHITE);
-        Forge.getGraphics().getBatch().draw(sprite, 0, 0, pw, ph);
-        if (item != null) {
-            if (!isBooster) {
-                float iw = item.getWidth() * 4;
-                float ih = item.getHeight() * 4;
-                Forge.getGraphics().getBatch().draw(item, pw / 2f - iw / 2f, (ph / 2f - ih / 2f) + itemLift, iw, ih);
-            } else
-                Forge.getGraphics().getBatch().draw(item, pw / 4f, ph / 4f, pw / 2f, ph / 2f);
+        // Round 907: a throw in here left the frame buffer bound and the shared batch open, and every later frame then
+        // failed at its own begin(): a frozen game (a shop on PC, a player's log). The card face is skipped and play goes
+        // on. Graphics.end() also resets a clip the throw skipped.
+        boolean drawing = false;
+        try {
+            Gdx.gl.glClearColor(0, 0, 0, 0);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Forge.getGraphics().begin(pw, ph);
+            drawing = true;
+            Forge.getGraphics().setProjectionMatrix(matrix);
+            Forge.getGraphics().startClip();
+            Forge.getGraphics().getBatch().setColor(Color.WHITE);
+            Forge.getGraphics().getBatch().draw(sprite, 0, 0, pw, ph);
+            if (item != null) {
+                if (!isBooster) {
+                    float iw = item.getWidth() * 4;
+                    float ih = item.getHeight() * 4;
+                    Forge.getGraphics().getBatch().draw(item, pw / 2f - iw / 2f, (ph / 2f - ih / 2f) + itemLift, iw, ih);
+                } else
+                    Forge.getGraphics().getBatch().draw(item, pw / 4f, ph / 4f, pw / 2f, ph / 2f);
+            }
+            if (itemText != null) {
+                itemText.setWrap(true);
+                itemText.setAlignment(1);
+                itemText.setWidth(pw);
+                itemText.setHeight(ph);
+                itemText.setX(itemText.getX() + (modX * 4));
+                itemText.setY(itemText.getY() + (modY * 8));
+                if (!faceTextOver)
+                    itemText.draw(Forge.getGraphics().getBatch(), 1);
+            }
+            Forge.getGraphics().endClip();
+        } catch (RuntimeException e) {
+            System.err.println("[TFR-Render] reward card face not drawn: " + e + ", reward " + reward.getType()
+                    + ", thread " + Thread.currentThread().getName());
+            e.printStackTrace();
+        } finally {
+            if (drawing)
+                Forge.getGraphics().end();
+            frameBuffer.end();
         }
-        if (itemText != null) {
-            itemText.setWrap(true);
-            itemText.setAlignment(1);
-            itemText.setWidth(pw);
-            itemText.setHeight(ph);
-            itemText.setX(itemText.getX() + (modX * 4));
-            itemText.setY(itemText.getY() + (modY * 8));
-            if (!faceTextOver)
-                itemText.draw(Forge.getGraphics().getBatch(), 1);
-        }
-        Forge.getGraphics().endClip();
-        Forge.getGraphics().end();
-        frameBuffer.end();
         image = frameBuffer.getColorBufferTexture();
         image.bind();
         faceText = faceTextOver ? itemText : null;
@@ -1057,9 +1079,12 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             frameBuffer.begin();
             Gdx.gl.glClearColor(0, 0, 0, 0);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            boolean drawing = false; // round 907, as in processSprite
+            String title = null;
             try {
                 m.setToOrtho2D(0, preview_h, preview_w, -preview_h); //So it renders flipped directly.
                 Forge.getGraphics().begin(preview_w, preview_h);
+                drawing = true;
                 Forge.getGraphics().setProjectionMatrix(m);
                 Forge.getGraphics().startClip();
                 Forge.getGraphics().drawImage(backSprite, 0, 0, preview_w, preview_h);
@@ -1070,17 +1095,13 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
 
                 float div = (float) preview_h / preview_w;
                 BitmapFont font = Controls.getBitmapFont("default", 4 / div);
-                if(reward.getType().equals(Reward.Type.CardPack)) {
-                    layout.setText(font, reward.getDeck().get(DeckSection.Main).countAll() +" Cards",
-                            Color.WHITE,
-                            preview_w - 64,
-                            Align.center, true);
-                }
+                if(reward.getType().equals(Reward.Type.CardPack))
+                    title = reward.getDeck().get(DeckSection.Main).countAll() +" Cards";
                 else if (Reward.Type.MapPiece.equals(reward.getType())) // round 530
-                    layout.setText(font, TreasureHunt.pieceCardTitle(reward.getMapRegion(), reward.getCount()).replace("\n", " - "),
-                            Color.WHITE, preview_w - 64, Align.center, true);
+                    title = TreasureHunt.pieceCardTitle(reward.getMapRegion(), reward.getCount()).replace("\n", " - ");
                 else
-                    layout.setText(font, itemExists ? item.getDisplayName() : getReward().type.name(), Color.WHITE, preview_w - 64, Align.center, true);
+                    title = itemExists ? item.getDisplayName() : getReward().type.name();
+                layout.setText(font, title, Color.WHITE, preview_w - 64, Align.center, true);
                 Forge.getGraphics().drawText(font, layout, 32, preview_h - 70);
                 align = itemExists ? Align.topLeft : Align.top;
                 if (itemExists) {
@@ -1096,10 +1117,15 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                 if (itemExists && description.isEmpty() && item.questItem)
                     description = "Quest Item";
                 Forge.getGraphics().endClip();
-                Forge.getGraphics().end();
             } catch (Exception e) {
+                // Round 907: the text and the thread, for libGDX's shared text pool going bad (cause not proven): "8 Cards"
+                // cannot reach the index that a player's log failed on
+                System.err.println("[TFR-Render] reward tooltip not drawn: " + e + ", text \"" + title + "\", reward "
+                        + reward.getType() + ", thread " + Thread.currentThread().getName());
                 e.printStackTrace();
             } finally {
+                if (drawing)
+                    Forge.getGraphics().end();
                 frameBuffer.end();
                 generatedTooltip = frameBuffer.getColorBufferTexture();
                 generatedTooltip.bind();
