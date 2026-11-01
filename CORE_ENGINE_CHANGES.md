@@ -35,6 +35,12 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 912 - the ROUTED badge's buffer
+- `forge-gui-mobile/src/forge/adventure/stage/GameStage.java` (STOCK): `getDefeatBadge()` returns the new private
+  `DefeatBadge`, a 352x400 `FBufferedImage` (stock: 176x200), drawn at the buffer's size. The private `showImageDialog` keeps the
+  image `Cell` and sets its width to 176 for a `DefeatBadge`, so the dialog stays as wide as it was; every other image dialog
+  takes stock's height-only cell. The art is the plane's own `ui/defeat.png`; stock's `common/ui/defeat.png` is unchanged.
+
 ### Round 910 - sheet keys and page-sized page keys
 - `forge-gui-mobile/src/forge/adventure/scene/UIScene.java` (STOCK): in `keyPressed`, `ScrollUp` and `ScrollDown` move
   `Math.max(20f, pane height * 0.8f)`, not 20. Every plane gets it, a behavior change with no flag.

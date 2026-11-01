@@ -269,7 +269,9 @@ public abstract class GameStage extends Stage {
             tr.flip(mirror, true);
             Image image = new Image(tr);
             image.setScaling(Scaling.fit);
-            dialog.getContentTable().add(image).height(100);
+            Cell<Image> imageCell = dialog.getContentTable().add(image).height(100);
+            if (fb instanceof DefeatBadge)
+                imageCell.width(DefeatBadge.CELL_WIDTH); // round 912: else the cell takes the buffer's width and the dialog widens
             dialog.getContentTable().add().row();
         }
         TypingLabel L = Controls.newTypingLabel(message);
@@ -983,14 +985,27 @@ public abstract class GameStage extends Stage {
         if (defeat.exists()) {
             TextureRegion tr = new TextureRegion(Forge.getAssets().getTexture(defeat, true, false));
             tr.flip(true, false);
-            return new FBufferedImage(176, 200) {
-                @Override
-                protected void draw(Graphics g, float w, float h) {
-                    g.drawImage(tr, 0, 0, 176, 200);
-                }
-            };
+            return new DefeatBadge(tr);
         }
         return null;
+    }
+
+    /** Round 912: the ROUTED badge's buffer matches its 352x400 art, so every art pixel lands (a smaller buffer drops
+     *  pixels, the stock badge's crumbled look), and it draws about 1:1 on a 1920-wide window. CELL_WIDTH is the width
+     *  of the old 176x200 buffer's dialog cell, which keeps the dialog as wide as it was. */
+    private static final class DefeatBadge extends FBufferedImage {
+        private static final float WIDTH = 352f, HEIGHT = 400f, CELL_WIDTH = 176f;
+        private final TextureRegion art;
+
+        private DefeatBadge(TextureRegion art) {
+            super(WIDTH, HEIGHT);
+            this.art = art;
+        }
+
+        @Override
+        protected void draw(Graphics g, float w, float h) {
+            g.drawImage(art, 0, 0, w, h);
+        }
     }
 
     public void setExtraAnnouncement(String message) {

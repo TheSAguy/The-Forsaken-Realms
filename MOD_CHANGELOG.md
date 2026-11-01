@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 912: the ROUTED badge (2026-11-01)
+
+- The user, of the stock DEFEAT badge: "I don't like this defeat picture, looks very low quality", then "I think the Defeat might
+  need to be renamed. It's a little misleading." and "Yes, ROUTED". The badge shows after a life-0 death (you wake at home) and
+  after a boss loss with life left, so the run is not over; the real end is the separate burning castle splash, unchanged.
+- **The art:** `The Forsaken Realms/ui/defeat.png`, new, 352x400, 64 colors, binary alpha, a 1px near-black outline: a cracked
+  shield and a torn red banner above a ROUTED plate (ChatGPT sheet, design 4 of 4, the user's pick). `adventure/common` is not
+  touched, so the stock file stays. The name stays `defeat.png`.
+- **The buffer:** half of the old crumbled look was the code. `getDefeatBadge()` drew the 512x576 file with Nearest into a 176x200
+  buffer, dropping about two of every three pixels. The buffer is now 352x400 (`GameStage.DefeatBadge`), the art's own size, so
+  every pixel lands, and it draws about 1:1 on a 1920-wide window (the dialog shows it about 350x398 there). A plane without its
+  own `ui/defeat.png` keeps the stock art, in the larger buffer.
+- **The dialog:** the image cell had only a height, so its width came from the buffer and 352 would have widened the dialog. The
+  private `showImageDialog` sets the old 176 on that cell for a `DefeatBadge` only. Achievement trophies size their buffer from
+  the trophy background, so a width on every cell would have changed them; they and the null-image announcement take the old path.
+  Callers read: the two defeat calls, the History reshow, `showAchievementDialog` (`TfrAchievements`, `GuiMobile.showImageDialog`),
+  and the announcement in `enter()`.
+- **Agent-tested** in a temporary copy, shots in `C:\TFR\notes\r912-routed-badge`, compared with the same save on the round 911 jar: a
+  real life-0 duel loss to a spawned Griselbrand at 50x (the "Lost [+Gold] 418" line sits right), console `endscreen died` on the
+  world map and in Orazca, console `endscreen boss` (dialog frame identical to the baseline), History and back (the badge returns
+  whole from the same buffer), an achievement dialog (0 pixels changed against the baseline; a test-only overlay opened it, since
+  the console grants none) and the announcement (same frame). 1280x720, 1920x1080 and 720x1280 portrait. No exception in the logs.
+  A real boss loss with life left was not played; `endscreen boss` runs the real `defeatedFromBoss`. Not run on Android.
+
 ## Round 911: a destroyed Bank hands back its deposits (2026-11-01)
 
 - P3-4 of the Fable list (`notes/fable-verify-2026-10-28.md`; the user: "Yes, refund them"). Destroying a Bank said "You will not
