@@ -333,10 +333,13 @@ public class PlayerStatisticScene extends UIScene {
                 float width = Math.max(60f, blessingBox.getWidth() - 6f);
                 int[] progress = forge.adventure.util.Ascendance.progress();
                 String title = forge.adventure.util.Ascendance.title();
-                TextraLabel ascendance = Controls.newTextraLabel("[BLACK]Ascendance " + forge.adventure.util.Ascendance.level()
-                        + (title.isEmpty() ? "" : " - " + title) + "\n[BLACK][%85][WHITE]" + forge.adventure.util.Ascendance.ICON
+                // Round 903: portrait's box is 80px tall, and a long title or 4-digit Power pushed the Level sheet button
+                // out of it, so there the heading is 90%, the title takes its own line and Power stops at the amount.
+                boolean landscape = Forge.isLandscapeMode();
+                TextraLabel ascendance = Controls.newTextraLabel((landscape ? "" : "[%90]") + "[BLACK]Ascendance " + forge.adventure.util.Ascendance.level()
+                        + (title.isEmpty() ? "" : (landscape ? " - " : "\n[BLACK]") + title) + "\n[BLACK][%85][WHITE]" + forge.adventure.util.Ascendance.ICON
                         + "[BLACK] Power " + progress[0] + " / " + progress[1] // round 517: the icon in its own colors
-                        + " to level " + (forge.adventure.util.Ascendance.level() + 1));
+                        + (landscape ? " to level " + (forge.adventure.util.Ascendance.level() + 1) : ""));
                 ascendance.setWrap(true);
                 Table box = new Table();
                 box.add(ascendance).width(width).left().row();
