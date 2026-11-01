@@ -559,12 +559,19 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         int window = forge.adventure.util.SpawnTierWeighting.winRatioWindow();
         String record = recentDuels() + (won ? "W" : "L");
         recentDuels = record.length() > window ? record.substring(record.length() - window) : record;
+        forge.adventure.util.ReloadJab.keepRecentDuels(recentDuels); // round 902: a reload must not rewind it
         forge.adventure.util.SpawnTierWeighting.logWinRatio(won ? "won" : "lost");
+    }
+
+    /** Round 902, ReloadJab.onLoaded: this world's record as kept outside the save. */
+    public void restoreRecentDuels(String record) {
+        recentDuels = record;
     }
 
     /** Round 613, console "winratio W L": set the record to W wins and L losses (spread evenly), for testing. */
     public String cheatSetRecentDuels(int wins, int losses) {
         recentDuels = forge.adventure.util.SpawnTierWeighting.spread(Math.max(0, wins), Math.max(0, losses));
+        forge.adventure.util.ReloadJab.keepRecentDuels(recentDuels); // round 902
         return forge.adventure.util.SpawnTierWeighting.describeWinRatio();
     }
 

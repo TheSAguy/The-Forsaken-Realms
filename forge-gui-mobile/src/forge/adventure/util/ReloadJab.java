@@ -55,6 +55,12 @@ import java.util.Properties;
  * {@link #CREDIT_EVERY} honest losses earn a reload credit, up to {@link #CREDIT_CAP} ({@code credits.<seed>},
  * {@code creditProgress.<seed>}); a load that would count - a reload after a loss, a counted mid-duel quit - spends one
  * instead and counts as nothing. Hidden: forge.log lines only, and the console's {@code reloadjab}.
+ *
+ * <p>Round 902 (notes/logs-1031.md P3-3: 63 real losses to one boss while the log read "47-3 (94% won)"): the win-ratio
+ * record (AdventurePlayer.recentDuels) is also kept here, as {@code recentDuels.<seed>}, and every load takes it over the
+ * save's. A reload no longer rewinds it, so a player losing for real stops drawing the anti-steamroll buffs. It's a record,
+ * not a penalty, so it runs under the option too. A world from before this round has no entry until its next counted duel,
+ * and uses the save's own record.
  */
 public final class ReloadJab {
     private static final String FILE = ForgeConstants.USER_DIR + "adventure" + File.separator + "tfr_reload_jab.properties";
@@ -212,6 +218,7 @@ public final class ReloadJab {
     public static void onLoaded(Date saveDate, boolean rescued) {
         if (!isEnabled())
             return;
+        restoreRecentDuels(); // round 902: first, DifficultyHints' watch below reads the record
         if (optedOut()) { // round 796: a record from before the flip is dropped, not judged
             synchronized (LOCK) {
                 Properties p = read();
@@ -312,6 +319,37 @@ public final class ReloadJab {
                     + "; reloads " + count(p, seed) + ", honest losses " + intProp(p, "honest." + seed) + "/"
                     + HONEST_PER_FORGIVE + ", reload credits " + intProp(p, "credits." + seed) + " - all kept)");
         }
+    }
+
+    // ---- Round 902: the win-ratio record, kept past a reload ----
+
+    /** AdventurePlayer: the record changed. Not on a plane without the jab, so a stock plane's record stays in its save. */
+    public static void keepRecentDuels(String record) {
+        long seed = currentSeed();
+        if (!isEnabled() || seed == 0L)
+            return;
+        synchronized (LOCK) {
+            Properties p = read();
+            p.setProperty("recentDuels." + seed, record);
+            write(p, false);
+        }
+    }
+
+    /** onLoaded: a save from before this world's last counted duel holds an older record than the one kept here. */
+    private static void restoreRecentDuels() {
+        forge.adventure.player.AdventurePlayer player = Current.player();
+        if (player == null)
+            return;
+        String kept;
+        synchronized (LOCK) {
+            kept = read().getProperty("recentDuels." + currentSeed());
+        }
+        String saved = player.recentDuels();
+        if (kept == null || !kept.matches("[WL]*") || kept.equals(saved))
+            return;
+        player.restoreRecentDuels(kept);
+        System.out.println("[TFR-WinRatio] kept past this load: the save held " + saved + ", the world's record is " + kept
+                + " - " + SpawnTierWeighting.describeWinRatio());
     }
 
     // ---- Round 735: the duel in progress (DuelHeartbeat writes it), judged on the next load ----

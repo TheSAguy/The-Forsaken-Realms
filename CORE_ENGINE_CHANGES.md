@@ -35,6 +35,10 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 902 - the win-ratio record is kept past a reload
+- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`: `recordRecentDuel` and `cheatSetRecentDuels` call
+  `ReloadJab.keepRecentDuels`; new `restoreRecentDuels(String)`.
+
 ### Round 903 - the Level sheet button in portrait
 - `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): in the Ascendance label, portrait only, the
   heading is `[%90]`, the title takes its own line and Power drops " to level N". Inside TFR's existing Ascendance block.

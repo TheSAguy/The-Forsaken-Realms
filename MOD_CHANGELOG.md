@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 902: a reload no longer rewinds the win ratio (2026-10-31)
+
+`notes/logs-1031.md` P3-3, the review's recommendation, taken by the main thread on the user's "If there is anything else
+pending, please perform it tonight". 343e2603 lost 63 real duels to Morcant while the log read `last 50 duels 47-3 (94% won)`,
+spawn shift +10, and Morcant kept starting with `tfr_ratio_enemy_clue` and `tfr_ratio_enemy_treasure`. `recentDuels` is in
+the save, so each reload took the loss back out, and a player who was badly stuck kept drawing the anti-steamroll buffs at
+full strength.
+
+- **The record is kept outside the save, as ReloadJab's counts are:** `recentDuels.<seed>` in `tfr_reload_jab.properties`,
+  written by `recordRecentDuel` and the console's `winratio`. `ReloadJab.onLoaded` takes it over the save's, first thing.
+  Every reader is fixed by that one step: the spawn shift, the `tfr_ratio_enemy_*` start cards and the win hint's streak all
+  read `recentDuels()`. Morcant's life isn't touched, and Notoriety and the reload count work as before.
+- **Existing saves:** the save format doesn't change, and `recentDuels` stays in the save. A world with no entry uses the
+  save's own record until its next counted duel, and a save from before round 613 still seeds from its lifetime record.
+- **Judgment calls:**
+  - It runs under the "I won't cheat" opt-out too: it's a record, not a penalty. It's gated on `reloadJabEnabled`, so a
+    stock plane's record stays in its save.
+  - Wins are kept as well: a reload past a win keeps the W. The record now says what was fought, not what the save remembers.
+  - A rescued `.old` load takes the kept record too, since those duels happened.
+  - It's per world, like ReloadJab's counts, so two slots of one world share the record once it has an entry.
+  - A mid-duel quit still adds nothing: the loss never happened, and the record only hears finished duels.
+  - Data moved from another device with an older store for the same world would take the older record. The next duels
+    roll it forward, so this wasn't worth a stamp.
+- **`[TFR-WinRatio] kept past this load: the save held <record>, the world's record is <record> - ...`:** only when they
+  differ.
+- **Proved in the agent game** (the two new classes ahead of the agent jar, duels at 50x, `[TFR-Agent] duel speed set to 50x`):
+  - Slot 93 (Insane, world 4484128249440946344, no entry yet) read 44-6 and was saved to slot 97. A won duel kept 44-6 (the
+    W replaced an old W), and the store's entry appeared. A real loss to a spawned Morcant, with the deck cut in memory:
+    `lost - last 50 duels 43-7`, record ending `L`.
+  - Slot 97 reloaded: `kept past this load`, 43-7, where the save held 44-6. Gold, life and the deck came back as before,
+    and ReloadJab counted 12. A second reload of it: 43-7.
+  - The game stopped and started again, slot 97 loaded: still 43-7. The next real loss: 42-8, the store's entry ending `LL`.
+  - Other worlds: slots 77 and 9, one world with no entry, read their own 0-0 and 10-10. Slot 90, from before round 613,
+    seeded 45-5. All three loaded clean.
+- **Not tested:** a stock plane (the gate is one `isEnabled()`), the opt-out, a rescued load, and New Game+ (it starts a new
+  seed: `generateNew(0)`). The Hard/Insane balance effect of the shift itself is unchanged, so it wasn't re-measured. Nothing
+  ran on a phone.
+
 ## Round 904: Landscape Sketchbooks are unique - one of each (2026-10-31)
 
 - The ask: use the `unique` flag the v1.25 merge brought in (upstream #12460, conflict C3) on TFR's sketchbooks, as stock
