@@ -35,11 +35,13 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
-### Round 912 - the ROUTED badge's buffer
+### Round 915 - the Journal's streak marker and Alt-click
 - `forge-gui-mobile/src/forge/adventure/stage/GameStage.java` (STOCK): `touchDown` calls `JournalScene.altClick` after its pause guard, and returns if it took the click (round 915).
 - `forge-gui-mobile/src/forge/adventure/stage/GameHUD.java` (STOCK): new `showBanner(text)` (a banner the notice log does not keep) and `holdsInput()` (round 915).
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): new `winStreakCards` and `winStreakCardNames`, moved out of DuelScene (round 915).
 - `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): the streak's card loop and `streakNote`'s names call those two (round 915).
+
+### Round 912 - the ROUTED badge's buffer
 - `forge-gui-mobile/src/forge/adventure/stage/GameStage.java` (STOCK): `getDefeatBadge()` returns the new private
   `DefeatBadge`, a 352x400 `FBufferedImage` (stock: 176x200), drawn at the buffer's size. The private `showImageDialog` keeps the
   image `Cell` and sets its width to 176 for a `DefeatBadge`, so the dialog stays as wide as it was; every other image dialog
