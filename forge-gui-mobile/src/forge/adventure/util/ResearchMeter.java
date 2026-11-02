@@ -291,7 +291,7 @@ public final class ResearchMeter {
     private static final Map<String, Batch> batch = new LinkedHashMap<>();
     private static int batchDepth = 0;
 
-    /** Groups the sales of one bulk sale into one log line per set. */
+    /** Groups the sales of one bulk sale into one log line (round 918: one line, however many sets it fed). */
     public static void beginBatch() {
         batchDepth++;
     }
@@ -343,17 +343,29 @@ public final class ResearchMeter {
             return;
         int day = currentDay();
         java.util.List<String> finished = new java.util.ArrayList<>();
+        // Round 918 (notes/logs-1102.md P3-2: one line per set was 60% of a log): a sale that fed several sets is one line
+        boolean oneSet = batch.size() == 1;
+        StringBuilder sets = new StringBuilder(), ready = new StringBuilder();
+        int newCards = 0, copies = 0;
+        float points = 0f;
         for (Map.Entry<String, Batch> e : batch.entrySet()) {
             String code = e.getKey();
             Batch b = e.getValue();
             float after = fill(player, code);
             boolean running = player.isResearching(code);
             int daysNow = days(player, code, day);
-            System.out.println("[TFR-Research] fed " + code + " (" + how + "): " + b.newCards + " new card(s), "
-                    + b.copies + " copy(ies), +" + fmt(b.points) + " pts -> " + fmt(points(player, code)) + "/"
-                    + meterSize(code) + " (" + Math.round(after * 100) + "%); start now: " + startCost(player, code)
-                    + " shards (base " + baseCost() + "), " + daysIfStarted(player, code) + " day(s)"
-                    + (running ? "; running, " + player.getResearchDaysLeft(code, day) + " day(s) left" : ""));
+            if (oneSet)
+                System.out.println("[TFR-Research] fed " + code + " (" + how + "): " + b.newCards + " new card(s), "
+                        + b.copies + " copy(ies), +" + fmt(b.points) + " pts -> " + fmt(points(player, code)) + "/"
+                        + meterSize(code) + " (" + Math.round(after * 100) + "%); start now: " + startCost(player, code)
+                        + " shards (base " + baseCost() + "), " + daysIfStarted(player, code) + " day(s)"
+                        + (running ? "; running, " + player.getResearchDaysLeft(code, day) + " day(s) left" : ""));
+            newCards += b.newCards;
+            copies += b.copies;
+            points += b.points;
+            sets.append(sets.length() == 0 ? "" : ", ").append(code).append(" +").append(fmt(b.points)).append(" -> ")
+                    .append(fmt(points(player, code))).append('/').append(meterSize(code))
+                    .append(running ? " (running, " + player.getResearchDaysLeft(code, day) + " day(s) left)" : "");
             if (running) {
                 // Round 764: feeding a running research shortens it; at 0 days left it finishes now, not on the next tick.
                 if (daysNow < b.daysBefore)
@@ -362,10 +374,15 @@ public final class ResearchMeter {
                 if (daysNow == 0)
                     finished.add(code);
             } else if (b.daysBefore > 0 && daysNow == 0) {
+                ready.append(ready.length() == 0 ? "" : ", ").append(code);
                 GameHUD.getInstance().addNotification("[+Shards] " + editionName(code) + " is ready to research -"
                         + " at your Capitol's Research Lab for " + startCost(player, code) + "[+Shards], with no wait.");
             }
         }
+        if (!oneSet)
+            System.out.println("[TFR-Research] fed " + batch.size() + " sets (" + how + "): " + newCards + " new card(s), "
+                    + copies + " copy(ies), +" + fmt(points) + " pts: " + sets
+                    + (ready.length() == 0 ? "" : "; ready, no wait: " + ready));
         batch.clear();
         for (String code : finished) {
             System.out.println("[TFR-Research] " + code + " finished by feeding on day " + day);

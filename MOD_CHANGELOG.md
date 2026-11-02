@@ -14345,6 +14345,34 @@ The first commit past the target is #12568 "[Adventure] Respect edition restrict
     code and the world map are outside the merge, short legs and entries worked, and the logs hold the same failure
     from before (Blue Tower). Agent tooling, not the game; `teleport to poi` takes the data name, not the display name.
 
+## Round 918: the Bonus Wall knob reads on every difficulty, and two log floods become one line each (2026-11-02)
+
+The user: "Yes, fix them", for `notes/logs-1102.md` P3-1 and P3-2.
+
+**The knob.** `bonusWallLife` read "?" on Hard and Insane, and taps did nothing: 31 `? -> ?` steps on 465855fc, then New Game+ dropped it.
+- **Cause:** a `[*]` target read for a preset uses that preset's column, and `notorietyBonusWallLifePercent` has 2 entries, one per bonus Wall, so Hard (2) and Insane (3) read past the end and `presetValue` caught it as "?".
+- **The write path is fine, read in full:** every writer calls `resolve(spec, null)`, which gives `ALL`, and `write` fills every entry however long the array. Only the two reads pass a preset: `presetValue` and `currentValue`.
+- **Fix:** `CustomDifficulty.column(array, index)`: an index past the end reads the first entry, which speaks for all of them since a write fills every one.
+- **Audit of every `[*]` target:** 18 targets on 17 knobs, 7 set knobs and 10 scale knobs. Two arrays are shorter than the 4 difficulties: `bonusWallLife` (2, a set knob) and `spawn.winRatioMaxShift` (2, knob `winRatioShift`). `winRatioShift` is a scale knob, so its row always read "x1", but the console's `custom knobs` read-back had the same fault; `column` fixes both. The other 6 set knobs have 4 entries.
+- A knob left as "?" in an older save stays dropped by `sanitize`, as it was: the default stands.
+
+**The floods** (`[TFR-LogQuiet]`'s idea, in the owners' files):
+- **`[TFR-Research] fed N sets (a sale of M card(s)): X new card(s), Y copy(ies), +Z pts: ONS +1 -> 1/113, EVE +2 -> 2/113; ready, no wait: ...`**: one line per sale, listing every set fed with its points and its meter, and `(running, N day(s) left)` on a running set. It was 1,094 lines, 60% of one log. A sale that fed one set keeps the old fuller line with the start cost. `running ... shortened` and `finished by feeding` are unchanged.
+- **`[TFR-Custom] panel changes: N step(s), K knob(s): startingLife 10 -> 15, ...`**: one line per panel visit, each knob with its old and new value and `(the preset's)` when it went back. It was one line per step of a held button: 2,092 lines, 17% of a log. A knob stepped back where it started isn't listed, but its steps are counted.
+- **A panel that closes unusually:** the line is written on Done or Back and before Reset all, at a pause and at exit (libGDX's `LifecycleListener`, no `SessionLog` edit), and every 30 s while steps wait, tagged `(pause)`, `(exit)` or `(so far)`. So a long visit can print a few lines. Only a process that dies with no pause within 30 s of a step loses those steps, and a panel's steps change nothing in the game until Done.
+
+**Tested** in the agent game over this round's classes (`notes/r918-agent-forge.log`, `notes/r918-agent-pause-forge.log`; the 1 duel ran at 50x; the agent's auto save put back after, the test quick save removed). The first log is the build before the lifecycle hook; the second is the final one:
+- **The row reads 25 unchanged on all four difficulties:** Normal, Hard, Insane (New Game+ panel), Easy (`custom panel`).
+- **A tap changes it:** 25 -> 30 Normal, 25 -> 30 Hard, 25 -> 40 in 3 taps Insane, and Easy 25 -> 35. Shots: `notes/r918-bonuswall-hard.png`, `notes/r918-bonuswall-insane.png`.
+- **New Game+ keeps it, through the running tuning:** Insane `bonusWallLife 25 -> 40 (now notorietyBonusWallLifePercent[0]=40)`; Hard from a save holding 30, `25 -> 40 (now ...[0]=40)`.
+- **`custom knobs`, 184 knobs, no "?":** on Insane and on Hard, with `winRatioShift ... now winRatioMaxShift[0]=5` on both.
+- **Log lines:** `fed 2 sets (a sale of 3 card(s))` L995 from a real reward auto-sell; `panel changes (so far)` L999 after 34 s; `(pause)` from a minimized window and again from a closed window (`pause` L50, L61); plain on Done; 3 steps collapse to one knob (L59).
+- `mvn -pl forge-gui-mobile -am compile -DskipTests -o -q`: exit 0.
+
+**Not tested:** on Android, so the `pause` hook's order against a kill is by libGDX's code, not seen. A forced process kill: the log is buffered on PC, so it proves nothing there. A sale of many sets (the test sold 2). A `Reset all` with steps waiting, and the `(exit)` tag, which didn't print because the pause before it had already flushed.
+
+**Files:** `forge-gui-mobile/src/forge/adventure/util/CustomDifficulty.java`, `scene/CustomDifficultyScene.java`, `util/ResearchMeter.java`, `CLAUDE.md`.
+
 ## Round 916: `[TFR-Memory]` reaches the crash, and `[TFR-Launch]` (2026-11-02)
 
 The user: "Review these last logs" and "Add anything needed to the logs for future help debugging." The review is `C:\TFR\notes\logs-1102.md`. Log lines only: no behavior change, and no stock game rule touched.

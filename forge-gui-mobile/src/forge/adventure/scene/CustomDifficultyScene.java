@@ -1,5 +1,7 @@
 package forge.adventure.scene;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -53,6 +55,9 @@ import java.util.function.IntConsumer;
  * Round 826: Settings' Difficulty row opens it on the running save ({@link #openMidGame}). Round 827: Share code -
  * Copy / Paste code through the clipboard ({@link CustomDifficulty#shareCode} / {@link CustomDifficulty#readCode}).
  * Round 839: New Game+'s dialog opens it on the chosen slot's settings ({@link #openNewGamePlus}).
+ * Round 918 (notes/logs-1102.md P3-2: one line per step was 2,092 lines of a log): steps collect into one {@code panel
+ * changes} line with each knob's old and new value, written on leaving, at a pause or exit (libGDX's lifecycle listener,
+ * so an Android kill after a pause keeps them), and every 30 s, for a process that ends with no pause.
  */
 public class CustomDifficultyScene extends UIScene {
     private static CustomDifficultyScene object;
@@ -67,7 +72,13 @@ public class CustomDifficultyScene extends UIScene {
     private static final Color CHANGED_TINT = new Color(0.36f, 0.31f, 0.18f, 0.55f);
     private static Texture white;
 
+    private static final long LOG_EVERY_MS = 30_000;
+
     private final LinkedHashMap<String, String> work = new LinkedHashMap<>();
+    /** Round 918: knob id -> {the value before, the value now}, since the last {@code panel changes} line. */
+    private final LinkedHashMap<String, String[]> unlogged = new LinkedHashMap<>();
+    private int unloggedSteps;
+    private long unloggedSince;
     private IntConsumer onDone;
     private String tab = ALL;
     private boolean expert, changedOnly;
@@ -220,6 +231,21 @@ public class CustomDifficultyScene extends UIScene {
         ui.onButtonPress("done", this::done);
         ui.onButtonPress("resetAll", this::resetAll);
         ui.onButtonPress("share", this::openShare);
+        Gdx.app.addLifecycleListener(new LifecycleListener() {
+            @Override
+            public void pause() {
+                logChanges(" (pause)");
+            }
+
+            @Override
+            public void resume() {
+            }
+
+            @Override
+            public void dispose() {
+                logChanges(" (exit)");
+            }
+        });
     }
 
     /** NewGameScene's Advanced button: the panel on this preset and the pending overrides; onDone gets the preset back. */
@@ -388,6 +414,7 @@ public class CustomDifficultyScene extends UIScene {
 
     private boolean done() {
         cancelRepeat();
+        logChanges("");
         if (midGame) {
             applyMidGame();
             midGame = false;
@@ -562,6 +589,7 @@ public class CustomDifficultyScene extends UIScene {
     /** Round 841 (Fable review P3-3): Reset all puts the difficulty back on its preset; the Rules (Disable Notoriety,
      *  Ascendance leveling, the reload switch) are the player's own, not the preset's, and stay as they are. */
     private boolean resetAll() {
+        logChanges("");
         if (midGame) { // round 826: the new-game-only rows are locked, so they keep the save's values
             int n = 0;
             for (java.util.Iterator<String> it = work.keySet().iterator(); it.hasNext(); ) {
@@ -610,9 +638,45 @@ public class CustomDifficultyScene extends UIScene {
             work.remove(k.id);
         else
             work.put(k.id, value);
-        if (!CustomDifficulty.same(k, before, value))
-            System.out.println("[TFR-Custom] panel: " + k.id + " " + CustomDifficulty.display(k, before) + " -> "
-                    + CustomDifficulty.display(k, value) + (work.containsKey(k.id) ? "" : " (the preset's)"));
+        if (CustomDifficulty.same(k, before, value))
+            return;
+        synchronized (unlogged) {
+            if (unloggedSteps++ == 0)
+                unloggedSince = System.currentTimeMillis();
+            String[] change = unlogged.get(k.id);
+            if (change == null)
+                unlogged.put(k.id, new String[]{before, value});
+            else
+                change[1] = value;
+        }
+    }
+
+    /** One line for the steps since the last one. A knob stepped back where it was isn't listed. */
+    private void logChanges(String when) {
+        synchronized (unlogged) {
+            if (unloggedSteps == 0)
+                return;
+            StringBuilder changes = new StringBuilder();
+            int knobs = 0;
+            for (Map.Entry<String, String[]> e : unlogged.entrySet()) {
+                Knob k = CustomDifficulty.knobs().get(e.getKey());
+                String[] change = e.getValue();
+                if (CustomDifficulty.same(k, change[0], change[1]))
+                    continue;
+                changes.append(knobs++ == 0 ? ": " : ", ").append(k.id).append(' ').append(CustomDifficulty.display(k, change[0]))
+                        .append(" -> ").append(CustomDifficulty.display(k, change[1])).append(work.containsKey(k.id) ? "" : " (the preset's)");
+            }
+            System.out.println("[TFR-Custom] panel changes" + when + ": " + unloggedSteps + " step(s), " + knobs + " knob(s)" + changes);
+            unlogged.clear();
+            unloggedSteps = 0;
+        }
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (unloggedSteps > 0 && System.currentTimeMillis() - unloggedSince >= LOG_EVERY_MS)
+            logChanges(" (so far)");
     }
 
     private List<Knob> visible() {

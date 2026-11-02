@@ -923,6 +923,15 @@ public final class CustomDifficulty {
 
     // ---- what a knob is now -------------------------------------------------------------------------------------
 
+    /**
+     * Round 918 (notes/logs-1102.md P3-1): the entry a read of a {@code [*]} target shows. Its index is the preset's
+     * column, but not every such array has one per difficulty: notorietyBonusWallLifePercent and winRatioMaxShift have 2
+     * entries, so Hard and Insane read past the end. A write fills every entry, so the first one speaks for an array that short.
+     */
+    private static int column(Object array, int index) {
+        return index >= 0 && index < Array.getLength(array) ? index : 0;
+    }
+
     /** The preset's own value of a knob, as text ("x1" for a scale knob). */
     public static String presetValue(Knob k, String presetName) {
         if (k.isScale())
@@ -936,7 +945,7 @@ public final class CustomDifficulty {
                 if (owner == null)
                     continue;
                 try {
-                    Object v = t.index == -1 ? t.field.get(owner) : Array.get(t.field.get(owner), Math.max(0, t.index));
+                    Object v = t.index == -1 ? t.field.get(owner) : Array.get(t.field.get(owner), column(t.field.get(owner), t.index));
                     return format(k, v);
                 } catch (Exception e) {
                     return "?";
@@ -1141,8 +1150,9 @@ public final class CustomDifficulty {
                 if (owner == null)
                     continue;
                 try {
-                    Object v = t.index == -1 ? t.field.get(owner) : Array.get(t.field.get(owner), Math.max(0, t.index));
-                    return t.field.getName() + (t.index == -1 ? "" : "[" + Math.max(0, t.index) + "]") + "=" + format(k, v);
+                    int column = t.index == -1 ? -1 : column(t.field.get(owner), t.index);
+                    Object v = t.index == -1 ? t.field.get(owner) : Array.get(t.field.get(owner), column);
+                    return t.field.getName() + (t.index == -1 ? "" : "[" + column + "]") + "=" + format(k, v);
                 } catch (Exception e) {
                     return "?";
                 }
