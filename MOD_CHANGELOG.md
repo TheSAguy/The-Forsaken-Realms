@@ -14277,6 +14277,16 @@ The user: "Yes, fix them", to the final agent pass's P2-1 (`notes/final-pass-110
 - **Log:** `[TFR-PickupSeed] pickup 76 on <level key>: seed <n>`, once per fill.
 - **Tested** (Maven exit 0, agent game, `forge-gui-mobile/target/classes` ahead of the jar, old saves): slot 75, Xira's Hive. Chest 76 opened 7 times over two launches: seed `-2762850668304234439` every time, and the same six cards where the screen was read (Ashes to Ashes, Forcemage Advocate, Gargoyle Sentinel, Invasion of Vryn, Lockjaw Snapper, Skybind). Chest 75 opened 4 times: seed `765233549951099254`, its own cards. Slot 70, another world, the same place's chest: Deepwood Legate, Kyren Negotiations, Resplendent Marshal, Rite of Renewal, Wall of Blossoms.
 
+## Round 926: the printing index is built at a load, not in a win (2026-11-02)
+
+The user: "Yes, fix them", to the Android proof's P2-3 (`notes/android-proof-1102/report.md`): an out-of-memory in `PrintingIndex.build` came through `ResearchScene.researchTotal` from `AdventurePlayer.maybeNotifyResearchThreshold` in `DuelScene.GameEnd`, on the thread that draws, right after a won duel. It needed the test filler at 512 MB. Files: `util/PrintingIndex.java`, `world/WorldSave.java` (stock), `player/AdventurePlayer.java` (stock).
+
+- **Why the index was on the win path at all:** it was built at launch, and `AdventurePlayer.load` then dropped it with `RewardData.invalidateCardPool()`. The Android log shows it: `[TFR-Printings]` at launch, then again 7,800 lines later on the first win.
+- **The change:** `PrintingIndex.preload` runs at the end of a successful `WorldSave.load` and after research completes, the other mid-game drop. It catches `OutOfMemoryError`, logs it, and the next use tries again. `maybeNotifyResearchThreshold` now catches `Exception | OutOfMemoryError` and skips the notice, with one log line per launch: a notice can't fail a win.
+- **Cost:** 65-138 ms on PC per build, measured by the `[TFR-Printings]` line's new `ms`. Android isn't measured; the next device log prints it. It holds 642 editions, 31,922 names and 75,338 printings; my estimate is about 10 MB, unmeasured. It rebuilds the reward pool too if that was dropped.
+- **Who else paid for it:** `SettingsScene`'s pool toggles still leave the rebuild to the next use, and the notice's catch covers that case. A new game keeps the launch's index, since nothing drops it. A rollback after a failed load also leaves it to the next use. The others (`ResearchScene`, `SpellSmithScene`, `ResearchMeter`, `EditionProgression`) are screens and shops, not the win path.
+- **Tested** (agent game): every load printed `[TFR-Printings]` just before its `[TFR-Perf] load` line. Rorix won, two games: no `[TFR-Printings]` after it. The caught failure itself wasn't forced: there's no filler on PC, so the Android re-test is what can show it.
+
 ## Round 923: three more card lists are copies, and the Spellsmith frees its card (2026-11-02)
 
 The user: "Yes, go ahead" to the two leftovers rounds 919 and 920 named.

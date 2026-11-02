@@ -192,6 +192,7 @@ public class WorldSave {
             // in readSave(), so a rollback to the running game never counts; after WorldStage.load() restored the log.
             // Round 862: a rescued cut-off save (the .old) was forced on the player - never counted.
             forge.adventure.util.ReloadJab.onLoaded(currentSave.header == null ? null : currentSave.header.saveDate, rescued);
+            forge.adventure.util.PrintingIndex.preload("at a load"); // round 926: the player's load dropped it
             forge.adventure.util.SessionLog.onGameLoaded(currentSlot, System.currentTimeMillis() - loadStarted); // round 777
             return true;
         }

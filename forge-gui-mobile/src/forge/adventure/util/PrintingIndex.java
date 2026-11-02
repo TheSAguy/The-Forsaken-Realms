@@ -36,9 +36,21 @@ public final class PrintingIndex {
         editionsByName = null;
     }
 
+    /** Round 926 (the Android proof's P2-3: an out-of-memory here ended a won duel): a load drops the index, so the next
+     *  thing to ask for it paid, and that was often the win path. A load builds it again at once, where a failure costs
+     *  nothing: the next use tries again. */
+    public static void preload(String when) {
+        try {
+            build();
+        } catch (OutOfMemoryError e) {
+            System.err.println("[TFR-Printings] not built " + when + ", the next use tries again: " + e);
+        }
+    }
+
     private static synchronized void build() {
         if (namesByEdition != null)
             return;
+        long started = System.nanoTime();
         Set<String> legal = new HashSet<>();
         for (PaperCard pc : RewardData.getAllCards())
             legal.add(pc.getName());
@@ -70,7 +82,7 @@ public final class PrintingIndex {
         for (Set<String> s : byEdition.values())
             printings += s.size();
         System.out.println("[TFR-Printings] " + byEdition.size() + " edition(s), " + byName.size() + " card name(s), "
-                + printings + " set printing(s) (basic lands left out)");
+                + printings + " set printing(s) (basic lands left out), " + (System.nanoTime() - started) / 1000000 + " ms");
     }
 
     private static boolean isBasicLand(String name) {

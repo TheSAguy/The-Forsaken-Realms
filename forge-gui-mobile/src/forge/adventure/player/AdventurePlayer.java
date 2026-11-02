@@ -2984,10 +2984,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 forge.adventure.stage.GameHUD.getInstance().addNotification(
                         "You can now research " + name + " (" + code + ") at your Capitol's Research Lab!");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception | OutOfMemoryError e) {
+            // Round 926: this runs inside a won duel's payout, and it is only a notice. Skip it, once in the log.
+            if (!researchNoticeFailed) {
+                researchNoticeFailed = true;
+                System.err.println("[TFR-Research] threshold notice skipped: " + e);
+            }
         }
     }
+
+    private static boolean researchNoticeFailed; // round 926: its log line once per launch
 
     private void refreshEditor() {
         AdventureDeckEditor editor = ((AdventureDeckEditor) DeckEditScene.getInstance(null).getScreen());
@@ -3867,6 +3873,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                     + " - now unlocked (" + (unlockedEditions.size() + 1) + " total)");
             unlockedEditions.add(done);
             RewardData.invalidateCardPool();
+            forge.adventure.util.PrintingIndex.preload("after research"); // round 926: not on the next win
             // Main-quest hook (2026-08-26, "Raise the Banner" - user decision: the objective
             // completes when the 7-day research actually FINISHES, not when it starts). The
             // matching quest stage must set worldMapOK:true AND anyPOI:true - completion can
