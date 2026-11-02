@@ -125,17 +125,53 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
     private int foilIndex;
     private boolean boosterTriggered = false;
     private boolean isUpdating = false;
+    /** Round 920: the frame buffers this actor drew into: a card's face, its tooltip, a rendered card. getItemFrameBuffer
+     *  makes a new one on every call and nothing kept them, and libGDX holds each until it is disposed, so every item card
+     *  left its pictures behind (about 0.75 MB a card), most of all on a phone. dispose() frees them with their textures. */
+    private final List<FrameBuffer> ownedBuffers = new ArrayList<>();
+    /** Round 920: a runnable posted before dispose() can run after it, and makes no buffer then. */
+    private boolean disposed;
+    /** Round 920: for [TFR-Render] reward buffers. */
+    private static int buffersMade, buffersFreed, buffersLogged;
 
     @Override
     public void dispose() {
+        disposed = true;
         if (needsToBeDisposed) {
             needsToBeDisposed = false;
-            // Because 'image' is a shared texture handle or a pooled FrameBuffer color reference,
-            // we let the AssetManager or global FrameBuffer pool manage the lifecycle safely
+            // 'image' is an asset manager's texture or the color texture of a buffer in ownedBuffers, freed below
             Forge.safeDispose(generatedTooltip);
         }
         Forge.safeDispose(T, Talt, Tnotext, Taltnotext, mapPieceTexture);
         mapPieceTexture = null;
+        freeOwnedBuffers();
+    }
+
+    /** Round 920: a texture disposed above is only disposed once: Texture.dispose skips a freed one. */
+    private void freeOwnedBuffers() {
+        if (ownedBuffers.isEmpty())
+            return;
+        for (FrameBuffer buffer : ownedBuffers)
+            Forge.safeDispose(buffer);
+        buffersFreed += ownedBuffers.size();
+        ownedBuffers.clear();
+        // once a screenful, and now and then if a card somewhere is never disposed
+        if (buffersMade == buffersFreed || buffersFreed - buffersLogged >= 200) {
+            buffersLogged = buffersFreed;
+            System.out.println("[TFR-Render] reward buffers: " + buffersMade + " made, " + buffersFreed + " freed");
+        }
+    }
+
+    /** Round 920: a new buffer that dispose() will free; null once disposed, or if it could not be made. */
+    private FrameBuffer newOwnedBuffer(int w, int h, boolean isCard) {
+        if (disposed)
+            return null;
+        FrameBuffer buffer = Forge.getAssets().getItemFrameBuffer(w, h, isCard);
+        if (buffer != null) {
+            ownedBuffers.add(buffer);
+            buffersMade++;
+        }
+        return buffer;
     }
 
     @Override
@@ -733,6 +769,8 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
     }
 
     private RewardImage getTooltipFaceImage(boolean backFace) {
+        if (disposed) // round 920: no buffer for a card nobody shows; the caller skips a null
+            return null;
         if (shouldDisplayText) {
             if (backFace) {
                 if (Taltnotext == null)
@@ -889,7 +927,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                 Forge.getGraphics().end(); // round 907, as in processSprite
             }
         }
-        FrameBuffer frameBuffer = Forge.getAssets().getItemFrameBuffer(preview_w, preview_h, true);
+        FrameBuffer frameBuffer = newOwnedBuffer(preview_w, preview_h, true);
         // safety check: escape gracefully if the context is uninitialized
         if (frameBuffer == null) {
             return null;
@@ -934,7 +972,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
 
         int pw = 192;
         int ph = 256;
-        FrameBuffer frameBuffer = Forge.getAssets().getItemFrameBuffer(pw, ph, false);
+        FrameBuffer frameBuffer = newOwnedBuffer(pw, ph, false);
         if (frameBuffer == null) {
             return;
         }
@@ -1067,7 +1105,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                 return;
             }
 
-            FrameBuffer frameBuffer = Forge.getAssets().getItemFrameBuffer(preview_w, preview_h, true);
+            FrameBuffer frameBuffer = newOwnedBuffer(preview_w, preview_h, true);
             // safety check: If the context hasn't fully caught up yet, escape gracefully
             if (frameBuffer == null) {
                 return;

@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 920: item cards free their frame buffers (2026-11-02)
+
+The user: "Can you implement" a code comparison's note. `Assets.getItemFrameBuffer` makes a new `FrameBuffer` on every call (its two fields are never assigned), `RewardActor` kept none, and its dispose comment assumed a pool that doesn't exist. libGDX holds every `FrameBuffer` in a static list until it is disposed, and rebuilds them all after an Android context loss, so a lost one stays lost.
+
+**The leak, measured** (live `FrameBuffer` objects after a full GC, `jcmd GC.class_histogram`, on a copied profile, the same save and the same four Goblin Hill shops):
+
+| After | The 918 jar | This round |
+|---|---|---|
+| the booster shop, closed | 29 | 0 |
+| three more shops, closed | 36 | 0 |
+
+The log: `[TFR-Render] reward buffers: 33 made, 33 freed`. A buffer is 192x256 or 488x680 at 16 bits, 0.07 or 0.66 MB, so one booster shop visit lost several MB of video memory for good. An open screen holds its buffers (10 live on a 5-card reward screen), which is correct.
+
+**The fix.**
+- `newOwnedBuffer` is the one way `RewardActor` gets a buffer, at all three calls: it adds the buffer to `ownedBuffers` and returns null once `disposed`. All three callers already handled null.
+- `dispose()` sets `disposed` and frees every owned buffer with its color texture. A second `dispose()` does nothing (`RewardScene.quitScene` disposes, then the next `loadRewards` disposes the same actors).
+- `disposed` stops a runnable posted before `dispose()` from making a buffer, and `getTooltipFaceImage` returns null then, which `switchTooltip` already skips.
+- The dispose comment about a pool is corrected. `Assets.java` is unchanged; round 907's `finally`, its `[TFR-Render]` lines and upstream's #12550 comment are kept.
+
+**Line 892, the third call, leaked too, in a smaller way.** It is `renderPlaceholderUnguarded`, the rendered card for a card with no art (`T`, `Talt`, `Tnotext`, `Taltnotext`). `dispose()` already freed those textures, so the picture's memory came back, but the `FrameBuffer`, its GL object and libGDX's entry for it did not. It goes through `newOwnedBuffer` as well. Freeing the same texture twice is safe: `Texture.dispose` returns at once on a freed one (read in the 1.14.2 bytecode).
+
+**Nothing draws a freed texture.** Traced every holder of `image`, `generatedTooltip` and the placeholders:
+- `RewardScene` (`quitScene`, `loadRewards`), `ResearchScene.disposeFoundActors` and `WorldStage`'s Duplicate dialog remove the actor in the same call as the dispose, and only `loadRewards` ever adds to `generated`.
+- `ImageCache.croppedBorderImage` makes a new region each call and caches nothing by texture.
+- `CardZoom` and `CardImageRenderer.drawZoom` read `actor.getImage` only while `ViewRewardsScene` is up over the scene that owns the actor, which can't quit under it. `ViewRewardsScene`'s static list keeps the actor, but nothing draws it until a new list replaces it.
+- The tooltip's texture was already freed in `dispose()`, so this round adds no new case there.
+- Shot: `notes/r920-shop-faces.png`, a reopened booster shop with the HOB Booster's buffer-drawn face intact; `notes/r920-shop2.png`, the next shop.
+
+**Left as it is:**
+- `SpellSmithScene` removes its `rewardActor` and never disposes it, so a card pulled there with no art keeps its buffer. It's outside this round's files. One line (`removeTooltip()` where it calls `remove()`) would close it.
+- A booster's tooltip, redrawn when its art arrives, frees the old texture at once and its `FrameBuffer` at `dispose()`, so an actor can hold 3 or 4 buffers until then. That's why a shop of 8 made 29.
+
+**`[TFR-Render] reward buffers: N made, M freed`:** one line when every buffer is back, so about once a screen, or every 200 frees if a card somewhere is never disposed.
+
+**Tested:** the table above, a compile with Maven exit 0, and no exception or GL error in `notes/r919-921-agent-forge.log`. **Not tested:** on a phone or through an Android context loss, so the Android gain is by the code and the PC count, not seen on a device.
+
+**Files:** `forge-gui-mobile/src/forge/adventure/util/RewardActor.java`, `CORE_ENGINE_CHANGES.md`, `CLAUDE.md`.
+
 ## Round 919: the render thread reads copies of a card's lists, so a duel can't close the game on them (2026-11-02)
 
 The user: "Can you implement" a code comparison's note: the render thread reads live collections the game thread changes in place, and the exception closes the game. 10x and 50x spectating make it likelier.

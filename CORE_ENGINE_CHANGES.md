@@ -35,6 +35,12 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 920 - item cards free their frame buffers
+- `forge-gui-mobile/src/forge/adventure/util/RewardActor.java`: new `ownedBuffers`, `disposed`, `newOwnedBuffer` and
+  `freeOwnedBuffers`; the three `getItemFrameBuffer` calls (`renderPlaceholderUnguarded`, `processSprite`, `setItemTooltips`) go
+  through `newOwnedBuffer`; `dispose()` frees the buffers and its comment is corrected; `getTooltipFaceImage` returns null once
+  disposed. On a merge: any new `getItemFrameBuffer` call in this file goes through `newOwnedBuffer`. `Assets.java` is unchanged.
+
 ### Round 919 - the render thread reads copies of a card's lists
 - `forge-game/src/main/java/forge/game/GameEntityView.java`: `getAllAttachedCards` returns a copy through `toArray()`, nulls left
   out, `List.of()` when null or empty; `getAttachedCards` filters that copy with `removeIf`, not a stream. Imports: `ArrayList` in,
