@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 922: a confirm page sizes the dialog to itself, so no letter is clipped (2026-11-02)
+
+- The ask (the user, with a screenshot): "I did notice a text wrapping issue to upgrade the Trader to a Exchange." Every
+  line's first letter was cut off, the line broke between "+ 113" and its wood icon, a gap sat before the "?", and the
+  text floated in a very tall box.
+- **Cause:** only `Dialog.show()` packs. `openUpgradeToExchangeConfirmDialog` and `openDestroyConfirmDialog` rebuild the
+  stage's open dialog in place, so the page kept the page before it's size. The Trader packs to 256x219 around its 240
+  buttons; a 250 content row in that window overflows both edges, and Window's clip takes the left of every line. The
+  clip needs a window narrower than the row: the Trader's is, the Bank's 300 is not. Portrait's 230 row
+  fit, so it showed only the tall box. Reproduced in the agent game before the fix (`notes/r922-shots/before-*`).
+- **Fix, `EconomyBuildings` only:**
+  - `refitDialog(dialog)` packs the open dialog and centers it the way `show()` does, with `[TFR-Dialog] refit AxB to
+    CxD`. Both confirms call it when built and again when they hand back (Cancel, Upgrade), so the page underneath gets
+    its own size; every `openDestroyConfirmDialog` caller is covered through its `onCancel` (Temple included), no caller
+    changed. Only these two confirms refit; other in-place refreshes redraw the same page and keep their size.
+  - `addContentRow` ties "+ 113 [+Wood]" together with no-break spaces, so no row (Balance Sheet, guards, Temple) parts
+    an amount from its icon or plus. `costLabel` is unchanged, because its text also reaches `FOptionPane` and buttons.
+  - The upgrade text is now "Upgrade this Trader to an Exchange?", "Cost: ...", then the two lines. The gap before "?"
+    was the icon's own advance, so the cost line simply no longer ends in a "?".
+- **A side effect kept:** this font draws the no-break space at zero width, so these rows read "150[icon] +75[icon]",
+  not "150 [icon] + 75 [icon]". The icon's own advance keeps them apart; legible at every size tested.
+- **Left alone:** the wrapped prompts outside `addContentRow` (`TownSpecialties`' fee question ends "[icon]? It is..."
+  and keeps the icon's gap; the Arena and Armory upgrade prompts, shown by their own scenes) are not this path and were
+  not retested.
+- **Tested** on this class over the agent jar (javac, no Maven; the agent game, cheats), a Capitol with a Trader and a
+  Bank, cost 150/75/75 at this difficulty, slot 92: 1280x720, 960x540 and portrait 540x960. Upgrade confirm, whole with
+  every letter (`after-upgrade-*`); Cancel restores the Trader exactly (`after-cancel-back-to-trader-*`, 264x136 back
+  to 256x219); short row `after-destroy-short-*`; long row with the Bank's refund `after-destroy-long-*`; a real upgrade
+  lands on a whole Exchange (`after-upgraded-exchange-540x960.png`). 0 exceptions in the logs. Button rows and widths
+  in the Trader and Bank are unchanged. The 225/113/113 cost of the user's shot was not reproduced, nor a shard cost;
+  the 230 and 250 rows wrap, so a longer cost takes a line. Android not run.
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java`.
+
 ## Round 921: a save that failed to load can't overwrite the good backup (2026-11-02)
 
 The user: "Can you implement" a code comparison's note, found by reading and never reproduced. **Reproduced first**, on a copied profile (`agent-r921`, the game closed for every file written), with saves that read whole but fail in the load. They were built in Java from a good save (`BreakSave`, scratch, the source untouched): one record replaced by four bytes. `readsWhole()` passes them, because it reads the header and the top-level record only.

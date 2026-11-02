@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -1200,8 +1201,12 @@ public class EconomyBuildings {
             destroyBuilding(stage, objectId);
             stage.hideDialog();
         });
-        addButtonRow(dialog, "Cancel", true, onCancel);
+        addButtonRow(dialog, "Cancel", true, () -> {
+            onCancel.run();
+            refitDialog(dialog);
+        });
         dialog.setKeepWithinStage(true);
+        refitDialog(dialog);
     }
 
     /**
@@ -3182,10 +3187,31 @@ public class EconomyBuildings {
     }
 
     static void addContentRow(Dialog dialog, String text) {
-        TypingLabel label = Controls.newTypingLabel(text);
+        // Round 922: no-break spaces tie "+ 113 [+Wood]" together, so a wrap can't part an amount from its icon or plus.
+        TypingLabel label = Controls.newTypingLabel(text.replaceAll("(\\d) (\\[\\+)", "$1 $2")
+                .replaceAll("\\+ (\\d)", "+ $1"));
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(forge.Forge.isLandscapeMode() ? 250f : 230f).row(); // round 100: portrait fit
+    }
+
+    /**
+     * Round 922 (user: "a text wrapping issue to upgrade the Trader to a Exchange"). Only Dialog.show() packs, so a
+     * page rebuilt inside an OPEN dialog keeps the last page's size. The Trader packs to its 240 buttons, a 250 content
+     * row then overflows the window both ways, and Window's clip takes the first letters off every line; the tall
+     * Trader height stays too. Called after a confirm page is built and again when it hands back, it sizes the window
+     * to the page and centers it the way show() does. A dialog not on a stage yet is left for show().
+     */
+    static void refitDialog(Dialog dialog) {
+        Stage stage = dialog.getStage();
+        if (stage == null)
+            return;
+        float oldWidth = dialog.getWidth(), oldHeight = dialog.getHeight();
+        dialog.pack();
+        dialog.setPosition(Math.round((stage.getWidth() - dialog.getWidth()) / 2f),
+                Math.round((stage.getHeight() - dialog.getHeight()) / 2f));
+        System.out.println("[TFR-Dialog] refit " + (int) oldWidth + "x" + (int) oldHeight
+                + " to " + (int) dialog.getWidth() + "x" + (int) dialog.getHeight());
     }
 
     // (Gold->Shard, Shard->Gold, Gold->Wood, Wood->Gold, Gold->Stone, Stone->Gold). Standardized
@@ -3443,14 +3469,19 @@ public class EconomyBuildings {
         dialog.getButtonTable().clear();
         dialog.clearListeners();
         int[] c = buildCostFor(EXCHANGE);
-        addContentRow(dialog, "Upgrade this Trader to an Exchange for " + costLabel(c[0], c[1], c[2], c[3])
-                + "?\nAdds Shards trading and better Wood/Stone rates. This cannot be undone.");
+        addContentRow(dialog, "Upgrade this Trader to an Exchange?\nCost: " + costLabel(c[0], c[1], c[2], c[3])
+                + "\nAdds Shards trading and better Wood/Stone rates. This cannot be undone.");
         addButtonRow(dialog, "Upgrade", true, () -> {
             upgradeTraderToExchange(stage, objectId);
             refreshExchangeDialog(stage, objectId);
+            refitDialog(dialog);
         });
-        addButtonRow(dialog, "Cancel", true, () -> refreshTraderDialog(stage, objectId));
+        addButtonRow(dialog, "Cancel", true, () -> {
+            refreshTraderDialog(stage, objectId);
+            refitDialog(dialog);
+        });
         dialog.setKeepWithinStage(true);
+        refitDialog(dialog);
     }
 
     private static void upgradeTraderToExchange(MapStage stage, int objectId) {
