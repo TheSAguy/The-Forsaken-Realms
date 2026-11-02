@@ -35,6 +35,11 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 921 - a save that failed to load can't overwrite the good backup
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java`: `load()` adds a file that failed to load to `brokenSaves`
+  (`readFailed || loadTouchedLiveState`; a refused format stays out) and logs it; `writeSaveSnapshot`'s rotation gets an
+  `else if (broken)` that calls `keptBackup`. On a merge: keep both, and keep the mark ahead of `rollBack`.
+
 ### Round 920 - item cards free their frame buffers
 - `forge-gui-mobile/src/forge/adventure/util/RewardActor.java`: new `ownedBuffers`, `disposed`, `newOwnedBuffer` and
   `freeOwnedBuffers`; the three `getItemFrameBuffer` calls (`renderPlaceholderUnguarded`, `processSprite`, `setItemTooltips`) go

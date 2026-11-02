@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 921: a save that failed to load can't overwrite the good backup (2026-11-02)
+
+The user: "Can you implement" a code comparison's note, found by reading and never reproduced. **Reproduced first**, on a copied profile (`agent-r921`, the game closed for every file written), with saves that read whole but fail in the load. They were built in Java from a good save (`BreakSave`, scratch, the source untouched): one record replaced by four bytes. `readsWhole()` passes them, because it reads the header and the top-level record only.
+
+**The cause.** `load()` rescues from `.old` only on `readFailed && !loadTouchedLiveState`, and `brokenSaves` is filled only for cut-off files. So after a load that failed in the player or world record, the next save saw a file that "reads whole" and copied it over `.old`. It printed nothing.
+
+**Before and after**, the same script on the 918 jar and on this round's classes; `.old` compared by md5 against the good file (`b8ca735a0978`):
+
+| Scenario | 918 | This round |
+|---|---|---|
+| S1 fresh launch, world record fails, another game loaded, save over the slot | lost: `.old` is the 19,982-byte broken file | kept |
+| S2 running game, player record fails, rollback, save over the slot | lost | kept |
+| S3 running game, the auto slot fails to load, the first save | lost | kept, on a save and on a real auto save entering Goblin Hill |
+| S4 a refused newer format, save over the slot | rotates into `.old` | rotates into `.old` (unchanged, see below) |
+| S5 a cut-off file, rescued from `.old` (round 863), save over the slot | kept | kept |
+| S6a fails, restart, save over the slot with no new load of it | lost | **lost** |
+| S6b fails, restart, fails again, save over the slot | lost | kept |
+
+**The fix.** `load()` adds the file to `brokenSaves` when a load failed (`readFailed || loadTouchedLiveState`), whether or not `.old` rescued it, and logs `[TFR-Load] slot N did not load - the next save of it keeps the backup (.old)`. The save then says `[TFR-Save] slot N: the old save was damaged (... bytes) - kept the backup from <date>`, through round 863's `keptBackup`; it used to say nothing.
+
+**A refused format is left out on purpose.** The brief said any failed load. A save refused for a newer format is whole and is the newest progress there is, and marking it would throw that file away on the next save and keep the older `.old`. It rotates into `.old` as before. `SAVE_FORMAT_VERSION` is 1, so this is only a guard for later.
+
+**The limits, measured:**
+- **The protection lasts one save, as it always has for `brokenSaves`.** The mark is consumed by that save, and the save after it rotates normally. On a real run: after a failed load of the auto slot the first auto save kept `.old`, and the second (`.old` `bbb2a7d64681`, the first new save) replaced it.
+- **A restart clears it (S6a).** `brokenSaves` lives for one launch. If the player restarts and saves over the slot without trying that load again, the broken file still goes over `.old`. If the load is tried again in the new launch, it is marked again (S6b).
+- **The game still doesn't offer `.old` for one of these saves.** Round 858's rescue needs `!loadTouchedLiveState`, so `.old` is kept but the player can only reach it by renaming the file. Offering it at the failed load would close both limits, because the player would get the backup at once. That's a behavior change outside this round, and the recommended next step.
+
+**What an auto save does after a failed load that touched the live game:**
+- A running game is rolled back (`rolled back to the game that was running`, seen in S2 and S3) and auto saves go on as normal; the first one of the failed slot keeps `.old`.
+- With no running game, or a failed rollback, `saveBlocked` refuses every save until a load or a new game succeeds (seen in S1), and then the same holds.
+- A failed load through the agent leaves the player sprite at (0,0) and the transition up, because `AgentActions.load` has no failure branch that enters the scene. The real paths don't: F8 calls `enter()` and the Load screen goes back through a scene switch. Agent tooling only, not changed.
+
+**Tested:** the table, `notes/r919-921-agent-forge.log` for the last run, a compile with Maven exit 0. The stray `load slot=4` a parallel session sent the test game at 08:48 didn't affect the table: every result there compares `.old` files, and the after-run came later. **Not tested:** on a phone. Nothing here is platform code.
+
+**Files:** `forge-gui-mobile/src/forge/adventure/world/WorldSave.java`, `CORE_ENGINE_CHANGES.md`, `CLAUDE.md`.
+
 ## Round 920: item cards free their frame buffers (2026-11-02)
 
 The user: "Can you implement" a code comparison's note. `Assets.getItemFrameBuffer` makes a new `FrameBuffer` on every call (its two fields are never assigned), `RewardActor` kept none, and its dispose comment assumed a pool that doesn't exist. libGDX holds every `FrameBuffer` in a static list until it is disposed, and rebuilds them all after an Android context loss, so a lost one stays lost.

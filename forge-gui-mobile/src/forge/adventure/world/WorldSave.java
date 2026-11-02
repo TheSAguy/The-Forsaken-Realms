@@ -195,6 +195,10 @@ public class WorldSave {
             forge.adventure.util.SessionLog.onGameLoaded(currentSlot, System.currentTimeMillis() - loadStarted); // round 777
             return true;
         }
+        // Round 921: a .sav can read whole and still fail in the load of its player or world. readsWhole() passes it, so
+        // the next save copied it over the good .old. A refused format is left out: that file is whole, only newer.
+        if ((readFailed || loadTouchedLiveState) && brokenSaves.add(new File(fileName).getPath()))
+            System.err.println("[TFR-Load] slot " + currentSlot + " did not load - the next save of it keeps the backup (.old)");
         if (loadTouchedLiveState)
             rollBack(rollback);
         return false;
@@ -269,7 +273,7 @@ public class WorldSave {
     private static final String TEMP_PREFIX = "forge-save-";
     private static final String TEMP_SUFFIX = ".tmp";
     /** Round 858: .sav files load() could not read and replaced with their .old this launch - the next save of the
-     *  slot must not copy one over that good .old. */
+     *  slot must not copy one over that good .old. Round 921: and any .sav that failed to load, rescued or not. */
     private static final java.util.Set<String> brokenSaves = new java.util.HashSet<>();
     /** Round 858: save folders already swept this launch. */
     private static final java.util.Set<String> sweptDirs = new java.util.HashSet<>();
@@ -657,6 +661,8 @@ public class WorldSave {
                     keptBackup(currentSlot, currentFile, backupFile);
             } else if (!currentFile.exists() && backupFile.exists()) {
                 backupFile.delete();
+            } else if (broken) {
+                keptBackup(currentSlot, currentFile, backupFile); // round 921
             }
 
             try {
@@ -699,7 +705,8 @@ public class WorldSave {
         }
     }
 
-    /** Round 863: the damaged .sav is replaced by the new save, and the existing .old (if any) stays the backup. */
+    /** Round 863: the damaged .sav is replaced by the new save, and the existing .old (if any) stays the backup. Round
+     *  921: "damaged" also means one that failed to load. */
     private static void keptBackup(int slot, File damaged, File backup) {
         WorldSaveHeader old = readHeader(backup);
         if (old == null) {
