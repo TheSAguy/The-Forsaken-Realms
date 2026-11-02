@@ -1523,6 +1523,14 @@ public class ChangeZoneAi extends SpellAbilityAi {
             break;
         }
 
+        if (keycardFound == null && player == decider && player.getController() instanceof PlayerControllerAi
+                && (ZoneType.Hand.equals(destination) || ZoneType.Library.equals(destination) && "0".equals(position))) {
+            // no key card named by the deck file: the deck plan (combo, commander, ramp) knows what is missing,
+            // for the card taken into the hand and for the one put on top of the library (Vampiric Tutor)
+            keycardFound = ((PlayerControllerAi) player.getController()).getAi().deckPlan(player)
+                    .tutorPick(player, fetchList);
+        }
+
         if (sa.hasParam("AILogic")) {
             String logic = sa.getParamOrDefault("AILogic", "");
             if ("NeverBounceItself".equals(logic)) {

@@ -95,6 +95,9 @@ public final class OpeningHand {
         if (!playable(kept, finalSize)) {
             return false; // no key card, combo piece or good score makes up for a hand that cannot cast anything
         }
+        if (plan != null && plan.combos.has(ComboPlan.Kind.TUTOR_STORM)) {
+            return plan.combos.keepsTutorStormHand(kept, finalSize); // judged as the combo player would, not by the generic score
+        }
         final double score = score(kept, lib, onPlay, plan);
         return score >= keepBar(finalSize);
     }
@@ -234,7 +237,7 @@ public final class OpeningHand {
             if (c.getCMC() <= w.playCmc) {
                 early += colorCredit(c, colors, lib);
             }
-            if (isKeyCard(c, arch) || plan != null && plan.combos.isKeyCard(c)) {
+            if (isKeyCard(c, arch) || plan != null && (plan.combos.isKeyCard(c) || plan.commander.isKeyCard(c))) {
                 keys++;
             }
         }

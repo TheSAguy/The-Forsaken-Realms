@@ -1124,6 +1124,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                         + reward.getType() + ", thread " + Thread.currentThread().getName());
                 e.printStackTrace();
             } finally {
+                // end the shared batch even when drawing failed, otherwise the next begin() throws
                 if (drawing)
                     Forge.getGraphics().end();
                 frameBuffer.end();

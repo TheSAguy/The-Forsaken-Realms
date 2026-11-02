@@ -605,7 +605,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             for (final Card attacker : combat.getAttackers()) {
                 if (!attacker.attackVigilance()) {
                     attacker.setTapped(false);
-                    if (attacker.tap(true, true, null, null)) tapped.add(attacker);
+                    if (attacker.tap(true, null, null)) tapped.add(attacker);
                 }
             }
             if (!tapped.isEmpty()) {
@@ -1039,7 +1039,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
     public void mainGameLoop() {
         // MAIN GAME LOOP
-        while (!game.isGameOver() && !(game.getAge() == GameStage.RestartedByKarn)) {
+        while (!game.isGameOver() && game.getAge() != GameStage.RestartedByKarn) {
             mainLoopStep();
         }
     }
