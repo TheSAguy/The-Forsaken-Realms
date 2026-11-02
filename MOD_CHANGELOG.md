@@ -14300,6 +14300,15 @@ The user: "Yes, fix them", to the final agent pass's P3-1: `afterGameEnd` could 
   - **The rematch:** two Xira duels and the two after them each resolved once, so no guard carried over.
 - **Not tested:** the `MapStage` null check was not hit, since the guard now stops the only route found to it.
 
+## Round 928: Settings fits in portrait (2026-11-02)
+
+The user: "Yes, fix them", to the Android proof's P3-3: Settings in portrait was about 50 px wider than the pane, so checkboxes and "Export Logs" sat off the right edge until the player dragged sideways. File: `scene/SettingsScene.java` (stock).
+
+- **The cause:** the battle-background URL field, `backgroundSourceUrl`, from upstream's `cd7134fbf3a` (2026-10-23, rotating battle backgrounds). A libGDX `TextField`'s preferred width is 150, and a hidden row's actor still sizes its column. With the 80 px label column and its padding the table came out wider than the 240 px inside the pane. It's older than round 917: it came with round 856's merge and shipped in 1.25.
+- **The change:** in portrait only, that cell is 130 wide. The field still takes any length of text, scrolling inside its box. Landscape's code path is untouched.
+- **Left:** row 1 still adds an empty third cell for the commented-out "Create own plane" button. It costs a few pixels, and removing it would shift landscape.
+- **Tested** (agent game): at 540x960, every page of Settings from top to bottom, paged with Page Down: every control inside the pane, including the drop-downs, the sliders and the checkboxes. At 1280x720 the top page reads as before, and the window is back at that size. The URL row itself wasn't shown, as it needs the Custom source selected. No device run; the Android re-test covers it.
+
 ## Round 923: three more card lists are copies, and the Spellsmith frees its card (2026-11-02)
 
 The user: "Yes, go ahead" to the two leftovers rounds 919 and 920 named.

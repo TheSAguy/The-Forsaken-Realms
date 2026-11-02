@@ -368,6 +368,10 @@ public class SettingsScene extends UIScene {
         Cell<TextraLabel> backgroundUrlLabelCell = addLabel(localizer.getMessage("lblBattleBackgroundIndexUrl"));
         TextraLabel backgroundUrlLabel = backgroundUrlLabelCell.getActor();
         Cell<TextField> backgroundUrlCell = settingGroup.add(backgroundSourceUrl).align(Align.right).pad(2);
+        // Round 928: a text field's preferred width is 150, and hidden or not this one set the column's width, which put
+        // every control in portrait past the pane's right edge.
+        if (!Forge.isLandscapeMode())
+            backgroundUrlCell.width(130);
         Runnable updateBackgroundUrlVisibility = () -> {
             boolean custom = customSource.equals(backgroundSource.getSelected());
             backgroundUrlLabel.setVisible(custom);

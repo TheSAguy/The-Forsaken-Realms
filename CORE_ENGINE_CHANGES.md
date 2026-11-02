@@ -49,6 +49,10 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): `GameEnd`'s `exitChain` is guarded by a local `AtomicBoolean`.
 - `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): `setWinner` sets aside a result with a null `currentMob`.
 
+### Round 928 - Settings fits in portrait
+
+- `forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java` (STOCK): in portrait only, `backgroundUrlCell.width(130)`, where upstream's hidden URL field's preferred 150 pushed every control past the pane.
+
 ### Round 923 - three more card lists, and the Spellsmith frees its card
 - `forge-game/src/main/java/forge/game/card/CardView.java`: `getMustBlockCards`, `getMergedCardsCollection` and `getChosenCards`
   use round 919's `copyOf`.
