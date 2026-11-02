@@ -28,16 +28,25 @@ import java.util.concurrent.TimeUnit;
  * its own, so everything here is a size read, nothing walks a list another thread may be changing, and the line never
  * throws: a full heap can fail anywhere in it. {@code game=over} is a finished game still held after its duel (the match
  * screen keeps its view until the next one).
+ *
+ * <p>Round 916 (notes/logs-1102.md P1-1: replayed on a duel OOM, the 78% line last fired 21 minutes before the crash,
+ * because a heap that stays over 60% never re-arms it): {@code full} at 95%, once per crossing; {@code oom} from the crash
+ * report; {@code duel} at each later duel's start, only over 60%, to show what stays between duels; and {@code turn},
+ * {@code threads} and {@code aiEval} on every line. Thinking takes one eval thread, so {@code aiEval} above 1 is a timed-out
+ * one still running (Android has no {@code Thread.stop}).
  */
 public final class MemoryWatch {
     private static final double HIGH = 0.78; // 400 MB of a phone's 512
     private static final double REARM = 0.60;
+    private static final double FULL = 0.95; // 486 MB of a phone's 512
     private static final long SAMPLE_MS = 2_000;
     private static final long MIN_GAP_MS = 60_000;
 
     private static ScheduledExecutorService timer;
     private static boolean armed = true;
     private static long lastLineAt;
+    private static boolean fullArmed = true;
+    private static long lastFullAt;
     /** MatchController and ImageCache are only touched after a duel loaded them on the GL thread, never first from here. */
     private static volatile boolean duelSeen;
 
@@ -56,8 +65,11 @@ public final class MemoryWatch {
         timer.scheduleWithFixedDelay(MemoryWatch::sample, SAMPLE_MS, SAMPLE_MS, TimeUnit.MILLISECONDS);
     }
 
-    /** SessionLog.onScene, a duel started. */
+    /** SessionLog.onScene, a duel started. The first has no game to read, and MatchController stays unloaded until it runs. */
     public static void onDuel() {
+        Runtime runtime = Runtime.getRuntime();
+        if (duelSeen && runtime.totalMemory() - runtime.freeMemory() >= runtime.maxMemory() * REARM)
+            report("duel");
         duelSeen = true;
     }
 
@@ -66,6 +78,13 @@ public final class MemoryWatch {
             Runtime runtime = Runtime.getRuntime();
             long used = runtime.totalMemory() - runtime.freeMemory();
             long max = runtime.maxMemory();
+            if (used < max * HIGH) {
+                fullArmed = true;
+            } else if (fullArmed && used >= max * FULL && System.currentTimeMillis() - lastFullAt >= MIN_GAP_MS) {
+                fullArmed = false;
+                lastFullAt = System.currentTimeMillis();
+                report("full");
+            }
             if (used < max * REARM) {
                 armed = true;
             } else if (armed && used >= max * HIGH && System.currentTimeMillis() - lastLineAt >= MIN_GAP_MS) {
@@ -83,7 +102,7 @@ public final class MemoryWatch {
         try {
             Runtime runtime = Runtime.getRuntime();
             System.out.println("[TFR-Memory] " + why + " used=" + ((runtime.totalMemory() - runtime.freeMemory()) >> 20)
-                    + "MB of " + (runtime.maxMemory() >> 20) + "MB " + gameText() + " " + imagesText());
+                    + "MB of " + (runtime.maxMemory() >> 20) + "MB " + gameText() + " " + imagesText() + " " + threadsText());
         } catch (Throwable ignored) { // the heap is full; the next crossing tries again
         }
     }
@@ -106,7 +125,7 @@ public final class MemoryWatch {
                 }
             }
             UndoManager undo = game.getUndoManager();
-            return "game=" + (game.isGameOver() ? "over" : "live") + " cards=" + cards + " battlefield=" + battlefield
+            return "game=" + (game.isGameOver() ? "over" : "live") + " turn=" + game.getPhaseHandler().getTurn() + " cards=" + cards + " battlefield=" + battlefield
                     + " logEntries=" + game.getGameLog().size() + " undo=" + undo.depth() + " undoObjects=" + undo.snapshotObjects();
         } catch (Throwable t) { // another thread changed the game under us, or the heap is full
             return "game=? (" + t.getClass().getSimpleName() + ")";
@@ -120,6 +139,19 @@ public final class MemoryWatch {
             return "images=" + ImageCache.getInstance().counter + " assets=" + Forge.getAssets().manager().getLoadedAssets();
         } catch (Throwable t) {
             return "images=? (" + t.getClass().getSimpleName() + ")";
+        }
+    }
+
+    private static String threadsText() {
+        try {
+            Thread[] threads = new Thread[Thread.activeCount() + 8];
+            int count = Thread.enumerate(threads), aiEval = 0;
+            for (int i = 0; i < count; i++)
+                if ("Game AI Eval".equals(threads[i].getName()))
+                    aiEval++;
+            return "threads=" + count + " aiEval=" + aiEval;
+        } catch (Throwable t) {
+            return "threads=? (" + t.getClass().getSimpleName() + ")";
         }
     }
 }

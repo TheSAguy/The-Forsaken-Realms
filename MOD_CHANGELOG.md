@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 916: `[TFR-Memory]` reaches the crash, and `[TFR-Launch]` (2026-11-02)
+
+The user: "Review these last logs" and "Add anything needed to the logs for future help debugging." The review is `C:\TFR\notes\logs-1102.md`. Log lines only: no behavior change, and no stock game rule touched.
+
+**Added, each with the question it answers:**
+- **`[TFR-Memory] full`** (`MemoryWatch`, 95% of max, once per crossing, re-arms under 78%, never within 60 s). *What held the heap in the duel that crashed?* `logs-1102` P1-1: the 78% line re-arms only under 60%, so replayed on the third OOM's `[heap]` lines its last print is 21 minutes before the crash, one duel earlier.
+- **`[TFR-Memory] oom`** (`SessionLog.onCrashReport`, when the report's first line names `OutOfMemoryError`). *The same question at the moment of the crash.* `report` had one other caller, the save path, so a duel OOM printed no reading at all.
+- **`[TFR-Memory] duel`** (`MemoryWatch.onDuel`, each duel after the first, only with the heap over 60%, so at most one line a duel and none on a healthy PC). *What stays between duels?* `logs-1102` P1-1: the heap's floor climbed from 200 to 388 MB over 7 duels in one process, and nothing says what held it. The line is taken before the new game starts, so `game=over` is the last game still held.
+- **`turn=`, `threads=` and `aiEval=` on every `[TFR-Memory]` line.** *How far into the duel, and do timed-out AI threads pile up?* `AiController`'s comment says a stuck eval thread keeps running on Android, where `Thread.stop` throws. 10 timeouts in that log, 90 in `logs-1031`, and no line counted the threads. Thinking takes one, so `aiEval` above 1 is a stale one. Read with `Thread.enumerate`, only when a line prints.
+- **`[TFR-Launch] action= fromRecents= restored= screenOn= locked= processAge= disposed=`** (`Main.java`, once per activity start). *Who opened the app in a launch that leaves within a second?* `logs-1101` P3-2 and `logs-1102` P2-1, one at 02:42. `[TFR-ExitReason]` can't say: it names how the last process ended, and a kept process didn't end. `onCreate` reads the values; the line goes out at the first frame or the first pause, whichever comes after `forge.log` is open, because a flash launch may never reach a frame.
+- **`[TFR-Relaunch]` adds `(that launch: ...)`:** a stub's launch ends in `startFreshProcess` before any log is open, so its text rides the new `tfrRelaunchedFrom` preference to the new process. That matters because round 901 starts the game again on the way past.
+
+**Nothing added, a tag already covers it:** the missing footer after an OOM (round 883's `[TFR-WorldGenPause] killed by libGDX's pause wait` prints with `generating=false`), deaths with no `onPause` (`[TFR-ExitReason]`), the "CJK Fonts" cause (round 908), a stub (round 901), undo depth and board size (`[TFR-Memory]`). No line for each AI timeout: the stack already prints, and `forge-ai` is stock.
+
+**Left out on purpose:** the floods `logs-1102` P3-2 names (`[TFR-Research] fed`, 60% of one log; `[TFR-Custom] panel`, 17% of another). A cut isn't an addition, so they wait for the user's call.
+
+**Tested** in the agent game over this round's classes, at 50x, with the heap cut to 800, 500, 380 and 320 MB so the marks are reached (a copy of the launcher, the agent's save). `notes/r916-agent-forge.log`, the 320 MB run: `high` L46; **`full` L111**, `game=live turn=4 cards=92 battlefield=7 ... threads=21 aiEval=0`, mid-duel; **`duel` L151**, `game=over turn=20 cards=94 ... images=0 assets=338 threads=13 aiEval=0`. At 800 MB, `duel` printed at the second and third duels and no first-duel line printed. `oom`: no duel ran out of memory, so a throwaway JVM ran the real `MemoryWatch` and `SessionLog` on a filled 64 MB heap: `[TFR-Memory] oom used=62MB of 64MB game=none images=- threads=2 aiEval=0`, twice, and a crash report that isn't an OOM printed none. `Main.java` compiled with `javac` against `android-35` (exit 0; the three libraries the module gets from Maven replaced by stand-ins). `mvn -pl forge-gui-mobile -am compile -DskipTests -o -q`: exit 0.
+
+**Not tested:** `[TFR-Launch]` and the `[TFR-Relaunch]` addition never ran: no device, emulator image or harness here, compiled only. `oom` was never seen in a game. `aiEval` was never above 0: no AI timeout happened. A value of `screenOn` or `locked` on a real flash launch is what the line is for, and it will first show in a player's 1.26 log.
+
+**Files:** `forge-gui-mobile/src/forge/adventure/util/MemoryWatch.java`, `util/SessionLog.java`, `forge-gui-android/src/forge/app/Main.java`, `CORE_ENGINE_CHANGES.md`, `CLAUDE.md`.
+
 ## Round 915: the Journal marks a win streak, and Alt-click opens it (2026-11-01)
 
 The user: "On the Journal, Like you are currently showing the Bronze token. Let's also do that for enemies you have a win streak against. showing they get the extra land ... Would it be possible, if you press "Alt" and click on an enemy, the Journal page opens at their info?"
