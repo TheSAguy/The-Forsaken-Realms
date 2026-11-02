@@ -39,8 +39,9 @@ public final class DungeonUpgrades {
     private DungeonUpgrades() {
     }
 
-    /** Salts of the two first-entry rolls that draw from {@link #visitRandom}, so neither shifts the other's draws. */
-    public static final int SALT_UPGRADE = 1, SALT_TIER = 2;
+    /** Salts of the two first-entry rolls that draw from {@link #visitRandom}, so neither shifts the other's draws;
+     *  round 925's pickup fill has its own. */
+    public static final int SALT_UPGRADE = 1, SALT_TIER = 2, SALT_PICKUP = 3;
 
     /**
      * Round 835: the Random for one placement's first-entry roll on this appearance of the place - the same on a reload

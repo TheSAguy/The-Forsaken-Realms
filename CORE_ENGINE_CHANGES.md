@@ -35,6 +35,10 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 925 - a dungeon chest rolls the same on a reload
+
+- `forge-gui-mobile/src/forge/adventure/character/RewardSprite.java` (STOCK): `getRewards()`'s one-time fill runs inside `ResourceSpawns.rollSeeded` and calls `generate(false, false)`, with one `[TFR-PickupSeed]` line. Upstream's cache and round 289's restriction stay as they were.
+
 ### Round 923 - three more card lists, and the Spellsmith frees its card
 - `forge-game/src/main/java/forge/game/card/CardView.java`: `getMustBlockCards`, `getMergedCardsCollection` and `getChosenCards`
   use round 919's `copyOf`.

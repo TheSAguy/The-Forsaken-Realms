@@ -2,9 +2,13 @@ package forge.adventure.character;
 
 import com.badlogic.gdx.utils.Array;
 import forge.adventure.data.RewardData;
+import forge.adventure.scene.TileMapScene;
+import forge.adventure.util.Current;
 import forge.adventure.util.EditionProgression;
 import forge.adventure.util.JSONStringLoader;
+import forge.adventure.util.ResourceSpawns;
 import forge.adventure.util.Reward;
+import forge.adventure.world.World;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -76,11 +80,21 @@ public class RewardSprite extends CharacterSprite {
                 // of interest, which cannot change while a map is open, so asking once per sprite returns what
                 // the old per-call version returned - and the generate() roll is now fixed at the first
                 // request instead of re-rolled, which is the point of upstream's cache.
-                for (RewardData rdata : EditionProgression.restrictDungeonRewardsForCurrentPoi(Arrays.asList(rewards))) {
-                    if (rdata != null) {
-                        rewardCollection.addAll(rdata.generate(false, true));
+                //
+                // Round 925: the fill rolls from the world's Random at a seed of its own, so a reload opens the same
+                // contents (round 870 seeded only the overworld's chests and diamonds).
+                final Iterable<RewardData> restricted = EditionProgression.restrictDungeonRewardsForCurrentPoi(Arrays.asList(rewards));
+                final World world = Current.world();
+                final TileMapScene place = TileMapScene.instance();
+                final long seed = ResourceSpawns.placePickupSeed(world, place.rootPoint, place.currentLevelKey(), id);
+                System.out.println("[TFR-PickupSeed] pickup " + id + " on " + place.currentLevelKey() + ": seed " + seed);
+                ResourceSpawns.rollSeeded(world, seed, () -> {
+                    for (RewardData rdata : restricted) {
+                        if (rdata != null) {
+                            rewardCollection.addAll(rdata.generate(false, false));
+                        }
                     }
-                }
+                });
                 // Round 299: +Life once per place, half on a boss lair's return visits - inside the one-time fill, so
                 // a pickup is judged exactly once.
                 forge.adventure.util.PlaceRewards.filterPickup(rewardCollection, id);

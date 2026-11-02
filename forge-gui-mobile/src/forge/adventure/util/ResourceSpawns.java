@@ -362,17 +362,29 @@ public class ResourceSpawns {
      *  as it was. Everything the pickup rolls happens inside award(): the event, the gold, the card, the duplicate,
      *  the Archmage, the blueprint. Saved state only - no new save field (the spawn list is already saved). */
     private static void awardSeeded(World world, int[] spawn) {
-        java.util.Random random = world.getRandom();
-        long resume = random.nextLong();
         long seed = pickupSeed(world.getSeed(), spawn);
         System.out.println("[TFR-PickupSeed] " + typeName(spawn[2]) + " at (" + spawn[0] + "," + spawn[1]
                 + "), expires day " + spawn[4] + ": seed " + seed);
+        rollSeeded(world, seed, () -> award(world, spawn[2], spawn[3]));
+    }
+
+    /** Round 925: runs a roll on the world's Random at this seed, and the world's stream resumes afterwards as round 870 set out. */
+    public static void rollSeeded(World world, long seed, Runnable roll) {
+        java.util.Random random = world.getRandom();
+        long resume = random.nextLong();
         random.setSeed(seed);
         try {
-            award(world, spawn[2], spawn[3]);
+            roll.run();
         } finally {
             random.setSeed(resume);
         }
+    }
+
+    /** Round 925 (the final pass's P2-1: a dungeon chest re-rolled on reload): the seed of a pickup placed on a place's map
+     *  - round 835's seed of that appearance, level and object, with the world seed mixed in so two worlds differ. Saved
+     *  state only, like round 870's, so a reload opens the same contents, and the place's next appearance has its own. */
+    public static long placePickupSeed(World world, PointOfInterest poi, String level, int objectId) {
+        return mixSeed(world.getSeed() + DungeonUpgrades.visitSeed(poi, level, objectId, DungeonUpgrades.SALT_PICKUP));
     }
 
     /** Round 870: the seed of one chest or diamond - the world seed mixed with the spawn's tile, type and expiry day. */

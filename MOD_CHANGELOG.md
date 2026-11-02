@@ -14264,6 +14264,19 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 925: a dungeon chest rolls the same on a reload (2026-11-02)
+
+The user: "Yes, fix them", to the final agent pass's P2-1 (`notes/final-pass-1102/report.md`): the same save opened one chest in Xira's Hive to two different hands. Round 870 seeded `ResourceSpawns.awardSeeded`, the world map's chests and diamonds only; `RewardSprite.getRewards` still called `generate(false, true)`, a seedless `new Random()`. Files: `character/RewardSprite.java` (stock), `util/ResourceSpawns.java`, `util/DungeonUpgrades.java`.
+
+- **The change:** the one-time fill rolls from the world's Random (`generate(false, false)`) at a seed of its own. `ResourceSpawns.placePickupSeed` mixes the world seed into round 835's `visitSeed` with a new `SALT_PICKUP`: the place, its appearance's despawn day, the level key (`TileMapScene.currentLevelKey`, because object ids are per level, round 331) and the object id. `rollSeeded` is `awardSeeded`'s old body: draw a resume value, seed, roll, reseed in a `finally`.
+- **Beyond the brief:** the appearance and level are in the seed as well as the world, place and object. Without the despawn day a returning place would refill every chest with the same cards; without the level two floors' objects with the same id would match.
+- **What `RewardSprite` serves:** only `reward` objects on a tile map (`MapStage.loadObjects`, the one `new RewardSprite`): chests, gold piles, boosters, in any map. Shops, enemy drops and quest rewards don't come through it.
+- **Rounds 289 and 835:** the fill is still once per sprite (289), and the edition restriction runs just before it, unchanged, so a color change around the place changes the pool and so the cards, as it should. 835's own rolls keep their salts.
+- **Not seeded (left):** `PlaceRewards.filterPickup`'s return-visit coin flip on a vanishing lair draws from `MyRandom`. A deferred pack's contents (`cardPackShop`) do too, but `booster.tx` hands out plain cards, so a map booster isn't affected.
+- **Saves:** no new field. An unopened chest in an old save rolls from the seed from now on. An opened chest is a deleted object (`changes.deleteObject`), so it stays gone.
+- **Log:** `[TFR-PickupSeed] pickup 76 on <level key>: seed <n>`, once per fill.
+- **Tested** (Maven exit 0, agent game, `forge-gui-mobile/target/classes` ahead of the jar, old saves): slot 75, Xira's Hive. Chest 76 opened 7 times over two launches: seed `-2762850668304234439` every time, and the same six cards where the screen was read (Ashes to Ashes, Forcemage Advocate, Gargoyle Sentinel, Invasion of Vryn, Lockjaw Snapper, Skybind). Chest 75 opened 4 times: seed `765233549951099254`, its own cards. Slot 70, another world, the same place's chest: Deepwood Legate, Kyren Negotiations, Resplendent Marshal, Rite of Renewal, Wall of Blossoms.
+
 ## Round 923: three more card lists are copies, and the Spellsmith frees its card (2026-11-02)
 
 The user: "Yes, go ahead" to the two leftovers rounds 919 and 920 named.
