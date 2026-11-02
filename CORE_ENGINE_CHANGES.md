@@ -35,6 +35,22 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 917 - the engine to the 11.01 daily (upstream `5a09fa8cc5d`)
+- `forge-gui-mobile/src/forge/screens/match/CardFlightOverlay.java`: upstream's new splatter gate also skips SUPERFAST, as
+  `FCardPanel` does (one line). Any new speed gate upstream adds needs the same check.
+- `forge-gui-mobile/src/forge/adventure/util/RewardActor.java`: `setItemTooltips` keeps round 907's version over upstream's
+  same fix (#12550), with `drawing` for upstream's `batchStarted` and upstream's comment on the `finally`.
+- `forge-gui/res/adventure/The Forsaken Realms/config.json`: `engineBuildVersion` 11.01 (plane file, for the packager's
+  base check).
+- Merged clean beside our edits, for the next conflict pass: `AiController`, `ComputerUtil`, `PlayerControllerAi`, `Game`,
+  `GameAction`, `Player`, `UndoManager`, `MagicStack`, `MatchController`, `VPlayerPanel`, `FCardPanel`, `en-US.properties`,
+  `IGuiGame`, `ForgeConstants`.
+
+### Round 916 - `[TFR-Launch]`
+- `forge-gui-android/src/forge/app/Main.java`: new `describeLaunch`, `logLaunch`, `launchText` and `RELAUNCHED_FROM`; one line in
+  `onCreate` after `super.onCreate`, one post in `loadGame`, one call at the top of `onPause`; `startFreshProcess` and
+  `logRelaunch` carry the text across the relaunch. Logging only. Android only. `MemoryWatch` and `SessionLog` are TFR's own.
+
 ### Round 915 - the Journal's streak marker and Alt-click
 - `forge-gui-mobile/src/forge/adventure/stage/GameStage.java` (STOCK): `touchDown` calls `JournalScene.altClick` after its pause guard, and returns if it took the click (round 915).
 - `forge-gui-mobile/src/forge/adventure/stage/GameHUD.java` (STOCK): new `showBanner(text)` (a banner the notice log does not keep) and `holdsInput()` (round 915).

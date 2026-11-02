@@ -378,6 +378,8 @@ public final class SessionLog {
         String first = report == null ? "?" : report.trim().split("\\R", 2)[0];
         System.out.println("[TFR-Error] crash report shown (the bug-report dialog): " + first);
         System.out.println("[TFR-Error] trail: " + trailText());
+        if (first.contains("OutOfMemoryError"))
+            MemoryWatch.report("oom"); // round 916
     }
 
     /** Round 815, Classic.render's catch (no dialog there, and it can fail every frame): counted, the trail once a launch. */

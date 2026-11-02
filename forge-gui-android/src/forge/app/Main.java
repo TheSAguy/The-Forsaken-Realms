@@ -8,6 +8,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ApplicationExitInfo;
+import android.app.KeyguardManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ComponentName;
@@ -35,6 +36,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -65,6 +68,7 @@ import com.getkeepsafe.relinker.ReLinker;
 import de.cketti.fileprovider.PublicFileProvider;
 import forge.util.HWInfo;
 import forge.Forge;
+import forge.error.ExceptionHandler;
 import forge.interfaces.IDeviceAdapter;
 import forge.screens.TransitionScreen;
 import forge.util.FileUtil;
@@ -91,6 +95,7 @@ public class Main extends AndroidApplication {
     private static final TaggedLogger netLog = Logger.tag("NETWORK");
     private static final long HEAP_HEARTBEAT_MS = 30_000L;
     private static final String RELAUNCHED_AT = "tfrRelaunchedAt";
+    private static final String RELAUNCHED_FROM = "tfrRelaunchedFrom";
 
     private AndroidAdapter Gadapter;
     private ArrayList<String> gamepads;
@@ -104,6 +109,7 @@ public class Main extends AndroidApplication {
     private ProgressBar progressBar;
     private TextView progressText;
     private String versionString;
+    private String launchText; // round 916, until it is logged
     private Handler heapHeartbeatHandler;
     private final Runnable heapHeartbeat = new Runnable() {
         @Override public void run() {
@@ -203,6 +209,7 @@ public class Main extends AndroidApplication {
         heapHeartbeatHandler.postDelayed(heapHeartbeat, HEAP_HEARTBEAT_MS);
 
         super.onCreate(savedInstanceState);
+        launchText = describeLaunch(savedInstanceState);
         // Round 901 (notes/logs-1031.md P3-2): Android can keep the process after the app closes, and a relaunch in it found
         // Forge disposed for good: create() skipped all loading and render() returned every frame, a dead screen until the
         // process was killed. Nothing in a disposed process is worth keeping, so start a new one here, before anything
@@ -421,6 +428,7 @@ public class Main extends AndroidApplication {
                 Gdx.app.postRunnable(() -> ExitReasons.log(this, sharedPreferences));
             }
             Gdx.app.postRunnable(this::logRelaunch);
+            Gdx.app.postRunnable(this::logLaunch);
 
             getAnimator(ObjectAnimator.ofFloat(forgeLogo, "alpha", 1f, 1f).setDuration(800), ObjectAnimator.ofObject(activeView, "backgroundColor", new ArgbEvaluator(), Color.WHITE, Color.BLACK).setDuration(1600), new AnimatorListenerAdapter() {
                 @Override
@@ -642,6 +650,7 @@ public class Main extends AndroidApplication {
     @Override
     protected void onPause() {
         netLog.info("[lifecycle] onPause");
+        logLaunch(); // a launch left before its first frame runs nothing posted
         // Round 883: after this first line the log ends one of three ways: "answered" (the app lived), "killed by
         // libGDX's pause wait" (AndroidGraphics' 4 s timeout) or nothing more (swiped away, or killed by Android).
         boolean generating = TransitionScreen.generatingWorld;
@@ -1029,7 +1038,8 @@ public class Main extends AndroidApplication {
      * clean launch, where staying would leave an empty screen.
      */
     private void startFreshProcess() {
-        getPreferences(Context.MODE_PRIVATE).edit().putLong(RELAUNCHED_AT, System.currentTimeMillis()).commit();
+        getPreferences(Context.MODE_PRIVATE).edit().putLong(RELAUNCHED_AT, System.currentTimeMillis())
+                .putString(RELAUNCHED_FROM, launchText).commit();
         triggerRebirth();
         Runtime.getRuntime().exit(0);
     }
@@ -1039,11 +1049,40 @@ public class Main extends AndroidApplication {
         try {
             long at = sharedPreferences.getLong(RELAUNCHED_AT, 0);
             if (at != 0) {
-                sharedPreferences.edit().remove(RELAUNCHED_AT).apply();
-                netLog.info("[TFR-Relaunch] the closed game's process was still alive: started a new one, {} ms ago", System.currentTimeMillis() - at);
+                String from = sharedPreferences.getString(RELAUNCHED_FROM, "?");
+                sharedPreferences.edit().remove(RELAUNCHED_AT).remove(RELAUNCHED_FROM).apply();
+                netLog.info("[TFR-Relaunch] the closed game's process was still alive: started a new one, {} ms ago (that launch: {})", System.currentTimeMillis() - at, from);
             }
         } catch (Throwable t) {
             netLog.warn("[TFR-Relaunch] not read: {}", t.toString());
+        }
+    }
+
+    /**
+     * Round 916 (notes/logs-1102.md P2-1): launches that leave within a second, one at 02:42, and no log says who opened the
+     * app or whether the screen was on. onCreate reads this; it's logged later, since forge.log only exists once create() has run.
+     */
+    private String describeLaunch(Bundle savedInstanceState) {
+        try {
+            Intent intent = getIntent();
+            int flags = intent == null ? 0 : intent.getFlags();
+            return "action=" + (intent == null ? "none" : intent.getAction())
+                    + " fromRecents=" + ((flags & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0)
+                    + " restored=" + (savedInstanceState != null)
+                    + " screenOn=" + ((PowerManager) getSystemService(POWER_SERVICE)).isInteractive()
+                    + " locked=" + ((KeyguardManager) getSystemService(KEYGUARD_SERVICE)).isKeyguardLocked()
+                    + " processAge=" + (SystemClock.elapsedRealtime() - android.os.Process.getStartElapsedRealtime()) / 1000 + "s"
+                    + " disposed=" + Forge.isDisposed;
+        } catch (Throwable t) {
+            return "not read: " + t;
+        }
+    }
+
+    /** Once a launch: the first frame or the first pause, whichever comes after forge.log is open. */
+    private synchronized void logLaunch() {
+        if (launchText != null && ExceptionHandler.getActiveLogFile() != null) {
+            netLog.info("[TFR-Launch] {}", launchText);
+            launchText = null;
         }
     }
 
