@@ -14318,7 +14318,32 @@ The first commit past the target is #12568 "[Adventure] Respect edition restrict
 - **Checked**: Maven `-pl forge-gui-mobile-dev -am package -DskipTests -o`: exit 0, needing no code change to compile, and
   again with round 916 merged in. `forge-gui-desktop` tests (every `forge.ai` test and `LoopBreakerTest`,
   `-Dcheckstyle.skip`), before round 916 came in: 819/819, LoopBreakerTest 6/6, RegenerateRecursionTest 4/4,
-  GameCopierOrphanEffectTest 4/4. The in-game regression comes as this round's follow-up, after the package.
+  GameCopierOrphanEffectTest 4/4.
+- **Round 917 (follow-up), the in-game regression**: the agent game at `a22d7c43116`, cheats on, every duel at 50x (9 of 9
+  `duel speed set to 50x`). No regression found.
+  - **Ran**: a new game (Elf, Normal: welcome page, intro skipped, out to the world, into Orazca); slot 61 (Merfolk, day 18)
+    and the pre-merge auto save (Vampire, day 18, copied to slot 89) loaded with their items and no mismatch line; a save
+    and load at this build (slot 91: gold, shards, deck, 43 items and quests the same); a shop buy in Shannon's Bazaar
+    (62 gold, the labels right); a Job Board quest taken (Elven Invasion) and the quest log; Blue Tower entered, its
+    Crawlspace effect shown, a duel won, the enemy gone, the map intact; the character sheet, the Journal (110 of 893, its
+    pips and rank lines), the Alt plates; title screen `2.0.16-SNAPSHOT-11.01`.
+  - **9 duels to the end**, 8 won, 1 lost, on the Vampire and Merfolk decks, the loss taken through the loot path. One
+    inside a dungeon. No boss among them.
+  - **`forge.log`**: session footer `errors=0`; no `Flat Monte Carlo rollout failed`, no `Couldn't map`, no `Couldn't add to
+    stack`, no serialVersionUID line, no `[TFR-Render]`, no `[TFR-Memory]`. Flat MC has no line of its own for a pause or
+    the breaker: none of its failure lines fired, and that is all the log can show. The one exception is the agent's
+    `/wait` timing out during world generation (the client's 150 s). `Forge v.2.0.16-SNAPSHOT-11.02` at the log's head is
+    the jar's build date.
+  - **AI time against the pre-merge agent logs** (11-02 and 11-01, the same profile and 50x): 1.85 s a turn and 32.6 s a duel
+    (9 duels, 158 turns) against 1.58 and 26.2 (12 duels, 199 turns): +17% a turn. A small sample, mixed ranks, so not
+    a measurement. The worst duel, Shieldmaiden Paragon (Master), took 88 s for 24 turns against 47 s for 22 before: both
+    decks are AI in an agent duel, so the new AI thinks for both seats, and a player's duel has one. Win ratios say nothing
+    about strength here for the same reason; S1 stays unmeasured.
+  - **Not run**: Android (`mobileLite()`), a boss, an Inn draft or sealed, a Grist deck, the Elven Invasion fight, a chest in
+    a dungeon. S2 is read from the code: nothing in the log shows a splatter, drawn or skipped.
+  - **The walker**: 8 `stuck near` or `no path` ends on long routes and beside places, in new and old worlds alike. Its
+    code and the world map are outside the merge, short legs and entries worked, and the logs hold the same failure
+    from before (Blue Tower). Agent tooling, not the game; `teleport to poi` takes the data name, not the display name.
 
 ## Round 916: `[TFR-Memory]` reaches the crash, and `[TFR-Launch]` (2026-11-02)
 
