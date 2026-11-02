@@ -446,11 +446,11 @@ public class CardView extends GameEntityView {
         set(TrackableProperty.MarkedColors, c.getMarkedColors());
     }
     public FCollectionView<CardView> getMergedCardsCollection() {
-        return Objects.requireNonNullElse(get(TrackableProperty.MergedCardsCollection), FCollection.getEmpty());
+        return copyOf(TrackableProperty.MergedCardsCollection);
     }
 
     public FCollectionView<CardView> getChosenCards() {
-        return Objects.requireNonNullElse(get(TrackableProperty.ChosenCards), FCollection.getEmpty());
+        return copyOf(TrackableProperty.ChosenCards);
     }
 
     public PlayerView getChosenPlayer() {
@@ -800,7 +800,7 @@ public class CardView extends GameEntityView {
     }
 
     public FCollectionView<CardView> getMustBlockCards() {
-        return Objects.requireNonNullElse(get(TrackableProperty.MustBlockCards), FCollection.getEmpty());
+        return copyOf(TrackableProperty.MustBlockCards);
     }
     void updateMustBlockCards(Card c) {
         setCards(null, c.getMustBlockCards(), TrackableProperty.MustBlockCards);

@@ -35,6 +35,12 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 923 - three more card lists, and the Spellsmith frees its card
+- `forge-game/src/main/java/forge/game/card/CardView.java`: `getMustBlockCards`, `getMergedCardsCollection` and `getChosenCards`
+  use round 919's `copyOf`.
+- `forge-gui-mobile/src/forge/adventure/scene/SpellSmithScene.java`: new private `removeRewardActor`, in place of the three
+  `rewardActor.remove()` calls; it disposes the actor through `removeTooltip()`.
+
 ### Round 921 - a save that failed to load can't overwrite the good backup
 - `forge-gui-mobile/src/forge/adventure/world/WorldSave.java`: `load()` adds a file that failed to load to `brokenSaves`
   (`readFailed || loadTouchedLiveState`; a refused format stays out) and logs it; `writeSaveSnapshot`'s rotation gets an

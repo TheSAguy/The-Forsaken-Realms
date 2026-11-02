@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 923: three more card lists are copies, and the Spellsmith frees its card (2026-11-02)
+
+The user: "Yes, go ahead" to the two leftovers rounds 919 and 920 named.
+
+**Three more lists.** `CardView.getMustBlockCards`, `getMergedCardsCollection` and `getChosenCards` go through round 919's `copyOf`. On the 922 jar, 2 s per read with the game thread changing the list in place, then on this round's classes:
+
+| Read | Before | After |
+|---|---|---|
+| merged: `size` and `get(i)` (a `CardZoom` list) | 1.5M `NullPointerException`, 358 `IndexOutOfBoundsException` of 30.4M | 0 of 19.1M |
+| merged: a loop | 1.2M `IndexOutOfBoundsException`, 74k `NullPointerException` of 8.0M | 0 of 16.0M |
+| must-block: `Lang.joinHomogenous` (detail text) | 1.0M `IndexOutOfBoundsException` of 4.6M | 0 of 12.7M |
+| chosen: `Lang.joinHomogenous` (detail text) | 1.1M `IndexOutOfBoundsException` of 4.0M | 0 of 11.8M |
+
+- **Only the merged list races in a real game.** `updateMergeCollections` clears and refills it in place. Must-block and chosen go through `setCards`, which sets a new collection each time, so a reader holds a list nobody changes. The table's last two rows change those lists in place on purpose: they show what would happen if that changed. The copy costs nothing when empty.
+- **Callers:** `CardDetailUtil` (chosen, must-block) and `CardZoom` (merged), all reads. `CardZoom.show` keeps the list it is given for the zoom, which now can't shrink under it. `updateMergeCollections` reads the property itself, so it still changes the live list, as it must. `AiBlockController` uses `Card`'s own list.
+- `CardViewListsTest` now covers all nine lists: 7 of 7 tests pass, Maven exit 0.
+
+**The Spellsmith.** `SpellSmithScene` removed its `rewardActor` at three places (a new pull, Take or Refund, Done) and never disposed it. A new `removeRewardActor` calls `removeTooltip()`, `remove()`, and clears the field, so it can't run twice on one actor. On the 922 jar and on this round's classes, the same save, 8 pulls and Refunds of cards with no art yet:
+
+| Live `FrameBuffer` objects | 922 | This round |
+|---|---|---|
+| after each pull and Refund | 2, 3, 4 ... 9 | 1 every time |
+| with a card showing | one more | 2 every time |
+
+The log: `[TFR-Render] reward buffers: 9 made, 9 freed`, counting a ninth pull that was taken. The one buffer left isn't a `RewardActor`'s, as made equals freed.
+
+**Nothing draws a freed texture.** The field was the only thing that draws it: `addReward` takes the `Reward`, not the actor. One stale `RewardActor` object stays live after a Refund, the same count every pull, with no buffer. `removeTooltip` hides the tooltip first, which a plain `remove()` never did. On Android a card's zoom opens over this scene, and a pull can't happen under it. An art download that lands after the dispose only sets the asset texture on the old actor; `disposed` stops it making a buffer, and art did land in these runs with no exception (`notes/r923-agent-forge.log`). Shot: `notes/r923-smith-pull.png`.
+
+**The same problem, not looked at in depth:** by reading only, `CardView`'s `PlayerMayLook` (used through `contains`), `PlayerView.getOpponents` and `CombatView`'s maps also hand out or read shared collections. `PlayerView`'s zones and `getCounters` stay as round 919 listed them.
+
+**How the Spellsmith was reached:** the test save's two towns tried had none to walk to, so a scratch copy of `AgentActions`, ahead of the jar in the test run only, opened the scene from Goblin Hill. It's not in the repo. The agent's auto save was put back after.
+
+**Not tested:** leaving with Done while a card shows (it takes the same `acceptSmithing` path as Take, then finds nothing to remove). A Spellsmith in a real town. A phone. A stray duel on one walk was left unplayed when the scene switched and the game was stopped, so no duel ran.
+
+**Files:** `forge-game/src/main/java/forge/game/card/CardView.java`, `forge-game/src/test/java/forge/game/card/CardViewListsTest.java`, `forge-gui-mobile/src/forge/adventure/scene/SpellSmithScene.java`, `CORE_ENGINE_CHANGES.md`, `CLAUDE.md`.
+
 ## Round 922: a confirm page sizes the dialog to itself, so no letter is clipped (2026-11-02)
 
 - The ask (the user, with a screenshot): "I did notice a text wrapping issue to upgrade the Trader to a Exchange." Every

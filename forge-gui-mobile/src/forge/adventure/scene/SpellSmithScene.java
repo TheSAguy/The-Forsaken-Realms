@@ -229,7 +229,7 @@ public class SpellSmithScene extends UIScene {
             acceptSmithing();
         }
 
-        if (rewardActor != null) rewardActor.remove();
+        removeRewardActor();
         cardPool.clear(); //Get rid of cardPool, filtering is fast enough to justify keeping it cached.
         Forge.switchToLast();
         return true;
@@ -514,7 +514,7 @@ public class SpellSmithScene extends UIScene {
         } else {
             currentReward = new Reward(CardUtil.remapToEditionList(P, restrictionArray, MyRandom.getRandom()));
         }
-        if (rewardActor != null) rewardActor.remove();
+        removeRewardActor();
         rewardActor = new RewardActor(currentReward, true, null, true);
         stage.addActor(rewardActor);
         rewardActor.setBounds(rewardDummy.getX(), rewardDummy.getY(), rewardDummy.getWidth(), rewardDummy.getHeight());
@@ -552,8 +552,18 @@ public class SpellSmithScene extends UIScene {
         updateFilterAndPullButtons();
     }
 
+    /** Round 923: a pulled card with no art or a back face draws into a frame buffer its actor owns, so the actor is
+     *  disposed as it leaves. removeTooltip hides its tooltip first; nothing else draws the actor. */
+    private void removeRewardActor() {
+        if (rewardActor == null)
+            return;
+        rewardActor.removeTooltip();
+        rewardActor.remove();
+        rewardActor = null;
+    }
+
     private void clearReward() {
-        if (rewardActor != null) rewardActor.remove();
+        removeRewardActor();
         currentReward = null;
     }
 

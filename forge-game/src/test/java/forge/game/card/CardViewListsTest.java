@@ -16,16 +16,20 @@ import forge.util.collect.FCollectionView;
  * Round 919: six card lists of a CardView are read on the render thread (VCardDisplayArea's linked-exile ghosts, the
  * card-detail text) while the game thread changes them in place. These reads are the ones the screens make: a loop, and
  * the detail text's append, whose toString walks the backing ArrayList and is fail-fast. About 2 seconds of real race.
+ * Round 923: three more. Only the merged cards change in place today; the other two are replaced whole, so the race
+ * below is stricter than the game for those, and holds if that ever changes.
  */
 public class CardViewListsTest {
 
     private static final TrackableProperty[] LISTS = {TrackableProperty.UntilLeavesBattlefield,
             TrackableProperty.EncodedCards, TrackableProperty.GainControlTargets, TrackableProperty.ImprintedCards,
-            TrackableProperty.ExiledCards, TrackableProperty.HauntedBy};
+            TrackableProperty.ExiledCards, TrackableProperty.HauntedBy, TrackableProperty.MustBlockCards,
+            TrackableProperty.MergedCardsCollection, TrackableProperty.ChosenCards};
 
     private static FCollectionView<?>[] readAll(final CardView card) {
         return new FCollectionView<?>[] {card.getUntilLeavesBattlefield(), card.getEncodedCards(),
-                card.getGainControlTargets(), card.getImprintedCards(), card.getExiledCards(), card.getHauntedBy()};
+                card.getGainControlTargets(), card.getImprintedCards(), card.getExiledCards(), card.getHauntedBy(),
+                card.getMustBlockCards(), card.getMergedCardsCollection(), card.getChosenCards()};
     }
 
     @Test
