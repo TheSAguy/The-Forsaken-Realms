@@ -35,6 +35,15 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 919 - the render thread reads copies of a card's lists
+- `forge-game/src/main/java/forge/game/GameEntityView.java`: `getAllAttachedCards` returns a copy through `toArray()`, nulls left
+  out, `List.of()` when null or empty; `getAttachedCards` filters that copy with `removeIf`, not a stream. Imports: `ArrayList` in,
+  `Objects` and `Collectors` out. On a merge: keep the copy if upstream rewrites either.
+- `forge-game/src/main/java/forge/game/card/CardView.java`: new private `copyOf(TrackableProperty)`, used by `getEncodedCards`,
+  `getUntilLeavesBattlefield`, `getGainControlTargets`, `getImprintedCards`, `getExiledCards`, `getHauntedBy`, where each had
+  `Objects.requireNonNullElse`. Same return type.
+- New tests, ours: `forge-game/src/test/java/forge/game/GameEntityViewTest.java`, `forge-game/src/test/java/forge/game/card/CardViewListsTest.java`.
+
 ### Round 917 - the engine to the 11.01 daily (upstream `5a09fa8cc5d`)
 - `forge-gui-mobile/src/forge/screens/match/CardFlightOverlay.java`: upstream's new splatter gate also skips SUPERFAST, as
   `FCardPanel` does (one line). Any new speed gate upstream adds needs the same check.

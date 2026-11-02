@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 919: the render thread reads copies of a card's lists, so a duel can't close the game on them (2026-11-02)
+
+The user: "Can you implement" a code comparison's note: the render thread reads live collections the game thread changes in place, and the exception closes the game. 10x and 50x spectating make it likelier.
+
+**The cause, measured on this tree** (a scratch probe, 2 s per read, the game thread removing and adding as `TrackableObject.removeCard`/`addCard` do, on the 918 jar and then on this round's classes):
+
+| Read | Before | After |
+|---|---|---|
+| `getAttachedCards` (a stream, `VField.tryStackCard`, the arrows) | 2.0M `ConcurrentModificationException`, 184k `NullPointerException` of 2.7M | 0 of 17.6M |
+| a loop over `getAllAttachedCards` (`updateCard`) | 1.2M `IndexOutOfBoundsException`, 61k `NullPointerException` of 8.9M | 0 of 21.8M |
+| a loop over a card list (the linked-exile ghosts) | 1.2M `IndexOutOfBoundsException`, 69k `NullPointerException` of 7.2M | 0 of 15.7M |
+| `toString` of a card list (`CardDetailUtil`'s append) | 1.9M `ConcurrentModificationException`, 121 `NoSuchElementException` of 2.2M | 0 of 13.3M |
+| `size` then `get(0)` (`PlayerControllerHuman`) | 0 of 40.7M | 0 of 18.3M |
+
+- **The note said a loop throws `ConcurrentModificationException`; here it doesn't.** Upstream's newer `FCollection` iterates a snapshot with no fail-fast check, but the two threads share its unsynchronized `liveIterators`, so the game thread can change the list in place under a live iterator: a loop fails too, with a different exception. The stream and `toString` go straight to the `ArrayList` and are fail-fast.
+- A render-thread loop also made the game thread copy the list at its next change, since a live iterator detaches it. The copies end that.
+
+**The fix.**
+- `GameEntityView.getAllAttachedCards` returns a copy through `toArray()`, nulls left out, `List.of()` when null or empty. `getAttachedCards` filters that copy with `removeIf`, not a stream.
+- `CardView.copyOf(TrackableProperty)`, the same copy, serves `getEncodedCards`, `getUntilLeavesBattlefield`, `getGainControlTargets`, `getImprintedCards`, `getExiledCards` and `getHauntedBy`. The return type stays `FCollectionView<CardView>`.
+
+**Why `toArray()` can't throw on this class.** `FCollection.toArray` reads `list` once and calls `ArrayList.toArray`, which is `Arrays.copyOf(elementData, size)` on the JDK and on Android (minSdk 26, ART's OpenJDK library). The two fields are read apart, so a mid-change copy can be short or padded with nulls, but `copyOf` takes any length and `size` is never negative. `ownList`'s swap of `list` gives the old list or the new one, both whole. One limit: `list` is not volatile, so on ARM the memory model alone doesn't rule out seeing a just-swapped `ArrayList` before its fields. That needs a detach in the same instant and would be a `NullPointerException` in one read. 86M reads on PC show nothing, but PC can't show that case. Nothing was added for it.
+
+**The callers.** 12 read sites by the code graph and Grep (VField, MatchScreen, both TargetingOverlays, VCardDisplayArea, PlayArea, CardDetailUtil, PlayerControllerHuman): all read and none keeps a list or writes through one. Rules, AI and network play use the `Card` lists or the property itself. An empty list now reads as `FCollection.getEmpty()`, whose `getFirst` throws where a real empty collection's gave null: no view caller uses `getFirst` or `getLast`.
+
+**The cost on a hot path.** `MatchScreen.hasArrowRelation` and `TargetingOverlay` run per card per frame; `updateCard` and `tryStackCard` per refresh. An empty list allocates nothing, and those two no longer build a stream for every card, so the common case costs less than before. A card with attachments costs an `Object[]`, an `ArrayList` and its array, about 100 bytes a read, less than the stream and list it replaces. A card list costs one more small object (`FCollection`), read only per refresh and in the detail text.
+
+**The same problem, left alone (not this round):** `CardView.getMustBlockCards`, `getMergedCardsCollection`, `getChosenCards`, all three read in the detail text or `CardZoom`; `PlayerView`'s zones, where `VField` and `VZoneDisplay` take `threadSafeIterable()` only in a net game, so a local game's field and zone loops read the live list; `GameEntityView.getCounters`, a live `Multiset`, read by `hasSameCounters` in `tryStackCard`.
+
+**`hasAnyCardAttachments()` is left as it is:** it returns `getAllAttachedCards().isEmpty()`, which is backwards, but nothing calls it.
+
+**Tested.** `GameEntityViewTest` and `CardViewListsTest`, 7 tests with about 2 s of real race each in the two race tests. Before the fix 5 of 7 failed, the race tests within 20 ms; after it 7 of 7 passed in each of 3 runs, Maven exit 0 each.
+
+**Not tested:** the race on a phone. No crash was reproduced in a real duel; the tests make the race, they don't play one.
+
+**Files:** `forge-game/src/main/java/forge/game/GameEntityView.java`, `forge-game/src/main/java/forge/game/card/CardView.java`, the two tests, `CORE_ENGINE_CHANGES.md`, `CLAUDE.md`.
+
 ## Round 917: the engine to the 11.01 daily (upstream `5a09fa8cc5d`) (2026-11-02)
 
 The user reinstalled stock Forge as BASE_INSTALL: "Forge is updated. E:\GAMES\Forge_2". 61 commits, 317 files since

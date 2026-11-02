@@ -712,12 +712,34 @@ public class CardView extends GameEntityView {
         return isInZone(EnumSet.of(ZoneType.Battlefield, ZoneType.Stack, ZoneType.Sideboard)) && getController().equals(viewer);
     }
 
+    /**
+     * TFR round 919: a copy of a card list, never the live collection (as GameEntityView.getAllAttachedCards). The
+     * field's linked-exile ghosts and the card-detail text read these on the render thread while the game thread changes
+     * them in place, and the detail text's toString walks the backing ArrayList, which throws
+     * ConcurrentModificationException and closes the game. toArray has no fail-fast check; a copy taken mid-change can
+     * hold an empty slot, which is left out. An empty list allocates nothing.
+     */
+    private FCollectionView<CardView> copyOf(final TrackableProperty key) {
+        final TrackableCollection<CardView> live = get(key);
+        if (live == null || live.isEmpty()) {
+            return FCollection.getEmpty();
+        }
+        final Object[] slots = live.toArray();
+        final FCollection<CardView> cards = FCollection.withCapacity(slots.length);
+        for (final Object c : slots) {
+            if (c != null) {
+                cards.add((CardView) c);
+            }
+        }
+        return cards;
+    }
+
     public FCollectionView<CardView> getEncodedCards() {
-        return Objects.requireNonNullElse(get(TrackableProperty.EncodedCards), FCollection.getEmpty());
+        return copyOf(TrackableProperty.EncodedCards);
     }
 
     public FCollectionView<CardView> getUntilLeavesBattlefield() {
-        return Objects.requireNonNullElse(get(TrackableProperty.UntilLeavesBattlefield), FCollection.getEmpty());
+        return copyOf(TrackableProperty.UntilLeavesBattlefield);
     }
 
     public GameEntityView getEntityAttachedTo() {
@@ -743,7 +765,7 @@ public class CardView extends GameEntityView {
     }
 
     public FCollectionView<CardView> getGainControlTargets() {
-        return Objects.requireNonNullElse(get(TrackableProperty.GainControlTargets), FCollection.getEmpty());
+        return copyOf(TrackableProperty.GainControlTargets);
     }
 
     public CardView getCloneOrigin() {
@@ -762,15 +784,15 @@ public class CardView extends GameEntityView {
     }
 
     public FCollectionView<CardView> getImprintedCards() {
-        return Objects.requireNonNullElse(get(TrackableProperty.ImprintedCards), FCollection.getEmpty());
+        return copyOf(TrackableProperty.ImprintedCards);
     }
 
     public FCollectionView<CardView> getExiledCards() {
-        return Objects.requireNonNullElse(get(TrackableProperty.ExiledCards), FCollection.getEmpty());
+        return copyOf(TrackableProperty.ExiledCards);
     }
 
     public FCollectionView<CardView> getHauntedBy() {
-        return Objects.requireNonNullElse(get(TrackableProperty.HauntedBy), FCollection.getEmpty());
+        return copyOf(TrackableProperty.HauntedBy);
     }
 
     public CardView getHaunting() {

@@ -1,8 +1,7 @@
 package forge.game;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.Multiset;
 
@@ -61,13 +60,34 @@ public abstract class GameEntityView extends TrackableObject {
     }
 
     public List<CardView> getAttachedCards() {
-        return getAllAttachedCards().stream().filter(c -> !c.isPhasedOut()).collect(Collectors.toList());
+        final List<CardView> cards = getAllAttachedCards();
+        if (!cards.isEmpty()) {
+            cards.removeIf(CardView::isPhasedOut);
+        }
+        return cards;
     }
     public boolean hasCardAttachments() {
         return !getAttachedCards().isEmpty();
     }
+    /**
+     * TFR round 919: a copy, never the live collection. The match screens call this on the render thread while the game
+     * thread changes the collection in place, and a stream over it threw ConcurrentModificationException, which closes
+     * the game. toArray has no fail-fast check; a copy taken mid-change can hold an empty slot, which is left out. No
+     * attachments allocate nothing: this runs per card per frame.
+     */
     public List<CardView> getAllAttachedCards() {
-        return Objects.requireNonNullElse(get(TrackableProperty.AttachedCards), List.of());
+        final TrackableCollection<CardView> live = get(TrackableProperty.AttachedCards);
+        if (live == null || live.isEmpty()) {
+            return List.of();
+        }
+        final Object[] slots = live.toArray();
+        final List<CardView> cards = new ArrayList<>(slots.length);
+        for (final Object c : slots) {
+            if (c != null) {
+                cards.add((CardView) c);
+            }
+        }
+        return cards;
     }
     public boolean hasAnyCardAttachments() {
         return getAllAttachedCards().isEmpty();
