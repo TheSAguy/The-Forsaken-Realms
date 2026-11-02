@@ -14287,6 +14287,19 @@ The user: "Yes, fix them", to the Android proof's P2-3 (`notes/android-proof-110
 - **Who else paid for it:** `SettingsScene`'s pool toggles still leave the rebuild to the next use, and the notice's catch covers that case. A new game keeps the launch's index, since nothing drops it. A rollback after a failed load also leaves it to the next use. The others (`ResearchScene`, `SpellSmithScene`, `ResearchMeter`, `EditionProgression`) are screens and shops, not the win path.
 - **Tested** (agent game): every load printed `[TFR-Printings]` just before its `[TFR-Perf] load` line. Rorix won, two games: no `[TFR-Printings]` after it. The caught failure itself wasn't forced: there's no filler on PC, so the Android re-test is what can show it.
 
+## Round 927: the end-of-duel dialog runs once (2026-11-02)
+
+The user: "Yes, fix them", to the final agent pass's P3-1: `afterGameEnd` could run twice, and the second run crashed in `MapStage.setWinner` on a null `currentMob`. Read from the code, on a win it would pay `win()` twice, and a double call counts the streak, Notoriety and `ReloadJab` twice. Files: `scene/DuelScene.java`, `stage/MapStage.java` (both stock).
+
+- **The guard:** `exitChain` starts with an `AtomicBoolean.compareAndSet`. The flag is local to `GameEnd`, so each duel's end has a fresh one and nothing has to reset it. `GameEnd` runs once per match, not per game. `[TFR-DuelEnd] the end-of-duel dialog fired again - ignored` marks a second call.
+- **The null check:** `MapStage.setWinner` returns with a `[TFR-SceneStack]` line when `currentMob` is null, as round 310 did for `WorldStage`. `isLoadingMatch` is still cleared first; the enemies aren't frozen for a result with no enemy.
+- **Tested** (agent game, duels at 50x; `notes/tiny-fixes-1102/forge-r925-927.log`):
+  - **The report's reproduction:** slot 70, Xira, lost, window minimized at the boss dialog, two bridge taps: both tapped, no crash, one `[TFR-WinStreak]`, one defeat, life 21 to 16, and the `[TFR-DuelEnd]` line for the second (L624).
+  - **A double ESC:** two ESC presses posted to the window at the same dialog in a rematch: the same, one of each (L867). So the keyboard route the report left open was real: the second key did reach the dialog.
+  - **A multi-game match:** Rorix, up to 3 games, won in two, with ante cards: one `[TFR-WinStreak]`, one `[TFR-Payout]`.
+  - **The rematch:** two Xira duels and the two after them each resolved once, so no guard carried over.
+- **Not tested:** the `MapStage` null check was not hit, since the guard now stops the only route found to it.
+
 ## Round 923: three more card lists are copies, and the Spellsmith frees its card (2026-11-02)
 
 The user: "Yes, go ahead" to the two leftovers rounds 919 and 920 named.

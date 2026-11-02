@@ -2392,6 +2392,12 @@ public class MapStage extends GameStage {
     @Override
     public void setWinner(boolean playerWins, boolean isArena) {
         isLoadingMatch = false;
+        // Round 927: the same guard as WorldStage's (round 310): a result with no enemy to hand it to is set aside.
+        if (currentMob == null) {
+            System.out.println("[TFR-SceneStack] a duel result reached a map with no enemy (winner=" + playerWins
+                    + ") - set aside instead of crashing");
+            return;
+        }
         freezeAllEnemyBehaviors = true;
         if (playerWins) {
             currentMob.clearCollisionHeight();

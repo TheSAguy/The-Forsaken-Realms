@@ -333,7 +333,14 @@ public class DuelScene extends ForgeScene {
 
         // Build popup chain: ante results -> boss dialogue -> exit
         callbackExit = true;
+        // Round 927 (the final pass's P3-1): the dialog that ends this chain could fire twice, and a second run paid the
+        // win and counted the streak again. Local, so each duel's end has its own.
+        final java.util.concurrent.atomic.AtomicBoolean exited = new java.util.concurrent.atomic.AtomicBoolean();
         Runnable exitChain = () -> {
+            if (!exited.compareAndSet(false, true)) {
+                System.out.println("[TFR-DuelEnd] the end-of-duel dialog fired again - ignored");
+                return;
+            }
             afterGameEnd(enemyName, finalWinner);
             exitDuelScene();
         };
