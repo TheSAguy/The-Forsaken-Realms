@@ -65,6 +65,8 @@ final class AgentActions {
                 case "advance": return advance();
                 case "back": return back();
                 case "key": return key(a.getString("key", "ESCAPE"));
+                case "holdalt": return holdAlt(a.getBoolean("on", true)); // round 915
+                case "clickenemy": return clickEnemy(a.getString("name", "")); // round 915
                 case "equip": return equip(a.getString("item", ""), true);
                 case "unequip": return equip(a.getString("item", ""), false);
                 case "use": return use(a.getString("item", ""));
@@ -298,6 +300,41 @@ final class AgentActions {
             return now(true, "back (Forge screen)");
         }
         return now(false, "back applies to menu scenes; on a map use `leave` or click the HUD");
+    }
+
+    /** Round 915: Alt held for Gdx.input.isKeyPressed, by the input's own key table: the bridge has no OS key to hold, and
+     *  a real key press would go to whatever window the user is in. Not a key event: only polling sees it. */
+    private CompletableFuture<Map<String, Object>> holdAlt(boolean on) {
+        try {
+            java.lang.reflect.Field keys = com.badlogic.gdx.AbstractInput.class.getDeclaredField("pressedKeys");
+            keys.setAccessible(true);
+            ((boolean[]) keys.get(com.badlogic.gdx.Gdx.input))[Input.Keys.ALT_LEFT] = on;
+            return now(true, "Alt " + (on ? "held" : "released"));
+        } catch (ReflectiveOperationException e) {
+            return now(false, "cannot hold Alt: " + e);
+        }
+    }
+
+    /** Round 915: a left click on an enemy in sight, by name , down
+     *  and up through the map scene's own touch handlers, as the mouse sends them. */
+    private CompletableFuture<Map<String, Object>> clickEnemy(String name) {
+        Scene scene = Forge.getCurrentScene();
+        if (!(scene instanceof HudScene)) return now(false, "not on a map scene");
+        com.badlogic.gdx.scenes.scene2d.Stage stage = MapStage.getInstance().isInMap() ? MapStage.getInstance()
+                : forge.adventure.stage.WorldStage.getInstance();
+        Actor target = null;
+        Iterable<? extends Actor> actors = MapStage.getInstance().isInMap() ? AgentStageAccess.mapActors() : AgentStageAccess.worldEnemies();
+        for (Actor actor : actors)
+            if (actor instanceof forge.adventure.character.EnemySprite && name.equals(((forge.adventure.character.EnemySprite) actor).getName()))
+                target = actor;
+        if (target == null) return now(false, "no enemy named '" + name + "' here");
+        Vector2 v = target.localToStageCoordinates(new Vector2(target.getWidth() / 2f, target.getHeight() / 2f));
+        stage.stageToScreenCoordinates(v);
+        int sx = Math.round(v.x), sy = Math.round(v.y);
+        ((HudScene) scene).touchDown(sx, sy, 0, Input.Buttons.LEFT);
+        if (Forge.getCurrentScene() == scene)
+            ((HudScene) scene).touchUp(sx, sy, 0, Input.Buttons.LEFT);
+        return now(true, "clicked " + name + " at " + sx + "," + sy + "; scene " + Forge.getCurrentScene().getClass().getSimpleName());
     }
 
     private CompletableFuture<Map<String, Object>> key(String name) {

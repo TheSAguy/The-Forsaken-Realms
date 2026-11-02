@@ -941,6 +941,8 @@ relative of that rank tells you its colors. Winning isn't needed: a lost duel op
   **last deck fought** instead; on a save from before this feature, fight it once more to record it.
 - The Journal covers this run only. A new game or a New Game+ starts it empty, and its bars count what this run has beaten.
 - Each creature you beat counts toward the **Field Guide** trophy, once whatever its rank.
+- A row shows a **Bronze Coin** when that enemy holds one of yours, and the colorless mana symbol when it will start its next duel with **Wastes** from your win streak, with the number past one. Its page says how many and why.
+- **Hold Alt and click an enemy** on the map, in a town or in a dungeon to open the Journal at its page without walking or starting a fight; Esc or Back returns you to the map. An enemy you have not met says "Not in your Journal yet." Keyboard and mouse only: a tap on a touchscreen still walks.
 
 ### Achievements
 
@@ -1328,6 +1330,7 @@ until it beats you once (a Bronze Coin still counts as a loss); then its count s
 enemy, whichever of its decks it brings, and covers every duel but Inn tournaments and your guards' fights.
 **Archmages** start every duel with a Wastes as well, except in town, Ring City, capital and Capitol fights
 and Inn tournaments - so an Archmage on a streak starts with two.
+The **Realm Journal** marks every enemy on such a streak, with its number of Wastes.
 
 **The first two weeks are eased.** In week 1 (days 1-7) a monster starts its duel with half its life,
 but never fewer than 20; in week 2 (days 8-14) with three quarters, never fewer than 25. A monster that

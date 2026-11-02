@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 915: the Journal marks a win streak, and Alt-click opens it (2026-11-01)
+
+The user: "On the Journal, Like you are currently showing the Bronze token. Let's also do that for enemies you have a win streak against. showing they get the extra land ... Would it be possible, if you press "Alt" and click on an enemy, the Journal page opens at their info?"
+
+- **The rule in one place.** `AdventurePlayer.winStreakCards(name)` (the cards once per step, from DuelScene's inline loop) and `winStreakCardNames(name)` ("Wastes", "2 Wastes", from `streakNote`). The duel, its notice and the Journal all read them, so the marker cannot drift. The Journal's `e.name` is `catalog.getName()`, the key `recordWinStreak` and the duel use, so a family's ranks and decks share one marker; the wizard families are separate names with separate rows, as they are separate streaks.
+- **The marker** (`JournalScene.streakMark`): the colorless pip `pmC`, the land filter's own mark for Wastes, beside the Bronze Coin, with the number from 2. Only while the enemy will start with the cards: nothing on Easy or below the count. Previewed from real art (`notes/r915-preview/`) and approved by the user. Built at the preview's spacing the "2" read as part of "1 - 0", so the number went to 85% and the mark's right pad to 5.
+- **The page** says "Starts with 2 Wastes in play: you have beaten it 8 times in a row. One win for it, and it forgets." under the header, in the notice's own words.
+- **Alt-click** (`JournalScene.altClick`, one line at the top of `GameStage.touchDown`, so world, town and dungeon maps alike): a left click with Alt held opens the Journal at that enemy: its tab, its list page, its row scrolled into view; a land or rank filter that would hide it is dropped. In portrait it opens the page, and Back goes straight to the map (`closeToMap`). The player does not walk: the click returns before the walk target is set. Alt is read from the key itself, so the Units toggle does nothing here.
+- **What can be clicked** is what wore a plate last frame (`TfrPlates.enemyAt`): in sight, no Mimic or Fog Trap, no Warden; the Wrath hunter counts. The plate itself is a target as well as the sprite, as that is where the eye is while Alt is held. An empty spot walks as before.
+- **Not in the Journal:** the banner "Not in your Journal yet." (`GameHUD.showBanner`, not kept in the notice log, at most one in 3 seconds), no page. `RealmJournal.entries` lists battled names only, so a seen enemy, and an unfought boss or a wizard rank with its own name, stay unlisted.
+- **Off on Android and for the controller:** a tap has to walk. It also does nothing with `realmJournalEnabled` off, a dialog up or the console open.
+- **Log:** `[TFR-Journal] Alt-click: <shown> (<enemy>), opens <entry>|not in the Journal`; the page line adds the chosen enemy's streak and cards.
+- **Agent:** `cmd holdalt on=true` sets Alt in the input's own key table, for polling only (reflection on `AbstractInput.pressedKeys`); `cmd clickenemy name=...` sends a left click through the map scene's touch handlers.
+- **Tested** in the agent game over this round's classes, slot 96, Insane (`notes/r915-shots/`). Streaks set with `winstreak`: 2 no marker or line, 3 marker and "Wastes", 6 "2", 9 "3". Alt-click with Alt held through `holdalt` and a real `HudScene.touchDown`: world map found and unmet, player's tile unchanged, Esc back to the map; a dungeon unmet and, after a duel, found; a boss on the Legends tab; a land filter dropped; a row on list page 1 scrolled into view; portrait page and Back straight to the map. A duel at 50x with Boggart at 6 wins logged `starts with Wastes|EOC, Wastes|EOC`, notice shown. No exceptions.
+- **Not tested:** a physical Alt key (the bridge has no OS key, and one would go to whatever window the user is in); a town map's enemy (same code path as the dungeon); a click with a dialog open (the `dialogOnlyInput` guard returns first); the marker beside a Bronze Coin in the running game (only in the preview); Android (compiled path off).
+
 ## Round 914: the golden Capitol's Inn and Job Board (2026-11-01)
 
 The user: "Yes, as recommended" - the fourth set of the Art thread's golden Capitol work, from the user's ChatGPT sheets,

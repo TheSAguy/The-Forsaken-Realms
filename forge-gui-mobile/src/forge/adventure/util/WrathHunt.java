@@ -654,7 +654,7 @@ public final class WrathHunt {
         if (world == null || color == null || mob.getData() == null)
             return;
         int day = world.getCurrentDay();
-        TfrPlates.queueWrath(plate, color, mob.getData().tier, World.nextWeekBoundary(day) - day, cx, foot);
+        TfrPlates.queueWrath(mob, plate, color, mob.getData().tier, World.nextWeekBoundary(day) - day, cx, foot);
     }
 
     // ---------------------------------------------------------------------------------------------- spawns ahead

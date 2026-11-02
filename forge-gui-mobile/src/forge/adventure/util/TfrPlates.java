@@ -189,11 +189,16 @@ public final class TfrPlates {
         for (PlaceQueued q : placeQueue) // round 791: the entrances first, so an enemy beside one is lifted over it
             q.plate.draw(batch, parentAlpha, q.cx, q.foot);
         placeQueue.clear();
-        for (WrathQueued q : wrathQueue) // round 814: the Wrath's plate, shown with or without Alt
+        targets.clear();
+        for (WrathQueued q : wrathQueue) { // round 814: the Wrath's plate, shown with or without Alt
             q.plate.draw(batch, parentAlpha, q.cx, q.foot);
+            target(q.sprite);
+        }
         wrathQueue.clear();
-        for (Queued q : queue)
+        for (Queued q : queue) {
             q.plate.draw(batch, parentAlpha, q.cx, q.foot);
+            target(q.sprite);
+        }
         // Round 723 (log review 2026-10-24, P3): the edge first, and "hidden" only after a "shown". A view with no enemy
         // in sight printed a lone "hidden" and left countNext set, so the next view printed "shown" on its first frame
         // (the stale flag, checked before the edge) and again on its second.
@@ -225,6 +230,7 @@ public final class TfrPlates {
             return;
         plate.update(sprite);
         Queued q = new Queued();
+        q.sprite = sprite;
         q.plate = plate;
         q.cx = cx;
         q.foot = foot;
@@ -232,8 +238,49 @@ public final class TfrPlates {
     }
 
     private static final class Queued {
+        EnemySprite sprite;
         Plate plate;
         float cx, foot;
+    }
+
+    /** Round 915: an enemy that wore a plate last frame, and that plate's box. */
+    private static final class Target {
+        EnemySprite sprite;
+        float[] box;
+    }
+
+    /** Round 915: every plate drawn last frame. A plate is the test the click needs: in sight, no Mimic, no Warden. */
+    private static final List<Target> targets = new ArrayList<>();
+
+    /** endFrame, right after a plate drew: placeBox's newest entry is its box. */
+    private static void target(EnemySprite sprite) {
+        Target t = new Target();
+        t.sprite = sprite;
+        t.box = placed.isEmpty() ? null : placed.get(placed.size() - 1);
+        targets.add(t);
+    }
+
+    /** Round 915: the enemy whose plate or art is at this stage point, or null. Plates draw on top, so a plate wins; of
+     *  overlapping sprites, the one centered nearest. */
+    public static EnemySprite enemyAt(float x, float y) {
+        EnemySprite best = null;
+        float bestDistance = Float.MAX_VALUE;
+        for (Target t : targets) {
+            if (t.box != null && x >= t.box[0] && x <= t.box[2] && y >= t.box[1] && y <= t.box[3])
+                return t.sprite;
+            EnemySprite s = t.sprite;
+            boolean drawn = s.drawnW > 0 && s.drawnH > 0;
+            float left = drawn ? s.drawnX : s.getX(), bottom = drawn ? s.drawnY : s.getY();
+            float width = drawn ? s.drawnW : s.getWidth(), height = drawn ? s.drawnH : s.getHeight();
+            if (x < left || x > left + width || y < bottom || y > bottom + height)
+                continue;
+            float distance = Math.abs(x - left - width / 2f) + Math.abs(y - bottom - height / 2f);
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                best = s;
+            }
+        }
+        return best;
     }
 
     /** Opaque bounds of a measured frame, as fractions of it: left, right, top (from the frame's top edge). */
@@ -419,14 +466,16 @@ public final class TfrPlates {
     private static final List<WrathQueued> wrathQueue = new ArrayList<>();
 
     private static final class WrathQueued {
+        EnemySprite sprite;
         WrathPlate plate;
         float cx, foot;
     }
 
     /** Round 814: EnemySprite.draw - the Wrath hunter's plate, every frame; the days left join it while the plates show. */
-    public static void queueWrath(WrathPlate plate, String color, String tier, int daysLeft, float cx, float foot) {
+    public static void queueWrath(EnemySprite sprite, WrathPlate plate, String color, String tier, int daysLeft, float cx, float foot) {
         plate.update(color, tier, frameShown ? daysLeft : -1);
         WrathQueued q = new WrathQueued();
+        q.sprite = sprite;
         q.plate = plate;
         q.cx = cx;
         q.foot = foot;

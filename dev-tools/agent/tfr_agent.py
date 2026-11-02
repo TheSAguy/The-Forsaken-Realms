@@ -30,6 +30,8 @@ Then, from anywhere:
     python tfr_agent.py cmd save slot=4 name="agent" | load slot=4 | newgame
     python tfr_agent.py cmd fasttime on=true | autobattle on=false
     python tfr_agent.py cmd console text="give gold 100"   (needs TFR_AGENT_CHEATS=1)
+    python tfr_agent.py cmd holdalt on=true        # Alt for key polling (not a key event)
+    python tfr_agent.py cmd clickenemy name="Boggart"   # a left click on it through the map scene
 
 Values: numbers and true/false are typed automatically; a,b lists become arrays; anything else is a string.
 Every command blocks until it finishes (a walk, a wait) or --timeout seconds pass.

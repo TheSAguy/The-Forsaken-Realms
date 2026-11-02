@@ -1,9 +1,12 @@
 package forge.adventure.scene;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -18,17 +21,23 @@ import com.badlogic.gdx.utils.Scaling;
 import com.github.tommyettinger.textra.TextraButton;
 import com.github.tommyettinger.textra.TextraLabel;
 import forge.Forge;
+import forge.adventure.character.EnemySprite;
 import forge.adventure.data.EnemyData;
 import forge.adventure.data.ItemData;
 import forge.adventure.data.ItemListData;
 import forge.adventure.player.AdventurePlayer;
+import forge.adventure.stage.GameHUD;
+import forge.adventure.stage.GameStage;
+import forge.adventure.stage.MapStage;
 import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
 import forge.adventure.util.EnemyAvatars;
 import forge.adventure.util.Paths;
 import forge.adventure.util.RealmJournal;
+import forge.adventure.util.TfrPlates;
 import forge.deck.Deck;
+import forge.gui.GuiBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +56,7 @@ import java.util.Set;
  */
 public class JournalScene extends UIScene {
     private static final int PAGE_ROWS = 40;
+    private static final float ROW_HEIGHT = 23f; // a row's 22 and its 1 below
     private static final String INK = "[BLACK]";
     private static final String DIM = "[#6e604a]";
     /** The plates' rank colors (TfrPlates) are for a dark plate; these are the same four, darkened for parchment. */
@@ -55,6 +65,8 @@ public class JournalScene extends UIScene {
     private static final String[] SORTS = {"Name", "Most fought"};
 
     private static JournalScene object;
+    private static final long NOTICE_GAP = 3000L;
+    private static long noticeAt;
 
     private final TextraLabel titleLabel;
     private final Table area;
@@ -67,6 +79,8 @@ public class JournalScene extends UIScene {
     private boolean detailOpen; // portrait: the page over the list
     private float listScroll;
     private ScrollPane listPane;
+    private boolean closeToMap;   // round 915: portrait's page came from the map, so Back goes straight there
+    private boolean revealChosen; // round 915: the next list built scrolls to the chosen row
 
     private JournalScene() {
         super(Forge.isLandscapeMode() ? "ui/sets.json" : "ui/sets_portrait.json");
@@ -91,7 +105,56 @@ public class JournalScene extends UIScene {
         scene.chosen = null;
         scene.detailOpen = false;
         scene.listScroll = 0f;
+        scene.closeToMap = false;
+        scene.revealChosen = false;
         Forge.switchScene(scene, true);
+    }
+
+    /**
+     * Round 915 (the user: "if you press 'Alt' and click on an enemy, the Journal page opens at their info"): GameStage's
+     * touchDown, on the world map and in towns and dungeons. True took the click, so the player does not walk. Alt itself,
+     * not the plates' toggle; a left click only. Keyboard and mouse only: on Android a tap walks. An enemy the Journal does
+     * not list stays unlisted: the knowledge rule stands, so a notice and no page.
+     */
+    public static boolean altClick(GameStage stage, int screenX, int screenY, int button) {
+        if (GuiBase.isAndroid() || button != Input.Buttons.LEFT || !RealmJournal.enabled()
+                || !(Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.ALT_RIGHT))
+                || MapStage.getInstance().isDialogOnlyInput() || GameHUD.getInstance().holdsInput())
+            return false;
+        Vector2 at = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
+        EnemySprite enemy = TfrPlates.enemyAt(at.x, at.y);
+        if (enemy == null)
+            return false;
+        List<RealmJournal.Entry> all = RealmJournal.entries(Current.player());
+        RealmJournal.Entry entry = find(all, enemy.getData().getName());
+        if (entry == null)
+            entry = find(all, enemy.getName());
+        System.out.println("[TFR-Journal] Alt-click: " + enemy.getName() + " (" + enemy.getData().getName() + "), "
+                + (entry == null ? "not in the Journal" : "opens " + entry.name));
+        long now = System.currentTimeMillis();
+        if (entry != null)
+            instance().openAt(entry, all);
+        else if (now - noticeAt > NOTICE_GAP) { // clicks in a row do not stack banners
+            noticeAt = now;
+            GameHUD.getInstance().showBanner("Not in your Journal yet.");
+        }
+        return true;
+    }
+
+    /** The entry's tab, its list page, its row: a filter that would hide it is dropped. Portrait opens its page. */
+    private void openAt(RealmJournal.Entry entry, List<RealmJournal.Entry> all) {
+        legends = entry.bossTab();
+        if (find(shownEntries(all), entry.name) == null) {
+            land = null;
+            rank = -1;
+        }
+        page = shownEntries(all).indexOf(entry) / PAGE_ROWS;
+        chosen = entry.name;
+        detailOpen = !Forge.isLandscapeMode();
+        closeToMap = detailOpen;
+        listScroll = 0f;
+        revealChosen = true;
+        Forge.switchScene(this, true);
     }
 
     @Override
@@ -110,11 +173,12 @@ public class JournalScene extends UIScene {
     /** Portrait's page closes back to the list; else leave. */
     @Override
     public boolean back() {
-        if (detailOpen) {
+        if (detailOpen && !closeToMap) {
             detailOpen = false;
             rebuild();
             return true;
         }
+        closeToMap = false;
         EnemyAvatars.release(); // switchToLast does not call leave
         return super.back();
     }
@@ -199,11 +263,19 @@ public class JournalScene extends UIScene {
             area.validate();
             listPane.layout();
             listPane.setScrollY(listScroll);
+            if (revealChosen && current != null) {
+                revealChosen = false;
+                int index = shown.indexOf(current) - page * PAGE_ROWS;
+                float rows = listPane.getActor().getHeight();
+                listPane.scrollTo(0f, rows - (index + 1) * ROW_HEIGHT, 1f, ROW_HEIGHT, false, true);
+            }
             listPane.updateVisualScroll();
         }
         System.out.println("[TFR-Journal] page: " + (legends ? "legends" : "creatures") + ", " + shown.size() + " of " + all.size()
                 + " entries, land " + land + ", rank " + rank + ", list page " + (page + 1) + "/" + pages
-                + ", scroll " + Math.round(listScroll) + (chosen == null ? "" : ", open on " + chosen));
+                + ", scroll " + Math.round(listPane == null ? listScroll : listPane.getScrollY())
+                + (chosen == null ? "" : ", open on " + chosen + ", streak "
+                + player.winStreak(chosen) + " wins, " + player.winStreakCards(chosen).length + " card(s)"));
     }
 
     private static RealmJournal.Entry find(List<RealmJournal.Entry> entries, String name) {
@@ -383,6 +455,9 @@ public class JournalScene extends UIScene {
         text.add(label("[%80]" + e.catalog.getDisplayName())).left().row();
         text.add(facts(e)).left();
         row.add(text).left().expandX().fillX();
+        Actor streak = streakMark(e);
+        if (streak != null)
+            row.add(streak).padRight(5f);
         Actor coin = coin(e);
         if (coin != null)
             row.add(coin).size(10f).padRight(2f);
@@ -404,6 +479,20 @@ public class JournalScene extends UIScene {
         ItemData item = ItemListData.getItem(AdventurePlayer.BRONZE_COIN_ITEM);
         Sprite sprite = item == null ? null : item.sprite();
         return sprite == null ? null : new Image(sprite);
+    }
+
+    /** Round 915: the colorless pip, the land filter's mark for Wastes, when this enemy will start with its streak's
+     *  cards, and their number past one. AdventurePlayer.winStreakCards is the duel's own answer. */
+    private Actor streakMark(RealmJournal.Entry e) {
+        int cards = Current.player().winStreakCards(e.name).length;
+        TextureAtlas.AtlasRegion pip = Config.instance().getAtlas(Paths.PIXELMANA_ATLAS).findRegion("pmC");
+        if (cards <= 0 || pip == null)
+            return null;
+        Table mark = new Table();
+        mark.add(new Image(pip)).size(10f);
+        if (cards > 1)
+            mark.add(label("[%85]" + cards)).padLeft(1f);
+        return mark;
     }
 
     /** The ranks battled in their colors, then the colors known. */
@@ -463,6 +552,10 @@ public class JournalScene extends UIScene {
             who.add(wrapped("[%65]" + DIM + "Roams " + String.join(", ", lands) + " land")).left().width(width - 52f).row();
         head.add(who).left().expandX().fillX();
         page.add(head).left().width(width).row();
+        if (Current.player().winStreakReached(e.name))
+            page.add(wrapped("[%65]Starts with " + Current.player().winStreakCardNames(e.name) + " in play: you have beaten it "
+                    + Current.player().winStreak(e.name) + " times in a row. One win for it, and it forgets."))
+                    .left().width(width).padTop(4f).row();
         page.add(label("[%80]What you know")).left().padTop(6f).padBottom(2f).row();
         for (EnemyData r : e.ranks)
             rankLines(page, e, r, width);

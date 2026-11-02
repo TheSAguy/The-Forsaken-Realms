@@ -532,6 +532,28 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return steps > 0 && winStreak(enemyName) == steps * need;
     }
 
+    /** Round 915: the cards this enemy starts its next duel with for its streak, moved here from DuelScene so the Journal
+     *  shows the duel's own number. Round 467: the cards once per step (Insane: one at 3 wins, two at 6, three from 9). */
+    public String[] winStreakCards(String enemyName) {
+        int steps = winStreakSteps(enemyName);
+        if (steps <= 0)
+            return new String[0];
+        String[] once = forge.adventure.util.Config.instance().getTuningData().winStreakStartCards;
+        String[] cards = new String[once.length * steps];
+        for (int step = 0; step < steps; step++)
+            System.arraycopy(once, 0, cards, step * once.length, once.length);
+        return cards;
+    }
+
+    /** Round 915: those cards as the player reads them, "Wastes" or "2 Wastes": the duel's notice and the Journal. */
+    public String winStreakCardNames(String enemyName) {
+        int steps = winStreakSteps(enemyName);
+        java.util.List<String> names = new java.util.ArrayList<>();
+        for (String c : forge.adventure.util.Config.instance().getTuningData().winStreakStartCards)
+            names.add((steps > 1 ? steps + " " : "") + (c.contains("|") ? c.substring(0, c.indexOf('|')) : c));
+        return String.join(", ", names);
+    }
+
     /** Round 404: does this enemy start its next duel with TuningData.winStreakStartCards? Not on Easy. */
     public boolean winStreakReached(String enemyName) {
         return winStreakSteps(enemyName) > 0; // round 467: the steps decide

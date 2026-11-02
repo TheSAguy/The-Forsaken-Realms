@@ -1665,6 +1665,16 @@ public class GameHUD extends Stage {
         addNotification(text, false);
     }
 
+    /** Round 915: a banner the notice log does not keep (JournalScene.altClick). */
+    public void showBanner(String text) {
+        addNotification(text, false, false);
+    }
+
+    /** Round 915: a dialog of the HUD's own, or the console, has the input (JournalScene.altClick). */
+    public boolean holdsInput() {
+        return dialogOnlyInput || console.isVisible();
+    }
+
     /**
      * authoredMarkup=true is the opt-in escape hatch from the tint-BLACK rule below, for messages
      * whose text is FULLY authored by the caller (no quest payloads, no player-named content with

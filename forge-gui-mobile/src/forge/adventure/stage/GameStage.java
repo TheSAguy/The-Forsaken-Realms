@@ -779,6 +779,8 @@ public abstract class GameStage extends Stage {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (isPaused() || dialogOnlyInput)
             return true;
+        if (forge.adventure.scene.JournalScene.altClick(this, screenX, screenY, button)) // round 915
+            return true;
         if (!GuiBase.isAndroid()) {
             touchX = screenX;
             touchY = screenY;

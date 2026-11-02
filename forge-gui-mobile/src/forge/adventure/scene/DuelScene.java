@@ -930,14 +930,10 @@ public class DuelScene extends ForgeScene {
     /** Round 404: what the player is told when an enemy on a win streak starts with extra cards. Round 467: a new
      *  notice for each step of the streak (the user: "Give a new message"), the count of cards growing with it. */
     private static String streakNote(EnemyData e) {
-        String[] cards = Config.instance().getTuningData().winStreakStartCards;
         int steps = Current.player().winStreakSteps(e.getName());
-        java.util.List<String> names = new java.util.ArrayList<>();
-        for (String c : cards)
-            names.add((steps > 1 ? steps + " " : "") + (c.contains("|") ? c.substring(0, c.indexOf('|')) : c));
         String who = e.getTieredDisplayName();
         String wins = " - you have beaten it " + Current.player().winStreak(e.getName()) + " times in a row. ";
-        String inPlay = String.join(", ", names) + " in play";
+        String inPlay = Current.player().winStreakCardNames(e.getName()) + " in play";
         String forgets = " One win for it, and it forgets.";
         if (steps <= 1)
             return who + " has learned your tricks" + wins + "It starts this duel with " + inPlay + "." + forgets;
@@ -1279,13 +1275,7 @@ public class DuelScene extends ForgeScene {
             // Capitol fights too. Not in Inn tournaments, not in a roaming guard's fight, not on Easy (winStreakReached).
             if (eventData == null && guardDeck == null && Current.player().winStreakReached(currentEnemy.getName())) {
                 EffectData streak = new EffectData();
-                // Round 467: the cards once per step of the streak (Insane: one at 3 wins, two at 6, three from 9).
-                String[] once = Config.instance().getTuningData().winStreakStartCards;
-                int steps = Current.player().winStreakSteps(currentEnemy.getName());
-                String[] cards = new String[once.length * steps];
-                for (int step = 0; step < steps; step++)
-                    System.arraycopy(once, 0, cards, step * once.length, once.length);
-                streak.startBattleWithCard = cards;
+                streak.startBattleWithCard = Current.player().winStreakCards(currentEnemy.getName());
                 addEffects(aiPlayer, Array.with(streak));
                 // Round 465 (the user): told once - on the first duel the streak applies; later ones just start with it.
                 // Round 467: once more on the first duel of each further step.
