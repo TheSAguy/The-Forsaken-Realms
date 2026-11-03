@@ -14327,6 +14327,7 @@ The fix list's round 934 (`C:\TFR\notes\morning-1103-fix-list.md`): the privacy 
 - **A load's error is its own (Fable P3-1).** `WorldSave.lastLoadError` was cleared only by the dialogs that show it, so after a Continue that failed silently a later failed load could show the older reason. Cleared at the start of `load()` (round 858's `.old` rescue keeps its own copy). File: `world/WorldSave.java` (stock).
 - **New Game+ without items forgets their uses (Fable P3-3).** `itemUses` is keyed by item name and a New Game+ with "Keep items" off kept it, so a Bonfire kit bought in the new run arrived spent. Cleared with the items. File: `player/AdventurePlayer.java` (stock).
 - **The Lab won't sacrifice a card that feeds no research (Fable P3-9).** Found Cards lists every owned printing of a set, basics and printings outside the pool included; Sacrifice took them for 0 points with no confirm, the detail having said "under a day off". `sacrificeFromLab` refuses a card that isn't `feedable` (logged), the button is off for it, and the detail says "Feeds no research. Sold for N [+Gold]". Files: `util/ResearchMeter.java`, `scene/ResearchScene.java`.
+- **The Balance Sheet names the week (Fable P3-13).** It read "Days 7-13" for week 1 (one off, and an absolute day, which round 868 took out of every label). Now "Week N". File: `util/BalanceSheet.java`.
 
 ## Round 933: the GUIDE, the FAQ and a tooltip say what the code does (2026-11-02)
 

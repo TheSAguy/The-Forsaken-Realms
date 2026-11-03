@@ -124,9 +124,10 @@ public class BalanceSheet {
 
     private static void fill(Dialog dialog, boolean lastWeek) {
         AdventurePlayer player = AdventurePlayer.current();
-        int start = Math.max(0, ResourceLedger.weekStartDay(lastWeek));
-        EconomyBuildings.addContentRow(dialog, "[%110]Days " + start + "-" + (start + 6)
-                + (lastWeek ? "[%]" : " (so far)[%]"));
+        // Round 934 (Fable P3-13): the week, as round 868 labels time. "Days 7-13" was an absolute day, and one off
+        // (World.weekOf runs days 1-7, 8-14).
+        int week = Math.max(0, ResourceLedger.weekStartDay(lastWeek)) / 7 + 1;
+        EconomyBuildings.addContentRow(dialog, "[%110]Week " + week + (lastWeek ? "[%]" : " (so far)[%]"));
 
         EconomyBuildings.addContentRow(dialog, "[%100]Income[%]");
         EconomyBuildings.addContentRow(dialog, "[%90]Mines: " + amounts(income(lastWeek, Bucket.MINES)));
