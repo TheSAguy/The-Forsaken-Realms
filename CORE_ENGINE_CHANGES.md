@@ -37,6 +37,7 @@ md` already gets updated after every change.
 
 ### Round 934 - small fixes, Android memory and privacy from the Fable review
 
+- `forge-gui-desktop/src/test/java/forge/game/SpellbookNamesTest.java`: new test, every `Spellbook$` name in the card scripts is a card (round 931's typo). If upstream renames a card a spellbook names, this fails until the script follows.
 - `forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java` (STOCK): Export Logs calls `LogShare.exportScrubbed` in place of stock `LogExporter.exportLogs` (which it still uses underneath). (P3-57)
 - `forge-gui-mobile/src/forge/adventure/scene/ShopScene.java`, `AdventureDeckEditor.java` (STOCK): `lblSellAllConfirm`'s gold amount is passed as a String. `RewardScene.java`, `stage/WorldStage.java` (STOCK): "you have N" gets its icon in three dialogs. (P3-56)
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): `getOrBuildNativePattern` nulls `structure.image` after `initialize()`. (P3-23)
