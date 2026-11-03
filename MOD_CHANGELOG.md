@@ -14264,6 +14264,12 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 938: the FAQ's edit list resets after 1.26 (2026-11-03)
+
+`dev-tools/discord_faq/messages.py`: `EDITED` and `ADDED` are empty sets again, so the next version's FAQ edits start
+from nothing (v1.26's set, {1, 8, 10, 12, 14, 15, 17, 19, 23}, is kept in the comment). `FAQ_VERSION` stays "v1.26".
+Local only; it goes out with the next release.
+
 ## Round 937 (follow-up): 1.26 released (2026-11-03)
 
 - **Published** 2026-11-03 14:21:56 UTC on the user's call: tag `tfr-v1.26` @ `092596b65f8`, Latest, `main` pushed to

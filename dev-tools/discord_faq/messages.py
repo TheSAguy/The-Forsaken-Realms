@@ -6,11 +6,9 @@ FAQ_VERSION = "v1.26"
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-# 1.26 (rounds 933 and 936 set it from a diff against tfr-v1.25; v1.25's own set was {3, 6, 7, 9, 20, 23}, all posted):
-# 1 the header's version, 8 the Realm Journal (936), 10 raids (865, 866), 12 research's starting sets (873), 14 races and
-# the Doppelganger (873, 879, 882), 15 a destroyed Bank pays out (933), 17 the Capitol as a target (933), 19 Jumpstart's
-# 25-win cutoff (933), 23 achievements (899) and the 1,000-trigger batch (933). Nothing is new, so Support stays last.
-EDITED = {1, 8, 10, 12, 14, 15, 17, 19, 23}
+# 1.27: nothing changed yet (round 938 reset them after 1.26; v1.26's own set was {1, 8, 10, 12, 14, 15, 17, 19, 23},
+# none ADDED).
+EDITED = set()
 ADDED = set()
 
 M = []
