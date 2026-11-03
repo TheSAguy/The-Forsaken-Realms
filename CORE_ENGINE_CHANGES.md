@@ -35,6 +35,10 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 931 - the must-fix list before 1.26
+
+- `forge-gui/res/cardsfolder/t/thoughtsteal_sprites.txt` (STOCK card script): the spellbook's "Vendillion Clique" is "Vendilion Clique", where `DraftEffect` threw on the unknown name. Drop this line when upstream fixes its typo.
+
 ### Round 930 - a big batch of life-gain triggers no longer draws its own duel
 
 - `forge-game/src/main/java/forge/game/zone/MagicStack.java` (STOCK): a `triggerLows` field and one line in `isRepeatingTrigger` before the count, `LoopBreaker.newLowStartsOver(triggerLows, triggerRepeats, id, size())`, so a chain starts over on a stack lower than it has seen. Both marked `TFR round 930`. If upstream changes `triggerRepeats`' key or where it clears, keep the call next to the `merge`.
@@ -1284,14 +1288,14 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 
 ### Round 723 - the Clean font; the inn sim's Localizer traces; the plates' log
 
-- **`forge-gui-mobile/src/forge/adventure/util/TfrFonts.java`** - NEW: the Clean font (TFR 2's Tfr2Fonts, ported).
+- **`forge-gui-mobile/src/forge/adventure/util/TfrFonts.java`** - NEW: the Clean font (ported from another project of the user's).
 - **`forge-gui-mobile/src/forge/assets/Assets.java`** (STOCK) - `getTextraFont(BitmapFont, TextureAtlas, TextureAtlas)`
   asks `TfrFonts.textraFont` first and caches what it returns as "textrafont"; null keeps the stock LanaPixel font. On a
   conflict, keep upstream's body and re-add the five-line hook at the top of the `containsKey` branch.
 - **`forge-gui-mobile/src/forge/adventure/util/UIActor.java`** (STOCK) - `fitKeyButtonText` after each actor's
   properties: in Clean a key-bound TextButton's text gets a `[%N]` scale so it fits beside its key cap.
 - **`forge-gui-mobile/src/forge/adventure/util/RewardActor.java`** (STOCK) - `faceText`/`faceImage`/`drawFaceText`: in
-  Clean the card title is drawn over the face instead of into the face's frame buffer (TFR 2's change, same lines).
+  Clean the card title is drawn over the face instead of into the face's frame buffer (the same lines as the font's original project).
 - **`forge-gui-mobile/src/forge/adventure/data/EnemyData.java`** - `translate` asks the Localizer only when the plane
   has an adventure language bundle, and caches the keys it lacked (`MISSING_KEYS`, `planeHasAdventureBundle`). The
   upstream flaw stays: `Localizer.silent` is shared by every thread and is not reset on the early returns.
