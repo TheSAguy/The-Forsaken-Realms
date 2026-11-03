@@ -48,6 +48,7 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): `generateNew`'s `preventSystemSleep(false)` is in a `finally`. (P3-27)
 - `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): `clearCache` nulls the three `pending*Message` fields. (P3-29)
 - `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): `loadPOI`'s catch calls `MapStage.clearIsInMap()`. (P3-33)
+- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): the load sets `difficultyData.startingSets` from the configured preset before the custom knob. (P3-36)
 
 ### Round 932 - rules and state from the Fable review
 

@@ -370,14 +370,9 @@ public final class TfrAchievements extends AchievementCollection {
      * own list gives the count - for a save from before 718 too.
      */
     private static int researchedSets(AdventurePlayer player) {
-        int[] startingByDifficulty = {4, 3, 2, 1};
-        int index = 1;
-        ConfigData config = Config.instance().getConfigData();
-        if (config != null && config.difficulties != null && player.getDifficulty() != null)
-            for (int i = 0; i < config.difficulties.length; i++)
-                if (config.difficulties[i].name.equals(player.getDifficulty().name))
-                    index = i;
-        int starting = startingByDifficulty[Math.min(index, startingByDifficulty.length - 1)];
+        // Round 934 (Fable P3-36): the save's own starting count (config's startingSets and round 872's knob), where a
+        // fixed 4/3/2/1 by preset gave Insane with 4 starting sets "1 researched" before any research.
+        int starting = AdventurePlayer.startingSetCount(player.getDifficulty());
         return Math.max(0, player.getUnlockedEditions().size() - starting);
     }
 

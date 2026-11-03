@@ -1982,6 +1982,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             this.difficultyData.rewardMaxFactor = configuredDifficulty.rewardMaxFactor;
         else
             this.difficultyData.rewardMaxFactor = data.readFloat("rewardMaxFactor");
+        // Round 934 (Fable P3-36): not saved, so the preset's, then the custom knob below - it kept the last new game's
+        // value from this run, and TfrAchievements counts research against it.
+        if (configuredDifficulty != null)
+            this.difficultyData.startingSets = configuredDifficulty.startingSets;
         // END SPECIAL CASES
         // Round 822: a custom save's own values win over the refreshes above (round 548's sell factor, the shard ratio).
         forge.adventure.util.CustomDifficulty.applyDifficulty(customDifficulty, this.difficultyData);
