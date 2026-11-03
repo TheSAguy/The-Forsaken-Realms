@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 /**
  * TFR round 929: an AI whose attack declaration can never pass does not loop forever. Juggernaut must attack, so a
- * declaration with no attackers is invalid. With the limit off, the never-pass, deadline and Reconfigure tests fail; the rest pass either way.
+ * declaration with no attackers is invalid. With the limit off, the never-pass and deadline tests fail; the Reconfigure test passes through GameCopier's own fix.
  */
 public class AttackRetryLimitTest extends AITest {
 
@@ -126,7 +126,7 @@ public class AttackRetryLimitTest extends AITest {
         AssertJUnit.assertTrue(juggernaut.isTapped());
     }
 
-    /** The state that froze a Xira duel: in a copied game the constraints still count an attached Reconfigure card as a creature. */
+    /** The state that froze a Xira duel: an attached Reconfigure card is not a creature in a copied game's constraints either, so the attack passes. */
     @Test(timeOut = 30000)
     public void aReconfiguredEquipmentCannotFreezeACopiedGame() {
         final Game game = initAndCreateGame();
@@ -149,8 +149,9 @@ public class AttackRetryLimitTest extends AITest {
 
         final Game copy = new forge.ai.simulation.GameCopier(game).makeCopy();
         final Combat copied = copy.getPhaseHandler().getCombat();
+        AssertJUnit.assertEquals("the Bear alone", 1, copied.getAttackConstraints().getLegalAttackers().getLeft().size());
         copy.getPhaseHandler().devDeclareAttackers();
-        AssertJUnit.assertTrue("the attack is skipped", copied.getAttackers().isEmpty());
+        AssertJUnit.assertEquals("it attacks, on the first try", 1, copied.getAttackers().size());
     }
 
     @Test(timeOut = 30000)

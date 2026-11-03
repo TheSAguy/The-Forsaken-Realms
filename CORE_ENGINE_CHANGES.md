@@ -39,6 +39,7 @@ md` already gets updated after every change.
 
 - `forge-game/src/main/java/forge/game/phase/PhaseHandler.java` (STOCK): `declareAttackersTurnBasedAction`: two locals, an `AttackRetryLimit.giveUp` check before each retry that can break the loop, and the failed step noted at the `validate` and cost failures. `removeAbsentCombatants`'s result is now kept in `absent`. All marked `TFR round 929`.
 - `forge-game/src/main/java/forge/game/combat/AttackRetryLimit.java`: new file.
+- `forge-ai/src/main/java/forge/ai/simulation/GameCopier.java` (STOCK): after `checkStateEffects`, in the declare-attackers step, `initConstraints()` on the copied combat, marked `TFR round 929`. If upstream moves the `Combat` copy below the state check, drop this.
 
 ### Round 928 - Settings fits in portrait
 

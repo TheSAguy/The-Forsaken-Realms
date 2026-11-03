@@ -215,6 +215,11 @@ public class GameCopier {
 
         newGame.getAction().checkStateEffects(true); //ensure state based effects and triggers are updated
         newGame.getTriggerHandler().resetActiveTriggers();
+        // TFR round 929: the copied Combat built its attack constraints above, with static effects undone: an attached
+        // Reconfigure card read as a creature that must attack, and a declaration could never pass (AttackRetryLimit)
+        if (newGame.getPhaseHandler().is(PhaseType.COMBAT_DECLARE_ATTACKERS) && newGame.getPhaseHandler().getCombat() != null) {
+            newGame.getPhaseHandler().getCombat().initConstraints();
+        }
 
         if (copyStack)
             copyStack(origGame, newGame, gameObjectMap);
