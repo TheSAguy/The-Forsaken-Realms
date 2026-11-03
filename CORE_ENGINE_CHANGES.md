@@ -39,6 +39,8 @@ md` already gets updated after every change.
 
 - `forge-gui/res/cardsfolder/t/thoughtsteal_sprites.txt` (STOCK card script): the spellbook's "Vendillion Clique" is "Vendilion Clique", where `DraftEffect` threw on the unknown name. Drop this line when upstream fixes its typo.
 - `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): `filenameToSlot` accepts a numbered slot only when the whole name matches `\d{1,9}_save_slot\.sav`, where any `_...sav` name reached `parseInt` and an Explorer copy threw.
+- `forge-gui-mobile/src/forge/adventure/stage/GameStage.java` (STOCK): `act()`'s `checkPendingCapitolDefense` call (TFR's) is gated on `capitolDuelCanStart`: this stage is `WorldStage`, `GameScene` is current, not paused, no `onEndAction`, no pending result task.
+- `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): `currentMobIsCapitolDefense = false` at the collision duel, `startTownAssault`, `startGuardDuel` and `startChestDuel`, each marked `round 931`.
 
 ### Round 930 - a big batch of life-gain triggers no longer draws its own duel
 

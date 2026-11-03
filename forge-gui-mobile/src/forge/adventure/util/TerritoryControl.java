@@ -2711,7 +2711,7 @@ public class TerritoryControl {
         pendingCapitolDefenseWaitLogged = true;
         System.out.println("[TFR-CapitolDefense] " + pendingCapitolDefenseMage.territoryColor + "'s "
                 + pendingCapitolDefenseMage.getData().getName() + " waits at the Capitol - the forced duel starts once the"
-                + " dialog on screen closes");
+                + " player is on the world map with no dialog, pause or duel result pending"); // round 931
     }
 
     /** Called every frame (GameStage.act(), both WorldStage and MapStage) once it's safe to

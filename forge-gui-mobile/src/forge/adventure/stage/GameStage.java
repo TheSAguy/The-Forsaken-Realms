@@ -632,7 +632,14 @@ public abstract class GameStage extends Stage {
         // and nothing else (a dialog, an existing duel/scene transition, pause) is in the way.
         // While inside a non-GameStage scene (Inn, shop, an ordinary duel, etc.) this simply never
         // runs until the player returns to one of these two - the natural "next safe point".
-        if (!isDialogOnlyInput() && !Forge.advFreezePlayerControls)
+        // Round 931 (Fable P1-2): the world map only, with nothing of its own pending. Started from a town or dungeon,
+        // the duel's result went to MapStage and was set aside, and the stale Capitol flag then ended the run on the
+        // next ordinary world-map loss; started in the second after a win, it took that win's currentMob. The entry
+        // lambda above can switch to a place in this same act, hence the scene check.
+        boolean capitolDuelCanStart = this == WorldStage.getInstance()
+                && Forge.getCurrentScene() == forge.adventure.scene.GameScene.instance()
+                && !isPaused() && onEndAction == null && !hasPendingResultTask();
+        if (capitolDuelCanStart && !isDialogOnlyInput() && !Forge.advFreezePlayerControls)
             TerritoryControl.checkPendingCapitolDefense();
         else
             TerritoryControl.notePendingCapitolDefenseWaiting(); // round 356: one log line per held-back duel

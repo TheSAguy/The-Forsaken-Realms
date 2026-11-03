@@ -969,6 +969,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(), mob.getAtlasPath(), Current.player().getName(), mob.getTieredDisplayName())
                                     .withEnemyStatKey(mob.getName()));
                             currentMob = mob;
+                            currentMobIsCapitolDefense = false; // round 931 (Fable P1-2): never a stale Capitol flag
                             autoSaveHere();
                         });
                     });
@@ -1344,6 +1345,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         ColorReputation.applyTownAssaultPenalty(color, Config.instance().getTuningData().townAssaultReputationPenalty,
                 "attacked " + poi.getDisplayName());
         currentMob = defender;
+        currentMobIsCapitolDefense = false; // round 931
         currentMobIsTownAssault = true;
         townAssaultTownName = poi.getDisplayName();
         townAssaultPoi = poi;
@@ -1434,6 +1436,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         guardFoe.territoryColor = mage.territoryColor;
         guardFoe.pillageTown = mage.pillageTown; // round 490: a pillaged town's raider
         currentMob = guardFoe;
+        currentMobIsCapitolDefense = false; // round 931
         currentMobIsGuardDuel = true;
         Forge.advFreezePlayerControls = true;
         DuelScene duelScene = DuelScene.instance();
@@ -1558,6 +1561,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
     public void startChestDuel(EnemySprite enemy) {
         currentMob = enemy;
+        currentMobIsCapitolDefense = false; // round 931
         Forge.advFreezePlayerControls = true;
         DuelScene duelScene = DuelScene.instance();
         FThreads.invokeInEdtNowOrLater(() -> {
