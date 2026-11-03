@@ -156,6 +156,7 @@ public class WorldSave {
 
         Forge.invokeWorldSave = true; // This is for dispose method check
         long loadStarted = System.currentTimeMillis(); // round 777: [TFR-Perf] load
+        lastLoadError = null; // round 934 (Fable P3-1): this load's reason only, never an older one's
         String fileName = WorldSave.getSaveFile(currentSlot);
         if (!new File(fileName).exists())
             return false;

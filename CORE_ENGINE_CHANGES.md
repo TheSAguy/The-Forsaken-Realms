@@ -41,6 +41,7 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/scene/ShopScene.java`, `AdventureDeckEditor.java` (STOCK): `lblSellAllConfirm`'s gold amount is passed as a String. `RewardScene.java`, `stage/WorldStage.java` (STOCK): "you have N" gets its icon in three dialogs. (P3-56)
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): `getOrBuildNativePattern` nulls `structure.image` after `initialize()`. (P3-23)
 - `forge-gui-mobile/src/forge/adventure/stage/WorldBackground.java` (STOCK): the three chunk arrays are sized by `getWidthInChunks() + 1` / `getHeightInChunks() + 1`, not in tiles; `loadChunk` checks its bounds. (P3-26)
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): `load()` clears `lastLoadError` first. (P3-1)
 
 ### Round 932 - rules and state from the Fable review
 
