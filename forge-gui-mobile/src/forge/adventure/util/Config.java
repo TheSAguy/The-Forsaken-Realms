@@ -1066,8 +1066,27 @@ public class Config {
 
     public void saveSettings() {
         Json json = new Json(JsonWriter.OutputType.json);
-        FileHandle handle = new FileHandle(ForgeProfileProperties.getUserDir() + "/adventure/settings.json");
-        handle.writeString(json.prettyPrint(json.toJson(settingsData, SettingData.class)), false);
+        String text = json.prettyPrint(json.toJson(settingsData, SettingData.class));
+        // TFR round 934 (Fable P3-2): a temp file, then a move over settings.json, as WorldSave writes a save. Written in
+        // place, an app killed mid-write (Android, right after a save) left half a file, and the next launch's parse
+        // failed and reset every setting: the last save, the log-sharing opt-in and sent list, the rules.
+        File target = new File(ForgeProfileProperties.getUserDir() + "/adventure/settings.json");
+        File temp = new File(target.getPath() + ".tmp");
+        try {
+            File dir = target.getParentFile();
+            if (dir != null)
+                dir.mkdirs();
+            Files.write(temp.toPath(), text.getBytes(StandardCharsets.UTF_8));
+            try {
+                Files.move(temp.toPath(), target.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING,
+                        java.nio.file.StandardCopyOption.ATOMIC_MOVE);
+            } catch (java.nio.file.AtomicMoveNotSupportedException e) {
+                Files.move(temp.toPath(), target.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            System.err.println("[TFR-Settings] settings.json not written: " + e);
+            temp.delete();
+        }
     }
 
     // --- Folder-backed starter deck support ---

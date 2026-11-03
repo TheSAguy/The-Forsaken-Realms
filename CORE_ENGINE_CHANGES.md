@@ -52,6 +52,7 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java` (STOCK): `done()` frees `miniMapTexture` a frame later when the scene is no longer current. (P3-55)
 - `forge-gui-mobile/src/forge/error/BugReportDialog.java` (STOCK): `show` runs TFR's crash hooks before the no-screen return (at most 5 unshown a launch). (P3-59)
 - `forge-gui/src/main/java/forge/error/ExceptionHandler.java` (STOCK): the archive `SimpleDateFormat` takes `Locale.ROOT`. (P3-61)
+- `forge-gui-mobile/src/forge/adventure/util/Config.java` (STOCK): `saveSettings` writes a temp file and moves it over `settings.json`. (P3-2)
 
 ### Round 932 - rules and state from the Fable review
 
