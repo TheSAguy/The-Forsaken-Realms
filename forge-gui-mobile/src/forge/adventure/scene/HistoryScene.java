@@ -468,6 +468,19 @@ public class HistoryScene extends UIScene {
         back();
     }
 
+    /** Round 934 (Fable P3-55, Android memory): the two 700x700 textures and pixmaps (about 8 MB) go once the replay is
+     *  off screen - a frame later, so nothing draws them freed; open() builds them again. */
+    @Override
+    public boolean back() {
+        setPlaying(false);
+        boolean done = super.back();
+        com.badlogic.gdx.Gdx.app.postRunnable(() -> {
+            if (Forge.getCurrentScene() != this)
+                disposeMap();
+        });
+        return done;
+    }
+
     private void disposeMap() {
         if (landTexture != null)
             landTexture.dispose();

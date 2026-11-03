@@ -49,6 +49,7 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): `clearCache` nulls the three `pending*Message` fields. (P3-29)
 - `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): `loadPOI`'s catch calls `MapStage.clearIsInMap()`. (P3-33)
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): the load sets `difficultyData.startingSets` from the configured preset before the custom knob. (P3-36)
+- `forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java` (STOCK): `done()` frees `miniMapTexture` a frame later when the scene is no longer current. (P3-55)
 
 ### Round 932 - rules and state from the Fable review
 

@@ -219,6 +219,15 @@ public class MapViewScene extends UIScene {
         miniMapPlayer.setScale(1);
         img.setScale(1);
         img.setPosition(0,0);
+        // Round 934 (Fable P3-55, Android memory): the 2800x2800 map texture (about 31 MB) is freed on leaving, a frame
+        // later so nothing draws it freed; enter() uploads it again (refreshMap()).
+        com.badlogic.gdx.Gdx.app.postRunnable(() -> {
+            if (Forge.getCurrentScene() != this && miniMapTexture != null) {
+                img.setDrawable(null);
+                miniMapTexture.dispose();
+                miniMapTexture = null;
+            }
+        });
         index = -1;
         Forge.switchToLast();
         return true;
