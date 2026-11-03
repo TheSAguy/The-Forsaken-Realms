@@ -110,7 +110,7 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
         // rename-success isn't a liveness signal. FileLock is honored cross-process.
         File[] existingSlots = parent.listFiles(f -> f.isFile() && SLOT_PATTERN.matcher(f.getName()).matches());
         if (existingSlots != null) {
-            SimpleDateFormat ts = new SimpleDateFormat(TIMESTAMP_FORMAT);
+            SimpleDateFormat ts = new SimpleDateFormat(TIMESTAMP_FORMAT, java.util.Locale.ROOT); // TFR round 934 (Fable P3-61): ASCII digits, as ARCHIVE_PATTERN reads them
             for (File slot : existingSlots) {
                 boolean unowned = false;
                 try (FileChannel probe = FileChannel.open(slot.toPath(), StandardOpenOption.WRITE)) {

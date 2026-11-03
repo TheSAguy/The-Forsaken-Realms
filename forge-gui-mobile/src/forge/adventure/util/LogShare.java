@@ -190,7 +190,7 @@ public final class LogShare {
     /** When the log's session ended: the earlier of its name and its file time, so a restored copy can't look new. */
     static long sessionTime(File log) {
         try {
-            long stamped = new SimpleDateFormat("yyyyMMdd-HHmmss").parse(log.getName().substring(6, 21)).getTime();
+            long stamped = new SimpleDateFormat("yyyyMMdd-HHmmss", java.util.Locale.ROOT).parse(log.getName().substring(6, 21)).getTime();
             return Math.min(stamped, log.lastModified());
         } catch (ParseException e) {
             return 0; // reads as older than any opt-in, so it never goes
