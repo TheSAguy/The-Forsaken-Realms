@@ -35,6 +35,10 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 932 - rules and state from the Fable review
+
+- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `trimAutoSellPile(card, why)` (new); `removeCardsForResearch` calls it in place of its own past-the-owned-count trim; `sellAutoSellPile` trims every card on the pile before the sale.
+
 ### Round 931 - the must-fix list before 1.26
 
 - `forge-gui/res/cardsfolder/t/thoughtsteal_sprites.txt` (STOCK card script): the spellbook's "Vendillion Clique" is "Vendilion Clique", where `DraftEffect` threw on the unknown name. Drop this line when upstream fixes its typo.

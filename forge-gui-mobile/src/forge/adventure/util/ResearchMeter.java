@@ -497,6 +497,7 @@ public final class ResearchMeter {
         beginBatch();
         try {
             sold = player.sellCard(card, Math.min(n, spareCopies(player, card)));
+            player.trimAutoSellPile(card, "Lab sale"); // round 932 (Fable P2-1)
         } finally {
             endBatch(player, "Found Cards sale");
         }
@@ -598,8 +599,10 @@ public final class ResearchMeter {
         int gold = player.getGold(), sold = 0;
         beginBatch();
         try {
-            for (Map.Entry<PaperCard, Integer> e : overFour(player, code, shown).entrySet())
+            for (Map.Entry<PaperCard, Integer> e : overFour(player, code, shown).entrySet()) {
                 sold += player.sellCard(e.getKey(), e.getValue());
+                player.trimAutoSellPile(e.getKey(), "Lab over-4 sale"); // round 932 (Fable P2-1)
+            }
         } finally {
             endBatch(player, "Found Cards over-4 sale");
         }
