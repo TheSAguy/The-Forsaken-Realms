@@ -341,17 +341,16 @@ public class DungeonRotation {
         int restocked = restock(poi);
         // Round 466: a set piece starts its new season from scratch - the arena's gate opens on a win count kept in a
         // map flag, which would otherwise let the player straight through to the champion.
+        // Round 932 (Fable P2-6): a clear-returner too. restock() brought its NPCs back with their old count, so a grant
+        // gated on enemiesDefeated (Court of Paliano, Mtenda Mesa, the Dueling Club) paid at the door every return.
         int flags = 0;
-        if (isSetPiece(poi.getData()))
-            for (forge.adventure.pointofintrest.PointOfInterestChanges levelChanges
-                    : WorldSave.getCurrentSave().getPointOfInterestChangesTree(id)) {
-                flags += levelChanges.getMapFlags().size();
-                levelChanges.getMapFlags().clear();
-            }
+        boolean newSeason = isSetPiece(poi.getData()) || isClearReturner(poi.getData());
+        if (newSeason)
+            flags = resetMapFlags(poi);
         int copies = returnStartCopies(poi); // round 468
         System.out.println("[TFR-Lair] " + poi.getDisplayName() + " is back on the map (" + why + "): " + restocked
                 + " enemies/rewards restocked - return visits pay half, no +Life, no signature item"
-                + (isSetPiece(poi.getData()) ? "; a new season: " + flags + " map flag(s) reset"
+                + (newSeason ? "; a new season: " + flags + " map flag(s) reset"
                         + (copies > 0 ? ", every opponent starts with " + returnStartLine(poi, copies) + " in play" : "")
                         : ""));
     }
