@@ -19,9 +19,10 @@ import forge.adventure.world.WorldSave;
 import forge.gui.GuiBase;
 
 /**
- * Round 712 (the user: "Just like in TFR2, create a small mini-map to show where the teleport location will be sending
- * you to"). The Teleporter dialog's two mini-maps, as TFR 2's seat card draws them (Tfr2MapPair): the whole world with
- * the destination ringed red with a white center, and a close-up of the land around it, a tenth of the world across.
+ * Round 712 (the user asked for a small mini-map showing where the teleport will send you, like one in another
+ * project of theirs). The Teleporter dialog's two mini-maps, drawn as that project's map pair draws them: the whole
+ * world with the destination ringed red with a white center, and a close-up of the land around it, a tenth of the world
+ * across.
  * Both come from the HUD minimap's own picture (World.getBiomeImage(), fog included) inside the HUD's minimap border,
  * and the world map shows where you stand with the HUD's player dot.
  * <p>
@@ -167,7 +168,7 @@ final class TeleporterMiniMap {
         return t;
     }
 
-    /** TFR 2's seat mark on the world map: a red disc with a white center, outlined dark so it reads on any land. */
+    /** The destination mark on the world map: a red disc with a white center, outlined dark so it reads on any land. */
     private static void mark(Pixmap m, int x, int y) {
         m.setColor(0.08f, 0.05f, 0.05f, 1f);
         m.fillCircle(x, y, 10);

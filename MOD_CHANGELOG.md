@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 935: the public repo stops naming the user's private projects (2026-11-02)
+
+The repo is public and must not name the user's other, private games, repos or projects (Fable review P3-64 and verify-c's
+P3-64 section). Comments and docs only; no behavior change. Files: `util/TfrFonts.java`, `util/TfrPlates.java`,
+`util/TeleporterMiniMap.java` (comments), `CORE_ENGINE_CHANGES.md` (round 723's two lines; they rode round 931's
+`8a629c96022`, which committed that file while the edit sat in the shared tree), `docs/tfr/history/claude-md-rounds.md`,
+`.claude/skills/tfr-play/SKILL.md`, `dev-tools/agent/agent_stop.ps1`, `CLAUDE.md`.
+
+- **Reworded:** the ported font, Alt plates and Teleporter mini-maps now say "ported from another project of the user's"
+  and drop that project's class names; the skill's and `agent_stop.ps1`'s stop-line notes say "other projects' games";
+  the frozen history's quote is elided ("TFR's ... CLAUDE.md"). `RewardActor.java:99` is the code thread's file; its
+  wording went to that thread.
+- **`CLAUDE.md`:** the Art Library rule names "the user's private art library (its own repository, outside this one)"
+  without its URL or path; the peer-session lesson says "an art session" in place of the private generator project's
+  name. Nothing in the repo reads that URL: the only code that names the library is round 689's one-off
+  `dev-tools/art-import/round689/ro_recut.py` (a local path, unchanged here).
+- **Left, by the brief:** the 177 files under folders named `tfr2` and the data paths that point at them (`enemies.json`,
+  `enemy_tiers.json`, `avatars.index`, round 382's and 681's import scripts, four history lines that name those folders),
+  and the 20 already-pushed `MOD_CHANGELOG.md` lines (rewriting public history is the user's call).
+- **Secrets check:** no Discord webhook URL, GitHub/Anthropic/AWS/Slack token or private key in any tracked file; every
+  Windows path names the generic `C:\Users\User` (or a placeholder).
+- **Tested:** `forge-gui-mobile` compiles (Maven exit 0). A Java comment edit trips the packager's jar-freshness guard:
+  rebuild the jar before the next package.
+
 ## Round 933: the GUIDE, the FAQ and a tooltip say what the code does (2026-11-02)
 
 From the Fable review's docs findings (`notes/fable-review-2026-11-02.md` P2-22 to P2-25 and P3-66's prize aside, as

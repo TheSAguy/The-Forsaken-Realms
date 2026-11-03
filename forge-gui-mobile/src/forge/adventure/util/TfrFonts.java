@@ -18,9 +18,8 @@ import forge.localinstance.properties.ForgeConstants;
 import java.util.Locale;
 
 /**
- * Round 723: TFR 2's Clean font brought to TFR 1 (the user, 2026-10-24: "I like the font we've implemented in TFR2, can
- * we do the same for TFR1"; the preview and plan approved with every recommendation). A port of TFR 2's Tfr2Fonts,
- * without its trial-only mixed mode.
+ * Round 723: the Clean font, ported from another project of the user's at their request (2026-10-24; the preview and
+ * plan approved with every recommendation), without that version's trial-only mixed mode.
  * <ul>
  *   <li>Clean, the default: the labels and buttons of the Adventure screens (Controls.getTextraFont) in the duel
  *   screen's font, the default skin's font1.ttf (Samsung Sharp Sans Medium, already shipped by Forge for the duel
@@ -34,7 +33,7 @@ import java.util.Locale;
  *   <li>The symbols Samsung Sharp Sans lacks (PIXEL_ONLY: the quest log's and auto-sell's check boxes, the HUD's
  *   disabled cross, the gender signs) are drawn in LanaPixel through a font family ([@Pixel]...[@]).</li>
  *   <li>The glyphs are packed 2k px apart: text drawn smaller than the k-times glyphs reads a smaller mipmap, where
- *   libGDX's 1 px gap is gone and a neighbor's edge bleeds in (TFR 2's reward card "2|2 Gold").</li>
+ *   libGDX's 1 px gap is gone and a neighbor's edge bleeds in (a reward card's "2|2 Gold" in the original).</li>
  * </ul>
  * Text fields, lists and Forge's own screens keep their fonts. Switches for scripted runs: -Dtfr.font=pixel|clean,
  * -Dtfr.fontSize (stage px), -Dtfr.fontY (glyphs moved down, stage px), -Dtfr.fontLine (line height, stage px),

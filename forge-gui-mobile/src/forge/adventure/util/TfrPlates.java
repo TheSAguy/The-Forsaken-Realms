@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Round 719: enemy info plates, TFR 2's Alt plates brought to TFR 1 (the user, 2026-10-23: "If you press 'Alt' it shows
+ * Round 719: enemy info plates, Alt plates ported from another project of the user's (the user, 2026-10-23: "If you press 'Alt' it shows
  * the monsters level ... If you have battle them before, then it will also show his deck colors and life total. If
  * you've battled a Apprentice, then for the same creatures' level ups ... it will show the level and deck colors. but
  * not life"; design.md approved with every recommendation).
@@ -66,7 +66,7 @@ public final class TfrPlates {
     /** Where a [%55] label's letters sit in its height (measured in the agent game: the lower ~40% is line gap): the
      *  plate is drawn round that band, not round the whole label. */
     private static final float BAND_LO = 0.42f, BAND_HI = 0.9f;
-    /** The ranks' colors: TFR 2's Apprentice, Adept and Master (Tfr2Plates), and gold for an Archmage. */
+    /** The ranks' colors: the original plates' Apprentice, Adept and Master, and gold for an Archmage. */
     private static final String[] RANK_COLOR = {"a8b49a", "7ab6d8", "c07ad8", "e8b84a"};
     private static final String[] RANK_WORDS = {"Apprentice ", "Adept ", "Master ", "Archmage "};
 

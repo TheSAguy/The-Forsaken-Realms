@@ -61,7 +61,7 @@ python dev-tools/agent/tfr_agent.py boot     # waits for the bridge; prints the 
   compiled classes put AHEAD of the jar - the dev loop, no Maven (`agent_launch.cmd cheats C:\...\classes`; compile
   with javac against the agent jar, `C:/` style paths inside `-cp`).
 - Stop, from the PowerShell tool (it matches only the agent folder's jar, under either of its names - `C:\TFR` is a
-  junction to `C:\CLAUDE\PROJECTS\TFR1` - so the player's game from `...\live` and TFR 2's games are never touched;
+  junction to `C:\CLAUDE\PROJECTS\TFR1` - so the player's game from `...\live` and any other project's games are never touched;
   `agent_stop.ps1` and `agent_sync.cmd` list the same two folders, change all three together):
   `$d = 'C:\TFR\agent\The Forsaken Realms\', 'C:\CLAUDE\PROJECTS\TFR1\agent\The Forsaken Realms\'; Get-CimInstance Win32_Process -Filter "Name='javaw.exe'" | Where-Object { $cl = "$($_.CommandLine)" -replace '/', '\'; @($d | Where-Object { $cl -like "*$_*" }).Count -gt 0 } | ForEach-Object { Stop-Process -Id $_.ProcessId -Confirm:$false }`
   `dev-tools\agent\agent_stop.ps1` does the same, but this machine's execution policy refuses to run scripts

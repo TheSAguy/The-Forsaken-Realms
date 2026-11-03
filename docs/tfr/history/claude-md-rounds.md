@@ -4105,7 +4105,7 @@ asked" rule, superseded by the no-push-until-release rule (2026-09-20).
    5: that every round updates them in the same action as its commit. If you find something missing, fix
    6: the docs rather than going back to chat history.
   68: **Check the code graph before changing a shared method (standing user rule, 2026-10-18: "Can we implement a rule in
-  69: TFR's and TFR 2's CLAUDE.md").** Before renaming, deleting or changing the signature or behavior of a method or class
+  69: TFR's ... CLAUDE.md").** Before renaming, deleting or changing the signature or behavior of a method or class
   70: that other code calls, list its callers from the local graphify code graph, and say in the round how many you found:
   72: affected Class.method --depth 2` (`explain Class` for a class). The `code-graph` skill has the details. The graph
   73: resolves calls by receiver, so it separates `AdventurePlayer.addCard` from `CardDb.addCard` where Grep cannot. It is

@@ -10,7 +10,7 @@
 #
 # Round 739: the project moved to C:\CLAUDE\PROJECTS\TFR1 and C:\TFR is a junction to it, so the agent folder has two
 # names. agent_launch.cmd uses C:\TFR today; a launch through the real path must match too. The two folders are
-# listed in full (never a bare '*\agent\The Forsaken Realms\*'), so TFR 2's games and the player's game stay out.
+# listed in full (never a bare '*\agent\The Forsaken Realms\*'), so other projects' games and the player's game stay out.
 # -like is case-insensitive, and '/' is folded to '\' first, so "c:/tfr/agent/..." matches as well. The same two
 # folders are in agent_sync.cmd and the tfr-play skill's stop line - change all three together.
 $AgentGameDirs = @(
