@@ -3382,6 +3382,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // result or defeat follow-up is still waiting on either stage before the new game exists.
         cancelPendingActions();
         MapStage.getInstance().cancelPendingActions();
+        // Round 934 (Fable P3-29): the deferred victory, defeat and one-away splashes belong to the game being left; kept,
+        // a load or New Game+ showed the old one at the new game's first world-map entry.
+        pendingVictoryMessage = null;
+        pendingDefeatMessage = null;
+        pendingStarWarningMessage = null;
         // Round 129: same treatment for a floating pickup label caught mid-animation by the load.
         clearStatusMessages();
         MapStage.getInstance().clearStatusMessages();
