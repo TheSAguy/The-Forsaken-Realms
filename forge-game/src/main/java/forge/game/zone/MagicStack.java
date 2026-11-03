@@ -84,6 +84,7 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
     private Card curResolvingCard = null;
     private final Map<Integer, Integer> triggerRepeats = new HashMap<>();
+    private final Map<Integer, Integer> triggerLows = new HashMap<>(); // TFR round 930: LoopBreaker.newLowStartsOver
     /** Card id -> how often it could not be added to the stack this turn because its targets were not legal. */
     private final Map<Integer, Integer> illegalAdditions = new HashMap<>();
 
@@ -580,6 +581,7 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
                 return false;
             }
         }
+        forge.game.LoopBreaker.newLowStartsOver(triggerLows, triggerRepeats, id, size()); // TFR round 930: a draining stack is no loop
         return triggerRepeats.merge(id, 1, Integer::sum) > MAX_TRIGGER_REPEATS;
     }
 

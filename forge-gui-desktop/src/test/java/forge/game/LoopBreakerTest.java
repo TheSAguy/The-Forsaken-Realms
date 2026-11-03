@@ -6,13 +6,16 @@ import forge.game.card.Card;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
+import forge.game.trigger.Trigger;
+import forge.game.trigger.TriggerHandler;
 import forge.game.zone.ZoneType;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 /** TFR round 708: the loop breaker (LoopBreaker) - the AI's 25th use of one ability in a turn bars it, a trigger chain of
  *  25 with nobody acting is a draw. Round 840: a chain where someone loses life is never drawn before 1000, and the AI
- *  takes an offered draw only after a bar this turn or while a chain is live at 10+. */
+ *  takes an offered draw only after a bar this turn or while a chain is live at 10+. Round 930: a chain on a stack that's
+ *  draining only counts from that stack's lowest point, so a big batch can't draw its own payoff. */
 public class LoopBreakerTest extends AITest {
 
     @Test
@@ -129,6 +132,121 @@ public class LoopBreakerTest extends AITest {
         game.getStack().add(cast);
         AssertJUnit.assertFalse("one cast starts the chain over: declined", LoopBreaker.loopSeen(game));
         AssertJUnit.assertFalse(game.isGameOver());
+    }
+
+    @Test
+    public void aMandatoryPayoffOnADrainingStackIsNotADraw() {
+        payoffOnADrainingStack("Ajani's Pridemate", 120);
+    }
+
+    @Test
+    public void anOptionalPayoffOnADrainingStackIsNotADraw() {
+        payoffOnADrainingStack("Dawn of Hope", 120);
+    }
+
+    /** The report: a batch of life-gain triggers, each one setting off a "whenever you gain life" trigger alone on the stack. */
+    private void payoffOnADrainingStack(String payoff, int creatures) {
+        Game game = initAndCreateGame();
+        Player p = game.getPlayers().get(0);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, p);
+        addCard("Soul Warden", p);
+        addCard(payoff, p);
+        game.getAction().checkStateEffects(true);
+        game.getTriggerHandler().resetActiveTriggers();
+        int lifeBefore = p.getLife();
+
+        for (int i = 0; i < creatures; i++)
+            game.getAction().moveToPlay(addCardToZone("Runeclaw Bear", p, ZoneType.Hand), null, null);
+        game.getTriggerHandler().runWaitingTriggers();
+        game.getStack().addAllTriggeredAbilitiesToStack();
+        int resolved = 0;
+        while (!game.isGameOver() && !game.getStack().isEmpty()) {
+            game.getStack().resolveStack();
+            resolved++;
+            game.getStack().addAllTriggeredAbilitiesToStack();
+        }
+        AssertJUnit.assertFalse(payoff + ": drawn after " + (p.getLife() - lifeBefore) + " of " + creatures + " life gains, "
+                + resolved + " items resolved: " + LoopBreaker.drawReason(game), game.isGameOver());
+        AssertJUnit.assertEquals("every trigger resolved", lifeBefore + creatures, p.getLife());
+    }
+
+    @Test
+    public void aSawtoothLoopIsStillADrawAt25() {
+        Game game = initAndCreateGame();
+        Player p = game.getPlayers().get(0);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, p);
+        Card host = addCard("Runeclaw Bear", p);
+        SpellAbility loop = trigger(host, p);
+        for (int i = 0; i < 4; i++)
+            game.getStack().add(trigger(host, p));
+
+        int repeats = 0;
+        while (!game.isGameOver() && repeats < 200) { // the stack is 5, 4, 5, 4 each time the loop comes back
+            boolean high = repeats % 2 == 0;
+            if (high)
+                game.getStack().add(trigger(host, p));
+            repeats++;
+            game.getStack().add(loop);
+            if (!game.isGameOver()) {
+                game.getStack().resolveStack();
+                if (high)
+                    game.getStack().resolveStack();
+            }
+        }
+        AssertJUnit.assertTrue("a stack can't make new lows forever", game.isGameOver() && game.getOutcome().isDraw());
+        AssertJUnit.assertEquals("the second time back, at 4, is the one new low", LoopBreaker.TRIGGER_DRAW_AT + 1, repeats);
+    }
+
+    @Test
+    public void aLoopOnAGrowingStackIsStillADrawAt25() {
+        Game game = initAndCreateGame();
+        Player p = game.getPlayers().get(0);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, p);
+        Card host = addCard("Runeclaw Bear", p);
+        SpellAbility loop = trigger(host, p);
+
+        int repeats = 0;
+        while (!game.isGameOver() && repeats < 200) {
+            game.getStack().add(trigger(host, p));
+            repeats++;
+            game.getStack().add(loop);
+            if (!game.isGameOver())
+                game.getStack().resolveStack();
+        }
+        AssertJUnit.assertTrue(game.isGameOver() && game.getOutcome().isDraw());
+        AssertJUnit.assertEquals(LoopBreaker.TRIGGER_DRAW_AT, repeats);
+    }
+
+    @Test
+    public void aLoopIsADrawOnceTheStackUnderItHasDrained() {
+        Game game = initAndCreateGame();
+        Player p = game.getPlayers().get(0);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, p);
+        Card host = addCard("Runeclaw Bear", p);
+        SpellAbility loop = trigger(host, p);
+        for (int i = 0; i < 40; i++)
+            game.getStack().add(trigger(host, p));
+
+        int repeats = 0;
+        while (!game.isGameOver() && repeats < 200) {
+            if (!game.getStack().isEmpty())
+                game.getStack().resolveStack();
+            repeats++;
+            game.getStack().add(loop);
+            if (!game.isGameOver())
+                game.getStack().resolveStack();
+        }
+        AssertJUnit.assertTrue(game.isGameOver() && game.getOutcome().isDraw());
+        AssertJUnit.assertEquals("40 lows, the 40th the first of the 25 on the empty stack", 40 + LoopBreaker.TRIGGER_DRAW_AT - 1, repeats);
+    }
+
+    /** A mandatory, untargeted trigger of its own, built by hand so a test sets the stack size each time it comes back. */
+    private SpellAbility trigger(Card host, Player p) {
+        Trigger t = TriggerHandler.parseTrigger("Mode$ Always | TriggerDescription$ A test trigger.", host, true);
+        SpellAbility sa = AbilityFactory.getAbility("DB$ Pump | Defined$ Self", host);
+        sa.setTrigger(t);
+        sa.setActivatingPlayer(p);
+        return sa;
     }
 
     /** Creatures enter one at a time, every trigger resolving before the next; returns how many entered. */

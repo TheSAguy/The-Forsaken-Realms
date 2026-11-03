@@ -2225,7 +2225,8 @@ your last 50 duels all shift the ranks you meet. See [Enemies That Adapt to You]
 ### A duel is stuck in a loop - what do I do?
 
 If a trigger keeps coming back 25 times with nobody acting and nobody losing life, the duel ends in a draw - nothing
-won or lost. A combo that drains or burns runs to the end. You can also open the duel menu > **Offer Draw**: the enemy
+won or lost. A combo that drains or burns runs to the end, and so does a big batch of triggers resolving one by one
+(a hundred tokens entering with a life-gain payoff on the board). You can also open the duel menu > **Offer Draw**: the enemy
 accepts while a trigger loop is running (10 or more repeats) or once it has had to stop repeating one of its own
 abilities this turn - never in an ordinary duel.
 

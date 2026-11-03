@@ -27,7 +27,10 @@ import java.util.WeakHashMap;
  *   death triggers is one, not thirty. Round 840: any life lost starts every chain over (upstream's own rule,
  *   Player.loseLife / MagicStack.clearTriggerRepeats, #12127: "a chain of triggers that costs life ends by itself"), so
  *   a drain or burn combo runs to the end; {@link #TRIGGER_BACKSTOP_AT} repeats of one trigger in a turn with nobody
- *   acting are a draw whatever happened, for a drain loop that cannot end (a "can't lose" effect);</li>
+ *   acting are a draw whatever happened, for a drain loop that cannot end (a "can't lose" effect). Round 930: a chain
+ *   starts over each time it comes back on a stack lower than it has ever seen, so a batch's "whenever you gain life"
+ *   payoff, alone on the stack after each life gain, doesn't draw its own board. A stack can't make new lows forever, so
+ *   a real loop still counts (MagicStack.isRepeatingTrigger takes the same rule);</li>
  *   <li><b>the human's way out</b>: the AI accepts the Game menu's Offer Draw (PlayerControllerAi.acceptsDrawOffer) only
  *   once the breaker has barred an AI ability this turn, or while a trigger chain is live at {@link #DRAW_OFFER_AT} or
  *   more right now (round 840; it was any count reaching 10 this turn, which an AI pump used 10 times also met).
@@ -50,6 +53,7 @@ public final class LoopBreaker {
         final Map<String, Integer> aiRepeats = new HashMap<>();
         final Map<String, Integer> triggerRepeats = new HashMap<>(); // round 840: reset by any life lost too
         final Map<String, Integer> rawRepeats = new HashMap<>();     // round 840: reset only by a player acting
+        final Map<String, Integer> triggerLows = new HashMap<>();    // round 930: each live chain's lowest stack size
         final Map<String, String> labels = new HashMap<>();          // round 840: key -> label, for the log
         final Set<String> barred = new HashSet<>();
         String barredWhat; // round 840: the first ability barred this turn
@@ -70,6 +74,7 @@ public final class LoopBreaker {
             s.aiRepeats.clear();
             s.triggerRepeats.clear();
             s.rawRepeats.clear();
+            s.triggerLows.clear();
             s.labels.clear();
             s.barred.clear();
             s.barredWhat = null;
@@ -97,6 +102,18 @@ public final class LoopBreaker {
         if (count > s.most) {
             s.most = count;
             s.mostWhat = label(sa);
+        }
+    }
+
+    /**
+     * Round 930: the one rule for both trigger counts. A chain with a count remembers the lowest stack size it has come
+     * back on, and a new low starts it over: the stack is draining, so this isn't a loop. A count cleared by its owner
+     * (a player acting, life lost) has no chain left, so the next size it sees is its first.
+     */
+    public static <K> void newLowStartsOver(Map<K, Integer> lows, Map<K, Integer> repeats, K key, int stackSize) {
+        if (!repeats.containsKey(key) || stackSize < lows.get(key)) {
+            lows.put(key, stackSize);
+            repeats.remove(key);
         }
     }
 
@@ -139,10 +156,15 @@ public final class LoopBreaker {
             s.triggerRepeats.clear(); // round 840: someone lost life - the chain is going somewhere, it ends by itself
             s.lifeLostMark = lost;
         }
+        int size = game.getStack().size();
+        newLowStartsOver(s.triggerLows, s.triggerRepeats, key, size);
         int n = s.triggerRepeats.merge(key, 1, Integer::sum);
         int raw = s.rawRepeats.merge(key, 1, Integer::sum);
         s.labels.computeIfAbsent(key, k -> label(sa));
         note(s, n, sa);
+        if (raw == TRIGGER_DRAW_AT && n < TRIGGER_DRAW_AT && !game.isSimulationCopy())
+            System.out.println("[TFR-LoopBreak] " + label(sa) + " came back " + raw + " times, its chain at " + n
+                    + ": the stack is at " + size + " or life was lost");
         if (n >= TRIGGER_DRAW_AT)
             s.endReason = label(sa) + " triggered " + n + " times in a row with nobody acting";
         else if (raw >= TRIGGER_BACKSTOP_AT)
@@ -150,7 +172,7 @@ public final class LoopBreaker {
         else
             return false;
         String msg = "Loop breaker: " + s.endReason + " - the game is a draw.";
-        System.out.println("[TFR-LoopBreak] " + msg);
+        System.out.println("[TFR-LoopBreak] " + msg + (game.isSimulationCopy() ? " (in a rollout)" : ""));
         game.getGameLog().add(GameLogEntryType.INFORMATION, msg);
         for (Player p : game.getPlayers())
             p.intentionalDraw();

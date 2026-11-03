@@ -35,6 +35,12 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 930 - a big batch of life-gain triggers no longer draws its own duel
+
+- `forge-game/src/main/java/forge/game/zone/MagicStack.java` (STOCK): a `triggerLows` field and one line in `isRepeatingTrigger` before the count, `LoopBreaker.newLowStartsOver(triggerLows, triggerRepeats, id, size())`, so a chain starts over on a stack lower than it has seen. Both marked `TFR round 930`. If upstream changes `triggerRepeats`' key or where it clears, keep the call next to the `merge`.
+- `forge-game/src/main/java/forge/game/LoopBreaker.java` (TFR file): `newLowStartsOver`, `State.triggerLows`, the call in `onStackAdd`, a log line, and `(in a rollout)` on a copy's draw line.
+- `forge-gui-desktop/src/test/java/forge/game/LoopBreakerTest.java`: five tests added.
+
 ### Round 929 - an AI attack that can't pass no longer freezes the duel
 
 - `forge-game/src/main/java/forge/game/phase/PhaseHandler.java` (STOCK): `declareAttackersTurnBasedAction`: two locals, an `AttackRetryLimit.giveUp` check before each retry that can break the loop, and the failed step noted at the `validate` and cost failures. `removeAbsentCombatants`'s result is now kept in `absent`. All marked `TFR round 929`.
