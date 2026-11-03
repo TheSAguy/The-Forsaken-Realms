@@ -1315,14 +1315,20 @@ public class TerritoryControl {
             java.util.Set<String> roster = new java.util.HashSet<>();
             if (biome.enemies != null)
                 roster.addAll(java.util.Arrays.asList(biome.enemies));
+            // Round 932 (Fable P2-17): one name per list, tested AFTER the tier. Round 643's families list a Common, an
+            // Uncommon and a Rare copy of each name, Common first, so a name-first dedup kept only Commons: a guard-1
+            // assault always met the Adept <Color> Wizard and a guard-2 one the Master Wizard, the only names whose first
+            // copy is of those tiers. DungeonUpgrades.pick tests the tier first the same way.
             java.util.Set<String> seen = new java.util.HashSet<>();
+            java.util.Set<String> seenAtTier = new java.util.HashSet<>();
             List<EnemyData> candidates = new ArrayList<>();
             List<EnemyData> anyTier = new ArrayList<>();
             for (EnemyData e : biome.getEnemyList()) {
-                if (e == null || SpawnTierWeighting.isExempt(e) || !roster.contains(e.getName()) || !seen.add(e.getName()))
+                if (e == null || SpawnTierWeighting.isExempt(e) || !roster.contains(e.getName()))
                     continue;
-                anyTier.add(e);
-                if (tier == null || tier.equals(e.tier))
+                if (seen.add(e.getName()))
+                    anyTier.add(e);
+                if ((tier == null || tier.equals(e.tier)) && seenAtTier.add(e.getName()))
                     candidates.add(e);
             }
             if (excludeName != null && candidates.size() > 1)
