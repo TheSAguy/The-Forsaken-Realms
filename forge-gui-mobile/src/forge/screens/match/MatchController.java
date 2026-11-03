@@ -439,7 +439,9 @@ public class MatchController extends NetworkGuiGame {
         if (Forge.isMobileAdventureMode) {
             if (Config.instance().getSettingData().disableWinLose) {
                 MatchController.writeMatchPreferences();
-                if (getGameView().isMatchOver()){
+                // TFR round 932 (Fable P2-5): a drawn game ends the duel as a draw (round 708's rule, which only
+                // AdventureWinLose applied); isMatchOver() counts wins, so the draw was replayed.
+                if (getGameView().isMatchOver() || DuelScene.instance().isLastGameDrawn()){
                     Forge.setCursor(null, "0");
                     DuelScene.instance().GameEnd();
                     if (!DuelScene.instance().hasCallbackExit())

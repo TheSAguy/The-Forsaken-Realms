@@ -38,6 +38,7 @@ md` already gets updated after every change.
 ### Round 932 - rules and state from the Fable review
 
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `trimAutoSellPile(card, why)` (new); `removeCardsForResearch` calls it in place of its own past-the-owned-count trim; `sellAutoSellPile` trims every card on the pile before the sale.
+- `forge-gui-mobile/src/forge/screens/match/MatchController.java` (STOCK): `finishGame`'s `disableWinLose` branch ends the duel on `isMatchOver() || DuelScene.instance().isLastGameDrawn()`.
 
 ### Round 931 - the must-fix list before 1.26
 
