@@ -14264,6 +14264,12 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 931: the must-fix list before 1.26 (2026-11-02)
+
+The user: "Fix them all." The first five of the Fable review's list (`C:\TFR\notes\morning-1103-fix-list.md`), as its three checks corrected them, one commit each.
+
+- **A side quest taken again starts its own clock** (Fable P1-1). `QuestExpiry` keys the clock by the quest's template id, and finishing or abandoning a quest left its stamp, so a template taken a second time (every invasion, every repeatable board quest) kept its first acceptance's day: taken 15 or more days later it showed "0 days left" and failed at the next tick, taken sooner it had only the days left over. `onAccepted` now stamps the day of every acceptance, unless another open copy of the same template is in the log (that one's clock stands, as before). Old saves' stale stamps are replaced at the next acceptance. `[QuestExpiry] <quest> taken again: its old stamp (day N) is replaced`. A failure here costs only the quest: an expiry runs no failure dialog (the check's correction). File: `util/QuestExpiry.java` (TFR).
+
 ## Round 930: a big batch of life-gain triggers no longer draws its own duel (2026-11-02)
 
 A player's report on 1.25: a "gain life when a creature enters" deck, Rhys the Redeemed doubling 100-200 tokens, drew a boss fight it had nearly won, partway through the stack. Files: `forge-game/.../LoopBreaker.java`, `forge-game/.../zone/MagicStack.java` (stock), `LoopBreakerTest`.

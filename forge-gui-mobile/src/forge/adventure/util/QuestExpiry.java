@@ -84,7 +84,11 @@ public class QuestExpiry {
     /**
      * Round 594 (the user: "I don't see the number of days remaining on my quest 'Heart of a Champion'"): the clock
      * starts the day a quest is accepted, so the quest log shows its days at once. It used to wait for the next day
-     * tick, and a quest taken today showed no days until tomorrow. A quest already stamped keeps its stamp.
+     * tick, and a quest taken today showed no days until tomorrow.
+     * <p>
+     * Round 931 (Fable P1-1): the key is the template id, and finishing or abandoning a quest leaves its stamp, so a
+     * template taken again (every invasion) kept its first acceptance's day and failed at the next tick. A new
+     * acceptance now starts its own clock; only a second open copy of the same template shares the first one's.
      */
     public static void onAccepted(AdventureQuestData quest) {
         if (!isEnabled() || quest == null || quest.storyQuest || isChainQuest(quest) || WorldSave.getCurrentSave() == null)
@@ -93,8 +97,14 @@ public class QuestExpiry {
         if (world == null)
             return;
         String key = String.valueOf(quest.getID());
-        if (world.getQuestAcceptedDay().containsKey(key))
-            return;
+        Integer old = world.getQuestAcceptedDay().get(key);
+        if (old != null) {
+            for (AdventureQuestData open : Current.player().getQuests())
+                if (open != quest && open.getID() == quest.getID() && !open.completed && !open.failed)
+                    return; // the open copy's clock stands
+            System.out.println("[QuestExpiry] " + quest.getName() + " taken again: its old stamp (day " + old
+                    + ") is replaced");
+        }
         world.getQuestAcceptedDay().put(key, world.getCurrentDay());
         world.getQuestDayLimit().put(key, sideQuestDays());
         System.out.println("[QuestExpiry] " + quest.getName() + " accepted on day " + world.getCurrentDay() + " - "
