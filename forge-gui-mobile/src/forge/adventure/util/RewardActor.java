@@ -96,7 +96,7 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
     boolean isRewardShop, showOverlay, canAutoSell;
     private String priceTag = "";
     TextraLabel overlayLabel;
-    /** Round 723, TFR 2's port: with the clean font (TfrFonts.active) the card's title ("22 Gold", a booster's name) is
+    /** Round 723: with the clean font (TfrFonts.active) the card's title ("22 Gold", a booster's name) is
      *  laid out in the 192 x 256 face as before but drawn over the face at screen resolution in drawFrontSide, not into
      *  the face's picture, where it came out small and stretched. faceImage is that picture: a booster's real art
      *  replaces it, and the title goes with it. */

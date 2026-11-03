@@ -1792,15 +1792,12 @@ public class TerritoryControl {
                 weights.add(weight);
                 totalWeight += weight;
             }
-            // Color reputation (MOD_SCOPE.md #1) Capitol targeting (user request 2026-08-10): the
-            // player's Capitol is never a normal candidate (it's neither neutral nor an enemy-color
-            // town), and is fully exempt from this color's attacks at Partner/Happy. At War it becomes
-            // attackable via a flat weight bonus equal to 5% of the pool's total - stacking with the
-            // ordinary reputation multiplier above (user decision) - added as a 6th candidate, or ON
-            // TOP of its existing weight if it already landed among the 5 nearest by distance (defensive;
-            // in practice it never does, since "Player Capitol" matches neither isWastelandTown() nor
-            // an enemy-color town check). Neutral/Unhappy leave the Capitol untouched - only War and
-            // Partner/Happy have user-specified rules.
+            // Color reputation (MOD_SCOPE.md #1) Capitol targeting: the player's Capitol is an ordinary candidate - a
+            // BiomeColorless capital, so isWastelandTown() admits it, and it takes the player-town standing weight above
+            // like any town of theirs (no Partner/Happy exemption). At War it also gets a flat share equal to 5% of the
+            // pool's total (user request 2026-08-10, stacking with that weight): added on top of its weight when it is
+            // among the nearest by distance, or as a 6th candidate when it is not. Round 355's Unhappy/War points below
+            // apply only when it made the nearest on its own.
             PointOfInterest capitol = TownRestoration.findCapitol();
             // Same in-flight exclusion as the ordinary pool above - a Capitol already under
             // attack by one of this color's mages doesn't get a second one rolled onto it.
