@@ -5315,6 +5315,9 @@ public class World implements Disposable, SaveFileContent {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        // Round 934 (Fable P3-23, Android memory): the per-tile Color map is the editor's (StructureEditor builds its own);
+        // nothing in the game reads it after initialize(), and the cache kept about 13 MB of it for the whole session.
+        structure.image = null;
         nativeStructurePatternCache.putIfAbsent(structureData, structure);
         return nativeStructurePatternCache.get(structureData);
     }
