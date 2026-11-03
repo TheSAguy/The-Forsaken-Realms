@@ -22,15 +22,20 @@ public class BugReportDialog extends FScreen { //use screen rather than dialog s
     private static final float PADDING = Utils.scale(5);
     private static final float BUTTON_HEIGHT = Utils.AVG_FINGER_HEIGHT * 0.75f;
     private static boolean isOpen;
+    private static int unshownLogged; // TFR round 934: at most 5 lines for reports no dialog could show
 
     public static void show(String title, String text, boolean showExitAppBtn) {
-        if (isOpen || Forge.getCurrentScreen() == null) { return; } //don't allow showing if Forge not finished initializing yet
-
-        isOpen = true;
-        if (showExitAppBtn) { // TFR round 815: a crash report counts in the session footer's errors=
-            forge.adventure.util.SessionLog.onCrashReport(text);
+        if (isOpen) { return; }
+        boolean canShow = Forge.getCurrentScreen() != null;
+        // TFR round 934 (Fable P3-59): logged above the screen check, so a crash outside a duel (every adventure scene
+        // has no Forge screen; a world-load OOM) still gets its [TFR-Error] line, errors= count and oom reading.
+        if (showExitAppBtn && (canShow || unshownLogged++ < 5)) { // TFR round 815: a crash report counts in errors=
+            forge.adventure.util.SessionLog.onCrashReport(text, canShow);
             forge.adventure.util.DuelHeartbeat.onError("a crash report: " + text); // TFR round 816: a quit from here never counts
         }
+        if (!canShow) { return; } //don't allow showing if Forge not finished initializing yet
+
+        isOpen = true;
         Forge.openScreen(new BugReportDialog(title, text, showExitAppBtn));
     }
 

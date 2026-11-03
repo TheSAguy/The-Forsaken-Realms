@@ -50,6 +50,7 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): `loadPOI`'s catch calls `MapStage.clearIsInMap()`. (P3-33)
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): the load sets `difficultyData.startingSets` from the configured preset before the custom knob. (P3-36)
 - `forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java` (STOCK): `done()` frees `miniMapTexture` a frame later when the scene is no longer current. (P3-55)
+- `forge-gui-mobile/src/forge/error/BugReportDialog.java` (STOCK): `show` runs TFR's crash hooks before the no-screen return (at most 5 unshown a launch). (P3-59)
 
 ### Round 932 - rules and state from the Fable review
 

@@ -377,9 +377,16 @@ public final class SessionLog {
      * crash report is on screen. BugReporter printed the trace already; this counts it for the footer, with the trail.
      */
     public static void onCrashReport(String report) {
+        onCrashReport(report, true);
+    }
+
+    /** Round 934 (Fable P3-59): shown false when no dialog can open (an adventure scene has no Forge screen) - counted and
+     *  logged all the same, where the crash outside a duel used to leave no line at all. */
+    public static void onCrashReport(String report, boolean shown) {
         errors++;
         String first = report == null ? "?" : report.trim().split("\\R", 2)[0];
-        System.out.println("[TFR-Error] crash report shown (the bug-report dialog): " + first);
+        System.out.println("[TFR-Error] crash report " + (shown ? "shown (the bug-report dialog)"
+                : "not shown (no dialog outside a duel)") + ": " + first);
         System.out.println("[TFR-Error] trail: " + trailText());
         if (first.contains("OutOfMemoryError"))
             MemoryWatch.report("oom"); // round 916
