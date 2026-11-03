@@ -41,6 +41,7 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/screens/match/MatchController.java` (STOCK): `finishGame`'s `disableWinLose` branch ends the duel on `isMatchOver() || DuelScene.instance().isLastGameDrawn()`.
 - `forge-gui-mobile/src/forge/adventure/character/EnemySprite.java` (STOCK): `ownData()` (new, a per-sprite copy made once); `overrideDeck` writes to it.
 - `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): the placement's `speed` and `flying` go to `mob.ownData()`, not the shared `getData()`.
+- `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): `loadMap` sets `effect = null` before reading the level's `dungeonEffect`.
 
 ### Round 931 - the must-fix list before 1.26
 

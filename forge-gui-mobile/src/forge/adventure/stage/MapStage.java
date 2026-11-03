@@ -853,6 +853,9 @@ public class MapStage extends GameStage {
         //Load dungeon effects.
         MapProperties MP = map.getProperties();
 
+        // TFR round 932 (Fable P2-8): each level's own effect. It was cleared only on leaving the place, so a deeper level's
+        // effect followed the player up to a level with none (and applyReturnStartCards stacked its cards per level change).
+        effect = null;
         if (MP.get("dungeonEffect") != null && !MP.get("dungeonEffect").toString().isEmpty()) {
             effect = JSONStringLoader.parse(EffectData.class, map.getProperties().get("dungeonEffect").toString(), "");
         }
