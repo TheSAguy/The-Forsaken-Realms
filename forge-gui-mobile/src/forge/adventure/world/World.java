@@ -4001,12 +4001,13 @@ public class World implements Disposable, SaveFileContent {
             sealSea("new world"); // round 690: the writers above leave the sea alone; 0 here, or a [TFR-Water] line
             System.out.println("Generating world took :\t\t" + ((System.currentTimeMillis() - startTime) / 1000f) + " s");
             WorldStage.getInstance().clearCache();
-
-            if (GuiBase.isMobile())
-                GuiBase.getInterface().preventSystemSleep(false);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        } finally {
+            // Round 934 (Fable P3-27): in a finally, so a generation that fails or returns early lets the phone sleep too.
+            if (GuiBase.isMobile())
+                GuiBase.getInterface().preventSystemSleep(false);
         }
         return true;
     }
