@@ -48,6 +48,8 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `create()` copies `rewardMaxFactor` with the other difficulty fields (upstream leaves it out). Drop this line if upstream adds it.
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `expectedPackSellPrice(set)` (new), a pack's average resale from its set's booster template.
 - `forge-gui-mobile/src/forge/adventure/scene/RewardScene.java` (STOCK): the shop button floors a `CardPack` at `expectedPackSellPrice + 1`, next to round 843's card floor; the floor log line says "card(s) or pack(s)".
+- `forge-gui-mobile/src/forge/adventure/scene/SpellSmithScene.java` (STOCK): with `spellsmithPaysFirst`, `pullCard` pays (`payPull()`, new) and hides Decline; `acceptSmithing` pays only when the pull did not (`paidAtPull`). Flag off = stock.
+- `forge-gui-mobile/src/forge/adventure/data/ConfigData.java` (STOCK): `spellsmithPaysFirst` (false).
 
 ### Round 931 - the must-fix list before 1.26
 

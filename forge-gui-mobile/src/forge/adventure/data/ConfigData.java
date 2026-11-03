@@ -207,5 +207,8 @@ public class ConfigData {
     // Round 856 (the 10.28 merge): upstream's #12467 gives every boss with no "ai" of its own the Hardest AI profile.
     // True keeps such a boss on the player's AI setting, as before the merge (DuelScene.selectAI). False = upstream.
     public boolean bossAiFollowsSetting = false;
+    // Round 932 (Fable P2-4): the Spellsmith charges a pull before the card shows and the card is kept (no Decline).
+    // False = stock: the card shows first, Accept pays, Decline costs 10%.
+    public boolean spellsmithPaysFirst = false;
 
 }

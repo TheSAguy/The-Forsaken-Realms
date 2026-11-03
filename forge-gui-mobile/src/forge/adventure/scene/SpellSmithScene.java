@@ -520,18 +520,35 @@ public class SpellSmithScene extends UIScene {
         rewardActor.setBounds(rewardDummy.getX(), rewardDummy.getY(), rewardDummy.getWidth(), rewardDummy.getHeight());
         rewardActor.flip(); //Make it flip so it draws visual attention, why not.
 
+        // TFR round 932 (Fable P2-4, the user's pick; spellsmithPaysFirst): the pull is paid before the card shows, and the
+        // card is kept - no Decline. Shown first, a pull was a lottery: decline what sold for less, for 10%, keep the rest.
+        paidAtPull = Config.instance().getConfigData().spellsmithPaysFirst;
+        if (paidAtPull) {
+            payPull();
+            System.out.println("[TFR-Spellsmith] pulled " + currentReward.getCard().getName() + " for " + (paidInShards
+                    ? lockedShardPrice + " shards" : lockedPrice + " gold") + ", paid before the reveal");
+        }
         acceptReward.setVisible(true);
-        declineReward.setVisible(true);
+        declineReward.setVisible(!paidAtPull);
 
         disableFilterAndPullButtons();
     }
 
-    private void acceptSmithing() {
+    /** Round 932: true while the shown card was paid for at the pull (spellsmithPaysFirst). */
+    private boolean paidAtPull;
+
+    private void payPull() {
         if (paidInShards) {
             Current.player().takeShards(lockedShardPrice);
         } else {
             Current.player().takeGold(lockedPrice);
         }
+    }
+
+    private void acceptSmithing() {
+        if (!paidAtPull) // round 932: else paid at the pull
+            payPull();
+        paidAtPull = false;
 
         Current.player().addReward(currentReward);
 
