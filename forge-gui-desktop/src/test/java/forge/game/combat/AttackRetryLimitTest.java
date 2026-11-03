@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 /**
  * TFR round 929: an AI whose attack declaration can never pass does not loop forever. Juggernaut must attack, so a
- * declaration with no attackers is invalid; before the round each of these tests ran until its timeout.
+ * declaration with no attackers is invalid. With the limit off, the never-pass, deadline and Reconfigure tests fail; the rest pass either way.
  */
 public class AttackRetryLimitTest extends AITest {
 

@@ -33,7 +33,8 @@ public final class AttackRetryLimit {
             return false;
         }
         final boolean last = tries >= MAX_AI_TRIES;
-        if (LINES.incrementAndGet() <= MAX_LINES) {
+        // A first failure is normal on a must-attack board: a rollout's attack set breaks the rule, the AI's own passes next.
+        if (tries > 1 && LINES.incrementAndGet() <= MAX_LINES) {
             log(declarer, combat, tries, failed, last);
         }
         AITimeoutTracker.check();
