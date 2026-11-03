@@ -7,8 +7,8 @@ and each data batch's reader audit `C:\TFR\notes\r829..r833-*.md`.
 
 ## The pieces
 
-- **The knob list**: `forge-gui/res/adventure/The Forsaken Realms/config tables/custom_difficulty.json` - 183 knobs
-  (round 833). Each has an id (the save's key - never rename one a release shipped), a label, a tab (`category`) and
+- **The knob list**: `forge-gui/res/adventure/The Forsaken Realms/config tables/custom_difficulty.json` - 184 knobs
+  (round 833, plus round 872's Starting sets). Each has an id (the save's key - never rename one a release shipped), a label, a tab (`category`) and
   sub-heading (`group`), a tooltip, `scope` (`anytime` or `newGame`), `level` (`basic`/`expert`), `mode` (`set` replaces,
   `scale` multiplies every target's shipped value), `min`/`max`/`step`, an optional `format: percent` and `rebalance`,
   and one or more targets. The header comment lists every field deliberately left out and why.

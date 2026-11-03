@@ -1583,7 +1583,7 @@ public final class Ascendance {
             case "coinToss": effect = "Win the opening coin toss " + pct(Math.min(1f, 0.5f * (1f + then))) + " of the time"; break; // round 525
             case "powerGain": effect = "Power gained +" + pct(then) + " " + ICON + (now > 0 ? " (now +" + pct(now) + ")" : ""); break; // round 536
             case "gambler": effect = GAMBLER_REROLLS + " re-rolls a level, each " + rerollCostAt(c.value) + " [+Shards] (one is "
-                    + baseRerollCost() + " now)"; break; // round 536
+                    + baseRerollCost() + " [+Shards] now)"; break; // round 536; round 934 (P3-39): the second amount's icon
             case "sellPrice": effect = "Cards sell for " + pct(then) + " more [+Gold]" + (now > 0 ? " (now " + pct(now) + ")" : ""); break; // round 548
             // Round 596: the three long lines shortened - the choice row is two lines (and four rows with Insight).
             case "intimidating": effect = pct(then) + " chance a foe you usually beat flees, leaving half its loot"
