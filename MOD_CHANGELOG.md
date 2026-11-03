@@ -14264,6 +14264,15 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 937 (follow-up): 1.26 released (2026-11-03)
+
+- **Published** 2026-11-03 14:21:56 UTC on the user's call: tag `tfr-v1.26` @ `092596b65f8`, Latest, `main` pushed to
+  `origin master` at `81c9577492b`, with the Windows zip (488.8 MB), the APK (15.8 MB, versionCode 12600, signer
+  EE:60:39:25) and `assets.zip` (438.6 MB, build.txt pair 05:29:06); every size matches on GitHub. Round 792's download
+  prompts still fit. No itch.io step this time (the user's word). Ledger: `docs/tfr/releases.md`.
+- **Docs**: the v1.26 block in `docs/tfr/releases.md`; the NOW block is rewritten short (rounds 865-936 now released;
+  their detail stays in this file). Next version 1.27 / 12700.
+
 ## Round 936 (follow-up): the version is 1.26 (2026-11-02)
 
 The last step of the release prep, after the code thread's rounds 931-934 (its go: round 934 touches neither file).

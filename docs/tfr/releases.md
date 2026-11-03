@@ -97,3 +97,21 @@ What's New 1.25 is a short linked list above 1.24's. The Discord FAQ says v1.25 
 push. Live = the release (package 2026-10-29 12:07, from the release commit), agent synced 12:10. The same zip and APK
 go to itch.io (the Art thread). NOTHING is unreleased. Next version: 1.26 / 12600. Next merge from upstream after
 `875333b7b78`.
+
+## STATE 2026-11-03 (14:21 UTC): **v1.26 "Journals & Doppelgangers" RELEASED** - tag `tfr-v1.26` @ `092596b65f8`,
+published 14:21:56 UTC, Latest. Rounds 865-936 on top of v1.25; `main` was pushed at `81c9577492b` (round 937, a
+notes-only line in `RELEASE_NOTES_v1.26.md` after the tag commit). Engine = the 11.01 daily (upstream `5a09fa8cc5d`,
+round 917) on the matching BASE_INSTALL. Assets in `C:\CLAUDE\PROJECTS\TFR1\release\v1.26`, each checked on GitHub at
+its exact byte size:
+- `The-Forsaken-Realms-v1.26.zip` 488.8 MB (488,831,233 bytes);
+- `forsaken-realms-1.26-signed-aligned.apk` 15.8 MB (15,822,700 bytes; com.thesaguy.forsakenrealms, versionCode 12600,
+  signer EE:60:39:25);
+- `assets.zip` 438.6 MB (438,614,161 bytes; build.txt pair 2026-11-03 05:29:06, one `mvn` run in `C:\TFR-build` via R:;
+  carries `log_share.txt`). Round 792's prompts ("430MB" / "16MB") still fit, so unchanged; the APK's download URL
+  `releases/download/tfr-v1.26/assets.zip` answers with the full size.
+
+Notes = `RELEASE_NOTES_v1.26.md` (title "The Forsaken Realms v1.26 — Journals & Doppelgangers", 1.25's form). GUIDE
+What's New 1.26 above "Coming from 1.24?". The Discord FAQ says v1.26 (round 936; artifact v14). The webhook token was
+checked absent from git before the push. Live was packaged from the tag commit (`PACKAGE_OK.txt` verified). The user
+dropped the itch.io step for this release. NOTHING is unreleased. Next version: 1.27 / 12700. Next merge from upstream
+after `5a09fa8cc5d`.
