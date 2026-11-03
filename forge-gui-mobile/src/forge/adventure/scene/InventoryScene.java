@@ -336,7 +336,7 @@ public class InventoryScene extends UIScene {
                 if (data.isCracked) {
                     data.isCracked = false;
                     updateInventory();
-                    setSelected(selected);
+                    reselect(data); // round 934 (Fable P3-16): the rebuilt button, not the detached old one
                     Current.player().takeGold(cost);
                 }
                 removeDialog();
