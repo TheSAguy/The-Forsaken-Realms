@@ -38,6 +38,7 @@ md` already gets updated after every change.
 ### Round 934 - small fixes, Android memory and privacy from the Fable review
 
 - `forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java` (STOCK): Export Logs calls `LogShare.exportScrubbed` in place of stock `LogExporter.exportLogs` (which it still uses underneath). (P3-57)
+- `forge-gui-mobile/src/forge/adventure/scene/ShopScene.java`, `AdventureDeckEditor.java` (STOCK): `lblSellAllConfirm`'s gold amount is passed as a String. `RewardScene.java`, `stage/WorldStage.java` (STOCK): "you have N" gets its icon in three dialogs. (P3-56)
 
 ### Round 932 - rules and state from the Fable review
 

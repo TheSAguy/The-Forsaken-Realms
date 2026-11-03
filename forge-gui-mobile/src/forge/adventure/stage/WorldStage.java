@@ -439,7 +439,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.clearListeners();
         final int cost = kit.repairShards;
         TypingLabel label = Controls.newTypingLabel("The bonfire kit is spent - every fire it held has been built. Rebuild it for "
-                + cost + " [+Shards]? You have " + Current.player().getShards() + ".");
+                + cost + " [+Shards]? You have " + Current.player().getShards() + " [+Shards]."); // round 934 (P3-56)
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();
@@ -1901,7 +1901,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     visitPoi(poi); // round 493
                 })
                 : Controls.newTextButton("Pay " + ColorReputation.CAPITAL_ENTRY_TOLL + " [+Gold] (you have "
-                    + Current.player().getGold() + ")");
+                    + Current.player().getGold() + " [+Gold])"); // round 934 (P3-56): the amount's icon
         payButton.setDisabled(!canAffordToll);
         dialog.getButtonTable().add(payButton).width(240f).row();
         // Round 100 (user spec 2026-09-03): storm the capital - a 1-vs-2 against two Archmages (weekly cooldown as for towns)

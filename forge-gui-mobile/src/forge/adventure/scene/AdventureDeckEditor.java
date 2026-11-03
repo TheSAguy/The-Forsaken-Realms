@@ -405,7 +405,7 @@ public class AdventureDeckEditor extends FDeckEditor {
             if (toSell.isEmpty())
                 return;
 
-            FOptionPane.showConfirmDialog(forge.adventure.util.ResourceGlyphs.goldInText(Forge.getLocalizer().getMessage("lblSellAllConfirm", toSell.countAll(), value), value), Forge.getLocalizer().getMessage("lblSellCurrentFilters"), Forge.getLocalizer().getMessage("lblSell"), Forge.getLocalizer().getMessage("lblCancel"), false, result -> {
+            FOptionPane.showConfirmDialog(forge.adventure.util.ResourceGlyphs.goldInText(Forge.getLocalizer().getMessage("lblSellAllConfirm", toSell.countAll(), String.valueOf(value)), value), Forge.getLocalizer().getMessage("lblSellCurrentFilters"), Forge.getLocalizer().getMessage("lblSell"), Forge.getLocalizer().getMessage("lblCancel"), false, result -> {
                 if (result) {
                     Current.player().doBulkSell(toSell);
                     refresh();

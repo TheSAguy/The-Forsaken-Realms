@@ -73,7 +73,7 @@ public class ShopScene extends ForgeScene {
             }
             if (profit == 0 || cards == 0)
                 return;
-            FOptionPane.showConfirmDialog(forge.adventure.util.ResourceGlyphs.goldInText(Forge.getLocalizer().getMessage("lblSellAllConfirm", cards, profit), profit),
+            FOptionPane.showConfirmDialog(forge.adventure.util.ResourceGlyphs.goldInText(Forge.getLocalizer().getMessage("lblSellAllConfirm", cards, String.valueOf(profit)), profit), // round 934: ungrouped, so 1,250 gets its coin
                 Forge.getLocalizer().getMessage("lblAutoSellable"), Forge.getLocalizer().getMessage("lblSell"),
                 Forge.getLocalizer().getMessage("lblCancel"), false, result -> {
                     if (result) {

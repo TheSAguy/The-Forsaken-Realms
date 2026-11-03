@@ -207,7 +207,8 @@ public class RewardScene extends UIScene {
         final int cost = EconomyBuildings.blueprintShardCostHere(tier);
         if (AdventurePlayer.current().getShards() < cost) {
             showDialog(createGenericDialog("", "A blueprint for " + EconomyBuildings.shopDisplayName(shopName)
-                            + " costs " + cost + " [+Shards] - you have " + AdventurePlayer.current().getShards() + ".",
+                            + " costs " + cost + " [+Shards] - you have " + AdventurePlayer.current().getShards()
+                            + " [+Shards].", // round 934 (P3-56): the amount's icon
                     Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
             return;
         }
