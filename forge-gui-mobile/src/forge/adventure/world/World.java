@@ -7259,7 +7259,9 @@ public class World implements Disposable, SaveFileContent {
     public int applyDayNightTerrainLife(int baseLife, int tileX, int tileY, boolean log) {
         if (!isDayNightCycleEnabled() || baseLife <= 0)
             return baseLife;
-        int biomeIndex = highestBiome(getBiome(tileX, tileY));
+        // Round 932 (Fable P2-19): the land under a road. The road bits sit above every biome, so a road tile read as no
+        // land and the rule never applied there (the spec, 2026-08-12: "the terrain the fight happens on").
+        int biomeIndex = highestBiome(getBiome(tileX, tileY) & ~roadMask());
         java.util.List<BiomeData> biomes = data == null ? null : data.GetBiomes();
         if (biomes == null || biomeIndex < 0 || biomeIndex >= biomes.size())
             return baseLife;
