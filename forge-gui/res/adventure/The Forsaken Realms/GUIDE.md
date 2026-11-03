@@ -11,7 +11,7 @@ are in the [FAQ](#faq) at the end.
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [What's New in 1.25](#whats-new-in-125)
+2. [What's New in 1.26](#whats-new-in-126)
 3. [Starting Out](#starting-out)
 4. [Changes from the Base Game](#changes-from-the-base-game)
 5. [Early Game Advice](#early-game-advice)
@@ -41,9 +41,31 @@ the early game is meant to be a fight.
 *Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android
 version - playable, but it gets far less testing than the desktop builds.*
 
-## What's New in 1.25
+## What's New in 1.26
 
-The short version for returning players. Each item links to where the guide covers it in full.
+The short version for returning players. Each item links to where the guide covers it in full. The Doppelganger and the
+starting-set choice need a new game; everything else works on your current save.
+
+- **The Realm Journal:** a Journal button on your character sheet lists every creature and legend you have met this
+  run, what you know of each, the decks you have fought, and which enemies will start with extra Wastes from your win
+  streak. Alt-click an enemy to open its page. See [The Realm Journal](#the-realm-journal).
+- **A new race, the Doppelganger:** it picks any four of the game's sets to start with, and takes another race's look
+  after every win. See [Races](#races).
+- **Choose your starting sets** on the new-game screen, or leave them Random; Advanced has a "Starting sets" setting
+  for how many. See [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).
+- **The golden Capitol:** new art for its buildings, 3D mines in every town, and the last five look-alike caves get
+  their own entrances. See [The Capitol](#the-capitol).
+- **A stronger AI:** the engine moves to Forge's 11.01 build, whose AI plans around your next turn, so expect tougher
+  duels on every difficulty.
+- **Quests and raids:** a raid's Details page has a mini-map of the town, Alt plates mark raiders and quest targets,
+  quest cards keep their where-to-look hint, and a quest's reputation goes to its own town. See
+  [Town Raids](#town-raids).
+- **Fair play:** a reload no longer re-rolls a chest, a diamond or a level-up offer, or rewinds your win ratio.
+- **Also:** resource icons on every amount, a destroyed Bank pays out its balance, Channel and two other cards priced
+  like banned ones are cheaper, Found Cards can show only cards in your decks, Landscape Sketchbooks are one of each,
+  and many fixes for freezes, crashes and saves.
+
+Coming from 1.24? This is what 1.25 added.
 
 - **Custom difficulty:** "Advanced..." on the new-game screen fine-tunes 183 settings on top of a preset, with search,
   share codes and a mid-run editor in Settings > Difficulty > Edit... Change a few at a time. See
@@ -1682,7 +1704,7 @@ Random (narrow drop-downs say "Any"), or pick one of your race's sets - a set an
 isn't offered. Any left on Random are drawn at random from the rest, so two runs as the same race on
 Hard can start with different sets. A **Doppelganger** has no sets of its own: it always has four
 drop-downs, each listing every other race's sets (58 in all, a scrolling list), and the difficulty decides
-how many of them start open, from the left. A check mark shows an open box and a padlock a locked one. You
+how many of them start open, from the left. A swung-open padlock shows an open box and a closed one a locked box. You
 can still change a locked box, and its set stays one of your four: you research it later. An Any is rolled
 in its own box, so an Any behind a padlock stays a surprise. A new race or difficulty puts the drop-downs
 back to Random, though a Doppelganger keeps its picks when the difficulty changes. The
@@ -2275,7 +2297,7 @@ game built on the Forge rules engine.
 ### How do I update the game to the latest version of Forge?
 
 You can't, and you don't need to. Each release is pinned to one tested Forge build, named in its release
-notes - this version runs on Forge 2.0.16 (the 10.28 build). Forge's own updater is switched off on purpose,
+notes - this version runs on Forge 2.0.16 (the 11.01 build). Forge's own updater is switched off on purpose,
 because a different engine underneath can break your world. Engine updates come to you with new Forsaken
 Realms releases.
 
@@ -2303,7 +2325,7 @@ session (grab it before restarting, or pick the matching dated file). Screenshot
 
 ---
 
-*This guide covers The Forsaken Realms v1.25, as of 2026-10-29. See `MOD_CHANGELOG.md` in the
+*This guide covers The Forsaken Realms v1.26, as of 2026-11-03. See `MOD_CHANGELOG.md` in the
 repository for the full history of how the game got here, if you're curious.*
 
 ## Support & Community

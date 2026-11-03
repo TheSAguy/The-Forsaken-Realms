@@ -1,16 +1,16 @@
 """The Discord FAQ: (topic, short label, message). Each message must stay under Discord's 2,000 characters."""
 
 # The released version the FAQ describes; build_page.py shows it in the page header. One line to change per release.
-FAQ_VERSION = "v1.25"
+FAQ_VERSION = "v1.26"
 
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-# Toward 1.26 (round 933 set it from a diff against tfr-v1.25; v1.25's own set was {3, 6, 7, 9, 20, 23}, all posted):
-# 10 raids (865, 866), 12 research's starting sets (873), 14 races and the Doppelganger (873, 879, 882), 15 a destroyed
-# Bank pays out (933), 17 the Capitol as a target (933), 19 Jumpstart's 25-win cutoff (933), 23 achievements (899) and
-# the 1,000-trigger batch (933). Message 1's header joins when FAQ_VERSION moves to v1.26.
-EDITED = {10, 12, 14, 15, 17, 19, 23}
+# 1.26 (rounds 933 and 936 set it from a diff against tfr-v1.25; v1.25's own set was {3, 6, 7, 9, 20, 23}, all posted):
+# 1 the header's version, 8 the Realm Journal (936), 10 raids (865, 866), 12 research's starting sets (873), 14 races and
+# the Doppelganger (873, 879, 882), 15 a destroyed Bank pays out (933), 17 the Capitol as a target (933), 19 Jumpstart's
+# 25-win cutoff (933), 23 achievements (899) and the 1,000-trigger batch (933). Nothing is new, so Support stays last.
+EDITED = {1, 8, 10, 12, 14, 15, 17, 19, 23}
 ADDED = set()
 
 M = []
@@ -135,6 +135,9 @@ M.append(("Legends and places that come with your level", "Legends & places", r"
 
 **Q: Where are the legends? Why do I keep meeting the same one?**
 **A:** Legends (dragon lords, gods, Slivers, the Arena's wandering champions) only roam the land of a color that is **Unhappy or at War** with you - rarely, one at a time, and the ones you haven't met first. You're told which one it is and where, a gold dot marks it on the map, and it waits **3 days** for you to come to it. A legend starts its duels with a Gemstone Mine in play.
+
+**Q: Where can I see the creatures I've met?**
+**A:** In the **Journal** on your character sheet (Quest log > **Status**): every creature and legend you've met this run, what you know of each, the decks you've fought, and a mark on enemies that will start with extra Wastes from your win streak. On PC, Alt-click an enemy to open its page.
 
 **Q: Where did these new places on my map come from?**
 **A:** 25 places from the Realm of Legends open up as your Ascendance level climbs, each in its own color's land, with a notice saying which way:

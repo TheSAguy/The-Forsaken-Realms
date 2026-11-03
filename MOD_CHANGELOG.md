@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 936: release prep for 1.26 - the guide, the FAQ and the notes (2026-11-02)
+
+The user: "I'd like for you to do as much as you can tonight, so we can release 1.26 tomorrow." Nothing is tagged, pushed,
+published or posted; the user does that. Files: `GUIDE.md`, `GUIDE.html` (regenerated), `dev-tools/discord_faq/messages.py`,
+new `RELEASE_NOTES_v1.26.md`; outside the repo, `notes/release-notes-1.26.md`, `notes/faq-1.26-edits.md`,
+`notes/faq-1.26.html` and `notes/release-1.26-posts.md`.
+
+- **GUIDE:** "What's New in 1.26" in 1.25's form (a short linked list), with the new-game answer in its intro: the Journal,
+  the Doppelganger, the starting-set choice, the golden Capitol, the stronger AI, quests and raids, fair play and the
+  rest. 1.25's list follows as "Coming from 1.24?", then the older ones as before. Also: the Forge build line reads 11.01,
+  the footer v1.26 as of 2026-11-03, and the starting-set drop-downs say a swung-open padlock marks an open box (round 886;
+  it said a check mark).
+- **FAQ:** `FAQ_VERSION = "v1.26"` (message 1's header); message 8 gets a Journal question (the release reminders asked
+  for one; 1,965 characters). `EDITED` = {1, 8, 10, 12, 14, 15, 17, 19, 23}, every message changed since `tfr-v1.25`;
+  `ADDED` stays empty, so Support stays last. Paste list `notes/faq-1.26-edits.md`, copy page `notes/faq-1.26.html`
+  (`build_page.py`); the artifact is republished at release.
+- **Release notes:** the user-seen draft brought up to rounds 919-935 (duel fixes, stability, Android, the corrected
+  guide), the repo copy with 1.25's Android section and a marked placeholder for the new-game line. The answer under it:
+  the Doppelganger and choosing starting sets need a new game (New Game+ keeps the race and draws its sets at random);
+  the golden Capitol and the mines are map art, the Journal reads the save's own record, and seeded chests need no save
+  field (round 925 tested old saves). Read from the rounds' entries; no old save was loaded for this list.
+- **Posts** (`notes/release-1.26-posts.md`, each a `text` block): the Discord announcement (1,282 characters, a `<LINK>`
+  placeholder), the reply to Brotman on the starting-set choice (rounds 872-873) and the reply to Tallennar, updated to
+  say the loop draw and the Oura crash are fixed in 1.26.
+- **Not here:** rounds 932 and 934's lines in the notes (they land after this), and the version bump (its own commit,
+  after the code thread's rounds).
+
 ## Round 935: the public repo stops naming the user's private projects (2026-11-02)
 
 The repo is public and must not name the user's other, private games, repos or projects (Fable review P3-64 and verify-c's
