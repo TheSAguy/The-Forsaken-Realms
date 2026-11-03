@@ -2988,6 +2988,12 @@ public class World implements Disposable, SaveFileContent {
             treasureHoles.clear();
             treasureVersion = 0;
             treasureStamp++;
+            // Round 932 (Fable P2-18): World is one per app run, and these were reset only by a load, so a New Game or
+            // New Game+ in the same run kept the last world's fires and the rune's other half (and saved them).
+            bonfires.clear();
+            bonfireStamp++;
+            yinYangAnchor = null;
+            yinYangStamp++;
             pillages.clear(); // round 484: a new world starts with no town under raid
             pillageWeek = -1;
             // 2026-09-02 review finding: the one-shot full-map reveal flag survived into a New Game

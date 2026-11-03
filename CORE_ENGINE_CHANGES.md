@@ -43,6 +43,7 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): the placement's `speed` and `flying` go to `mob.ownData()`, not the shared `getData()`.
 - `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): `loadMap` sets `effect = null` before reading the level's `dungeonEffect`.
 - `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): `dungeonFailedDialog`'s click listener is one-shot (`exited`) and calls `hideDialog()` before `exitDungeon`.
+- `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): `generateNew`'s TFR reset block also clears `bonfires` and `yinYangAnchor` and bumps their stamps.
 
 ### Round 931 - the must-fix list before 1.26
 
