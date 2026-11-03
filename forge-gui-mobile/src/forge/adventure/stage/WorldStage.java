@@ -1249,6 +1249,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
         } catch (Exception e) {
             System.err.println("Error loading map...");
             e.printStackTrace();
+            // Round 934 (Fable P3-33): the player is still on the world map; a map that threw mid-load left isInMap set,
+            // so saves said "not saved" and Resume opened a black TileMapScene until another place loaded.
+            MapStage.getInstance().clearIsInMap();
         }
     }
 

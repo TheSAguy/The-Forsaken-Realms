@@ -47,6 +47,7 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): TFR's `rebuildFogOfWarPixmap` disposes and nulls the pixmap when fog is off. (P3-24)
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): `generateNew`'s `preventSystemSleep(false)` is in a `finally`. (P3-27)
 - `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): `clearCache` nulls the three `pending*Message` fields. (P3-29)
+- `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): `loadPOI`'s catch calls `MapStage.clearIsInMap()`. (P3-33)
 
 ### Round 932 - rules and state from the Fable review
 

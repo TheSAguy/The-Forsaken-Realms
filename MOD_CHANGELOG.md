@@ -14333,6 +14333,7 @@ The fix list's round 934 (`C:\TFR\notes\morning-1103-fix-list.md`): the privacy 
 - **No fog-of-war image is left over (Fable P3-24).** With fog off, `rebuildFogOfWarPixmap` returned before disposing the last world's 2800x2800 pixmap (about 31 MB native), and `getBiomeImage()` kept handing it out. Disposed and nulled there. File: `world/World.java` (stock).
 - **A failed world generation lets the phone sleep (Fable P3-27).** `preventSystemSleep(false)` sat at the end of `generateNew`'s `try`; it is in a `finally`. File: `world/World.java` (stock).
 - **A load or New Game+ forgets the last game's end splash (Fable P3-29).** The deferred victory, defeat and one-away messages were cleared only by `enter()`, so one set inside a place and followed by a load showed on the new game's first world-map entry (the defeat dialog's only button goes to the menu). `clearCache` clears them. File: `stage/WorldStage.java` (stock).
+- **A place that fails to load leaves the player on the world map (Fable P3-33).** `loadPOI`'s catch left `MapStage.isInMap` set: saves said "not saved" and Resume opened a black map until another place loaded. It calls `clearIsInMap()`. File: `stage/WorldStage.java` (stock).
 
 ## Round 933: the GUIDE, the FAQ and a tooltip say what the code does (2026-11-02)
 
