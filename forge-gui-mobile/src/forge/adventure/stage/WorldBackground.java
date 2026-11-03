@@ -412,6 +412,8 @@ public class WorldBackground extends Actor {
     }
 
     public void loadChunk(int x, int y) {
+        if (x < 0 || y < 0 || x >= chunksSprites.length || y >= chunksSprites[0].length)
+            return; // round 934: the arrays are chunk-sized now; WorldStage.enter calls this unchecked
         if (chunksSprites[x][y] == null)
             chunksSprites[x][y] = MapSprite.getMapSprites(x, y, MapSprite.SpriteLayer);
 
@@ -523,10 +525,14 @@ public class WorldBackground extends Actor {
                     if (texture != null)
                         texture.dispose();
         }
-        chunks = new Texture[WorldSave.getCurrentSave().getWorld().getWidthInTiles()][WorldSave.getCurrentSave().getWorld().getHeightInTiles()];
-        Array[][] createChunks = new Array[WorldSave.getCurrentSave().getWorld().getWidthInTiles()][WorldSave.getCurrentSave().getWorld().getHeightInTiles()];
+        // TFR round 934 (Fable P3-26, Android memory): sized in chunks, as upstream does, plus one for a partial edge chunk.
+        // Sized in tiles (700 x 700, 24 x 24 used), the three arrays held about 6 MB of references, rebuilt on every load.
+        int widthInChunks = WorldSave.getCurrentSave().getWorld().getWidthInChunks() + 1;
+        int heightInChunks = WorldSave.getCurrentSave().getWorld().getHeightInChunks() + 1;
+        chunks = new Texture[widthInChunks][heightInChunks];
+        Array[][] createChunks = new Array[widthInChunks][heightInChunks];
         chunksSprites = createChunks;
-        Array[][] createSprites = new Array[WorldSave.getCurrentSave().getWorld().getWidthInTiles()][WorldSave.getCurrentSave().getWorld().getHeightInTiles()];
+        Array[][] createSprites = new Array[widthInChunks][heightInChunks];
         chunksSpritesBackground = createSprites;
 
 
