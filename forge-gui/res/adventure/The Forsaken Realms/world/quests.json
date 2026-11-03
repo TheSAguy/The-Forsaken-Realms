@@ -1411,7 +1411,9 @@
 													"count": 300,
 													"addMaxCount": 100
 												}
-											]
+											],
+											"addMapReputation": -2,
+											"POIReference": ""
 										}
 									],
 									"name": "Investigate the dropped bag",
@@ -5006,6 +5008,12 @@
 											"name": "\"Keep the loot coming and you won't find another $(enemy_1) on its feet again.\" (Accept Quest)"
 										},
 										{
+											"action": [
+												{
+													"addMapReputation": -1,
+													"POIReference": ""
+												}
+											],
 											"name": "\"On second thought, I have better things to do.\" (Decline Quest)",
 											"text": "Obviously annoyed at the pointless distraction, the two return to their conversation without you. (-1 Local [+Reputation])"
 										},
@@ -5282,6 +5290,12 @@
 													"text": "\"I shall do the same as I ask of you. Defeat 3 $(enemy_1)s. Once I finish, I will return here and wait for you.\"",
 													"options": [
 														{
+															"action": [
+																{
+																	"addMapReputation": -1,
+																	"POIReference": ""
+																}
+															],
 															"name": "\"There. You're solving your own problems. Now get out of here.\" (Decline Quest)",
 															"text": "His brow furrows, not accustomed to being spoken to in such a manner. (-1 Local [+Reputation])",
 															"options": [
