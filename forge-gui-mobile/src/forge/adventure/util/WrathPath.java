@@ -171,6 +171,24 @@ public final class WrathPath {
         });
     }
 
+    /**
+     * Round 934 (Fable P3-49, Android memory): drops the search buffers (about 6 MB at 700x700) and the grid when a hunt
+     * ends or a game loads; the next request builds them again. Queued searches are skipped, and the buffers are freed on
+     * the worker, after any search already running there.
+     */
+    public static void release() {
+        latest.incrementAndGet();
+        grid = null;
+        worker.execute(() -> {
+            boolean held = cost != null;
+            cost = null;
+            parent = stamp = heapNode = null;
+            heapKey = null;
+            if (held)
+                System.out.println("[TFR-Wrath] path buffers released");
+        });
+    }
+
     // Search buffers, reused (worker thread only).
     private static float[] cost;
     private static int[] parent, stamp, heapNode;

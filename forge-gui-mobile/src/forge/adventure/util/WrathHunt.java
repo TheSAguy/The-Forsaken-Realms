@@ -97,6 +97,7 @@ public final class WrathHunt {
         pendingBounty = null;
         hunter = null;
         forgetRoute();
+        WrathPath.release(); // round 934 (P3-49)
     }
 
     private static void forgetRoute() {
@@ -405,6 +406,7 @@ public final class WrathHunt {
         EnemySprite h = hunter;
         hunter = null;
         forgetRoute();
+        WrathPath.release(); // round 934 (P3-49): its search buffers too
         if (h == null)
             return;
         System.out.println("[TFR-Wrath] fades: " + h.getName() + " at (" + tileOf(h.getX() + h.getWidth() / 2f) + ","
