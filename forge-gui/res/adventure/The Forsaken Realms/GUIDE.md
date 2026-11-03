@@ -349,8 +349,8 @@ has a map torn into nine pieces, and an Archmage guarding it.
 - **Map Fragments.** A Wastes, White, Blue, Black, Red or Green **Map Fragment** is a piece in item form: use it from
   your inventory and it fits the next piece into that map. A whole map, or one whose treasure you've dug up, refuses it
   and it stays in your bag (it sells, but no shop stocks it). Fragments come from:
-  - **the five AI capitals' Arenas** - win all three rounds and the prize is that color's fragment 1 time in 9, in
-    place of one of the capital's eight items;
+  - **the five AI capitals' Arenas** - win all three rounds and the prize is that color's fragment about 1 time in 15,
+    in place of one of the capital's fourteen items;
   - **the Archaeologist** - about 1 expedition in 65 brings back a fragment for a map that still needs one;
   - **a level-up reward**, offered while any map still lacks pieces (see [Ascendance](#ascendance---your-level)).
 - **The Spade.** Your first piece, from an obelisk or a fragment, comes with an old **Spade**. Wear it in a utility
@@ -507,6 +507,8 @@ never stack:
 
 - **It's paid with the loot.** A win's Power shows as a card among its loot and is yours when you collect it. An Arena
   match pays at once; Inn tournament matches pay at the tournament's end instead (below).
+- **The Arena pays half.** An Arena duel, a Coin Challenge and the bracket's own prize pay half of what the same win
+  pays elsewhere, and an Arena win is never a first win: only a win outside the Arena counts for that.
 - **Outgrown enemies pay less.** Above level 8 an Apprentice's win pays 10% less for each level you have over it, above
   15 an Adept's and above 22 a Master's - but never less than 20% (from level 16, 23 and 30). Archmages never. A boss's
   or legend's own rank counts the same way.
@@ -527,7 +529,7 @@ never stack:
 | A side quest / a story quest (the introduction, or the tutorial, pays its 50 in full - that is level 1) | 17 / 43 |
 | Stopping an invasion, by its toughest invader: Apprentice / Adept / Master / Archmage | 43 / 64 / 85 / 128 |
 | Driving the raiders from a pillaged town | 21 |
-| Winning an Arena bracket (each match also pays its duel) | 34 |
+| Winning an Arena bracket (each match also pays its duel, both at half) | 17 |
 | An Inn tournament: each match won, and more for winning it without a loss | about 13 each, +26 |
 | Digging up a treasure (its guardian's duel pays as well) | 64 |
 | An overworld chest - one outcome in seven (one in five in week 1) | 13 |
@@ -884,7 +886,7 @@ rarity), and an escalating-cost **Re-roll** lets you swap out an ante you don't 
 before the duel starts — re-rolls won't repeat a card you just rejected. Or hand over a **Bronze
 Coin** (the button on the "Card Lost" screen) - see [The Bronze Challenge Coin](#the-bronze-challenge-coin).
 
-Innkeepers run weekly **tournaments** (Draft, Sealed, and - once per player - Jumpstart) — these
+Innkeepers run weekly **tournaments** (Draft, Sealed, and - once per player, early in a run - Jumpstart) — these
 are entry-fee events with prize support, **no ante at stake**. They also offer an opt-in "simulate
 the AI rounds" mode if you'd rather not watch every AI match play out. Details in
 [Inn Tournaments](#inn-tournaments).
@@ -908,9 +910,9 @@ Challenging bracket seats only Masters and Archmages, at least two of them Archm
 - **Coin holders join your own Arena.** When enemies hold your Bronze Coins, one of them may take a seat in your own
   Arena's bracket: a 50% chance with one such enemy, 75% with two, certain with three or more (in the Challenging
   bracket, only a Master or Archmage holder). Beat it there and you take the coin back.
-- **AI capital prizes.** Win all three rounds at an AI capital and you take one item from that capital's own set of
-  eight, in its color's style - helper shoes, a Planeswalker amulet, a color ring, a mask, armor and weapons - and no two
-  capitals share an item. One time in nine the prize is that color's **Map Fragment** instead (see
+- **AI capital prizes.** Win all three rounds at an AI capital and you take one item from that capital's own list of
+  fourteen - pieces of its color's Regalia and of one Bane set (see [Gear Sets](#gear-sets)) - and no two capitals
+  share an item. About one time in fifteen the prize is that color's **Map Fragment** instead (see
   [Lost Treasure Hunts](#lost-treasure-hunts)).
 
 ### Item Economy & Shops
@@ -1531,8 +1533,8 @@ enemies (15% / 30%).
 | **Partner** | 80+ | **30% off** | 75% less likely | 10% faster | Entering its towns heals you to full plus 2 extra life until your next duel; all its blueprints on sale, Rare and Mythic included |
 | **Happy** | 30 to 79 | 15% off | 50% less likely | 5% faster | Its Spellsmiths serve you; Common and Uncommon blueprints |
 | **Neutral** | −29 to 29 | — | — | — | Common blueprints only |
-| **Unhappy** | −30 to −79 | 25% pricier | 15% more likely | 5% slower | No blueprints; entering its towns no longer heals you; legends walk its land |
-| **War** | −80 or worse | **40% pricier** | 50% more likely, and it may target your Capitol | 10% slower | Towns barred (you may storm them instead); its capital charges a 500 gold toll; no healing in its towns; legends and its arena champions walk its land |
+| **Unhappy** | −30 to −79 | 25% pricier | 15% more likely, your Capitol a little more | 5% slower | No blueprints; entering its towns no longer heals you; legends walk its land |
+| **War** | −80 or worse | **40% pricier** | 50% more likely, your Capitol more still | 10% slower | Towns barred (you may storm them instead); its capital charges a 500 gold toll; no healing in its towns; legends and its arena champions walk its land |
 
 Two consequences worth planning around. At **War** that color's towns shut their gates on you —
 you can storm them, once a week each, and you can still buy your way into its capital, but at a
@@ -1829,7 +1831,8 @@ and of a Sealed a silver one. The bronze coins have two separate uses.
 
 1. **Free entry to a Jumpstart tournament** at an Inn, in place of the 500 gold or 50 Shard fee -
    and since you only ever get one Jumpstart tournament (New Game+ included), only one coin ever
-   goes this way; the other two are for ransom.
+   goes this way; the other two are for ransom. Inns stop offering Jumpstart once the run has 25 duel
+   wins (Arena wins count), so look for one early.
 2. **Ante ransom.** Lose an ordinary duel and the "Card Lost" screen offers a **Bronze Coin** button:
    hand the winner a coin instead of losing your anted cards — you get every anted card back (every
    game of a best-of-3) *and* keep your gold. The life loss still applies. Beat that same kind of enemy
@@ -1863,8 +1866,9 @@ unless you've entered it or have prizes waiting. The entry fee scales with the t
 - **Re-roll** the offered tournament for 15 Shards; it's guaranteed to come back different.
 - **Jumpstart comes around once per player.** Every Inn draws its Jumpstart from the same list of
   Jumpstart products, whatever your race, and the entry is 500 gold or 50 Shards (or a Bronze
-  Coin). After you have played one Jumpstart tournament - on any run, New Game+ included - Inns
-  only offer Draft and Sealed.
+  Coin). An Inn offers it only while this run has fewer than 25 duel wins (Arena wins count; a New Game+
+  starts the count over), and then about 3 deals in 10. After 25 wins, or after you have played one
+  Jumpstart tournament - on any run, New Game+ included - Inns only offer Draft and Sealed.
 - **Winning a tournament** raises that town's reputation with you by 1 - once a week per town: after a win, that
   Inn deals no new tournament until the week turns (days 8, 15, 22...), and its line reads "Won - back next week".
 - **Simulated AI rounds** belong to their own tournament and round: walk out of the Inn while they run and the next
@@ -1917,7 +1921,7 @@ color's capital and that cap is halved.
 you own — plus the ordinary towns of its two *enemy* colors on the wheel (White fights Black and
 Red, Blue fights Red and Green, Black fights Green and White, Red fights White and Blue, Green
 fights Blue and Black). It never touches an ally's towns, its own, or another color's capital.
-Your Capitol is a special case — see below.
+Your Capitol counts as one of your towns, with a few extra rules — see below.
 
 **Before the roll**, three things leave the list: any Ring City this color already went for in the
 last 7 days, any town one of its mages is already marching toward, and your Capitol for 7 days
@@ -1943,8 +1947,11 @@ So one town of yours sitting among four AI towns is picked about 6% of the time 
 Happy, 20% at Neutral, 22% at Unhappy and 27% at War. Reputation only ever changes *your* towns'
 share — it never makes a color prefer one rival over another; distance does that.
 
-**Your Capitol** is never a normal candidate. Only at **War** does a color add it to the roll, as a
-sixth option worth 5% of the pool.
+**Your Capitol** is a candidate like any town of yours: among a color's 5 nearest it takes your standing's
+weight from the table. A color that dislikes you leans on it harder. When it is among the 5 nearest, its chance of
+being picked rises by 5 points at **Unhappy** and 10 at **War**; and at **War** the color adds a share worth 5% of the
+pool on top - a sixth option when the Capitol isn't among the nearest. A mage an Unhappy or War color sends at your
+Capitol has a 5% / 10% chance to come one rank stronger (never past the week's cap).
 
 **The one guaranteed attack.** When a color's *neighbor* is wiped out, that color's next mage goes
 to a random town of yours, anywhere on the map, Capitol included if it's off cooldown. If you own
@@ -2226,7 +2233,8 @@ your last 50 duels all shift the ranks you meet. See [Enemies That Adapt to You]
 
 If a trigger keeps coming back 25 times with nobody acting and nobody losing life, the duel ends in a draw - nothing
 won or lost. A combo that drains or burns runs to the end, and so does a big batch of triggers resolving one by one
-(a hundred tokens entering with a life-gain payoff on the board). You can also open the duel menu > **Offer Draw**: the enemy
+(a hundred tokens entering with a life-gain payoff on the board), as long as it's under about 1,000 triggers at once: a batch that size
+(200 tokens with five "gain life when a creature enters" cards out) is still a draw. You can also open the duel menu > **Offer Draw**: the enemy
 accepts while a trigger loop is running (10 or more repeats) or once it has had to stop repeating one of its own
 abilities this turn - never in an ordinary duel.
 

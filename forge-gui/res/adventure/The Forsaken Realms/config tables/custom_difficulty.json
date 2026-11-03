@@ -98,7 +98,7 @@
         {
             "id": "winStreakWins", "label": "Enemy win streak", "category": "Enemies & Duels", "group": "Enemies",
             "target": "tuning.winStreakWins{D}", "min": 0, "max": 10, "step": 1,
-            "tooltip": "An enemy that has beaten you this many times in a row starts its duels with a Wastes in play, then more. 0 = never."
+            "tooltip": "An enemy you have beaten this many times in a row starts its duels with a Wastes in play, then more; one loss to it starts the count over. 0 = never."
         },
         {
             "id": "winStreakMaxSteps", "label": "Win streak steps", "category": "Enemies & Duels", "group": "Enemies",

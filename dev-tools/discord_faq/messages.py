@@ -6,8 +6,11 @@ FAQ_VERSION = "v1.25"
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-EDITED = {3, 6, 7, 9, 20, 23}  # round 790: Far Sight is +1 tile of sight per pick; round 837: the early-life floor;
-# round 848: the Notoriety deck card (7), the reload rule and a gauntlet loss (9), gauntlets (20), the loop draw (23)
+# Toward 1.26 (round 933 set it from a diff against tfr-v1.25; v1.25's own set was {3, 6, 7, 9, 20, 23}, all posted):
+# 10 raids (865, 866), 12 research's starting sets (873), 14 races and the Doppelganger (873, 879, 882), 15 a destroyed
+# Bank pays out (933), 17 the Capitol as a target (933), 19 Jumpstart's 25-win cutoff (933), 23 achievements (899) and
+# the 1,000-trigger batch (933). Message 1's header joins when FAQ_VERSION moves to v1.26.
+EDITED = {10, 12, 14, 15, 17, 19, 23}
 ADDED = set()
 
 M = []
@@ -301,7 +304,7 @@ M.append(("Shops", "Shops", r"""**Shops and Blueprints**
   - Mythic: 300 gold + 100 Shards, **Capitol only**
 - **Rules:** you can only build types you have the blueprint for, and each type only once per town. The menu lists every type anyway: buildable ones first, then "(built)", then grayed "(locked)", each showing how many cards it could stock for you right now.
 - **Stock:** your shops sell only cards from your unlocked sets. Every shop restocks weekly, and Refresh re-rolls it now for a few Shards.
-- **Re-assign Shop Type** (inside your own card shops) switches to another type you know, crediting half the old shop's gold cost. **Destroy Building** clears a slot, with no refund.
+- **Re-assign Shop Type** (inside your own card shops) switches to another type you know, crediting half the old shop's gold cost. **Destroy Building** clears a slot, with no refund (a Bank still pays its balance into your purse).
 - **Town reputation caps building:** each point of a town's own reputation allows 3 buildings there. You get +1 for restoring the town, +2 when it becomes your Capitol, +1 for each attacking mage you beat there, +1 for winning its Inn tournament, +1 for clearing a dungeon near it, +1 for driving raiders off it, and more from its Job Board quests.
 - **Capitol Land Shops:** a colored Land Shop can be repaired (50 gold) once you've visited that color's AI capital.
 - **Capital hearts:** each AI capital's Items shop sells its +1 max life once per game, not every week."""))
@@ -324,8 +327,8 @@ M.append(("Reputation", "Reputation", r"""**Reputation**
 - **Partner (80+):** card shops in that color's towns 30% off. Its war mages are 75% less likely to pick your towns. Entering its towns heals you to full plus 2 extra life until your next duel. Its Spellsmiths serve you, and all its blueprints are for sale, Rare and Mythic included.
 - **Happy (30 to 79):** 15% off. Mages 50% less likely. Its Spellsmiths serve you. Common and Uncommon blueprints for sale.
 - **Neutral (-29 to 29):** normal prices. Common blueprints only.
-- **Unhappy (-30 to -79):** 25% dearer. Mages 15% more likely. No blueprints, entering its towns no longer heals you, and its **legends** start roaming its land.
-- **War (-80 or worse):** its towns bar you (you can storm one instead, once a week per town). Its capital charges a 500 gold toll and prices there are 40% dearer. Mages 50% more likely, and it may target your Capitol. No healing in its towns. Its legends and arena champions roam its land - and its castle's front gate is open to a fight.
+- **Unhappy (-30 to -79):** 25% dearer. Mages 15% more likely, your Capitol a little more. No blueprints, entering its towns no longer heals you, and its **legends** start roaming its land.
+- **War (-80 or worse):** its towns bar you (you can storm one instead, once a week per town). Its capital charges a 500 gold toll and prices there are 40% dearer. Mages 50% more likely, your Capitol more still. No healing in its towns. Its legends and arena champions roam its land - and its castle's front gate is open to a fight.
 
 Standing also changes:
 - **Travel speed** on that color's land: +10% Partner, +5% Happy, -5% Unhappy, -10% War.
@@ -366,7 +369,7 @@ M.append(("Challenge Coins", "Coins", r"""**Challenge Coins**
 **A:** Your starting kit includes 1 Gold, 1 Silver and 3 Bronze Challenge Coins.
 - **Gold:** free entry to a Draft tournament at an Inn.
 - **Silver:** free entry to a Sealed tournament.
-- **Bronze, use 1 - free Jumpstart entry** instead of the 500 gold or 50 Shard fee. You only ever get ONE Jumpstart tournament per player (New Game+ included), so only one Bronze coin can go this way.
+- **Bronze, use 1 - free Jumpstart entry** instead of the 500 gold or 50 Shard fee. You only ever get ONE Jumpstart tournament per player (New Game+ included), so only one Bronze coin can go this way - and Inns stop offering Jumpstart once a run has 25 duel wins (Arena wins count), so look for one early.
 - **Bronze, use 2 - ante ransom.** Lose an ordinary duel while playing for ante, and the "Card Lost" screen offers a **Bronze Coin** button. You get back every card you anted in that match (every game of a best-of-3) and you keep your gold. The life loss still applies.
 
 **Getting a Bronze coin back, or a new one:**
@@ -447,7 +450,7 @@ M.append(("Achievements, enemy plates, loops and duel settings", "Achievements &
 **A:** Hold **Alt** (touch: the Units button; controller: R3). A plate over every enemy on screen shows its rank. Fought another rank of its kind? You see its deck colors too. Fought this exact rank? Also the life it would start with now, in orange when it's above normal.
 
 **Q: My duel is stuck in an endless loop. What now?**
-**A:** The AI can't repeat the same ability more than 25 times in a turn, and a trigger that comes back 25 times with nobody acting and nobody losing life ends the game in a draw. A combo that drains or burns runs to the end. The AI accepts the duel menu's **Offer Draw** while a trigger loop is running (10+ repeats) or once it has had to stop repeating one of its own abilities that turn - never in an ordinary duel. A draw is nothing won or lost: no ante, no gold, no notoriety.
+**A:** The AI can't repeat the same ability more than 25 times in a turn, and a trigger that comes back 25 times with nobody acting and nobody losing life ends the game in a draw. A combo that drains or burns runs to the end. So does a big batch of triggers resolving one by one, as long as it's under about 1,000 at once: one that size (200 tokens with five "gain life when a creature enters" cards out) is still a draw. The AI accepts the duel menu's **Offer Draw** while a trigger loop is running (10+ repeats) or once it has had to stop repeating one of its own abilities that turn - never in an ordinary duel. A draw is nothing won or lost: no ante, no gold, no notoriety.
 
 **Q: Which duel settings are worth knowing?**
 - **Show land drops in duels** (off by default): lands played this turn out of lands allowed, under each player's counts.
