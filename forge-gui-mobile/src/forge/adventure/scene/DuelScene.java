@@ -1817,7 +1817,11 @@ public class DuelScene extends ForgeScene {
         this.isArena = isArena;
         this.eventData = eventData;
         this.aiControlsPlayerSide = aiControlsPlayerSide;
-        forge.adventure.util.ReloadJab.onDuelStarted(); // round 726: a new duel - the last loss stands
+        // Round 726: a new duel - the last loss stands. Round 934 (Fable P3-17): the player's own duels only. A watched guard
+        // fight or a Deck Tester game cleared the pending loss and banked it honest, so a reload after it was free.
+        if (!aiControlsPlayerSide && (enemySprite == null || enemySprite.getData() == null
+                || enemySprite.getData().fixedDeck == null))
+            forge.adventure.util.ReloadJab.onDuelStarted();
         this.guardDeck = null;       // round 145 - never carry a guard's loadout into another duel
         this.guardStartingLife = 0;
         this.guardEffects = null;    // round 163
