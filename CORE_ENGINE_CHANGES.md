@@ -44,6 +44,7 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): `load()` clears `lastLoadError` first. (P3-1)
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `applyNewGamePlusCarry` clears `itemUses` with the items. (P3-3)
 - `forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java` (STOCK): Repair calls `reselect(data)`. (P3-16)
+- `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): TFR's `rebuildFogOfWarPixmap` disposes and nulls the pixmap when fog is off. (P3-24)
 
 ### Round 932 - rules and state from the Fable review
 

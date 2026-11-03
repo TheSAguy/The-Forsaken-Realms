@@ -7698,8 +7698,15 @@ public class World implements Disposable, SaveFileContent {
      *  toggling fog of war on mid-session (e.g. the debug HUD toggle) - normal reveals patch the
      *  pixmap incrementally via updateFogOfWarPixmap() instead of a full rebuild. */
     public void rebuildFogOfWarPixmap() {
-        if (!isFogOfWarEnabled() || biomeImage == null || explored == null)
+        if (!isFogOfWarEnabled() || biomeImage == null || explored == null) {
+            // Round 934 (Fable P3-24): the last world's 2800x2800 pixmap (about 31 MB native) went too, not only when a
+            // new one replaced it - and getBiomeImage() kept handing it out.
+            if (fogOfWarPixmap != null) {
+                fogOfWarPixmap.dispose();
+                fogOfWarPixmap = null;
+            }
             return;
+        }
         if (fogOfWarPixmap != null)
             fogOfWarPixmap.dispose();
         fogOfWarPixmap = new Pixmap(biomeImage.getWidth(), biomeImage.getHeight(), Pixmap.Format.RGBA8888);
