@@ -1234,6 +1234,8 @@ public class ResearchScene extends UIScene {
                 detail += "In a deck or a favorite - kept.";
             else if (ready) // the gold glyph ends the line (its advance reads as a space before punctuation)
                 detail += "Sold for " + player.cardSellPrice(pc) + "[+Gold]";
+            else if (!ResearchMeter.feedable(player, pc)) // round 934 (P3-9): it said "under a day off" here
+                detail += "Feeds no research. Sold for " + player.cardSellPrice(pc) + "[+Gold]";
             else
                 detail += "Sacrificed: " + daysOffText(ResearchMeter.daysOffForOne(player, pc, true, day)) + ". Sold: "
                         + daysOffText(ResearchMeter.daysOffForOne(player, pc, false, day)) + " and " + player.cardSellPrice(pc) + "[+Gold]";
@@ -1246,7 +1248,9 @@ public class ResearchScene extends UIScene {
         }
         if (foundSacrifice != null) {
             foundSacrifice.setText(foundAllSpare ? "Sacrifice all" : "Sacrifice");
-            foundSacrifice.setDisabled(spare <= 0 || ready);
+            // Round 934 (Fable P3-9): never for a card that feeds no research (a basic land, a printing outside the pool):
+            // a sacrifice is gold given up for points, and these give none.
+            foundSacrifice.setDisabled(spare <= 0 || ready || !ResearchMeter.feedable(player, pc));
         }
         // Round 817: the window is sized when it opens; a refill or a choice that adds a line (All Sets' detail, a long
         // name) squeezed the content up over the title. Size and center it again once it is on the stage.

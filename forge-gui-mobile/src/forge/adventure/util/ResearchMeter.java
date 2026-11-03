@@ -509,6 +509,11 @@ public final class ResearchMeter {
 
     /** Round 766: Found Cards' Sacrifice - up to n spare copies, no gold, double; stops at 0 days, like the window's. */
     public static int sacrificeFromLab(AdventurePlayer player, PaperCard card, int n, int currentDay) {
+        if (!feedable(player, card)) { // round 934 (Fable P3-9): it would leave for 0 points
+            System.out.println("[TFR-Research] Found Cards: " + card.getName() + " (" + card.getEdition()
+                    + ") feeds no research - not sacrificed");
+            return 0;
+        }
         String code = card.getEdition();
         int before = days(player, code, currentDay);
         boolean running = player.isResearching(code);
