@@ -848,7 +848,7 @@ public class SettingsScene extends UIScene {
         try {
             java.io.File downloads = new com.badlogic.gdx.files.FileHandle(Forge.getDeviceAdapter().getDownloadsDir()).file();
             downloads.mkdirs();
-            java.io.File zip = forge.util.LogExporter.exportLogs(downloads);
+            java.io.File zip = forge.adventure.util.LogShare.exportScrubbed(downloads); // round 934: no user name
             if (zip == null) {
                 message = localizer.getMessage("lblNoLogFilesFound");
             } else {

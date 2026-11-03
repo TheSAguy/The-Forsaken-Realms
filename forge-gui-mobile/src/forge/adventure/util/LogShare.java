@@ -59,6 +59,54 @@ public final class LogShare {
     /** "C:\Users\Name\..." / "/Users/Name/..." / "/home/name/..." - the name goes. */
     private static final Pattern USER_PATH = Pattern.compile("(?i)([\\\\/](?:Users|home)[\\\\/])[^\\\\/\\s:\"'<>|]+");
     private static final long MAX_BYTES = 8L * 1024 * 1024; // Discord's attachment limit is 10 MB
+
+    /** One log line without the PC user name: a user folder in a path, then the name itself (3+ letters, not root).
+     *  Round 934 moved it here from the send, so Export Logs scrubs the same way. */
+    static String scrub(String line) {
+        line = USER_PATH.matcher(line).replaceAll("$1<user>");
+        String user = System.getProperty("user.name", "");
+        return user.length() >= 3 && !"root".equals(user) ? line.replace(user, "<user>") : line;
+    }
+
+    /**
+     * Round 934 (Fable P3-57, privacy): Export Logs zipped the raw logs, user name and all (every path line, its own
+     * "[TFR-Logs] exported to" line included), and its dialog tells players to attach the zip on Discord. Stock
+     * LogExporter builds the zip in a temp folder (it snapshots the running log); this writes each of its logs into
+     * destDir a line at a time through {@link #scrub}, under the same name. Null when there was no log.
+     */
+    public static File exportScrubbed(File destDir) throws java.io.IOException {
+        File temp = java.nio.file.Files.createTempDirectory("tfr-logs").toFile();
+        try {
+            File raw = forge.util.LogExporter.exportLogs(temp);
+            if (raw == null)
+                return null;
+            File out = new File(destDir, raw.getName());
+            int lines = 0;
+            try (java.util.zip.ZipInputStream in = new java.util.zip.ZipInputStream(new FileInputStream(raw));
+                 java.util.zip.ZipOutputStream zip = new java.util.zip.ZipOutputStream(new java.io.FileOutputStream(out))) {
+                for (java.util.zip.ZipEntry entry = in.getNextEntry(); entry != null; entry = in.getNextEntry()) {
+                    zip.putNextEntry(new java.util.zip.ZipEntry(entry.getName()));
+                    // Not closed: that would close the zip streams. Each entry's reads end at the entry's end.
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+                    Writer writer = new BufferedWriter(new OutputStreamWriter(zip, StandardCharsets.UTF_8));
+                    for (String line = reader.readLine(); line != null; line = reader.readLine(), lines++) {
+                        writer.write(scrub(line));
+                        writer.write('\n');
+                    }
+                    writer.flush();
+                    zip.closeEntry();
+                }
+            }
+            System.out.println("[TFR-Logs] export scrubbed of the user name: " + lines + " line(s)");
+            return out;
+        } finally {
+            File[] left = temp.listFiles();
+            if (left != null)
+                for (File f : left)
+                    f.delete();
+            temp.delete();
+        }
+    }
     static final int MAX_PER_LAUNCH = 3;
     private static boolean startedThisRun;
 
@@ -227,8 +275,6 @@ public final class LogShare {
                 System.out.println("[TFR-LogShare] " + log.getName() + " is " + log.length() / 1024 + " KB - too big, not sent");
                 return Outcome.TOO_BIG;
             }
-            String user = System.getProperty("user.name", "");
-            boolean scrubUser = user.length() >= 3 && !"root".equals(user);
             ByteArrayOutputStream zipped = new ByteArrayOutputStream();
             // Round 906: a line at a time, where the whole log as a String peaked near 130 MB of heap at the 32 MB limit
             // (P3-20). The limit stays: a log that size zips well under Discord's. Neither scrub spans a line break.
@@ -237,8 +283,7 @@ public final class LogShare {
                 zip.putNextEntry(new ZipEntry(log.getName()));
                 Writer out = new BufferedWriter(new OutputStreamWriter(zip, StandardCharsets.UTF_8));
                 for (String line = in.readLine(); line != null; line = in.readLine()) {
-                    line = USER_PATH.matcher(line).replaceAll("$1<user>");
-                    out.write(scrubUser ? line.replace(user, "<user>") : line);
+                    out.write(scrub(line));
                     out.write('\n');
                 }
                 out.flush();

@@ -35,6 +35,10 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 934 - small fixes, Android memory and privacy from the Fable review
+
+- `forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java` (STOCK): Export Logs calls `LogShare.exportScrubbed` in place of stock `LogExporter.exportLogs` (which it still uses underneath). (P3-57)
+
 ### Round 932 - rules and state from the Fable review
 
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `trimAutoSellPile(card, why)` (new); `removeCardsForResearch` calls it in place of its own past-the-owned-count trim; `sellAutoSellPile` trims every card on the pile before the sale.

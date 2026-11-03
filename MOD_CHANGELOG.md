@@ -14315,6 +14315,12 @@ P3-64 section). Comments and docs only; no behavior change. Files: `util/TfrFont
 - **Tested:** `forge-gui-mobile` compiles (Maven exit 0). A Java comment edit trips the packager's jar-freshness guard:
   rebuild the jar before the next package.
 
+## Round 934: small fixes, Android memory and privacy from the Fable review (2026-11-02)
+
+The fix list's round 934 (`C:\TFR\notes\morning-1103-fix-list.md`): the privacy fix, the resource-icon rule, the Android memory batch and the safe P3s the review's check listed, one commit each. Skipped: P3-45 (the check found it wrong: the quest log frees the raid mini-map on its next visit).
+
+- **Export Logs takes the user name out (Fable P3-57, privacy).** Settings' Export Logs zipped the raw logs: every path line carries `C:\Users\<name>\...`, its own `[TFR-Logs] exported to` line included, and its dialog tells players to attach the zip on Discord. Log sharing scrubbed the name; this did not. `LogShare.scrub(line)` is now the one scrub (the user folder in a path, then the name itself, 3+ letters and not root), and `LogShare.exportScrubbed(dir)` has stock `LogExporter` build its zip (with the running log's snapshot) in a temp folder, then writes each log into Downloads a line at a time through the scrub, under the same name; the temp folder goes. `[TFR-Logs] export scrubbed of the user name: N line(s)`. Stock `LogExporter` is untouched. Files: `util/LogShare.java`, `scene/SettingsScene.java` (stock).
+
 ## Round 933: the GUIDE, the FAQ and a tooltip say what the code does (2026-11-02)
 
 From the Fable review's docs findings (`notes/fable-review-2026-11-02.md` P2-22 to P2-25 and P3-66's prize aside, as
