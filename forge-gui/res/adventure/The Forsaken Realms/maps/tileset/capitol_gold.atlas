@@ -1,5 +1,5 @@
 capitol_gold.png
-size: 120,48
+size: 200,48
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -12,3 +12,9 @@ ArmoryLevel1
 ArmoryLevel2
   xy: 72, 0
   size: 48, 48
+PlainShop
+  xy: 120, 0
+  size: 40, 40
+SpecialShop
+  xy: 160, 0
+  size: 40, 40

@@ -14264,6 +14264,48 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 940: the golden Capitol's Card Shop and Booster Shop (2026-11-03)
+
+The Art thread's next pair for the golden Capitol (Orazca). The user picked one cell from each of two ChatGPT sheets
+("Got the shop art back ... I like these. For the booster, we can remove the card images"), then approved the install:
+"Yes, install at 40". Capitol only ("Yes, Capitol only"), like round 867's Trader and round 874's Armory.
+
+- **Card Shop** (`PlainShop`): a tall gabled house with a chimney, a blue and gold striped awning, and a gold star
+  banner over the door. Converted as drawn, 24 colors, 40x40.
+- **Booster Shop** (`SpecialShop`): a red pagoda roof with a gold finial, gold corner posts, and a green and gold
+  awning. Converted as drawn, 32 colors (24 turns the awning olive), 40x40. Two small hand edits:
+  - the fanned-cards sign is painted out, in the sprite's own colors: the tower wall runs down to the awning, with the
+    lamp niche as a lit window;
+  - one converter speck, dark green, is removed from the outline under the door.
+- **The switch:** `EconomyBuildings.getPlainShopSprite()` and `getSpecialShopSprite()` read the new `PlainShop` and
+  `SpecialShop` regions on the plane's `capitol_gold.atlas` when `TownRestoration.isCurrentTownCapitol()`. Every other
+  town keeps `economy_buildings`' regions. Each logs `[TFR-CapitolArt] Card Shop / Booster Shop (special shop) drawn from
+  <atlas> (the Capitol | an ordinary town)` when its choice changes. `ShopActor.draw()` is the only caller of either
+  getter (Grep, and no data file names the regions), so only the map's lot draw changes. In an ordinary town, a booster
+  pack card shop also draws the special-shop sprite, and it keeps today's art. `drawOverFootprint()` centers any
+  region size, so 40x40 needs no code change.
+- **Page:** `capitol_gold.png` grows from 120x48 to 200x48. The Card Shop is at x 120 and the Booster Shop at x 160.
+  The first 120 px are byte-identical to before.
+
+Checked:
+- Maven package: exit 0.
+- An agent copy (`C:\TFR\agent-shops`, its own profile and cache) with a fresh cheats world and `capitol raise`. The
+  Booster Shop was built on lot 85 and a Card Shop on lot 87, with the Armory (86) and Trader (88) beside them. All four
+  show the gold art. Log: Booster Shop and Card Shop "drawn from capitol_gold.atlas (the Capitol)".
+- In an ordinary town (Flowering Village, a restored Waste Town), a card shop was built on lot 54. It shows today's
+  `PlainShop` art. Log: "Card Shop drawn from economy_buildings.atlas (an ordinary town)".
+- No duels were played. Shots: `C:\TFR\notes\r940-shots` (`01b-capitol-shop-row-2x.png`,
+  `03b-ordinary-town-card-shop-2x.png`).
+
+Not checked:
+- A booster pack shop in an ordinary town: no Special card shop was unlocked in a fresh world. It shares the Card
+  Shop's switch.
+- Android.
+
+Open: each lot's shop-type sign (shop.tx, offset 16,-16) sits over the lower-right corner of the 40 px art, as it did
+on the 32 px art, but now it covers the right window. Round 875 dropped the Armory lot's sign for the same reason; that
+choice is the user's.
+
 ## Round 939: a running game can change its level - Change level... in Settings > Difficulty > Edit... (2026-11-03)
 
 A player said the difficulty can't change mid-game. True of the preset until now: about 160 custom knobs could change,

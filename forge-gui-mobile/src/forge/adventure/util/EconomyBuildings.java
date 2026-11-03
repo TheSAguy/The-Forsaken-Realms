@@ -116,6 +116,7 @@ public class EconomyBuildings {
     private static final String CAPITOL_GOLD_ATLAS = "maps/tileset/capitol_gold.atlas";
     private static String lastTraderArt;
     private static String lastArmoryArt; // round 874: the Capitol's Armory, the same switch
+    private static String lastPlainShopArt, lastSpecialShopArt; // round 940: the Capitol's Card Shop and Booster Shop
     // Guard tier map-indicator icons (2026-08-11, MOD_SCOPE.md #22) - 8x8, cropped from
     // common/maps/tileset/dungeon.png (user-supplied IDs 83/84/86/88) and shrunk per the user's
     // own mockup estimate. See PointOfInterestMapSprite for where these actually get drawn.
@@ -810,12 +811,30 @@ public class EconomyBuildings {
         return data != null && data.name != null && data.name.startsWith("Ring");
     }
 
+    /** Round 940: the Capitol's Card Shop is the golden Capitol's own sprite (capitol_gold.atlas, 40x40); every other
+     *  town keeps economy_buildings' PlainShop. ShopActor.draw() is the only caller (the map's lot draw). */
     public static TextureRegion getPlainShopSprite() {
-        return Config.instance().getAtlasSprite(ATLAS, "PlainShop");
+        boolean capitol = TownRestoration.isCurrentTownCapitol();
+        String art = capitol ? "capitol_gold" : "economy_buildings";
+        if (!art.equals(lastPlainShopArt)) {
+            lastPlainShopArt = art;
+            System.out.println("[TFR-CapitolArt] Card Shop drawn from " + art + ".atlas ("
+                    + (capitol ? "the Capitol" : "an ordinary town") + ")");
+        }
+        return Config.instance().getAtlasSprite(capitol ? CAPITOL_GOLD_ATLAS : ATLAS, "PlainShop");
     }
 
+    /** Round 940: the Capitol's Booster Shop (the special-shop sprite) is the golden Capitol's own, 40x40, the same
+     *  switch as getPlainShopSprite(). */
     public static TextureRegion getSpecialShopSprite() {
-        return Config.instance().getAtlasSprite(ATLAS, "SpecialShop");
+        boolean capitol = TownRestoration.isCurrentTownCapitol();
+        String art = capitol ? "capitol_gold" : "economy_buildings";
+        if (!art.equals(lastSpecialShopArt)) {
+            lastSpecialShopArt = art;
+            System.out.println("[TFR-CapitolArt] Booster Shop (special shop) drawn from " + art + ".atlas ("
+                    + (capitol ? "the Capitol" : "an ordinary town") + ")");
+        }
+        return Config.instance().getAtlasSprite(capitol ? CAPITOL_GOLD_ATLAS : ATLAS, "SpecialShop");
     }
 
     /** Armory icon, level-aware (Task #8/#13, 2026-08-11) - real art for both levels now lives in
