@@ -1543,6 +1543,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             inventoryItems.clear();
             equippedItems.clear();
             armoryStorage.clear();
+            itemUses.clear(); // round 934 (Fable P3-3): a kit left behind takes its uses with it
             onEquipmentChange.emit();
         } else if (!armoryStorage.isEmpty()) {
             // The storage opens at the Capitol's Level 2 Armory, which a new run has to raise again - its contents
