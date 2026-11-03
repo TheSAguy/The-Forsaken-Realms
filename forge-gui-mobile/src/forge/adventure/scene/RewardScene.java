@@ -1360,7 +1360,7 @@ public class RewardScene extends UIScene {
         liftModButtonsAboveCards(); // round 253 (Android): see the method
         if (type == Type.Shop) {
             if (floorRaised > 0)
-                System.out.println("[TFR-Shop] floor: " + floorRaised + " card(s) in "
+                System.out.println("[TFR-Shop] floor: " + floorRaised + " card(s) or pack(s) in " // round 932: packs too
                         + (shopActor.getShopData() == null ? "a shop" : shopActor.getShopData().name)
                         + " raised to their sell price + 1 (" + floorExample + ")");
             updateBuyButtons();
@@ -1473,6 +1473,15 @@ public class RewardScene extends UIScene {
                 if (sell > 0 && price < sell + 1) {
                     if (floorRaised++ == 0)
                         floorExample = reward.getCard().getName() + " " + price + " -> " + (sell + 1) + ", sells for " + sell;
+                    price = sell + 1;
+                }
+            } else if (Reward.Type.CardPack.equals(reward.getType()) && reward.getDeck() != null) {
+                // TFR round 932 (Fable P2-3): a pack too, at what its set's packs sell for on average (never its own
+                // cards). A Fallen Empires pack (the price list's 200) and a discounted pack resold at a profit.
+                int sell = Current.player().expectedPackSellPrice(reward.getDeck().getComment());
+                if (sell > 0 && price < sell + 1) {
+                    if (floorRaised++ == 0)
+                        floorExample = reward.getDeck().getComment() + " pack " + price + " -> " + (sell + 1) + ", sells for about " + sell;
                     price = sell + 1;
                 }
             }

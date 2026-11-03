@@ -46,6 +46,8 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): `generateNew`'s TFR reset block also clears `bonfires` and `yinYangAnchor` and bumps their stamps.
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): TFR's `applyDayNightTerrainLife` masks the road bits (`& ~roadMask()`).
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `create()` copies `rewardMaxFactor` with the other difficulty fields (upstream leaves it out). Drop this line if upstream adds it.
+- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `expectedPackSellPrice(set)` (new), a pack's average resale from its set's booster template.
+- `forge-gui-mobile/src/forge/adventure/scene/RewardScene.java` (STOCK): the shop button floors a `CardPack` at `expectedPackSellPrice + 1`, next to round 843's card floor; the floor log line says "card(s) or pack(s)".
 
 ### Round 931 - the must-fix list before 1.26
 
