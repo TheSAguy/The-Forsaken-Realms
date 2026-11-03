@@ -38,6 +38,7 @@ md` already gets updated after every change.
 ### Round 931 - the must-fix list before 1.26
 
 - `forge-gui/res/cardsfolder/t/thoughtsteal_sprites.txt` (STOCK card script): the spellbook's "Vendillion Clique" is "Vendilion Clique", where `DraftEffect` threw on the unknown name. Drop this line when upstream fixes its typo.
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): `filenameToSlot` accepts a numbered slot only when the whole name matches `\d{1,9}_save_slot\.sav`, where any `_...sav` name reached `parseInt` and an Explorer copy threw.
 
 ### Round 930 - a big batch of life-gain triggers no longer draws its own duel
 

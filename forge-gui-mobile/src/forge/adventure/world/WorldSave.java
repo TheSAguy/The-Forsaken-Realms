@@ -513,9 +513,11 @@ public class WorldSave {
             return AUTO_SAVE_SLOT;
         if (name.equals("quick_save.sav"))
             return QUICK_SAVE_SLOT;
-        if (!name.contains("_") || !name.endsWith(".sav"))
+        // TFR round 931 (Fable P2-13): only the names filename() writes. An Explorer copy ("auto_save - Copy.sav") threw
+        // NumberFormatException here every time Save/Load opened, and "1_save_slot - Copy.sav" took slot 1's listing.
+        if (!name.matches("\\d{1,9}_save_slot\\.sav"))
             return INVALID_SAVE_SLOT;
-        return Integer.parseInt(name.split("_")[0]);
+        return Integer.parseInt(name.substring(0, name.indexOf('_')));
     }
 
     static public String filename(int slot) {
