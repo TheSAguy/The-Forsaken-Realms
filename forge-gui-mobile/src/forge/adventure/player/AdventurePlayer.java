@@ -3834,9 +3834,6 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     /**
-     * Round 751 (the user: "Maybe all selling happens at the Research lab ... the auto sell will automatically sell at the
-     * lab"): in a research v2 game the auto-sell pile sells where it is collected - the reward screen as it closes - not at
-    /**
      * Round 932 (Fable P2-1): the auto-sell pile holds at most the copies no deck uses (the deck editor's own rule). The
      * Lab sells and sacrifices from the collection, which the pile is part of, so after a Lab removal the pile could
      * hold copies that were now the deck's, and its next sale sold them. Trims the pile to owned less deck use.
@@ -3850,16 +3847,19 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 + ") - owned " + cards.count(card) + ", in decks " + getCopiesUsedInDecks(card));
     }
 
+    /**
+     * Round 751 (the user: "Maybe all selling happens at the Research lab ... the auto sell will automatically sell at the
+     * lab"): in a research v2 game the auto-sell pile sells where it is collected - the reward screen as it closes - not at
      * the next shop; each sale feeds its card's set (ResearchMeter). A classic save keeps selling the pile on shop entry.
      */
     public void sellAutoSellPile(String trigger) {
         if (!forge.adventure.util.ResearchMeter.enabled(this) || autoSellCards.isEmpty())
             return;
+        for (PaperCard pc : new ArrayList<>(new java.util.LinkedHashSet<>(autoSellCards.toFlatList())))
+            trimAutoSellPile(pc, "auto-sell guard"); // round 932: the pile never sells a copy a deck uses
         int count = autoSellCards.countAll();
         int goldBefore = gold;
         doBulkSell(autoSellCards);
-        for (PaperCard pc : new ArrayList<>(new java.util.LinkedHashSet<>(autoSellCards.toFlatList())))
-            trimAutoSellPile(pc, "auto-sell guard"); // round 932: the pile never sells a copy a deck uses
         autoSellCards.clear();
         System.out.println("[TFR-Research] auto-sell (" + trigger + "): " + count + " card(s) sold for "
                 + (gold - goldBefore) + " gold");
