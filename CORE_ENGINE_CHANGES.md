@@ -35,23 +35,28 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
-### Round 925 - a dungeon chest rolls the same on a reload
+### Round 929 - an AI attack that can't pass no longer freezes the duel
 
-- `forge-gui-mobile/src/forge/adventure/character/RewardSprite.java` (STOCK): `getRewards()`'s one-time fill runs inside `ResourceSpawns.rollSeeded` and calls `generate(false, false)`, with one `[TFR-PickupSeed]` line. Upstream's cache and round 289's restriction stay as they were.
+- `forge-game/src/main/java/forge/game/phase/PhaseHandler.java` (STOCK): `declareAttackersTurnBasedAction`: two locals, an `AttackRetryLimit.giveUp` check before each retry that can break the loop, and the failed step noted at the `validate` and cost failures. `removeAbsentCombatants`'s result is now kept in `absent`. All marked `TFR round 929`.
+- `forge-game/src/main/java/forge/game/combat/AttackRetryLimit.java`: new file.
 
-### Round 926 - the printing index is built at a load, not in a win
+### Round 928 - Settings fits in portrait
 
-- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java`: one line in `load()`, `PrintingIndex.preload`.
-- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `maybeNotifyResearchThreshold` also catches `OutOfMemoryError`, logging once (`researchNoticeFailed`); one `preload` line after research completes.
+- `forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java` (STOCK): in portrait only, `backgroundUrlCell.width(130)`, where upstream's hidden URL field's preferred 150 pushed every control past the pane.
 
 ### Round 927 - the end-of-duel dialog runs once
 
 - `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): `GameEnd`'s `exitChain` is guarded by a local `AtomicBoolean`.
 - `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): `setWinner` sets aside a result with a null `currentMob`.
 
-### Round 928 - Settings fits in portrait
+### Round 926 - the printing index is built at a load, not in a win
 
-- `forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java` (STOCK): in portrait only, `backgroundUrlCell.width(130)`, where upstream's hidden URL field's preferred 150 pushed every control past the pane.
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java`: one line in `load()`, `PrintingIndex.preload`.
+- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `maybeNotifyResearchThreshold` also catches `OutOfMemoryError`, logging once (`researchNoticeFailed`); one `preload` line after research completes.
+
+### Round 925 - a dungeon chest rolls the same on a reload
+
+- `forge-gui-mobile/src/forge/adventure/character/RewardSprite.java` (STOCK): `getRewards()`'s one-time fill runs inside `ResourceSpawns.rollSeeded` and calls `generate(false, false)`, with one `[TFR-PickupSeed]` line. Upstream's cache and round 289's restriction stay as they were.
 
 ### Round 923 - three more card lists, and the Spellsmith frees its card
 - `forge-game/src/main/java/forge/game/card/CardView.java`: `getMustBlockCards`, `getMergedCardsCollection` and `getChosenCards`

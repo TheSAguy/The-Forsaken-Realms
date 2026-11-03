@@ -28,6 +28,7 @@ import forge.game.ability.AbilityKey;
 import forge.game.ability.effects.AddTurnEffect;
 import forge.game.ability.effects.SkipPhaseEffect;
 import forge.game.card.*;
+import forge.game.combat.AttackRetryLimit;
 import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
 import forge.game.cost.CostEnlist;
@@ -538,19 +539,25 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
         if (CombatUtil.canAttack(playerTurn)) {
             boolean success = false;
+            int attackTries = 0; // TFR round 929
+            String attackFailed = null;
             do {
                 if (game.isGameOver()) { // they just like to close window at any moment
                     return;
+                }
+                if (attackTries++ > 0 && AttackRetryLimit.giveUp(whoDeclares, combat, attackTries - 1, attackFailed)) {
+                    break; // TFR round 929: an AI's attack that can't pass is skipped, it never freezes the game
                 }
 
                 if (!game.getUndoManager().isOwner(whoDeclares)) {
                     game.getUndoManager().barrier("Opponent declared attackers");
                 }
                 whoDeclares.getController().declareAttackers(playerTurn, combat);
-                combat.removeAbsentCombatants();
+                final boolean absent = combat.removeAbsentCombatants();
 
                 success = CombatUtil.validateAttackers(combat);
                 if (!success) {
+                    attackFailed = absent ? "validate, after an absent attacker left" : "validate"; // TFR round 929
                     whoDeclares.getController().notifyOfValue(null, null, "Attack declaration invalid");
                     continue;
                 }
@@ -589,6 +596,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                         }
                         success = CombatUtil.validateAttackers(combat);
                         if (!success) {
+                            attackFailed = "cost of " + attacker; // TFR round 929
                             for (Card c : untapFromCancel) {
                                 c.setTapped(false);
                             }
