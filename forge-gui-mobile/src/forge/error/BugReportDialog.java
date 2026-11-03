@@ -54,6 +54,9 @@ public class BugReportDialog extends FScreen { //use screen rather than dialog s
             BugReporter.sendSentry();
             Forge.back();
         });
+        // TFR round 934 (Fable P3-58): Report only where Sentry runs. TFR never initializes it (Android's manifest turns
+        // auto-init off), so the tap sent nothing; Save and the Settings' Export Logs are the ways to send a report.
+        btnReport.setVisible(sentryRunning());
         btnSave.setCommand(e -> {
             BugReporter.saveToFile(tvDetails.text);
             Forge.back();
@@ -64,6 +67,14 @@ public class BugReportDialog extends FScreen { //use screen rather than dialog s
         }
         else {
             btnExit.setVisible(false);
+        }
+    }
+
+    private static boolean sentryRunning() {
+        try {
+            return io.sentry.Sentry.isEnabled();
+        } catch (Throwable t) { // TFR round 934: no Sentry on the classpath is "not running"
+            return false;
         }
     }
 
@@ -102,8 +113,12 @@ public class BugReportDialog extends FScreen { //use screen rather than dialog s
         tvDetails.setBounds(x, y, w, height - totalButtonHeight - 2 * PADDING - y);
         y += tvDetails.getHeight() + PADDING;
 
-        btnReport.setBounds(x, y, buttonWidth, buttonHeight);
-        btnSave.setBounds(x + buttonWidth + PADDING, y, buttonWidth, buttonHeight);
+        if (btnReport.isVisible()) {
+            btnReport.setBounds(x, y, buttonWidth, buttonHeight);
+            btnSave.setBounds(x + buttonWidth + PADDING, y, buttonWidth, buttonHeight);
+        } else { // TFR round 934: Save takes Report's place too
+            btnSave.setBounds(x, y, 2 * buttonWidth + PADDING, buttonHeight);
+        }
         if (landscapeMode) {
             x += 2 * (buttonWidth + PADDING);
         }

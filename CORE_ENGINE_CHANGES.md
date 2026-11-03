@@ -54,6 +54,7 @@ md` already gets updated after every change.
 - `forge-gui/src/main/java/forge/error/ExceptionHandler.java` (STOCK): the archive `SimpleDateFormat` takes `Locale.ROOT`. (P3-61)
 - `forge-gui-mobile/src/forge/adventure/util/Config.java` (STOCK): `saveSettings` writes a temp file and moves it over `settings.json`. (P3-2)
 - `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): `initDuels` calls `ReloadJab.onDuelStarted` only when `!aiControlsPlayerSide` and the enemy has no `fixedDeck`. (P3-17)
+- `forge-gui-mobile/src/forge/error/BugReportDialog.java` (STOCK): Report is hidden unless `io.sentry.Sentry.isEnabled()`; Save takes its width. (P3-58)
 - `forge-gui-mobile/src/forge/adventure/util/RewardActor.java` (STOCK): round 723's comment reworded, no code. (P3-64)
 
 ### Round 932 - rules and state from the Fable review

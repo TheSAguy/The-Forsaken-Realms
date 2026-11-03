@@ -14342,6 +14342,17 @@ The fix list's round 934 (`C:\TFR\notes\morning-1103-fix-list.md`): the privacy 
 - **settings.json is written whole or not at all (Fable P3-2).** `Config.saveSettings` rewrote it in place after every save and settings change; a kill mid-write (Android, right after a save) left half a file and the next launch reset every setting (the last save, the log-sharing opt-in and sent list, the rules). Now a temp file and a move over it, atomic where the file system allows, as `WorldSave` writes a save; a failure leaves the old file and logs `[TFR-Settings] settings.json not written`. Written in UTF-8, which is how it is read. File: `util/Config.java` (stock).
 - **A guard fight or Deck Tester game no longer settles a pending loss (Fable P3-17).** `ReloadJab.onDuelStarted` ran from every `initDuels`, so a watched roaming-guard fight or a Deck Tester game cleared the pending loss and banked it honest: a load of the pre-loss save then cost nothing. Only the player's own duels call it now (not `aiControlsPlayerSide`, no fixed deck). File: `scene/DuelScene.java` (stock).
 - **Three quest choices cost the reputation their text says (Fable P3-41).** "High Plains Justice"'s satchel branch says -2 [+Reputation] and paid 300-400 gold and a 50% artifact with no cost (free gold each time a plains board offers it); it now takes the 2. The declines of "Population Control" and "Proving Yourself Worthy" say -1 and now take it. Each lands on the giving town (`POIReference` ""), as the other declines do. "Waste 'em"'s silent -2 is left: its text could say so, a wording call. File: `world/quests.json`.
+- **The crash dialog's Report button only where Sentry runs (Fable P3-58).** Report called `BugReporter.sendSentry`, but TFR never initializes Sentry (Android's manifest turns auto-init off; only classic desktop and iOS start it), so the tap sent nothing. Hidden unless `Sentry.isEnabled()`; Save takes its width. File: `error/BugReportDialog.java` (stock).
+- **Tested (tests):** `forge-gui-mobile` compiles; `validate_plane_data.py` exits 0 after the `quests.json` edit. The four the check asked one test each for, and the rest, wait for the agent game (TFR 2's jobs held it all evening), at 50x where a duel is involved:
+  - P3-2: a save, then `settings.json` parses and no `.tmp` is left.
+  - P3-17: lose, watch a guard fight, load the pre-loss save: the reload counts.
+  - P3-41: High Plains Justice's satchel: -2 [+Reputation].
+  - P3-58: a forced crash dialog without Report.
+  - P3-57: Export Logs, then search the zip for the user name.
+  - P3-56: a sell-all over 1,000 gold.
+  - P3-26 and P3-55: world map and History open and close.
+  - P3-13: the Balance Sheet.
+  - P3-9: Found Cards on a basic land.
 
 ## Round 933: the GUIDE, the FAQ and a tooltip say what the code does (2026-11-02)
 
