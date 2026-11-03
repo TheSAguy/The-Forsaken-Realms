@@ -1792,6 +1792,7 @@ public final class Ascendance {
             return null;
         AscendanceData.Choice c = choice(id);
         int level = s.pendingLevels.remove(0);
+        int rerolls = s.rerolledLevel == level ? s.rerollCount : 0; // round 932: the offer's own seed input
         s.offer.clear();
         String result;
         if (c.lasting) {
@@ -1802,7 +1803,19 @@ public final class Ascendance {
             if ("medic".equals(id)) // round 508: a guard already down heals in the shorter time too
                 shortenDowntimes();
         } else {
-            result = AscendanceRewards.give(id, c.value, level, color);
+            // Round 932 (Fable P2-2): round 870 seeded the offer, not its payout - a reload re-rolled the cards, the item,
+            // the pack's set and the fragment's region. Now from the offer's seed and the choice (a pack's contents still
+            // come from the booster generator's own Random).
+            long seed = ResourceSpawns.mixSeed(offerSeed(level, rerolls) ^ (id + "|" + color).hashCode());
+            forge.adventure.world.World world = WorldSave.getCurrentSave() == null ? null : WorldSave.getCurrentSave().getWorld();
+            String[] paid = new String[1];
+            if (world == null)
+                paid[0] = AscendanceRewards.give(id, c.value, level, color);
+            else
+                ResourceSpawns.rollSeeded(world, seed, () -> paid[0] = AscendanceRewards.give(id, c.value, level, color));
+            result = paid[0];
+            System.out.println("[TFR-PickupSeed] level " + level + " payout " + id + (color == null ? "" : " " + color)
+                    + ": seed " + seed);
         }
         System.out.println("[TFR-Ascend] level " + level + " reward chosen: " + id + " -> " + result + " (still waiting: "
                 + s.pendingLevels.size() + ")");

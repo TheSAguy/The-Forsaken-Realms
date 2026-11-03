@@ -30,6 +30,13 @@ final class AscendanceRewards {
 
     private static final Random RAND = new Random();
 
+    /** Round 932 (Fable P2-2): a payout's draws come from the world Random, which Ascendance.choose seeds by the level, its
+     *  re-rolls and the choice, so a reload pays the same. RAND only without a world. */
+    private static Random rand() {
+        World world = WorldSave.getCurrentSave() == null ? null : WorldSave.getCurrentSave().getWorld();
+        return world == null ? RAND : world.getRandom();
+    }
+
     static String name(String id) {
         switch (id) {
             case "gold": return "Gold";
@@ -130,7 +137,7 @@ final class AscendanceRewards {
             }
             case "item": {
                 List<String> names = ItemListData.getItemNamesByRarity(itemRarity(level));
-                ItemData item = names.isEmpty() ? null : ItemListData.getItem(names.get(RAND.nextInt(names.size())));
+                ItemData item = names.isEmpty() ? null : ItemListData.getItem(names.get(rand().nextInt(names.size())));
                 if (item != null)
                     loot.add(new Reward(item));
                 result = item == null ? "no item" : item.name;
@@ -138,7 +145,7 @@ final class AscendanceRewards {
             }
             case "booster": {
                 List<String> editions = boosterEditions();
-                String code = editions.isEmpty() ? null : editions.get(RAND.nextInt(editions.size()));
+                String code = editions.isEmpty() ? null : editions.get(rand().nextInt(editions.size()));
                 forge.deck.Deck pack = code == null ? null : AdventureEventController.instance().generateBooster(code);
                 if (pack != null)
                     loot.add(new Reward(pack));
@@ -147,7 +154,7 @@ final class AscendanceRewards {
             }
             case "mapFragment": {
                 List<Integer> regions = regionsMissingPieces();
-                int r = regions.isEmpty() ? -1 : regions.get(RAND.nextInt(regions.size()));
+                int r = regions.isEmpty() ? -1 : regions.get(rand().nextInt(regions.size()));
                 ItemData fragment = r < 0 ? null : ItemListData.getItem(TreasureHunt.fragmentItemName(r));
                 if (fragment != null)
                     loot.add(new Reward(fragment));
@@ -257,7 +264,7 @@ final class AscendanceRewards {
         data.probability = 1;
         data.rarity = new String[]{rarity};
         data.colors = new String[]{color};
-        return data.generate(false, true);
+        return data.generate(false, false); // round 932: the world Random, seeded by Ascendance.choose
     }
 
     /** Unlocked editions a pack can be made of (Jumpstart and other template-less sets cannot). */
