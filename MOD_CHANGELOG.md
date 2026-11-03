@@ -14329,6 +14329,7 @@ The fix list's round 934 (`C:\TFR\notes\morning-1103-fix-list.md`): the privacy 
 - **The Lab won't sacrifice a card that feeds no research (Fable P3-9).** Found Cards lists every owned printing of a set, basics and printings outside the pool included; Sacrifice took them for 0 points with no confirm, the detail having said "under a day off". `sacrificeFromLab` refuses a card that isn't `feedable` (logged), the button is off for it, and the detail says "Feeds no research. Sold for N [+Gold]". Files: `util/ResearchMeter.java`, `scene/ResearchScene.java`.
 - **The Balance Sheet names the week (Fable P3-13).** It read "Days 7-13" for week 1 (one off, and an absolute day, which round 868 took out of every label). Now "Week N". File: `util/BalanceSheet.java`.
 - **Repair keeps the item selected (Fable P3-16).** After a repair the panel was handed the old, detached button (round 141 rebuilds them), so it kept the old text and Equip and Delete did nothing until the item was clicked again. `reselect(data)`, round 160's fix for Equip. File: `scene/InventoryScene.java` (stock).
+- **The "one Ring City from defeat" warning comes back after a load (Fable P3-20).** Round 210 meant a reload to remind the player again, but `starTownWarningCounts` outlived it and held back the first warning after a load or in a new game. Cleared in `TerritoryControl.resetSessionState`. File: `util/TerritoryControl.java`.
 
 ## Round 933: the GUIDE, the FAQ and a tooltip say what the code does (2026-11-02)
 

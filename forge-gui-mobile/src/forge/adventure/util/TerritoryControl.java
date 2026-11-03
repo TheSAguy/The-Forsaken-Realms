@@ -604,6 +604,9 @@ public class TerritoryControl {
         neutralDefenseAttempts = 0;
         neutralDefenseRepels = 0;
         neutralDefenseExpectedRepels = 0f;
+        // Round 934 (Fable P3-20): round 210 meant a reload to remind the player again; kept, the old count held back the
+        // first warning after a load or in a new game.
+        starTownWarningCounts.clear();
     }
 
     private static long pullSourcesFingerprint(List<float[]> source) {
