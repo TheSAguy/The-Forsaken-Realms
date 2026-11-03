@@ -116,6 +116,16 @@ public class CustomDifficultyScene extends UIScene {
     private boolean newGamePlus;
     private java.util.function.Consumer<Map<String, String>> onDoneSettings;
     private final TextraLabel title;
+    /**
+     * Round 939 (route B; the user's "Yes, build it"): mid-game, Change level... - the save's own level, the level a pick
+     * will switch it to on Done (null = none), why a switch is off now (null = it is on), and the changes the pick set
+     * aside because they equal the picked level's own values (they come back if the pick changes).
+     */
+    private String ownLevel, pendingLevel, levelBlock;
+    private final LinkedHashMap<String, String> droppedByLevel = new LinkedHashMap<>();
+    private final Actor changeLevelButton;
+    /** Round 939: the panel's copy as it opened - what Cancel throws away is the difference. */
+    private final LinkedHashMap<String, String> opened = new LinkedHashMap<>();
 
     private CustomDifficultyScene() {
         super(Forge.isLandscapeMode() ? "ui/custom_difficulty.json" : "ui/custom_difficulty_portrait.json");
@@ -231,6 +241,9 @@ public class CustomDifficultyScene extends UIScene {
         ui.onButtonPress("done", this::done);
         ui.onButtonPress("resetAll", this::resetAll);
         ui.onButtonPress("share", this::openShare);
+        ui.onButtonPress("cancel", this::cancel); // round 939
+        ui.onButtonPress("changeLevel", this::openChangeLevel);
+        changeLevelButton = ui.findActor("changeLevel");
         Gdx.app.addLifecycleListener(new LifecycleListener() {
             @Override
             public void pause() {
@@ -257,11 +270,14 @@ public class CustomDifficultyScene extends UIScene {
         player = null;
         title.setText("[%120]Custom Difficulty");
         showPresetBox(true);
+        noLevelChange();
         work.clear();
         if (current != null)
             work.putAll(current);
         work.putAll(CustomDifficulty.pendingRules()); // round 825: the rules ride along (seeded from the profile)
         preset.setSelectedIndex(Math.max(0, Math.min(presetIndex, preset.getItems().size - 1)));
+        opened.clear();
+        opened.putAll(work);
         help.setText(WARNING + "Tap a setting's name to read what it does.");
         System.out.println("[TFR-Custom] panel opened on " + presetName() + " with " + work.size() + " change(s), "
                 + CustomDifficulty.knobs().size() + " knob(s)");
@@ -284,6 +300,7 @@ public class CustomDifficultyScene extends UIScene {
         title.setText("[%120]Custom Difficulty");
         player = p;
         int i = Math.max(0, preset.getItems().indexOf(p.getDifficulty().name, false));
+        noLevelChange();
         preset.setSelectedIndex(i);
         work.clear();
         work.putAll(p.getCustomDifficulty());
@@ -299,11 +316,22 @@ public class CustomDifficultyScene extends UIScene {
                 : WorldSave.getCurrentSave().getWorld().getCurrentDay();
         inPlay.setText("[%85][LIGHT_GRAY]" + p.getDifficulty().name + " - in play, week " + forge.adventure.world.World.weekOf(day)); // round 868: the week, as the HUD clock shows it
         showPresetBox(false);
-        help.setText(WARNING + "Mid-game: new-game-only settings are locked.");
+        opened.clear();
+        opened.putAll(work);
+        // round 939: Change level... - the save's own level; never during a duel or its rewards (Settings is out of
+        // reach then - the map menu is frozen - so this is the guard for every other way in)
+        ownLevel = p.getDifficulty().name;
+        levelBlock = Forge.advFreezePlayerControls ? "not during a duel or its rewards" : CustomDifficulty.levelChangeBlocked();
+        if (changeLevelButton != null)
+            changeLevelButton.setVisible(true);
+        help.setText(WARNING + "Mid-game: new-game-only settings are locked."
+                + (levelBlock == null ? "" : " [ORANGE]Change level is off - " + levelBlock + "."));
         System.out.println("[TFR-Custom] panel opened mid-game on day " + day + ": " + CustomDifficulty.displayName(p)
                 + ", " + CustomDifficulty.count(p) + " change(s)"
                 + (CustomDifficulty.rules(p).isEmpty() ? "" : ", rules " + CustomDifficulty.rules(p))
-                + (p.hasRulesPerSave() ? "" : " (rules from the profile - an older save)"));
+                + (p.hasRulesPerSave() ? "" : " (rules from the profile - an older save)")
+                + (CustomDifficulty.levelChanges(p) > 0 ? ", levels " + p.getLevelHistory() : "")
+                + (levelBlock == null ? "" : "; Change level off - " + levelBlock));
         Forge.switchScene(this);
     }
 
@@ -322,6 +350,7 @@ public class CustomDifficultyScene extends UIScene {
         player = null;
         title.setText("[%120]New Game+");
         showPresetBox(true);
+        noLevelChange();
         preset.setSelectedIndex(Math.max(0, Math.min(presetIndex, preset.getItems().size - 1)));
         work.clear();
         if (edited != null) {
@@ -335,6 +364,8 @@ public class CustomDifficultyScene extends UIScene {
                         work.put(k.id, String.valueOf(CustomDifficulty.profileRule(field)));
                 }
         }
+        opened.clear();
+        opened.putAll(work);
         help.setText(WARNING + "New Game+: these settings start the new run.");
         System.out.println("[TFR-Custom] panel opened for New Game+ on " + presetName() + " with "
                 + CustomDifficulty.countChanges(work) + " change(s)" + (edited != null ? " (edited before)" : "")
@@ -401,6 +432,125 @@ public class CustomDifficultyScene extends UIScene {
                 + (CustomDifficulty.rules(p).isEmpty() ? "" : ", rules " + CustomDifficulty.rules(p)));
     }
 
+    // ---- Change level (round 939) -------------------------------------------------------------------------------
+
+    /** No level change waiting; the button only mid-game. */
+    private void noLevelChange() {
+        pendingLevel = null;
+        levelBlock = null;
+        ownLevel = null;
+        droppedByLevel.clear();
+        if (changeLevelButton != null)
+            changeLevelButton.setVisible(midGame);
+    }
+
+    /** Mid-game Done: the waiting level change, first, so the rows' other changes are measured against the new level.
+     *  False when it was refused (then nothing else is applied either - the rows were measured against it). */
+    private boolean applyLevelChange() {
+        if (pendingLevel == null)
+            return true;
+        if (player == null || player != AdventurePlayer.current())
+            return true; // applyMidGame says why and applies nothing
+        String error = CustomDifficulty.changeLevel(player, pendingLevel, "Change level, mid-game");
+        if (error == null)
+            return true;
+        System.out.println("[TFR-Custom] panel done mid-game: the level change to " + pendingLevel + " was refused (" + error
+                + ") - nothing applied");
+        return false;
+    }
+
+    /** Change level...: the four levels (the save's own marked), Close. Off during a duel or its rewards. */
+    private boolean openChangeLevel() {
+        cancelRepeat();
+        if (!midGame || ownLevel == null)
+            return true;
+        if (levelBlock != null) {
+            help.setText("[%85][ORANGE]Change level is off - " + levelBlock + ".");
+            System.out.println("[TFR-Custom] panel: Change level... refused - " + levelBlock);
+            return true;
+        }
+        Dialog d = new Dialog("", Controls.getSkin());
+        TextraLabel text = Controls.newTextraLabel("[%120][GOLD]Change this save's level[%][WHITE]\n"
+                + "From now on this save plays as that level: enemy health and decks, ranks, prices, rewards, losses,"
+                + " Notoriety and the reload rule all follow it.\n[%85][LIGHT_GRAY]Stays as it was: the world (made on "
+                + CustomDifficulty.startedOn(player) + "), your level (Ascendance keeps it; the next levels cost the new"
+                + " level's), your own custom settings and Rules. No reload penalty for reloads made before.\n"
+                + "Applies on Done; Cancel throws it away.");
+        text.setWrap(true);
+        d.getContentTable().add(text).width(Math.min(landscape ? 380f : 240f, stage.getWidth() - 40f)).pad(4).row();
+        float w = landscape ? 70 : 54, h = landscape ? 18 : 26;
+        Table levels = new Table();
+        for (String level : preset.getItems()) {
+            boolean own = level.equals(ownLevel), picked = level.equals(pendingLevel);
+            TextraButton b = Controls.newTextButton((picked ? "[GOLD]" : "") + level + (own ? " [%80](yours)" : ""), () -> {
+                pickLevel(level);
+                removeDialog();
+            });
+            b.setName("level:" + level);
+            levels.add(b).width(own && landscape ? 86 : w).height(h).pad(2);
+        }
+        d.getContentTable().add(levels).row();
+        TextraButton close = Controls.newTextButton("Close", this::removeDialog);
+        close.setName("level:close");
+        d.getButtonTable().add(close).width(w).height(h).pad(3);
+        showDialog(d);
+        return true;
+    }
+
+    /**
+     * A level picked in the dialog: the rows are measured against it from now on (its own values are no change), and
+     * Done switches the save. The changes that equal its values are set aside - a later pick puts them back first. The
+     * save's own level is no level change.
+     */
+    private void pickLevel(String level) {
+        if (!midGame || ownLevel == null || levelBlock != null)
+            return;
+        for (Map.Entry<String, String> e : droppedByLevel.entrySet())
+            work.putIfAbsent(e.getKey(), e.getValue()); // a row stepped since keeps its new value
+        droppedByLevel.clear();
+        if (level.equals(ownLevel)) {
+            pendingLevel = null;
+            System.out.println("[TFR-Custom] panel: Change level - " + ownLevel + ", the save's own: no level change");
+        } else {
+            pendingLevel = level;
+            for (String id : CustomDifficulty.equalTo(work, level))
+                droppedByLevel.put(id, work.remove(id));
+            System.out.println("[TFR-Custom] panel: Change level " + ownLevel + " -> " + level + " waiting for Done ("
+                    + droppedByLevel.size() + " change(s) equal " + level + "'s own and go" + (droppedByLevel.isEmpty() ? ""
+                    : ": " + CustomDifficulty.encode(droppedByLevel)) + ")");
+        }
+        preset.setSelectedIndex(Math.max(0, preset.getItems().indexOf(pendingLevel != null ? pendingLevel : ownLevel, false)));
+        help.setText(pendingLevel == null ? "[%85][LIGHT_GRAY]No level change - the save stays " + ownLevel + "."
+                : "[%85][GOLD]Level change to " + pendingLevel + " waiting:[WHITE] press Done to apply it, Cancel to stay "
+                + ownLevel + ". The rows now show " + pendingLevel + "'s values.");
+        refill();
+    }
+
+    /** Round 939: Cancel - the panel's copy (and a waiting level change) thrown away; nothing applies. */
+    private boolean cancel() {
+        cancelRepeat();
+        logChanges("");
+        int dropped = 0;
+        java.util.Set<String> ids = new java.util.HashSet<>(work.keySet());
+        ids.addAll(opened.keySet());
+        for (String id : ids) {
+            Knob k = CustomDifficulty.knobs().get(id);
+            String a = work.get(id), b = opened.get(id);
+            if (k == null ? !java.util.Objects.equals(a, b) : !CustomDifficulty.same(k, a, b))
+                dropped++;
+        }
+        System.out.println("[TFR-Custom] panel cancelled" + (midGame ? " mid-game" : newGamePlus ? " for New Game+" : "") + ": "
+                + dropped + " unapplied change(s) dropped" + (pendingLevel == null ? "" : ", and the level change to " + pendingLevel));
+        midGame = false;
+        newGamePlus = false;
+        player = null;
+        onDone = null;
+        onDoneSettings = null;
+        noLevelChange();
+        Forge.switchToLast();
+        return true;
+    }
+
     @Override
     public void enter() {
         super.enter();
@@ -416,7 +566,9 @@ public class CustomDifficultyScene extends UIScene {
         cancelRepeat();
         logChanges("");
         if (midGame) {
-            applyMidGame();
+            if (applyLevelChange())
+                applyMidGame();
+            noLevelChange();
             midGame = false;
             player = null;
             Forge.switchToLast();
@@ -625,9 +777,12 @@ public class CustomDifficultyScene extends UIScene {
         refill();
     }
 
-    /** The value a row shows: the change, else the preset's own. */
+    /** The value a row shows: the change, else the preset's own. Round 939: a locked row mid-game shows what the save
+     *  holds - a run that changed level keeps its first level's starting values. */
     private String valueOf(Knob k) {
         String v = work.get(k.id);
+        if (v == null && locked(k) && player != null)
+            v = CustomDifficulty.ownValue(k, player);
         return v != null ? v : CustomDifficulty.presetRaw(k, presetName());
     }
 
@@ -774,6 +929,11 @@ public class CustomDifficultyScene extends UIScene {
 
     private void updateCount() {
         int changed = CustomDifficulty.countChanges(work); // round 825: the rules are not difficulty changes
+        if (pendingLevel != null) { // round 939: a level change waiting for Done
+            countLabel.setText("[%85][GOLD]" + ownLevel + " -> " + pendingLevel + " on Done - "
+                    + (changed == 0 ? "no other changes" : changed + " changed"));
+            return;
+        }
         countLabel.setText(changed == 0 ? "[%85][LIGHT_GRAY]No changes - " + (midGame ? "playing as " : "plays as ") + presetName()
                 : "[%85][GOLD]" + changed + " changed - \"Custom (" + presetName() + ")\"");
     }
@@ -915,8 +1075,40 @@ public class CustomDifficultyScene extends UIScene {
 
     /** custom panel: what the panel shows now; custom panel search TEXT: types TEXT into its search box. */
     public static String console(String[] s) {
+        // round 939: the agent bridge cannot scroll Settings to its Difficulty row - "custom panel open" is its Edit...;
+        // "changelevel LEVEL" picks in the Change level dialog, "cancel" is the Cancel button, "levelcheck" the self-check
+        if (s.length >= 2 && "open".equals(s[1])) {
+            String blocked = CustomDifficulty.levelChangeBlocked();
+            if (!CustomDifficulty.gameRunning() || AdventurePlayer.current() == null)
+                return "No game is running.";
+            if (blocked != null) {
+                System.out.println("[TFR-Custom] panel open refused - " + blocked + " (console)");
+                return "Not now - " + blocked + ".";
+            }
+            instance().openMidGame(AdventurePlayer.current());
+            return "Panel open mid-game on " + object.presetName()
+                    + (object.levelBlock == null ? "" : " (Change level off - " + object.levelBlock + ")");
+        }
+        if (s.length >= 2 && "levelcheck".equals(s[1]))
+            return CustomDifficulty.levelCheck(AdventurePlayer.current());
         if (object == null)
             return "The panel has not been opened this launch.";
+        if (s.length >= 3 && "changelevel".equals(s[1])) {
+            if (!object.midGame)
+                return "Change level is mid-game only (custom panel open).";
+            if (object.levelBlock != null)
+                return "Change level is off - " + object.levelBlock + ".";
+            if (object.preset.getItems().indexOf(s[2], false) < 0)
+                return "No level " + s[2] + " (" + object.preset.getItems() + ")";
+            object.pickLevel(s[2]);
+            return object.pendingLevel == null ? "No level change - the save stays " + object.ownLevel
+                    : "Level change " + object.ownLevel + " -> " + object.pendingLevel + " waiting for Done; "
+                    + CustomDifficulty.countChanges(object.work) + " change(s), set aside " + object.droppedByLevel.keySet();
+        }
+        if (s.length >= 2 && "cancel".equals(s[1])) {
+            object.cancel();
+            return "Cancelled.";
+        }
         if (s.length >= 2 && "code".equals(s[1])) {
             // round 827: the agent bridge cannot read or fill the clipboard - "custom panel code" prints this panel's
             // code; "custom panel code paste TEXT" loads TEXT as Paste code would (the dialog open). It does not go

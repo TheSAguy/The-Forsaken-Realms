@@ -149,6 +149,8 @@ public final class SessionLog {
                 .append(" colors=").append(p.getColorIdentityLong())
                 .append(" mode=").append(p.getAdventureMode())
                 .append(" difficulty=").append(p.getDifficulty() == null ? "?" : CustomDifficulty.logName(p)) // round 822: Custom(Hard)
+                .append(" startedOn=").append(CustomDifficulty.startedOn(p)) // round 939: the level the run began on
+                .append(" levelChanges=").append(CustomDifficulty.levelChanges(p))
                 .append(" custom=").append(CustomDifficulty.count(p))
                 .append(" rules=").append(CustomDifficulty.rules(p).isEmpty() ? "-" : CustomDifficulty.rules(p)) // round 825
                 .append(" ngplus=").append(p.getCharacterFlag("newGamePlus") > 0 ? 1 : 0)

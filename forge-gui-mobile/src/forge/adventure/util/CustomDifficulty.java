@@ -21,8 +21,9 @@ import java.util.Map;
  * Round 822 (the user: "a very comprehensive custom difficulty. All those settings we added in config tables";
  * study notes/custom-difficulty-feasibility.md): a save's own difficulty, on top of its preset.
  * <p>
- * The preset (Easy/Normal/Hard/Insane) stays the save's difficulty and its name stays the key every difficulty rule
- * reads ({@code isHardorInsaneDifficulty}, the {@code ...For(name)} switches, {@code difficultyIndex()}). A custom save
+ * The preset (Easy/Normal/Hard/Insane) is the save's difficulty and its name is the key every difficulty rule
+ * reads ({@code isHardorInsaneDifficulty}, the {@code ...For(name)} switches, {@code difficultyIndex()}). Round 939: a
+ * running save can change it ({@link #changeLevel}), so every one of those follows the new level. A custom save
  * also keeps a map of knob id -> value ({@code AdventurePlayer.customDifficulty}, saved as one "customDifficulty"
  * string; absent = the preset, so an older save plays exactly as before). The knobs are defined in
  * {@code config tables/custom_difficulty.json}: each names its targets, its range and its scope. A value with no knob
@@ -1242,15 +1243,300 @@ public final class CustomDifficulty {
         return sb.toString();
     }
 
-    /** "Custom (Hard)" for a custom save, else the preset's name. */
+    /** "Custom (Hard)" for a custom save, else the preset's name. Round 939: a run that changed level says where it
+     *  began - "Normal (started on Hard)", "Custom (Normal, started on Hard)". */
     public static String displayName(AdventurePlayer p) {
+        return name(p, "started on ");
+    }
+
+    /** Round 939: the save slot's words - "Normal (from Hard)", "Custom (Normal, from Hard)" (SaveLoadScene.presetOf
+     *  reads the level back out of them). */
+    public static String slotName(AdventurePlayer p) {
+        return name(p, "from ");
+    }
+
+    private static String name(AdventurePlayer p, String began) {
+        String name = p == null || p.getDifficulty() == null ? "?" : p.getDifficulty().name;
+        String note = levelNote(p, began);
+        if (isCustom(p))
+            return "Custom (" + name + (note == null ? "" : ", " + note) + ")";
+        return note == null ? name : name + " (" + note + ")";
+    }
+
+    /** Round 939: "started on Hard" (or "from Hard"), or for a run back on the level it began on "level changed 2x"; null
+     *  for a run that never changed level. */
+    public static String levelNote(AdventurePlayer p, String began) {
+        List<String[]> history = levelHistory(p);
+        if (history.size() < 2)
+            return null;
+        String first = history.get(0)[0];
+        if (!first.equals(p.getDifficulty().name))
+            return began + first;
+        return "level changed " + (history.size() - 1) + "x";
+    }
+
+    /** The difficulty for a log token: "Custom(Hard)" or "Hard" (round 939: the level only; SessionLog adds where a run
+     *  began). */
+    public static String logName(AdventurePlayer p) {
+        return levelName(p).replace(" ", "");
+    }
+
+    /** Round 939: "Custom (Normal)" or "Normal" - the level now, without where the run began. */
+    public static String levelName(AdventurePlayer p) {
         String name = p == null || p.getDifficulty() == null ? "?" : p.getDifficulty().name;
         return isCustom(p) ? "Custom (" + name + ")" : name;
     }
 
-    /** The difficulty for a log token: "Custom(Hard)" or "Hard". */
-    public static String logName(AdventurePlayer p) {
-        return displayName(p).replace(" ", "");
+    // ---- Change level (round 939) -------------------------------------------------------------------------------
+
+    /**
+     * Round 939: the run's levels in order, each {level, the day it began} - from the save's levelHistory
+     * ("Hard@0,Normal@34"). Empty for a run that never changed level.
+     */
+    public static List<String[]> levelHistory(AdventurePlayer p) {
+        return parseHistory(p == null ? null : p.getLevelHistory());
+    }
+
+    static List<String[]> parseHistory(String text) {
+        List<String[]> out = new ArrayList<>();
+        if (text == null || text.trim().isEmpty())
+            return out;
+        for (String part : text.split(",")) {
+            int at = part.lastIndexOf('@');
+            if (at > 0)
+                out.add(new String[]{part.substring(0, at).trim(), part.substring(at + 1).trim()});
+        }
+        return out;
+    }
+
+    /** Round 939: the history with one more level, begun on {@code day}; the first change also records the start. */
+    static String appendHistory(String text, String from, String to, int day) {
+        StringBuilder sb = new StringBuilder(text == null || text.trim().isEmpty() ? from + "@0" : text.trim());
+        return sb.append(',').append(to).append('@').append(day).toString();
+    }
+
+    /** Round 939: the level the run began on (its history's first), else its level now. */
+    public static String startedOn(AdventurePlayer p) {
+        List<String[]> history = levelHistory(p);
+        return !history.isEmpty() ? history.get(0)[0] : p == null || p.getDifficulty() == null ? null : p.getDifficulty().name;
+    }
+
+    /** Round 939: how many times the run changed level. */
+    public static int levelChanges(AdventurePlayer p) {
+        return Math.max(0, levelHistory(p).size() - 1);
+    }
+
+    /** Round 939: the statistics' words - "Normal (started on Hard, changed on day 34)". */
+    public static String levelStory(AdventurePlayer p) {
+        String detail = levelDetail(p);
+        String name = p == null || p.getDifficulty() == null ? "?" : p.getDifficulty().name;
+        if (detail == null)
+            return displayName(p);
+        return isCustom(p) ? "Custom (" + name + ", " + detail + ")" : name + " (" + detail + ")";
+    }
+
+    /** Round 939: "started on Hard, changed on day 34", or for more than one change "started on Hard, changed 3 times,
+     *  last to Normal on day 34" (the whole list ran off the sheet; the save and the [TFR-Custom] lines keep every one),
+     *  or null for a run that never changed level. The statistics put it on a line of its own. */
+    public static String levelDetail(AdventurePlayer p) {
+        List<String[]> history = levelHistory(p);
+        if (history.size() < 2)
+            return null;
+        String start = "started on " + history.get(0)[0];
+        if (history.size() == 2)
+            return start + ", changed on day " + history.get(1)[1];
+        String[] last = history.get(history.size() - 1);
+        return start + ", changed " + (history.size() - 1) + " times, last to " + last[0] + " on day " + last[1];
+    }
+
+    /** Round 939: the starting sets of the level the run began on (TfrAchievements counts research against them). */
+    public static int startingSetsOf(AdventurePlayer p) {
+        DifficultyData first = configPreset(startedOn(p));
+        DifficultyData own = first != null ? withOverrides(p.getCustomDifficulty(), first) : p.getDifficulty();
+        return AdventurePlayer.startingSetCount(own);
+    }
+
+    /** Round 939: why the level cannot change now, or null - never during a duel or the reward screen after it. */
+    public static String levelChangeBlocked() {
+        if (!gameRunning())
+            return "no game is running";
+        forge.adventure.scene.Scene scene = forge.Forge.getCurrentScene();
+        if (scene instanceof forge.adventure.scene.DuelScene || scene instanceof forge.adventure.scene.RewardScene)
+            return "not during a duel or its rewards";
+        return null;
+    }
+
+    /** Round 939: the name and the fields a run reads from its preset (the ones AdventurePlayer.create copies and the save
+     *  keeps); the starting fields stay the start's. */
+    static void runFields(DifficultyData d, DifficultyData to) {
+        d.name = to.name;
+        d.spawnRank = to.spawnRank;
+        d.enemyLifeFactor = to.enemyLifeFactor;
+        d.sellFactor = to.sellFactor;
+        d.shardSellRatio = to.shardSellRatio;
+        d.goldLoss = to.goldLoss;
+        d.lifeLoss = to.lifeLoss;
+        d.rewardMaxFactor = to.rewardMaxFactor;
+    }
+
+    private static boolean sameRunFields(DifficultyData d, DifficultyData to) {
+        return d.name.equals(to.name) && d.spawnRank == to.spawnRank && d.enemyLifeFactor == to.enemyLifeFactor
+                && d.sellFactor == to.sellFactor && d.shardSellRatio == to.shardSellRatio && d.goldLoss == to.goldLoss
+                && d.lifeLoss == to.lifeLoss && d.rewardMaxFactor == to.rewardMaxFactor;
+    }
+
+    static boolean hardOrInsane(String level) {
+        return "Hard".equalsIgnoreCase(level) || "Insane".equalsIgnoreCase(level); // AdventurePlayer.isHardorInsaneDifficulty
+    }
+
+    /** Round 939: a difficulty.* knob's value in the save's own difficulty (the panel's locked rows), else null. */
+    public static String ownValue(Knob k, AdventurePlayer p) {
+        if (p == null || p.getDifficulty() == null)
+            return null;
+        for (String spec : k.targets)
+            for (Target t : resolve(spec, null))
+                if (t.difficulty() && t.index == -1)
+                    try {
+                        return clean(k, format(k, t.field.get(p.getDifficulty())));
+                    } catch (IllegalAccessException e) {
+                        return null;
+                    }
+        return null;
+    }
+
+    /** Round 939: the overrides a switch to {@code level} drops - every difficulty change (not a Rule) equal to that
+     *  level's own value, which would no longer be a change. */
+    public static List<String> equalTo(Map<String, String> overrides, String level) {
+        List<String> out = new ArrayList<>();
+        for (Map.Entry<String, String> e : overrides.entrySet()) {
+            Knob k = knobs().get(e.getKey());
+            if (k != null && !isRule(k) && same(k, e.getValue(), presetRaw(k, level)))
+                out.add(k.id);
+        }
+        return out;
+    }
+
+    /**
+     * Round 939 (route B; the user's "Yes, build it" on notes/r939-routeB.md): the running save becomes a save of
+     * another level from now on. Its difficulty takes that preset's name and run fields (enemy life, sell prices, losses,
+     * the dungeon spawn rank, the loot rate), so every rule that reads the level follows - the enemy decks, prices, the
+     * rank tilt, cracking, the purse and every {D} / [*] column. What would jump or apply backwards is held:
+     * Ascendance Power is re-priced (the level stays), a switch into Hard/Insane forgives the reloads counted before, and
+     * the starting sets stay the first level's. Overrides equal to the new level's values are dropped (no longer
+     * changes); the rest, and the Rules, carry on. The run's levelHistory records it. Null = done, else why not.
+     */
+    public static String changeLevel(AdventurePlayer p, String level, String source) {
+        if (p == null || p.getDifficulty() == null)
+            return "no game is running";
+        String blocked = levelChangeBlocked();
+        if (blocked != null) {
+            System.out.println("[TFR-Custom] level change to " + level + " refused - " + blocked + " (" + source + ")");
+            return blocked;
+        }
+        DifficultyData to = configPreset(level);
+        if (to == null)
+            return "no level " + level + " on this plane";
+        String from = p.getDifficulty().name;
+        if (from.equals(to.name))
+            return null; // the save's own level: nothing to change
+        int day = WorldSave.getCurrentSave() == null || WorldSave.getCurrentSave().getWorld() == null ? 0
+                : WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        int sets = startingSetsOf(p); // before the name changes: the run's first level
+        String power = Ascendance.onLevelChange(p, from, to.name); // reads both costs by name
+        int forgiven = hardOrInsane(to.name) && !hardOrInsane(from) ? ReloadJab.onLevelChangeIntoHard() : -1;
+        List<String> dropped = equalTo(p.getCustomDifficulty(), to.name);
+        for (String id : dropped)
+            p.getCustomDifficulty().remove(id);
+        p.setLevelHistory(appendHistory(p.getLevelHistory(), from, to.name, Math.max(1, day))); // a new world's first day reads 0
+        runFields(p.getDifficulty(), to);
+        p.getDifficulty().startingSets = sets;
+        applyTuning(p.getCustomDifficulty());
+        applyDifficulty(p.getCustomDifficulty(), p.getDifficulty());
+        changesThisLaunch++;
+        System.out.println("[TFR-Custom] level changed " + from + " -> " + to.name + " on day " + day + " (" + source + "): "
+                + power + "; reload jab " + (forgiven < 0 ? "not into Hard/Insane" : forgiven + " earlier reload(s) forgiven")
+                + "; startingSets kept " + sets + " (" + startedOn(p) + "'s); dropped " + dropped.size() + " override(s) now "
+                + to.name + "'s own" + (dropped.isEmpty() ? "" : " " + dropped) + "; now " + displayName(p) + " with "
+                + count(p) + " change(s), history " + p.getLevelHistory());
+        return null;
+    }
+
+    /**
+     * Round 939: {@code custom panel levelcheck} - the Change level's round trip on the plane's real data, without
+     * touching the save: for every pair of levels, the switched difficulty is the new level's, Power keeps its level both
+     * ways, the overrides dropped are exactly the ones equal to the new level, the history and the slot words read back,
+     * and the save's own level is a no-op. One line per failure, then the count.
+     */
+    public static String levelCheck(AdventurePlayer p) {
+        List<String> fails = new ArrayList<>();
+        int checks = 0;
+        DifficultyData[] all = Config.instance().getConfigData().difficulties;
+        int[] powers = {0, 37, 500, 2000, 9000, p == null ? 0 : p.ascendance().power};
+        for (DifficultyData a : all)
+            for (DifficultyData b : all) {
+                if (a == b)
+                    continue;
+                String pair = a.name + " -> " + b.name;
+                // the run fields: a's difficulty switched is b's
+                DifficultyData d = (DifficultyData) copyFields(a, new DifficultyData(), DifficultyData.class);
+                runFields(d, b);
+                checks += 2;
+                if (!sameRunFields(d, b))
+                    fails.add(pair + ": the switched difficulty is not " + b.name + "'s");
+                if (d.startingLife != a.startingLife || d.startingMoney != a.startingMoney || d.startingShards != a.startingShards)
+                    fails.add(pair + ": the starting fields moved off " + a.name + "'s");
+                // Ascendance keeps the level, and back again lands where it began (a step's rounding at most)
+                for (int power : powers) {
+                    int there = Ascendance.repriced(power, a.name, b.name);
+                    int back = Ascendance.repriced(there, b.name, a.name);
+                    checks += 2;
+                    if (Ascendance.levelAt(there, b.name) != Ascendance.levelAt(power, a.name))
+                        fails.add(pair + ": Power " + power + " level " + Ascendance.levelAt(power, a.name) + " -> "
+                                + Ascendance.levelAt(there, b.name));
+                    if (Ascendance.levelAt(back, a.name) != Ascendance.levelAt(power, a.name) || Math.abs(back - power) > 2)
+                        fails.add(pair + ": Power " + power + " round trip -> " + back);
+                }
+                // the overrides: a save holding every editable knob at a's value drops exactly those equal to b's
+                LinkedHashMap<String, String> held = new LinkedHashMap<>();
+                for (Knob k : knobs().values())
+                    if (!isRule(k) && !k.isScale())
+                        held.put(k.id, presetRaw(k, a.name));
+                List<String> drop = equalTo(held, b.name);
+                for (Knob k : knobs().values()) {
+                    if (!held.containsKey(k.id))
+                        continue;
+                    checks++;
+                    boolean equal = same(k, presetRaw(k, a.name), presetRaw(k, b.name));
+                    if (equal != drop.contains(k.id))
+                        fails.add(pair + ": " + k.id + " " + (equal ? "kept though equal" : "dropped though different"));
+                }
+                // the history and the words the save slot keeps
+                String history = appendHistory("", a.name, b.name, 34);
+                List<String[]> read = parseHistory(history);
+                checks++;
+                if (read.size() != 2 || !read.get(0)[0].equals(a.name) || !read.get(1)[0].equals(b.name) || !"34".equals(read.get(1)[1]))
+                    fails.add(pair + ": history " + history + " reads back wrong");
+                for (String words : new String[]{b.name + " (from " + a.name + ")", "Custom (" + b.name + ", from " + a.name + ")",
+                        b.name + " (level changed 2x)", "Custom (" + b.name + ")", b.name}) {
+                    checks++;
+                    if (!b.name.equals(forge.adventure.scene.SaveLoadScene.presetOf(words)))
+                        fails.add("slot words \"" + words + "\" read back as " + forge.adventure.scene.SaveLoadScene.presetOf(words));
+                }
+            }
+        // the save's own level changes nothing
+        if (p != null && p.getDifficulty() != null) {
+            String name = p.getDifficulty().name, history = p.getLevelHistory();
+            int power = p.ascendance().power, overrides = p.getCustomDifficulty().size();
+            String result = changeLevel(p, name, "level check");
+            checks++;
+            if (result != null || !name.equals(p.getDifficulty().name) || !history.equals(p.getLevelHistory())
+                    || power != p.ascendance().power || overrides != p.getCustomDifficulty().size())
+                fails.add("the own level " + name + " changed something" + (result == null ? "" : ": " + result));
+        }
+        String line = "[TFR-Custom] level check: " + checks + " check(s), " + fails.size() + " failed"
+                + (fails.isEmpty() ? "" : ": " + String.join("; ", fails));
+        System.out.println(line);
+        return line;
     }
 
     public static int count(AdventurePlayer p) {
@@ -1489,6 +1775,6 @@ public final class CustomDifficulty {
         if ("panel".equals(s[0])) // round 823: the new-game Advanced panel, for tests
             return forge.adventure.scene.CustomDifficultyScene.console(s);
         return "custom | custom knobs | custom set ID VALUE | custom reset ID|all | custom next ID VALUE | custom next clear"
-                + " | custom panel [search TEXT]";
+                + " | custom panel [search TEXT] | custom panel open | custom panel changelevel LEVEL | custom panel cancel | custom panel levelcheck";
     }
 }

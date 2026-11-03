@@ -9,10 +9,11 @@ every round built. If you find something missing, fix the docs rather than going
 **v1.26 "Journals & Doppelgangers" is the latest release** (tag `tfr-v1.26` @ `092596b65f8`, published 2026-11-03
 14:21 UTC; rounds 865-936 on top of v1.25; assets, notes and the tag commit in `docs/tfr/releases.md`; the round detail
 in `MOD_CHANGELOG.md`). `modVersion` 1.26 / `modVersionDate` 11.03, Android `tfr.version` 1.26 / versionCode 12600,
-`RELEASE_NOTES_v1.26.md`, GUIDE's What's New in 1.26. NOTHING is unreleased. Engine = the 11.01 daily (round 917, upstream `5a09fa8cc5d`; round 769's R1-R4 still
+`RELEASE_NOTES_v1.26.md`, GUIDE's What's New in 1.26. Unreleased (for 1.27): round 939 - a running game can change its level
+(Settings > Difficulty > Edit... > Change level...; round 822's fixed-preset rule is gone, `docs/tfr/custom-difficulty.md`). Engine = the 11.01 daily (round 917, upstream `5a09fa8cc5d`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `5a09fa8cc5d` (its first commit is #12568, in `RewardData` and `CardUtil`); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.27 / 12700. Next free round: 939. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.27 / 12700. Next free round: 940. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

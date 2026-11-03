@@ -35,6 +35,20 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 939 - a running game can change its level
+
+- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): a `levelHistory` field ("Hard@0,Normal@34"),
+  reset in `clear()` and `updateDifficulty` (New Game+), read in `load()` (absent = ""), stored only when not empty;
+  `getLevelHistory` / `setLevelHistory`; the load's round-934 `startingSets` line is followed by
+  `CustomDifficulty.startingSetsOf` for a game that changed level.
+- `forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java` (STOCK): `getSaveFileSuffix` writes
+  `CustomDifficulty.slotName` (was `displayName`); `presetOf` is public and reads "Normal (from Hard)" and "Custom
+  (Normal, from Hard)".
+- `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): the Difficulty line uses
+  `CustomDifficulty.levelName` and a small `levelNote` ("(from Hard)").
+- `forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java` (STOCK): the Difficulty row's sub-line starts with
+  `levelDetail` ("Changed on day 34.") and its default text says "or the level".
+
 ### Round 934 - small fixes, Android memory and privacy from the Fable review
 
 - `forge-gui-desktop/src/test/java/forge/game/SpellbookNamesTest.java`: new test, every `Spellbook$` name in the card scripts is a card (round 931's typo). If upstream renames a card a spellbook names, this fails until the script follows.

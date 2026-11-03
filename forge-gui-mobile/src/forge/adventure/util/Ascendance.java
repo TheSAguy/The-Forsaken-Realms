@@ -1870,6 +1870,39 @@ public final class Ascendance {
         return powerAtLevel(level, to) + Math.round(into * (powerToNext(level, to) / (float) powerToNext(level, from)));
     }
 
+    /**
+     * Round 939 (route B, the user's "Yes, build it"): the mid-game Change level - the Power is re-priced from the old
+     * level's cost to the new one's, as round 545's load does, so the character keeps its level and its share of the way
+     * to the next (later levels cost the new level's). The save then stores the new cost, so the next load re-prices
+     * nothing. Call before the save's difficulty takes the new name. The {@code [TFR-Custom] level changed} line's part.
+     */
+    static String onLevelChange(AdventurePlayer player, String from, String to) {
+        if (player == null)
+            return "no character";
+        AscendanceState s = player.ascendance();
+        float was = costFactor(from), now = costFactor(to);
+        if (!s.on)
+            return "Ascendance off";
+        if (Math.abs(was - now) < 0.0001f)
+            return "level cost the same (x" + was + ")";
+        int before = s.power;
+        int level = levelFor(before, was);
+        s.power = repriced(before, from, to);
+        return "Power " + before + " -> " + s.power + " (level cost x" + was + " -> x" + now + "), still level "
+                + levelFor(s.power, now) + " (was " + level + ")";
+    }
+
+    /** Round 939: Power priced at level {@code from}'s cost, re-priced to level {@code to}'s (CustomDifficulty's check). */
+    static int repriced(int power, String from, String to) {
+        float was = costFactor(from), now = costFactor(to);
+        return Math.abs(was - now) < 0.0001f ? power : reprice(power, was, now);
+    }
+
+    /** Round 939: the level this Power reaches at level {@code level}'s cost. */
+    static int levelAt(int power, String level) {
+        return levelFor(power, costFactor(level));
+    }
+
     /** AdventurePlayer.load: absent keys (every save before round 493) read as "off". */
     public static void load(forge.adventure.util.SaveFileData data, AscendanceState s, String difficulty) {
         s.reset();

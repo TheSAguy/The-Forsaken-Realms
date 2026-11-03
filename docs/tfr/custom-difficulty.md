@@ -1,4 +1,4 @@
-# Custom difficulty - how it works (rounds 822-833, 839)
+# Custom difficulty - how it works (rounds 822-833, 839, 939)
 
 A save can carry its own difficulty on top of its preset. This page is the map for a session that has to change it,
 review it, or read a player's log. The round-by-round detail is in `MOD_CHANGELOG.md` (rounds 822-833 and 839); the
@@ -37,7 +37,35 @@ and each data batch's reader audit `C:\TFR\notes\r829..r833-*.md`.
   share codes), `scene/NewGameScene` (Advanced...), `scene/SettingsScene` (the Difficulty row and the rule rows),
   `scene/SaveLoadScene` (New Game+'s Custom settings row).
 - **Console** (`custom ...`): `list`, `knobs` (every knob, its range, scope, the preset's value and the live one), `set
-  ID VALUE`, `reset ID|all`, `next ID VALUE` / `next clear`, `panel [search TEXT | tab NAME | code [paste TEXT]]`.
+  ID VALUE`, `reset ID|all`, `next ID VALUE` / `next clear`, `panel [search TEXT | tab NAME | code [paste TEXT]]`;
+  round 939: `panel open` (the panel on the running save - the agent bridge cannot scroll Settings to its Edit...),
+  `panel changelevel LEVEL`, `panel cancel`, `panel levelcheck` (the Change level self-check).
+
+## Changing a save's level (round 939)
+
+Until round 939 a save's preset was fixed for the run ("the preset stays the save's difficulty"). **That rule is gone:**
+the mid-game panel's **Change level...** (Easy / Normal / Hard / Insane, any number of times) makes the running save a
+save of another level (`CustomDifficulty.changeLevel`). The design and its audit: `C:\TFR\notes\r939-audit.md` and
+`r939-routeB.md`.
+
+- **What moves:** the save's `difficultyData` takes the new preset's name and run fields (`runFields`: spawnRank,
+  enemyLifeFactor, sellFactor, shardSellRatio, goldLoss, lifeLoss, rewardMaxFactor). Every rule that reads the level by
+  name or index follows with no knob: enemy decks (genetic AI on Hard/Insane), building prices, the rank tilt
+  (`difficultyFactors`), item cracking, the purse factor, dungeon spawns, invasion leaders, the {D} / [*] columns.
+- **What is held:** Ascendance Power is re-priced to the new level cost (`Ascendance.onLevelChange`, round 545's
+  `reprice`), so the level stays and the next load re-prices nothing; a switch INTO Hard/Insane forgives the reloads the
+  world already counted (`ReloadJab.onLevelChangeIntoHard`, round 732's no-retroactive rule); the starting sets stay the
+  first level's (`startingSetsOf`, read again at every load). The starting fields (life, gold, kit) stay the start's.
+- **Overrides:** a change equal to the new level's own value is dropped (`equalTo`); the rest and the Rules carry on.
+  The panel sets them aside when a level is picked and puts them back if the pick changes.
+- **Never during a duel or its rewards** (`levelChangeBlocked`; the map menu is frozen then anyway).
+- **The record:** the save's `levelHistory` key ("Hard@0,Normal@34"; absent = never changed, so older saves are as
+  before; New Game+ starts it over). Words: Settings "Normal (started on Hard)" (`displayName`), the save slot "Normal
+  (from Hard)" (`slotName`; `SaveLoadScene.presetOf` reads the level back), Settings' sub-line "Changed on day 34."
+  (`levelDetail`), the info page "Normal (from Hard)" (`levelNote`), `[TFR-Session] difficulty=Normal startedOn=Hard
+  levelChanges=1`.
+- **Panel:** Change level... and Cancel (Cancel throws away every unapplied edit, in every mode; Esc stays Done). A
+  picked level waits for Done, which switches first and then applies the rows (measured against the new level).
 
 ## Reading a log
 
@@ -46,6 +74,9 @@ and each data batch's reader audit `C:\TFR\notes\r829..r833-*.md`.
 - `[TFR-Custom] load/new game/New Game+: Custom (Hard), N override(s): id a -> b, ... | rules: ...` - what the save
   plays with; `dropped` / `clamped` lines say a save held a value the json no longer allows (it is clamped, not lost).
 - `[TFR-Custom] changed ID a -> b on day N (source)` - every mid-game change (Settings, the panel, the console).
+- `[TFR-Custom] level changed Hard -> Normal on day N (source): Power a -> b (level cost ...), still level L; reload jab
+  ...; startingSets kept S; dropped N override(s) ...; history ...` - a Change level (round 939); `panel: Change level
+  ... waiting for Done`, `panel cancelled ...` and `level change ... refused - not during a duel or its rewards` around it.
 - `[TFR-Session] game ... difficulty=Custom(Hard) custom=N rules=...` and the footer's `custom=`/`rules=`/`customChanges=`.
 - **Log-review checklist line**: when a report reads oddly (enemies too strong or weak, a price, Power, a raid), grep
   `[TFR-Custom]` first - a `custom=` above 0 means the save's numbers are not the preset's, and the override list names

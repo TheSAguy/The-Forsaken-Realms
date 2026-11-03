@@ -6,9 +6,9 @@ FAQ_VERSION = "v1.26"
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-# 1.27: nothing changed yet (round 938 reset them after 1.26; v1.26's own set was {1, 8, 10, 12, 14, 15, 17, 19, 23},
-# none ADDED).
-EDITED = set()
+# 1.27 (round 938 reset them after 1.26; v1.26's own set was {1, 8, 10, 12, 14, 15, 17, 19, 23}, none ADDED): round 939
+# edited 9 (the mid-game Change level).
+EDITED = {9}
 ADDED = set()
 
 M = []
@@ -174,7 +174,7 @@ M.append(("Losing (and winning)", "Losing & winning", r"""**Losing (and winning)
 If your life hits 0 you're carried home: to your Capitol, or to Orazca before it stands. Losing inside a rotating dungeon usually makes it vanish (a gauntlet stays). The Stubborn perk cuts the gold and life a loss costs.
 
 **Q: Can I just reload after a loss?**
-**A:** You can, but the realm notices. On Hard and Insane, each cheat (reloading after a loss, or quitting mid-duel) gives enemies +1 life, up to +25. Every 3 losses you take honestly removes one. Arena losses never count. Each cheat also costs the loss's Notoriety; **Settings** can switch it all off. Lose to one foe 5 times and the game suggests an easier difficulty; win 50 in a row, a harder one (for your next game or New Game+)."""))
+**A:** You can, but the realm notices. On Hard and Insane, each cheat (reloading after a loss, or quitting mid-duel) gives enemies +1 life, up to +25. Every 3 losses you take honestly removes one. Arena losses never count. Each cheat also costs the loss's Notoriety; **Settings** can switch it all off. Lose to one foe 5 times and it suggests an easier level, win 50 in a row a harder one; **Change level...** (Settings > Difficulty > Edit...) switches it mid-run."""))
 
 M.append(("Your towns under attack: raids and war mages", "Raids & mages", r"""**Your towns under attack**
 

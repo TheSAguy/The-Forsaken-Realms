@@ -998,6 +998,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private void clear() {
         //Ensure sensitive gameplay data is properly reset between games.
         //Reset all properties HERE.
+        levelHistory = ""; // round 939
         fantasyMode = false;
         announceFantasy = false;
         usingCustomDeck = false;
@@ -1109,6 +1110,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // created or taken into New Game+ on round 825 or later, or switched in Settings since; saved as "rulesPerSave".
     // Without it the rules are the profile's, as before (CustomDifficulty.rule).
     private boolean rulesPerSave = false;
+    // Round 939: the levels this run has played, "Hard@0,Normal@34" (level @ the day it began) - written by the mid-game
+    // Change level (CustomDifficulty.changeLevel); empty = never switched. Saved as "levelHistory", absent when empty.
+    private String levelHistory = "";
 
     // Bronze Coin ante ransom (user spec 2026-08-29). Enemy NAMES the player has bought their
     // ante back from with a Bronze Challenge Coin; beating an enemy of that name later reclaims
@@ -1586,6 +1590,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // lost in the new world) silently subtracts the OLD playthrough's stale bonus from
         // maxLife/life. Mirrors the reset clear() already does for a fresh New Game.
         townLifeBonus = 0;
+        levelHistory = ""; // round 939: the new run starts on its own level
         ringLifeBonus = 0;
         System.out.println("[TFR-NGPlusLife] updateDifficulty: reset townLifeBonus to 0, starting life now " + diff.startingLife);
         int lb = life, mb = maxLife;
@@ -1923,6 +1928,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // (a save without one puts the plane's own values back - the last game may have been custom).
         customDifficulty.clear();
         rulesPerSave = data.containsKey("rulesPerSave") && data.readBool("rulesPerSave"); // round 825
+        levelHistory = data.containsKey("levelHistory") ? data.readString("levelHistory") : ""; // round 939
         if (data.containsKey(forge.adventure.util.CustomDifficulty.SAVE_KEY))
             customDifficulty.putAll(forge.adventure.util.CustomDifficulty.sanitize(forge.adventure.util.CustomDifficulty.decode(
                     data.readString(forge.adventure.util.CustomDifficulty.SAVE_KEY)), "load"));
@@ -1986,6 +1992,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // value from this run, and TfrAchievements counts research against it.
         if (configuredDifficulty != null)
             this.difficultyData.startingSets = configuredDifficulty.startingSets;
+        // Round 939: a run that changed level keeps the starting sets of the level it began on (the research count).
+        if (!levelHistory.isEmpty())
+            this.difficultyData.startingSets = forge.adventure.util.CustomDifficulty.startingSetsOf(this);
         // END SPECIAL CASES
         // Round 822: a custom save's own values win over the refreshes above (round 548's sell factor, the shard ratio).
         forge.adventure.util.CustomDifficulty.applyDifficulty(customDifficulty, this.difficultyData);
@@ -2640,6 +2649,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // Round 751: research v2 (see load()). Stored only by a v2 save, so a classic save's file is unchanged.
         if (rulesPerSave) // round 825: stored only by a save that keeps its own rules
             data.store("rulesPerSave", true);
+        if (!levelHistory.isEmpty()) // round 939: stored only by a run that changed level
+            data.store("levelHistory", levelHistory);
         if (!customDifficulty.isEmpty()) // round 822: stored only by a custom save
             data.store(forge.adventure.util.CustomDifficulty.SAVE_KEY, forge.adventure.util.CustomDifficulty.encode(customDifficulty));
         if (townSpecialties) // round 760: stored only by a save that has them
@@ -3803,6 +3814,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public void setRulesPerSave(boolean on) {
         rulesPerSave = on;
+    }
+
+    /** Round 939: the levels this run has played ("Hard@0,Normal@34"), or "" when it never changed level. */
+    public String getLevelHistory() {
+        return levelHistory;
+    }
+
+    public void setLevelHistory(String history) {
+        levelHistory = history == null ? "" : history;
     }
 
     /** Round 760: this save has town specialties (util/TownSpecialties). */

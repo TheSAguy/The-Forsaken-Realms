@@ -698,9 +698,14 @@ public class SettingsScene extends UIScene {
                 ? forge.adventure.player.AdventurePlayer.current() : null;
         if (p != null && p.getDifficulty() != null) {
             int n = forge.adventure.util.CustomDifficulty.count(p);
+            // round 939: a game that changed level says when ("Changed on day 34."); the title says where it started
+            String story = forge.adventure.util.CustomDifficulty.levelDetail(p);
+            if (story != null && story.contains(", "))
+                story = story.substring(story.indexOf(", ") + 2);
             difficultyLabel.setText(title + ": " + forge.adventure.util.CustomDifficulty.displayName(p)
                     + (n > 0 ? " - " + n + " changed" : "") + "\n[%80][LIGHT_GRAY]"
-                    + localizer.getMessageorUseDefault("lblCustomDifficultyMidGame", "Change the settings that can change mid-game"));
+                    + (story == null ? "" : Character.toUpperCase(story.charAt(0)) + story.substring(1) + ". ")
+                    + localizer.getMessageorUseDefault("lblCustomDifficultyMidGame", "Change the settings or the level mid-game"));
             difficultyEdit.setDisabled(false);
         } else {
             difficultyLabel.setText(title + "\n[%80][LIGHT_GRAY]"

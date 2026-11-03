@@ -14264,6 +14264,102 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 939: a running game can change its level - Change level... in Settings > Difficulty > Edit... (2026-11-03)
+
+A player said the difficulty can't change mid-game. True of the preset until now: about 160 custom knobs could change,
+but Easy/Normal/Hard/Insane was fixed per save. The audit (`C:\TFR\notes\r939-audit.md`) found that a "copy another
+level's values" button would reach only about 16 knobs, because many of a level's biggest differences read the preset
+itself: Hard's genetic-AI enemy decks, building prices x1.25, the enemy-rank tilt, item cracking, the purse factor,
+dungeon spawns and the invasion leaders. So the user approved route B (`C:\TFR\notes\r939-routeB.md`, "Yes, build it"): a
+real mid-game level change. **This drops round 822's rule that "a save's preset is fixed".**
+
+- **Change level...** (`CustomDifficultyScene`; landscape under Share code, portrait at the title row's right): a dialog
+  that says what follows and what stays, with Easy / Normal / Hard / Insane (the save's own marked "(yours)") and Close.
+  A pick waits for Done: the rows are measured against the picked level from then on, and the changes equal to its own
+  values are set aside (put back if the pick changes). Done switches first, then applies the rows. The save's own
+  level is no change. Any number of switches.
+- **Never during a duel or its rewards** (`CustomDifficulty.levelChangeBlocked`: the current scene is a DuelScene or
+  RewardScene). Settings is out of reach then anyway - the map menu is frozen from the encounter through the reward
+  screen - so this guards every other way in (the console, a future path). With the panel open from a frozen state, the
+  button says why on the help line.
+- **`CustomDifficulty.changeLevel`** sets the save's name and run fields from the new preset (`runFields`), so every read
+  of the level follows. It holds three things that would jump or apply backwards:
+  - Ascendance Power is re-priced with round 545's `reprice` (`Ascendance.onLevelChange`): same level, same share of
+    the way to the next, later levels at the new cost. The save stores the new cost, so the next load re-prices nothing.
+  - A switch INTO Hard/Insane forgives the reloads the world already counted (`ReloadJab.onLevelChangeIntoHard`;
+    round 732's no-retroactive rule).
+  - The starting sets stay the first level's (`startingSetsOf`, also at every load: TfrAchievements counts research
+    against them).
+
+  Overrides equal to the new level's own value are dropped; the rest and the Rules carry on.
+- **The record:** `AdventurePlayer.levelHistory` ("Hard@0,Normal@34", saved only when set, cleared by New Game+). It
+  shows as:
+  - Settings' Difficulty row: "Normal (started on Hard)", " - N changed" for custom changes only, and its sub-line
+    "Changed on day 34." (or "Changed 3 times, last to Normal on day 34.");
+  - a run back on its first level: "Hard (level changed 2x)";
+  - the save slot: "Normal (from Hard)", Normal's dot (`slotName`; `SaveLoadScene.presetOf` reads it back for New Game+);
+  - the info page: "Difficulty: Normal" + a small "(from Hard)". The brief's "(started on Hard, changed on day 34)" ran
+    off the sheet, and a second line covered Notoriety (the stats layout is a stock common/ file), so the day went to
+    Settings;
+  - `[TFR-Session] ... difficulty=Normal startedOn=Hard levelChanges=1`.
+- **Cancel** (both layouts; portrait's bottom row is four buttons): throws away every unapplied edit and a waiting level
+  change, in every mode (new game and New Game+ too). Esc stays Done.
+- **Log lines:**
+  - `[TFR-Custom] level changed Hard -> Normal on day 1 (Change level, mid-game): Power 649 -> 526 (level cost x1.32 ->
+    x1.05), still level 6 (was 6); reload jab ...; startingSets kept 2 (Hard's); dropped N override(s) ...; now ...,
+    history ...`
+  - `panel: Change level ... waiting for Done (...)`, `panel cancelled ...: N unapplied change(s) dropped`,
+    `level change ... refused - ...`, `panel open refused - ... (console)`
+  - `[TFR-ReloadJab] level changed into Hard/Insane: ... N earlier reload(s) forgiven`
+- **Console** (the bridge cannot scroll Settings to Edit...): `custom panel open`, `custom panel changelevel LEVEL`,
+  `custom panel cancel`, and `custom panel levelcheck`, which checks every pair of levels on the real data without
+  touching the save:
+  - the switched fields;
+  - the Power level both ways;
+  - the dropped overrides;
+  - the history and the slot words;
+  - the own level as a no-op.
+
+  forge-gui-mobile has no unit tests, so this console check stands in for one (no stock pom edit, the manager's call).
+- **Words:**
+  - `DifficultyHints`: both hints point at Change level...;
+  - the Settings sub-line: "Change the settings or the level mid-game", after the change story;
+  - GUIDE: Custom Difficulty's Change level paragraph and Notes on Difficulty; GUIDE.html regenerated;
+  - FAQ message 9 (now 1994 characters) and `EDITED = {9}` for 1.27;
+  - `docs/tfr/custom-difficulty.md` (a new section; the old fixed-preset rule is struck).
+- **Agent-tested** on the classes over the agent jar, 1280x720 and portrait 540x960, a new Hard save (slot 39). Every
+  duel ran at 50x. Shots: `C:\TFR\notes\r939-shots\` (b* landscape, c* portrait). Results:
+  - `levelcheck`: 2029 checks, 0 failed.
+  - Hard -> Normal through the dialog and Done:
+    - "Normal (started on Hard)";
+    - Ascendance level 6 kept (Power 649 -> 526);
+    - the Job Board's restore fee 250 + 25 -> 200 + 20 (`[TFR-RestoreFee]` x1.25 -> x1.0);
+    - a duel's `[TFR-EnemyLife] enemyLifeFactor=1.0`.
+  - Save + load: the slot reads "Normal (from Hard)", Power 539 / level 6 unchanged by the load (no re-price), and
+    `[TFR-Session] startedOn=Hard levelChanges=1`. `custom knobs` shows startingSets 2 and startingLife 10 kept,
+    enemyHealth and sellFactor Normal's.
+  - Normal -> Hard with 5 reloads counted: 5 forgiven, enemy bonus +0.
+  - A Wrath hunt started on Normal kept hunting through Easy and back, a day passed on Easy.
+  - Cancel (console and button) applied nothing.
+  - The own level: "No level change".
+  - A Hard-valued enemyHealth override: set aside on picking Hard, back on picking Insane, dropped on Done.
+  - An old save (slot 1) reads plain "Normal".
+  - Mid-duel: `custom panel open` refused "not during a duel or its rewards" in the duel and at its post-duel ante
+    prompt.
+  - No exceptions in forge.log.
+  - The info page and the Settings row checked in both layouts after their fix (b7, b9, c4, c6).
+- **Not tested:**
+  - The RewardScene branch of the block itself (the wins went straight to the map);
+  - Android and a controller;
+  - New Game+ after a switch (the history reset is a one-line clear).
+- Files:
+  - `util/CustomDifficulty.java`, `scene/CustomDifficultyScene.java`, `util/Ascendance.java`, `util/ReloadJab.java`;
+  - `player/AdventurePlayer.java`, `scene/SaveLoadScene.java`, `scene/PlayerStatisticScene.java`,
+    `scene/SettingsScene.java` (STOCK, see `CORE_ENGINE_CHANGES.md`);
+  - `util/SessionLog.java`, `util/DifficultyHints.java`;
+  - `ui/custom_difficulty.json`, `ui/custom_difficulty_portrait.json`;
+  - GUIDE.md/.html, `dev-tools/discord_faq/messages.py`, `docs/tfr/custom-difficulty.md`.
+
 ## Round 938: the FAQ's edit list resets after 1.26 (2026-11-03)
 
 `dev-tools/discord_faq/messages.py`: `EDITED` and `ADDED` are empty sets again, so the next version's FAQ edits start

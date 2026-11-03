@@ -311,7 +311,11 @@ public class PlayerStatisticScene extends UIScene {
         if (winloss != null) {
             // Round 838 (the user: "Could we somehow show what difficulty that are playing on?"): the old Win/Loss
             // ratio row names the save's difficulty in Settings' own words - "Difficulty: Insane", "Custom (Hard)".
-            winloss.setText(size + "Difficulty: " + forge.adventure.util.CustomDifficulty.displayName(AdventurePlayer.current()));
+            // Round 939: a run that changed level adds a small "(from Hard)" - the full "started on Hard" text ran off the sheet,
+            // and a second line covered Notoriety; Settings' Difficulty row tells the whole story.
+            String note = forge.adventure.util.CustomDifficulty.levelNote(AdventurePlayer.current(), "from ");
+            winloss.setText(size + "Difficulty: " + forge.adventure.util.CustomDifficulty.levelName(AdventurePlayer.current())
+                    + (note == null ? "" : " [%60](" + note + ")"));
         }
         if (lossWinRatio != null) {
             lossWinRatio.setText("");

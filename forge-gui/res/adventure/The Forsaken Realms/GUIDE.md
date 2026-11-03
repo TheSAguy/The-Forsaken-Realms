@@ -1311,7 +1311,8 @@ first: if he has something to tell you, hear him out, then speak to him again.
 ## Notes on Difficulty
 
 Your difficulty shows on the info page (Quest log > **Status**, under Notoriety), in **Settings > Difficulty**, and on
-each save slot's button, in its dot's color - "Custom (Hard)" for a custom difficulty.
+each save slot's button, in its dot's color - "Custom (Hard)" for a custom difficulty, "Normal (from Hard)" for a game
+that changed level (see [Custom Difficulty](#custom-difficulty)).
 
 Insane difficulty roughly doubles the stakes of everything above: reputation swings matter more,
 War states are more likely to actually happen, and the newest boss fights (several of which run
@@ -1385,6 +1386,14 @@ when you press Done; the ones that shape a new world are locked until your next 
 the Temple, Level cost, the day-one mages, the Center Towns that end a run, the neutral and ruined towns, pillage raids,
 town specialties, realm milestones, the side-quest time limit and the New Game+ wave. **Reset all** puts the
 difficulty back on its preset; your Rules (Disable Notoriety, leveling, the reload switch) stay as they are.
+
+**Change level...** in the same panel switches your game to another level - Easy, Normal, Hard or Insane - as often as
+you like, though never during a duel or its rewards. From then on the game plays as that level: enemy health and decks,
+the enemy ranks, prices, rewards, what a loss costs, Notoriety and the reload rule all follow it. What stays: the world
+as it was made, your Ascendance level (the next levels cost the new level's price), your starting sets, your own custom
+settings and Rules, and no penalty for reloads made before the switch. It applies when you press **Done**; **Cancel**
+throws it away (and any other change in the panel). The game then reads "Normal (started on Hard)" in Settings, with the day
+it changed, and "Normal (from Hard)" on its save slot and the info page.
 
 The numbers elsewhere in this guide are the presets' own; a custom game plays by its settings instead.
 

@@ -504,10 +504,17 @@ public class SaveLoadScene extends UIScene {
         return null;
     }
 
-    /** "Custom (Hard)" -> "Hard"; a preset's name stays itself. */
-    static String presetOf(String words) {
+    /** "Custom (Hard)" -> "Hard"; a preset's name stays itself. Round 939: a run that changed level - "Normal (from
+     *  Hard)" and "Hard (level changed 2x)" -> the level before the bracket, "Custom (Normal, from Hard)" -> "Normal". */
+    public static String presetOf(String words) {
         int open = words.indexOf('('), close = words.lastIndexOf(')');
-        return open >= 0 && close > open ? words.substring(open + 1, close).trim() : words;
+        if (open < 0 || close < open)
+            return words.trim();
+        if (!words.startsWith("Custom"))
+            return words.substring(0, open).trim();
+        String inside = words.substring(open + 1, close);
+        int comma = inside.indexOf(',');
+        return (comma >= 0 ? inside.substring(0, comma) : inside).trim();
     }
 
     /** The save dot's color markup for a preset (getSaveFileSuffix's colors). */
@@ -836,7 +843,7 @@ public class SaveLoadScene extends UIScene {
         }
         // Round 838: a third segment, the difficulty in CustomDifficulty.displayName's words ("Insane", "Custom (Hard)"),
         // for the slot buttons and New Game+ (slotDifficulty). A build before 838 reads only the first two.
-        String words = forge.adventure.util.CustomDifficulty.displayName(AdventurePlayer.current());
+        String words = forge.adventure.util.CustomDifficulty.slotName(AdventurePlayer.current()); // round 939: "Normal (from Hard)"
         return ASCII_179 + difficulty + GameScene.instance().getAdventurePlayerLocation(true, true)
                 + ("?".equals(words) || words.indexOf(ASCII_179) >= 0 ? "" : ASCII_179 + words);
     }

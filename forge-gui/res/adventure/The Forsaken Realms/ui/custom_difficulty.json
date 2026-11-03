@@ -52,6 +52,24 @@
       "height": 30,
       "x": 414,
       "y": 120
+    },
+    {
+      "type": "TextButton",
+      "name": "changeLevel",
+      "text": "[%75]Change level...",
+      "width": 60,
+      "height": 30,
+      "x": 414,
+      "y": 160
+    },
+    {
+      "type": "TextButton",
+      "name": "cancel",
+      "text": "tr(lblCancel)",
+      "width": 60,
+      "height": 30,
+      "x": 414,
+      "y": 225
     }
   ]
 }

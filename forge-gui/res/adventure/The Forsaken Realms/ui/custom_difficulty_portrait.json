@@ -30,7 +30,7 @@
       "name": "done",
       "text": "tr(lblDone)",
       "binding": "Back",
-      "width": 84,
+      "width": 62,
       "height": 32,
       "x": 6,
       "y": 432
@@ -39,19 +39,37 @@
       "type": "TextButton",
       "name": "resetAll",
       "text": "Reset all",
-      "width": 84,
+      "width": 62,
       "height": 32,
-      "x": 93,
+      "x": 136,
       "y": 432
     },
     {
       "type": "TextButton",
       "name": "share",
       "text": "[%80]Share code",
-      "width": 84,
+      "width": 63,
       "height": 32,
-      "x": 180,
+      "x": 201,
       "y": 432
+    },
+    {
+      "type": "TextButton",
+      "name": "cancel",
+      "text": "tr(lblCancel)",
+      "width": 62,
+      "height": 32,
+      "x": 71,
+      "y": 432
+    },
+    {
+      "type": "TextButton",
+      "name": "changeLevel",
+      "text": "[%75]Change level...",
+      "width": 88,
+      "height": 18,
+      "x": 168,
+      "y": 12
     }
   ]
 }

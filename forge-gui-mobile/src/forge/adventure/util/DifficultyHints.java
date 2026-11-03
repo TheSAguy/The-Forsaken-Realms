@@ -197,13 +197,17 @@ public final class DifficultyHints {
                 + difficultyName() + " -> " + easier + ", world " + seed + (custom() ? ", custom" : "") + ")");
         // Round 827: a custom save is pointed at its own settings first; with round 826's mid-game panel, a preset save
         // also hears it can ease things now
+        // Round 939: and the save itself can move to the easier level now (Change level...)
         if (custom())
             show("A Word of Advice", foe + " has beaten you " + LOSSES + " times. You can ease your custom settings now in "
-                    + "Settings > Difficulty > Edit..., or pick " + easier + " on your next game or New Game+.");
+                    + "Settings > Difficulty > Edit..., or change this save to " + easier + " there (Change level...).");
+        else if (canEdit())
+            show("A Word of Advice", foe + " has beaten you " + LOSSES + " times. " + easier
+                    + " is always an option: change this save to it now in Settings > Difficulty > Edit... > Change level...,"
+                    + " or ease only some settings there.");
         else
             show("A Word of Advice", foe + " has beaten you " + LOSSES + " times. " + easier
-                    + " is always an option: pick it on your next game or New Game+."
-                    + (canEdit() ? " Or ease the settings that can change mid-game now, in Settings > Difficulty." : ""));
+                    + " is always an option: pick it on your next game or New Game+.");
     }
 
     private static void showWin() {
@@ -215,11 +219,13 @@ public final class DifficultyHints {
                 + " wins in a row (" + difficultyName() + " -> " + harder + ", world " + seed + (custom() ? ", custom" : "") + ")");
         if (custom())
             show("Ready for More?", WINS + " wins in a row! If the duels feel easy, tighten your custom settings in "
-                    + "Settings > Difficulty > Edit..., or try " + harder + " on your next game or New Game+.");
+                    + "Settings > Difficulty > Edit..., or change this save to " + harder + " there (Change level...).");
+        else if (canEdit())
+            show("Ready for More?", WINS + " wins in a row! If the duels feel easy, change this save to " + harder
+                    + " now in Settings > Difficulty > Edit... > Change level..., or raise only some settings there.");
         else
             show("Ready for More?", WINS + " wins in a row! If the duels feel easy, try " + harder
-                    + " on your next game or New Game+."
-                    + (canEdit() ? " Or raise the settings that can change mid-game now, in Settings > Difficulty." : ""));
+                    + " on your next game or New Game+.");
     }
 
     /** The Notices line and the world map's dialog, in round 756's style, with one button. */

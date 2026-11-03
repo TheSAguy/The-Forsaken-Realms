@@ -137,6 +137,30 @@ public final class ReloadJab {
                 + (dropped ? "; a pending loss or duel record was dropped, not judged" : ""));
     }
 
+    /**
+     * Round 939 (the user's call, through the manager): the mid-game Change level INTO Hard or Insane - the reloads this
+     * world already counted (on the level before, where they cost nothing) are forgiven, so the enemy life bonus starts
+     * from the switch and is never applied retroactively (round 732's rule). Out of Hard/Insane nothing is needed: the
+     * bonus stops with the level. Returns how many were forgiven now (0 when none were owed).
+     */
+    static int onLevelChangeIntoHard() {
+        long seed = currentSeed();
+        if (seed == 0L)
+            return 0;
+        synchronized (LOCK) {
+            Properties p = read();
+            int reloads = count(p, seed);
+            int forgiven = intProp(p, "forgiven." + seed);
+            if (reloads <= forgiven)
+                return 0;
+            p.setProperty("forgiven." + seed, String.valueOf(reloads));
+            write(p);
+            System.out.println("[TFR-ReloadJab] level changed into Hard/Insane: world " + seed + "'s " + (reloads - forgiven)
+                    + " earlier reload(s) forgiven (forgiven " + forgiven + " -> " + reloads + ") - the bonus counts from now");
+            return reloads - forgiven;
+        }
+    }
+
     private static long currentSeed() {
         WorldSave save = WorldSave.getCurrentSave();
         return save == null || save.getWorld() == null ? 0L : save.getWorld().getSeed();
