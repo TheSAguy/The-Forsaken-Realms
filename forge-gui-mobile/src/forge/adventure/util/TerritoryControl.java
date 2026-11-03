@@ -2428,6 +2428,11 @@ public class TerritoryControl {
         String currentColor = currentColorAtPoi(world, poi);
         if (homeColor == null || currentColor == null || homeColor.equals(currentColor))
             return null;
+        // Round 932 (Fable P2-21, the user's pick): neutral land never re-themes, only land another color took.
+        // neutralizeAfterGeneration turns every colored tile beyond 20 of its castle into waste, so nearly every colored
+        // dungeon read as "changed hands" on day 1 and swapped its placements for wasteland creatures (open since round 301).
+        if ("waste".equals(currentColor))
+            return null;
         for (BiomeData biome : world.getData().GetBiomes()) {
             if (currentColor.equals(biome.name)) {
                 // Round 173 (review S8): the ordinary roster only - war champions and frontier spawns
