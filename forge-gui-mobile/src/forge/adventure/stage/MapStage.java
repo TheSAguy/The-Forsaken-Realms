@@ -2522,13 +2522,19 @@ public class MapStage extends GameStage {
                 ok.setVisible(true);
             }
         });
+        // TFR round 932 (Fable P2-10): one exit. The tap that skips the typing exited and left the dialog up on the shared
+        // HUD; its OK then exited again (two cracked items after a boss loss). Now hidden first, and once.
+        final boolean[] exited = {false};
         dialog.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 L.skipToTheEnd();
                 super.clicked(event, x, y);
-                if (exit)
+                if (exit && !exited[0]) {
+                    exited[0] = true;
+                    hideDialog();
                     exitDungeon(false, defeatedByBoss);
+                }
             }
         });
         dialog.getButtonTable().add(ok).width(240f);
