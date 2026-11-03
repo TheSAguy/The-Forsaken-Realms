@@ -504,6 +504,11 @@ public class WorldSave {
         lastLoadError = null;
     }
 
+    /** TFR round 931 (Fable P2-14): true while a failed load left a half-loaded game that must not be resumed or saved. */
+    public static boolean isSaveBlocked() {
+        return saveBlocked;
+    }
+
     public static boolean isSafeFile(String name) {
         return filenameToSlot(name) != INVALID_SAVE_SLOT;
     }

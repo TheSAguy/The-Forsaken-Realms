@@ -14276,6 +14276,11 @@ The user: "Fix them all." The first five of the Fable review's list (`C:\TFR\not
   - Every other duel start on the world map (a collision, a town assault, a guard's fight, a chest or treasure duel) clears `currentMobIsCapitolDefense`, so a stale flag can't reach a later loss.
   - Not done: saving the pending mage (about 25 lines and a save key, as round 173 does for the duelling guard's mage). A save made while it waits, or a quit mid-duel, still drops the attack, as before. I'd do it after 1.26.
   Files: `stage/GameStage.java`, `stage/WorldStage.java` (stock), `util/TerritoryControl.java` (the log line).
+- **A failed Continue says why, and the half-loaded game can't be resumed** (Fable P2-14, with its check's corrections). A save that reads whole but fails in its world record (round 921's class) leaves `World.data` set and, on a fresh launch with no game to roll back to, `saveBlocked` true. Continue's failure branch only cleared the transition, so nothing was said; after the next menu round trip Resume showed, and the player played on in a world whose every save was refused with a log line only. Now:
+  - Continue's failure shows the Load screen's text ("Could not continue", the reason from `getLastLoadError`, the file unchanged) and refreshes the buttons. `[TFR-Load] Continue failed[ - Resume hidden, saving is off]`.
+  - `WorldSave.isSaveBlocked()`; the menu hides Resume and Save while it is true, so Continue, Load and New Game stay the ways on. A new game or a good load clears the block, as before.
+  Files: `scene/StartScene.java`, `world/WorldSave.java` (stock).
+- **Tested:** `forge-gui-mobile` compiles (Maven exit 0). The regex on nine names in jshell. The rest is reasoned from the code: `forge-gui-mobile` has no unit tests and these paths need a running game. Agent-game checks to run once the machine is free: a repeat quest's days after a second acceptance (P1-1); a copied save named "auto_save - Copy.sav" in the agent profile, then open Load (P2-13); a Capitol mage held while in a town (P1-2); a Continue on a save with a broken world record (P2-14); an Oura duel at 50x (the typo).
 
 ## Round 930: a big batch of life-gain triggers no longer draws its own duel (2026-11-02)
 

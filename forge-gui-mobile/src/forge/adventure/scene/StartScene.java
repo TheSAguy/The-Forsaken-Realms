@@ -162,6 +162,7 @@ public class StartScene extends UIScene {
                         Forge.switchScene(GameScene.instance());
                     } else {
                         Forge.clearTransitionScreen();
+                        showContinueFailed(); // TFR round 931 (Fable P2-14): it used to say nothing
                     }
                 }, null, false, true, Forge.getLocalizer().getMessage("lblLoadingWorld")));
             } catch (Exception e) {
@@ -354,13 +355,28 @@ public class StartScene extends UIScene {
         return true;
     }
 
+    /** TFR round 931 (Fable P2-14): why Continue failed, as the Load screen says it, and Resume hidden while the
+     *  half-loaded game can't be saved. */
+    private void showContinueFailed() {
+        String reason = WorldSave.getLastLoadError();
+        WorldSave.clearLastLoadError();
+        System.err.println("[TFR-Load] Continue failed" + (WorldSave.isSaveBlocked() ? " - Resume hidden, saving is off" : ""));
+        updateResumeContinue();
+        showDialog(createGenericDialog("Could not continue", "Your last save could not be opened"
+                        + (reason == null ? "." : ":\n\n" + reason)
+                        + "\n\nThe file on disk has NOT been changed. Try Load to pick another save, and please report this "
+                        + "with your forge.log so it can be looked at.",
+                Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
+    }
+
     public void switchToClassic() {
         SoundSystem.instance.stopBackgroundMusic();
         Forge.switchToClassic();
     }
 
     public void updateResumeContinue() {
-        boolean hasResumeButton = WorldSave.getCurrentSave().getWorld().getData() != null;
+        // TFR round 931 (Fable P2-14): not a half-loaded game a failed load left, whose saves are refused
+        boolean hasResumeButton = WorldSave.getCurrentSave().getWorld().getData() != null && !WorldSave.isSaveBlocked();
         resumeButton.setVisible(hasResumeButton);
 
         // Continue button mutually exclusive with resume button
@@ -377,7 +393,7 @@ public class StartScene extends UIScene {
 
     @Override
     public void enter() {
-        boolean hasSaveButton = WorldSave.getCurrentSave().getWorld().getData() != null;
+        boolean hasSaveButton = WorldSave.getCurrentSave().getWorld().getData() != null && !WorldSave.isSaveBlocked(); // round 931
         if (hasSaveButton) {
             TileMapScene scene = TileMapScene.instance();
             hasSaveButton = !scene.currentMap().isInMap() || scene.isAutoHealLocation();
