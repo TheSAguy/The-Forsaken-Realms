@@ -36,9 +36,8 @@
 - The guide and the Discord FAQ are refreshed, and now say exactly how the Capitol is targeted, that the Arena pays half
   Power, and when Jumpstart stops being offered.
 
-<!-- NEW-GAME LINE: the user's wording. Suggested: "Start a new game to play the Doppelganger or pick your starting sets
-(New Game+ keeps your race and draws its sets at random); everything else works on your current save." -->
-**[NEW-GAME LINE]**
+**New game?** Only to play the Doppelganger or pick your starting sets (New Game+ keeps your race and draws its sets at
+random). Everything else works on your current save.
 
 ## 📱 Android
 
