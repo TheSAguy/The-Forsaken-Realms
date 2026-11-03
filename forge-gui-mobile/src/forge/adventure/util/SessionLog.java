@@ -214,6 +214,9 @@ public final class SessionLog {
     public static void onDuelEnd(EnemySprite enemy, Game game, Match match, RegisteredPlayer human, boolean winner,
                                  boolean drawn, boolean arena, boolean event, boolean watched) {
         try {
+            String aiCap = forge.ai.LiteTurnCap.duelSummary(); // round 924
+            if (aiCap != null)
+                System.out.println(aiCap);
             String result = drawn ? "draw" : winner ? "won" : "lost";
             if (!watched) {
                 duels++;

@@ -58,6 +58,11 @@ md` already gets updated after every change.
 
 - `forge-gui-mobile/src/forge/adventure/character/RewardSprite.java` (STOCK): `getRewards()`'s one-time fill runs inside `ResourceSpawns.rollSeeded` and calls `generate(false, false)`, with one `[TFR-PickupSeed]` line. Upstream's cache and round 289's restriction stay as they were.
 
+### Round 924 - the AI's wait on Android is capped
+
+- `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK): a field `liteTimeoutTurn`; `noteLiteTimeout()` and `prioritySessionNanos()`; `chooseSpellAbilityToPlay` asks the second for its session's time, and `chooseSpellAbilitiesToPlayFromList`'s `TimeoutException` branch calls the first. All marked `TFR round 924`. In upstream's fastest-moving file, so check all four sites at a merge.
+- `forge-ai/src/main/java/forge/ai/LiteTurnCap.java`: new file.
+
 ### Round 923 - three more card lists, and the Spellsmith frees its card
 - `forge-game/src/main/java/forge/game/card/CardView.java`: `getMustBlockCards`, `getMergedCardsCollection` and `getChosenCards`
   use round 919's `copyOf`.

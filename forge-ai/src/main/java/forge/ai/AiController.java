@@ -118,6 +118,8 @@ public class AiController {
     /** Per player switch for comparisons and tests: null follows the game-wide setting. */
     private Boolean flatMcOverride;
     private Boolean flatMcMaxOverride;
+    /** TFR round 924: the turn an AI timeout cut short on lite settings; see {@link LiteTurnCap}. */
+    private int liteTimeoutTurn = -1;
 
     /**
      * Casts and activations that could not be put on the stack this turn (illegal targets), by card and ability, to
@@ -1584,7 +1586,7 @@ public class AiController {
      */
     public List<SpellAbility> chooseSpellAbilityToPlay() {
         final long id = AITimeoutTracker.key(game.getId(), player.getId());
-        final long timeoutNanos = TimeUnit.SECONDS.toNanos(game.getAITimeout());
+        final long timeoutNanos = prioritySessionNanos(); // TFR round 924
         AITimeoutTracker.begin(id, timeoutNanos);
         final Object limit = AITimeoutTracker.arm(AITimeoutTracker.deadlineNanos(id, timeoutNanos), false);
         try {
@@ -2349,6 +2351,22 @@ public class AiController {
         }
     }
 
+    /** TFR round 924: the first timeout of a turn on lite settings: no Monte Carlo until the next turn. */
+    void noteLiteTimeout() {
+        final int turn = game.getPhaseHandler().getTurn();
+        if (game.getAIFlatMonteCarloLite() && turn != liteTimeoutTurn) {
+            liteTimeoutTurn = turn;
+            flatMcPausedUntilTurn = Math.max(flatMcPausedUntilTurn, turn + 1);
+            LiteTurnCap.noteTrip(player, turn);
+        }
+    }
+
+    /** TFR round 924: one priority's time: the game's timeout, or the short limit in a turn that has timed out. */
+    long prioritySessionNanos() {
+        final long full = TimeUnit.SECONDS.toNanos(game.getAITimeout());
+        return liteTimeoutTurn == game.getPhaseHandler().getTurn() ? LiteTurnCap.shortened(full) : full;
+    }
+
     /** Monte Carlo is off for this player: tripped by errors, or paused after slowness. */
     private boolean flatMcOff() {
         return flatMcTripped || game.getPhaseHandler().getTurn() < flatMcPausedUntilTurn;
@@ -2660,6 +2678,7 @@ public class AiController {
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
             if (e instanceof TimeoutException) {
+                noteLiteTimeout(); // TFR round 924
                 // log where the eval thread currently is - each timeout doubles as a
                 // profiler sample for diagnosing remaining AI slowdowns from user logs
                 StringBuilder sb = new StringBuilder("AI eval thread at timeout:");
