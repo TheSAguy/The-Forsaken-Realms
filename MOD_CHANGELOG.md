@@ -14264,6 +14264,14 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 936 (follow-up): the version is 1.26 (2026-11-02)
+
+The last step of the release prep, after the code thread's rounds 931-934 (its go: round 934 touches neither file).
+`ANDROID_RELEASE.md` steps 1-2: `config.json` `modVersion` 1.26 and `modVersionDate` 11.03 (the release day the user named),
+`forge-gui-android/pom.xml` `<tfr.version>` 1.26 and `<manifestVersionCode>` 12600; the NOW block's version lines (they rode round 934's `c919a087392`, which committed `CLAUDE.md` while they sat on its line).
+`RELEASE_NOTES_v1.26.md` gains rounds 932 and 934's lines (fairer rules, privacy, smaller fixes, Android memory) and the
+booster caveat on the seeded level-up payout. Nothing tagged, pushed or packaged; the release tag must be `tfr-v1.26`.
+
 ## Round 936: release prep for 1.26 - the guide, the FAQ and the notes (2026-11-02)
 
 The user: "I'd like for you to do as much as you can tonight, so we can release 1.26 tomorrow." Nothing is tagged, pushed,
