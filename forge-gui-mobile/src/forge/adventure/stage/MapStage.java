@@ -1757,11 +1757,11 @@ public class MapStage extends GameStage {
                             }
                             if (prop.containsKey("speed")) //Check for flee range.
                             {
-                                mob.getData().speed = Float.parseFloat(prop.get("speed").toString());
+                                mob.ownData().speed = Float.parseFloat(prop.get("speed").toString()); // round 932: not the shared data
                             }
                             if (prop.containsKey("flying"))
                             {
-                                mob.getData().flying = Boolean.parseBoolean(prop.get("flying").toString());
+                                mob.ownData().flying = Boolean.parseBoolean(prop.get("flying").toString()); // round 932
                             }
                             if (prop.containsKey("hidden"))
                             {

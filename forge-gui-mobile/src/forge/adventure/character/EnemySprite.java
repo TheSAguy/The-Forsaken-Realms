@@ -681,9 +681,23 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         return data;
     }
 
+    /** TFR round 932 (Fable P2-7): this sprite's own copy of its data, made once, for a map's per-placement overrides.
+     *  The data is the shared catalog entry (or a cached tier variant), so a deckOverride, speed or flying written to it
+     *  changed every enemy of that name for the rest of the session. */
+    public EnemyData ownData() {
+        if (!ownsData) {
+            EnemyData copy = new EnemyData(data);
+            copy.fixedDeck = data.fixedDeck; // transient, left out by the copy constructor
+            data = copy;
+            ownsData = true;
+        }
+        return data;
+    }
+
+    private boolean ownsData;
+
     public void overrideDeck(String deckPath) {
-        data.deck = new String[1];
-        data.deck[0] = deckPath;
+        ownData().deck = new String[]{deckPath}; // round 932: was written into the shared data
     }
 
     @Override
