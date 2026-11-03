@@ -1200,6 +1200,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         this.difficultyData.shardSellRatio = difficultyData.shardSellRatio;
         this.difficultyData.goldLoss = difficultyData.goldLoss;
         this.difficultyData.lifeLoss = difficultyData.lifeLoss;
+        // TFR round 932 (Fable P2-15): the preset's "Random loot rate" (stock left it out here, as round 400 found in
+        // updateDifficulty), so every new game played at the default 1.0 whatever the new-game screen said.
+        this.difficultyData.rewardMaxFactor = difficultyData.rewardMaxFactor;
         this.difficultyData.startingSets = difficultyData.startingSets; // round 872: read by seedStartingEditions below
 
         gold = ringGiftStart() ? 0 : difficultyData.startingMoney; // round 101: the Ring Cities hand the kit over

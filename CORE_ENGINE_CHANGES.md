@@ -45,6 +45,7 @@ md` already gets updated after every change.
 - `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): `dungeonFailedDialog`'s click listener is one-shot (`exited`) and calls `hideDialog()` before `exitDungeon`.
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): `generateNew`'s TFR reset block also clears `bonfires` and `yinYangAnchor` and bumps their stamps.
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK): TFR's `applyDayNightTerrainLife` masks the road bits (`& ~roadMask()`).
+- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `create()` copies `rewardMaxFactor` with the other difficulty fields (upstream leaves it out). Drop this line if upstream adds it.
 
 ### Round 931 - the must-fix list before 1.26
 

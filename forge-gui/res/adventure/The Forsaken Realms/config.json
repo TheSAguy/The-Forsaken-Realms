@@ -210,7 +210,7 @@
       "startingSets": 1,
       "startingMoney": 50,
       "enemyLifeFactor": 2.5,
-      "rewardMaxFactor" : 0.0,
+      "rewardMaxFactor" : 0.5,
       "spawnRank": 3,
       "goldLoss": 0.5,
       "lifeLoss": 0.3,
