@@ -485,16 +485,21 @@ public class SoundSystem {
         if (!planeMusicAddsToCommon || adventureDirectory == null)
             return files;
         File plane = new File(adventureDirectory + ForgeConstants.MUSIC_DIR, playlist.getSubDir());
-        if (!dir.getAbsoluteFile().equals(plane.getAbsoluteFile()))
-            return files; // a player override, or the plane has no tracks here: stock behavior
-        File[] common = new File(ForgeConstants.ADVENTURE_COMMON_DIR + ForgeConstants.MUSIC_DIR, playlist.getSubDir())
-                .listFiles(PLAYABLE_AUDIO);
+        File commonDir = new File(ForgeConstants.ADVENTURE_COMMON_DIR + ForgeConstants.MUSIC_DIR, playlist.getSubDir());
+        // a player override, the plane has no tracks here, or the adventure directory is common itself (Forge.openAdventure
+        // sets common until StartScene sets the plane): stock behavior
+        if (!dir.getAbsoluteFile().equals(plane.getAbsoluteFile()) || plane.getAbsoluteFile().equals(commonDir.getAbsoluteFile()))
+            return files;
+        File[] common = commonDir.listFiles(PLAYABLE_AUDIO);
         if (common == null || common.length == 0)
             return files;
         File[] all = Arrays.copyOf(files, files.length + common.length);
         System.arraycopy(common, 0, all, files.length, common.length);
+        StringBuilder names = new StringBuilder();
+        for (File f : files)
+            names.append(names.length() == 0 ? "" : ", ").append(f.getName());
         System.out.println("[TFR-Music] " + playlist.getSubDir() + " " + all.length + " tracks (" + files.length
-                + " plane + " + common.length + " common)");
+                + " plane + " + common.length + " common); plane: " + names);
         return all;
     }
 

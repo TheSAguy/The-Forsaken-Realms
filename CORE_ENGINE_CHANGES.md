@@ -44,7 +44,9 @@ md` already gets updated after every change.
 - `forge-gui/src/main/java/forge/sound/MusicPlaylist.java` (STOCK): `getRandomFilename` loads through
   `SoundSystem.findMusicFiles`; stock's shared `isInvalidated` boolean is a static `generation` counter with a
   per-playlist `loadedGeneration` (stock cleared the one flag on the first playlist's reload, leaving the others stale);
-  a `[TFR-Music] <playlist> plays <file>` line per pick.
+  a `[TFR-Music] <playlist> plays <file>` line per pick. Follow-up: a list is also re-read when
+  `GuiBase.getAdventureDirectory()` changed since it was loaded (`loadedAdventureDir`), and a fresh list
+  (`mostRecentTrackIdx < 0`) picks any track; `findMusicFiles` skips the merge when the plane folder is common itself.
 - `forge-gui-mobile/src/forge/adventure/util/Config.java` (STOCK): after `applyDigitalOnlyEditions()`, one line passes
   `configData.planeMusicAddsToCommon` to `SoundSystem.setPlaneMusicAddsToCommon` (the base config, before any save's
   custom-difficulty copy).

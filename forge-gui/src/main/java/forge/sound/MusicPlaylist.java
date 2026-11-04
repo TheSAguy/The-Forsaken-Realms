@@ -25,6 +25,9 @@ public enum MusicPlaylist {
     // cleared, so every other playlist kept its stale file list.
     private static int generation = 0;
     private int loadedGeneration = -1;
+    // TFR round 957: the adventure directory the list was read under. Forge.openAdventure sets common first and
+    // StartScene sets the plane later; stock kept the first list (common's menus) for the whole session.
+    private String loadedAdventureDir;
 
     MusicPlaylist(String subDir0) {
         subDir = subDir0;
@@ -39,7 +42,9 @@ public enum MusicPlaylist {
     }
 
     public String getRandomFilename() {
-        if (filenames == null || loadedGeneration != generation) {
+        String adventureDir = forge.gui.GuiBase.getAdventureDirectory();
+        if (filenames == null || loadedGeneration != generation || !java.util.Objects.equals(loadedAdventureDir, adventureDir)) {
+            loadedAdventureDir = adventureDir;
             try {
                 filenames = SoundSystem.findMusicFiles(this);
             }
@@ -52,8 +57,8 @@ public enum MusicPlaylist {
         }
 
         if (filenames.length == 0) { return null; }
-        else if (filenames.length == 1) {
-            mostRecentTrackIdx = 0;
+        else if (filenames.length == 1 || mostRecentTrackIdx < 0) { // TFR round 957: a fresh list can pick any track
+            mostRecentTrackIdx = MyRandom.getRandom().nextInt(filenames.length);
         }
         else {
             int index = MyRandom.getRandom().nextInt(filenames.length - 1);

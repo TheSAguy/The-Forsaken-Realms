@@ -14308,6 +14308,25 @@ for every candidate is `pieces.json` there).
   source is not known yet; a `MUSIC-SOURCE` comment marks where to name it.
 - **Build:** `mvn -pl forge-gui-mobile -am compile` and `-pl forge-gui-mobile-dev -am package` both passed.
 - **Not run:** Android playback.
+
+**Round 957 (follow-up): the menus playlist.** The agent game logged `menus/ 4 tracks (2 plane + 2 common)`, and the
+plane's 3 menus tracks never played.
+- **The cause:** `Forge.openAdventure` sets the adventure directory to `common` and starts MENUS. `StartScene` sets
+  the plane later. So the first MENUS list came from common, and the merge then added common to itself. Stock kept that
+  first list all session, so a plane's own menus music never played in stock either.
+- **The fixes:**
+  - `SoundSystem.findMusicFiles` does not merge when the "plane" folder is common itself.
+  - `MusicPlaylist` re-reads its list when the adventure directory changes, not just when invalidated. The title
+    screen's first track still comes from common, and the plane's tracks join from the next MENUS pick.
+  - A fresh list can pick any track. Stock's `mostRecentTrackIdx = -1` start skipped the first file.
+  - The load line names the plane's tracks.
+- **Agent game** (music turned on in the agent profile only, at 1% volume, then turned off again):
+  - `menus/ 5 tracks (3 plane + 2 common)`, and it played `pc_Match20_14.ogg`.
+  - `colorless/ 3 tracks (1 plane + 2 common)`, and it played `pc_Match10_06.ogg` on the Waste overworld.
+  - A duel at 50x: `match/ 13 tracks (8 plane + 5 common)`, and it played `pc_Match10_08.ogg`. An earlier run played
+    `pc_Match10_01.ogg`.
+  - No `Unable to load music file` lines.
+  - Not seen: boss, castle and the other biomes (same code path), and Android playback.
 - **Stock files:** `SoundSystem.java`, `MusicPlaylist.java`, `Config.java`, `ConfigData.java`, `forge-gui-android/pom.xml`
   (`CORE_ENGINE_CHANGES.md`).
 
