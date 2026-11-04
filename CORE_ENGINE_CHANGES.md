@@ -35,6 +35,12 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 947 - the desktop world-generation text
+- **`forge-gui-mobile/src/forge/screens/TransitionScreen.java`** (STOCK) - in the progress-bar block, an
+  `else if (isWorldGen)` after round 883's Android branch: the desktop bar text `message + lblWorldGenDesktopWait`.
+- **`forge-gui/res/languages/en-US.properties`** (STOCK, shared) - new key `lblWorldGenDesktopWait`, after
+  `lblKeepAppOpen`.
+
 ### Round 946 - Classic-only files left out of the packages
 - `forge-gui-android/pom.xml` (STOCK): seven `<exclude>` lines on the `assets.zip` copy's `res/**` fileset
   (`res/puzzle/**`, `res/tutorial/**`, `res/music/menus/**`, `res/music/match/**`, `res/quest/world/*/*/**`,

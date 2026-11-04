@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 947: desktop world generation says it may take a minute and Windows may call it not responding (2026-11-03)
+
+The user approved the first of today's log-review recommendations ("Yes for 2-4"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103c.md`
+P2-1). A new Windows player's game ended three times with no end line, twice inside world generation. On PC a world
+takes about 35 s on the render thread (`TransitionScreen.onEnd` posts `generateWorld` to it), so the window stops
+answering and Windows marks it "Not Responding" after about 5 s. The likely story is a player closing a frozen window.
+
+- The world-generation bar on desktop now reads **"Generating World... This can take a minute. If Windows says Not
+  Responding, please wait."** from the fade's first frame, so the frame the bar freezes on already says it. Android keeps
+  round 883's "Keep the app open" text. New key `lblWorldGenDesktopWait` in `en-US.properties`, after `lblKeepAppOpen`.
+- Wording: shorter than the brief's draft ("Building the world - this can take up to a minute. If Windows says the window
+  is not responding, please wait.") because that one doesn't fit the bar on one line: the bar is half the screen wide and
+  its font follows the screen height. The final text fills about 580 of the bar's 640 px at 1280x720.
+- **Not done, on purpose: moving world generation off the render thread.** It is the real fix for the freeze, but the
+  generation touches libGDX textures and scene state throughout, so it is a big, risky change. This round only explains
+  the wait.
+
+Checked (agent game, 1280x720, the round's classes ahead of the packaged jar):
+- Shots through the bridge from the newgame request into the freeze:
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r947-950\worldgen-00.png` (the fade's first frame: the text is already there) and
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r947-950\worldgen-02.png` (the last frame before the freeze: the bar, mostly filled,
+  shows the full text on one line). The next two shots timed out (the render thread was generating), and
+  `worldgen-05.png` is after the world was done.
+- Windows really does call the window not responding: `Process.Responding` was false for about 15-18 s of a world on
+  this PC.
+
+Not checked: fullscreen. A 16:9 fullscreen keeps the 1280x720 proportions (the bar scales with the width, the font with
+the height), so the text fits there too. A 16:10 or 4:3 screen makes the text wider than the bar; `drawText` then wraps it
+onto two lines inside the bar, untested. macOS and Linux run the same desktop path, also untested.
+
 ## Round 946: Classic-only files no longer ship - ~29 MB off the PC folder, ~24 MB off assets.zip (2026-11-03)
 
 The user, after round 945: "If we can remove any files that will make the game smaller due to not having classic let's

@@ -223,6 +223,10 @@ public class TransitionScreen extends FContainer {
                     // shows from the fade's first frame: the bar freezes on the last frame drawn before generation.
                     if (isWorldGen && GuiBase.isAndroid()) {
                         progressBar.setDescription(message + " " + Forge.getLocalizer().getMessage("lblKeepAppOpen"));
+                    } else if (isWorldGen) {
+                        // Round 947: on desktop the window stops answering while the world generates (the render
+                        // thread does it), and Windows calls it not responding; say so before the freeze.
+                        progressBar.setDescription(message + " " + Forge.getLocalizer().getMessage("lblWorldGenDesktopWait"));
                     } else if (multi == 100 && !message.isEmpty()) {
                         progressBar.setDescription(message);
                     }
