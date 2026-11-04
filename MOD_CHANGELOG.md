@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 950: the Xiaomi/MIUI background kill in the FAQ and GUIDE (docs only) (2026-11-03)
+
+The user approved the FAQ line from today's log review ("Yes for 2-4"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103c.md`
+P3-4): Xiaomi's memory service force-stopped a new player's game three times in 6 minutes, each time 10-25 s after it
+went to the background. No code fix (the OS kills the biggest background app).
+
+- **Discord FAQ** (`dev-tools/discord_faq/messages.py`): a new Q under message 1's Android answer, the review's text
+  word for word ("Playing on a Xiaomi..." became the question "On my Xiaomi, Redmi or POCO the game restarts whenever I
+  switch apps."). Message 1 goes from 1,433 to 1,790 characters. `EDITED` is now {1, 9}; `ADDED` stays empty.
+- **Why not a new message** (the brief asked for one before Support): a one-question message would make the user repost
+  Support at the end of #faq for 380 characters, and message 1 is where Android players already look. One edit in place.
+- **GUIDE** (`GUIDE.md`, FAQ): the same answer as its own question, right after "Can I play this on Android?". The GUIDE
+  has no Android troubleshooting section; the FAQ's Android entry is the nearest home.
+
+Not done: the FAQ artifact page isn't rebuilt (`build_page.py`); that happens with the release's FAQ pass.
+
 ## Round 944: the Capitol's buildings in the world icon's colors - sandstone, gold trim, teal roofs (2026-11-03)
 
 The Art thread's recolor of the golden Capitol (Orazca). The user showed the Capitol's world-map icon: "So this is how

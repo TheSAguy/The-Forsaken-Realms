@@ -7,8 +7,9 @@ FAQ_VERSION = "v1.26"
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
 # 1.27 (round 938 reset them after 1.26; v1.26's own set was {1, 8, 10, 12, 14, 15, 17, 19, 23}, none ADDED): round 939
-# edited 9 (the mid-game Change level).
-EDITED = {9}
+# edited 9 (the mid-game Change level); round 950 edited 1 (the Xiaomi/MIUI background kill, a Q under Android rather
+# than a new message, so Support needn't be reposted).
+EDITED = {1, 9}
 ADDED = set()
 
 M = []
@@ -28,7 +29,10 @@ M.append(("About the game: is this a mod? Android", "About / Android", "**THE FO
 2. Open it and allow installs from your browser or file manager when asked (it's signed by us, not the Play Store).
 3. Grant the storage permission it asks for.
 4. On first launch, tap Download for the game data (about 430 MB, use Wi-Fi). The app restarts, and after that it plays offline.
-It installs alongside the official Forge app, and installing a newer APK over the old one keeps your saves. Android gets less testing than PC, so please report problems here with your device model and Android version. (There is no iOS version.)"""))
+It installs alongside the official Forge app, and installing a newer APK over the old one keeps your saves. Android gets less testing than PC, so please report problems here with your device model and Android version. (There is no iOS version.)
+
+**Q: On my Xiaomi, Redmi or POCO the game restarts whenever I switch apps.**
+**A:** MIUI/HyperOS closes big apps in the background. To keep The Forsaken Realms running when you switch apps: long-press its card in Recents and tap the lock icon, and set Battery saver for the app to "No restrictions" (Settings > Apps > The Forsaken Realms > Battery saver)."""))
 
 M.append(("Ascendance: Power and levels", "Ascendance", r"""**Ascendance (your level)**
 

@@ -2319,6 +2319,12 @@ It installs alongside the official Forge app. Installing a newer APK over the ol
 Android gets less testing than PC, so please report problems on the Discord with your device model and
 Android version. (There is no iOS version.)
 
+### On my Xiaomi, Redmi or POCO the game restarts whenever I switch apps
+
+MIUI/HyperOS closes big apps in the background. To keep The Forsaken Realms running when you switch apps:
+long-press its card in Recents and tap the lock icon, and set Battery saver for the app to "No restrictions"
+(Settings > Apps > The Forsaken Realms > Battery saver).
+
 ### Is this a mod for Forge?
 
 No. The Forsaken Realms began as an Adventure-mode world for Forge, but since v1.00 it's a standalone
