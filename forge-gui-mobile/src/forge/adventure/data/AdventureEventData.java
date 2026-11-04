@@ -128,7 +128,12 @@ public class AdventureEventData implements Serializable {
     }
 
     public AdventureEventData(Long seed, AdventureEventController.EventFormat selectedFormat, boolean playerTown) {
-        this(seed, selectedFormat, null, pickCardBlockByFormat(selectedFormat, playerTown));
+        this(seed, selectedFormat, playerTown, null);
+    }
+
+    /** Round 954: {@code innPointID} is the Inn's town, for its color shard and its neighbors' sets (null = neither). */
+    public AdventureEventData(Long seed, AdventureEventController.EventFormat selectedFormat, boolean playerTown, String innPointID) {
+        this(seed, selectedFormat, null, pickCardBlockByFormat(selectedFormat, playerTown, innPointID));
         // Stamped so a cached Available event can tell that the player has unlocked a set since it
         // was rolled - see InnScene.initLocalEvent(). 0 on a non-player town or a legacy event.
         this.playerTownPoolStamp = playerTown
@@ -213,8 +218,13 @@ public class AdventureEventData implements Serializable {
     /** @param playerTown true for an Inn in a town the player owns - narrows the pool to the
      *                    player's race editions plus their unlocked sets (user spec 2026-08-31). */
     public static CardBlock pickCardBlockByFormat(AdventureEventController.EventFormat format, boolean playerTown) {
+        return pickCardBlockByFormat(format, playerTown, null);
+    }
+
+    /** Round 954: {@code innPointID}, the Inn's town id, feeds innColorShardEvents and innSpreadNearbyTowns. */
+    public static CardBlock pickCardBlockByFormat(AdventureEventController.EventFormat format, boolean playerTown, String innPointID) {
         return switch (format) {
-            case Draft, Sealed -> pickWeightedCardBlock(format.toString(), playerTown);
+            case Draft, Sealed -> pickWeightedCardBlock(format.toString(), playerTown, innPointID);
             case Jumpstart -> pickJumpstartCardBlock(playerTown);
             case Constructed -> null;
         };
@@ -229,9 +239,9 @@ public class AdventureEventData implements Serializable {
      * callers therefore try the narrow pool first and fall back to the global one rather than
      * offering nothing; as research unlocks more sets the narrow pool starts winning on its own.
      */
-    private static java.util.Set<String> eventPool(boolean playerTown) {
+    private static java.util.Set<String> eventPool(boolean playerTown, String townColor) {
         if (!playerTown)
-            return forge.adventure.util.EditionProgression.eventAllowedEditionCodes();
+            return forge.adventure.util.EditionProgression.innEventEditionCodes(townColor); // round 954: + color shard
         java.util.Set<String> narrow = forge.adventure.util.EditionProgression.playerTownEventEditionCodes();
         return narrow != null ? narrow : forge.adventure.util.EditionProgression.eventAllowedEditionCodes();
     }
@@ -307,8 +317,17 @@ public class AdventureEventData implements Serializable {
     }
 
     private static CardBlock pickWeightedCardBlock(String formatForLogging, boolean playerTown) {
+        return pickWeightedCardBlock(formatForLogging, playerTown, null);
+    }
+
+    private static CardBlock pickWeightedCardBlock(String formatForLogging, boolean playerTown, String innPointID) {
         CardEdition.Collection editions = FModel.getMagicDb().getEditions();
         ConfigData configData = Config.instance().getConfigData();
+        // Round 954: the Inn's town, its color (an AI color town only, when innColorShardEvents is on) and the label
+        // the [TFR-InnEvent] line prints. A player town (restored or the Capitol) keeps race + unlocked below.
+        forge.adventure.pointofintrest.PointOfInterest innTown = innPointID == null ? null : innTownById(innPointID);
+        String aiColor = innTown == null || playerTown ? null : forge.adventure.util.ColorReputation.colorOfTown(innTown.getData());
+        String townColor = configData.innColorShardEvents ? aiColor : null;
         Predicate<CardEdition> filter = CardEdition.Predicates.CAN_MAKE_BOOSTER;
 
         if(configData.allowedEvents != null && configData.allowedEvents.length > 0) {
@@ -333,9 +352,13 @@ public class AdventureEventData implements Serializable {
                 filter = filter.and(q -> !restricted.contains(q.getCode()));
             }
 
-            Predicate<CardEdition> setPoolFilter = selectSetPool();
-            if(editions.stream().anyMatch(setPoolFilter))
-                filter = filter.and(setPoolFilter);
+            // Round 954: innUniformBlockPick drops the tier roll - in TFR's small pools its "30% Standard only" lands on
+            // the race's one Standard set nearly every time (a Dragon save became a Tarkir: Dragonstorm save).
+            if (!configData.innUniformBlockPick) {
+                Predicate<CardEdition> setPoolFilter = selectSetPool();
+                if(editions.stream().anyMatch(setPoolFilter))
+                    filter = filter.and(setPoolFilter);
+            }
         }
 
         // Progressive Set Unlocks (user spec 2026-08-12): Inn tournaments may only use editions
@@ -343,7 +366,9 @@ public class AdventureEventData implements Serializable {
         // allowedEvents branch above deliberately - the progression lock must hold even when a
         // plane whitelists events. Null = feature off/unseeded, no restriction. An emptied
         // result is already graceful: no legal blocks -> null -> "No events at this time".
-        final java.util.Set<String> narrowPool = eventPool(playerTown);
+        // Round 954: with innColorShardEvents an AI color town adds its color shard (the user's OK reverses the 2026-08-12
+        // "Inns = researched + neutral" rule for those towns only).
+        final java.util.Set<String> narrowPool = eventPool(playerTown, townColor);
         java.util.Set<String> loggedPool = narrowPool;
         final Predicate<CardEdition> baseFilter = filter;
         if (narrowPool != null)
@@ -377,10 +402,90 @@ public class AdventureEventData implements Serializable {
             loggedPool = wide;
         }
 
-        CardBlock picked = legalBlocks.isEmpty() ? null : Aggregates.random(legalBlocks);
+        // Round 954 (innSpreadNearbyTowns): a block sharing a set with an event showing at a neighbor's Inn is skipped,
+        // unless that skips every legal block.
+        Set<String> nearbySets = innTown == null || configData.innSpreadNearbyTowns <= 0
+                ? Collections.emptySet() : setsShowingNearby(innTown, configData.innSpreadNearbyTowns);
+        List<CardBlock> candidates = legalBlocks;
+        Set<String> skipped = new TreeSet<>();
+        if (!nearbySets.isEmpty()) {
+            candidates = new ArrayList<>();
+            for (CardBlock b : legalBlocks) {
+                List<String> shared = new ArrayList<>();
+                for (CardEdition ed : b.getSets())
+                    if (nearbySets.contains(ed.getCode()))
+                        shared.add(ed.getCode());
+                if (shared.isEmpty())
+                    candidates.add(b);
+                else
+                    skipped.addAll(shared);
+            }
+            if (candidates.isEmpty())
+                candidates = legalBlocks;
+        }
+
+        CardBlock picked = candidates.isEmpty() ? null : Aggregates.random(candidates);
         if (loggedPool != null)
             logInnEditions(formatForLogging, loggedPool, picked, playerTown, fellBack);
+        if (innTown != null) {
+            String colorLabel = playerTown ? "player town" : aiColor == null ? "neutral"
+                    : townColor == null ? aiColor + ", shared pool" : aiColor;
+            System.out.println("[TFR-InnEvent] " + innTown.getDisplayName() + " (" + colorLabel + "): pool "
+                    + (loggedPool == null ? "all" : String.valueOf(loggedPool.size())) + " sets / " + legalBlocks.size()
+                    + " legal blocks, picked " + (picked == null ? "nothing" : blockLabel(picked)) + " (" + formatForLogging
+                    + "), skipped " + (skipped.isEmpty() ? "none" : skipped)
+                    + (candidates == legalBlocks && !skipped.isEmpty() ? " - all taken, any block" : "")
+                    + (nearbySets.isEmpty() ? "" : " (showing nearby: " + new TreeSet<>(nearbySets) + ")"));
+        }
         return picked;
+    }
+
+    private static forge.adventure.pointofintrest.PointOfInterest innTownById(String id) {
+        forge.adventure.world.WorldSave save = forge.adventure.world.WorldSave.getCurrentSave();
+        if (save == null || save.getWorld() == null)
+            return null;
+        for (forge.adventure.pointofintrest.PointOfInterest poi : save.getWorld().getAllPointOfInterest())
+            if (poi.getID().equals(id))
+                return poi;
+        return null;
+    }
+
+    /**
+     * Round 954: the set codes of the Draft/Sealed events showing at the Inns of the {@code count} towns nearest to
+     * {@code town} (towns and capitals, by world distance). An event from an earlier week that is Available, Awarded or
+     * Abandoned is left out: that Inn deals a new one on the next visit (round 368).
+     */
+    private static Set<String> setsShowingNearby(forge.adventure.pointofintrest.PointOfInterest town, int count) {
+        forge.adventure.world.World world = forge.adventure.world.WorldSave.getCurrentSave().getWorld();
+        AdventurePlayer player = AdventurePlayer.current();
+        if (world == null || player == null || player.getEvents() == null || player.getEvents().isEmpty())
+            return Collections.emptySet();
+        List<forge.adventure.pointofintrest.PointOfInterest> towns = new ArrayList<>();
+        for (forge.adventure.pointofintrest.PointOfInterest poi : world.getAllPointOfInterest())
+            if (forge.adventure.util.RoadNetwork.isTownOrCapital(poi) && !poi.getID().equals(town.getID()))
+                towns.add(poi);
+        towns.sort(Comparator.comparingDouble(p -> p.getPosition().dst2(town.getPosition())));
+        Set<String> nearIds = new HashSet<>();
+        for (int i = 0; i < Math.min(count, towns.size()); i++)
+            nearIds.add(towns.get(i).getID());
+        int week = forge.adventure.util.SpawnTierWeighting.currentWeek(world);
+        Set<String> sets = new HashSet<>();
+        for (AdventureEventData e : player.getEvents()) {
+            if (e.sourceID == null || !nearIds.contains(e.sourceID))
+                continue;
+            if (e.format != AdventureEventController.EventFormat.Draft && e.format != AdventureEventController.EventFormat.Sealed)
+                continue;
+            boolean settled = e.eventStatus == AdventureEventController.EventStatus.Available
+                    || e.eventStatus == AdventureEventController.EventStatus.Awarded
+                    || e.eventStatus == AdventureEventController.EventStatus.Abandoned;
+            if (settled && week > 0 && e.createdWeek != week)
+                continue;
+            CardBlock block = e.getCardBlock();
+            if (block != null)
+                for (CardEdition ed : block.getSets())
+                    sets.add(ed.getCode());
+        }
+        return sets;
     }
 
     public static List<CardBlock> getValidDraftBlocks(List<CardEdition> validEditions) {

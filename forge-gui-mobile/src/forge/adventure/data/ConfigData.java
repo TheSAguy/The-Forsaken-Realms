@@ -214,5 +214,16 @@ public class ConfigData {
     // choice is ignored) and every switch to Classic is refused with a [TFR-Classic] line (Forge.isClassicLocked).
     // The start menu's Classic button is gone through the plane's own ui/start_menu*.json. False = stock.
     public boolean adventureOnly = false;
+    // Round 954 (a Reddit player: nearby Inns nearly all offered the same draft or sealed set): an AI color town's Inn
+    // deals Draft/Sealed from that town's color shard + the neutral shard + the player's unlocked sets, the shard its
+    // shops use (EditionProgression.innEventEditionCodes). Player towns, the Capitol and neutral towns are unchanged.
+    // False = every AI and neutral Inn draws from unlocked + neutral alone (the 2026-08-12 rule).
+    public boolean innColorShardEvents = false;
+    // Round 954: Draft/Sealed blocks are picked evenly among every legal block. False = stock's tier roll first
+    // (AdventureEventData.selectSetPool: 30% Standard only, 30% Pioneer, 20% Modern, 20% Vintage).
+    public boolean innUniformBlockPick = false;
+    // Round 954: an Inn dealing a Draft/Sealed event skips blocks that share a set with an event showing at the Inns of
+    // the N nearest other towns; when every legal block is taken, any of them. 0 = off (stock).
+    public int innSpreadNearbyTowns = 0;
 
 }

@@ -158,9 +158,9 @@ public class AdventureEventController implements Serializable {
         } else {
             if (random.nextInt(4) == 3) {
                 // Experimental: 1 out of 4 chance for it to be a Sealed Deck event
-                e = new AdventureEventData(eventSeed, EventFormat.Sealed, playerTown);
+                e = new AdventureEventData(eventSeed, EventFormat.Sealed, playerTown, pointID); // round 954: the Inn's town
             } else {
-                e = new AdventureEventData(eventSeed, EventFormat.Draft, playerTown);
+                e = new AdventureEventData(eventSeed, EventFormat.Draft, playerTown, pointID);
             }
         }
 

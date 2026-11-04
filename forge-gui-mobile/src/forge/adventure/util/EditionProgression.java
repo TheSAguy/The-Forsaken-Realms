@@ -433,6 +433,18 @@ public class EditionProgression {
     }
 
     /**
+     * Round 954 (ConfigData.innColorShardEvents): an AI color town's Inn pool - eventAllowedEditionCodes() plus the
+     * town's color shard, the same shard its shops sell from. A null color (a neutral town) is the plain pool.
+     */
+    public static Set<String> innEventEditionCodes(String townColor) {
+        Set<String> allowed = eventAllowedEditionCodes();
+        if (allowed == null || townColor == null)
+            return allowed;
+        allowed.addAll(getEditionsForColor(WorldSave.getCurrentSave().getWorld(), townColor));
+        return allowed;
+    }
+
+    /**
      * True when at least one of the player's unlocked editions can actually produce a booster
      * pack (has a Draft template) - the "cardPackShop" reward type silently generates nothing
      * otherwise (see RewardData.generate()'s empty-allEditions guard). Fresh saves can start

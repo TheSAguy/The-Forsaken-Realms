@@ -399,7 +399,7 @@ public class InnScene extends UIScene {
                     String currentBlockName = localEvent.cardBlockName;
                     CardBlock newBlock = null;
                     for (int attempt = 0; attempt < MAX_REROLL_ATTEMPTS; attempt++) {
-                        CardBlock candidate = AdventureEventData.pickCardBlockByFormat(format, isPlayerOwnedTown());
+                        CardBlock candidate = AdventureEventData.pickCardBlockByFormat(format, isPlayerOwnedTown(), localPointOfInterestId); // round 954
                         if (candidate == null)
                             break; // no legal pool to draw from at all
                         if (currentBlockName == null || !candidate.getName().equals(currentBlockName)) {

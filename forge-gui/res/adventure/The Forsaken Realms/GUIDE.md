@@ -1923,8 +1923,13 @@ unless you've entered it or have prizes waiting. The entry fee scales with the t
   you've researched. It widens as you unlock more sets, and a tournament you haven't entered yet
   will re-roll itself when your pool changes. (If your pool is still too narrow to form a legal
   draft block, the Inn falls back to the wider pool rather than offering nothing.)
-- **AI and neutral Inns** draw from the neutral pool plus the sets you've unlocked instead — which
-  is a real reason to travel if you want to draft sets you don't own.
+- **AI color towns' Inns** draw from that color's own sets (the ones its shops sell), the neutral pool
+  and the sets you've unlocked, so each color's land offers its own tournaments. **Neutral towns'
+  Inns** draw from the neutral pool plus your unlocked sets. Either way it's a real reason to travel if
+  you want to draft sets you don't own.
+- **Neighboring Inns differ.** Every legal set is equally likely, and an Inn skips the sets already on
+  offer at the Inns of the 6 nearest towns (unless every set it could deal is taken).
+  A tournament dealt before version 1.27 keeps its set until the week turns.
 - **Re-roll** the offered tournament for 15 Shards; it's guaranteed to come back different.
 - **Jumpstart comes around once per player.** Every Inn draws its Jumpstart from the same list of
   Jumpstart products, whatever your race, and the entry is 500 gold or 50 Shards (or a Bronze

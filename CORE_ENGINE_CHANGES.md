@@ -35,6 +35,20 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 954 - Inn events: the town's color shard, an even pick, different sets at neighboring Inns
+- `forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java` (STOCK): a new constructor
+  `(seed, format, playerTown, innPointID)` and overloads `pickCardBlockByFormat(format, playerTown, innPointID)` /
+  `pickWeightedCardBlock(format, playerTown, innPointID)` (the old signatures pass null). In `pickWeightedCardBlock`:
+  the `selectSetPool()` tier filter runs only when `innUniformBlockPick` is off; `eventPool` takes the town color
+  (`EditionProgression.innEventEditionCodes`); before the random pick, blocks sharing a set with `setsShowingNearby()`
+  are dropped (fallback: every legal block); a `[TFR-InnEvent]` line. New helpers `innTownById`, `setsShowingNearby`.
+- `forge-gui-mobile/src/forge/adventure/util/AdventureEventController.java` (STOCK): `createEvent(pointID, playerTown)`
+  passes `pointID` to the new constructor for Draft and Sealed.
+- `forge-gui-mobile/src/forge/adventure/scene/InnScene.java` (STOCK): `promptRerollEvent` passes
+  `localPointOfInterestId` to `pickCardBlockByFormat`.
+- `forge-gui-mobile/src/forge/adventure/data/ConfigData.java` (STOCK): `innColorShardEvents`, `innUniformBlockPick`
+  (false) and `innSpreadNearbyTowns` (0).
+
 ### Round 947 - the desktop world-generation text
 - **`forge-gui-mobile/src/forge/screens/TransitionScreen.java`** (STOCK) - in the progress-bar block, an
   `else if (isWorldGen)` after round 883's Android branch: the desktop bar text `message + lblWorldGenDesktopWait`.

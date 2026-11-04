@@ -14264,6 +14264,58 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 954: Inns in AI color towns use their color's sets; neighboring Inns offer different sets (2026-11-04)
+
+The user: "Yes, A plus B" - Options A and B of the read-only study `C:\CLAUDE\PROJECTS\TFR1\notes\inn-event-variety.md`.
+Origin: a Reddit player said nearby Inns nearly all offered the same draft or sealed set (Tarkir: Dragonstorm one game,
+Dominaria/Ixalan the next). Cause: every AI and neutral Inn drew from one pool (the player's unlocked sets + the neutral
+shard, which always holds the race's 4 sets: about 9-10 legal blocks), and stock Forge's tier roll
+(`AdventureEventData.selectSetPool`: 30% Standard only) funneled into the race's one Standard set.
+
+- **A. Color shard (`ConfigData.innColorShardEvents`):** an AI color town's or capital's Inn draws Draft/Sealed from that
+  town's color shard + the neutral shard + the player's unlocked sets (`EditionProgression.innEventEditionCodes`). The
+  color is resolved as shops do (`ColorReputation.colorOfTown` on the town's data; restored towns and the Capitol are
+  player towns and keep race + unlocked). Neutral (Waste) towns keep unlocked + neutral. **This reverses the 2026-08-12
+  spec "Inns = researched + neutral" for AI color towns, with the user's OK.** Re-rolls (15 Shards) use the same pool.
+- **Even pick (`ConfigData.innUniformBlockPick`):** the stock tier roll is skipped; every legal block is equally likely.
+- **B. Neighbors (`ConfigData.innSpreadNearbyTowns`, TFR 6):** an Inn dealing a Draft/Sealed event skips every block that
+  shares a set with a Draft/Sealed event showing at the Inns of the 6 nearest towns (towns and capitals by world distance;
+  the player's saved events list; an Available/Awarded/Abandoned event from an earlier week does not count, since it
+  turns over on the next visit). If that skips every legal block, any legal block is used.
+- **Plumbing:** `AdventureEventController.createEvent(pointID, playerTown)` passes the Inn's point id to a new
+  `AdventureEventData(seed, format, playerTown, innPointID)` constructor and a new
+  `pickCardBlockByFormat(format, playerTown, innPointID)` overload; `InnScene.promptRerollEvent` passes it too. The old
+  signatures stay (null point id = stock). Callers checked first: graphify `affected` found 2 callers of
+  `pickCardBlockByFormat` (the constructor, the re-roll), 6 of `createEvent` (InnScene, the console's `set event`, which
+  passes its own block) and 1 of `selectSetPool`; Grep agreed. Jumpstart is untouched (one event per player, round 335).
+- **Flags** default false (`ConfigData`), on in `The Forsaken Realms/config.json`: stock planes are unchanged.
+- **Log:** `[TFR-InnEvent] <town> (<color | neutral | player town>): pool N sets / M legal blocks, picked <block> [sets]
+  (<format>), skipped <sets> (showing nearby: <sets>)`; "- all taken, any block" when the fallback fires. The old
+  `[TFR-InnEditions]` line stays.
+- **No save change.** No new saved field, no `serialVersionUID` change. An event already dealt keeps its set until it
+  turns over at the next in-game week (round 368), unless it is re-rolled.
+- **Docs:** GUIDE's Inn Tournaments section (color towns' own sets, neutral towns' pool, neighbors differ, a pre-1.27
+  event keeps its set until the week turns); `GUIDE.html` regenerated (`--check` OK). The Discord FAQ says nothing about
+  AI Inns' sets (`messages.py` only mentions the player's own towns), so no message is edited.
+- **Agent test** (new Human world, cheats, classes ahead of the jar; shots in `C:\CLAUDE\PROJECTS\TFR1\notes\r954\`,
+  every `[TFR-InnEvent]` line in `notes\r954\innevent-lines.txt`). 25 towns visited in week 1 and again in week 2 (day 13),
+  each Inn rolled by the console's `set event` (it opens the local Inn first):
+  - color towns (green 3, blue 1, red 1, black 2): pool 48-49 sets, **25-30 legal blocks** (was 9); 7 events, 7 sets
+    each week (LCI, DOM, ZNR, BRO, LTR, AKH, TDM; then DSK, S99, M13, IKO, ME3, TSR, M19);
+  - neutral towns: pool 16 sets, 9 legal blocks; 12 events, 7 sets (week 1) and 6 sets (week 2), top set 3 of 12;
+  - the skip fired on 13 of 19 events a week, and no event repeated a set showing at its 6 nearest Inns; the fallback
+    never fired;
+  - week 2: every Available week-1 event made way (`[TFR-InnWeek]`) and was dealt again;
+  - a Draft at Haunted Shrine (black, Tarkir: Dragonstorm) was entered with a Gold coin: the draft opened with 14-card
+    TDM packs (shot 03).
+- **Fixed after the test:** the test's lines named the town by its data name ("Forest Town Tribal"); the line now prints
+  the display name ("Tinkers' Forest"), rebuilt and checked after the package.
+- **Found in the test:** on day 1 only 14 of 310 towns are color towns (5 capitals + 9); the other 296 are Waste Towns.
+  Ruined Waste Towns' Inns are shut (round 241), so the Inns a player can use early are mostly color towns and capitals,
+  plus a few working neutral towns and the player's own. Captured towns become color towns and pick up A.
+- **Not run:** Android; an old save's existing events (they keep their set until the week turns - nothing reads them
+  differently); the shard re-roll button by hand (it calls the same picker).
+
 ## Round 953: the GUIDE's Loot section points at Custom Difficulty, not settings.json (docs only) (2026-11-04)
 
 The user: "Yes, fix it" - the GUIDE pointer round 952 found. The Loot section of `GUIDE.md` ended with "Every number
