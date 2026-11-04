@@ -117,6 +117,7 @@ public class EconomyBuildings {
     private static String lastTraderArt;
     private static String lastArmoryArt; // round 874: the Capitol's Armory, the same switch
     private static String lastPlainShopArt, lastSpecialShopArt; // round 940: the Capitol's Card Shop and Booster Shop
+    private static String lastOutlookArt; // round 959: the Capitol's Outlook
     // Guard tier map-indicator icons (2026-08-11, MOD_SCOPE.md #22) - 8x8, cropped from
     // common/maps/tileset/dungeon.png (user-supplied IDs 83/84/86/88) and shrunk per the user's
     // own mockup estimate. See PointOfInterestMapSprite for where these actually get drawn.
@@ -199,7 +200,7 @@ public class EconomyBuildings {
      */
     public static TextureRegion getBuildingSprite(int type) {
         if (type == OUTLOOK)
-            return Config.instance().getAtlasSprite(NEW_BUILDINGS_ATLAS, "Outlook");
+            return getOutlookSprite();
         if (type == ARCHAEOLOGIST)
             return getArchaeologistSprite();
         if (type == TRADER)
@@ -223,6 +224,19 @@ public class EconomyBuildings {
                     + (capitol ? "the Capitol" : "an ordinary town") + ")");
         }
         return Config.instance().getAtlasSprite(capitol ? CAPITOL_GOLD_ATLAS : NEW_BUILDINGS_ATLAS, "Trader");
+    }
+
+    /** Round 959: the Capitol's Outlook is the golden Capitol's own sprite (capitol_gold.atlas, a 19x48 spire in a
+     *  20x48 region, even so it centers on a whole pixel); every other town keeps new_buildings' 16x32 Outlook. */
+    private static TextureRegion getOutlookSprite() {
+        boolean capitol = TownRestoration.isCurrentTownCapitol();
+        String art = capitol ? "capitol_gold" : "new_buildings";
+        if (!art.equals(lastOutlookArt)) {
+            lastOutlookArt = art;
+            System.out.println("[TFR-CapitolArt] Outlook drawn from " + art + ".atlas ("
+                    + (capitol ? "the Capitol" : "an ordinary town") + ")");
+        }
+        return Config.instance().getAtlasSprite(capitol ? CAPITOL_GOLD_ATLAS : NEW_BUILDINGS_ATLAS, "Outlook");
     }
 
     /** Rebuilt-Arena icon for the Capitol's gated Arena building (see OnCollide.draw()) - level 2

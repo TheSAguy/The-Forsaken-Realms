@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 959: the golden Capitol's Outlook (2026-11-04)
+
+The Art thread's Outlook for the golden Capitol (Orazca), in the round 944 sandstone look. The user picked one tower
+from a ChatGPT sheet ("Lookout done. I like this one."), chose the size from the previews ("Yes, install both" on "the
+Outlook at 48"), and the Capitol's art is Capitol only ("Yes, Capitol only"), like rounds 867, 874 and 940.
+
+- **Outlook:** a round sandstone tower with gold bands, a lookout gallery with gold corner finials, and a tall teal
+  spire with a gold tip. Converted as drawn (each pixel takes its block's most common color, alpha fully on or off, 1 px
+  black outline, the magenta fringe cleaned, no recolor). The art is 19x48. The region is 20x48, with one clear
+  column on the right: `drawOverFootprint()` centers on `(32 - w) / 2`, and an odd width would land on a half pixel.
+- **The switch:** `EconomyBuildings.getBuildingSprite(OUTLOOK)` now calls the new `getOutlookSprite()`. It reads the
+  `Outlook` region on the plane's `capitol_gold.atlas` when `TownRestoration.isCurrentTownCapitol()`. Every other town
+  keeps `new_buildings`' 16x32 `Outlook`. It logs `[TFR-CapitolArt] Outlook drawn from <atlas> (the Capitol | an
+  ordinary town)` when its choice changes. `ShopActor.draw()` is the only caller (Grep, and no data file names the
+  region), so only the map's lot draw changes.
+- **Page:** `capitol_gold.png` grows from 200x48 to 220x48, with the Outlook at x 200. The first 200 px are
+  byte-identical to before.
+- **Room:** the Outlook can stand on any of the Capitol's six rubble lots (63, 93, 95, 97, 98, 101). At 48 tall it
+  keeps 18-19 px from the Bank and the Exchange on lot 95, and at least 12 px from the art behind it (lot 101).
+
+Checked:
+- Maven package: exit 0.
+- An agent copy (`C:\CLAUDE\PROJECTS\TFR1\agent-959`, its own profile and cache) with a fresh cheats world:
+  - **Capitol:** after `capitol raise`, an Outlook was built on lot 95. It shows the gold spire. Log: "Outlook drawn
+    from capitol_gold.atlas (the Capitol)".
+  - **Ordinary town:** in a second fresh world, Orazca was restored as an ordinary town (not raised) and an Outlook
+    was built on lot 54. It shows today's brown wooden Outlook. Log: "Outlook drawn from new_buildings.atlas (an
+    ordinary town)".
+  - Two wandering-enemy duels on the way, both at 50x (`[TFR-Agent] duel speed set to 50x`).
+  - Shots: `C:\TFR\notes\r959-shots` (`01-capitol-outlook-lot95.png`, `02-ordinary-town-old-outlook.png`). Log:
+    `C:\TFR\notes\r959-agent-forge.log`.
+
+Not checked:
+- Android.
+
 ## Round 957: 21 more adventure music tracks - 8 on both versions, 13 Windows-only (2026-11-04)
 
 The user: "I'd like to look into expanding the music selection for TFR", from round 946's Classic tracks and their own
