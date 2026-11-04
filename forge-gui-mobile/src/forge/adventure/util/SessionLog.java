@@ -48,6 +48,7 @@ import java.util.Set;
  * <li>{@code [TFR-LogQuiet]} round 878: the engine's "Did not have activator set" line, once per caller a launch and
  * then a count per duel, in place of up to half the log.</li>
  * <li>{@code [TFR-Memory]} round 898: {@link MemoryWatch}, what the heap holds when it runs high.</li>
+ * <li>{@code [TFR-LastExit]} round 948: {@link LastExit}, desktop only, how the last session ended.</li>
  * </ul>
  * No character name, user name or path: save slots, world town names and game numbers only. Console: {@code session},
  * {@code session error}.
@@ -77,6 +78,7 @@ public final class SessionLog {
     public static void onStart() {
         QuietStream.install(); // round 878
         MemoryWatch.start(); // round 898
+        LastExit.onStart(); // round 948: how the last desktop session ended
         try {
             String os = GuiBase.isAndroid() ? "Android " + GuiBase.getAndroidAPILevel() : System.getProperty("os.name", "?");
             String version = Config.instance().getConfigData().modVersion;
@@ -172,6 +174,8 @@ public final class SessionLog {
 
     /** Forge.pause() ("pause", printed only when something changed since the last footer) and Forge.dispose() ("exit"). */
     public static void end(String why) {
+        if ("exit".equals(why))
+            LastExit.onCleanExit(); // round 948
         QuietStream.flush("exit".equals(why) ? "at exit" : "since the last duel"); // round 878
         try {
             if (firstDay < 0) {
