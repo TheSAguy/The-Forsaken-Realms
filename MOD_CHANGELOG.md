@@ -14307,8 +14307,9 @@ Checked:
   - **Dungeon portal:** the Library of Varsil's portal still draws the stock arch from common `portals.png`.
   - Every duel ran at 50x (`[TFR-Agent] duel speed set to 50x`).
   - **Test-only shortcuts, in the agent copy only (never in the repo):**
-    - The restore dialog never opened at the Job Board in this world, for either Orazca or Pyrenian Haven. So the
-      town was marked restored with `set mapflag townRestored 1`.
+    - The town was marked restored with `set mapflag townRestored 1`. The restore dialog had not opened: the
+      bridge's `goto`/`warp` stop a few px short of the Job Board's sign, so its collision never fires. The way in
+      (from round 959): `warp actor=<Job Board>`, then `warp x=<pos.x> y=<pos.y + 26>` (y is up).
     - A recompiled `TownRestoration` lifted the town's reputation slot limit, so the Teleporter could be built
       without first finishing its quests.
   - Shots: `C:\TFR\notes\r960-shots` (`01-capitol-teleporter-closed.png`, `02-capitol-teleporter-active.png`,
@@ -14317,8 +14318,6 @@ Checked:
 
 Not checked:
 - Android.
-- Why the restore dialog did not open in the agent world: the Job Board walk arrived, but no `[TFR-RestoreFee]` line
-  was logged.
 
 ## Round 959: the golden Capitol's Outlook (2026-11-04)
 
