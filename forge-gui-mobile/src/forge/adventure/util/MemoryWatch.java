@@ -34,6 +34,10 @@ import java.util.concurrent.TimeUnit;
  * report; {@code duel} at each later duel's start, only over 60%, to show what stays between duels; and {@code turn},
  * {@code threads} and {@code aiEval} on every line. Thinking takes one eval thread, so {@code aiEval} above 1 is a timed-out
  * one still running (Android has no {@code Thread.stop}).
+ *
+ * <p>Round 942 (notes/logs-1103b.md P3-1: a 15-permanent board and every save load crossed 95% too): {@code floor=} after
+ * {@code used=}, the lowest used of the last minute's samples and now. A floor near the max is memory really held; a low
+ * floor says the high {@code used} was garbage the collector hadn't taken yet.
  */
 public final class MemoryWatch {
     private static final double HIGH = 0.78; // 400 MB of a phone's 512
@@ -47,6 +51,9 @@ public final class MemoryWatch {
     private static long lastLineAt;
     private static boolean fullArmed = true;
     private static long lastFullAt;
+    /** Round 942: one minute of samples, a ring; read from other threads without a lock (a stale slot only moves floor=). */
+    private static final long[] recent = new long[(int) (MIN_GAP_MS / SAMPLE_MS)];
+    private static int recentNext;
     /** MatchController and ImageCache are only touched after a duel loaded them on the GL thread, never first from here. */
     private static volatile boolean duelSeen;
 
@@ -78,6 +85,7 @@ public final class MemoryWatch {
             Runtime runtime = Runtime.getRuntime();
             long used = runtime.totalMemory() - runtime.freeMemory();
             long max = runtime.maxMemory();
+            recent[recentNext++ % recent.length] = used;
             if (used < max * HIGH) {
                 fullArmed = true;
             } else if (fullArmed && used >= max * FULL && System.currentTimeMillis() - lastFullAt >= MIN_GAP_MS) {
@@ -101,10 +109,20 @@ public final class MemoryWatch {
     public static void report(String why) {
         try {
             Runtime runtime = Runtime.getRuntime();
-            System.out.println("[TFR-Memory] " + why + " used=" + ((runtime.totalMemory() - runtime.freeMemory()) >> 20)
-                    + "MB of " + (runtime.maxMemory() >> 20) + "MB " + gameText() + " " + imagesText() + " " + threadsText());
+            long used = runtime.totalMemory() - runtime.freeMemory();
+            System.out.println("[TFR-Memory] " + why + " used=" + (used >> 20) + "MB of " + (runtime.maxMemory() >> 20)
+                    + "MB floor=" + (floorOf(used) >> 20) + "MB " + gameText() + " " + imagesText() + " " + threadsText());
         } catch (Throwable ignored) { // the heap is full; the next crossing tries again
         }
+    }
+
+    /** Round 942: the lowest of the last minute's samples and {@code used}; an empty slot (0) is no sample yet. */
+    private static long floorOf(long used) {
+        long floor = used;
+        for (long sample : recent)
+            if (sample > 0 && sample < floor)
+                floor = sample;
+        return floor;
     }
 
     private static String gameText() {

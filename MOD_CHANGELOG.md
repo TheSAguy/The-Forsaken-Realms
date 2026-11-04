@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 942: `floor=` on the `[TFR-Memory]` lines (diagnostic only) (2026-11-03)
+
+The user approved the second recommendation from today's log review ("Yes, both"; `C:\CLAUDE\PROJECTS\TFR1
+otes\logs-1103b.md`
+P3-1). A `full` line (95% of the heap) can't tell memory really held from garbage the collector hasn't taken yet: a new
+player's 15-permanent board crossed 95%, and so does every save load, which drops from 511 MB to 255 MB 30 s later.
+
+- `MemoryWatch` keeps its 2 s samples of `used` for the last minute (a ring of 30, `MIN_GAP_MS / SAMPLE_MS`), and every
+  `[TFR-Memory]` line (`high`, `full`, `duel`, `oom`, `save`) gets `floor=` right after `used=... of ...`: the lowest of
+  those samples and the line's own `used`. Example:
+  `[TFR-Memory] full used=493MB of 512MB floor=255MB game=live turn=4 ...`.
+- **How to read it:** a floor near the max is memory really held (pressure); a low floor says the high `used` was garbage.
+- The other fields keep their order, after `floor=`. The class comment lists the new field (no other doc lists the
+  `[TFR-Memory]` fields; `SessionLog`'s tag list names the tag only).
+- No behavior change: the ring is written by the watch's own thread and read without a lock by the thread that writes
+  a line (a stale slot only moves `floor=`); `report` still never throws. PC and Android both run `MemoryWatch`.
+- A TFR file, so no `CORE_ENGINE_CHANGES.md` entry.
+
+Checked:
+- Maven: `mvn -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0.
+
+Not checked: Android (same class, no platform code). The agent's `[TFR-Memory]` line with `floor=` is in the round's
+follow-up.
+
 ## Round 941: a timer race no longer crashes a duel at its first priority (stock Forge) (2026-11-03)
 
 The user approved the fix from today's log review ("Yes, both"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103b.md` P2-1). One
