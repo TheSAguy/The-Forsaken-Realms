@@ -14266,8 +14266,7 @@ quests.json (Q54-73).
 
 ## Round 942: `floor=` on the `[TFR-Memory]` lines (diagnostic only) (2026-11-03)
 
-The user approved the second recommendation from today's log review ("Yes, both"; `C:\CLAUDE\PROJECTS\TFR1
-otes\logs-1103b.md`
+The user approved the second recommendation from today's log review ("Yes, both"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103b.md`
 P3-1). A `full` line (95% of the heap) can't tell memory really held from garbage the collector hasn't taken yet: a new
 player's 15-permanent board crossed 95%, and so does every save load, which drops from 511 MB to 255 MB 30 s later.
 
