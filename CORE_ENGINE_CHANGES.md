@@ -47,6 +47,12 @@ md` already gets updated after every change.
   a `[TFR-Music] <playlist> plays <file>` line per pick. Follow-up: a list is also re-read when
   `GuiBase.getAdventureDirectory()` changed since it was loaded (`loadedAdventureDir`), and a fresh list
   (`mostRecentTrackIdx < 0`) picks any track; `findMusicFiles` skips the merge when the plane folder is common itself.
+  **Upstream bugs worth reporting later (not posted):** (1) the shared static `isInvalidated` flag is cleared by
+  whichever playlist reloads first, so the other 11 keep stale lists after a music-set change; (2) MENUS is read
+  while `Forge.openAdventure` has the adventure directory at common and is never re-read after `StartScene` sets
+  the plane, so a plane's own `music/menus` never plays; (3) a fresh list never picks its first file.
+  Callers checked (code graph, Grep agrees): `getRandomFilename` 1 (`SoundSystem.changeBackgroundTrack`),
+  `invalidateMusicPlaylist` 7 (signature unchanged; it now resets every playlist), `findMusicDirectory` unchanged.
 - `forge-gui-mobile/src/forge/adventure/util/Config.java` (STOCK): after `applyDigitalOnlyEditions()`, one line passes
   `configData.planeMusicAddsToCommon` to `SoundSystem.setPlaneMusicAddsToCommon` (the base config, before any save's
   custom-difficulty copy).

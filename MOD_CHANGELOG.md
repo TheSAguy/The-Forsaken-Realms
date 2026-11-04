@@ -14327,6 +14327,12 @@ plane's 3 menus tracks never played.
     `pc_Match10_01.ogg`.
   - No `Unable to load music file` lines.
   - Not seen: boss, castle and the other biomes (same code path), and Android playback.
+- **A folder with no plane tracks plays as before:** entering Tinkers' Glade logged `town/ plays town6.mp3`, with no
+  merge line (town has no plane folder, so common's list is used, as in stock). The flag defaults to false, so stock
+  planes are unchanged.
+- **Callers checked** (code graph; Grep agrees): `MusicPlaylist.getRandomFilename` has 1 (`SoundSystem.changeBackgroundTrack`).
+  `invalidateMusicPlaylist` has 7; its signature is unchanged and it now resets every playlist.
+  `SoundSystem.findMusicDirectory` is unchanged and is now called only by `findMusicFiles`.
 - **Stock files:** `SoundSystem.java`, `MusicPlaylist.java`, `Config.java`, `ConfigData.java`, `forge-gui-android/pom.xml`
   (`CORE_ENGINE_CHANGES.md`).
 
