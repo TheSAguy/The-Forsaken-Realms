@@ -14264,6 +14264,73 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 949: loaded assets by type and folder on the `[TFR-Memory]` lines (diagnostic only) (2026-11-03)
+
+The user approved the third recommendation from today's log review ("Yes for 2-4"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103c.md`
+P3-2). Tallennar's `assets=` (libGDX `AssetManager.getLoadedAssets()`) climbed from 398 to 1,008 over 3.7 h and never
+fell. Card art is capped and evicted, so the review suspects map, sprite or "others" textures. The line couldn't say which.
+
+- `MemoryWatch` appends two fields at the end of every `[TFR-Memory]` line that already prints `assets=` (any line after
+  the first duel): `assetTypes=` (count by asset class) and `assetDirs=` (count by the folder that says what it is: after
+  `pics/` for card art, after `adventure/<plane>/` for plane art, after `res/`, else the parent folder). Each shows the top
+  4, then `+N` for the rest. All the other fields keep their order (round 942's `floor=` included).
+- On every line, not only `full` and `duel`: a `[TFR-Memory]` line fires at most about once a minute, and the extra is
+  about 120 characters.
+- Thread safety: `AssetManager`'s `getAssetNames` and `getAssetType` are `synchronized`, so the watch's thread waits
+  for a load in progress rather than racing it. It's a read: no behavior change. Any failure prints `assetTypes=? (...)`.
+- A TFR file, so no `CORE_ENGINE_CHANGES.md` entry. The class comment lists the new fields.
+
+Checked (agent game at `-Xmx640m` so the 78% mark fires, the round's classes ahead of the packaged jar; two duels at 50x):
+`[TFR-Memory] high used=513MB of 640MB floor=286MB game=over turn=17 cards=110 battlefield=17 logEntries=451 undo=0
+undoObjects=0 images=0 assets=338 threads=20 aiEval=0 assetTypes=Texture:212,BitmapFont:65,TextureAtlas:60,Skin:1
+assetDirs=fonts:130,sprites:57,skins:46,world:36,+69`.
+
+Not checked: Android (same class, no platform code), where the climb was seen. The next phone log with this build says
+which folder grows.
+
+## Round 948: `[TFR-LastExit]` - how the last desktop session ended (diagnostic only) (2026-11-03)
+
+The user approved the second recommendation from today's log review ("Yes for 2-4"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103c.md`
+P2-1). On desktop a killed process, "Close the program" on a window Windows called not responding, and a native JVM
+crash all leave a log that just stops, so P2-1 stayed an inference. Android has the OS's `[TFR-ExitReason]`; desktop now
+has this.
+
+- **`util/LastExit`** (new, TFR): a marker `lastexit.txt` in the profile folder (`%APPDATA%\ForsakenRealms`, beside
+  forge.log; never the game folder). `onStart` logs the last session's line, then writes `running <start>`; a daemon timer
+  touches the file once a minute; `onCleanExit` writes `clean <start> <end>`.
+- One line at each launch, before `[TFR-Session] start`:
+  - `[TFR-LastExit] none: no marker from a last session (first launch with this check)`
+  - `[TFR-LastExit] clean: the last session closed normally (started <time>, <hours>)`
+  - `[TFR-LastExit] NOT clean: the last session (started <time>) ended without closing - a killed process, a forced close
+    or a native crash; last seen <time of the last touch>, about <hours> after its start; no hs_err_pid crash file since
+    then` - or `JVM crash file hs_err_pid<N>.log (<folder>, <time>)` when one was written since that session started. It
+    looks in the working folder, the jar's folder and the temp folder (the JVM's fallback) and names the folder by kind,
+    never by path.
+- **A second copy of the game** (a double launch) would read the first copy's `running` marker as not clean. So each
+  session holds an OS lock on `lastexit.lock` for its life (the OS lets go when the process dies, killed or not). A copy
+  that can't take the lock logs `[TFR-LastExit] another copy of the game is running ...` and leaves the marker alone.
+  The first try used the touch's age instead ("seen under 90 s ago, maybe still running"), and it fired on a killed
+  session relaunched a minute later, which is exactly what 0d03f3c7 did. The lock replaced it.
+- **Hooks:** `SessionLog.onStart` calls `LastExit.onStart()` after `MemoryWatch.start()`, and `SessionLog.end("exit")`
+  (from `Forge.dispose`) calls `LastExit.onCleanExit()` before its footer de-duplication, so an exit right after a pause
+  footer still counts as clean. Both are TFR files, so this round needs no `CORE_ENGINE_CHANGES.md` entry. Desktop only:
+  `onStart` returns on Android and iOS.
+- Never throws: every step is in a try, and a failure logs `[TFR-LastExit] failed: ...` once.
+
+Checked (agent game, the round's classes ahead of the packaged jar), lines from
+`C:\CLAUDE\PROJECTS\TFR1\agent\profile\ForsakenRealms\forge*.log`:
+- First launch: `[TFR-LastExit] none: no marker from a last session (first launch with this check)`.
+- After a clean close (`CloseMainWindow`): `[TFR-LastExit] clean: the last session closed normally (started 2026-11-03
+  18:52:55, 0.08 h)`.
+- After `taskkill /F` of the agent's javaw by PID and a relaunch 3 s later: `[TFR-LastExit] NOT clean: the last session
+  (started 2026-11-03 19:03:44) ended without closing - a killed process, a forced close or a native crash; last seen
+  2026-11-03 19:03:44, about 0.00 h after its start; no hs_err_pid crash file since then`. An earlier kill, 3 min into a
+  session, logged `last seen 2026-11-03 19:01:17, about 0.05 h after its start` (the minute touch works).
+- While the game ran, `lastexit.lock` was locked ("another process has locked a portion of the file").
+
+Not checked: a real second copy of the game (two agent games would share one LOCALAPPDATA cache; only the held lock was
+checked); an actual JVM crash with an hs_err file; macOS and Linux (same Java code).
+
 ## Round 947: desktop world generation says it may take a minute and Windows may call it not responding (2026-11-03)
 
 The user approved the first of today's log-review recommendations ("Yes for 2-4"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103c.md`

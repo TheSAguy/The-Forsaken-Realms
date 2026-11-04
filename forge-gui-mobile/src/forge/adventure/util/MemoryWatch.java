@@ -1,5 +1,6 @@
 package forge.adventure.util;
 
+import com.badlogic.gdx.assets.AssetManager;
 import forge.Forge;
 import forge.assets.ImageCache;
 import forge.game.Game;
@@ -10,6 +11,10 @@ import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 import forge.screens.match.MatchController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -38,6 +43,11 @@ import java.util.concurrent.TimeUnit;
  * <p>Round 942 (notes/logs-1103b.md P3-1: a 15-permanent board and every save load crossed 95% too): {@code floor=} after
  * {@code used=}, the lowest used of the last minute's samples and now. A floor near the max is memory really held; a low
  * floor says the high {@code used} was garbage the collector hadn't taken yet.
+ *
+ * <p>Round 949 (notes/logs-1103c.md P3-2: a phone's {@code assets=} climbed from 398 to 1,008 in 3.7 h and never fell):
+ * {@code assetTypes=} and {@code assetDirs=} at the end of the line, the loaded assets counted by class and by folder
+ * (top {@link #TOP}, then {@code +N} for the rest), to tell which kind keeps growing. AssetManager's methods are
+ * synchronized, so the read waits for a load in progress rather than racing it.
  */
 public final class MemoryWatch {
     private static final double HIGH = 0.78; // 400 MB of a phone's 512
@@ -45,6 +55,7 @@ public final class MemoryWatch {
     private static final double FULL = 0.95; // 486 MB of a phone's 512
     private static final long SAMPLE_MS = 2_000;
     private static final long MIN_GAP_MS = 60_000;
+    private static final int TOP = 4;
 
     private static ScheduledExecutorService timer;
     private static boolean armed = true;
@@ -111,7 +122,8 @@ public final class MemoryWatch {
             Runtime runtime = Runtime.getRuntime();
             long used = runtime.totalMemory() - runtime.freeMemory();
             System.out.println("[TFR-Memory] " + why + " used=" + (used >> 20) + "MB of " + (runtime.maxMemory() >> 20)
-                    + "MB floor=" + (floorOf(used) >> 20) + "MB " + gameText() + " " + imagesText() + " " + threadsText());
+                    + "MB floor=" + (floorOf(used) >> 20) + "MB " + gameText() + " " + imagesText() + " " + threadsText()
+                    + assetsText());
         } catch (Throwable ignored) { // the heap is full; the next crossing tries again
         }
     }
@@ -158,6 +170,59 @@ public final class MemoryWatch {
         } catch (Throwable t) {
             return "images=? (" + t.getClass().getSimpleName() + ")";
         }
+    }
+
+    /** Round 949: " assetTypes=Texture:950,TextureAtlas:40,+3 assetDirs=cards:120,sprites:410,+5"; empty before a duel. */
+    private static String assetsText() {
+        try {
+            if (!duelSeen)
+                return "";
+            AssetManager manager = Forge.getAssets().manager();
+            Map<String, Integer> types = new HashMap<>(), dirs = new HashMap<>();
+            for (String name : manager.getAssetNames()) {
+                Class<?> type = manager.getAssetType(name);
+                types.merge(type == null ? "?" : type.getSimpleName(), 1, Integer::sum);
+                dirs.merge(assetDir(name), 1, Integer::sum);
+            }
+            return " assetTypes=" + top(types) + " assetDirs=" + top(dirs);
+        } catch (Throwable t) {
+            return " assetTypes=? (" + t.getClass().getSimpleName() + ")";
+        }
+    }
+
+    /** The folder that says what an asset is: after pics/ (cards, tokens), after adventure/<plane>/ (sprites, maps), after res/. */
+    private static String assetDir(String path) {
+        String p = path.replace('\\', '/');
+        int at;
+        if ((at = p.indexOf("/pics/")) >= 0)
+            p = p.substring(at + 6);
+        else if ((at = p.indexOf("/adventure/")) >= 0) {
+            p = p.substring(at + 11);
+            p = p.substring(p.indexOf('/') + 1); // the plane folder, or "common"
+        } else if ((at = p.indexOf("/res/")) >= 0)
+            p = p.substring(at + 5);
+        else {
+            int slash = p.lastIndexOf('/');
+            p = slash > 0 ? p.substring(p.lastIndexOf('/', slash - 1) + 1) : p;
+        }
+        int slash = p.indexOf('/');
+        return slash > 0 ? p.substring(0, slash) : "-";
+    }
+
+    private static String top(Map<String, Integer> counts) {
+        List<Map.Entry<String, Integer>> entries = new ArrayList<>(counts.entrySet());
+        entries.sort((a, b) -> b.getValue() - a.getValue());
+        StringBuilder sb = new StringBuilder();
+        int rest = 0;
+        for (int i = 0; i < entries.size(); i++) {
+            if (i < TOP)
+                sb.append(i == 0 ? "" : ",").append(entries.get(i).getKey().replace(' ', '_')).append(':').append(entries.get(i).getValue());
+            else
+                rest += entries.get(i).getValue();
+        }
+        if (rest > 0)
+            sb.append(",+").append(rest);
+        return sb.length() == 0 ? "-" : sb.toString();
     }
 
     private static String threadsText() {
