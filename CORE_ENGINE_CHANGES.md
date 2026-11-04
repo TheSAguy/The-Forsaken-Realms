@@ -35,6 +35,13 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 946 - Classic-only files left out of the packages
+- `forge-gui-android/pom.xml` (STOCK): seven `<exclude>` lines on the `assets.zip` copy's `res/**` fileset
+  (`res/puzzle/**`, `res/tutorial/**`, `res/music/menus/**`, `res/music/match/**`, `res/quest/world/*/*/**`,
+  `res/conquest/**/*.dck`, `res/lists/net-decks-archive-*.txt`), the same list as
+  `standalone-packaging/build_standalone.py`'s `classic_only()` (not an engine file). No stock res file is deleted.
+  Upstream adding a res folder that only Classic reads would need a new line in both.
+
 ### Round 945 - TFR is Adventure only (no Classic)
 - `forge-gui-mobile/src/forge/Forge.java` (STOCK): a new `isClassicLocked()` (the plane's base `ConfigData.adventureOnly`);
   `openHomeDefault()` opens the adventure instead when it is set; `switchToClassic()` returns before its transition; the

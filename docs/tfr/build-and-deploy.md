@@ -70,6 +70,9 @@ Deploy loop, in order:
      local zips are kept - upload it, then delete it from `C:\TFR\live\`.
    - `--full` forces the stock-asset re-copy on a local build - needed only for suspected local
      corruption. An engine-version change forces it automatically without the flag.
+   - Round 946: the stock files only Classic reads (`classic_only()` in the script) never ship - skipped by the full
+     copy, removed on a fast-path run, ignored by the overlay. The Android pom's `assets.zip` fileset carries the same
+     list as `<exclude>` lines; change both together.
 4. **Read `PACKAGE_OK.txt`** in the live folder before telling the user it is safe to play. The
    script deletes it first and writes it only after full verification, so its presence is the
    playability contract. **Never substitute file-existence checks for reading this marker** - a

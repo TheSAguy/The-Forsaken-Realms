@@ -516,6 +516,15 @@
                                                 <include name="res/**" />
                                                 <exclude name="res/cardsfolder/**" />
                                                 <exclude name="res/adventure/**" />
+                                                <!-- TFR round 946: Classic-only files (TFR is Adventure only); the
+                                                     same list as build_standalone.py's classic_only() -->
+                                                <exclude name="res/puzzle/**" />
+                                                <exclude name="res/tutorial/**" />
+                                                <exclude name="res/music/menus/**" />
+                                                <exclude name="res/music/match/**" />
+                                                <exclude name="res/quest/world/*/*/**" /><!-- not world/worlds.txt -->
+                                                <exclude name="res/conquest/**/*.dck" />
+                                                <exclude name="res/lists/net-decks-archive-*.txt" />
                                             </fileset>
                                             <fileset dir="${basedir}/../forge-gui/">
                                                 <include name="res/adventure/common/**" />

@@ -23,7 +23,8 @@ What it does, in order:
      shell), renaming each to the game's name.
   3. Copy BASE_INSTALL/res EXCEPT res/adventure - SKIPPED on a fast-path run
      (see below), since this is by far the biggest, slowest step and its
-     content is static between TFR-only rounds.
+     content is static between TFR-only rounds. Round 946: never the
+     Classic-only files (classic_only); a fast-path run removes them instead.
   4. res/adventure gets exactly two entries: common/ (from BASE_INSTALL, also
      skipped on a fast-path run) and the repo's "The Forsaken Realms" plane
      folder (ALWAYS rebuilt fresh - this is the part that actually changes).
@@ -66,6 +67,58 @@ LOG_SHARE_SECRET = r"C:\TFR\secrets\discord_log_webhook.txt"
 # dropped: stock-Forge client, editors, uninstaller, upstream txt files that
 # would mislead in a standalone context).
 ROOT_INCLUDE = ["LICENSE.txt", "CONTRIBUTORS.txt", "build.txt"]
+
+
+def classic_only(rel):
+    """Round 946 (the user: "If we can remove any files that will make the game smaller due to not having classic let's
+    do that also"): stock res files only Classic mode reads. TFR is Adventure only since round 945, so they never ship.
+    `rel` is a path under res/ with forward slashes. The evidence per entry is in notes/r946-classic-only-files-audit.md;
+    forge-gui-android/pom.xml carries the same list for assets.zip. Remove an entry here to ship it again."""
+    parts = rel.split("/")
+    if parts[0] in ("puzzle", "tutorial"):              # Classic's Puzzle mode
+        return True
+    if parts[0] == "music" and len(parts) > 1 and parts[1] in ("menus", "match"):
+        return True                                     # the adventure plays adventure/common/music first
+    if parts[:2] == ["quest", "world"] and len(parts) > 2 and parts[2] != "worlds.txt":
+        return True                                     # Quest worlds' duels/challenges; worlds.txt is read eagerly
+    if parts[0] == "conquest" and rel.endswith(".dck"):  # Planar Conquest event decks; the .txt files stay
+        return True
+    if len(parts) == 2 and parts[0] == "lists" and parts[1].startswith("net-decks-archive-") and parts[1].endswith(".txt"):
+        return True                                     # the Classic deck chooser's net deck archives
+    return False
+
+
+def classic_only_ignore(res_root):
+    """A shutil.copytree ignore for a copy of `res_root` (round 946): drops classic_only entries."""
+    def ignore(d, names):
+        rel_dir = os.path.relpath(d, res_root).replace(os.sep, "/")
+        prefix = "" if rel_dir == "." else rel_dir + "/"
+        return [n for n in names if classic_only(prefix + n)]
+    return ignore
+
+
+def remove_classic_only(res_dir):
+    """Round 946: takes classic_only entries out of an existing package (a fast-path run never recopies res/).
+    Returns (files, bytes) removed."""
+    files = size = 0
+    for root, dirs, fs in os.walk(res_dir, topdown=True):
+        rel_dir = os.path.relpath(root, res_dir).replace(os.sep, "/")
+        prefix = "" if rel_dir == "." else rel_dir + "/"
+        for n in list(dirs):
+            if classic_only(prefix + n):
+                p = os.path.join(root, n)
+                for r2, _, f2 in os.walk(p):
+                    files += len(f2)
+                    size += sum(os.path.getsize(os.path.join(r2, f)) for f in f2)
+                rmtree_with_retry(p)
+                dirs.remove(n)
+        for n in fs:
+            if classic_only(prefix + n):
+                p = os.path.join(root, n)
+                files += 1
+                size += os.path.getsize(p)
+                os.remove(p)
+    return files, size
 
 
 def fail(msg):
@@ -237,7 +290,8 @@ def git_overlay_list():
         if not f:
             return False
         if not f.startswith("forge-gui/res/adventure/"):
-            return True  # ordinary stock res (languages, skins, ...)
+            # ordinary stock res (languages, skins, ...), except round 946's Classic-only files
+            return not classic_only(f[len("forge-gui/res/"):])
         # Inside adventure/: keep common/ (part of the static tree), drop the plane folders,
         # which step 3 copies wholesale from the repo every single run.
         return f.startswith("forge-gui/res/adventure/common/")
@@ -467,14 +521,23 @@ def main():
     if full_rebuild:
         # 3. res minus adventure
         print("copying res/ from base install (this is the big one)...")
-        shutil.copytree(os.path.join(BASE_INSTALL, "res"), os.path.join(game_dir, "res"),
-                        ignore=lambda d, names: ["adventure"] if os.path.samefile(d, os.path.join(BASE_INSTALL, "res")) else [])
+        # round 946: and without the Classic-only files (classic_only)
+        base_res = os.path.join(BASE_INSTALL, "res")
+        skip_classic = classic_only_ignore(base_res)
+        shutil.copytree(base_res, os.path.join(game_dir, "res"),
+                        ignore=lambda d, names: (["adventure"] if os.path.samefile(d, base_res) else [])
+                        + skip_classic(d, names))
         # 4a. adventure/common (static, part of the base install)
         os.makedirs(adv)
         shutil.copytree(os.path.join(BASE_INSTALL, "res", "adventure", "common"),
                         os.path.join(adv, "common"))
         with open(version_marker, "w", encoding="utf-8") as vm:
             vm.write(marker_value)
+    else:
+        # round 946: a fast-path package kept an older copy's Classic-only files - take them out (a no-op once gone)
+        gone_files, gone_bytes = remove_classic_only(static_res_dir)
+        if gone_files:
+            print(f"removed {gone_files} Classic-only file(s), {gone_bytes / 1024 / 1024:.1f} MB (round 946)")
     # 4b. adventure/<plane> (changes every round - always fresh)
     # Round 220: tool backups never ship. The plane folder is copied wholesale, and a stray backup
     # written beside a data file by one of the dev-tools landed in the player's install twice
@@ -526,8 +589,8 @@ def main():
 
     overlay = git_overlay_list()
     for rel in previous_overlay:
-        if rel in overlay:
-            continue
+        if rel in overlay or classic_only(os.path.relpath(rel, "forge-gui/res").replace(os.sep, "/")):
+            continue  # round 946: a Classic-only file is not restored either
         base_src = os.path.join(BASE_INSTALL, "res", os.path.relpath(rel, "forge-gui/res"))
         dst = os.path.join(game_dir, "res", os.path.relpath(rel, "forge-gui/res"))
         if os.path.exists(base_src):

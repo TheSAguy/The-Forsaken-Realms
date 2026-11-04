@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 946: Classic-only files no longer ship - ~29 MB off the PC folder, ~24 MB off assets.zip (2026-11-03)
+
+The user, after round 945: "If we can remove any files that will make the game smaller due to not having classic let's
+do that also." The audit (each path's size and the evidence that the adventure never reads it):
+`C:\CLAUDE\PROJECTS\TFR1\notes\r946-classic-only-files-audit.md`. The main thread approved the list as proposed.
+
+- **Dropped (under res/):** 9,339 files, 29.1 MB of data (~45 MB on disk), ~23.7 MB compressed.
+  - `quest/world/*/`, the Quest worlds' duels and challenges (5.8 MB, 7,800 files). `quest/world/worlds.txt` stays: the
+    deck editor's `AdvancedSearch` reads it.
+  - `conquest/planes/**/*.dck`, the Planar Conquest event decks (0.9 MB). The plane `.txt` files stay, for the same
+    reason.
+  - `music/menus/` and `music/match/`, Classic's music (16.9 MB). The adventure plays `adventure/common/music` first,
+    and `res/music` was only reached from `Forge.openHomeDefault`. `music/Credit.txt` stays.
+  - `puzzle/` and `tutorial/`, Classic's Puzzle mode (0.5 MB).
+  - `lists/net-decks-archive-*.txt`, the Classic deck chooser's net deck archives (4.9 MB).
+- **Kept, because the adventure reads them:**
+  - Quest precons, duels and themes (adventure starter and theme decks via `DeckgenUtil`).
+  - `quest/booster-prices.txt` (`ReadPriceList`), `deckgendecks` (LDA archetype enemy decks), `geneticaidecks`.
+  - `cube`, `draft`, `sealed`, editions and blocks (Inn events and boosters), `skins`, `sound` and `languages`.
+  - The 64 MB of `languages/cardnames-*.txt` are the only bigger item left. The adventure's language setting uses them,
+    so dropping them is a separate product call for the user.
+- **How (nothing deleted from the repo or BASE_INSTALL; reversible by emptying one list):**
+  - `standalone-packaging/build_standalone.py`: `classic_only(rel)` is the list. The full BASE_INSTALL copy skips
+    those files (`classic_only_ignore`), and a fast-path run removes them from the existing package
+    (`remove_classic_only`, no `--full` needed). The git overlay neither ships nor restores them.
+  - `forge-gui-android/pom.xml`: the same seven patterns as `<exclude>` lines on the `assets.zip` fileset.
+- **Verified:**
+  - **Unit cases** for `classic_only`.
+  - **The full-copy ignore,** walked read-only over `E:\GAMES\Forge_2\res`: it skips 9,339 files (29.07 MB).
+  - **`remove_classic_only`,** run twice on a scratch copy of the live folders: 9,339 files the first time and 0 the
+    second. `worlds.txt`, precons, duels, themes, `booster-prices.txt`, `Credit.txt` and `planes.txt` were all still
+    there.
+  - **Real Ant 1.10.14** over the repo's `forge-gui/res` with the pom's patterns: the same 9,339 files as
+    `classic_only`. The first pattern, `res/quest/world/*/**`, also matched `worlds.txt` (Ant's `**` matches zero
+    folders), so it is now `res/quest/world/*/*/**`.
+- **Not run in this round:** packaging, the agent smoke test and an Android build. The main thread packages once the
+  947-950 thread's work is committed.
+- **Stock file:** `forge-gui-android/pom.xml` (`CORE_ENGINE_CHANGES.md`).
+
 ## Round 945: no way into Classic mode - TFR is Adventure only (2026-11-03)
 
 Today's log review (`C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103c.md`, P2-2): 2 of 9 new players pressed the start screen's
