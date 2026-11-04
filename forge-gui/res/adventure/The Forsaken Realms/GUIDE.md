@@ -1925,8 +1925,9 @@ unless you've entered it or have prizes waiting. The entry fee scales with the t
   draft block, the Inn falls back to the wider pool rather than offering nothing.)
 - **AI color towns' Inns** draw from that color's own sets (the ones its shops sell), the neutral pool
   and the sets you've unlocked, so each color's land offers its own tournaments. **Neutral towns'
-  Inns** draw from the neutral pool plus your unlocked sets. Either way it's a real reason to travel if
-  you want to draft sets you don't own.
+  Inns** (working Waste Towns) borrow the sets of the nearest color town, along with the neutral pool and
+  your unlocked sets, so a Waste Town near the red lands deals red's sets. Either way it's a real reason
+  to travel if you want to draft sets you don't own.
 - **Neighboring Inns differ.** Every legal set is equally likely, and an Inn skips the sets already on
   offer at the Inns of the 6 nearest towns (unless every set it could deal is taken).
   A tournament dealt before version 1.27 keeps its set until the week turns.

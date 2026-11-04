@@ -48,6 +48,9 @@ md` already gets updated after every change.
   `localPointOfInterestId` to `pickCardBlockByFormat`.
 - `forge-gui-mobile/src/forge/adventure/data/ConfigData.java` (STOCK): `innColorShardEvents`, `innUniformBlockPick`
   (false) and `innSpreadNearbyTowns` (0).
+- Round 954 (follow-up): `AdventureEventData.pickWeightedCardBlock` also gives a neutral town's Inn the color of the
+  nearest AI color town or capital when `innNeutralNearestColor` is on (new helper `nearestAiColor`; the
+  `[TFR-InnEvent]` label reads "neutral, nearest <color>"); `ConfigData.innNeutralNearestColor` (false).
 
 ### Round 947 - the desktop world-generation text
 - **`forge-gui-mobile/src/forge/screens/TransitionScreen.java`** (STOCK) - in the progress-bar block, an

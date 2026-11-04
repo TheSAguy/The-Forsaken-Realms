@@ -328,6 +328,12 @@ public class AdventureEventData implements Serializable {
         forge.adventure.pointofintrest.PointOfInterest innTown = innPointID == null ? null : innTownById(innPointID);
         String aiColor = innTown == null || playerTown ? null : forge.adventure.util.ColorReputation.colorOfTown(innTown.getData());
         String townColor = configData.innColorShardEvents ? aiColor : null;
+        // Round 954 (follow-up, innNeutralNearestColor): a neutral town's Inn (a working Waste town) borrows the color
+        // shard of the nearest AI color town or capital.
+        String borrowedColor = innTown != null && !playerTown && aiColor == null
+                && configData.innColorShardEvents && configData.innNeutralNearestColor ? nearestAiColor(innTown) : null;
+        if (borrowedColor != null)
+            townColor = borrowedColor;
         Predicate<CardEdition> filter = CardEdition.Predicates.CAN_MAKE_BOOSTER;
 
         if(configData.allowedEvents != null && configData.allowedEvents.length > 0) {
@@ -428,7 +434,8 @@ public class AdventureEventData implements Serializable {
         if (loggedPool != null)
             logInnEditions(formatForLogging, loggedPool, picked, playerTown, fellBack);
         if (innTown != null) {
-            String colorLabel = playerTown ? "player town" : aiColor == null ? "neutral"
+            String colorLabel = playerTown ? "player town"
+                    : aiColor == null ? (borrowedColor == null ? "neutral" : "neutral, nearest " + borrowedColor)
                     : townColor == null ? aiColor + ", shared pool" : aiColor;
             System.out.println("[TFR-InnEvent] " + innTown.getDisplayName() + " (" + colorLabel + "): pool "
                     + (loggedPool == null ? "all" : String.valueOf(loggedPool.size())) + " sets / " + legalBlocks.size()
@@ -448,6 +455,33 @@ public class AdventureEventData implements Serializable {
             if (poi.getID().equals(id))
                 return poi;
         return null;
+    }
+
+    /**
+     * Round 954 (follow-up): the color of the AI color town or capital nearest to {@code town} by world distance, or null
+     * when there is none. Read from the towns, not the territory map: a Waste town stands on neutral ground, and the
+     * towns' names are what colorOfTown() and the shops already trust. A restored town counts for no color. A tie in
+     * distance goes to the lower POI id, so the same town always borrows the same color.
+     */
+    private static String nearestAiColor(forge.adventure.pointofintrest.PointOfInterest town) {
+        forge.adventure.world.WorldSave save = forge.adventure.world.WorldSave.getCurrentSave();
+        if (save == null || save.getWorld() == null)
+            return null;
+        String best = null, bestId = null;
+        float bestDst = Float.MAX_VALUE;
+        for (forge.adventure.pointofintrest.PointOfInterest poi : save.getWorld().getAllPointOfInterest()) {
+            String color = forge.adventure.util.ColorReputation.colorOfTown(poi.getData());
+            if (color == null || poi.getID().equals(town.getID())
+                    || forge.adventure.util.TownRestoration.isTownRestored(save.peekPointOfInterestChanges(poi.getID())))
+                continue;
+            float d = poi.getPosition().dst2(town.getPosition());
+            if (d < bestDst || (d == bestDst && poi.getID().compareTo(bestId) < 0)) {
+                best = color;
+                bestId = poi.getID();
+                bestDst = d;
+            }
+        }
+        return best;
     }
 
     /**

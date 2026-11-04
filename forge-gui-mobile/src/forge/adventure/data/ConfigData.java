@@ -216,7 +216,7 @@ public class ConfigData {
     public boolean adventureOnly = false;
     // Round 954 (a Reddit player: nearby Inns nearly all offered the same draft or sealed set): an AI color town's Inn
     // deals Draft/Sealed from that town's color shard + the neutral shard + the player's unlocked sets, the shard its
-    // shops use (EditionProgression.innEventEditionCodes). Player towns, the Capitol and neutral towns are unchanged.
+    // shops use (EditionProgression.innEventEditionCodes). Player towns and the Capitol are unchanged; neutral towns see innNeutralNearestColor.
     // False = every AI and neutral Inn draws from unlocked + neutral alone (the 2026-08-12 rule).
     public boolean innColorShardEvents = false;
     // Round 954: Draft/Sealed blocks are picked evenly among every legal block. False = stock's tier roll first
@@ -225,5 +225,9 @@ public class ConfigData {
     // Round 954: an Inn dealing a Draft/Sealed event skips blocks that share a set with an event showing at the Inns of
     // the N nearest other towns; when every legal block is taken, any of them. 0 = off (stock).
     public int innSpreadNearbyTowns = 0;
+    // Round 954 (follow-up): with innColorShardEvents on, a neutral town's Inn (a working Waste town) also deals from
+    // the color shard of the nearest AI color town or capital (AdventureEventData.nearestAiColor). False = neutral
+    // towns' Inns keep unlocked + neutral.
+    public boolean innNeutralNearestColor = false;
 
 }

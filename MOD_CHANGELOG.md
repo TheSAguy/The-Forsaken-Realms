@@ -14264,6 +14264,55 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 954 (follow-up): neutral (Waste) towns' Inns borrow the nearest color's sets (2026-11-04)
+
+The user: "Yes, do it" - to "give neutral (Waste) towns' Inns the nearest color's sets too". Round 954's test found that
+working neutral towns' Inns still drew from unlocked + neutral alone (16 sets, 9 legal blocks there, always holding the
+race's 4 sets), so they rotated the same ~9 sets all game.
+
+- **What changed:** with `innColorShardEvents` on and the new `ConfigData.innNeutralNearestColor` (default false, true in
+  `The Forsaken Realms/config.json`), the Inn of a town that is neither a player town nor a color town draws Draft/Sealed
+  from the color shard of the **nearest AI color town or capital** + neutral + unlocked - the same
+  `EditionProgression.innEventEditionCodes(color)` pool a color town's Inn uses. Player towns (restored, the Capitol)
+  are unchanged. Re-rolls use the same pool (the re-roll already passes the Inn's town).
+- **Why the nearest town, not the territory:** a Waste town stands on neutral ground, so the territory map at its tile
+  names no color, and a "nearest territory" search would walk the biome map. The towns are already resolved reliably:
+  `ColorReputation.colorOfTown` on each POI's data, the heuristic shops and round 954 trust. A restored town counts for
+  no color; a town an AI captures counts for its new color; a defeated color's towns no longer match, so nobody borrows
+  it. Distance is world distance between POI positions; a tie goes to the lower POI id, so a town always borrows the
+  same color. No color town left at all = the plain pool.
+- **A separate flag, not an extension of `innColorShardEvents`:** it can be switched off alone, and it needs
+  `innColorShardEvents` on to act (the label still says which).
+- **Code:** `AdventureEventData.pickWeightedCardBlock` sets the town color from new helper `nearestAiColor(innTown)` when
+  the town's own color is null; the `[TFR-InnEvent]` label reads `neutral, nearest <color>`, e.g.
+  `[TFR-InnEvent] Tinkers' Glade (neutral, nearest green): pool 48 sets / 25 legal blocks, picked Innistrad: Midnight
+  Hunt [MID] (Sealed Deck), skipped none`. Callers checked first: graphify `affected` found 2 callers of
+  `pickCardBlockByFormat` (the constructor, `InnScene.promptRerollEvent`) and 1 of `pickWeightedCardBlock`; Grep agreed.
+  Only calls that pass an Inn's point id can change.
+- **Ring Cities** (the five star towns) are working neutral towns but have no Inn; Orazca (before the Capitol) would
+  borrow like any neutral town.
+- **No save change.** No new saved field. An event already dealt keeps its set until the week turns (round 368).
+- **Docs:** GUIDE's Inn Tournaments section (working Waste towns borrow the nearest color town's sets); `GUIDE.html`
+  regenerated (`--check` OK: 99 headings, 197 links, 3 pictures); `CORE_ENGINE_CHANGES.md`.
+- **Agent test** (new world, cheats, classes ahead of the jar; `C:\CLAUDE\PROJECTS\TFR1\notes\r954f\README.md`, every
+  line in `notes\r954f\innevent-lines.txt`). A day-1 census of all 309 towns gave the color towns (5 capitals + 3 towns);
+  174 Waste towns were entered and each Inn dealt through the console's `set event zzz` (it opens the Inn, which deals;
+  the bad block name then replaces nothing); 15 were working (fewer than 9 shops destroyed).
+  - Neutral Inns' pool **15 sets -> 47-48 sets; legal blocks 23-32, median 26** (119 deals; round 954 measured 9 in its
+    world).
+  - The borrowed color matched the nearest color town by tile for 115 of 116 towns; the 116th (Celestine Vale) is a
+    0.4-tile tie (white 216.5, blue 216.9) and took blue on pixel positions. All five colors were borrowed (22-27 lines
+    each).
+  - Working neutral towns: Tinkers' Glade and Minnehil (green), Golemstooth and Baker's Camp (white), Mardrake Wetlands,
+    Spirit's Town and Wisp's Coven (black), Ebbing Port and Amanaxis Cove (blue). The other 5 working towns had been
+    taken by AI colors by day 2 and print their own color, so no working neutral town near red was left; red was
+    borrowed by 24 ruined towns' Inns.
+  - Week turnover at day 8: 6 revisited Inns each printed `[TFR-InnWeek] ... makes way for week 2's` and dealt again
+    (Tinkers' Glade MID -> KLR, Golemstooth 4ED -> ME2, Minnehil TMT -> 4ED). The neighbor skip still fired; the
+    "all taken" fallback never did.
+- **Not run:** a draft or sealed entered at a Waste town's Inn (the deal path is the one round 954 played); the re-roll
+  button by hand; Android; an old save (its events turn over at the next week).
+
 ## Round 954: Inns in AI color towns use their color's sets; neighboring Inns offer different sets (2026-11-04)
 
 The user: "Yes, A plus B" - Options A and B of the read-only study `C:\CLAUDE\PROJECTS\TFR1\notes\inn-event-variety.md`.
