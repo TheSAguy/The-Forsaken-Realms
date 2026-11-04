@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 953: the GUIDE's Loot section points at Custom Difficulty, not settings.json (docs only) (2026-11-04)
+
+The user: "Yes, fix it" - the GUIDE pointer round 952 found. The Loot section of `GUIDE.md` ended with "Every number
+here is a setting: `cardBudget...` (1 to 5 cards each) and `resourcePurse...` in the plane's `config tables/settings.json`."
+
+- **Now:** "You can change these numbers in game with Custom Difficulty (**Advanced...** on the new-game screen, or
+  Settings > Difficulty > **Edit...** during a run), on its **Loot & Rewards** tab. **Cards per win** (always 1 to 5
+  cards) and **Win purse** scale the cards and the purse at every rank. Expert adds **First-win bonus cards**,
+  **First-win purse**, **Payback purse**, **Champion loot**, **Legend gold** and **Legend cards**. Only the purse's color
+  lean and Easy's extra card stay in the plane's settings files, for advanced players." (links to #custom-difficulty).
+- **Checked against `config tables/custom_difficulty.json`:** Cards per win = `cardBudget` (scales the eight
+  `cardBudgetFirst*/Repeat*`, Basic), Win purse = `purse` (scales `resourcePurse{Common..Mythic}`, Basic); the six Expert
+  knobs target `cardBudgetFirstWinBonusCards`, `resourcePurseFirstWinFactor`, `resourcePurseLosingRecordFactor`,
+  `championLootFactor`, `legendRewardGoldFactor`, `legendRewardCardFactor`. Not knobs (the file's own "left out" list):
+  `resourcePurseFavoredWeight/OtherWeight`, `resourcePurseColorlessFactor` (the color lean) and `cardBudgetEasyBonus`.
+- **Rest of GUIDE.md grepped:** no other advice to edit settings files. Kept as a source citation: the Ascendance Power
+  table's "the plane's numbers in `config tables/ascendance.json`". Every other "Settings" is the in-game screen.
+- `GUIDE.html` regenerated with `dev-tools/guide_html.py` (`--check` OK: 99 headings, 197 links, 3 pictures).
+
 ## Round 952: the Welcome page no longer sends players to the settings files (2026-11-04)
 
 The user: "Let's update the home page. We can remove the last paragraph, settings has moved to in-game settings. Not sure

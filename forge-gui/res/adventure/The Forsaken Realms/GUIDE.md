@@ -497,8 +497,11 @@ enemy's name - and your **first victory** over each kind of enemy is the big one
   flee, and nothing flees inside a town or dungeon.
 - **Power.** With Ascendance, a win's loot also holds a Power card - see
   [Ascendance](#ascendance---your-level).
-- Every number here is a setting: `cardBudget...` (1 to 5 cards each) and `resourcePurse...` in
-  the plane's `config tables/settings.json`.
+- You can change these numbers in game with [Custom Difficulty](#custom-difficulty) (**Advanced...** on the new-game
+  screen, or Settings > Difficulty > **Edit...** during a run), on its **Loot & Rewards** tab. **Cards per win** (always
+  1 to 5 cards) and **Win purse** scale the cards and the purse at every rank. Expert adds **First-win bonus cards**,
+  **First-win purse**, **Payback purse**, **Champion loot**, **Legend gold** and **Legend cards**. Only the purse's
+  color lean and Easy's extra card stay in the plane's settings files, for advanced players.
 
 ### Ascendance - Your Level
 
