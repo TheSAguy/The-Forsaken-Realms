@@ -1,0 +1,40 @@
+capitol_teleporter.png
+size: 360,40
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Closed
+  xy: 0, 0
+  size: 40, 40
+Active
+  xy: 40, 0
+  size: 40, 40
+  index: 0
+Active
+  xy: 80, 0
+  size: 40, 40
+  index: 1
+Active
+  xy: 120, 0
+  size: 40, 40
+  index: 2
+Active
+  xy: 160, 0
+  size: 40, 40
+  index: 3
+Active
+  xy: 200, 0
+  size: 40, 40
+  index: 4
+Active
+  xy: 240, 0
+  size: 40, 40
+  index: 5
+Active
+  xy: 280, 0
+  size: 40, 40
+  index: 6
+Active
+  xy: 320, 0
+  size: 40, 40
+  index: 7

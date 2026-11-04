@@ -14264,6 +14264,62 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 960: the golden Capitol's Teleporter (2026-11-04)
+
+The Art thread's Teleporter for the golden Capitol (Orazca), the last building of the round 944 sandstone look. The user
+picked portal-4, a ruined arch with a starfield void, from a ChatGPT sheet: "I like this one. Can you try and match the
+capitol colors a little closer. and then, can you make it animated or do we need to work on that?" They chose variant
+A at 40 px from the previews ("Yes, install both"). The Capitol's art is Capitol only: "These buildings should be Cap
+only... Everything else should remain as it for Player towns."
+
+- **Art:** the drawing sampled as drawn (each pixel takes its block's most common color, 1 px black outline), then
+  recolored toward the Capitol with sandstone_remap's luma-keeping method: the stone to sandstone, the cold highlights
+  to gold trim, the void to a deep teal with turquoise stars, the step to turquoise (the Exchange's dome). The
+  animation was made in house from the one drawing, frame by frame at game size, so the stone is the same pixels in
+  every frame.
+  - **Active**, 8 frames at 0.15 s (a 1.2 s loop): stars spiral inward 1 px a frame, the center star pulses, the
+    void's rim glows and dims, the step's glow pulses, the three floating rocks bob 1 px out of phase, and a gold
+    glint crosses the crystal once a loop.
+  - **Closed:** the void is dark with three faint stars, and the step is unlit stone.
+- **Atlas:** a new plane atlas, `maps/tileset/capitol_teleporter.atlas` + `.png` (360x40): `Closed`, then `Active`
+  index 0-7, each 40x40. It is its own page, so `capitol_gold.atlas` is untouched.
+- **The switch:** `ShopActor.draw()`'s TELEPORTER branch calls the new `EconomyBuildings.getTownTeleporterSprite()`.
+  In the Capitol (`TownRestoration.isCurrentTownCapitol()`) it draws the new art. Every other town gets portal4's
+  Active or Closed, exactly as before. Active versus Closed is still `isTeleporterNetworkActive()`. It logs
+  `[TFR-CapitolArt] Teleporter drawn from <atlas> (the Capitol | an ordinary town)` when its choice changes.
+  `drawOverFootprint()` already draws a 40x40 region centered on its lot.
+- **Left on portal4:** the overworld icon (`getTeleporterMapIcon()`), the `[+Portal]` glyph
+  (`MapViewScene.ensurePortalGlyph()`), the other towns' Teleporters and the dungeon portals. `adventure/common` is
+  not touched.
+- **Room:** the Teleporter can stand on any of the Capitol's six rubble lots. On lot 95, the tightest (between the
+  Bank and the Exchange), it keeps 8 px on each side.
+
+Checked:
+- Maven package: exit 0.
+- An agent copy (`C:\CLAUDE\PROJECTS\TFR1\agent-960`, its own profile and cache, removed after) with a fresh cheats
+  world, the round's classes ahead of the jar and the new atlas in its game folder:
+  - **Capitol, Closed:** after `capitol raise`, a Teleporter was built on lot 95, the only one in the world. It shows
+    the new arch with a dark void. Log: "Teleporter drawn from capitol_teleporter.atlas (the Capitol)".
+  - **Player town:** Pyrenian Haven was restored and a Teleporter built there. It shows portal4's blue shimmer at
+    16 px. Log: "Teleporter drawn from portal4.atlas (an ordinary town)".
+  - **Capitol, Active:** with 2 Teleporters, the Capitol's shows the turquoise step and the stars. Six shots in a row
+    caught five different frames.
+  - **Dungeon portal:** the Library of Varsil's portal still draws the stock arch from common `portals.png`.
+  - Every duel ran at 50x (`[TFR-Agent] duel speed set to 50x`).
+  - **Test-only shortcuts, in the agent copy only (never in the repo):**
+    - The restore dialog never opened at the Job Board in this world, for either Orazca or Pyrenian Haven. So the
+      town was marked restored with `set mapflag townRestored 1`.
+    - A recompiled `TownRestoration` lifted the town's reputation slot limit, so the Teleporter could be built
+      without first finishing its quests.
+  - Shots: `C:\TFR\notes\r960-shots` (`01-capitol-teleporter-closed.png`, `02-capitol-teleporter-active.png`,
+    `03-player-town-teleporter-portal4-active.png`, `04-capitol-teleporter-active-frames-3x.png`,
+    `05-dungeon-portal-unchanged.png`). Logs: `C:\TFR\notes\r960-agent-forge-1.log` .. `-3.log`.
+
+Not checked:
+- Android.
+- Why the restore dialog did not open in the agent world: the Job Board walk arrived, but no `[TFR-RestoreFee]` line
+  was logged.
+
 ## Round 959: the golden Capitol's Outlook (2026-11-04)
 
 The Art thread's Outlook for the golden Capitol (Orazca), in the round 944 sandstone look. The user picked one tower

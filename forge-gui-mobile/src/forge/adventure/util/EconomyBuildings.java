@@ -707,6 +707,38 @@ public class EconomyBuildings {
         return teleporterActiveAnimation;
     }
 
+    // Round 960: the golden Capitol's own Teleporter (the user's pick, portal-4 recolored toward the Capitol - sandstone,
+    // gold trim, a teal void with turquoise stars - and animated in house): 40x40, Closed + 8 Active frames at 0.15 s
+    // (a 1.2 s loop) on the plane's capitol_teleporter.atlas. Capitol only: every other town's Teleporter, the dungeon
+    // portals, the overworld icon (getTeleporterMapIcon) and the [+Portal] glyph stay on portal4.
+    private static final String CAPITOL_TELEPORTER_ATLAS = "maps/tileset/capitol_teleporter.atlas";
+    private static com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> capitolTeleporterActiveAnimation;
+    private static String lastTeleporterArt;
+
+    /** Round 960: the in-town Teleporter picture - the Capitol's own art in the Capitol, portal4 in every other town;
+     *  Active while the network has somewhere to go, Closed otherwise. */
+    public static TextureRegion getTownTeleporterSprite(float animTime) {
+        boolean capitol = TownRestoration.isCurrentTownCapitol();
+        String art = capitol ? "capitol_teleporter" : "portal4";
+        if (!art.equals(lastTeleporterArt)) {
+            lastTeleporterArt = art;
+            System.out.println("[TFR-CapitolArt] Teleporter drawn from " + art + ".atlas ("
+                    + (capitol ? "the Capitol" : "an ordinary town") + ")");
+        }
+        boolean active = isTeleporterNetworkActive();
+        if (!capitol)
+            return active ? getTeleporterActiveAnimation().getKeyFrame(animTime, true) : getTeleporterClosedSprite();
+        if (!active)
+            return Config.instance().getAtlasSprite(CAPITOL_TELEPORTER_ATLAS, "Closed");
+        if (capitolTeleporterActiveAnimation == null) {
+            com.badlogic.gdx.utils.Array<com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion> frames =
+                    Config.instance().getAtlas(CAPITOL_TELEPORTER_ATLAS).findRegions("Active");
+            capitolTeleporterActiveAnimation = new com.badlogic.gdx.graphics.g2d.Animation<>(0.15f, frames,
+                    com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP);
+        }
+        return capitolTeleporterActiveAnimation.getKeyFrame(animTime, true);
+    }
+
     /** True once a SECOND Teleporter exists anywhere (Capitol + towns combined) - before that
      *  a lone Teleporter has no destination, so it stays visually "Closed". */
     public static boolean isTeleporterNetworkActive() {

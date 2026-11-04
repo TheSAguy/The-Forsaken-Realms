@@ -35,6 +35,11 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 960 - the golden Capitol's own Teleporter
+- **`forge-gui-mobile/src/forge/adventure/character/ShopActor.java`** (STOCK) - `draw()`: the TELEPORTER branch (TFR's,
+  2026-08-10) calls `EconomyBuildings.getTownTeleporterSprite(teleporterAnimTime)` instead of picking portal4's
+  Active/Closed itself. Mod file: `util/EconomyBuildings.java`.
+
 ### Round 957 - more adventure music (a plane's music adds to common's)
 - `forge-gui/src/main/java/forge/sound/SoundSystem.java` (STOCK): new static `planeMusicAddsToCommon` with
   `setPlaneMusicAddsToCommon(boolean)` (invalidates the playlists on a change), and `findMusicFiles(MusicPlaylist)`:

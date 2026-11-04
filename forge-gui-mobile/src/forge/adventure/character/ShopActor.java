@@ -248,10 +248,9 @@ public class ShopActor extends MapActor {
             TextureRegion buildingSprite;
             if (economyType == EconomyBuildings.TELEPORTER) {
                 // Animated portal art, not a single static region - intercepted before the
-                // generic getBuildingSprite() path (see its own comment on TELEPORTER).
-                buildingSprite = EconomyBuildings.isTeleporterNetworkActive()
-                        ? EconomyBuildings.getTeleporterActiveAnimation().getKeyFrame(teleporterAnimTime, true)
-                        : EconomyBuildings.getTeleporterClosedSprite();
+                // generic getBuildingSprite() path (see its own comment on TELEPORTER). TFR round 960: the
+                // Capitol draws its own 40x40 Teleporter, every other town portal4 (getTownTeleporterSprite).
+                buildingSprite = EconomyBuildings.getTownTeleporterSprite(teleporterAnimTime);
             } else {
                 buildingSprite = EconomyBuildings.getBuildingSprite(economyType);
             }
